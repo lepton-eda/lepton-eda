@@ -1,0 +1,304 @@
+# Russian translation for lepton-symcheck
+# Copyright (c) 2020 Vladimir Zhbanov <vzhbanov@gmail.com>
+#
+# This file is distributed under the same license as the lepton-eda
+# package.
+#
+# Переводчикам: см. примечания в liblepton/po/ru.po
+msgid ""
+msgstr ""
+"Project-Id-Version: lepton-eda\n"
+"Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
+"POT-Creation-Date: 2020-03-05 14:01+0300\n"
+"PO-Revision-Date: 2020-03-06 23:25+0300\n"
+"Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
+"Language-Team: Russian\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#, scheme-format
+msgid "Zero radius arc at ~A"
+msgstr "Дуга с нулевым радиусом с координатами ~A"
+
+#, scheme-format
+msgid "Zero angle arc at ~A"
+msgstr "Дуга с нулевым углом с координатами ~A"
+
+#, scheme-format
+msgid ""
+"Set 'graphical=1' if you want the symbol to be graphical, current value: ~A"
+msgstr ""
+"Установите «graphical=1», если нужно, чтобы символ был графическим; текущее "
+"значение: ~A"
+
+msgid "Graphical symbols should have device=none"
+msgstr "В графических символах должен быть атрибут «device=none»"
+
+#, scheme-format
+msgid "Forbidden attribute: ~A"
+msgstr "Запрещённый атрибут: ~A"
+
+#, scheme-format
+msgid "Obsolete attribute: ~A"
+msgstr "Устаревший атрибут: ~A"
+
+#, scheme-format
+msgid "Misplaced pin attribute: ~A"
+msgstr "Неправильно размещённый атрибут вывода: ~A"
+
+#, scheme-format
+msgid "Wrongly attached attribute: ~A"
+msgstr "Неправильно прикреплённый атрибут: ~A"
+
+#, scheme-format
+msgid "Unknown attribute: ~A"
+msgstr "Неизвестный атрибут: ~A"
+
+#, scheme-format
+msgid "Duplicate floating attribute: ~A"
+msgstr "Дублирование плавающего атрибута: ~A"
+
+#, scheme-format
+msgid "Missing required attribute: ~A"
+msgstr "Отсутствует обязательный атрибут: ~A"
+
+#, scheme-format
+msgid "Zero sized box at ~A"
+msgstr "Прямоугольник нулевого размера с координатами ~A"
+
+#, scheme-format
+msgid "Zero radius circle at ~A"
+msgstr "Окружность с нулевым радиусом с координатами ~A"
+
+#, scheme-format
+msgid "Object with forbidden connections: ~A"
+msgstr "Объект с запрещёнными соединениями: ~A"
+
+#, scheme-format
+msgid "Object forbidden inside symbols: ~A"
+msgstr "Объект запрещён внутри символов: ~A"
+
+#, scheme-format
+msgid "Zero length ~A at ~A"
+msgstr "~A нулевой длины с координатами ~A"
+
+msgid "Wrong check log destination!"
+msgstr "Неверное место назначения журнала проверки"
+
+#, scheme-format
+msgid "Missing pin number after \":\" or \",\": ~A"
+msgstr "Отсутствует номер вывода после \":\" или \",\": ~A"
+
+#, scheme-format
+msgid "Duplicate pin number in one net= attribute ~A: ~A"
+msgstr "Дублирование номера вывода «~A» в том же самом атрибуте net=: ~A"
+
+#, scheme-format
+msgid "Invalid net attribute: net=~A"
+msgstr "Недопустимый атрибут соединения: net=~A"
+
+#, scheme-format
+msgid "Duplicate pin number in net= attribute ~A: ~A"
+msgstr "Дублирование номера вывода «~A» в аттрибутах «net=:»: ~A"
+
+#, scheme-format
+msgid "Duplicate pin number ~A: ~A"
+msgstr "Дублирование номера вывода ~A: ~A"
+
+#, scheme-format
+msgid "Zero length path element: ~A"
+msgstr "Элемент контура нулевой длины: ~A"
+
+#, scheme-format
+msgid "Zero sized picture at ~A"
+msgstr "Изображение нулевого размера с координатами ~A"
+
+#, scheme-format
+msgid "Picture file ~S does not exist or is not readable."
+msgstr "Файл изображения ~S не существует или нет разрешения на чтение."
+
+#, scheme-format
+msgid "Duplicate pin attribute on one pin: ~A"
+msgstr "Дублирование аттрибута для одного вывода: ~A"
+
+#, scheme-format
+msgid "Prohibited zero value pin attribute: ~A=0"
+msgstr "Запрещенное нулевое значение для атрибута вывода: ~A=0"
+
+#, scheme-format
+msgid "Invalid pin attribute value: pintype=~A"
+msgstr "Неверное значение атрибута вывода: pintype=~A"
+
+#, scheme-format
+msgid "Missing pin attribute: ~A"
+msgstr "Отсутствует атрибут вывода: ~A"
+
+#, scheme-format
+msgid "Duplicate pin attribute in the symbol: ~A=~A"
+msgstr "Дублирование аттрибута вывода в символе: ~A=~A"
+
+#, scheme-format
+msgid "Object: ~A"
+msgstr "Объект: ~A"
+
+#, scheme-format
+msgid "Found ~A=~A attribute"
+msgstr "Найден атрибут ~A=~A"
+
+#, scheme-format
+msgid "Invalid slotdef=~A attribute (the format is #:#,#,#,...)"
+msgstr "Недопустимый атрибут «slotdef=~A» (формат: «#:#,#,#,...»)"
+
+#, scheme-format
+msgid "Negative attribute: numslots=~A"
+msgstr "Отрицательное значение атрибута: numslots=~A"
+
+msgid "numslots set to 0, symbol does not have slots"
+msgstr "Атрибут numslots установлен в 0, в символе нет секций"
+
+#, scheme-format
+msgid "Zero pin number in slotdef=~A"
+msgstr "Нулевой номер вывода в «slotdef=~A»"
+
+#, scheme-format
+msgid "Found a zero slot in slotdef=~A"
+msgstr "Нулевой номер секции в «slotdef=~A»"
+
+#, scheme-format
+msgid ""
+"Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)"
+msgstr "Номер секции ~A в «slotdef=~A» больше максимального номера секции ~A"
+
+#, scheme-format
+msgid "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr ""
+"Лишний атрибут «slotdef=~A:...» (количество атрибутов «slotdef=» должно быть "
+"равно ~A)"
+
+#, scheme-format
+msgid "Missing slotdef=~A:... (there should be ~A slotdef= attributes)"
+msgstr ""
+"Отсутствующий атрибут «slotdef=~A:...» (количество атрибутов «slotdef=» "
+"должно быть равно ~A)"
+
+#, scheme-format
+msgid "Not enough pins in slotdef=~A (must be ~A)"
+msgstr "Недостаточное количество выводов в «slotdef=~A» (должно быть ~A)"
+
+#, scheme-format
+msgid "Too many pins in slotdef=~A (must be ~A)"
+msgstr "Избыточное количество выводов в «slotdef=~A» (должно быть ~A)"
+
+#, scheme-format
+msgid "Duplicate slot number ~A: ~A"
+msgstr "Дублирование номера секции ~A: ~A"
+
+#, scheme-format
+msgid "Found ~A distinct pins in slots"
+msgstr "Найдено ~A отдельных выводов в секциях"
+
+#, scheme-format
+msgid "Simple text object with only SHOW_NAME or SHOW_VALUE set: ~A"
+msgstr ""
+"Простой текстовый объект с одним установленным флагом SHOW_NAME или "
+"SHOW_VALUE: ~A"
+
+#, scheme-format
+msgid "Text with a trailing '\\', consider to escape it with '\\\\': ~A"
+msgstr ""
+"Текст с символом '\\' в конце, рассмотрите экранирование символа с помощью "
+"'\\\\': ~A"
+
+#, scheme-format
+msgid "Text with unbalanced overbar markers '\\_' in it': ~A"
+msgstr "Текст с несбалансированными маркерами надчёркивания '\\_': ~A"
+
+#, scheme-format
+msgid "Text with a '\\' in it, consider to escape it with '\\\\': ~A"
+msgstr ""
+"Текст, включающий '\\', рассмотрите экранирование символа с помощью '\\\\': "
+"~A"
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTIONS] FILE ...\n"
+"\n"
+"Check one or more Lepton EDA symbol FILEs.\n"
+"\n"
+"General options:\n"
+"  -h, --help        Print usage\n"
+"  -V, --version     Show version information\n"
+"  -q, --quiet       Quiet mode\n"
+"  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error\n"
+"                    messages, -vv will show errors and warnings, and\n"
+"                    -vvv displays also informational messages)\n"
+"\n"
+"Report bugs at <~A>\n"
+"Lepton EDA homepage: <~A>\n"
+msgstr ""
+"Использование: ~A [ОПЦИИ] ФАЙЛ ...\n"
+"\n"
+"Проверка одного или нескольких файлов символов Lepton EDA.\n"
+"\n"
+"Опции:\n"
+"  -h, --help     Вывод информации об использовании\n"
+"  -V, --version  Вывод информации о версии\n"
+"  -q, --quiet    Без вывода информации\n"
+"  -v, --verbose  Подробный вывод (с накопительным эффектом, т. е.\n"
+"                 -v для вывода ошибок, -vv для вывода ошибок и\n"
+"                 предупреждений, и -vvv также для вывода\n"
+"                 информационных сообщений.)\n"
+"\n"
+"Страница для отчётов об ошибках: ~A\n"
+"Домашняя страница Lepton EDA: ~A\n"
+
+#, scheme-format
+msgid "Loading schematic ~S"
+msgstr "Загрузка схемы ~S"
+
+#, scheme-format
+msgid "Checking: ~A\n"
+msgstr "Проверка: ~A\n"
+
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+"Не указаны файлы для обработки.\n"
+"Подробности см. в выводе команды «~A --help».\n"
+
+#, scheme-format
+msgid "Info: ~A"
+msgstr "Информация: ~A"
+
+#, scheme-format
+msgid "Warning: ~A"
+msgstr "Предупреждение: ~A"
+
+#, scheme-format
+msgid "ERROR: ~A"
+msgstr "ОШИБКА: ~A"
+
+#, scheme-format
+msgid "Unrecognized info: ~A\n"
+msgstr "Непонятная информация: ~A\n"
+
+#, scheme-format
+msgid "~A warning found"
+msgstr "Количество предупреждений: ~A"
+
+msgid "(use -vv to view details)"
+msgstr "(используйте опцию -vv для вывода подробностей)"
+
+msgid "No errors found"
+msgstr "Ошибок не найдено"
+
+#, scheme-format
+msgid "~A ERROR found"
+msgstr "Количество ошибок: ~A"
+
+msgid "(use -v to view details)"
+msgstr "(используйте опцию -v для вывода подробностей)"
