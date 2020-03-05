@@ -1264,7 +1264,7 @@ SCM_DEFINE (config_remove_group, "%config-remove-group!", 2, 0, 0,
  *
  * \param legacy_s  Boolean: set legacy mode or not.
  *
- * \return         SCM_BOOL_T.
+ * \return  Previously set config mode: SCM_BOOL_T - legacy, SCM_BOOL_F otherwise.
  */
 SCM_DEFINE (config_set_legacy_mode_x, "%config-set-legacy-mode!", 1, 0, 0,
             (SCM  legacy_s),
@@ -1272,9 +1272,11 @@ SCM_DEFINE (config_set_legacy_mode_x, "%config-set-legacy-mode!", 1, 0, 0,
 {
   SCM_ASSERT (scm_is_bool (legacy_s), legacy_s, SCM_ARG1, s_config_set_legacy_mode_x);
 
+  gboolean result = config_get_legacy_mode();
+
   config_set_legacy_mode (scm_to_bool (legacy_s));
 
-  return SCM_BOOL_T;
+  return result ? SCM_BOOL_T : SCM_BOOL_F;
 }
 
 
