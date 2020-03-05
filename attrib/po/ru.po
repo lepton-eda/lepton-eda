@@ -1,24 +1,23 @@
 # Russian translation for lepton-attrib
 # Copyright (c) 2010 Rosetta Contributors and Canonical Ltd 2010
-# Copyright (c) Vladimir Zhbanov <vzhbanov@gmail.com>, 2011, 2014, 2020.
+# Copyright (c) 2011, 2014, 2020 Vladimir Zhbanov <vzhbanov@gmail.com>
 #
-# This file is distributed under the same license as the lepton-attrib package.
+# This file is distributed under the same license as the lepton-eda
+# package.
 #
 # Переводчикам: см. примечания в liblepton/po/ru.po
 msgid ""
 msgstr ""
-"Project-Id-Version: geda gattrib\n"
+"Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
 "POT-Creation-Date: 2020-03-19 12:10+0300\n"
-"PO-Revision-Date: 2020-03-06 03:17+0300\n"
+"PO-Revision-Date: 2020-03-07 15:13+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
-"Language-Team: Lepton EDA developers\n"
+"Language-Team: Russian\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2010-02-14 12:56+0000\n"
-"X-Generator: Launchpad (build Unknown)\n"
 
 msgid "Lepton EDA Attribute Editor"
 msgstr "Редактор атрибутов Lepton EDA"
