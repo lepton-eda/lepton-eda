@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda 1.9.9\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:33+0300\n"
+"POT-Creation-Date: 2020-03-05 14:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -256,28 +256,36 @@ msgstr ""
 msgid "Text with a '\\' in it, consider to escape it with '\\\\': ~A"
 msgstr ""
 
-#: symcheck/scheme/symcheck/check.scm:36
+#: symcheck/scheme/symcheck/check.scm:37
 #, scheme-format
 msgid ""
-"Usage: ~A [OPTIONS] FILENAME ...\n"
+"Usage: ~A [OPTIONS] FILE ...\n"
+"\n"
+"Check one or more Lepton EDA symbol FILEs.\n"
+"\n"
+"General options:\n"
 "  -h, --help        Print usage\n"
+"  -V, --version     Show version information\n"
 "  -q, --quiet       Quiet mode\n"
-"  -v, --verbose     Verbose mode (cumulative: errors, warnings, info)\n"
-"                    Use this to get the actual symbol error messages\n"
-"FILENAME ... are the symbols to check.\n"
+"  -v, --verbose     Verbose mode (cumulative, i.e. -v will show error\n"
+"                    messages, -vv will show errors and warnings, and\n"
+"                    -vvv displays also informational messages)\n"
+"\n"
+"Report bugs at <~A>\n"
+"Lepton EDA homepage: <~A>\n"
 msgstr ""
 
-#: symcheck/scheme/symcheck/check.scm:52
+#: symcheck/scheme/symcheck/check.scm:68
 #, scheme-format
 msgid "Loading schematic ~S"
 msgstr ""
 
-#: symcheck/scheme/symcheck/check.scm:59
+#: symcheck/scheme/symcheck/check.scm:75
 #, scheme-format
 msgid "Checking: ~A\n"
 msgstr ""
 
-#: symcheck/scheme/symcheck/check.scm:65
+#: symcheck/scheme/symcheck/check.scm:81
 #, scheme-format
 msgid ""
 "No schematic files specified for processing.\n"
