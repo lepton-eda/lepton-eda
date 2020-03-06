@@ -29,15 +29,14 @@
 
 ; get configuration context
 ;
-; [what]: symbol: 'local, 'user or 'system
-; {ret}:  requested configuration context or #f on failure
+; [cfg-id]: symbol: 'geda-local, 'geda-user
+; {ret}:    requested configuration context or #f on failure
 ;
-( define ( get-cfg-ctx what )
+( define ( get-cfg-ctx cfg-id )
   ; return:
   ( cond
-    (  ( eq? what 'local  )  ( path-config-context (getcwd) )  )
-    (  ( eq? what 'user   )  ( user-config-context )           )
-    (  ( eq? what 'system )  ( system-config-context )         )
+    (  ( eq? cfg-id 'geda-local )  ( path-config-context (getcwd) )  )
+    (  ( eq? cfg-id 'geda-user  )  ( user-config-context )           )
     (  else #f  )
   )
 )
@@ -128,13 +127,13 @@
 ; config-upgrade(): upgrade legacy gEDA configuration
 ;
 ; Read legacy gEDA configuration from geda.conf (in current
-; directory), geda-user.conf or geda-system.conf file,
+; directory) or geda-user.conf file,
 ; convert it (using new names) and produce the corresponding
 ; lepton*.conf configuration file.
 ; We get conversion information (list of keys, old and new names) from
 ; the list structure defined in the (lepton legacy-config keylist) module.
 ;
-; [what]:                'local, 'user or 'system - config to convert
+; [cfg-id]:              'geda-local, 'geda-user - config to convert
 ; [report-absent-keys]:  print messages about missing keys in old cfg file
 ; [overwrite]:           if #t, overwrite existing new cfg file
 ; {thr}:                 'ctx 'infile 'load 'outfile 'save
@@ -147,7 +146,7 @@
 ; - 'outfile:  output config file already exists
 ; - 'save:     cannot write output config file
 ;
-( define* ( config-upgrade what #:key (report-absent-keys #f) (overwrite #f) )
+( define* ( config-upgrade cfg-id #:key (report-absent-keys #f) (overwrite #f) )
 ( let
   (
   ( cfg    #f )
@@ -162,7 +161,7 @@
 
   ( config-set-legacy-mode! #t ) ; use geda*.conf files
 
-  ( set! cfg ( get-cfg-ctx what ) )
+  ( set! cfg ( get-cfg-ctx cfg-id ) )
   ( unless cfg
     ( throw 'ctx "Cannot get config context (input)" )
   )
@@ -197,7 +196,7 @@
 
   ( config-set-legacy-mode! #f ) ; use lepton*.conf files
 
-  ( set! cfg ( get-cfg-ctx what ) )
+  ( set! cfg ( get-cfg-ctx cfg-id ) )
   ( unless cfg
     ( throw 'ctx "Cannot get config context (output)" )
   )

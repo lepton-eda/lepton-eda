@@ -101,9 +101,8 @@ Lepton EDA homepage: <~a>
   (
   ( cmd-line-args '() )
   ( args-len       0  )
-  ( what           #f )
+  ( cfg-id         #f )
   ( overwrite      #f )
-  ( fname          #f )
   )
 
   ( set! cmd-line-args
@@ -123,13 +122,13 @@ Lepton EDA homepage: <~a>
   )
 
   ( if (option-ref cmd-line-args 'local #f)
-    ( set! what 'local )
+    ( set! cfg-id 'geda-local )
   )
   ( if (option-ref cmd-line-args 'user #f)
-    ( set! what 'user )
+    ( set! cfg-id 'geda-user )
   )
 
-  ( unless what
+  ( unless cfg-id
     ( usage 1 )
   )
 
@@ -138,10 +137,8 @@ Lepton EDA homepage: <~a>
 
   ( catch #t
     ( lambda()
-      ( upcfg-log "ii: converting [~a] configuration...~%~%" what )
-      ( set! fname
-        ( config-upgrade what #:report-absent-keys #f #:overwrite overwrite )
-      )
+      ( upcfg-log "ii: converting [~a] configuration...~%~%" cfg-id )
+      ( config-upgrade cfg-id #:report-absent-keys #f #:overwrite overwrite )
     )
     ( lambda( ex . args )
       ( upcfg-log "ee: config-upgrade() failed: ['~a]~%  ~a~%" ex args )
