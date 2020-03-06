@@ -23,8 +23,6 @@ SCM g_scm_c_eval_string_protected (const gchar *str);
 gboolean g_read_file(TOPLEVEL *toplevel, const gchar *filename, GError **err);
 
 /* g_rc.c */
-SCM g_rc_mode_general(SCM scmmode, const char *rc_name, int *mode_var,
-                      const vstbl_entry *table, int table_size);
 gboolean g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
 gboolean g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
 gboolean g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar *path, GError **err);
