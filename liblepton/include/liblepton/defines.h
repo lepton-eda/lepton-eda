@@ -179,14 +179,4 @@
 # define S_IRWXG 0
 #endif
 
-
-/* Used by the rc loading mechanism */
-#define RETURN_G_RC_MODE(rc, var, size) \
-  return g_rc_mode_general(mode,        \
-                           (rc),        \
-                           &(var),      \
-                           mode_table,  \
-                           size)
-
-
 #endif /* !_DEFINES_H_INCL */
