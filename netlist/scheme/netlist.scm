@@ -246,7 +246,7 @@ REFDES. As a result, slots may be repeated in the returned list."
               ;; conversion failed, invalid slot, ignore value
               (begin
                 (format (current-error-port)
-                        (_ "Uref ~a: Bad slot number: ~a.\n") refdes slot)
+                        (_ "Refdes ~a: Bad slot number: ~a.\n") refdes slot)
                 #f))
           ;; no slot attribute, assume slot number is 1
           1))
