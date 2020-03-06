@@ -503,7 +503,7 @@ geda_picture_object_to_buffer (const GedaObject *object)
                                 &encoded_picture_length,
                                 TRUE);
     if (encoded_picture == NULL) {
-      s_log_message(_("ERROR: o_picture_save: unable to encode the picture."));
+      s_log_message(_("ERROR: unable to encode the picture."));
     }
   }
 
