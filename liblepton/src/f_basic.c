@@ -605,7 +605,7 @@ char *follow_symlinks (const gchar *filename, GError **err)
 
   /* Too many symlinks */
   g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_LOOP,
-               _("%s: %s"), g_strerror (EMLINK), followed_filename);
+               "%s: %s", g_strerror (EMLINK), followed_filename);
   g_free (followed_filename);
   return NULL;
 
