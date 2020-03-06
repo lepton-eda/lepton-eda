@@ -35,6 +35,9 @@ has been renamed to `autoload`.
   files is *$XDG_CONFIG_HOME/lepton-eda/* (usually,
   it is *$HOME/.config/lepton-eda*).
 
+- The obsolete and undocumented script `bompp.sh` has been
+  removed.
+
 ### Changes when building from source:
 - The following obsolete `configure` options have been removed:
   - `--with-kdedatadir` (for KDE 3)

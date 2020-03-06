@@ -2,7 +2,6 @@ noinst_SCRIPTS = \
 	gnet_hier_verilog.sh \
 	sarlacc_sym \
 	pads_backannotate \
-	bompp.sh.in \
 	bom_xref.sh.in \
 	sch2eaglepos.sh \
 	sw2asc \
