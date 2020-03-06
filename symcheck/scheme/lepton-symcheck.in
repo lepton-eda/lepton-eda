@@ -23,6 +23,12 @@ exec @GUILE@ -s "$0" "$@"
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
                 "liblepton_init")
 
+;;; Localization.
+(define %textdomain "lepton-symcheck")
+(textdomain %textdomain)
+(bindtextdomain %textdomain "@localedir@")
+(bind-textdomain-codeset %textdomain "UTF-8")
+
 ;;; At compile time of this program guile won't be aware of these
 ;;; modules, since it compiles the code before loading the above
 ;;; extension. Let's make it quiet here.
