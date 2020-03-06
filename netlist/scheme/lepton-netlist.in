@@ -24,6 +24,12 @@ exec @GUILE@ -s "$0" "$@"
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
                 "liblepton_init")
 
+;;; Localization.
+(define %textdomain "lepton-netlist")
+(textdomain %textdomain)
+(bindtextdomain %textdomain "@localedir@")
+(bind-textdomain-codeset %textdomain "UTF-8")
+
 ;;; Process lepton-netlist options.
 
 (use-modules (ice-9 getopt-long)
