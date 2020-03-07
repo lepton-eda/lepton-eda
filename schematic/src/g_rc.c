@@ -86,7 +86,7 @@ SCM g_rc_gschem_version(SCM scm_version)
     sourcefile = scm_to_utf8_string (rc_filename);
     scm_dynwind_free (sourcefile);
     fprintf(stderr,
-            _("You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"),
+            _("You are running lepton-schematic version [%1$s%2$s.%3$s],\n"),
             PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
             PACKAGE_DATE_VERSION);
     fprintf(stderr,
