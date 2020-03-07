@@ -52,7 +52,8 @@ void o_edit(GschemToplevel *w_current, GList *list)
 
   o_current = (OBJECT *) list->data;
   if (o_current == NULL) {
-    fprintf(stderr, _("Got an unexpected NULL in o_edit\n"));
+    fprintf(stderr, "o_edit: ");
+    fprintf(stderr, _("Got an unexpected NULL\n"));
     exit(-1);
   }
 
@@ -583,7 +584,8 @@ void o_autosave_backups(GschemToplevel *w_current)
       real_filename = follow_symlinks (s_page_get_filename (p_current), NULL);
 
       if (real_filename == NULL) {
-        s_log_message (_("o_autosave_backups: Can't get the real filename of %1$s."), s_page_get_filename (p_current));
+        s_log_message ("o_autosave_backups: ");
+        s_log_message (_("Can't get the real filename of %1$s."), s_page_get_filename (p_current));
       } else {
         /* Get the directory in which the real filename lives */
         dirname = g_path_get_dirname (real_filename);
