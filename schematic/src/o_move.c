@@ -190,7 +190,7 @@ void o_move_end(GschemToplevel *w_current)
     object = (OBJECT *) s_current->data;
 
     if (object == NULL) {
-      fprintf(stderr, _("ERROR: NULL object in o_move_end!\n"));
+      fprintf (stderr, "o_move_end: ERROR: Got an unexpected NULL\n");
       exit(-1);
     }
 

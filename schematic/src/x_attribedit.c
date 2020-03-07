@@ -136,7 +136,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
     while (s_current != NULL) {
       object = (OBJECT *)s_current->data;
       if (object == NULL) {
-	fprintf(stderr, _("ERROR: NULL object!\n"));
+	fprintf (stderr, "attrib_edit_dialog_ok: ERROR: Got an unexpected NULL\n");
 	exit(-1);
       }
       if (!object->attached_to) {
