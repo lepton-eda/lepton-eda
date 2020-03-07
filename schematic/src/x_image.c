@@ -403,9 +403,10 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
     pixbuf = x_image_get_pixbuf(w_current, width, height, is_color);
     if (pixbuf != NULL) {
       if (!gdk_pixbuf_save(pixbuf, filename, filetype, &gerror, NULL)) {
-        s_log_message(_("x_image_lowlevel: Unable to write %1$s file %2$s."),
-            filetype, filename);
-        s_log_message("%s", gerror->message);
+        s_log_message ("x_image_lowlevel: ");
+        s_log_message (_("Unable to write %1$s file %2$s."),
+                       filetype, filename);
+        s_log_message ("%s", gerror->message);
 
         /* Warn the user */
         dialog = gtk_message_dialog_new (GTK_WINDOW(w_current->main_window),
@@ -443,7 +444,8 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
         g_object_unref(pixbuf);
     }
     else {
-      s_log_message(_("x_image_lowlevel: Unable to get pixbuf from gschem's window."));
+      s_log_message ("x_image_lowlevel: ");
+      s_log_message (_("Unable to get pixbuf from lepton-schematic's window."));
     }
   }
 
