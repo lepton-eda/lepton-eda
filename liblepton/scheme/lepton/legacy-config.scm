@@ -12,7 +12,7 @@
   #:use-module  ( lepton legacy-config keylist )
 
   #:export      ( upcfg-log )
-  #:export      ( config-upgrade )
+  #:export      ( config-upgrade-old-keys )
   #:export      ( warning-option-deprecated )
   #:export      ( warning-option-obsolete )
 )
@@ -124,7 +124,12 @@
 
 ; public:
 ;
-; config-upgrade(): upgrade legacy gEDA configuration
+; Upgrade legacy gEDA configuration
+;
+; NOTE: this function writes the keys defined in the
+;       (lepton legacy-config keylist) module.
+;       All other keys defined in the source configuration
+;       file are ignored.
 ;
 ; Read legacy gEDA configuration from geda.conf (in current
 ; directory) or geda-user.conf file,
@@ -146,7 +151,7 @@
 ; - 'outfile:  output config file already exists
 ; - 'save:     cannot write output config file
 ;
-( define* ( config-upgrade cfg-id #:key (report-absent-keys #f) (overwrite #f) )
+( define* ( config-upgrade-old-keys cfg-id #:key (report-absent-keys #f) (overwrite #f) )
 ( let
   (
   ( cfg    #f )
@@ -222,7 +227,7 @@
   fname
 
 ) ; let
-) ; config-upgrade()
+) ; config-upgrade-old-keys()
 
 
 
