@@ -376,7 +376,7 @@ x_menus_sensitivity (GtkWidget*   menu,
   }
   else
   {
-    g_debug(_("x_menus_sensitivity(): cannot find action [%s]"), action_name);
+    g_debug ("x_menus_sensitivity(): cannot find action [%s]", action_name);
   }
 }
 
