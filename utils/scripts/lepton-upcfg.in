@@ -38,6 +38,11 @@ exec @GUILE@ "$0" "$@"
     ( list 'single-char #\u )
     ( list 'value        #f )
   )
+  ( list ; --copy (-c)
+    'copy
+    ( list 'single-char #\c )
+    ( list 'value        #f )
+  )
   ( list ; --overwrite (-x)
     'overwrite
     ( list 'single-char #\x )
@@ -60,17 +65,20 @@ exec @GUILE@ "$0" "$@"
 
 ( define ( usage exit-code )
   ( format #t "~
-Usage: lepton-upcfg -l | -u | [-x] | -h | -V
+Usage: lepton-upcfg -l | -u | -o [-c] [-x]
 
 Lepton EDA configuration upgrade utility.
 Converts geda*.conf configuration files
 to corresponding lepton*.conf files.
+By default, the upgraded configuration
+is printed to standard output.
 
 Options:
   -l, --local      geda.conf => lepton.conf
                    (in current directory)
   -u, --user       geda-user.conf => lepton-user.conf
                    (in user configuration directory)
+  -c, --copy       Write to configuration file, not STDOUT
   -x, --overwrite  Overwrite existing files
   -h, --help       Show usage information
   -V, --version    Show version information
@@ -102,6 +110,7 @@ Lepton EDA homepage: <~a>
   ( cmd-line-args '() )
   ( args-len       0  )
   ( cfg-id         #f )
+  ( copy           #f )
   ( overwrite      #f )
   )
 
@@ -110,7 +119,7 @@ Lepton EDA homepage: <~a>
   )
 
   ( set! args-len (length cmd-line-args) )
-  ( when ( or (< args-len 2) (> args-len 3) )
+  ( when ( or (< args-len 2) (> args-len 4) )
     ( usage 1 )
   )
 
@@ -132,12 +141,13 @@ Lepton EDA homepage: <~a>
     ( usage 1 )
   )
 
+  ( set! copy      (option-ref cmd-line-args 'copy      #f) )
   ( set! overwrite (option-ref cmd-line-args 'overwrite #f) )
 
 
   ( upcfg-log "ii: converting [~a] configuration...~%~%" cfg-id )
 
-  ( unless ( config-upgrade cfg-id #:overwrite overwrite )
+  ( unless ( config-upgrade cfg-id #:copy copy #:overwrite overwrite )
     ( upcfg-log "lepton-upcfg: configuration upgrade failed.~%" )
     ( primitive-exit 1 )
   )
