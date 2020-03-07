@@ -86,7 +86,7 @@ void x_color_allocate (void)
                                  &black,
                                  FALSE,
                                  TRUE)) {
-    fprintf (stderr, _("Could not allocate the color %1$s!\n"), _("black"));
+    fprintf (stderr, "Could not allocate the color %1$s!\n", "black");
     exit (-1);
   }
 
@@ -95,7 +95,7 @@ void x_color_allocate (void)
                                  &white,
                                  FALSE,
                                  TRUE)) {
-    fprintf (stderr, _("Could not allocate the color %1$s!\n"), _("white"));
+    fprintf (stderr, "Could not allocate the color %1$s!\n", "white");
     exit (-1);
   }
 
@@ -117,7 +117,7 @@ void x_color_allocate (void)
       error = gdk_color_alloc(colormap, gdk_colors[i]);
 
       if (error == FALSE) {
-        g_error (_("Could not allocate display color %1$i!\n"), i);
+        g_error ("Could not allocate display color %1$i!\n", i);
       }
     } else {
       gdk_colors[i] = NULL;
@@ -139,7 +139,7 @@ void x_color_allocate (void)
       error = gdk_color_alloc(colormap, gdk_outline_colors[i]);
 
       if (error == FALSE) {
-        g_error (_("Could not allocate outline color %1$i!\n"), i);
+        g_error ("Could not allocate outline color %1$i!\n", i);
       }
     } else {
       gdk_outline_colors[i] = NULL;
