@@ -18,7 +18,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#, fuzzy
 msgid ""
 "Copyright (C) 1998-2016 gEDA developers\n"
 "Copyright (C) 2017-2020 Lepton EDA Contributors\n"
@@ -27,10 +26,11 @@ msgid ""
 "included in the Lepton EDA distribution.\n"
 "There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr ""
-"gEDA %s (g%.7s)\n"
-"Это свободное программное обеспечение, и его можно распространять при\n"
-"определённых условиях. Подробности см. в файле COPYING\n"
-"в дистрибутиве gEDA.\n"
+"Copyright (C) 1998-2016 gEDA developers\n"
+"Copyright (C) 2017-2019 Lepton EDA Contributors\n"
+"Это свободное программное обеспечение, и его можно распространять\n"
+"при определённых условиях. Подробности см. в файле COPYING в\n"
+"дистрибутиве Lepton EDA.\n"
 "Нет НИКАКИХ ГАРАНТИЙ в рамках, допустимых имеющимся\n"
 "законодательством.\n"
 
@@ -40,13 +40,16 @@ msgid ""
 "name: ~A\n"
 "values: ~A\n"
 msgstr ""
+"Возможный конфликт атрибутов для позиционного обозначения: ~A\n"
+"имя: ~A\n"
+"значения: ~A\n"
 
 #, scheme-format
 msgid "Refdes ~a: Bad slot number: ~a.\n"
-msgstr ""
+msgstr "Позиционное обозначение ~A: неправильный номер секции: ~A\n"
 
 msgid "Couldn't wrap string  at requested position\n"
-msgstr ""
+msgstr "Не удалось разбить строку в указанной позиции\n"
 
 #, scheme-format
 msgid ""
@@ -58,6 +61,12 @@ msgid ""
 "due to truncation of the name, case insensitivity, or\n"
 "other limitations imposed by this netlist format.\n"
 msgstr ""
+"Конфликт имён соединений!\n"
+"Соединение «~A» будет переименовано в «~A», но это имя уже\n"
+"используется для соединения «~A».  Это может быть вызвано\n"
+"конфликтом атрибутов «netname» вследствие сокращения имени,\n"
+"регистронезависимости или других ограничений, накладываемых данным\n"
+"форматом списка соединений.\n"
 
 #, scheme-format
 msgid ""
@@ -69,12 +78,18 @@ msgid ""
 "due to truncation of the refdes, case insensitivity, or\n"
 "other limitations imposed by this netlist format.\n"
 msgstr ""
+"Конфликт позиционных обозначений!\n"
+"Позиционное обозначение «~A» будет переименовано в «~A», но это\n"
+"имя уже используется для «~A».  Это может быть вызвано конфликтом\n"
+"атрибутов «refdes» вследствие сокращения обозначения,\n"
+"регистронезависимости или других ограничений, накладываемых данным\n"
+"форматом списка соединений.\n"
 
 #, scheme-format
 msgid "Can't open directory ~S.\n"
 msgstr "Не удалось открыть каталог ~S.\n"
 
-#, fuzzy, scheme-format
+#, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
 "\n"
@@ -100,30 +115,34 @@ msgid ""
 "Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
 "Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
-"Использование: %s [КЛЮЧ ...] [-g ДРАЙВЕР] [--] ФАЙЛ ...\n"
+"Использование: ~A [ОПЦИЯ ...] [-g ДРАЙВЕР] [--] ФАЙЛ ...\n"
 "\n"
-"Создание списка соединений из одного или нескольких ФАЙЛов схем gEDA.\n"
+"Создание списка соединений из одного или нескольких файлов схем Lepton EDA.\n"
 "\n"
-"Общие ключи:\n"
-"  -q              Без вывода информации.\n"
-"  -v, --verbose   Подробный вывод.\n"
-"  -o ФАЙЛ         Вывести список соединений в ФАЙЛ.\n"
-"  -L КАТАЛОГ      Добавить КАТАЛОГ к пути поиска файлов Scheme.\n"
-"  -g ДРАЙВЕР      Задать драйвер списка соединений.\n"
-"  -O СТРОКА       Задать строку опций для драйвера.\n"
-"  -l ФАЙЛ         Загрузить ФАЙЛ Scheme до загрузки драйвера.\n"
-"  -m ФАЙЛ         Загрузить ФАЙЛ Scheme после загрузки драйвера.\n"
-"  -c ВЫРАЖЕНИЕ    Выполнить выражение Scheme при запуске.\n"
-"  -i              После загрузки войти в интерактивный цикл Scheme (REPL).\n"
-"  --list-backends Вывести список доступных драйверов списков соединений.\n"
-"  -h, --help      Данная справка.\n"
-"  -V, --version   Информация о версии.\n"
-"  --              Считать все последующие аргументы именами файлов.\n"
+"Общие опции:\n"
+"  -q                  Без вывода информации.\n"
+"  -v, --verbose       Подробный вывод.\n"
+"  -o ФАЙЛ             Вывести список соединений в файл.\n"
+"  -L КАТАЛОГ          Добавить каталог к пути поиска файлов Scheme.\n"
+"  -g ДРАЙВЕР          Задать драйвер списка соединений.\n"
+"  -f ФАЙЛ             Задать файл драйвера, указав путь к нему.\n"
+"  -O СТРОКА           Задать строку опций для драйвера.\n"
+"  -l ФАЙЛ             Загрузить файл Scheme до загрузки драйвера.\n"
+"  -m ФАЙЛ             Загрузить файл Scheme после загрузки драйвера.\n"
+"  -c ВЫРАЖЕНИЕ        Выполнить выражение Scheme при запуске.\n"
+"  -i                  После загрузки войти в интерактивный цикл Scheme "
+"(REPL).\n"
+"  -b, --list-backends Вывести список доступных драйверов списков "
+"соединений.\n"
+"  -h, --help          Данная справка.\n"
+"  -V, --version       Информация о версии.\n"
+"  --                  Считать все последующие аргументы именами файлов.\n"
 "\n"
-"Отчёты об ошибках отправляйте по адресу <https://bugs.launchpad.net/geda>\n"
-"Домашняя страница gEDA/gaf: <http://www.geda-project.org/>\n"
+"Страница для отчётов об ошибках: https://github.com/lepton-eda/lepton-eda/"
+"issues\n"
+"Домашняя страница Lepton EDA: https://github.com/lepton-eda/lepton-eda\n"
 
-#, fuzzy, scheme-format
+#, scheme-format
 msgid ""
 "\n"
 "Just got an error '~A':\n"
@@ -131,23 +150,24 @@ msgid ""
 "\n"
 msgstr ""
 "\n"
-"Обнаружена ошибка; имя тега\n"
-"        "
+"Обнаружена ошибка «~A»:\n"
+"        ~A\n"
+"\n"
 
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
 
-#, fuzzy, scheme-format
+#, scheme-format
 msgid ""
 "No schematic files specified for processing.\n"
 "~\n"
 "                         Run `~A --help' for more information.\n"
 msgstr ""
 "Не заданы файлы схем для обработки.\n"
-"\n"
+"~\n"
 "Подробности см. в выводе команды «~A --help».\n"
 
-#, fuzzy, scheme-format
+#, scheme-format
 msgid ""
 "Could not find backend `~A' in load path.\n"
 "~\n"
@@ -155,7 +175,7 @@ msgid ""
 "available backends.\n"
 msgstr ""
 "Не удалось найти драйвер «~A» в пути загрузки.\n"
-"\n"
+"~\n"
 "Список всех доступных драйверов можно узнать по команде «~A --list-"
 "backends».\n"
 
@@ -169,230 +189,33 @@ msgid ""
 "                         and contain entry point function NAME (where NAME "
 "is the backend's name).\n"
 msgstr ""
+"Не удалось загрузить файл драйвера ~S.\n"
+"Ожидается, что имя файла драйвера имеет формат\n"
+"«gnet-ИМЯ.scm» и его входная функция называется «ИМЯ» (где «ИМЯ»\n"
+"является названием драйвера).\n"
 
 #, scheme-format
 msgid "Netlist mode requested by backend is not supported: ~A\n"
 msgstr ""
+"Режим создания списка соединений, запрошенный драйвером, не поддерживается: "
+"~A\n"
 
 msgid "Failed to evaluate Scheme expression at startup.\n"
-msgstr ""
+msgstr "Не удалось вычислить выражение Scheme при запуске.\n"
 
 msgid "Failed to load Scheme file before loading backend.\n"
-msgstr ""
+msgstr "Не удалось загрузить файл Scheme перед загрузкой драйвера.\n"
 
 msgid "Failed to load backend file.\n"
-msgstr ""
+msgstr "Не удалось загрузить файл драйвера.\n"
 
 msgid "Failed to load Scheme file after loading backend.\n"
-msgstr ""
+msgstr "Не удалось загрузить файл Scheme после загрузки драйвера.\n"
 
 #, scheme-format
 msgid "Invalid attribute (missing ':'): net=~A"
-msgstr ""
+msgstr "Недопустимый атрибут (отсутствует ':'): net=~A"
 
 #, scheme-format
 msgid "Attached net ~A:~A overrides inherited net ~A:~A"
-msgstr ""
-
-#, fuzzy
-#~ msgid "Found duplicate net name, renaming ~A to ~A"
-#~ msgstr ""
-#~ "Обнаружено ещё одно имя для соединения «%s», переименование в «%s»\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "WARNING: Trying to rename something twice:\n"
-#~ "\t~A and ~A\n"
-#~ "are both a src and dest name\n"
-#~ "This warning is okay if you have multiple levels of hierarchy!\n"
-#~ msgstr ""
-#~ "ПРЕДУПРЕЖДЕНИЕ: Попытка двойного переименования:\n"
-#~ "\t%s и %s\n"
-#~ "оба являются именами источника и назначения\n"
-
-#~ msgid "Loading schematic ~S\n"
-#~ msgstr "Загрузка схемы ~S\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "gEDA/gnetlist version ~A~A.~A\n"
-#~ "gEDA/gnetlist comes with ABSOLUTELY NO WARRANTY; see COPYING for more "
-#~ "details.\n"
-#~ "This is free software, and you are welcome to redistribute it under "
-#~ "certain\n"
-#~ "conditions; please see the COPYING file for more details.\n"
-#~ msgstr ""
-#~ "gEDA/gnetlist версии %s%s.%s\n"
-#~ "gEDA/gnetlist поставляется БЕЗ КАКИХ БЫ ТО НИ БЫЛО ГАРАНТИЙ; подробности "
-#~ "см. в файле COPYING.\n"
-#~ "Это свободное программное обеспечение, и его можно распространять при "
-#~ "определённых\n"
-#~ "условиях. Подробности см. в файле COPYING.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "List of available backends: \n"
-#~ "\n"
-#~ msgstr ""
-#~ "Список доступных драйверов: \n"
-#~ "\n"
-
-#~ msgid ""
-#~ "This is the MINGW32 port.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Это версия для MINGW32.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "ERROR: -%c option requires an argument.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "ОШИБКА: для опции -%c необходим аргумент.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "ERROR: Unknown option -%c.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "ОШИБКА: Неизвестная опция -%c.\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "ERROR: Unknown option character `\\x%x'.\n"
-#~ "\n"
-#~ msgstr ""
-#~ "ОШИБКА: Неизвестный символ опции «\\x%x».\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "Run `%s --help' for more information.\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Подробности см. в выводе команды «%s --help».\n"
-
-#, fuzzy
-#~ msgid "Going to traverse source [%1$s]"
-#~ msgstr "Переход к обработке источника данных «%s»\n"
-
-#, fuzzy
-#~ msgid "Failed to load subcircuit '%1$s': %2$s\n"
-#~ msgstr "Не удалось загрузить подсхему «%s»: %s\n"
-
-#, fuzzy
-#~ msgid "ERROR: Failed to load subcircuit '%1$s': %2$s\n"
-#~ msgstr "ОШИБКА: Не удалось загрузить подсхему «%s»: %s\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Found a pin [%1$s] on component [%2$s] which does not have a label!\n"
-#~ msgstr "Найден вывод «%s» компонента «%s» без атрибута «pinlabel»!\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Missing I/O symbol with refdes [%1$s] inside schematic for symbol [%2$s]\n"
-#~ msgstr ""
-#~ "Отсутствует символ ввода-вывода с позиционным обозначением «%s» в схеме "
-#~ "для символа «%s»\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "DONE\n"
-#~ msgstr ""
-#~ "\n"
-#~ "ЗАВЕРШЕНО\n"
-
-#~ msgid " DONE\n"
-#~ msgstr " ЗАВЕРШЕНО\n"
-
-#, fuzzy
-#~ msgid "ERROR: `%1$s' is reserved for internal use."
-#~ msgstr "ОШИБКА: префикс «%s» зарезервирован для внутреннего использования."
-
-#~ msgid "Found malformed net attribute\n"
-#~ msgstr "Обнаружен атрибут соединения в недопустимом формате\n"
-
-#, fuzzy
-#~ msgid "Found a cpinlist head with a netname! [%1$s]\n"
-#~ msgstr ""
-#~ "Найдено начало списка выводов компонента с именем соединения! «%s»\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Got an invalid net= attrib [net=%1$s]\n"
-#~ "Missing : in net= attrib\n"
-#~ msgstr ""
-#~ "Недопустимый атрибут «net» («net=%s»)\n"
-#~ "В атрибуте «net» отсутствует символ «:»\n"
-
-#~ msgid "Missing Attributes (refdes and pin number)\n"
-#~ msgstr "Отсутствуют атрибуты «refdes» и «pinnumber»\n"
-
-#, fuzzy
-#~ msgid "s_net_name: incorrect connectivity type %1$i\n"
-#~ msgstr "s_net_name: неверный тип соединения «%i»\n"
-
-#~ msgid "Increase number of unnamed nets (s_net.c)\n"
-#~ msgstr "Увеличьте количество безымянных соединений (в s_net.c)\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "WARNING: Found a placeholder/missing component, are you missing a symbol "
-#~ "file? [%1$s]\n"
-#~ msgstr ""
-#~ "ПРЕДУПРЕЖДЕНИЕ: Найден временный/отсутствующий компонент, может быть нет "
-#~ "файла символа для «%s»?\n"
-
-#~ msgid ""
-#~ "Could not find refdes on component and could not find any special "
-#~ "attributes!\n"
-#~ msgstr ""
-#~ "Не удалось обнаружить ни позиционное обозначение компонента, ни каких-"
-#~ "либо специальных атрибутов!\n"
-
-#~ msgid "Non-connectable object being queried for connection type\n"
-#~ msgstr "Запрос типа соединения для неприсоединяемого объекта.\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "WARNING: Found label=%1$s. label= is deprecated, please use netname=\n"
-#~ msgstr ""
-#~ "ПРЕДУПРЕЖДЕНИЕ: Найден атрибут «label=%s». Использовать «label» не "
-#~ "рекомендуется, вместо него следует использовать «netname».\n"
-
-#~ msgid "Found a possible net/pin infinite connection\n"
-#~ msgstr ""
-#~ "Обнаружено возможно бесконечное число подключений для вывода/соединения\n"
-
-#, fuzzy
-#~ msgid "uref= is deprecated, please use refdes=~A"
-#~ msgstr ""
-#~ "ПРЕДУПРЕЖДЕНИЕ: Найден атрибут «label=%s». Использовать «label» не "
-#~ "рекомендуется, вместо него следует использовать «netname».\n"
-
-#~ msgid "ERROR: Overwriting a valid rename list.\n"
-#~ msgstr "ОШИБКА: Перезапись действующего списка переименований.\n"
-
-#~ msgid "This warning is okay if you have multiple levels of hierarchy!\n"
-#~ msgstr ""
-#~ "Это предупреждение несущественно, если имеется несколько уровней "
-#~ "иерархии!\n"
-
-#~ msgid "ERROR: Failed to load '%s': %s\n"
-#~ msgstr "ОШИБКА: Не удалось загрузить «%s»: %s\n"
-
-#~ msgid ""
-#~ "You are running gEDA/gaf version [%s%s.%s],\n"
-#~ "but you have a version [%s] gnetlistrc file:\n"
-#~ "[%s]\n"
-#~ "Please be sure that you have the latest rc file.\n"
-#~ msgstr ""
-#~ "Вы работаете с gEDA/gaf версии %s%s.%s,\n"
-#~ "но версия файла gnetlistrc «%s»:\n"
-#~ "%s\n"
-#~ "Удостоверьтесь, что у вас последняя версия файла настроек.\n"
-
-#~ msgid "Invalid refdes ('%s') and pin ('%s') passed to get-nets\n"
-#~ msgstr ""
-#~ "get-nets: недопустимое позиционное обозначение («%s») и вывод («%s»)\n"
+msgstr "Прикреплённый атрибут «net» ~A:~A замещает унаследованный ~A:~A"
