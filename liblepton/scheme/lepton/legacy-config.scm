@@ -275,3 +275,132 @@ https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 
 ) ; warning-option-obsolete()
 
+
+
+; "/dir" "subdir" "file" => "/dir/subdir/file"
+;
+( define ( path-join name . names )
+  ( string-join (cons name names) file-name-separator-string )
+)
+
+
+( define ( upcfg-tmp-dir )
+  ( path-join ( user-cache-dir ) "upcfg" )
+)
+
+
+; temporary file with upgraded configuration
+;
+( define ( upcfg-tmp-file )
+  ( path-join ( upcfg-tmp-dir ) "lepton.conf" )
+)
+
+
+; [cfg-id]: symbol, either:
+; - 'geda-local   =>  $PWD/geda.conf
+; - 'geda-user1   =>  $HOME/.gEDA/geda-user.conf
+; - 'geda-user2   =>  $XDG_CONFIG_HOME/gEDA/geda-user.conf
+; - 'geda-user3   =>  $XDG_CONFIG_HOME/lepton-eda/geda-user.conf
+; - 'lepton-local =>  $PWD/lepton.conf
+; - 'lepton-user  =>  $XDG_CONFIG_HOME/lepton-eda/lepton-user.conf
+;
+( define ( config-file-path cfg-id )
+  ( define ( geda-local )
+    ( path-join (getcwd) "geda.conf" )
+  )
+  ( define ( geda-user1 )
+    ( path-join (getenv "HOME") ".gEDA" "geda-user.conf" )
+  )
+  ( define ( geda-user2 )
+    ( if (getenv "XDG_CONFIG_HOME")
+      ( path-join (getenv "XDG_CONFIG_HOME") "gEDA" "geda-user.conf" ) ; if
+      ( path-join (getenv "HOME") ".config" "gEDA" "geda-user.conf" )  ; else
+    )
+  )
+  ( define ( geda-user3 )
+    ( path-join (user-config-dir) "geda-user.conf" )
+  )
+  ( define ( lepton-local )
+    ( path-join (getcwd) "lepton.conf" )
+  )
+  ( define ( lepton-user )
+    ( path-join (user-config-dir) "lepton-user.conf" )
+  )
+
+  ; return:
+  ( cond
+    ( (eq? cfg-id 'geda-local)    (geda-local)   )
+    ( (eq? cfg-id 'geda-user1)    (geda-user1)   )
+    ( (eq? cfg-id 'geda-user2)    (geda-user2)   )
+    ( (eq? cfg-id 'geda-user3)    (geda-user3)   )
+    ( (eq? cfg-id 'lepton-local)  (lepton-local) )
+    ( (eq? cfg-id 'lepton-user)   (lepton-user)  )
+    ( else
+      ( throw 'wrong-cfg-id "config-file-path(): wrong cfg-id" )
+    )
+  )
+) ; config-file-path()
+
+
+; geda cfg id => lepton cfg id
+;
+( define ( target-cfg-id src-cfg-id )
+  ; return:
+  ( cond
+    ( (eq? src-cfg-id 'geda-local)  'lepton-local )
+    ( (eq? src-cfg-id 'geda-user1)  'lepton-user  )
+    ( (eq? src-cfg-id 'geda-user2)  'lepton-user  )
+    ( (eq? src-cfg-id 'geda-user3)  'lepton-user  )
+    ( else
+      ( throw 'wrong-cfg-id "target-cfg-id(): wrong cfg-id" )
+    )
+  )
+)
+
+
+( define ( config-file-readable? cfg-id )
+  ( access? (config-file-path cfg-id) R_OK )
+)
+
+
+( define ( upcfg-mkdir path )
+
+  ( define ( exec-mkdir )
+    ( status:exit-val (system* "mkdir" "-p" path) )
+  )
+
+  ( upcfg-log "ii: creating directory: [~a]~%" path )
+
+  ( unless ( eq? 0 (exec-mkdir) )
+    ( throw 'mkdir "cannot create directory" path )
+  )
+
+) ; upcfg-mkdir()
+
+
+; write [fpath] file contents to STDOUT
+;
+( define ( upcfg-print-file fpath )
+  ( with-input-from-file
+    fpath
+    ( lambda()
+      ( format (current-output-port) "~a" ( read-string (current-input-port) ) )
+    )
+  )
+)
+
+
+( define* ( upcfg-copy-file src dest #:key (overwrite #t) )
+
+  ( upcfg-log "ii: copying: [~a] => [~a]~%" src dest )
+
+  ( if ( and (not overwrite) (file-exists? dest) )
+    ( throw 'file-exists "target file exists" dest )
+  )
+
+  ( unless ( false-if-exception ( copy-file src dest ) )
+    ( throw 'copy-failed "unable to copy file" src )
+  )
+
+) ; upcfg-copy-file()
+
