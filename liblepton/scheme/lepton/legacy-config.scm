@@ -471,3 +471,34 @@ https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 ) ; let
 ) ; upgrade-ctx()
 
+
+
+; - create tmp dir
+; - copy config file [fpath] to tmp file in tmp dir
+; - upgrade config in that tmp file
+;
+( define ( upgrade-file fpath )
+( let
+  (
+  ( ctx #f )
+  )
+
+  ( upcfg-mkdir (upcfg-tmp-dir) )
+  ( upcfg-copy-file fpath (upcfg-tmp-file) )
+
+  ( config-set-legacy-mode! #f )
+  ( set! ctx ( path-config-context (upcfg-tmp-dir) ) )
+
+  ( config-load! ctx #:force-load #t )
+  ( upgrade-ctx ctx )
+
+  ( if ( config-changed? ctx )
+    ( upcfg-log "ii: config has been upgraded~%"  )   ; if
+    ( upcfg-log "ii: config has not been changed~%" ) ; else
+  )
+
+  ( config-save! ctx ) ; NOTE: config-save!() raises exception on failure
+
+) ; let
+) ; upgrade-file()
+
