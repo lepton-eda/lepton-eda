@@ -672,7 +672,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
      in the searchtext list */
 
   if (strlen(scope_text) == 0) {
-    s_log_message(_("No searchstring given in autonumber text."));
+    s_log_message(_("No search string given in autonumber text."));
     return; /* error */
   }
   else if (g_str_has_suffix(scope_text,"?") == TRUE) {
