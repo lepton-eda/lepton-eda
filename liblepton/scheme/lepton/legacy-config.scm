@@ -404,3 +404,70 @@ https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 
 ) ; upcfg-copy-file()
 
+
+
+; upgrade config in config context [ctx]
+; {pre}: [ctx] is config-load!()'ed
+; {thr}: 'write
+;
+( define ( upgrade-ctx ctx )
+( let
+  (
+  ( val-old #f )
+  ( val-old-read #f )
+  )
+
+  ( define ( group-empty? grp )
+    ( null? (config-keys ctx grp) )
+  )
+
+  ( define ( delete-old-key grp key )
+    ( false-if-exception (config-remove-key! ctx grp key) )
+    ( if ( group-empty? grp )
+      ( false-if-exception (config-remove-group! ctx grp) )
+    )
+  )
+
+  ( define ( write-new-key grp-new key-new val-old )
+    ( false-if-exception (set-config! ctx grp-new key-new val-old) )
+  )
+
+  ( define ( read-old-key pfn grp-old key-old )
+    ( catch #t
+      ( lambda()
+        ( set! val-old ( pfn ctx grp-old key-old ) )
+        ( set! val-old-read #t )
+      )
+      ( lambda( ex . args )
+        ( set! val-old-read #f )
+        ( upcfg-log "ii: skipping:  [~a]::~a - no such key~%" grp-old key-old )
+      )
+    )
+  )
+
+  ( define ( convert-key pfn grp-old key-old grp-new key-new )
+    ( read-old-key pfn grp-old key-old )
+    ( when val-old-read
+      ( upcfg-log "ii: upgrading: [~a]::~a => [~a]::~a~%" grp-old key-old grp-new key-new )
+      ( if ( write-new-key grp-new key-new val-old )
+        ( delete-old-key grp-old key-old )                      ; if
+        ( throw 'write "cannot write new key" grp-new key-new ) ; else
+      )
+    )
+  )
+
+  ( define ( process-entry entry )
+    ( match entry ; match 6 values in the [entry] list:
+    (
+      ( pfn default-val grp-old key-old grp-new key-new )
+      ( convert-key pfn grp-old key-old grp-new key-new )
+    )
+    )
+  )
+
+
+  ( for-each process-entry (config-keylist) )
+
+) ; let
+) ; upgrade-ctx()
+
