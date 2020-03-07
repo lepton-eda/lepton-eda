@@ -8,11 +8,14 @@
 
   #:use-module  ( ice-9 format )
   #:use-module  ( ice-9 match )
+  #:use-module  ( ice-9 rdelim )  ; read-string()
   #:use-module  ( lepton config )
+  #:use-module  ( lepton os )
   #:use-module  ( lepton legacy-config keylist )
 
   #:export      ( upcfg-log )
   #:export      ( config-upgrade-old-keys )
+  #:export      ( config-upgrade )
   #:export      ( warning-option-deprecated )
   #:export      ( warning-option-obsolete )
 )
@@ -506,4 +509,53 @@ https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 
 ) ; let
 ) ; upgrade-file()
+
+
+
+; public:
+;
+; Upgrade legacy gEDA configuration
+;
+; [cfg-id]:    config to upgrade: symbol, see config-file-path()
+; [copy]:      #t => write result to config file, #f => print to STDOUT
+; [overwrite]: if [copy] is #t, whether to overwrite existing file
+;
+; {thr}: does not throw exceptions
+; {ret}: #t on success, #f on failure
+;
+( define* ( config-upgrade cfg-id #:key (copy #f) (overwrite #f) )
+( let
+  (
+  ( res #f )
+  )
+
+  ( catch #t
+  ( lambda()
+    ( unless ( config-file-readable? cfg-id )
+      ( throw 'src-file "cannot read config file" (config-file-path cfg-id) )
+    )
+
+    ( upgrade-file (config-file-path cfg-id) )
+
+    ( if copy
+      ( upcfg-copy-file ; if
+        ( upcfg-tmp-file )
+        ( config-file-path (target-cfg-id cfg-id) )
+        #:overwrite overwrite
+      )
+      ( upcfg-print-file (upcfg-tmp-file) ) ; else
+    )
+
+    ( set! res #t )
+  )
+  ( lambda( ex . args )
+    ( upcfg-log "ee: ['~a]:~%  ~s~%" ex args )
+  )
+  ) ; catch()
+
+  ; return:
+  res
+
+) ; let
+) ; config-upgrade()
 
