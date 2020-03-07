@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gattrib\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:30+0300\n"
+"POT-Creation-Date: 2020-03-07 14:08+0300\n"
 "PO-Revision-Date: 2014-03-08 20:49+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -29,7 +29,7 @@ msgid "Manipulate component attributes with lepton-attrib"
 msgstr "Управление атрибутами компонента с помощью gattrib"
 
 #, fuzzy, c-format
-msgid "o_save: Could not open [%1$s]"
+msgid "Could not open [%1$s]"
 msgstr "o_save: Не удалось открыть «%s»\n"
 
 #, c-format
@@ -50,13 +50,15 @@ msgstr "Виджет должен быть дочерним для GtkSheet"
 
 #, fuzzy, c-format
 msgid ""
+"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
 "\n"
 "lepton-attrib: Lepton EDA attribute editor.\n"
 "Presents schematic attributes in easy-to-edit spreadsheet format.\n"
 "\n"
-"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
+"Options:\n"
 "  -q, --quiet            Quiet mode\n"
 "  -v, --verbose          Verbose mode on\n"
+"  -V, --version          Show version information\n"
 "  -h, --help             This help menu\n"
 "\n"
 "  FAQ:\n"
@@ -78,7 +80,8 @@ msgid ""
 "Copyright (C) 2007-2016 gEDA Contributors.\n"
 "Copyright (C) 2017-2019 Lepton EDA Contributors.\n"
 "\n"
-"Please report bugs to %2$s.\n"
+"Report bugs at <%2$s>\n"
+"Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 "\n"
 "Gattrib:  редактор атрибутов проекта gEDA.\n"
@@ -109,8 +112,18 @@ msgstr ""
 "net.\n"
 "\n"
 
+#, c-format
+msgid ""
+"\n"
+"Run `lepton-attrib --help' for more information.\n"
+msgstr ""
+
+#, c-format
+msgid "WARNING: "
+msgstr ""
+
 #, fuzzy, c-format
-msgid "WARNING: Found uref=%1$s, uref= is deprecated, please use refdes=\n"
+msgid "Found uref=%1$s, uref= is deprecated, please use refdes=\n"
 msgstr ""
 "ВНИМАНИЕ: Обнаружен не рекомендуемый к использованию атрибут «uref=%s», "
 "используйте вместо него «refdes».\n"
@@ -128,136 +141,94 @@ msgid " DONE\n"
 msgstr " ЗАВЕРШЕНО\n"
 
 #, fuzzy, c-format
-msgid ""
-"In s_object_replace_attrib_in_object, we have failed to find the attrib %1$s "
-"on the component.  Exiting . . .\n"
-msgstr ""
-"s_object_replace_attrib_in_object: не удалось найти атрибут «%s» для "
-"компонента. Выход . . .\n"
-
-#, fuzzy, c-format
-msgid ""
-"In s_object_remove_attrib_in_object, we have failed to find the attrib %1$s "
-"on the component.  Exiting . . .\n"
+msgid "Failed to find the attrib %1$s on the component.\n"
 msgstr ""
 "s_object_remove_attrib_in_object: не удалось найти атрибут «%s» для "
 "компонента. Выход . . .\n"
 
-#, c-format
-msgid ""
-"In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex "
-"or non-net!\n"
+#, fuzzy, c-format
+msgid "Trying to add attrib to non-component or non-net!\n"
 msgstr ""
 "s_object_attrib_add_attrib_in_object: попытка добавить атрибут к объекту, не "
 "являющимся ни составным, ни соединением!\n"
 
-#, c-format
-msgid "- Starting master comp list creation.\n"
+#, fuzzy, c-format
+msgid "Start master component list creation.\n"
 msgstr "- Приступаем к созданию основного списка компонентов.\n"
 
-#, c-format
-msgid "- Starting master comp attrib list creation.\n"
+#, fuzzy, c-format
+msgid "Start master component attrib list creation.\n"
 msgstr "- Приступаем к созданию основного списка атрибутов компонентов.\n"
 
-#, c-format
-msgid "- Starting master pin list creation.\n"
+#, fuzzy, c-format
+msgid "Start master pin list creation.\n"
 msgstr "- Приступаем к созданию основного списка выводов.\n"
 
 #, c-format
-msgid ""
-"In s_sheet_data_add_master_pin_list_items, found component pin with no "
-"pinnumber.\n"
+msgid "Found component pin with no pinnumber: refdes = %1$s\n"
 msgstr ""
-"s_sheet_data_add_master_pin_list_items: обнаружен вывод компонента без "
-"атрибута pinnumber.\n"
 
-#, c-format
-msgid "- Starting master pin attrib list creation.\n"
+#, fuzzy, c-format
+msgid "Start master pin attrib list creation.\n"
 msgstr "- Приступаем к созданию основного списка атрибутов выводов.\n"
 
-#, c-format
-msgid "In s_string_list_add_item, tried to add to a NULL list.\n"
+#, fuzzy, c-format
+msgid "Tried to add to a NULL list.\n"
 msgstr ""
 "s_string_list_add_item: попытка добавления к списку со значением NULL.\n"
 
-#, c-format
-msgid "In s_string_list_delete_item, tried to remove item from empty list\n"
+#, fuzzy, c-format
+msgid "Tried to remove item from empty list.\n"
 msgstr ""
 "s_string_list_delete_item: попытка удаления элемента из пустого списка\n"
 
-#, c-format
-msgid "In s_string_list_delete_item, couldn't delete item %s\n"
-msgstr "s_string_list_delete_item: не удалось удалить элемент %s\n"
+#, fuzzy, c-format
+msgid "Couldn't delete item %1$s\n"
+msgstr "Не удалось найти файл «%s»\n"
 
-#, c-format
-msgid ""
-"In s_table_create_attrib_pair, we didn't find the row name in the row list!\n"
+#, fuzzy, c-format
+msgid "We didn't find the row name in the row list!\n"
 msgstr ""
 "s_table_create_attrib_pair: не удалось найти имя строки в списке строк!\n"
 
-#, c-format
-msgid "- Starting internal component TABLE creation\n"
+#, fuzzy, c-format
+msgid "Start internal component TABLE creation\n"
 msgstr "- Приступаем к созданию внутренней таблицы компонентов\n"
 
-#, c-format
-msgid ""
-"In s_table_add_toplevel_comp_items_to_comp_table, we didn't find either row "
-"or col in the lists!\n"
-msgstr ""
-"s_table_add_toplevel_comp_items_to_comp_table: не удалось найти либо строку, "
-"либо столбец в соответствующем списке!\n"
-
-#, c-format
-msgid "- Starting internal pin TABLE creation\n"
-msgstr "- Приступаем к созданию внутренней таблицы выводов\n"
-
-#, c-format
-msgid ""
-"In s_table_add_toplevel_pin_items_to_pin_table, we didn't find either row or "
-"col in the lists!\n"
+#, fuzzy, c-format
+msgid "We didn't find either row or col in the lists!\n"
 msgstr ""
 "s_table_add_toplevel_pin_items_to_pin_table: не удалось найти либо строку, "
 "либо столбец в соответствующем списке!\n"
 
+#, fuzzy, c-format
+msgid "Start internal pin TABLE creation\n"
+msgstr "- Приступаем к созданию внутренней таблицы выводов\n"
+
 msgid "_cancel"
 msgstr ""
 
-#, c-format
-msgid "In s_toplevel_delete_attrib_col, can't get attrib name\n"
-msgstr "s_toplevel_delete_attrib_col: не удалось получить имя атрибута\n"
+#, fuzzy, c-format
+msgid "Can't get attrib name\n"
+msgstr "Введите новое имя атрибута"
 
-#, c-format
-msgid ""
-"In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes in "
-"the master list!\n"
-msgstr ""
-"s_toplevel_get_component_attribs_in_sheet: не найдено значение «refdes» в "
-"основном списке!\n"
-
-#, c-format
-msgid ""
-"In s_toplevel_get_component_attribs_in_sheet, count != i!  Exiting . . . .\n"
-msgstr "s_toplevel_get_component_attribs_in_sheet: count != i!  Выход . . .\n"
-
-#, c-format
-msgid ""
-"In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object "
-"missing!\n"
-msgstr ""
-"s_toplevel_get_pin_attribs_in_sheet: отсутствует атрибут «refdes» или "
-"«pinnumber» у объекта!\n"
-
-#, c-format
-msgid ""
-"In s_toplevel_get_pin_attribs_in_sheet, we didn't find the refdes:pin in the "
-"master list!\n"
+#, fuzzy, c-format
+msgid "We didn't find the refdes in the master list.\n"
 msgstr ""
 "s_toplevel_get_pin_attribs_in_sheet: не удалось найти нужную строку "
 "«refdes»:«pinnumber» в основном списке!\n"
 
-#, c-format
-msgid "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
-msgstr "s_toplevel_get_pin_attribs_in_sheet: count != i!  Выход . . .\n"
+#, fuzzy, c-format
+msgid "Either refdes or pinnumber of object missing.\n"
+msgstr ""
+"s_toplevel_get_pin_attribs_in_sheet: отсутствует атрибут «refdes» или "
+"«pinnumber» у объекта!\n"
+
+#, fuzzy, c-format
+msgid "We didn't find the refdes:pin in the master list.\n"
+msgstr ""
+"s_toplevel_get_pin_attribs_in_sheet: не удалось найти нужную строку "
+"«refdes»:«pinnumber» в основном списке!\n"
 
 msgid "Add new attribute"
 msgstr "Добавление нового атрибута"
@@ -452,6 +423,51 @@ msgid ""
 msgstr ""
 "Не найдено выводов ни у одного компонента!\n"
 "Проверьте свой проект."
+
+#, fuzzy
+#~ msgid ""
+#~ "In s_object_replace_attrib_in_object, we have failed to find the attrib "
+#~ "%1$s on the component.  Exiting . . .\n"
+#~ msgstr ""
+#~ "s_object_replace_attrib_in_object: не удалось найти атрибут «%s» для "
+#~ "компонента. Выход . . .\n"
+
+#~ msgid ""
+#~ "In s_sheet_data_add_master_pin_list_items, found component pin with no "
+#~ "pinnumber.\n"
+#~ msgstr ""
+#~ "s_sheet_data_add_master_pin_list_items: обнаружен вывод компонента без "
+#~ "атрибута pinnumber.\n"
+
+#~ msgid "In s_string_list_delete_item, couldn't delete item %s\n"
+#~ msgstr "s_string_list_delete_item: не удалось удалить элемент %s\n"
+
+#~ msgid ""
+#~ "In s_table_add_toplevel_comp_items_to_comp_table, we didn't find either "
+#~ "row or col in the lists!\n"
+#~ msgstr ""
+#~ "s_table_add_toplevel_comp_items_to_comp_table: не удалось найти либо "
+#~ "строку, либо столбец в соответствующем списке!\n"
+
+#~ msgid "In s_toplevel_delete_attrib_col, can't get attrib name\n"
+#~ msgstr "s_toplevel_delete_attrib_col: не удалось получить имя атрибута\n"
+
+#~ msgid ""
+#~ "In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes "
+#~ "in the master list!\n"
+#~ msgstr ""
+#~ "s_toplevel_get_component_attribs_in_sheet: не найдено значение «refdes» в "
+#~ "основном списке!\n"
+
+#~ msgid ""
+#~ "In s_toplevel_get_component_attribs_in_sheet, count != i!  "
+#~ "Exiting . . . .\n"
+#~ msgstr ""
+#~ "s_toplevel_get_component_attribs_in_sheet: count != i!  Выход . . .\n"
+
+#~ msgid ""
+#~ "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
+#~ msgstr "s_toplevel_get_pin_attribs_in_sheet: count != i!  Выход . . .\n"
 
 #, fuzzy
 #~ msgid ""

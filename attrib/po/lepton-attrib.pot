@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda 1.9.9\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:30+0300\n"
+"POT-Creation-Date: 2020-03-07 14:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,17 +25,17 @@ msgstr ""
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr ""
 
-#: attrib/src/f_export.c:82
+#: attrib/src/f_export.c:83
 #, c-format
-msgid "o_save: Could not open [%1$s]"
+msgid "Could not open [%1$s]"
 msgstr ""
 
-#: attrib/src/lepton-attrib.c:180
+#: attrib/src/lepton-attrib.c:181
 #, c-format
 msgid "Lepton EDA/lepton-attrib version %1$s%2$s.%3$s git: %4$.7s"
 msgstr ""
 
-#: attrib/src/lepton-attrib.c:213
+#: attrib/src/lepton-attrib.c:214
 #, c-format
 msgid "Couldn't find file [%1$s]\n"
 msgstr ""
@@ -48,16 +48,18 @@ msgstr ""
 msgid "Widget must be a GtkSheet child"
 msgstr ""
 
-#: attrib/src/parsecmd.c:74
+#: attrib/src/parsecmd.c:72
 #, c-format
 msgid ""
+"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
 "\n"
 "lepton-attrib: Lepton EDA attribute editor.\n"
 "Presents schematic attributes in easy-to-edit spreadsheet format.\n"
 "\n"
-"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
+"Options:\n"
 "  -q, --quiet            Quiet mode\n"
 "  -v, --verbose          Verbose mode on\n"
+"  -V, --version          Show version information\n"
 "  -h, --help             This help menu\n"
 "\n"
 "  FAQ:\n"
@@ -79,12 +81,25 @@ msgid ""
 "Copyright (C) 2007-2016 gEDA Contributors.\n"
 "Copyright (C) 2017-2019 Lepton EDA Contributors.\n"
 "\n"
-"Please report bugs to %2$s.\n"
+"Report bugs at <%2$s>\n"
+"Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 
-#: attrib/src/s_attrib.c:101
+#: attrib/src/parsecmd.c:172
 #, c-format
-msgid "WARNING: Found uref=%1$s, uref= is deprecated, please use refdes=\n"
+msgid ""
+"\n"
+"Run `lepton-attrib --help' for more information.\n"
+msgstr ""
+
+#: attrib/src/s_attrib.c:102
+#, c-format
+msgid "WARNING: "
+msgstr ""
+
+#: attrib/src/s_attrib.c:104
+#, c-format
+msgid "Found uref=%1$s, uref= is deprecated, please use refdes=\n"
 msgstr ""
 
 #: attrib/src/s_misc.c:81
@@ -99,138 +114,98 @@ msgstr ""
 msgid " DONE\n"
 msgstr ""
 
-#: attrib/src/s_object.c:217
+#: attrib/src/s_object.c:219 attrib/src/s_object.c:280
 #, c-format
-msgid ""
-"In s_object_replace_attrib_in_object, we have failed to find the attrib %1$s "
-"on the component.  Exiting . . .\n"
+msgid "Failed to find the attrib %1$s on the component.\n"
 msgstr ""
 
-#: attrib/src/s_object.c:276
+#: attrib/src/s_object.c:334
 #, c-format
-msgid ""
-"In s_object_remove_attrib_in_object, we have failed to find the attrib %1$s "
-"on the component.  Exiting . . .\n"
+msgid "Trying to add attrib to non-component or non-net!\n"
 msgstr ""
 
-#: attrib/src/s_object.c:329
+#: attrib/src/s_sheet_data.c:117
 #, c-format
-msgid ""
-"In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex "
-"or non-net!\n"
+msgid "Start master component list creation.\n"
 msgstr ""
 
-#: attrib/src/s_sheet_data.c:116
+#: attrib/src/s_sheet_data.c:188
 #, c-format
-msgid "- Starting master comp list creation.\n"
+msgid "Start master component attrib list creation.\n"
 msgstr ""
 
-#: attrib/src/s_sheet_data.c:184
+#: attrib/src/s_sheet_data.c:304
 #, c-format
-msgid "- Starting master comp attrib list creation.\n"
+msgid "Start master pin list creation.\n"
 msgstr ""
 
-#: attrib/src/s_sheet_data.c:297
+#: attrib/src/s_sheet_data.c:342
 #, c-format
-msgid "- Starting master pin list creation.\n"
+msgid "Found component pin with no pinnumber: refdes = %1$s\n"
 msgstr ""
 
-#: attrib/src/s_sheet_data.c:331
+#: attrib/src/s_sheet_data.c:399
 #, c-format
-msgid ""
-"In s_sheet_data_add_master_pin_list_items, found component pin with no "
-"pinnumber.\n"
+msgid "Start master pin attrib list creation.\n"
 msgstr ""
 
-#: attrib/src/s_sheet_data.c:389
+#: attrib/src/s_string_list.c:124
 #, c-format
-msgid "- Starting master pin attrib list creation.\n"
+msgid "Tried to add to a NULL list.\n"
 msgstr ""
 
-#: attrib/src/s_string_list.c:123
+#: attrib/src/s_string_list.c:191
 #, c-format
-msgid "In s_string_list_add_item, tried to add to a NULL list.\n"
+msgid "Tried to remove item from empty list.\n"
 msgstr ""
 
-#: attrib/src/s_string_list.c:188
+#: attrib/src/s_string_list.c:262
 #, c-format
-msgid "In s_string_list_delete_item, tried to remove item from empty list\n"
+msgid "Couldn't delete item %1$s\n"
 msgstr ""
 
-#: attrib/src/s_string_list.c:252
+#: attrib/src/s_table.c:244
 #, c-format
-msgid "In s_string_list_delete_item, couldn't delete item %s\n"
+msgid "We didn't find the row name in the row list!\n"
 msgstr ""
 
-#: attrib/src/s_table.c:242
+#: attrib/src/s_table.c:287
 #, c-format
-msgid ""
-"In s_table_create_attrib_pair, we didn't find the row name in the row list!\n"
+msgid "Start internal component TABLE creation\n"
 msgstr ""
 
-#: attrib/src/s_table.c:285
+#: attrib/src/s_table.c:348 attrib/src/s_table.c:565
 #, c-format
-msgid "- Starting internal component TABLE creation\n"
+msgid "We didn't find either row or col in the lists!\n"
 msgstr ""
 
-#: attrib/src/s_table.c:344
+#: attrib/src/s_table.c:503
 #, c-format
-msgid ""
-"In s_table_add_toplevel_comp_items_to_comp_table, we didn't find either row "
-"or col in the lists!\n"
+msgid "Start internal pin TABLE creation\n"
 msgstr ""
 
-#: attrib/src/s_table.c:493
-#, c-format
-msgid "- Starting internal pin TABLE creation\n"
-msgstr ""
-
-#: attrib/src/s_table.c:553
-#, c-format
-msgid ""
-"In s_table_add_toplevel_pin_items_to_pin_table, we didn't find either row or "
-"col in the lists!\n"
-msgstr ""
-
-#: attrib/src/s_toplevel.c:185
+#: attrib/src/s_toplevel.c:188
 msgid "_cancel"
 msgstr ""
 
-#: attrib/src/s_toplevel.c:318
+#: attrib/src/s_toplevel.c:328
 #, c-format
-msgid "In s_toplevel_delete_attrib_col, can't get attrib name\n"
+msgid "Can't get attrib name\n"
 msgstr ""
 
-#: attrib/src/s_toplevel.c:554
+#: attrib/src/s_toplevel.c:572
 #, c-format
-msgid ""
-"In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes in "
-"the master list!\n"
+msgid "We didn't find the refdes in the master list.\n"
 msgstr ""
 
-#: attrib/src/s_toplevel.c:582
+#: attrib/src/s_toplevel.c:911
 #, c-format
-msgid ""
-"In s_toplevel_get_component_attribs_in_sheet, count != i!  Exiting . . . .\n"
+msgid "Either refdes or pinnumber of object missing.\n"
 msgstr ""
 
-#: attrib/src/s_toplevel.c:891
+#: attrib/src/s_toplevel.c:920
 #, c-format
-msgid ""
-"In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object "
-"missing!\n"
-msgstr ""
-
-#: attrib/src/s_toplevel.c:900
-#, c-format
-msgid ""
-"In s_toplevel_get_pin_attribs_in_sheet, we didn't find the refdes:pin in the "
-"master list!\n"
-msgstr ""
-
-#: attrib/src/s_toplevel.c:928
-#, c-format
-msgid "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
+msgid "We didn't find the refdes:pin in the master list.\n"
 msgstr ""
 
 #: attrib/src/x_dialog.c:75
@@ -254,7 +229,7 @@ msgid ""
 "One or more components have been found with missing symbol files!\n"
 "\n"
 "This probably happened because lepton-attrib couldn't find your component "
-"libraries, perhaps because your gafrc or gattribrc files are misconfigured.\n"
+"libraries, perhaps because your gafrc files are misconfigured.\n"
 "\n"
 "Choose \"Quit\" to leave lepton-attrib and fix the problem, or\n"
 "\"Forward\" to continue working with lepton-attrib.\n"

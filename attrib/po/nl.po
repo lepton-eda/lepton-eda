@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:30+0300\n"
+"POT-Creation-Date: 2020-03-07 14:33+0300\n"
 "PO-Revision-Date: 2014-08-31 20:31+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -29,7 +29,7 @@ msgid "Manipulate component attributes with lepton-attrib"
 msgstr "Manipuleer componenten attributen met gattrib"
 
 #, fuzzy, c-format
-msgid "o_save: Could not open [%1$s]"
+msgid "Could not open [%1$s]"
 msgstr "o_save: Kan [%s] niet openen\n"
 
 #, c-format
@@ -48,13 +48,15 @@ msgstr "Widget moet een kind van GtkSheet zijn"
 
 #, fuzzy, c-format
 msgid ""
+"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
 "\n"
 "lepton-attrib: Lepton EDA attribute editor.\n"
 "Presents schematic attributes in easy-to-edit spreadsheet format.\n"
 "\n"
-"Usage: %1$s [OPTIONS] filename1 ... filenameN\n"
+"Options:\n"
 "  -q, --quiet            Quiet mode\n"
 "  -v, --verbose          Verbose mode on\n"
+"  -V, --version          Show version information\n"
 "  -h, --help             This help menu\n"
 "\n"
 "  FAQ:\n"
@@ -76,7 +78,8 @@ msgid ""
 "Copyright (C) 2007-2016 gEDA Contributors.\n"
 "Copyright (C) 2017-2019 Lepton EDA Contributors.\n"
 "\n"
-"Please report bugs to %2$s.\n"
+"Report bugs at <%2$s>\n"
+"Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 "\n"
 "Gattrib:  De gEDA project attribuut editor.\n"
@@ -107,8 +110,18 @@ msgstr ""
 "net.\n"
 "\n"
 
+#, c-format
+msgid ""
+"\n"
+"Run `lepton-attrib --help' for more information.\n"
+msgstr ""
+
+#, c-format
+msgid "WARNING: "
+msgstr ""
+
 #, fuzzy, c-format
-msgid "WARNING: Found uref=%1$s, uref= is deprecated, please use refdes=\n"
+msgid "Found uref=%1$s, uref= is deprecated, please use refdes=\n"
 msgstr ""
 "WAARSCHUWING: uref=%s gevonden, uref= is vervallen, gebruik alstublieft "
 "refdes=\n"
@@ -126,141 +139,96 @@ msgid " DONE\n"
 msgstr " GEDAAN\n"
 
 #, fuzzy, c-format
-msgid ""
-"In s_object_replace_attrib_in_object, we have failed to find the attrib %1$s "
-"on the component.  Exiting . . .\n"
-msgstr ""
-"In s_object_replace_attrib_in_object, is gefaald om attrib %s te vinden in "
-"de component.  Afsluiten . . .\n"
-
-#, fuzzy, c-format
-msgid ""
-"In s_object_remove_attrib_in_object, we have failed to find the attrib %1$s "
-"on the component.  Exiting . . .\n"
+msgid "Failed to find the attrib %1$s on the component.\n"
 msgstr ""
 "In s_object_remove_attrib_in_object, is gefaald om attrib %s in de component "
 "te vinden.  Afsluiten . . .\n"
 
-#, c-format
-msgid ""
-"In s_object_attrib_add_attrib_in_object, trying to add attrib to non-complex "
-"or non-net!\n"
+#, fuzzy, c-format
+msgid "Trying to add attrib to non-component or non-net!\n"
 msgstr ""
 "In s_object_attrib_add_attrib_in_object, geprobeerd om attrib toe te voegen "
 "aan een non-complex of niet-net!\n"
 
-#, c-format
-msgid "- Starting master comp list creation.\n"
+#, fuzzy, c-format
+msgid "Start master component list creation.\n"
 msgstr "- Start het aanmaken van de hoofdcomponentenlijst.\n"
 
-#, c-format
-msgid "- Starting master comp attrib list creation.\n"
+#, fuzzy, c-format
+msgid "Start master component attrib list creation.\n"
 msgstr "- Start het aanmaken van de hoofdattributenlijst.\n"
 
-#, c-format
-msgid "- Starting master pin list creation.\n"
+#, fuzzy, c-format
+msgid "Start master pin list creation.\n"
 msgstr "- Start het aanmaken van de hoofdpennenlijst.\n"
 
 #, c-format
-msgid ""
-"In s_sheet_data_add_master_pin_list_items, found component pin with no "
-"pinnumber.\n"
+msgid "Found component pin with no pinnumber: refdes = %1$s\n"
 msgstr ""
-"In s_sheet_data_add_master_pin_list_items, is een component pen zonder "
-"pennummer gevonden.\n"
 
-#, c-format
-msgid "- Starting master pin attrib list creation.\n"
+#, fuzzy, c-format
+msgid "Start master pin attrib list creation.\n"
 msgstr "- Start het aanmaken van de hoofdpennenattributenlijst.\n"
 
-#, c-format
-msgid "In s_string_list_add_item, tried to add to a NULL list.\n"
+#, fuzzy, c-format
+msgid "Tried to add to a NULL list.\n"
 msgstr ""
 "In s_string_list_add_item, is geprobeerd toe te voegen aan een NULL lijst.\n"
 
-#, c-format
-msgid "In s_string_list_delete_item, tried to remove item from empty list\n"
+#, fuzzy, c-format
+msgid "Tried to remove item from empty list.\n"
 msgstr ""
 "In s_string_list_delete_item, is geprobeerd om een item te verwijderen van "
 "een lege lijst\n"
 
-#, c-format
-msgid "In s_string_list_delete_item, couldn't delete item %s\n"
-msgstr "In s_string_list_delete_item, kan item %s niet verwijderen\n"
+#, fuzzy, c-format
+msgid "Couldn't delete item %1$s\n"
+msgstr "Kan bestand [%s] niet vinden\n"
 
-#, c-format
-msgid ""
-"In s_table_create_attrib_pair, we didn't find the row name in the row list!\n"
+#, fuzzy, c-format
+msgid "We didn't find the row name in the row list!\n"
 msgstr ""
 "In s_table_create_attrib_pair, is de naam van de regel niet gevonden in de "
 "lijst met regels!\n"
 
-#, c-format
-msgid "- Starting internal component TABLE creation\n"
+#, fuzzy, c-format
+msgid "Start internal component TABLE creation\n"
 msgstr "- Start het aanmaken van de interne componenten TABEL.\n"
 
-#, c-format
-msgid ""
-"In s_table_add_toplevel_comp_items_to_comp_table, we didn't find either row "
-"or col in the lists!\n"
-msgstr ""
-"In s_table_add_toplevel_comp_items_to_comp_table, is geen regel of kolom "
-"gevonden in de lijsten!\n"
-
-#, c-format
-msgid "- Starting internal pin TABLE creation\n"
-msgstr "- Start het aanmaken van de interne pennen TABEL.\n"
-
-#, c-format
-msgid ""
-"In s_table_add_toplevel_pin_items_to_pin_table, we didn't find either row or "
-"col in the lists!\n"
+#, fuzzy, c-format
+msgid "We didn't find either row or col in the lists!\n"
 msgstr ""
 "In s_table_add_toplevel_pin_items_to_pin_table, is noch regel noch kolom "
 "gevonden in de lijsten!\n"
 
+#, fuzzy, c-format
+msgid "Start internal pin TABLE creation\n"
+msgstr "- Start het aanmaken van de interne pennen TABEL.\n"
+
 msgid "_cancel"
 msgstr "_afbreken"
 
-#, c-format
-msgid "In s_toplevel_delete_attrib_col, can't get attrib name\n"
-msgstr "In s_toplevel_delete_attrib_col, kan geen attrib naam krijgen\n"
+#, fuzzy, c-format
+msgid "Can't get attrib name\n"
+msgstr "Voer nieuwe attribuutnaam toe"
 
-#, c-format
-msgid ""
-"In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes in "
-"the master list!\n"
-msgstr ""
-"In s_toplevel_get_component_attribs_in_sheet, geen refdes gevonden in de "
-"hoofdlijst!\n"
-
-#, c-format
-msgid ""
-"In s_toplevel_get_component_attribs_in_sheet, count != i!  Exiting . . . .\n"
-msgstr ""
-"In s_toplevel_get_component_attribs_in_sheet, count != i!  "
-"Afsluiten . . . .\n"
-
-#, c-format
-msgid ""
-"In s_toplevel_get_pin_attribs_in_sheet, either refdes or pinnumber of object "
-"missing!\n"
-msgstr ""
-"In s_toplevel_get_pin_attribs_in_sheet, ofwel een refdes of een pennummer "
-"van het object ontbreken!\n"
-
-#, c-format
-msgid ""
-"In s_toplevel_get_pin_attribs_in_sheet, we didn't find the refdes:pin in the "
-"master list!\n"
+#, fuzzy, c-format
+msgid "We didn't find the refdes in the master list.\n"
 msgstr ""
 "In s_toplevel_get_pin_attribs_in_sheet, is geen refdes:pin gevonden in de "
 "hoofdlijst!\n"
 
-#, c-format
-msgid "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
+#, fuzzy, c-format
+msgid "Either refdes or pinnumber of object missing.\n"
 msgstr ""
-"In s_toplevel_get_pin_attribs_in_sheet, count != i!  Afsluiten . . . .\n"
+"In s_toplevel_get_pin_attribs_in_sheet, ofwel een refdes of een pennummer "
+"van het object ontbreken!\n"
+
+#, fuzzy, c-format
+msgid "We didn't find the refdes:pin in the master list.\n"
+msgstr ""
+"In s_toplevel_get_pin_attribs_in_sheet, is geen refdes:pin gevonden in de "
+"hoofdlijst!\n"
 
 msgid "Add new attribute"
 msgstr "Voeg nieuwe attribuut toe"
@@ -279,7 +247,7 @@ msgid ""
 "One or more components have been found with missing symbol files!\n"
 "\n"
 "This probably happened because lepton-attrib couldn't find your component "
-"libraries, perhaps because your gafrc or gattribrc files are misconfigured.\n"
+"libraries, perhaps because your gafrc files are misconfigured.\n"
 "\n"
 "Choose \"Quit\" to leave lepton-attrib and fix the problem, or\n"
 "\"Forward\" to continue working with lepton-attrib.\n"
@@ -455,6 +423,53 @@ msgid ""
 msgstr ""
 "Geen pennen gevonden op geen van de componenten!\n"
 "Controleer alstublieft uw ontwerp."
+
+#, fuzzy
+#~ msgid ""
+#~ "In s_object_replace_attrib_in_object, we have failed to find the attrib "
+#~ "%1$s on the component.  Exiting . . .\n"
+#~ msgstr ""
+#~ "In s_object_replace_attrib_in_object, is gefaald om attrib %s te vinden "
+#~ "in de component.  Afsluiten . . .\n"
+
+#~ msgid ""
+#~ "In s_sheet_data_add_master_pin_list_items, found component pin with no "
+#~ "pinnumber.\n"
+#~ msgstr ""
+#~ "In s_sheet_data_add_master_pin_list_items, is een component pen zonder "
+#~ "pennummer gevonden.\n"
+
+#~ msgid "In s_string_list_delete_item, couldn't delete item %s\n"
+#~ msgstr "In s_string_list_delete_item, kan item %s niet verwijderen\n"
+
+#~ msgid ""
+#~ "In s_table_add_toplevel_comp_items_to_comp_table, we didn't find either "
+#~ "row or col in the lists!\n"
+#~ msgstr ""
+#~ "In s_table_add_toplevel_comp_items_to_comp_table, is geen regel of kolom "
+#~ "gevonden in de lijsten!\n"
+
+#~ msgid "In s_toplevel_delete_attrib_col, can't get attrib name\n"
+#~ msgstr "In s_toplevel_delete_attrib_col, kan geen attrib naam krijgen\n"
+
+#~ msgid ""
+#~ "In s_toplevel_get_component_attribs_in_sheet, we didn't find the refdes "
+#~ "in the master list!\n"
+#~ msgstr ""
+#~ "In s_toplevel_get_component_attribs_in_sheet, geen refdes gevonden in de "
+#~ "hoofdlijst!\n"
+
+#~ msgid ""
+#~ "In s_toplevel_get_component_attribs_in_sheet, count != i!  "
+#~ "Exiting . . . .\n"
+#~ msgstr ""
+#~ "In s_toplevel_get_component_attribs_in_sheet, count != i!  "
+#~ "Afsluiten . . . .\n"
+
+#~ msgid ""
+#~ "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Exiting . . . .\n"
+#~ msgstr ""
+#~ "In s_toplevel_get_pin_attribs_in_sheet, count != i!  Afsluiten . . . .\n"
 
 #, fuzzy
 #~ msgid ""
