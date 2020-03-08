@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:35+0300\n"
+"POT-Creation-Date: 2020-03-18 22:17+0300\n"
 "PO-Revision-Date: 2012-09-01 18:46+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -168,18 +168,10 @@ msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
 msgid "Could NOT save file: %1$s"
 msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση του αρχείου: %s"
 
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
 msgid ""
 "\n"
 "Backtrace:\n"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "Invalid mode [%1$s] passed to %2$s\n"
-msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκη στοιχείων\n"
 
 #, fuzzy
 msgid "RC file already loaded"
@@ -217,15 +209,11 @@ msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκη στοιχείων\n"
 
 #, fuzzy, c-format
-msgid "Invalid path [%1$s] passed to bitmap-directory\n"
-msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκη στοιχείων\n"
+msgid "Can't get the real filename of %1$s."
+msgstr "Αδυναμία λήψης του πραγματικού ονόματος αρχείου του %s: %s"
 
 #, fuzzy, c-format
-msgid "s_page_delete: Can't get the real filename of %1$s."
-msgstr "s_page_delete: Αδυναμία λήψης του πραγματικού ονόματος αρχείου του %s."
-
-#, fuzzy, c-format
-msgid "s_page_delete: Unable to delete backup file %1$s."
+msgid "Unable to delete backup file %1$s."
 msgstr "s_page_delete: Αδυναμία διαγραφής αντιγράφου ασφαλείας %s."
 
 #, fuzzy, c-format
@@ -240,7 +228,7 @@ msgid "Failed to parse arc object"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Found a zero radius arc [ %1$c %2$d, %3$d, %4$d, %5$d, %6$d, %7$d ]"
+msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
 msgstr "Βρέθηκε εικόνα με μηδενικό πλάτος/ύψος [ %c %d %d %d %d ]\n"
 
 #, fuzzy, c-format
@@ -319,7 +307,7 @@ msgstr ""
 "Το στοιχείο δε βρέθηκε:\n"
 " %s"
 
-msgid "Failed to parse complex object"
+msgid "Failed to parse component object"
 msgstr ""
 
 #, fuzzy, c-format
@@ -466,7 +454,7 @@ msgid "Falling back to file loading. Picture unembedded."
 msgstr "Επιστροφή στο φόρτωμα αρχείου. Η εικόνα αποενσωματώθηκε.\n"
 
 #, fuzzy
-msgid "ERROR: o_picture_save: unable to encode the picture."
+msgid "ERROR: unable to encode the picture."
 msgstr "ΣΦΑΛΜΑ: o_picture_save: αδυναμία κωδικοποίησης εικόνας.\n"
 
 #, fuzzy, c-format
@@ -504,8 +492,8 @@ msgstr ""
 msgid "Picture [%1$s] has been unembedded."
 msgstr "Το στοιχείο [%s] ενσωματώθηκε\n"
 
-#, fuzzy, c-format
-msgid "Failed to load fallback image %1$s: %2$s.\n"
+#, fuzzy
+msgid "Failed to load fallback image.\n"
 msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
 
 msgid "Failed to parse pin object"
@@ -663,7 +651,8 @@ msgstr ""
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr "Το ~A δεν είναι έγκυρο γνώρισμα: μη έγκυρη συμβολοσειρά '~A'."
 
-msgid "Objects ~A and ~A are not part of the same page and/or complex object"
+#, fuzzy
+msgid "Objects ~A and ~A are not part of the same page and/or component object"
 msgstr ""
 "Τα αντικείμενα ~A και ~A δεν είναι μέρη της ίδια σελίδας ή/και πολύπλοκου "
 "αντικειμένου"
@@ -674,14 +663,16 @@ msgstr "Το αντικείμενο Object ~A είναι ήδη συνδεδεμ
 msgid "Object ~A is attribute of wrong object"
 msgstr "Το αντικείμενο ~A είναι γνώρισμα του λάθος αντικειμένου"
 
-msgid "Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr ""
+#, fuzzy
+msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
+msgstr "Μη έγκυρη γωνία κειμένου ~A. Πρέπει να είναι 0, 90, 180, ή 270 μοίρες"
 
 msgid "Object ~A is already attached to something"
 msgstr "Το αντικείμενο ~A είναι ήδη συνδεδεμένο με κάτι"
 
-msgid "Object ~A is attached to a different complex"
-msgstr ""
+#, fuzzy
+msgid "Object ~A is attached to a different component"
+msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
 
 msgid "Object ~A is attached to a page"
 msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
@@ -771,8 +762,9 @@ msgstr ""
 msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr "Μη έγκυρη γωνία εικόνας ~A. Πρέπει να είναι 0, 90, 180, ή 270 μοίρες"
 
-msgid "Object ~A is attached to a complex or different page"
-msgstr ""
+#, fuzzy
+msgid "Object ~A is attached to a component or different page"
+msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
 
 msgid "Parse error: ~s"
 msgstr ""
@@ -787,12 +779,6 @@ msgstr ""
 msgid "Object ~A is not part of a page"
 msgstr "Το αντικείμενο ~A δεν είναι μέρος καμίας σελίδας"
 
-msgid "Welcome to Lepton REPL!\n"
-msgstr ""
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
-
 #, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr ""
@@ -803,6 +789,32 @@ msgstr ""
 #, fuzzy, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr "Το αρχείο %s είναι μόνο για ανάγνωση"
+
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#, fuzzy
+#~ msgid "Invalid mode [%1$s] passed to %2$s\n"
+#~ msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκη στοιχείων\n"
+
+#, fuzzy
+#~ msgid "Invalid path [%1$s] passed to bitmap-directory\n"
+#~ msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκη στοιχείων\n"
+
+#, fuzzy
+#~ msgid "s_page_delete: Can't get the real filename of %1$s."
+#~ msgstr ""
+#~ "s_page_delete: Αδυναμία λήψης του πραγματικού ονόματος αρχείου του %s."
 
 #~ msgid "o_save_objects: object %p has unknown type '%c'\n"
 #~ msgstr "o_save_objects: το αντικείμενο %p έχει άγνωστο τύπο '%c'\n"

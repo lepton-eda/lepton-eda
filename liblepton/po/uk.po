@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:35+0300\n"
+"POT-Creation-Date: 2020-03-18 22:17+0300\n"
 "PO-Revision-Date: 2012-01-27 14:12+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -160,17 +160,9 @@ msgid "Could NOT save file: %1$s"
 msgstr ""
 "Не мжу встановити для файлу резерної копії [%s] режим тільки для читання\n"
 
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
 msgid ""
 "\n"
 "Backtrace:\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid mode [%1$s] passed to %2$s\n"
 msgstr ""
 
 msgid "RC file already loaded"
@@ -207,17 +199,13 @@ msgstr ""
 msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr ""
 
-#, c-format
-msgid "Invalid path [%1$s] passed to bitmap-directory\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr "Не можу зберегти файл резервної копії: %s."
 
-#, c-format
-msgid "s_page_delete: Can't get the real filename of %1$s."
-msgstr ""
-
-#, c-format
-msgid "s_page_delete: Unable to delete backup file %1$s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Unable to delete backup file %1$s."
+msgstr "Не можу зберегти файл резервної копії: %s."
 
 #, c-format
 msgid "Saved [%1$s]"
@@ -231,7 +219,7 @@ msgid "Failed to parse arc object"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Found a zero radius arc [ %1$c %2$d, %3$d, %4$d, %5$d, %6$d, %7$d ]"
+msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
 msgstr "Дуга з нульовим радіусом [ %c %d, %d, %d, %d, %d, %d ]\n"
 
 #, fuzzy, c-format
@@ -308,7 +296,7 @@ msgstr ""
 "Компонент не знайдено:\n"
 " %s"
 
-msgid "Failed to parse complex object"
+msgid "Failed to parse component object"
 msgstr ""
 
 #, fuzzy, c-format
@@ -449,7 +437,7 @@ msgstr ""
 msgid "Falling back to file loading. Picture unembedded."
 msgstr ""
 
-msgid "ERROR: o_picture_save: unable to encode the picture."
+msgid "ERROR: unable to encode the picture."
 msgstr ""
 
 #, c-format
@@ -486,8 +474,7 @@ msgstr ""
 msgid "Picture [%1$s] has been unembedded."
 msgstr ""
 
-#, c-format
-msgid "Failed to load fallback image %1$s: %2$s.\n"
+msgid "Failed to load fallback image.\n"
 msgstr ""
 
 msgid "Failed to parse pin object"
@@ -633,7 +620,7 @@ msgstr ""
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr ""
 
-msgid "Objects ~A and ~A are not part of the same page and/or complex object"
+msgid "Objects ~A and ~A are not part of the same page and/or component object"
 msgstr ""
 
 msgid "Object ~A is already attached as an attribute"
@@ -642,13 +629,13 @@ msgstr ""
 msgid "Object ~A is attribute of wrong object"
 msgstr ""
 
-msgid "Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"
+msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
 msgid "Object ~A is already attached to something"
 msgstr ""
 
-msgid "Object ~A is attached to a different complex"
+msgid "Object ~A is attached to a different component"
 msgstr ""
 
 msgid "Object ~A is attached to a page"
@@ -738,7 +725,7 @@ msgstr ""
 msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
-msgid "Object ~A is attached to a complex or different page"
+msgid "Object ~A is attached to a component or different page"
 msgstr ""
 
 msgid "Parse error: ~s"
@@ -754,12 +741,6 @@ msgstr ""
 msgid "Object ~A is not part of a page"
 msgstr ""
 
-msgid "Welcome to Lepton REPL!\n"
-msgstr ""
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
-
 #, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr ""
@@ -770,6 +751,19 @@ msgstr ""
 #, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr ""
+
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
 
 #~ msgid "o_save_objects: object %p has unknown type '%c'\n"
 #~ msgstr "o_save_objects: об’єкт %p має не визначений тип '%c'\n"

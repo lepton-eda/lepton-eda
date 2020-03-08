@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:35+0300\n"
+"POT-Creation-Date: 2020-03-18 22:17+0300\n"
 "PO-Revision-Date: 2014-08-31 23:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -178,20 +178,12 @@ msgstr "Faalde om eigenaarschap te herstellen op '%s: %s\n"
 msgid "Could NOT save file: %1$s"
 msgstr "Kan bestand: %s NIET opslaan"
 
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
 msgid ""
 "\n"
 "Backtrace:\n"
 msgstr ""
 "\n"
 "Traceren:\n"
-
-#, fuzzy, c-format
-msgid "Invalid mode [%1$s] passed to %2$s\n"
-msgstr "Ongeldige modus [%s] overgedragen aan %s\n"
 
 # We hebben deze al ingelezen.
 msgid "RC file already loaded"
@@ -231,15 +223,11 @@ msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr "Ongeldig pad [%s] overgedragen aan component-library\n"
 
 #, fuzzy, c-format
-msgid "Invalid path [%1$s] passed to bitmap-directory\n"
-msgstr "Ongeldig pad [%s] overgedragen aan bitmap-directory\n"
+msgid "Can't get the real filename of %1$s."
+msgstr "Kan de werkelijke bestandsnaam van %s: %s niet krijgen"
 
 #, fuzzy, c-format
-msgid "s_page_delete: Can't get the real filename of %1$s."
-msgstr "s_page_delete: Kan de echte bestandsnaam van %s niet krijgen."
-
-#, fuzzy, c-format
-msgid "s_page_delete: Unable to delete backup file %1$s."
+msgid "Unable to delete backup file %1$s."
 msgstr "s_page_delete: Niet mogelijk om reservekopie %s te verwijderen."
 
 #, fuzzy, c-format
@@ -254,7 +242,7 @@ msgid "Failed to parse arc object"
 msgstr "Faalde bij het ontleden van een boog object"
 
 #, fuzzy, c-format
-msgid "Found a zero radius arc [ %1$c %2$d, %3$d, %4$d, %5$d, %6$d, %7$d ]"
+msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
 msgstr "Boog met een straal van nul gevonden [ %c %d, %d, %d, %d, %d, %d ]\n"
 
 #, fuzzy, c-format
@@ -333,7 +321,8 @@ msgstr ""
 "Komponent niet gevonden:\n"
 " %s"
 
-msgid "Failed to parse complex object"
+#, fuzzy
+msgid "Failed to parse component object"
 msgstr "Faalde bij het ontleden van een complex object"
 
 #, fuzzy, c-format
@@ -496,7 +485,7 @@ msgid "Falling back to file loading. Picture unembedded."
 msgstr "Val terug op het laden van bestand. Afbeelding uitgevoegd.\n"
 
 #, fuzzy
-msgid "ERROR: o_picture_save: unable to encode the picture."
+msgid "ERROR: unable to encode the picture."
 msgstr "FOUT: o_picture_save: kan de afbeelding niet coderen.\n"
 
 #, fuzzy, c-format
@@ -536,8 +525,8 @@ msgstr "Afbeelding is nog steeds ingevoegd.\n"
 msgid "Picture [%1$s] has been unembedded."
 msgstr "Afbeelding [%s] is uitgevoegd\n"
 
-#, fuzzy, c-format
-msgid "Failed to load fallback image %1$s: %2$s.\n"
+#, fuzzy
+msgid "Failed to load fallback image.\n"
 msgstr "Laden van afbeelding uit bestand %s faalde: %s.\n"
 
 msgid "Failed to parse pin object"
@@ -703,7 +692,8 @@ msgstr "Configuratie heeft geen toets '%s'"
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr "~A is een ongeldige attribuut: ongeldige rij '~A'."
 
-msgid "Objects ~A and ~A are not part of the same page and/or complex object"
+#, fuzzy
+msgid "Objects ~A and ~A are not part of the same page and/or component object"
 msgstr ""
 "Objecten ~A en ~A zijn geen onderdeel van dezelfde pagina en/of complex "
 "object"
@@ -714,13 +704,15 @@ msgstr "Object ~A is reeds bevestigd als een attribuut"
 msgid "Object ~A is attribute of wrong object"
 msgstr "Object ~A is attribuut van een fout object"
 
-msgid "Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"
+#, fuzzy
+msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr "Ongeldige complex hoek ~A. Moet 0, 90, 180, of 270 graden zijn"
 
 msgid "Object ~A is already attached to something"
 msgstr "Object ~A is reeds bevestigd aan iets"
 
-msgid "Object ~A is attached to a different complex"
+#, fuzzy
+msgid "Object ~A is attached to a different component"
 msgstr "Object ~A is bevestigd aan een andere complex"
 
 msgid "Object ~A is attached to a page"
@@ -810,7 +802,8 @@ msgstr "Ongeldig pad element type ~A."
 msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr "Ongeldige afbeelding hoek ~A. Moet 0, 90, 180, of 270 graden zijn"
 
-msgid "Object ~A is attached to a complex or different page"
+#, fuzzy
+msgid "Object ~A is attached to a component or different page"
 msgstr "Object ~A is bevestigd aan een complex of een andere pagina"
 
 msgid "Parse error: ~s"
@@ -826,12 +819,6 @@ msgstr "De Scheme-level haak naar proxy"
 msgid "Object ~A is not part of a page"
 msgstr "Object ~A is geen deel van een pagina"
 
-msgid "Welcome to Lepton REPL!\n"
-msgstr ""
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
-
 #, fuzzy, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr "Ongeldig pad [%s] overgedragen aan source-library\n"
@@ -842,6 +829,31 @@ msgstr ""
 #, fuzzy, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr "Bestand %s is alleen-lezen"
+
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#, fuzzy
+#~ msgid "Invalid mode [%1$s] passed to %2$s\n"
+#~ msgstr "Ongeldige modus [%s] overgedragen aan %s\n"
+
+#, fuzzy
+#~ msgid "Invalid path [%1$s] passed to bitmap-directory\n"
+#~ msgstr "Ongeldig pad [%s] overgedragen aan bitmap-directory\n"
+
+#, fuzzy
+#~ msgid "s_page_delete: Can't get the real filename of %1$s."
+#~ msgstr "s_page_delete: Kan de echte bestandsnaam van %s niet krijgen."
 
 #, fuzzy
 #~ msgid ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:35+0300\n"
+"POT-Creation-Date: 2020-03-18 22:17+0300\n"
 "PO-Revision-Date: 2010-01-31 13:00+0000\n"
 "Last-Translator: Werner Hoch <werner.ho@gmx.de>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -180,19 +180,10 @@ msgstr "Fehler beim Öffnen eines Verzeichnisses [%s]: %s\n"
 msgid "Could NOT save file: %1$s"
 msgstr "ACHTUNG: Konnte Datei nicht speichern [%s]\n"
 
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
 msgid ""
 "\n"
 "Backtrace:\n"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "Invalid mode [%1$s] passed to %2$s\n"
-msgstr ""
-"Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
 
 #, fuzzy
 msgid "RC file already loaded"
@@ -231,17 +222,11 @@ msgstr ""
 "Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
 
 #, fuzzy, c-format
-msgid "Invalid path [%1$s] passed to bitmap-directory\n"
-msgstr ""
-"Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
+msgid "Can't get the real filename of %1$s."
+msgstr "Konnte den wahren Dateinamen von %s nicht ermitteln.\n"
 
 #, fuzzy, c-format
-msgid "s_page_delete: Can't get the real filename of %1$s."
-msgstr ""
-"s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht ermitteln."
-
-#, fuzzy, c-format
-msgid "s_page_delete: Unable to delete backup file %1$s."
+msgid "Unable to delete backup file %1$s."
 msgstr "s_page_delete: Kann die Backupdatei [%s] nicht löschen."
 
 #, fuzzy, c-format
@@ -256,7 +241,7 @@ msgid "Failed to parse arc object"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Found a zero radius arc [ %1$c %2$d, %3$d, %4$d, %5$d, %6$d, %7$d ]"
+msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
 msgstr "Kreisbogen mit Radius 0 entdeckt [%c %d, %d, %d, %d, %d, %d ]\n"
 
 #, fuzzy, c-format
@@ -336,7 +321,7 @@ msgstr ""
 "Bauteil wurde nicht gefunden:\n"
 " %s"
 
-msgid "Failed to parse complex object"
+msgid "Failed to parse component object"
 msgstr ""
 
 #, fuzzy, c-format
@@ -506,7 +491,7 @@ msgid "Falling back to file loading. Picture unembedded."
 msgstr "Lade das Bild aus der Datei. Das Bild ist ausgebettet.\n"
 
 #, fuzzy
-msgid "ERROR: o_picture_save: unable to encode the picture."
+msgid "ERROR: unable to encode the picture."
 msgstr "FEHLER: o_picture_save: Kann das Bild nicht kodieren.\n"
 
 #, fuzzy, c-format
@@ -545,8 +530,8 @@ msgstr "Das Bild [%s] wurde eingebettet\n"
 msgid "Picture [%1$s] has been unembedded."
 msgstr "Das Bild [%s] wurde ausgebettet\n"
 
-#, fuzzy, c-format
-msgid "Failed to load fallback image %1$s: %2$s.\n"
+#, fuzzy
+msgid "Failed to load fallback image.\n"
 msgstr "Das Bild konnte nicht aus der Datei [%s] geladen werden: %s\n"
 
 msgid "Failed to parse pin object"
@@ -715,7 +700,7 @@ msgstr ""
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr ""
 
-msgid "Objects ~A and ~A are not part of the same page and/or complex object"
+msgid "Objects ~A and ~A are not part of the same page and/or component object"
 msgstr ""
 
 msgid "Object ~A is already attached as an attribute"
@@ -724,14 +709,15 @@ msgstr ""
 msgid "Object ~A is attribute of wrong object"
 msgstr ""
 
-msgid "Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"
+msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
 msgid "Object ~A is already attached to something"
 msgstr ""
 
-msgid "Object ~A is attached to a different complex"
-msgstr ""
+#, fuzzy
+msgid "Object ~A is attached to a different component"
+msgstr "Es wurde versucht eine Attribut anzubringen, welches kein Text ist!\n"
 
 msgid "Object ~A is attached to a page"
 msgstr ""
@@ -821,8 +807,9 @@ msgstr ""
 msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
-msgid "Object ~A is attached to a complex or different page"
-msgstr ""
+#, fuzzy
+msgid "Object ~A is attached to a component or different page"
+msgstr "Es wurde versucht eine Attribut anzubringen, welches kein Text ist!\n"
 
 msgid "Parse error: ~s"
 msgstr ""
@@ -837,12 +824,6 @@ msgstr ""
 msgid "Object ~A is not part of a page"
 msgstr ""
 
-msgid "Welcome to Lepton REPL!\n"
-msgstr ""
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
-
 #, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr ""
@@ -853,6 +834,34 @@ msgstr ""
 #, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr ""
+
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#, fuzzy
+#~ msgid "Invalid mode [%1$s] passed to %2$s\n"
+#~ msgstr ""
+#~ "Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
+
+#, fuzzy
+#~ msgid "Invalid path [%1$s] passed to bitmap-directory\n"
+#~ msgstr ""
+#~ "Das Bauteil [%s] konnte nicht in der Bauteilbibliothek gefunden werden\n"
+
+#, fuzzy
+#~ msgid "s_page_delete: Can't get the real filename of %1$s."
+#~ msgstr ""
+#~ "s_page_delete: Kann den tatsächlichen Dateinamen von [%s] nicht ermitteln."
 
 #, fuzzy
 #~ msgid ""
@@ -1030,9 +1039,6 @@ msgstr ""
 
 #~ msgid "Maybe toplevel schematic page was closed/discarded?\n"
 #~ msgstr "Eventuell wurde der übergeordnete Schaltplan geschlossen?\n"
-
-#~ msgid "Can't get the real filename of %s.\n"
-#~ msgstr "Konnte den wahren Dateinamen von %s nicht ermitteln.\n"
 
 #~ msgid "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f)!\n"
 #~ msgstr ""

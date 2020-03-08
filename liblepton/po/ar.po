@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:35+0300\n"
+"POT-Creation-Date: 2020-03-18 22:17+0300\n"
 "PO-Revision-Date: 2012-01-31 12:11+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -176,18 +176,10 @@ msgstr "فشل في فتح الدليل [%s]: %s\n"
 msgid "Could NOT save file: %1$s"
 msgstr "تعذّر حفظ [‎%s‬]\n"
 
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
 msgid ""
 "\n"
 "Backtrace:\n"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "Invalid mode [%1$s] passed to %2$s\n"
-msgstr "لم يعثر على المكون [%s] في المكتبة المكونات\n"
 
 msgid "RC file already loaded"
 msgstr ""
@@ -224,15 +216,11 @@ msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr "لم يعثر على المكون [%s] في المكتبة المكونات\n"
 
 #, fuzzy, c-format
-msgid "Invalid path [%1$s] passed to bitmap-directory\n"
-msgstr "لم يعثر على المكون [%s] في المكتبة المكونات\n"
-
-#, fuzzy, c-format
-msgid "s_page_delete: Can't get the real filename of %1$s."
+msgid "Can't get the real filename of %1$s."
 msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
 
 #, fuzzy, c-format
-msgid "s_page_delete: Unable to delete backup file %1$s."
+msgid "Unable to delete backup file %1$s."
 msgstr "‏s_page_delete: غير قادرة على حذف الملف الاحتياطي %s."
 
 #, fuzzy, c-format
@@ -247,7 +235,7 @@ msgid "Failed to parse arc object"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Found a zero radius arc [ %1$c %2$d, %3$d, %4$d, %5$d, %6$d, %7$d ]"
+msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
 msgstr "عثر على قوس صفر الشعاع [ %c %d, %d, %d, %d, %d, %d ]\n"
 
 #, fuzzy, c-format
@@ -325,7 +313,7 @@ msgstr ""
 "لم يعثر على مكون:\n"
 " %s"
 
-msgid "Failed to parse complex object"
+msgid "Failed to parse component object"
 msgstr ""
 
 #, fuzzy, c-format
@@ -482,7 +470,7 @@ msgid "Falling back to file loading. Picture unembedded."
 msgstr "التراجع لتحميل الملف. ألغي تضمين الصورة.\n"
 
 #, fuzzy
-msgid "ERROR: o_picture_save: unable to encode the picture."
+msgid "ERROR: unable to encode the picture."
 msgstr "﻿خطأ: o_picture_save: غير قادر على ترميز الصورة.\n"
 
 #, fuzzy, c-format
@@ -521,8 +509,8 @@ msgstr "تم تضمين الصورة [‪%s‬]\n"
 msgid "Picture [%1$s] has been unembedded."
 msgstr "تم إلغاء تضمين الصورة [‪%s‬]\n"
 
-#, fuzzy, c-format
-msgid "Failed to load fallback image %1$s: %2$s.\n"
+#, fuzzy
+msgid "Failed to load fallback image.\n"
 msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
 
 msgid "Failed to parse pin object"
@@ -679,7 +667,7 @@ msgstr ""
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr ""
 
-msgid "Objects ~A and ~A are not part of the same page and/or complex object"
+msgid "Objects ~A and ~A are not part of the same page and/or component object"
 msgstr ""
 
 msgid "Object ~A is already attached as an attribute"
@@ -688,13 +676,13 @@ msgstr ""
 msgid "Object ~A is attribute of wrong object"
 msgstr ""
 
-msgid "Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"
+msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
 msgid "Object ~A is already attached to something"
 msgstr ""
 
-msgid "Object ~A is attached to a different complex"
+msgid "Object ~A is attached to a different component"
 msgstr ""
 
 msgid "Object ~A is attached to a page"
@@ -784,7 +772,7 @@ msgstr ""
 msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
-msgid "Object ~A is attached to a complex or different page"
+msgid "Object ~A is attached to a component or different page"
 msgstr ""
 
 msgid "Parse error: ~s"
@@ -800,12 +788,6 @@ msgstr ""
 msgid "Object ~A is not part of a page"
 msgstr ""
 
-msgid "Welcome to Lepton REPL!\n"
-msgstr ""
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
-
 #, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr ""
@@ -816,6 +798,31 @@ msgstr ""
 #, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr ""
+
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#, fuzzy
+#~ msgid "Invalid mode [%1$s] passed to %2$s\n"
+#~ msgstr "لم يعثر على المكون [%s] في المكتبة المكونات\n"
+
+#, fuzzy
+#~ msgid "Invalid path [%1$s] passed to bitmap-directory\n"
+#~ msgstr "لم يعثر على المكون [%s] في المكتبة المكونات\n"
+
+#, fuzzy
+#~ msgid "s_page_delete: Can't get the real filename of %1$s."
+#~ msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
 
 #, fuzzy
 #~ msgid ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:35+0300\n"
+"POT-Creation-Date: 2020-03-18 22:17+0300\n"
 "PO-Revision-Date: 2012-03-16 10:58+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -169,18 +169,10 @@ msgstr "Impossibile aprire la directory [%s]: %s\n"
 msgid "Could NOT save file: %1$s"
 msgstr "Impossibile impostare il file di backup [%s] in sola lettura.\n"
 
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
 msgid ""
 "\n"
 "Backtrace:\n"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "Invalid mode [%1$s] passed to %2$s\n"
-msgstr "Impossibile trovare il componente [%s] nella libreria componenti\n"
 
 msgid "RC file already loaded"
 msgstr ""
@@ -217,16 +209,12 @@ msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr "Impossibile trovare il componente [%s] nella libreria componenti\n"
 
 #, fuzzy, c-format
-msgid "Invalid path [%1$s] passed to bitmap-directory\n"
-msgstr "Impossibile trovare il componente [%s] nella libreria componenti\n"
+msgid "Can't get the real filename of %1$s."
+msgstr "Impossibile salvare il file di backup: %s."
 
-#, c-format
-msgid "s_page_delete: Can't get the real filename of %1$s."
-msgstr ""
-
-#, c-format
-msgid "s_page_delete: Unable to delete backup file %1$s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Unable to delete backup file %1$s."
+msgstr "Impossibile salvare il file di backup: %s."
 
 #, c-format
 msgid "Saved [%1$s]"
@@ -240,7 +228,7 @@ msgid "Failed to parse arc object"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Found a zero radius arc [ %1$c %2$d, %3$d, %4$d, %5$d, %6$d, %7$d ]"
+msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
 msgstr "Ho trovato un arco con raggio zero [ %c %d, %d, %d, %d, %d, %d ]\n"
 
 #, fuzzy, c-format
@@ -319,7 +307,7 @@ msgstr ""
 "Componente non trovato:\n"
 " %s"
 
-msgid "Failed to parse complex object"
+msgid "Failed to parse component object"
 msgstr ""
 
 #, fuzzy, c-format
@@ -480,7 +468,7 @@ msgid "Falling back to file loading. Picture unembedded."
 msgstr "Ritorno al caricamento del file. Immagine non incorporata.\n"
 
 #, fuzzy
-msgid "ERROR: o_picture_save: unable to encode the picture."
+msgid "ERROR: unable to encode the picture."
 msgstr "ERRORE: o_picture_save: impossibile codificare l'immagine.\n"
 
 #, fuzzy, c-format
@@ -519,8 +507,8 @@ msgstr "L'immagine [%s] è stata incorporata\n"
 msgid "Picture [%1$s] has been unembedded."
 msgstr "L'immagine [%s] è stata rimossa\n"
 
-#, fuzzy, c-format
-msgid "Failed to load fallback image %1$s: %2$s.\n"
+#, fuzzy
+msgid "Failed to load fallback image.\n"
 msgstr "Impossibile caricare l'immagine dal file [%s]: %s\n"
 
 msgid "Failed to parse pin object"
@@ -669,7 +657,7 @@ msgstr ""
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr ""
 
-msgid "Objects ~A and ~A are not part of the same page and/or complex object"
+msgid "Objects ~A and ~A are not part of the same page and/or component object"
 msgstr ""
 
 msgid "Object ~A is already attached as an attribute"
@@ -678,13 +666,13 @@ msgstr ""
 msgid "Object ~A is attribute of wrong object"
 msgstr ""
 
-msgid "Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"
+msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
 msgid "Object ~A is already attached to something"
 msgstr ""
 
-msgid "Object ~A is attached to a different complex"
+msgid "Object ~A is attached to a different component"
 msgstr ""
 
 msgid "Object ~A is attached to a page"
@@ -774,7 +762,7 @@ msgstr ""
 msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
-msgid "Object ~A is attached to a complex or different page"
+msgid "Object ~A is attached to a component or different page"
 msgstr ""
 
 msgid "Parse error: ~s"
@@ -790,12 +778,6 @@ msgstr ""
 msgid "Object ~A is not part of a page"
 msgstr ""
 
-msgid "Welcome to Lepton REPL!\n"
-msgstr ""
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
-
 #, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr ""
@@ -806,6 +788,27 @@ msgstr ""
 #, fuzzy, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr "Il file %s è di sola lettura"
+
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#, fuzzy
+#~ msgid "Invalid mode [%1$s] passed to %2$s\n"
+#~ msgstr "Impossibile trovare il componente [%s] nella libreria componenti\n"
+
+#, fuzzy
+#~ msgid "Invalid path [%1$s] passed to bitmap-directory\n"
+#~ msgstr "Impossibile trovare il componente [%s] nella libreria componenti\n"
 
 #, fuzzy
 #~ msgid ""

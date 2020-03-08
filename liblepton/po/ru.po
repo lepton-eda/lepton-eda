@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:35+0300\n"
+"POT-Creation-Date: 2020-03-18 22:17+0300\n"
 "PO-Revision-Date: 2014-06-06 16:40+0400\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
@@ -198,20 +198,12 @@ msgstr "Не удалось восстановить владельца для �
 msgid "Could NOT save file: %1$s"
 msgstr "Не удалось сохранить файл: %s"
 
-#, c-format
-msgid "%s: %s"
-msgstr "%s: %s"
-
 msgid ""
 "\n"
 "Backtrace:\n"
 msgstr ""
 "\n"
 "Последовательность вызовов подпрограмм:\n"
-
-#, fuzzy, c-format
-msgid "Invalid mode [%1$s] passed to %2$s\n"
-msgstr "%2$s: недопустимый режим «%1$s»\n"
 
 msgid "RC file already loaded"
 msgstr "Файл настроек уже загружен"
@@ -247,18 +239,14 @@ msgstr "ОШИБКА: в файле журнала %s может быть бол
 msgid "Invalid path [%1$s] passed to component-library\n"
 msgstr "component-library: недопустимый путь «%s»\n"
 
-#, fuzzy, c-format
-msgid "Invalid path [%1$s] passed to bitmap-directory\n"
-msgstr "bitmap-directory: недопустимый путь «%s»\n"
-
 # Эта функция пытается найти для указанного имени реальный файл (не являющийся
 # ссылкой).
 #, fuzzy, c-format
-msgid "s_page_delete: Can't get the real filename of %1$s."
-msgstr "s_page_delete: не удалось определить имя реального файла для %s."
+msgid "Can't get the real filename of %1$s."
+msgstr "Не удалось определить имя реального файла для %s: %s"
 
 #, fuzzy, c-format
-msgid "s_page_delete: Unable to delete backup file %1$s."
+msgid "Unable to delete backup file %1$s."
 msgstr "s_page_delete: не удалось удалить файл резервной копии %s."
 
 #, fuzzy, c-format
@@ -273,7 +261,7 @@ msgid "Failed to parse arc object"
 msgstr "Ошибка в определении дуги"
 
 #, fuzzy, c-format
-msgid "Found a zero radius arc [ %1$c %2$d, %3$d, %4$d, %5$d, %6$d, %7$d ]"
+msgid "Found a zero radius arc [ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"
 msgstr "Дуга с нулевым радиусом «%c %d, %d, %d, %d, %d, %d»\n"
 
 #, fuzzy, c-format
@@ -353,7 +341,8 @@ msgstr ""
 "Не найден компонент:\n"
 " %s"
 
-msgid "Failed to parse complex object"
+#, fuzzy
+msgid "Failed to parse component object"
 msgstr "Ошибка в определении составного объекта"
 
 #, fuzzy, c-format
@@ -522,7 +511,7 @@ msgid "Falling back to file loading. Picture unembedded."
 msgstr "Возврат к загрузке из файла. Изображение исключено.\n"
 
 #, fuzzy
-msgid "ERROR: o_picture_save: unable to encode the picture."
+msgid "ERROR: unable to encode the picture."
 msgstr "ОШИБКА: o_picture_save: невозможно закодировать изображение.\n"
 
 # Ошибка, если данные изображения уже есть во внутреннем буфере
@@ -563,8 +552,8 @@ msgstr "Изображение всё ещё внедрено.\n"
 msgid "Picture [%1$s] has been unembedded."
 msgstr "Изображение «%s» исключено\n"
 
-#, fuzzy, c-format
-msgid "Failed to load fallback image %1$s: %2$s.\n"
+#, fuzzy
+msgid "Failed to load fallback image.\n"
 msgstr "Не удалось загрузить копию изображения для отката «%s»: %s\n"
 
 msgid "Failed to parse pin object"
@@ -730,7 +719,8 @@ msgstr "В настройках не обнаружено ключа «%s»"
 msgid "~A is not a valid attribute: invalid string '~A'."
 msgstr "~A не является допустимым атрибутом: недопустимая строка «~A»."
 
-msgid "Objects ~A and ~A are not part of the same page and/or complex object"
+#, fuzzy
+msgid "Objects ~A and ~A are not part of the same page and/or component object"
 msgstr ""
 "Объекты ~A и ~A не являются частями одной схемы и (или) одного составного "
 "объекта"
@@ -741,7 +731,8 @@ msgstr "Объект ~A уже прикреплён как атрибут"
 msgid "Object ~A is attribute of wrong object"
 msgstr "Объект ~A является атрибутом другого объекта"
 
-msgid "Invalid complex angle ~A. Must be 0, 90, 180, or 270 degrees"
+#, fuzzy
+msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 "Недопустимый угол поворота составного объекта ~A. Должен быть 0, 90, 180 или "
 "270 градусов"
@@ -749,7 +740,8 @@ msgstr ""
 msgid "Object ~A is already attached to something"
 msgstr "Объект ~A уже к чему-то прикреплён"
 
-msgid "Object ~A is attached to a different complex"
+#, fuzzy
+msgid "Object ~A is attached to a different component"
 msgstr "Объект ~A прикреплён к другому составному объекту"
 
 msgid "Object ~A is attached to a page"
@@ -844,7 +836,8 @@ msgstr ""
 "Недопустимое значение угла поворота изображения ~A. Угол должен быть равен  "
 "0, 90, 180 или 270 градусов"
 
-msgid "Object ~A is attached to a complex or different page"
+#, fuzzy
+msgid "Object ~A is attached to a component or different page"
 msgstr ""
 "Объект ~A прикреплён к составному объекту или находится на другой странице"
 
@@ -861,12 +854,6 @@ msgstr "Перехват функций Scheme для EdascmHookProxy"
 msgid "Object ~A is not part of a page"
 msgstr "Объект ~A не является частью схемы"
 
-msgid "Welcome to Lepton REPL!\n"
-msgstr ""
-
-msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
-
 #, fuzzy, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr "source-library: недопустимый путь «%s»\n"
@@ -877,6 +864,33 @@ msgstr ""
 #, fuzzy, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr "Файл %s только для чтения"
+
+#, scheme-format
+msgid "Library at ~S has been already added."
+msgstr ""
+
+msgid "Welcome to Lepton REPL!\n"
+msgstr ""
+
+msgid "WARNING: Readline library is not supported in your configuration.\n"
+msgstr ""
+
+#~ msgid "%s: %s"
+#~ msgstr "%s: %s"
+
+#, fuzzy
+#~ msgid "Invalid mode [%1$s] passed to %2$s\n"
+#~ msgstr "%2$s: недопустимый режим «%1$s»\n"
+
+#, fuzzy
+#~ msgid "Invalid path [%1$s] passed to bitmap-directory\n"
+#~ msgstr "bitmap-directory: недопустимый путь «%s»\n"
+
+# Эта функция пытается найти для указанного имени реальный файл (не являющийся
+# ссылкой).
+#, fuzzy
+#~ msgid "s_page_delete: Can't get the real filename of %1$s."
+#~ msgstr "s_page_delete: не удалось определить имя реального файла для %s."
 
 #, fuzzy
 #~ msgid ""
