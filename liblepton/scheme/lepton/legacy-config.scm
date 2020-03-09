@@ -11,6 +11,7 @@
   #:use-module  ( ice-9 rdelim )  ; read-string()
   #:use-module  ( lepton config )
   #:use-module  ( lepton os )
+  #:use-module  ( lepton log )
   #:use-module  ( lepton legacy-config keylist )
 
   #:export      ( upcfg-log )
@@ -25,9 +26,16 @@
 ; public:
 ;
 ( define ( upcfg-log fmt . args )
-  ( apply format (current-error-port) fmt args )
-  ; ( apply log! 'message fmt args )
-)
+( let
+  (
+  ( msg ( apply format #f fmt args ) )
+  )
+
+  ( format (current-error-port) "~a" msg )
+  ( log! 'message "~a" (string-trim-right msg #\newline) )
+
+) ; let
+) ; upcfg-log()
 
 
 ; get configuration context

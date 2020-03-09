@@ -21,6 +21,7 @@ exec @GUILE@ "$0" "$@"
 ( primitive-eval '(use-modules (lepton legacy-config)) )
 ( primitive-eval '(use-modules (ice-9 getopt-long)) )
 ( primitive-eval '(use-modules (lepton version)) )
+( primitive-eval '(use-modules (lepton log)) )
 
 
 
@@ -145,7 +146,9 @@ Lepton EDA homepage: <~a>
   ( set! overwrite (option-ref cmd-line-args 'overwrite #f) )
 
 
-  ( upcfg-log "ii: converting [~a] configuration...~%~%" cfg-id )
+  ( init-log "upcfg" )
+
+  ( upcfg-log "ii: converting [~a] configuration...~%" cfg-id )
 
   ( unless ( config-upgrade cfg-id #:copy copy #:overwrite overwrite )
     ( upcfg-log "lepton-upcfg: configuration upgrade failed.~%" )
