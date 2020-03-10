@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:34+0300\n"
+"POT-Creation-Date: 2020-03-18 20:44+0300\n"
 "PO-Revision-Date: 2012-01-27 14:18+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -19,6 +19,13 @@ msgstr ""
 "X-Generator: Launchpad (build 16265)\n"
 
 msgid "Zoom too small!  Cannot zoom further."
+msgstr ""
+
+msgid ""
+"Save your color scheme to a file by clicking on the \"Save As...\"\n"
+"button. It can be loaded on startup with the following\n"
+"expression in the gschemrc configuration file:\n"
+"( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
 
 #, c-format
@@ -46,6 +53,11 @@ msgstr ""
 msgid "Sa_ve..."
 msgstr ""
 
+msgid ""
+"After you're done choosing the font, it's recommended\n"
+"to reopen schematics or restart the application."
+msgstr ""
+
 #, c-format
 msgid "<b>Current:</b> %s"
 msgstr ""
@@ -53,23 +65,20 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
-msgid "Save settings to:"
+msgid "Local configuration file:"
 msgstr ""
 
-msgid "Local configuration file (in current directory)"
+msgid "User configuration file:"
 msgstr ""
 
-msgid "User configuration file (geda-user.conf)"
-msgstr ""
-
-msgid "Object ~A is not included in the current gschem page."
+msgid "Object ~A is not included in the current lepton-schematic page."
 msgstr ""
 
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
 #, fuzzy, c-format
-msgid "You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
+msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
 msgstr "gEDA/gschem verzija %s%s.%s\n"
 
 #, c-format
@@ -82,65 +91,13 @@ msgstr ""
 msgid "Please be sure that you have the latest rc file.\n"
 msgstr ""
 
-#, c-format
-msgid "Invalid size [%1$d] passed to text-size\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid size [%1$d] passed to snap-size\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid num levels [%1$d] passed to undo-levels\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid gain [%1$d] passed to zoom-gain\n"
-msgstr ""
-
-#, c-format
-msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
-msgstr ""
-
 msgid "Object ~A is not directly included in a page."
 msgstr ""
 
 msgid "Could not launch URI ~S: ~A"
 msgstr ""
 
-msgid "Found invalid gschem window smob ~S"
+msgid "Found invalid lepton-schematic window smob ~S"
 msgstr ""
 
 #, fuzzy, c-format
@@ -171,7 +128,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2019 Lepton Developers.\n"
+"Copyright © 2017-2020 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -610,7 +567,8 @@ msgid ""
 "\n"
 "Are you sure you want to revert this page?\n"
 "All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk."
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
 msgstr ""
 
 #, fuzzy
@@ -705,10 +663,6 @@ msgid_plural "Delete %1$u locked objects?"
 msgstr[0] ""
 msgstr[1] ""
 
-#, c-format
-msgid "Got an unexpected NULL in o_edit\n"
-msgstr ""
-
 msgid "Hidden text is now visible"
 msgstr ""
 
@@ -720,7 +674,7 @@ msgid "Could not find symbol [%1$s] in library. Update failed."
 msgstr ""
 
 #, c-format
-msgid "o_autosave_backups: Can't get the real filename of %1$s."
+msgid "Can't get the real filename of %1$s."
 msgstr ""
 
 #, c-format
@@ -733,10 +687,6 @@ msgstr ""
 
 #, c-format
 msgid "Could NOT save backup file [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "ERROR: NULL object in o_move_end!\n"
 msgstr ""
 
 #, c-format
@@ -785,7 +735,7 @@ msgstr ""
 msgid "New slot number out of range"
 msgstr ""
 
-msgid "Undo/Redo disabled in rc file"
+msgid "Undo/Redo is disabled in configuration"
 msgstr ""
 
 #, c-format
@@ -806,27 +756,12 @@ msgid ""
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"Lepton EDA %1$s (git: %2$.7s)\n"
-"Copyright (C) 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright (C) 2017-2019 Lepton Developers.\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
+"Report bugs at <%2$s>\n"
+"Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
-msgstr ""
-
-#, c-format
-msgid "ERROR: NULL object!\n"
 msgstr ""
 
 msgid "Single Attribute Editor"
@@ -881,7 +816,7 @@ msgid ""
 "duplicate slot may cause problems: [symbolname=%1$s, number=%2$d, slot=%3$d]"
 msgstr ""
 
-msgid "No searchstring given in autonumber text."
+msgid "No search string given in autonumber text."
 msgstr ""
 
 msgid "No '*' or '?' given at the end of the autonumber text."
@@ -955,24 +890,6 @@ msgid ""
 msgstr ""
 
 msgid "Clipboard insertion failed"
-msgstr ""
-
-#, c-format
-msgid "Could not allocate the color %1$s!\n"
-msgstr ""
-
-msgid "black"
-msgstr ""
-
-msgid "white"
-msgstr ""
-
-#, c-format
-msgid "Could not allocate display color %1$i!\n"
-msgstr ""
-
-#, c-format
-msgid "Could not allocate outline color %1$i!\n"
 msgstr ""
 
 #, c-format
@@ -1113,13 +1030,13 @@ msgstr ""
 msgid "Invalid Attribute"
 msgstr ""
 
-msgid "Schematics"
+msgid "Schematics (*.sch)"
 msgstr ""
 
-msgid "Symbols"
+msgid "Symbols (*.sym)"
 msgstr ""
 
-msgid "Schematics and symbols"
+msgid "Schematics and symbols (*.sch *.sym)"
 msgstr ""
 
 msgid "All files"
@@ -1155,7 +1072,7 @@ msgid "Hatch"
 msgstr ""
 
 #, c-format
-msgid "x_image_lowlevel: Unable to write %1$s file %2$s."
+msgid "Unable to write %1$s file %2$s."
 msgstr ""
 
 #, c-format
@@ -1174,7 +1091,7 @@ msgstr ""
 msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
 msgstr ""
 
-msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
+msgid "Unable to get pixbuf from lepton-schematic's window."
 msgstr ""
 
 msgid "NOTE: print-color-map will be used for PDF export"
@@ -1223,72 +1140,59 @@ msgstr ""
 msgid "Phantom"
 msgstr ""
 
-msgid "Add Net"
-msgstr ""
-
-msgid "Add Attribute"
-msgstr ""
-
 #, fuzzy
-msgid "Add Component"
+msgid "Add Co_mponent..."
 msgstr "Komponenta"
 
-msgid "Add Bus"
-msgstr ""
-
 #, fuzzy
-msgid "Add Text"
+msgid "Add Te_xt..."
 msgstr "Izmijeni tekst"
 
 #, fuzzy
-msgid "Zoom In"
-msgstr "_Uvećaj"
+msgid "Add _Attribute..."
+msgstr "_Atribut..."
 
 #, fuzzy
-msgid "Zoom Out"
-msgstr "U_manji"
+msgid "Add _Net"
+msgstr "Izmijeni tekst"
 
-#, fuzzy
-msgid "Zoom Extents"
-msgstr "Okvir zooma"
-
-msgid "Select"
+msgid "Add _Bus"
 msgstr ""
 
-msgid "Edit..."
+msgid "Cu_t"
+msgstr "_Isijeci"
+
+msgid "_Copy"
+msgstr "_Kopiraj"
+
+msgid "_Paste"
+msgstr "_Umetni"
+
+msgid "_Delete"
+msgstr "_Obriši"
+
+#, fuzzy
+msgid "_Edit..."
 msgstr "Izmijeni..."
 
-msgid "Object Properties..."
+#, fuzzy
+msgid "Ed_it Text..."
+msgstr "Izmijeni tekst..."
+
+msgid "_Object Properties..."
 msgstr ""
 
-msgid "Copy"
-msgstr "Kopiraj"
-
-msgid "Move"
-msgstr "Premjesti"
-
-msgid "Delete"
-msgstr "Obriši"
-
 #, fuzzy
-msgid "Down Schematic"
+msgid "Hierarchy: Down _Schematic"
 msgstr "_Dolje Shemu"
 
 #, fuzzy
-msgid "Down Symbol"
+msgid "Hierarchy: Down S_ymbol"
 msgstr "Doljen _Simbol"
 
 #, fuzzy
-msgid "Up"
-msgstr "_Gore"
-
-#, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
-msgstr ""
-
-#, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
-msgstr ""
+msgid "Hierarchy: _Up"
+msgstr "Hije_rarhija"
 
 msgid "The operating system is out of memory or resources."
 msgstr ""
@@ -1311,6 +1215,9 @@ msgstr ""
 msgid "Duplicate"
 msgstr ""
 
+msgid "Delete"
+msgstr "Obriši"
+
 #, fuzzy
 msgid "Copy to all"
 msgstr "Kopiraj u 1"
@@ -1330,6 +1237,9 @@ msgstr ""
 #, fuzzy
 msgid "Sho_w inherited attributes"
 msgstr "Atribut"
+
+msgid "Add Attribute"
+msgstr ""
 
 msgid "_Name:"
 msgstr ""
@@ -1441,6 +1351,24 @@ msgstr "Hije_rarhija"
 msgid "Hierarchy up"
 msgstr "Hije_rarhija"
 
+msgid "_New"
+msgstr "_Nova"
+
+msgid "_Open..."
+msgstr "_Otvori..."
+
+msgid "_Save"
+msgstr "_Snimi"
+
+msgid "Save _As..."
+msgstr "Snimi _kao..."
+
+msgid "Page _Manager..."
+msgstr ""
+
+msgid "_Close"
+msgstr "_Zatvori"
+
 #, fuzzy
 msgid "Options"
 msgstr "_Opcije"
@@ -1550,6 +1478,9 @@ msgstr ""
 msgid "Add Text..."
 msgstr ""
 
+msgid "Select"
+msgstr ""
+
 msgid "Select mode"
 msgstr ""
 
@@ -1611,20 +1542,8 @@ msgstr ""
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr ""
 
-msgid "_New"
-msgstr "_Nova"
-
-msgid "_Open..."
-msgstr "_Otvori..."
-
 msgid "Open Recen_t"
 msgstr "O_tvori ranije"
-
-msgid "_Save"
-msgstr "_Snimi"
-
-msgid "Save _As..."
-msgstr "Snimi _kao..."
 
 msgid "Save All"
 msgstr "Snimi sve"
@@ -1657,18 +1576,6 @@ msgstr "_Poništi"
 msgid "_Redo"
 msgstr "_Vrati"
 
-msgid "Cu_t"
-msgstr "_Isijeci"
-
-msgid "_Copy"
-msgstr "_Kopiraj"
-
-msgid "_Paste"
-msgstr "_Umetni"
-
-msgid "_Delete"
-msgstr "_Obriši"
-
 msgid "Select All"
 msgstr ""
 
@@ -1677,6 +1584,12 @@ msgstr ""
 
 msgid "Rotate 90 Mode"
 msgstr "Režim rotacije 90 stepeni"
+
+msgid "Object Properties..."
+msgstr ""
+
+msgid "Edit..."
+msgstr "Izmijeni..."
 
 msgid "Edit Text..."
 msgstr "Izmijeni tekst..."
@@ -1796,9 +1709,6 @@ msgstr "_Prethodna"
 msgid "_Next"
 msgstr "_Naredna"
 
-msgid "_Close"
-msgstr "_Zatvori"
-
 #, fuzzy
 msgid "_Revert..."
 msgstr "_Vrati"
@@ -1908,6 +1818,9 @@ msgid "Grid Style: Cycle Dots/Mesh/Off"
 msgstr ""
 
 msgid "Grid Snap: Cycle Grid/Resnap/Off"
+msgstr ""
+
+msgid "Grips: On/Off"
 msgstr ""
 
 msgid "Feedback Mode: Outline/Box"
@@ -2052,6 +1965,9 @@ msgstr ""
 msgid "Cut"
 msgstr "_Isijeci"
 
+msgid "Copy"
+msgstr "Kopiraj"
+
 #, fuzzy
 msgid "Paste"
 msgstr "_Umetni"
@@ -2078,6 +1994,18 @@ msgstr ""
 
 msgid "Pan Down"
 msgstr ""
+
+#, fuzzy
+msgid "Zoom Extents"
+msgstr "Okvir zooma"
+
+#, fuzzy
+msgid "Zoom In"
+msgstr "_Uvećaj"
+
+#, fuzzy
+msgid "Zoom Out"
+msgstr "U_manji"
 
 #, fuzzy
 msgid "Zoom Full"
@@ -2110,6 +2038,20 @@ msgid "Print Page"
 msgstr "_Prethodna"
 
 #, fuzzy
+msgid "Add Component"
+msgstr "Komponenta"
+
+msgid "Add Net"
+msgstr ""
+
+msgid "Add Bus"
+msgstr ""
+
+#, fuzzy
+msgid "Add Text"
+msgstr "Izmijeni tekst"
+
+#, fuzzy
 msgid "Add Line"
 msgstr "Linija"
 
@@ -2132,6 +2074,14 @@ msgstr ""
 #, fuzzy
 msgid "Add Picture"
 msgstr "Sli_ka..."
+
+#, fuzzy
+msgid "Down Schematic"
+msgstr "_Dolje Shemu"
+
+#, fuzzy
+msgid "Down Symbol"
+msgstr "Doljen _Simbol"
 
 #, fuzzy
 msgid "Up Hierarchy"
@@ -2211,6 +2161,9 @@ msgstr "Novi prozor"
 msgid "Show Coordinate Window"
 msgstr ""
 
+msgid "Toggle Grips"
+msgstr ""
+
 msgid "Component Documentation"
 msgstr ""
 
@@ -2245,10 +2198,6 @@ msgstr ""
 msgid "About lepton-schematic"
 msgstr ""
 
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr ""
-
 msgid "Could not show documentation:"
 msgstr ""
 
@@ -2262,6 +2211,17 @@ msgstr ""
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr ""
+
+#, scheme-format
+msgid "Invalid text alignment ~A."
+msgstr ""
+
+#~ msgid "Move"
+#~ msgstr "Premjesti"
+
+#, fuzzy
+#~ msgid "Up"
+#~ msgstr "_Gore"
 
 #~ msgid "Edit"
 #~ msgstr "Izmijeni"

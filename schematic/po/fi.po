@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:34+0300\n"
+"POT-Creation-Date: 2020-03-18 20:44+0300\n"
 "PO-Revision-Date: 2012-01-27 14:18+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -19,6 +19,13 @@ msgstr ""
 "X-Generator: Launchpad (build 16265)\n"
 
 msgid "Zoom too small!  Cannot zoom further."
+msgstr ""
+
+msgid ""
+"Save your color scheme to a file by clicking on the \"Save As...\"\n"
+"button. It can be loaded on startup with the following\n"
+"expression in the gschemrc configuration file:\n"
+"( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
 
 #, c-format
@@ -46,6 +53,11 @@ msgstr ""
 msgid "Sa_ve..."
 msgstr ""
 
+msgid ""
+"After you're done choosing the font, it's recommended\n"
+"to reopen schematics or restart the application."
+msgstr ""
+
 #, c-format
 msgid "<b>Current:</b> %s"
 msgstr ""
@@ -53,23 +65,20 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
-msgid "Save settings to:"
+msgid "Local configuration file:"
 msgstr ""
 
-msgid "Local configuration file (in current directory)"
+msgid "User configuration file:"
 msgstr ""
 
-msgid "User configuration file (geda-user.conf)"
-msgstr ""
-
-msgid "Object ~A is not included in the current gschem page."
+msgid "Object ~A is not included in the current lepton-schematic page."
 msgstr ""
 
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
 #, c-format
-msgid "You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
+msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
 msgstr ""
 
 #, c-format
@@ -82,65 +91,13 @@ msgstr ""
 msgid "Please be sure that you have the latest rc file.\n"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to text-size\n"
-msgstr "Virheellinen koko [%d] annettu tekstin kooksi.\n"
-
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to snap-size\n"
-msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
-
-#, fuzzy, c-format
-msgid "Invalid num levels [%1$d] passed to undo-levels\n"
-msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
-
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
-msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
-
-#, fuzzy, c-format
-msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
-msgstr "Virheellinen koko [%d] annettu tekstin kooksi.\n"
-
-#, fuzzy, c-format
-msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
-msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
-
-#, c-format
-msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
-msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
-msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
-msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
-
-#, fuzzy, c-format
-msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
-msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to zoom-gain\n"
-msgstr "Virheellinen koko [%d] annettu tekstin kooksi.\n"
-
-#, c-format
-msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
-msgstr ""
-
 msgid "Object ~A is not directly included in a page."
 msgstr ""
 
 msgid "Could not launch URI ~S: ~A"
 msgstr ""
 
-msgid "Found invalid gschem window smob ~S"
+msgid "Found invalid lepton-schematic window smob ~S"
 msgstr ""
 
 #, c-format
@@ -171,7 +128,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2019 Lepton Developers.\n"
+"Copyright © 2017-2020 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -615,7 +572,8 @@ msgid ""
 "\n"
 "Are you sure you want to revert this page?\n"
 "All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk."
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
 msgstr ""
 
 #, fuzzy
@@ -709,10 +667,6 @@ msgid_plural "Delete %1$u locked objects?"
 msgstr[0] ""
 msgstr[1] ""
 
-#, c-format
-msgid "Got an unexpected NULL in o_edit\n"
-msgstr ""
-
 msgid "Hidden text is now visible"
 msgstr ""
 
@@ -724,7 +678,7 @@ msgid "Could not find symbol [%1$s] in library. Update failed."
 msgstr ""
 
 #, c-format
-msgid "o_autosave_backups: Can't get the real filename of %1$s."
+msgid "Can't get the real filename of %1$s."
 msgstr ""
 
 #, c-format
@@ -737,10 +691,6 @@ msgstr ""
 
 #, c-format
 msgid "Could NOT save backup file [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "ERROR: NULL object in o_move_end!\n"
 msgstr ""
 
 #, c-format
@@ -789,7 +739,7 @@ msgstr ""
 msgid "New slot number out of range"
 msgstr ""
 
-msgid "Undo/Redo disabled in rc file"
+msgid "Undo/Redo is disabled in configuration"
 msgstr ""
 
 #, c-format
@@ -810,27 +760,12 @@ msgid ""
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"Lepton EDA %1$s (git: %2$.7s)\n"
-"Copyright (C) 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright (C) 2017-2019 Lepton Developers.\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
+"Report bugs at <%2$s>\n"
+"Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
-msgstr ""
-
-#, c-format
-msgid "ERROR: NULL object!\n"
 msgstr ""
 
 msgid "Single Attribute Editor"
@@ -886,7 +821,7 @@ msgid ""
 "duplicate slot may cause problems: [symbolname=%1$s, number=%2$d, slot=%3$d]"
 msgstr ""
 
-msgid "No searchstring given in autonumber text."
+msgid "No search string given in autonumber text."
 msgstr ""
 
 msgid "No '*' or '?' given at the end of the autonumber text."
@@ -960,24 +895,6 @@ msgid ""
 msgstr ""
 
 msgid "Clipboard insertion failed"
-msgstr ""
-
-#, c-format
-msgid "Could not allocate the color %1$s!\n"
-msgstr ""
-
-msgid "black"
-msgstr ""
-
-msgid "white"
-msgstr ""
-
-#, c-format
-msgid "Could not allocate display color %1$i!\n"
-msgstr ""
-
-#, c-format
-msgid "Could not allocate outline color %1$i!\n"
 msgstr ""
 
 #, c-format
@@ -1118,13 +1035,13 @@ msgstr ""
 msgid "Invalid Attribute"
 msgstr ""
 
-msgid "Schematics"
+msgid "Schematics (*.sch)"
 msgstr ""
 
-msgid "Symbols"
+msgid "Symbols (*.sym)"
 msgstr ""
 
-msgid "Schematics and symbols"
+msgid "Schematics and symbols (*.sch *.sym)"
 msgstr ""
 
 msgid "All files"
@@ -1160,7 +1077,7 @@ msgid "Hatch"
 msgstr ""
 
 #, c-format
-msgid "x_image_lowlevel: Unable to write %1$s file %2$s."
+msgid "Unable to write %1$s file %2$s."
 msgstr ""
 
 #, c-format
@@ -1179,7 +1096,7 @@ msgstr ""
 msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
 msgstr ""
 
-msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
+msgid "Unable to get pixbuf from lepton-schematic's window."
 msgstr ""
 
 msgid "NOTE: print-color-map will be used for PDF export"
@@ -1228,69 +1145,55 @@ msgstr ""
 msgid "Phantom"
 msgstr ""
 
-msgid "Add Net"
-msgstr ""
-
-msgid "Add Attribute"
-msgstr ""
-
 #, fuzzy
-msgid "Add Component"
+msgid "Add Co_mponent..."
 msgstr "Päivitä komponentti"
 
-msgid "Add Bus"
-msgstr ""
-
 #, fuzzy
-msgid "Add Text"
+msgid "Add Te_xt..."
 msgstr "Muokkaa tekstiä..."
 
 #, fuzzy
-msgid "Zoom In"
-msgstr "_Lähennä"
+msgid "Add _Attribute..."
+msgstr "_Määrite..."
 
 #, fuzzy
-msgid "Zoom Out"
-msgstr "L_oitonna"
+msgid "Add _Net"
+msgstr "Muokkaa tekstiä..."
 
-#, fuzzy
-msgid "Zoom Extents"
-msgstr "_Lähennä"
-
-msgid "Select"
+msgid "Add _Bus"
 msgstr ""
 
-msgid "Edit..."
+msgid "Cu_t"
+msgstr "_Leikkaa"
+
+msgid "_Copy"
+msgstr "_Kopioi"
+
+msgid "_Paste"
+msgstr "L_iitä"
+
+msgid "_Delete"
+msgstr "_Poista"
+
+#, fuzzy
+msgid "_Edit..."
 msgstr "Muokkaa..."
 
-msgid "Object Properties..."
-msgstr ""
-
-msgid "Copy"
-msgstr ""
-
-msgid "Move"
-msgstr ""
-
-msgid "Delete"
-msgstr ""
-
-msgid "Down Schematic"
-msgstr ""
-
-msgid "Down Symbol"
-msgstr ""
-
 #, fuzzy
-msgid "Up"
-msgstr "_Ylös"
+msgid "Ed_it Text..."
+msgstr "Muokkaa tekstiä..."
 
-#, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
+msgid "_Object Properties..."
 msgstr ""
 
-#, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
+msgid "Hierarchy: Down _Schematic"
+msgstr ""
+
+msgid "Hierarchy: Down S_ymbol"
+msgstr ""
+
+msgid "Hierarchy: _Up"
 msgstr ""
 
 msgid "The operating system is out of memory or resources."
@@ -1314,6 +1217,9 @@ msgstr ""
 msgid "Duplicate"
 msgstr ""
 
+msgid "Delete"
+msgstr ""
+
 #, fuzzy
 msgid "Copy to all"
 msgstr "Kopioi puskuriin 1"
@@ -1333,6 +1239,9 @@ msgstr ""
 #, fuzzy
 msgid "Sho_w inherited attributes"
 msgstr "Määri_tteet..."
+
+msgid "Add Attribute"
+msgstr ""
 
 #, fuzzy
 msgid "_Name:"
@@ -1444,6 +1353,24 @@ msgstr ""
 msgid "Hierarchy up"
 msgstr ""
 
+msgid "_New"
+msgstr "_Uusi"
+
+msgid "_Open..."
+msgstr "_Avaa…"
+
+msgid "_Save"
+msgstr "_Tallenna"
+
+msgid "Save _As..."
+msgstr "Tallenna _nimellä..."
+
+msgid "Page _Manager..."
+msgstr ""
+
+msgid "_Close"
+msgstr "Sul_je"
+
 msgid "Options"
 msgstr ""
 
@@ -1552,6 +1479,9 @@ msgstr ""
 msgid "Add Text..."
 msgstr ""
 
+msgid "Select"
+msgstr ""
+
 msgid "Select mode"
 msgstr ""
 
@@ -1612,20 +1542,8 @@ msgstr ""
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr ""
 
-msgid "_New"
-msgstr "_Uusi"
-
-msgid "_Open..."
-msgstr "_Avaa…"
-
 msgid "Open Recen_t"
 msgstr "_Viimeisimmät tiedostot"
-
-msgid "_Save"
-msgstr "_Tallenna"
-
-msgid "Save _As..."
-msgstr "Tallenna _nimellä..."
 
 msgid "Save All"
 msgstr "Tallenna _kaikki"
@@ -1659,18 +1577,6 @@ msgstr "K_umoa"
 msgid "_Redo"
 msgstr "_Tee uudelleen"
 
-msgid "Cu_t"
-msgstr "_Leikkaa"
-
-msgid "_Copy"
-msgstr "_Kopioi"
-
-msgid "_Paste"
-msgstr "L_iitä"
-
-msgid "_Delete"
-msgstr "_Poista"
-
 msgid "Select All"
 msgstr ""
 
@@ -1679,6 +1585,12 @@ msgstr ""
 
 msgid "Rotate 90 Mode"
 msgstr "Käännä 90 astetta"
+
+msgid "Object Properties..."
+msgstr ""
+
+msgid "Edit..."
+msgstr "Muokkaa..."
 
 msgid "Edit Text..."
 msgstr "Muokkaa tekstiä..."
@@ -1798,9 +1710,6 @@ msgstr "_Edellinen"
 msgid "_Next"
 msgstr "_Seuraava"
 
-msgid "_Close"
-msgstr "Sul_je"
-
 #, fuzzy
 msgid "_Revert..."
 msgstr "_Hylkää muutokset"
@@ -1910,6 +1819,9 @@ msgid "Grid Style: Cycle Dots/Mesh/Off"
 msgstr ""
 
 msgid "Grid Snap: Cycle Grid/Resnap/Off"
+msgstr ""
+
+msgid "Grips: On/Off"
 msgstr ""
 
 #, fuzzy
@@ -2056,6 +1968,9 @@ msgstr ""
 msgid "Cut"
 msgstr "_Leikkaa"
 
+msgid "Copy"
+msgstr ""
+
 #, fuzzy
 msgid "Paste"
 msgstr "L_iitä"
@@ -2082,6 +1997,18 @@ msgstr ""
 
 msgid "Pan Down"
 msgstr ""
+
+#, fuzzy
+msgid "Zoom Extents"
+msgstr "_Lähennä"
+
+#, fuzzy
+msgid "Zoom In"
+msgstr "_Lähennä"
+
+#, fuzzy
+msgid "Zoom Out"
+msgstr "L_oitonna"
 
 #, fuzzy
 msgid "Zoom Full"
@@ -2114,6 +2041,20 @@ msgid "Print Page"
 msgstr "_Edellinen"
 
 #, fuzzy
+msgid "Add Component"
+msgstr "Päivitä komponentti"
+
+msgid "Add Net"
+msgstr ""
+
+msgid "Add Bus"
+msgstr ""
+
+#, fuzzy
+msgid "Add Text"
+msgstr "Muokkaa tekstiä..."
+
+#, fuzzy
 msgid "Add Line"
 msgstr "_Viiva"
 
@@ -2136,6 +2077,12 @@ msgstr ""
 #, fuzzy
 msgid "Add Picture"
 msgstr "Kuva..."
+
+msgid "Down Schematic"
+msgstr ""
+
+msgid "Down Symbol"
+msgstr ""
 
 msgid "Up Hierarchy"
 msgstr ""
@@ -2225,6 +2172,10 @@ msgid "Show Coordinate Window"
 msgstr "Näytä _Koordinaatti-ikkuna..."
 
 #, fuzzy
+msgid "Toggle Grips"
+msgstr "Vaihda Näk_yvyys"
+
+#, fuzzy
 msgid "Component Documentation"
 msgstr "Komponentin D_okumentaatio..."
 
@@ -2261,10 +2212,6 @@ msgstr ""
 msgid "About lepton-schematic"
 msgstr ""
 
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr ""
-
 #, fuzzy
 msgid "Could not show documentation:"
 msgstr "Komponentin D_okumentaatio..."
@@ -2279,6 +2226,58 @@ msgstr ""
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr ""
+
+#, scheme-format
+msgid "Invalid text alignment ~A."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to text-size\n"
+#~ msgstr "Virheellinen koko [%d] annettu tekstin kooksi.\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to snap-size\n"
+#~ msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
+
+#, fuzzy
+#~ msgid "Invalid num levels [%1$d] passed to undo-levels\n"
+#~ msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
+#~ msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
+
+#, fuzzy
+#~ msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
+#~ msgstr "Virheellinen koko [%d] annettu tekstin kooksi.\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
+#~ msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
+
+#, fuzzy
+#~ msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
+#~ msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
+#~ msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
+#~ msgstr "virheellinen koko [%d] annettu apuruudukonkooksi.\n"
+
+#, fuzzy
+#~ msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
+#~ msgstr "Virheellinen määrä [%d] kumoamistasoja.\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to zoom-gain\n"
+#~ msgstr "Virheellinen koko [%d] annettu tekstin kooksi.\n"
+
+#, fuzzy
+#~ msgid "Up"
+#~ msgstr "_Ylös"
 
 #, fuzzy
 #~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:34+0300\n"
+"POT-Creation-Date: 2020-03-18 20:44+0300\n"
 "PO-Revision-Date: 2012-09-01 20:41+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -19,6 +19,13 @@ msgstr ""
 "X-Generator: Launchpad (build 16265)\n"
 
 msgid "Zoom too small!  Cannot zoom further."
+msgstr ""
+
+msgid ""
+"Save your color scheme to a file by clicking on the \"Save As...\"\n"
+"button. It can be loaded on startup with the following\n"
+"expression in the gschemrc configuration file:\n"
+"( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
 
 #, fuzzy, c-format
@@ -50,6 +57,11 @@ msgstr ""
 msgid "Sa_ve..."
 msgstr ""
 
+msgid ""
+"After you're done choosing the font, it's recommended\n"
+"to reopen schematics or restart the application."
+msgstr ""
+
 #, c-format
 msgid "<b>Current:</b> %s"
 msgstr ""
@@ -57,24 +69,21 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "Local configuration file:"
+msgstr ""
+
+msgid "User configuration file:"
+msgstr ""
+
 #, fuzzy
-msgid "Save settings to:"
-msgstr "Ρυθμίσεις"
-
-msgid "Local configuration file (in current directory)"
-msgstr ""
-
-msgid "User configuration file (geda-user.conf)"
-msgstr ""
-
-msgid "Object ~A is not included in the current gschem page."
+msgid "Object ~A is not included in the current lepton-schematic page."
 msgstr "Το αντικείμενο ~A δεν περιλαμβάνεται στην τρέχουσα gschem."
 
 msgid "Invalid text name/value visibility ~A."
 msgstr "Μη έγκυρο όνομα/τιμή ορατότητας ~A."
 
 #, fuzzy, c-format
-msgid "You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
+msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
 msgstr "gEDA/gschem έκδοση %s%s.%s\n"
 
 #, c-format
@@ -87,74 +96,15 @@ msgstr ""
 msgid "Please be sure that you have the latest rc file.\n"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to text-size\n"
-msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
-
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to snap-size\n"
-msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
-
-#, fuzzy, c-format
-msgid "Invalid num levels [%1$d] passed to undo-levels\n"
-msgstr ""
-"Δόθηκε μη έγκυρος αριθμός δευτερολέπτων [%d] στο διάστημα αυτόματης "
-"αποθήκευσης\n"
-
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
-msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
-
-#, fuzzy, c-format
-msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
-msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
-
-#, fuzzy, c-format
-msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
-msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
-
-#, c-format
-msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
-msgstr ""
-"Δόθηκε μη έγκυρος αριθμός δευτερολέπτων [%d] στο διάστημα αυτόματης "
-"αποθήκευσης\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
-msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
-msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
-
-#, fuzzy, c-format
-msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
-msgstr ""
-"Δόθηκε μη έγκυρος αριθμός δευτερολέπτων [%d] στο διάστημα αυτόματης "
-"αποθήκευσης\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to zoom-gain\n"
-msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
-
-#, fuzzy, c-format
-msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
-msgstr ""
-"Δόθηκε μη έγκυρος αριθμός δευτερολέπτων [%d] στο διάστημα αυτόματης "
-"αποθήκευσης\n"
-
 msgid "Object ~A is not directly included in a page."
 msgstr "Το αντικείμενο ~A δεν περιλαμβάνεται άμεσα σε μια σελίδα."
 
 msgid "Could not launch URI ~S: ~A"
 msgstr "Αδυναμία εκτέλεσης URI ~S: ~A"
 
-msgid "Found invalid gschem window smob ~S"
-msgstr ""
+#, fuzzy
+msgid "Found invalid lepton-schematic window smob ~S"
+msgstr "Το ~S δεν είναι έγκυρος συνδιασμός πλήκτρων."
 
 #, fuzzy, c-format
 msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
@@ -189,7 +139,7 @@ msgstr "gEDA: Ηλεκτρονικός Αυτοματισμός Σχεδίαση
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2019 Lepton Developers.\n"
+"Copyright © 2017-2020 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Πνευματικά δικαιώματα © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -669,7 +619,8 @@ msgid ""
 "\n"
 "Are you sure you want to revert this page?\n"
 "All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk."
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
 msgstr ""
 
 #, fuzzy
@@ -774,10 +725,6 @@ msgid_plural "Delete %1$u locked objects?"
 msgstr[0] "Επιλεγμένα αντικείμενα"
 msgstr[1] "Επιλεγμένα αντικείμενα"
 
-#, c-format
-msgid "Got an unexpected NULL in o_edit\n"
-msgstr "Λήφθηκε απροσδόκητο NULL στο o_edit\n"
-
 #, fuzzy
 msgid "Hidden text is now visible"
 msgstr "Το κρυφό κείμενο είναι πλέον ορατό\n"
@@ -791,7 +738,7 @@ msgid "Could not find symbol [%1$s] in library. Update failed."
 msgstr "Αδυναμία εύρεσης συμβόλου [%s] στη βιβλιοθήκη. Η ενημέρωση απέτυχε.\n"
 
 #, fuzzy, c-format
-msgid "o_autosave_backups: Can't get the real filename of %1$s."
+msgid "Can't get the real filename of %1$s."
 msgstr ""
 "o_autosave_backups: Αδυναμία λήψης του πραγματικού ονόματος αρχείου για το "
 "%s."
@@ -810,10 +757,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Could NOT save backup file [%1$s]"
 msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση του αντιγράφου ασφαλείας [%s]\n"
-
-#, c-format
-msgid "ERROR: NULL object in o_move_end!\n"
-msgstr "ERROR: Αντικείμενο NULL στο o_move_end!\n"
 
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
@@ -866,7 +809,7 @@ msgstr "Οι υποδοχές δεν επιτρέπονται σε αυτό το
 msgid "New slot number out of range"
 msgstr "Νέος αριθμός υποδοχής εκτός εύρους\n"
 
-msgid "Undo/Redo disabled in rc file"
+msgid "Undo/Redo is disabled in configuration"
 msgstr ""
 
 #, c-format
@@ -887,35 +830,14 @@ msgid ""
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+"Report bugs at <%2$s>\n"
+"Lepton EDA homepage: <%3$s>\n"
 msgstr ""
-
-#, fuzzy, c-format
-msgid ""
-"Lepton EDA %1$s (git: %2$.7s)\n"
-"Copyright (C) 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright (C) 2017-2019 Lepton Developers.\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
-"gEDA %s (g%.7s)\n"
-"Πνευματικά δικαιώματα (C) 1998-2012 προγραμματιστές του gEDA\n"
-"Αυτό είναι δωρεάν λογισμικό, και μπορείτε να το αναδιανείμετε ελεύθερα υπό\n"
-"συγκεκριμένους όρους. Για λεπτομέρειες, δείτε το αρχείο `COPYING', το οποίο\n"
-"συμπεριλαμβάνεται στη διανομή του gEDA.\n"
-"Δεν υπάρχει ΚΑΜΙΑ ΕΓΓΥΗΣΗ, στα πλαίσια που επιτρέπει ο νόμος.\n"
 
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 "Λήφθηκε μη έγκυρη επιλογή εμφάνισης. Προεπιλεγμένη εμφάνιση και των δύο\n"
-
-#, c-format
-msgid "ERROR: NULL object!\n"
-msgstr "ΣΦΑΛΜΑ: Αντικείμενο NULL!\n"
 
 msgid "Single Attribute Editor"
 msgstr "Επεξεργαστής ενός γνωρίσματος"
@@ -974,7 +896,7 @@ msgstr ""
 "οι διπλές υποδοχές μπορεί να προκαλέσουν προβλήματα: [σύμβολο=%s, αριθμός="
 "%d, υποδοχή=%d]\n"
 
-msgid "No searchstring given in autonumber text."
+msgid "No search string given in autonumber text."
 msgstr ""
 
 msgid "No '*' or '?' given at the end of the autonumber text."
@@ -1052,24 +974,6 @@ msgstr ""
 
 msgid "Clipboard insertion failed"
 msgstr "Η εισαγωγή από το πρόχειρο απέτυχε"
-
-#, fuzzy, c-format
-msgid "Could not allocate the color %1$s!\n"
-msgstr "Αδυναμία εντοπισμού χρώματος %s!\n"
-
-msgid "black"
-msgstr "μαύρο"
-
-msgid "white"
-msgstr "άσπρο"
-
-#, fuzzy, c-format
-msgid "Could not allocate display color %1$i!\n"
-msgstr "Αδυναμία εντοπισμού χρώματος εμφάνισης %i!\n"
-
-#, fuzzy, c-format
-msgid "Could not allocate outline color %1$i!\n"
-msgstr "Αδυναμία εντοπισμού χρώματος περιγράμματος %i!\n"
 
 #, fuzzy, c-format
 msgid "Tried to get an invalid color: %1$d\n"
@@ -1218,13 +1122,16 @@ msgstr ""
 msgid "Invalid Attribute"
 msgstr "Μη έγκυρο γνώρισμα"
 
-msgid "Schematics"
+#, fuzzy
+msgid "Schematics (*.sch)"
 msgstr "Σχεδιαγράμματα"
 
-msgid "Symbols"
+#, fuzzy
+msgid "Symbols (*.sym)"
 msgstr "Σύμβολα"
 
-msgid "Schematics and symbols"
+#, fuzzy
+msgid "Schematics and symbols (*.sch *.sym)"
 msgstr "Σχεδιαγράμματα και σύμβολα"
 
 msgid "All files"
@@ -1261,7 +1168,7 @@ msgid "Hatch"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "x_image_lowlevel: Unable to write %1$s file %2$s."
+msgid "Unable to write %1$s file %2$s."
 msgstr "x_image_lowlevel: Αδυναμία εγγραφής του αρχείου %s %s.\n"
 
 #, fuzzy, c-format
@@ -1286,7 +1193,7 @@ msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
 msgstr "Εγγράφηκε ασπρόμαυρη εικόνα στο [%s] [%d x %d]\n"
 
 #, fuzzy
-msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
+msgid "Unable to get pixbuf from lepton-schematic's window."
 msgstr "x_image_lowlevel: Αδυναμία λήψης pixbuf από το παράθυρο του gschem.\n"
 
 msgid "NOTE: print-color-map will be used for PDF export"
@@ -1336,71 +1243,60 @@ msgid "Phantom"
 msgstr "Φάντασμα"
 
 #, fuzzy
-msgid "Add Net"
-msgstr "/Προσθήκη δικτύου"
-
-msgid "Add Attribute"
-msgstr "Προσθήκη γνωρίσματος"
-
-#, fuzzy
-msgid "Add Component"
+msgid "Add Co_mponent..."
 msgstr "/Προσθήκη στοιχείου..."
 
 #, fuzzy
-msgid "Add Bus"
-msgstr "/Προσθήκη διαύλου"
+msgid "Add Te_xt..."
+msgstr "Προσθήκη κειμένου..."
 
 #, fuzzy
-msgid "Add Text"
-msgstr "/Προσθήκη κειμένου"
+msgid "Add _Attribute..."
+msgstr "/Προσθήκη γνωρίσματος..."
 
-msgid "Zoom In"
-msgstr ""
+#, fuzzy
+msgid "Add _Net"
+msgstr "/Προσθήκη δικτύου"
 
-msgid "Zoom Out"
-msgstr ""
+#, fuzzy
+msgid "Add _Bus"
+msgstr "/Προσθήκη διαύλου"
 
-msgid "Zoom Extents"
-msgstr ""
+msgid "Cu_t"
+msgstr "Α_ποκοπή"
 
-msgid "Select"
-msgstr "Επιλογή"
+msgid "_Copy"
+msgstr "Α_ντιγραφή"
 
-msgid "Edit..."
+msgid "_Paste"
+msgstr "Ε_πικόλληση"
+
+msgid "_Delete"
+msgstr "_Διαγραφή"
+
+#, fuzzy
+msgid "_Edit..."
 msgstr "Επεξεργασία..."
 
 #, fuzzy
-msgid "Object Properties..."
-msgstr "<b>Ιδιότητες κειμένου</b>"
-
-msgid "Copy"
-msgstr "Αντιγραφή"
-
-msgid "Move"
-msgstr "Μετακίνηση"
-
-msgid "Delete"
-msgstr "Διαγραφή"
+msgid "Ed_it Text..."
+msgstr "Επεξεργασία κειμένου..."
 
 #, fuzzy
-msgid "Down Schematic"
+msgid "_Object Properties..."
+msgstr "<b>Ιδιότητες κειμένου</b>"
+
+#, fuzzy
+msgid "Hierarchy: Down _Schematic"
 msgstr "/Κάτω σχεδιάγραμμα"
 
 #, fuzzy
-msgid "Down Symbol"
+msgid "Hierarchy: Down S_ymbol"
 msgstr "/Κάτω σύμβολο"
 
 #, fuzzy
-msgid "Up"
-msgstr "/Πάνω"
-
-#, fuzzy, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
-msgstr "Προσπάθεια ρύθμισης ευαισθησίας σε ανύπαρκτο αντικείμενο μενού '%s'\n"
-
-#, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
-msgstr "Προσπάθεια ρύθμισης ευαισθησίας σε ανύπαρκτο αντικείμενο μενού '%s'\n"
+msgid "Hierarchy: _Up"
+msgstr "_Ιεραρχία"
 
 msgid "The operating system is out of memory or resources."
 msgstr "Το λειτουργικό σύστημα είναι εκτός ορίων μνήμης ή πηγών."
@@ -1424,6 +1320,9 @@ msgstr "Προώθηση"
 msgid "Duplicate"
 msgstr "Αντίγραφο"
 
+msgid "Delete"
+msgstr "Διαγραφή"
+
 #, fuzzy
 msgid "Copy to all"
 msgstr "Αντιγραφή σε 1"
@@ -1443,6 +1342,9 @@ msgstr ""
 #, fuzzy
 msgid "Sho_w inherited attributes"
 msgstr "Εμφάνιση κληρονομημένων γνωρισμάτων"
+
+msgid "Add Attribute"
+msgstr "Προσθήκη γνωρίσματος"
 
 #, fuzzy
 msgid "_Name:"
@@ -1562,6 +1464,25 @@ msgstr "_Ιεραρχία"
 #, fuzzy
 msgid "Hierarchy up"
 msgstr "_Ιεραρχία"
+
+msgid "_New"
+msgstr "_Νέο"
+
+msgid "_Open..."
+msgstr "_Άνοιγμα..."
+
+msgid "_Save"
+msgstr "_Αποθήκευση"
+
+msgid "Save _As..."
+msgstr "Αποθήκευση _ως..."
+
+#, fuzzy
+msgid "Page _Manager..."
+msgstr "Διαχειριστής σελίδων"
+
+msgid "_Close"
+msgstr "_Κλείσιμο"
 
 #, fuzzy
 msgid "Options"
@@ -1683,6 +1604,9 @@ msgstr ""
 msgid "Add Text..."
 msgstr "Προσθήκη κειμένου..."
 
+msgid "Select"
+msgstr "Επιλογή"
+
 msgid "Select mode"
 msgstr "Λειτουργία επιλογής"
 
@@ -1754,20 +1678,8 @@ msgstr ""
 "Δημιουργείστε και επεξεργαστείτε ηλεκτρικά σχεδιαγράμματα και σύμβολα με το "
 "gschem"
 
-msgid "_New"
-msgstr "_Νέο"
-
-msgid "_Open..."
-msgstr "_Άνοιγμα..."
-
 msgid "Open Recen_t"
 msgstr "Άνοιγμα _προσφάτου"
-
-msgid "_Save"
-msgstr "_Αποθήκευση"
-
-msgid "Save _As..."
-msgstr "Αποθήκευση _ως..."
 
 msgid "Save All"
 msgstr "Αποθήκευση όλων"
@@ -1800,18 +1712,6 @@ msgstr "_Αναίρεση"
 msgid "_Redo"
 msgstr "Ε_παναφορά"
 
-msgid "Cu_t"
-msgstr "Α_ποκοπή"
-
-msgid "_Copy"
-msgstr "Α_ντιγραφή"
-
-msgid "_Paste"
-msgstr "Ε_πικόλληση"
-
-msgid "_Delete"
-msgstr "_Διαγραφή"
-
 msgid "Select All"
 msgstr "Επιλογή όλων"
 
@@ -1820,6 +1720,13 @@ msgstr "Αποεπιλογή"
 
 msgid "Rotate 90 Mode"
 msgstr "Λειτουργία περιστροφής 90"
+
+#, fuzzy
+msgid "Object Properties..."
+msgstr "<b>Ιδιότητες κειμένου</b>"
+
+msgid "Edit..."
+msgstr "Επεξεργασία..."
 
 msgid "Edit Text..."
 msgstr "Επεξεργασία κειμένου..."
@@ -1944,9 +1851,6 @@ msgstr "_Προηγούμενο"
 msgid "_Next"
 msgstr "_Επόμενο"
 
-msgid "_Close"
-msgstr "_Κλείσιμο"
-
 #, fuzzy
 msgid "_Revert..."
 msgstr "_Επαναφορά"
@@ -2058,6 +1962,9 @@ msgid "Grid Style: Cycle Dots/Mesh/Off"
 msgstr ""
 
 msgid "Grid Snap: Cycle Grid/Resnap/Off"
+msgstr ""
+
+msgid "Grips: On/Off"
 msgstr ""
 
 #, fuzzy
@@ -2208,6 +2115,9 @@ msgstr ""
 msgid "Cut"
 msgstr "Α_ποκοπή"
 
+msgid "Copy"
+msgstr "Αντιγραφή"
+
 #, fuzzy
 msgid "Paste"
 msgstr "Ε_πικόλληση"
@@ -2234,6 +2144,15 @@ msgid "Pan Up"
 msgstr ""
 
 msgid "Pan Down"
+msgstr ""
+
+msgid "Zoom Extents"
+msgstr ""
+
+msgid "Zoom In"
+msgstr ""
+
+msgid "Zoom Out"
 msgstr ""
 
 msgid "Zoom Full"
@@ -2271,6 +2190,22 @@ msgid "Print Page"
 msgstr "_Προηγούμενο"
 
 #, fuzzy
+msgid "Add Component"
+msgstr "/Προσθήκη στοιχείου..."
+
+#, fuzzy
+msgid "Add Net"
+msgstr "/Προσθήκη δικτύου"
+
+#, fuzzy
+msgid "Add Bus"
+msgstr "/Προσθήκη διαύλου"
+
+#, fuzzy
+msgid "Add Text"
+msgstr "/Προσθήκη κειμένου"
+
+#, fuzzy
 msgid "Add Line"
 msgstr "Γραμμή"
 
@@ -2296,6 +2231,14 @@ msgstr ""
 #, fuzzy
 msgid "Add Picture"
 msgstr "Εικόνα"
+
+#, fuzzy
+msgid "Down Schematic"
+msgstr "/Κάτω σχεδιάγραμμα"
+
+#, fuzzy
+msgid "Down Symbol"
+msgstr "/Κάτω σύμβολο"
 
 #, fuzzy
 msgid "Up Hierarchy"
@@ -2384,6 +2327,10 @@ msgid "Show Coordinate Window"
 msgstr "Εμφάνιση παραθύρου συντεταγμένων..."
 
 #, fuzzy
+msgid "Toggle Grips"
+msgstr "Εναλλαγή ορατότητας"
+
+#, fuzzy
 msgid "Component Documentation"
 msgstr "Τεκμηρίωση _στοιχείων"
 
@@ -2421,10 +2368,6 @@ msgstr ""
 msgid "About lepton-schematic"
 msgstr "Σχετικά με το gschem"
 
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr "Μη έγκυρη στοίχιση κειμένου ~A."
-
 #, fuzzy
 msgid "Could not show documentation:"
 msgstr "Τεκμηρίωση _στοιχείων"
@@ -2439,6 +2382,133 @@ msgstr "Το ~S δεν είναι έγκυρος συνδιασμός πλήκτ
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr ""
+
+#, scheme-format
+msgid "Invalid text alignment ~A."
+msgstr "Μη έγκυρη στοίχιση κειμένου ~A."
+
+#, fuzzy
+#~ msgid "Save settings to:"
+#~ msgstr "Ρυθμίσεις"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to text-size\n"
+#~ msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to snap-size\n"
+#~ msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
+
+#, fuzzy
+#~ msgid "Invalid num levels [%1$d] passed to undo-levels\n"
+#~ msgstr ""
+#~ "Δόθηκε μη έγκυρος αριθμός δευτερολέπτων [%d] στο διάστημα αυτόματης "
+#~ "αποθήκευσης\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
+#~ msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
+
+#, fuzzy
+#~ msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
+#~ msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
+#~ msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
+
+#, fuzzy
+#~ msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
+#~ msgstr ""
+#~ "Δόθηκε μη έγκυρος αριθμός δευτερολέπτων [%d] στο διάστημα αυτόματης "
+#~ "αποθήκευσης\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
+#~ msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
+#~ msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
+
+#, fuzzy
+#~ msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
+#~ msgstr ""
+#~ "Δόθηκε μη έγκυρος αριθμός δευτερολέπτων [%d] στο διάστημα αυτόματης "
+#~ "αποθήκευσης\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to zoom-gain\n"
+#~ msgstr "Δόθηκε μη έγκυρο μέγεθος [%d] στο μέγεθος κειμένου\n"
+
+#, fuzzy
+#~ msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
+#~ msgstr ""
+#~ "Δόθηκε μη έγκυρος αριθμός δευτερολέπτων [%d] στο διάστημα αυτόματης "
+#~ "αποθήκευσης\n"
+
+#~ msgid "Got an unexpected NULL in o_edit\n"
+#~ msgstr "Λήφθηκε απροσδόκητο NULL στο o_edit\n"
+
+#~ msgid "ERROR: NULL object in o_move_end!\n"
+#~ msgstr "ERROR: Αντικείμενο NULL στο o_move_end!\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Lepton EDA %1$s (git: %2$.7s)\n"
+#~ "Copyright (C) 1998-2017 by Ales Hvezda and the respective original "
+#~ "authors.\n"
+#~ "Copyright (C) 2017-2019 Lepton Developers.\n"
+#~ "This is free software, and you are welcome to redistribute it under\n"
+#~ "certain conditions. For details, see the file `COPYING', which is\n"
+#~ "included in the Lepton EDA distribution.\n"
+#~ "There is NO WARRANTY, to the extent permitted by law.\n"
+#~ msgstr ""
+#~ "gEDA %s (g%.7s)\n"
+#~ "Πνευματικά δικαιώματα (C) 1998-2012 προγραμματιστές του gEDA\n"
+#~ "Αυτό είναι δωρεάν λογισμικό, και μπορείτε να το αναδιανείμετε ελεύθερα "
+#~ "υπό\n"
+#~ "συγκεκριμένους όρους. Για λεπτομέρειες, δείτε το αρχείο `COPYING', το "
+#~ "οποίο\n"
+#~ "συμπεριλαμβάνεται στη διανομή του gEDA.\n"
+#~ "Δεν υπάρχει ΚΑΜΙΑ ΕΓΓΥΗΣΗ, στα πλαίσια που επιτρέπει ο νόμος.\n"
+
+#~ msgid "ERROR: NULL object!\n"
+#~ msgstr "ΣΦΑΛΜΑ: Αντικείμενο NULL!\n"
+
+#, fuzzy
+#~ msgid "Could not allocate the color %1$s!\n"
+#~ msgstr "Αδυναμία εντοπισμού χρώματος %s!\n"
+
+#~ msgid "black"
+#~ msgstr "μαύρο"
+
+#~ msgid "white"
+#~ msgstr "άσπρο"
+
+#, fuzzy
+#~ msgid "Could not allocate display color %1$i!\n"
+#~ msgstr "Αδυναμία εντοπισμού χρώματος εμφάνισης %i!\n"
+
+#, fuzzy
+#~ msgid "Could not allocate outline color %1$i!\n"
+#~ msgstr "Αδυναμία εντοπισμού χρώματος περιγράμματος %i!\n"
+
+#~ msgid "Move"
+#~ msgstr "Μετακίνηση"
+
+#, fuzzy
+#~ msgid "Up"
+#~ msgstr "/Πάνω"
+
+#, fuzzy
+#~ msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
+#~ msgstr ""
+#~ "Προσπάθεια ρύθμισης ευαισθησίας σε ανύπαρκτο αντικείμενο μενού '%s'\n"
+
+#~ msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
+#~ msgstr ""
+#~ "Προσπάθεια ρύθμισης ευαισθησίας σε ανύπαρκτο αντικείμενο μενού '%s'\n"
 
 #, fuzzy
 #~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
@@ -2701,9 +2771,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Embed Component/Pictore"
 #~ msgstr "Ενσωμάτωση στοιχείου/εικόνας"
-
-#~ msgid "/Add Attribute..."
-#~ msgstr "/Προσθήκη γνωρίσματος..."
 
 #~ msgid "/Select"
 #~ msgstr "/Επιλογή"

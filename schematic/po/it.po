@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:34+0300\n"
+"POT-Creation-Date: 2020-03-18 20:44+0300\n"
 "PO-Revision-Date: 2014-12-29 20:06+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -25,6 +25,13 @@ msgstr ""
 msgid "Zoom too small!  Cannot zoom further."
 msgstr ""
 "Eccessiva riduzione dell'immagine!  Non è possibile ridurla ulteriormente.\n"
+
+msgid ""
+"Save your color scheme to a file by clicking on the \"Save As...\"\n"
+"button. It can be loaded on startup with the following\n"
+"expression in the gschemrc configuration file:\n"
+"( primitive-load \"/path/to/saved-color-scheme-file\" )"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -54,6 +61,11 @@ msgstr ""
 msgid "Sa_ve..."
 msgstr ""
 
+msgid ""
+"After you're done choosing the font, it's recommended\n"
+"to reopen schematics or restart the application."
+msgstr ""
+
 #, c-format
 msgid "<b>Current:</b> %s"
 msgstr ""
@@ -61,23 +73,21 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
-msgid "Save settings to:"
+msgid "Local configuration file:"
 msgstr ""
 
-msgid "Local configuration file (in current directory)"
+msgid "User configuration file:"
 msgstr ""
 
-msgid "User configuration file (geda-user.conf)"
-msgstr ""
-
-msgid "Object ~A is not included in the current gschem page."
+#, fuzzy
+msgid "Object ~A is not included in the current lepton-schematic page."
 msgstr "L'oggetto ~A non è incluso nella pagina di gschem corrente."
 
 msgid "Invalid text name/value visibility ~A."
 msgstr "Visibilità nome/valore testo non valida ~A."
 
 #, fuzzy, c-format
-msgid "You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
+msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
 msgstr "Stai usando gEDA/gaf versione [%s%s.%s],\n"
 
 #, fuzzy, c-format
@@ -92,69 +102,14 @@ msgstr ""
 msgid "Please be sure that you have the latest rc file.\n"
 msgstr "Assicurarsi di avere l'ultimo file rc.\n"
 
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to text-size\n"
-msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
-
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to snap-size\n"
-msgstr "Ampiezza non valida [%d], passata alla dimensione magnetismo\n"
-
-#, fuzzy, c-format
-msgid "Invalid num levels [%1$d] passed to undo-levels\n"
-msgstr ""
-"Il numero di livelli non valido [%d] passato ai livelli di annullamento\n"
-
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
-msgstr "Dimensione non valida [%d] passata a bus-ripper-size\n"
-
-#, fuzzy, c-format
-msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
-msgstr "Dimensione punto non valida [%d] passata a dots-grid-dot-size\n"
-
-#, fuzzy, c-format
-msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
-msgstr "Spaziatura pixel non valida [%d] passata a dots-grid-fixed-threshold\n"
-
-#, fuzzy, c-format
-msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
-msgstr ""
-"Spaziatura pixel non valida [%d] passata a mesh-grid-display-threshold\n"
-
-#, fuzzy, c-format
-msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
-msgstr ""
-"Il numero di secondi indicati [%d] non è valido ai fini dell'intervallo di "
-"auto salvataggio\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
-msgstr "Guadagno non valido [%d] passato a mousepan-gain\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
-msgstr "Guadagno non valido [%d] passato a keyboardpan-gain\n"
-
-#, fuzzy, c-format
-msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
-msgstr "Il numero [%d] di pixel indicati non è valido\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to zoom-gain\n"
-msgstr "Guadagno non valido [%d] passato a zoom-gain\n"
-
-#, fuzzy, c-format
-msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
-msgstr "Numero passi non valido [%d] scrollpan-steps\n"
-
 msgid "Object ~A is not directly included in a page."
 msgstr "L'oggetto ~A non è direttamente incluso in una pagina."
 
 msgid "Could not launch URI ~S: ~A"
 msgstr "Impossibile avviare l'URI ~S: ~A"
 
-msgid "Found invalid gschem window smob ~S"
+#, fuzzy
+msgid "Found invalid lepton-schematic window smob ~S"
 msgstr "Trovato smob finestra gschem non valido ~S"
 
 #, fuzzy, c-format
@@ -190,7 +145,7 @@ msgstr "gEDA: GPL Electronic Design Automation"
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2019 Lepton Developers.\n"
+"Copyright © 2017-2020 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Copyright © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -678,7 +633,8 @@ msgid ""
 "\n"
 "Are you sure you want to revert this page?\n"
 "All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk."
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
 msgstr ""
 
 #, fuzzy
@@ -790,10 +746,6 @@ msgid_plural "Delete %1$u locked objects?"
 msgstr[0] "Cancellare l'oggetto bloccato?"
 msgstr[1] "Cancellare i %u oggetti bloccati?"
 
-#, c-format
-msgid "Got an unexpected NULL in o_edit\n"
-msgstr "Ottenuto un NULL inaspettato in o_edit\n"
-
 #, fuzzy
 msgid "Hidden text is now visible"
 msgstr "Il testo nascosto è ora visibile\n"
@@ -809,7 +761,7 @@ msgstr ""
 "fallito.\n"
 
 #, fuzzy, c-format
-msgid "o_autosave_backups: Can't get the real filename of %1$s."
+msgid "Can't get the real filename of %1$s."
 msgstr "o_autosave_backups: Non è possibile ottenere il vero nome del file %s."
 
 #, fuzzy, c-format
@@ -827,10 +779,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Could NOT save backup file [%1$s]"
 msgstr "Non è possibile salvare il file di ripristino [%s]\n"
-
-#, c-format
-msgid "ERROR: NULL object in o_move_end!\n"
-msgstr "ERRORE: oggetto NULLO in o_move_end!\n"
 
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
@@ -885,7 +833,7 @@ msgid "New slot number out of range"
 msgstr "Numero del nuovo slot fuori dal limite\n"
 
 #, fuzzy
-msgid "Undo/Redo disabled in rc file"
+msgid "Undo/Redo is disabled in configuration"
 msgstr "Cancella/Ripristina disabilitato nel file rc\n"
 
 #, fuzzy, c-format
@@ -906,8 +854,8 @@ msgid ""
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+"Report bugs at <%2$s>\n"
+"Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 "Uso: %s [OPZIONE ...] [--] [FILE ...]\n"
 "\n"
@@ -932,30 +880,9 @@ msgstr ""
 "Riportare eventuali difetti su <https://bugs.launchpad.net/geda>\n"
 "Homepage di gEDA/gaf: <http://www.geda-project.org/>\n"
 
-#, fuzzy, c-format
-msgid ""
-"Lepton EDA %1$s (git: %2$.7s)\n"
-"Copyright (C) 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright (C) 2017-2019 Lepton Developers.\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
-"gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2012 sviluppatori gEDA\n"
-"Questo è software libero, è possibile la sua ridistribuzione sotto\n"
-"certe condizioni. Per i dettagli, vedere il file `COPYING', incluso\n"
-"nella distribuzione di gEDA.\n"
-"Non c'è ALCUNA GARANZIA, nei limiti di legge.\n"
-
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr "Ottenuta opzione mostra non valida; ritorno a mostra entrambi\n"
-
-#, c-format
-msgid "ERROR: NULL object!\n"
-msgstr "ERRORE: oggetto NULLO!\n"
 
 msgid "Single Attribute Editor"
 msgstr "Editor Singola Caratteristica"
@@ -1018,7 +945,7 @@ msgstr ""
 "slot=%d]\n"
 
 #, fuzzy
-msgid "No searchstring given in autonumber text."
+msgid "No search string given in autonumber text."
 msgstr "Nessuna stringa di ricerca nel testo di autonumerazione.\n"
 
 #, fuzzy
@@ -1097,24 +1024,6 @@ msgstr ""
 
 msgid "Clipboard insertion failed"
 msgstr "Inserimento appunti fallito"
-
-#, fuzzy, c-format
-msgid "Could not allocate the color %1$s!\n"
-msgstr "Non è possibile inserire il colore %s!\n"
-
-msgid "black"
-msgstr "nero"
-
-msgid "white"
-msgstr "bianco"
-
-#, fuzzy, c-format
-msgid "Could not allocate display color %1$i!\n"
-msgstr "Impossibile allocare il colore display %i!\n"
-
-#, fuzzy, c-format
-msgid "Could not allocate outline color %1$i!\n"
-msgstr "Impossibile allocare il colore outline %i!\n"
 
 #, fuzzy, c-format
 msgid "Tried to get an invalid color: %1$d\n"
@@ -1269,13 +1178,16 @@ msgstr ""
 msgid "Invalid Attribute"
 msgstr "Attributo non valido"
 
-msgid "Schematics"
+#, fuzzy
+msgid "Schematics (*.sch)"
 msgstr "Schemi"
 
-msgid "Symbols"
+#, fuzzy
+msgid "Symbols (*.sym)"
 msgstr "Simboli"
 
-msgid "Schematics and symbols"
+#, fuzzy
+msgid "Schematics and symbols (*.sch *.sym)"
 msgstr "Schemi e simboli"
 
 msgid "All files"
@@ -1317,7 +1229,7 @@ msgid "Hatch"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "x_image_lowlevel: Unable to write %1$s file %2$s."
+msgid "Unable to write %1$s file %2$s."
 msgstr "x_image_lowlevel: impossibile scrivere %s file %s.\n"
 
 #, fuzzy, c-format
@@ -1342,7 +1254,7 @@ msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
 msgstr "Scritta immagine in bianco e nero per [%s] [%d x %d]\n"
 
 #, fuzzy
-msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
+msgid "Unable to get pixbuf from lepton-schematic's window."
 msgstr ""
 "x_image_lowlevel: incapace ad ottenere immagine pixbuf dalla finestra di "
 "gschem.\n"
@@ -1393,69 +1305,61 @@ msgstr ""
 msgid "Phantom"
 msgstr ""
 
-msgid "Add Net"
-msgstr "Aggiungi net"
-
-msgid "Add Attribute"
-msgstr "Aggiungi attributo"
-
-msgid "Add Component"
+#, fuzzy
+msgid "Add Co_mponent..."
 msgstr "Aggiungi componente"
 
-msgid "Add Bus"
+#, fuzzy
+msgid "Add Te_xt..."
+msgstr "Aggiungi Testo..."
+
+#, fuzzy
+msgid "Add _Attribute..."
+msgstr "_Attributo..."
+
+#, fuzzy
+msgid "Add _Net"
+msgstr "Aggiungi net"
+
+#, fuzzy
+msgid "Add _Bus"
 msgstr "Aggiungi bus"
 
-msgid "Add Text"
-msgstr "Aggiungi testo"
+msgid "Cu_t"
+msgstr "_Taglia"
 
-msgid "Zoom In"
-msgstr "Zoom In"
+msgid "_Copy"
+msgstr "_Copia"
 
-msgid "Zoom Out"
-msgstr "Zoom Out"
+msgid "_Paste"
+msgstr "_Incolla"
 
-msgid "Zoom Extents"
-msgstr "Zoom alla pagina"
+msgid "_Delete"
+msgstr "_Elimina"
 
-msgid "Select"
-msgstr "Seleziona"
-
-msgid "Edit..."
+#, fuzzy
+msgid "_Edit..."
 msgstr "Modifica..."
 
 #, fuzzy
-msgid "Object Properties..."
+msgid "Ed_it Text..."
+msgstr "Modifica il testo..."
+
+#, fuzzy
+msgid "_Object Properties..."
 msgstr "<b>Opzioni</b>"
 
-msgid "Copy"
-msgstr "Copia"
-
-msgid "Move"
-msgstr "Sposta"
-
-msgid "Delete"
-msgstr "Cancella"
-
-msgid "Down Schematic"
+#, fuzzy
+msgid "Hierarchy: Down _Schematic"
 msgstr "Giu nello schema"
 
-msgid "Down Symbol"
+#, fuzzy
+msgid "Hierarchy: Down S_ymbol"
 msgstr "Giu nel simbolo"
 
-msgid "Up"
-msgstr "Su"
-
-#, fuzzy, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
-msgstr ""
-"Si è tentato di regolare la sensitività su un oggetto di menu inesistente "
-"%s\n"
-
-#, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
-msgstr ""
-"Si è tentato di regolare la sensitività su un oggetto di menu inesistente "
-"%s\n"
+#, fuzzy
+msgid "Hierarchy: _Up"
+msgstr "Ge_rarchia"
 
 msgid "The operating system is out of memory or resources."
 msgstr "Il sistema operativo ha terminato le risorse di memoria."
@@ -1478,6 +1382,9 @@ msgstr "Promuovi"
 msgid "Duplicate"
 msgstr "Duplica"
 
+msgid "Delete"
+msgstr "Cancella"
+
 msgid "Copy to all"
 msgstr "Copia in tutti"
 
@@ -1496,6 +1403,9 @@ msgstr "V"
 #, fuzzy
 msgid "Sho_w inherited attributes"
 msgstr "Mostra gli attributi ereditati"
+
+msgid "Add Attribute"
+msgstr "Aggiungi attributo"
 
 #, fuzzy
 msgid "_Name:"
@@ -1622,6 +1532,25 @@ msgstr "Ge_rarchia"
 msgid "Hierarchy up"
 msgstr "Ge_rarchia"
 
+msgid "_New"
+msgstr "_Nuovo"
+
+msgid "_Open..."
+msgstr "_Apri..."
+
+msgid "_Save"
+msgstr "_Salva"
+
+msgid "Save _As..."
+msgstr "Salva _come..."
+
+#, fuzzy
+msgid "Page _Manager..."
+msgstr "Gestore Pagina"
+
+msgid "_Close"
+msgstr "_Chiudi"
+
 #, fuzzy
 msgid "Options"
 msgstr "_Opzioni"
@@ -1745,6 +1674,9 @@ msgstr ""
 msgid "Add Text..."
 msgstr "Aggiungi Testo..."
 
+msgid "Select"
+msgstr "Seleziona"
+
 msgid "Select mode"
 msgstr "Modalità Selezione"
 
@@ -1814,20 +1746,8 @@ msgstr "Editor di schemi gEDA"
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr "Crea e modifica schemi elettrici e simboli con gschem"
 
-msgid "_New"
-msgstr "_Nuovo"
-
-msgid "_Open..."
-msgstr "_Apri..."
-
 msgid "Open Recen_t"
 msgstr "Apri recen_ti"
-
-msgid "_Save"
-msgstr "_Salva"
-
-msgid "Save _As..."
-msgstr "Salva _come..."
 
 msgid "Save All"
 msgstr "Salva tutto"
@@ -1861,18 +1781,6 @@ msgstr "Ann_ulla"
 msgid "_Redo"
 msgstr "_Ripeti"
 
-msgid "Cu_t"
-msgstr "_Taglia"
-
-msgid "_Copy"
-msgstr "_Copia"
-
-msgid "_Paste"
-msgstr "_Incolla"
-
-msgid "_Delete"
-msgstr "_Elimina"
-
 msgid "Select All"
 msgstr "Seleziona tutto"
 
@@ -1881,6 +1789,13 @@ msgstr "Deseleziona"
 
 msgid "Rotate 90 Mode"
 msgstr "Ruota di 90 gradi"
+
+#, fuzzy
+msgid "Object Properties..."
+msgstr "<b>Opzioni</b>"
+
+msgid "Edit..."
+msgstr "Modifica..."
 
 msgid "Edit Text..."
 msgstr "Modifica il testo..."
@@ -2005,9 +1920,6 @@ msgstr "_Precedente"
 msgid "_Next"
 msgstr "_Successivo"
 
-msgid "_Close"
-msgstr "_Chiudi"
-
 #, fuzzy
 msgid "_Revert..."
 msgstr "_Ripristina"
@@ -2119,6 +2031,9 @@ msgid "Grid Style: Cycle Dots/Mesh/Off"
 msgstr ""
 
 msgid "Grid Snap: Cycle Grid/Resnap/Off"
+msgstr ""
+
+msgid "Grips: On/Off"
 msgstr ""
 
 #, fuzzy
@@ -2261,6 +2176,9 @@ msgstr "Mostra/Nascondi testo invisibile"
 msgid "Cut"
 msgstr "Taglia"
 
+msgid "Copy"
+msgstr "Copia"
+
 msgid "Paste"
 msgstr "Incolla"
 
@@ -2285,6 +2203,15 @@ msgstr "Trascina in su"
 
 msgid "Pan Down"
 msgstr "Trascina in giù"
+
+msgid "Zoom Extents"
+msgstr "Zoom alla pagina"
+
+msgid "Zoom In"
+msgstr "Zoom In"
+
+msgid "Zoom Out"
+msgstr "Zoom Out"
 
 msgid "Zoom Full"
 msgstr "Zoom tutto"
@@ -2314,6 +2241,18 @@ msgstr "Pagina successiva"
 msgid "Print Page"
 msgstr "Stampa pagina"
 
+msgid "Add Component"
+msgstr "Aggiungi componente"
+
+msgid "Add Net"
+msgstr "Aggiungi net"
+
+msgid "Add Bus"
+msgstr "Aggiungi bus"
+
+msgid "Add Text"
+msgstr "Aggiungi testo"
+
 msgid "Add Line"
 msgstr "Aggiungi linea"
 
@@ -2334,6 +2273,12 @@ msgstr "Aggiungi pin"
 
 msgid "Add Picture"
 msgstr "Aggiungi immagine"
+
+msgid "Down Schematic"
+msgstr "Giu nello schema"
+
+msgid "Down Symbol"
+msgstr "Giu nel simbolo"
 
 msgid "Up Hierarchy"
 msgstr "Su nella gerarchia"
@@ -2406,6 +2351,10 @@ msgstr "Mostra la finestra di log"
 msgid "Show Coordinate Window"
 msgstr "Mostra la finestra coordinate"
 
+#, fuzzy
+msgid "Toggle Grips"
+msgstr "Commu_ta Visibilità"
+
 msgid "Component Documentation"
 msgstr "Documentazione componente"
 
@@ -2449,10 +2398,6 @@ msgstr "Visualizza la pagina principale del wiki di gEDA in un browser."
 msgid "About lepton-schematic"
 msgstr "Informazioni su gschem"
 
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr "Allineamento testo non valido ~A."
-
 #, fuzzy
 msgid "Could not show documentation:"
 msgstr ""
@@ -2469,6 +2414,129 @@ msgstr "~S non è una combinazione di tasti valida."
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr "~S non è un prefisso di sequenza di tasti."
+
+#, scheme-format
+msgid "Invalid text alignment ~A."
+msgstr "Allineamento testo non valido ~A."
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to text-size\n"
+#~ msgstr "Grandezza [%d] passata alla dimensione del testo, non valida\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to snap-size\n"
+#~ msgstr "Ampiezza non valida [%d], passata alla dimensione magnetismo\n"
+
+#, fuzzy
+#~ msgid "Invalid num levels [%1$d] passed to undo-levels\n"
+#~ msgstr ""
+#~ "Il numero di livelli non valido [%d] passato ai livelli di annullamento\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
+#~ msgstr "Dimensione non valida [%d] passata a bus-ripper-size\n"
+
+#, fuzzy
+#~ msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
+#~ msgstr "Dimensione punto non valida [%d] passata a dots-grid-dot-size\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
+#~ msgstr ""
+#~ "Spaziatura pixel non valida [%d] passata a dots-grid-fixed-threshold\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
+#~ msgstr ""
+#~ "Spaziatura pixel non valida [%d] passata a mesh-grid-display-threshold\n"
+
+#, fuzzy
+#~ msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
+#~ msgstr ""
+#~ "Il numero di secondi indicati [%d] non è valido ai fini dell'intervallo "
+#~ "di auto salvataggio\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
+#~ msgstr "Guadagno non valido [%d] passato a mousepan-gain\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
+#~ msgstr "Guadagno non valido [%d] passato a keyboardpan-gain\n"
+
+#, fuzzy
+#~ msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
+#~ msgstr "Il numero [%d] di pixel indicati non è valido\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to zoom-gain\n"
+#~ msgstr "Guadagno non valido [%d] passato a zoom-gain\n"
+
+#, fuzzy
+#~ msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
+#~ msgstr "Numero passi non valido [%d] scrollpan-steps\n"
+
+#~ msgid "Got an unexpected NULL in o_edit\n"
+#~ msgstr "Ottenuto un NULL inaspettato in o_edit\n"
+
+#~ msgid "ERROR: NULL object in o_move_end!\n"
+#~ msgstr "ERRORE: oggetto NULLO in o_move_end!\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Lepton EDA %1$s (git: %2$.7s)\n"
+#~ "Copyright (C) 1998-2017 by Ales Hvezda and the respective original "
+#~ "authors.\n"
+#~ "Copyright (C) 2017-2019 Lepton Developers.\n"
+#~ "This is free software, and you are welcome to redistribute it under\n"
+#~ "certain conditions. For details, see the file `COPYING', which is\n"
+#~ "included in the Lepton EDA distribution.\n"
+#~ "There is NO WARRANTY, to the extent permitted by law.\n"
+#~ msgstr ""
+#~ "gEDA %s (g%.7s)\n"
+#~ "Copyright (C) 1998-2012 sviluppatori gEDA\n"
+#~ "Questo è software libero, è possibile la sua ridistribuzione sotto\n"
+#~ "certe condizioni. Per i dettagli, vedere il file `COPYING', incluso\n"
+#~ "nella distribuzione di gEDA.\n"
+#~ "Non c'è ALCUNA GARANZIA, nei limiti di legge.\n"
+
+#~ msgid "ERROR: NULL object!\n"
+#~ msgstr "ERRORE: oggetto NULLO!\n"
+
+#, fuzzy
+#~ msgid "Could not allocate the color %1$s!\n"
+#~ msgstr "Non è possibile inserire il colore %s!\n"
+
+#~ msgid "black"
+#~ msgstr "nero"
+
+#~ msgid "white"
+#~ msgstr "bianco"
+
+#, fuzzy
+#~ msgid "Could not allocate display color %1$i!\n"
+#~ msgstr "Impossibile allocare il colore display %i!\n"
+
+#, fuzzy
+#~ msgid "Could not allocate outline color %1$i!\n"
+#~ msgstr "Impossibile allocare il colore outline %i!\n"
+
+#~ msgid "Move"
+#~ msgstr "Sposta"
+
+#~ msgid "Up"
+#~ msgstr "Su"
+
+#, fuzzy
+#~ msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
+#~ msgstr ""
+#~ "Si è tentato di regolare la sensitività su un oggetto di menu inesistente "
+#~ "%s\n"
+
+#~ msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
+#~ msgstr ""
+#~ "Si è tentato di regolare la sensitività su un oggetto di menu inesistente "
+#~ "%s\n"
 
 #, fuzzy
 #~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"

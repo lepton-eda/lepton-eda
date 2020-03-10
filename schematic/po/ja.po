@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:34+0300\n"
+"POT-Creation-Date: 2020-03-18 20:44+0300\n"
 "PO-Revision-Date: 2012-01-31 12:07+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -21,6 +21,13 @@ msgstr ""
 #, fuzzy
 msgid "Zoom too small!  Cannot zoom further."
 msgstr "これ以上ズームできません。\n"
+
+msgid ""
+"Save your color scheme to a file by clicking on the \"Save As...\"\n"
+"button. It can be loaded on startup with the following\n"
+"expression in the gschemrc configuration file:\n"
+"( primitive-load \"/path/to/saved-color-scheme-file\" )"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -48,6 +55,11 @@ msgstr ""
 msgid "Sa_ve..."
 msgstr ""
 
+msgid ""
+"After you're done choosing the font, it's recommended\n"
+"to reopen schematics or restart the application."
+msgstr ""
+
 #, c-format
 msgid "<b>Current:</b> %s"
 msgstr ""
@@ -55,23 +67,20 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
-msgid "Save settings to:"
+msgid "Local configuration file:"
 msgstr ""
 
-msgid "Local configuration file (in current directory)"
+msgid "User configuration file:"
 msgstr ""
 
-msgid "User configuration file (geda-user.conf)"
-msgstr ""
-
-msgid "Object ~A is not included in the current gschem page."
+msgid "Object ~A is not included in the current lepton-schematic page."
 msgstr ""
 
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
 #, c-format
-msgid "You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
+msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
 msgstr ""
 
 #, c-format
@@ -84,65 +93,13 @@ msgstr ""
 msgid "Please be sure that you have the latest rc file.\n"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to text-size\n"
-msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
-
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to snap-size\n"
-msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
-
-#, fuzzy, c-format
-msgid "Invalid num levels [%1$d] passed to undo-levels\n"
-msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
-
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
-msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
-
-#, fuzzy, c-format
-msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
-msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
-
-#, fuzzy, c-format
-msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
-msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
-
-#, fuzzy, c-format
-msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
-msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
-
-#, fuzzy, c-format
-msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
-msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
-msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
-msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
-
-#, fuzzy, c-format
-msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
-msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to zoom-gain\n"
-msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
-
-#, c-format
-msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
-msgstr ""
-
 msgid "Object ~A is not directly included in a page."
 msgstr ""
 
 msgid "Could not launch URI ~S: ~A"
 msgstr ""
 
-msgid "Found invalid gschem window smob ~S"
+msgid "Found invalid lepton-schematic window smob ~S"
 msgstr ""
 
 #, c-format
@@ -173,7 +130,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2019 Lepton Developers.\n"
+"Copyright © 2017-2020 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -633,7 +590,8 @@ msgid ""
 "\n"
 "Are you sure you want to revert this page?\n"
 "All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk."
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
 msgstr ""
 
 #, fuzzy
@@ -736,10 +694,6 @@ msgid_plural "Delete %1$u locked objects?"
 msgstr[0] ""
 msgstr[1] ""
 
-#, c-format
-msgid "Got an unexpected NULL in o_edit\n"
-msgstr ""
-
 #, fuzzy
 msgid "Hidden text is now visible"
 msgstr "隠しテキストが表示されました。\n"
@@ -753,7 +707,7 @@ msgid "Could not find symbol [%1$s] in library. Update failed."
 msgstr ""
 
 #, c-format
-msgid "o_autosave_backups: Can't get the real filename of %1$s."
+msgid "Can't get the real filename of %1$s."
 msgstr ""
 
 #, c-format
@@ -766,10 +720,6 @@ msgstr ""
 
 #, c-format
 msgid "Could NOT save backup file [%1$s]"
-msgstr ""
-
-#, c-format
-msgid "ERROR: NULL object in o_move_end!\n"
 msgstr ""
 
 #, c-format
@@ -822,7 +772,7 @@ msgid "New slot number out of range"
 msgstr "スロット番号が範囲を越えています。\n"
 
 #, fuzzy
-msgid "Undo/Redo disabled in rc file"
+msgid "Undo/Redo is disabled in configuration"
 msgstr "アンドゥ/リドゥはrcファイルで無効に設定されています。\n"
 
 #, c-format
@@ -843,27 +793,12 @@ msgid ""
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"Lepton EDA %1$s (git: %2$.7s)\n"
-"Copyright (C) 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright (C) 2017-2019 Lepton Developers.\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
+"Report bugs at <%2$s>\n"
+"Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
-msgstr ""
-
-#, c-format
-msgid "ERROR: NULL object!\n"
 msgstr ""
 
 msgid "Single Attribute Editor"
@@ -921,7 +856,7 @@ msgid ""
 "duplicate slot may cause problems: [symbolname=%1$s, number=%2$d, slot=%3$d]"
 msgstr ""
 
-msgid "No searchstring given in autonumber text."
+msgid "No search string given in autonumber text."
 msgstr ""
 
 msgid "No '*' or '?' given at the end of the autonumber text."
@@ -996,24 +931,6 @@ msgstr ""
 
 msgid "Clipboard insertion failed"
 msgstr ""
-
-#, fuzzy, c-format
-msgid "Could not allocate the color %1$s!\n"
-msgstr "指定できない色[%s]です!\n"
-
-msgid "black"
-msgstr "黒"
-
-msgid "white"
-msgstr "白"
-
-#, fuzzy, c-format
-msgid "Could not allocate display color %1$i!\n"
-msgstr "指定できない色[%s]です!\n"
-
-#, fuzzy, c-format
-msgid "Could not allocate outline color %1$i!\n"
-msgstr "指定できない色[%s]です!\n"
 
 #, fuzzy, c-format
 msgid "Tried to get an invalid color: %1$d\n"
@@ -1154,13 +1071,13 @@ msgstr ""
 msgid "Invalid Attribute"
 msgstr ""
 
-msgid "Schematics"
+msgid "Schematics (*.sch)"
 msgstr ""
 
-msgid "Symbols"
+msgid "Symbols (*.sym)"
 msgstr ""
 
-msgid "Schematics and symbols"
+msgid "Schematics and symbols (*.sch *.sym)"
 msgstr ""
 
 msgid "All files"
@@ -1195,9 +1112,9 @@ msgstr "メッシュ"
 msgid "Hatch"
 msgstr "ハッチ"
 
-#, c-format
-msgid "x_image_lowlevel: Unable to write %1$s file %2$s."
-msgstr ""
+#, fuzzy, c-format
+msgid "Unable to write %1$s file %2$s."
+msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 
 #, c-format
 msgid ""
@@ -1215,7 +1132,7 @@ msgstr "カラーイメージを出力しました。[%s] [%d x %d]\n"
 msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
 msgstr "白黒イメージを出力しました。[%s] [%d x %d]\n"
 
-msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
+msgid "Unable to get pixbuf from lepton-schematic's window."
 msgstr ""
 
 msgid "NOTE: print-color-map will be used for PDF export"
@@ -1265,69 +1182,56 @@ msgid "Phantom"
 msgstr "ファントム"
 
 #, fuzzy
-msgid "Add Net"
-msgstr "テキスト追加..."
-
-msgid "Add Attribute"
-msgstr ""
-
-#, fuzzy
-msgid "Add Component"
+msgid "Add Co_mponent..."
 msgstr "部品"
 
-msgid "Add Bus"
-msgstr ""
-
 #, fuzzy
-msgid "Add Text"
+msgid "Add Te_xt..."
 msgstr "テキスト追加..."
 
 #, fuzzy
-msgid "Zoom In"
-msgstr "拡大(_I)"
+msgid "Add _Attribute..."
+msgstr "アトリビュート(_A)"
 
 #, fuzzy
-msgid "Zoom Out"
-msgstr "縮小(_O)"
+msgid "Add _Net"
+msgstr "テキスト追加..."
+
+msgid "Add _Bus"
+msgstr ""
+
+msgid "Cu_t"
+msgstr "切り取り(_T)"
+
+msgid "_Copy"
+msgstr "コピー(_C)"
+
+msgid "_Paste"
+msgstr "貼り付け(_P)"
+
+msgid "_Delete"
+msgstr "削除(_D)"
 
 #, fuzzy
-msgid "Zoom Extents"
-msgstr "回路全体の表示(_E)"
-
-msgid "Select"
-msgstr "選択"
-
-msgid "Edit..."
+msgid "_Edit..."
 msgstr "編集..."
 
-msgid "Object Properties..."
+#, fuzzy
+msgid "Ed_it Text..."
+msgstr "テキスト編集..."
+
+msgid "_Object Properties..."
 msgstr ""
 
-msgid "Copy"
-msgstr "コピー"
-
-msgid "Move"
-msgstr "移動"
-
-msgid "Delete"
-msgstr "削除"
-
-msgid "Down Schematic"
+msgid "Hierarchy: Down _Schematic"
 msgstr ""
 
-msgid "Down Symbol"
+msgid "Hierarchy: Down S_ymbol"
 msgstr ""
 
-msgid "Up"
-msgstr ""
-
-#, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
-msgstr ""
-
-#, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
-msgstr ""
+#, fuzzy
+msgid "Hierarchy: _Up"
+msgstr "階層"
 
 msgid "The operating system is out of memory or resources."
 msgstr ""
@@ -1350,6 +1254,9 @@ msgstr ""
 msgid "Duplicate"
 msgstr ""
 
+msgid "Delete"
+msgstr "削除"
+
 #, fuzzy
 msgid "Copy to all"
 msgstr "コピー1"
@@ -1369,6 +1276,9 @@ msgstr "値"
 #, fuzzy
 msgid "Sho_w inherited attributes"
 msgstr "アトリビュート編集"
+
+msgid "Add Attribute"
+msgstr ""
 
 #, fuzzy
 msgid "_Name:"
@@ -1479,6 +1389,25 @@ msgstr "階層"
 #, fuzzy
 msgid "Hierarchy up"
 msgstr "階層"
+
+msgid "_New"
+msgstr "新規(_N)"
+
+msgid "_Open..."
+msgstr "開く(_O)..."
+
+msgid "_Save"
+msgstr "保存(_S)"
+
+msgid "Save _As..."
+msgstr "別名で保存(_A)..."
+
+#, fuzzy
+msgid "Page _Manager..."
+msgstr "ページマネージャ"
+
+msgid "_Close"
+msgstr "閉じる(_C)"
 
 #, fuzzy
 msgid "Options"
@@ -1599,6 +1528,9 @@ msgstr ""
 msgid "Add Text..."
 msgstr "テキスト追加..."
 
+msgid "Select"
+msgstr "選択"
+
 msgid "Select mode"
 msgstr "選択モード"
 
@@ -1662,20 +1594,8 @@ msgstr ""
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr ""
 
-msgid "_New"
-msgstr "新規(_N)"
-
-msgid "_Open..."
-msgstr "開く(_O)..."
-
 msgid "Open Recen_t"
 msgstr "最近使用したファイル(_T)"
-
-msgid "_Save"
-msgstr "保存(_S)"
-
-msgid "Save _As..."
-msgstr "別名で保存(_A)..."
 
 msgid "Save All"
 msgstr "すべて保存"
@@ -1709,18 +1629,6 @@ msgstr "元に戻す(_U)"
 msgid "_Redo"
 msgstr "やり直す(_R)"
 
-msgid "Cu_t"
-msgstr "切り取り(_T)"
-
-msgid "_Copy"
-msgstr "コピー(_C)"
-
-msgid "_Paste"
-msgstr "貼り付け(_P)"
-
-msgid "_Delete"
-msgstr "削除(_D)"
-
 msgid "Select All"
 msgstr ""
 
@@ -1729,6 +1637,12 @@ msgstr ""
 
 msgid "Rotate 90 Mode"
 msgstr "90度回転モード"
+
+msgid "Object Properties..."
+msgstr ""
+
+msgid "Edit..."
+msgstr "編集..."
 
 msgid "Edit Text..."
 msgstr "テキスト編集..."
@@ -1852,9 +1766,6 @@ msgstr "前のページ(_P)"
 msgid "_Next"
 msgstr "次のページ(_N)"
 
-msgid "_Close"
-msgstr "閉じる(_C)"
-
 #, fuzzy
 msgid "_Revert..."
 msgstr "再読み込み(_R)"
@@ -1966,6 +1877,9 @@ msgid "Grid Style: Cycle Dots/Mesh/Off"
 msgstr ""
 
 msgid "Grid Snap: Cycle Grid/Resnap/Off"
+msgstr ""
+
+msgid "Grips: On/Off"
 msgstr ""
 
 msgid "Feedback Mode: Outline/Box"
@@ -2114,6 +2028,9 @@ msgstr "テキスト表示/非表示"
 msgid "Cut"
 msgstr "切り取り(_T)"
 
+msgid "Copy"
+msgstr "コピー"
+
 #, fuzzy
 msgid "Paste"
 msgstr "貼り付け(_P)"
@@ -2143,6 +2060,18 @@ msgstr ""
 #, fuzzy
 msgid "Pan Down"
 msgstr "パンモード"
+
+#, fuzzy
+msgid "Zoom Extents"
+msgstr "回路全体の表示(_E)"
+
+#, fuzzy
+msgid "Zoom In"
+msgstr "拡大(_I)"
+
+#, fuzzy
+msgid "Zoom Out"
+msgstr "縮小(_O)"
 
 #, fuzzy
 msgid "Zoom Full"
@@ -2179,6 +2108,21 @@ msgid "Print Page"
 msgstr "前のページ(_P)"
 
 #, fuzzy
+msgid "Add Component"
+msgstr "部品"
+
+#, fuzzy
+msgid "Add Net"
+msgstr "テキスト追加..."
+
+msgid "Add Bus"
+msgstr ""
+
+#, fuzzy
+msgid "Add Text"
+msgstr "テキスト追加..."
+
+#, fuzzy
 msgid "Add Line"
 msgstr "線"
 
@@ -2201,6 +2145,12 @@ msgstr ""
 #, fuzzy
 msgid "Add Picture"
 msgstr "画像(_R)"
+
+msgid "Down Schematic"
+msgstr ""
+
+msgid "Down Symbol"
+msgstr ""
 
 #, fuzzy
 msgid "Up Hierarchy"
@@ -2282,6 +2232,9 @@ msgstr "新規ウィンドウ"
 msgid "Show Coordinate Window"
 msgstr "現在のウィンドウ"
 
+msgid "Toggle Grips"
+msgstr ""
+
 #, fuzzy
 msgid "Component Documentation"
 msgstr "部品モード"
@@ -2317,10 +2270,6 @@ msgstr ""
 msgid "About lepton-schematic"
 msgstr ""
 
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr ""
-
 #, fuzzy
 msgid "Could not show documentation:"
 msgstr "部品モード"
@@ -2335,6 +2284,79 @@ msgstr ""
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr ""
+
+#, scheme-format
+msgid "Invalid text alignment ~A."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to text-size\n"
+#~ msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to snap-size\n"
+#~ msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Invalid num levels [%1$d] passed to undo-levels\n"
+#~ msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
+#~ msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
+#~ msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
+#~ msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
+#~ msgstr "無効なサイズ[%d]がbus-ripperに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
+#~ msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
+#~ msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
+#~ msgstr "無効なサイズ[%d]がsnap-sizeに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
+#~ msgstr "無効なアンドゥレベル[%d]がundo-levelsに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to zoom-gain\n"
+#~ msgstr "無効なサイズ[%d]がtext-sizeに指定されました。\n"
+
+#, fuzzy
+#~ msgid "Could not allocate the color %1$s!\n"
+#~ msgstr "指定できない色[%s]です!\n"
+
+#~ msgid "black"
+#~ msgstr "黒"
+
+#~ msgid "white"
+#~ msgstr "白"
+
+#, fuzzy
+#~ msgid "Could not allocate display color %1$i!\n"
+#~ msgstr "指定できない色[%s]です!\n"
+
+#, fuzzy
+#~ msgid "Could not allocate outline color %1$i!\n"
+#~ msgstr "指定できない色[%s]です!\n"
+
+#~ msgid "Move"
+#~ msgstr "移動"
 
 #, fuzzy
 #~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"

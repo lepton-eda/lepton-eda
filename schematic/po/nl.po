@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2019-10-03 23:34+0300\n"
+"POT-Creation-Date: 2020-03-18 20:44+0300\n"
 "PO-Revision-Date: 2014-08-31 22:35+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -21,6 +21,13 @@ msgstr ""
 #, fuzzy
 msgid "Zoom too small!  Cannot zoom further."
 msgstr "Vergroting te klein! Kan niet verder vergroten.\n"
+
+msgid ""
+"Save your color scheme to a file by clicking on the \"Save As...\"\n"
+"button. It can be loaded on startup with the following\n"
+"expression in the gschemrc configuration file:\n"
+"( primitive-load \"/path/to/saved-color-scheme-file\" )"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -51,6 +58,11 @@ msgstr ""
 msgid "Sa_ve..."
 msgstr ""
 
+msgid ""
+"After you're done choosing the font, it's recommended\n"
+"to reopen schematics or restart the application."
+msgstr ""
+
 #, c-format
 msgid "<b>Current:</b> %s"
 msgstr ""
@@ -58,24 +70,21 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "Local configuration file:"
+msgstr ""
+
+msgid "User configuration file:"
+msgstr ""
+
 #, fuzzy
-msgid "Save settings to:"
-msgstr "Instellingen"
-
-msgid "Local configuration file (in current directory)"
-msgstr ""
-
-msgid "User configuration file (geda-user.conf)"
-msgstr ""
-
-msgid "Object ~A is not included in the current gschem page."
+msgid "Object ~A is not included in the current lepton-schematic page."
 msgstr "Objekt ~A is niet bijgevoegd in de huidige gschem pagina."
 
 msgid "Invalid text name/value visibility ~A."
 msgstr "Ongeldige tekst naam/waarde zichtbaarheid ~A."
 
 #, fuzzy, c-format
-msgid "You are running gEDA/gaf version [%1$s%2$s.%3$s],\n"
+msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
 msgstr "U gebruikt gEDA/gaf versie [%s%s.%s],\n"
 
 #, fuzzy, c-format
@@ -90,69 +99,14 @@ msgstr ""
 msgid "Please be sure that you have the latest rc file.\n"
 msgstr "Wees alstublieft zeker dat U het laatste rc bestand heeft.\n"
 
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to text-size\n"
-msgstr "Ongeldige waarde [%d] overgedragen aan text-size\n"
-
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to snap-size\n"
-msgstr "Ongeldige waarde [%d] overgedragen aan snap-size\n"
-
-#, fuzzy, c-format
-msgid "Invalid num levels [%1$d] passed to undo-levels\n"
-msgstr "Ongeldige num niveaus [%d] overgedragen naar undo-levels\n"
-
-#, fuzzy, c-format
-msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
-msgstr "Ongeldige afmeting [%d] overgedragen aan bus-ripper-size\n"
-
-#, fuzzy, c-format
-msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
-msgstr "Ongeldige punt afmeting [%d] overgedragen aan dots-grid-dot-size\n"
-
-#, fuzzy, c-format
-msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
-msgstr ""
-"Ongeldige beeldpunt ruimte [%d] overgedragen aan dots-grid-fixed-threshold\n"
-
-#, fuzzy, c-format
-msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
-msgstr ""
-"Ongeldige beeldpunt ruimte [%d] overgedragen aan mesh-grid-display-"
-"threshold\n"
-
-#, fuzzy, c-format
-msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
-msgstr "Ongeldig aantal seconden [%d] overgedragen naar auto-save-interval\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
-msgstr "Ongeldige versterking [%d] overgedragen aan mousepan-gain\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
-msgstr "Ongeldige versterking [%d] overgedragen aan keyboardpan-gain\n"
-
-#, fuzzy, c-format
-msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
-msgstr ""
-"Ongeldig aantal beeldpunten [%d] overgedragen aan select-slack-pixels\n"
-
-#, fuzzy, c-format
-msgid "Invalid gain [%1$d] passed to zoom-gain\n"
-msgstr "Ongeldige versterking [%d] overgedragen aan zoom-gain\n"
-
-#, fuzzy, c-format
-msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
-msgstr "Ongeldig aantal stappen [%d] scrollpan-steps\n"
-
 msgid "Object ~A is not directly included in a page."
 msgstr "Object ~A is niet direct bijgevoegd in een pagina."
 
 msgid "Could not launch URI ~S: ~A"
 msgstr "Kan URI ~S: ~A niet starten"
 
-msgid "Found invalid gschem window smob ~S"
+#, fuzzy
+msgid "Found invalid lepton-schematic window smob ~S"
 msgstr "Ongeldige gschem venster smob ~S gevonden"
 
 #, fuzzy, c-format
@@ -188,7 +142,7 @@ msgstr "gEDA: GPL Elektronische Ontwerp Automatisering"
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2019 Lepton Developers.\n"
+"Copyright © 2017-2020 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Copyright © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -675,7 +629,8 @@ msgid ""
 "\n"
 "Are you sure you want to revert this page?\n"
 "All unsaved changes in current schematic will be\n"
-"discarded and page file will be reloaded from disk."
+"discarded and page file will be reloaded from disk.\n"
+"This action will also reload all component libraries."
 msgstr ""
 
 #, fuzzy
@@ -787,10 +742,6 @@ msgid_plural "Delete %1$u locked objects?"
 msgstr[0] "Verwijder vergrendeld object?"
 msgstr[1] "Verwijder %u vergrendelde objecten?"
 
-#, c-format
-msgid "Got an unexpected NULL in o_edit\n"
-msgstr "Ontving een onverwachte NULL in o_edit\n"
-
 #, fuzzy
 msgid "Hidden text is now visible"
 msgstr "Verborgen tekst is nu zichtbaar\n"
@@ -804,7 +755,7 @@ msgid "Could not find symbol [%1$s] in library. Update failed."
 msgstr "Kan symbool [%s] niet in bibliotheek vinden. Vernieuwen faalde.\n"
 
 #, fuzzy, c-format
-msgid "o_autosave_backups: Can't get the real filename of %1$s."
+msgid "Can't get the real filename of %1$s."
 msgstr "o_autosave_backups: Kan de echte bestandsnaam van %s niet krijgen."
 
 #, fuzzy, c-format
@@ -820,10 +771,6 @@ msgstr "Reserve bestand [%s] kan NIET op alleen-lezen ingesteld worden\n"
 #, fuzzy, c-format
 msgid "Could NOT save backup file [%1$s]"
 msgstr "Reserve bestand [%s] kan NIET opgeslagen worden\n"
-
-#, c-format
-msgid "ERROR: NULL object in o_move_end!\n"
-msgstr "FOUT: NULL object in o_move_end!\n"
 
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
@@ -879,7 +826,7 @@ msgid "New slot number out of range"
 msgstr "Nieuw slotnummer buiten het bereik\n"
 
 #, fuzzy
-msgid "Undo/Redo disabled in rc file"
+msgid "Undo/Redo is disabled in configuration"
 msgstr "Ongedaan/Opnieuw doen uitgeschakeld in rc bestand\n"
 
 #, fuzzy, c-format
@@ -900,8 +847,8 @@ msgid ""
 "  -h, --help               Help; this message.\n"
 "  --                       Treat all remaining arguments as filenames.\n"
 "\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+"Report bugs at <%2$s>\n"
+"Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 "Gebruik: %s [OPTIE ...] [--] [BESTAND ...]\n"
 "\n"
@@ -927,30 +874,9 @@ msgstr ""
 "Rapporteer fouten aan <https://bugs.launchpad.net/geda>\n"
 "gEDA/gaf startpagina: <http://www.geda-project.org/>\n"
 
-#, fuzzy, c-format
-msgid ""
-"Lepton EDA %1$s (git: %2$.7s)\n"
-"Copyright (C) 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright (C) 2017-2019 Lepton Developers.\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
-"gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2012 gEDA developers\n"
-"Dit is vrije software, en U bent welkom om deze te herdistribueren onder\n"
-"bepaalde condities. Voor details, zie het bestand `COPYING', welke is\n"
-"bijgevoegd in de gEDA distributie.\n"
-"Er is GEEN GARANTIE, voor zover de wet dit toelaat.\n"
-
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr "Kreeg ongeldige toon optie; standaardwaarde is toon beide\n"
-
-#, c-format
-msgid "ERROR: NULL object!\n"
-msgstr "FOUT: NULL object!\n"
 
 msgid "Single Attribute Editor"
 msgstr "Enkelvoudige Attribuut Bewerking"
@@ -1012,7 +938,7 @@ msgstr ""
 "een dubbel slot kan een probleem geven: [symbolname=%s, number=%d, slot=%d]\n"
 
 #, fuzzy
-msgid "No searchstring given in autonumber text."
+msgid "No search string given in autonumber text."
 msgstr "Geen zoektekst gegeven in automatisch nummeren tekst.\n"
 
 #, fuzzy
@@ -1092,24 +1018,6 @@ msgstr ""
 
 msgid "Clipboard insertion failed"
 msgstr "Klembord invoegen faalde"
-
-#, fuzzy, c-format
-msgid "Could not allocate the color %1$s!\n"
-msgstr "Kan de kleur %s niet toewijzen!\n"
-
-msgid "black"
-msgstr "zwart"
-
-msgid "white"
-msgstr "wit"
-
-#, fuzzy, c-format
-msgid "Could not allocate display color %1$i!\n"
-msgstr "Kan scherm kleur %i niet toewijzen!\n"
-
-#, fuzzy, c-format
-msgid "Could not allocate outline color %1$i!\n"
-msgstr "Kan de omlijning kleur %i niet toewijzen!\n"
 
 #, fuzzy, c-format
 msgid "Tried to get an invalid color: %1$d\n"
@@ -1258,13 +1166,16 @@ msgstr ""
 msgid "Invalid Attribute"
 msgstr "Ongeldig Attribuut"
 
-msgid "Schematics"
+#, fuzzy
+msgid "Schematics (*.sch)"
 msgstr "Schema's"
 
-msgid "Symbols"
+#, fuzzy
+msgid "Symbols (*.sym)"
 msgstr "Symbolen"
 
-msgid "Schematics and symbols"
+#, fuzzy
+msgid "Schematics and symbols (*.sch *.sym)"
 msgstr "Schema's en symbolen"
 
 msgid "All files"
@@ -1306,7 +1217,7 @@ msgid "Hatch"
 msgstr "Arcering"
 
 #, fuzzy, c-format
-msgid "x_image_lowlevel: Unable to write %1$s file %2$s."
+msgid "Unable to write %1$s file %2$s."
 msgstr "x_image_lowlevel: Kan %s bestand %s niet schrijven.\n"
 
 #, fuzzy, c-format
@@ -1331,7 +1242,7 @@ msgid "Wrote black and white image to [%1$s] [%2$d x %3$d]"
 msgstr "Schreef zwart/wit afbeelding naar [%s] [%d x %d]\n"
 
 #, fuzzy
-msgid "x_image_lowlevel: Unable to get pixbuf from gschem's window."
+msgid "Unable to get pixbuf from lepton-schematic's window."
 msgstr "x_image_lowlevel: Kan geen pixbuf krijgen van gschem's venster.\n"
 
 msgid "NOTE: print-color-map will be used for PDF export"
@@ -1380,67 +1291,61 @@ msgstr "Hart"
 msgid "Phantom"
 msgstr "Begrenzing"
 
-msgid "Add Net"
-msgstr "Voeg Draad Toe"
-
-msgid "Add Attribute"
-msgstr "Plaats Attribuut"
-
-msgid "Add Component"
+#, fuzzy
+msgid "Add Co_mponent..."
 msgstr "Voeg Component Toe"
 
-msgid "Add Bus"
+#, fuzzy
+msgid "Add Te_xt..."
+msgstr "Plaats een tekst..."
+
+#, fuzzy
+msgid "Add _Attribute..."
+msgstr "/Plaats Attribuut..."
+
+#, fuzzy
+msgid "Add _Net"
+msgstr "Voeg Draad Toe"
+
+#, fuzzy
+msgid "Add _Bus"
 msgstr "Voeg Bus Toe"
 
-msgid "Add Text"
-msgstr "Voeg Tekst Toe"
+msgid "Cu_t"
+msgstr "K_nip"
 
-msgid "Zoom In"
-msgstr "Vergroot"
+msgid "_Copy"
+msgstr "_Kopieer"
 
-msgid "Zoom Out"
-msgstr "Verklein"
+msgid "_Paste"
+msgstr "_Plak"
 
-msgid "Zoom Extents"
-msgstr "Toon Alles"
+msgid "_Delete"
+msgstr "Verwij_der"
 
-msgid "Select"
-msgstr "Selecteer"
-
-msgid "Edit..."
+#, fuzzy
+msgid "_Edit..."
 msgstr "Bewerk..."
 
 #, fuzzy
-msgid "Object Properties..."
+msgid "Ed_it Text..."
+msgstr "Bewerk Tekst..."
+
+#, fuzzy
+msgid "_Object Properties..."
 msgstr "<b>Tekst Eigenschappen</b>"
 
-msgid "Copy"
-msgstr "Kopieer"
-
-msgid "Move"
-msgstr "Verplaats"
-
-msgid "Delete"
-msgstr "Verwijder"
-
-msgid "Down Schematic"
+#, fuzzy
+msgid "Hierarchy: Down _Schematic"
 msgstr "Naar Schema"
 
-msgid "Down Symbol"
+#, fuzzy
+msgid "Hierarchy: Down S_ymbol"
 msgstr "Naar Symbool"
 
-msgid "Up"
-msgstr "Omhoog"
-
-#, fuzzy, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
-msgstr ""
-"Probeerde de gevoeligheid in te stellen op een niet bestaand menu_item '%s'\n"
-
-#, c-format
-msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
-msgstr ""
-"Probeerde de gevoeligheid in te stellen op een niet bestaand menu_item '%s'\n"
+#, fuzzy
+msgid "Hierarchy: _Up"
+msgstr "Hie_rarchie"
 
 msgid "The operating system is out of memory or resources."
 msgstr "Het besturingssysteem heeft niet meer geheugen of bronnen."
@@ -1463,6 +1368,9 @@ msgstr "Promoot"
 msgid "Duplicate"
 msgstr "Dupliceer"
 
+msgid "Delete"
+msgstr "Verwijder"
+
 msgid "Copy to all"
 msgstr "Kopieer naar alles"
 
@@ -1482,6 +1390,9 @@ msgstr "W"
 #, fuzzy
 msgid "Sho_w inherited attributes"
 msgstr "Toon geërfde attributen"
+
+msgid "Add Attribute"
+msgstr "Plaats Attribuut"
 
 #, fuzzy
 msgid "_Name:"
@@ -1606,6 +1517,25 @@ msgstr "Hie_rarchie"
 msgid "Hierarchy up"
 msgstr "Hie_rarchie"
 
+msgid "_New"
+msgstr "_Nieuw"
+
+msgid "_Open..."
+msgstr "_Open..."
+
+msgid "_Save"
+msgstr "Op_slaan"
+
+msgid "Save _As..."
+msgstr "Opslaan _Als..."
+
+#, fuzzy
+msgid "Page _Manager..."
+msgstr "Pagina Manager"
+
+msgid "_Close"
+msgstr "S_luit"
+
 #, fuzzy
 msgid "Options"
 msgstr "_Opties"
@@ -1726,6 +1656,9 @@ msgstr ""
 msgid "Add Text..."
 msgstr "Plaats een tekst..."
 
+msgid "Select"
+msgstr "Selecteer"
+
 msgid "Select mode"
 msgstr "Selectie mode"
 
@@ -1794,20 +1727,8 @@ msgstr "gEDA schema bewerking"
 msgid "Create and edit electrical schematics and symbols with lepton-schematic"
 msgstr "Creer en bewerk elektrische schema's en symbolen met gschem"
 
-msgid "_New"
-msgstr "_Nieuw"
-
-msgid "_Open..."
-msgstr "_Open..."
-
 msgid "Open Recen_t"
 msgstr "Open Recen_t"
-
-msgid "_Save"
-msgstr "Op_slaan"
-
-msgid "Save _As..."
-msgstr "Opslaan _Als..."
 
 msgid "Save All"
 msgstr "Alles Opslaan"
@@ -1841,18 +1762,6 @@ msgstr "_Ongedaan maken"
 msgid "_Redo"
 msgstr "He_rstel"
 
-msgid "Cu_t"
-msgstr "K_nip"
-
-msgid "_Copy"
-msgstr "_Kopieer"
-
-msgid "_Paste"
-msgstr "_Plak"
-
-msgid "_Delete"
-msgstr "Verwij_der"
-
 msgid "Select All"
 msgstr "Selecteer Alles"
 
@@ -1861,6 +1770,13 @@ msgstr "Deselecteer"
 
 msgid "Rotate 90 Mode"
 msgstr "Rotatie 90 Mode"
+
+#, fuzzy
+msgid "Object Properties..."
+msgstr "<b>Tekst Eigenschappen</b>"
+
+msgid "Edit..."
+msgstr "Bewerk..."
 
 msgid "Edit Text..."
 msgstr "Bewerk Tekst..."
@@ -1985,9 +1901,6 @@ msgstr "_Vorige"
 msgid "_Next"
 msgstr "Volge_nde"
 
-msgid "_Close"
-msgstr "S_luit"
-
 #, fuzzy
 msgid "_Revert..."
 msgstr "Te_rughalen"
@@ -2099,6 +2012,9 @@ msgid "Grid Style: Cycle Dots/Mesh/Off"
 msgstr ""
 
 msgid "Grid Snap: Cycle Grid/Resnap/Off"
+msgstr ""
+
+msgid "Grips: On/Off"
 msgstr ""
 
 #, fuzzy
@@ -2241,6 +2157,9 @@ msgstr "Zichtbaar/Verborgen Onzichtbare Tekst"
 msgid "Cut"
 msgstr "Knip"
 
+msgid "Copy"
+msgstr "Kopieer"
+
 msgid "Paste"
 msgstr "Plak"
 
@@ -2265,6 +2184,15 @@ msgstr "Verschuif Omhoog"
 
 msgid "Pan Down"
 msgstr "Verschuif Omlaag"
+
+msgid "Zoom Extents"
+msgstr "Toon Alles"
+
+msgid "Zoom In"
+msgstr "Vergroot"
+
+msgid "Zoom Out"
+msgstr "Verklein"
 
 msgid "Zoom Full"
 msgstr "Toon Volledig"
@@ -2294,6 +2222,18 @@ msgstr "Volgende Pagina"
 msgid "Print Page"
 msgstr "Druk Pagina Af"
 
+msgid "Add Component"
+msgstr "Voeg Component Toe"
+
+msgid "Add Net"
+msgstr "Voeg Draad Toe"
+
+msgid "Add Bus"
+msgstr "Voeg Bus Toe"
+
+msgid "Add Text"
+msgstr "Voeg Tekst Toe"
+
 msgid "Add Line"
 msgstr "Voeg Lijn Toe"
 
@@ -2314,6 +2254,12 @@ msgstr "Voeg Pen Toe"
 
 msgid "Add Picture"
 msgstr "Voeg Afbeelding Toe"
+
+msgid "Down Schematic"
+msgstr "Naar Schema"
+
+msgid "Down Symbol"
+msgstr "Naar Symbool"
 
 msgid "Up Hierarchy"
 msgstr "Hierarchie Omhoog"
@@ -2386,6 +2332,10 @@ msgstr "Toon Logboek Venster"
 msgid "Show Coordinate Window"
 msgstr "Toon Coordinaten Venster"
 
+#, fuzzy
+msgid "Toggle Grips"
+msgstr "Schakel Zich_tbaarheid"
+
 msgid "Component Documentation"
 msgstr "Component Documentatie"
 
@@ -2428,10 +2378,6 @@ msgstr "Toon de voorpagina van de gEDA wiki in een browser."
 msgid "About lepton-schematic"
 msgstr "Over gschem"
 
-#, scheme-format
-msgid "Invalid text alignment ~A."
-msgstr "Ongeldige tekst uitlijning ~A."
-
 #, fuzzy
 msgid "Could not show documentation:"
 msgstr ""
@@ -2448,6 +2394,134 @@ msgstr "~S is geen geldige toetsencombinatie."
 #, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr "~S is geen voorafgaande toetsen combinatie."
+
+#, scheme-format
+msgid "Invalid text alignment ~A."
+msgstr "Ongeldige tekst uitlijning ~A."
+
+#, fuzzy
+#~ msgid "Save settings to:"
+#~ msgstr "Instellingen"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to text-size\n"
+#~ msgstr "Ongeldige waarde [%d] overgedragen aan text-size\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to snap-size\n"
+#~ msgstr "Ongeldige waarde [%d] overgedragen aan snap-size\n"
+
+#, fuzzy
+#~ msgid "Invalid num levels [%1$d] passed to undo-levels\n"
+#~ msgstr "Ongeldige num niveaus [%d] overgedragen naar undo-levels\n"
+
+#, fuzzy
+#~ msgid "Invalid size [%1$d] passed to bus-ripper-size\n"
+#~ msgstr "Ongeldige afmeting [%d] overgedragen aan bus-ripper-size\n"
+
+#, fuzzy
+#~ msgid "Invalid dot size [%1$d] passed to dots-grid-dot-size\n"
+#~ msgstr "Ongeldige punt afmeting [%d] overgedragen aan dots-grid-dot-size\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to dots-grid-fixed-threshold\n"
+#~ msgstr ""
+#~ "Ongeldige beeldpunt ruimte [%d] overgedragen aan dots-grid-fixed-"
+#~ "threshold\n"
+
+#, fuzzy
+#~ msgid "Invalid pixel spacing [%1$d] passed to mesh-grid-display-threshold\n"
+#~ msgstr ""
+#~ "Ongeldige beeldpunt ruimte [%d] overgedragen aan mesh-grid-display-"
+#~ "threshold\n"
+
+#, fuzzy
+#~ msgid "Invalid number of seconds [%1$d] passed to auto-save-interval\n"
+#~ msgstr ""
+#~ "Ongeldig aantal seconden [%d] overgedragen naar auto-save-interval\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to mousepan-gain\n"
+#~ msgstr "Ongeldige versterking [%d] overgedragen aan mousepan-gain\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to keyboardpan-gain\n"
+#~ msgstr "Ongeldige versterking [%d] overgedragen aan keyboardpan-gain\n"
+
+#, fuzzy
+#~ msgid "Invalid number of pixels [%1$d] passed to select-slack-pixels\n"
+#~ msgstr ""
+#~ "Ongeldig aantal beeldpunten [%d] overgedragen aan select-slack-pixels\n"
+
+#, fuzzy
+#~ msgid "Invalid gain [%1$d] passed to zoom-gain\n"
+#~ msgstr "Ongeldige versterking [%d] overgedragen aan zoom-gain\n"
+
+#, fuzzy
+#~ msgid "Invalid number of steps [%1$d] scrollpan-steps\n"
+#~ msgstr "Ongeldig aantal stappen [%d] scrollpan-steps\n"
+
+#~ msgid "Got an unexpected NULL in o_edit\n"
+#~ msgstr "Ontving een onverwachte NULL in o_edit\n"
+
+#~ msgid "ERROR: NULL object in o_move_end!\n"
+#~ msgstr "FOUT: NULL object in o_move_end!\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Lepton EDA %1$s (git: %2$.7s)\n"
+#~ "Copyright (C) 1998-2017 by Ales Hvezda and the respective original "
+#~ "authors.\n"
+#~ "Copyright (C) 2017-2019 Lepton Developers.\n"
+#~ "This is free software, and you are welcome to redistribute it under\n"
+#~ "certain conditions. For details, see the file `COPYING', which is\n"
+#~ "included in the Lepton EDA distribution.\n"
+#~ "There is NO WARRANTY, to the extent permitted by law.\n"
+#~ msgstr ""
+#~ "gEDA %s (g%.7s)\n"
+#~ "Copyright (C) 1998-2012 gEDA developers\n"
+#~ "Dit is vrije software, en U bent welkom om deze te herdistribueren onder\n"
+#~ "bepaalde condities. Voor details, zie het bestand `COPYING', welke is\n"
+#~ "bijgevoegd in de gEDA distributie.\n"
+#~ "Er is GEEN GARANTIE, voor zover de wet dit toelaat.\n"
+
+#~ msgid "ERROR: NULL object!\n"
+#~ msgstr "FOUT: NULL object!\n"
+
+#, fuzzy
+#~ msgid "Could not allocate the color %1$s!\n"
+#~ msgstr "Kan de kleur %s niet toewijzen!\n"
+
+#~ msgid "black"
+#~ msgstr "zwart"
+
+#~ msgid "white"
+#~ msgstr "wit"
+
+#, fuzzy
+#~ msgid "Could not allocate display color %1$i!\n"
+#~ msgstr "Kan scherm kleur %i niet toewijzen!\n"
+
+#, fuzzy
+#~ msgid "Could not allocate outline color %1$i!\n"
+#~ msgstr "Kan de omlijning kleur %i niet toewijzen!\n"
+
+#~ msgid "Move"
+#~ msgstr "Verplaats"
+
+#~ msgid "Up"
+#~ msgstr "Omhoog"
+
+#, fuzzy
+#~ msgid "Tried to set the sensitivity on non-existent menu item '%1$s'"
+#~ msgstr ""
+#~ "Probeerde de gevoeligheid in te stellen op een niet bestaand menu_item "
+#~ "'%s'\n"
+
+#~ msgid "Tried to set the sensitivity on non-existent menu item '%s'\n"
+#~ msgstr ""
+#~ "Probeerde de gevoeligheid in te stellen op een niet bestaand menu_item "
+#~ "'%s'\n"
 
 #, fuzzy
 #~ msgid "Invalid offset [%1$d] passed to add-attribute-offset\n"
@@ -2750,9 +2824,6 @@ msgstr "~S is geen voorafgaande toetsen combinatie."
 
 #~ msgid "Function"
 #~ msgstr "Funktie"
-
-#~ msgid "/Add Attribute..."
-#~ msgstr "/Plaats Attribuut..."
 
 #~ msgid "/Zoom Box"
 #~ msgstr "/Vergroot Venster"
