@@ -210,15 +210,13 @@ geda_component_object_get_position (const GedaObject *object, gint *x, gint *y)
  *  An attribute object is promotable if it's promoted by default, or the user
  *  has configered it to promote an attribute.
  *
- *  \param [in] toplevel  The TOPLEVEL object
  *  \param [in] object    The attribute object to check
  *  \return TRUE if the object is a eligible attribute, FALSE otherwise
  */
 static int
-o_component_is_eligible_attribute (TOPLEVEL *toplevel, OBJECT *object)
+o_component_is_eligible_attribute (OBJECT *object)
 {
   gboolean promote_invisible;
-  g_return_val_if_fail (toplevel, FALSE);
   g_return_val_if_fail (object, FALSE);
 
   cfg_read_bool ("schematic.attrib", "promote-invisible",
@@ -310,7 +308,7 @@ GList *o_component_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detac
     tmp = (OBJECT*) iter->data;
 
     /* Is it an attribute we want to promote? */
-    if (!o_component_is_eligible_attribute (toplevel, tmp))
+    if (!o_component_is_eligible_attribute (tmp))
       continue;
 
     if (detach) {
