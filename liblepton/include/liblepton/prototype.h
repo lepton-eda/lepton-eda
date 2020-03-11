@@ -56,7 +56,12 @@ o_attrib_add (OBJECT *object,
               OBJECT *item);
 
 gboolean o_attrib_is_attached (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object);
-void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object, int set_color);
+
+void
+o_attrib_attach (OBJECT *attrib,
+                 OBJECT *object,
+                 int set_color);
+
 void o_attrib_attach_list(TOPLEVEL *toplevel, GList *attr_list, OBJECT *object, int set_color);
 void o_attrib_detach_all(TOPLEVEL *toplevel, OBJECT *object);
 void o_attrib_print(GList *attributes);
