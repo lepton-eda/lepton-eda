@@ -55,12 +55,12 @@
  *  \par Function Description
  *  Add an attribute to an existing attribute list.
  *
- *  \param [in]  toplevel   The TOPLEVEL object.
  *  \param [in]  object     The OBJECT we're adding the attribute to.
  *  \param [in]  item       The item you want to add as an attribute.
  *  \return nothing.
  */
-void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item)
+void
+o_attrib_add (OBJECT *object, OBJECT *item)
 {
   /* Add link from item to attrib listing */
   item->attached_to = object;
@@ -128,7 +128,7 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
   */
   attrib->selectable = object->selectable;
 
-  o_attrib_add (toplevel, object, attrib);
+  o_attrib_add (object, attrib);
 
   if (set_color)
     o_set_color (attrib, ATTRIBUTE_COLOR);
