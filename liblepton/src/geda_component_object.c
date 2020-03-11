@@ -283,12 +283,13 @@ o_component_is_embedded (OBJECT *o_current)
  *  from the prim_objs of the component.  If detach is FALSE, the
  *  OBJECTs are left in place.
  *
- *  \param [in]  toplevel The toplevel environment.
  *  \param [in]  object   The component object being modified.
  *  \param [in]  detach   Should the attributes be detached?
  *  \returns              A linked list of OBJECTs to promote.
  */
-GList *o_component_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach)
+GList*
+o_component_get_promotable (OBJECT *object,
+                            int detach)
 {
   GList *promoted = NULL;
   GList *attribs;
@@ -346,7 +347,7 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
   cfg_read_bool ("schematic.attrib", "keep-invisible",
                  default_keep_invisible, &keep_invisible);
 
-  promotable = o_component_get_promotable (toplevel, object, FALSE);
+  promotable = o_component_get_promotable (object, FALSE);
 
   /* Run through the attributes deciding if we want to keep them (in
    * which case we copy them and make them invisible) or if we want to
@@ -399,7 +400,7 @@ static void o_component_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *o
   GList *promotable, *iter;
   gboolean keep_invisible;
 
-  promotable = o_component_get_promotable (toplevel, object, FALSE);
+  promotable = o_component_get_promotable (object, FALSE);
 
   if (promotable == NULL)
     return;
