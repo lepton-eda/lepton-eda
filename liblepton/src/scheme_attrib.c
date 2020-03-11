@@ -190,7 +190,6 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
   SCM_ASSERT (edascm_is_object_type (attrib_s, OBJ_TEXT), attrib_s,
               SCM_ARG2, s_attach_attrib_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   OBJECT *attrib = edascm_to_object (attrib_s);
 
@@ -220,7 +219,7 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
 
   /* Carry out the attachment */
   o_emit_pre_change_notify (attrib);
-  o_attrib_attach (toplevel, attrib, obj, TRUE);
+  o_attrib_attach (attrib, obj, TRUE);
   o_emit_change_notify (attrib);
 
   o_page_changed (obj);

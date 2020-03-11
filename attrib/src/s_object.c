@@ -359,7 +359,7 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
 
   /* now attach the attribute to the object */
   /* remember that o_current contains the object to get the attribute */
-  o_attrib_attach (toplevel, new_obj, o_current, FALSE);
+  o_attrib_attach (new_obj, o_current, FALSE);
 
   o_selection_add (toplevel->page_current->selection_list, new_obj);
 

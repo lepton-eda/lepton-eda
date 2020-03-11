@@ -95,13 +95,14 @@ gboolean o_attrib_is_attached (TOPLEVEL *toplevel,
  *  \par Function Description
  *  Attach existing attribute to an object.
  *
- *  \param [in]  toplevel     The TOPLEVEL object.
  *  \param [in]  attrib       The attribute to be added.
  *  \param [out] object       The object where you want to add item as an attribute.
  *  \param [in]  set_color    Whether or not we should set the new attribute's color.
  */
-void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
-                      int set_color)
+void
+o_attrib_attach (OBJECT *attrib,
+                 OBJECT *object,
+                 int set_color)
 {
   g_return_if_fail (attrib != NULL);
   g_return_if_fail (object != NULL);
@@ -150,7 +151,7 @@ void o_attrib_attach_list (TOPLEVEL *toplevel,
   GList *iter;
 
   for (iter = attr_list; iter != NULL; iter = g_list_next (iter))
-    o_attrib_attach (toplevel, (OBJECT*) iter->data, object, set_color);
+    o_attrib_attach ((OBJECT*) iter->data, object, set_color);
 }
 
 
@@ -324,7 +325,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
     }
 
     if (ATTACH) {
-      o_attrib_attach (toplevel, new_obj, object_to_get_attribs, FALSE);
+      o_attrib_attach (new_obj, object_to_get_attribs, FALSE);
       ATTACH=FALSE;
     } else {
       g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Tried to attach a non-text item as an attribute"));

@@ -110,8 +110,9 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
 
       if (src_object->attached_to != NULL &&
           src_object->attached_to->copied_to != NULL) {
-        o_attrib_attach(toplevel, dst_object,
-                        src_object->attached_to->copied_to, FALSE);
+        o_attrib_attach (dst_object,
+                         src_object->attached_to->copied_to,
+                         FALSE);
         /* handle slot= attribute, it's a special case */
         if (g_ascii_strncasecmp (geda_text_object_get_string (dst_object),
                                  "slot=", 5) == 0)

@@ -130,7 +130,7 @@ void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
     s_page_append (toplevel, toplevel->page_current, new_obj);
 
     /* manually attach attribute */
-    o_attrib_attach (toplevel, new_obj, object, FALSE);
+    o_attrib_attach (new_obj, object, FALSE);
 
     /* Call add-objects-hook */
     g_run_hook_object (w_current, "%add-objects-hook", new_obj);

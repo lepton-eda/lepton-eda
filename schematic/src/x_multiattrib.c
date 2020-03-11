@@ -656,7 +656,7 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
         o_new = o_object_copy (toplevel, o_attrib);
         s_page_append (toplevel, toplevel->page_current, o_new);
         /* add the attribute its parent */
-        o_attrib_attach (toplevel, o_new, o_attrib->parent, TRUE);
+        o_attrib_attach (o_new, o_attrib->parent, TRUE);
         /* note: this object is unselected (not added to selection). */
 
         /* Call add-objects-hook */
