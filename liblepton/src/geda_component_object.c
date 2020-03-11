@@ -452,7 +452,10 @@ render_placeholders()
   return placeholder_rendering;
 }
 
-static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, int y)
+static void
+create_placeholder (OBJECT *new_node,
+                    int x,
+                    int y)
 {
     GedaBounds bounds;
     OBJECT *new_prim_obj;
@@ -580,7 +583,7 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
   }
 
   if (clib == NULL || buffer == NULL)
-    create_placeholder(toplevel, new_node, x, y);
+    create_placeholder (new_node, x, y);
   else {
     GError * err = NULL;
 
@@ -589,7 +592,7 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
     if (err) {
       g_error_free(err);
       /* If reading fails, replace with placeholder object */
-      create_placeholder(toplevel, new_node, x, y);
+      create_placeholder (new_node, x, y);
     }
     else {
       if (mirror) {
