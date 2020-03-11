@@ -620,7 +620,6 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
  *  \par Function Description
  *  This function creates a new embedded object.
  *
- *  \param [in]  toplevel  The TOPLEVEL object
  *  \param [in]  type      The type of the object (usually OBJ_COMLEX)
  *  \param [in]  color     The color of the object
  *  \param [in]  x         The x location of the component object
@@ -631,9 +630,15 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
  *  \param [in]  selectable whether the object can be selected with the mouse
  *  \return a new component object
  */
-OBJECT *o_component_new_embedded (TOPLEVEL *toplevel,
-                                  char type, int color, int x, int y, int angle, int mirror,
-                                  const gchar *basename, int selectable)
+OBJECT*
+o_component_new_embedded (char type,
+                          int color,
+                          int x,
+                          int y,
+                          int angle,
+                          int mirror,
+                          const gchar *basename,
+                          int selectable)
 {
   OBJECT *new_node=NULL;
 
@@ -725,8 +730,12 @@ OBJECT *o_component_read (TOPLEVEL *toplevel,
   }
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
 
-    new_obj = o_component_new_embedded (toplevel, type,
-                                        DEFAULT_COLOR, x1, y1, angle, mirror,
+    new_obj = o_component_new_embedded (type,
+                                        DEFAULT_COLOR,
+                                        x1,
+                                        y1,
+                                        angle,
+                                        mirror,
                                         basename + 8,
                                         selectable);
   } else {
