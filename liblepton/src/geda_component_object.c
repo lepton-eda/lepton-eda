@@ -333,11 +333,11 @@ o_component_get_promotable (OBJECT *object,
  *  Selects promotable attributes from \a object, and returns a new
  *  #GList containing them (suitable for appending to a #PAGE).
  *
- *  \param [in]  toplevel The #TOPLEVEL environment.
  *  \param [in]  object   The component #OBJECT to promote from.
  *  \return A #GList of promoted attributes.
  */
-GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
+GList*
+o_component_promote_attribs (OBJECT *object)
 {
   GList *promoted = NULL;
   GList *promotable = NULL;
