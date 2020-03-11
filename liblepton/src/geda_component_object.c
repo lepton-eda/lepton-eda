@@ -392,10 +392,10 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
  *  true, attributes eligible for promotion are kept in memory but
  *  flagged as invisible.
  *
- *  \param [in]  toplevel The toplevel environment.
  *  \param [in]  object   The component object being altered.
  */
-static void o_component_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *object)
+static void
+o_component_remove_promotable_attribs (OBJECT *object)
 {
   GList *promotable, *iter;
   gboolean keep_invisible;
@@ -724,7 +724,7 @@ OBJECT *o_component_read (TOPLEVEL *toplevel,
     /* Delete or hide attributes eligible for promotion inside the
        component. */
     if (new_obj)
-      o_component_remove_promotable_attribs (toplevel, new_obj);
+      o_component_remove_promotable_attribs (new_obj);
   }
 
   g_free (basename);
@@ -836,7 +836,7 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 
   /* Delete or hide attributes eligible for promotion inside the
      component. */
-  o_component_remove_promotable_attribs (toplevel, o_new);
+  o_component_remove_promotable_attribs (o_new);
 
   s_slot_update_object (o_new);
 
