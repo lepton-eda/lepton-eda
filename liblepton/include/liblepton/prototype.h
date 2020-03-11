@@ -55,8 +55,6 @@ void
 o_attrib_add (OBJECT *object,
               OBJECT *item);
 
-gboolean o_attrib_is_attached (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object);
-
 void
 o_attrib_attach (OBJECT *attrib,
                  OBJECT *object,
