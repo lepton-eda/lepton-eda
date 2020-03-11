@@ -51,7 +51,10 @@ void m_polygon_append_bezier(GArray *points, GedaBezier *bezier, int segments);
 void m_polygon_append_point(GArray *points, int x, int y);
 
 /* o_attrib.c */
-void o_attrib_add(TOPLEVEL *toplevel, OBJECT *object, OBJECT *item);
+void
+o_attrib_add (OBJECT *object,
+              OBJECT *item);
+
 gboolean o_attrib_is_attached (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object);
 void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object, int set_color);
 void o_attrib_attach_list(TOPLEVEL *toplevel, GList *attr_list, OBJECT *object, int set_color);
