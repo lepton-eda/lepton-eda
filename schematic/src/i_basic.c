@@ -345,14 +345,14 @@ static void clipboard_usable_cb (int usable, void *userdata)
 
 /*! \brief Return the first object of type \a type if it is selected.
  *
- *  \param toplevel  pointer to TOPLEVEL structure
+ *  \param page  The page to search for selected object.
  *  \param type      object type constant (OBJ_TEXT, OBJ_COMPONENT, etc.) (o_types.h)
  */
 static OBJECT*
-obj_selected (TOPLEVEL* toplevel, int type)
+obj_selected (PAGE* page, int type)
 {
   OBJECT* result = FALSE;
-  SELECTION* selection = toplevel->page_current->selection_list;
+  SELECTION* selection = page->selection_list;
 
   GList* gl = geda_list_get_glist (selection);
   for ( ; gl != NULL; gl = g_list_next (gl) )
@@ -378,10 +378,10 @@ obj_selected (TOPLEVEL* toplevel, int type)
  *  \param [in] w_current  GschemToplevel structure
  */
 static gboolean
-parent_comp_selected (TOPLEVEL* toplevel)
+parent_comp_selected (PAGE* page)
 {
   gboolean result = FALSE;
-  OBJECT* obj = obj_selected (toplevel, OBJ_COMPONENT);
+  OBJECT* obj = obj_selected (page, OBJ_COMPONENT);
 
   if (obj != NULL)
   {
@@ -421,12 +421,12 @@ void i_update_menus (GschemToplevel* w_current)
   update_state_menu_items (w_current, (enum x_states) w_current->event_state);
 
   gboolean selected      = o_select_selected (w_current);
-  gboolean text_selected = selected && obj_selected (toplevel, OBJ_TEXT);
-  gboolean comp_selected = selected && obj_selected (toplevel, OBJ_COMPONENT);
-  gboolean pic_selected  = selected && obj_selected (toplevel, OBJ_PICTURE);
+  gboolean text_selected = selected && obj_selected (page, OBJ_TEXT);
+  gboolean comp_selected = selected && obj_selected (page, OBJ_COMPONENT);
+  gboolean pic_selected  = selected && obj_selected (page, OBJ_PICTURE);
   gboolean embeddable    = comp_selected || pic_selected;
   gboolean has_parent    = s_hierarchy_find_up_page (toplevel->pages, page) != NULL;
-  gboolean parent        = comp_selected && parent_comp_selected (toplevel);
+  gboolean parent        = comp_selected && parent_comp_selected (page);
 
   GtkWidget* mmenu = w_current->menubar;
 
