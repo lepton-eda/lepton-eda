@@ -55,8 +55,7 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
     page->place_list = NULL;
   }
 
-  page->place_list = o_glist_copy_all (page->toplevel,
-                                       s_current,
+  page->place_list = o_glist_copy_all (s_current,
                                        page->place_list);
 
   g_run_hook_object_list (w_current,

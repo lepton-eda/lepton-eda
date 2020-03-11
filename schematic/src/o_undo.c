@@ -176,8 +176,7 @@ o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
     o_save (s_page_objects (page), filename, NULL);
 
   } else if (w_current->undo_type == UNDO_MEMORY && flag == UNDO_ALL) {
-    object_list = o_glist_copy_all (toplevel,
-                                    s_page_objects (page),
+    object_list = o_glist_copy_all (s_page_objects (page),
                                     object_list);
   }
 
@@ -477,7 +476,7 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
 
     s_page_append_list (page,
-                        o_glist_copy_all (toplevel, u_current->object_list,
+                        o_glist_copy_all (u_current->object_list,
                                           NULL));
   }
 

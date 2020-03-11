@@ -179,7 +179,6 @@ x_clipboard_set (GschemToplevel *w_current, const GList *object_list)
   GtkClipboard *cb = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
   GtkTargetEntry target = { (gchar*) MIME_TYPE_SCHEMATIC, 0,
                             CLIP_TYPE_SCHEMATIC };
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean result;
 
   /* Clear the clipboard buffer */
@@ -188,7 +187,7 @@ x_clipboard_set (GschemToplevel *w_current, const GList *object_list)
 
   /* Copy the objects to the clipboard buffer */
   w_current->clipboard_buffer =
-    o_glist_copy_all (toplevel, object_list, w_current->clipboard_buffer);
+    o_glist_copy_all (object_list, w_current->clipboard_buffer);
 
   /* Advertise that the data is available */
   result = gtk_clipboard_set_with_data (cb, &target, 1,

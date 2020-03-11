@@ -94,8 +94,7 @@ void o_place_end (GschemToplevel *w_current,
 
   if (continue_placing) {
     /* Make a copy of the place list if we want to keep it afterwards */
-    temp_dest_list = o_glist_copy_all (page->toplevel,
-                                       page->place_list,
+    temp_dest_list = o_glist_copy_all (page->place_list,
                                        temp_dest_list);
   } else {
     /* Otherwise just take it */

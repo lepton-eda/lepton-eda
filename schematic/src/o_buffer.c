@@ -72,8 +72,7 @@ selection_to_buffer(GschemToplevel *w_current, int buf_num)
     object_buffer[buf_num] = NULL;
   }
 
-  object_buffer[buf_num] = o_glist_copy_all (toplevel,
-                                             s_current,
+  object_buffer[buf_num] = o_glist_copy_all (s_current,
                                              object_buffer[buf_num]);
 }
 
@@ -166,7 +165,7 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   toplevel->page_current->place_list = NULL;
 
   toplevel->page_current->place_list =
-    o_glist_copy_all (toplevel, object_buffer[buf_num],
+    o_glist_copy_all (object_buffer[buf_num],
                       toplevel->page_current->place_list);
 
   if (!world_get_object_glist_bounds (toplevel,

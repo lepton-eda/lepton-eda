@@ -48,14 +48,13 @@ extern int global_sid;
  *  objects are unselected before they are copied and then reselected
  *  this is necessary to preserve the color info
  *
- *  \param [in] toplevel       The TOPLEVEL object.
  *  \param [in] src_list       The GList to copy from.
  *  \param [in] dest_list      The GList to copy to.
  *  \return the dest_list GList with objects appended to it.
  */
-GList *o_glist_copy_all (TOPLEVEL *toplevel,
-                         const GList *src_list,
-                         GList *dest_list)
+GList*
+o_glist_copy_all (const GList *src_list,
+                  GList *dest_list)
 {
   const GList *src;
   GList *dest;
@@ -80,7 +79,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
       o_selection_unselect (src_object);
 
     if (src_object->type != OBJ_TEXT) {
-      dst_object = o_object_copy (toplevel, src_object);
+      dst_object = o_object_copy (src_object);
       dst_object->sid = global_sid++;
       dest = g_list_prepend (dest, dst_object);
     }
@@ -104,7 +103,7 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
       o_selection_unselect (src_object);
 
     if (src_object->type == OBJ_TEXT) {
-      dst_object = o_object_copy (toplevel, src_object);
+      dst_object = o_object_copy (src_object);
       dst_object->sid = global_sid++;
       dest = g_list_prepend (dest, dst_object);
 

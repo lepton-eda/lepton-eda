@@ -48,7 +48,7 @@ void
 geda_component_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT *
-o_component_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+o_component_copy (OBJECT *o_current);
 
 void
 geda_component_object_rotate (int world_centerx,

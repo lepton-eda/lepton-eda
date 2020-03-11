@@ -158,16 +158,14 @@ s_basic_new_object (int type, char const *prefix)
  *  look at above.. this returns what was passed in!!!!
  *  copies selected to list_head (!! returns new list)
  *
- *  \param [in]  toplevel   The TOPLEVEL object.
  *  \param [in]  selected
  *  \return OBJECT pointer.
  */
-OBJECT *o_object_copy (TOPLEVEL *toplevel,
-                       OBJECT *selected)
+OBJECT*
+o_object_copy (OBJECT *selected)
 {
   OBJECT *new_obj;
 
-  g_return_val_if_fail (toplevel != NULL, NULL);
   g_return_val_if_fail (selected != NULL, NULL);
 
   switch(selected->type) {
@@ -198,7 +196,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
 
     case(OBJ_COMPONENT):
     case(OBJ_PLACEHOLDER):
-      new_obj = o_component_copy (toplevel, selected);
+      new_obj = o_component_copy (selected);
       break;
 
     case(OBJ_TEXT):

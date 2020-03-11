@@ -355,7 +355,7 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
   if (keep_invisible) {
     for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
       OBJECT *o_kept = (OBJECT *) iter->data;
-      OBJECT *o_copy = o_object_copy (toplevel, o_kept);
+      OBJECT *o_copy = o_object_copy (o_kept);
       o_set_visibility (o_kept, INVISIBLE);
       o_copy->parent = NULL;
       promoted = g_list_prepend (promoted, o_copy);
@@ -800,11 +800,11 @@ geda_component_object_translate (GedaObject *object, int dx, int dy)
  *  This function creates a copy of the component object \a
  *  o_current.
  *
- *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] o_current    The object that is copied
  *  \return a new component object
  */
-OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
+OBJECT*
+o_component_copy (OBJECT *o_current)
 {
   OBJECT *o_new;
   GList *iter;
@@ -825,7 +825,7 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 
   /* Copy contents and set the parent pointers on the copied objects. */
   o_new->component->prim_objs =
-    o_glist_copy_all (toplevel, o_current->component->prim_objs,
+    o_glist_copy_all (o_current->component->prim_objs,
                       NULL);
 
   for (iter = o_new->component->prim_objs;
