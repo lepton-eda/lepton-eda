@@ -140,13 +140,14 @@ o_attrib_attach (OBJECT *attrib,
  *  \par Function Description
  *  Attach list of existing attributes to an object.
  *
- *  \param [in]  toplevel   The TOPLEVEL object.
  *  \param [in]  attr_list  The list of attributes to be added.
  *  \param [out] object     The object where you want to add item as an attribute.
  *  \param [in]  set_color    Whether or not we should set the new attribute's color.
  */
-void o_attrib_attach_list (TOPLEVEL *toplevel,
-                           GList *attr_list, OBJECT *object, int set_color)
+void
+o_attrib_attach_list (GList *attr_list,
+                      OBJECT *object,
+                      int set_color)
 {
   GList *iter;
 
