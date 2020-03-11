@@ -374,7 +374,7 @@ GList *o_component_promote_attribs (TOPLEVEL *toplevel, OBJECT *object)
 
   /* Attach promoted attributes to the original component
      object. */
-  o_attrib_attach_list (toplevel, promoted, object, TRUE);
+  o_attrib_attach_list (promoted, object, TRUE);
 
   return promoted;
 }
