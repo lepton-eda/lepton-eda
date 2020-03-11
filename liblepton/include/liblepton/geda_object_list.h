@@ -53,6 +53,7 @@ void
 geda_object_list_translate (const GList *objects, int dx, int dy);
 
 GList*
-o_glist_copy_all (TOPLEVEL *toplevel, const GList *src_list, GList *dest_list);
+o_glist_copy_all (const GList *src_list,
+                  GList *dest_list);
 
 G_END_DECLS
