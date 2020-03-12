@@ -4,7 +4,7 @@ endif
 if ENABLE_CONTRIB
 CONTRIB_DIR=contrib
 endif
-SUBDIRS = liblepton libleptonrenderer cli schematic ${ATTRIB_DIR} \
+SUBDIRS = libleptonrenderer liblepton cli schematic ${ATTRIB_DIR} \
 	symcheck netlist utils symbols docs examples ${CONTRIB_DIR}
 
 ACLOCAL_AMFLAGS = -I m4
