@@ -10,7 +10,7 @@ Cairo-based schematic and symbol renderer
 
 The libleptonrenderer library provides a renderer for schematics and
 symbols based on the Cairo vector graphics library and the Pango font
-library.  Data for rendering is loaded using libgeda.
+library.  Data for rendering is loaded using liblepton.
 
 The library does *not* provide a rendering widget for programs
 (although it could be used to implement one).  It is intended for more
@@ -50,7 +50,7 @@ Header files
 The main header file for the library is
 `libleptonrenderer/libleptonrenderer.h'.
 
-It makes two main groups of API functions and and types available: the
+It makes two main groups of API functions and types available: the
 main EdaRenderer class (based on GObject), and a set of hinted
 rendering functions.
 
@@ -69,7 +69,7 @@ The EdaRenderer class
 ---------------------
 
 The EdaRenderer class is the main interface to the library.  It uses
-information from libgeda OBJECT structures to draw various schematic
+information from liblepton OBJECT structures to draw various schematic
 elements, control grips, and cues.
 
 EdaRenderer is a GObject class, with several properties that control
@@ -84,7 +84,7 @@ its behaviour:
   "font-name"  [string]
       The font to use when drawing text.  By default, this is "Arial".
   "color-map"  [pointer]
-      A GArray of libgeda `COLOR' structures which is used as the
+      A GArray of liblepton `COLOR' structures which is used as the
       color map for drawing.  Note that the EdaRenderer does not make
       a copy of this array, and doesn't free it when the EdaRenderer
       is destroyed.
@@ -174,7 +174,7 @@ To actually do the drawing, there are two additional functions:
       Use a colour map index and a GArray of COLOR structures to set
       the current Cairo drawing colour.
   eda_cairo_stroke()
-      Stroke the current Cairo path, with libgeda-compatible stroke
+      Stroke the current Cairo path, with liblepton-compatible stroke
       parameters.
 
 ..
