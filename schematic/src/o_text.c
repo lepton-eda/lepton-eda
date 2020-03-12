@@ -46,19 +46,19 @@ o_text_get_rendered_bounds (void *user_data,
   TOPLEVEL *toplevel;
   EdaRenderer *renderer;
   cairo_t *cr;
-  cairo_matrix_t render_mtx;
+  cairo_surface_t *surface;
   int result, render_flags = 0;
   double t, l, r, b;
   GschemToplevel *w_current = (GschemToplevel *) user_data;
   g_return_val_if_fail ((w_current != NULL), FALSE);
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  g_return_val_if_fail ((page_view != NULL), FALSE);
-
   toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_val_if_fail ((toplevel != NULL), FALSE);
 
-  cr = gdk_cairo_create (gtk_widget_get_window (GTK_WIDGET(page_view)));
+  /* Use dummy zero-sized surface */
+  surface =
+    cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 0, 0);
+  cr = cairo_create (surface);
 
   /* Set up renderer based on configuration in w_current. Note that we
    * *don't* enable hinting, because if its enabled the calculated
@@ -71,16 +71,13 @@ o_text_get_rendered_bounds (void *user_data,
                 "render-flags", render_flags,
                 NULL);
 
-  /* We need to transform the cairo context to approximate world
-   * coordinates. */
-  cairo_matrix_init (&render_mtx, 1, 0, 0, -1, -1, 1);
-  cairo_set_matrix (cr, &render_mtx);
-
   /* Use the renderer to calculate text bounds */
   result = eda_renderer_get_user_bounds (renderer, o_current, &l, &t, &r, &b);
 
   /* Clean up */
   eda_renderer_destroy (renderer);
+
+  cairo_surface_destroy (surface);
   cairo_destroy (cr);
 
   /* Round bounds to nearest integer */
