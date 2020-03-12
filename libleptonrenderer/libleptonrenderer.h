@@ -20,7 +20,6 @@
 #ifndef __LIBLEPTONRENDERER_H__
 #define __LIBLEPTONRENDERER_H__
 
-#include <liblepton/liblepton.h>
 #include <cairo.h>
 #include <pango/pangocairo.h>
 

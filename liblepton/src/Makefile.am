@@ -105,6 +105,8 @@ liblepton_la_LDFLAGS = -version-info $(LIBLEPTON_SHLIB_VERSION) \
 	$(GLIB_LIBS) $(GDK_PIXBUF_LIBS)
 LIBTOOL=@LIBTOOL@ --silent
 
+liblepton_la_LIBADD = $(top_builddir)/libleptonrenderer/libleptonrenderer.la
+
 # This is used to generate boilerplate for defining Scheme functions
 # in C.
 SUFFIXES = .x
