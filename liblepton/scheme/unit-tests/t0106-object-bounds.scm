@@ -19,9 +19,9 @@
     ;; Multiple arguments
     (assert-equal '((-5 . 8) . (8 . -5)) (object-bounds x y))
 
-    ;; Unfortunately, libgeda has no text renderer, so text never has
-    ;; any bounds.  What a shame.
-    (assert-true (not (object-bounds t)))
+    ;; We do not know the size of resulting text, so it is enough
+    ;; to check that text object bounds are not #f.
+    (assert-true (object-bounds t))
 
     ;; Empty components should have no bounds...
     (assert-equal '() (component-contents C))
@@ -71,9 +71,9 @@
     ;; Multiple arguments
     (assert-equal '((-5 . 8) . (8 . -5)) (geda:object-bounds x y))
 
-    ;; Unfortunately, libgeda has no text renderer, so text never has
-    ;; any bounds.  What a shame.
-    (assert-true (not (geda:object-bounds t)))
+    ;; We do not know the size of resulting text, so it is enough
+    ;; to check that text object bounds are not #f.
+    (assert-true (geda:object-bounds t))
 
     ;; Empty components should have no bounds...
     (assert-equal '() (geda:component-contents C))
