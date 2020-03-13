@@ -7,11 +7,11 @@ END header
 
 START graphical symbols
 
-Component without refdes: title-B.sym at ((40000 . 51000) 57000 . 40000)
-Component without refdes: title-B.sym at ((40000 . 51000) 57000 . 40000)
-Component without refdes: under.sym at ((51092 . 46900) 53208 . 45800)
-Component without refdes: title-B.sym at ((40000 . 51000) 57000 . 40000)
-Component without refdes: under.sym at ((51092 . 46900) 53208 . 45800)
+Component without refdes: title-B.sym at (40000 . 40000)
+Component without refdes: title-B.sym at (40000 . 40000)
+Component without refdes: under.sym at (51100 . 45800)
+Component without refdes: title-B.sym at (40000 . 40000)
+Component without refdes: under.sym at (51100 . 45800)
 
 END graphical symbols
 

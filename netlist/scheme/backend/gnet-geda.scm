@@ -61,7 +61,7 @@ END header
     (format #f
             "Component without refdes: ~A at ~A"
             (component-basename object)
-            (object-bounds object)))
+            (component-position object)))
 
   (define (graphical-info package)
     (or (schematic-component-refdes package)

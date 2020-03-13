@@ -7,7 +7,7 @@ END header
 
 START graphical symbols
 
-Component without refdes: title-B.sym at ((26000 . 57000) 43000 . 46000)
+Component without refdes: title-B.sym at (26000 . 46000)
 
 END graphical symbols
 

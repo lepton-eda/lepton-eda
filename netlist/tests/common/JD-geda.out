@@ -7,7 +7,7 @@ END header
 
 START graphical symbols
 
-Component without refdes: title-bordered-A.sym at ((5200 . 88900) 16200 . 80400)
+Component without refdes: title-bordered-A.sym at (5200 . 80400)
 
 END graphical symbols
 
