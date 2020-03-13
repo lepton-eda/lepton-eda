@@ -87,11 +87,11 @@ input_files = \
 	common/netattrib.sch \
 	common/powersupply.sch \
 	common/singlenet.sch \
+	missing-source.sch \
 	verilog_rip_test.sch \
 	verilog_rip_test-symbols/D_FF.sym
 
 XFAIL_TESTS = \
-	missing-source-geda.out \
 	common/netattrib-switcap.out \
 	common/SlottedOpamps-futurenet2.out \
 	common/SlottedOpamps-switcap.out
