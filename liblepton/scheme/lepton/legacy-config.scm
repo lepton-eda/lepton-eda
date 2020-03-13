@@ -17,6 +17,7 @@
   #:export      ( upcfg-log )
   #:export      ( config-upgrade-old-keys )
   #:export      ( config-upgrade )
+  #:export      ( config-upgrade-file )
   #:export      ( warning-option-deprecated )
   #:export      ( warning-option-obsolete )
 )
@@ -566,4 +567,42 @@ https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 
 ) ; let
 ) ; config-upgrade()
+
+
+
+; public:
+;
+; Upgrade legacy gEDA configuration read from file [fpath],
+; print result to standard output.
+;
+; {thr}: does not throw exceptions
+; {ret}: #t on success, #f on failure
+;
+( define ( config-upgrade-file fpath )
+( let
+  (
+  ( res #f )
+  )
+
+  ( catch #t
+  ( lambda()
+    ( unless ( access? fpath R_OK )
+      ( throw 'src-file "cannot read config file" fpath )
+    )
+
+    ( upgrade-file fpath )
+    ( upcfg-print-file (upcfg-tmp-file) )
+
+    ( set! res #t )
+  )
+  ( lambda( ex . args )
+    ( upcfg-log "ee: ['~a]:~%  ~s~%" ex args )
+  )
+  ) ; catch()
+
+  ; return:
+  res
+
+) ; let
+) ; config-upgrade-file()
 
