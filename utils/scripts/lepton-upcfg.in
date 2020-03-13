@@ -66,13 +66,19 @@ exec @GUILE@ "$0" "$@"
 
 ( define ( usage exit-code )
   ( format #t "~
-Usage: lepton-upcfg -l | -u | -o [-c] [-x]
+Usage: lepton-upcfg [OPTIONS] | FILE
 
 Lepton EDA configuration upgrade utility.
 Converts geda*.conf configuration files
 to corresponding lepton*.conf files.
 By default, the upgraded configuration
 is printed to standard output.
+One of the options can be passed on the
+command line to upgrade the configuration
+located in predefined locations. Instead of
+the options, one can specify the
+configuration file path to convert and
+redirect the output to some destination file.
 
 Options:
   -l, --local      geda.conf => lepton.conf
@@ -106,21 +112,24 @@ Lepton EDA homepage: <~a>
 ; program entry point:
 ;
 ( define ( main )
-( let
+( let*
   (
-  ( cmd-line-args '() )
-  ( args-len       0  )
-  ( cfg-id         #f )
-  ( copy           #f )
-  ( overwrite      #f )
+  ( cmd-line-args (getopt-long (program-arguments) cmd-line-args-spec) )
+  ( files         (option-ref cmd-line-args '() '()) )
+  ( copy          (option-ref cmd-line-args 'copy #f) )
+  ( overwrite     (option-ref cmd-line-args 'overwrite #f) )
+  ( args-len      0  )
+  ( cfg-id        #f )
   )
 
-  ( set! cmd-line-args
-    ( getopt-long (program-arguments) cmd-line-args-spec )
+  ( define ( failure )
+    ( upcfg-log "lepton-upcfg: configuration upgrade failed.~%" )
+    ( primitive-exit 1 )
   )
+
 
   ( set! args-len (length cmd-line-args) )
-  ( when ( or (< args-len 2) (> args-len 4) )
+  ( when ( and (null? files) (or (< args-len 2) (> args-len 4)) )
     ( usage 1 )
   )
 
@@ -138,21 +147,18 @@ Lepton EDA homepage: <~a>
     ( set! cfg-id 'geda-user3 )
   )
 
-  ( unless cfg-id
+  ( if ( and (null? files) (not cfg-id) )
     ( usage 1 )
   )
-
-  ( set! copy      (option-ref cmd-line-args 'copy      #f) )
-  ( set! overwrite (option-ref cmd-line-args 'overwrite #f) )
 
 
   ( init-log "upcfg" )
 
   ( upcfg-log "ii: converting [~a] configuration...~%" cfg-id )
 
-  ( unless ( config-upgrade cfg-id #:copy copy #:overwrite overwrite )
-    ( upcfg-log "lepton-upcfg: configuration upgrade failed.~%" )
-    ( primitive-exit 1 )
+  ( if ( null? files )
+    ( or (config-upgrade cfg-id #:copy copy #:overwrite overwrite) (failure) ) ; if
+    ( or (config-upgrade-file (list-ref files 0))                  (failure) ) ; else
   )
 
 ) ; let
