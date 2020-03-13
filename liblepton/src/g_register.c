@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +47,6 @@ static struct gsubr_t libgeda_funcs[] = {
   { "eval-string-protected",     1, 0, 0, (SCM (*) ()) g_scm_eval_string_protected },
 
   { "rc-filename",               0, 0, 0, (SCM (*) ()) g_rc_rc_filename },
-  { "rc-config",                 0, 0, 0, (SCM (*) ()) g_rc_rc_config },
   { "parse-rc",                  2, 0, 0, (SCM (*) ()) g_rc_parse_rc },
   { NULL,                        0, 0, 0, NULL } };
 

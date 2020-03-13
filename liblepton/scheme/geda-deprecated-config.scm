@@ -31,6 +31,7 @@
 ;; ===================================================================
 
 
+( use-modules ( lepton config ) )
 ( use-modules ( lepton legacy-config ) )
 
 
@@ -73,8 +74,15 @@
     (lambda args
       (or warned?
           (begin (deprecation-warning) (set! warned? #t)))
-      ((@ (lepton config) set-config!)
-       (rc-config) group key (apply value-transformer args)))))
+      (set-config!
+        (path-config-context (getcwd))
+        group
+        key
+        (apply value-transformer args)
+      )
+    )
+  ) ; let
+)
 
 ;; Convenience macro for using rc-deprecated-config.
 ;;

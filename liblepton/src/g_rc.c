@@ -675,25 +675,6 @@ g_rc_rc_filename()
   return scm_source_property (source, scm_sym_filename);
 }
 
-/*!
- * \brief Get a configuration context for the current RC file.
- * \par Function Description
- * Returns the configuration context applicable to the RC file being
- * evaluated.  This function is intended to support gEDA transition
- * from functions in RC files to static configuration files.
- *
- * \returns An EdaConfig smob.
- */
-SCM
-g_rc_rc_config()
-{
-  SCM cfg_s = scm_fluid_ref (scheme_rc_config_fluid);
-  if (!scm_is_false (cfg_s)) return cfg_s;
-
-  EdaConfig *cfg = eda_config_get_context_for_file (NULL);
-  return edascm_from_config (cfg);
-}
-
 /*! \brief Add a directory to the Guile load path.
  * \par Function Description
  * Prepends \a s_path to the Guile system '%load-path', after
