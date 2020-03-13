@@ -1,0 +1,26 @@
+START header
+
+gEDA's netlist format
+(Initially created for testing of gnetlist)
+
+END header
+
+No graphical symbols found
+
+START components
+
+
+END components
+
+No "no-connect" nets found
+
+START renamed-nets
+
+
+END renamed-nets
+
+START nets
+
+
+END nets
+
