@@ -861,5 +861,5 @@ the file manually.\n"))
     ((@@ (guile-user) parse-rc) "lepton-archive" "gafrc" )
     ;; Init log domain and create log file right away even if
     ;; logging is enabled.
-    (init-log "lepton-archive")
+    (init-log "archive")
     (main)))
