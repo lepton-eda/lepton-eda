@@ -159,15 +159,15 @@
 (define-rc-dead-config setpagedevice-pagesize)
 
 (define-rc-deprecated-config
- print-paper "gschem.printing" "paper"
+ print-paper "schematic.printing" "paper"
  rc-deprecated-string-transformer)
 
 (define-rc-deprecated-config
- print-orientation "gschem.printing" "layout"
+ print-orientation "schematic.printing" "layout"
  rc-deprecated-string-transformer)
 
 (define-rc-deprecated-config
- print-color "gschem.printing" "monochrome"
+ print-color "schematic.printing" "monochrome"
  (lambda (x) (not (rc-deprecated-string-boolean-transformer x))))
 
 (define-rc-dead-config net-style)
@@ -182,17 +182,17 @@
 (define-rc-dead-config text-feedback)
 
 (define-rc-deprecated-config
- untitled-name "gschem" "default-filename"
+ untitled-name "schematic" "default-filename"
  rc-deprecated-string-transformer)
 
 (define-rc-dead-config scrollbar-update)
 
 (define-rc-deprecated-config
- sort-component-library "gschem.library" "sort"
+ sort-component-library "schematic.library" "sort"
  rc-deprecated-string-boolean-transformer)
 
 (define-rc-deprecated-config
- component-dialog-attributes "gschem.library" "component-attributes"
+ component-dialog-attributes "schematic.library" "component-attributes"
  (lambda (x) x))
 
 (define-rc-dead-config add-attribute-offset)
@@ -209,43 +209,43 @@
 (define-rc-dead-config gnetlist-version)
 
 (define-rc-deprecated-config
-  unnamed-netname "gnetlist" "default-net-name"
+  unnamed-netname "netlist" "default-net-name"
   rc-deprecated-string-transformer)
 (define-rc-deprecated-config
-  unnamed-busname "gnetlist" "default-bus-name"
+  unnamed-busname "netlist" "default-bus-name"
   rc-deprecated-string-transformer)
 (define-rc-deprecated-config
-  net-naming-priority "gnetlist" "net-naming-priority"
+  net-naming-priority "netlist" "net-naming-priority"
   (lambda (x) (if (string=? x "netname") "netname-attribute" "net-attribute")))
 (define-rc-deprecated-config
-  hierarchy-traversal "gnetlist.hierarchy" "traverse-hierarchy"
+  hierarchy-traversal "netlist.hierarchy" "traverse-hierarchy"
   rc-deprecated-string-boolean-transformer)
 (define-rc-deprecated-config
-  hierarchy-uref-mangle "gnetlist.hierarchy" "mangle-refdes-attribute"
+  hierarchy-uref-mangle "netlist.hierarchy" "mangle-refdes-attribute"
   rc-deprecated-string-boolean-transformer)
 (define-rc-deprecated-config
-  hierarchy-uref-order "gnetlist.hierarchy" "refdes-attribute-order"
+  hierarchy-uref-order "netlist.hierarchy" "refdes-attribute-order"
   (lambda (x) (string=? "prepend" x)))
 (define-rc-deprecated-config
-  hierarchy-uref-separator "gnetlist.hierarchy" "refdes-attribute-separator"
+  hierarchy-uref-separator "netlist.hierarchy" "refdes-attribute-separator"
   rc-deprecated-string-transformer)
 (define-rc-deprecated-config
-  hierarchy-netname-mangle "gnetlist.hierarchy" "mangle-netname-attribute"
+  hierarchy-netname-mangle "netlist.hierarchy" "mangle-netname-attribute"
   rc-deprecated-string-boolean-transformer)
 (define-rc-deprecated-config
-  hierarchy-netname-order "gnetlist.hierarchy" "netname-attribute-order"
+  hierarchy-netname-order "netlist.hierarchy" "netname-attribute-order"
   (lambda (x) (string=? "prepend" x)))
 (define-rc-deprecated-config
-  hierarchy-netname-separator "gnetlist.hierarchy" "netname-attribute-separator"
+  hierarchy-netname-separator "netlist.hierarchy" "netname-attribute-separator"
   rc-deprecated-string-transformer)
 (define-rc-deprecated-config
-  hierarchy-netattrib-mangle "gnetlist.hierarchy" "mangle-net-attribute"
+  hierarchy-netattrib-mangle "netlist.hierarchy" "mangle-net-attribute"
   rc-deprecated-string-boolean-transformer)
 (define-rc-deprecated-config
-  hierarchy-netattrib-order "gnetlist.hierarchy" "net-attribute-order"
+  hierarchy-netattrib-order "netlist.hierarchy" "net-attribute-order"
   (lambda (x) (string=? "prepend" x)))
 (define-rc-deprecated-config
-  hierarchy-netattrib-separator "gnetlist.hierarchy" "net-attribute-separator"
+  hierarchy-netattrib-separator "netlist.hierarchy" "net-attribute-separator"
   rc-deprecated-string-transformer)
 
 (define-rc-deprecated-config
