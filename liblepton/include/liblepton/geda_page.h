@@ -126,7 +126,9 @@ void
 s_page_remove (PAGE *page, OBJECT *object);
 
 void
-s_page_replace (TOPLEVEL *toplevel, PAGE *page, OBJECT *object1, OBJECT *object2);
+s_page_replace (PAGE *page,
+                OBJECT *object1,
+                OBJECT *object2);
 
 void
 s_page_delete_objects (PAGE *page);

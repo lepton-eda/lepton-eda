@@ -714,14 +714,14 @@ s_page_remove (PAGE *page,
  * \a object2 in the position thus vacated. If \a object1 is not in \a
  * page, object2 is appended to \a page.
  *
- * \param [in] toplevel  The TOPLEVEL object.
  * \param [in] page      The PAGE to be modified.
  * \param [in] object1   The OBJECT being removed from the page.
  * \param [in] object2   The OBJECT being added to the page.
  */
 void
-s_page_replace (TOPLEVEL *toplevel, PAGE *page,
-                OBJECT *object1, OBJECT *object2)
+s_page_replace (PAGE *page,
+                OBJECT *object1,
+                OBJECT *object2)
 {
   GList *iter = g_list_find (page->_object_list, object1);
 
