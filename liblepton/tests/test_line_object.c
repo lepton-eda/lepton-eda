@@ -14,8 +14,7 @@ check_construction ()
     gint y1 = g_test_rand_int ();
     gint color = g_test_rand_int_range (0, MAX_COLORS - 1);
 
-    GedaObject *object0 = geda_line_object_new (toplevel,
-                                                color,
+    GedaObject *object0 = geda_line_object_new (color,
                                                 x0,
                                                 y0,
                                                 x1,
@@ -63,8 +62,7 @@ check_accessors ()
     gint y1 = g_test_rand_int ();
     gint color = g_test_rand_int_range (0, MAX_COLORS - 1);
 
-    GedaObject *object0 = geda_line_object_new (toplevel,
-                                                color,
+    GedaObject *object0 = geda_line_object_new (color,
                                                 x0,
                                                 y0,
                                                 x1,
@@ -115,8 +113,7 @@ check_serialization ()
     gint y1 = g_test_rand_int ();
     gint color = g_test_rand_int_range (0, MAX_COLORS - 1);
 
-    GedaObject *object0 = geda_line_object_new (toplevel,
-                                                color,
+    GedaObject *object0 = geda_line_object_new (color,
                                                 x0,
                                                 y0,
                                                 x1,

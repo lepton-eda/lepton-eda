@@ -94,9 +94,6 @@ void o_line_end(GschemToplevel *w_current, int w_x, int w_y)
   PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
-  TOPLEVEL *toplevel = page->toplevel;
-  g_return_if_fail (toplevel != NULL);
-
   /* Don't bother.. the real object is invalidated, its in the same place */
   /* o_line_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
@@ -106,8 +103,7 @@ void o_line_end(GschemToplevel *w_current, int w_x, int w_y)
        (w_current->first_wy != w_current->second_wy) ) {
 
     /* create the line object and draw it */
-    new_obj = geda_line_object_new (toplevel,
-                                    GRAPHIC_COLOR,
+    new_obj = geda_line_object_new (GRAPHIC_COLOR,
                                     w_current->first_wx,
                                     w_current->first_wy,
                                     w_current->second_wx,

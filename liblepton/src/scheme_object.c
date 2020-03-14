@@ -876,8 +876,7 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
 SCM_DEFINE (make_line, "%make-line", 0, 0, 0,
             (), "Create a new line object.")
 {
-  GedaObject *object = geda_line_object_new (edascm_c_current_toplevel (),
-                                             DEFAULT_COLOR,
+  GedaObject *object = geda_line_object_new (DEFAULT_COLOR,
                                              0,
                                              0,
                                              0,
