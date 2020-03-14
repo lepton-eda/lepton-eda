@@ -8,11 +8,11 @@
 
 
 (define *testdir*      (string-append (getcwd)   file-name-separator-string "t0402-tmp"))
-(define *testdirconf*  (string-append *testdir*  file-name-separator-string "geda.conf"))
+(define *testdirconf*  (string-append *testdir*  file-name-separator-string "lepton.conf"))
 (define *testdirA*     (string-append *testdir*  file-name-separator-string "A"))
-(define *testdirAconf* (string-append *testdirA* file-name-separator-string "geda.conf"))
+(define *testdirAconf* (string-append *testdirA* file-name-separator-string "lepton.conf"))
 (define *testdirB*     (string-append *testdir*  file-name-separator-string "B"))
-(define *testdirBconf* (string-append *testdirB* file-name-separator-string "geda.conf"))
+(define *testdirBconf* (string-append *testdirB* file-name-separator-string "lepton.conf"))
 
 ;; Setup/teardown of directories / files needed by tests
 (define (config-test-setup)
@@ -60,7 +60,7 @@
   ;; Unfortunately, there's no reliable way of testing the "recurse
   ;; all the way to root and then give up" functionality, because we
   ;; can't control the contents of the superdirectories of the CWD.
-  (assert-equal "/geda.conf"
+  (assert-equal "/lepton.conf"
                 (config-filename (path-config-context "/__missing/file/")))
   (let ((c (path-config-context *testdir*))
         (a (path-config-context *testdirA*))
@@ -401,11 +401,11 @@
 ;;; functions.
 
 (define *testdir-geda*      (string-append (getcwd)   file-name-separator-string "t0402-tmp-geda"))
-(define *testdir-geda-conf*  (string-append *testdir-geda*  file-name-separator-string "geda.conf"))
+(define *testdir-geda-conf*  (string-append *testdir-geda*  file-name-separator-string "lepton.conf"))
 (define *testdir-geda-A*     (string-append *testdir-geda*  file-name-separator-string "A"))
-(define *testdir-geda-Aconf* (string-append *testdir-geda-A* file-name-separator-string "geda.conf"))
+(define *testdir-geda-Aconf* (string-append *testdir-geda-A* file-name-separator-string "lepton.conf"))
 (define *testdir-geda-B*     (string-append *testdir-geda*  file-name-separator-string "B"))
-(define *testdir-geda-Bconf* (string-append *testdir-geda-B* file-name-separator-string "geda.conf"))
+(define *testdir-geda-Bconf* (string-append *testdir-geda-B* file-name-separator-string "lepton.conf"))
 
 ;; Setup/teardown of directories / files needed by tests
 (define (config-geda-test-setup)
@@ -453,7 +453,7 @@
   ;; Unfortunately, there's no reliable way of testing the "recurse
   ;; all the way to root and then give up" functionality, because we
   ;; can't control the contents of the superdirectories of the CWD.
-  (assert-equal "/geda.conf"
+  (assert-equal "/lepton.conf"
                 (geda:config-filename (geda:path-config-context "/__missing/file/")))
   (let ((c (geda:path-config-context *testdir-geda*))
         (a (geda:path-config-context *testdir-geda-A*))
