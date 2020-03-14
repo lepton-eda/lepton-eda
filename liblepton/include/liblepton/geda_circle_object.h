@@ -30,8 +30,7 @@ G_BEGIN_DECLS
 /* construction, destruction */
 
 GedaObject*
-geda_circle_object_new (TOPLEVEL *toplevel,
-                        gint color,
+geda_circle_object_new (gint color,
                         gint x,
                         gint y,
                         gint radius);
