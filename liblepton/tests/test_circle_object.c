@@ -26,7 +26,7 @@ check_construction ()
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
     g_assert_cmpint (radius, ==, geda_circle_object_get_radius (object0));
 
-    GedaObject *object1 = geda_circle_object_copy (toplevel, object0);
+    GedaObject *object1 = geda_circle_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);

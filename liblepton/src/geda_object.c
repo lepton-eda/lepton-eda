@@ -193,7 +193,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
       break;
 
     case(OBJ_CIRCLE):
-      new_obj = geda_circle_object_copy (toplevel, selected);
+      new_obj = geda_circle_object_copy (selected);
       break;
 
     case(OBJ_COMPONENT):

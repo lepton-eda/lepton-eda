@@ -98,12 +98,11 @@ geda_circle_object_new (gint color,
  *  The function #geda_circle_object_copy() creates a verbatim copy of the object
  *  pointed by <B>o_current</B> describing a circle.
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  o_current  Circle OBJECT to copy.
  *  \return The new OBJECT
  */
 GedaObject*
-geda_circle_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
+geda_circle_object_copy (const GedaObject *object)
 {
   GedaObject *new_obj;
 
