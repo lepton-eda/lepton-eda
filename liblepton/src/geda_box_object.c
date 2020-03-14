@@ -95,12 +95,11 @@ geda_box_object_new (char type,
  *  The function #geda_box_object_copy() creates a verbatim copy of the object
  *  pointed by <B>o_current</B> describing a box.
  *
- *  \param [in]      toplevel  The TOPLEVEL object.
  *  \param [in]      o_current  BOX OBJECT to copy.
  *  \return The new OBJECT
  */
 OBJECT*
-geda_box_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
+geda_box_object_copy (OBJECT *o_current)
 {
   OBJECT *new_obj;
 
