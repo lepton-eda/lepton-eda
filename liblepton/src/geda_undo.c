@@ -181,7 +181,8 @@ void s_undo_print_all( UNDO *head )
  *  \par Function Description
  *
  */
-void s_undo_destroy_all(TOPLEVEL *toplevel, UNDO *head)
+void
+s_undo_destroy_all (UNDO *head)
 {
   UNDO *u_current;
   UNDO *u_prev;
@@ -274,7 +275,7 @@ void s_undo_init(PAGE *p_current)
  */
 void s_undo_free_all(TOPLEVEL *toplevel, PAGE *p_current)
 {
-  s_undo_destroy_all(toplevel, p_current->undo_bottom);
+  s_undo_destroy_all (p_current->undo_bottom);
   p_current->undo_bottom = NULL;
   p_current->undo_tos = NULL;
   p_current->undo_current = NULL;

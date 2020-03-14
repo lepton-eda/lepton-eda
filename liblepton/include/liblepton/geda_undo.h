@@ -64,7 +64,7 @@ void
 s_undo_print_all (UNDO *head);
 
 void
-s_undo_destroy_all (TOPLEVEL *toplevel, UNDO *head);
+s_undo_destroy_all (UNDO *head);
 
 void
 s_undo_remove_rest (UNDO *head);
