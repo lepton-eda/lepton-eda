@@ -33,70 +33,70 @@
 
   ;; This is the default name used for nets for which the user has set
   ;; no explicit name via the netname= or net= attributes.
-  (set-config! cfg "gnetlist" "default-net-name" "unnamed_net")
+  (set-config! cfg "netlist" "default-net-name" "unnamed_net")
 
   ;; This is the default name used for buses for which the user has set
   ;; no explicit name via the netname= or net= attributes.
-  (set-config! cfg "gnetlist" "default-bus-name" "unnamed_bus")
+  (set-config! cfg "netlist" "default-bus-name" "unnamed_bus")
 
   ;; By default, net= attributes beat netname= attributes.
-  (set-config! cfg "gnetlist" "net-naming-priority" "net-attribute")
+  (set-config! cfg "netlist" "net-naming-priority" "net-attribute")
 
   ;; By default, hierarchy processing is enabled.
-  (set-config! cfg "gnetlist.hierarchy" "traverse-hierarchy" #t)
+  (set-config! cfg "netlist.hierarchy" "traverse-hierarchy" #t)
 
   ;; By default, sub-schematic attributes 'refdes' are built
   ;; accounting for the parent schematic's ones.
-  (set-config! cfg "gnetlist.hierarchy" "mangle-refdes-attribute" #t)
+  (set-config! cfg "netlist.hierarchy" "mangle-refdes-attribute" #t)
 
   ;; By default, sub-schematic attributes 'refdese' are appended to the parent
   ;; schematic's ones to build hierarchical attributes 'refdes'.
-  (set-config! cfg "gnetlist.hierarchy" "refdes-attribute-order" #f)
+  (set-config! cfg "netlist.hierarchy" "refdes-attribute-order" #f)
 
   ;; This is the default separator which is used to built hierarchical
   ;; refdeses of any component in sub-schematics.
-  (set-config! cfg "gnetlist.hierarchy" "refdes-attribute-separator" "/")
+  (set-config! cfg "netlist.hierarchy" "refdes-attribute-separator" "/")
 
   ;; By default, sub-schematic attributes 'netname' are built
   ;; accounting for the parent schematic's ones.
-  (set-config! cfg "gnetlist.hierarchy" "mangle-netname-attribute" #t)
+  (set-config! cfg "netlist.hierarchy" "mangle-netname-attribute" #t)
 
   ;; By default, sub-schematic attributes 'netname' are appended to the parent
   ;; schematic's ones to build hierarchical netnames.
-  (set-config! cfg "gnetlist.hierarchy" "netname-attribute-order" #f)
+  (set-config! cfg "netlist.hierarchy" "netname-attribute-order" #f)
 
   ;; This is the default separator which is used to built hierarchical
   ;; attributes 'netname' for nets in sub-schematics.
-  (set-config! cfg "gnetlist.hierarchy" "netname-attribute-separator" "/")
+  (set-config! cfg "netlist.hierarchy" "netname-attribute-separator" "/")
 
   ;; By default, sub-schematic attributes 'net' are built
   ;; accounting for the parent schematic's ones.
-  (set-config! cfg "gnetlist.hierarchy" "mangle-net-attribute" #t)
+  (set-config! cfg "netlist.hierarchy" "mangle-net-attribute" #t)
 
   ;; By default, sub-schematic attributes 'net' are appended to the parent
   ;; schematic's ones to build hierarchical netnames.
-  (set-config! cfg "gnetlist.hierarchy" "net-attribute-order" #f)
+  (set-config! cfg "netlist.hierarchy" "net-attribute-order" #f)
 
   ;; This is the default separator which is used to built hierarchical
   ;; attributes 'net' for nets in sub-schematics.
-  (set-config! cfg "gnetlist.hierarchy" "net-attribute-separator" "/"))
+  (set-config! cfg "netlist.hierarchy" "net-attribute-separator" "/"))
 
 (define %gnetlist-config-table
-  `((traverse-hierarchy    ,config-boolean "gnetlist.hierarchy" "traverse-hierarchy")
-    (reverse-refdes-order  ,config-boolean "gnetlist.hierarchy" "refdes-attribute-order")
-    (refdes-separator      ,config-string  "gnetlist.hierarchy" "refdes-attribute-separator")
-    (mangle-refdes         ,config-boolean "gnetlist.hierarchy" "mangle-refdes-attribute")
-    (reverse-net-order     ,config-boolean "gnetlist.hierarchy" "net-attribute-order")
-    (mangle-net            ,config-boolean "gnetlist.hierarchy" "mangle-net-attribute")
-    (net-separator         ,config-string  "gnetlist.hierarchy" "net-attribute-separator")
-    (reverse-netname-order ,config-boolean "gnetlist.hierarchy" "netname-attribute-order")
-    (mangle-netname        ,config-boolean "gnetlist.hierarchy" "mangle-netname-attribute")
-    (netname-separator     ,config-string  "gnetlist.hierarchy" "netname-attribute-separator")
+  `((traverse-hierarchy    ,config-boolean "netlist.hierarchy" "traverse-hierarchy")
+    (reverse-refdes-order  ,config-boolean "netlist.hierarchy" "refdes-attribute-order")
+    (refdes-separator      ,config-string  "netlist.hierarchy" "refdes-attribute-separator")
+    (mangle-refdes         ,config-boolean "netlist.hierarchy" "mangle-refdes-attribute")
+    (reverse-net-order     ,config-boolean "netlist.hierarchy" "net-attribute-order")
+    (mangle-net            ,config-boolean "netlist.hierarchy" "mangle-net-attribute")
+    (net-separator         ,config-string  "netlist.hierarchy" "net-attribute-separator")
+    (reverse-netname-order ,config-boolean "netlist.hierarchy" "netname-attribute-order")
+    (mangle-netname        ,config-boolean "netlist.hierarchy" "mangle-netname-attribute")
+    (netname-separator     ,config-string  "netlist.hierarchy" "netname-attribute-separator")
     (netname-attribute-priority
                            ,(lambda args (string=? "netname-attribute" (apply config-string args)))
-                                           "gnetlist"           "net-naming-priority")
-    (default-net-name      ,config-string  "gnetlist"           "default-net-name")
-    (default-bus-name      ,config-string  "gnetlist"           "default-bus-name")))
+                                           "netlist"           "net-naming-priority")
+    (default-net-name      ,config-string  "netlist"           "default-net-name")
+    (default-bus-name      ,config-string  "netlist"           "default-bus-name")))
 
 ;; Try to load a configuration file for gnetlist
 ;;
@@ -120,16 +120,16 @@
   (set! %gnetlist-config (map process %gnetlist-config-table)))
 
 (define (gnetlist-config-ref key)
-  "Returns value of gnetlist configuration KEY."
+  "Returns value of lepton-netlist configuration KEY."
   (car (assq-ref %gnetlist-config key)))
 
 (define (print-gnetlist-config)
-  "Displays gnetlist configuration settings."
+  "Displays lepton-netlist configuration settings."
   (define (source-string cfg)
     (if (equal? cfg (default-config-context))
         "(default)"
         (string-append "[" (config-filename cfg) "]")))
-  (display "Gnetlist settings:\n\n")
+  (display "lepton-netlist settings:\n\n")
   (for-each
    (lambda (x)
      (match x
