@@ -1212,7 +1212,6 @@ static void o_grips_end_line(GschemToplevel *w_current, OBJECT *o_current,
 static void o_grips_end_net(GschemToplevel *w_current, OBJECT *o_current,
                             int whichone)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *connected_objects;
 
   /* don't allow zero length net
@@ -1225,7 +1224,7 @@ static void o_grips_end_net(GschemToplevel *w_current, OBJECT *o_current,
   }
 
   s_conn_remove_object_connections (o_current);
-  geda_net_object_modify (toplevel, o_current, w_current->second_wx,
+  geda_net_object_modify (o_current, w_current->second_wx,
                           w_current->second_wy, w_current->which_grip);
   s_conn_update_object (o_current->page, o_current);
 
