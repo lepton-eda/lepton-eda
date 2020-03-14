@@ -34,17 +34,15 @@ static void
 clipboard_to_buffer(GschemToplevel *w_current, int buf_num)
 {
   GList *object_list;
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (toplevel != NULL);
   g_return_if_fail (buf_num >= 0);
   g_return_if_fail (buf_num < MAX_BUFFERS);
 
   object_list = x_clipboard_get (w_current);
 
   if (object_buffer[buf_num] != NULL) {
-    geda_object_list_delete (toplevel, object_buffer[buf_num]);
+    geda_object_list_delete (object_buffer[buf_num]);
   }
 
   object_buffer[buf_num] = object_list;
@@ -70,7 +68,7 @@ selection_to_buffer(GschemToplevel *w_current, int buf_num)
   s_current = geda_list_get_glist (toplevel->page_current->selection_list);
 
   if (object_buffer[buf_num] != NULL) {
-    geda_object_list_delete (toplevel, object_buffer[buf_num]);
+    geda_object_list_delete (object_buffer[buf_num]);
     object_buffer[buf_num] = NULL;
   }
 
@@ -164,7 +162,7 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   }
 
   /* remove the old place list if it exists */
-  geda_object_list_delete (toplevel, toplevel->page_current->place_list);
+  geda_object_list_delete (toplevel->page_current->place_list);
   toplevel->page_current->place_list = NULL;
 
   toplevel->page_current->place_list =
@@ -231,12 +229,11 @@ void o_buffer_init(void)
  */
 void o_buffer_free(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int i;
 
   for (i = 0 ; i < MAX_BUFFERS; i++) {
     if (object_buffer[i]) {
-      geda_object_list_delete (toplevel, object_buffer[i]);
+      geda_object_list_delete (object_buffer[i]);
       object_buffer[i] = NULL;
     }
   }

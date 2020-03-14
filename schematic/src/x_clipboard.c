@@ -66,10 +66,9 @@ static void
 clip_clear (GtkClipboard *cb, gpointer user_data_or_owner)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (user_data_or_owner);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* Free the objects in the clipboard buffer */
-  geda_object_list_delete (toplevel, w_current->clipboard_buffer);
+  geda_object_list_delete (w_current->clipboard_buffer);
   w_current->clipboard_buffer = NULL;
 }
 

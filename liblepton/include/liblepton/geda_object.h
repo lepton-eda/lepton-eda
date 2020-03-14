@@ -98,7 +98,7 @@ OBJECT*
 o_object_copy (TOPLEVEL *toplevel, OBJECT *selected);
 
 void
-s_delete_object (TOPLEVEL *toplevel, OBJECT *o_current);
+s_delete_object (OBJECT *o_current);
 
 /* methods */
 

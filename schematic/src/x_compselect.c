@@ -134,8 +134,7 @@ x_compselect_callback_response (GtkDialog *dialog,
           if (w_current->rubber_visible)
             o_place_invalidate_rubber (w_current, FALSE);
           w_current->rubber_visible = 0;
-          geda_object_list_delete (toplevel,
-                                   toplevel->page_current->place_list);
+          geda_object_list_delete (toplevel->page_current->place_list);
           toplevel->page_current->place_list = NULL;
         } else {
           /* Cancel whatever other action is currently in progress */

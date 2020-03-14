@@ -364,7 +364,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
   return(object_list);
 
 error:
-  geda_object_list_delete (toplevel, new_object_list);
+  geda_object_list_delete (new_object_list);
 
   unsigned long linenum = s_textbuffer_linenum (tb);
   g_prefix_error (err, "Parsing stopped at line %lu:\n", linenum);

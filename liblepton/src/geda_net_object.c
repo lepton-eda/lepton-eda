@@ -619,7 +619,6 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
   PAGE *page;
   int changed = 0;
 
-  g_return_val_if_fail ((toplevel != NULL), 0);
   g_return_val_if_fail ((object != NULL), 0);
   g_return_val_if_fail ((object->type == OBJ_NET), 0);
 
@@ -666,7 +665,7 @@ static int o_net_consolidate_segments (TOPLEVEL *toplevel, OBJECT *object)
             }
           }
 
-          s_delete_object (toplevel, other_object);
+          s_delete_object (other_object);
           s_conn_update_object (page, object);
           return(-1);
         }

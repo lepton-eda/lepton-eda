@@ -193,7 +193,7 @@ void s_undo_destroy_all(TOPLEVEL *toplevel, UNDO *head)
     g_free(u_current->filename);
 
     if (u_current->object_list) {
-      geda_object_list_delete (toplevel, u_current->object_list);
+      geda_object_list_delete (u_current->object_list);
       u_current->object_list = NULL;
     }
 
@@ -265,7 +265,7 @@ void s_undo_remove_rest(TOPLEVEL *toplevel, UNDO *head)
     }
 
     if (u_current->object_list) {
-      geda_object_list_delete (toplevel, u_current->object_list);
+      geda_object_list_delete (u_current->object_list);
       u_current->object_list = NULL;
     }
 

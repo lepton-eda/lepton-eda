@@ -366,7 +366,7 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
       /* Free the place list and its contents. If we were in a move
        * action, the list (refering to objects on the page) would
        * already have been cleared in o_move_cancel(), so this is OK. */
-      geda_object_list_delete (toplevel, toplevel->page_current->place_list);
+      geda_object_list_delete (toplevel->page_current->place_list);
       toplevel->page_current->place_list = NULL;
 
       i_action_stop (w_current);

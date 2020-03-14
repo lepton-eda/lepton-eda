@@ -386,7 +386,7 @@ s_object_delete_text_object_in_object (TOPLEVEL *toplevel,
                                        OBJECT * text_object)
 {
   s_page_remove (toplevel->page_current, text_object);
-  s_delete_object (toplevel, text_object);
+  s_delete_object (text_object);
   toplevel->page_current->CHANGED = 1;
 }
 
