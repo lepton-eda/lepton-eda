@@ -76,6 +76,6 @@ void
 s_undo_init (PAGE *p_current);
 
 void
-s_undo_free_all (TOPLEVEL *toplevel, PAGE *p_current);
+s_undo_free_all (PAGE *p_current);
 
 G_END_DECLS
