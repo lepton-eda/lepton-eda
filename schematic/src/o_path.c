@@ -449,7 +449,6 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 
   g_assert (w_current);
   g_assert (w_current->inside_action != 0);
-  g_assert (w_current->toplevel);
   g_assert (w_current->temp_path != NULL);
   g_assert (w_current->temp_path->sections != NULL);
 
@@ -458,9 +457,6 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 
   PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
-
-  TOPLEVEL *toplevel = page->toplevel;
-  g_return_if_fail (toplevel != NULL);
 
   o_path_invalidate_rubber (w_current);
 
@@ -497,7 +493,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 
   if (end_path || close_path) {
     /* Add object to page and clean up path drawing state */
-    OBJECT *obj = geda_path_object_new_take_path (toplevel, OBJ_PATH,
+    OBJECT *obj = geda_path_object_new_take_path (OBJ_PATH,
                                                   GRAPHIC_COLOR, p);
     w_current->temp_path = NULL;
     w_current->first_wx = -1;
