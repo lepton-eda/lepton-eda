@@ -239,7 +239,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
           if (new_obj != NULL &&
               (new_obj->type == OBJ_COMPONENT ||
                new_obj->type == OBJ_PLACEHOLDER)) {
-            s_slot_update_object (toplevel, new_obj);
+            s_slot_update_object (new_obj);
           }
           new_obj = NULL;
         }

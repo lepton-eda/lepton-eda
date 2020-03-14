@@ -846,7 +846,7 @@ OBJECT *o_component_copy(TOPLEVEL *toplevel, OBJECT *o_current)
      component. */
   o_component_remove_promotable_attribs (toplevel, o_new);
 
-  s_slot_update_object (toplevel, o_new);
+  s_slot_update_object (o_new);
 
   /* deal with stuff that has changed */
 

@@ -171,7 +171,9 @@ void s_menu_init(void);
 
 /* s_slot.c */
 char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
-void s_slot_update_object(TOPLEVEL *toplevel, OBJECT *object);
+
+void
+s_slot_update_object (OBJECT *object);
 
 /* s_textbuffer.c */
 TextBuffer *s_textbuffer_new (const gchar *data, const gint size, const gchar* name);

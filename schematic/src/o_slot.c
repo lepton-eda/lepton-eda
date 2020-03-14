@@ -136,7 +136,7 @@ void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
     g_run_hook_object (w_current, "%add-objects-hook", new_obj);
   }
 
-  s_slot_update_object (toplevel, object);
+  s_slot_update_object (object);
 
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
   g_free (value);
