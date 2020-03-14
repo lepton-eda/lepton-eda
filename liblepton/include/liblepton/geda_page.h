@@ -127,7 +127,7 @@ void
 s_page_replace (TOPLEVEL *toplevel, PAGE *page, OBJECT *object1, OBJECT *object2);
 
 void
-s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page);
+s_page_delete_objects (PAGE *page);
 
 const GList*
 s_page_objects (PAGE *page);
