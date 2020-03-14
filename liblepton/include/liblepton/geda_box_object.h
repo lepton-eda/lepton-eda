@@ -40,7 +40,7 @@ geda_box_object_new (char type,
                      int y2);
 
 OBJECT*
-geda_box_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+geda_box_object_copy (OBJECT *o_current);
 
 /* methods */
 
