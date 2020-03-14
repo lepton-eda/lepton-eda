@@ -28,7 +28,9 @@ OBJECT*
 geda_path_object_new (TOPLEVEL *toplevel, char type, int color, const char *path_string);
 
 OBJECT*
-geda_path_object_new_take_path (TOPLEVEL *toplevel, char type, int color, PATH *path_data);
+geda_path_object_new_take_path (char type,
+                                int color,
+                                PATH *path_data);
 
 OBJECT*
 geda_path_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);

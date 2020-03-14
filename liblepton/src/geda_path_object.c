@@ -69,7 +69,7 @@ typedef void (*FILL_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
 OBJECT *geda_path_object_new (TOPLEVEL *toplevel,
                               char type, int color, const char *path_string)
 {
-  return geda_path_object_new_take_path (toplevel, type, color,
+  return geda_path_object_new_take_path (type, color,
                                          s_path_parse (path_string));
 }
 
@@ -82,15 +82,15 @@ OBJECT *geda_path_object_new (TOPLEVEL *toplevel,
  *
  *  \see geda_path_object_new().
  *
- *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     type         Must be OBJ_PATH.
  *  \param [in]     color        The path color.
  *  \param [in]     path_data    The #PATH data structure to use.
  *  \return A pointer to the new end of the object list.
  */
 OBJECT*
-geda_path_object_new_take_path (TOPLEVEL *toplevel,
-                                char type, int color, PATH *path_data)
+geda_path_object_new_take_path (char type,
+                                int color,
+                                PATH *path_data)
 {
   OBJECT *new_node;
 
