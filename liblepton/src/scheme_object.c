@@ -1171,8 +1171,7 @@ SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
 SCM_DEFINE (make_box, "%make-box", 0, 0, 0,
             (), "Create a new box object.")
 {
-  OBJECT *obj = geda_box_object_new (edascm_c_current_toplevel (),
-                                     OBJ_BOX, DEFAULT_COLOR,
+  OBJECT *obj = geda_box_object_new (OBJ_BOX, DEFAULT_COLOR,
                                      0, 0, 0, 0);
 
   SCM result = edascm_from_object (obj);

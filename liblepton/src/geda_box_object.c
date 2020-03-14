@@ -44,7 +44,6 @@
  *  line type with a width of 0, and no filling. It can be changed after
  *  with the #o_set_line_options() and #o_set_fill_options().
  *
- *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     type         Box type.
  *  \param [in]     color        Box border color.
  *  \param [in]     x1           Upper x coordinate.
@@ -54,8 +53,12 @@
  *  \return The new OBJECT
  */
 OBJECT*
-geda_box_object_new (TOPLEVEL *toplevel, char type, int color,
-                     int x1, int y1, int x2, int y2)
+geda_box_object_new (char type,
+                     int color,
+                     int x1,
+                     int y1,
+                     int x2,
+                     int y2)
 {
   OBJECT *new_node;
   BOX *box;
@@ -103,7 +106,7 @@ geda_box_object_copy(TOPLEVEL *toplevel, OBJECT *o_current)
 
   /* A new box object is created with #geda_box_object_new().
    * Values for its fields are default and need to be modified. */
-  new_obj = geda_box_object_new (toplevel, OBJ_BOX, o_current->color, 0, 0, 0, 0);
+  new_obj = geda_box_object_new (OBJ_BOX, o_current->color, 0, 0, 0, 0);
 
   /*
    * The dimensions of the new box are set with the ones of the original box.
@@ -341,7 +344,7 @@ OBJECT *o_box_read (TOPLEVEL *toplevel, const char buf[],
   d_y2 = y1;
 
   /* create a new box */
-  new_obj = geda_box_object_new (toplevel, type, color, d_x1, d_y1, d_x2, d_y2);
+  new_obj = geda_box_object_new (type, color, d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
   o_set_line_options (new_obj,
                       (OBJECT_END) box_end,
