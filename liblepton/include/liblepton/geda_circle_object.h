@@ -36,7 +36,7 @@ geda_circle_object_new (gint color,
                         gint radius);
 
 GedaObject*
-geda_circle_object_copy (TOPLEVEL *toplevel, const GedaObject *o_current);
+geda_circle_object_copy (const GedaObject *o_current);
 
 /* methods */
 
