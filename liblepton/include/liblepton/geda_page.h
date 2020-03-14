@@ -119,7 +119,8 @@ s_page_append (PAGE *page,
                OBJECT *object);
 
 void
-s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list);
+s_page_append_list (PAGE *page,
+                    GList *obj_list);
 
 void
 s_page_remove (PAGE *page, OBJECT *object);

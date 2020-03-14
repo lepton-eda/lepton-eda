@@ -1059,7 +1059,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
                                      component_angle, 0,
                                      rippersym,
                                      w_current->bus_ripper_symname, 1);
-          s_page_append_list (page->toplevel, page,
+          s_page_append_list (page,
                               o_component_promote_attribs (page->toplevel, new_obj));
           s_page_append (page, new_obj);
         } else {

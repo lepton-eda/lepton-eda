@@ -476,7 +476,7 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
 
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
 
-    s_page_append_list (toplevel, page,
+    s_page_append_list (page,
                         o_glist_copy_all (toplevel, u_current->object_list,
                                           NULL));
   }

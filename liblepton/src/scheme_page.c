@@ -436,7 +436,7 @@ SCM_DEFINE (string_to_page, "%string->page", 2, 0, 0,
                  _("Parse error: ~s"), scm_list_1 (error_message), SCM_EOL);
   }
 
-  s_page_append_list (toplevel, page, objects);
+  s_page_append_list (page, objects);
 
   return edascm_from_page (page);
 }
