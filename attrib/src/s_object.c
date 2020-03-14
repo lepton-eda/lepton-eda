@@ -161,19 +161,19 @@ s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
  *
  * Find the instance of attrib_name on o_current, and
  * replace its value with the new_attrib_value.
- * \param toplevel TOPLEVEL object
+ *
  * \param o_current object to operate on
  * \param new_attrib_name name of attribute to replace
  * \param new_attrib_value value to set attribute to
  * \param visibility set visibility of attribute
  * \param show_name_value set visibility of attribute name and value
  */
-void s_object_replace_attrib_in_object(TOPLEVEL *toplevel,
-				       OBJECT *o_current,
-				       char *new_attrib_name,
-				       char *new_attrib_value,
-				       gint visibility,
-				       gint show_name_value)
+void
+s_object_replace_attrib_in_object(OBJECT *o_current,
+                                  char *new_attrib_name,
+                                  char *new_attrib_value,
+                                  gint visibility,
+                                  gint show_name_value)
 {
   GList *a_iter;
   OBJECT *a_current;

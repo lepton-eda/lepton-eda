@@ -113,12 +113,12 @@ void s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
                                         char *new_attrib_name,
                                         char *new_attrib_value);
 
-void s_object_replace_attrib_in_object (TOPLEVEL *toplevel,
-                                        OBJECT *o_current,
+void s_object_replace_attrib_in_object (OBJECT *o_current,
                                         char *new_attrib_name,
                                         char *new_attrib_value,
                                         gint visibility,
                                         gint show_name_value);
+
 void s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
                                        OBJECT *o_current,
                                        char *new_attrib_name);

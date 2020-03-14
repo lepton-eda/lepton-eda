@@ -785,12 +785,11 @@ s_toplevel_update_component_attribs_in_toplevel (
       printf ("    visibility = %d, show_name_value = %d.\n",
               visibility, show_name_value);
 #endif
-      s_object_replace_attrib_in_object(toplevel,
-					o_current,
-					new_attrib_name, 
-					new_attrib_value, 
-					visibility, 
-					show_name_value);
+      s_object_replace_attrib_in_object (o_current,
+                                         new_attrib_name,
+                                         new_attrib_value,
+                                         visibility,
+                                         show_name_value);
     }
 
     /* -------  Four cases to consider: Case 2 ----- */
@@ -1023,12 +1022,11 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
       printf ("About to replace old attrib with new one: name= %s, value= %s\n",
               new_attrib_name, new_attrib_value);
 #endif
-      s_object_replace_attrib_in_object(toplevel,
-					o_pin,
-					new_attrib_name, 
-					new_attrib_value, 
-					LEAVE_VISIBILITY_ALONE,
-					LEAVE_NAME_VALUE_ALONE); 
+      s_object_replace_attrib_in_object (o_pin,
+                                         new_attrib_name,
+                                         new_attrib_value,
+                                         LEAVE_VISIBILITY_ALONE,
+                                         LEAVE_NAME_VALUE_ALONE);
     }
                                                                                                        
     /* -------  Four cases to consider: Case 2: old attrib exists, new one doesn't ----- */
