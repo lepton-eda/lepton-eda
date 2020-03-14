@@ -32,8 +32,7 @@
 /*! \brief create a new arc object
  *
  *  The line and fill type of the created arc are set to default.
-*
- *  \param [in] toplevel The TOPLEVEL object.
+ *
  *  \param [in] color the color index of the arc
  *  \param [in] center_x the x coordinate of the center
  *  \param [in] center_y the y coordinate of the center
@@ -43,8 +42,7 @@
  *  \return the new arc object
  */
 GedaObject*
-geda_arc_object_new (TOPLEVEL *toplevel,
-                     gint color,
+geda_arc_object_new (gint color,
                      gint center_x,
                      gint center_y,
                      gint radius,
@@ -112,8 +110,7 @@ geda_arc_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
   g_return_val_if_fail (object->arc != NULL, NULL);
   g_return_val_if_fail (object->type == OBJ_ARC, NULL);
 
-  new_object = geda_arc_object_new (toplevel,
-                                    object->color,
+  new_object = geda_arc_object_new (object->color,
                                     object->arc->x,
                                     object->arc->y,
                                     object->arc->radius,
@@ -437,8 +434,7 @@ OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
   }
 
   /* Allocation and initialization */
-  new_obj = geda_arc_object_new (toplevel,
-                                 color,
+  new_obj = geda_arc_object_new (color,
                                  x1,
                                  y1,
                                  radius,

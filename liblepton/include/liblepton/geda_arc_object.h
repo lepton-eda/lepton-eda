@@ -32,8 +32,7 @@ G_BEGIN_DECLS
 /* construction, destruction */
 
 GedaObject*
-geda_arc_object_new (TOPLEVEL *toplevel,
-                     gint color,
+geda_arc_object_new (gint color,
                      gint center_x,
                      gint center_y,
                      gint radius,
