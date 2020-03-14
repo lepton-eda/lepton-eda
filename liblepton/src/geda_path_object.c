@@ -123,12 +123,11 @@ geda_path_object_new_take_path (char type,
  *  is added at the end of the list following the <B>list_tail</B>
  *  parameter.
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  o_current  Line OBJECT to copy.
  *  \return A new pointer to the end of the object list.
  */
 OBJECT*
-geda_path_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
+geda_path_object_copy (OBJECT *o_current)
 {
   OBJECT *new_obj;
   char *path_string;
