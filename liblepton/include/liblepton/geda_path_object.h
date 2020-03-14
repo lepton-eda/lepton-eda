@@ -35,7 +35,7 @@ geda_path_object_new_take_path (char type,
                                 PATH *path_data);
 
 OBJECT*
-geda_path_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+geda_path_object_copy (OBJECT *o_current);
 
 void
 geda_path_object_calculate_bounds (TOPLEVEL *toplevel,

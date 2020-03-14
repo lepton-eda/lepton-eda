@@ -206,7 +206,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
       break;
 
     case(OBJ_PATH):
-      new_obj = geda_path_object_copy (toplevel, selected);
+      new_obj = geda_path_object_copy (selected);
       break;
 
     case(OBJ_PIN):
