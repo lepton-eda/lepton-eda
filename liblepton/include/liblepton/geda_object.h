@@ -184,7 +184,8 @@ gboolean
 o_is_visible (const OBJECT *object);
 
 void
-o_set_color(TOPLEVEL *toplevel, OBJECT *object, int color);
+o_set_color (OBJECT *object,
+             int color);
 
 void
 o_set_fill_options (OBJECT *o_current,

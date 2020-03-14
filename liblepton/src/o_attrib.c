@@ -131,7 +131,7 @@ void o_attrib_attach (TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object,
   o_attrib_add (toplevel, object, attrib);
 
   if (set_color)
-    o_set_color (toplevel, attrib, ATTRIBUTE_COLOR);
+    o_set_color (attrib, ATTRIBUTE_COLOR);
 }
 
 
@@ -171,7 +171,7 @@ void o_attrib_detach_all(TOPLEVEL *toplevel, OBJECT *object)
     a_current = (OBJECT*) a_iter->data;
 
     a_current->attached_to = NULL;
-    o_set_color (toplevel, a_current, DETACHED_ATTRIBUTE_COLOR);
+    o_set_color (a_current, DETACHED_ATTRIBUTE_COLOR);
   }
 
   g_list_free (object->attribs);

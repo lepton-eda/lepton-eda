@@ -260,17 +260,17 @@ geda_object_list_mirror (const GList *objects, int x, int y, TOPLEVEL *toplevel)
  *
  *  \param [in,out] objects  A GList of objects to mirror.
  *  \param [in]     color    The new color.
- *  \param [in]     toplevel The toplevel object. (used for change notification)
  */
 void
-geda_object_list_set_color (const GList *objects, int color, TOPLEVEL *toplevel)
+geda_object_list_set_color (const GList *objects,
+                            int color)
 {
   const GList *iter = objects;
 
   while (iter != NULL) {
     GedaObject *object = (GedaObject*)iter->data;
 
-    o_set_color (toplevel, object, color);
+    o_set_color (object, color);
     iter = g_list_next (iter);
   }
 }

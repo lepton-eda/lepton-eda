@@ -124,7 +124,7 @@ check_accessors ()
     geda_text_object_set_alignment (object0, alignment);
     geda_text_object_set_angle (object0, angle);
     geda_text_object_set_size (object0, size);
-    o_set_color (toplevel, object0, color);
+    o_set_color (object0, color);
     o_set_visibility (object0, visible);
     o_text_set_string (object0, string);
 

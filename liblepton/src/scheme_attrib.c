@@ -251,7 +251,6 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
   SCM_ASSERT (edascm_is_object_type (attrib_s, OBJ_TEXT), attrib_s,
               SCM_ARG2, s_detach_attrib_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   OBJECT *obj = edascm_to_object (obj_s);
   OBJECT *attrib = edascm_to_object (attrib_s);
 
@@ -270,7 +269,7 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
   /* Detach object */
   o_emit_pre_change_notify (attrib);
   o_attrib_remove (&obj->attribs, attrib);
-  o_set_color (toplevel, attrib, DETACHED_ATTRIBUTE_COLOR);
+  o_set_color (attrib, DETACHED_ATTRIBUTE_COLOR);
   o_emit_change_notify (attrib);
 
   o_page_changed (obj);
