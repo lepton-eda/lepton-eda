@@ -74,8 +74,7 @@ geda_net_object_mirror (TOPLEVEL *toplevel,
                         OBJECT *object);
 
 void
-geda_net_object_modify (TOPLEVEL *toplevel,
-                        OBJECT *object,
+geda_net_object_modify (OBJECT *object,
                         int x,
                         int y,
                         int whichone);

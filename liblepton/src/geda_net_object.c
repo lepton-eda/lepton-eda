@@ -731,7 +731,6 @@ geda_net_object_consolidate (PAGE *page)
  *  is specified by the \a whichone variable and the new coordinate
  *  is (\a x, \a y).
  *
- *  \param toplevel   The TOPLEVEL object
  *  \param object     The net OBJECT to modify
  *  \param x          new x-coord of the net point
  *  \param y          new y-coord of the net point
@@ -739,8 +738,10 @@ geda_net_object_consolidate (PAGE *page)
  *
  */
 void
-geda_net_object_modify (TOPLEVEL *toplevel, OBJECT *object,
-                        int x, int y, int whichone)
+geda_net_object_modify (OBJECT *object,
+                        int x,
+                        int y,
+                        int whichone)
 {
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;
