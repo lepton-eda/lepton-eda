@@ -517,7 +517,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
 
   /* Detach attributes from old OBJECT and attach to new OBJECT */
   old_attribs = g_list_copy (o_current->attribs);
-  o_attrib_detach_all (toplevel, o_current);
+  o_attrib_detach_all (o_current);
   o_attrib_attach_list (old_attribs, o_new, 1);
   g_list_free (old_attribs);
 

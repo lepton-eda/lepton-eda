@@ -160,10 +160,10 @@ o_attrib_attach_list (GList *attr_list,
  *  \par Function Description
  *  Detach all attributes from an object.
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object    The object whos attributes to detach.
  */
-void o_attrib_detach_all(TOPLEVEL *toplevel, OBJECT *object)
+void
+o_attrib_detach_all (OBJECT *object)
 {
   OBJECT *a_current;
   GList *a_iter;
