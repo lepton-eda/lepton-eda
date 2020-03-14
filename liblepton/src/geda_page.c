@@ -236,7 +236,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   page->connectible_list = NULL;
 
   /* free current page undo structs */
-  s_undo_free_all (toplevel, page);
+  s_undo_free_all (page);
 
   /* ouch, deal with parents going away and the children still around */
   page->up = -2;

@@ -273,7 +273,8 @@ void s_undo_init(PAGE *p_current)
  *  \par Function Description
  *
  */
-void s_undo_free_all(TOPLEVEL *toplevel, PAGE *p_current)
+void
+s_undo_free_all (PAGE *p_current)
 {
   s_undo_destroy_all (p_current->undo_bottom);
   p_current->undo_bottom = NULL;
