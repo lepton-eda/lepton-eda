@@ -212,13 +212,11 @@ geda_net_object_set_y1 (GedaObject *object, gint y)
  *
  *  On failure, this function sets the bounds to empty.
  *
- *  \param [in]  toplevel Unused
  *  \param [in]  object   The net object
  *  \param [out] bounds   The bounds of the net
  */
 void
-geda_net_object_calculate_bounds (TOPLEVEL *toplevel,
-                                  const OBJECT *object,
+geda_net_object_calculate_bounds (const OBJECT *object,
                                   GedaBounds *bounds)
 {
   gint expand;

@@ -45,8 +45,7 @@ geda_net_object_copy (OBJECT *o_current);
 /* methods */
 
 void
-geda_net_object_calculate_bounds (TOPLEVEL *toplevel,
-                                  const OBJECT *object,
+geda_net_object_calculate_bounds (const OBJECT *object,
                                   GedaBounds *bounds);
 
 void
