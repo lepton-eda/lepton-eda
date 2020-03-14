@@ -88,7 +88,7 @@ check_accessors ()
 
     geda_arc_object_set_center_x (object0, center_x);
     geda_arc_object_set_center_y (object0, center_y);
-    o_set_color (toplevel, object0, color);
+    o_set_color (object0, color);
     geda_arc_object_set_radius (object0, radius);
     geda_arc_object_set_start_angle (object0, start_angle);
     geda_arc_object_set_sweep_angle (object0, sweep_angle);

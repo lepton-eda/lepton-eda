@@ -833,14 +833,12 @@ geda_object_shortest_distance_full (TOPLEVEL *toplevel, OBJECT *object,
 
 /*! \brief Change the color of an object
  *
- *  \par Function Description
- *  This function changes the color of an object.
- *
- *  \param [in] toplevel  The TOPLEVEL structure.
  *  \param [in] object    The OBJECT to change color.
  *  \param [in] color     The new color.
  */
-void o_set_color (TOPLEVEL *toplevel, OBJECT *object, int color)
+void
+o_set_color (OBJECT *object,
+             int color)
 {
   g_return_if_fail (object != NULL);
 
@@ -848,7 +846,7 @@ void o_set_color (TOPLEVEL *toplevel, OBJECT *object, int color)
 
   if (object->type == OBJ_COMPONENT ||
       object->type == OBJ_PLACEHOLDER)
-    geda_object_list_set_color (object->component->prim_objs, color, toplevel);
+    geda_object_list_set_color (object->component->prim_objs, color);
 }
 
 

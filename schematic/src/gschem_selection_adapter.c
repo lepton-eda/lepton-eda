@@ -1645,8 +1645,7 @@ gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int 
   g_return_if_fail (color < MAX_COLORS);
 
   geda_object_list_set_color (geda_list_get_glist (adapter->selection),
-                              color,
-                              adapter->toplevel);
+                              color);
 
   g_object_notify (G_OBJECT (adapter), "object-color");
   g_object_notify (G_OBJECT (adapter), "text-color");
@@ -1790,7 +1789,7 @@ gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int co
     OBJECT *object = (OBJECT*) iter->data;
 
     if (object->type == OBJ_TEXT) {
-      o_set_color (adapter->toplevel, object, color);
+      o_set_color (object, color);
     }
 
     iter = g_list_next (iter);
