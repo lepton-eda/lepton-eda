@@ -1130,7 +1130,7 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
     if (o_current->line == NULL) {
       return 0;
     }
-    geda_net_object_calculate_bounds (toplevel, o_current, &bounds);
+    geda_net_object_calculate_bounds (o_current, &bounds);
     break;
 
   case(OBJ_BUS):
