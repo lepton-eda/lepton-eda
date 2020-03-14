@@ -97,12 +97,11 @@ geda_arc_object_new (gint color,
 
 /*! \brief create a copy of an existing arc object
  *
- *  \param [in] toplevel The TOPLEVEL object
  *  \param [in] object the arc object to copy
  *  \return The new arc object
  */
 GedaObject*
-geda_arc_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
+geda_arc_object_copy (const GedaObject *object)
 {
   GedaObject *new_object;
 
