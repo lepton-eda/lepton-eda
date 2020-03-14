@@ -199,7 +199,7 @@ preview_update (GschemPreview *preview)
                             objects);
       }
       else {
-        s_page_append (preview_toplevel, preview_page,
+        s_page_append (preview_page,
                        geda_text_object_new (preview_toplevel,
                                              2,
                                              100,

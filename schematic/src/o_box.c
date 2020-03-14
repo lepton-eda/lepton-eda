@@ -140,7 +140,7 @@ void o_box_end(GschemToplevel *w_current, int w_x, int w_y)
     new_obj = geda_box_object_new (toplevel, OBJ_BOX, GRAPHIC_COLOR,
                                    box_left, box_top,
                                    box_left + box_width, box_top - box_height);
-    s_page_append (toplevel, page, new_obj);
+    s_page_append (page, new_obj);
 
 #if DEBUG
   printf("coords: %d %d %d %d\n", box_left, box_top, box_width, box_height);

@@ -115,7 +115,8 @@ gint
 s_page_autosave (TOPLEVEL *toplevel);
 
 void
-s_page_append (TOPLEVEL *toplevel, PAGE *page, OBJECT *object);
+s_page_append (PAGE *page,
+               OBJECT *object);
 
 void
 s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list);

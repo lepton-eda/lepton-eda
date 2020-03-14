@@ -659,11 +659,12 @@ gint s_page_autosave (TOPLEVEL *toplevel)
  *  Links the passed OBJECT to the end of the PAGE's
  *  linked list of objects.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] page      The PAGE the object is being added to.
  *  \param [in] object    The OBJECT being added to the page.
  */
-void s_page_append (TOPLEVEL *toplevel, PAGE *page, OBJECT *object)
+void
+s_page_append (PAGE *page,
+               OBJECT *object)
 {
   page->_object_list = g_list_append (page->_object_list, object);
   object_added (page, object);
@@ -725,7 +726,7 @@ s_page_replace (TOPLEVEL *toplevel, PAGE *page,
 
   /* If object1 not found, append object2 */
   if (iter == NULL) {
-    s_page_append (toplevel, page, object2);
+    s_page_append (page, object2);
     return;
   }
 
