@@ -32,8 +32,7 @@ G_BEGIN_DECLS
 /* construction, destruction */
 
 OBJECT*
-geda_net_object_new (TOPLEVEL *toplevel,
-                     char type,
+geda_net_object_new (char type,
                      int color,
                      int x1,
                      int y1,

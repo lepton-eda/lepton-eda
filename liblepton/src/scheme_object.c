@@ -1030,8 +1030,7 @@ SCM_DEFINE (make_net, "%make-net", 0, 0, 0,
   OBJECT *obj;
   SCM result;
 
-  obj = geda_net_object_new (edascm_c_current_toplevel (),
-                             OBJ_NET, NET_COLOR, 0, 0, 0, 0);
+  obj = geda_net_object_new (OBJ_NET, NET_COLOR, 0, 0, 0, 0);
 
 
   result = edascm_from_object (obj);
