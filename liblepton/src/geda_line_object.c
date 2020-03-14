@@ -48,7 +48,6 @@
  *  It can be changed after with the #o_set_line_options() and
  *  #o_set_fill_options().
  *
- *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     type         Must be OBJ_LINE.
  *  \param [in]     color        Circle line color.
  *  \param [in]     x1           Upper x coordinate.
@@ -58,8 +57,7 @@
  *  \return A pointer to the new end of the object list.
  */
 GedaObject*
-geda_line_object_new (TOPLEVEL *toplevel,
-                      gint color,
+geda_line_object_new (gint color,
                       gint x1,
                       gint y1,
                       gint x2,
@@ -112,8 +110,7 @@ geda_line_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
 {
   OBJECT *new_obj;
 
-  new_obj = geda_line_object_new (toplevel,
-                                  o_current->color,
+  new_obj = geda_line_object_new (o_current->color,
                                   o_current->line->x[0],
                                   o_current->line->y[0],
                                   o_current->line->x[1],
@@ -423,8 +420,7 @@ OBJECT *o_line_read (TOPLEVEL *toplevel, const char buf[],
    * type is set according to the values of the fields on the line.
    */
   /* create and add the line to the list */
-  new_obj = geda_line_object_new (toplevel,
-                                  color,
+  new_obj = geda_line_object_new (color,
                                   x1,
                                   y1,
                                   x2,
