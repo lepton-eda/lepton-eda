@@ -25,7 +25,9 @@
 G_BEGIN_DECLS
 
 OBJECT*
-geda_path_object_new (TOPLEVEL *toplevel, char type, int color, const char *path_string);
+geda_path_object_new (char type,
+                      int color,
+                      const char *path_string);
 
 OBJECT*
 geda_path_object_new_take_path (char type,

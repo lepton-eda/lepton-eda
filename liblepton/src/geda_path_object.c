@@ -60,14 +60,15 @@ typedef void (*FILL_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
  *  The object is added to the end of the list described by the
  *  <B>object_list</B> parameter by the #s_basic_link_object().
  *
- *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     type         Must be OBJ_PATH.
  *  \param [in]     color        The path color.
  *  \param [in]     path_string  The string representation of the path
  *  \return A pointer to the new end of the object list.
  */
-OBJECT *geda_path_object_new (TOPLEVEL *toplevel,
-                              char type, int color, const char *path_string)
+OBJECT*
+geda_path_object_new (char type,
+                      int color,
+                      const char *path_string)
 {
   return geda_path_object_new_take_path (type, color,
                                          s_path_parse (path_string));
@@ -133,7 +134,7 @@ geda_path_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
   char *path_string;
 
   path_string = s_path_string_from_path (o_current->path);
-  new_obj = geda_path_object_new (toplevel, OBJ_PATH, o_current->color, path_string);
+  new_obj = geda_path_object_new (OBJ_PATH, o_current->color, path_string);
   g_free (path_string);
 
   /* copy the path type and filling options */
@@ -234,7 +235,7 @@ OBJECT *o_path_read (TOPLEVEL *toplevel,
   string = geda_string_remove_ending_newline (string);
 
   /* create a new path */
-  new_obj = geda_path_object_new (toplevel, type, color, string);
+  new_obj = geda_path_object_new (type, color, string);
   g_free (string);
 
   /* set its line options */
