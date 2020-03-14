@@ -176,7 +176,7 @@ preview_update (GschemPreview *preview)
   TOPLEVEL *preview_toplevel = preview_page->toplevel;
 
   /* delete old preview */
-  s_page_delete_objects (preview_toplevel, preview_page);
+  s_page_delete_objects (preview_page);
 
   if (preview->active) {
     g_assert ((preview->filename == NULL) || (preview->buffer == NULL));

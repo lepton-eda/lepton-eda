@@ -218,7 +218,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   g_object_unref( page->selection_list );
 
   /* then delete objects of page */
-  s_page_delete_objects (toplevel, page);
+  s_page_delete_objects (page);
 
   /* Free the objects in the place list. */
   geda_object_list_delete (page->place_list);
@@ -736,13 +736,10 @@ s_page_replace (TOPLEVEL *toplevel, PAGE *page,
 
 /*! \brief Remove and free all OBJECTs from the PAGE
  *
- *  \par Function Description
- *  Removes and frees all OBJECTs from the PAGE.
- *
- *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] page      The PAGE being cleared.
  */
-void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page)
+void
+s_page_delete_objects (PAGE *page)
 {
   GList *objects = page->_object_list;
   GList *iter;
