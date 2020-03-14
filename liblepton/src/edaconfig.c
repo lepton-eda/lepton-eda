@@ -66,7 +66,7 @@ static EdaConfig* g_context_system_legacy = NULL;
  * Global variable declared in globals.h
  * Whether to use legacy configuration file names:
  */
-gboolean config_legacy_mode = TRUE;
+gboolean config_legacy_mode = FALSE;
 
 /*! \brief Set config_legacy_mode global variable
  */
