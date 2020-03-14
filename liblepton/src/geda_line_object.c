@@ -101,12 +101,11 @@ geda_line_object_new (gint color,
  *  This function creates a verbatim copy of the
  *  object pointed by <B>o_current</B> describing a line.
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
  *  \param [in]  o_current  Line OBJECT to copy.
  *  \return The new OBJECT
  */
 OBJECT*
-geda_line_object_copy (TOPLEVEL *toplevel, OBJECT *o_current)
+geda_line_object_copy (OBJECT *o_current)
 {
   OBJECT *new_obj;
 

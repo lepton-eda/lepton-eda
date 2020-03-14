@@ -37,7 +37,7 @@ geda_line_object_new (gint color,
                       gint y2);
 
 OBJECT*
-geda_line_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+geda_line_object_copy (OBJECT *o_current);
 
 /* methods */
 
