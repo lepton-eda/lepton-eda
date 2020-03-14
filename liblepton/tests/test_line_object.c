@@ -29,7 +29,7 @@ check_construction ()
     g_assert_cmpint (y1, ==, geda_line_object_get_y1 (object0));
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
 
-    GedaObject *object1 = geda_line_object_copy (toplevel, object0);
+    GedaObject *object1 = geda_line_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
