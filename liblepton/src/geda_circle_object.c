@@ -49,7 +49,6 @@
  *  line type with a width of 0, and no filling. It can be changed after
  *  with #o_set_line_options() and #o_set_fill_options().
  *
- *  \param [in]     toplevel     The TOPLEVEL object.
  *  \param [in]     color        Circle line color.
  *  \param [in]     center_x     Center x coordinate.
  *  \param [in]     center_y     Center y coordinate.
@@ -57,8 +56,7 @@
  *  \return A pointer to the new end of the object list.
  */
 GedaObject*
-geda_circle_object_new (TOPLEVEL *toplevel,
-                        gint color,
+geda_circle_object_new (gint color,
                         gint center_x,
                         gint center_y,
                         gint radius)
@@ -113,8 +111,7 @@ geda_circle_object_copy (TOPLEVEL *toplevel, const GedaObject *object)
   g_return_val_if_fail (object->circle != NULL, NULL);
   g_return_val_if_fail (object->type == OBJ_CIRCLE, NULL);
 
-  new_obj = geda_circle_object_new (toplevel,
-                                    object->color,
+  new_obj = geda_circle_object_new (object->color,
                                     object->circle->center_x,
                                     object->circle->center_y,
                                     object->circle->radius);
@@ -381,7 +378,7 @@ o_circle_read (TOPLEVEL *toplevel,
    * Its filling and line type are set according to the values of the field
    * on the line.
    */
-  new_obj = geda_circle_object_new (toplevel, color, x1, y1, radius);
+  new_obj = geda_circle_object_new (color, x1, y1, radius);
 
   o_set_line_options (new_obj,
                       (OBJECT_END) circle_end,
