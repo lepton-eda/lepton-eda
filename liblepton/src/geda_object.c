@@ -177,7 +177,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
       break;
 
     case(OBJ_NET):
-      new_obj = geda_net_object_copy (toplevel, selected);
+      new_obj = geda_net_object_copy (selected);
       break;
 
     case(OBJ_BUS):

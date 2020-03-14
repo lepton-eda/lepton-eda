@@ -367,12 +367,11 @@ geda_net_object_translate (GedaObject *object, int dx, int dy)
  *  \par Function Description
  *  This function creates a copy of the net object \a o_current.
  *
- *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] o_current    The object that is copied
  *  \return a new net object
  */
 OBJECT*
-geda_net_object_copy (TOPLEVEL *toplevel,  OBJECT *o_current)
+geda_net_object_copy (OBJECT *o_current)
 {
   OBJECT *new_obj;
 
