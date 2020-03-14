@@ -23,7 +23,7 @@
 G_BEGIN_DECLS
 
 void
-geda_object_list_delete (TOPLEVEL *toplevel, GList *list);
+geda_object_list_delete (GList *list);
 
 void
 geda_object_list_mirror (const GList *objects, int x, int y, TOPLEVEL *toplevel);

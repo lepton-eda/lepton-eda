@@ -37,7 +37,7 @@ check_construction ()
     g_assert (object1 != object0);
     g_assert_cmpint (OBJ_NET, ==, object1->type);
 
-    s_delete_object (toplevel, object0);
+    s_delete_object (object0);
 
     g_assert_cmpint (x0, ==, geda_net_object_get_x0 (object1));
     g_assert_cmpint (y0, ==, geda_net_object_get_y0 (object1));
@@ -45,7 +45,7 @@ check_construction ()
     g_assert_cmpint (y1, ==, geda_net_object_get_y1 (object1));
     g_assert_cmpint (color, ==, geda_object_get_color (object1));
 
-    s_delete_object (toplevel, object1);
+    s_delete_object (object1);
   }
 
   s_toplevel_delete (toplevel);
@@ -93,7 +93,7 @@ check_accessors ()
     g_assert_cmpint (y1, ==, geda_net_object_get_y1 (object0));
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
 
-    s_delete_object (toplevel, object0);
+    s_delete_object (object0);
   }
 
   s_toplevel_delete (toplevel);
@@ -128,7 +128,7 @@ check_serialization ()
     g_assert (object0 != NULL);
 
     gchar *buffer0 = geda_net_object_to_buffer (object0);
-    s_delete_object (toplevel, object0);
+    s_delete_object (object0);
     g_assert (buffer0 != NULL);
 
     GedaObject *object1 = o_net_read (toplevel,
@@ -146,7 +146,7 @@ check_serialization ()
     g_assert_cmpint (color, ==, geda_object_get_color (object1));
 
     gchar *buffer1 = geda_net_object_to_buffer (object1);
-    s_delete_object (toplevel, object1);
+    s_delete_object (object1);
     g_assert (buffer1 != NULL);
 
     g_assert_cmpstr (buffer0, ==, buffer1);

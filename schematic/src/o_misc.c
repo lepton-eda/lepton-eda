@@ -506,7 +506,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
     value = o_attrib_search_attached_attribs_by_name (o_current, name, 0);
     if (value != NULL) {
       o_attrib_remove (&o_new->attribs, attr_new);
-      s_delete_object (toplevel, attr_new);
+      s_delete_object (attr_new);
       iter->data = NULL;
     }
 
@@ -529,7 +529,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
 
   /* Replace old OBJECT with new OBJECT */
   s_page_replace (toplevel, page, o_current, o_new);
-  s_delete_object (toplevel, o_current);
+  s_delete_object (o_current);
 
   /* Select new OBJECT */
   o_selection_add (page->selection_list, o_new);

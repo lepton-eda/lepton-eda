@@ -47,7 +47,7 @@ o_component_prepare_place (GschemToplevel *w_current,
   i_action_start (w_current);
 
   /* remove the old place list if it exists */
-  geda_object_list_delete (toplevel, toplevel->page_current->place_list);
+  geda_object_list_delete (toplevel->page_current->place_list);
   toplevel->page_current->place_list = NULL;
 
   /* Insert the new object into the buffer at world coordinates (0,0).
@@ -93,7 +93,7 @@ o_component_prepare_place (GschemToplevel *w_current,
     if (new_object->type == OBJ_PLACEHOLDER) {
       /* If created object is a placeholder, the loading failed and we end the insert action */
 
-      s_delete_object(toplevel, new_object);
+      s_delete_object (new_object);
       i_set_state (w_current, SELECT);
       i_action_stop (w_current);
       return;

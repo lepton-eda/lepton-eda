@@ -298,9 +298,7 @@ smob_free (SCM smob)
                  __FUNCTION__, data);
       break;
     case GEDA_SMOB_OBJECT:
-      /* See edascm_from_object() for an explanation of why OBJECT
-       * smobs store a TOPLEVEL in the second data word */
-      s_delete_object ((TOPLEVEL *) SCM_SMOB_DATA_2 (smob), (OBJECT *) data);
+      s_delete_object ((OBJECT *) data);
       break;
     case GEDA_SMOB_CONFIG:
       /* These are reference counted, so the structure will have

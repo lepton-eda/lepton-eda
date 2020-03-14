@@ -51,7 +51,7 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
   s_current = geda_list_get_glist (page->selection_list);
 
   if (page->place_list != NULL) {
-    geda_object_list_delete  (page->toplevel, page->place_list);
+    geda_object_list_delete (page->place_list);
     page->place_list = NULL;
   }
 

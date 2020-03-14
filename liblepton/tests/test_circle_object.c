@@ -33,14 +33,14 @@ check_construction ()
     g_assert (object1 != object0);
     g_assert_cmpint (OBJ_CIRCLE, ==, object1->type);
 
-    s_delete_object (toplevel, object0);
+    s_delete_object (object0);
 
     g_assert_cmpint (center_x, ==, geda_circle_object_get_center_x (object1));
     g_assert_cmpint (center_y, ==, geda_circle_object_get_center_y (object1));
     g_assert_cmpint (color, ==, geda_object_get_color (object1));
     g_assert_cmpint (radius, ==, geda_circle_object_get_radius (object1));
 
-    s_delete_object (toplevel, object1);
+    s_delete_object (object1);
   }
 
   s_toplevel_delete (toplevel);
@@ -82,7 +82,7 @@ check_accessors ()
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
     g_assert_cmpint (radius, ==, geda_circle_object_get_radius (object0));
 
-    s_delete_object (toplevel, object0);
+    s_delete_object (object0);
   }
 
   s_toplevel_delete (toplevel);
@@ -114,7 +114,7 @@ check_serialization ()
     g_assert (object0 != NULL);
 
     gchar *buffer0 = geda_circle_object_to_buffer (object0);
-    s_delete_object (toplevel, object0);
+    s_delete_object (object0);
     g_assert (buffer0 != NULL);
 
     GedaObject *object1 = o_circle_read (toplevel,
@@ -131,7 +131,7 @@ check_serialization ()
     g_assert_cmpint (radius, ==, geda_circle_object_get_radius (object1));
 
     gchar *buffer1 = geda_circle_object_to_buffer (object1);
-    s_delete_object (toplevel, object1);
+    s_delete_object (object1);
     g_assert (buffer1 != NULL);
 
     g_assert_cmpstr (buffer0, ==, buffer1);

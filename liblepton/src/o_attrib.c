@@ -316,7 +316,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
                _("Unexpected end-of-file in attribute list"));
 
 error:
-  geda_object_list_delete (toplevel, object_list);
+  geda_object_list_delete (object_list);
   return NULL;
 }
 

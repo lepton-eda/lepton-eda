@@ -221,7 +221,7 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   s_page_delete_objects (toplevel, page);
 
   /* Free the objects in the place list. */
-  geda_object_list_delete (toplevel, page->place_list);
+  geda_object_list_delete (page->place_list);
   page->place_list = NULL;
 
   /*  This removes all objects from the list of connectible objects
@@ -750,7 +750,7 @@ void s_page_delete_objects (TOPLEVEL *toplevel, PAGE *page)
     pre_object_removed (page, (OBJECT*) iter->data);
   }
   page->_object_list = NULL;
-  geda_object_list_delete (toplevel, objects);
+  geda_object_list_delete (objects);
 }
 
 

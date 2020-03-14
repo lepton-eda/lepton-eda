@@ -145,11 +145,10 @@ GList *o_glist_copy_all (TOPLEVEL *toplevel,
  *
  *  This function deletes everything, including the GList.
  *
- *  \param [in] toplevel The toplevel object.
  *  \param [in] objects A GList of objects to delete.
  */
 void
-geda_object_list_delete (TOPLEVEL *toplevel, GList *objects)
+geda_object_list_delete (GList *objects)
 {
   OBJECT *o_current=NULL;
   GList *ptr;
@@ -159,7 +158,7 @@ geda_object_list_delete (TOPLEVEL *toplevel, GList *objects)
   /* do the delete backwards */
   while(ptr != NULL) {
     o_current = (OBJECT *) ptr->data;
-    s_delete_object(toplevel, o_current);
+    s_delete_object (o_current);
     ptr = g_list_previous (ptr);
   }
   g_list_free(objects);

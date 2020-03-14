@@ -241,7 +241,7 @@ OBJECT *o_object_copy (TOPLEVEL *toplevel,
  *
  */
 void
-s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
+s_delete_object (OBJECT *o_current)
 {
   if (o_current != NULL) {
     /* If currently attached to a page, remove it from the page */
@@ -301,7 +301,7 @@ s_delete_object(TOPLEVEL *toplevel, OBJECT *o_current)
 
       if (o_current->component->prim_objs) {
         /* printf("sdeleting component's primitive objects\n");*/
-        geda_object_list_delete (toplevel, o_current->component->prim_objs);
+        geda_object_list_delete (o_current->component->prim_objs);
         o_current->component->prim_objs = NULL;
       }
 
