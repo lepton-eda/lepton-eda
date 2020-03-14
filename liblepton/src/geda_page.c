@@ -676,11 +676,12 @@ s_page_append (PAGE *page,
  *  Links the passed OBJECT GList to the end of the PAGE's
  *  object_list.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] page      The PAGE the objects are being added to.
  *  \param [in] obj_list  The OBJECT list being added to the page.
  */
-void s_page_append_list (TOPLEVEL *toplevel, PAGE *page, GList *obj_list)
+void
+s_page_append_list (PAGE *page,
+                    GList *obj_list)
 {
   GList *iter;
   page->_object_list = g_list_concat (page->_object_list, obj_list);

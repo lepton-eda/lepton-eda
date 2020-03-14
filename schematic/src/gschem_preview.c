@@ -195,8 +195,7 @@ preview_update (GschemPreview *preview)
                                        _("Preview Buffer"), &err);
 
       if (err == NULL) {
-        s_page_append_list (preview_toplevel, preview_page,
-                            objects);
+        s_page_append_list (preview_page, objects);
       }
       else {
         s_page_append (preview_page,
