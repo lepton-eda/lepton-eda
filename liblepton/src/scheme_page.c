@@ -236,7 +236,6 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
 
   PAGE *page = edascm_to_page (page_s);
   OBJECT *obj = edascm_to_object (obj_s);
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   /* Check that the object isn't already attached to something. */
   PAGE *curr_page = o_get_page (obj);
@@ -252,7 +251,7 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
   /* Object cleanup now managed by C code. */
   edascm_c_set_gc (obj_s, 0);
   o_emit_pre_change_notify (obj);
-  s_page_append (toplevel, page, obj);
+  s_page_append (page, obj);
   o_emit_change_notify (obj);
   page->CHANGED = 1; /* Ugh. */
 

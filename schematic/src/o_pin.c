@@ -53,9 +53,6 @@ void o_pin_end(GschemToplevel *w_current, int x, int y)
   PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
-  TOPLEVEL *toplevel = page->toplevel;
-  g_return_if_fail (toplevel != NULL);
-
   /* undraw rubber line */
   /* o_pin_invalidate_rubber (w_current); */
   w_current->rubber_visible = 0;
@@ -73,7 +70,7 @@ void o_pin_end(GschemToplevel *w_current, int x, int y)
                                  w_current->second_wy,
                                  PIN_TYPE_NET,
                                  0);
-  s_page_append (toplevel, page, new_obj);
+  s_page_append (page, new_obj);
 
   /* Call add-objects-hook */
   g_run_hook_object (w_current, "%add-objects-hook", new_obj);

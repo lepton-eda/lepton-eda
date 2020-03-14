@@ -514,7 +514,7 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
       new_net = geda_net_object_new (page->toplevel, OBJ_NET, NET_COLOR,
                                      w_current->first_wx, w_current->first_wy,
                                      w_current->second_wx, w_current->second_wy);
-      s_page_append (page->toplevel, page, new_net);
+      s_page_append (page, new_net);
 
       added_objects = g_list_prepend (added_objects, new_net);
 
@@ -549,7 +549,7 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
       new_net = geda_net_object_new (page->toplevel, OBJ_NET, NET_COLOR,
                                      w_current->second_wx, w_current->second_wy,
                                      w_current->third_wx, w_current->third_wy);
-      s_page_append (page->toplevel, page, new_net);
+      s_page_append (page, new_net);
 
       added_objects = g_list_prepend (added_objects, new_net);
 
@@ -1050,7 +1050,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
         new_obj = geda_net_object_new (page->toplevel, OBJ_NET, NET_COLOR,
                                        rippers[i].x[0], rippers[i].y[0],
                                        rippers[i].x[1], rippers[i].y[1]);
-        s_page_append (page->toplevel, page, new_obj);
+        s_page_append (page, new_obj);
       } else {
 
         if (rippersym != NULL) {
@@ -1061,7 +1061,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
                                      w_current->bus_ripper_symname, 1);
           s_page_append_list (page->toplevel, page,
                               o_component_promote_attribs (page->toplevel, new_obj));
-          s_page_append (page->toplevel, page, new_obj);
+          s_page_append (page, new_obj);
         } else {
           s_log_message(_("Bus ripper symbol [%1$s] was not found in any component library"),
                         w_current->bus_ripper_symname);
