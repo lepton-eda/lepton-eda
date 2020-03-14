@@ -1692,7 +1692,7 @@ untitled_filename (GschemToplevel* w_current, gboolean log_skipped)
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
 
   gchar* name = eda_config_get_string (cfg,
-                                       "gschem",
+                                       "schematic",
                                        "default-filename",
                                        NULL);
 
@@ -1765,7 +1765,7 @@ x_window_untitled_page (PAGE* page)
   if (cfg != NULL)
   {
     uname = eda_config_get_string (cfg,
-                                   "gschem",
+                                   "schematic",
                                    "default-filename",
                                    NULL);
   }

@@ -42,7 +42,7 @@
  * and set 1 gschem point = 1 mil, i.e. 1000 points = 1 inch */
 #define DEFAULT_GSCHEM_PPI 1000
 
-#define CFG_GROUP_PRINTING "gschem.printing"
+#define CFG_GROUP_PRINTING "schematic.printing"
 #define CFG_KEY_PRINTING_ORIENTATION "layout"
 #define CFG_KEY_PRINTING_PAPER "paper"
 #define CFG_KEY_PRINTING_MONOCHROME "monochrome"
