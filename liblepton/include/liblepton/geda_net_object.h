@@ -40,7 +40,7 @@ geda_net_object_new (char type,
                      int y2);
 
 OBJECT*
-geda_net_object_copy (TOPLEVEL *toplevel, OBJECT *o_current);
+geda_net_object_copy (OBJECT *o_current);
 
 /* methods */
 
