@@ -57,7 +57,11 @@ void o_attrib_attach(TOPLEVEL *toplevel, OBJECT *attrib, OBJECT *object, int set
 void o_attrib_attach_list(TOPLEVEL *toplevel, GList *attr_list, OBJECT *object, int set_color);
 void o_attrib_detach_all(TOPLEVEL *toplevel, OBJECT *object);
 void o_attrib_print(GList *attributes);
-void o_attrib_remove(TOPLEVEL *toplevel, GList **list, OBJECT *remove);
+
+void
+o_attrib_remove (GList **list,
+                 OBJECT *remove);
+
 gboolean o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr);
 gboolean o_attrib_get_name_value (const OBJECT *attrib, gchar **name_ptr, gchar **value_ptr);
 const char *o_attrib_get_name (const OBJECT *attrib);

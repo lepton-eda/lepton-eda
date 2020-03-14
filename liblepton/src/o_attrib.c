@@ -208,11 +208,12 @@ void o_attrib_print(GList *attributes)
  *  This function removes the given attribute from an attribute list.
  *  This function should be used when detaching an attribute.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
  *  \param [in] list      The attribute list to remove attribute from.
  *  \param [in] remove    The OBJECT to remove from list.
  */
-void o_attrib_remove(TOPLEVEL *toplevel, GList **list, OBJECT *remove)
+void
+o_attrib_remove (GList **list,
+                 OBJECT *remove)
 {
   g_return_if_fail (remove != NULL);
 
