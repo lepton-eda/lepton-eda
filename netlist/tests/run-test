@@ -72,67 +72,67 @@ cmd="\"()\""
 args=
 case "${backend}" in
 config_refdes_attribute_order_true)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 refdes-attribute-order=true
 EOF
     backend=geda
     ;;
 config_refdes_attribute_order_false)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 refdes-attribute-order=false
 EOF
     backend=geda
     ;;
 config_mangle_refdes_attribute_false_1)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 mangle-refdes-attribute=false
 refdes-attribute-order=false
 EOF
     backend=geda
     ;;
 config_mangle_refdes_attribute_false_2)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 mangle-refdes-attribute=false
 refdes-attribute-order=true
 EOF
     backend=geda
     ;;
 config_mangle_refdes_attribute_true)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 mangle-refdes-attribute=true
 EOF
     backend=geda
     ;;
 config_net_attribute_order_true)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 net-attribute-order=true
 EOF
     backend=geda
     ;;
 config_net_attribute_order_false)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 net-attribute-order=false
 EOF
     backend=geda
     ;;
 config_mangle_net_attribute_false_1)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 mangle-net-attribute=false
 net-attribute-order=false
 EOF
     backend=geda
     ;;
 config_mangle_net_attribute_false_2)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 mangle-net-attribute=false
 net-attribute-order=true
 EOF
@@ -140,46 +140,46 @@ EOF
     ;;
 # Default net-attribute-separator.
 config_net_attribute_separator_1)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 mangle-net-attribute=true
 net-attribute-separator=:
 EOF
     backend=geda
     ;;
 config_net_attribute_separator_2)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 mangle-net-attribute=false
 net-attribute-separator=:
 EOF
     backend=geda
     ;;
 config_netname_attribute_order_true)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 netname-attribute-order=true
 EOF
     backend=geda
     ;;
 config_netname_attribute_order_false)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 netname-attribute-order=false
 EOF
     backend=geda
     ;;
 config_mangle_netname_attribute_false_1)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 mangle-netname-attribute=false
 netname-attribute-order=false
 EOF
     backend=geda
     ;;
 config_mangle_netname_attribute_false_2)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 mangle-netname-attribute=false
 netname-attribute-order=true
 EOF
@@ -187,31 +187,31 @@ EOF
     ;;
 # Default netname-attribute-separator.
 config_netname_attribute_separator_1)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 mangle-netname-attribute=true
 netname-attribute-separator=:
 EOF
     backend=geda
     ;;
 config_netname_attribute_separator_2)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist.hierarchy]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist.hierarchy]
 mangle-netname-attribute=false
 netname-attribute-separator=:
 EOF
     backend=geda
     ;;
 config_net_naming_priority_net)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist]
 net-naming-priority=net-attribute
 EOF
     backend=geda
     ;;
 config_net_naming_priority_netname)
-    cat >> "${rundir}/geda.conf" << EOF
-[gnetlist]
+    cat >> "${rundir}/lepton.conf" << EOF
+[netlist]
 net-naming-priority=netname-attribute
 EOF
     backend=geda
