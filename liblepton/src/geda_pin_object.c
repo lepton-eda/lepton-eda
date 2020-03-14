@@ -603,16 +603,17 @@ geda_pin_object_update_whichend (TOPLEVEL *toplevel,
 
   if (force_boundingbox) {
     /* Include text objects since we need full bounds. */
-    world_get_object_glist_bounds (toplevel,
-                                   object_list,
+    world_get_object_glist_bounds (object_list,
+                                   /* Never consider hidden text. */
+                                   FALSE,
                                    &left,
                                    &top,
                                    &right,
                                    &bottom);
   } else {
     /* Only look at the pins to calculate symbol bounds. */
-    world_get_object_glist_bounds (toplevel,
-                                   pin_list,
+    world_get_object_glist_bounds (pin_list,
+                                   FALSE,
                                    &left,
                                    &top,
                                    &right,

@@ -103,8 +103,8 @@ s_delete_object (OBJECT *o_current);
 /* methods */
 
 gboolean
-geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
-                                      OBJECT *o_current,
+geda_object_calculate_visible_bounds (OBJECT *o_current,
+                                      gboolean include_hidden,
                                       gint *rleft,
                                       gint *rtop,
                                       gint *rright,

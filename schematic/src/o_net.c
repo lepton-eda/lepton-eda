@@ -238,8 +238,12 @@ void o_net_find_magnetic(GschemToplevel *w_current,
       int left, top, right, bottom;
       o_current = (OBJECT*) iter2->data;
 
-      if (!geda_object_calculate_visible_bounds(page->toplevel, o_current,
-                                                &left, &top, &right, &bottom) ||
+      if (!geda_object_calculate_visible_bounds (o_current,
+                                                 FALSE,
+                                                 &left,
+                                                 &top,
+                                                 &right,
+                                                 &bottom) ||
           !visible (w_current, left, top, right, bottom))
         continue; /* skip invisible objects */
 

@@ -337,9 +337,12 @@ OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
         break;
     }
   } else {
-    world_get_object_glist_bounds (toplevel,
-                                   s_page_objects (toplevel->page_current),
-                                   &left, &top, &right, &bottom);
+    world_get_object_glist_bounds (s_page_objects (toplevel->page_current),
+                                   toplevel->show_hidden_text,
+                                   &left,
+                                   &top,
+                                   &right,
+                                   &bottom);
 
     /* this really is the lower left hand corner */
     world_x = left;

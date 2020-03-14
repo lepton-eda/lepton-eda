@@ -168,10 +168,12 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
     o_glist_copy_all (object_buffer[buf_num],
                       toplevel->page_current->place_list);
 
-  if (!world_get_object_glist_bounds (toplevel,
-                                      toplevel->page_current->place_list,
-                                     &rleft, &rtop,
-                                     &rright, &rbottom)) {
+  if (!world_get_object_glist_bounds (toplevel->page_current->place_list,
+                                      toplevel->show_hidden_text,
+                                      &rleft,
+                                      &rtop,
+                                      &rright,
+                                      &rbottom)) {
     /* If the place buffer doesn't have any objects
      * to define its any bounds, we drop out here */
     return TRUE;

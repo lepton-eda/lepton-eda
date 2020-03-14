@@ -103,8 +103,10 @@ static gboolean placeholder_rendering = FALSE;
 
 /*! \brief Return the bounds of the given GList of objects.
  *  \par Given a list of objects, calcule the bounds coordinates.
- *  \param [in]  toplevel The TOPLEVEL structure.
+ *
  *  \param [in]  head   The list of objects to look the bounds for.
+ *  \param [in] include_hidden If bounds of hidden objects should
+ *                             be calculated.
  *  \param [out] left   pointer to the left coordinate of the object.
  *  \param [out] top    pointer to the top coordinate of the object.
  *  \param [out] right  pointer to the right coordinate of the object.
@@ -113,8 +115,13 @@ static gboolean placeholder_rendering = FALSE;
  *  \retval 0 No bounds were found
  *  \retval 1 Bound was found
  */
-int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *head,
-                                  int *left, int *top, int *right, int *bottom)
+int
+world_get_object_glist_bounds (const GList *head,
+                               gboolean include_hidden,
+                               int *left,
+                               int *top,
+                               int *right,
+                               int *bottom)
 {
   const GList *s_current=NULL;
   OBJECT *o_current=NULL;
@@ -130,7 +137,12 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *head,
     /* Sanity check */
     g_return_val_if_fail ((o_current != NULL), found);
 
-    if ( geda_object_calculate_visible_bounds( toplevel, o_current, &rleft, &rtop, &rright, &rbottom) ) {
+    if (geda_object_calculate_visible_bounds (o_current,
+                                              include_hidden,
+                                              &rleft,
+                                              &rtop,
+                                              &rright,
+                                              &rbottom)) {
       if ( found ) {
         *left = MIN( *left, rleft );
         *top = MIN( *top, rtop );
@@ -153,13 +165,14 @@ int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *head,
  *
  *  On failure, this function sets the bounds to empty.
  *
- *  \param [in] toplevel The toplevel object.
  *  \param [in] object The component object.
+ *  \param [in] include_hidden If bounds of hidden objects should
+ *                             be calculated.
  *  \param [out] bounds The bounds of the component object
  */
 void
-geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
-                                        const OBJECT *object,
+geda_component_object_calculate_bounds (const OBJECT *object,
+                                        gboolean include_hidden,
                                         GedaBounds *bounds)
 {
   geda_bounds_init (bounds);
@@ -168,8 +181,8 @@ geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
   g_return_if_fail (((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)));
   g_return_if_fail (object->component != NULL);
 
-  world_get_object_glist_bounds (toplevel,
-                                 object->component->prim_objs,
+  world_get_object_glist_bounds (object->component->prim_objs,
+                                 include_hidden,
                                  &(bounds->min_x),
                                  &(bounds->min_y),
                                  &(bounds->max_x),
@@ -1197,8 +1210,12 @@ geda_component_object_shortest_distance (TOPLEVEL *toplevel, OBJECT *object,
 
     /* Collect the bounds of any lines and arcs in the symbol */
     if ((obj->type == OBJ_LINE || obj->type == OBJ_ARC) &&
-        geda_object_calculate_visible_bounds(toplevel, obj,
-                                       &left, &top, &right, &bottom)) {
+        geda_object_calculate_visible_bounds (obj,
+                                              toplevel->show_hidden_text,
+                                              &left,
+                                              &top,
+                                              &right,
+                                              &bottom)) {
       if (found_line_bounds) {
         line_bounds.lower_x = MIN (line_bounds.lower_x, left);
         line_bounds.lower_y = MIN (line_bounds.lower_y, top);

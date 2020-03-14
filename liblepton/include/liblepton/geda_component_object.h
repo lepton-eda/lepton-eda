@@ -24,9 +24,13 @@
 
 G_BEGIN_DECLS
 
-int world_get_object_glist_bounds(TOPLEVEL *toplevel, const GList *o_list,
-			     int *left, int *top,
-			     int *right, int *bottom);
+int
+world_get_object_glist_bounds (const GList *head,
+                               gboolean include_hidden,
+                               int *left,
+                               int *top,
+                               int *right,
+                               int *bottom);
 
 int o_component_is_embedded (OBJECT *o_current);
 
@@ -40,8 +44,8 @@ OBJECT*
 o_component_new_embedded (TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const gchar *basename, int selectable);
 
 void
-geda_component_object_calculate_bounds (TOPLEVEL *toplevel,
-                                        const OBJECT *object,
+geda_component_object_calculate_bounds (const OBJECT *object,
+                                        gboolean include_hidden,
                                         GedaBounds *bounds);
 
 void

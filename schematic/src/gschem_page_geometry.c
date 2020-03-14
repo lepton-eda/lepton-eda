@@ -722,9 +722,12 @@ gschem_page_geometry_zoom_extents (GschemPageGeometry *geometry, TOPLEVEL *tople
     return;
   }
 
-  if (!world_get_object_glist_bounds (toplevel, list,
-                                      &lleft, &ltop,
-                                      &lright, &lbottom)) {
+  if (!world_get_object_glist_bounds (list,
+                                      toplevel->show_hidden_text,
+                                      &lleft,
+                                      &ltop,
+                                      &lright,
+                                      &lbottom)) {
     return;
   }
 

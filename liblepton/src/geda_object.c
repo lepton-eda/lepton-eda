@@ -1083,8 +1083,10 @@ o_set_visibility (OBJECT *object, int visibility)
 
 /*! \brief Return the bounds of the given object.
  *  \par Given an object, calculate the bounds coordinates.
- *  \param [in] toplevel The toplevel structure.
+ *
  *  \param [in] o_current The object to look the bounds for.
+ *  \param [in] include_hidden If bounds of hidden objects should
+ *                             be calculated.
  *  \param [out] rleft   pointer to the left coordinate of the object.
  *  \param [out] rtop    pointer to the top coordinate of the object.
  *  \param [out] rright  pointer to the right coordinate of the object.
@@ -1094,8 +1096,8 @@ o_set_visibility (OBJECT *object, int visibility)
  *  \retval 1 Bound was found
  */
 gboolean
-geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
-                                      OBJECT *o_current,
+geda_object_calculate_visible_bounds (OBJECT *o_current,
+                                      gboolean include_hidden,
                                       gint *rleft,
                                       gint *rtop,
                                       gint *rright,
@@ -1108,7 +1110,7 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
   /* only do bounding boxes for visible or doing show_hidden_text*/
   /* you might lose some attrs though */
   if (o_current->type == OBJ_TEXT &&
-      ! (o_is_visible (o_current) || toplevel->show_hidden_text)) {
+      ! (o_is_visible (o_current) || include_hidden)) {
     return 0;
   }
 
@@ -1175,7 +1177,9 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
     if (o_current->component->prim_objs == NULL)
       return 0;
 
-    geda_component_object_calculate_bounds(toplevel, o_current, &bounds);
+    geda_component_object_calculate_bounds (o_current,
+                                            include_hidden,
+                                            &bounds);
     break;
 
   case(OBJ_PIN):
@@ -1198,7 +1202,7 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
 
   case(OBJ_TEXT):
     if (!geda_text_object_calculate_bounds (o_current,
-                                            toplevel->show_hidden_text,
+                                            include_hidden,
                                             &bounds)) {
       return 0;
     }

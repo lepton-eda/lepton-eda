@@ -91,7 +91,11 @@ x_print_default_page_setup (TOPLEVEL *toplevel, PAGE *page)
   } else if (orientation == NULL
              || g_strcmp0 (orientation, "auto") == 0) {
     /* Automatically choose the orientation that fits best */
-    status = world_get_object_glist_bounds (toplevel, s_page_objects (page),
+    status = world_get_object_glist_bounds (s_page_objects (page),
+                                            /* Should we allow to
+                                               print hidden
+                                               text? */
+                                            toplevel->show_hidden_text,
                                             &wx_min, &wy_min, &wx_max, &wy_max);
     if (!status || (wx_max - wx_min) > (wy_max - wy_min)) {
       /* Default to landscape */
@@ -140,8 +144,14 @@ x_print_draw_page (TOPLEVEL *toplevel, PAGE *page,
   /* First, calculate a transformation matrix for the cairo
    * context. We want to center the extents of the page in the
    * available page area. */
-  status = world_get_object_glist_bounds (toplevel, s_page_objects (page),
-                                          &wx_min, &wy_min, &wx_max, &wy_max);
+  status = world_get_object_glist_bounds (s_page_objects (page),
+                                          /* Should we allow
+                                             hidden text here? */
+                                          toplevel->show_hidden_text,
+                                          &wx_min,
+                                          &wy_min,
+                                          &wx_max,
+                                          &wy_max);
   /* If there are no printable objects, draw nothing. */
   if (!status) return;
 
@@ -349,8 +359,9 @@ x_print_export_pdf (GschemToplevel *w_current,
   /* First, calculate a transformation matrix for the cairo
    * context. We want to center the extents of the page in the
    * available page area. */
-  status = world_get_object_glist_bounds (w_current->toplevel,
-                                          s_page_objects (w_current->toplevel->page_current),
+  status = world_get_object_glist_bounds (s_page_objects (w_current->toplevel->page_current),
+                                          /* Should we allow hidden text here? */
+                                          w_current->toplevel->show_hidden_text,
                                           &wx_min, &wy_min, &wx_max, &wy_max);
   if (status) {
     width  = (wx_max - wx_min) * DEFAULT_ADOBE_PDF_PPI / DEFAULT_GSCHEM_PPI;

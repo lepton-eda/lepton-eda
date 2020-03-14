@@ -539,12 +539,13 @@ gschem_page_view_invalidate_object (GschemPageView *view, OBJECT *object)
     int world_left;
     int world_top;
 
-    success = geda_object_calculate_visible_bounds (page->toplevel,
-                                                    object,
-                                                    &world_left,
-                                                    &world_top,
-                                                    &world_right,
-                                                    &world_bottom);
+    success =
+      geda_object_calculate_visible_bounds (object,
+                                            page->toplevel->show_hidden_text,
+                                            &world_left,
+                                            &world_top,
+                                            &world_right,
+                                            &world_bottom);
 
     if (success) {
       gschem_page_view_invalidate_world_rect (view,
@@ -1329,8 +1330,8 @@ gschem_page_view_zoom_object (GschemPageView *view, OBJECT *object)
   g_return_if_fail (object->page != NULL);
   g_return_if_fail (object->page->toplevel != NULL);
 
-  success = geda_object_calculate_visible_bounds (object->page->toplevel,
-                                                  object,
+  success = geda_object_calculate_visible_bounds (object,
+                                                  object->page->toplevel->show_hidden_text,
                                                   &x[0],
                                                   &y[0],
                                                   &x[1],

@@ -341,9 +341,14 @@ export_layout_page (PAGE *page,
     m[3] = DEFAULT_MARGIN;
   }
 
-  /* Now calculate extents of objects within page */
-  world_get_object_glist_bounds (toplevel, s_page_objects (page),
-                                 &wx_min, &wy_min, &wx_max, &wy_max);
+  /* Now calculate extents of objects within page. Hidden text is
+     not taken into account. */
+  world_get_object_glist_bounds (s_page_objects (page),
+                                 FALSE,
+                                 &wx_min,
+                                 &wy_min,
+                                 &wx_max,
+                                 &wy_max);
   w_width = wx_max - wx_min;
   w_height = wy_max - wy_min;
 

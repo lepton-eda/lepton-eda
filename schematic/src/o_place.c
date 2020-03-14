@@ -246,8 +246,12 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
   }
 
   /* Find the bounds of the drawing to be done */
-  world_get_object_glist_bounds (page->toplevel, page->place_list,
-                                 &left, &top, &right, &bottom);
+  world_get_object_glist_bounds (page->place_list,
+                                 page->toplevel->show_hidden_text,
+                                 &left,
+                                 &top,
+                                 &right,
+                                 &bottom);
 
   gschem_page_view_invalidate_world_rect (page_view,
                                           left + diff_x,
@@ -321,9 +325,12 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
     int left, top, bottom, right;
 
     /* Find the bounds of the drawing to be done */
-    world_get_object_glist_bounds (page->toplevel,
-                                   page->place_list,
-                                   &left, &top, &right, &bottom);
+    world_get_object_glist_bounds (page->place_list,
+                                   page->toplevel->show_hidden_text,
+                                   &left,
+                                   &top,
+                                   &right,
+                                   &bottom);
 
     /* Draw box outline */
     eda_cairo_box (cr, flags, 0, left, top, right, bottom);

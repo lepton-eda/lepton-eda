@@ -288,22 +288,16 @@ SCM_DEFINE (object_id, "%object-id", 1, 0, 0,
 SCM_DEFINE (object_bounds, "%object-bounds", 0, 0, 1,
             (SCM rst_s), "Get the bounds of a list of objects")
 {
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-
   GList *obj_list = edascm_to_object_glist (rst_s, s_object_bounds);
 
   int success, left, top, right, bottom;
-  if (toplevel->show_hidden_text) {
-    success = world_get_object_glist_bounds (toplevel, obj_list,
-                                             &left, &top, &right, &bottom);
-  } else {
-    toplevel->show_hidden_text = TRUE;
-
-    success = world_get_object_glist_bounds (toplevel, obj_list,
-                                             &left, &top, &right, &bottom);
-
-    toplevel->show_hidden_text = FALSE;
-  }
+  success = world_get_object_glist_bounds (obj_list,
+                                           /* Include hidden text. */
+                                           TRUE,
+                                           &left,
+                                           &top,
+                                           &right,
+                                           &bottom);
 
   SCM result = SCM_BOOL_F;
   if (success) {

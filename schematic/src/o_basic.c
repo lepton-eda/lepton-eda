@@ -455,8 +455,12 @@ void o_invalidate (GschemToplevel *w_current, OBJECT *object)
     return;
   }
 
-  if (geda_object_calculate_visible_bounds(page->toplevel, object, &left,  &top,
-                                                       &right, &bottom)) {
+  if (geda_object_calculate_visible_bounds (object,
+                                            page->toplevel->show_hidden_text,
+                                            &left,
+                                            &top,
+                                            &right,
+                                            &bottom)) {
     gschem_page_view_invalidate_world_rect (page_view,
                                             left,
                                             top,
@@ -485,8 +489,12 @@ void o_invalidate_glist (GschemToplevel *w_current, GList *list)
   PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
-  if (world_get_object_glist_bounds (page->toplevel, list, &left,  &top,
-                                                     &right, &bottom)) {
+  if (world_get_object_glist_bounds (list,
+                                     page->toplevel->show_hidden_text,
+                                     &left,
+                                     &top,
+                                     &right,
+                                     &bottom)) {
     gschem_page_view_invalidate_world_rect (page_view,
                                             left,
                                             top,
