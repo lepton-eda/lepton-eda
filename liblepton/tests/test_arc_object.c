@@ -32,7 +32,7 @@ check_construction ()
     g_assert_cmpint (start_angle, ==, geda_arc_object_get_start_angle (object0));
     g_assert_cmpint (sweep_angle, ==, geda_arc_object_get_sweep_angle (object0));
 
-    GedaObject *object1 = geda_arc_object_copy (toplevel, object0);
+    GedaObject *object1 = geda_arc_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);

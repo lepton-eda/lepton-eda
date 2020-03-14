@@ -40,7 +40,7 @@ geda_arc_object_new (gint color,
                      gint sweep_angle);
 
 GedaObject*
-geda_arc_object_copy (TOPLEVEL *toplevel, const GedaObject *object);
+geda_arc_object_copy (const GedaObject *object);
 
 /* methods */
 
