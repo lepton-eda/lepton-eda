@@ -115,10 +115,10 @@ static char *s_slot_search_slotdef (OBJECT *object, int slotnumber)
  *  parts, but on slotted parts, this is what sets the
  *  pinnumber= attribute on slots 2, 3, 4....
  *
- *  \param [in]     toplevel  The TOPLEVEL object.
  *  \param [in,out] object     The OBJECT to update.
  */
-void s_slot_update_object (TOPLEVEL *toplevel, OBJECT *object)
+void
+s_slot_update_object (OBJECT *object)
 {
   OBJECT *o_pin_object;
   OBJECT *o_pinnum_attrib;

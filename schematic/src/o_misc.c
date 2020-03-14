@@ -525,7 +525,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   s_page_append_list (page, new_attribs);
 
   /* Update pinnumbers for current slot */
-  s_slot_update_object (toplevel, o_new);
+  s_slot_update_object (o_new);
 
   /* Replace old OBJECT with new OBJECT */
   s_page_replace (page, o_current, o_new);
