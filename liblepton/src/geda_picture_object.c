@@ -337,19 +337,18 @@ static const char* fallback_xpm[] = {
  *  Parses \a first_line and subsequent lines from \a tb, and returns
  *  a newly-created picture #OBJECT.
  *
- *  \param [in]  toplevel       The TOPLEVEL object.
  *  \param [in]  first_line      Character string with picture description.
  *  \param [in]  tb              Text buffer to load embedded data from.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new picture object, or NULL on error.
  */
-OBJECT *o_picture_read (TOPLEVEL *toplevel,
-                        const char *first_line,
-                        TextBuffer *tb,
-                        unsigned int release_ver,
-                        unsigned int fileformat_ver,
-                        GError **err)
+OBJECT*
+o_picture_read (const char *first_line,
+                TextBuffer *tb,
+                unsigned int release_ver,
+                unsigned int fileformat_ver,
+                GError **err)
 {
   OBJECT *new_obj;
   int x1, y1;

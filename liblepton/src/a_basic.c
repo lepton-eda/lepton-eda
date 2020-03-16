@@ -167,7 +167,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         break;
 
       case(OBJ_PICTURE):
-        new_obj = o_picture_read (toplevel, line, tb, release_ver, fileformat_ver, err);
+        new_obj = o_picture_read (line, tb, release_ver, fileformat_ver, err);
         if (new_obj == NULL)
           goto error;
         new_object_list = g_list_prepend (new_object_list, new_obj);
