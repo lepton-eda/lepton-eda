@@ -105,8 +105,7 @@ void
 geda_net_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
-o_net_read (TOPLEVEL *toplevel,
-            const char buf[],
+o_net_read (const char buf[],
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err);
