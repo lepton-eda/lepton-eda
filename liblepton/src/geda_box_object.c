@@ -246,14 +246,16 @@ geda_box_object_modify (OBJECT *object,
  *    <DT>*</DT><DD>the file format used for the releases after 2000704.
  *  </DL>
  *
- *  \param [in]     toplevel       The TOPLEVEL object.
  *  \param [in]     buf             Character string with box description.
  *  \param [in]     release_ver     libgeda release version number.
  *  \param [in]     fileformat_ver  libgeda file format version number.
  *  \return The BOX OBJECT that was created, or NULL on error.
  */
-OBJECT *o_box_read (TOPLEVEL *toplevel, const char buf[],
-                    unsigned int release_ver, unsigned int fileformat_ver, GError **err)
+OBJECT*
+o_box_read (const char buf[],
+            unsigned int release_ver,
+            unsigned int fileformat_ver,
+            GError **err)
 {
   OBJECT *new_obj;
   char type;
