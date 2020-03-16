@@ -109,6 +109,13 @@ Lepton EDA homepage: <~a>
 
 
 
+( define ( failure )
+  ( upcfg-log "lepton-upcfg: configuration upgrade failed.~%" )
+  ( primitive-exit 1 )
+)
+
+
+
 ; program entry point:
 ;
 ( define ( main )
@@ -122,11 +129,7 @@ Lepton EDA homepage: <~a>
   ( cfg-id        #f )
   )
 
-  ( define ( failure )
-    ( upcfg-log "lepton-upcfg: configuration upgrade failed.~%" )
-    ( primitive-exit 1 )
-  )
-
+  ( init-log "upcfg" )
 
   ( set! args-len (length cmd-line-args) )
   ( when ( and (null? files) (or (< args-len 2) (> args-len 4)) )
@@ -151,8 +154,6 @@ Lepton EDA homepage: <~a>
     ( usage 1 )
   )
 
-
-  ( init-log "upcfg" )
 
   ( upcfg-log "ii: upgrading config in [~a]...~%" (config-file-path cfg-id) )
 
