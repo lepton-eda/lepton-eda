@@ -106,8 +106,7 @@ void
 geda_line_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
-o_line_read (TOPLEVEL *toplevel,
-             const char buf[],
+o_line_read (const char buf[],
              unsigned int release_ver,
              unsigned int fileformat_ver,
              GError **err);
