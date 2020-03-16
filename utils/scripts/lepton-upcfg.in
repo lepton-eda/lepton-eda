@@ -18,6 +18,7 @@ exec @GUILE@ "$0" "$@"
 ; from netlist/scheme/lepton-netlist.in (see comments there):
 ;
 ( primitive-eval '(use-modules (ice-9 format)) )
+( primitive-eval '(use-modules (ice-9 rdelim)) ) ; read-line()
 ( primitive-eval '(use-modules (lepton legacy-config)) )
 ( primitive-eval '(use-modules (ice-9 getopt-long)) )
 ( primitive-eval '(use-modules (lepton version)) )
@@ -116,6 +117,69 @@ Lepton EDA homepage: <~a>
 
 
 
+( define ( prompt-for-user-cfg ids )
+( let
+  (
+  ( i 0 )
+  ( ndx #f )
+  )
+
+  ( define ( input-error )
+    ( upcfg-log "ee: wrong value entered~%" )
+    ( failure )
+  )
+
+  ( upcfg-log "ii: more than one user configuration files found:~%" )
+  ( while ( < i (length ids) )
+    ( upcfg-log "~d: ~a~%" (1+ i) (config-file-path (list-ref ids i)) )
+    ( set! i (1+ i) )
+  )
+
+  ( upcfg-log "Type config file number to upgrade and press Enter: " )
+  ( set! ndx (false-if-exception (read-line)) )
+  ( set! ndx (false-if-exception (string->number ndx)) )
+
+  ( unless ndx
+    ( input-error )
+  )
+
+  ( upcfg-log "ii: choice: [ ~a ]~%" ndx )
+  ( set! ndx ( 1- ndx ) )
+  ( if ( or (< ndx 0) (>= ndx (length ids)) )
+    ( input-error )
+  )
+
+  ; return:
+  ( list-ref ids ndx )
+
+) ; let
+) ; prompt-for-user-cfg()
+
+
+
+( define ( get-user-cfg-id )
+( let
+  (
+  ( ids (find-user-config-files) )
+  )
+
+  ( when ( null? ids )
+    ( upcfg-log "ii: no user configuration files found.~%" )
+    ( primitive-exit 0 )
+  )
+
+  ; return:
+  ( if ( > (length ids) 1 )
+    ( prompt-for-user-cfg ids ) ; if
+    ( list-ref ids 0 )          ; else
+  )
+
+) ; let
+) ; get-user-cfg-id()
+
+
+
+
 ; program entry point:
 ;
 ( define ( main )
@@ -147,7 +211,7 @@ Lepton EDA homepage: <~a>
     ( set! cfg-id 'geda-local )
   )
   ( if (option-ref cmd-line-args 'user #f)
-    ( set! cfg-id 'geda-user3 )
+    ( set! cfg-id ( get-user-cfg-id ) )
   )
 
   ( if ( and (null? files) (not cfg-id) )
