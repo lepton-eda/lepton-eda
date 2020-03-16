@@ -270,7 +270,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
         break;
 
       case(OBJ_PATH):
-        new_obj = o_path_read (toplevel, line, tb, release_ver, fileformat_ver, err);
+        new_obj = o_path_read (line, tb, release_ver, fileformat_ver, err);
         if (new_obj == NULL)
           goto error;
         object_list = g_list_prepend (object_list, new_obj);
