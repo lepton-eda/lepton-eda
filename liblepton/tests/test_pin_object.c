@@ -137,8 +137,7 @@ check_serialization ()
     s_delete_object (object0);
     g_assert (buffer0 != NULL);
 
-    GedaObject *object1 = o_pin_read (toplevel,
-                                      buffer0,
+    GedaObject *object1 = o_pin_read (buffer0,
                                       version,
                                       FILEFORMAT_VERSION,
                                       NULL);

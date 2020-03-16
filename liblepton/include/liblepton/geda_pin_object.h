@@ -107,8 +107,7 @@ geda_pin_object_update_whichend (TOPLEVEL *toplevel,
                                  int num_pins);
 
 OBJECT*
-o_pin_read (TOPLEVEL *toplevel,
-            const char buf[],
+o_pin_read (const char buf[],
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err);
