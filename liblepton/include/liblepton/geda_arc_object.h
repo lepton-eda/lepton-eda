@@ -115,8 +115,7 @@ void
 geda_arc_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
-o_arc_read (TOPLEVEL *toplevel,
-            const char buf[],
+o_arc_read (const char buf[],
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err);

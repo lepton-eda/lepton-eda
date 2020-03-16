@@ -372,14 +372,16 @@ geda_arc_object_modify (OBJECT *object,
  *
  *  A negative or null radius is not allowed.
  *
- *  \param [in] toplevel    The TOPLEVEL object.
  *  \param [in] buf
  *  \param [in] release_ver
  *  \param [in] fileformat_ver
  *  \return The ARC OBJECT that was created, or NULL on error.
  */
-OBJECT *o_arc_read (TOPLEVEL *toplevel, const char buf[],
-           unsigned int release_ver, unsigned int fileformat_ver, GError **err)
+OBJECT
+*o_arc_read (const char buf[],
+             unsigned int release_ver,
+             unsigned int fileformat_ver,
+             GError **err)
 {
   OBJECT *new_obj;
   char type;
