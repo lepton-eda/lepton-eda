@@ -189,12 +189,11 @@ check_serialization ()
                                        "test_text_object.c::check_serialization()");
     const gchar *line = s_textbuffer_next_line (tb);
 
-    GedaObject *object1 = o_text_read (toplevel,
-                                      line,
-                                      tb,
-                                      version,
-                                      FILEFORMAT_VERSION,
-                                      NULL);
+    GedaObject *object1 = o_text_read (line,
+                                       tb,
+                                       version,
+                                       FILEFORMAT_VERSION,
+                                       NULL);
 
     g_assert (object1 != NULL);
     s_textbuffer_free (tb);

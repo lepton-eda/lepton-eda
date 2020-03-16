@@ -127,8 +127,7 @@ o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
                                  void *user_data);
 
 OBJECT*
-o_text_read (TOPLEVEL *toplevel,
-             const char *first_line,
+o_text_read (const char *first_line,
              TextBuffer *tb,
              unsigned int release_ver,
              unsigned int fileformat_ver,

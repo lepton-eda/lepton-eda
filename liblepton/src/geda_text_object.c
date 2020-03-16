@@ -482,7 +482,6 @@ geda_text_object_new (gint color,
  *  If the line object was read successfully, a new object is
  *  create and appended to the \a object_list.
  *
- *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] first_line   the first line of the text
  *  \param [in] tb           a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
@@ -490,8 +489,7 @@ geda_text_object_new (gint color,
  *  \return The object list, or NULL on error.
  */
 OBJECT*
-o_text_read (TOPLEVEL *toplevel,
-             const char *first_line,
+o_text_read (const char *first_line,
              TextBuffer *tb,
              unsigned int release_ver,
              unsigned int fileformat_ver,
