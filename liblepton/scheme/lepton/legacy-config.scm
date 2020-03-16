@@ -18,6 +18,7 @@
   #:export      ( config-upgrade-old-keys )
   #:export      ( config-upgrade )
   #:export      ( config-upgrade-file )
+  #:export      ( config-file-path )
   #:export      ( warning-option-deprecated )
   #:export      ( warning-option-obsolete )
 )
