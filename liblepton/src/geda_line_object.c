@@ -346,14 +346,16 @@ geda_line_object_modify (OBJECT *object,
  *    <DT>*</DT><DD>the file format used for the releases after 20010704.
  *  </DL>
  *
- *  \param [in]  toplevel       The TOPLEVEL object.
  *  \param [in]  buf             Character string with line description.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new line object, or NULL on error.
  */
-OBJECT *o_line_read (TOPLEVEL *toplevel, const char buf[],
-                     unsigned int release_ver, unsigned int fileformat_ver, GError ** err)
+OBJECT*
+o_line_read (const char buf[],
+             unsigned int release_ver,
+             unsigned int fileformat_ver,
+             GError ** err)
 {
   OBJECT *new_obj;
   char type;
