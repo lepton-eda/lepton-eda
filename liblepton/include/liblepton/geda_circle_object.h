@@ -96,8 +96,7 @@ void
 geda_circle_object_translate (GedaObject *object, gint dx, gint dy);
 
 GedaObject*
-o_circle_read (TOPLEVEL *toplevel,
-               const char buf[],
+o_circle_read (const char buf[],
                unsigned int release_ver,
                unsigned int fileformat_ver,
                GError **err);

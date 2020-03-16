@@ -290,15 +290,13 @@ geda_circle_object_modify (GedaObject *object,
  *    <DT>*</DT><DD>the file format used for the releases after 20000704.
  *  </DL>
  *
- *  \param [in]  toplevel       The TOPLEVEL object.
  *  \param [in]  buf             Character string with circle description.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new circle object, or NULL on error.
  */
 GedaObject*
-o_circle_read (TOPLEVEL *toplevel,
-               const char buf[],
+o_circle_read (const char buf[],
                unsigned int release_ver,
                unsigned int fileformat_ver,
                GError ** err)
