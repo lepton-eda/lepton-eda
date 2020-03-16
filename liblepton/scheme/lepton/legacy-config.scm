@@ -19,6 +19,7 @@
   #:export      ( config-upgrade )
   #:export      ( config-upgrade-file )
   #:export      ( config-file-path )
+  #:export      ( find-user-config-files )
   #:export      ( warning-option-deprecated )
   #:export      ( warning-option-obsolete )
 )
@@ -606,4 +607,35 @@ https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 
 ) ; let
 ) ; config-upgrade-file()
+
+
+
+; public:
+;
+; Find available user configuration files.
+;
+; {ret}: list of config ids, sorted by file modification time
+;        (recently updated first).
+;
+( define ( find-user-config-files )
+
+  ( define ( mtime>? a b )
+    ( >
+      ( stat:mtime ( stat (config-file-path a) ) )
+      ( stat:mtime ( stat (config-file-path b) ) )
+    )
+  )
+
+( let*
+  (
+  ( ids (list 'geda-user1 'geda-user2 'geda-user3) )
+  ( ids-readable (filter config-file-readable? ids) )
+  ( ids-by-mtime (sort ids-readable mtime>?) )
+  )
+
+  ; return:
+  ids-by-mtime
+
+) ; let
+) ; find-user-config-files()
 
