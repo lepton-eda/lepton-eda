@@ -102,7 +102,11 @@ GdkPixbuf*
 o_picture_get_fallback_pixbuf () G_GNUC_WARN_UNUSED_RESULT;
 
 OBJECT*
-o_picture_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+o_picture_read (const char *first_line,
+                TextBuffer *tb,
+                unsigned int release_ver,
+                unsigned int fileformat_ver,
+                GError **err);
 
 gchar*
 geda_picture_object_to_buffer (const GedaObject *object);
