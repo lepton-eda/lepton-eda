@@ -163,16 +163,18 @@ geda_path_object_copy (OBJECT *o_current)
  *    <DT>*</DT><DD>the file format used for the releases after 20010704.
  *  </DL>
  *
- *  \param [in]  toplevel       The TOPLEVEL object.
  *  \param [in]  first_line      Character string with path description.
  *  \param [in]  tb              Text buffer containing the path string.
  *  \param [in]  release_ver     libgeda release version number.
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new path object, or NULL on error;
  */
-OBJECT *o_path_read (TOPLEVEL *toplevel,
-                     const char *first_line, TextBuffer *tb,
-                     unsigned int release_ver, unsigned int fileformat_ver, GError **err)
+OBJECT*
+o_path_read (const char *first_line,
+             TextBuffer *tb,
+             unsigned int release_ver,
+             unsigned int fileformat_ver,
+             GError **err)
 {
   OBJECT *new_obj;
   char type;

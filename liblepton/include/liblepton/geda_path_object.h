@@ -62,7 +62,11 @@ geda_path_object_mirror (int world_centerx,
                          OBJECT *object);
 
 OBJECT*
-o_path_read(TOPLEVEL *toplevel, const char *first_line, TextBuffer *tb, unsigned int release_ver, unsigned int fileformat_ver, GError **err);
+o_path_read (const char *first_line,
+             TextBuffer *tb,
+             unsigned int release_ver,
+             unsigned int fileformat_ver,
+             GError **err);
 
 gchar*
 geda_path_object_to_buffer (const GedaObject *object);
