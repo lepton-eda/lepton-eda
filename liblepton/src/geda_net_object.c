@@ -277,15 +277,17 @@ geda_net_object_new (char type,
  *  If the netobject was read successfully, a new net object is
  *  allocated and appended to the \a object_list.
  *
- *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  *
  */
-OBJECT *o_net_read (TOPLEVEL *toplevel, const char buf[],
-                    unsigned int release_ver, unsigned int fileformat_ver, GError **err)
+OBJECT*
+o_net_read (const char buf[],
+            unsigned int release_ver,
+            unsigned int fileformat_ver,
+            GError **err)
 {
   OBJECT *new_obj;
   char type;
