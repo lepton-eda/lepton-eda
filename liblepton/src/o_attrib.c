@@ -251,7 +251,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
         break;
 
       case(OBJ_BOX):
-        if ((new_obj = o_box_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+        if ((new_obj = o_box_read (line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;

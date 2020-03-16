@@ -89,8 +89,7 @@ void
 geda_box_object_translate (GedaObject *object, int dx, int dy);
 
 OBJECT*
-o_box_read (TOPLEVEL *toplevel,
-            const char buf[],
+o_box_read (const char buf[],
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err);
