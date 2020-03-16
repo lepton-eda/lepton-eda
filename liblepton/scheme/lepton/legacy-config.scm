@@ -538,7 +538,15 @@ https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 ( let
   (
   ( res #f )
+  ( target-id (target-cfg-id cfg-id) )
   )
+
+  ( define ( mk-user-cfg-dir )
+    ( unless ( file-exists? (user-config-dir) )
+      ( upcfg-mkdir (user-config-dir) )
+    )
+  )
+
 
   ( catch #t
   ( lambda()
@@ -548,10 +556,14 @@ https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
 
     ( upgrade-file (config-file-path cfg-id) )
 
+    ( if ( and copy (eq? target-id 'lepton-user) )
+      ( mk-user-cfg-dir )
+    )
+
     ( if copy
       ( upcfg-copy-file ; if
         ( upcfg-tmp-file )
-        ( config-file-path (target-cfg-id cfg-id) )
+        ( config-file-path target-id )
         #:overwrite overwrite
       )
       ( upcfg-print-file (upcfg-tmp-file) ) ; else
