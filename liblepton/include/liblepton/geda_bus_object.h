@@ -103,8 +103,7 @@ void
 geda_bus_object_translate (GedaObject *object, gint dx, gint dy);
 
 GedaObject*
-o_bus_read (TOPLEVEL *toplevel,
-            const char buf[],
+o_bus_read (const char buf[],
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err);

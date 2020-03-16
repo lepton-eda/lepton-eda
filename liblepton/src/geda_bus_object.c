@@ -314,15 +314,13 @@ geda_bus_object_new (gint color,
  *  If the bus object was read successfully, a new bus object is
  *  allocated and appended to the \a object_list.
  *
- *  \param [in] toplevel     The TOPLEVEL object
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
 GedaObject*
-o_bus_read (TOPLEVEL *toplevel,
-            const char buf[],
+o_bus_read (const char buf[],
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err)
