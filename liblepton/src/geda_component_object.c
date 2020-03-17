@@ -98,6 +98,8 @@ always_promote_attributes ()
   return attributes;
 }
 
+static gboolean placeholder_rendering = FALSE;
+
 
 /*! \brief Return the bounds of the given GList of objects.
  *  \par Given a list of objects, calcule the bounds coordinates.
@@ -421,6 +423,23 @@ static void o_component_remove_promotable_attribs (TOPLEVEL *toplevel, OBJECT *o
   g_list_free (promotable);
 }
 
+/*! \brief Enable rendering of placeholders */
+void
+set_render_placeholders()
+{
+  placeholder_rendering = TRUE;
+}
+
+/*! \brief If placeholders have to be rendered
+ *  \return TRUE if placeholders have to be rendered, otherwise
+ *          FALSE
+ */
+static gboolean
+render_placeholders()
+{
+  return placeholder_rendering;
+}
+
 static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, int y)
 {
     GedaBounds bounds;
@@ -435,7 +454,7 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
 
     /* Some programs (e.g. netlister) don't need to render
      * anything, so we just return here. */
-    if (!toplevel->rendered_text_bounds_func) {
+    if (!render_placeholders()) {
       return;
     }
 

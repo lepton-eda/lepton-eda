@@ -273,6 +273,9 @@ void main_prog(void *closure, int argc, char *argv[])
   /* Allocate w_current */
   w_current = x_window_new (toplevel);
 
+  /* Enable rendering of placeholders */
+  set_render_placeholders();
+
   g_dynwind_window (w_current);
 
 #ifdef HAVE_LIBSTROKE
