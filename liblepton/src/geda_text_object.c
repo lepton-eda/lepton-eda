@@ -98,10 +98,6 @@ geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
   gboolean result = FALSE;
   double t, l, r, b;
 
-  if (toplevel->rendered_text_bounds_data == NULL) {
-    return result;
-  }
-
   /* Use the new renderer to calculate text bounds */
   result = eda_renderer_get_text_user_bounds (object,
                                               toplevel->show_hidden_text,
@@ -909,19 +905,4 @@ o_text_set_string (OBJECT *obj,
   obj->text->string = g_strdup (new_string);
 
   o_text_recreate (obj);
-}
-
-/*! \brief Set the font-renderer-specific bounds function.
- *  \par Function Description
- *  Set the function to be used to calculate text bounds for a given
- *  #TOPLEVEL.
- *
- *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] user_data User data to be passed to the function.
- */
-void
-o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
-                                 void *user_data)
-{
-  toplevel->rendered_text_bounds_data = user_data;
 }

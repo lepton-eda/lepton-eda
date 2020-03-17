@@ -231,10 +231,6 @@ cmd_export_impl (void *data, int argc, char **argv)
     g_object_set (renderer, "font-name", settings.font, NULL);
   }
 
-  /* Make sure liblepton knows how to calculate the bounds of text
-   * taking into account font etc. */
-  o_text_set_rendered_bounds_func (toplevel, renderer);
-
   /* Create color map */
   render_color_map =
     g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), MAX_COLORS);

@@ -122,10 +122,6 @@ void
 o_text_set_string (OBJECT *obj,
                    const gchar *new_string);
 
-void
-o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
-                                 void *user_data);
-
 OBJECT*
 o_text_read (const char *first_line,
              TextBuffer *tb,

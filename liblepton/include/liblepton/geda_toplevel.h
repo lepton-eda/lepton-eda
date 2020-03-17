@@ -51,9 +51,6 @@ struct st_toplevel
   int auto_save_interval;
   gint auto_save_timeout;
 
-  /* Renderer for calculating text bounds */
-  void *rendered_text_bounds_data;
-
   /* Callback functions for object change notification */
   GList *change_notify_funcs;
 
