@@ -77,4 +77,7 @@ geda_component_object_get_position (const GedaObject *object, gint *x, gint *y);
 GList*
 o_component_get_promotable (TOPLEVEL *toplevel, OBJECT *object, int detach);
 
+void
+set_render_placeholders();
+
 G_END_DECLS
