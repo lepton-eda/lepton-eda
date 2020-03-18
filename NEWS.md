@@ -35,6 +35,11 @@ has been renamed to `autoload`.
   files is *$XDG_CONFIG_HOME/lepton-eda/* (usually,
   it is *$HOME/.config/lepton-eda*).
 
+- Legacy `geda*.conf` configuration files are no longer used.
+  Settings are now read from `lepton*.conf` files.
+  To convert your settings to new format, please use the
+  `lepton-upcfg` utility.
+
 - The obsolete and undocumented script `bompp.sh` has been
   removed.
 
@@ -52,7 +57,7 @@ has been renamed to `autoload`.
   from source when Guile development headers were distributed in
   separate packages in their distribution and there was two
   different Guile versions (2.0 and 2.2) installed on their
-  systems.  They could get misterious error messages about
+  systems.  They could get mysterious error messages about
   applying a wrong object type.  Point is that Guile 2.0 and Guile
   2.2 use incompatible binary code format for compiled programs.
   Now Lepton build system checks what development packages are
@@ -137,21 +142,15 @@ has been renamed to `autoload`.
 
 - The `bitmap-directory` `gafrc` option has been removed.
 
-- The following `gafrc` options have been deprecated and
-replaced with the new configuration settings (types and default
-values are listed in parenthesis):
+- The `gafrc` options listed below have been deprecated
+and replaced with new configuration settings.
+Please refer to the [Deprecated Settings](https://github.com/lepton-eda/lepton-eda/wiki/Deprecated-Settings#user-content-deprecated-gafrc) wiki document.
   - `bus-ripper-symname` => `[schematic]::bus-ripper-symname`
-  (`string`, `busripper-1.sym`)
   - `always-promote-attributes` => `[schematic.attrib]::always-promote`
-  (`string list`, `footprint;device;value;model-name`)
   - `keep-invisible` => `[schematic.attrib]::keep-invisible`
-  (`boolean`, `true`)
   - `attribute-promotion` => `[schematic.attrib]::promote`
-  (`boolean`, `true`)
   - `promote-invisible` => `[schematic.attrib]::promote-invisible`
-  (`boolean`, `false`)
   - `make-backup-files` => `[schematic.backup]::create-files`
-  (`boolean`, `true`)
 
 - Fixed rotation of logs broken in Lepton 1.9.8.
 
@@ -226,7 +225,7 @@ values are listed in parenthesis):
   `port-connection`, which holds a hierarchical
   `<schematic-connection>` a pin belongs to.
 
-- Crashes, when source file cannot be found, are now aovided.
+- Crashes, when source file cannot be found, are now avoided.
 
 - Fixed crashes on power symbols (the symbols having one pin and
   no *"refdes="* attribute) having a *"net="* attribute but no
@@ -404,7 +403,7 @@ equivalent: `-b`.
 
 - The default paper size is now defined in the system configuration
   files: the `paper` configuration key in the `export` and
-  `gschem.printing` groups is set to `iso_a4`.
+  `schematic.printing` (`gschem.printing`) groups is set to `iso_a4`.
 
 - `lepton-cli config` can now read and write configuration
   stored in the **cache** configuration context: a new
@@ -458,9 +457,6 @@ equivalent: `-b`.
   - `(gschem core util)` => `(schematic core util)`
   - `(gschem core window)` => `(schematic core window)`
 
-- The module `(gschem core hook)` has been renamed to `(schematic
-  core hook)`.
-
 - Grips can now be turned on and off at run-time.
   Use the new 'Options → Grips: On/Off' menu item or
   <kbd>O</kbd>-<kbd>I</kbd> keyboard shortcut.
@@ -490,7 +486,7 @@ equivalent: `-b`.
   `true`/`false` for booleans instead of `"enabled"` and `"disabled"`). Please refer
   to the
   [Configuration Settings](https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings)
-  document for more information.
+  document ("Deprecated Settings") for more information.
 
 - In the `Save As` dialog, the filter field now shows
 file extensions (`.sch`, `.sym`). A file's extension in the
