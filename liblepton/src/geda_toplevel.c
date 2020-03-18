@@ -68,8 +68,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   /* The following is an attempt at getting (deterministic) defaults */
   /* for the following variables */
-  toplevel->force_boundingbox = FALSE;
-
   toplevel->rendered_text_bounds_data = NULL;
 
   toplevel->change_notify_funcs = NULL;

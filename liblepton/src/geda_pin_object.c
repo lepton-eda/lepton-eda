@@ -586,11 +586,19 @@ geda_pin_object_update_whichend (TOPLEVEL *toplevel,
   int min0_whichend, min1_whichend;
   int rleft, rtop, rright, rbottom;
   int found;
+  gboolean force_boundingbox;
+
+  cfg_read_bool ("schematic.gui", "force-boundingbox",
+                 default_force_boundingbox, &force_boundingbox);
 
   if (object_list && num_pins) {
-    if (num_pins == 1 || toplevel->force_boundingbox) {
-      world_get_object_glist_bounds (toplevel, object_list,
-                                     &left, &top, &right, &bottom);
+    if (num_pins == 1 || force_boundingbox) {
+      world_get_object_glist_bounds (toplevel,
+                                     object_list,
+                                     &left,
+                                     &top,
+                                     &right,
+                                     &bottom);
     } else {
       found = 0;
 

@@ -60,7 +60,6 @@ int   default_setpagedevice_pagesize = FALSE;
 int   default_bus_ripper_size = 200;
 int   default_bus_ripper_type = COMP_BUS_RIPPER;
 int   default_bus_ripper_rotation = NON_SYMMETRIC;
-int   default_force_boundingbox = FALSE;
 int   default_grid_mode = DEFAULT_GRID_MODE;
 int   default_dots_grid_dot_size = 1;
 int   default_dots_grid_mode = DOTS_GRID_VARIABLE_MODE;
@@ -372,10 +371,6 @@ i_vars_set (GschemToplevel* w_current)
                        vals_brr,
                        sizeof( vals_brr ) / sizeof( vals_brr[0] ),
                        &w_current->bus_ripper_rotation);
-
-
-  cfg_read_bool ("schematic.gui", "force-boundingbox",
-                 default_force_boundingbox, &toplevel->force_boundingbox);
 
   cfg_read_int_with_check ("schematic.gui", "dots-grid-dot-size",
                            default_dots_grid_dot_size, &w_current->dots_grid_dot_size,

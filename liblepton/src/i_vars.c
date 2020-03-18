@@ -31,7 +31,7 @@ int   default_keep_invisible = TRUE;
 
 int   default_make_backup_files = TRUE;
 int   default_net_consolidate = TRUE;
-
+int   default_force_boundingbox = FALSE;
 
 
 /*! \brief Read configuration, initialize variables in TOPLEVEL object.
