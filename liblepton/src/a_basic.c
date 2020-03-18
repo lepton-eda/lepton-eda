@@ -105,6 +105,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
   int itemsread = 0;
 
   int embedded_level = 0;
+  gboolean force_boundingbox;
 
   g_return_val_if_fail ((buffer != NULL), NULL);
 
@@ -346,10 +347,13 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         last_component = NULL;  /* no longer need to check */
   }
 
-  if (found_pin) {
-    if (release_ver <= VERSION_20020825) {
-      geda_pin_object_update_whichend (toplevel, new_object_list, found_pin);
-    }
+  if (release_ver <= VERSION_20020825) {
+    cfg_read_bool ("schematic.gui", "force-boundingbox",
+                   default_force_boundingbox, &force_boundingbox);
+
+    geda_pin_object_update_whichend (toplevel,
+                                     new_object_list,
+                                     (found_pin == 1 || force_boundingbox));
   }
 
   s_textbuffer_free(tb);

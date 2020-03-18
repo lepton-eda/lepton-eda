@@ -570,12 +570,13 @@ geda_pin_object_modify(TOPLEVEL *toplevel, OBJECT *object, int x, int y, int whi
  *
  *  \param toplevel    The TOPLEVEL object
  *  \param object_list list of OBJECTs
- *  \param num_pins    pin count in the object list
- *
+ *  \param force_boundingbox Use the whole symbol bounding box to
+ *                           find pin connection points.
  */
 void
 geda_pin_object_update_whichend (TOPLEVEL *toplevel,
-                                 GList *object_list, int num_pins)
+                                 GList *object_list,
+                                 gboolean force_boundingbox)
 {
   OBJECT *o_current;
   GList *iter;
@@ -586,13 +587,9 @@ geda_pin_object_update_whichend (TOPLEVEL *toplevel,
   int min0_whichend, min1_whichend;
   int rleft, rtop, rright, rbottom;
   int found;
-  gboolean force_boundingbox;
 
-  cfg_read_bool ("schematic.gui", "force-boundingbox",
-                 default_force_boundingbox, &force_boundingbox);
-
-  if (object_list && num_pins) {
-    if (num_pins == 1 || force_boundingbox) {
+  if (object_list) {
+    if (force_boundingbox) {
       world_get_object_glist_bounds (toplevel,
                                      object_list,
                                      &left,
