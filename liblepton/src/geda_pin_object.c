@@ -580,59 +580,51 @@ geda_pin_object_update_whichend (TOPLEVEL *toplevel,
 {
   OBJECT *o_current;
   GList *iter;
+  GList *pin_list = NULL;
   int top = 0, left = 0;
   int right = 0, bottom = 0;
   int d1, d2, d3, d4;
   int min0, min1;
   int min0_whichend, min1_whichend;
-  int rleft, rtop, rright, rbottom;
-  int found;
 
-  if (object_list) {
-    if (force_boundingbox) {
-      world_get_object_glist_bounds (toplevel,
-                                     object_list,
-                                     &left,
-                                     &top,
-                                     &right,
-                                     &bottom);
-    } else {
-      found = 0;
+  /* No objects, nothing to update. */
+  if (object_list == NULL) return;
 
-      /* only look at the pins to calculate bounds of the symbol */
-      iter = object_list;
-      while (iter != NULL) {
-        o_current = (OBJECT *)iter->data;
-        if (o_current->type == OBJ_PIN) {
-          (void) geda_object_calculate_visible_bounds(
-            toplevel, o_current, &rleft, &rtop, &rright, &rbottom);
-
-          if ( found ) {
-            left = MIN( left, rleft );
-            top = MIN( top, rtop );
-            right = MAX( right, rright );
-            bottom = MAX( bottom, rbottom );
-          } else {
-            left = rleft;
-            top = rtop;
-            right = rright;
-            bottom = rbottom;
-            found = 1;
-          }
-        }
-        iter = g_list_next (iter);
-      }
-
+  for (iter = object_list;
+       iter != NULL;
+       iter = g_list_next (iter)) {
+    o_current = (OBJECT *)iter->data;
+    if (o_current->type == OBJ_PIN) {
+      pin_list = g_list_prepend (pin_list, o_current);
     }
-  } else {
-    return;
   }
 
-  iter = object_list;
+  /* No pins, nothing to update. */
+  if (pin_list == NULL) return;
+
+  if (force_boundingbox) {
+    /* Include text objects since we need full bounds. */
+    world_get_object_glist_bounds (toplevel,
+                                   object_list,
+                                   &left,
+                                   &top,
+                                   &right,
+                                   &bottom);
+  } else {
+    /* Only look at the pins to calculate symbol bounds. */
+    world_get_object_glist_bounds (toplevel,
+                                   pin_list,
+                                   &left,
+                                   &top,
+                                   &right,
+                                   &bottom);
+  }
+
+  iter = pin_list;
   while (iter != NULL) {
     o_current = (OBJECT *)iter->data;
     /* Determine which end of the pin is on or nearest the boundary */
-    if (o_current->type == OBJ_PIN && o_current->whichend == -1) {
+    if (o_current->whichend == -1) {
       if (o_current->line->y[0] == o_current->line->y[1]) {
         /* horizontal */
 
@@ -696,6 +688,8 @@ geda_pin_object_update_whichend (TOPLEVEL *toplevel,
     }
     iter = g_list_next (iter);
   }
+
+  g_list_free (pin_list);
 }
 
 
