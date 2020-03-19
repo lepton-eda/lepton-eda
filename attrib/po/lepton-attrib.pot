@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.9\n"
+"Project-Id-Version: lepton-eda 1.9.10\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-07 14:33+0300\n"
+"POT-Creation-Date: 2020-03-19 12:10+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr ""
 
-#: attrib/src/f_export.c:83
+#: attrib/src/f_export.c:84
 #, c-format
 msgid "Could not open [%1$s]"
 msgstr ""
@@ -79,7 +79,7 @@ msgid ""
 "\n"
 "Copyright (C) 2003-2006 Stuart D. Brorson.\n"
 "Copyright (C) 2007-2016 gEDA Contributors.\n"
-"Copyright (C) 2017-2019 Lepton EDA Contributors.\n"
+"Copyright (C) 2017-2020 Lepton EDA Contributors.\n"
 "\n"
 "Report bugs at <%2$s>\n"
 "Lepton EDA homepage: <%3$s>\n"
@@ -149,17 +149,17 @@ msgstr ""
 msgid "Start master pin attrib list creation.\n"
 msgstr ""
 
-#: attrib/src/s_string_list.c:124
+#: attrib/src/s_string_list.c:125
 #, c-format
 msgid "Tried to add to a NULL list.\n"
 msgstr ""
 
-#: attrib/src/s_string_list.c:191
+#: attrib/src/s_string_list.c:192
 #, c-format
 msgid "Tried to remove item from empty list.\n"
 msgstr ""
 
-#: attrib/src/s_string_list.c:262
+#: attrib/src/s_string_list.c:263
 #, c-format
 msgid "Couldn't delete item %1$s\n"
 msgstr ""
