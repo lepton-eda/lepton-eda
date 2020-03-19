@@ -1392,7 +1392,7 @@ version()
   const char* msg =
     "Lepton EDA %s.%s (git: %.7s)\n"
     "Copyright (C) 1998-2016 gEDA developers\n"
-    "Copyright (C) 2017-2019 Lepton EDA developers\n"
+    "Copyright (C) 2017-2020 Lepton EDA developers\n"
     "This is free software, and you are welcome to redistribute it\n"
     "under certain conditions. For details, see the file `COPYING',\n"
     "which is included in the Lepton EDA distribution.\n"
