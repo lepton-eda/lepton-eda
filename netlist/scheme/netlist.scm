@@ -104,7 +104,7 @@ to current standard output port and exit with exit status 0."
   (define version-msg "Lepton EDA/lepton-netlist ~A~A.~A (git: ~A)\n")
 
   (define copyright-msg (_ "Copyright (C) 1998-2016 gEDA developers
-Copyright (C) 2017-2019 Lepton EDA Contributors
+Copyright (C) 2017-2020 Lepton EDA Contributors
 This is free software, and you are welcome to redistribute it under
 certain conditions. For details, see the file `COPYING', which is
 included in the Lepton EDA distribution.
