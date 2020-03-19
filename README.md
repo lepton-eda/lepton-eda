@@ -4,10 +4,10 @@ Lepton Electronic Design Automation
 Introduction
 ============
 
-The Lepton EDA suite provides schematic capture,
-netlisting into over 30 netlist formats,
-and many other features. It was forked from the
-[gEDA/gaf suite](http://wiki.geda-project.org/geda:gaf) in late 2016.
+The Lepton EDA suite provides schematic capture, netlisting into
+over 30 netlist formats, and many other features. It was forked
+from the [gEDA/gaf suite](http://wiki.geda-project.org/geda:gaf)
+in late 2016 by most of its active developers at that time.
 
 The GPL Electronic Design Automation (gEDA) project has produced and
 continues working on a full GPL'd suite and toolkit of Electronic
@@ -270,6 +270,7 @@ The programs and associated files are:
 
   Copyright (C) 1998-2017 by Ales Hvezda and the respective original
   authors.
+
   Copyright (C) 2017-2020 Lepton Developers.
 
 See the `AUTHORS` file for a more extensive list of contributors to
