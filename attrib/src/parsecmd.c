@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 1999-2013 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -95,7 +95,7 @@ void usage(char *cmd)
              "\n"
              "Copyright (C) 2003-2006 Stuart D. Brorson.\n"
              "Copyright (C) 2007-2016 gEDA Contributors.\n"
-             "Copyright (C) 2017-2019 Lepton EDA Contributors.\n"
+             "Copyright (C) 2017-2020 Lepton EDA Contributors.\n"
              "\n"
              "Report bugs at <%2$s>\n"
              "Lepton EDA homepage: <%3$s>\n"),
