@@ -31,6 +31,8 @@
  *   - log
  */
 
+#include "config.h"
+
 #include "gschem.h"
 
 
