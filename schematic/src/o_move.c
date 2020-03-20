@@ -529,6 +529,10 @@ void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
   OBJECT *other;
   int whichone;
 
+  g_return_if_fail (object->type == OBJ_NET ||
+                    object->type == OBJ_PIN ||
+                    object->type == OBJ_BUS);
+
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
@@ -537,12 +541,6 @@ void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
 
   if (!object)
   return;
-
-  if (object->type != OBJ_NET && object->type != OBJ_PIN &&
-      object->type != OBJ_BUS) {
-    fprintf(stderr, _("Got a non line object in o_move_check_endpoint\n"));
-    return;
-  }
 
   for (cl_current = object->conn_list;
        cl_current != NULL;
