@@ -196,7 +196,7 @@ color_edit_widget_create (ColorEditWidget* widget)
   gtk_box_pack_start (GTK_BOX (hbox), widget->color_cb_, TRUE, TRUE, 0);
 
   /* "save as..." button: */
-  widget->btn_save_ = gtk_button_new_with_mnemonic ("Save As.._.");
+  widget->btn_save_ = gtk_button_new_with_mnemonic (_("Save As.._."));
   gtk_box_pack_start (GTK_BOX (hbox), widget->btn_save_, FALSE, FALSE, 0);
 
   /* separator: */
