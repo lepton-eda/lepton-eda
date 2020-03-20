@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-18 20:44+0300\n"
+"POT-Creation-Date: 2020-03-20 15:15+0300\n"
 "PO-Revision-Date: 2014-12-29 20:06+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -25,6 +25,10 @@ msgstr ""
 msgid "Zoom too small!  Cannot zoom further."
 msgstr ""
 "Eccessiva riduzione dell'immagine!  Non è possibile ridurla ulteriormente.\n"
+
+#, fuzzy
+msgid "Save As.._."
+msgstr "Salva _come..."
 
 msgid ""
 "Save your color scheme to a file by clicking on the \"Save As...\"\n"
@@ -783,10 +787,6 @@ msgstr "Non è possibile salvare il file di ripristino [%s]\n"
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
 msgstr "ACC! Ho cercato whichone ma non l'ho trovato!\n"
-
-#, c-format
-msgid "Got a non line object in o_move_check_endpoint\n"
-msgstr "Ottenuto un oggetto non in linea in o_move_check_endpoint\n"
 
 #, fuzzy
 msgid "Warning: Starting net at off grid coordinate"
@@ -2418,6 +2418,9 @@ msgstr "~S non è un prefisso di sequenza di tasti."
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Allineamento testo non valido ~A."
+
+#~ msgid "Got a non line object in o_move_check_endpoint\n"
+#~ msgstr "Ottenuto un oggetto non in linea in o_move_check_endpoint\n"
 
 #, fuzzy
 #~ msgid "Invalid size [%1$d] passed to text-size\n"

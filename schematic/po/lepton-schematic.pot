@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda 1.9.10\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-19 12:10+0300\n"
+"POT-Creation-Date: 2020-03-20 15:15+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,11 @@ msgstr ""
 msgid "Zoom too small!  Cannot zoom further."
 msgstr ""
 
-#: schematic/src/color_edit_widget.c:227
+#: schematic/src/color_edit_widget.c:199
+msgid "Save As.._."
+msgstr ""
+
+#: schematic/src/color_edit_widget.c:229
 msgid ""
 "Save your color scheme to a file by clicking on the \"Save As...\"\n"
 "button. It can be loaded on startup with the following\n"
@@ -30,18 +34,18 @@ msgid ""
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
 
-#: schematic/src/color_edit_widget.c:411
+#: schematic/src/color_edit_widget.c:413
 #, c-format
 msgid ""
 "Could not save file [%s]:\n"
 "%s"
 msgstr ""
 
-#: schematic/src/color_edit_widget.c:446
+#: schematic/src/color_edit_widget.c:448
 msgid "Save Color Scheme As..."
 msgstr ""
 
-#: schematic/src/color_edit_widget.c:494 schematic/src/x_fileselect.c:505
+#: schematic/src/color_edit_widget.c:496 schematic/src/x_fileselect.c:505
 #, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -49,38 +53,38 @@ msgid ""
 "Would you like to overwrite it?"
 msgstr ""
 
-#: schematic/src/color_edit_widget.c:498 schematic/src/x_fileselect.c:509
+#: schematic/src/color_edit_widget.c:500 schematic/src/x_fileselect.c:509
 msgid "Overwrite file?"
 msgstr ""
 
-#: schematic/src/font_select_widget.c:216
+#: schematic/src/font_select_widget.c:217
 msgid "_Apply"
 msgstr ""
 
-#: schematic/src/font_select_widget.c:220
+#: schematic/src/font_select_widget.c:221
 msgid "Sa_ve..."
 msgstr ""
 
-#: schematic/src/font_select_widget.c:237
+#: schematic/src/font_select_widget.c:238
 msgid ""
 "After you're done choosing the font, it's recommended\n"
 "to reopen schematics or restart the application."
 msgstr ""
 
-#: schematic/src/font_select_widget.c:292
+#: schematic/src/font_select_widget.c:293
 #, c-format
 msgid "<b>Current:</b> %s"
 msgstr ""
 
-#: schematic/src/font_select_widget.c:479
+#: schematic/src/font_select_widget.c:480
 msgid "Save configuration"
 msgstr ""
 
-#: schematic/src/font_select_widget.c:492
+#: schematic/src/font_select_widget.c:493
 msgid "Local configuration file:"
 msgstr ""
 
-#: schematic/src/font_select_widget.c:498
+#: schematic/src/font_select_widget.c:499
 msgid "User configuration file:"
 msgstr ""
 
@@ -305,7 +309,7 @@ msgid "Filename"
 msgstr ""
 
 #: schematic/src/gschem_find_text_state.c:822 schematic/src/x_colorcb.c:154
-#: schematic/src/x_widgets.c:174 schematic/src/x_window.c:1199
+#: schematic/src/x_widgets.c:176 schematic/src/x_window.c:1199
 #: schematic/src/x_window.c:1448
 msgid "Text"
 msgstr ""
@@ -334,25 +338,25 @@ msgstr ""
 msgid "Check symbol:"
 msgstr ""
 
-#: schematic/src/gschem_hotkey_dialog.c:191
+#: schematic/src/gschem_hotkey_dialog.c:193
 msgid "Hotkeys"
 msgstr ""
 
-#: schematic/src/gschem_hotkey_dialog.c:214
+#: schematic/src/gschem_hotkey_dialog.c:216
 msgid ""
 "Start typing action name or keystroke to filter the list.\n"
 "Type hotkeys as they are displayed in \"Keystroke(s)\" column."
 msgstr ""
 
-#: schematic/src/gschem_hotkey_dialog.c:218 schematic/src/x_compselect.c:1124
+#: schematic/src/gschem_hotkey_dialog.c:220 schematic/src/x_compselect.c:1124
 msgid "_Filter:"
 msgstr ""
 
-#: schematic/src/gschem_hotkey_dialog.c:244 schematic/src/x_window.c:1317
+#: schematic/src/gschem_hotkey_dialog.c:246 schematic/src/x_window.c:1317
 msgid "Action"
 msgstr ""
 
-#: schematic/src/gschem_hotkey_dialog.c:262
+#: schematic/src/gschem_hotkey_dialog.c:264
 msgid "Keystroke(s)"
 msgstr ""
 
@@ -785,7 +789,7 @@ msgstr ""
 msgid "Symbol is not a real file. Symbol cannot be loaded."
 msgstr ""
 
-#: schematic/src/i_callbacks.c:2324 schematic/src/x_tabs.c:1097
+#: schematic/src/i_callbacks.c:2324 schematic/src/x_tabs.c:1099
 msgid "Cannot find any schematics above the current one!"
 msgstr ""
 
@@ -894,11 +898,6 @@ msgstr ""
 #: schematic/src/o_move.c:516
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
-msgstr ""
-
-#: schematic/src/o_move.c:543
-#, c-format
-msgid "Got a non line object in o_move_check_endpoint\n"
 msgstr ""
 
 #: schematic/src/o_net.c:446
@@ -1717,64 +1716,64 @@ msgstr ""
 msgid "Executing guile script [%1$s]"
 msgstr ""
 
-#: schematic/src/x_tabs.c:886
+#: schematic/src/x_tabs.c:888
 #, c-format
 msgid "Hierarchy up: %s"
 msgstr ""
 
-#: schematic/src/x_tabs.c:889
+#: schematic/src/x_tabs.c:891
 msgid "Hierarchy up"
 msgstr ""
 
-#: schematic/src/x_tabs.c:1562 schematic/scheme/conf/schematic/menu.scm:29
+#: schematic/src/x_tabs.c:1564 schematic/scheme/conf/schematic/menu.scm:29
 msgid "_New"
 msgstr ""
 
-#: schematic/src/x_tabs.c:1563 schematic/scheme/conf/schematic/menu.scm:30
+#: schematic/src/x_tabs.c:1565 schematic/scheme/conf/schematic/menu.scm:30
 msgid "_Open..."
 msgstr ""
 
-#: schematic/src/x_tabs.c:1565 schematic/scheme/conf/schematic/menu.scm:33
+#: schematic/src/x_tabs.c:1567 schematic/scheme/conf/schematic/menu.scm:33
 msgid "_Save"
 msgstr ""
 
-#: schematic/src/x_tabs.c:1566 schematic/scheme/conf/schematic/menu.scm:34
+#: schematic/src/x_tabs.c:1568 schematic/scheme/conf/schematic/menu.scm:34
 msgid "Save _As..."
 msgstr ""
 
-#: schematic/src/x_tabs.c:1568
+#: schematic/src/x_tabs.c:1570
 msgid "Page _Manager..."
 msgstr ""
 
-#: schematic/src/x_tabs.c:1570 schematic/scheme/conf/schematic/menu.scm:209
+#: schematic/src/x_tabs.c:1572 schematic/scheme/conf/schematic/menu.scm:209
 msgid "_Close"
 msgstr ""
 
-#: schematic/src/x_widgets.c:153 schematic/src/x_window.c:1452
+#: schematic/src/x_widgets.c:155 schematic/src/x_window.c:1452
 msgid "Options"
 msgstr ""
 
-#: schematic/src/x_widgets.c:198 schematic/src/x_window.c:1444
+#: schematic/src/x_widgets.c:200 schematic/src/x_window.c:1444
 msgid "Object"
 msgstr ""
 
-#: schematic/src/x_widgets.c:219
+#: schematic/src/x_widgets.c:221
 msgid "Log"
 msgstr ""
 
-#: schematic/src/x_widgets.c:240 schematic/src/x_window.c:1474
+#: schematic/src/x_widgets.c:242 schematic/src/x_window.c:1474
 msgid "Find Text"
 msgstr ""
 
-#: schematic/src/x_widgets.c:254
+#: schematic/src/x_widgets.c:256
 msgid "Color Scheme Editor"
 msgstr ""
 
-#: schematic/src/x_widgets.c:267 schematic/scheme/schematic/builtins.scm:498
+#: schematic/src/x_widgets.c:269 schematic/scheme/schematic/builtins.scm:498
 msgid "Select Schematic Font"
 msgstr ""
 
-#: schematic/src/x_widgets.c:280 schematic/scheme/schematic/builtins.scm:241
+#: schematic/src/x_widgets.c:282 schematic/scheme/schematic/builtins.scm:241
 msgid "Page Manager"
 msgstr ""
 
