@@ -23,6 +23,7 @@
  * \brief Schematic font selection widget
  *
  */
+#include "config.h"
 
 #include "gschem.h"
 

@@ -75,6 +75,8 @@
  *
  */
 
+#include "config.h"
+
 #include "gschem.h"
 
 
