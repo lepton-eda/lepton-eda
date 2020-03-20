@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda gschem ru\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-18 20:44+0300\n"
+"POT-Creation-Date: 2020-03-20 15:15+0300\n"
 "PO-Revision-Date: 2015-09-13 16:05+0300\n"
 "Last-Translator: Sergey Alyoshin <alyoshin.s@gmail.com>\n"
 "Language-Team: geda-user@delorie.com\n"
@@ -25,6 +25,10 @@ msgstr ""
 #, fuzzy
 msgid "Zoom too small!  Cannot zoom further."
 msgstr "Масштаб слишком мал! Дальнейшее изменение невозможно.\n"
+
+#, fuzzy
+msgid "Save As.._."
+msgstr "Сохранить _как..."
 
 msgid ""
 "Save your color scheme to a file by clicking on the \"Save As...\"\n"
@@ -784,11 +788,6 @@ msgstr "Не удалось сохранить файл резервной ко�
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
 msgstr ""
 "Ох! Попытка найти точку подключения для соединения оказалась безуспешной!\n"
-
-# Имеется в виду, что объект не является соединением, выводом или шиной
-#, c-format
-msgid "Got a non line object in o_move_check_endpoint\n"
-msgstr "o_move_check_endpoint: задан объект, не являющийся линейным\n"
 
 #, fuzzy
 msgid "Warning: Starting net at off grid coordinate"
@@ -2462,6 +2461,10 @@ msgstr "~S не является префиксом клавишной посл�
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Недопустимое выравнивание текста ~A."
+
+# Имеется в виду, что объект не является соединением, выводом или шиной
+#~ msgid "Got a non line object in o_move_check_endpoint\n"
+#~ msgstr "o_move_check_endpoint: задан объект, не являющийся линейным\n"
 
 #, fuzzy
 #~ msgid "Invalid size [%1$d] passed to text-size\n"
