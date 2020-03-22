@@ -8180,7 +8180,7 @@ gtk_sheet_attach_floating       (GtkSheet *sheet,
                                  GtkWidget *widget,
                                  gint row, gint col)
 {
-  GdkRectangle area;
+  GdkRectangle area = { 0, 0, 0, 0 };
   GtkSheetChild *child;
 
   if(row < 0 || col < 0){
