@@ -608,10 +608,10 @@ gschem_page_view_invalidate_screen_rect (GschemPageView *view, int left, int top
 void
 gschem_page_view_invalidate_world_rect (GschemPageView *view, int left, int top, int right, int bottom)
 {
-  int screen_bottom;
-  int screen_right;
-  int screen_left;
-  int screen_top;
+  int screen_bottom = 0;
+  int screen_right = 0;
+  int screen_left = 0;
+  int screen_top = 0;
 
   g_return_if_fail (view != NULL);
 
