@@ -352,7 +352,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->select_slack_pixels = 4;
   w_current->zoom_gain = 20;
   w_current->scrollpan_steps = 8;
-  w_current->show_hidden_text = FALSE;
 
   w_current->bus_ripper_symname = NULL;
 
@@ -785,3 +784,20 @@ renderer_load_font (EdaRenderer* renderer)
   }
 }
 
+
+/*! \brief Get visibility of hidden text
+ *
+ *  \param [in] w_current The current gschem toplevel
+ *  \return TRUE if hidden text should be visible, otherwise FALSE
+ */
+gboolean
+gschem_toplevel_get_show_hidden_text (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, FALSE);
+
+  GschemPageView *view = GSCHEM_PAGE_VIEW (w_current->drawing_area);
+
+  /* On early stage, page view may not be created yet, so just
+     return FALSE in such cases. */
+  return (view == NULL) ? FALSE : gschem_page_view_get_show_hidden_text (view);
+}

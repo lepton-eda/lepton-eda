@@ -211,6 +211,9 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
 
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
+
   /* If drawing is true, then don't worry about the previous drawing
    * method and movement constraints, use with the current settings */
   if (drawing) {
@@ -247,7 +250,7 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
 
   /* Find the bounds of the drawing to be done */
   world_get_object_glist_bounds (page->place_list,
-                                 w_current->show_hidden_text,
+                                 show_hidden_text,
                                  &left,
                                  &top,
                                  &right,
@@ -290,6 +293,9 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
 
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
+
   /* Don't worry about the previous drawing method and movement
    * constraints, use with the current settings */
   w_current->last_drawb_mode = w_current->actionfeedback_mode;
@@ -326,7 +332,7 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 
     /* Find the bounds of the drawing to be done */
     world_get_object_glist_bounds (page->place_list,
-                                   w_current->show_hidden_text,
+                                   show_hidden_text,
                                    &left,
                                    &top,
                                    &right,

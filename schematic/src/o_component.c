@@ -171,12 +171,15 @@ o_component_translate_all (GschemToplevel *w_current, int offset)
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
 
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
+
   /* first zoom extents */
   gschem_page_view_zoom_extents (view, NULL);
   gschem_page_view_invalidate_all (view);
 
   world_get_object_glist_bounds (s_page_objects (toplevel->page_current),
-                                 w_current->show_hidden_text,
+                                 show_hidden_text,
                                  &w_rleft,  &w_rtop,
                                  &w_rright, &w_rbottom);
 

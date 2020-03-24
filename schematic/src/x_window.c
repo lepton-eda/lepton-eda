@@ -298,6 +298,9 @@ x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);
 
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
+
   switch (response) {
   case GTK_RESPONSE_OK:
     count = gschem_find_text_state_find (
@@ -307,7 +310,7 @@ x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
         gschem_find_text_widget_get_find_type (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
         gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
         gschem_find_text_widget_get_descend (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
-        w_current->show_hidden_text);
+        show_hidden_text);
 
     if (count > 0)
     {

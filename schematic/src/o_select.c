@@ -388,6 +388,8 @@ void o_select_box_search(GschemToplevel *w_current)
   int CONTROLKEY = w_current->CONTROLKEY;
   int left, right, top, bottom;
   const GList *iter;
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
 
   left = MIN(w_current->first_wx, w_current->second_wx);
   right = MAX(w_current->first_wx, w_current->second_wx);
@@ -398,11 +400,11 @@ void o_select_box_search(GschemToplevel *w_current)
   while (iter != NULL) {
     o_current = (OBJECT*) iter->data;
     /* only select visible objects */
-    if (o_is_visible (o_current) || w_current->show_hidden_text) {
+    if (o_is_visible (o_current) || show_hidden_text) {
       int cleft, ctop, cright, cbottom;
 
       if (geda_object_calculate_visible_bounds (o_current,
-                                                w_current->show_hidden_text,
+                                                show_hidden_text,
                                                 &cleft,
                                                 &ctop,
                                                 &cright,
@@ -596,6 +598,8 @@ o_select_visible_unlocked (GschemToplevel *w_current)
   SELECTION *selection = toplevel->page_current->selection_list;
   const GList *iter;
   GList *added;
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
 
   o_select_unselect_all (w_current);
   for (iter = s_page_objects (toplevel->page_current);
@@ -604,7 +608,7 @@ o_select_visible_unlocked (GschemToplevel *w_current)
     OBJECT *obj = (OBJECT *) iter->data;
 
     /* Skip invisible objects. */
-    if (!o_is_visible (obj) && !w_current->show_hidden_text)
+    if (!o_is_visible (obj) && !show_hidden_text)
       continue;
 
     /* Skip locked objects. */
