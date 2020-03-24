@@ -349,7 +349,6 @@ void o_edit_show_hidden (GschemToplevel *w_current, const GList *o_list)
 
   /* toggle show_hidden_text variable, which when it is true */
   /* means that hidden text IS drawn */
-  w_current->show_hidden_text = !w_current->show_hidden_text;
   g_signal_emit_by_name (gschem_toplevel_get_current_page_view (w_current),
                          "toggle-hidden-text");
   i_show_state(w_current, NULL); /* update screen status */
@@ -357,7 +356,7 @@ void o_edit_show_hidden (GschemToplevel *w_current, const GList *o_list)
   o_edit_show_hidden_lowlevel(w_current, o_list);
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 
-  if (w_current->show_hidden_text) {
+  if (gschem_toplevel_get_show_hidden_text (w_current)) {
     s_log_message(_("Hidden text is now visible"));
   } else {
     s_log_message(_("Hidden text is now invisible"));

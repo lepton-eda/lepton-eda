@@ -145,6 +145,9 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   g_return_val_if_fail (buf_num >= 0, TRUE);
   g_return_val_if_fail (buf_num < MAX_BUFFERS, TRUE);
 
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
+
   /* Cancel current place or draw action if it is being done */
   if (w_current->inside_action) {
     i_callback_cancel (w_current, 0, NULL);
@@ -169,7 +172,7 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
                       toplevel->page_current->place_list);
 
   if (!world_get_object_glist_bounds (toplevel->page_current->place_list,
-                                      w_current->show_hidden_text,
+                                      show_hidden_text,
                                       &rleft,
                                       &rtop,
                                       &rright,

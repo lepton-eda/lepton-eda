@@ -92,17 +92,20 @@ void o_redraw_rect (GschemToplevel *w_current,
   world_rect->upper_x = ceil (upper_x);
   world_rect->upper_y = ceil (upper_y);
 
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
+
   obj_list = s_page_objects_in_regions (toplevel,
                                         page,
                                         world_rect,
                                         1,
-                                        w_current->show_hidden_text);
+                                        show_hidden_text);
 
   g_free (world_rect);
 
   /* Set up renderer based on configuration in w_current */
   render_flags = EDA_RENDERER_FLAG_HINTING;
-  if (w_current->show_hidden_text)
+  if (show_hidden_text)
     render_flags |= EDA_RENDERER_FLAG_TEXT_HIDDEN;
   if (w_current->fast_mousepan &&
       gschem_toplevel_get_current_page_view(w_current)->doing_pan)
@@ -450,6 +453,8 @@ void o_invalidate (GschemToplevel *w_current, OBJECT *object)
 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   PAGE *page = gschem_page_view_get_page (page_view);
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
 
   /* this function may be called before a page is created */
   if (page == NULL) {
@@ -457,7 +462,7 @@ void o_invalidate (GschemToplevel *w_current, OBJECT *object)
   }
 
   if (geda_object_calculate_visible_bounds (object,
-                                            w_current->show_hidden_text,
+                                            show_hidden_text,
                                             &left,
                                             &top,
                                             &right,
@@ -490,8 +495,11 @@ void o_invalidate_glist (GschemToplevel *w_current, GList *list)
   PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
+
   if (world_get_object_glist_bounds (list,
-                                     w_current->show_hidden_text,
+                                     show_hidden_text,
                                      &left,
                                      &top,
                                      &right,

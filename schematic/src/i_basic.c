@@ -112,12 +112,15 @@ void i_show_state(GschemToplevel *w_current, const char *message)
   int i = 3; /* array[4] must be NULL */
   SNAP_STATE snap_mode;
 
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
+
   /* Fill in the string array */
   array[i--] = i_status_string(w_current);
 
   snap_mode = gschem_options_get_snap_mode (w_current->options);
 
-  if (w_current->show_hidden_text)
+  if (show_hidden_text)
     array[i--] = _("Show Hidden");
 
   if(snap_mode == SNAP_OFF)
