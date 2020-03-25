@@ -17,5 +17,5 @@ sym_files = \
 
 SUBDIRS = vhdl
 
-EXTRA_DIST = README gschemrc geda.conf generate_netlist.scm \
+EXTRA_DIST = README gschemrc lepton.conf generate_netlist.scm \
 	$(sch_files) $(sym_files)
