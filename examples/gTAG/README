@@ -41,5 +41,5 @@ The distribution of the schematics of gTAG should consist of:
   - gTAG-consio.[sym/sch]
   - gTAG-psu.[sym/sch]
 * gEDA rc-files for this project:
-  - geda.conf - Netlister settings.
+  - lepton.conf - Netlister settings.
   - gafrc     - Symbols and subschematics search paths.

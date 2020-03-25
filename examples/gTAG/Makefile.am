@@ -11,7 +11,7 @@ nobase_example_DATA = \
 	gTAG-ucont.sch \
 	gTAG.bom \
 	gTAG.sch \
-	geda.conf \
+	lepton.conf \
 	README \
 	sym/7414-1.sym \
 	sym/copyleft.sym \
