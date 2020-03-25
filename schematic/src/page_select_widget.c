@@ -569,7 +569,7 @@ widget_create (PageSelectWidget* pagesel)
                       hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
 
-  GtkWidget* chkbox = gtk_check_button_new_with_mnemonic ("_Show full paths");
+  GtkWidget* chkbox = gtk_check_button_new_with_mnemonic (_("_Show full paths"));
   gtk_box_pack_start (GTK_BOX (hbox), chkbox, FALSE, TRUE, 5);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (chkbox),
