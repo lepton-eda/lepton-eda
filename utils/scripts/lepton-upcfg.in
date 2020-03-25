@@ -219,7 +219,13 @@ Lepton EDA homepage: <~a>
   )
 
 
-  ( upcfg-log "ii: upgrading config in [~a]...~%" (config-file-path cfg-id) )
+  ( upcfg-log
+    "ii: upgrading config in [~a]...~%"
+    ( if cfg-id
+      ( config-file-path cfg-id ) ; if
+      ( list-ref files 0 )        ; else
+    )
+  )
 
   ( if ( null? files )
     ( or (config-upgrade cfg-id #:copy copy #:overwrite overwrite) (failure) ) ; if
