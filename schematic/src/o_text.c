@@ -35,50 +35,6 @@
  *  \par Function Description
  *
  */
-gboolean
-o_text_get_rendered_bounds (void *user_data,
-                            const GedaObject *o_current,
-                            gint *min_x,
-                            gint *min_y,
-                            gint *max_x,
-                            gint *max_y)
-{
-  gboolean result = FALSE;
-  double t, l, r, b;
-
-  /* Use dummy zero-sized surface */
-  cairo_surface_t *surface =
-    cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 0, 0);
-  cairo_t *cr = cairo_create (surface);
-
-  EdaRenderer *renderer = EDA_RENDERER (user_data);
-  g_object_set (G_OBJECT (renderer),
-                "cairo-context", cr,
-                NULL);
-
-  /* Use the new renderer to calculate text bounds */
-  result = eda_renderer_get_user_bounds (renderer,
-                                         o_current,
-                                         &l, &t, &r, &b);
-
-  /* Clean up */
-  cairo_surface_destroy (surface);
-  cairo_destroy (cr);
-
-  /* Round bounds to nearest integer */
-  *min_x = lrint (fmin (l, r));
-  *min_y = lrint (fmin (t, b));
-  *max_x = lrint (fmax (l, r));
-  *max_y = lrint (fmax (t, b));
-
-  return result;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int align, int rotate, int size)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
