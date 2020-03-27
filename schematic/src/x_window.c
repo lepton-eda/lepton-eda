@@ -1021,7 +1021,8 @@ GschemToplevel* x_window_new (TOPLEVEL *toplevel)
   gschem_toplevel_get_toplevel (w_current)->load_newer_backup_data = w_current;
 
   o_text_set_rendered_bounds_func (gschem_toplevel_get_toplevel (w_current),
-                                   o_text_get_rendered_bounds, w_current);
+                                   o_text_get_rendered_bounds,
+                                   w_current->renderer);
 
   /* Damage notifications should invalidate the object on screen */
   o_add_change_notify (gschem_toplevel_get_toplevel (w_current),
