@@ -306,7 +306,7 @@ gschem_preview_init (GschemPreview *preview)
     preview_w_current;
   o_text_set_rendered_bounds_func (preview_w_current->toplevel,
                                    o_text_get_rendered_bounds,
-                                   preview_w_current);
+                                   preview_w_current->renderer);
 
   i_vars_set (preview_w_current);
 

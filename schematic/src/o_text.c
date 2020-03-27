@@ -43,40 +43,25 @@ o_text_get_rendered_bounds (void *user_data,
                             gint *max_x,
                             gint *max_y)
 {
-  TOPLEVEL *toplevel;
-  EdaRenderer *renderer;
-  cairo_t *cr;
-  cairo_surface_t *surface;
-  int result, render_flags = 0;
+  gboolean result = FALSE;
   double t, l, r, b;
-  GschemToplevel *w_current = (GschemToplevel *) user_data;
-  g_return_val_if_fail ((w_current != NULL), FALSE);
-
-  toplevel = gschem_toplevel_get_toplevel (w_current);
-  g_return_val_if_fail ((toplevel != NULL), FALSE);
 
   /* Use dummy zero-sized surface */
-  surface =
+  cairo_surface_t *surface =
     cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 0, 0);
-  cr = cairo_create (surface);
+  cairo_t *cr = cairo_create (surface);
 
-  /* Set up renderer based on configuration in w_current. Note that we
-   * *don't* enable hinting, because if its enabled the calculated
-   * bounds are zoom-level-dependent. */
-  if (toplevel->show_hidden_text)
-    render_flags |= EDA_RENDERER_FLAG_TEXT_HIDDEN;
-  renderer = EDA_RENDERER (g_object_ref (w_current->renderer));
+  EdaRenderer *renderer = EDA_RENDERER (user_data);
   g_object_set (G_OBJECT (renderer),
                 "cairo-context", cr,
-                "render-flags", render_flags,
                 NULL);
 
-  /* Use the renderer to calculate text bounds */
-  result = eda_renderer_get_user_bounds (renderer, o_current, &l, &t, &r, &b);
+  /* Use the new renderer to calculate text bounds */
+  result = eda_renderer_get_user_bounds (renderer,
+                                         o_current,
+                                         &l, &t, &r, &b);
 
   /* Clean up */
-  eda_renderer_destroy (renderer);
-
   cairo_surface_destroy (surface);
   cairo_destroy (cr);
 
