@@ -54,8 +54,7 @@ struct st_toplevel
   /* controls if the whole bounding box is used in the auto whichend code */
   int force_boundingbox;
 
-  /* Callback function for calculating text bounds */
-  RenderedBoundsFunc rendered_text_bounds_func;
+  /* Renderer for calculating text bounds */
   void *rendered_text_bounds_data;
 
   /* Callback functions for object change notification */

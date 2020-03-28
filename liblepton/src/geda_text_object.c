@@ -961,14 +961,11 @@ o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string)
  *  #TOPLEVEL.
  *
  *  \param [in] toplevel     The TOPLEVEL object
- *  \param [in] func      Function to use.
  *  \param [in] user_data User data to be passed to the function.
  */
 void
 o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
-                                 RenderedBoundsFunc func,
                                  void *user_data)
 {
-  toplevel->rendered_text_bounds_func = func;
   toplevel->rendered_text_bounds_data = user_data;
 }

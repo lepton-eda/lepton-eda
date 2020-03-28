@@ -233,9 +233,7 @@ cmd_export_impl (void *data, int argc, char **argv)
 
   /* Make sure libgeda knows how to calculate the bounds of text
    * taking into account font etc. */
-  o_text_set_rendered_bounds_func (toplevel,
-                                   o_text_get_rendered_bounds,
-                                   renderer);
+  o_text_set_rendered_bounds_func (toplevel, renderer);
 
   /* Create color map */
   render_color_map =
