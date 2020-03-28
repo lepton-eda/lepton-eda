@@ -53,54 +53,6 @@
 #include "libgeda_priv.h"
 #include "libleptonrenderer/libleptonrenderer.h"
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gboolean
-o_text_get_rendered_bounds (void *user_data,
-                            const GedaObject *o_current,
-                            gint *min_x,
-                            gint *min_y,
-                            gint *max_x,
-                            gint *max_y)
-{
-  gboolean result = FALSE;
-  double t, l, r, b;
-
-  if (user_data == NULL) {
-    return result;
-  }
-
-  /* Use dummy zero-sized surface */
-  cairo_surface_t *surface =
-    cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 0, 0);
-  cairo_t *cr = cairo_create (surface);
-
-  EdaRenderer *renderer = EDA_RENDERER (user_data);
-  g_object_set (G_OBJECT (renderer),
-                "cairo-context", cr,
-                NULL);
-
-  /* Use the new renderer to calculate text bounds */
-  result = eda_renderer_get_user_bounds (renderer,
-                                         o_current,
-                                         &l, &t, &r, &b);
-
-  /* Clean up */
-  cairo_surface_destroy (surface);
-  cairo_destroy (cr);
-
-  /* Round bounds to nearest integer */
-  *min_x = lrint (fmin (l, r));
-  *min_y = lrint (fmin (t, b));
-  *max_x = lrint (fmax (l, r));
-  *max_y = lrint (fmax (t, b));
-
-  return result;
-}
-
 
 /*! \brief Scale factor between legacy lepton-schematic font units
  *  and postscript points.
@@ -143,12 +95,40 @@ geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
   g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
   g_return_val_if_fail (toplevel != NULL, FALSE);
 
-  return o_text_get_rendered_bounds (toplevel->rendered_text_bounds_data,
-                                     object,
-                                     &bounds->min_x,
-                                     &bounds->min_y,
-                                     &bounds->max_x,
-                                     &bounds->max_y);
+  gboolean result = FALSE;
+  double t, l, r, b;
+
+  if (toplevel->rendered_text_bounds_data == NULL) {
+    return result;
+  }
+
+  /* Use dummy zero-sized surface */
+  cairo_surface_t *surface =
+    cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 0, 0);
+  cairo_t *cr = cairo_create (surface);
+
+  EdaRenderer *renderer =
+    EDA_RENDERER (toplevel->rendered_text_bounds_data);
+  g_object_set (G_OBJECT (renderer),
+                "cairo-context", cr,
+                NULL);
+
+  /* Use the new renderer to calculate text bounds */
+  result = eda_renderer_get_user_bounds (renderer,
+                                         object,
+                                         &l, &t, &r, &b);
+
+  /* Clean up */
+  cairo_surface_destroy (surface);
+  cairo_destroy (cr);
+
+  /* Round bounds to nearest integer */
+  bounds->min_x = lrint (fmin (l, r));
+  bounds->min_y = lrint (fmin (t, b));
+  bounds->max_x = lrint (fmax (l, r));
+  bounds->max_y = lrint (fmax (t, b));
+
+  return result;
 }
 
 /*! \brief Get the text alignment

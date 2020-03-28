@@ -136,12 +136,4 @@ o_text_read (TOPLEVEL *toplevel,
              unsigned int fileformat_ver,
              GError **err);
 
-gboolean
-o_text_get_rendered_bounds (void *user_data,
-                            const GedaObject *o_current,
-                            gint *min_x,
-                            gint *min_y,
-                            gint *max_x,
-                            gint *max_y);
-
 G_END_DECLS
