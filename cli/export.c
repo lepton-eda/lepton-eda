@@ -225,28 +225,6 @@ cmd_export_impl (void *data, int argc, char **argv)
     exit (1);
   }
 
-  /* Load schematic files */
-  while (optind < argc) {
-    PAGE *page;
-    tmp = argv[optind++];
-
-    page = s_page_new (toplevel, tmp);
-    if (!f_open (toplevel, page, tmp, &err)) {
-      fprintf (stderr,
-               /* TRANSLATORS: The first string is the filename, the second
-                * is the detailed error message */
-               _("ERROR: Failed to load '%1$s': %2$s\n"), tmp,
-               err->message);
-      exit (1);
-    }
-    if (g_chdir (original_cwd) != 0) {
-      fprintf (stderr,
-               _("ERROR: Failed to change directory to '%1$s': %2$s\n"),
-               original_cwd, g_strerror (errno));
-      exit (1);
-    }
-  }
-
   /* Create renderer */
   renderer = eda_renderer_new (NULL, NULL);
   if (settings.font != NULL) {
@@ -286,6 +264,28 @@ cmd_export_impl (void *data, int argc, char **argv)
     }
   }
   eda_renderer_set_color_map (renderer, render_color_map);
+
+  /* Load schematic files */
+  while (optind < argc) {
+    PAGE *page;
+    tmp = argv[optind++];
+
+    page = s_page_new (toplevel, tmp);
+    if (!f_open (toplevel, page, tmp, &err)) {
+      fprintf (stderr,
+               /* TRANSLATORS: The first string is the filename, the second
+                * is the detailed error message */
+               _("ERROR: Failed to load '%1$s': %2$s\n"), tmp,
+               err->message);
+      exit (1);
+    }
+    if (g_chdir (original_cwd) != 0) {
+      fprintf (stderr,
+               _("ERROR: Failed to change directory to '%1$s': %2$s\n"),
+               original_cwd, g_strerror (errno));
+      exit (1);
+    }
+  }
 
   /* Render */
   exporter->func ();
