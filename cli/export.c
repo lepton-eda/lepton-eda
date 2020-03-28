@@ -42,14 +42,6 @@
 #include <cairo-pdf.h>
 #include <cairo-ps.h>
 
-static gboolean
-export_text_rendered_bounds (void *user_data,
-                             const GedaObject *object,
-                             gint *left,
-                             gint *top,
-                             gint *right,
-                             gint *bottom);
-
 static void export_layout_page (PAGE *page,
                                 cairo_rectangle_t *extents,
                                 cairo_matrix_t *mtx,
@@ -264,7 +256,7 @@ cmd_export_impl (void *data, int argc, char **argv)
   /* Make sure libgeda knows how to calculate the bounds of text
    * taking into account font etc. */
   o_text_set_rendered_bounds_func (toplevel,
-                                   export_text_rendered_bounds,
+                                   o_text_get_rendered_bounds,
                                    renderer);
 
   /* Create color map */
@@ -300,29 +292,6 @@ cmd_export_impl (void *data, int argc, char **argv)
 
   scm_dynwind_end ();
   exit (0);
-}
-
-/* Callback function registered with libgeda to allow the libgeda
- * "bounds" functions to get text bounds using the renderer.  If a
- * "rendered bounds" function isn't provided, text objects don't get
- * used when calculating the extents of the drawing. */
-static gboolean
-export_text_rendered_bounds (void *user_data,
-                             const GedaObject *object,
-                             gint *left,
-                             gint *top,
-                             gint *right,
-                             gint *bottom)
-{
-  int result;
-  double t, l, r, b;
-  EdaRenderer *renderer = EDA_RENDERER (user_data);
-  result = eda_renderer_get_user_bounds (renderer, object, &l, &t, &r, &b);
-  *left = lrint (fmin (l,r));
-  *top = lrint (fmin (t, b));
-  *right = lrint (fmax (l, r));
-  *bottom = lrint (fmax (t, b));
-  return result;
 }
 
 /* Prints a message and quits with error status if a cairo status
