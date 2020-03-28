@@ -126,7 +126,6 @@ o_text_set_string (TOPLEVEL *toplevel, OBJECT *obj, const gchar *new_string);
 
 void
 o_text_set_rendered_bounds_func (TOPLEVEL *toplevel,
-                                 RenderedBoundsFunc func,
                                  void *user_data);
 
 OBJECT*

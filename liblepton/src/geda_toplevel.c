@@ -70,7 +70,6 @@ TOPLEVEL *s_toplevel_new (void)
   /* for the following variables */
   toplevel->force_boundingbox = FALSE;
 
-  toplevel->rendered_text_bounds_func = NULL;
   toplevel->rendered_text_bounds_data = NULL;
 
   toplevel->change_notify_funcs = NULL;

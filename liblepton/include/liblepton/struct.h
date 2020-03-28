@@ -70,9 +70,6 @@ struct st_conn {
   int other_whichone;
 };
 
-/*! \brief Type of callback function for calculating text bounds */
-typedef gboolean(*RenderedBoundsFunc)(void*, const GedaObject*, gint*, gint*, gint*, gint*);
-
 /*! \brief Type of callback function for object damage notification */
 typedef int(*ChangeNotifyFunc)(void *, OBJECT *);
 
