@@ -1,4 +1,5 @@
 #!/bin/sh
+export LANG=C
 
 INPUT=$1
 rundir=${abs_builddir}/run
