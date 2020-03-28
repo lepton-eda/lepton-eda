@@ -69,6 +69,10 @@ o_text_get_rendered_bounds (void *user_data,
   gboolean result = FALSE;
   double t, l, r, b;
 
+  if (user_data == NULL) {
+    return result;
+  }
+
   /* Use dummy zero-sized surface */
   cairo_surface_t *surface =
     cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 0, 0);
