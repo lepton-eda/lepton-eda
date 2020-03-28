@@ -138,14 +138,13 @@ geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
   g_return_val_if_fail (object->text != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
   g_return_val_if_fail (toplevel != NULL, FALSE);
-  g_return_val_if_fail (toplevel->rendered_text_bounds_func != NULL, FALSE);
 
-  return toplevel->rendered_text_bounds_func (toplevel->rendered_text_bounds_data,
-                                              object,
-                                              &bounds->min_x,
-                                              &bounds->min_y,
-                                              &bounds->max_x,
-                                              &bounds->max_y);
+  return o_text_get_rendered_bounds (toplevel->rendered_text_bounds_data,
+                                     object,
+                                     &bounds->min_x,
+                                     &bounds->min_y,
+                                     &bounds->max_x,
+                                     &bounds->max_y);
 }
 
 /*! \brief Get the text alignment
