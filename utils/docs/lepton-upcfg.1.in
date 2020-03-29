@@ -1,0 +1,62 @@
+.TH lepton-upcfg 1 "@DATE@" "Lepton EDA" @VERSION@
+
+.SH NAME
+lepton-upcfg \- Lepton EDA configuration upgrade utility
+
+.SH SYNOPSIS
+.B lepton-upcfg
+\fIOPTIONS\fR | \fIFILE\fR
+
+.SH DESCRIPTION
+.B lepton-upcfg
+converts legacy configuration stored in geda*.conf files to
+Lepton EDA configuration format used in lepton*.conf files.
+By default, the result is printed to standard output.
+.PP
+One of the options can be passed on the
+command line to upgrade the configuration
+stored in predefined locations.
+Instead of the options, one can specify the
+configuration file path to convert and
+redirect the output to some destination file.
+
+.SH OPTIONS
+.TP
+.BR \-l ", " \-\-local
+Read and upgrade configuration from the \fBgeda.conf\fR file in current directory.
+If \fB-c\fR is specified, write the result to the \fBlepton.conf\fR file
+in current directory.
+.TP
+.BR \-u ", " \-\-user
+Upgrade the user configuration. If multiple user configuration files are
+found, prompt the user to select which file to use.
+If \fB-c\fR is specified, write the result to the \fBlepton-user.conf\fR file
+in $XDG_CONFIG_HOME/lepton-eda directory (typically, ~/.config/lepton-eda).
+.TP
+.BR \-c ", " \-\-copy
+Write upgraded configuration to corresponding lepton*.conf file
+instead of standard ouput.
+.TP
+.BR \-x ", " \-\-overwrite
+Overwrite existing files.
+.TP
+.BR \-V ", " \-\-version
+Show version information.
+.TP
+.BR \-h ", " \-\-help
+Show usage information.
+
+.SH AUTHOR
+dmn <graahnul.grom@gmail.com>
+
+.SH SEE ALSO
+.BR lepton-cli(1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 2019-@YEAR@ Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
