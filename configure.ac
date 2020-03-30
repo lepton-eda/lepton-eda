@@ -221,13 +221,17 @@ AC_CONFIG_FILES([Makefile
                  schematic/tests/Makefile
                  schematic/scheme/Makefile
 
+                 libleptonattrib/libleptonattrib.pc
+                 libleptonattrib/Makefile
+                 libleptonattrib/po/Makefile.in
+                 libleptonattrib/include/Makefile
+                 libleptonattrib/src/Makefile
+                 libleptonattrib/design/Makefile
+                 libleptonattrib/data/Makefile
+
                  attrib/Makefile
-                 attrib/po/Makefile.in
-                 attrib/design/Makefile
                  attrib/docs/Makefile
-                 attrib/include/Makefile
                  attrib/src/Makefile
-                 attrib/data/Makefile
 
                  symcheck/tests/Makefile
                  symcheck/Makefile

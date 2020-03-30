@@ -20,7 +20,7 @@ desktopdir=$(xdgdatadir)/applications
 desktop_in_files = lepton-attrib.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 
-DOMAIN=lepton-attrib
+DOMAIN=libleptonattrib
 
 @DESKTOP_I18N_LANGS_RULE@
 @DESKTOP_I18N_DESKTOP_RULE@
