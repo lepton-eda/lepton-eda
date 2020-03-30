@@ -1606,11 +1606,8 @@ x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
 
     int btn = 0;
     int etime = 0;
-    if (ebtn != NULL)
-    {
-      btn = ebtn->button;
-      etime = gtk_get_current_event_time();
-    }
+    btn = ebtn->button;
+    etime = gtk_get_current_event_time();
 
     gtk_menu_attach_to_widget (menu, hdr, NULL);
     gtk_menu_popup (menu, NULL, NULL, NULL, NULL, btn, etime);
