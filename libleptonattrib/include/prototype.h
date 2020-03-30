@@ -6,6 +6,9 @@
 /* ---------------- gattrib.c ---------------- */
 gboolean gattrib_really_quit(void);
 gint gattrib_quit(gint return_code);
+void gattrib_main (void *closure,
+                   int argc,
+                   char *argv[]);
 
 /* -------------- parsecmd.c ----------------- */
 void usage(char *cmd);   
