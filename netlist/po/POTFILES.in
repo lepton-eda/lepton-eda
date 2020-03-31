@@ -1,5 +1,0 @@
-# List of translatable files
-
-netlist/scheme/netlist.scm
-netlist/scheme/netlist/hierarchy.scm
-netlist/scheme/netlist/net.scm

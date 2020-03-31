@@ -1,4 +1,4 @@
-SUBDIRS = po scheme examples tests docs
+SUBDIRS = scheme examples tests docs
 
 EXTRA_DIST = BUGS ChangeLog
 
