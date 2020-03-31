@@ -38,6 +38,11 @@ liblepton/scheme/lepton/attrib.scm
 liblepton/scheme/lepton/library.scm
 liblepton/scheme/lepton/library/component.scm
 liblepton/scheme/lepton/repl.scm
+liblepton/scheme/netlist.scm
+liblepton/scheme/netlist/attrib/refdes.scm
+liblepton/scheme/netlist/net.scm
+liblepton/scheme/netlist/package.scm
+liblepton/scheme/netlist/subschematic.scm
 liblepton/scheme/symbol/blame.scm
 liblepton/scheme/symbol/check.scm
 liblepton/scheme/symbol/check/alignment.scm

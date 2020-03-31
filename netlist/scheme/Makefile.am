@@ -15,7 +15,7 @@ PCBM4DIR=	@PCBM4DIR@
 PCBCONFDIR=	@PCBCONFDIR@
 
 scmdatadir = @LEPTONDATADIR@/scheme
-nobase_scmdata_DATA = $(DIST_SCM) $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(BUILT_SCM)
+nobase_scmdata_DATA = $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(BUILT_SCM)
 
 
 config-netlist.scm: config-netlist.scm.in
@@ -66,34 +66,6 @@ DIST_SCM_BACKENDS = \
 DIST_SCM_BACKENDS_COMMON = \
 	backend/spice/common.scm
 
-DIST_SCM = \
-	netlist.scm \
-	netlist/attrib/compare.scm \
-	netlist/attrib/refdes.scm \
-	netlist/backend-getopt.scm \
-	netlist/config.scm \
-	netlist/core/gettext.scm \
-	netlist/deprecated.scm \
-	netlist/duplicate.scm \
-	netlist/error.scm \
-	netlist/hierarchy.scm \
-	netlist/mode.scm \
-	netlist/net.scm \
-	netlist/option.scm \
-	netlist/package-pin.scm \
-	netlist/package.scm \
-	netlist/partlist.scm \
-	netlist/partlist/common.scm \
-	netlist/port.scm \
-	netlist/schematic-component.scm \
-	netlist/schematic-connection.scm \
-	netlist/schematic-port.scm \
-	netlist/schematic.scm \
-	netlist/schematic/toplevel.scm \
-	netlist/subschematic.scm \
-	netlist/subschematic-connection.scm \
-	netlist/verbose.scm
-
 TESTS = unit-tests/test-netlist-load-path.scm \
 	unit-tests/test-component-library-search.scm \
 	unit-tests/test-netlist-attrib.scm \
@@ -117,7 +89,7 @@ AM_TESTS_ENVIRONMENT = GUILE_AUTO_COMPILE=0
 
 dist_noinst_DATA = unit-test.scm $(TESTS)
 
-EXTRA_DIST = $(DIST_SCM) $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(SCM_SRCS) lepton-netlist.in config-netlist.scm.in
+EXTRA_DIST = $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(SCM_SRCS) lepton-netlist.in config-netlist.scm.in
 
 SCM_SRCS=	backend/gnet-gsch2pcb.scm.in
 

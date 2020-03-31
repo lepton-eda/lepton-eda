@@ -233,7 +233,6 @@ AC_CONFIG_FILES([Makefile
                  symcheck/Makefile
 
                  netlist/Makefile
-                 netlist/po/Makefile.in
                  netlist/scheme/Makefile
                  netlist/examples/Makefile
                  netlist/tests/Makefile

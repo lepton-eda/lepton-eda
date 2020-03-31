@@ -26,6 +26,32 @@ nobase_dist_scmdata_DATA = \
 	lepton/version.scm \
 	lepton/legacy-config/keylist.scm \
 	lepton/legacy-config.scm \
+	netlist.scm \
+	netlist/attrib/compare.scm \
+	netlist/attrib/refdes.scm \
+	netlist/backend-getopt.scm \
+	netlist/config.scm \
+	netlist/core/gettext.scm \
+	netlist/deprecated.scm \
+	netlist/duplicate.scm \
+	netlist/error.scm \
+	netlist/hierarchy.scm \
+	netlist/mode.scm \
+	netlist/net.scm \
+	netlist/option.scm \
+	netlist/package-pin.scm \
+	netlist/package.scm \
+	netlist/partlist.scm \
+	netlist/partlist/common.scm \
+	netlist/port.scm \
+	netlist/schematic-component.scm \
+	netlist/schematic-connection.scm \
+	netlist/schematic-port.scm \
+	netlist/schematic.scm \
+	netlist/schematic/toplevel.scm \
+	netlist/subschematic.scm \
+	netlist/subschematic-connection.scm \
+	netlist/verbose.scm \
 	symbol/blame.scm \
 	symbol/check.scm \
 	symbol/check/alignment.scm \
