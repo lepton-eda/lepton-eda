@@ -3,6 +3,8 @@
  * project.  It should be #include'ed after struct.h.
  */
 
+G_BEGIN_DECLS
+
 /* ---------------- gattrib.c ---------------- */
 gboolean gattrib_really_quit(void);
 gint gattrib_quit(gint return_code);
@@ -178,5 +180,4 @@ gboolean x_fileselect_load_files (GSList *filenames);
 void x_window_init();
 void x_window_add_items();
 
-
-
+G_END_DECLS

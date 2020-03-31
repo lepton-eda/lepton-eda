@@ -1,7 +1,0 @@
-.deps
-Makefile
-Makefile.in
-lepton-attrib
-lepton-attrib.exe
-*.o
-*~

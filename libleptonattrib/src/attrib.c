@@ -186,7 +186,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
   pr_current = s_toplevel_new();
 
   /* ----- Read in RC files.   ----- */
-  g_rc_parse (pr_current, argv[0], NULL, NULL);
+  g_rc_parse (pr_current, "lepton-attrib", NULL, NULL);
 
   gtk_init(&argc, &argv);
 
