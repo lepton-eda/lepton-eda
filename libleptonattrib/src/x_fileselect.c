@@ -123,6 +123,7 @@ x_fileselect_load_files (GSList *filenames)
   GList *iter;
   PAGE *p_local;
   GSList *filename;
+  TOPLEVEL *toplevel = pr_current ();
 
   /* iterate over selected files */
   for (filename = filenames;
@@ -134,26 +135,26 @@ x_fileselect_load_files (GSList *filenames)
       s_log_message(_("Loading file [%1$s]"), string);
     }
 
-    s_page_goto (pr_current, s_page_new (pr_current, string));
+    s_page_goto (toplevel, s_page_new (toplevel, string));
 
-    if(s_toplevel_read_page(pr_current, string) == 0) {
+    if(s_toplevel_read_page(toplevel, string) == 0) {
        fprintf(stderr, _("Couldn't load schematic [%1$s]\n"), string);
        return FALSE;
     }
 
     /* Now add all items found to the master lists */
-    s_sheet_data_add_master_comp_list_items (s_page_objects (pr_current->page_current));
-    s_sheet_data_add_master_comp_attrib_list_items (s_page_objects (pr_current->page_current));
+    s_sheet_data_add_master_comp_list_items (s_page_objects (toplevel->page_current));
+    s_sheet_data_add_master_comp_attrib_list_items (s_page_objects (toplevel->page_current));
 #if 0
     /* Note that this must be changed.  We need to input the entire project
      * before doing anything with the nets because we need to first
      * determine where they are all connected!   */
-    s_sheet_data_add_master_net_list_items (pr_current->page_current->object_list);
-    s_sheet_data_add_master_net_attrib_list_items (pr_current->page_current->object_list);
+    s_sheet_data_add_master_net_list_items (toplevel->page_current->object_list);
+    s_sheet_data_add_master_net_attrib_list_items (toplevel->page_current->object_list);
 #endif
     
-    s_sheet_data_add_master_pin_list_items (s_page_objects (pr_current->page_current));
-    s_sheet_data_add_master_pin_attrib_list_items (s_page_objects (pr_current->page_current));
+    s_sheet_data_add_master_pin_list_items (s_page_objects (toplevel->page_current));
+    s_sheet_data_add_master_pin_attrib_list_items (s_page_objects (toplevel->page_current));
   }  	/* end of loop over files     */
   
 
@@ -178,7 +179,7 @@ x_fileselect_load_files (GSList *filenames)
   sheet_head->pin_table = s_table_new(sheet_head->pin_count, sheet_head->pin_attrib_count);
 
   /* must iterate over all pages in design */
-  for ( iter = geda_list_get_glist( pr_current->pages );
+  for ( iter = geda_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
     p_local = (PAGE *)iter->data;
@@ -208,7 +209,7 @@ x_fileselect_load_files (GSList *filenames)
 
 
   /* ---------- Now verify correctness of entire design.  ---------- */
-  s_toplevel_verify_design(pr_current);  /* pr_current is a global */
+  s_toplevel_verify_design(toplevel);  /* toplevel is a global */
 
   return TRUE;
 }
@@ -270,6 +271,7 @@ x_fileselect_open (void)
 void
 x_fileselect_save (void)
 {
+  TOPLEVEL *toplevel = pr_current ();
   GtkWidget *dialog;
 
   dialog = gtk_file_chooser_dialog_new (_("Save as..."),
@@ -300,19 +302,19 @@ x_fileselect_save (void)
 
     /* try saving current page of toplevel to file filename */
     if (filename != NULL &&
-        f_save (pr_current->page_current, filename, NULL)) {
+        f_save (toplevel->page_current, filename, NULL)) {
       s_log_message (_("Saved As [%1$s]"), filename);
 
       /* replace page filename with new one */
-      s_page_set_filename (pr_current->page_current, filename);
+      s_page_set_filename (toplevel->page_current, filename);
 
       /* reset the changed flag of current page*/
-      pr_current->page_current->CHANGED = 0;
+      toplevel->page_current->CHANGED = 0;
 
     } else {
       /* report error in log and status bar */
       s_log_message (_("Could NOT save [%1$s]"),
-                     s_page_get_filename (pr_current->page_current));
+                     s_page_get_filename (toplevel->page_current));
 
     }
     g_free (filename);

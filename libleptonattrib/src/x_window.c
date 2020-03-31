@@ -174,8 +174,9 @@ menu_file_open()
 static void
 menu_file_save()
 {
-  s_toplevel_gtksheet_to_toplevel(pr_current);  /* Dumps sheet data into TOPLEVEL */
-  s_page_save_all(pr_current);  /* saves all pages in design */
+  TOPLEVEL *toplevel = pr_current ();
+  s_toplevel_gtksheet_to_toplevel (toplevel);  /* Dumps sheet data into TOPLEVEL */
+  s_page_save_all (toplevel);  /* saves all pages in design */
 
   sheet_head->CHANGED = FALSE;
 }

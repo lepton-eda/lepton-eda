@@ -83,15 +83,6 @@
 
 /*------------------------------------------------------------------*/
 /*!
- * The main data structure from gEDA.  I made it a
- * global since it was treated that way anyway.  It is defined in
- * structs.h
- */
-/*------------------------------------------------------------------*/
-extern TOPLEVEL *pr_current;
-
-/*------------------------------------------------------------------*/
-/*!
  * My own data structure which I made
  * a global because it was easier to deal with when handing
  * callbacks.  It is defined in structs.h

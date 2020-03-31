@@ -56,13 +56,22 @@
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
-TOPLEVEL *pr_current;
 SHEET_DATA *sheet_head;
 GtkWidget *window;
 GtkWidget *notebook;
 GtkSheet **sheets;
 GtkWidget *entry;
 GtkWidget *label;
+
+
+TOPLEVEL *pr_current() {
+  static TOPLEVEL *toplevel;
+  if (toplevel == NULL) {
+    toplevel = s_toplevel_new ();
+  }
+  return toplevel;
+}
+
 
 /*------------------------------------------------------------------*/
 /*! \brief GTK callback to quit the program.
@@ -183,10 +192,8 @@ void gattrib_main(void *closure, int argc, char *argv[])
      PACKAGE_DATE_VERSION, PACKAGE_GIT_COMMIT);
 
   /* ---------- Start creation of new project: (TOPLEVEL *pr_current) ---------- */
-  pr_current = s_toplevel_new();
-
   /* ----- Read in RC files.   ----- */
-  g_rc_parse (pr_current, "lepton-attrib", NULL, NULL);
+  g_rc_parse (pr_current (), "lepton-attrib", NULL, NULL);
 
   gtk_init(&argc, &argv);
 
