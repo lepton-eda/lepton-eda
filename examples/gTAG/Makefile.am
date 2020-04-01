@@ -43,4 +43,4 @@ nobase_example_DATA = \
 	ps/gTAG-ucont.ps \
 	ps/gTAG.ps
 
-EXTRA_DIST = ChangeLog-1.0 $(nobase_example_DATA)
+EXTRA_DIST = $(nobase_example_DATA)

@@ -4,7 +4,7 @@ exampledir = $(docdir)/examples/
 
 example_DATA = README
 
-EXTRA_DIST = ChangeLog ChangeLog-1.0 $(example_DATA)
+EXTRA_DIST = ChangeLog $(example_DATA)
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git
