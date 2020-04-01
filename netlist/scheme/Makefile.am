@@ -1,15 +1,3 @@
-bin_SCRIPTS = lepton-netlist
-
-do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
-	-e 's,[@]GUILE[@],$(GUILE),g' \
-	-e 's,[@]localedir[@],$(localedir),g'
-	-e 's,[@]ccachedir[@],@LEPTON_SCM_PRECOMPILE_DIR@,g'
-
-lepton-netlist: lepton-netlist.in Makefile
-	$(do_subst) < $(srcdir)/$@.in > $@
-	chmod +x $@
-
-
 M4=		@M4@
 PCBM4DIR=	@PCBM4DIR@
 PCBCONFDIR=	@PCBCONFDIR@
@@ -89,7 +77,7 @@ AM_TESTS_ENVIRONMENT = GUILE_AUTO_COMPILE=0
 
 dist_noinst_DATA = unit-test.scm $(TESTS)
 
-EXTRA_DIST = $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(SCM_SRCS) lepton-netlist.in config-netlist.scm.in
+EXTRA_DIST = $(DIST_SCM_BACKENDS) $(DIST_SCM_BACKENDS_COMMON) $(SCM_SRCS) config-netlist.scm.in
 
 SCM_SRCS=	backend/gnet-gsch2pcb.scm.in
 

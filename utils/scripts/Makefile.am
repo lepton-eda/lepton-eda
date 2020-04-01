@@ -1,6 +1,7 @@
 bin_SCRIPTS = \
 	lepton-archive \
 	lepton-embed \
+	lepton-netlist \
 	lepton-pcb_backannotate \
 	lepton-refdes_renum \
 	lepton-schdiff \
@@ -12,6 +13,7 @@ bin_SCRIPTS = \
 EXTRA_DIST = \
 	lepton-archive.in \
 	lepton-embed.in \
+	lepton-netlist.in \
 	lepton-pcb_backannotate \
 	lepton-refdes_renum \
 	lepton-schdiff \
@@ -45,4 +47,14 @@ lepton-symcheck: lepton-symcheck.in
 	$(do_subst) < $(srcdir)/$@.in > $@
 	chmod +x $@
 
-CLEANFILES = lepton-archive lepton-embed lepton-tragesym lepton-upcfg lepton-symcheck
+lepton-netlist: lepton-netlist.in Makefile
+	$(do_subst) < $(srcdir)/$@.in > $@
+	chmod +x $@
+
+CLEANFILES = \
+	lepton-archive \
+	lepton-embed \
+	lepton-tragesym \
+	lepton-upcfg \
+	lepton-symcheck \
+	lepton-netlist

@@ -8,7 +8,7 @@ backend="`echo "${tmp}" | sed -e "s:^${stem}-::"`"
 LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton"
 export LIBLEPTON
 
-GNETLIST="${abs_top_builddir}/netlist/scheme/lepton-netlist"
+GNETLIST="${abs_top_builddir}/utils/scripts/lepton-netlist"
 
 export GUILE_LOAD_PATH="${abs_top_srcdir}/netlist/scheme:${abs_top_builddir}/netlist/scheme:${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme:${abs_top_srcdir}/symcheck/scheme:${abs_top_builddir}/symcheck/scheme:..."
 
