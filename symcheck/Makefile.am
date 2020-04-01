@@ -1,4 +1,4 @@
-SUBDIRS = docs tests scheme
+SUBDIRS = docs tests
 
 EXTRA_DIST = ChangeLog
 
