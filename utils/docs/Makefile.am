@@ -6,6 +6,7 @@ dist_man_MANS = \
 	lepton-renum.1 \
 	lepton-sch2pcb.1 \
 	lepton-schdiff.1 \
+	lepton-symcheck.1 \
 	lepton-symfix.1 \
 	lepton-tragesym.1 \
 	lepton-upcfg.1
@@ -18,6 +19,7 @@ EXTRA_DIST = \
 	lepton-renum.1.in \
 	lepton-sch2pcb.1.in \
 	lepton-schdiff.1.in \
+	lepton-symcheck.1.in \
 	lepton-symfix.1.in \
 	lepton-tragesym.1.in \
 	lepton-upcfg.1.in \
