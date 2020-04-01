@@ -8,7 +8,7 @@ Lepton EDA examples
     gTAG is an interface to connect your USB port of computer to talk
     to your circuits which talks JTAG.
 
-    See gTAG/README and gTAG/ChangeLog-1.0 for more information.
+    See gTAG/README for more information.
 
     gTAG shows off how to do hierarchical schematics in Lepton EDA.
 

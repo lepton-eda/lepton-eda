@@ -1,6 +1,6 @@
-SUBDIRS = toplevel wiki scheme-api
+SUBDIRS = toplevel wiki scheme-api changelogs
 
-EXTRA_DIST = ChangeLog-1.0 ChangeLog
+EXTRA_DIST = ChangeLog
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git

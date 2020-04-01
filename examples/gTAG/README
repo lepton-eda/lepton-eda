@@ -27,7 +27,6 @@ Files
 The distribution of the schematics of gTAG should consist of:
 * README - this file.
 * crdist.sh - shell script used to generate the tar.gz.
-* ChangeLog-1.0 - tries to scribble down what has changed between versions.
 * Four component symbols:
   - 7414-1.sym - Original 7414 from gschem without power attributes.
   - max882.sym - 5-to-3.3 V converter.

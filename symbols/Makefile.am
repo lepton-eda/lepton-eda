@@ -57,7 +57,6 @@ datasymdir = $(LEPTONDATADIR)/sym
 
 EXTRA_DIST = \
 	ChangeLog \
-	ChangeLog-1.0 \
 	radio/README \
 	AUTHORS
 

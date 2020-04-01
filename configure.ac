@@ -275,6 +275,7 @@ AC_CONFIG_FILES([Makefile
                  symbols/vhdl/Makefile
 
                  docs/Makefile
+                 docs/changelogs/Makefile
                  docs/scheme-api/Makefile
                  docs/toplevel/Makefile
                  docs/toplevel/gedadocs.html

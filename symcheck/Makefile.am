@@ -1,6 +1,6 @@
 SUBDIRS = po docs tests scheme
 
-EXTRA_DIST = ChangeLog ChangeLog-1.0
+EXTRA_DIST = ChangeLog
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git
