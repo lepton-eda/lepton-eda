@@ -230,7 +230,6 @@ AC_CONFIG_FILES([Makefile
                  attrib/data/Makefile
 
                  symcheck/docs/Makefile
-                 symcheck/po/Makefile.in
                  symcheck/tests/Makefile
                  symcheck/Makefile
                  symcheck/scheme/Makefile

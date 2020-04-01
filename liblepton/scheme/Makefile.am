@@ -25,7 +25,37 @@ nobase_dist_scmdata_DATA = \
 	lepton/repl.scm \
 	lepton/version.scm \
 	lepton/legacy-config/keylist.scm \
-	lepton/legacy-config.scm
+	lepton/legacy-config.scm \
+	symbol/blame.scm \
+	symbol/check.scm \
+	symbol/check/alignment.scm \
+	symbol/check/arc.scm \
+	symbol/check/attrib.scm \
+	symbol/check/box.scm \
+	symbol/check/bus.scm \
+	symbol/check/circle.scm \
+	symbol/check/component.scm \
+	symbol/check/connection.scm \
+	symbol/check/duplicate.scm \
+	symbol/check/entity-pin.scm \
+	symbol/check/forbidden.scm \
+	symbol/check/line.scm \
+	symbol/check/log.scm \
+	symbol/check/net.scm \
+	symbol/check/net-attrib.scm \
+	symbol/check/obsolete.scm \
+	symbol/check/path.scm \
+	symbol/check/picture.scm \
+	symbol/check/pin.scm \
+	symbol/check/pin-attrib.scm \
+	symbol/check/primitive.scm \
+	symbol/check/slot.scm \
+	symbol/check/text.scm \
+	symbol/gettext.scm \
+	symcheck/check.scm \
+	symcheck/option.scm \
+	symcheck/report.scm
+
 nobase_scmdata_DATA = lepton/core/gettext.scm
 
 check-am: update-cli-tool

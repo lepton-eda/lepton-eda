@@ -1,4 +1,4 @@
-SUBDIRS = po docs tests scheme
+SUBDIRS = docs tests scheme
 
 EXTRA_DIST = ChangeLog
 
