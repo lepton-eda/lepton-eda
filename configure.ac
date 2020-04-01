@@ -229,7 +229,6 @@ AC_CONFIG_FILES([Makefile
                  attrib/src/Makefile
                  attrib/data/Makefile
 
-                 symcheck/docs/Makefile
                  symcheck/tests/Makefile
                  symcheck/Makefile
 
