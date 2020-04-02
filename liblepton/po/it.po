@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-18 22:17+0300\n"
+"POT-Creation-Date: 2020-04-02 19:27+0300\n"
 "PO-Revision-Date: 2015-01-12 10:15+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -803,6 +803,206 @@ msgstr ""
 msgid "WARNING: Readline library is not supported in your configuration.\n"
 msgstr ""
 
+msgid ""
+"Copyright (C) 1998-2016 gEDA developers\n"
+"Copyright (C) 2017-2020 Lepton EDA Contributors\n"
+"This is free software, and you are welcome to redistribute it under\n"
+"certain conditions. For details, see the file `COPYING', which is\n"
+"included in the Lepton EDA distribution.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Possible attribute conflict for refdes: ~A\n"
+"name: ~A\n"
+"values: ~A\n"
+msgstr ""
+
+#, scheme-format
+msgid "Refdes ~a: Bad slot number: ~a.\n"
+msgstr ""
+
+msgid "Couldn't wrap string  at requested position\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There is a net name collision!\n"
+"The net called \"~A\" will be remapped\n"
+"to \"~A\" which is already used\n"
+"by the net called \"~A\".\n"
+"This may be caused by netname attributes colliding with other netnames\n"
+"due to truncation of the name, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There is a refdes name collision!\n"
+"The refdes \"~A\" will be mapped\n"
+"to \"~A\" which is already used\n"
+"by \"~A\".\n"
+"This may be caused by refdes attributes colliding with others\n"
+"due to truncation of the refdes, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+
+#, scheme-format
+msgid "Can't open directory ~S.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+"\n"
+"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
+"\n"
+"General options:\n"
+"  -q                  Quiet mode.\n"
+"  -v, --verbose       Verbose mode.\n"
+"  -o FILE             Filename for netlist data output.\n"
+"  -L DIR              Add DIR to Scheme search path.\n"
+"  -g BACKEND          Specify netlist backend to use.\n"
+"  -f FILE             Specify path to netlist backend file to use.\n"
+"  -O STRING           Pass an option string to backend.\n"
+"  -l FILE             Load Scheme file before loading backend.\n"
+"  -m FILE             Load Scheme file after loading backend.\n"
+"  -c EXPR             Evaluate Scheme expression at startup.\n"
+"  -i                  Enter interactive Scheme REPL after loading.\n"
+"  -b, --list-backends Print a list of available netlist backends.\n"
+"  -h, --help          Help; this message.\n"
+"  -V, --version       Show version information.\n"
+"  --                  Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"\n"
+"Just got an error '~A':\n"
+"        ~A\n"
+"\n"
+msgstr ""
+
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"~\n"
+"                         Run `~A --help' for more information.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Could not find backend `~A' in load path.\n"
+"~\n"
+"                         Run `~A --list-backends' for a full list of "
+"available backends.\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Can't load backend file ~S.\n"
+"~\n"
+"                         Backend files are expected to have names like "
+"\"gnet-NAME.scm\"\n"
+"~\n"
+"                         and contain entry point function NAME (where NAME "
+"is the backend's name).\n"
+msgstr ""
+
+#, scheme-format
+msgid "Netlist mode requested by backend is not supported: ~A\n"
+msgstr ""
+
+msgid "Failed to evaluate Scheme expression at startup.\n"
+msgstr ""
+
+#, fuzzy
+msgid "Failed to load Scheme file before loading backend.\n"
+msgstr "Impossibile caricare l'immagine dal file [%s]: %s\n"
+
+#, fuzzy
+msgid "Failed to load backend file.\n"
+msgstr "Impossibile caricare l'immagine dal file [%s]: %s\n"
+
+#, fuzzy
+msgid "Failed to load Scheme file after loading backend.\n"
+msgstr "Impossibile caricare l'immagine dal file [%s]: %s\n"
+
+#, scheme-format
+msgid "Invalid hierarchy tag: ~S"
+msgstr ""
+
+#, scheme-format
+msgid "Netlist mode ~S is not supported."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"\n"
+"Non-graphical symbol ~S\n"
+"at ~A on page ~S\n"
+"has neither refdes= nor net=."
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Invalid attribute (missing ':'): net=~A"
+msgstr "Attributo net= sbagliato [net=%s]\n"
+
+#, scheme-format
+msgid "Attached net ~A:~A overrides inherited net ~A:~A"
+msgstr ""
+
+#, scheme-format
+msgid "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n"
+msgstr ""
+
+#, scheme-format
+msgid "Loading subcircuit ~S."
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Failed to load subcircuit ~S."
+msgstr "Impossibile caricare l'immagine dal file [%s]: %s\n"
+
+#, scheme-format
+msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
+msgstr ""
+
+#, scheme-format
+msgid "Port component ~S has no pins."
+msgstr ""
+
+#, scheme-format
+msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There are several subschematic components for the pin with \"pinlabel=~A\" "
+"of the component ~S."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Pins with numbers ~A of the component ~S have the same \"pinlabel\" "
+"attribute."
+msgstr ""
+
+#, scheme-format
+msgid "Connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Non-connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
 #, scheme-format
 msgid "Zero radius arc at ~A"
 msgstr ""
@@ -890,6 +1090,14 @@ msgstr "Trovato pinnumber 0 in attributo net=\n"
 #, scheme-format
 msgid "Duplicate pin number ~A: ~A"
 msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Obsolete pin#=# attribute: ~A=~A"
+msgstr "Trovato attributo pin posizionato erroneamente: [%s=%s]\n"
+
+#, fuzzy, scheme-format
+msgid "Obsolete slot#=# attribute: ~A=~A"
+msgstr "Trovato vecchio attributo slot#=#: %s\n"
 
 #, scheme-format
 msgid "Zero length path element: ~A"
@@ -1306,10 +1514,6 @@ msgstr "(usare -v per visualizzare i dettagli)\n"
 #, fuzzy
 #~ msgid "Found old pin#=# attribute: %1$s\n"
 #~ msgstr "Trovato vecchio attributo pin#=#: %s\n"
-
-#, fuzzy
-#~ msgid "Found old slot#=# attribute: %1$s\n"
-#~ msgstr "Trovato vecchio attributo slot#=#: %s\n"
 
 #~ msgid "Found a net inside a symbol\n"
 #~ msgstr "Trovata una net dentro un simbolo\n"
