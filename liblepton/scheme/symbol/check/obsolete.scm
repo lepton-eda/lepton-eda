@@ -28,7 +28,7 @@
 (define-syntax blame-error
   (syntax-rules ()
     ((_ object msg arg ...)
-     (blame-object object 'error (format #f (gettext msg) arg ...)))))
+     (blame-object object 'error (format #f msg arg ...)))))
 
 (define regex-old-pin (make-regexp "^pin[0-9]+$"))
 (define regex-old-slot (make-regexp "^slot[0-9]+$"))
@@ -38,7 +38,7 @@
   (let ((name (attrib-name object))
         (value (attrib-value object)))
     (when (regexp-exec regex-old-pin name)
-      (blame-error object "Obsolete pin#=# attribute: ~A=~A" name value))
+      (blame-error object (_ "Obsolete pin#=# attribute: ~A=~A") name value))
     object))
 
 (define (check-obsolete-floating-attrib object)
@@ -46,5 +46,5 @@
   (let ((name (attrib-name object))
         (value (attrib-value object)))
     (when (regexp-exec regex-old-slot name)
-      (blame-error object "Obsolete slot#=# attribute: ~A=~A" name value))
+      (blame-error object (_ "Obsolete slot#=# attribute: ~A=~A") name value))
     object))
