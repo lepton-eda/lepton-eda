@@ -17,7 +17,7 @@
 ;;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 
 (define-module (symbol check log)
-  #:use-module (symbol gettext)
+  #:use-module (lepton core gettext)
   #:use-module (lepton log)
 
   #:export (set-check-log-destination!

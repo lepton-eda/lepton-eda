@@ -19,11 +19,12 @@
 (define-module (netlist net)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
+
+  #:use-module (lepton core gettext)
   #:use-module (lepton attrib)
   #:use-module (lepton log)
   #:use-module (lepton object)
   #:use-module (netlist config)
-  #:use-module (netlist core gettext)
   #:use-module (symbol check net-attrib)
   #:use-module (symbol check duplicate)
 

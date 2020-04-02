@@ -23,8 +23,9 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
+
+  #:use-module (lepton core gettext)
   #:use-module (lepton log)
-  #:use-module (netlist core gettext)
   #:use-module (netlist schematic-component)
   #:use-module (symbol check duplicate)
 

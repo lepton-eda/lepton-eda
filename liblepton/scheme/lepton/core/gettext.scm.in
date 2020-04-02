@@ -25,3 +25,5 @@
 
 (define %liblepton-gettext-domain "@LIBLEPTON_GETTEXT_DOMAIN@")
 (define-public (_ msg) (gettext msg %liblepton-gettext-domain))
+(define-public (N_ msgid msgid-plural n)
+  (ngettext msgid msgid-plural n %liblepton-gettext-domain))

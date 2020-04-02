@@ -20,14 +20,13 @@
 ;;; in the "source=" attributes of a component.
 
 (define-module (netlist subschematic)
-  ;; Import C procedures and variables.
-  #:use-module (netlist core gettext)
-
   #:use-module (ice-9 receive)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
   #:use-module (srfi srfi-26)
+
+  #:use-module (lepton core gettext)
   #:use-module (lepton library)
   #:use-module (lepton log)
   #:use-module (lepton object)

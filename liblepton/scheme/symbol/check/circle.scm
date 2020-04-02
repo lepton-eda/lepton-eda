@@ -17,8 +17,8 @@
 ;;; Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111 USA
 
 (define-module (symbol check circle)
+  #:use-module (lepton core gettext)
   #:use-module (lepton object)
-  #:use-module (symbol gettext)
   #:use-module (symbol blame)
 
   #:export (check-circle-radius

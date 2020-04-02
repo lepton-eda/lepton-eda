@@ -20,9 +20,10 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
+
   #:use-module (lepton attrib)
+  #:use-module (lepton core gettext)
   #:use-module (lepton object)
-  #:use-module (symbol gettext)
   #:use-module (symbol blame)
   #:use-module (symbol check alignment)
   #:use-module (symbol check attrib)

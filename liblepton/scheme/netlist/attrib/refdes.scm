@@ -18,11 +18,8 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (netlist attrib refdes)
-
-  ;; Import C procedures and variables.
-  #:use-module (netlist core gettext)
-
   #:use-module (ice-9 match)
+  #:use-module (lepton core gettext)
   #:use-module (lepton log)
   #:use-module (lepton object)
   #:use-module (lepton page)

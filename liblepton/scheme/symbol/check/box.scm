@@ -18,8 +18,9 @@
 
 (define-module (symbol check box)
   #:use-module (ice-9 match)
+
+  #:use-module (lepton core gettext)
   #:use-module (lepton object)
-  #:use-module (symbol gettext)
   #:use-module (symbol blame)
 
   #:export (check-box-size
