@@ -18,8 +18,8 @@
 
 (define-module (symbol check primitive)
   #:use-module (lepton attrib)
+  #:use-module (lepton core gettext)
   #:use-module (lepton object)
-  #:use-module (symbol gettext)
   #:use-module (symbol blame)
   #:use-module (symbol check alignment)
   #:use-module (symbol check arc)

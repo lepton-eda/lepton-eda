@@ -31,7 +31,6 @@ nobase_dist_scmdata_DATA = \
 	netlist/attrib/refdes.scm \
 	netlist/backend-getopt.scm \
 	netlist/config.scm \
-	netlist/core/gettext.scm \
 	netlist/deprecated.scm \
 	netlist/duplicate.scm \
 	netlist/error.scm \
@@ -77,7 +76,6 @@ nobase_dist_scmdata_DATA = \
 	symbol/check/primitive.scm \
 	symbol/check/slot.scm \
 	symbol/check/text.scm \
-	symbol/gettext.scm \
 	symcheck/check.scm \
 	symcheck/option.scm \
 	symcheck/report.scm

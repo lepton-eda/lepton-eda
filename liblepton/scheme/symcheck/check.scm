@@ -20,6 +20,8 @@
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
                 #:prefix rdelim:)
+
+  #:use-module (lepton core gettext)
   #:use-module (lepton log)
   #:use-module (lepton page)
   #:use-module (lepton repl)
@@ -28,7 +30,6 @@
   #:use-module (symcheck report)
   #:use-module (symbol check)
   #:use-module (symbol check log)
-  #:use-module (symbol gettext)
 
   #:export (check-all-symbols))
 

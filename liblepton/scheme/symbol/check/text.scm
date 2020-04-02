@@ -21,8 +21,8 @@
   ;; #:use-module (rnrs bytevectors)
   ;; #:use-module (rnrs io ports)
   #:use-module (lepton attrib)
+  #:use-module (lepton core gettext)
   #:use-module (lepton object)
-  #:use-module (symbol gettext)
   #:use-module (symbol blame)
 
   #:export (check-text-visibility

@@ -21,9 +21,10 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-26)
+
   #:use-module (lepton attrib)
+  #:use-module (lepton core gettext)
   #:use-module (lepton object)
-  #:use-module (symbol gettext)
   #:use-module (symbol blame)
   #:use-module (symbol check duplicate)
   #:use-module (symbol check entity-pin)

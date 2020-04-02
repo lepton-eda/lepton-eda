@@ -18,11 +18,9 @@
 ;;; MA 02111-1301 USA.
 
 (define-module (netlist hierarchy)
-  ;; Import C procedures and variables.
-  #:use-module (netlist core gettext)
-
   #:use-module (srfi srfi-1)
 
+  #:use-module (lepton core gettext)
   #:use-module (lepton object)
   #:use-module (netlist attrib refdes)
   #:use-module (netlist config)

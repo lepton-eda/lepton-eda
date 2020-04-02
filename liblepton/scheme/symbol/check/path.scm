@@ -19,8 +19,9 @@
 (define-module (symbol check path)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
+
+  #:use-module (lepton core gettext)
   #:use-module (lepton object)
-  #:use-module (symbol gettext)
   #:use-module (symbol blame)
 
   #:export (path-info
