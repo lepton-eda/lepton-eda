@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-18 22:17+0300\n"
+"POT-Creation-Date: 2020-04-02 19:27+0300\n"
 "PO-Revision-Date: 2020-03-20 09:14+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -847,6 +847,273 @@ msgstr "Добро пожаловать в Lepton REPL!\n"
 msgid "WARNING: Readline library is not supported in your configuration.\n"
 msgstr "ВНИМАНИЕ: Библиотека readline не поддерживается в ваших настройках.\n"
 
+msgid ""
+"Copyright (C) 1998-2016 gEDA developers\n"
+"Copyright (C) 2017-2020 Lepton EDA Contributors\n"
+"This is free software, and you are welcome to redistribute it under\n"
+"certain conditions. For details, see the file `COPYING', which is\n"
+"included in the Lepton EDA distribution.\n"
+"There is NO WARRANTY, to the extent permitted by law.\n"
+msgstr ""
+"Copyright (C) 1998-2016 gEDA developers\n"
+"Copyright (C) 2017-2019 Lepton EDA Contributors\n"
+"Это свободное программное обеспечение, и его можно распространять\n"
+"при определённых условиях. Подробности см. в файле COPYING в\n"
+"дистрибутиве Lepton EDA.\n"
+"Нет НИКАКИХ ГАРАНТИЙ в рамках, допустимых имеющимся\n"
+"законодательством.\n"
+
+#, scheme-format
+msgid ""
+"Possible attribute conflict for refdes: ~A\n"
+"name: ~A\n"
+"values: ~A\n"
+msgstr ""
+"Возможный конфликт атрибутов для позиционного обозначения: ~A\n"
+"имя: ~A\n"
+"значения: ~A\n"
+
+#, scheme-format
+msgid "Refdes ~a: Bad slot number: ~a.\n"
+msgstr "Позиционное обозначение ~A: неправильный номер секции: ~A\n"
+
+msgid "Couldn't wrap string  at requested position\n"
+msgstr "Не удалось разбить строку в указанной позиции\n"
+
+#, scheme-format
+msgid ""
+"There is a net name collision!\n"
+"The net called \"~A\" will be remapped\n"
+"to \"~A\" which is already used\n"
+"by the net called \"~A\".\n"
+"This may be caused by netname attributes colliding with other netnames\n"
+"due to truncation of the name, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+"Конфликт имён соединений!\n"
+"Соединение «~A» будет переименовано в «~A», но это имя уже\n"
+"используется для соединения «~A».  Это может быть вызвано\n"
+"конфликтом атрибутов «netname» вследствие сокращения имени,\n"
+"регистронезависимости или других ограничений, накладываемых данным\n"
+"форматом списка соединений.\n"
+
+#, scheme-format
+msgid ""
+"There is a refdes name collision!\n"
+"The refdes \"~A\" will be mapped\n"
+"to \"~A\" which is already used\n"
+"by \"~A\".\n"
+"This may be caused by refdes attributes colliding with others\n"
+"due to truncation of the refdes, case insensitivity, or\n"
+"other limitations imposed by this netlist format.\n"
+msgstr ""
+"Конфликт позиционных обозначений!\n"
+"Позиционное обозначение «~A» будет переименовано в «~A», но это\n"
+"имя уже используется для «~A».  Это может быть вызвано конфликтом\n"
+"атрибутов «refdes» вследствие сокращения обозначения,\n"
+"регистронезависимости или других ограничений, накладываемых данным\n"
+"форматом списка соединений.\n"
+
+#, scheme-format
+msgid "Can't open directory ~S.\n"
+msgstr "Не удалось открыть каталог ~S.\n"
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
+"\n"
+"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
+"\n"
+"General options:\n"
+"  -q                  Quiet mode.\n"
+"  -v, --verbose       Verbose mode.\n"
+"  -o FILE             Filename for netlist data output.\n"
+"  -L DIR              Add DIR to Scheme search path.\n"
+"  -g BACKEND          Specify netlist backend to use.\n"
+"  -f FILE             Specify path to netlist backend file to use.\n"
+"  -O STRING           Pass an option string to backend.\n"
+"  -l FILE             Load Scheme file before loading backend.\n"
+"  -m FILE             Load Scheme file after loading backend.\n"
+"  -c EXPR             Evaluate Scheme expression at startup.\n"
+"  -i                  Enter interactive Scheme REPL after loading.\n"
+"  -b, --list-backends Print a list of available netlist backends.\n"
+"  -h, --help          Help; this message.\n"
+"  -V, --version       Show version information.\n"
+"  --                  Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
+"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
+msgstr ""
+"Использование: ~A [ОПЦИЯ ...] [-g ДРАЙВЕР] [--] ФАЙЛ ...\n"
+"\n"
+"Создание списка соединений из одного или нескольких файлов схем Lepton EDA.\n"
+"\n"
+"Общие опции:\n"
+"  -q                  Без вывода информации.\n"
+"  -v, --verbose       Подробный вывод.\n"
+"  -o ФАЙЛ             Вывести список соединений в файл.\n"
+"  -L КАТАЛОГ          Добавить каталог к пути поиска файлов Scheme.\n"
+"  -g ДРАЙВЕР          Задать драйвер списка соединений.\n"
+"  -f ФАЙЛ             Задать файл драйвера, указав путь к нему.\n"
+"  -O СТРОКА           Задать строку опций для драйвера.\n"
+"  -l ФАЙЛ             Загрузить файл Scheme до загрузки драйвера.\n"
+"  -m ФАЙЛ             Загрузить файл Scheme после загрузки драйвера.\n"
+"  -c ВЫРАЖЕНИЕ        Выполнить выражение Scheme при запуске.\n"
+"  -i                  После загрузки войти в интерактивный цикл Scheme "
+"(REPL).\n"
+"  -b, --list-backends Вывести список доступных драйверов списков "
+"соединений.\n"
+"  -h, --help          Данная справка.\n"
+"  -V, --version       Информация о версии.\n"
+"  --                  Считать все последующие аргументы именами файлов.\n"
+"\n"
+"Страница для отчётов об ошибках: https://github.com/lepton-eda/lepton-eda/"
+"issues\n"
+"Домашняя страница Lepton EDA: https://github.com/lepton-eda/lepton-eda\n"
+
+#, scheme-format
+msgid ""
+"\n"
+"Just got an error '~A':\n"
+"        ~A\n"
+"\n"
+msgstr ""
+"\n"
+"Обнаружена ошибка «~A»:\n"
+"        ~A\n"
+"\n"
+
+msgid "You gave neither backend to execute nor interactive mode!\n"
+msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
+
+#, scheme-format
+msgid ""
+"No schematic files specified for processing.\n"
+"~\n"
+"                         Run `~A --help' for more information.\n"
+msgstr ""
+"Не заданы файлы схем для обработки.\n"
+"~\n"
+"Подробности см. в выводе команды «~A --help».\n"
+
+#, scheme-format
+msgid ""
+"Could not find backend `~A' in load path.\n"
+"~\n"
+"                         Run `~A --list-backends' for a full list of "
+"available backends.\n"
+msgstr ""
+"Не удалось найти драйвер «~A» в пути загрузки.\n"
+"~\n"
+"Список всех доступных драйверов можно узнать по команде «~A --list-"
+"backends».\n"
+
+#, scheme-format
+msgid ""
+"Can't load backend file ~S.\n"
+"~\n"
+"                         Backend files are expected to have names like "
+"\"gnet-NAME.scm\"\n"
+"~\n"
+"                         and contain entry point function NAME (where NAME "
+"is the backend's name).\n"
+msgstr ""
+"Не удалось загрузить файл драйвера ~S.\n"
+"Ожидается, что имя файла драйвера имеет формат\n"
+"«gnet-ИМЯ.scm» и его входная функция называется «ИМЯ» (где «ИМЯ»\n"
+"является названием драйвера).\n"
+
+#, scheme-format
+msgid "Netlist mode requested by backend is not supported: ~A\n"
+msgstr ""
+"Режим создания списка соединений, запрошенный драйвером, не поддерживается: "
+"~A\n"
+
+msgid "Failed to evaluate Scheme expression at startup.\n"
+msgstr "Не удалось вычислить выражение Scheme при запуске.\n"
+
+msgid "Failed to load Scheme file before loading backend.\n"
+msgstr "Не удалось загрузить файл Scheme перед загрузкой драйвера.\n"
+
+msgid "Failed to load backend file.\n"
+msgstr "Не удалось загрузить файл драйвера.\n"
+
+msgid "Failed to load Scheme file after loading backend.\n"
+msgstr "Не удалось загрузить файл Scheme после загрузки драйвера.\n"
+
+#, scheme-format
+msgid "Invalid hierarchy tag: ~S"
+msgstr ""
+
+#, fuzzy, scheme-format
+msgid "Netlist mode ~S is not supported."
+msgstr ""
+"Режим создания списка соединений, запрошенный драйвером, не поддерживается: "
+"~A\n"
+
+#, scheme-format
+msgid ""
+"\n"
+"Non-graphical symbol ~S\n"
+"at ~A on page ~S\n"
+"has neither refdes= nor net=."
+msgstr ""
+
+#, scheme-format
+msgid "Invalid attribute (missing ':'): net=~A"
+msgstr "Недопустимый атрибут (отсутствует ':'): net=~A"
+
+#, scheme-format
+msgid "Attached net ~A:~A overrides inherited net ~A:~A"
+msgstr "Прикреплённый атрибут «net» ~A:~A замещает унаследованный ~A:~A"
+
+#, fuzzy, scheme-format
+msgid "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n"
+msgstr ""
+"Возможный конфликт атрибутов для позиционного обозначения: ~A\n"
+"имя: ~A\n"
+"значения: ~A\n"
+
+#, fuzzy, scheme-format
+msgid "Loading subcircuit ~S."
+msgstr "Загрузка схемы ~S"
+
+#, fuzzy, scheme-format
+msgid "Failed to load subcircuit ~S."
+msgstr "Не удалось загрузить файл драйвера.\n"
+
+#, fuzzy, scheme-format
+msgid "Pin ~S of the component ~S has no \"pinlabel\" attribute."
+msgstr "Отсутствует атрибут «pinseq» у вывода компонента."
+
+#, scheme-format
+msgid "Port component ~S has no pins."
+msgstr ""
+
+#, scheme-format
+msgid "Source schematic of the component ~S has no port with \"refdes=~A\"."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"There are several subschematic components for the pin with \"pinlabel=~A\" "
+"of the component ~S."
+msgstr ""
+
+#, scheme-format
+msgid ""
+"Pins with numbers ~A of the component ~S have the same \"pinlabel\" "
+"attribute."
+msgstr ""
+
+#, scheme-format
+msgid "Connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
+#, scheme-format
+msgid "Non-connectible end of pin is off grid (x~A=~A,y~A=~A)"
+msgstr ""
+
 #, scheme-format
 msgid "Zero radius arc at ~A"
 msgstr "Дуга с нулевым радиусом с координатами ~A"
@@ -935,6 +1202,14 @@ msgstr "Дублирование номера вывода «~A» в аттри�
 #, scheme-format
 msgid "Duplicate pin number ~A: ~A"
 msgstr "Дублирование номера вывода ~A: ~A"
+
+#, fuzzy, scheme-format
+msgid "Obsolete pin#=# attribute: ~A=~A"
+msgstr "Устаревший атрибут: ~A"
+
+#, fuzzy, scheme-format
+msgid "Obsolete slot#=# attribute: ~A=~A"
+msgstr "Устаревший атрибут: ~A"
 
 #, scheme-format
 msgid "Zero length path element: ~A"
@@ -1131,205 +1406,3 @@ msgstr "Количество ошибок: ~A"
 
 msgid "(use -v to view details)"
 msgstr "(используйте опцию -v для вывода подробностей)"
-
-msgid ""
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2020 Lepton EDA Contributors\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2019 Lepton EDA Contributors\n"
-"Это свободное программное обеспечение, и его можно распространять\n"
-"при определённых условиях. Подробности см. в файле COPYING в\n"
-"дистрибутиве Lepton EDA.\n"
-"Нет НИКАКИХ ГАРАНТИЙ в рамках, допустимых имеющимся\n"
-"законодательством.\n"
-
-#, scheme-format
-msgid ""
-"Possible attribute conflict for refdes: ~A\n"
-"name: ~A\n"
-"values: ~A\n"
-msgstr ""
-"Возможный конфликт атрибутов для позиционного обозначения: ~A\n"
-"имя: ~A\n"
-"значения: ~A\n"
-
-#, scheme-format
-msgid "Refdes ~a: Bad slot number: ~a.\n"
-msgstr "Позиционное обозначение ~A: неправильный номер секции: ~A\n"
-
-msgid "Couldn't wrap string  at requested position\n"
-msgstr "Не удалось разбить строку в указанной позиции\n"
-
-#, scheme-format
-msgid ""
-"There is a net name collision!\n"
-"The net called \"~A\" will be remapped\n"
-"to \"~A\" which is already used\n"
-"by the net called \"~A\".\n"
-"This may be caused by netname attributes colliding with other netnames\n"
-"due to truncation of the name, case insensitivity, or\n"
-"other limitations imposed by this netlist format.\n"
-msgstr ""
-"Конфликт имён соединений!\n"
-"Соединение «~A» будет переименовано в «~A», но это имя уже\n"
-"используется для соединения «~A».  Это может быть вызвано\n"
-"конфликтом атрибутов «netname» вследствие сокращения имени,\n"
-"регистронезависимости или других ограничений, накладываемых данным\n"
-"форматом списка соединений.\n"
-
-#, scheme-format
-msgid ""
-"There is a refdes name collision!\n"
-"The refdes \"~A\" will be mapped\n"
-"to \"~A\" which is already used\n"
-"by \"~A\".\n"
-"This may be caused by refdes attributes colliding with others\n"
-"due to truncation of the refdes, case insensitivity, or\n"
-"other limitations imposed by this netlist format.\n"
-msgstr ""
-"Конфликт позиционных обозначений!\n"
-"Позиционное обозначение «~A» будет переименовано в «~A», но это\n"
-"имя уже используется для «~A».  Это может быть вызвано конфликтом\n"
-"атрибутов «refdes» вследствие сокращения обозначения,\n"
-"регистронезависимости или других ограничений, накладываемых данным\n"
-"форматом списка соединений.\n"
-
-#, scheme-format
-msgid "Can't open directory ~S.\n"
-msgstr "Не удалось открыть каталог ~S.\n"
-
-#, scheme-format
-msgid ""
-"Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
-"\n"
-"Generate a netlist from one or more Lepton EDA schematic FILEs.\n"
-"\n"
-"General options:\n"
-"  -q                  Quiet mode.\n"
-"  -v, --verbose       Verbose mode.\n"
-"  -o FILE             Filename for netlist data output.\n"
-"  -L DIR              Add DIR to Scheme search path.\n"
-"  -g BACKEND          Specify netlist backend to use.\n"
-"  -f FILE             Specify path to netlist backend file to use.\n"
-"  -O STRING           Pass an option string to backend.\n"
-"  -l FILE             Load Scheme file before loading backend.\n"
-"  -m FILE             Load Scheme file after loading backend.\n"
-"  -c EXPR             Evaluate Scheme expression at startup.\n"
-"  -i                  Enter interactive Scheme REPL after loading.\n"
-"  -b, --list-backends Print a list of available netlist backends.\n"
-"  -h, --help          Help; this message.\n"
-"  -V, --version       Show version information.\n"
-"  --                  Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>\n"
-"Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
-msgstr ""
-"Использование: ~A [ОПЦИЯ ...] [-g ДРАЙВЕР] [--] ФАЙЛ ...\n"
-"\n"
-"Создание списка соединений из одного или нескольких файлов схем Lepton EDA.\n"
-"\n"
-"Общие опции:\n"
-"  -q                  Без вывода информации.\n"
-"  -v, --verbose       Подробный вывод.\n"
-"  -o ФАЙЛ             Вывести список соединений в файл.\n"
-"  -L КАТАЛОГ          Добавить каталог к пути поиска файлов Scheme.\n"
-"  -g ДРАЙВЕР          Задать драйвер списка соединений.\n"
-"  -f ФАЙЛ             Задать файл драйвера, указав путь к нему.\n"
-"  -O СТРОКА           Задать строку опций для драйвера.\n"
-"  -l ФАЙЛ             Загрузить файл Scheme до загрузки драйвера.\n"
-"  -m ФАЙЛ             Загрузить файл Scheme после загрузки драйвера.\n"
-"  -c ВЫРАЖЕНИЕ        Выполнить выражение Scheme при запуске.\n"
-"  -i                  После загрузки войти в интерактивный цикл Scheme "
-"(REPL).\n"
-"  -b, --list-backends Вывести список доступных драйверов списков "
-"соединений.\n"
-"  -h, --help          Данная справка.\n"
-"  -V, --version       Информация о версии.\n"
-"  --                  Считать все последующие аргументы именами файлов.\n"
-"\n"
-"Страница для отчётов об ошибках: https://github.com/lepton-eda/lepton-eda/"
-"issues\n"
-"Домашняя страница Lepton EDA: https://github.com/lepton-eda/lepton-eda\n"
-
-#, scheme-format
-msgid ""
-"\n"
-"Just got an error '~A':\n"
-"        ~A\n"
-"\n"
-msgstr ""
-"\n"
-"Обнаружена ошибка «~A»:\n"
-"        ~A\n"
-"\n"
-
-msgid "You gave neither backend to execute nor interactive mode!\n"
-msgstr "Не задан ни драйвер для работы, ни интерактивный режим!\n"
-
-#, scheme-format
-msgid ""
-"No schematic files specified for processing.\n"
-"~\n"
-"                         Run `~A --help' for more information.\n"
-msgstr ""
-"Не заданы файлы схем для обработки.\n"
-"~\n"
-"Подробности см. в выводе команды «~A --help».\n"
-
-#, scheme-format
-msgid ""
-"Could not find backend `~A' in load path.\n"
-"~\n"
-"                         Run `~A --list-backends' for a full list of "
-"available backends.\n"
-msgstr ""
-"Не удалось найти драйвер «~A» в пути загрузки.\n"
-"~\n"
-"Список всех доступных драйверов можно узнать по команде «~A --list-"
-"backends».\n"
-
-#, scheme-format
-msgid ""
-"Can't load backend file ~S.\n"
-"~\n"
-"                         Backend files are expected to have names like "
-"\"gnet-NAME.scm\"\n"
-"~\n"
-"                         and contain entry point function NAME (where NAME "
-"is the backend's name).\n"
-msgstr ""
-"Не удалось загрузить файл драйвера ~S.\n"
-"Ожидается, что имя файла драйвера имеет формат\n"
-"«gnet-ИМЯ.scm» и его входная функция называется «ИМЯ» (где «ИМЯ»\n"
-"является названием драйвера).\n"
-
-#, scheme-format
-msgid "Netlist mode requested by backend is not supported: ~A\n"
-msgstr ""
-"Режим создания списка соединений, запрошенный драйвером, не поддерживается: "
-"~A\n"
-
-msgid "Failed to evaluate Scheme expression at startup.\n"
-msgstr "Не удалось вычислить выражение Scheme при запуске.\n"
-
-msgid "Failed to load Scheme file before loading backend.\n"
-msgstr "Не удалось загрузить файл Scheme перед загрузкой драйвера.\n"
-
-msgid "Failed to load backend file.\n"
-msgstr "Не удалось загрузить файл драйвера.\n"
-
-msgid "Failed to load Scheme file after loading backend.\n"
-msgstr "Не удалось загрузить файл Scheme после загрузки драйвера.\n"
-
-#, scheme-format
-msgid "Invalid attribute (missing ':'): net=~A"
-msgstr "Недопустимый атрибут (отсутствует ':'): net=~A"
-
-#, scheme-format
-msgid "Attached net ~A:~A overrides inherited net ~A:~A"
-msgstr "Прикреплённый атрибут «net» ~A:~A замещает унаследованный ~A:~A"
