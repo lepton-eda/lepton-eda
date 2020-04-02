@@ -53,9 +53,9 @@ Returns PIN."
   ;; line-start is the connectible point (whichend)
   (check-on-grid pin
                  'error
-                 "Connectible end of pin is off grid (x~A=~A,y~A=~A)"
+                 (_ "Connectible end of pin is off grid (x~A=~A,y~A=~A)")
                  (line-start pin))
   (check-on-grid pin
                  'warning
-                 "Non-connectible end of pin is off grid (x~A=~A,y~A=~A)"
+                 (_ "Non-connectible end of pin is off grid (x~A=~A,y~A=~A)")
                  (line-end pin)))
