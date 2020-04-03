@@ -16,8 +16,7 @@
 ;;;
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with this program; if not, write to the Free Software
-;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
-;;; MA 02111-1301 USA.
+;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 ;;  Calay format (modified from Ales's gnet-PCB.scm by jpd)
 ;;  Netname translation cleaned up at Dan McMahill'suggestion -jpd
