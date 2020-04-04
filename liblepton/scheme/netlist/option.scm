@@ -18,6 +18,7 @@
 (define-module (netlist option)
   #:use-module (srfi srfi-1)
   #:use-module ((ice-9 getopt-long) #:select (option-ref))
+  #:use-module (lepton option)
 
   #:export (%default-netlist-options
             %netlist-options
@@ -46,9 +47,7 @@
 
 ;;; This list contains key names which values must be lists.
 (define %list-keys
-  (filter-map
-   (lambda (x) (and (eq? (cdr x) '()) (car x)))
-   %default-netlist-options))
+  (option-ref-get-list-keys %default-netlist-options))
 
 ;;; Checks if KEY must return a list.
 (define (is-list-key? key)

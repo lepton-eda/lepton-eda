@@ -19,6 +19,8 @@
 (define-module (symcheck option)
   #:use-module (ice-9 getopt-long)
   #:use-module ((srfi srfi-1) #:select (filter-map))
+  #:use-module (lepton option)
+
   #:export (%default-symcheck-options
             symcheck-option-ref
             symcheck-option-ref-length))
@@ -34,9 +36,7 @@
 
 ;;; This list contains key names which values must be lists.
 (define %list-keys
-  (filter-map
-   (lambda (x) (and (eq? (cdr x) '()) (car x)))
-   %default-symcheck-options))
+  (option-ref-get-list-keys %default-symcheck-options))
 
 ;;; getopt-long compatible symcheck options.
 (define %symcheck-options
