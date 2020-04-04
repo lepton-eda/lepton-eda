@@ -791,8 +791,7 @@ x_tabs_hdr_create (TabInfo* nfo)
   */
   const gchar* fname = NULL;
   gchar*       bname = NULL;
-
-  if (nfo->page_)
+//check on pointer NULL not needed
     fname = s_page_get_filename (nfo->page_);
 
   if (fname)
@@ -1606,11 +1605,10 @@ x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
 
     int btn = 0;
     int etime = 0;
-    if (ebtn != NULL)
-    {
-      btn = ebtn->button;
-      etime = gtk_get_current_event_time();
-    }
+// checking edtn is superfluous      
+    btn = ebtn->button;
+    etime = gtk_get_current_event_time();
+    
 
     gtk_menu_attach_to_widget (menu, hdr, NULL);
     gtk_menu_popup (menu, NULL, NULL, NULL, NULL, btn, etime);
