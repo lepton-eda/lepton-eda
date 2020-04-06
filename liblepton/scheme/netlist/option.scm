@@ -53,15 +53,6 @@
 (define (is-list-key? key)
   (memq key %list-keys))
 
-;;; This function extends option-ref so that for keys which may
-;;; repeat on command line, it returns their value as value lists
-;;; (e.g. "cmd -x a -x b" produces '("a" "b") for the key 'x).
-(define (list-option-ref options key default)
-  (or (reverse (filter-map
-                (lambda (x) (and (eq? (car x) key) (cdr x)))
-                options))
-      default))
-
 ;;; Custom function to account for list keys.
 (define (netlist-option-ref/toplevel getopt-long-options key default)
   "Searches for KEY in GETOPT-LONG-OPTIONS and returns its value

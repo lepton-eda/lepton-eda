@@ -48,15 +48,6 @@
                  (version (single-char #\V))
                  (interactive (single-char #\i)))))
 
-;;; This function extends option-ref so that for keys which may
-;;; repeat on command line, it returns their value as value lists
-;;; (e.g. "cmd -x a -x b" produces '("a" "b") for the key 'x).
- (define (list-option-ref options key default)
-  (or (filter-map
-       (lambda (x) (and (eq? (car x) key) (cdr x)))
-       options)
-      default))
-
 (define (symcheck-option-ref key)
   "Returns value of symcheck option KEY. Use '() to request schematics."
   (let ((default (assq-ref %default-symcheck-options key))

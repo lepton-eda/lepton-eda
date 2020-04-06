@@ -21,7 +21,8 @@
 (define-module (lepton option)
   #:use-module ((srfi srfi-1) #:select (filter-map))
 
-  #:export (option-ref-get-list-keys))
+  #:export (option-ref-get-list-keys
+            list-option-ref))
 
 (define (option-ref-get-list-keys default-options)
   "Having an alist of DEFAULT-OPTIONS, returns those keys whose
@@ -34,3 +35,17 @@ you can specify the option '-L' several times."
   (filter-map
    (lambda (x) (and (eq? (cdr x) '()) (car x)))
    default-options))
+
+
+;;; This function extends option-ref so that for keys which may
+;;; repeat on command line, it returns their value as value lists
+;;; (e.g. "cmd -x a -x b" produces '("a" "b") for the key 'x).
+(define (list-option-ref options key default)
+  "The function extends option-ref in that for keys which may
+repeat on command line, it returns their value as value lists (for
+example, when using the command \"cmd -x a -x b\" it returns the
+value '(\"a\" \"b\") for the key 'x)."
+  (or (reverse (filter-map
+                (lambda (x) (and (eq? (car x) key) (cdr x)))
+                options))
+      default))
