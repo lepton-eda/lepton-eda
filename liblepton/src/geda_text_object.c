@@ -78,14 +78,15 @@ int tab_in_chars = 8;
  *  be moved to EdaRenderer. And, this method should not be a virtual method
  *  of GedaObject.
  *
- *  \param [in]  toplevel  The TOPLEVEL object.
- *  \param [in]  object    a text object
- *  \param [out] bounds    the bounds of the text
+ *  \param [in]  object         a text object
+ *  \param [in]  include_hidden if hidden text should be taken into
+ *                              account
+ *  \param [out] bounds         the bounds of the text
  *  \return TRUE if successful, FALSE if unsuccessful
  */
 gboolean
-geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
-                                   const GedaObject *object,
+geda_text_object_calculate_bounds (const GedaObject *object,
+                                   gboolean include_hidden,
                                    GedaBounds *bounds)
 {
   geda_bounds_init (bounds);
@@ -93,15 +94,11 @@ geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->text != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
-  g_return_val_if_fail (toplevel != NULL, FALSE);
 
-  gboolean result = FALSE;
   double t, l, r, b;
-
-  /* Use the new renderer to calculate text bounds */
-  result = eda_renderer_get_text_user_bounds (object,
-                                              toplevel->show_hidden_text,
-                                              &l, &t, &r, &b);
+  gboolean result = eda_renderer_get_text_user_bounds (object,
+                                                       include_hidden,
+                                                       &l, &t, &r, &b);
 
   /* Round bounds to nearest integer */
   bounds->min_x = lrint (fmin (l, r));

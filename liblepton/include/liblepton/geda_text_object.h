@@ -46,8 +46,8 @@ geda_text_object_copy (const GedaObject *object);
 /* methods */
 
 gboolean
-geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
-                                   const GedaObject *object,
+geda_text_object_calculate_bounds (const GedaObject *object,
+                                   gboolean include_hidden,
                                    GedaBounds *bounds);
 
 gint

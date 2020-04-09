@@ -481,8 +481,8 @@ static void create_placeholder(TOPLEVEL * toplevel, OBJECT * new_node, int x, in
     g_free(not_found_text);
 
     /* figure out where to put the hazard triangle */
-    geda_text_object_calculate_bounds (toplevel,
-                                       new_prim_obj,
+    geda_text_object_calculate_bounds (new_prim_obj,
+                                       FALSE,
                                        &bounds);
     x_offset = (bounds.max_x - bounds.min_x) / 4;
     y_offset = bounds.max_y - bounds.min_y + 100;  /* 100 is just an additional offset */

@@ -1197,7 +1197,9 @@ geda_object_calculate_visible_bounds (TOPLEVEL *toplevel,
     break;
 
   case(OBJ_TEXT):
-    if (!geda_text_object_calculate_bounds(toplevel, o_current, &bounds)) {
+    if (!geda_text_object_calculate_bounds (o_current,
+                                            toplevel->show_hidden_text,
+                                            &bounds)) {
       return 0;
     }
     break;
