@@ -529,18 +529,16 @@ void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
   OBJECT *other;
   int whichone;
 
-  g_return_if_fail (object->type == OBJ_NET ||
-                    object->type == OBJ_PIN ||
-                    object->type == OBJ_BUS);
+  g_return_if_fail (object != NULL);
+  g_return_if_fail ((object->type == OBJ_BUS) ||
+                    (object->type == OBJ_NET) ||
+                    (object->type == OBJ_PIN));
 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
   PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
-
-  if (!object)
-  return;
 
   for (cl_current = object->conn_list;
        cl_current != NULL;
