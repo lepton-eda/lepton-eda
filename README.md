@@ -4,7 +4,8 @@ Lepton Electronic Design Automation
 Introduction
 ============
 
-The Lepton EDA suite provides schematic capture, netlisting into
+Lepton EDA is a suite of free software tools for designing
+electronics. It provides schematic capture, netlisting into
 over 30 netlist formats, and many other features. It was forked
 from the [gEDA/gaf suite](http://wiki.geda-project.org/geda:gaf)
 in late 2016 by most of its active developers at that time.
