@@ -780,6 +780,7 @@ static GtkWidget*
 x_tabs_hdr_create (TabInfo* nfo)
 {
   g_return_val_if_fail (nfo != NULL, NULL);
+  g_return_val_if_fail (nfo->page_ != NULL, NULL);
 
   GtkWidget* box_hdr        = gtk_hbox_new (FALSE, 0);
   GtkWidget* box_btns_left  = gtk_hbox_new (FALSE, 0);
@@ -789,15 +790,10 @@ x_tabs_hdr_create (TabInfo* nfo)
 
   /* label:
   */
-  const gchar* fname = NULL;
-  gchar*       bname = NULL;
+  const gchar* fname = s_page_get_filename (nfo->page_);
+  g_return_val_if_fail (fname != NULL, NULL);
 
-  if (nfo->page_)
-    fname = s_page_get_filename (nfo->page_);
-
-  if (fname)
-    bname = g_path_get_basename (fname);
-
+  gchar* bname = g_path_get_basename (fname);
   gchar* lab_txt = NULL;
 
   if (nfo->page_->CHANGED)
@@ -1585,7 +1581,6 @@ static gboolean
 x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
 {
   g_return_val_if_fail (data != NULL, FALSE);
-  GdkEventButton* ebtn = (GdkEventButton*) e;
 
   TabInfo* nfo    = (TabInfo*) data;
   TabInfo* nfocur = x_tabs_info_cur (nfo->tl_);
@@ -1593,29 +1588,29 @@ x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
   /* show menu for current tab only:
   */
   if (nfo != nfocur)
+  {
     return FALSE;
+  }
 
 #ifdef DEBUG
   printf( "p: [%s]\n",   g_path_get_basename( s_page_get_filename(nfo->page_) ) );
   printf( "C: [%s]\n\n", g_path_get_basename( s_page_get_filename(nfocur->page_) ) );
 #endif
 
-  if (ebtn->type == GDK_BUTTON_PRESS && ebtn->button == 3)
+  GdkEventButton* ebtn = (GdkEventButton*) e;
+
+  if (ebtn->type == GDK_BUTTON_PRESS && ebtn->button == 3) /* 3: RMB */
   {
     GtkMenu* menu = x_tabs_menu_create (nfo);
-
-    int btn = 0;
-    int etime = 0;
-    btn = ebtn->button;
-    etime = gtk_get_current_event_time();
-
     gtk_menu_attach_to_widget (menu, hdr, NULL);
-    gtk_menu_popup (menu, NULL, NULL, NULL, NULL, btn, etime);
+
+    int etime = gtk_get_current_event_time();
+    gtk_menu_popup (menu, NULL, NULL, NULL, NULL, ebtn->button, etime);
 
     return TRUE;
   }
 
-  return FALSE;
+  return FALSE; /* FALSE => propagate the event further */
 
 } /* x_tabs_page_on_mouse_click() */
 
