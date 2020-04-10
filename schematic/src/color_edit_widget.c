@@ -310,6 +310,8 @@ color_edit_widget_update (GschemToplevel* w_current)
  *
  */
 
+/*! \brief Color selection combo box "changed" signal handler
+ */
 static void
 on_color_cb_changed (GtkWidget* color_cb, gpointer p)
 {
@@ -322,20 +324,20 @@ on_color_cb_changed (GtkWidget* color_cb, gpointer p)
 
 
 
+/*! \brief GtkColorSelection "color-changed" signal handler
+ */
 static void
 on_color_sel_changed (GtkColorSelection* csel, gpointer p)
 {
   ColorEditWidget* widget = (ColorEditWidget*) p;
   g_return_if_fail (widget != NULL);
+  g_return_if_fail (widget->toplevel_ != NULL);
 
-  if (widget->toplevel_ == NULL)
-    return;
+  int color_index = x_colorcb_get_index (widget->color_cb_);
+  g_return_if_fail (color_index >= 0);
 
   GdkColor color;
   gtk_color_selection_get_current_color (csel, &color);
-
-  int color_index = x_colorcb_get_index (widget->color_cb_);
-
 
   /* adjust a color in display and outline color maps: */
   x_color_set_display (color_index, &color);
@@ -343,9 +345,12 @@ on_color_sel_changed (GtkColorSelection* csel, gpointer p)
 
 
   /* update current combo box color: */
+  GtkComboBox* combo = GTK_COMBO_BOX (widget->color_cb_);
   GtkTreeIter iter;
-  gtk_combo_box_get_active_iter (GTK_COMBO_BOX (widget->color_cb_), &iter);
-  x_colorcb_set_color (&iter, &color);
+  if (gtk_combo_box_get_active_iter (combo, &iter))
+  {
+    x_colorcb_set_color (&iter, &color);
+  }
 
   /* refresh page view: */
   GschemPageView* pview =
@@ -356,6 +361,8 @@ on_color_sel_changed (GtkColorSelection* csel, gpointer p)
 
 
 
+/*! \brief "Save As" button "clicked" signal handler
+ */
 static void
 on_btn_save (GtkWidget* btn, gpointer p)
 {
