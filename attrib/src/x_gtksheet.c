@@ -71,7 +71,6 @@ x_gtksheet_init()
   const gchar *folder[]= {_("Components"),
                           _("Nets"),
                           _("Pins")};
-  GtkWidget **scrolled_windows = NULL;
 
   /* ---  Create three new sheets.   were malloc'ed in x_window_init  --- */
 
@@ -117,11 +116,9 @@ x_gtksheet_init()
     if (sheets[i] != NULL) {  /* is this check needed? 
 			       * Yes, it prevents us from segfaulting on empty nets sheet. */
 
-
-      scrolled_windows=(GtkWidget **)realloc(scrolled_windows, (i+1)*sizeof(GtkWidget *));
-      scrolled_windows[i]=gtk_scrolled_window_new(NULL, NULL);
+      GtkWidget* scrolled_window = gtk_scrolled_window_new (NULL, NULL);
       
-      gtk_container_add( GTK_CONTAINER(scrolled_windows[i]), GTK_WIDGET(sheets[i]) );
+      gtk_container_add( GTK_CONTAINER(scrolled_window), GTK_WIDGET(sheets[i]) );
 
       /* First remove old notebook page.  I should probably do some checking here. */
       if (notebook != NULL) 
@@ -131,11 +128,11 @@ x_gtksheet_init()
       /* Then add new, updated notebook page */
       label= gtk_label_new(folder[i]);
 
-      gtk_notebook_append_page(GTK_NOTEBOOK(notebook), GTK_WIDGET(scrolled_windows[i]),
+      gtk_notebook_append_page(GTK_NOTEBOOK(notebook), scrolled_window,
 			       GTK_WIDGET(label) );
 
       gtk_widget_show( GTK_WIDGET(sheets[i]) );
-      gtk_widget_show( GTK_WIDGET(scrolled_windows[i]) );
+      gtk_widget_show( scrolled_window );
       gtk_widget_show( GTK_WIDGET(notebook) );  /* show updated notebook  */
 
 
