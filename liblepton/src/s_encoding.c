@@ -253,6 +253,7 @@ gchar *s_encoding_base64_decode (gchar* src, guint srclen, guint* dstlenp)
 	{
 	case 0:             /* Invalid = in first position */
 	case 1:             /* Invalid = in second position */
+	  g_free(dst);
 	  return NULL;
 	case 2:             /* Valid, means one byte of info */
                                 /* Skip any number of spaces. */
