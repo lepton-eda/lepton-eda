@@ -1,4 +1,4 @@
-NETLISTER=lepton-netlist -L ../../.. -g spice-noqsi
+NETLISTER=lepton-netlist -g spice-noqsi
 SPICE=ngspice
 
 %.cir : %.sch
