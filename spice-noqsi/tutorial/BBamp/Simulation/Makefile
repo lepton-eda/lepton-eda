@@ -1,8 +1,8 @@
-GNET=lepton-netlist -L ../../.. -g spice-noqsi
+NETLISTER=lepton-netlist -L ../../.. -g spice-noqsi
 SPICE=ngspice
 
 %.cir : %.sch
-	$(GNET) $< -o $@
+	$(NETLISTER) $< -o $@
 
 .PHONY : simulation
 
