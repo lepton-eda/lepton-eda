@@ -30,7 +30,7 @@
 (use-modules (netlist schematic)
              (netlist schematic toplevel))
 
-(define (space-noqsi filename)
+(define (spice-noqsi filename)
     (write-header)
     (for-each reserve-refdes (schematic-package-names (toplevel-schematic)))
     (for-each collect-file (schematic-package-names (toplevel-schematic)))

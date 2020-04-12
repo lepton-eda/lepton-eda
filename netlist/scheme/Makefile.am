@@ -40,6 +40,7 @@ DIST_SCM_BACKENDS = \
 	backend/gnet-pcbpins.scm \
 	backend/gnet-protelII.scm \
 	backend/gnet-redac.scm \
+	backend/gnet-spice-noqsi.scm \
 	backend/gnet-spice-sdb.scm \
 	backend/gnet-spice.scm \
 	backend/gnet-switcap.scm \
