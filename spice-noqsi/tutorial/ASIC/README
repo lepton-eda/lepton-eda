@@ -1,6 +1,8 @@
 This sample project demonstrates ASIC development using gEDA with openIP.
 
-The demo assumes you have installed gnet-spice-noqsi.scm. See INSTALL in the gnet-spice-noqsi directory. You must also have ngspice installed. Typing "make" should  create netlists, run ngspice, and display a plot of the behavior of a pulse height discriminator.
+The demo assumes you have ngspice installed. Typing "make" should
+create netlists, run ngspice, and display a plot of the behavior
+of a pulse height discriminator.
 
 Some details:
 

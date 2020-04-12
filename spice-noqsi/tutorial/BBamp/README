@@ -1,6 +1,8 @@
 This sample project demonstrates some of the features of the spice-noqsi back end for gnetlist. There is brief reference documentation on these features in the README in the main gnet-spice-noqsi directory.
 
-To run the demo, you must first install gnet-spice-noqsi.scm. See INSTALL in the gnet-spice-noqsi directory. You must also have ngspice installed. Typing "make" should  create netlists, run ngspice, and display a plot of the frequency response of a broadband amplifier.
+To run the demo, you must have ngspice installed. Typing "make"
+should create netlists, run ngspice, and display a plot of the
+frequency response of a broadband amplifier.
 
 Some details:
 
