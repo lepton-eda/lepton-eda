@@ -10,13 +10,13 @@ frequency response of a broadband amplifier.
 Some details:
 
 This project handles hierarchy in SPICE rather than
-lepton-netlist. Thus, there is a gnetlistrc file containing the line
-'(hierarchy-traversal "disabled")'. This spice-noqsi back end does
-not require this: you may instead allow lepton-netlist to flatten
-hierarchy and pass the flattened netlist to SPICE. Either approach
-works. The BBamp.sch schematic should be usable as-is in a printed
-circuit design flow as well, but in that case you'll probably need
-to let lepton-netlist traverse the hierarchy.
+lepton-netlist. Thus, hierarchy traversal is disabled in
+configuration. This spice-noqsi back end does not require this:
+you may instead allow lepton-netlist to flatten hierarchy and pass
+the flattened netlist to SPICE. Either approach works. The
+BBamp.sch schematic should be usable as-is in a printed circuit
+design flow as well, but in that case you'll probably need to let
+lepton-netlist traverse the hierarchy.
 
 The BBamp.sch schematic is the amplifier itself. Its symbol is
 included in the drawing as a graphical comment for the reader,
