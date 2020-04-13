@@ -1,7 +1,4 @@
-GNET=lepton-netlist -L ../../.. -g spice-noqsi
-#
-# Alternate for using the spice-sdb back end instead
-# GNET=gnetlist -g spice-sdb
+NETLISTER=lepton-netlist -g spice-noqsi
 SPICE=ngspice
 
 IMPORTS=DISCRI.sch Comparator.sch
@@ -9,7 +6,7 @@ CIRCUITS=DISCRI.cir Comparator.cir DISCRItest.cir
 MODELS=../Models/submicron.inc ../Models/openIP.inc
 
 %.cir : %.sch
-	$(GNET) $< -o $@
+	$(NETLISTER) $< -o $@
 
 .PHONY : simulation
 
