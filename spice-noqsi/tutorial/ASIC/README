@@ -1,4 +1,5 @@
-This sample project demonstrates ASIC development using gEDA with openIP.
+This sample project demonstrates ASIC development using Lepton
+with openIP.
 
 The demo assumes you have ngspice installed. Typing "make" should
 create netlists, run ngspice, and display a plot of the behavior
@@ -6,14 +7,10 @@ of a pulse height discriminator.
 
 Some details:
 
-This project handles hierarchy in SPICE rather than gnetlist. Thus, there is a
-gnetlistrc file containing the line '(hierarchy-traversal "disabled")'. This project uses the style of the older spice-sdb back end for gnetlist. Indeed, it works if you change the line:
-
-GNET=gnetlist -L ../.. -g spice-noqsi
-
-to:
-
-GNET=gnetlist -g spice-sdb
+This project handles hierarchy in SPICE rather than
+lepton-netlist. Thus, there is a gnetlistrc file containing the
+line '(hierarchy-traversal "disabled")'. This project uses the
+style of the older spice-sdb back end for lepton-netlist.
 
 References:
 
