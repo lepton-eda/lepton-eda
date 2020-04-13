@@ -8,9 +8,9 @@ of a pulse height discriminator.
 Some details:
 
 This project handles hierarchy in SPICE rather than
-lepton-netlist. Thus, there is a gnetlistrc file containing the
-line '(hierarchy-traversal "disabled")'. This project uses the
-style of the older spice-sdb back end for lepton-netlist.
+lepton-netlist. Thus, hierarchy traversal is disabled in
+configuration. This project uses the style of the older spice-sdb
+back end for lepton-netlist.
 
 References:
 
