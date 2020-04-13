@@ -81,6 +81,7 @@ input_files = \
 	common/TwoStageAmp.sch \
 	common/cascade.sch \
 	common/graphical.sch \
+	common/modeltest.sch \
 	common/multiequal.sch \
 	common/netattrib-symbols/7400-custom.sym \
 	common/netattrib-symbols/gnd-custom.sym \
@@ -354,6 +355,9 @@ TESTS = stack_1-geda.out \
 	common/graphical-verilog.out \
 	common/graphical-vhdl.out \
 	common/graphical-vipec.out \
+	common/modeltest-spice-noqsi.out \
+	common/modeltest-spice-sdb.out \
+	common/modeltest-spice.out \
 	common/multiequal-PCB.out \
 	common/multiequal-allegro.out \
 	common/multiequal-bae.out \
