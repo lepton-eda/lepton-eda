@@ -1,0 +1,71 @@
+v 20070216 1
+B 300 0 1000 800 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 1700 1700 5 10 0 0 0 0 1
+device=RSFF1
+P 300 600 0 600 1 0 1
+{
+T 200 650 5 8 0 1 0 6 1
+pinnumber=4
+T 200 550 5 8 0 1 0 8 1
+pinseq=4
+T 350 600 9 8 1 1 0 1 1
+pinlabel=S
+T 350 600 5 8 0 1 0 2 1
+pintype=in
+}
+P 1600 600 1300 600 1 0 0
+{
+T 1400 650 5 8 0 1 0 0 1
+pinnumber=1
+T 1400 550 5 8 0 1 0 2 1
+pinseq=1
+T 1250 600 9 8 1 1 0 7 1
+pinlabel=Q
+T 1250 600 5 8 0 1 0 8 1
+pintype=out
+}
+V 1350 200 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+P 1400 200 1600 200 1 0 1
+{
+T 1400 250 5 8 0 1 0 0 1
+pinnumber=2
+T 1400 150 5 8 0 1 0 2 1
+pinseq=2
+T 1250 200 9 8 1 1 0 7 1
+pinlabel=\_Q\_
+T 1250 200 5 8 0 1 0 8 1
+pintype=out
+}
+T 1300 900 8 10 1 1 0 6 1
+refdes=X?
+T 1700 1500 8 10 0 0 0 0 1
+model-name=RSFF1
+T 800 400 9 10 1 0 0 4 1
+RSFF1
+T 300 1300 8 10 0 0 0 0 1
+numslots=0
+T 1700 1300 8 10 0 1 0 0 1
+description=R/S flip flop
+T 300 1100 8 10 0 1 0 0 1
+documentation=http://research.kek.jp/people/ikeda/openIP
+T 300 1900 8 10 0 0 0 0 1
+symversion=1.0
+T 300 1700 8 10 0 1 0 0 1
+author=jpd@noqsi.com
+T 300 1500 8 10 0 0 0 0 1
+footprint=none
+P 300 200 0 200 1 0 1
+{
+T 200 250 5 8 0 1 0 6 1
+pinnumber=3
+T 200 150 5 8 0 1 0 8 1
+pinseq=3
+T 350 200 9 8 1 1 0 1 1
+pinlabel=R
+T 350 200 5 8 0 1 0 2 1
+pintype=in
+}
+T 0 0 8 10 0 0 0 0 1
+dist-license=GPL
+T 0 0 8 10 0 0 0 0 1
+use-license=unlimited

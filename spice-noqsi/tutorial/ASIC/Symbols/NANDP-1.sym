@@ -1,0 +1,63 @@
+v 20070216 1
+T 400 800 8 10 1 1 0 0 1
+refdes=X?
+T 1000 1500 8 10 0 1 0 0 1
+device=NANDP
+T 1000 1300 8 10 0 0 0 0 1
+model-name=NANDP
+T 1000 1100 8 10 0 0 0 0 1
+numslots=0
+T 1000 900 8 10 0 1 0 0 1
+description=NAND gate
+T 1000 700 8 10 0 1 0 0 1
+documentation=http://research.kek.jp/people/ikeda/openIP
+T 1000 1700 8 10 0 0 0 0 1
+symversion=1.0
+T 1900 1500 8 10 0 1 0 0 1
+author=jpd@noqsi.com
+T 2000 1100 8 10 0 0 0 0 1
+footprint=none
+L 300 100 300 700 3 0 0 0 -1 -1
+L 300 700 700 700 3 0 0 0 -1 -1
+L 300 100 700 100 3 0 0 0 -1 -1
+A 700 400 300 270 180 3 0 0 0 -1 -1
+V 1050 400 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+P 1100 400 1300 400 1 0 1
+{
+T 1100 450 5 8 0 1 0 0 1
+pinnumber=3
+T 1100 350 5 8 0 1 0 2 1
+pinseq=3
+T 950 400 5 8 0 1 0 6 1
+pinlabel=Y
+T 950 400 5 8 0 1 0 8 1
+pintype=out
+}
+P 300 200 0 200 1 0 1
+{
+T 200 250 5 8 0 1 0 6 1
+pinnumber=2
+T 200 150 5 8 0 1 0 8 1
+pinseq=2
+T 350 200 5 8 0 1 0 0 1
+pinlabel=B
+T 350 200 5 8 0 1 0 2 1
+pintype=in
+}
+P 300 600 0 600 1 0 1
+{
+T 200 650 5 8 0 1 0 6 1
+pinnumber=1
+T 200 550 5 8 0 1 0 8 1
+pinseq=1
+T 350 600 5 8 0 1 0 0 1
+pinlabel=A
+T 350 600 5 8 0 1 0 2 1
+pintype=in
+}
+T 650 400 9 10 1 0 0 4 1
+NANDP
+T 0 0 8 10 0 0 0 0 1
+dist-license=GPL
+T 0 0 8 10 0 0 0 0 1
+use-license=unlimited

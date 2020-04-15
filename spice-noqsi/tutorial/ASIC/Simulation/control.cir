@@ -1,0 +1,5 @@
+.control
+set method=gear
+tran 1n 1u
+plot in LLP+1 HLP+2
+.endc
