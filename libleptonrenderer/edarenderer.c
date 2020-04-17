@@ -143,11 +143,9 @@ static void eda_renderer_draw_arc (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_circle (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_path (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_text (EdaRenderer *renderer, OBJECT *object);
-static int eda_renderer_get_font_descent (EdaRenderer *renderer,
-                                          PangoFontDescription *desc);
 static int eda_renderer_prepare_text (EdaRenderer *renderer, const GedaObject *object);
 static void eda_renderer_calc_text_position (EdaRenderer *renderer, const GedaObject *object,
-                                             int descent, double *x, double *y);
+                                             double *x, double *y);
 static void eda_renderer_draw_picture (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_component (EdaRenderer *renderer, OBJECT *object);
 
@@ -861,32 +859,11 @@ eda_renderer_draw_text (EdaRenderer *renderer, OBJECT *object)
 }
 
 static int
-eda_renderer_get_font_descent (EdaRenderer *renderer,
-                               PangoFontDescription *desc)
-{
-  PangoFontMetrics *metrics;
-  int size = pango_font_description_get_size (desc);
-  int *key;
-
-  /* Lookup the font size in the metrics cache, and get the metrics
-   * from there if available. Otherwise, calculate the metrics and
-   * cache them. */
-  metrics = (PangoFontMetrics*) g_hash_table_lookup (renderer->priv->metrics_cache, &size);
-  if (metrics == NULL) {
-    metrics = pango_context_get_metrics (renderer->priv->pc, desc, NULL);
-    key = g_new (int, 1);
-    *key = size;
-    g_hash_table_insert (renderer->priv->metrics_cache, key, metrics);
-  }
-  return pango_font_metrics_get_descent (metrics);
-}
-
-static int
 eda_renderer_prepare_text (EdaRenderer *renderer, const GedaObject *object)
 {
   gint angle;
   double points_size, dx, dy;
-  int size, descent;
+  int size;
   char *draw_string;
   cairo_font_options_t *options;
   PangoFontDescription *desc;
@@ -912,7 +889,6 @@ eda_renderer_prepare_text (EdaRenderer *renderer, const GedaObject *object)
   desc = pango_font_description_from_string (renderer->priv->font_name);
   pango_font_description_set_size (desc, size);
   pango_layout_set_font_description (renderer->priv->pl, desc);
-  descent = eda_renderer_get_font_descent (renderer, desc);
   pango_font_description_free (desc);
 
   /* Extract text to display and Pango text attributes, and then set
@@ -927,7 +903,7 @@ eda_renderer_prepare_text (EdaRenderer *renderer, const GedaObject *object)
   pango_attr_list_unref (attrs);
 
   /* Calculate text position. */
-  eda_renderer_calc_text_position (renderer, object, descent, &dx, &dy);
+  eda_renderer_calc_text_position (renderer, object, &dx, &dy);
 
   cairo_translate (renderer->priv->cr, object->text->x, object->text->y);
 
@@ -958,7 +934,7 @@ eda_renderer_prepare_text (EdaRenderer *renderer, const GedaObject *object)
  * world coordinates. */
 static void
 eda_renderer_calc_text_position (EdaRenderer *renderer, const GedaObject *object,
-                                 int descent, double *x, double *y)
+                                 double *x, double *y)
 {
   PangoRectangle inked_rect, logical_rect;
   double temp;
