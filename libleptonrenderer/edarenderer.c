@@ -972,17 +972,9 @@ eda_renderer_calc_text_position (EdaRenderer *renderer, const GedaObject *object
   x_middle = -logical_rect.width / 2.0;
   x_right = -logical_rect.width;
 
-  /*! \note Ideally, we would be using just font / logical metrics for vertical
-   *        alignment, however this way seems to be more backward compatible
-   *        with the old gschem rendering.
-   *
-   *        Lower alignment is at the baseline of the bottom text line, whereas
-   *        middle and upper alignment is based upon the inked extents of the
-   *        entire text block.
-   */
-  y_upper  = -inked_rect.y;                     /* Top of inked extents */
-  y_middle = y_upper - inked_rect.height / 2.;  /* Middle of inked extents */
-  y_lower  = descent - logical_rect.height;     /* Baseline of bottom line */
+  y_upper  = -logical_rect.y;                     /* Top of inked extents */
+  y_middle = y_upper - logical_rect.height / 2.;  /* Middle of inked extents */
+  y_lower  = y_upper - logical_rect.height;       /* Baseline of bottom line */
 
   /* Special case flips attachment point to opposite corner when
    * the text is rotated to 180 degrees, since the drawing code
