@@ -107,10 +107,10 @@ geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
     cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 0, 0);
   cairo_t *cr = cairo_create (surface);
 
-  EdaRenderer *renderer =
-    EDA_RENDERER (toplevel->rendered_text_bounds_data);
+  EdaRenderer *renderer = eda_renderer_new (NULL, NULL);
   g_object_set (G_OBJECT (renderer),
                 "cairo-context", cr,
+                "render-flags", toplevel->show_hidden_text ? EDA_RENDERER_FLAG_TEXT_HIDDEN : 0,
                 NULL);
 
   /* Use the new renderer to calculate text bounds */
@@ -119,6 +119,7 @@ geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
                                          &l, &t, &r, &b);
 
   /* Clean up */
+  eda_renderer_destroy (renderer);
   cairo_surface_destroy (surface);
   cairo_destroy (cr);
 
