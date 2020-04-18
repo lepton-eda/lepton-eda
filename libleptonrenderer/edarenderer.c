@@ -172,14 +172,6 @@ eda_renderer_default_get_user_bounds (EdaRenderer *renderer,
                                       double *right,
                                       double *bottom);
 
-static gboolean
-eda_renderer_get_text_user_bounds (EdaRenderer *renderer,
-                                   const GedaObject *object,
-                                   double *left,
-                                   double *top,
-                                   double *right,
-                                   double *bottom);
-
 G_DEFINE_TYPE_WITH_PRIVATE (EdaRenderer, eda_renderer, G_TYPE_OBJECT);
 
 GType
@@ -1493,7 +1485,7 @@ eda_renderer_default_get_user_bounds (EdaRenderer *renderer,
   }
 }
 
-static gboolean
+gboolean
 eda_renderer_get_text_user_bounds (EdaRenderer *renderer,
                                    const GedaObject *object,
                                    double *left,

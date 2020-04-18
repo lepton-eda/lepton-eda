@@ -114,9 +114,9 @@ geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
                 NULL);
 
   /* Use the new renderer to calculate text bounds */
-  result = eda_renderer_get_user_bounds (renderer,
-                                         object,
-                                         &l, &t, &r, &b);
+  result = eda_renderer_get_text_user_bounds (renderer,
+                                              object,
+                                              &l, &t, &r, &b);
 
   /* Clean up */
   eda_renderer_destroy (renderer);

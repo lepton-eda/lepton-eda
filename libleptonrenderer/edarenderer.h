@@ -96,6 +96,14 @@ eda_renderer_get_user_bounds (EdaRenderer *renderer,
                               double *right,
                               double *bottom);
 
+gboolean
+eda_renderer_get_text_user_bounds (EdaRenderer *renderer,
+                                   const GedaObject *object,
+                                   double *left,
+                                   double *top,
+                                   double *right,
+                                   double *bottom);
+
 G_END_DECLS
 
 #endif /* !__EDA_RENDERER_H__ */
