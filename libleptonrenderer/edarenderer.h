@@ -97,8 +97,8 @@ eda_renderer_get_user_bounds (EdaRenderer *renderer,
                               double *bottom);
 
 gboolean
-eda_renderer_get_text_user_bounds (EdaRenderer *renderer,
-                                   const GedaObject *object,
+eda_renderer_get_text_user_bounds (const GedaObject *object,
+                                   gboolean enable_hidden,
                                    double *left,
                                    double *top,
                                    double *right,

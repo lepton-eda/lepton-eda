@@ -102,26 +102,10 @@ geda_text_object_calculate_bounds (TOPLEVEL *toplevel,
     return result;
   }
 
-  /* Use dummy zero-sized surface */
-  cairo_surface_t *surface =
-    cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 0, 0);
-  cairo_t *cr = cairo_create (surface);
-
-  EdaRenderer *renderer = eda_renderer_new (NULL, NULL);
-  g_object_set (G_OBJECT (renderer),
-                "cairo-context", cr,
-                "render-flags", toplevel->show_hidden_text ? EDA_RENDERER_FLAG_TEXT_HIDDEN : 0,
-                NULL);
-
   /* Use the new renderer to calculate text bounds */
-  result = eda_renderer_get_text_user_bounds (renderer,
-                                              object,
+  result = eda_renderer_get_text_user_bounds (object,
+                                              toplevel->show_hidden_text,
                                               &l, &t, &r, &b);
-
-  /* Clean up */
-  eda_renderer_destroy (renderer);
-  cairo_surface_destroy (surface);
-  cairo_destroy (cr);
 
   /* Round bounds to nearest integer */
   bounds->min_x = lrint (fmin (l, r));

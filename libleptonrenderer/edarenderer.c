@@ -1465,7 +1465,7 @@ eda_renderer_default_get_user_bounds (EdaRenderer *renderer,
 
   switch (object->type) {
   case OBJ_TEXT:
-    return eda_renderer_get_text_user_bounds (renderer, object,
+    return eda_renderer_get_text_user_bounds (object, FALSE,
                                               left, top, right, bottom);
   case OBJ_LINE:
   case OBJ_BOX:
@@ -1486,8 +1486,8 @@ eda_renderer_default_get_user_bounds (EdaRenderer *renderer,
 }
 
 gboolean
-eda_renderer_get_text_user_bounds (EdaRenderer *renderer,
-                                   const GedaObject *object,
+eda_renderer_get_text_user_bounds (const GedaObject *object,
+                                   gboolean enable_hidden,
                                    double *left,
                                    double *top,
                                    double *right,
@@ -1496,14 +1496,23 @@ eda_renderer_get_text_user_bounds (EdaRenderer *renderer,
   PangoRectangle inked_rect, logical_rect;
 
   /* First check if this is hidden text. */
-  if (object->visibility == INVISIBLE
-      && !EDA_RENDERER_CHECK_FLAG (renderer, FLAG_TEXT_HIDDEN)) {
+  if (object->visibility == INVISIBLE && !enable_hidden) {
     return FALSE;
   }
 
   /* Also, check that we actually need to display a string */
   if (object->text->disp_string == NULL)
     return FALSE;
+
+  /* Use dummy zero-sized surface */
+  cairo_surface_t *surface =
+    cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 0, 0);
+  cairo_t *cr = cairo_create (surface);
+
+  EdaRenderer *renderer = eda_renderer_new (NULL, NULL);
+  g_object_set (G_OBJECT (renderer),
+                "cairo-context", cr,
+                NULL);
 
   cairo_save (renderer->priv->cr);
 
