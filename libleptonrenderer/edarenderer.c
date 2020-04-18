@@ -1523,10 +1523,10 @@ eda_renderer_get_text_user_bounds (EdaRenderer *renderer,
    * device coordinates, but we need world coordinates. */
   pango_layout_get_pixel_extents (renderer->priv->pl,
                                   &inked_rect, &logical_rect);
-  *left = (double) inked_rect.x;
-  *top = (double) inked_rect.y;
-  *right = (double) inked_rect.x + inked_rect.width;
-  *bottom = (double) inked_rect.y + inked_rect.height;
+  *left = (double) logical_rect.x;
+  *top = (double) logical_rect.y;
+  *right = (double) logical_rect.x + logical_rect.width;
+  *bottom = (double) logical_rect.y + logical_rect.height;
   cairo_user_to_device (renderer->priv->cr, left, top);
   cairo_user_to_device (renderer->priv->cr, right, bottom);
 
