@@ -918,7 +918,6 @@ eda_renderer_prepare_text (EdaRenderer *renderer, const GedaObject *object)
     cairo_translate (renderer->priv->cr, dx, dy);
   }
 
-  pango_cairo_update_layout (renderer->priv->cr, renderer->priv->pl);
   return TRUE;
 }
 
@@ -933,6 +932,9 @@ eda_renderer_calc_text_position (EdaRenderer *renderer, const GedaObject *object
   double y_lower, y_middle, y_upper;
   double x_left, x_middle, x_right;
 
+  cairo_save (renderer->priv->cr);
+  cairo_identity_matrix (renderer->priv->cr);
+  pango_cairo_update_layout (renderer->priv->cr, renderer->priv->pl);
   pango_layout_get_extents (renderer->priv->pl,
                             &inked_rect, &logical_rect);
 
@@ -969,6 +971,7 @@ eda_renderer_calc_text_position (EdaRenderer *renderer, const GedaObject *object
 
   *x /= PANGO_SCALE;
   *y /= PANGO_SCALE;
+  cairo_restore (renderer->priv->cr);
 }
 
 static void
