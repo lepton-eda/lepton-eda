@@ -34,7 +34,6 @@
 #define _(x) (x)
 
 #define MAGIC_OVERBAR_POS_CONSTANT 0.8
-#define MAGIC_OVERBAR_WIDTH_CONSTANT 0.03
 
 enum {
   PROP_CAIRO_CONTEXT = 1
@@ -199,6 +198,7 @@ eda_pango_renderer_draw_glyphs (PangoRenderer *renderer,
   cairo_t *cr = eda_renderer->priv->cr;
 
   if (eda_renderer->priv->overbar) {
+    PangoFontMetrics *metrics;
     double rx, ry;
     double rwidth;
     double rheight;
@@ -210,7 +210,9 @@ eda_pango_renderer_draw_glyphs (PangoRenderer *renderer,
     rwidth = glyphs_extents.width / PANGO_SCALE;
 
     /* Make the thickness the same as for the font's underline */
-    rheight = glyphs_extents.height * MAGIC_OVERBAR_WIDTH_CONSTANT / PANGO_SCALE;
+    metrics = pango_font_get_metrics (font, NULL);
+    rheight = pango_font_metrics_get_underline_thickness (metrics) / PANGO_SCALE;
+    pango_font_metrics_unref (metrics);
 
     /* Allow the overbar to fade out as it becomes < 1px high */
     if (rheight > 1.0) {
