@@ -1516,6 +1516,14 @@ eda_renderer_get_text_user_bounds (const GedaObject *object,
   g_object_set (G_OBJECT (renderer),
                 "cairo-context", cr,
                 NULL);
+  EdaConfig *cfg = eda_config_get_context_for_file (NULL);
+  gchar *font_name = eda_config_get_string (cfg, "schematic.gui", "font", NULL);
+  if (font_name != NULL) {
+    g_object_set (G_OBJECT (renderer),
+                  "font-name", font_name,
+                  NULL);
+  }
+  g_free (font_name);
 
   cairo_save (renderer->priv->cr);
 
