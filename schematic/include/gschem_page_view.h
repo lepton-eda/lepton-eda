@@ -79,9 +79,6 @@ void
 gschem_page_view_invalidate_all (GschemPageView *view);
 
 void
-gschem_page_view_invalidate_object (GschemPageView *view, OBJECT *object);
-
-void
 gschem_page_view_invalidate_screen_rect (GschemPageView *view, int left, int top, int right, int bottom);
 
 void

@@ -514,51 +514,6 @@ gschem_page_view_invalidate_all (GschemPageView *view)
 }
 
 
-
-/*! \brief Schedule redraw of the given object
- *
- *  \param [in,out] view   The Gschem page view to redraw
- *  \param [in]     object The object to redraw
- */
-void
-gschem_page_view_invalidate_object (GschemPageView *view, OBJECT *object)
-{
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (view != NULL);
-
-  if (!gtk_widget_get_realized (GTK_WIDGET (view))) {
-    return;
-  }
-
-  PAGE *page = gschem_page_view_get_page (view);
-
-  if (page != NULL) {
-    gboolean success;
-    int world_bottom;
-    int world_right;
-    int world_left;
-    int world_top;
-
-    success =
-      geda_object_calculate_visible_bounds (object,
-                                            page->toplevel->show_hidden_text,
-                                            &world_left,
-                                            &world_top,
-                                            &world_right,
-                                            &world_bottom);
-
-    if (success) {
-      gschem_page_view_invalidate_world_rect (view,
-                                              world_left,
-                                              world_top,
-                                              world_right,
-                                              world_bottom);
-    }
-  }
-}
-
-
-
 /*! \brief Schedule redraw of the given rectange
  *
  *  \param [in,out] view   The Gschem page view to redraw
