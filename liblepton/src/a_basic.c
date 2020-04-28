@@ -352,8 +352,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
     cfg_read_bool ("schematic.gui", "force-boundingbox",
                    default_force_boundingbox, &force_boundingbox);
 
-    geda_pin_object_update_whichend (toplevel,
-                                     new_object_list,
+    geda_pin_object_update_whichend (new_object_list,
                                      (found_pin == 1 || force_boundingbox));
   }
 

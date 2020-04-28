@@ -102,8 +102,7 @@ void
 geda_pin_object_translate (GedaObject *object, int dx, int dy);
 
 void
-geda_pin_object_update_whichend (TOPLEVEL *toplevel,
-                                 GList *object_list,
+geda_pin_object_update_whichend (GList *object_list,
                                  int num_pins);
 
 OBJECT*

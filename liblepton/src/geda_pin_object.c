@@ -567,14 +567,12 @@ geda_pin_object_modify (OBJECT *object,
  *  The side of the pins that are closer to the boundary of the box are
  *  set as active ends of the pins.
  *
- *  \param toplevel    The TOPLEVEL object
  *  \param object_list list of OBJECTs
  *  \param force_boundingbox Use the whole symbol bounding box to
  *                           find pin connection points.
  */
 void
-geda_pin_object_update_whichend (TOPLEVEL *toplevel,
-                                 GList *object_list,
+geda_pin_object_update_whichend (GList *object_list,
                                  gboolean force_boundingbox)
 {
   OBJECT *o_current;
