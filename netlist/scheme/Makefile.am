@@ -56,8 +56,10 @@ DIST_SCM_BACKENDS_COMMON = \
 
 TESTS = \
 	unit-tests/test-component-library-search.scm \
+	unit-tests/test-geda-object-box.scm \
 	unit-tests/test-geda-object-line.scm \
 	unit-tests/test-lepton-file-system.scm \
+	unit-tests/test-lepton-object-box.scm \
 	unit-tests/test-lepton-object-line.scm \
 	unit-tests/test-lepton-rc-build-path.scm \
 	unit-tests/test-netlist-attrib.scm \
