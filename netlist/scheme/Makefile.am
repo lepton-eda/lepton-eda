@@ -54,7 +54,7 @@ DIST_SCM_BACKENDS = \
 DIST_SCM_BACKENDS_COMMON = \
 	backend/spice/common.scm
 
-TESTS = unit-tests/test-build-path.scm \
+TESTS = unit-tests/test-lepton-rc-build-path.scm \
 	unit-tests/test-component-library-search.scm \
 	unit-tests/test-netlist-attrib.scm \
 	unit-tests/test-netlist-load-path.scm \
