@@ -1,6 +1,6 @@
 (use-modules (lepton rc))
 
-(test-begin "build-path" 1)
+(test-begin "build-path" 2)
 
 (test-equal "prefix/suffix"
   (build-path "prefix" "suffix"))
