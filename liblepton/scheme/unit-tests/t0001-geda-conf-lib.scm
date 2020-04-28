@@ -1,14 +1,5 @@
 (use-modules (unit-test)
-             (lepton file-system)
-             (lepton rc))
-
-(begin-test 'build-path
- (assert-equal
-  "prefix/suffix"
-  (build-path "prefix" "suffix"))
- (assert-equal
-  "/path/to/a/directory"
-  (build-path "/path" "to" "a" "directory")))
+             (lepton file-system))
 
 ; Makes blatant assumptions about the current directory. Oh well:
 ;
