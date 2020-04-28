@@ -93,7 +93,7 @@ SCM_LOG_COMPILER = $(CLI_SHELL)
 AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir) \
 	-c '(use-modules (unit-test)) (load (list-ref (command-line) 1)) (exit (if (tests-passed?) 0 1))'
 
-TESTS = unit-tests/t0001-geda-conf-lib.scm \
+TESTS = \
 	unit-tests/t0100-object-line.scm \
 	unit-tests/t0101-object-box.scm \
 	unit-tests/t0102-object-circle.scm \
