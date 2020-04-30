@@ -57,12 +57,14 @@ DIST_SCM_BACKENDS_COMMON = \
 TESTS = \
 	unit-tests/test-component-library-search.scm \
 	unit-tests/test-geda-object-arc.scm \
+	unit-tests/test-geda-object-bounds.scm \
 	unit-tests/test-geda-object-box.scm \
 	unit-tests/test-geda-object-circle.scm \
 	unit-tests/test-geda-object-line.scm \
 	unit-tests/test-geda-object-text.scm \
 	unit-tests/test-lepton-file-system.scm \
 	unit-tests/test-lepton-object-arc.scm \
+	unit-tests/test-lepton-object-bounds.scm \
 	unit-tests/test-lepton-object-box.scm \
 	unit-tests/test-lepton-object-circle.scm \
 	unit-tests/test-lepton-object-line.scm \
