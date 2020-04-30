@@ -95,7 +95,6 @@ AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir) \
 
 TESTS = \
 	unit-tests/t0105-object-component.scm \
-	unit-tests/t0106-object-bounds.scm \
 	unit-tests/t0107-object-stroke-fill.scm \
 	unit-tests/t0108-object-connections.scm \
 	unit-tests/t0109-object-copy.scm \
