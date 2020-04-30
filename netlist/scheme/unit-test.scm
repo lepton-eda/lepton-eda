@@ -79,6 +79,22 @@
 (define make-toplevel (@@ (lepton core toplevel) %make-toplevel))
 
 
+;;; Syntax and procedure that check exception type and probably
+;;; have no analogs in SRFI-64.
+(define (%assert-thrown key thunk)
+  (catch key
+    (lambda ()
+      (thunk)
+      (throw 'test-failed-exception
+             (simple-format #f "  assert-thrown: expected exception: ~S"
+                            key)))
+    (lambda (key . args) #t)))
+
+(define-syntax test-assert-thrown
+  (syntax-rules ()
+    ((_ key . test-forms)
+     (%assert-thrown key (lambda () . test-forms)))))
+
 (define (report s port)
   (display s port)
   (display s (current-error-port)))
