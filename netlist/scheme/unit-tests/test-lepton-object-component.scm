@@ -262,7 +262,7 @@
        (mirror-flag #f)
        (locked-flag #f))
 
-  ( define ( mk-comp1 )
+  (define (make-real-component)
     ( with-output-to-file fname1
       ( lambda()
         ( format #t "v 20191003 2~%" )
@@ -281,7 +281,7 @@
                             mirror-flag
                             locked-flag))
 
-  ( define ( mk-comp2 )
+  (define (make-bogus-component)
     ;; return:
     (make-component basename2
                     position
@@ -296,8 +296,8 @@
   ( format #t "fname1:  [~a]~%" fname1 )              ; [debug]
   |#
 
-  (let ((temp-component (mk-comp1))
-        (non-existing-component (mk-comp2)))
+  (let ((temp-component (make-real-component))
+        (non-existing-component (make-bogus-component)))
 
     (test-group-with-cleanup "component-filename"
 
