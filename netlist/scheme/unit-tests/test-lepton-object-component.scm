@@ -296,14 +296,14 @@
   ( format #t "fname1:  [~a]~%" fname1 )              ; [debug]
   |#
 
-  (let ((comp1 (mk-comp1))
-        (comp2 (mk-comp2)))
+  (let ((temp-component (mk-comp1))
+        (non-existing-component (mk-comp2)))
 
-  (test-group-with-cleanup "component-filename"
+    (test-group-with-cleanup "component-filename"
 
-  (test-equal (component-filename comp1) fname1)
-  (test-assert (not (component-filename comp2)))
-    ;; Clean up.
+      (test-equal (component-filename temp-component) fname1)
+      (test-assert (not (component-filename non-existing-component)))
+      ;; Clean up.
       (begin
         (reset-component-library)
         (delete-file fname1)))))
