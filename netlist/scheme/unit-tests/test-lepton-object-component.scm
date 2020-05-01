@@ -307,4 +307,6 @@
   (test-equal (component-filename comp1) fname1)
   (test-assert (not (component-filename comp2)))
     ;; Clean up.
-      (reset-component-library))))
+      (begin
+        (reset-component-library)
+        (delete-file fname1)))))
