@@ -61,7 +61,9 @@ TESTS = \
 	unit-tests/test-geda-object-box.scm \
 	unit-tests/test-geda-object-circle.scm \
 	unit-tests/test-geda-object-component.scm \
+	unit-tests/test-geda-object-fill.scm \
 	unit-tests/test-geda-object-line.scm \
+	unit-tests/test-geda-object-stroke.scm \
 	unit-tests/test-geda-object-text.scm \
 	unit-tests/test-lepton-file-system.scm \
 	unit-tests/test-lepton-object-arc.scm \
@@ -69,7 +71,9 @@ TESTS = \
 	unit-tests/test-lepton-object-box.scm \
 	unit-tests/test-lepton-object-circle.scm \
 	unit-tests/test-lepton-object-component.scm \
+	unit-tests/test-lepton-object-fill.scm \
 	unit-tests/test-lepton-object-line.scm \
+	unit-tests/test-lepton-object-stroke.scm \
 	unit-tests/test-lepton-object-text.scm \
 	unit-tests/test-lepton-rc-build-path.scm \
 	unit-tests/test-netlist-attrib.scm \
