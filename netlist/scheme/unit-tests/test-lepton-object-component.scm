@@ -258,8 +258,6 @@
      ( fname1  ( format #f "~a.sym" (tmpnam) ) )
      ( symname ( basename fname1 ) )
      ( symdir  ( dirname  fname1 ) )
-     ( comp1   #f )
-     ( comp2   #f )
      )
 
   ( define ( mk-comp1 )
@@ -301,12 +299,12 @@
   ( format #t "symname: [~a]~%" symname )             ; [debug]
   ( format #t "fname1:  [~a]~%" fname1 )              ; [debug]
 
-  ( set! comp1 ( mk-comp1 ) )
-  ( set! comp2 ( mk-comp2 ) )
+  (let ((comp1 (mk-comp1))
+        (comp2 (mk-comp2)))
 
   (test-group-with-cleanup "component-filename"
 
   (test-equal (component-filename comp1) fname1)
   (test-assert (not (component-filename comp2)))
     ;; Clean up.
-    (reset-component-library)))
+      (reset-component-library))))
