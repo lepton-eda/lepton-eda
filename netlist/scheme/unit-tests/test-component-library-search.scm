@@ -1,5 +1,4 @@
-(use-modules (srfi srfi-64)
-             (lepton library component))
+(use-modules (lepton library component))
 
 ;;; Helper procedures.
 

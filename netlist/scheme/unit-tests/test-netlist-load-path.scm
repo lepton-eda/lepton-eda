@@ -1,5 +1,3 @@
-(use-modules (srfi srfi-64))
-
 (test-begin "load-path")
 (test-equal
     %load-path

@@ -1,5 +1,4 @@
-(use-modules (srfi srfi-64)
-             (netlist partlist)
+(use-modules (netlist partlist)
              (netlist attrib compare))
 
 (define (refdes>? a b)

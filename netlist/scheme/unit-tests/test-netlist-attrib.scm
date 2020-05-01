@@ -1,5 +1,4 @@
-(use-modules (srfi srfi-64)
-             (netlist attrib compare))
+(use-modules (netlist attrib compare))
 
 (test-begin "attrib:refdes<?")
 (test-assert (refdes<? "DA0" "DA1"))
