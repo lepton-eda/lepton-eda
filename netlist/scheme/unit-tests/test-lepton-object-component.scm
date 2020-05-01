@@ -294,10 +294,12 @@
     )
 
 
+  #|
   ( format #t "cwd:     [~a]~%" (getcwd) )            ; [debug]
   ( format #t "symdir:  [~a]~%" symdir )              ; [debug]
   ( format #t "symname: [~a]~%" symname )             ; [debug]
   ( format #t "fname1:  [~a]~%" fname1 )              ; [debug]
+  |#
 
   (let ((comp1 (mk-comp1))
         (comp2 (mk-comp2)))
