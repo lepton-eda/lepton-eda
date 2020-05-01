@@ -1,13 +1,10 @@
-; Test Scheme procedures for getting connections.
+;;; Test Scheme procedures for getting connections.
 
 (use-modules (lepton object)
              (lepton page))
 
-(define P (make-page "/test/page/A"))
-
-(test-begin "object-connections" 22)
-
-(let ((C (make-component "test component" '(1 . 2) 0 #t #f))
+(let ((P (make-page "/test/page/A"))
+      (C (make-component "test component" '(1 . 2) 0 #t #f))
       (np (make-net-pin '(100 . 0) '(0 . 0)))
       (bp (make-bus-pin '(100 . 200) '(0 . 200)))
       (n1 (make-net '(100 . 0) '(100 . 100)))
@@ -15,69 +12,66 @@
       (b1 (make-bus '(100 . 200) '(200 . 200)))
       (b2 (make-bus '(200 . 100) '(200 . 200))))
 
-  (test-assert-thrown 'object-state (object-connections np))
+  (test-group-with-cleanup "object-connections"
 
-  ;; Build component
-  (component-append! C np bp)
-  (test-assert-thrown 'object-state (object-connections np))
+    (test-assert-thrown 'object-state (object-connections np))
 
-  ;; Build page
-  (page-append! P C n1 n2 b1 b2)
+    ;; Build component
+    (component-append! C np bp)
+    (test-assert-thrown 'object-state (object-connections np))
 
-  ;; Test initial connections
-  (test-equal (list n1 b1) (object-connections C))
+    ;; Build page
+    (page-append! P C n1 n2 b1 b2)
 
-  (test-equal (list n1)    (object-connections np))
-  (test-equal (list np n2) (object-connections n1))
-  (test-equal (list n1)    (object-connections n2))
+    ;; Test initial connections
+    (test-equal (list n1 b1) (object-connections C))
 
-  (test-equal (list b1)    (object-connections bp))
-  (test-equal (list bp b2) (object-connections b1))
-  (test-equal (list b1)    (object-connections b2))
+    (test-equal (list n1)    (object-connections np))
+    (test-equal (list np n2) (object-connections n1))
+    (test-equal (list n1)    (object-connections n2))
 
-  ;; Break some stuff
-  (page-remove! P n1)
-  (component-remove! C bp)
+    (test-equal (list b1)    (object-connections bp))
+    (test-equal (list bp b2) (object-connections b1))
+    (test-equal (list b1)    (object-connections b2))
 
-  ;; Test modified connections
-  (test-equal '()            (object-connections np))
-  (test-assert-thrown 'object-state (object-connections n1))
-  (test-equal '()            (object-connections n2))
+    ;; Break some stuff
+    (page-remove! P n1)
+    (component-remove! C bp)
 
-  (test-assert-thrown 'object-state (object-connections bp))
-  (test-equal (list b2)      (object-connections b1))
-  (test-equal (list b1)      (object-connections b2))
+    ;; Test modified connections
+    (test-equal '()            (object-connections np))
+    (test-assert-thrown 'object-state (object-connections n1))
+    (test-equal '()            (object-connections n2))
 
-  ;; Change stuff back
-  (page-append! P n1)
-  (component-append! C bp)
+    (test-assert-thrown 'object-state (object-connections bp))
+    (test-equal (list b2)      (object-connections b1))
+    (test-equal (list b1)      (object-connections b2))
 
-  ;; Test modified connections
-  (test-equal (list n1 b1) (object-connections C))
+    ;; Change stuff back
+    (page-append! P n1)
+    (component-append! C bp)
 
-  (test-equal (list n1)    (object-connections np))
-  (test-equal (list np n2) (object-connections n1))
-  (test-equal (list n1)    (object-connections n2))
+    ;; Test modified connections
+    (test-equal (list n1 b1) (object-connections C))
 
-  (test-equal (list b1)    (object-connections bp))
-  (test-equal (list b2 bp) (object-connections b1))
-  (test-equal (list b1)    (object-connections b2))
-  )
+    (test-equal (list n1)    (object-connections np))
+    (test-equal (list np n2) (object-connections n1))
+    (test-equal (list n1)    (object-connections n2))
 
-(test-end "object-connections")
+    (test-equal (list b1)    (object-connections bp))
+    (test-equal (list b2 bp) (object-connections b1))
+    (test-equal (list b1)    (object-connections b2))
 
-(close-page! P)
+    ;; Clean up.
+    (close-page! P)))
 
 
-(define Q (make-page "/test/page/B"))
-
-;; Test what happens when you connect to a net (incorrectly) placed in
-;; a component.
-;;
-;; The "right thing" is probably to be as permissive as possible.
-(test-begin "net-in-component-connections" 4)
-
-(let ((C1 (make-component "test component" '(0 . 0) 0 #t #f))
+;;; Test what happens when you connect to a net (incorrectly)
+;;; placed in a component.
+;;;
+;;; The "right thing" is probably to be as permissive as possible.
+(let ((Q (make-page "/test/page/B"))
+      (C1 (make-component "test component" '(0 . 0) 0 #t #f))
       (C2 (make-component "test component" '(0 . 0) 0 #t #f))
       (p1 (make-net-pin '(100 . 0) '(0 . 0)))
       (p2 (make-net-pin '(100 . 0) '(200 . 0)))
@@ -86,23 +80,24 @@
       (n3 (make-net '(100 . 100) '(200 . 100)))
       (n4 (make-net '(100 . 100) '(100 . 200))))
 
-  (page-append! Q C1 C2)
+  (test-group-with-cleanup "net-in-component-connections"
 
-  ;; Connections within the same component are fine
-  (component-append! C1 n1 n2 p1)
-  (test-equal (list n1) (object-connections p1))
+    (page-append! Q C1 C2)
 
-  ;; Connections between objects in different components are only
-  ;; permitted if both objects are pins.
-  (component-append! C2 n3 p2)
-  (test-equal (list p1) (object-connections p2))
-  (test-equal '() (object-connections n3))
+    ;; Connections within the same component are fine
+    (component-append! C1 n1 n2 p1)
+    (test-equal (list n1) (object-connections p1))
 
-  ;; Connections between nets in the page and nets in components are
-  ;; forbidden.
-  (page-append! Q n4)
-  (test-equal '() (object-connections n4)))
+    ;; Connections between objects in different components are only
+    ;; permitted if both objects are pins.
+    (component-append! C2 n3 p2)
+    (test-equal (list p1) (object-connections p2))
+    (test-equal '() (object-connections n3))
 
-(test-end "net-in-component-connections")
+    ;; Connections between nets in the page and nets in components are
+    ;; forbidden.
+    (page-append! Q n4)
+    (test-equal '() (object-connections n4))
 
-(close-page! Q)
+    ;; Clean up.
+    (close-page! Q)))
