@@ -253,12 +253,14 @@
 
 
 ;;; Test component file names.
-(let*
-    (
-     ( fname1  ( format #f "~a.sym" (tmpnam) ) )
-     ( symname ( basename fname1 ) )
-     ( symdir  ( dirname  fname1 ) )
-     )
+(let* ((fname1  (format #f "~a.sym" (tmpnam)))
+       (symdir (dirname  fname1))
+       (basename1 (basename fname1))
+       (basename2 "does-not-exist")
+       (position '(0 . 0))
+       (angle 0)
+       (mirror-flag #f)
+       (locked-flag #f))
 
   ( define ( mk-comp1 )
     ( with-output-to-file fname1
@@ -272,32 +274,25 @@
 
     ( component-library symdir )
 
-                                        ; return:
-    ( make-component/library
-      symname                           ; basename
-      ( cons 0 0 )                      ; position
-      0                                 ; angle
-      #f                                ; mirror
-      #f                                ; locked
-      )
-    )
+    ;; return:
+    (make-component/library basename1
+                            position
+                            angle
+                            mirror-flag
+                            locked-flag))
 
   ( define ( mk-comp2 )
-                                        ; return:
-    ( make-component
-      "does-not-exist"                  ; basename
-      ( cons 0 0 )                      ; position
-      0                                 ; angle
-      #f                                ; mirror
-      #f                                ; locked
-      )
-    )
-
+    ;; return:
+    (make-component basename2
+                    position
+                    angle
+                    mirror-flag
+                    locked-flag))
 
   #|
   ( format #t "cwd:     [~a]~%" (getcwd) )            ; [debug]
   ( format #t "symdir:  [~a]~%" symdir )              ; [debug]
-  ( format #t "symname: [~a]~%" symname )             ; [debug]
+  ( format #t "symname: [~a]~%" basename1 )           ; [debug]
   ( format #t "fname1:  [~a]~%" fname1 )              ; [debug]
   |#
 
