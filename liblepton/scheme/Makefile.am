@@ -94,7 +94,6 @@ AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir) \
 	-c '(use-modules (unit-test)) (load (list-ref (command-line) 1)) (exit (if (tests-passed?) 0 1))'
 
 TESTS = \
-	unit-tests/t0112-object-picture.scm \
 	unit-tests/t0113-object-selectable.scm \
 	unit-tests/t0114-object-embedded.scm \
 	unit-tests/t0200-page.scm \
