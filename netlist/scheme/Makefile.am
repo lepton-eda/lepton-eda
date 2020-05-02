@@ -62,6 +62,7 @@ TESTS = \
 	unit-tests/test-geda-object-circle.scm \
 	unit-tests/test-geda-object-component.scm \
 	unit-tests/test-geda-object-connections.scm \
+	unit-tests/test-geda-object-copy.scm \
 	unit-tests/test-geda-object-fill.scm \
 	unit-tests/test-geda-object-line.scm \
 	unit-tests/test-geda-object-stroke.scm \
@@ -73,6 +74,7 @@ TESTS = \
 	unit-tests/test-lepton-object-circle.scm \
 	unit-tests/test-lepton-object-component.scm \
 	unit-tests/test-lepton-object-connections.scm \
+	unit-tests/test-lepton-object-copy.scm \
 	unit-tests/test-lepton-object-fill.scm \
 	unit-tests/test-lepton-object-line.scm \
 	unit-tests/test-lepton-object-stroke.scm \
