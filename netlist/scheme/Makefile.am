@@ -74,6 +74,7 @@ TESTS = \
 	unit-tests/test-geda-object-transform.scm \
 	unit-tests/test-geda-page-basic.scm \
 	unit-tests/test-geda-page-dirty.scm \
+	unit-tests/test-geda-page-parse-embed-no-component.scm \
 	unit-tests/test-geda-page-parse-garbage-attrib.scm \
 	unit-tests/test-geda-page-parse-line-endings.scm \
 	unit-tests/test-geda-page-parse-ordering.scm \
@@ -98,6 +99,7 @@ TESTS = \
 	unit-tests/test-lepton-object-transform.scm \
 	unit-tests/test-lepton-page-basic.scm \
 	unit-tests/test-lepton-page-dirty.scm \
+	unit-tests/test-lepton-page-parse-embed-no-component.scm \
 	unit-tests/test-lepton-page-parse-garbage-attrib.scm \
 	unit-tests/test-lepton-page-parse-line-endings.scm \
 	unit-tests/test-lepton-page-parse-ordering.scm \
