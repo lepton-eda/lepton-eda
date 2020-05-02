@@ -75,6 +75,7 @@ TESTS = \
 	unit-tests/test-geda-page-basic.scm \
 	unit-tests/test-geda-page-dirty.scm \
 	unit-tests/test-geda-page-parse-garbage-attrib.scm \
+	unit-tests/test-geda-page-parse-line-endings.scm \
 	unit-tests/test-geda-page-parse-ordering.scm \
 	unit-tests/test-geda-page-parse-unterminated-attrib.scm \
 	unit-tests/test-geda-page-string.scm \
@@ -98,6 +99,7 @@ TESTS = \
 	unit-tests/test-lepton-page-basic.scm \
 	unit-tests/test-lepton-page-dirty.scm \
 	unit-tests/test-lepton-page-parse-garbage-attrib.scm \
+	unit-tests/test-lepton-page-parse-line-endings.scm \
 	unit-tests/test-lepton-page-parse-ordering.scm \
 	unit-tests/test-lepton-page-parse-unterminated-attrib.scm \
 	unit-tests/test-lepton-page-string.scm \
