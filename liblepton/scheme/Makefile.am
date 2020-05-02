@@ -94,7 +94,6 @@ AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir) \
 	-c '(use-modules (unit-test)) (load (list-ref (command-line) 1)) (exit (if (tests-passed?) 0 1))'
 
 TESTS = \
-	unit-tests/t0206-page-parse-garbage-attribute.scm \
 	unit-tests/t0207-page-parse-line-endings.scm \
 	unit-tests/t0208-page-parse-embed-no-component.scm \
 	unit-tests/t0300-attribute.scm \
