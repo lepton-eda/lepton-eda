@@ -1,13 +1,10 @@
-;; Test procedures for Scheme functions:
-;; - object-embedded?
-;; - set-object-embedded!
+;;; Test procedures for Scheme functions:
+;;; - object-embedded?
+;;; - set-object-embedded!
 
-(use-modules (unit-test)
-             (lepton object)
-             ((geda object) #:renamer (symbol-prefix-proc 'geda:))
+(use-modules (lepton object)
              (lepton page)
              (lepton library component))
-
 
 ( define ( mk-component ) ; create and return a component object
 
@@ -89,7 +86,7 @@
 
   ; obj should be unembedded:
   ;
-  ( assert-false (object-embedded? obj) )
+  (test-assert (not (object-embedded? obj)))
 
 
   ; clear the page modification flag and embed the object:
@@ -99,15 +96,15 @@
 
   ; set-object-embedded!() should return the object:
   ;
-  ( assert-equal tmp obj )
+  ( test-equal tmp obj )
 
   ; ensure obj is now embedded:
   ;
-  ( assert-true (object-embedded? obj) )
+  ( test-assert (object-embedded? obj) )
 
   ; ensure the page modification flag is set:
   ;
-  ( assert-true (page-dirty? page) )
+  ( test-assert (page-dirty? page) )
 
 
   ; clear the page modification flag and try to embed the object again:
@@ -117,7 +114,7 @@
 
   ; ensure the page modification flag is NOT set (obj is not modified):
   ;
-  ( assert-false (page-dirty? page) )
+  (test-assert (not (page-dirty? page)))
 
   ; clear the page modification flag and unembed the object:
   ;
@@ -126,15 +123,15 @@
 
   ; set-object-embedded!() should return the object:
   ;
-  ( assert-equal tmp obj )
+  ( test-equal tmp obj )
 
   ; ensure obj is now unembedded:
   ;
-  ( assert-false (object-embedded? obj) )
+  (test-assert (not (object-embedded? obj)))
 
   ; ensure the page modification flag is set:
   ;
-  ( assert-true (page-dirty? page) )
+  ( test-assert (page-dirty? page) )
 
 
   ( close-page! page )
@@ -143,8 +140,7 @@
 ) ; test-embedded()
 
 
-
-( begin-test 'object-embedded
+(test-begin "object-embedded")
 ( let
   (
   ( obj #f )
@@ -156,95 +152,6 @@
   ( set! obj ( mk-picture ) )
   ( set-object-embedded! obj #f ) ; make-picture/vector() creates embedded object
   ( test-embedded obj )
-
-) ; let
-) ; 'object-embedded()
-
-;;; The same tests for the deprecated (geda object) module
-;;; functions.
-
-
-( define ( geda:test-embedded obj )
-( let
-  (
-  ( page #f )
-  ( tmp  #f )
   )
 
-  ; create a page and add an object to it:
-  ;
-  ( set! page ( make-page "/test/page/A" ) )
-  ( page-append! page obj )
-
-  ; obj should be unembedded:
-  ;
-  ( assert-false (geda:object-embedded? obj) )
-
-
-  ; clear the page modification flag and embed the object:
-  ;
-  ( set-page-dirty! page #f )
-  ( set! tmp (geda:set-object-embedded! obj #t) )
-
-  ; geda:set-object-embedded!() should return the object:
-  ;
-  ( assert-equal tmp obj )
-
-  ; ensure obj is now embedded:
-  ;
-  ( assert-true (geda:object-embedded? obj) )
-
-  ; ensure the page modification flag is set:
-  ;
-  ( assert-true (page-dirty? page) )
-
-
-  ; clear the page modification flag and try to embed the object again:
-  ;
-  ( set-page-dirty! page #f )
-  ( geda:set-object-embedded! obj #t )
-
-  ; ensure the page modification flag is NOT set (obj is not modified):
-  ;
-  ( assert-false (page-dirty? page) )
-
-  ; clear the page modification flag and unembed the object:
-  ;
-  ( set-page-dirty! page #f )
-  ( set! tmp (geda:set-object-embedded! obj #f) )
-
-  ; geda:set-object-embedded!() should return the object:
-  ;
-  ( assert-equal tmp obj )
-
-  ; ensure obj is now unembedded:
-  ;
-  ( assert-false (geda:object-embedded? obj) )
-
-  ; ensure the page modification flag is set:
-  ;
-  ( assert-true (page-dirty? page) )
-
-
-  ( close-page! page )
-
-) ; let
-) ; geda:test-embedded()
-
-
-
-( begin-test 'geda:object-embedded
-( let
-  (
-  ( obj #f )
-  )
-
-  ( set! obj ( mk-component ) )
-  ( geda:test-embedded obj )
-
-  ( set! obj ( mk-picture ) )
-  ( geda:set-object-embedded! obj #f ) ; make-picture/vector() creates embedded object
-  ( geda:test-embedded obj )
-
-) ; let
-) ; 'geda:object-embedded()
+(test-end "object-embedded")
