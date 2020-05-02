@@ -93,7 +93,7 @@
 (define-syntax test-assert-thrown
   (syntax-rules ()
     ((_ key . test-forms)
-     (%assert-thrown key (lambda () . test-forms)))))
+     (test-assert (%assert-thrown key (lambda () . test-forms))))))
 
 (define (report s port)
   (display s port)
