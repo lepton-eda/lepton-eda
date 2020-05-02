@@ -3,6 +3,8 @@
 (use-modules ((geda object) #:renamer (symbol-prefix-proc 'geda:))
              (lepton page))
 
+(test-begin "geda:object-connection-functions")
+
 (let ((P (make-page "/test/page/A"))
       (C (geda:make-component "test component" '(1 . 2) 0 #t #f))
       (np (geda:make-net-pin '(100 . 0) '(0 . 0)))
@@ -102,3 +104,5 @@
 
     ;; Clean up.
     (close-page! Q)))
+
+(test-end "geda:object-connection-functions")

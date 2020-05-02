@@ -3,6 +3,8 @@
 (use-modules (lepton object)
              (lepton page))
 
+(test-begin "object-connection-functions")
+
 (let ((P (make-page "/test/page/A"))
       (C (make-component "test component" '(1 . 2) 0 #t #f))
       (np (make-net-pin '(100 . 0) '(0 . 0)))
@@ -101,3 +103,5 @@
 
     ;; Clean up.
     (close-page! Q)))
+
+(test-end "object-connection-functions")
