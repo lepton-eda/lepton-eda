@@ -95,7 +95,6 @@ AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir) \
 
 TESTS = \
 	unit-tests/t0301-promotable-attributes.scm \
-	unit-tests/t0400-os.scm \
 	unit-tests/t0401-os-expand-env-variables.scm \
 	unit-tests/t0402-config.scm \
 	unit-tests/t0500-source-library.scm \

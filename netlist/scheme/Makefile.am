@@ -73,6 +73,7 @@ TESTS = \
 	unit-tests/test-geda-object-stroke.scm \
 	unit-tests/test-geda-object-text.scm \
 	unit-tests/test-geda-object-transform.scm \
+	unit-tests/test-geda-os-basic.scm \
 	unit-tests/test-geda-page-basic.scm \
 	unit-tests/test-geda-page-dirty.scm \
 	unit-tests/test-geda-page-parse-embed-no-component.scm \
@@ -99,6 +100,7 @@ TESTS = \
 	unit-tests/test-lepton-object-stroke.scm \
 	unit-tests/test-lepton-object-text.scm \
 	unit-tests/test-lepton-object-transform.scm \
+	unit-tests/test-lepton-os-basic.scm \
 	unit-tests/test-lepton-page-basic.scm \
 	unit-tests/test-lepton-page-dirty.scm \
 	unit-tests/test-lepton-page-parse-embed-no-component.scm \
