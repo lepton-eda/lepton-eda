@@ -66,6 +66,7 @@ TESTS = \
 	unit-tests/test-geda-object-fill.scm \
 	unit-tests/test-geda-object-line.scm \
 	unit-tests/test-geda-object-path.scm \
+	unit-tests/test-geda-object-picture.scm \
 	unit-tests/test-geda-object-stroke.scm \
 	unit-tests/test-geda-object-text.scm \
 	unit-tests/test-geda-object-transform.scm \
@@ -80,6 +81,7 @@ TESTS = \
 	unit-tests/test-lepton-object-fill.scm \
 	unit-tests/test-lepton-object-line.scm \
 	unit-tests/test-lepton-object-path.scm \
+	unit-tests/test-lepton-object-picture.scm \
 	unit-tests/test-lepton-object-stroke.scm \
 	unit-tests/test-lepton-object-text.scm \
 	unit-tests/test-lepton-object-transform.scm \
