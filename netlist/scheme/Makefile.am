@@ -57,6 +57,7 @@ DIST_SCM_BACKENDS_COMMON = \
 TESTS = \
 	unit-tests/test-component-library-search.scm \
 	unit-tests/test-geda-attrib-basic.scm \
+	unit-tests/test-geda-deprecated.scm \
 	unit-tests/test-geda-object-arc.scm \
 	unit-tests/test-geda-object-bounds.scm \
 	unit-tests/test-geda-object-box.scm \
