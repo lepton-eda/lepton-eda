@@ -44,3 +44,10 @@
     (test-equal (line-info x) (line-info (car (geda:page-contents B))))))
 
 (test-end "geda:string->page")
+
+
+(test-begin "geda:string->page: syntax")
+
+(test-assert-thrown 'string-format (geda:string->page "/test/page/A" "__GARBAGE__"))
+
+(test-end "geda:string->page: syntax")

@@ -44,3 +44,10 @@
     (test-equal (line-info x) (line-info (car (page-contents B))))))
 
 (test-end "string->page")
+
+
+(test-begin "string->page: syntax")
+
+(test-assert-thrown 'string-format (string->page "/test/page/A" "__GARBAGE__"))
+
+(test-end "string->page: syntax")
