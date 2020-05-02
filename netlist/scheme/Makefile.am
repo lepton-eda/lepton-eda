@@ -73,6 +73,7 @@ TESTS = \
 	unit-tests/test-geda-object-text.scm \
 	unit-tests/test-geda-object-transform.scm \
 	unit-tests/test-geda-page-basic.scm \
+	unit-tests/test-geda-page-dirty.scm \
 	unit-tests/test-lepton-file-system.scm \
 	unit-tests/test-lepton-object-arc.scm \
 	unit-tests/test-lepton-object-bounds.scm \
@@ -91,6 +92,7 @@ TESTS = \
 	unit-tests/test-lepton-object-text.scm \
 	unit-tests/test-lepton-object-transform.scm \
 	unit-tests/test-lepton-page-basic.scm \
+	unit-tests/test-lepton-page-dirty.scm \
 	unit-tests/test-lepton-rc-build-path.scm \
 	unit-tests/test-netlist-attrib.scm \
 	unit-tests/test-netlist-load-path.scm \
