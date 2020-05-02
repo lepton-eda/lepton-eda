@@ -94,8 +94,7 @@ AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir) \
 	-c '(use-modules (unit-test)) (load (list-ref (command-line) 1)) (exit (if (tests-passed?) 0 1))'
 
 TESTS = \
-	unit-tests/t0301-promotable-attributes.scm \
-	unit-tests/t0402-config.scm
+	unit-tests/t0301-promotable-attributes.scm
 
 XFAIL_TESTS = \
 	unit-tests/t0301-promotable-attributes.scm

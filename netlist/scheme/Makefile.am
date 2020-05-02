@@ -57,6 +57,7 @@ DIST_SCM_BACKENDS_COMMON = \
 TESTS = \
 	unit-tests/test-component-library-search.scm \
 	unit-tests/test-geda-attrib-basic.scm \
+	unit-tests/test-geda-config.scm \
 	unit-tests/test-geda-deprecated.scm \
 	unit-tests/test-geda-object-arc.scm \
 	unit-tests/test-geda-object-bounds.scm \
@@ -85,6 +86,7 @@ TESTS = \
 	unit-tests/test-geda-page-parse-unterminated-attrib.scm \
 	unit-tests/test-geda-page-string.scm \
 	unit-tests/test-lepton-attrib-basic.scm \
+	unit-tests/test-lepton-config.scm \
 	unit-tests/test-lepton-file-system.scm \
 	unit-tests/test-lepton-library-source-library-contents.scm \
 	unit-tests/test-lepton-object-arc.scm \
