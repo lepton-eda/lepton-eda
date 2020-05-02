@@ -85,6 +85,7 @@ TESTS = \
 	unit-tests/test-geda-page-string.scm \
 	unit-tests/test-lepton-attrib-basic.scm \
 	unit-tests/test-lepton-file-system.scm \
+	unit-tests/test-lepton-library-source-library-contents.scm \
 	unit-tests/test-lepton-object-arc.scm \
 	unit-tests/test-lepton-object-bounds.scm \
 	unit-tests/test-lepton-object-box.scm \
