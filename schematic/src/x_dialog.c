@@ -224,15 +224,16 @@ major_changed_dialog (GschemToplevel* w_current)
   GtkTreeViewColumn *column;
   char* tmp;
   GList *curr;
+  PAGE* page = w_current->toplevel->page_current;
 
-  if (w_current->toplevel->page_current->major_changed_refdes == NULL)
+  if (page->major_changed_refdes == NULL)
   {
     return;
   }
 
   list_store = gtk_list_store_new (1, G_TYPE_STRING);
 
-  for (curr = w_current->toplevel->page_current->major_changed_refdes;
+  for (curr = page->major_changed_refdes;
        curr != NULL;
        curr = g_list_next (curr))
   {
@@ -300,6 +301,20 @@ major_changed_dialog (GschemToplevel* w_current)
                                     NULL));
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
   g_free (tmp);
+
+  /* label with page basename:
+  */
+  const gchar* fname = s_page_get_filename (page);
+  gchar* bname = g_path_get_basename (fname);
+  gchar* text = g_strdup_printf(_("Schematic: %s"), bname);
+  g_free (bname);
+
+  GtkWidget* label_page_bname = gtk_label_new (text);
+  gtk_misc_set_alignment (GTK_MISC (label_page_bname), 0.0, 0.0);
+  gtk_box_pack_start (GTK_BOX (vbox), label_page_bname, FALSE, FALSE, 0);
+
+  g_free (text);
+
   /* Secondary label */
   label = GTK_WIDGET (g_object_new (GTK_TYPE_LABEL,
                                     /* GtkMisc */
