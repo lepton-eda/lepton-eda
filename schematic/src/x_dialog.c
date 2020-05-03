@@ -283,7 +283,7 @@ major_changed_dialog (GschemToplevel* w_current)
                                    "homogeneous", FALSE,
                                    "spacing", 12,
                                    NULL));
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   /* Primary label */
   tmp = g_strconcat ("<big><b>",
                      _("Major symbol version changes detected."),
