@@ -208,10 +208,7 @@ int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size)
 
 /*********** Start of major symbol changed dialog box *******/
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+/*! \brief Show the "Symbol version changes" dialog box.
  */
 void
 major_changed_dialog (GschemToplevel* w_current)
@@ -225,6 +222,8 @@ major_changed_dialog (GschemToplevel* w_current)
   char* tmp;
   GList *curr;
   PAGE* page = w_current->toplevel->page_current;
+
+  g_return_if_fail (page != NULL);
 
   if (page->major_changed_refdes == NULL)
   {
@@ -248,7 +247,7 @@ major_changed_dialog (GschemToplevel* w_current)
 
 
   dialog = gtk_dialog_new_with_buttons(
-    NULL,
+    _("Symbol version changes"),
     GTK_WINDOW (w_current->main_window),
     (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
     GTK_STOCK_OK, GTK_RESPONSE_OK,
