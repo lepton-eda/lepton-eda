@@ -1056,7 +1056,7 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
   refdes = o_attrib_search_object_attribs_by_name(object, "refdes", 0);
   if (!refdes)
   {
-    refdes = g_strdup ("unknown");
+    refdes = g_strdup ("no refdes");
   }
 
   if (inside)
@@ -1066,12 +1066,15 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
     {
       if (inside)
       {
-        s_log_message(_("WARNING: Symbol version parse error on refdes %1$s:\n"
-                        "\tCould not parse symbol file symversion=%2$s"),
-                      refdes, inside);
+        s_log_message(_("WARNING: %s (%s): could not parse "
+                        "symversion (%s) in symbol file"),
+                      object->component_basename,
+                      refdes,
+                      inside);
       } else {
-        s_log_message(_("WARNING: Symbol version parse error on refdes %1$s:\n"
-                        "\tCould not parse symbol file symversion="),
+        s_log_message(_("WARNING: %s (%s): could not parse "
+                        "symversion in symbol file"),
+                      object->component_basename,
                       refdes);
       }
       goto done;
@@ -1086,9 +1089,11 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
     outside_value = strtod(outside, &err_check);
     if (outside_value == 0 && outside == err_check)
     {
-      s_log_message(_("WARNING: Symbol version parse error on refdes %1$s:\n"
-                      "\tCould not parse attached symversion=%2$s"),
-                    refdes, outside);
+      s_log_message(_("WARNING: %s (%s): could not parse "
+                      "attached symversion (%s)"),
+                    object->component_basename,
+                    refdes,
+                    outside);
       goto done;
     }
     outside_present = TRUE;
@@ -1111,10 +1116,10 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
   /* No symversion inside, but a version is outside, this is a weird case */
   if (!inside_present && outside_present)
   {
-    s_log_message(_("WARNING: Symbol version oddity on refdes %1$s:\n"
-                    "\tsymversion=%2$s attached to instantiated symbol, "
-                    "but no symversion= inside symbol file."),
-                  refdes, outside);
+    s_log_message(_("WARNING: %s (%s): symversion attached, "
+                    "but absent inside symbol file"),
+                  object->component_basename,
+                  refdes);
     goto done;
   }
 
@@ -1124,11 +1129,6 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
   if ((inside_present && !outside_present) ||
       ((inside_present && outside_present) && (inside_value > outside_value)))
   {
-
-    s_log_message(_("WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
-                    "\tSymbol in library is newer than "
-                    "instantiated symbol."),
-                  refdes, object->component_basename);
 
     /* break up the version values into major.minor numbers */
     inside_major = floor(inside_value);
@@ -1153,10 +1153,13 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
     if (inside_major > outside_major)
     {
       char* refdes_copy;
-      s_log_message(_("\tMAJOR VERSION CHANGE (file %1$.3f, "
-                      "instantiated %2$.3f, %3$s)!"),
-                    inside_value, outside_value, refdes);
 
+      s_log_message(_("WARNING: %s (%s): MAJOR symversion change "
+                      "(attached: %.3f < library: %.3f)"),
+                    object->component_basename,
+                    refdes,
+                    outside_value,
+                    inside_value);
 
       /* add the refdes and basename to the page's major_changed_refdes GList:
       */
@@ -1187,9 +1190,12 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
 
     if (inside_minor > outside_minor)
     {
-      s_log_message(_("\tMinor version change (file %1$.3f, "
-                      "instantiated %2$.3f)"),
-                    inside_value, outside_value);
+      s_log_message(_("WARNING: %s (%s): minor symversion change "
+                      "(attached: %.3f < library: %.3f)"),
+                    object->component_basename,
+                    refdes,
+                    outside_value,
+                    inside_value);
     }
 
     goto done;
@@ -1198,10 +1204,12 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
   /* outside value is greater than inside value, this is weird case */
   if ((inside_present && outside_present) && (outside_value > inside_value))
   {
-    s_log_message(_("WARNING: Symbol version oddity on refdes %1$s:\n"
-                    "\tInstantiated symbol is newer than "
-                    "symbol in library."),
-                  refdes);
+    s_log_message(_("WARNING: %s (%s): symbol is newer "
+                    "than symbol in library (%.3f > %.3f)"),
+                  object->component_basename,
+                  refdes,
+                  outside_value,
+                  inside_value);
     goto done;
   }
 
