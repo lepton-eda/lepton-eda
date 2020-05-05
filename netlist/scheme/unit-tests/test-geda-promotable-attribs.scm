@@ -13,16 +13,13 @@
 ;;;
 ;;; [1] This is a good thing -- it shouldn't be necessary!
 
-(test-skip "geda:promotable-attributes")
-(test-skip "geda:promote-attribs!")
+;; (test-begin "geda:promotable-attributes")
+;; (throw 'missing-unit-test "We can't test this at the moment")
+;; (test-end "geda:promotable-attributes")
 
-(test-begin "geda:promotable-attributes")
-(throw 'missing-unit-test "We can't test this at the moment")
-(test-end "geda:promotable-attributes")
-
-(test-begin "geda:promote-attribs!")
-(throw 'missing-unit-test "We can't test this at the moment")
-(test-end "geda:promote-attribs!")
+;; (test-begin "geda:promote-attribs!")
+;; (throw 'missing-unit-test "We can't test this at the moment")
+;; (test-end "geda:promote-attribs!")
 
 (test-begin "geda:promote-attribs!/not-in-page")
 (let ((p (make-net-pin '(0 . 0) '(100 . 0))))
