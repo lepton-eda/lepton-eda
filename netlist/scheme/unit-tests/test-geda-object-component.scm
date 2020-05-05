@@ -294,11 +294,12 @@
       )
     )
 
-
+  #|
   ( format #t "cwd:     [~a]~%" (getcwd) ) ; [debug]
   ( format #t "symdir:  [~a]~%" symdir )   ; [debug]
   ( format #t "symname: [~a]~%" symname )  ; [debug]
   ( format #t "fname1:  [~a]~%" fname1 )   ; [debug]
+  |#
 
   ( set! comp1 ( mk-comp1 ) )
   ( set! comp2 ( mk-comp2 ) )
