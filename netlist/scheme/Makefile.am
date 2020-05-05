@@ -85,6 +85,7 @@ TESTS = \
 	unit-tests/test-geda-page-parse-ordering.scm \
 	unit-tests/test-geda-page-parse-unterminated-attrib.scm \
 	unit-tests/test-geda-page-string.scm \
+	unit-tests/test-geda-promotable-attribs.scm \
 	unit-tests/test-lepton-attrib-basic.scm \
 	unit-tests/test-lepton-config.scm \
 	unit-tests/test-lepton-file-system.scm \
@@ -115,6 +116,7 @@ TESTS = \
 	unit-tests/test-lepton-page-parse-ordering.scm \
 	unit-tests/test-lepton-page-parse-unterminated-attrib.scm \
 	unit-tests/test-lepton-page-string.scm \
+	unit-tests/test-lepton-promotable-attribs.scm \
 	unit-tests/test-lepton-rc-build-path.scm \
 	unit-tests/test-netlist-attrib.scm \
 	unit-tests/test-netlist-load-path.scm \
