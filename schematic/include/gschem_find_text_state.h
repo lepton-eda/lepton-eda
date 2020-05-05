@@ -22,11 +22,15 @@
  * \brief
  */
 
-#define GSCHEM_TYPE_FIND_TEXT_STATE           (gschem_find_text_state_get_type())
-#define GSCHEM_FIND_TEXT_STATE(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_TYPE_FIND_TEXT_STATE, GschemFindTextState))
-#define GSCHEM_FIND_TEXT_STATE_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_TYPE_FIND_TEXT_STATE, GschemFindTextStateClass))
-#define GSCHEM_IS_FIND_TEXT_STATE(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_TYPE_FIND_TEXT_STATE))
-#define GSCHEM_FIND_TEXT_STATE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_TYPE_FIND_TEXT_STATE, GschemFindTextStateClass))
+#ifndef GSCHEM_FIND_TEXT_STATE_H_
+#define GSCHEM_FIND_TEXT_STATE_H_
+
+
+#define GSCHEM_FIND_TEXT_STATE_TYPE           (gschem_find_text_state_get_type())
+#define GSCHEM_FIND_TEXT_STATE(obj)           (G_TYPE_CHECK_INSTANCE_CAST ((obj), GSCHEM_FIND_TEXT_STATE_TYPE, GschemFindTextState))
+#define GSCHEM_FIND_TEXT_STATE_CLASS(klass)   (G_TYPE_CHECK_CLASS_CAST ((klass),  GSCHEM_FIND_TEXT_STATE_TYPE, GschemFindTextStateClass))
+#define IS_GSCHEM_FIND_TEXT_STATE(obj)        (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GSCHEM_FIND_TEXT_STATE_TYPE))
+#define GSCHEM_FIND_TEXT_STATE_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), GSCHEM_FIND_TEXT_STATE_TYPE, GschemFindTextStateClass))
 
 
 enum
@@ -62,3 +66,6 @@ gschem_find_text_state_get_type ();
 
 GtkWidget*
 gschem_find_text_state_new ();
+
+
+#endif /* GSCHEM_FIND_TEXT_STATE_H_ */

@@ -24,16 +24,6 @@
  */
 
 #include <config.h>
-#include <version.h>
-
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
 #include "gschem.h"
 
 
@@ -46,6 +36,9 @@ enum
 };
 
 
+G_DEFINE_TYPE (GschemFindTextState, gschem_find_text_state, GSCHEM_TYPE_BIN);
+
+
 typedef void (*NotifyFunc)(void*, void*);
 
 
@@ -53,16 +46,7 @@ static void
 assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text);
 
 static void
-class_init (GschemFindTextStateClass *klass);
-
-static void
 clear_store (GschemFindTextState *state);
-
-static void
-dispose (GObject *object);
-
-static void
-finalize (GObject *object);
 
 static GSList*
 find_objects_using_pattern (GSList *pages, const char *text);
@@ -86,9 +70,6 @@ static GList*
 get_subpages (PAGE *page);
 
 static void
-instance_init (GschemFindTextState *state);
-
-static void
 object_weakref_cb (OBJECT *object, GschemFindTextState *state);
 
 static void
@@ -99,9 +80,6 @@ select_cb (GtkTreeSelection *selection, GschemFindTextState *state);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
-
-
-static GObjectClass *gschem_find_text_state_parent_class = NULL;
 
 
 /*! \brief find instances of a given string
@@ -158,36 +136,6 @@ gschem_find_text_state_find (GschemFindTextState *state, GList *pages, int type,
 }
 
 
-/*! \brief Get/register GschemFindTextState type.
- */
-GType
-gschem_find_text_state_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemFindTextStateClass),
-      NULL,                                /* base_init */
-      NULL,                                /* base_finalize */
-      (GClassInitFunc) class_init,
-      NULL,                                /* class_finalize */
-      NULL,                                /* class_data */
-      sizeof(GschemFindTextState),
-      0,                                   /* n_preallocs */
-      (GInstanceInitFunc) instance_init,
-    };
-
-    type = g_type_register_static (GSCHEM_TYPE_BIN,
-                                   "GschemFindTextState",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
-}
-
-
 /*! \brief create a new widget for showing the find text state
  *
  *  \return the new find text state widget
@@ -195,14 +143,9 @@ gschem_find_text_state_get_type ()
 GtkWidget*
 gschem_find_text_state_new ()
 {
-  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_FIND_TEXT_STATE,
+  return GTK_WIDGET (g_object_new (GSCHEM_FIND_TEXT_STATE_TYPE,
                                    NULL));
 }
-
-
-
-
-
 
 
 
@@ -277,17 +220,36 @@ assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text)
 }
 
 
+/*! \brief Dispose of the object
+ */
+static void
+dispose (GObject *object)
+{
+  GschemFindTextState *state = GSCHEM_FIND_TEXT_STATE (object);
+
+  if (state->store) {
+    clear_store (state);
+    g_object_unref (state->store);
+    state->store = NULL;
+  }
+
+  /* lastly, chain up to the parent dispose */
+  GschemFindTextStateClass* cls = GSCHEM_FIND_TEXT_STATE_GET_CLASS (object);
+  g_return_if_fail (cls != NULL);
+  GObjectClass* parent_cls = G_OBJECT_CLASS (g_type_class_peek_parent (cls));
+  g_return_if_fail (parent_cls != NULL);
+  parent_cls->dispose (object);
+}
+
+
 /*! \brief initialize class
  *
  *  \param [in] klass The class for initialization
  */
 static void
-class_init (GschemFindTextStateClass *klass)
+gschem_find_text_state_class_init (GschemFindTextStateClass *klass)
 {
-  gschem_find_text_state_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
-
   G_OBJECT_CLASS (klass)->dispose  = dispose;
-  G_OBJECT_CLASS (klass)->finalize = finalize;
 
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
@@ -344,38 +306,6 @@ clear_store (GschemFindTextState *state)
   }
 
   gtk_list_store_clear (state->store);
-}
-
-
-/*! \brief Dispose of the object
- */
-static void
-dispose (GObject *object)
-{
-  GschemFindTextState *state = GSCHEM_FIND_TEXT_STATE (object);
-
-  if (state->store) {
-    clear_store (state);
-    g_object_unref (state->store);
-    state->store = NULL;
-  }
-
-  /* lastly, chain up to the parent dispose */
-
-  g_return_if_fail (gschem_find_text_state_parent_class != NULL);
-  gschem_find_text_state_parent_class->dispose (object);
-}
-
-
-/*! \brief Finalize object
- */
-static void
-finalize (GObject *object)
-{
-  /* lastly, chain up to the parent finalize */
-
-  g_return_if_fail (gschem_find_text_state_parent_class != NULL);
-  gschem_find_text_state_parent_class->finalize (object);
 }
 
 
@@ -777,7 +707,7 @@ get_subpages (PAGE *page)
  *  \param [in] state the new instance
  */
 static void
-instance_init (GschemFindTextState *state)
+gschem_find_text_state_init (GschemFindTextState *state)
 {
   GtkTreeViewColumn *column;
   GtkCellRenderer *renderer;
