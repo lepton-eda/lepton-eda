@@ -93,13 +93,7 @@ SCM_LOG_COMPILER = $(CLI_SHELL)
 AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir) \
 	-c '(use-modules (unit-test)) (load (list-ref (command-line) 1)) (exit (if (tests-passed?) 0 1))'
 
-TESTS = \
-	unit-tests/t0301-promotable-attributes.scm
-
-XFAIL_TESTS = \
-	unit-tests/t0301-promotable-attributes.scm
-
-dist_noinst_DATA = lepton/core/gettext.scm.in unit-test.scm $(TESTS)
+dist_noinst_DATA = lepton/core/gettext.scm.in unit-test.scm
 
 lepton/core/gettext.scm: $(srcdir)/lepton/core/gettext.scm.in Makefile
 	@domain=$(LIBLEPTON_GETTEXT_DOMAIN); \
