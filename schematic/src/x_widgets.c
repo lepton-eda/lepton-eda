@@ -1,5 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2017-2019 dmn <graahnul.grom@gmail.com>
+ * Copyright (C) 2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -347,15 +348,11 @@ x_widgets_show_in_dialog (GschemToplevel* w_current,
     GTK_STOCK_CLOSE, GTK_RESPONSE_NONE,
     NULL);
 
-
-
   if (x_widgets_use_toplevel_windows())
   {
     gtk_window_set_transient_for (GTK_WINDOW (dlg), NULL);
     gtk_window_set_type_hint (GTK_WINDOW (dlg), GDK_WINDOW_TYPE_HINT_NORMAL);
   }
-
-
 
   g_signal_connect (G_OBJECT (dlg),
                     "response",
@@ -376,3 +373,68 @@ x_widgets_show_in_dialog (GschemToplevel* w_current,
   *dialog = dlg;
 
 } /* x_widgets_show_in_dialog() */
+
+
+
+/*! \brief Destroy dialogs created in "toplevel" mode
+ *
+ *  \param [in] w_current  The toplevel environment.
+ */
+void
+x_widgets_destroy_dialogs (GschemToplevel* w_current)
+{
+  g_return_if_fail (w_current != NULL);
+
+  if (!x_widgets_use_toplevel_windows())
+    return;
+
+  if (w_current->options_widget_dialog != NULL)
+  {
+    gtk_widget_destroy (w_current->options_widget_dialog);
+    w_current->options_widget_dialog = NULL;
+  }
+
+  if (w_current->text_properties_dialog != NULL)
+  {
+    gtk_widget_destroy (w_current->text_properties_dialog);
+    w_current->text_properties_dialog = NULL;
+  }
+
+  if (w_current->object_properties_dialog != NULL)
+  {
+    gtk_widget_destroy (w_current->object_properties_dialog);
+    w_current->object_properties_dialog = NULL;
+  }
+
+  if (w_current->log_widget_dialog != NULL)
+  {
+    gtk_widget_destroy (w_current->log_widget_dialog);
+    w_current->log_widget_dialog = NULL;
+  }
+
+  if (w_current->find_text_state_dialog != NULL)
+  {
+    gtk_widget_destroy (w_current->find_text_state_dialog);
+    w_current->find_text_state_dialog = NULL;
+  }
+
+  if (w_current->color_edit_dialog != NULL)
+  {
+    gtk_widget_destroy (w_current->color_edit_dialog);
+    w_current->color_edit_dialog = NULL;
+  }
+
+  if (w_current->font_select_dialog != NULL)
+  {
+    gtk_widget_destroy (w_current->font_select_dialog);
+    w_current->font_select_dialog = NULL;
+  }
+
+  if (w_current->page_select_dialog != NULL)
+  {
+    gtk_widget_destroy (w_current->page_select_dialog);
+    w_current->page_select_dialog = NULL;
+  }
+
+} /* x_widgets_destroy_dialogs */
+
