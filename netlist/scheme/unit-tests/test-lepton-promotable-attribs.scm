@@ -1,37 +1,42 @@
 ;;; Test promotable-attributes function.
 
 (use-modules (lepton attrib)
+             (lepton config)
              (lepton object)
              (lepton page))
 
-;;; Unfortunately, we can't test this at the moment, because the
-;;; default list of promotable attribute names is empty.  We suppress
-;;; config file loading when running the unit tests, and even though we
-;;; could call the (always-promote-attributes ...) config file
-;;; procedure, but it wouldn't do us any good because we can't call
-;;; i_vars_libgeda_set() from Scheme [1].  So instead, we just fail.
-;;;
-;;; [1] This is a good thing -- it shouldn't be necessary!
-
-(test-skip "promotable-attributes")
-(test-skip "promote-attribs!")
-
 (test-begin "promotable-attributes")
-(throw 'missing-unit-test "We can't test this at the moment")
+
+(let ((cfg (path-config-context (getcwd)))
+      (P (make-page "new-page"))
+      (C (make-component "test component" '(0 . 0) 0 #t #f))
+      (a (make-text '(1 . 2) 'lower-left 0 "name=x" 10 #t 'both)))
+  (set-config! cfg "schematic.attrib" "always-promote" "name")
+  (test-equal '("name") (config-string-list cfg "schematic.attrib" "always-promote"))
+  (component-append! C a)
+  (page-append! P C)
+  (test-eq "promotable-attribs" 1 (length (promotable-attribs C)))
+  (test-eq 1 (length (page-contents P)))
+  (test-eq "promote-attribs!" 1 (length (promote-attribs! C)))
+  (test-eq 2 (length (page-contents P)))
+  (close-page! P))
+
 (test-end "promotable-attributes")
 
-(test-begin "promote-attribs!")
-(throw 'missing-unit-test "We can't test this at the moment")
-(test-end "promote-attribs!")
 
 (test-begin "promote-attribs!/not-in-page")
+
 (let ((p (make-net-pin '(0 . 0) '(100 . 0))))
   (test-assert-thrown 'object-state (promote-attribs! p)))
+
 (test-end "promote-attribs!/not-in-page")
 
+
 (test-begin "promote-attribs!/non-component")
+
 (let ((P (make-page "/test/page/A"))
       (p (make-net-pin '(0 . 0) '(100 . 0))))
   (page-append! P p)
   (test-equal '() (promote-attribs! p)))
+
 (test-end "promote-attribs!/non-component")
