@@ -308,4 +308,6 @@
     (test-equal (geda:component-filename comp1) fname1)
     (test-assert (not (geda:component-filename comp2)))
     ;; Clean up.
-    (reset-component-library)))
+    (begin
+      (reset-component-library)
+      (delete-file fname1))))
