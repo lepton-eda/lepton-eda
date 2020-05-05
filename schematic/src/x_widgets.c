@@ -41,6 +41,9 @@
 static gboolean
 g_x_widgets_use_docks = FALSE;
 
+static gboolean
+g_x_widgets_use_toplevel_windows = FALSE;
+
 
 
 static void
@@ -59,6 +62,14 @@ x_widgets_show_in_dialog (GschemToplevel* w_current,
 gboolean x_widgets_use_docks()
 {
   return g_x_widgets_use_docks;
+}
+
+
+
+static gboolean
+x_widgets_use_toplevel_windows()
+{
+  return !x_widgets_use_docks() && g_x_widgets_use_toplevel_windows;
 }
 
 
@@ -335,6 +346,16 @@ x_widgets_show_in_dialog (GschemToplevel* w_current,
     w_current,
     GTK_STOCK_CLOSE, GTK_RESPONSE_NONE,
     NULL);
+
+
+
+  if (x_widgets_use_toplevel_windows())
+  {
+    gtk_window_set_transient_for (GTK_WINDOW (dlg), NULL);
+    gtk_window_set_type_hint (GTK_WINDOW (dlg), GDK_WINDOW_TYPE_HINT_NORMAL);
+  }
+
+
 
   g_signal_connect (G_OBJECT (dlg),
                     "response",
