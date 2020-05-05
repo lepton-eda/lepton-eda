@@ -22,18 +22,22 @@
  *
  * \brief Widgets management
  *
- * Now there are 5 of them:
- * - in right dock:
- *   - obj props
- *   - txt props
- *   - options
- * - in bottom dock:
- *   - find text results
- *   - log
+ * lepton-schematic widgets:
+ *
+ * - object properties    (GschemObjectPropertiesWidget)  [right dock]
+ * - text properties      (GschemTextPropertiesWidget)    [right dock]
+ * - options              (GschemOptionsWidget)           [right dock]
+ *
+ * - find text results    (GschemFindTextState)           [bottom dock]
+ * - log                  (GschemLogWidget)               [bottom dock]
+ *
+ * - page manager         (PageSelectWidget)
+ * - font selector        (FontSelectWidget)
+ * - color scheme editor  (ColorEditWidget)
+ *
  */
 
 #include "config.h"
-
 #include "gschem.h"
 
 
@@ -435,5 +439,5 @@ x_widgets_destroy_dialogs (GschemToplevel* w_current)
     w_current->page_select_dialog = NULL;
   }
 
-} /* x_widgets_destroy_dialogs */
+} /* x_widgets_destroy_dialogs() */
 
