@@ -82,6 +82,87 @@ nobase_dist_scmdata_DATA = \
 
 nobase_scmdata_DATA = lepton/core/gettext.scm
 
+TESTS = \
+	unit-tests/test-geda-attrib-basic.scm \
+	unit-tests/test-geda-config.scm \
+	unit-tests/test-geda-deprecated.scm \
+	unit-tests/test-geda-object-arc.scm \
+	unit-tests/test-geda-object-bounds.scm \
+	unit-tests/test-geda-object-box.scm \
+	unit-tests/test-geda-object-circle.scm \
+	unit-tests/test-geda-object-component.scm \
+	unit-tests/test-geda-object-connections.scm \
+	unit-tests/test-geda-object-copy.scm \
+	unit-tests/test-geda-object-embedded.scm \
+	unit-tests/test-geda-object-fill.scm \
+	unit-tests/test-geda-object-line.scm \
+	unit-tests/test-geda-object-path.scm \
+	unit-tests/test-geda-object-picture.scm \
+	unit-tests/test-geda-object-selectable.scm \
+	unit-tests/test-geda-object-stroke.scm \
+	unit-tests/test-geda-object-text.scm \
+	unit-tests/test-geda-object-transform.scm \
+	unit-tests/test-geda-os-basic.scm \
+	unit-tests/test-geda-os-expand-env-variables.scm \
+	unit-tests/test-geda-page-basic.scm \
+	unit-tests/test-geda-page-dirty.scm \
+	unit-tests/test-geda-page-parse-embed-no-component.scm \
+	unit-tests/test-geda-page-parse-garbage-attrib.scm \
+	unit-tests/test-geda-page-parse-line-endings.scm \
+	unit-tests/test-geda-page-parse-ordering.scm \
+	unit-tests/test-geda-page-parse-unterminated-attrib.scm \
+	unit-tests/test-geda-page-string.scm \
+	unit-tests/test-geda-promotable-attribs.scm \
+	unit-tests/test-lepton-attrib-basic.scm \
+	unit-tests/test-lepton-config.scm \
+	unit-tests/test-lepton-file-system.scm \
+	unit-tests/test-lepton-library-component.scm \
+	unit-tests/test-lepton-library-source-library-contents.scm \
+	unit-tests/test-lepton-object-arc.scm \
+	unit-tests/test-lepton-object-bounds.scm \
+	unit-tests/test-lepton-object-box.scm \
+	unit-tests/test-lepton-object-circle.scm \
+	unit-tests/test-lepton-object-component.scm \
+	unit-tests/test-lepton-object-connections.scm \
+	unit-tests/test-lepton-object-copy.scm \
+	unit-tests/test-lepton-object-embedded.scm \
+	unit-tests/test-lepton-object-fill.scm \
+	unit-tests/test-lepton-object-line.scm \
+	unit-tests/test-lepton-object-path.scm \
+	unit-tests/test-lepton-object-picture.scm \
+	unit-tests/test-lepton-object-selectable.scm \
+	unit-tests/test-lepton-object-stroke.scm \
+	unit-tests/test-lepton-object-text.scm \
+	unit-tests/test-lepton-object-transform.scm \
+	unit-tests/test-lepton-os-basic.scm \
+	unit-tests/test-lepton-os-expand-env-variables.scm \
+	unit-tests/test-lepton-page-basic.scm \
+	unit-tests/test-lepton-page-dirty.scm \
+	unit-tests/test-lepton-page-parse-embed-no-component.scm \
+	unit-tests/test-lepton-page-parse-garbage-attrib.scm \
+	unit-tests/test-lepton-page-parse-line-endings.scm \
+	unit-tests/test-lepton-page-parse-ordering.scm \
+	unit-tests/test-lepton-page-parse-unterminated-attrib.scm \
+	unit-tests/test-lepton-page-string.scm \
+	unit-tests/test-lepton-promotable-attribs.scm \
+	unit-tests/test-lepton-rc-build-path.scm \
+	unit-tests/test-netlist-attrib.scm \
+	unit-tests/test-netlist-load-path.scm \
+	unit-tests/test-netlist-partlist.scm
+
+TEST_EXTENSIONS = .scm
+# $(srcdir) and $(builddir) are added here and not in
+# AM_SCM_LOG_FLAGS below because guile must know where to find
+# netlist modules before it runs tests
+SCM_LOG_DRIVER = $(GUILE) \
+	-L $(abs_top_srcdir)/liblepton/scheme \
+	-L $(abs_top_builddir)/liblepton/scheme \
+	-L $(abs_top_srcdir)/netlist/scheme \
+	-L $(abs_top_builddir)/netlist/scheme \
+	-L $(abs_top_srcdir)/symcheck/scheme \
+	-L $(abs_top_builddir)/symcheck/scheme \
+	--no-auto-compile -e main/with-toplevel -s unit-test.scm
+
 check-am: update-cli-tool
 
 # Unit test support.  The unit tests are run using the geda-batch
@@ -90,10 +171,9 @@ check-am: update-cli-tool
 CLI_SHELL = $(top_builddir)/cli/lepton-cli --no-rcfiles shell
 TEST_EXTENSIONS = .scm
 SCM_LOG_COMPILER = $(CLI_SHELL)
-AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir) \
-	-c '(use-modules (unit-test)) (load (list-ref (command-line) 1)) (exit (if (tests-passed?) 0 1))'
+AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir)
 
-dist_noinst_DATA = lepton/core/gettext.scm.in unit-test.scm
+dist_noinst_DATA = lepton/core/gettext.scm.in unit-test.scm $(TESTS)
 
 lepton/core/gettext.scm: $(srcdir)/lepton/core/gettext.scm.in Makefile
 	@domain=$(LIBLEPTON_GETTEXT_DOMAIN); \
