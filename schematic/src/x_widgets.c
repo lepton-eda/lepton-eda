@@ -100,11 +100,18 @@ x_widgets_use_toplevel_windows()
  */
 void x_widgets_init()
 {
-  cfg_read_bool ("schematic.gui", "use-docks",
-                 FALSE, &g_x_widgets_use_docks);
+  static gsize initialized = 0;
 
-  cfg_read_bool ("schematic.gui", "use-toplevel-windows",
-                 FALSE, &g_x_widgets_use_toplevel_windows);
+  if (g_once_init_enter (&initialized))
+  {
+    cfg_read_bool ("schematic.gui", "use-docks",
+                   FALSE, &g_x_widgets_use_docks);
+
+    cfg_read_bool ("schematic.gui", "use-toplevel-windows",
+                   FALSE, &g_x_widgets_use_toplevel_windows);
+
+    g_once_init_leave (&initialized, 1);
+  }
 }
 
 
