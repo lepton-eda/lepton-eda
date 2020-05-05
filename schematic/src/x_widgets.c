@@ -75,26 +75,36 @@ x_widgets_use_toplevel_windows()
 
 
 
-/*! \par Function Description
+/*! \brief Initialize widgets management
  *
- * Initialize widgets management.
+ * \par Function Description
+ *
+ * Read widgets configuration.
  * Call this before any other functions from this file.
- * This function reads the value of "use-docks" configuration
- * setting in "schematic.gui" group, which determines
- * if widgets will be shown in docks (if true) or as
- * dialog boxes (if false).
  *
- * Configuration setting description:
+ * Configuration settings for widgets:
+ *
  * key:   use-docks
  * group: schematic.gui
  * type:  boolean
  * default value: false
+ * description: whether to use docking GUI
  *
+ * key:   use-toplevel-windows
+ * group: schematic.gui
+ * type:  boolean
+ * default value: false
+ * description: when docking GUI is off, whether to display
+ *              widgets as toplevel windows (true) or
+ *              dialogs (false)
  */
 void x_widgets_init()
 {
   cfg_read_bool ("schematic.gui", "use-docks",
                  FALSE, &g_x_widgets_use_docks);
+
+  cfg_read_bool ("schematic.gui", "use-toplevel-windows",
+                 FALSE, &g_x_widgets_use_toplevel_windows);
 }
 
 
