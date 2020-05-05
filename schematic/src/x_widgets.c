@@ -93,26 +93,8 @@ x_widgets_use_toplevel_windows()
  */
 void x_widgets_init()
 {
-  gchar* cwd = g_get_current_dir();
-
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-
-  g_free (cwd);
-
-  if (cfg != NULL)
-  {
-    GError* err = NULL;
-    gboolean val = eda_config_get_boolean (cfg,
-                                           "schematic.gui",
-                                           "use-docks",
-                                           &err);
-    if (err == NULL)
-    {
-      g_x_widgets_use_docks = val;
-    }
-
-    g_clear_error (&err);
-  }
+  cfg_read_bool ("schematic.gui", "use-docks",
+                 FALSE, &g_x_widgets_use_docks);
 }
 
 
