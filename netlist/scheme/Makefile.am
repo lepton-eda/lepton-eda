@@ -75,20 +75,4 @@ backend/gnet-gsch2pcb.scm: $(srcdir)/backend/gnet-gsch2pcb.scm.in
 		-e "s;@mode@;${SETVBUF_MODE};g" \
 		$(srcdir)/backend/gnet-gsch2pcb.scm.in > $@
 
-all-local:
-	if test "$(srcdir)" != "@builddir@" ; then \
-		echo "copying scheme files" ; \
-		cp -f $(srcdir)/*.scm @builddir@/ ; \
-	else \
-		echo "source directory = build directory" ; \
-	fi
-
-clean-local:
-	if test "$(srcdir)" != "@builddir@" ; then \
-		echo "cleaning scheme files" ; \
-		rm -f @builddir@/*.scm ; \
-	else \
-		echo "source directory = build directory" ; \
-	fi
-
-CLEANFILES = backend/gnet-gsch2pcb.scm $(bin_SCRIPTS) config-netlist.scm
+CLEANFILES = backend/gnet-gsch2pcb.scm config-netlist.scm
