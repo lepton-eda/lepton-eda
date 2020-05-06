@@ -161,17 +161,7 @@ SCM_LOG_DRIVER = $(GUILE) \
 	-L $(abs_top_builddir)/netlist/scheme \
 	-L $(abs_top_srcdir)/symcheck/scheme \
 	-L $(abs_top_builddir)/symcheck/scheme \
-	--no-auto-compile -e main/with-toplevel -s unit-test.scm
-
-check-am: update-cli-tool
-
-# Unit test support.  The unit tests are run using the geda-batch
-# program, with config loading disabled (-q) so that user config
-# already on the system can't interfere with the test process.
-CLI_SHELL = $(top_builddir)/cli/lepton-cli --no-rcfiles shell
-TEST_EXTENSIONS = .scm
-SCM_LOG_COMPILER = $(CLI_SHELL)
-AM_SCM_LOG_FLAGS = -L $(srcdir) -L $(builddir)
+	--no-auto-compile -e main/with-toplevel -s $(abs_top_srcdir)/liblepton/scheme/unit-test.scm
 
 dist_noinst_DATA = lepton/core/gettext.scm.in unit-test.scm $(TESTS)
 
@@ -184,12 +174,5 @@ lepton/core/gettext.scm: $(srcdir)/lepton/core/gettext.scm.in Makefile
 	else \
 	  echo "Recreating $@"; mv $@.new $@; \
 	fi
-
-update-cli-tool:
-	for d in liblepton/src libleptonrenderer cli; do \
-	  (cd $(top_builddir)/$$d && $(MAKE) $(AM_MAKEFLAGS) all-am); \
-	done
-
-.PHONY: update-cli-tool
 
 CLEANFILES = lepton/core/gettext.scm unit-tests/dummy.sym unit-tests/dummy.xpm
