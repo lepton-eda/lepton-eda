@@ -452,6 +452,90 @@ render_placeholders()
   return placeholder_rendering;
 }
 
+
+
+/*! \brief Create a placeholder symbol.
+ *
+ *  \par Function Description
+ *  Create a smaller placeholder which looks like this:
+ *
+ *     |
+ *     | missing-symbol.sym
+ *     |____________________
+ *    /
+ *  \/
+ *  /\
+ *
+ *  \param node  Placeholder object.
+ *  \param x     Placeholder's origin X.
+ *  \param y     Placeholder's origin Y.
+ *
+ */
+static void
+create_placeholder_small (OBJECT* node, int x, int y)
+{
+  node->type = OBJ_PLACEHOLDER;
+
+  if (!render_placeholders())
+    return;
+
+  const gint color = DETACHED_ATTRIBUTE_COLOR;
+  const gint text_size = 6;
+
+  /* two crossed lines to mark component's origin:
+  */
+  OBJECT* line1 = geda_line_object_new (color,
+                                        x - 30, y + 30,
+                                        x + 30, y - 30 );
+  OBJECT* line2 = geda_line_object_new (color,
+                                        x - 30, y - 30,
+                                        x + 50, y + 50 );
+
+  /* text - symbol file name:
+  */
+  OBJECT* txt = geda_text_object_new (color,
+                                      x + 100, y + 100,
+                                      LOWER_LEFT,
+                                      0,
+                                      node->component_basename,
+                                      text_size,
+                                      VISIBLE,
+                                      SHOW_NAME_VALUE);
+
+  GedaBounds bounds;
+  geda_text_object_calculate_bounds (txt, FALSE, &bounds);
+
+  bounds.max_x = geda_coord_snap (bounds.max_x, 100);
+  bounds.max_y = geda_coord_snap (bounds.max_y, 100);
+
+  /* two lines at the left and bottom sides of the text:
+  */
+  OBJECT* line3 = geda_line_object_new (color,
+                                        x + 50, y + 50,
+                                        x + 50, bounds.max_y + 10 );
+  OBJECT* line4 = geda_line_object_new (color,
+                                        x + 50, y + 50,
+                                        bounds.max_x + 10, y + 50 );
+
+  OBJECT* objs[] =
+  {
+      line1,
+      line2,
+      txt,
+      line3,
+      line4
+  };
+
+  for ( size_t i = 0; i < sizeof(objs) / sizeof(objs[0]); ++i )
+  {
+      node->component->prim_objs =
+        g_list_append (node->component->prim_objs, objs[i]);
+  }
+
+} /* create_placeholder_small() */
+
+
+
 static void
 create_placeholder (OBJECT *new_node,
                     int x,
