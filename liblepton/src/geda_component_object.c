@@ -463,8 +463,10 @@ render_placeholders()
  *     | missing-symbol.sym
  *     |____________________
  *    /
- *  \/
- *  /\
+ *   X
+ *
+ *  Do not call this function directly,
+ *  call create_placeholder() instead.
  *
  *  \param node  Placeholder object.
  *  \param x     Placeholder's origin X.
@@ -474,11 +476,6 @@ render_placeholders()
 static void
 create_placeholder_small (OBJECT* node, int x, int y)
 {
-  node->type = OBJ_PLACEHOLDER;
-
-  if (!render_placeholders())
-    return;
-
   const gint color = DETACHED_ATTRIBUTE_COLOR;
   const gint text_size = 6;
 
@@ -536,26 +533,34 @@ create_placeholder_small (OBJECT* node, int x, int y)
 
 
 
+/*! \brief Create a placeholder symbol.
+ *
+ *  \par Function Description
+ *  Create a placeholder which looks like this:
+ *
+ *          /\
+ *         /  \
+ *        / !  \
+ *       /______\
+ *    Component not found:
+ *     missing-symbol.sym
+ *   +
+ *
+ *  Do not call this function directly,
+ *  call create_placeholder() instead.
+ *
+ *  \param new_node  Placeholder object.
+ *  \param x         Placeholder's origin X.
+ *  \param y         Placeholder's origin Y.
+ *
+ */
 static void
-create_placeholder (OBJECT *new_node,
-                    int x,
-                    int y)
+create_placeholder_classic (OBJECT *new_node, int x, int y)
 {
     GedaBounds bounds;
     OBJECT *new_prim_obj;
     char *not_found_text = NULL;
     int x_offset, y_offset;
-
-    /* Put placeholder into object list.  Changed by SDB on
-     * 1.19.2005 to fix problem that symbols were silently
-     * deleted by gattrib when RC files were messed up.  */
-    new_node->type = OBJ_PLACEHOLDER;
-
-    /* Some programs (e.g. netlister) don't need to render
-     * anything, so we just return here. */
-    if (!render_placeholders()) {
-      return;
-    }
 
     /* Mark the origin of the missing component */
     new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
@@ -623,7 +628,55 @@ create_placeholder (OBJECT *new_node,
                                          SHOW_NAME_VALUE);
     new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
     new_node->component->prim_objs = g_list_reverse(new_node->component->prim_objs);
-}
+
+} /* create_placeholder_classic() */
+
+
+
+/*! \brief Create a placeholder symbol.
+ *
+ *  \par Function Description
+ *  Create a placeholder to be used in place of missing symbol.
+ *  Depending on value of the schematic.gui::small-placeholders
+ *  configuration key, draw either alternative, smaller
+ *  placeholder (true) or the original one (false).
+ *
+ *  \param node  Placeholder object.
+ *  \param x     Placeholder's origin X.
+ *  \param y     Placeholder's origin Y.
+ *
+ */
+static void
+create_placeholder (OBJECT* node, int x, int y)
+{
+    /* Put placeholder into object list.  Changed by SDB on
+     * 1.19.2005 to fix problem that symbols were silently
+     * deleted by gattrib when RC files were messed up.  */
+    node->type = OBJ_PLACEHOLDER;
+
+    /* Some programs (e.g. netlister) don't need to render
+     * anything, so we just return here. */
+    if (!render_placeholders())
+    {
+      return;
+    }
+
+    gboolean small_placeholders = FALSE;
+    cfg_read_bool ("schematic.gui", "small-placeholders",
+                   FALSE, &small_placeholders);
+
+    if (small_placeholders)
+    {
+      create_placeholder_small (node, x, y);
+    }
+    else
+    {
+      create_placeholder_classic (node, x, y);
+    }
+
+} /* create_placeholder() */
+
+
 
 /* Done */
 /*! \brief
