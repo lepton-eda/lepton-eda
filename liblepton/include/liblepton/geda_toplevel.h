@@ -34,8 +34,6 @@ struct st_toplevel
   int init_left, init_right; 		/* Starting values for above */
   int init_top, init_bottom;
 
-  int width, height;			/* height, width of window */
-
   /* page system */
   PAGE *page_current;
   GedaPageList *pages;
