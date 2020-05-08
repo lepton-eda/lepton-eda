@@ -87,7 +87,7 @@ DEFINE_I_CALLBACK(file_new_window)
   GschemToplevel *w_current = NULL;
   PAGE *page = NULL;
 
-  w_current = x_window_new (NULL);
+  w_current = x_window_new ();
   g_return_if_fail (w_current != NULL);
 
   page = x_window_open_page (w_current, NULL);

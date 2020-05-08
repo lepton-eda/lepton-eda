@@ -985,26 +985,21 @@ x_window_init_icons (void)
 	}
 }
 
-/*! \brief Creates a new X window.
+/*! \brief Creates and initializes a new lepton-schematic window.
  *
- * \par Function description
- *
- * Creates and initializes new GschemToplevel object and then sets
- * and setups its libgeda \a toplevel.
- *
- * \param toplevel The libgeda TOPLEVEL object.
  * \return Pointer to the new GschemToplevel object.
  */
-GschemToplevel* x_window_new (TOPLEVEL *toplevel)
+GschemToplevel* x_window_new ()
 {
   GschemToplevel *w_current;
+  TOPLEVEL *toplevel = s_toplevel_new ();
 
   w_current = gschem_toplevel_new ();
-  gschem_toplevel_set_toplevel (w_current,
-                                (toplevel != NULL) ? toplevel : s_toplevel_new ());
+  gschem_toplevel_set_toplevel (w_current, toplevel);
+  x_rc_parse_gschem (toplevel, NULL);
 
   /* Damage notifications should invalidate the object on screen */
-  o_add_change_notify (gschem_toplevel_get_toplevel (w_current),
+  o_add_change_notify (toplevel,
                        (ChangeNotifyFunc) o_invalidate,
                        (ChangeNotifyFunc) o_invalidate, w_current);
 

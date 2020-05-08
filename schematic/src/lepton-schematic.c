@@ -166,7 +166,6 @@ void main_prog(void *closure, int argc, char *argv[])
   int i;
   char *cwd = NULL;
   GschemToplevel *w_current = NULL;
-  TOPLEVEL *toplevel = NULL;
   int argv_index;
   char *filename;
 
@@ -244,15 +243,11 @@ void main_prog(void *closure, int argc, char *argv[])
   /* Run pre-load Scheme expressions */
   g_scm_eval_protected (s_pre_load_expr, scm_current_module ());
 
-  /* Initialize toplevel */
-  toplevel = s_toplevel_new ();
-
   /* Set up atexit handlers */
   gschem_atexit (i_vars_atexit_save_cache_config, NULL);
 
   /* Now read in RC files. */
   g_rc_parse_gtkrc();
-  x_rc_parse_gschem (toplevel, NULL);
 
   /* Set default icon theme and make sure we can find our own icons */
   x_window_set_default_icon();
@@ -262,7 +257,7 @@ void main_prog(void *closure, int argc, char *argv[])
   x_tabs_init();
 
   /* Allocate w_current */
-  w_current = x_window_new (toplevel);
+  w_current = x_window_new ();
 
   /* Enable rendering of placeholders */
   set_render_placeholders();

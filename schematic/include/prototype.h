@@ -681,7 +681,7 @@ void x_window_close_page (GschemToplevel *w_current, PAGE *page);
 PAGE* x_window_close_page_impl (GschemToplevel *w_current, PAGE *page);
 void x_window_set_default_icon (void);
 void x_window_init_icons (void);
-GschemToplevel* x_window_new (TOPLEVEL *toplevel);
+GschemToplevel* x_window_new ();
 void x_window_select_object (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current);
 void x_window_setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled);
 gboolean x_window_untitled_page (PAGE* page);
