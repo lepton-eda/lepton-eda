@@ -661,9 +661,9 @@ create_placeholder (OBJECT* node, int x, int y)
       return;
     }
 
-    gboolean small_placeholders = FALSE;
+    gboolean small_placeholders = TRUE;
     cfg_read_bool ("schematic.gui", "small-placeholders",
-                   FALSE, &small_placeholders);
+                   TRUE, &small_placeholders);
 
     if (small_placeholders)
     {
