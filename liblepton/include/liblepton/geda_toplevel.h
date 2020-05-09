@@ -25,11 +25,8 @@ G_BEGIN_DECLS
 
 struct st_toplevel
 {
-  /* have to decided on component list stuff */
-  /* if it should go in here or not */
-  /* leave outside for now */
-
-  GList *RC_list;                       /* List of RC files which have been read in. */
+  /* List of RC files which have been read in. */
+  GList *RC_list;
 
   int init_left, init_right; 		/* Starting values for above */
   int init_top, init_bottom;
