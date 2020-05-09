@@ -51,6 +51,11 @@
 
 #include "libgeda_priv.h"
 
+static gboolean
+f_choose_file_to_load (TOPLEVEL *toplevel,
+                       gchar *backup_filename,
+                       gboolean stat_error);
+
 
 /*! \brief Get the autosave filename for a file
  *  \par Function description
@@ -166,6 +171,47 @@ int f_open(TOPLEVEL *toplevel, PAGE *page,
                        F_OPEN_RC | F_OPEN_CHECK_BACKUP, err);
 }
 
+
+static gboolean
+f_choose_file_to_load (TOPLEVEL *toplevel,
+                       gchar *backup_filename,
+                       gboolean stat_error)
+{
+  gboolean result = FALSE;
+  GString *message = g_string_new ("");
+
+  g_string_append_printf (message,
+                          _("\nWARNING: Found an autosave backup file:\n  %1$s.\n\n"),
+                          backup_filename);
+
+  if (stat_error) {
+    g_string_append (message,
+                     _("I could not guess if it is newer, so you have to do it manually.\n"));
+  } else {
+    g_string_append (message,
+                     _("The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n"));
+  }
+
+  g_string_append (message,
+                   _("lepton-schematic usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n"));
+
+  if (toplevel->load_newer_backup_func == NULL) {
+    g_warning ("%s", message->str);
+    g_warning (_("\nRun lepton-schematic and correct the situation.\n\n"));
+  } else {
+    /* Ask the user if load the backup or the original file */
+    if (toplevel->load_newer_backup_func
+        (toplevel->load_newer_backup_data, message)) {
+      /* Load the backup file */
+      result = TRUE;
+    }
+  }
+
+  g_string_free (message, TRUE);
+  return result;
+}
+
+
 /*! \brief Opens the schematic file with fine-grained control over behaviour.
  *  \par Function Description
  *  Opens the schematic file and carries out a number of actions
@@ -194,7 +240,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   char *file_directory = NULL;
   char *saved_cwd = NULL;
   char *backup_filename = NULL;
-  char load_backup_file = 0;
+  gboolean load_backup_file = FALSE;
   GError *tmp_err = NULL;
 
   /* has the head been freed yet? */
@@ -251,39 +297,20 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
 
   if (flags & F_OPEN_CHECK_BACKUP) {
     /* Check if there is a newer autosave backup file */
-    GString *message;
     gboolean active_backup = f_has_active_autosave (full_filename, &tmp_err);
     backup_filename = f_get_autosave_filename (full_filename);
 
     if (tmp_err != NULL) g_warning ("%s\n", tmp_err->message);
     if (active_backup) {
-      message = g_string_new ("");
-      g_string_append_printf(message, _("\nWARNING: Found an autosave backup file:\n  %1$s.\n\n"), backup_filename);
-      if (tmp_err != NULL) {
-        g_string_append(message, _("I could not guess if it is newer, so you have to do it manually.\n"));
-      } else {
-        g_string_append(message, _("The backup copy is newer than the schematic, so it seems you should load it instead of the original file.\n"));
-      }
-      g_string_append (message, _("lepton-schematic usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n"));
-      if (toplevel->load_newer_backup_func == NULL) {
-        g_warning ("%s", message->str);
-        g_warning (_("\nRun lepton-schematic and correct the situation.\n\n"));
-      } else {
-        /* Ask the user if load the backup or the original file */
-        if (toplevel->load_newer_backup_func
-            (toplevel->load_newer_backup_data, message)) {
-          /* Load the backup file */
-          load_backup_file = 1;
-        }
-      }
-      g_string_free (message, TRUE);
+      load_backup_file =
+        f_choose_file_to_load (toplevel, backup_filename, (tmp_err != NULL));
     }
     if (tmp_err != NULL) g_error_free (tmp_err);
   }
 
   /* Now that we have set the current directory and read
    * the RC file, it's time to read in the file. */
-  if (load_backup_file == 1) {
+  if (load_backup_file) {
     /* Load the backup file */
     s_page_append_list (page,
                         o_read (toplevel, NULL, backup_filename, &tmp_err));
@@ -298,7 +325,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   else
     g_propagate_error (err, tmp_err);
 
-  if (load_backup_file == 0) {
+  if (!load_backup_file) {
     /* If it's not the backup file */
     page->CHANGED=0; /* added 4/7/98 */
   } else {
