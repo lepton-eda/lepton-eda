@@ -728,16 +728,17 @@ GdkPixbuf
   rect.width = right - origin_x;
   rect.height = bottom - origin_y;
 
-  new_geometry = gschem_page_geometry_new_with_values (width,
-                                                   height,
-                                                   old_geometry->viewport_left,
-                                                   old_geometry->viewport_top,
-                                                   old_geometry->viewport_right,
-                                                   old_geometry->viewport_bottom,
-                                                   toplevel.init_left,
-                                                   toplevel.init_top,
-                                                   toplevel.init_right,
-                                                   toplevel.init_bottom);
+  new_geometry =
+    gschem_page_geometry_new_with_values (width,
+                                          height,
+                                          old_geometry->viewport_left,
+                                          old_geometry->viewport_top,
+                                          old_geometry->viewport_right,
+                                          old_geometry->viewport_bottom,
+                                          WORLD_DEFAULT_LEFT,
+                                          WORLD_DEFAULT_TOP,
+                                          WORLD_DEFAULT_RIGHT,
+                                          WORLD_DEFAULT_BOTTOM);
 
   o_redraw_rect (&new_w_current,
                  window,

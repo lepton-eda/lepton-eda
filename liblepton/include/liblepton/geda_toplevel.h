@@ -28,9 +28,6 @@ struct st_toplevel
   /* List of RC files which have been read in. */
   GList *RC_list;
 
-  int init_left, init_right; 		/* Starting values for above */
-  int init_top, init_bottom;
-
   /* page system */
   PAGE *page_current;
   GedaPageList *pages;

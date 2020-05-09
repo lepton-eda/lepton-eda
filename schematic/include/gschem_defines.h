@@ -21,6 +21,15 @@
 #ifndef _GSCHEM_DEFINES_H_INCL
 #define _GSCHEM_DEFINES_H_INCL
 
+/* Default extents of the schematic drawing area in world
+ * coordinates. The negative values allow symbols, residing at the
+ * origin, to be edited without translation to other coordinates.
+ */
+#define WORLD_DEFAULT_LEFT -60500
+#define WORLD_DEFAULT_RIGHT 121000
+#define WORLD_DEFAULT_BOTTOM 90750
+#define WORLD_DEFAULT_TOP -45375
+
 #define ZOOM_OUT 0
 #define ZOOM_IN 1
 #define ZOOM_FULL 2
