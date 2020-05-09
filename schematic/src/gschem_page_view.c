@@ -402,14 +402,14 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
   if (geometry == NULL) {
     geometry = gschem_page_geometry_new_with_values (screen_width,
                                                      screen_height,
-                                                     page->toplevel->init_left,
-                                                     page->toplevel->init_top,
-                                                     page->toplevel->init_right,
-                                                     page->toplevel->init_bottom,
-                                                     page->toplevel->init_left,
-                                                     page->toplevel->init_top,
-                                                     page->toplevel->init_right,
-                                                     page->toplevel->init_bottom);
+                                                     WORLD_DEFAULT_LEFT,
+                                                     WORLD_DEFAULT_TOP,
+                                                     WORLD_DEFAULT_RIGHT,
+                                                     WORLD_DEFAULT_BOTTOM,
+                                                     WORLD_DEFAULT_LEFT,
+                                                     WORLD_DEFAULT_TOP,
+                                                     WORLD_DEFAULT_RIGHT,
+                                                     WORLD_DEFAULT_BOTTOM);
 
     geometry_cache_insert (view, page, geometry);
 

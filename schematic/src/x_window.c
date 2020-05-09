@@ -1381,20 +1381,18 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
 void
 x_window_setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled)
 {
-  GedaToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-
   GtkAdjustment *hadjustment = GTK_ADJUSTMENT(
     gtk_adjustment_new (0.0,
-                        toplevel->init_left,
-                        toplevel->init_right,
+                        WORLD_DEFAULT_LEFT,
+                        WORLD_DEFAULT_RIGHT,
                         100.0,
                         100.0,
                         10.0));
 
   GtkAdjustment *vadjustment = GTK_ADJUSTMENT(
-    gtk_adjustment_new (toplevel->init_bottom,
+    gtk_adjustment_new (WORLD_DEFAULT_BOTTOM,
                         0.0,
-                        toplevel->init_bottom - toplevel->init_top,
+                        WORLD_DEFAULT_BOTTOM - WORLD_DEFAULT_TOP,
                         100.0,
                         100.0,
                         10.0));

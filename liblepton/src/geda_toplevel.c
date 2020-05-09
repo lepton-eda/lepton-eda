@@ -49,16 +49,6 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->RC_list = NULL;
 
-  /* These values are the default extents of the schematic drawing area.
-   *
-   * The negative values allow symbols, residing at the origin, to be
-   * edited without translation to other coordinates.
-   */
-  toplevel->init_left = -60500;
-  toplevel->init_top  = -45375;
-  toplevel->init_right  = 121000;
-  toplevel->init_bottom = 90750;
-
   toplevel->pages = geda_list_new();
   toplevel->page_current = NULL;
 
