@@ -301,6 +301,7 @@ x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
   switch (response) {
   case GTK_RESPONSE_OK:
     count = gschem_find_text_state_find (
+        w_current,
         GSCHEM_FIND_TEXT_STATE (w_current->find_text_state),
         geda_list_get_glist (w_current->toplevel->pages),
         gschem_find_text_widget_get_find_type (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
@@ -728,7 +729,7 @@ x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename)
 
   /* Try to load [filename]: */
   GError* err = NULL;
-  if (!f_open (toplevel, page, filename, &err))
+  if (!schematic_file_open (w_current, page, filename, &err))
   {
     g_warning ("%s\n", err->message);
     open_page_error_dialog (w_current, filename, err);
@@ -1000,9 +1001,6 @@ GschemToplevel* x_window_new (TOPLEVEL *toplevel)
   w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (w_current,
                                 (toplevel != NULL) ? toplevel : s_toplevel_new ());
-
-  gschem_toplevel_get_toplevel (w_current)->load_newer_backup_func = x_fileselect_load_backup;
-  gschem_toplevel_get_toplevel (w_current)->load_newer_backup_data = w_current;
 
   /* Damage notifications should invalidate the object on screen */
   o_add_change_notify (gschem_toplevel_get_toplevel (w_current),

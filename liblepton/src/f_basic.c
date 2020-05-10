@@ -51,12 +51,6 @@
 
 #include "libgeda_priv.h"
 
-static gboolean
-f_choose_file_to_load (TOPLEVEL *toplevel,
-                       gchar *backup_filename,
-                       gboolean stat_error);
-
-
 /*! \brief Get the autosave filename for a file
  *  \par Function description
  *  Returns the expected autosave filename for the \a filename passed.
@@ -172,12 +166,10 @@ int f_open(TOPLEVEL *toplevel, PAGE *page,
 }
 
 
-static gboolean
-f_choose_file_to_load (TOPLEVEL *toplevel,
-                       gchar *backup_filename,
-                       gboolean stat_error)
+GString*
+f_backup_message (gchar *backup_filename,
+                  gboolean stat_error)
 {
-  gboolean result = FALSE;
   GString *message = g_string_new ("");
 
   g_string_append_printf (message,
@@ -195,20 +187,8 @@ f_choose_file_to_load (TOPLEVEL *toplevel,
   g_string_append (message,
                    _("lepton-schematic usually makes backup copies automatically, and this situation happens when it crashed or it was forced to exit abruptly.\n"));
 
-  if (toplevel->load_newer_backup_func == NULL) {
-    g_warning ("%s", message->str);
-    g_warning (_("\nRun lepton-schematic and correct the situation.\n\n"));
-  } else {
-    /* Ask the user if load the backup or the original file */
-    if (toplevel->load_newer_backup_func
-        (toplevel->load_newer_backup_data, message)) {
-      /* Load the backup file */
-      result = TRUE;
-    }
-  }
-
-  g_string_free (message, TRUE);
-  return result;
+  /* The user must g_string_free the message. */
+  return message;
 }
 
 
@@ -295,17 +275,29 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
 
   g_free (file_directory);
 
-  if (flags & F_OPEN_CHECK_BACKUP) {
+  if (flags & F_OPEN_FORCE_BACKUP) {
+    backup_filename = f_get_autosave_filename (full_filename);
+    load_backup_file = TRUE;
+  }
+  else if (flags & F_OPEN_CHECK_BACKUP) {
     /* Check if there is a newer autosave backup file */
     gboolean active_backup = f_has_active_autosave (full_filename, &tmp_err);
     backup_filename = f_get_autosave_filename (full_filename);
 
-    if (tmp_err != NULL) g_warning ("%s\n", tmp_err->message);
-    if (active_backup) {
-      load_backup_file =
-        f_choose_file_to_load (toplevel, backup_filename, (tmp_err != NULL));
+    gboolean stat_error = (tmp_err != NULL);
+    if (stat_error) {
+      g_warning ("%s\n", tmp_err->message);
+      g_error_free (tmp_err);
     }
-    if (tmp_err != NULL) g_error_free (tmp_err);
+
+    if (active_backup) {
+      GString *message =
+        f_backup_message (backup_filename, stat_error);
+      g_warning ("%s", message->str);
+      g_warning (_("\nRun lepton-schematic and correct the situation.\n\n"));
+      g_string_free (message, TRUE);
+      /* load_backup_file = FALSE; */
+    }
   }
 
   /* Now that we have set the current directory and read

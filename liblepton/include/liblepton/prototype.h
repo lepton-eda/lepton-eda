@@ -25,6 +25,10 @@ f_save (PAGE *page,
 gchar *f_normalize_filename (const gchar *filename, GError **error) G_GNUC_WARN_UNUSED_RESULT;
 char *follow_symlinks (const gchar *filename, GError **error);
 
+GString*
+f_backup_message (gchar *backup_filename,
+                  gboolean stat_error);
+
 /* g_basic.c */
 SCM g_scm_eval_protected (SCM exp, SCM module_or_state);
 SCM g_scm_eval_string_protected (SCM str);
