@@ -88,7 +88,6 @@ liblepton_la_SOURCES = \
 	s_clib.c \
 	s_conn.c \
 	s_encoding.c \
-	s_hierarchy.c \
 	s_log.c \
 	s_menu.c \
 	s_slot.c \

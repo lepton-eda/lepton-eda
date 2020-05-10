@@ -75,6 +75,7 @@ schematic/src/o_slot.c
 schematic/src/o_text.c
 schematic/src/o_undo.c
 schematic/src/parsecmd.c
+schematic/src/schematic_hierarchy.c
 schematic/src/x_attribedit.c
 schematic/src/x_autonumber.c
 schematic/src/x_basic.c
