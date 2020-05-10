@@ -92,6 +92,7 @@ lepton_schematic_SOURCES = \
 	o_undo.c \
 	parsecmd.c \
 	s_stretch.c \
+	schematic_hierarchy.c \
 	x_attribedit.c \
 	x_autonumber.c \
 	x_basic.c \

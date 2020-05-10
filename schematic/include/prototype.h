@@ -716,6 +716,39 @@ void x_tabs_dbg_pages_dump (GschemToplevel* w_current);
 /* color_edit_widget.c */
 void color_edit_widget_update (GschemToplevel* w_current);
 
+/* schematic_hierarchy.c */
+PAGE*
+s_hierarchy_down_schematic_single (TOPLEVEL *toplevel,
+                                   const gchar *filename,
+                                   PAGE *parent,
+                                   int page_control,
+                                   int flag,
+                                   GError **err);
+void
+s_hierarchy_down_symbol (TOPLEVEL *toplevel,
+                         const CLibSymbol *symbol,
+                         PAGE *parent);
+PAGE*
+s_hierarchy_find_up_page (GedaPageList *page_list,
+                          PAGE *current_page);
+PAGE*
+s_hierarchy_load_subpage (PAGE *page,
+                          const char *filename,
+                          GError **error);
+GList*
+s_hierarchy_traversepages (TOPLEVEL *toplevel,
+                           PAGE *p_current,
+                           gint flags);
+gint
+s_hierarchy_print_page (PAGE *p_current,
+                        void * data);
+PAGE*
+s_hierarchy_find_prev_page (GedaPageList *page_list,
+                            PAGE *current_page);
+PAGE*
+s_hierarchy_find_next_page (GedaPageList *page_list,
+                            PAGE *current_page);
+
 
 #endif /* LEPTON_PROTOTYPE_H_ */
 

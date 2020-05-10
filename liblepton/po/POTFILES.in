@@ -25,7 +25,6 @@ liblepton/src/geda_picture_object.c
 liblepton/src/geda_pin_object.c
 liblepton/src/geda_text_object.c
 liblepton/src/s_clib.c
-liblepton/src/s_hierarchy.c
 liblepton/src/s_slot.c
 liblepton/src/edaconfig.c
 liblepton/src/scheme_attrib.c
