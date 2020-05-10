@@ -59,7 +59,12 @@ struct _GschemFindTextState
 
 
 int
-gschem_find_text_state_find (GschemFindTextState *state, GList *pages, int type, const char *text, gboolean descend);
+gschem_find_text_state_find (GschemToplevel *w_current,
+                             GschemFindTextState *state,
+                             GList *pages,
+                             int type,
+                             const char *text,
+                             gboolean descend);
 
 GType
 gschem_find_text_state_get_type ();

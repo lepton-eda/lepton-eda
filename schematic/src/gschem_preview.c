@@ -299,11 +299,6 @@ gschem_preview_init (GschemPreview *preview)
   preview_w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (preview_w_current, s_toplevel_new ());
 
-  preview_w_current->toplevel->load_newer_backup_func =
-    x_fileselect_load_backup;
-  preview_w_current->toplevel->load_newer_backup_data =
-    preview_w_current;
-
   i_vars_set (preview_w_current);
 
   /* be sure to turn off scrollbars */

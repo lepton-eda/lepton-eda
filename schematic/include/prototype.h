@@ -601,7 +601,13 @@ void x_compselect_deselect (GschemToplevel *w_current);
 /* x_fileselect.c */
 void x_fileselect_open(GschemToplevel *w_current);
 gboolean x_fileselect_save(GschemToplevel *w_current, PAGE* page, gboolean* result);
-int x_fileselect_load_backup(void *user_data, GString *message);
+
+gboolean
+schematic_file_open (GschemToplevel *w_current,
+                     PAGE *page,
+                     const gchar *filename,
+                     GError **err);
+
 /* x_fstylecb.c */
 GtkWidget* x_fstylecb_new ();
 int x_fstylecb_get_index (GtkWidget *widget);
@@ -718,25 +724,28 @@ void color_edit_widget_update (GschemToplevel* w_current);
 
 /* schematic_hierarchy.c */
 PAGE*
-s_hierarchy_down_schematic_single (TOPLEVEL *toplevel,
+s_hierarchy_down_schematic_single (GschemToplevel *w_current,
                                    const gchar *filename,
                                    PAGE *parent,
                                    int page_control,
                                    int flag,
                                    GError **err);
 void
-s_hierarchy_down_symbol (TOPLEVEL *toplevel,
+s_hierarchy_down_symbol (GschemToplevel *w_current,
+                         TOPLEVEL *toplevel,
                          const CLibSymbol *symbol,
                          PAGE *parent);
 PAGE*
 s_hierarchy_find_up_page (GedaPageList *page_list,
                           PAGE *current_page);
 PAGE*
-s_hierarchy_load_subpage (PAGE *page,
+s_hierarchy_load_subpage (GschemToplevel *w_current,
+                          PAGE *page,
                           const char *filename,
                           GError **error);
 GList*
-s_hierarchy_traversepages (TOPLEVEL *toplevel,
+s_hierarchy_traversepages (GschemToplevel *w_current,
+                           TOPLEVEL *toplevel,
                            PAGE *p_current,
                            gint flags);
 gint

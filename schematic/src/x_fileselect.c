@@ -35,6 +35,9 @@ static GtkFileFilter* filter_all      = NULL;
 static GtkFileFilter* filter_last_opendlg = NULL;
 static GtkFileFilter* filter_last_savedlg = NULL;
 
+static int
+x_fileselect_load_backup (GschemToplevel *w_current,
+                          GString *message);
 
 
 /*! \brief Creates filter for file chooser.
@@ -557,10 +560,11 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
  *  \param [in] message   Message to display to user.
  *  \return TRUE if the user wants to load the backup file, FALSE otherwise.
  */
-int x_fileselect_load_backup(void *user_data, GString *message)
+static int
+x_fileselect_load_backup (GschemToplevel *w_current,
+                          GString *message)
 {
   GtkWidget *dialog;
-  GschemToplevel *w_current = (GschemToplevel *) user_data;
 
   g_string_append(message, _(
 "\n"
@@ -590,4 +594,39 @@ int x_fileselect_load_backup(void *user_data, GString *message)
     gtk_widget_destroy(dialog);
     return FALSE;
   }
+}
+
+
+gboolean
+schematic_file_open (GschemToplevel *w_current,
+                     PAGE *page,
+                     const gchar *filename,
+                     GError **err)
+{
+  g_return_val_if_fail ((w_current != NULL), FALSE);
+
+  GError *tmp_err = NULL;
+  gboolean stat_error = FALSE;
+  gint flags = F_OPEN_RC;
+  gboolean active_backup = f_has_active_autosave (filename, &tmp_err);
+
+  if (tmp_err != NULL) {
+    g_warning ("%s\n", tmp_err->message);
+    g_error_free (tmp_err);
+    stat_error = TRUE;
+  }
+
+  if (active_backup) {
+    gchar *backup_filename = f_get_autosave_filename (filename);
+    GString *message = f_backup_message (backup_filename, stat_error);
+    if (x_fileselect_load_backup (w_current, message)) {
+      flags |= F_OPEN_FORCE_BACKUP;
+    }
+
+    g_string_free (message, TRUE);
+    g_free (backup_filename);
+  }
+
+  return f_open_flags (gschem_toplevel_get_toplevel (w_current),
+                       page, filename, flags, err);
 }

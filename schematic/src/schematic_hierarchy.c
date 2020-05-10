@@ -52,13 +52,21 @@ static int page_control_counter=0;
  *  flag is mainly used by gnetlist where pushed down schematics MUST be unique
  */
 PAGE *
-s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
-                                  PAGE *parent, int page_control, int flag,
-                                  GError **err)
+s_hierarchy_down_schematic_single (GschemToplevel *w_current,
+                                   const gchar *filename,
+                                   PAGE *parent,
+                                   int page_control,
+                                   int flag,
+                                   GError **err)
 {
   gchar *string;
   PAGE *found = NULL;
   PAGE *forbear;
+  TOPLEVEL *toplevel;
+
+  g_return_val_if_fail ((w_current != NULL), NULL);
+
+  toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_val_if_fail ((toplevel != NULL), NULL);
   g_return_val_if_fail ((filename != NULL), NULL);
@@ -106,14 +114,14 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
 
       found = s_page_new (toplevel, string);
 
-      f_open (toplevel, found, s_page_get_filename (found), NULL);
+      schematic_file_open (w_current, found, s_page_get_filename (found), NULL);
     }
     break;
 
   case HIERARCHY_FORCE_LOAD:
     {
       found = s_page_new (toplevel, string);
-      f_open (toplevel, found, s_page_get_filename (found), NULL);
+      schematic_file_open (w_current, found, s_page_get_filename (found), NULL);
     }
     break;
 
@@ -141,7 +149,9 @@ s_hierarchy_down_schematic_single(TOPLEVEL *toplevel, const gchar *filename,
  *
  */
 void
-s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol,
+s_hierarchy_down_symbol (GschemToplevel *w_current,
+                         TOPLEVEL *toplevel,
+                         const CLibSymbol *symbol,
                          PAGE *parent)
 {
   PAGE *page;
@@ -165,7 +175,7 @@ s_hierarchy_down_symbol (TOPLEVEL *toplevel, const CLibSymbol *symbol,
 
   s_page_goto (toplevel, page);
 
-  f_open(toplevel, page, s_page_get_filename (page), NULL);
+  schematic_file_open (w_current, page, s_page_get_filename (page), NULL);
 
   page->up = parent->pid;
   page_control_counter++;
@@ -216,7 +226,10 @@ s_hierarchy_find_up_page (GedaPageList *page_list, PAGE *current_page)
  *  \return A pointer to the subpage or NULL if an error occured.
  */
 PAGE*
-s_hierarchy_load_subpage (PAGE *page, const char *filename, GError **error)
+s_hierarchy_load_subpage (GschemToplevel *w_current,
+                          PAGE *page,
+                          const char *filename,
+                          GError **error)
 {
   char *string;
   PAGE *subpage = NULL;
@@ -243,7 +256,7 @@ s_hierarchy_load_subpage (PAGE *page, const char *filename, GError **error)
       int success;
 
       subpage = s_page_new (page->toplevel, string);
-      success = f_open (page->toplevel, subpage, s_page_get_filename (subpage), error);
+      success = schematic_file_open (w_current, subpage, s_page_get_filename (subpage), error);
 
       if (success) {
         subpage->page_control = ++page_control_counter;
@@ -277,7 +290,10 @@ s_hierarchy_load_subpage (PAGE *page, const char *filename, GError **error)
  *  Caller must destroy returned GList with g_list_free().
  */
 GList *
-s_hierarchy_traversepages (TOPLEVEL *toplevel, PAGE *p_current, gint flags)
+s_hierarchy_traversepages (GschemToplevel *w_current,
+                           TOPLEVEL *toplevel,
+                           PAGE *p_current,
+                           gint flags)
 {
   OBJECT *o_current;
   PAGE *child_page;
@@ -327,11 +343,11 @@ s_hierarchy_traversepages (TOPLEVEL *toplevel, PAGE *p_current, gint flags)
        lets load the page and dive into it */
     GError *err = NULL;
     child_page =
-      s_hierarchy_down_schematic_single (toplevel, filename, p_current, 0,
+      s_hierarchy_down_schematic_single (w_current, filename, p_current, 0,
                                          HIERARCHY_NORMAL_LOAD, &err);
     if (child_page != NULL) {
       /* call the recursive function */
-      s_hierarchy_traversepages (toplevel, child_page, flags | HIERARCHY_INNERLOOP);
+      s_hierarchy_traversepages (w_current, toplevel, child_page, flags | HIERARCHY_INNERLOOP);
     } else {
       s_log_message (_("Failed to descend hierarchy into '%1$s': %2$s"),
                      filename, err->message);

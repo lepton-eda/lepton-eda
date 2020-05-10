@@ -61,13 +61,16 @@ static GSList*
 find_objects_using_check (GSList *pages);
 
 static GSList*
-get_pages (GList *pages, gboolean descend);
+get_pages (GschemToplevel *w_current,
+           GList *pages,
+           gboolean descend);
 
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static GList*
-get_subpages (PAGE *page);
+get_subpages (GschemToplevel *w_current,
+              PAGE *page);
 
 static void
 object_weakref_cb (OBJECT *object, GschemFindTextState *state);
@@ -95,14 +98,19 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
  *  \return the number of objects found
  */
 int
-gschem_find_text_state_find (GschemFindTextState *state, GList *pages, int type, const char *text, gboolean descend)
+gschem_find_text_state_find (GschemToplevel *w_current,
+                             GschemFindTextState *state,
+                             GList *pages,
+                             int type,
+                             const char *text,
+                             gboolean descend)
 {
   int count;
   GSList *objects = NULL;
   GSList *all_pages;
   gboolean filter_text = TRUE;
 
-  all_pages = get_pages (pages, descend);
+  all_pages = get_pages (w_current, pages, descend);
 
   switch (type) {
     case FIND_TYPE_SUBSTRING:
@@ -577,7 +585,9 @@ find_objects_using_check (GSList *pages)
  *  \return a list of all the pages
  */
 static GSList*
-get_pages (GList *pages, gboolean descend)
+get_pages (GschemToplevel *w_current,
+           GList *pages,
+           gboolean descend)
 {
   GList *input_list = g_list_copy (pages);
   GSList *output_list = NULL;
@@ -604,7 +614,7 @@ get_pages (GList *pages, gboolean descend)
     g_hash_table_insert (visit_list, page, NULL);
 
     if (descend) {
-      input_list = g_list_concat (input_list, get_subpages (page));
+      input_list = g_list_concat (input_list, get_subpages (w_current, page));
     }
   }
 
@@ -641,7 +651,8 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \return a list of all the subpages
  */
 static GList*
-get_subpages (PAGE *page)
+get_subpages (GschemToplevel *w_current,
+              PAGE *page)
 {
   const GList *object_iter;
   GList *page_list = NULL;
@@ -688,7 +699,7 @@ get_subpages (PAGE *page)
     }
 
     for (iter = filenames; *iter != NULL; iter++) {
-      PAGE *subpage = s_hierarchy_load_subpage (page, *iter, NULL);
+      PAGE *subpage = s_hierarchy_load_subpage (w_current, page, *iter, NULL);
 
       if (subpage != NULL) {
         page_list = g_list_prepend (page_list, subpage);
