@@ -375,15 +375,18 @@ error:
  *  \par Function Description
  *  This function reads a file in libgeda format.
  *
- *  \param [in,out] toplevel    The current TOPLEVEL structure.
+ *  \param [in,out] page         The PAGE object.
  *  \param [in]     object_list  The object_list to read data to.
  *  \param [in]     filename     The filename to read from.
  *  \param [in,out] err          #GError structure for error reporting, or
  *                               NULL to disable error reporting
  *  \return object_list if successful read, or NULL on error.
  */
-GList *o_read (TOPLEVEL *toplevel, GList *object_list, char *filename,
-               GError **err)
+GList*
+o_read (PAGE *page,
+        GList *object_list,
+        char *filename,
+        GError **err)
 {
   char *buffer = NULL;
   size_t size;
@@ -398,7 +401,7 @@ GList *o_read (TOPLEVEL *toplevel, GList *object_list, char *filename,
   }
 
   /* Parse file contents */
-  result = o_read_buffer (toplevel->page_current, object_list, buffer, size, filename, err);
+  result = o_read_buffer (page, object_list, buffer, size, filename, err);
   g_free (buffer);
   return result;
 }
