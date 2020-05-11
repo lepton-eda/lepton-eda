@@ -13,11 +13,13 @@ gboolean m_polygon_interior_point(GArray *points, int x, int y);
 double m_polygon_shortest_distance(GArray *points, int x, int y, gboolean closed);
 
 /* o_attrib.c */
-GList *o_read_attribs(TOPLEVEL *toplevel,
-                      OBJECT *object_to_get_attribs,
-                      TextBuffer *tb,
-                      unsigned int release_ver,
-                      unsigned int fileformat_ver, GError **err);
+GList*
+o_read_attribs (PAGE *page,
+                OBJECT *object_to_get_attribs,
+                TextBuffer *tb,
+                unsigned int release_ver,
+                unsigned int fileformat_ver,
+                GError **err);
 OBJECT *o_attrib_find_attrib_by_name (const GList *list, const char *name, int count);
 
 /* geda_object.c */

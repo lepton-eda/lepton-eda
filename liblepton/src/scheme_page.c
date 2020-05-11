@@ -424,7 +424,7 @@ SCM_DEFINE (string_to_page, "%string->page", 2, 0, 0,
   size_t len;
   GError * err = NULL;
   char *str = scm_to_utf8_stringn (str_s, &len);
-  GList *objects = o_read_buffer (toplevel, NULL, str, len,
+  GList *objects = o_read_buffer (page, NULL, str, len,
                                   s_page_get_filename(page), &err);
   free (str);
 

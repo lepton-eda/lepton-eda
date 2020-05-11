@@ -61,7 +61,7 @@ o_component_prepare_place (GschemToplevel *w_current,
     temp_list = NULL;
 
     buffer = s_clib_symbol_get_data (sym);
-    temp_list = o_read_buffer (toplevel,
+    temp_list = o_read_buffer (toplevel->page_current,
                                temp_list,
                                buffer, -1,
                                sym_name,
@@ -87,7 +87,7 @@ o_component_prepare_place (GschemToplevel *w_current,
   } else { /* if (w_current->include_component) {..} else { */
     OBJECT *new_object;
 
-    new_object = o_component_new (toplevel, OBJ_COMPONENT, DEFAULT_COLOR,
+    new_object = o_component_new (toplevel->page_current, OBJ_COMPONENT, DEFAULT_COLOR,
                                   0, 0, 0, 0, sym, sym_name, 1);
 
     if (new_object->type == OBJ_PLACEHOLDER) {

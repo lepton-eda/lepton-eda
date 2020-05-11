@@ -38,7 +38,16 @@ GList*
 o_component_promote_attribs (OBJECT *object);
 
 OBJECT*
-o_component_new (TOPLEVEL *toplevel, char type, int color, int x, int y, int angle, int mirror, const CLibSymbol *clib_sym, const gchar *basename, int selectable);
+o_component_new (PAGE *page,
+                 char type,
+                 int color,
+                 int x,
+                 int y,
+                 int angle,
+                 int mirror,
+                 const CLibSymbol *clib_sym,
+                 const gchar *basename,
+                 int selectable);
 
 OBJECT*
 o_component_new_embedded (char type,
@@ -80,8 +89,11 @@ o_component_check_symversion (PAGE* page,
                               OBJECT* object);
 
 OBJECT*
-o_component_read (TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
-
+o_component_read (PAGE *page,
+                  const char buf[],
+                  unsigned int release_ver,
+                  unsigned int fileformat_ver,
+                  GError **err);
 gchar*
 geda_component_object_to_buffer (const GedaObject *object);
 

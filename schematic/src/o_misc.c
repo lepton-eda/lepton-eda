@@ -475,12 +475,15 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   o_selection_remove (page->selection_list, o_current);
 
   /* Create new object and set embedded */
-  o_new = o_component_new (toplevel, OBJ_COMPONENT, DEFAULT_COLOR,
+  o_new = o_component_new (toplevel->page_current,
+                           OBJ_COMPONENT,
+                           DEFAULT_COLOR,
                            o_current->component->x,
                            o_current->component->y,
                            o_current->component->angle,
                            o_current->component->mirror,
-                           clib, o_current->component_basename,
+                           clib,
+                           o_current->component_basename,
                            1);
   if (o_component_is_embedded (o_current)) {
     o_embed (o_new);
