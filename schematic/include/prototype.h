@@ -732,7 +732,6 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
                                    GError **err);
 void
 s_hierarchy_down_symbol (GschemToplevel *w_current,
-                         TOPLEVEL *toplevel,
                          const CLibSymbol *symbol,
                          PAGE *parent);
 PAGE*
@@ -745,7 +744,6 @@ s_hierarchy_load_subpage (GschemToplevel *w_current,
                           GError **error);
 GList*
 s_hierarchy_traversepages (GschemToplevel *w_current,
-                           TOPLEVEL *toplevel,
                            PAGE *p_current,
                            gint flags);
 gint

@@ -2280,7 +2280,7 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
 
   TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
 
-  s_hierarchy_down_symbol (w_current, toplevel, sym, toplevel->page_current);
+  s_hierarchy_down_symbol (w_current, sym, toplevel->page_current);
   gschem_toplevel_page_changed (w_current);
 
   x_window_set_current_page (w_current, toplevel->page_current);

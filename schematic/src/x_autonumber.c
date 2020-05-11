@@ -656,7 +656,6 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 
   /* Step1: get all pages of the hierarchy */
   pages = s_hierarchy_traversepages (w_current,
-                                     w_current->toplevel,
                                      w_current->toplevel->page_current,
                                      HIERARCHY_NODUPS);
 

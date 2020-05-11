@@ -35,7 +35,7 @@ static int page_control_counter=0;
  *  function will load the page again with a new page id. The second case
  *  is mainly used by gnetlist where pushed down schematics MUST be unique.
  *
- *  \param [in] toplevel      The TOPLEVEL object.
+ *  \param [in] w_current     The GschemToplevel object.
  *  \param [in] filename      Schematic file name.
  *  \param [in] parent        The parent page of the schematic.
  *  \param [in] page_control
@@ -62,11 +62,10 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
   gchar *string;
   PAGE *found = NULL;
   PAGE *forbear;
-  TOPLEVEL *toplevel;
 
   g_return_val_if_fail ((w_current != NULL), NULL);
 
-  toplevel = gschem_toplevel_get_toplevel (w_current);
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_val_if_fail ((toplevel != NULL), NULL);
   g_return_val_if_fail ((filename != NULL), NULL);
@@ -150,12 +149,16 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
  */
 void
 s_hierarchy_down_symbol (GschemToplevel *w_current,
-                         TOPLEVEL *toplevel,
                          const CLibSymbol *symbol,
                          PAGE *parent)
 {
   PAGE *page;
   gchar *filename;
+
+  g_return_if_fail (w_current != NULL);
+
+  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_if_fail (toplevel != NULL);
 
   filename = s_clib_symbol_get_filename (symbol);
 
@@ -281,7 +284,7 @@ s_hierarchy_load_subpage (GschemToplevel *w_current,
  *  duplicate pages, and <B>HIERARCHY_POSTORDER</B> traverses the
  *  hierarchy tree and returns a postorder list instead of preorder.
  *
- *  \param toplevel The TOPLEVEL structure.
+ *  \param w_current The GschemToplevel structure.
  *  \param p_current The PAGE to traverse hierarchy for.
  *  \param flags Flags controlling form of return value.
  *  \return A GList of PAGE pointers.
@@ -291,7 +294,6 @@ s_hierarchy_load_subpage (GschemToplevel *w_current,
  */
 GList *
 s_hierarchy_traversepages (GschemToplevel *w_current,
-                           TOPLEVEL *toplevel,
                            PAGE *p_current,
                            gint flags)
 {
@@ -301,7 +303,6 @@ s_hierarchy_traversepages (GschemToplevel *w_current,
   static GList *pages = NULL;
   const GList *iter;
 
-  g_return_val_if_fail ((toplevel != NULL), NULL);
   g_return_val_if_fail ((p_current != NULL), NULL);
 
   /* init static variables the first time*/
@@ -347,7 +348,7 @@ s_hierarchy_traversepages (GschemToplevel *w_current,
                                          HIERARCHY_NORMAL_LOAD, &err);
     if (child_page != NULL) {
       /* call the recursive function */
-      s_hierarchy_traversepages (w_current, toplevel, child_page, flags | HIERARCHY_INNERLOOP);
+      s_hierarchy_traversepages (w_current, child_page, flags | HIERARCHY_INNERLOOP);
     } else {
       s_log_message (_("Failed to descend hierarchy into '%1$s': %2$s"),
                      filename, err->message);
