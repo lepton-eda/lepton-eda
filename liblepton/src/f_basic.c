@@ -305,11 +305,11 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   if (load_backup_file) {
     /* Load the backup file */
     s_page_append_list (page,
-                        o_read (toplevel, NULL, backup_filename, &tmp_err));
+                        o_read (page, NULL, backup_filename, &tmp_err));
   } else {
     /* Load the original file */
     s_page_append_list (page,
-                        o_read (toplevel, NULL, full_filename, &tmp_err));
+                        o_read (page, NULL, full_filename, &tmp_err));
   }
 
   if (tmp_err == NULL)
