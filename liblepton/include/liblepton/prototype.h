@@ -12,9 +12,8 @@ o_read_buffer (PAGE *page,
                const int size,
                const char *name,
                GError **err);
-GList*
+PAGE*
 o_read (PAGE *page,
-        GList *object_list,
         char *filename,
         GError **err);
 
