@@ -1146,15 +1146,15 @@ o_component_find_pin_by_attribute (OBJECT *object,
  *  \par Function Description
  *  This function compares the symversion of a symbol with it's
  *  earlier saved symversion in a schematic.
- *  Major symversion changes are added to the toplevel object
- *  (toplevel->major_changed_refdes), minor changes are reported
+ *  Major symversion changes are added to the page object
+ *  (page->major_changed_refdes), minor changes are reported
  *  to the messaging system.
  *
- *  \param toplevel  The TOPLEVEL object
+ *  \param page      The PAGE object
  *  \param object    The component OBJECT
  */
 void
-o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
+o_component_check_symversion (PAGE* page, OBJECT* object)
 {
   char *inside = NULL;
   char *outside = NULL;
@@ -1300,7 +1300,7 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
 
       /* add the refdes and basename to the page's major_changed_refdes GList:
       */
-      if (toplevel->page_current != NULL)
+      if (page != NULL)
       {
         /* make sure refdes_copy is freed somewhere:
         */
@@ -1311,8 +1311,8 @@ o_component_check_symversion (TOPLEVEL* toplevel, OBJECT* object)
                                    ")",
                                    NULL);
 
-        toplevel->page_current->major_changed_refdes =
-          g_list_append (toplevel->page_current->major_changed_refdes,
+        page->major_changed_refdes =
+          g_list_append (page->major_changed_refdes,
                          refdes_copy);
       }
       else

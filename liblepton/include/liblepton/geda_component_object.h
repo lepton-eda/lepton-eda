@@ -76,7 +76,8 @@ OBJECT *
 o_component_find_pin_by_attribute (OBJECT *object, const char *name, char *wanted_value);
 
 void
-o_component_check_symversion(TOPLEVEL* toplevel, OBJECT* object);
+o_component_check_symversion (PAGE* page,
+                              OBJECT* object);
 
 OBJECT*
 o_component_read (TOPLEVEL *toplevel, const char buf[], unsigned int release_ver, unsigned int fileformat_ver, GError **err);
