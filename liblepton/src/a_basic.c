@@ -71,7 +71,7 @@ o_save (const GList *object_list,
 
 /*! \brief Read a memory buffer
  *  \par Function Description
- *  This function reads data in libgeda format from a memory buffer.
+ *  This function reads data in gEDA format from a memory buffer.
  *
  *  If the size argument is negative, the buffer is assumed to be
  *  null-terminated.
@@ -79,14 +79,14 @@ o_save (const GList *object_list,
  *  The name argument is used for debugging, and should be set to a
  *  meaningful string (e.g. the name of the file the data is from).
  *
- *  \param [in,out] toplevel    The current TOPLEVEL structure.
+ *  \param [in,out] page         The PAGE object.
  *  \param [in]     object_list  The object_list to read data to.
  *  \param [in]     buffer       The memory buffer to read from.
  *  \param [in]     size         The size of the buffer.
  *  \param [in]     name         The name to describe the data with.
  *  \return GList of objects if successful read, or NULL on error.
  */
-GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
+GList *o_read_buffer (PAGE *page, GList *object_list,
                       char *buffer, const int size,
                       const char *name, GError **err)
 {
@@ -136,7 +136,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
     {
         /* yes */
         /* verify symbol version (not file format but rather contents) */
-        o_component_check_symversion (toplevel->page_current, last_component);
+        o_component_check_symversion (page, last_component);
         last_component = NULL;  /* no longer need to check */
     }
 
@@ -182,7 +182,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
 
       case(OBJ_COMPONENT):
       case(OBJ_PLACEHOLDER):
-        if ((new_obj = o_component_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+        if ((new_obj = o_component_read (page, line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
         new_object_list = g_list_prepend (new_object_list, new_obj);
 
@@ -221,7 +221,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         /* first is the fp */
         /* 2nd is the object to get the attributes */
         if (new_obj != NULL) {
-          new_attrs_list = o_read_attribs (toplevel, new_obj, tb, release_ver, fileformat_ver, err);
+          new_attrs_list = o_read_attribs (page, new_obj, tb, release_ver, fileformat_ver, err);
           if (new_attrs_list == NULL)
             goto error;
           new_object_list = g_list_concat (new_attrs_list, new_object_list);
@@ -232,7 +232,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
           {
             /* yes */
             /* verify symbol version (not file format but rather contents) */
-            o_component_check_symversion (toplevel->page_current, last_component);
+            o_component_check_symversion (page, last_component);
             last_component = NULL;
           }
 
@@ -273,8 +273,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
         if (embedded_level>0) {
           /* don't do this since objects are already
            * stored/read translated
-           * geda_component_object_translate (toplevel, new_object_list->x,
-           *                                  new_object_list->y, new_object_list->component);
+           * geda_component_object_translate (new_object_list->x, new_object_list->y, new_object_list->component);
            */
           new_object_list = g_list_reverse (new_object_list);
 
@@ -344,7 +343,7 @@ GList *o_read_buffer (TOPLEVEL *toplevel, GList *object_list,
   /* and had no attached attributes */
   if (last_component)
   {
-    o_component_check_symversion (toplevel->page_current, last_component);
+    o_component_check_symversion (page, last_component);
     last_component = NULL;  /* no longer need to check */
   }
 
@@ -399,7 +398,7 @@ GList *o_read (TOPLEVEL *toplevel, GList *object_list, char *filename,
   }
 
   /* Parse file contents */
-  result = o_read_buffer (toplevel, object_list, buffer, size, filename, err);
+  result = o_read_buffer (toplevel->page_current, object_list, buffer, size, filename, err);
   g_free (buffer);
   return result;
 }

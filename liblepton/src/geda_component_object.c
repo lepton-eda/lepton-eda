@@ -683,7 +683,7 @@ create_placeholder (OBJECT* node, int x, int y)
  *  \par Function Description
  *
  */
-OBJECT *o_component_new (TOPLEVEL *toplevel,
+OBJECT *o_component_new (PAGE *page,
                          char type,
                          int color, int x, int y, int angle,
                          int mirror, const CLibSymbol *clib,
@@ -725,7 +725,8 @@ OBJECT *o_component_new (TOPLEVEL *toplevel,
     GError * err = NULL;
 
     /* add connections till translated */
-    new_node->component->prim_objs = o_read_buffer (toplevel, NULL, buffer, -1, new_node->component_basename, &err);
+    new_node->component->prim_objs =
+      o_read_buffer (page, NULL, buffer, -1, new_node->component_basename, &err);
     if (err) {
       g_error_free(err);
       /* If reading fails, replace with placeholder object */
@@ -808,15 +809,17 @@ o_component_new_embedded (char type,
  *  If the component object was read successfully, a new object is
  *  allocated and appended to the \a object_list.
  *
- *  \param [in] toplevel     The TOPLEVEL object
+ *  \param [in] page         The PAGE object
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
-OBJECT *o_component_read (TOPLEVEL *toplevel,
-                          const char buf[], unsigned int release_ver,
-                          unsigned int fileformat_ver, GError **err)
+OBJECT *o_component_read (PAGE *page,
+                          const char buf[],
+                          unsigned int release_ver,
+                          unsigned int fileformat_ver,
+                          GError **err)
 {
   OBJECT *new_obj;
   char type;
@@ -879,7 +882,7 @@ OBJECT *o_component_read (TOPLEVEL *toplevel,
 
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
 
-    new_obj = o_component_new (toplevel, type,
+    new_obj = o_component_new (page, type,
                                DEFAULT_COLOR,
                                x1, y1,
                                angle, mirror, clib,

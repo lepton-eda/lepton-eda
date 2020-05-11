@@ -190,7 +190,7 @@ preview_update (GschemPreview *preview)
     }
     if (preview->buffer != NULL) {
       /* Load the data buffer */
-      GList * objects = o_read_buffer (preview_toplevel,
+      GList * objects = o_read_buffer (preview_page,
                                        NULL, preview->buffer, -1,
                                        _("Preview Buffer"), &err);
 

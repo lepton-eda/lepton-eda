@@ -192,14 +192,14 @@ o_attrib_remove (GList **list,
 
 /*! \brief Read attributes from a TextBuffer.
  *
- *  \param [in]  toplevel               The TOPLEVEL object.
+ *  \param [in]  page                   The PAGE object.
  *  \param [in]  object_to_get_attribs  Object which gets these attribs.
  *  \param [in]  tb                     The text buffer to read from.
  *  \param [in]  release_ver            libgeda release version number.
  *  \param [in]  fileformat_ver         file format version number.
  *  \return GList of attributes read, or NULL on error.
  */
-GList *o_read_attribs (TOPLEVEL *toplevel,
+GList *o_read_attribs (PAGE *page,
                        OBJECT *object_to_get_attribs,
                        TextBuffer *tb,
                        unsigned int release_ver, unsigned int fileformat_ver, GError ** err)
@@ -251,7 +251,7 @@ GList *o_read_attribs (TOPLEVEL *toplevel,
 
       case(OBJ_COMPONENT):
       case(OBJ_PLACEHOLDER):
-        if ((new_obj = o_component_read (toplevel, line, release_ver, fileformat_ver, err)) == NULL)
+        if ((new_obj = o_component_read (page, line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;

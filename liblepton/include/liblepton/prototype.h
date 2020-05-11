@@ -6,7 +6,14 @@ o_save (const GList *object_list,
         const char *filename,
         GError **err);
 
-GList *o_read_buffer(TOPLEVEL *toplevel, GList *object_list, char *buffer, const int size, const char *name, GError **err);
+GList*
+o_read_buffer (PAGE *page,
+               GList *object_list,
+               char *buffer,
+               const int size,
+               const char *name,
+               GError **err);
+
 GList *o_read(TOPLEVEL *toplevel, GList *object_list, char *filename, GError **err);
 
 /* f_basic.c */
