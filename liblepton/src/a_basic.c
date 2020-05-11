@@ -373,24 +373,22 @@ error:
 
 /*! \brief Read a file
  *  \par Function Description
- *  This function reads a file in libgeda format.
+ *  This function reads a file in gEDA format.
  *
  *  \param [in,out] page         The PAGE object.
- *  \param [in]     object_list  The object_list to read data to.
  *  \param [in]     filename     The filename to read from.
  *  \param [in,out] err          #GError structure for error reporting, or
  *                               NULL to disable error reporting
- *  \return object_list if successful read, or NULL on error.
+ *  \return page
  */
-GList*
+PAGE*
 o_read (PAGE *page,
-        GList *object_list,
         char *filename,
         GError **err)
 {
   char *buffer = NULL;
   size_t size;
-  GList *result;
+  GList *objects;
 
   /* Return NULL if error reporting is enabled and the return location
    * for an error isn't NULL. */
@@ -401,7 +399,10 @@ o_read (PAGE *page,
   }
 
   /* Parse file contents */
-  result = o_read_buffer (page, object_list, buffer, size, filename, err);
+  objects = o_read_buffer (page, NULL, buffer, size, filename, err);
   g_free (buffer);
-  return result;
+
+  s_page_append_list (page, objects);
+
+  return page;
 }
