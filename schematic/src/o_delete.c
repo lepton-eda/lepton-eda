@@ -32,16 +32,17 @@
  */
 void o_delete (GschemToplevel *w_current, OBJECT *object)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-
   g_return_if_fail (object != NULL);
 
-  o_selection_remove (toplevel->page_current->selection_list, object);
-  s_page_remove (toplevel->page_current, object);
+  PAGE *page = object->page;
+  g_return_if_fail (page != NULL);
+
+  o_selection_remove (page->selection_list, object);
+  s_page_remove (page, object);
   g_run_hook_object (w_current, "%remove-objects-hook", object);
   s_delete_object (object);
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, page);
 }
 
 /*! \brief Delete objects from the selection.
