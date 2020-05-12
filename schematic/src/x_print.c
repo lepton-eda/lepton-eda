@@ -198,7 +198,7 @@ x_print_draw_page (TOPLEVEL *toplevel, PAGE *page,
                                          "render-flags", is_raster ? EDA_RENDERER_FLAG_HINTING : 0,
                                          NULL));
 
-  EdaConfig *cfg = eda_config_get_context_for_file (NULL);
+  EdaConfig *cfg = eda_config_get_context_for_path (".");
   gchar *fontstr = eda_config_get_string (cfg, "schematic.gui", "font", NULL);
 
   if (fontstr != NULL) {
