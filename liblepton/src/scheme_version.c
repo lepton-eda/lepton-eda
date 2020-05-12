@@ -78,7 +78,7 @@ init_module_lepton_core_version (void *unused)
 }
 
 /*!
- * \brief Initialise the TOPLEVEL manipulation procedures.
+ * \brief Initialise procedures of the module (lepton core version).
  * \par Function Description
  * Registers Scheme procedures for working with Lepton EDA version.
  * Should only be called by edascm_init().
