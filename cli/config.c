@@ -148,11 +148,14 @@ cmd_config_impl (void *data, int argc, char **argv)
 
   /* If no configuration is available yet, grab the project
    * configuration. */
-  if (cfg == NULL) {
+  if (cfg == NULL)
+  {
     if (project_store_path == NULL)
+    {
       project_store_path = ".";
-    GFile *project_store = g_file_new_for_commandline_arg (project_store_path);
-    cfg = eda_config_get_context_for_file (project_store);
+    }
+
+    cfg = eda_config_get_context_for_path (project_store_path);
   }
 
   /* If no further arguments were specified, output the configuration
@@ -163,11 +166,15 @@ cmd_config_impl (void *data, int argc, char **argv)
   }
 
   /* Attempt to load the file, and all its parents */
-  for (parent = cfg; parent != NULL; parent = eda_config_get_parent (parent)) {
-    GError *err = NULL;
+  for (parent = cfg; parent != NULL; parent = eda_config_get_parent (parent))
+  {
     if (eda_config_is_loaded (parent) ||
-        eda_config_get_file (parent) == NULL) continue;
+        eda_config_get_filename (parent) == NULL)
+    {
+      continue;
+    }
 
+    GError *err = NULL;
     if (!eda_config_load (parent, &err)) {
       if (!g_error_matches (err, G_IO_ERROR, G_IO_ERROR_NOT_FOUND)) {
         /* TRANSLATORS: The first string is the filename, the second is
