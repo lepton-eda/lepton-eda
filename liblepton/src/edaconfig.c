@@ -104,6 +104,11 @@ config_get_legacy_mode()
 
 
 
+static EdaConfig* eda_config_get_context_for_file (GFile* path);
+static GFile* eda_config_get_file (EdaConfig* cfg);
+
+
+
 /*! \brief Get filename for system configuration files
  */
 static const gchar*
@@ -664,7 +669,7 @@ find_project_root (GFile *path)
   return result;
 }
 
-/*! \public \memberof EdaConfig
+/*! \private \memberof EdaConfig
  * \brief Return a local configuration context.
  *
  * Looks for a configuration file named "geda.conf".  If \a path is
@@ -691,7 +696,7 @@ find_project_root (GFile *path)
  * \param [in] path    Path to search for configuration from.
  * \return a local #EdaConfig configuration context for \a path.
  */
-EdaConfig *
+static EdaConfig *
 eda_config_get_context_for_file (GFile *path)
 {
   static gsize initialized = 0;
@@ -776,7 +781,7 @@ eda_config_get_context_for_path (const gchar *path)
   return config;
 }
 
-/*! \public \memberof EdaConfig
+/*! \private \memberof EdaConfig
  * \brief Return underlying filename for configuration context.
  *
  * Return a GFile for the configuration file associated with the
@@ -787,7 +792,7 @@ eda_config_get_context_for_path (const gchar *path)
  * \param cfg  Configuration context.
  * \return Configuration file for \a cfg.
  */
-GFile *
+static GFile *
 eda_config_get_file (EdaConfig *cfg)
 {
   g_return_val_if_fail (EDA_IS_CONFIG (cfg), NULL);
