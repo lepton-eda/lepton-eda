@@ -343,16 +343,6 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   return opened;
 }
 
-/*! \brief Closes the schematic file
- *  \par Function Description
- *  Does nothing
- *
- *  \param [in,out] toplevel  The TOPLEVEL object with schematic to be closed.
- */
-void f_close(TOPLEVEL *toplevel)
-{
-
-}
 
 /*! \brief Save the schematic file
  *  \par Function Description
