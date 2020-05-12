@@ -68,9 +68,6 @@ void o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
   PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
-  TOPLEVEL *toplevel = page->toplevel;
-  g_return_if_fail (toplevel != NULL);
-
   GList *prev_conn_objects = NULL;
 
   /* erase the rubberbus */
