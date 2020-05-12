@@ -404,7 +404,7 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
    * current working directory's configuration context here, no matter
    * where the rc file is located on disk. */
   if (rcfile != NULL) {
-    EdaConfig *cwd_cfg = eda_config_get_context_for_file (NULL);
+    EdaConfig *cwd_cfg = eda_config_get_context_for_path (".");
     g_rc_parse_file (toplevel, rcfile, cwd_cfg, &err); HANDLER_DISPATCH;
   }
 
