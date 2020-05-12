@@ -23,8 +23,6 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err);
 int f_open(TOPLEVEL *toplevel, PAGE *page, const gchar *filename, GError **err);
 int f_open_flags(TOPLEVEL *toplevel, PAGE *page, const gchar *filename,
                  const gint flags, GError **err);
-void f_close(TOPLEVEL *toplevel);
-
 int
 f_save (PAGE *page,
         const char *filename,
