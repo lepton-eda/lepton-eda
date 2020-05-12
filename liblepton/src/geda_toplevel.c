@@ -58,9 +58,6 @@ TOPLEVEL *s_toplevel_new (void)
   /* for the following variables */
   toplevel->change_notify_funcs = NULL;
 
-  toplevel->load_newer_backup_func = NULL;
-  toplevel->load_newer_backup_data = NULL;
-
   /* Auto-save interval */
   toplevel->auto_save_interval = 0;
   toplevel->auto_save_timeout = 0;

@@ -43,10 +43,6 @@ struct st_toplevel
   /* Callback functions for object change notification */
   GList *change_notify_funcs;
 
-  /* Callback function for deciding whether to load a backup file. */
-  LoadBackupQueryFunc load_newer_backup_func;
-  void *load_newer_backup_data;
-
   GList *weak_refs; /* Weak references */
 };
 
