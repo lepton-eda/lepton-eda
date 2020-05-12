@@ -190,17 +190,14 @@ SCM_DEFINE (path_config_context, "%path-config-context", 1, 0, 0,
               s_path_config_context);
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+
   char *path = scm_to_utf8_string (path_s);
   scm_dynwind_free (path);
-  GFile *file = g_file_parse_name (path);
-  scm_dynwind_unwind_handler (g_object_unref, file,
-                              SCM_F_WIND_EXPLICITLY);
 
-  EdaConfig *cfg = eda_config_get_context_for_file (file);
+  EdaConfig *cfg = eda_config_get_context_for_path (path);
   SCM result = edascm_from_config (cfg);
 
   scm_dynwind_end ();
-  scm_remember_upto_here_1 (path_s);
   return result;
 }
 
