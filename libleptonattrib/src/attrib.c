@@ -179,15 +179,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
    * (that is, to the first file name) */
   argv_index = parse_commandline(argc, argv);
 
-  /* ----------  create log file right away ---------- */
-  /* ----------  even if logging is enabled ---------- */
-  s_log_init ("attrib");
-
-  s_log_message
-    (_("Lepton EDA/lepton-attrib version %1$s%2$s.%3$s git: %4$.7s"),
-     PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
-     PACKAGE_DATE_VERSION, PACKAGE_GIT_COMMIT);
-
   /* ---------- Start creation of new project: (TOPLEVEL *pr_current) ---------- */
   /* ----- Read in RC files.   ----- */
   g_rc_parse (pr_current (), "lepton-attrib", NULL, NULL);

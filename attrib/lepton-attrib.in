@@ -23,7 +23,8 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 
-(use-modules (system foreign))
+(use-modules (system foreign)
+             (ice-9 match))
 
 ;;; Load and initialize liblepton library.
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
@@ -41,6 +42,24 @@ exec @GUILE@ -s "$0" "$@"
 (bind-textdomain-codeset "lepton-attrib" "UTF-8")
 (setlocale LC_ALL "")
 (setlocale LC_NUMERIC "C")
+
+
+
+(primitive-eval '(use-modules (lepton log)
+                              (lepton version)))
+
+(define* (lepton-attrib-version )
+  "Print lepton-attrib version."
+  (define (version-msg . args)
+    (apply format #f "Lepton EDA/lepton-attrib ~A~A.~A (git: ~A)\n" args))
+
+  (match (lepton-version)
+    ((prepend dotted date commit bugs url msg)
+     (log! 'message (version-msg prepend dotted date (string-take commit 7))))))
+
+;;; Init logging.
+(init-log "attrib")
+(lepton-attrib-version)
 
 ;;; FIXME: use (command-line) here
 (attrib-main %null-pointer 0 %null-pointer)
