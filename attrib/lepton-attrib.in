@@ -24,7 +24,8 @@ exec @GUILE@ -s "$0" "$@"
 
 
 (use-modules (system foreign)
-             (ice-9 match))
+             (ice-9 match)
+             (ice-9 getopt-long))
 
 ;;; Load and initialize liblepton library.
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
@@ -57,9 +58,34 @@ exec @GUILE@ -s "$0" "$@"
     ((prepend dotted date commit bugs url msg)
      (log! 'message (version-msg prepend dotted date (string-take commit 7))))))
 
+
+(define g-slist-append
+  (pointer->procedure
+   '*
+   (dynamic-func "g_slist_append" (dynamic-link "libglib-2.0"))
+   (list '* '*)))
+
+(define (list->gslist ls)
+  (let loop ((ls ls)
+             (gslist %null-pointer))
+    (if (null? ls)
+        gslist
+        (loop (cdr ls)
+              (g-slist-append gslist (string->pointer (car ls)))))))
+
 ;;; Init logging.
 (init-log "attrib")
 (lepton-attrib-version)
 
-;;; FIXME: use (command-line) here
-(attrib-main %null-pointer 0 %null-pointer)
+
+(let* ((option-spec '((help (single-char #\h))
+                      (quiet (single-char #\q))
+                      (verbose (single-char #\v))
+                      (version (single-char #\V))))
+
+       (options (getopt-long (program-arguments) option-spec))
+       (files (option-ref options '() '())))
+
+  ;; FIXME: check that files exist (f_normalize_filename() in the
+  ;; original code).
+  (attrib-main (list->gslist files) 0 %null-pointer))

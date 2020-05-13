@@ -158,13 +158,16 @@ gint gattrib_quit(gint return_code)
  * \param argc Number of command line arguments
  * \param argv Command line arguments
  */
-void gattrib_main(void *closure, int argc, char *argv[])
+void
+gattrib_main (GSList *file_list,
+              int argc,
+              char *argv[])
 {
   /* TOPLEVEL *pr_current is a global */
   /* SHEET_DATA *sheet_head is a global */
   /* GtkWidget *main_window is a global */
 
-  int argv_index;
+  /* int argv_index; */
 
 #ifdef HAVE_GTHREAD
   /* Gattrib isn't threaded, but some of GTK's file chooser
@@ -177,7 +180,7 @@ void gattrib_main(void *closure, int argc, char *argv[])
 
   /* Note that argv_index holds index to first non-flag command line option
    * (that is, to the first file name) */
-  argv_index = parse_commandline(argc, argv);
+  /* argv_index = parse_commandline(argc, argv); */
 
   /* ---------- Start creation of new project: (TOPLEVEL *pr_current) ---------- */
   /* ----- Read in RC files.   ----- */
@@ -190,25 +193,24 @@ void gattrib_main(void *closure, int argc, char *argv[])
   /* ---------- Initialize SHEET_DATA data structure ---------- */
   sheet_head = s_sheet_data_new();   /* sheet_head was declared in globals.h */
 
-  GSList *file_list = NULL;
-  if (argv_index >= argc) {
-     /* No files specified on the command line, pop up the File open dialog. */
-     file_list = x_fileselect_open();
-     if(file_list == NULL)
-        exit(0);
+  if (file_list == NULL) {
+    /* No files specified on the command line, pop up the File
+       open dialog. */
+    file_list = x_fileselect_open();
+    if (file_list == NULL) exit(0);
   } else {
-     /* Construct the list of filenames from the command line.
-      * argv_index holds the position of the first filename  */
-     while (argv_index < argc) {
-        gchar *filename = f_normalize_filename(argv[argv_index], NULL);
-        if (filename != NULL) {
-            file_list = g_slist_append(file_list, filename);
-        } else {
-            fprintf(stderr, _("Couldn't find file [%1$s]\n"), argv[argv_index]);
-            exit(1);
-        }
-        argv_index++;
-     }
+    /* Construct the list of filenames from the command line.
+     * argv_index holds the position of the first filename  */
+    /* while (argv_index < argc) { */
+    /*     gchar *filename = f_normalize_filename(argv[argv_index], NULL); */
+    /*     if (filename != NULL) { */
+    /*         file_list = g_slist_append(file_list, filename); */
+    /*     } else { */
+    /*         fprintf(stderr, _("Couldn't find file [%1$s]\n"), argv[argv_index]); */
+    /*         exit(1); */
+    /*     } */
+    /*     argv_index++; */
+    /*  } */
   }
 
   /* Load the files */

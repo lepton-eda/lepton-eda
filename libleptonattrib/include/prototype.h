@@ -9,7 +9,7 @@ G_BEGIN_DECLS
 TOPLEVEL *pr_current ();
 gboolean gattrib_really_quit(void);
 gint gattrib_quit(gint return_code);
-void gattrib_main (void *closure,
+void gattrib_main (GSList *file_list,
                    int argc,
                    char *argv[]);
 
