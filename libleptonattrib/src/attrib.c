@@ -175,9 +175,6 @@ void gattrib_main(void *closure, int argc, char *argv[])
     g_thread_init (NULL);
 #endif
 
-  /* Initialize gEDA stuff */
-  liblepton_init();
-
   /* Note that argv_index holds index to first non-flag command line option
    * (that is, to the first file name) */
   argv_index = parse_commandline(argc, argv);
