@@ -167,15 +167,6 @@ gattrib_main (GSList *file_list)
 
   /* int argv_index; */
 
-#ifdef HAVE_GTHREAD
-  /* Gattrib isn't threaded, but some of GTK's file chooser
-   * backends uses threading so we need to call g_thread_init().
-   * GLib requires threading be initialised before any other GLib
-   * functions are called. Do it now if its not already setup.  */
-  if (!g_thread_supported ())
-    g_thread_init (NULL);
-#endif
-
   /* ---------- Start creation of new project: (TOPLEVEL *pr_current) ---------- */
   /* ----- Read in RC files.   ----- */
   g_rc_parse (pr_current (), "lepton-attrib", NULL, NULL);
