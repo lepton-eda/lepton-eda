@@ -36,6 +36,13 @@ exec @GUILE@ -s "$0" "$@"
                            (dynamic-func "gattrib_main" (dynamic-link "libleptonattrib"))
                            (list '* int '*)))
 
+(define set-verbose-mode!
+  (pointer->procedure
+   void
+   (dynamic-func "set_verbose_mode"
+                 (dynamic-link "libleptonattrib"))
+   '()))
+
 ;;; Localization.
 (define %textdomain "lepton-attrib")
 (bindtextdomain %textdomain "@localedir@")
@@ -141,11 +148,13 @@ Lepton EDA homepage: ~S
        (options (getopt-long (program-arguments) option-spec))
        (help (option-ref options 'help #f))
        (version (option-ref options 'version #f))
-       (files (option-ref options '() '())))
+       (files (option-ref options '() '()))
+       (verbose? (option-ref options 'verbose #f)))
 
   (when help (usage))
   ;; Output version to stdout and exit, if requested.
   (when version (lepton-attrib-version 'stdout))
+  (when verbose? (set-verbose-mode!))
 
   ;; FIXME: check that files exist (f_normalize_filename() in the
   ;; original code).

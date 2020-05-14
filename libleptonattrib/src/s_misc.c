@@ -48,6 +48,11 @@
  */
 static int char_index = 0;
 
+void
+set_verbose_mode () {
+  verbose_mode = TRUE;
+}
+
 /*! \brief Print message in verbose mode
  *
  * Print the supplied message in verbose mode. Line wrap if necessary.
