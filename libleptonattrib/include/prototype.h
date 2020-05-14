@@ -13,12 +13,6 @@ void gattrib_main (GSList *file_list,
                    int argc,
                    char *argv[]);
 
-/* -------------- parsecmd.c ----------------- */
-void usage(char *cmd);   
-     /* output usage string */
-int parse_commandline(int argc, char *argv[]);
-     /* run through cmd line options and set mode switches. */
-
 /* -------------- listsort.c ----------------- */
 int cmp(STRING_LIST *a, STRING_LIST *b);
 STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double);

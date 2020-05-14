@@ -5,7 +5,6 @@ libleptonattrib/src/gtkextra-marshal.c
 libleptonattrib/src/gtksheet_2_2.c
 libleptonattrib/src/i_basic.c
 libleptonattrib/src/listsort.c
-libleptonattrib/src/parsecmd.c
 libleptonattrib/src/s_attrib.c
 libleptonattrib/src/s_misc.c
 libleptonattrib/src/s_object.c

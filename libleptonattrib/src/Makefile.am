@@ -8,7 +8,6 @@ libleptonattrib_la_SOURCES = \
 	gtksheet_2_2.c \
 	i_basic.c \
 	listsort.c \
-	parsecmd.c \
 	s_attrib.c \
 	s_misc.c \
 	s_object.c \

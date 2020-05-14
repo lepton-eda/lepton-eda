@@ -178,10 +178,6 @@ gattrib_main (GSList *file_list,
     g_thread_init (NULL);
 #endif
 
-  /* Note that argv_index holds index to first non-flag command line option
-   * (that is, to the first file name) */
-  /* argv_index = parse_commandline(argc, argv); */
-
   /* ---------- Start creation of new project: (TOPLEVEL *pr_current) ---------- */
   /* ----- Read in RC files.   ----- */
   g_rc_parse (pr_current (), "lepton-attrib", NULL, NULL);
