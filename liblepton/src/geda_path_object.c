@@ -26,17 +26,6 @@
 #include "libgeda_priv.h"
 
 
-typedef void (*DRAW_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
-                           int line_width, int length, int space,
-                           int origin_x, int origin_y);
-
-
-typedef void (*FILL_FUNC) (TOPLEVEL *toplevel, FILE *fp, PATH *path,
-                           int fill_width,
-                           int angle1, int pitch1, int angle2, int pitch2,
-                           int origin_x, int origin_y);
-
-
 /*! \brief Create a new path object.
  *  \par Function Description
  *  This function creates a new object representing a path.
