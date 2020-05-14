@@ -32,9 +32,10 @@ exec @GUILE@ -s "$0" "$@"
                 "liblepton_init")
 
 (define attrib-main
-       (pointer->procedure void
-                           (dynamic-func "gattrib_main" (dynamic-link "libleptonattrib"))
-                           (list '* int '*)))
+  (pointer->procedure void
+                      (dynamic-func "gattrib_main"
+                                    (dynamic-link "libleptonattrib"))
+                      (list '*)))
 
 (define set-verbose-mode!
   (pointer->procedure
@@ -158,4 +159,4 @@ Lepton EDA homepage: ~S
 
   ;; FIXME: check that files exist (f_normalize_filename() in the
   ;; original code).
-  (attrib-main (list->gslist files) 0 %null-pointer))
+  (attrib-main (list->gslist files)))

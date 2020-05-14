@@ -9,9 +9,7 @@ G_BEGIN_DECLS
 TOPLEVEL *pr_current ();
 gboolean gattrib_really_quit(void);
 gint gattrib_quit(gint return_code);
-void gattrib_main (GSList *file_list,
-                   int argc,
-                   char *argv[]);
+void gattrib_main (GSList *file_list);
 
 /* -------------- listsort.c ----------------- */
 int cmp(STRING_LIST *a, STRING_LIST *b);

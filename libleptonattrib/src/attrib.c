@@ -154,15 +154,13 @@ gint gattrib_quit(gint return_code)
  * - populates the spreadsheet data structure;
  * - calls gtk_main() to start the event loop.
  *
- * \param closure
- * \param argc Number of command line arguments
- * \param argv Command line arguments
+ * \param file_list
  */
 void
-gattrib_main (GSList *file_list,
-              int argc,
-              char *argv[])
+gattrib_main (GSList *file_list)
 {
+  int argc = 0;
+
   /* TOPLEVEL *pr_current is a global */
   /* SHEET_DATA *sheet_head is a global */
   /* GtkWidget *main_window is a global */
@@ -182,7 +180,7 @@ gattrib_main (GSList *file_list,
   /* ----- Read in RC files.   ----- */
   g_rc_parse (pr_current (), "lepton-attrib", NULL, NULL);
 
-  gtk_init(&argc, &argv);
+  gtk_init (&argc, NULL);
 
   x_window_init();
 
