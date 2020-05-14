@@ -84,7 +84,6 @@ lepton-attrib: Lepton EDA attribute editor.
 Presents schematic attributes in easy-to-edit spreadsheet format.
 
 Options:
-  -q, --quiet            Quiet mode
   -v, --verbose          Verbose mode on
   -V, --version          Show version information
   -h, --help             This help menu
@@ -136,7 +135,6 @@ Lepton EDA homepage: ~S
 
 
 (let* ((option-spec '((help (single-char #\h))
-                      (quiet (single-char #\q))
                       (verbose (single-char #\v))
                       (version (single-char #\V))))
 

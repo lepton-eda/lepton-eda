@@ -130,8 +130,8 @@ x_fileselect_load_files (GSList *filenames)
        filename != NULL;
        filename = g_slist_next (filename)) {
     gchar *string = (gchar*)filename->data;
-    
-    if (!quiet_mode) {
+
+    if (verbose_mode) {
       s_log_message(_("Loading file [%1$s]"), string);
     }
 

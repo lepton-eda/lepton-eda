@@ -106,7 +106,6 @@ extern GtkWidget *label;
 
 /* command line switch settings */
 extern int verbose_mode;
-extern int quiet_mode;
 
 /* Used to identify colors */
 #define BLACK           0

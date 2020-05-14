@@ -156,7 +156,6 @@ int parse_commandline(int argc, char *argv[])
           break;
 	
         case 'q':
-          quiet_mode = TRUE;
           break;
 	
         case 'h':
@@ -177,11 +176,6 @@ int parse_commandline(int argc, char *argv[])
       }
     }
     
-    if (quiet_mode)
-    {
-      verbose_mode = FALSE;
-    }
-
     return (optind);
 }
 
