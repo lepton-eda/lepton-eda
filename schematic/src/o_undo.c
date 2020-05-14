@@ -440,16 +440,8 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
 
   o_select_unselect_all (w_current);
 
-  if (w_current->undo_type == UNDO_DISK && u_current->filename) {
-    /* delete objects of page */
-    s_page_delete_objects (page);
-
-    /* Free the objects in the place list. */
-    geda_object_list_delete (page->place_list);
-    page->place_list = NULL;
-
-    gschem_toplevel_page_content_changed (w_current, page);
-  } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
+  if ((w_current->undo_type == UNDO_DISK && u_current->filename) ||
+      (w_current->undo_type == UNDO_MEMORY && u_current->object_list)) {
     /* delete objects of page */
     s_page_delete_objects (page);
 
@@ -459,7 +451,6 @@ o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
 
     gschem_toplevel_page_content_changed (w_current, page);
   }
-
 
   /* temporarily disable logging */
   save_logging = do_logging;
