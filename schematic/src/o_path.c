@@ -27,11 +27,6 @@
 #define NUM_BEZIER_SEGMENTS 100
 
 
-typedef void (*FILL_FUNC) (GschemToplevel *w_current,
-                           GedaColor *color, PATH *path,
-                           gint fill_width,
-                           gint angle1, gint pitch1, gint angle2, gint pitch2);
-
 static PATH *path_copy_modify (PATH *path, int dx, int dy,
                                int new_x, int new_y, int whichone)
 {
