@@ -157,13 +157,25 @@ gint gattrib_quit(gint return_code)
  * \param file_list
  */
 void
-gattrib_main (GSList *file_list)
+gattrib_main (SCM file_list_s)
 {
   /* TOPLEVEL *pr_current is a global */
   /* SHEET_DATA *sheet_head is a global */
   /* GtkWidget *main_window is a global */
 
+  SCM list_s;
+  GSList *file_list = NULL;
   /* int argv_index; */
+
+  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
+  scm_dynwind_unwind_handler ((void (*)(void *)) g_slist_free,
+                              file_list,
+                              (scm_t_wind_flags) 0);
+
+  for (list_s = file_list_s; !scm_is_null (list_s); list_s = SCM_CDR (list_s)) {
+    SCM element = SCM_CAR (list_s);
+    file_list = g_slist_prepend (file_list, (gpointer) scm_to_locale_string (element));
+  }
 
   /* ---------- Start creation of new project: (TOPLEVEL *pr_current) ---------- */
   /* ----- Read in RC files.   ----- */
@@ -204,6 +216,10 @@ gattrib_main (GSList *file_list)
 
   g_slist_foreach(file_list, (GFunc)g_free, NULL);
   g_slist_free(file_list);
+
+  scm_remember_upto_here_1 (file_list_s);
+
+  scm_dynwind_end ();
 
   gtk_main();
   exit(0);

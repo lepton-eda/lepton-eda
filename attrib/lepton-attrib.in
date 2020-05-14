@@ -123,20 +123,6 @@ Lepton EDA homepage: ~S
   (primitive-exit 0))
 
 
-(define g-slist-append
-  (pointer->procedure
-   '*
-   (dynamic-func "g_slist_append" (dynamic-link "libglib-2.0"))
-   (list '* '*)))
-
-(define (list->gslist ls)
-  (let loop ((ls ls)
-             (gslist %null-pointer))
-    (if (null? ls)
-        gslist
-        (loop (cdr ls)
-              (g-slist-append gslist (string->pointer (car ls)))))))
-
 ;;; Init logging.
 (init-log "attrib")
 (lepton-attrib-version)
@@ -159,4 +145,4 @@ Lepton EDA homepage: ~S
 
   ;; FIXME: check that files exist (f_normalize_filename() in the
   ;; original code).
-  (attrib-main (list->gslist files)))
+  (attrib-main (scm->pointer files)))
