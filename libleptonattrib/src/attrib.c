@@ -48,11 +48,10 @@
 #include <string.h>
 #endif
 
-/*------------------------------------------------------------------*/
-/* Gattrib specific includes -- stuff dealing with gattrib data structs.
- *------------------------------------------------------------------*/
+/* lepton-attrib specific includes -- stuff dealing with data
+   structs. */
 #include <liblepton/liblepton.h>
-#include "../include/struct.h"     /* typdef and struct declarations */
+#include "../include/struct.h"     /* typedef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
 
@@ -125,7 +124,6 @@ gboolean gattrib_really_quit(void)
  */
 gint gattrib_quit(gint return_code)
 {
-  /*   s_clib_cache_free(); */
   s_clib_free();
 #ifdef DEBUG
   fflush(stderr);
@@ -138,34 +136,24 @@ gint gattrib_quit(gint return_code)
 }
 
 /*------------------------------------------------------------------*/
-/*! \brief The "real" main for gattrib.
+/*! \brief The main C procedure for lepton-attrib.
  *
  * This is the main program body for gattrib. A pointer to this
  * function is passed to scm_boot_guile() at startup.
  *
  * This function:
- * - initialises threading, if the underlying GTK library is threaded.
- *   However, gattrib itself isn't threaded.
- * - initialises libgeda;
- * - parses the command line;
- * - starts logging;
  * - parses the RC files;
  * - initialises the GTK UI;
  * - populates the spreadsheet data structure;
  * - calls gtk_main() to start the event loop.
  *
- * \param file_list
+ * \param file_list_s  Scheme list of files to process
  */
 void
 gattrib_main (SCM file_list_s)
 {
-  /* TOPLEVEL *pr_current is a global */
-  /* SHEET_DATA *sheet_head is a global */
-  /* GtkWidget *main_window is a global */
-
   SCM list_s;
   GSList *file_list = NULL;
-  /* int argv_index; */
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   scm_dynwind_unwind_handler ((void (*)(void *)) g_slist_free,
