@@ -169,8 +169,6 @@ gattrib_main (SCM file_list_s)
   /* ----- Read in RC files.   ----- */
   g_rc_parse (pr_current (), "lepton-attrib", NULL, NULL);
 
-  gtk_init (NULL, NULL);
-
   x_window_init();
 
   /* ---------- Initialize SHEET_DATA data structure ---------- */
@@ -195,7 +193,4 @@ gattrib_main (SCM file_list_s)
   scm_remember_upto_here_1 (file_list_s);
 
   scm_dynwind_end ();
-
-  gtk_main();
-  exit(0);
 }
