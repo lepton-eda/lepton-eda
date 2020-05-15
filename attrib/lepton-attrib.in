@@ -23,9 +23,11 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 
-(use-modules (system foreign)
+(use-modules (ice-9 getopt-long)
              (ice-9 match)
-             (ice-9 getopt-long))
+             (ice-9 receive)
+             (srfi srfi-1)
+             (system foreign))
 
 ;;; Load and initialize liblepton library.
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
@@ -55,7 +57,8 @@ exec @GUILE@ -s "$0" "$@"
 (define G_ gettext)
 
 
-(primitive-eval '(use-modules (lepton log)
+(primitive-eval '(use-modules (lepton file-system)
+                              (lepton log)
                               (lepton version)))
 
 (define* (lepton-attrib-version #:optional stdout)
@@ -123,6 +126,12 @@ Lepton EDA homepage: ~S
   (primitive-exit 0))
 
 
+(define (report-unreadable filename)
+  (format (current-error-port)
+          "Could not open file ~S.\n"
+          filename))
+
+
 ;;; Init logging.
 (init-log "attrib")
 (lepton-attrib-version)
@@ -143,6 +152,13 @@ Lepton EDA homepage: ~S
   (when version (lepton-attrib-version 'stdout))
   (when verbose? (set-verbose-mode!))
 
-  ;; FIXME: check that files exist (f_normalize_filename() in the
-  ;; original code).
-  (attrib-main (scm->pointer files)))
+  (receive (readable-files unreadable-files)
+      (partition file-readable? files)
+    (if (null? unreadable-files)
+        ;; Main procedure.
+        (attrib-main (scm->pointer readable-files))
+        ;; There are non-existing or unreadable files.  Report and
+        ;; exit.
+        (begin
+          (for-each report-unreadable unreadable-files)
+          (primitive-exit 1)))))

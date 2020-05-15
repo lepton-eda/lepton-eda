@@ -193,19 +193,6 @@ gattrib_main (SCM file_list_s)
        open dialog. */
     file_list = x_fileselect_open();
     if (file_list == NULL) exit(0);
-  } else {
-    /* Construct the list of filenames from the command line.
-     * argv_index holds the position of the first filename  */
-    /* while (argv_index < argc) { */
-    /*     gchar *filename = f_normalize_filename(argv[argv_index], NULL); */
-    /*     if (filename != NULL) { */
-    /*         file_list = g_slist_append(file_list, filename); */
-    /*     } else { */
-    /*         fprintf(stderr, _("Couldn't find file [%1$s]\n"), argv[argv_index]); */
-    /*         exit(1); */
-    /*     } */
-    /*     argv_index++; */
-    /*  } */
   }
 
   /* Load the files */
