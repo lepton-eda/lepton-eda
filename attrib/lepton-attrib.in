@@ -35,7 +35,7 @@ exec @GUILE@ -s "$0" "$@"
 
 (define attrib-main
   (pointer->procedure void
-                      (dynamic-func "gattrib_main"
+                      (dynamic-func "attrib_main"
                                     (dynamic-link "libleptonattrib"))
                       (list '*)))
 

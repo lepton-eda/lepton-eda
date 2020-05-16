@@ -150,7 +150,7 @@ gint gattrib_quit(gint return_code)
  * \param file_list_s  Scheme list of files to process
  */
 void
-gattrib_main (SCM file_list_s)
+attrib_main (SCM file_list_s)
 {
   SCM list_s;
   GSList *file_list = NULL;
