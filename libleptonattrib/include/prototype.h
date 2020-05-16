@@ -1,6 +1,5 @@
 /*! \file
- * This file holds all function prototypes for the entire gattrib
- * project.  It should be #include'ed after struct.h.
+ * Function prototypes for the libleptonattrib library.
  */
 
 G_BEGIN_DECLS
