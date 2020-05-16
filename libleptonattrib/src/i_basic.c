@@ -38,6 +38,3 @@
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
-
-/* --- This is necessary for i_basic.c --- */
-#include "../include/x_states.h"
