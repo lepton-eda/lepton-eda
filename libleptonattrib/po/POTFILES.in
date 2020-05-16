@@ -3,7 +3,6 @@ libleptonattrib/src/f_export.c
 libleptonattrib/src/globals.c
 libleptonattrib/src/gtkextra-marshal.c
 libleptonattrib/src/gtksheet_2_2.c
-libleptonattrib/src/i_basic.c
 libleptonattrib/src/listsort.c
 libleptonattrib/src/s_attrib.c
 libleptonattrib/src/s_misc.c

@@ -6,7 +6,6 @@ libleptonattrib_la_SOURCES = \
 	globals.c \
 	gtkextra-marshal.c \
 	gtksheet_2_2.c \
-	i_basic.c \
 	listsort.c \
 	s_attrib.c \
 	s_misc.c \
