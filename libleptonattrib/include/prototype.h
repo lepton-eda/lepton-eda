@@ -5,7 +5,7 @@
 
 G_BEGIN_DECLS
 
-/* ---------------- gattrib.c ---------------- */
+/* attrib.c */
 TOPLEVEL *pr_current ();
 gboolean attrib_really_quit(void);
 gint attrib_quit(gint return_code);
