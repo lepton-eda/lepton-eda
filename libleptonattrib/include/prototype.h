@@ -7,8 +7,8 @@ G_BEGIN_DECLS
 
 /* ---------------- gattrib.c ---------------- */
 TOPLEVEL *pr_current ();
-gboolean gattrib_really_quit(void);
-gint gattrib_quit(gint return_code);
+gboolean attrib_really_quit(void);
+gint attrib_quit(gint return_code);
 void attrib_main (SCM file_list_s);
 
 /* -------------- listsort.c ----------------- */

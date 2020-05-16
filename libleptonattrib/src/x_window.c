@@ -95,7 +95,7 @@ x_window_init()
   gtk_window_set_title( GTK_WINDOW(window), _("lepton-attrib - Lepton EDA attribute editor")); 
   
   g_signal_connect(window, "delete_event",
-                   G_CALLBACK (gattrib_really_quit), 0);
+                   G_CALLBACK (attrib_really_quit), 0);
 
   /* -----  Now create main_vbox.  This is a container which organizes child  ----- */  
   /* -----  widgets into a vertical column.  ----- */  
@@ -281,7 +281,7 @@ static const GtkActionEntry actions[] = {
   { "file-save", GTK_STOCK_SAVE, "Save", "<Control>S", "", menu_file_save},
   { "file-export-csv", NULL, "Export CSV", "", "", menu_file_export_csv},
   /* { "file-print", GTK_STOCK_PRINT, "Print", "<Control>P", "", x_dialog_unimplemented_feature}, */
-  { "file-quit", GTK_STOCK_QUIT, "Quit", "<Control>Q", "", G_CALLBACK(gattrib_really_quit)},
+  { "file-quit", GTK_STOCK_QUIT, "Quit", "<Control>Q", "", G_CALLBACK(attrib_really_quit)},
 
   /* Edit menu */
   { "edit", NULL, "_Edit"},

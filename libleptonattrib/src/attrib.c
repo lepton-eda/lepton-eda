@@ -83,7 +83,7 @@ TOPLEVEL *pr_current() {
  *
  *  \return value 0 to the shell to denote a successful quit.
  */
-gboolean gattrib_really_quit(void)
+gboolean attrib_really_quit(void)
 {
   /* Save main window's geometry:
   */
@@ -108,7 +108,7 @@ gboolean gattrib_really_quit(void)
   if (sheet_head->CHANGED == TRUE) {
     x_dialog_unsaved_data();
   } else {
-    gattrib_quit(0);
+    attrib_quit(0);
   }
   return TRUE;
 }
@@ -122,7 +122,7 @@ gboolean gattrib_really_quit(void)
  *
  *  \param return_code Value to pass to the exit() system call.
  */
-gint gattrib_quit(gint return_code)
+gint attrib_quit(gint return_code)
 {
   s_clib_free();
 #ifdef DEBUG
