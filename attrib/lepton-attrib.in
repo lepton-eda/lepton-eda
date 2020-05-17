@@ -61,6 +61,13 @@ exec @GUILE@ -s "$0" "$@"
                  (dynamic-link "libleptonattrib"))
    '()))
 
+(define init-window
+  (pointer->procedure
+   void
+   (dynamic-func "x_window_init"
+                 (dynamic-link "libleptonattrib"))
+   '()))
+
 ;;; Localization.
 (define %textdomain "lepton-attrib")
 (bindtextdomain %textdomain "@localedir@")
@@ -174,6 +181,8 @@ Lepton EDA homepage: ~S
         (begin
           ;; Initialize GTK.
           (gtk-init %null-pointer %null-pointer)
+          ;; Initialize main window.
+          (init-window)
           ;; Run attribute editor.
           (attrib-main (scm->pointer readable-files))
           ;; Run main GTK loop.
