@@ -167,7 +167,6 @@ int x_gtksheet_get_max_col(GtkSheet *sheet);
 
 /* ------------- x_fileselect.c ------------- */
 GSList *x_fileselect_open (void);
-void x_fileselect_save (void);
 gboolean x_fileselect_load_files (GSList *filenames);
 
 /* ------------- x_window.c ------------- */
