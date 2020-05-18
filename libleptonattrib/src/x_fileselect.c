@@ -218,11 +218,11 @@ x_fileselect_load_files (GSList *filenames)
 
 /*! \brief Open file dialog
  *
- * This function opens a file chooser dialog and waits for the user
- *         to select at least one file to load as toplevel's new pages.
+ * This function opens a file chooser dialog and waits for the
+ * user to select at least one file to load as a new page.
  *
- *  \returns list of files to be opened, or NULL if the user cancelled
- *           the dialog
+ * \returns GSList* list of files to be opened, or NULL if the
+ *          user cancelled the dialog
  */
 GSList *
 x_fileselect_open (void)
