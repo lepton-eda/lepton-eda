@@ -248,7 +248,7 @@ void x_dialog_unsaved_data()
         }
       case GTK_RESPONSE_YES:
         {
-          s_toplevel_save_sheet (pr_current ());  /* Dumps sheet data into TOPLEVEL */
+          s_toplevel_save_sheet ();
           attrib_quit(0);
           break;
         }

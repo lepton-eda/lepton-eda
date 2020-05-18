@@ -125,15 +125,17 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
  *
  * Called when the user invokes "save".  It first
  * places all data from gtksheet into SHEET_DATA.  Then it
- * loops through all pages & calls s_toplevel_sheetdata_to_toplevel()
- * to place all
- * stuff in SHEET_DATA into the libgeda TOPLEVEL structure.
+ * loops through all pages and saves them.
  */
 void
-s_toplevel_save_sheet (TOPLEVEL *toplevel)
+s_toplevel_save_sheet ()
 {
   GList *iter;
   PAGE *p_current;
+
+  TOPLEVEL *toplevel = pr_current ();
+
+  g_return_if_fail (toplevel != NULL);
 
 #if DEBUG
   printf ("==== Enter s_toplevel_gtksheet_to_toplevel()\n");
@@ -163,7 +165,8 @@ s_toplevel_save_sheet (TOPLEVEL *toplevel)
   printf ("Done writing SHEEET_DATA text back into pr_currnet.\n");
 #endif  
 
-  s_page_save_all (pr_current ());  /* saves all pages in design */
+  /* Save all pages in design. */
+  s_page_save_all (toplevel);
   sheet_head->CHANGED = FALSE;
 
   return;

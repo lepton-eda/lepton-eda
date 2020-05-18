@@ -174,8 +174,7 @@ menu_file_open()
 static void
 menu_file_save()
 {
-  TOPLEVEL *toplevel = pr_current ();
-  s_toplevel_save_sheet (toplevel);  /* Dumps sheet data into TOPLEVEL */
+  s_toplevel_save_sheet ();
 }
 
 /*!
