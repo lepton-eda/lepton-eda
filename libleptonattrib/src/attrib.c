@@ -178,9 +178,6 @@ attrib_main (SCM file_list_s)
      exit(1);
   }
 
-  g_slist_foreach(file_list, (GFunc)g_free, NULL);
-  g_slist_free(file_list);
-
   scm_remember_upto_here_1 (file_list_s);
 
   scm_dynwind_end ();

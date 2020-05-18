@@ -156,7 +156,9 @@ x_fileselect_load_files (GSList *filenames)
     s_sheet_data_add_master_pin_list_items (s_page_objects (toplevel->page_current));
     s_sheet_data_add_master_pin_attrib_list_items (s_page_objects (toplevel->page_current));
   }  	/* end of loop over files     */
-  
+
+  g_slist_foreach (filenames, (GFunc)g_free, NULL);
+  g_slist_free (filenames);
 
   /* ---------- Sort the master lists  ---------- */
   s_string_list_sort_master_comp_list();
