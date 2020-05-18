@@ -167,17 +167,6 @@ menu_file_open()
 #endif
 
 /*!
- * \brief File->Save menu item
- *
- * Implement the File->Save menu
- */
-static void
-menu_file_save()
-{
-  s_toplevel_save_sheet ();
-}
-
-/*!
  * \brief File->Export CSV menu item
  *
  * Implement the File->Export CSV menu item
@@ -274,7 +263,7 @@ static const GtkActionEntry actions[] = {
   /* File menu */
   { "file", NULL, "_File"},
   /* { "file-open", GTK_STOCK_OPEN, "Open", "<Control>O", "", menu_file_open}, */
-  { "file-save", GTK_STOCK_SAVE, "Save", "<Control>S", "", menu_file_save},
+  { "file-save", GTK_STOCK_SAVE, "Save", "<Control>S", "", s_toplevel_save_sheet},
   { "file-export-csv", NULL, "Export CSV", "", "", menu_file_export_csv},
   /* { "file-print", GTK_STOCK_PRINT, "Print", "<Control>P", "", x_dialog_unimplemented_feature}, */
   { "file-quit", GTK_STOCK_QUIT, "Quit", "<Control>Q", "", G_CALLBACK(attrib_really_quit)},
