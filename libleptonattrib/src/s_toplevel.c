@@ -163,8 +163,10 @@ s_toplevel_save_sheet (TOPLEVEL *toplevel)
   printf ("Done writing SHEEET_DATA text back into pr_currnet.\n");
 #endif  
 
-  return;
+  s_page_save_all (pr_current ());  /* saves all pages in design */
+  sheet_head->CHANGED = FALSE;
 
+  return;
 }
 
 

@@ -249,8 +249,6 @@ void x_dialog_unsaved_data()
       case GTK_RESPONSE_YES:
         {
           s_toplevel_save_sheet (pr_current ());  /* Dumps sheet data into TOPLEVEL */
-          s_page_save_all (pr_current ());  /* saves all pages in design */
-          sheet_head->CHANGED = FALSE;
           attrib_quit(0);
           break;
         }
