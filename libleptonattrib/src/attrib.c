@@ -172,13 +172,6 @@ attrib_main (SCM file_list_s)
   /* ---------- Initialize SHEET_DATA data structure ---------- */
   sheet_head = s_sheet_data_new();   /* sheet_head was declared in globals.h */
 
-  if (file_list == NULL) {
-    /* No files specified on the command line, pop up the File
-       open dialog. */
-    file_list = x_fileselect_open();
-    if (file_list == NULL) exit(0);
-  }
-
   /* Load the files */
   if(x_fileselect_load_files(file_list) == FALSE) {
      /* just exit the program */

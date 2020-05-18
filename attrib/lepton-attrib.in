@@ -68,6 +68,13 @@ exec @GUILE@ -s "$0" "$@"
                  (dynamic-link "libleptonattrib"))
    '()))
 
+(define fileselect-open
+  (pointer->procedure
+   '*
+   (dynamic-func "x_fileselect_open"
+                 (dynamic-link "libleptonattrib"))
+   '()))
+
 ;;; Localization.
 (define %textdomain "lepton-attrib")
 (bindtextdomain %textdomain "@localedir@")
@@ -153,6 +160,15 @@ Lepton EDA homepage: ~S
           "Could not open file ~S.\n"
           filename))
 
+(define (gslist->list gslist)
+  (let loop ((gsls gslist)
+             (ls '()))
+    (if (null-pointer? gsls)
+        ls
+        (let* ((elem (parse-c-struct gsls (list '* '*)))
+               (str (pointer->string (first elem)))
+               (gsls (second elem)))
+          (loop gsls (cons str ls))))))
 
 ;;; Init logging.
 (init-log "attrib")
@@ -183,11 +199,19 @@ Lepton EDA homepage: ~S
           (gtk-init %null-pointer %null-pointer)
           ;; Initialize main window.
           (init-window)
-          ;; Run attribute editor.
-          (attrib-main (scm->pointer readable-files))
-          ;; Run main GTK loop.
-          (gtk-main)
-          (primitive-exit 0))
+          (let ((files (if (null? readable-files)
+                           ;; No files specified on the command
+                           ;; line, pop up the File open dialog.
+                           (gslist->list (fileselect-open))
+                           readable-files)))
+            (if (null? files)
+                (primitive-exit 0)
+                (begin
+                  ;; Run attribute editor.
+                  (attrib-main (scm->pointer files))
+                  ;; Run main GTK loop.
+                  (gtk-main)
+                  (primitive-exit 0)))))
         ;; There are non-existing or unreadable files.  Report and
         ;; exit.
         (begin
