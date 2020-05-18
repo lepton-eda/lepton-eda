@@ -130,7 +130,7 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
  * stuff in SHEET_DATA into the libgeda TOPLEVEL structure.
  */
 void
-s_toplevel_gtksheet_to_toplevel(TOPLEVEL *toplevel)
+s_toplevel_save_sheet (TOPLEVEL *toplevel)
 {
   GList *iter;
   PAGE *p_current;
