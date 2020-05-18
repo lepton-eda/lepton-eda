@@ -5,7 +5,6 @@
 G_BEGIN_DECLS
 
 /* attrib.c */
-TOPLEVEL *pr_current ();
 gboolean attrib_really_quit(void);
 gint attrib_quit(gint return_code);
 void attrib_main (SCM file_list_s);

@@ -86,7 +86,8 @@ exec @GUILE@ -s "$0" "$@"
 (define G_ gettext)
 
 
-(primitive-eval '(use-modules (lepton file-system)
+(primitive-eval '(use-modules (lepton core toplevel)
+                              (lepton file-system)
                               (lepton log)
                               (lepton version)))
 
@@ -206,12 +207,14 @@ Lepton EDA homepage: ~S
                            readable-files)))
             (if (null? files)
                 (primitive-exit 0)
-                (begin
-                  ;; Run attribute editor.
-                  (attrib-main (scm->pointer files))
-                  ;; Run main GTK loop.
-                  (gtk-main)
-                  (primitive-exit 0)))))
+                (%with-toplevel (%make-toplevel)
+                 (lambda ()
+                   ((@@ (guile-user) parse-rc) "lepton-attrib" "gafrc")
+                   ;; Run attribute editor.
+                   (attrib-main (scm->pointer files))
+                   ;; Run main GTK loop.
+                   (gtk-main)
+                   (primitive-exit 0))))))
         ;; There are non-existing or unreadable files.  Report and
         ;; exit.
         (begin

@@ -63,16 +63,6 @@ GtkWidget *entry;
 GtkWidget *label;
 
 
-TOPLEVEL *pr_current() {
-  static TOPLEVEL *toplevel;
-  if (toplevel == NULL) {
-    toplevel = s_toplevel_new ();
-  }
-  return toplevel;
-}
-
-
-/*------------------------------------------------------------------*/
 /*! \brief GTK callback to quit the program.
  *
  * This is called when the user quits the program using the UI. The
@@ -164,10 +154,6 @@ attrib_main (SCM file_list_s)
     SCM element = SCM_CAR (list_s);
     file_list = g_slist_prepend (file_list, (gpointer) scm_to_locale_string (element));
   }
-
-  /* ---------- Start creation of new project: (TOPLEVEL *pr_current) ---------- */
-  /* ----- Read in RC files.   ----- */
-  g_rc_parse (pr_current (), "lepton-attrib", NULL, NULL);
 
   /* ---------- Initialize SHEET_DATA data structure ---------- */
   sheet_head = s_sheet_data_new();   /* sheet_head was declared in globals.h */

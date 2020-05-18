@@ -63,6 +63,7 @@
  *------------------------------------------------------------------*/
 #include <config.h>
 #include <liblepton/liblepton.h>
+#include <liblepton/libgedaguile.h>
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
@@ -123,7 +124,7 @@ x_fileselect_load_files (GSList *filenames)
   GList *iter;
   PAGE *p_local;
   GSList *filename;
-  TOPLEVEL *toplevel = pr_current ();
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   /* iterate over selected files */
   for (filename = filenames;

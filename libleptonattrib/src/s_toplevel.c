@@ -41,6 +41,7 @@
  * Gattrib specific includes
  *------------------------------------------------------------------*/
 #include <liblepton/liblepton.h>
+#include <liblepton/libgedaguile.h>
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
@@ -133,7 +134,7 @@ s_toplevel_save_sheet ()
   GList *iter;
   PAGE *p_current;
 
-  TOPLEVEL *toplevel = pr_current ();
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   g_return_if_fail (toplevel != NULL);
 
