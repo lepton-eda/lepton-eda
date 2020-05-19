@@ -38,6 +38,7 @@
   #:use-module (lepton log)
   #:use-module (lepton object)
   #:use-module (lepton page)
+  #:use-module (lepton rc)
   #:use-module (lepton repl)
   #:use-module (lepton version)
   #:use-module (netlist config)
@@ -784,19 +785,6 @@ other limitations imposed by this netlist format.
     (and (not (string=? name "-"))
          name)))
 
-;;; List of processed rc directories.
-(define %rc-dirs (make-hash-table))
-
-;;; Backward compatibility stuff.
-;;; Process "gafrc" file in SCHEMATIC-NAME's directory.
-(define (process-gafrc schematic-name)
-  (let ((cwd (getcwd)))
-    (unless (hash-ref %rc-dirs cwd)
-      (chdir (dirname schematic-name))
-      ((@@ (guile-user) parse-rc) "lepton-netlist" "gafrc")
-      (hash-set! %rc-dirs cwd cwd)
-      (chdir cwd))))
-
 
 ;;; Prints a list of available backends.
 (define (gnetlist-backends)
@@ -861,9 +849,12 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 ;;; Set lepton-netlist toplevel schematic based on schematic FILES
 ;;; and NETLIST-MODE which must be either "'geda", or "'spice".
 (define (set-ln-toplevel-schematic! files)
+  (define (process-gafrc* name)
+    (process-gafrc "lepton-netlist" name))
+
   (and (eq? (netlist-mode) 'spice)
        (set! get-uref get-spice-refdes))
-  (for-each process-gafrc files)
+  (for-each process-gafrc* files)
   (set-toplevel-schematic! (make-toplevel-schematic files)))
 
 

@@ -28,7 +28,8 @@
             geda-rc-path
             path-sep
             load-scheme-dir
-            load-rc-from-sys-config-dirs))
+            load-rc-from-sys-config-dirs
+            process-gafrc))
 
 (define path-sep file-name-separator-string)
 
@@ -64,3 +65,19 @@ path (rather than the regular Scheme load path)."
   (let ((rc-file (search-path (sys-config-dirs) basename '("" ".scm"))))
     ;; Use primitive-load to suppress autocompilation
     (if rc-file (primitive-load rc-file))))
+
+
+;;; List of processed rc directories.
+(define %rc-dirs (make-hash-table))
+
+
+;;; Backward compatibility stuff.
+(define (process-gafrc program schematic)
+  "Process \"gafrc\" file for PROGRAM in the directory SCHEMATIC
+resides in."
+  (let ((cwd (getcwd)))
+    (unless (hash-ref %rc-dirs cwd)
+      (chdir (dirname schematic))
+      ((@@ (guile-user) parse-rc) program "gafrc")
+      (hash-set! %rc-dirs cwd cwd)
+      (chdir cwd))))
