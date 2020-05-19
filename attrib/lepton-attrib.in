@@ -37,7 +37,7 @@ exec @GUILE@ -s "$0" "$@"
   (pointer->procedure void
                       (dynamic-func "attrib_main"
                                     (dynamic-link "libleptonattrib"))
-                      (list '*)))
+                      '()))
 
 (define gtk-init
   (pointer->procedure
@@ -89,6 +89,7 @@ exec @GUILE@ -s "$0" "$@"
 (primitive-eval '(use-modules (lepton core toplevel)
                               (lepton file-system)
                               (lepton log)
+                              (lepton page)
                               (lepton version)))
 
 (define* (lepton-attrib-version #:optional stdout)
@@ -210,8 +211,10 @@ Lepton EDA homepage: ~S
                 (%with-toplevel (%make-toplevel)
                  (lambda ()
                    ((@@ (guile-user) parse-rc) "lepton-attrib" "gafrc")
+                   ;; Open all files.
+                   (for-each file->page files)
                    ;; Run attribute editor.
-                   (attrib-main (scm->pointer files))
+                   (attrib-main)
                    ;; Run main GTK loop.
                    (gtk-main)
                    (primitive-exit 0))))))

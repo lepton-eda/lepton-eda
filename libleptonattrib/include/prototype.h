@@ -7,7 +7,7 @@ G_BEGIN_DECLS
 /* attrib.c */
 gboolean attrib_really_quit(void);
 gint attrib_quit(gint return_code);
-void attrib_main (SCM file_list_s);
+void attrib_main ();
 
 /* -------------- listsort.c ----------------- */
 int cmp(STRING_LIST *a, STRING_LIST *b);
@@ -166,7 +166,7 @@ int x_gtksheet_get_max_col(GtkSheet *sheet);
 
 /* ------------- x_fileselect.c ------------- */
 GSList *x_fileselect_open (void);
-gboolean x_fileselect_load_files (GSList *filenames);
+gboolean x_fileselect_load_files ();
 
 /* ------------- x_window.c ------------- */
 void x_window_init();

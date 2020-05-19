@@ -140,28 +140,11 @@ gint attrib_quit(gint return_code)
  * \param file_list_s  Scheme list of files to process
  */
 void
-attrib_main (SCM file_list_s)
+attrib_main ()
 {
-  SCM list_s;
-  GSList *file_list = NULL;
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  scm_dynwind_unwind_handler ((void (*)(void *)) g_slist_free,
-                              file_list,
-                              (scm_t_wind_flags) 0);
-
-  for (list_s = file_list_s; !scm_is_null (list_s); list_s = SCM_CDR (list_s)) {
-    SCM element = SCM_CAR (list_s);
-    file_list = g_slist_prepend (file_list, (gpointer) scm_to_locale_string (element));
-  }
-
   /* Load the files */
-  if(x_fileselect_load_files(file_list) == FALSE) {
+  if (x_fileselect_load_files () == FALSE) {
      /* just exit the program */
      exit(1);
   }
-
-  scm_remember_upto_here_1 (file_list_s);
-
-  scm_dynwind_end ();
 }

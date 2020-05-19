@@ -119,37 +119,15 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
  *  \returns FALSE if any of the files could not be opened, TRUE otherwise
  */
 gboolean
-x_fileselect_load_files (GSList *filenames)
+x_fileselect_load_files ()
 {
   GList *iter;
   PAGE *p_local;
-  GSList *filename;
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   /* Initialize SHEET_DATA data structure (sheet_head was declared
      in globals.h) */
   sheet_head = s_sheet_data_new();
-
-  /* iterate over selected files */
-  for (filename = filenames;
-       filename != NULL;
-       filename = g_slist_next (filename)) {
-    gchar *string = (gchar*)filename->data;
-
-    if (verbose_mode) {
-      s_log_message(_("Loading file [%1$s]"), string);
-    }
-
-    s_page_goto (toplevel, s_page_new (toplevel, string));
-
-    if(s_toplevel_read_page(toplevel, string) == 0) {
-       fprintf(stderr, _("Couldn't load schematic [%1$s]\n"), string);
-       return FALSE;
-    }
-  }
-
-  g_slist_foreach (filenames, (GFunc)g_free, NULL);
-  g_slist_free (filenames);
 
   for (iter = geda_list_get_glist (toplevel->pages);
        iter != NULL;
