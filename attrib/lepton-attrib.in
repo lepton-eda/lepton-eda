@@ -90,6 +90,7 @@ exec @GUILE@ -s "$0" "$@"
                               (lepton file-system)
                               (lepton log)
                               (lepton page)
+                              (lepton rc)
                               (lepton version)))
 
 (define* (lepton-attrib-version #:optional stdout)
@@ -172,6 +173,11 @@ Lepton EDA homepage: ~S
                (gsls (second elem)))
           (loop gsls (cons str ls))))))
 
+
+(define (process-gafrc* name)
+  (process-gafrc "lepton-attrib" name))
+
+
 ;;; Init logging.
 (init-log "attrib")
 (lepton-attrib-version)
@@ -210,7 +216,7 @@ Lepton EDA homepage: ~S
                 (primitive-exit 0)
                 (%with-toplevel (%make-toplevel)
                  (lambda ()
-                   ((@@ (guile-user) parse-rc) "lepton-attrib" "gafrc")
+                   (for-each process-gafrc* files)
                    ;; Open all files.
                    (for-each file->page files)
                    ;; Run attribute editor.
