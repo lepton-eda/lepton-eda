@@ -139,33 +139,6 @@ x_window_init()
 } /* x_window_init() */
 
 
-/*------------------------------------------------------------------
- * \brief File Open menu
- *
- * File open menu. Currently unimplemented.
- * \todo this should really be done in two stages:
- * -# close the current project and reinitialize structures
- * -# load the new project
- */
-#ifdef UNIMPLEMENTED_FEATURES
-static void
-menu_file_open()
-{
-  x_dialog_unimplemented_feature();
-#if 0
-  GSList *file_list;
-
-  file_list = x_fileselect_open();
-  
-  /* Load the files, don't check if it went OK */
-  x_fileselect_load_files(file_list);
-  
-  g_slist_foreach(file_list, (GFunc)g_free, NULL);
-  g_slist_free(file_list);
-#endif
-}
-#endif
-
 /*!
  * \brief File->Export CSV menu item
  *
@@ -262,7 +235,6 @@ static const GtkActionEntry actions[] = {
   /* name, stock-id, label, accelerator, tooltip, callback function */
   /* File menu */
   { "file", NULL, "_File"},
-  /* { "file-open", GTK_STOCK_OPEN, "Open", "<Control>O", "", menu_file_open}, */
   { "file-save", GTK_STOCK_SAVE, "Save", "<Control>S", "", s_toplevel_save_sheet},
   { "file-export-csv", NULL, "Export CSV", "", "", menu_file_export_csv},
   /* { "file-print", GTK_STOCK_PRINT, "Print", "<Control>P", "", x_dialog_unimplemented_feature}, */
