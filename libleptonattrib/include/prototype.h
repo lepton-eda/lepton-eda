@@ -7,7 +7,6 @@ G_BEGIN_DECLS
 /* attrib.c */
 gboolean attrib_really_quit(void);
 gint attrib_quit(gint return_code);
-void attrib_main ();
 
 /* -------------- listsort.c ----------------- */
 int cmp(STRING_LIST *a, STRING_LIST *b);

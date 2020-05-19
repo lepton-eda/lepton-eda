@@ -33,9 +33,9 @@ exec @GUILE@ -s "$0" "$@"
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
                 "liblepton_init")
 
-(define attrib-main
+(define lepton-attrib-window
   (pointer->procedure void
-                      (dynamic-func "attrib_main"
+                      (dynamic-func "lepton_attrib_window"
                                     (dynamic-link "libleptonattrib"))
                       '()))
 
@@ -214,7 +214,7 @@ Lepton EDA homepage: ~S
                    ;; Open all files.
                    (for-each file->page files)
                    ;; Run attribute editor.
-                   (attrib-main)
+                   (lepton-attrib-window)
                    ;; Run main GTK loop.
                    (gtk-main)
                    (primitive-exit 0))))))

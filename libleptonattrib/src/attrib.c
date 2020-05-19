@@ -124,23 +124,3 @@ gint attrib_quit(gint return_code)
   gtk_main_quit();
   exit(return_code);
 }
-
-/*------------------------------------------------------------------*/
-/*! \brief The main C procedure for lepton-attrib.
- *
- * This is the main program body for gattrib. A pointer to this
- * function is passed to scm_boot_guile() at startup.
- *
- * This function:
- * - parses the RC files;
- * - initialises the GTK UI;
- * - populates the spreadsheet data structure;
- * - calls gtk_main() to start the event loop.
- *
- * \param file_list_s  Scheme list of files to process
- */
-void
-attrib_main ()
-{
-  lepton_attrib_window ();
-}
