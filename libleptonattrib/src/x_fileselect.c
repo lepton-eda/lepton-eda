@@ -126,6 +126,10 @@ x_fileselect_load_files (GSList *filenames)
   GSList *filename;
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
+  /* Initialize SHEET_DATA data structure (sheet_head was declared
+     in globals.h) */
+  sheet_head = s_sheet_data_new();
+
   /* iterate over selected files */
   for (filename = filenames;
        filename != NULL;

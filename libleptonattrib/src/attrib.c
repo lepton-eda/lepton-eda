@@ -155,9 +155,6 @@ attrib_main (SCM file_list_s)
     file_list = g_slist_prepend (file_list, (gpointer) scm_to_locale_string (element));
   }
 
-  /* ---------- Initialize SHEET_DATA data structure ---------- */
-  sheet_head = s_sheet_data_new();   /* sheet_head was declared in globals.h */
-
   /* Load the files */
   if(x_fileselect_load_files(file_list) == FALSE) {
      /* just exit the program */
