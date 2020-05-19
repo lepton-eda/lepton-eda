@@ -146,24 +146,32 @@ x_fileselect_load_files (GSList *filenames)
        fprintf(stderr, _("Couldn't load schematic [%1$s]\n"), string);
        return FALSE;
     }
+  }
+
+  g_slist_foreach (filenames, (GFunc)g_free, NULL);
+  g_slist_free (filenames);
+
+  for (iter = geda_list_get_glist (toplevel->pages);
+       iter != NULL;
+       iter = g_list_next (iter)) {
+
+    p_local = (PAGE*) iter->data;
+    s_toplevel_set_page_current (toplevel, p_local);
 
     /* Now add all items found to the master lists */
-    s_sheet_data_add_master_comp_list_items (s_page_objects (toplevel->page_current));
-    s_sheet_data_add_master_comp_attrib_list_items (s_page_objects (toplevel->page_current));
+    s_sheet_data_add_master_comp_list_items (s_page_objects (p_local));
+    s_sheet_data_add_master_comp_attrib_list_items (s_page_objects (p_local));
 #if 0
     /* Note that this must be changed.  We need to input the entire project
      * before doing anything with the nets because we need to first
      * determine where they are all connected!   */
-    s_sheet_data_add_master_net_list_items (toplevel->page_current->object_list);
-    s_sheet_data_add_master_net_attrib_list_items (toplevel->page_current->object_list);
+    s_sheet_data_add_master_net_list_items (p_local->object_list);
+    s_sheet_data_add_master_net_attrib_list_items (p_local->object_list);
 #endif
     
-    s_sheet_data_add_master_pin_list_items (s_page_objects (toplevel->page_current));
-    s_sheet_data_add_master_pin_attrib_list_items (s_page_objects (toplevel->page_current));
+    s_sheet_data_add_master_pin_list_items (s_page_objects (p_local));
+    s_sheet_data_add_master_pin_attrib_list_items (s_page_objects (p_local));
   }  	/* end of loop over files     */
-
-  g_slist_foreach (filenames, (GFunc)g_free, NULL);
-  g_slist_free (filenames);
 
   /* ---------- Sort the master lists  ---------- */
   s_string_list_sort_master_comp_list();
