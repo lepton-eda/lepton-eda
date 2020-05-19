@@ -166,7 +166,7 @@ int x_gtksheet_get_max_col(GtkSheet *sheet);
 
 /* ------------- x_fileselect.c ------------- */
 GSList *x_fileselect_open (void);
-gboolean lepton_attrib_window ();
+void lepton_attrib_window ();
 
 /* ------------- x_window.c ------------- */
 void x_window_init();

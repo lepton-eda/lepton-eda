@@ -118,7 +118,7 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
  *  \param [in] filenames list of files to be opened
  *  \returns FALSE if any of the files could not be opened, TRUE otherwise
  */
-gboolean
+void
 lepton_attrib_window ()
 {
   GList *iter;
@@ -200,12 +200,10 @@ lepton_attrib_window ()
                             * and then calls another fcn to update
                             * the GtkSheet itself.  */
 
-
   /* ---------- Now verify correctness of entire design.  ---------- */
   s_toplevel_verify_design(toplevel);  /* toplevel is a global */
-
-  return TRUE;
 }
+
 
 /*! \brief Open file dialog
  *

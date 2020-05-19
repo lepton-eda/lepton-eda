@@ -142,9 +142,5 @@ gint attrib_quit(gint return_code)
 void
 attrib_main ()
 {
-  /* Load the files */
-  if (lepton_attrib_window () == FALSE) {
-     /* just exit the program */
-     exit(1);
-  }
+  lepton_attrib_window ();
 }
