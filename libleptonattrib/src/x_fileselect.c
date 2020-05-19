@@ -119,7 +119,7 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
  *  \returns FALSE if any of the files could not be opened, TRUE otherwise
  */
 gboolean
-x_fileselect_load_files ()
+lepton_attrib_window ()
 {
   GList *iter;
   PAGE *p_local;
