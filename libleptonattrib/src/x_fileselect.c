@@ -107,16 +107,11 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
 
 }
 
-/*! \brief Open all files specified in the list.
+
+/*! \brief Open lepton-attrib window.
  *
- * Open all files specified in the list. The caller is responsible for
- * freeing the strings and the list itself.
- *
- *  The function updates the user interface. At the end of the function, 
- *  the toplevel's current page is set to the page of the last loaded page.
- *
- *  \param [in] filenames list of files to be opened
- *  \returns FALSE if any of the files could not be opened, TRUE otherwise
+ * The function populates the spreadsheet data structure and
+ * updates GUI.
  */
 void
 lepton_attrib_window ()
