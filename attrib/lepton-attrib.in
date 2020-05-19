@@ -36,12 +36,6 @@ exec @GUILE@ -s "$0" "$@"
 (define libgtk (dynamic-link "libgtk-x11-2.0"))
 (define libleptonattrib (dynamic-link "libleptonattrib"))
 
-(define lepton-attrib-window
-  (pointer->procedure
-   void
-   (dynamic-func "lepton_attrib_window" libleptonattrib)
-   '()))
-
 (define gtk-init
   (pointer->procedure
    void
@@ -60,16 +54,22 @@ exec @GUILE@ -s "$0" "$@"
    (dynamic-func "set_verbose_mode" libleptonattrib)
    '()))
 
+(define fileselect-open
+  (pointer->procedure
+   '*
+   (dynamic-func "x_fileselect_open" libleptonattrib)
+   '()))
+
 (define init-window
   (pointer->procedure
    void
    (dynamic-func "x_window_init" libleptonattrib)
    '()))
 
-(define fileselect-open
+(define lepton-attrib-window
   (pointer->procedure
-   '*
-   (dynamic-func "x_fileselect_open" libleptonattrib)
+   void
+   (dynamic-func "lepton_attrib_window" libleptonattrib)
    '()))
 
 ;;; Localization.
