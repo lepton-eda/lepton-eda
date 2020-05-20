@@ -39,7 +39,7 @@ void setup_script_selector (GschemToplevel *w_current)
   char *filename;
 
   w_current->sowindow =
-    gtk_file_chooser_dialog_new (_("Execute Script..."),
+    gtk_file_chooser_dialog_new (_("Execute Script"),
 				 GTK_WINDOW(w_current->main_window),
 				 GTK_FILE_CHOOSER_ACTION_OPEN,
 				 GTK_STOCK_CANCEL, 
