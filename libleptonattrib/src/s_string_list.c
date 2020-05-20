@@ -129,10 +129,8 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   /* First check to see if list is empty.  Handle insertion of first item 
      into empty list separately.  (Is this necessary?) */
   if (list->data == NULL) {
-#ifdef DEBUG
-    printf ("s_string_list_add_item: ");
-    printf ("About to place first item in list.\n");
-#endif
+    g_debug ("s_string_list_add_item: "
+             "About to place first item in list.\n");
     list->data = (gchar *) g_strdup(item);
     list->next = NULL;
     list->prev = NULL;  /* this may have already been initialized. . . . */
@@ -193,25 +191,21 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
     return;
   }
 
-#ifdef DEBUG
-    printf ("s_string_list_delete_item: ");
-    printf ("About to delete item %s from list.\n", item);
-#endif
+  g_debug ("s_string_list_delete_item: "
+           "About to delete item %s from list.\n",
+           item);
 
   /* Now loop through list looking for item */
   list_item = (*list);
   while (list_item != NULL) {
     trial_item = (gchar *) g_strdup(list_item->data);        
-#ifdef DEBUG
-    printf ("s_string_list_delete_item: ");
-    printf ("Matching item against trial item = %s from list.\n", trial_item);
-#endif
+    g_debug ("s_string_list_delete_item: "
+             "Matching item against trial item = %s from list.\n",
+             trial_item);
     if (strcmp(trial_item, item) == 0) {
       /* found item, now delete it. */
-#ifdef DEBUG
-    printf ("s_string_list_delete_item: ");
-    printf ("Match found.\n");
-#endif
+      g_debug ("s_string_list_delete_item: "
+               "Match found.\n");
       prev_item = list_item->prev;
       next_item = list_item->next;
 
@@ -233,23 +227,17 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
 	next_item->prev = prev_item;
       }
       
-#ifdef DEBUG
-    printf ("s_string_list_delete_item: ");
-    printf ("Free list_item.\n");
-#endif
+      g_debug ("s_string_list_delete_item: "
+               "Free list_item.\n");
       g_free(list_item);  /* free current list item */
       (*count)--;       /* decrement count */
       /* Do we need to re-number the list? */
 
-#ifdef DEBUG
-    printf ("s_string_list_delete_item: ");
-    printf ("Free trial_item.\n");
-#endif
+      g_debug ("s_string_list_delete_item: "
+               "Free trial_item.\n");
       g_free(trial_item); /* free trial item before returning */
-#ifdef DEBUG
-    printf ("s_string_list_delete_item: ");
-    printf ("Return.\n");
-#endif
+      g_debug ("s_string_list_delete_item: "
+               "Return.\n");
       return;
     }
     g_free(trial_item);
