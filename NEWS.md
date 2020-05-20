@@ -39,6 +39,12 @@ top-level windows (i.e. do not stay on top of the main window):
   - Font selector
   - Find text results
 
+- `lepton-schematic` now uses new (more compact) placeholders
+for missing schematic symbols. Traditional placeholders (giant
+red triangles with an exclamation mark and two lines of text)
+can be turned back on by setting the `small-placeholders` key
+in the `schematic.gui` group to `false`.
+
 
 Notable changes in Lepton EDA 1.9.10 (20200319)
 -----------------------------------------------
