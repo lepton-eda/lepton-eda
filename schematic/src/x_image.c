@@ -550,7 +550,7 @@ void x_image_setup (GschemToplevel *w_current)
   gtk_widget_show(vbox2);
 
   /* Create the dialog */
-  dialog = gtk_file_chooser_dialog_new (_("Write image..."),
+  dialog = gtk_file_chooser_dialog_new (_("Write Image"),
       GTK_WINDOW(w_current->main_window),
       GTK_FILE_CHOOSER_ACTION_SAVE,
       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
