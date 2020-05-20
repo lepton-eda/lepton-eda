@@ -60,6 +60,9 @@
 #define GATTRIB_THEME_ICON_NAME "lepton-attrib"
 
 static void
+x_window_init ();
+
+static void
 x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
 
 static void
@@ -88,14 +91,11 @@ x_window_get_toplevel ()
  *  GTK_CONTAINER *main_vbox
  *  GTK_MENU 
  */
-void
-x_window_init()
+static void
+x_window_init ()
 {
   GtkWidget *menu_bar;
   GtkWidget *main_vbox;
-
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  x_window_set_toplevel (toplevel);
 
   /* Set default icon */
   x_window_set_default_icon();
@@ -470,7 +470,12 @@ lepton_attrib_window ()
 {
   GList *iter;
   PAGE *p_local;
-  TOPLEVEL *toplevel = x_window_get_toplevel ();
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  x_window_set_toplevel (toplevel);
+
+  /* Initialize GTK window. */
+  x_window_init ();
 
   /* Initialize SHEET_DATA data structure (sheet_head was declared
      in globals.h) */

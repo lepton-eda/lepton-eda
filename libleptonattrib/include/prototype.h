@@ -167,7 +167,6 @@ int x_gtksheet_get_max_col(GtkSheet *sheet);
 GSList *x_fileselect_open (void);
 
 /* ------------- x_window.c ------------- */
-void x_window_init();
 void x_window_add_items();
 void
 x_window_set_toplevel (TOPLEVEL *toplevel);

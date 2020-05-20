@@ -60,12 +60,6 @@ exec @GUILE@ -s "$0" "$@"
    (dynamic-func "x_fileselect_open" libleptonattrib)
    '()))
 
-(define init-window
-  (pointer->procedure
-   void
-   (dynamic-func "x_window_init" libleptonattrib)
-   '()))
-
 (define lepton-attrib-window
   (pointer->procedure
    void
@@ -214,8 +208,6 @@ Lepton EDA homepage: ~S
                    (for-each process-gafrc* files)
                    ;; Open all files.
                    (for-each file->page files)
-                   ;; Initialize main window.
-                   (init-window)
                    ;; Run attribute editor.
                    (lepton-attrib-window)
                    ;; Run main GTK loop.
