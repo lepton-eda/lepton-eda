@@ -52,6 +52,7 @@ edascm_closure_marshal (SCM args, SCM smob) {
   SCM_ASSERT (EDASCM_CLOSUREP (smob), smob, SCM_ARG2,
               "edascm_closure_marshal");
 #endif
+  g_debug ("edascm_closure_marshal()\n");
   EDASCM_ASSERT_SMOB_VALID (smob);
 
   SCM (*func)(SCM, gpointer) = (SCM (*)(SCM, gpointer)) SCM_SMOB_DATA (smob);

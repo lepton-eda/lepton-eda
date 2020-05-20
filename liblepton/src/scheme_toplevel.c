@@ -86,6 +86,7 @@ SCM_DEFINE (edascm_current_toplevel, "%current-toplevel", 0, 0, 0,
 TOPLEVEL *
 edascm_c_current_toplevel ()
 {
+  g_debug ("edascm_c_current_toplevel()\n");
   SCM s_toplevel = edascm_current_toplevel ();
 
   EDASCM_ASSERT_SMOB_VALID(s_toplevel);

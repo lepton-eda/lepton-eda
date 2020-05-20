@@ -376,6 +376,7 @@ smob_print (SCM smob, SCM port, scm_print_state *pstate)
 static SCM
 smob_equalp (SCM obj1, SCM obj2)
 {
+  g_debug ("smob_equalp()\n");
   EDASCM_ASSERT_SMOB_VALID (obj1);
   EDASCM_ASSERT_SMOB_VALID (obj2);
 
@@ -455,6 +456,7 @@ edascm_from_page (PAGE *page)
 PAGE *
 edascm_to_page (SCM smob)
 {
+  g_debug ("edascm_to_page()\n");
 #ifndef NDEBUG
   SCM_ASSERT (EDASCM_PAGEP (smob), smob,
               SCM_ARG1, "edascm_to_page");
@@ -521,6 +523,7 @@ edascm_from_object (OBJECT *object)
 OBJECT *
 edascm_to_object (SCM smob)
 {
+  g_debug ("edascm_to_object()\n");
 #ifndef NDEBUG
   SCM_ASSERT (EDASCM_OBJECTP (smob), smob,
               SCM_ARG1, "edascm_to_object");
@@ -563,6 +566,7 @@ edascm_from_config (EdaConfig *cfg)
 EdaConfig *
 edascm_to_config (SCM smob)
 {
+  g_debug ("edascm_to_config()\n");
 #ifndef NDEBUG
   SCM_ASSERT (EDASCM_CONFIGP (smob), smob,
               SCM_ARG1, "edascm_to_object");
@@ -605,6 +609,7 @@ edascm_from_closure (SCM (*func)(SCM, gpointer), gpointer user_data)
 void
 edascm_c_set_gc (SCM smob, int gc)
 {
+  g_debug ("edascm_c_set_gc()\n");
   EDASCM_ASSERT_SMOB_VALID (smob);
   int current = EDASCM_SMOB_GCP (smob);
 
