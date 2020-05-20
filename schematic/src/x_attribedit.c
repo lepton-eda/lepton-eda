@@ -325,7 +325,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
     }
   }
 
-  aewindow = gschem_dialog_new_with_buttons(_("Single Attribute Editor"),
+  aewindow = gschem_dialog_new_with_buttons(NULL,
                                             GTK_WINDOW(w_current->main_window),
                                             GTK_DIALOG_MODAL,
                                             "singleattrib", w_current,
@@ -354,13 +354,14 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 				 DIALOG_BORDER_SPACING);
   gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
-  if (attr_obj)
-    label = gtk_label_new(_("<b>Edit Attribute</b>"));
+  if (attr_obj != NULL)
+  {
+    gtk_window_set_title (GTK_WINDOW(aewindow), _("Edit Attribute"));
+  }
   else
-    label = gtk_label_new(_("<b>Add Attribute</b>"));
-  gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-  gtk_misc_set_alignment(GTK_MISC(label),0,0);
-  gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
+  {
+    gtk_window_set_title (GTK_WINDOW(aewindow), _("Add Attribute"));
+  }
 
   alignment = gtk_alignment_new(0,0,1,1);
   gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
