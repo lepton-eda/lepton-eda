@@ -330,10 +330,7 @@ void x_dialog_about_dialog()
     _("Lepton Electronic Design Automation\n\n"
       "lepton-attrib - Lepton EDA attribute editor\n\n"
       "lepton-attrib version: %1$s%2$s.%3$s\n\n"
-      "lepton-attrib is written by: Stuart Brorson (sdb@cloud9.net)\n"
-      "with generous helpings of code from gschem, gnetlist, \n"
-      "and gtkextra, as well as support from the gEDA community.");
-
+      "lepton-attrib is Lepton's successor of gEDA gattrib\n");
 
   /* Create the dialog */
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
