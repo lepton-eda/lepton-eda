@@ -100,10 +100,7 @@ void s_visibility_set_invisible() {
   case GTK_SHEET_COLUMN_SELECTED:  
   case GTK_SHEET_ROW_SELECTED: 
 
-#ifdef DEBUG
-    printf ("s_visibility_set_invisible: ");
-    printf ("Range/col/row selected.\n");
-#endif
+    g_debug ("s_visibility_set_invisible: Range/col/row selected.\n");
 
     row_start = sheet->range.row0;
     row_end = sheet->range.rowi;
@@ -127,11 +124,8 @@ void s_visibility_set_invisible() {
     break;
 
   case GTK_SHEET_NORMAL:
-#ifdef DEBUG
-    printf ("s_visibility_set_invisible: ");
-    printf ("Normal selection.\n");
-#endif
-    s_visibility_set_cell(cur_page, 
+    g_debug ("s_visibility_set_invisible: Normal selection.\n");
+    s_visibility_set_cell(cur_page,
 			  sheet->active_cell.row, 
 			  sheet->active_cell.col, 
 			  INVISIBLE, 
@@ -174,10 +168,7 @@ void s_visibility_set_name_only() {
   case GTK_SHEET_RANGE_SELECTED:
   case GTK_SHEET_COLUMN_SELECTED:  
   case GTK_SHEET_ROW_SELECTED: 
-#ifdef DEBUG
-    printf ("s_visibility_set_name_only: ");
-    printf ("Range/col/row selected.\n");
-#endif
+    g_debug ("s_visibility_set_name_only: Range/col/row selected.\n");
     row_start = sheet->range.row0;
     row_end = sheet->range.rowi;
     col_start = sheet->range.col0;
@@ -236,10 +227,7 @@ void s_visibility_set_value_only() {
   case GTK_SHEET_RANGE_SELECTED:
   case GTK_SHEET_COLUMN_SELECTED:  
   case GTK_SHEET_ROW_SELECTED: 
-#ifdef DEBUG
-    printf ("s_visibility_set_value_only: ");
-    printf ("Range/col/row selected.\n");
-#endif
+    g_debug ("s_visibility_set_value_only: Range/col/row selected.\n");
     row_start = sheet->range.row0;
     row_end = sheet->range.rowi;
     col_start = sheet->range.col0;
@@ -259,11 +247,8 @@ void s_visibility_set_value_only() {
     break;
 
   case GTK_SHEET_NORMAL:
-#ifdef DEBUG
-    printf ("s_visibility_set_value_only: ");
-    printf ("Sheet normal selected.\n");
-#endif
-    s_visibility_set_cell(cur_page, 
+    g_debug ("s_visibility_set_value_only: Sheet normal selected.\n");
+    s_visibility_set_cell(cur_page,
 			  sheet->active_cell.row, 
 			  sheet->active_cell.col, 
 			  VISIBLE, SHOW_VALUE);
@@ -356,11 +341,8 @@ void s_visibility_set_cell(gint cur_page, gint row, gint col,
 			   gint show_name_value) {
   TABLE **local_table = NULL;
 
-#ifdef DEBUG
-  printf ("s_visibility_set_cell: ");
-  printf ("Setting row = %d, col = %d.\n",
+  g_debug ("s_visibility_set_cell: Setting row = %d, col = %d.\n",
 	   row, col);
-#endif
 
   switch (cur_page) {
 
