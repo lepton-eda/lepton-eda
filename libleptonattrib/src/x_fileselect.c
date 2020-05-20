@@ -82,7 +82,7 @@ static void
 x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
 {
   GtkFileFilter *filter;
-  
+
   /* file filter for schematic files (*.sch) */
   filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, _("Schematics"));
@@ -131,10 +131,10 @@ x_fileselect_open (void)
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-					  GTK_RESPONSE_ACCEPT,
-					  GTK_RESPONSE_CANCEL,
-					  -1);
-  
+                                          GTK_RESPONSE_ACCEPT,
+                                          GTK_RESPONSE_CANCEL,
+                                          -1);
+
   g_object_set (dialog,
                 /* GtkFileChooser */
                 "select-multiple", TRUE,
@@ -145,7 +145,7 @@ x_fileselect_open (void)
 
   if(gtk_dialog_run (GTK_DIALOG(dialog)) == GTK_RESPONSE_ACCEPT)
      filenames = gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER (dialog));
-  
+
   gtk_widget_destroy (dialog);
   return filenames;
 }
