@@ -115,12 +115,7 @@ gboolean attrib_really_quit(void)
 gint attrib_quit(gint return_code)
 {
   s_clib_free();
-#ifdef DEBUG
-  fflush(stderr);
-  fflush(stdout);
-  printf ("gattrib_quit: ");
-  printf ("Calling gtk_main_quit().\n");
-#endif
+  g_debug ("attrib_quit: Calling gtk_main_quit().\n");
   gtk_main_quit();
   exit(return_code);
 }
