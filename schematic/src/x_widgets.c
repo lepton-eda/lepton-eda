@@ -188,7 +188,7 @@ void x_widgets_show_text_properties (GschemToplevel* w_current)
     x_widgets_show_in_dialog (w_current,
                               w_current->text_properties,
                               &w_current->text_properties_dialog,
-                              _("Text"),
+                              _("Edit Text"),
                               "txtprops");
   }
 
