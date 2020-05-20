@@ -136,7 +136,7 @@ s_toplevel_save_sheet ()
 
   g_debug ("==== Enter s_toplevel_gtksheet_to_toplevel()\n");
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  TOPLEVEL *toplevel = x_window_get_toplevel ();
 
   g_return_if_fail (toplevel != NULL);
 

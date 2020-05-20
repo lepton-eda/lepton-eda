@@ -118,7 +118,7 @@ lepton_attrib_window ()
 {
   GList *iter;
   PAGE *p_local;
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  TOPLEVEL *toplevel = x_window_get_toplevel ();
 
   /* Initialize SHEET_DATA data structure (sheet_head was declared
      in globals.h) */

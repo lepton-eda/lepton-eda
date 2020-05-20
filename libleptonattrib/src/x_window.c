@@ -48,6 +48,7 @@
  * Gattrib specific includes
  *------------------------------------------------------------------*/
 #include <liblepton/liblepton.h>
+#include <liblepton/libgedaguile.h>
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
@@ -63,6 +64,20 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
 
 static void
 x_window_set_default_icon( void );
+
+static TOPLEVEL *window_toplevel = NULL;
+
+void
+x_window_set_toplevel (TOPLEVEL *toplevel)
+{
+  window_toplevel = toplevel;
+}
+
+TOPLEVEL*
+x_window_get_toplevel ()
+{
+  return window_toplevel;
+}
 
 /*! \brief Initialises the toplevel gtksheet
  *
@@ -85,6 +100,9 @@ x_window_init()
 {
   GtkWidget *menu_bar;
   GtkWidget *main_vbox;
+
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  x_window_set_toplevel (toplevel);
 
   /* Set default icon */
   x_window_set_default_icon();

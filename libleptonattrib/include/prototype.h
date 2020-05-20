@@ -170,5 +170,9 @@ void lepton_attrib_window ();
 /* ------------- x_window.c ------------- */
 void x_window_init();
 void x_window_add_items();
+void
+x_window_set_toplevel (TOPLEVEL *toplevel);
+TOPLEVEL*
+x_window_get_toplevel ();
 
 G_END_DECLS
