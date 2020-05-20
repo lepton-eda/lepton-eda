@@ -134,11 +134,11 @@ s_toplevel_save_sheet ()
   GList *iter;
   PAGE *p_current;
 
+  g_debug ("==== Enter s_toplevel_gtksheet_to_toplevel()\n");
+
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
 
   g_return_if_fail (toplevel != NULL);
-
-  g_debug ("==== Enter s_toplevel_gtksheet_to_toplevel()\n");
 
   s_sheet_data_gtksheet_to_sheetdata();  /* read data from gtksheet into SHEET_DATA */
   g_debug ("s_toplevel_gtksheet_to_toplevel: "
