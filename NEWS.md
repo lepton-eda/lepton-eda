@@ -11,6 +11,21 @@ Notable changes in Lepton EDA 1.9.11 (upcoming)
 - Localization support has been added.  The utility had no
   localization support since rewriting it in Scheme.
 
+### Changes in `lepton-schematic`:
+- Log messages about `symversion` mismatch are no longer emitted
+for missing schematic symbols.
+
+- `symversion` attribute changes are now detected when a page is
+opened. Previous behavior was to check just the first page passed
+on the `lepton-schematic` command line.
+
+- The "Major symbol version changes" dialog has been improved by
+making it more informative and non-modal. A new dialog instance
+is opened for each page with symbol version changes.
+
+- Log messages related to `symversion` have been changed to be
+more compact and comprehensible.
+
 
 Notable changes in Lepton EDA 1.9.10 (20200319)
 -----------------------------------------------
