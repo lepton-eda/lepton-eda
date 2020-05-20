@@ -130,7 +130,7 @@ void picture_selection_dialog (GschemToplevel *w_current)
   GdkPixbuf *pixbuf;
   GError *error = NULL;
 
-  w_current->pfswindow = gtk_file_chooser_dialog_new (_("Select a picture file..."),
+  w_current->pfswindow = gtk_file_chooser_dialog_new (_("Add Picture"),
 						      GTK_WINDOW(w_current->main_window),
 						      GTK_FILE_CHOOSER_ACTION_OPEN,
 						      GTK_STOCK_CANCEL,
