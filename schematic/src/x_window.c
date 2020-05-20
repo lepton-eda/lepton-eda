@@ -1456,7 +1456,7 @@ create_notebook_bottom (GschemToplevel* w_current)
 
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                               GTK_WIDGET (w_current->log_widget),
-                              gtk_label_new(_("Status")));
+                              gtk_label_new(_("Log")));
 
 
     gtk_container_set_border_width (GTK_CONTAINER (notebook),
