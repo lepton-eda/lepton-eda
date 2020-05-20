@@ -464,3 +464,94 @@ x_window_set_default_icon( void )
   gtk_window_set_default_icon_name( GATTRIB_THEME_ICON_NAME );
 }
 
+
+/*! \brief Open lepton-attrib window.
+ *
+ * The function populates the spreadsheet data structure and
+ * updates GUI.
+ */
+void
+lepton_attrib_window ()
+{
+  GList *iter;
+  PAGE *p_local;
+  TOPLEVEL *toplevel = x_window_get_toplevel ();
+
+  /* Initialize SHEET_DATA data structure (sheet_head was declared
+     in globals.h) */
+  sheet_head = s_sheet_data_new();
+
+  for (iter = geda_list_get_glist (toplevel->pages);
+       iter != NULL;
+       iter = g_list_next (iter)) {
+
+    p_local = (PAGE*) iter->data;
+    s_toplevel_set_page_current (toplevel, p_local);
+
+    /* Now add all items found to the master lists */
+    s_sheet_data_add_master_comp_list_items (s_page_objects (p_local));
+    s_sheet_data_add_master_comp_attrib_list_items (s_page_objects (p_local));
+#if 0
+    /* Note that this must be changed.  We need to input the entire project
+     * before doing anything with the nets because we need to first
+     * determine where they are all connected!   */
+    s_sheet_data_add_master_net_list_items (p_local->object_list);
+    s_sheet_data_add_master_net_attrib_list_items (p_local->object_list);
+#endif
+
+    s_sheet_data_add_master_pin_list_items (s_page_objects (p_local));
+    s_sheet_data_add_master_pin_attrib_list_items (s_page_objects (p_local));
+  }  	/* end of loop over files     */
+
+  /* ---------- Sort the master lists  ---------- */
+  s_string_list_sort_master_comp_list();
+  s_string_list_sort_master_comp_attrib_list();
+
+#if 0
+  /* Note that this must be changed.  We need to input the entire project
+   * before doing anything with the nets because we need to first
+   * determine where they are all connected!   */
+  s_string_list_sort_master_net_list();
+  s_string_list_sort_master_net_attrib_list();
+#endif
+
+  s_string_list_sort_master_pin_list();
+  s_string_list_sort_master_pin_attrib_list();
+
+  /* ---------- Create and load the tables  ---------- */
+  sheet_head->component_table = s_table_new(sheet_head->comp_count, sheet_head->comp_attrib_count);
+  sheet_head->net_table = s_table_new(sheet_head->net_count, sheet_head->net_attrib_count);
+  sheet_head->pin_table = s_table_new(sheet_head->pin_count, sheet_head->pin_attrib_count);
+
+  /* must iterate over all pages in design */
+  for ( iter = geda_list_get_glist( toplevel->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
+    p_local = (PAGE *)iter->data;
+
+    /* only traverse pages which are toplevel */
+    if (p_local->page_control == 0) {
+      /* adds all components from page to comp_table */
+      s_table_add_toplevel_comp_items_to_comp_table (s_page_objects (p_local));
+#if 0
+      /* Note that this must be changed.  We need to input the entire project
+       * before doing anything with the nets because we need to first
+       * determine where they are all connected!   */
+
+      /* adds all nets from page to net_table */
+      s_table_add_toplevel_net_items_to_net_table(p_local->object_head);
+#endif
+
+      /* adds all pins from page to pin_table */
+      s_table_add_toplevel_pin_items_to_pin_table (s_page_objects (p_local));
+    }
+  } /* for loop over pages */
+
+  /* -------------- update windows --------------- */
+  x_window_add_items();    /* This updates the top level stuff,
+                            * and then calls another fcn to update
+                            * the GtkSheet itself.  */
+
+  /* ---------- Now verify correctness of entire design.  ---------- */
+  s_toplevel_verify_design(toplevel);  /* toplevel is a global */
+}
