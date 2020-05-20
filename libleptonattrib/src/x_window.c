@@ -87,13 +87,6 @@ x_window_get_toplevel ()
  *  GTK_WINDOW *window 
  *  GTK_CONTAINER *main_vbox
  *  GTK_MENU 
- * 
- *  Note that it doesn't display the spreadsheet itself.  This is done
- *  in x_sheet_build_sheet. I suppose I could postpone all initialization 
- *  until x_sheet_build_sheet, but I figured that I could at least do 
- *  some initialization here. In particular, the stuff to put up the 
- *  menus is long & it is worthwhile to separate it from other code.  
- *  Maybe I'll refactor this later.
  */
 void
 x_window_init()
