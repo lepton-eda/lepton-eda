@@ -202,8 +202,6 @@ Lepton EDA homepage: ~S
         (begin
           ;; Initialize GTK.
           (gtk-init %null-pointer %null-pointer)
-          ;; Initialize main window.
-          (init-window)
           (let ((files (if (null? readable-files)
                            ;; No files specified on the command
                            ;; line, pop up the File open dialog.
@@ -216,6 +214,8 @@ Lepton EDA homepage: ~S
                    (for-each process-gafrc* files)
                    ;; Open all files.
                    (for-each file->page files)
+                   ;; Initialize main window.
+                   (init-window)
                    ;; Run attribute editor.
                    (lepton-attrib-window)
                    ;; Run main GTK loop.
