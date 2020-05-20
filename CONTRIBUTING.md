@@ -53,7 +53,9 @@ output of `lepton-cli --version`, which includes important
 information about exactly what version of Lepton you are using.
 
 Sometimes, there are log messages that are related to the problem;
-including them in your report is very helpful!
+including them in your report is very helpful.
+Log files can be found in the `$XDG_CACHE_HOME/lepton-eda/logs/`
+directory (`$XDG_CACHE_HOME` usually expands to `$HOME/.cache`).
 
 ## Pull Requests
 
