@@ -348,12 +348,14 @@ x_window_add_items()
   
   /* Do these sanity check to prevent later segfaults */
   if (sheet_head->comp_count == 0) {
-    error_string = _("No components found in entire design!\nDo you have refdeses on your components?");
+    error_string = _("No components found in entire design!\n"
+                     "Do you have refdeses on your components?");
     x_dialog_fatal_error(error_string, 1);
   }
 
   if (sheet_head->comp_attrib_count == 0) {
-    error_string = _("No configurable component attributes found in entire design!\nPlease attach at least some attributes before running lepton-attrib.");
+    error_string = _("No configurable component attributes found in entire design!\n"
+                     "Please attach at least some attributes before running lepton-attrib.");
     x_dialog_fatal_error(error_string, 2);
   }
 
