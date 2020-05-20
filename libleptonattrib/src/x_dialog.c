@@ -319,10 +319,8 @@ void x_dialog_fatal_error(const gchar *string, gint return_code)
   exit(GPOINTER_TO_INT(return_code));
 }
 
-/*! \brief About gattrib dialog
- *
- * This dosplays the about dialog.
- */
+
+/*! \brief The About dialog */
 void x_dialog_about_dialog()
 {
   GtkWidget *dialog;
