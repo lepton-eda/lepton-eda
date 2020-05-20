@@ -1444,7 +1444,7 @@ compselect_constructor (GType type,
   /* dialog initialization */
   g_object_set (object,
                 /* GtkWindow */
-                "title",           _("Select Component..."),
+                "title",           _("Add Component"),
                 "default-height",  300,
                 "default-width",   400,
                 NULL);
