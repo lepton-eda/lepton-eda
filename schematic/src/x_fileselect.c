@@ -333,7 +333,7 @@ x_fileselect_open(GschemToplevel *w_current)
   GtkWidget *dialog;
   gchar *cwd;
 
-  dialog = gtk_file_chooser_dialog_new (_("Open..."),
+  dialog = gtk_file_chooser_dialog_new (_("Open"),
                                         GTK_WINDOW(w_current->main_window),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
                                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
@@ -418,7 +418,7 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
   }
 
   GtkWidget* dialog = gtk_file_chooser_dialog_new(
-    _("Save as..."),
+    _("Save As"),
     GTK_WINDOW(w_current->main_window),
     GTK_FILE_CHOOSER_ACTION_SAVE,
     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
