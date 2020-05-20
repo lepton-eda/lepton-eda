@@ -74,11 +74,8 @@ void f_export_components(gchar *filename)
   }
 
   /* -----  First try to open file for writing ----- */
+  g_debug ("f_export_components: Trying to open %s.\n", filename);
 
-#ifdef DEBUG
-  printf ("f_export_components: ");
-  printf ("Trying to open %s.\n", filename);
-#endif
   fp = fopen(filename, "wb");
   if (fp == NULL) {
     s_log_message(_("Could not open [%1$s]"), filename);
@@ -114,11 +111,9 @@ void f_export_components(gchar *filename)
     /*  First output the component refdes  */
     text = g_strdup( s_string_list_get_data_at_index(
 		       sheet_head->master_comp_list_head, i) );
-#ifdef DEBUG
-    printf ("f_export_components: ");
-    printf ("Getting refdes: row number = %d, output component refdes = %s.\n",
-            i, text);
-#endif
+    g_debug ("f_export_components: "
+             "Getting refdes: row number = %d, output component refdes = %s.\n",
+             i, text);
     fprintf(fp, "%s, ",text);
     g_free(text);
 
@@ -127,10 +122,8 @@ void f_export_components(gchar *filename)
       if ( (sheet_head->component_table)[i][j].attrib_value ) { /* found a string */
         /* make a copy of the text, escaping any special chars, like " */
         text = (gchar *) g_strescape( (sheet_head->component_table)[i][j].attrib_value, "" );
-#ifdef DEBUG
-        printf ("f_export_components: ");
-        printf ("Output attribute %s.\n", text);
-#endif
+
+        g_debug ("f_export_components: Output attribute %s.\n", text);
         /* if there's a comma anywhere in the field, wrap the field in " */
         gboolean havecomma = ( g_strstr_len(text, -1, ",") != NULL );
         if(havecomma) fprintf(fp, "\"");
@@ -140,10 +133,8 @@ void f_export_components(gchar *filename)
 
 	g_free(text);
       } else {                                                  /* no attrib string */
-#ifdef DEBUG
-        printf ("f_export_components: ");
-        printf ("Output blank attrib space.\n");
-#endif
+
+        g_debug ("f_export_components: Output blank attrib space.\n");
 	fprintf(fp, ", ");
       }
     }  /* end of for over cols  */
@@ -151,10 +142,8 @@ void f_export_components(gchar *filename)
     if ( (sheet_head->component_table)[i][j].attrib_value ) { /* found a string */
       /* make a copy of the text, escaping any special chars, like " */
       text = (gchar *) g_strescape( (sheet_head->component_table)[i][j].attrib_value, "" );
-#ifdef DEBUG
-      printf ("f_export_components: ");
-      printf ("Output final attribute %s.\n", text);
-#endif
+
+      g_debug ("f_export_components: Output final attribute %s.\n", text);
       /* if there's a comma anywhere in the field, wrap the field in " */
       gboolean havecomma = ( g_strstr_len(text, -1, ",") != NULL );
       if(havecomma) fprintf(fp, "\"");
@@ -164,16 +153,12 @@ void f_export_components(gchar *filename)
 
       g_free(text);
     } else {                                                  /* no attrib string */
-#ifdef DEBUG
-      printf ("f_export_components: ");
-      printf ("Output blank at end of line.\n");
-#endif
+
+      g_debug ("f_export_components: Output blank at end of line.\n");
       fprintf(fp, "\n");
     }
-#ifdef DEBUG
-    printf ("f_export_components: ");
-    printf ("Go to next row.\n");
-#endif
+
+    g_debug ("f_export_components: Go to next row.\n");
   }  /* close of for over rows */
 
   fclose(fp);
