@@ -430,7 +430,7 @@ text_input_dialog (GschemToplevel *w_current)
                                 /* GtkContainer */
                                 "border-width",     DIALOG_BORDER_SPACING,
                                 /* GtkWindow */
-                                "title",            _("Text Entry..."),
+                                "title",            _("Add Text"),
                                 "default-width",    320,
                                 "default-height",   350,
                                 "window-position",  GTK_WIN_POS_MOUSE,
