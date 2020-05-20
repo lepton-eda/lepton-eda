@@ -26,6 +26,19 @@ is opened for each page with symbol version changes.
 - Log messages related to `symversion` have been changed to be
 more compact and comprehensible.
 
+- A new boolean configuration parameter has been added to the
+`schematic.gui` group: `use-toplevel-windows` ( `false` by default).
+Setting it to `true` allows the following widgets to behave like
+top-level windows (i.e. do not stay on top of the main window):
+  - Page manager
+  - Log window
+  - Edit text
+  - Color scheme editor
+  - Object properties
+  - Options
+  - Font selector
+  - Find text results
+
 
 Notable changes in Lepton EDA 1.9.10 (20200319)
 -----------------------------------------------
