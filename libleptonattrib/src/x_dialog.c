@@ -172,7 +172,13 @@ void x_dialog_delattrib()
 void x_dialog_missing_sym()
 {
   GtkWidget *dialog;
-  const char *string = _("One or more components have been found with missing symbol files!\n\nThis probably happened because lepton-attrib couldn't find your component libraries, perhaps because your gafrc files are misconfigured.\n\nChoose \"Quit\" to leave lepton-attrib and fix the problem, or\n\"Forward\" to continue working with lepton-attrib.\n");
+  const char *string =
+    _("One or more components have been found with missing symbol files!\n\n"
+      "This probably happened because lepton-attrib couldn't find your "
+      "component libraries, perhaps because your gafrc files are "
+      "misconfigured.\n\n"
+      "Choose \"Quit\" to leave lepton-attrib and fix the problem, or\n"
+      "\"Forward\" to continue working with lepton-attrib.\n");
 
   /* Create the dialog */
   dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
