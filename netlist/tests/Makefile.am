@@ -93,6 +93,7 @@ input_files = \
 	verilog_rip_test-symbols/D_FF.sym
 
 XFAIL_TESTS = \
+	common/modeltest-spice-noqsi.out \
 	common/netattrib-switcap.out \
 	common/SlottedOpamps-futurenet2.out \
 	common/SlottedOpamps-switcap.out
