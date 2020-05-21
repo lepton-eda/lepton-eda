@@ -121,6 +121,45 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
   }
 }
 
+
+/*! \brief Saves all the pages of a TOPLEVEL object.
+ *  \par Function Description
+ *  Saves all the pages in the <B>toplevel</B> parameter.
+ *
+ *  \param [in] toplevel  The TOPLEVEL to save pages from.
+ *  \return The number of failed tries to save a page.
+ */
+gint s_page_save_all (TOPLEVEL *toplevel)
+{
+  const GList *iter;
+  PAGE *p_current;
+  gint status = 0;
+
+  for ( iter = geda_list_get_glist( toplevel->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
+
+    p_current = (PAGE *)iter->data;
+
+    if (f_save (p_current, s_page_get_filename (p_current), NULL)) {
+      s_log_message (_("Saved [%1$s]"),
+                     s_page_get_filename (p_current));
+      /* reset the CHANGED flag of p_current */
+      p_current->CHANGED = 0;
+
+    } else {
+      s_log_message (_("Could NOT save [%1$s]"),
+                     s_page_get_filename (p_current));
+      /* increase the error counter */
+      status++;
+    }
+
+  }
+
+  return status;
+}
+
+
 /*------------------------------------------------------------------*/
 /*! \brief Copy data from gtksheet into TOPLEVEL struct
  *

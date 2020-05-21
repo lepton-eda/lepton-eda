@@ -104,9 +104,6 @@ s_page_search_by_page_id (GedaPageList *list, int pid);
 void
 s_page_print_all (TOPLEVEL *toplevel);
 
-gint
-s_page_save_all (TOPLEVEL *toplevel);
-
 gboolean
 s_page_check_changed (GedaPageList *list);
 

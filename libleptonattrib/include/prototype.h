@@ -91,6 +91,8 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin);
 void s_toplevel_update_pin_attribs_in_toplevel(TOPLEVEL *toplevel,
 					 char *refdes, OBJECT *pin,
 					 STRING_LIST *new_pin_attrib_list);
+gint
+s_page_save_all (TOPLEVEL *toplevel);
 
 
 /* ------------- s_object.c ------------- */
