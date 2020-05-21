@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -119,9 +119,53 @@ void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
   i_action_stop (w_current);
 }
 
-/*! \brief Creates the add image dialog
- *  \par Function Description
- *  This function creates the add image dialog and loads the selected picture.
+
+
+/*! \brief Setup file filters for the "Add Picture" dialog.
+ *
+ *  \param filechooser  Picture file chooser.
+ */
+static void
+setup_filechooser_filters (GtkFileChooser* filechooser)
+{
+  GSList* formats = gdk_pixbuf_get_formats();
+  g_return_if_fail (formats != NULL);
+
+  /* Filter for all file formats supported by gdk-pixbuf:
+  */
+  GtkFileFilter* filter = gtk_file_filter_new();
+  gtk_file_filter_set_name (filter, _("All supported formats"));
+  gtk_file_chooser_add_filter (filechooser, filter);
+
+  for (GSList* p = formats; p != NULL; p = g_slist_next (p))
+  {
+    GdkPixbufFormat* fmt = (GdkPixbufFormat*) p->data;
+    gchar** extensions = gdk_pixbuf_format_get_extensions (fmt);
+
+    for (gchar** ext = extensions; *ext != NULL; ++ext)
+    {
+      gchar* str = g_strdup_printf ("*.%s", *ext);
+      gtk_file_filter_add_pattern (filter, str);
+      g_free (str);
+    }
+
+    g_strfreev (extensions);
+  }
+
+  g_slist_free (formats);
+
+  /* Filter for all files:
+  */
+  GtkFileFilter* filter_all = gtk_file_filter_new();
+  gtk_file_filter_set_name (filter_all, _("All files"));
+  gtk_file_filter_add_pattern (filter_all, "*");
+  gtk_file_chooser_add_filter (filechooser, filter_all);
+
+} /* setup_filechooser_filters() */
+
+
+
+/*! \brief Creates and shows the "Add Picture" dialog.
  */
 void picture_selection_dialog (GschemToplevel *w_current)
 {
@@ -138,6 +182,9 @@ void picture_selection_dialog (GschemToplevel *w_current)
 						      GTK_STOCK_OPEN,
 						      GTK_RESPONSE_ACCEPT,
 						      NULL);
+
+  setup_filechooser_filters (GTK_FILE_CHOOSER (w_current->pfswindow));
+
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->pfswindow),
 					  GTK_RESPONSE_ACCEPT,
