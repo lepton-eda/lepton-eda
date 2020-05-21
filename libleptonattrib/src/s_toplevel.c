@@ -150,7 +150,6 @@ s_toplevel_save_sheet ()
         iter = g_list_next( iter ) ) {
 
     p_current = (PAGE *)iter->data;
-    s_toplevel_set_page_current (toplevel, p_current);
     /* only traverse pages which are toplevel */
     if (p_current->page_control == 0) {
       s_toplevel_sheetdata_to_toplevel (toplevel, p_current);    /* adds all objects from page */
