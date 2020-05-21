@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2013 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +48,20 @@ void setup_script_selector (GschemToplevel *w_current)
 				 GTK_STOCK_EXECUTE, 
 				 GTK_RESPONSE_ACCEPT,
 				 NULL);
+
+  /* Filter for Scheme files:
+  */
+  GtkFileFilter* filter_scm = gtk_file_filter_new();
+  gtk_file_filter_set_name (filter_scm, _("Scheme files (*.scm)"));
+  gtk_file_filter_add_pattern (filter_scm, "*.scm");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (w_current->sowindow), filter_scm);
+
+  /* Filter for all files:
+  */
+  GtkFileFilter* filter_all = gtk_file_filter_new();
+  gtk_file_filter_set_name (filter_all, _("All files"));
+  gtk_file_filter_add_pattern (filter_all, "*");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (w_current->sowindow), filter_all);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->sowindow),
