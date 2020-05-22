@@ -1,0 +1,96 @@
+v 20070216 1
+B 300 300 1000 1200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 1700 2500 5 10 0 0 0 0 1
+device=EDFFP
+P 800 0 800 200 1 0 0
+{
+T 850 100 5 8 0 1 0 0 1
+pinnumber=6
+T 850 100 5 8 0 1 0 2 1
+pinseq=6
+T 800 350 9 8 1 1 0 3 1
+pinlabel=\_R\_
+T 800 450 5 8 0 1 0 3 1
+pintype=in
+}
+P 300 900 0 900 1 0 1
+{
+T 200 950 5 8 0 1 0 6 1
+pinnumber=2
+T 200 850 5 8 0 1 0 8 1
+pinseq=2
+T 350 900 9 8 1 1 0 1 1
+pinlabel=D
+T 350 900 5 8 0 1 0 2 1
+pintype=in
+}
+P 300 500 0 500 1 0 1
+{
+T 200 550 5 8 0 1 0 6 1
+pinnumber=1
+T 200 450 5 8 0 1 0 8 1
+pinseq=1
+T 400 500 9 8 1 1 0 1 1
+pinlabel=CK
+T 400 500 5 8 0 1 0 2 1
+pintype=in
+}
+L 300 600 400 500 3 0 0 0 -1 -1
+L 400 500 300 400 3 0 0 0 -1 -1
+P 1600 1300 1300 1300 1 0 0
+{
+T 1400 1350 5 8 0 1 0 0 1
+pinnumber=4
+T 1400 1250 5 8 0 1 0 2 1
+pinseq=4
+T 1250 1300 9 8 1 1 0 7 1
+pinlabel=Q
+T 1250 1300 5 8 0 1 0 8 1
+pintype=out
+}
+V 1350 500 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+P 1400 500 1600 500 1 0 1
+{
+T 1400 550 5 8 0 1 0 0 1
+pinnumber=5
+T 1400 450 5 8 0 1 0 2 1
+pinseq=5
+T 1250 500 9 8 1 1 0 7 1
+pinlabel=\_Q\_
+T 1250 500 5 8 0 1 0 8 1
+pintype=out
+}
+T 1300 1600 8 10 1 1 0 6 1
+refdes=X?
+V 800 250 50 6 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 1700 2300 8 10 0 0 0 0 1
+model-name=EDFFP
+P 300 1300 0 1300 1 0 1
+{
+T 200 1350 5 8 0 1 0 6 1
+pinnumber=3
+T 200 1250 5 8 0 1 0 8 1
+pinseq=3
+T 350 1300 9 8 1 1 0 1 1
+pinlabel=E
+T 350 1300 5 8 0 1 0 2 1
+pintype=in
+}
+T 800 1100 9 10 1 0 0 4 1
+EDFFP
+T 300 2100 8 10 0 0 0 0 1
+numslots=0
+T 1700 2100 8 10 0 1 0 0 1
+description=D flip flop with clear and enable
+T 300 1900 8 10 0 1 0 0 1
+documentation=http://research.kek.jp/people/ikeda/openIP
+T 300 2700 8 10 0 0 0 0 1
+symversion=1.0
+T 300 2500 8 10 0 1 0 0 1
+author=jpd@noqsi.com
+T 300 2300 8 10 0 0 0 0 1
+footprint=none
+T 0 0 8 10 0 0 0 0 1
+dist-license=GPL
+T 0 0 8 10 0 0 0 0 1
+use-license=unlimited

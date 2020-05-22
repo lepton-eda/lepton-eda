@@ -1,0 +1,5 @@
+* SPICE Lepton EDA netlister backend
+Q1 unconnected_pin-1 unconnected_pin-3 unconnected_pin-2 <No valid value attribute found>
+Q2 unconnected_pin-4 unconnected_pin-6 unconnected_pin-5 <No valid value attribute found>
+Q3 unconnected_pin-7 unconnected_pin-9 unconnected_pin-8 <No valid value attribute found>
+.END

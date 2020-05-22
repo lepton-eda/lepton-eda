@@ -1,0 +1,94 @@
+v 20130925 2
+B 300 300 1000 1200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 1700 2500 5 10 0 0 0 0 1
+device=DISCRI
+P 1000 0 1000 300 1 0 0
+{
+T 1050 100 5 8 0 1 0 0 1
+pinnumber=6
+T 1050 100 5 8 0 1 0 2 1
+pinseq=6
+T 1000 450 9 8 1 1 0 3 1
+pinlabel=CLK
+T 1000 450 5 8 0 1 0 3 1
+pintype=in
+}
+P 300 900 0 900 1 0 1
+{
+T 200 950 5 8 0 1 0 6 1
+pinnumber=2
+T 200 850 5 8 0 1 0 8 1
+pinseq=2
+T 350 900 9 8 1 1 0 1 1
+pinlabel=LL
+T 350 900 5 8 0 1 0 2 1
+pintype=pas
+}
+P 300 500 0 500 1 0 1
+{
+T 200 550 5 8 0 1 0 6 1
+pinnumber=3
+T 200 450 5 8 0 1 0 8 1
+pinseq=3
+T 350 500 9 8 1 1 0 1 1
+pinlabel=HL
+T 400 500 5 8 0 1 0 2 1
+pintype=pas
+}
+L 1000 400 1100 300 3 0 0 0 -1 -1
+L 1000 400 900 300 3 0 0 0 -1 -1
+P 1600 1300 1300 1300 1 0 0
+{
+T 1400 1350 5 8 0 1 0 0 1
+pinnumber=4
+T 1400 1250 5 8 0 1 0 2 1
+pinseq=4
+T 1250 1300 9 8 1 1 0 7 1
+pinlabel=LLP
+T 1250 1300 5 8 0 1 0 8 1
+pintype=out
+}
+P 1300 800 1600 800 1 0 1
+{
+T 1400 850 5 8 0 1 0 0 1
+pinnumber=5
+T 1400 750 5 8 0 1 0 2 1
+pinseq=5
+T 1250 800 9 8 1 1 0 7 1
+pinlabel=HLP
+T 1250 800 5 8 0 1 0 8 1
+pintype=out
+}
+T 1300 1600 8 10 1 1 0 6 1
+refdes=X?
+T 1700 2300 8 10 0 0 0 0 1
+model-name=DISCRI
+P 300 1300 0 1300 1 0 1
+{
+T 200 1350 5 8 0 1 0 6 1
+pinnumber=1
+T 200 1250 5 8 0 1 0 8 1
+pinseq=1
+T 350 1300 9 8 1 1 0 1 1
+pinlabel=IN
+T 350 1300 5 8 0 1 0 2 1
+pintype=pas
+}
+T 800 1100 9 10 1 0 0 4 1
+DISCRI
+T 300 2100 8 10 0 0 0 0 1
+numslots=0
+T 1700 2100 8 10 0 1 0 0 1
+description=Two level pulse height discriminator
+T 300 2700 8 10 0 0 0 0 1
+symversion=1.0
+T 300 2500 8 10 0 1 0 0 1
+author=jpd@noqsi.com
+T 300 2300 8 10 0 0 0 0 1
+footprint=none
+T 0 0 8 10 0 0 0 0 1
+dist-license=GPL
+T 0 0 8 10 0 0 0 0 1
+use-license=unlimited
+T 1800 1900 8 10 0 0 0 0 1
+source=DISCRI.sch

@@ -1,0 +1,59 @@
+v 20070902 1
+B 300 0 800 700 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 1700 1400 5 10 0 0 0 0 1
+device=BIAS1
+P 0 200 300 200 1 0 0
+{
+T 205 245 5 8 0 1 0 6 1
+pinnumber=1
+T 200 150 5 8 0 1 0 8 1
+pinseq=1
+T 355 195 9 8 1 1 0 0 1
+pinlabel=IIN
+T 350 200 5 8 0 1 0 2 1
+pintype=pas
+}
+T 400 800 8 10 1 1 0 0 1
+refdes=X?
+T 1700 1200 8 10 0 0 0 0 1
+model-name=BIAS1
+T 650 400 9 8 1 0 90 4 1
+BIAS1
+T 300 1000 8 10 0 0 0 0 1
+numslots=0
+T 1700 1000 8 10 0 1 0 0 1
+description=Bias Generator
+T 300 800 8 10 0 1 0 0 1
+documentation=http://research.kek.jp/people/ikeda/openIP
+T 300 1600 8 10 0 0 0 0 1
+symversion=1.0
+T 300 1400 8 10 0 1 0 0 1
+author=jpd@noqsi.com
+T 300 1200 8 10 0 0 0 0 1
+footprint=none
+P 1100 200 1400 200 1 0 1
+{
+T 1195 245 5 8 0 1 0 0 1
+pinnumber=3
+T 1200 150 5 8 0 1 0 2 1
+pinseq=3
+T 1045 195 9 8 1 1 0 6 1
+pinlabel=VL
+T 1050 200 5 8 0 1 0 8 1
+pintype=pas
+}
+P 1100 500 1400 500 1 0 1
+{
+T 1195 545 5 8 0 1 0 0 1
+pinnumber=2
+T 1200 450 5 8 0 1 0 2 1
+pinseq=2
+T 1045 495 9 8 1 1 0 6 1
+pinlabel=VH
+T 1050 500 5 8 0 1 0 8 1
+pintype=pas
+}
+T 0 0 8 10 0 0 0 0 1
+dist-license=GPL
+T 0 0 8 10 0 0 0 0 1
+use-license=unlimited
