@@ -42,4 +42,5 @@ EXTRA_DIST = \
 	BBamp/Symbols/Noqsi-title-B.sym \
 	BBamp/Symbols/pwrjack-RAPC712.sym \
 	HelloWorld/HelloWorld.sch \
+	HelloWorld/HelloWorld.cir \
 	HelloWorld/Makefile

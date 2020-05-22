@@ -83,6 +83,7 @@ nobase_dist_scmdata_DATA = \
 nobase_scmdata_DATA = lepton/core/gettext.scm
 
 TESTS = \
+	unit-tests/backend-spice-noqsi.scm \
 	unit-tests/geda-attrib-basic.scm \
 	unit-tests/geda-config.scm \
 	unit-tests/geda-deprecated.scm \
