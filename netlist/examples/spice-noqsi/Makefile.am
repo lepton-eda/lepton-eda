@@ -1,5 +1,5 @@
 EXTRA_DIST = \
-	README.md
+	README.md \
 	ASIC/Makefile \
 	ASIC/README \
 	ASIC/Models/nch.sym \
@@ -42,14 +42,4 @@ EXTRA_DIST = \
 	BBamp/Symbols/Noqsi-title-B.sym \
 	BBamp/Symbols/pwrjack-RAPC712.sym \
 	HelloWorld/HelloWorld.sch \
-	HelloWorld/Makefile \
-	Images/BBamp.png \
-	Images/Board.png \
-	Images/Comparator.png \
-	Images/DISCRI.png \
-	Images/DISCRItest.png \
-	Images/HelloWorld.png \
-	Images/Test.png \
-	Images/dB.jpg \
-	Images/dB.tiff \
-	test/model-test.sch
+	HelloWorld/Makefile

@@ -238,6 +238,7 @@ AC_CONFIG_FILES([Makefile
                  netlist/tests/Makefile
                  netlist/docs/Makefile
                  netlist/docs/vams/Makefile
+                 netlist/examples/spice-noqsi/Makefile
                  netlist/examples/vams/Makefile
                  netlist/examples/vams/vhdl/Makefile
                  netlist/examples/vams/vhdl/basic-vhdl/Makefile
