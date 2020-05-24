@@ -149,6 +149,9 @@ gboolean eda_config_remove_group (EdaConfig *cfg, const char *group, GError **er
 void config_set_legacy_mode(gboolean legacy);
 gboolean config_get_legacy_mode();
 
+EdaConfig*
+eda_config_get_anyfile_context (const gchar* path, EdaConfig* parent, gboolean trusted);
+
 G_END_DECLS
 
 #endif /* !__EDA_CONFIG_H__ */

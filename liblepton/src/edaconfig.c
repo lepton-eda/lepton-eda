@@ -743,6 +743,56 @@ eda_config_get_context_for_file (GFile *path)
   return config;
 }
 
+
+
+/*! \brief Get configuration context for a given configuration file.
+ *
+ * \param path     Configuration file path.
+ * \param parent   Context to be used as a parent or NULL.
+ * \param trusted  Whether to mark the context as trusted.
+ *
+ * \return         #EdaConfig configuration context for a file.
+ */
+EdaConfig*
+eda_config_get_anyfile_context (const gchar* path,
+                                EdaConfig*   parent,
+                                gboolean     trusted)
+{
+  g_return_val_if_fail (path != NULL, NULL);
+  g_return_val_if_fail (EDA_IS_CONFIG(parent) || parent == NULL, NULL);
+
+  static gsize initialized = 0;
+  static GHashTable* contexts = NULL;
+  GFile* file = g_file_new_for_path (path);
+
+  if (g_once_init_enter (&initialized))
+  {
+    contexts = g_hash_table_new_full (g_file_hash,
+                                      (GEqualFunc) g_file_equal,
+                                      g_object_unref,
+                                      g_object_unref);
+    g_once_init_leave (&initialized, 1);
+  }
+
+  EdaConfig* cfg = EDA_CONFIG (g_hash_table_lookup (contexts, file));
+  if (cfg == NULL)
+  {
+    gpointer obj = g_object_new (EDA_TYPE_CONFIG,
+                                 "file",    file,
+                                 "parent",  parent,
+                                 "trusted", trusted,
+                                 NULL);
+    cfg = EDA_CONFIG (obj);
+    g_hash_table_insert (contexts, g_object_ref (file), cfg);
+  }
+
+  g_object_unref (file);
+  return cfg;
+
+} /* eda_config_get_anyfile_context() */
+
+
+
 /*! \public \memberof EdaConfig
  * \brief Return a local configuration context.
  *
