@@ -29,6 +29,11 @@
 (define-public system-config-context %system-config-context)
 (define-public user-config-context %user-config-context)
 (define-public path-config-context %path-config-context)
+
+( define*-public ( anyfile-config-context path #:key (parent #f) (trusted #f) )
+  ( %anyfile-config-context path parent trusted )
+)
+
 (define-public cache-config-context %cache-config-context)
 (define-public config-filename %config-filename)
 
