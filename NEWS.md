@@ -6,6 +6,11 @@ more information, please consult `git log` history.
 
 Notable changes in Lepton EDA 1.9.11 (upcoming)
 -----------------------------------------------
+### Changes in `lepton-netlist`:
+
+- Localization support has been added.  The utility had no
+  localization support since rewriting it in Scheme.
+
 ### Changes in `lepton-symcheck`:
 
 - Localization support has been added.  The utility had no
