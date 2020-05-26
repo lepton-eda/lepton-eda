@@ -658,8 +658,6 @@ void x_rc_parse_gschem (TOPLEVEL *toplevel, const gchar *rcfile);
 GtkWidget* gschem_rotation_combo_new ();
 int gschem_rotation_combo_get_angle (GtkWidget *widget);
 void gschem_rotation_combo_set_angle (GtkWidget *widget, int angle);
-/* x_script.c */
-void setup_script_selector(GschemToplevel *w_current);
 /* x_stroke.c */
 void x_stroke_init (void);
 void x_stroke_free (void);

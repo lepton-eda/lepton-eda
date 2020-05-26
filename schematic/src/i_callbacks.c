@@ -132,18 +132,56 @@ void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
   i_callback_file_open (data, 0, widget);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+
+
+/*! \brief Open the "Execute Script" dialog, execute the selected Scheme file
  */
 DEFINE_I_CALLBACK(file_script)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
   g_return_if_fail (w_current != NULL);
-  setup_script_selector(w_current);
-}
+
+  GtkWidget* dialog = gtk_file_chooser_dialog_new(
+    _("Execute Script"),
+    GTK_WINDOW (w_current->main_window),
+    GTK_FILE_CHOOSER_ACTION_OPEN,
+    GTK_STOCK_CANCEL,  GTK_RESPONSE_CANCEL,
+    GTK_STOCK_EXECUTE, GTK_RESPONSE_ACCEPT,
+    NULL);
+
+  /* Filter for Scheme files:
+  */
+  GtkFileFilter* filter_scm = gtk_file_filter_new();
+  gtk_file_filter_set_name (filter_scm, _("Scheme files (*.scm)"));
+  gtk_file_filter_add_pattern (filter_scm, "*.scm");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter_scm);
+
+  /* Filter for all files:
+  */
+  GtkFileFilter* filter_all = gtk_file_filter_new();
+  gtk_file_filter_set_name (filter_all, _("All files"));
+  gtk_file_filter_add_pattern (filter_all, "*");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter_all);
+
+  gtk_dialog_set_alternative_button_order(
+    GTK_DIALOG (dialog),
+    GTK_RESPONSE_ACCEPT,
+    GTK_RESPONSE_CANCEL,
+    -1);
+
+  if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+  {
+    gchar* filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
+    s_log_message (_("Executing Guile script [%s]"), filename);
+    g_read_file (w_current->toplevel, filename, NULL);
+
+    g_free (filename);
+  }
+
+  gtk_widget_destroy (dialog);
+
+} /* i_callback_file_script() */
 
 
 

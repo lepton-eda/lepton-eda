@@ -116,7 +116,6 @@ lepton_schematic_SOURCES = \
 	page_select_widget.c \
 	x_print.c \
 	x_rc.c \
-	x_script.c \
 	x_stroke.c \
 	x_window.c \
 	x_widgets.c \
