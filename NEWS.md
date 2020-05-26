@@ -80,6 +80,9 @@ red triangles with an exclamation mark and two lines of text)
 can be turned back on by setting the `small-placeholders` key
 in the `schematic.gui` group to `false`.
 
+- The same font, defined in the `font` configuration key of the
+  `schematic.gui` group, is now used for printing and rendering of
+  objects in GUI.
 
 Notable changes in Lepton EDA 1.9.10 (20200319)
 -----------------------------------------------
