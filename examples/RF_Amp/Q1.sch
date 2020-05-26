@@ -125,7 +125,7 @@ device=spice-IO
 }
 C 68100 55300 1 0 0 spice-subcircuit-LL-1.sym
 {
-T 68200 55700 5 10 1 1 0 0 1
+T 68200 55800 5 10 1 1 0 1 1
 refdes=A1
 T 68200 55500 5 10 1 1 0 2 1
 model-name=Q1_MSA26F
