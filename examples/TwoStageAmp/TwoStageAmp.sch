@@ -139,31 +139,31 @@ netname=Vout
 C 26000 46000 0 0 0 title-B.sym
 C 26500 55500 1 0 0 spice-model-1.sym
 {
-T 26600 56100 5 10 1 1 0 0 1
+T 26600 56300 5 10 1 1 0 1 1
 refdes=A1
-T 27800 55800 5 10 1 1 0 0 1
+T 27800 56000 5 10 1 1 0 2 1
 model-name=2N3904
-T 27000 55600 5 10 1 1 0 0 1
+T 27000 55700 5 10 1 1 0 2 1
 file=./models/2N3904.mod
 T 26600 56200 5 10 0 1 0 0 1
 device=model
 }
-C 26500 54600 1 0 0 spice-include-1.sym
+C 26500 54400 1 0 0 spice-include-1.sym
 {
-T 26600 55000 5 10 1 1 0 0 1
+T 26600 54900 5 10 1 1 0 1 1
 refdes=A2
-T 27000 54700 5 10 1 1 0 0 1
+T 27000 54600 5 10 1 1 0 2 1
 file=./Simulation.cmd
-T 26600 54900 5 10 0 1 0 0 1
+T 26600 54700 5 10 0 1 0 0 1
 device=include
 }
-C 26500 53700 1 0 0 spice-directive-1.sym
+C 26500 53000 1 0 0 spice-directive-1.sym
 {
-T 26600 54100 5 10 1 1 0 0 1
+T 26600 53800 5 10 1 1 0 1 1
 refdes=A3
-T 26600 53800 5 10 1 1 0 0 1
+T 26600 53500 5 10 1 1 0 2 1
 value=.options TEMP=25
-T 26600 54000 5 10 0 1 0 0 1
+T 26600 53300 5 10 0 1 0 0 1
 device=directive
 }
 N 27000 49700 28100 49700 4
