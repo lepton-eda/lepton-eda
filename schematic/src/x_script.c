@@ -39,7 +39,7 @@ void setup_script_selector (GschemToplevel *w_current)
 {
   char *filename;
 
-  w_current->sowindow =
+  GtkWidget* sowindow =
     gtk_file_chooser_dialog_new (_("Execute Script"),
 				 GTK_WINDOW(w_current->main_window),
 				 GTK_FILE_CHOOSER_ACTION_OPEN,
@@ -54,23 +54,23 @@ void setup_script_selector (GschemToplevel *w_current)
   GtkFileFilter* filter_scm = gtk_file_filter_new();
   gtk_file_filter_set_name (filter_scm, _("Scheme files (*.scm)"));
   gtk_file_filter_add_pattern (filter_scm, "*.scm");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (w_current->sowindow), filter_scm);
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (sowindow), filter_scm);
 
   /* Filter for all files:
   */
   GtkFileFilter* filter_all = gtk_file_filter_new();
   gtk_file_filter_set_name (filter_all, _("All files"));
   gtk_file_filter_add_pattern (filter_all, "*");
-  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (w_current->sowindow), filter_all);
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (sowindow), filter_all);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->sowindow),
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(sowindow),
 					  GTK_RESPONSE_ACCEPT,
 					  GTK_RESPONSE_CANCEL,
 					  -1);
 
-  if (gtk_dialog_run (GTK_DIALOG (w_current->sowindow)) == GTK_RESPONSE_ACCEPT) {
-    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w_current->sowindow));
+  if (gtk_dialog_run (GTK_DIALOG (sowindow)) == GTK_RESPONSE_ACCEPT) {
+    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (sowindow));
 
     if (!(g_file_test(filename, G_FILE_TEST_IS_DIR))) {
       s_log_message(_("Executing guile script [%1$s]"), filename);
@@ -79,6 +79,5 @@ void setup_script_selector (GschemToplevel *w_current)
     g_free (filename);
   }
 
-  gtk_widget_destroy (GTK_WIDGET(w_current->sowindow));
-  w_current->sowindow = NULL;
+  gtk_widget_destroy (GTK_WIDGET(sowindow));
 }
