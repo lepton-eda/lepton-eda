@@ -20,7 +20,6 @@
  */
 
 #include <config.h>
-#include <version.h>
 
 #include <locale.h>
 #include <unistd.h>
