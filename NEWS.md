@@ -6,6 +6,20 @@ more information, please consult `git log` history.
 
 Notable changes in Lepton EDA 1.9.11 (upcoming)
 -----------------------------------------------
+### Changes when building from source:
+- Build order has been changed and now `libleptonrenderer` is
+  built before `liblepton`.
+
+### Changes in `lepton-cli`:
+- The tool used to silently skip missing symbols on export without
+  rendering any placeholders. Rendering of placeholders has been
+  fixed.
+
+- In some cases, for instance, when a Scheme script was evaluated
+  by the tool and no renderer was available, it output assertion
+  failures for text objects during calculation of their bounds,
+  which has been fixed.
+
 ### Changes in `lepton-netlist`:
 
 - Localization support has been added.  The utility had no
