@@ -218,7 +218,6 @@ GschemToplevel *gschem_toplevel_new ()
   /* ------------ */
   /* Dialog boxes */
   /* ------------ */
-  w_current->sowindow     = NULL;
   w_current->pfswindow    = NULL;
   w_current->cswindow     = NULL;
   w_current->tiwindow     = NULL;

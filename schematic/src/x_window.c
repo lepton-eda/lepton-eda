@@ -595,9 +595,6 @@ void x_window_close(GschemToplevel *w_current)
   x_widgets_destroy_dialogs (w_current);
 
   /* close all the dialog boxes */
-  if (w_current->sowindow)
-  gtk_widget_destroy(w_current->sowindow);
-
   if (w_current->cswindow)
   gtk_widget_destroy(w_current->cswindow);
 
