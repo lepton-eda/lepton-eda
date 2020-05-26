@@ -19,6 +19,11 @@ Notable changes in Lepton EDA 1.9.11 (upcoming)
 
 - More Scheme strings have been added to translation.
 
+- Two Scheme test suites, `liblepton`'s and `lepton-netlist`'s
+  ones, have been merged into one.
+
+- Unit test for promotable attributes has been added.
+
 - Old changelog files (*ChangeLog-1.0*) have been moved into one
   directory and renamed.
 
