@@ -379,7 +379,7 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
   gboolean result;
   GError *error = NULL;
 
-  GtkWidget* pfswindow = gtk_file_chooser_dialog_new (_("Select a picture file..."),
+  GtkWidget* pfswindow = gtk_file_chooser_dialog_new (_("Select Picture"),
 						      GTK_WINDOW(w_current->main_window),
 						      GTK_FILE_CHOOSER_ACTION_OPEN,
 						      GTK_STOCK_CANCEL,
@@ -387,6 +387,8 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
 						      GTK_STOCK_OPEN,
 						      GTK_RESPONSE_ACCEPT,
 						      NULL);
+
+  setup_filechooser_filters (GTK_FILE_CHOOSER (pfswindow));
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(pfswindow),
