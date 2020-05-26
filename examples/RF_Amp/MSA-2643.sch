@@ -202,12 +202,8 @@ file=./Simulation.cmd
 T 27500 57900 5 10 0 1 0 0 1
 device=include
 }
-L 30000 57200 30000 50200 3 0 0 0 -1 -1
-L 39500 57200 39500 50200 3 0 0 0 -1 -1
-L 30000 57200 39500 57200 3 0 0 0 -1 -1
-L 30000 50200 39500 50200 3 0 0 0 -1 -1
 T 30200 56900 9 10 1 0 0 0 1
-Components inside green box are inside the device package
+Components inside this box are inside the device package
 C 30900 51300 1 0 0 inductor-1.sym
 {
 T 31100 51600 5 10 1 1 0 0 1
@@ -307,3 +303,4 @@ device=RESISTOR
 }
 N 31800 50700 32100 50700 4
 N 31900 51400 31800 51400 4
+B 30000 50100 9500 7100 3 10 1 0 -1 -1 0 -1 -1 -1 -1 -1
