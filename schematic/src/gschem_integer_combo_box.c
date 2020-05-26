@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,7 +25,6 @@
  *  integer value from a drop down menu.
  */
 #include <config.h>
-#include <version.h>
 
 #ifdef HAVE_ERRNO_H
 #include <errno.h>

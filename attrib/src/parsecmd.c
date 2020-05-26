@@ -26,7 +26,6 @@
  */
 
 #include <config.h>
-#include <version.h>
 
 #include <stdio.h>
 #ifdef HAVE_STRING_H
