@@ -84,6 +84,24 @@ in the `schematic.gui` group to `false`.
   `schematic.gui` group, is now used for printing and rendering of
   objects in GUI.
 
+- Several rendering issues, manifesting themselves on some modern
+  distributions where new Pango library (1.44) is used, have been
+  fixed:
+  - Different scaling of overbars on zooming.
+  - Wrong alignment and position of lower aligned text in printed
+    output.
+  - Changing of vertical spacing between paragraphs of text
+    separated with empty lines on zooming.
+
+- Historically, text lines of the same object size with different
+  size of glyphs, for instance, all uppercase and all lowercase,
+  might be rendered as if they have different baseline position.
+  For example, `-` (*minus*) and `_` (*underscore*) could be
+  rendered on the same height, depending on alignment.  This has
+  been changed, and now logical extents of text are used to
+  calculate and properly set its position.
+
+
 Notable changes in Lepton EDA 1.9.10 (20200319)
 -----------------------------------------------
 ### General changes:
