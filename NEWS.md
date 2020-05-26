@@ -6,6 +6,22 @@ more information, please consult `git log` history.
 
 Notable changes in Lepton EDA 1.9.11 (upcoming)
 -----------------------------------------------
+### General changes:
+- Executable scripts `lepton-netlist` and `lepton-symcheck` have
+  been moved to the *utils/* directory.  Their Scheme modules have
+  been moved to the directory with Scheme files of `liblepton`.
+
+- Separate *gettext* domains of `lepton-netlist` and
+  `lepton-symcheck` have been removed.
+
+- As a side effect of this transition, the messages by symbol
+  checker are now translated in `lepton-schematic` GUI.
+
+- More Scheme strings have been added to translation.
+
+- Old changelog files (*ChangeLog-1.0*) have been moved into one
+  directory and renamed.
+
 ### Changes when building from source:
 - Build order has been changed and now `libleptonrenderer` is
   built before `liblepton`.
