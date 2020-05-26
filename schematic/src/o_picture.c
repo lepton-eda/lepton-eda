@@ -174,7 +174,7 @@ void picture_selection_dialog (GschemToplevel *w_current)
   GdkPixbuf *pixbuf;
   GError *error = NULL;
 
-  w_current->pfswindow = gtk_file_chooser_dialog_new (_("Add Picture"),
+  GtkWidget* pfswindow = gtk_file_chooser_dialog_new (_("Add Picture"),
 						      GTK_WINDOW(w_current->main_window),
 						      GTK_FILE_CHOOSER_ACTION_OPEN,
 						      GTK_STOCK_CANCEL,
@@ -183,24 +183,21 @@ void picture_selection_dialog (GschemToplevel *w_current)
 						      GTK_RESPONSE_ACCEPT,
 						      NULL);
 
-  setup_filechooser_filters (GTK_FILE_CHOOSER (w_current->pfswindow));
+  setup_filechooser_filters (GTK_FILE_CHOOSER (pfswindow));
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->pfswindow),
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(pfswindow),
 					  GTK_RESPONSE_ACCEPT,
 					  GTK_RESPONSE_CANCEL,
 					  -1);
 
   if (w_current->pixbuf_filename)
-    gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(w_current->pfswindow),
+    gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(pfswindow),
 				  w_current->pixbuf_filename);
 
-  if (gtk_dialog_run (GTK_DIALOG (w_current->pfswindow)) == GTK_RESPONSE_ACCEPT) {
+  if (gtk_dialog_run (GTK_DIALOG (pfswindow)) == GTK_RESPONSE_ACCEPT) {
 
-    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w_current->pfswindow));
-    gtk_widget_destroy(w_current->pfswindow);
-    w_current->pfswindow=NULL;
-
+    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (pfswindow));
     pixbuf = gdk_pixbuf_new_from_file (filename, &error);
 
     if (!pixbuf) {
@@ -235,10 +232,7 @@ void picture_selection_dialog (GschemToplevel *w_current)
     g_free (filename);
   }
 
-  if (w_current->pfswindow) {
-    gtk_widget_destroy(w_current->pfswindow);
-    w_current->pfswindow=NULL;
-  }
+  gtk_widget_destroy(pfswindow);
 }
 
 /*! \todo Finish function documentation!!!
@@ -385,7 +379,7 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
   gboolean result;
   GError *error = NULL;
 
-  w_current->pfswindow = gtk_file_chooser_dialog_new (_("Select a picture file..."),
+  GtkWidget* pfswindow = gtk_file_chooser_dialog_new (_("Select a picture file..."),
 						      GTK_WINDOW(w_current->main_window),
 						      GTK_FILE_CHOOSER_ACTION_OPEN,
 						      GTK_STOCK_CANCEL,
@@ -395,22 +389,18 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
 						      NULL);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
-  gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->pfswindow),
+  gtk_dialog_set_alternative_button_order(GTK_DIALOG(pfswindow),
 					  GTK_RESPONSE_ACCEPT,
 					  GTK_RESPONSE_CANCEL,
 					  -1);
 
   if (w_current->pixbuf_filename)
-    gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(w_current->pfswindow),
+    gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(pfswindow),
 				  w_current->pixbuf_filename);
 
-  if (gtk_dialog_run (GTK_DIALOG (w_current->pfswindow)) == GTK_RESPONSE_ACCEPT) {
+  if (gtk_dialog_run (GTK_DIALOG (pfswindow)) == GTK_RESPONSE_ACCEPT) {
 
-    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (w_current->pfswindow));
-    gtk_widget_destroy(w_current->pfswindow);
-    w_current->pfswindow=NULL;
-
-    /* Actually update the pictures */
+    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (pfswindow));
     result = o_picture_exchange (w_current, filename, &error);
 
     if (!result) {
@@ -433,10 +423,7 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
     g_free (filename);
   }
 
-  if (w_current->pfswindow) {
-    gtk_widget_destroy(w_current->pfswindow);
-    w_current->pfswindow=NULL;
-  }
+  gtk_widget_destroy(pfswindow);
 }
 
 /*! \todo Finish function documentation!!!

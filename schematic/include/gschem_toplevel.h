@@ -97,7 +97,6 @@ struct st_gschem_toplevel {
   /* ------------ */
   /* Dialog boxes */
   /* ------------ */
-  GtkWidget *pfswindow;                 /* Picture File Selection window */
   GtkWidget *cswindow;                  /* component select */
   GtkWidget *tiwindow;                  /* text input */
   GtkWidget *sewindow;                  /* slot edit */
