@@ -106,6 +106,9 @@ in the `schematic.gui` group to `false`.
   been changed, and now logical extents of text are used to
   calculate and properly set its position.
 
+- Showing/hiding of hidden text can now be set individually on per
+  page view basis.
+
 
 Notable changes in Lepton EDA 1.9.10 (20200319)
 -----------------------------------------------
