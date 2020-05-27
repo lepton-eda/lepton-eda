@@ -170,10 +170,33 @@ void main_prog(void *closure, int argc, char *argv[])
   char *filename;
 
 #if ENABLE_NLS
-  /* This must be the same for all locales */
+  setlocale(LC_ALL, "");
   setlocale(LC_NUMERIC, "C");
+  bindtextdomain("lepton-schematic", LOCALEDIR);
+  textdomain("lepton-schematic");
+  bind_textdomain_codeset("lepton-schematic", "UTF-8");
 #endif
 
+  if (precompile_mode())
+  {
+    precompile_prepare();
+  }
+  else
+  {
+    set_guile_compiled_path();
+  }
+
+
+#ifdef DEBUG
+  printf ("\n");
+  printf (" >> lepton-schematic::main_prog():\n");
+  printf ("\n");
+  printf ("    $GUILE_LOAD_COMPILED_PATH:    %s\n", getenv ("GUILE_LOAD_COMPILED_PATH"));
+  printf ("    LEPTON_SCM_PRECOMPILE_DIR:    %s\n", LEPTON_SCM_PRECOMPILE_DIR);
+  printf ("    LEPTON_SCM_PRECOMPILE_SCRIPT: %s\n", LEPTON_SCM_PRECOMPILE_SCRIPT);
+  printf ("    LEPTON_SCM_PRECOMPILE_CFG:    %s\n", LEPTON_SCM_PRECOMPILE_CFG );
+  printf ("\n");
+#endif
 
   /* precompilation:
   */
@@ -327,38 +350,6 @@ void main_prog(void *closure, int argc, char *argv[])
  */
 int main (int argc, char *argv[])
 {
-
-#if ENABLE_NLS
-  setlocale(LC_ALL, "");
-  setlocale(LC_NUMERIC, "C");
-  bindtextdomain("lepton-schematic", LOCALEDIR);
-  textdomain("lepton-schematic");
-  bind_textdomain_codeset("lepton-schematic", "UTF-8");
-#endif
-
-
-  if (precompile_mode())
-  {
-    precompile_prepare();
-  }
-  else
-  {
-    set_guile_compiled_path();
-  }
-
-
-#ifdef DEBUG
-  printf ("\n");
-  printf (" >> lepton-schematic::main(): just before scm_boot_guile():\n");
-  printf ("\n");
-  printf ("    $GUILE_LOAD_COMPILED_PATH:    %s\n", getenv ("GUILE_LOAD_COMPILED_PATH"));
-  printf ("    LEPTON_SCM_PRECOMPILE_DIR:    %s\n", LEPTON_SCM_PRECOMPILE_DIR);
-  printf ("    LEPTON_SCM_PRECOMPILE_SCRIPT: %s\n", LEPTON_SCM_PRECOMPILE_SCRIPT);
-  printf ("    LEPTON_SCM_PRECOMPILE_CFG:    %s\n", LEPTON_SCM_PRECOMPILE_CFG );
-  printf ("\n");
-#endif
-
-
   scm_boot_guile (argc, argv, main_prog, 0);
 
   return 0;
