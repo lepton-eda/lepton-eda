@@ -36,5 +36,13 @@ exec @GUILE@ -s "$0" "$@"
    (dynamic-func "main_prog" libleptongui)
    (list int '*)))
 
+;;; Localization.
+(define %textdomain "lepton-schematic")
+(bindtextdomain %textdomain "@localedir@")
+(textdomain %textdomain)
+(bind-textdomain-codeset %textdomain "UTF-8")
+(setlocale LC_ALL "")
+(setlocale LC_NUMERIC "C")
+
 ;;; FIXME: Arguments are not supported yet.
 (main 0 %null-pointer)

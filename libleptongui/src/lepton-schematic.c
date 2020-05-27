@@ -170,14 +170,6 @@ main_prog (int argc, char *argv[])
   int argv_index;
   char *filename;
 
-#if ENABLE_NLS
-  setlocale(LC_ALL, "");
-  setlocale(LC_NUMERIC, "C");
-  bindtextdomain("lepton-schematic", LOCALEDIR);
-  textdomain("lepton-schematic");
-  bind_textdomain_codeset("lepton-schematic", "UTF-8");
-#endif
-
   if (precompile_mode())
   {
     precompile_prepare();
