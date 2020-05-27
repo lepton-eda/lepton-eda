@@ -82,7 +82,14 @@ x_rc_parse_gschem_error (GError **err)
  */
 void
 x_rc_parse_gschem (TOPLEVEL *toplevel, const gchar *rcfile) {
-  return g_rc_parse_handler (toplevel, "gschemrc", rcfile,
+
+  static gsize initialized = 0;
+
+  if (g_once_init_enter (&initialized)) {
+  g_rc_parse_handler (toplevel, "gschemrc", rcfile,
                       (ConfigParseErrorFunc) x_rc_parse_gschem_error,
                       (void *) toplevel);
+
+  g_once_init_leave (&initialized, 1);
+  }
 }
