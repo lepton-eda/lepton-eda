@@ -169,14 +169,6 @@ void main_prog(void *closure, int argc, char *argv[])
   int argv_index;
   char *filename;
 
-#ifdef HAVE_GTHREAD
-  /* Gschem isn't threaded, but some of GTK's file chooser
-   * backends uses threading so we need to call g_thread_init().
-   * GLib requires threading be initialised before any other GLib
-   * functions are called. Do it now if its not already setup.  */
-  if (!g_thread_supported ()) g_thread_init (NULL);
-#endif
-
 #if ENABLE_NLS
   /* This must be the same for all locales */
   setlocale(LC_NUMERIC, "C");
