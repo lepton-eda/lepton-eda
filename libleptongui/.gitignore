@@ -1,3 +1,4 @@
+libleptongui.pc
 Makefile
 Makefile.in
 config.h

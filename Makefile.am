@@ -5,6 +5,7 @@ SUBDIRS = \
 	libleptonrenderer \
 	liblepton \
 	libleptonattrib \
+	libleptongui \
 	cli \
 	schematic \
 	symcheck \
@@ -71,7 +72,7 @@ endif HAVE_GIT_REPO
 
 doxygen:
 if ENABLE_DOXYGEN
-	@for subdir in schematic/docs libleptonattrib/docs \
+	@for subdir in schematic/docs libleptonattrib/docs libleptongui/docs \
 	  liblepton/docs utils/docs ; do \
 	  (cd $$subdir; $(MAKE) doxygen) || exit 1; \
 	done

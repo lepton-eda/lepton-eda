@@ -4,7 +4,7 @@
 DOMAIN = lepton-schematic
 
 # These two variables depend on the location of this directory.
-subdir = schematic/po
+subdir = libleptongui/po
 top_builddir = ../..
 
 # These options get passed to xgettext.

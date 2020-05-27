@@ -1,17 +1,14 @@
-SUBDIRS = \
-	po bitmap data docs examples include lib scheme \
-	src tests
+bin_SCRIPTS = lepton-schematic
 
-EXTRA_DIST = ChangeLog
+EXTRA_DIST = lepton-schematic.in
 
-if HAVE_GIT_REPO
-ChangeLog: $(top_builddir)/stamp-git
-	( \
-	  cd $(srcdir) && \
-	  $(GIT) log --pretty=medium $(CHANGELOG_BASE).. -- . || \
-	  echo "WARNING: ChangeLog information not available from git" >&2 ; \
-	) > $@
-endif HAVE_GIT_REPO
+do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
+	-e 's,[@]GUILE[@],$(GUILE),g' \
+	-e 's,[@]localedir[@],$(localedir),g'
+	-e 's,[@]ccachedir[@],@LEPTON_SCM_PRECOMPILE_DIR@,g'
 
-maintainer-clean-local:
-	-rm -rf po/*.sed po/*.header po/*.sin po/*.template po/Rules-quot
+lepton-schematic: lepton-schematic.in
+	$(do_subst) < $(srcdir)/$@.in > $@
+	chmod +x $@
+
+CLEANFILES = lepton-schematic

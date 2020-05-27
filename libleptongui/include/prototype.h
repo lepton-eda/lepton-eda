@@ -1,6 +1,8 @@
 #ifndef LEPTON_PROTOTYPE_H_
 #define LEPTON_PROTOTYPE_H_
 
+G_BEGIN_DECLS
+
 /* a_zoom.c */
 void a_zoom(GschemToplevel *w_current, GschemPageView *page_view, int dir, int selected_from);
 void a_zoom_box_start(GschemToplevel *w_current, int x, int y);
@@ -752,6 +754,6 @@ PAGE*
 s_hierarchy_find_next_page (GedaPageList *page_list,
                             PAGE *current_page);
 
+G_END_DECLS
 
 #endif /* LEPTON_PROTOTYPE_H_ */
-

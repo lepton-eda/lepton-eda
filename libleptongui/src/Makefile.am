@@ -1,4 +1,4 @@
-bin_PROGRAMS = lepton-schematic
+lib_LTLIBRARIES = libleptongui.la
 
 BUILT_SOURCES = \
 	g_action.x \
@@ -10,7 +10,7 @@ BUILT_SOURCES = \
 	g_select.x \
 	scheme_undo.x
 
-lepton_schematic_SOURCES = \
+libleptongui_la_SOURCES = \
 	a_zoom.c \
 	g_action.c \
 	g_attrib.c \
@@ -124,14 +124,16 @@ lepton_schematic_SOURCES = \
 	color_edit_widget.c \
 	font_select_widget.c
 
-lepton_schematic_CPPFLAGS = -I$(top_srcdir)/liblepton/include  -I$(srcdir)/../include \
+libleptongui_la_CPPFLAGS = -I$(top_srcdir)/liblepton/include  -I$(srcdir)/../include \
 	-I$(top_srcdir) -I$(includedir)
-lepton_schematic_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
+libleptongui_la_CFLAGS = $(GCC_CFLAGS) $(LIBSTROKE_CFLAGS) \
 	$(MINGW_CFLAGS) \
 	$(GLIB_CFLAGS) $(GTK_CFLAGS) $(GTHREAD_CFLAGS) $(GUILE_CFLAGS) $(CFLAGS)
-lepton_schematic_LDFLAGS = $(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
+libleptongui_la_LDFLAGS = -version-info $(LIBLEPTONGUI_SHLIB_VERSION) \
+	$(LIBSTROKE_LDFLAGS) $(GLIB_LIBS) $(GTK_LIBS) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
-lepton_schematic_LDADD = \
+
+libleptongui_la_LIBADD = \
 	$(top_builddir)/libleptonrenderer/libleptonrenderer.la \
 	$(top_builddir)/liblepton/src/liblepton.la
 
@@ -140,7 +142,7 @@ lepton_schematic_LDADD = \
 # in C.
 SUFFIXES = .x
 snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(lepton_schematic_CPPFLAGS) $(AM_CFLAGS) $(lepton_schematic_CFLAGS)
+	$(libleptongui_la_CPPFLAGS) $(AM_CFLAGS) $(libleptongui_la_CFLAGS)
 .c.x:
 	$(AM_V_GEN) CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
 

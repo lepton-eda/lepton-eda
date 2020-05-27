@@ -128,7 +128,7 @@ AC_CHECK_HEADERS([errno.h fcntl.h])
 # FIXME On a system without locale.h, the user may have just disabled NLS
 # to be able to build.  But are there known systems with working NLS but
 # without a locale.h?  We do need to include locale.h on some systems
-# to be able to build schematic/src/lepton-schematic.c
+# to be able to build libleptongui/src/lepton-schematic.c
 AC_CHECK_HEADERS([locale.h])
 
 # Check for lrint in math library.
@@ -186,6 +186,8 @@ AX_LIBLEPTON([6:0:0])
 AX_LIBLEPTONRENDERER([3:0:0])
 # Set up libleptonattrib with the correct ld version number
 AX_LIBLEPTONATTRIB([1:0:0])
+# Set up libleptongui with the correct ld version number.
+AX_LIBLEPTONGUI([1:0:0])
 
 #####################################################################
 # Generate output
@@ -211,17 +213,20 @@ AC_CONFIG_FILES([Makefile
                  cli/Makefile
                  cli/po/Makefile.in
 
+                 libleptongui/Makefile
+                 libleptongui/libleptongui.pc
+                 libleptongui/po/Makefile.in
+                 libleptongui/docs/Makefile
+                 libleptongui/include/Makefile
+                 libleptongui/src/Makefile
+                 libleptongui/examples/Makefile
+                 libleptongui/lib/Makefile
+                 libleptongui/data/Makefile
+                 libleptongui/bitmap/Makefile
+                 libleptongui/tests/Makefile
+                 libleptongui/scheme/Makefile
+
                  schematic/Makefile
-                 schematic/po/Makefile.in
-                 schematic/docs/Makefile
-                 schematic/include/Makefile
-                 schematic/src/Makefile
-                 schematic/examples/Makefile
-                 schematic/lib/Makefile
-                 schematic/data/Makefile
-                 schematic/bitmap/Makefile
-                 schematic/tests/Makefile
-                 schematic/scheme/Makefile
 
                  libleptonattrib/libleptonattrib.pc
                  libleptonattrib/Makefile
