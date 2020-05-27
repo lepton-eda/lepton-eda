@@ -180,7 +180,6 @@ typedef void (*gschem_atexit_func)(gpointer data);
 void gschem_atexit(gschem_atexit_func func, gpointer data);
 void gschem_quit(void);
 void main_prog(void *closure, int argc, char *argv[]);
-int main(int argc, char *argv[]);
 /* i_basic.c */
 void i_action_start(GschemToplevel *w_current);
 void i_action_stop(GschemToplevel *w_current);

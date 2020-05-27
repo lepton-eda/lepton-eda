@@ -341,16 +341,3 @@ void main_prog(void *closure, int argc, char *argv[])
   /* enter main loop */
   gtk_main();
 }
-
-/*! \brief Main executable entrance point.
- *  \par Function Description
- *  This is the main function for gSchem. It sets up the Scheme(GUILE)
- *  environment and passes control to via scm_boot_guile to
- *  the #main_prog function.
- */
-int main (int argc, char *argv[])
-{
-  scm_boot_guile (argc, argv, main_prog, 0);
-
-  return 0;
-}
