@@ -212,8 +212,6 @@ main_prog (int argc, char *argv[])
   argv_index = parse_commandline(argc, argv);
   cwd = g_get_current_dir();
 
-  liblepton_init();
-
   /* create log file right away even if logging is enabled */
   s_log_init ("schematic");
 
