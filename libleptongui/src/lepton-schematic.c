@@ -161,7 +161,8 @@ void gschem_quit(void)
  *  It handles initializing all libraries and gSchem variables
  *  and passes control to the gtk main loop.
  */
-void main_prog(void *closure, int argc, char *argv[])
+void
+main_prog (int argc, char *argv[])
 {
   int i;
   char *cwd = NULL;

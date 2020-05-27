@@ -34,7 +34,7 @@ exec @GUILE@ -s "$0" "$@"
   (pointer->procedure
    void
    (dynamic-func "main_prog" libleptongui)
-   (list '* int '*)))
+   (list int '*)))
 
 ;;; FIXME: Arguments are not supported yet.
-(main %null-pointer 0 %null-pointer)
+(main 0 %null-pointer)
