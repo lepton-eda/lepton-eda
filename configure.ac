@@ -184,6 +184,8 @@ AX_PCB_DIRS
 AX_LIBLEPTON([5:0:0])
 # Set up libleptonrenderer with the correct ld version number
 AX_LIBLEPTONRENDERER([2:0:0])
+# Set up libleptonattrib with the correct ld version number
+AX_LIBLEPTONATTRIB([1:0:0])
 
 #####################################################################
 # Generate output
