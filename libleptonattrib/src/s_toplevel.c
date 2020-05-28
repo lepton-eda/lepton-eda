@@ -142,14 +142,14 @@ gint s_page_save_all (TOPLEVEL *toplevel)
     p_current = (PAGE *)iter->data;
 
     if (f_save (p_current, s_page_get_filename (p_current), NULL)) {
-      s_log_message (_("Saved [%1$s]"),
-                     s_page_get_filename (p_current));
+      g_message (_("Saved [%1$s]"),
+                 s_page_get_filename (p_current));
       /* reset the CHANGED flag of p_current */
       p_current->CHANGED = 0;
 
     } else {
-      s_log_message (_("Could NOT save [%1$s]"),
-                     s_page_get_filename (p_current));
+      g_message (_("Could NOT save [%1$s]"),
+                 s_page_get_filename (p_current));
       /* increase the error counter */
       status++;
     }

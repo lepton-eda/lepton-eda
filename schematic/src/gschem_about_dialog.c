@@ -58,8 +58,8 @@ void about_dialog (GschemToplevel *w_current)
 
   if (error != NULL) {
     g_assert (logo == NULL);
-    s_log_message ("Could not load image at file: %1$s\n%2$s",
-                   logo_file, error->message);
+    g_message ("Could not load image at file: %1$s\n%2$s",
+               logo_file, error->message);
     g_error_free (error);
   }
 

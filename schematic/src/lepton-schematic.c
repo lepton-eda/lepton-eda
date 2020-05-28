@@ -202,11 +202,11 @@ void main_prog(void *closure, int argc, char *argv[])
   /* create log file right away even if logging is enabled */
   s_log_init ("schematic");
 
-  s_log_message (_("Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"),
-                 PREPEND_VERSION_STRING,
-                 PACKAGE_DOTTED_VERSION,
-                 PACKAGE_DATE_VERSION,
-                 PACKAGE_GIT_COMMIT);
+  g_message (_("Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"),
+             PREPEND_VERSION_STRING,
+             PACKAGE_DOTTED_VERSION,
+             PACKAGE_DATE_VERSION,
+             PACKAGE_GIT_COMMIT);
 
 #if defined(__MINGW32__) && defined(DEBUG)
   fprintf(stderr, _("This is the MINGW32 port.\n"));

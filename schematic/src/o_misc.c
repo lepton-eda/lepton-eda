@@ -357,9 +357,9 @@ void o_edit_show_hidden (GschemToplevel *w_current, const GList *o_list)
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 
   if (gschem_toplevel_get_show_hidden_text (w_current)) {
-    s_log_message(_("Hidden text is now visible"));
+    g_message (_("Hidden text is now visible"));
   } else {
-    s_log_message(_("Hidden text is now invisible"));
+    g_message (_("Hidden text is now invisible"));
   }
 }
 
@@ -467,7 +467,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   s_clib_symbol_invalidate_data (clib);
 
   if (clib == NULL) {
-    s_log_message (_("Could not find symbol [%1$s] in library. Update failed."),
+    g_message (_("Could not find symbol [%1$s] in library. Update failed."),
                    o_current->component_basename);
     return NULL;
   }
@@ -586,8 +586,9 @@ void o_autosave_backups(GschemToplevel *w_current)
       real_filename = follow_symlinks (s_page_get_filename (p_current), NULL);
 
       if (real_filename == NULL) {
-        s_log_message ("o_autosave_backups: ");
-        s_log_message (_("Can't get the real filename of %1$s."), s_page_get_filename (p_current));
+        g_message ("o_autosave_backups: ");
+        g_message (_("Can't get the real filename of %1$s."),
+                   s_page_get_filename (p_current));
       } else {
         /* Get the directory in which the real filename lives */
         dirname = g_path_get_dirname (real_filename);
@@ -631,8 +632,8 @@ void o_autosave_backups(GschemToplevel *w_current)
           saved_umask = umask(0);
           if (chmod(backup_filename, (S_IWRITE|S_IWGRP|S_IWOTH) &
                     ((~saved_umask) & 0777)) != 0) {
-            s_log_message (_("Could NOT set previous backup file [%1$s] read-write"),
-                           backup_filename);
+            g_message (_("Could NOT set previous backup file [%1$s] read-write"),
+                       backup_filename);
           }
           umask(saved_umask);
         }
@@ -650,13 +651,13 @@ void o_autosave_backups(GschemToplevel *w_current)
           mask = (~mask)&0777;
           mask &= ((~saved_umask) & 0777);
           if (chmod(backup_filename,mask) != 0) {
-            s_log_message (_("Could NOT set backup file [%1$s] readonly"),
-                           backup_filename);
+            g_message (_("Could NOT set backup file [%1$s] readonly"),
+                       backup_filename);
           }
           umask(saved_umask);
         } else {
-          s_log_message (_("Could NOT save backup file [%1$s]"),
-                         backup_filename);
+          g_message (_("Could NOT save backup file [%1$s]"),
+                     backup_filename);
         }
         g_free (backup_filename);
       }

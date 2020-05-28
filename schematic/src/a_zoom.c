@@ -152,7 +152,7 @@ a_zoom_box(GschemToplevel *w_current)
   /*test if there is really a box*/
   if (w_current->first_wx == w_current->second_wx ||
       w_current->first_wy == w_current->second_wy) {
-    s_log_message(_("Zoom too small!  Cannot zoom further."));
+    g_message (_("Zoom too small!  Cannot zoom further."));
     return;
   }
 

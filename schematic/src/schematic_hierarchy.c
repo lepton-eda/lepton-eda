@@ -350,8 +350,8 @@ s_hierarchy_traversepages (GschemToplevel *w_current,
       /* call the recursive function */
       s_hierarchy_traversepages (w_current, child_page, flags | HIERARCHY_INNERLOOP);
     } else {
-      s_log_message (_("Failed to descend hierarchy into '%1$s': %2$s"),
-                     filename, err->message);
+      g_message (_("Failed to descend hierarchy into '%1$s': %2$s"),
+                 filename, err->message);
       g_error_free (err);
     }
 

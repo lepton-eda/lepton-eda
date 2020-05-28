@@ -370,22 +370,22 @@ o_picture_read (const char *first_line,
   }
 
   if (width == 0 || height == 0) {
-    s_log_message(_("Found a zero width/height picture "
-                    "[ %1$c %2$d %3$d %4$d %5$d ]"),
-                  type, x1, y1, width, height);
+    g_message (_("Found a zero width/height picture "
+                 "[ %1$c %2$d %3$d %4$d %5$d ]"),
+               type, x1, y1, width, height);
   }
 
   if ( (mirrored > 1) || (mirrored < 0)) {
-    s_log_message(_("Found a picture with a wrong 'mirrored' parameter: %1$d."),
-                  mirrored);
-    s_log_message(_("Setting mirrored to 0."));
+    g_message (_("Found a picture with a wrong 'mirrored' parameter: %1$d."),
+               mirrored);
+    g_message (_("Setting mirrored to 0."));
     mirrored = 0;
   }
 
   if ( (embedded > 1) || (embedded < 0)) {
-    s_log_message(_("Found a picture with a wrong 'embedded' parameter: %1$d."),
-                  embedded);
-    s_log_message(_("Setting embedded to 0."));
+    g_message (_("Found a picture with a wrong 'embedded' parameter: %1$d."),
+               embedded);
+    g_message (_("Setting embedded to 0."));
     embedded = 0;
   }
 
@@ -398,8 +398,8 @@ o_picture_read (const char *first_line,
     break;
 
     default:
-      s_log_message(_("Found an unsupported picture angle [ %1$d ]"), angle);
-      s_log_message(_("Setting angle to 0."));
+      g_message (_("Found an unsupported picture angle [ %1$d ]"), angle);
+      g_message (_("Setting angle to 0."));
       angle=0;
       break;
 
@@ -410,7 +410,7 @@ o_picture_read (const char *first_line,
 
   /* Handle empty filenames */
   if (strlen (filename) == 0) {
-    s_log_message (_("Found an image with no filename."));
+    g_message (_("Found an image with no filename."));
     g_free (filename);
     filename = NULL;
   }
@@ -441,9 +441,9 @@ o_picture_read (const char *first_line,
     }
 
     if (file_content == NULL) {
-      s_log_message (_("Failed to load image from embedded data [%1$s]: %2$s"),
-                     filename, _("Base64 decoding failed."));
-      s_log_message (_("Falling back to file loading. Picture unembedded."));
+      g_message (_("Failed to load image from embedded data [%1$s]: %2$s"),
+                 filename, _("Base64 decoding failed."));
+      g_message (_("Falling back to file loading. Picture unembedded."));
       embedded = 0;
     }
   }
@@ -502,7 +502,7 @@ geda_picture_object_to_buffer (const GedaObject *object)
                                 &encoded_picture_length,
                                 TRUE);
     if (encoded_picture == NULL) {
-      s_log_message(_("ERROR: unable to encode the picture."));
+      g_message (_("ERROR: unable to encode the picture."));
     }
   }
 
@@ -607,8 +607,8 @@ OBJECT *o_picture_new (const gchar *file_content,
     GError *error = NULL;
     if (!o_picture_set_from_buffer (new_node, filename,
                                     file_content, file_length, &error)) {
-      s_log_message (_("Failed to load buffer image [%1$s]: %2$s"),
-                     filename, error->message);
+      g_message (_("Failed to load buffer image [%1$s]: %2$s"),
+                 filename, error->message);
       g_error_free (error);
 
       /* Force the data into the object anyway, so as to prevent data
@@ -620,8 +620,8 @@ OBJECT *o_picture_new (const gchar *file_content,
   if (picture->pixbuf == NULL && filename != NULL) {
     GError *error = NULL;
     if (!o_picture_set_from_file (new_node, filename, &error)) {
-      s_log_message (_("Failed to load image from [%1$s]: %2$s"),
-                     filename, error->message);
+      g_message (_("Failed to load image from [%1$s]: %2$s"),
+                 filename, error->message);
       g_error_free (error);
       /* picture not found; try to open a fall back pixbuf */
       picture->pixbuf = o_picture_get_fallback_pixbuf ();
@@ -1052,8 +1052,8 @@ o_picture_embed (OBJECT *object)
   if (o_picture_is_embedded (object)) return;
 
   if (object->picture->file_content == NULL) {
-    s_log_message (_("Picture [%1$s] has no image data."), filename);
-    s_log_message (_("Falling back to file loading. Picture is still unembedded."));
+    g_message (_("Picture [%1$s] has no image data."), filename);
+    g_message (_("Falling back to file loading. Picture is still unembedded."));
     object->picture->embedded = 0;
     return;
   }
@@ -1061,7 +1061,7 @@ o_picture_embed (OBJECT *object)
   object->picture->embedded = 1;
 
   basename = g_path_get_basename (filename);
-  s_log_message (_("Picture [%1$s] has been embedded."), basename);
+  g_message (_("Picture [%1$s] has been embedded."), basename);
   g_free (basename);
 }
 
@@ -1085,9 +1085,9 @@ o_picture_unembed (OBJECT *object)
   o_picture_set_from_file (object, filename, &err);
 
   if (err != NULL) {
-    s_log_message (_("Failed to load image from file [%1$s]: %2$s"),
-                   filename, err->message);
-    s_log_message (_("Picture is still embedded."));
+    g_message (_("Failed to load image from file [%1$s]: %2$s"),
+               filename, err->message);
+    g_message (_("Picture is still embedded."));
     g_error_free (err);
     return;
   }
@@ -1095,7 +1095,7 @@ o_picture_unembed (OBJECT *object)
   object->picture->embedded = 0;
 
   basename = g_path_get_basename(filename);
-  s_log_message (_("Picture [%1$s] has been unembedded."), basename);
+  g_message (_("Picture [%1$s] has been unembedded."), basename);
   g_free(basename);
 }
 

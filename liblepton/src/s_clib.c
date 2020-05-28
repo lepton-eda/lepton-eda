@@ -457,17 +457,17 @@ static gchar *run_source_command (const gchar *command)
                              &e);
 
   if (e != NULL) {
-    s_log_message (_("Library command failed [%1$s]: %2$s"), command,
-		   e->message);
+    g_message (_("Library command failed [%1$s]: %2$s"), command,
+               e->message);
     g_error_free (e);
 
   } else if (WIFSIGNALED(exit_status)) {
-    s_log_message (_("Library command failed [%1$s]: Uncaught signal %2$i."),
-                   command, WTERMSIG(exit_status));
+    g_message (_("Library command failed [%1$s]: Uncaught signal %2$i."),
+               command, WTERMSIG(exit_status));
 
   } else if (WIFEXITED(exit_status) && WEXITSTATUS(exit_status)) {
-    s_log_message (_("Library command failed [%1$s]"), command);
-    s_log_message(_("Error output was:\n%1$s"), standard_error);
+    g_message (_("Library command failed [%1$s]"), command);
+    g_message (_("Error output was:\n%1$s"), standard_error);
 
   } else {
     success = TRUE;
@@ -475,7 +475,7 @@ static gchar *run_source_command (const gchar *command)
 
   /* forward library command messages */
   if (success && standard_error != NULL)
-    s_log_message ("%s", standard_error);
+    g_message ("%s", standard_error);
 
   g_free (standard_error);
 
@@ -553,8 +553,8 @@ static gchar *uniquify_source_name (const gchar *name)
     newname = g_strdup_printf ("%s<%i>", name, i);
   } while (s_clib_get_source_by_name (newname) != NULL);
 
-  s_log_message (_("Library name [%1$s] already in use.  Using [%2$s]."),
-                 name, newname);
+  g_message (_("Library name [%1$s] already in use.  Using [%2$s]."),
+             name, newname);
 
   return newname;
 }
@@ -590,8 +590,8 @@ static void refresh_directory (CLibSource *source)
   dir = g_dir_open (source->directory, 0, &e);
 
   if (e != NULL) {
-    s_log_message (_("Failed to open directory [%1$s]: %2$s"),
-		   source->directory, e->message);
+    g_message (_("Failed to open directory [%1$s]: %2$s"),
+               source->directory, e->message);
     g_error_free (e);
     return;
   }
@@ -726,16 +726,16 @@ static void refresh_scm (CLibSource *source)
   symlist = scm_call_0 (source->list_fn);
 
   if (scm_is_false (scm_list_p (symlist))) {
-    s_log_message (_("Failed to scan library [%1$s]: Scheme function returned non-list."),
-		   source->name);
+    g_message (_("Failed to scan library [%1$s]: Scheme function returned non-list."),
+               source->name);
     return;
   }
 
   while (!scm_is_null (symlist)) {
     symname = SCM_CAR (symlist);
     if (!scm_is_string (symname)) {
-      s_log_message (_("Non-string symbol name while scanning library [%1$s]"),
-		     source->name);
+      g_message (_("Non-string symbol name while scanning library [%1$s]"),
+                 source->name);
     } else {
       symbol = g_new0 (CLibSymbol, 1);
       symbol->source = source;
@@ -890,16 +890,16 @@ const CLibSource *s_clib_add_command (const gchar *list_cmd,
   gchar *realname;
 
   if (name == NULL) {
-    s_log_message (_("Cannot add library: name not specified."));
+    g_message (_("Cannot add library: name not specified."));
     return NULL;
   }
 
   realname = uniquify_source_name (name);
 
   if (list_cmd == NULL || get_cmd == NULL) {
-    s_log_message (_("Cannot add library [%1$s]: both 'list' and "
-                     "'get' commands must be specified."),
-		   realname);
+    g_message (_("Cannot add library [%1$s]: both 'list' and "
+                 "'get' commands must be specified."),
+               realname);
   }
 
   source = g_new0 (CLibSource, 1);
@@ -937,7 +937,7 @@ const CLibSource *s_clib_add_scm (SCM listfunc, SCM getfunc, const gchar *name)
   gchar *realname;
 
   if (name == NULL) {
-    s_log_message (_("Cannot add library: name not specified."));
+    g_message (_("Cannot add library: name not specified."));
     return NULL;
   }
 
@@ -945,8 +945,8 @@ const CLibSource *s_clib_add_scm (SCM listfunc, SCM getfunc, const gchar *name)
 
   if (scm_is_false (scm_procedure_p (listfunc))
       && scm_is_false (scm_procedure_p (getfunc))) {
-    s_log_message (_("Cannot add Scheme-library [%1$s]: callbacks must be closures."),
-                   realname);
+    g_message (_("Cannot add Scheme-library [%1$s]: callbacks must be closures."),
+               realname);
     return NULL;
   }
 
@@ -1072,8 +1072,8 @@ static gchar *get_data_directory (const CLibSymbol *symbol)
   g_file_get_contents (filename, &data, NULL, &e);
 
   if (e != NULL) {
-    s_log_message (_("Failed to load symbol from file [%1$s]: %2$s"),
-                   filename, e->message);
+    g_message (_("Failed to load symbol from file [%1$s]: %2$s"),
+               filename, e->message);
     g_error_free (e);
   }
 
@@ -1132,8 +1132,8 @@ static gchar *get_data_scm (const CLibSymbol *symbol)
 			scm_from_utf8_string (symbol->name));
 
   if (!scm_is_string (symdata)) {
-    s_log_message (_("Failed to load symbol data [%1$s] from source [%2$s]"),
-                   symbol->name, symbol->source->name);
+    g_message (_("Failed to load symbol data [%1$s] from source [%2$s]"),
+               symbol->name, symbol->source->name);
     return NULL;
   }
 
@@ -1374,14 +1374,14 @@ const CLibSymbol *s_clib_get_symbol_by_name (const gchar *name)
   symlist = s_clib_search (name, CLIB_EXACT);
 
   if (symlist == NULL) {
-    s_log_message (_("Component [%1$s] was not found in the component library."),
-                   name);
+    g_message (_("Component [%1$s] was not found in the component library."),
+               name);
     return NULL;
   }
 
   if (g_list_next (symlist) != NULL) { /* More than one symbol */
-    s_log_message (_("More than one component found with name [%1$s]."),
-                   name);
+    g_message (_("More than one component found with name [%1$s]."),
+               name);
   }
 
   retval = (CLibSymbol *) symlist->data;

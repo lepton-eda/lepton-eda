@@ -78,7 +78,7 @@ void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
 
   status = o_attrib_string_get_name_value (string, NULL, &value);
   if (!status) {
-    s_log_message (_("Slot attribute malformed"));
+    g_message (_("Slot attribute malformed"));
     return;
   }
 
@@ -86,8 +86,8 @@ void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
     o_attrib_search_object_attribs_by_name (object, "numslots", 0);
 
   if (!numslots_value) {
-    s_log_message (_("numslots attribute missing"));
-    s_log_message (_("Slotting not allowed for this component"));
+    g_message (_("numslots attribute missing"));
+    g_message (_("Slotting not allowed for this component"));
     g_free (value);
     return;
   }
@@ -102,7 +102,7 @@ void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
 #endif
 
   if (new_slot_number > numslots || new_slot_number <=0 ) {
-    s_log_message (_("New slot number out of range"));
+    g_message (_("New slot number out of range"));
     g_free (value);
     return;
   }
