@@ -1092,7 +1092,7 @@ x_tabs_hier_up (GschemToplevel* w_current)
 
   if (parent == NULL)
   {
-    s_log_message(_("Cannot find any schematics above the current one!"));
+    g_message (_("Cannot find any schematics above the current one!"));
     return;
   }
 

@@ -355,16 +355,16 @@ o_circle_read (const char buf[],
 
 
   if (radius <= 0) {
-    s_log_message(_("Found a zero or negative radius circle "
-                    "[ %1$c %2$d %3$d %4$d %5$d ]"),
-                  type, x1, y1, radius, color);
-    s_log_message (_("Setting radius to 0."));
+    g_message (_("Found a zero or negative radius circle "
+                 "[ %1$c %2$d %3$d %4$d %5$d ]"),
+               type, x1, y1, radius, color);
+    g_message (_("Setting radius to 0."));
     radius = 0;
   }
 
   if (!color_id_valid (color)) {
-    s_log_message(_("Found an invalid color [ %1$s ]"), buf);
-    s_log_message(_("Setting color to default color."));
+    g_message (_("Found an invalid color [ %1$s ]"), buf);
+    g_message (_("Setting color to default color."));
     color = default_color_id();
   }
 

@@ -156,13 +156,13 @@ s_slot_update_object (OBJECT *object)
 
   if (slotdef == NULL) {
     if (slot_string) /* only an error if there's a slot string */
-      s_log_message (_("Did not find slotdef=#:#,#,#... attribute."));
+      g_message (_("Did not find slotdef=#:#,#,#... attribute."));
     return;
   }
 
   if (!strstr (slotdef, ":")) {
     /* Didn't find proper slotdef=#:... put warning into log */
-    s_log_message (_("Improper slotdef syntax: missing \":\"."));
+    g_message (_("Improper slotdef syntax: missing \":\"."));
     g_free (slotdef);
     return;
   }
@@ -177,7 +177,7 @@ s_slot_update_object (OBJECT *object)
   cptr++; /* skip colon */
 
   if (*cptr == '\0') {
-    s_log_message (_("Did not find proper slotdef=#:#,#,#... attribute."));
+    g_message (_("Did not find proper slotdef=#:#,#,#... attribute."));
     g_free (slotdef);
     return;
   }
@@ -206,7 +206,7 @@ s_slot_update_object (OBJECT *object)
 
       pin_counter++;
     } else {
-      s_log_message (_("component missing pinseq= attribute."));
+      g_message (_("component missing pinseq= attribute."));
     }
 
     current_pin = strtok (NULL, DELIMITERS);

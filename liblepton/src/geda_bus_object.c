@@ -347,20 +347,20 @@ o_bus_read (const char buf[],
   }
 
   if (x1 == x2 && y1 == y2) {
-    s_log_message (_("Found a zero length bus "
-                     "[ %1$c %2$d %3$d %4$d %5$d %6$d ]"),
-                    type, x1, y1, x2, y2, color);
+    g_message (_("Found a zero length bus "
+                 "[ %1$c %2$d %3$d %4$d %5$d %6$d ]"),
+               type, x1, y1, x2, y2, color);
   }
 
   if (!color_id_valid (color)) {
-    s_log_message (_("Found an invalid color [ %1$s ]"), buf);
-    s_log_message (_("Setting color to default color."));
+    g_message (_("Found an invalid color [ %1$s ]"), buf);
+    g_message (_("Setting color to default color."));
     color = default_color_id();
   }
 
   if (ripper_dir < -1 || ripper_dir > 1) {
-    s_log_message (_("Found an invalid bus ripper direction [ %1$s ]"), buf);
-    s_log_message (_("Resetting direction to neutral (no direction)."));
+    g_message (_("Found an invalid bus ripper direction [ %1$s ]"), buf);
+    g_message (_("Resetting direction to neutral (no direction)."));
     ripper_dir = 0;
   }
 

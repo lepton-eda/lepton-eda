@@ -277,7 +277,7 @@ process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err) {
   scm_close_output_port (s_port);
 
   /* Send long message to log */
-  s_log_message ("%s", long_message);
+  g_message ("%s", long_message);
 
   /* Populate any GError */
   g_set_error (err, EDA_ERROR, EDA_ERROR_SCHEME, "%s", short_message);

@@ -335,7 +335,7 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
     gtk_file_chooser_set_current_name(GTK_FILE_CHOOSER(file_chooser),
         new_image_filename);
   } else {
-    s_log_message("x_image_update_dialog_filename: No parent file chooser found!.");
+    g_message ("x_image_update_dialog_filename: No parent file chooser found!.");
   }
 
   g_free(file_name);
@@ -403,10 +403,10 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
     pixbuf = x_image_get_pixbuf(w_current, width, height, is_color);
     if (pixbuf != NULL) {
       if (!gdk_pixbuf_save(pixbuf, filename, filetype, &gerror, NULL)) {
-        s_log_message ("x_image_lowlevel: ");
-        s_log_message (_("Unable to write %1$s file %2$s."),
-                       filetype, filename);
-        s_log_message ("%s", gerror->message);
+        g_message ("x_image_lowlevel: ");
+        g_message (_("Unable to write %1$s file %2$s."),
+                   filetype, filename);
+        g_message ("%s", gerror->message);
 
         /* Warn the user */
         dialog = gtk_message_dialog_new (GTK_WINDOW(w_current->main_window),
@@ -434,9 +434,9 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
       }
       else {
         if (is_color) {
-          s_log_message(_("Wrote color image to [%1$s] [%2$d x %3$d]"), filename, width, height);
+          g_message (_("Wrote color image to [%1$s] [%2$d x %3$d]"), filename, width, height);
         } else {
-          s_log_message(_("Wrote black and white image to [%1$s] [%2$d x %3$d]"), filename, width, height);
+          g_message (_("Wrote black and white image to [%1$s] [%2$d x %3$d]"), filename, width, height);
         }
       }
 
@@ -444,8 +444,8 @@ void x_image_lowlevel(GschemToplevel *w_current, const char* filename,
         g_object_unref(pixbuf);
     }
     else {
-      s_log_message ("x_image_lowlevel: ");
-      s_log_message (_("Unable to get pixbuf from lepton-schematic's window."));
+      g_message ("x_image_lowlevel: ");
+      g_message (_("Unable to get pixbuf from lepton-schematic's window."));
     }
   }
 

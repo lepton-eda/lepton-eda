@@ -422,15 +422,15 @@ OBJECT
 
   /* Error check */
   if (radius <= 0) {
-    s_log_message (_("Found a zero radius arc "
-                     "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"),
-                   type, x1, y1, radius, start_angle, sweep_angle, color);
+    g_message (_("Found a zero radius arc "
+                 "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$d ]"),
+               type, x1, y1, radius, start_angle, sweep_angle, color);
     radius = 0;
   }
 
   if (!color_id_valid (color)) {
-    s_log_message(_("Found an invalid color [ %1$s ]"), buf);
-    s_log_message(_("Setting color to default color."));
+    g_message (_("Found an invalid color [ %1$s ]"), buf);
+    g_message (_("Setting color to default color."));
     color = default_color_id();
   }
 

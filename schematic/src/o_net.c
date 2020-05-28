@@ -447,7 +447,7 @@ void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
 
   if (w_current->first_wx != snap_grid (w_current, w_current->first_wx)
       || w_current->first_wy != snap_grid (w_current, w_current->first_wy))
-      s_log_message(_("Warning: Starting net at off grid coordinate"));
+      g_message (_("Warning: Starting net at off grid coordinate"));
 
   if (w_current->net_direction_mode)
     o_net_guess_direction(w_current, w_current->first_wx, w_current->first_wy);
@@ -511,7 +511,7 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
 
   if (w_current->third_wx != snap_grid (w_current, w_current->third_wx)
       || w_current->third_wy != snap_grid (w_current, w_current->third_wy))
-      s_log_message(_("Warning: Ending net at off grid coordinate"));
+      g_message (_("Warning: Ending net at off grid coordinate"));
 
   if (!primary_zero_length ) {
   /* create primary net */
@@ -1067,8 +1067,8 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
                               o_component_promote_attribs (new_obj));
           s_page_append (page, new_obj);
         } else {
-          s_log_message(_("Bus ripper symbol [%1$s] was not found in any component library"),
-                        w_current->bus_ripper_symname);
+          g_message (_("Bus ripper symbol [%1$s] was not found in any component library"),
+                     w_current->bus_ripper_symname);
         }
       }
     }

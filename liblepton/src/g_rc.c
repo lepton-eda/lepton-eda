@@ -139,7 +139,7 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
   scm_dynwind_end ();
 
   if (status) {
-    s_log_message (_("Loaded RC file [%1$s]"), name_norm);
+    g_message (_("Loaded RC file [%1$s]"), name_norm);
   } else {
     /* Copy tmp_err into err, with a prefixed message. */
     g_propagate_prefixed_error (err, tmp_err,
@@ -274,7 +274,7 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
   if (*err == NULL) {
     const gchar *msgl =
       _("ERROR: An unknown error occurred while parsing configuration files.");
-    s_log_message ("%1$s", msgl);
+    g_message ("%1$s", msgl);
     fprintf(stderr, "%1$s\n", msgl);
 
   } else {
@@ -285,7 +285,7 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
       return;
     }
 
-    s_log_message (_("ERROR: %1$s"), (*err)->message);
+    g_message (_("ERROR: %1$s"), (*err)->message);
     fprintf (stderr, _("ERROR: %1$s\n"), (*err)->message);
   }
 

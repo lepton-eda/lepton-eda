@@ -195,9 +195,9 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
   real_filename = follow_symlinks (s_page_get_filename(page), NULL);
 
   if (real_filename == NULL) {
-    s_log_message ("s_page_delete:");
-    s_log_message (_("Can't get the real filename of %1$s."),
-                   s_page_get_filename (page));
+    g_message ("s_page_delete:");
+    g_message (_("Can't get the real filename of %1$s."),
+               s_page_get_filename (page));
   }
   else {
     backup_filename = f_get_autosave_filename (real_filename);
@@ -207,9 +207,9 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 	 (!g_file_test(backup_filename, G_FILE_TEST_IS_DIR)) )
     {
       if (unlink(backup_filename) != 0) {
-        s_log_message ("s_page_delete:");
-	s_log_message (_("Unable to delete backup file %1$s."),
-                      backup_filename);
+        g_message ("s_page_delete:");
+	g_message (_("Unable to delete backup file %1$s."),
+                   backup_filename);
       }
     }
     g_free (backup_filename);

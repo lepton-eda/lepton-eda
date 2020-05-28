@@ -725,7 +725,7 @@ x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename)
   gschem_toplevel_page_changed (w_current);
 
   if (!quiet_mode)
-    s_log_message (_("Loading schematic [%1$s]"), filename);
+    g_message (_("Loading schematic [%1$s]"), filename);
 
 
   /* Try to load [filename]: */
@@ -857,7 +857,7 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
   }
 
   /* log status of operation */
-  s_log_message (log_msg, filename);
+  g_message (log_msg, filename);
 
   i_set_state_msg  (w_current, SELECT, state_msg);
 
@@ -921,9 +921,9 @@ x_window_close_page_impl (GschemToplevel *w_current, PAGE *page)
     /* new_current will be the new current page at the end of the function */
   }
 
-  s_log_message (page->CHANGED ?
-                 _("Discarding page [%1$s]") : _("Closing [%1$s]"),
-                 s_page_get_filename (page));
+  g_message (page->CHANGED ?
+             _("Discarding page [%1$s]") : _("Closing [%1$s]"),
+             s_page_get_filename (page));
   /* remove page from toplevel list of page and free */
   s_page_delete (toplevel, page);
   gschem_toplevel_page_changed (w_current);
@@ -1563,7 +1563,7 @@ x_window_new_page (GschemToplevel* w_current)
   gschem_toplevel_page_changed (w_current);
 
   if (!quiet_mode)
-    s_log_message (_("New file [%s]"), filename);
+    g_message (_("New file [%s]"), filename);
 
   g_free (filename);
 
@@ -1711,7 +1711,7 @@ untitled_filename (GschemToplevel* w_current, gboolean log_skipped)
     {
       if (log_skipped)
       {
-        s_log_message (_("Skipping existing file [%s]"), fname);
+        g_message (_("Skipping existing file [%s]"), fname);
       }
 
       g_free (fname);

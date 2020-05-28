@@ -353,17 +353,17 @@ o_pin_read (const char buf[],
   }
 
   if (whichend == -1) {
-    s_log_message (_("Found a pin which did not have the whichend field set.\n"
-                     "Verify and correct manually."));
+    g_message (_("Found a pin which did not have the whichend field set.\n"
+                 "Verify and correct manually."));
   } else if (whichend < -1 || whichend > 1) {
-    s_log_message (_("Found an invalid whichend on a pin (reseting to zero): %d"),
-                   whichend);
+    g_message (_("Found an invalid whichend on a pin (reseting to zero): %d"),
+               whichend);
     whichend = 0;
   }
 
   if (!color_id_valid (color)) {
-    s_log_message (_("Found an invalid color [ %1$s ]"), buf);
-    s_log_message (_("Setting color to default color."));
+    g_message (_("Found an invalid color [ %1$s ]"), buf);
+    g_message (_("Setting color to default color."));
     color = default_color_id();
   }
 

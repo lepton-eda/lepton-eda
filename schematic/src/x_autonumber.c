@@ -409,8 +409,8 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 	  if (numslots > 0) {
 	    slot_str = o_attrib_search_object_attribs_by_name (o_parent, "slot", 0);
 	    if (slot_str == NULL) {
-	      s_log_message(_("slotted object without slot attribute may cause "
-			      "problems when autonumbering slots"));
+	      g_message (_("slotted object without slot attribute may cause "
+                           "problems when autonumbering slots"));
 	    }
 	    else {
 	      sscanf(slot_str, " %d", &slotnr);
@@ -424,9 +424,9 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 						 slot,
 						 (GCompareFunc) freeslot_compare);
 	      if (slot_item != NULL) { /* duplicate slot in used_slots */
-		s_log_message(_("duplicate slot may cause problems: "
-				"[symbolname=%1$s, number=%2$d, slot=%3$d]"),
-				slot->symbolname, slot->number, slot->slotnr);
+		g_message (_("duplicate slot may cause problems: "
+                             "[symbolname=%1$s, number=%2$d, slot=%3$d]"),
+                           slot->symbolname, slot->number, slot->slotnr);
 		g_free(slot);
 	      }
 	      else {
@@ -672,7 +672,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
      in the searchtext list */
 
   if (strlen(scope_text) == 0) {
-    s_log_message(_("No search string given in autonumber text."));
+    g_message (_("No search string given in autonumber text."));
     return; /* error */
   }
   else if (g_str_has_suffix(scope_text,"?") == TRUE) {
@@ -725,7 +725,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
     g_free(searchtext);
   }
   else {
-    s_log_message(_("No '*' or '?' given at the end of the autonumber text."));
+    g_message (_("No '*' or '?' given at the end of the autonumber text."));
     return;
   }
 

@@ -266,7 +266,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
        * this. */
       if (!g_error_matches (tmp_err, G_FILE_ERROR, G_FILE_ERROR_NOENT) &&
           !g_error_matches (tmp_err, EDA_ERROR, EDA_ERROR_RC_TWICE)) {
-        s_log_message ("%s", tmp_err->message);
+        g_message ("%s", tmp_err->message);
       }
       g_error_free (tmp_err);
       tmp_err = NULL;
@@ -409,13 +409,13 @@ f_save (PAGE *page,
       if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
 	   (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
 	if (chmod(backup_filename, S_IREAD|S_IWRITE) != 0) {
-	  s_log_message (_("Could NOT set previous backup file [%1$s] read-write."),
-			 backup_filename);
+	  g_message (_("Could NOT set previous backup file [%1$s] read-write."),
+                     backup_filename);
 	}
       }
 	
       if (rename(real_filename, backup_filename) != 0) {
-	s_log_message (_("Can't save backup file: %1$s."), backup_filename);
+	g_message (_("Can't save backup file: %1$s."), backup_filename);
       }
       else {
 	/* Make the backup file readonly so a 'rm *' command will ask 
@@ -425,8 +425,8 @@ f_save (PAGE *page,
 	mask = (~mask)&0777;
 	mask &= ((~saved_umask) & 0777);
 	if (chmod(backup_filename, mask) != 0) {
-	  s_log_message (_("Could NOT set backup file [%1$s] readonly."),
-                         backup_filename);
+	  g_message (_("Could NOT set backup file [%1$s] readonly."),
+                     backup_filename);
 	}
 	umask(saved_umask);
       }

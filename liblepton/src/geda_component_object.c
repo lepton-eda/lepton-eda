@@ -847,10 +847,10 @@ OBJECT *o_component_read (PAGE *page,
       break;
 
     default:
-      s_log_message(_("Found a component with an invalid rotation "
-                      "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$s ]"),
-                    type, x1, y1, selectable, angle, mirror, basename);
-      s_log_message (_("Setting angle to 0."));
+      g_message (_("Found a component with an invalid rotation "
+                   "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$s ]"),
+                 type, x1, y1, selectable, angle, mirror, basename);
+      g_message (_("Setting angle to 0."));
       angle = 0;
   }
 
@@ -862,10 +862,10 @@ OBJECT *o_component_read (PAGE *page,
       break;
 
     default:
-      s_log_message(_("Found a component with an invalid mirror flag "
-                      "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$s ]"),
-                    type, x1, y1, selectable, angle, mirror, basename);
-      s_log_message (_("Setting mirror to 0."));
+      g_message (_("Found a component with an invalid mirror flag "
+                   "[ %1$c %2$d %3$d %4$d %5$d %6$d %7$s ]"),
+                 type, x1, y1, selectable, angle, mirror, basename);
+      g_message (_("Setting mirror to 0."));
       mirror = 0;
   }
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
@@ -1206,16 +1206,16 @@ o_component_check_symversion (PAGE* page, OBJECT* object)
     {
       if (inside)
       {
-        s_log_message(_("WARNING: %s (%s): could not parse "
-                        "symversion (%s) in symbol file"),
-                      object->component_basename,
-                      refdes,
-                      inside);
+        g_message (_("WARNING: %s (%s): could not parse "
+                     "symversion (%s) in symbol file"),
+                   object->component_basename,
+                   refdes,
+                   inside);
       } else {
-        s_log_message(_("WARNING: %s (%s): could not parse "
-                        "symversion in symbol file"),
-                      object->component_basename,
-                      refdes);
+        g_message (_("WARNING: %s (%s): could not parse "
+                     "symversion in symbol file"),
+                   object->component_basename,
+                   refdes);
       }
       goto done;
     }
@@ -1229,11 +1229,11 @@ o_component_check_symversion (PAGE* page, OBJECT* object)
     outside_value = strtod(outside, &err_check);
     if (outside_value == 0 && outside == err_check)
     {
-      s_log_message(_("WARNING: %s (%s): could not parse "
-                      "attached symversion (%s)"),
-                    object->component_basename,
-                    refdes,
-                    outside);
+      g_message (_("WARNING: %s (%s): could not parse "
+                   "attached symversion (%s)"),
+                 object->component_basename,
+                 refdes,
+                 outside);
       goto done;
     }
     outside_present = TRUE;
@@ -1256,10 +1256,10 @@ o_component_check_symversion (PAGE* page, OBJECT* object)
   /* No symversion inside, but a version is outside, this is a weird case */
   if (!inside_present && outside_present)
   {
-    s_log_message(_("WARNING: %s (%s): symversion attached, "
-                    "but absent inside symbol file"),
-                  object->component_basename,
-                  refdes);
+    g_message (_("WARNING: %s (%s): symversion attached, "
+                 "but absent inside symbol file"),
+               object->component_basename,
+               refdes);
     goto done;
   }
 
@@ -1294,12 +1294,12 @@ o_component_check_symversion (PAGE* page, OBJECT* object)
     {
       char* refdes_copy;
 
-      s_log_message(_("WARNING: %s (%s): MAJOR symversion change "
-                      "(attached: %.3f < library: %.3f)"),
-                    object->component_basename,
-                    refdes,
-                    outside_value,
-                    inside_value);
+      g_message (_("WARNING: %s (%s): MAJOR symversion change "
+                   "(attached: %.3f < library: %.3f)"),
+                 object->component_basename,
+                 refdes,
+                 outside_value,
+                 inside_value);
 
       /* add the refdes and basename to the page's major_changed_refdes GList:
       */
@@ -1330,12 +1330,12 @@ o_component_check_symversion (PAGE* page, OBJECT* object)
 
     if (inside_minor > outside_minor)
     {
-      s_log_message(_("WARNING: %s (%s): minor symversion change "
-                      "(attached: %.3f < library: %.3f)"),
-                    object->component_basename,
-                    refdes,
-                    outside_value,
-                    inside_value);
+      g_message (_("WARNING: %s (%s): minor symversion change "
+                   "(attached: %.3f < library: %.3f)"),
+                 object->component_basename,
+                 refdes,
+                 outside_value,
+                 inside_value);
     }
 
     goto done;
@@ -1344,12 +1344,12 @@ o_component_check_symversion (PAGE* page, OBJECT* object)
   /* outside value is greater than inside value, this is weird case */
   if ((inside_present && outside_present) && (outside_value > inside_value))
   {
-    s_log_message(_("WARNING: %s (%s): symbol is newer "
-                    "than symbol in library (%.3f > %.3f)"),
-                  object->component_basename,
-                  refdes,
-                  outside_value,
-                  inside_value);
+    g_message (_("WARNING: %s (%s): symbol is newer "
+                 "than symbol in library (%.3f > %.3f)"),
+               object->component_basename,
+               refdes,
+               outside_value,
+               inside_value);
     goto done;
   }
 

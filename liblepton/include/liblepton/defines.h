@@ -155,9 +155,6 @@
 #define M_PI  3.14159265358979323846
 #endif
 
-/* Logs a normal message. */
-#define s_log_message g_message
-
 /* Backup filename creation string */
 #define AUTOSAVE_BACKUP_FILENAME_STRING "#%s#"
 
