@@ -67,10 +67,10 @@ exec @GUILE@ -s "$0" "$@"
    '()))
 
 ;;; Localization.
-(define %textdomain "lepton-attrib")
+(define %textdomain "libleptonattrib")
 (bindtextdomain %textdomain "@localedir@")
 (textdomain %textdomain)
-(bind-textdomain-codeset "lepton-attrib" "UTF-8")
+(bind-textdomain-codeset %textdomain "UTF-8")
 (setlocale LC_ALL "")
 (setlocale LC_NUMERIC "C")
 
