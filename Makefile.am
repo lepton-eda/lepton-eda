@@ -1,6 +1,3 @@
-if ENABLE_ATTRIB
-ATTRIB_DIR=attrib
-endif
 if ENABLE_CONTRIB
 CONTRIB_DIR=contrib
 endif
@@ -10,7 +7,6 @@ SUBDIRS = \
 	libleptonattrib \
 	cli \
 	schematic \
-	${ATTRIB_DIR} \
 	symcheck \
 	netlist \
 	utils \
@@ -75,7 +71,7 @@ endif HAVE_GIT_REPO
 
 doxygen:
 if ENABLE_DOXYGEN
-	@for subdir in attrib/docs schematic/docs \
+	@for subdir in schematic/docs libleptonattrib/docs \
 	  liblepton/docs utils/docs ; do \
 	  (cd $$subdir; $(MAKE) doxygen) || exit 1; \
 	done
