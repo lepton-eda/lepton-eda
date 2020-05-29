@@ -74,8 +74,7 @@ exec @GUILE@ -s "$0" "$@"
 (setlocale LC_ALL "")
 (setlocale LC_NUMERIC "C")
 
-(define G_ gettext)
-
+(define (G_ msg) (gettext msg %textdomain))
 
 (primitive-eval '(use-modules (lepton core toplevel)
                               (lepton file-system)
