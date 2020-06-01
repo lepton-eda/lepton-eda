@@ -113,6 +113,12 @@ in the `schematic.gui` group to `false`.
 - Showing/hiding of hidden text can now be set individually on per
   page view basis.
 
+### Changes in `lepton-upcfg`:
+- Fixed a logging issue when the utility is called with some file
+  path as a command line parameter.
+
+- The utility now has its own manual page `lepton-upcfg(1)`.
+
 
 Notable changes in Lepton EDA 1.9.10 (20200319)
 -----------------------------------------------
