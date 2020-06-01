@@ -63,6 +63,9 @@ for missing schematic symbols.
 opened. Previous behavior was to check just the first page passed
 on the `lepton-schematic` command line.
 
+- Log messages related to `symversion` have been changed to be
+more compact and comprehensible.
+
 - Several dialogs and dock widgets now have shorter and more
   uniform titles.
 
@@ -72,9 +75,6 @@ is opened for each page with symbol version changes.
 
 - The dialogs "Add picture" and "Execute script" now have file
   filters, which eases selection of supported files.
-
-- Log messages related to `symversion` have been changed to be
-more compact and comprehensible.
 
 - A new boolean configuration parameter has been added to the
 `schematic.gui` group: `use-toplevel-windows` ( `false` by default).
