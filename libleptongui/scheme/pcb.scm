@@ -52,11 +52,12 @@
 ;; - figure out how to install the hotkeys
 ;;
 
-(use-modules (ice-9 popen))
+(use-modules (ice-9 popen)
+             (lepton log))
 
-(gschem-log "Loading the PCB major mode\n")
-;; (gschem-log "PCB-mode version $Id$\n")
-(gschem-log "The PCB major mode is incomplete and considered experimental at this time\n")
+(log! 'message "Loading the PCB major mode\n")
+;; (log! 'message "PCB-mode version $Id$\n")
+(log! 'message "The PCB major mode is incomplete and considered experimental at this time\n")
 
 ;; These may be changed by the user in their gafrc files (FIXME -- make this
 ;; preceeding comment be true)
@@ -98,11 +99,11 @@
 	       ;; and set pcb:pipe to false so we don't
 	       ;; try and write again
 	       (lambda (key . args)
-		 (gschem-log "It appears that PCB has terminated.\n")
-		 (gschem-log "If this is not the case, you should save and exit and\n")
-		 (gschem-log "report this as a bug.\n\n")
-		 (gschem-log "If you exited PCB on purpose, you can ignore \n")
-		 (gschem-log "this message\n\n")
+		 (log! 'message "It appears that PCB has terminated.\n")
+		 (log! 'message "If this is not the case, you should save and exit and\n")
+		 (log! 'message "report this as a bug.\n\n")
+		 (log! 'message "If you exited PCB on purpose, you can ignore \n")
+		 (log! 'message "this message\n\n")
 		 (set! pcb:pipe #f)
 		 )
 
@@ -231,7 +232,7 @@
   ;; exits from PCB
   (if pcb:pipe 
       (begin
-	(gschem-log "PCB is already running\n")
+	(log! 'message "PCB is already running\n")
 	(gschem-msg "PCB is already running\n")
 	)
 
@@ -239,14 +240,14 @@
 	(if (gschem-confirm "Start pcb?")
 	    (begin
 	      (sigaction SIGPIPE SIG_IGN)
-	      (gschem-log "Launching PCB\n")
+	      (log! 'message "Launching PCB\n")
 	      (set! pcb:pipe (open-output-pipe 
 			      (string-append pcb:pcb-cmd " --listen")
 			      )
 		    )
 	      (if (not pcb:pipe)
-		  (gschem-log "Failed to launch PCB\n")
-		  (gschem-log "Launched PCB\n")
+		  (log! 'message "Failed to launch PCB\n")
+		  (log! 'message "Launched PCB\n")
 		  )
 	      )
 	    (gschem-msg "Not launching PCB\n")
@@ -256,7 +257,7 @@
   )
 
 (define (pcb:run-gsch2pcb)
-  (gschem-log "Running gsch2pcb")
+  (log! 'message "Running gsch2pcb")
   (system pcb:gsch2pcb-cmd)
 )
 

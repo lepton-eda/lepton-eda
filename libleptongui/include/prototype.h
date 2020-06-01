@@ -19,7 +19,6 @@ void g_init_builtins (void);
 /* g_attrib.c */
 void g_init_attrib ();
 /* g_funcs.c */
-SCM g_funcs_log(SCM msg);
 SCM g_funcs_msg(SCM msg);
 SCM g_funcs_confirm(SCM msg);
 SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags);

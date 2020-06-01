@@ -28,6 +28,7 @@
   #:use-module (geda deprecated)
 
   #:use-module (lepton attrib)
+  #:use-module (lepton log)
   #:use-module (lepton object)
   #:use-module (lepton page)
 
@@ -563,3 +564,5 @@
 
 ;; - defined in the gschem source code
 (define-public (gschem-exit) (primitive-exit 0))
+(define-public (gschem-log msg)
+  (log! 'message msg))
