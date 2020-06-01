@@ -63,6 +63,9 @@ for missing schematic symbols.
 opened. Previous behavior was to check just the first page passed
 on the `lepton-schematic` command line.
 
+- Several dialogs and dock widgets now have shorter and more
+  uniform titles.
+
 - The "Major symbol version changes" dialog has been improved by
 making it more informative and non-modal. A new dialog instance
 is opened for each page with symbol version changes.
