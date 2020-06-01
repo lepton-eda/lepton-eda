@@ -73,8 +73,8 @@ more compact and comprehensible.
 making it more informative and non-modal. A new dialog instance
 is opened for each page with symbol version changes.
 
-- The dialogs "Add picture" and "Execute script" now have file
-  filters, which eases selection of supported files.
+- The dialogs "Add picture", "Select picture" and "Execute script"
+  now have file filters, which eases selection of supported files.
 
 - A new boolean configuration parameter has been added to the
 `schematic.gui` group: `use-toplevel-windows` ( `false` by default).
