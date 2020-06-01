@@ -70,6 +70,9 @@ on the `lepton-schematic` command line.
 making it more informative and non-modal. A new dialog instance
 is opened for each page with symbol version changes.
 
+- The dialogs "Add picture" and "Execute script" now have file
+  filters, which eases selection of supported files.
+
 - Log messages related to `symversion` have been changed to be
 more compact and comprehensible.
 
