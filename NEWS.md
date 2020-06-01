@@ -46,6 +46,10 @@ Notable changes in Lepton EDA 1.9.11 (upcoming)
 - Localization support has been added.  The utility had no
   localization support since rewriting it in Scheme.
 
+- The famous Scheme backend `spice-noqsi` has been added to the
+  list of backends. The directory with examples contains now its
+  documentation and example schematics.
+
 ### Changes in `lepton-symcheck`:
 
 - Localization support has been added.  The utility had no
