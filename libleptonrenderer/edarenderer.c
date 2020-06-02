@@ -1528,8 +1528,12 @@ eda_renderer_get_text_user_bounds (const GedaObject *object,
   cairo_save (renderer->priv->cr);
 
   /* Set up the text and check it worked. */
-  if (!eda_renderer_prepare_text (renderer, object))
+  if (!eda_renderer_prepare_text (renderer, object)) {
+    cairo_destroy (cr);
+    cairo_surface_destroy (surface);
+    eda_renderer_destroy (renderer);
     return FALSE;
+  }
 
   /* Figure out the bounds, send them back.  Note that Pango thinks in
    * device coordinates, but we need world coordinates. */
@@ -1547,6 +1551,9 @@ eda_renderer_get_text_user_bounds (const GedaObject *object,
   cairo_device_to_user (renderer->priv->cr, left, top);
   cairo_device_to_user (renderer->priv->cr, right, bottom);
 
+  cairo_destroy (cr);
+  cairo_surface_destroy (surface);
+  eda_renderer_destroy (renderer);
   return TRUE;
 }
 
