@@ -263,6 +263,8 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
       map[i].enabled = TRUE;
     }
 
+    free (rgba); /* this should stay as free (allocated from guile) */
+
   color_map_next:
     /* Go to next element in map */
     curr = scm_cdr (curr);
