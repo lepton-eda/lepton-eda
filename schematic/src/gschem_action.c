@@ -114,7 +114,6 @@ gschem_action_connect_proxy (GtkAction *action,
                              GtkWidget *proxy)
 {
   GschemAction *gs_action = GSCHEM_ACTION (action);
-  char *label_string;
 
   /* Override the type of label widget used with the menu item */
   if (GTK_IS_MENU_ITEM (proxy)) {
@@ -129,6 +128,7 @@ gschem_action_connect_proxy (GtkAction *action,
     }
 
     if (label == NULL) {
+      char *label_string;
       g_object_get (action, "label", &label_string, NULL);
       g_object_new (GSCHEM_TYPE_ACCEL_LABEL,
 		    "use-underline", TRUE,
@@ -138,6 +138,7 @@ gschem_action_connect_proxy (GtkAction *action,
 		    "label", label_string,
 		    "accel-string", gs_action->multikey_accel,
 		    NULL);
+      g_free (label_string);
     }
   }
 
