@@ -1497,6 +1497,7 @@ eda_renderer_get_text_user_bounds (const GedaObject *object,
                                    double *bottom)
 {
   PangoRectangle inked_rect, logical_rect;
+  gboolean result = FALSE;
 
   /* First check if this is hidden text. */
   if (object->visibility == INVISIBLE && !enable_hidden) {
@@ -1528,33 +1529,32 @@ eda_renderer_get_text_user_bounds (const GedaObject *object,
   cairo_save (renderer->priv->cr);
 
   /* Set up the text and check it worked. */
-  if (!eda_renderer_prepare_text (renderer, object)) {
-    cairo_destroy (cr);
-    cairo_surface_destroy (surface);
-    eda_renderer_destroy (renderer);
-    return FALSE;
+  if (eda_renderer_prepare_text (renderer, object)) {
+
+    /* Figure out the bounds, send them back.  Note that Pango thinks in
+     * device coordinates, but we need world coordinates. */
+    pango_layout_get_pixel_extents (renderer->priv->pl,
+                                    &inked_rect, &logical_rect);
+    *left = (double) logical_rect.x;
+    *top = (double) logical_rect.y;
+    *right = (double) logical_rect.x + logical_rect.width;
+    *bottom = (double) logical_rect.y + logical_rect.height;
+    cairo_user_to_device (renderer->priv->cr, left, top);
+    cairo_user_to_device (renderer->priv->cr, right, bottom);
+
+    cairo_restore (renderer->priv->cr);
+
+    cairo_device_to_user (renderer->priv->cr, left, top);
+    cairo_device_to_user (renderer->priv->cr, right, bottom);
+
+    result = TRUE;
   }
-
-  /* Figure out the bounds, send them back.  Note that Pango thinks in
-   * device coordinates, but we need world coordinates. */
-  pango_layout_get_pixel_extents (renderer->priv->pl,
-                                  &inked_rect, &logical_rect);
-  *left = (double) logical_rect.x;
-  *top = (double) logical_rect.y;
-  *right = (double) logical_rect.x + logical_rect.width;
-  *bottom = (double) logical_rect.y + logical_rect.height;
-  cairo_user_to_device (renderer->priv->cr, left, top);
-  cairo_user_to_device (renderer->priv->cr, right, bottom);
-
-  cairo_restore (renderer->priv->cr);
-
-  cairo_device_to_user (renderer->priv->cr, left, top);
-  cairo_device_to_user (renderer->priv->cr, right, bottom);
 
   cairo_destroy (cr);
   cairo_surface_destroy (surface);
   eda_renderer_destroy (renderer);
-  return TRUE;
+
+  return result;
 }
 
 
