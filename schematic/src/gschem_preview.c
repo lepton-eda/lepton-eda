@@ -58,6 +58,7 @@ static void preview_get_property (GObject *object,
                                   GValue *value,
                                   GParamSpec *pspec);
 static void preview_dispose (GObject *self);
+static void preview_finalize (GObject *self);
 
 
 /*! \brief create a new preview widget
@@ -243,6 +244,7 @@ gschem_preview_class_init (GschemPreviewClass *klass)
   gobject_class->set_property = preview_set_property;
   gobject_class->get_property = preview_get_property;
   gobject_class->dispose      = preview_dispose;
+  gobject_class->finalize     = preview_finalize;
 
   g_object_class_install_property (
     gobject_class, PROP_FILENAME,
@@ -415,4 +417,15 @@ preview_dispose (GObject *self)
   }
 
   G_OBJECT_CLASS (gschem_preview_parent_class)->dispose (self);
+}
+
+static void
+preview_finalize (GObject *self)
+{
+  GschemPreview *preview = GSCHEM_PREVIEW (self);
+
+  g_free (preview->filename);
+  g_free (preview->buffer);
+
+  G_OBJECT_CLASS (gschem_preview_parent_class)->finalize (self);
 }
