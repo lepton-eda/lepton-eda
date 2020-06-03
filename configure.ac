@@ -9,7 +9,7 @@ dnl directory.
 #####################################################################
 
 AC_INIT([Lepton EDA],
-        [1.9.10],
+        [1.9.11],
         [https://github.com/lepton-eda/lepton-eda/issues],
         [lepton-eda],
         [https://github.com/lepton-eda/lepton-eda])
@@ -29,7 +29,7 @@ AC_GNU_SOURCE # FIXME for some reason this is needed?
 # Do version number magic
 #####################################################################
 
-AX_GIT_VERSION([20200319])
+AX_GIT_VERSION([20200604])
 
 # This is used for keeping the ChangeLog files up-to-date
 AC_SUBST([CHANGELOG_BASE], [1.0-20070526])
@@ -181,9 +181,9 @@ AX_DATA_DIRS
 # Where should PCB footprints be searched for?
 AX_PCB_DIRS
 # Set up liblepton with the correct ld version number
-AX_LIBLEPTON([5:0:0])
+AX_LIBLEPTON([6:0:0])
 # Set up libleptonrenderer with the correct ld version number
-AX_LIBLEPTONRENDERER([2:0:0])
+AX_LIBLEPTONRENDERER([3:0:0])
 # Set up libleptonattrib with the correct ld version number
 AX_LIBLEPTONATTRIB([1:0:0])
 
