@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library - Scheme API
- * Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
+/* Lepton EDA library
+ * Copyright (C) 2013-2016 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

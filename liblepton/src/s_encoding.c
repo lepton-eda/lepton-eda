@@ -1,3 +1,8 @@
+/* Lepton EDA library
+ * Copyright (C) 2005-2012 gEDA Contributors
+ * Copyright (C) 2020 Lepton EDA Contributors
+ */
+
 /*! \verbatim
  ***********************************************************************
  *                   _     _                     __   _  _
