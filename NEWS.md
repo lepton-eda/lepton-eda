@@ -139,6 +139,11 @@ in the `schematic.gui` group to `false`.
   been moved to the module `(lepton rc)` to be available for other
   utilities.
 
+- A new Scheme function, `anyfile-config-context()`, and its C
+  counterpart, have been added to the library.  In future, they
+  can be used to support additional configuration files, for
+  example, files containing color schemes or component library
+  descriptions.
 
 Notable changes in Lepton EDA 1.9.10 (20200319)
 -----------------------------------------------
