@@ -125,6 +125,20 @@ in the `schematic.gui` group to `false`.
 
 - The utility now has its own manual page `lepton-upcfg(1)`.
 
+### Changes in `lepton-attrib`:
+- The source code of the program has been transformed into a
+  library, `libleptonattrib`, and an executable script written in
+  Scheme.  Thus, C functions of the new library can now be used in
+  other tools.
+
+- The option `--quiet` has been removed.
+
+### Changes in `liblepton`:
+
+- The procedure `process-gafrc()` from the module `(netlist)` has
+  been moved to the module `(lepton rc)` to be available for other
+  utilities.
+
 
 Notable changes in Lepton EDA 1.9.10 (20200319)
 -----------------------------------------------
