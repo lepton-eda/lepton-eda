@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-20 15:15+0300\n"
+"POT-Creation-Date: 2020-06-04 03:03+0300\n"
 "PO-Revision-Date: 2014-08-31 22:35+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -593,6 +593,21 @@ msgstr "Nieuwe pagina gemaakt [%s]\n"
 msgid "New Window created [%1$s]"
 msgstr "Nieuw venster gemaakt [%s]\n"
 
+#, fuzzy
+msgid "Execute Script"
+msgstr "Script Uitvoeren..."
+
+#, fuzzy
+msgid "Scheme files (*.scm)"
+msgstr "Schema's"
+
+msgid "All files"
+msgstr "Alle bestanden"
+
+#, fuzzy, c-format
+msgid "Executing Guile script [%s]"
+msgstr "Bezig met uitvoeren van guile script [%s]\n"
+
 msgid "Saved All"
 msgstr "Alles Opgeslagen"
 
@@ -798,12 +813,19 @@ msgid "Bus ripper symbol [%1$s] was not found in any component library"
 msgstr ""
 "Bus ripper symbool [%s] niet gevonden in een van de component bibliotheken\n"
 
-msgid "Select a picture file..."
-msgstr "Selecteer een afbeelding bestands..."
+msgid "All supported formats"
+msgstr ""
+
+msgid "Add Picture"
+msgstr "Voeg Afbeelding Toe"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
 msgstr "Fout bij het lezen van afbeelding: %s"
+
+#, fuzzy
+msgid "Select Picture"
+msgstr "Selecteer een afbeelding bestands..."
 
 #, c-format
 msgid "Failed to replace pictures: %s"
@@ -874,18 +896,30 @@ msgstr ""
 "Rapporteer fouten aan <https://bugs.launchpad.net/geda>\n"
 "gEDA/gaf startpagina: <http://www.geda-project.org/>\n"
 
+msgid "Schematic not found in source library."
+msgstr ""
+
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+#, fuzzy
+msgid "There are no schematics above the current one!"
+msgstr "Kan geen schema's vinden boven het huidige schema!\n"
+
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr "Faalde bij het afdalen in '%s': %s\n"
+
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr "Kreeg ongeldige toon optie; standaardwaarde is toon beide\n"
 
-msgid "Single Attribute Editor"
-msgstr "Enkelvoudige Attribuut Bewerking"
+#, fuzzy
+msgid "Edit Attribute"
+msgstr "Bewerk Attribuut"
 
-msgid "<b>Edit Attribute</b>"
-msgstr "<b>Bewerk Attribuut</b>"
-
-msgid "<b>Add Attribute</b>"
-msgstr "<b>Plaats Attribuut</b>"
+msgid "Add Attribute"
+msgstr "Plaats Attribuut"
 
 #, fuzzy
 msgid "N_ame:"
@@ -1115,8 +1149,8 @@ msgstr "Component insluiten in schema"
 msgid "Include component as individual objects"
 msgstr "Invoegen component als individuele objecten"
 
-msgid "Select Component..."
-msgstr "Selecteer Component..."
+msgid "Add Component"
+msgstr "Voeg Component Toe"
 
 #, fuzzy
 msgid "In Us_e"
@@ -1132,13 +1166,22 @@ msgstr "Vooraf zien"
 msgid "Attributes"
 msgstr "Attributen"
 
-msgid "Major symbol changes detected."
+msgid "Symbol version changes"
+msgstr ""
+
+#, fuzzy
+msgid "Major symbol version changes detected."
 msgstr "Grote symbool veranderingen gedetecteerd."
 
+#, fuzzy, c-format
+msgid "Schematic: %s"
+msgstr "Schema's"
+
+#, fuzzy
 msgid ""
-"Changes have occurred to the symbols shown below.\n"
-"\n"
-"Be sure to verify each of these symbols."
+"Changes have occurred to the symbols shown\n"
+"below, be sure to verify each of these symbols.\n"
+"Consult lepton-schematic log for details."
 msgstr ""
 "Er zijn in onderstaande symbolen veranderingen opgetreden.\n"
 "'nWees er zeker van elk van deze symbolen te verifiëren."
@@ -1178,14 +1221,11 @@ msgstr "Symbolen"
 msgid "Schematics and symbols (*.sch *.sym)"
 msgstr "Schema's en symbolen"
 
-msgid "All files"
-msgstr "Alle bestanden"
+msgid "Open"
+msgstr "Open"
 
-msgid "Open..."
-msgstr "Open..."
-
-msgid "Save as..."
-msgstr "Opslaan Als..."
+msgid "Save As"
+msgstr "Opslaan Als"
 
 #, fuzzy
 msgid "Save cancelled on user request"
@@ -1264,8 +1304,9 @@ msgstr "Kleur"
 msgid "Grayscale"
 msgstr ""
 
-msgid "Write image..."
-msgstr "Schrijf afbeelding..."
+#, fuzzy
+msgid "Write Image"
+msgstr "Schrijf afbeeld_ing..."
 
 msgid "Butt"
 msgstr "Afgekort"
@@ -1391,9 +1432,6 @@ msgstr "W"
 msgid "Sho_w inherited attributes"
 msgstr "Toon geërfde attributen"
 
-msgid "Add Attribute"
-msgstr "Plaats Attribuut"
-
 #, fuzzy
 msgid "_Name:"
 msgstr "Naam:"
@@ -1431,8 +1469,8 @@ msgid_plural "%1$i attributes"
 msgstr[0] "%i attribuut"
 msgstr[1] "%i attributen"
 
-msgid "Text Entry..."
-msgstr "Tekst Ingeven..."
+msgid "Add Text"
+msgstr "Voeg Tekst Toe"
 
 msgid "Refresh"
 msgstr ""
@@ -1502,13 +1540,6 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr "Kan geen gschem configuratie laden."
 
-msgid "Execute Script..."
-msgstr "Script Uitvoeren..."
-
-#, fuzzy, c-format
-msgid "Executing guile script [%1$s]"
-msgstr "Bezig met uitvoeren van guile script [%s]\n"
-
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "Hie_rarchie"
@@ -1540,9 +1571,12 @@ msgstr "S_luit"
 msgid "Options"
 msgstr "_Opties"
 
+msgid "Edit Text"
+msgstr "Bewerk Tekst"
+
 #, fuzzy
-msgid "Object"
-msgstr "Object kleur:"
+msgid "Object Properties"
+msgstr "<b>Tekst Eigenschappen</b>"
 
 msgid "Log"
 msgstr ""
@@ -1599,9 +1633,6 @@ msgstr "Nieuw"
 
 msgid "New file"
 msgstr "Nieuw bestand"
-
-msgid "Open"
-msgstr "Open"
 
 #, fuzzy
 msgid "Open file"
@@ -1689,8 +1720,9 @@ msgstr "Afbreken"
 msgid "Pick"
 msgstr "Pak"
 
-msgid "Status"
-msgstr "Status"
+#, fuzzy
+msgid "Object"
+msgstr "Object kleur:"
 
 #, fuzzy, c-format
 msgid "New file [%s]"
@@ -1743,6 +1775,9 @@ msgstr "Schrijf afbeeld_ing..."
 #, fuzzy
 msgid "Invoke Macro..."
 msgstr "Macro Aanroepen"
+
+msgid "Execute Script..."
+msgstr "Script Uitvoeren..."
 
 msgid "REPL..."
 msgstr ""
@@ -2114,9 +2149,6 @@ msgstr "Nieuw Bestand"
 msgid "Open File"
 msgstr "Open Bestand"
 
-msgid "Save As"
-msgstr "Opslaan Als"
-
 msgid "Print"
 msgstr "Afdrukken"
 
@@ -2134,9 +2166,6 @@ msgstr "Stoppen"
 
 msgid "Terminal REPL"
 msgstr ""
-
-msgid "Edit Text"
-msgstr "Bewerk Tekst"
 
 msgid "Choose Slot"
 msgstr "Kies Slot"
@@ -2165,6 +2194,9 @@ msgstr "Plak"
 
 msgid "Sidebar"
 msgstr ""
+
+msgid "Status"
+msgstr "Status"
 
 #, fuzzy
 msgid "Find Text State"
@@ -2222,17 +2254,11 @@ msgstr "Volgende Pagina"
 msgid "Print Page"
 msgstr "Druk Pagina Af"
 
-msgid "Add Component"
-msgstr "Voeg Component Toe"
-
 msgid "Add Net"
 msgstr "Voeg Draad Toe"
 
 msgid "Add Bus"
 msgstr "Voeg Bus Toe"
-
-msgid "Add Text"
-msgstr "Voeg Tekst Toe"
 
 msgid "Add Line"
 msgstr "Voeg Lijn Toe"
@@ -2251,9 +2277,6 @@ msgstr "Voeg Boog Toe"
 
 msgid "Add Pin"
 msgstr "Voeg Pen Toe"
-
-msgid "Add Picture"
-msgstr "Voeg Afbeelding Toe"
 
 msgid "Down Schematic"
 msgstr "Naar Schema"
@@ -2398,6 +2421,30 @@ msgstr "~S is geen voorafgaande toetsen combinatie."
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Ongeldige tekst uitlijning ~A."
+
+#~ msgid "Single Attribute Editor"
+#~ msgstr "Enkelvoudige Attribuut Bewerking"
+
+#~ msgid "<b>Edit Attribute</b>"
+#~ msgstr "<b>Bewerk Attribuut</b>"
+
+#~ msgid "<b>Add Attribute</b>"
+#~ msgstr "<b>Plaats Attribuut</b>"
+
+#~ msgid "Select Component..."
+#~ msgstr "Selecteer Component..."
+
+#~ msgid "Open..."
+#~ msgstr "Open..."
+
+#~ msgid "Save as..."
+#~ msgstr "Opslaan Als..."
+
+#~ msgid "Write image..."
+#~ msgstr "Schrijf afbeelding..."
+
+#~ msgid "Text Entry..."
+#~ msgstr "Tekst Ingeven..."
 
 #~ msgid "Got a non line object in o_move_check_endpoint\n"
 #~ msgstr "Ontving een niet lijn object in o_move_check_endpoint\n"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-20 15:15+0300\n"
+"POT-Creation-Date: 2020-06-04 03:03+0300\n"
 "PO-Revision-Date: 2012-01-27 14:23+0000\n"
 "Last-Translator: kop <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -576,6 +576,21 @@ msgstr "[%s] oldal létrehozva.\n"
 msgid "New Window created [%1$s]"
 msgstr "[%s] ablak létrehozva.\n"
 
+#, fuzzy
+msgid "Execute Script"
+msgstr "Szkript végrehajtása"
+
+#, fuzzy
+msgid "Scheme files (*.scm)"
+msgstr "rajzok"
+
+msgid "All files"
+msgstr "Összes fájl"
+
+#, fuzzy, c-format
+msgid "Executing Guile script [%s]"
+msgstr "[%s] guile szkript végrehajtása.\n"
+
 msgid "Saved All"
 msgstr "Minden oldal elmentve."
 
@@ -758,13 +773,20 @@ msgstr ""
 msgid "Bus ripper symbol [%1$s] was not found in any component library"
 msgstr ""
 
+msgid "All supported formats"
+msgstr ""
+
 #, fuzzy
-msgid "Select a picture file..."
-msgstr "PostScript fájlnév kiválasztása..."
+msgid "Add Picture"
+msgstr "Kép"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
 msgstr "Sikertelen a(z) %s kép betöltése"
+
+#, fuzzy
+msgid "Select Picture"
+msgstr "PostScript fájlnév kiválasztása..."
 
 #, c-format
 msgid "Failed to replace pictures: %s"
@@ -810,18 +832,29 @@ msgid ""
 "Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 
+msgid "Schematic not found in source library."
+msgstr ""
+
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+msgid "There are no schematics above the current one!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr "[%s] init scm fájl olvasása sikertelen.\n"
+
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 
-msgid "Single Attribute Editor"
-msgstr ""
+#, fuzzy
+msgid "Edit Attribute"
+msgstr "Attribútumok szerkesztése"
 
-msgid "<b>Edit Attribute</b>"
-msgstr "<b>Attribútum szerkesztése</b>"
-
-msgid "<b>Add Attribute</b>"
-msgstr "<b>Attribútum hozzáadása</b>"
+msgid "Add Attribute"
+msgstr "Attribútum hozzáadása"
 
 #, fuzzy
 msgid "N_ame:"
@@ -1046,8 +1079,9 @@ msgstr "Alkatrész beágyazása a rajzba"
 msgid "Include component as individual objects"
 msgstr "Alkatrész hozzáadása mint független objektum"
 
-msgid "Select Component..."
-msgstr "Alkatrész kiválasztása..."
+#, fuzzy
+msgid "Add Component"
+msgstr "/Alkatrész hozzáadása"
 
 #, fuzzy
 msgid "In Us_e"
@@ -1063,13 +1097,20 @@ msgstr "Előnézet"
 msgid "Attributes"
 msgstr "Attribútumok"
 
-msgid "Major symbol changes detected."
+msgid "Symbol version changes"
 msgstr ""
 
+msgid "Major symbol version changes detected."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Schematic: %s"
+msgstr "rajzok"
+
 msgid ""
-"Changes have occurred to the symbols shown below.\n"
-"\n"
-"Be sure to verify each of these symbols."
+"Changes have occurred to the symbols shown\n"
+"below, be sure to verify each of these symbols.\n"
+"Consult lepton-schematic log for details."
 msgstr ""
 
 #, fuzzy
@@ -1101,14 +1142,12 @@ msgstr "szimbólumok"
 msgid "Schematics and symbols (*.sch *.sym)"
 msgstr "rajzok és szimbólumok"
 
-msgid "All files"
-msgstr "Összes fájl"
+msgid "Open"
+msgstr "Megnyitás"
 
-msgid "Open..."
-msgstr "Megnyitás…"
-
-msgid "Save as..."
-msgstr "Mentés másként..."
+#, fuzzy
+msgid "Save As"
+msgstr "Mind mentése"
 
 #, fuzzy
 msgid "Save cancelled on user request"
@@ -1181,7 +1220,8 @@ msgstr "Szín"
 msgid "Grayscale"
 msgstr ""
 
-msgid "Write image..."
+#, fuzzy
+msgid "Write Image"
 msgstr "Képfájl írása..."
 
 msgid "Butt"
@@ -1310,9 +1350,6 @@ msgstr "É"
 msgid "Sho_w inherited attributes"
 msgstr "Attribútumok szerkesztése"
 
-msgid "Add Attribute"
-msgstr "Attribútum hozzáadása"
-
 #, fuzzy
 msgid "_Name:"
 msgstr "Név:"
@@ -1351,8 +1388,8 @@ msgstr[0] "Attribútum"
 msgstr[1] "Attribútum"
 
 #, fuzzy
-msgid "Text Entry..."
-msgstr "Szöveg"
+msgid "Add Text"
+msgstr "/Szöveg hozzáadása"
 
 msgid "Refresh"
 msgstr ""
@@ -1409,13 +1446,6 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
-msgid "Execute Script..."
-msgstr "Szkript végrehajtása"
-
-#, fuzzy, c-format
-msgid "Executing guile script [%1$s]"
-msgstr "[%s] guile szkript végrehajtása.\n"
-
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "Hie_rarchia"
@@ -1447,9 +1477,12 @@ msgstr "_Bezárás"
 msgid "Options"
 msgstr "Beállítás_ok"
 
+msgid "Edit Text"
+msgstr "Szöveg szerkesztése"
+
 #, fuzzy
-msgid "Object"
-msgstr "Objektum színe:"
+msgid "Object Properties"
+msgstr "<b>Szöveg tulajdonságai</b>"
 
 msgid "Log"
 msgstr ""
@@ -1506,9 +1539,6 @@ msgstr "Új"
 
 msgid "New file"
 msgstr "Új fájl"
-
-msgid "Open"
-msgstr "Megnyitás"
 
 #, fuzzy
 msgid "Open file"
@@ -1591,8 +1621,9 @@ msgstr "Középre/mégsem"
 msgid "Pick"
 msgstr "Kijelöl"
 
-msgid "Status"
-msgstr "Állapot."
+#, fuzzy
+msgid "Object"
+msgstr "Objektum színe:"
 
 #, fuzzy, c-format
 msgid "New file [%s]"
@@ -1644,6 +1675,9 @@ msgstr "Képfájl írása..."
 #, fuzzy
 msgid "Invoke Macro..."
 msgstr "Makró végrehajtása"
+
+msgid "Execute Script..."
+msgstr "Szkript végrehajtása"
 
 msgid "REPL..."
 msgstr ""
@@ -2017,10 +2051,6 @@ msgid "Open File"
 msgstr "Fájl megnyitása…"
 
 #, fuzzy
-msgid "Save As"
-msgstr "Mind mentése"
-
-#, fuzzy
 msgid "Print"
 msgstr "Nyomtatás..."
 
@@ -2040,9 +2070,6 @@ msgstr "Kilépés"
 
 msgid "Terminal REPL"
 msgstr ""
-
-msgid "Edit Text"
-msgstr "Szöveg szerkesztése"
 
 msgid "Choose Slot"
 msgstr ""
@@ -2075,6 +2102,9 @@ msgstr "Beillesztés (_P)"
 
 msgid "Sidebar"
 msgstr ""
+
+msgid "Status"
+msgstr "Állapot."
 
 #, fuzzy
 msgid "Find Text State"
@@ -2147,20 +2177,12 @@ msgid "Print Page"
 msgstr "Előző"
 
 #, fuzzy
-msgid "Add Component"
-msgstr "/Alkatrész hozzáadása"
-
-#, fuzzy
 msgid "Add Net"
 msgstr "/Összeköttetés hozzáadása"
 
 #, fuzzy
 msgid "Add Bus"
 msgstr "/Busz hozzáadása"
-
-#, fuzzy
-msgid "Add Text"
-msgstr "/Szöveg hozzáadása"
 
 #, fuzzy
 msgid "Add Line"
@@ -2184,10 +2206,6 @@ msgstr "Attribútum hozzáadása"
 
 msgid "Add Pin"
 msgstr ""
-
-#, fuzzy
-msgid "Add Picture"
-msgstr "Kép"
 
 #, fuzzy
 msgid "Down Schematic"
@@ -2343,6 +2361,28 @@ msgstr ""
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr ""
+
+#~ msgid "<b>Edit Attribute</b>"
+#~ msgstr "<b>Attribútum szerkesztése</b>"
+
+#~ msgid "<b>Add Attribute</b>"
+#~ msgstr "<b>Attribútum hozzáadása</b>"
+
+#~ msgid "Select Component..."
+#~ msgstr "Alkatrész kiválasztása..."
+
+#~ msgid "Open..."
+#~ msgstr "Megnyitás…"
+
+#~ msgid "Save as..."
+#~ msgstr "Mentés másként..."
+
+#~ msgid "Write image..."
+#~ msgstr "Képfájl írása..."
+
+#, fuzzy
+#~ msgid "Text Entry..."
+#~ msgstr "Szöveg"
 
 #, fuzzy
 #~ msgid "Save settings to:"

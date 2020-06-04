@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-04-02 19:27+0300\n"
+"POT-Creation-Date: 2020-06-04 03:05+0300\n"
 "PO-Revision-Date: 2020-03-20 09:14+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -116,10 +116,6 @@ msgid "Failed to stat [%1$s]: %2$s"
 msgstr "Ошибка чтения статуса (stat) «%1$s»: %2$s"
 
 #, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "Файл «%1$s» не найден: %2$s"
-
-#, c-format
 msgid ""
 "\n"
 "WARNING: Found an autosave backup file:\n"
@@ -148,6 +144,10 @@ msgstr ""
 "Обычно lepton-schematic автоматически создаёт резервные копии, и такая "
 "ситуация может быть результатом фатального сбоя или неожиданного "
 "принудительного завершения программы.\n"
+
+#, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Файл «%1$s» не найден: %2$s"
 
 msgid ""
 "\n"
@@ -242,14 +242,6 @@ msgstr "Не удалось определить имя реального фа�
 #, c-format
 msgid "Unable to delete backup file %1$s."
 msgstr "Не удалось удалить файл резервной копии %1$s."
-
-#, c-format
-msgid "Saved [%1$s]"
-msgstr "Файл «%1$s» сохранён"
-
-#, c-format
-msgid "Could NOT save [%1$s]"
-msgstr "Не удалось сохранить «%1$s»"
 
 msgid "Failed to parse arc object"
 msgstr "Ошибка в определении дуги"
@@ -360,37 +352,22 @@ msgid "Setting mirror to 0."
 msgstr "Установка «mirror» в 0."
 
 #, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion=%2$s"
+msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
 msgstr ""
-"ВНИМАНИЕ: Ошибка грамматического разбора версии символа с поз. обозначением "
-"%1$s:\n"
-"\tНекорректный атрибут «symversion=%2$s» в файле символа"
 
 #, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion="
+msgid "WARNING: %s (%s): could not parse symversion in symbol file"
 msgstr ""
-"ВНИМАНИЕ: Ошибка грамматического разбора версии символа с поз. обозначением "
-"%1$s:\n"
-"\tНекорректный атрибут «symversion» внутри файла символа"
 
-#, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse attached symversion=%2$s"
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
 msgstr ""
 "ВНИМАНИЕ: Ошибка грамматического разбора версии символа с поз. обозначением "
 "%1$s:\n"
 "\tПрикреплён некорректный атрибут «symversion=%2$s»"
 
-#, c-format
-msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tsymversion=%2$s attached to instantiated symbol, but no symversion= inside "
-"symbol file."
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
 msgstr ""
 "ВНИМАНИЕ: Необычное задание версии для символа с поз. обозначением %1$s:\n"
 "\tК экземпляру символа прикреплён атрибут «symversion=%2$s», но в файле "
@@ -398,29 +375,16 @@ msgstr ""
 
 #, c-format
 msgid ""
-"WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
-"\tSymbol in library is newer than instantiated symbol."
+"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
 msgstr ""
-"ВНИМАНИЕ: Несоответствие версий для символа с поз. обозначением %1$s "
-"(%2$s):\n"
-"\tСимвол в библиотеке новее экземпляра в схеме."
-
-# Под file здесь имеется в виду символ. Последняя переменная -- позиционное
-# обозначение. Думаю, не стоит это специально отмечать.
-#, c-format
-msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
-msgstr ""
-"\tИзменение ОСНОВНОГО номера версии (символ: %1$.3f, экземпляр: %2$.3f, "
-"%3$s)!"
-
-#, c-format
-msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
-msgstr "\tИзменение младшего номера версии (символ %1$.3f, экземпляр: %2$.3f)"
 
 #, c-format
 msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tInstantiated symbol is newer than symbol in library."
+"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
 msgstr ""
 "ВНИМАНИЕ: Необычное задание версии для символа с поз. обозначением %1$s:\n"
 "\tЭкземпляр в схеме новее символа в библиотеке."
@@ -657,19 +621,6 @@ msgstr "Компонент «%1$s» не найден в библиотеке к
 #, c-format
 msgid "More than one component found with name [%1$s]."
 msgstr "Обнаружено несколько компонентов с именем «%1$s»."
-
-msgid "Schematic not found in source library."
-msgstr "Схема не найдена в библиотеке исходных данных."
-
-msgid "Hierarchy contains a circular dependency."
-msgstr "Циклическая зависимость в иерархической структуре."
-
-msgid "There are no schematics above the current one!"
-msgstr "Для текущей схемы нет схемы, вышестоящей по иерархии!"
-
-#, c-format
-msgid "Failed to descend hierarchy into '%1$s': %2$s"
-msgstr "Не удалось перейти к подсхеме «%1$s»: %2$s"
 
 msgid "Did not find slotdef=#:#,#,#... attribute."
 msgstr "Не удалось найти атрибут «slotdef=#:#,#,#...»."
@@ -1406,3 +1357,56 @@ msgstr "Количество ошибок: ~A"
 
 msgid "(use -v to view details)"
 msgstr "(используйте опцию -v для вывода подробностей)"
+
+#~ msgid "Saved [%1$s]"
+#~ msgstr "Файл «%1$s» сохранён"
+
+#~ msgid "Could NOT save [%1$s]"
+#~ msgstr "Не удалось сохранить «%1$s»"
+
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion=%2$s"
+#~ msgstr ""
+#~ "ВНИМАНИЕ: Ошибка грамматического разбора версии символа с поз. "
+#~ "обозначением %1$s:\n"
+#~ "\tНекорректный атрибут «symversion=%2$s» в файле символа"
+
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion="
+#~ msgstr ""
+#~ "ВНИМАНИЕ: Ошибка грамматического разбора версии символа с поз. "
+#~ "обозначением %1$s:\n"
+#~ "\tНекорректный атрибут «symversion» внутри файла символа"
+
+#~ msgid ""
+#~ "WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
+#~ "\tSymbol in library is newer than instantiated symbol."
+#~ msgstr ""
+#~ "ВНИМАНИЕ: Несоответствие версий для символа с поз. обозначением %1$s "
+#~ "(%2$s):\n"
+#~ "\tСимвол в библиотеке новее экземпляра в схеме."
+
+# Под file здесь имеется в виду символ. Последняя переменная -- позиционное
+# обозначение. Думаю, не стоит это специально отмечать.
+#~ msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
+#~ msgstr ""
+#~ "\tИзменение ОСНОВНОГО номера версии (символ: %1$.3f, экземпляр: %2$.3f, "
+#~ "%3$s)!"
+
+#~ msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
+#~ msgstr ""
+#~ "\tИзменение младшего номера версии (символ %1$.3f, экземпляр: %2$.3f)"
+
+#~ msgid "Schematic not found in source library."
+#~ msgstr "Схема не найдена в библиотеке исходных данных."
+
+#~ msgid "Hierarchy contains a circular dependency."
+#~ msgstr "Циклическая зависимость в иерархической структуре."
+
+#~ msgid "There are no schematics above the current one!"
+#~ msgstr "Для текущей схемы нет схемы, вышестоящей по иерархии!"
+
+#~ msgid "Failed to descend hierarchy into '%1$s': %2$s"
+#~ msgstr "Не удалось перейти к подсхеме «%1$s»: %2$s"

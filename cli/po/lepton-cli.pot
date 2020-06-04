@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.10\n"
+"Project-Id-Version: lepton-eda 1.9.11\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-19 12:10+0300\n"
+"POT-Creation-Date: 2020-06-04 03:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: cli/lepton-cli.c:69
+#: cli/lepton-cli.c:68
 #, c-format
 msgid ""
 "Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]\n"
@@ -38,14 +38,14 @@ msgid ""
 "Lepton EDA homepage: <%2$s>\n"
 msgstr ""
 
-#: cli/lepton-cli.c:140
+#: cli/lepton-cli.c:139
 #, c-format
 msgid ""
 "\n"
 "Run `lepton-cli --help' for more information.\n"
 msgstr ""
 
-#: cli/lepton-cli.c:152
+#: cli/lepton-cli.c:151
 #, c-format
 msgid ""
 "ERROR: You must specify a command to run.\n"
@@ -53,7 +53,7 @@ msgid ""
 "Run `lepton-cli --help' for more information.\n"
 msgstr ""
 
-#: cli/lepton-cli.c:170
+#: cli/lepton-cli.c:169
 #, c-format
 msgid ""
 "ERROR: Unrecognised command `%1$s'.\n"
@@ -61,7 +61,7 @@ msgid ""
 "Run `lepton-cli --help' for more information.\n"
 msgstr ""
 
-#: cli/config.c:49
+#: cli/config.c:48
 #, c-format
 msgid ""
 "Usage: lepton-cli config [OPTION] [GROUP KEY [VALUE]]\n"
@@ -85,82 +85,82 @@ msgid ""
 "Lepton EDA homepage: <%2$s>\n"
 msgstr ""
 
-#: cli/config.c:74
+#: cli/config.c:73
 msgid ""
 "\n"
 "Run `lepton-cli config --help' for more information.\n"
 msgstr ""
 
-#: cli/config.c:75
+#: cli/config.c:74
 msgid "ERROR: You may only specify a single configuration store.\n"
 msgstr ""
 
 #. TRANSLATORS: The first string is the filename, the second is
 #. * the detailed error message
-#: cli/config.c:175
+#: cli/config.c:181
 #, c-format
 msgid "WARNING: Could not load '%1$s': %2$s.\n"
 msgstr ""
 
-#: cli/config.c:187
+#: cli/config.c:193
 #, c-format
 msgid "ERROR: You must specify both configuration group and key.\n"
 msgstr ""
 
-#: cli/config.c:199 cli/config.c:213
+#: cli/config.c:205 cli/config.c:219
 #, c-format
 msgid "ERROR: %1$s.\n"
 msgstr ""
 
-#: cli/export.c:152
+#: cli/export.c:143
 #, c-format
 msgid "ERROR: Bad argument '%1$s' to %2$s option.\n"
 msgstr ""
 
-#: cli/export.c:153
+#: cli/export.c:144
 msgid ""
 "\n"
 "Run `lepton-cli export --help' for more information.\n"
 msgstr ""
 
-#: cli/export.c:193
+#: cli/export.c:188
 #, c-format
 msgid "ERROR: Cannot infer output format from filename '%1$s'.\n"
 msgstr ""
 
-#: cli/export.c:210
+#: cli/export.c:205
 #, c-format
 msgid "ERROR: Cannot find supported format for filename '%1$s'.\n"
 msgstr ""
 
-#: cli/export.c:215
+#: cli/export.c:210
 #, c-format
 msgid "ERROR: Unsupported output format '%1$s'.\n"
 msgstr ""
 
-#: cli/export.c:227
+#: cli/export.c:222
 #, c-format
 msgid "ERROR: Selected output format does not support multipage output\n"
 msgstr ""
 
 #. TRANSLATORS: The first string is the filename, the second
 #. * is the detailed error message
-#: cli/export.c:241
+#: cli/export.c:270
 #, c-format
 msgid "ERROR: Failed to load '%1$s': %2$s\n"
 msgstr ""
 
-#: cli/export.c:247
+#: cli/export.c:276
 #, c-format
 msgid "ERROR: Failed to change directory to '%1$s': %2$s\n"
 msgstr ""
 
-#: cli/export.c:329
+#: cli/export.c:295
 #, c-format
 msgid "ERROR: %s.\n"
 msgstr ""
 
-#: cli/export.c:963
+#: cli/export.c:934
 #, c-format
 msgid ""
 "Usage: lepton-cli export [OPTION ...] -o OUTPUT [--] FILE ...\n"
@@ -187,12 +187,12 @@ msgid ""
 "Lepton EDA homepage: <%2$s>\n"
 msgstr ""
 
-#: cli/export.c:1163
+#: cli/export.c:1134
 #, c-format
 msgid "ERROR: You must specify at least one input filename.\n"
 msgstr ""
 
-#: cli/export.c:1172
+#: cli/export.c:1143
 #, c-format
 msgid "ERROR: You must specify an output filename.\n"
 msgstr ""

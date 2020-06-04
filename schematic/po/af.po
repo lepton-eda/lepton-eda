@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-20 15:15+0300\n"
+"POT-Creation-Date: 2020-06-04 03:03+0300\n"
 "PO-Revision-Date: 2010-02-14 01:03+0000\n"
 "Last-Translator: Bernd Jendrissek <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -576,6 +576,21 @@ msgstr "Nuwe bladsy geskep [%s]\n"
 msgid "New Window created [%1$s]"
 msgstr "Nuwe Venster geskep [%s]\n"
 
+#, fuzzy
+msgid "Execute Script"
+msgstr "Voer Script Uit..."
+
+#, fuzzy
+msgid "Scheme files (*.scm)"
+msgstr "Stroombaandiagramme"
+
+msgid "All files"
+msgstr "Alle lêers"
+
+#, fuzzy, c-format
+msgid "Executing Guile script [%s]"
+msgstr "Voer guile script [%s] uit\n"
+
 msgid "Saved All"
 msgstr "Alles Bewaar"
 
@@ -763,13 +778,20 @@ msgstr ""
 msgid "Bus ripper symbol [%1$s] was not found in any component library"
 msgstr "Busrippersimbool [%s] is nie in enige komponentbiblioteek gevind nie\n"
 
+msgid "All supported formats"
+msgstr ""
+
 #, fuzzy
-msgid "Select a picture file..."
-msgstr "Kies PostScript Lêernaam"
+msgid "Add Picture"
+msgstr "Afbeelding"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
 msgstr "Kon nie afbeelding laai nie: %s"
+
+#, fuzzy
+msgid "Select Picture"
+msgstr "Kies PostScript Lêernaam"
 
 #, fuzzy, c-format
 msgid "Failed to replace pictures: %s"
@@ -816,18 +838,29 @@ msgid ""
 "Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 
+msgid "Schematic not found in source library."
+msgstr ""
+
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+msgid "There are no schematics above the current one!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr "Kon nie afbeelding laai nie: %s"
+
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 
-msgid "Single Attribute Editor"
-msgstr "Enkeleienskap-Bewerker"
+#, fuzzy
+msgid "Edit Attribute"
+msgstr "Bewerk Eienskappe"
 
-msgid "<b>Edit Attribute</b>"
-msgstr "<b>Bewerk Eienskap</b>"
-
-msgid "<b>Add Attribute</b>"
-msgstr "<b>Voeg Eienskap By</b>"
+msgid "Add Attribute"
+msgstr "Voeg Eienskap By"
 
 #, fuzzy
 msgid "N_ame:"
@@ -1051,8 +1084,9 @@ msgstr "Lê komponent in stroombaandiagram in"
 msgid "Include component as individual objects"
 msgstr "Sluit komponent as afsonderlike voorwerpe in"
 
-msgid "Select Component..."
-msgstr "Kies Komponent..."
+#, fuzzy
+msgid "Add Component"
+msgstr "/Voeg Komponent By"
 
 #, fuzzy
 msgid "In Us_e"
@@ -1068,13 +1102,20 @@ msgstr "Voorskou"
 msgid "Attributes"
 msgstr "Eienskappe"
 
-msgid "Major symbol changes detected."
+msgid "Symbol version changes"
 msgstr ""
 
+msgid "Major symbol version changes detected."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Schematic: %s"
+msgstr "Stroombaandiagramme"
+
 msgid ""
-"Changes have occurred to the symbols shown below.\n"
-"\n"
-"Be sure to verify each of these symbols."
+"Changes have occurred to the symbols shown\n"
+"below, be sure to verify each of these symbols.\n"
+"Consult lepton-schematic log for details."
 msgstr ""
 
 #, fuzzy
@@ -1113,14 +1154,12 @@ msgstr "Simbole"
 msgid "Schematics and symbols (*.sch *.sym)"
 msgstr "Stroombaandiagramme en simbole"
 
-msgid "All files"
-msgstr "Alle lêers"
+msgid "Open"
+msgstr "Maak Oop"
 
-msgid "Open..."
-msgstr "Open..."
-
-msgid "Save as..."
-msgstr "Bewaar as..."
+#, fuzzy
+msgid "Save As"
+msgstr "Bewaar Alles"
 
 msgid "Save cancelled on user request"
 msgstr ""
@@ -1192,7 +1231,8 @@ msgstr "Kleur"
 msgid "Grayscale"
 msgstr ""
 
-msgid "Write image..."
+#, fuzzy
+msgid "Write Image"
 msgstr "Skryf afbeelding..."
 
 msgid "Butt"
@@ -1319,9 +1359,6 @@ msgstr "W"
 msgid "Sho_w inherited attributes"
 msgstr "Bewerk Eienskappe"
 
-msgid "Add Attribute"
-msgstr "Voeg Eienskap By"
-
 #, fuzzy
 msgid "_Name:"
 msgstr "Naam:"
@@ -1359,8 +1396,9 @@ msgid_plural "%1$i attributes"
 msgstr[0] "Eienskap"
 msgstr[1] "Eienskap"
 
-msgid "Text Entry..."
-msgstr "Teksaantekening..."
+#, fuzzy
+msgid "Add Text"
+msgstr "/Voeg Teks By"
 
 msgid "Refresh"
 msgstr ""
@@ -1417,13 +1455,6 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
-msgid "Execute Script..."
-msgstr "Voer Script Uit..."
-
-#, fuzzy, c-format
-msgid "Executing guile script [%1$s]"
-msgstr "Voer guile script [%s] uit\n"
-
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "Hierargie"
@@ -1454,9 +1485,12 @@ msgstr ""
 msgid "Options"
 msgstr "Opsies"
 
+msgid "Edit Text"
+msgstr "Bewerk Teks"
+
 #, fuzzy
-msgid "Object"
-msgstr "Voorwerpkleur:"
+msgid "Object Properties"
+msgstr "<b>Tekseienskappe</b>"
 
 msgid "Log"
 msgstr ""
@@ -1514,9 +1548,6 @@ msgstr "Nuwe"
 
 msgid "New file"
 msgstr "Nuwe lêer"
-
-msgid "Open"
-msgstr "Maak Oop"
 
 #, fuzzy
 msgid "Open file"
@@ -1596,8 +1627,9 @@ msgstr "Menu/Kanselleer"
 msgid "Pick"
 msgstr "Kies"
 
-msgid "Status"
-msgstr "Stand"
+#, fuzzy
+msgid "Object"
+msgstr "Voorwerpkleur:"
 
 #, fuzzy, c-format
 msgid "New file [%s]"
@@ -1646,6 +1678,9 @@ msgstr "Skryf afbeelding..."
 
 msgid "Invoke Macro..."
 msgstr ""
+
+msgid "Execute Script..."
+msgstr "Voer Script Uit..."
 
 msgid "REPL..."
 msgstr ""
@@ -2018,10 +2053,6 @@ msgid "Open File"
 msgstr "Maak lêer oop..."
 
 #, fuzzy
-msgid "Save As"
-msgstr "Bewaar Alles"
-
-#, fuzzy
 msgid "Print"
 msgstr "Druk..."
 
@@ -2040,9 +2071,6 @@ msgstr ""
 
 msgid "Terminal REPL"
 msgstr ""
-
-msgid "Edit Text"
-msgstr "Bewerk Teks"
 
 msgid "Choose Slot"
 msgstr ""
@@ -2075,6 +2103,9 @@ msgstr "Plak 2"
 
 msgid "Sidebar"
 msgstr ""
+
+msgid "Status"
+msgstr "Stand"
 
 #, fuzzy
 msgid "Find Text State"
@@ -2143,20 +2174,12 @@ msgid "Print Page"
 msgstr "Sluit Bladsy"
 
 #, fuzzy
-msgid "Add Component"
-msgstr "/Voeg Komponent By"
-
-#, fuzzy
 msgid "Add Net"
 msgstr "/Voeg Net By"
 
 #, fuzzy
 msgid "Add Bus"
 msgstr "/Voeg Bus By"
-
-#, fuzzy
-msgid "Add Text"
-msgstr "/Voeg Teks By"
 
 #, fuzzy
 msgid "Add Line"
@@ -2180,10 +2203,6 @@ msgstr "Voeg Eienskap By"
 
 msgid "Add Pin"
 msgstr ""
-
-#, fuzzy
-msgid "Add Picture"
-msgstr "Afbeelding"
 
 #, fuzzy
 msgid "Down Schematic"
@@ -2334,6 +2353,30 @@ msgstr ""
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr ""
+
+#~ msgid "Single Attribute Editor"
+#~ msgstr "Enkeleienskap-Bewerker"
+
+#~ msgid "<b>Edit Attribute</b>"
+#~ msgstr "<b>Bewerk Eienskap</b>"
+
+#~ msgid "<b>Add Attribute</b>"
+#~ msgstr "<b>Voeg Eienskap By</b>"
+
+#~ msgid "Select Component..."
+#~ msgstr "Kies Komponent..."
+
+#~ msgid "Open..."
+#~ msgstr "Open..."
+
+#~ msgid "Save as..."
+#~ msgstr "Bewaar as..."
+
+#~ msgid "Write image..."
+#~ msgstr "Skryf afbeelding..."
+
+#~ msgid "Text Entry..."
+#~ msgstr "Teksaantekening..."
 
 #~ msgid "Got a non line object in o_move_check_endpoint\n"
 #~ msgstr ""

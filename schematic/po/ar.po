@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-20 15:15+0300\n"
+"POT-Creation-Date: 2020-06-04 03:03+0300\n"
 "PO-Revision-Date: 2010-02-14 06:08+0000\n"
 "Last-Translator: عبدالله شلي (Abdellah Chelli) <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -583,6 +583,21 @@ msgstr "أنشئت صفحة جديدة [‎%s‬]\n"
 msgid "New Window created [%1$s]"
 msgstr "أنشئت نافذة جديدة [‎%s‬]\n"
 
+#, fuzzy
+msgid "Execute Script"
+msgstr "نفذ مخطوطا (سكربت)..."
+
+#, fuzzy
+msgid "Scheme files (*.scm)"
+msgstr "مخططات"
+
+msgid "All files"
+msgstr "كل الملفات"
+
+#, fuzzy, c-format
+msgid "Executing Guile script [%s]"
+msgstr "تنفيذ مخطوط guile [‎%s‬]\n"
+
 msgid "Saved All"
 msgstr "حفظ الكل"
 
@@ -782,13 +797,20 @@ msgstr "﻿حاولت إضافة أكثر من اثنين من كسارات ال
 msgid "Bus ripper symbol [%1$s] was not found in any component library"
 msgstr "﻿لم يتم العثور على رمز كسار الناقل [%s] في أي مكتبة مكون\n"
 
+msgid "All supported formats"
+msgstr ""
+
 #, fuzzy
-msgid "Select a picture file..."
-msgstr "انتق اسم ملف بوست-سكريبت..."
+msgid "Add Picture"
+msgstr "صورة"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
 msgstr "فشل تحميل الصورة: %s"
+
+#, fuzzy
+msgid "Select Picture"
+msgstr "انتق اسم ملف بوست-سكريبت..."
 
 #, fuzzy, c-format
 msgid "Failed to replace pictures: %s"
@@ -836,18 +858,30 @@ msgid ""
 "Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 
+msgid "Schematic not found in source library."
+msgstr ""
+
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+#, fuzzy
+msgid "There are no schematics above the current one!"
+msgstr "يتعذر إيجاد أي مخطط فوق الحالي!\n"
+
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr "فشل تحميل الصورة: %s"
+
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr "﻿حصلت على خيار عرض غير صحيح ؛تعيين الافتراضي لإظهار كليهما\n"
 
-msgid "Single Attribute Editor"
-msgstr "محرّر سمة منفردة"
+#, fuzzy
+msgid "Edit Attribute"
+msgstr "حرّر المواصفات"
 
-msgid "<b>Edit Attribute</b>"
-msgstr "<b>حرّر السّمة</b>"
-
-msgid "<b>Add Attribute</b>"
-msgstr "<b>أضف سمة</b>"
+msgid "Add Attribute"
+msgstr "أضف سمة"
 
 #, fuzzy
 msgid "N_ame:"
@@ -1071,8 +1105,9 @@ msgstr "﻿ضمّن المكون في المخطط"
 msgid "Include component as individual objects"
 msgstr "ضمّن المكون ككائنات فردية"
 
-msgid "Select Component..."
-msgstr "انتق مكونا..."
+#, fuzzy
+msgid "Add Component"
+msgstr "/أضف مكونا..."
 
 #, fuzzy
 msgid "In Us_e"
@@ -1088,13 +1123,20 @@ msgstr "معاينة"
 msgid "Attributes"
 msgstr "سمات"
 
-msgid "Major symbol changes detected."
+msgid "Symbol version changes"
 msgstr ""
 
+msgid "Major symbol version changes detected."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Schematic: %s"
+msgstr "مخططات"
+
 msgid ""
-"Changes have occurred to the symbols shown below.\n"
-"\n"
-"Be sure to verify each of these symbols."
+"Changes have occurred to the symbols shown\n"
+"below, be sure to verify each of these symbols.\n"
+"Consult lepton-schematic log for details."
 msgstr ""
 
 #, fuzzy
@@ -1132,14 +1174,12 @@ msgstr "رموز"
 msgid "Schematics and symbols (*.sch *.sym)"
 msgstr "مخططات و رموز"
 
-msgid "All files"
-msgstr "كل الملفات"
+msgid "Open"
+msgstr "افتح"
 
-msgid "Open..."
-msgstr "افتح..."
-
-msgid "Save as..."
-msgstr "احفظ كـ..."
+#, fuzzy
+msgid "Save As"
+msgstr "احفظ الكل"
 
 #, fuzzy
 msgid "Save cancelled on user request"
@@ -1212,8 +1252,9 @@ msgstr "لون"
 msgid "Grayscale"
 msgstr ""
 
-msgid "Write image..."
-msgstr "أكتب صورة..."
+#, fuzzy
+msgid "Write Image"
+msgstr "أكتب _صورة..."
 
 msgid "Butt"
 msgstr ""
@@ -1339,9 +1380,6 @@ msgstr "V"
 msgid "Sho_w inherited attributes"
 msgstr "أظهر السمات الموروثة"
 
-msgid "Add Attribute"
-msgstr "أضف سمة"
-
 #, fuzzy
 msgid "_Name:"
 msgstr "الاسم:"
@@ -1379,8 +1417,9 @@ msgid_plural "%1$i attributes"
 msgstr[0] "سمة"
 msgstr[1] "سمة"
 
-msgid "Text Entry..."
-msgstr "مدخل نص..."
+#, fuzzy
+msgid "Add Text"
+msgstr "/أضف نصا"
 
 msgid "Refresh"
 msgstr ""
@@ -1437,13 +1476,6 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
-msgid "Execute Script..."
-msgstr "نفذ مخطوطا (سكربت)..."
-
-#, fuzzy, c-format
-msgid "Executing guile script [%1$s]"
-msgstr "تنفيذ مخطوط guile [‎%s‬]\n"
-
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "تسلسل​_هرمي"
@@ -1474,9 +1506,12 @@ msgstr "أ_غلق"
 msgid "Options"
 msgstr "خيارات"
 
+msgid "Edit Text"
+msgstr "حرّر النص"
+
 #, fuzzy
-msgid "Object"
-msgstr "لون الكائن:"
+msgid "Object Properties"
+msgstr "<b>خصائص النص</b>"
 
 msgid "Log"
 msgstr ""
@@ -1534,9 +1569,6 @@ msgstr "جديد"
 
 msgid "New file"
 msgstr "ملف جديد"
-
-msgid "Open"
-msgstr "افتح"
 
 #, fuzzy
 msgid "Open file"
@@ -1624,8 +1656,9 @@ msgstr "انتقل/ألغِ"
 msgid "Pick"
 msgstr "التقط"
 
-msgid "Status"
-msgstr "الحالة"
+#, fuzzy
+msgid "Object"
+msgstr "لون الكائن:"
 
 #, fuzzy, c-format
 msgid "New file [%s]"
@@ -1675,6 +1708,9 @@ msgstr "أكتب _صورة..."
 #, fuzzy
 msgid "Invoke Macro..."
 msgstr "استدع ماكرو"
+
+msgid "Execute Script..."
+msgstr "نفذ مخطوطا (سكربت)..."
 
 msgid "REPL..."
 msgstr ""
@@ -2053,10 +2089,6 @@ msgid "Open File"
 msgstr "افتح ملفا..."
 
 #, fuzzy
-msgid "Save As"
-msgstr "احفظ الكل"
-
-#, fuzzy
 msgid "Print"
 msgstr "اطبع..."
 
@@ -2076,9 +2108,6 @@ msgstr "أ_خرج"
 
 msgid "Terminal REPL"
 msgstr ""
-
-msgid "Edit Text"
-msgstr "حرّر النص"
 
 msgid "Choose Slot"
 msgstr ""
@@ -2111,6 +2140,9 @@ msgstr "أ_لصق"
 
 msgid "Sidebar"
 msgstr ""
+
+msgid "Status"
+msgstr "الحالة"
 
 #, fuzzy
 msgid "Find Text State"
@@ -2183,20 +2215,12 @@ msgid "Print Page"
 msgstr "ال_سّابقة"
 
 #, fuzzy
-msgid "Add Component"
-msgstr "/أضف مكونا..."
-
-#, fuzzy
 msgid "Add Net"
 msgstr "/أضف شبكة"
 
 #, fuzzy
 msgid "Add Bus"
 msgstr "/أضف ناقلا"
-
-#, fuzzy
-msgid "Add Text"
-msgstr "/أضف نصا"
 
 #, fuzzy
 msgid "Add Line"
@@ -2220,10 +2244,6 @@ msgstr "أضف سمة"
 
 msgid "Add Pin"
 msgstr ""
-
-#, fuzzy
-msgid "Add Picture"
-msgstr "صورة"
 
 #, fuzzy
 msgid "Down Schematic"
@@ -2385,6 +2405,30 @@ msgstr ""
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr ""
+
+#~ msgid "Single Attribute Editor"
+#~ msgstr "محرّر سمة منفردة"
+
+#~ msgid "<b>Edit Attribute</b>"
+#~ msgstr "<b>حرّر السّمة</b>"
+
+#~ msgid "<b>Add Attribute</b>"
+#~ msgstr "<b>أضف سمة</b>"
+
+#~ msgid "Select Component..."
+#~ msgstr "انتق مكونا..."
+
+#~ msgid "Open..."
+#~ msgstr "افتح..."
+
+#~ msgid "Save as..."
+#~ msgstr "احفظ كـ..."
+
+#~ msgid "Write image..."
+#~ msgstr "أكتب صورة..."
+
+#~ msgid "Text Entry..."
+#~ msgstr "مدخل نص..."
 
 #~ msgid "Got a non line object in o_move_check_endpoint\n"
 #~ msgstr "﻿حصلت على كائن غير مشكّل من خط في o_move_check_endpoint\n"

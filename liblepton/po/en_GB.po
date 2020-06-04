@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-04-02 19:27+0300\n"
+"POT-Creation-Date: 2020-06-04 03:05+0300\n"
 "PO-Revision-Date: 2012-01-31 12:15+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -105,10 +105,6 @@ msgid "Failed to stat [%1$s]: %2$s"
 msgstr "Failed to stat [%s]: %s"
 
 #, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "Cannot find file: %s: %s"
-
-#, fuzzy, c-format
 msgid ""
 "\n"
 "WARNING: Found an autosave backup file:\n"
@@ -137,6 +133,10 @@ msgid ""
 msgstr ""
 "Gschem usually makes backup copies automatically, and this situation happens "
 "when it crashed or it was forced to exit abruptly.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Cannot find file: %s: %s"
 
 #, fuzzy
 msgid ""
@@ -225,14 +225,6 @@ msgstr "Can't get the real filename of %s: %s"
 #, fuzzy, c-format
 msgid "Unable to delete backup file %1$s."
 msgstr "s_page_delete: Unable to delete backup file %s."
-
-#, fuzzy, c-format
-msgid "Saved [%1$s]"
-msgstr "Saved [%s]\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save [%1$s]"
-msgstr "Could NOT save [%s]\n"
 
 msgid "Failed to parse arc object"
 msgstr "Failed to parse arc object"
@@ -341,60 +333,39 @@ msgstr ""
 msgid "Setting mirror to 0."
 msgstr "Setting mirror to 0\n"
 
-#, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion=%2$s"
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
 msgstr ""
-"WARNING: Symbol version parse error on refdes %s:\n"
-"\tCould not parse symbol file symversion=%s\n"
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion in symbol file"
+msgstr ""
 
 #, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion="
-msgstr ""
-"WARNING: Symbol version parse error on refdes %s:\n"
-"\tCould not parse symbol file symversion=\n"
-
-#, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse attached symversion=%2$s"
+msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
 msgstr ""
 "WARNING: Symbol version parse error on refdes %s:\n"
 "\tCould not parse attached symversion=%s\n"
 
 #, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tsymversion=%2$s attached to instantiated symbol, but no symversion= inside "
-"symbol file."
+msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
 msgstr ""
 "WARNING: Symbol version oddity on refdes %s:\n"
 "\tsymversion=%s attached to instantiated symbol, but no symversion= inside "
 "symbol file\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
-"\tSymbol in library is newer than instantiated symbol."
+"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
 msgstr ""
-"WARNING: Symbol version mismatch on refdes %s (%s):\n"
-"\tSymbol in library is newer than instantiated symbol\n"
 
-#, fuzzy, c-format
-msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
-msgstr "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
-
-#, fuzzy, c-format
-msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
-msgstr "\tMinor version change (file %.3f, instantiated %.3f)\n"
-
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tInstantiated symbol is newer than symbol in library."
+"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
 msgstr ""
 "WARNING: Symbol version oddity on refdes %s:\n"
 "\tInstantiated symbol is newer than symbol in library\n"
@@ -631,20 +602,6 @@ msgstr "Component [%s] was not found in the component library\n"
 #, fuzzy, c-format
 msgid "More than one component found with name [%1$s]."
 msgstr "More than one component found with name [%s]\n"
-
-msgid "Schematic not found in source library."
-msgstr ""
-
-msgid "Hierarchy contains a circular dependency."
-msgstr ""
-
-#, fuzzy
-msgid "There are no schematics above the current one!"
-msgstr "There are no schematics above the current one!\n"
-
-#, fuzzy, c-format
-msgid "Failed to descend hierarchy into '%1$s': %2$s"
-msgstr "Failed to open directory [%s]: %s\n"
 
 #, fuzzy
 msgid "Did not find slotdef=#:#,#,#... attribute."
@@ -1285,6 +1242,54 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Saved [%1$s]"
+#~ msgstr "Saved [%s]\n"
+
+#, fuzzy
+#~ msgid "Could NOT save [%1$s]"
+#~ msgstr "Could NOT save [%s]\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion=%2$s"
+#~ msgstr ""
+#~ "WARNING: Symbol version parse error on refdes %s:\n"
+#~ "\tCould not parse symbol file symversion=%s\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion="
+#~ msgstr ""
+#~ "WARNING: Symbol version parse error on refdes %s:\n"
+#~ "\tCould not parse symbol file symversion=\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
+#~ "\tSymbol in library is newer than instantiated symbol."
+#~ msgstr ""
+#~ "WARNING: Symbol version mismatch on refdes %s (%s):\n"
+#~ "\tSymbol in library is newer than instantiated symbol\n"
+
+#, fuzzy
+#~ msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
+#~ msgstr "\tMAJOR VERSION CHANGE (file %.3f, instantiated %.3f, %s)!\n"
+
+#, fuzzy
+#~ msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
+#~ msgstr "\tMinor version change (file %.3f, instantiated %.3f)\n"
+
+#, fuzzy
+#~ msgid "There are no schematics above the current one!"
+#~ msgstr "There are no schematics above the current one!\n"
+
+#, fuzzy
+#~ msgid "Failed to descend hierarchy into '%1$s': %2$s"
+#~ msgstr "Failed to open directory [%s]: %s\n"
 
 #~ msgid "%s: %s"
 #~ msgstr "%s: %s"

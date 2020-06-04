@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-20 15:15+0300\n"
+"POT-Creation-Date: 2020-06-04 03:03+0300\n"
 "PO-Revision-Date: 2020-03-20 15:30+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -562,6 +562,21 @@ msgstr "Создана новая страница «%1$s»"
 msgid "New Window created [%1$s]"
 msgstr "Создано новое окно «%1$s»"
 
+#, fuzzy
+msgid "Execute Script"
+msgstr "Выполнить скрипт..."
+
+#, fuzzy
+msgid "Scheme files (*.scm)"
+msgstr "Схемы (*.sch)"
+
+msgid "All files"
+msgstr "Все файлы"
+
+#, fuzzy, c-format
+msgid "Executing Guile script [%s]"
+msgstr "Выполнение скрипта Guile «%1$s»"
+
 msgid "Saved All"
 msgstr "Все файлы сохранены"
 
@@ -758,14 +773,21 @@ msgid "Bus ripper symbol [%1$s] was not found in any component library"
 msgstr ""
 "Символ ответвления шины «%1$s» не найден ни в одной из библиотек компонентов"
 
-# Заголовок окна выбора файла изображения
-msgid "Select a picture file..."
-msgstr "Выберите файл изображения"
+msgid "All supported formats"
+msgstr ""
+
+msgid "Add Picture"
+msgstr "Добавить изображение"
 
 # Квадратные скобки добавлены для единообразия
 #, c-format
 msgid "Failed to load picture: %1$s"
 msgstr "Не удалось загрузить изображение: «%1$s»"
+
+# Заголовок окна выбора файла изображения
+#, fuzzy
+msgid "Select Picture"
+msgstr "Выберите файл изображения"
 
 # Квадратные скобки добавлены для единообразия
 #, c-format
@@ -830,26 +852,32 @@ msgstr ""
 "Страница для отчётов об ошибках: %2$s\n"
 "Домашняя страница Lepton EDA: %3$s\n"
 
+msgid "Schematic not found in source library."
+msgstr ""
+
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+#, fuzzy
+msgid "There are no schematics above the current one!"
+msgstr "Для текущей схемы не удалось найти схему, вышестоящую по иерархии!"
+
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr "Не удалось перейти к подсхеме «%1$s»: %2$s"
+
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 "Выбран недопустимый способ отображения, установка отображения имени и "
 "значения\n"
 
-msgid "Single Attribute Editor"
-msgstr "Редактор атрибута"
+#, fuzzy
+msgid "Edit Attribute"
+msgstr "Правка атрибутов"
 
-# Надпись в редакторе атрибута. "Изменить атрибут" было бы излишне, так как
-# там далее идут поля "Имя" и "Значение". Т. е. "изменить ... имя"
-# представляется красивше, чем "изменить атрибут ... имя", т. к. и так известно
-# (из заголовка окна), что меняется атрибут.
-msgid "<b>Edit Attribute</b>"
-msgstr "<b>Изменить</b>"
-
-# См. выше. Но тут слово "атрибут" необходимо. Иначе получается "добавить ... имя" или
-# "значение", а не "атрибут".
-msgid "<b>Add Attribute</b>"
-msgstr "<b>Добавить атрибут</b>"
+msgid "Add Attribute"
+msgstr "Добавить атрибут"
 
 msgid "N_ame:"
 msgstr "_Имя:"
@@ -1084,8 +1112,8 @@ msgstr "Внедрить в схему"
 msgid "Include component as individual objects"
 msgstr "Вставить как отдельные объекты"
 
-msgid "Select Component..."
-msgstr "Выбор компонента"
+msgid "Add Component"
+msgstr "Добавить компонент"
 
 msgid "In Us_e"
 msgstr "_Используемые"
@@ -1101,13 +1129,22 @@ msgstr "Предпросмотр"
 msgid "Attributes"
 msgstr "Атрибуты"
 
-msgid "Major symbol changes detected."
+msgid "Symbol version changes"
+msgstr ""
+
+#, fuzzy
+msgid "Major symbol version changes detected."
 msgstr "Обнаружено значительное изменение символа."
 
+#, fuzzy, c-format
+msgid "Schematic: %s"
+msgstr "Схемы (*.sch)"
+
+#, fuzzy
 msgid ""
-"Changes have occurred to the symbols shown below.\n"
-"\n"
-"Be sure to verify each of these symbols."
+"Changes have occurred to the symbols shown\n"
+"below, be sure to verify each of these symbols.\n"
+"Consult lepton-schematic log for details."
 msgstr ""
 "Приведённые ниже символы были изменены.\n"
 "\n"
@@ -1145,16 +1182,11 @@ msgstr "Символы (*.sym)"
 msgid "Schematics and symbols (*.sch *.sym)"
 msgstr "Схемы и символы (*.sch *.sym)"
 
-msgid "All files"
-msgstr "Все файлы"
+msgid "Open"
+msgstr "Открыть"
 
-# Заголовок окна выбора файла при открывании существующего файла
-msgid "Open..."
-msgstr "Выберите файл"
-
-# Заголовок окна выбора файла при сохранении
-msgid "Save as..."
-msgstr "Введите имя файла для сохранения"
+msgid "Save As"
+msgstr "Сохранить как"
 
 msgid "Save cancelled on user request"
 msgstr "Сохранение отменено по команде пользователя"
@@ -1229,8 +1261,9 @@ msgstr "Цветное"
 msgid "Grayscale"
 msgstr "В оттенках серого"
 
-msgid "Write image..."
-msgstr "Сохранение изображения..."
+#, fuzzy
+msgid "Write Image"
+msgstr "Сохранить _изображение..."
 
 msgid "Butt"
 msgstr "Усечённые"
@@ -1344,9 +1377,6 @@ msgstr "З"
 msgid "Sho_w inherited attributes"
 msgstr "Показать _унаследованные атрибуты"
 
-msgid "Add Attribute"
-msgstr "Добавить атрибут"
-
 msgid "_Name:"
 msgstr "_Имя:"
 
@@ -1388,8 +1418,8 @@ msgstr[0] "%1$i атрибут"
 msgstr[1] "%1$i атрибута"
 msgstr[2] "%1$i атрибутов"
 
-msgid "Text Entry..."
-msgstr "Ввод текста..."
+msgid "Add Text"
+msgstr "Добавить текст"
 
 msgid "Refresh"
 msgstr "Обновить"
@@ -1454,13 +1484,6 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr "Не удалось загрузить настройки lepton-schematic."
 
-msgid "Execute Script..."
-msgstr "Выполнить скрипт..."
-
-#, c-format
-msgid "Executing guile script [%1$s]"
-msgstr "Выполнение скрипта Guile «%1$s»"
-
 #, c-format
 msgid "Hierarchy up: %s"
 msgstr "Вверх по иерархии: %s"
@@ -1489,8 +1512,12 @@ msgstr "_Закрыть"
 msgid "Options"
 msgstr "Параметры"
 
-msgid "Object"
-msgstr "Объект"
+msgid "Edit Text"
+msgstr "Правка текста"
+
+#, fuzzy
+msgid "Object Properties"
+msgstr "Свойства объекта..."
 
 msgid "Log"
 msgstr "Журнал"
@@ -1546,9 +1573,6 @@ msgstr "Новый"
 
 msgid "New file"
 msgstr "Новый файл"
-
-msgid "Open"
-msgstr "Открыть"
 
 msgid "Open file"
 msgstr "Открыть файл"
@@ -1639,8 +1663,8 @@ msgstr "/Отмена"
 msgid "Pick"
 msgstr "Выбор"
 
-msgid "Status"
-msgstr "Журнал"
+msgid "Object"
+msgstr "Объект"
 
 #, c-format
 msgid "New file [%s]"
@@ -1696,6 +1720,9 @@ msgstr "Сохранить _изображение..."
 
 msgid "Invoke Macro..."
 msgstr "Выполнить макрос..."
+
+msgid "Execute Script..."
+msgstr "Выполнить скрипт..."
 
 msgid "REPL..."
 msgstr "REPL..."
@@ -2046,9 +2073,6 @@ msgstr "Новый файл"
 msgid "Open File"
 msgstr "Открыть файл"
 
-msgid "Save As"
-msgstr "Сохранить как"
-
 msgid "Print"
 msgstr "Печать"
 
@@ -2066,9 +2090,6 @@ msgstr "Выход"
 
 msgid "Terminal REPL"
 msgstr "REPL в терминале"
-
-msgid "Edit Text"
-msgstr "Правка текста"
 
 msgid "Choose Slot"
 msgstr "Выбрать секцию"
@@ -2098,6 +2119,9 @@ msgstr "Вставить"
 
 msgid "Sidebar"
 msgstr "Боковая панель"
+
+msgid "Status"
+msgstr "Журнал"
 
 msgid "Find Text State"
 msgstr "Статус поиска текста"
@@ -2153,18 +2177,12 @@ msgstr "Следующая страница"
 msgid "Print Page"
 msgstr "Печать страницы"
 
-msgid "Add Component"
-msgstr "Добавить компонент"
-
 # Контекстное меню, вызываемое по правой кнопке в основном окне.
 msgid "Add Net"
 msgstr "Добавить соединение"
 
 msgid "Add Bus"
 msgstr "Добавить шину"
-
-msgid "Add Text"
-msgstr "Добавить текст"
 
 msgid "Add Line"
 msgstr "Добавить линию"
@@ -2183,9 +2201,6 @@ msgstr "Добавить дугу"
 
 msgid "Add Pin"
 msgstr "Добавить вывод"
-
-msgid "Add Picture"
-msgstr "Добавить изображение"
 
 msgid "Down Schematic"
 msgstr "Войти в подсхему"
@@ -2317,3 +2332,35 @@ msgstr "~S не является префиксом клавишной посл�
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Недопустимое выравнивание текста ~A."
+
+#~ msgid "Single Attribute Editor"
+#~ msgstr "Редактор атрибута"
+
+# Надпись в редакторе атрибута. "Изменить атрибут" было бы излишне, так как
+# там далее идут поля "Имя" и "Значение". Т. е. "изменить ... имя"
+# представляется красивше, чем "изменить атрибут ... имя", т. к. и так известно
+# (из заголовка окна), что меняется атрибут.
+#~ msgid "<b>Edit Attribute</b>"
+#~ msgstr "<b>Изменить</b>"
+
+# См. выше. Но тут слово "атрибут" необходимо. Иначе получается "добавить ... имя" или
+# "значение", а не "атрибут".
+#~ msgid "<b>Add Attribute</b>"
+#~ msgstr "<b>Добавить атрибут</b>"
+
+#~ msgid "Select Component..."
+#~ msgstr "Выбор компонента"
+
+# Заголовок окна выбора файла при открывании существующего файла
+#~ msgid "Open..."
+#~ msgstr "Выберите файл"
+
+# Заголовок окна выбора файла при сохранении
+#~ msgid "Save as..."
+#~ msgstr "Введите имя файла для сохранения"
+
+#~ msgid "Write image..."
+#~ msgstr "Сохранение изображения..."
+
+#~ msgid "Text Entry..."
+#~ msgstr "Ввод текста..."

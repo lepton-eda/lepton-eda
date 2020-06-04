@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-20 15:15+0300\n"
+"POT-Creation-Date: 2020-06-04 03:03+0300\n"
 "PO-Revision-Date: 2012-01-31 12:07+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -554,6 +554,20 @@ msgstr ""
 msgid "New Window created [%1$s]"
 msgstr ""
 
+#, fuzzy
+msgid "Execute Script"
+msgstr "スクリプト実行..."
+
+msgid "Scheme files (*.scm)"
+msgstr ""
+
+msgid "All files"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Executing Guile script [%s]"
+msgstr "guileスクリプトを実行しています。[%s]\n"
+
 msgid "Saved All"
 msgstr "すべて保存"
 
@@ -744,12 +758,20 @@ msgstr ""
 msgid "Bus ripper symbol [%1$s] was not found in any component library"
 msgstr ""
 
-msgid "Select a picture file..."
+msgid "All supported formats"
 msgstr ""
+
+#, fuzzy
+msgid "Add Picture"
+msgstr "画像(_R)"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
 msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
+
+#, fuzzy
+msgid "Select Picture"
+msgstr "画像(_R)"
 
 #, c-format
 msgid "Failed to replace pictures: %s"
@@ -797,17 +819,28 @@ msgid ""
 "Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 
+msgid "Schematic not found in source library."
+msgstr ""
+
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+msgid "There are no schematics above the current one!"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
+
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 
-msgid "Single Attribute Editor"
-msgstr "シングルアトルビュートエディタ"
+#, fuzzy
+msgid "Edit Attribute"
+msgstr "アトリビュート編集"
 
-msgid "<b>Edit Attribute</b>"
-msgstr ""
-
-msgid "<b>Add Attribute</b>"
+msgid "Add Attribute"
 msgstr ""
 
 #, fuzzy
@@ -1030,8 +1063,9 @@ msgstr ""
 msgid "Include component as individual objects"
 msgstr ""
 
-msgid "Select Component..."
-msgstr "部品選択..."
+#, fuzzy
+msgid "Add Component"
+msgstr "部品"
 
 msgid "In Us_e"
 msgstr ""
@@ -1046,13 +1080,20 @@ msgstr "プレビュー"
 msgid "Attributes"
 msgstr "アトリビュート"
 
-msgid "Major symbol changes detected."
+msgid "Symbol version changes"
+msgstr ""
+
+msgid "Major symbol version changes detected."
+msgstr ""
+
+#, c-format
+msgid "Schematic: %s"
 msgstr ""
 
 msgid ""
-"Changes have occurred to the symbols shown below.\n"
-"\n"
-"Be sure to verify each of these symbols."
+"Changes have occurred to the symbols shown\n"
+"below, be sure to verify each of these symbols.\n"
+"Consult lepton-schematic log for details."
 msgstr ""
 
 msgid "Symbol"
@@ -1080,14 +1121,12 @@ msgstr ""
 msgid "Schematics and symbols (*.sch *.sym)"
 msgstr ""
 
-msgid "All files"
-msgstr ""
+msgid "Open"
+msgstr "開く"
 
-msgid "Open..."
-msgstr "開く..."
-
-msgid "Save as..."
-msgstr ""
+#, fuzzy
+msgid "Save As"
+msgstr "すべて保存"
 
 msgid "Save cancelled on user request"
 msgstr ""
@@ -1154,8 +1193,9 @@ msgstr "色"
 msgid "Grayscale"
 msgstr ""
 
-msgid "Write image..."
-msgstr ""
+#, fuzzy
+msgid "Write Image"
+msgstr "画像として保存(_I)..."
 
 msgid "Butt"
 msgstr ""
@@ -1277,9 +1317,6 @@ msgstr "値"
 msgid "Sho_w inherited attributes"
 msgstr "アトリビュート編集"
 
-msgid "Add Attribute"
-msgstr ""
-
 #, fuzzy
 msgid "_Name:"
 msgstr "名前:"
@@ -1317,8 +1354,9 @@ msgid_plural "%1$i attributes"
 msgstr[0] "アトリビュート"
 msgstr[1] "アトリビュート"
 
-msgid "Text Entry..."
-msgstr "テキスト..."
+#, fuzzy
+msgid "Add Text"
+msgstr "テキスト追加..."
 
 msgid "Refresh"
 msgstr ""
@@ -1375,13 +1413,6 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
-msgid "Execute Script..."
-msgstr "スクリプト実行..."
-
-#, fuzzy, c-format
-msgid "Executing guile script [%1$s]"
-msgstr "guileスクリプトを実行しています。[%s]\n"
-
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "階層"
@@ -1413,7 +1444,10 @@ msgstr "閉じる(_C)"
 msgid "Options"
 msgstr "オプション"
 
-msgid "Object"
+msgid "Edit Text"
+msgstr "テキスト編集"
+
+msgid "Object Properties"
 msgstr ""
 
 msgid "Log"
@@ -1471,9 +1505,6 @@ msgstr "新規"
 
 msgid "New file"
 msgstr "新規ファイル"
-
-msgid "Open"
-msgstr "開く"
 
 #, fuzzy
 msgid "Open file"
@@ -1561,8 +1592,8 @@ msgstr "パン/キャンセル"
 msgid "Pick"
 msgstr "ピック"
 
-msgid "Status"
-msgstr "ステータス"
+msgid "Object"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "New file [%s]"
@@ -1610,6 +1641,9 @@ msgstr "画像として保存(_I)..."
 #, fuzzy
 msgid "Invoke Macro..."
 msgstr "マクロの実行"
+
+msgid "Execute Script..."
+msgstr "スクリプト実行..."
 
 msgid "REPL..."
 msgstr ""
@@ -1980,10 +2014,6 @@ msgid "Open File"
 msgstr "ファイルを開く..."
 
 #, fuzzy
-msgid "Save As"
-msgstr "すべて保存"
-
-#, fuzzy
 msgid "Print"
 msgstr "印刷..."
 
@@ -2003,9 +2033,6 @@ msgstr "終了(_Q)"
 
 msgid "Terminal REPL"
 msgstr ""
-
-msgid "Edit Text"
-msgstr "テキスト編集"
 
 msgid "Choose Slot"
 msgstr ""
@@ -2037,6 +2064,9 @@ msgstr "貼り付け(_P)"
 
 msgid "Sidebar"
 msgstr ""
+
+msgid "Status"
+msgstr "ステータス"
 
 #, fuzzy
 msgid "Find Text State"
@@ -2108,19 +2138,11 @@ msgid "Print Page"
 msgstr "前のページ(_P)"
 
 #, fuzzy
-msgid "Add Component"
-msgstr "部品"
-
-#, fuzzy
 msgid "Add Net"
 msgstr "テキスト追加..."
 
 msgid "Add Bus"
 msgstr ""
-
-#, fuzzy
-msgid "Add Text"
-msgstr "テキスト追加..."
 
 #, fuzzy
 msgid "Add Line"
@@ -2141,10 +2163,6 @@ msgstr ""
 
 msgid "Add Pin"
 msgstr ""
-
-#, fuzzy
-msgid "Add Picture"
-msgstr "画像(_R)"
 
 msgid "Down Schematic"
 msgstr ""
@@ -2288,6 +2306,18 @@ msgstr ""
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr ""
+
+#~ msgid "Single Attribute Editor"
+#~ msgstr "シングルアトルビュートエディタ"
+
+#~ msgid "Select Component..."
+#~ msgstr "部品選択..."
+
+#~ msgid "Open..."
+#~ msgstr "開く..."
+
+#~ msgid "Text Entry..."
+#~ msgstr "テキスト..."
 
 #, fuzzy
 #~ msgid "Invalid size [%1$d] passed to text-size\n"

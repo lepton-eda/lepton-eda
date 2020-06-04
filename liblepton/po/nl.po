@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-04-02 19:27+0300\n"
+"POT-Creation-Date: 2020-06-04 03:05+0300\n"
 "PO-Revision-Date: 2014-08-31 23:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -110,10 +110,6 @@ msgid "Failed to stat [%1$s]: %2$s"
 msgstr "Status niet gelukt [%s]: %s"
 
 #, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "Kan bestand %s niet vinden: %s"
-
-#, fuzzy, c-format
 msgid ""
 "\n"
 "WARNING: Found an autosave backup file:\n"
@@ -143,6 +139,10 @@ msgstr ""
 "Gschem maakt gewoonlijk automatisch reservekopieen, en deze situatie komt "
 "voor wanneer er een crash is of wanneer er een abrupte gedwongen beeindiging "
 "was.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Kan bestand %s niet vinden: %s"
 
 #, fuzzy
 msgid ""
@@ -233,14 +233,6 @@ msgstr "Kan de werkelijke bestandsnaam van %s: %s niet krijgen"
 #, fuzzy, c-format
 msgid "Unable to delete backup file %1$s."
 msgstr "s_page_delete: Niet mogelijk om reservekopie %s te verwijderen."
-
-#, fuzzy, c-format
-msgid "Saved [%1$s]"
-msgstr "[%s] opgeslagen\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save [%1$s]"
-msgstr "Kan [%s] NIET opslaan\n"
 
 msgid "Failed to parse arc object"
 msgstr "Faalde bij het ontleden van een boog object"
@@ -352,60 +344,39 @@ msgstr ""
 msgid "Setting mirror to 0."
 msgstr "Spiegelen op 0 ingesteld\n"
 
-#, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion=%2$s"
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
 msgstr ""
-"WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
-"\tKan symboolbestand niet doorzoeken symversion=%s\n"
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion in symbol file"
+msgstr ""
 
 #, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion="
-msgstr ""
-"WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
-"\tKan symboolbestand niet doorzoeken symversion=\n"
-
-#, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse attached symversion=%2$s"
+msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
 msgstr ""
 "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
 "\tKan bijgevoegd symboolbestand niet doorzoeken symversion=%s\n"
 
 #, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tsymversion=%2$s attached to instantiated symbol, but no symversion= inside "
-"symbol file."
+msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
 msgstr ""
 "WAARSCHUWING: Symbool versie afwijking bij refdes %s:\n"
 "\tsymversion=%s bijgevoegd aan bedoelde symbool, maar geen symversion= in "
 "het symbool bestand\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
-"\tSymbol in library is newer than instantiated symbol."
+"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
 msgstr ""
-"WAARSCHUWING: Symbool versie fout bij refdes %s (%s):\n"
-"\tSymbool in bibliotheek is nieuwer dan bedoelde symbool\n"
 
-#, fuzzy, c-format
-msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
-msgstr "\tGROTE VERSIE VERANDERING (bestand %.3f, bedoeld %.3f, %s)!\n"
-
-#, fuzzy, c-format
-msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
-msgstr "\tKleine versie verandering (bestand %.3f, bedoeld %.3f)!\n"
-
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tInstantiated symbol is newer than symbol in library."
+"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
 msgstr ""
 "WAARSCHUWING: Symbool versie afwijking bij refdes %s:\n"
 "\tbedoeld symbool is nieuwer dan het symbool in de bibliotheek\n"
@@ -651,20 +622,6 @@ msgstr "Komponent [%s] is niet in de komponenten bibliotheek gevonden\n"
 #, fuzzy, c-format
 msgid "More than one component found with name [%1$s]."
 msgstr "Meer dan een komponent gevonden met de naam [%s]\n"
-
-msgid "Schematic not found in source library."
-msgstr "Schema niet gevonden in bron bibliotheek."
-
-msgid "Hierarchy contains a circular dependency."
-msgstr "Hierarchie bevat een rondgaande afhankelijkheid."
-
-#, fuzzy
-msgid "There are no schematics above the current one!"
-msgstr "Er zijn geen schema's boven de huidige!\n"
-
-#, fuzzy, c-format
-msgid "Failed to descend hierarchy into '%1$s': %2$s"
-msgstr "Faalde om af te dalen in hierarchie '%s: %s\n"
 
 #, fuzzy
 msgid "Did not find slotdef=#:#,#,#... attribute."
@@ -1353,6 +1310,60 @@ msgstr "1 FOUT gevonden "
 #, fuzzy
 msgid "(use -v to view details)"
 msgstr "(gebruik -v om details te zien)\n"
+
+#, fuzzy
+#~ msgid "Saved [%1$s]"
+#~ msgstr "[%s] opgeslagen\n"
+
+#, fuzzy
+#~ msgid "Could NOT save [%1$s]"
+#~ msgstr "Kan [%s] NIET opslaan\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion=%2$s"
+#~ msgstr ""
+#~ "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
+#~ "\tKan symboolbestand niet doorzoeken symversion=%s\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion="
+#~ msgstr ""
+#~ "WAARSCHUWING: Symbool versie zoek fout bij refdes %s:\n"
+#~ "\tKan symboolbestand niet doorzoeken symversion=\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
+#~ "\tSymbol in library is newer than instantiated symbol."
+#~ msgstr ""
+#~ "WAARSCHUWING: Symbool versie fout bij refdes %s (%s):\n"
+#~ "\tSymbool in bibliotheek is nieuwer dan bedoelde symbool\n"
+
+#, fuzzy
+#~ msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
+#~ msgstr "\tGROTE VERSIE VERANDERING (bestand %.3f, bedoeld %.3f, %s)!\n"
+
+#, fuzzy
+#~ msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
+#~ msgstr "\tKleine versie verandering (bestand %.3f, bedoeld %.3f)!\n"
+
+#~ msgid "Schematic not found in source library."
+#~ msgstr "Schema niet gevonden in bron bibliotheek."
+
+#~ msgid "Hierarchy contains a circular dependency."
+#~ msgstr "Hierarchie bevat een rondgaande afhankelijkheid."
+
+#, fuzzy
+#~ msgid "There are no schematics above the current one!"
+#~ msgstr "Er zijn geen schema's boven de huidige!\n"
+
+#, fuzzy
+#~ msgid "Failed to descend hierarchy into '%1$s': %2$s"
+#~ msgstr "Faalde om af te dalen in hierarchie '%s: %s\n"
 
 #~ msgid "%s: %s"
 #~ msgstr "%s: %s"

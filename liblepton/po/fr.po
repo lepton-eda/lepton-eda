@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-04-02 19:27+0300\n"
+"POT-Creation-Date: 2020-06-04 03:05+0300\n"
 "PO-Revision-Date: 2012-10-22 13:10+0000\n"
 "Last-Translator: Patrick Fiquet <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -104,10 +104,6 @@ msgid "Failed to stat [%1$s]: %2$s"
 msgstr "Impossible d'évaluer [%s]: %s"
 
 #, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "Impossible de trouver le fichier %s: %s"
-
-#, fuzzy, c-format
 msgid ""
 "\n"
 "WARNING: Found an autosave backup file:\n"
@@ -139,6 +135,10 @@ msgstr ""
 "Gschem effectue habituellement des sauvegardes automatiques et cette "
 "situation se produit lorsqu'il a crashé ou qu'il a été obligé de s'arrêter "
 "brutalement.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Impossible de trouver le fichier %s: %s"
 
 #, fuzzy
 msgid ""
@@ -231,14 +231,6 @@ msgstr "Impossible d'obtenir le nom réel de %s : %s"
 #, fuzzy, c-format
 msgid "Unable to delete backup file %1$s."
 msgstr "s_page_delete: Impossible d'effacer le fichier de sauvegarde %s."
-
-#, fuzzy, c-format
-msgid "Saved [%1$s]"
-msgstr "Sauvegarder [%s]\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save [%1$s]"
-msgstr "Impossible de sauvegarder [%s]\n"
 
 msgid "Failed to parse arc object"
 msgstr ""
@@ -352,60 +344,38 @@ msgstr ""
 msgid "Setting mirror to 0."
 msgstr "Initilisation du miroir à 0\n"
 
-#, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion=%2$s"
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
 msgstr ""
-"ATTENTION: erreur du traitement de la version du Symbole sur refdes %s:\n"
-"\tImpossible de traiter la version du fichier de symbole symversion=%s\n"
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion in symbol file"
+msgstr ""
 
 #, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion="
-msgstr ""
-"ATTENTION: erreur du traitement de la version du Symbole sur refdes %s:\n"
-"\tImpossible de traiter la version du fichier de symbole symversion=%s\n"
-
-#, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse attached symversion=%2$s"
+msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
 msgstr ""
 "ATTENTION: erreur du traitement de la version du Symbole sur refdes %s:\n"
 "\tImpossible de traiter symversion=%s attaché\n"
 
 #, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tsymversion=%2$s attached to instantiated symbol, but no symversion= inside "
-"symbol file."
+msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
 msgstr ""
 "ATTENTION: erreur du traitement de la version du Symbole sur refdes %s:\n"
 "\tImpossible de traiter la version du fichier de symbole symversion=%s\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
-"\tSymbol in library is newer than instantiated symbol."
+"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
 msgstr ""
-"ATTENTION: erreur du traitement de la version du Symbole sur refdes %s:\n"
-"\tImpossible de traiter symversion=%s attaché\n"
 
-#, fuzzy, c-format
-msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
-msgstr ""
-"\tCHANGEMENT MAJEUR DE VERSION (fichier %.3f, instantiation %.3f, %s)!\n"
-
-#, fuzzy, c-format
-msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
-msgstr "\tChangement de version mineur (fichier %.3f, instantiation %.3f)\n"
-
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tInstantiated symbol is newer than symbol in library."
+"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
 msgstr ""
 "ATTENTION: erreur du traitement de la version du Symbole sur refdes %s:\n"
 "\tImpossible de traiter la version du fichier de symbole symversion=%s\n"
@@ -647,20 +617,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "More than one component found with name [%1$s]."
 msgstr "Trouvé plus d'un composant avec le nom [%s]\n"
-
-msgid "Schematic not found in source library."
-msgstr ""
-
-msgid "Hierarchy contains a circular dependency."
-msgstr ""
-
-#, fuzzy
-msgid "There are no schematics above the current one!"
-msgstr "Il n'y a pas de schéma au-dessus de celui-ci!\n"
-
-#, fuzzy, c-format
-msgid "Failed to descend hierarchy into '%1$s': %2$s"
-msgstr "Échec de l'ouverture du répertoire [%s]: %s\n"
 
 #, fuzzy
 msgid "Did not find slotdef=#:#,#,#... attribute."
@@ -1297,6 +1253,55 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Saved [%1$s]"
+#~ msgstr "Sauvegarder [%s]\n"
+
+#, fuzzy
+#~ msgid "Could NOT save [%1$s]"
+#~ msgstr "Impossible de sauvegarder [%s]\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion=%2$s"
+#~ msgstr ""
+#~ "ATTENTION: erreur du traitement de la version du Symbole sur refdes %s:\n"
+#~ "\tImpossible de traiter la version du fichier de symbole symversion=%s\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion="
+#~ msgstr ""
+#~ "ATTENTION: erreur du traitement de la version du Symbole sur refdes %s:\n"
+#~ "\tImpossible de traiter la version du fichier de symbole symversion=%s\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
+#~ "\tSymbol in library is newer than instantiated symbol."
+#~ msgstr ""
+#~ "ATTENTION: erreur du traitement de la version du Symbole sur refdes %s:\n"
+#~ "\tImpossible de traiter symversion=%s attaché\n"
+
+#, fuzzy
+#~ msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
+#~ msgstr ""
+#~ "\tCHANGEMENT MAJEUR DE VERSION (fichier %.3f, instantiation %.3f, %s)!\n"
+
+#, fuzzy
+#~ msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
+#~ msgstr "\tChangement de version mineur (fichier %.3f, instantiation %.3f)\n"
+
+#, fuzzy
+#~ msgid "There are no schematics above the current one!"
+#~ msgstr "Il n'y a pas de schéma au-dessus de celui-ci!\n"
+
+#, fuzzy
+#~ msgid "Failed to descend hierarchy into '%1$s': %2$s"
+#~ msgstr "Échec de l'ouverture du répertoire [%s]: %s\n"
 
 #~ msgid "%s: %s"
 #~ msgstr "%s: %s"

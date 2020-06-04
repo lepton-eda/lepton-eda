@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-04-02 19:27+0300\n"
+"POT-Creation-Date: 2020-06-04 03:05+0300\n"
 "PO-Revision-Date: 2012-09-01 18:46+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -95,10 +95,6 @@ msgid "Failed to stat [%1$s]: %2$s"
 msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
 
 #, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "Αδυναμία εύρεσης του αρχείου %s: %s"
-
-#, fuzzy, c-format
 msgid ""
 "\n"
 "WARNING: Found an autosave backup file:\n"
@@ -129,6 +125,10 @@ msgid ""
 msgstr ""
 "Το gschem συνήθως δημιουργεί αντίγραφα ασφαλείας αυτόματα, και αυτή η "
 "περίπτωση συμβαίνει όταν κατέρρευσε ή έγινε βίαιη έξοδος.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Αδυναμία εύρεσης του αρχείου %s: %s"
 
 #, fuzzy
 msgid ""
@@ -215,14 +215,6 @@ msgstr "Αδυναμία λήψης του πραγματικού ονόματο
 #, fuzzy, c-format
 msgid "Unable to delete backup file %1$s."
 msgstr "s_page_delete: Αδυναμία διαγραφής αντιγράφου ασφαλείας %s."
-
-#, fuzzy, c-format
-msgid "Saved [%1$s]"
-msgstr "Αποθηκεύτηκε [%s]\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save [%1$s]"
-msgstr "ΔΕΝ αποθηκεύτηκε [%s]\n"
 
 msgid "Failed to parse arc object"
 msgstr ""
@@ -332,48 +324,33 @@ msgid "Setting mirror to 0."
 msgstr "Ρύθμιση καθρεπτισμού σε 0\n"
 
 #, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion=%2$s"
+msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
+msgstr ""
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion in symbol file"
+msgstr ""
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
+msgstr ""
+
+#, c-format
+msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
 msgstr ""
 
 #, c-format
 msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion="
+"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
 msgstr ""
 
 #, c-format
 msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse attached symversion=%2$s"
+"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
 msgstr ""
 
 #, c-format
-msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tsymversion=%2$s attached to instantiated symbol, but no symversion= inside "
-"symbol file."
-msgstr ""
-
-#, c-format
-msgid ""
-"WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
-"\tSymbol in library is newer than instantiated symbol."
-msgstr ""
-
-#, c-format
-msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
-msgstr ""
-
-#, c-format
-msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
-msgstr ""
-
-#, c-format
-msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tInstantiated symbol is newer than symbol in library."
+msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
 msgstr ""
 
 #, fuzzy, c-format
@@ -607,20 +584,6 @@ msgstr "Το στοιχείο [%s] δε βρέθηκε στη βιβλιοθήκ
 #, fuzzy, c-format
 msgid "More than one component found with name [%1$s]."
 msgstr "Βρέθηκαν περισσότερα από ένα στοιχεία με το όνομα [%s]\n"
-
-msgid "Schematic not found in source library."
-msgstr ""
-
-msgid "Hierarchy contains a circular dependency."
-msgstr ""
-
-#, fuzzy
-msgid "There are no schematics above the current one!"
-msgstr "Δεν υπάρχουν σχεδιαγράμματα πάνω από το τρέχον!\n"
-
-#, fuzzy, c-format
-msgid "Failed to descend hierarchy into '%1$s': %2$s"
-msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
 
 #, fuzzy
 msgid "Did not find slotdef=#:#,#,#... attribute."
@@ -1263,6 +1226,22 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Saved [%1$s]"
+#~ msgstr "Αποθηκεύτηκε [%s]\n"
+
+#, fuzzy
+#~ msgid "Could NOT save [%1$s]"
+#~ msgstr "ΔΕΝ αποθηκεύτηκε [%s]\n"
+
+#, fuzzy
+#~ msgid "There are no schematics above the current one!"
+#~ msgstr "Δεν υπάρχουν σχεδιαγράμματα πάνω από το τρέχον!\n"
+
+#, fuzzy
+#~ msgid "Failed to descend hierarchy into '%1$s': %2$s"
+#~ msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
 
 #~ msgid "%s: %s"
 #~ msgstr "%s: %s"

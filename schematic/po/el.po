@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-20 15:15+0300\n"
+"POT-Creation-Date: 2020-06-04 03:03+0300\n"
 "PO-Revision-Date: 2012-09-01 20:41+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -589,6 +589,21 @@ msgstr "Δημιουργήθηκε νέα σελίδα [%s]\n"
 msgid "New Window created [%1$s]"
 msgstr "Δημιουργήθηκε νέο παράθυρο [%s]\n"
 
+#, fuzzy
+msgid "Execute Script"
+msgstr "Εκτέλεση σεναρίου..."
+
+#, fuzzy
+msgid "Scheme files (*.scm)"
+msgstr "Σχεδιαγράμματα"
+
+msgid "All files"
+msgstr "Όλα τα αρχεία"
+
+#, c-format
+msgid "Executing Guile script [%s]"
+msgstr ""
+
 msgid "Saved All"
 msgstr "Αποθήκευση όλων"
 
@@ -782,13 +797,20 @@ msgstr ""
 msgid "Bus ripper symbol [%1$s] was not found in any component library"
 msgstr ""
 
+msgid "All supported formats"
+msgstr ""
+
 #, fuzzy
-msgid "Select a picture file..."
-msgstr "Επιλογή ονόματος αρχείου PostScript..."
+msgid "Add Picture"
+msgstr "Εικόνα"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
 msgstr "Αδυναμία φορτώματος εικόνας: %s"
+
+#, fuzzy
+msgid "Select Picture"
+msgstr "Επιλογή ονόματος αρχείου PostScript..."
 
 #, c-format
 msgid "Failed to replace pictures: %s"
@@ -834,19 +856,31 @@ msgid ""
 "Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 
+msgid "Schematic not found in source library."
+msgstr ""
+
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+#, fuzzy
+msgid "There are no schematics above the current one!"
+msgstr "Δεν μπορούν να βρεθούν σχεδιαγράμματα πάνω από το τρέχον!\n"
+
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr "Αδυναμία αντικατάστασης εικόνων: %s"
+
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 "Λήφθηκε μη έγκυρη επιλογή εμφάνισης. Προεπιλεγμένη εμφάνιση και των δύο\n"
 
-msgid "Single Attribute Editor"
-msgstr "Επεξεργαστής ενός γνωρίσματος"
+#, fuzzy
+msgid "Edit Attribute"
+msgstr "Επεξεργασία γνωρισμάτων"
 
-msgid "<b>Edit Attribute</b>"
-msgstr "<b>Επεξεργασία γνωρίσματος</b>"
-
-msgid "<b>Add Attribute</b>"
-msgstr "<b>Προσθήκη γνωρίσματος</b>"
+msgid "Add Attribute"
+msgstr "Προσθήκη γνωρίσματος"
 
 #, fuzzy
 msgid "N_ame:"
@@ -1072,8 +1106,9 @@ msgstr "Ενσωμάτωση στοιχείου στο σχεδιάγραμμα"
 msgid "Include component as individual objects"
 msgstr "Συμπερίληψη του στοιχείου ως ξεχωριστά αντικείμενα"
 
-msgid "Select Component..."
-msgstr "Επιλογή στοιχείου..."
+#, fuzzy
+msgid "Add Component"
+msgstr "/Προσθήκη στοιχείου..."
 
 #, fuzzy
 msgid "In Us_e"
@@ -1089,13 +1124,20 @@ msgstr "Προεπισκόπηση"
 msgid "Attributes"
 msgstr "Γνωρίσματα"
 
-msgid "Major symbol changes detected."
+msgid "Symbol version changes"
 msgstr ""
 
+msgid "Major symbol version changes detected."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Schematic: %s"
+msgstr "Σχεδιαγράμματα"
+
 msgid ""
-"Changes have occurred to the symbols shown below.\n"
-"\n"
-"Be sure to verify each of these symbols."
+"Changes have occurred to the symbols shown\n"
+"below, be sure to verify each of these symbols.\n"
+"Consult lepton-schematic log for details."
 msgstr ""
 
 #, fuzzy
@@ -1134,14 +1176,12 @@ msgstr "Σύμβολα"
 msgid "Schematics and symbols (*.sch *.sym)"
 msgstr "Σχεδιαγράμματα και σύμβολα"
 
-msgid "All files"
-msgstr "Όλα τα αρχεία"
+msgid "Open"
+msgstr "Άνοιγμα"
 
-msgid "Open..."
-msgstr "Άνοιγμα..."
-
-msgid "Save as..."
-msgstr "Αποθήκευση ως..."
+#, fuzzy
+msgid "Save As"
+msgstr "Αποθήκευση όλων"
 
 #, fuzzy
 msgid "Save cancelled on user request"
@@ -1215,8 +1255,9 @@ msgstr "Χρώμα"
 msgid "Grayscale"
 msgstr ""
 
-msgid "Write image..."
-msgstr "Εγγραφή εικόνας..."
+#, fuzzy
+msgid "Write Image"
+msgstr "Ε_γγραφή εικόνας..."
 
 msgid "Butt"
 msgstr ""
@@ -1343,9 +1384,6 @@ msgstr ""
 msgid "Sho_w inherited attributes"
 msgstr "Εμφάνιση κληρονομημένων γνωρισμάτων"
 
-msgid "Add Attribute"
-msgstr "Προσθήκη γνωρίσματος"
-
 #, fuzzy
 msgid "_Name:"
 msgstr "Όνομα:"
@@ -1383,8 +1421,9 @@ msgid_plural "%1$i attributes"
 msgstr[0] "Γνώρισμα"
 msgstr[1] "Γνώρισμα"
 
-msgid "Text Entry..."
-msgstr "Εισαγωγή κειμένου..."
+#, fuzzy
+msgid "Add Text"
+msgstr "/Προσθήκη κειμένου"
 
 msgid "Refresh"
 msgstr ""
@@ -1450,13 +1489,6 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr "Δεν είναι δυνατό το φόρτωμα των ρυθμίσεων του gschem."
 
-msgid "Execute Script..."
-msgstr "Εκτέλεση σεναρίου..."
-
-#, c-format
-msgid "Executing guile script [%1$s]"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "_Ιεραρχία"
@@ -1488,9 +1520,12 @@ msgstr "_Κλείσιμο"
 msgid "Options"
 msgstr "_Επιλογές"
 
+msgid "Edit Text"
+msgstr "Επεξεργασία κειμένου"
+
 #, fuzzy
-msgid "Object"
-msgstr "Χρώμα αντικειμένου:"
+msgid "Object Properties"
+msgstr "<b>Ιδιότητες κειμένου</b>"
 
 msgid "Log"
 msgstr ""
@@ -1547,9 +1582,6 @@ msgstr "Νέο"
 
 msgid "New file"
 msgstr "Νέο αρχείο"
-
-msgid "Open"
-msgstr "Άνοιγμα"
 
 #, fuzzy
 msgid "Open file"
@@ -1637,8 +1669,9 @@ msgstr "Μενού/Άκυρο"
 msgid "Pick"
 msgstr ""
 
-msgid "Status"
-msgstr "Κατάσταση"
+#, fuzzy
+msgid "Object"
+msgstr "Χρώμα αντικειμένου:"
 
 #, fuzzy, c-format
 msgid "New file [%s]"
@@ -1693,6 +1726,9 @@ msgstr "Ε_γγραφή εικόνας..."
 
 msgid "Invoke Macro..."
 msgstr ""
+
+msgid "Execute Script..."
+msgstr "Εκτέλεση σεναρίου..."
 
 msgid "REPL..."
 msgstr ""
@@ -2067,10 +2103,6 @@ msgid "Open File"
 msgstr "Άνοιγμα αρχείου..."
 
 #, fuzzy
-msgid "Save As"
-msgstr "Αποθήκευση όλων"
-
-#, fuzzy
 msgid "Print"
 msgstr "Εκτύπωση..."
 
@@ -2090,9 +2122,6 @@ msgstr "Έ_ξοδος"
 
 msgid "Terminal REPL"
 msgstr ""
-
-msgid "Edit Text"
-msgstr "Επεξεργασία κειμένου"
 
 msgid "Choose Slot"
 msgstr ""
@@ -2124,6 +2153,9 @@ msgstr "Ε_πικόλληση"
 
 msgid "Sidebar"
 msgstr ""
+
+msgid "Status"
+msgstr "Κατάσταση"
 
 #, fuzzy
 msgid "Find Text State"
@@ -2190,20 +2222,12 @@ msgid "Print Page"
 msgstr "_Προηγούμενο"
 
 #, fuzzy
-msgid "Add Component"
-msgstr "/Προσθήκη στοιχείου..."
-
-#, fuzzy
 msgid "Add Net"
 msgstr "/Προσθήκη δικτύου"
 
 #, fuzzy
 msgid "Add Bus"
 msgstr "/Προσθήκη διαύλου"
-
-#, fuzzy
-msgid "Add Text"
-msgstr "/Προσθήκη κειμένου"
 
 #, fuzzy
 msgid "Add Line"
@@ -2227,10 +2251,6 @@ msgstr "Προσθήκη γνωρίσματος"
 
 msgid "Add Pin"
 msgstr ""
-
-#, fuzzy
-msgid "Add Picture"
-msgstr "Εικόνα"
 
 #, fuzzy
 msgid "Down Schematic"
@@ -2386,6 +2406,30 @@ msgstr ""
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Μη έγκυρη στοίχιση κειμένου ~A."
+
+#~ msgid "Single Attribute Editor"
+#~ msgstr "Επεξεργαστής ενός γνωρίσματος"
+
+#~ msgid "<b>Edit Attribute</b>"
+#~ msgstr "<b>Επεξεργασία γνωρίσματος</b>"
+
+#~ msgid "<b>Add Attribute</b>"
+#~ msgstr "<b>Προσθήκη γνωρίσματος</b>"
+
+#~ msgid "Select Component..."
+#~ msgstr "Επιλογή στοιχείου..."
+
+#~ msgid "Open..."
+#~ msgstr "Άνοιγμα..."
+
+#~ msgid "Save as..."
+#~ msgstr "Αποθήκευση ως..."
+
+#~ msgid "Write image..."
+#~ msgstr "Εγγραφή εικόνας..."
+
+#~ msgid "Text Entry..."
+#~ msgstr "Εισαγωγή κειμένου..."
 
 #, fuzzy
 #~ msgid "Save settings to:"

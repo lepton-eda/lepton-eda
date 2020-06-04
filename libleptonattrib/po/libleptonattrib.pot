@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.10\n"
+"Project-Id-Version: lepton-eda 1.9.11\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-05-29 16:42+0300\n"
+"POT-Creation-Date: 2020-06-04 03:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,14 +94,14 @@ msgstr ""
 msgid "Found uref=%1$s, uref= is deprecated, please use refdes=\n"
 msgstr ""
 
-#: libleptonattrib/src/s_misc.c:86
+#: libleptonattrib/src/s_misc.c:87
 #, c-format
 msgid ""
 "\n"
 "DONE\n"
 msgstr ""
 
-#: libleptonattrib/src/s_misc.c:88
+#: libleptonattrib/src/s_misc.c:89
 #, c-format
 msgid " DONE\n"
 msgstr ""
@@ -303,23 +303,23 @@ msgstr ""
 msgid "Export CSV"
 msgstr ""
 
-#: libleptonattrib/src/x_fileselect.c:88
+#: libleptonattrib/src/x_fileselect.c:89
 msgid "Schematics"
 msgstr ""
 
-#: libleptonattrib/src/x_fileselect.c:93
+#: libleptonattrib/src/x_fileselect.c:94
 msgid "Symbols"
 msgstr ""
 
-#: libleptonattrib/src/x_fileselect.c:98
+#: libleptonattrib/src/x_fileselect.c:99
 msgid "Schematics and symbols"
 msgstr ""
 
-#: libleptonattrib/src/x_fileselect.c:104
+#: libleptonattrib/src/x_fileselect.c:105
 msgid "All files"
 msgstr ""
 
-#: libleptonattrib/src/x_fileselect.c:125
+#: libleptonattrib/src/x_fileselect.c:126
 msgid "Open..."
 msgstr ""
 

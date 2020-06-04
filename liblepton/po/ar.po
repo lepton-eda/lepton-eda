@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-04-02 19:27+0300\n"
+"POT-Creation-Date: 2020-06-04 03:05+0300\n"
 "PO-Revision-Date: 2012-01-31 12:11+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -104,10 +104,6 @@ msgid "Failed to stat [%1$s]: %2$s"
 msgstr "فشل إلى الحالة  [%s]: %s"
 
 #, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "يتعذّر العثور على الملف ‪%s‬: %s"
-
-#, fuzzy, c-format
 msgid ""
 "\n"
 "WARNING: Found an autosave backup file:\n"
@@ -137,6 +133,10 @@ msgid ""
 msgstr ""
 "عادة ما يعمل gschem نسخا احتياطية تلقائيا، وهذا الوضع يحدث عندما يتحطم أو "
 "يجبر على الخروج بشكل مفاجئ.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "يتعذّر العثور على الملف ‪%s‬: %s"
 
 #, fuzzy
 msgid ""
@@ -222,14 +222,6 @@ msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقي�
 #, fuzzy, c-format
 msgid "Unable to delete backup file %1$s."
 msgstr "‏s_page_delete: غير قادرة على حذف الملف الاحتياطي %s."
-
-#, fuzzy, c-format
-msgid "Saved [%1$s]"
-msgstr "‏حفظ [%s]\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save [%1$s]"
-msgstr "تعذّر حفظ [‎%s‬]\n"
 
 msgid "Failed to parse arc object"
 msgstr ""
@@ -336,59 +328,38 @@ msgstr "عثر على مكون بعلامة مرآة غير صالحة [ %c %d %
 msgid "Setting mirror to 0."
 msgstr "تعيين 'معكوس' إلى 0\n"
 
-#, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion=%2$s"
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
 msgstr ""
-"تحذير: خطأ عند تحليل(إعراب) إصدار الرمز في refdes %s:\n"
-"‏\tتعذر تحليل ملف الرمز symversion=%s\n"
+
+#, c-format
+msgid "WARNING: %s (%s): could not parse symversion in symbol file"
+msgstr ""
 
 #, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse symbol file symversion="
-msgstr ""
-"تحذير: خطأ عند تحليل(إعراب) إصدار الرمز في refdes %s:\n"
-"‏\tتعذر تحليل ملف الرمز symversion=\n"
-
-#, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version parse error on refdes %1$s:\n"
-"\tCould not parse attached symversion=%2$s"
+msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
 msgstr ""
 "تحذير: خطأ عند تحليل(إعراب) إصدار الرمز في refdes %s:\n"
 "‏\tتعذر تحليل المرفق symversion=%s\n"
 
 #, fuzzy, c-format
-msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tsymversion=%2$s attached to instantiated symbol, but no symversion= inside "
-"symbol file."
+msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
 msgstr ""
 "‏تحذير:  غرابة إصدار الرمز في refdes %s:\n"
 "‏\t‏symversion=%s مرفق إلى رمز مماثل، و لكن لا symversion= ضمن ملف الرمز\n"
 
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
-"\tSymbol in library is newer than instantiated symbol."
+"WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
 msgstr ""
-"تحذير: عدم تطابق رمز الإصدار في refdes %s (%s):\n"
-"‏\tالرمز في المكتبة أحدث من مثيله\n"
 
-#, fuzzy, c-format
-msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
-msgstr "\t‏\tتغيير أساسي في الإصدار (الملف %.3f، المثيل %.3f، %s)!\n"
-
-#, fuzzy, c-format
-msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
-msgstr "\t‏\tتغيير ثانوي في الإصدار (الملف %.3f، المثيل %.3f)\n"
-
-#, fuzzy, c-format
+#, c-format
 msgid ""
-"WARNING: Symbol version oddity on refdes %1$s:\n"
-"\tInstantiated symbol is newer than symbol in library."
+"WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
 msgstr ""
 "تحذير:  غرابة إصدار الرمز في refdes %s:\n"
 "‏\tالمثيل أحدث من الرمز في المكتبة\n"
@@ -626,20 +597,6 @@ msgstr "لم يعثر على المكون [%s] في المكتبة المكون�
 #, fuzzy, c-format
 msgid "More than one component found with name [%1$s]."
 msgstr "أكثر من مكون واحد عثر عليه باسم [%s]\n"
-
-msgid "Schematic not found in source library."
-msgstr ""
-
-msgid "Hierarchy contains a circular dependency."
-msgstr ""
-
-#, fuzzy
-msgid "There are no schematics above the current one!"
-msgstr "لا توجد مخططات فوق المخطط الحالي!\n"
-
-#, fuzzy, c-format
-msgid "Failed to descend hierarchy into '%1$s': %2$s"
-msgstr "فشل في فتح الدليل [%s]: %s\n"
 
 msgid "Did not find slotdef=#:#,#,#... attribute."
 msgstr ""
@@ -1272,6 +1229,54 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Saved [%1$s]"
+#~ msgstr "‏حفظ [%s]\n"
+
+#, fuzzy
+#~ msgid "Could NOT save [%1$s]"
+#~ msgstr "تعذّر حفظ [‎%s‬]\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion=%2$s"
+#~ msgstr ""
+#~ "تحذير: خطأ عند تحليل(إعراب) إصدار الرمز في refdes %s:\n"
+#~ "‏\tتعذر تحليل ملف الرمز symversion=%s\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version parse error on refdes %1$s:\n"
+#~ "\tCould not parse symbol file symversion="
+#~ msgstr ""
+#~ "تحذير: خطأ عند تحليل(إعراب) إصدار الرمز في refdes %s:\n"
+#~ "‏\tتعذر تحليل ملف الرمز symversion=\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "WARNING: Symbol version mismatch on refdes %1$s (%2$s):\n"
+#~ "\tSymbol in library is newer than instantiated symbol."
+#~ msgstr ""
+#~ "تحذير: عدم تطابق رمز الإصدار في refdes %s (%s):\n"
+#~ "‏\tالرمز في المكتبة أحدث من مثيله\n"
+
+#, fuzzy
+#~ msgid "\tMAJOR VERSION CHANGE (file %1$.3f, instantiated %2$.3f, %3$s)!"
+#~ msgstr "\t‏\tتغيير أساسي في الإصدار (الملف %.3f، المثيل %.3f، %s)!\n"
+
+#, fuzzy
+#~ msgid "\tMinor version change (file %1$.3f, instantiated %2$.3f)"
+#~ msgstr "\t‏\tتغيير ثانوي في الإصدار (الملف %.3f، المثيل %.3f)\n"
+
+#, fuzzy
+#~ msgid "There are no schematics above the current one!"
+#~ msgstr "لا توجد مخططات فوق المخطط الحالي!\n"
+
+#, fuzzy
+#~ msgid "Failed to descend hierarchy into '%1$s': %2$s"
+#~ msgstr "فشل في فتح الدليل [%s]: %s\n"
 
 #~ msgid "%s: %s"
 #~ msgstr "%s: %s"

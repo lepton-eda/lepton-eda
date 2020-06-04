@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-20 15:15+0300\n"
+"POT-Creation-Date: 2020-06-04 03:03+0300\n"
 "PO-Revision-Date: 2012-01-31 12:14+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -592,6 +592,21 @@ msgstr "New page created [%s]\n"
 msgid "New Window created [%1$s]"
 msgstr "New Window created [%s]\n"
 
+#, fuzzy
+msgid "Execute Script"
+msgstr "Execute Script..."
+
+#, fuzzy
+msgid "Scheme files (*.scm)"
+msgstr "Schematics"
+
+msgid "All files"
+msgstr "All files"
+
+#, fuzzy, c-format
+msgid "Executing Guile script [%s]"
+msgstr "Executing guile script [%s]\n"
+
 msgid "Saved All"
 msgstr "Saved All"
 
@@ -795,13 +810,20 @@ msgstr "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgid "Bus ripper symbol [%1$s] was not found in any component library"
 msgstr "Bus ripper symbol [%s] was not found in any component library\n"
 
+msgid "All supported formats"
+msgstr ""
+
 #, fuzzy
-msgid "Select a picture file..."
-msgstr "Select PostScript Filename..."
+msgid "Add Picture"
+msgstr "Picture"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
 msgstr "Failed to load picture: %s"
+
+#, fuzzy
+msgid "Select Picture"
+msgstr "Select PostScript Filename..."
 
 #, c-format
 msgid "Failed to replace pictures: %s"
@@ -870,18 +892,30 @@ msgstr ""
 "Report bugs at <https://bugs.launchpad.net/geda>\n"
 "gEDA/gaf homepage: <http://www.geda-project.org/>\n"
 
+msgid "Schematic not found in source library."
+msgstr ""
+
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+#, fuzzy
+msgid "There are no schematics above the current one!"
+msgstr "Cannot find any schematics above the current one!\n"
+
+#, fuzzy, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr "Failed to replace pictures: %s"
+
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr "Got invalid show option; defaulting to show both\n"
 
-msgid "Single Attribute Editor"
-msgstr "Single Attribute Editor"
+#, fuzzy
+msgid "Edit Attribute"
+msgstr "Edit Attributes"
 
-msgid "<b>Edit Attribute</b>"
-msgstr "<b>Edit Attribute</b>"
-
-msgid "<b>Add Attribute</b>"
-msgstr "<b>Add Attribute</b>"
+msgid "Add Attribute"
+msgstr "Add Attribute"
 
 #, fuzzy
 msgid "N_ame:"
@@ -1110,8 +1144,9 @@ msgstr "Embed component in schematic"
 msgid "Include component as individual objects"
 msgstr "Include component as individual objects"
 
-msgid "Select Component..."
-msgstr "Select Component..."
+#, fuzzy
+msgid "Add Component"
+msgstr "/Add Component..."
 
 #, fuzzy
 msgid "In Us_e"
@@ -1127,13 +1162,20 @@ msgstr "Preview"
 msgid "Attributes"
 msgstr "Attributes"
 
-msgid "Major symbol changes detected."
+msgid "Symbol version changes"
 msgstr ""
 
+msgid "Major symbol version changes detected."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Schematic: %s"
+msgstr "Schematics"
+
 msgid ""
-"Changes have occurred to the symbols shown below.\n"
-"\n"
-"Be sure to verify each of these symbols."
+"Changes have occurred to the symbols shown\n"
+"below, be sure to verify each of these symbols.\n"
+"Consult lepton-schematic log for details."
 msgstr ""
 
 #, fuzzy
@@ -1171,14 +1213,12 @@ msgstr "Symbols"
 msgid "Schematics and symbols (*.sch *.sym)"
 msgstr "Schematics and symbols"
 
-msgid "All files"
-msgstr "All files"
+msgid "Open"
+msgstr "Open"
 
-msgid "Open..."
-msgstr "Open..."
-
-msgid "Save as..."
-msgstr "Save as..."
+#, fuzzy
+msgid "Save As"
+msgstr "Save All"
 
 #, fuzzy
 msgid "Save cancelled on user request"
@@ -1251,8 +1291,9 @@ msgstr "Colour"
 msgid "Grayscale"
 msgstr ""
 
-msgid "Write image..."
-msgstr "Write image..."
+#, fuzzy
+msgid "Write Image"
+msgstr "Write _image..."
 
 msgid "Butt"
 msgstr ""
@@ -1378,9 +1419,6 @@ msgstr "V"
 msgid "Sho_w inherited attributes"
 msgstr "Show inherited attributes"
 
-msgid "Add Attribute"
-msgstr "Add Attribute"
-
 #, fuzzy
 msgid "_Name:"
 msgstr "Name:"
@@ -1418,8 +1456,9 @@ msgid_plural "%1$i attributes"
 msgstr[0] "Attribute"
 msgstr[1] "Attribute"
 
-msgid "Text Entry..."
-msgstr "Text Entry..."
+#, fuzzy
+msgid "Add Text"
+msgstr "/Add Text"
 
 msgid "Refresh"
 msgstr ""
@@ -1485,13 +1524,6 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr "Cannot load gschem configuration."
 
-msgid "Execute Script..."
-msgstr "Execute Script..."
-
-#, fuzzy, c-format
-msgid "Executing guile script [%1$s]"
-msgstr "Executing guile script [%s]\n"
-
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "Hie_rarchy"
@@ -1523,9 +1555,12 @@ msgstr "_Close"
 msgid "Options"
 msgstr "_Options"
 
+msgid "Edit Text"
+msgstr "Edit Text"
+
 #, fuzzy
-msgid "Object"
-msgstr "Object colour:"
+msgid "Object Properties"
+msgstr "<b>Text Properties</b>"
 
 msgid "Log"
 msgstr ""
@@ -1582,9 +1617,6 @@ msgstr "New"
 
 msgid "New file"
 msgstr "New file"
-
-msgid "Open"
-msgstr "Open"
 
 #, fuzzy
 msgid "Open file"
@@ -1672,8 +1704,9 @@ msgstr "Pan/Cancel"
 msgid "Pick"
 msgstr "Pick"
 
-msgid "Status"
-msgstr "Status"
+#, fuzzy
+msgid "Object"
+msgstr "Object colour:"
 
 #, fuzzy, c-format
 msgid "New file [%s]"
@@ -1726,6 +1759,9 @@ msgstr "Write _image..."
 #, fuzzy
 msgid "Invoke Macro..."
 msgstr "Invoke Macro"
+
+msgid "Execute Script..."
+msgstr "Execute Script..."
 
 msgid "REPL..."
 msgstr ""
@@ -2101,10 +2137,6 @@ msgid "Open File"
 msgstr "Open file..."
 
 #, fuzzy
-msgid "Save As"
-msgstr "Save All"
-
-#, fuzzy
 msgid "Print"
 msgstr "Print..."
 
@@ -2124,9 +2156,6 @@ msgstr "_Quit"
 
 msgid "Terminal REPL"
 msgstr ""
-
-msgid "Edit Text"
-msgstr "Edit Text"
 
 msgid "Choose Slot"
 msgstr ""
@@ -2159,6 +2188,9 @@ msgstr "_Paste"
 
 msgid "Sidebar"
 msgstr ""
+
+msgid "Status"
+msgstr "Status"
 
 #, fuzzy
 msgid "Find Text State"
@@ -2231,20 +2263,12 @@ msgid "Print Page"
 msgstr "_Previous"
 
 #, fuzzy
-msgid "Add Component"
-msgstr "/Add Component..."
-
-#, fuzzy
 msgid "Add Net"
 msgstr "/Add Net"
 
 #, fuzzy
 msgid "Add Bus"
 msgstr "/Add Bus"
-
-#, fuzzy
-msgid "Add Text"
-msgstr "/Add Text"
 
 #, fuzzy
 msgid "Add Line"
@@ -2268,10 +2292,6 @@ msgstr "Add Attribute"
 
 msgid "Add Pin"
 msgstr ""
-
-#, fuzzy
-msgid "Add Picture"
-msgstr "Picture"
 
 #, fuzzy
 msgid "Down Schematic"
@@ -2431,6 +2451,30 @@ msgstr "~S is not a prefix key sequence."
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Invalid text alignment ~A."
+
+#~ msgid "Single Attribute Editor"
+#~ msgstr "Single Attribute Editor"
+
+#~ msgid "<b>Edit Attribute</b>"
+#~ msgstr "<b>Edit Attribute</b>"
+
+#~ msgid "<b>Add Attribute</b>"
+#~ msgstr "<b>Add Attribute</b>"
+
+#~ msgid "Select Component..."
+#~ msgstr "Select Component..."
+
+#~ msgid "Open..."
+#~ msgstr "Open..."
+
+#~ msgid "Save as..."
+#~ msgstr "Save as..."
+
+#~ msgid "Write image..."
+#~ msgstr "Write image..."
+
+#~ msgid "Text Entry..."
+#~ msgstr "Text Entry..."
 
 #~ msgid "Got a non line object in o_move_check_endpoint\n"
 #~ msgstr "Got a non line object in o_move_check_endpoint\n"

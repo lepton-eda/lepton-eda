@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-03-20 15:15+0300\n"
+"POT-Creation-Date: 2020-06-04 03:03+0300\n"
 "PO-Revision-Date: 2012-01-27 14:18+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: Bosnian <bs@li.org>\n"
@@ -537,6 +537,20 @@ msgstr "Nova strana kreirana [%s]\n"
 msgid "New Window created [%1$s]"
 msgstr "Novi prozor keriran [%s]\n"
 
+#, fuzzy
+msgid "Execute Script"
+msgstr "Izvrši Skriptu..."
+
+msgid "Scheme files (*.scm)"
+msgstr ""
+
+msgid "All files"
+msgstr ""
+
+#, c-format
+msgid "Executing Guile script [%s]"
+msgstr ""
+
 msgid "Saved All"
 msgstr ""
 
@@ -711,12 +725,20 @@ msgstr ""
 msgid "Bus ripper symbol [%1$s] was not found in any component library"
 msgstr ""
 
-msgid "Select a picture file..."
+msgid "All supported formats"
 msgstr ""
+
+#, fuzzy
+msgid "Add Picture"
+msgstr "Sli_ka..."
 
 #, c-format
 msgid "Failed to load picture: %1$s"
 msgstr ""
+
+#, fuzzy
+msgid "Select Picture"
+msgstr "Sli_ka..."
 
 #, c-format
 msgid "Failed to replace pictures: %s"
@@ -760,17 +782,28 @@ msgid ""
 "Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 
+msgid "Schematic not found in source library."
+msgstr ""
+
+msgid "Hierarchy contains a circular dependency."
+msgstr ""
+
+msgid "There are no schematics above the current one!"
+msgstr ""
+
+#, c-format
+msgid "Failed to descend hierarchy into '%1$s': %2$s"
+msgstr ""
+
 #, c-format
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 
-msgid "Single Attribute Editor"
-msgstr ""
+#, fuzzy
+msgid "Edit Attribute"
+msgstr "Atribut"
 
-msgid "<b>Edit Attribute</b>"
-msgstr ""
-
-msgid "<b>Add Attribute</b>"
+msgid "Add Attribute"
 msgstr ""
 
 msgid "N_ame:"
@@ -989,8 +1022,9 @@ msgstr ""
 msgid "Include component as individual objects"
 msgstr ""
 
-msgid "Select Component..."
-msgstr ""
+#, fuzzy
+msgid "Add Component"
+msgstr "Komponenta"
 
 msgid "In Us_e"
 msgstr ""
@@ -1004,13 +1038,20 @@ msgstr ""
 msgid "Attributes"
 msgstr ""
 
-msgid "Major symbol changes detected."
+msgid "Symbol version changes"
 msgstr ""
 
+msgid "Major symbol version changes detected."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Schematic: %s"
+msgstr "_Dolje Shemu"
+
 msgid ""
-"Changes have occurred to the symbols shown below.\n"
-"\n"
-"Be sure to verify each of these symbols."
+"Changes have occurred to the symbols shown\n"
+"below, be sure to verify each of these symbols.\n"
+"Consult lepton-schematic log for details."
 msgstr ""
 
 #, fuzzy
@@ -1039,14 +1080,12 @@ msgstr ""
 msgid "Schematics and symbols (*.sch *.sym)"
 msgstr ""
 
-msgid "All files"
+msgid "Open"
 msgstr ""
 
-msgid "Open..."
-msgstr ""
-
-msgid "Save as..."
-msgstr ""
+#, fuzzy
+msgid "Save As"
+msgstr "Snimi sve"
 
 msgid "Save cancelled on user request"
 msgstr ""
@@ -1113,8 +1152,9 @@ msgstr "Boja"
 msgid "Grayscale"
 msgstr ""
 
-msgid "Write image..."
-msgstr ""
+#, fuzzy
+msgid "Write Image"
+msgstr "Piši sl_iku..."
 
 msgid "Butt"
 msgstr ""
@@ -1238,9 +1278,6 @@ msgstr ""
 msgid "Sho_w inherited attributes"
 msgstr "Atribut"
 
-msgid "Add Attribute"
-msgstr ""
-
 msgid "_Name:"
 msgstr ""
 
@@ -1278,8 +1315,8 @@ msgstr[0] "Atribut"
 msgstr[1] "Atribut"
 
 #, fuzzy
-msgid "Text Entry..."
-msgstr "_Tekst..."
+msgid "Add Text"
+msgstr "Izmijeni tekst"
 
 msgid "Refresh"
 msgstr ""
@@ -1336,13 +1373,6 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
-msgid "Execute Script..."
-msgstr "Izvrši Skriptu..."
-
-#, c-format
-msgid "Executing guile script [%1$s]"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "Hije_rarhija"
@@ -1373,7 +1403,10 @@ msgstr "_Zatvori"
 msgid "Options"
 msgstr "_Opcije"
 
-msgid "Object"
+msgid "Edit Text"
+msgstr "Izmijeni tekst"
+
+msgid "Object Properties"
 msgstr ""
 
 msgid "Log"
@@ -1429,9 +1462,6 @@ msgid "New"
 msgstr ""
 
 msgid "New file"
-msgstr ""
-
-msgid "Open"
 msgstr ""
 
 msgid "Open file"
@@ -1509,7 +1539,7 @@ msgstr ""
 msgid "Pick"
 msgstr ""
 
-msgid "Status"
+msgid "Object"
 msgstr ""
 
 #, fuzzy, c-format
@@ -1557,6 +1587,9 @@ msgstr "Piši sl_iku..."
 
 msgid "Invoke Macro..."
 msgstr ""
+
+msgid "Execute Script..."
+msgstr "Izvrši Skriptu..."
 
 msgid "REPL..."
 msgstr ""
@@ -1918,10 +1951,6 @@ msgid "Open File"
 msgstr ""
 
 #, fuzzy
-msgid "Save As"
-msgstr "Snimi sve"
-
-#, fuzzy
 msgid "Print"
 msgstr "_Štampaj..."
 
@@ -1941,9 +1970,6 @@ msgstr "_Izlaz"
 
 msgid "Terminal REPL"
 msgstr ""
-
-msgid "Edit Text"
-msgstr "Izmijeni tekst"
 
 msgid "Choose Slot"
 msgstr ""
@@ -1973,6 +1999,9 @@ msgid "Paste"
 msgstr "_Umetni"
 
 msgid "Sidebar"
+msgstr ""
+
+msgid "Status"
 msgstr ""
 
 #, fuzzy
@@ -2037,19 +2066,11 @@ msgstr ""
 msgid "Print Page"
 msgstr "_Prethodna"
 
-#, fuzzy
-msgid "Add Component"
-msgstr "Komponenta"
-
 msgid "Add Net"
 msgstr ""
 
 msgid "Add Bus"
 msgstr ""
-
-#, fuzzy
-msgid "Add Text"
-msgstr "Izmijeni tekst"
 
 #, fuzzy
 msgid "Add Line"
@@ -2070,10 +2091,6 @@ msgstr ""
 
 msgid "Add Pin"
 msgstr ""
-
-#, fuzzy
-msgid "Add Picture"
-msgstr "Sli_ka..."
 
 #, fuzzy
 msgid "Down Schematic"
@@ -2216,6 +2233,10 @@ msgstr ""
 msgid "Invalid text alignment ~A."
 msgstr ""
 
+#, fuzzy
+#~ msgid "Text Entry..."
+#~ msgstr "_Tekst..."
+
 #~ msgid "Move"
 #~ msgstr "Premjesti"
 
@@ -2302,10 +2323,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Edit Pin Type"
 #~ msgstr "Izmijeni tekst"
-
-#, fuzzy
-#~ msgid "Edit Attributes - %s"
-#~ msgstr "Atribut"
 
 #~ msgid "Ne_w"
 #~ msgstr "No_va"
