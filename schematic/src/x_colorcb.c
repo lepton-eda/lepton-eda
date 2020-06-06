@@ -55,7 +55,6 @@ static GtkListStore* color_list_store = NULL;
 
 
 static GtkListStore* create_color_list_store();
-static const char* get_color_name(int index);
 
 
 
@@ -75,7 +74,7 @@ create_color_list_store ()
       gtk_list_store_append (store, &iter);
 
       gtk_list_store_set (store, &iter,
-          COLUMN_NAME,  get_color_name (color_index),
+          COLUMN_NAME,  color_get_strname (color_index),
           COLUMN_INDEX, color_index,
           COLUMN_COLOR, x_get_color (color_index),
           -1
@@ -134,43 +133,6 @@ x_colorcb_set_color (GtkTreeIter* iter, GdkColor* color)
   gtk_list_store_set (color_list_store, iter, COLUMN_COLOR, color, -1);
 }
 
-
-
-/*! \brief Given the color index, obtain a human readable name
- */
-static const char*
-get_color_name (int index)
-{
-  switch(index) {
-    case BACKGROUND_COLOR:         return _("Background");
-    case PIN_COLOR:                return _("Pin");
-    case NET_ENDPOINT_COLOR:       return _("Net endpoint");
-    case GRAPHIC_COLOR:            return _("Graphic");
-    case NET_COLOR:                return _("Net");
-    case ATTRIBUTE_COLOR:          return _("Attribute");
-    case LOGIC_BUBBLE_COLOR:       return _("Logic bubble");
-    case DOTS_GRID_COLOR:          return _("Grid point");
-    case DETACHED_ATTRIBUTE_COLOR: return _("Detached attribute");
-    case TEXT_COLOR:               return _("Text");
-    case BUS_COLOR:                return _("Bus");
-    case SELECT_COLOR:             return _("Selection");
-    case BOUNDINGBOX_COLOR:        return _("Bounding box");
-    case ZOOM_BOX_COLOR:           return _("Zoom box");
-    case STROKE_COLOR:             return _("Stroke");
-    case LOCK_COLOR:               return _("Lock");
-    case OUTPUT_BACKGROUND_COLOR:  return _("Output background");
-    case FREESTYLE1_COLOR:         return _("Freestyle 1");
-    case FREESTYLE2_COLOR:         return _("Freestyle 2");
-    case FREESTYLE3_COLOR:         return _("Freestyle 3");
-    case FREESTYLE4_COLOR:         return _("Freestyle 4");
-    case JUNCTION_COLOR:           return _("Net junction");
-    case MESH_GRID_MAJOR_COLOR:    return _("Mesh grid major");
-    case MESH_GRID_MINOR_COLOR:    return _("Mesh grid minor");
-    default:
-      break;
-  }
-  return _("Unknown");
-}
 
 
 /*! \brief Create a ComboBox with the gschem colors.

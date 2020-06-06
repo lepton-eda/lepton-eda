@@ -183,50 +183,6 @@ x_color_display_enabled (int index)
 
 
 
-/*! \brief: For a given \a color_index, get Scheme symbol as a string
- *
- *  \param color_index  One of color index constants defined in geda_color_map.h
- *  \return             Scheme symbol as a string
- */
-static const gchar*
-x_color_lookup_scm_str (int color_index)
-{
-  switch (color_index)
-  {
-    case BACKGROUND_COLOR:         return "background";
-    case PIN_COLOR:                return "pin";
-    case NET_ENDPOINT_COLOR:       return "net-endpoint";
-    case GRAPHIC_COLOR:            return "graphic";
-    case NET_COLOR:                return "net";
-    case ATTRIBUTE_COLOR:          return "attribute";
-    case LOGIC_BUBBLE_COLOR:       return "logic-bubble";
-    case DOTS_GRID_COLOR:          return "dots-grid";
-    case DETACHED_ATTRIBUTE_COLOR: return "detached-attribute";
-    case TEXT_COLOR:               return "text";
-    case BUS_COLOR:                return "bus";
-    case SELECT_COLOR:             return "select";
-    case BOUNDINGBOX_COLOR:        return "bounding-box";
-    case ZOOM_BOX_COLOR:           return "zoom-box";
-    case STROKE_COLOR:             return "stroke";
-    case LOCK_COLOR:               return "lock";
-    case OUTPUT_BACKGROUND_COLOR:  return "output-background";
-    case FREESTYLE1_COLOR:         return "freestyle1";
-    case FREESTYLE2_COLOR:         return "freestyle2";
-    case FREESTYLE3_COLOR:         return "freestyle3";
-    case FREESTYLE4_COLOR:         return "freestyle4";
-    case JUNCTION_COLOR:           return "junction";
-    case MESH_GRID_MAJOR_COLOR:    return "mesh-grid-major";
-    case MESH_GRID_MINOR_COLOR:    return "mesh-grid-minor";
-    default:
-      break;
-  }
-
-  return "";
-
-} /* x_color_lookup_scm_str() */
-
-
-
 /*! \brief: Change a color in color map
  *
  *  \param colors_gdk   An array of GdkColor structures (gdk_colors or gdk_outline_colors)
@@ -306,7 +262,7 @@ x_color_map2str (GedaColorMap cmap)
   {
     GedaColor color = cmap[ color_index ];
 
-    const gchar* scm_str = x_color_lookup_scm_str (color_index);
+    const gchar* scm_str = color_get_name (color_index);
 
     if (color.enabled)
     {
