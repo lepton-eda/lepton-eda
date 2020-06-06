@@ -369,3 +369,84 @@ s_color_init()
 {
   geda_color_map_init (print_colors);
 }
+
+
+
+/*! \brief: For a given \a color_index, get Scheme symbol name
+ */
+const gchar*
+color_get_name (int color_index)
+{
+  switch (color_index)
+  {
+    case BACKGROUND_COLOR:         return "background";
+    case PIN_COLOR:                return "pin";
+    case NET_ENDPOINT_COLOR:       return "net-endpoint";
+    case GRAPHIC_COLOR:            return "graphic";
+    case NET_COLOR:                return "net";
+    case ATTRIBUTE_COLOR:          return "attribute";
+    case LOGIC_BUBBLE_COLOR:       return "logic-bubble";
+    case DOTS_GRID_COLOR:          return "dots-grid";
+    case DETACHED_ATTRIBUTE_COLOR: return "detached-attribute";
+    case TEXT_COLOR:               return "text";
+    case BUS_COLOR:                return "bus";
+    case SELECT_COLOR:             return "select";
+    case BOUNDINGBOX_COLOR:        return "bounding-box";
+    case ZOOM_BOX_COLOR:           return "zoom-box";
+    case STROKE_COLOR:             return "stroke";
+    case LOCK_COLOR:               return "lock";
+    case OUTPUT_BACKGROUND_COLOR:  return "output-background";
+    case FREESTYLE1_COLOR:         return "freestyle1";
+    case FREESTYLE2_COLOR:         return "freestyle2";
+    case FREESTYLE3_COLOR:         return "freestyle3";
+    case FREESTYLE4_COLOR:         return "freestyle4";
+    case JUNCTION_COLOR:           return "junction";
+    case MESH_GRID_MAJOR_COLOR:    return "mesh-grid-major";
+    case MESH_GRID_MINOR_COLOR:    return "mesh-grid-minor";
+    default:
+      break;
+  }
+
+  return "";
+
+} /* color_get_name() */
+
+
+
+/*! \brief: For a given \a color_index, get (localized) human readable name
+ */
+const char*
+color_get_strname (int color_index)
+{
+  switch(color_index)
+  {
+    case BACKGROUND_COLOR:         return _("Background");
+    case PIN_COLOR:                return _("Pin");
+    case NET_ENDPOINT_COLOR:       return _("Net endpoint");
+    case GRAPHIC_COLOR:            return _("Graphic");
+    case NET_COLOR:                return _("Net");
+    case ATTRIBUTE_COLOR:          return _("Attribute");
+    case LOGIC_BUBBLE_COLOR:       return _("Logic bubble");
+    case DOTS_GRID_COLOR:          return _("Grid point");
+    case DETACHED_ATTRIBUTE_COLOR: return _("Detached attribute");
+    case TEXT_COLOR:               return _("Text");
+    case BUS_COLOR:                return _("Bus");
+    case SELECT_COLOR:             return _("Selection");
+    case BOUNDINGBOX_COLOR:        return _("Bounding box");
+    case ZOOM_BOX_COLOR:           return _("Zoom box");
+    case STROKE_COLOR:             return _("Stroke");
+    case LOCK_COLOR:               return _("Lock");
+    case OUTPUT_BACKGROUND_COLOR:  return _("Output background");
+    case FREESTYLE1_COLOR:         return _("Freestyle 1");
+    case FREESTYLE2_COLOR:         return _("Freestyle 2");
+    case FREESTYLE3_COLOR:         return _("Freestyle 3");
+    case FREESTYLE4_COLOR:         return _("Freestyle 4");
+    case JUNCTION_COLOR:           return _("Net junction");
+    case MESH_GRID_MAJOR_COLOR:    return _("Mesh grid major");
+    case MESH_GRID_MINOR_COLOR:    return _("Mesh grid minor");
+    default:
+      break;
+  }
+  return _("Unknown");
+
+} /* color_get_strname() */
