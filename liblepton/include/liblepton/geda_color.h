@@ -103,6 +103,13 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name);
 SCM
 s_color_map_to_scm (const GedaColor *map);
 
+
+const gchar*
+color_get_name (int color_index);
+
+const char*
+color_get_strname (int color_index);
+
 G_END_DECLS
 
 
