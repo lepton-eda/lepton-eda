@@ -51,7 +51,6 @@ liblepton_la_SOURCES = \
 	geda_box_object.c \
 	geda_bus_object.c \
 	geda_color.c \
-	geda_color_map.c \
 	geda_circle.c \
 	geda_circle_object.c \
 	geda_component_object.c \

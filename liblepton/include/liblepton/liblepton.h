@@ -32,7 +32,6 @@ G_BEGIN_DECLS
 #include <liblepton/defines.h>
 
 #include <liblepton/geda_color.h>
-#include <liblepton/geda_color_map.h>
 #include <liblepton/geda_fill_type.h>
 #include <liblepton/geda_line_type.h>
 #include <liblepton/geda_line_cap_type.h>

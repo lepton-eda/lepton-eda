@@ -18,7 +18,6 @@ libleptoninclude_HEADERS = \
 	liblepton/geda_circle.h \
 	liblepton/geda_circle_object.h \
 	liblepton/geda_color.h \
-	liblepton/geda_color_map.h \
 	liblepton/geda_component.h \
 	liblepton/geda_component_object.h \
 	liblepton/geda_coord.h \

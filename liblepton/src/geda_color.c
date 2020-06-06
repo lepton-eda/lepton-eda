@@ -17,16 +17,52 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+
+/*!
+ * \file  geda_color.c
+ * \brief Colors and color maps
+ */
+
 #include <config.h>
-
-#include <stdio.h>
-#include <math.h>
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
 #include "libgeda_priv.h"
 
+
+GedaColorMap print_colors;
+
+#define NOCOLOR {0xff, 0xff, 0xff, 0xff, FALSE}
+#define WHITE   {0xff, 0xff, 0xff, 0xff, TRUE}
+#define GRAY    {0x88, 0x88, 0x88, 0xff, TRUE}
+#define BLACK   {0x00, 0x00, 0x00, 0xff, TRUE}
+#define ENDMAP  {0x00, 0x00, 0x00, 0x00, FALSE}
+
+static GedaColor default_colors[] =
+{
+  WHITE,           /*  0: background         */
+  BLACK,           /*  1: pin                */
+  BLACK,           /*  2: net-endpoint       */
+  BLACK,           /*  3: graphic            */
+  BLACK,           /*  4: net                */
+  BLACK,           /*  5: attribute          */
+  BLACK,           /*  6: logic-bubble       */
+  BLACK,           /*  7: dots-grid          */
+  BLACK,           /*  8: detached-attribute */
+  BLACK,           /*  9: text               */
+  BLACK,           /* 10: bus                */
+  GRAY,            /* 11: select             */
+  GRAY,            /* 12: bounding-box       */
+  GRAY,            /* 13: zoom-box           */
+  GRAY,            /* 14: stroke             */
+  BLACK,           /* 15: lock               */
+  NOCOLOR,         /* 16: output-background  */
+  NOCOLOR,         /* 17: freestyle1         */
+  NOCOLOR,         /* 18: freestyle2         */
+  NOCOLOR,         /* 19: freestyle3         */
+  NOCOLOR,         /* 20: freestyle4         */
+  BLACK,           /* 21: junction           */
+  GRAY,            /* 22: mesh-grid-major    */
+  NOCOLOR,         /* 23: mesh-grid-minor    */
+  ENDMAP
+};
 
 
 /*! \brief Get the color blue value as a double
@@ -270,4 +306,66 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
     curr = scm_cdr (curr);
   }
   scm_remember_upto_here_2 (wrong_type_arg_sym, proc_name);
+}
+
+
+
+/*! \brief Initialise a color map to B&W
+ *  \par Function Description
+ *  Initialises a color map to a simple default: black features on a
+ *  white background, with "special" colors as gray.
+ *
+ *  \warning \a map must be have length of at least #MAX_COLORS.
+ *
+ *  \param map Color map to initialise.
+ */
+void
+geda_color_map_init (GedaColorMap map)
+{
+  int i;
+  gboolean reached_end = FALSE;
+  GedaColor c;
+  for (i = 0; i < MAX_COLORS; i++) {
+    if (reached_end) {
+      map[i].enabled = FALSE;
+      continue;
+    }
+    c = default_colors[i];
+    if (c.a == 0) { /* Check for end of default map */
+      reached_end = TRUE;
+      i--;
+      continue;
+    }
+    map[i] = c;
+  }
+}
+
+
+
+/*! \brief Get a color from the color map
+ *
+ *  \param [in] map The color map
+ *  \param [in] index The index of the color
+ *  \returns The color
+ */
+GedaColor*
+geda_color_map_get_color (GedaColorMap map, int index)
+{
+  g_return_val_if_fail (index >= 0, &map[DEFAULT_COLOR]);
+  g_return_val_if_fail (index < MAX_COLORS, &map[DEFAULT_COLOR]);
+  g_return_val_if_fail (map[index].enabled, &map[DEFAULT_COLOR]);
+
+  return &map[index];
+}
+
+
+
+/*! \brief Initialises the color subsystem
+ *  \par Function Description
+ *  At the moment, just initialises the print color map.
+ */
+void
+s_color_init()
+{
+  geda_color_map_init (print_colors);
 }
