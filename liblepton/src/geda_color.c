@@ -29,7 +29,6 @@
 
 GedaColorMap print_colors;
 
-#define NOCOLOR {0xff, 0xff, 0xff, 0xff, FALSE}
 #define WHITE   {0xff, 0xff, 0xff, 0xff, TRUE}
 #define GRAY    {0x88, 0x88, 0x88, 0xff, TRUE}
 #define BLACK   {0x00, 0x00, 0x00, 0xff, TRUE}
@@ -53,14 +52,14 @@ static GedaColor default_colors[] =
   GRAY,            /* 13: zoom-box           */
   GRAY,            /* 14: stroke             */
   BLACK,           /* 15: lock               */
-  NOCOLOR,         /* 16: output-background  */
-  NOCOLOR,         /* 17: freestyle1         */
-  NOCOLOR,         /* 18: freestyle2         */
-  NOCOLOR,         /* 19: freestyle3         */
-  NOCOLOR,         /* 20: freestyle4         */
+  GRAY,            /* 16: output-background  */
+  GRAY,            /* 17: freestyle1         */
+  GRAY,            /* 18: freestyle2         */
+  GRAY,            /* 19: freestyle3         */
+  GRAY,            /* 20: freestyle4         */
   BLACK,           /* 21: junction           */
   GRAY,            /* 22: mesh-grid-major    */
-  NOCOLOR,         /* 23: mesh-grid-minor    */
+  GRAY,            /* 23: mesh-grid-minor    */
   ENDMAP
 };
 
