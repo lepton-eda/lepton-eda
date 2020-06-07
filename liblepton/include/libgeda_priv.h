@@ -1,11 +1,14 @@
-/* System headers which libgeda headers rely on */
+#ifndef LIBLEPTON_PRIV_H_
+#define LIBLEPTON_PRIV_H_
+
+/* System headers */
 #include <glib.h>
 #include <glib-object.h>
 #include <libguile.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 #include <glib/gstdio.h>
 
-/* Public libgeda headers */
+/* Public headers */
 #define __LIBLEPTON_INTERNAL_API__ 1
 
 #include "defines.h"
@@ -62,10 +65,12 @@
 
 #include "geda_list.h"
 
-/* Private libgeda headers */
+/* Private headers */
 #include "defines_priv.h"
 #include "prototype_priv.h"
 #include "i_vars_priv.h"
 
 /* Gettext translation */
 #include "gettext_priv.h"
+
+#endif /* LIBLEPTON_PRIV_H_ */
