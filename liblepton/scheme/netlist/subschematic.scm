@@ -187,7 +187,7 @@
    component
    (make-schematic-component-refdes*
     component
-    (gnetlist-config-ref 'mangle-refdes))))
+    (netlist-config-ref 'mangle-refdes))))
 
 
 (define* (page-list->subschematic pages #:optional name)
@@ -422,7 +422,7 @@ NAME is used as its hierarchical name."
   (let* ((id #f)
          (page #f)
          (netnames (group-hierarchical-name group
-                                            (gnetlist-config-ref
+                                            (netlist-config-ref
                                              'netname-attribute-priority)))
          (objects (merge-objects group))
          (pins (merge-pins group))

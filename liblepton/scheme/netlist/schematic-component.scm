@@ -181,7 +181,7 @@ sets the component to be its parent component."
     (append-map (lambda (s) (string-split s #\,)) ls))
 
   (and (not graphical?)
-       (gnetlist-config-ref 'traverse-hierarchy)
+       (netlist-config-ref 'traverse-hierarchy)
        (let ((sources
               (or (non-null* (assq-ref attached-attribs 'source))
                   (non-null* (assq-ref inherited-attribs 'source)))))

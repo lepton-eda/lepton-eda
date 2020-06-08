@@ -22,7 +22,7 @@
   #:use-module (lepton config)
   #:use-module (lepton log)
   #:use-module (netlist option)
-  #:export (gnetlist-config-ref
+  #:export (netlist-config-ref
             print-gnetlist-config))
 
 (define %gnetlist-config #f)
@@ -118,7 +118,7 @@
 
   (set! %gnetlist-config (map process %gnetlist-config-table)))
 
-(define (gnetlist-config-ref key)
+(define (netlist-config-ref key)
   "Returns value of lepton-netlist configuration KEY."
   (car (assq-ref %gnetlist-config key)))
 

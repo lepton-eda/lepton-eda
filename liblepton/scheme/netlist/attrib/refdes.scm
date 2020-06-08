@@ -92,10 +92,10 @@ of a list."
   "Transforms hierarchical REFDES, being a list, into string form
 accounting for netlister settings."
   (define reverse-refdes-order?
-    (gnetlist-config-ref 'reverse-refdes-order))
+    (netlist-config-ref 'reverse-refdes-order))
 
   (define refdes-separator
-    (gnetlist-config-ref 'refdes-separator))
+    (netlist-config-ref 'refdes-separator))
 
   (match refdes
     ;; Return #f for graphical, hierarchical, etc. symbols.
