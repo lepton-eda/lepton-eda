@@ -29,10 +29,10 @@
 
 GedaColorMap print_colors;
 
+
 #define WHITE   {0xff, 0xff, 0xff, 0xff, TRUE}
 #define GRAY    {0x88, 0x88, 0x88, 0xff, TRUE}
 #define BLACK   {0x00, 0x00, 0x00, 0xff, TRUE}
-#define ENDMAP  {0x00, 0x00, 0x00, 0x00, FALSE}
 
 static GedaColor default_colors[] =
 {
@@ -59,8 +59,7 @@ static GedaColor default_colors[] =
   GRAY,            /* 20: freestyle4         */
   BLACK,           /* 21: junction           */
   GRAY,            /* 22: mesh-grid-major    */
-  GRAY,            /* 23: mesh-grid-minor    */
-  ENDMAP
+  GRAY             /* 23: mesh-grid-minor    */
 };
 
 
@@ -321,21 +320,9 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
 void
 geda_color_map_init (GedaColorMap map)
 {
-  int i;
-  gboolean reached_end = FALSE;
-  GedaColor c;
-  for (i = 0; i < MAX_COLORS; i++) {
-    if (reached_end) {
-      map[i].enabled = FALSE;
-      continue;
-    }
-    c = default_colors[i];
-    if (c.a == 0) { /* Check for end of default map */
-      reached_end = TRUE;
-      i--;
-      continue;
-    }
-    map[i] = c;
+  for (size_t i = 0; i < MAX_COLORS - 1; ++i)
+  {
+    map[ i ] = default_colors[ i ];
   }
 }
 
