@@ -76,12 +76,16 @@
 
 (global-set-key "F W" '&file-new-window)
 (global-set-key "F N" '&file-new)
+(global-set-key "<Control>N" '&file-new)
 (global-set-key "F O" '&file-open)
+(global-set-key "<Control>O" '&file-open)
 (global-set-key "F S" '&file-save)
+(global-set-key "<Control>S" '&file-save)
 (global-set-key "F E" '&page-close)
 (global-set-key "F A" '&file-save-as)
 (global-set-key "F L" '&file-save-all)
 (global-set-key "F P" '&file-print)
+(global-set-key "<Control>P" '&file-print)
 (global-set-key "F R" '&page-revert)
 (global-set-key "F I" '&file-image)
 (global-set-key "F T" '&file-script)
@@ -157,6 +161,18 @@
 (global-set-key "V L" '&view-light-colors)
 (global-set-key "V W" '&view-bw-colors)
 
+; new zoom control keys:
+;
+(global-set-key "equal" '&view-zoom-in)
+(global-set-key "minus" '&view-zoom-out)
+(global-set-key "0"     '&view-zoom-extents)
+(global-set-key "<Control>equal" '&view-zoom-in)
+(global-set-key "<Control>minus" '&view-zoom-out)
+(global-set-key "<Control>0"     '&view-zoom-extents)
+(global-set-key "KP_Add"      '&view-zoom-in )
+(global-set-key "KP_Subtract" '&view-zoom-out )
+(global-set-key "KP_Multiply" '&view-zoom-extents )
+
 (global-set-key "<Control>V" '&clipboard-paste)
 (global-set-key "W" '&view-zoom-box)
 (global-set-key "X" '&view-pan)
@@ -167,6 +183,7 @@
 ;(global-set-key "Y P" 'buffer-paste1)
 
 (global-set-key "<Control>Y" '&edit-redo)
+(global-set-key "<Control><Shift>Z" '&edit-redo)
 (global-set-key "Z" '&view-zoom-in)
 (global-set-key "<Shift>Z" '&view-zoom-out)
 (global-set-key "<Control>Z" '&edit-undo)
