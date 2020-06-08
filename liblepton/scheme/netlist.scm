@@ -1042,7 +1042,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ; Verbose mode (-v): print configuration:
   ;
   ( when opt-verbose
-    ( print-gnetlist-config )
+    ( print-netlist-config )
   )
 
   ; Neither backend (-g or -f), nor interactive mode (-i) specified:
