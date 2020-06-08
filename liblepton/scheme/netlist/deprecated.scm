@@ -45,6 +45,7 @@
 ;;; Backward compatibility procedures.
 (define gnetlist-option-ref netlist-option-ref)
 (define gnetlist-config-ref netlist-config-ref)
+(define print-gnetlist-config print-netlist-config)
 
 (define (get-pins refdes)
   (define (found? x)
