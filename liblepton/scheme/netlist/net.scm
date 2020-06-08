@@ -48,11 +48,11 @@ symbols to assign net name. Otherwise, settings for \"netname=\"
 attribute are used, the latter is used to assign names for net
 primitives."
   (define hierarchical?
-    (gnetlist-config-ref (if power-rail? 'mangle-net 'mangle-netname)))
+    (netlist-config-ref (if power-rail? 'mangle-net 'mangle-netname)))
   (define reverse?
-    (gnetlist-config-ref (if power-rail? 'reverse-net-order 'reverse-netname-order)))
+    (netlist-config-ref (if power-rail? 'reverse-net-order 'reverse-netname-order)))
   (define separator
-    (gnetlist-config-ref (if power-rail? 'net-separator 'netname-separator)))
+    (netlist-config-ref (if power-rail? 'net-separator 'netname-separator)))
   (define name (cons basename hierarchy-tag))
 
   (if (and basename hierarchical?)

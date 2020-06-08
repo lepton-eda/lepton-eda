@@ -21,6 +21,7 @@
 (define-module (netlist deprecated)
   #:use-module (srfi srfi-1)
   #:use-module (netlist attrib compare)
+  #:use-module (netlist config)
   #:use-module (netlist duplicate)
   #:use-module (netlist option)
   #:use-module (netlist package-pin)
@@ -43,6 +44,7 @@
 
 ;;; Backward compatibility procedures.
 (define gnetlist-option-ref netlist-option-ref)
+(define gnetlist-config-ref netlist-config-ref)
 
 (define (get-pins refdes)
   (define (found? x)

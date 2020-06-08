@@ -51,7 +51,7 @@
 
 (define (create-unnamed-netname tag)
   (define (hierarchical-default-name s)
-    (create-net-name (string-append (gnetlist-config-ref 'default-net-name) s)
+    (create-net-name (string-append (netlist-config-ref 'default-net-name) s)
                      tag
                      ;; The below means just #f.
                      (not 'power-rail)))
