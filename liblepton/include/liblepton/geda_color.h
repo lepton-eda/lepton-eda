@@ -88,6 +88,10 @@ typedef GedaColor GedaColorMap[MAX_COLORS];
 extern GedaColorMap print_colors;
 
 
+size_t
+colors_count();
+
+
 void
 geda_color_map_init (GedaColorMap map);
 

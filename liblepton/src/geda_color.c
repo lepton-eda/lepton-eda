@@ -63,6 +63,13 @@ static GedaColor default_colors[] =
 };
 
 
+size_t
+colors_count()
+{
+  return MAX_COLORS;
+}
+
+
 /*! \brief Get the color blue value as a double
  *
  *  A getter until colors convert to double natively
@@ -214,7 +221,7 @@ s_color_map_to_scm (const GedaColor *map)
 {
   SCM result = SCM_EOL;
   int i;
-  for (i = MAX_COLORS - 1; i >= 0; i--) {
+  for (i = colors_count() - 1; i >= 0; i--) {
     SCM color_val = SCM_BOOL_F;
     if (map[i].enabled) {
       GedaColor c = map[i];
@@ -320,7 +327,7 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
 void
 geda_color_map_init (GedaColorMap map)
 {
-  for (size_t i = 0; i < MAX_COLORS - 1; ++i)
+  for (size_t i = 0; i < colors_count() - 1; ++i)
   {
     map[ i ] = default_colors[ i ];
   }
