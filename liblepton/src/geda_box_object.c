@@ -320,7 +320,7 @@ o_box_read (const char buf[],
                    type, x1, y1, width, height, color);
   }
 
-  if (color < 0 || color > MAX_COLORS) {
+  if (!color_id_valid (color)) {
     s_log_message (_("Found an invalid color [ %1$s ]"), buf);
     s_log_message (_("Setting color to default color."));
     color = DEFAULT_COLOR;

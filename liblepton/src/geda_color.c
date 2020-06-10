@@ -75,7 +75,7 @@ colors_count()
 gboolean
 color_id_valid (size_t id)
 {
-  return color >= 0 && color < colors_count();
+  return id >= 0 && id < colors_count();
 }
 
 

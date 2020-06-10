@@ -362,7 +362,7 @@ o_circle_read (const char buf[],
     radius = 0;
   }
 
-  if (color < 0 || color > MAX_COLORS) {
+  if (!color_id_valid (color)) {
     s_log_message(_("Found an invalid color [ %1$s ]"), buf);
     s_log_message(_("Setting color to default color."));
     color = DEFAULT_COLOR;
