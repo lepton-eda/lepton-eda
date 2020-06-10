@@ -344,23 +344,6 @@ geda_color_map_init (GedaColorMap map)
 
 
 
-/*! \brief Get a color from the color map
- *
- *  \param [in] map The color map
- *  \param [in] index The index of the color
- *  \returns The color
- */
-GedaColor*
-geda_color_map_get_color (GedaColorMap map, int index)
-{
-  g_return_val_if_fail (color_id_valid (index), &map[DEFAULT_COLOR]);
-  g_return_val_if_fail (map[index].enabled, &map[DEFAULT_COLOR]);
-
-  return &map[index];
-}
-
-
-
 /*! \brief Initialises the color subsystem
  *  \par Function Description
  *  At the moment, just initialises the print color map.

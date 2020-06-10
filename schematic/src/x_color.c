@@ -172,7 +172,13 @@ GdkColor *x_get_color(int color)
 GedaColor*
 x_color_lookup (GschemToplevel *toplevel, int color)
 {
-  return geda_color_map_get_color (display_colors, color);
+  g_return_val_if_fail (color_id_valid (color),
+                        &display_colors[DEFAULT_COLOR]);
+
+  g_return_val_if_fail (display_colors[color].enabled,
+                        &display_colors[DEFAULT_COLOR]);
+
+  return &display_colors[color];
 }
 
 gboolean
