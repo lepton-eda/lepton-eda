@@ -70,6 +70,7 @@ colors_count()
 }
 
 
+
 /* \brief Check if a color \id is valid (one of the defined *_COLOR constants).
  */
 gboolean
@@ -77,6 +78,15 @@ color_id_valid (size_t id)
 {
   return id >= 0 && id < colors_count();
 }
+
+
+
+size_t
+default_color_id()
+{
+  return DEFAULT_COLOR;
+}
+
 
 
 /*! \brief Get the color blue value as a double

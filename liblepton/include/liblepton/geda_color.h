@@ -94,6 +94,9 @@ colors_count();
 gboolean
 color_id_valid (size_t id);
 
+size_t
+default_color_id();
+
 
 void
 geda_color_map_init (GedaColorMap map);
