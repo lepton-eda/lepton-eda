@@ -197,7 +197,7 @@ o_path_read (const char *first_line,
   if (!color_id_valid (color)) {
     s_log_message (_("Found an invalid color [ %1$s ]"), first_line);
     s_log_message (_("Setting color to default color."));
-    color = DEFAULT_COLOR;
+    color = default_color_id();
   }
 
   /*

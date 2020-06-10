@@ -871,7 +871,7 @@ OBJECT *o_component_read (PAGE *page,
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
 
     new_obj = o_component_new_embedded (type,
-                                        DEFAULT_COLOR,
+                                        default_color_id(),
                                         x1,
                                         y1,
                                         angle,
@@ -883,7 +883,7 @@ OBJECT *o_component_read (PAGE *page,
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
 
     new_obj = o_component_new (page, type,
-                               DEFAULT_COLOR,
+                               default_color_id(),
                                x1, y1,
                                angle, mirror, clib,
                                basename, selectable);

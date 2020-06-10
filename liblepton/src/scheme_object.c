@@ -869,7 +869,7 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
 SCM_DEFINE (make_line, "%make-line", 0, 0, 0,
             (), "Create a new line object.")
 {
-  GedaObject *object = geda_line_object_new (DEFAULT_COLOR,
+  GedaObject *object = geda_line_object_new (default_color_id(),
                                              0,
                                              0,
                                              0,
@@ -1160,7 +1160,7 @@ SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
 SCM_DEFINE (make_box, "%make-box", 0, 0, 0,
             (), "Create a new box object.")
 {
-  OBJECT *obj = geda_box_object_new (OBJ_BOX, DEFAULT_COLOR,
+  OBJECT *obj = geda_box_object_new (OBJ_BOX, default_color_id(),
                                      0, 0, 0, 0);
 
   SCM result = edascm_from_object (obj);
@@ -1256,7 +1256,7 @@ SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
 SCM_DEFINE (make_circle, "%make-circle", 0, 0, 0,
             (), "Create a new circle object.")
 {
-  GedaObject *object = geda_circle_object_new (DEFAULT_COLOR,
+  GedaObject *object = geda_circle_object_new (default_color_id(),
                                                0,
                                                0,
                                                1);
@@ -1350,7 +1350,7 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
 SCM_DEFINE (make_arc, "%make-arc", 0, 0, 0,
             (), "Create a new arc object.")
 {
-  GedaObject *object = geda_arc_object_new (DEFAULT_COLOR,
+  GedaObject *object = geda_arc_object_new (default_color_id(),
                                             0,
                                             0,
                                             1,
@@ -1460,7 +1460,7 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
 SCM_DEFINE (make_text, "%make-text", 0, 0, 0,
             (), "Create a new text object.")
 {
-  OBJECT *obj = geda_text_object_new (DEFAULT_COLOR,
+  OBJECT *obj = geda_text_object_new (default_color_id(),
                                       0,
                                       0,
                                       LOWER_LEFT,
@@ -1755,7 +1755,7 @@ SCM_DEFINE (object_component, "%object-component", 1, 0, 0,
 SCM_DEFINE (make_path, "%make-path", 0, 0, 0,
             (), "Create a new path object")
 {
-  OBJECT *obj = geda_path_object_new (OBJ_PATH, DEFAULT_COLOR, "");
+  OBJECT *obj = geda_path_object_new (OBJ_PATH, default_color_id(), "");
 
   SCM result = edascm_from_object (obj);
 
