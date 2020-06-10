@@ -69,8 +69,7 @@ gint
 geda_object_get_color (const GedaObject *object)
 {
   g_return_val_if_fail (object != NULL, DEFAULT_COLOR);
-  g_return_val_if_fail (object->color >= 0, DEFAULT_COLOR);
-  g_return_val_if_fail (object->color < MAX_COLORS, DEFAULT_COLOR);
+  g_return_val_if_fail (color_id_valid (object->color), DEFAULT_COLOR);
 
   return object->color;
 }
@@ -95,8 +94,7 @@ geda_object_get_drawing_color (const GedaObject *object)
 
   color = object->selectable ? object->color : LOCK_COLOR;
 
-  g_return_val_if_fail (color >= 0, DEFAULT_COLOR);
-  g_return_val_if_fail (color < MAX_COLORS, DEFAULT_COLOR);
+  g_return_val_if_fail (color_id_valid (color), DEFAULT_COLOR);
 
   return color;
 }
