@@ -69,7 +69,7 @@ create_color_list_store ()
 
   store = gtk_list_store_new (COLUMN_COUNT, G_TYPE_STRING, G_TYPE_INT, GDK_TYPE_COLOR);
 
-  for (color_index = 0; color_index < MAX_COLORS; color_index++) {
+  for (color_index = 0; color_index < colors_count(); color_index++) {
     if (x_color_display_enabled (color_index)) {
       gtk_list_store_append (store, &iter);
 

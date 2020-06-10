@@ -1642,8 +1642,7 @@ void
 gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int color)
 {
   g_return_if_fail (adapter != NULL);
-  g_return_if_fail (color >= 0);
-  g_return_if_fail (color < MAX_COLORS);
+  g_return_if_fail (color_id_valid (color));
 
   geda_object_list_set_color (geda_list_get_glist (adapter->selection),
                               color);
@@ -1781,8 +1780,7 @@ gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int co
   GList *iter;
 
   g_return_if_fail (adapter != NULL);
-  g_return_if_fail (color >= 0);
-  g_return_if_fail (color < MAX_COLORS);
+  g_return_if_fail (color_id_valid (color));
 
   iter = geda_list_get_glist (adapter->selection);
 

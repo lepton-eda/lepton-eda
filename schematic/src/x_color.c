@@ -63,7 +63,7 @@ x_color_free (void)
   gdk_colormap_free_colors (colormap, &black, 1);
   gdk_colormap_free_colors (colormap, &white, 1);
 
-  for (i = 0; i < MAX_COLORS; i++) {
+  for (i = 0; i < colors_count(); i++) {
     if (display_colors[i].enabled)
       gdk_colormap_free_colors (colormap, gdk_colors[i], 1);
     if (display_outline_colors[i].enabled)
@@ -100,7 +100,7 @@ void x_color_allocate (void)
     exit (-1);
   }
 
-  for (i = 0; i < MAX_COLORS; i++) {
+  for (i = 0; i < colors_count(); i++) {
 
     if (display_colors[i].enabled) {
       gdk_colors[i] = (GdkColor *)
@@ -155,7 +155,7 @@ void x_color_allocate (void)
  */
 GdkColor *x_get_color(int color)
 {
-  if ((color < 0) || (color >= MAX_COLORS)
+  if (!color_id_valid (color)
       || (gdk_colors[color] == NULL)) {
     g_warning (_("Tried to get an invalid color: %1$d\n"), color);
     return(&white);
@@ -258,7 +258,7 @@ x_color_map2str (GedaColorMap cmap)
 
   g_string_append (str, "'(\n");
 
-  for (int color_index = 0; color_index < MAX_COLORS - 1; color_index++)
+  for (int color_index = 0; color_index < colors_count() - 1; color_index++)
   {
     GedaColor color = cmap[ color_index ];
 
