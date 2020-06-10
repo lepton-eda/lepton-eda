@@ -91,6 +91,9 @@ extern GedaColorMap print_colors;
 size_t
 colors_count();
 
+gboolean
+color_id_valid (size_t id);
+
 
 void
 geda_color_map_init (GedaColorMap map);
