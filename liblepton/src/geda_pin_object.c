@@ -364,7 +364,7 @@ o_pin_read (const char buf[],
   if (!color_id_valid (color)) {
     s_log_message (_("Found an invalid color [ %1$s ]"), buf);
     s_log_message (_("Setting color to default color."));
-    color = DEFAULT_COLOR;
+    color = default_color_id();
   }
 
   new_obj = geda_pin_object_new (color,

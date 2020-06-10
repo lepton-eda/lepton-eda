@@ -45,7 +45,7 @@ SCM_DEFINE (make_component, "%make-component", 1, 0, 0,
   SCM_ASSERT (scm_is_string (basename_s), basename_s, SCM_ARG1, s_make_component);
 
   char *tmp = scm_to_utf8_string (basename_s);
-  OBJECT *obj = o_component_new_embedded (OBJ_COMPONENT, DEFAULT_COLOR, 0, 0, 0,
+  OBJECT *obj = o_component_new_embedded (OBJ_COMPONENT, default_color_id(), 0, 0, 0,
                                           FALSE, tmp, TRUE);
   free (tmp);
 
@@ -91,7 +91,7 @@ SCM_DEFINE (make_component_library, "%make-component/library", 1, 0, 0,
   const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
   if (clib != NULL) {
     OBJECT *obj = o_component_new (toplevel->page_current,
-                                   OBJ_COMPONENT, DEFAULT_COLOR, 0, 0, 0,
+                                   OBJ_COMPONENT, default_color_id(), 0, 0, 0,
                                    FALSE, clib, basename, TRUE);
 
     result = edascm_from_object (obj);

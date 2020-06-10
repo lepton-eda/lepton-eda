@@ -68,8 +68,8 @@ int global_sid=0;
 gint
 geda_object_get_color (const GedaObject *object)
 {
-  g_return_val_if_fail (object != NULL, DEFAULT_COLOR);
-  g_return_val_if_fail (color_id_valid (object->color), DEFAULT_COLOR);
+  g_return_val_if_fail (object != NULL, default_color_id());
+  g_return_val_if_fail (color_id_valid (object->color), default_color_id());
 
   return object->color;
 }
@@ -90,11 +90,11 @@ geda_object_get_drawing_color (const GedaObject *object)
 {
   gint color;
 
-  g_return_val_if_fail (object != NULL, DEFAULT_COLOR);
+  g_return_val_if_fail (object != NULL, default_color_id());
 
   color = object->selectable ? object->color : LOCK_COLOR;
 
-  g_return_val_if_fail (color_id_valid (color), DEFAULT_COLOR);
+  g_return_val_if_fail (color_id_valid (color), default_color_id());
 
   return color;
 }
@@ -1275,7 +1275,7 @@ s_basic_init_object (OBJECT *new_node, int type, char const *name)
   new_node->parent = NULL;
 
   /* Setup the color */
-  new_node->color = DEFAULT_COLOR;
+  new_node->color = default_color_id();
   new_node->dont_redraw = FALSE;
   new_node->selectable = TRUE;
   new_node->selected = FALSE;
