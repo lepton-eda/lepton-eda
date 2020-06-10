@@ -478,7 +478,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   /* Create new object and set embedded */
   o_new = o_component_new (toplevel->page_current,
                            OBJ_COMPONENT,
-                           DEFAULT_COLOR,
+                           default_color_id(),
                            o_current->component->x,
                            o_current->component->y,
                            o_current->component->angle,
