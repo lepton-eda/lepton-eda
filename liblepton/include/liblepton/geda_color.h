@@ -98,9 +98,6 @@ color_id_valid (size_t id);
 void
 geda_color_map_init (GedaColorMap map);
 
-GedaColor*
-geda_color_map_get_color (GedaColorMap map, int index);
-
 void
 s_color_init (void);
 
