@@ -1058,7 +1058,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
       } else {
 
         if (rippersym != NULL) {
-          new_obj = o_component_new (page, OBJ_COMPONENT, DEFAULT_COLOR,
+          new_obj = o_component_new (page, OBJ_COMPONENT, default_color_id(),
                                      rippers[i].x[0], rippers[i].y[0],
                                      component_angle, 0,
                                      rippersym,

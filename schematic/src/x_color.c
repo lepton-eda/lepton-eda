@@ -173,10 +173,10 @@ GedaColor*
 x_color_lookup (GschemToplevel *toplevel, int color)
 {
   g_return_val_if_fail (color_id_valid (color),
-                        &display_colors[DEFAULT_COLOR]);
+                        &display_colors[ default_color_id() ]);
 
   g_return_val_if_fail (display_colors[color].enabled,
-                        &display_colors[DEFAULT_COLOR]);
+                        &display_colors[ default_color_id() ]);
 
   return &display_colors[color];
 }
