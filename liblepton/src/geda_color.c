@@ -70,6 +70,15 @@ colors_count()
 }
 
 
+/* \brief Check if a color \id is valid (one of the defined *_COLOR constants).
+ */
+gboolean
+color_id_valid (size_t id)
+{
+  return color >= 0 && color < colors_count();
+}
+
+
 /*! \brief Get the color blue value as a double
  *
  *  A getter until colors convert to double natively
@@ -273,7 +282,7 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
      *
      * FIXME one day we will have dynamically-expanding colorspace.
      * One day. */
-    if ((i < 0) || (i >= MAX_COLORS)) {
+    if (!color_id_valid (i)) {
       g_critical ("Color map index out of bounds: %1$i\n", i);
       goto color_map_next;
     }
@@ -344,8 +353,7 @@ geda_color_map_init (GedaColorMap map)
 GedaColor*
 geda_color_map_get_color (GedaColorMap map, int index)
 {
-  g_return_val_if_fail (index >= 0, &map[DEFAULT_COLOR]);
-  g_return_val_if_fail (index < MAX_COLORS, &map[DEFAULT_COLOR]);
+  g_return_val_if_fail (color_id_valid (index), &map[DEFAULT_COLOR]);
   g_return_val_if_fail (map[index].enabled, &map[DEFAULT_COLOR]);
 
   return &map[index];
