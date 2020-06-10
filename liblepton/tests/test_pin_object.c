@@ -12,7 +12,7 @@ check_construction ()
     gint y0 = g_test_rand_int ();
     gint x1 = g_test_rand_int ();
     gint y1 = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, MAX_COLORS - 1);
+    gint color = g_test_rand_int_range (0, colors_count() - 1);
     gint type = g_test_rand_int_range (0, 2);
     gint which = g_test_rand_int_range (0, 2);
 
@@ -64,7 +64,7 @@ check_accessors ()
     gint y0 = g_test_rand_int ();
     gint x1 = g_test_rand_int ();
     gint y1 = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, MAX_COLORS - 1);
+    gint color = g_test_rand_int_range (0, colors_count() - 1);
     gint type = g_test_rand_int_range (0, 2);
     gint which = g_test_rand_int_range (0, 2);
 
@@ -83,7 +83,7 @@ check_accessors ()
     y0 = g_test_rand_int ();
     x1 = g_test_rand_int ();
     y1 = g_test_rand_int ();
-    color = g_test_rand_int_range (0, MAX_COLORS - 1);
+    color = g_test_rand_int_range (0, colors_count() - 1);
 
     geda_pin_object_set_x0 (object0, x0);
     geda_pin_object_set_y0 (object0, y0);
@@ -119,7 +119,7 @@ check_serialization ()
     gint y0 = g_test_rand_int ();
     gint x1 = g_test_rand_int ();
     gint y1 = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, MAX_COLORS - 1);
+    gint color = g_test_rand_int_range (0, colors_count() - 1);
     gint type = g_test_rand_int_range (0, 2);
     gint which = g_test_rand_int_range (0, 2);
 
