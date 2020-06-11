@@ -84,43 +84,6 @@ x_color_display_enabled (size_t color_id)
 
 
 
-/*! \brief: Change a color in color map
- *
- *  \param colors_gdk   An array of GdkColor structures (gdk_colors or gdk_outline_colors)
- *  \param colors_geda  An array of GedaColor structures (display_colors or display_outline_colors)
- *  \param color_index  One of color index constants defined in geda_color_map.h
- *  \param color        A pointer to GdkColor to be set
- */
-static void
-x_color_set (GdkColor**   colors_gdk,
-             GedaColorMap colors_geda,
-             int          color_index,
-             GdkColor*    color)
-{
-  /* do nothing if color is disabled: */
-  if (colors_gdk[ color_index ] == NULL)
-  {
-    return;
-  }
-
-  guint16 r = color->red   >> 8;
-  guint16 g = color->green >> 8;
-  guint16 b = color->blue  >> 8;
-
-  colors_gdk[ color_index ]->red   = r;
-  colors_gdk[ color_index ]->green = g;
-  colors_gdk[ color_index ]->blue  = b;
-
-  /* this actually changes the color on the screen:
-  */
-  colors_geda[ color_index ].r = r;
-  colors_geda[ color_index ].g = g;
-  colors_geda[ color_index ].b = b;
-
-} /* x_color_set() */
-
-
-
 /*! \brief: Change a color in the display color map
  */
 void
