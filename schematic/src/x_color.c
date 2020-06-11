@@ -164,22 +164,23 @@ GdkColor *x_get_color(int color)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Documentation
- *
+
+
+/*! \brief Get a color for specified \a color_id.
  */
 GedaColor*
-x_color_lookup (GschemToplevel *toplevel, int color)
+x_color_lookup (size_t color_id)
 {
-  g_return_val_if_fail (color_id_valid (color),
+  g_return_val_if_fail (color_id_valid (color_id),
                         &display_colors[ default_color_id() ]);
 
-  g_return_val_if_fail (display_colors[color].enabled,
+  g_return_val_if_fail (display_colors[color_id].enabled,
                         &display_colors[ default_color_id() ]);
 
-  return &display_colors[color];
+  return &display_colors[ color_id ];
 }
+
+
 
 gboolean
 x_color_display_enabled (int index)

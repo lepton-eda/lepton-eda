@@ -545,7 +545,7 @@ void x_color_init (void);
 void x_color_free (void);
 void x_color_allocate (void);
 GdkColor *x_get_color(int color);
-GedaColor *x_color_lookup(GschemToplevel *toplevel, int color);
+GedaColor *x_color_lookup(size_t color_id);
 gboolean x_color_display_enabled (int index);
 void x_color_set_display (int color_index, GdkColor* color);
 void x_color_set_outline (int color_index, GdkColor* color);
