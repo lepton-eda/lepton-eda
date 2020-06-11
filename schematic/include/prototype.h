@@ -547,8 +547,8 @@ void x_color_allocate (void);
 GdkColor *x_color_lookup_gdk(size_t color_id);
 GedaColor *x_color_lookup(size_t color_id);
 gboolean x_color_display_enabled (size_t color_id);
-void x_color_set_display (int color_index, GdkColor* color);
-void x_color_set_outline (int color_index, GdkColor* color);
+void x_color_set_display (size_t color_id, GdkColor* color);
+void x_color_set_outline (size_t color_id, GdkColor* color);
 GString* x_color_map2str_display();
 GString* x_color_map2str_outline();
 
