@@ -73,12 +73,16 @@ create_color_list_store ()
     if (x_color_display_enabled (color_index)) {
       gtk_list_store_append (store, &iter);
 
+      GdkColor* color = x_color_lookup_gdk (color_index);
+
       gtk_list_store_set (store, &iter,
           COLUMN_NAME,  color_get_strname (color_index),
           COLUMN_INDEX, color_index,
-          COLUMN_COLOR, x_color_lookup_gdk (color_index),
+          COLUMN_COLOR, color,
           -1
           );
+
+      gdk_color_free (color);
     }
   }
 
@@ -113,6 +117,7 @@ x_colorcb_update_colors()
     {
       GdkColor* color = x_color_lookup_gdk (color_index);
       x_colorcb_set_color (&iter, color);
+      gdk_color_free (color);
     }
 
     res = gtk_tree_model_iter_next (model, &iter);
