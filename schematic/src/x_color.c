@@ -30,8 +30,8 @@
 GedaColorMap display_colors;
 GedaColorMap display_outline_colors;
 
-static GdkColor* gdk_colors[MAX_COLORS];
-static GdkColor* gdk_outline_colors[MAX_COLORS];
+static GdkColor* gdk_colors[ COLORS_COUNT ];
+static GdkColor* gdk_outline_colors[ COLORS_COUNT ];
 
 static GdkColormap *colormap = NULL;
 

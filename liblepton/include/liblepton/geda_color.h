@@ -79,9 +79,9 @@ s_color_rgba_encode (guint8 r, guint8 g, guint8 b, guint8 a);
 
 #define DEFAULT_COLOR                   GRAPHIC_COLOR
 
-#define MAX_COLORS 24
+#define COLORS_COUNT 24
 
-typedef GedaColor GedaColorMap[ MAX_COLORS ];
+typedef GedaColor GedaColorMap[ COLORS_COUNT ];
 
 
 /* Color map for printing */

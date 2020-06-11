@@ -66,7 +66,7 @@ static GedaColor default_colors[] =
 size_t
 colors_count()
 {
-  return MAX_COLORS;
+  return COLORS_COUNT;
 }
 
 
@@ -338,8 +338,6 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
  *  \par Function Description
  *  Initialises a color map to a simple default: black features on a
  *  white background, with "special" colors as gray.
- *
- *  \warning \a map must be have length of at least #MAX_COLORS.
  *
  *  \param map Color map to initialise.
  */
