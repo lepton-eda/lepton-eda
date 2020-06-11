@@ -541,9 +541,7 @@ void x_clipboard_query_usable (GschemToplevel *w_current, void (*callback) (int,
 gboolean x_clipboard_set (GschemToplevel *w_current, const GList *object_list);
 GList *x_clipboard_get (GschemToplevel *w_current);
 /* x_color.c */
-void x_color_init (void);
-void x_color_free (void);
-void x_color_allocate (void);
+void x_color_init();
 GdkColor *x_color_lookup_gdk(size_t color_id);
 GedaColor *x_color_lookup(size_t color_id);
 gboolean x_color_display_enabled (size_t color_id);

@@ -258,9 +258,6 @@ void main_prog(void *closure, int argc, char *argv[])
   x_window_set_default_icon();
   x_window_init_icons ();
 
-  /* At end, complete set up of window. */
-  x_color_allocate();
-
   /* Initialize tabbed GUI: */
   x_tabs_init();
 
