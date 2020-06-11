@@ -1334,19 +1334,15 @@ DEFINE_I_CALLBACK(view_pan_down)
   gschem_page_view_pan_mouse (page_view, 0, -w_current->keyboardpan_gain);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+
+
+/*! \brief Load the Dark color scheme
  */
 DEFINE_I_CALLBACK (view_dark_colors)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
-  x_color_free ();
-  /* Change the scheme here */
   g_scm_c_eval_string_protected ("(load-rc-from-sys-config-dirs \"gschem-colormap-darkbg\")");
-  x_color_allocate ();
 
   x_colorcb_update_colors();
   color_edit_widget_update (w_current);
@@ -1354,19 +1350,15 @@ DEFINE_I_CALLBACK (view_dark_colors)
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+
+
+/*! \brief Load the Light color scheme
  */
 DEFINE_I_CALLBACK (view_light_colors)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
-  x_color_free ();
-  /* Change the scheme here */
   g_scm_c_eval_string_protected ("(load-rc-from-sys-config-dirs \"gschem-colormap-lightbg\")");
-  x_color_allocate ();
 
   x_colorcb_update_colors();
   color_edit_widget_update (w_current);
@@ -1374,25 +1366,23 @@ DEFINE_I_CALLBACK (view_light_colors)
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
+
+
+/*! \brief Load the Black & White color scheme
  */
 DEFINE_I_CALLBACK (view_bw_colors)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
-  x_color_free ();
-  /* Change the scheme here */
   g_scm_c_eval_string_protected ("(load-rc-from-sys-config-dirs \"gschem-colormap-bw\")");
-  x_color_allocate ();
 
   x_colorcb_update_colors();
   color_edit_widget_update (w_current);
 
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 }
+
+
 
 /*! \brief Show color scheme editor widget
  */

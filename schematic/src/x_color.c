@@ -17,135 +17,24 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
+
 #include <config.h>
-
-#include <stdio.h>
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-#include <math.h>
-
 #include "gschem.h"
+
+
 
 GedaColorMap display_colors;
 GedaColorMap display_outline_colors;
 
-static GdkColor* gdk_colors[ COLORS_COUNT ];
-static GdkColor* gdk_outline_colors[ COLORS_COUNT ];
 
-static GdkColormap *colormap = NULL;
 
-/*! \brief Initializes the color system for the application.
- *  \par Function Documentation
- *
- *  Initialises the color maps to defaults.
+/*! \brief Initializes the display and outline color maps to defaults.
  */
 void
-x_color_init (void)
+x_color_init()
 {
-  colormap = gdk_colormap_get_system ();
-
-  /* Initialise default color maps */
   geda_color_map_init (display_colors);
   geda_color_map_init (display_outline_colors);
-}
-
-/*! \brief Frees memory used by the color system.
- *  \par Function Documentation
- *  This function frees the colors from colormap along with
- *  \b black and \b white.
- */
-void
-x_color_free (void)
-{
-  int i;
-
-  gdk_colormap_free_colors (colormap, &black, 1);
-  gdk_colormap_free_colors (colormap, &white, 1);
-
-  for (i = 0; i < colors_count(); i++) {
-    if (display_colors[i].enabled)
-      gdk_colormap_free_colors (colormap, gdk_colors[i], 1);
-    if (display_outline_colors[i].enabled)
-      gdk_colormap_free_colors (colormap, gdk_outline_colors[i], 1);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Documentation
- *
- */
-void x_color_allocate (void)
-{
-  int error;
-  int i;
-  GedaColor c;
-
-  gdk_color_parse ("black", &black);
-  if (!gdk_colormap_alloc_color (colormap,
-                                 &black,
-                                 FALSE,
-                                 TRUE)) {
-    fprintf (stderr, "Could not allocate the color %1$s!\n", "black");
-    exit (-1);
-  }
-
-  gdk_color_parse ("white", &white);
-  if (!gdk_colormap_alloc_color (colormap,
-                                 &white,
-                                 FALSE,
-                                 TRUE)) {
-    fprintf (stderr, "Could not allocate the color %1$s!\n", "white");
-    exit (-1);
-  }
-
-  for (i = 0; i < colors_count(); i++) {
-
-    if (display_colors[i].enabled) {
-      gdk_colors[i] = (GdkColor *)
-        g_malloc(sizeof(GdkColor));
-
-      c = display_colors[i];
-
-      /* Interpolate 8-bpp colours into 16-bpp GDK color
-       * space. N.b. ignore transparency because GDK doesn't
-       * understand it. */
-      gdk_colors[i]->red = c.r + (c.r<<8);
-      gdk_colors[i]->green = c.g + (c.g<<8);
-      gdk_colors[i]->blue = c.b + (c.b<<8);
-
-      error = gdk_color_alloc(colormap, gdk_colors[i]);
-
-      if (error == FALSE) {
-        g_error ("Could not allocate display color %1$i!\n", i);
-      }
-    } else {
-      gdk_colors[i] = NULL;
-    }
-
-    if (display_outline_colors[i].enabled) {
-      gdk_outline_colors[i] = (GdkColor *)
-        g_malloc(sizeof(GdkColor));
-
-      c = display_outline_colors[i];
-
-      /* Interpolate 8-bpp colours into 16-bpp GDK color
-       * space. N.b. ignore transparency because GDK doesn't
-       * understand it. */
-      gdk_outline_colors[i]->red = c.r + (c.r<<8);
-      gdk_outline_colors[i]->green = c.g + (c.g<<8);
-      gdk_outline_colors[i]->blue = c.b + (c.b<<8);
-
-      error = gdk_color_alloc(colormap, gdk_outline_colors[i]);
-
-      if (error == FALSE) {
-        g_error ("Could not allocate outline color %1$i!\n", i);
-      }
-    } else {
-      gdk_outline_colors[i] = NULL;
-    }
-  }
 }
 
 
