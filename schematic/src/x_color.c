@@ -179,8 +179,6 @@ x_color_lookup (size_t color_id)
   g_return_val_if_fail (color_id_valid (color_id),
                         &display_colors[ default_color_id() ]);
 
-  g_return_val_if_fail (display_colors[color_id].enabled,
-                        &display_colors[ default_color_id() ]);
 
   return &display_colors[ color_id ];
 }
