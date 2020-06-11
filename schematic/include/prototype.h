@@ -544,7 +544,7 @@ GList *x_clipboard_get (GschemToplevel *w_current);
 void x_color_init (void);
 void x_color_free (void);
 void x_color_allocate (void);
-GdkColor *x_get_color(int color);
+GdkColor *x_color_lookup_gdk(size_t color_id);
 GedaColor *x_color_lookup(size_t color_id);
 gboolean x_color_display_enabled (size_t color_id);
 void x_color_set_display (int color_index, GdkColor* color);

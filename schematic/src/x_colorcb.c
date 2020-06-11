@@ -76,7 +76,7 @@ create_color_list_store ()
       gtk_list_store_set (store, &iter,
           COLUMN_NAME,  color_get_strname (color_index),
           COLUMN_INDEX, color_index,
-          COLUMN_COLOR, x_get_color (color_index),
+          COLUMN_COLOR, x_color_lookup_gdk (color_index),
           -1
           );
     }
@@ -111,7 +111,7 @@ x_colorcb_update_colors()
 
     if (x_color_display_enabled (color_index))
     {
-      GdkColor* color = x_get_color (color_index);
+      GdkColor* color = x_color_lookup_gdk (color_index);
       x_colorcb_set_color (&iter, color);
     }
 
