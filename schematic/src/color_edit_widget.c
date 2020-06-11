@@ -270,7 +270,7 @@ color_sel_update (ColorEditWidget* widget)
   g_return_if_fail (widget != NULL);
 
   int ndx = x_colorcb_get_index (widget->color_cb_);
-  GdkColor* color = x_get_color (ndx);
+  GdkColor* color = x_color_lookup_gdk (ndx);
 
   GtkColorSelection* csel = GTK_COLOR_SELECTION (widget->color_sel_);
 

@@ -148,19 +148,21 @@ void x_color_allocate (void)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Documentation
- *
+
+
+/*! \brief Get a color for specified \a color_id as GdkColor.
  */
-GdkColor *x_get_color(int color)
+GdkColor*
+x_color_lookup_gdk (size_t color_id)
 {
-  if (!color_id_valid (color)
-      || (gdk_colors[color] == NULL)) {
-    g_warning (_("Tried to get an invalid color: %1$d\n"), color);
-    return(&white);
-  } else {
-    return(gdk_colors[color]);
+  if (!color_id_valid (color_id) || (gdk_colors[color_id] == NULL))
+  {
+    g_warning (_("Tried to get an invalid color: %1$zu\n"), color_id);
+    return &white;
+  }
+  else
+  {
+    return gdk_colors[color_id];
   }
 }
 
