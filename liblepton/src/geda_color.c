@@ -346,7 +346,7 @@ s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
 void
 geda_color_map_init (GedaColorMap map)
 {
-  for (size_t i = 0; i < colors_count() - 1; ++i)
+  for (size_t i = 0; i < colors_count(); ++i)
   {
     map[ i ] = default_colors[ i ];
   }

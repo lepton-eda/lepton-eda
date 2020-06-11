@@ -26,7 +26,7 @@ check_construction ()
     gint y = g_test_rand_int ();
     gint alignment = g_test_rand_int_range (0, 9);
     gint angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
-    gint color = g_test_rand_int_range (0, colors_count() - 1);
+    gint color = g_test_rand_int_range (0, colors_count());
     gint show_name_value = g_test_rand_int_range (0, 3);
     gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
@@ -88,7 +88,7 @@ check_accessors ()
     gint y = g_test_rand_int ();
     gint alignment = g_test_rand_int_range (0, 9);
     gint angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
-    gint color = g_test_rand_int_range (0, colors_count() - 1);
+    gint color = g_test_rand_int_range (0, colors_count());
     gint show_name_value = g_test_rand_int_range (0, 3);
     gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
@@ -111,7 +111,7 @@ check_accessors ()
     y = g_test_rand_int ();
     alignment = g_test_rand_int_range (0, 9);
     angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
-    color = g_test_rand_int_range (0, colors_count() - 1);
+    color = g_test_rand_int_range (0, colors_count());
     show_name_value = g_test_rand_int_range (0, 3);
     size = g_test_rand_int_range (0, G_MAXINT);
     string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
@@ -163,7 +163,7 @@ check_serialization ()
     gint y = g_test_rand_int ();
     gint alignment = g_test_rand_int_range (0, 9);
     gint angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
-    gint color = g_test_rand_int_range (0, colors_count() - 1);
+    gint color = g_test_rand_int_range (0, colors_count());
     gint show_name_value = g_test_rand_int_range (0, 3);
     gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
