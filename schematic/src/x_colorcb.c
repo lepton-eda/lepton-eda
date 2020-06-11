@@ -19,18 +19,10 @@
  */
 /*! \file x_colorcb.c
  *
- *  \brief A GtkComboBox with the gschem colors.
+ *  \brief A GtkComboBox with available colors in the display color map.
  */
+
 #include <config.h>
-
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
 #include "gschem.h"
 
 
@@ -69,21 +61,25 @@ create_color_list_store ()
 
   store = gtk_list_store_new (COLUMN_COUNT, G_TYPE_STRING, G_TYPE_INT, GDK_TYPE_COLOR);
 
-  for (color_index = 0; color_index < colors_count(); color_index++) {
-    if (x_color_display_enabled (color_index)) {
-      gtk_list_store_append (store, &iter);
+  for (color_index = 0; color_index < colors_count(); color_index++)
+  {
+    gtk_list_store_append (store, &iter);
 
-      GdkColor* color = x_color_lookup_gdk (color_index);
+    const gchar* name = color_get_strname (color_index);
+    gchar* str = x_color_display_enabled (color_index)
+                 ? g_strdup (name)
+                 : g_strdup_printf (_("%s [ disabled ]"), name);
 
-      gtk_list_store_set (store, &iter,
-          COLUMN_NAME,  color_get_strname (color_index),
-          COLUMN_INDEX, color_index,
-          COLUMN_COLOR, color,
-          -1
-          );
+    GdkColor* color = x_color_lookup_gdk (color_index);
 
-      gdk_color_free (color);
-    }
+    gtk_list_store_set (store, &iter,
+      COLUMN_NAME,  str,
+      COLUMN_INDEX, color_index,
+      COLUMN_COLOR, color,
+      -1);
+
+    gdk_color_free (color);
+    g_free (str);
   }
 
   return store;
@@ -113,12 +109,25 @@ x_colorcb_update_colors()
     int color_index = -1;
     gtk_tree_model_get (model, &iter, COLUMN_INDEX, &color_index, -1);
 
-    if (x_color_display_enabled (color_index))
+    const gchar* name = color_get_strname (color_index);
+    gchar* str = x_color_display_enabled (color_index)
+                 ? g_strdup (name)
+                 : g_strdup_printf (_("%s [ disabled ]"), name);
+
+    gtk_list_store_set (store, &iter, COLUMN_NAME, str, -1);
+    g_free (str);
+
+    /* WIP: Display default color for disabled color map entries.
+     *      In new config format all colors will have values.
+     */
+    if (!x_color_display_enabled (color_index))
     {
-      GdkColor* color = x_color_lookup_gdk (color_index);
-      x_colorcb_set_color (&iter, color);
-      gdk_color_free (color);
+      color_index = default_color_id();
     }
+
+    GdkColor* color = x_color_lookup_gdk (color_index);
+    x_colorcb_set_color (&iter, color);
+    gdk_color_free (color);
 
     res = gtk_tree_model_iter_next (model, &iter);
   }
