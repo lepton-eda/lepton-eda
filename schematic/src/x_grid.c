@@ -102,7 +102,7 @@ draw_dots_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int
 
   int dot_size = MIN (w_current->dots_grid_dot_size, 5);
 
-  GedaColor *color = x_color_lookup (w_current, DOTS_GRID_COLOR);
+  GedaColor *color = x_color_lookup (DOTS_GRID_COLOR);
   cairo_set_source_rgba (cr,
                          geda_color_get_red_double (color),
                          geda_color_get_green_double (color),
@@ -318,7 +318,7 @@ draw_mesh_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int
       draw_mesh (w_current,
                  cr,
                  &user_to_device_matrix,
-                 x_color_lookup (w_current, MESH_GRID_MINOR_COLOR),
+                 x_color_lookup (MESH_GRID_MINOR_COLOR),
                  floor (x_start),
                  floor (y_start),
                  ceil (x_end),
@@ -330,7 +330,7 @@ draw_mesh_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int
     draw_mesh (w_current,
                cr,
                &user_to_device_matrix,
-               x_color_lookup (w_current, MESH_GRID_MAJOR_COLOR),
+               x_color_lookup (MESH_GRID_MAJOR_COLOR),
                floor (x_start),
                floor (y_start),
                ceil (x_end),

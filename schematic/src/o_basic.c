@@ -136,7 +136,7 @@ void o_redraw_rect (GschemToplevel *w_current,
                 NULL);
 
   /* Paint background */
-  GedaColor *color = x_color_lookup (w_current, BACKGROUND_COLOR);
+  GedaColor *color = x_color_lookup (BACKGROUND_COLOR);
 
   cairo_set_source_rgba (cr,
                          geda_color_get_red_double (color),
