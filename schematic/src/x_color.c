@@ -182,10 +182,12 @@ x_color_lookup (size_t color_id)
 
 
 
+/*! \brief Whether a color \a color_id is enabled in the display color map.
+ */
 gboolean
-x_color_display_enabled (int index)
+x_color_display_enabled (size_t color_id)
 {
-  return (gdk_colors[index] != NULL);
+  return display_colors[ color_id ].enabled;
 }
 
 
