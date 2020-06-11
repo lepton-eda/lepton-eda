@@ -150,25 +150,28 @@ void x_color_allocate (void)
 
 
 
-/*! \brief Get a color for specified \a color_id as GdkColor.
+/*! \brief Get a display color map color for specified \a color_id as GdkColor.
+ *
+ *  \note Caller must gdk_color_free() the returned value.
  */
 GdkColor*
 x_color_lookup_gdk (size_t color_id)
 {
-  if (!color_id_valid (color_id) || (gdk_colors[color_id] == NULL))
-  {
-    g_warning (_("Tried to get an invalid color: %1$zu\n"), color_id);
-    return &white;
-  }
-  else
-  {
-    return gdk_colors[color_id];
-  }
+  GedaColor* color = x_color_lookup (color_id);
+
+  /* Extrapolate 8-bpp color into 16-bpp GDK color:
+  */
+  GdkColor color_gdk;
+  color_gdk.red   = color->r + (color->r << 8);
+  color_gdk.green = color->g + (color->g << 8);
+  color_gdk.blue  = color->b + (color->b << 8);
+
+  return gdk_color_copy (&color_gdk);
 }
 
 
 
-/*! \brief Get a color for specified \a color_id.
+/*! \brief Get a color for specified \a color_id from the display color map.
  */
 GedaColor*
 x_color_lookup (size_t color_id)

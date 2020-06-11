@@ -279,6 +279,7 @@ color_sel_update (ColorEditWidget* widget)
                                    widget);
 
   gtk_color_selection_set_current_color (csel, color);
+  gdk_color_free (color);
 
   g_signal_handlers_unblock_by_func (G_OBJECT (csel),
                                      (gpointer) &on_color_sel_changed,
