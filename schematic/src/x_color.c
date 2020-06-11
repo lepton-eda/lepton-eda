@@ -232,28 +232,26 @@ x_color_set (GdkColor**   colors_gdk,
 
 
 
-/*! \brief: Change a color in display color map
- *
- *  \param color_index  One of color index constants defined in geda_color_map.h
- *  \param color        A pointer to GdkColor
+/*! \brief: Change a color in the display color map
  */
 void
-x_color_set_display (int color_index, GdkColor* color)
+x_color_set_display (size_t color_id, GdkColor* color)
 {
-  x_color_set (gdk_colors, display_colors, color_index, color);
+  display_colors[ color_id ].r = color->red   >> 8;
+  display_colors[ color_id ].g = color->green >> 8;
+  display_colors[ color_id ].b = color->blue  >> 8;
 }
 
 
 
-/*! \brief: Change a color in outline color map
- *
- *  \param color_index  One of color index constants defined in geda_color_map.h
- *  \param color        A pointer to GdkColor
+/*! \brief: Change a color in the outline color map
  */
 void
-x_color_set_outline (int color_index, GdkColor* color)
+x_color_set_outline (size_t color_id, GdkColor* color)
 {
-  x_color_set (gdk_outline_colors, display_outline_colors, color_index, color);
+  display_outline_colors[ color_id ].r = color->red   >> 8;
+  display_outline_colors[ color_id ].g = color->green >> 8;
+  display_outline_colors[ color_id ].b = color->blue  >> 8;
 }
 
 
