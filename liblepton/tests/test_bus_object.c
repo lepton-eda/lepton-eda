@@ -12,7 +12,7 @@ check_construction ()
     gint y0 = g_test_rand_int ();
     gint x1 = g_test_rand_int ();
     gint y1 = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, colors_count() - 1);
+    gint color = g_test_rand_int_range (0, colors_count());
     gint ripper = g_test_rand_int_range (-1, 2);
 
     GedaObject *object0 = geda_bus_object_new (color,
@@ -64,7 +64,7 @@ check_accessors ()
     gint y0 = g_test_rand_int ();
     gint x1 = g_test_rand_int ();
     gint y1 = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, colors_count() - 1);
+    gint color = g_test_rand_int_range (0, colors_count());
     gint ripper = g_test_rand_int_range (-1, 2);
 
     GedaObject *object0 = geda_bus_object_new (color,
@@ -81,7 +81,7 @@ check_accessors ()
     y0 = g_test_rand_int ();
     x1 = g_test_rand_int ();
     y1 = g_test_rand_int ();
-    color = g_test_rand_int_range (0, colors_count() - 1);
+    color = g_test_rand_int_range (0, colors_count());
     ripper = g_test_rand_int_range (-1, 2);
 
     geda_bus_object_set_x0 (object0, x0);
@@ -120,7 +120,7 @@ check_serialization ()
     gint y0 = g_test_rand_int ();
     gint x1 = g_test_rand_int ();
     gint y1 = g_test_rand_int ();
-    gint color = g_test_rand_int_range (0, colors_count() - 1);
+    gint color = g_test_rand_int_range (0, colors_count());
     gint ripper = g_test_rand_int_range (-1, 2);
 
     GedaObject *object0 = geda_bus_object_new (color,
