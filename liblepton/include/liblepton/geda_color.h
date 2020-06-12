@@ -77,7 +77,6 @@ s_color_rgba_encode (guint8 r, guint8 g, guint8 b, guint8 a);
 #define MESH_GRID_MAJOR_COLOR           22
 #define MESH_GRID_MINOR_COLOR           23
 
-#define DEFAULT_COLOR                   GRAPHIC_COLOR
 
 #define COLORS_COUNT 24
 

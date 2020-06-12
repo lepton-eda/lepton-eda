@@ -60,7 +60,7 @@ int global_sid=0;
 
 /*! \brief Get the color index of the object
  *
- *  If this function fails, it returns the DEFAULT_COLOR.
+ *  If this function fails, it returns the default color ID.
  *
  *  \param [in] object the object to obtain the color of
  *  \return the color index of the object
@@ -76,7 +76,7 @@ geda_object_get_color (const GedaObject *object)
 
 /*! \brief Get the color for drawing the object
  *
- *  If this function fails, it returns the DEFAULT_COLOR.
+ *  If this function fails, it returns the default color ID.
  *
  *  The output of this funtion is ependent on other variables than just the
  *  object color. If the object is locked, it will return the LOCK_COLOR.
