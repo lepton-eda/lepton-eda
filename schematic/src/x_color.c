@@ -120,7 +120,7 @@ x_color_map2str (GedaColorMap cmap)
 
   g_string_append (str, "'(\n");
 
-  for (int color_index = 0; color_index < colors_count(); color_index++)
+  for (size_t color_index = 0; color_index < colors_count(); color_index++)
   {
     GedaColor color = cmap[ color_index ];
 

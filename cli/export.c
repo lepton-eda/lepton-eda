@@ -146,7 +146,7 @@ static struct ExportSettings settings = {
 static void
 cmd_export_impl (void *data, int argc, char **argv)
 {
-  int i;
+  size_t i;
   GError *err = NULL;
   gchar *tmp;
   const gchar *out_suffix;

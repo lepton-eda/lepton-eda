@@ -168,8 +168,7 @@ x_print_draw_page (TOPLEVEL *toplevel, PAGE *page,
   color_map = g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), colors_count());
   color_map = g_array_append_vals (color_map, print_colors, colors_count());
   if (!is_color) {
-    int i;
-    for (i = 0; i < colors_count(); i++) {
+    for (size_t i = 0; i < colors_count(); i++) {
       GedaColor *c = &g_array_index (color_map, GedaColor, i);
       if (!c->enabled) continue;
 
