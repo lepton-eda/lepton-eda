@@ -27,6 +27,9 @@
 #include "libgeda_priv.h"
 
 
+#define DEFAULT_COLOR GRAPHIC_COLOR
+
+
 GedaColorMap print_colors;
 
 
