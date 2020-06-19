@@ -80,23 +80,6 @@ setup_filters (GtkFileChooser *filechooser)
     filter_last_opendlg = filter_sch;
   }
 
-  /* restore last used filters:
-  */
-  GtkFileChooserAction type = gtk_file_chooser_get_action (filechooser);
-
-  if (type == GTK_FILE_CHOOSER_ACTION_OPEN)
-  {
-    gtk_file_chooser_set_filter (filechooser, filter_last_opendlg);
-  }
-  else
-  if (type == GTK_FILE_CHOOSER_ACTION_SAVE)
-  {
-  }
-  else
-  {
-    g_assert (FALSE && "Trying to set filter for unsupported dialog type");
-  }
-
 } /* x_fileselect_setup_filechooser_filters() */
 
 
@@ -319,8 +302,12 @@ x_fileselect_open(GschemToplevel *w_current)
                 /* GtkFileChooser */
                 "select-multiple", TRUE,
                 NULL);
+
   /* add file filters to dialog */
   setup_filters (GTK_FILE_CHOOSER (dialog));
+  /* restore last filter: */
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter_last_opendlg);
+
   /* force start in current working directory, not in 'Recently Used' */
   cwd = g_get_current_dir ();
   gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), cwd);
