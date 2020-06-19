@@ -33,7 +33,6 @@ static GtkFileFilter* filter_all      = NULL;
 /*! Remember the last used filters
  */
 static GtkFileFilter* filter_last_opendlg = NULL;
-static GtkFileFilter* filter_last_savedlg = NULL;
 
 static int
 x_fileselect_load_backup (GschemToplevel *w_current,
@@ -110,11 +109,6 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
     filter_last_opendlg = filter_sch;
   }
 
-  if (filter_last_savedlg == NULL)
-  {
-    filter_last_savedlg = filter_sch;
-  }
-
   /* restore last used filters:
   */
   GtkFileChooserAction type = gtk_file_chooser_get_action (filechooser);
@@ -126,7 +120,6 @@ x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
   else
   if (type == GTK_FILE_CHOOSER_ACTION_SAVE)
   {
-    gtk_file_chooser_set_filter (filechooser, filter_last_savedlg);
   }
   else
   {
@@ -488,10 +481,6 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
   gtk_widget_show (dialog);
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_ACCEPT)
   {
-    /* remember current filter:
-    */
-    filter_last_savedlg = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
-
     gchar *filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
     /* If the file already exists, display a dialog box to check if
