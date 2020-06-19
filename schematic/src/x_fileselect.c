@@ -38,6 +38,13 @@ static int
 x_fileselect_load_backup (GschemToplevel *w_current,
                           GString *message);
 
+static void
+add_filter (GtkFileChooser* filechooser,
+            GtkFileFilter** filter,
+            const gchar*    name,
+            const gchar**   patterns);
+
+
 
 /*! \brief Creates filter for file chooser.
  *  \par Function Description
@@ -48,59 +55,23 @@ x_fileselect_load_backup (GschemToplevel *w_current,
  *  \param [in] filechooser The file chooser to add filter to.
  */
 static void
-x_fileselect_setup_filechooser_filters (GtkFileChooser *filechooser)
+setup_filters (GtkFileChooser *filechooser)
 {
-  /* create filters:
-  */
-  if (filter_sch == NULL)
-  {
-    filter_sch = gtk_file_filter_new();
+  const gchar* patterns_sch[] = { "*.sch", NULL };
+  add_filter (filechooser, &filter_sch,
+              _("Schematics (*.sch)"), patterns_sch);
 
-    gtk_file_filter_set_name (filter_sch, _("Schematics (*.sch)"));
-    gtk_file_filter_add_pattern (filter_sch, "*.sch");
+  const gchar* patterns_sym[] = { "*.sym", NULL };
+  add_filter (filechooser, &filter_sym,
+              _("Symbols (*.sym)"), patterns_sym);
 
-    /* NOTE: GtkFileChooser object takes ownership of the filter:
-    */
-    g_object_ref (G_OBJECT (filter_sch));
-  }
+  const gchar* patterns_sch_sym[] = { "*.sch", "*.sym", NULL };
+  add_filter (filechooser, &filter_sch_sym,
+              _("Schematics and symbols (*.sch *.sym)"), patterns_sch_sym);
 
-  if (filter_sym == NULL)
-  {
-    filter_sym = gtk_file_filter_new();
-
-    gtk_file_filter_set_name (filter_sym, _("Symbols (*.sym)"));
-    gtk_file_filter_add_pattern (filter_sym, "*.sym");
-
-    g_object_ref (G_OBJECT (filter_sym));
-  }
-
-  if (filter_sch_sym == NULL)
-  {
-    filter_sch_sym = gtk_file_filter_new();
-
-    gtk_file_filter_set_name (filter_sch_sym, _("Schematics and symbols (*.sch *.sym)"));
-    gtk_file_filter_add_pattern (filter_sch_sym, "*.sym");
-    gtk_file_filter_add_pattern (filter_sch_sym, "*.sch");
-
-    g_object_ref (G_OBJECT (filter_sch_sym));
-  }
-
-  if (filter_all == NULL)
-  {
-    filter_all = gtk_file_filter_new();
-
-    gtk_file_filter_set_name (filter_all, _("All files"));
-    gtk_file_filter_add_pattern (filter_all, "*");
-
-    g_object_ref (G_OBJECT (filter_all));
-  }
-
-  /* add filters to [filechooser]:
-  */
-  gtk_file_chooser_add_filter (filechooser, filter_sch);
-  gtk_file_chooser_add_filter (filechooser, filter_sym);
-  gtk_file_chooser_add_filter (filechooser, filter_sch_sym);
-  gtk_file_chooser_add_filter (filechooser, filter_all);
+  const gchar* patterns_all[] = { "*", NULL };
+  add_filter (filechooser, &filter_all,
+              _("All files"), patterns_all);
 
   /* use *.sch filter by default:
   */
@@ -349,7 +320,7 @@ x_fileselect_open(GschemToplevel *w_current)
                 "select-multiple", TRUE,
                 NULL);
   /* add file filters to dialog */
-  x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
+  setup_filters (GTK_FILE_CHOOSER (dialog));
   /* force start in current working directory, not in 'Recently Used' */
   cwd = g_get_current_dir ();
   gtk_file_chooser_set_current_folder (GTK_FILE_CHOOSER (dialog), cwd);
@@ -439,7 +410,7 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
 
   /* add file filters to dialog:
   */
-  x_fileselect_setup_filechooser_filters (GTK_FILE_CHOOSER (dialog));
+  setup_filters (GTK_FILE_CHOOSER (dialog));
 
   /* set the current filename or directory name if new document:
   */
@@ -618,4 +589,39 @@ schematic_file_open (GschemToplevel *w_current,
 
   return f_open_flags (gschem_toplevel_get_toplevel (w_current),
                        page, filename, flags, err);
+}
+
+
+
+/*! \brief Add a file chooser filter.
+ *
+ *  \param [in]      filechooser  GtkFileChooser
+ *  \param [in, out] filter       filter to set up
+ *  \param [in]      name         filter display name
+ *  \param [in]      patterns     NULL-terminated array of strings
+ */
+static void
+add_filter (GtkFileChooser* filechooser,
+            GtkFileFilter** filter,
+            const gchar*    name,
+            const gchar**   patterns)
+{
+  if (*filter == NULL)
+  {
+    *filter = gtk_file_filter_new();
+
+    gtk_file_filter_set_name (*filter, name);
+
+    for (const gchar** pp = patterns; *pp != NULL; ++pp)
+    {
+      gtk_file_filter_add_pattern (*filter, *pp);
+    }
+
+    /* GtkFileChooser takes ownership of the filter.
+     * ++ ref count to keep it alive after chooser is destroyed.
+    */
+    g_object_ref (G_OBJECT (*filter));
+  }
+
+  gtk_file_chooser_add_filter (filechooser, *filter);
 }
