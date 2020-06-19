@@ -46,6 +46,22 @@ add_filter (GtkFileChooser* filechooser,
 
 
 
+static gboolean
+filename_sym (const gchar* fname)
+{
+  return g_str_has_suffix (fname, ".sym");
+}
+
+
+
+static gboolean
+filename_sch (const gchar* fname)
+{
+  return g_str_has_suffix (fname, ".sch");
+}
+
+
+
 /*! \brief Creates filter for file chooser.
  *  \par Function Description
  *  This function adds file filters to <B>filechooser</B>.
@@ -150,12 +166,12 @@ on_filter_changed (GtkFileChooserDialog* dialog, gpointer data)
 
   gchar* bname = NULL;
 
-  if (filter == filter_sch && g_str_has_suffix (fname, ".sym"))
+  if (filter == filter_sch && filename_sym (fname))
   {
     bname = basename_switch_suffix (fname, "sch");
   }
   else
-  if (filter == filter_sym && g_str_has_suffix (fname, ".sch"))
+  if (filter == filter_sym && filename_sch (fname))
   {
     bname = basename_switch_suffix (fname, "sym");
   }
@@ -398,13 +414,27 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
   /* add file filters to dialog:
   */
   setup_filters (GTK_FILE_CHOOSER (dialog));
+  const gchar* fname = s_page_get_filename (page);
+
+  if (filename_sch (fname))
+  {
+    gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter_sch);
+  }
+  else
+  if (filename_sym (fname))
+  {
+    gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter_sym);
+  }
+  else
+  {
+    gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter_all);
+  }
 
   /* set the current filename or directory name if new document:
   */
-  if (g_file_test (s_page_get_filename (page), G_FILE_TEST_EXISTS))
+  if (g_file_test (fname, G_FILE_TEST_EXISTS))
   {
-    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
-                                   s_page_get_filename (page));
+    gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), fname);
   }
   else
   {
@@ -417,7 +447,6 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
 
     /* set page file's basename as the current filename:
     */
-    const gchar* fname = s_page_get_filename (page);
     gchar* bname = g_path_get_basename (fname);
     gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog), bname);
     g_free (bname);
