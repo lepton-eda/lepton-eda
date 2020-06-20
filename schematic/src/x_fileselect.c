@@ -42,14 +42,18 @@ static void
 add_filter (GtkFileChooser* filechooser,
             GtkFileFilter** filter,
             const gchar*    name,
-            const gchar**   patterns);
+            GtkFileFilterFunc pfn);
 
 
 
 static gboolean
 filename_sym (const gchar* fname)
 {
-  return g_str_has_suffix (fname, ".sym");
+  gchar* str = g_utf8_strdown (fname, -1);
+  gboolean res = g_str_has_suffix (str, ".sym");
+  g_free (str);
+
+  return res;
 }
 
 
@@ -57,7 +61,37 @@ filename_sym (const gchar* fname)
 static gboolean
 filename_sch (const gchar* fname)
 {
-  return g_str_has_suffix (fname, ".sch");
+  gchar* str = g_utf8_strdown (fname, -1);
+  gboolean res = g_str_has_suffix (str, ".sch");
+  g_free (str);
+
+  return res;
+}
+
+
+
+static gboolean
+filter_func_sch(const GtkFileFilterInfo* info, gpointer data)
+{
+  return filename_sch (info->filename);
+}
+
+static gboolean
+filter_func_sym(const GtkFileFilterInfo* info, gpointer data)
+{
+  return filename_sym (info->filename);
+}
+
+static gboolean
+filter_func_sch_sym(const GtkFileFilterInfo* info, gpointer data)
+{
+  return filename_sch (info->filename) || filename_sym (info->filename);
+}
+
+static gboolean
+filter_func_all(const GtkFileFilterInfo* info, gpointer data)
+{
+  return TRUE;
 }
 
 
@@ -73,21 +107,17 @@ filename_sch (const gchar* fname)
 static void
 setup_filters (GtkFileChooser *filechooser)
 {
-  const gchar* patterns_sch[] = { "*.sch", NULL };
   add_filter (filechooser, &filter_sch,
-              _("Schematics (*.sch)"), patterns_sch);
+              _("Schematics (*.sch)"), &filter_func_sch);
 
-  const gchar* patterns_sym[] = { "*.sym", NULL };
   add_filter (filechooser, &filter_sym,
-              _("Symbols (*.sym)"), patterns_sym);
+              _("Symbols (*.sym)"), &filter_func_sym);
 
-  const gchar* patterns_sch_sym[] = { "*.sch", "*.sym", NULL };
   add_filter (filechooser, &filter_sch_sym,
-              _("Schematics and symbols (*.sch *.sym)"), patterns_sch_sym);
+              _("Schematics and symbols (*.sch *.sym)"), &filter_func_sch_sym);
 
-  const gchar* patterns_all[] = { "*", NULL };
   add_filter (filechooser, &filter_all,
-              _("All files"), patterns_all);
+              _("All files"), &filter_func_all);
 
   /* use *.sch filter by default:
   */
@@ -614,24 +644,20 @@ schematic_file_open (GschemToplevel *w_current,
  *  \param [in]      filechooser  GtkFileChooser
  *  \param [in, out] filter       filter to set up
  *  \param [in]      name         filter display name
- *  \param [in]      patterns     NULL-terminated array of strings
+ *  \param [in]      pfn          filter function
  */
 static void
 add_filter (GtkFileChooser* filechooser,
             GtkFileFilter** filter,
             const gchar*    name,
-            const gchar**   patterns)
+            GtkFileFilterFunc pfn)
 {
   if (*filter == NULL)
   {
     *filter = gtk_file_filter_new();
 
     gtk_file_filter_set_name (*filter, name);
-
-    for (const gchar** pp = patterns; *pp != NULL; ++pp)
-    {
-      gtk_file_filter_add_pattern (*filter, *pp);
-    }
+    gtk_file_filter_add_custom (*filter, GTK_FILE_FILTER_FILENAME, pfn, NULL, NULL);
 
     /* GtkFileChooser takes ownership of the filter.
      * ++ ref count to keep it alive after chooser is destroyed.
