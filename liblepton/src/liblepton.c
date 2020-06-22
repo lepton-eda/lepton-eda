@@ -57,31 +57,38 @@ void liblepton_init(void)
 
 
 
-/*! \brief Add Lepton compiled path to Guile compiled paths env var.
+/*! \brief Prepend Lepton compiled path to Guile compiled paths env var.
  *  \note  To take effect, must be called before scm_boot_guile().
  */
 void
 set_guile_compiled_path()
 {
-  char* path = getenv ("GUILE_LOAD_COMPILED_PATH");
-  char buf[ PATH_MAX ] = "";
+  const char  varname[] = "GUILE_LOAD_COMPILED_PATH";
+  const char* lepton_precompile_dir = LEPTON_SCM_PRECOMPILE_DIR;
+  const char* value = getenv (varname);
 
-  if (path != NULL && strlen (path) > 0)
+  if (value == NULL || strlen (value) == 0)
   {
-    /* preserve already set $GUILE_LOAD_COMPILED_PATH:
-    */
-    snprintf (buf, sizeof (buf),
-              "%s:%s",
-              LEPTON_SCM_PRECOMPILE_DIR, path);
-    path = buf;
+    setenv (varname, lepton_precompile_dir, 1);
   }
   else
   {
-    path = (char*) LEPTON_SCM_PRECOMPILE_DIR;
+    const size_t len = strlen (lepton_precompile_dir)
+                       + 1  /* ":" */
+                       + strlen (value)
+                       + 1; /* \0  */
+    char* buffer = (char*) malloc (len);
+
+    strcpy (buffer, lepton_precompile_dir);
+    strcat (buffer, ":");
+    strcat (buffer, value);
+
+    setenv (varname, buffer, 1);
+
+    free (buffer);
   }
 
-  setenv ("GUILE_LOAD_COMPILED_PATH", path, 1);
-}
+} /* set_guile_compiled_path() */
 
 
 
