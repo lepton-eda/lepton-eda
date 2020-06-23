@@ -128,14 +128,6 @@ main_prog (int argc, char *argv[])
   argv_index = parse_commandline(argc, argv);
   cwd = g_get_current_dir();
 
-#if defined(__MINGW32__) && defined(DEBUG)
-  fprintf(stderr, _("This is the MINGW32 port.\n"));
-#endif
-
-#if DEBUG
-  fprintf(stderr, _("Current locale settings: %1$s\n"), setlocale(LC_ALL, NULL));
-#endif
-
   /* init global buffers */
   o_buffer_init();
 
