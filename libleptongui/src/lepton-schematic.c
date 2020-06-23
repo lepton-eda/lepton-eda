@@ -323,7 +323,4 @@ main_prog (int argc, char *argv[])
   }
 
   scm_dynwind_end ();
-
-  /* enter main loop */
-  gtk_main();
 }

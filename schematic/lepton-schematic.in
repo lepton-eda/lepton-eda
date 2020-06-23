@@ -30,8 +30,15 @@ exec @GUILE@ -s "$0" "$@"
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
                 "liblepton_init")
 
+(define libgtk (dynamic-link "libgtk-x11-2.0"))
 (define libleptongui (dynamic-link "libleptongui"))
 
+
+(define gtk-main
+  (pointer->procedure
+   void
+   (dynamic-func "gtk_main" libgtk)
+   '()))
 
 ;;; Localization.
 (define %textdomain "lepton-schematic")
@@ -156,3 +163,5 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
 (parse-commandline)
 ;;; FIXME: Arguments are not supported yet.
 (main 0 %null-pointer)
+;;; Run main GTK loop.
+(gtk-main)
