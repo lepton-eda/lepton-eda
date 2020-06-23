@@ -187,12 +187,42 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Contains a Scheme expression arising from command-line
 ;;; arguments.  This is evaluated after initialising
 ;;; lepton-schematic, but before loading any rc files.
-(define s-pre-load-expr '())
+(define pre-load-expr #f)
 
 ;;; Contains a Scheme expression arising from command-line
 ;;; arguments.  This is evaluated after loading lepton-schematic
 ;;; and any schematic files specified on the command-line.
-(define s-post-load-expr '())
+(define post-load-expr #f)
+
+
+(define (process-error-stack stack key args)
+  (match args
+    ((subr message message-args rest)
+     ;; Capture long error message (including possible backtrace).
+     (let ((long-message
+            (with-output-to-string
+              (λ ()
+                (when (stack? stack)
+                  (let ((port (current-output-port)))
+                    (display (_ "\nBacktrace:\n") port)
+                    (display-backtrace stack port)
+                    (display "\n" port)))
+                (display-error #f port subr message message-args rest)))))
+
+       ;; Send long message to log.
+       (log! 'message "~A\n" long-message)))))
+
+
+(define (protected-eval exp)
+  (let ((captured-stack #f))
+    (catch #t
+      ;; Expression to evaluate.
+      (lambda () exp)
+      (lambda (key . args)
+        (process-error-stack captured-stack key args))
+      (lambda (key . args)
+        ;; Capture the stack here:
+        (set! captured-stack (make-stack #t))))))
 
 
 ;;; Print brief help message describing lepton-schematic usage and
@@ -261,12 +291,14 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
         (version           (option-ref %options 'version #f))
         (quiet-mode        (option-ref %options 'quiet-mode #f))
         (rc-filename       (option-ref %options 'rc-filename #f))
-        (pre-load-expr     (option-ref %options 'pre-load-expr #f))
-        (post-load-expr    (option-ref %options 'post-load-expr #f))
+        (pre-load          (option-ref %options 'pre-load-expr #f))
+        (post-load         (option-ref %options 'post-load-expr #f))
         (schematics        (option-ref %options '() #f)))
     (cond (help (usage))
           (version (lepton-schematic-version 'stdout))
           (verbose (display "Verbose\n")))
+    (when pre-load
+      (set! pre-load-expr pre-load))
     ;; Return schematic names to open.
     schematics))
 
@@ -305,6 +337,9 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
 ;;; files).
 (init-color)
 (init-undo*)
+
+;;; Run pre-load Scheme expressions.
+(and=> pre-load-expr protected-eval)
 
 ;;; FIXME: Arguments are not supported yet.
 (main 0 %null-pointer)

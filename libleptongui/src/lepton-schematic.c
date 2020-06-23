@@ -130,9 +130,6 @@ main_prog (int argc, char *argv[])
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
-  /* Run pre-load Scheme expressions */
-  g_scm_eval_protected (s_pre_load_expr, scm_current_module ());
-
   /* Set up atexit handlers */
   gschem_atexit (i_vars_atexit_save_cache_config, NULL);
 
