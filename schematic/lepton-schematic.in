@@ -106,6 +106,24 @@ exec @GUILE@ -s "$0" "$@"
    (dynamic-func "scheme_init_undo" libleptongui)
    '()))
 
+(define init-buffers
+  (pointer->procedure
+   void
+   (dynamic-func "o_buffer_init" libleptongui)
+   '()))
+
+(define init-color
+  (pointer->procedure
+   void
+   (dynamic-func "x_color_init" libleptongui)
+   '()))
+
+(define init-undo*
+  (pointer->procedure
+   void
+   (dynamic-func "o_undo_init" libleptongui)
+   '()))
+
 
 ;;; Localization.
 (define %textdomain "lepton-schematic")
@@ -128,24 +146,25 @@ exec @GUILE@ -s "$0" "$@"
 (define (set-guile-compiled-path)
   (set! %load-compiled-path (cons "@ccachedir@"
                                   %load-compiled-path)))
+(define (register-guile-funcs)
+  (register-funcs)
+  (init-window)
+  (init-select)
+  (init-hook)
+  (init-action)
+  (init-attrib)
+  (init-keys)
+  (init-builtins)
+  (init-util)
+  (init-undo))
 
 (define (precompile-run)
   (let ((script (getenv "LEPTON_SCM_PRECOMPILE_SCRIPT")))
     (if script
-        (begin
-          (register-funcs)
-          (init-window)
-          (init-select)
-          (init-hook)
-          (init-action)
-          (init-attrib)
-          (init-keys)
-          (init-builtins)
-          (init-util)
-          (init-undo)
-          ;; Actually load the script.
-          (primitive-load script)
-          0)
+        (begin (register-guile-funcs)
+               ;; Actually load the script.
+               (primitive-load script)
+               0)
         1)))
 
 (primitive-eval '(use-modules (lepton log)
@@ -275,6 +294,17 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
 
 ;;; Initialize GTK.
 (gtk-init %null-pointer %null-pointer)
+
+;;; Init global buffers.
+(init-buffers)
+
+;;; Register guile (scheme) functions
+(register-guile-funcs)
+
+;;; Initialise color map (need to do this before reading rc
+;;; files).
+(init-color)
+(init-undo*)
 
 ;;; FIXME: Arguments are not supported yet.
 (main 0 %null-pointer)

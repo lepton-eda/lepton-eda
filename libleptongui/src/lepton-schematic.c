@@ -128,29 +128,6 @@ main_prog (int argc, char *argv[])
   argv_index = parse_commandline(argc, argv);
   cwd = g_get_current_dir();
 
-  /* init global buffers */
-  o_buffer_init();
-
-  /* register guile (scheme) functions */
-  g_register_funcs();
-  g_init_window ();
-  g_init_select ();
-  g_init_hook ();
-  g_init_action ();
-  g_init_attrib ();
-  g_init_keys ();
-  g_init_builtins ();
-  g_init_util ();
-
-  scheme_init_undo();
-
-
-  /* initialise color map (need to do this before reading rc files */
-  x_color_init ();
-
-  o_undo_init();
-
-
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
   /* Run pre-load Scheme expressions */
