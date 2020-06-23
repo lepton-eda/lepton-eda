@@ -40,6 +40,68 @@ exec @GUILE@ -s "$0" "$@"
    (dynamic-func "gtk_main" libgtk)
    '()))
 
+
+(define register-funcs
+  (pointer->procedure
+   void
+   (dynamic-func "g_register_funcs" libleptongui)
+   '()))
+
+(define init-window
+  (pointer->procedure
+   void
+   (dynamic-func "g_init_window" libleptongui)
+   '()))
+
+(define init-select
+  (pointer->procedure
+   void
+   (dynamic-func "g_init_select" libleptongui)
+   '()))
+
+(define init-hook
+  (pointer->procedure
+   void
+   (dynamic-func "g_init_hook" libleptongui)
+   '()))
+
+(define init-action
+  (pointer->procedure
+   void
+   (dynamic-func "g_init_action" libleptongui)
+   '()))
+
+(define init-attrib
+  (pointer->procedure
+   void
+   (dynamic-func "g_init_attrib" libleptongui)
+   '()))
+
+(define init-keys
+  (pointer->procedure
+   void
+   (dynamic-func "g_init_keys" libleptongui)
+   '()))
+
+(define init-builtins
+  (pointer->procedure
+   void
+   (dynamic-func "g_init_builtins" libleptongui)
+   '()))
+
+(define init-util
+  (pointer->procedure
+   void
+   (dynamic-func "g_init_util" libleptongui)
+   '()))
+
+(define init-undo
+  (pointer->procedure
+   void
+   (dynamic-func "scheme_init_undo" libleptongui)
+   '()))
+
+
 ;;; Localization.
 (define %textdomain "lepton-schematic")
 (bindtextdomain %textdomain "@localedir@")
@@ -49,6 +111,37 @@ exec @GUILE@ -s "$0" "$@"
 (setlocale LC_NUMERIC "C")
 
 (define (G_ msg) (gettext msg %textdomain))
+
+;;; Precompilation.
+(define (precompile-mode)
+  (getenv "LEPTON_SCM_PRECOMPILE"))
+
+(define (precompile-prepare)
+  (setenv "GUILE_AUTO_COMPILE" "0"))
+
+;;; Add Lepton compiled path to Guile compiled paths env var.
+(define (set-guile-compiled-path)
+  (set! %load-compiled-path (cons "@ccachedir@"
+                                  %load-compiled-path)))
+
+(define (precompile-run)
+  (let ((script (getenv "LEPTON_SCM_PRECOMPILE_SCRIPT")))
+    (if script
+        (begin
+          (register-funcs)
+          (init-window)
+          (init-select)
+          (init-hook)
+          (init-action)
+          (init-attrib)
+          (init-keys)
+          (init-builtins)
+          (init-util)
+          (init-undo)
+          ;; Actually load the script.
+          (primitive-load script)
+          0)
+        1)))
 
 (primitive-eval '(use-modules (lepton log)
                               (lepton version)))
@@ -161,6 +254,17 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
    (list int '*)))
 
 (parse-commandline)
+
+;;; Precompilation.
+(if (precompile-mode)
+    (precompile-prepare)
+    (set-guile-compiled-path))
+
+;;; Run precompilation.
+(when (precompile-mode)
+  (primitive-exit (precompile-run)))
+
+
 ;;; FIXME: Arguments are not supported yet.
 (main 0 %null-pointer)
 ;;; Run main GTK loop.
