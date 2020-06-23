@@ -258,6 +258,10 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
    (dynamic-func "main_prog" libleptongui)
    (list int '*)))
 
+;;; Init logging.
+(init-log "schematic")
+(lepton-schematic-version)
+
 (parse-commandline)
 
 ;;; Precompilation.
