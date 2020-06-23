@@ -125,8 +125,6 @@ main_prog (int argc, char *argv[])
   int argv_index;
   char *filename;
 
-  gtk_init(&argc, &argv);
-
   argv_index = parse_commandline(argc, argv);
   cwd = g_get_current_dir();
 

@@ -33,6 +33,11 @@ exec @GUILE@ -s "$0" "$@"
 (define libgtk (dynamic-link "libgtk-x11-2.0"))
 (define libleptongui (dynamic-link "libleptongui"))
 
+(define gtk-init
+  (pointer->procedure
+   void
+   (dynamic-func "gtk_init" libgtk)
+   (list '* '*)))
 
 (define gtk-main
   (pointer->procedure
@@ -264,6 +269,8 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
 (when (precompile-mode)
   (primitive-exit (precompile-run)))
 
+;;; Initialize GTK.
+(gtk-init %null-pointer %null-pointer)
 
 ;;; FIXME: Arguments are not supported yet.
 (main 0 %null-pointer)
