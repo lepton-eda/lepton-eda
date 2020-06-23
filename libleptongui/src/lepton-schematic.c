@@ -309,11 +309,6 @@ main_prog (int argc, char *argv[])
 
   x_window_set_current_page (w_current, page);
 
-
-#if DEBUG
-  scm_c_eval_string ("(display \"hello guile\n\")");
-#endif
-
   /* Run post-load expressions */
   if (scm_is_false (g_scm_eval_protected (s_post_load_expr, scm_current_module ()))) {
     fprintf (stderr, _("ERROR: Failed to load or evaluate startup script.\n\n"
