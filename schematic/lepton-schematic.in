@@ -367,5 +367,8 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
 
 ;;; FIXME: Arguments are not supported yet.
 (main 0 %null-pointer)
+
+(eval-post-load-expr!)
+
 ;;; Run main GTK loop.
 (gtk-main)
