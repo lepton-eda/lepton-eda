@@ -41,7 +41,7 @@
 void
 set_verbose_mode () {
   verbose_mode = TRUE;
-  verbose_load = TRUE;
+  verbose_loading = TRUE;
   quiet_mode = FALSE;
 }
 
@@ -49,7 +49,7 @@ void
 set_quiet_mode () {
   quiet_mode = TRUE;
   verbose_mode = FALSE;
-  verbose_load = FALSE;
+  verbose_loading = FALSE;
 }
 
 

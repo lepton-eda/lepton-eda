@@ -124,6 +124,18 @@ exec @GUILE@ -s "$0" "$@"
    (dynamic-func "o_undo_init" libleptongui)
    '()))
 
+(define set-quiet-mode!
+  (pointer->procedure
+   void
+   (dynamic-func "set_quiet_mode" libleptongui)
+   '()))
+
+(define set-verbose-mode!
+  (pointer->procedure
+   void
+   (dynamic-func "set_verbose_mode" libleptongui)
+   '()))
+
 
 ;;; Localization.
 (define %textdomain "lepton-schematic")
@@ -274,10 +286,12 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
     (list
      (option '(#\q "quiet") #f #f
              (λ (opt name arg seeds)
-               `(quiet . ,seeds)))
+               (set-quiet-mode!)
+               seeds))
      (option '(#\v "verbose") #f #f
              (λ (opt name arg seeds)
-               `(verbose . ,seeds)))
+               (set-verbose-mode!)
+               seeds))
      (option '(#\L) #t #f
              (λ (opt name arg seeds)
                (add-to-load-path arg)

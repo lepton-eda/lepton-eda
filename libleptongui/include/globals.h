@@ -35,6 +35,7 @@ extern int do_logging;
 /* command line options */
 extern int quiet_mode;
 extern int verbose_mode;
+extern int verbose_loading;
 
 /* Global buffers */
 #define MAX_BUFFERS      (5)
