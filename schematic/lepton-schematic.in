@@ -363,7 +363,7 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
 (init-color)
 (init-undo*)
 
-(let ((schematics (reverse (parse-commandline))))
+(let ((schematics (parse-commandline)))
   (main (scm->pointer schematics)))
 
 (eval-post-load-expr!)
