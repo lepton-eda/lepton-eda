@@ -90,7 +90,6 @@ libleptongui_la_SOURCES = \
 	o_slot.c \
 	o_text.c \
 	o_undo.c \
-	parsecmd.c \
 	s_stretch.c \
 	schematic_hierarchy.c \
 	x_attribedit.c \

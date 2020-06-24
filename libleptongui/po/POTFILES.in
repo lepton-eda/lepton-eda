@@ -74,7 +74,6 @@ libleptongui/src/o_select.c
 libleptongui/src/o_slot.c
 libleptongui/src/o_text.c
 libleptongui/src/o_undo.c
-libleptongui/src/parsecmd.c
 libleptongui/src/schematic_hierarchy.c
 libleptongui/src/x_attribedit.c
 libleptongui/src/x_autonumber.c
