@@ -111,3 +111,5 @@ libleptongui/scheme/schematic/builtins.scm
 libleptongui/scheme/schematic/gschemdoc.scm.in
 libleptongui/scheme/schematic/keymap.scm
 libleptongui/scheme/gschem/deprecated.scm
+
+schematic/lepton-schematic.scm
