@@ -183,12 +183,6 @@ exec @GUILE@ -s "$0" "$@"
                               (lepton version)))
 
 
-;;; Contains a Scheme expression arising from command-line
-;;; arguments.  This is evaluated after loading lepton-schematic
-;;; and any schematic files specified on the command-line.
-(define post-load-expr #f)
-
-
 (define (process-error-stack stack key args)
   (match args
     ((subr message message-args rest)
@@ -211,12 +205,30 @@ exec @GUILE@ -s "$0" "$@"
   (let ((captured-stack #f))
     (catch #t
       ;; Expression to evaluate.
-      (lambda () exp)
+      (lambda () (eval exp current-module))
       (lambda (key . args)
         (process-error-stack captured-stack key args))
       (lambda (key . args)
         ;; Capture the stack here:
         (set! captured-stack (make-stack #t))))))
+
+
+(define add-post-load-expr! #f)
+(define eval-post-load-expr! #f)
+
+;;; Contains a Scheme expression arising from command-line
+;;; arguments.  This is evaluated after loading lepton-schematic
+;;; and any schematic files specified on the command-line.
+(let ((post-load-expr '()))
+  (set! add-post-load-expr!
+        (λ (expr script?)
+          (set! post-load-expr
+                (cons (list (if script? 'load 'eval-string) expr)
+                      post-load-expr))))
+  (set! eval-post-load-expr!
+        (λ ()
+          (protected-eval
+           (cons 'begin (reverse post-load-expr))))))
 
 
 ;;; Print brief help message describing lepton-schematic usage and
@@ -298,10 +310,12 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
                seeds))
      (option '(#\s) #t #f
              (λ (opt name arg seeds)
-               `((script . ,arg) . ,seeds)))
+               (add-post-load-expr! arg #t)
+               seeds))
      (option '(#\c) #t #f
              (λ (opt name arg seeds)
-               `((expr . ,arg) . ,seeds)))
+               (add-post-load-expr! arg #f)
+               seeds))
      (option '(#\h #\? "help") #f #f
              (λ (opt name arg seeds)
                (usage)))
