@@ -334,13 +334,11 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
   (pointer->procedure
    void
    (dynamic-func "main_prog" libleptongui)
-   (list int '*)))
+   (list '*)))
 
 ;;; Init logging.
 (init-log "schematic")
 (lepton-schematic-version)
-
-(parse-commandline)
 
 ;;; Precompilation.
 (if (precompile-mode)
@@ -365,8 +363,8 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
 (init-color)
 (init-undo*)
 
-;;; FIXME: Arguments are not supported yet.
-(main 0 %null-pointer)
+(let ((schematics (reverse (parse-commandline))))
+  (main (scm->pointer schematics)))
 
 (eval-post-load-expr!)
 

@@ -180,7 +180,7 @@ typedef void (*gschem_atexit_func)(gpointer data);
 void gschem_atexit(gschem_atexit_func func, gpointer data);
 void gschem_quit(void);
 void
-main_prog (int argc, char *argv[]);
+main_prog (SCM file_list_s);
 void
 set_verbose_mode ();
 void

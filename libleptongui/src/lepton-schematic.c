@@ -132,15 +132,15 @@ void gschem_quit(void)
  *  and passes control to the gtk main loop.
  */
 void
-main_prog (int argc, char *argv[])
+main_prog (SCM file_list_s)
 {
-  int i;
   char *cwd = NULL;
   GschemToplevel *w_current = NULL;
-  int argv_index;
   char *filename;
+  char *element;
+  SCM list_s;
+  SCM element_s;
 
-  argv_index = parse_commandline(argc, argv);
   cwd = g_get_current_dir();
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
@@ -170,14 +170,19 @@ main_prog (int argc, char *argv[])
   x_stroke_init ();
 #endif /* HAVE_LIBSTROKE */
 
-  for (i = argv_index; i < argc; i++) {
+  for (list_s = file_list_s;
+       !scm_is_null (list_s);
+       list_s = SCM_CDR (list_s)) {
 
-    if (g_path_is_absolute(argv[i]))
+    element_s = SCM_CAR (list_s);
+    element = scm_to_locale_string (element_s);
+
+    if (g_path_is_absolute (element))
     {
       /* Path is already absolute so no need to do any concat of cwd */
-      filename = g_strdup (argv[i]);
+      filename = g_strdup (element);
     } else {
-      filename = g_build_filename (cwd, argv[i], NULL);
+      filename = g_build_filename (cwd, element, NULL);
     }
 
     /*
@@ -188,8 +193,11 @@ main_prog (int argc, char *argv[])
 
     x_window_open_page(w_current, filename);
 
-    g_free (filename);
+    free (filename);
+    free (element);
   }
+
+  scm_remember_upto_here_1 (file_list_s);
 
   g_free(cwd);
 
@@ -204,13 +212,6 @@ main_prog (int argc, char *argv[])
   }
 
   x_window_set_current_page (w_current, page);
-
-  /* Run post-load expressions */
-  if (scm_is_false (g_scm_eval_protected (s_post_load_expr, scm_current_module ()))) {
-    fprintf (stderr, _("ERROR: Failed to load or evaluate startup script.\n\n"
-                       "The lepton-schematic log may contain more information.\n"));
-    exit (1);
-  }
 
   /* open up log window on startup */
   if (w_current->log_window == MAP_ON_STARTUP)
