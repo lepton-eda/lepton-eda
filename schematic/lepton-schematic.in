@@ -22,8 +22,8 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 
-(use-modules (ice-9 getopt-long)
-             (ice-9 match)
+(use-modules (ice-9 match)
+             (srfi srfi-37)
              (system foreign))
 
 ;;; Load and initialize liblepton library.
@@ -170,24 +170,6 @@ exec @GUILE@ -s "$0" "$@"
 (primitive-eval '(use-modules (lepton log)
                               (lepton version)))
 
-(define option-spec
-  '((help (single-char #\h))
-    (version (single-char #\V))
-    (quiet (single-char #\q))
-    (verbose (single-char #\v))
-    (loaddir (single-char #\L) (value #t))
-    (script (single-char #\s) (value #t))
-    (command (single-char #\c) (value #t))
-    ))
-
-
-(define %options (getopt-long (command-line) option-spec))
-
-
-;;; Contains a Scheme expression arising from command-line
-;;; arguments.  This is evaluated after initialising
-;;; lepton-schematic, but before loading any rc files.
-(define pre-load-expr #f)
 
 ;;; Contains a Scheme expression arising from command-line
 ;;; arguments.  This is evaluated after loading lepton-schematic
@@ -286,21 +268,36 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
 ;;; message or version information as required.
 (define (parse-commandline)
   "Parse command line options"
-  (let ((help (option-ref %options 'help #f))
-        (version (option-ref %options 'version #f))
-        (verbose-mode (option-ref %options 'verbose #f))
-        (quiet-mode (option-ref %options 'quiet #f))
-        (pre-load-dirs (option-ref %options 'loaddir #f))
-        (post-load-expr (option-ref %options 'command #f))
-        (post-load-script (option-ref %options 'script #f))
-        (schematics (option-ref %options '() #f)))
-    (cond (help (usage))
-          (version (lepton-schematic-version 'stdout))
-          (verbose-mode (display "Verbose\n")))
-    (when pre-load-dirs
-      (set! pre-load-expr pre-load-dirs))
-    ;; Return schematic names to open.
-    schematics))
+  (reverse
+   (args-fold
+    (cdr (program-arguments))
+    (list
+     (option '(#\q "quiet") #f #f
+             (λ (opt name arg seeds)
+               `(quiet . ,seeds)))
+     (option '(#\v "verbose") #f #f
+             (λ (opt name arg seeds)
+               `(verbose . ,seeds)))
+     (option '(#\L) #t #f
+             (λ (opt name arg seeds)
+               (add-to-load-path arg)
+               seeds))
+     (option '(#\s) #t #f
+             (λ (opt name arg seeds)
+               `((script . ,arg) . ,seeds)))
+     (option '(#\c) #t #f
+             (λ (opt name arg seeds)
+               `((expr . ,arg) . ,seeds)))
+     (option '(#\h #\? "help") #f #f
+             (λ (opt name arg seeds)
+               (usage)))
+     (option '(#\V "version") #f #f
+             (λ (opt name arg seeds)
+               (lepton-schematic-version 'stdout))))
+    (lambda (opt name arg seeds)
+      (error "Unrecognized option `~A'" name))
+    (lambda (op seeds) (cons op seeds))
+    '())))
 
 
 (define main
@@ -337,9 +334,6 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
 ;;; files).
 (init-color)
 (init-undo*)
-
-;;; Run pre-load Scheme expressions.
-(and=> pre-load-expr protected-eval)
 
 ;;; FIXME: Arguments are not supported yet.
 (main 0 %null-pointer)
