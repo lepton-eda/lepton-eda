@@ -181,6 +181,10 @@ void gschem_atexit(gschem_atexit_func func, gpointer data);
 void gschem_quit(void);
 void
 main_prog (int argc, char *argv[]);
+void
+set_verbose_mode ();
+void
+set_quiet_mode ();
 /* i_basic.c */
 void i_action_start(GschemToplevel *w_current);
 void i_action_stop(GschemToplevel *w_current);
