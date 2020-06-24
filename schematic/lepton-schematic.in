@@ -205,7 +205,7 @@ exec @GUILE@ -s "$0" "$@"
   (let ((captured-stack #f))
     (catch #t
       ;; Expression to evaluate.
-      (lambda () (eval exp current-module))
+      (lambda () (eval exp (current-module)))
       (lambda (key . args)
         (process-error-stack captured-stack key args))
       (lambda (key . args)
