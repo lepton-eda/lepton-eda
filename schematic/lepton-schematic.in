@@ -177,7 +177,7 @@ exec @GUILE@ -s "$0" "$@"
     (verbose (single-char #\v))
     (loaddir (single-char #\L) (value #t))
     (script (single-char #\s) (value #t))
-    (expr (single-char #\c) (value #t))
+    (command (single-char #\c) (value #t))
     ))
 
 
@@ -286,19 +286,19 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
 ;;; message or version information as required.
 (define (parse-commandline)
   "Parse command line options"
-  (let ((help              (option-ref %options 'help #f))
-        (verbose           (option-ref %options 'verbose #f))
-        (version           (option-ref %options 'version #f))
-        (quiet-mode        (option-ref %options 'quiet-mode #f))
-        (rc-filename       (option-ref %options 'rc-filename #f))
-        (pre-load          (option-ref %options 'pre-load-expr #f))
-        (post-load         (option-ref %options 'post-load-expr #f))
-        (schematics        (option-ref %options '() #f)))
+  (let ((help (option-ref %options 'help #f))
+        (version (option-ref %options 'version #f))
+        (verbose-mode (option-ref %options 'verbose #f))
+        (quiet-mode (option-ref %options 'quiet #f))
+        (pre-load-dirs (option-ref %options 'loaddir #f))
+        (post-load-expr (option-ref %options 'command #f))
+        (post-load-script (option-ref %options 'script #f))
+        (schematics (option-ref %options '() #f)))
     (cond (help (usage))
           (version (lepton-schematic-version 'stdout))
-          (verbose (display "Verbose\n")))
-    (when pre-load
-      (set! pre-load-expr pre-load))
+          (verbose-mode (display "Verbose\n")))
+    (when pre-load-dirs
+      (set! pre-load-expr pre-load-dirs))
     ;; Return schematic names to open.
     schematics))
 
