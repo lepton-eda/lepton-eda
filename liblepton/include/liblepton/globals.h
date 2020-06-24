@@ -27,7 +27,7 @@
 
 extern gboolean config_legacy_mode;
 
-extern int verbose_loading;
+extern int verbose_mode;
 
 extern int do_logging;
 

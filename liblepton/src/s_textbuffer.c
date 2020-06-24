@@ -34,7 +34,7 @@
  * When loading sch/sym files, print each line of the
  * file while parsing it. 1 => enabled.
  */
-int verbose_loading = 0;
+int verbose_mode = 0;
 
 
 
@@ -91,7 +91,7 @@ TextBuffer *s_textbuffer_new (const gchar *data, const gint size, const gchar* n
 
   result->linenum = 0;
 
-  if (verbose_loading)
+  if (verbose_mode)
   {
     fprintf (stderr, "\n");
     fprintf (stderr, "vvvvvvvvvvvvvvvvvvvv s_textbuffer_new(): [%s]\n", name);
@@ -120,7 +120,7 @@ TextBuffer *s_textbuffer_free (TextBuffer *tb)
   tb->line = NULL;
   g_free (tb);
 
-  if (verbose_loading)
+  if (verbose_mode)
   {
     fprintf (stderr, "\n");
     fprintf (stderr, "^^^^^^^^^^^^^^^^^^^^ s_textbuffer_free()\n");
@@ -227,7 +227,7 @@ s_textbuffer_next_line (TextBuffer *tb)
   {
     ++tb->linenum;
 
-    if (verbose_loading)
+    if (verbose_mode)
     {
       fprintf (stderr, "%-4lu: %s", (unsigned long) tb->linenum, line);
     }

@@ -40,14 +40,14 @@
 
 void
 set_verbose_mode () {
-  verbose_loading = TRUE;
+  verbose_mode = TRUE;
   quiet_mode = FALSE;
 }
 
 void
 set_quiet_mode () {
   quiet_mode = TRUE;
-  verbose_loading = FALSE;
+  verbose_mode = FALSE;
 }
 
 
