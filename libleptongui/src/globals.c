@@ -28,7 +28,6 @@ GList *global_window_list = NULL;
 
 /* command line options */
 int quiet_mode = FALSE;
-int verbose_mode = FALSE;
 int verbose_loading = FALSE;
 
 /* Hooks */
