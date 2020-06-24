@@ -325,7 +325,14 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
              (λ (opt name arg seeds)
                (lepton-schematic-version 'stdout))))
     (lambda (opt name arg seeds)
-      (error "Unrecognized option `~A'" name))
+      (format #t
+              (G_ "ERROR: Unknown option ~A.
+Run `~A --help' for more information.\n")
+              (if (char? name)
+                  (string-append "-" (char-set->string (char-set name)))
+                  (string-append "--" name))
+              (basename (car (program-arguments))))
+      (primitive-exit 1))
     (lambda (op seeds) (cons op seeds))
     '())))
 
