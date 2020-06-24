@@ -192,7 +192,7 @@ exec @GUILE@ -s "$0" "$@"
               (λ ()
                 (when (stack? stack)
                   (let ((port (current-output-port)))
-                    (display (_ "\nBacktrace:\n") port)
+                    (display (G_ "\nBacktrace:\n") port)
                     (display-backtrace stack port)
                     (display "\n" port)))
                 (display-error #f port subr message message-args rest)))))
