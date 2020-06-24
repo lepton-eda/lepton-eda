@@ -194,11 +194,13 @@ exec @GUILE@ -s "$0" "$@"
                   (let ((port (current-output-port)))
                     (display (G_ "\nBacktrace:\n") port)
                     (display-backtrace stack port)
-                    (display "\n" port)))
-                (display-error #f port subr message message-args rest)))))
+                    (display "\n" port)
+                    (display-error #f port subr message message-args rest)))))))
 
        ;; Send long message to log.
-       (log! 'message "~A\n" long-message)))))
+       (log! 'message "~A\n" long-message)
+       (format #t (_ "ERROR: ~A\nPlease see log file for more information.\n")
+               (apply format #f message message-args))))))
 
 
 (define (protected-eval exp)
