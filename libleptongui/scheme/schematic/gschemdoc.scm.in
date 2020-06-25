@@ -29,23 +29,13 @@
   #:use-module (lepton os)
 
   #:use-module (schematic core gettext)
+  #:use-module (schematic dialog)
   #:use-module (schematic util)
 
   #:export (sys-doc-dir)
   #:export (user-doc-dir)
   #:export (show-wiki)
   #:export (show-component-documentation))
-
-
-
-; private:
-;
-; Display a message box.
-;
-( define ( doc-msg-box msg )
-  ( (@@ (guile-user) gschem-msg) msg )
-)
-
 
 
 ; private:
@@ -67,7 +57,7 @@
       ( exmsg ( apply format #f msg args ) )
       ( ermsg ( format #f "~a~%'~a in ~a():~%~%~a" str key subr exmsg ) )
       )
-        ( doc-msg-box ermsg )
+        (schematic-message-dialog ermsg)
       )
     )
   ) ; catch()
@@ -265,4 +255,4 @@ displayed in the system associated viewer application."
          (directory-doc-search (sys-doc-dir) name ".pdf"))))
 
      ;; 4) Fail miserably
-     (doc-msg-box (_ "No documentation found")))))
+     (schematic-message-dialog (_ "No documentation found")))))
