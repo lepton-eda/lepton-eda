@@ -20,7 +20,8 @@
 (define-module (schematic dialog)
   #:use-module (system foreign)
 
-  #:export (schematic-message-dialog))
+  #:export (schematic-message-dialog
+            schematic-confirm-dialog))
 
 (define libleptongui (dynamic-link "libleptongui"))
 
@@ -32,3 +33,12 @@
 
 (define (schematic-message-dialog message)
   (generic-msg-dialog (string->pointer message)))
+
+(define generic-confirm-dialog
+  (pointer->procedure
+   int
+   (dynamic-func "generic_confirm_dialog" libleptongui)
+   (list '*)))
+
+(define (schematic-confirm-dialog message)
+  (not (zero? (generic-confirm-dialog (string->pointer message)))))

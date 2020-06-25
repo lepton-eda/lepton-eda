@@ -568,3 +568,4 @@
 (define-public (gschem-log msg)
   (log! 'message msg))
 (define-public gschem-msg schematic-message-dialog)
+(define-public gschem-confirm schematic-confirm-dialog)

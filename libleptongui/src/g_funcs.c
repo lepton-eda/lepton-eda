@@ -40,29 +40,6 @@
  *  \par Function Description
  *
  */
-SCM g_funcs_confirm(SCM scm_msg)
-{
-  int r;
-  char *msg;
-
-  SCM_ASSERT (scm_is_string (scm_msg), scm_msg,
-	      SCM_ARG1, "gschem-confirm");
-  
-  msg = scm_to_utf8_string (scm_msg);
-  r = generic_confirm_dialog (msg);
-  free(msg);
-
-  if (r)
-    return SCM_BOOL_T;
-  else
-    return SCM_BOOL_F;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_funcs_filesel(SCM scm_msg, SCM scm_templ, SCM scm_flags)
 {
   int c_flags;
