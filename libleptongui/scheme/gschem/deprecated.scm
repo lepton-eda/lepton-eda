@@ -35,6 +35,7 @@
   #:use-module (schematic core builtins)
   #:use-module (schematic attrib)
   #:use-module (schematic core gettext)
+  #:use-module (schematic dialog)
   #:use-module (schematic hook)
   #:use-module (schematic selection)
   #:use-module (schematic window))
@@ -566,3 +567,4 @@
 (define-public (gschem-exit) (primitive-exit 0))
 (define-public (gschem-log msg)
   (log! 'message msg))
+(define-public gschem-msg schematic-message-dialog)
