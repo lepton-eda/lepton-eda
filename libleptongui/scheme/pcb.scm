@@ -271,7 +271,10 @@
   (let ((f #f))
     (schematic-message-dialog "This menu choice does not really do anything yet other than select a file\n")
 
-    (set! f (gschem-filesel "Select Project File" pcb:project-file-name  'open 'must_exist))
+    (set! f (schematic-fileselect-dialog "Select Project File"
+                                         pcb:project-file-name
+                                         ;; flags
+                                         'open 'must_exist))
     (if f (set! pcb:project-file-name f) )
   )
 )
@@ -280,7 +283,10 @@
   (let ((f #f))
     (schematic-message-dialog "This menu choice does not really do anything yet other than select a file\n")
 
-    (set! f (gschem-filesel "Save Project File As" pcb:project-file-name 'save 'may_exist))
+    (set! f (schematic-fileselect-dialog "Save Project File As"
+                                         pcb:project-file-name
+                                         ;; flags
+                                         'save 'may_exist))
     (if f (set! pcb:project-file-name f) )
   )
 )
