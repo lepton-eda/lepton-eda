@@ -53,7 +53,8 @@
 ;;
 
 (use-modules (ice-9 popen)
-             (lepton log))
+             (lepton log)
+             (schematic dialog))
 
 (log! 'message "Loading the PCB major mode\n")
 ;; (log! 'message "PCB-mode version $Id$\n")
@@ -215,7 +216,8 @@
 ;;
 ;;
 (define (pcb:about)
-  (gschem-msg (string-append
+  (schematic-message-dialog
+   (string-append
 	       "This is the pcb major mode for gschem\n"
 	       ;; "pcb.scm version $Id$\n"
 	       "***** WARNING *****\n"
@@ -233,7 +235,7 @@
   (if pcb:pipe 
       (begin
 	(log! 'message "PCB is already running\n")
-	(gschem-msg "PCB is already running\n")
+	(schematic-message-dialog "PCB is already running\n")
 	)
 
       (begin
@@ -250,7 +252,7 @@
 		  (log! 'message "Launched PCB\n")
 		  )
 	      )
-	    (gschem-msg "Not launching PCB\n")
+	    (schematic-message-dialog "Not launching PCB\n")
 	    )
 	)
       )
@@ -267,7 +269,7 @@
 
 (define (pcb:load-project)
   (let ((f #f))
-    (gschem-msg "This menu choice does not really do anything yet other than select a file\n")
+    (schematic-message-dialog "This menu choice does not really do anything yet other than select a file\n")
 
     (set! f (gschem-filesel "Select Project File" pcb:project-file-name  'open 'must_exist))
     (if f (set! pcb:project-file-name f) )
@@ -276,7 +278,7 @@
 
 (define (pcb:save-project)
   (let ((f #f))
-    (gschem-msg "This menu choice does not really do anything yet other than select a file\n")
+    (schematic-message-dialog "This menu choice does not really do anything yet other than select a file\n")
 
     (set! f (gschem-filesel "Save Project File As" pcb:project-file-name 'save 'may_exist))
     (if f (set! pcb:project-file-name f) )
