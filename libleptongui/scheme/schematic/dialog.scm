@@ -18,10 +18,13 @@
 
 
 (define-module (schematic dialog)
+  #:use-module (srfi srfi-1)
   #:use-module (system foreign)
+  #:use-module (lepton log)
 
   #:export (schematic-message-dialog
-            schematic-confirm-dialog))
+            schematic-confirm-dialog
+            schematic-fileselect-dialog))
 
 (define libleptongui (dynamic-link "libleptongui"))
 
@@ -42,3 +45,33 @@
 
 (define (schematic-confirm-dialog message)
   (not (zero? (generic-confirm-dialog (string->pointer message)))))
+
+(define generic-fileselect-dialog
+  (pointer->procedure
+   '*
+   (dynamic-func "generic_filesel_dialog" libleptongui)
+   (list '* '* int)))
+
+(define (schematic-fileselect-dialog message template . flags)
+  ;; Corresponds to FSB_* flags in C code.
+  (define flag-alist
+    '((may_exist . 1)
+      (must_exist . 2)
+      (must_not_exist . 4)
+      (save . 256)
+      (open . 512)))
+
+  (define (flag->int flag)
+    (let ((result (assq-ref flag-alist flag)))
+      (when (not result)
+        (log! 'warning
+              "schematic-fileselect-dialog: Flag ~S is not supported."
+              flag))
+      result))
+
+  (let* ((bit-flags (apply logior (filter-map flag->int flags)))
+         (str-pointer (generic-fileselect-dialog (string->pointer message)
+                                                 (string->pointer template)
+                                                 bit-flags)))
+    (and (not (null-pointer? str-pointer))
+         (pointer->string str-pointer))))

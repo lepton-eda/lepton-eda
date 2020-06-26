@@ -420,10 +420,6 @@
 (add-hook!/full-attribs select-objects-hook select-net-hook net?)
 
 
-;
-; 3 functions used to be in schematic/src/g_funcs.c:
-;
-
 (define-public (gschem-image filename)
   (format (current-error-port)
    "WARNING: gschem-image function is deprecated and does nothing.~%")
@@ -569,3 +565,4 @@
   (log! 'message msg))
 (define-public gschem-msg schematic-message-dialog)
 (define-public gschem-confirm schematic-confirm-dialog)
+(define-public gschem-filesel schematic-fileselect-dialog)

@@ -18,8 +18,6 @@ void g_init_action (void);
 void g_init_builtins (void);
 /* g_attrib.c */
 void g_init_attrib ();
-/* g_funcs.c */
-SCM g_funcs_filesel(SCM msg, SCM templ, SCM flags);
 /* g_hook.c */
 void g_init_hook ();
 void g_run_hook_object (GschemToplevel *w_current, const char *name, OBJECT *obj);

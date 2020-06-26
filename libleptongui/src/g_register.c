@@ -42,9 +42,6 @@ static struct gsubr_t gschem_funcs[] = {
 
   { "add-menu",                     2, 0, 0, (SCM (*) ()) g_rc_add_menu },
 
-  /* general guile functions */
-  { "gschem-filesel",               2, 0, 1, (SCM (*) ()) g_funcs_filesel },
-
   { NULL,                           0, 0, 0, NULL } };
 
 /*! \brief Define a hook.
@@ -67,7 +64,8 @@ create_hook (const char *name, int n_args)
 
 /*! \brief Register function with Scheme.
  *  \par Function Description
- *  Creates <B>subr</B> objects to make <B>g_rc_*</B> functions that are defined *  #g_rc.c, #g_keys.c and #g_funcs.c visible to Scheme.
+ *  Creates <B>subr</B> objects to make <B>g_rc_*</B> functions
+ *  that are defined in #g_rc.c and #g_keys.c visible to Scheme.
  */
 void g_register_funcs (void)
 {
