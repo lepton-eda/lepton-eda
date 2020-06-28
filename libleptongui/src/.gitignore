@@ -1,4 +1,5 @@
 .deps
+.libs
 Makefile
 Makefile.in
 lepton-schematic
@@ -7,3 +8,5 @@ lepton-schematic.exe
 *.x
 *~
 TAGS
+*.la
+*.lo
