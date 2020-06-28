@@ -994,9 +994,10 @@ GschemToplevel* x_window_new ()
   GschemToplevel *w_current;
   TOPLEVEL *toplevel = s_toplevel_new ();
 
+  x_rc_parse_gschem (toplevel, NULL);
+
   w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (w_current, toplevel);
-  x_rc_parse_gschem (toplevel, NULL);
 
   /* Damage notifications should invalidate the object on screen */
   o_add_change_notify (toplevel,
