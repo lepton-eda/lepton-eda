@@ -31,21 +31,21 @@
 void
 g_rc_parse_gtkrc()
 {
-	gchar *filename;
+  gchar *filename;
 
-	/* Search for the first gschem-gtkrc file in the system
-	 * configuration path. */
-	const gchar * const * sys_dirs = eda_get_system_config_dirs();
-	for (gint i = 0; sys_dirs[i]; ++i) {
-		filename = g_build_filename (sys_dirs[i], "lepton-gtkrc", NULL);
-		if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
-			gtk_rc_parse (filename);
-		}
-		g_free (filename);
-	}
+  /* Search for the first gschem-gtkrc file in the system
+   * configuration path. */
+  const gchar * const * sys_dirs = eda_get_system_config_dirs();
+  for (gint i = 0; sys_dirs[i]; ++i) {
+    filename = g_build_filename (sys_dirs[i], "lepton-gtkrc", NULL);
+    if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
+      gtk_rc_parse (filename);
+    }
+    g_free (filename);
+  }
 
-	filename = g_build_filename (eda_get_user_config_dir(),
-	                             "lepton-gtkrc", NULL);
+  filename = g_build_filename (eda_get_user_config_dir(),
+                               "lepton-gtkrc", NULL);
   gtk_rc_parse (filename);
   g_free (filename);
 }
@@ -77,7 +77,7 @@ SCM g_rc_gschem_version(SCM scm_version)
   scm_dynwind_free (version);
 
   if (g_utf8_collate (g_utf8_casefold (version,-1),
-		      g_utf8_casefold (PACKAGE_DATE_VERSION,-1)) != 0) {
+                      g_utf8_casefold (PACKAGE_DATE_VERSION,-1)) != 0) {
     sourcefile = NULL;
     rc_filename = g_rc_rc_filename ();
     if (scm_is_false (rc_filename)) {
