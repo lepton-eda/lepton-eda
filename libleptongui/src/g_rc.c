@@ -50,57 +50,6 @@ g_rc_parse_gtkrc()
   g_free (filename);
 }
 
-/*! \brief Verify the version of the RC file under evaluation.
- *  \par Function Description
- *
- *  Implements the Scheme function "gschem-version". Tests the version
- *  string in the argument against the version of the application
- *  itself.
- *
- *  \param [in] scm_version Scheme object containing RC file version string
- *
- *  \returns #t if the version of the RC file matches the application,
- *           else #f.
- */
-SCM g_rc_gschem_version(SCM scm_version)
-{
-  SCM ret;
-  char *version;
-  SCM rc_filename;
-  char *sourcefile;
-
-  SCM_ASSERT (scm_is_string (scm_version), scm_version,
-              SCM_ARG1, "gschem-version");
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  version = scm_to_utf8_string (scm_version);
-  scm_dynwind_free (version);
-
-  if (g_utf8_collate (g_utf8_casefold (version,-1),
-                      g_utf8_casefold (PACKAGE_DATE_VERSION,-1)) != 0) {
-    sourcefile = NULL;
-    rc_filename = g_rc_rc_filename ();
-    if (scm_is_false (rc_filename)) {
-      rc_filename = scm_from_utf8_string ("unknown");
-    }
-    sourcefile = scm_to_utf8_string (rc_filename);
-    scm_dynwind_free (sourcefile);
-    fprintf(stderr,
-            _("You are running lepton-schematic version [%1$s%2$s.%3$s],\n"),
-            PREPEND_VERSION_STRING, PACKAGE_DOTTED_VERSION,
-            PACKAGE_DATE_VERSION);
-    fprintf(stderr,
-            _("but you have a version [%1$s] gschemrc file:\n[%2$s]\n"),
-            version, sourcefile);
-    fprintf(stderr,
-            _("Please be sure that you have the latest rc file.\n"));
-    ret = SCM_BOOL_F;
-  } else {
-    ret = SCM_BOOL_T;
-  }
-  scm_dynwind_end();
-  return ret;
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

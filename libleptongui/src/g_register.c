@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,8 +33,6 @@ struct gsubr_t {
 /*! \brief */
 static struct gsubr_t gschem_funcs[] = {
   /* rc file */
-  { "gschem-version",               1, 0, 0, (SCM (*) ()) g_rc_gschem_version },
-
   { "display-color-map",            0, 1, 0, (SCM (*) ()) g_rc_display_color_map },
   { "display-outline-color-map",    0, 1, 0, (SCM (*) ()) g_rc_display_outline_color_map },
 

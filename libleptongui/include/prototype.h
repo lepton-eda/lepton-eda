@@ -150,7 +150,6 @@ SCM g_keys_cancel(SCM rest);
 void g_init_keys ();
 /* g_rc.c */
 void g_rc_parse_gtkrc();
-SCM g_rc_gschem_version(SCM version);
 SCM g_rc_attribute_name(SCM path);
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items);
 SCM g_rc_display_color_map (SCM scm_map);

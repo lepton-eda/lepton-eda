@@ -566,3 +566,6 @@
 (define-public gschem-msg schematic-message-dialog)
 (define-public gschem-confirm schematic-confirm-dialog)
 (define-public gschem-filesel schematic-fileselect-dialog)
+(define-public (gschem-version version)
+  (format (current-error-port)
+   "WARNING: The function gschem-version() is deprecated and does nothing.~%"))
