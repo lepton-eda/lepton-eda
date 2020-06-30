@@ -35,6 +35,7 @@
    (list '*)))
 
 (define (schematic-message-dialog message)
+  "Opens GTK message dialog with MESSAGE and one OK button."
   (generic-msg-dialog (string->pointer message)))
 
 (define generic-confirm-dialog
@@ -44,6 +45,9 @@
    (list '*)))
 
 (define (schematic-confirm-dialog message)
+  "Opens GTK confirmation dialog with MESSAGE and buttons YES and
+NO.  Returns #t if the button YES was pressed.  Otherwise returns
+#f."
   (not (zero? (generic-confirm-dialog (string->pointer message)))))
 
 (define generic-fileselect-dialog
@@ -53,6 +57,11 @@
    (list '* '* int)))
 
 (define (schematic-fileselect-dialog message template . flags)
+  "Opens GTK file selection dialog with MESSAGE as dialog's title.
+TEMPLATE is used to select files when appropriate.  Several FLAGS
+can be used to change the behaviour of the dialog: 'may_exist,
+'must_exist, 'must_not_exist, 'save, and 'open.  Returns the name
+of selected file, or #f if nothing has been selected."
   ;; Corresponds to FSB_* flags in C code.
   (define flag-alist
     '((may_exist . 1)
