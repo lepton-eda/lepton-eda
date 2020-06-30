@@ -30,6 +30,11 @@ exec @GUILE@ -s "$0" "$@"
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
                 "liblepton_init")
 
+(primitive-eval '(use-modules (lepton log)
+                              (schematic core gettext)
+                              (schematic version)))
+
+
 (define libgtk (dynamic-link "libgtk-x11-2.0"))
 (define libleptongui (dynamic-link "libleptongui"))
 
@@ -138,7 +143,6 @@ exec @GUILE@ -s "$0" "$@"
 
 
 ;;; Localization.
-(primitive-eval '(use-modules (schematic core gettext)))
 (bindtextdomain %schematic-gettext-domain "@localedir@")
 (textdomain %schematic-gettext-domain)
 (bind-textdomain-codeset %schematic-gettext-domain "UTF-8")
@@ -177,9 +181,6 @@ exec @GUILE@ -s "$0" "$@"
                (primitive-load script)
                0)
         1)))
-
-(primitive-eval '(use-modules (lepton log)
-                              (lepton version)))
 
 
 (define (process-error-stack stack key args)
@@ -263,32 +264,6 @@ Lepton EDA homepage: ~S\n")
   (primitive-exit 0))
 
 
-;;; Print lepton-schematic version and copyright/warranty notices,
-;;; and exit with exit status 0, if output to stdout is requested,
-;;; that is, STDOUT is not #f.
-(define* (lepton-schematic-version #:optional stdout)
-  (define (version-msg . args)
-    (apply format #f "Lepton EDA/lepton-schematic ~A~A.~A (git: ~A)\n" args))
-
-  (define copyrights
-    (G_ "Copyright (C) 1998-2016 gEDA developers
-Copyright (C) 2017-2020 Lepton EDA developers
-This is free software, and you are welcome to redistribute it
-under certain conditions. For details, see the file `COPYING',
-which is included in the Lepton EDA distribution.
-There is NO WARRANTY, to the extent permitted by law.\n"))
-
-  (match (lepton-version)
-    ((prepend dotted date commit bugs url msg)
-     (let ((version-message (version-msg prepend dotted date (string-take commit 7))))
-       (if stdout
-           (begin
-             (display version-message)
-             (display copyrights)
-             (primitive-exit 0))
-           (log! 'message version-message))))))
-
-
 ;;; Parse lepton-schematic command-line options, displaying usage
 ;;; message or version information as required.
 (define (parse-commandline)
@@ -322,7 +297,7 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
                (usage)))
      (option '(#\V "version") #f #f
              (lambda (opt name arg seeds)
-               (lepton-schematic-version 'stdout))))
+               (print-lepton-schematic-version 'stdout))))
     (lambda (opt name arg seeds)
       (format #t
               (G_ "ERROR: Unknown option ~A.
@@ -344,7 +319,7 @@ Run `~A --help' for more information.\n")
 
 ;;; Init logging.
 (init-log "schematic")
-(lepton-schematic-version)
+(print-lepton-schematic-version)
 
 ;;; Precompilation.
 (if (precompile-mode)
