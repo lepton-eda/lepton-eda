@@ -138,14 +138,13 @@ exec @GUILE@ -s "$0" "$@"
 
 
 ;;; Localization.
-(define %textdomain "lepton-schematic")
-(bindtextdomain %textdomain "@localedir@")
-(textdomain %textdomain)
-(bind-textdomain-codeset %textdomain "UTF-8")
+(primitive-eval '(use-modules (schematic core gettext)))
+(bindtextdomain %schematic-gettext-domain "@localedir@")
+(textdomain %schematic-gettext-domain)
+(bind-textdomain-codeset %schematic-gettext-domain "UTF-8")
 (setlocale LC_ALL "")
 (setlocale LC_NUMERIC "C")
 
-(define (G_ msg) (gettext msg %textdomain))
 
 ;;; Precompilation.
 (define (precompile-mode)

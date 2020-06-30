@@ -23,7 +23,9 @@
 ;;
 ;; This module is for internal use only.
 
-(define-module (schematic core gettext))
+(define-module (schematic core gettext)
+  #:export (%schematic-gettext-domain
+            G_))
 
 (define %schematic-gettext-domain "lepton-schematic")
-(define-public (G_ msg) (gettext msg %schematic-gettext-domain))
+(define (G_ msg) (gettext msg %schematic-gettext-domain))
