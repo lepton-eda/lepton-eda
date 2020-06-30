@@ -26,10 +26,11 @@
   #:export (print-lepton-schematic-version))
 
 
-;;; Print lepton-schematic version and copyright/warranty notices,
-;;; and exit with exit status 0, if output to stdout is requested,
-;;; that is, STDOUT is not #f.
 (define* (print-lepton-schematic-version #:optional stdout)
+  "Print lepton-schematic version and copyright/warranty notices.
+If STDOUT is true, output the info to standard output and exit
+with exit status 0.  Otherwise, just print the message to log."
+
   (define (version-msg . args)
     (apply format #f "Lepton EDA/lepton-schematic ~A~A.~A (git: ~A)\n" args))
 
