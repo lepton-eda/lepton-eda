@@ -128,6 +128,7 @@ char *s_attrib_get(int counter);
 gchar *s_expand_env_variables (const gchar *string);
 
 /* s_clib.c */
+void s_clib_init (void);
 void s_clib_free (void);
 GList *s_clib_get_sources (const gboolean sorted);
 const CLibSource *s_clib_get_source_by_name (const gchar *name);

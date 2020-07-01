@@ -32,6 +32,8 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
+  #:use-module (system foreign)
+
   #:use-module (lepton core gettext)
   #:use-module (lepton core rc)
   #:use-module (lepton log)
@@ -55,6 +57,14 @@
   symbol-library?
   (name symbol-library-name set-symbol-library-name!)
   (path symbol-library-path set-symbol-library-path!))
+
+(define liblepton (dynamic-link "liblepton"))
+
+(define init-clib
+  (pointer->procedure
+   void
+   (dynamic-func "s_clib_init" liblepton)
+   '()))
 
 (define %component-libraries '())
 (define (component-libraries)
@@ -145,9 +155,11 @@
 
 (define component-library-command %component-library-command)
 (define component-library-funcs %component-library-funcs)
+
 (define (reset-component-library)
+  "Reset component library and initialise it to an empty list."
   (set! %component-libraries '())
-  (%reset-component-library))
+  (init-clib))
 
 
 

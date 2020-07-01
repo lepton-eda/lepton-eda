@@ -614,19 +614,6 @@ SCM_DEFINE (scheme_directory,"%scheme-directory", 1, 0, 0,
   return SCM_BOOL_T;
 }
 
-/*! \todo Finish function description!!!
- *  \brief
- *  \par Function Description
- *
- *  \return SCM_BOOL_T always.
- */
-SCM_DEFINE (reset_component_library, "%reset-component-library", 0, 0, 0,
-            (void), "Reset component library and initialise it to an empty list.")
-{
-  s_clib_init();
-  
-  return SCM_BOOL_T;
-}
 
 /*! \brief Load cache configuration data.
  *
@@ -677,7 +664,6 @@ init_module_lepton_core_rc (void *unused)
   scm_c_export (s_component_library,
                 s_component_library_command,
                 s_component_library_funcs,
-                s_reset_component_library,
                 s_scheme_directory,
                 NULL);
 }

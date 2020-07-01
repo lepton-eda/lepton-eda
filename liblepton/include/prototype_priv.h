@@ -30,9 +30,6 @@ void o_emit_change_notify (OBJECT *object);
 void o_selection_select (OBJECT *object);
 void o_selection_unselect (OBJECT *object);
 
-/* s_clib.c */
-void s_clib_init (void);
-
 /* s_conn.c */
 CONN *s_conn_return_new(OBJECT *other_object, int type, int x, int y, int whichone, int other_whichone);
 int s_conn_uniq(GList *conn_list, CONN *input_conn);
