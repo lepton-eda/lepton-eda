@@ -39,10 +39,6 @@ TOPLEVEL *edascm_c_current_toplevel ();
 /* Set the #TOPLEVEL fluid in the current dynamic context. */
 void edascm_dynwind_toplevel (TOPLEVEL *toplevel);
 
-/* Set the current #TOPLEVEL temporarily. */
-SCM edascm_c_with_toplevel (TOPLEVEL *toplevel, SCM (*func)(void *),
-                            void *user_data);
-
 /* Create a Guile value from a page structure. */
 SCM edascm_from_page (PAGE *page);
 

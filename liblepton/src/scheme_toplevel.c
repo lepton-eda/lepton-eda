@@ -107,21 +107,6 @@ SCM_DEFINE (edascm_with_toplevel, "%with-toplevel", 2, 0, 0,
 }
 
 /*!
- * \brief Set the current #TOPLEVEL temporarily.
- * \ingroup guile_c_iface
- * \par Function Description
- * Set the #TOPLEVEL fluid to \a toplevel and call \a func with \a
- * user_data.
- */
-SCM
-edascm_c_with_toplevel (TOPLEVEL *toplevel, SCM (*func)(void *),
-                        void *user_data)
-{
-  SCM s_toplevel = edascm_from_toplevel (toplevel);
-  return scm_c_with_fluid (scheme_toplevel_fluid, s_toplevel, func, user_data);
-}
-
-/*!
  * \brief Create the (lepton core toplevel) Scheme module
  * \par Function Description
  * Defines procedures in the (lepton core toplevel) module. The module
