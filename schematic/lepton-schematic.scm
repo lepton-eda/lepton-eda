@@ -189,7 +189,7 @@ exec @GUILE@ -s "$0" "$@"
      ;; Capture long error message (including possible backtrace).
      (let ((long-message
             (with-output-to-string
-              (λ ()
+              (lambda ()
                 (when (stack? stack)
                   (let ((port (current-output-port)))
                     (display (G_ "\nBacktrace:\n") port)
@@ -223,12 +223,12 @@ exec @GUILE@ -s "$0" "$@"
 ;;; and any schematic files specified on the command-line.
 (let ((post-load-expr '()))
   (set! add-post-load-expr!
-        (λ (expr script?)
+        (lambda (expr script?)
           (set! post-load-expr
                 (cons (list (if script? 'load 'eval-string) expr)
                       post-load-expr))))
   (set! eval-post-load-expr!
-        (λ ()
+        (lambda ()
           (protected-eval
            (cons 'begin (reverse post-load-expr))))))
 
@@ -299,30 +299,30 @@ There is NO WARRANTY, to the extent permitted by law.\n"))
     (cdr (program-arguments))
     (list
      (option '(#\q "quiet") #f #f
-             (λ (opt name arg seeds)
+             (lambda (opt name arg seeds)
                (set-quiet-mode!)
                seeds))
      (option '(#\v "verbose") #f #f
-             (λ (opt name arg seeds)
+             (lambda (opt name arg seeds)
                (set-verbose-mode!)
                seeds))
      (option '(#\L) #t #f
-             (λ (opt name arg seeds)
+             (lambda (opt name arg seeds)
                (add-to-load-path arg)
                seeds))
      (option '(#\s) #t #f
-             (λ (opt name arg seeds)
+             (lambda (opt name arg seeds)
                (add-post-load-expr! arg #t)
                seeds))
      (option '(#\c) #t #f
-             (λ (opt name arg seeds)
+             (lambda (opt name arg seeds)
                (add-post-load-expr! arg #f)
                seeds))
      (option '(#\h #\? "help") #f #f
-             (λ (opt name arg seeds)
+             (lambda (opt name arg seeds)
                (usage)))
      (option '(#\V "version") #f #f
-             (λ (opt name arg seeds)
+             (lambda (opt name arg seeds)
                (lepton-schematic-version 'stdout))))
     (lambda (opt name arg seeds)
       (format #t
