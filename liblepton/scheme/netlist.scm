@@ -943,7 +943,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
   ; Parse configuration:
   ;
-  ( (@@ (guile-user) parse-rc) "lepton-netlist" "gnetlistrc" )
+  (parse-rc "lepton-netlist" "gnetlistrc")
 
   ; Set default netlist mode:
   ;

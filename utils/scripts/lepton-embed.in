@@ -22,6 +22,7 @@ exec @GUILE@ "$0" "$@"
 ( primitive-eval '(use-modules (lepton core toplevel)) )
 ( primitive-eval '(use-modules (lepton object)) )
 ( primitive-eval '(use-modules (lepton page)) )
+( primitive-eval '(use-modules (lepton rc)) )
 ( primitive-eval '(use-modules (lepton version)) )
 
 
@@ -251,7 +252,7 @@ Lepton EDA homepage: <~a>
   )
 
 
-  ( (@@ (guile-user) parse-rc) "lepton-embed" "gafrc" )
+  (parse-rc "lepton-embed" "gafrc")
 
   ( for-each
   ( lambda( file )

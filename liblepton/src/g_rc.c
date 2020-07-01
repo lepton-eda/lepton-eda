@@ -326,31 +326,6 @@ g_rc_parse (const gchar *pname,
                       (void *) pname);
 }
 
-/*! \brief General RC file parsing Scheme procedure.
- * \par Function Description
- * Analog of g_rc_parse() for using in Scheme.
- *
- * \param [in] pname_s   The name of the application (Scheme string).
- * \param [in] rcname    RC file basename (Scheme string).
- * \return SCM_UNSPECIFIED.
- */
-SCM
-g_rc_parse_rc (SCM pname_s, SCM rcname_s)
-{
-  gchar *pname = NULL;
-  gchar *rcname = NULL;
-
-  SCM_ASSERT (scm_is_string (pname_s), pname_s,
-              SCM_ARG1, "parse-rc");
-  SCM_ASSERT (scm_is_string (rcname_s), rcname_s,
-              SCM_ARG2, "parse-rc");
-
-  pname = scm_to_utf8_string (pname_s);
-  rcname = scm_to_utf8_string (rcname_s);
-
-  g_rc_parse (pname, rcname, NULL);
-  return SCM_UNSPECIFIED;
-}
 
 /*! \brief General RC file parsing function.
  * \par Function Description

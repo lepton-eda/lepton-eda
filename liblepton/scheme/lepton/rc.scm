@@ -20,6 +20,8 @@
 
 (define-module (lepton rc)
   #:use-module (srfi srfi-1)
+  #:use-module (system foreign)
+
   #:use-module (lepton file-system)
   #:use-module (lepton os)
 
@@ -29,7 +31,10 @@
             path-sep
             load-scheme-dir
             load-rc-from-sys-config-dirs
+            parse-rc
             process-gafrc))
+
+(define liblepton (dynamic-link (or (getenv "LIBLEPTON") "liblepton")))
 
 (define path-sep file-name-separator-string)
 
@@ -67,6 +72,21 @@ path (rather than the regular Scheme load path)."
     (if rc-file (primitive-load rc-file))))
 
 
+(define (parse-rc program-name rc-name)
+  "Parses RC file RC-NAME in the namespace of PROGRAM-NAME.
+RC-NAME should be a basename of RC file, such as, for example,
+\"gafrc\"."
+  (define rc-parse
+    (pointer->procedure
+     void
+     (dynamic-func "g_rc_parse" liblepton)
+     (list '* '* '*)))
+
+  (rc-parse (string->pointer program-name)
+            (string->pointer rc-name)
+            %null-pointer))
+
+
 ;;; List of processed rc directories.
 (define %rc-dirs (make-hash-table))
 
@@ -78,6 +98,6 @@ resides in."
   (let ((cwd (getcwd)))
     (unless (hash-ref %rc-dirs cwd)
       (chdir (dirname schematic))
-      ((@@ (guile-user) parse-rc) program "gafrc")
+      (parse-rc program "gafrc")
       (hash-set! %rc-dirs cwd cwd)
       (chdir cwd))))

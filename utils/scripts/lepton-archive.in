@@ -85,6 +85,7 @@ exec @GUILE@ -s "$0" "$@"
                (lepton object)
                (lepton os)
                (lepton page)
+               (lepton rc)
                (netlist schematic)
                (netlist schematic-component)))
 
@@ -858,7 +859,7 @@ the file manually.\n"))
 (%with-toplevel (%make-toplevel)
   (lambda ()
     ;; Process all gafrc files.
-    ((@@ (guile-user) parse-rc) "lepton-archive" "gafrc" )
+    (parse-rc "lepton-archive" "gafrc" )
     ;; Init log domain and create log file right away even if
     ;; logging is enabled.
     (init-log "archive")

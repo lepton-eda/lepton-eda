@@ -51,7 +51,6 @@ g_rc_parse (const gchar* pname,
             const gchar* rcname,
             const gchar* rcfile);
 void g_rc_parse_handler (TOPLEVEL *toplevel, const gchar *rcname, const gchar *rcfile, ConfigParseErrorFunc handler, void *user_data);
-SCM g_rc_parse_rc (SCM pname_s, SCM rcname_s);
 
 /* liblepton.c */
 void liblepton_init(void);
