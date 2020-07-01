@@ -168,7 +168,7 @@ cmd_export_impl (void *data, int argc, char **argv)
 
   /* Now load rc files, if necessary */
   if (getenv ("LEPTON_INHIBIT_RC_FILES") == NULL) {
-    g_rc_parse (toplevel, "lepton-cli export", NULL, NULL);
+    g_rc_parse ("lepton-cli export", NULL, NULL);
   }
 
   /* Parse configuration files */

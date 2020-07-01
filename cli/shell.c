@@ -132,7 +132,7 @@ cmd_shell_impl (void *data, int argc, char **argv)
 
   /* Now load rc files, if necessary */
   if (getenv ("LEPTON_INHIBIT_RC_FILES") == NULL) {
-    g_rc_parse (toplevel, "lepton-cli shell", NULL, NULL);
+    g_rc_parse ("lepton-cli shell", NULL, NULL);
   }
 
   scm_shell (argc, argv); /* Doesn't return */

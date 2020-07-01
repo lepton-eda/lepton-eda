@@ -311,15 +311,16 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
  * on application startup or when there is no chance of data loss from
  * an unexpected exit().
  *
- * \param [in] toplevel  The current #TOPLEVEL structure.
  * \param [in] pname     The name of the application (usually argv[0]).
  * \param [in] rcname    RC file basename, or NULL.
  * \param [in] rcfile    Specific RC file path, or NULL.
  */
 void
-g_rc_parse (TOPLEVEL *toplevel, const gchar *pname,
-            const gchar *rcname, const gchar *rcfile)
+g_rc_parse (const gchar *pname,
+            const gchar *rcname,
+            const gchar *rcfile)
 {
+  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   g_rc_parse_handler (toplevel, rcname, rcfile,
                       (ConfigParseErrorFunc) g_rc_parse__process_error,
                       (void *) pname);
@@ -338,7 +339,6 @@ g_rc_parse_rc (SCM pname_s, SCM rcname_s)
 {
   gchar *pname = NULL;
   gchar *rcname = NULL;
-  TOPLEVEL *toplevel = NULL;
 
   SCM_ASSERT (scm_is_string (pname_s), pname_s,
               SCM_ARG1, "parse-rc");
@@ -347,9 +347,8 @@ g_rc_parse_rc (SCM pname_s, SCM rcname_s)
 
   pname = scm_to_utf8_string (pname_s);
   rcname = scm_to_utf8_string (rcname_s);
-  toplevel = edascm_c_current_toplevel ();
 
-  g_rc_parse (toplevel, pname, rcname, NULL);
+  g_rc_parse (pname, rcname, NULL);
   return SCM_UNSPECIFIED;
 }
 
