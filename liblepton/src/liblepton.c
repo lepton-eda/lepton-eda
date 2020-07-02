@@ -47,7 +47,6 @@ void liblepton_init(void)
   s_attrib_init();
   s_color_init();
 
-  g_register_libgeda_funcs();
   if (getenv ("LEPTON_INHIBIT_RC_FILES") == NULL) {
     g_register_libgeda_dirs ();
   }

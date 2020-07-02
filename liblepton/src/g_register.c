@@ -32,34 +32,6 @@
 
 #include "libgeda_priv.h"
 
-/*! \brief */
-struct gsubr_t {
-  const char* name;
-  int req;
-  int opt;
-  int rst;
-  SCM (*fnc)();
-};
-
-/*! \brief */
-static struct gsubr_t libgeda_funcs[] = {
-  { NULL,                        0, 0, 0, NULL } };
-
-/*! \brief Register all libgeda functions with scheme.
- *  \par Function Description
- *  Creates g_subr_t objects to make g_rc_* functions that are defined
- *  in g_rc.c visible to Scheme.
- */
-void g_register_libgeda_funcs (void)
-{
-  struct gsubr_t *tmp = libgeda_funcs;
-  
-  while (tmp->name != NULL) {
-    scm_c_define_gsubr (tmp->name, tmp->req, tmp->opt, tmp->rst, (scm_t_subr) tmp->fnc);
-    tmp++;
-  }
-  
-}
 
 /*! \brief Enable scheme loading from a shared data directory
  * \par Function Description
