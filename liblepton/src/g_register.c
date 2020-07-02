@@ -43,7 +43,6 @@ struct gsubr_t {
 
 /*! \brief */
 static struct gsubr_t libgeda_funcs[] = {
-  { "eval-protected",            1, 1, 0, (SCM (*) ()) g_scm_eval_protected },
   { "eval-string-protected",     1, 0, 0, (SCM (*) ()) g_scm_eval_string_protected },
   { NULL,                        0, 0, 0, NULL } };
 

@@ -22,6 +22,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
+  #:use-module (lepton eval)
   #:use-module (lepton file-system)
   #:use-module (lepton os)
 
@@ -58,7 +59,7 @@ system file name separator string."
             (if (and (regular-file? path)
                      (string-suffix? ".scm" path)
                      (access? path R_OK))
-                ((@@ (guile-user) eval-protected) `(primitive-load ,path))
+                (eval-protected `(primitive-load ,path))
                 #f
                 )))
         (closedir dir))

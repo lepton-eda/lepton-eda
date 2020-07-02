@@ -31,6 +31,7 @@ exec @GUILE@ -s "$0" "$@"
                 "liblepton_init")
 
 (primitive-eval '(use-modules (lepton color-map)
+                              (lepton eval)
                               (lepton log)
                               (lepton version)
                               (schematic core gettext)))
@@ -184,38 +185,6 @@ exec @GUILE@ -s "$0" "$@"
         1)))
 
 
-(define (process-error-stack stack key args)
-  (match args
-    ((subr message message-args rest)
-     ;; Capture long error message (including possible backtrace).
-     (let ((long-message
-            (with-output-to-string
-              (lambda ()
-                (when (stack? stack)
-                  (let ((port (current-output-port)))
-                    (display (G_ "\nBacktrace:\n") port)
-                    (display-backtrace stack port)
-                    (display "\n" port)
-                    (display-error #f port subr message message-args rest)))))))
-
-       ;; Send long message to log.
-       (log! 'message "~A\n" long-message)
-       (format #t (G_ "ERROR: ~A\nPlease see log file for more information.\n")
-               (apply format #f message message-args))))))
-
-
-(define (protected-eval exp)
-  (let ((captured-stack #f))
-    (catch #t
-      ;; Expression to evaluate.
-      (lambda () (eval exp (current-module)))
-      (lambda (key . args)
-        (process-error-stack captured-stack key args))
-      (lambda (key . args)
-        ;; Capture the stack here:
-        (set! captured-stack (make-stack #t))))))
-
-
 (define add-post-load-expr! #f)
 (define eval-post-load-expr! #f)
 
@@ -230,7 +199,7 @@ exec @GUILE@ -s "$0" "$@"
                       post-load-expr))))
   (set! eval-post-load-expr!
         (lambda ()
-          (protected-eval
+          (eval-protected
            (cons 'begin (reverse post-load-expr))))))
 
 
