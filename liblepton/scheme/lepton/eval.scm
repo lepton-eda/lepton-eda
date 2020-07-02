@@ -23,7 +23,8 @@
   #:use-module (lepton core gettext)
   #:use-module (lepton log)
 
-  #:export (eval-protected))
+  #:export (eval-protected
+            eval-string-protected))
 
 
 (define (process-error-stack stack key args)
@@ -56,6 +57,21 @@ results of evaluation."
     (catch #t
       ;; Expression to evaluate.
       (lambda () (eval exp (or env (current-module))))
+      (lambda (key . args)
+        (process-error-stack captured-stack key args))
+      (lambda (key . args)
+        ;; Capture the stack here:
+        (set! captured-stack (make-stack #t))))))
+
+
+(define* (eval-string-protected s)
+  "Safely evaluates string S.  The function catches up any errors
+or exceptions, if any, and logs them.  If an error occurs, returns
+#f, otherwise returns the results of evaluation."
+  (let ((captured-stack #f))
+    (catch #t
+      ;; Expression to evaluate.
+      (lambda () (eval-string s))
       (lambda (key . args)
         (process-error-stack captured-stack key args))
       (lambda (key . args)
