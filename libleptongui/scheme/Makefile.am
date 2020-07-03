@@ -22,6 +22,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/action.scm \
 	schematic/attrib.scm \
 	schematic/builtins.scm \
+	schematic/color-map.scm \
 	schematic/core/gettext.scm \
 	schematic/dialog.scm \
 	schematic/gui/keymap.scm \

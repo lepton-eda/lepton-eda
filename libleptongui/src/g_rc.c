@@ -98,33 +98,3 @@ SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
 
   return SCM_BOOL_T;
 }
-
-
-extern GedaColorMap display_colors;
-extern GedaColorMap display_outline_colors;
-
-SCM g_rc_display_color_map (SCM scm_map)
-{
-  if (scm_is_eq (scm_map, SCM_UNDEFINED)) {
-    return s_color_map_to_scm (display_colors);
-  }
-
-  SCM_ASSERT (scm_is_true (scm_list_p (scm_map)),
-              scm_map, SCM_ARG1, "display-color-map");
-
-  s_color_map_from_scm (display_colors, scm_map, "display-color-map");
-  return SCM_BOOL_T;
-}
-
-SCM g_rc_display_outline_color_map (SCM scm_map)
-{
-  if (scm_is_eq (scm_map, SCM_UNDEFINED)) {
-    return s_color_map_to_scm (display_outline_colors);
-  }
-
-  SCM_ASSERT (scm_is_true (scm_list_p (scm_map)),
-              scm_map, SCM_ARG1, "display-outline-color-map");
-
-  s_color_map_from_scm (display_outline_colors, scm_map, "display-outline-color-map");
-  return SCM_BOOL_T;
-}

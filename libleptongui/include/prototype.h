@@ -152,8 +152,6 @@ void g_init_keys ();
 void g_rc_parse_gtkrc();
 SCM g_rc_attribute_name(SCM path);
 SCM g_rc_add_menu(SCM menu_name, SCM menu_items);
-SCM g_rc_display_color_map (SCM scm_map);
-SCM g_rc_display_outline_color_map (SCM scm_map);
 /* g_register.c */
 void g_register_funcs(void);
 /* g_select.c */

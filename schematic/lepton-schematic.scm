@@ -31,6 +31,7 @@ exec @GUILE@ -s "$0" "$@"
                 "liblepton_init")
 
 (primitive-eval '(use-modules (lepton log)
+                              (schematic color-map)
                               (schematic core gettext)
                               (schematic version)))
 

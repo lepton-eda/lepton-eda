@@ -33,9 +33,6 @@ struct gsubr_t {
 /*! \brief */
 static struct gsubr_t gschem_funcs[] = {
   /* rc file */
-  { "display-color-map",            0, 1, 0, (SCM (*) ()) g_rc_display_color_map },
-  { "display-outline-color-map",    0, 1, 0, (SCM (*) ()) g_rc_display_outline_color_map },
-
   { "attribute-name",               1, 0, 0, (SCM (*) ()) g_rc_attribute_name },
 
   { "add-menu",                     2, 0, 0, (SCM (*) ()) g_rc_add_menu },
