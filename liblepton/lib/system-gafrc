@@ -21,7 +21,8 @@
 
 ;; Import deprecated Scheme functions
 (load-from-path "geda-deprecated-config.scm")
-(use-modules (geda deprecated))
+(use-modules (geda deprecated)
+             (schematic color-map))
 
 
 ; Function: scheme-directory( dir )

@@ -24,7 +24,8 @@
   #:use-module (lepton log)
 
   #:export (display-color-map
-            display-outline-color-map))
+            display-outline-color-map
+            print-color-map))
 
 (define liblepton (dynamic-link "liblepton"))
 (define libleptongui (dynamic-link "libleptongui"))
@@ -45,6 +46,9 @@
   (dynamic-pointer "display_colors" libleptongui))
 (define display-outline-colors
   (dynamic-pointer "display_outline_colors" libleptongui))
+(define print-colors
+  (dynamic-pointer "print_colors" libleptongui))
+
 
 (define (check-color-map color-map)
   (or (list? color-map)
@@ -73,3 +77,8 @@
   (process-color-map color-map
                      display-outline-colors
                      "display-outline-color-map"))
+
+(define* (print-color-map #:optional color-map)
+  (process-color-map color-map
+                     print-colors
+                     "print-color-map"))

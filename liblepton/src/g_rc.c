@@ -628,22 +628,6 @@ SCM_DEFINE (reset_component_library, "%reset-component-library", 0, 0, 0,
   return SCM_BOOL_T;
 }
 
-SCM_DEFINE (print_color_map, "%print-color-map", 0, 1, 0,
-            (SCM scm_map), "Set or view current print color map.")
-{
-  if (scm_is_eq (scm_map, SCM_UNDEFINED)) {
-    return s_color_map_to_scm (print_colors);
-  }
-
-  SCM_ASSERT (scm_is_true (scm_list_p (scm_map)),
-              scm_map, SCM_ARG1, s_print_color_map);
-
-  s_color_map_from_scm (print_colors, scm_map, "print-color-map");
-  return SCM_BOOL_T;
-}
-
-
-
 /*! \brief Load cache configuration data.
  *
  * \param toplevel  The current #TOPLEVEL structure.
@@ -693,7 +677,6 @@ init_module_lepton_core_rc (void *unused)
   scm_c_export (s_component_library,
                 s_component_library_command,
                 s_component_library_funcs,
-                s_print_color_map,
                 s_reset_component_library,
                 s_scheme_directory,
                 NULL);
