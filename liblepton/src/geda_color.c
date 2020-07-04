@@ -91,6 +91,13 @@ default_color_id()
 }
 
 
+const GedaColor*
+lepton_colormap_color_by_id (const GedaColor *color_map,
+                             size_t id)
+{
+  return &color_map[id];
+}
+
 
 /*! \brief Get the color blue value as a double
  *
@@ -216,45 +223,6 @@ s_color_rgba_decode (const gchar *rgba,
   return TRUE;
 }
 
-/* \brief Encode a hexadecimal RGB or RGBA color code.
- * \par Function Description
- * Encodes four colour components into either the form #RRGGBB or
- * #RRGGBBAA. The shorter form is used when the alpha component is
- * 0xff.
- *
- * \param [in] r Red component.
- * \param [in] g Green component.
- * \param [in] b Blue component.
- * \returns A newly allocated string containing the encoded string.
- */
-gchar *
-s_color_rgba_encode (guint8 r, guint8 g, guint8 b, guint8 a)
-{
-  if (a < 0xff)
-    return g_strdup_printf("#%02x%02x%02x%02x",
-                           (gint) r, (gint) g, (gint) b, (gint) a);
-  else
-    return g_strdup_printf("#%02x%02x%02x",
-                           (gint) r, (gint) g, (gint) b);
-}
-
-SCM
-s_color_map_to_scm (const GedaColor *map)
-{
-  SCM result = SCM_EOL;
-  int i;
-  for (i = colors_count() - 1; i >= 0; i--) {
-    SCM color_val = SCM_BOOL_F;
-    if (map[i].enabled) {
-      GedaColor c = map[i];
-      gchar *rgba = s_color_rgba_encode (c.r, c.g, c.b, c.a);
-      color_val = scm_from_utf8_string (rgba);
-      g_free (rgba);
-    }
-    result = scm_cons (scm_list_2 (scm_from_int (i), color_val), result);
-  }
-  return result;
-}
 
 /*!
  * \warning This function should ONLY be called from Scheme procedures.

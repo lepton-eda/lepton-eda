@@ -18,6 +18,9 @@
 ;;; Colors in schematic.
 
 (define-module (schematic color-map)
+  #:use-module (ice-9 format)
+  #:use-module (ice-9 match)
+  #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
   #:use-module (lepton core gettext)
@@ -30,11 +33,38 @@
 (define liblepton (dynamic-link "liblepton"))
 (define libleptongui (dynamic-link "libleptongui"))
 
-(define color-map->scm
+(define colors-count
+  (pointer->procedure
+   size_t
+   (dynamic-func "colors_count" liblepton)
+   '()))
+
+(define color-map-id->color
   (pointer->procedure
    '*
-   (dynamic-func "s_color_map_to_scm" liblepton)
-   (list '*)))
+   (dynamic-func "lepton_colormap_color_by_id" liblepton)
+   (list '* size_t)))
+
+;;; Transforms COLOR-MAP into a list of elements '(id color) where
+;;; each color is a string representing the color in a hexadecimal
+;;; "#RRGGBB" or "#RRGGBBAA" code. The shorter form is used when
+;;; the alpha component is 0xff.
+(define (color-map->scm color-map)
+  (define (id->color id)
+    (let ((color (parse-c-struct (color-map-id->color color-map id)
+                                 ;; '(r g b a enabled)
+                                 (list uint8 uint8 uint8 uint8 int))))
+      (match color
+        ((r g b a enabled)
+         (list id
+               (and (not (zero? enabled))
+                    (if (= a #xff)
+                        (format #f "#~2,'0x~2,'0x~2,'0x" r g b)
+                        (format #f "#~2,'0x~2,'0x~2,'0x~2,'0x" r g b a)))))
+        (_ (error "Wrong C color struct: ~S" color)))))
+
+  (map id->color (iota (colors-count))))
+
 
 (define scm->color-map
   (pointer->procedure
@@ -65,7 +95,7 @@
            (not (not (scm->color-map color-array
                                      (scm->pointer color-map)
                                      (string->pointer proc-name)))))
-      (pointer->scm (color-map->scm color-array))))
+      (color-map->scm color-array)))
 
 
 (define* (display-color-map #:optional color-map)
