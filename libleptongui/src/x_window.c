@@ -991,18 +991,21 @@ x_window_init_icons (void)
  */
 GschemToplevel* x_window_new ()
 {
-  GschemToplevel *w_current;
   TOPLEVEL *toplevel = s_toplevel_new ();
 
+  /* Load old (*rc files) and new (*.conf) configuration: */
   x_rc_parse_gschem (toplevel, NULL);
 
-  w_current = gschem_toplevel_new ();
+  GschemToplevel *w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (w_current, toplevel);
 
   /* Damage notifications should invalidate the object on screen */
   o_add_change_notify (toplevel,
                        (ChangeNotifyFunc) o_invalidate,
                        (ChangeNotifyFunc) o_invalidate, w_current);
+
+  /* Initialize tabbed GUI: */
+  x_tabs_init();
 
   x_window_setup (w_current);
 

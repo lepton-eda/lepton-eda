@@ -142,17 +142,14 @@ main_prog (SCM file_list_s)
   /* Set up atexit handlers */
   gschem_atexit (i_vars_atexit_save_cache_config, NULL);
 
-  /* Now read in RC files. */
+  /* Parse custom GTK resource files: */
   g_rc_parse_gtkrc();
 
   /* Set default icon theme and make sure we can find our own icons */
   x_window_set_default_icon();
   x_window_init_icons ();
 
-  /* Initialize tabbed GUI: */
-  x_tabs_init();
-
-  /* Allocate w_current */
+  /* Create a new window and associated TOPLEVEL object: */
   w_current = x_window_new ();
 
   /* Enable rendering of placeholders */
