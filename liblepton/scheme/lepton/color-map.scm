@@ -27,9 +27,41 @@
   #:use-module (lepton core gettext)
   #:use-module (lepton log)
 
-  #:export (display-color-map
+  #:export (%color-name-map
+            display-color-map
             display-outline-color-map
             print-color-map))
+
+;;; Map between color index numbers and symbolic color names.
+(define %color-name-map
+  '((background . 0)
+    (pin . 1)
+    (net-endpoint . 2)
+    (graphic . 3)
+    (net . 4)
+    (attribute . 5)
+    (logic-bubble . 6)
+    (dots-grid . 7)
+    (detached-attribute . 8)
+    (text . 9)
+    (bus . 10)
+    (select . 11)
+    (bounding-box . 12)
+    (zoom-box . 13)
+    (stroke . 14)
+    (lock . 15)
+    (output-background . 16)
+    (freestyle1 . 17)
+    (freestyle2 . 18)
+    (freestyle3 . 19)
+    (freestyle4 . 20)
+    (junction . 21)
+    (mesh-grid-major . 22)
+    (mesh-grid-minor . 23)))
+
+(define %color-name-reverse-map
+  (map (lambda (x) (cons (cdr x) (car x))) %color-name-map))
+
 
 (define liblepton (dynamic-link "liblepton"))
 (define libleptongui (dynamic-link "libleptongui"))
@@ -63,13 +95,19 @@
 ;;; "#RRGGBB" or "#RRGGBBAA" code. The shorter form is used when
 ;;; the alpha component is 0xff.
 (define (color-map->scm color-map)
+  ;; Look up the symbolic color for an internal system ID.
+  (define (color-map-name-from-index id)
+    (or (assq-ref %color-name-reverse-map id)
+        ;; Fall back to the index if no symbol found.
+        id))
+
   (define (id->color id)
     (let ((color (parse-c-struct (color-map-id->color color-map id)
                                  ;; '(r g b a enabled)
                                  (list uint8 uint8 uint8 uint8 int))))
       (match color
         ((r g b a enabled)
-         (list id
+         (list (color-map-name-from-index id)
                (and (not (zero? enabled))
                     (if (= a #xff)
                         (format #f "#~2,'0x~2,'0x~2,'0x" r g b)
@@ -113,6 +151,12 @@
        (< id (colors-count))))
 
 (define (scm->color-map color-map ls proc-name)
+  ;; Look up the internal system ID for a symbolic color.
+  (define (color-map-name-to-index x)
+    (if (symbol? x)
+        (assq-ref %color-name-map x)
+        x))
+
   (define (parse-entry entry)
     ;; Check if map entry has correct type.
     (when (or (not (list? entry))
@@ -122,12 +166,12 @@
              (G_ "Color map entry must be a two-element list: ~S\n")
              entry))
     ;; Check color index has correct type and extract it.
-    (let ((id (car entry))
+    (let ((id (color-map-name-to-index (car entry)))
           (color (cadr entry)))
       (when (not (integer? id))
         (error 'wrong-type-arg
                proc-name
-               (G_ "Index in color map entry must be an integer: ~S\n")
+               (G_ "Index in color map entry must be an integer or a symbol defined in %color-name-map: ~S\n")
                (car entry)))
       ;; Check color index is within bounds. If it's out of bounds
       ;; it's legal but warn & ignore it.
@@ -172,64 +216,6 @@
   (dynamic-pointer "print_colors" libleptongui))
 
 
-;; Map between color index numbers and symbolic color names
-(define %color-name-map
-  '((background . 0)
-    (pin . 1)
-    (net-endpoint . 2)
-    (graphic . 3)
-    (net . 4)
-    (attribute . 5)
-    (logic-bubble . 6)
-    (dots-grid . 7)
-    (detached-attribute . 8)
-    (text . 9)
-    (bus . 10)
-    (select . 11)
-    (bounding-box . 12)
-    (zoom-box . 13)
-    (stroke . 14)
-    (lock . 15)
-    (output-background . 16)
-    (freestyle1 . 17)
-    (freestyle2 . 18)
-    (freestyle3 . 19)
-    (freestyle4 . 20)
-    (junction . 21)
-    (mesh-grid-major . 22)
-    (mesh-grid-minor . 23)
-    ))
-
-(define %color-name-reverse-map
-  (map (lambda (x) (cons (cdr x) (car x))) %color-name-map))
-
-;;; Look up the internal system ID for a symbolic color.
-(define (color-map-name-to-index val)
-  (if (symbol? val)
-      (or (assq-ref %color-name-map val) 0)
-      val))
-
-;;; Look up the symbolic color for an internal system ID.
-(define (color-map-name-from-index idx)
-  (or (assq-ref %color-name-reverse-map idx)
-      ;; Fall back to the index if no symbol found.
-      idx))
-
-;; Convert a color map to use system IDs.
-(define (color-map-to-symbolic colormap)
-  (map (lambda (entry)
-         (cons (color-map-name-from-index (car entry))
-               (cdr entry)))
-       colormap))
-
-;; Convert a color map to use symbolic color names.
-(define (color-map-from-symbolic colormap)
-  (map (lambda (entry)
-         (cons (color-map-name-to-index (car entry))
-               (cdr entry)))
-       colormap))
-
-
 (define (process-color-map color-map color-array proc-name)
   (define (check-color-map color-map)
     (or (list? color-map)
@@ -245,9 +231,9 @@
                      proc-name)
                #f))
            (not (not (scm->color-map color-array
-                                     (color-map-from-symbolic color-map)
+                                     color-map
                                      proc-name))))
-      (color-map-to-symbolic (color-map->scm color-array))))
+      (color-map->scm color-array)))
 
 
 (define* (display-color-map #:optional color-map)
