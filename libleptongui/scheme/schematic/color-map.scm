@@ -45,6 +45,18 @@
    (dynamic-func "lepton_colormap_color_by_id" liblepton)
    (list '* size_t)))
 
+(define colormap-disable-color!
+  (pointer->procedure
+   void
+   (dynamic-func "lepton_colormap_disable_color" liblepton)
+   (list '* size_t)))
+
+(define colormap-set-color!
+  (pointer->procedure
+   void
+   (dynamic-func "lepton_colormap_set_color" liblepton)
+   (list '* size_t uint8 uint8 uint8 uint8)))
+
 ;;; Transforms COLOR-MAP into a list of elements '(id color) where
 ;;; each color is a string representing the color in a hexadecimal
 ;;; "#RRGGBB" or "#RRGGBBAA" code. The shorter form is used when
@@ -66,11 +78,90 @@
   (map id->color (iota (colors-count))))
 
 
-(define scm->color-map
-  (pointer->procedure
-   void
-   (dynamic-func "s_color_map_from_scm" liblepton)
-   (list '* '* '*)))
+;;; Decode a hexadecimal RGB or RGBA color code.
+;;;
+;;; The function accepts a hexadecimal color code of either the
+;;; form #RRGGBB or #RRGGBBAA, parses it to extract the numerical
+;;; color values, and returns the list of values '(RR GG BB AA).
+;;; If the six-digit form is used, the alpha channel is set to
+;;; full opacity. If an error occurs during parsing, the return
+;;; value is #f.
+(define (color-rgba-decode s)
+  ;; Check that the string has a valid length and starts with a
+  ;; '#'.
+  (define (check-string s)
+    (and (string-prefix? "#" s)
+         (let ((s (string-drop s 1)))
+           (or (and (= 6 (string-length s))
+                    (string-append s "ff"))
+               (and (= 8 (string-length s))
+                    s)))))
+
+  (let ((s (check-string s)))
+    (and s
+         ;; Conversion with radix 16 will work for proper hex
+         ;; chars only.
+         (let ((r (string->number (substring s 0 2) 16))
+               (g (string->number (substring s 2 4) 16))
+               (b (string->number (substring s 4 6) 16))
+               (a (string->number (substring s 6 8) 16)))
+           (and r g b a (list r g b a))))))
+
+(define (valid-color-id? id)
+  (and (>= id 0)
+       (< id (colors-count))))
+
+(define (scm->color-map color-map ls proc-name)
+  (define (parse-entry entry)
+    ;; Check if map entry has correct type.
+    (when (or (not (list? entry))
+              (not (= (length entry) 2)))
+      (error 'wrong-type-arg
+             proc-name
+             (G_ "Color map entry must be a two-element list: ~S\n")
+             entry))
+    ;; Check color index has correct type and extract it.
+    (let ((id (car entry))
+          (color (cadr entry)))
+      (when (not (integer? id))
+        (error 'wrong-type-arg
+               proc-name
+               (G_ "Index in color map entry must be an integer: ~S\n")
+               (car entry)))
+      ;; Check color index is within bounds. If it's out of bounds
+      ;; it's legal but warn & ignore it.
+      ;; FIXME: one day we will have dynamically-expanding
+      ;; colorspace.  One day.
+      (if (valid-color-id? id)
+          (if color
+              (if (string? color)
+                  (let ((result (color-rgba-decode color)))
+                    (if result
+                        (cons id (cons #t result))
+                        (begin
+                          (log! 'critical (G_ "Invalid color map value: ~S\n") color)
+                          #f)))
+                  ;; Color must be a string or #f.
+                  (error 'wrong-type-arg
+                         proc-name
+                         (G_ "Value in color map entry must be #f or a string: ~S\n")
+                         color))
+              ;; If color value is #f, disable the color.
+              (list id #f #x00 #x00 #x00 #xff))
+          (begin
+            (log! 'critical (G_ "Color map index out of bounds: ~A\n") id)
+            #f))))
+
+  (define (process-entry entry)
+    (match (parse-entry entry)
+      ((id enabled r g b a)
+       (if enabled
+           (colormap-set-color! color-map id r g b a)
+           (colormap-disable-color! color-map id)))
+      (_ #f)))
+
+  (for-each process-entry ls))
+
 
 (define display-colors
   (dynamic-pointer "display_colors" libleptongui))
@@ -90,11 +181,13 @@
              (lambda ()
                (check-color-map color-map))
              (lambda (key . args)
-               (log! 'warning (G_ "~A: color-map must be a list.\n") proc-name)
+               (log! 'warning
+                     (G_ "~A: color-map must be a list.\n")
+                     proc-name)
                #f))
            (not (not (scm->color-map color-array
-                                     (scm->pointer color-map)
-                                     (string->pointer proc-name)))))
+                                     color-map
+                                     proc-name))))
       (color-map->scm color-array)))
 
 

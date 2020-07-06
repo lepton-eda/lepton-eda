@@ -45,9 +45,6 @@ geda_color_get_red_double (const GedaColor *color);
 gdouble
 geda_color_get_alpha_double (const GedaColor *color);
 
-gboolean
-s_color_rgba_decode (const gchar *rgba, guchar *r, guchar *g, guchar *b, guchar *a);
-
 
 #define BACKGROUND_COLOR                0
 #define PIN_COLOR                       1
@@ -98,13 +95,20 @@ lepton_colormap_color_by_id (const GedaColor *color_map,
                              size_t id);
 
 void
+lepton_colormap_disable_color (GedaColor *color_map,
+                               size_t id);
+void
+lepton_colormap_set_color (GedaColor *color_map,
+                           size_t id,
+                           guint8 r,
+                           guint8 g,
+                           guint8 b,
+                           guint8 a);
+void
 geda_color_map_init (GedaColorMap map);
 
 void
 s_color_init (void);
-
-void
-s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name);
 
 const gchar*
 color_get_name (int color_index);

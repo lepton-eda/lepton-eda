@@ -98,6 +98,28 @@ lepton_colormap_color_by_id (const GedaColor *color_map,
   return &color_map[id];
 }
 
+void
+lepton_colormap_disable_color (GedaColor *color_map,
+                               size_t id)
+{
+  color_map[id].enabled = FALSE;
+}
+
+void
+lepton_colormap_set_color (GedaColor *color_map,
+                           size_t id,
+                           guint8 r,
+                           guint8 g,
+                           guint8 b,
+                           guint8 a)
+{
+  color_map[id].enabled = TRUE;
+  color_map[id].r = r;
+  color_map[id].g = g;
+  color_map[id].b = b;
+  color_map[id].a = a;
+}
+
 
 /*! \brief Get the color blue value as a double
  *
@@ -158,151 +180,6 @@ geda_color_get_alpha_double (const GedaColor *color)
 
   return color->a / 255.0;
 }
-
-/* \brief Decode a hexadecimal RGB or RGBA color code.
- * \par Function Description
- * Accepts a hexadecimal color code \a rgba of either the form #RRGGBB
- * or #RRGGBBAA, and parses it to extract the numerical color values,
- * placing them in the the #guchar pointers passed as arguments. If
- * the six-digit form is used, the alpha channel is set to full
- * opacity. If an error occurs during parsing, the return values are
- * set to solid white.
- *
- * Note that this function implements similar functionality to
- * gdk_color_parse(). However, for consistency, <em>only</em> this
- * function should be used to parse color strings from gEDA
- * configuration files, as gdk_color_parse() does not support the
- * alpha channel.
- *
- * \todo Use GError mechanism to give more specific error messages.
- *
- * \param [in]  rgba Colour code to parse.
- * \param [out] r    Location to store red value.
- * \param [out] g    Location to store green value.
- * \param [out] b    Location to store blue value.
- *
- *  \returns #TRUE on success, #FALSE on failure.
- */
-gboolean
-s_color_rgba_decode (const gchar *rgba,
-                     guint8 *r, guint8 *g, guint8 *b, guint8 *a)
-{
-  gint len, i, ri, gi, bi, ai;
-  gchar c;
-
-  /* Default to solid white */
-  *r = 0xff; *g = 0xff; *b = 0xff; *a = 0xff;
-
-  /* Check that the string is a valid length and starts with a '#' */
-  len = strlen (rgba);
-  if ((len != 9 && len != 7) || rgba[0] != '#')
-    return FALSE;
-
-  /* Check we only have [0-9a-fA-F] */
-  for (i = 1; i < len; i++) {
-    c = rgba[i];
-    if ((c < '0' || c > '9')
-        && (c < 'a' || c > 'f')
-        && (c < 'A' || c > 'F'))
-      return FALSE;
-  }
-
-  /* Use sscanf to extract values */
-  c = sscanf (rgba + 1, "%2x%2x%2x", &ri, &gi, &bi);
-  if (c != 3)
-    return FALSE;
-  *r = (guint8) ri; *g = (guint8) gi; *b = (guint8) bi;
-
-  if (len == 9) {
-    c = sscanf (rgba + 7, "%2x", &ai);
-    if (c != 1)
-      return FALSE;
-    *a = (guint8) ai;
-  }
-
-  return TRUE;
-}
-
-
-/*!
- * \warning This function should ONLY be called from Scheme procedures.
- */
-void
-s_color_map_from_scm (GedaColor *map, SCM lst, const char *scheme_proc_name)
-{
-  SCM curr = lst;
-  SCM wrong_type_arg_sym = scm_from_utf8_symbol ("wrong-type-arg");
-  SCM proc_name = scm_from_utf8_string (scheme_proc_name);
-  while (!scm_is_null (curr)) {
-    int i;
-    char *rgba;
-    SCM s;
-    GedaColor c = {0x00, 0x00, 0x00, FALSE};
-    gboolean result;
-    SCM entry = scm_car (curr);
-
-    /* Check map entry has correct type */
-    if (!scm_is_true (scm_list_p (entry))
-        || (scm_to_int (scm_length (entry)) != 2)) {
-      scm_error_scm (wrong_type_arg_sym, proc_name,
-                     scm_from_utf8_string (_("Color map entry must be a two-element list")),
-                     SCM_EOL, scm_list_1 (entry));
-    }
-
-    /* Check color index has correct type, and extract it */
-    s = scm_car (entry);
-    if (!scm_is_integer (s)) {
-      scm_error_scm (wrong_type_arg_sym, proc_name,
-                     scm_from_utf8_string (_("Index in color map entry must be an integer")),
-                     SCM_EOL, scm_list_1 (s));
-    }
-    i = scm_to_int (s);
-
-    /* Check color index is within bounds. If it's out of bounds, it's
-     * legal, but warn & ignore it.
-     *
-     * FIXME one day we will have dynamically-expanding colorspace.
-     * One day. */
-    if (!color_id_valid (i)) {
-      g_critical ("Color map index out of bounds: %1$i\n", i);
-      goto color_map_next;
-    }
-
-    /* If color value is #F, disable color */
-    s = scm_cadr (entry);
-    if (scm_is_false (s)) {
-      map[i].enabled = FALSE;
-      goto color_map_next;
-    }
-
-    /* Otherwise, we require a string */
-    s = scm_cadr (entry);
-    if (!scm_is_string (s)) {
-      scm_error_scm (wrong_type_arg_sym, proc_name,
-                     scm_from_utf8_string (_("Value in color map entry must be #f or a string")),
-                     SCM_EOL, scm_list_1 (s));
-    }
-    rgba = scm_to_utf8_string (s);
-
-    result = s_color_rgba_decode (rgba, &c.r, &c.g, &c.b, &c.a);
-
-    /* FIXME should we generate a Guile error if there's a problem here? */
-    if (!result) {
-      g_critical ("Invalid color map value: %1$s\n", rgba);
-    } else {
-      map[i] = c;
-      map[i].enabled = TRUE;
-    }
-
-    free (rgba); /* this should stay as free (allocated from guile) */
-
-  color_map_next:
-    /* Go to next element in map */
-    curr = scm_cdr (curr);
-  }
-  scm_remember_upto_here_2 (wrong_type_arg_sym, proc_name);
-}
-
 
 
 /*! \brief Initialise a color map to B&W
