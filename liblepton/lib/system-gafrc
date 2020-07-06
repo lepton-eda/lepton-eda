@@ -22,7 +22,7 @@
 ;; Import deprecated Scheme functions
 (load-from-path "geda-deprecated-config.scm")
 (use-modules (geda deprecated)
-             (schematic color-map))
+             (lepton color-map))
 
 
 ; Function: scheme-directory( dir )
@@ -33,9 +33,6 @@
 
 
 ;;;; Color maps
-
-;; Load functions for handling color maps
-(load-from-path "color-map.scm")
 
 ;; Make the printing color map more user-friendly
 (color-map-make-friendly print-color-map)

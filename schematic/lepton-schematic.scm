@@ -30,8 +30,8 @@ exec @GUILE@ -s "$0" "$@"
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
                 "liblepton_init")
 
-(primitive-eval '(use-modules (lepton log)
-                              (schematic color-map)
+(primitive-eval '(use-modules (lepton color-map)
+                              (lepton log)
                               (schematic core gettext)
                               (schematic version)))
 

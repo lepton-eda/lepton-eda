@@ -2,7 +2,6 @@ scmdatadir = $(LEPTONDATADIR)/scheme
 nobase_dist_scmdata_DATA = \
 	geda.scm \
 	geda-deprecated-config.scm \
-	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \
 	geda/attrib.scm \
@@ -12,6 +11,7 @@ nobase_dist_scmdata_DATA = \
 	geda/log.scm \
 	geda/library.scm \
 	lepton/attrib.scm \
+	lepton/color-map.scm \
 	lepton/config.scm \
 	lepton/file-system.scm \
 	lepton/library.scm \
