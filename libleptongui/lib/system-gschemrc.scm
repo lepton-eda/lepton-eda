@@ -5,6 +5,7 @@
 
 (use-modules (gschem deprecated)
              (schematic action)
+             (schematic attrib)
              (schematic builtins)
              (schematic gui keymap)
              (schematic gui stroke)

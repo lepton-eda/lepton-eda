@@ -33,8 +33,6 @@ struct gsubr_t {
 /*! \brief */
 static struct gsubr_t gschem_funcs[] = {
   /* rc file */
-  { "attribute-name",               1, 0, 0, (SCM (*) ()) g_rc_attribute_name },
-
   { "add-menu",                     2, 0, 0, (SCM (*) ()) g_rc_add_menu },
 
   { NULL,                           0, 0, 0, NULL } };

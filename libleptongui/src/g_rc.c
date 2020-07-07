@@ -56,33 +56,6 @@ g_rc_parse_gtkrc()
  *  \par Function Description
  *
  */
-SCM g_rc_attribute_name(SCM scm_path)
-{
-  char *path;
-  SCM ret;
-
-  SCM_ASSERT (scm_is_string (scm_path), scm_path,
-              SCM_ARG1, "attribute-name");
-
-  path = scm_to_utf8_string (scm_path);
-
-  /* not unique? */
-  if (!s_attrib_uniq(path)) {
-    ret = SCM_BOOL_F;
-  } else {
-    s_attrib_add_entry (path);
-    ret = SCM_BOOL_T;
-  }
-
-  free(path);
-  return ret;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
 SCM g_rc_add_menu(SCM scm_menu_name, SCM scm_menu_items)
 {
   char *menu_name;

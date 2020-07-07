@@ -19,8 +19,11 @@
 ;;
 
 (define-module (schematic attrib)
+  #:use-module (system foreign)
 
-  #:use-module (schematic core attrib))
+  #:use-module (schematic core attrib)
+
+  #:export (attribute-name))
 
 ;; add-attrib! target name value visible attribute-mode
 ;;
@@ -37,3 +40,29 @@
 ;;
 ;; See also active-page in the (schematic window) module.
 (define-public add-attrib! %add-attrib!)
+
+
+(define libleptongui (dynamic-link "libleptongui"))
+
+(define s_attrib_uniq
+  (pointer->procedure
+   int
+   (dynamic-func "s_attrib_uniq" libleptongui)
+   (list '*)))
+
+(define s_attrib_add_entry
+  (pointer->procedure
+   int
+   (dynamic-func "s_attrib_add_entry" libleptongui)
+   (list '*)))
+
+(define (attribute-name name)
+  "Adds attribute NAME to the list of attributes shown in the
+\"Add attribute\" and \"Edit attribute\" dialogs.  Returns #t if
+the attribute was added successfully, otherwise returns #f."
+  (when (not (string? name))
+    (throw 'wrong-type-arg "attribute-name: The argument must be a string."))
+
+  (let ((pname (string->pointer name)))
+    (and (not (zero? (s_attrib_uniq pname)))
+         (not (zero? (s_attrib_add_entry pname))))))
