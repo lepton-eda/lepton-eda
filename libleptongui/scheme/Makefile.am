@@ -28,6 +28,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/gui/stroke.scm \
 	schematic/hook.scm \
 	schematic/keymap.scm \
+	schematic/menu.scm \
 	schematic/netlist.scm \
 	schematic/precompile.scm \
 	schematic/repl.scm \

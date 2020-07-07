@@ -9,6 +9,7 @@
              (schematic builtins)
              (schematic gui keymap)
              (schematic gui stroke)
+             (schematic menu)
              (schematic netlist)
              (lepton config))
 

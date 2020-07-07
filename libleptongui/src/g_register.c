@@ -21,22 +21,6 @@
 #include <config.h>
 #include "gschem.h"
 
-/*! \brief */
-struct gsubr_t {
-  const char* name;
-  int req;
-  int opt;
-  int rst;
-  SCM (*fnc)();
-};
-
-/*! \brief */
-static struct gsubr_t gschem_funcs[] = {
-  /* rc file */
-  { "add-menu",                     2, 0, 0, (SCM (*) ()) g_rc_add_menu },
-
-  { NULL,                           0, 0, 0, NULL } };
-
 /*! \brief Define a hook.
  * \par Function Description
  * Creates a Guile new hook with \a n_args arguments, and binds it to
@@ -62,13 +46,6 @@ create_hook (const char *name, int n_args)
  */
 void g_register_funcs (void)
 {
-  struct gsubr_t *tmp = gschem_funcs;
-
-  while (tmp->name != NULL) {
-    scm_c_define_gsubr (tmp->name, tmp->req, tmp->opt, tmp->rst, (scm_t_subr) tmp->fnc);
-    tmp++;
-  }
-
   /* Hook stuff */
   complex_place_list_changed_hook = create_hook ("complex-place-list-changed-hook", 1);
 }
