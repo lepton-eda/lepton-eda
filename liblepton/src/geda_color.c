@@ -30,7 +30,7 @@
 #define DEFAULT_COLOR GRAPHIC_COLOR
 
 
-GedaColorMap print_colors;
+static GedaColorMap print_colors;
 GedaColorMap display_colors;
 GedaColorMap display_outline_colors;
 
@@ -212,6 +212,11 @@ s_color_init()
   geda_color_map_init (print_colors);
 }
 
+GedaColor*
+print_colors_array ()
+{
+  return print_colors;
+}
 
 
 /*! \brief: For a given \a color_index, get Scheme symbol name

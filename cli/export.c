@@ -232,6 +232,7 @@ cmd_export_impl (void *data, int argc, char **argv)
   /* Create color map */
   render_color_map =
     g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), colors_count());
+  GedaColor* print_colors = print_colors_array();
   render_color_map =
     g_array_append_vals (render_color_map, print_colors, colors_count());
   if (!settings.color) {

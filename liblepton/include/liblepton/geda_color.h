@@ -77,10 +77,6 @@ geda_color_get_alpha_double (const GedaColor *color);
 typedef GedaColor GedaColorMap[ COLORS_COUNT ];
 
 
-/* Color map for printing */
-extern GedaColorMap print_colors;
-
-
 size_t
 colors_count();
 
@@ -115,6 +111,9 @@ color_get_name (int color_index);
 
 const char*
 color_get_strname (int color_index);
+
+GedaColor*
+print_colors_array ();
 
 G_END_DECLS
 

@@ -166,6 +166,7 @@ x_print_draw_page (TOPLEVEL *toplevel, PAGE *page,
    * making the background color transparent and replacing all other
    * enabled colors with solid black. */
   color_map = g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), colors_count());
+  GedaColor *print_colors = print_colors_array ();
   color_map = g_array_append_vals (color_map, print_colors, colors_count());
   if (!is_color) {
     for (size_t i = 0; i < colors_count(); i++) {

@@ -209,8 +209,6 @@
   (dynamic-pointer "display_colors" liblepton))
 (define display-outline-colors
   (dynamic-pointer "display_outline_colors" liblepton))
-(define print-colors
-  (dynamic-pointer "print_colors" liblepton))
 
 
 (define (process-color-map color-map color-array proc-name)
@@ -243,7 +241,13 @@
                      display-outline-colors
                      "display-outline-color-map"))
 
+(define print-colors-array
+  (pointer->procedure
+   '*
+   (dynamic-func "print_colors_array" liblepton)
+   '()))
+
 (define* (print-color-map #:optional color-map)
   (process-color-map color-map
-                     print-colors
+                     (print-colors-array)
                      "print-color-map"))
