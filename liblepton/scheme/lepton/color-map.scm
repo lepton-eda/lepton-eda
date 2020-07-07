@@ -173,8 +173,7 @@
         (throw 'wrong-type-arg
                (G_ "Index in color map entry must be an integer or a symbol defined in %color-name-map: ~S\n")
                (car entry)))
-      ;; Check color index is within bounds. If it's out of bounds
-      ;; it's legal but warn & ignore it.
+      ;; Check color index is within bounds.
       ;; FIXME: one day we will have dynamically-expanding
       ;; colorspace.  One day.
       (if (valid-color-id? id)
@@ -183,22 +182,18 @@
                   (let ((result (color-rgba-decode color)))
                     (if result
                         (cons id (cons #t result))
-                        (begin
-                          (log! 'critical
-                                (G_ "Invalid color map value: ~S\n")
-                                color)
-                          #f)))
+                        (throw 'wrong-type-arg
+                               (G_ "Invalid color map value: ~S\n")
+                               color)))
                   ;; Color must be a string or #f.
                   (throw 'wrong-type-arg
                          (G_ "Value in color map entry must be #f or a string: ~S\n")
                          color))
               ;; If color value is #f, disable the color.
               (list id #f #x00 #x00 #x00 #xff))
-          (begin
-            (log! 'critical
-                  (G_ "Color map index out of bounds: ~A\n")
-                  id)
-            #f))))
+          (throw 'out-of-range
+                 (G_ "Color map index out of bounds: ~A\n")
+                 id))))
 
   (define (process-entry entry)
     (match (parse-entry entry)
@@ -226,7 +221,7 @@
                (G_ "Color-map must be a list: ~S")
                color-map)))
 
-  (catch 'wrong-type-arg
+  (catch #t
     (lambda ()
       (if color-map
           (and (check-color-map color-map)
