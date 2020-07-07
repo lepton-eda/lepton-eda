@@ -9,10 +9,6 @@
 ; Start of color section
 ;
 
-;; Make the gschem color maps more user-friendly
-(color-map-make-friendly display-color-map)
-(color-map-make-friendly display-outline-color-map)
-
 ; Load up a color scheme which has a dark (black) background.
 ; Comment out the first line and comment in the second line for a
 ; light (almost white) background.  The dark background is the

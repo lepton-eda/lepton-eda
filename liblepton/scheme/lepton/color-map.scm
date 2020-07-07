@@ -29,9 +29,7 @@
 
   #:export (display-color-map
             display-outline-color-map
-            print-color-map
-            color-map-make-friendly
-            color-map-friendlier-function))
+            print-color-map))
 
 (define liblepton (dynamic-link "liblepton"))
 (define libleptongui (dynamic-link "libleptongui"))
@@ -174,41 +172,6 @@
   (dynamic-pointer "print_colors" libleptongui))
 
 
-(define (check-color-map color-map)
-  (or (list? color-map)
-      (throw 'wrong-type-arg)))
-
-(define (process-color-map color-map color-array proc-name)
-  (if color-map
-      (and (catch 'wrong-type-arg
-             (lambda ()
-               (check-color-map color-map))
-             (lambda (key . args)
-               (log! 'warning
-                     (G_ "~A: color-map must be a list.\n")
-                     proc-name)
-               #f))
-           (not (not (scm->color-map color-array
-                                     color-map
-                                     proc-name))))
-      (color-map->scm color-array)))
-
-
-(define* (display-color-map #:optional color-map)
-  (process-color-map color-map
-                     display-colors
-                     "display-color-map"))
-
-(define* (display-outline-color-map #:optional color-map)
-  (process-color-map color-map
-                     display-outline-colors
-                     "display-outline-color-map"))
-
-(define* (print-color-map #:optional color-map)
-  (process-color-map color-map
-                     print-colors
-                     "print-color-map"))
-
 ;; Map between color index numbers and symbolic color names
 (define %color-name-map
   '((background . 0)
@@ -235,51 +198,69 @@
     (junction . 21)
     (mesh-grid-major . 22)
     (mesh-grid-minor . 23)
-   ))
+    ))
 
-;; Look up the internal system ID for a symbolic color
+(define %color-name-reverse-map
+  (map (lambda (x) (cons (cdr x) (car x))) %color-name-map))
+
+;;; Look up the internal system ID for a symbolic color.
 (define (color-map-name-to-index val)
   (if (symbol? val)
-      (apply + (map (lambda (x)
-                      (if (eqv? (car x) val) (cdr x) 0))
-                    %color-name-map))
+      (or (assq-ref %color-name-map val) 0)
       val))
 
-
-;; Look up the symbolic color for an internal system ID
+;;; Look up the symbolic color for an internal system ID.
 (define (color-map-name-from-index idx)
-  (define (impl lst idx)
-    (if (null? lst)
-        idx ;; Fall back to the index if no symbol found
-        (let ((entry (car lst)))
-          (if (eq? idx (cdr entry))
-              (car entry)
-              (impl (cdr lst) idx)))))
-  (impl %color-name-map idx))
+  (or (assq-ref %color-name-reverse-map idx)
+      ;; Fall back to the index if no symbol found.
+      idx))
 
-;; Convert a color map to use system IDs
+;; Convert a color map to use system IDs.
 (define (color-map-to-symbolic colormap)
   (map (lambda (entry)
-         (list (color-map-name-from-index (car entry))
-               (cadr entry)))
+         (cons (color-map-name-from-index (car entry))
+               (cdr entry)))
        colormap))
 
-;; Convert a color map to use symbolic color names
+;; Convert a color map to use symbolic color names.
 (define (color-map-from-symbolic colormap)
   (map (lambda (entry)
-         (list (color-map-name-to-index (car entry))
-               (cadr entry)))
+         (cons (color-map-name-to-index (car entry))
+               (cdr entry)))
        colormap))
 
-;; Given a color map function (e.g. print-color-map), return an
-;; equivalent function that uses symbolic colors.
-(define (color-map-friendlier-function map-function)
-  (lambda rest
-    (if (null? rest)
-        (color-map-to-symbolic (map-function))
-        (map-function (apply color-map-from-symbolic rest)))))
 
-;; Converts a standard color map function into one which understands
-;; symbolic colors
-(define-macro (color-map-make-friendly func)
-  `(define ,func (color-map-friendlier-function ,func)))
+(define (process-color-map color-map color-array proc-name)
+  (define (check-color-map color-map)
+    (or (list? color-map)
+        (throw 'wrong-type-arg)))
+
+  (if color-map
+      (and (catch 'wrong-type-arg
+             (lambda ()
+               (check-color-map color-map))
+             (lambda (key . args)
+               (log! 'warning
+                     (G_ "~A: color-map must be a list.\n")
+                     proc-name)
+               #f))
+           (not (not (scm->color-map color-array
+                                     (color-map-from-symbolic color-map)
+                                     proc-name))))
+      (color-map-to-symbolic (color-map->scm color-array))))
+
+
+(define* (display-color-map #:optional color-map)
+  (process-color-map color-map
+                     display-colors
+                     "display-color-map"))
+
+(define* (display-outline-color-map #:optional color-map)
+  (process-color-map color-map
+                     display-outline-colors
+                     "display-outline-color-map"))
+
+(define* (print-color-map #:optional color-map)
+  (process-color-map color-map
+                     print-colors
+                     "print-color-map"))

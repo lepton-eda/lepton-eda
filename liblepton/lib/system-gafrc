@@ -33,10 +33,6 @@
 
 
 ;;;; Color maps
-
-;; Make the printing color map more user-friendly
-(color-map-make-friendly print-color-map)
-
 ;; Load up a color scheme for printing optimised for a white background.
 ; Comment out the second line and comment in the first line for a
 ; dark background. The dark background is the original look.
