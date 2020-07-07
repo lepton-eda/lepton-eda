@@ -224,8 +224,9 @@
     (lambda ()
       (if color-map
           (and (check-color-map color-map)
-               (not (not (scm->color-map color-array
-                                         color-map))))
+               (scm->color-map color-array color-map)
+               ;; Return the resulting list.
+               (color-map->scm color-array))
           (color-map->scm color-array)))
     (lambda (key . args)
       (log! 'critical "~A: ~A\n" proc-name (apply format #f args))
