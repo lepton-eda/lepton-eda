@@ -20,7 +20,6 @@ symbol_dirs = \
 	irf \
 	lattice \
 	linear \
-	local \
 	maxim \
 	memory \
 	micro \

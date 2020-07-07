@@ -12,7 +12,6 @@
        (component-library (build-path geda-sym-path dir)))
    )
  (reverse '(
-    "local"
   ; Generic symbols
     ("analog" "Basic devices")
     ("connector" "Connectors (generic)")
