@@ -112,7 +112,9 @@
                     (if (= a #xff)
                         (format #f "#~2,'0x~2,'0x~2,'0x" r g b)
                         (format #f "#~2,'0x~2,'0x~2,'0x~2,'0x" r g b a)))))
-        (_ (error "Wrong C color struct: ~S" color)))))
+        (_ (throw 'wrong-type-arg
+                  (G_ "Wrong C color struct: ~S")
+                  color)))))
 
   (map id->color (iota (colors-count))))
 
@@ -150,7 +152,7 @@
   (and (>= id 0)
        (< id (colors-count))))
 
-(define (scm->color-map color-map ls proc-name)
+(define (scm->color-map color-map ls)
   ;; Look up the internal system ID for a symbolic color.
   (define (color-map-name-to-index x)
     (if (symbol? x)
@@ -161,16 +163,14 @@
     ;; Check if map entry has correct type.
     (when (or (not (list? entry))
               (not (= (length entry) 2)))
-      (error 'wrong-type-arg
-             proc-name
+      (throw 'wrong-type-arg
              (G_ "Color map entry must be a two-element list: ~S\n")
              entry))
     ;; Check color index has correct type and extract it.
     (let ((id (color-map-name-to-index (car entry)))
           (color (cadr entry)))
       (when (not (integer? id))
-        (error 'wrong-type-arg
-               proc-name
+        (throw 'wrong-type-arg
                (G_ "Index in color map entry must be an integer or a symbol defined in %color-name-map: ~S\n")
                (car entry)))
       ;; Check color index is within bounds. If it's out of bounds
@@ -184,17 +184,20 @@
                     (if result
                         (cons id (cons #t result))
                         (begin
-                          (log! 'critical (G_ "Invalid color map value: ~S\n") color)
+                          (log! 'critical
+                                (G_ "Invalid color map value: ~S\n")
+                                color)
                           #f)))
                   ;; Color must be a string or #f.
-                  (error 'wrong-type-arg
-                         proc-name
+                  (throw 'wrong-type-arg
                          (G_ "Value in color map entry must be #f or a string: ~S\n")
                          color))
               ;; If color value is #f, disable the color.
               (list id #f #x00 #x00 #x00 #xff))
           (begin
-            (log! 'critical (G_ "Color map index out of bounds: ~A\n") id)
+            (log! 'critical
+                  (G_ "Color map index out of bounds: ~A\n")
+                  id)
             #f))))
 
   (define (process-entry entry)
@@ -219,21 +222,20 @@
 (define (process-color-map color-map color-array proc-name)
   (define (check-color-map color-map)
     (or (list? color-map)
-        (throw 'wrong-type-arg)))
+        (throw 'wrong-type-arg
+               (G_ "Color-map must be a list: ~S")
+               color-map)))
 
-  (if color-map
-      (and (catch 'wrong-type-arg
-             (lambda ()
-               (check-color-map color-map))
-             (lambda (key . args)
-               (log! 'warning
-                     (G_ "~A: color-map must be a list.\n")
-                     proc-name)
-               #f))
-           (not (not (scm->color-map color-array
-                                     color-map
-                                     proc-name))))
-      (color-map->scm color-array)))
+  (catch 'wrong-type-arg
+    (lambda ()
+      (if color-map
+          (and (check-color-map color-map)
+               (not (not (scm->color-map color-array
+                                         color-map))))
+          (color-map->scm color-array)))
+    (lambda (key . args)
+      (log! 'critical "~A: ~A\n" proc-name (apply format #f args))
+      #f)))
 
 
 (define* (display-color-map #:optional color-map)
