@@ -64,7 +64,6 @@
 
 
 (define liblepton (dynamic-link "liblepton"))
-(define libleptongui (dynamic-link "libleptongui"))
 
 (define colors-count
   (pointer->procedure
@@ -207,11 +206,11 @@
 
 
 (define display-colors
-  (dynamic-pointer "display_colors" libleptongui))
+  (dynamic-pointer "display_colors" liblepton))
 (define display-outline-colors
-  (dynamic-pointer "display_outline_colors" libleptongui))
+  (dynamic-pointer "display_outline_colors" liblepton))
 (define print-colors
-  (dynamic-pointer "print_colors" libleptongui))
+  (dynamic-pointer "print_colors" liblepton))
 
 
 (define (process-color-map color-map color-array proc-name)

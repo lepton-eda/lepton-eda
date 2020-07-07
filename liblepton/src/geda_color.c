@@ -31,6 +31,8 @@
 
 
 GedaColorMap print_colors;
+GedaColorMap display_colors;
+GedaColorMap display_outline_colors;
 
 
 #define WHITE   {0xff, 0xff, 0xff, 0xff, TRUE}

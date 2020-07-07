@@ -23,8 +23,8 @@
 
 
 
-GedaColorMap display_colors;
-GedaColorMap display_outline_colors;
+extern GedaColorMap display_colors;
+extern GedaColorMap display_outline_colors;
 
 
 
