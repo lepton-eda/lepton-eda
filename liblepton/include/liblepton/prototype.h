@@ -120,7 +120,6 @@ o_selection_remove (SELECTION *selection,
 
 /* s_attrib.c */
 int s_attrib_add_entry(char *new_attrib);
-void s_attrib_print(void);
 int s_attrib_uniq(char *name);
 void s_attrib_free(void);
 void s_attrib_init(void);

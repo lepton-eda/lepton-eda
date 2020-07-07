@@ -66,19 +66,6 @@ int s_attrib_add_entry(char *new_attrib)
   return(attrib_index);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void s_attrib_print()
-{
-  int i;
-
-  for (i = 0; i < attrib_index; i++) {
-    printf("%s\n", attrib[i].attrib_name);
-  }
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
