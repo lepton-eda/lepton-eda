@@ -33,17 +33,6 @@ struct BuiltinInfo {
 };
 
 static struct BuiltinInfo builtins[] = {
-  { "%file-new-window",              0, 0, 0, (SCM (*) ()) g_keys_file_new_window },
-  { "%file-new",                     0, 0, 0, (SCM (*) ()) g_keys_file_new },
-  { "%file-open",                    0, 0, 0, (SCM (*) ()) g_keys_file_open },
-  { "%file-script",                  0, 0, 0, (SCM (*) ()) g_keys_file_script },
-  { "%file-save",                    0, 0, 0, (SCM (*) ()) g_keys_file_save },
-  { "%file-save-as",                 0, 0, 0, (SCM (*) ()) g_keys_file_save_as },
-  { "%file-save-all",                0, 0, 0, (SCM (*) ()) g_keys_file_save_all },
-  { "%file-print",                   0, 0, 0, (SCM (*) ()) g_keys_file_print },
-  { "%file-image",                   0, 0, 0, (SCM (*) ()) g_keys_file_write_png },
-  { "%file-close-window",            0, 0, 0, (SCM (*) ()) g_keys_file_close },
-  { "%file-quit",                    0, 0, 0, (SCM (*) ()) g_keys_file_quit },
   { "%edit-undo",                    0, 0, 0, (SCM (*) ()) g_keys_edit_undo },
   { "%edit-redo",                    0, 0, 0, (SCM (*) ()) g_keys_edit_redo },
   { "%edit-select",                  0, 0, 0, (SCM (*) ()) g_keys_edit_select },

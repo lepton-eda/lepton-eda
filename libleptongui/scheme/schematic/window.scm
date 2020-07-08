@@ -29,6 +29,7 @@
 (define-public active-page %active-page)
 (define-public set-active-page! %set-active-page!)
 (define-public pointer-position %pointer-position)
+(define-public current-window %current-window)
 
 (define-public (snap-point point)
   (%snap-point (car point) (cdr point)))

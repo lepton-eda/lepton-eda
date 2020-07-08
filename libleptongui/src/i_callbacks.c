@@ -49,7 +49,8 @@
  *  since there is a call: widget = NULL, data = 0 (will be w_current hack)
  *  \todo This should be renamed to page_new perhaps...
  */
-DEFINE_I_CALLBACK(file_new)
+void
+i_callback_file_new (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   PAGE *page;
@@ -74,7 +75,7 @@ DEFINE_I_CALLBACK(file_new)
  */
 void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
 {
-  i_callback_file_new (data, 0, widget);
+  i_callback_file_new (widget, data);
 }
 
 /*! \todo Finish function documentation!!!
@@ -82,7 +83,8 @@ void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(file_new_window)
+void
+i_callback_file_new_window (GtkWidget* widget, gpointer data)
 {
   GschemToplevel *w_current = NULL;
   PAGE *page = NULL;
@@ -108,7 +110,8 @@ DEFINE_I_CALLBACK(file_new_window)
  *  since there is a call: widget = NULL, data = 0 (will be w_current)
  *  \todo This should be renamed to page_open perhaps...
  */
-DEFINE_I_CALLBACK(file_open)
+void
+i_callback_file_open (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -129,14 +132,15 @@ DEFINE_I_CALLBACK(file_open)
  */
 void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
 {
-  i_callback_file_open (data, 0, widget);
+  i_callback_file_open (widget, data);
 }
 
 
 
 /*! \brief Open the "Execute Script" dialog, execute the selected Scheme file
  */
-DEFINE_I_CALLBACK(file_script)
+void
+i_callback_file_script (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -194,7 +198,8 @@ DEFINE_I_CALLBACK(file_script)
  *  checking...
  *  since there is a call: widget = NULL, data = 0 (will be w_current)
  */
-DEFINE_I_CALLBACK(file_save)
+void
+i_callback_file_save (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -234,14 +239,15 @@ DEFINE_I_CALLBACK(file_save)
  */
 void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
 {
-  i_callback_file_save (data, 0, widget);
+  i_callback_file_save (widget, data);
 }
 
 
 
 /*! \brief Save all opened pages
  */
-DEFINE_I_CALLBACK(file_save_all)
+void
+i_callback_file_save_all (GtkWidget *widget, gpointer data)
 {
   GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -300,7 +306,8 @@ DEFINE_I_CALLBACK(file_save_all)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(file_save_as)
+void
+i_callback_file_save_as (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -317,7 +324,8 @@ DEFINE_I_CALLBACK(file_save_as)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(file_print)
+void
+i_callback_file_print (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   x_print (w_current);
@@ -328,7 +336,8 @@ DEFINE_I_CALLBACK(file_print)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(file_write_png)
+void
+i_callback_file_write_png (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -347,7 +356,8 @@ DEFINE_I_CALLBACK(file_write_png)
  *  since there is a call: widget = NULL, data = 0 (will be w_current)
  *  this function closes a window
  */
-DEFINE_I_CALLBACK(file_close)
+void
+i_callback_file_close (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -362,7 +372,8 @@ DEFINE_I_CALLBACK(file_close)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(file_quit)
+void
+i_callback_file_quit (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 

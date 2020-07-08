@@ -779,7 +779,7 @@ x_dialog_close_changed_page (GschemToplevel *w_current, PAGE *page)
         /* action selected: save */
         s_page_goto (w_current->toplevel, page);
         gschem_toplevel_page_changed (w_current);
-        i_callback_file_save(w_current, 0, NULL);
+        i_callback_file_save (NULL, w_current);
         /* has the page been really saved? */
         if (!page->CHANGED) {
           result = TRUE;
@@ -881,7 +881,7 @@ x_dialog_close_window (GschemToplevel *w_current)
           s_page_goto (toplevel, p_current);
           gschem_toplevel_page_changed (w_current);
 
-          i_callback_file_save(w_current, 0, NULL);
+          i_callback_file_save (NULL, w_current);
           /* if user cancelled previous, do not close window */
           ret &= !p_current->CHANGED;
         }
