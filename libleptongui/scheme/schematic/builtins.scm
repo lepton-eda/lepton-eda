@@ -20,8 +20,10 @@
 
 (define-module (schematic builtins)
   #:use-module (srfi srfi-1)
+  #:use-module (system foreign)
 
   #:use-module (lepton attrib)
+  #:use-module (lepton ffi)
   #:use-module (lepton log)
   #:use-module (lepton object)
   #:use-module (lepton page)
@@ -30,6 +32,7 @@
   #:use-module (schematic action)
   #:use-module (schematic core builtins)
   #:use-module (schematic core gettext)
+  #:use-module (schematic ffi)
   #:use-module (schematic gschemdoc)
   #:use-module (schematic hook)
   #:use-module (schematic repl)
@@ -45,6 +48,20 @@
        (define-action (name . args) . forms)
        (export name)))))
 
+;;; Check if current window is not NULL and run a foreign
+;;; C-CALLBACK.  If it is NULL, inform the user and return
+;;; #f. ACTION-NAME is a string representing the name of action
+;;; the callback is called in.
+(define-syntax run-callback
+  (syntax-rules ()
+    ((_ c-callback action-name)
+     (let ((window (current-window)))
+       (if (null-pointer? window)
+           (begin
+             (log! 'critical "NULL window in ~S()." action-name)
+             #f)
+           (c-callback %null-pointer window))))))
+
 ;; -------------------------------------------------------------------
 ;;;; Special actions
 
@@ -55,38 +72,38 @@
 ;;;; File menu actions
 
 (define-action-public (&file-new #:label (G_ "New File") #:icon "gtk-new")
-  (%file-new))
+  (run-callback i_callback_file_new "&file-new"))
 
 (define-action-public (&file-open #:label (G_ "Open File") #:icon "gtk-open")
-  (%file-open))
+  (run-callback i_callback_file_open "&file-open"))
 
 (define-action-public (&file-save #:label (G_ "Save") #:icon "gtk-save")
-  (%file-save))
+  (run-callback i_callback_file_save "&file-save"))
 
 (define-action-public (&file-save-as #:label (G_ "Save As") #:icon "gtk-save-as")
-  (%file-save-as))
+  (run-callback i_callback_file_save_as "&file-save-as"))
 
 (define-action-public (&file-save-all #:label (G_ "Save All") #:icon "gtk-save")
-  (%file-save-all))
+  (run-callback i_callback_file_save_all "&file-save-all"))
 
 (define-action-public (&file-print #:label (G_ "Print") #:icon "gtk-print")
-  (%file-print))
+  (run-callback i_callback_file_print "&file-print"))
 
 (define-action-public (&file-image #:label (G_ "Export Image"))
-  (%file-image))
+  (run-callback i_callback_file_write_png "&file-image"))
 
 (define-action-public (&file-script #:label (G_ "Run Script") #:icon "gtk-execute")
-  (%file-script))
+  (run-callback i_callback_file_script "&file-script"))
 
 (define-action-public (&file-new-window #:label (G_ "New Window") #:icon "window-new")
-  (%file-new-window))
+  (i_callback_file_new_window %null-pointer %null-pointer))
 
 (define-action-public (&file-close-window #:label (G_ "Close Window") #:icon "gtk-close")
-  (%file-close-window))
+  (run-callback i_callback_file_close "&file-close-window"))
 
 (define-action-public (&file-quit #:label (G_ "Quit") #:icon "gtk-quit")
   (lepton-repl-save-history)
-  (%file-quit))
+  (run-callback i_callback_file_quit "&file-quit"))
 
 (define-action-public (&file-repl #:label (G_ "Terminal REPL") #:icon "gtk-execute")
   (start-repl-in-background-terminal))

@@ -32,6 +32,17 @@
             generic_filesel_dialog
             generic_msg_dialog
             gschem_toplevel_get_toplevel
+            i_callback_file_close
+            i_callback_file_new
+            i_callback_file_new_window
+            i_callback_file_open
+            i_callback_file_print
+            i_callback_file_quit
+            i_callback_file_save
+            i_callback_file_save_all
+            i_callback_file_save_as
+            i_callback_file_script
+            i_callback_file_write_png
             o_buffer_init
             o_undo_init
             scheme_init_undo
@@ -85,6 +96,18 @@
 (define-lff generic_confirm_dialog int '(*))
 (define-lff generic_filesel_dialog '* (list '* '* int))
 (define-lff generic_msg_dialog void '(*))
+;;; i_callbacks.c
+(define-lff i_callback_file_close void '(* *))
+(define-lff i_callback_file_new void '(* *))
+(define-lff i_callback_file_new_window void '(* *))
+(define-lff i_callback_file_open void '(* *))
+(define-lff i_callback_file_print void '(* *))
+(define-lff i_callback_file_quit void '(* *))
+(define-lff i_callback_file_save void '(* *))
+(define-lff i_callback_file_save_all void '(* *))
+(define-lff i_callback_file_save_as void '(* *))
+(define-lff i_callback_file_script void '(* *))
+(define-lff i_callback_file_write_png void '(* *))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.

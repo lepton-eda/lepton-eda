@@ -32,36 +32,6 @@ SCM g_keys_ ## name(SCM rest)                           \
    return SCM_BOOL_T;                           \
 }
 
-/*! \brief test-comment
- * test-comment
- */
-DEFINE_G_KEYS(file_new)
-
-DEFINE_G_KEYS(file_new_window)
-
-/* don't use the widget parameter on this function, or do some checking... */
-/* since there is a call: widget = NULL, data = 0 (will be w_current) */
-/* This should be renamed to page_open perhaps... */
-DEFINE_G_KEYS(file_open)
-
-/* don't use the widget parameter on this function, or do some checking... */
-/* since there is a call: widget = NULL, data = 0 (will be w_current) */
-DEFINE_G_KEYS(file_script)
-
-/* don't use the widget parameter on this function, or do some checking... */
-/* since there is a call: widget = NULL, data = 0 (will be w_current) */
-DEFINE_G_KEYS(file_save)
-DEFINE_G_KEYS(file_save_as)
-DEFINE_G_KEYS(file_save_all)
-DEFINE_G_KEYS(file_print)
-DEFINE_G_KEYS(file_write_png)
-
-/* don't use the widget parameter on this function, or do some checking... */
-/* since there is a call: widget = NULL, data = 0 (will be w_current) */
-/* this function closes a window */
-DEFINE_G_KEYS(file_close)
-DEFINE_G_KEYS(file_quit)
-
 /* Select also does not update the middle button shortcut */
 DEFINE_G_KEYS(edit_undo)
 DEFINE_G_KEYS(edit_redo)

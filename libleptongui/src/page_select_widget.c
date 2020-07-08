@@ -294,7 +294,7 @@ pagesel_callback_popup_new_page (GtkMenuItem* mitem, gpointer data)
   PageSelectWidget* pagesel = (PageSelectWidget*) data;
   GschemToplevel* toplevel = pagesel->toplevel_;
 
-  i_callback_file_new (toplevel, 0, NULL);
+  i_callback_file_new (NULL, toplevel);
 }
 
 
@@ -307,7 +307,7 @@ pagesel_callback_popup_open_page (GtkMenuItem* mitem, gpointer data)
   PageSelectWidget* pagesel = (PageSelectWidget*) data;
   GschemToplevel* toplevel = pagesel->toplevel_;
 
-  i_callback_file_open (toplevel, 0, NULL);
+  i_callback_file_open (NULL, toplevel);
 }
 
 
@@ -320,7 +320,7 @@ pagesel_callback_popup_save_page (GtkMenuItem* mitem, gpointer data)
   PageSelectWidget* pagesel = (PageSelectWidget*) data;
   GschemToplevel* toplevel = pagesel->toplevel_;
 
-  i_callback_file_save (toplevel, 0, NULL);
+  i_callback_file_save (NULL, toplevel);
 }
 
 
