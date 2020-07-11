@@ -1,10 +1,15 @@
+if ENABLE_ATTRIB
+ATTRIB_DIR=libleptonattrib
+endif
+
 if ENABLE_CONTRIB
 CONTRIB_DIR=contrib
 endif
+
 SUBDIRS = \
 	libleptonrenderer \
 	liblepton \
-	libleptonattrib \
+	${ATTRIB_DIR} \
 	libleptongui \
 	cli \
 	schematic \
