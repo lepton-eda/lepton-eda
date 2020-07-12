@@ -2190,7 +2190,7 @@ SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
   scm_t_array_handle handle;
   size_t len;
   ssize_t inc;
-  const scm_t_int8 *elt = scm_s8vector_elements (vec_s, &handle, &len, &inc);
+  const int8_t *elt = scm_s8vector_elements (vec_s, &handle, &len, &inc);
   gchar *buf = (gchar*) g_malloc (len);
   guint i;
 
