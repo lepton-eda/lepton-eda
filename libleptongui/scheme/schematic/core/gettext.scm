@@ -26,4 +26,4 @@
 (define-module (schematic core gettext))
 
 (define %schematic-gettext-domain "lepton-schematic")
-(define-public (_ msg) (gettext msg %schematic-gettext-domain))
+(define-public (G_ msg) (gettext msg %schematic-gettext-domain))
