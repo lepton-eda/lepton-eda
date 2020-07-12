@@ -103,7 +103,7 @@
                  ("Upper Right" . upper-right))
                alignment)
               (and (string=? "" alignment) (text-align attrib))
-              (error (_ "Invalid text alignment ~A.") alignment))
+              (error (G_ "Invalid text alignment ~A.") alignment))
              ;; angle
              (if (= rotation -1) (text-angle attrib) rotation)
              ;; string

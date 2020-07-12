@@ -48,266 +48,266 @@
 ;; -------------------------------------------------------------------
 ;;;; Special actions
 
-(define-action-public (&cancel #:label (_ "Cancel"))
+(define-action-public (&cancel #:label (G_ "Cancel"))
   (%cancel))
 
 ;; -------------------------------------------------------------------
 ;;;; File menu actions
 
-(define-action-public (&file-new #:label (_ "New File") #:icon "gtk-new")
+(define-action-public (&file-new #:label (G_ "New File") #:icon "gtk-new")
   (%file-new))
 
-(define-action-public (&file-open #:label (_ "Open File") #:icon "gtk-open")
+(define-action-public (&file-open #:label (G_ "Open File") #:icon "gtk-open")
   (%file-open))
 
-(define-action-public (&file-save #:label (_ "Save") #:icon "gtk-save")
+(define-action-public (&file-save #:label (G_ "Save") #:icon "gtk-save")
   (%file-save))
 
-(define-action-public (&file-save-as #:label (_ "Save As") #:icon "gtk-save-as")
+(define-action-public (&file-save-as #:label (G_ "Save As") #:icon "gtk-save-as")
   (%file-save-as))
 
-(define-action-public (&file-save-all #:label (_ "Save All") #:icon "gtk-save")
+(define-action-public (&file-save-all #:label (G_ "Save All") #:icon "gtk-save")
   (%file-save-all))
 
-(define-action-public (&file-print #:label (_ "Print") #:icon "gtk-print")
+(define-action-public (&file-print #:label (G_ "Print") #:icon "gtk-print")
   (%file-print))
 
-(define-action-public (&file-image #:label (_ "Export Image"))
+(define-action-public (&file-image #:label (G_ "Export Image"))
   (%file-image))
 
-(define-action-public (&file-script #:label (_ "Run Script") #:icon "gtk-execute")
+(define-action-public (&file-script #:label (G_ "Run Script") #:icon "gtk-execute")
   (%file-script))
 
-(define-action-public (&file-new-window #:label (_ "New Window") #:icon "window-new")
+(define-action-public (&file-new-window #:label (G_ "New Window") #:icon "window-new")
   (%file-new-window))
 
-(define-action-public (&file-close-window #:label (_ "Close Window") #:icon "gtk-close")
+(define-action-public (&file-close-window #:label (G_ "Close Window") #:icon "gtk-close")
   (%file-close-window))
 
-(define-action-public (&file-quit #:label (_ "Quit") #:icon "gtk-quit")
+(define-action-public (&file-quit #:label (G_ "Quit") #:icon "gtk-quit")
   (lepton-repl-save-history)
   (%file-quit))
 
-(define-action-public (&file-repl #:label (_ "Terminal REPL") #:icon "gtk-execute")
+(define-action-public (&file-repl #:label (G_ "Terminal REPL") #:icon "gtk-execute")
   (start-repl-in-background-terminal))
 
 ;; -------------------------------------------------------------------
 ;;;; General editing actions
 
-(define-action-public (&edit-undo #:label (_ "Undo") #:icon "gtk-undo")
+(define-action-public (&edit-undo #:label (G_ "Undo") #:icon "gtk-undo")
   (%edit-undo))
 
-(define-action-public (&edit-redo #:label (_ "Redo") #:icon "gtk-redo")
+(define-action-public (&edit-redo #:label (G_ "Redo") #:icon "gtk-redo")
   (%edit-redo))
 
-(define-action-public (&edit-select #:label (_ "Select Mode") #:icon "select")
+(define-action-public (&edit-select #:label (G_ "Select Mode") #:icon "select")
   (%edit-select))
 
-(define-action-public (&edit-select-all #:label (_ "Select All") #:icon "gtk-select-all")
+(define-action-public (&edit-select-all #:label (G_ "Select All") #:icon "gtk-select-all")
   (%edit-select-all))
 
-(define-action-public (&edit-deselect #:label (_ "Deselect"))
+(define-action-public (&edit-deselect #:label (G_ "Deselect"))
   (%edit-deselect))
 
-(define-action-public (&edit-delete #:label (_ "Delete") #:icon "gtk-delete")
+(define-action-public (&edit-delete #:label (G_ "Delete") #:icon "gtk-delete")
   (%edit-delete))
 
-(define-action-public (&edit-move #:label (_ "Move Mode"))
+(define-action-public (&edit-move #:label (G_ "Move Mode"))
   (%edit-move))
 
-(define-action-public (&edit-copy #:label (_ "Copy Mode") #:icon "clone")
+(define-action-public (&edit-copy #:label (G_ "Copy Mode") #:icon "clone")
   (%edit-copy))
 
-(define-action-public (&edit-mcopy #:label (_ "Multiple Copy Mode") #:icon "multi-clone")
+(define-action-public (&edit-mcopy #:label (G_ "Multiple Copy Mode") #:icon "multi-clone")
   (%edit-mcopy))
 
-(define-action-public (&edit-rotate-90 #:label (_ "Rotate Mode") #:icon "object-rotate-left")
+(define-action-public (&edit-rotate-90 #:label (G_ "Rotate Mode") #:icon "object-rotate-left")
   (%edit-rotate-90))
 
-(define-action-public (&edit-mirror #:label (_ "Mirror Mode") #:icon "object-flip-horizontal")
+(define-action-public (&edit-mirror #:label (G_ "Mirror Mode") #:icon "object-flip-horizontal")
   (%edit-mirror))
 
-(define-action-public (&edit-edit #:label (_ "Edit..."))
+(define-action-public (&edit-edit #:label (G_ "Edit..."))
   (%edit-edit))
 
-(define-action-public (&edit-text #:label (_ "Edit Text") #:icon "gtk-edit")
+(define-action-public (&edit-text #:label (G_ "Edit Text") #:icon "gtk-edit")
   (%edit-text))
 
-(define-action-public (&edit-slot #:label (_ "Choose Slot"))
+(define-action-public (&edit-slot #:label (G_ "Choose Slot"))
   (%edit-slot))
 
-(define-action-public (&edit-object-properties #:label (_ "Edit Object Properties") #:icon "gtk-properties")
+(define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")
   (%edit-object-properties))
 
-(define-action-public (&edit-translate #:label (_ "Translate Symbol"))
+(define-action-public (&edit-translate #:label (G_ "Translate Symbol"))
   (%edit-translate))
 
-(define-action-public (&edit-lock #:label (_ "Lock"))
+(define-action-public (&edit-lock #:label (G_ "Lock"))
   (%edit-lock))
 
-(define-action-public (&edit-unlock #:label (_ "Unlock"))
+(define-action-public (&edit-unlock #:label (G_ "Unlock"))
   (%edit-unlock))
 
-(define-action-public (&edit-invoke-macro #:label (_ "Invoke Macro"))
+(define-action-public (&edit-invoke-macro #:label (G_ "Invoke Macro"))
   (%edit-invoke-macro))
 
-(define-action-public (&edit-embed #:label (_ "Embed Component/Picture"))
+(define-action-public (&edit-embed #:label (G_ "Embed Component/Picture"))
   (%edit-embed))
 
-(define-action-public (&edit-unembed #:label (_ "Unembed Component/Picture"))
+(define-action-public (&edit-unembed #:label (G_ "Unembed Component/Picture"))
   (%edit-unembed))
 
-(define-action-public (&edit-update #:label (_ "Update Component") #:icon "gtk-refresh")
+(define-action-public (&edit-update #:label (G_ "Update Component") #:icon "gtk-refresh")
   (%edit-update))
 
-(define-action-public (&edit-show-hidden #:label (_ "Show/Hide Invisible Text"))
+(define-action-public (&edit-show-hidden #:label (G_ "Show/Hide Invisible Text"))
   (%edit-show-hidden))
 
 ;; -------------------------------------------------------------------
 ;;;; Clipboard actions
 
-(define-action-public (&clipboard-cut #:label (_ "Cut") #:icon "gtk-cut")
+(define-action-public (&clipboard-cut #:label (G_ "Cut") #:icon "gtk-cut")
   (%clipboard-cut))
 
-(define-action-public (&clipboard-copy #:label (_ "Copy") #:icon "gtk-copy")
+(define-action-public (&clipboard-copy #:label (G_ "Copy") #:icon "gtk-copy")
   (%clipboard-copy))
 
-(define-action-public (&clipboard-paste #:label (_ "Paste") #:icon "gtk-paste")
+(define-action-public (&clipboard-paste #:label (G_ "Paste") #:icon "gtk-paste")
   (%clipboard-paste))
 
 ;; -------------------------------------------------------------------
 ;;;; View control actions
 
-(define-action-public (&view-sidebar #:label (_ "Sidebar"))
+(define-action-public (&view-sidebar #:label (G_ "Sidebar"))
   (%view-sidebar))
 
-(define-action-public (&view-status #:label (_ "Status"))
+(define-action-public (&view-status #:label (G_ "Status"))
   (%view-status))
 
-(define-action-public (&view-find-text-state #:label (_ "Find Text State"))
+(define-action-public (&view-find-text-state #:label (G_ "Find Text State"))
   (%view-find-text-state))
 
-(define-action-public (&view-redraw #:label (_ "Redraw") #:icon "gtk-refresh")
+(define-action-public (&view-redraw #:label (G_ "Redraw") #:icon "gtk-refresh")
   (%view-redraw))
 
-(define-action-public (&view-pan #:label (_ "Pan"))
+(define-action-public (&view-pan #:label (G_ "Pan"))
   (%view-pan))
 
-(define-action-public (&view-pan-left #:label (_ "Pan Left"))
+(define-action-public (&view-pan-left #:label (G_ "Pan Left"))
   (%view-pan-left))
 
-(define-action-public (&view-pan-right #:label (_ "Pan Right"))
+(define-action-public (&view-pan-right #:label (G_ "Pan Right"))
   (%view-pan-right))
 
-(define-action-public (&view-pan-up #:label (_ "Pan Up"))
+(define-action-public (&view-pan-up #:label (G_ "Pan Up"))
   (%view-pan-up))
 
-(define-action-public (&view-pan-down #:label (_ "Pan Down"))
+(define-action-public (&view-pan-down #:label (G_ "Pan Down"))
   (%view-pan-down))
 
-(define-action-public (&view-zoom-box #:label (_ "Zoom Box"))
+(define-action-public (&view-zoom-box #:label (G_ "Zoom Box"))
   (%view-zoom-box))
 
-(define-action-public (&view-zoom-extents #:label (_ "Zoom Extents") #:icon "gtk-zoom-fit")
+(define-action-public (&view-zoom-extents #:label (G_ "Zoom Extents") #:icon "gtk-zoom-fit")
   (%view-zoom-extents))
 
-(define-action-public (&view-zoom-in #:label (_ "Zoom In") #:icon "gtk-zoom-in")
+(define-action-public (&view-zoom-in #:label (G_ "Zoom In") #:icon "gtk-zoom-in")
   (%view-zoom-in))
 
-(define-action-public (&view-zoom-out #:label (_ "Zoom Out") #:icon "gtk-zoom-out")
+(define-action-public (&view-zoom-out #:label (G_ "Zoom Out") #:icon "gtk-zoom-out")
   (%view-zoom-out))
 
-(define-action-public (&view-zoom-full #:label (_ "Zoom Full"))
+(define-action-public (&view-zoom-full #:label (G_ "Zoom Full"))
   (%view-zoom-full))
 
-(define-action-public (&view-dark-colors #:label (_ "Dark Color Scheme"))
+(define-action-public (&view-dark-colors #:label (G_ "Dark Color Scheme"))
   (%view-dark-colors))
 
-(define-action-public (&view-light-colors #:label (_ "Light Color Scheme"))
+(define-action-public (&view-light-colors #:label (G_ "Light Color Scheme"))
   (%view-light-colors))
 
-(define-action-public (&view-bw-colors #:label (_ "Monochrome Color Scheme"))
+(define-action-public (&view-bw-colors #:label (G_ "Monochrome Color Scheme"))
   (%view-bw-colors))
 
-(define-action-public (&view-color-edit #:label (_ "Show Color Scheme Editor"))
+(define-action-public (&view-color-edit #:label (G_ "Show Color Scheme Editor"))
  (%view-color-edit))
 
 ;; -------------------------------------------------------------------
 ;;;; Page-related actions
 
-(define-action-public (&page-revert #:label (_ "Revert Changes") #:icon "gtk-revert-to-saved")
+(define-action-public (&page-revert #:label (G_ "Revert Changes") #:icon "gtk-revert-to-saved")
   (%page-revert))
 
-(define-action-public (&page-manager #:label (_ "Page Manager"))
+(define-action-public (&page-manager #:label (G_ "Page Manager"))
   (%page-manager))
 
-(define-action-public (&page-prev #:label (_ "Previous Page") #:icon "gtk-go-back")
+(define-action-public (&page-prev #:label (G_ "Previous Page") #:icon "gtk-go-back")
   (%page-prev))
 
-(define-action-public (&page-next #:label (_ "Next Page") #:icon "gtk-go-forward")
+(define-action-public (&page-next #:label (G_ "Next Page") #:icon "gtk-go-forward")
   (%page-next))
 
-(define-action-public (&page-close #:label (_ "Close Page") #:icon "gtk-close")
+(define-action-public (&page-close #:label (G_ "Close Page") #:icon "gtk-close")
   (%page-close))
 
-(define-action-public (&page-next-tab #:label (_ "Next Tab") #:icon "gtk-go-forward")
+(define-action-public (&page-next-tab #:label (G_ "Next Tab") #:icon "gtk-go-forward")
   (%page-next-tab))
 
-(define-action-public (&page-prev-tab #:label (_ "Previous Tab") #:icon "gtk-go-back")
+(define-action-public (&page-prev-tab #:label (G_ "Previous Tab") #:icon "gtk-go-back")
   (%page-prev-tab))
 
-(define-action-public (&page-print #:label (_ "Print Page") #:icon "gtk-print")
+(define-action-public (&page-print #:label (G_ "Print Page") #:icon "gtk-print")
   (%page-print))
 
 ;; -------------------------------------------------------------------
 ;;;; Actions related to adding things
 
-(define-action-public (&add-component #:label (_ "Add Component") #:icon "insert-symbol")
+(define-action-public (&add-component #:label (G_ "Add Component") #:icon "insert-symbol")
   (%add-component))
 
-(define-action-public (&add-attribute #:label (_ "Add Attribute") #:icon "insert-attribute")
+(define-action-public (&add-attribute #:label (G_ "Add Attribute") #:icon "insert-attribute")
   (%add-attribute))
 
-(define-action-public (&add-net #:label (_ "Add Net") #:icon "insert-net")
+(define-action-public (&add-net #:label (G_ "Add Net") #:icon "insert-net")
   (%add-net))
 
-(define-action-public (&add-bus #:label (_ "Add Bus") #:icon "insert-bus")
+(define-action-public (&add-bus #:label (G_ "Add Bus") #:icon "insert-bus")
   (%add-bus))
 
-(define-action-public (&add-text #:label (_ "Add Text") #:icon "insert-text")
+(define-action-public (&add-text #:label (G_ "Add Text") #:icon "insert-text")
   (%add-text))
 
-(define-action-public (&add-line #:label (_ "Add Line") #:icon "insert-line")
+(define-action-public (&add-line #:label (G_ "Add Line") #:icon "insert-line")
   (%add-line))
 
-(define-action-public (&add-path #:label (_ "Add Path") #:icon "insert-path")
+(define-action-public (&add-path #:label (G_ "Add Path") #:icon "insert-path")
   (%add-path))
 
-(define-action-public (&add-box #:label (_ "Add Box") #:icon "insert-box")
+(define-action-public (&add-box #:label (G_ "Add Box") #:icon "insert-box")
   (%add-box))
 
-(define-action-public (&add-circle #:label (_ "Add Circle") #:icon "insert-circle")
+(define-action-public (&add-circle #:label (G_ "Add Circle") #:icon "insert-circle")
   (%add-circle))
 
-(define-action-public (&add-arc #:label (_ "Add Arc") #:icon "insert-arc")
+(define-action-public (&add-arc #:label (G_ "Add Arc") #:icon "insert-arc")
   (%add-arc))
 
-(define-action-public (&add-pin #:label (_ "Add Pin") #:icon "insert-pin")
+(define-action-public (&add-pin #:label (G_ "Add Pin") #:icon "insert-pin")
   (%add-pin))
 
-(define-action-public (&add-picture #:label (_ "Add Picture") #:icon "insert-image")
+(define-action-public (&add-picture #:label (G_ "Add Picture") #:icon "insert-image")
   (%add-picture))
 
 ;; -------------------------------------------------------------------
 ;;;; Hierarchy actions
 
-(define-action-public (&hierarchy-down-schematic #:label (_ "Down Schematic") #:icon "gtk-go-down")
+(define-action-public (&hierarchy-down-schematic #:label (G_ "Down Schematic") #:icon "gtk-go-down")
   (%hierarchy-down-schematic))
 
-(define-action-public (&hierarchy-down-symbol #:label (_ "Down Symbol") #:icon "gtk-goto-bottom")
+(define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
   (%hierarchy-down-symbol))
 
-(define-action-public (&hierarchy-up #:label (_ "Up Hierarchy") #:icon "gtk-go-up")
+(define-action-public (&hierarchy-up #:label (G_ "Up Hierarchy") #:icon "gtk-go-up")
   (%hierarchy-up))
 
 ;; -------------------------------------------------------------------
@@ -315,7 +315,7 @@
 
 ( define-action-public
   ( &attributes-attach
-    #:label (_ "Attach Attributes")
+    #:label (G_ "Attach Attributes")
     #:icon  "attribute-attach"
   )
 
@@ -344,7 +344,7 @@
 
     ( define ( attach-attr obj attr )
       ( attach-attribs! obj attr )
-      ( log! 'message (_ "Attribute attached: [~a]") (text-string attr) )
+      ( log! 'message (G_ "Attribute attached: [~a]") (text-string attr) )
       ( deselect-object! attr )
     )
 
@@ -387,7 +387,7 @@
 ( define-action-public
   (
     &attributes-detach
-    #:label (_ "Detach Attributes")
+    #:label (G_ "Detach Attributes")
     #:icon "attribute-detach"
   )
 
@@ -408,7 +408,7 @@
 
     ( define ( detach-attr attr )
       ( detach-attribs! (attrib-attachment attr) attr )
-      ( log! 'message (_ "Attribute detached: [~a]") (text-string attr) )
+      ( log! 'message (G_ "Attribute detached: [~a]") (text-string attr) )
       ( deselect-object! attr )
     )
 
@@ -435,79 +435,79 @@
 
 
 
-(define-action-public (&attributes-show-value #:label (_ "Show Attribute Value") #:icon "attribute-show-value")
+(define-action-public (&attributes-show-value #:label (G_ "Show Attribute Value") #:icon "attribute-show-value")
   (%attributes-show-value))
 
-(define-action-public (&attributes-show-name #:label (_ "Show Attribute Name") #:icon "attribute-show-name")
+(define-action-public (&attributes-show-name #:label (G_ "Show Attribute Name") #:icon "attribute-show-name")
   (%attributes-show-name))
 
-(define-action-public (&attributes-show-both #:label (_ "Show Name & Value") #:icon "attribute-show-both")
+(define-action-public (&attributes-show-both #:label (G_ "Show Name & Value") #:icon "attribute-show-both")
   (%attributes-show-both))
 
-(define-action-public (&attributes-visibility-toggle #:label (_ "Toggle Text Visibility"))
+(define-action-public (&attributes-visibility-toggle #:label (G_ "Toggle Text Visibility"))
   (%attributes-visibility-toggle))
 
-(define-action-public (&edit-find-text #:label (_ "Find Specific Text") #:icon "gtk-find")
+(define-action-public (&edit-find-text #:label (G_ "Find Specific Text") #:icon "gtk-find")
   (%edit-find-text))
 
-(define-action-public (&edit-hide-text #:label (_ "Hide Specific Text"))
+(define-action-public (&edit-hide-text #:label (G_ "Hide Specific Text"))
   (%edit-hide-text))
 
-(define-action-public (&edit-show-text #:label (_ "Show Specific Text"))
+(define-action-public (&edit-show-text #:label (G_ "Show Specific Text"))
   (%edit-show-text))
 
-(define-action-public (&edit-autonumber #:label (_ "Autonumber Text"))
+(define-action-public (&edit-autonumber #:label (G_ "Autonumber Text"))
   (%edit-autonumber))
 
 ;; -------------------------------------------------------------------
 ;;;; Configuration actions
 
-(define-action-public (&help-hotkeys #:label (_ "Show Hotkeys") #:icon "preferences-desktop-keyboard-shortcuts")
+(define-action-public (&help-hotkeys #:label (G_ "Show Hotkeys") #:icon "preferences-desktop-keyboard-shortcuts")
   (%help-hotkeys))
 
-(define-action-public (&options-grid #:label (_ "Switch Grid Style"))
+(define-action-public (&options-grid #:label (G_ "Switch Grid Style"))
   (%options-grid))
 
-(define-action-public (&options-snap #:label (_ "Switch Snap Mode"))
+(define-action-public (&options-snap #:label (G_ "Switch Snap Mode"))
   (%options-snap))
 
-(define-action-public (&options-snap-size #:label (_ "Set Grid Spacing"))
+(define-action-public (&options-snap-size #:label (G_ "Set Grid Spacing"))
   (%options-snap-size))
 
-(define-action-public (&options-scale-up-snap-size #:label (_ "Increase Grid Spacing"))
+(define-action-public (&options-scale-up-snap-size #:label (G_ "Increase Grid Spacing"))
   (%options-scale-up-snap-size))
 
-(define-action-public (&options-scale-down-snap-size #:label (_ "Decrease Grid Spacing"))
+(define-action-public (&options-scale-down-snap-size #:label (G_ "Decrease Grid Spacing"))
   (%options-scale-down-snap-size))
 
-(define-action-public (&options-action-feedback #:label (_ "Toggle Outline Drawing"))
+(define-action-public (&options-action-feedback #:label (G_ "Toggle Outline Drawing"))
   (%options-action-feedback))
 
-(define-action-public (&options-rubberband #:label (_ "Toggle Net Rubber Band"))
+(define-action-public (&options-rubberband #:label (G_ "Toggle Net Rubber Band"))
   (%options-rubberband))
 
-(define-action-public (&options-magneticnet #:label (_ "Toggle Magnetic Nets"))
+(define-action-public (&options-magneticnet #:label (G_ "Toggle Magnetic Nets"))
   (%options-magneticnet))
 
-(define-action-public (&options-show-log-window #:label (_ "Show Log Window"))
+(define-action-public (&options-show-log-window #:label (G_ "Show Log Window"))
   (%options-show-log-window))
 
-(define-action-public (&options-show-coord-window #:label (_ "Show Coordinate Window"))
+(define-action-public (&options-show-coord-window #:label (G_ "Show Coordinate Window"))
   (%options-show-coord-window))
 
-(define-action-public (&options-select-font #:label (_ "Select Schematic Font"))
+(define-action-public (&options-select-font #:label (G_ "Select Schematic Font"))
   (%options-select-font))
 
-(define-action-public (&options-draw-grips #:label (_ "Toggle Grips"))
+(define-action-public (&options-draw-grips #:label (G_ "Toggle Grips"))
   (%options-draw-grips))
 
 ;; -------------------------------------------------------------------
 ;;;; Documentation-related actions
 
 (define-action-public
-    (&hierarchy-documentation #:label (_ "Component Documentation")
+    (&hierarchy-documentation #:label (G_ "Component Documentation")
                               #:icon "symbol-datasheet"
-                              #:tooltip (_ "View documentation for selected component"))
+                              #:tooltip (G_ "View documentation for selected component"))
 
   "If a component is selected, search for and display corresponding
 documentation in a browser or PDF viewer. If no documentation can be
@@ -520,30 +520,30 @@ found, shows a dialog with an error message."
 
 
 (define-action-public
-    (&help-manual #:label (_ "Lepton EDA Manuals") #:icon "help-browser"
-     #:tooltip (_ "View the front page of the Lepton EDA documentation in a browser."))
+    (&help-manual #:label (G_ "Lepton EDA Manuals") #:icon "help-browser"
+     #:tooltip (G_ "View the front page of the Lepton EDA documentation in a browser."))
   (show-wiki "geda:documentation"))
 
 
 (define-action-public
-    (&help-guide #:label (_ "lepton-schematic User Guide") #:icon "gtk-help"
-                 #:tooltip (_ "View the lepton-schematic User Guide in a browser."))
+    (&help-guide #:label (G_ "lepton-schematic User Guide") #:icon "gtk-help"
+                 #:tooltip (G_ "View the lepton-schematic User Guide in a browser."))
   (show-wiki "geda:gschem_ug"))
 
 
 (define-action-public
-    (&help-faq #:label (_ "lepton-schematic FAQ") #:icon "help-faq"
-     #:tooltip (_ "Frequently Asked Questions about using lepton-schematic."))
+    (&help-faq #:label (G_ "lepton-schematic FAQ") #:icon "help-faq"
+     #:tooltip (G_ "Frequently Asked Questions about using lepton-schematic."))
   (show-wiki "geda:faq-gschem"))
 
 
 (define-action-public
-    (&help-wiki #:label (_ "Lepton EDA wiki") #:icon "web-browser"
-     #:tooltip (_ "View the front page of the Lepton EDA wiki in a browser."))
+    (&help-wiki #:label (G_ "Lepton EDA wiki") #:icon "web-browser"
+     #:tooltip (G_ "View the front page of the Lepton EDA wiki in a browser."))
   (show-wiki))
 
 
-(define-action-public (&help-about #:label (_ "About lepton-schematic") #:icon "gtk-about")
+(define-action-public (&help-about #:label (G_ "About lepton-schematic") #:icon "gtk-about")
   (%help-about))
 
 

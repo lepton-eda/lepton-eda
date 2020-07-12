@@ -40,7 +40,7 @@ its blamed objects."
     (sym:check-symbol page)
     (let ((page-info (object-blaming-info page)))
       (schematic-message-dialog (if (string-null? page-info)
-                                    (_ "Symbol has no pin info.")
+                                    (G_ "Symbol has no pin info.")
                                     page-info)))
     (filter blamed-object? (page-contents page))))
 

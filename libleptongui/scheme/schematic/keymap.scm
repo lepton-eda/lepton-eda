@@ -40,7 +40,7 @@
 (define-public (string->key str)
   (or (%string->key str)
       (scm-error 'key-format #f
-                 (_ "~S is not a valid key combination.")
+                 (G_ "~S is not a valid key combination.")
                  (list str) #f)))
 
 ;; -------------------- Key sequences --------------------
@@ -157,7 +157,7 @@
            ((keymap? binding) (lookup binding keys (1+ ofs)))
 
            ;; Otherwise, generate an error.
-           (else (error (_ "~S is not a prefix key sequence.")
+           (else (error (G_ "~S is not a prefix key sequence.")
                         (keys->display-string (prefix-keys keys))))))))
 
   (lookup keymap keys 0))

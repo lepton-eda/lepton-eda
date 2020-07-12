@@ -42,9 +42,9 @@
 ;; executed to be repeated.
 (define-public (eval-action! action)
   (define (invalid-action-error)
-    (log! 'warning (_ "[~A] is not a valid lepton-schematic action.") action))
+    (log! 'warning (G_ "[~A] is not a valid lepton-schematic action.") action))
   (define (no-last-action-error)
-    (log! 'message (_ "There is no last action to repeat.")))
+    (log! 'message (G_ "There is no last action to repeat.")))
 
   (define (eval-action!/recursive a)
 
@@ -165,4 +165,4 @@
 ;; away that the previous successfully-evaluated action gets invoked.
 (define-public &repeat-last-action
   (make-action 'repeat-last-command
-               #:label (_ "Repeat Last Action") #:icon "gtk-redo"))
+               #:label (G_ "Repeat Last Action") #:icon "gtk-redo"))
