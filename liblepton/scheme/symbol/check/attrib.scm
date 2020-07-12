@@ -49,7 +49,7 @@ returns #f."
         (and (blame-object object
                            'warning
                            (format #f
-                                   (_ "Set 'graphical=1' if you want the symbol to be graphical, current value: ~A")
+                                   (G_ "Set 'graphical=1' if you want the symbol to be graphical, current value: ~A")
                                    value))
              #f))))
 
@@ -66,7 +66,7 @@ returns #f."
            ;; Check for "device=none" for graphical symbols.
            (blame-object device
                          'warning
-                         (format #f (_"Graphical symbols should have device=none")))))))
+                         (format #f (G_"Graphical symbols should have device=none")))))))
 
 (define (check-attribute object)
   "Checks attribute OBJECT."
@@ -78,12 +78,12 @@ returns #f."
            ((type name)
             (blame-object object
                           'error
-                          (format #f (_ "Forbidden attribute: ~A") s)))
+                          (format #f (G_ "Forbidden attribute: ~A") s)))
 
            ((uref label email)
             (blame-object object
                           'warning
-                          (format #f (_ "Obsolete attribute: ~A") s)))
+                          (format #f (G_ "Obsolete attribute: ~A") s)))
 
            ;; Valid pin attributes.
            ((pinlabel pintype pinseq pinnumber)
@@ -91,7 +91,7 @@ returns #f."
                     (not (pin? (attrib-attachment object))))
                 (blame-object object
                               'error
-                              (format #f (_ "Misplaced pin attribute: ~A") s))))
+                              (format #f (G_ "Misplaced pin attribute: ~A") s))))
 
            ;; Valid attributes.
            ((device graphical description author
@@ -103,12 +103,12 @@ returns #f."
             (unless (floating-attrib? object)
               (blame-object object
                             'error
-                            (format #f (_ "Wrongly attached attribute: ~A") s))))
+                            (format #f (G_ "Wrongly attached attribute: ~A") s))))
 
            ;; All other attributes are unknown.
            (else (blame-object object
                                'warning
-                               (format #f (_ "Unknown attribute: ~A") s)))))))
+                               (format #f (G_ "Unknown attribute: ~A") s)))))))
 
 (define (check-floating-attrib-duplicates ls)
   "Checks for duplicated attributes in object list LS."
@@ -116,7 +116,7 @@ returns #f."
     (blame-object object
                   'error
                   (format #f
-                          (_ "Duplicate floating attribute: ~A")
+                          (G_ "Duplicate floating attribute: ~A")
                           (attrib-name object))))
   (unless (null? (cdr ls))
     (for-each blame-duplicate ls))
@@ -153,7 +153,7 @@ returns #f."
       (blame-object page
                     'warning
                     (format #f
-                            (_ "Missing required attribute: ~A")
+                            (G_ "Missing required attribute: ~A")
                             name))))
 
   (for-each blame-missing required-attribs))

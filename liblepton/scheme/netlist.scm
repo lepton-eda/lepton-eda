@@ -103,7 +103,7 @@ to current standard output port and exit with exit status 0."
 
   (define version-msg "Lepton EDA/lepton-netlist ~A~A.~A (git: ~A)\n")
 
-  (define copyright-msg (_ "Copyright (C) 1998-2016 gEDA developers
+  (define copyright-msg (G_ "Copyright (C) 1998-2016 gEDA developers
 Copyright (C) 2017-2020 Lepton EDA Contributors
 This is free software, and you are welcome to redistribute it under
 certain conditions. For details, see the file `COPYING', which is
@@ -180,7 +180,7 @@ code should use `gnetlist:get-backend-arguments' directly."
     (and (not (null? values))
          (let ((value (car values)))
            (or (every (lambda (x) (equal? x value)) values)
-               (format (current-error-port) (_ "\
+               (format (current-error-port) (G_ "\
 Possible attribute conflict for refdes: ~A
 name: ~A
 values: ~A
@@ -246,7 +246,7 @@ REFDES. As a result, slots may be repeated in the returned list."
               ;; conversion failed, invalid slot, ignore value
               (begin
                 (format (current-error-port)
-                        (_ "Refdes ~a: Bad slot number: ~a.\n") refdes slot)
+                        (G_ "Refdes ~a: Bad slot number: ~a.\n") refdes slot)
                 #f))
           ;; no slot attribute, assume slot number is 1
           1))
@@ -289,7 +289,7 @@ REFDES. As a result, slots may be repeated in the returned list."
       string-to-wrap ; Last snippet of string
       (let ((pos (string-rindex string-to-wrap #\space 0 wrap-length)))
 	(cond ((not pos)
-               (display (_ "Couldn't wrap string  at requested position\n"))
+               (display (G_ "Couldn't wrap string  at requested position\n"))
 	       " Wrap error!")
 	      (else
 	       (string-append
@@ -590,7 +590,7 @@ The argument LEVEL is dummy."
 
             (when (hash-ref gnetlist:net-hash-reverse alias)
               (netlist-error 1
-                      (_ "There is a net name collision!
+                      (G_ "There is a net name collision!
 The net called \"~A\" will be remapped
 to \"~A\" which is already used
 by the net called \"~A\".
@@ -627,7 +627,7 @@ other limitations imposed by this netlist format.
 
             (when (hash-ref gnetlist:refdes-hash-reverse alias)
               (netlist-error 1
-                             (_ "There is a refdes name collision!
+                             (G_ "There is a refdes name collision!
 The refdes \"~A\" will be mapped\nto \"~A\" which is already used
 by \"~A\".
 This may be caused by refdes attributes colliding with others
@@ -807,7 +807,7 @@ begins with \"gnet-\" and ends with \".scm\"."
   (define (path-backends path)
     (or (scandir path backend?)
         (begin
-          (log! 'warning (_ "Can't open directory ~S.\n") path)
+          (log! 'warning (G_ "Can't open directory ~S.\n") path)
           '())))
 
   (let ((backend-files (append-map path-backends (delete-duplicates %load-path))))
@@ -817,7 +817,7 @@ begins with \"gnet-\" and ends with \".scm\"."
               'suffix))))
 
 (define (usage)
-  (format #t (_
+  (format #t (G_
     "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...
 
 Generate a netlist from one or more Lepton EDA schematic FILEs.
@@ -860,7 +860,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
 (define (catch-handler tag . args)
   (format (current-error-port)
-          (_ "\nJust got an error '~A':\n        ~A\n\n")
+          (G_ "\nJust got an error '~A':\n        ~A\n\n")
           tag
           args)
   #f)
@@ -901,30 +901,30 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   ; local functions:
 
   ( define ( error-no-backend )
-    (netlist-error 1 (_ "You gave neither backend to execute nor interactive mode!\n"))
+    (netlist-error 1 (G_ "You gave neither backend to execute nor interactive mode!\n"))
   )
 
   ( define ( error-no-sch )
-    (netlist-error 1 (_ "No schematic files specified for processing.\n~
+    (netlist-error 1 (G_ "No schematic files specified for processing.\n~
                          Run `~A --help' for more information.\n")
                      (car (program-arguments)))
   )
 
   ( define ( error-backend-not-found backend )
-    (netlist-error 1 (_ "Could not find backend `~A' in load path.\n~
+    (netlist-error 1 (G_ "Could not find backend `~A' in load path.\n~
                          Run `~A --list-backends' for a full list of available backends.\n")
                      backend (car (program-arguments)))
   )
 
   ( define ( error-backend-file-name bname )
-    (netlist-error 1 (_ "Can't load backend file ~S.\n~
+    (netlist-error 1 (G_ "Can't load backend file ~S.\n~
                          Backend files are expected to have names like \"gnet-NAME.scm\"\n~
                          and contain entry point function NAME (where NAME is the backend's name).\n")
                      bname)
   )
 
   ( define ( error-backend-mode mode )
-    (netlist-error 1 (_ "Netlist mode requested by backend is not supported: ~A\n") mode)
+    (netlist-error 1 (G_ "Netlist mode requested by backend is not supported: ~A\n") mode)
   )
 
   ( define ( get-backend-proc-name filename )
@@ -984,7 +984,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
       )
       ( lambda( tag . args )
         ( catch-handler tag args )
-        ( netlist-error 1 (_ "Failed to evaluate Scheme expression at startup.\n") )
+        ( netlist-error 1 (G_ "Failed to evaluate Scheme expression at startup.\n") )
       )
     )
   )
@@ -1018,7 +1018,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     )
     ( lambda( tag . args )
       ( catch-handler tag args )
-      ( netlist-error 1 (_ "Failed to load Scheme file before loading backend.\n") )
+      ( netlist-error 1 (G_ "Failed to load Scheme file before loading backend.\n") )
     )
   )
 
@@ -1047,7 +1047,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
       )
       ( lambda( tag . args )
         ( catch-handler tag args )
-        ( netlist-error 1 (_ "Failed to load backend file.\n") )
+        ( netlist-error 1 (G_ "Failed to load backend file.\n") )
       )
     )
   )
@@ -1060,7 +1060,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
     )
     ( lambda( tag . args )
       ( catch-handler tag args )
-      ( netlist-error 1 (_ "Failed to load Scheme file after loading backend.\n") )
+      ( netlist-error 1 (G_ "Failed to load Scheme file after loading backend.\n") )
     )
   )
 

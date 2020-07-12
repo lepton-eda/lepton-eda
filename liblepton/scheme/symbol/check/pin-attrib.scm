@@ -59,7 +59,7 @@ returns #f."
     (blame-object (symbol-pin-object symbol-pin)
                   'error
                   (format #f
-                          (_ "Duplicate pin attribute in the symbol: ~A=~A")
+                          (G_ "Duplicate pin attribute in the symbol: ~A=~A")
                           name
                           (getter symbol-pin))))
   (define (blame-if-list ls)

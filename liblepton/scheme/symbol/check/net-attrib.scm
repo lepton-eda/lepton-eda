@@ -53,7 +53,7 @@
         (blame-object object
                       'error
                       (format #f
-                              (_ "Missing pin number after \":\" or \",\": ~A")
+                              (G_ "Missing pin number after \":\" or \",\": ~A")
                               (attrib-value object)))
         #f)
       pin))
@@ -71,7 +71,7 @@
       (blame-object net-object
                     'error
                     (format #f
-                            (_ "Duplicate pin number in one net= attribute ~A: ~A")
+                            (G_ "Duplicate pin number in one net= attribute ~A: ~A")
                             (net-map-pinnumber net-map)
                             (text-string net-object)))))
 
@@ -101,7 +101,7 @@
           (blame-object net
                         'error
                         (format #f
-                                (_ "Invalid net attribute: net=~A")
+                                (G_ "Invalid net attribute: net=~A")
                                 value))
           '()))))
 
@@ -113,7 +113,7 @@
       (blame-object net-object
                     'error
                     (format #f
-                            (_ "Duplicate pin number in net= attribute ~A: ~A")
+                            (G_ "Duplicate pin number in net= attribute ~A: ~A")
                             (net-map-pinnumber net-map)
                             (text-string net-object)))))
 
@@ -151,7 +151,7 @@
       (blame-object source-object
                     'error
                     (format #f
-                            (_ "Duplicate pin number ~A: ~A")
+                            (G_ "Duplicate pin number ~A: ~A")
                             (entity-pin-number entity-pin)
                             (text-string source-object)))))
 

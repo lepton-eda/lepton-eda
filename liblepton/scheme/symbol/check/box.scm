@@ -32,7 +32,7 @@
     (blame-object object
                      'error
                      (format #f
-                             (_ "Zero sized box at ~A")
+                             (G_ "Zero sized box at ~A")
                              (box-top-left object))))
 
   (match `(,(box-top-left object) . ,(box-bottom-right object))

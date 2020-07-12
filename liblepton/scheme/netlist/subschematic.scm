@@ -212,10 +212,10 @@ NAME is used as its hierarchical name."
     (if filename
         (begin
           (unless quiet-mode
-            (log! 'message (_ "Loading subcircuit ~S.") filename))
+            (log! 'message (G_ "Loading subcircuit ~S.") filename))
           (file->page filename 'new-page))
         (begin
-          (log! 'critical (_ "Failed to load subcircuit ~S.") name)
+          (log! 'critical (G_ "Failed to load subcircuit ~S.") name)
           #f))))
 
 
@@ -243,21 +243,21 @@ NAME is used as its hierarchical name."
   (or (package-pin-label pin)
       (begin
         (log! 'critical
-              (_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
+              (G_ "Pin ~S of the component ~S has no \"pinlabel\" attribute.")
               (package-pin-number pin)
               (schematic-component-refdes (package-pin-parent pin)))
         #f)))
 
 
 (define (warn-no-inner-pins component)
-  (log! 'critical (_ "Port component ~S has no pins.")
+  (log! 'critical (G_ "Port component ~S has no pins.")
         (schematic-component-refdes component))
   #f)
 
 ;;; Warn if no port found in the subcircuit. Return #f.
 (define (warn-no-port pin)
   (log! 'critical
-        (_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
+        (G_ "Source schematic of the component ~S has no port with \"refdes=~A\".")
         (schematic-component-refdes (package-pin-parent pin))
         (package-pin-label pin))
   #f)
@@ -265,7 +265,7 @@ NAME is used as its hierarchical name."
 
 (define (warn-one-pin-multiple-components pin)
   (log! 'critical
-        (_ "There are several subschematic components for the pin with \"pinlabel=~A\" of the component ~S.")
+        (G_ "There are several subschematic components for the pin with \"pinlabel=~A\" of the component ~S.")
         (package-pin-label pin)
         (component-basename (schematic-component-object (package-pin-parent pin)))))
 
@@ -274,7 +274,7 @@ NAME is used as its hierarchical name."
   (if (list? arg)
       (begin
         (log! 'critical
-              (_ "Pins with numbers ~A of the component ~S have the same \"pinlabel\" attribute.")
+              (G_ "Pins with numbers ~A of the component ~S have the same \"pinlabel\" attribute.")
               (string-join (map package-pin-number  arg) ", ")
               (schematic-component-refdes (package-pin-parent (car arg))))
         ;; Return first duplicate pin.

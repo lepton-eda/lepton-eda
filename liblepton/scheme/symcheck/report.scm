@@ -39,18 +39,18 @@
     (match blame
       (('info . msg)
        (when (or (> verbose 2) (output-to-log?))
-         (check-log! 'info (format #f (_ "Info: ~A") msg)))
+         (check-log! 'info (format #f (G_ "Info: ~A") msg)))
        '(1 0 0 0))
       (('warning . msg)
        (when (or (> verbose 1) (output-to-log?))
-         (check-log! 'warning (format #f (_ "Warning: ~A") msg)))
+         (check-log! 'warning (format #f (G_ "Warning: ~A") msg)))
        '(0 1 0 0))
       (('error . msg)
        (when (or (> verbose 0) (output-to-log?))
-         (check-log! 'critical (format #f (_ "ERROR: ~A") msg)))
+         (check-log! 'critical (format #f (G_ "ERROR: ~A") msg)))
        '(0 0 1 0))
       (_
-       (check-log! 'critical (format #f (_ "Unrecognized info: ~A\n") blame))
+       (check-log! 'critical (format #f (G_ "Unrecognized info: ~A\n") blame))
        '(0 0 0 1))))
 
   (map report (or (object-blames object) '())))
@@ -80,17 +80,17 @@ list of the form:
                                  warning-count)
                     warning-count)
         (when (< verbose 2)
-          (check-log! 'message (_ "(use -vv to view details)"))))
+          (check-log! 'message (G_ "(use -vv to view details)"))))
 
       (if (zero? error-count)
-          (check-log! 'message (_ "No errors found"))
+          (check-log! 'message (G_ "No errors found"))
           (begin
             (check-log! 'message (N_ "~A ERROR found"
                                      "~A ERRORS found"
                                      error-count)
                         error-count)
             (when (< verbose 1)
-              (check-log! 'message (_ "(use -v to view details)"))))))
+              (check-log! 'message (G_ "(use -v to view details)"))))))
 
     ;; return code
     (if (zero? error-count)

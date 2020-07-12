@@ -35,5 +35,5 @@
     (blame-object object
                   'error
                   (format #f
-                          (_ "Object forbidden inside symbols: ~A")
+                          (G_ "Object forbidden inside symbols: ~A")
                           (object-type object)))))

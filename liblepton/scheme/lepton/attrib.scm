@@ -54,7 +54,7 @@
 (define-public (promote-attribs! object)
   (let ((p (or (object-page object)
                (scm-error 'object-state #f
-                          (_ "Object ~A is not part of a page")
+                          (G_ "Object ~A is not part of a page")
                           (list object) #f))))
     (if (component? object)
         (map (lambda (x)

@@ -30,7 +30,7 @@
     (blame-object object
                   'error
                   (format #f
-                          (_ "Zero radius circle at ~A")
+                          (G_ "Zero radius circle at ~A")
                           (circle-center object)))))
 
 (define (check-circle object)

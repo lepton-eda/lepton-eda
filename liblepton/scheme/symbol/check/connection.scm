@@ -29,5 +29,5 @@
     (blame-object object
                   'error
                   (format #f
-                          (_ "Object with forbidden connections: ~A")
+                          (G_ "Object with forbidden connections: ~A")
                           (object-type object)))))

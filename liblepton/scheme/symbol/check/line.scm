@@ -32,7 +32,7 @@
       (blame-object object
                     'error
                     (format #f
-                            (_ "Zero length ~A at ~A")
+                            (G_ "Zero length ~A at ~A")
                             (object-type object)
                             start)))))
 

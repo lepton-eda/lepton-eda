@@ -38,7 +38,7 @@
 
 (define (make-hierarchical-refdes basename hierarchy-tag)
   (define (error-invalid-hierarchy-tag tag)
-    (netlist-error 1 (_ "Invalid hierarchy tag: ~S") tag))
+    (netlist-error 1 (G_ "Invalid hierarchy tag: ~S") tag))
 
   (and basename
        (match hierarchy-tag
@@ -53,7 +53,7 @@
 ;;; "refdes-attrib-value.slot-attrib-value".
 (define (netlist-mode-refdes attribs)
   (define (error-netlist-mode-not-supported mode)
-    (netlist-error 1 (_ "Netlist mode ~S is not supported.") mode))
+    (netlist-error 1 (G_ "Netlist mode ~S is not supported.") mode))
 
   (let ((refdes (and=> (assq-ref attribs 'refdes) car)))
     (case (netlist-mode)
@@ -73,7 +73,7 @@ special other one. If HIERARCHY-TAG is not #F, forms a
 hierarchical refdes in the form of a list. Logs a warning with the
 object info."
   (log! 'critical
-        (_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
+        (G_ "\nNon-graphical symbol ~S\nat ~A on page ~S\nhas neither refdes= nor net=.")
         (component-basename object)
         (component-position object)
         (page-filename (object-page object)))

@@ -38,7 +38,7 @@
   (let ((name (attrib-name object))
         (value (attrib-value object)))
     (when (regexp-exec regex-old-pin name)
-      (blame-error object (_ "Obsolete pin#=# attribute: ~A=~A") name value))
+      (blame-error object (G_ "Obsolete pin#=# attribute: ~A=~A") name value))
     object))
 
 (define (check-obsolete-floating-attrib object)
@@ -46,5 +46,5 @@
   (let ((name (attrib-name object))
         (value (attrib-value object)))
     (when (regexp-exec regex-old-slot name)
-      (blame-error object (_ "Obsolete slot#=# attribute: ~A=~A") name value))
+      (blame-error object (G_ "Obsolete slot#=# attribute: ~A=~A") name value))
     object))

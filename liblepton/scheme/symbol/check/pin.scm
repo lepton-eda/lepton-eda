@@ -105,7 +105,7 @@ Example usage:
     (blame-object object
                   'error
                   (format #f
-                          (_ "Duplicate pin attribute on one pin: ~A")
+                          (G_ "Duplicate pin attribute on one pin: ~A")
                           (attrib-name object))))
   (unless (null? (cdr ls))
     (for-each blame-duplicate ls))
@@ -123,14 +123,14 @@ Example usage:
   (blame-object object
                 'error
                 (format #f
-                        (_ "Prohibited zero value pin attribute: ~A=0")
+                        (G_ "Prohibited zero value pin attribute: ~A=0")
                         name)))
 
 (define-syntax-rule (blame-invalid-pintype object value)
   (blame-object object
                 'error
                 (format #f
-                        (_ "Invalid pin attribute value: pintype=~A")
+                        (G_ "Invalid pin attribute value: pintype=~A")
                         value)))
 
 (define (check-pin-attrib-value object name value)
@@ -144,7 +144,7 @@ Example usage:
     (unless attrib
       (blame-object pin
                     severity
-                    (format #f (_ "Missing pin attribute: ~A") name)))
+                    (format #f (G_ "Missing pin attribute: ~A") name)))
     (check-pin-attrib-value attrib
                             name
                             (and=> attrib attrib-value))))

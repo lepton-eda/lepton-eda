@@ -33,7 +33,7 @@
     (blame-object object
                      'error
                      (format #f
-                             (_ "Zero sized picture at ~A")
+                             (G_ "Zero sized picture at ~A")
                              (picture-top-left object))))
 
   (match `(,(picture-top-left object) . ,(picture-bottom-right object))
@@ -49,7 +49,7 @@
         (blame-object object
                       'error
                       (format #f
-                              (_ "Picture file ~S does not exist or is not readable.")
+                              (G_ "Picture file ~S does not exist or is not readable.")
                               filename)))))
 
 (define (check-picture object)

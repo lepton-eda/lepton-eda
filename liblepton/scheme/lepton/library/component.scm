@@ -75,7 +75,7 @@
                        path)))
 
   (if (library-path-exists? path)
-      (log! 'message (_ "Library at ~S has been already added.") path)
+      (log! 'message (G_ "Library at ~S has been already added.") path)
       (begin
         (set! %component-libraries
               (cons (make-symbol-library name (normalize-path path))

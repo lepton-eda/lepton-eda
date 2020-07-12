@@ -56,7 +56,7 @@ Carries out appropriate checks for each type of objects. Returns
 OBJECT if it needs other checks. Otherwise returns #f."
   (blame-object object
                 'info
-                (format #f (_ "Object: ~A") (cons (object-type object)
+                (format #f (G_ "Object: ~A") (cons (object-type object)
                                                   (object-info object))))
   ;; Specific checks for every object.
   ;; #f means no other check is needed.

@@ -44,12 +44,12 @@
 
 ;;; Outputs Lepton REPL greeting.
 (define (lepton-repl-welcome)
-  (display (_ "Welcome to Lepton REPL!\n")))
+  (display (G_ "Welcome to Lepton REPL!\n")))
 
 ;;; Warning on systems where the 'readline feature is not
 ;;; supported.
 (define (lepton-repl-readline-warning)
-  (display (_ "WARNING: Readline library is not supported in your configuration.\n")))
+  (display (G_ "WARNING: Readline library is not supported in your configuration.\n")))
 
 (define (lepton-repl)
   "Runs interactive REPL in a terminal."

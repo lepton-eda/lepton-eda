@@ -73,7 +73,7 @@ primitives."
 
 (define (blame-missing-colon net-attrib-value)
   (log! 'critical
-        (_ "Invalid attribute (missing ':'): net=~A")
+        (G_ "Invalid attribute (missing ':'): net=~A")
         net-attrib-value)
   #f)
 
@@ -129,7 +129,7 @@ primitives."
 
   (define (blame-duplicate a b)
     (log! 'message
-          (_ "Attached net ~A:~A overrides inherited net ~A:~A")
+          (G_ "Attached net ~A:~A overrides inherited net ~A:~A")
           (net-map-netname a)
           (net-map-pinnumber a)
           (net-map-netname b)

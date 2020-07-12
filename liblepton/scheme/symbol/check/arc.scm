@@ -31,7 +31,7 @@
        (blame-object object
                      'error
                      (format #f
-                             (_ "Zero radius arc at ~A")
+                             (G_ "Zero radius arc at ~A")
                              (arc-center object)))))
 
 (define (check-arc-angle object)
@@ -43,7 +43,7 @@
        (blame-object object
                      'error
                      (format #f
-                             (_ "Zero angle arc at ~A")
+                             (G_ "Zero angle arc at ~A")
                              (arc-center object)))))
 
 (define (check-arc object)

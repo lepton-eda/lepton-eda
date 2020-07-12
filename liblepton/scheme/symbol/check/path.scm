@@ -57,7 +57,7 @@
        (blame-object object
                      'error
                      (format #f
-                             (_ "Zero length path element: ~A")
+                             (G_ "Zero length path element: ~A")
                              next)))
      next)
    '()

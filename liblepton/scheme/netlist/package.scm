@@ -121,7 +121,7 @@ a string."
 
   (define (blame-conflicting-attribs refdes attrib-type name value other-value)
     (log! 'warning
-          (_ "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n")
+          (G_ "Possible ~A attribute conflict for ~A: ~A=~A ~A=~A\n")
           attrib-type
           refdes
           name

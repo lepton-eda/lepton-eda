@@ -87,13 +87,13 @@ Example usage:
 
 (define (blame-attrib-info object)
   (blame-info object
-              (_ "Found ~A=~A attribute")
+              (G_ "Found ~A=~A attribute")
               (attrib-name object)
               (attrib-value object)))
 
 (define (blame-invalid-slotdef object)
   (blame-error object
-               (_ "Invalid slotdef=~A attribute (the format is #:#,#,#,...)")
+               (G_ "Invalid slotdef=~A attribute (the format is #:#,#,#,...)")
                (attrib-value object)))
 
 (define (string->integer value)
@@ -108,10 +108,10 @@ Example usage:
          (cond
           ((negative? num)
            (blame-error numslots
-                        (_ "Negative attribute: numslots=~A")
+                        (G_ "Negative attribute: numslots=~A")
                         num))
           ((zero? num)
-           (blame-info numslots (_ "numslots set to 0, symbol does not have slots"))
+           (blame-info numslots (G_ "numslots set to 0, symbol does not have slots"))
            #f)
           ((positive? num) num)))))
 
@@ -120,7 +120,7 @@ Example usage:
   (define (check-slotdef-pin pin object)
     (when (string=? pin "0")
       (blame-error object
-                   (_ "Zero pin number in slotdef=~A")
+                   (G_ "Zero pin number in slotdef=~A")
                    (attrib-value object))))
 
   (let ((pin-string-list (string-split s #\,)))
@@ -137,11 +137,11 @@ Example usage:
     ((? negative? num) (blame-invalid-slotdef object))
     ((? zero? num)
      (blame-error object
-                  (_ "Found a zero slot in slotdef=~A")
+                  (G_ "Found a zero slot in slotdef=~A")
                   (attrib-value object)))
     ((? greater-than-numslots? num)
      (blame-error object
-                  (_ "Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)")
+                  (G_ "Slot number ~A (slotdef=~A) is greater than the maximum slot number (~A)")
                   num
                   (attrib-value object)
                   numslots))
@@ -190,7 +190,7 @@ Example usage:
 
   (define (blame-superfluous-slot-number slot)
     (blame-error (slot-object slot)
-                 (_ "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)")
+                 (G_ "Superfluous slotdef=~A:... (there should be ~A slotdef= attributes)")
                  (slot-number slot)
                  numslots))
 
@@ -201,7 +201,7 @@ Example usage:
          (superfluous-slots (filter-map (cut slot-number-in-list? <> superfluous-numbers)
                                         slot-list)))
     (for-each (cut blame-error page
-                   (_ "Missing slotdef=~A:... (there should be ~A slotdef= attributes)")
+                   (G_ "Missing slotdef=~A:... (there should be ~A slotdef= attributes)")
                    <>
                    numslots)
               missing-numbers)
@@ -216,13 +216,13 @@ Example usage:
       (cond
        ((< real-pin-number numpins)
         (blame-error object
-                     (_ "Not enough pins in slotdef=~A (must be ~A)")
+                     (G_ "Not enough pins in slotdef=~A (must be ~A)")
                      (attrib-value object)
                      numpins)
         #f)
        ((> real-pin-number numpins)
         (blame-error object
-                     (_ "Too many pins in slotdef=~A (must be ~A)")
+                     (G_ "Too many pins in slotdef=~A (must be ~A)")
                      (attrib-value object)
                      numpins)
         #f)
@@ -236,7 +236,7 @@ Example usage:
   (define (blame-duplicate-slot-number slot)
     (let ((object (slot-object slot)))
       (blame-error object
-                   (_ "Duplicate slot number ~A: ~A")
+                   (G_ "Duplicate slot number ~A: ~A")
                    (slot-number slot)
                    (text-string object))))
 
@@ -256,7 +256,7 @@ Example usage:
 (define (check-slots page pins numslots-ls slotdef-ls)
   (define (count-all-slot-pins page ls)
     (blame-info page
-                (_ "Found ~A distinct pins in slots")
+                (G_ "Found ~A distinct pins in slots")
                 (length (list->duplicate-list (append-map slot-pins ls)
                                               string<?
                                               string=?))))

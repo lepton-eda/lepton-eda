@@ -32,7 +32,7 @@
 destination is specified."
   (if (or (eq? value 'log) (eq? value 'stdout))
       (begin (set! %check-log-destination value) value)
-      (error (_ "Wrong check log destination!"))))
+      (error (G_ "Wrong check log destination!"))))
 
 (define (current-check-log-destination)
   "Returns current destination for the check-log! procedure."

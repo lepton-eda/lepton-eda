@@ -35,7 +35,7 @@
 
 (define (usage)
   (format #t
-          (_ "Usage: ~A [OPTIONS] FILE ...
+          (G_ "Usage: ~A [OPTIONS] FILE ...
 
 Check one or more Lepton EDA symbol FILEs.
 
@@ -66,20 +66,20 @@ Lepton EDA homepage: <~A>
   (with-input-from-file name
     (lambda ()
       (unless (symcheck-option-ref 'quiet)
-        (log! 'message (_ "Loading schematic ~S") name))
+        (log! 'message (G_ "Loading schematic ~S") name))
       (string->page name (rdelim:read-string)))))
 
 
 (define (check-all-symbols)
   (define (report-symbol-statistics page)
     (unless (symcheck-option-ref 'quiet)
-      (check-log! 'message (_ "Checking: ~A\n") (page-filename page)))
+      (check-log! 'message (G_ "Checking: ~A\n") (page-filename page)))
     (check-symbol page)
     (check-report `(,page . ,(page-contents page))))
 
   (define (error-no-files-specified)
     (format #t
-            (_ "No schematic files specified for processing.
+            (G_ "No schematic files specified for processing.
 Run `~A --help' for more information.\n")
             (car (program-arguments)))
     (primitive-exit 1))
