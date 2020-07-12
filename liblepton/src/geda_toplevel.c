@@ -95,6 +95,18 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
 
 }
 
+/*\ brief Get the current page.
+ *
+ *  \param [in] toplevel This toplevel.
+ *  \return The \a page_current field of the \a toplevel.
+ */
+PAGE*
+s_toplevel_page_current (TOPLEVEL *toplevel)
+{
+  g_return_val_if_fail (toplevel != NULL, NULL);
+
+  return toplevel->page_current;
+}
 
 
 /*\ brief Set the current page

@@ -54,6 +54,9 @@ s_toplevel_new (void);
 void
 s_toplevel_remove_weak_ptr (TOPLEVEL *toplevel, void *weak_pointer_loc);
 
+PAGE*
+s_toplevel_page_current (TOPLEVEL *toplevel);
+
 void
 s_toplevel_set_page_current (TOPLEVEL *toplevel, PAGE *page);
 
