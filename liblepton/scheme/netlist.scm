@@ -103,20 +103,13 @@ to current standard output port and exit with exit status 0."
 
   (define version-msg "Lepton EDA/lepton-netlist ~A~A.~A (git: ~A)\n")
 
-  (define copyright-msg (G_ "Copyright (C) 1998-2016 gEDA developers
-Copyright (C) 2017-2020 Lepton EDA Contributors
-This is free software, and you are welcome to redistribute it under
-certain conditions. For details, see the file `COPYING', which is
-included in the Lepton EDA distribution.
-There is NO WARRANTY, to the extent permitted by law.\n"))
-
   (match (lepton-version)
     ((prepend dotted date commit bugs url copyright msg)
      (if output-to-log?
          (log! 'message version-msg prepend dotted date (string-take commit 7))
          (begin
            (format #t version-msg prepend dotted date (string-take commit 7))
-           (format #t copyright-msg))))))
+           (display copyright))))))
 
 
 ;;----------------------------------------------------------------------

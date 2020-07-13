@@ -34,20 +34,12 @@ with exit status 0.  Otherwise, just print the message to log."
   (define (version-msg . args)
     (apply format #f "Lepton EDA/lepton-schematic ~A~A.~A (git: ~A)\n" args))
 
-  (define copyrights
-    (G_ "Copyright (C) 1998-2016 gEDA developers
-Copyright (C) 2017-2020 Lepton EDA developers
-This is free software, and you are welcome to redistribute it
-under certain conditions. For details, see the file `COPYING',
-which is included in the Lepton EDA distribution.
-There is NO WARRANTY, to the extent permitted by law.\n"))
-
   (match (lepton-version)
     ((prepend dotted date commit bugs url copyright msg)
      (let ((version-message (version-msg prepend dotted date (string-take commit 7))))
        (if stdout
            (begin
              (display version-message)
-             (display copyrights)
+             (display copyright)
              (primitive-exit 0))
            (log! 'message version-message))))))

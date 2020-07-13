@@ -72,7 +72,7 @@ lepton_version_copyright ()
       "This is free software, and you are welcome to redistribute it\n"
       "under certain conditions. For details, see the file `COPYING',\n"
       "which is included in the Lepton EDA distribution.\n"
-      "There is NO WARRANTY, to the extent permitted by law.");
+      "There is NO WARRANTY, to the extent permitted by law.\n");
   return msg;
 }
 
