@@ -61,7 +61,7 @@ SCM_SRCS=	backend/gnet-gsch2pcb.scm.in
 
 BUILT_SCM=	backend/gnet-gsch2pcb.scm
 
-SETVBUF_MODE = `$(GUILE) -c '(display (if (string= (minor-version) "0") "_IONBF" (quote (quote none))))'`
+SETVBUF_MODE = `$(GUILE) -c '(display (if (and (string= (major-version) "2") (string= (minor-version) "0")) "_IONBF" (quote (quote none))))'`
 
 backend/gnet-gsch2pcb.scm: $(srcdir)/backend/gnet-gsch2pcb.scm.in
 	if test "$(srcdir)" != "@builddir@" ; then \
