@@ -68,13 +68,20 @@
 
 ;; We use a record type here in case we later want to add additional
 ;; information into the keymap (e.g. default actions, canonical
-;; ordering, keymap names, etc).
-(define <keymap> (make-record-type "gschem-keymap" '(key-table)))
-(define %make-keymap (record-constructor <keymap> '(key-table)))
-(define keymap-key-table (record-accessor <keymap> 'key-table))
-(define set-keymap-key-table! (record-modifier <keymap> 'key-table))
+;; ordering, keymap names, etc):
+;;
+( define-record-type         ; define srfi-9-style structure ("record")
+  <schematic-keymap>         ; record name
+  ( %make-keymap key-table ) ; constructor taking 1 argument
+  %keymap?                   ; predicate function
+  (
+    key-table                ; data field
+    keymap-key-table         ; data field accessor function
+    set-keymap-key-table!    ; data field modifier function
+  )
+)
 
-(define-public keymap? (record-predicate <keymap>))
+(define-public (keymap? km) (%keymap? km))
 
 (define*-public (make-keymap)
   (let ((k (%make-keymap
