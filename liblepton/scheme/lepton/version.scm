@@ -28,12 +28,13 @@
   (syntax-rules ()
     ((_ <name>)
      (define <name>
-       (let ((proc (delay (pointer->procedure
+       (let* ((proc (delay (pointer->procedure
                            '*
                            (dynamic-func (symbol->string (quote <name>))
                                          liblepton)
-                           '()))))
-         (lambda () (pointer->string ((force proc)))))))))
+                           '())))
+              (result (delay (pointer->string ((force proc))))))
+         (force result))))))
 
 
 (define-getter lepton_version_prepend)
@@ -49,13 +50,13 @@
 
 ;;; Return Lepton EDA version string list.
 (define (%lepton-version)
-  (list (lepton_version_prepend)
-        (lepton_version_dotted)
-        (lepton_version_date)
-        (lepton_version_git_commit)
-        (lepton_version_bugreport)
-        (lepton_version_url)
-        (lepton_version_message)))
+  (list lepton_version_prepend
+        lepton_version_dotted
+        lepton_version_date
+        lepton_version_git_commit
+        lepton_version_bugreport
+        lepton_version_url
+        lepton_version_message))
 
 ; public:
 ;
