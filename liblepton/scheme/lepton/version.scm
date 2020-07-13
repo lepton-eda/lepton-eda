@@ -58,6 +58,19 @@
         lepton_version_url
         lepton_version_message))
 
+(define lepton_version_git7
+  (string-take lepton_version_git_commit 7))
+
+(define %lepton-version-alist
+  `((prepend . ,lepton_version_prepend)
+    (dotted  . ,lepton_version_dotted)
+    (date    . ,lepton_version_date)
+    (git     . ,lepton_version_git_commit)
+    (git7    . ,lepton_version_git7)
+    (bugs    . ,lepton_version_bugreport)
+    (url     . ,lepton_version_url)
+    (msg     . ,lepton_version_message)))
+
 ; public:
 ;
 ; [what]: symbol, what information to retrieve:
@@ -82,45 +95,7 @@
 ( define* ( lepton-version #:optional (what #f) )
   ; return:
   ( if what
-    ( lepton-version-ex what ) ; if
-    %lepton-version            ; else
+    (assq-ref %lepton-version-alist what)
+    %lepton-version
   )
 )
-
-
-
-; private:
-;
-( define* ( lepton-version-ex what #:optional ( ver %lepton-version ) )
-
-  ( define ( item ndx )
-    ( list-ref ver ndx )
-  )
-
-  ( define ( git7 )
-    ( string-take (item 3) 7 )
-  )
-
-  ( let
-    (
-    ( items
-      ( list
-        ( cons 'prepend ( item 0 ) )
-        ( cons 'dotted  ( item 1 ) )
-        ( cons 'date    ( item 2 ) )
-        ( cons 'git     ( item 3 ) )
-        ( cons 'git7    ( git7 )   )
-        ( cons 'bugs    ( item 4 ) )
-        ( cons 'url     ( item 5 ) )
-        ( cons 'msg     ( item 6 ) )
-      )
-    )
-    )
-
-    ; return:
-    ( assoc-ref items what )
-
-  ) ; let
-
-) ; lepton-version-ex()
-
