@@ -49,7 +49,7 @@
 
 
 ;;; Return Lepton EDA version string list.
-(define (%lepton-version)
+(define %lepton-version
   (list lepton_version_prepend
         lepton_version_dotted
         lepton_version_date
@@ -83,7 +83,7 @@
   ; return:
   ( if what
     ( lepton-version-ex what ) ; if
-    ( %lepton-version )        ; else
+    %lepton-version            ; else
   )
 )
 
@@ -91,7 +91,7 @@
 
 ; private:
 ;
-( define* ( lepton-version-ex what #:optional ( ver (%lepton-version) ) )
+( define* ( lepton-version-ex what #:optional ( ver %lepton-version ) )
 
   ( define ( item ndx )
     ( list-ref ver ndx )
