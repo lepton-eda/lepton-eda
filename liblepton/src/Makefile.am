@@ -13,7 +13,6 @@ BUILT_SOURCES = \
 	scheme_config.x \
 	scheme_closure.x \
 	scheme_log.x \
-	scheme_version.x \
 	scheme_deprecated.x \
 	g_rc.x
 
@@ -30,7 +29,6 @@ scheme_api_sources = \
 	scheme_closure.c \
 	scheme_deprecated.c \
 	scheme_log.c \
-	scheme_version.c \
 	edascmhookproxy.c \
 	edascmvaluetypes.c \
 	g_rc.c
@@ -91,7 +89,8 @@ liblepton_la_SOURCES = \
 	s_menu.c \
 	s_slot.c \
 	s_textbuffer.c \
-	s_weakref.c
+	s_weakref.c \
+	version.c
 
 liblepton_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"  $(DATADIR_DEFS) \
 	-I$(srcdir)/../include -I$(srcdir)/../include/liblepton -I$(top_srcdir)

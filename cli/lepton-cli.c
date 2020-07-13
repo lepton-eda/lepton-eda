@@ -91,7 +91,7 @@ usage (void)
 static void
 version (void)
 {
-  char* msg = version_message();
+  char* msg = lepton_version_message();
   printf ("%s\n", msg);
   free (msg);
 

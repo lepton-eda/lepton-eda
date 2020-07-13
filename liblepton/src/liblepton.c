@@ -89,38 +89,3 @@ set_guile_compiled_path()
   }
 
 } /* set_guile_compiled_path() */
-
-
-
-/*! \brief Returns a message to be used in the --version output.
- *  \note  Caller must free() the returned value.
- */
-char*
-version_message()
-{
-  const char* msg =
-    _("Lepton EDA %s%s.%s (git: %.7s)\n"
-    "Copyright (C) 1998-2016 gEDA developers\n"
-    "Copyright (C) 2017-2020 Lepton EDA developers\n"
-    "This is free software, and you are welcome to redistribute it\n"
-    "under certain conditions. For details, see the file `COPYING',\n"
-    "which is included in the Lepton EDA distribution.\n"
-    "There is NO WARRANTY, to the extent permitted by law.");
-
-  size_t sz = snprintf (NULL, 0, msg,
-                        PREPEND_VERSION_STRING,
-                        PACKAGE_DOTTED_VERSION,
-                        PACKAGE_DATE_VERSION,
-                        PACKAGE_GIT_COMMIT);
-
-  char* res = (char*) malloc (++sz);
-
-  snprintf (res, sz, msg,
-            PREPEND_VERSION_STRING,
-            PACKAGE_DOTTED_VERSION,
-            PACKAGE_DATE_VERSION,
-            PACKAGE_GIT_COMMIT);
-
-  return res;
-}
-

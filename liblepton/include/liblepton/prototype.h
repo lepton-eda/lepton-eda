@@ -53,7 +53,6 @@ SCM g_rc_parse_rc (SCM pname_s, SCM rcname_s);
 /* liblepton.c */
 void liblepton_init(void);
 void set_guile_compiled_path();
-char* version_message();
 
 /* m_hatch.c */
 void m_hatch_box(GedaBox *box, gint angle, gint pitch, GArray *lines);
@@ -236,5 +235,26 @@ cfg_read_string2int (const gchar* group,
                      const struct OptionStringInt* vals,
                      size_t       nvals,
                      gint*        result);
+
+/* version.c */
+const char*
+lepton_version_prepend ();
+
+const char*
+lepton_version_dotted ();
+
+const char*
+lepton_version_date ();
+
+const char*
+lepton_version_git_commit ();
+
+const char*
+lepton_version_bugreport ();
+
+const char*
+lepton_version_url ();
+
+char* lepton_version_message();
 
 G_END_DECLS

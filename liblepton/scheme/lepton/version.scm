@@ -1,6 +1,5 @@
-;;; Lepton EDA
-;;; liblepton - Lepton's library - Scheme API
-;;; Copyright (C) 2017-2019 Lepton EDA Contributors
+;;; Lepton EDA library - Scheme API
+;;; Copyright (C) 2017-2020 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,11 +18,68 @@
 ;;; Lepton version
 
 (define-module (lepton version)
-  #:use-module (lepton core version)
+  #:use-module (system foreign)
 
   #:export (lepton-version))
 
+(define liblepton (dynamic-link "liblepton"))
 
+
+(define lepton_version_prepend
+  (pointer->procedure
+   '*
+   (dynamic-func "lepton_version_prepend" liblepton)
+   '()))
+
+(define lepton_version_dotted
+  (pointer->procedure
+   '*
+   (dynamic-func "lepton_version_dotted" liblepton)
+   '()))
+
+(define lepton_version_date
+  (pointer->procedure
+   '*
+   (dynamic-func "lepton_version_date" liblepton)
+   '()))
+
+(define lepton_version_git_commit
+  (pointer->procedure
+   '*
+   (dynamic-func "lepton_version_git_commit" liblepton)
+   '()))
+
+(define lepton_version_bugreport
+  (pointer->procedure
+   '*
+   (dynamic-func "lepton_version_bugreport" liblepton)
+   '()))
+
+(define lepton_version_url
+  (pointer->procedure
+   '*
+   (dynamic-func "lepton_version_url" liblepton)
+   '()))
+
+;;; This procedure returns version message that can be used in the
+;;; --version output.
+(define lepton_version_message
+  (pointer->procedure
+   '*
+   (dynamic-func "lepton_version_message" liblepton)
+   '()))
+
+
+;;; Return Lepton EDA version string list.
+(define (%lepton-version)
+  (map pointer->string
+       (list (lepton_version_prepend)
+             (lepton_version_dotted)
+             (lepton_version_date)
+             (lepton_version_git_commit)
+             (lepton_version_bugreport)
+             (lepton_version_url)
+             (lepton_version_message))))
 
 ; public:
 ;
@@ -35,7 +91,7 @@
 ;   'git7    => get first 7 symbols of PACKAGE_GIT_COMMIT
 ;   'bugs    => get PACKAGE_BUGREPORT (defined in config.h)
 ;   'url     => get PACKAGE_URL       (defined in config.h)
-;   'msg     => get message from version_message()
+;   'msg     => get message from lepton_version_message()
 ;
 ; If [what] is #f, return a list of strings:
 ; - PREPEND_VERSION_STRING
@@ -44,7 +100,7 @@
 ; - PACKAGE_GIT_COMMIT
 ; - PACKAGE_BUGREPORT
 ; - PACKAGE_URL
-; - message from version_message()
+; - message from lepton_version_message()
 ;
 ( define* ( lepton-version #:optional (what #f) )
   ; return:
