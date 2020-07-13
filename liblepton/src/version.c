@@ -63,6 +63,19 @@ lepton_version_url ()
   return PACKAGE_URL;
 }
 
+const char*
+lepton_version_copyright ()
+{
+  const char* msg =
+    _("Copyright (C) 1998-2016 gEDA developers\n"
+      "Copyright (C) 2017-2020 Lepton EDA developers\n"
+      "This is free software, and you are welcome to redistribute it\n"
+      "under certain conditions. For details, see the file `COPYING',\n"
+      "which is included in the Lepton EDA distribution.\n"
+      "There is NO WARRANTY, to the extent permitted by law.");
+  return msg;
+}
+
 
 /*! \brief Returns a message to be used in the --version output.
  *  \note  Caller must free() the returned value.
@@ -71,19 +84,14 @@ char*
 lepton_version_message()
 {
   const char* msg =
-    _("Lepton EDA %s%s.%s (git: %.7s)\n"
-    "Copyright (C) 1998-2016 gEDA developers\n"
-    "Copyright (C) 2017-2020 Lepton EDA developers\n"
-    "This is free software, and you are welcome to redistribute it\n"
-    "under certain conditions. For details, see the file `COPYING',\n"
-    "which is included in the Lepton EDA distribution.\n"
-    "There is NO WARRANTY, to the extent permitted by law.");
+    _("Lepton EDA %s%s.%s (git: %.7s)\n%s");
 
   size_t sz = snprintf (NULL, 0, msg,
                         PREPEND_VERSION_STRING,
                         PACKAGE_DOTTED_VERSION,
                         PACKAGE_DATE_VERSION,
-                        PACKAGE_GIT_COMMIT);
+                        PACKAGE_GIT_COMMIT,
+                        lepton_version_copyright ());
 
   char* res = (char*) malloc (++sz);
 
@@ -91,7 +99,8 @@ lepton_version_message()
             PREPEND_VERSION_STRING,
             PACKAGE_DOTTED_VERSION,
             PACKAGE_DATE_VERSION,
-            PACKAGE_GIT_COMMIT);
+            PACKAGE_GIT_COMMIT,
+            lepton_version_copyright ());
 
   return res;
 }
