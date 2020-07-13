@@ -28,12 +28,12 @@
   (syntax-rules ()
     ((_ <name>)
      (define <name>
-       (let* ((proc (delay (pointer->procedure
-                           '*
-                           (dynamic-func (symbol->string (quote <name>))
-                                         liblepton)
-                           '())))
-              (result (delay (pointer->string ((force proc))))))
+       (let* ((proc (pointer->procedure
+                     '*
+                     (dynamic-func (symbol->string (quote <name>))
+                                   liblepton)
+                     '()))
+              (result (delay (pointer->string (proc)))))
          (force result))))))
 
 
