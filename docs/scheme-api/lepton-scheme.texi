@@ -356,6 +356,7 @@ available to be used in all Lepton applications.
 * Configuration functions::
 * Logging functions::
 * System information::
+* Version information::
 @end menu
 
 @node Core page functions
@@ -2214,6 +2215,47 @@ the form @samp{$@{VAR@}}.
 @example
 (expand-env-variables "$@{HOME@}/path/to/dir")
 @end example
+
+@end defun
+
+@node Version information
+@section Version information
+
+To use the functions described in this section, you will need to load
+the @code{(lepton version)} module.
+
+This section describes functions and variables that can be used to get
+and report Lepton version data.
+
+@defun lepton-version [element]
+Returns a list of strings describing the version of Lepton library
+currently in use.  Optionally, specify @var{element} type if you want
+to get only one list element value.
+
+The returned list contains elements as follows:
+
+@itemize
+@item
+@samp{prepend} Text that is usually prepended when the version
+information is output.
+@item
+@samp{dotted} Dotted version info.
+@item
+@samp{date} Date of the current release.
+@item
+@samp{git} Git commit hash of the current release.
+@item
+@samp{bugs} Internet address of Lepton's bugtracker.
+@item
+@samp{url} Internet address of Lepton's main page.
+@item
+@samp{copyright} General copyright information.
+@item
+@samp{msg} Message including all the above in a standardized form.
+@end itemize
+
+For example, you can use @samp{(lepton-version 'copyright)} to get
+copyright info of the library.
 
 @end defun
 
