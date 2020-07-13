@@ -237,7 +237,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; command-line options, and exit with exit status 0.
 (define (usage)
   (match (lepton-version)
-    ((prepend dotted date commit bugs url msg)
+    ((prepend dotted date commit bugs url copyright msg)
      (format #t
              (G_ "Usage: ~A [OPTION ...] [--] [FILE ...]
 

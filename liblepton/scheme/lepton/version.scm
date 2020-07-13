@@ -43,6 +43,7 @@
 (define-getter lepton_version_git_commit)
 (define-getter lepton_version_bugreport)
 (define-getter lepton_version_url)
+(define-getter lepton_version_copyright)
 ;;; This procedure returns version message that can be used in the
 ;;; --version output.
 (define-getter lepton_version_message)
@@ -56,20 +57,22 @@
         lepton_version_git_commit
         lepton_version_bugreport
         lepton_version_url
+        lepton_version_copyright
         lepton_version_message))
 
 (define lepton_version_git7
   (string-take lepton_version_git_commit 7))
 
 (define %lepton-version-alist
-  `((prepend . ,lepton_version_prepend)
-    (dotted  . ,lepton_version_dotted)
-    (date    . ,lepton_version_date)
-    (git     . ,lepton_version_git_commit)
-    (git7    . ,lepton_version_git7)
-    (bugs    . ,lepton_version_bugreport)
-    (url     . ,lepton_version_url)
-    (msg     . ,lepton_version_message)))
+  `((prepend   . ,lepton_version_prepend)
+    (dotted    . ,lepton_version_dotted)
+    (date      . ,lepton_version_date)
+    (git       . ,lepton_version_git_commit)
+    (git7      . ,lepton_version_git7)
+    (bugs      . ,lepton_version_bugreport)
+    (url       . ,lepton_version_url)
+    (copyright . ,lepton_version_copyright)
+    (msg       . ,lepton_version_message)))
 
 ; public:
 ;
