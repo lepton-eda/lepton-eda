@@ -24,50 +24,26 @@
 
 (define liblepton (dynamic-link "liblepton"))
 
+(define-syntax define-getter
+  (syntax-rules ()
+    ((_ <name>)
+     (define <name>
+       (pointer->procedure
+        '*
+        (dynamic-func (symbol->string (quote <name>))
+                      liblepton)
+        '())))))
 
-(define lepton_version_prepend
-  (pointer->procedure
-   '*
-   (dynamic-func "lepton_version_prepend" liblepton)
-   '()))
 
-(define lepton_version_dotted
-  (pointer->procedure
-   '*
-   (dynamic-func "lepton_version_dotted" liblepton)
-   '()))
-
-(define lepton_version_date
-  (pointer->procedure
-   '*
-   (dynamic-func "lepton_version_date" liblepton)
-   '()))
-
-(define lepton_version_git_commit
-  (pointer->procedure
-   '*
-   (dynamic-func "lepton_version_git_commit" liblepton)
-   '()))
-
-(define lepton_version_bugreport
-  (pointer->procedure
-   '*
-   (dynamic-func "lepton_version_bugreport" liblepton)
-   '()))
-
-(define lepton_version_url
-  (pointer->procedure
-   '*
-   (dynamic-func "lepton_version_url" liblepton)
-   '()))
-
+(define-getter lepton_version_prepend)
+(define-getter lepton_version_dotted)
+(define-getter lepton_version_date)
+(define-getter lepton_version_git_commit)
+(define-getter lepton_version_bugreport)
+(define-getter lepton_version_url)
 ;;; This procedure returns version message that can be used in the
 ;;; --version output.
-(define lepton_version_message
-  (pointer->procedure
-   '*
-   (dynamic-func "lepton_version_message" liblepton)
-   '()))
+(define-getter lepton_version_message)
 
 
 ;;; Return Lepton EDA version string list.
