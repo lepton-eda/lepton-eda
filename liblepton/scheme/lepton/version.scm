@@ -19,7 +19,6 @@
 
 (define-module (lepton version)
   #:use-module (system foreign)
-  #:use-module (lepton core gettext)
 
   #:export (lepton-version
             lepton-version-data
@@ -107,6 +106,6 @@ representation of Lepton version.  Otherwise the first argument
 FMT should be a format string followed by ARGS which is a list of
 symbols as defined for lepton-version-data."
   (if (null? args)
-      (apply format #f (G_ "Lepton EDA ~A~A.~A (git: ~A)")
+      (apply format #f "Lepton EDA ~A~A.~A (git: ~A)"
              (lepton-version-data 'prepend 'dotted 'date 'git7))
       (~lepton-version fmt args)))
