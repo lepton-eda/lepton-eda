@@ -2227,12 +2227,8 @@ the @code{(lepton version)} module.
 This section describes functions and variables that can be used to get
 and report Lepton version data.
 
-@defun lepton-version [element]
-Returns a list of strings describing the version of Lepton library
-currently in use.  Optionally, specify @var{element} type if you want
-to get only one list element value.
-
-The returned list contains elements as follows:
+The following list of symbols can be used with functions described
+below to retrieve corresponding version information:
 
 @itemize
 @item
@@ -2250,13 +2246,51 @@ information is output.
 @samp{url} Internet address of Lepton's main page.
 @item
 @samp{copyright} General copyright information.
-@item
-@samp{msg} Message including all the above in a standardized form.
 @end itemize
 
-For example, you can use @samp{(lepton-version 'copyright)} to get
+An optional element, @samp{git7}, can be used to get 7-char prefix of
+the git commit hash.
+
+@defun lepton-version-ref element
+
+Returns a single version data string by specified @var{element} from
+the above symbol list.
+
+For example, you can use @samp{(lepton-version-ref 'copyright)} to get
 copyright info of the library.
 
+@example
+(lepton-version-ref 'git7)
+=> "88acbbd"
+@end example
+@end defun
+
+@defun lepton-version-data [element-list]
+
+Returns a list of strings corresponding to the above symbol list
+(exluding @samp{git7}) in order.  An optional argument
+@var{element-list} can be specified to retrieve any number of the data
+strings in any order.
+
+@example
+(lepton-version-data 'dotted 'git7)
+=> ("1.9.11" "88acbbd")
+@end example
+@end defun
+
+@defun lepton-version [format-string . format-args]
+Returns a generic string describing the version of Lepton library
+currently in use.
+
+If the optional @var{format-string} is specified, it is interpreted as
+a format string, with @var{format-args} as its parameters.
+
+@example
+(lepton-version)
+=> "Lepton EDA 1.9.11.20200604 (git: 88acbbd)"
+(lepton-version "lepton-netlist ~A" 'dotted)
+=> "lepton-netlist 1.9.11"
+@end example
 @end defun
 
 @node lepton-schematic API Reference
