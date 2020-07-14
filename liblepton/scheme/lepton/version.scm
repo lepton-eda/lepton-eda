@@ -19,8 +19,10 @@
 
 (define-module (lepton version)
   #:use-module (system foreign)
+  #:use-module (lepton log)
 
-  #:export (lepton-version
+  #:export (display-lepton-version
+            lepton-version
             lepton-version-data
             lepton-version-ref))
 
@@ -107,3 +109,31 @@ symbols as defined for lepton-version-data."
       (apply format #f "Lepton EDA ~A~A.~A (git: ~A)"
              (lepton-version-data 'prepend 'dotted 'date 'git7))
       (~lepton-version fmt args)))
+
+(define* (display-lepton-version #:optional name? log?)
+  "Output version and copyright info to current output port. If
+optional argument NAME? is not #f, output the basename of the
+program as well.  If optional argument LOG? is not #f, the output
+goes to log without copyright information."
+  (define program-basename
+    (basename (car (program-arguments))))
+
+  (define suite-name "Lepton EDA")
+
+  (define version-prefix
+    (if name?
+        (string-append suite-name "/" program-basename)
+        suite-name))
+
+  (define version-suffix
+    (lepton-version "~A~A.~A (git: ~A)\n"
+                    'prepend 'dotted 'date 'git7))
+
+  (define version-message
+    (string-append version-prefix " " version-suffix))
+
+  (if log?
+      (log! 'message version-message)
+      (begin
+        (display version-message)
+        (display (lepton-version-ref 'copyright)))))
