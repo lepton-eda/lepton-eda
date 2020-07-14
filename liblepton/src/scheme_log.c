@@ -103,31 +103,6 @@ SCM_DEFINE (log_x, "%log!", 3, 0, 0,
   return SCM_UNSPECIFIED;
 }
 
-
-/*! \brief Init logging functionality.
- * \par Function Description
- * Init log file using given \a domain_s prefix.
- * This is a Scheme wrapper for s_log_init().
- *
- * \note Scheme API: Implements the \%init-log procedure in the
- * (lepton core log) module.
- *
- * \param domain_s  The log domain, as a string.
- *
- * \return domain_s.
- */
-SCM_DEFINE (init_log, "%init-log", 1, 0, 0,
-            (SCM domain_s),
-            "Init log file using given domain prefix.")
-{
-  SCM_ASSERT (scm_is_string(domain_s), domain_s, SCM_ARG1, s_log_x);
-
-  gchar *domain = scm_to_utf8_string(domain_s);
-  s_log_init (domain);
-
-  return domain_s;
-}
-
 /* ================================================================
  * Initialization
  * ================================================================ */
@@ -146,7 +121,6 @@ init_module_lepton_core_log (void *unused)
 
   /* Add them to the module's public definitions */
   scm_c_export (s_log_x,
-                s_init_log,
                 NULL);
 }
 

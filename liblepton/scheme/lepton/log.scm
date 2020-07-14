@@ -18,7 +18,7 @@
 
 (define-module (lepton log)
   #:use-module (ice-9 format)
-  #:use-module (lepton core log)
+  #:use-module (system foreign)
 
   #:export (init-log
             log!))
@@ -44,4 +44,10 @@ A newline character is automatically appended to the message.
   (let ((formatted (apply format #f message format-args)))
     (%log! #f level (string-append formatted))))
 
-(define init-log %init-log)
+(define (init-log domain)
+  "Init log file using given DOMAIN prefix."
+  (let ((s_log_init (delay (pointer->procedure
+                            void
+                            (dynamic-func "s_log_init" liblepton)
+                            (list '*)))))
+    ((force s_log_init) (string->pointer domain))))
