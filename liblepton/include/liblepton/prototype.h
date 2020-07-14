@@ -163,6 +163,20 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object);
 void s_log_init (const gchar *filename);
 void s_log_close (void);
 gchar *s_log_read (void);
+GLogLevelFlags
+lepton_log_flag_fatal ();
+GLogLevelFlags
+lepton_log_level_error ();
+GLogLevelFlags
+lepton_log_level_critical ();
+GLogLevelFlags
+lepton_log_level_warning ();
+GLogLevelFlags
+lepton_log_level_message ();
+GLogLevelFlags
+lepton_log_level_info ();
+GLogLevelFlags
+lepton_log_level_debug ();
 
 /* s_menu.c */
 int s_menu_return_num(void);
