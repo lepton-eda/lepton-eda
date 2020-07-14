@@ -98,14 +98,15 @@ equivalent to the call (lepton-version-data 'prepend 'dotted 'date
       (map lepton-version-ref args)))
 
 
-;;; If no arguments given, returns a canonical string
-;;; representation of Lepton version.  Otherwise the first
-;;; argument should be a format string followed by a list of
-;;; symbols as defined for lepton-version-data.
-(define-syntax lepton-version
-  (syntax-rules ()
-    ((_)
-     (apply format #f (G_ "Lepton EDA ~A~A.~A (git: ~A)")
-            (lepton-version-data 'prepend 'dotted 'date 'git7)))
-    ((_ <string> <arg> ...)
-      (apply format #f <string> (lepton-version-data <arg> ...)))))
+(define-syntax-rule (~lepton-version <string> <args>)
+  (apply format #f <string> (apply lepton-version-data <args>)))
+
+(define* (lepton-version #:optional fmt . args)
+  "If no arguments given, returns a canonical string
+representation of Lepton version.  Otherwise the first argument
+FMT should be a format string followed by ARGS which is a list of
+symbols as defined for lepton-version-data."
+  (if (null? args)
+      (apply format #f (G_ "Lepton EDA ~A~A.~A (git: ~A)")
+             (lepton-version-data 'prepend 'dotted 'date 'git7))
+      (~lepton-version fmt args)))
