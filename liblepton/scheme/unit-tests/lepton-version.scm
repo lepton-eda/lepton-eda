@@ -14,10 +14,9 @@
 (define bugs (lepton-version 'bugs))
 (define url (lepton-version 'url))
 (define copyright (lepton-version 'copyright))
-(define msg (lepton-version 'msg))
 
 ;;; Test the length of the returned list.
-(test-eq 8 (length version))
+(test-eq 7 (length version))
 
 ;;; Every element of the list must be a string.
 (test-assert (every string? version))
@@ -31,7 +30,6 @@
 (test-assert (string? bugs))
 (test-assert (string? url))
 (test-assert (string? copyright))
-(test-assert (string? msg))
 
 ;;; Test list element sequence.
 (test-equal version
@@ -41,8 +39,7 @@
         git
         bugs
         url
-        copyright
-        msg))
+        copyright))
 
 ;;; Special case: git commit prefix.
 (test-eq 7 (string-length git7))

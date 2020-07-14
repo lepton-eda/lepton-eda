@@ -91,9 +91,12 @@ usage (void)
 static void
 version (void)
 {
-  char* msg = lepton_version_message();
-  printf ("%s\n", msg);
-  free (msg);
+  printf (_("Lepton EDA %s%s.%s (git: %.7s)\n%s"),
+            lepton_version_prepend (),
+            lepton_version_dotted (),
+            lepton_version_date (),
+            lepton_version_git_commit (),
+            lepton_version_copyright ());
 
   exit (0);
 }

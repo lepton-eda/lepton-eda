@@ -104,7 +104,7 @@ to current standard output port and exit with exit status 0."
   (define version-msg "Lepton EDA/lepton-netlist ~A~A.~A (git: ~A)\n")
 
   (match (lepton-version)
-    ((prepend dotted date commit bugs url copyright msg)
+    ((prepend dotted date commit bugs url copyright)
      (if output-to-log?
          (log! 'message version-msg prepend dotted date (string-take commit 7))
          (begin

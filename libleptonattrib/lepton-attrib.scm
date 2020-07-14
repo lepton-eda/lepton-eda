@@ -89,7 +89,7 @@ exec @GUILE@ -s "$0" "$@"
     (apply format #f "Lepton EDA/lepton-attrib ~A~A.~A (git: ~A)\n" args))
 
   (match (lepton-version)
-    ((prepend dotted date commit bugs url copyright msg)
+    ((prepend dotted date commit bugs url copyright)
      (let ((version-message (version-msg prepend dotted date (string-take commit 7))))
        (if stdout
            (begin
@@ -101,7 +101,7 @@ exec @GUILE@ -s "$0" "$@"
 
 (define (usage)
   (match (lepton-version)
-    ((prepend dotted date commit bugs url msg)
+    ((prepend dotted date commit bugs url)
      (format #t
              (G_ "Usage: ~A [OPTIONS] filename1 ... filenameN
 

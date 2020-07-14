@@ -35,7 +35,7 @@ with exit status 0.  Otherwise, just print the message to log."
     (apply format #f "Lepton EDA/lepton-schematic ~A~A.~A (git: ~A)\n" args))
 
   (match (lepton-version)
-    ((prepend dotted date commit bugs url copyright msg)
+    ((prepend dotted date commit bugs url copyright)
      (let ((version-message (version-msg prepend dotted date (string-take commit 7))))
        (if stdout
            (begin

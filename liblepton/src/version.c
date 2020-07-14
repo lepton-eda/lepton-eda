@@ -75,32 +75,3 @@ lepton_version_copyright ()
       "There is NO WARRANTY, to the extent permitted by law.\n");
   return msg;
 }
-
-
-/*! \brief Returns a message to be used in the --version output.
- *  \note  Caller must free() the returned value.
- */
-char*
-lepton_version_message()
-{
-  const char* msg =
-    _("Lepton EDA %s%s.%s (git: %.7s)\n%s");
-
-  size_t sz = snprintf (NULL, 0, msg,
-                        PREPEND_VERSION_STRING,
-                        PACKAGE_DOTTED_VERSION,
-                        PACKAGE_DATE_VERSION,
-                        PACKAGE_GIT_COMMIT,
-                        lepton_version_copyright ());
-
-  char* res = (char*) malloc (++sz);
-
-  snprintf (res, sz, msg,
-            PREPEND_VERSION_STRING,
-            PACKAGE_DOTTED_VERSION,
-            PACKAGE_DATE_VERSION,
-            PACKAGE_GIT_COMMIT,
-            lepton_version_copyright ());
-
-  return res;
-}

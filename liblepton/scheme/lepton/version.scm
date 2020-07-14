@@ -44,10 +44,6 @@
 (define-getter lepton_version_bugreport)
 (define-getter lepton_version_url)
 (define-getter lepton_version_copyright)
-;;; This procedure returns version message that can be used in the
-;;; --version output.
-(define-getter lepton_version_message)
-
 
 ;;; Return Lepton EDA version string list.
 (define %lepton-version
@@ -57,8 +53,7 @@
         lepton_version_git_commit
         lepton_version_bugreport
         lepton_version_url
-        lepton_version_copyright
-        lepton_version_message))
+        lepton_version_copyright))
 
 (define lepton_version_git7
   (string-take lepton_version_git_commit 7))
@@ -71,8 +66,7 @@
     (git7      . ,lepton_version_git7)
     (bugs      . ,lepton_version_bugreport)
     (url       . ,lepton_version_url)
-    (copyright . ,lepton_version_copyright)
-    (msg       . ,lepton_version_message)))
+    (copyright . ,lepton_version_copyright)))
 
 ; public:
 ;
@@ -84,7 +78,6 @@
 ;   'git7    => get first 7 symbols of PACKAGE_GIT_COMMIT
 ;   'bugs    => get PACKAGE_BUGREPORT (defined in config.h)
 ;   'url     => get PACKAGE_URL       (defined in config.h)
-;   'msg     => get message from lepton_version_message()
 ;
 ; If [what] is #f, return a list of strings:
 ; - PREPEND_VERSION_STRING
@@ -93,7 +86,6 @@
 ; - PACKAGE_GIT_COMMIT
 ; - PACKAGE_BUGREPORT
 ; - PACKAGE_URL
-; - message from lepton_version_message()
 ;
 ( define* ( lepton-version #:optional (what #f) )
   ; return:
