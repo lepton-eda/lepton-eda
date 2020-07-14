@@ -148,6 +148,7 @@ TESTS = \
 	unit-tests/lepton-page-string.scm \
 	unit-tests/lepton-promotable-attribs.scm \
 	unit-tests/lepton-rc-build-path.scm \
+	unit-tests/lepton-version.scm \
 	unit-tests/netlist-attrib.scm \
 	unit-tests/netlist-load-path.scm \
 	unit-tests/netlist-partlist.scm

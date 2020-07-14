@@ -22,7 +22,7 @@
 
   #:export (lepton-version))
 
-(define liblepton (dynamic-link "liblepton"))
+(define liblepton (dynamic-link (or (getenv "LIBLEPTON") "liblepton")))
 
 (define-syntax define-getter
   (syntax-rules ()

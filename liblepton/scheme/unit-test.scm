@@ -66,6 +66,7 @@
 
 
 ;;; Initialize liblepton variables and functions.
+(setenv "LIBLEPTON" "../src/liblepton")
 (setenv "LEPTON_INHIBIT_RC_FILES" "yes")
 ;;; The load path should not be changed after loading the
 ;;; liblepton library.  This is tested in the unit test
