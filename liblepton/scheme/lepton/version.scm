@@ -26,17 +26,15 @@
 
 (define liblepton (dynamic-link (or (getenv "LIBLEPTON") "liblepton")))
 
-(define-syntax define-getter
-  (syntax-rules ()
-    ((_ <name>)
-     (define <name>
-       (let* ((proc (pointer->procedure
-                     '*
-                     (dynamic-func (symbol->string (quote <name>))
-                                   liblepton)
-                     '()))
-              (result (delay (pointer->string (proc)))))
-         (force result))))))
+(define-syntax-rule (define-getter <name>)
+  (define <name>
+    (let* ((proc (pointer->procedure
+                  '*
+                  (dynamic-func (symbol->string (quote <name>))
+                                liblepton)
+                  '()))
+           (result (delay (pointer->string (proc)))))
+      (force result))))
 
 
 (define-getter lepton_version_prepend)
