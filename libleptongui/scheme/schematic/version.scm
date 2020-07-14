@@ -30,16 +30,11 @@
   "Print lepton-schematic version and copyright/warranty notices.
 If STDOUT is true, output the info to standard output and exit
 with exit status 0.  Otherwise, just print the message to log."
-
-  (define (version-msg . args)
-    (apply format #f "Lepton EDA/lepton-schematic ~A~A.~A (git: ~A)\n" args))
-
-  (match (lepton-version)
-    ((prepend dotted date commit bugs url copyright)
-     (let ((version-message (version-msg prepend dotted date (string-take commit 7))))
-       (if stdout
-           (begin
-             (display version-message)
-             (display copyright)
-             (primitive-exit 0))
-           (log! 'message version-message))))))
+  (let ((version-message (lepton-version "Lepton EDA/lepton-schematic ~A~A.~A (git: ~A)\n"
+                                         'prepend 'dotted 'date 'git7)))
+    (if stdout
+        (begin
+          (display version-message)
+          (display (lepton-version-ref 'copyright))
+          (primitive-exit 0))
+        (log! 'message version-message))))

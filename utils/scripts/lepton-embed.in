@@ -98,7 +98,7 @@ Lepton EDA homepage: <~a>
 
 
 ( define ( version )
-  ( format #t "~a~%" ( lepton-version 'msg ) )
+  ( format #t "~a~%" ( lepton-version ) )
   ( primitive-exit 0 )
 )
 

@@ -19,8 +19,11 @@
 
 (define-module (lepton version)
   #:use-module (system foreign)
+  #:use-module (lepton core gettext)
 
-  #:export (lepton-version))
+  #:export (lepton-version
+            lepton-version-data
+            lepton-version-ref))
 
 (define liblepton (dynamic-link (or (getenv "LIBLEPTON") "liblepton")))
 
@@ -68,29 +71,41 @@
     (url       . ,lepton_version_url)
     (copyright . ,lepton_version_copyright)))
 
-; public:
-;
-; [what]: symbol, what information to retrieve:
-;   'prepend => get PREPEND_VERSION_STRING (defined in liblepton/defines.h)
-;   'dotted  => get PACKAGE_DOTTED_VERSION (defined in version.h)
-;   'date    => get PACKAGE_DATE_VERSION   (defined in version.h)
-;   'git     => get PACKAGE_GIT_COMMIT     (defined in version.h)
-;   'git7    => get first 7 symbols of PACKAGE_GIT_COMMIT
-;   'bugs    => get PACKAGE_BUGREPORT (defined in config.h)
-;   'url     => get PACKAGE_URL       (defined in config.h)
-;
-; If [what] is #f, return a list of strings:
-; - PREPEND_VERSION_STRING
-; - PACKAGE_DOTTED_VERSION
-; - PACKAGE_DATE_VERSION
-; - PACKAGE_GIT_COMMIT
-; - PACKAGE_BUGREPORT
-; - PACKAGE_URL
-;
-( define* ( lepton-version #:optional (what #f) )
-  ; return:
-  ( if what
-    (assq-ref %lepton-version-alist what)
-    %lepton-version
-  )
-)
+
+(define (lepton-version-ref name)
+  "Reference and return one element of lepton-version-data by
+NAME."
+  (assq-ref %lepton-version-alist name))
+
+
+(define (lepton-version-data . args)
+  "Return Lepton version data list.  Optional arguments ARGS may
+define the sequence and contents of the list to retrieve.  The following
+symbols are supported:
+  'prepend - get PREPEND_VERSION_STRING defined in liblepton
+  'dotted  - get PACKAGE_DOTTED_VERSION string defined in liblepton
+  'date    - get PACKAGE_DATE_VERSION string defined in liblepton
+  'git     - get PACKAGE_GIT_COMMIT string defined in liblepton
+  'git7    - get first 7 symbols of PACKAGE_GIT_COMMIT
+  'bugs    - get PACKAGE_BUGREPORT string defined in liblepton
+  'url     - get PACKAGE_URL string defined in liblepton
+
+The default call for (lepton-version-data) without arguments is
+equivalent to the call (lepton-version-data 'prepend 'dotted 'date
+'git 'bugs 'url 'copyright)."
+  (if (null? args)
+      %lepton-version
+      (map lepton-version-ref args)))
+
+
+;;; If no arguments given, returns a canonical string
+;;; representation of Lepton version.  Otherwise the first
+;;; argument should be a format string followed by a list of
+;;; symbols as defined for lepton-version-data.
+(define-syntax lepton-version
+  (syntax-rules ()
+    ((_)
+     (apply format #f (G_ "Lepton EDA ~A~A.~A (git: ~A)")
+            (lepton-version-data 'prepend 'dotted 'date 'git7)))
+    ((_ <string> <arg> ...)
+      (apply format #f <string> (lepton-version-data <arg> ...)))))

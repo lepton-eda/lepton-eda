@@ -94,8 +94,8 @@ Options:
 Report bugs at <~a>
 Lepton EDA homepage: <~a>
 "
-    ( lepton-version 'bugs )
-    ( lepton-version 'url )
+    ( lepton-version-ref 'bugs )
+    ( lepton-version-ref 'url )
   )
 
   ( primitive-exit exit-code )
@@ -104,7 +104,7 @@ Lepton EDA homepage: <~a>
 
 
 ( define ( version )
-  ( format #t "~a~%" ( lepton-version 'msg ) )
+  ( format #t "~a~%" ( lepton-version ) )
   ( primitive-exit 0 )
 )
 

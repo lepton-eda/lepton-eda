@@ -4,22 +4,22 @@
 (test-begin "lepton-version")
 
 ;;; Full version list.
-(define version (lepton-version))
+(define version-data (lepton-version-data))
 ;;; Elements.
-(define prepend (lepton-version 'prepend))
-(define dotted (lepton-version 'dotted))
-(define date (lepton-version 'date))
-(define git (lepton-version 'git))
-(define git7 (lepton-version 'git7))
-(define bugs (lepton-version 'bugs))
-(define url (lepton-version 'url))
-(define copyright (lepton-version 'copyright))
+(define prepend (lepton-version-ref 'prepend))
+(define dotted (lepton-version-ref 'dotted))
+(define date (lepton-version-ref 'date))
+(define git (lepton-version-ref 'git))
+(define git7 (lepton-version-ref 'git7))
+(define bugs (lepton-version-ref 'bugs))
+(define url (lepton-version-ref 'url))
+(define copyright (lepton-version-ref 'copyright))
 
 ;;; Test the length of the returned list.
-(test-eq 7 (length version))
+(test-eq 7 (length version-data))
 
 ;;; Every element of the list must be a string.
-(test-assert (every string? version))
+(test-assert (every string? version-data))
 
 ;;; Test all allowed symbols.
 (test-assert (string? prepend))
@@ -32,7 +32,7 @@
 (test-assert (string? copyright))
 
 ;;; Test list element sequence.
-(test-equal version
+(test-equal version-data
   (list prepend
         dotted
         date
@@ -43,5 +43,17 @@
 
 ;;; Special case: git commit prefix.
 (test-eq 7 (string-length git7))
+
+(test-assert (string? (lepton-version)))
+
+(test-equal (lepton-version "~A ~A ~A ~A ~A ~A ~A"
+                            'prepend
+                            'dotted
+                            'date
+                            'git
+                            'bugs
+                            'url
+                            'copyright)
+  (string-join (lepton-version-data) " " 'infix))
 
 (test-end "lepton-version")

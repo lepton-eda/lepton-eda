@@ -85,25 +85,19 @@ exec @GUILE@ -s "$0" "$@"
 
 (define* (lepton-attrib-version #:optional stdout)
   "Print lepton-attrib version."
-  (define (version-msg . args)
-    (apply format #f "Lepton EDA/lepton-attrib ~A~A.~A (git: ~A)\n" args))
-
-  (match (lepton-version)
-    ((prepend dotted date commit bugs url copyright)
-     (let ((version-message (version-msg prepend dotted date (string-take commit 7))))
-       (if stdout
-           (begin
-             (display version-message)
-             (display copyright)
-             (primitive-exit 0))
-           (log! 'message (version-msg prepend dotted date (string-take commit 7))))))))
+  (let ((version-message (lepton-version "Lepton EDA/lepton-attrib ~A~A.~A (git: ~A)\n"
+                                         'prepend 'dotted 'date 'git7)))
+    (if stdout
+        (begin
+          (display version-message)
+          (display (lepton-version-ref 'copyright))
+          (primitive-exit 0))
+        (log! 'message version-message))))
 
 
 (define (usage)
-  (match (lepton-version)
-    ((prepend dotted date commit bugs url)
-     (format #t
-             (G_ "Usage: ~A [OPTIONS] filename1 ... filenameN
+  (format #t
+          (G_ "Usage: ~A [OPTIONS] filename1 ... filenameN
 
 lepton-attrib: Lepton EDA attribute editor.
 Presents schematic attributes in easy-to-edit spreadsheet format.
@@ -133,9 +127,9 @@ Copyright (C) 2017-2020 Lepton EDA Contributors.
 Report bugs at ~S
 Lepton EDA homepage: ~S
 ")
-             (car (program-arguments))
-             bugs
-             url)))
+          (car (program-arguments))
+          (lepton-version-ref 'bugs)
+          (lepton-version-ref 'url))
 
   (primitive-exit 0))
 

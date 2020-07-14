@@ -95,21 +95,18 @@
                all-pins))
 
 
-(define* (lepton-netlist-version #:optional output-to-log? exit?)
+(define* (lepton-netlist-version #:optional output-to-log?)
   "Print lepton-netlist version, and copyright/warranty
 notices. If OUTPUT-TO-LOG? is requested, just output the version
 to log file, omitting copyright. Otherwise, output the full info
-to current standard output port and exit with exit status 0."
-
-  (define version-msg "Lepton EDA/lepton-netlist ~A~A.~A (git: ~A)\n")
-
-  (match (lepton-version)
-    ((prepend dotted date commit bugs url copyright)
-     (if output-to-log?
-         (log! 'message version-msg prepend dotted date (string-take commit 7))
-         (begin
-           (format #t version-msg prepend dotted date (string-take commit 7))
-           (display copyright))))))
+to current standard output port."
+  (let ((version-msg (lepton-version "Lepton EDA/lepton-netlist ~A~A.~A (git: ~A)\n"
+                                     'prepend 'dotted 'date 'git7)))
+    (if output-to-log?
+        (log! 'message version-msg)
+        (begin
+          (display version-msg)
+          (display (lepton-version-ref 'copyright))))))
 
 
 ;;----------------------------------------------------------------------

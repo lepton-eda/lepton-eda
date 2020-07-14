@@ -236,10 +236,8 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Print brief help message describing lepton-schematic usage and
 ;;; command-line options, and exit with exit status 0.
 (define (usage)
-  (match (lepton-version)
-    ((prepend dotted date commit bugs url copyright)
-     (format #t
-             (G_ "Usage: ~A [OPTION ...] [--] [FILE ...]
+  (format #t
+          (G_ "Usage: ~A [OPTION ...] [--] [FILE ...]
 
 
 Interactively edit Lepton EDA schematics or symbols.
@@ -258,9 +256,9 @@ Options:
 
 Report bugs at ~S
 Lepton EDA homepage: ~S\n")
-             (car (program-arguments))
-             bugs
-             url)))
+          (car (program-arguments))
+          (lepton-version-ref 'bugs)
+          (lepton-version-ref 'url))
   (primitive-exit 0))
 
 

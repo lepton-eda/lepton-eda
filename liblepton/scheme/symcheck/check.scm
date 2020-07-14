@@ -51,13 +51,13 @@ Report bugs at <~A>
 Lepton EDA homepage: <~A>
 ")
           (car (program-arguments))
-          (lepton-version 'bugs)
-          (lepton-version 'url))
+          (lepton-version-ref 'bugs)
+          (lepton-version-ref 'url))
   (primitive-exit 0))
 
 
 (define (lepton-symcheck-version)
-  (format #t "~a~%" (lepton-version 'msg))
+  (format #t "~a~%" (lepton-version))
   (primitive-exit 0))
 
 
