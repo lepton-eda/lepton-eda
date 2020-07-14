@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -274,4 +274,52 @@ static void s_log_handler (const gchar *log_domain,
     (*x_log_update_func) (log_domain, log_level, message);
   }
 
+}
+
+
+/* Helper functions to construct GLogLevelFlags values in
+   Scheme.  We don't just list their current values in Scheme code
+   since GLogLevelFlag is an opaque Glib enum and the flag values
+   may change in future. */
+
+GLogLevelFlags
+lepton_log_flag_fatal ()
+{
+  return G_LOG_FLAG_FATAL;
+}
+
+GLogLevelFlags
+lepton_log_level_error ()
+{
+  return G_LOG_LEVEL_ERROR;
+}
+
+GLogLevelFlags
+lepton_log_level_critical ()
+{
+  return G_LOG_LEVEL_CRITICAL;
+}
+
+GLogLevelFlags
+lepton_log_level_warning ()
+{
+  return G_LOG_LEVEL_WARNING;
+}
+
+GLogLevelFlags
+lepton_log_level_message ()
+{
+  return G_LOG_LEVEL_MESSAGE;
+}
+
+GLogLevelFlags
+lepton_log_level_info ()
+{
+  return G_LOG_LEVEL_INFO;
+}
+
+GLogLevelFlags
+lepton_log_level_debug ()
+{
+  return G_LOG_LEVEL_DEBUG;
 }
