@@ -2293,6 +2293,24 @@ a format string, with @var{format-args} as its parameters.
 @end lisp
 @end defun
 
+@defun display-lepton-version [print-name] [copyright] [log]
+
+Outputs version of a Lepton tool to the current output port or log. If
+@var{print-name} keyword argument is true (@samp{#t}), the basename of
+the tool is included to the output.  If @var{log} keyword argument is
+true (@samp{#t}), the output will go to log instead of standard output
+port. If @var{copyright} is true (@samp{#t}), copyright information
+will be output as well.  By default, all keywords are set to false
+(@samp{#f}).
+
+@lisp
+(display-lepton-version)
+@print{} "Lepton EDA 1.9.11.20200604 (git: 88acbbd)"
+(display-lepton-version #:print-name #t)
+@print{} "Lepton EDA/lepton-netlist 1.9.11.20200604 (git: 88acbbd)"
+@end lisp
+@end defun
+
 @node lepton-schematic API Reference
 @chapter lepton-schematic API Reference
 
