@@ -50,8 +50,7 @@
   #:use-module (netlist schematic toplevel)
   #:use-module (netlist verbose)
 
-  #:export (lepton-netlist-version
-            main
+  #:export (main
             calling-flag?
             get-device
             get-connections
@@ -93,21 +92,6 @@
                all-unique-nets
                all-nets
                all-pins))
-
-
-(define* (lepton-netlist-version #:optional output-to-log?)
-  "Print lepton-netlist version, and copyright/warranty
-notices. If OUTPUT-TO-LOG? is requested, just output the version
-to log file, omitting copyright. Otherwise, output the full info
-to current standard output port."
-  (let ((version-msg (lepton-version "Lepton EDA/lepton-netlist ~A~A.~A (git: ~A)\n"
-                                     'prepend 'dotted 'date 'git7)))
-    (if output-to-log?
-        (log! 'message version-msg)
-        (begin
-          (display version-msg)
-          (display (lepton-version-ref 'copyright))))))
-
 
 ;;----------------------------------------------------------------------
 ;; The below functions added by SDB in Sept 2003 to support command-line flag
@@ -984,7 +968,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   )
 
   ( when opt-version
-    ( lepton-netlist-version )
+    ( display-lepton-version #:print-name )
     ( primitive-exit 0 )
   )
 

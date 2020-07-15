@@ -80,6 +80,7 @@ exec @GUILE@ -s "$0" "$@"
                               (geda deprecated)
                               (lepton library)
                               (lepton log)
+                              (lepton version)
                               (netlist)))
 
 ;;; Run netlister in new toplevel environment.
@@ -88,5 +89,5 @@ exec @GUILE@ -s "$0" "$@"
     ;; Init log domain and create log file right away even if
     ;; logging is enabled.
     (init-log "netlist")
-    (lepton-netlist-version 'log)
+    (display-lepton-version #:print-name #t #:log #t)
     (main)))
