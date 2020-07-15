@@ -32,8 +32,8 @@ exec @GUILE@ -s "$0" "$@"
 
 (primitive-eval '(use-modules (lepton color-map)
                               (lepton log)
-                              (schematic core gettext)
-                              (schematic version)))
+                              (lepton version)
+                              (schematic core gettext)))
 
 
 (define libgtk (dynamic-link "libgtk-x11-2.0"))
@@ -296,7 +296,8 @@ Lepton EDA homepage: ~S\n")
                (usage)))
      (option '(#\V "version") #f #f
              (lambda (opt name arg seeds)
-               (print-lepton-schematic-version 'stdout))))
+               (display-lepton-version #:print-name #t)
+               (primitive-exit 0))))
     (lambda (opt name arg seeds)
       (format #t
               (G_ "ERROR: Unknown option ~A.
@@ -318,7 +319,7 @@ Run `~A --help' for more information.\n")
 
 ;;; Init logging.
 (init-log "schematic")
-(print-lepton-schematic-version)
+(display-lepton-version #:print-name #t #:log #t)
 
 ;;; Precompilation.
 (if (precompile-mode)

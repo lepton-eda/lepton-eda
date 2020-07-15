@@ -968,7 +968,7 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   )
 
   ( when opt-version
-    ( display-lepton-version #:print-name )
+    ( display-lepton-version #:print-name #t )
     ( primitive-exit 0 )
   )
 

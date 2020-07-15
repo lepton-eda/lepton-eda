@@ -82,18 +82,6 @@ exec @GUILE@ -s "$0" "$@"
                               (lepton rc)
                               (lepton version)))
 
-(define* (lepton-attrib-version #:optional stdout)
-  "Print lepton-attrib version."
-  (let ((version-message (lepton-version "Lepton EDA/lepton-attrib ~A~A.~A (git: ~A)\n"
-                                         'prepend 'dotted 'date 'git7)))
-    (if stdout
-        (begin
-          (display version-message)
-          (display (lepton-version-ref 'copyright))
-          (primitive-exit 0))
-        (log! 'message version-message))))
-
-
 (define (usage)
   (format #t
           (G_ "Usage: ~A [OPTIONS] filename1 ... filenameN
@@ -155,7 +143,7 @@ Lepton EDA homepage: ~S
 
 ;;; Init logging.
 (init-log "attrib")
-(lepton-attrib-version)
+(display-lepton-version #:print-name #t #:log #t)
 
 
 (let* ((option-spec '((help (single-char #\h))
@@ -170,7 +158,9 @@ Lepton EDA homepage: ~S
 
   (when help (usage))
   ;; Output version to stdout and exit, if requested.
-  (when version (lepton-attrib-version 'stdout))
+  (when version
+    (display-lepton-version #:print-name #t)
+    (primitive-exit 0))
   (when verbose? (set-verbose-mode!))
 
   (receive (readable-files unreadable-files)

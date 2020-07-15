@@ -56,11 +56,6 @@ Lepton EDA homepage: <~A>
   (primitive-exit 0))
 
 
-(define (lepton-symcheck-version)
-  (format #t "~a~%" (lepton-version))
-  (primitive-exit 0))
-
-
 ;;; Reads file NAME and outputs a page named NAME
 (define (file->page name)
   (with-input-from-file name
@@ -91,8 +86,9 @@ Run `~A --help' for more information.\n")
         (help (symcheck-option-ref 'help))
         (version (symcheck-option-ref 'version))
         (interactive (symcheck-option-ref 'interactive)))
-    (if version
-        (lepton-symcheck-version))
+    (when version
+      (display-lepton-version #:print-name #t)
+      (primitive-exit 0))
     (if help
         (usage))
 
