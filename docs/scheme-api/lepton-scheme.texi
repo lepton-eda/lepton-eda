@@ -2259,10 +2259,10 @@ the above symbol list.
 For example, you can use @samp{(lepton-version-ref 'copyright)} to get
 copyright info of the library.
 
-@example
+@lisp
 (lepton-version-ref 'git7)
-=> "88acbbd"
-@end example
+@result{} "88acbbd"
+@end lisp
 @end defun
 
 @defun lepton-version-data [element-list]
@@ -2272,10 +2272,10 @@ Returns a list of strings corresponding to the above symbol list
 @var{element-list} can be specified to retrieve any number of the data
 strings in any order.
 
-@example
+@lisp
 (lepton-version-data 'dotted 'git7)
-=> ("1.9.11" "88acbbd")
-@end example
+@result{} ("1.9.11" "88acbbd")
+@end lisp
 @end defun
 
 @defun lepton-version [format-string . format-args]
@@ -2285,12 +2285,12 @@ currently in use.
 If the optional @var{format-string} is specified, it is interpreted as
 a format string, with @var{format-args} as its parameters.
 
-@example
+@lisp
 (lepton-version)
-=> "Lepton EDA 1.9.11.20200604 (git: 88acbbd)"
+@result{} "Lepton EDA 1.9.11.20200604 (git: 88acbbd)"
 (lepton-version "lepton-netlist ~A" 'dotted)
-=> "lepton-netlist 1.9.11"
-@end example
+@result{} "lepton-netlist 1.9.11"
+@end lisp
 @end defun
 
 @node lepton-schematic API Reference
