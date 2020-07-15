@@ -56,4 +56,38 @@
                             'copyright)
   (string-join (lepton-version-data) " " 'infix))
 
+;;; Tests for display-lepton-version
+(let ((version-prefix "Lepton EDA")
+      (version-display (with-output-to-string display-lepton-version))
+      (version-log
+       (with-output-to-string
+         (lambda ()
+           (display-lepton-version #:log #t))))
+      (version-copyright
+       (with-output-to-string
+         (lambda ()
+           (display-lepton-version #:copyright #t))))
+      (version-print-name
+       (with-output-to-string
+         (lambda ()
+           (display-lepton-version #:print-name #t))))
+      (version-copyright-print-name
+       (with-output-to-string
+         (lambda ()
+           (display-lepton-version #:copyright #t #:print-name #t)))))
+
+  (test-assert (string? version-display))
+  (test-assert (string? version-log))
+  (test-assert (string? version-copyright))
+  (test-assert (string? version-print-name))
+  (test-assert (string-null? version-log))
+  (test-assert (string> version-copyright version-display))
+  (test-assert (string> version-print-name version-display))
+  (test-assert (string> version-copyright-print-name version-copyright))
+  (test-assert (string> version-copyright-print-name version-print-name))
+  (test-assert (string-prefix? version-prefix version-display))
+  (test-assert (string-prefix? version-prefix version-copyright))
+  (test-assert (string-prefix? version-prefix version-print-name))
+  (test-assert (string-prefix? version-prefix version-copyright-print-name)))
+
 (test-end "lepton-version")
