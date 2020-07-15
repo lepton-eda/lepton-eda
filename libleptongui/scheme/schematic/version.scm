@@ -17,8 +17,6 @@
 
 
 (define-module (schematic version)
-  #:use-module (ice-9 match)
-
   #:use-module (lepton log)
   #:use-module (lepton version)
   #:use-module (schematic core gettext)
