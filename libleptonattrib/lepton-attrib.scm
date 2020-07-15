@@ -24,7 +24,6 @@ exec @GUILE@ -s "$0" "$@"
 
 
 (use-modules (ice-9 getopt-long)
-             (ice-9 match)
              (ice-9 receive)
              (srfi srfi-1)
              (system foreign))
