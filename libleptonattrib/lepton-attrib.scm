@@ -159,7 +159,7 @@ Lepton EDA homepage: ~S
   (when help (usage))
   ;; Output version to stdout and exit, if requested.
   (when version
-    (display-lepton-version #:print-name #t)
+    (display-lepton-version #:print-name #t #:copyright #t)
     (primitive-exit 0))
   (when verbose? (set-verbose-mode!))
 

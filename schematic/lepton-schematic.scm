@@ -296,7 +296,7 @@ Lepton EDA homepage: ~S\n")
                (usage)))
      (option '(#\V "version") #f #f
              (lambda (opt name arg seeds)
-               (display-lepton-version #:print-name #t)
+               (display-lepton-version #:print-name #t #:copyright #t)
                (primitive-exit 0))))
     (lambda (opt name arg seeds)
       (format #t

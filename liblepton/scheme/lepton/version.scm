@@ -110,12 +110,16 @@ symbols as defined for lepton-version-data."
              (lepton-version-data 'prepend 'dotted 'date 'git7))
       (~lepton-version fmt args)))
 
-(define* (display-lepton-version #:key (print-name #f) (log #f))
-  "Output version and copyright information to the current output
-port or log. The optional keyword PRINT-NAME specifies if
-program's basename should be output along with other information.
-The optional keyword LOG specifies if the output should go to log
-without copyright information.  Both keywords are #f by default."
+(define* (display-lepton-version #:key
+                                 (print-name #f)
+                                 (log #f)
+                                 (copyright #f))
+  "Output Lepton tool version to the current output port or
+log. The optional keyword PRINT-NAME specifies if program's
+basename should be output along with other information.  The
+optional keyword LOG specifies if the output should go to log.
+The optional keyword COPYRIGHT enables output of copyright
+information.  All keywords are set to #f by default."
   (define program-basename
     (basename (car (program-arguments))))
 
@@ -131,10 +135,13 @@ without copyright information.  Both keywords are #f by default."
                     'prepend 'dotted 'date 'git7))
 
   (define version-message
-    (string-append version-prefix " " version-suffix))
+    (string-append version-prefix
+                   " "
+                   version-suffix
+                   (if copyright
+                       (lepton-version-ref 'copyright)
+                       "")))
 
   (if log
       (log! 'message version-message)
-      (begin
-        (display version-message)
-        (display (lepton-version-ref 'copyright)))))
+      (display version-message)))
