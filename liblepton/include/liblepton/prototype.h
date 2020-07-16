@@ -258,6 +258,4 @@ lepton_version_url ();
 const char*
 lepton_version_copyright ();
 
-char* lepton_version_message();
-
 G_END_DECLS
