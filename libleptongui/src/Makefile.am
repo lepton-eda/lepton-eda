@@ -73,6 +73,7 @@ libleptongui_la_SOURCES = \
 	o_slot.c \
 	o_text.c \
 	o_undo.c \
+	signals.c \
 	s_stretch.c \
 	schematic_hierarchy.c \
 	slot_edit_dialog.c \

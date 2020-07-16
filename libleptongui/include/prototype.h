@@ -72,6 +72,13 @@ lepton_schematic_run (gpointer activate);
 gpointer
 lepton_schematic_app ();
 
+/* signals.c */
+void
+schematic_signal_connect (gpointer instance,
+                          const char *detailed_signal,
+                          GCallback c_handler,
+                          gpointer data);
+
 /* i_basic.c */
 void i_action_start(GschemToplevel *w_current);
 void i_action_stop(GschemToplevel *w_current);
