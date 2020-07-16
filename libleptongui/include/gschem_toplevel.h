@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
+G_BEGIN_DECLS
 
 /* Temporary cast until GschemToplevel becomes a class */
 #define GSCHEM_TOPLEVEL(ptr) ((GschemToplevel*)(ptr))
@@ -296,3 +297,5 @@ gschem_toplevel_page_content_changed (GschemToplevel *w_current, PAGE *page);
 
 gboolean
 gschem_toplevel_get_show_hidden_text (GschemToplevel *w_current);
+
+G_END_DECLS
