@@ -1,0 +1,55 @@
+\input texinfo
+@c -*-texinfo-*-
+@c %**start of header
+@setfilename lepton-manual.info
+@include version.texi
+@documentencoding UTF-8
+@settitle Lepton EDA Reference Manual @value{VERSION}
+@c %**end of header
+
+@copying
+This manual documents Lepton EDA version @value{VERSION}.
+
+Copyright @copyright{} 2020 Lepton Contributors.
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled ``GNU Free
+Documentation License.''
+@end copying
+
+@titlepage
+@title Lepton EDA Reference Manual
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@c Output contents.
+@contents
+
+@ifnottex
+@node Top
+@top Lepton EDA Reference Manual
+@end ifnottex
+
+@menu
+* Overview:: Overview of program components.
+* Index::
+@end menu
+
+@node Overview
+@chapter Overview
+@cindex overview
+
+Lepton EDA suite is a set of tools that provide schematic capture,
+netlisting and export of schematics into several formats, which, in
+turn, allows simulation via third party tools and producing PCBs.
+
+@node Index
+@unnumbered Index
+@printindex cp
+
+@bye

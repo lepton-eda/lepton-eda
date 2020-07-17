@@ -281,6 +281,7 @@ AC_CONFIG_FILES([Makefile
 
                  docs/Makefile
                  docs/changelogs/Makefile
+                 docs/manual/Makefile
                  docs/scheme-api/Makefile
                  docs/toplevel/Makefile
                  docs/toplevel/gedadocs.html
