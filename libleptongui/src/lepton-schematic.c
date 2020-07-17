@@ -135,8 +135,6 @@ main_prog (SCM file_list_s)
   SCM list_s;
   SCM element_s;
 
-  cwd = g_get_current_dir();
-
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
   /* Set up atexit handlers */
@@ -160,6 +158,8 @@ main_prog (SCM file_list_s)
 #ifdef HAVE_LIBSTROKE
   x_stroke_init ();
 #endif /* HAVE_LIBSTROKE */
+
+  cwd = g_get_current_dir();
 
   for (list_s = file_list_s;
        !scm_is_null (list_s);
