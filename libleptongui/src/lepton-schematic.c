@@ -51,34 +51,6 @@ set_quiet_mode () {
 }
 
 
-typedef struct {
-  gschem_atexit_func func;
-  gpointer arg;
-} gschem_atexit_struct;
-
-static GList *exit_functions = NULL;
-
-/*! \brief Register a function to be called on program exit
- *
- *  \par Function Description
- *  This function registers a function to be called on
- *  program exit. Multiple functions will be executed in
- *  the order they are registered.
- *
- *  \param [in] func a pointer to the function to be registered
- *  \param [in] data an arbitrary argument provided to the function
- *                   when it is called
- */
-void gschem_atexit(gschem_atexit_func func, gpointer data)
-{
-  gschem_atexit_struct *p;
-
-  p = g_new(gschem_atexit_struct, 1);
-  p->func = func;
-  p->arg = data;
-  exit_functions = g_list_append(exit_functions, p);
-}
-
 /*! \brief Cleanup gSchem on exit.
  *  \par Function Description
  *  This function cleans up all memory objects allocated during the
@@ -86,19 +58,7 @@ void gschem_atexit(gschem_atexit_func func, gpointer data)
  */
 void gschem_quit(void)
 {
-  GList *list;
-  gschem_atexit_struct *p;
-
-  /* Call all registered functions in order */
-  list = exit_functions;
-  while(list != NULL) {
-    p = (gschem_atexit_struct *) list->data;
-    p->func(p->arg);
-    g_free(p);
-    list = g_list_next(list);
-  }
-  g_list_free(exit_functions);
-
+  i_vars_atexit_save_cache_config (NULL);
   s_clib_free();
   s_menu_free();
   s_attrib_free();
@@ -136,9 +96,6 @@ main_prog (SCM file_list_s)
   SCM element_s;
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-
-  /* Set up atexit handlers */
-  gschem_atexit (i_vars_atexit_save_cache_config, NULL);
 
   /* Parse custom GTK resource files: */
   g_rc_parse_gtkrc();
