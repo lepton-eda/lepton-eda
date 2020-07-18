@@ -35,23 +35,8 @@ exec @GUILE@ -s "$0" "$@"
                               (lepton log)
                               (lepton version)
                               (schematic core gettext)
-                              (schematic ffi)))
-
-
-(define libgtk (dynamic-link "libgtk-x11-2.0"))
-
-(define gtk-init
-  (pointer->procedure
-   void
-   (dynamic-func "gtk_init" libgtk)
-   (list '* '*)))
-
-(define gtk-main
-  (pointer->procedure
-   void
-   (dynamic-func "gtk_main" libgtk)
-   '()))
-
+                              (schematic ffi)
+                              (schematic ffi gtk)))
 
 (define register-funcs
   (pointer->procedure
