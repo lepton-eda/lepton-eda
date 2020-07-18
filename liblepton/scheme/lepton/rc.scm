@@ -23,6 +23,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton eval)
+  #:use-module (lepton ffi)
   #:use-module (lepton file-system)
   #:use-module (lepton os)
 
@@ -34,8 +35,6 @@
             load-rc-from-sys-config-dirs
             parse-rc
             process-gafrc))
-
-(define liblepton (dynamic-link (or (getenv "LIBLEPTON") "liblepton")))
 
 (define path-sep file-name-separator-string)
 
