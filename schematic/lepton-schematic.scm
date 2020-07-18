@@ -34,11 +34,11 @@ exec @GUILE@ -s "$0" "$@"
                               (lepton eval)
                               (lepton log)
                               (lepton version)
-                              (schematic core gettext)))
+                              (schematic core gettext)
+                              (schematic ffi)))
 
 
 (define libgtk (dynamic-link "libgtk-x11-2.0"))
-(define libleptongui (dynamic-link "libleptongui"))
 
 (define gtk-init
   (pointer->procedure

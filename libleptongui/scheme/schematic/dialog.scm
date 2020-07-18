@@ -20,13 +20,13 @@
 (define-module (schematic dialog)
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
+
   #:use-module (lepton log)
+  #:use-module (schematic ffi)
 
   #:export (schematic-message-dialog
             schematic-confirm-dialog
             schematic-fileselect-dialog))
-
-(define libleptongui (dynamic-link "libleptongui"))
 
 (define generic-msg-dialog
   (pointer->procedure

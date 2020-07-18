@@ -16,24 +16,10 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-;;; Procedures for working with menus.
-
-(define-module (schematic menu)
+(define-module (schematic ffi)
   #:use-module (system foreign)
 
-  #:use-module (schematic ffi)
+  #:export (libleptongui))
 
-  #:export (add-menu))
-
-(define add-menu-entry!
-  (pointer->procedure
-   int
-   (dynamic-func "s_menu_add_entry" libleptongui)
-   (list '* '*)))
-
-(define (add-menu name items)
-  (and (string? name)
-       (list? items)
-       (add-menu-entry! (string->pointer name)
-                        (scm->pointer items))
-       #t))
+(define libleptongui
+  (dynamic-link (or (getenv "LIBLEPTONGUI") "libleptongui")))

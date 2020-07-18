@@ -25,6 +25,7 @@
   #:use-module (lepton log)
   #:use-module (schematic core attrib)
   #:use-module (schematic core gettext)
+  #:use-module (schematic ffi)
 
   #:export (attribute-name
             init-schematic-attribs!))
@@ -45,8 +46,6 @@
 ;; See also active-page in the (schematic window) module.
 (define-public add-attrib! %add-attrib!)
 
-
-(define libleptongui (dynamic-link "libleptongui"))
 
 (define s_attrib_uniq
   (let ((proc (delay

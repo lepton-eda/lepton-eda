@@ -24,6 +24,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/builtins.scm \
 	schematic/core/gettext.scm \
 	schematic/dialog.scm \
+	schematic/ffi.scm \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
 	schematic/hook.scm \
