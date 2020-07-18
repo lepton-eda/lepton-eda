@@ -19,14 +19,14 @@
 
 (define-module (lepton version)
   #:use-module (system foreign)
+
+  #:use-module (lepton ffi)
   #:use-module (lepton log)
 
   #:export (display-lepton-version
             lepton-version
             lepton-version-data
             lepton-version-ref))
-
-(define liblepton (dynamic-link (or (getenv "LIBLEPTON") "liblepton")))
 
 (define-syntax-rule (define-getter <name>)
   (define <name>

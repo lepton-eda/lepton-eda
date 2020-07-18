@@ -36,6 +36,7 @@
 
   #:use-module (lepton core gettext)
   #:use-module (lepton core rc)
+  #:use-module (lepton ffi)
   #:use-module (lepton log)
   #:use-module (lepton os)
 
@@ -57,8 +58,6 @@
   symbol-library?
   (name symbol-library-name set-symbol-library-name!)
   (path symbol-library-path set-symbol-library-path!))
-
-(define liblepton (dynamic-link "liblepton"))
 
 (define init-clib
   (pointer->procedure

@@ -22,6 +22,8 @@
   #:use-module (ice-9 format)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi)
+
   #:export (init-log
             log!))
 
@@ -30,8 +32,6 @@
 ;; ================================================================
 
 (define libglib (dynamic-link "libglib-2.0"))
-(define liblepton (dynamic-link (or (getenv "LIBLEPTON")
-                                    "liblepton")))
 
 (define g_log
   (let ((proc (delay (pointer->procedure

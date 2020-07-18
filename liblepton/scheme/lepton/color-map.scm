@@ -25,6 +25,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton core gettext)
+  #:use-module (lepton ffi)
   #:use-module (lepton log)
 
   #:export (%color-name-map
@@ -62,8 +63,6 @@
 (define %color-name-reverse-map
   (map (lambda (x) (cons (cdr x) (car x))) %color-name-map))
 
-
-(define liblepton (dynamic-link "liblepton"))
 
 (define colors-count
   (pointer->procedure
