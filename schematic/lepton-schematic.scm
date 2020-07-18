@@ -32,7 +32,9 @@ exec @GUILE@ -s "$0" "$@"
 
 (primitive-eval '(use-modules (lepton color-map)
                               (lepton eval)
+                              (lepton file-system)
                               (lepton log)
+                              (lepton os)
                               (lepton version)
                               (schematic core gettext)
                               (schematic ffi)
@@ -265,6 +267,21 @@ Run `~A --help' for more information.\n")
     '())))
 
 
+;;; Load GTK resource files.
+;;; Search system and user configuration directories for
+;;; lepton-gtkrc files and load them in sequence.
+(define (parse-gtkrc)
+  (let loop ((dirs (append (sys-config-dirs)
+                           (list (user-config-dir)))))
+    (or (null? dirs)
+        (let ((filename (string-append (car dirs)
+                                       file-name-separator-string
+                                       "lepton-gtkrc")))
+          (when (file-readable? filename)
+            (gtk_rc_parse filename))
+          (loop (cdr dirs))))))
+
+
 (define main
   (pointer->procedure
    '*
@@ -297,6 +314,9 @@ Run `~A --help' for more information.\n")
 ;;; files).
 (init-color)
 (init-undo*)
+
+;;; Parse custom GTK resource files.
+(parse-gtkrc)
 
 (let* ((schematics (parse-commandline))
        ;; Foreign pointer to w_current.

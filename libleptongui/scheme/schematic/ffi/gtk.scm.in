@@ -20,7 +20,8 @@
   #:use-module (system foreign)
 
   #:export (gtk_init
-            gtk_main))
+            gtk_main
+            gtk_rc_parse))
 
 (define libgtk (dynamic-link "@LIBGTK@"))
 
@@ -35,3 +36,11 @@
    void
    (dynamic-func "gtk_main" libgtk)
    '()))
+
+(define (gtk_rc_parse filename)
+  (define proc
+    (delay (pointer->procedure
+            void
+            (dynamic-func "gtk_rc_parse" libgtk)
+            (list '*))))
+  ((force proc) (string->pointer filename)))

@@ -97,9 +97,6 @@ main_prog (SCM file_list_s)
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
-  /* Parse custom GTK resource files: */
-  g_rc_parse_gtkrc();
-
   /* Set default icon theme and make sure we can find our own icons */
   x_window_set_default_icon();
   x_window_init_icons ();
