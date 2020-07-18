@@ -37,7 +37,7 @@
   (let ((proc (delay (pointer->procedure
                       void
                       (dynamic-func "g_log" libglib)
-                      (list '* int '*)))))
+                      (list '* int '* '*)))))
     (force proc)))
 
 (define-syntax-rule (define-getter <name>)
@@ -80,7 +80,7 @@
              (string->pointer domain)
              %null-pointer)
          (decode-log-level level)
-         ;; (string->pointer "%s")
+         (string->pointer "%s")
          (string->pointer message)))
 
 #|
