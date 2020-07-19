@@ -97,10 +97,6 @@ main_prog (SCM file_list_s)
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
 
-  /* Set default icon theme and make sure we can find our own icons */
-  x_window_set_default_icon();
-  x_window_init_icons ();
-
   /* Create a new window and associated TOPLEVEL object: */
   w_current = x_window_new ();
 
