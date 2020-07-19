@@ -21,7 +21,10 @@
 
   #:export (gtk_init
             gtk_main
-            gtk_rc_parse))
+            gtk_rc_parse
+            gtk_icon_theme_get_default
+            gtk_icon_theme_append_search_path
+            gtk_window_set_default_icon_name))
 
 (define libgtk (dynamic-link "@LIBGTK@"))
 
@@ -44,3 +47,33 @@
             (dynamic-func "gtk_rc_parse" libgtk)
             (list '*))))
   ((force proc) (string->pointer filename)))
+
+
+(define (gtk_window_set_default_icon_name name)
+  (let ((proc (delay
+                (pointer->procedure
+                 void
+                 (dynamic-func "gtk_window_set_default_icon_name"
+                               libgtk)
+                 (list '*)))))
+    ((force proc) (string->pointer name))))
+
+
+(define (gtk_icon_theme_get_default)
+  (define proc
+    (delay
+      (pointer->procedure
+       '*
+       (dynamic-func "gtk_icon_theme_get_default" libgtk)
+       '())))
+  ((force proc)))
+
+
+(define (gtk_icon_theme_append_search_path icon-theme path)
+  (define proc
+    (delay
+      (pointer->procedure
+       void
+       (dynamic-func "gtk_icon_theme_append_search_path" libgtk)
+       (list '* '*))))
+  ((force proc) icon-theme (string->pointer path)))

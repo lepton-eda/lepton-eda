@@ -282,6 +282,34 @@ Run `~A --help' for more information.\n")
           (loop (cdr dirs))))))
 
 
+
+
+;;; Setup default icon for GTK windows
+;;; Sets the default window icon by name, to be found in the
+;;; current icon theme.
+(define (set-window-default-icon)
+  (define %theme-icon-name "lepton-schematic")
+
+  (gtk_window_set_default_icon_name %theme-icon-name))
+
+;;; Setup icon search paths.
+;;; Add the icons installed by the program to the search path for
+;;; the default icon theme, so that they can be automatically
+;;; found by GTK.
+(define (init-window-icons)
+  ;; FIXME: this shouldn't be necessary, Lepton should just
+  ;; install its icons in the system hicolor icon theme and
+  ;; they'll be picked up automatically.
+  (let loop ((sys-dirs (sys-data-dirs)))
+    (or (null? sys-dirs)
+        (let ((icon-dir (string-append (car sys-dirs)
+                                       file-name-separator-string
+                                       "icons")))
+          (gtk_icon_theme_append_search_path (gtk_icon_theme_get_default)
+                                             icon-dir)
+          (loop (cdr sys-dirs))))))
+
+
 (define main
   (pointer->procedure
    '*
@@ -317,6 +345,11 @@ Run `~A --help' for more information.\n")
 
 ;;; Parse custom GTK resource files.
 (parse-gtkrc)
+
+;;; Set default icon theme and make sure we can find our own
+;;; icons.
+(set-window-default-icon)
+(init-window-icons)
 
 (let* ((schematics (parse-commandline))
        ;; Foreign pointer to w_current.

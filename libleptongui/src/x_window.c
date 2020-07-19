@@ -23,10 +23,6 @@
 #include "gschem.h"
 
 
-#define GSCHEM_THEME_ICON_NAME "lepton-schematic"
-
-
-
 static void
 create_menubar (GschemToplevel *w_current, GtkWidget *main_box);
 
@@ -972,40 +968,6 @@ x_window_close_page_impl (GschemToplevel *w_current, PAGE *page)
 
 } /* x_window_close_page_impl() */
 
-
-
-/*! \brief Setup default icon for GTK windows
- *
- *  \par Function Description
- *  Sets the default window icon by name, to be found in the current icon
- *  theme. The name used is \#defined above as GSCHEM_THEME_ICON_NAME.
- */
-void x_window_set_default_icon( void )
-{
-  gtk_window_set_default_icon_name( GSCHEM_THEME_ICON_NAME );
-}
-
-/*! \brief Setup icon search paths.
- * \par Function Description
- * Add the icons installed by gschem to the search path for the
- * default icon theme, so that they can be automatically found by GTK.
- */
-void
-x_window_init_icons (void)
-{
-	/* System icons */
-	/* FIXME this shouldn't be necessary; gschem should just install its
-	 * icons in the system hicolor icon theme and they'll be picked up
-	 * automatically. */
-	const gchar * const * sys_dirs = eda_get_system_data_dirs();
-	for (gint i = 0; sys_dirs[i]; ++i) {
-		gchar *icon_dir;
-		icon_dir = g_build_filename (sys_dirs[i], "icons", NULL);
-		gtk_icon_theme_append_search_path (gtk_icon_theme_get_default(),
-		                                   icon_dir);
-		g_free (icon_dir);
-	}
-}
 
 /*! \brief Creates and initializes a new lepton-schematic window.
  *
