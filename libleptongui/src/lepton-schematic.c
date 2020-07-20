@@ -100,9 +100,6 @@ main_prog (SCM file_list_s)
   /* Create a new window and associated TOPLEVEL object: */
   w_current = x_window_new ();
 
-  /* Enable rendering of placeholders */
-  set_render_placeholders();
-
   g_dynwind_window (w_current);
 
 #ifdef HAVE_LIBSTROKE
