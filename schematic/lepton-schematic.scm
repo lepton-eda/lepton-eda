@@ -310,6 +310,13 @@ Run `~A --help' for more information.\n")
           (loop (cdr sys-dirs))))))
 
 
+(define set_render_placeholders
+  (pointer->procedure
+   void
+   (dynamic-func "set_render_placeholders" libleptongui)
+   '()))
+
+
 (define main
   (pointer->procedure
    '*
@@ -350,6 +357,9 @@ Run `~A --help' for more information.\n")
 ;;; icons.
 (set-window-default-icon)
 (init-window-icons)
+
+;;; Enable rendering of placeholders.
+(set_render_placeholders)
 
 (let* ((schematics (parse-commandline))
        ;; Foreign pointer to w_current.
