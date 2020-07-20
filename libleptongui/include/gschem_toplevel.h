@@ -198,7 +198,6 @@ struct st_gschem_toplevel {
   int embed_component;    /* controls if component objects are embedded */
   int include_component;  /* controls if component objects are included */
   int scrollbars_flag;    /* controls if scrollbars are displayed */
-  int log_window;         /* controls if the log windows mapped on startup */
   int third_button;       /* controls what the third mouse button does */
   int third_button_cancel;/* controls if the third mouse button cancels actions */
   int middle_button;      /* controls what the third mouse button does */

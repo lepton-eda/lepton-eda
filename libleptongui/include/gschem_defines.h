@@ -96,10 +96,6 @@ typedef enum
 #define DOTS_GRID_VARIABLE_MODE 0
 #define DOTS_GRID_FIXED_MODE    1
 
-/* for log-window keyword */
-#define MAP_LATER		0
-#define MAP_ON_STARTUP		1
-
 /* mouse buttons actions */
 #define MOUSEBTN_DO_STROKE   0
 #define MOUSEBTN_DO_REPEAT   1

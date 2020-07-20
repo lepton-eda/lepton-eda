@@ -321,7 +321,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->embed_component = 0;
   w_current->include_component = 0;
   w_current->scrollbars_flag = 0;
-  w_current->log_window = 0;
   w_current->third_button = 0;
   w_current->third_button_cancel = TRUE;
   w_current->middle_button = 0;

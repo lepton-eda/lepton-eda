@@ -18,7 +18,14 @@
 (define-module (lepton ffi)
   #:use-module (system foreign)
 
-  #:export (liblepton))
+  #:export (liblepton
+            s_toplevel_page_current))
 
 (define liblepton
   (dynamic-link (or (getenv "LIBLEPTON") "@LIBLEPTON@")))
+
+(define s_toplevel_page_current
+  (pointer->procedure
+   '*
+   (dynamic-func "s_toplevel_page_current" liblepton)
+   (list '*)))
