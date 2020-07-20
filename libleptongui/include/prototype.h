@@ -165,8 +165,6 @@ void g_dynwind_window (GschemToplevel *w_current);
 void g_init_window ();
 /* lepton-schematic.c */
 void gschem_quit(void);
-GschemToplevel*
-main_prog (SCM file_list_s);
 void
 set_verbose_mode ();
 void

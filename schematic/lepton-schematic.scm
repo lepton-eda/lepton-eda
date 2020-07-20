@@ -31,7 +31,9 @@ exec @GUILE@ -s "$0" "$@"
                 "liblepton_init")
 
 (primitive-eval '(use-modules (lepton color-map)
+                              (lepton config)
                               (lepton eval)
+                              (lepton ffi)
                               (lepton file-system)
                               (lepton log)
                               (lepton os)
@@ -310,18 +312,96 @@ Run `~A --help' for more information.\n")
           (loop (cdr sys-dirs))))))
 
 
+(define g_dynwind_window
+  (pointer->procedure
+   void
+   (dynamic-func "g_dynwind_window" libleptongui)
+   (list '*)))
+
 (define set_render_placeholders
   (pointer->procedure
    void
    (dynamic-func "set_render_placeholders" libleptongui)
    '()))
 
-
-(define main
+(define x_window_new
   (pointer->procedure
    '*
-   (dynamic-func "main_prog" libleptongui)
+   (dynamic-func "x_window_new" libleptongui)
+   '()))
+
+(define x_window_set_current_page
+  (pointer->procedure
+   void
+   (dynamic-func "x_window_set_current_page" libleptongui)
+   (list '* '*)))
+
+(define x_window_open_page
+  (pointer->procedure
+   '*
+   (dynamic-func "x_window_open_page" libleptongui)
+   (list '* '*)))
+
+(define x_widgets_show_log
+  (pointer->procedure
+   void
+   (dynamic-func "x_widgets_show_log" libleptongui)
    (list '*)))
+
+(define (x_stroke_init)
+  (let ((func (delay (false-if-exception (dynamic-func "x_stroke_init"
+                                                       libleptongui)))))
+    (and (force func)
+         (let ((proc (delay (pointer->procedure void (force func) '()))))
+           ((force proc))))))
+
+(define gschem_toplevel_get_toplevel
+  (pointer->procedure
+   '*
+   (dynamic-func "gschem_toplevel_get_toplevel" libleptongui)
+   (list '*)))
+
+(define (main file-list)
+  ;; Create a new window and associated TOPLEVEL object:
+  (let ((window (x_window_new))
+        (cwd (getcwd)))
+    (let loop ((ls file-list))
+      (or (null? ls)
+          (let* ((element (car ls))
+                 (filename (if (absolute-file-name? element)
+                               ;; Path is already absolute so no
+                               ;; need to do any concat of cwd.
+                               element
+                               ;; Get absolute path.
+                               (string-append cwd
+                                              file-name-separator-string
+                                              element))))
+
+            ;; SDB notes: at this point the filename might be
+            ;; unnormalized, like /path/to/foo/../bar/baz.sch.
+            ;; Bad filenames will be normalized in f_open (called
+            ;; by x_window_open_page). This works for Linux and
+            ;; MINGW32.
+            (x_window_open_page window (string->pointer filename))
+            (loop (cdr ls)))))
+
+    ;; Update the window to show the current page:
+    (let* ((current-page
+            (s_toplevel_page_current (gschem_toplevel_get_toplevel window)))
+           (page (if (eq? current-page %null-pointer)
+                     (x_window_open_page window %null-pointer)
+                     current-page)))
+
+      (x_window_set_current_page window page))
+
+    ;; Open up log window on startup if requested in config.
+    (let ((cfg (path-config-context (getcwd))))
+      (when (string= (config-string cfg "schematic" "log-window")
+                     "startup")
+        (x_widgets_show_log window)))
+    ;; Return the new window.
+    window))
+
 
 ;;; Init logging.
 (init-log "schematic")
@@ -361,9 +441,12 @@ Run `~A --help' for more information.\n")
 ;;; Enable rendering of placeholders.
 (set_render_placeholders)
 
+;;; Init libstroke.
+(x_stroke_init)
+
 (let* ((schematics (parse-commandline))
        ;; Foreign pointer to w_current.
-       (window (main (scm->pointer schematics))))
+       (window (main schematics)))
 
   ;; %lepton-window is a fluid defined in C code, namely in
   ;; g_window.c.  When a new lepton-schematic window is created,

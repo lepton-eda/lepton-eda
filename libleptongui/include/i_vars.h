@@ -17,7 +17,6 @@ extern int default_print_orientation;
 extern int default_print_color;
 extern int default_width;
 extern int default_height;
-extern int default_log_window;
 extern int default_third_button;
 extern int default_third_button_cancel;
 extern int default_middle_button;

@@ -36,7 +36,6 @@ int   default_include_component = FALSE;
 int   default_snap_size = DEFAULT_SNAP_SIZE;
 
 int   default_scrollbars_flag = TRUE;
-int   default_log_window = MAP_ON_STARTUP;
 int   default_third_button = MOUSEBTN_DO_POPUP;
 int   default_third_button_cancel = TRUE;
 int   default_middle_button = MOUSEBTN_DO_PAN;
@@ -211,22 +210,6 @@ i_vars_set (GschemToplevel* w_current)
 
 
   w_current->include_component = default_include_component;
-
-
-  /* log-window:
-  */
-  const struct OptionStringInt vals_lw[] =
-  {
-    { "startup", MAP_ON_STARTUP },
-    { "later",   MAP_LATER      }
-  };
-
-  cfg_read_string2int ("schematic",
-                       "log-window",
-                       default_log_window,
-                       vals_lw,
-                       sizeof( vals_lw ) / sizeof( vals_lw[0] ),
-                       &w_current->log_window);
 
 
   /* third-button:
