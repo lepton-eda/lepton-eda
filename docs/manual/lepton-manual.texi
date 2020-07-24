@@ -150,6 +150,14 @@ bom_xref.sh---sorted formatted uppercase output of plain text BOM
 netlists.
 @end itemize
 
+@c @node Configuration system
+@c @chapter Configuration system
+@c @cindex config, configuration
+
+@c Legacy configuration system
+@c Add info on gschemrc, system-gschemrc, gafrc, system-gafrc, and
+@c settings that can be done in them.
+
 @node Index
 @unnumbered Index
 @printindex cp
