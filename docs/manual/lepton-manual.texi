@@ -39,6 +39,7 @@ Documentation License.''
 
 @menu
 * Overview:: Overview of program components.
+* lepton-netlist:: Lepton EDA netlister.
 * Index::
 @end menu
 
@@ -157,6 +158,101 @@ netlists.
 @c Legacy configuration system
 @c Add info on gschemrc, system-gschemrc, gafrc, system-gafrc, and
 @c settings that can be done in them.
+
+@node lepton-netlist
+@chapter Netlister
+@cindex lepton-netlist, netlist, netlister
+
+lepton-netlist is a Lepton netlister tool with command line interface.
+It can be used directly on command line or in Makefiles to automate
+your work.  This tool consists of a front-end and back-ends parts.
+The front-end is the program itself which creates some internal
+representation of schematic structure and does some post-processing.
+The back-ends use this information to output into various formats for
+use in other programs.  The user can write and use her custom back-end
+or use several already existing backends included in the Lepton EDA
+suite.
+
+Below you'll find the list of back-ends available in Lepton.
+
+@itemize
+@item
+allegro
+@item
+bae
+@item
+bom
+@item
+bom2
+@item
+calay
+@item
+cascade
+@item
+drc
+@item
+drc2
+@item
+eagle
+@item
+ewnet
+@item
+futurenet2
+@item
+geda
+@item
+gossip
+@item
+gsch2pcb
+@item
+liquidpcb
+@item
+makedepend
+@item
+mathematica
+@item
+maxascii
+@item
+osmond
+@item
+pads
+@item
+partslist1
+@item
+partslist2
+@item
+partslist3
+@item
+PCB
+@item
+pcbpins
+@item
+protelII
+@item
+redac
+@item
+spice
+@item
+spice-noqsi
+@item
+spice-sdb
+@item
+switcap
+@item
+systemc
+@item
+tango
+@item
+tEDAx
+@item
+vams
+@item
+verilog
+@item
+vhdl
+@item
+vipec
+@end itemize
 
 @node Index
 @unnumbered Index
