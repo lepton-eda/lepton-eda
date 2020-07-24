@@ -95,6 +95,59 @@ lepton-tragesym
 lepton-upcfg
 @end itemize
 
+The following contributed tools are not covered in this manual.
+Mostly, those are for working with proprietary, often obsolete,
+programs, so they are of limited use for most users.  Please see
+corresponding man pages for more information.
+
+@itemize
+@item
+convert_sym---convert a Viewlogic symbol/schematic to gEDA file
+format.
+@item
+gmk_sym---create rectangular symbols in gEDA file format from a text
+file.
+@item
+olib---OrCAD(tm) library part to gEDA .sym converter.
+@item
+sarlacc_schem---convert OrCAD SDT IV files to gEDA file format.
+@item
+smash_megafile---break a Viewlogic megafile into a million little
+pieces.
+@item
+gnet_hier_verilog.sh---generate a non-flattened hierarchical Verilog
+netlist.
+@item
+pads_backannotate---process PADS PowerPCB .eco files to backannotate
+changes to schematics in gEDA file format.
+@item
+sw2asc---converts a SWITCAP2 output file into ASCII data files that
+other tools can read.
+@item
+sch2eaglepos.sh---read a schematic in gEDA file format and attempt to
+extract the relative positions of the components in order to generate
+corresponding MOVE instructions for Eagle.
+@item
+sarlacc_sym---convert OrCAD text libraries to components in gEDA file
+format.
+@end itemize
+
+The following contributed scripts are not covered in this manual
+either.  They are pretty obsolete, non-documented, and usually do
+trivial things:
+
+@itemize
+@item
+gschupdate---update some deprecated attributes in old schematics (with
+version 20020527 or earlier).
+@item
+gsymupdate---update some deprecated attributes in old symbols (with
+version 20020527 or earlier).
+@item
+bom_xref.sh---sorted formatted uppercase output of plain text BOM
+netlists.
+@end itemize
+
 @node Index
 @unnumbered Index
 @printindex cp
