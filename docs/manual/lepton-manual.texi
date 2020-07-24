@@ -48,6 +48,53 @@ Lepton EDA suite is a set of tools that provide schematic capture,
 netlisting and export of schematics into several formats, which, in
 turn, allows simulation via third party tools and producing PCBs.
 
+Programs in the suite
+
+Lepton EDA suite includes tools as follows:
+
+@itemize
+@item
+lepton-schematic---the main GUI tool for schematic capture.
+@item
+lepton-attrib
+@item
+lepton-netlist---a tool for making netlists from command line
+@item
+lepton-cli---a CLI tool providing support of configuration, export, and shell.
+@item
+lepton-archive---project archivation utility
+@item
+lepton-tragesym---symbol generator
+@item
+lepton-sch2pcb
+@item
+lepton-cli
+@item
+lepton-embed
+@item
+lepton-netlist
+@item
+lepton-pcb_backannotate
+@item
+lepton-refdes_renum
+@item
+lepton-renum
+@item
+lepton-sch2pcb
+@item
+lepton-schdiff
+@item
+lepton-schematic
+@item
+lepton-symcheck
+@item
+lepton-symfix
+@item
+lepton-tragesym
+@item
+lepton-upcfg
+@end itemize
+
 @node Index
 @unnumbered Index
 @printindex cp
