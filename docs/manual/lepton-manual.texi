@@ -27,7 +27,7 @@ Documentation License.''
 @insertcopying
 @end titlepage
 
-@headings double
+@setchapternewpage odd
 
 @c Output contents.
 @contents
