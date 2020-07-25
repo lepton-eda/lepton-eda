@@ -35,6 +35,7 @@
   #:export (sys-doc-dir)
   #:export (user-doc-dir)
   #:export (show-wiki)
+  #:export (show-manual)
   #:export (show-component-documentation))
 
 
@@ -111,6 +112,14 @@ name as used on the live version of the wiki."
                                file-name-separator-string 'suffix)
                   (wiki-munge page)
                   ".html")))
+
+(define (show-manual)
+  "Launch a browser to display a main page of the offline version
+of the Lepton EDA Reference manual."
+  (doc-show-uri
+   (string-append "file://"
+                  (string-join (list (sys-doc-dir) "lepton-manual.html" "index.html")
+                               file-name-separator-string))))
 
 
 ;; Get the value of a named attribute.  Attached attributes are

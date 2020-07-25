@@ -520,9 +520,9 @@ found, shows a dialog with an error message."
 
 
 (define-action-public
-    (&help-manual #:label (G_ "Lepton EDA Manuals") #:icon "help-browser"
-     #:tooltip (G_ "View the front page of the Lepton EDA documentation in a browser."))
-  (show-wiki "geda:documentation"))
+    (&help-manual #:label (G_ "Lepton EDA Manual") #:icon "help-browser"
+     #:tooltip (G_ "View the main page of the Lepton EDA Reference Manual in a browser."))
+  (show-manual))
 
 
 (define-action-public
