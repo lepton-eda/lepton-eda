@@ -20,6 +20,11 @@ copy of the license is included in the section entitled ``GNU Free
 Documentation License.''
 @end copying
 
+@dircategory Engineering
+@direntry
+* Lepton EDA: (lepton-manual). Lepton EDA Reference Manual
+@end direntry
+
 @titlepage
 @title Lepton EDA Reference Manual
 @page
