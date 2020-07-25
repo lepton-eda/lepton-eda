@@ -65,8 +65,9 @@ Installation
 Dependencies
 ------------
 
-In order to compile gEDA from the distributed source archives, you
-*must* have the following tools and libraries installed:
+In order to compile Lepton EDA from the distributed source
+archives, you *must* have the following tools and libraries
+installed:
 
 - A C/C++ compiler and standard library (GCC/glibc are recommended).
 
@@ -105,17 +106,17 @@ The following tools and libraries are optional:
   <http://www.etla.net/libstroke/>
 
 - The `doxygen` API documentation tool.  This is required for
-  building the gEDA developer API documentation, not for the regular
-  user documentation.  <http://www.doxygen.nl>
+  building the Lepton developer API documentation, not for the
+  regular user documentation.  <http://www.doxygen.nl>
 
 - 'Inkscape' or 'ImageMagick' for svg to png or pdf conversion
-  This is required for building the gEDA developer API documentation,
+  This is required for building the Lepton developer API documentation,
   not for the regular user documentation.
   <http://inkscape.org/>
   <http://www.imagemagick.org/script/index.php>
 
 - 'Graphviz' for drawing directed graphs.
-  This is required for building the gEDA developer API documentation,
+  This is required for building the Lepton developer API documentation,
   not for the regular user documentation.
   <http://www.graphviz.org/>
 
@@ -152,7 +153,7 @@ First extract the archive to a sensible place:
     tar -xzvf lepton-eda-<version>.tar.gz && cd lepton-eda-<version>
 
 Run the configuration script.  You'll probably want to specify a
-custom directory to install gEDA to, for example:
+custom directory to install Lepton to, for example:
 
 
     ./configure --prefix=$HOME/lepton
@@ -190,7 +191,7 @@ tools *in addition to* the ones listed above:
   Note that on some distributions the TeX support for Texinfo is
   packaged separately.
 
-Once you have these installed, you need to clone the gEDA git
+Once you have these installed, you need to clone the Lepton git
 repository:
 
     git clone https://github.com/lepton-eda/lepton-eda.git
