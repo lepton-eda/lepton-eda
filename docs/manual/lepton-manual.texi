@@ -342,7 +342,9 @@ You can then proceed to configure and build Lepton as described above.
 
 @node lepton-netlist
 @chapter Netlister
-@cindex lepton-netlist, netlist, netlister
+@cindex lepton-netlist
+@cindex netlist
+@cindex netlister
 
 lepton-netlist is a Lepton netlister tool with command line interface.
 It can be used directly on command line or in Makefiles to automate
