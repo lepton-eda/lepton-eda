@@ -45,6 +45,7 @@ Documentation License.''
 @menu
 * Overview:: Overview of program components.
 * Installation:: Installation of the tool suite.
+* Configuration:: Configuration system.
 * lepton-netlist:: Lepton EDA netlister.
 * Index::
 @end menu
@@ -219,8 +220,10 @@ scanners.  The @command{flex} implementation is recommended.
 The @command{awk} tool for data processing.
 @url{http://www.gnu.org/software/gawk, GNU Awk} (@command{gawk}) is
 recommended.
-@item
+@end itemize
+
 The following tools and libraries are @emph{highly recommended}:
+@itemize
 @item
 @url{http://www.gnu.org/software/groff, GNU troff} (@command{groff}).
 @item
@@ -332,13 +335,1438 @@ autoreconf -ivf
 
 You can then proceed to configure and build Lepton as described above.
 
-@c @node Configuration system
-@c @chapter Configuration system
-@c @cindex config, configuration
+@node Configuration
+@chapter Configuration system
+@cindex config
+@cindex configuration
 
-@c Legacy configuration system
-@c Add info on gschemrc, system-gschemrc, gafrc, system-gafrc, and
-@c settings that can be done in them.
+@c Some aliases and macros.
+@alias attrib=var
+@alias cfgkey=code
+@alias cfgtype=samp
+@alias cfgval=samp
+
+@macro cfggroup{name}
+@code{[\name\]}
+@end macro
+
+@macro since{version}
+Since @emph{\version\}.
+@end macro
+
+@macro menuentry{menu, item}
+@samp{\menu\}->@samp{\item\}
+@end macro
+
+This chapter describes configuration system of the Lepton EDA suite.
+
+@menu
+* Introduction:: Introductory information.
+* Legacy configuration:: Legacy configuration files still in use.
+* New configuration system:: Overview of the new configuration system.
+* Tools configuration:: Configuration settings for particular Lepton tools.
+* Deprecated settings:: Configuration settings no longer used.
+* Resources:: Other useful resources.
+@end menu
+
+
+@node Introduction
+@section Introduction
+
+Currently, there are two types of configuration files:
+@enumerate
+@item
+Traditionally, Lepton EDA and gEDA settings were stored as Scheme
+source code files, and some of them are still in use: @file{gafrc} and
+@file{gschemrc} (@xref{Legacy configuration, Legacy configuration
+settings}).  The work is underway to convert them to the new
+configuration system.
+@item
+New settings are stored in @file{*.conf} ini-like text files and can
+be accessed using the @code{lepton-cli config} command.
+@end enumerate
+
+
+@emph{Important}:
+
+Starting with Lepton EDA release
+@url{https://github.com/lepton-eda/lepton-eda/releases/tag/1.9.10-20200319, 1.9.10}:
+@itemize
+@item
+Most of the @file{gafrc} and @file{gschemrc} options are
+[deprecated](Deprecated-Settings#user-content-deprecated-settings) and
+replaced with new configuration parameters.  @xref{Legacy
+configuration, Legacy configuration settings} for remaining options.
+@item
+All the
+[*gnetlistrc* options](https://github.com/graahnul-grom/lepton-eda/wiki/Deprecated-Settings#user-content-deprecated-gnetlistrc)
+are deprecated. Please stop using this legacy configuration file.
+@item
+Legacy names for @file{*.conf} configuration files are no longer used:
+instead of @file{geda.conf}, @file{geda-user.conf}, and
+@file{geda-system.conf}, configuration files are named @file{lepton.conf},
+@file{lepton-user.conf} and @file{lepton-system.conf}, respectively.  The
+@url{https://graahnul-grom.github.io/ref-man/lepton-upcfg.html, lepton-upcfg(1)}
+utility can upgrade your settings stored in @file{geda*.conf} files.
+@item
+The directory for user configuration files is
+@file{$XDG_CONFIG_HOME/lepton-eda/} (usually,
+@file{~/.config/lepton-eda/}).
+@item
+The directory @file{~/.gEDA/} is not used anymore.
+@end itemize
+
+@quotation Note
+Recently added options and groups of options may be marked with
+``@since{release}'', designating their introduction in the specified
+Lepton EDA @code{release}, for example: ``@since{1.9.10}'' =>
+available since Lepton EDA 1.9.10.
+@end quotation
+
+@c * [Deprecated settings](Deprecated-Settings#user-content-deprecated-settings)
+@c     * [gafrc](Deprecated-Settings#user-content-deprecated-gafrc)
+@c     * [gnetlistrc](Deprecated-Settings#user-content-deprecated-gnetlistrc)
+@c     * [gschemrc](Deprecated-Settings#user-content-deprecated-gschemrc)
+@c * [Obsolete settings](Obsolete-Settings)
+@c     * [gafrc](Obsolete-Settings#user-content-obsolete-gafrc-file-options)
+@c     * [gnetlistrc](Obsolete-Settings#user-content-obsolete-gnetlistrc-file-options)
+@c     * [gschemrc](Obsolete-Settings#user-content-obsolete-gschemrc-file-options)
+
+
+
+@node Legacy configuration
+@section Legacy configuration files still in use
+
+@node gafrc
+@subsection @file{gafrc}
+
+Configuration file used by various tools in the Lepton EDA suite.
+
+Files named @file{gafrc} are read from @file{~/.config/lepton-eda/}
+(user configuration) and from a directory where you run the lepton-eda
+tools (configuration for current directory). Expressions in this file
+control the following settings:
+
+@itemize
+@item
+Component and source libraries. @dfn{Component libraries} is a list of
+directories where Lepton will search for symbol files (@file{*.sym}).
+@dfn{Source libraries} is a list of directories where Lepton will
+search for @dfn{source files} (defined by the @attrib{source=}
+attribute) used in hierarchical schematics.
+
+@item
+@code{(reset-component-library)}
+Clear the list of component libraries.
+
+@item
+@lisp
+(reset-source-library)
+@end lisp
+Clear the list of source libraries.
+
+@item
+@lisp
+(component-library @var{path} @var{name})
+@end lisp
+
+Add the directory @var{path} to the list of component libraries giving
+it a display name @var{name} which will be shown in the "Add
+Component" dialog in @command{lepton-schematic}, for example:
+@lisp
+(component-library "/home/dmn/sym" "MySymbols")
+@end lisp
+
+@item
+@lisp
+(component-library-search @var{path} @var{prefix})
+@end lisp
+Add the directory @var{path} recursively with all its sub-directories
+to the list of component libraries. Directories added with this
+command will be shown in the "Add Component"
+@command{lepton-schematic} dialog prefixed with the string
+@var{prefix}, for example:
+
+@lisp
+(component-library-search "/home/dmn/my-libs" "MyLibs::")
+@end lisp
+
+@item
+@lisp
+(source-library @var{path})
+@end lisp
+Add the directory @var{path} to the list of source libraries.
+@item
+Color scheme used for exporting/printing by @code{lepton-cli export}
+and @command{lepton-schematic}'s @menuentry{File, Write Image...}  (if
+"Image type" is set to @samp{PDF}) and @menuentry{File, Print...} main
+menu commands.
+
+@itemize @minus
+@item
+@lisp
+(primitive-load @var{file})
+@end lisp
+Load a color scheme from file @var{file}, for example:
+@lisp
+(primitive-load "/usr/share/lepton-eda/print-colormap-darkbg")
+@end lisp
+@end itemize
+
+@end itemize
+
+@node gschemrc
+@subsection @file{gschemrc}
+
+Configuration file for @command{lepton-schematic} schematic editor.
+
+Files named @file{gschemrc} are read from @file{~/.config/lepton-eda/}
+(user configuration) and from a directory where you run
+@command{lepton-schematic} (configuration for current directory).
+Expressions in this file control the following settings:
+
+@itemize
+@item
+Color scheme used to draw schematics.
+
+@lisp
+(primitive-load FILE)
+@end lisp
+
+Load a color scheme from file `FILE`, for example:
+
+@lisp
+(primitive-load "/usr/share/lepton-eda/gschem-colormap-bw")
+@end lisp
+
+@item
+Custom keyboard shortcuts.
+
+@lisp
+(global-set-key KEY ACTION)
+@end lisp
+
+Assign key combination `KEY` to action @code{ACTION}, for example:
+@lisp
+(global-set-key "<Control><Shift>N" '&file-new-window)
+(global-set-key "A A" '&add-attribute )
+@end lisp
+
+Other actions and shortcut definitions can be found in the
+@url{https://github.com/lepton-eda/lepton-eda/blob/1.9.11-20200604/schematic/scheme/conf/schematic/menu.scm,
+menu.scm} and
+@url{https://github.com/lepton-eda/lepton-eda/blob/1.9.11-20200604/schematic/scheme/conf/schematic/keys.scm,
+keys.scm} files.
+@end itemize
+
+
+@node New configuration system
+@section Overview of the new configuration system
+
+Configuration parameters are always evaluated within a
+@emph{configuration context}.  Each context is associated with a
+configuration file (although the file does not necessarily need to
+exist).
+
+There are five configuration contexts:
+
+@table @samp
+@item DEFAULT
+
+@itemize
+@item
+contains default values for configuration settings (read-only)
+
+@item
+configuration file: none
+
+@item
+parent context: none
+@end itemize
+
+@item SYSTEM
+
+@itemize
+@item
+contains system-wide settings
+@item
+configuration file:
+@url{https://github.com/lepton-eda/lepton-eda/blob/master/liblepton/lib/lepton-system.conf,
+@file{lepton-system.conf}} @since{1.9.10} (former
+@url{https://github.com/lepton-eda/lepton-eda/blob/master/liblepton/lib/geda-system.conf,
+@file{geda-system.conf}})
+@item
+configuration file location: @file{$PREFIX/share/lepton-eda/}
+(@env{$PREFIX} is the installation prefix, e.g. @file{/usr} or @file{/usr/local})
+@item
+ parent context: @samp{DEFAULT}
+@item
+@code{lepton-cli config} option to access this context:
+@option{--system} (@option{-s})
+@end itemize
+
+@item USER
+@itemize
+@item
+contains per-user settings
+@item
+configuration file: @file{lepton-user.conf} @since{1.9.10} (former
+@file{geda-user.conf})
+@item
+configuration file location: @file{$XDG_CONFIG_HOME/lepton-eda/}
+(usually, @file{~/.config/lepton-eda/})
+@item
+parent context: @samp{SYSTEM}
+@item
+@code{lepton-cli config} option to access this context:
+@option{--user} (@option{-u})
+@end itemize
+
+@item PATH
+@itemize
+@item
+contains per-project (per-directory) settings
+@item
+configuration file: @file{lepton.conf} @since{1.9.10} (former
+@file{geda.conf})
+@item
+configuration file location: current directory (or directory specified
+by @option{--project})
+@item
+parent context: @samp{USER}
+@item
+@code{lepton-cli config} option to access this context:
+@option{--project[=PATH]} (@option{-p})
+@end itemize
+
+@item CACHE
+@itemize
+@item
+contains program-specific settings (dialog geometry, command history,
+etc.; normally, you do not use it directly)
+@item
+configuration file: @file{gui.conf}
+@item
+configuration file location: @file{$XDG_CACHE_HOME/lepton-eda/}
+(usually, @file{~/.cache/lepton-eda/})
+@item
+parent context: none
+@item
+@code{lepton-cli config} option to access this context:
+@option{--cache} (@option{-c})
+@end itemize
+@end table
+
+@dfn{Context inheritance} means that if particular configuration
+parameter is not found in current context, the value from the parent
+context will be used.  And if parameter is set in the child context it
+will override one set in the parent context(s).
+
+Configuration file contains `groups` and `key=value` pairs, for example:
+
+@example
+@c ini
+[group]
+key=value
+@end example
+
+Lines beginning with a @samp{#} and blank lines are considered
+comments:
+@example
+@c ini
+# This is a comment
+@end example
+
+@command{lepton-cli} utility with the @option{config} command is used
+to read and write configuration settings:
+
+@example
+lepton-cli config [@var{option}] [@var{group} @var{key} [@var{value}]]
+@end example
+
+@var{option} can be either @option{--system}, @option{--user},
+@option{--project[=@var{path}]}, or @option{--cache} to access the
+@samp{SYSTEM}, @samp{USER}, @samp{PATH}, or @samp{CACHE} context,
+respectively.
+
+For example, to get value of the @cfgkey{font} key from the
+@cfggroup{schematic.gui} group in the @samp{USER} configuration
+context, issue the following command:
+
+@example
+@c sh
+$ lepton-cli config --user "schematic.gui" "font"
+@end example
+
+It will print the result to standard output:
+
+@example
+OpenGost Type B TT Regular
+@end example
+
+To set that value to `Monospace Regular` for configuration in the current
+directory, type:
+
+@example
+@c sh
+lepton-cli config --project "schematic.gui" "font" "Monospace Regular"
+@end example
+
+
+
+@node Tools configuration
+@section Configuration settings for tools in the Lepton EDA suite
+
+@node lepton-schematic
+@subsection @command{lepton-schematic}
+
+@node schematic.gui group
+@subsubsection @cfggroup{schematic.gui} group
+@cindex schematic.gui
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{use-docks}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+How to display widgets: as dialogs (@cfgval{false}) or inside the dock
+widgets (@cfgval{true}).
+
+@item @cfgkey{use-tabs}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Whether to use tabbed GUI: display each schematic in its own tab
+within GtkNotebook widget.
+
+@item @cfgkey{font}
+@tab @cfgtype{string}
+@tab @cfgval{""} (empty string)
+@tab
+The name of the font to be used to draw text in schematics.  For
+example: @samp{font=OpenGost Type B TT Regular}
+
+@item @cfgkey{text-sizes}
+@tab @cfgtype{list of @code{string}s}
+@tab @cfgval{empty list}
+@tab
+If set, these values will appear in the 'size' combo box of the 'Add
+text' and 'Edit text' dialogs instead of the default ones (set in
+@file{gschem_toplevel.c}: 8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24,
+26). For example: @samp{text-sizes=2;3;4;5;6;8}
+
+@item @cfgkey{max-recent-files}
+@tab @cfgtype{integer}
+@tab @cfgval{10}
+@tab
+Maximum number of recent files to show in `File->Open Recent` menu.
+
+@item @cfgkey{title-show-path}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Whether to show full file path in the main window's title.
+
+@item @cfgkey{restore-window-geometry}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Whether to restore main window's size and position on startup.
+
+@item @cfgkey{draw-grips}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Controls if the editing grips are drawn when selecting objects.
+@since{1.9.10}
+
+@item @cfgkey{toolbars}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Controls if the toolbars are visible or not.  @since{1.9.10}
+
+@item @cfgkey{scrollbars}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Controls if the scrollbars are visible or not.  @since{1.9.10}
+
+@item @cfgkey{handleboxes}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Controls if the handleboxes for the menu and toolbars are visible or
+not.  @since{1.9.10}
+
+@item @cfgkey{zoom-with-pan}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Sets the zoom functions to pan the display and then zoom.
+@since{1.9.10}
+
+@item @cfgkey{fast-mousepan}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Controls if text is drawn properly or if a simplified version (a text
+string bounding box) is drawn during mouse pan. Drawing a simple box
+speeds up mousepan a lot for big schematics.  @since{1.9.10}
+
+@item @cfgkey{continue-component-place}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Controls the behavior of the "Select Component..." dialog. Allows to
+place multiple instances of a component without having to press the
+"Apply" button each time.  @since{1.9.10}
+
+@item @cfgkey{file-preview}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Controls if the preview area in the File Open/Save As dialog boxes is
+enabled.  @since{1.9.10}
+
+@item @cfgkey{enforce-hierarchy}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Controls if the movement between hierarchy levels of the same
+underlying schematics is allowed or not. If this is enabled, then the
+user cannot (without using the page manager) move between hierarchy
+levels. Otherwise, the user sees all the hierarchy levels as being
+flat.  @since{1.9.10}
+
+@item @cfgkey{third-button-cancel}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Controls if the third mouse button cancels draw actions such as
+placing of a component or drawing of a primitive.  @since{1.9.10}
+
+@item @cfgkey{warp-cursor}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Controls if the cursor is warped (moved) when you zoom in and out.
+@since{1.9.10}
+
+@item @cfgkey{force-boundingbox}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Controls if the entire bounding box of a symbol is used when figuring
+out which end of the pin is considered the active port.  This option
+is for backward compatibility with old schematic file format.
+@since{1.9.10}
+
+@item @cfgkey{net-direction-mode}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Guess the best continuation direction of an L-shape net when adding a
+net.  @since{1.9.10}
+
+@item @cfgkey{embed-components}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Determines if the newly placed components are embedded in the
+schematic.  @since{1.9.10}
+
+@item @cfgkey{netconn-rubberband}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Maintain net connections when you move a connected component or net.
+@since{1.9.10}
+
+@item @cfgkey{magnetic-net-mode}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Whether to mark a possible connection that is close to the current
+cursor position when drawing a net.  @since{1.9.10}
+
+@item @cfgkey{zoom-gain}
+@tab @cfgtype{int}
+@tab @cfgval{20}
+@tab
+The percentage size increase/decrease when zooming in/out with the
+mouse wheel. Negative values reverses the direction.  @since{1.9.10}
+
+@item @cfgkey{mousepan-gain}
+@tab @cfgtype{int}
+@tab @cfgval{1}
+@tab
+Controls how much the display pans when using mouse. A larger value
+provides greater pan distance when moving the mouse.  @since{1.9.10}
+
+@item @cfgkey{keyboardpan-gain}
+@tab @cfgtype{int}
+@tab @cfgval{20}
+@tab
+Controls how much the display pans when using the keyboard keys.  A
+larger value provides greater pan distance.  @since{1.9.10}
+
+@item @cfgkey{select-slack-pixels}
+@tab @cfgtype{int}
+@tab @cfgval{10}
+@tab
+Controls how many pixels around an object can still be clicked as part
+of that object. A larger value gives greater ease in selecting small,
+or narrow objects.  @since{1.9.10}
+
+@item @cfgkey{text-size}
+@tab @cfgtype{int}
+@tab @cfgval{10}
+@tab
+Sets the default text size.  @since{1.9.10}
+
+@item @cfgkey{snap-size}
+@tab @cfgtype{int}
+@tab @cfgval{10}
+@tab
+Sets the default grid spacing.  @since{1.9.10}
+
+@item @cfgkey{scrollpan-steps}
+@tab @cfgtype{int}
+@tab @cfgval{8}
+@tab
+Controls the number of scroll pan events required to traverse the
+viewed schematic area.  Larger numbers mean more scroll steps are
+required to pan across the viewed area and giving finer control over
+positioning.  @since{1.9.10}
+
+@item @cfgkey{dots-grid-dot-size}
+@tab @cfgtype{int}
+@tab @cfgval{1}
+@tab
+Controls the size of the grid dots (in pixels) in the dots grid
+display.  @since{1.9.10}
+
+@item @cfgkey{dots-grid-fixed-threshold}
+@tab @cfgtype{int}
+@tab @cfgval{10}
+@tab
+Specifies the minimum number of pixels for the grid to be displayed.
+Controls the density of the displayed grid (smaller numbers will cause
+the grid to be drawn denser).  This option is only effective when the
+dots-grid-mode is set to "fixed".  @since{1.9.10}
+
+@item @cfgkey{mesh-grid-display-threshold}
+@tab @cfgtype{int}
+@tab @cfgval{3}
+@tab
+Specifies the minimum line pitch for the grid to be displayed.
+Controls the maximum density of the displayed grid before the minor,
+then the major grid lines are switched off.  @since{1.9.10}
+
+@item @cfgkey{action-feedback-mode}
+@tab @cfgtype{string}
+@tab @cfgval{outline}
+@tab
+Possible values: @cfgval{outline}, @cfgval{boundingbox}.  Sets the
+default action feedback mode for copy, move, and component place
+operations.  When set to @cfgval{boundingbox}, just a box surrounding
+objects is drawn, which is much faster. It may help with slow
+hardware.  @since{1.9.10}
+
+@item @cfgkey{text-caps-style}
+@tab @cfgtype{string}
+@tab @cfgval{both}
+@tab
+Possible values: @cfgval{both}, @cfgval{lower}, @cfgval{upper}.  Sets the
+default caps style used for the input of text.  @since{1.9.10}
+
+@item @cfgkey{middle-button}
+@tab @cfgtype{string}
+@tab @cfgval{mousepan}
+@tab
+Possible values: @cfgval{mousepan}, @cfgval{popup}, @cfgval{action},
+@cfgval{stroke}, @cfgval{repeat}.  Controls what the middle mouse
+button does:
+@itemize @minus
+@item
+@cfgval{mousepan}: mouse panning
+@item
+@cfgval{popup}: display the popup menu
+@item
+@cfgval{action}: perform an action on a single object
+@item
+@cfgval{stroke}: draw strokes
+@item
+@cfgval{repeat}: repeat the last command
+@end itemize
+@since{1.9.10}
+
+@item @cfgkey{third-button}
+@tab @cfgtype{string}
+@tab @cfgval{popup}
+@tab
+Possible values: @cfgval{popup}, @cfgval{mousepan}.  Controls what the
+third mouse button does:
+@itemize
+@item
+@cfgval{popup}: display the popup menu
+@item
+@cfgval{mousepan}: mouse panning
+@end itemize
+@since{1.9.10}
+
+@item @cfgkey{scroll-wheel}
+@tab @cfgtype{string}
+@tab @code{classic}
+@tab
+Possible values: @cfgval{classic}, @cfgval{gtk}.
+Controls the binding of the mouse scroll wheel:
+@itemize
+@item
+@cfgval{classic}: zoom in/out, with @key{CTRL} -- horizontal scroll,
+with @key{SHIFT} -- vertical scroll
+@item
+@cfgval{gtk}: vertical scroll, with @key{SHIFT} -- horizontal scroll,
+with @key{CTRL} -- zoom in/out
+@end itemize
+@since{1.9.10}
+
+@item @cfgkey{grid-mode}
+@tab @cfgtype{string}
+@tab @cfgval{mesh}
+@tab
+Possible values: @cfgval{mesh}, @cfgval{dots}, @cfgval{none}.  Sets
+the type of the grid.  @since{1.9.10}
+
+@item @cfgkey{dots-grid-mode}
+@tab @cfgtype{string}
+@tab @cfgval{variable}
+@tab
+Possible values: @cfgval{variable}, @cfgval{fixed}.  Controls the mode
+of the dotted grid.  In the @cfgval{variable} mode, the grid spacing
+changes depending on the zoom factor.  In the @cfgval{fixed} mode, the
+grid always represents the same number of units as the
+snap-spacing. You can control the density of the grid using the
+@cfgkey{dots-grid-fixed-threshold} option.  @since{1.9.10}
+
+@item @cfgkey{net-selection-mode}
+@tab @cfgtype{string}
+@tab @cfgval{enabled_net}
+@tab
+Possible values: @cfgval{enabled_net}, @cfgval{enabled_all},
+@cfgval{disabled}.  Controls how many net segments are selected when
+you click at a net:
+
+@itemize
+@item
+@cfgval{enabled_all}:
+@itemize @minus
+@item
+first click selects the net itself
+@item
+second click selects all nets directly connected to the selected one
+@item
+third click in addition selects all nets with equal @samp{netname}
+attributes
+@end itemize
+
+@item
+@cfgval{enabled_net}:
+@itemize @minus
+@item
+first click selects the net itself
+@item
+second click selects all nets directly connected to the selected one
+@end itemize
+
+@item
+@cfgval{disabled}:
+@itemize @minus
+@item
+mouse clicks just selects the clicked net
+@end itemize
+@end itemize
+@since{1.9.10}
+
+
+@item @cfgkey{default-titleblock}
+@tab @cfgtype{string}
+@tab @cfgval{title-B.sym}
+@tab
+Symbol (usually, a title block) to be automatically added when a new
+page is created.  If you do not want to use a title block, set this
+option to an empty string.  @since{1.9.10}
+
+@item @cfgkey{use-toplevel-windows}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+When docking windows GUI is off, allow the following widgets to act as
+top-level windows (do not stay on top of the main window):
+@itemize @minus
+@item
+Object properties
+@item
+Text properties
+@item
+Options
+@item
+Log
+@item
+Find text results
+@item
+Page manager
+@item
+Font selector
+@item
+Color scheme editor
+@end itemize
+@since{1.9.11}
+
+@item @cfgkey{small-placeholders}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Draw either new (smaller) placeholders for missing schematic symbols
+(@cfgval{true}), or classic ones (giant red triangles with an
+exclamation mark and two lines of text) if this option is set to
+@cfgval{false}.  @since{1.9.11}
+
+@end multitable
+
+
+@node schematic.tabs
+@subsubsection @cfggroup{schematic.tabs} group
+@cindex schematic.tabs
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{show-close-button}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Whether to show "close" button on each tab.
+
+@item @cfgkey{show-up-button}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Whether to show "hierarchy up" button on each tab.
+
+@item @cfgkey{show-tooltips}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Whether to show tabs tooltips in tabbed GUI.  @since{1.9.10}
+
+@end multitable
+
+
+@node schematic.status-bar
+@subsubsection @cfggroup{schematic.status-bar} group
+@cindex schematic.status-bar
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{show-mouse-buttons}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Whether to show mouse buttons assignment indicators.
+
+@item @cfgkey{show-rubber-band}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Whether to show net rubber band mode indicator.
+
+@item @cfgkey{show-magnetic-net}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Whether to show magnetic net mode indicator.
+
+@item @cfgkey{status-bold-font}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Whether to display the status line with bolder font weight.
+
+@item @cfgkey{status-active-color}
+@tab @cfgtype{string}
+@tab @cfgval{"green"}
+@tab
+Color to use for the status line text when some mode is activated.
+The string can be either one of a set of standard names (taken from
+the X11 @file{rgb.txt} file), or a hex value in the form
+@cfgval{#rrggbb}.
+
+@end multitable
+
+
+@node schematic.undo
+@subsubsection @cfggroup{schematic.undo} group
+@cindex schematic.undo
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{modify-viewport}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Allow undo/redo operations to change pan and zoom.
+
+@item @cfgkey{undo-control}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Controls if the undo is enabled or not.  @since{1.9.10}
+
+@item @cfgkey{undo-type}
+@tab @cfgtype{string}
+@tab @cfgval{disk}
+@tab
+Possible values: @cfgval{disk}, @cfgval{memory}.  Controls what kind
+of medium is used for storing undo data.  The @cfgval{disk} mechanism
+is nice because you get undo-level number of backups of the schematic
+written to disk as backups so you should never lose a schematic due to
+a crash.  @since{1.9.10}
+
+@item @cfgkey{undo-levels}
+@tab @cfgtype{int}
+@tab @cfgval{20}
+@tab
+Determines the number of levels of undo.  @since{1.9.10}
+
+@item @cfgkey{undo-panzoom}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Controls if pan or zoom commands are saved in the undo list. If this
+is enabled, then a pan or zoom will be considered a command and can be
+undone.  @since{1.9.10}
+
+@end multitable
+
+
+@node schematic.log-window
+@subsubsection @cfggroup{schematic.log-window} group
+@cindex schematic.log-window
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{font}
+@tab @cfgtype{string}
+@tab @cfgval{"Monospace 11"}
+@tab
+Custom font for the log window (e.g. @cfgval{"Monospace 10"}).
+
+@end multitable
+
+
+@subsubsection @cfggroup{schematic.macro-widget} group
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{history-length}
+@tab @cfgtype{integer}
+@tab @cfgval{10}
+@tab
+Maximum number of items to keep in the macro-widget command history.
+
+@item @cfgkey{font}
+@tab @cfgtype{string}
+@tab @cfgval{"Monospace 11"}
+@tab
+Font to be used to draw text in the macro-widget command entry. For
+example:
+@example
+font=Monospace 12
+@end example
+
+@end multitable
+
+
+@node schematic group
+@subsubsection @cfggroup{schematic} group
+@since{1.9.10}
+Before 1.9.10 it was @cfggroup{gschem} group.
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{default-filename}
+@tab @cfgtype{string}
+@tab @cfgval{"untitled"}
+@tab
+Default file name for any new schematic files.  It is used to create
+filenames of the form @file{untitled_N.sch} where @cfgval{N} is a
+number.
+
+
+@item @cfgkey{bus-ripper-size}
+@tab @cfgtype{int}
+@tab @cfgval{200}
+@tab
+Sets the size of the auto bus rippers.  @since{1.9.10}
+
+@item @cfgkey{bus-ripper-type}
+@tab @cfgtype{string}
+@tab @cfgval{component}
+@tab
+Possible values: @cfgval{component}, @cfgval{net}.  Sets the bus
+ripper type, either a symbol (@cfgval{component}) or plain net.
+@since{1.9.10}
+
+@item @cfgkey{bus-ripper-symname}
+@tab @cfgtype{string}
+@tab @cfgval{busripper-1.sym}
+@tab
+The default bus ripper symbol, used when the
+@cfgkey{schematic::bus-ripper-type} configuration key is set to
+@cfgval{"component"}.  The symbol must exist in a component library.
+@since{1.9.10}
+
+@item @cfgkey{bus-ripper-rotation}
+@tab @cfgtype{string}
+@tab @cfgval{non-symmetric}
+@tab
+Possible values: @cfgval{non-symmetric}, @cfgval{symmetric}.  This
+deals with how the bus ripper symbol is rotated when it is auto added
+to a schematic.  @since{1.9.10}
+
+@item @cfgkey{net-consolidate}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Controls if the net consolidation code is used when schematics are
+read in, written to disk, and when nets are being drawn (does not
+consolidate when things are being copied or moved yet).  Net
+consolidation is the connection of nets which can be combined into
+one.  @since{1.9.10}
+
+@item @cfgkey{logging}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Determines if the logging mechanism is enabled.  @since{1.9.10}
+
+@item @cfgkey{log-window}
+@tab @cfgtype{string}
+@tab @cfgval{later}
+@tab
+Possible values: @cfgval{later}, @cfgval{startup} Controls if the log
+window is shown when lepton-schematic is started up
+(@cfgval{startup}), or not (@cfgval{later}).  @since{1.9.10}
+
+@item
+@cfgkey{auto-save-interval}
+@tab @cfgtype{int}
+@tab @cfgval{120}
+@tab
+Controls how often a backup copy is made, in seconds.  The backup copy
+is made when you make some change to the schematic, and there were
+more than "interval" seconds from the last autosave.  Autosaving will
+not be allowed if setting it to zero.  @since{1.9.10}
+
+@end multitable
+
+
+@node schematic.library
+@subsubsection @cfggroup{schematic.library} group
+Before 1.9.10 it was @cfggroup{gschem.library} group.
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{component-attributes}
+@tab @cfgtype{string list}
+@tab @cfgval{*}
+@tab
+List of attribute names (semicolon-separated) that are displayed in
+the component select dialog.  An empty list will disable the attribute
+view.  If the first list element is an asterisk @samp{"*"}, all
+attributes will be displayed in the alphabetical order.
+
+@item @cfgkey{sort}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+If @cfgval{true}, the component libraries are sorted alphabetically.
+Otherwise they are sorted in the order opposite to what they were
+added in.
+
+@end multitable
+
+
+@node schematic.printing
+@subsubsection @cfggroup{schematic.printing}
+Before 1.9.10 it was @cfggroup{gschem.printing} group.
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{layout}
+@tab @cfgtype{string}
+@tab @cfgval{auto}
+@tab
+Possible values: @cfgval{auto}, @cfgval{portrait}, @cfgval{landscape}.
+When using a paper size, set the orientation of the output.  If
+@cfgval{auto} layout is used, the orientation that best fits the
+drawing will be used.
+
+@item @cfgtype{monochrome}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Toggle monochrome (@cfgval{true}) or color (@cfgval{false}) output.
+
+@item @cfgkey{paper}
+@tab @cfgtype{string}
+@tab @cfgval{"iso_a4"}
+@tab
+Size the output for a particular paper size.  The default value
+depends on the current locale.  Described in the PWG 5101.1 standard
+(Printer Working Group @url{http://www.pwg.org/standards.html#s5101,
+"Media Standardized Names"}).  Examples: @cfgval{iso_a4},
+@cfgval{iso_a5}, @cfgval{na_letter}.
+
+@end multitable
+
+
+@node schematic.backup group
+@subsubsection @cfggroup{schematic.backup} group
+@since{1.9.10}
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{create-files}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Enable the creation of backup files (@file{NAME.sch~}) when saving a
+schematic.  @since{1.9.10}
+
+@end multitable
+
+
+@node schematic.attrib group
+@subsubsection @cfggroup{schematic.attrib} group
+@since{1.9.10}
+
+The parameters in this group replace the deprecated options used
+to be set in @file{gafrc} files.
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+
+@item @cfgkey{promote}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Former @file{gafrc} option: @cfgkey{attribute-promotion}.  Set if
+attribute promotion occurs when you instantiate a component.
+Attribute promotion means that any floating (unattached) attribute
+which is inside a symbol gets attached to the newly inserted component
+when it is instantiated.  @since{1.9.10}
+
+@item @cfgkey{always-promote}
+@tab @cfgtype{string list}
+@tab @cfgval{footprint;device;value;model-name}
+@tab
+Former @file{gafrc} option: @cfgkey{always-promote-attributes}.  The
+list of attributes that are always promoted regardless of their
+visibility.  @since{1.9.10}
+
+@item @cfgkey{promote-invisible}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Former @file{gafrc} option: @cfgkey{promote-invisible}.  Set if
+invisible floating attributes are promoted when a component is
+instantiated.  @since{1.9.10}
+
+@item
+@cfgkey{keep-invisible}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Former @file{gafrc} option: @cfgkey{keep-invisible}.  Do not change
+this option. Here's the original description from the
+@file{system-gafrc} file:
+@quotation
+If both @cfgkey{attribute-promotion} and @cfgkey{promote-invisible}
+are enabled, then this controls if invisible floating attributes are
+kept around in memory and NOT deleted. Having this enabled will keeps
+component slotting working. If @cfgkey{attribute-promotion} and
+@cfgkey{promote-invisible} are enabled and this keyword is disabled,
+then component slotting will NOT work (and maybe other functions which
+depend on hidden attributes, since those attributes are deleted from
+memory).  @since{1.9.10}
+@end quotation
+
+@end multitable
+
+
+@node lepton-netlist configuration
+@subsection @command{lepton-netlist}
+
+@node netlist group
+@subsubsection @cfggroup{netlist}
+@cindex netlist group
+Before 1.9.10 it was @cfggroup{gnetlist} group.
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{default-net-name}
+@tab @cfgtype{string}
+@tab @cfgval{"unnamed_net"}
+@tab
+Default name used for nets for which the user has set no explicit name
+via the @attrib{netname=} or @attrib{net=} attributes.
+
+@item @cfgkey{default-bus-name}
+@tab @cfgtype{string}
+@tab @cfgval{"unnamed_bus"}
+@tab
+Default name used for buses for which the user has set no explicit
+name via the @attrib{netname=} or @attrib{net=} attributes.
+
+@item @cfgkey{net-naming-priority}
+@tab @cfgtype{string}
+@tab @cfgval{net-attribute}
+@tab
+Possible values: @cfgval{net-attribute}, @cfgval{netname-attribute}.
+Specify which attribute, @attrib{net} or @attrib{netname}, has
+priority if a net is found with two names. Any netname conflict will
+be resolved using the chosen attribute.
+
+@end multitable
+
+
+@node netlist.hierarchy
+@subsubsection @cfggroup{netlist.hierarchy}
+@cindex netlist.hierarchy
+
+Before 1.9.10 it was @cfggroup{gnetlist.hierarchy} group.
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+@item @cfgkey{traverse-hierarchy}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Turn on/off hierarchy processing.
+
+@item @cfgkey{mangle-refdes-attribute}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Whether to mangle sub-schematic's @attrib{refdes} attributes.
+
+@item @cfgkey{refdes-attribute-order}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+While mangling @attrib{refdes} attributes, whether to append
+(@cfgval{false}) or prepend (@cfgval{true}) sub-schematic's ones.
+
+@item @cfgkey{refdes-attribute-separator}
+@tab @cfgtype{string}
+@tab @cfgval{"/"}
+@tab
+Separator string used to form mangled @attrib{refdes} attribute names.
+
+@item @cfgkey{mangle-netname-attribute}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Whether to mangle sub-schematic's @attrib{netname} attributes.
+
+@item @cfgkey{netname-attribute-order}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+While mangling @attrib{netname} attributes, whether to append
+(@cfgval{false}) or prepend (@cfgval{true}) sub-schematic's ones.
+
+@item @cfgkey{netname-attribute-separator}
+@tab @cfgtype{string}
+@tab @cfgval{"/"}
+@tab
+Separator string used to form mangled @attrib{netname} attribute
+names.
+
+@item @cfgkey{mangle-net-attribute}
+@tab @cfgtype{boolean}
+@tab @cfgval{true}
+@tab
+Whether to mangle sub-schematic's @attrib{net} attributes.
+
+@item @cfgkey{net-attribute-order}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+While mangling @samp{net} attributes, whether to append
+(@cfgval{false}) or prepend (@cfgval{true}) sub-schematic's ones.
+
+@item @cfgkey{net-attribute-separator}
+@tab @cfgtype{string}
+@tab @cfgval{"/"}
+@tab
+Separator string used to form mangled @attrib{net} attribute names.
+
+@end multitable
+
+
+@node lepton-cli
+@subsection @command{lepton-cli}
+
+The following settings control the behaviour of @command{lepton-cli}
+utility when it's invoked with the @option{export} command.
+
+@node export group
+@subsubsection @cfggroup{export} group
+
+@multitable @columnfractions .15 .15 .15 .55
+@headitem Name @tab Type @tab Default value @tab Description
+
+@item @cfgkey{align}
+@tab
+list of two doubles in the form @cfgval{HALIGN;VALIGN} or string
+@cfgval{auto}
+@tab @cfgval{auto}
+@tab
+Set how the drawing is aligned within the page. @cfgval{HALIGN}
+controls the horizontal alignment, and @cfgval{VALIGN} the vertical.
+Each alignment value should be in the range 0.0 to 1.0. The
+@cfgval{auto} alignment is equivalent to a value of @cfgval{0.5;0.5},
+i.e. centered.
+
+@item @cfgkey{dpi}
+@tab @cfgtype{integer}
+@tab @cfgval{96}
+@tab
+Set the number of pixels per inch used when generating @samp{PNG}
+output.
+
+@item @cfgkey{font}
+@tab @cfgtype{string}
+@tab @cfgval{"Sans"}
+@tab
+Set the font to be used for drawing text.
+
+@item @cfgkey{layout}
+@tab @cfgtype{string}
+@tab @cfgval{auto}
+@tab
+Possible values: @cfgval{auto}, @code{portrait}, @code{landscape}.
+When using a paper size, set the orientation of the output. If
+@cfgval{auto} layout is used, the orientation that best fits the
+drawing will be used.
+
+@item @cfgkey{margins}
+@tab list of four integers in the form @cfgval{TOP;LEFT;BOTTOM;RIGHT}
+@tab @cfgval{18;18;18;18}
+@tab
+Set the widths of the margins to be used (the minimal distances from
+the sheet edges; actual margins may be larger if the sizes of the
+chosen paper do not meet the sizes of the printed schematic).
+
+@item @cfgtype{monochrome}
+@tab @cfgtype{boolean}
+@tab @cfgval{false}
+@tab
+Toggle monochrome (@cfgval{true}) or color (@cfgval{false}) output.
+
+@item @cfgkey{paper}
+@tab @cfgtype{string}
+@tab @cfgval{"iso_a4"}
+@tab
+Size the output for a particular paper size.  The default value
+depends on the current locale.  Described in the PWG 5101.1 standard
+(Printer Working Group @url{http://www.pwg.org/standards.html#s5101,
+"Media Standardized Names"}).  Examples: @cfgval{iso_a4},
+@cfgval{iso_a5}, @cfgval{na_letter}.
+
+@item @code{size}
+@tab
+list of two doubles in the form @samp{WIDTH;HEIGHT} or string
+@cfgval{auto}
+@tab @cfgval{auto}
+@tab
+Size the output with specific dimensions.  If the size is
+@cfgval{auto}, select the size that best fits the drawing.  This
+overrides the @code{paper} key (see the previous entry).
+
+@end multitable
+
+
+@node Deprecated settings
+@section Deprecated settings
+
+@node Resources
+@section Resources
+
+@node Documentation
+@subsection Documentation
+* lepton-cli [man page](https://graahnul-grom.github.io/ref-man/lepton-cli.html)
+* lepton-upcfg [man page](https://graahnul-grom.github.io/ref-man/lepton-upcfg.html)
+* Configuration system [specification](https://github.com/lepton-eda/lepton-eda/blob/master/docs/specifications/config-api.txt)
+* Lepton EDA Scheme [reference manual](https://graahnul-grom.github.io/ref-scheme-api/index.html) - chapter 2.5: [configuration functions](https://graahnul-grom.github.io/ref-scheme-api/Configuration-functions.html)
+
+@node Web pages
+@subsection Web pages
+
+@itemize
+@item
+@url{https://github.com/lepton-eda/lepton-eda, Lepton EDA home page}
+@item
+@url{https://gitter.im/Lepton-EDA/Lobby, gitter.im chat room}: get in
+touch with Lepton EDA users and developers
+@item
+@url{http://wiki.geda-project.org/geda:mailinglists, gEDA mailing
+lists}
+@item
+@url{http://wiki.geda-project.org, gEDA wiki}
+@item
+@url{https://graahnul-grom.github.io/, dmn's documentation page},
+links and resources for Lepton EDA users and developers
+@end itemize
+
+@node Utilities
+@subsection Utilities
+* GUI configuration utility:
+@url{https://github.com/graahnul-grom/lepton-conf, lepton-conf}
+(@url{https://graahnul-grom.github.io/lepton-conf, home page}).
+@command{lepton-conf} has the ability to work with either legacy
+(@file{geda*.conf}) or new (@file{lepton*.conf}) configuration files,
+which could be helpful in settings upgrade process.
+
+@node Other resources
+@subsection Other resources (outdated, but may be useful)
+@itemize
+@item
+@url{http://wiki.geda-project.org/geda:gaf_utility, gaf wiki page}
+(@command{gaf} is @command{lepton-cli}'s old name)
+@item
+@url{http://wiki.geda-project.org/geda:gschem_ug, gschem user guide},
+and in particular
+@url{http://wiki.geda-project.org/geda:gschem_ug:config, configuring
+gschem}
+@end itemize
+
 
 @node lepton-netlist
 @chapter Netlister
