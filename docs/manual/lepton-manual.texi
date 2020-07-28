@@ -1655,6 +1655,7 @@ utility when it's invoked with the @code{export} command.
 
 @node export group
 @subsubsection @cfggroup{export} group
+@cindex export group
 
 @multitable @columnfractions .15 .15 .15 .55
 @headitem Name @tab Type @tab Default value @tab Description
