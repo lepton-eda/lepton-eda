@@ -1739,10 +1739,28 @@ overrides the @code{paper} key (see the previous entry).
 
 @node Documentation
 @subsection Documentation
-* lepton-cli [man page](https://graahnul-grom.github.io/ref-man/lepton-cli.html)
-* lepton-upcfg [man page](https://graahnul-grom.github.io/ref-man/lepton-upcfg.html)
-* Configuration system [specification](https://github.com/lepton-eda/lepton-eda/blob/master/docs/specifications/config-api.txt)
-* Lepton EDA Scheme [reference manual](https://graahnul-grom.github.io/ref-scheme-api/index.html) - chapter 2.5: [configuration functions](https://graahnul-grom.github.io/ref-scheme-api/Configuration-functions.html)
+
+@c FIXME: These links should point to local documents.
+
+@itemize
+@item
+@url{https://graahnul-grom.github.io/ref-man/lepton-cli.html,
+lepton-cli man page}
+
+@item
+@url{https://graahnul-grom.github.io/ref-man/lepton-upcfg.html,
+lepton-upcfg man page}
+
+@item
+@url{https://github.com/lepton-eda/lepton-eda/blob/master/docs/specifications/config-api.txt,
+Configuration system specification}
+
+@item
+@url{https://graahnul-grom.github.io/ref-scheme-api/index.html, Lepton
+EDA Scheme reference manual}, especially
+@url{https://graahnul-grom.github.io/ref-scheme-api/Configuration-functions.html,
+configuration functions}
+@end itemize
 
 @node Web pages
 @subsection Web pages
