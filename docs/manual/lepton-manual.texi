@@ -374,7 +374,7 @@ Currently, there are two types of configuration files:
 @item
 Traditionally, Lepton EDA and gEDA settings were stored as Scheme
 source code files, and some of them are still in use: @file{gafrc} and
-@file{gschemrc} (@xref{Legacy configuration, Legacy configuration
+@file{gschemrc} (@pxref{Legacy configuration, Legacy configuration
 settings}).  The work is underway to convert them to the new
 configuration system.
 @item
@@ -391,8 +391,8 @@ Starting with Lepton EDA release
 @item
 Most of the @file{gafrc} and @file{gschemrc} options are
 @ref{Deprecated settings, deprecated} and replaced with new
-configuration parameters.  @xref{Legacy configuration, Legacy
-configuration settings} for remaining options.
+configuration parameters.  For remaining options, @pxref{Legacy
+configuration, Legacy configuration settings}.
 @item
 All the
 @uref{https://github.com/graahnul-grom/lepton-eda/wiki/Deprecated-Settings#user-content-deprecated-gnetlistrc,
