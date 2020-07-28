@@ -414,14 +414,15 @@ The directory for user configuration files is
 @file{$XDG_CONFIG_HOME/lepton-eda/} (usually,
 @file{~/.config/lepton-eda/}).
 @item
-The directory @file{~/.gEDA/} is not used anymore.
+The directory @file{~/.gEDA/} is no longer used.
 @end itemize
 
 @quotation Note
-Recently added options and groups of options may be marked with
-``@since{release}'', designating their introduction in the specified
-Lepton EDA @code{release}, for example: ``@since{1.9.10}'' =>
-available since Lepton EDA 1.9.10.
+Later in this document, recently added options and groups of options
+may be marked with ``@since{release}'', designating their introduction
+in the specified Lepton EDA @code{release}, for example:
+``@since{1.9.10}'' means the changes are available since Lepton EDA
+1.9.10.
 @end quotation
 
 @c * [Deprecated settings](Deprecated-Settings#user-content-deprecated-settings)
