@@ -364,7 +364,7 @@ This chapter describes configuration system of the Lepton EDA suite.
 * Introduction:: Introductory information.
 * Legacy configuration:: Legacy configuration files still in use.
 * New configuration system:: Overview of the new configuration system.
-* Tools configuration:: Configuration settings for particular Lepton tools.
+* Configuration of Lepton tools:: Configuration settings for particular Lepton tools.
 * Deprecated settings:: Configuration settings no longer used.
 * Resources:: Other useful resources.
 @end menu
@@ -712,7 +712,7 @@ lepton-cli config --project "schematic.gui" "font" "Monospace Regular"
 
 
 
-@node Tools configuration
+@node Configuration of Lepton tools
 @section Configuration settings for tools in the Lepton EDA suite
 
 @node lepton-schematic
