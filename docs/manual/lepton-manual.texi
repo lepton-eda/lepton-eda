@@ -346,10 +346,6 @@ You can then proceed to configure and build Lepton as described above.
 @alias cfgtype=samp
 @alias cfgval=samp
 
-@macro cfggroup{name}
-@code{[\name\]}
-@end macro
-
 @macro since{version}
 Since @emph{\version\}.
 @end macro
@@ -692,7 +688,7 @@ lepton-cli config [@var{option}] [@var{group} @var{key} [@var{value}]]
 respectively.
 
 For example, to get value of the @cfgkey{font} key from the
-@cfggroup{schematic.gui} group in the @samp{USER} configuration
+@code{schematic.gui} group in the @samp{USER} configuration
 context, issue the following command, which will print the result to
 standard output:
 
@@ -720,7 +716,7 @@ lepton-cli config --project "schematic.gui" "font" "Monospace Regular"
 @cindex lepton-schematic configuration
 
 @node schematic.gui group
-@subsubsection @cfggroup{schematic.gui} group
+@subsubsection @code{schematic.gui} group
 @cindex schematic.gui group
 
 @multitable @columnfractions .15 .15 .15 .55
@@ -1138,7 +1134,7 @@ exclamation mark and two lines of text) if this option is set to
 
 
 @node schematic.tabs group
-@subsubsection @cfggroup{schematic.tabs} group
+@subsubsection @code{schematic.tabs} group
 @cindex schematic.tabs group
 
 @multitable @columnfractions .15 .15 .15 .55
@@ -1166,7 +1162,7 @@ Whether to show tabs tooltips in tabbed GUI.  @since{1.9.10}
 
 
 @node schematic.status-bar group
-@subsubsection @cfggroup{schematic.status-bar} group
+@subsubsection @code{schematic.status-bar} group
 @cindex schematic.status-bar group
 
 @multitable @columnfractions .15 .15 .15 .55
@@ -1209,7 +1205,7 @@ the X11 @file{rgb.txt} file), or a hex value in the form
 
 
 @node schematic.undo group
-@subsubsection @cfggroup{schematic.undo} group
+@subsubsection @code{schematic.undo} group
 @cindex schematic.undo group
 
 @multitable @columnfractions .15 .15 .15 .55
@@ -1255,7 +1251,7 @@ undone.  @since{1.9.10}
 
 
 @node schematic.log-window group
-@subsubsection @cfggroup{schematic.log-window} group
+@subsubsection @code{schematic.log-window} group
 @cindex schematic.log-window group
 
 @multitable @columnfractions .15 .15 .15 .55
@@ -1271,7 +1267,7 @@ Custom font for the log window (e.g. @cfgval{"Monospace 10"}).
 
 
 @node schematic.macro-widget group
-@subsubsection @cfggroup{schematic.macro-widget} group
+@subsubsection @code{schematic.macro-widget} group
 @cindex schematic.macro-widget group
 
 @multitable @columnfractions .15 .15 .15 .55
@@ -1297,11 +1293,11 @@ font=Monospace 12
 
 
 @node schematic group
-@subsubsection @cfggroup{schematic} group
+@subsubsection @code{schematic} group
 @cindex schematic group
 
 @since{1.9.10}
-Before 1.9.10 it was @cfggroup{gschem} group.
+Before 1.9.10 it was @code{gschem} group.
 
 @multitable @columnfractions .15 .15 .15 .55
 @headitem Name @tab Type @tab Default value @tab Description
@@ -1384,11 +1380,11 @@ not be allowed if setting it to zero.  @since{1.9.10}
 
 
 @node schematic.library group
-@subsubsection @cfggroup{schematic.library} group
+@subsubsection @code{schematic.library} group
 @cindex schematic.library group
 
 @since{1.9.10}
-Before 1.9.10 it was @cfggroup{gschem.library} group.
+Before 1.9.10 it was @code{gschem.library} group.
 
 @multitable @columnfractions .15 .15 .15 .55
 @headitem Name @tab Type @tab Default value @tab Description
@@ -1414,11 +1410,11 @@ added in.
 
 
 @node schematic.printing group
-@subsubsection @cfggroup{schematic.printing} group
+@subsubsection @code{schematic.printing} group
 @cindex schematic.printing group
 
 @since{1.9.10}
-Before 1.9.10 it was @cfggroup{gschem.printing} group.
+Before 1.9.10 it was @code{gschem.printing} group.
 
 @multitable @columnfractions .15 .15 .15 .55
 @headitem Name @tab Type @tab Default value @tab Description
@@ -1452,7 +1448,7 @@ depends on the current locale.  Described in the PWG 5101.1 standard
 
 
 @node schematic.backup group
-@subsubsection @cfggroup{schematic.backup} group
+@subsubsection @code{schematic.backup} group
 @cindex schematic.backup group
 
 @since{1.9.10}
@@ -1471,7 +1467,7 @@ schematic.  @since{1.9.10}
 
 
 @node schematic.attrib group
-@subsubsection @cfggroup{schematic.attrib} group
+@subsubsection @code{schematic.attrib} group
 @cindex schematic.attrib group
 
 @since{1.9.10}
@@ -1536,11 +1532,11 @@ memory).  @since{1.9.10}
 @cindex lepton-netlist configuration
 
 @node netlist group
-@subsubsection @cfggroup{netlist} group
+@subsubsection @code{netlist} group
 @cindex netlist group
 
 @since{1.9.10}
-Before 1.9.10 it was @cfggroup{gnetlist} group.
+Before 1.9.10 it was @code{gnetlist} group.
 
 @multitable @columnfractions .15 .15 .15 .55
 @headitem Name @tab Type @tab Default value @tab Description
@@ -1572,10 +1568,10 @@ be resolved using the chosen attribute.
 
 
 @node netlist.hierarchy group
-@subsubsection @cfggroup{netlist.hierarchy} group
+@subsubsection @code{netlist.hierarchy} group
 @cindex netlist.hierarchy group
 
-Before 1.9.10 it was @cfggroup{gnetlist.hierarchy} group.
+Before 1.9.10 it was @code{gnetlist.hierarchy} group.
 
 @multitable @columnfractions .15 .15 .15 .55
 @headitem Name @tab Type @tab Default value @tab Description
@@ -1654,7 +1650,7 @@ The following settings control the behaviour of @command{lepton-cli}
 utility when it's invoked with the @code{export} command.
 
 @node export group
-@subsubsection @cfggroup{export} group
+@subsubsection @code{export} group
 @cindex export group
 
 @multitable @columnfractions .15 .15 .15 .55
