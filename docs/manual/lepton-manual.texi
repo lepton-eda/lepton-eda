@@ -1733,6 +1733,7 @@ overrides the @code{paper} key (see the previous entry).
 
 @node Deprecated settings
 @section Deprecated settings
+@cindex deprecated settings
 
 @node Resources
 @section Resources
