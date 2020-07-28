@@ -246,24 +246,24 @@ will support mouse gesture recognition.
 @node Troubleshooting dependencies
 @section Troubleshooting dependencies
 
-Sometimes, @command{./configure} says it cannot find a library while
+Sometimes, @code{./configure} says it cannot find a library while
 the library is installed.  Really, it may just not find its headers
 which live in a separate package.  Many modern operating system
 distributions split a library into two packages:
 
 @enumerate
 @item
-A package with binary files, say a @command{libfoo} package, which
+A package with binary files, say a @file{libfoo} package, which
 contains the files necessary to @emph{run} programs which use
-@command{libfoo}.
+@file{libfoo}.
 @item
-A @emph{development} package, @command{libfoo-dev} or
-@command{libfoo-devel}, which contains the files necessary to
-@emph{compile} programs which use @command{libfoo}.
+A @dfn{development package}, @file{libfoo-dev} or @file{libfoo-devel},
+which contains the files necessary to @emph{compile} programs which
+use @file{libfoo}.
 @end enumerate
 
 If you're having problems, make sure that you have all of the
-necessary @emph{development} packages installed.
+necessary development packages installed.
 
 
 @node Installation from source
