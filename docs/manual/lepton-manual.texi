@@ -1750,14 +1750,18 @@ overrides the @code{paper} key (see the previous entry).
 @itemize
 @item
 @url{https://github.com/lepton-eda/lepton-eda, Lepton EDA home page}
+
 @item
 @url{https://gitter.im/Lepton-EDA/Lobby, gitter.im chat room}: get in
 touch with Lepton EDA users and developers
+
 @item
 @url{http://wiki.geda-project.org/geda:mailinglists, gEDA mailing
 lists}
+
 @item
 @url{http://wiki.geda-project.org, gEDA wiki}
+
 @item
 @url{https://graahnul-grom.github.io/, dmn's documentation page},
 links and resources for Lepton EDA users and developers
