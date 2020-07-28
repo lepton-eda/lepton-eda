@@ -298,7 +298,7 @@ make install
 
 Lepton uses the @command{git} version control system.  If you wish to
 try out the very latest version of Lepton, you will need to install
-some extra tools *in addition to* the ones listed above:
+some extra tools @emph{in addition to} the ones listed above:
 
 @itemize
 @item
