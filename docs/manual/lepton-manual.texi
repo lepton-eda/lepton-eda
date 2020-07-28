@@ -394,13 +394,14 @@ Starting with Lepton EDA release
 @itemize
 @item
 Most of the @file{gafrc} and @file{gschemrc} options are
-[deprecated](Deprecated-Settings#user-content-deprecated-settings) and
-replaced with new configuration parameters.  @xref{Legacy
-configuration, Legacy configuration settings} for remaining options.
+@ref{Deprecated settings, deprecated} and replaced with new
+configuration parameters.  @xref{Legacy configuration, Legacy
+configuration settings} for remaining options.
 @item
 All the
-[*gnetlistrc* options](https://github.com/graahnul-grom/lepton-eda/wiki/Deprecated-Settings#user-content-deprecated-gnetlistrc)
-are deprecated. Please stop using this legacy configuration file.
+@uref{https://github.com/graahnul-grom/lepton-eda/wiki/Deprecated-Settings#user-content-deprecated-gnetlistrc,
+@file{gnetlistrc} options} are deprecated. Please stop using this
+obsolete configuration file.
 @item
 Legacy names for @file{*.conf} configuration files are no longer used:
 instead of @file{geda.conf}, @file{geda-user.conf}, and
