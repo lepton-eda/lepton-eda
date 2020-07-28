@@ -442,7 +442,8 @@ in the specified Lepton EDA @code{release}, for example:
 @node gafrc
 @subsection @file{gafrc}
 
-Configuration file used by various tools in the Lepton EDA suite.
+@file{gafrc} is a configuration file used by various tools in the
+Lepton EDA suite.
 
 Files named @file{gafrc} are read from @file{~/.config/lepton-eda/}
 (user configuration) and from a directory where you run the lepton-eda
