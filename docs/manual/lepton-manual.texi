@@ -447,8 +447,8 @@ Lepton EDA suite.
 
 Files named @file{gafrc} are read from @file{~/.config/lepton-eda/}
 (user configuration) and from a directory where you run the lepton-eda
-tools (configuration for current directory). Expressions in this file
-control the following settings:
+tools (configuration for current directory). Expressions in
+@file{gafrc} files control the following settings:
 
 @itemize
 @item
@@ -460,45 +460,42 @@ attribute) used in hierarchical schematics.
 
 @item
 @code{(reset-component-library)}
+
 Clear the list of component libraries.
 
 @item
-@lisp
-(reset-source-library)
-@end lisp
+@code{(reset-source-library)}
+
 Clear the list of source libraries.
 
 @item
-@lisp
-(component-library @var{path} @var{name})
-@end lisp
+@code{(component-library @var{path} @var{name})}
 
 Add the directory @var{path} to the list of component libraries giving
 it a display name @var{name} which will be shown in the "Add
 Component" dialog in @command{lepton-schematic}, for example:
+
 @lisp
 (component-library "/home/dmn/sym" "MySymbols")
 @end lisp
 
 @item
-@lisp
-(component-library-search @var{path} @var{prefix})
-@end lisp
+@code{(component-library-search @var{path} @var{prefix})}
+
 Add the directory @var{path} recursively with all its sub-directories
 to the list of component libraries. Directories added with this
-command will be shown in the "Add Component"
-@command{lepton-schematic} dialog prefixed with the string
-@var{prefix}, for example:
+command will be shown in @command{lepton-schematic} in the "Add
+Component" dialog prefixed with the string @var{prefix}, for example:
 
 @lisp
 (component-library-search "/home/dmn/my-libs" "MyLibs::")
 @end lisp
 
 @item
-@lisp
-(source-library @var{path})
-@end lisp
+@code{(source-library @var{path})}
+
 Add the directory @var{path} to the list of source libraries.
+
 @item
 Color scheme used for exporting/printing by @code{lepton-cli export}
 and @command{lepton-schematic}'s @menuentry{File, Write Image...}  (if
@@ -507,10 +504,10 @@ menu commands.
 
 @itemize @minus
 @item
-@lisp
-(primitive-load @var{file})
-@end lisp
+@code{(primitive-load @var{file})}
+
 Load a color scheme from file @var{file}, for example:
+
 @lisp
 (primitive-load "/usr/share/lepton-eda/print-colormap-darkbg")
 @end lisp
