@@ -530,10 +530,10 @@ Expressions in this file control the following settings:
 Color scheme used to draw schematics.
 
 @lisp
-(primitive-load FILE)
+(primitive-load @var{file})
 @end lisp
 
-Load a color scheme from file `FILE`, for example:
+Load a color scheme from file @var{file}, for example:
 
 @lisp
 (primitive-load "/usr/share/lepton-eda/gschem-colormap-bw")
@@ -543,10 +543,10 @@ Load a color scheme from file `FILE`, for example:
 Custom keyboard shortcuts.
 
 @lisp
-(global-set-key KEY ACTION)
+(global-set-key @var{key} @var{action})
 @end lisp
 
-Assign key combination `KEY` to action @code{ACTION}, for example:
+Assign key combination @var{key} to action @var{action}, for example:
 @lisp
 (global-set-key "<Control><Shift>N" '&file-new-window)
 (global-set-key "A A" '&add-attribute )
@@ -564,7 +564,8 @@ keys.scm} files.
 @section Overview of the new configuration system
 
 Configuration parameters are always evaluated within a
-@emph{configuration context}.  Each context is associated with a
+@dfn{configuration context} which defines what configuration files are
+processed and the processing order.  Each context is associated with a
 configuration file (although the file does not necessarily need to
 exist).
 
@@ -592,9 +593,9 @@ contains system-wide settings
 @item
 configuration file:
 @url{https://github.com/lepton-eda/lepton-eda/blob/master/liblepton/lib/lepton-system.conf,
-@file{lepton-system.conf}} @since{1.9.10} (former
+@file{lepton-system.conf}} (@since{1.9.10} Formerly it was named
 @url{https://github.com/lepton-eda/lepton-eda/blob/master/liblepton/lib/geda-system.conf,
-@file{geda-system.conf}})
+@file{geda-system.conf}}.)
 @item
 configuration file location: @file{$PREFIX/share/lepton-eda/}
 (@env{$PREFIX} is the installation prefix, e.g. @file{/usr} or @file{/usr/local})
@@ -610,8 +611,8 @@ configuration file location: @file{$PREFIX/share/lepton-eda/}
 @item
 contains per-user settings
 @item
-configuration file: @file{lepton-user.conf} @since{1.9.10} (former
-@file{geda-user.conf})
+configuration file: @file{lepton-user.conf} (@since{1.9.10} Formerly
+it was named @file{geda-user.conf}.)
 @item
 configuration file location: @file{$XDG_CONFIG_HOME/lepton-eda/}
 (usually, @file{~/.config/lepton-eda/})
@@ -627,8 +628,8 @@ parent context: @samp{SYSTEM}
 @item
 contains per-project (per-directory) settings
 @item
-configuration file: @file{lepton.conf} @since{1.9.10} (former
-@file{geda.conf})
+configuration file: @file{lepton.conf} (@since{1.9.10} Formerly it
+was named @file{geda.conf}.)
 @item
 configuration file location: current directory (or directory specified
 by @option{--project})
@@ -636,14 +637,14 @@ by @option{--project})
 parent context: @samp{USER}
 @item
 @code{lepton-cli config} option to access this context:
-@option{--project[=PATH]} (@option{-p})
+@option{--project[=@var{path}]} (@option{-p})
 @end itemize
 
 @item CACHE
 @itemize
 @item
 contains program-specific settings (dialog geometry, command history,
-etc.; normally, you do not use it directly)
+etc.); normally, you do not use it directly
 @item
 configuration file: @file{gui.conf}
 @item
@@ -658,11 +659,12 @@ parent context: none
 @end table
 
 @dfn{Context inheritance} means that if particular configuration
-parameter is not found in current context, the value from the parent
-context will be used.  And if parameter is set in the child context it
-will override one set in the parent context(s).
+parameter is not found in some context, the value from its parent
+context is used instead.  And if parameter is set in the child context
+it will override one set in the parent context(s).
 
-Configuration file contains `groups` and `key=value` pairs, for example:
+Configuration file contains @samp{groups} and @samp{key=value} pairs,
+for example:
 
 @example
 @c ini
@@ -677,7 +679,7 @@ comments:
 # This is a comment
 @end example
 
-@command{lepton-cli} utility with the @option{config} command is used
+@command{lepton-cli} utility with the @code{config} command is used
 to read and write configuration settings:
 
 @example
@@ -691,21 +693,17 @@ respectively.
 
 For example, to get value of the @cfgkey{font} key from the
 @cfggroup{schematic.gui} group in the @samp{USER} configuration
-context, issue the following command:
+context, issue the following command, which will print the result to
+standard output:
 
 @example
 @c sh
-$ lepton-cli config --user "schematic.gui" "font"
+lepton-cli config --user "schematic.gui" "font"
+@print{} OpenGost Type B TT Regular
 @end example
 
-It will print the result to standard output:
-
-@example
-OpenGost Type B TT Regular
-@end example
-
-To set that value to `Monospace Regular` for configuration in the current
-directory, type:
+To set that value to @samp{Monospace Regular} for configuration in the
+current directory, type:
 
 @example
 @c sh
