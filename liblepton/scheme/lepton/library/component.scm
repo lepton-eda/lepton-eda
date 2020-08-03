@@ -37,6 +37,7 @@
   #:use-module (lepton core gettext)
   #:use-module (lepton core rc)
   #:use-module (lepton ffi)
+  #:use-module (lepton file-system)
   #:use-module (lepton log)
   #:use-module (lepton os)
 
@@ -59,17 +60,27 @@
   (name symbol-library-name set-symbol-library-name!)
   (path symbol-library-path set-symbol-library-path!))
 
-(define init-clib
+(define s_clib_init
   (pointer->procedure
    void
    (dynamic-func "s_clib_init" liblepton)
    '()))
 
+(define s_clib_add_directory
+  (pointer->procedure
+   '*
+   (dynamic-func "s_clib_add_directory" liblepton)
+   '(* *)))
+
 (define %component-libraries '())
 (define (component-libraries)
   %component-libraries)
 
+
 (define (add-component-library! path name)
+  "Adds the component library with specified PATH and NAME to the
+list of component libraries.  NAME is a descriptive name for
+library directory."
   (define (library-path-exists? path)
     (let loop ((libs %component-libraries))
       (and (not (null? libs))
@@ -83,13 +94,24 @@
                        file-name-separator-string
                        path)))
 
-  (if (library-path-exists? path)
-      (log! 'message (G_ "Library at ~S has been already added.") path)
-      (begin
-        (set! %component-libraries
-              (cons (make-symbol-library name (normalize-path path))
-                    %component-libraries))
-        (%component-library path name))))
+  ;; take care of any shell variables
+  (let ((expanded-path (normalize-path (expand-env-variables path))))
+
+    (if (directory? expanded-path)
+        (if (library-path-exists? expanded-path)
+            (log! 'message (G_ "Library at ~S has been already added.")
+                  expanded-path)
+            ;; If anything is OK, just add the new library.
+            (begin
+              (set! %component-libraries
+                    (cons (make-symbol-library name expanded-path)
+                          %component-libraries))
+              (s_clib_add_directory (string->pointer expanded-path)
+                                    (string->pointer name))))
+        ;; Report that path is invalid.
+        (log! 'warning
+              (G_ "Invalid path ~S passed to component-library.\n")
+              expanded-path))))
 
 
 (define (component-library-symbol-names path)
@@ -158,7 +180,7 @@
 (define (reset-component-library)
   "Reset component library and initialise it to an empty list."
   (set! %component-libraries '())
-  (init-clib))
+  (s_clib_init))
 
 
 

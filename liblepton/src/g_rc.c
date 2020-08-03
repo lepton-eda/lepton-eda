@@ -385,63 +385,6 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
 #undef HANDLER_DISPATCH
 }
 
-/*! \brief
- *  \par Function Description
- *
- *  \param [in] path 
- *  \param [in] name Optional descriptive name for library directory.
- *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
- */
-
-SCM_DEFINE (component_library, "%component-library", 1, 1, 0,
-            (SCM path, SCM name),
-            "Adds the component library with specified PATH and NAME to the list of component libraries.")
-{
-  gchar *string;
-  char *temp;
-  char *namestr = NULL;
-
-  SCM_ASSERT (scm_is_string (path), path,
-              SCM_ARG1, s_component_library);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  if (!scm_is_eq (name, SCM_UNDEFINED)) {
-    SCM_ASSERT (scm_is_string (name), name,
-		SCM_ARG2, s_component_library);
-    namestr = scm_to_utf8_string (name);
-    scm_dynwind_free(namestr);
-  }
-
-  /* take care of any shell variables */
-  temp = scm_to_utf8_string (path);
-  string = s_expand_env_variables (temp);
-  scm_dynwind_unwind_handler (g_free, string, SCM_F_WIND_EXPLICITLY);
-  free (temp);
-
-  /* invalid path? */
-  if (!g_file_test (string, G_FILE_TEST_IS_DIR)) {
-    fprintf(stderr,
-            _("Invalid path [%1$s] passed to component-library\n"),
-            string);
-    scm_dynwind_end();
-    return SCM_BOOL_F;
-  }
-
-  if (g_path_is_absolute (string)) {
-    s_clib_add_directory (string, namestr);
-  } else {
-    gchar *cwd = g_get_current_dir ();
-    gchar *temp;
-    temp = g_build_filename (cwd, string, NULL);
-    s_clib_add_directory (temp, namestr);
-    g_free(temp);
-    g_free(cwd);
-  }
-
-  scm_dynwind_end();
-  return SCM_BOOL_T;
-}
-
 /*! \brief Guile callback for adding library commands.
  *  \par Function Description
  *  Callback function for the "component-library-command" Guile
@@ -635,8 +578,7 @@ init_module_lepton_core_rc (void *unused)
   #include "g_rc.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_component_library,
-                s_component_library_command,
+  scm_c_export (s_component_library_command,
                 s_component_library_funcs,
                 s_scheme_directory,
                 NULL);
