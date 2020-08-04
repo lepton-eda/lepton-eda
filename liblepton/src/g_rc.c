@@ -385,67 +385,6 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
 #undef HANDLER_DISPATCH
 }
 
-/*! \brief Guile callback for adding library commands.
- *  \par Function Description
- *  Callback function for the "component-library-command" Guile
- *  function, which can be used in the rc files to add a command to
- *  the component library.
- *
- *  \param [in] listcmd command to get a list of symbols
- *  \param [in] getcmd  command to get a symbol from the library
- *  \param [in] name    Optional descriptive name for component source.
- *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise.
- */
-SCM_DEFINE (component_library_command, "%component-library-command", 3, 0, 0,
-            (SCM listcmd, SCM getcmd, SCM name),
-            "Creates a component library source called NAME (the third"
-"argument) driven by two user commands: LIST-COMMAND (the first"
-"argument) and GET-COMMAND (the second argument). The list command"
-"should return a list of component names in the source.  The get"
-"command should return symbol contents by specified component name."
-"Both commands should output their results to stdout.")
-{
-  const CLibSource *src;
-  gchar *lcmdstr, *gcmdstr;
-  char *tmp_str, *namestr;
-
-  SCM_ASSERT (scm_is_string (listcmd), listcmd, SCM_ARG1, 
-              s_component_library_command);
-  SCM_ASSERT (scm_is_string (getcmd), getcmd, SCM_ARG2, 
-              s_component_library_command);
-  SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
-              s_component_library_command);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-
-  /* take care of any shell variables */
-  /*! \bug this may be a security risk! */
-  tmp_str = scm_to_utf8_string (listcmd);
-  lcmdstr = s_expand_env_variables (tmp_str);
-  scm_dynwind_unwind_handler (g_free, lcmdstr, SCM_F_WIND_EXPLICITLY);
-  free (tmp_str); /* this should stay as free (allocated from guile) */
-
-  /* take care of any shell variables */
-  /*! \bug this may be a security risk! */
-  tmp_str = scm_to_utf8_string (getcmd);
-  gcmdstr = s_expand_env_variables (tmp_str);
-  scm_dynwind_unwind_handler (g_free, gcmdstr, SCM_F_WIND_EXPLICITLY);
-  free (tmp_str); /* this should stay as free (allocated from guile) */
-
-  namestr = scm_to_utf8_string (name);
-
-  src = s_clib_add_command (lcmdstr, gcmdstr, namestr);
-
-  free (namestr); /* this should stay as free (allocated from guile) */
-
-  scm_dynwind_end();
-
-  if (src != NULL) {
-    return SCM_BOOL_T;
-  }
-
-  return SCM_BOOL_F;
-}
 
 /*! \brief Guile callback for adding library functions.
  *  \par Function Description
@@ -578,8 +517,7 @@ init_module_lepton_core_rc (void *unused)
   #include "g_rc.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_component_library_command,
-                s_component_library_funcs,
+  scm_c_export (s_component_library_funcs,
                 s_scheme_directory,
                 NULL);
 }
