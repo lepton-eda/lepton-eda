@@ -35,7 +35,6 @@
   #:use-module (system foreign)
 
   #:use-module (lepton core gettext)
-  #:use-module (lepton core rc)
   #:use-module (lepton ffi)
   #:use-module (lepton file-system)
   #:use-module (lepton log)
@@ -77,6 +76,13 @@
    '*
    (dynamic-func "s_clib_add_command" liblepton)
    '(* * *)))
+
+(define s_clib_add_scm
+  (pointer->procedure
+   '*
+   (dynamic-func "s_clib_add_scm" liblepton)
+   '(* * *)))
+
 
 (define %component-libraries '())
 (define (component-libraries)
@@ -201,7 +207,22 @@ their results to stdout.  Returns #t on success, otherwise returns
                                             (string->pointer name))))))
 
 
-(define component-library-funcs %component-library-funcs)
+(define  (component-library-funcs list-function get-function name)
+  "The function can be used in Scheme RC files to add a set of
+Guile procedures for listing and generating symbols.  It creates a
+component library source called NAME (the third argument) driven
+by two user Scheme procedures: LIST-FUNCTION (the first argument)
+and GET-FUNCTION (the second argument). The list function should
+return a Scheme list of component names in the source.  The get
+function should return symbol contents by specified component name
+as a Scheme string in gEDA format or #f if the component name is
+unknown.  Both functions must be thunks, that is, take no
+arguments.  Returns #t on success, otherwise returns #f."
+  (not (null-pointer?
+        (s_clib_add_scm (scm->pointer list-function)
+                        (scm->pointer get-function)
+                        (string->pointer name)))))
+
 
 (define (reset-component-library)
   "Reset component library and initialise it to an empty list."

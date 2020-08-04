@@ -386,54 +386,6 @@ g_rc_parse_handler (TOPLEVEL *toplevel,
 }
 
 
-/*! \brief Guile callback for adding library functions.
- *  \par Function Description
- *  Callback function for the "component-library-funcs" Guile
- *  function, which can be used in the rc files to add a set of Guile
- *  procedures for listing and generating symbols.
- *
- *  \param [in] listfunc A Scheme procedure which takes no arguments
- *                       and returns a Scheme list of component names.
- *  \param [in] getfunc A Scheme procedure which takes a component
- *                      name as an argument and returns a symbol
- *                      encoded in a string in gEDA format, or the \b
- *                      \#f if the component name is unknown.
- *  \param [in] name    A descriptive name for this component source.
- *
- *  \returns SCM_BOOL_T on success, SCM_BOOL_F otherwise.
- */
-
-SCM_DEFINE (component_library_funcs, "%component-library-funcs", 3, 0, 0,
-            (SCM listfunc, SCM getfunc, SCM name),
-            "Creates a component library source called NAME (the third"
-"argument) driven by two user Scheme procedures: LIST-FUNCTION (the"
-"first argument) and GET-FUNCTION (the second argument). The list"
-"function should return a Scheme list of component names in the"
-"source.  The get function should return symbol contents by"
-"specified component name as a Scheme string or #f, if there is no"
-"such name in the list.")
-{
-  char *namestr;
-  SCM result = SCM_BOOL_F;
-
-  SCM_ASSERT (scm_is_true (scm_procedure_p (listfunc)), listfunc, SCM_ARG1,
-              s_component_library_funcs);
-  SCM_ASSERT (scm_is_true (scm_procedure_p (getfunc)), getfunc, SCM_ARG2,
-              s_component_library_funcs);
-  SCM_ASSERT (scm_is_string (name), name, SCM_ARG3, 
-              s_component_library_funcs);
-
-  namestr = scm_to_utf8_string (name);
-
-  if (s_clib_add_scm (listfunc, getfunc, namestr) != NULL) {
-    result = SCM_BOOL_T;
-  }
-
-  free (namestr);
-  return result;
-}
-
-
 /*! \brief Add a directory to the Guile load path.
  * \par Function Description
  * Prepends \a s_path to the Guile system '%load-path', after
@@ -517,8 +469,7 @@ init_module_lepton_core_rc (void *unused)
   #include "g_rc.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_component_library_funcs,
-                s_scheme_directory,
+  scm_c_export (s_scheme_directory,
                 NULL);
 }
 
