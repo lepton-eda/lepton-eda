@@ -307,3 +307,50 @@
       (begin
         (reset-component-library)
         (delete-file fname1)))))
+
+
+;;; Test component-library-command().
+(define script-contents "#!/usr/bin/env sh
+if [ -z \"$1\" ] ; then
+   echo \"Usage: $0 symname.sym\"
+   echo \"List symbols: $0 -l\"
+   echo \"Get symbol: $0 symname.sym\"
+   exit 255
+fi
+
+if test \"$1\" = \"-l\"; then
+   echo \"symname1.sym\"
+   echo \"symname2.sym\"
+else
+   if test \"$1\" = \"symname1.sym\"; then
+       # symname1.sym
+       echo \"v 20200604 2\"
+       echo \"L 100 100 200 200 3 0 0 0 -1 -1\"
+   else
+       # symname2.sym
+       echo \"v 20200604 2\"
+       echo \"P 300 300 0 300 1 0 1\"
+   fi
+fi
+")
+
+(let* ((script-name (tmpnam))
+       (get-command script-name)
+       (list-command (string-append script-name " -l")))
+
+  (with-output-to-file get-command
+    (lambda () (display script-contents)))
+
+  (chmod get-command #o755)
+
+  (component-library-command list-command get-command "make-sym-lib")
+
+  (let ((C1 (make-component/library "symname1.sym" '(0 . 0) 0 #f #f))
+        (C2 (make-component/library "symname2.sym" '(1000 . 1000) 0 #f #f)))
+
+    (test-group-with-cleanup "component-library-command"
+
+      (test-assert (component? C1))
+      (test-assert (component? C2))
+      ;; Clean up.
+      (delete-file get-command))))
