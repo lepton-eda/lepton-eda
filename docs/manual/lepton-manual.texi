@@ -46,8 +46,11 @@ Documentation License.''
 * Overview:: Overview of program components.
 * Installation:: Installation of the tool suite.
 * Configuration:: Configuration system.
+* lepton-schematic:: Lepton EDA schematic capture program.
 * lepton-netlist:: Lepton EDA netlister.
 * Development:: Useful information for developers.
+* gEDA file format:: File format currently in use.
+
 * Index::
 @end menu
 
@@ -1806,6 +1809,216 @@ gschem}
 @end itemize
 
 
+@node lepton-schematic
+@chapter Schematic capture
+@cindex lepton-schematic
+@cindex schematic capture
+
+@node Component libraries
+@section Component libraries
+@cindex component libraries
+
+The global @emph{component library} of a project is made up of a
+number of @emph{symbol libraries}, otherwise named @emph{component
+resources}, each of which in turn makes available a number of
+component @emph{symbols}.  Each resource may be either a directory on
+disk containing symbol files, a command in the system @env{PATH} which
+can generate symbol data (e.g. from a database), or a Scheme function
+which can do likewise.
+
+The component library system in Lepton manages component resources and
+symbols, and abstracts the interface to the underlying storage.
+
+A directory which contains one or more symbol files in gEDA file
+format may be used as a component resource.  Each symbol file should
+have a filename ending in @samp{.sym} (case insensitive).  A component
+resource based on a directory can be added using the functions
+@ref{component-library} or @ref{component-library-search}.  Symbol
+files with filenames starting with a period @samp{.} are ignored.
+
+An executable program in the system search path may be used as a
+component resource.  A component resource based on a command may
+be added using the function @ref{component-library-command}.
+
+Scheme functions may be used as a component resource as well.  A
+component resource based on Scheme functions may be added using the
+function @ref{component-library-funcs}.
+
+Each symbol is identified by its @emph{name}, which is stored in the
+saved schematic file.  The name must be a valid for storage in a
+Lepton schematic file as the @emph{basename} of a @emph{component} object.
+For symbols from directory resources, the filename of the symbol is
+taken as the symbol name.  For a command resource, the name may be any
+permissible string.  Guidelines to follow:
+
+@itemize
+@item
+Do not begin a symbol name with @samp{EMBEDDED}.
+@item
+Do not use whitespace, or any of the characters @samp{/:!*?}.
+@item
+Try to use unique names.
+@end itemize
+
+
+@node Component library setup
+@subsection Component library setup
+
+Component library functions are Scheme procedures that should be
+specified in one of @file{gafrc} files.  @xref{Configuration} for more
+information.  The following command can be used:
+
+@node component-library
+@subsubsection component-library
+@cindex component-library
+
+The function @code{component-library} defines a directory containing
+@emph{symbol} files as a component resource.  You should use it as
+follows:
+
+@lisp
+(component-library path)
+@end lisp
+
+@var{path} is a path to the directory you want to add as a component
+resource.
+
+@node component-library-search
+@subsubsection component-library-search
+@cindex component-library-search
+
+The function @code{component-library-search} is similar to
+@ref{component-library} as it also defines a component resource from a
+directory on disk.  However, it adds all the directories in it
+recursively as a tree of several component resources.  You should
+write it as follows:
+
+@lisp
+(component-library-search path)
+@end lisp
+
+Here @var{path} is a root directory from which you want to make a tree
+of component resources.
+
+
+@node component-library-command
+@subsubsection component-library-command
+@cindex component-library-command
+
+A program or set of programs can be used as a component resource.  The
+procedure used to add such a resource from a Lepton rc file is:
+
+@example
+(component-library-command list-command get-command name)
+@end example
+
+The list command will be executed with no further arguments, and
+should output a list of available symbol names on stdout.  The get
+command will have a symbol name appended to it as the final argument,
+and should output symbol data in @ref{gEDA file format} on stdout.
+
+If the command cannot successfully complete, it should exit with
+non-zero exit status.  Anything it has output on stdout will be
+ignored, and any stderr output displayed to the user.
+
+This is the contents of an example script:
+
+@example
+#!/usr/bin/env sh
+if [ -z "$1" ] ; then
+   echo "Usage: $0 symname.sym"
+   echo "List symbols: $0 -l"
+   echo "Get symbol: $0 symname.sym"
+   exit 255
+fi
+
+if test "$1" = "-l"; then
+   echo "symname1.sym"
+   echo "symname2.sym"
+else
+   if test "$1" = "symname1.sym"; then
+       # symname1.sym
+       echo "v 20200604 2"
+       echo "L 100 100 200 200 3 0 0 0 -1 -1"
+   else
+       # symname2.sym
+       echo "v 20200604 2"
+       echo "P 300 300 0 300 1 0 1"
+   fi
+fi
+@end example
+
+As can be seen from the code, the script can function as list
+command, if the option @option{-l} is given, or as get command, if
+file name is given.  Otherwise, if no arguments given, it exits with
+an error code.  If the script is named, say,
+@file{make-simple-syms.sh}, then the following code in @file{gafrc}
+file will make it work:
+
+@lisp
+(define list-command "make-simple-syms.sh")
+(define get-command (string-append list-command " -l"))
+(component-library-command list-command get-command "simple-cmd-lib")
+@end lisp
+
+Likewise, you can use various symbol generators written in various
+languages.
+
+@node component-library-funcs
+@subsubsection component-library-funcs
+@cindex component-library-funcs
+
+A set of Scheme procedures can be used as a component resource.  The
+procedure used to add such a resource from a Lepton RC file is:
+
+@lisp
+(component-library-funcs list-function get-function name)
+@end lisp
+
+@var{list-function} and @var{get-function} must both be Guile
+procedures.  @var{list-function} takes no arguments, and returns a
+list of symbol names.  @var{get-function} takes a symbol name as an
+argument, and returns symbol data in @ref{gEDA file format} in a
+string, or @code{#f} if not known.
+
+Thus, the user may take advantage of using currently available Scheme
+procedures for creating schematic objects.  For example:
+
+@lisp
+@include scm-component.scm
+@end lisp
+
+The code defines three symbols.  You can see that some steps are
+automated in the example for the first two of them: creating
+attributes and stroke parameter setting for line objects.  Some other
+things are obscure though, like @code{toplevel} stuff.  However, this
+is how it currently works.
+
+Put the code in some file and load it from your @file{gafrc}, e.g.:
+
+@lisp
+(primitive-load "scm-component.scm")
+@end lisp
+@noindent
+or put it directly to @file{gafrc}.
+
+
+@node reset-component-library
+@subsubsection reset-component-library
+@cindex reset-component-library
+
+@code{reset-component-library} initializes, i.e. empties the global
+component library.  Thus, the user can define a new set of component
+resources from scratch.  Its usage is simple:
+
+@lisp
+(reset-component-library)
+@end lisp
+
+Do it before using of other component library commands, such as
+@ref{component-library}.
+
+
 @node lepton-netlist
 @chapter Netlister
 @cindex lepton-netlist
@@ -2022,6 +2235,14 @@ Then, you can use the following command to fiddle with them in
 @example
 G_DEBUG=fatal_criticals gdb --args guile -s /usr/local/bin/lepton-schematic
 @end example
+
+@node gEDA file format
+@chapter gEDA file format
+@cindex gEDA file format
+
+The official @url{http://wiki.geda-project.org/geda:file_format_spec,
+gEDA file format page} contains comprehensive information about the
+file format.
 
 
 @node Index

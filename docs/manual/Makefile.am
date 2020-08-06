@@ -2,7 +2,7 @@ info_TEXINFOS = lepton-manual.texi
 
 AM_MAKEINFOHTMLFLAGS = --css-ref=lepton-manual.css
 
-EXTRA_DIST = lepton-manual.css
+EXTRA_DIST = lepton-manual.css scm-component.scm
 
 all: all-am html
 	$(MKDIR_P) $(builddir)/lepton-manual.html/
