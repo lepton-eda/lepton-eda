@@ -116,15 +116,15 @@ corresponding man pages for more information.
 
 @itemize
 @item
-convert_sym---convert a Viewlogic symbol/schematic to gEDA file
-format.
+convert_sym---convert a Viewlogic symbol/schematic to @ref{gEDA file
+format}.
 @item
-gmk_sym---create rectangular symbols in gEDA file format from a text
-file.
+gmk_sym---create rectangular symbols in @ref{gEDA file format} from a
+text file.
 @item
 olib---OrCAD(tm) library part to gEDA .sym converter.
 @item
-sarlacc_schem---convert OrCAD SDT IV files to gEDA file format.
+sarlacc_schem---convert OrCAD SDT IV files to @ref{gEDA file format}.
 @item
 smash_megafile---break a Viewlogic megafile into a million little
 pieces.
@@ -133,17 +133,17 @@ gnet_hier_verilog.sh---generate a non-flattened hierarchical Verilog
 netlist.
 @item
 pads_backannotate---process PADS PowerPCB .eco files to backannotate
-changes to schematics in gEDA file format.
+changes to schematics in @ref{gEDA file format}.
 @item
 sw2asc---converts a SWITCAP2 output file into ASCII data files that
 other tools can read.
 @item
-sch2eaglepos.sh---read a schematic in gEDA file format and attempt to
-extract the relative positions of the components in order to generate
-corresponding MOVE instructions for Eagle.
+sch2eaglepos.sh---read a schematic in @ref{gEDA file format} and
+attempt to extract the relative positions of the components in order
+to generate corresponding MOVE instructions for Eagle.
 @item
-sarlacc_sym---convert OrCAD text libraries to components in gEDA file
-format.
+sarlacc_sym---convert OrCAD text libraries to components in @ref{gEDA file
+format}.
 @end itemize
 
 The following contributed scripts are not covered in this manual
@@ -1829,8 +1829,8 @@ which can do likewise.
 The component library system in Lepton manages component resources and
 symbols, and abstracts the interface to the underlying storage.
 
-A directory which contains one or more symbol files in gEDA file
-format may be used as a component resource.  Each symbol file should
+A directory which contains one or more symbol files in @ref{gEDA file
+format} may be used as a component resource.  Each symbol file should
 have a filename ending in @samp{.sym} (case insensitive).  A component
 resource based on a directory can be added using the functions
 @ref{component-library} or @ref{component-library-search}.  Symbol
