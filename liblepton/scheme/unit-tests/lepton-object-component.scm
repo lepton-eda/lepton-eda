@@ -1,6 +1,7 @@
 ;;; Test Scheme procedures related to component objects.
 
-(use-modules (lepton attrib)
+(use-modules (ice-9 rdelim)
+             (lepton attrib)
              (lepton library)
              (lepton object)
              (lepton page))
@@ -310,29 +311,10 @@
 
 
 ;;; Test component-library-command().
-(define script-contents "#!/usr/bin/env sh
-if [ -z \"$1\" ] ; then
-   echo \"Usage: $0 symname.sym\"
-   echo \"List symbols: $0 -l\"
-   echo \"Get symbol: $0 symname.sym\"
-   exit 255
-fi
-
-if test \"$1\" = \"-l\"; then
-   echo \"symname1.sym\"
-   echo \"symname2.sym\"
-else
-   if test \"$1\" = \"symname1.sym\"; then
-       # symname1.sym
-       echo \"v 20200604 2\"
-       echo \"L 100 100 200 200 3 0 0 0 -1 -1\"
-   else
-       # symname2.sym
-       echo \"v 20200604 2\"
-       echo \"P 300 300 0 300 1 0 1\"
-   fi
-fi
-")
+(define script-contents
+  (with-input-from-file (string-append (getenv "abs_top_srcdir")
+                                       "/docs/manual/cmd-component.sh")
+    read-string))
 
 (let* ((script-name (tmpnam))
        (get-command script-name)
