@@ -75,7 +75,9 @@
         (with-output-to-string (lambda () (write %load-path))))
 
 
-(load-extension "../../liblepton/src/liblepton" "liblepton_init")
+(load-extension (string-append (getenv "abs_top_builddir")
+                               "/liblepton/src/liblepton")
+                "liblepton_init")
 (define with-toplevel (@@ (lepton core toplevel) %with-toplevel))
 (define make-toplevel (@@ (lepton core toplevel) %make-toplevel))
 
