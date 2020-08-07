@@ -1973,6 +1973,11 @@ attributes and stroke parameter setting for line objects.  Some other
 things are obscure though, like @code{toplevel} stuff.  However, this
 is how it currently works.
 
+You may also notice that the last symbol, @samp{dummy.sym}, is defined
+just as a string in the @ref{gEDA file format}.  You can do so as
+well, though either you lose any automation, or you have to deal with
+strings instead of Lepton Scheme objects.
+
 Put the code in some file and load it from your @file{gafrc}, e.g.:
 
 @lisp

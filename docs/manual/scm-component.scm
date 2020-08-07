@@ -60,14 +60,22 @@
      (let ((page (thunk)))
        (page->string page)))))
 
+(define dummy-sym-contents
+  "v 20200604 2
+B 0 0 500 500 3 10 1 0 -1 -1 0 -1 -1 -1 -1 -1
+T 0 600 21 6 1 0 0 0 1
+refdes=R?")
+
 (define (list-function)
   '("my-gnd.sym"
-    "my-vss.sym"))
+    "my-vss.sym"
+    "dummy.sym"))
 
 (define (get-function symbol-name)
   (cond
    ((string=? symbol-name "my-gnd.sym") (thunk->string make-gnd-symbol))
    ((string=? symbol-name "my-vss.sym") (thunk->string make-vss-symbol))
+   ((string=? symbol-name "dummy.sym") dummy-sym-contents)
    (else #f)))
 
 
