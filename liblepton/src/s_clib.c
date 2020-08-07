@@ -74,19 +74,19 @@
  *
  *  \section libcmds Library Commands
  *
- *  A program or set of programs can be used as a component source.  The procedure used to add such a source from a gEDA rc file is:
+ *  A program or set of programs can be used as a component
+ *  source.  The procedure used to add such a source from a gEDA
+ *  rc file is:
  *
  *  <code>
  *  (component-library-command listcmd getcmd name)
  *  </code>
  *
- *  This is implemented by g_rc_component_library_command(), which is
- *  a wrapper for s_clib_add_command().
- *
- *  The list command will be executed with no further arguments, and
- *  should output a list of available symbol names on stdout.  The get
- *  command will have a symbol name appended to it as the final
- *  argument, and should output gEDA symbol data on stdout.
+ *  The list command will be executed with no further arguments,
+ *  and should output a list of available symbol names on stdout.
+ *  The get command will have a symbol name appended to it as the
+ *  final argument, and should output symbol data in the gEDA file
+ *  format on stdout.
  *
  *  If the command cannot successfully complete, it should exit with
  *  non-zero exit status.  Anything it has output on stdout will be
@@ -95,19 +95,17 @@
  *  \section libscms Library Scheme Procedures
  *
  *  A set of Scheme procedures can be used as a component source.  The
- *  procedure used to add such a source from a gEDA rc file is:
+ *  procedure used to add such a source from a rc file is:
  *
  *  <code>
  *  (component-library-funcs listfunc getfunc name)
  *  </code>
  *
- *  This is implemented by g_rc_component_library_funcs(), which is a
- *  wrapper for s_clib_add_scm().
- *
  *  \b listfunc and \b getfunc must both be Guile procedures. \b
  *  listfunc takes no arguments, and returns a list of symbol
- *  names. \b getfunc takes a symbol name as an argument, and returns
- *  gEDA symbol data in a string, or \b \#f if not known.
+ *  names. \b getfunc takes a symbol name as an argument, and
+ *  returns symbol data as a string in the gEDA file format, or \b
+ *  \#f if not known.
  */
 
 #include <config.h>
