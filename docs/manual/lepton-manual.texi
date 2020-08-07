@@ -1827,7 +1827,9 @@ can generate symbol data (e.g. from a database), or a Scheme function
 which can do likewise.
 
 The component library system in Lepton manages component resources and
-symbols, and abstracts the interface to the underlying storage.
+symbols, and abstracts the interface to the underlying storage.  The
+libraries are used by all Lepton tools based on the code of the
+@code{liblepton} library.
 
 A directory which contains one or more symbol files in @ref{gEDA file
 format} may be used as a component resource.  Each symbol file should
@@ -1865,8 +1867,15 @@ Try to use unique names.
 @subsection Component library setup
 
 Component library functions are Scheme procedures that should be
-specified in one of @file{gafrc} files.  @xref{Configuration} for more
-information.  The following command can be used:
+specified in one of @file{gafrc} files.  @xref{Legacy configuration}
+for more information.
+
+Environment variables are expanded in all component library functions
+working with paths.  You can use, e.g. @samp{$@{HOME@}/lib/path} to
+specify the directory you need.  You may form the path names with any
+Scheme functions available as well.
+
+The following commands are available:
 
 @node component-library
 @subsubsection component-library
@@ -1886,8 +1895,13 @@ or
 @end lisp
 
 @var{path} is a path to the directory you want to add as a component
-resource.  @var{name} is optional, if it is omitted, @var{path} is
-used instead.  Environment variables in @var{path} are expanded.
+resource.  Environment variables in @var{path} are expanded.  Using
+this function is convenient if you want each of your library to have a
+unique descriptive name.  It can be specified with the second argument
+@var{name}.  The name is optional, if it is omitted, @var{path} is
+used instead.  The name will be displayed in the @samp{Select
+component} window of @command{lepton-schematic}.  Obviously, it is
+useless for CLI Lepton tools.
 
 
 @node component-library-search
@@ -1897,8 +1911,12 @@ used instead.  Environment variables in @var{path} are expanded.
 The function @code{component-library-search} is similar to
 @ref{component-library} as it also defines a component resource from a
 directory on disk.  However, it adds all the directories in it
-recursively as a tree of several component resources.  You should
-write it as follows:
+recursively as a tree of several component resources.  This approach
+is good when you don't want to list each separate subdirectory in the
+root directory.  But then you won't be able to specify unique names
+for the subdirectories.
+
+The usage is as follows:
 
 @lisp
 (component-library-search path)
@@ -2009,14 +2027,30 @@ or put it directly to @file{gafrc}.
 
 @code{reset-component-library} initializes, i.e. empties the global
 component library.  Thus, the user can define a new set of component
-resources from scratch.  Its usage is simple:
+resources from scratch.  For example, sometimes it is convenient to
+get rid of default symbols in the library window of
+@command{lepton-schematic} and work only with those in your own custom
+libraries.
+
+Use the command before other component library commands, such as
+@ref{component-library}.
+
+Supposed you want some of your projects to use only special symbol
+libraries, then the typical usage is as follows.  First reset all
+libraries, then populate the component library with your directories,
+e.g.:
 
 @lisp
 (reset-component-library)
+
+(component-library-search "$@{HOME@}/lepton/symbols")
 @end lisp
 
-Do it before using of other component library commands, such as
-@ref{component-library}.
+The good place to do so is @file{gafrc} in your project's directory.
+However, you can also disable default libraries completely by writing
+such lines in @file{gafrc} in the directory with your user's settings.
+@xref{Legacy configuration} for more information on configuration
+paths.
 
 
 @node lepton-netlist
