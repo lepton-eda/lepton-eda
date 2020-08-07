@@ -1879,9 +1879,16 @@ follows:
 @lisp
 (component-library path)
 @end lisp
+@noindent
+or
+@lisp
+(component-library path name)
+@end lisp
 
 @var{path} is a path to the directory you want to add as a component
-resource.
+resource.  @var{name} is optional, if it is omitted, @var{path} is
+used instead.  Environment variables in @var{path} are expanded.
+
 
 @node component-library-search
 @subsubsection component-library-search
