@@ -1924,39 +1924,18 @@ ignored, and any stderr output displayed to the user.
 This is the contents of an example script:
 
 @example
-#!/usr/bin/env sh
-if [ -z "$1" ] ; then
-   echo "Usage: $0 symname.sym"
-   echo "List symbols: $0 -l"
-   echo "Get symbol: $0 symname.sym"
-   exit 255
-fi
-
-if test "$1" = "-l"; then
-   echo "symname1.sym"
-   echo "symname2.sym"
-else
-   if test "$1" = "symname1.sym"; then
-       # symname1.sym
-       echo "v 20200604 2"
-       echo "L 100 100 200 200 3 0 0 0 -1 -1"
-   else
-       # symname2.sym
-       echo "v 20200604 2"
-       echo "P 300 300 0 300 1 0 1"
-   fi
-fi
+@include cmd-component.sh
 @end example
 
-As can be seen from the code, the script can function as list
-command, if the option @option{-l} is given, or as get command, if
-file name is given.  Otherwise, if no arguments given, it exits with
-an error code.  If the script is named, say,
-@file{make-simple-syms.sh}, then the following code in @file{gafrc}
-file will make it work:
+As can be seen from the code, the script can function as list command,
+if the option @option{-l} is given, or as get command, if file name is
+given.  Otherwise, if no arguments given, it exits with an error code.
+If the script is named, say, @file{cmd-component.sh}, then the
+following code in @file{gafrc} file will define a new component
+library:
 
 @lisp
-(define list-command "make-simple-syms.sh")
+(define list-command "cmd-component.sh")
 (define get-command (string-append list-command " -l"))
 (component-library-command list-command get-command "simple-cmd-lib")
 @end lisp
