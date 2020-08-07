@@ -219,8 +219,7 @@ and GET-FUNCTION (the second argument). The list function should
 return a Scheme list of component names in the source.  The get
 function should return symbol contents by specified component name
 as a Scheme string in gEDA format or #f if the component name is
-unknown.  Both functions must be thunks, that is, take no
-arguments.  Returns #t on success, otherwise returns #f."
+unknown.  Returns #t on success, otherwise returns #f."
   (not (null-pointer?
         (s_clib_add_scm (scm->pointer list-function)
                         (scm->pointer get-function)
