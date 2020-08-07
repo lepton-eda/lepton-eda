@@ -179,6 +179,9 @@ library directory."
 
 
 (define* (component-library path #:optional name)
+  "Adds a component library from PATH optionally named NAME.  If
+name is omitted, PATH is used as name instead.  Environment
+variables in PATH are expanded."
   ;; Expand environment variables here, too.  They are expanded
   ;; when the procedure is called in component-library-search, but
   ;; in other cases it is not so.
