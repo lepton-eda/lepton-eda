@@ -1965,9 +1965,10 @@ procedure used to add such a resource from a Lepton RC file is:
 
 @var{list-function} and @var{get-function} must both be Guile
 procedures.  @var{list-function} takes no arguments, and returns a
-list of symbol names.  @var{get-function} takes a symbol name as an
-argument, and returns symbol data in @ref{gEDA file format} in a
-string, or @code{#f} if not known.
+list of symbol names as Scheme strings.  @var{get-function} takes a
+symbol name as an argument, and returns symbol data in @ref{gEDA file
+format} in a Scheme string, or @code{#f} if not known.  The @var{name}
+argument specifies the name of the new library.
 
 Thus, the user may take advantage of using currently available Scheme
 procedures for creating schematic objects.  For example:
