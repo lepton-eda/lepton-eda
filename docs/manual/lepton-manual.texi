@@ -1903,9 +1903,15 @@ write it as follows:
 @lisp
 (component-library-search path)
 @end lisp
+@noindent
+or
+@lisp
+(component-library-search path prefix)
+@end lisp
 
 Here @var{path} is a root directory from which you want to make a tree
-of component resources.
+of component resources.  If optional @var{prefix} is specified, it
+will be prepended to the names of the new libraries.
 
 
 @node component-library-command
