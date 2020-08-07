@@ -1913,16 +1913,18 @@ of component resources.
 @cindex component-library-command
 
 A program or set of programs can be used as a component resource.  The
-procedure used to add such a resource from a Lepton rc file is:
+procedure used to add such a resource from a Lepton RC file is:
 
 @example
 (component-library-command list-command get-command name)
 @end example
 
-The list command will be executed with no further arguments, and
-should output a list of available symbol names on stdout.  The get
-command will have a symbol name appended to it as the final argument,
-and should output symbol data in @ref{gEDA file format} on stdout.
+The code adds a new library named @var{name}.  The @var{list-command}
+argument specifies a name of the program that will be executed with no
+further arguments, and should output a list of available symbol names
+on stdout.  The @var{get-command} argument specifies another program
+that should take a symbol name as its only argument, and output symbol
+data in @ref{gEDA file format} on stdout.
 
 If the command cannot successfully complete, it should exit with
 non-zero exit status.  Anything it has output on stdout will be
