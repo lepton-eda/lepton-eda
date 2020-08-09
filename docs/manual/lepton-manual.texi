@@ -226,6 +226,7 @@ Netlister
 
 * Allegro backend::
 * BOM backend::
+* PADS backend::
 
 lepton-cli - Lepton command-line utility
 
