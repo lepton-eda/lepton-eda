@@ -228,6 +228,7 @@ Netlister
 * BOM backend::
 * Cascade backend::
 * PADS backend::
+* Switcap backend::
 
 lepton-cli - Lepton command-line utility
 
