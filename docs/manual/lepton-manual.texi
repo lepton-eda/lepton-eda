@@ -2093,14 +2093,7 @@ Then, you can use the following command to fiddle with them in
 G_DEBUG=fatal_criticals gdb --args guile -s /usr/local/bin/lepton-schematic
 @end example
 
-@node gEDA file format
-@chapter gEDA file format
-@cindex gEDA file format
-
-The official @url{http://wiki.geda-project.org/geda:file_format_spec,
-gEDA file format page} contains comprehensive information about the
-file format.
-
+@include geda-file-format-spec.texi
 
 @node Index
 @unnumbered Index

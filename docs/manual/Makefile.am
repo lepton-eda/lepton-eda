@@ -1,12 +1,14 @@
 info_TEXINFOS = lepton-manual.texi
+lepton_manual_TEXINFOS = \
+	geda-file-format-spec.texi \
+	lepton-schematic.texi
 
 AM_MAKEINFOHTMLFLAGS = --css-ref=lepton-manual.css
 
 EXTRA_DIST = \
 	lepton-manual.css \
 	scm-component.scm \
-	cmd-component.sh \
-	lepton-schematic.texi
+	cmd-component.sh
 
 all: all-am html
 	$(MKDIR_P) $(builddir)/lepton-manual.html/

@@ -1,0 +1,1847 @@
+@node gEDA file format
+@chapter gEDA/gaf File Format Document
+@cindex gEDA file format
+
+The origin of this document is
+@url{http://wiki.geda-project.org/geda:file_format_spec, gEDA file
+format page}.
+
+
+by: Ales V. Hvezda, @email{ahvezda@@geda.seul.org}
+
+This document is released under
+@url{http://www.gnu.org/copyleft/fdl.html, GFDL}
+
+December 31st, 2003
+
+
+@node File format overview
+@section Overview
+
+This file is the official documentation for the file formats in
+gEDA/gaf (gschem And Friends). The primary file format used in
+gEDA/gaf is the schematic/symbol format. Files which end with .sch or
+.sym are schematics or symbol files. Until there is another file type
+in gEDA/gaf, then this document will only cover the symbol/schematic
+file format.
+
+
+This file format document is current as of gEDA/gaf version
+20040111. This document covers file format version 1 and 2.
+
+
+Note, this file format and any other file formats associated with gEDA
+are placed under the General Public License (GPL) version 2.0. The
+gEDA/gaf symbol and schematic file format is Copyright (C) 1998-2004
+Ales Hvezda.
+
+
+@node Coordinate space
+@section Coordinate Space
+
+All coordinates are in mils (1/1000 of an inch). This is an arbitrary
+decision. Remember in there is no concept of physical
+lengths/dimensions in schematics and symbols (for schematic capture
+only).
+
+@itemize
+@item
+Origin is in lower left hand corner.
+
+@item
+The size of the coordinate space is unlimited, but it is recommended
+that all objects stay within (120.0, 90.0) (x, y inches).
+
+@item
+It is generally advisable to have positive x and y coordinates,
+however, negative coordinates work too, but not recommended.
+
+@end itemize
+
+
+The following figure shows how the coordinate space is setup:
+
+@c @image{coordinate-space}
+
+X axis increases going to the right. Y axis increase going
+up. Coordinate system is landscape and corresponds to a sheet of paper
+turned on its side.
+
+
+@node Filenames
+@section Filenames
+
+Symbols end in .sym. The only symbol filename convention that is used
+in gEDA/gaf is that if there are multiple instances of a symbol with
+the same name (like a 7400), then a -1, -2, -3, ... -N suffix is added
+to the end of the filename. Example: 7400-1.sym, 7400-2.sym,
+7400-3.sym...
+
+Schematics end in .sch. There used to be a schematic filename
+convention (adding a -1 .. -N to the end of the basename), but this
+convention is now obsolete. Schematic filenames can be anything that
+makes sense to the creator.
+
+
+@node Object types
+@section Object types
+
+A schematic/symbol file for gEDA/gaf consists of:
+
+@itemize
+@item
+A version (v) as the first item in the file. This is required.
+
+@item
+Any number of objects and the correct data. Objects are specified by
+an ``object type''
+
+@item
+Most objects are a single line, however text objects are two lines
+long.
+
+@item
+No blank lines at the end of the file (these are ignored by the tools)
+
+@item
+For all enumerated types in the gEDA/gaf file formats, the field takes
+on the numeric value.
+
+@end itemize
+
+The ``object type'' id is a single letter and this id must start in
+the first column. The object type id is case sensitive.
+
+The schematic and symbol files share the same file layout. A symbol is
+nothing more than a collection of primitive objects (lines, boxes,
+circles, arcs, text, and pins). A schematic is a collection of symbols
+(components), nets, and buses.
+
+The following sections describe the specifics of each recognized
+object type. Each section has the name of the object, which file type
+(sch/sym) the object can appear in, the format of the data, a
+description of each individual field, details and caveats of the
+fields, and finally an example with description.
+
+For information on the color index (which is used in practically all
+objects), see the Color section.
+
+@node version
+@subsection version
+
+Valid in: Schematic and Symbol files
+
+
+@code{@strong{type version fileformat_version}}
+@multitable @columnfractions .2 .2 .2 .4
+@headitem
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+# @tab type @tab char @tab v
+
+@item
+1 @tab version @tab int @tab version of gEDA/gaf that wrote this file
+
+@item
+2 @tab fileformat_version @tab int @tab gEDA/gaf file format version
+number
+
+@end multitable
+
+@itemize
+@item
+The type is a lower case ``v'' (as in Victor).
+
+@item
+This object must be in every file used or created by the gEDA/gaf
+tools.
+
+@item
+The format of the first version field is YYYYMMDD.
+
+@item
+The version number is not an arbitrary timestamp. Do not make up a
+version number and expect the tools to behave properly.
+
+@item
+The ``version of gEDA/gaf that wrote this file'' was used in all
+versions of gEDA/gaf up to 20030921 as the file formats version. This
+field should no longer be used to determine the file format. It is
+used for information purposes only now.
+
+@item
+Starting at and after gEDA/gaf version 20031004, the fileformat
+version field is used to determine the file format version. All file
+format code should key off of this field.
+
+@item
+fileformat version increases when the file format changes.
+
+@item
+The starting point for fileformat version was 1. The current
+fileformat is 2.
+
+@item
+fileformat version is just an integer with no minor number.
+
+@item
+Development versions include: 19990601, 19990610, 19990705, 19990829,
+19990919, 19991011, 20000220, 20000704, 20001006, 20001217, 20010304,
+20010708, 20010722, 20020209, 20020414, 20020527, 20020825, 20021103,
+20030223, 20030525, 20030901, 20040111, 20040710, 20041228, 20050313,
+20050820, 20060123, 20060824, 20060906, 20061020, 20070216, 20070705,
+20070708, 20070818, 20071229, 20080110, 20080127, 20080706, 20081220,
+20081221, 20090328, 20090829, 20090830, 20110116, 20110619, 20111231
+
+@item
+Stable versions include: 20070526, 20070626, 20070902, 20071231,
+20080127, 20080929, 20081220, 20081231, 20091004, 20100214, 20110115
+
+@item
+CVS or test versions (should not be used): 20030921, 20031004,
+20031019, 20031231, 20050814
+
+@item
+Keep in mind that each of the above listed versions might have had
+file format variations. This document only covers the last version's
+file format.
+
+@end itemize
+
+
+Example:
+@example
+v 20040111 1
+@end example
+
+
+@node line
+@subsection line
+
+Valid in: Schematic and Symbol files
+
+
+@code{@strong{type x1 y1 x2 y2 color width capstyle dashstyle
+dashlength dashspace}}
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+# @tab type @tab char @tab L
+
+@item
+1 @tab x1 @tab int/mils @tab First X coordinate
+
+@item
+2 @tab y1 @tab int/mils @tab First Y coordinate
+
+@item
+3 @tab x2 @tab int/mils @tab Second X coordinate
+
+@item
+4 @tab y2 @tab int/mils @tab Second Y coordinate
+
+@item
+5 @tab color @tab int @tab Color index
+
+@item
+6 @tab width @tab int/mils @tab Width of line
+
+@item
+7 @tab capstyle @tab int @tab Line cap style
+
+@item
+8 @tab dashstyle @tab int @tab Type of dash style
+
+@item
+9 @tab dashlength @tab int/mils @tab Length of dash
+
+@item
+10 @tab dashspace @tab int/mils @tab Space inbetween dashes
+
+@end multitable
+
+@itemize
+@item
+The capstyle is an enumerated type:
+@itemize
+@item
+END NONE = 0
+
+@item
+END SQUARE = 1
+
+@item
+END ROUND = 2
+
+@end itemize
+
+@item
+The dashstyle is an enumerated type:
+@itemize
+@item
+TYPE SOLID = 0
+
+@item
+TYPE DOTTED = 1
+
+@item
+TYPE DASHED = 2
+
+@item
+TYPE CENTER = 3
+
+@item
+TYPE PHANTOM = 4
+
+@end itemize
+
+@item
+The dashlength parameter is not used for TYPE SOLID and TYPE
+DOTTED. This parameter should take on a value of -1 in these cases.
+
+@item
+The dashspace parameter is not used for TYPE SOLID. This parameter
+should take on a value of -1 in these case.
+
+@end itemize
+
+
+Example:
+@example
+L 23000 69000 28000 69000 3 40 0 1 -1 75
+@end example
+
+A line segment from (23000, 69000) to (28000, 69000) with color index
+3, 40 mils thick, no cap, dotted line style, and with a spacing of 75
+mils in between each dot.
+
+
+@node picture
+@subsection picture
+
+Valid in: Schematic and Symbol files
+
+
+@code{@strong{type x1 y1 width height angle mirrored embedded
+filename
+[encoded picture data
+encoded picture end]}}
+
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+# @tab type @tab char @tab G
+
+@item
+1 @tab x @tab int/mils @tab Lower left X coordinate
+
+@item
+2 @tab y @tab int/mils @tab Lower left Y coordinate
+
+@item
+3 @tab width @tab int/mils @tab Width of the picture
+
+@item
+4 @tab height @tab int/mils @tab Height of the picture
+
+@item
+5 @tab angle @tab int/degrees @tab Angle of the picture
+
+@item
+6 @tab mirrored @tab char @tab Mirrored or normal picture
+
+@item
+7 @tab embedded @tab char @tab Embedded or link to the picture file
+
+@item
+8 @tab filename @tab string @tab path and filename of a not embedded
+picture
+
+@item
+9 @tab encoded picture data @tab string @tab Serialized picture
+encoded using base64
+
+@item
+10 @tab encoded picture end @tab string @tab A line containing only a
+dot character
+
+@end multitable
+
+@itemize
+@item
+This object is a picture object. The first line contains all the
+picture parameters, and the second line is the path and filename of
+the picture. The filename is not used if the picture is embedded.
+
+@item
+The angle of the picture can only take on one of the following values:
+0, 90, 180, 270.
+
+@item
+The mirrored field is an enumerated type:
+@itemize
+@item
+NOT MIRRORED = 0
+
+@item
+MIRRORED = 1
+
+@end itemize
+
+@item
+The embedded field is an enumerated type:
+@itemize
+@item
+NOT EMBEDDED = 0
+
+@item
+EMBEDDED = 1 (not yet supported)
+
+@end itemize
+
+@item
+The encoded picture and encoded picture end fields are only in the
+file if the picture is embedded in the schematic:
+@itemize
+@item
+encoded picture data: This is a multiple line field. The picture is
+serialized and then encoded using base64. This way the encoded data
+uses only printable characters. This field is the result of these two
+operations.
+
+@item
+encoded picture end : A line containing only a single dot @samp{.}
+character marks the end of the encoded picture data.
+
+@end itemize
+
+@end itemize
+
+
+Example 1:
+@example
+G 16900 35800 1400 2175 0 0 0
+../bitmaps/logo.jpg
+@end example
+
+A picture object with the lower left corner at (16900, 35800). The
+width of the image is 1400 mils, and its height is 2175 mils. The
+picture rotation is 0 degrees and the picture is not mirrored, neither
+embedded.
+
+The picture path and filename is showed in the second line.
+
+Example 2:
+@example
+G 16900 35800 1400 2175 0 0 1
+../bitmaps/logo.jpg
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+.
+@end example
+
+A picture object with the lower left corner at (16900, 35800). The
+width of the image is 1400 mils, and its height is 2175 mils.
+
+The picture rotation is 0 degrees, it is not mirrored, and it is
+embedded.
+
+The picture path and filename is showed in the second line. Since this
+is an embedded picture, the filename and path are not used.
+
+The encoded picture data is only an example (it is not real data). The
+last line containing a single dot @samp{.} character marks the end of
+the encoded picture data.
+
+
+@node box
+@subsection box
+
+Valid in: Schematic and Symbol files
+
+
+@code{@strong{type x y width height color width capstyle dashstyle
+dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2}}
+
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+# @tab type @tab char @tab B
+
+@item
+1 @tab x @tab int/mils @tab Lower left hand X coordinate
+
+@item
+2 @tab y @tab int/mils @tab Lower left hand Y coordinate
+
+@item
+3 @tab width @tab int/mils @tab Width of the box (x direction)
+
+@item
+4 @tab height @tab int/mils @tab Height of the box (y direction)
+
+@item
+5 @tab color @tab int @tab Color index
+
+@item
+6 @tab width @tab int/mils @tab Width of lines
+
+@item
+7 @tab capstyle @tab int/mils @tab Line cap style
+
+@item
+8 @tab dashstyle @tab int @tab Type of dash style
+
+@item
+9 @tab dashlength @tab int/mils @tab Length of dash
+
+@item
+10 @tab dashspace @tab int/mils @tab Space inbetween dashes
+
+@item
+11 @tab filltype @tab int @tab Type of fill
+
+@item
+12 @tab fillwidth @tab int/mils @tab Width of the fill lines
+
+@item
+13 @tab angle1 @tab int/degrees @tab First angle of fill
+
+@item
+14 @tab pitch1 @tab int/mils @tab First pitch/spacing of fill
+
+@item
+15 @tab angle2 @tab int/degrees @tab Second angle of fill
+
+@item
+16 @tab pitch2 @tab int/mils @tab Second pitch/spacing of fill
+
+@end multitable
+
+@itemize
+@item
+The capstyle is an enumerated type:
+@itemize
+@item
+END NONE = 0
+
+@item
+END SQUARE = 1
+
+@item
+END ROUND = 2
+
+@end itemize
+
+@item
+The dashstyle is an enumerated type:
+@itemize
+@item
+TYPE SOLID = 0
+
+@item
+TYPE DOTTED = 1
+
+@item
+TYPE DASHED = 2
+
+@item
+TYPE CENTER = 3
+
+@item
+TYPE PHANTOM = 4
+
+@end itemize
+
+@item
+The dashlength parameter is not used for TYPE SOLID and TYPE
+DOTTED. This parameter should take on a value of -1 in these cases.
+
+@item
+The dashspace parameter is not used for TYPE SOLID. This parameter
+should take on a value of -1 in these case.
+
+@item
+The filltype parameter is an enumerated type:
+@itemize
+@item
+FILLING HOLLOW = 0
+
+@item
+FILLING FILL = 1
+
+@item
+FILLING MESH = 2
+
+@item
+FILLING HATCH = 3
+
+@item
+FILLING VOID = 4 unused
+
+@end itemize
+
+@item
+If the filltype is 0 (FILLING HOLLOW), then all the fill parameters
+should take on a value of -1.
+
+@item
+The fill type FILLING FILL is a solid color fill.
+
+@item
+The two pairs of pitch and spacing control the fill or hatch if the
+fill type is FILLING MESH.
+
+@item
+Only the first pair of pitch and spacing are used if the fill type is
+FILLING HATCH.
+
+@end itemize
+
+
+Example:
+@example
+B 33000 67300 2000 2000 3 60 0 2 75 50 0 -1 -1 -1 -1 -1
+@end example
+
+A box with the lower left hand corner at (33000, 67300) and a width
+and height of (2000, 2000), color index 3, line width of 60 mils, no
+cap, dashed line type, dash length of 75 mils, dash spacing of 50
+mils, no fill, rest parameters unset.
+
+
+@node circle
+@subsection circle
+
+Valid in: Schematic and Symbol files
+
+
+@code{@strong{type x y radius color width capstyle dashstyle
+dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2}}
+
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+# @tab type @tab char @tab V
+
+@item
+1 @tab x @tab int/mils @tab Center X coordinate
+
+@item
+2 @tab y @tab int/mils @tab Center Y coordinate
+
+@item
+3 @tab radius @tab int/mils @tab Radius of the circle
+
+@item
+4 @tab color @tab int @tab Color index
+
+@item
+5 @tab width @tab int/mils @tab Width of circle line
+
+@item
+6 @tab capstyle @tab int/mils @tab 0 unused
+
+@item
+7 @tab dashstyle @tab int @tab Type of dash style
+
+@item
+8 @tab dashlength @tab int/mils @tab Length of dash
+
+@item
+9 @tab dashspace @tab int/mils @tab Space inbetween dashes
+
+@item
+10 @tab filltype @tab int @tab Type of fill
+
+@item
+11 @tab fillwidth @tab int/mils @tab Width of the fill lines
+
+@item
+12 @tab angle1 @tab int/degrees @tab First angle of fill
+
+@item
+13 @tab pitch1 @tab int/mils @tab First pitch/spacing of fill
+
+@item
+14 @tab angle2 @tab int/degrees @tab Second angle of fill
+
+@item
+15 @tab pitch2 @tab int/mils @tab Second pitch/spacing of fill
+
+@end multitable
+
+@itemize
+@item
+The dashstyle is an enumerated type:
+@itemize
+@item
+TYPE SOLID = 0
+
+@item
+TYPE DOTTED = 1
+
+@item
+TYPE DASHED = 2
+
+@item
+TYPE CENTER = 3
+
+@item
+TYPE PHANTOM = 4
+
+@end itemize
+
+@item
+The dashlength parameter is not used for TYPE SOLID and TYPE
+DOTTED. This parameter should take on a value of -1 in these cases.
+
+@item
+The dashspace parameter is not used for TYPE SOLID. This parameter
+should take on a value of -1 in these case.
+
+@item
+The filltype parameter is an enumerated type:
+@itemize
+@item
+FILLING HOLLOW = 0
+
+@item
+FILLING FILL = 1
+
+@item
+FILLING MESH = 2
+
+@item
+FILLING HATCH = 3
+
+@item
+FILLING VOID = 4 unused
+
+@end itemize
+
+@item
+If the filltype is 0 (FILLING HOLLOW), then all the fill parameters
+should take on a value of -1.
+
+@item
+The fill type FILLING FILL is a solid color fill.
+
+@item
+The two pairs of pitch and spacing control the fill or hatch if the
+fill type is FILLING MESH.
+
+@item
+Only the first pair of pitch and spacing are used if the fill type is
+FILLING HATCH.
+
+@end itemize
+
+
+Example:
+@example
+V 38000 67000 900 3 0 0 2 75 50 2 10 20 30 90 50
+@end example
+
+A circle with the center at (38000, 67000) and a radius of 900 mils,
+color index 3, line width of 0 mils (smallest size), no cap, dashed
+line type, dash length of 75 mils, dash spacing of 50 mils, mesh fill,
+10 mils thick mesh lines, first mesh line: 20 degrees, with a spacing
+of 30 mils, second mesh line: 90 degrees, with a spacing of 50 mils.
+
+
+@node arc
+@subsection arc
+
+Valid in: Schematic and Symbol files
+
+
+@code{@strong{type x y radius startangle sweepangle color width
+capstyle dashstyle dashlength dashspace}}
+
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+ # @tab type @tab char @tab A
+
+@item
+ 1 @tab x @tab int/mils @tab Center X coordinate
+
+@item
+ 2 @tab y @tab int/mils @tab Center Y coordinate
+
+@item
+ 3 @tab radius @tab int/mils @tab Radius of the arc
+
+@item
+ 4 @tab startangle @tab int/degrees @tab Starting angle of the arc
+
+@item
+ 5 @tab sweepangle @tab int/degrees @tab Amount the arc sweeps
+
+@item
+ 6 @tab color @tab int @tab Color index
+
+@item
+ 7 @tab width @tab int/mils @tab Width of circle line
+
+@item
+ 8 @tab capstyle @tab int @tab Cap style
+
+@item
+ 9 @tab dashstyle @tab int @tab Type of dash style
+
+@item
+10 @tab dashlength @tab int/mils @tab Length of dash
+
+@item
+11 @tab dashspace @tab int/mils @tab Space inbetween dashes
+
+@end multitable
+
+@itemize
+@item
+The startangle can be negative, but not recommended.
+
+@item
+The sweepangle can be negative, but not recommended.
+
+@item
+The capstyle is an enumerated type:
+@itemize
+@item
+END NONE = 0
+
+@item
+END SQUARE = 1
+
+@item
+END ROUND = 2
+
+@end itemize
+
+@item
+The dashstyle is an enumerated type:
+@itemize
+@item
+TYPE SOLID = 0
+
+@item
+TYPE DOTTED = 1
+
+@item
+TYPE DASHED = 2
+
+@item
+TYPE CENTER = 3
+
+@item
+TYPE PHANTOM = 4
+
+@end itemize
+
+@item
+The dashlength parameter is not used for TYPE SOLID and TYPE
+DOTTED. This parameter should take on a value of -1 in these cases.
+
+@item
+The dashspace parameter is not used for TYPE SOLID. This parameter
+should take on a value of -1 in these case.
+
+@end itemize
+
+
+Example:
+@example
+A 30600 75000 2000 0 45 3 0 0 3 75 50
+@end example
+
+An arc with the center at (30600, 75000) and a radius of 2000 mils, a
+starting angle of 0, sweeping 45 degrees, color index 3, line width of
+0 mils (smallest size), no cap, center line type, dash length of 75
+mils, dash spacing of 50 mils.
+
+
+@node text and attributes
+@subsection text and attributes
+
+Depending on context, text objects can play different roles. Outside
+any environment, they represent informative lines of text. When
+enclosed by curly braces, they are interpreted as attributes. See the
+@ref{Attributes, attributes section}.
+
+Valid in: Schematic and Symbol files
+
+
+@code{@strong{type x y color size visibility show_name_value angle alignment num_lines
+string line 1
+string line 2
+string line 3
+...
+string line N}}
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+# @tab type @tab char @tab T
+
+@item
+1 @tab x @tab int/mils @tab First X coordinate
+
+@item
+2 @tab y @tab int/mils @tab First Y coordinate
+
+@item
+3 @tab color @tab int @tab Color index
+
+@item
+4 @tab size @tab int/points @tab Size of text
+
+@item
+5 @tab visibility @tab int @tab Visibility of text
+
+@item
+6 @tab show_name_value @tab int @tab Attribute visibility control
+
+@item
+7 @tab angle @tab int/degrees @tab Angle of the text
+
+@item
+8 @tab alignment @tab int @tab Alignment/origin of the text
+
+@item
+9 @tab num_lines @tab int @tab Number of lines of text (1 based)
+
+@item
+10 @tab string line 1 ... N @tab string @tab The text strings, on a
+separate line
+
+@end multitable
+
+@itemize
+@item
+This object is a multi line object. The first line contains all the
+text parameters and the subsequent lines are the text strings.
+
+@item
+There must be exactly num lines of text following the T ... string.
+
+@item
+The maximum length of any single text string is 1024, however there is
+no limit to the number of text string lines.
+
+@item
+The minimum size is 2 points (1/72 of an inch).
+
+@item
+There is no maximum size.
+
+@item
+The coordinate pair is the origin of the text item.
+
+@item
+The visibility field is an enumerated type:
+@itemize
+@item
+INVISIBLE = 0
+
+@item
+VISIBLE = 1
+
+@end itemize
+
+@item
+The show_name_value is an enumerated type:
+@itemize
+@item
+SHOW NAME VALUE = 0 (show both name and value of an attribute)
+
+@item
+SHOW VALUE = 1 (show only the value of an attribute)
+
+@item
+SHOW NAME = 2 (show only the name of an attribute)
+
+@end itemize
+
+@item
+The show_name_value field is only valid if the string is an attribute
+(string has to be in the form: name=value to be considered an
+attribute).
+
+@item
+The angle of the text can only take on one of the following values: 0,
+90, 180, 270. A value of 270 will always generate upright text.
+
+@item
+The alignment/origin field controls the relative location of the
+origin.
+
+@item
+The alignment field can take a value from 0 to 8.
+
+The following diagram shows what the values for the alignment field
+mean:
+
+@end itemize
+
+
+@c @image{text-layout}
+
+@itemize
+@item
+The num_lines field always starts at 1.
+
+The num_lines field was added starting with file format version
+1. Past versions (0 or earlier) only supported single line text
+objects.
+
+@item
+The text strings of the string line(s) can have overbars if the text
+is embedded in two overbar markers @samp{\_}. A single backslash needs
+to be written as @samp{\\}.
+
+@end itemize
+
+
+Example 1:
+@example
+T 16900 35800 3 10 1 0 0 0 1
+Text string!
+@end example
+
+A text object with the origin at (16900, 35800), color index 3, 10
+points in size, visible, attribute flags not valid (not an attribute),
+origin at lower left, not rotated, string: Text string!
+
+Example 2:
+@example
+T 16900 35800 3 10 1 0 0 0 5
+Text string line 1
+Text string line 2
+Text string line 3
+Text string line 4
+Text string line 5
+@end example
+
+This is a similar text object as the above example, however here there
+are five lines of text.
+
+Example 3:
+@example
+T 10000 20000 3 10 1 1 8 90 1
+pinlabel=R/\_W\_
+@end example
+
+A text object with the origin at (10000, 20000), color index 3, 10
+points in size, visible, only the value of the attribute is visible,
+text origin at upper right, the text is rotated by 90 degree, the
+string: ``R/W'' has an overbar over the ``W''.
+
+
+@node net
+@subsection net
+
+Valid in: Schematic files ONLY
+
+
+@code{@strong{type x1 y1 x2 y2 color}}
+
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+ # @tab type @tab char @tab N
+
+@item
+ 1 @tab x1 @tab int/mils @tab First X coordinate
+
+@item
+ 2 @tab y1 @tab int/mils @tab First Y coordinate
+
+@item
+ 3 @tab x2 @tab int/mils @tab Second X coordinate
+
+@item
+ 4 @tab y2 @tab int/mils @tab Second Y coordinate
+
+@item
+ 5 @tab color @tab int @tab Color index
+
+@end multitable
+
+@itemize
+@item
+Nets can only appear in schematic files.
+
+@item
+You cannot have a zero length net (the tools will throw them away).
+
+@end itemize
+
+
+Example:
+@example
+N 12700 29400 32900 29400 4
+@end example
+
+A net segment from (12700, 29400) to (32900, 29400) with color index
+4.
+
+
+@node bus
+@subsection bus
+
+Valid in: Schematic files ONLY
+
+
+@code{@strong{type x1 y1 x2 y2 color ripperdir}}
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+ # @tab type @tab char @tab U
+
+@item
+ 1 @tab x1 @tab int/mils @tab First X coordinate
+
+@item
+ 2 @tab y1 @tab int/mils @tab First Y coordinate
+
+@item
+ 3 @tab x2 @tab int/mils @tab Second X coordinate
+
+@item
+ 4 @tab y2 @tab int/mils @tab Second Y coordinate
+
+@item
+ 5 @tab color @tab int @tab Color index
+
+@item
+ 6 @tab ripperdir @tab int @tab Direction of bus rippers
+
+@end multitable
+
+@itemize
+@item
+The ripperdir field for an brand new bus is 0.
+
+@item
+The ripperdir field takes on a value of 1 or -1 when a net is
+connected to the bus for the first time. This value indicates the
+direction of the ripper symbol. The ripper direction is set to the
+same value for the entire life of the bus object.
+
+@item
+Buses can only appear in schematic files.
+
+@item
+You cannot have a zero length bus (the tools will throw them away).
+
+@end itemize
+
+
+Example:
+@example
+U 27300 37400 27300 35300 3 0
+@end example
+
+A bus segment from (27300, 37400) to (27300, 35300) with color index 3
+and no nets have been connected to this bus segment.
+
+
+@node pin
+@subsection pin
+
+Valid in: Symbol files ONLY
+
+
+@code{@strong{type x1 y1 x2 y2 color pintype whichend}}
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+ # @tab type @tab char @tab P
+
+@item
+ 1 @tab x1 @tab int/mils @tab First X coordinate
+
+@item
+ 2 @tab y1 @tab int/mils @tab First Y coordinate
+
+@item
+ 3 @tab x2 @tab int/mils @tab Second X coordinate
+
+@item
+ 4 @tab y2 @tab int/mils @tab Second Y coordinate
+
+@item
+ 5 @tab color @tab int @tab Color index
+
+@item
+ 6 @tab pintype @tab int @tab Type of pin
+
+@item
+ 7 @tab whichend @tab int @tab Specifies the active end
+
+@end multitable
+
+@itemize
+@item
+The pintype is an enumerated type:
+@itemize
+@item
+NORMAL PIN = 0
+
+@item
+BUS PIN = 1 unused
+
+@end itemize
+
+@item
+The whichend specifies which end point of the pin is the active
+connection port. Only this end point can have other pins or nets
+connected to it.
+
+@item
+To make the first end point active, whichend should be 0, else to
+specify the other end, whichend should be 1.
+
+@item
+Pins can only appear in symbol files.
+
+@item
+Zero length pins are allowed
+
+@end itemize
+
+
+Example:
+@example
+P 0 200 200 200 1 0 0
+@end example
+
+A pin from (0, 200) to (200, 200) with color index 1, a regular pin,
+and the first point being the active connection end.
+
+
+@node component
+@subsection component
+
+Valid in: Schematic files ONLY
+
+
+@code{@strong{type x y selectable angle mirror basename}}
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+ # @tab type @tab char @tab C
+
+@item
+ 1 @tab x @tab int/mils @tab Origin X coordinate
+
+@item
+ 2 @tab y @tab int/mils @tab Origin Y coordinate
+
+@item
+ 3 @tab selectable @tab int @tab Selectable flag
+
+@item
+ 4 @tab angle @tab int/degrees @tab Angle of the component
+
+@item
+ 5 @tab mirror @tab int @tab Mirror around Y axis
+
+@item
+ 6 @tab basename @tab string @tab The filename of the component
+
+@end multitable
+
+@itemize
+@item
+The selectable field is either 1 for selectable or 0 if not
+selectable.
+
+@item
+The angle field can only take on the following values: 0, 90, 180,
+270.
+
+@item
+The angle field can only be positive.
+
+@item
+The mirror flag is 0 if the component is not mirrored (around the Y
+axis).
+
+@item
+The mirror flag is 1 if the component is mirrored (around the Y axis).
+
+@item
+The just basename is the filename of the component. This filename is
+not the full path.
+
+@end itemize
+
+
+Example:
+@example
+C 18600 19900 1 0 0 7400-1.sym
+@end example
+
+A component who's origin is at (18600,19900), is selectable, not
+rotated, not mirrored, and the basename of the component is
+7400-1.sym.
+
+
+@node path
+@subsection path
+
+Valid in: Schematic and Symbol files
+
+
+Valid since: Fileformat version 2 (release 1.5.1)
+
+
+@code{@strong{type color width capstyle dashstyle dashlength dashspace
+filltype fillwidth angle1 pitch1 angle2 pitch2 numlines
+path data line 1
+path data line 2
+path data line 3
+...
+path data line N}}
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+ # @tab type @tab char @tab H
+
+@item
+ 1 @tab color @tab int @tab Color index
+
+@item
+ 2 @tab width @tab int/mils @tab Width of line
+
+@item
+ 3 @tab capstyle @tab int @tab Line cap style
+
+@item
+ 4 @tab dashstyle @tab int @tab Type of dash style
+
+@item
+ 5 @tab dashlength @tab int/mils @tab Length of dash
+
+@item
+ 6 @tab dashspace @tab int/mils @tab Space inbetween dashes
+
+@item
+ 7 @tab filltype @tab int @tab Type of fill
+
+@item
+ 8 @tab fillwidth @tab int/mils @tab Width of the fill lines
+
+@item
+ 9 @tab angle1 @tab int/degrees @tab First angle of fill
+
+@item
+10 @tab pitch1 @tab int/mils @tab First pitch/spacing of fill
+
+@item
+11 @tab angle2 @tab int/degrees @tab Second angle of fill
+
+@item
+12 @tab pitch2 @tab int/mils @tab Second pitch/spacing of fill
+
+@item
+13 @tab num_lines @tab int @tab Number of lines of path data (1 based)
+
+@item
+14 @tab path data line 1 ... N @tab path data @tab The path data, on
+separate lines
+
+@end multitable
+
+@itemize
+@item
+The capstyle is an enumerated type:
+@itemize
+@item
+END NONE = 0
+
+@item
+END SQUARE = 1
+
+@item
+END ROUND = 2
+
+@end itemize
+
+@end itemize
+
+
+@itemize
+@item
+The dashstyle is an enumerated type:
+@itemize
+@item
+TYPE SOLID = 0
+
+@item
+TYPE DOTTED = 1
+
+@item
+TYPE DASHED = 2
+
+@item
+TYPE CENTER = 3
+
+@item
+TYPE PHANTOM = 4
+
+@end itemize
+
+@item
+The dashlength parameter is not used for TYPE SOLID and TYPE
+DOTTED. This parameter should take on a value of -1 in these cases.
+
+@item
+The dashspace parameter is not used for TYPE SOLID. This parameter
+should take on a value of -1 in these case.
+
+@end itemize
+
+
+@itemize
+@item
+The filltype parameter is an enumerated type:
+@itemize
+@item
+FILLING HOLLOW = 0
+
+@item
+FILLING FILL = 1
+
+@item
+FILLING MESH = 2
+
+@item
+FILLING HATCH = 3
+
+@item
+FILLING VOID = 4 unused
+
+@end itemize
+
+@item
+If the filltype is 0 (FILLING HOLLOW), then all the fill parameters
+should take on a value of -1.
+
+@item
+The fill type FILLING FILL is a solid color fill.
+
+@item
+The two pairs of pitch and spacing control the fill or hatch if the
+fill type is FILLING MESH.
+
+@item
+Only the first pair of pitch and spacing are used if the fill type is
+FILLING HATCH.
+
+@end itemize
+
+
+@itemize
+@item
+The format of path data is deliberately similar to that of
+@url{http://www.w3.org/TR/SVG/paths.html, paths in the W3C SVG
+standard}.
+
+@item
+The subset of the SVG path syntax emitted by gEDA is documented below
+in section @ref{Path data}.
+
+@item
+As an implementation detail; libgeda takes code from librsvg, an SVG
+parsing library. As a result, the majority of SVG path syntax is read
+correctly, however this is always normalised to absolute move, line,
+Bézier curve and close-path commands internally (and is saved as
+such).
+
+@item
+Coordinates along the path are specified in the standard gschem
+coordinate space.
+
+@end itemize
+
+
+Example:
+@example
+H 3 10 0 0 -1 -1 0 -1 -1 -1 -1 -1 5
+M 410,240
+L 501,200
+L 455,295
+L 435,265
+z
+@end example
+
+A path starting at (410,240) with lines drawn from there, and joining
+points (501,200), (455,295), (435,265), closing back to its origin. It
+has color index 3, is 10 mils thick, no cap, solid style. There are 5
+lines of path data.
+
+
+@node font
+@subsection font
+
+Valid in: Special font files ONLY
+
+
+@code{@strong{type character width flag}}
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Pos. @tab Field @tab Type/unit @tab Description
+
+@item
+# @tab type @tab char @tab F
+
+@item
+1 @tab character @tab char @tab The character being defined
+
+@item
+2 @tab width @tab int/mils @tab Width of the character (mils)
+
+@item
+3 @tab flag @tab int @tab Special space flag
+
+@end multitable
+
+@itemize
+@item
+This is a special tag and should ONLY show up in font definition
+files.
+
+@item
+If the font character being defined is the space character (32) then
+flag should be 1, otherwise 0.
+
+@end itemize
+
+
+Example:
+@example
+F 11 1
+@end example
+
+The above font definition is for the space character.
+
+@node Colors
+@section Colors
+
+In the gEDA/gaf schematic and symbol file format colors are specified
+via an integer index. The relationship between integer and color is
+based on object type. Each object type typically has one or more
+colors. Here is a table of color index to object type:
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Index @tab Object type
+
+@item
+0 @tab BACKGROUND_COLOR
+
+@item
+1 @tab PIN_COLOR
+
+@item
+2 @tab NET_ENDPOINT_COLOR
+
+@item
+3 @tab GRAPHIC_COLOR
+
+@item
+4 @tab NET_COLOR
+
+@item
+5 @tab ATTRIBUTE_COLOR
+
+@item
+6 @tab LOGIC_BUBBLE_COLOR
+
+@item
+7 @tab DOTS_GRID_COLOR
+
+@item
+8 @tab DETACHED_ATTRIBUTE_COLOR
+
+@item
+9 @tab TEXT_COLOR
+
+@item
+10 @tab BUS_COLOR
+
+@item
+11 @tab SELECT_COLOR
+
+@item
+12 @tab BOUNDINGBOX_COLOR
+
+@item
+13 @tab ZOOM_BOX_COLOR
+
+@item
+14 @tab STROKE_COLOR
+
+@item
+15 @tab LOCK_COLOR
+
+@item
+16 @tab OUTPUT_BACKGROUND_COLOR
+
+@item
+17 @tab FREESTYLE1_COLOR
+
+@item
+18 @tab FREESTYLE2_COLOR
+
+@item
+19 @tab FREESTYLE3_COLOR
+
+@item
+20 @tab FREESTYLE4_COLOR
+
+@item
+21 @tab JUNCTION_COLOR
+
+@item
+22 @tab MESH_GRID_MAJOR_COLOR
+
+@item
+23 @tab MESH_GRID_MINOR_COLOR
+
+@end multitable
+
+The actual color associated with the color index is defined on a per
+tool bases. Objects are typically assigned their corresponding color
+index, but it is permissible (sometimes) to assign other color index
+values to different object types.
+
+@node Attributes
+@section Attributes
+
+Attributes are enclosed in braces @{@} and can only be text. Attributes
+are text items which take on the form name=value. If it doesn't have
+name=value, it's not an attribute. Attributes are attached to the
+previous object. Here's an example:
+
+@example
+P 988 500 1300 500 1
+@{
+T 1000 570 5 8 1 1 0
+pinseq=3
+T 1000 550 5 8 1 1 0
+pinnumber=3
+@}
+@end example
+
+The object is a pin which has an attribute pinnumber=3 and pinseq=3
+(name=value). You can have multiple text objects (both the T ... and
+text string are required) in between the braces @{@}. As of 20021103,
+you can only attached text items as attributes. Attaching other object
+types as attributes is unsupported.
+
+You can also have ``toplevel'' attributes. These attributes are not
+attached to any object, but instead are just text objects that take on
+the form name=value.
+
+These attributes are useful when you need to convey some info about a
+schematic page or symbol and need the netlister to have access to this
+info.
+
+@node Embedded Components
+@section Embedded components
+
+Embedded components are components which have all of their definition
+stored within the schematic file. When a users place a component onto
+a schematic page, they have the option of making the component
+embedded. Other than storing all the symbol information inside of the
+schematic, an embedded component is just any other component. Embedded
+components are defined as:
+
+@example
+C 18600 21500 1 0 0 EMBEDDED555-1.sym
+[
+...
+... Embedded primitive objects
+...
+]
+@end example
+
+In the example above, @file{555-1.sym} is the component. The EMBEDDED
+tag and the [ ] are the distinguishing characteristics of embedded
+components.  @file{componentname.sym} must exist in one of the
+specified component-libraries if you want to unembed the component.
+
+
+@node Path data
+@section Path data
+
+The gEDA/gaf path data format has been deliberately specified to match
+a subset of @url{http://www.w3.org/TR/SVG/paths.html, that in the W3C
+SVG standard.}.
+
+@itemize
+@item
+As an implementation detail; libgeda takes code from librsvg, an SVG
+parsing library. As a result, the majority of SVG path syntax is read
+correctly, however this is always normalised to absolute move, line,
+Bézier curve and close-path commands internally (and is saved as
+such).
+
+@item
+Coordinates along the path are specified in the standard gschem
+coordinate space.
+
+@item
+Those path commands which gEDA emits, and will guarantee to parse, are
+listed in the table below:
+
+(Text taken from the above SVG specification).
+
+@item
+In the table below, the following notation is used:
+@itemize
+@item
+(): grouping of parameters
+
+@item
++: 1 or more of the given parameter(s) is required
+
+@end itemize
+
+@end itemize
+
+@multitable @columnfractions .2 .2 .2 .4
+@item
+Command @tab Name @tab Parameters @tab Description
+
+@item
+M (absolute) @tab moveto @tab (x,y)+ @tab Start a new sub-path at the
+given (x,y) coordinate. M (uppercase) indicates that absolute
+coordinates will follow; m (lowercase) indicates that relative
+coordinates will follow. If a relative moveto (m) appears as the first
+element of the path, then it is treated as a pair of absolute
+coordinates. If a moveto is followed by multiple pairs of coordinates,
+the subsequent pairs are treated as implicit lineto commands.
+
+@item
+L (absolute) @tab lineto @tab (x,y)+ @tab Draw a line from the current
+point to the given (x,y) coordinate which becomes the new current
+point. L (uppercase) indicates that absolute coordinates will follow;
+l (lowercase) indicates that relative coordinates will follow. A
+number of coordinates pairs may be specified to draw a polyline. At
+the end of the command, the new current point is set to the final set
+of coordinates provided.
+
+@item
+C (absolute) @tab curveto @tab (x1,y1 x2,y2 x,y)+ @tab Draws a cubic
+Bézier curve from the current point to (x,y) using (x1,y1) as the
+control point at the beginning of the curve and (x2,y2) as the control
+point at the end of the curve. C (uppercase) indicates that absolute
+coordinates will follow; c (lowercase) indicates that relative
+coordinates will follow. Multiple sets of coordinates may be specified
+to draw a polybézier. At the end of the command, the new current point
+becomes the final (x,y) coordinate pair used in the polybézier.
+
+@item
+Z or z @tab closepath @tab (none) @tab Close the current subpath by
+drawing a straight line from the current point to current subpath's
+initial point.
+
+@end multitable
+
+@itemize
+@item
+gEDA's output currently emits only the absolute coordinate versions of
+the above commands.
+
+@item
+gEDA's output currently emits the commands, M, L, C before every set
+of coordinates, even where they could be omitted according to the SVG
+specification.
+
+@item
+gEDA's output places commas between x,y coordinates. These may be
+replaced with whitespace according to the SVG specification.
+
+@item
+gEDA's does not currently support more than one sub-path.
+
+@item
+gEDA currently emits one path data line per command + coordinate set.
+
+@end itemize
+
+
+As example, lets draw the outline of an AND gate. The path data is:
+
+@example
+M 100,100 L 500,100 C 700,100 800,275 800,400
+C 800,525 700,700 500,700 L 100,700 z
+@end example
+
+And a complete schematic:
+
+@example
+v 20080706 1
+H 3 0 0 0 -1 -1 0 2 20 100 -1 -1 6
+M 100,100
+L 500,100
+C 700,100 800,275 800,400
+C 800,525 700,700 500,700
+L 100,700
+z
+@end example
+
+The resulting path (with control points drawn on to illustrate their
+positions) is shown here:
+
+@c @image{path-example}
+
+@node gEDA File Format Document Revision History
+@section gEDA File Format Document Revision History
+@table @emph
+@item November 30th, 2002
+Created fleformats.tex from fleformats.html.
+
+@item December 1st, 2002
+Continued work on this document.
+
+@item October 4th, 2003
+Added new file format version flag info.
+
+@item October 19th, 2003
+Added num lines text field.
+
+@item November 2nd, 2008
+Added path object, bumping file format version to 2
+
+@item May 26th, 2011
+Added a column for the position of parameters in the tables
+
+@end table
