@@ -68,7 +68,6 @@ Documentation License.''
 @command{lepton-sch2pcb}
 @end macro
 
-
 @menu
 * Overview::                    Overview of program components.
 * Installation::                Installation of the tool suite.
@@ -82,6 +81,7 @@ Documentation License.''
 * Communication::               Places for discussions and chatting.
 * Development::                 Useful information for developers.
 * gEDA file format::            File format currently in use.
+* gEDA/gaf Master Attribute Document::
 * Lepton EDA fonts::
 * Topic Index::
 
@@ -158,6 +158,7 @@ Resources
 
 Symbols
 
+* Symbol Creation::
 * Editing symbols::
 * Editing symversion attribute::
 * No-connect symbols::
@@ -276,6 +277,62 @@ Object types
 * path::
 * font::
 
+gEDA/gaf Master Attribute Document
+
+* Master Attribute Document Overview::
+* What are Attributes?::
+* Symbol only Attributes::
+* Schematic only Attributes::
+* Symbol and Schematic Attributes::
+* Obsolete Attributes::
+* Master Attribute Document Revision History::
+
+Symbol only Attributes
+
+* device attribute::
+* graphical attribute::
+* description attribute::
+* author attribute::
+* comment attribute::
+* pinseq attribute::
+* pinnumber attribute::
+* pintype attribute::
+* pinlabel attribute::
+* numslots attribute::
+* slotdef attribute::
+* footprint attribute::
+* documentation attribute::
+
+Schematic only Attributes
+
+* netname attribute::
+* source attribute::
+
+Symbol and Schematic Attributes
+
+* refdes attribute::
+* slot attribute::
+* net attribute::
+* value attribute::
+* symversion attribute::
+* dist-license attribute::
+* use-license attribute::
+
+refdes attribute
+
+* refdes naming restrictions::
+* refdes naming conventions::
+
+Obsolete Attributes
+
+* uref attribute::
+* name attribute::
+* label attribute::
+* pin# attribute::
+* slot# attribute::
+* type attribute::
+* email attribute::
+
 @end detailmenu
 @end menu
 
@@ -291,6 +348,7 @@ Object types
 @include communication.texi
 @include development.texi
 @include geda-file-format-spec.texi
+@include attributes.texi
 @include lepton-eda-fonts.texi
 @include index.texi
 
