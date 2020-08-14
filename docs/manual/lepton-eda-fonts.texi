@@ -1,4 +1,4 @@
-@node Lepton EDA fonts, Topic Index, gEDA/gaf Master Attribute Document, Top
+@node Lepton EDA fonts, Topic Index, net= attribute mini-HOWTO, Top
 @appendix Lepton EDA fonts
 @cindex Lepton EDA fonts
 @cindex Fonts configuration in Lepton EDA

@@ -1,4 +1,4 @@
-@node gEDA/gaf Master Attribute Document, Lepton EDA fonts, gEDA file format, Top
+@node gEDA/gaf Master Attribute Document, net= attribute mini-HOWTO, gEDA file format, Top
 @chapter gEDA/gaf Master Attribute Document
 
 by: Ales Hvezda, @email{ahvezda@@geda.seul.org}
