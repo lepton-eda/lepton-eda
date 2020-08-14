@@ -82,6 +82,7 @@ Documentation License.''
 * Development::                 Useful information for developers.
 * gEDA file format::            File format currently in use.
 * gEDA/gaf Master Attribute Document::
+* net= attribute mini-HOWTO::
 * Lepton EDA fonts::
 * Topic Index::
 
@@ -349,6 +350,7 @@ Obsolete Attributes
 @include development.texi
 @include geda-file-format-spec.texi
 @include attributes.texi
+@include attribute-net.texi
 @include lepton-eda-fonts.texi
 @include index.texi
 

@@ -1,5 +1,6 @@
 info_TEXINFOS = lepton-manual.texi
 lepton_manual_TEXINFOS = \
+	attribute-net.texi \
 	attributes.texi \
 	communication.texi \
 	configuration.texi \
