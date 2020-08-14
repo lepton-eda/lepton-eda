@@ -4,6 +4,7 @@
 @cindex schematic symbols
 
 @menu
+* Symbol Creation::
 * Editing symbols::
 * Editing symversion attribute::
 * No-connect symbols::
@@ -11,6 +12,7 @@
 * Missing symbols::
 @end menu
 
+@include symbol-creation.texi
 @include symbol-editing.texi
 @include symbol-version-attribute.texi
 @include no-connect-symbol.texi

@@ -20,6 +20,7 @@ lepton_manual_TEXINFOS = \
 	no-connect-symbol.texi \
 	overview.texi \
 	placeholder.texi \
+	symbol-creation.texi \
 	symbol-editing.texi \
 	symbol-version-attribute.texi \
 	symbols.texi \
