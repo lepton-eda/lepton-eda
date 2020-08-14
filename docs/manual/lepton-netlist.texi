@@ -98,9 +98,11 @@ vipec
 @menu
 * Allegro backend::
 * BOM backend::
+* Cascade backend::
 * PADS backend::
 @end menu
 
 @include lepton-netlist-allegro.texi
 @include lepton-netlist-bom.texi
+@include lepton-netlist-cascade.texi
 @include lepton-netlist-pads.texi

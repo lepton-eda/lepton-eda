@@ -17,6 +17,7 @@ lepton_manual_TEXINFOS = \
 	lepton-netlist.texi \
 	lepton-netlist-allegro.texi \
 	lepton-netlist-bom.texi \
+	lepton-netlist-cascade.texi \
 	lepton-netlist-pads.texi \
 	lepton-schematic.texi \
 	logging.texi \
