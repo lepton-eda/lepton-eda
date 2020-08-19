@@ -48,6 +48,7 @@ Documentation License.''
 * Configuration:: Configuration system.
 * lepton-schematic:: Lepton EDA schematic capture program.
 * lepton-netlist:: Lepton EDA netlister.
+* Communication:: Places for discussions and chatting.
 * Development:: Useful information for developers.
 * gEDA file format:: File format currently in use.
 
@@ -1812,19 +1813,14 @@ configuration functions}
 @url{https://github.com/lepton-eda/lepton-eda, Lepton EDA home page}
 
 @item
-@url{https://gitter.im/Lepton-EDA/Lobby, gitter.im chat room}: get in
-touch with Lepton EDA users and developers
-
-@item
-@url{http://wiki.geda-project.org/geda:mailinglists, gEDA mailing
-lists}
-
-@item
 @url{http://wiki.geda-project.org, gEDA wiki}
 
 @item
 @url{https://graahnul-grom.github.io/, dmn's documentation page},
 links and resources for Lepton EDA users and developers
+
+@item
+@ref{Communication, Communication channels}
 @end itemize
 
 @node Utilities
@@ -1948,6 +1944,34 @@ vhdl
 @item
 vipec
 @end itemize
+
+
+@node Communication
+@chapter Communication
+@cindex communication
+@cindex communication channels
+
+We are using the following resources for almost all
+communication about Lepton EDA and gEDA:
+
+@itemize
+@item
+@url{https://github.com/lepton-eda/lepton-eda, our site on Github}:
+report and discuss issues, add your patches, join to the project
+
+@item
+@url{https://gitter.im/Lepton-EDA/Lobby, gitter.im chat room}: get in
+touch with Lepton EDA users and developers
+
+@item
+@url{http://wiki.geda-project.org/geda:mailinglists, geda-user mailing
+list}: discuss anything about Lepton and gEDA
+
+@end itemize
+
+We are interested in having new developers join and stay with our
+project.  Get involved!
+
 
 @node Development
 @chapter Development
