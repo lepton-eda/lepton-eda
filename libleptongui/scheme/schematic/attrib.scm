@@ -21,7 +21,9 @@
 (define-module (schematic attrib)
   #:use-module (system foreign)
 
+  #:use-module (lepton log)
   #:use-module (schematic core attrib)
+  #:use-module (schematic core gettext)
 
   #:export (attribute-name))
 
@@ -64,12 +66,44 @@
   "Adds attribute NAME to the list of attributes shown in the
 \"Add attribute\" and \"Edit attribute\" dialogs.  Returns #t if
 the attribute was added successfully, otherwise returns #f."
-  (when (not (string? name))
-    (throw 'wrong-type-arg "attribute-name: The argument must be a string."))
+  (define proc-name "attribute-name: ")
 
-  (when (string-null? name)
-    (throw 'wrong-type-arg "attribute-name: The argument cannot be an empty string."))
+  (define (warning-empty-string)
+    (string-append "WARNING: "
+                   proc-name
+                   (G_ "The argument cannot be an empty string.")))
 
-  (let ((pname (string->pointer name)))
-    (and (not (zero? (s_attrib_uniq pname)))
-         (not (zero? (s_attrib_add_entry pname))))))
+  (define (warning-already-added)
+    (string-append "WARNING: "
+                   proc-name
+                   (format #f (G_ "Attribute has been already added: ~S")
+                           name)))
+
+  (define (warning-failed-to-add)
+    (string-append "WARNING: "
+                   proc-name
+                   (format #f (G_ "Failed to add attribute: ~S")
+                           name)))
+
+  (define (error-not-string)
+    (string-append "ERROR: "
+                   proc-name
+                   (G_ "The argument must be a string.")))
+
+  (define (warn-if-error err msg)
+    (or (not err)
+        (begin (log! 'warning "~A" msg) #f)))
+
+  (catch 'wrong-type-arg
+    (lambda ()
+      (and (warn-if-error (string-null? name)
+                          (warning-empty-string))
+
+           (let ((pname (string->pointer name)))
+             (and (warn-if-error (zero? (s_attrib_uniq pname))
+                                 (warning-already-added))
+                  (warn-if-error (zero? (s_attrib_add_entry pname))
+                                 (warning-failed-to-add))))))
+    (lambda (key . args)
+      (begin (log! 'critical "~A" (error-not-string))
+             #f))))
