@@ -45,16 +45,20 @@
 (define libleptongui (dynamic-link "libleptongui"))
 
 (define s_attrib_uniq
-  (pointer->procedure
-   int
-   (dynamic-func "s_attrib_uniq" libleptongui)
-   (list '*)))
+  (let ((proc (delay
+                (pointer->procedure
+                 int
+                 (dynamic-func "s_attrib_uniq" libleptongui)
+                 (list '*)))))
+    (force proc)))
 
 (define s_attrib_add_entry
-  (pointer->procedure
-   int
-   (dynamic-func "s_attrib_add_entry" libleptongui)
-   (list '*)))
+  (let ((proc (delay
+                (pointer->procedure
+                 int
+                 (dynamic-func "s_attrib_add_entry" libleptongui)
+                 (list '*)))))
+    (force proc)))
 
 (define (attribute-name name)
   "Adds attribute NAME to the list of attributes shown in the
