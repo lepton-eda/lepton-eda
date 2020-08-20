@@ -67,6 +67,9 @@ the attribute was added successfully, otherwise returns #f."
   (when (not (string? name))
     (throw 'wrong-type-arg "attribute-name: The argument must be a string."))
 
+  (when (string-null? name)
+    (throw 'wrong-type-arg "attribute-name: The argument cannot be an empty string."))
+
   (let ((pname (string->pointer name)))
     (and (not (zero? (s_attrib_uniq pname)))
          (not (zero? (s_attrib_add_entry pname))))))
