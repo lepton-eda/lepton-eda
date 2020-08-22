@@ -4100,7 +4100,6 @@ gtk_sheet_hide_active_cell(GtkSheet *sheet)
                    sheet->column[col].width+4,
                    sheet->row[row].height+4);   
 
- GTK_WIDGET_UNSET_FLAGS(sheet->sheet_entry, GTK_HAS_FOCUS);
  gtk_widget_grab_focus(GTK_WIDGET(sheet));
 
  GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(sheet->sheet_entry), GTK_VISIBLE);
@@ -4209,7 +4208,6 @@ gtk_sheet_show_active_cell(GtkSheet *sheet)
  gtk_sheet_draw_active_cell(sheet);
 
  gtk_widget_grab_focus(GTK_WIDGET(sheet_entry));
- GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(sheet), GTK_HAS_FOCUS);
 
  g_free(text);
 }
@@ -4952,7 +4950,6 @@ gtk_sheet_button_press (GtkWidget * widget,
                        event->time);
      gtk_grab_add(GTK_WIDGET(sheet));
      sheet->timer = g_timeout_add (TIMEOUT_SCROLL, (GSourceFunc) gtk_sheet_scroll, sheet);
-     GTK_WIDGET_UNSET_FLAGS(sheet->sheet_entry, GTK_HAS_FOCUS);
      gtk_widget_grab_focus(GTK_WIDGET(sheet));
 
      if(sheet->selection_mode != GTK_SELECTION_SINGLE &&
@@ -5017,7 +5014,6 @@ gtk_sheet_button_press (GtkWidget * widget,
        gtk_sheet_click_cell(sheet, -1, column, &veto);
        gtk_grab_add(GTK_WIDGET(sheet));
        sheet->timer = g_timeout_add (TIMEOUT_SCROLL, (GSourceFunc) gtk_sheet_scroll, sheet);
-       GTK_WIDGET_UNSET_FLAGS(sheet->sheet_entry, GTK_HAS_FOCUS);
        gtk_widget_grab_focus(GTK_WIDGET(sheet));
        GTK_SHEET_SET_FLAGS(sheet, GTK_SHEET_IN_SELECTION);
      }
@@ -5030,7 +5026,6 @@ gtk_sheet_button_press (GtkWidget * widget,
        gtk_sheet_click_cell(sheet, row, -1, &veto);
        gtk_grab_add(GTK_WIDGET(sheet));
        sheet->timer = g_timeout_add (TIMEOUT_SCROLL, (GSourceFunc) gtk_sheet_scroll, sheet);
-       GTK_WIDGET_UNSET_FLAGS(sheet->sheet_entry, GTK_HAS_FOCUS);
        gtk_widget_grab_focus(GTK_WIDGET(sheet));
        GTK_SHEET_SET_FLAGS(sheet, GTK_SHEET_IN_SELECTION);
      }
