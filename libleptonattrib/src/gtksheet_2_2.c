@@ -1141,7 +1141,7 @@ gtk_sheet_construct_browser(GtkSheet *sheet, guint rows, guint columns,
 
 GtkWidget *
 gtk_sheet_new_with_custom_entry (guint rows, guint columns, const gchar *title,
-                                 GtkType entry_type)
+                                 GType entry_type)
 {
   GtkWidget *widget;
   
@@ -1157,7 +1157,7 @@ void
 gtk_sheet_construct_with_custom_entry (GtkSheet *sheet, 
                                       guint rows, guint columns, 
                                       const gchar *title,
-                                      GtkType entry_type)
+                                      GType entry_type)
 {
   gtk_sheet_construct(sheet, rows, columns, title);
 
@@ -1167,7 +1167,7 @@ gtk_sheet_construct_with_custom_entry (GtkSheet *sheet,
 
 
 void
-gtk_sheet_change_entry(GtkSheet *sheet, GtkType entry_type)
+gtk_sheet_change_entry(GtkSheet *sheet, GType entry_type)
 {
   gint state;
 
