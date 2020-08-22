@@ -520,7 +520,6 @@ GtkWidget* gschem_alignment_combo_new ();
 int gschem_alignment_combo_get_align (GtkWidget *widget);
 void gschem_alignment_combo_set_align (GtkWidget *widget, int align);
 /* x_attribedit.c */
-gint option_menu_get_history(GtkOptionMenu *option_menu);
 void attrib_edit_dialog_ok(GtkWidget *w, GschemToplevel *w_current);
 void attrib_edit_dialog(GschemToplevel *w_current, OBJECT *attr_obj, int flag);
 /* x_autonumber.c */

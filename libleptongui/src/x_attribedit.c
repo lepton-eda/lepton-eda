@@ -39,26 +39,6 @@
  *  \par Function Documentation
  *
  */
-gint option_menu_get_history (GtkOptionMenu *option_menu)
-{
-  GtkWidget *active_widget;
-
-  g_return_val_if_fail (GTK_IS_OPTION_MENU (option_menu), -1);
-
-  active_widget = gtk_menu_get_active (GTK_MENU (option_menu->menu));
-
-  if (active_widget)
-    return g_list_index (GTK_MENU_SHELL (option_menu->menu)->children,
-			 active_widget);
-  else
-    return -1;
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Documentation
- *
- */
 void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -107,7 +87,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
   else
   vis = INVISIBLE;
 
-  option_index = option_menu_get_history(GTK_OPTION_MENU (show_options));
+  option_index = gtk_combo_box_get_active (GTK_COMBO_BOX (show_options));
   switch(option_index) {
     case(0):
       show = SHOW_VALUE;
@@ -290,8 +270,6 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   GtkWidget *aewindow;
   GtkWidget *vbox, *label, *table, *alignment;
   GtkWidget *show_options;
-  GtkWidget *show_options_menu;
-  GtkWidget *glade_menuitem;
   GtkWidget *attrib_combo_box_entry;
   GtkWidget *attrib_combo_entry;
   GtkWidget *value_entry;
@@ -424,23 +402,26 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  show_options = gtk_option_menu_new ();
+  show_options = gtk_combo_box_new ();
+  GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING);
+  gtk_combo_box_set_model (GTK_COMBO_BOX (show_options), GTK_TREE_MODEL(store));
+  GtkCellRenderer *cell = gtk_cell_renderer_text_new();
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (show_options), cell, TRUE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (show_options),
+                                  cell, "text", 0, NULL);
+
   g_object_ref (show_options);
   g_object_set_data_full (G_OBJECT (aewindow), "show_options", show_options,
                           (GtkDestroyNotify) g_object_unref);
-  gtk_widget_show (show_options);
+
   gtk_table_attach (GTK_TABLE (table), show_options, 1, 2, 2, 3,
                     (GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
-  show_options_menu = gtk_menu_new ();
-  glade_menuitem = gtk_menu_item_new_with_label (_("Show Value Only"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (show_options_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label (_("Show Name Only"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (show_options_menu), glade_menuitem);
-  glade_menuitem = gtk_menu_item_new_with_label (_("Show Name & Value"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (show_options_menu), glade_menuitem);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (show_options), show_options_menu);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (show_options), 0);
+
+  gtk_combo_box_append_text (GTK_COMBO_BOX (show_options), _("Show Value Only"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (show_options), _("Show Name Only"));
+  gtk_combo_box_append_text (GTK_COMBO_BOX (show_options), _("Show Name & Value"));
+  gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 0);
 
   if (nsel > 1) { /* gschem specific */
 
@@ -535,11 +516,11 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
     }
 
     if (attrib->show_name_value == SHOW_VALUE) {
-      gtk_option_menu_set_history (GTK_OPTION_MENU (show_options), 0);
+      gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 0);
     } else if (attrib->show_name_value == SHOW_NAME) {
-      gtk_option_menu_set_history (GTK_OPTION_MENU (show_options), 1);
+      gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 1);
     } else {
-      gtk_option_menu_set_history (GTK_OPTION_MENU (show_options), 2);
+      gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 2);
     }
   } else {
     OBJECT *object;
@@ -553,7 +534,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);
     /* show value only */
-    gtk_option_menu_set_history (GTK_OPTION_MENU (show_options), 0);
+    gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 0);
   }
   g_object_set_data (G_OBJECT (aewindow), "attrib", attrib);
   if (name) {
