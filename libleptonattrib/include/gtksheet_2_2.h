@@ -60,7 +60,7 @@ enum
 
 #define GTK_SHEET(obj)          G_TYPE_CHECK_INSTANCE_CAST (obj, gtk_sheet_get_type (), GtkSheet)
 #define GTK_SHEET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, gtk_sheet_get_type (), GtkSheetClass)
-#define GTK_IS_SHEET(obj)       GTK_CHECK_TYPE (obj, gtk_sheet_get_type ())
+#define GTK_IS_SHEET(obj)       G_TYPE_CHECK_INSTANCE_TYPE (obj, gtk_sheet_get_type ())
 
 /* Public flags, for compatibility */
 
