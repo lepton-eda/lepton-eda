@@ -2986,7 +2986,7 @@ gtk_sheet_unmap (GtkWidget * widget)
 
   if (gtk_widget_get_mapped (widget))
     {
-      GTK_WIDGET_UNSET_FLAGS (widget, GTK_MAPPED);
+      gtk_widget_set_mapped (widget, FALSE);
 
       gdk_window_hide (sheet->sheet_window);
       if(sheet->column_titles_visible)
