@@ -6316,7 +6316,7 @@ gtk_sheet_get_entry(GtkSheet *sheet)
  GtkWidget *parent;
  GtkWidget *entry = NULL;
  GtkTableChild *table_child;
- GtkBoxChild *box_child;
+ GtkContainer *box_child;
  GList *children = NULL;
 
  g_return_val_if_fail (sheet != NULL, NULL);
@@ -6338,8 +6338,8 @@ gtk_sheet_get_entry(GtkSheet *sheet)
         entry = table_child->widget;
       }
       if(GTK_IS_BOX(parent)){
-        box_child = (GtkBoxChild*) children->data;
-        entry = box_child->widget;
+        box_child = (GtkContainer*) children->data;
+        entry = GTK_WIDGET (&box_child->widget);
       }
 
       if(GTK_IS_ENTRY(entry))  
