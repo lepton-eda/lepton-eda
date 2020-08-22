@@ -1528,6 +1528,50 @@ depend on hidden attributes, since those attributes are deleted from
 memory).  @since{1.9.10}
 @end quotation
 
+@item
+@cfgkey{symbol-attribs}
+@tab @cfgtype{string list}
+@tab
+@cfgval{netname;footprint;value;refdes;
+source;model-name;model;net;
+device;numslots;slot;slotdef;
+graphical;description;documentation;symversion;
+comment;author;dist-license;use-license;file}
+@tab
+Formerly the attribute names were given by using the @file{gafrc}
+keyword @cfgkey{attribute-name} several time in the file.  Do not use
+this keyword any more.
+
+The list specifies attributes presented in the @samp{Add attribute}
+and @samp{Edit attribute} dialogs.  The user can add any attributes
+which should be listed there.  The default names are specific for
+symbols and nets.  Use @cfgkey{pin-attribs} for pins.  While for now
+both lists are displayed together, this may change in future.  The
+attribute names are case sensitive.  The order of the names in the
+list determines the order they are displayed.
+
+@quotation Note
+The attribute names from parent configuration contexts are not
+inherited and will be overridden by the child context value.  If the
+user will specify, e.g., @cfgval{foo;bar} here, only these two names
+are displayed.
+@end quotation
+
+@since{1.9.12}
+
+@item
+@cfgkey{pin-attribs}
+@tab @cfgtype{string list}
+@tab @cfgval{pinnumber;pinseq;pintype;pinlabel}
+@tab
+The same as @cfgkey{symbol-attribs} but for pin attribute names.  The
+attribute names are displayed in the @samp{Add attribute} and
+@samp{Edit attribute} dialogs along with names specified in that key.
+All notes about the @cfgkey{symbol-attribs} keyword are applicable
+here, too.
+
+@since{1.9.12}
+
 @end multitable
 
 
