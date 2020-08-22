@@ -299,7 +299,6 @@ AC_CONFIG_FILES([Makefile
                  contrib/gmk_sym/Makefile
                  contrib/sarlacc_schem/Makefile
                  contrib/scripts/Makefile
-                 contrib/scripts/bom_xref.sh
                  contrib/scripts/sw2asc
 ])
 AC_OUTPUT
