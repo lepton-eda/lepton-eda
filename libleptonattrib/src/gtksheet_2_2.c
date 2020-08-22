@@ -4101,7 +4101,7 @@ gtk_sheet_hide_active_cell(GtkSheet *sheet)
 
  gtk_widget_grab_focus(GTK_WIDGET(sheet));
 
- GTK_WIDGET_UNSET_FLAGS(GTK_WIDGET(sheet->sheet_entry), GTK_VISIBLE);
+ gtk_widget_set_visible (sheet->sheet_entry, FALSE);
 
 }
 
