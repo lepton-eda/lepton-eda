@@ -21,11 +21,13 @@
 (define-module (schematic attrib)
   #:use-module (system foreign)
 
+  #:use-module (lepton config)
   #:use-module (lepton log)
   #:use-module (schematic core attrib)
   #:use-module (schematic core gettext)
 
-  #:export (attribute-name))
+  #:export (attribute-name
+            init-schematic-attribs!))
 
 ;; add-attrib! target name value visible attribute-mode
 ;;
@@ -107,3 +109,31 @@ the attribute was added successfully, otherwise returns #f."
     (lambda (key . args)
       (begin (log! 'critical "~A" (error-not-string))
              #f))))
+
+;;; Attribute list used in "Edit attribute" and "Multiattrib"
+;;; dialogs.  Initially, it is set to #f which means it is not
+;;; initialized.
+(define %schematic-attribs #f)
+
+;;; Get attributes from config.
+(define (schematic-attribs-from-config)
+  (let* ((group "schematic.attrib")
+         (sym-attribs-key "symbol-attribs")
+         (pin-attribs-key "pin-attribs")
+         (cfg (path-config-context (getcwd))))
+    (if (config-has-group? cfg group)
+        (append (if (config-has-key? cfg group sym-attribs-key)
+                    (config-string-list cfg group sym-attribs-key)
+                    '())
+                (if (config-has-key? cfg group pin-attribs-key)
+                    (config-string-list cfg group pin-attribs-key)
+                    '())))))
+
+(define (init-schematic-attribs!)
+  "Initializes the list of attributes used in attribute dialogs
+from path configuration context."
+  (when (not %schematic-attribs)
+    ;; Init %schematic-attribs once.
+    (set! %schematic-attribs
+          (filter attribute-name (schematic-attribs-from-config))))
+  %schematic-attribs)
