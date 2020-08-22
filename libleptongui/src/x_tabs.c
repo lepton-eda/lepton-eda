@@ -748,7 +748,7 @@ x_tabs_pview_create (GschemToplevel* w_current,
   gtk_container_add (GTK_CONTAINER (wtab), GTK_WIDGET (pview));
   gtk_widget_show_all (wtab);
 
-  GTK_WIDGET_SET_FLAGS (pview, GTK_CAN_FOCUS);
+  gtk_widget_set_can_focus (GTK_WIDGET (pview), TRUE);
 
   x_window_setup_draw_events_drawing_area (w_current, pview);
 
