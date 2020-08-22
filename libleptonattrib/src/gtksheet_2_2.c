@@ -993,7 +993,6 @@ gtk_sheet_init (GtkSheet *sheet)
   sheet->freeze_count = 0;
   sheet->state = GTK_SHEET_NORMAL;
 
-  GTK_WIDGET_UNSET_FLAGS (sheet, GTK_NO_WINDOW);
   gtk_widget_set_can_focus (GTK_WIDGET (sheet), TRUE);
 
   sheet->maxrow = 0;
