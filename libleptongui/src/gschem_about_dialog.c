@@ -67,7 +67,7 @@ void about_dialog (GschemToplevel *w_current)
   GtkWidget* dlg = gtk_about_dialog_new();
   GtkAboutDialog* adlg = GTK_ABOUT_DIALOG (dlg);
 
-  gtk_about_dialog_set_name (adlg, "lepton-schematic");
+  gtk_about_dialog_set_program_name (adlg, "lepton-schematic");
   gtk_about_dialog_set_version (adlg, version_string);
 
   if (logo != NULL)
