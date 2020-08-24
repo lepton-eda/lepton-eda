@@ -1273,17 +1273,17 @@ create_behaviors_combo_box (void)
 {
   GtkWidget *combobox;
 
-  combobox = gtk_combo_box_new_text ();
+  combobox = gtk_combo_box_text_new ();
 
   /* Note: order of items in menu is important */
   /* COMPSEL_BEHAVIOR_REFERENCE */
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combobox),
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combobox),
                              _("Default behavior - reference component"));
   /* COMPSEL_BEHAVIOR_EMBED */
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combobox),
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combobox),
                              _("Embed component in schematic"));
   /* COMPSEL_BEHAVIOR_INCLUDE */
-  gtk_combo_box_append_text (GTK_COMBO_BOX (combobox),
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combobox),
                              _("Include component as individual objects"));
 
   gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), 0);
