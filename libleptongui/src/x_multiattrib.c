@@ -1598,8 +1598,8 @@ multiattrib_callback_button_add (GtkButton *button, gpointer user_data)
 
   /* retrieve information from the Add/Edit frame */
   /*   - attribute's name */
-  name = gtk_entry_get_text (
-    GTK_ENTRY (GTK_COMBO (multiattrib->combo_name)->entry));
+  name =
+    gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (multiattrib->combo_name));
   /*   - attribute's value */
   gtk_text_buffer_get_bounds (buffer, &start, &end);
   value = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
@@ -1607,7 +1607,7 @@ multiattrib_callback_button_add (GtkButton *button, gpointer user_data)
   visible = gtk_toggle_button_get_active (
     (GtkToggleButton*)multiattrib->button_visible);
   /*   - visibility type */
-  shownv = (gint)gtk_option_menu_get_history (multiattrib->optionmenu_shownv);
+  shownv = gtk_combo_box_get_active (GTK_COMBO_BOX (multiattrib->optionmenu_shownv));
 
   if (name[0] == '\0' || name[0] == ' ') {
     /* name not allowed for an attribute */
@@ -1629,21 +1629,16 @@ multiattrib_callback_button_add (GtkButton *button, gpointer user_data)
  *
  */
 static void
-multiattrib_init_attrib_names (GtkCombo *combo)
+multiattrib_init_attrib_names (GtkComboBoxText *combo)
 {
-  GList *items = NULL;
   const gchar *string;
   gint i;
 
   for (i = 0, string = s_attrib_get (i);
        string != NULL;
        i++, string = s_attrib_get (i)) {
-    items = g_list_append (items, (gpointer)string);
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), string);
   }
-
-  gtk_combo_set_popdown_strings (GTK_COMBO (combo), items);
-
-  g_list_free (items);
 }
 
 /*! \todo Finish function documentation
@@ -1652,19 +1647,14 @@ multiattrib_init_attrib_names (GtkCombo *combo)
  *
  */
 static void
-multiattrib_init_visible_types (GtkOptionMenu *optionmenu)
+multiattrib_init_visible_types (GtkComboBoxText *optionmenu)
 {
-  GtkWidget *menu, *item;
-
-  menu = gtk_menu_new ();
-  item = gtk_menu_item_new_with_label (_("Show Name & Value"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  item = gtk_menu_item_new_with_label (_("Show Value only"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-  item = gtk_menu_item_new_with_label (_("Show Name only"));
-  gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
-
-  gtk_option_menu_set_menu (optionmenu, menu);
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (optionmenu),
+                                  _("Show Name & Value"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (optionmenu),
+                                  _("Show Value only"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (optionmenu),
+                                  _("Show Name only"));
 }
 
 
@@ -2237,15 +2227,13 @@ multiattrib_init (Multiattrib *multiattrib)
   label = gtk_label_new_with_mnemonic (_("_Name:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
 
-  combo = GTK_WIDGET (g_object_new (GTK_TYPE_COMBO,
-                                    /* GtkCombo */
-                                    "value-in-list", FALSE,
-                                    NULL));
-  multiattrib_init_attrib_names (GTK_COMBO (combo));
-  multiattrib->combo_name = GTK_COMBO (combo);
+  combo = gtk_combo_box_text_new_with_entry ();
+
+  multiattrib_init_attrib_names (GTK_COMBO_BOX_TEXT (combo));
+  multiattrib->combo_name = GTK_COMBO_BOX_TEXT (combo);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
-                                 multiattrib->combo_name->entry);
+                                 GTK_WIDGET (multiattrib->combo_name));
 
   gtk_table_attach (GTK_TABLE (table), label,
                     0, 1, 0, 1,
@@ -2329,10 +2317,9 @@ multiattrib_init (Multiattrib *multiattrib)
                     3, 0);
 
   /*   - the visibility type */
-  optionm = GTK_WIDGET (g_object_new (GTK_TYPE_OPTION_MENU,
-                                      NULL));
-  multiattrib_init_visible_types (GTK_OPTION_MENU (optionm));
-  multiattrib->optionmenu_shownv = GTK_OPTION_MENU (optionm);
+  optionm = gtk_combo_box_text_new ();
+  multiattrib_init_visible_types (GTK_COMBO_BOX_TEXT (optionm));
+  multiattrib->optionmenu_shownv = GTK_COMBO_BOX_TEXT (optionm);
   gtk_table_attach (GTK_TABLE (table), optionm,
                     1, 2, 2, 3,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),

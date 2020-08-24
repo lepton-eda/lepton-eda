@@ -55,13 +55,13 @@ struct _Multiattrib {
 
   GtkTreeView    *treeview;
 
-  GtkWidget      *show_inherited;
-  GtkCombo       *combo_name;
-  GtkTextView    *textview_value;
-  GtkCheckButton *button_visible;
-  GtkOptionMenu  *optionmenu_shownv;
-  GtkWidget      *list_frame;
-  GtkWidget      *add_frame;
+  GtkWidget       *show_inherited;
+  GtkComboBoxText *combo_name;
+  GtkTextView     *textview_value;
+  GtkCheckButton  *button_visible;
+  GtkComboBoxText *optionmenu_shownv;
+  GtkWidget       *list_frame;
+  GtkWidget       *add_frame;
 
   GdkColor       value_normal_text_color;   /* Workaround for lameness in GtkTextView */
   GdkColor       insensitive_text_color;
