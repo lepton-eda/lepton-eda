@@ -358,7 +358,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
 
-  attrib_combo_box_entry = gtk_combo_box_entry_new_text ();
+  attrib_combo_box_entry = gtk_combo_box_text_new_with_entry ();
   attrib_combo_entry = gtk_bin_get_child(GTK_BIN(attrib_combo_box_entry));
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), attrib_combo_box_entry);
