@@ -32,7 +32,7 @@
 
 #define GLADE_HOOKUP_OBJECT(component,widget,name) \
   g_object_set_data_full (G_OBJECT (component), name, \
-    gtk_widget_ref (widget), (GDestroyNotify) g_object_unref)
+    g_object_ref (widget), (GDestroyNotify) g_object_unref)
 
 /***************** Start of Arc dialog box ***************************/
 
