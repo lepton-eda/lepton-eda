@@ -2265,29 +2265,31 @@ gtk_sheet_flash(gpointer data)
   }
   if(height>clip_area.height) height=clip_area.height+10;
 
+  GtkStyle *style = gtk_widget_get_style (GTK_WIDGET(sheet));
+
   gdk_draw_pixmap(sheet->sheet_window,
-                  GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
+                  style->fg_gc[GTK_STATE_NORMAL],
                   sheet->pixmap,
                   x, y,
                   x, y,
                   1, height);
 
   gdk_draw_pixmap(sheet->sheet_window,
-                  GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
+                  style->fg_gc[GTK_STATE_NORMAL],
                   sheet->pixmap,
                   x, y,
                   x, y,
                   width, 1);
 
   gdk_draw_pixmap(sheet->sheet_window,
-                  GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
+                  style->fg_gc[GTK_STATE_NORMAL],
                   sheet->pixmap,
                   x, y+height,
                   x, y+height,
                   width, 1);
 
   gdk_draw_pixmap(sheet->sheet_window,
-                  GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
+                  style->fg_gc[GTK_STATE_NORMAL],
                   sheet->pixmap,
                   x+width, y,
                   x+width, y,
@@ -7737,7 +7739,9 @@ static void
 init_attributes(GtkSheet *sheet, gint col, GtkSheetCellAttr *attributes)
 {
  /* DEFAULT VALUES */    
- attributes->foreground = GTK_WIDGET(sheet)->style->black;
+ GtkStyle *style = gtk_widget_get_style (GTK_WIDGET(sheet));
+
+ attributes->foreground = style->black;
  attributes->background = sheet->bg_color;
  if (!gtk_widget_get_realized (GTK_WIDGET (sheet))) {
    GdkColormap *colormap;
@@ -7751,11 +7755,11 @@ init_attributes(GtkSheet *sheet, gint col, GtkSheetCellAttr *attributes)
  attributes->border.cap_style = GDK_CAP_NOT_LAST;
  attributes->border.join_style = GDK_JOIN_MITER;
  attributes->border.mask = 0;
- attributes->border.color = GTK_WIDGET(sheet)->style->black;
+ attributes->border.color = style->black;
  attributes->is_editable = TRUE;
  attributes->is_visible = TRUE;
- attributes->font = GTK_WIDGET(sheet)->style->private_font;
- attributes->font_desc = GTK_WIDGET(sheet)->style->font_desc;
+ attributes->font = style->private_font;
+ attributes->font_desc = style->font_desc;
 
 }       
  
