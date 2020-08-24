@@ -402,7 +402,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
 
-  show_options = gtk_combo_box_new ();
+  show_options = gtk_combo_box_text_new ();
   GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING);
   gtk_combo_box_set_model (GTK_COMBO_BOX (show_options), GTK_TREE_MODEL(store));
   GtkCellRenderer *cell = gtk_cell_renderer_text_new();
@@ -418,9 +418,12 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
                     (GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
 
-  gtk_combo_box_append_text (GTK_COMBO_BOX (show_options), _("Show Value Only"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (show_options), _("Show Name Only"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (show_options), _("Show Name & Value"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (show_options),
+                                  _("Show Value Only"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (show_options),
+                                  _("Show Name Only"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (show_options),
+                                  _("Show Name & Value"));
   gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 0);
 
   if (nsel > 1) { /* gschem specific */
@@ -558,7 +561,8 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   i = 0;
   string = (char *) s_attrib_get(i);
   while (string != NULL) {
-    gtk_combo_box_append_text(GTK_COMBO_BOX(attrib_combo_box_entry), string);
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (attrib_combo_box_entry),
+                                    string);
     i++;
     string = (char *) s_attrib_get(i);
   }
