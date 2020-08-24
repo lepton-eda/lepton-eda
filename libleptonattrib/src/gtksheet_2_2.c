@@ -8382,11 +8382,13 @@ gtk_sheet_button_size_request	(GtkSheet *sheet,
 
   if(button->child)
   {
+     GtkStyle *style = gtk_widget_get_style (sheet->button);
+
      gtk_widget_size_request(button->child->widget, &requisition);
      requisition.width += 2*button->child->xpadding;
      requisition.height += 2*button->child->ypadding;
-     requisition.width += 2*sheet->button->style->xthickness;
-     requisition.height += 2*sheet->button->style->ythickness;
+     requisition.width += 2 * style->xthickness;
+     requisition.height += 2 * style->ythickness;
   }
   else
   {
