@@ -93,12 +93,14 @@ G_DEFINE_TYPE (GtkSheet, gtk_sheet, GTK_TYPE_CONTAINER)
 #define DEFAULT_COLUMN_WIDTH 80
 
 static inline guint DEFAULT_ROW_HEIGHT(GtkWidget *widget) 
-{ 
-  if(!widget->style->font_desc) return 24;
+{
+  GtkStyle *style = gtk_widget_get_style (widget);
+
+  if(!style->font_desc) return 24;
   else {
     PangoContext *context = gtk_widget_get_pango_context(widget); 
     PangoFontMetrics *metrics = pango_context_get_metrics(context,
-                                  widget->style->font_desc,
+                                  style->font_desc,
                                   pango_context_get_language(context)); 
     guint val = pango_font_metrics_get_descent(metrics) + 
                 pango_font_metrics_get_ascent(metrics);
@@ -114,11 +116,13 @@ static inline guint DEFAULT_ROW_HEIGHT(GtkWidget *widget)
 
 static inline guint DEFAULT_FONT_ASCENT(GtkWidget *widget) 
 { 
-  if(!widget->style->font_desc) return 12;
+  GtkStyle *style = gtk_widget_get_style (widget);
+
+  if(!style->font_desc) return 12;
   else {
     PangoContext *context = gtk_widget_get_pango_context(widget); 
     PangoFontMetrics *metrics = pango_context_get_metrics(context,
-                                  widget->style->font_desc,
+                                  style->font_desc,
                                   pango_context_get_language(context)); 
     guint val = pango_font_metrics_get_ascent(metrics);
     pango_font_metrics_unref(metrics);
@@ -147,12 +151,15 @@ static inline guint STRING_WIDTH(GtkWidget *widget,
 
 static inline guint DEFAULT_FONT_DESCENT(GtkWidget *widget) 
 { 
-  if(!widget->style->font_desc) return 12;
+  GtkStyle *style = gtk_widget_get_style (widget);
+
+  if(!style->font_desc) return 12;
   else {
     PangoContext *context = gtk_widget_get_pango_context(widget); 
-    PangoFontMetrics *metrics = pango_context_get_metrics(context,
-                                  widget->style->font_desc,
-                                  pango_context_get_language(context)); 
+    PangoFontMetrics *metrics =
+      pango_context_get_metrics(context,
+                                style->font_desc,
+                                pango_context_get_language(context));
     guint val =  pango_font_metrics_get_descent(metrics);
     pango_font_metrics_unref(metrics);
     return PANGO_PIXELS(val);
