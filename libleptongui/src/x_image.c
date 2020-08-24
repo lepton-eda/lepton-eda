@@ -188,7 +188,7 @@ static void create_size_menu (GtkComboBox *combo)
   for (i=0; x_image_sizes[i] != NULL;i++) {
     /* Create a new string and add it as an option*/
     buf = g_strdup (x_image_sizes[i]);
-    gtk_combo_box_append_text (GTK_COMBO_BOX (combo), buf);
+    gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), buf);
 
     /* Compare with the default size, to get the default index */
     if (strcasecmp(buf, default_size ) == 0) {
@@ -209,7 +209,7 @@ static void create_size_menu (GtkComboBox *combo)
  *  \note
  *  This function is only used in this file, there are other create_menus...
  */
-static void create_type_menu(GtkComboBox *combo)
+static void create_type_menu (GtkComboBoxText *combo)
 {
   GSList *formats = gdk_pixbuf_get_formats ();
   GSList *ptr;
@@ -221,7 +221,7 @@ static void create_type_menu(GtkComboBox *combo)
     if (gdk_pixbuf_format_is_writable ((GdkPixbufFormat*) ptr->data)) {
       /* Get the format description and add it to the menu */
       buf = g_strdup (gdk_pixbuf_format_get_description ((GdkPixbufFormat*) ptr->data));
-      gtk_combo_box_append_text (GTK_COMBO_BOX (combo), buf);
+      gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), buf);
 
       /* Compare the name with "png" and store the index */
       buf = g_strdup (gdk_pixbuf_format_get_name ((GdkPixbufFormat*) ptr->data));
@@ -235,7 +235,7 @@ static void create_type_menu(GtkComboBox *combo)
     ptr = ptr->next;
   }
   g_slist_free (formats);
-  gtk_combo_box_append_text(GTK_COMBO_BOX(combo), "Portable Document Format");
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (combo), "Portable Document Format");
 
   /* Set the default menu */
   gtk_combo_box_set_active(GTK_COMBO_BOX(combo), default_index);
@@ -284,8 +284,9 @@ x_image_get_type_from_description (const char *description)
  *  \return nothing.
  *
  */
-static void x_image_update_dialog_filename(GtkComboBox *combo,
-    GschemToplevel *w_current) {
+static void
+x_image_update_dialog_filename (GtkComboBoxText *combo,
+                                GschemToplevel *w_current) {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   char* image_type_descr = NULL;
   gchar *image_type = NULL;
@@ -296,7 +297,8 @@ static void x_image_update_dialog_filename(GtkComboBox *combo,
   GtkWidget *file_chooser;
 
   /* Get the current image type */
-  image_type_descr = gtk_combo_box_get_active_text(GTK_COMBO_BOX(combo));
+  image_type_descr =
+    gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (combo));
   image_type = x_image_get_type_from_description(image_type_descr);
 
   /* Get the parent dialog */
@@ -502,7 +504,7 @@ void x_image_setup (GschemToplevel *w_current)
   gtk_box_pack_start (GTK_BOX (vbox1),
       label1, FALSE, FALSE, 0);
 
-  size_combo =  gtk_combo_box_new_text ();
+  size_combo =  gtk_combo_box_text_new ();
   create_size_menu (GTK_COMBO_BOX(size_combo));
 
   gtk_widget_show (size_combo);
@@ -518,9 +520,9 @@ void x_image_setup (GschemToplevel *w_current)
   gtk_box_pack_start (GTK_BOX (vbox2),
       label2, FALSE, FALSE, 0);
 
-  type_combo = gtk_combo_box_new_text ();
+  type_combo = gtk_combo_box_text_new ();
   gtk_box_pack_start (GTK_BOX (vbox2), type_combo, TRUE, TRUE, 0);
-  create_type_menu (GTK_COMBO_BOX(type_combo));
+  create_type_menu (GTK_COMBO_BOX_TEXT (type_combo));
 
 
   /* Color/grayscale selection:
@@ -531,10 +533,10 @@ void x_image_setup (GschemToplevel *w_current)
   gtk_misc_set_padding (GTK_MISC (label3), 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox3), label3, FALSE, FALSE, 0);
 
-  GtkWidget* color_combo = gtk_combo_box_new_text();
+  GtkWidget* color_combo = gtk_combo_box_text_new();
   gtk_box_pack_start (GTK_BOX (vbox3), color_combo, TRUE, TRUE, 0);
-  gtk_combo_box_append_text (GTK_COMBO_BOX (color_combo), _("Color"));
-  gtk_combo_box_append_text (GTK_COMBO_BOX (color_combo), _("Grayscale"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (color_combo), _("Color"));
+  gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (color_combo), _("Grayscale"));
   gtk_combo_box_set_active (GTK_COMBO_BOX (color_combo), 0);
 
   gtk_widget_show_all (vbox3);
@@ -578,7 +580,7 @@ void x_image_setup (GschemToplevel *w_current)
       NULL);
 
   /* Update the filename */
-  x_image_update_dialog_filename(GTK_COMBO_BOX(type_combo), w_current);
+  x_image_update_dialog_filename (GTK_COMBO_BOX_TEXT (type_combo), w_current);
 
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
       GTK_RESPONSE_ACCEPT);
@@ -600,9 +602,11 @@ void x_image_setup (GschemToplevel *w_current)
   gtk_widget_show (dialog);
 
   if (gtk_dialog_run((GTK_DIALOG(dialog))) == GTK_RESPONSE_ACCEPT) {
-    image_size = gtk_combo_box_get_active_text(GTK_COMBO_BOX(size_combo));
+    image_size =
+      gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (size_combo));
 
-    image_type_descr = gtk_combo_box_get_active_text(GTK_COMBO_BOX(type_combo));
+    image_type_descr =
+      gtk_combo_box_text_get_active_text (GTK_COMBO_BOX_TEXT (type_combo));
 
     image_type = x_image_get_type_from_description(image_type_descr);
     sscanf(image_size, "%ix%i", &width, &height);
