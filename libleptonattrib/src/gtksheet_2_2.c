@@ -2663,13 +2663,16 @@ gtk_sheet_style_set (GtkWidget *widget,
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_SHEET (widget));
 
+  GtkStyle *style = gtk_widget_get_style (widget);
+  GdkWindow *window = gtk_widget_get_window (widget);
+
   if (GTK_WIDGET_CLASS (gtk_sheet_parent_class)->style_set)
     (*GTK_WIDGET_CLASS (gtk_sheet_parent_class)->style_set) (widget, previous_style);
 
   if (gtk_widget_get_realized (widget))
      {
-       gtk_style_set_background (widget->style,
-                                 widget->window,
+       gtk_style_set_background (style,
+                                 window,
                                  (GtkStateType) widget->state);
      }
 
