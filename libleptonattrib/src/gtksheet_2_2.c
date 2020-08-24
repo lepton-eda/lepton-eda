@@ -8339,6 +8339,9 @@ label_size_request(GtkSheet *sheet, gchar *label, GtkRequisition *req)
   gint n = 0;
   gint row_height = DEFAULT_ROW_HEIGHT(GTK_WIDGET(sheet)) - 2*CELLOFFSET + 2;
 
+  GtkWidget *widget = GTK_WIDGET (sheet);
+  GtkStyle *style = gtk_widget_get_style (widget);
+
   req->height = 0;
   req->width = 0;
   words=label;
@@ -8349,9 +8352,7 @@ label_size_request(GtkSheet *sheet, gchar *label, GtkRequisition *req)
 
       word[n] = '\0';
       req->width = MAX (req->width,
-                        (gint) STRING_WIDTH (GTK_WIDGET (sheet),
-                                             GTK_WIDGET (sheet)->style->font_desc,
-                                             word));
+                        (gint) STRING_WIDTH (widget, style->font_desc, word));
       n = 0;
     } else {
       word[n++] = *words;
