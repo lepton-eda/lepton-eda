@@ -1400,8 +1400,11 @@ gtk_sheet_set_title(GtkSheet *sheet, const gchar *title)
     return;
   }
 
-  if(GTK_BIN(sheet->button)->child)
-           label = GTK_BIN(sheet->button)->child;
+  GtkWidget *widget = gtk_bin_get_child (GTK_BIN(sheet->button));
+
+  if (widget) {
+    label = widget;
+  }
   size_allocate_global_button(sheet);
 }
 
