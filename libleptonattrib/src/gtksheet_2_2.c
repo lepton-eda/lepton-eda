@@ -6490,7 +6490,9 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
                          x, y,
 	                 width, height);
 
-  gtk_paint_box (sheet->button->style, window,
+  GtkStyle *button_style = gtk_widget_get_style (GTK_WIDGET (sheet->button));
+
+  gtk_paint_box (button_style, window,
                  GTK_STATE_NORMAL, GTK_SHADOW_OUT, 
                  &allocation, GTK_WIDGET(sheet),
                  "buttondefault", x, y, width, height);
@@ -6504,7 +6506,7 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
      shadow_type = GTK_SHADOW_OUT;
 
   if(state != GTK_STATE_NORMAL && state != GTK_STATE_INSENSITIVE)
-  gtk_paint_box (sheet->button->style, window,
+  gtk_paint_box (button_style, window,
                  button->state, shadow_type, 
                  &allocation, GTK_WIDGET(sheet),
                  "button", x, y, width, height);
@@ -6519,7 +6521,7 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
                               &allocation);
     gdk_gc_set_clip_rectangle(widget_style->white_gc, &allocation);
 
-    y += DEFAULT_ROW_HEIGHT(GTK_WIDGET(sheet))/2 + sheet->button->style->ythickness + DEFAULT_FONT_DESCENT(GTK_WIDGET(sheet));
+    y += DEFAULT_ROW_HEIGHT(GTK_WIDGET(sheet))/2 + button_style->ythickness + DEFAULT_FONT_DESCENT(GTK_WIDGET(sheet));
 
     if(button->label && strlen(button->label)>0){
 
