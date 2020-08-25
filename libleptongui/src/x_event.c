@@ -771,19 +771,23 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   if (pan_xaxis) {
     adj = gschem_page_view_get_hadjustment (GSCHEM_PAGE_VIEW (widget));
     g_return_val_if_fail (adj != NULL, TRUE);
-    gtk_adjustment_set_value(adj, MIN(adj->value + pan_direction *
-                                        (adj->page_increment /
-                                         w_current->scrollpan_steps),
-                                      adj->upper - adj->page_size));
+    gtk_adjustment_set_value (adj,
+                              MIN (gtk_adjustment_get_value (adj) + pan_direction *
+                                   (gtk_adjustment_get_page_increment (adj) /
+                                    w_current->scrollpan_steps),
+                                   gtk_adjustment_get_upper (adj) -
+                                   gtk_adjustment_get_page_size (adj)));
   }
 
   if (pan_yaxis) {
     adj = gschem_page_view_get_vadjustment (GSCHEM_PAGE_VIEW (widget));
     g_return_val_if_fail (adj != NULL, TRUE);
-    gtk_adjustment_set_value(adj, MIN(adj->value + pan_direction *
-                                        (adj->page_increment /
-                                         w_current->scrollpan_steps),
-                                      adj->upper - adj->page_size));
+    gtk_adjustment_set_value (adj,
+                              MIN (gtk_adjustment_get_value (adj) + pan_direction *
+                                   (gtk_adjustment_get_page_increment (adj) /
+                                    w_current->scrollpan_steps),
+                                   gtk_adjustment_get_upper (adj) -
+                                   gtk_adjustment_get_page_size (adj)));
   }
 
   if (w_current->undo_panzoom && (zoom || pan_xaxis || pan_yaxis)) {
