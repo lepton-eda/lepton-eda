@@ -6218,10 +6218,12 @@ gtk_sheet_size_allocate_entry(GtkSheet *sheet)
 
  if (gtk_widget_get_realized (sheet->sheet_entry)) {
 
-  if(!GTK_WIDGET(sheet_entry)->style) 
-        gtk_widget_ensure_style(GTK_WIDGET(sheet_entry));
+  if (!gtk_widget_get_style (GTK_WIDGET (sheet_entry))) {
+    gtk_widget_ensure_style (GTK_WIDGET (sheet_entry));
+  }
 
-  previous_style = GTK_WIDGET(sheet_entry)->style;
+  previous_style =
+    gtk_widget_get_style (GTK_WIDGET (sheet_entry));
 
   style = gtk_style_copy(previous_style);
   style->bg[GTK_STATE_NORMAL] = attributes.background;
@@ -6234,9 +6236,9 @@ gtk_sheet_size_allocate_entry(GtkSheet *sheet)
   pango_font_description_free(style->font_desc);
   style->font_desc = pango_font_description_copy(attributes.font_desc);
 
-  GTK_WIDGET(sheet_entry)->style = style;
+  gtk_widget_set_style (GTK_WIDGET (sheet_entry), style);
   gtk_widget_size_request(sheet->sheet_entry, NULL);
-  GTK_WIDGET(sheet_entry)->style = previous_style;
+  gtk_widget_set_style (GTK_WIDGET (sheet_entry), previous_style);
 
   if(style != previous_style){
     style->bg[GTK_STATE_NORMAL] = previous_style->bg[GTK_STATE_NORMAL];
