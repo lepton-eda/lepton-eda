@@ -6509,13 +6509,15 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
                  &allocation, GTK_WIDGET(sheet),
                  "button", x, y, width, height);
 
+  GtkStyle *widget_style = gtk_widget_get_style (GTK_WIDGET (sheet));
+
   if(button->label_visible){
 
     text_height=DEFAULT_ROW_HEIGHT(GTK_WIDGET(sheet))-2*CELLOFFSET;
 
-    gdk_gc_set_clip_rectangle(GTK_WIDGET(sheet)->style->fg_gc[button->state], 
+    gdk_gc_set_clip_rectangle(widget_style->fg_gc[button->state],
                               &allocation);
-    gdk_gc_set_clip_rectangle(GTK_WIDGET(sheet)->style->white_gc, &allocation);
+    gdk_gc_set_clip_rectangle(widget_style->white_gc, &allocation);
 
     y += DEFAULT_ROW_HEIGHT(GTK_WIDGET(sheet))/2 + sheet->button->style->ythickness + DEFAULT_FONT_DESCENT(GTK_WIDGET(sheet));
 
@@ -6533,11 +6535,11 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
                 line[len+1]='\0';
              }
              if(*words == '\n' || *(words+1) == '\0'){
-               text_width = STRING_WIDTH(GTK_WIDGET(sheet), GTK_WIDGET(sheet)->style->font_desc, line);
+               text_width = STRING_WIDTH(GTK_WIDGET(sheet), widget_style->font_desc, line);
 
                switch(button->justification){
                  case GTK_JUSTIFY_LEFT:
-                   gtk_paint_string (GTK_WIDGET(sheet)->style,
+                   gtk_paint_string (widget_style,
                                      window,
                                      (GtkStateType) state,
                                      &allocation, GTK_WIDGET(sheet), "label",
@@ -6545,7 +6547,7 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
                                      line);
                    break;
                  case GTK_JUSTIFY_RIGHT:
-                   gtk_paint_string (GTK_WIDGET(sheet)->style,
+                   gtk_paint_string (widget_style,
                                      window,
                                      (GtkStateType) state,
                                      &allocation, GTK_WIDGET(sheet), "label",
@@ -6554,7 +6556,7 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
                    break;
                  case GTK_JUSTIFY_CENTER:
                  default:
-                   gtk_paint_string (GTK_WIDGET(sheet)->style,
+                   gtk_paint_string (widget_style,
                                      window,
                                      (GtkStateType) state,
                                      &allocation, GTK_WIDGET(sheet), "label",
@@ -6573,11 +6575,11 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
            g_free(line);
     }else{
            sprintf(label,"%d",index);
-           text_width = STRING_WIDTH(GTK_WIDGET(sheet), GTK_WIDGET(sheet)->style->font_desc, label);
+           text_width = STRING_WIDTH(GTK_WIDGET(sheet), widget_style->font_desc, label);
 
            switch(button->justification){
              case GTK_JUSTIFY_LEFT:
-               gtk_paint_string (GTK_WIDGET(sheet)->style,
+               gtk_paint_string (widget_style,
                                  window,
                                  (GtkStateType) state,
                                  &allocation, GTK_WIDGET(sheet), "label",
@@ -6585,7 +6587,7 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
                                  label);
                break;
              case GTK_JUSTIFY_RIGHT:
-               gtk_paint_string (GTK_WIDGET(sheet)->style,
+               gtk_paint_string (widget_style,
                                  window,
                                  (GtkStateType) state,
                                  &allocation, GTK_WIDGET(sheet), "label",
@@ -6594,7 +6596,7 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
                break;
              case GTK_JUSTIFY_CENTER:
              default:
-               gtk_paint_string (GTK_WIDGET(sheet)->style,
+               gtk_paint_string (widget_style,
                                  window,
                                  (GtkStateType) state,
                                  &allocation, GTK_WIDGET(sheet), "label",
@@ -6604,9 +6606,9 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
 
     }
 
-    gdk_gc_set_clip_rectangle(GTK_WIDGET(sheet)->style->fg_gc[button->state],
+    gdk_gc_set_clip_rectangle (widget_style->fg_gc[button->state],
                             NULL);
-    gdk_gc_set_clip_rectangle(GTK_WIDGET(sheet)->style->white_gc, NULL);
+    gdk_gc_set_clip_rectangle (widget_style->white_gc, NULL);
 
   }
 
