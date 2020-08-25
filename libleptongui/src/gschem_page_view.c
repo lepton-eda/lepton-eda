@@ -1040,7 +1040,7 @@ hadjustment_value_changed (GtkAdjustment *hadjustment, GschemPageView *view)
     g_return_if_fail (view->hadjustment == hadjustment);
 
     current_left = gschem_page_geometry_get_viewport_left (geometry);
-    new_left = (int) hadjustment->value;
+    new_left = (int) gtk_adjustment_get_value (hadjustment);
 
     geometry->viewport_left = new_left;
     geometry->viewport_right = geometry->viewport_right - (current_left - new_left);
@@ -1265,7 +1265,7 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view)
     g_return_if_fail (view->vadjustment == vadjustment);
 
     current_bottom = geometry->viewport_bottom;
-    new_bottom = geometry->world_bottom - (int) vadjustment->value;
+    new_bottom = geometry->world_bottom - (int) gtk_adjustment_get_value (vadjustment);
 
     geometry->viewport_bottom = new_bottom;
     geometry->viewport_top = geometry->viewport_top - (current_bottom - new_bottom);
