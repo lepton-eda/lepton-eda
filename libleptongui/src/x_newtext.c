@@ -243,7 +243,7 @@ static void newtext_init(NewText *dialog)
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
                                   GTK_RESPONSE_ACCEPT);
 
-  vbox = GTK_DIALOG(dialog)->vbox;
+  vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
   gtk_box_set_spacing(GTK_BOX(vbox),DIALOG_V_SPACING);
 
   table = gtk_table_new(4, 2, FALSE);
