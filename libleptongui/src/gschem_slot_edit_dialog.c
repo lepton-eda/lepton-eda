@@ -115,7 +115,7 @@ void slot_edit_dialog (GschemToplevel *w_current, const char *count, const char 
 
     gtk_container_set_border_width (GTK_CONTAINER (w_current->sewindow),
                                     DIALOG_BORDER_SPACING);
-    vbox = GTK_DIALOG(w_current->sewindow)->vbox;
+    vbox = gtk_dialog_get_content_area (GTK_DIALOG (w_current->sewindow));
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
     label[0] = gschem_dialog_misc_create_property_label (_("Number of Slots:"));
