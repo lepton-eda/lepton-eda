@@ -5583,6 +5583,8 @@ gtk_sheet_extend_selection(GtkSheet *sheet, gint row, gint column)
    gint state;
    gint r,c;
 
+  GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (sheet));
+
    if(row == sheet->selection_cell.row && column == sheet->selection_cell.col)
         return;
 
@@ -5611,7 +5613,7 @@ gtk_sheet_extend_selection(GtkSheet *sheet, gint row, gint column)
          sheet->range.coli=c;
          sheet->range.rowi=r;
          gdk_draw_pixmap(sheet->sheet_window,
-                   GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
+                   style->fg_gc[GTK_STATE_NORMAL],
                    sheet->pixmap,
                    COLUMN_LEFT_XPIXEL(sheet,c)-1,
                    ROW_TOP_YPIXEL(sheet,r)-1,
