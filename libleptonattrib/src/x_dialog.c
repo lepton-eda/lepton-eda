@@ -82,13 +82,14 @@ void x_dialog_newattrib()
   
   /*  Create a text label for the dialog window */
   label = gtk_label_new (_("Enter new attribute name"));
-  gtk_box_pack_start (GTK_BOX(GTK_DIALOG(dialog)->vbox), label, 
-		      FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      label, FALSE, FALSE, 0);
 
   /*  Create the "attrib" text entry area */
   attrib_entry = gtk_entry_new ();
   gtk_entry_set_max_length (GTK_ENTRY (attrib_entry), 1024);
-  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->vbox), attrib_entry, TRUE, TRUE, 5);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      attrib_entry, TRUE, TRUE, 5);
   gtk_widget_set_size_request (dialog, 260, 140);
 
   gtk_widget_show_all(dialog);
