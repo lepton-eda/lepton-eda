@@ -6862,7 +6862,7 @@ hadjustment_value_changed (GtkAdjustment * adjustment,
   }
 
 
-  sheet->hadjustment->value=adjustment->value;
+  gtk_adjustment_set_value (sheet->hadjustment, gtk_adjustment_get_value (adjustment));
 
   value = gtk_adjustment_get_value (adjustment);
 
