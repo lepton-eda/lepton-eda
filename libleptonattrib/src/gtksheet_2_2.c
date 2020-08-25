@@ -1925,9 +1925,9 @@ gtk_sheet_moveto (GtkSheet * sheet,
       }
 
       if (y < 0)
-	sheet->vadjustment->value = 0.0;
+	gtk_adjustment_set_value (sheet->vadjustment, (gdouble) 0.0);
       else
-	sheet->vadjustment->value = y;
+	gtk_adjustment_set_value (sheet->vadjustment, (gdouble) y);
 
       sheet->old_vadjustment = -1.;
       g_signal_emit_by_name (sheet->vadjustment, "value_changed");
@@ -1959,9 +1959,9 @@ gtk_sheet_moveto (GtkSheet * sheet,
       }
 
       if (x < 0)
-	sheet->hadjustment->value = 0.0;
+	gtk_adjustment_set_value (sheet->hadjustment, (gdouble) 0.0);
       else
-	sheet->hadjustment->value = x;
+	gtk_adjustment_set_value (sheet->hadjustment, (gdouble) x);
 
       sheet->old_vadjustment = -1.;
       g_signal_emit_by_name (sheet->hadjustment, "value_changed");
@@ -2489,7 +2489,7 @@ gtk_sheet_set_vadjustment (GtkSheet      *sheet,
        return;
      }
 
-  sheet->old_vadjustment = sheet->vadjustment->value;
+  sheet->old_vadjustment = gtk_adjustment_get_value (sheet->vadjustment);
 }
 
 void
@@ -2539,7 +2539,7 @@ gtk_sheet_set_hadjustment (GtkSheet      *sheet,
        return;
      }
 
-  sheet->old_hadjustment = sheet->hadjustment->value;
+  sheet->old_hadjustment = gtk_adjustment_get_value (sheet->hadjustment);
 }
 
 static void
