@@ -327,7 +327,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   gtk_dialog_set_default_response(GTK_DIALOG(aewindow),
                                   GTK_RESPONSE_APPLY);
 
-  vbox = GTK_DIALOG(aewindow)->vbox;
+  vbox = gtk_dialog_get_content_area (GTK_DIALOG (aewindow));
   gtk_container_set_border_width(GTK_CONTAINER(aewindow),
 				 DIALOG_BORDER_SPACING);
   gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
