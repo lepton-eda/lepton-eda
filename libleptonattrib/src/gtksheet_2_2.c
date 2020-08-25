@@ -2678,7 +2678,7 @@ gtk_sheet_style_set (GtkWidget *widget,
      {
        gtk_style_set_background (style,
                                  window,
-                                 (GtkStateType) widget->state);
+                                 gtk_widget_get_state (widget));
      }
 
 }
