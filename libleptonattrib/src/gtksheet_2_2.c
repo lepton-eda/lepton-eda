@@ -2727,13 +2727,14 @@ gtk_sheet_realize (GtkWidget * widget)
   attributes.cursor = gdk_cursor_new(GDK_TOP_LEFT_ARROW);
 
   /* main window */
-  widget->window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
+  GdkWindow *window = gdk_window_new (gtk_widget_get_parent_window (widget), &attributes, attributes_mask);
+  gtk_widget_set_window (widget, window);
 
-  gdk_window_set_user_data (widget->window, sheet);
+  gdk_window_set_user_data (window, sheet);
 
-  widget->style = gtk_style_attach (widget->style, widget->window);
+  widget->style = gtk_style_attach (widget->style, window);
 
-  gtk_style_set_background (widget->style, widget->window, GTK_STATE_NORMAL);
+  gtk_style_set_background (widget->style, window, GTK_STATE_NORMAL);
 
   attributes.x = 0;
   if(sheet->row_titles_visible)
@@ -2743,7 +2744,7 @@ gtk_sheet_realize (GtkWidget * widget)
   attributes.height = sheet->column_title_area.height;
 
   /* column-title window */
-  sheet->column_title_window = gdk_window_new (widget->window, &attributes, attributes_mask);
+  sheet->column_title_window = gdk_window_new (window, &attributes, attributes_mask);
   gdk_window_set_user_data (sheet->column_title_window, sheet);
   gtk_style_set_background (widget->style, sheet->column_title_window, GTK_STATE_NORMAL);
 
@@ -2755,7 +2756,7 @@ gtk_sheet_realize (GtkWidget * widget)
   attributes.height = sheet->row_title_area.height;
 
   /* row-title window */
-  sheet->row_title_window = gdk_window_new (widget->window, &attributes, attributes_mask);
+  sheet->row_title_window = gdk_window_new (window, &attributes, attributes_mask);
   gdk_window_set_user_data (sheet->row_title_window, sheet);
   gtk_style_set_background (widget->style, sheet->row_title_window, GTK_STATE_NORMAL);
 
@@ -2767,7 +2768,7 @@ gtk_sheet_realize (GtkWidget * widget)
   attributes.width = sheet->sheet_window_width, 
   attributes.height = sheet->sheet_window_height;
 
-  sheet->sheet_window = gdk_window_new (widget->window, &attributes, attributes_mask);
+  sheet->sheet_window = gdk_window_new (window, &attributes, attributes_mask);
   gdk_window_set_user_data (sheet->sheet_window, sheet);
 
   gdk_window_set_background (sheet->sheet_window, &widget->style->white);
