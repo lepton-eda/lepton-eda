@@ -589,8 +589,8 @@ void x_image_setup (GschemToplevel *w_current)
 
   gtk_container_set_border_width(GTK_CONTAINER(dialog),
       DIALOG_BORDER_SPACING);
-  gtk_box_set_spacing(GTK_BOX(GTK_DIALOG(dialog)->vbox),
-      DIALOG_V_SPACING);
+  gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                       DIALOG_V_SPACING);
 
 
   settings_restore (GTK_FILE_CHOOSER (dialog),
