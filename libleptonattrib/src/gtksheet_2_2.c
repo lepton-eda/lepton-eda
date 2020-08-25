@@ -6864,7 +6864,7 @@ hadjustment_value_changed (GtkAdjustment * adjustment,
 
   sheet->hadjustment->value=adjustment->value;
 
-  value = adjustment->value;
+  value = gtk_adjustment_get_value (adjustment);
 
   sheet->hoffset = -value;
 
