@@ -6654,22 +6654,22 @@ adjust_scrollbars (GtkSheet * sheet)
 {
 
  if(sheet->vadjustment){ 
-  sheet->vadjustment->page_size = sheet->sheet_window_height;
-  sheet->vadjustment->page_increment = sheet->sheet_window_height / 2;
-  sheet->vadjustment->step_increment = DEFAULT_ROW_HEIGHT(GTK_WIDGET(sheet));
-  sheet->vadjustment->lower = 0;
-  sheet->vadjustment->upper = SHEET_HEIGHT (sheet) + 80;
-  g_signal_emit_by_name (sheet->vadjustment, "changed");
+   gtk_adjustment_set_page_size (sheet->vadjustment, (gdouble) sheet->sheet_window_height);
+   gtk_adjustment_set_page_increment (sheet->vadjustment, (gdouble) sheet->sheet_window_height / 2);
+   gtk_adjustment_set_step_increment (sheet->vadjustment, (gdouble) DEFAULT_ROW_HEIGHT(GTK_WIDGET(sheet)));
+   gtk_adjustment_set_lower (sheet->vadjustment, 0.);
+   gtk_adjustment_set_upper (sheet->vadjustment, (gdouble) SHEET_HEIGHT (sheet) + 80);
+   g_signal_emit_by_name (sheet->vadjustment, "changed");
 
  }
 
  if(sheet->hadjustment){
-  sheet->hadjustment->page_size = sheet->sheet_window_width;
-  sheet->hadjustment->page_increment = sheet->sheet_window_width / 2;
-  sheet->hadjustment->step_increment = DEFAULT_COLUMN_WIDTH;
-  sheet->hadjustment->lower = 0;
-  sheet->hadjustment->upper = SHEET_WIDTH (sheet)+ 80;
-  g_signal_emit_by_name (sheet->hadjustment, "changed");
+   gtk_adjustment_set_page_size (sheet->hadjustment, (gdouble) sheet->sheet_window_width);
+   gtk_adjustment_set_page_increment (sheet->hadjustment, (gdouble) sheet->sheet_window_width / 2);
+   gtk_adjustment_set_step_increment (sheet->hadjustment, (gdouble) DEFAULT_COLUMN_WIDTH);
+   gtk_adjustment_set_lower (sheet->hadjustment, 0.);
+   gtk_adjustment_set_upper (sheet->hadjustment, (gdouble) SHEET_WIDTH (sheet)+ 80);
+   g_signal_emit_by_name (sheet->hadjustment, "changed");
 
  }
 /*
