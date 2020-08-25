@@ -120,7 +120,7 @@ gschem_action_connect_proxy (GtkAction *action,
   if (GTK_IS_MENU_ITEM (proxy)) {
     GtkWidget *label;
 
-    label = GTK_BIN (proxy)->child;
+    label = gtk_bin_get_child (GTK_BIN (proxy));
 
     /* make sure label is a GschemAccelLabel */
     if (label && !GSCHEM_IS_ACCEL_LABEL (label)) {
