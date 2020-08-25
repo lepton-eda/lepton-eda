@@ -1232,7 +1232,7 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
 
   gtk_container_set_border_width (GTK_CONTAINER (autonumber_text),
                                   DIALOG_BORDER_SPACING);
-  vbox1 = GTK_DIALOG(autonumber_text)->vbox;
+  vbox1 = gtk_dialog_get_content_area (GTK_DIALOG (autonumber_text));
   gtk_box_set_spacing(GTK_BOX(vbox1), DIALOG_V_SPACING);
 
   /* scope section */
