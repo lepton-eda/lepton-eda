@@ -127,7 +127,7 @@ void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
 
     gtk_container_set_border_width (GTK_CONTAINER (w_current->aawindow),
                                     DIALOG_BORDER_SPACING);
-    vbox = GTK_DIALOG(w_current->aawindow)->vbox;
+    vbox = gtk_dialog_get_content_area (GTK_DIALOG (w_current->aawindow));
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
 
