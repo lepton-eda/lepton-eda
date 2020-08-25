@@ -6827,7 +6827,7 @@ hadjustment_value_changed (GtkAdjustment * adjustment,
 
   for(i=0; i<= sheet->maxcol; i++){
    if(sheet->column[i].is_visible) x+=sheet->column[i].width;
-   if(x > adjustment->value) break;
+   if(x > gtk_adjustment_get_value (adjustment)) break;
   }
   x-=sheet->column[i].width;
   new_column=i;
