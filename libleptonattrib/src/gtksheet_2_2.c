@@ -2962,11 +2962,17 @@ gtk_sheet_map (GtkWidget * widget)
 	          gtk_widget_map (sheet->button);
       }
 
-      if(GTK_BIN(sheet->button)->child)
-        if (gtk_widget_get_visible (GTK_BIN (sheet->button)->child) &&
-            !gtk_widget_get_mapped (GTK_BIN (sheet->button)->child)) {
-  	          gtk_widget_map (GTK_BIN(sheet->button)->child);
+      GtkWidget *button_child = NULL;
+      if (GTK_IS_BIN (sheet->button)) {
+        button_child = gtk_bin_get_child (GTK_BIN (sheet->button));
+      }
+
+      if (button_child != NULL) {
+        if (gtk_widget_get_visible (button_child) &&
+            !gtk_widget_get_mapped (button_child)) {
+          gtk_widget_map (button_child);
         }
+      }
 
       gtk_sheet_range_draw(sheet, NULL);
       gtk_sheet_activate_cell(sheet, 
