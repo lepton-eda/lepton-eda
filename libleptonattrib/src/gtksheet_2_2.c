@@ -6760,11 +6760,12 @@ vadjustment_value_changed (GtkAdjustment * adjustment,
 
  
   if(new_row == 0){
-   sheet->vadjustment->step_increment=
-   sheet->row[0].height;
+    gtk_adjustment_set_step_increment (sheet->vadjustment,
+                                       (gdouble) sheet->row[0].height);
   }else{
-   sheet->vadjustment->step_increment=
-   MIN(sheet->row[new_row].height, sheet->row[new_row-1].height);
+    gtk_adjustment_set_step_increment (sheet->vadjustment,
+                                       (gdouble) MIN (sheet->row[new_row].height,
+                                                      sheet->row[new_row-1].height));
   }
 
   sheet->vadjustment->value=adjustment->value;
