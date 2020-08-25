@@ -2797,7 +2797,7 @@ gtk_sheet_realize (GtkWidget * widget)
   if(sheet->xor_gc) {
     g_object_unref (sheet->xor_gc);
   }
-  sheet->xor_gc = gdk_gc_new_with_values (widget->window,
+  sheet->xor_gc = gdk_gc_new_with_values (gtk_widget_get_window (widget),
                                           &values,
                                           (GdkGCValuesMask) (GDK_GC_FOREGROUND |
                                                              GDK_GC_FUNCTION |
@@ -6893,8 +6893,10 @@ draw_xor_vline (GtkSheet * sheet)
   g_return_if_fail (sheet != NULL);
   
   widget = GTK_WIDGET (sheet);
+  GdkWindow *window = gtk_widget_get_window (widget);
 
-  gdk_draw_line (widget->window, sheet->xor_gc,  
+  gdk_draw_line (window,
+                 sheet->xor_gc,
                  sheet->x_drag,                                       
                  sheet->column_title_area.height,                               
                  sheet->x_drag,                                             
@@ -6910,8 +6912,10 @@ draw_xor_hline (GtkSheet * sheet)
   g_return_if_fail (sheet != NULL);
   
   widget = GTK_WIDGET (sheet);
+  GdkWindow *window = gtk_widget_get_window (widget);
 
-  gdk_draw_line (widget->window, sheet->xor_gc,  
+  gdk_draw_line (window,
+                 sheet->xor_gc,
 		 sheet->row_title_area.width,
                  sheet->y_drag,                                       
                         
