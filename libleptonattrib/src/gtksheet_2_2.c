@@ -6755,8 +6755,8 @@ vadjustment_value_changed (GtkAdjustment * adjustment,
     return;
   }
 
-  sheet->old_vadjustment = sheet->vadjustment->value;
-  adjustment->value=y;
+  sheet->old_vadjustment = gtk_adjustment_get_value (sheet->vadjustment);
+  gtk_adjustment_set_value (adjustment, (gdouble) y);
 
  
   if(new_row == 0){
