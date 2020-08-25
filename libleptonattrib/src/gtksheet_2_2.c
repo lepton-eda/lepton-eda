@@ -6837,7 +6837,7 @@ hadjustment_value_changed (GtkAdjustment * adjustment,
 /* This avoids embarrassing twitching */
           if(column == new_column && column != sheet->maxcol &&
              gtk_adjustment_get_value (adjustment) - sheet->old_hadjustment >=
-                          sheet->hadjustment->step_increment &&
+             gtk_adjustment_get_step_increment (sheet->hadjustment) &&
              new_column + 1 != MIN_VISIBLE_COLUMN(sheet)){
              new_column+=1;
              x=x+sheet->column[column].width;
