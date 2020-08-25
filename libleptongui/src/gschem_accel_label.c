@@ -253,7 +253,7 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
 
           y += get_first_baseline (label_layout) - get_first_baseline (accel_layout);
 
-          gtk_paint_layout (widget->style,
+          gtk_paint_layout (gtk_widget_get_style (widget),
                             gtk_widget_get_window (widget),
                             gtk_widget_get_state (widget),
                             FALSE,
