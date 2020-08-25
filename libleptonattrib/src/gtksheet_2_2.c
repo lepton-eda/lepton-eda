@@ -2698,6 +2698,8 @@ gtk_sheet_realize (GtkWidget * widget)
   g_return_if_fail (widget != NULL);
   g_return_if_fail (GTK_IS_SHEET (widget));
 
+  GtkStyle *style = gtk_widget_get_style (widget);
+
   sheet = GTK_SHEET (widget);
 
   gtk_widget_set_realized (widget, TRUE);
@@ -2732,9 +2734,9 @@ gtk_sheet_realize (GtkWidget * widget)
 
   gdk_window_set_user_data (window, sheet);
 
-  widget->style = gtk_style_attach (widget->style, window);
+  gtk_widget_set_style (widget, gtk_style_attach (style, window));
 
-  gtk_style_set_background (widget->style, window, GTK_STATE_NORMAL);
+  gtk_style_set_background (style, window, GTK_STATE_NORMAL);
 
   attributes.x = 0;
   if(sheet->row_titles_visible)
@@ -2746,7 +2748,7 @@ gtk_sheet_realize (GtkWidget * widget)
   /* column-title window */
   sheet->column_title_window = gdk_window_new (window, &attributes, attributes_mask);
   gdk_window_set_user_data (sheet->column_title_window, sheet);
-  gtk_style_set_background (widget->style, sheet->column_title_window, GTK_STATE_NORMAL);
+  gtk_style_set_background (style, sheet->column_title_window, GTK_STATE_NORMAL);
 
   attributes.x = 0;
   attributes.y = 0;
@@ -2758,7 +2760,7 @@ gtk_sheet_realize (GtkWidget * widget)
   /* row-title window */
   sheet->row_title_window = gdk_window_new (window, &attributes, attributes_mask);
   gdk_window_set_user_data (sheet->row_title_window, sheet);
-  gtk_style_set_background (widget->style, sheet->row_title_window, GTK_STATE_NORMAL);
+  gtk_style_set_background (style, sheet->row_title_window, GTK_STATE_NORMAL);
 
   /* sheet-window */
   attributes.cursor = gdk_cursor_new(GDK_PLUS);
@@ -2771,7 +2773,7 @@ gtk_sheet_realize (GtkWidget * widget)
   sheet->sheet_window = gdk_window_new (window, &attributes, attributes_mask);
   gdk_window_set_user_data (sheet->sheet_window, sheet);
 
-  gdk_window_set_background (sheet->sheet_window, &widget->style->white);
+  gdk_window_set_background (sheet->sheet_window, &style->white);
   gdk_window_show (sheet->sheet_window);
 
   /* backing_pixmap */
@@ -2789,12 +2791,12 @@ gtk_sheet_realize (GtkWidget * widget)
 
   colormap = gtk_widget_get_colormap(widget);
 
-  gdk_color_white(colormap, &widget->style->white);
-  gdk_color_black(colormap, &widget->style->black);
+  gdk_color_white(colormap, &style->white);
+  gdk_color_black(colormap, &style->black);
 
   gdk_gc_get_values(sheet->fg_gc, &auxvalues);
 
-  values.foreground = widget->style->white;
+  values.foreground = style->white;
   values.function = GDK_INVERT;
   values.subwindow_mode = GDK_INCLUDE_INFERIORS;
   if(sheet->xor_gc) {
