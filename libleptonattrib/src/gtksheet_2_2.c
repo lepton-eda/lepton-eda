@@ -6768,9 +6768,10 @@ vadjustment_value_changed (GtkAdjustment * adjustment,
                                                       sheet->row[new_row-1].height));
   }
 
-  sheet->vadjustment->value=adjustment->value;
+  gtk_adjustment_set_value (sheet->vadjustment,
+                            (gdouble) gtk_adjustment_get_value (adjustment));
 
-  value = adjustment->value;
+  value = gtk_adjustment_get_value (adjustment);
 
   sheet->voffset = -value;
  
