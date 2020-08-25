@@ -353,9 +353,16 @@ cellrenderermultilinetext_start_editing (GtkCellRenderer      *cell,
   CellRendererMultiLineText *cell_mlt;
   GtkWidget *textview;
   GtkTextBuffer *textbuffer;
+  gboolean editable;
+  gchar *text = NULL;
 
   cell_text = GTK_CELL_RENDERER_TEXT (cell);
-  if (cell_text->editable == FALSE) {
+
+  g_object_get (cell_text,
+                "editable", &editable,
+                NULL);
+
+  if (editable == FALSE) {
     return NULL;
   }
 
@@ -363,9 +370,15 @@ cellrenderermultilinetext_start_editing (GtkCellRenderer      *cell,
 
   textbuffer = GTK_TEXT_BUFFER (g_object_new (GTK_TYPE_TEXT_BUFFER,
                                               NULL));
+  g_object_get (cell_text,
+                "text", &text,
+                NULL);
+
   gtk_text_buffer_set_text (textbuffer,
-                            cell_text->text,
-                            strlen (cell_text->text));
+                            text,
+                            strlen (text));
+
+  g_free (text);
 
   textview = GTK_WIDGET (g_object_new (TYPE_CELL_TEXT_VIEW,
                                        /* GtkTextView */
