@@ -445,7 +445,7 @@ close_confirmation_dialog_constructor (GType type,
                 /* GtkContainer */
                 "border-width",      5,
                 NULL);
-  g_object_set (GTK_DIALOG (dialog)->vbox,
+  g_object_set (gtk_dialog_get_content_area (GTK_DIALOG (dialog)),
                 /* GtkBox */
                 "spacing", 14,
                 NULL);
@@ -574,8 +574,8 @@ close_confirmation_dialog_constructor (GType type,
   /* all done, let's show the contents of the dialog */
   gtk_widget_show_all (hbox);
 
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox,
-                      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
+                      hbox, TRUE, TRUE, 0);
 
   return object;
 }

@@ -99,7 +99,7 @@ void coord_dialog (GschemToplevel *w_current, int x, int y)
 
     gtk_container_set_border_width (GTK_CONTAINER (w_current->cowindow),
                                     DIALOG_BORDER_SPACING);
-    vbox = GTK_DIALOG(w_current->cowindow)->vbox;
+    vbox = gtk_dialog_get_content_area (GTK_DIALOG (w_current->cowindow));
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
 
