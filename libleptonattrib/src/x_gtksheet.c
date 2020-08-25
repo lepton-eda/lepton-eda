@@ -387,7 +387,7 @@ show_entry(GtkWidget *widget, gpointer data)
  GtkWidget *sheet_entry = NULL;
  gint cur_page;
 
- if(!GTK_WIDGET_HAS_FOCUS(widget)) {
+ if (!gtk_widget_has_focus (widget)) {
    return;
  }
 
