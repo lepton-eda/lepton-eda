@@ -449,7 +449,7 @@ close_confirmation_dialog_constructor (GType type,
                 /* GtkBox */
                 "spacing", 14,
                 NULL);
-  g_object_set (GTK_DIALOG (dialog)->action_area,
+  g_object_set (gtk_dialog_get_action_area (GTK_DIALOG (dialog)),
                 /* GtkBox */
                 "spacing",      6,
                 /* GtkContainer */
