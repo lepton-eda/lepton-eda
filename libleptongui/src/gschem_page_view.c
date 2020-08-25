@@ -1039,7 +1039,7 @@ hadjustment_value_changed (GtkAdjustment *hadjustment, GschemPageView *view)
 
     g_return_if_fail (view->hadjustment == hadjustment);
 
-    current_left = gschem_page_geometry_get_viewport_left (geometry),
+    current_left = gschem_page_geometry_get_viewport_left (geometry);
     new_left = (int) hadjustment->value;
 
     geometry->viewport_left = new_left;
