@@ -4311,6 +4311,8 @@ gtk_sheet_new_selection(GtkSheet *sheet, GtkSheetRange *range)
 
   g_return_if_fail (sheet != NULL);
 
+  GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (sheet));
+
   if(range==NULL) range=&sheet->range;
 
   new_range=*range;
@@ -4372,7 +4374,7 @@ gtk_sheet_new_selection(GtkSheet *sheet, GtkSheetRange *range)
          if(j==sheet->range.coli) width=width+3;
 
          gdk_draw_pixmap(sheet->sheet_window,
-                  GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
+                  style->fg_gc[GTK_STATE_NORMAL],
                   sheet->pixmap,
                   x+1,
                   y+1,
@@ -4436,7 +4438,7 @@ gtk_sheet_new_selection(GtkSheet *sheet, GtkSheetRange *range)
       if(j==sheet->range.coli) width=width+3;
 
       gdk_draw_pixmap(sheet->sheet_window,
-                  GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
+                  style->fg_gc[GTK_STATE_NORMAL],
                   sheet->pixmap,
                   x+1,
                   y+1,
