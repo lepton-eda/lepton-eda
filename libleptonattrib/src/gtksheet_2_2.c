@@ -6614,12 +6614,14 @@ gtk_sheet_button_draw (GtkSheet *sheet, gint row, gint column)
       child->x = allocation.x;
       child->y = allocation.y;
 
-      child->x += (width - child->widget->requisition.width) / 2; 
-      child->y += (height - child->widget->requisition.height) / 2;
+      GtkRequisition requisition;
+      gtk_widget_get_requisition (child->widget, &requisition);
+      child->x += (width - requisition.width) / 2;
+      child->y += (height - requisition.height) / 2;
       allocation.x = child->x;
       allocation.y = child->y;
-      allocation.width = child->widget->requisition.width;
-      allocation.height = child->widget->requisition.height;
+      allocation.width = requisition.width;
+      allocation.height = requisition.height;
 
       x = child->x;
       y = child->y;
