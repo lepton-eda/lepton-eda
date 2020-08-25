@@ -218,7 +218,12 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
 
       ac_width = gschem_accel_label_get_accel_width (accel_label);
 
-      if (widget->allocation.width >= widget->requisition.width + (gint) ac_width)
+      GtkAllocation *allocation = g_new (GtkAllocation, 1);
+      GtkRequisition *requisition = g_new (GtkRequisition, 1);
+      gtk_widget_get_allocation (widget, allocation);
+      gtk_widget_get_requisition (widget, requisition);
+
+      if (allocation->width >= requisition->width + (gint) ac_width)
         {
           PangoLayout *label_layout;
           PangoLayout *accel_layout;
@@ -230,8 +235,10 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
           label_layout = gtk_label_get_layout (GTK_LABEL (accel_label));
 
           if (direction == GTK_TEXT_DIR_RTL)
-            widget->allocation.x += ac_width;
-          widget->allocation.width -= ac_width;
+            allocation->x += ac_width;
+          allocation->width -= ac_width;
+          gtk_widget_set_allocation (widget, allocation);
+
           if (gtk_label_get_ellipsize (label))
             pango_layout_set_width (label_layout,
                                     pango_layout_get_width (label_layout)
@@ -239,18 +246,23 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
 
           if (GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->expose_event)
             GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->expose_event (widget, event);
+
+          gtk_widget_get_allocation (widget, allocation);
           if (direction == GTK_TEXT_DIR_RTL)
-            widget->allocation.x -= ac_width;
-          widget->allocation.width += ac_width;
+            allocation->x -= ac_width;
+          allocation->width += ac_width;
+          gtk_widget_set_allocation (widget, allocation);
+
           if (gtk_label_get_ellipsize (label))
             pango_layout_set_width (label_layout,
                                     pango_layout_get_width (label_layout)
                                     + ac_width * PANGO_SCALE);
 
+          gtk_widget_get_allocation (widget, allocation);
           if (direction == GTK_TEXT_DIR_RTL)
-            x = widget->allocation.x + xpad;
+            x = allocation->x + xpad;
           else
-            x = widget->allocation.x + widget->allocation.width - xpad - ac_width;
+            x = allocation->x + allocation->width - xpad - ac_width;
 
           gtk_label_get_layout_offsets (GTK_LABEL (accel_label), NULL, &y);
 
@@ -275,6 +287,8 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
           if (GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->expose_event)
             GTK_WIDGET_CLASS (gschem_accel_label_parent_class)->expose_event (widget, event);
         }
+      g_free (allocation);
+      g_free (requisition);
     }
 
   return FALSE;
