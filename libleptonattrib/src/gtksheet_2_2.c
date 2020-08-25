@@ -6846,12 +6846,12 @@ hadjustment_value_changed (GtkAdjustment * adjustment,
 
 /* Negative old_adjustment enforces the redraw, otherwise avoid spureous redraw */
   if(sheet->old_hadjustment >= 0. && new_column == column){
-     sheet->old_hadjustment = sheet->hadjustment->value;
+    sheet->old_hadjustment = gtk_adjustment_get_value (sheet->hadjustment);
      return;
   }
 
-  sheet->old_hadjustment = sheet->hadjustment->value;
-  adjustment->value=x;
+  sheet->old_hadjustment = gtk_adjustment_get_value (sheet->hadjustment);
+  gtk_adjustment_set_value (adjustment, (gdouble) x);
 
   if(new_column == 0){
    sheet->hadjustment->step_increment=
