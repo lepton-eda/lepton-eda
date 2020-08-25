@@ -6854,8 +6854,8 @@ hadjustment_value_changed (GtkAdjustment * adjustment,
   gtk_adjustment_set_value (adjustment, (gdouble) x);
 
   if(new_column == 0){
-   sheet->hadjustment->step_increment=
-   sheet->column[0].width;
+    gtk_adjustment_set_step_increment (sheet->hadjustment,
+                                       (gdouble) sheet->column[0].width);
   }else{
    sheet->hadjustment->step_increment=
    MIN(sheet->column[new_column].width, sheet->column[new_column-1].width);
