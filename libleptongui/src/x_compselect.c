@@ -1513,8 +1513,8 @@ compselect_constructor (GType type,
   gtk_paned_pack2 (GTK_PANED (hpaned), vpaned, FALSE, FALSE);
 
   /* add the hpaned to the dialog vbox */
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (compselect)->vbox), hpaned,
-                      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (compselect))),
+                      hpaned, TRUE, TRUE, 0);
   gtk_widget_show_all (hpaned);
 
 
@@ -1524,8 +1524,8 @@ compselect_constructor (GType type,
                     "changed",
                     G_CALLBACK (compselect_callback_behavior_changed),
                     compselect);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (compselect)->vbox), combobox,
-                      FALSE, FALSE, 10);
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (compselect))),
+                      combobox, FALSE, FALSE, 10);
   gtk_widget_show_all (combobox);
   /* set behavior combo box of compselect */
   compselect->combobox_behaviors = GTK_COMBO_BOX (combobox);
