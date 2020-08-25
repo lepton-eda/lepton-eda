@@ -6350,8 +6350,9 @@ gtk_sheet_get_entry(GtkSheet *sheet)
 
  parent = GTK_WIDGET(sheet->sheet_entry);
 
- if(GTK_IS_TABLE(parent)) children = GTK_TABLE(parent)->children;
- if(GTK_IS_BOX(parent)) children = GTK_BOX(parent)->children;
+ if (GTK_IS_CONTAINER (parent)) {
+   children = gtk_container_get_children (GTK_CONTAINER (parent));
+ }
 
  if(!children) return NULL;
 
