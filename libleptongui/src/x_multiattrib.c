@@ -2024,7 +2024,7 @@ multiattrib_init (Multiattrib *multiattrib)
                 "has-separator",   TRUE,
                 NULL);
 
-  gtk_box_set_spacing (GTK_BOX (GTK_DIALOG (multiattrib)->vbox), 5);
+  gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))), 5);
 
   /* create the attribute list frame */
   multiattrib->list_frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
@@ -2208,7 +2208,7 @@ multiattrib_init (Multiattrib *multiattrib)
                     multiattrib);
 
   /* pack the frame */
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (multiattrib)->vbox),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))),
                       multiattrib->list_frame,
                       TRUE, TRUE, 1);
   gtk_widget_show_all (multiattrib->list_frame);
@@ -2343,7 +2343,7 @@ multiattrib_init (Multiattrib *multiattrib)
   /* add the table to the frame */
   gtk_container_add (GTK_CONTAINER (multiattrib->add_frame), table);
   /* pack the frame in the dialog */
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (multiattrib)->vbox),
+  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))),
                       multiattrib->add_frame,
                       FALSE, TRUE, 1);
   gtk_widget_show_all (multiattrib->add_frame);
