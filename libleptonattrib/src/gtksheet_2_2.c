@@ -3338,6 +3338,8 @@ gtk_sheet_range_draw(GtkSheet *sheet, const GtkSheetRange *range)
  g_return_if_fail(sheet != NULL);
  g_return_if_fail(GTK_SHEET(sheet));
  
+ GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (sheet));
+
  if (!gtk_widget_is_drawable (GTK_WIDGET (sheet))) return;
  if (!gtk_widget_get_realized (GTK_WIDGET (sheet))) return;
  if (!gtk_widget_get_mapped (GTK_WIDGET (sheet))) return;
@@ -3350,7 +3352,7 @@ gtk_sheet_range_draw(GtkSheet *sheet, const GtkSheetRange *range)
    drawing_range.coli=MAX_VISIBLE_COLUMN(sheet);
 /*
    gdk_draw_rectangle (sheet->pixmap,
-	               GTK_WIDGET(sheet)->style->white_gc,
+	               style->white_gc,
 	               TRUE,
 	               0,0,
 	               sheet->sheet_window_width,sheet->sheet_window_height);
@@ -3379,7 +3381,7 @@ gtk_sheet_range_draw(GtkSheet *sheet, const GtkSheetRange *range)
                       sheet->sheet_window_height);
 
   gdk_draw_pixmap(sheet->sheet_window,
-                  GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
+                  style->fg_gc[GTK_STATE_NORMAL],
                   sheet->pixmap,
                   area.x,
                   area.y,
@@ -3402,7 +3404,7 @@ gtk_sheet_range_draw(GtkSheet *sheet, const GtkSheetRange *range)
                       sheet->sheet_window_height - area.y);
 
   gdk_draw_pixmap(sheet->sheet_window,
-                  GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
+                  style->fg_gc[GTK_STATE_NORMAL],
                   sheet->pixmap,
                   area.x,
                   area.y,
