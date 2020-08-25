@@ -2702,11 +2702,13 @@ gtk_sheet_realize (GtkWidget * widget)
 
   gtk_widget_set_realized (widget, TRUE);
 
+  GtkAllocation allocation;
+  gtk_widget_get_allocation (widget, &allocation);
   attributes.window_type = GDK_WINDOW_CHILD;
-  attributes.x = widget->allocation.x;
-  attributes.y = widget->allocation.y;
-  attributes.width = widget->allocation.width;
-  attributes.height = widget->allocation.height;
+  attributes.x = allocation.x;
+  attributes.y = allocation.y;
+  attributes.width = allocation.width;
+  attributes.height = allocation.height;
   attributes.wclass = GDK_INPUT_OUTPUT;
 
   attributes.visual = gtk_widget_get_visual (widget);
