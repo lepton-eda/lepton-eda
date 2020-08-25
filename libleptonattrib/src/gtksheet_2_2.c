@@ -4117,9 +4117,11 @@ gtk_sheet_hide_active_cell(GtkSheet *sheet)
 
  gtk_widget_unmap(sheet->sheet_entry);
 
+ GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (sheet));
+
  if(row != -1 && col != -1)
    gdk_draw_pixmap(sheet->sheet_window,
-                   GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
+                   style->fg_gc[GTK_STATE_NORMAL],
                    sheet->pixmap,
                    COLUMN_LEFT_XPIXEL(sheet,col)-1,
                    ROW_TOP_YPIXEL(sheet,row)-1,
