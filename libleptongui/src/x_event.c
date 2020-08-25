@@ -827,10 +827,11 @@ x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
 
-  g_return_val_if_fail (GTK_WIDGET (page_view)->window != NULL, FALSE);
+  GdkWindow *window = gtk_widget_get_window (GTK_WIDGET (page_view));
+  g_return_val_if_fail (window != NULL, FALSE);
 
-  width = gdk_window_get_width (GTK_WIDGET (page_view)->window);
-  height = gdk_window_get_height (GTK_WIDGET (page_view)->window);
+  width = gdk_window_get_width (window);
+  height = gdk_window_get_height (window);
 
   gtk_widget_get_pointer(GTK_WIDGET (page_view), &sx, &sy);
 
