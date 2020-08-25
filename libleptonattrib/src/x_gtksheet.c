@@ -171,8 +171,10 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
 
   /* Get character width based upon "X", which is a large char.
    * font_combo is a global.  Where is it set?  */
-  if ( GTK_WIDGET(sheet)->style->private_font )
-    char_width = gdk_char_width (GTK_WIDGET(sheet)->style->private_font, (gchar)'X'); 
+  GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (sheet));
+
+  if (style->private_font)
+    char_width = gdk_char_width (style->private_font, (gchar) 'X');
   else
     char_width = 12;
 
