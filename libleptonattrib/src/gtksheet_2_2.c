@@ -3312,8 +3312,10 @@ gtk_sheet_cell_draw_label (GtkSheet *sheet, gint row, gint col)
   gdk_gc_set_clip_rectangle(fg_gc, NULL);
   g_object_unref(G_OBJECT(layout));
 
+  GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (sheet));
+
   gdk_draw_pixmap(sheet->sheet_window,
-                  GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
+                  style->fg_gc[GTK_STATE_NORMAL],
                   sheet->pixmap,
                   area.x,
                   area.y,
