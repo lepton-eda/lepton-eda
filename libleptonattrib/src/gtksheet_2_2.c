@@ -3564,15 +3564,17 @@ gtk_sheet_draw_backing_pixmap(GtkSheet *sheet, GtkSheetRange range)
   if(range.coli==sheet->maxcol) width=sheet->sheet_window_width-x;
   if(range.rowi==sheet->maxrow) height=sheet->sheet_window_height-y;
 
-  gdk_draw_pixmap(sheet->sheet_window,
-                  GTK_WIDGET(sheet)->style->fg_gc[GTK_STATE_NORMAL],
-                  sheet->pixmap,
-                  x,
-                  y,
-                  x,
-                  y,
-                  width+1,
-                  height+1);                  
+  GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (sheet));
+
+  gdk_draw_pixmap (sheet->sheet_window,
+                   style->fg_gc[GTK_STATE_NORMAL],
+                   sheet->pixmap,
+                   x,
+                   y,
+                   x,
+                   y,
+                   width+1,
+                   height+1);
 }
 
 static GtkSheetCell *
