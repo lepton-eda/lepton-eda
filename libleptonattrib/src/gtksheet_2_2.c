@@ -5987,7 +5987,7 @@ gtk_sheet_size_allocate (GtkWidget * widget,
   g_return_if_fail (allocation != NULL);
 
   sheet = GTK_SHEET (widget);
-  widget->allocation = *allocation;
+  gtk_widget_set_allocation (widget, allocation);
   border_width = GTK_CONTAINER(widget)->border_width;
 
   if (gtk_widget_get_realized (widget)) {
