@@ -2803,14 +2803,14 @@ gtk_sheet_realize (GtkWidget * widget)
                                                              GDK_GC_FUNCTION |
                                                              GDK_GC_SUBWINDOW));
 
-  if(sheet->sheet_entry->parent){
+  if (gtk_widget_get_parent (sheet->sheet_entry)) {
           g_object_ref(sheet->sheet_entry);
           gtk_widget_unparent(sheet->sheet_entry);
   }
   gtk_widget_set_parent_window (sheet->sheet_entry, sheet->sheet_window);
   gtk_widget_set_parent(sheet->sheet_entry, GTK_WIDGET(sheet));
 
-  if(sheet->button && sheet->button->parent){
+  if(sheet->button && gtk_widget_get_parent (sheet->button)){
           g_object_ref(sheet->button);
           gtk_widget_unparent(sheet->button);
   }
@@ -8122,7 +8122,7 @@ gtk_sheet_put(GtkSheet *sheet, GtkWidget *child, gint x, gint y)
   g_return_val_if_fail(sheet != NULL, NULL);
   g_return_val_if_fail(GTK_IS_SHEET(sheet), NULL);
   g_return_val_if_fail(child != NULL, NULL);
-  g_return_val_if_fail(child->parent == NULL, NULL);
+  g_return_val_if_fail (gtk_widget_get_parent (child) == NULL, NULL);
 
   child_info = g_new (GtkSheetChild, 1);
   child_info->widget = child;
