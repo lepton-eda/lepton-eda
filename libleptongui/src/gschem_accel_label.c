@@ -203,7 +203,12 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
 {
   GschemAccelLabel *accel_label = GSCHEM_ACCEL_LABEL (widget);
   GtkMisc *misc = GTK_MISC (accel_label);
+  guint xpad = 0;
   GtkTextDirection direction;
+
+  g_object_get (misc,
+                "xpad", &xpad,
+                NULL);
 
   direction = gtk_widget_get_direction (widget);
 
@@ -243,9 +248,9 @@ gschem_accel_label_expose_event (GtkWidget      *widget,
                                     + ac_width * PANGO_SCALE);
 
           if (direction == GTK_TEXT_DIR_RTL)
-            x = widget->allocation.x + misc->xpad;
+            x = widget->allocation.x + xpad;
           else
-            x = widget->allocation.x + widget->allocation.width - misc->xpad - ac_width;
+            x = widget->allocation.x + widget->allocation.width - xpad - ac_width;
 
           gtk_label_get_layout_offsets (GTK_LABEL (accel_label), NULL, &y);
 
