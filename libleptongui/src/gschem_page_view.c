@@ -426,15 +426,16 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
     return NULL;
   }
 
+  GdkWindow *window = gtk_widget_get_window (GTK_WIDGET (view));
   /* If there's no window yet, defer geometry calculation until
    * later. */
-  if (!GDK_IS_DRAWABLE (GTK_WIDGET (view)->window))
+  if (!GDK_IS_DRAWABLE (window))
     return NULL;
 
   geometry = geometry_cache_lookup (view, page);
 
-  screen_width  = gdk_window_get_width  (GTK_WIDGET (view)->window);
-  screen_height = gdk_window_get_height (GTK_WIDGET (view)->window);
+  screen_width  = gdk_window_get_width  (window);
+  screen_height = gdk_window_get_height (window);
 
   if (geometry == NULL) {
     geometry = gschem_page_geometry_new_with_values (screen_width,
