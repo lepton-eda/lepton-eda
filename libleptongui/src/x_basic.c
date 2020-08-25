@@ -34,7 +34,7 @@ void x_basic_warp_cursor (GtkWidget* widget, gint x, gint y)
   GdkDisplay *display;
   int window_x, window_y;
 
-  gdk_window_get_origin (widget->window, &window_x, &window_y);
+  gdk_window_get_origin (gtk_widget_get_window (widget), &window_x, &window_y);
 
   screen = gtk_widget_get_screen (widget);
   display = gdk_screen_get_display (screen);
