@@ -2783,8 +2783,8 @@ gtk_sheet_realize (GtkWidget * widget)
   if (sheet->bg_gc) {
     g_object_unref (sheet->bg_gc);
   }
-  sheet->fg_gc = gdk_gc_new (widget->window);
-  sheet->bg_gc = gdk_gc_new (widget->window);
+  sheet->fg_gc = gdk_gc_new (gtk_widget_get_window (widget));
+  sheet->bg_gc = gdk_gc_new (gtk_widget_get_window (widget));
 
   colormap = gtk_widget_get_colormap(widget);
 
@@ -2940,7 +2940,7 @@ gtk_sheet_map (GtkWidget * widget)
 
       if(!sheet->cursor_drag) sheet->cursor_drag=gdk_cursor_new(GDK_PLUS);
 
-      gdk_window_show (widget->window);
+      gdk_window_show (gtk_widget_get_window (widget));
 
       gdk_window_show (sheet->sheet_window);
 
@@ -3016,7 +3016,7 @@ gtk_sheet_unmap (GtkWidget * widget)
           gdk_window_hide (sheet->column_title_window);
       if(sheet->row_titles_visible)
           gdk_window_hide (sheet->row_title_window);
-      gdk_window_hide (widget->window);
+      gdk_window_hide (gtk_widget_get_window (widget));
 
       if (gtk_widget_get_mapped (sheet->sheet_entry))
 	gtk_widget_unmap (sheet->sheet_entry);
@@ -4910,7 +4910,7 @@ gtk_sheet_button_press (GtkWidget * widget,
   g_return_val_if_fail (event != NULL, FALSE);
 
   if(event->type != GDK_BUTTON_PRESS) return TRUE;
-  gdk_window_get_pointer(widget->window, NULL, NULL, &mods);
+  gdk_window_get_pointer (gtk_widget_get_window (widget), NULL, NULL, &mods);
   if(!(mods & GDK_BUTTON1_MASK)) return TRUE;
 
   sheet = GTK_SHEET (widget);
@@ -5386,11 +5386,11 @@ gtk_sheet_motion (GtkWidget * widget,
          gdk_window_set_cursor(sheet->sheet_window,sheet->cursor_drag);
   }
 
-  gdk_window_get_pointer (widget->window, &x, &y, &mods);
+  gdk_window_get_pointer (gtk_widget_get_window (widget), &x, &y, &mods);
   if(!(mods & GDK_BUTTON1_MASK)) return FALSE;
 
   if (GTK_SHEET_IN_XDRAG (sheet)){
-	if (event->is_hint || event->window != widget->window)
+    if (event->is_hint || event->window != gtk_widget_get_window (widget))
 	    gtk_widget_get_pointer (widget, &x, NULL);
 	  else
 	    x = event->x;
@@ -5406,7 +5406,7 @@ gtk_sheet_motion (GtkWidget * widget,
   }
 
   if (GTK_SHEET_IN_YDRAG (sheet)){
-	  if (event->is_hint || event->window != widget->window)
+    if (event->is_hint || event->window != gtk_widget_get_window (widget))
 	    gtk_widget_get_pointer (widget, NULL, &y);
 	  else
 	    y = event->y;
@@ -5977,7 +5977,7 @@ gtk_sheet_size_allocate (GtkWidget * widget,
   border_width = GTK_CONTAINER(widget)->border_width;
 
   if (gtk_widget_get_realized (widget)) {
-    gdk_window_move_resize (widget->window,
+    gdk_window_move_resize (gtk_widget_get_window (widget),
 	      	  	    allocation->x + border_width,
 	                    allocation->y + border_width,
                             allocation->width - 2*border_width,
