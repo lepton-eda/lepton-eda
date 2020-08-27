@@ -1225,9 +1225,12 @@ gtk_sheet_set_background(GtkSheet *sheet, GdkColor *color)
   g_return_if_fail (GTK_IS_SHEET (sheet));
 
   if(!color)
-    gdk_color_white(gdk_colormap_get_system(), &sheet->bg_color);
+    gdk_color_parse ("white", &sheet->bg_color);
   else
     sheet->bg_color = *color;
+
+  gdk_colormap_alloc_color (gdk_colormap_get_system (),
+                            &sheet->bg_color, TRUE, TRUE);
 
   if(!GTK_SHEET_IS_FROZEN(sheet)) 
     gtk_sheet_range_draw(sheet, NULL);
