@@ -517,8 +517,6 @@ static void draw_xor_vline 			(GtkSheet * sheet);
 static void draw_xor_hline 			(GtkSheet * sheet);
 static void draw_xor_rectangle			(GtkSheet *sheet, 
 						 GtkSheetRange range);
-static void gtk_sheet_draw_flashing_range	(GtkSheet *sheet, 
-						 GtkSheetRange range);
 static guint new_column_width 			(GtkSheet * sheet,
 		  				 gint column,
 		  				 gint * x);
@@ -2175,58 +2173,6 @@ gtk_sheet_select_column (GtkSheet * sheet,
 
 }
 
-static void
-gtk_sheet_draw_flashing_range(GtkSheet *sheet, GtkSheetRange range)
-{
-  GdkRectangle clip_area;
-  gint x,y,width,height;
-
-  if(!gtk_sheet_range_isvisible(sheet, sheet->clip_range)) return;
-  
-  clip_area.x=COLUMN_LEFT_XPIXEL(sheet, MIN_VISIBLE_COLUMN(sheet));
-  clip_area.y=ROW_TOP_YPIXEL(sheet, MIN_VISIBLE_ROW(sheet));
-  clip_area.width=sheet->sheet_window_width;
-  clip_area.height=sheet->sheet_window_height;
-
-  gdk_gc_set_clip_rectangle(sheet->xor_gc, &clip_area);  
-
-  x=COLUMN_LEFT_XPIXEL(sheet,sheet->clip_range.col0)+1;
-  y=ROW_TOP_YPIXEL(sheet,sheet->clip_range.row0)+1;
-  width=COLUMN_LEFT_XPIXEL(sheet,sheet->clip_range.coli)-x+ 
-             sheet->column[sheet->clip_range.coli].width-1;
-  height=ROW_TOP_YPIXEL(sheet,sheet->clip_range.rowi)-y+
-             sheet->row[sheet->clip_range.rowi].height-1;
-
-  if(x<0) {
-     width=width+x+1;
-     x=-1;
-  }
-  if(width>clip_area.width) width=clip_area.width+10;
-  if(y<0) {
-     height=height+y+1;
-     y=-1;
-  }
-  if(height>clip_area.height) height=clip_area.height+10;
-
-  gdk_gc_set_line_attributes (sheet->xor_gc,
-                              1,
-                              (GdkLineStyle) 1,
-                              (GdkCapStyle) 0,
-                              (GdkJoinStyle) 0);
-
-  gdk_draw_rectangle(sheet->sheet_window, sheet->xor_gc, FALSE, 
-                     x, y,
-                     width, height);
-
-  gdk_gc_set_line_attributes (sheet->xor_gc,
-                              1,
-                              (GdkLineStyle) 0,
-                              (GdkCapStyle) 0,
-                              (GdkJoinStyle) 0);
-
-  gdk_gc_set_clip_rectangle(sheet->xor_gc, NULL);
-
-}
 
 static gint
 gtk_sheet_range_isvisible (GtkSheet * sheet,
