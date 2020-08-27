@@ -652,19 +652,19 @@ x_event_key (GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_cu
   pressed = (event->type == GDK_KEY_PRESS) ? 1 : 0;
 
   switch (event->keyval) {
-    case GDK_Alt_L:
-    case GDK_Alt_R:
+    case GDK_KEY_Alt_L:
+    case GDK_KEY_Alt_R:
       w_current->ALTKEY = pressed;
       break;
 
-    case GDK_Shift_L:
-    case GDK_Shift_R:
+    case GDK_KEY_Shift_L:
+    case GDK_KEY_Shift_R:
       w_current->SHIFTKEY = pressed;
       special = TRUE;
       break;
 
-    case GDK_Control_L:
-    case GDK_Control_R:
+    case GDK_KEY_Control_L:
+    case GDK_KEY_Control_R:
       w_current->CONTROLKEY = pressed;
       special = TRUE;
       break;
@@ -879,8 +879,8 @@ x_event_faked_motion (GschemPageView *view, GdkEventKey *event) {
 
   if (event != NULL ) {
     switch (event->keyval) {
-      case GDK_Control_L:
-      case GDK_Control_R:
+      case GDK_KEY_Control_L:
+      case GDK_KEY_Control_R:
         if (event->type == GDK_KEY_PRESS) {
           newevent->state |= GDK_CONTROL_MASK;
         } else {
@@ -888,8 +888,8 @@ x_event_faked_motion (GschemPageView *view, GdkEventKey *event) {
         }
         break;
 
-      case GDK_Shift_L:
-      case GDK_Shift_R:
+      case GDK_KEY_Shift_L:
+      case GDK_KEY_Shift_R:
         if (event->type == GDK_KEY_PRESS) {
           newevent->state |= GDK_SHIFT_MASK;
         } else {

@@ -201,15 +201,15 @@ celltextview_key_press_event (GtkWidget   *widget,
   CellTextView *celltextview = (CellTextView*)widget;
 
   /* If the Escape key is pressed, we flag the edit as canceled */
-  if (key_event->keyval == GDK_Escape)
+  if (key_event->keyval == GDK_KEY_Escape)
       celltextview->editing_canceled = TRUE;
 
   /* ends editing of cell if one of these keys are pressed or editing is canceled */
   if (celltextview->editing_canceled == TRUE ||
       /* the Enter key without the Control modifier */
       (!(key_event->state & GDK_CONTROL_MASK) &&
-       (key_event->keyval == GDK_Return ||
-        key_event->keyval == GDK_KP_Enter))) {
+       (key_event->keyval == GDK_KEY_Return ||
+        key_event->keyval == GDK_KEY_KP_Enter))) {
     gtk_cell_editable_editing_done  (GTK_CELL_EDITABLE (celltextview));
     gtk_cell_editable_remove_widget (GTK_CELL_EDITABLE (celltextview));
     return TRUE;
@@ -1298,7 +1298,7 @@ multiattrib_callback_key_pressed (GtkWidget *widget,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
 
   if (event->state == 0 &&
-      (event->keyval == GDK_Delete || event->keyval == GDK_KP_Delete)) {
+      (event->keyval == GDK_KEY_Delete || event->keyval == GDK_KEY_KP_Delete)) {
     GtkTreeModel *model;
     GtkTreeIter iter;
     GedaList *attr_list;
@@ -1550,9 +1550,9 @@ multiattrib_callback_value_key_pressed (GtkWidget *widget,
   /* ends editing of cell if one of these keys are pressed: */
   /*  - the Return key without the Control modifier */
   /*  - the Tab key without the Control modifier */
-  if ((event->keyval == GDK_Return || event->keyval == GDK_KP_Enter) ||
-      (event->keyval == GDK_Tab    || event->keyval == GDK_KP_Tab ||
-       event->keyval == GDK_ISO_Left_Tab)) {
+  if ((event->keyval == GDK_KEY_Return || event->keyval == GDK_KEY_KP_Enter) ||
+      (event->keyval == GDK_KEY_Tab    || event->keyval == GDK_KEY_KP_Tab ||
+       event->keyval == GDK_KEY_ISO_Left_Tab)) {
     /* Control modifier activated? */
     if (event->state & GDK_CONTROL_MASK) {
       /* yes the modifier in event structure and let event propagate */
