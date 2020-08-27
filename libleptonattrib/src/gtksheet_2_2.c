@@ -1071,7 +1071,7 @@ gtk_sheet_new (guint rows, guint columns, const gchar *title)
   g_return_val_if_fail (columns >= MINCOLS, NULL);
   g_return_val_if_fail (rows >= MINROWS, NULL);
 
-  widget = GTK_WIDGET (gtk_widget_new (gtk_sheet_get_type (), NULL));
+  widget = GTK_WIDGET (g_object_new (gtk_sheet_get_type (), NULL));
 
   gtk_sheet_construct(GTK_SHEET(widget), rows, columns, title);
 
@@ -1125,7 +1125,7 @@ gtk_sheet_new_browser(guint rows, guint columns, const gchar *title)
 {
   GtkWidget *widget;
   
-  widget = GTK_WIDGET (gtk_widget_new (gtk_sheet_get_type (), NULL));
+  widget = GTK_WIDGET (g_object_new (gtk_sheet_get_type (), NULL));
 
   gtk_sheet_construct_browser(GTK_SHEET(widget), rows, columns, title);
  
@@ -1148,7 +1148,7 @@ gtk_sheet_new_with_custom_entry (guint rows, guint columns, const gchar *title,
 {
   GtkWidget *widget;
   
-  widget = GTK_WIDGET (gtk_widget_new (gtk_sheet_get_type (), NULL));
+  widget = GTK_WIDGET (g_object_new (gtk_sheet_get_type (), NULL));
 
   gtk_sheet_construct_with_custom_entry(GTK_SHEET(widget), 
                                        rows, columns, title, entry_type);
