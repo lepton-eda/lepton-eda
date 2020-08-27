@@ -7254,6 +7254,7 @@ gtk_sheet_range_set_background(GtkSheet *sheet, const GtkSheetRange *urange, con
   gint i, j;
   GtkSheetCellAttr attributes;
   GtkSheetRange range;
+  GdkColor new_color;
 
   g_return_if_fail (sheet != NULL);
   g_return_if_fail (GTK_IS_SHEET (sheet));
@@ -7263,11 +7264,16 @@ gtk_sheet_range_set_background(GtkSheet *sheet, const GtkSheetRange *urange, con
   else
      range = *urange;
 
+  /* Make sure the color is allocated, otherwise odd results can occur
+     when drawing */
+  new_color = *color;
+  gdk_colormap_alloc_color(gdk_colormap_get_system(), &new_color, TRUE, TRUE);
+
   for (i=range.row0; i<=range.rowi; i++)
     for (j=range.col0; j<=range.coli; j++){
       gtk_sheet_get_attributes(sheet, i, j, &attributes);
       if(color != NULL)
-        attributes.background = *color;
+        attributes.background = new_color;
       else
         attributes.background = sheet->bg_color;
  
@@ -7290,6 +7296,7 @@ gtk_sheet_range_set_foreground(GtkSheet *sheet, const GtkSheetRange *urange, con
   gint i, j;
   GtkSheetCellAttr attributes;
   GtkSheetRange range;
+  GdkColor new_color;
 
   g_return_if_fail (sheet != NULL);
   g_return_if_fail (GTK_IS_SHEET (sheet));
@@ -7299,12 +7306,17 @@ gtk_sheet_range_set_foreground(GtkSheet *sheet, const GtkSheetRange *urange, con
   else
      range = *urange;
 
+  /* Make sure the color is allocated, otherwise odd results can occur
+     when drawing */
+  new_color = *color;
+  gdk_colormap_alloc_color(gdk_colormap_get_system(), &new_color, TRUE, TRUE);
+
   for (i=range.row0; i<=range.rowi; i++)
     for (j=range.col0; j<=range.coli; j++){
       gtk_sheet_get_attributes(sheet, i, j, &attributes);
 
       if(color != NULL)
-        attributes.foreground = *color;
+        attributes.foreground = new_color;
       else
         gdk_color_black(gdk_colormap_get_system(), &attributes.foreground);
  
@@ -7461,6 +7473,7 @@ gtk_sheet_range_set_border_color(GtkSheet *sheet, const GtkSheetRange *urange, c
   gint i, j;
   GtkSheetCellAttr attributes;
   GtkSheetRange range;
+  GdkColor new_color;
 
   g_return_if_fail (sheet != NULL);
   g_return_if_fail (GTK_IS_SHEET (sheet));
@@ -7470,10 +7483,13 @@ gtk_sheet_range_set_border_color(GtkSheet *sheet, const GtkSheetRange *urange, c
   else
      range = *urange;
 
+  new_color = *color;
+  gdk_colormap_alloc_color(gdk_colormap_get_system(), &new_color, TRUE, TRUE);
+
   for (i=range.row0; i<=range.rowi; i++)
     for (j=range.col0; j<=range.coli; j++){
       gtk_sheet_get_attributes(sheet, i, j, &attributes);
-      attributes.border.color = *color;
+      attributes.border.color = new_color;
       gtk_sheet_set_cell_attributes(sheet, i, j, attributes); 
     }
  
