@@ -58,9 +58,10 @@ enum
 #define GTK_TYPE_SHEET_RANGE (gtk_sheet_range_get_type ())
 #define GTK_TYPE_SHEET (gtk_sheet_get_type ())
 
-#define GTK_SHEET(obj)          G_TYPE_CHECK_INSTANCE_CAST (obj, gtk_sheet_get_type (), GtkSheet)
-#define GTK_SHEET_CLASS(klass)  GTK_CHECK_CLASS_CAST (klass, gtk_sheet_get_type (), GtkSheetClass)
-#define GTK_IS_SHEET(obj)       G_TYPE_CHECK_INSTANCE_TYPE (obj, gtk_sheet_get_type ())
+#define GTK_TYPE_SHEET (gtk_sheet_get_type ())
+#define GTK_SHEET(obj)          (G_TYPE_CHECK_INSTANCE_CAST ((obj),GTK_TYPE_SHEET, GtkSheet))
+#define GTK_SHEET_CLASS(klass)  (G_TYPE_CHECK_CLASS_CAST ((klass), GTK_TYPE_SHEET, GtkSheetClass))
+#define GTK_IS_SHEET(obj)       (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GTK_TYPE_SHEET))
 
 /* Public flags, for compatibility */
 
