@@ -437,7 +437,6 @@ static gint gtk_sheet_cell_isvisible 		(GtkSheet * sheet,
 /* Clipped Range */
 
 static gint gtk_sheet_scroll			(gpointer data);
-static gint gtk_sheet_flash			(gpointer data);
 
 /* Drawing Routines */
 
@@ -2173,139 +2172,6 @@ gtk_sheet_select_column (GtkSheet * sheet,
 
   g_signal_emit (sheet, sheet_signals[SELECT_COLUMN], 0, column);
   gtk_sheet_real_select_range(sheet, NULL);
-
-}
-
-void
-gtk_sheet_clip_range (GtkSheet *sheet, const GtkSheetRange *range)
-{
-
-  g_return_if_fail (sheet != NULL);
-  g_return_if_fail (GTK_IS_SHEET (sheet));
-
-  if(GTK_SHEET_IN_CLIP(sheet)) return;
-
-  GTK_SHEET_SET_FLAGS(sheet, GTK_SHEET_IN_CLIP);
-
-  if(range == NULL)
-    sheet->clip_range = sheet->range;
-  else
-    sheet->clip_range=*range;
-
-  sheet->interval=0;
-  sheet->clip_timer = g_timeout_add (TIMEOUT_FLASH, (GSourceFunc) gtk_sheet_flash, sheet);
-
-  g_signal_emit (sheet, sheet_signals[CLIP_RANGE], 0, &sheet->clip_range);
-
-}
-
-void
-gtk_sheet_unclip_range(GtkSheet *sheet)
-{
-
-  g_return_if_fail (sheet != NULL);
-  g_return_if_fail (GTK_IS_SHEET (sheet));
-
-  if(!GTK_SHEET_IN_CLIP(sheet)) return;
-
-  GTK_SHEET_UNSET_FLAGS(sheet, GTK_SHEET_IN_CLIP);
-  g_source_remove (sheet->clip_timer);
-  gtk_sheet_range_draw(sheet, &sheet->clip_range);
-
-  if(gtk_sheet_range_isvisible(sheet, sheet->range))
-    gtk_sheet_range_draw(sheet, &sheet->range);
-}
-
-gboolean
-gtk_sheet_in_clip (GtkSheet *sheet)
-{
-  g_return_val_if_fail (sheet != NULL, FALSE);
-  g_return_val_if_fail (GTK_IS_SHEET (sheet), FALSE);
-
-  return GTK_SHEET_IN_CLIP(sheet);
-}
-
-static gint
-gtk_sheet_flash(gpointer data)
-{
-  GtkSheet *sheet;
-  gint x,y,width,height;
-  GdkRectangle clip_area;
-
-  sheet=GTK_SHEET(data);
-
-  if (!gtk_widget_get_realized (GTK_WIDGET (sheet))) return TRUE;
-  if (!gtk_widget_is_drawable (GTK_WIDGET (sheet))) return TRUE;
-  if(!gtk_sheet_range_isvisible(sheet, sheet->clip_range)) return TRUE;
-  if(GTK_SHEET_IN_XDRAG(sheet)) return TRUE; 
-  if(GTK_SHEET_IN_YDRAG(sheet)) return TRUE; 
-
-  GDK_THREADS_ENTER();
- 
-  x=COLUMN_LEFT_XPIXEL(sheet,sheet->clip_range.col0)+1;
-  y=ROW_TOP_YPIXEL(sheet,sheet->clip_range.row0)+1;
-  width=COLUMN_LEFT_XPIXEL(sheet,sheet->clip_range.coli)-x+ 
-             sheet->column[sheet->clip_range.coli].width-1;
-  height=ROW_TOP_YPIXEL(sheet,sheet->clip_range.rowi)-y+
-             sheet->row[sheet->clip_range.rowi].height-1;
-
-  clip_area.x=COLUMN_LEFT_XPIXEL(sheet, MIN_VISIBLE_COLUMN(sheet));
-  clip_area.y=ROW_TOP_YPIXEL(sheet, MIN_VISIBLE_ROW(sheet));
-  clip_area.width=sheet->sheet_window_width;
-  clip_area.height=sheet->sheet_window_height;
-
-  if(x<0) {
-     width=width+x+1;
-     x=-1;
-  }
-  if(width>clip_area.width) width=clip_area.width+10;
-  if(y<0) {
-     height=height+y+1;
-     y=-1;
-  }
-  if(height>clip_area.height) height=clip_area.height+10;
-
-  GtkStyle *style = gtk_widget_get_style (GTK_WIDGET(sheet));
-
-  gdk_draw_pixmap(sheet->sheet_window,
-                  style->fg_gc[GTK_STATE_NORMAL],
-                  sheet->pixmap,
-                  x, y,
-                  x, y,
-                  1, height);
-
-  gdk_draw_pixmap(sheet->sheet_window,
-                  style->fg_gc[GTK_STATE_NORMAL],
-                  sheet->pixmap,
-                  x, y,
-                  x, y,
-                  width, 1);
-
-  gdk_draw_pixmap(sheet->sheet_window,
-                  style->fg_gc[GTK_STATE_NORMAL],
-                  sheet->pixmap,
-                  x, y+height,
-                  x, y+height,
-                  width, 1);
-
-  gdk_draw_pixmap(sheet->sheet_window,
-                  style->fg_gc[GTK_STATE_NORMAL],
-                  sheet->pixmap,
-                  x+width, y,
-                  x+width, y,
-                  1, height);
-
-
-  sheet->interval=sheet->interval+1;
-  if(sheet->interval==TIME_INTERVAL) sheet->interval=0;
-
-  gdk_gc_set_dashes(sheet->xor_gc, sheet->interval, (gint8*)"\4\4", 2);
-  gtk_sheet_draw_flashing_range(sheet,sheet->clip_range);
-  gdk_gc_set_dashes(sheet->xor_gc, 0, (gint8*)"\4\4", 2);
-
-  GDK_THREADS_LEAVE();
-
-  return TRUE;
 
 }
 
@@ -5665,16 +5531,6 @@ gtk_sheet_key_press(GtkWidget *widget,
 
   if(key->state & GDK_CONTROL_MASK || key->keyval==GDK_KEY_Control_L ||
      key->keyval==GDK_KEY_Control_R) return FALSE;
-
-/*
-  {
-    if(key->keyval=='c' || key->keyval == 'C' && sheet->state != GTK_STATE_NORMAL)
-            gtk_sheet_clip_range(sheet, sheet->range);
-    if(key->keyval=='x' || key->keyval == 'X')
-            gtk_sheet_unclip_range(sheet);    
-    return FALSE;
-  }
-*/
 
   /* extend_selection is set when shift, ctrl, etc is pressed & held down */
   extend_selection = (key->state & GDK_SHIFT_MASK) || key->keyval==GDK_KEY_Shift_L
