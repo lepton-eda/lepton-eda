@@ -713,7 +713,7 @@ gtk_sheet_range_get_type (void)
 {
   static GType sheet_range_type;
 
-  if(!sheet_range_type)
+  if (sheet_range_type == 0)
   {
     sheet_range_type = g_boxed_type_register_static("GtkSheetRange", (GBoxedCopyFunc)gtk_sheet_range_copy, (GBoxedFreeFunc)gtk_sheet_range_free);
   }
