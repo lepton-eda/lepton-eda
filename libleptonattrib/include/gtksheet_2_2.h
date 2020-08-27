@@ -621,16 +621,6 @@ void
 gtk_sheet_select_column 		(GtkSheet * sheet,
 		         		gint column);
 
-/* save selected range to "clipboard" */
-void
-gtk_sheet_clip_range 			(GtkSheet *sheet, const GtkSheetRange *range);
-/* free clipboard */
-void
-gtk_sheet_unclip_range			(GtkSheet *sheet);
-
-gboolean
-gtk_sheet_in_clip			(GtkSheet *sheet);
-
 /* get scrollbars adjustment */
 GtkAdjustment *
 gtk_sheet_get_vadjustment 		(GtkSheet * sheet);
