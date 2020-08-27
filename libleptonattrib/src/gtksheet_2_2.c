@@ -1243,9 +1243,12 @@ gtk_sheet_set_grid(GtkSheet *sheet, GdkColor *color)
   g_return_if_fail (GTK_IS_SHEET (sheet));
 
   if(!color)
-    gdk_color_black(gdk_colormap_get_system(), &sheet->grid_color);
+    gdk_color_parse ("black", &sheet->grid_color);
   else
     sheet->grid_color = *color;
+
+  gdk_colormap_alloc_color (gdk_colormap_get_system(),
+                            &sheet->grid_color, TRUE, TRUE);
 
   if(!GTK_SHEET_IS_FROZEN(sheet)) 
     gtk_sheet_range_draw(sheet, NULL);
