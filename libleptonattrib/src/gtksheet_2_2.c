@@ -2721,7 +2721,7 @@ gtk_sheet_unrealize (GtkWidget * widget)
 
   sheet = GTK_SHEET (widget);
 
-  gdk_cursor_destroy (sheet->cursor_drag);
+  gdk_cursor_unref (sheet->cursor_drag);
 
   gdk_gc_destroy (sheet->xor_gc);
   gdk_gc_destroy (sheet->fg_gc);
@@ -5160,14 +5160,14 @@ gtk_sheet_motion (GtkWidget * widget,
     if(!GTK_SHEET_IN_SELECTION(sheet) && POSSIBLE_XDRAG(sheet, x, &column)){
       new_cursor=GDK_SB_H_DOUBLE_ARROW;
       if(new_cursor != gdk_cursor_get_cursor_type (sheet->cursor_drag)){
-        gdk_cursor_destroy(sheet->cursor_drag);
+        gdk_cursor_unref(sheet->cursor_drag);
         sheet->cursor_drag=gdk_cursor_new(GDK_SB_H_DOUBLE_ARROW);
         gdk_window_set_cursor(sheet->column_title_window,sheet->cursor_drag);
       }
     }else{
       new_cursor=GDK_TOP_LEFT_ARROW;
       if(!GTK_SHEET_IN_XDRAG(sheet) && new_cursor != gdk_cursor_get_cursor_type (sheet->cursor_drag)){
-        gdk_cursor_destroy(sheet->cursor_drag);
+        gdk_cursor_unref(sheet->cursor_drag);
         sheet->cursor_drag=gdk_cursor_new(GDK_TOP_LEFT_ARROW);
         gdk_window_set_cursor(sheet->column_title_window,sheet->cursor_drag);
       }
@@ -5179,14 +5179,14 @@ gtk_sheet_motion (GtkWidget * widget,
     if(!GTK_SHEET_IN_SELECTION(sheet) && POSSIBLE_YDRAG(sheet,y, &column)){
       new_cursor=GDK_SB_V_DOUBLE_ARROW;
       if(new_cursor != gdk_cursor_get_cursor_type (sheet->cursor_drag)){
-        gdk_cursor_destroy(sheet->cursor_drag);
+        gdk_cursor_unref(sheet->cursor_drag);
         sheet->cursor_drag=gdk_cursor_new(GDK_SB_V_DOUBLE_ARROW);
         gdk_window_set_cursor(sheet->row_title_window,sheet->cursor_drag);
       }
     }else{
       new_cursor=GDK_TOP_LEFT_ARROW;
       if(!GTK_SHEET_IN_YDRAG(sheet) && new_cursor != gdk_cursor_get_cursor_type (sheet->cursor_drag)){
-        gdk_cursor_destroy(sheet->cursor_drag);
+        gdk_cursor_unref(sheet->cursor_drag);
         sheet->cursor_drag=gdk_cursor_new(GDK_TOP_LEFT_ARROW);
         gdk_window_set_cursor(sheet->row_title_window,sheet->cursor_drag);
       }
@@ -5198,7 +5198,7 @@ gtk_sheet_motion (GtkWidget * widget,
      !POSSIBLE_RESIZE(sheet,x,y,&row,&column) && !GTK_SHEET_IN_RESIZE(sheet) &&
      event->window == sheet->sheet_window && 
      new_cursor != gdk_cursor_get_cursor_type (sheet->cursor_drag)){
-         gdk_cursor_destroy(sheet->cursor_drag);
+         gdk_cursor_unref(sheet->cursor_drag);
          sheet->cursor_drag=gdk_cursor_new(GDK_PLUS);
          gdk_window_set_cursor(sheet->sheet_window,sheet->cursor_drag);
   }
@@ -5208,7 +5208,7 @@ gtk_sheet_motion (GtkWidget * widget,
      (POSSIBLE_DRAG(sheet, x,y,&row,&column) || GTK_SHEET_IN_DRAG(sheet)) && 
      event->window == sheet->sheet_window && 
      new_cursor != gdk_cursor_get_cursor_type (sheet->cursor_drag)){
-         gdk_cursor_destroy(sheet->cursor_drag);
+         gdk_cursor_unref(sheet->cursor_drag);
          sheet->cursor_drag=gdk_cursor_new(GDK_TOP_LEFT_ARROW);
          gdk_window_set_cursor(sheet->sheet_window,sheet->cursor_drag);
   }
@@ -5218,7 +5218,7 @@ gtk_sheet_motion (GtkWidget * widget,
      (POSSIBLE_RESIZE(sheet,x,y,&row,&column) || GTK_SHEET_IN_RESIZE(sheet)) &&
      event->window == sheet->sheet_window && 
      new_cursor != gdk_cursor_get_cursor_type (sheet->cursor_drag)){
-         gdk_cursor_destroy(sheet->cursor_drag);
+         gdk_cursor_unref(sheet->cursor_drag);
          sheet->cursor_drag=gdk_cursor_new(GDK_SIZING);
          gdk_window_set_cursor(sheet->sheet_window,sheet->cursor_drag);
   }
