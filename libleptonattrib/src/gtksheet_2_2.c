@@ -7321,9 +7321,12 @@ gtk_sheet_range_set_foreground(GtkSheet *sheet, const GtkSheetRange *urange, con
 
       if(color != NULL)
         attributes.foreground = new_color;
-      else
-        gdk_color_black(gdk_colormap_get_system(), &attributes.foreground);
- 
+      else {
+        gdk_color_parse ("black", &attributes.foreground);
+        gdk_colormap_alloc_color (gdk_colormap_get_system (),
+                                  &attributes.foreground, TRUE, TRUE);
+      }
+
       gtk_sheet_set_cell_attributes(sheet, i, j, attributes); 
     }
 
@@ -7615,7 +7618,8 @@ init_attributes(GtkSheet *sheet, gint col, GtkSheetCellAttr *attributes)
  if (!gtk_widget_get_realized (GTK_WIDGET (sheet))) {
    GdkColormap *colormap;
    colormap=gdk_colormap_get_system();
-   gdk_color_black(colormap, &attributes->foreground);
+   gdk_color_parse ("black", &attributes->foreground);
+   gdk_colormap_alloc_color (colormap, &attributes->foreground, TRUE, TRUE);
    attributes->background = sheet->bg_color;
  }
  attributes->justification = sheet->column[col].justification;
