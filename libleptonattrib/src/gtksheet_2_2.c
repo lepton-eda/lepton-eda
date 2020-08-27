@@ -1056,9 +1056,12 @@ gtk_sheet_init (GtkSheet *sheet)
   sheet->x_drag = 0;
   sheet->y_drag = 0;
 
-  gdk_color_white(gdk_colormap_get_system(), &sheet->bg_color);
+  GdkColormap *colormap = gdk_colormap_get_system();
+  gdk_color_parse("white", &sheet->bg_color);
+  gdk_colormap_alloc_color(colormap, &sheet->bg_color, TRUE, TRUE);
   gdk_color_parse("gray", &sheet->grid_color);
-  gdk_color_alloc(gdk_colormap_get_system(), &sheet->grid_color);
+  gdk_colormap_alloc_color(colormap, &sheet->grid_color, TRUE, TRUE);
+
   sheet->show_grid = TRUE;
 }
 
