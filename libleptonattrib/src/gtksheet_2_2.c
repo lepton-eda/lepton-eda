@@ -1212,8 +1212,8 @@ gtk_sheet_show_grid(GtkSheet *sheet, gboolean show)
 gboolean
 gtk_sheet_grid_visible(GtkSheet *sheet)
 {
-  g_return_val_if_fail (sheet != NULL, 0);
-  g_return_val_if_fail (GTK_IS_SHEET (sheet), 0);
+  g_return_val_if_fail (sheet != NULL, FALSE);
+  g_return_val_if_fail (GTK_IS_SHEET (sheet), FALSE);
 
   return sheet->show_grid;
 }
