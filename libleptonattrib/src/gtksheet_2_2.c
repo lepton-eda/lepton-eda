@@ -2611,9 +2611,10 @@ gtk_sheet_realize (GtkWidget * widget)
   sheet->bg_gc = gdk_gc_new (gtk_widget_get_window (widget));
 
   colormap = gtk_widget_get_colormap(widget);
-
-  gdk_color_white(colormap, &style->white);
-  gdk_color_black(colormap, &style->black);
+  gdk_color_parse("white", &style->white);
+  gdk_colormap_alloc_color(colormap, &style->white, TRUE, TRUE);
+  gdk_color_parse("black", &style->black);
+  gdk_colormap_alloc_color(colormap, &style->black, TRUE, TRUE);
 
   gdk_gc_get_values(sheet->fg_gc, &auxvalues);
 
