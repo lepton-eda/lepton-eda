@@ -425,7 +425,7 @@ void x_window_create_main(GschemToplevel *w_current)
   w_current->main_window = GTK_WIDGET (gschem_main_window_new ());
 
   gtk_widget_set_name (w_current->main_window, "lepton-schematic");
-  gtk_window_set_policy (GTK_WINDOW (w_current->main_window), TRUE, TRUE, TRUE);
+  gtk_window_set_resizable (GTK_WINDOW (w_current->main_window), TRUE);
 
   /* We want the widgets to flow around the drawing area, so we don't
    * set a size of the main window.  The drawing area's size is fixed,
