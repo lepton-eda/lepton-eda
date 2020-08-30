@@ -6732,16 +6732,16 @@ vadjustment_value_changed (GtkAdjustment * adjustment,
     
   for(i=0; i<= sheet->maxrow; i++){
    if(sheet->row[i].is_visible) y+=sheet->row[i].height;
-   if(y > adjustment->value) break;
+   if(y > gtk_adjustment_get_value (adjustment)) break;
   }
   y-=sheet->row[i].height;
   new_row=i;
 
-  if (adjustment->value > sheet->old_vadjustment && sheet->old_vadjustment > 0. &&
+  if (gtk_adjustment_get_value (adjustment) > sheet->old_vadjustment && sheet->old_vadjustment > 0. &&
       sheet->row[i].height > sheet->vadjustment->step_increment){
 /* This avoids embarrassing twitching */
           if(row == new_row && row != sheet->maxrow &&
-             adjustment->value - sheet->old_vadjustment >= 
+             gtk_adjustment_get_value (adjustment) - sheet->old_vadjustment >=
                           sheet->vadjustment->step_increment &&
              new_row + 1 != MIN_VISIBLE_ROW(sheet)){
                 new_row+=1;
@@ -6751,8 +6751,8 @@ vadjustment_value_changed (GtkAdjustment * adjustment,
 
 /* Negative old_adjustment enforces the redraw, otherwise avoid spureous redraw */
   if(sheet->old_vadjustment >= 0. && row == new_row){
-      sheet->old_vadjustment = sheet->vadjustment->value;
-      return;
+    sheet->old_vadjustment = gtk_adjustment_get_value (sheet->vadjustment);
+    return;
   }
 
   sheet->old_vadjustment = sheet->vadjustment->value;
