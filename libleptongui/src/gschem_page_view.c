@@ -38,9 +38,9 @@
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
 
+#ifndef ENABLE_GTK3
 #include "gtk/gtkmarshal.h"
-
-
+#endif
 
 #define INVALIDATE_MARGIN 1
 
