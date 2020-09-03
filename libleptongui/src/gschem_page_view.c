@@ -338,6 +338,7 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
                                                         (GParamFlags) (G_PARAM_READWRITE |
                                                                        G_PARAM_CONSTRUCT)));
 
+#ifndef ENABLE_GTK3
   GTK_WIDGET_CLASS (klass)->set_scroll_adjustments_signal = g_signal_new (
     "set-scroll-adjustments",
     G_OBJECT_CLASS_TYPE (klass),
@@ -350,6 +351,7 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
     2,
     GTK_TYPE_ADJUSTMENT,
     GTK_TYPE_ADJUSTMENT);
+#endif
 
   g_signal_new (
     "update-grid-info",
@@ -651,11 +653,13 @@ gschem_page_view_init (GschemPageView *view)
   view->pan_y = 0;
   view->throttle = 0;
 
+#ifndef ENABLE_GTK3
   g_signal_connect (view,
                     "set-scroll-adjustments",
                     G_CALLBACK (set_scroll_adjustments),
                     NULL);
 
+#endif
   g_signal_connect(view,
                    "realize",
                    G_CALLBACK (event_realize),
