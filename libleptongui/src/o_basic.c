@@ -36,11 +36,20 @@ extern GedaColorMap display_outline_colors;
  *  \par Function Description
  *
  */
+#ifdef ENABLE_GTK3
+void
+o_redraw_rect (GschemToplevel *w_current,
+               GtkWidget *widget,
+               PAGE *page,
+               GschemPageGeometry *geometry,
+               cairo_t *cr)
+#else
 void o_redraw_rect (GschemToplevel *w_current,
                     GdkDrawable *drawable,
                     PAGE *page,
                     GschemPageGeometry *geometry,
                     GdkRectangle *rectangle)
+#endif
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean draw_selected;
@@ -55,20 +64,23 @@ void o_redraw_rect (GschemToplevel *w_current,
   int render_flags;
   GArray *render_color_map = NULL;
   GArray *render_outline_color_map = NULL;
+#ifndef ENABLE_GTK3
   cairo_t *cr;
+#endif
 
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (toplevel != NULL);
   g_return_if_fail (w_current->toplevel == toplevel);
   g_return_if_fail (page != NULL);
   g_return_if_fail (geometry != NULL);
-
+#ifndef ENABLE_GTK3
   cr = gdk_cairo_create (drawable);
 
   gdk_cairo_rectangle (cr, rectangle);
   cairo_clip (cr);
 
   cairo_save (cr);
+#endif
   cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (geometry));
 
   grip_half_size = GRIP_SIZE / 2;
@@ -79,10 +91,27 @@ void o_redraw_rect (GschemToplevel *w_current,
 
   world_rect = g_new (BOX, 1);
 
+#ifdef ENABLE_GTK3
+  gint wx, wy;
+  gtk_widget_translate_coordinates (w_current->drawing_area,
+                                    gtk_widget_get_toplevel (w_current->drawing_area),
+                                    0, 0, &wx, &wy);
+
+  gint x = 0;
+  gint y = 0;
+  gint width = gtk_widget_get_allocated_width (GTK_WIDGET (widget));
+  gint height = gtk_widget_get_allocated_height (GTK_WIDGET (widget));
+
+  double lower_x = x - bloat;
+  double lower_y = y + height + bloat;
+  double upper_x = x + width + bloat;
+  double upper_y = y - bloat;
+#else
   double lower_x = rectangle->x - bloat;
   double lower_y = rectangle->y + rectangle->height + bloat;
   double upper_x = rectangle->x + rectangle->width + bloat;
   double upper_y = rectangle->y - bloat;
+#endif
 
   cairo_device_to_user (cr, &lower_x, &lower_y);
   cairo_device_to_user (cr, &upper_x, &upper_y);
@@ -144,12 +173,23 @@ void o_redraw_rect (GschemToplevel *w_current,
                          geda_color_get_blue_double (color),
                          geda_color_get_alpha_double (color));
 
+#ifdef ENABLE_GTK3
+  double cx=wx, cy=wy;
+  cairo_device_to_user_distance (cr, &cx, &cy);
+  cairo_translate (cr, cx, cy);
+#endif
   cairo_paint (cr);
 
   /* Draw grid lines */
+#ifdef ENABLE_GTK3
+  x_grid_draw_region (w_current, cr,
+                      wx, wy,
+                      width, height);
+#else
   x_grid_draw_region (w_current, cr,
                       rectangle->x, rectangle->y,
                       rectangle->width, rectangle->height);
+#endif
 
   /* Determine whether we should draw the selection at all */
   draw_selected = !(w_current->inside_action &&
@@ -275,7 +315,9 @@ void o_redraw_rect (GschemToplevel *w_current,
   g_array_free (render_color_map, TRUE);
   g_array_free (render_outline_color_map, TRUE);
 
+#ifndef ENABLE_GTK3
   cairo_destroy (cr);
+#endif
 }
 
 
@@ -511,5 +553,3 @@ void o_invalidate_glist (GschemToplevel *w_current, GList *list)
                                             bottom);
   }
 }
-
-
