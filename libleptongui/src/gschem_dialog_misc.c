@@ -99,7 +99,7 @@ gschem_dialog_misc_create_property_table (GtkWidget *label[], GtkWidget *widget[
                                index+1);          /* bottom_attach */
 
     if (GTK_IS_LABEL (label[index]) &&
-        gtk_label_get_mnemonic_keyval (GTK_LABEL (label[index])) != GDK_VoidSymbol)
+        gtk_label_get_mnemonic_keyval (GTK_LABEL (label[index])) != GDK_KEY_VoidSymbol)
     {
       gtk_label_set_mnemonic_widget (GTK_LABEL (label[index]), widget[index]);
     }
