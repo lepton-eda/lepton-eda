@@ -61,6 +61,15 @@ set_property (GObject      *object,
               const GValue *value,
               GParamSpec   *pspec);
 
+#ifdef ENABLE_GTK3
+static void
+render (GtkCellRenderer      *cell,
+        cairo_t              *cr,
+        GtkWidget            *widget,
+        const GdkRectangle   *background_area,
+        const GdkRectangle   *cell_area,
+        GtkCellRendererState flags);
+#else
 static void
 render (GtkCellRenderer      *cell,
         GdkWindow            *window,
@@ -69,7 +78,7 @@ render (GtkCellRenderer      *cell,
         GdkRectangle         *cell_area,
         GdkRectangle         *expose_area,
         GtkCellRendererState flags);
-
+#endif
 
 
 /*! \private
@@ -171,6 +180,15 @@ swatchcr_init (GschemSwatchColumnRenderer *swatch)
  *  \param [in] expose_area
  *  \param [in] flags
  */
+#ifdef ENABLE_GTK3
+static void
+render (GtkCellRenderer      *cell,
+        cairo_t              *cr,
+        GtkWidget            *widget,
+        const GdkRectangle   *background_area,
+        const GdkRectangle   *cell_area,
+        GtkCellRendererState flags)
+#else
 static void
 render (GtkCellRenderer      *cell,
         GdkWindow            *window,
@@ -179,17 +197,20 @@ render (GtkCellRenderer      *cell,
         GdkRectangle         *cell_area,
         GdkRectangle         *expose_area,
         GtkCellRendererState flags)
+#endif
 {
   GschemSwatchColumnRenderer *swatch = GSCHEM_SWATCH_COLUMN_RENDERER (cell);
 
   if (swatch->enabled) {
-    cairo_t *cr = gdk_cairo_create (window);
     double offset = SWATCH_BORDER_WIDTH / 2.0;
+#ifndef ENABLE_GTK3
+    cairo_t *cr = gdk_cairo_create (window);
 
     if (expose_area) {
       gdk_cairo_rectangle (cr, expose_area);
       cairo_clip (cr);
     }
+#endif
 
     cairo_move_to (cr,
                    (double) cell_area->x + offset,
@@ -221,8 +242,9 @@ render (GtkCellRenderer      *cell,
     cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
 
     cairo_stroke (cr);
-
+#ifndef ENABLE_GTK3
     cairo_destroy (cr);
+#endif
   }
 }
 
