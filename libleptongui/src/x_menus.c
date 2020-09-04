@@ -456,8 +456,8 @@ x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
 
   gtk_recent_chooser_set_local_only(GTK_RECENT_CHOOSER(menuitem_file_recent_items), FALSE);
   gtk_recent_chooser_menu_set_show_numbers(GTK_RECENT_CHOOSER_MENU(menuitem_file_recent_items), TRUE);
-  g_signal_connect(GTK_OBJECT(menuitem_file_recent_items), "item-activated",
-                   G_CALLBACK(recent_chooser_item_activated), w_current);
+  g_signal_connect (G_OBJECT (menuitem_file_recent_items), "item-activated",
+                    G_CALLBACK (recent_chooser_item_activated), w_current);
 
   if (menuitem == NULL)
     return;
