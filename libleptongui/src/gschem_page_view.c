@@ -431,8 +431,13 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
   GdkWindow *window = gtk_widget_get_window (GTK_WIDGET (view));
   /* If there's no window yet, defer geometry calculation until
    * later. */
+#ifdef ENABLE_GTK3
+  if (!GDK_IS_WINDOW (window))
+    return NULL;
+#else
   if (!GDK_IS_DRAWABLE (window))
     return NULL;
+#endif
 
   geometry = geometry_cache_lookup (view, page);
 
