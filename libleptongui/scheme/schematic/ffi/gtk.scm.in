@@ -22,7 +22,7 @@
   #:export (gtk_init
             gtk_main))
 
-(define libgtk (dynamic-link "libgtk-x11-2.0"))
+(define libgtk (dynamic-link "@LIBGTK@"))
 
 (define gtk_init
   (pointer->procedure

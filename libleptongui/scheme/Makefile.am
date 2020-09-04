@@ -25,7 +25,6 @@ nobase_dist_scmdata_DATA = \
 	schematic/core/gettext.scm \
 	schematic/dialog.scm \
 	schematic/ffi.scm \
-	schematic/ffi/gtk.scm \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
 	schematic/hook.scm \
@@ -45,12 +44,30 @@ nobase_dist_scmdata_DATA = \
 	conf/schematic/menu.scm \
 	conf/schematic/stroke.scm
 
-nobase_scmdata_DATA = schematic/gschemdoc.scm
+nobase_scmdata_DATA = \
+	schematic/gschemdoc.scm \
+	schematic/ffi/gtk.scm
+
+if ENABLE_GTK3
+LIBGTK = libgtk-3
+else
+LIBGTK = libgtk-x11-2.0
+endif
 
 schematic/gschemdoc.scm: schematic/gschemdoc.scm.in
 	$(MKDIR_P) schematic/; \
 	sed -e 's,[@]docdir[@],$(docdir),g' < $(srcdir)/$@.in > $@
 
-EXTRA_DIST = schematic/gschemdoc.scm.in
+schematic/ffi/gtk.scm: schematic/ffi/gtk.scm.in
+	$(MKDIR_P) schematic/ffi/; \
+	sed -e 's,[@]LIBGTK[@],$(LIBGTK),g' < $(srcdir)/$@.in > $@
 
-CLEANFILES = schematic/gschemdoc.scm schematic/precompile-config.scm
+
+EXTRA_DIST = \
+	schematic/gschemdoc.scm.in \
+	schematic/ffi/gtk.scm.in
+
+CLEANFILES = \
+	schematic/gschemdoc.scm \
+	schematic/precompile-config.scm \
+	schematic/ffi/gtk.scm
