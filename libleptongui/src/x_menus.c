@@ -181,7 +181,11 @@ get_main_menu (GschemToplevel* w_current)
       menu_item_name = (char *) gettext(raw_menu_item_name);
 
       if (strcmp(menu_item_name, "SEPARATOR") == 0) {
+#ifdef ENABLE_GTK3
+        menu_item = gtk_separator_menu_item_new ();
+#else
         menu_item = gtk_menu_item_new();
+#endif
         gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
       } else {
 
@@ -302,7 +306,11 @@ get_main_popup (GschemToplevel* w_current)
 
     /* No action --> add a separator */
     if (e.action == NULL) {
+#ifdef ENABLE_GTK3
+      menu_item = gtk_separator_menu_item_new ();
+#else
       menu_item = gtk_menu_item_new();
+#endif
       gtk_widget_show (menu_item);
       gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
       continue;
