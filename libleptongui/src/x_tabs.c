@@ -782,10 +782,17 @@ x_tabs_hdr_create (TabInfo* nfo)
   g_return_val_if_fail (nfo != NULL, NULL);
   g_return_val_if_fail (nfo->page_ != NULL, NULL);
 
+#ifdef ENABLE_GTK3
+  GtkWidget* box_hdr        = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  GtkWidget* box_btns_left  = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  GtkWidget* box_lab        = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  GtkWidget* box_btns_right = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+#else
   GtkWidget* box_hdr        = gtk_hbox_new (FALSE, 0);
   GtkWidget* box_btns_left  = gtk_hbox_new (FALSE, 0);
   GtkWidget* box_lab        = gtk_hbox_new (FALSE, 0);
   GtkWidget* box_btns_right = gtk_hbox_new (FALSE, 0);
+#endif
 
 
   /* label:
