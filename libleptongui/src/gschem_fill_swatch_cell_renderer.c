@@ -63,6 +63,15 @@ get_property (GObject    *object,
 static void
 instance_init (GschemFillSwatchCellRenderer *swatch);
 
+#ifdef ENABLE_GTK3
+static void
+render (GtkCellRenderer      *cell,
+        cairo_t              *cr,
+        GtkWidget            *widget,
+        const GdkRectangle   *background_area,
+        const GdkRectangle   *cell_area,
+        GtkCellRendererState flags);
+#else /* GTK2 */
 static void
 render (GtkCellRenderer      *cell,
         GdkWindow            *window,
@@ -71,6 +80,7 @@ render (GtkCellRenderer      *cell,
         GdkRectangle         *cell_area,
         GdkRectangle         *expose_area,
         GtkCellRendererState flags);
+#endif
 
 static void
 set_property (GObject      *object,
@@ -206,7 +216,26 @@ get_property (GObject    *object,
 
 
 
+#ifdef ENABLE_GTK3
 /*! \private
+ *  \brief Render the swatch into the cell
+ *
+ *  \param [in] cell this cell renderer
+ *  \param [in] cr cairo context to render to
+ *  \param [in] widget the widget owning the window
+ *  \param [in] background_area entire cell area
+ *  \param [in] cell_area area rendered normally
+ *  \param [in] flags
+ */
+static void
+render (GtkCellRenderer      *cell,
+        cairo_t              *cr,
+        GtkWidget            *widget,
+        const GdkRectangle   *background_area,
+        const GdkRectangle   *cell_area,
+        GtkCellRendererState flags)
+#else /* GTK2 */
+/*
  *  \brief Render the swatch into the cell
  *
  *  \param [in] cell this cell renderer
@@ -225,19 +254,22 @@ render (GtkCellRenderer      *cell,
         GdkRectangle         *cell_area,
         GdkRectangle         *expose_area,
         GtkCellRendererState flags)
+#endif
 {
   GschemFillSwatchCellRenderer *swatch = GSCHEM_FILL_SWATCH_CELL_RENDERER (cell);
 
   if (swatch->enabled) {
     GdkColor color;
-    cairo_t *cr = gdk_cairo_create (window);
     double offset = SWATCH_BORDER_WIDTH / 2.0;
     gboolean success;
+#ifndef ENABLE_GTK3
+    cairo_t *cr = gdk_cairo_create (window);
 
     if (expose_area) {
       gdk_cairo_rectangle (cr, expose_area);
       cairo_clip (cr);
     }
+#endif
 
     /* Paint the swatch using the text color to match the user's desktop theme.
      */
@@ -314,7 +346,9 @@ render (GtkCellRenderer      *cell,
 
     cairo_set_line_width (cr, SWATCH_BORDER_WIDTH);
     cairo_stroke (cr);
+#ifndef ENABLE_GTK3
     cairo_destroy (cr);
+#endif
   }
 }
 
