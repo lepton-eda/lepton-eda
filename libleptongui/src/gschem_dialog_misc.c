@@ -48,9 +48,14 @@ gschem_dialog_misc_create_property_label (const char *label)
 {
   GtkWidget *widget = gtk_label_new_with_mnemonic (label);
 
+#ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (widget), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (widget), 0.0);
+#else
   gtk_misc_set_alignment (GTK_MISC (widget),
                           0.0,                  /* xalign */
                           0.0);                 /* yalign */
+#endif
 
   return widget;
 }
