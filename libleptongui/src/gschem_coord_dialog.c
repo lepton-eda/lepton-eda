@@ -106,16 +106,30 @@ void coord_dialog (GschemToplevel *w_current, int x, int y)
     frame = gtk_frame_new (_("Screen"));
     w_current->coord_screen = gtk_label_new("(########, ########)");
     gtk_label_set_justify( GTK_LABEL(w_current->coord_screen), GTK_JUSTIFY_LEFT);
+#ifdef ENABLE_GTK3
+    gtk_widget_set_margin_left (w_current->coord_screen, DIALOG_H_SPACING);
+    gtk_widget_set_margin_right (w_current->coord_screen, DIALOG_H_SPACING);
+    gtk_widget_set_margin_top (w_current->coord_screen, DIALOG_V_SPACING);
+    gtk_widget_set_margin_bottom (w_current->coord_screen, DIALOG_V_SPACING);
+#else
     gtk_misc_set_padding(GTK_MISC(w_current->coord_screen),
                          DIALOG_H_SPACING, DIALOG_V_SPACING);
+#endif
     gtk_container_add(GTK_CONTAINER (frame),
                       w_current->coord_screen);
     gtk_box_pack_start(GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
     frame = gtk_frame_new (_("World"));
     w_current->coord_world = gtk_label_new ("(########, ########)");
+#ifdef ENABLE_GTK3
+    gtk_widget_set_margin_left (w_current->coord_world, DIALOG_H_SPACING);
+    gtk_widget_set_margin_right (w_current->coord_world, DIALOG_H_SPACING);
+    gtk_widget_set_margin_top (w_current->coord_world, DIALOG_V_SPACING);
+    gtk_widget_set_margin_bottom (w_current->coord_world, DIALOG_V_SPACING);
+#else
     gtk_misc_set_padding(GTK_MISC(w_current->coord_world),
                          DIALOG_H_SPACING, DIALOG_V_SPACING);
+#endif
     gtk_label_set_justify(GTK_LABEL(w_current->coord_world),
                           GTK_JUSTIFY_LEFT);
     gtk_container_add(GTK_CONTAINER (frame),
