@@ -1246,7 +1246,12 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   /* scope section */
   label1 = gtk_label_new (_("<b>Scope</b>"));
   gtk_label_set_use_markup (GTK_LABEL (label1), TRUE);
+#ifdef ENABLE_GTK3
   gtk_misc_set_alignment (GTK_MISC(label1), 0, 0);
+#else
+  gtk_label_set_xalign (GTK_LABEL (label1), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label1), 0.0);
+#endif
   gtk_box_pack_start (GTK_BOX(vbox1), label1, TRUE, TRUE, 0);
   gtk_widget_show (label1);
 
@@ -1282,12 +1287,14 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_widget_show (label4);
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid1), label4, 0, 0, 1, 1);
+  gtk_label_set_xalign (GTK_LABEL (label4), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label4), 0.5);
 #else
   gtk_table_attach (GTK_TABLE (table1), label4, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-#endif
   gtk_misc_set_alignment (GTK_MISC (label4), 0, 0.5);
+#endif
 
   scope_text = gtk_combo_box_text_new_with_entry ();
   gtk_entry_set_activates_default(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(scope_text))), TRUE);
@@ -1305,22 +1312,26 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid1), label8, 0, 1, 1, 1);
 #else
+  gtk_label_set_xalign (GTK_LABEL (label8), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label8), 0.5);
   gtk_table_attach (GTK_TABLE (table1), label8, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-#endif
   gtk_misc_set_alignment (GTK_MISC (label8), 0, 0.5);
+#endif
 
   label6 = gtk_label_new (_("Skip numbers found in:"));
   gtk_widget_show (label6);
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid1), label6, 0, 2, 1, 1);
+  gtk_label_set_xalign (GTK_LABEL (label6), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label6), 0.5);
 #else
   gtk_table_attach (GTK_TABLE (table1), label6, 0, 1, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-#endif
   gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
+#endif
 
   scope_number = gtk_combo_box_text_new ();
   gtk_widget_show (scope_number);
@@ -1355,7 +1366,12 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   /* Options section */
   label3 = gtk_label_new (_("<b>Options</b>"));
   gtk_label_set_use_markup (GTK_LABEL (label3), TRUE);
+#ifdef ENABLE_GTK3
   gtk_misc_set_alignment(GTK_MISC(label3), 0, 0);
+#else
+  gtk_label_set_xalign (GTK_LABEL (label3), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label3), 0.0);
+#endif
   gtk_widget_show (label3);
   gtk_box_pack_start(GTK_BOX(vbox1), label3, TRUE, TRUE, 0);
 
@@ -1391,23 +1407,27 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_widget_show (label12);
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid3), label12, 0, 0, 1, 1);
+  gtk_label_set_xalign (GTK_LABEL (label12), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label12), 0.5);
 #else
   gtk_table_attach (GTK_TABLE (table3), label12, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-#endif
   gtk_misc_set_alignment (GTK_MISC (label12), 0, 0.5);
+#endif
 
   label13 = gtk_label_new (_("Sort order:"));
   gtk_widget_show (label13);
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid3), label13, 0, 1, 1, 1);
+  gtk_label_set_xalign (GTK_LABEL (label13), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label13), 0.5);
 #else
   gtk_table_attach (GTK_TABLE (table3), label13, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
-#endif
   gtk_misc_set_alignment (GTK_MISC (label13), 0, 0.5);
+#endif
 
 
   /* this sets the page size to 10 (step * 10).
