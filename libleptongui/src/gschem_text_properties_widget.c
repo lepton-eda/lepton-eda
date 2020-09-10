@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -189,9 +189,8 @@ gschem_text_properties_widget_class_init (GschemTextPropertiesWidgetClass *klass
 static GtkWidget*
 create_text_content_section (GschemTextPropertiesWidget *widget)
 {
-  GtkWidget *bbox = gtk_hbutton_box_new ();
-  GtkWidget *scrolled = gtk_scrolled_window_new (NULL, NULL);
 #ifdef ENABLE_GTK3
+  GtkWidget *bbox = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
   GtkWidget *vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
 
   gtk_widget_set_hexpand (vbox, TRUE);
@@ -199,8 +198,10 @@ create_text_content_section (GschemTextPropertiesWidget *widget)
   gtk_widget_set_halign (vbox, GTK_ALIGN_FILL);
   gtk_widget_set_valign (vbox, GTK_ALIGN_FILL);
 #else
+  GtkWidget *bbox = gtk_hbutton_box_new ();
   GtkWidget *vbox = gtk_vbox_new (FALSE, 0);
 #endif
+  GtkWidget *scrolled = gtk_scrolled_window_new (NULL, NULL);
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   GTK_POLICY_AUTOMATIC,

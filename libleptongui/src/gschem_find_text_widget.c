@@ -430,7 +430,11 @@ gschem_find_text_widget_init (GschemFindTextWidget *widget)
   gtk_widget_set_visible (widget->descend_button, TRUE);
   gtk_box_pack_start (GTK_BOX (content), widget->descend_button, FALSE, FALSE, 0);
 
+#ifdef ENABLE_GTK3
+  button_box = gtk_button_box_new (GTK_ORIENTATION_HORIZONTAL);
+#else
   button_box = gtk_hbutton_box_new ();
+#endif
   gtk_widget_set_visible (button_box, TRUE);
   gtk_box_pack_start (GTK_BOX (content), button_box, FALSE, FALSE, 0);
 
