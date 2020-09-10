@@ -2308,7 +2308,12 @@ multiattrib_init (Multiattrib *multiattrib)
 
   /*   - the name entry: a GtkComboBoxEntry */
   label = gtk_label_new_with_mnemonic (_("_Name:"));
+#ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
+#else
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+#endif
 
   combo = gtk_combo_box_text_new_with_entry ();
 
@@ -2336,7 +2341,12 @@ multiattrib_init (Multiattrib *multiattrib)
 
   /*   - the value entry: a GtkEntry */
   label = gtk_label_new_with_mnemonic (_("_Value:"));
+#ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
+#else
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+#endif
 
   scrolled_win = GTK_WIDGET (
                              g_object_new (GTK_TYPE_SCROLLED_WINDOW,
