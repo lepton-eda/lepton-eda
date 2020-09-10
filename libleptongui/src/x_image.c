@@ -510,13 +510,15 @@ void x_image_setup (GschemToplevel *w_current)
 #endif
   label1 = gtk_label_new (_("Width x Height"));
   gtk_widget_show (label1);
-  gtk_misc_set_alignment( GTK_MISC (label1), 0, 0);
 #ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label1), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label1), 0.0);
   gtk_widget_set_margin_left (label1, 0);
   gtk_widget_set_margin_right (label1, 0);
   gtk_widget_set_margin_top (label1, 0);
   gtk_widget_set_margin_bottom (label1, 0);
 #else
+  gtk_misc_set_alignment( GTK_MISC (label1), 0, 0);
   gtk_misc_set_padding (GTK_MISC (label1), 0, 0);
 #endif
   gtk_box_pack_start (GTK_BOX (vbox1),
@@ -537,13 +539,15 @@ void x_image_setup (GschemToplevel *w_current)
 #endif
   label2 = gtk_label_new (_("Image type"));
   gtk_widget_show (label2);
-  gtk_misc_set_alignment( GTK_MISC (label2), 0, 0);
 #ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label2), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label2), 0.0);
   gtk_widget_set_margin_left (label2, 0);
   gtk_widget_set_margin_right (label2, 0);
   gtk_widget_set_margin_top (label2, 0);
   gtk_widget_set_margin_bottom (label2, 0);
 #else
+  gtk_misc_set_alignment( GTK_MISC (label2), 0, 0);
   gtk_misc_set_padding (GTK_MISC (label2), 0, 0);
 #endif
   gtk_box_pack_start (GTK_BOX (vbox2),
@@ -562,13 +566,15 @@ void x_image_setup (GschemToplevel *w_current)
   GtkWidget* vbox3 = gtk_vbox_new (TRUE, 0);
 #endif
   GtkWidget* label3 = gtk_label_new (_("Color mode"));
-  gtk_misc_set_alignment (GTK_MISC (label3), 0, 0);
 #ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label3), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label3), 0.0);
   gtk_widget_set_margin_left (label3, 0);
   gtk_widget_set_margin_right (label3, 0);
   gtk_widget_set_margin_top (label3, 0);
   gtk_widget_set_margin_bottom (label3, 0);
 #else
+  gtk_misc_set_alignment (GTK_MISC (label3), 0, 0);
   gtk_misc_set_padding (GTK_MISC (label3), 0, 0);
 #endif
   gtk_box_pack_start (GTK_BOX (vbox3), label3, FALSE, FALSE, 0);
