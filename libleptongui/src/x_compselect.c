@@ -1155,7 +1155,12 @@ create_lib_treeview (Compselect *compselect)
 
   /* create the entry label */
   label = gtk_label_new_with_mnemonic (_("_Filter:"));
+#ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
+#else
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+#endif
 
   /* add the search label to the filter area */
   gtk_box_pack_start (GTK_BOX (hbox), label,
