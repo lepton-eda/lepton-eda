@@ -1033,8 +1033,8 @@ create_inuse_treeview (Compselect *compselect)
                                      "relief",    GTK_RELIEF_NONE,
                                      NULL));
   gtk_container_add (GTK_CONTAINER (button),
-                     gtk_image_new_from_stock (GTK_STOCK_REFRESH,
-                                            GTK_ICON_SIZE_SMALL_TOOLBAR));
+                     gtk_image_new_from_icon_name ("view-refresh",
+                                                   GTK_ICON_SIZE_SMALL_TOOLBAR));
   /* add the refresh button to the horizontal box at the end */
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   g_signal_connect (button,
@@ -1201,8 +1201,8 @@ create_lib_treeview (Compselect *compselect)
                                      NULL));
 
   gtk_container_add (GTK_CONTAINER (button),
-                     gtk_image_new_from_stock (GTK_STOCK_CLEAR,
-                                               GTK_ICON_SIZE_SMALL_TOOLBAR));
+                     gtk_image_new_from_icon_name ("edit-clear",
+                                                   GTK_ICON_SIZE_SMALL_TOOLBAR));
 
   gtk_widget_set_tooltip_text (button, _("Reset filter"));
 
@@ -1225,8 +1225,8 @@ create_lib_treeview (Compselect *compselect)
                                      "relief",    GTK_RELIEF_NONE,
                                      NULL));
   gtk_container_add (GTK_CONTAINER (button),
-                     gtk_image_new_from_stock (GTK_STOCK_REFRESH,
-                                            GTK_ICON_SIZE_SMALL_TOOLBAR));
+                     gtk_image_new_from_icon_name ("view-refresh",
+                                                   GTK_ICON_SIZE_SMALL_TOOLBAR));
   gtk_widget_set_tooltip_text (button, _("Reload all libraries"));
 
   /* add the refresh button to the filter area */

@@ -911,8 +911,8 @@ x_tabs_hdr_create (TabInfo* nfo)
   );
 #endif
 
-  GtkWidget* img_close = gtk_image_new_from_stock (GTK_STOCK_CLOSE,
-                                                   GTK_ICON_SIZE_MENU);
+  GtkWidget* img_close = gtk_image_new_from_icon_name ("window-close",
+                                                       GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (btn_close), img_close);
   gtk_widget_set_tooltip_text (btn_close, _("Close"));
 
@@ -924,8 +924,8 @@ x_tabs_hdr_create (TabInfo* nfo)
   gtk_button_set_relief (GTK_BUTTON (btn_up), GTK_RELIEF_NONE);
   gtk_button_set_focus_on_click (GTK_BUTTON (btn_up), FALSE);
 
-  GtkWidget* img_up = gtk_image_new_from_stock (GTK_STOCK_GO_UP,
-                                                GTK_ICON_SIZE_MENU);
+  GtkWidget* img_up = gtk_image_new_from_icon_name ("go-up",
+                                                    GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (btn_up), img_up);
 
 
