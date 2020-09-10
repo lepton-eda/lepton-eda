@@ -366,10 +366,12 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
 
   /* Name selection */
   label = gtk_label_new_with_mnemonic (_("N_ame:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
 #ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
 #else
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
@@ -395,10 +397,12 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
 
   /* Value entry */
   label = gtk_label_new_with_mnemonic (_("_Value:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
 #ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
 #else
+  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
@@ -463,7 +467,12 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
 
     label = gtk_label_new(_("<b>Attach Options</b>"));
     gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
+#ifdef ENABLE_GTK3
+    gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+    gtk_label_set_yalign (GTK_LABEL (label), 0.0);
+#else
     gtk_misc_set_alignment(GTK_MISC(label),0,0);
+#endif
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
     alignment = gtk_alignment_new(0,0,1,1);
