@@ -403,7 +403,7 @@ macro_widget_create (GschemMacroWidget* widget)
   gtk_widget_set_visible (widget->evaluate_button, TRUE);
   gtk_box_pack_start (GTK_BOX (button_box), widget->evaluate_button, FALSE, FALSE, 0);
 
-  cancel_button = gtk_button_new_from_stock (GTK_STOCK_CANCEL);
+  cancel_button = gtk_button_new_with_label (_("_Cancel"));
   gtk_widget_set_visible (cancel_button, TRUE);
   gtk_box_pack_start (GTK_BOX (button_box), cancel_button, FALSE, FALSE, 0);
 
