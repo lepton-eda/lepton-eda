@@ -854,15 +854,36 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
 
   widget->left_button_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->left_button_label, _("Left mouse button"));
+#ifdef ENABLE_GTK3
+  gtk_widget_set_margin_left (GTK_WIDGET (widget->left_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_right (GTK_WIDGET (widget->left_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_top (GTK_WIDGET (widget->left_button_label), LABEL_YPAD);
+  gtk_widget_set_margin_bottom (GTK_WIDGET (widget->left_button_label), LABEL_YPAD);
+#else
   gtk_misc_set_padding (GTK_MISC (widget->left_button_label), LABEL_XPAD, LABEL_YPAD);
+#endif
 
   widget->middle_button_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->middle_button_label, _("Middle mouse button"));
+#ifdef ENABLE_GTK3
+  gtk_widget_set_margin_left (GTK_WIDGET (widget->middle_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_right (GTK_WIDGET (widget->middle_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_top (GTK_WIDGET (widget->middle_button_label), LABEL_YPAD);
+  gtk_widget_set_margin_bottom (GTK_WIDGET (widget->middle_button_label), LABEL_YPAD);
+#else
   gtk_misc_set_padding (GTK_MISC (widget->middle_button_label), LABEL_XPAD, LABEL_YPAD);
+#endif
 
   widget->right_button_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->right_button_label, _("Right mouse button"));
+#ifdef ENABLE_GTK3
+  gtk_widget_set_margin_left (GTK_WIDGET (widget->right_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_right (GTK_WIDGET (widget->right_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_top (GTK_WIDGET (widget->right_button_label), LABEL_YPAD);
+  gtk_widget_set_margin_bottom (GTK_WIDGET (widget->right_button_label), LABEL_YPAD);
+#else
   gtk_misc_set_padding (GTK_MISC (widget->right_button_label), LABEL_XPAD, LABEL_YPAD);
+#endif
 
 
   /* default values for configuration settings: */
@@ -964,7 +985,14 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   gtk_widget_set_tooltip_text (widget->rubber_band_label,
                                _("Net rubber band mode.\n"
                                  "Click to toggle ON/OFF."));
+#ifdef ENABLE_GTK3
+  gtk_widget_set_margin_left (GTK_WIDGET (widget->rubber_band_label), LABEL_XPAD);
+  gtk_widget_set_margin_right (GTK_WIDGET (widget->rubber_band_label), LABEL_XPAD);
+  gtk_widget_set_margin_top (GTK_WIDGET (widget->rubber_band_label), LABEL_YPAD);
+  gtk_widget_set_margin_bottom (GTK_WIDGET (widget->rubber_band_label), LABEL_YPAD);
+#else
   gtk_misc_set_padding (GTK_MISC (widget->rubber_band_label), LABEL_XPAD, LABEL_YPAD);
+#endif
   if (show_rubber_band_indicator)
   {
     GtkWidget* ebox_rubber_band = gtk_event_box_new();
@@ -987,7 +1015,14 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   gtk_widget_set_tooltip_text (widget->magnetic_net_label,
                                _("Magnetic net mode.\n"
                                  "Click to toggle ON/OFF."));
+#ifdef ENABLE_GTK3
+  gtk_widget_set_margin_left (GTK_WIDGET (widget->magnetic_net_label), LABEL_XPAD);
+  gtk_widget_set_margin_right (GTK_WIDGET (widget->magnetic_net_label), LABEL_XPAD);
+  gtk_widget_set_margin_top (GTK_WIDGET (widget->magnetic_net_label), LABEL_YPAD);
+  gtk_widget_set_margin_bottom (GTK_WIDGET (widget->magnetic_net_label), LABEL_YPAD);
+#else
   gtk_misc_set_padding (GTK_MISC (widget->magnetic_net_label), LABEL_XPAD, LABEL_YPAD);
+#endif
   if (show_magnetic_net_indicator)
   {
     GtkWidget* ebox_magnetic_net = gtk_event_box_new();
@@ -1004,7 +1039,14 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
 
   widget->status_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->status_label, _("Current action mode"));
+#ifdef ENABLE_GTK3
+  gtk_widget_set_margin_left (GTK_WIDGET (widget->status_label), LABEL_XPAD);
+  gtk_widget_set_margin_right (GTK_WIDGET (widget->status_label), LABEL_XPAD);
+  gtk_widget_set_margin_top (GTK_WIDGET (widget->status_label), LABEL_YPAD);
+  gtk_widget_set_margin_bottom (GTK_WIDGET (widget->status_label), LABEL_YPAD);
+#else
   gtk_misc_set_padding (GTK_MISC (widget->status_label), LABEL_XPAD, LABEL_YPAD);
+#endif
   gtk_box_pack_end (GTK_BOX (widget), widget->status_label, FALSE, FALSE, 0);
 
   separator = separator_new ();
