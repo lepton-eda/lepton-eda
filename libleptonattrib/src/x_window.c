@@ -110,7 +110,11 @@ x_window_init ()
 
   /* -----  Now create main_vbox.  This is a container which organizes child  ----- */
   /* -----  widgets into a vertical column.  ----- */
+  #ifdef ENABLE_GTK3
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL,1);
+  #else
   main_vbox = gtk_vbox_new(FALSE,1);
+  #endif
   gtk_container_set_border_width(GTK_CONTAINER(main_vbox), 1);
   gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(main_vbox) );
 
