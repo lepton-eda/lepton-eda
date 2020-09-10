@@ -855,8 +855,8 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   widget->left_button_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->left_button_label, _("Left mouse button"));
 #ifdef ENABLE_GTK3
-  gtk_widget_set_margin_left (GTK_WIDGET (widget->left_button_label), LABEL_XPAD);
-  gtk_widget_set_margin_right (GTK_WIDGET (widget->left_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_start (GTK_WIDGET (widget->left_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_end (GTK_WIDGET (widget->left_button_label), LABEL_XPAD);
   gtk_widget_set_margin_top (GTK_WIDGET (widget->left_button_label), LABEL_YPAD);
   gtk_widget_set_margin_bottom (GTK_WIDGET (widget->left_button_label), LABEL_YPAD);
 #else
@@ -866,8 +866,8 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   widget->middle_button_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->middle_button_label, _("Middle mouse button"));
 #ifdef ENABLE_GTK3
-  gtk_widget_set_margin_left (GTK_WIDGET (widget->middle_button_label), LABEL_XPAD);
-  gtk_widget_set_margin_right (GTK_WIDGET (widget->middle_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_start (GTK_WIDGET (widget->middle_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_end (GTK_WIDGET (widget->middle_button_label), LABEL_XPAD);
   gtk_widget_set_margin_top (GTK_WIDGET (widget->middle_button_label), LABEL_YPAD);
   gtk_widget_set_margin_bottom (GTK_WIDGET (widget->middle_button_label), LABEL_YPAD);
 #else
@@ -877,8 +877,8 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   widget->right_button_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->right_button_label, _("Right mouse button"));
 #ifdef ENABLE_GTK3
-  gtk_widget_set_margin_left (GTK_WIDGET (widget->right_button_label), LABEL_XPAD);
-  gtk_widget_set_margin_right (GTK_WIDGET (widget->right_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_start (GTK_WIDGET (widget->right_button_label), LABEL_XPAD);
+  gtk_widget_set_margin_end (GTK_WIDGET (widget->right_button_label), LABEL_XPAD);
   gtk_widget_set_margin_top (GTK_WIDGET (widget->right_button_label), LABEL_YPAD);
   gtk_widget_set_margin_bottom (GTK_WIDGET (widget->right_button_label), LABEL_YPAD);
 #else
@@ -986,8 +986,8 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
                                _("Net rubber band mode.\n"
                                  "Click to toggle ON/OFF."));
 #ifdef ENABLE_GTK3
-  gtk_widget_set_margin_left (GTK_WIDGET (widget->rubber_band_label), LABEL_XPAD);
-  gtk_widget_set_margin_right (GTK_WIDGET (widget->rubber_band_label), LABEL_XPAD);
+  gtk_widget_set_margin_start (GTK_WIDGET (widget->rubber_band_label), LABEL_XPAD);
+  gtk_widget_set_margin_end (GTK_WIDGET (widget->rubber_band_label), LABEL_XPAD);
   gtk_widget_set_margin_top (GTK_WIDGET (widget->rubber_band_label), LABEL_YPAD);
   gtk_widget_set_margin_bottom (GTK_WIDGET (widget->rubber_band_label), LABEL_YPAD);
 #else
@@ -1016,8 +1016,8 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
                                _("Magnetic net mode.\n"
                                  "Click to toggle ON/OFF."));
 #ifdef ENABLE_GTK3
-  gtk_widget_set_margin_left (GTK_WIDGET (widget->magnetic_net_label), LABEL_XPAD);
-  gtk_widget_set_margin_right (GTK_WIDGET (widget->magnetic_net_label), LABEL_XPAD);
+  gtk_widget_set_margin_start (GTK_WIDGET (widget->magnetic_net_label), LABEL_XPAD);
+  gtk_widget_set_margin_end (GTK_WIDGET (widget->magnetic_net_label), LABEL_XPAD);
   gtk_widget_set_margin_top (GTK_WIDGET (widget->magnetic_net_label), LABEL_YPAD);
   gtk_widget_set_margin_bottom (GTK_WIDGET (widget->magnetic_net_label), LABEL_YPAD);
 #else
@@ -1040,8 +1040,8 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   widget->status_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->status_label, _("Current action mode"));
 #ifdef ENABLE_GTK3
-  gtk_widget_set_margin_left (GTK_WIDGET (widget->status_label), LABEL_XPAD);
-  gtk_widget_set_margin_right (GTK_WIDGET (widget->status_label), LABEL_XPAD);
+  gtk_widget_set_margin_start (GTK_WIDGET (widget->status_label), LABEL_XPAD);
+  gtk_widget_set_margin_end (GTK_WIDGET (widget->status_label), LABEL_XPAD);
   gtk_widget_set_margin_top (GTK_WIDGET (widget->status_label), LABEL_YPAD);
   gtk_widget_set_margin_bottom (GTK_WIDGET (widget->status_label), LABEL_YPAD);
 #else

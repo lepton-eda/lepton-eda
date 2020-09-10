@@ -513,8 +513,8 @@ void x_image_setup (GschemToplevel *w_current)
 #ifdef ENABLE_GTK3
   gtk_label_set_xalign (GTK_LABEL (label1), 0.0);
   gtk_label_set_yalign (GTK_LABEL (label1), 0.0);
-  gtk_widget_set_margin_left (label1, 0);
-  gtk_widget_set_margin_right (label1, 0);
+  gtk_widget_set_margin_start (label1, 0);
+  gtk_widget_set_margin_end (label1, 0);
   gtk_widget_set_margin_top (label1, 0);
   gtk_widget_set_margin_bottom (label1, 0);
 #else
@@ -542,8 +542,8 @@ void x_image_setup (GschemToplevel *w_current)
 #ifdef ENABLE_GTK3
   gtk_label_set_xalign (GTK_LABEL (label2), 0.0);
   gtk_label_set_yalign (GTK_LABEL (label2), 0.0);
-  gtk_widget_set_margin_left (label2, 0);
-  gtk_widget_set_margin_right (label2, 0);
+  gtk_widget_set_margin_start (label2, 0);
+  gtk_widget_set_margin_end (label2, 0);
   gtk_widget_set_margin_top (label2, 0);
   gtk_widget_set_margin_bottom (label2, 0);
 #else
@@ -569,8 +569,8 @@ void x_image_setup (GschemToplevel *w_current)
 #ifdef ENABLE_GTK3
   gtk_label_set_xalign (GTK_LABEL (label3), 0.0);
   gtk_label_set_yalign (GTK_LABEL (label3), 0.0);
-  gtk_widget_set_margin_left (label3, 0);
-  gtk_widget_set_margin_right (label3, 0);
+  gtk_widget_set_margin_start (label3, 0);
+  gtk_widget_set_margin_end (label3, 0);
   gtk_widget_set_margin_top (label3, 0);
   gtk_widget_set_margin_bottom (label3, 0);
 #else
