@@ -322,7 +322,12 @@ major_changed_dialog (GschemToplevel* w_current)
   g_free (bname);
 
   GtkWidget* label_page_bname = gtk_label_new (text);
+#ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label_page_bname), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label_page_bname), 0.0);
+#else
   gtk_misc_set_alignment (GTK_MISC (label_page_bname), 0.0, 0.0);
+#endif
   gtk_box_pack_start (GTK_BOX (vbox), label_page_bname, FALSE, FALSE, 0);
 
   g_free (text);
