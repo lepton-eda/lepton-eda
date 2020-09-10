@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,8 +54,13 @@ struct _GschemBottomWidget
   GtkWidget *rubber_band_label;
   gboolean  magnetic_net_mode;
   GtkWidget *magnetic_net_label;
+#ifdef ENABLE_GTK3
+  GdkRGBA   status_inactive_color;
+  GdkRGBA   status_active_color;
+#else
   GdkColor  status_inactive_color;
   GdkColor  status_active_color;
+#endif
   gboolean  status_bold_font;
 };
 
@@ -125,4 +131,3 @@ gschem_bottom_widget_set_rubber_band_mode (GschemBottomWidget *widget, gboolean 
 
 void
 gschem_bottom_widget_set_magnetic_net_mode (GschemBottomWidget *widget, gboolean mode);
-

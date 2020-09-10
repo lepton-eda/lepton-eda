@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -523,8 +523,13 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   gboolean show_mouse_indicators       = TRUE;
   gboolean show_rubber_band_indicator  = FALSE;
   gboolean show_magnetic_net_indicator = FALSE;
+#ifdef ENABLE_GTK3
+  gdk_rgba_parse (&widget->status_inactive_color, "black");
+  gdk_rgba_parse (&widget->status_active_color, "green");
+#else
   gdk_color_parse ("black", &widget->status_inactive_color);
   gdk_color_parse ("green", &widget->status_active_color);
+#endif
   widget->status_bold_font = FALSE;
 
   gchar* cwd = g_get_current_dir();
@@ -570,7 +575,11 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
                                           &err);
     if (color != NULL)
     {
+#ifdef ENABLE_GTK3
+      gdk_rgba_parse (&widget->status_active_color, color);
+#else
       gdk_color_parse (color, &widget->status_active_color);
+#endif
       g_free (color);
     }
     g_clear_error (&err);
@@ -797,7 +806,11 @@ gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean
 {
   g_return_if_fail (widget != NULL);
 
+#ifdef ENABLE_GTK3
+  const GdkRGBA* color = NULL;
+#else
   const GdkColor* color = NULL;
+#endif
 
   if (active) {
     color = &widget->status_active_color;
@@ -805,7 +818,15 @@ gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean
     color = &widget->status_inactive_color;
   }
 
-  gtk_widget_modify_fg (GTK_WIDGET (widget->status_label), GTK_STATE_NORMAL, color);
+#ifdef ENABLE_GTK3
+  gtk_widget_override_color (GTK_WIDGET (widget->status_label),
+                             GTK_STATE_FLAG_NORMAL,
+                             color);
+#else
+  gtk_widget_modify_fg (GTK_WIDGET (widget->status_label),
+                        GTK_STATE_NORMAL,
+                        color);
+#endif
 }
 
 
@@ -989,12 +1010,19 @@ update_rubber_band_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointe
 {
   g_return_if_fail (widget != NULL);
 
+#ifdef ENABLE_GTK3
+  GdkRGBA color;
+  gdk_rgba_parse (&color, widget->rubber_band_mode ? "green" : "blue");
+  gtk_widget_override_color (GTK_WIDGET (widget->rubber_band_label),
+                             GTK_STATE_FLAG_NORMAL,
+                             &color);
+#else
   GdkColor color;
   gdk_color_parse (widget->rubber_band_mode ? "green" : "blue", &color);
-
   gtk_widget_modify_fg (GTK_WIDGET (widget->rubber_band_label),
                         GTK_STATE_NORMAL,
                         &color);
+#endif
 
   gtk_label_set_markup (GTK_LABEL (widget->rubber_band_label),
                         widget->rubber_band_mode ?
@@ -1014,12 +1042,19 @@ update_magnetic_net_label (GschemBottomWidget *widget, GParamSpec *pspec, gpoint
 {
   g_return_if_fail (widget != NULL);
 
+#ifdef ENABLE_GTK3
+  GdkRGBA color;
+  gdk_rgba_parse (&color, widget->magnetic_net_mode ? "purple" : "darkgray");
+  gtk_widget_override_color (GTK_WIDGET (widget->magnetic_net_label),
+                             GTK_STATE_FLAG_NORMAL,
+                             &color);
+#else
   GdkColor color;
   gdk_color_parse (widget->magnetic_net_mode ? "purple" : "darkgray", &color);
-
   gtk_widget_modify_fg (GTK_WIDGET (widget->magnetic_net_label),
                         GTK_STATE_NORMAL,
                         &color);
+#endif
 
   gtk_label_set_markup (GTK_LABEL (widget->magnetic_net_label),
                     widget->magnetic_net_mode ?
