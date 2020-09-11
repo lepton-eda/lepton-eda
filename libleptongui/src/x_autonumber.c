@@ -1225,10 +1225,8 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
                                                    GTK_WINDOW(w_current->main_window),
                                                    (GtkDialogFlags) 0, /* not modal */
                                                    "autonumber", w_current,
-                                                   GTK_STOCK_CLOSE,
-                                                   GTK_RESPONSE_REJECT,
-                                                   GTK_STOCK_APPLY,
-                                                   GTK_RESPONSE_ACCEPT,
+                                                   _("_Close"), GTK_RESPONSE_REJECT,
+                                                   _("_Apply"), GTK_RESPONSE_ACCEPT,
                                                    NULL);
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(autonumber_text),

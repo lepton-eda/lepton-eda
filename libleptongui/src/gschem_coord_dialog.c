@@ -87,8 +87,7 @@ void coord_dialog (GschemToplevel *w_current, int x, int y)
                                                          GTK_WINDOW(w_current->main_window),
                                                          (GtkDialogFlags) 0, /* Not modal GTK_DIALOG_MODAL */
                                                          "coord", w_current,
-                                                         GTK_STOCK_CLOSE,
-                                                         GTK_RESPONSE_REJECT,
+                                                         _("_Close"), GTK_RESPONSE_REJECT,
                                                          NULL);
 
     gtk_window_set_position (GTK_WINDOW (w_current->cowindow), GTK_WIN_POS_NONE);

@@ -104,10 +104,8 @@ void arc_angle_dialog (GschemToplevel *w_current, LeptonObject *arc_object)
                                                          GTK_WINDOW(w_current->main_window),
                                                          GTK_DIALOG_MODAL,
                                                          "arc-angle", w_current,
-                                                         GTK_STOCK_CANCEL,
-                                                         GTK_RESPONSE_REJECT,
-                                                         GTK_STOCK_OK,
-                                                         GTK_RESPONSE_ACCEPT,
+                                                         _("_Cancel"), GTK_RESPONSE_REJECT,
+                                                         _("_OK"), GTK_RESPONSE_ACCEPT,
                                                          NULL);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */

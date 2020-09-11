@@ -194,7 +194,7 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
     GTK_WINDOW (w_current->main_window),
     (GtkDialogFlags) 0, /* not modal */
     "hotkeys", w_current,
-    GTK_STOCK_CLOSE, GTK_RESPONSE_REJECT,
+    _("_Close"), GTK_RESPONSE_REJECT,
     NULL);
 
   g_signal_connect (G_OBJECT (w_current->hkwindow), "response",

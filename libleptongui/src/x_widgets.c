@@ -348,7 +348,7 @@ x_widgets_show_in_dialog (GschemToplevel* w_current,
     (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
     ini_group,
     w_current,
-    GTK_STOCK_CLOSE, GTK_RESPONSE_NONE,
+    _("_Close"), GTK_RESPONSE_NONE,
     NULL);
 
   if (x_widgets_use_toplevel_windows())
