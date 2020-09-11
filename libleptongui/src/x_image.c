@@ -599,10 +599,10 @@ void x_image_setup (GschemToplevel *w_current)
 
   /* Create the dialog */
   dialog = gtk_file_chooser_dialog_new (_("Write Image"),
-      GTK_WINDOW(w_current->main_window),
-      GTK_FILE_CHOOSER_ACTION_SAVE,
-      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-      GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
+                                        GTK_WINDOW(w_current->main_window),
+                                        GTK_FILE_CHOOSER_ACTION_SAVE,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                        _("_Save"), GTK_RESPONSE_ACCEPT,
       NULL);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */

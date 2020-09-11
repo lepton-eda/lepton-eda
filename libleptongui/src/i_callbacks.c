@@ -106,8 +106,8 @@ i_callback_file_script (GtkWidget *widget, gpointer data)
     _("Execute Script"),
     GTK_WINDOW (w_current->main_window),
     GTK_FILE_CHOOSER_ACTION_OPEN,
-    GTK_STOCK_CANCEL,  GTK_RESPONSE_CANCEL,
-    GTK_STOCK_EXECUTE, GTK_RESPONSE_ACCEPT,
+    _("_Cancel"), GTK_RESPONSE_CANCEL,
+    _("_Run"), GTK_RESPONSE_ACCEPT,
     NULL);
 
   /* Filter for Scheme files:

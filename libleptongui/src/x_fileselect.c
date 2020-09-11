@@ -329,8 +329,8 @@ x_fileselect_open(GschemToplevel *w_current)
   dialog = gtk_file_chooser_dialog_new (_("Open"),
                                         GTK_WINDOW(w_current->main_window),
                                         GTK_FILE_CHOOSER_ACTION_OPEN,
-                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                                        GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
+                                        _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                        _("_Open"), GTK_RESPONSE_ACCEPT,
                                         NULL);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -420,8 +420,8 @@ x_fileselect_save (GschemToplevel *w_current,
     _("Save As"),
     GTK_WINDOW(w_current->main_window),
     GTK_FILE_CHOOSER_ACTION_SAVE,
-    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-    GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
+    _("_Cancel"), GTK_RESPONSE_CANCEL,
+    _("_Save"),   GTK_RESPONSE_ACCEPT,
     NULL);
 
   /* Set the alternative button order (ok, cancel, help) for other systems:

@@ -640,8 +640,8 @@ dlg_save_as (GtkWidget* parent)
     _("Save Color Scheme"),
     GTK_WINDOW (parent),
     GTK_FILE_CHOOSER_ACTION_SAVE,
-    GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
-    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+    _("_Save"), GTK_RESPONSE_ACCEPT,
+    _("_Cancel"), GTK_RESPONSE_CANCEL,
     NULL);
 
   gtk_dialog_set_alternative_button_order(

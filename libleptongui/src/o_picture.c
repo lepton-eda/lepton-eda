@@ -181,9 +181,9 @@ void picture_selection_dialog (GschemToplevel *w_current)
   GtkWidget* pfswindow = gtk_file_chooser_dialog_new (_("Add Picture"),
                                                       GTK_WINDOW(w_current->main_window),
                                                       GTK_FILE_CHOOSER_ACTION_OPEN,
-                                                      GTK_STOCK_CANCEL,
+                                                      _("_Cancel"),
                                                       GTK_RESPONSE_CANCEL,
-                                                      GTK_STOCK_OPEN,
+                                                      _("_Open"),
                                                       GTK_RESPONSE_ACCEPT,
                                                       NULL);
 
@@ -386,9 +386,9 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
   GtkWidget* pfswindow = gtk_file_chooser_dialog_new (_("Select Picture"),
                                                       GTK_WINDOW(w_current->main_window),
                                                       GTK_FILE_CHOOSER_ACTION_OPEN,
-                                                      GTK_STOCK_CANCEL,
+                                                      _("_Cancel"),
                                                       GTK_RESPONSE_CANCEL,
-                                                      GTK_STOCK_OPEN,
+                                                      _("_Open"),
                                                       GTK_RESPONSE_ACCEPT,
                                                       NULL);
 
