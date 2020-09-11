@@ -74,6 +74,38 @@ GtkWidget*
 gschem_dialog_misc_create_property_table (GtkWidget *label[], GtkWidget *widget[], int count)
 {
   int index;
+#ifdef ENABLE_GTK3
+  GtkWidget *grid = gtk_grid_new ();
+
+  gtk_grid_set_row_spacing (GTK_GRID (grid), DIALOG_V_SPACING);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), DIALOG_H_SPACING);
+
+  for (index=0; index<count; index++) {
+    gtk_grid_attach (GTK_GRID (grid),
+                     label[index],
+                     0,
+                     index,
+                     1,
+                     1);
+
+    gtk_grid_attach (GTK_GRID (grid),
+                     widget[index],
+                     1,
+                     index,
+                     1,
+                     1);
+
+    if (GTK_IS_LABEL (label[index]) &&
+        gtk_label_get_mnemonic_keyval (GTK_LABEL (label[index])) != GDK_KEY_VoidSymbol)
+    {
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label[index]), widget[index]);
+    }
+  }
+
+  return grid;
+
+#else /* GTK2 */
+
   GtkWidget *table = gtk_table_new (count, 2, FALSE);
 
   gtk_table_set_row_spacings (GTK_TABLE (table), DIALOG_V_SPACING);
@@ -106,6 +138,7 @@ gschem_dialog_misc_create_property_table (GtkWidget *label[], GtkWidget *widget[
   }
 
   return table;
+#endif
 }
 
 
