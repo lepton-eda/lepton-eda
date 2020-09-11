@@ -277,7 +277,7 @@ major_changed_dialog (GschemToplevel* w_current)
                                     "xalign", 0.5,
                                     "yalign", 0.0,
                                     /* GtkImage */
-                                    "stock", GTK_STOCK_DIALOG_WARNING,
+                                    "icon-name", "dialog-warning",
                                     "icon-size", GTK_ICON_SIZE_DIALOG,
                                     NULL));
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
