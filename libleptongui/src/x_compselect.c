@@ -1583,8 +1583,8 @@ compselect_constructor (GType type,
   /* now add buttons in the action area */
   gtk_dialog_add_buttons (GTK_DIALOG (compselect),
                           /*  - close button */
-                          GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
-                          GTK_STOCK_OK, COMPSELECT_RESPONSE_HIDE,
+                          _("_Close"), GTK_RESPONSE_CLOSE,
+                          _("_OK"), COMPSELECT_RESPONSE_HIDE,
                           NULL);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */

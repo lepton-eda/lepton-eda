@@ -222,12 +222,10 @@ static void newtext_init(NewText *dialog)
 #endif
 
   gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         GTK_STOCK_CLOSE,
-                         GTK_RESPONSE_CLOSE);
+                         _("_Close"), GTK_RESPONSE_CLOSE);
 
   gtk_dialog_add_button (GTK_DIALOG (dialog),
-                         GTK_STOCK_APPLY,
-                         GTK_RESPONSE_APPLY);
+                         _("_Apply"), GTK_RESPONSE_APPLY);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),

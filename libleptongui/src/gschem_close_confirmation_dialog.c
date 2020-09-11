@@ -583,8 +583,8 @@ close_confirmation_dialog_constructor (GType type,
   /* add buttons to dialog action area */
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
                           _("Close _without saving"), GTK_RESPONSE_NO,
-                          GTK_STOCK_CANCEL,           GTK_RESPONSE_CANCEL,
-                          GTK_STOCK_SAVE,             GTK_RESPONSE_YES,
+                          _("_Cancel"), GTK_RESPONSE_CANCEL,
+                          _("_Save"), GTK_RESPONSE_YES,
                           NULL);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */

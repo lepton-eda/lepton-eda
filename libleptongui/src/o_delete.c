@@ -87,7 +87,7 @@ void o_delete_selected (GschemToplevel *w_current)
     gtk_dialog_add_buttons (GTK_DIALOG (dialog),
         _("Delete _all"), GTK_RESPONSE_YES,
         _("All, _except locked"), GTK_RESPONSE_NO,
-        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);
+        _("_Cancel"), GTK_RESPONSE_CANCEL, NULL);
 
     gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
     gtk_window_set_title (GTK_WINDOW (dialog), _("Delete"));

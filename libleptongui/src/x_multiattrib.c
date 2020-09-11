@@ -2501,7 +2501,7 @@ multiattrib_init (Multiattrib *multiattrib)
 
   /* now add the close button to the action area */
   gtk_dialog_add_button (GTK_DIALOG (multiattrib),
-                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+                         _("_Close"), GTK_RESPONSE_CLOSE);
 
   multiattrib_update (multiattrib);
 }
