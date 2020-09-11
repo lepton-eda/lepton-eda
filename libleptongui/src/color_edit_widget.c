@@ -175,6 +175,15 @@ color_edit_widget_init (ColorEditWidget* widget)
 }
 
 
+static GtkWidget*
+separator_new ()
+{
+#ifdef ENABLE_GTK3
+  return gtk_separator_new (GTK_ORIENTATION_HORIZONTAL);
+#else
+  return gtk_hseparator_new ();
+#endif
+}
 
 
 /* --------------------------------------------------------
@@ -209,7 +218,7 @@ color_edit_widget_create (ColorEditWidget* widget)
   gtk_box_pack_start (GTK_BOX (hbox), widget->btn_save_, FALSE, FALSE, 0);
 
   /* separator: */
-  gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), FALSE, FALSE, 5);
+  gtk_box_pack_start (GTK_BOX (vbox), separator_new(), FALSE, FALSE, 5);
 
 
   /* \todo opacity control:
@@ -230,7 +239,7 @@ color_edit_widget_create (ColorEditWidget* widget)
   gtk_box_pack_start (GTK_BOX (vbox), widget->color_sel_, TRUE, TRUE, 0);
 
   /* separator: */
-  gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), FALSE, FALSE, 5);
+  gtk_box_pack_start (GTK_BOX (vbox), separator_new(), FALSE, FALSE, 5);
 
 
   /* informational label: */
@@ -558,7 +567,7 @@ mk_opacity_box (GtkWidget* vbox)
   gtk_box_pack_start (GTK_BOX (hbox2), label, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox2), scale, TRUE, TRUE, 0);
 
-  gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), FALSE, FALSE, 5);
+  gtk_box_pack_start (GTK_BOX (vbox), separator_new(), FALSE, FALSE, 5);
 
 }
 
