@@ -249,7 +249,7 @@ major_changed_dialog (GschemToplevel* w_current)
     _("Symbol version changes"),
     GTK_WINDOW (w_current->main_window),
     (GtkDialogFlags) GTK_DIALOG_DESTROY_WITH_PARENT,
-    GTK_STOCK_OK, GTK_RESPONSE_OK,
+    _("_OK"), GTK_RESPONSE_OK,
     NULL);
 
   content_area = gtk_dialog_get_content_area (GTK_DIALOG (dialog));

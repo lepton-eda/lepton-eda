@@ -585,8 +585,8 @@ save_settings_dlg (FontSelectWidget* widget)
     _("Save configuration"),
     GTK_WINDOW (widget->toplevel_->main_window),
     GTK_DIALOG_MODAL,
-    GTK_STOCK_OK,     GTK_RESPONSE_ACCEPT,
-    GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
+    _("_OK"), GTK_RESPONSE_ACCEPT,
+    _("_Cancel"), GTK_RESPONSE_REJECT,
     NULL);
 
   /* text for radio buttons: */
