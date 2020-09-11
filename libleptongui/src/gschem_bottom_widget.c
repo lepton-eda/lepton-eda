@@ -545,6 +545,17 @@ gschem_bottom_widget_get_magnetic_net_mode (GschemBottomWidget *widget)
 
 
 
+static GtkWidget*
+separator_new ()
+{
+#ifdef ENABLE_GTK3
+  return gtk_separator_new (GTK_ORIENTATION_VERTICAL);
+#else
+  return gtk_vseparator_new ();
+#endif
+}
+
+
 /*! \brief Set grid_snap_widget text
  *
  *  \param  widget  This GschemBottomWidget
@@ -930,11 +941,11 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   if (show_mouse_indicators)
   {
     gtk_box_pack_start (GTK_BOX (widget), widget->left_button_label, FALSE, FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), separator_new(), FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (widget), widget->middle_button_label, FALSE, FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), separator_new(), FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (widget), widget->right_button_label, FALSE, FALSE, 0);
-    gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (widget), separator_new(), FALSE, FALSE, 0);
   }
 
 
@@ -942,7 +953,7 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   create_grid_size_widget (widget);
 
 
-  separator = gtk_vseparator_new ();
+  separator = separator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
 
@@ -965,7 +976,7 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   }
 
 
-  separator = gtk_vseparator_new ();
+  separator = separator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
 
@@ -993,7 +1004,7 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   gtk_misc_set_padding (GTK_MISC (widget->status_label), LABEL_XPAD, LABEL_YPAD);
   gtk_box_pack_end (GTK_BOX (widget), widget->status_label, FALSE, FALSE, 0);
 
-  separator = gtk_vseparator_new ();
+  separator = separator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
   g_signal_connect (G_OBJECT (widget),
