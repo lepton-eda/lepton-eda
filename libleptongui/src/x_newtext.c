@@ -218,7 +218,11 @@ static void newtext_init(NewText *dialog)
   GtkWidget *scrolled_window = NULL;
   PangoTabArray *tab_array;
   int real_tab_width;
+#ifdef ENABLE_GTK3
+  GtkWidget *grid;
+#else
   GtkWidget *table;
+#endif
 
   gtk_dialog_add_button (GTK_DIALOG (dialog),
                          GTK_STOCK_CLOSE,
@@ -246,9 +250,15 @@ static void newtext_init(NewText *dialog)
   vbox = gtk_dialog_get_content_area (GTK_DIALOG (dialog));
   gtk_box_set_spacing(GTK_BOX(vbox),DIALOG_V_SPACING);
 
+#ifdef ENABLE_GTK3
+  grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), DIALOG_V_SPACING);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), DIALOG_H_SPACING);
+#else
   table = gtk_table_new(4, 2, FALSE);
   gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
   gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
+#endif
 
   label = gtk_label_new(_("<b>Text Properties</b>"));
   gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
@@ -260,7 +270,11 @@ static void newtext_init(NewText *dialog)
                             DIALOG_INDENTATION, 0);
   gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
 
+#ifdef ENABLE_GTK3
+  gtk_container_add (GTK_CONTAINER (alignment), grid);
+#else
   gtk_container_add(GTK_CONTAINER(alignment), table);
+#endif
 
   label = gtk_label_new (_("<b>Text Content</b>"));
   gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
@@ -270,6 +284,9 @@ static void newtext_init(NewText *dialog)
 
   label = gtk_label_new_with_mnemonic (_("Colo_r:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE(table),
                     label,
                     0,
@@ -280,16 +297,24 @@ static void newtext_init(NewText *dialog)
                     (GtkAttachOptions) 0,
                     0,
                     0);
+#endif
 
   dialog->colorcb = x_colorcb_new ();
   x_colorcb_set_index(dialog->colorcb, TEXT_COLOR);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->colorcb);
 
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), dialog->colorcb, 1, 0, 1, 1);
+#else
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->colorcb, 1,2,0,1);
+#endif
 
   label = gtk_label_new_with_mnemonic (_("_Size:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE(table),
                     label,
                     0,
@@ -300,15 +325,23 @@ static void newtext_init(NewText *dialog)
                     (GtkAttachOptions) 0,
                     0,
                     0);
+#endif
 
   dialog->textsizecb = gschem_integer_combo_box_new();
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->textsizecb);
 
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), dialog->textsizecb, 1, 1, 1, 1);
+#else
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->textsizecb, 1,2,1,2);
+#endif
 
   label = gtk_label_new_with_mnemonic (_("Ali_gnment:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE(table),
                     label,
                     0,
@@ -319,16 +352,24 @@ static void newtext_init(NewText *dialog)
                     (GtkAttachOptions) 0,
                     0,
                     0);
+#endif
 
   dialog->aligncb = gschem_alignment_combo_new ();
   gschem_alignment_combo_set_align(dialog->aligncb, LOWER_LEFT);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->aligncb);
 
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), dialog->aligncb, 1, 2, 1, 1);
+#else
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->aligncb, 1,2,2,3);
+#endif
 
   label = gtk_label_new_with_mnemonic (_("Ro_tation:"));
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 3, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE(table),
                     label,
                     0,
@@ -339,14 +380,18 @@ static void newtext_init(NewText *dialog)
                     (GtkAttachOptions) 0,
                     0,
                     0);
+#endif
 
   dialog->rotatecb = gschem_rotation_combo_new ();
   gschem_rotation_combo_set_angle(dialog->rotatecb, 0);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->rotatecb);
 
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), dialog->rotatecb, 1, 3, 1, 1);
+#else
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->rotatecb, 1,2,3,4);
-
+#endif
 
   viewport1 = gtk_viewport_new (NULL, NULL);
   gtk_widget_show (viewport1);
