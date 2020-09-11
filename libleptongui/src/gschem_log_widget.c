@@ -398,11 +398,12 @@ log_window_clear (GtkMenuItem* item, gpointer data)
   gtk_window_set_title (GTK_WINDOW (dlg), _("Clear Log"));
   gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_CANCEL);
 
+#ifndef ENABLE_GTK3
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
-
+#endif
 
   if (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK)
   {

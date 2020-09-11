@@ -605,11 +605,13 @@ void x_image_setup (GschemToplevel *w_current)
                                         _("_Save"), GTK_RESPONSE_ACCEPT,
       NULL);
 
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
       GTK_RESPONSE_ACCEPT,
       GTK_RESPONSE_CANCEL,
       -1);
+#endif
 
   /* Add the extra widgets to the dialog*/
   gtk_box_pack_start(GTK_BOX(hbox), vbox1, FALSE, FALSE, 10);

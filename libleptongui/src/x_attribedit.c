@@ -316,11 +316,13 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
                                             _("_Cancel"), GTK_RESPONSE_REJECT,
                                             _("_OK"), GTK_RESPONSE_APPLY,
                                             NULL);
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(aewindow),
                                           GTK_RESPONSE_APPLY,
                                           GTK_RESPONSE_REJECT,
                                           -1);
+#endif
 
   g_signal_connect (G_OBJECT (aewindow), "response",
                     G_CALLBACK (attribute_edit_dialog_response),

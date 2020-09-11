@@ -96,11 +96,13 @@ void slot_edit_dialog (GschemToplevel *w_current, const char *count, const char 
                                                          _("_OK"), GTK_RESPONSE_ACCEPT,
                                                          NULL);
 
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
     gtk_dialog_set_alternative_button_order(GTK_DIALOG(w_current->sewindow),
                                             GTK_RESPONSE_ACCEPT,
                                             GTK_RESPONSE_REJECT,
                                             -1);
+#endif
 
     gtk_window_set_position (GTK_WINDOW (w_current->sewindow), GTK_WIN_POS_MOUSE);
 

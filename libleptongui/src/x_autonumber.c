@@ -1228,11 +1228,13 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
                                                    _("_Close"), GTK_RESPONSE_REJECT,
                                                    _("_Apply"), GTK_RESPONSE_ACCEPT,
                                                    NULL);
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(autonumber_text),
                                           GTK_RESPONSE_ACCEPT,
                                           GTK_RESPONSE_REJECT,
                                           -1);
+#endif
 
   gtk_window_set_position (GTK_WINDOW (autonumber_text), GTK_WIN_POS_MOUSE);
 

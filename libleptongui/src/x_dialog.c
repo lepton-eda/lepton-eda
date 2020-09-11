@@ -126,11 +126,13 @@ char *generic_filesel_dialog (const char *msg, const char *templ, gint flags)
                                           NULL);
   }
 
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
                                           GTK_RESPONSE_OK,
                                           GTK_RESPONSE_CANCEL,
                                           -1);
+#endif
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 

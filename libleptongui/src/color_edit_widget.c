@@ -631,11 +631,13 @@ dlg_save_as (GtkWidget* parent)
     _("_Cancel"), GTK_RESPONSE_CANCEL,
     NULL);
 
+#ifndef ENABLE_GTK3
   gtk_dialog_set_alternative_button_order(
     GTK_DIALOG (dlg),
     GTK_RESPONSE_ACCEPT,
     GTK_RESPONSE_CANCEL,
     -1);
+#endif
 
   gtk_dialog_set_default_response (GTK_DIALOG (dlg),
                                    GTK_RESPONSE_ACCEPT);

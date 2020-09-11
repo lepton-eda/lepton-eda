@@ -333,11 +333,13 @@ x_fileselect_open(GschemToplevel *w_current)
                                         _("_Open"), GTK_RESPONSE_ACCEPT,
                                         NULL);
 
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
                                           GTK_RESPONSE_ACCEPT,
                                           GTK_RESPONSE_CANCEL,
                                           -1);
+#endif
 
   if (w_current->file_preview)
   {
@@ -424,12 +426,14 @@ x_fileselect_save (GschemToplevel *w_current,
     _("_Save"),   GTK_RESPONSE_ACCEPT,
     NULL);
 
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems:
   */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
                                           GTK_RESPONSE_ACCEPT,
                                           GTK_RESPONSE_CANCEL,
                                           -1);
+#endif
 
   /* set default response signal. This is usually triggered by the
    * "Return" key:
@@ -589,11 +593,13 @@ x_fileselect_load_backup (GschemToplevel *w_current,
                                    "%s", message->str);
 
   gtk_window_set_title (GTK_WINDOW (dialog), "Load Backup");
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
                                           GTK_RESPONSE_YES,
                                           GTK_RESPONSE_NO,
                                           -1);
+#endif
 
   gtk_widget_show (dialog);
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_YES) {

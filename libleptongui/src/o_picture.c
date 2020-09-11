@@ -189,11 +189,13 @@ void picture_selection_dialog (GschemToplevel *w_current)
 
   setup_filechooser_filters (GTK_FILE_CHOOSER (pfswindow));
 
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(pfswindow),
                                           GTK_RESPONSE_ACCEPT,
                                           GTK_RESPONSE_CANCEL,
                                           -1);
+#endif
 
   if (w_current->pixbuf_filename)
     gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(pfswindow),
@@ -394,11 +396,13 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
 
   setup_filechooser_filters (GTK_FILE_CHOOSER (pfswindow));
 
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(pfswindow),
                                           GTK_RESPONSE_ACCEPT,
                                           GTK_RESPONSE_CANCEL,
                                           -1);
+#endif
 
   if (w_current->pixbuf_filename)
     gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(pfswindow),

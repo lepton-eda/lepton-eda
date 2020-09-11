@@ -124,11 +124,13 @@ i_callback_file_script (GtkWidget *widget, gpointer data)
   gtk_file_filter_add_pattern (filter_all, "*");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter_all);
 
+#ifndef ENABLE_GTK3
   gtk_dialog_set_alternative_button_order(
     GTK_DIALOG (dialog),
     GTK_RESPONSE_ACCEPT,
     GTK_RESPONSE_CANCEL,
     -1);
+#endif
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
   {
@@ -1530,11 +1532,13 @@ i_callback_page_revert (GtkWidget *widget, gpointer data)
 
   gtk_window_set_title (GTK_WINDOW (dialog), _("Revert"));
 
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
                                           GTK_RESPONSE_YES,
                                           GTK_RESPONSE_NO,
                                           -1);
+#endif
 
   response = gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);

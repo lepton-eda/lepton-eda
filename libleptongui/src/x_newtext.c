@@ -227,11 +227,13 @@ static void newtext_init(NewText *dialog)
   gtk_dialog_add_button (GTK_DIALOG (dialog),
                          _("_Apply"), GTK_RESPONSE_APPLY);
 
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
                                           GTK_RESPONSE_APPLY,
                                           GTK_RESPONSE_CLOSE,
                                           -1);
+#endif
 
   gtk_window_set_position (GTK_WINDOW (dialog), GTK_WIN_POS_NONE);
 
