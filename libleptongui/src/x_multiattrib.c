@@ -2064,7 +2064,7 @@ static void
 multiattrib_init (Multiattrib *multiattrib)
 {
   GtkWidget *label, *scrolled_win, *treeview;
-  GtkWidget *table, *textview, *combo, *optionm, *button;
+  GtkWidget *textview, *combo, *optionm, *button;
   GtkWidget *attrib_vbox, *show_inherited;
   GtkTreeModel *store;
   GtkCellRenderer *renderer;
@@ -2288,13 +2288,16 @@ multiattrib_init (Multiattrib *multiattrib)
                       TRUE, TRUE, 1);
   gtk_widget_show_all (multiattrib->list_frame);
 
-
-  table = GTK_WIDGET (g_object_new (GTK_TYPE_TABLE,
-                                    /* GtkTable */
-                                    "n-rows",      4,
-                                    "n-columns",   2,
-                                    "homogeneous", FALSE,
-                                    NULL));
+#ifdef ENABLE_GTK3
+  GtkWidget *grid = gtk_grid_new ();
+#else
+  GtkWidget *table = GTK_WIDGET (g_object_new (GTK_TYPE_TABLE,
+                                               /* GtkTable */
+                                               "n-rows",      4,
+                                               "n-columns",   2,
+                                               "homogeneous", FALSE,
+                                               NULL));
+#endif
 
   /*   - the name entry: a GtkComboBoxEntry */
   label = gtk_label_new_with_mnemonic (_("_Name:"));
@@ -2308,6 +2311,10 @@ multiattrib_init (Multiattrib *multiattrib)
   gtk_label_set_mnemonic_widget (GTK_LABEL (label),
                                  GTK_WIDGET (multiattrib->combo_name));
 
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), combo, 1, 0, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table), label,
                     0, 1, 0, 1,
                     (GtkAttachOptions) 0,
@@ -2318,6 +2325,7 @@ multiattrib_init (Multiattrib *multiattrib)
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) 0,
                     6, 3);
+#endif
 
   /*   - the value entry: a GtkEntry */
   label = gtk_label_new_with_mnemonic (_("_Value:"));
@@ -2389,6 +2397,10 @@ multiattrib_init (Multiattrib *multiattrib)
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
   multiattrib->textview_value = GTK_TEXT_VIEW (textview);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
+  gtk_grid_attach (GTK_GRID (grid), scrolled_win, 1, 1, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table), label,
                     0, 1, 1, 2,
                     (GtkAttachOptions) 0,
@@ -2399,28 +2411,38 @@ multiattrib_init (Multiattrib *multiattrib)
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) 0,
                     6, 3);
+#endif
 
   /*   - the visible status */
   button = gtk_check_button_new_with_mnemonic (_("Vi_sible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
   multiattrib->button_visible = GTK_CHECK_BUTTON (button);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), button, 0, 2, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table), button,
                     0, 1, 2, 3,
                     GTK_FILL,
                     (GtkAttachOptions) 0,
                     3, 0);
+#endif
 
   /*   - the visibility type */
   optionm = gtk_combo_box_text_new ();
   multiattrib_init_visible_types (GTK_COMBO_BOX_TEXT (optionm));
   multiattrib->optionmenu_shownv = GTK_COMBO_BOX_TEXT (optionm);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), optionm, 1, 2, 1, 1);
+  gtk_widget_show_all (grid);
+#else
   gtk_table_attach (GTK_TABLE (table), optionm,
                     1, 2, 2, 3,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) 0,
                     6, 3);
   gtk_widget_show_all (table);
+#endif
 
   /* create the add button */
   button = gtk_button_new_from_stock (GTK_STOCK_ADD);
@@ -2428,6 +2450,13 @@ multiattrib_init (Multiattrib *multiattrib)
                     "clicked",
                     G_CALLBACK (multiattrib_callback_button_add),
                     multiattrib);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), button, 2, 0, 1, 1);
+
+  multiattrib->add_frame =
+    gschem_dialog_misc_create_section_widget(
+      _("<b>Add Attribute</b>"), grid);
+#else
   gtk_table_attach (GTK_TABLE (table), button,
                     2, 3, 0, 3,
                     (GtkAttachOptions) 0,
@@ -2438,6 +2467,7 @@ multiattrib_init (Multiattrib *multiattrib)
   multiattrib->add_frame =
     gschem_dialog_misc_create_section_widget(
       _("<b>Add Attribute</b>"), table);
+#endif
 
   g_signal_connect (multiattrib->add_frame,
                     "activate",
