@@ -208,7 +208,6 @@ static void newtext_class_init(NewTextClass *klass)
  */
 static void newtext_init(NewText *dialog)
 {
-  GtkWidget *alignment;
   GtkWidget *vbox;
   GtkWidget *label = NULL;
   GtkWidget *viewport1 = NULL;
@@ -262,14 +261,14 @@ static void newtext_init(NewText *dialog)
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
   gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
-  alignment = gtk_alignment_new(0,0,1,1);
+#ifdef ENABLE_GTK3
+  gtk_box_pack_start (GTK_BOX (vbox), grid, FALSE, FALSE, 0);
+#else
+  GtkWidget *alignment = gtk_alignment_new (0, 0, 1, 1);
   gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
                             DIALOG_INDENTATION, 0);
   gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
 
-#ifdef ENABLE_GTK3
-  gtk_container_add (GTK_CONTAINER (alignment), grid);
-#else
   gtk_container_add(GTK_CONTAINER(alignment), table);
 #endif
 
