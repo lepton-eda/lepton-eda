@@ -1668,15 +1668,15 @@ x_tabs_menu_create (TabInfo* nfo)
   g_return_val_if_fail (tl != NULL, NULL);
 
   GtkWidget* menu = gtk_menu_new();
-  x_tabs_menu_create_item (tl, menu, "&file-new", _("_New"), GTK_STOCK_NEW);
-  x_tabs_menu_create_item (tl, menu, "&file-open", _("_Open..."), GTK_STOCK_OPEN);
+  x_tabs_menu_create_item (tl, menu, "&file-new", _("_New"), "document-new");
+  x_tabs_menu_create_item (tl, menu, "&file-open", _("_Open..."), "document-open");
   x_tabs_menu_create_item_separ (menu);
-  x_tabs_menu_create_item (tl, menu, "&file-save", _("_Save"), GTK_STOCK_SAVE);
-  x_tabs_menu_create_item (tl, menu, "&file-save-as", _("Save _As..."), GTK_STOCK_SAVE_AS);
+  x_tabs_menu_create_item (tl, menu, "&file-save", _("_Save"), "document-save");
+  x_tabs_menu_create_item (tl, menu, "&file-save-as", _("Save _As..."), "document-save-as");
   x_tabs_menu_create_item_separ (menu);
   x_tabs_menu_create_item (tl, menu, "&page-manager", _("Page _Manager..."), NULL);
   x_tabs_menu_create_item_separ (menu);
-  x_tabs_menu_create_item (tl, menu, "&page-close", _("_Close"), GTK_STOCK_CLOSE);
+  x_tabs_menu_create_item (tl, menu, "&page-close", _("_Close"), "window-close");
 
   gtk_widget_show_all (menu);
   return GTK_MENU (menu);
