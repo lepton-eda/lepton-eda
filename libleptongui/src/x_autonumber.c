@@ -1197,7 +1197,6 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   GtkWidget *vbox1;
   GtkWidget *alignment1;
   GtkWidget *vbox3;
-  GtkWidget *table1;
   GtkWidget *label4;
   GtkWidget *scope_text;
   GtkWidget *label8;
@@ -1208,7 +1207,6 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   GtkWidget *label1;
   GtkWidget *alignment3;
   GtkWidget *vbox4;
-  GtkWidget *table3;
   GtkWidget *label12;
   GtkWidget *label13;
   GtkWidget *opt_startnum;
@@ -1261,54 +1259,86 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_widget_show (vbox3);
   gtk_container_add (GTK_CONTAINER (alignment1), vbox3);
 
-  table1 = gtk_table_new (3, 2, FALSE);
+#ifdef ENABLE_GTK3
+  GtkWidget* grid1 = gtk_grid_new ();
+  gtk_widget_show (grid1);
+  gtk_box_pack_start (GTK_BOX (vbox3), grid1, TRUE, TRUE, 0);
+  gtk_grid_set_row_spacing (GTK_GRID (grid1), DIALOG_V_SPACING);
+  gtk_grid_set_column_spacing (GTK_GRID (grid1), DIALOG_H_SPACING);
+#else
+  GtkWidget *table1 = gtk_table_new (3, 2, FALSE);
   gtk_widget_show (table1);
   gtk_box_pack_start (GTK_BOX (vbox3), table1, TRUE, TRUE, 0);
   gtk_table_set_row_spacings (GTK_TABLE (table1), DIALOG_V_SPACING);
   gtk_table_set_col_spacings (GTK_TABLE (table1), DIALOG_H_SPACING);
+#endif
 
   label4 = gtk_label_new (_("Search for:"));
   gtk_widget_show (label4);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid1), label4, 0, 0, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table1), label4, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+#endif
   gtk_misc_set_alignment (GTK_MISC (label4), 0, 0.5);
 
   scope_text = gtk_combo_box_text_new_with_entry ();
   gtk_entry_set_activates_default(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(scope_text))), TRUE);
   gtk_widget_show (scope_text);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid1), scope_text, 1, 0, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table1), scope_text, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
+#endif
 
   label8 = gtk_label_new (_("Autonumber text in:"));
   gtk_widget_show (label8);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid1), label8, 0, 1, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table1), label8, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+#endif
   gtk_misc_set_alignment (GTK_MISC (label8), 0, 0.5);
 
   label6 = gtk_label_new (_("Skip numbers found in:"));
   gtk_widget_show (label6);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid1), label6, 0, 2, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table1), label6, 0, 1, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+#endif
   gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
 
   scope_number = gtk_combo_box_text_new ();
   gtk_widget_show (scope_number);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid1), scope_number, 1, 1, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table1), scope_number, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
+#endif
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (scope_number), _("Selected objects"));
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (scope_number), _("Current page"));
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (scope_number), _("Whole hierarchy"));
 
   scope_skip = gtk_combo_box_text_new ();
   gtk_widget_show (scope_skip);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid1), scope_skip, 1, 2, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table1), scope_skip, 1, 2, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
+#endif
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (scope_skip), _("Selected objects"));
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (scope_skip), _("Current page"));
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (scope_skip), _("Whole hierarchy"));
@@ -1338,24 +1368,40 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_widget_show (vbox4);
   gtk_container_add (GTK_CONTAINER (alignment3), vbox4);
 
-  table3 = gtk_table_new (2, 2, FALSE);
+#ifdef ENABLE_GTK3
+  GtkWidget *grid3 = gtk_grid_new ();
+  gtk_widget_show (grid3);
+  gtk_box_pack_start (GTK_BOX (vbox4), grid3, TRUE, TRUE, 0);
+  gtk_grid_set_row_spacing (GTK_GRID (grid3), DIALOG_V_SPACING);
+  gtk_grid_set_column_spacing (GTK_GRID (grid3), DIALOG_H_SPACING);
+#else
+  GtkWidget *table3 = gtk_table_new (2, 2, FALSE);
   gtk_widget_show (table3);
   gtk_box_pack_start (GTK_BOX (vbox4), table3, TRUE, TRUE, 0);
   gtk_table_set_row_spacings (GTK_TABLE (table3), DIALOG_V_SPACING);
   gtk_table_set_col_spacings (GTK_TABLE (table3), DIALOG_H_SPACING);
+#endif
 
   label12 = gtk_label_new (_("Starting number:"));
   gtk_widget_show (label12);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid3), label12, 0, 0, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table3), label12, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+#endif
   gtk_misc_set_alignment (GTK_MISC (label12), 0, 0.5);
 
   label13 = gtk_label_new (_("Sort order:"));
   gtk_widget_show (label13);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid3), label13, 0, 1, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table3), label13, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+#endif
   gtk_misc_set_alignment (GTK_MISC (label13), 0, 0.5);
 
 
@@ -1373,15 +1419,23 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
 
   gtk_entry_set_activates_default(GTK_ENTRY(opt_startnum), TRUE);
   gtk_widget_show (opt_startnum);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid3), opt_startnum, 1, 0, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table3), opt_startnum, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+#endif
 
   sort_order = gtk_combo_box_new();
   gtk_widget_show (sort_order);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid3), sort_order, 1, 1, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table3), sort_order, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
+#endif
 
   opt_removenum = gtk_check_button_new_with_mnemonic (_("Remove numbers"));
   gtk_widget_show (opt_removenum);
