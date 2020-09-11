@@ -273,7 +273,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GtkWidget *aewindow;
-  GtkWidget *vbox, *label, *table, *alignment;
+  GtkWidget *vbox, *label, *alignment;
   GtkWidget *show_options;
   GtkWidget *attrib_combo_box_entry;
   GtkWidget *attrib_combo_entry;
@@ -352,26 +352,41 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
                             DIALOG_INDENTATION, 0);
   gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
 
-  table = gtk_table_new (3, 2, FALSE);
+#ifdef ENABLE_GTK3
+  GtkWidget *grid = gtk_grid_new ();
+  gtk_grid_set_row_spacing (GTK_GRID (grid), DIALOG_V_SPACING);
+  gtk_grid_set_column_spacing (GTK_GRID (grid), DIALOG_H_SPACING);
+  gtk_container_add (GTK_CONTAINER (alignment), grid);
+#else
+  GtkWidget *table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
   gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
   gtk_container_add (GTK_CONTAINER (alignment), table);
+#endif
 
   /* Name selection */
   label = gtk_label_new_with_mnemonic (_("N_ame:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (GTK_FILL), 0, 0);
+#endif
 
   attrib_combo_box_entry = gtk_combo_box_text_new_with_entry ();
   attrib_combo_entry = gtk_bin_get_child(GTK_BIN(attrib_combo_box_entry));
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), attrib_combo_box_entry);
 
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), attrib_combo_box_entry, 1, 0, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table), attrib_combo_box_entry, 1, 2, 0, 1,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+#endif
   g_object_ref (attrib_combo_entry);
   g_object_set_data_full (G_OBJECT (aewindow),
                          "attrib_combo_entry", attrib_combo_entry,
@@ -381,9 +396,13 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
   /* Value entry */
   label = gtk_label_new_with_mnemonic (_("_Value:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+#endif
 
   value_entry = gtk_entry_new ();
   g_object_ref (value_entry);
@@ -392,9 +411,13 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), value_entry);
 
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), value_entry, 1, 1, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table), value_entry, 1, 2, 1, 2,
                     (GtkAttachOptions) (GTK_EXPAND | GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+#endif
   gtk_entry_set_activates_default(GTK_ENTRY(value_entry), TRUE);
 
   /* Visibility */
@@ -404,9 +427,13 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
                           (GDestroyNotify) g_object_unref);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (visbutton), TRUE);
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), visbutton, 0, 2, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table), visbutton, 0, 1, 2, 3,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
+#endif
 
   show_options = gtk_combo_box_text_new ();
   GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING);
@@ -416,9 +443,13 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
   g_object_set_data_full (G_OBJECT (aewindow), "show_options", show_options,
                           (GDestroyNotify) g_object_unref);
 
+#ifdef ENABLE_GTK3
+  gtk_grid_attach (GTK_GRID (grid), show_options, 1, 2, 1, 1);
+#else
   gtk_table_attach (GTK_TABLE (table), show_options, 1, 2, 2, 3,
                     (GtkAttachOptions) (GTK_FILL | GTK_EXPAND),
                     (GtkAttachOptions) (0), 0, 0);
+#endif
 
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (show_options),
                                   _("Show Value Only"));
@@ -440,16 +471,26 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
                               DIALOG_INDENTATION, 0);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
 
+#ifdef ENABLE_GTK3
+    grid = gtk_grid_new ();
+    gtk_grid_set_row_spacing (GTK_GRID (grid), DIALOG_V_SPACING);
+    gtk_grid_set_column_spacing (GTK_GRID (grid), DIALOG_H_SPACING);
+    gtk_container_add (GTK_CONTAINER (alignment), grid);
+#else
     table = gtk_table_new (2, 3, FALSE);
     gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
     gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
     gtk_container_add (GTK_CONTAINER (alignment), table);
+#endif
 
     addtoallbutton = gtk_radio_button_new_with_label (hbox2_group, _("All"));
     hbox2_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (addtoallbutton));
     g_object_ref (addtoallbutton);
     g_object_set_data_full (G_OBJECT (aewindow), "addtoallbutton", addtoallbutton,
                             (GDestroyNotify) g_object_unref);
+#ifdef ENABLE_GTK3
+    gtk_grid_attach (GTK_GRID (grid), addtoallbutton, 0, 0, 1, 1);
+#else
     gtk_table_attach(GTK_TABLE(table),
                      addtoallbutton,
                      0,
@@ -460,12 +501,16 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
                      (GtkAttachOptions) 0,
                      0,
                      0);
+#endif
 
     addtocompsbutton = gtk_radio_button_new_with_label (hbox2_group, _("Components"));
     hbox2_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (addtocompsbutton));
     g_object_ref (addtocompsbutton);
     g_object_set_data_full (G_OBJECT (aewindow), "addtocompsbutton", addtocompsbutton,
                             (GDestroyNotify) g_object_unref);
+#ifdef ENABLE_GTK3
+    gtk_grid_attach (GTK_GRID (grid), addtocompsbutton, 1, 0, 1, 1);
+#else
     gtk_table_attach(GTK_TABLE(table),
                      addtocompsbutton,
                      1,
@@ -476,12 +521,16 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
                      (GtkAttachOptions) 0,
                      0,
                      0);
+#endif
 
     addtonetsbutton = gtk_radio_button_new_with_label (hbox2_group, _("Nets"));
     hbox2_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (addtonetsbutton));
     g_object_ref (addtonetsbutton);
     g_object_set_data_full (G_OBJECT (aewindow), "addtonetsbutton", addtonetsbutton,
                             (GDestroyNotify) g_object_unref);
+#ifdef ENABLE_GTK3
+    gtk_grid_attach (GTK_GRID (grid), addtonetsbutton, 2, 0, 1, 1);
+#else
     gtk_table_attach(GTK_TABLE(table),
                      addtonetsbutton,
                      2,
@@ -492,12 +541,16 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
                      (GtkAttachOptions) 0,
                      0,
                      0);
+#endif
 
     overwritebutton = gtk_check_button_new_with_label (_("Replace existing attributes"));
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(overwritebutton), TRUE);
     g_object_ref (overwritebutton);
     g_object_set_data_full (G_OBJECT (aewindow), "overwritebutton", overwritebutton,
                             (GDestroyNotify) g_object_unref);
+#ifdef ENABLE_GTK3
+    gtk_grid_attach (GTK_GRID (grid), overwritebutton, 0, 1, 1, 1);
+#else
     gtk_table_attach(GTK_TABLE(table),
                      overwritebutton,
                      0,
@@ -508,6 +561,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
                      (GtkAttachOptions) 0,
                      0,
                      0);
+#endif
   }
 
   /* gschem specific */
