@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -673,7 +673,11 @@ command_entry_set_font (GtkWidget* entry)
   {
     PangoFontDescription* fdesc = pango_font_description_from_string (font);
 
+#ifdef ENABLE_GTK3
+    gtk_widget_override_font (entry, fdesc);
+#else
     gtk_widget_modify_font (entry, fdesc);
+#endif
 
     pango_font_description_free (fdesc);
     g_free (font);
@@ -682,4 +686,3 @@ command_entry_set_font (GtkWidget* entry)
   g_clear_error (&err);
 
 } /* command_entry_set_font() */
-
