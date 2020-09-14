@@ -854,7 +854,15 @@ x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint 
   width = gdk_window_get_width (window);
   height = gdk_window_get_height (window);
 
+#ifdef ENABLE_GTK3
+  GdkDisplay *display = gdk_display_get_default ();
+  GdkSeat *seat = gdk_display_get_default_seat (display);
+  GdkDevice *pointer = gdk_seat_get_pointer (seat);
+
+  gdk_device_get_position (pointer, NULL, &sx, &sy);
+#else
   gtk_widget_get_pointer(GTK_WIDGET (page_view), &sx, &sy);
+#endif
 
   /* check if we are inside the drawing area */
   if ((sx < 0) || (sx >= width) || (sy < 0) || (sy >= height)) {
@@ -893,7 +901,15 @@ x_event_faked_motion (GschemPageView *view, GdkEventKey *event) {
   gboolean ret;
   GdkEventMotion *newevent;
 
+#ifdef ENABLE_GTK3
+  GdkDisplay *display = gdk_display_get_default ();
+  GdkSeat *seat = gdk_display_get_default_seat (display);
+  GdkDevice *pointer = gdk_seat_get_pointer (seat);
+
+  gdk_device_get_position (pointer, NULL, &x, &y);
+#else
   gtk_widget_get_pointer (GTK_WIDGET (view), &x, &y);
+#endif
   newevent = (GdkEventMotion*)gdk_event_new(GDK_MOTION_NOTIFY);
   newevent->x = x;
   newevent->y = y;
