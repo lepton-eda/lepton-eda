@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2012 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -186,7 +186,8 @@ static void gschem_action_class_init (GschemActionClass *klass)
  * /param [in] name            A unique name for the action
  * /param [in] label           The label displayed in menu items and on buttons, or NULL
  * /param [in] tooltip         A tooltip for the action, or NULL
- * /param [in] stock_id        The stock icon to display in widgets representing the action, or NULL
+ * /param [in] icon_name       The icon name to display in widgets representing the action, or NULL (GTK3 only)
+ * /param [in] stock_id        The stock icon to display in widgets representing the action, or NULL (GTK2 only)
  * /param [in] multikey_accel  The (potentially) multi-key accelerator used for this action
  *
  * /returns A new GschemAction
@@ -194,7 +195,11 @@ static void gschem_action_class_init (GschemActionClass *klass)
 GschemAction *gschem_action_new (const gchar *name,
                                  const gchar *label,
                                  const gchar *tooltip,
+#ifdef ENABLE_GTK3
+                                 const gchar *icon_name,
+#else /* GTK2 */
                                  const gchar *stock_id,
+#endif
                                  const gchar *multikey_accel)
 {
   g_return_val_if_fail (name != NULL, NULL);
@@ -203,7 +208,11 @@ GschemAction *gschem_action_new (const gchar *name,
                                       "name", name,
                                       "label", label,
                                       "tooltip", tooltip,
+#ifdef ENABLE_GTK3
+                                      "icon-name", icon_name,
+#else /* GTK2 */
                                       "stock-id", stock_id,
+#endif
                                       "multikey-accel", multikey_accel,
                                       NULL));
 }
