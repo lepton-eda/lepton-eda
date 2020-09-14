@@ -273,7 +273,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GtkWidget *aewindow;
-  GtkWidget *vbox, *label, *alignment;
+  GtkWidget *vbox, *label;
   GtkWidget *show_options;
   GtkWidget *attrib_combo_box_entry;
   GtkWidget *attrib_combo_entry;
@@ -347,17 +347,17 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
     gtk_window_set_title (GTK_WINDOW(aewindow), _("Add Attribute"));
   }
 
-  alignment = gtk_alignment_new(0,0,1,1);
-  gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
-                            DIALOG_INDENTATION, 0);
-  gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
-
 #ifdef ENABLE_GTK3
   GtkWidget *grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), DIALOG_V_SPACING);
   gtk_grid_set_column_spacing (GTK_GRID (grid), DIALOG_H_SPACING);
-  gtk_container_add (GTK_CONTAINER (alignment), grid);
+  gtk_box_pack_start (GTK_BOX(vbox), grid, TRUE, TRUE, 0);
 #else
+  GtkWidget *alignment = gtk_alignment_new(0,0,1,1);
+  gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
+                            DIALOG_INDENTATION, 0);
+  gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
+
   GtkWidget *table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
   gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
@@ -475,17 +475,17 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
 #endif
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
 
+#ifdef ENABLE_GTK3
+    grid = gtk_grid_new ();
+    gtk_grid_set_row_spacing (GTK_GRID (grid), DIALOG_V_SPACING);
+    gtk_grid_set_column_spacing (GTK_GRID (grid), DIALOG_H_SPACING);
+    gtk_box_pack_start(GTK_BOX(vbox), grid, TRUE, TRUE, 0);
+#else
     alignment = gtk_alignment_new(0,0,1,1);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
                               DIALOG_INDENTATION, 0);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
 
-#ifdef ENABLE_GTK3
-    grid = gtk_grid_new ();
-    gtk_grid_set_row_spacing (GTK_GRID (grid), DIALOG_V_SPACING);
-    gtk_grid_set_column_spacing (GTK_GRID (grid), DIALOG_H_SPACING);
-    gtk_container_add (GTK_CONTAINER (alignment), grid);
-#else
     table = gtk_table_new (2, 3, FALSE);
     gtk_table_set_row_spacings(GTK_TABLE(table), DIALOG_V_SPACING);
     gtk_table_set_col_spacings(GTK_TABLE(table), DIALOG_H_SPACING);
