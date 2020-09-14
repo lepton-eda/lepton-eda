@@ -160,9 +160,10 @@ gschem_dialog_misc_create_property_table (GtkWidget *label[], GtkWidget *widget[
 GtkWidget*
 gschem_dialog_misc_create_section_widget (const char *label, GtkWidget *child)
 {
-  GtkWidget *alignment;
   GtkWidget *expander;
 
+#ifndef ENABLE_GTK3
+  GtkWidget *alignment;
   alignment = gtk_alignment_new (0.0,     /* xalign */
                                  0.0,     /* yalign */
                                  1.0,     /* xscale */
@@ -175,6 +176,7 @@ gschem_dialog_misc_create_section_widget (const char *label, GtkWidget *child)
                             0);                    /* padding_right  */
 
   gtk_container_add (GTK_CONTAINER (alignment), child);
+#endif
 
   expander = gtk_expander_new (label);
 
@@ -186,7 +188,11 @@ gschem_dialog_misc_create_section_widget (const char *label, GtkWidget *child)
   gtk_expander_set_spacing (GTK_EXPANDER (expander), DIALOG_V_SPACING);
   gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
 
+#ifdef ENABLE_GTK3
+  gtk_container_add (GTK_CONTAINER (expander), child);
+#else
   gtk_container_add (GTK_CONTAINER (expander), alignment);
+#endif
 
   return expander;
 }
