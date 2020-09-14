@@ -1473,7 +1473,7 @@ compselect_constructor (GType type,
   GtkWidget *hpaned, *vpaned, *notebook, *attributes;
   GtkWidget *libview, *inuseview;
   GtkWidget *preview, *combobox;
-  GtkWidget *alignment, *frame;
+  GtkWidget *frame;
 
   /* chain up to constructor of parent class */
   object = G_OBJECT_CLASS (compselect_parent_class)->
@@ -1530,6 +1530,8 @@ compselect_constructor (GType type,
                                     /* GtkFrame */
                                     "label", _("Preview"),
                                     NULL));
+#ifndef ENABLE_GTK3
+  GtkWidget *alignment;
   alignment = GTK_WIDGET (g_object_new (GTK_TYPE_ALIGNMENT,
                                         /* GtkAlignment */
                                         "border-width", 5,
@@ -1538,11 +1540,16 @@ compselect_constructor (GType type,
                                         "xalign",         0.5,
                                         "yalign",         0.5,
                                         NULL));
+#endif
 
   preview = gschem_preview_new ();
 
+#ifdef ENABLE_GTK3
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+#else
   gtk_container_add (GTK_CONTAINER (alignment), preview);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
+#endif
   /* set preview of compselect */
   compselect->preview = GSCHEM_PREVIEW (preview);
   g_object_set (GTK_WIDGET (preview),
