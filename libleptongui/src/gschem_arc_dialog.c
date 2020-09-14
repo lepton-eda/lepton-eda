@@ -96,7 +96,7 @@ void arc_angle_dialog (GschemToplevel *w_current, LeptonObject *arc_object)
 {
   GtkWidget *label[3];
   GtkWidget *vbox;
-  GtkWidget *alignment, *table;
+  GtkWidget *table;
   GtkWidget *widget[3];
 
   if (!w_current->aawindow) {
@@ -130,11 +130,12 @@ void arc_angle_dialog (GschemToplevel *w_current, LeptonObject *arc_object)
     vbox = gtk_dialog_get_content_area (GTK_DIALOG (w_current->aawindow));
     gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
-
-    alignment = gtk_alignment_new(0,0,1,1);
+#ifndef ENABLE_GTK3
+    GtkWidget *alignment = gtk_alignment_new (0, 0, 1, 1);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
                               0 /*DIALOG_INDENTATION */, 0);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, FALSE, FALSE, 0);
+#endif
 
     label[0] = gschem_dialog_misc_create_property_label (_("Arc _Radius:"));
     label[1] = gschem_dialog_misc_create_property_label (_("Start _Angle:"));
@@ -149,8 +150,13 @@ void arc_angle_dialog (GschemToplevel *w_current, LeptonObject *arc_object)
     widget[2] = gtk_spin_button_new_with_range (-360,360,1);
     gtk_entry_set_activates_default(GTK_ENTRY(widget[2]), TRUE);
 
-        table = gschem_dialog_misc_create_property_table (label, widget, 3);
+    table = gschem_dialog_misc_create_property_table (label, widget, 3);
+
+#ifdef ENABLE_GTK3
+    gtk_box_pack_start (GTK_BOX(vbox), table, FALSE, FALSE, 0);
+#else
     gtk_container_add (GTK_CONTAINER(alignment), table);
+#endif
 
     GLADE_HOOKUP_OBJECT(w_current->aawindow, widget[0], "radius");
     GLADE_HOOKUP_OBJECT(w_current->aawindow, widget[1],"spin_start");
