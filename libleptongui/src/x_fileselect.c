@@ -273,11 +273,13 @@ x_fileselect_callback_update_preview (GtkFileChooser *chooser,
 static void
 x_fileselect_add_preview (GtkFileChooser *filechooser)
 {
-  GtkWidget *alignment, *frame, *preview;
+  GtkWidget *frame, *preview;
 
   frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
                                     "label", _("Preview"),
                                     NULL));
+#ifndef ENABLE_GTK3
+  GtkWidget *alignment;
   alignment = GTK_WIDGET (g_object_new (GTK_TYPE_ALIGNMENT,
                                         "right-padding", 5,
                                         "left-padding", 5,
@@ -286,11 +288,16 @@ x_fileselect_add_preview (GtkFileChooser *filechooser)
                                         "xalign", 0.5,
                                         "yalign", 0.5,
                                         NULL));
+#endif
 
   preview = gschem_preview_new ();
 
+#ifdef ENABLE_GTK3
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+#else
   gtk_container_add (GTK_CONTAINER (alignment), preview);
   gtk_container_add (GTK_CONTAINER (frame), alignment);
+#endif
   gtk_widget_show_all (frame);
 
   g_object_set (filechooser,
