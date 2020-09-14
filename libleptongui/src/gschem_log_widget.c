@@ -301,7 +301,11 @@ gschem_log_widget_init (GschemLogWidget *widget)
     {
       PangoFontDescription* fdesc = pango_font_description_from_string (font);
 
+#ifdef ENABLE_GTK3
+      gtk_widget_override_font (GTK_WIDGET (widget->viewer), fdesc);
+#else
       gtk_widget_modify_font (GTK_WIDGET (widget->viewer), fdesc);
+#endif
 
       pango_font_description_free (fdesc);
       g_free (font);
