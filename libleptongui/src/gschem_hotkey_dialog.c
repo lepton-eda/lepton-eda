@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 /***************** Start of help/keymapping dialog box **************/
 
 
+#ifndef ENABLE_GTK3
 /*! \brief Fix up displaying icons in list of hotkeys.
  * In gschem, we use both GTK's stock icons and also our own icons
  * that we add to the icon theme search path.  We identify each icon
@@ -81,7 +82,7 @@ x_dialog_hotkeys_cell_stock_id_notify (GObject *gobject,
 
   g_free (stock_id);
 }
-
+#endif
 
 
 static gboolean
@@ -249,13 +250,19 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
   renderer = gtk_cell_renderer_pixbuf_new ();
   column = gtk_tree_view_column_new_with_attributes (_("Action"),
                                                      renderer,
+#ifdef ENABLE_GTK3
+                                                     "icon-name",
+#else /* GTK2 */
                                                      "stock-id",
+#endif
                                                      GSCHEM_HOTKEY_STORE_COLUMN_ICON,
                                                      NULL);
+#ifndef ENABLE_GTK3
   /* Fix things up to show stock icons *and* theme icons. */
   g_signal_connect (renderer, "notify::stock-id",
                     G_CALLBACK (x_dialog_hotkeys_cell_stock_id_notify),
                     NULL);
+#endif
 
   renderer = gtk_cell_renderer_text_new ();
   gtk_tree_view_column_pack_start (column, renderer, FALSE);

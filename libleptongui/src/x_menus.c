@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,11 @@ struct PopupEntry
 {
   const gchar* name;
   const gchar* action;
+#ifdef ENABLE_GTK3
+  const gchar* icon_name;
+#else /* GTK2 */
   const gchar* stock_id;
+#endif
 };
 
 static struct PopupEntry popup_items[] =
@@ -92,7 +96,9 @@ make_menu_action (const char *action_name,
                   const char *menu_item_stock,
                   GschemToplevel *w_current)
 {
+#ifndef ENABLE_GTK3
   GtkStockItem stock_info;
+#endif
   GschemAction *action =
     GSCHEM_ACTION (g_object_new (GSCHEM_TYPE_ACTION,
                                  "name", action_name,
@@ -101,6 +107,10 @@ make_menu_action (const char *action_name,
                                  "multikey-accel", menu_item_keys,
                                  NULL));
 
+#ifdef ENABLE_GTK3
+  /* Look up icon in the icon theme. */
+  gtk_action_set_icon_name (GTK_ACTION (action), menu_item_stock);
+#else /* GTK2 */
   /* If stock name corresponds to a GTK stock item, then use it.
    * Otherwise, look it up in the icon theme. */
   if (menu_item_stock != NULL &&
@@ -112,6 +122,7 @@ make_menu_action (const char *action_name,
   {
     gtk_action_set_icon_name (GTK_ACTION (action), menu_item_stock);
   }
+#endif
 
   g_signal_connect (G_OBJECT (action),
                     "activate",
@@ -155,7 +166,11 @@ get_main_popup (GschemToplevel* w_current)
     action = make_menu_action (e.action,
                                gettext (e.name),
                                NULL,
+#ifdef ENABLE_GTK3
+                               e.icon_name,
+#else /* GTK2 */
                                e.stock_id,
+#endif
                                w_current);
 
     menu_item = gtk_action_create_menu_item (GTK_ACTION (action));

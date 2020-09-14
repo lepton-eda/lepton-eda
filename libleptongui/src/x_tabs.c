@@ -1767,7 +1767,11 @@ x_tabs_menu_create_item (GschemToplevel* toplevel,
   GschemAction* action = gschem_action_new (action_name,  /* name */
                                             action_label, /* label */
                                             NULL,         /* tooltip */
+#ifdef ENABLE_GTK3
+                                            icon_name,    /* icon_name */
+#else /* GTK2 */
                                             icon_name,    /* stock_id */
+#endif
                                             NULL);        /* multikey_accel */
 
   GtkWidget* item = gtk_action_create_menu_item (GTK_ACTION (action));
