@@ -1200,7 +1200,6 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
 {
   GtkWidget *autonumber_text;
   GtkWidget *vbox1;
-  GtkWidget *alignment1;
   GtkWidget *vbox3;
   GtkWidget *label4;
   GtkWidget *scope_text;
@@ -1210,7 +1209,6 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   GtkWidget *scope_skip;
   GtkWidget *scope_overwrite;
   GtkWidget *label1;
-  GtkWidget *alignment3;
   GtkWidget *vbox4;
   GtkWidget *label12;
   GtkWidget *label13;
@@ -1255,27 +1253,32 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_box_pack_start (GTK_BOX(vbox1), label1, TRUE, TRUE, 0);
   gtk_widget_show (label1);
 
-  alignment1 = gtk_alignment_new (0, 0, 1, 1);
+#ifdef ENABLE_GTK3
+  vbox3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
+  GtkWidget *alignment1 = gtk_alignment_new (0, 0, 1, 1);
   gtk_widget_show (alignment1);
   gtk_box_pack_start (GTK_BOX (vbox1), alignment1, TRUE, TRUE, 0);
   gtk_alignment_set_padding (GTK_ALIGNMENT (alignment1),
                              0, 0, DIALOG_INDENTATION, 0);
 
-#ifdef ENABLE_GTK3
-  vbox3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-#else
   vbox3 = gtk_vbox_new (FALSE, 0);
 #endif
   gtk_widget_show (vbox3);
-  gtk_container_add (GTK_CONTAINER (alignment1), vbox3);
 
 #ifdef ENABLE_GTK3
+  gtk_box_pack_start (GTK_BOX (vbox1), vbox3, TRUE, TRUE, 0);
+
   GtkWidget* grid1 = gtk_grid_new ();
   gtk_widget_show (grid1);
   gtk_box_pack_start (GTK_BOX (vbox3), grid1, TRUE, TRUE, 0);
   gtk_grid_set_row_spacing (GTK_GRID (grid1), DIALOG_V_SPACING);
   gtk_grid_set_column_spacing (GTK_GRID (grid1), DIALOG_H_SPACING);
-#else
+
+#else /* GTK2 */
+
+  gtk_container_add (GTK_CONTAINER (alignment1), vbox3);
+
   GtkWidget *table1 = gtk_table_new (3, 2, FALSE);
   gtk_widget_show (table1);
   gtk_box_pack_start (GTK_BOX (vbox3), table1, TRUE, TRUE, 0);
@@ -1375,27 +1378,32 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_widget_show (label3);
   gtk_box_pack_start(GTK_BOX(vbox1), label3, TRUE, TRUE, 0);
 
-  alignment3 = gtk_alignment_new (0, 0, 1, 1);
+#ifdef ENABLE_GTK3
+  vbox4 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 3);
+#else
+  GtkWidget *alignment3 = gtk_alignment_new (0, 0, 1, 1);
   gtk_widget_show (alignment3);
   gtk_box_pack_start(GTK_BOX(vbox1), alignment3, TRUE, TRUE, 0);
   gtk_alignment_set_padding (GTK_ALIGNMENT (alignment3),
                              0, 0, DIALOG_INDENTATION, 0);
 
-#ifdef ENABLE_GTK3
-  vbox4 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 3);
-#else
   vbox4 = gtk_vbox_new (FALSE, 3);
 #endif
   gtk_widget_show (vbox4);
-  gtk_container_add (GTK_CONTAINER (alignment3), vbox4);
 
 #ifdef ENABLE_GTK3
+  gtk_box_pack_start(GTK_BOX(vbox1), vbox4, TRUE, TRUE, 0);
+
   GtkWidget *grid3 = gtk_grid_new ();
   gtk_widget_show (grid3);
   gtk_box_pack_start (GTK_BOX (vbox4), grid3, TRUE, TRUE, 0);
   gtk_grid_set_row_spacing (GTK_GRID (grid3), DIALOG_V_SPACING);
   gtk_grid_set_column_spacing (GTK_GRID (grid3), DIALOG_H_SPACING);
-#else
+
+#else /* GTK2 */
+
+  gtk_container_add (GTK_CONTAINER (alignment3), vbox4);
+
   GtkWidget *table3 = gtk_table_new (2, 2, FALSE);
   gtk_widget_show (table3);
   gtk_box_pack_start (GTK_BOX (vbox4), table3, TRUE, TRUE, 0);
