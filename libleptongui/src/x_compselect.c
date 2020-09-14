@@ -1482,15 +1482,24 @@ compselect_constructor (GType type,
                 "default-width",   400,
                 NULL);
 
-  /* vertical pane containing preview and attributes */
-  vpaned = GTK_WIDGET (g_object_new (GTK_TYPE_VPANED, NULL));
-  compselect->vpaned = vpaned;
+  /* vpaned is vertical pane containing preview and attributes.
+   * hpaned is horizontal pane containing selection and
+   * preview. */
 
-  /* horizontal pane containing selection and preview */
+#ifdef ENABLE_GTK3
+  vpaned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
+  hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
+#else
+  vpaned = GTK_WIDGET (g_object_new (GTK_TYPE_VPANED, NULL));
   hpaned = GTK_WIDGET (g_object_new (GTK_TYPE_HPANED,
                                     /* GtkContainer */
                                     "border-width", 5,
                                      NULL));
+#endif
+
+  gtk_container_set_border_width (GTK_CONTAINER (hpaned), 5);
+
+  compselect->vpaned = vpaned;
   compselect->hpaned = hpaned;
 
   /* notebook for library and inuse views */
