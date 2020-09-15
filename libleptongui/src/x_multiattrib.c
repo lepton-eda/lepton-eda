@@ -340,6 +340,16 @@ static gboolean cellrenderermultilinetext_focus_out_event (GtkWidget *widget,
  *  \par Function Description
  *
  */
+#ifdef ENABLE_GTK3
+static GtkCellEditable*
+cellrenderermultilinetext_start_editing (GtkCellRenderer      *cell,
+                                         GdkEvent             *event,
+                                         GtkWidget            *widget,
+                                         const gchar          *path,
+                                         const GdkRectangle   *background_area,
+                                         const GdkRectangle   *cell_area,
+                                         GtkCellRendererState flags)
+#else
 static GtkCellEditable*
 cellrenderermultilinetext_start_editing (GtkCellRenderer      *cell,
                                          GdkEvent             *event,
@@ -348,6 +358,7 @@ cellrenderermultilinetext_start_editing (GtkCellRenderer      *cell,
                                          GdkRectangle         *background_area,
                                          GdkRectangle         *cell_area,
                                          GtkCellRendererState  flags)
+#endif
 {
   GtkCellRendererText *cell_text;
   CellRendererMultiLineText *cell_mlt;
