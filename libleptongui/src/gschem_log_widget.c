@@ -245,6 +245,12 @@ gschem_log_widget_init (GschemLogWidget *widget)
   g_return_if_fail (widget != NULL);
 
   scrolled = gtk_scrolled_window_new (NULL, NULL);
+#ifdef ENABLE_GTK3
+  gtk_widget_show (scrolled);
+  gtk_widget_set_hexpand (scrolled, TRUE);
+  gtk_widget_set_vexpand (scrolled, TRUE);
+#endif
+
   gtk_container_add (GTK_CONTAINER (widget), scrolled);
 
   /* show scrollbars only when needed: */
