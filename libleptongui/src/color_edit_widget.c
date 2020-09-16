@@ -352,7 +352,7 @@ on_color_sel_changed (GtkColorSelection* csel, gpointer p)
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->toplevel_ != NULL);
 
-  int color_index = x_colorcb_get_index (widget->color_cb_);
+  int color_index = x_colorcb_get_index (GTK_WIDGET (widget->color_cb_));
   g_return_if_fail (color_index >= 0);
 
   GdkColor color;
