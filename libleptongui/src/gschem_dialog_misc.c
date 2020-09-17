@@ -140,6 +140,10 @@ gschem_dialog_misc_create_section_widget (const char *label, GtkWidget *child)
 
   expander = gtk_expander_new (label);
 
+#ifdef ENABLE_GTK3
+  gtk_widget_set_vexpand (expander, TRUE);
+#endif
+
   gtk_expander_set_expanded (GTK_EXPANDER (expander), TRUE);
   gtk_expander_set_spacing (GTK_EXPANDER (expander), DIALOG_V_SPACING);
   gtk_expander_set_use_markup (GTK_EXPANDER (expander), TRUE);
