@@ -69,11 +69,21 @@ schematic_get_font (GschemToplevel* toplevel);
 static void
 schematic_set_font (GschemToplevel* toplevel, const gchar* font);
 
+#ifdef ENABLE_GTK3
+static gchar*
+fontchooser_get_font (GtkFontChooser* font_chooser);
+
+static void
+fontchooser_set_font (FontSelectWidget* widget, const gchar* font);
+
+#else /* GTK2 */
 static gchar*
 fontsel_get_font (GtkFontSelection* sel);
 
 static void
 fontsel_set_font (FontSelectWidget* widget, const gchar* font);
+
+#endif
 
 static void
 config_save (GschemToplevel* toplevel, EdaConfig* cfg);
@@ -183,6 +193,11 @@ font_select_widget_class_init (FontSelectWidgetClass* cls)
 static void
 font_select_widget_init (FontSelectWidget* widget)
 {
+#ifdef ENABLE_GTK3
+  g_type_ensure (PANGO_TYPE_FONT_FAMILY);
+  g_type_ensure (PANGO_TYPE_FONT_FACE);
+#endif
+
   font_select_widget_create (widget);
 }
 
@@ -205,9 +220,15 @@ font_select_widget_create (FontSelectWidget* widget)
 #endif
   gtk_container_add (GTK_CONTAINER (widget), vbox);
 
+#ifdef ENABLE_GTK3
+  /* GTK font chooser widget: */
+  widget->font_chooser = GTK_FONT_CHOOSER (gtk_font_chooser_widget_new ());
+  gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (widget->font_chooser), TRUE, TRUE, 0);
+#else
   /* GTK font selection widget: */
   widget->font_sel_ = GTK_FONT_SELECTION (gtk_font_selection_new());
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (widget->font_sel_), TRUE, TRUE, 0);
+#endif
 
   /* separator */
 #ifdef ENABLE_GTK3
@@ -295,7 +316,11 @@ font_select_widget_on_show (GtkWidget* w)
   gchar* font = schematic_get_font (widget->toplevel_);
 
   update_font_label (widget, font);
+#ifdef ENABLE_GTK3
+  fontchooser_set_font (widget, font);
+#else
   fontsel_set_font (widget, font);
+#endif
 
   g_free (font);
 
@@ -384,6 +409,58 @@ config_save (GschemToplevel* toplevel, EdaConfig* cfg)
 }
 
 
+#ifdef ENABLE_GTK3
+
+/*! \brief Get selected font as a string composed of family and
+ *  face.
+ *  \note Caller must g_free() return value.
+ *
+ *  \param font_chooser Pointer to a GtkFontChooser widget.
+ *
+ *  \return String in the form "family face".
+ */
+static gchar*
+fontchooser_get_font (GtkFontChooser* font_chooser)
+{
+  g_return_val_if_fail (font_chooser != NULL, NULL);
+
+  PangoFontFamily* family = gtk_font_chooser_get_font_family (font_chooser);
+  const char* family_name = pango_font_family_get_name (family);
+
+  PangoFontFace* face = gtk_font_chooser_get_font_face (font_chooser);
+  const char* face_name = pango_font_face_get_face_name (face);
+
+  return g_strdup_printf ("%s %s", family_name, face_name);
+}
+
+
+/*! \brief Select \a font in the GtkFontChooser widget, if
+ *  possible.
+ *
+ *  \param widget Pointer to a FontSelectWidget.
+ *  \param font   Font name to select in GtkFontChooser widget.
+ */
+static void
+fontchooser_set_font (FontSelectWidget* widget, const gchar* font)
+{
+  g_return_if_fail (widget != NULL);
+
+  /* Append font size to the [font] name.
+   * If the [font] name string doesn't contain font size,
+   * GtkFontChooser widget will set its "Size" field to 0,
+   * effectively hiding text in the "Preview" box:
+  */
+  gchar* fname = g_strdup_printf ("%s %d", font, PREVIEW_TEXT_SIZE);
+  gtk_font_chooser_set_font (widget->font_chooser, fname);
+
+  g_free (fname);
+
+  /* Set preview text:
+  */
+  gtk_font_chooser_set_preview_text (widget->font_chooser, PREVIEW_TEXT);
+}
+
+#else /* GTK2 */
 
 /*! \brief Get selected font as a string composed of family and face
  *  \note  Caller must g_free() return value
@@ -433,7 +510,7 @@ fontsel_set_font (FontSelectWidget* widget, const gchar* font)
   gtk_font_selection_set_preview_text (widget->font_sel_, PREVIEW_TEXT);
 }
 
-
+#endif
 
 
 /* --------------------------------------------------------
@@ -450,7 +527,11 @@ on_btn_apply (GtkWidget* btn, gpointer p)
   g_return_if_fail (widget != NULL);
   g_return_if_fail (widget->toplevel_ != NULL);
 
+#ifdef ENABLE_GTK3
+  gchar* font = fontchooser_get_font (widget->font_chooser);
+#else
   gchar* font = fontsel_get_font (widget->font_sel_);
+#endif
 
   schematic_set_font (widget->toplevel_, font);
   update_font_label (widget, font);
