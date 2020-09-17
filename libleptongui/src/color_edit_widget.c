@@ -75,6 +75,11 @@ static void
 on_color_sel_changed (GtkColorSelection* csel, gpointer p);
 #endif
 
+#ifdef ENABLE_GTK3
+static void
+on_btn_apply (GtkWidget* btn, gpointer p);
+#endif
+
 static void
 on_btn_save(GtkWidget* btn, gpointer p);
 
@@ -218,6 +223,12 @@ color_edit_widget_create (ColorEditWidget* widget)
   widget->color_cb_ = x_colorcb_new();
   gtk_box_pack_start (GTK_BOX (hbox), widget->color_cb_, TRUE, TRUE, 0);
 
+#ifdef ENABLE_GTK3
+  /* "Apply" button: */
+  widget->btn_apply = gtk_button_new_with_mnemonic (_("_Apply"));
+  gtk_box_pack_start (GTK_BOX (hbox), widget->btn_apply, FALSE, FALSE, 0);
+#endif
+
   /* "save as..." button: */
   widget->btn_save_ = gtk_button_new_with_mnemonic (_("Save As.._."));
   gtk_box_pack_start (GTK_BOX (hbox), widget->btn_save_, FALSE, FALSE, 0);
@@ -287,6 +298,12 @@ color_edit_widget_create (ColorEditWidget* widget)
                     G_CALLBACK (&on_btn_save),
                     widget);
 
+#ifdef ENABLE_GTK3
+  g_signal_connect (G_OBJECT (widget->btn_apply),
+                    "clicked",
+                    G_CALLBACK (&on_btn_apply),
+                    widget);
+#endif
 
   x_colorcb_set_index (widget->color_cb_, BACKGROUND_COLOR);
 
@@ -463,6 +480,26 @@ on_color_sel_changed (GtkColorSelection* csel, gpointer p)
 
 } /* on_color_sel_changed() */
 
+#endif
+
+
+#ifdef ENABLE_GTK3
+/*! \brief "Apply" button "clicked" signal handler. */
+static void
+on_btn_apply (GtkWidget* btn, gpointer p)
+{
+  ColorEditWidget* widget = (ColorEditWidget*) p;
+
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (widget->toplevel_ != NULL);
+
+  GtkColorChooser* chooser = GTK_COLOR_CHOOSER (widget->color_chooser);
+  GdkRGBA color;
+  gtk_color_chooser_get_rgba (chooser, &color);
+
+  int color_index = x_colorcb_get_index (GTK_WIDGET (widget->color_cb_));
+  x_color_set_display_color (color_index, &color);
+}
 #endif
 
 

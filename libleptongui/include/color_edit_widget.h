@@ -51,6 +51,7 @@ struct _ColorEditWidget
   GtkWidget* color_cb_;
 #ifdef ENABLE_GTK3
   GtkWidget* color_chooser;
+  GtkWidget* btn_apply;
 #else
   GtkWidget* color_sel_;
 #endif
