@@ -1151,8 +1151,24 @@ gschem_page_view_update_hadjustment (GschemPageView *view)
                                geometry->viewport_left);
 
 #if DEBUG
+#ifdef ENABLE_GTK3
+    printf ("Horizontal: "
+            "lower=%f "
+            "upper=%f "
+            "page_size=%f "
+            "page_increment=%f "
+            "step_increment=%f "
+            "value=%f\n",
+            gtk_adjustment_get_lower (view->hadjustment),
+            gtk_adjustment_get_upper (view->hadjustment),
+            gtk_adjustment_get_page_size (view->hadjustment),
+            gtk_adjustment_get_page_increment (view->hadjustment),
+            gtk_adjustment_get_step_increment (view->hadjustment),
+            gtk_adjustment_get_value (view->hadjustment));
+#else /* GTK2 */
     printf("H %1$f %2$f\n", view->hadjustment->lower, view->hadjustment->upper);
     printf("Hp %1$f\n", view->hadjustment->page_size);
+#endif
 #endif
 
     gtk_adjustment_changed(view->hadjustment);
@@ -1196,8 +1212,24 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
                              geometry->world_bottom - geometry->viewport_bottom);
 
 #if DEBUG
+#ifdef ENABLE_GTK3
+    printf ("Vertical: "
+            "lower=%f "
+            "upper=%f "
+            "page_size=%f "
+            "page_increment=%f "
+            "step_increment=%f "
+            "value=%f\n",
+            gtk_adjustment_get_lower (view->vadjustment),
+            gtk_adjustment_get_upper (view->vadjustment),
+            gtk_adjustment_get_page_size (view->vadjustment),
+            gtk_adjustment_get_page_increment (view->vadjustment),
+            gtk_adjustment_get_step_increment (view->vadjustment),
+            gtk_adjustment_get_value (view->vadjustment));
+#else /* GTK2 */
     printf("V %1$f %2$f\n", view->vadjustment->lower, view->vadjustment->upper);
     printf("Vp %1$f\n", view->vadjustment->page_size);
+#endif
 #endif
 
     gtk_adjustment_changed(view->vadjustment);
