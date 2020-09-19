@@ -538,8 +538,13 @@ x_window_create_main (GschemToplevel *w_current, GtkWidget *menubar)
   /*
   *  windows layout:
   */
+#ifdef ENABLE_GTK3
+  vpaned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
+  hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
+#else
   vpaned = gtk_vpaned_new ();
   hpaned = gtk_hpaned_new ();
+#endif
 
   w_current->right_notebook = create_notebook_right (w_current);
   w_current->bottom_notebook = create_notebook_bottom (w_current);
