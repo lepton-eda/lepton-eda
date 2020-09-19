@@ -1118,6 +1118,9 @@ create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
                                   GTK_ORIENTATION_HORIZONTAL);
   gtk_toolbar_set_style (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_ICONS);
 
+#ifdef ENABLE_GTK3
+  gtk_box_pack_start (GTK_BOX (main_box), toolbar, FALSE, FALSE, 0);
+#else
   if (w_current->handleboxes)
   {
     GtkWidget *handlebox = gtk_handle_box_new ();
@@ -1128,8 +1131,7 @@ create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
   {
     gtk_box_pack_start (GTK_BOX (main_box), toolbar, FALSE, FALSE, 0);
   }
-
-
+#endif
 
   create_toolbar_button (w_current, toolbar,
                          "new", _("New"), _("New file"),
