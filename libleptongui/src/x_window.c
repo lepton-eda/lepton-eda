@@ -472,9 +472,6 @@ x_window_create_main (GschemToplevel *w_current, GtkWidget *menubar)
   create_menubar (w_current, main_box, menubar);
 
 
-  gtk_widget_realize (w_current->main_window);
-
-
   /*
   *  toolbar:
   */
