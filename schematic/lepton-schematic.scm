@@ -285,7 +285,7 @@ Run `~A --help' for more information.\n")
   (primitive-exit (precompile-run)))
 
 ;;; Initialize GTK.
-(gtk-init %null-pointer %null-pointer)
+(gtk_init %null-pointer %null-pointer)
 
 ;;; Init global buffers.
 (init-buffers)
@@ -304,4 +304,4 @@ Run `~A --help' for more information.\n")
 (eval-post-load-expr!)
 
 ;;; Run main GTK loop.
-(gtk-main)
+(gtk_main)

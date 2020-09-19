@@ -19,18 +19,18 @@
 (define-module (schematic ffi gtk)
   #:use-module (system foreign)
 
-  #:export (gtk-init
-            gtk-main))
+  #:export (gtk_init
+            gtk_main))
 
 (define libgtk (dynamic-link "libgtk-x11-2.0"))
 
-(define gtk-init
+(define gtk_init
   (pointer->procedure
    void
    (dynamic-func "gtk_init" libgtk)
    (list '* '*)))
 
-(define gtk-main
+(define gtk_main
   (pointer->procedure
    void
    (dynamic-func "gtk_main" libgtk)
