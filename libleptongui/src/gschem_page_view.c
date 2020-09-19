@@ -93,8 +93,10 @@ hadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
+#ifndef ENABLE_GTK3
 static void
 set_scroll_adjustments (GschemPageView *view, GtkAdjustment *hadjustment, GtkAdjustment *vadjustment);
+#endif
 
 static void
 vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
@@ -1289,8 +1291,10 @@ gschem_page_view_update_hadjustment (GschemPageView *view)
 #endif
 #endif
 
+#ifndef ENABLE_GTK3
     gtk_adjustment_changed(view->hadjustment);
     gtk_adjustment_value_changed (view->hadjustment);
+#endif
   }
 }
 
@@ -1350,8 +1354,10 @@ gschem_page_view_update_vadjustment (GschemPageView *view)
 #endif
 #endif
 
+#ifndef ENABLE_GTK3
     gtk_adjustment_changed(view->vadjustment);
     gtk_adjustment_value_changed (view->vadjustment);
+#endif
   }
 }
 
@@ -1393,6 +1399,7 @@ gschem_page_view_WORLDabs(GschemPageView *page_view, int val)
 
 
 
+#ifndef ENABLE_GTK3
 /*! \brief Signal handler for setting the scroll adjustments
  *
  *  Sent from the GtkScrolledWindow to set the adjustments for the
@@ -1404,6 +1411,7 @@ set_scroll_adjustments (GschemPageView *view, GtkAdjustment *hadjustment, GtkAdj
   gschem_page_view_set_hadjustment (view, hadjustment);
   gschem_page_view_set_vadjustment (view, vadjustment);
 }
+#endif
 
 
 
