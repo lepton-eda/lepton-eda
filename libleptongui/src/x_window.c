@@ -1139,25 +1139,25 @@ create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
 #endif
 
   create_toolbar_button (w_current, toolbar,
-                         "new", _("New"), _("New file"),
+                         "document-new", _("New"), _("New file"),
                          G_CALLBACK (&i_callback_file_new), 0);
 
   create_toolbar_button (w_current, toolbar,
-                         "open", _("Open"), _("Open file"),
+                         "document-open", _("Open"), _("Open file"),
                          G_CALLBACK (&i_callback_file_open), 1);
 
   create_toolbar_button (w_current, toolbar,
-                         "save", _("Save"), _("Save file"),
+                         "document-save", _("Save"), _("Save file"),
                          G_CALLBACK (&i_callback_file_save), 2);
 
   create_toolbar_separator (toolbar, 3);
 
   create_toolbar_button (w_current, toolbar,
-                         "undo", _("Undo"), _("Undo last operation"),
+                         "edit-undo", _("Undo"), _("Undo last operation"),
                          G_CALLBACK (&i_callback_edit_undo), 4);
 
   create_toolbar_button (w_current, toolbar,
-                         "redo", _("Redo"), _("Redo last undo"),
+                         "edit-redo", _("Redo"), _("Redo last undo"),
                          G_CALLBACK (&i_callback_edit_redo), 5);
 
   create_toolbar_separator (toolbar, 6);
