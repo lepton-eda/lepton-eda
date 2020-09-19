@@ -646,9 +646,6 @@ x_tabs_nbook_create (GschemToplevel* w_current, GtkWidget* work_box)
 
   gtk_container_add (GTK_CONTAINER (work_box), nbook);
 
-
-  /* TODO: gtk_notebook_set_scrollable() is deprecated:
-  */
   gtk_notebook_set_scrollable (w_current->xtabs_nbook, TRUE);
 
   /* TODO: [ask folks]: configurable tabs position:
