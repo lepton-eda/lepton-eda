@@ -1023,6 +1023,9 @@ create_menubar (GschemToplevel *w_current, GtkWidget *main_box)
 {
   GtkWidget *menubar = get_main_menu (w_current);
 
+#ifdef ENABLE_GTK3
+  gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
+#else
   if (w_current->handleboxes)
   {
     GtkWidget *handlebox = gtk_handle_box_new ();
@@ -1033,6 +1036,7 @@ create_menubar (GschemToplevel *w_current, GtkWidget *main_box)
   {
     gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
   }
+#endif
 
   w_current->menubar = menubar;
 }
