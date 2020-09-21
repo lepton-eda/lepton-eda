@@ -1715,8 +1715,12 @@ x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
     GtkMenu* menu = x_tabs_menu_create (nfo);
     gtk_menu_attach_to_widget (menu, hdr, NULL);
 
+#ifdef ENABLE_GTK3
+    gtk_menu_popup_at_pointer (menu, e);
+#else
     int etime = gtk_get_current_event_time();
     gtk_menu_popup (menu, NULL, NULL, NULL, NULL, ebtn->button, etime);
+#endif
 
     return TRUE;
   }
