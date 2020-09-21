@@ -114,6 +114,7 @@ static void geometry_cache_finalize (GschemPageView *view);
 static GObjectClass *gschem_page_view_parent_class = NULL;
 
 
+#ifndef ENABLE_GTK3
 /*
  *  In later versions of GTK+, the GtkScrolledWindow uses an interface, instead
  *  of signals, to set the scrollbar adjustments. When Gschem uses on of these
@@ -154,7 +155,7 @@ cclosure_marshal_VOID__OBJECT_OBJECT (GClosure     *closure,
             g_value_get_object (param_values + 2),
             data2);
 }
-
+#endif
 
 
 /*! \brief Dispose of the object
