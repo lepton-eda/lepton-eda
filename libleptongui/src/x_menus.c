@@ -177,8 +177,12 @@ gint do_popup (GschemToplevel *w_current, GdkEventButton *event)
   GtkWidget *menu = (GtkWidget *) w_current->popup_menu;
   g_return_val_if_fail (menu != NULL, FALSE);
 
+#ifdef ENABLE_GTK3
+  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
+#else
   gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
                   event->button, event->time);
+#endif
 
   return FALSE;
 }
