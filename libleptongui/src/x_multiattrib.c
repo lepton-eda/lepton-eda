@@ -1772,9 +1772,13 @@ multiattrib_popup_menu (Multiattrib *multiattrib, GdkEventButton *event)
   }
   gtk_widget_show_all (menu);
   /* make menu a popup menu */
+#ifdef ENABLE_GTK3
+  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent*)event);
+#else
   gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
                   (event != NULL) ? event->button : 0,
                   gdk_event_get_time ((GdkEvent*)event));
+#endif
 }
 
 
