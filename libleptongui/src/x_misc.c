@@ -111,13 +111,20 @@ x_show_uri (GschemToplevel *w_current, const gchar *uri,
             GError **error)
 {
 # if defined (SHOW_URI_GIO)
-  GdkScreen *screen;
 
   g_assert (w_current);
   g_assert (uri);
 
-  screen = gtk_window_get_screen (GTK_WINDOW (w_current->main_window));
+#ifdef ENABLE_GTK3
+  return gtk_show_uri_on_window (GTK_WINDOW (w_current->main_window),
+                                 uri,
+                                 GDK_CURRENT_TIME,
+                                 error);
+#else /* GTK2 */
+  GdkScreen *screen =
+    gtk_window_get_screen (GTK_WINDOW (w_current->main_window));
   return gtk_show_uri (screen, uri, GDK_CURRENT_TIME, error);
+#endif
 
 # elif defined (OS_WIN32) && !defined (OS_CYGWIN)
   return show_uri__win32 (uri, error);
