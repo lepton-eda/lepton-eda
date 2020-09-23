@@ -882,7 +882,11 @@ x_tabs_hdr_create (TabInfo* nfo)
   GtkWidget* btn_close = gtk_button_new();
   gtk_widget_set_name (btn_close, "lepton-tab-btn" );
   gtk_button_set_relief (GTK_BUTTON (btn_close), GTK_RELIEF_NONE);
+#ifdef ENABLE_GTK3
+  gtk_widget_set_focus_on_click (btn_close, FALSE);
+#else /* GTK2 */
   gtk_button_set_focus_on_click (GTK_BUTTON (btn_close), FALSE);
+#endif
 
 
 #ifdef ENABLE_GTK3
@@ -934,7 +938,11 @@ x_tabs_hdr_create (TabInfo* nfo)
   GtkWidget* btn_up = gtk_button_new();
   gtk_widget_set_name (btn_up, "lepton-tab-btn");
   gtk_button_set_relief (GTK_BUTTON (btn_up), GTK_RELIEF_NONE);
+#ifdef ENABLE_GTK3
+  gtk_widget_set_focus_on_click (btn_up, FALSE);
+#else /* GTK2 */
   gtk_button_set_focus_on_click (GTK_BUTTON (btn_up), FALSE);
+#endif
 
   GtkWidget* img_up = gtk_image_new_from_icon_name ("go-up",
                                                     GTK_ICON_SIZE_MENU);
@@ -946,7 +954,11 @@ x_tabs_hdr_create (TabInfo* nfo)
   GtkWidget* btn_save = gtk_button_new();
   gtk_widget_set_name (btn_save, "lepton-tab-btn");
   gtk_button_set_relief (GTK_BUTTON (btn_save), GTK_RELIEF_NONE);
+#ifdef ENABLE_GTK3
+  gtk_widget_set_focus_on_click (btn_save, FALSE);
+#else /* GTK2 */
   gtk_button_set_focus_on_click (GTK_BUTTON (btn_save), FALSE);
+#endif
 
   GtkWidget* img_save = gtk_image_new_from_icon_name ("document-save",
                                                       GTK_ICON_SIZE_MENU);
