@@ -171,7 +171,6 @@ gschem_accel_label_size_request (GtkWidget      *widget,
                                  GtkRequisition *requisition)
 {
   GschemAccelLabel *accel_label = GSCHEM_ACCEL_LABEL (widget);
-  GtkAccelLabel *gtk_accel_label = GTK_ACCEL_LABEL (widget);
   PangoLayout *layout;
   gint width;
 
@@ -180,7 +179,6 @@ gschem_accel_label_size_request (GtkWidget      *widget,
   layout = gtk_widget_create_pango_layout (widget, gschem_accel_label_get_string (accel_label));
   pango_layout_get_pixel_size (layout, &width, NULL);
   accel_label->accel_string_width = width;
-  gtk_accel_label->accel_string_width = width; /* HACK: This field is private to GtkAccelLabel */
   g_object_unref (layout);
 }
 
