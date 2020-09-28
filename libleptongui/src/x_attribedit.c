@@ -405,10 +405,6 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   show_options = gtk_combo_box_text_new ();
   GtkListStore *store = gtk_list_store_new (1, G_TYPE_STRING);
   gtk_combo_box_set_model (GTK_COMBO_BOX (show_options), GTK_TREE_MODEL(store));
-  GtkCellRenderer *cell = gtk_cell_renderer_text_new();
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (show_options), cell, TRUE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (show_options),
-                                  cell, "text", 0, NULL);
 
   g_object_ref (show_options);
   g_object_set_data_full (G_OBJECT (aewindow), "show_options", show_options,
