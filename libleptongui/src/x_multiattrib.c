@@ -1655,6 +1655,7 @@ multiattrib_init_visible_types (GtkComboBoxText *optionmenu)
                                   _("Show Value only"));
   gtk_combo_box_text_append_text (GTK_COMBO_BOX_TEXT (optionmenu),
                                   _("Show Name only"));
+  gtk_combo_box_set_active (GTK_COMBO_BOX (optionmenu), 0);
 }
 
 
