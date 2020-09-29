@@ -37,8 +37,10 @@ class_init (GschemBinClass *klass);
 static void
 size_allocate (GtkWidget *widget, GtkAllocation *allocation);
 
+#ifndef ENABLE_GTK3
 static void
 size_request (GtkWidget *widget, GtkRequisition *requisition);
+#endif
 
 
 /*! \brief register/get class
@@ -82,6 +84,43 @@ gschem_bin_new ()
 }
 
 
+
+#ifdef ENABLE_GTK3
+static void
+lepton_bin_get_preferred_width (GtkWidget *widget,
+                                gint *minimal_width,
+                                gint *natural_width)
+{
+  GtkBin *bin = GTK_BIN (widget);
+  GtkWidget *child = gtk_bin_get_child (bin);
+  *minimal_width = 0;
+  *natural_width = 0;
+
+  if (gtk_widget_get_visible (child)) {
+    gtk_widget_get_preferred_width (child,
+                                    minimal_width,
+                                    natural_width);
+  }
+}
+
+static void
+lepton_bin_get_preferred_height (GtkWidget *widget,
+                                 gint *minimal_height,
+                                 gint *natural_height)
+{
+  GtkBin *bin = GTK_BIN (widget);
+  GtkWidget *child = gtk_bin_get_child (bin);
+  *minimal_height = 0;
+  *natural_height = 0;
+
+  if (gtk_widget_get_visible (child)) {
+    gtk_widget_get_preferred_height (child,
+                                     minimal_height,
+                                     natural_height);
+  }
+}
+#endif
+
 /*! \brief initialize class
  */
 static void
@@ -92,7 +131,12 @@ class_init (GschemBinClass *klass)
   g_return_if_fail (widget_klass != NULL);
 
   widget_klass->size_allocate = size_allocate;
+#ifdef ENABLE_GTK3
+  widget_klass->get_preferred_width = lepton_bin_get_preferred_width;
+  widget_klass->get_preferred_height = lepton_bin_get_preferred_height;
+#else
   widget_klass->size_request = size_request;
+#endif
 }
 
 
@@ -107,7 +151,7 @@ size_allocate (GtkWidget *widget, GtkAllocation *allocation)
   gtk_widget_size_allocate (child , allocation);
 }
 
-
+#ifndef ENABLE_GTK3
 /*! \private
  *  \brief forward size request to child
  */
@@ -118,3 +162,4 @@ size_request (GtkWidget *widget, GtkRequisition *requisition)
 
   gtk_widget_size_request (child, requisition);
 }
+#endif
