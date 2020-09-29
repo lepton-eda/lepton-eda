@@ -54,6 +54,6 @@ addons:
 
     # FIXME[Issue #44] Replace this e-mail address once there's a
     # mailing list or e-mail alias set up for Lepton developers
-    notification_email: peter@peter-b.co.uk
+    notification_email: vzhbanov@gmail.com
     build_command: make CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=0' V=1 all
     branch_pattern: coverity_scan
