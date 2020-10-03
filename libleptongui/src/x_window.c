@@ -449,7 +449,11 @@ void x_window_create_main(GschemToplevel *w_current)
   /*
   *  top level container:
   */
+#ifdef ENABLE_GTK3
+  main_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
+#else
   main_box = gtk_vbox_new (FALSE, 1);
+#endif
   gtk_container_set_border_width (GTK_CONTAINER (main_box), 0);
   gtk_container_add (GTK_CONTAINER (w_current->main_window), main_box);
 
@@ -479,8 +483,11 @@ void x_window_create_main(GschemToplevel *w_current)
   *  container for scrolled window and bottom infowidgets;
   *  when tabbed GUI is enabled, it will contain the notebook:
   */
+#ifdef ENABLE_GTK3
+  work_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
   work_box = gtk_vbox_new (FALSE, 0);
-
+#endif
 
   if (x_tabs_enabled())
   {
