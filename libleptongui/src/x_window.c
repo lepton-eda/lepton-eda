@@ -144,6 +144,14 @@ void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
 {
   PAGE* page = w_current->toplevel->page_current;
   GschemPageView* view = gschem_page_view_new_with_page (page);
+
+#ifdef ENABLE_GTK3
+  gtk_widget_set_hexpand (GTK_WIDGET (view), TRUE);
+  gtk_widget_set_vexpand (GTK_WIDGET (view), TRUE);
+  gtk_widget_set_halign (GTK_WIDGET (view), GTK_ALIGN_FILL);
+  gtk_widget_set_valign (GTK_WIDGET (view), GTK_ALIGN_FILL);
+#endif
+
   w_current->drawing_area = GTK_WIDGET (view);
 
   gtk_container_add(GTK_CONTAINER(scrolled), w_current->drawing_area);
