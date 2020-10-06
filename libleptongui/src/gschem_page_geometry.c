@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -180,32 +180,47 @@ gschem_page_geometry_get_viewport_top (GschemPageGeometry *geometry)
 
 
 
-/*! \brief Get the top edge of the world in world coordinates.
+/*! \brief Get the bottom edge of the world in world coordinates.
  *
  *  \param [in] geometry The GschemPageGeometry
- *  \return The top edge of the world in world coordinates.
+ *  \return The bottom edge of the world in world coordinates.
  */
 int
 gschem_page_geometry_get_world_bottom (GschemPageGeometry *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
-  return geometry->world_top;
+  return geometry->world_bottom;
 }
 
 
 
-/*! \brief Get the top edge of the world in world coordinates.
+/*! \brief Get the left edge of the world in world coordinates.
  *
  *  \param [in] geometry The GschemPageGeometry
- *  \return The top edge of the world in world coordinates.
+ *  \return The left edge of the world in world coordinates.
  */
 int
 gschem_page_geometry_get_world_left (GschemPageGeometry *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
-  return geometry->world_top;
+  return geometry->world_left;
+}
+
+
+
+/*! \brief Get the right edge of the world in world coordinates.
+ *
+ *  \param [in] geometry The GschemPageGeometry
+ *  \return The right edge of the world in world coordinates.
+ */
+int
+gschem_page_geometry_get_world_right (GschemPageGeometry *geometry)
+{
+  g_return_val_if_fail (geometry != NULL, 0);
+
+  return geometry->world_right;
 }
 
 
@@ -216,7 +231,7 @@ gschem_page_geometry_get_world_left (GschemPageGeometry *geometry)
  *  \return The top edge of the world in world coordinates.
  */
 int
-gschem_page_geometry_get_world_right (GschemPageGeometry *geometry)
+gschem_page_geometry_get_world_top (GschemPageGeometry *geometry)
 {
   g_return_val_if_fail (geometry != NULL, 0);
 
@@ -248,21 +263,6 @@ gschem_page_geometry_get_world_to_screen_matrix (GschemPageGeometry *geometry)
   }
 
   return &(geometry->world_to_screen_matrix);
-}
-
-
-
-/*! \brief Get the top edge of the world in world coordinates.
- *
- *  \param [in] geometry The GschemPageGeometry
- *  \return The top edge of the world in world coordinates.
- */
-int
-gschem_page_geometry_get_world_top (GschemPageGeometry *geometry)
-{
-  g_return_val_if_fail (geometry != NULL, 0);
-
-  return geometry->world_top;
 }
 
 
