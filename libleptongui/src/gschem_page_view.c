@@ -53,7 +53,11 @@ enum
   PROP_PAGE,
   PROP_PAGE_GEOMETRY,
   PROP_VADJUSTMENT,
-  PROP_SHOW_HIDDEN_TEXT
+  PROP_SHOW_HIDDEN_TEXT,
+#ifdef ENABLE_GTK3
+  PROP_HSCROLL_POLICY,
+  PROP_VSCROLL_POLICY
+#endif
 };
 
 
@@ -338,7 +342,27 @@ gschem_page_view_class_init (GschemPageViewClass *klass)
                                                         (GParamFlags) (G_PARAM_READWRITE |
                                                                        G_PARAM_CONSTRUCT)));
 
-#ifndef ENABLE_GTK3
+#ifdef ENABLE_GTK3
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_HSCROLL_POLICY,
+                                   g_param_spec_enum ("hscroll-policy",
+                                                      "hscroll-policy",
+                                                      "hscroll-policy",
+                                                      GTK_TYPE_SCROLLABLE_POLICY,
+                                                      GTK_SCROLL_MINIMUM,
+                                                      (GParamFlags) (G_PARAM_READWRITE |
+                                                                     G_PARAM_CONSTRUCT)));
+
+  g_object_class_install_property (G_OBJECT_CLASS (klass),
+                                   PROP_VSCROLL_POLICY,
+                                   g_param_spec_enum ("vscroll-policy",
+                                                      "vscroll-policy",
+                                                      "vscroll-policy",
+                                                      GTK_TYPE_SCROLLABLE_POLICY,
+                                                      GTK_SCROLL_MINIMUM,
+                                                      (GParamFlags) (G_PARAM_READWRITE |
+                                                                     G_PARAM_CONSTRUCT)));
+#else
   GTK_WIDGET_CLASS (klass)->set_scroll_adjustments_signal = g_signal_new (
     "set-scroll-adjustments",
     G_OBJECT_CLASS_TYPE (klass),
