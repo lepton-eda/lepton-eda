@@ -584,6 +584,19 @@ gschem_page_view_get_type ()
                                    "GschemPageView",
                                    &info,
                                    (GTypeFlags) 0);
+
+#ifdef ENABLE_GTK3
+    static const GInterfaceInfo scrollable_info =
+      {
+       (GInterfaceInitFunc) NULL,
+       (GInterfaceFinalizeFunc) NULL,
+       (gpointer) NULL
+      };
+
+    g_type_add_interface_static (type,
+                                 GTK_TYPE_SCROLLABLE,
+                                 &scrollable_info);
+#endif
   }
 
   return type;
