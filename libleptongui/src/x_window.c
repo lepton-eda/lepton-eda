@@ -245,7 +245,11 @@ void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
                          GDK_BUTTON_PRESS_MASK   |
                          GDK_ENTER_NOTIFY_MASK |
                          GDK_KEY_PRESS_MASK |
-                         GDK_BUTTON_RELEASE_MASK);
+                         GDK_BUTTON_RELEASE_MASK
+#ifdef ENABLE_GTK3
+                         | GDK_SCROLL_MASK
+#endif
+                         );
 
   struct event_reg_t* tmp = NULL;
 
