@@ -332,7 +332,11 @@ gschem_preview_init (GschemPreview *preview)
   gtk_widget_set_events (GTK_WIDGET (preview),
                          GDK_EXPOSURE_MASK |
                          GDK_POINTER_MOTION_MASK |
-                         GDK_BUTTON_PRESS_MASK);
+                         GDK_BUTTON_PRESS_MASK
+#ifdef ENABLE_GTK3
+                         | GDK_SCROLL_MASK
+#endif
+                         );
   for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++) {
     g_signal_connect (GTK_WIDGET (preview),
                       tmp->detailed_signal,
