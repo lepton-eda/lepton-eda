@@ -276,6 +276,16 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
       g_value_set_boolean (value, gschem_page_view_get_show_hidden_text (view));
       break;
 
+#ifdef ENABLE_GTK3
+    case PROP_HSCROLL_POLICY:
+      g_value_set_enum (value, (gint) gschem_page_view_get_hscroll_policy (view));
+      break;
+
+    case PROP_VSCROLL_POLICY:
+      g_value_set_enum (value, (gint) gschem_page_view_get_vscroll_policy (view));
+      break;
+#endif
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
   }
@@ -415,6 +425,35 @@ gschem_page_view_get_hadjustment (GschemPageView *view)
   return view->hadjustment;
 }
 
+
+#ifdef ENABLE_GTK3
+/*! \brief Get the horizontal scrolling policy for this view
+ *
+ *  \param [in] view The view
+ *  \return The horizontal scrolling policy for this view
+ */
+GtkScrollablePolicy
+gschem_page_view_get_hscroll_policy (GschemPageView *view)
+{
+  g_return_val_if_fail (view != NULL, GTK_SCROLL_MINIMUM);
+
+  return view->hscroll_policy;
+}
+
+
+/*! \brief Get the vertical scrolling policy for this view
+ *
+ *  \param [in] view The view
+ *  \return The vertical scrolling policy for this view
+ */
+GtkScrollablePolicy
+gschem_page_view_get_vscroll_policy (GschemPageView *view)
+{
+  g_return_val_if_fail (view != NULL, GTK_SCROLL_MINIMUM);
+
+  return view->vscroll_policy;
+}
+#endif
 
 
 /*! \brief Get page for this view
@@ -671,6 +710,11 @@ gschem_page_view_init (GschemPageView *view)
 
   view->hadjustment = NULL;
   view->vadjustment = NULL;
+
+#ifdef ENABLE_GTK3
+  view->hscroll_policy = GTK_SCROLL_MINIMUM;
+  view->vscroll_policy = GTK_SCROLL_MINIMUM;
+#endif
 
   geometry_cache_create (view);
 
@@ -1046,6 +1090,33 @@ gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustme
 }
 
 
+#ifdef ENABLE_GTK3
+/*! \brief Set the horizontal scrolling policy for this view
+ *
+ *  \param [in] view The view
+ */
+void
+gschem_page_view_set_hscroll_policy (GschemPageView *view, GtkScrollablePolicy policy)
+{
+  g_return_if_fail (view != NULL);
+
+  view->hscroll_policy = policy;
+}
+
+
+/*! \brief Get the vertical scrolling policy for this view
+ *
+ *  \param [in] view The view
+ */
+void
+gschem_page_view_set_vscroll_policy (GschemPageView *view, GtkScrollablePolicy policy)
+{
+  g_return_if_fail (view != NULL);
+
+  view->vscroll_policy = policy;
+}
+#endif
+
 
 void
 gschem_page_view_set_show_hidden_text (GschemPageView *view,
@@ -1110,6 +1181,16 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       gschem_page_view_set_show_hidden_text (view,
                                              g_value_get_boolean (value));
       break;
+
+#ifdef ENABLE_GTK3
+    case PROP_HSCROLL_POLICY:
+      gschem_page_view_set_hscroll_policy (view, (GtkScrollablePolicy) g_value_get_enum (value));
+      break;
+
+    case PROP_VSCROLL_POLICY:
+      gschem_page_view_set_vscroll_policy (view, (GtkScrollablePolicy) g_value_get_enum (value));
+      break;
+#endif
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);

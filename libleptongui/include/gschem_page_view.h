@@ -46,6 +46,11 @@ struct _GschemPageView
   GtkAdjustment *hadjustment;
   GtkAdjustment *vadjustment;
 
+  #ifdef ENABLE_GTK3
+  GtkScrollablePolicy hscroll_policy;
+  GtkScrollablePolicy vscroll_policy;
+  #endif
+
   gboolean configured;
 
   gboolean doing_pan;  /* mouse pan status flag */
@@ -150,3 +155,17 @@ gschem_page_view_zoom_extents (GschemPageView *view, const GList *list);
 
 void
 gschem_page_view_zoom_object (GschemPageView *view, OBJECT *object);
+
+#ifdef ENABLE_GTK3
+GtkScrollablePolicy
+gschem_page_view_get_hscroll_policy (GschemPageView *view);
+
+GtkScrollablePolicy
+gschem_page_view_get_vscroll_policy (GschemPageView *view);
+
+void
+gschem_page_view_set_hscroll_policy (GschemPageView *view, GtkScrollablePolicy scroll);
+
+void
+gschem_page_view_set_vscroll_policy (GschemPageView *view, GtkScrollablePolicy scroll);
+#endif
