@@ -928,15 +928,24 @@ eda_renderer_calc_text_position (EdaRenderer *renderer, const GedaObject *object
                                  double *x, double *y)
 {
   PangoRectangle inked_rect, logical_rect;
+  PangoContext *pcontext;
   double temp;
   double y_lower, y_middle, y_upper;
   double x_left, x_middle, x_right;
+  const PangoFontDescription *fdesc;
+  PangoFontMetrics *fmetrics;
+  gint descent;
 
   cairo_save (renderer->priv->cr);
   cairo_identity_matrix (renderer->priv->cr);
   pango_cairo_update_layout (renderer->priv->cr, renderer->priv->pl);
   pango_layout_get_extents (renderer->priv->pl,
                             &inked_rect, &logical_rect);
+
+  pcontext = pango_layout_get_context (renderer->priv->pl);
+  fdesc = pango_layout_get_font_description (renderer->priv->pl);
+  fmetrics = pango_context_get_metrics (pcontext, fdesc, NULL);
+  descent = pango_font_metrics_get_descent (fmetrics);
 
   x_left = 0;
   x_middle = -logical_rect.width / 2.0;
@@ -945,6 +954,14 @@ eda_renderer_calc_text_position (EdaRenderer *renderer, const GedaObject *object
   y_upper  = -logical_rect.y;                     /* Top of inked extents */
   y_middle = y_upper - logical_rect.height / 2.;  /* Middle of inked extents */
   y_lower  = y_upper - logical_rect.height;       /* Baseline of bottom line */
+
+  switch (geda_text_object_get_alignment (object)) {
+    case LOWER_LEFT:
+    case LOWER_MIDDLE:
+    case LOWER_RIGHT:
+      y_lower += descent; break;
+    default: break;
+  }
 
   /* Special case flips attachment point to opposite corner when
    * the text is rotated to 180 degrees, since the drawing code
