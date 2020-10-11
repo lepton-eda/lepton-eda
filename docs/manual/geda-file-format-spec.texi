@@ -20,10 +20,10 @@ December 31st, 2003
 
 This file is the official documentation for the file formats in
 gEDA/gaf (gschem And Friends). The primary file format used in
-gEDA/gaf is the schematic/symbol format. Files which end with .sch or
-.sym are schematics or symbol files. Until there is another file type
-in gEDA/gaf, then this document will only cover the symbol/schematic
-file format.
+gEDA/gaf is the schematic/symbol format. Files which end with
+@file{.sch} or @file{.sym} are schematics or symbol files. Until there
+is another file type in gEDA/gaf, then this document will only cover
+the symbol/schematic file format.
 
 
 This file format document is current as of gEDA/gaf version
@@ -71,16 +71,16 @@ turned on its side.
 @node Filenames
 @section Filenames
 
-Symbols end in .sym. The only symbol filename convention that is used
-in gEDA/gaf is that if there are multiple instances of a symbol with
-the same name (like a 7400), then a -1, -2, -3, ... -N suffix is added
-to the end of the filename. Example: 7400-1.sym, 7400-2.sym,
-7400-3.sym...
+Symbol names end in @file{.sym}. The only symbol filename convention
+that is used in gEDA/gaf is that if there are multiple instances of a
+symbol with the same name (like a 7400), then a -1, -2, -3, ... -N
+suffix is added to the end of the filename. Example: @file{7400-1.sym},
+@file{7400-2.sym}, @file{7400-3.sym}...
 
-Schematics end in .sch. There used to be a schematic filename
-convention (adding a -1 .. -N to the end of the basename), but this
-convention is now obsolete. Schematic filenames can be anything that
-makes sense to the creator.
+Schematic names end in @file{.sch}. There used to be a schematic
+filename convention (adding a -1 .. -N to the end of the basename),
+but this convention is now obsolete. Schematic filenames can be
+anything that makes sense to the creator.
 
 
 @node Object types
@@ -90,11 +90,11 @@ A schematic/symbol file for gEDA/gaf consists of:
 
 @itemize
 @item
-A version (v) as the first item in the file. This is required.
+A version (@code{v}) as the first item in the file. This is required.
 
 @item
 Any number of objects and the correct data. Objects are specified by
-an ``object type''
+an ``object type''.
 
 @item
 Most objects are a single line, however text objects are two lines
@@ -109,8 +109,8 @@ on the numeric value.
 
 @end itemize
 
-The ``object type'' id is a single letter and this id must start in
-the first column. The object type id is case sensitive.
+The ``object type'' ID is a single letter and this ID must start in
+the first column. The object type ID is case sensitive.
 
 The schematic and symbol files share the same file layout. A symbol is
 nothing more than a collection of primitive objects (lines, boxes,
@@ -171,16 +171,16 @@ field should no longer be used to determine the file format. It is
 used for information purposes only now.
 
 @item
-Starting at and after gEDA/gaf version 20031004, the fileformat
-version field is used to determine the file format version. All file
-format code should key off of this field.
+Starting at and after gEDA/gaf version 20031004, the
+@code{fileformat_version} field is used to determine the file format
+version. All file format code should key off of this field.
 
 @item
-fileformat version increases when the file format changes.
+@code{fileformat_version} increases when the file format changes.
 
 @item
-The starting point for fileformat version was 1. The current
-fileformat is 2.
+The starting point for @code{fileformat_version} was 1. The current
+file format version is 2.
 
 @item
 fileformat version is just an integer with no minor number.
@@ -1307,7 +1307,7 @@ C 18600 19900 1 0 0 7400-1.sym
 
 A component who's origin is at (18600,19900), is selectable, not
 rotated, not mirrored, and the basename of the component is
-7400-1.sym.
+@file{7400-1.sym}.
 
 
 @node path
