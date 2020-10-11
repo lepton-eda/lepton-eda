@@ -124,7 +124,7 @@ description of each individual field, details and caveats of the
 fields, and finally an example with description.
 
 For information on the color index (which is used in practically all
-objects), see the Color section.
+objects), see the @ref{Colors} section.
 
 @node version
 @subsection version
