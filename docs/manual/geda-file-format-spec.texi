@@ -325,7 +325,7 @@ mils in between each dot.
 Valid in: Schematic and Symbol files
 
 
-@code{@strong{type x1 y1 width height angle mirrored embedded
+@code{@strong{type x y width height angle mirrored embedded
 filename
 [encoded picture data
 encoded picture end]}}
