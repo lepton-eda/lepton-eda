@@ -225,7 +225,7 @@ Valid in: Schematic and Symbol files
 @code{@strong{type x1 y1 x2 y2 color width capstyle dashstyle
 dashlength dashspace}}
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -331,7 +331,7 @@ filename
 encoded picture end]}}
 
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -469,7 +469,7 @@ Valid in: Schematic and Symbol files
 dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2}}
 
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -627,7 +627,7 @@ Valid in: Schematic and Symbol files
 dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2}}
 
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -769,7 +769,7 @@ Valid in: Schematic and Symbol files
 capstyle dashstyle dashlength dashspace}}
 
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -891,7 +891,7 @@ string line 3
 ...
 string line N}}
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -1060,7 +1060,7 @@ Valid in: Schematic files ONLY
 @code{@strong{type x1 y1 x2 y2 color}}
 
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -1110,7 +1110,7 @@ Valid in: Schematic files ONLY
 
 @code{@strong{type x1 y1 x2 y2 color ripperdir}}
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -1172,7 +1172,7 @@ Valid in: Symbol files ONLY
 
 @code{@strong{type x1 y1 x2 y2 color pintype whichend}}
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -1248,7 +1248,7 @@ Valid in: Schematic files ONLY
 
 @code{@strong{type x y selectable angle mirror basename}}
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -1327,7 +1327,7 @@ path data line 3
 ...
 path data line N}}
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -1515,7 +1515,7 @@ Valid in: Special font files ONLY
 
 @code{@strong{type character width flag}}
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Pos. @tab Field @tab Type/unit @tab Description
 
 @item
@@ -1559,7 +1559,7 @@ via an integer index. The relationship between integer and color is
 based on object type. Each object type typically has one or more
 colors. Here is a table of color index to object type:
 @multitable @columnfractions .2 .2 .2 .4
-@item
+@headitem
 Index @tab Object type
 
 @item
