@@ -3,6 +3,7 @@ lepton_manual_TEXINFOS = \
 	communication.texi \
 	development.texi \
 	geda-file-format-spec.texi \
+	lepton-netlist.texi \
 	lepton-schematic.texi
 
 AM_MAKEINFOHTMLFLAGS = --css-ref=lepton-manual.css
