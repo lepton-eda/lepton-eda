@@ -1,0 +1,176 @@
+@node Installation
+@chapter Installation
+
+Installation of Lepton is pretty simple on many operating systems and
+distributions supporting pre-built binary packages.  Just use your
+favorite package manager to install the package.  For example, on
+Debian or Ubuntu, you could use @command{synaptic}, @command{apt-get},
+or @command{aptitude} for installation.  It doesn't matter which
+interface you use, GUI or CLI. For instance:
+@example
+sudo aptitude install lepton-eda
+@end example
+
+However, in some cases or on some systems you may want to install
+Lepton from source code.  The order is as follows.
+@itemize
+@item
+Download the source code:
+@item
+Compile it and install:
+@example
+cd the-directory-with-lepton-eda
+autoreconf -ivf && ./configure && make && sudo make install
+@end example
+Call for @command{autoreconf} is not needed if you download sources as
+a tarball of some version.
+@item
+In some cases, when, for example, a new library is installed, you may
+need to launch @command{ldconfig} as well:
+@example
+sudo ldconfig
+@end example
+@end itemize
+
+@node Dependencies
+@section Dependencies
+
+In order to compile Lepton from the distributed source archives, you
+@strong{must} have the following tools and libraries installed:
+@itemize
+@item
+A C/C++ compiler and standard library (@command{gcc}/@command{glibc}
+are recommended, though you may use @command{clang} instead).
+@item
+@url{http://pkgconfig.freedesktop.org, The pkg-config tool} for
+managing shared libraries.
+@item
+@url{http://www.gnu.org/software/guile, Guile} ("GNU's Ubiquitous
+Intelligent Language for Extensions"), version 2.0.13 or later.
+@item
+@url{http://www.gtk.org, GTK+} (the Gimp Toolkit), version 2.24.0 or
+later.
+@item
+@url{http://www.gnu.org/software/gettext, GNU gettext}, version 0.18
+or newer.
+@item
+@url{http://flex.sourceforge.net, The lex tool} for generating lexical
+scanners.  The @command{flex} implementation is recommended.
+@item
+The @command{awk} tool for data processing.
+@url{http://www.gnu.org/software/gawk, GNU Awk} (@command{gawk}) is
+recommended.
+@end itemize
+
+The following tools and libraries are @emph{highly recommended}:
+@itemize
+@item
+@url{http://www.gnu.org/software/groff, GNU troff} (@command{groff}).
+@item
+@url{http://freedesktop.org/Software/shared-mime-info, The
+freedesktop.org MIME info database}.
+@item
+@url{http://www.freedesktop.org/software/desktop-file-utils, The
+freedesktop.org utilities} for manipulating @file{.desktop} files.
+@end itemize
+
+The following tools and libraries are optional:
+
+@itemize
+@item
+@url{http://www.etla.net/libstroke, libstroke} a stroke and gesture
+recognition library.  If this is available, @command{lepton-schematic}
+will support mouse gesture recognition.
+@end itemize
+
+@node Troubleshooting dependencies
+@section Troubleshooting dependencies
+
+Sometimes, @code{./configure} says it cannot find a library while
+the library is installed.  Really, it may just not find its headers
+which live in a separate package.  Many modern operating system
+distributions split a library into two packages:
+
+@enumerate
+@item
+A package with binary files, say a @file{libfoo} package, which
+contains the files necessary to @emph{run} programs which use
+@file{libfoo}.
+@item
+A @dfn{development package}, @file{libfoo-dev} or @file{libfoo-devel},
+which contains the files necessary to @emph{compile} programs which
+use @file{libfoo}.
+@end enumerate
+
+If you're having problems, make sure that you have all of the
+necessary development packages installed.
+
+
+@node Installation from source
+@section Installation from a source archive
+
+First extract the archive to a sensible place:
+@example
+tar -xzvf lepton-eda-@value{VERSION}.tar.gz &&
+cd lepton-eda-@value{VERSION}
+@end example
+
+Run the configuration script.  You'll probably want to specify a
+custom directory to install Lepton EDA to, for example:
+@example
+./configure --prefix=$HOME/lepton
+@end example
+
+You can then compile Lepton:
+@example
+make
+@end example
+
+And install it (if you used a @option{--prefix} outside your
+@env{$HOME} directory, you may need to run this as @emph{root}):
+
+@example
+make install
+@end example
+
+@node Installation from git
+@section Installation from the git repository
+
+Lepton uses the @command{git} version control system.  If you wish to
+try out the very latest version of Lepton, you will need to install
+some extra tools @emph{in addition to} the ones listed above:
+
+@itemize
+@item
+The @url{http://git-scm.com, git version control tool}, version 1.6 or
+newer.
+@item
+@url{http://www.gnu.org/software/automake, GNU Automake}, version
+1.11.0 or newer.
+@item
+@url{http://www.gnu.org/software/autoconf, GNU Autoconf}, version 2.60
+or newer.
+@item
+@url{http://www.gnu.org/software/libtool, GNU Libtool}.
+@item
+@url{http://www.gnu.org/software/texinfo, GNU Texinfo documentation
+system}.
+
+Note that on some distributions the @TeX{} support for Texinfo is
+packaged separately.
+@end itemize
+
+Once you have these installed, you need to clone the Lepton git
+repository:
+
+@example
+git clone https://github.com/lepton-eda/lepton-eda.git
+@end example
+
+To generate the configure script, run:
+
+@example
+autoreconf -ivf
+@end example
+
+You can then proceed to configure and build Lepton as described above.
