@@ -1,4 +1,4 @@
-@node Communication
+@node Communication, Development, lepton-netlist, Top
 @chapter Communication
 @cindex communication
 @cindex communication channels

@@ -38,20 +38,19 @@ Documentation License.''
 @contents
 
 @ifnottex
-@node Top
+@node Top, Overview, (dir), (dir)
 @top Lepton EDA Reference Manual
 @end ifnottex
 
 @menu
-* Overview:: Overview of program components.
-* Installation:: Installation of the tool suite.
-* Configuration:: Configuration system.
-* lepton-schematic:: Lepton EDA schematic capture program.
-* lepton-netlist:: Lepton EDA netlister.
-* Communication:: Places for discussions and chatting.
-* Development:: Useful information for developers.
-* gEDA file format:: File format currently in use.
-
+* Overview::                    Overview of program components.
+* Installation::                Installation of the tool suite.
+* Configuration::               Configuration system.
+* lepton-schematic::            Lepton EDA schematic capture program.
+* lepton-netlist::              Lepton EDA netlister.
+* Communication::               Places for discussions and chatting.
+* Development::                 Useful information for developers.
+* gEDA file format::            File format currently in use.
 * Index::
 @end menu
 
@@ -63,9 +62,6 @@ Documentation License.''
 @include communication.texi
 @include development.texi
 @include geda-file-format-spec.texi
-
-@node Index
-@unnumbered Index
-@printindex cp
+@include index.texi
 
 @bye

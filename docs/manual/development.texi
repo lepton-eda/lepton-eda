@@ -1,4 +1,4 @@
-@node Development
+@node Development, gEDA file format, Communication, Top
 @chapter Development
 @cindex development
 

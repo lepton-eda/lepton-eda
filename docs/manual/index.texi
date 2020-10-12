@@ -1,0 +1,3 @@
+@node Index, , gEDA file format, Top
+@unnumbered Index
+@printindex cp

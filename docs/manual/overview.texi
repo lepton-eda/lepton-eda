@@ -1,4 +1,4 @@
-@node Overview
+@node Overview, Installation, Top, Top
 @chapter Overview
 @cindex overview
 

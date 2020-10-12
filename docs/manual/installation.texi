@@ -1,4 +1,4 @@
-@node Installation
+@node Installation, Configuration, Overview, Top
 @chapter Installation
 
 Installation of Lepton is pretty simple on many operating systems and
