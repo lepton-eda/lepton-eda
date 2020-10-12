@@ -132,7 +132,10 @@ objects), see the @ref{Colors} section.
 Valid in: Schematic and Symbol files
 
 
-@code{@strong{type version fileformat_version}}
+@verbatim
+type version fileformat_version
+@end verbatim
+
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
 Pos. @tab Field @tab Type/unit @tab Description
@@ -222,8 +225,10 @@ v 20040111 1
 Valid in: Schematic and Symbol files
 
 
-@code{@strong{type x1 y1 x2 y2 color width capstyle dashstyle
-dashlength dashspace}}
+@verbatim
+type x1 y1 x2 y2 color width capstyle dashstyle dashlength dashspace
+@end verbatim
+
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
 Pos. @tab Field @tab Type/unit @tab Description
@@ -325,10 +330,12 @@ mils in between each dot.
 Valid in: Schematic and Symbol files
 
 
-@code{@strong{type x y width height angle mirrored embedded
-filename
+@verbatim
+type x y width height angle mirrored embedded filename
 [encoded picture data
-encoded picture end]}}
+encoded picture end]
+@end verbatim
+
 
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
@@ -465,8 +472,10 @@ the encoded picture data.
 Valid in: Schematic and Symbol files
 
 
-@code{@strong{type x y width height color width capstyle dashstyle
-dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2}}
+@verbatim
+type x y width height color width capstyle dashstyle dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2
+@end verbatim
+
 
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
@@ -623,8 +632,10 @@ mils, no fill, rest parameters unset.
 Valid in: Schematic and Symbol files
 
 
-@code{@strong{type x y radius color width capstyle dashstyle
-dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2}}
+@verbatim
+type x y radius color width capstyle dashstyle dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2
+@end verbatim
+
 
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
@@ -765,8 +776,10 @@ of 30 mils, second mesh line: 90 degrees, with a spacing of 50 mils.
 Valid in: Schematic and Symbol files
 
 
-@code{@strong{type x y radius startangle sweepangle color width
-capstyle dashstyle dashlength dashspace}}
+@verbatim
+type x y radius startangle sweepangle color width capstyle dashstyle dashlength dashspace
+@end verbatim
+
 
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
@@ -884,12 +897,15 @@ enclosed by curly braces, they are interpreted as attributes. See the
 Valid in: Schematic and Symbol files
 
 
-@code{@strong{type x y color size visibility show_name_value angle alignment num_lines
+@verbatim
+type x y color size visibility show_name_value angle alignment num_lines
 string line 1
 string line 2
 string line 3
 ...
-string line N}}
+string line N
+@end verbatim
+
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
 Pos. @tab Field @tab Type/unit @tab Description
@@ -1057,7 +1073,10 @@ string: ``R/W'' has an overbar over the ``W''.
 Valid in: Schematic files ONLY
 
 
-@code{@strong{type x1 y1 x2 y2 color}}
+@verbatim
+type x1 y1 x2 y2 color
+@end verbatim
+
 
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
@@ -1108,7 +1127,10 @@ A net segment from (12700, 29400) to (32900, 29400) with color index
 Valid in: Schematic files ONLY
 
 
-@code{@strong{type x1 y1 x2 y2 color ripperdir}}
+@verbatim
+type x1 y1 x2 y2 color ripperdir
+@end verbatim
+
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
 Pos. @tab Field @tab Type/unit @tab Description
@@ -1170,7 +1192,10 @@ and no nets have been connected to this bus segment.
 Valid in: Symbol files ONLY
 
 
-@code{@strong{type x1 y1 x2 y2 color pintype whichend}}
+@verbatim
+type x1 y1 x2 y2 color pintype whichend
+@end verbatim
+
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
 Pos. @tab Field @tab Type/unit @tab Description
@@ -1246,7 +1271,10 @@ and the first point being the active connection end.
 Valid in: Schematic files ONLY
 
 
-@code{@strong{type x y selectable angle mirror basename}}
+@verbatim
+type x y selectable angle mirror basename
+@end verbatim
+
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
 Pos. @tab Field @tab Type/unit @tab Description
@@ -1319,13 +1347,15 @@ Valid in: Schematic and Symbol files
 Valid since: Fileformat version 2 (release 1.5.1)
 
 
-@code{@strong{type color width capstyle dashstyle dashlength dashspace
-filltype fillwidth angle1 pitch1 angle2 pitch2 numlines
+@verbatim
+type color width capstyle dashstyle dashlength dashspace filltype fillwidth angle1 pitch1 angle2 pitch2 numlines
 path data line 1
 path data line 2
 path data line 3
 ...
-path data line N}}
+path data line N
+@end verbatim
+
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
 Pos. @tab Field @tab Type/unit @tab Description
@@ -1513,7 +1543,10 @@ lines of path data.
 Valid in: Special font files ONLY
 
 
-@code{@strong{type character width flag}}
+@verbatim
+type character width flag
+@end verbatim
+
 @multitable @columnfractions .2 .2 .2 .4
 @headitem
 Pos. @tab Field @tab Type/unit @tab Description
