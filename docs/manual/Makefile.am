@@ -1,5 +1,6 @@
 info_TEXINFOS = lepton-manual.texi
 lepton_manual_TEXINFOS = \
+	development.texi \
 	geda-file-format-spec.texi \
 	lepton-schematic.texi
 

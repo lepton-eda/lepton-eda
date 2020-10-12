@@ -1,0 +1,119 @@
+@node Development
+@chapter Development
+@cindex development
+
+Most of Lepton tools are written in Guile Scheme and work the same way
+independently of their location.  This provides an interesting
+opportunity: you can copy any of them to your home directory and play
+with it, edit and run without touching anything else.
+
+@node Debugging
+@section Debugging the tools
+@cindex debug
+@cindex debugging
+
+Most of Lepton programs are written in Guile Scheme.  GUI tools are
+based on Glib and GTK libraries.  It's worth to be aware of how to
+debug the code in order to fix or report issues.
+
+@node Debug Scheme code
+@subsection Debug Guile Scheme code
+@cindex debug Scheme code
+
+Sometimes code in Scheme may fail and output a backtrace looking out
+something like this:
+
+@example
+Backtrace:
+In unknown file:
+?: 19 [apply-smob/1 #<catch-closure 55e36cf0a020>]
+In ice-9/boot-9.scm:
+66: 18 [call-with-prompt prompt0 ...]
+...
+many more lines
+...
+In ice-9/boot-9.scm:
+105: 1 [#<procedure 55e36e0eee80 at ice-9/boot-9.scm:100:6 (thrown-k . args)> wrong-type-arg ...]
+In unknown file:
+?: 0 [apply-smob/1 #<catch-closure 55e36e0edae0> wrong-type-arg ...]
+
+ERROR: In procedure apply-smob/1:
+ERROR: In procedure struct-vtable: Wrong type argument in position 1 (expecting struct): #f
+@end example
+
+The output is incomprehensible, isn't it?  The issue gets worse due to
+abbreviation of the output, look at the ellipses in some of the lines.
+
+The length of the output lines depends on the environment variable
+@env{COLUMNS} set in your environment.  Sometimes you can improve
+readability of such errors by setting the variable to a bigger value.
+For instance, if you launch your program in terminal, do:
+
+@example
+echo $COLUMNS
+@print{} 106
+export COLUMNS=1000
+lepton-schematic
+@end example
+
+You can do it in your Scheme code as well:
+
+@lisp
+(setenv "COLUMNS" "1000")
+@end lisp
+
+Sometimes you have to find the code you could insert such a line in.
+For example, the code of Lepton Scheme unit tests contains this line
+in @file{unit-test.scm}, though it is commented out as this is
+unnecessary in most cases.
+
+Another approach is using of interactive mode of Guile or one of
+Lepton tools to debug your code.  Load your modules or files with code
+in this mode one by one and see what's wrong with them.
+@command{lepton-netlist} and @command{lepton-symcheck} support this.
+
+
+@node Debuggers
+@subsection Debug C code with debugger tools
+@cindex debuggers
+
+One of the most popular tools to debug C code is @command{gdb}.  The
+issue with @command{gdb} is that it cannot work with programs written
+in Scheme and most of Lepton tools are such programs.  This is easily
+solvable.  Instead of the call
+
+@example
+gdb lepton-schematic
+@end example
+
+@noindent
+use
+
+@example
+gdb --args guile -s /usr/local/bin/lepton-schematic
+@end example
+
+@noindent
+because this is the very command which is used internally in the
+@command{lepton-schematic} script.  Please note using of the full path
+to the script here.
+
+@node Debug Glib and GTK
+@subsection Debug C code based on Glib and GTK
+@cindex debug glib
+@cindex debug gtk
+
+Sometimes you may encounter critical warnings by @code{glib} or
+@code{gtk}, which look like this:
+
+@example
+GLib-GObject-CRITICAL **: ...
+@end example
+
+In order to debug them, you need to know the way of reproducing them.
+Then, you can use the following command to fiddle with them in
+@command{gdb}:
+
+@example
+G_DEBUG=fatal_criticals gdb --args guile -s /usr/local/bin/lepton-schematic
+@end example
