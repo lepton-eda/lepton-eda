@@ -1,6 +1,7 @@
 info_TEXINFOS = lepton-manual.texi
 lepton_manual_TEXINFOS = \
 	communication.texi \
+	configuration.texi \
 	development.texi \
 	geda-file-format-spec.texi \
 	lepton-netlist.texi \
