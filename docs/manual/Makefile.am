@@ -6,7 +6,8 @@ lepton_manual_TEXINFOS = \
 	geda-file-format-spec.texi \
 	installation.texi \
 	lepton-netlist.texi \
-	lepton-schematic.texi
+	lepton-schematic.texi \
+	overview.texi
 
 AM_MAKEINFOHTMLFLAGS = --css-ref=lepton-manual.css
 
