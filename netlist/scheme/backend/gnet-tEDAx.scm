@@ -21,8 +21,12 @@
 ;; The tEDAx format is documented at http://repo.hu/projects/tedax/
 ;; --------------------------------------------------------------------------
 
-(use-modules (netlist schematic)
-             (netlist schematic toplevel))
+(use-modules (srfi srfi-1)
+             (lepton attrib)
+             (lepton object)
+             (netlist schematic)
+             (netlist schematic toplevel)
+             (netlist schematic-connection))
 
 ;;; Escape spaces and tabs in string S.
 (define (escape-whitespaces s)
@@ -104,22 +108,60 @@
 ;;
 ;; iterate over all nets
 ;;
-(define (tEDAx:nets netnames)
+(define (tEDAx:connections netnames)
   (for-each
    (lambda (netname)
      (format #t "~A\n"
        (tEDAx:display-connections netname (get-all-connections netname))))
    netnames))
 
+;;; Output all net attributes for all CONNECTIONS in the format
+;;; "nettag connection-name attrib-name attrib-value".
+;;; Attributes "netname=" are filtered out from the list.
+(define (tEDAx:netattributes connections)
+  (define (output-list ls)
+    (unless (null? ls)
+      (apply format #t "\tnettag ~A ~A ~A\n"
+             (map escape-whitespaces ls))))
+
+  (define connection-name schematic-connection-override-name)
+
+  (define (conn-attrib->name-ls conn attrib)
+    (if (string= (attrib-name attrib) "netname")
+        ;; If attrib is "netname=", skip it.
+        '()
+        ;; Otherwise, create the list in the form:
+        ;; '(connection-name attrib-name attrib-value)
+        (list (connection-name conn)
+              (attrib-name attrib)
+              (attrib-value attrib))))
+
+  (define (connection-nets conn)
+    (filter net? (schematic-connection-objects conn)))
+
+  (define (connection-attribs conn)
+    (append-map object-attribs (connection-nets conn)))
+
+  (define (connection->name-attrib-lists conn)
+    (map (lambda (attrib) (conn-attrib->name-ls conn attrib))
+         (connection-attribs conn)))
+
+  (define list-of-conn-attrib-lists
+    (append-map connection->name-attrib-lists connections))
+
+  (for-each output-list list-of-conn-attrib-lists))
+
 ;;;
 ;;; emit netlist in tEDAx interchange format
 ;;;
 (define (tEDAx output-filename)
   (let ((nets (schematic-nets (toplevel-schematic)))
-        (packages (schematic-package-names (toplevel-schematic))))
+        (packages (schematic-package-names (toplevel-schematic)))
+        (connections (schematic-connections (toplevel-schematic))))
     (tEDAx:header)
     (tEDAx:components packages)
-    (tEDAx:nets nets)
+    (tEDAx:netattributes connections)
+    (tEDAx:connections nets)
     (tEDAx:trailer)))
 
 ;; --------------------------------------------------------------------------
