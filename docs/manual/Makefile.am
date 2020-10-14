@@ -5,7 +5,15 @@ lepton_manual_TEXINFOS = \
 
 AM_MAKEINFOHTMLFLAGS = --css-ref=lepton-manual.css
 
+PICTURES = \
+	coordinate-space.eps \
+	coordinate-space.png \
+	coordinate-space.sch
+
+noinst_DATA = $(PICTURES)
+
 EXTRA_DIST = \
+	$(PICTURES) \
 	lepton-manual.css \
 	scm-component.scm \
 	cmd-component.sh

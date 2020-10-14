@@ -61,7 +61,7 @@ however, negative coordinates work too, but not recommended.
 
 The following figure shows how the coordinate space is setup:
 
-@c @image{coordinate-space}
+@image{coordinate-space}
 
 X axis increases going to the right. Y axis increase going
 up. Coordinate system is landscape and corresponds to a sheet of paper
