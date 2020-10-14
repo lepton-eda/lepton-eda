@@ -11,7 +11,7 @@ begin netlist v1 netlist
 
 	footprint A3 UNKNOWN
 	device A3 directive
-	value A3 .options TEMP=25
+	value A3 .options\ TEMP=25
 
 	footprint C1 UNKNOWN
 	device C1 CAPACITOR
@@ -87,11 +87,11 @@ begin netlist v1 netlist
 
 	footprint VCC none
 	device VCC VOLTAGE_SOURCE
-	value VCC DC 15V
+	value VCC DC\ 15V
 
 	footprint Vinput none
 	device Vinput vsin
-	value Vinput DC 1.6V AC 10MV SIN(0 1MV 1KHZ)
+	value Vinput DC\ 1.6V\ AC\ 10MV\ SIN(0\ 1MV\ 1KHZ)
 
 	conn GND CE1 1
 	conn GND CE2 1

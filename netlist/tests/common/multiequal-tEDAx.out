@@ -11,7 +11,7 @@ begin netlist v1 netlist
 
 	footprint V1 none
 	device V1 VOLTAGE_SOURCE
-	value V1 DC 1V
+	value V1 DC\ 1V
 
 	conn GND R1 1
 	conn GND V1 2

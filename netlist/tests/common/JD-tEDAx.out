@@ -35,11 +35,11 @@ begin netlist v1 netlist
 
 	footprint V1 none
 	device V1 vpulse
-	value V1 pulse 3.3 0 1u 10p 10p 1.25u 2.5u
+	value V1 pulse\ 3.3\ 0\ 1u\ 10p\ 10p\ 1.25u\ 2.5u
 
 	footprint Vdd none
 	device Vdd VOLTAGE_SOURCE
-	value Vdd DC 3.3V
+	value Vdd DC\ 3.3V
 
 	footprint X1 UNKNOWN
 	device X1 LVD

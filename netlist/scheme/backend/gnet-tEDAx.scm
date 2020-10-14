@@ -24,6 +24,16 @@
 (use-modules (netlist schematic)
              (netlist schematic toplevel))
 
+;;; Escape spaces and tabs in string S.
+(define (escape-whitespaces s)
+  (define (escape-spaces s)
+    (string-join (string-split s #\space) "\\ "))
+
+  (define (escape-tabs s)
+    (string-join (string-split s #\tab) "\\\t"))
+
+  (escape-tabs (escape-spaces s)))
+
 ;;
 ;; return device attribute
 ;;
@@ -62,13 +72,17 @@
 (define (tEDAx:components ls)
   (for-each
    (lambda (package)
-     (format #t "\tfootprint ~A ~A\n\tdevice ~A ~A\n\tvalue ~A ~A\n\n"
-       package
-       (tEDAx:get-pattern package)
-       package
-       (tEDAx:get-device package)
-       package
-       (tEDAx:get-value package)))
+     (let ((package-name (escape-whitespaces package))
+           (pattern (escape-whitespaces (tEDAx:get-pattern package)))
+           (device (escape-whitespaces (tEDAx:get-device package)))
+           (value (escape-whitespaces (tEDAx:get-value package))))
+       (format #t "\tfootprint ~A ~A\n\tdevice ~A ~A\n\tvalue ~A ~A\n\n"
+               package-name
+               pattern
+               package-name
+               device
+               package-name
+               value)))
    ls))
 
 ;;
@@ -81,8 +95,8 @@
    (map
     (lambda (net)
       (format #f "\tconn ~A ~A ~A\n"
-	netname
-        (package net)
+	(escape-whitespaces netname)
+        (escape-whitespaces (package net))
         (pinnumber net)))
     nets)
    ""))
