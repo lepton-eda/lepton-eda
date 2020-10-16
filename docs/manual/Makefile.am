@@ -8,7 +8,10 @@ AM_MAKEINFOHTMLFLAGS = --css-ref=lepton-manual.css
 PICTURES = \
 	coordinate-space.eps \
 	coordinate-space.png \
-	coordinate-space.sch
+	coordinate-space.sch \
+	text-layout.eps \
+	text-layout.png \
+	text-layout.sch
 
 # lepton-cli export --no-color -k 0,5cm -o coordinate-space.png coordinate-space.sch
 # lepton-cli export --no-color -o coordinate-space.pdf coordinate-space.sch && pdftops -eps coordinate-space.pdf coordinate-space.eps

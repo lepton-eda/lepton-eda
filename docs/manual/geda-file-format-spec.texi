@@ -1014,7 +1014,7 @@ mean:
 @end itemize
 
 
-@c @image{text-layout}
+@image{text-layout}
 
 @itemize
 @item
