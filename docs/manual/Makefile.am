@@ -15,6 +15,8 @@ PICTURES = \
 
 # lepton-cli export --no-color -k 0,5cm -o coordinate-space.png coordinate-space.sch
 # lepton-cli export --no-color -o coordinate-space.pdf coordinate-space.sch && pdftops -eps coordinate-space.pdf coordinate-space.eps
+# lepton-cli export -k 1cm -o text-layout.png text-layout.sch
+# lepton-cli export -m 0,1cm -o text-layout.pdf text-layout.sch && pdftops -eps text-layout.pdf text-layout.eps
 noinst_DATA = $(PICTURES)
 
 EXTRA_DIST = \
