@@ -1,5 +1,6 @@
 /* Lepton EDA Schematic Capture
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * Code based on GTK 2.14.5 gtk/gtkaccellabel.c (LGPL)
  *

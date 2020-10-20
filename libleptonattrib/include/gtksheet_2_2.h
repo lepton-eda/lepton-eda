@@ -1,5 +1,7 @@
 /* GtkSheet widget for Gtk+.
  * Copyright (C) 1999-2001 Adrian E. Feiguin <adrian@ifir.ifir.edu.ar>
+ * Copyright (C) 2004-2011 gEDA Contributors
+ * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * Based on GtkClist widget by Jay Painter, but major changes.
  * Memory allocation routines inspired on SC (Spreadsheet Calculator)
