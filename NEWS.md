@@ -4,6 +4,31 @@ Recent Changes in Lepton EDA
 This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
+
+Notable changes in Lepton EDA 1.9.12 (upcoming)
+-----------------------------------------------
+### Changes in `lepton-schematic`:
+
+- Several new additional shortcuts have been added which are used
+  in many other programs to ease working with the tools for
+  newbies:
+  - <kbd>Control</kbd>+<kbd>N</kbd> for opening a new file
+  - <kbd>Control</kbd>+<kbd>O</kbd> for opening an existing file
+  - <kbd>Control</kbd>+<kbd>S</kbd> for file saving
+  - <kbd>Control</kbd>+<kbd>P</kbd> for printing the contents of a file
+  - <kbd>Control</kbd>+<kbd>Shift</kbd>+<kbd>Z</kbd> for redo (as
+    an inversion for <kbd>Control</kbd>+<kbd>Z</kbd> for undo)
+
+- Another bunch of additional shortcuts has been added to simplify
+  zooming for the same reasons:
+  - <kbd>=</kbd>, <kbd>Control</kbd>+<kbd>=</kbd>, and
+    <kbd>KP_Add</kbd> for zooming in
+  - <kbd>-</kbd>, <kbd>Control</kbd>+<kbd>-</kbd>, and
+    <kbd>KP_Subtract</kbd> for zooming out
+  - <kbd>0</kbd>, <kbd>Control</kbd>+<kbd>0</kbd>, and
+    <kbd>KP_Multiply</kbd> for zooming to extents
+
+
 Notable changes in Lepton EDA 1.9.11 (20200604)
 -----------------------------------------------
 ### General changes:
