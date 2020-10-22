@@ -9,6 +9,9 @@ PICTURES = \
 	coordinate-space.eps \
 	coordinate-space.png \
 	coordinate-space.sch \
+	path-example.eps \
+	path-example.png \
+	path-example.sch \
 	text-layout.eps \
 	text-layout.png \
 	text-layout.sch

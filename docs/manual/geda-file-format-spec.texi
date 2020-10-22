@@ -1854,7 +1854,7 @@ z
 The resulting path (with control points drawn on to illustrate their
 positions) is shown here:
 
-@c @image{path-example}
+@image{path-example}
 
 @node gEDA File Format Document Revision History
 @section gEDA File Format Document Revision History
