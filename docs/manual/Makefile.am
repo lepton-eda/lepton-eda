@@ -40,5 +40,6 @@ EXTRA_DIST = \
 all: all-am html
 	$(MKDIR_P) $(builddir)/lepton-manual.html/
 	cp -fv $(srcdir)/lepton-manual.css $(builddir)/lepton-manual.html/
+	for file in $(PICTURES); do cp $(srcdir)/$$file ${builddir}/lepton-manual.html/; done
 
 install-data-local: install-html
