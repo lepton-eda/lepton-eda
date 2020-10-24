@@ -12,16 +12,15 @@ lepton_manual_TEXINFOS = \
 
 AM_MAKEINFOHTMLFLAGS = --css-ref=lepton-manual.css
 
-PICTURES = \
-	coordinate-space.eps \
-	coordinate-space.png \
+schematics = \
 	coordinate-space.sch \
-	path-example.eps \
-	path-example.png \
 	path-example.sch \
-	text-layout.eps \
-	text-layout.png \
 	text-layout.sch
+
+schematics_eps = ${schematics:.sch=.eps}
+schematics_png = ${schematics:.sch=.png}
+
+PICTURES = $(schematics) $(schematics_eps) $(schematics_png)
 
 # lepton-cli export --no-color -k 0,5cm -o coordinate-space.png coordinate-space.sch
 # lepton-cli export --no-color -o coordinate-space.pdf coordinate-space.sch && pdftops -eps coordinate-space.pdf coordinate-space.eps
@@ -40,6 +39,6 @@ EXTRA_DIST = \
 all: all-am html
 	$(MKDIR_P) $(builddir)/lepton-manual.html/
 	cp -fv $(srcdir)/lepton-manual.css $(builddir)/lepton-manual.html/
-	for file in $(PICTURES); do cp $(srcdir)/$$file ${builddir}/lepton-manual.html/; done
+	for file in $(schematics_png); do cp $(srcdir)/$$file ${builddir}/lepton-manual.html/; done
 
 install-data-local: install-html
