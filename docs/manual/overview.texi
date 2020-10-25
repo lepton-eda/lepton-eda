@@ -102,3 +102,15 @@ version 20020527 or earlier).
 gsymupdate---update some deprecated attributes in old symbols (with
 version 20020527 or earlier).
 @end itemize
+
+@node compatibility with geda-gaf
+@section Compatibility with geda-gaf
+@cindex compatibility with geda-gaf
+
+Lepton EDA is backward compatible with its predecessor @emph{geda-gaf}
+and supports the same @ref{gEDA file format} for symbols and
+schematics.  We are planning to support it in future since there are
+lots of symbols and schematics created using it.  We cannot promise
+you to support any change in @emph{geda-gaf} in future.  It's up to
+you, our users, to point out what feature you would like to have in
+Lepton.
