@@ -7,6 +7,10 @@ independently of their location.  This provides an interesting
 opportunity: you can copy any of them to your home directory and play
 with it, edit and run without touching anything else.
 
+@menu
+* Debugging:: Debugging the tools
+@end menu
+
 @node Debugging
 @section Debugging the tools
 @cindex debug

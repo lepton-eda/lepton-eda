@@ -32,6 +32,13 @@ sudo ldconfig
 @end example
 @end itemize
 
+@menu
+* Dependencies::
+* Troubleshooting dependencies::
+* Installation from source::
+* Installation from git::
+@end menu
+
 @node Dependencies
 @section Dependencies
 

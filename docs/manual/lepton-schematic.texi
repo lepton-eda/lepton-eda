@@ -3,6 +3,10 @@
 @cindex lepton-schematic
 @cindex schematic capture
 
+@menu
+* Component libraries::
+@end menu
+
 @node Component libraries
 @section Component libraries
 @cindex component libraries
