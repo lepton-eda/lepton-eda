@@ -26,6 +26,17 @@ hardware or open source hardware. The suite is mainly being developed
 on the GNU/Linux platform with some development effort going into
 making sure the tools run on other platforms as well.
 
+Compatibility with geda-gaf
+===========================
+
+Lepton EDA is backward compatible with its predecessor `geda-gaf`
+and supports the same file format for symbols and schematics.  We
+are planning to support it in future since there are lots of
+symbols and schematics created using it.  We cannot promise you to
+support any change in `geda-gaf` in future, though.  It's up to
+you, our users, to point out what feature you would like to have
+in Lepton.
+
 Tools in the Lepton EDA suite
 =============================
 
