@@ -45,6 +45,12 @@ The major components of the Lepton suite are:
 - `liblepton`
   - A library of functions for manipulating Lepton schematics and symbols.
 
+- `libleptonrenderer`
+  - A library of functions for rendering primitives.
+
+- `libleptongui`
+  - A library of GUI functions.
+
 - `lepton-schematic`
   - A schematic editor.
 
