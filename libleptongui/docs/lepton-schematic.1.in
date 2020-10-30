@@ -73,7 +73,10 @@ There is NO WARRANTY, to the extent permitted by law.
 .SH SEE ALSO
 \fBlepton-netlist\fR(1), \fBlepton-symcheck\fR(1)
 .PP
-The full documentation for
+The complete manual for
 .B lepton-schematic
-is available from within the program by selecting the
-`Documentation' option from the program's `Help' menu.
+is provided in a GNU texinfo format. It is also available as
+HTML which you can open from within the program by selecting the
+`Documentation' option from the program's `Help' menu.  The
+texinfo version may be viewed with various info viewers such as
+emacs or tkinfo.
