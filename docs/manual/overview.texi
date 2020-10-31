@@ -12,8 +12,9 @@ professionals, educators, hobbyists, consultants, and anybody who
 needs a set of quality EDA tools.
 
 @menu
-* List of programs:: The list of programs in the suite.
+* List of programs::            The list of programs in the suite.
 * Compatibility with geda-gaf::
+* Related tools::               Tools related to Lepton EDA
 @end menu
 
 @node List of programs
@@ -130,3 +131,19 @@ lots of symbols and schematics created using it.  We cannot promise
 you to support any change in @emph{geda-gaf} in future.  It's up to
 you, our users, to point out what feature you would like to have in
 Lepton.
+
+
+@node Related tools
+@section Related tools
+@cindex Related tools
+
+@node Covered
+@subsection Covered
+@cindex Covered
+@cindex verilog code coverage
+
+@url{http://covered.sourceforge.net/index.html,
+Covered} is Verilog Code Coverage Analyzer by Trevor Williams.
+
+The project @url{http://covered.sourceforge.net/news.html, is inactive
+since 2011}.
