@@ -77,7 +77,13 @@ Documentation License.''
 
 Overview
 
+* List of programs::            The list of programs in the suite.
 * Compatibility with geda-gaf::
+* Related tools::               Tools related to Lepton EDA
+
+Related tools
+
+* Covered::
 
 Installation
 
@@ -152,6 +158,11 @@ Component library setup
 * component-library-command::
 * component-library-funcs::
 * reset-component-library::
+
+Netlister
+
+* Allegro backend::
+* BOM backend::
 
 lepton-cli - Lepton command-line utility
 

@@ -17,7 +17,7 @@ needs a set of quality EDA tools.
 * Related tools::               Tools related to Lepton EDA
 @end menu
 
-@node List of programs
+@node List of programs, Compatibility with geda-gaf, Overview, Overview
 @section The list of programs in the suite
 @cindex list of programs
 
@@ -118,9 +118,10 @@ version 20020527 or earlier).
 
 @menu
 * Compatibility with geda-gaf::
+* Related tools::
 @end menu
 
-@node Compatibility with geda-gaf,  , Overview, Overview
+@node Compatibility with geda-gaf, Related tools, List of programs, Overview
 @section Compatibility with geda-gaf
 @cindex compatibility with geda-gaf
 
@@ -133,11 +134,15 @@ you, our users, to point out what feature you would like to have in
 Lepton.
 
 
-@node Related tools
+@node Related tools,  , Compatibility with geda-gaf, Overview
 @section Related tools
 @cindex Related tools
 
-@node Covered
+@menu
+* Covered::
+@end menu
+
+@node Covered,  , Related tools, Related tools
 @subsection Covered
 @cindex Covered
 @cindex verilog code coverage
