@@ -1,0 +1,14 @@
+@node Allegro backend
+@section Allegro netlister backend
+
+The Allegro netlister backend by Matthew Ettus @email{matt@@ettus.com}
+is a backend generating netlists for the
+@url{https://www.cadence.com/en_US/home/tools/pcb-design-and-analysis/pcb-layout/allegro-pcb-designer.html,
+Allegro PCB designer}.
+
+It doesn't require any additional configuration.
+
+Example of netlist creation:
+@example
+lepton-netlist -g allegro -o schematic.out schematic.sch
+@end example
