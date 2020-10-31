@@ -13,6 +13,7 @@ lepton_manual_TEXINFOS = \
 	lepton-cli.texi \
 	lepton-eda-fonts.texi \
 	lepton-netlist.texi \
+	lepton-netlist-bom.texi \
 	lepton-schematic.texi \
 	no-connect-symbol.texi \
 	overview.texi \

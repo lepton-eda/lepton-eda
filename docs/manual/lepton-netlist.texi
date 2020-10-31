@@ -94,3 +94,9 @@ vhdl
 @item
 vipec
 @end itemize
+
+@menu
+* BOM backend::
+@end menu
+
+@include lepton-netlist-bom.texi
