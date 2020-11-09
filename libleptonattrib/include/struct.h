@@ -38,7 +38,7 @@
 
 /* -------  Includes needed to make the GTK stuff work  ------ */
 
-#include "gtksheet_2_2.h"
+#include <gtkextra/gtksheet.h>
 
 
 /* ========  Data structures used in processing below here  ========== */
