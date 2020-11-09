@@ -2,8 +2,6 @@ libleptonattrib/data/lepton-attrib.desktop.in
 libleptonattrib/lepton-attrib.scm
 libleptonattrib/src/f_export.c
 libleptonattrib/src/globals.c
-libleptonattrib/src/gtkextra-marshal.c
-libleptonattrib/src/gtksheet_2_2.c
 libleptonattrib/src/listsort.c
 libleptonattrib/src/s_attrib.c
 libleptonattrib/src/s_misc.c
