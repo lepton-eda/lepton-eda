@@ -46,7 +46,7 @@
 
 /* ----------------------------------------------------------------- *
  *  The sheet data hierarchy built by the prog should look like this:
- *  SHEET_DATA->(STRING_LIST *master_XXX_list)          // list of comps/nets/pins (row labels) 
+ *  SHEET_DATA->(STRING_LIST *master_XXX_list)          // list of comps/nets/pins (row labels)
  *            ->(STRING_LIST *master_XXX_attrib_list)   // list of attached names  (column labels)
  *            ->(TABLE *XXX_table)                      // table of attrib values (table entries)
  * ----------------------------------------------------------------- */
@@ -94,10 +94,10 @@ struct st_sheet_data {
 /* -------------------------------------------------------------------- */
 /* \brief Table cell struct
  *
- * st_table defined what is held in a spreadsheet cell for both 
- * comp and net spreadsheets.  Holds pointer to individual comp/net name, and 
- * pointer to attrib list.  Ideally, the name pointer points to the 
- * refdes/netname string held in the TOPLEVEL data structure, so that 
+ * st_table defined what is held in a spreadsheet cell for both
+ * comp and net spreadsheets.  Holds pointer to individual comp/net name, and
+ * pointer to attrib list.  Ideally, the name pointer points to the
+ * refdes/netname string held in the TOPLEVEL data structure, so that
  * when SHEET_DATA is manipulated, so is TOPLEVEL.
  */
 /* -------------------------------------------------------------------- */
@@ -135,8 +135,8 @@ struct st_string_list {
 /*! \brief A list of pins
  *
  * PIN_LIST is a special struct used for keeping track of pins.  Since
- * the master_pin_list must keep track of both refdes and pin, we need a 
- * special struct for pins.  Later processing will for a STRING_LIST 
+ * the master_pin_list must keep track of both refdes and pin, we need a
+ * special struct for pins.  Later processing will for a STRING_LIST
  * of refdes:pinnumber pairs for insertion in the spreadsheet.
  *
  * \todo Is this still in use? Consider replacing with a GList-based
@@ -154,9 +154,3 @@ struct st_pin_list {
 };
 
 #endif // #ifndef SHEET_DATA_STRUCT
-
-
-
-
-
-
