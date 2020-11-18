@@ -228,8 +228,8 @@ color_edit_widget_create (ColorEditWidget* widget)
   /* informational label: */
   const gchar* msg =
     _("Save your color scheme to a file by clicking on the \"Save As...\"\n"
-      "button. It can be loaded on startup with the following\n"
-      "expression in the gschemrc configuration file:\n"
+      "button. It can be loaded on startup with the following expression\n"
+      "(including parentheses) in the gschemrc configuration file:\n"
       "( primitive-load \"/path/to/saved-color-scheme-file\" )");
 
   GtkWidget* label = gtk_label_new (msg);
