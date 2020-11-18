@@ -23,7 +23,7 @@
  * \brief Functions to interface to the spreadsheet widget.
  *
  * This file holds functions used to handle the spreadsheet widget.
- * Much of this was hacked from testgtksheet.c starting in Jan 2004 
+ * Much of this was hacked from testgtksheet.c starting in Jan 2004
  * by SDB.
  */
 
@@ -80,7 +80,7 @@ x_gtksheet_init()
   } else {
     x_dialog_fatal_error(_("No components found in design.  Please check your schematic and try again!\n"), 1);
   }
-  
+
 
 #ifdef UNIMPLEMENTED_FEATURES
   /* -----  Nets  ----- */
@@ -96,7 +96,7 @@ x_gtksheet_init()
     gtk_sheet_set_locked(GTK_SHEET(sheets[1]), TRUE);   /* disallow editing of attribs for now */
   }
 #endif
-  
+
 
 #ifdef UNIMPLEMENTED_FEATURES
   /* -----  Pins  ----- */
@@ -113,23 +113,23 @@ x_gtksheet_init()
 
   /* --- Finally stick labels on the notebooks holding the two sheets. --- */
   for(i=0; i<NUM_SHEETS; i++){
-    if (sheets[i] != NULL) {  /* is this check needed? 
-			       * Yes, it prevents us from segfaulting on empty nets sheet. */
+    if (sheets[i] != NULL) {  /* is this check needed?
+                               * Yes, it prevents us from segfaulting on empty nets sheet. */
 
       GtkWidget* scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-      
+
       gtk_container_add( GTK_CONTAINER(scrolled_window), GTK_WIDGET(sheets[i]) );
 
       /* First remove old notebook page.  I should probably do some checking here. */
-      if (notebook != NULL) 
-	gtk_notebook_remove_page(GTK_NOTEBOOK(notebook), i);
+      if (notebook != NULL)
+        gtk_notebook_remove_page(GTK_NOTEBOOK(notebook), i);
 
 
       /* Then add new, updated notebook page */
       label= gtk_label_new(folder[i]);
 
       gtk_notebook_append_page(GTK_NOTEBOOK(notebook), scrolled_window,
-			       GTK_WIDGET(label) );
+                               GTK_WIDGET(label) );
 
       gtk_widget_show( GTK_WIDGET(sheets[i]) );
       gtk_widget_show( scrolled_window );
@@ -165,7 +165,7 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
   int width = 0;
   int new_width = 0;
   int char_width;
-  
+
   /* Leave if no items to add are available */
   if ((count == 0) || (list_head == NULL)) return;
 
@@ -181,10 +181,10 @@ x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
   string_list_item = list_head;
   for (j = 0; j < count; j++) {
     text = (gchar *) g_strdup(string_list_item->data);
-    new_width = char_width * strlen(text);  
-    if (new_width > width) 
+    new_width = char_width * strlen(text);
+    if (new_width > width)
       width = new_width;
-    
+
     gtk_sheet_row_button_add_label(sheet, j, text);
     gtk_sheet_row_button_justify(sheet, j, GTK_JUSTIFY_LEFT);
     g_free(text);
@@ -224,7 +224,7 @@ x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
     string_list_item = string_list_item->next;
   }
 }
-  
+
 
 /*------------------------------------------------------------------*/
 /*! \brief Add a cell item to the GtkSheet
@@ -238,10 +238,10 @@ x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head)
  * \param show_name_value
  */
 void
-x_gtksheet_add_cell_item(GtkSheet *sheet,gint i, gint j, 
-			 gchar *text, 
-			 gint visibility, 
-			 gint show_name_value)
+x_gtksheet_add_cell_item(GtkSheet *sheet,gint i, gint j,
+                         gchar *text,
+                         gint visibility,
+                         gint show_name_value)
 {
 
   /*  Should I do some sanity checking here?  */
@@ -253,16 +253,16 @@ x_gtksheet_add_cell_item(GtkSheet *sheet,gint i, gint j,
     switch(show_name_value) {
 
     case(SHOW_NAME_VALUE):
-      	x_gtksheet_set_cell_text_color(sheet, i, j, BLUE);       
-	break;
+        x_gtksheet_set_cell_text_color(sheet, i, j, BLUE);
+        break;
 
     case(SHOW_NAME):
-      	x_gtksheet_set_cell_text_color(sheet, i, j, RED);
-	break;
+        x_gtksheet_set_cell_text_color(sheet, i, j, RED);
+        break;
 
     case(SHOW_VALUE):
-      	x_gtksheet_set_cell_text_color(sheet, i, j, BLACK);
-	break;
+        x_gtksheet_set_cell_text_color(sheet, i, j, BLACK);
+        break;
     }
   } /* if (visibility == INVISIBLE) */
 
@@ -315,10 +315,10 @@ int x_gtksheet_get_max_col(GtkSheet *sheet) {
  * \param col Column of cell to set
  * \param color_name Color to set text to
  */
-void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col, 
-			       gint color_name)
+void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
+                               gint color_name)
 {
-  GtkSheetRange *range;	
+  GtkSheetRange *range;
   GdkColormap *cmap;
   GdkColor *color;
 
@@ -330,25 +330,25 @@ void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
     color->red = 0xffff;
     color->green = 0x0;
     color->blue = 0x0;
-  break; 
+  break;
 
   case BLUE:
     color->red = 0x0;
     color->green = 0x0;
     color->blue = 0xffff;
-  break; 
+  break;
 
   case BLACK:
     color->red = 0x0;
     color->green = 0x0;
     color->blue = 0x0;
-  break; 
+  break;
 
   case GREY:
     color->red = 0x9999;
     color->green = 0x9999;
     color->blue = 0x9999;
-  break; 
+  break;
   }
 
   if (!gdk_colormap_alloc_color (cmap, color, FALSE, FALSE)) {
@@ -356,7 +356,7 @@ void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
     return;
   }
   /*   g_free(cmap); */
-  
+
   /* XXXXX  Attempt to set cell color */
   range = g_new (GtkSheetRange, 1);
   range->row0 = row;
@@ -382,7 +382,7 @@ void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
 static void
 show_entry(GtkWidget *widget, gpointer data)
 {
- gchar *text; 
+ gchar *text;
  GtkSheet *sheet;
  GtkWidget *sheet_entry = NULL;
  gint cur_page;
@@ -405,9 +405,8 @@ show_entry(GtkWidget *widget, gpointer data)
      gtk_entry_set_text(GTK_ENTRY(entry),  text);
    }
    else {
-     gtk_entry_set_text(GTK_ENTRY(entry), (const gchar *) ""); 
+     gtk_entry_set_text(GTK_ENTRY(entry), (const gchar *) "");
      /* gtk_entry_set_text(GTK_ENTRY(entry), NULL); */
    }
  }
 }
-
