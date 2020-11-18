@@ -831,6 +831,7 @@ x_dialog_close_window (GschemToplevel *w_current)
                                      "unsaved-pages", unsaved_pages,
                                      NULL));
 
+  gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
   gtk_window_set_transient_for (GTK_WINDOW (dialog),
                                 GTK_WINDOW (w_current->main_window));
 
