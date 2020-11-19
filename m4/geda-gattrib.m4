@@ -37,4 +37,10 @@ AC_DEFUN([AX_OPTION_ATTRIB],
 
   AM_CONDITIONAL([ENABLE_ATTRIB], test "X$enable_attrib" = "Xyes")
 
+  AS_IF([test "X$enable_attrib" = "Xyes"],
+  [
+  PKG_CHECK_MODULES(GTKEXTRA, [gtkextra-3.0 >= 3.0.0], ,
+    AC_MSG_ERROR([GTKEXTRA 3.0.0 or later is required.]))
+  ])
+
 ])dnl AX_OPTION_ATTRIB

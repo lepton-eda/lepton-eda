@@ -95,9 +95,6 @@ PKG_CHECK_MODULES(GDK, [gdk-2.0 >= 2.24.0], ,
 PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 2.21.0], ,
   AC_MSG_ERROR([GDK_PIXBUF 2.21.0 or later is required.]))
 
-PKG_CHECK_MODULES(GTKEXTRA, [gtkextra-3.0 >= 3.0.0], ,
-  AC_MSG_ERROR([GTKEXTRA 3.0.0 or later is required.]))
-
 AX_CHECK_CAIRO
 
 PKG_CHECK_MODULES(PANGOCAIRO, [pangocairo >= 0.26], ,
