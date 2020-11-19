@@ -39,8 +39,14 @@ AC_DEFUN([AX_OPTION_ATTRIB],
 
   AS_IF([test "X$enable_attrib" = "Xyes"],
   [
-  PKG_CHECK_MODULES(GTKEXTRA, [gtkextra-3.0 >= 3.0.0], ,
-    AC_MSG_ERROR([GTKEXTRA 3.0.0 or later is required.]))
+    AS_CASE(["$with_gtk3"],
+      # Use GTK3 and libgtksheet.
+      [yes],
+        [PKG_CHECK_MODULES(GTKSHEET, [gtksheet-4.0 >= 4.0.0], ,
+          AC_MSG_ERROR([GTKSHEET 4.0.0 or later is required.]))],
+      # Default case: use GTK2 and libgtkextra.
+      [PKG_CHECK_MODULES(GTKEXTRA, [gtkextra-3.0 >= 3.0.0], ,
+        AC_MSG_ERROR([GTKEXTRA 3.0.0 or later is required.]))])
   ])
 
 ])dnl AX_OPTION_ATTRIB

@@ -94,6 +94,8 @@ AC_ARG_WITH([gtk3],
 
 if test "X$with_gtk3" = "Xyes"; then
   AC_MSG_RESULT([yes])
+  AC_DEFINE([ENABLE_GTK3], [1],
+    [Define to 1 if GTK3 will be used for build.])
 else
   AC_MSG_RESULT([no])
 fi
