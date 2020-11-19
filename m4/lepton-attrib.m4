@@ -1,4 +1,4 @@
-# geda-gattrib.m4                                        -*-Autoconf-*-
+# lepton-attrib.m4                                       -*-Autoconf-*-
 # serial 1.0
 
 dnl Check for dependencies for attrib and optionally disable it.
