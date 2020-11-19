@@ -88,8 +88,15 @@ PKG_CHECK_MODULES(GIO, [gio-2.0 >= 2.38.0], ,
 
 dnl GTK2 is used by default, though GTK3 can be choosen instead
 dnl with the --with-gtk3 configure option.
+AC_MSG_CHECKING([whether to use GTK3])
 AC_ARG_WITH([gtk3],
   AS_HELP_STRING([--with-gtk3], [Build with GTK3.]))
+
+if test "X$with_gtk3" = "Xyes"; then
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_RESULT([no])
+fi
 
 AS_CASE(["$with_gtk3"],
 dnl Use GTK3.
