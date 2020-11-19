@@ -38,7 +38,11 @@
 
 /* -------  Includes needed to make the GTK stuff work  ------ */
 
+#ifdef ENABLE_GTK3
+#include <gtksheet/gtksheet.h>
+#else
 #include <gtkextra/gtksheet.h>
+#endif
 
 
 /* ========  Data structures used in processing below here  ========== */
