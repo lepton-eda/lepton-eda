@@ -1,4 +1,4 @@
-# Dutch translation for the geda-gattrib package.
+# Dutch translation for the lepton-attrib package.
 # Copyright (C) 2003-2008 Stuart D. Brorson and the respective original authors (which are listed on the respective files).
 # This file is distributed under the same license as the geda-gattrib package.
 # Bert Timmerman <bert.timmerman@xs4all.nl>, 2007, 2008, 2012.
