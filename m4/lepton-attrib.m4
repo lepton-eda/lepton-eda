@@ -3,7 +3,7 @@
 
 dnl Check for dependencies for attrib and optionally disable it.
 dnl Copyright (C) 2009  Dan McMahill <dan@mcmahill.net>
-dnl Copyright (C) 2019  Lepton EDA Contributors
+dnl Copyright (C) 2019-2020 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
