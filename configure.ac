@@ -86,8 +86,23 @@ AC_DEFINE([G_DISABLE_DEPRECATED], [1], [Disable deprecated GLib features])
 PKG_CHECK_MODULES(GIO, [gio-2.0 >= 2.38.0], ,
   AC_MSG_ERROR([GIO 2.38.0 or later is required.]))
 
-PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.24.0], ,
-  AC_MSG_ERROR([GTK+ 2.24.0 or later is required.]))
+dnl GTK2 is used by default, though GTK3 can be choosen instead
+dnl with the --with-gtk3 configure option.
+AC_ARG_WITH([gtk3],
+  AS_HELP_STRING([--with-gtk3], [Build with GTK3.]))
+
+AS_CASE(["$with_gtk3"],
+dnl Use GTK3.
+  [yes],
+    [PKG_CHECK_MODULES(GTK, [gtk+-3.0 >= 3.0.0],
+      [WITH_GTK3=1],
+      AC_MSG_ERROR([GTK+ 3.0.0 or later is required.]))],
+dnl Default case: use GTK2.
+  [PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.24.0],
+    [WITH_GTK3=0],
+    AC_MSG_ERROR([GTK+ 2.24.0 or later is required.]))])
+
+AM_CONDITIONAL([ENABLE_GTK3], [test "x$WITH_GTK3" = x1])
 
 PKG_CHECK_MODULES(GDK, [gdk-2.0 >= 2.24.0], ,
   AC_MSG_ERROR([GDK 2.24.0 or later is required.]))
