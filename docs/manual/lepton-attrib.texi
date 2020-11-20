@@ -150,7 +150,9 @@ Opens the ``About'' dialog box.
 @section Installation of lepton-attrib
 
 To install @command{lepton-attrib} from sources, just install Lepton
-EDA.  Installation of @command{lepton-attrib} can be disabled with the
+EDA.  @xref{Installation}.
+
+Installation of @command{lepton-attrib} can be disabled with the
 option @option{--disable-attrib} on the @code{configure} stage:
 
 @example
