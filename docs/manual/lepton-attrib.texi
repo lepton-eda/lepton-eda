@@ -1,0 +1,197 @@
+@node lepton-attrib
+@chapter Spreadsheet attribute editor
+@cindex lepton-attrib
+@cindex spreadsheet attribute editor
+
+@section Introduction to lepton-attrib
+
+@command{lepton-attrib} is Lepton's attribute editor.  It reads a set
+of schematic files (@file{.sch}), and creates a spreadsheet showing
+all components in rows, with the associated component attributes
+listed in the columns.  It allows the user to add, modify, or delete
+component attributes outside of @command{lepton-schematic}, and then
+save the @file{.sch} files back out.  When it is completed, it will
+allow the user to edit attributes attached to components.
+
+@command{lepton-attrib} is useful in situations where you need to
+view, add, modify, or delete a number of attributes all at once.  It
+saves you the pain of clicking on each component and repeatedly using
+@command{lepton-schematic}'s attribute editor to modify component
+attributes.  For example, if you create a large design with generic
+components, and then later want to attach @code{footprint} attributes
+to your components, it is a real hassle to do so using
+@command{lepton-schematic}.  In this situation, you can run
+@command{lepton-attrib} on your design files to attach the
+@code{footprint} attributes all at once using an easy-to-use
+spreadsheet.
+
+@quotation Warning
+While @command{lepton-attrib} has been tested on many designs, it is
+not guaranteed to work properly in all cases.  It may even trash your
+design!  Therefore, always keep a back-up copy of your design files.
+Note that this is good advice when using any software on critical
+files.
+@end quotation
+
+@node Usage of lepton-attrib
+@section Usage of lepton-attrib
+
+You can invoke @command{lepton-attrib} on your design from the command
+line in the following way:
+
+@example
+lepton-attrib file1.sch file2.sch ...
+@end example
+
+For example:
+
+@example
+lepton-attrib my_design_*.sch
+@end example
+
+(This assumes you have a multi-page design with file names
+@file{my_design_1.sch}, @file{my_design_2.sch}, etc.)
+@command{lepton-attrib} will then read in your design, and present you
+with a spreadsheet showing all components and associated attributes.
+
+You can also just run @command{lepton-attrib}, and select the input
+files in the ``Open'' dialog box.
+
+To edit your attributes, just edit the cells in the spreadsheet.
+
+@node lepton-attrib menus
+@section lepton-attrib menus
+
+@itemize
+
+@item
+@clicksequence{File}
+
+@itemize @minus
+
+@item @clicksequence{File @click{} Save}
+
+Saves your design, that is all schematic files you opened.
+
+@quotation Note
+No checks are currently done when you select @clicksequence{Save}.  Be
+careful!
+@end quotation
+
+@item @clicksequence{File @click{} Export CSV}
+
+Saves out a @acronym{CSV, Comma Separated Values} file, which can
+later be imported into a more general spreadsheet editor, e.g. Libre
+Office Calc.  This can be useful for @acronym{BOM, Bill Of Materials}
+management.
+
+@item @clicksequence{File @click{} Quit}
+
+Quits @command{lepton-attrib}.
+
+@quotation Note
+Currently no checks that you have saved your design are done when you
+quit.
+@end quotation
+
+@end itemize @c File
+
+@item
+@clicksequence{Edit}
+
+@itemize @minus
+
+@item @clicksequence{Edit @click{} Add new attrib column}
+
+Allows you to add an entirely new attribute to your design (i.e. one
+which doesn't exist on any component).
+
+@item @clicksequence{Edit @click{} Delete attrib column}
+
+Allows you to delete an entire attribute column.
+
+@end itemize @c Edit
+
+@item
+@clicksequence{Visibility}
+@itemize @minus
+
+You can set the visibility of any particular attribute, or an entire
+column of attributes through the menu.  Just select the attribute or
+column first, then do one of:
+
+@item @clicksequence{Visibility @click{} Set selected invisible}
+@item @clicksequence{Visibility @click{} Set selected name visible only}
+@item @clicksequence{Visibility @click{} Set selected value visible only}
+@item @clicksequence{Visibility @click{} Set selected name and value visible}
+
+Component visibility is indicated by changing the color of the
+attribute in each cell.  The following colors are used:
+
+@itemize @c colors
+@item Invisible attributes: light grey
+@item Name only visible: red
+@item Value only visible: black
+@item Name and value both visible: blue
+@end itemize @c colors
+
+@end itemize @c Visibility
+
+@item
+@clicksequence{Help}
+@itemize @minus
+@item @clicksequence{Help @click{} About}
+Opens the ``About'' dialog box.
+@end itemize @c Help
+
+@end itemize @c menu
+
+@node Installation of lepton-attrib
+@section Installation of lepton-attrib
+
+To install @command{lepton-attrib} from sources, just install Lepton
+EDA.  Installation of @command{lepton-attrib} can be disabled with the
+option @option{--disable-attrib} on the @code{configure} stage:
+
+@example
+autoreconf -ivf && ./configure --disable-attrib && make
+sudo make install
+@end example
+
+Currently, @command{lepton-attrib} depends on the third-party library
+@code{gtkextra} which has to be installed on your system.  On some
+systems you also need to install @emph{development packages}
+containing C header files necessary for compilation.  For example, on
+Debian, you would need @code{libgtkextra-dev}.
+
+If you want to try new GTK3 interface, you have to install another
+library, @code{gtksheet}: @url{https://github.com/fpaquet/gtksheet}.
+Then use the @option{--with-gtk3} for @code{configure}:
+
+@example
+autoreconf -ivf && ./configure --with-gtk3 && make
+sudo make install
+@end example
+
+If you install Lepton from sources to a place not known for your
+system dynamic linker, you may need to set @env{LD_LIBRARY_PATH}
+to get it to work.
+
+For example, if you use @code{csh}, do:
+@example
+setenv LD_LIBRARY_PATH /home/user/lepton/lib:$LD_LIBRARY_PATH
+@end example
+
+For @code{bash} and the like shells:
+@example
+export LD_LIBRARY_PATH=/home/user/lepton/lib:$LD_LIBRARY_PATH
+@end example
+
+@node Credits and history of lepton-attrib
+@section Credits and history of lepton-attrib
+
+The original code of @command{lepton-attrib} under name
+@command{gattrib} has been written by Stuart Brorson
+(@email{sdb@@cloud9.net}) for the gEDA project.  @command{gattrib} was
+cobbled together in December 2003 from parts culled from GtkSheet
+(GTK+Extra) and gEDA.

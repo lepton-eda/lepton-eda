@@ -48,6 +48,7 @@ Documentation License.''
 * Configuration::               Configuration system.
 * lepton-schematic::            Lepton EDA schematic capture program.
 * lepton-netlist::              Lepton EDA netlister.
+* lepton-attrib::               Lepton EDA spreadsheet attribute editor.
 * Communication::               Places for discussions and chatting.
 * Development::                 Useful information for developers.
 * gEDA file format::            File format currently in use.
@@ -59,6 +60,7 @@ Documentation License.''
 @include configuration.texi
 @include lepton-schematic.texi
 @include lepton-netlist.texi
+@include lepton-attrib.texi
 @include communication.texi
 @include development.texi
 @include geda-file-format-spec.texi
