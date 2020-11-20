@@ -219,6 +219,31 @@ To generate the configure script, run:
 
 You can then proceed to configure and build Lepton as described above.
 
+Installation of lepton-attrib
+-----------------------------
+
+There are several options when you're about to install the
+program.
+
+Simple installation described in the above sections will install
+GTK2 version of the program.
+
+In order to install GTK3 version, use:
+
+    ./configure --with-gtk3
+    cd libleptonattrib/ && make && sudo make install
+
+Please note that GTK2 and GTK3 version of lepton-attrib require
+different additional libraries.  `libgtkextra` is required for the
+GTK2 version, and `gtksheet` for GTK3.  The latter can be found
+[here](https://github.com/fpaquet/gtksheet).
+
+Installation of the program can be disabled on the configure
+stage:
+
+    ./configure --disable-attrib
+
+
 Building Lepton developer API documentation
 ===========================================
 
