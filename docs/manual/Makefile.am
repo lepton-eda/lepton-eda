@@ -6,6 +6,7 @@ lepton_manual_TEXINFOS = \
 	geda-file-format-spec.texi \
 	index.texi \
 	installation.texi \
+	lepton-attrib.texi \
 	lepton-netlist.texi \
 	lepton-schematic.texi \
 	overview.texi
