@@ -20,16 +20,16 @@ Since @emph{\version\}.
 This chapter describes configuration system of the Lepton EDA suite.
 
 @menu
-* Introduction:: Introductory information.
-* Legacy configuration:: Legacy configuration files still in use.
-* New configuration system:: Overview of the new configuration system.
-* Configuration of Lepton tools:: Configuration settings for particular Lepton tools.
-* Deprecated settings:: Configuration settings no longer used.
-* Resources:: Other useful resources.
+* Introduction::                Introductory information.
+* Legacy configuration::        Legacy configuration files still in use.
+* New configuration system::    Overview of the new configuration system.
+* Configuration of Lepton tools::  Configuration settings for particular Lepton tools.
+* Deprecated settings::         Configuration settings no longer used.
+* Resources::                   Other useful resources.
 @end menu
 
 
-@node Introduction
+@node Introduction, Legacy configuration, Configuration, Configuration
 @section Introduction
 
 Currently, there are two types of configuration files:
@@ -95,10 +95,15 @@ in the specified Lepton EDA @code{release}, for example:
 
 
 
-@node Legacy configuration
+@node Legacy configuration, New configuration system, Introduction, Configuration
 @section Legacy configuration files still in use
 
-@node gafrc
+@menu
+* gafrc::
+* gschemrc::
+@end menu
+
+@node gafrc, gschemrc, Legacy configuration, Legacy configuration
 @subsection @file{gafrc}
 
 @file{gafrc} is a configuration file used by various tools in the
@@ -174,7 +179,7 @@ Load a color scheme from file @var{file}, for example:
 
 @end itemize
 
-@node gschemrc
+@node gschemrc,  , gafrc, Legacy configuration
 @subsection @file{gschemrc}
 
 Configuration file for @command{lepton-schematic} schematic editor.
@@ -219,7 +224,7 @@ keys.scm} files.
 @end itemize
 
 
-@node New configuration system
+@node New configuration system, Configuration of Lepton tools, Legacy configuration, Configuration
 @section Overview of the new configuration system
 
 Configuration parameters are always evaluated within a
@@ -371,14 +376,34 @@ lepton-cli config --project "schematic.gui" "font" "Monospace Regular"
 
 
 
-@node Configuration of Lepton tools
+@node Configuration of Lepton tools, Deprecated settings, New configuration system, Configuration
 @section Configuration settings for tools in the Lepton EDA suite
 
-@node lepton-schematic configuration
+@menu
+* lepton-schematic configuration::
+* lepton-netlist configuration::
+* lepton-cli configuration::
+@end menu
+
+@node lepton-schematic configuration, lepton-netlist configuration, Configuration of Lepton tools, Configuration of Lepton tools
 @subsection @command{Configuration of lepton-schematic}
 @cindex lepton-schematic configuration
 
-@node schematic.gui group
+@menu
+* schematic.gui group::
+* schematic.tabs group::
+* schematic.status-bar group::
+* schematic.undo group::
+* schematic.log-window group::
+* schematic.macro-widget group::
+* schematic group::
+* schematic.library group::
+* schematic.printing group::
+* schematic.backup group::
+* schematic.attrib group::
+@end menu
+
+@node schematic.gui group, schematic.tabs group, lepton-schematic configuration, lepton-schematic configuration
 @subsubsection @code{schematic.gui} group
 @cindex schematic.gui group
 
@@ -796,7 +821,7 @@ exclamation mark and two lines of text) if this option is set to
 @end multitable
 
 
-@node schematic.tabs group
+@node schematic.tabs group, schematic.status-bar group, schematic.gui group, lepton-schematic configuration
 @subsubsection @code{schematic.tabs} group
 @cindex schematic.tabs group
 
@@ -824,7 +849,7 @@ Whether to show tabs tooltips in tabbed GUI.  @since{1.9.10}
 @end multitable
 
 
-@node schematic.status-bar group
+@node schematic.status-bar group, schematic.undo group, schematic.tabs group, lepton-schematic configuration
 @subsubsection @code{schematic.status-bar} group
 @cindex schematic.status-bar group
 
@@ -867,7 +892,7 @@ the X11 @file{rgb.txt} file), or a hex value in the form
 @end multitable
 
 
-@node schematic.undo group
+@node schematic.undo group, schematic.log-window group, schematic.status-bar group, lepton-schematic configuration
 @subsubsection @code{schematic.undo} group
 @cindex schematic.undo group
 
@@ -913,7 +938,7 @@ undone.  @since{1.9.10}
 @end multitable
 
 
-@node schematic.log-window group
+@node schematic.log-window group, schematic.macro-widget group, schematic.undo group, lepton-schematic configuration
 @subsubsection @code{schematic.log-window} group
 @cindex schematic.log-window group
 
@@ -929,7 +954,7 @@ Custom font for the log window (e.g. @cfgval{"Monospace 10"}).
 @end multitable
 
 
-@node schematic.macro-widget group
+@node schematic.macro-widget group, schematic group, schematic.log-window group, lepton-schematic configuration
 @subsubsection @code{schematic.macro-widget} group
 @cindex schematic.macro-widget group
 
@@ -955,7 +980,7 @@ font=Monospace 12
 @end multitable
 
 
-@node schematic group
+@node schematic group, schematic.library group, schematic.macro-widget group, lepton-schematic configuration
 @subsubsection @code{schematic} group
 @cindex schematic group
 
@@ -1042,7 +1067,7 @@ not be allowed if setting it to zero.  @since{1.9.10}
 @end multitable
 
 
-@node schematic.library group
+@node schematic.library group, schematic.printing group, schematic group, lepton-schematic configuration
 @subsubsection @code{schematic.library} group
 @cindex schematic.library group
 
@@ -1072,7 +1097,7 @@ added in.
 @end multitable
 
 
-@node schematic.printing group
+@node schematic.printing group, schematic.backup group, schematic.library group, lepton-schematic configuration
 @subsubsection @code{schematic.printing} group
 @cindex schematic.printing group
 
@@ -1110,7 +1135,7 @@ depends on the current locale.  Described in the PWG 5101.1 standard
 @end multitable
 
 
-@node schematic.backup group
+@node schematic.backup group, schematic.attrib group, schematic.printing group, lepton-schematic configuration
 @subsubsection @code{schematic.backup} group
 @cindex schematic.backup group
 
@@ -1129,7 +1154,7 @@ schematic.  @since{1.9.10}
 @end multitable
 
 
-@node schematic.attrib group
+@node schematic.attrib group,  , schematic.backup group, lepton-schematic configuration
 @subsubsection @code{schematic.attrib} group
 @cindex schematic.attrib group
 
@@ -1234,11 +1259,16 @@ here, too.
 @end multitable
 
 
-@node lepton-netlist configuration
+@node lepton-netlist configuration, lepton-cli configuration, lepton-schematic configuration, Configuration of Lepton tools
 @subsection @command{Configuration of lepton-netlist}
 @cindex lepton-netlist configuration
 
-@node netlist group
+@menu
+* netlist group::
+* netlist.hierarchy group::
+@end menu
+
+@node netlist group, netlist.hierarchy group, lepton-netlist configuration, lepton-netlist configuration
 @subsubsection @code{netlist} group
 @cindex netlist group
 
@@ -1274,7 +1304,7 @@ be resolved using the chosen attribute.
 @end multitable
 
 
-@node netlist.hierarchy group
+@node netlist.hierarchy group,  , netlist group, lepton-netlist configuration
 @subsubsection @code{netlist.hierarchy} group
 @cindex netlist.hierarchy group
 
@@ -1349,14 +1379,18 @@ Separator string used to form mangled @attrib{net} attribute names.
 @end multitable
 
 
-@node lepton-cli configuration
+@node lepton-cli configuration,  , lepton-netlist configuration, Configuration of Lepton tools
 @subsection @command{Configuration of lepton-cli}
 @cindex lepton-cli configuration
 
 The following settings control the behaviour of @command{lepton-cli}
 utility when it's invoked with the @code{export} command.
 
-@node export group
+@menu
+* export group::
+@end menu
+
+@node export group,  , lepton-cli configuration, lepton-cli configuration
 @subsubsection @code{export} group
 @cindex export group
 
@@ -1434,14 +1468,21 @@ overrides the @code{paper} key (see the previous entry).
 @end multitable
 
 
-@node Deprecated settings
+@node Deprecated settings, Resources, Configuration of Lepton tools, Configuration
 @section Deprecated settings
 @cindex deprecated settings
 
-@node Resources
+@node Resources,  , Deprecated settings, Configuration
 @section Resources
 
-@node Documentation
+@menu
+* Documentation::
+* Web pages::
+* Utilities::
+* Other resources::
+@end menu
+
+@node Documentation, Web pages, Resources, Resources
 @subsection Documentation
 
 @c FIXME: These links should point to local documents.
@@ -1466,7 +1507,7 @@ EDA Scheme reference manual}, especially
 configuration functions}
 @end itemize
 
-@node Web pages
+@node Web pages, Utilities, Documentation, Resources
 @subsection Web pages
 
 @itemize
@@ -1484,7 +1525,7 @@ links and resources for Lepton EDA users and developers
 @ref{Communication, Communication channels}
 @end itemize
 
-@node Utilities
+@node Utilities, Other resources, Web pages, Resources
 @subsection Utilities
 * GUI configuration utility:
 @url{https://github.com/graahnul-grom/lepton-conf, lepton-conf}
@@ -1493,7 +1534,7 @@ links and resources for Lepton EDA users and developers
 (@file{geda*.conf}) or new (@file{lepton*.conf}) configuration files,
 which could be helpful in settings upgrade process.
 
-@node Other resources
+@node Other resources,  , Utilities, Resources
 @subsection Other resources (outdated, but may be useful)
 @itemize
 @item

@@ -7,7 +7,7 @@
 * Component libraries::
 @end menu
 
-@node Component libraries
+@node Component libraries,  , lepton-schematic, lepton-schematic
 @section Component libraries
 @cindex component libraries
 
@@ -56,7 +56,11 @@ Try to use unique names.
 @end itemize
 
 
-@node Component library setup
+@menu
+* Component library setup::
+@end menu
+
+@node Component library setup,  , Component libraries, Component libraries
 @subsection Component library setup
 
 Component library functions are Scheme procedures that should be
@@ -70,7 +74,15 @@ Scheme functions available as well.
 
 The following commands are available:
 
-@node component-library
+@menu
+* component-library::
+* component-library-search::
+* component-library-command::
+* component-library-funcs::
+* reset-component-library::
+@end menu
+
+@node component-library, component-library-search, Component library setup, Component library setup
 @subsubsection component-library
 @cindex component-library
 
@@ -97,7 +109,7 @@ component} window of @command{lepton-schematic}.  Obviously, it is
 useless for CLI Lepton tools.
 
 
-@node component-library-search
+@node component-library-search, component-library-command, component-library, Component library setup
 @subsubsection component-library-search
 @cindex component-library-search
 
@@ -125,7 +137,7 @@ of component resources.  If optional @var{prefix} is specified, it
 will be prepended to the names of the new libraries.
 
 
-@node component-library-command
+@node component-library-command, component-library-funcs, component-library-search, Component library setup
 @subsubsection component-library-command
 @cindex component-library-command
 
@@ -169,7 +181,7 @@ library:
 Likewise, you can use various symbol generators written in various
 languages.
 
-@node component-library-funcs
+@node component-library-funcs, reset-component-library, component-library-command, Component library setup
 @subsubsection component-library-funcs
 @cindex component-library-funcs
 
@@ -214,7 +226,7 @@ Put the code in some file and load it from your @file{gafrc}, e.g.:
 or put it directly to @file{gafrc}.
 
 
-@node reset-component-library
+@node reset-component-library,  , component-library-funcs, Component library setup
 @subsubsection reset-component-library
 @cindex reset-component-library
 

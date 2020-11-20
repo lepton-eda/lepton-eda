@@ -33,7 +33,14 @@ Note that this is good advice when using any software on critical
 files.
 @end quotation
 
-@node Usage of lepton-attrib
+@menu
+* Usage of lepton-attrib::
+* lepton-attrib menus::
+* Installation of lepton-attrib::
+* Credits and history of lepton-attrib::
+@end menu
+
+@node Usage of lepton-attrib, lepton-attrib menus, lepton-attrib, lepton-attrib
 @section Usage of lepton-attrib
 
 You can invoke @command{lepton-attrib} on your design from the command
@@ -59,7 +66,7 @@ files in the ``Open'' dialog box.
 
 To edit your attributes, just edit the cells in the spreadsheet.
 
-@node lepton-attrib menus
+@node lepton-attrib menus, Installation of lepton-attrib, Usage of lepton-attrib, lepton-attrib
 @section lepton-attrib menus
 
 @itemize
@@ -146,7 +153,7 @@ Opens the ``About'' dialog box.
 
 @end itemize @c menu
 
-@node Installation of lepton-attrib
+@node Installation of lepton-attrib, Credits and history of lepton-attrib, lepton-attrib menus, lepton-attrib
 @section Installation of lepton-attrib
 
 To install @command{lepton-attrib} from sources, just install Lepton
@@ -194,7 +201,7 @@ For @code{bash} and the like shells:
 export LD_LIBRARY_PATH=/home/user/lepton/lib:$LD_LIBRARY_PATH
 @end example
 
-@node Credits and history of lepton-attrib
+@node Credits and history of lepton-attrib,  , Installation of lepton-attrib, lepton-attrib
 @section Credits and history of lepton-attrib
 
 The original code of @command{lepton-attrib} under name
