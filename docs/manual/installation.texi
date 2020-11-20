@@ -39,7 +39,7 @@ sudo ldconfig
 * Installation from git::
 @end menu
 
-@node Dependencies
+@node Dependencies, Troubleshooting dependencies, Installation, Installation
 @section Dependencies
 
 In order to compile Lepton from the distributed source archives, you
@@ -90,7 +90,7 @@ recognition library.  If this is available, @command{lepton-schematic}
 will support mouse gesture recognition.
 @end itemize
 
-@node Troubleshooting dependencies
+@node Troubleshooting dependencies, Installation from source, Dependencies, Installation
 @section Troubleshooting dependencies
 
 Sometimes, @code{./configure} says it cannot find a library while
@@ -113,7 +113,7 @@ If you're having problems, make sure that you have all of the
 necessary development packages installed.
 
 
-@node Installation from source
+@node Installation from source, Installation from git, Troubleshooting dependencies, Installation
 @section Installation from a source archive
 
 First extract the archive to a sensible place:
@@ -140,7 +140,7 @@ And install it (if you used a @option{--prefix} outside your
 make install
 @end example
 
-@node Installation from git
+@node Installation from git,  , Installation from source, Installation
 @section Installation from the git repository
 
 Lepton uses the @command{git} version control system.  If you wish to

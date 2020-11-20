@@ -28,7 +28,7 @@ December 31st, 2003
 @end menu
 
 
-@node File format overview
+@node File format overview, Coordinate space, gEDA file format, gEDA file format
 @section Overview
 
 This file is the official documentation for the file formats in
@@ -49,7 +49,7 @@ gEDA/gaf symbol and schematic file format is Copyright (C) 1998-2004
 Ales Hvezda.
 
 
-@node Coordinate space
+@node Coordinate space, Filenames, File format overview, gEDA file format
 @section Coordinate Space
 
 All coordinates are in mils (1/1000 of an inch). This is an arbitrary
@@ -81,7 +81,7 @@ up. Coordinate system is landscape and corresponds to a sheet of paper
 turned on its side.
 
 
-@node Filenames
+@node Filenames, Object types, Coordinate space, gEDA file format
 @section Filenames
 
 Symbol names end in @file{.sym}. The only symbol filename convention
@@ -96,7 +96,7 @@ but this convention is now obsolete. Schematic filenames can be
 anything that makes sense to the creator.
 
 
-@node Object types
+@node Object types, Colors, Filenames, gEDA file format
 @section Object types
 
 A schematic/symbol file for gEDA/gaf consists of:
@@ -139,7 +139,23 @@ fields, and finally an example with description.
 For information on the color index (which is used in practically all
 objects), see the @ref{Colors} section.
 
-@node version
+@menu
+* version::
+* line::
+* picture::
+* box::
+* circle::
+* arc::
+* text and attributes::
+* net::
+* bus::
+* pin::
+* component::
+* path::
+* font::
+@end menu
+
+@node version, line, Object types, Object types
 @subsection version
 
 Valid in: Schematic and Symbol files
@@ -232,7 +248,7 @@ v 20040111 1
 @end example
 
 
-@node line
+@node line, picture, version, Object types
 @subsection line
 
 Valid in: Schematic and Symbol files
@@ -337,7 +353,7 @@ A line segment from (23000, 69000) to (28000, 69000) with color index
 mils in between each dot.
 
 
-@node picture
+@node picture, box, line, Object types
 @subsection picture
 
 Valid in: Schematic and Symbol files
@@ -479,7 +495,7 @@ last line containing a single dot @samp{.} character marks the end of
 the encoded picture data.
 
 
-@node box
+@node box, circle, picture, Object types
 @subsection box
 
 Valid in: Schematic and Symbol files
@@ -639,7 +655,7 @@ cap, dashed line type, dash length of 75 mils, dash spacing of 50
 mils, no fill, rest parameters unset.
 
 
-@node circle
+@node circle, arc, box, Object types
 @subsection circle
 
 Valid in: Schematic and Symbol files
@@ -783,7 +799,7 @@ line type, dash length of 75 mils, dash spacing of 50 mils, mesh fill,
 of 30 mils, second mesh line: 90 degrees, with a spacing of 50 mils.
 
 
-@node arc
+@node arc, text and attributes, circle, Object types
 @subsection arc
 
 Valid in: Schematic and Symbol files
@@ -899,7 +915,7 @@ starting angle of 0, sweeping 45 degrees, color index 3, line width of
 mils, dash spacing of 50 mils.
 
 
-@node text and attributes
+@node text and attributes, net, arc, Object types
 @subsection text and attributes
 
 Depending on context, text objects can play different roles. Outside
@@ -1080,7 +1096,7 @@ text origin at upper right, the text is rotated by 90 degree, the
 string: ``R/W'' has an overbar over the ``W''.
 
 
-@node net
+@node net, bus, text and attributes, Object types
 @subsection net
 
 Valid in: Schematic files ONLY
@@ -1134,7 +1150,7 @@ A net segment from (12700, 29400) to (32900, 29400) with color index
 4.
 
 
-@node bus
+@node bus, pin, net, Object types
 @subsection bus
 
 Valid in: Schematic files ONLY
@@ -1199,7 +1215,7 @@ A bus segment from (27300, 37400) to (27300, 35300) with color index 3
 and no nets have been connected to this bus segment.
 
 
-@node pin
+@node pin, component, bus, Object types
 @subsection pin
 
 Valid in: Symbol files ONLY
@@ -1278,7 +1294,7 @@ A pin from (0, 200) to (200, 200) with color index 1, a regular pin,
 and the first point being the active connection end.
 
 
-@node component
+@node component, path, pin, Object types
 @subsection component
 
 Valid in: Schematic files ONLY
@@ -1351,7 +1367,7 @@ rotated, not mirrored, and the basename of the component is
 @file{7400-1.sym}.
 
 
-@node path
+@node path, font, component, Object types
 @subsection path
 
 Valid in: Schematic and Symbol files
@@ -1550,7 +1566,7 @@ has color index 3, is 10 mils thick, no cap, solid style. There are 5
 lines of path data.
 
 
-@node font
+@node font,  , path, Object types
 @subsection font
 
 Valid in: Special font files ONLY
@@ -1597,7 +1613,7 @@ F 11 1
 
 The above font definition is for the space character.
 
-@node Colors
+@node Colors, Attributes, Object types, gEDA file format
 @section Colors
 
 In the gEDA/gaf schematic and symbol file format colors are specified
@@ -1687,7 +1703,7 @@ tool bases. Objects are typically assigned their corresponding color
 index, but it is permissible (sometimes) to assign other color index
 values to different object types.
 
-@node Attributes
+@node Attributes, Embedded Components, Colors, gEDA file format
 @section Attributes
 
 Attributes are enclosed in braces @{@} and can only be text. Attributes
@@ -1719,7 +1735,7 @@ These attributes are useful when you need to convey some info about a
 schematic page or symbol and need the netlister to have access to this
 info.
 
-@node Embedded Components
+@node Embedded Components, Path data, Attributes, gEDA file format
 @section Embedded components
 
 Embedded components are components which have all of their definition
@@ -1744,7 +1760,7 @@ components.  @file{componentname.sym} must exist in one of the
 specified component-libraries if you want to unembed the component.
 
 
-@node Path data
+@node Path data, gEDA File Format Document Revision History, Embedded Components, gEDA file format
 @section Path data
 
 The gEDA/gaf path data format has been deliberately specified to match
@@ -1869,7 +1885,7 @@ positions) is shown here:
 
 @image{path-example}
 
-@node gEDA File Format Document Revision History
+@node gEDA File Format Document Revision History,  , Path data, gEDA file format
 @section gEDA File Format Document Revision History
 @table @emph
 @item November 30th, 2002

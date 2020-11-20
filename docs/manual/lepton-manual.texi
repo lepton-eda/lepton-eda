@@ -53,6 +53,133 @@ Documentation License.''
 * Development::                 Useful information for developers.
 * gEDA file format::            File format currently in use.
 * Index::
+
+@detailmenu
+ --- The Detailed Node Listing ---
+
+Overview
+
+* Compatibility with geda-gaf::
+
+Installation
+
+* Dependencies::
+* Troubleshooting dependencies::
+* Installation from source::
+* Installation from git::
+
+Configuration system
+
+* Introduction::                Introductory information.
+* Legacy configuration::        Legacy configuration files still in use.
+* New configuration system::    Overview of the new configuration system.
+* Configuration of Lepton tools::  Configuration settings for particular Lepton tools.
+* Deprecated settings::         Configuration settings no longer used.
+* Resources::                   Other useful resources.
+
+Legacy configuration files still in use
+
+* gafrc::
+* gschemrc::
+
+Configuration settings for tools in the Lepton EDA suite
+
+* lepton-schematic configuration::
+* lepton-netlist configuration::
+* lepton-cli configuration::
+
+@command{Configuration of lepton-schematic}
+
+* schematic.gui group::
+* schematic.tabs group::
+* schematic.status-bar group::
+* schematic.undo group::
+* schematic.log-window group::
+* schematic.macro-widget group::
+* schematic group::
+* schematic.library group::
+* schematic.printing group::
+* schematic.backup group::
+* schematic.attrib group::
+
+@command{Configuration of lepton-netlist}
+
+* netlist group::
+* netlist.hierarchy group::
+
+@command{Configuration of lepton-cli}
+
+* export group::
+
+Resources
+
+* Documentation::
+* Web pages::
+* Utilities::
+* Other resources::
+
+Schematic capture
+
+* Component libraries::
+
+Component libraries
+
+* Component library setup::
+
+Component library setup
+
+* component-library::
+* component-library-search::
+* component-library-command::
+* component-library-funcs::
+* reset-component-library::
+
+Introduction to lepton-attrib
+
+* Usage of lepton-attrib::
+* lepton-attrib menus::
+* Installation of lepton-attrib::
+* Credits and history of lepton-attrib::
+
+Development
+
+* Debugging::                   Debugging the tools
+
+Debugging the tools
+
+* Debug Scheme code::
+* Debuggers::
+* Debug Glib and GTK::
+
+gEDA/gaf File Format Document
+
+* File format overview::
+* Coordinate space::
+* Filenames::
+* Object types::
+* Colors::
+* Attributes::
+* Embedded Components::
+* Path data::
+* gEDA File Format Document Revision History::
+
+Object types
+
+* version::
+* line::
+* picture::
+* box::
+* circle::
+* arc::
+* text and attributes::
+* net::
+* bus::
+* pin::
+* component::
+* path::
+* font::
+
+@end detailmenu
 @end menu
 
 @include overview.texi

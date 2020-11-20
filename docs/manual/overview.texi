@@ -107,7 +107,7 @@ version 20020527 or earlier).
 * Compatibility with geda-gaf::
 @end menu
 
-@node Compatibility with geda-gaf
+@node Compatibility with geda-gaf,  , Overview, Overview
 @section Compatibility with geda-gaf
 @cindex compatibility with geda-gaf
 

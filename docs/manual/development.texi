@@ -8,10 +8,10 @@ opportunity: you can copy any of them to your home directory and play
 with it, edit and run without touching anything else.
 
 @menu
-* Debugging:: Debugging the tools
+* Debugging::                   Debugging the tools
 @end menu
 
-@node Debugging
+@node Debugging,  , Development, Development
 @section Debugging the tools
 @cindex debug
 @cindex debugging
@@ -20,7 +20,13 @@ Most of Lepton programs are written in Guile Scheme.  GUI tools are
 based on Glib and GTK libraries.  It's worth to be aware of how to
 debug the code in order to fix or report issues.
 
-@node Debug Scheme code
+@menu
+* Debug Scheme code::
+* Debuggers::
+* Debug Glib and GTK::
+@end menu
+
+@node Debug Scheme code, Debuggers, Debugging, Debugging
 @subsection Debug Guile Scheme code
 @cindex debug Scheme code
 
@@ -77,7 +83,7 @@ in this mode one by one and see what's wrong with them.
 @command{lepton-netlist} and @command{lepton-symcheck} support this.
 
 
-@node Debuggers
+@node Debuggers, Debug Glib and GTK, Debug Scheme code, Debugging
 @subsection Debug C code with debugger tools
 @cindex debuggers
 
@@ -102,7 +108,7 @@ because this is the very command which is used internally in the
 @command{lepton-schematic} script.  Please note using of the full path
 to the script here.
 
-@node Debug Glib and GTK
+@node Debug Glib and GTK,  , Debuggers, Debugging
 @subsection Debug C code based on Glib and GTK
 @cindex debug glib
 @cindex debug gtk
