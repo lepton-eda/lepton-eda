@@ -32,7 +32,7 @@ exec @GUILE@ -s "$0" "$@"
 (load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
                 "liblepton_init")
 
-(define libgtk (dynamic-link "libgtk-x11-2.0"))
+(define libgtk (dynamic-link "@LIBGTK@"))
 (define libleptonattrib (dynamic-link "libleptonattrib"))
 
 (define gtk-init
