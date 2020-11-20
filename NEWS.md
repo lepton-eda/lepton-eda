@@ -16,6 +16,16 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
 
 - Guile 3.0 support has been added.
 
+### Changes in `liblepton`:
+
+- Refactored color system code.
+
+- Print color maps for dark and light color schemes have been
+  fixed:
+  - The `grid` color name has been replaced with `dots-grid`.
+  - Missing colors `mesh-grid-major` and`mesh-grid-minor` have
+    been added.
+
 ### Changes in `lepton-schematic`:
 
 - Several new additional shortcuts have been added which are used
@@ -47,6 +57,8 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
 - It is now possible to change a color of net and bus objects
   in the `Object Properties` dialog.
 
+- All available colors are now shown in the colors combo box,
+  disabled ones are designated as "[ disabled ]".
 
 Notable changes in Lepton EDA 1.9.11 (20200604)
 -----------------------------------------------
