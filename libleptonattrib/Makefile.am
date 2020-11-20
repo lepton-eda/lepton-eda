@@ -1,5 +1,11 @@
 bin_SCRIPTS = lepton-attrib
 
+if ENABLE_GTK3
+LIBGTK = libgtk-3
+else
+LIBGTK = libgtk-x11-2.0
+endif
+
 SUBDIRS = po src include design data docs
 
 pkgconfigdir            = $(libdir)/pkgconfig
@@ -24,10 +30,10 @@ endif HAVE_GIT_REPO
 
 do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
 	-e 's,[@]GUILE[@],$(GUILE),g' \
+	-e 's,[@]LIBGTK[@],$(LIBGTK),g' \
 	-e 's,[@]localedir[@],$(localedir),g' \
 	-e 's,[@]ccachedir[@],@LEPTON_SCM_PRECOMPILE_DIR@,g'
 
 EXTRA_DIST = lepton-attrib.scm NOTES README ChangeLog ToDos
 
 CLEANFILES = $(bin_SCRIPTS)
-
