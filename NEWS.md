@@ -7,6 +7,11 @@ more information, please consult `git log` history.
 
 Notable changes in Lepton EDA 1.9.12 (upcoming)
 -----------------------------------------------
+### General changes:
+
+- The empty `local` subdirectory has been removed from
+  the list of component libraries.
+
 ### Changes in `lepton-schematic`:
 
 - Several new additional shortcuts have been added which are used
