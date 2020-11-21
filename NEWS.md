@@ -28,6 +28,13 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
   - <kbd>0</kbd>, <kbd>Control</kbd>+<kbd>0</kbd>, and
     <kbd>KP_Multiply</kbd> for zooming to extents
 
+- Filters behavior in the file chooser dialogs has been
+  improved. In the `Save As` dialog the filter is set based
+  on the current schematic's file name. Extensions containing
+  letters in different case are now correctly recognized,
+  filters can work with file names matching the following
+  shell patterns: `*.[sS][cC][hH]` and `*.[sS][yY][mM]`.
+
 
 Notable changes in Lepton EDA 1.9.11 (20200604)
 -----------------------------------------------
