@@ -28,6 +28,21 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
 
 ### Changes in `lepton-schematic`:
 
+- C source code has been transformed into a new library,
+  `libleptongui`.  `lepton-schematic` is now an executable Scheme
+  script which uses Guile FFI to make the job done, allowing to
+  play with it without recompilation of the underlying C code.
+
+- Guile module `(srfi srfi-37)` is now used instead of `(ice-9
+  getopt-long)` for command line option processing.
+
+- A new option, `--command`, can now be used as an alias for `-c`.
+
+- The keyword `G_` is now used for translation of strings in
+  Scheme code in order to prevent conflicts with other Guile
+  functions such as, e.g., `match()`.  It's the same change as one
+  that have been recently made in Guile 3.0.
+
 - Several new additional shortcuts have been added which are used
   in many other programs to ease working with the tools for
   newbies:
