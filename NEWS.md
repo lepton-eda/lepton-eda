@@ -12,6 +12,10 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
 - The empty `local` subdirectory has been removed from
   the list of component libraries.
 
+- Old ChangeLog files (<=2007) are no longer installed.  They
+  hardly provide some any useful information for end users now and
+  any info can be easily received using git.
+
 ### Changes when building from source:
 
 - Guile 3.0 support has been added.
