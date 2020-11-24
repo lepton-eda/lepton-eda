@@ -33,6 +33,10 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
   script which uses Guile FFI to make the job done, allowing to
   play with it without recompilation of the underlying C code.
 
+- Scheme builtin action procedures that were defined in C code and
+  that were not available in some circumstances, e.g. in remote
+  REPL, are now available in the module `(gschem deprecated)`.
+
 - Guile module `(srfi srfi-37)` is now used instead of `(ice-9
   getopt-long)` for command line option processing.
 
