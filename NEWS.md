@@ -27,6 +27,9 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
 - The build option `--disable-attrib` broken in the previous
   release has been fixed.
 
+- The obsolete and pretty useless script `bom_xref.sh` has been
+  removed from the toolset.
+
 ### Changes in `liblepton`:
 
 - A new module, `(lepton eval)`, has been added. The new module
