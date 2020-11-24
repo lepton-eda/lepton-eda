@@ -20,6 +20,9 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
 
 - Guile 3.0 support has been added.
 
+- The build option `--disable-attrib` broken in the previous
+  release has been fixed.
+
 ### Changes in `liblepton`:
 
 - Refactored color system code.
