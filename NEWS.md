@@ -147,6 +147,15 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
   `(schematic attrib)`.  See updated Lepton reference manual for
   more information.
 
+### Changes in `lepton-netlist`:
+
+- Two issues in the `tEDAx` backend have been fixed:
+  - Parametric attribute values containing spaces between the
+    parameters were passed un-escaped in the backend output.  Now
+    they are escaped according to [the tEDAx
+    spec](http://repo.hu/projects/tedax/syntax.html).
+  - Support for output of `nettag` net attributes, which had been
+    missing before, has been added.
 
 Notable changes in Lepton EDA 1.9.11 (20200604)
 -----------------------------------------------
