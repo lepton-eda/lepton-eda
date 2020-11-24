@@ -9,6 +9,10 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
 -----------------------------------------------
 ### General changes:
 
+- Started creation of Lepton EDA reference manual.  The manual can
+  be opened from the `lepton-schematic` GUI by using <kbd>H</kbd>
+  <kbd>M</kbd> keyboard shortcut.
+
 - The empty `local` subdirectory has been removed from
   the list of component libraries.
 
