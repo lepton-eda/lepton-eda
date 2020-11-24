@@ -25,7 +25,15 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
 
 ### Changes in `liblepton`:
 
-- Refactored color system code.
+- Refactored color system code:
+  - A new module, `(lepton color-map)` has been added.
+  - Procedures `print-color-map()`, `display-color-map()`, and
+    `display-outline-color-map()` have been moved to the module.
+  - The procedures now return their color-map values instead of
+    just `#t`.
+  - The module additionally exports the variable
+    `%color-name-map`.  It returns the set of valid symbols for
+    color names.
 
 - Print color maps for dark and light color schemes have been
   fixed:
