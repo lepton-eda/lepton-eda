@@ -123,6 +123,14 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
 - All available colors are now shown in the colors combo box,
   disabled ones are designated as "[ disabled ]".
 
+- Two new keywords, `symbol-attribs` and `pin-attribs`, have been
+  added to the `[schematic.attrib]` configuration group in order
+  to replace the functionality of the legacy procedure
+  `attribute-name()`.  The procedure is now exported in the module
+  `(schematic attrib)`.  See updated Lepton reference manual for
+  more information.
+
+
 Notable changes in Lepton EDA 1.9.11 (20200604)
 -----------------------------------------------
 ### General changes:
