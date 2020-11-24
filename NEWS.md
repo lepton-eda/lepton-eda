@@ -44,8 +44,8 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
   filters can work with file names matching the following
   shell patterns: `*.[sS][cC][hH]` and `*.[sS][yY][mM]`.
 
-- It is now possible to change a color of net objects in
-  the `Object Properties` dialog.
+- It is now possible to change a color of net and bus objects
+  in the `Object Properties` dialog.
 
 
 Notable changes in Lepton EDA 1.9.11 (20200604)
