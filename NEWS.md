@@ -163,6 +163,17 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
   - Support for output of `nettag` net attributes, which had been
     missing before, has been added.
 
+### Changes in `lepton-attrib`:
+
+- The source code of the program has been fixed so that it no
+  longer use a big change of obsolete third party spreadsheet
+  code.  Instead, a dependency on another up-to-date project,
+  `gtkextra`, has been added.
+
+- After the above change, another feature has been added.  Now,
+  you can try to install a new, experimental GTK3 interface of the
+  program.  Please see Lepton reference manual for more info.
+
 Notable changes in Lepton EDA 1.9.11 (20200604)
 -----------------------------------------------
 ### General changes:
