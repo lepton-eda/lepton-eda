@@ -79,16 +79,18 @@ void o_delete_selected (GschemToplevel *w_current)
       gtk_message_dialog_new (NULL,
                               (GtkDialogFlags) (GTK_DIALOG_MODAL
                                                 | GTK_DIALOG_DESTROY_WITH_PARENT),
-                              GTK_MESSAGE_QUESTION,
+                              GTK_MESSAGE_WARNING,
                               GTK_BUTTONS_NONE,
-                              ngettext ("Delete locked object?",
-                                        "Delete %1$u locked objects?",                                                                                        locked_num),
-                              locked_num);
+                              _("Warning: the selection contains locked objects.\n"
+                              "Please choose what objects you'd like to delete:"));
+
     gtk_dialog_add_buttons (GTK_DIALOG (dialog),
-        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-        GTK_STOCK_YES, GTK_RESPONSE_YES,
-        GTK_STOCK_NO, GTK_RESPONSE_NO, NULL);
-    gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_NO);
+        _("Delete _all"), GTK_RESPONSE_YES,
+        _("All, _except locked"), GTK_RESPONSE_NO,
+        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL, NULL);
+
+    gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+    gtk_window_set_title (GTK_WINDOW (dialog), _("Delete"));
 
     resp = gtk_dialog_run (GTK_DIALOG (dialog));
     gtk_widget_destroy (dialog);
