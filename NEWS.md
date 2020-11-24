@@ -41,6 +41,14 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
   that were not available in some circumstances, e.g. in remote
   REPL, are now available in the module `(gschem deprecated)`.
 
+- Three C functions for creating dialogs and their corresponding
+  Scheme counterparts have been re-implemented in Scheme using FFI
+  and renamed.  The new functions are exported in a new Scheme
+  module, `(schematic dialog)`. Those functions are:
+  - `schematic-message-dialog` (former `gschem-msg`)
+  - `schematic-confirm-dialog` (former `gschem-confirm`)
+  - `schematic-fileselect-dialog` (former `gschem-filesel`)
+
 - Guile module `(srfi srfi-37)` is now used instead of `(ice-9
   getopt-long)` for command line option processing.
 
