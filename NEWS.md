@@ -147,6 +147,12 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
   `(schematic attrib)`.  See updated Lepton reference manual for
   more information.
 
+- Fixed a regression in font displaying that appeared in the
+  previous Lepton version 1.9.11.  Now lower aligned text objects
+  are displayed the same way as before, their anchor points now
+  specify positions of their baselines rather than bottom lines of
+  the text logical rectangles.
+
 ### Changes in `lepton-netlist`:
 
 - Two issues in the `tEDAx` backend have been fixed:
