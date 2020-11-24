@@ -653,7 +653,8 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
         (object->type == OBJ_LINE)   ||
         (object->type == OBJ_PATH)   ||
         (object->type == OBJ_TEXT)   ||
-        (object->type == OBJ_NET))) {
+        (object->type == OBJ_NET)    ||
+        (object->type == OBJ_BUS))) {
       color = geda_object_get_color (object);
       break;
     }
