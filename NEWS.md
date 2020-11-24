@@ -29,6 +29,13 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
 
 ### Changes in `liblepton`:
 
+- A new module, `(lepton eval)`, has been added. The new module
+  exports Scheme versions of functions `eval-protected()` and
+  `eval-string-protected()` previously defined in C code.
+
+- A new module, `(lepton ffi)`, has been introduced.  It contains
+  general definitions related to Scheme FFI.
+
 - Refactored color system code:
   - A new module, `(lepton color-map)` has been added.
   - Procedures `print-color-map()`, `display-color-map()`, and
