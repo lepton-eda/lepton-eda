@@ -72,6 +72,20 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
   script which uses Guile FFI to make the job done, allowing to
   play with it without recompilation of the underlying C code.
 
+- Setting of the environment variable `LD_LIBRARY_PATH` may be
+  needed for users installing Lepton from sources if the system
+  configuration does not include the path to `libleptongui`.
+
+- Two new Scheme modules, `(schematic ffi)` and `(schematic ffi
+  gtk)`, have been added to the suite.  They provide Scheme FFI
+  bindings for GTK functions.
+
+- A new environment variable, **LIBLEPTONGUI**, has been added in
+  order the user to redefine the path to the `libleptongui`
+  library "on the fly".  This can be used, e.g., for test suite or
+  in development for testing changes without installation of the
+  library.
+
 - Scheme builtin action procedures that were defined in C code and
   that were not available in some circumstances, e.g. in remote
   REPL, are now available in the module `(gschem deprecated)`.
