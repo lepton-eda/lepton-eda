@@ -33,6 +33,16 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
   - Missing colors `mesh-grid-major` and`mesh-grid-minor` have
     been added.
 
+- Scheme functions working with version of the tools have been
+  added or refactored:
+  - Added procedure `lepton-version-data()` which can return the
+    list of version strings by requested symbol names.
+  - Added procedure `lepton-version-ref()` which retrieves one
+    version data element by its symbol name.
+  - Added generic procedure `display-lepton-version()`.
+  - `lepton-version()` has been refactored.  Please see its
+    docstring for more.
+
 ### Changes in `lepton-schematic`:
 
 - C source code has been transformed into a new library,
