@@ -87,9 +87,9 @@ x_window_get_toplevel ()
  * This function initializes the toplevel gtksheet stuff.
  *
  *  It basically just initializes the following widgets:
- *  GTK_WINDOW *window 
+ *  GTK_WINDOW *window
  *  GTK_CONTAINER *main_vbox
- *  GTK_MENU 
+ *  GTK_MENU
  */
 static void
 x_window_init ()
@@ -101,29 +101,29 @@ x_window_init ()
   x_window_set_default_icon();
 
   /*  window is a global declared in globals.h.  */
-  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);  
+  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
-  gtk_window_set_title( GTK_WINDOW(window), _("lepton-attrib - Lepton EDA attribute editor")); 
-  
+  gtk_window_set_title( GTK_WINDOW(window), _("lepton-attrib - Lepton EDA attribute editor"));
+
   g_signal_connect(window, "delete_event",
                    G_CALLBACK (attrib_really_quit), 0);
 
-  /* -----  Now create main_vbox.  This is a container which organizes child  ----- */  
-  /* -----  widgets into a vertical column.  ----- */  
+  /* -----  Now create main_vbox.  This is a container which organizes child  ----- */
+  /* -----  widgets into a vertical column.  ----- */
   main_vbox = gtk_vbox_new(FALSE,1);
   gtk_container_set_border_width(GTK_CONTAINER(main_vbox), 1);
   gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(main_vbox) );
 
-  /* -----  Now create menu bar  ----- */  
+  /* -----  Now create menu bar  ----- */
   x_window_create_menu(GTK_WINDOW(window), &menu_bar);
   gtk_box_pack_start(GTK_BOX (main_vbox), menu_bar, FALSE, TRUE, 0);
 
-  /* -----  Now init notebook widget  ----- */  
+  /* -----  Now init notebook widget  ----- */
   notebook = gtk_notebook_new();
   gtk_notebook_set_tab_pos(GTK_NOTEBOOK(notebook), GTK_POS_BOTTOM);
   gtk_box_pack_start(GTK_BOX(main_vbox), notebook, TRUE, TRUE, 0);
-  
-  /* -----  Now malloc -- but don't fill out -- space for sheets  ----- */  
+
+  /* -----  Now malloc -- but don't fill out -- space for sheets  ----- */
   /* This basically sets up the overhead for the sheets, as I understand
    * it.  The memory for the actual sheet cells is allocated later,
    * when gtk_sheet_new is invoked, I think.  */
@@ -155,7 +155,7 @@ x_window_init ()
  *
  * Implement the File->Export CSV menu item
  */
-static void 
+static void
 menu_file_export_csv()
 {
   gint cur_page;
@@ -167,7 +167,7 @@ menu_file_export_csv()
   if (cur_page == 0) {
     x_dialog_export_file();
   } else {
-    x_dialog_unimplemented_feature();  /* We only support export 
+    x_dialog_unimplemented_feature();  /* We only support export
                                           of components now */
   }
 }
@@ -177,7 +177,7 @@ menu_file_export_csv()
  *
  * Implement the New attrib menu item
  */
-static void 
+static void
 menu_edit_newattrib()
 {
   gint cur_page;
@@ -318,10 +318,10 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar)
 /*! \brief Add all items to the top level window
  *
  * This function updates the top level window
- *         after a new page is read in.  
+ *         after a new page is read in.
  *
  *  It does the following:
- * 
+ *
  *  -# Create a new gtksheet having the current dimensions.
  *  -# Call x_gktsheet_add_row_labels(comp_count, master_*_list_head)
  *  -# Call x_gktsheet_add_col_labels(comp_attrib_count, master_*_attrib_list_head)
@@ -338,7 +338,7 @@ x_window_add_items()
   gchar *text;
   const gchar *error_string;
   gint visibility, show_name_value;
-  
+
   /* Do these sanity check to prevent later segfaults */
   if (sheet_head->comp_count == 0) {
     error_string = _("No components found in entire design!\n"
@@ -360,34 +360,34 @@ x_window_add_items()
 
   /*  initialize the gtksheet. */
   x_gtksheet_init();  /* this creates a new gtksheet having dimensions specified
-		       * in sheet_head->comp_count, etc. . .  */
+                       * in sheet_head->comp_count, etc. . .  */
 
   if (sheet_head->comp_count > 0 ) {
-    x_gtksheet_add_row_labels(GTK_SHEET(sheets[0]), 
-			      sheet_head->comp_count, sheet_head->master_comp_list_head);
-    x_gtksheet_add_col_labels(GTK_SHEET(sheets[0]), 
-			      sheet_head->comp_attrib_count, sheet_head->master_comp_attrib_list_head);
+    x_gtksheet_add_row_labels(GTK_SHEET(sheets[0]),
+                              sheet_head->comp_count, sheet_head->master_comp_list_head);
+    x_gtksheet_add_col_labels(GTK_SHEET(sheets[0]),
+                              sheet_head->comp_attrib_count, sheet_head->master_comp_attrib_list_head);
   }
 
 #ifdef UNIMPLEMENTED_FEATURES
   /* This is not ready.  I need to implement net attributes */
   if (sheet_head->net_count > 0 ) {
-    x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]), 
-			      sheet_head->net_count, sheet_head->master_net_list_head);
-    x_gtksheet_add_col_labels(GTK_SHEET(sheets[1]), 
-			      sheet_head->net_attrib_count, sheet_head->master_net_attrib_list_head);
+    x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]),
+                              sheet_head->net_count, sheet_head->master_net_list_head);
+    x_gtksheet_add_col_labels(GTK_SHEET(sheets[1]),
+                              sheet_head->net_attrib_count, sheet_head->master_net_attrib_list_head);
   } else {
     x_gtksheet_add_row_labels(GTK_SHEET(sheets[1]), 1, NULL);
     x_gtksheet_add_col_labels(GTK_SHEET(sheets[1]), 1, NULL);
-  }  
+  }
 #endif
 
 #ifdef UNIMPLEMENTED_FEATURES
   if (sheet_head->pin_count > 0 ) {
-    x_gtksheet_add_row_labels(GTK_SHEET(sheets[2]), 
-			      sheet_head->pin_count, sheet_head->master_pin_list_head);
-    x_gtksheet_add_col_labels(GTK_SHEET(sheets[2]), 
-			      sheet_head->pin_attrib_count, sheet_head->master_pin_attrib_list_head);
+    x_gtksheet_add_row_labels(GTK_SHEET(sheets[2]),
+                              sheet_head->pin_count, sheet_head->master_pin_list_head);
+    x_gtksheet_add_col_labels(GTK_SHEET(sheets[2]),
+                              sheet_head->pin_attrib_count, sheet_head->master_pin_attrib_list_head);
   }
 #endif
 
@@ -397,12 +397,12 @@ x_window_add_items()
   for (i = 0; i < num_rows; i++) {
     for (j = 0; j < num_cols; j++) {
       if ( (sheet_head->component_table)[i][j].attrib_value ) { /* NULL = no entry */
-	text = (gchar *) g_strdup( (sheet_head->component_table)[i][j].attrib_value );
-	visibility = (sheet_head->component_table)[i][j].visibility;
-	show_name_value = (sheet_head->component_table)[i][j].show_name_value;
-	x_gtksheet_add_cell_item( GTK_SHEET(sheets[0]), i, j, (gchar *) text, 
-				  visibility, show_name_value );
-	g_free(text);
+        text = (gchar *) g_strdup( (sheet_head->component_table)[i][j].attrib_value );
+        visibility = (sheet_head->component_table)[i][j].visibility;
+        show_name_value = (sheet_head->component_table)[i][j].show_name_value;
+        x_gtksheet_add_cell_item( GTK_SHEET(sheets[0]), i, j, (gchar *) text,
+                                  visibility, show_name_value );
+        g_free(text);
       }
     }
   }
@@ -414,12 +414,12 @@ x_window_add_items()
   for (i = 0; i < num_rows; i++) {
     for (j = 0; j < num_cols; j++) {
       if ( (sheet_head->net_table)[i][j].attrib_value ) { /* NULL = no entry */
-	text = (gchar *) g_strdup( (sheet_head->net_table)[i][j].attrib_value );
-	visibility = (sheet_head->net_table)[i][j].visibility;
-	show_name_value = (sheet_head->component_table)[i][j].show_name_value;
-	x_gtksheet_add_cell_item( GTK_SHEET(sheets[1]), i, j, (gchar *) text,
-				  visibility, show_name_value );
-	g_free(text);
+        text = (gchar *) g_strdup( (sheet_head->net_table)[i][j].attrib_value );
+        visibility = (sheet_head->net_table)[i][j].visibility;
+        show_name_value = (sheet_head->component_table)[i][j].show_name_value;
+        x_gtksheet_add_cell_item( GTK_SHEET(sheets[1]), i, j, (gchar *) text,
+                                  visibility, show_name_value );
+        g_free(text);
       }
     }
   }
@@ -432,11 +432,11 @@ x_window_add_items()
   for (i = 0; i < num_rows; i++) {
     for (j = 0; j < num_cols; j++) {
       if ( (sheet_head->pin_table)[i][j].attrib_value ) { /* NULL = no entry */
-	text = (gchar *) g_strdup( (sheet_head->pin_table)[i][j].attrib_value );
-	/* pins have no visibility attributes, must therefore provide default. */
-	x_gtksheet_add_cell_item( GTK_SHEET(sheets[2]), i, j, (gchar *) text, 
-				  VISIBLE, SHOW_VALUE );
-	g_free(text);
+        text = (gchar *) g_strdup( (sheet_head->pin_table)[i][j].attrib_value );
+        /* pins have no visibility attributes, must therefore provide default. */
+        x_gtksheet_add_cell_item( GTK_SHEET(sheets[2]), i, j, (gchar *) text,
+                                  VISIBLE, SHOW_VALUE );
+        g_free(text);
       }
     }
   }
@@ -501,7 +501,7 @@ lepton_attrib_window ()
 
     s_sheet_data_add_master_pin_list_items (s_page_objects (p_local));
     s_sheet_data_add_master_pin_attrib_list_items (s_page_objects (p_local));
-  }  	/* end of loop over files     */
+  }     /* end of loop over files     */
 
   /* ---------- Sort the master lists  ---------- */
   s_string_list_sort_master_comp_list();
