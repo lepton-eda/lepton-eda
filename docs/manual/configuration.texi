@@ -122,6 +122,8 @@ directories where Lepton will search for symbol files (@file{*.sym}).
 search for @dfn{source files} (defined by the @attrib{source=}
 attribute) used in hierarchical schematics.
 
+@itemize @minus
+
 @item
 @code{(reset-component-library)}
 
@@ -159,6 +161,8 @@ Component" dialog prefixed with the string @var{prefix}, for example:
 @code{(source-library @var{path})}
 
 Add the directory @var{path} to the list of source libraries.
+
+@end itemize
 
 @item
 Color scheme used for exporting/printing by @code{lepton-cli export}
