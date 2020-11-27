@@ -21,14 +21,14 @@
 (define-module (schematic menu)
   #:use-module (system foreign)
 
-  #:use-module (schematic ffi)
+  #:use-module (lepton ffi)
 
   #:export (add-menu))
 
 (define add-menu-entry!
   (pointer->procedure
    int
-   (dynamic-func "s_menu_add_entry" libleptongui)
+   (dynamic-func "s_menu_add_entry" liblepton)
    (list '* '*)))
 
 (define (add-menu name items)

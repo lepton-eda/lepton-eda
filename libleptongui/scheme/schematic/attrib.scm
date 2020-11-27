@@ -25,7 +25,7 @@
   #:use-module (lepton log)
   #:use-module (schematic core attrib)
   #:use-module (schematic core gettext)
-  #:use-module (schematic ffi)
+  #:use-module (lepton ffi)
 
   #:export (attribute-name
             init-schematic-attribs!))
@@ -51,7 +51,7 @@
   (let ((proc (delay
                 (pointer->procedure
                  int
-                 (dynamic-func "s_attrib_uniq" libleptongui)
+                 (dynamic-func "s_attrib_uniq" liblepton)
                  (list '*)))))
     (force proc)))
 
@@ -59,7 +59,7 @@
   (let ((proc (delay
                 (pointer->procedure
                  int
-                 (dynamic-func "s_attrib_add_entry" libleptongui)
+                 (dynamic-func "s_attrib_add_entry" liblepton)
                  (list '*)))))
     (force proc)))
 
