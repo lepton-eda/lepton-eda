@@ -97,10 +97,10 @@ liblepton_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"  $(DATADIR_DEFS) \
 	-I$(srcdir)/../include -I$(srcdir)/../include/liblepton -I$(top_srcdir)
 liblepton_la_CFLAGS = \
 	$(GCC_CFLAGS) $(MINGW_CFLAGS) $(GUILE_CFLAGS) $(GLIB_CFLAGS) \
-	$(GDK_PIXBUF_CFLAGS) $(CFLAGS) $(CAIRO_CFLAGS) $(PANGO_CFLAGS)
+	$(GDK_CFLAGS) $(GDK_PIXBUF_CFLAGS) $(CFLAGS) $(CAIRO_CFLAGS) $(PANGO_CFLAGS)
 liblepton_la_LDFLAGS = -version-info $(LIBLEPTON_SHLIB_VERSION) \
 	$(WINDOWS_LIBTOOL_FLAGS) $(MINGW_LDFLAGS) $(GUILE_LIBS) \
-	$(GLIB_LIBS) $(GDK_PIXBUF_LIBS) $(CAIRO_LIBS) $(PANGO_LIBS)
+	$(GLIB_LIBS) $(GDK_LIBS) $(GDK_PIXBUF_LIBS) $(CAIRO_LIBS) $(PANGO_LIBS)
 LIBTOOL=@LIBTOOL@ --silent
 
 # This is used to generate boilerplate for defining Scheme functions
