@@ -88,7 +88,10 @@ liblepton_la_SOURCES = \
 	s_slot.c \
 	s_textbuffer.c \
 	s_weakref.c \
-	version.c
+	version.c \
+	edacairo.c \
+	edapangorenderer.c \
+	edarenderer.c
 
 liblepton_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"  $(DATADIR_DEFS) \
 	-I$(srcdir)/../include -I$(srcdir)/../include/liblepton -I$(top_srcdir)

@@ -49,7 +49,11 @@ libleptoninclude_HEADERS = \
 	liblepton/o_types.h \
 	liblepton/prototype.h \
 	liblepton/libgedaguile.h \
-	liblepton/struct.h
+	liblepton/struct.h \
+	liblepton/edacairo.h \
+	liblepton/edapangorenderer.h \
+	liblepton/edarenderer.h \
+	liblepton/libleptonrenderer.h
 
 
 noinst_HEADERS = \
