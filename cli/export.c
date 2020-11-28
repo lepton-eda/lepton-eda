@@ -32,7 +32,7 @@
 
 #include <liblepton/liblepton.h>
 #include <liblepton/libgedaguile.h>
-#include <libleptonrenderer/libleptonrenderer.h>
+#include <liblepton/libleptonrenderer.h>
 
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
