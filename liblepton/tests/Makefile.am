@@ -33,5 +33,4 @@ AM_CXXFLAGS =  $(MINGW_CLAGS) $(GUILE_CFLAGS) $(GLIB_CFLAGS) \
 AM_LDFLAGS = \
 	$(WINDOWS_LIBTOOL_FLAGS) $(MINGW_LDFLAGS) $(GUILE_LIBS) \
 	$(GLIB_LIBS) $(GDK_PIXBUF_LIBS) \
-	$(top_builddir)/libleptonrenderer/libleptonrenderer.la \
 	$(top_builddir)/liblepton/src/liblepton.la

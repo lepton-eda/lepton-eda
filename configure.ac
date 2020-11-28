@@ -206,8 +206,6 @@ AX_DATA_DIRS
 AX_PCB_DIRS
 # Set up liblepton with the correct ld version number
 AX_LIBLEPTON([6:0:0])
-# Set up libleptonrenderer with the correct ld version number
-AX_LIBLEPTONRENDERER([3:0:0])
 # Set up libleptonattrib with the correct ld version number
 AX_LIBLEPTONATTRIB([1:0:0])
 # Set up libleptongui with the correct ld version number.
@@ -230,9 +228,6 @@ AC_CONFIG_FILES([Makefile
                  liblepton/scheme/Makefile
                  liblepton/src/Makefile
                  liblepton/tests/Makefile
-
-                 libleptonrenderer/Makefile
-                 libleptonrenderer/libleptonrenderer.pc
 
                  cli/Makefile
                  cli/po/Makefile.in
