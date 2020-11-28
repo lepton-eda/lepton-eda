@@ -23,7 +23,7 @@
 #include <math.h>
 
 #include <liblepton/liblepton.h>
-#include "edacairo.h"
+#include <liblepton/edacairo.h>
 
 /* We don't use gettext */
 #define _(x) (x)

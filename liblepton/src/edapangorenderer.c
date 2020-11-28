@@ -28,7 +28,7 @@
 #include <glib-object.h>
 #include <cairo.h>
 #include <pango/pangocairo.h>
-#include "edapangorenderer.h"
+#include <liblepton/edapangorenderer.h>
 
 /* We don't use gettext */
 #define _(x) (x)

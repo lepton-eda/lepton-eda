@@ -23,7 +23,7 @@
 #include <cairo.h>
 #include <pango/pangocairo.h>
 
-#include <libleptonrenderer/edarenderer.h>
-#include <libleptonrenderer/edacairo.h>
+#include <liblepton/edarenderer.h>
+#include <liblepton/edacairo.h>
 
 #endif /* !__LIBLEPTONRENDERER_H__ */

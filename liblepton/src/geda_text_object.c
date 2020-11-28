@@ -51,7 +51,7 @@
 #endif
 
 #include "libgeda_priv.h"
-#include "libleptonrenderer/libleptonrenderer.h"
+#include <liblepton/libleptonrenderer.h>
 
 
 /*! \brief Scale factor between legacy lepton-schematic font units
