@@ -1,7 +1,7 @@
 # libleptonattrib.m4                                     -*-Autoconf-*-
 # serial 1
 
-dnl libleptonrenderer-specific setup
+dnl libleptonattrib-specific setup
 dnl Copyright (C) 2020 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
