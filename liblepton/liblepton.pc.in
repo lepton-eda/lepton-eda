@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: liblepton
 Description: Lepton EDA core library
-Requires: libleptonrenderer glib-2.0 gdk-pixbuf-2.0 gio-2.0 @GUILE_PKG_NAME@
+Requires: gobject-2.0 gdk-2.0 cairo pangocairo glib-2.0 gdk-pixbuf-2.0 gio-2.0 @GUILE_PKG_NAME@
 Requires.private:
 Version: @DATE_VERSION@
 Libs: -L${libdir} -llepton
