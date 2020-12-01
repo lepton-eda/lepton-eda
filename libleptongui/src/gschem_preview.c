@@ -291,7 +291,11 @@ gschem_preview_init (GschemPreview *preview)
     GCallback c_handler;
   } drawing_area_events[] = {
     { "realize",              G_CALLBACK (preview_callback_realize)       },
+#ifdef ENABLE_GTK3
+    { "draw",                 G_CALLBACK (x_event_draw)                   },
+#else
     { "expose_event",         G_CALLBACK (x_event_expose)                 },
+#endif
     { "button_press_event",   G_CALLBACK (preview_callback_button_press)  },
     { "configure_event",      G_CALLBACK (x_event_configure)              },
     { "scroll_event",         G_CALLBACK (preview_event_scroll)           },

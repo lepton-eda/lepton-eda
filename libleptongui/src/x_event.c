@@ -34,6 +34,26 @@
 static int DOING_STROKE = FALSE;
 #endif /* HAVE_LIBSTROKE */
 
+#ifdef ENABLE_GTK3
+/*! \brief Redraws the view when widget is exposed.
+ *
+ *  \param [in] view      The GschemPageView.
+ *  \param [in] cr        The cairo context.
+ *  \param [in] w_current The GschemToplevel.
+ *  \returns FALSE to propagate the event further.
+ */
+gint
+x_event_draw (GschemPageView *view,
+              cairo_t *cr,
+              GschemToplevel *w_current)
+{
+  gschem_page_view_redraw (view, cr, w_current);
+
+  return(0);
+}
+
+#else /* GTK2 */
+
 /*! \brief Redraws the view when widget is exposed.
  *
  *  \param [in] view      The GschemPageView.
@@ -41,15 +61,16 @@ static int DOING_STROKE = FALSE;
  *  \param [in] w_current The GschemToplevel.
  *  \returns FALSE to propagate the event further.
  */
-
 gint
-x_event_expose(GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current)
+x_event_expose (GschemPageView *view,
+                GdkEventExpose *event,
+                GschemToplevel *w_current)
 {
   gschem_page_view_redraw (view, event, w_current);
 
   return(0);
 }
-
+#endif
 
 
 /*! \todo Finish function documentation!!!
