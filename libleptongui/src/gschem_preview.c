@@ -134,8 +134,8 @@ preview_callback_button_press (GtkWidget *widget,
         gschem_page_view_invalidate_all (GSCHEM_PAGE_VIEW (widget));
         break;
       case 2: /* middle mouse button: pan */
-	if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
-	  return FALSE;
+        if (!x_event_get_pointer_position(preview_w_current, FALSE, &wx, &wy))
+          return FALSE;
         gschem_page_view_pan (GSCHEM_PAGE_VIEW (preview), wx, wy);
         break;
       case 3: /* right mouse button: zoom out */
