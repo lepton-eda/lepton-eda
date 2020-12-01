@@ -220,7 +220,11 @@ void x_dialog_hotkeys (GschemToplevel *w_current)
   GtkWidget* label = gtk_label_new_with_mnemonic (_("_Filter:"));
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), entry);
 
+#ifdef ENABLE_GTK3
+  GtkWidget* hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+#else
   GtkWidget* hbox = gtk_hbox_new (FALSE, 0);
+#endif
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 5);
   gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE,  TRUE,  5);
   gtk_box_pack_start (GTK_BOX (vbox), hbox,  FALSE, TRUE,  0);
