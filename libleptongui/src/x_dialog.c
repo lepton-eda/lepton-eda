@@ -258,7 +258,12 @@ major_changed_dialog (GschemToplevel* w_current)
                 "spacing", 14,
                 NULL);
   /* This box contains the warning image and the vbox */
-  hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
+  hbox = GTK_WIDGET (g_object_new (
+#ifdef ENABLE_GTK3
+                                   GTK_TYPE_BOX,
+#else
+                                   GTK_TYPE_HBOX,
+#endif
                                    /* GtkContainer */
                                    "border-width", 5,
                                    /* GtkBox */
@@ -277,10 +282,19 @@ major_changed_dialog (GschemToplevel* w_current)
                                     NULL));
   gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   /* This box contains the labels and list of changed symbols */
-  vbox = GTK_WIDGET (g_object_new (GTK_TYPE_VBOX,
+  vbox = GTK_WIDGET (g_object_new (
+#ifdef ENABLE_GTK3
+                                   GTK_TYPE_BOX,
+#else
+                                   GTK_TYPE_VBOX,
+#endif
                                    /* GtkBox */
                                    "homogeneous", FALSE,
                                    "spacing", 12,
+#ifdef ENABLE_GTK3
+                                   /* GtkOrientable */
+                                   "orientation", GTK_ORIENTATION_VERTICAL,
+#endif
                                    NULL));
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   /* Primary label */
