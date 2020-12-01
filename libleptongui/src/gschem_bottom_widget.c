@@ -479,7 +479,12 @@ gschem_bottom_widget_get_type ()
       (GInstanceInitFunc) gschem_bottom_widget_init,
     };
 
-    type = g_type_register_static (GTK_TYPE_HBOX,
+    type = g_type_register_static (
+#ifdef ENABLE_GTK3
+                                   GTK_TYPE_BOX,
+#else
+                                   GTK_TYPE_HBOX,
+#endif
                                    "GschemBottomWidget",
                                    &info,
                                    (GTypeFlags) 0);
@@ -1020,4 +1025,3 @@ update_magnetic_net_label (GschemBottomWidget *widget, GParamSpec *pspec, gpoint
                     widget->magnetic_net_mode ?
                     "MN: <b>ON</b>" : "MN: off");
 }
-
