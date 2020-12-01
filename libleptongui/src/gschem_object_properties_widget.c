@@ -447,7 +447,11 @@ gschem_object_properties_widget_init (GschemObjectPropertiesWidget *dialog)
   gtk_viewport_set_shadow_type (GTK_VIEWPORT (viewport),
                                 GTK_SHADOW_NONE);
 
+#ifdef ENABLE_GTK3
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, DIALOG_V_SPACING);
+#else
   vbox = gtk_vbox_new (FALSE, DIALOG_V_SPACING);
+#endif
   gtk_container_add (GTK_CONTAINER (viewport), vbox);
 
   dialog->general_section_widget = create_general_property_widget (dialog);
