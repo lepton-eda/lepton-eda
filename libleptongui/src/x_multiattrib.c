@@ -2217,7 +2217,11 @@ multiattrib_init (Multiattrib *multiattrib)
   /* set treeview of multiattrib */
   multiattrib->treeview = GTK_TREE_VIEW (treeview);
 
+#ifdef ENABLE_GTK3
+  attrib_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
   attrib_vbox = gtk_vbox_new (FALSE, 0);
+#endif
 
   /* Pack the vbox into the frame */
   gtk_container_add (GTK_CONTAINER (multiattrib->list_frame), attrib_vbox);
