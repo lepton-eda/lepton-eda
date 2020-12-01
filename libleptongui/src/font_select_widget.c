@@ -198,7 +198,11 @@ font_select_widget_init (FontSelectWidget* widget)
 static void
 font_select_widget_create (FontSelectWidget* widget)
 {
+#ifdef ENABLE_GTK3
+  GtkWidget* vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
   GtkWidget* vbox = gtk_vbox_new (FALSE, 0);
+#endif
   gtk_container_add (GTK_CONTAINER (widget), vbox);
 
   /* GTK font selection widget: */
@@ -209,7 +213,11 @@ font_select_widget_create (FontSelectWidget* widget)
   gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), FALSE, FALSE, 5);
 
   /* horizontal container */
+#ifdef ENABLE_GTK3
+  GtkWidget* hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+#else
   GtkWidget* hbox = gtk_hbox_new (FALSE, 0);
+#endif
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
 
 
@@ -222,7 +230,11 @@ font_select_widget_create (FontSelectWidget* widget)
   gtk_box_pack_start (GTK_BOX (hbox), btn_save, FALSE, FALSE, 3);
 
   /* horizontal container for the current schematic font label */
+#ifdef ENABLE_GTK3
+  GtkWidget* hbox_lab = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+#else
   GtkWidget* hbox_lab = gtk_hbox_new (TRUE, 0);
+#endif
   gtk_box_pack_start (GTK_BOX (hbox), hbox_lab, TRUE, TRUE, 0);
 
   /* current font label */
@@ -515,7 +527,11 @@ save_settings_dlg (FontSelectWidget* widget)
   g_free (font);
 
   /* pack to vbox: */
+#ifdef ENABLE_GTK3
+  GtkWidget* vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
   GtkWidget* vbox = gtk_vbox_new (FALSE, 0);
+#endif
   gtk_box_pack_start (GTK_BOX (vbox), label_font, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), TRUE, TRUE, 10);
   gtk_box_pack_start (GTK_BOX (vbox), btn1, TRUE, TRUE, 0);
@@ -550,4 +566,3 @@ save_settings_dlg (FontSelectWidget* widget)
   return ctx;
 
 } /* save_settings_dlg() */
-
