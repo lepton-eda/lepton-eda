@@ -393,7 +393,7 @@ void o_delete(GschemToplevel *w_current, OBJECT *object);
 void o_delete_selected(GschemToplevel *w_current);
 /* o_find.c */
 gboolean o_find_object(GschemToplevel *w_current, int x, int y,
-		       gboolean deselect_afterwards);
+                       gboolean deselect_afterwards);
 gboolean o_find_selected_object(GschemToplevel *w_current, int x, int y);
 /* o_grips.c */
 OBJECT *o_grips_search_world(GschemToplevel *w_current, int x, int y, int *whichone);
