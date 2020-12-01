@@ -186,10 +186,18 @@ color_edit_widget_init (ColorEditWidget* widget)
 static void
 color_edit_widget_create (ColorEditWidget* widget)
 {
+#ifdef ENABLE_GTK3
+  GtkWidget* vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
   GtkWidget* vbox = gtk_vbox_new (FALSE, 0);
+#endif
   gtk_container_add (GTK_CONTAINER (widget), vbox);
 
+#ifdef ENABLE_GTK3
+  GtkWidget* hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+#else
   GtkWidget* hbox = gtk_hbox_new (FALSE, 0);
+#endif
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
 
   /* color selection combo box: */
@@ -527,7 +535,11 @@ dlg_confirm_overwrite (GtkWidget* parent, const gchar* fname)
 static void
 mk_opacity_box (GtkWidget* vbox)
 {
+#ifdef ENABLE_GTK3
+  GtkWidget* hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+#else
   GtkWidget* hbox2 = gtk_hbox_new (FALSE, 0);
+#endif
   gtk_box_pack_start (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
 
   GtkWidget* label = gtk_label_new (_("Opacity for outline color scheme:"));
@@ -546,4 +558,3 @@ mk_opacity_box (GtkWidget* vbox)
 }
 
 */
-
