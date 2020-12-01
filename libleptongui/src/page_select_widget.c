@@ -442,7 +442,11 @@ pagesel_popup_menu (PageSelectWidget* pagesel, GdkEventButton* event)
 static void
 widget_create (PageSelectWidget* pagesel)
 {
+#ifdef ENABLE_GTK3
+  GtkWidget* vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
   GtkWidget* vbox = gtk_vbox_new (FALSE, 0);
+#endif
   gtk_container_add (GTK_CONTAINER (pagesel), vbox);
 
   GtkWidget *scrolled_win, *treeview;
@@ -570,7 +574,11 @@ widget_create (PageSelectWidget* pagesel)
   /* "Show full paths" checkbox:
   */
 
+#ifdef ENABLE_GTK3
+  GtkWidget* hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+#else
   GtkWidget* hbox = gtk_hbox_new (TRUE, 0);
+#endif
   gtk_box_pack_start (GTK_BOX (vbox),
                       hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
