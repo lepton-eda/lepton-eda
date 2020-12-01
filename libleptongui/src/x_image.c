@@ -484,11 +484,16 @@ void x_image_setup (GschemToplevel *w_current)
   char *image_size;
   int width, height;
 
+#ifdef ENABLE_GTK3
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+  GtkWidget* vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  GtkWidget* hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+#else
   hbox = gtk_hbox_new(FALSE, 0);
-
-
   GtkWidget* vbox = gtk_vbox_new (FALSE, 0);
   GtkWidget* hbox2 = gtk_hbox_new (FALSE, 0);
+#endif
+
   GtkWidget* label = gtk_label_new(
     _("NOTE: print-color-map will be used for PDF export"));
   gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 10);
@@ -498,7 +503,11 @@ void x_image_setup (GschemToplevel *w_current)
 
 
   /* Image size selection */
+#ifdef ENABLE_GTK3
+  vbox1 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
   vbox1 = gtk_vbox_new(TRUE, 0);
+#endif
   label1 = gtk_label_new (_("Width x Height"));
   gtk_widget_show (label1);
   gtk_misc_set_alignment( GTK_MISC (label1), 0, 0);
@@ -514,7 +523,11 @@ void x_image_setup (GschemToplevel *w_current)
   gtk_widget_show(vbox1);
 
   /* Image type selection */
+#ifdef ENABLE_GTK3
+  vbox2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
   vbox2 = gtk_vbox_new(TRUE, 0);
+#endif
   label2 = gtk_label_new (_("Image type"));
   gtk_widget_show (label2);
   gtk_misc_set_alignment( GTK_MISC (label2), 0, 0);
@@ -529,7 +542,11 @@ void x_image_setup (GschemToplevel *w_current)
 
   /* Color/grayscale selection:
   */
+#ifdef ENABLE_GTK3
+  GtkWidget* vbox3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
   GtkWidget* vbox3 = gtk_vbox_new (TRUE, 0);
+#endif
   GtkWidget* label3 = gtk_label_new (_("Color mode"));
   gtk_misc_set_alignment (GTK_MISC (label3), 0, 0);
   gtk_misc_set_padding (GTK_MISC (label3), 0, 0);
