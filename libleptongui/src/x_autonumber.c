@@ -1248,7 +1248,11 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_alignment_set_padding (GTK_ALIGNMENT (alignment1),
 			     0, 0, DIALOG_INDENTATION, 0);
 
+#ifdef ENABLE_GTK3
+  vbox3 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
   vbox3 = gtk_vbox_new (FALSE, 0);
+#endif
   gtk_widget_show (vbox3);
   gtk_container_add (GTK_CONTAINER (alignment1), vbox3);
 
@@ -1321,7 +1325,11 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_alignment_set_padding (GTK_ALIGNMENT (alignment3),
 			     0, 0, DIALOG_INDENTATION, 0);
 
+#ifdef ENABLE_GTK3
+  vbox4 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 3);
+#else
   vbox4 = gtk_vbox_new (FALSE, 3);
+#endif
   gtk_widget_show (vbox4);
   gtk_container_add (GTK_CONTAINER (alignment3), vbox4);
 
