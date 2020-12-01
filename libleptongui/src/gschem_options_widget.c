@@ -193,7 +193,11 @@ create_grid_mode_widget (GschemOptionsWidget *widget)
 
   g_return_val_if_fail (widget != NULL, NULL);
 
+#ifdef ENABLE_GTK3
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+#else
   box = gtk_hbox_new (FALSE, FALSE);
+#endif
 
   for (index=0; index<GRID_MODE_COUNT; index++) {
     widget->grid_radio[index] = gtk_toggle_button_new_with_mnemonic (NULL);
@@ -316,7 +320,11 @@ create_snap_mode_widget (GschemOptionsWidget *widget)
 
   g_return_val_if_fail (widget != NULL, NULL);
 
+#ifdef ENABLE_GTK3
+  box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+#else
   box = gtk_hbox_new (FALSE, FALSE);
+#endif
 
   for (index=0; index<SNAP_STATE_COUNT; index++) {
     widget->snap_radio[index] = gtk_toggle_button_new_with_mnemonic (NULL);
@@ -417,7 +425,11 @@ gschem_options_widget_init (GschemOptionsWidget *widget)
 
   widget->size_group = gtk_size_group_new (GTK_SIZE_GROUP_BOTH);
 
+#ifdef ENABLE_GTK3
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, DIALOG_V_SPACING);
+#else
   vbox = gtk_vbox_new (FALSE, DIALOG_V_SPACING);
+#endif
   gtk_container_add (GTK_CONTAINER (widget), vbox);
 
   gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
