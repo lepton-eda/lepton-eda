@@ -19,9 +19,11 @@
  */
 
 #include <config.h>
+#include <math.h>
 #include "gschem.h"
 
 
+extern GedaColorMap display_colors;
 
 #define X_IMAGE_DEFAULT_SIZE "800x600"
 #define X_IMAGE_DEFAULT_TYPE "PNG"
@@ -684,6 +686,144 @@ static void x_image_convert_to_greyscale(GdkPixbuf *pixbuf)
  *  \par Function Description
  *
  */
+#ifdef ENABLE_GTK3
+GdkPixbuf
+*x_image_get_pixbuf (GschemToplevel *w_current, int width, int height, gboolean is_color)
+{
+  GdkPixbuf *pixbuf;
+  GschemPageView *page_view;
+  PAGE *page;
+  int origin_x, origin_y, bottom, right;
+  GschemPageGeometry *old_geometry, *new_geometry;
+
+  GList *obj_list;
+  GList *iter;
+  BOX *world_rect;
+  EdaRenderer *renderer;
+  int render_flags;
+  GArray *render_color_map = NULL;
+
+  cairo_surface_t *cs;
+  cairo_t *cr;
+
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  page_view = gschem_toplevel_get_current_page_view (w_current);
+
+  g_return_val_if_fail (page_view != NULL, NULL);
+
+  page = gschem_page_view_get_page (page_view);
+
+  g_return_val_if_fail (page != NULL, NULL);
+
+  old_geometry = gschem_page_view_get_page_geometry (page_view);
+
+  cs = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, width, height);
+  cr = cairo_create (cs);
+
+  origin_x = origin_y = 0;
+  right = width;
+  bottom = height;
+
+  new_geometry =
+    gschem_page_geometry_new_with_values (width,
+                                          height,
+                                          old_geometry->viewport_left,
+                                          old_geometry->viewport_top,
+                                          old_geometry->viewport_right,
+                                          old_geometry->viewport_bottom,
+                                          WORLD_DEFAULT_LEFT,
+                                          WORLD_DEFAULT_TOP,
+                                          WORLD_DEFAULT_RIGHT,
+                                          WORLD_DEFAULT_BOTTOM);
+
+  cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (new_geometry));
+
+  world_rect = g_new (BOX, 1);
+
+  double lower_x = 0;
+  double lower_y = height;
+  double upper_x = width;
+  double upper_y = 0;
+
+  cairo_device_to_user (cr, &lower_x, &lower_y);
+  cairo_device_to_user (cr, &upper_x, &upper_y);
+
+  world_rect->lower_x = floor (lower_x);
+  world_rect->lower_y = floor (lower_y);
+  world_rect->upper_x = ceil (upper_x);
+  world_rect->upper_y = ceil (upper_y);
+
+  gboolean show_hidden_text =
+    gschem_toplevel_get_show_hidden_text (w_current);
+
+  obj_list = s_page_objects_in_regions (NULL, /* unused 'toplevel' parameter */
+                                        page,
+                                        world_rect,
+                                        1,
+                                        show_hidden_text);
+
+  g_free (world_rect);
+
+  /* Set up renderer based on configuration in w_current */
+  render_flags = EDA_RENDERER_FLAG_HINTING;
+  if (show_hidden_text)
+    render_flags |= EDA_RENDERER_FLAG_TEXT_HIDDEN;
+
+  /* This color map is used for "normal" rendering. */
+  render_color_map =
+    g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), colors_count());
+  render_color_map =
+    g_array_append_vals (render_color_map, display_colors, colors_count());
+
+  /* Set up renderer */
+  renderer = eda_renderer_new (NULL, NULL);
+  g_object_set (G_OBJECT (renderer),
+                "cairo-context", cr,
+                "render-flags", render_flags,
+                "color-map", render_color_map,
+                NULL);
+
+  /* Paint background */
+  GedaColor *color = x_color_lookup (BACKGROUND_COLOR);
+
+  cairo_set_source_rgba (cr,
+                         geda_color_get_red_double (color),
+                         geda_color_get_green_double (color),
+                         geda_color_get_blue_double (color),
+                         geda_color_get_alpha_double (color));
+
+  cairo_paint (cr);
+  cairo_destroy (cr);
+
+  for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
+    OBJECT *o_current = (OBJECT*) iter->data;
+
+    if (!o_current->dont_redraw) {
+      eda_renderer_draw (renderer, o_current);
+    }
+  }
+
+  g_list_free (obj_list);
+  g_object_unref (G_OBJECT (renderer));
+  g_array_free (render_color_map, TRUE);
+
+  gschem_page_geometry_free (new_geometry);
+
+  /* Get the pixbuf */
+  pixbuf = gdk_pixbuf_get_from_surface (cs, 0, 0, right-origin_x, bottom-origin_y);
+  cairo_surface_destroy (cs);
+
+  if (!is_color)
+  {
+    x_image_convert_to_greyscale(pixbuf);
+  }
+
+  return(pixbuf);
+}
+
+#else /* GTK2 */
+
 GdkPixbuf
 *x_image_get_pixbuf (GschemToplevel *w_current, int width, int height, gboolean is_color)
 {
@@ -769,3 +909,4 @@ GdkPixbuf
 
   return(pixbuf);
 }
+#endif
