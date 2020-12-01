@@ -112,7 +112,13 @@ gboolean
 gschem_page_view_pan_end(GschemPageView *page_view);
 
 void
+#ifdef ENABLE_GTK3
+gschem_page_view_redraw (GschemPageView *view,
+                         cairo_t *cr,
+                         GschemToplevel *w_current);
+#else
 gschem_page_view_redraw (GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current);
+#endif
 
 int
 gschem_page_view_SCREENabs(GschemPageView *view, int val);

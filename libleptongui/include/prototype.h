@@ -340,7 +340,16 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object);
 void o_attrib_toggle_show_name_value(GschemToplevel *w_current, OBJECT *object, int new_show_name_value);
 OBJECT *o_attrib_add_attrib(GschemToplevel *w_current, const char *text_string, int visibility, int show_name_value, OBJECT *object);
 /* o_basic.c */
+#ifdef ENABLE_GTK3
+void
+o_redraw_rect (GschemToplevel *w_current,
+               GtkWidget *widget,
+               PAGE *page,
+               GschemPageGeometry *geometry,
+               cairo_t *cr);
+#else
 void o_redraw_rect (GschemToplevel *w_current, GdkDrawable *drawable, PAGE *page, GschemPageGeometry *geometry, GdkRectangle *rectangle);
+#endif
 int o_invalidate_rubber(GschemToplevel *w_current);
 int o_redraw_cleanstates(GschemToplevel *w_current);
 void o_invalidate_rect(GschemToplevel *w_current, int x1, int y1, int x2, int y2);

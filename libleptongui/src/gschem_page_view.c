@@ -1397,7 +1397,13 @@ gschem_page_view_zoom_object (GschemPageView *view, OBJECT *object)
  *  \param [in] view      The GschemPageView object which page to redraw
  */
 void
-gschem_page_view_redraw (GschemPageView *view, GdkEventExpose *event, GschemToplevel *w_current)
+gschem_page_view_redraw (GschemPageView *view,
+#ifdef ENABLE_GTK3
+                         cairo_t *cr,
+#else
+                         GdkEventExpose *event,
+#endif
+                         GschemToplevel *w_current)
 {
   GschemPageGeometry *geometry;
   PAGE *page;
@@ -1416,11 +1422,19 @@ gschem_page_view_redraw (GschemPageView *view, GdkEventExpose *event, GschemTopl
 
     g_return_if_fail (view != NULL);
 
+#ifdef ENABLE_GTK3
+    o_redraw_rect (w_current,
+                   GTK_WIDGET(view),
+                   page,
+                   geometry,
+                   cr);
+#else
     o_redraw_rect (w_current,
                    gtk_widget_get_window (GTK_WIDGET(view)),
                    page,
                    geometry,
                    &(event->area));
+#endif
   }
 }
 
