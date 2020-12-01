@@ -931,12 +931,21 @@ create_inuse_treeview (Compselect *compselect)
 
   model = create_inuse_tree_model (compselect);
 
-  vbox = GTK_WIDGET (g_object_new (GTK_TYPE_VBOX,
+  vbox = GTK_WIDGET (g_object_new (
+#ifdef ENABLE_GTK3
+                                   GTK_TYPE_BOX,
+#else
+                                   GTK_TYPE_VBOX,
+#endif
                                    /* GtkContainer */
                                    "border-width", 5,
                                    /* GtkBox */
                                    "homogeneous",  FALSE,
                                    "spacing",      5,
+#ifdef ENABLE_GTK3
+                                   /* GtkOrientable */
+                                   "orientation", GTK_ORIENTATION_VERTICAL,
+#endif
                                    NULL));
 
   /* Create a scrolled window to accomodate the treeview */
@@ -998,11 +1007,16 @@ create_inuse_treeview (Compselect *compselect)
                       TRUE, TRUE, 0);
 
   /* -- refresh button area -- */
-  hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
-                                          /* GtkBox */
-                                          "homogeneous", FALSE,
-                                          "spacing",     3,
-                                          NULL));
+  hbox = GTK_WIDGET (g_object_new (
+#ifdef ENABLE_GTK3
+                                   GTK_TYPE_BOX,
+#else
+                                   GTK_TYPE_HBOX,
+#endif
+                                   /* GtkBox */
+                                   "homogeneous", FALSE,
+                                   "spacing",     3,
+                                   NULL));
   /* create the refresh button */
   button = GTK_WIDGET (g_object_new (GTK_TYPE_BUTTON,
                                      /* GtkWidget */
@@ -1041,12 +1055,21 @@ create_lib_treeview (Compselect *compselect)
   /* -- library selection view -- */
 
   /* vertical box for component selection and search entry */
-  vbox = GTK_WIDGET (g_object_new (GTK_TYPE_VBOX,
+  vbox = GTK_WIDGET (g_object_new (
+#ifdef ENABLE_GTK3
+                                   GTK_TYPE_BOX,
+#else
+                                   GTK_TYPE_VBOX,
+#endif
                                    /* GtkContainer */
                                    "border-width", 5,
                                    /* GtkBox */
                                    "homogeneous",  FALSE,
                                    "spacing",      5,
+#ifdef ENABLE_GTK3
+                                   /* GtkOrientable */
+                                   "orientation", GTK_ORIENTATION_VERTICAL,
+#endif
                                    NULL));
 
   child_model  = create_lib_tree_model (compselect);
@@ -1111,11 +1134,16 @@ create_lib_treeview (Compselect *compselect)
 
 
   /* -- filter area -- */
-  hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
-                                          /* GtkBox */
-                                          "homogeneous", FALSE,
-                                          "spacing",     3,
-                                          NULL));
+  hbox = GTK_WIDGET (g_object_new (
+#ifdef ENABLE_GTK3
+                                   GTK_TYPE_BOX,
+#else
+                                   GTK_TYPE_HBOX,
+#endif
+                                   /* GtkBox */
+                                   "homogeneous", FALSE,
+                                   "spacing",     3,
+                                   NULL));
 
   /* create the entry label */
   label = gtk_label_new_with_mnemonic (_("_Filter:"));
