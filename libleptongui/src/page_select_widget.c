@@ -473,6 +473,9 @@ widget_create (PageSelectWidget* pagesel)
                                        "model",      store,
                                        "rules-hint", TRUE,
                                        NULL));
+#ifdef ENABLE_GTK3
+  g_object_unref (G_OBJECT (store));
+#endif
 
   g_signal_connect (treeview,
                     "key-press-event",
@@ -703,7 +706,16 @@ pagesel_update (PageSelectWidget* pagesel)
   model    = gtk_tree_view_get_model (pagesel->treeview_);
 
   /* wipe out every thing in the store */
+#ifdef ENABLE_GTK3
+  model = (GtkTreeModel*)gtk_tree_store_new (NUM_COLUMNS,
+                                             G_TYPE_POINTER,  /* page */
+                                             G_TYPE_STRING,   /* name */
+                                             G_TYPE_BOOLEAN); /* changed */
+  gtk_tree_view_set_model (pagesel->treeview_, model);
+  g_object_unref (G_OBJECT (model));
+#else
   gtk_tree_store_clear (GTK_TREE_STORE (model));
+#endif
   /* now rebuild */
   for ( iter = geda_list_get_glist( toplevel->pages );
         iter != NULL;
@@ -722,4 +734,3 @@ pagesel_update (PageSelectWidget* pagesel)
   select_page (pagesel->treeview_, NULL, toplevel->page_current);
 
 } /* pagesel_update() */
-
