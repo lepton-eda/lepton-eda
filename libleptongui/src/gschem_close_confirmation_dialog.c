@@ -324,10 +324,19 @@ close_confirmation_dialog_build_page_list (CloseConfirmationDialog *dialog)
   const gchar *text;
 
   /* place the treeview and its caption into their own box */
-  vbox = GTK_WIDGET (g_object_new (GTK_TYPE_VBOX,
+  vbox = GTK_WIDGET (g_object_new (
+#ifdef ENABLE_GTK3
+                                   GTK_TYPE_BOX,
+#else
+                                   GTK_TYPE_VBOX,
+#endif
                                    /* GtkBox */
                                    "homogeneous", FALSE,
                                    "spacing",     8,
+#ifdef ENABLE_GTK3
+                                   /* GtkOrientable */
+                                   "orientation", GTK_ORIENTATION_VERTICAL,
+#endif
                                    NULL));
 
 
@@ -468,7 +477,12 @@ close_confirmation_dialog_constructor (GType type,
                                            &iter);
 
   /* here starts the layout of the dialog */
-  hbox = GTK_WIDGET (g_object_new (GTK_TYPE_HBOX,
+  hbox = GTK_WIDGET (g_object_new (
+#ifdef ENABLE_GTK3
+                                   GTK_TYPE_BOX,
+#else
+                                   GTK_TYPE_HBOX,
+#endif
                                    /* GtkContainer */
                                    "border-width", 5,
                                    /* GtkBox */
@@ -489,10 +503,19 @@ close_confirmation_dialog_constructor (GType type,
                       FALSE, FALSE, 0);
 
   /* vertical box on the right hand side of the dialog */
-  vbox = GTK_WIDGET (g_object_new (GTK_TYPE_VBOX,
+  vbox = GTK_WIDGET (g_object_new (
+#ifdef ENABLE_GTK3
+                                   GTK_TYPE_BOX,
+#else
+                                   GTK_TYPE_VBOX,
+#endif
                                    /* GtkBox */
                                    "homogeneous", FALSE,
                                    "spacing",     12,
+#ifdef ENABLE_GTK3
+                                   /* GtkOrientable */
+                                   "orientation", GTK_ORIENTATION_VERTICAL,
+#endif
                                    NULL));
 
   /* primary label */
