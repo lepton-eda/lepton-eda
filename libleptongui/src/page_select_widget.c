@@ -537,6 +537,9 @@ widget_create (PageSelectWidget* pagesel)
   /* add the scrolled window to the dialog vbox */
   gtk_box_pack_start (GTK_BOX (vbox), scrolled_win,
                       TRUE, TRUE, 0);
+#ifdef ENABLE_GTK3
+  gtk_widget_set_vexpand (scrolled_win, TRUE);
+#endif
   gtk_widget_show_all (scrolled_win);
 
 
