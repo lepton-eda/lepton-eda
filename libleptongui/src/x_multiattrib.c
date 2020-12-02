@@ -2042,18 +2042,22 @@ multiattrib_init (Multiattrib *multiattrib)
                 "default-width",   320,
                 "default-height",  350,
                 "window-position", GTK_WIN_POS_MOUSE,
+#ifndef ENABLE_GTK3
                 "allow-grow",      TRUE,
                 "allow-shrink",    FALSE,
                 /* GtkDialog */
                 "has-separator",   TRUE,
+#endif
                 NULL);
 
   gtk_box_set_spacing (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))), 5);
 
   /* create the attribute list frame */
   multiattrib->list_frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
+#ifndef ENABLE_GTK3
                                                       /* GtkFrame */
                                                       "shadow", GTK_SHADOW_NONE,
+#endif
                                                       NULL));
   /*   - create the model for the treeview */
   store = (GtkTreeModel*)gtk_list_store_new (NUM_COLUMNS,
