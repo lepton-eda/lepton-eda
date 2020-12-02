@@ -437,8 +437,10 @@ close_confirmation_dialog_constructor (GType type,
 
 
   g_object_set (dialog,
+#ifndef ENABLE_GTK3
                 /* GtkDialog */
                 "has-separator",     FALSE,
+#endif
                 /* GtkWindow */
                 "resizable",         TRUE,
                 "skip-taskbar-hint", TRUE,
