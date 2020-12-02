@@ -742,6 +742,13 @@ x_tabs_pview_create (GschemToplevel* w_current,
 
   GschemPageView* pview = gschem_page_view_new_with_page (page);
 
+#ifdef ENABLE_GTK3
+  gtk_widget_set_hexpand (GTK_WIDGET (pview), TRUE);
+  gtk_widget_set_vexpand (GTK_WIDGET (pview), TRUE);
+  gtk_widget_set_halign (GTK_WIDGET (pview), GTK_ALIGN_FILL);
+  gtk_widget_set_valign (GTK_WIDGET (pview), GTK_ALIGN_FILL);
+#endif
+
   gtk_container_add (GTK_CONTAINER (wtab), GTK_WIDGET (pview));
   gtk_widget_show_all (wtab);
 
@@ -1668,4 +1675,3 @@ x_tabs_menu_create_item (GschemToplevel* toplevel,
                     toplevel);
 
 } /* x_tabs_menu_create_item() */
-
