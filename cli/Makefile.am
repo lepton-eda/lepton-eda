@@ -32,7 +32,6 @@ lepton_cli_CFLAGS = \
 lepton_cli_LDFLAGS = $(GUILE_LIBS) $(GTK_LIBS) $(GDK_PIXBUF_LIBS) $(CAIRO_LIBS) \
 	$(CAIRO_PNG_LIBS) $(CAIRO_PDF_CLAGS) $(CAIRO_PS_LIBS) $(CAIRO_SVG_LIBS)
 lepton_cli_LDADD = \
-	$(top_builddir)/libleptonrenderer/libleptonrenderer.la \
 	$(top_builddir)/liblepton/src/liblepton.la
 
 localedir = @datadir@/locale

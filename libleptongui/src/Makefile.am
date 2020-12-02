@@ -132,7 +132,6 @@ libleptongui_la_LDFLAGS = -version-info $(LIBLEPTONGUI_SHLIB_VERSION) \
 	$(GTHREAD_LIBS) $(GUILE_LIBS) $(MINGW_GUI_LDFLAGS)
 
 libleptongui_la_LIBADD = \
-	$(top_builddir)/libleptonrenderer/libleptonrenderer.la \
 	$(top_builddir)/liblepton/src/liblepton.la
 
 

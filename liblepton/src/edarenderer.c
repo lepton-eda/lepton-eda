@@ -29,10 +29,10 @@
 
 #include <liblepton/liblepton.h>
 
-#include "edarenderer.h"
+#include <liblepton/edarenderer.h>
 
-#include "edacairo.h"
-#include "edapangorenderer.h"
+#include <liblepton/edacairo.h>
+#include <liblepton/edapangorenderer.h>
 
 /* We don't use gettext */
 #define _(x) (x)

@@ -7,7 +7,6 @@ CONTRIB_DIR=contrib
 endif
 
 SUBDIRS = \
-	libleptonrenderer \
 	liblepton \
 	${ATTRIB_DIR} \
 	libleptongui \
@@ -104,7 +103,6 @@ install-data-local:
 
 uninstall-local:
 	rm -vfr $(DESTDIR)$(includedir)/liblepton
-	rm -vfr $(DESTDIR)$(includedir)/libleptonrenderer
 	rm -vfr $(DESTDIR)$(pkgdatadir)
 	rm -vfr $(DESTDIR)$(docdir)
 
