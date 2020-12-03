@@ -24,6 +24,12 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
 
 - Guile 3.0 support has been added.
 
+- Experimental GTK 3.0 support has been added.  A new `configure`
+  option, `--with-gtk3`, has been added to enable building
+  programs with GTK3.  Please see [README](README.md) for more
+  information.
+
+
 - The build option `--disable-attrib` broken in the previous
   release has been fixed.
 
