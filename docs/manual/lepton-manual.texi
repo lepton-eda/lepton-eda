@@ -67,6 +67,7 @@ Installation
 * Troubleshooting dependencies::
 * Installation from source::
 * Installation from git::
+* Configure options::
 
 Configuration system
 

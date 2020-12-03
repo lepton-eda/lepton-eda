@@ -37,6 +37,7 @@ sudo ldconfig
 * Troubleshooting dependencies::
 * Installation from source::
 * Installation from git::
+* Configure options::
 @end menu
 
 @node Dependencies, Troubleshooting dependencies, Installation, Installation
@@ -140,7 +141,7 @@ And install it (if you used a @option{--prefix} outside your
 make install
 @end example
 
-@node Installation from git,  , Installation from source, Installation
+@node Installation from git, Configure options, Installation from source, Installation
 @section Installation from the git repository
 
 Lepton uses the @command{git} version control system.  If you wish to
@@ -181,3 +182,34 @@ autoreconf -ivf
 @end example
 
 You can then proceed to configure and build Lepton as described above.
+
+@node Configure options,  , Installation from git, Installation
+@section Configure options
+@cindex configure options
+@cindex --with-gtk3
+@cindex --disable-attrib
+@cindex --enable-contrib
+
+The following command in the build directory
+
+@example
+./configure --help
+@end example
+
+will let you see all options available.  Here we'll notice only those
+of them that may be of special interest for the user.
+
+@table @option
+@item --with-gtk3
+turns on experimental support for GTK3 library. @xref{Installation of
+lepton-attrib} for more information on what additional libraries are
+needed to install @command{lepton-attrib}.
+
+@item --disable-attrib
+turns off building and installing @command{lepton-attrib}.
+
+@item --enable-contrib
+Build and installation of several contributed tools are disabled by
+default.  @xref{Overview} for info on what tools can be additionally
+installed.
+@end table

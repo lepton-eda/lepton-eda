@@ -178,16 +178,9 @@ library, @code{gtksheet}: @url{https://github.com/fpaquet/gtksheet}.
 Then use the @option{--with-gtk3} for @code{configure}:
 
 @example
-autoreconf -ivf && ./configure --with-gtk3
-cd libleptonrenderer/ && make && sudo make install
-cd ../liblepton/ && make && sudo make install
-cd ../libleptonattrib/ && make && sudo make install
+autoreconf -ivf && ./configure --with-gtk3 && make
+sudo make install
 @end example
-
-@quotation Note
-This command sequence is @emph{required} since other GUI tools do not
-support GTK3 build yet.
-@end quotation
 
 If you install Lepton from sources to a place not known for your
 system dynamic linker, you may need to set @env{LD_LIBRARY_PATH}
