@@ -193,6 +193,11 @@ create_text_content_section (GschemTextPropertiesWidget *widget)
   GtkWidget *scrolled = gtk_scrolled_window_new (NULL, NULL);
 #ifdef ENABLE_GTK3
   GtkWidget *vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+
+  gtk_widget_set_hexpand (vbox, TRUE);
+  gtk_widget_set_vexpand (vbox, TRUE);
+  gtk_widget_set_halign (vbox, GTK_ALIGN_FILL);
+  gtk_widget_set_valign (vbox, GTK_ALIGN_FILL);
 #else
   GtkWidget *vbox = gtk_vbox_new (FALSE, 0);
 #endif
