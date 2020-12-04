@@ -90,7 +90,7 @@ Lepton EDA homepage: ~S
 ;;; Verifies the entire design by looping through all objects in
 ;;; the design looking for missing components, that is, those
 ;;; components for which no corresponding symbol files was found.
-(define (verify-design *toplevel)
+(define (design-has-missing-symbols?)
   (define (missing-symbol? object)
     ;; Look for object, and verify that it has a symbol file
     ;; attached and signal that problem exists.
@@ -101,9 +101,7 @@ Lepton EDA homepage: ~S
   (define (page-with-missing-symbol? page)
     (any missing-symbol? (page-contents page)))
 
-  (when (any page-with-missing-symbol? (active-pages))
-    ;; Dialog gives user option to quit.
-    (x_dialog_missing_sym)))
+  (any page-with-missing-symbol? (active-pages)))
 
 
 (define (activate *app *toplevel)
@@ -201,7 +199,9 @@ Lepton EDA homepage: ~S
   ;; function to update the GtkSheet itself.
   (x_window_add_items)
   ;; Verify correctness of entire design.
-  (verify-design *toplevel)
+  (when (design-has-missing-symbols?)
+    ;; Dialog gives user option to quit.
+    (x_dialog_missing_sym))
 
   (x_window_set_title *pages)
 
