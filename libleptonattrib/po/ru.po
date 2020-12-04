@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:01+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2020-05-29 17:36+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -24,15 +24,6 @@ msgstr "Редактор атрибутов Lepton EDA"
 
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr "Управление атрибутами компонента с помощью lepton-attrib"
-
-msgid ""
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2020 Lepton EDA developers\n"
-"This is free software, and you are welcome to redistribute it\n"
-"under certain conditions. For details, see the file `COPYING',\n"
-"which is included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
 
 #, scheme-format
 msgid ""
@@ -105,14 +96,6 @@ msgstr ""
 #, c-format
 msgid "Could not open [%1$s]"
 msgstr "Не удалось открыть «%1$s»"
-
-msgid "Entry type must be GtkEntry subclass, using default"
-msgstr ""
-"Тип записи должен быть подклассом GtkEntry, используется значение по "
-"умолчанию"
-
-msgid "Widget must be a GtkSheet child"
-msgstr "Виджет должен быть дочерним для GtkSheet"
 
 #, c-format
 msgid "WARNING: "
@@ -384,3 +367,11 @@ msgid ""
 msgstr ""
 "Не найдено выводов ни у одного компонента!\n"
 "Проверьте свой проект."
+
+#~ msgid "Entry type must be GtkEntry subclass, using default"
+#~ msgstr ""
+#~ "Тип записи должен быть подклассом GtkEntry, используется значение по "
+#~ "умолчанию"
+
+#~ msgid "Widget must be a GtkSheet child"
+#~ msgstr "Виджет должен быть дочерним для GtkSheet"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:06+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2020-03-20 20:29+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -57,6 +57,12 @@ msgstr ""
 "\n"
 "Страница для отчётов об ошибках: %1$s\n"
 "Домашняя страница Lepton EDA: %2$s\n"
+
+#, c-format
+msgid ""
+"Lepton EDA %s%s.%s (git: %.7s)\n"
+"%s"
+msgstr ""
 
 #, c-format
 msgid ""

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:05+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2014-08-31 23:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -223,10 +223,6 @@ msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr "FOUT: De %s log kan meer informatie bevatten.\n"
 
 #, fuzzy, c-format
-msgid "Invalid path [%1$s] passed to component-library\n"
-msgstr "Ongeldig pad [%s] overgedragen aan component-library\n"
-
-#, fuzzy, c-format
 msgid "Can't get the real filename of %1$s."
 msgstr "Kan de werkelijke bestandsnaam van %s: %s niet krijgen"
 
@@ -300,14 +296,82 @@ msgstr "Een cirkel met een radius van nul gevonden [ %c %d %d %d %d ]\n"
 msgid "Setting radius to 0."
 msgstr "Radius op 0 ingesteld\n"
 
-msgid "Color map entry must be a two-element list"
-msgstr "Kleuren map invoer moet een twee-element lijst zijn"
+msgid "Background"
+msgstr ""
 
-msgid "Index in color map entry must be an integer"
-msgstr "Index in kleuren map invoer moet een integer zijn"
+msgid "Pin"
+msgstr ""
 
-msgid "Value in color map entry must be #f or a string"
-msgstr "Waarde in kleuren map invoer moet een #f of een string zijn"
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+#, fuzzy
+msgid "Attribute"
+msgstr "%s attribuut gevonden\n"
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+#, fuzzy
+msgid "Detached attribute"
+msgstr "Verkeerd bevestigd attribuut: [%s=%s] gevonden\n"
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -795,27 +859,15 @@ msgstr "Bestand %s is alleen-lezen"
 msgid "Library at ~S has been already added."
 msgstr ""
 
+#, fuzzy, scheme-format
+msgid "Invalid path ~S passed to component-library.\n"
+msgstr "Ongeldig pad [%s] overgedragen aan component-library\n"
+
 msgid "Welcome to Lepton REPL!\n"
 msgstr ""
 
 msgid "WARNING: Readline library is not supported in your configuration.\n"
 msgstr ""
-
-#, fuzzy
-msgid ""
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2020 Lepton EDA Contributors\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
-"gEDA %s (g%.7s)\n"
-"Copyright (C) 1998-2012 gEDA developers\n"
-"Dit is vrije software, en u bent welkom om deze te herdistribueren onder\n"
-"bepaalde condities. Voor details, zie het bestand `COPYING', welke is\n"
-"bijgesloten in de gEDA distributie.\n"
-"Er is GEEN GARANTIE, voor zover toegestaan door de wet.\n"
 
 #, scheme-format
 msgid ""
@@ -1310,6 +1362,31 @@ msgstr "1 FOUT gevonden "
 #, fuzzy
 msgid "(use -v to view details)"
 msgstr "(gebruik -v om details te zien)\n"
+
+#~ msgid "Color map entry must be a two-element list"
+#~ msgstr "Kleuren map invoer moet een twee-element lijst zijn"
+
+#~ msgid "Index in color map entry must be an integer"
+#~ msgstr "Index in kleuren map invoer moet een integer zijn"
+
+#~ msgid "Value in color map entry must be #f or a string"
+#~ msgstr "Waarde in kleuren map invoer moet een #f of een string zijn"
+
+#, fuzzy
+#~ msgid ""
+#~ "Copyright (C) 1998-2016 gEDA developers\n"
+#~ "Copyright (C) 2017-2020 Lepton EDA Contributors\n"
+#~ "This is free software, and you are welcome to redistribute it under\n"
+#~ "certain conditions. For details, see the file `COPYING', which is\n"
+#~ "included in the Lepton EDA distribution.\n"
+#~ "There is NO WARRANTY, to the extent permitted by law.\n"
+#~ msgstr ""
+#~ "gEDA %s (g%.7s)\n"
+#~ "Copyright (C) 1998-2012 gEDA developers\n"
+#~ "Dit is vrije software, en u bent welkom om deze te herdistribueren onder\n"
+#~ "bepaalde condities. Voor details, zie het bestand `COPYING', welke is\n"
+#~ "bijgesloten in de gEDA distributie.\n"
+#~ "Er is GEEN GARANTIE, voor zover toegestaan door de wet.\n"
 
 #, fuzzy
 #~ msgid "Saved [%1$s]"

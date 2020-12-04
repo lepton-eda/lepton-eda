@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:01+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2014-08-31 20:31+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -27,15 +27,6 @@ msgstr "gEDA Attribuut Editor"
 #, fuzzy
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr "Manipuleer componenten attributen met gattrib"
-
-msgid ""
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2020 Lepton EDA developers\n"
-"This is free software, and you are welcome to redistribute it\n"
-"under certain conditions. For details, see the file `COPYING',\n"
-"which is included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
 
 #, fuzzy, scheme-format
 msgid ""
@@ -103,12 +94,6 @@ msgstr ""
 #, fuzzy, c-format
 msgid "Could not open [%1$s]"
 msgstr "o_save: Kan [%s] niet openen\n"
-
-msgid "Entry type must be GtkEntry subclass, using default"
-msgstr "Invoer type moet een GtkEntry subklasse zijn, gebruik de standaard"
-
-msgid "Widget must be a GtkSheet child"
-msgstr "Widget moet een kind van GtkSheet zijn"
 
 #, c-format
 msgid "WARNING: "
@@ -404,6 +389,12 @@ msgid ""
 msgstr ""
 "Geen pennen gevonden op geen van de componenten!\n"
 "Controleer alstublieft uw ontwerp."
+
+#~ msgid "Entry type must be GtkEntry subclass, using default"
+#~ msgstr "Invoer type moet een GtkEntry subklasse zijn, gebruik de standaard"
+
+#~ msgid "Widget must be a GtkSheet child"
+#~ msgstr "Widget moet een kind van GtkSheet zijn"
 
 #, fuzzy
 #~ msgid "Couldn't find file [%1$s]\n"

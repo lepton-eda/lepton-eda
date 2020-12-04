@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.11\n"
+"Project-Id-Version: lepton-eda 1.9.12\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:01+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,17 +25,7 @@ msgstr ""
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr ""
 
-#: libleptonattrib/lepton-attrib.scm:92
-msgid ""
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2020 Lepton EDA developers\n"
-"This is free software, and you are welcome to redistribute it\n"
-"under certain conditions. For details, see the file `COPYING',\n"
-"which is included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
-
-#: libleptonattrib/lepton-attrib.scm:114
+#: libleptonattrib/lepton-attrib.scm:87
 #, scheme-format
 msgid ""
 "Usage: ~A [OPTIONS] filename1 ... filenameN\n"
@@ -74,14 +64,6 @@ msgstr ""
 #: libleptonattrib/src/f_export.c:81
 #, c-format
 msgid "Could not open [%1$s]"
-msgstr ""
-
-#: libleptonattrib/src/gtksheet_2_2.c:6285
-msgid "Entry type must be GtkEntry subclass, using default"
-msgstr ""
-
-#: libleptonattrib/src/gtksheet_2_2.c:8482
-msgid "Widget must be a GtkSheet child"
 msgstr ""
 
 #: libleptonattrib/src/s_attrib.c:102
@@ -218,15 +200,15 @@ msgstr ""
 msgid "Enter new attribute name"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:148
+#: libleptonattrib/src/x_dialog.c:149
 msgid "Are you sure you want to delete this attribute?"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:150
+#: libleptonattrib/src/x_dialog.c:151
 msgid "Delete attribute"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:176
+#: libleptonattrib/src/x_dialog.c:177
 msgid ""
 "One or more components have been found with missing symbol files!\n"
 "\n"
@@ -237,31 +219,31 @@ msgid ""
 "\"Forward\" to continue working with lepton-attrib.\n"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:194
+#: libleptonattrib/src/x_dialog.c:195
 msgid "Missing symbol file found for component!"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:221
+#: libleptonattrib/src/x_dialog.c:222
 msgid "Save the changes before closing?"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:222
+#: libleptonattrib/src/x_dialog.c:223
 msgid "<big><b>"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:222
+#: libleptonattrib/src/x_dialog.c:223
 msgid "</b></big>"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:224
+#: libleptonattrib/src/x_dialog.c:225
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:234
+#: libleptonattrib/src/x_dialog.c:235
 msgid "Close without saving"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:279
+#: libleptonattrib/src/x_dialog.c:280
 msgid ""
 "Sorry -- you have chosen a feature which has not been\n"
 "implemented yet.\n"
@@ -275,15 +257,15 @@ msgid ""
 "Otherwise, just hang tight -- I'll implement this feature soon!\n"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:287
+#: libleptonattrib/src/x_dialog.c:288
 msgid "Unimplemented feature!"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:314
+#: libleptonattrib/src/x_dialog.c:315
 msgid "Fatal error"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:328
+#: libleptonattrib/src/x_dialog.c:329
 #, c-format
 msgid ""
 "Lepton Electronic Design Automation\n"
@@ -295,11 +277,11 @@ msgid ""
 "lepton-attrib is Lepton's successor of gEDA gattrib\n"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:341
+#: libleptonattrib/src/x_dialog.c:342
 msgid "About..."
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:357
+#: libleptonattrib/src/x_dialog.c:358
 msgid "Export CSV"
 msgstr ""
 
@@ -346,7 +328,7 @@ msgstr ""
 msgid "TBD"
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:353
+#: libleptonattrib/src/x_gtksheet.c:354
 msgid "couldn't allocate color"
 msgstr ""
 
@@ -354,24 +336,24 @@ msgstr ""
 msgid "lepton-attrib - Lepton EDA attribute editor"
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:308
+#: libleptonattrib/src/x_window.c:312
 #, c-format
 msgid "Error loading menu: %1$s\n"
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:344
+#: libleptonattrib/src/x_window.c:348
 msgid ""
 "No components found in entire design!\n"
 "Do you have refdeses on your components?"
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:350
+#: libleptonattrib/src/x_window.c:354
 msgid ""
 "No configurable component attributes found in entire design!\n"
 "Please attach at least some attributes before running lepton-attrib."
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:356
+#: libleptonattrib/src/x_window.c:360
 msgid ""
 "No pins found on any components!\n"
 "Please check your design."

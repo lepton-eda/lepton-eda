@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gaf\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:06+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2014-12-28 22:09+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -49,6 +49,12 @@ msgstr ""
 "  export         esporta i file gEDA in vari formati immagine.\n"
 "\n"
 "Segnalare eventuali difetti a %s.\n"
+
+#, c-format
+msgid ""
+"Lepton EDA %s%s.%s (git: %.7s)\n"
+"%s"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""

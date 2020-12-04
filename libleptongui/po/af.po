@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:03+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2010-02-14 01:03+0000\n"
 "Last-Translator: Bernd Jendrissek <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -27,8 +27,8 @@ msgstr "Bewaar as..."
 
 msgid ""
 "Save your color scheme to a file by clicking on the \"Save As...\"\n"
-"button. It can be loaded on startup with the following\n"
-"expression in the gschemrc configuration file:\n"
+"button. It can be loaded on startup with the following expression\n"
+"(including parentheses) in the gschemrc configuration file:\n"
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
 
@@ -82,20 +82,6 @@ msgstr ""
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
-#, fuzzy, c-format
-msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
-msgstr "gEDA/gschem uitgawe %s%s.%s\n"
-
-#, c-format
-msgid ""
-"but you have a version [%1$s] gschemrc file:\n"
-"[%2$s]\n"
-msgstr ""
-
-#, c-format
-msgid "Please be sure that you have the latest rc file.\n"
-msgstr ""
-
 msgid "Object ~A is not directly included in a page."
 msgstr ""
 
@@ -105,28 +91,15 @@ msgstr ""
 msgid "Found invalid lepton-schematic window smob ~S"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
-msgstr "gEDA/gschem uitgawe %s%s.%s\n"
-
-#, c-format
-msgid "This is the MINGW32 port.\n"
-msgstr ""
-
-#, c-format
-msgid "Current locale settings: %1$s\n"
-msgstr ""
-
-#, c-format
-msgid ""
-"ERROR: Failed to load or evaluate startup script.\n"
-"\n"
-"The lepton-schematic log may contain more information.\n"
-msgstr ""
-
 #, c-format
 msgid "%s (git: %.7s)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Could not load image at file: %1$s\n"
+"%2$s"
+msgstr "Kon nie lêer %s oopmaak nie\n"
 
 #, fuzzy
 msgid "Lepton Electronic Design Automation"
@@ -723,11 +696,20 @@ msgstr "Netmodus"
 msgid "Translating schematic [%1$d %2$d]"
 msgstr "Verskuif stroombaandiagram [%d %d]\n"
 
-#, c-format
-msgid "Delete locked object?"
-msgid_plural "Delete %1$u locked objects?"
-msgstr[0] ""
-msgstr[1] ""
+msgid ""
+"Warning: the selection contains locked objects.\n"
+"Please choose what objects you'd like to delete:"
+msgstr ""
+
+#, fuzzy
+msgid "Delete _all"
+msgstr "Verwyder"
+
+msgid "All, _except locked"
+msgstr ""
+
+msgid "Delete"
+msgstr "Verwyder"
 
 #, fuzzy
 msgid "Hidden text is now visible"
@@ -814,28 +796,6 @@ msgid "New slot number out of range"
 msgstr "Nuwe gleufnommer buite bereik\n"
 
 msgid "Undo/Redo is disabled in configuration"
-msgstr ""
-
-#, c-format
-msgid ""
-"Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
-"\n"
-"Interactively edit Lepton EDA schematics or symbols.\n"
-"If one or more FILEs are specified, open them for\n"
-"editing; otherwise, create a new, empty schematic.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Quiet mode.\n"
-"  -v, --verbose            Verbose mode.\n"
-"  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
-"  -V, --version            Show version information.\n"
-"  -h, --help               Help; this message.\n"
-"  --                       Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at <%2$s>\n"
-"Lepton EDA homepage: <%3$s>\n"
 msgstr ""
 
 msgid "Schematic not found in source library."
@@ -986,83 +946,8 @@ msgstr ""
 msgid "Clipboard insertion failed"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Tried to get an invalid color: %1$d\n"
-msgstr "Het probeer om 'n ongeldige kleur te kry: %d\n"
-
-msgid "Background"
-msgstr ""
-
-msgid "Pin"
-msgstr "Pen"
-
-msgid "Net endpoint"
-msgstr ""
-
-msgid "Graphic"
-msgstr ""
-
-msgid "Net"
-msgstr "Skakeling"
-
-msgid "Attribute"
-msgstr "Eienskap"
-
-msgid "Logic bubble"
-msgstr ""
-
-msgid "Grid point"
-msgstr ""
-
-#, fuzzy
-msgid "Detached attribute"
-msgstr "Bewerk Eienskappe"
-
-msgid "Bus"
-msgstr "Bus"
-
-#, fuzzy
-msgid "Selection"
-msgstr "Kies"
-
-msgid "Bounding box"
-msgstr ""
-
-msgid "Zoom box"
-msgstr "Zoem Reghoek"
-
-msgid "Stroke"
-msgstr "Wyserslag"
-
-msgid "Lock"
-msgstr "Sluit"
-
-msgid "Output background"
-msgstr ""
-
-msgid "Freestyle 1"
-msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-#, fuzzy
-msgid "Net junction"
-msgstr "Funksie"
-
-msgid "Mesh grid major"
-msgstr ""
-
-msgid "Mesh grid minor"
-msgstr ""
-
-msgid "Unknown"
+#, c-format
+msgid "%s [ disabled ]"
 msgstr ""
 
 #, fuzzy
@@ -1336,9 +1221,6 @@ msgstr ""
 msgid "Duplicate"
 msgstr "Dupliseer"
 
-msgid "Delete"
-msgstr "Verwyder"
-
 #, fuzzy
 msgid "Copy to all"
 msgstr "Kopieer in 1 in"
@@ -1591,6 +1473,9 @@ msgid ""
 "Right mouse button to cancel"
 msgstr ""
 
+msgid "Bus"
+msgstr "Bus"
+
 msgid "Add Text..."
 msgstr "Voeg Teks By..."
 
@@ -1609,6 +1494,9 @@ msgstr "Toon Teks beginnende met:"
 
 msgid "none"
 msgstr "geen"
+
+msgid "Stroke"
+msgstr "Wyserslag"
 
 #, fuzzy
 msgid "Repeat"
@@ -1724,6 +1612,9 @@ msgstr "Bewerk Teks..."
 
 msgid "Slot..."
 msgstr "Gleuf..."
+
+msgid "Lock"
+msgstr "Sluit"
 
 msgid "Unlock"
 msgstr "Ontsluit"
@@ -2305,10 +2196,10 @@ msgid "View documentation for selected component"
 msgstr ""
 
 #, fuzzy
-msgid "Lepton EDA Manuals"
+msgid "Lepton EDA Manual"
 msgstr "Handleiding"
 
-msgid "View the front page of the Lepton EDA documentation in a browser."
+msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr ""
 
 msgid "lepton-schematic User Guide"
@@ -2353,6 +2244,71 @@ msgstr ""
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
+"\n"
+"\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Quiet mode.\n"
+"  -v, --verbose            Verbose mode.\n"
+"  -L DIR                   Add DIR to Scheme search path.\n"
+"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -s FILE                  Scheme script to run at startup.\n"
+"  -V, --version            Show version information.\n"
+"  -h, --help               Help; this message.\n"
+"  --                       Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at ~S\n"
+"Lepton EDA homepage: ~S\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"ERROR: Unknown option ~A.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#, fuzzy
+#~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
+#~ msgstr "gEDA/gschem uitgawe %s%s.%s\n"
+
+#, fuzzy
+#~ msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
+#~ msgstr "gEDA/gschem uitgawe %s%s.%s\n"
+
+#, fuzzy
+#~ msgid "Tried to get an invalid color: %1$d\n"
+#~ msgstr "Het probeer om 'n ongeldige kleur te kry: %d\n"
+
+#~ msgid "Pin"
+#~ msgstr "Pen"
+
+#~ msgid "Net"
+#~ msgstr "Skakeling"
+
+#~ msgid "Attribute"
+#~ msgstr "Eienskap"
+
+#, fuzzy
+#~ msgid "Detached attribute"
+#~ msgstr "Bewerk Eienskappe"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Kies"
+
+#~ msgid "Zoom box"
+#~ msgstr "Zoem Reghoek"
+
+#, fuzzy
+#~ msgid "Net junction"
+#~ msgstr "Funksie"
 
 #~ msgid "Single Attribute Editor"
 #~ msgstr "Enkeleienskap-Bewerker"

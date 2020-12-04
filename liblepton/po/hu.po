@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:05+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2010-02-06 22:11+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -195,10 +195,6 @@ msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr ""
 
 #, c-format
-msgid "Invalid path [%1$s] passed to component-library\n"
-msgstr ""
-
-#, c-format
 msgid "Can't get the real filename of %1$s."
 msgstr ""
 
@@ -268,13 +264,79 @@ msgstr ""
 msgid "Setting radius to 0."
 msgstr ""
 
-msgid "Color map entry must be a two-element list"
+msgid "Background"
 msgstr ""
 
-msgid "Index in color map entry must be an integer"
+msgid "Pin"
 msgstr ""
 
-msgid "Value in color map entry must be #f or a string"
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+msgid "Attribute"
+msgstr ""
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+msgid "Detached attribute"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
 msgstr ""
 
 #, c-format
@@ -713,19 +775,14 @@ msgstr "Csak olvasható file %s"
 msgid "Library at ~S has been already added."
 msgstr ""
 
+#, scheme-format
+msgid "Invalid path ~S passed to component-library.\n"
+msgstr ""
+
 msgid "Welcome to Lepton REPL!\n"
 msgstr ""
 
 msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
-
-msgid ""
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2020 Lepton EDA Contributors\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr ""
 
 #, scheme-format

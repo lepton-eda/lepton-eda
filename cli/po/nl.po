@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gaf\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:06+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2014-08-31 20:24+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers\n"
@@ -49,6 +49,12 @@ msgstr ""
 "  shell          Scheme REPL voor interactieve gEDA gegevensverwerking\n"
 "\n"
 "Rapporteer onvolkomenheden alstublieft aan %s.\n"
+
+#, c-format
+msgid ""
+"Lepton EDA %s%s.%s (git: %.7s)\n"
+"%s"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""

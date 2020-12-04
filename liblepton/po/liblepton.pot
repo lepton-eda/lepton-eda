@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.11\n"
+"Project-Id-Version: lepton-eda 1.9.12\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:05+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -211,11 +211,6 @@ msgstr ""
 msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr ""
 
-#: liblepton/src/g_rc.c:450
-#, c-format
-msgid "Invalid path [%1$s] passed to component-library\n"
-msgstr ""
-
 #: liblepton/src/geda_page.c:199
 #, c-format
 msgid "Can't get the real filename of %1$s."
@@ -315,16 +310,104 @@ msgstr ""
 msgid "Setting radius to 0."
 msgstr ""
 
-#: liblepton/src/geda_color.c:217
-msgid "Color map entry must be a two-element list"
+#: liblepton/src/geda_color.c:270
+msgid "Background"
 msgstr ""
 
-#: liblepton/src/geda_color.c:225
-msgid "Index in color map entry must be an integer"
+#: liblepton/src/geda_color.c:271
+msgid "Pin"
 msgstr ""
 
-#: liblepton/src/geda_color.c:251
-msgid "Value in color map entry must be #f or a string"
+#: liblepton/src/geda_color.c:272
+msgid "Net endpoint"
+msgstr ""
+
+#: liblepton/src/geda_color.c:273
+msgid "Graphic"
+msgstr ""
+
+#: liblepton/src/geda_color.c:274
+msgid "Net"
+msgstr ""
+
+#: liblepton/src/geda_color.c:275
+msgid "Attribute"
+msgstr ""
+
+#: liblepton/src/geda_color.c:276
+msgid "Logic bubble"
+msgstr ""
+
+#: liblepton/src/geda_color.c:277
+msgid "Grid point"
+msgstr ""
+
+#: liblepton/src/geda_color.c:278
+msgid "Detached attribute"
+msgstr ""
+
+#: liblepton/src/geda_color.c:279
+msgid "Text"
+msgstr ""
+
+#: liblepton/src/geda_color.c:280
+msgid "Bus"
+msgstr ""
+
+#: liblepton/src/geda_color.c:281
+msgid "Selection"
+msgstr ""
+
+#: liblepton/src/geda_color.c:282
+msgid "Bounding box"
+msgstr ""
+
+#: liblepton/src/geda_color.c:283
+msgid "Zoom box"
+msgstr ""
+
+#: liblepton/src/geda_color.c:284
+msgid "Stroke"
+msgstr ""
+
+#: liblepton/src/geda_color.c:285
+msgid "Lock"
+msgstr ""
+
+#: liblepton/src/geda_color.c:286
+msgid "Output background"
+msgstr ""
+
+#: liblepton/src/geda_color.c:287
+msgid "Freestyle 1"
+msgstr ""
+
+#: liblepton/src/geda_color.c:288
+msgid "Freestyle 2"
+msgstr ""
+
+#: liblepton/src/geda_color.c:289
+msgid "Freestyle 3"
+msgstr ""
+
+#: liblepton/src/geda_color.c:290
+msgid "Freestyle 4"
+msgstr ""
+
+#: liblepton/src/geda_color.c:291
+msgid "Net junction"
+msgstr ""
+
+#: liblepton/src/geda_color.c:292
+msgid "Mesh grid major"
+msgstr ""
+
+#: liblepton/src/geda_color.c:293
+msgid "Mesh grid minor"
+msgstr ""
+
+#: liblepton/src/geda_color.c:297
+msgid "Unknown"
 msgstr ""
 
 #: liblepton/src/geda_component_object.c:575
@@ -595,79 +678,79 @@ msgstr ""
 msgid "Unexpected end-of-file after %1$d lines"
 msgstr ""
 
-#: liblepton/src/s_clib.c:460
+#: liblepton/src/s_clib.c:458
 #, c-format
 msgid "Library command failed [%1$s]: %2$s"
 msgstr ""
 
-#: liblepton/src/s_clib.c:465
+#: liblepton/src/s_clib.c:463
 #, c-format
 msgid "Library command failed [%1$s]: Uncaught signal %2$i."
 msgstr ""
 
-#: liblepton/src/s_clib.c:469
+#: liblepton/src/s_clib.c:467
 #, c-format
 msgid "Library command failed [%1$s]"
 msgstr ""
 
-#: liblepton/src/s_clib.c:470
+#: liblepton/src/s_clib.c:468
 #, c-format
 msgid ""
 "Error output was:\n"
 "%1$s"
 msgstr ""
 
-#: liblepton/src/s_clib.c:556
+#: liblepton/src/s_clib.c:554
 #, c-format
 msgid "Library name [%1$s] already in use.  Using [%2$s]."
 msgstr ""
 
-#: liblepton/src/s_clib.c:593
+#: liblepton/src/s_clib.c:591
 #, c-format
 msgid "Failed to open directory [%1$s]: %2$s"
 msgstr ""
 
-#: liblepton/src/s_clib.c:729
+#: liblepton/src/s_clib.c:727
 #, c-format
 msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
 msgstr ""
 
-#: liblepton/src/s_clib.c:737
+#: liblepton/src/s_clib.c:735
 #, c-format
 msgid "Non-string symbol name while scanning library [%1$s]"
 msgstr ""
 
-#: liblepton/src/s_clib.c:893 liblepton/src/s_clib.c:940
+#: liblepton/src/s_clib.c:891 liblepton/src/s_clib.c:938
 msgid "Cannot add library: name not specified."
 msgstr ""
 
-#: liblepton/src/s_clib.c:900
+#: liblepton/src/s_clib.c:898
 #, c-format
 msgid ""
 "Cannot add library [%1$s]: both 'list' and 'get' commands must be specified."
 msgstr ""
 
-#: liblepton/src/s_clib.c:948
+#: liblepton/src/s_clib.c:946
 #, c-format
 msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
 msgstr ""
 
-#: liblepton/src/s_clib.c:1075
+#: liblepton/src/s_clib.c:1073
 #, c-format
 msgid "Failed to load symbol from file [%1$s]: %2$s"
 msgstr ""
 
-#: liblepton/src/s_clib.c:1135
+#: liblepton/src/s_clib.c:1133
 #, c-format
 msgid "Failed to load symbol data [%1$s] from source [%2$s]"
 msgstr ""
 
-#: liblepton/src/s_clib.c:1377
+#: liblepton/src/s_clib.c:1375
 #, c-format
 msgid "Component [%1$s] was not found in the component library."
 msgstr ""
 
-#: liblepton/src/s_clib.c:1383
+#: liblepton/src/s_clib.c:1381
 #, c-format
 msgid "More than one component found with name [%1$s]."
 msgstr ""
@@ -881,9 +964,14 @@ msgstr ""
 msgid "File ~S is not readable.\n"
 msgstr ""
 
-#: liblepton/scheme/lepton/library/component.scm:78
+#: liblepton/scheme/lepton/library/component.scm:114
 #, scheme-format
 msgid "Library at ~S has been already added."
+msgstr ""
+
+#: liblepton/scheme/lepton/library/component.scm:125
+#, scheme-format
+msgid "Invalid path ~S passed to component-library.\n"
 msgstr ""
 
 #: liblepton/scheme/lepton/repl.scm:47
@@ -894,17 +982,7 @@ msgstr ""
 msgid "WARNING: Readline library is not supported in your configuration.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:106
-msgid ""
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2020 Lepton EDA Contributors\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
-
-#: liblepton/scheme/netlist.scm:183
+#: liblepton/scheme/netlist.scm:157
 #, scheme-format
 msgid ""
 "Possible attribute conflict for refdes: ~A\n"
@@ -912,16 +990,16 @@ msgid ""
 "values: ~A\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:249
+#: liblepton/scheme/netlist.scm:223
 #, scheme-format
 msgid "Refdes ~a: Bad slot number: ~a.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:292
+#: liblepton/scheme/netlist.scm:266
 msgid "Couldn't wrap string  at requested position\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:593
+#: liblepton/scheme/netlist.scm:567
 #, scheme-format
 msgid ""
 "There is a net name collision!\n"
@@ -933,7 +1011,7 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:630
+#: liblepton/scheme/netlist.scm:604
 #, scheme-format
 msgid ""
 "There is a refdes name collision!\n"
@@ -945,12 +1023,12 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:810
+#: liblepton/scheme/netlist.scm:784
 #, scheme-format
 msgid "Can't open directory ~S.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:821
+#: liblepton/scheme/netlist.scm:795
 #, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
@@ -978,7 +1056,7 @@ msgid ""
 "Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:863
+#: liblepton/scheme/netlist.scm:837
 #, scheme-format
 msgid ""
 "\n"
@@ -987,11 +1065,11 @@ msgid ""
 "\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:904
+#: liblepton/scheme/netlist.scm:878
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:908
+#: liblepton/scheme/netlist.scm:882
 #, scheme-format
 msgid ""
 "No schematic files specified for processing.\n"
@@ -999,7 +1077,7 @@ msgid ""
 "                         Run `~A --help' for more information.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:914
+#: liblepton/scheme/netlist.scm:888
 #, scheme-format
 msgid ""
 "Could not find backend `~A' in load path.\n"
@@ -1008,7 +1086,7 @@ msgid ""
 "available backends.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:920
+#: liblepton/scheme/netlist.scm:894
 #, scheme-format
 msgid ""
 "Can't load backend file ~S.\n"
@@ -1020,24 +1098,24 @@ msgid ""
 "is the backend's name).\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:927
+#: liblepton/scheme/netlist.scm:901
 #, scheme-format
 msgid "Netlist mode requested by backend is not supported: ~A\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:987
+#: liblepton/scheme/netlist.scm:961
 msgid "Failed to evaluate Scheme expression at startup.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:1021
+#: liblepton/scheme/netlist.scm:995
 msgid "Failed to load Scheme file before loading backend.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:1050
+#: liblepton/scheme/netlist.scm:1024
 msgid "Failed to load backend file.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:1063
+#: liblepton/scheme/netlist.scm:1037
 msgid "Failed to load Scheme file after loading backend.\n"
 msgstr ""
 
@@ -1392,17 +1470,17 @@ msgid ""
 "Lepton EDA homepage: <~A>\n"
 msgstr ""
 
-#: liblepton/scheme/symcheck/check.scm:69
+#: liblepton/scheme/symcheck/check.scm:64
 #, scheme-format
 msgid "Loading schematic ~S"
 msgstr ""
 
-#: liblepton/scheme/symcheck/check.scm:76
+#: liblepton/scheme/symcheck/check.scm:71
 #, scheme-format
 msgid "Checking: ~A\n"
 msgstr ""
 
-#: liblepton/scheme/symcheck/check.scm:82
+#: liblepton/scheme/symcheck/check.scm:77
 #, scheme-format
 msgid ""
 "No schematic files specified for processing.\n"

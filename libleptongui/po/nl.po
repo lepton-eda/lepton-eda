@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:03+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2014-08-31 22:35+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -28,8 +28,8 @@ msgstr "Opslaan _Als..."
 
 msgid ""
 "Save your color scheme to a file by clicking on the \"Save As...\"\n"
-"button. It can be loaded on startup with the following\n"
-"expression in the gschemrc configuration file:\n"
+"button. It can be loaded on startup with the following expression\n"
+"(including parentheses) in the gschemrc configuration file:\n"
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
 
@@ -87,22 +87,6 @@ msgstr "Objekt ~A is niet bijgevoegd in de huidige gschem pagina."
 msgid "Invalid text name/value visibility ~A."
 msgstr "Ongeldige tekst naam/waarde zichtbaarheid ~A."
 
-#, fuzzy, c-format
-msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
-msgstr "U gebruikt gEDA/gaf versie [%s%s.%s],\n"
-
-#, fuzzy, c-format
-msgid ""
-"but you have a version [%1$s] gschemrc file:\n"
-"[%2$s]\n"
-msgstr ""
-"maar U heeft een versie [%s] gschemrc bestand:\n"
-"[%s]\n"
-
-#, c-format
-msgid "Please be sure that you have the latest rc file.\n"
-msgstr "Wees alstublieft zeker dat U het laatste rc bestand heeft.\n"
-
 msgid "Object ~A is not directly included in a page."
 msgstr "Object ~A is niet direct bijgevoegd in een pagina."
 
@@ -114,30 +98,14 @@ msgid "Found invalid lepton-schematic window smob ~S"
 msgstr "Ongeldige gschem venster smob ~S gevonden"
 
 #, fuzzy, c-format
-msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
-msgstr "gEDA/gschem versie %s%s.%s\n"
-
-#, c-format
-msgid "This is the MINGW32 port.\n"
-msgstr "Dit is de MINGW32 versie.\n"
-
-#, fuzzy, c-format
-msgid "Current locale settings: %1$s\n"
-msgstr "Huidige locale instellingen: %s\n"
+msgid "%s (git: %.7s)"
+msgstr "%s (g%.7s)"
 
 #, fuzzy, c-format
 msgid ""
-"ERROR: Failed to load or evaluate startup script.\n"
-"\n"
-"The lepton-schematic log may contain more information.\n"
-msgstr ""
-"FOUT: Faalde bij het laden of evalueren van het opstart script.\n"
-"\n"
-"Het gschem log kan meer informatie bevatten.\n"
-
-#, fuzzy, c-format
-msgid "%s (git: %.7s)"
-msgstr "%s (g%.7s)"
+"Could not load image at file: %1$s\n"
+"%2$s"
+msgstr "Pagina [%s] kan NIET opgeslagen worden\n"
 
 #, fuzzy
 msgid "Lepton Electronic Design Automation"
@@ -755,11 +723,20 @@ msgstr "magnetische draad mode: UIT\n"
 msgid "Translating schematic [%1$d %2$d]"
 msgstr "Vertaal schema [%d %d]\n"
 
-#, fuzzy, c-format
-msgid "Delete locked object?"
-msgid_plural "Delete %1$u locked objects?"
-msgstr[0] "Verwijder vergrendeld object?"
-msgstr[1] "Verwijder %u vergrendelde objecten?"
+msgid ""
+"Warning: the selection contains locked objects.\n"
+"Please choose what objects you'd like to delete:"
+msgstr ""
+
+#, fuzzy
+msgid "Delete _all"
+msgstr "Verwijder"
+
+msgid "All, _except locked"
+msgstr ""
+
+msgid "Delete"
+msgstr "Verwijder"
 
 #, fuzzy
 msgid "Hidden text is now visible"
@@ -850,51 +827,6 @@ msgstr "Nieuw slotnummer buiten het bereik\n"
 #, fuzzy
 msgid "Undo/Redo is disabled in configuration"
 msgstr "Ongedaan/Opnieuw doen uitgeschakeld in rc bestand\n"
-
-#, fuzzy, c-format
-msgid ""
-"Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
-"\n"
-"Interactively edit Lepton EDA schematics or symbols.\n"
-"If one or more FILEs are specified, open them for\n"
-"editing; otherwise, create a new, empty schematic.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Quiet mode.\n"
-"  -v, --verbose            Verbose mode.\n"
-"  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
-"  -V, --version            Show version information.\n"
-"  -h, --help               Help; this message.\n"
-"  --                       Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at <%2$s>\n"
-"Lepton EDA homepage: <%3$s>\n"
-msgstr ""
-"Gebruik: %s [OPTIE ...] [--] [BESTAND ...]\n"
-"\n"
-"Interactief bewerken van gEDA schema's of symbolen.  Als een of meer "
-"BESTANDen\n"
-"gespecificeerd zijn, open deze voor bewerken; of, creëer een nieuw, leeg\n"
-"schema.\n"
-"\n"
-"Opties:\n"
-"  -q, --quiet              Stille mode.\n"
-"  -v, --verbose            Verbale mode.\n"
-"  -r, --config-file=FILE   Additioneel configuratie bestand laden.\n"
-"  -L DIR                   Voeg DIR toe aan Scheme zoekpad.\n"
-"  -c EXPR                  Scheme expressie uitvoeren tijdens opstarten.\n"
-"  -s FILE                  Scheme script uitvoeren tijdens opstarten.\n"
-"  -o, --output=FILE        Uitvoer bestandsnaam (voor afdrukken).\n"
-"  -p                       Automatisch geplaatst in het venster.\n"
-"  -V, --version            Toon versie informatie.\n"
-"  -h, --help               Help; dit bericht.\n"
-"  --                       Behandel alle overblijvende argumenten als "
-"bestandnamen.\n"
-"\n"
-"Rapporteer fouten aan <https://bugs.launchpad.net/geda>\n"
-"gEDA/gaf startpagina: <http://www.geda-project.org/>\n"
 
 msgid "Schematic not found in source library."
 msgstr ""
@@ -1053,82 +985,9 @@ msgstr ""
 msgid "Clipboard insertion failed"
 msgstr "Klembord invoegen faalde"
 
-#, fuzzy, c-format
-msgid "Tried to get an invalid color: %1$d\n"
-msgstr "Probeerde een ongeldige kleur te verkrijgen: %d\n"
-
-msgid "Background"
-msgstr "Achtergrond"
-
-msgid "Pin"
-msgstr "Pen"
-
-msgid "Net endpoint"
-msgstr "Draad eindpunt"
-
-msgid "Graphic"
-msgstr "Grafisch"
-
-msgid "Net"
-msgstr "Draad"
-
-msgid "Attribute"
-msgstr "Attribuut"
-
-msgid "Logic bubble"
-msgstr "Logische inverter"
-
-msgid "Grid point"
-msgstr "Rasterpunt"
-
-#, fuzzy
-msgid "Detached attribute"
-msgstr "Maak Attributen Los"
-
-msgid "Bus"
-msgstr "Bus"
-
-msgid "Selection"
-msgstr "Selectie"
-
-msgid "Bounding box"
-msgstr "Omhullende rechthoek"
-
-msgid "Zoom box"
-msgstr "Vergroot venster"
-
-msgid "Stroke"
-msgstr "Slag"
-
-msgid "Lock"
-msgstr "Vergrendel"
-
-msgid "Output background"
-msgstr "Uitvoer achtergrond"
-
-msgid "Freestyle 1"
+#, c-format
+msgid "%s [ disabled ]"
 msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-msgid "Net junction"
-msgstr "Draad aftakking"
-
-msgid "Mesh grid major"
-msgstr "Maas raster groot"
-
-msgid "Mesh grid minor"
-msgstr "Maas raster klein"
-
-msgid "Unknown"
-msgstr "Onbekend"
 
 #, fuzzy
 msgid "Reset filter"
@@ -1409,9 +1268,6 @@ msgstr "Promoot"
 msgid "Duplicate"
 msgstr "Dupliceer"
 
-msgid "Delete"
-msgstr "Verwijder"
-
 msgid "Copy to all"
 msgstr "Kopieer naar alles"
 
@@ -1684,6 +1540,9 @@ msgstr ""
 "Plaats bussen modus\n"
 "Rechter muisknop om af te breken"
 
+msgid "Bus"
+msgstr "Bus"
+
 msgid "Add Text..."
 msgstr "Plaats een tekst..."
 
@@ -1702,6 +1561,9 @@ msgstr "Toon tekst beginnend met:"
 
 msgid "none"
 msgstr "geen"
+
+msgid "Stroke"
+msgstr "Slag"
 
 #, fuzzy
 msgid "Repeat"
@@ -1818,6 +1680,9 @@ msgstr "Bewerk Tekst..."
 
 msgid "Slot..."
 msgstr "Slot..."
+
+msgid "Lock"
+msgstr "Vergrendel"
 
 msgid "Unlock"
 msgstr "Ontgrendel"
@@ -2366,11 +2231,11 @@ msgid "View documentation for selected component"
 msgstr "Toon documentatie voor geselecteerde component"
 
 #, fuzzy
-msgid "Lepton EDA Manuals"
+msgid "Lepton EDA Manual"
 msgstr "gEDA Handleidingen"
 
 #, fuzzy
-msgid "View the front page of the Lepton EDA documentation in a browser."
+msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr "Toon de voorpagina van de gEDA documentatie in een browser."
 
 #, fuzzy
@@ -2421,6 +2286,156 @@ msgstr "~S is geen voorafgaande toetsen combinatie."
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Ongeldige tekst uitlijning ~A."
+
+#, fuzzy, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
+"\n"
+"\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Quiet mode.\n"
+"  -v, --verbose            Verbose mode.\n"
+"  -L DIR                   Add DIR to Scheme search path.\n"
+"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -s FILE                  Scheme script to run at startup.\n"
+"  -V, --version            Show version information.\n"
+"  -h, --help               Help; this message.\n"
+"  --                       Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at ~S\n"
+"Lepton EDA homepage: ~S\n"
+msgstr ""
+"Gebruik: %s [OPTIE ...] [--] [BESTAND ...]\n"
+"\n"
+"Interactief bewerken van gEDA schema's of symbolen.  Als een of meer "
+"BESTANDen\n"
+"gespecificeerd zijn, open deze voor bewerken; of, creëer een nieuw, leeg\n"
+"schema.\n"
+"\n"
+"Opties:\n"
+"  -q, --quiet              Stille mode.\n"
+"  -v, --verbose            Verbale mode.\n"
+"  -r, --config-file=FILE   Additioneel configuratie bestand laden.\n"
+"  -L DIR                   Voeg DIR toe aan Scheme zoekpad.\n"
+"  -c EXPR                  Scheme expressie uitvoeren tijdens opstarten.\n"
+"  -s FILE                  Scheme script uitvoeren tijdens opstarten.\n"
+"  -o, --output=FILE        Uitvoer bestandsnaam (voor afdrukken).\n"
+"  -p                       Automatisch geplaatst in het venster.\n"
+"  -V, --version            Toon versie informatie.\n"
+"  -h, --help               Help; dit bericht.\n"
+"  --                       Behandel alle overblijvende argumenten als "
+"bestandnamen.\n"
+"\n"
+"Rapporteer fouten aan <https://bugs.launchpad.net/geda>\n"
+"gEDA/gaf startpagina: <http://www.geda-project.org/>\n"
+
+#, scheme-format
+msgid ""
+"ERROR: Unknown option ~A.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#, fuzzy
+#~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
+#~ msgstr "U gebruikt gEDA/gaf versie [%s%s.%s],\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "but you have a version [%1$s] gschemrc file:\n"
+#~ "[%2$s]\n"
+#~ msgstr ""
+#~ "maar U heeft een versie [%s] gschemrc bestand:\n"
+#~ "[%s]\n"
+
+#~ msgid "Please be sure that you have the latest rc file.\n"
+#~ msgstr "Wees alstublieft zeker dat U het laatste rc bestand heeft.\n"
+
+#, fuzzy
+#~ msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
+#~ msgstr "gEDA/gschem versie %s%s.%s\n"
+
+#~ msgid "This is the MINGW32 port.\n"
+#~ msgstr "Dit is de MINGW32 versie.\n"
+
+#, fuzzy
+#~ msgid "Current locale settings: %1$s\n"
+#~ msgstr "Huidige locale instellingen: %s\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "ERROR: Failed to load or evaluate startup script.\n"
+#~ "\n"
+#~ "The lepton-schematic log may contain more information.\n"
+#~ msgstr ""
+#~ "FOUT: Faalde bij het laden of evalueren van het opstart script.\n"
+#~ "\n"
+#~ "Het gschem log kan meer informatie bevatten.\n"
+
+#, fuzzy
+#~ msgid "Delete locked object?"
+#~ msgid_plural "Delete %1$u locked objects?"
+#~ msgstr[0] "Verwijder vergrendeld object?"
+#~ msgstr[1] "Verwijder %u vergrendelde objecten?"
+
+#, fuzzy
+#~ msgid "Tried to get an invalid color: %1$d\n"
+#~ msgstr "Probeerde een ongeldige kleur te verkrijgen: %d\n"
+
+#~ msgid "Background"
+#~ msgstr "Achtergrond"
+
+#~ msgid "Pin"
+#~ msgstr "Pen"
+
+#~ msgid "Net endpoint"
+#~ msgstr "Draad eindpunt"
+
+#~ msgid "Graphic"
+#~ msgstr "Grafisch"
+
+#~ msgid "Net"
+#~ msgstr "Draad"
+
+#~ msgid "Attribute"
+#~ msgstr "Attribuut"
+
+#~ msgid "Logic bubble"
+#~ msgstr "Logische inverter"
+
+#~ msgid "Grid point"
+#~ msgstr "Rasterpunt"
+
+#, fuzzy
+#~ msgid "Detached attribute"
+#~ msgstr "Maak Attributen Los"
+
+#~ msgid "Selection"
+#~ msgstr "Selectie"
+
+#~ msgid "Bounding box"
+#~ msgstr "Omhullende rechthoek"
+
+#~ msgid "Zoom box"
+#~ msgstr "Vergroot venster"
+
+#~ msgid "Output background"
+#~ msgstr "Uitvoer achtergrond"
+
+#~ msgid "Net junction"
+#~ msgstr "Draad aftakking"
+
+#~ msgid "Mesh grid major"
+#~ msgstr "Maas raster groot"
+
+#~ msgid "Mesh grid minor"
+#~ msgstr "Maas raster klein"
+
+#~ msgid "Unknown"
+#~ msgstr "Onbekend"
 
 #~ msgid "Single Attribute Editor"
 #~ msgstr "Enkelvoudige Attribuut Bewerking"

@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:05+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2020-03-20 09:14+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -229,10 +229,6 @@ msgstr "ОШИБКА: %1$s\n"
 msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr "ОШИБКА: В файле журнала «%1$s» может быть больше информации.\n"
 
-#, c-format
-msgid "Invalid path [%1$s] passed to component-library\n"
-msgstr "component-library: недопустимый путь «%1$s»\n"
-
 # Эта функция пытается найти для указанного имени реальный файл (не являющийся
 # ссылкой).
 #, c-format
@@ -309,14 +305,82 @@ msgstr ""
 msgid "Setting radius to 0."
 msgstr "Установка радиуса в 0."
 
-msgid "Color map entry must be a two-element list"
-msgstr "Запись в таблице цветов должна быть двухэлементным списком"
+msgid "Background"
+msgstr ""
 
-msgid "Index in color map entry must be an integer"
-msgstr "Индекс записи в таблице цветов должен быть целым числом"
+msgid "Pin"
+msgstr ""
 
-msgid "Value in color map entry must be #f or a string"
-msgstr "Значение записи в таблице цветов должно быть «#f» или строкой"
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+#, fuzzy
+msgid "Attribute"
+msgstr "Найден атрибут ~A=~A"
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+#, fuzzy
+msgid "Detached attribute"
+msgstr "Неправильно прикреплённый атрибут: ~A"
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
 
 #, c-format
 msgid ""
@@ -792,27 +856,15 @@ msgstr "Нет доступа на чтение к файлу ~S.\n"
 msgid "Library at ~S has been already added."
 msgstr "Библиотека в ~S уже добавлена."
 
+#, fuzzy, scheme-format
+msgid "Invalid path ~S passed to component-library.\n"
+msgstr "component-library: недопустимый путь «%1$s»\n"
+
 msgid "Welcome to Lepton REPL!\n"
 msgstr "Добро пожаловать в Lepton REPL!\n"
 
 msgid "WARNING: Readline library is not supported in your configuration.\n"
 msgstr "ВНИМАНИЕ: Библиотека readline не поддерживается в ваших настройках.\n"
-
-msgid ""
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2020 Lepton EDA Contributors\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
-msgstr ""
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2019 Lepton EDA Contributors\n"
-"Это свободное программное обеспечение, и его можно распространять\n"
-"при определённых условиях. Подробности см. в файле COPYING в\n"
-"дистрибутиве Lepton EDA.\n"
-"Нет НИКАКИХ ГАРАНТИЙ в рамках, допустимых имеющимся\n"
-"законодательством.\n"
 
 #, scheme-format
 msgid ""
@@ -1357,6 +1409,31 @@ msgstr "Количество ошибок: ~A"
 
 msgid "(use -v to view details)"
 msgstr "(используйте опцию -v для вывода подробностей)"
+
+#~ msgid "Color map entry must be a two-element list"
+#~ msgstr "Запись в таблице цветов должна быть двухэлементным списком"
+
+#~ msgid "Index in color map entry must be an integer"
+#~ msgstr "Индекс записи в таблице цветов должен быть целым числом"
+
+#~ msgid "Value in color map entry must be #f or a string"
+#~ msgstr "Значение записи в таблице цветов должно быть «#f» или строкой"
+
+#~ msgid ""
+#~ "Copyright (C) 1998-2016 gEDA developers\n"
+#~ "Copyright (C) 2017-2020 Lepton EDA Contributors\n"
+#~ "This is free software, and you are welcome to redistribute it under\n"
+#~ "certain conditions. For details, see the file `COPYING', which is\n"
+#~ "included in the Lepton EDA distribution.\n"
+#~ "There is NO WARRANTY, to the extent permitted by law.\n"
+#~ msgstr ""
+#~ "Copyright (C) 1998-2016 gEDA developers\n"
+#~ "Copyright (C) 2017-2019 Lepton EDA Contributors\n"
+#~ "Это свободное программное обеспечение, и его можно распространять\n"
+#~ "при определённых условиях. Подробности см. в файле COPYING в\n"
+#~ "дистрибутиве Lepton EDA.\n"
+#~ "Нет НИКАКИХ ГАРАНТИЙ в рамках, допустимых имеющимся\n"
+#~ "законодательством.\n"
 
 #~ msgid "Saved [%1$s]"
 #~ msgstr "Файл «%1$s» сохранён"

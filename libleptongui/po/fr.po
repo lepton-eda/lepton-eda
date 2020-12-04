@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:03+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2012-10-28 15:46+0000\n"
 "Last-Translator: Penegal <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -31,8 +31,8 @@ msgstr "Enregistrer _sous..."
 
 msgid ""
 "Save your color scheme to a file by clicking on the \"Save As...\"\n"
-"button. It can be loaded on startup with the following\n"
-"expression in the gschemrc configuration file:\n"
+"button. It can be loaded on startup with the following expression\n"
+"(including parentheses) in the gschemrc configuration file:\n"
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
 
@@ -90,20 +90,6 @@ msgstr "L'objet ~A n'est pas inclus dans la page gschem courante."
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
-#, fuzzy, c-format
-msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
-msgstr "gEDA/gschem version %s%s.%s\n"
-
-#, c-format
-msgid ""
-"but you have a version [%1$s] gschemrc file:\n"
-"[%2$s]\n"
-msgstr ""
-
-#, c-format
-msgid "Please be sure that you have the latest rc file.\n"
-msgstr ""
-
 msgid "Object ~A is not directly included in a page."
 msgstr "L'objet ~A n'est inclus directement par aucune page."
 
@@ -115,30 +101,14 @@ msgid "Found invalid lepton-schematic window smob ~S"
 msgstr "~S n'est pas une combinaison de touches valide."
 
 #, fuzzy, c-format
-msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
-msgstr "gEDA/gschem version %s%s.%s\n"
-
-#, c-format
-msgid "This is the MINGW32 port.\n"
-msgstr "Ceci est le portage sous MINGW32\n"
-
-#, fuzzy, c-format
-msgid "Current locale settings: %1$s\n"
-msgstr "Locale en cours : %s\n"
+msgid "%s (git: %.7s)"
+msgstr "%s (g%.7s)"
 
 #, fuzzy, c-format
 msgid ""
-"ERROR: Failed to load or evaluate startup script.\n"
-"\n"
-"The lepton-schematic log may contain more information.\n"
-msgstr ""
-"%s\n"
-"\n"
-"Le journal gschem pourrait contenir plus d'informations."
-
-#, fuzzy, c-format
-msgid "%s (git: %.7s)"
-msgstr "%s (g%.7s)"
+"Could not load image at file: %1$s\n"
+"%2$s"
+msgstr "Échec sauvegarde de la page [%s]\n"
 
 msgid "Lepton Electronic Design Automation"
 msgstr ""
@@ -765,11 +735,20 @@ msgstr "Mode Piste Magnétique : OFF\n"
 msgid "Translating schematic [%1$d %2$d]"
 msgstr "Translation du schéma [%d %d]\n"
 
-#, fuzzy, c-format
-msgid "Delete locked object?"
-msgid_plural "Delete %1$u locked objects?"
-msgstr[0] "les objets sélectionnés"
-msgstr[1] "les objets sélectionnés"
+msgid ""
+"Warning: the selection contains locked objects.\n"
+"Please choose what objects you'd like to delete:"
+msgstr ""
+
+#, fuzzy
+msgid "Delete _all"
+msgstr "Supprimer"
+
+msgid "All, _except locked"
+msgstr ""
+
+msgid "Delete"
+msgstr "Supprimer"
 
 #, fuzzy
 msgid "Hidden text is now visible"
@@ -867,51 +846,6 @@ msgstr "Nouvelle valeur de slot hors plage\n"
 #, fuzzy
 msgid "Undo/Redo is disabled in configuration"
 msgstr "Opérations Défaire/Refaire désactivées dans fichier rc\n"
-
-#, fuzzy, c-format
-msgid ""
-"Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
-"\n"
-"Interactively edit Lepton EDA schematics or symbols.\n"
-"If one or more FILEs are specified, open them for\n"
-"editing; otherwise, create a new, empty schematic.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Quiet mode.\n"
-"  -v, --verbose            Verbose mode.\n"
-"  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
-"  -V, --version            Show version information.\n"
-"  -h, --help               Help; this message.\n"
-"  --                       Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at <%2$s>\n"
-"Lepton EDA homepage: <%3$s>\n"
-msgstr ""
-"Usage: %s [OPTION ...] [--] [FICHIER ...]\n"
-"\n"
-"Éditer de façon interactive un schéma ou des symboles gEDA. \n"
-"Si un FICHIER ou plus sont spécifiés, les ouvrir pour édition;\n"
-"sinon, créer un nouveau schéma vide.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Mode silencieux.\n"
-"  -v, --verbose            Mode bavard.\n"
-"  -r, --config-file=FICHIER   Fichier de configuration additionnelle à "
-"charger.\n"
-"  -L RÉP                   Ajouter RÉP au chemin de recherche du schéma.\n"
-"  -c EXPR                  Expression de schéma à charger au démarrage.\n"
-"  -s FICHIER                  Script de schéma à lancer au démarrage.\n"
-"  -o, --output=FICHIER        Fichier de résultat (pour impression).\n"
-"  -p                       Placer la fenêtre automatiquement.\n"
-"  -V, --version            Afficher la version.\n"
-"  -h, --help               Aide; ce message.\n"
-"  --                       Traiter les arguments restants comme des noms de "
-"fichier.\n"
-"\n"
-"En cas de bug, prévenir <https://bugs.launchpad.net/geda>\n"
-"Page d'accueil gEDA/gaf: <http://www.geda-project.org/>\n"
 
 msgid "Schematic not found in source library."
 msgstr ""
@@ -1074,82 +1008,9 @@ msgstr ""
 msgid "Clipboard insertion failed"
 msgstr "Échec de l'insertion du contenu copié"
 
-#, fuzzy, c-format
-msgid "Tried to get an invalid color: %1$d\n"
-msgstr "Tentative d'obtention d'une couleur invalide : %d\n"
-
-msgid "Background"
-msgstr "Arrière-plan"
-
-msgid "Pin"
-msgstr "Broche"
-
-msgid "Net endpoint"
-msgstr "Point d'arrêt de la liaison"
-
-msgid "Graphic"
-msgstr "Graphique"
-
-msgid "Net"
-msgstr "Piste"
-
-msgid "Attribute"
-msgstr "Attribut"
-
-msgid "Logic bubble"
-msgstr "Bulle logique"
-
-msgid "Grid point"
-msgstr "Point de grille"
-
-#, fuzzy
-msgid "Detached attribute"
-msgstr "Attribut détaché"
-
-msgid "Bus"
-msgstr "Bus"
-
-msgid "Selection"
-msgstr "Sélection"
-
-msgid "Bounding box"
-msgstr "Boîte englobante"
-
-msgid "Zoom box"
-msgstr "Boîte d'agrandissement"
-
-msgid "Stroke"
-msgstr "Trait"
-
-msgid "Lock"
-msgstr "Verrouiller"
-
-msgid "Output background"
-msgstr "Arrière-plan de sortie"
-
-msgid "Freestyle 1"
+#, c-format
+msgid "%s [ disabled ]"
 msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-msgid "Net junction"
-msgstr "Jonction de liaison"
-
-msgid "Mesh grid major"
-msgstr "Maille de la grille principale"
-
-msgid "Mesh grid minor"
-msgstr "Maille de la grille secondaire"
-
-msgid "Unknown"
-msgstr "Inconnu"
 
 #, fuzzy
 msgid "Reset filter"
@@ -1426,9 +1287,6 @@ msgstr "Promouvoir"
 msgid "Duplicate"
 msgstr "Cloner"
 
-msgid "Delete"
-msgstr "Supprimer"
-
 #, fuzzy
 msgid "Copy to all"
 msgstr "Copier dans 1"
@@ -1701,6 +1559,9 @@ msgstr ""
 "Mode ajout de bus\n"
 "Clic droit pour annuler"
 
+msgid "Bus"
+msgstr "Bus"
+
 msgid "Add Text..."
 msgstr "Ajouter du texte..."
 
@@ -1719,6 +1580,9 @@ msgstr "Montrer le texte commençant par :"
 
 msgid "none"
 msgstr "aucun"
+
+msgid "Stroke"
+msgstr "Trait"
 
 #, fuzzy
 msgid "Repeat"
@@ -1836,6 +1700,9 @@ msgstr "Éditer le texte..."
 
 msgid "Slot..."
 msgstr "Slot..."
+
+msgid "Lock"
+msgstr "Verrouiller"
 
 msgid "Unlock"
 msgstr "Déverrouiller"
@@ -2436,10 +2303,11 @@ msgstr "Documentation du composant"
 msgid "View documentation for selected component"
 msgstr ""
 
-msgid "Lepton EDA Manuals"
-msgstr ""
+#, fuzzy
+msgid "Lepton EDA Manual"
+msgstr "gEDA _Wiki..."
 
-msgid "View the front page of the Lepton EDA documentation in a browser."
+msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr ""
 
 #, fuzzy
@@ -2485,6 +2353,145 @@ msgstr "~S n'est pas un préfixe valide."
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Alignement du paragraphe invalide ~A."
+
+#, fuzzy, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
+"\n"
+"\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Quiet mode.\n"
+"  -v, --verbose            Verbose mode.\n"
+"  -L DIR                   Add DIR to Scheme search path.\n"
+"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -s FILE                  Scheme script to run at startup.\n"
+"  -V, --version            Show version information.\n"
+"  -h, --help               Help; this message.\n"
+"  --                       Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at ~S\n"
+"Lepton EDA homepage: ~S\n"
+msgstr ""
+"Usage: %s [OPTION ...] [--] [FICHIER ...]\n"
+"\n"
+"Éditer de façon interactive un schéma ou des symboles gEDA. \n"
+"Si un FICHIER ou plus sont spécifiés, les ouvrir pour édition;\n"
+"sinon, créer un nouveau schéma vide.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Mode silencieux.\n"
+"  -v, --verbose            Mode bavard.\n"
+"  -r, --config-file=FICHIER   Fichier de configuration additionnelle à "
+"charger.\n"
+"  -L RÉP                   Ajouter RÉP au chemin de recherche du schéma.\n"
+"  -c EXPR                  Expression de schéma à charger au démarrage.\n"
+"  -s FICHIER                  Script de schéma à lancer au démarrage.\n"
+"  -o, --output=FICHIER        Fichier de résultat (pour impression).\n"
+"  -p                       Placer la fenêtre automatiquement.\n"
+"  -V, --version            Afficher la version.\n"
+"  -h, --help               Aide; ce message.\n"
+"  --                       Traiter les arguments restants comme des noms de "
+"fichier.\n"
+"\n"
+"En cas de bug, prévenir <https://bugs.launchpad.net/geda>\n"
+"Page d'accueil gEDA/gaf: <http://www.geda-project.org/>\n"
+
+#, scheme-format
+msgid ""
+"ERROR: Unknown option ~A.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#, fuzzy
+#~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
+#~ msgstr "gEDA/gschem version %s%s.%s\n"
+
+#, fuzzy
+#~ msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
+#~ msgstr "gEDA/gschem version %s%s.%s\n"
+
+#~ msgid "This is the MINGW32 port.\n"
+#~ msgstr "Ceci est le portage sous MINGW32\n"
+
+#, fuzzy
+#~ msgid "Current locale settings: %1$s\n"
+#~ msgstr "Locale en cours : %s\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "ERROR: Failed to load or evaluate startup script.\n"
+#~ "\n"
+#~ "The lepton-schematic log may contain more information.\n"
+#~ msgstr ""
+#~ "%s\n"
+#~ "\n"
+#~ "Le journal gschem pourrait contenir plus d'informations."
+
+#, fuzzy
+#~ msgid "Delete locked object?"
+#~ msgid_plural "Delete %1$u locked objects?"
+#~ msgstr[0] "les objets sélectionnés"
+#~ msgstr[1] "les objets sélectionnés"
+
+#, fuzzy
+#~ msgid "Tried to get an invalid color: %1$d\n"
+#~ msgstr "Tentative d'obtention d'une couleur invalide : %d\n"
+
+#~ msgid "Background"
+#~ msgstr "Arrière-plan"
+
+#~ msgid "Pin"
+#~ msgstr "Broche"
+
+#~ msgid "Net endpoint"
+#~ msgstr "Point d'arrêt de la liaison"
+
+#~ msgid "Graphic"
+#~ msgstr "Graphique"
+
+#~ msgid "Net"
+#~ msgstr "Piste"
+
+#~ msgid "Attribute"
+#~ msgstr "Attribut"
+
+#~ msgid "Logic bubble"
+#~ msgstr "Bulle logique"
+
+#~ msgid "Grid point"
+#~ msgstr "Point de grille"
+
+#, fuzzy
+#~ msgid "Detached attribute"
+#~ msgstr "Attribut détaché"
+
+#~ msgid "Selection"
+#~ msgstr "Sélection"
+
+#~ msgid "Bounding box"
+#~ msgstr "Boîte englobante"
+
+#~ msgid "Zoom box"
+#~ msgstr "Boîte d'agrandissement"
+
+#~ msgid "Output background"
+#~ msgstr "Arrière-plan de sortie"
+
+#~ msgid "Net junction"
+#~ msgstr "Jonction de liaison"
+
+#~ msgid "Mesh grid major"
+#~ msgstr "Maille de la grille principale"
+
+#~ msgid "Mesh grid minor"
+#~ msgstr "Maille de la grille secondaire"
+
+#~ msgid "Unknown"
+#~ msgstr "Inconnu"
 
 #~ msgid "Single Attribute Editor"
 #~ msgstr "Éditeur d'attribut"

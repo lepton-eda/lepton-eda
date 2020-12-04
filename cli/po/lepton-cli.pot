@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.11\n"
+"Project-Id-Version: lepton-eda 1.9.12\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:06+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,14 +38,21 @@ msgid ""
 "Lepton EDA homepage: <%2$s>\n"
 msgstr ""
 
-#: cli/lepton-cli.c:139
+#: cli/lepton-cli.c:94
+#, c-format
+msgid ""
+"Lepton EDA %s%s.%s (git: %.7s)\n"
+"%s"
+msgstr ""
+
+#: cli/lepton-cli.c:142
 #, c-format
 msgid ""
 "\n"
 "Run `lepton-cli --help' for more information.\n"
 msgstr ""
 
-#: cli/lepton-cli.c:151
+#: cli/lepton-cli.c:154
 #, c-format
 msgid ""
 "ERROR: You must specify a command to run.\n"
@@ -53,7 +60,7 @@ msgid ""
 "Run `lepton-cli --help' for more information.\n"
 msgstr ""
 
-#: cli/lepton-cli.c:169
+#: cli/lepton-cli.c:172
 #, c-format
 msgid ""
 "ERROR: Unrecognised command `%1$s'.\n"
@@ -145,22 +152,22 @@ msgstr ""
 
 #. TRANSLATORS: The first string is the filename, the second
 #. * is the detailed error message
-#: cli/export.c:270
+#: cli/export.c:271
 #, c-format
 msgid "ERROR: Failed to load '%1$s': %2$s\n"
 msgstr ""
 
-#: cli/export.c:276
+#: cli/export.c:277
 #, c-format
 msgid "ERROR: Failed to change directory to '%1$s': %2$s\n"
 msgstr ""
 
-#: cli/export.c:295
+#: cli/export.c:296
 #, c-format
 msgid "ERROR: %s.\n"
 msgstr ""
 
-#: cli/export.c:934
+#: cli/export.c:935
 #, c-format
 msgid ""
 "Usage: lepton-cli export [OPTION ...] -o OUTPUT [--] FILE ...\n"
@@ -187,12 +194,12 @@ msgid ""
 "Lepton EDA homepage: <%2$s>\n"
 msgstr ""
 
-#: cli/export.c:1134
+#: cli/export.c:1135
 #, c-format
 msgid "ERROR: You must specify at least one input filename.\n"
 msgstr ""
 
-#: cli/export.c:1143
+#: cli/export.c:1144
 #, c-format
 msgid "ERROR: You must specify an output filename.\n"
 msgstr ""

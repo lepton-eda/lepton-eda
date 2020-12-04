@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:05+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2015-01-12 10:15+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -209,10 +209,6 @@ msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr ""
 
 #, fuzzy, c-format
-msgid "Invalid path [%1$s] passed to component-library\n"
-msgstr "Impossibile trovare il componente [%s] nella libreria componenti\n"
-
-#, fuzzy, c-format
 msgid "Can't get the real filename of %1$s."
 msgstr "Impossibile salvare il file di backup: %s."
 
@@ -286,14 +282,82 @@ msgstr "Ho trovato un arco con raggio zero [ %c %d, %d, %d, %d, %d, %d ]\n"
 msgid "Setting radius to 0."
 msgstr "imposto l'angolo a 0\n"
 
-msgid "Color map entry must be a two-element list"
+msgid "Background"
 msgstr ""
 
-msgid "Index in color map entry must be an integer"
-msgstr "L'indice nella voce di mappa colore deve essere un intero"
+msgid "Pin"
+msgstr ""
 
-msgid "Value in color map entry must be #f or a string"
-msgstr "Il valore nella voce di mappa colore deve essere #f o una stringa"
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+#, fuzzy
+msgid "Attribute"
+msgstr "Trovato attributo %s\n"
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+#, fuzzy
+msgid "Detached attribute"
+msgstr "Trovato attributo allegato erroneamente: [%s=%s]\n"
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -754,19 +818,14 @@ msgstr "Il file %s è di sola lettura"
 msgid "Library at ~S has been already added."
 msgstr ""
 
+#, fuzzy, scheme-format
+msgid "Invalid path ~S passed to component-library.\n"
+msgstr "Impossibile trovare il componente [%s] nella libreria componenti\n"
+
 msgid "Welcome to Lepton REPL!\n"
 msgstr ""
 
 msgid "WARNING: Readline library is not supported in your configuration.\n"
-msgstr ""
-
-msgid ""
-"Copyright (C) 1998-2016 gEDA developers\n"
-"Copyright (C) 2017-2020 Lepton EDA Contributors\n"
-"This is free software, and you are welcome to redistribute it under\n"
-"certain conditions. For details, see the file `COPYING', which is\n"
-"included in the Lepton EDA distribution.\n"
-"There is NO WARRANTY, to the extent permitted by law.\n"
 msgstr ""
 
 #, scheme-format
@@ -1234,6 +1293,12 @@ msgstr "1 ERRORE trovato "
 #, fuzzy
 msgid "(use -v to view details)"
 msgstr "(usare -v per visualizzare i dettagli)\n"
+
+#~ msgid "Index in color map entry must be an integer"
+#~ msgstr "L'indice nella voce di mappa colore deve essere un intero"
+
+#~ msgid "Value in color map entry must be #f or a string"
+#~ msgstr "Il valore nella voce di mappa colore deve essere #f o una stringa"
 
 #, fuzzy
 #~ msgid ""

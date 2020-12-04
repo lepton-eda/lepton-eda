@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:03+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2020-03-20 15:30+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -30,10 +30,11 @@ msgstr "Масштаб слишком мал! Дальнейшее измене�
 msgid "Save As.._."
 msgstr "Сохранить _как..."
 
+#, fuzzy
 msgid ""
 "Save your color scheme to a file by clicking on the \"Save As...\"\n"
-"button. It can be loaded on startup with the following\n"
-"expression in the gschemrc configuration file:\n"
+"button. It can be loaded on startup with the following expression\n"
+"(including parentheses) in the gschemrc configuration file:\n"
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
 "Сохраните цветовую схему в файл, щёлкнув по кнопке \"Сохранить\n"
@@ -98,22 +99,6 @@ msgstr "Объект ~A не принадлежит текущей страни�
 msgid "Invalid text name/value visibility ~A."
 msgstr "Недопустимое сочетание видимости имени/значения ~A."
 
-#, c-format
-msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
-msgstr "Вы работаете с lepton-schematic версии %1$s%2$s.%3$s,\n"
-
-#, c-format
-msgid ""
-"but you have a version [%1$s] gschemrc file:\n"
-"[%2$s]\n"
-msgstr ""
-"но версия файла gschemrc «%1$s»:\n"
-"%2$s\n"
-
-#, c-format
-msgid "Please be sure that you have the latest rc file.\n"
-msgstr "Удостоверьтесь, что у вас последняя версия файла настроек.\n"
-
 # Данная ошибка возникает, например, в случае попытки отдельного выделения
 # объекта, не являющегося самостоятельной частью страницы, а входящего в
 # состав какого-то символа, то есть включенного в страницу косвенно.
@@ -128,30 +113,16 @@ msgid "Found invalid lepton-schematic window smob ~S"
 msgstr "Обнаружена недопустимая структура данных smob окна lepton-schematic ~S"
 
 #, c-format
-msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
-msgstr "Lepton EDA/lepton-schematic версии %1$s%2$s.%3$s git: %4$.7s"
-
-#, c-format
-msgid "This is the MINGW32 port.\n"
-msgstr "Это версия для MINGW32.\n"
-
-#, c-format
-msgid "Current locale settings: %1$s\n"
-msgstr "Текущие настройки локализации: %1$s\n"
-
-#, c-format
-msgid ""
-"ERROR: Failed to load or evaluate startup script.\n"
-"\n"
-"The lepton-schematic log may contain more information.\n"
-msgstr ""
-"ОШИБКА: не удалось загрузить или выполнить скрипт при запуске.\n"
-"\n"
-"В журнале lepton-schematic может быть больше информации.\n"
-
-#, c-format
 msgid "%s (git: %.7s)"
 msgstr "%s (git: %.7s)"
+
+#, fuzzy, c-format
+msgid ""
+"Could not load image at file: %1$s\n"
+"%2$s"
+msgstr ""
+"Не удалось сохранить страницу «%s»:\n"
+"%s"
 
 msgid "Lepton Electronic Design Automation"
 msgstr "Lepton Electronic Design Automation"
@@ -714,12 +685,20 @@ msgstr "Режим «магнитных» соединений отключён"
 msgid "Translating schematic [%1$d %2$d]"
 msgstr "Смещение схемы в [%1$d %2$d]"
 
-#, c-format
-msgid "Delete locked object?"
-msgid_plural "Delete %1$u locked objects?"
-msgstr[0] "Удалить %1$u заблокированный объект?"
-msgstr[1] "Удалить %1$u заблокированных объекта?"
-msgstr[2] "Удалить %1$u заблокированных объектов?"
+msgid ""
+"Warning: the selection contains locked objects.\n"
+"Please choose what objects you'd like to delete:"
+msgstr ""
+
+#, fuzzy
+msgid "Delete _all"
+msgstr "Удалить"
+
+msgid "All, _except locked"
+msgstr ""
+
+msgid "Delete"
+msgstr "Удалить"
 
 msgid "Hidden text is now visible"
 msgstr "Скрытый текст теперь видим"
@@ -810,47 +789,6 @@ msgstr "Новый номер секции вне допустимого диа�
 
 msgid "Undo/Redo is disabled in configuration"
 msgstr "Отмена/Повтор отключены в файле настроек"
-
-#, c-format
-msgid ""
-"Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
-"\n"
-"Interactively edit Lepton EDA schematics or symbols.\n"
-"If one or more FILEs are specified, open them for\n"
-"editing; otherwise, create a new, empty schematic.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Quiet mode.\n"
-"  -v, --verbose            Verbose mode.\n"
-"  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
-"  -V, --version            Show version information.\n"
-"  -h, --help               Help; this message.\n"
-"  --                       Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at <%2$s>\n"
-"Lepton EDA homepage: <%3$s>\n"
-msgstr ""
-"Использование: %1$s [ОПЦИЯ ...] [--] [ФАЙЛ ...]\n"
-"\n"
-"Интерактивное редактирование принципиальных схем и символов Lepton EDA.\n"
-"Если указан один или более файлов, они открываются для редактирования;\n"
-"в противном случае создаётся новый пустой файл.\n"
-"\n"
-"Опции:\n"
-"  -q, --quiet              Без вывода информации.\n"
-"  -v, --verbose            Подробный вывод.\n"
-"  -L КАТАЛОГ               Добавить каталог к пути поиска файлов Scheme.\n"
-"  -c ВЫРАЖЕНИЕ             Выполнить выражение Scheme при запуске.\n"
-"  -s ФАЙЛ                  Выполнить файл скрипта Scheme при запуске.\n"
-"  -V, --version            Информация о версии.\n"
-"  -h, --help               Данная справка.\n"
-"  --                       Считать все последующие аргументы именами\n"
-"                           файлов.\n"
-"\n"
-"Страница для отчётов об ошибках: %2$s\n"
-"Домашняя страница Lepton EDA: %3$s\n"
 
 msgid "Schematic not found in source library."
 msgstr ""
@@ -1015,84 +953,8 @@ msgid "Clipboard insertion failed"
 msgstr "Ошибка вставки данных из буфера обмена"
 
 #, c-format
-msgid "Tried to get an invalid color: %1$d\n"
-msgstr "Запрос недопустимого цвета: %1$d\n"
-
-msgid "Background"
-msgstr "Фон"
-
-msgid "Pin"
-msgstr "Вывод"
-
-msgid "Net endpoint"
-msgstr "Метка конца соединения"
-
-msgid "Graphic"
-msgstr "Графический объект"
-
-msgid "Net"
-msgstr "Соединение"
-
-msgid "Attribute"
-msgstr "Атрибут"
-
-msgid "Logic bubble"
-msgstr "Логическая инверсия"
-
-msgid "Grid point"
-msgstr "Точка сетки"
-
-msgid "Detached attribute"
-msgstr "Неприкреплённый атрибут"
-
-msgid "Bus"
-msgstr "Шина"
-
-msgid "Selection"
-msgstr "Выделение"
-
-# Цвет рамки, которая отображается при переключении "Внешние контуры/Рамка"
-# вместо объекта
-msgid "Bounding box"
-msgstr "Ограничительная рамка"
-
-msgid "Zoom box"
-msgstr "Рамка масштабирования"
-
-msgid "Stroke"
-msgstr "Жест"
-
-msgid "Lock"
-msgstr "Блокировка"
-
-# Можно было бы "Фон распечатки", но можно вывести и в файл...
-msgid "Output background"
-msgstr "Фон экспорта"
-
-msgid "Freestyle 1"
-msgstr "Свободный 1"
-
-msgid "Freestyle 2"
-msgstr "Свободный 2"
-
-msgid "Freestyle 3"
-msgstr "Свободный 3"
-
-msgid "Freestyle 4"
-msgstr "Свободный 4"
-
-msgid "Net junction"
-msgstr "Соединительная точка"
-
-msgid "Mesh grid major"
-msgstr "Линии сетки основные"
-
-msgid "Mesh grid minor"
-msgstr "Линии сетки вспомогательные"
-
-# Имеется в виду цвет
-msgid "Unknown"
-msgstr "Неизвестный"
+msgid "%s [ disabled ]"
+msgstr ""
 
 msgid "Reset filter"
 msgstr "Сбросить фильтр"
@@ -1355,9 +1217,6 @@ msgstr "Вынести"
 
 msgid "Duplicate"
 msgstr "Дублировать"
-
-msgid "Delete"
-msgstr "Удалить"
 
 msgid "Copy to all"
 msgstr "Скопировать во все"
@@ -1624,6 +1483,9 @@ msgstr ""
 "Ввод шин\n"
 "Щелчок правой кнопкой отменяет операцию"
 
+msgid "Bus"
+msgstr "Шина"
+
 msgid "Add Text..."
 msgstr "Ввод текста..."
 
@@ -1643,6 +1505,9 @@ msgstr "Показать текст, начинающийся с:"
 # подключена.
 msgid "none"
 msgstr "---"
+
+msgid "Stroke"
+msgstr "Жест"
 
 # Функция средней кнопки мыши.
 # За этой строкой следует название действия
@@ -1765,6 +1630,9 @@ msgstr "Правка текста..."
 
 msgid "Slot..."
 msgstr "Секция..."
+
+msgid "Lock"
+msgstr "Блокировка"
 
 msgid "Unlock"
 msgstr "Разблокировка"
@@ -2288,10 +2156,12 @@ msgstr "Документация на компонент"
 msgid "View documentation for selected component"
 msgstr "Просмотр документации для выбранного компонента"
 
-msgid "Lepton EDA Manuals"
+#, fuzzy
+msgid "Lepton EDA Manual"
 msgstr "Документация Lepton EDA"
 
-msgid "View the front page of the Lepton EDA documentation in a browser."
+#, fuzzy
+msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr "Открыть основную страницу документации Lepton EDA в браузере."
 
 msgid "lepton-schematic User Guide"
@@ -2332,6 +2202,161 @@ msgstr "~S не является префиксом клавишной посл�
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr "Недопустимое выравнивание текста ~A."
+
+#, fuzzy, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
+"\n"
+"\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Quiet mode.\n"
+"  -v, --verbose            Verbose mode.\n"
+"  -L DIR                   Add DIR to Scheme search path.\n"
+"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -s FILE                  Scheme script to run at startup.\n"
+"  -V, --version            Show version information.\n"
+"  -h, --help               Help; this message.\n"
+"  --                       Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at ~S\n"
+"Lepton EDA homepage: ~S\n"
+msgstr ""
+"Использование: %1$s [ОПЦИЯ ...] [--] [ФАЙЛ ...]\n"
+"\n"
+"Интерактивное редактирование принципиальных схем и символов Lepton EDA.\n"
+"Если указан один или более файлов, они открываются для редактирования;\n"
+"в противном случае создаётся новый пустой файл.\n"
+"\n"
+"Опции:\n"
+"  -q, --quiet              Без вывода информации.\n"
+"  -v, --verbose            Подробный вывод.\n"
+"  -L КАТАЛОГ               Добавить каталог к пути поиска файлов Scheme.\n"
+"  -c ВЫРАЖЕНИЕ             Выполнить выражение Scheme при запуске.\n"
+"  -s ФАЙЛ                  Выполнить файл скрипта Scheme при запуске.\n"
+"  -V, --version            Информация о версии.\n"
+"  -h, --help               Данная справка.\n"
+"  --                       Считать все последующие аргументы именами\n"
+"                           файлов.\n"
+"\n"
+"Страница для отчётов об ошибках: %2$s\n"
+"Домашняя страница Lepton EDA: %3$s\n"
+
+#, scheme-format
+msgid ""
+"ERROR: Unknown option ~A.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
+#~ msgstr "Вы работаете с lepton-schematic версии %1$s%2$s.%3$s,\n"
+
+#~ msgid ""
+#~ "but you have a version [%1$s] gschemrc file:\n"
+#~ "[%2$s]\n"
+#~ msgstr ""
+#~ "но версия файла gschemrc «%1$s»:\n"
+#~ "%2$s\n"
+
+#~ msgid "Please be sure that you have the latest rc file.\n"
+#~ msgstr "Удостоверьтесь, что у вас последняя версия файла настроек.\n"
+
+#~ msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
+#~ msgstr "Lepton EDA/lepton-schematic версии %1$s%2$s.%3$s git: %4$.7s"
+
+#~ msgid "This is the MINGW32 port.\n"
+#~ msgstr "Это версия для MINGW32.\n"
+
+#~ msgid "Current locale settings: %1$s\n"
+#~ msgstr "Текущие настройки локализации: %1$s\n"
+
+#~ msgid ""
+#~ "ERROR: Failed to load or evaluate startup script.\n"
+#~ "\n"
+#~ "The lepton-schematic log may contain more information.\n"
+#~ msgstr ""
+#~ "ОШИБКА: не удалось загрузить или выполнить скрипт при запуске.\n"
+#~ "\n"
+#~ "В журнале lepton-schematic может быть больше информации.\n"
+
+#~ msgid "Delete locked object?"
+#~ msgid_plural "Delete %1$u locked objects?"
+#~ msgstr[0] "Удалить %1$u заблокированный объект?"
+#~ msgstr[1] "Удалить %1$u заблокированных объекта?"
+#~ msgstr[2] "Удалить %1$u заблокированных объектов?"
+
+#~ msgid "Tried to get an invalid color: %1$d\n"
+#~ msgstr "Запрос недопустимого цвета: %1$d\n"
+
+#~ msgid "Background"
+#~ msgstr "Фон"
+
+#~ msgid "Pin"
+#~ msgstr "Вывод"
+
+#~ msgid "Net endpoint"
+#~ msgstr "Метка конца соединения"
+
+#~ msgid "Graphic"
+#~ msgstr "Графический объект"
+
+#~ msgid "Net"
+#~ msgstr "Соединение"
+
+#~ msgid "Attribute"
+#~ msgstr "Атрибут"
+
+#~ msgid "Logic bubble"
+#~ msgstr "Логическая инверсия"
+
+#~ msgid "Grid point"
+#~ msgstr "Точка сетки"
+
+#~ msgid "Detached attribute"
+#~ msgstr "Неприкреплённый атрибут"
+
+#~ msgid "Selection"
+#~ msgstr "Выделение"
+
+# Цвет рамки, которая отображается при переключении "Внешние контуры/Рамка"
+# вместо объекта
+#~ msgid "Bounding box"
+#~ msgstr "Ограничительная рамка"
+
+#~ msgid "Zoom box"
+#~ msgstr "Рамка масштабирования"
+
+# Можно было бы "Фон распечатки", но можно вывести и в файл...
+#~ msgid "Output background"
+#~ msgstr "Фон экспорта"
+
+#~ msgid "Freestyle 1"
+#~ msgstr "Свободный 1"
+
+#~ msgid "Freestyle 2"
+#~ msgstr "Свободный 2"
+
+#~ msgid "Freestyle 3"
+#~ msgstr "Свободный 3"
+
+#~ msgid "Freestyle 4"
+#~ msgstr "Свободный 4"
+
+#~ msgid "Net junction"
+#~ msgstr "Соединительная точка"
+
+#~ msgid "Mesh grid major"
+#~ msgstr "Линии сетки основные"
+
+#~ msgid "Mesh grid minor"
+#~ msgstr "Линии сетки вспомогательные"
+
+# Имеется в виду цвет
+#~ msgid "Unknown"
+#~ msgstr "Неизвестный"
 
 #~ msgid "Single Attribute Editor"
 #~ msgstr "Редактор атрибута"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-06-04 03:03+0300\n"
+"POT-Creation-Date: 2020-12-04 05:12+0300\n"
 "PO-Revision-Date: 2012-01-27 14:23+0000\n"
 "Last-Translator: kop <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -28,8 +28,8 @@ msgstr "Mentés másként"
 
 msgid ""
 "Save your color scheme to a file by clicking on the \"Save As...\"\n"
-"button. It can be loaded on startup with the following\n"
-"expression in the gschemrc configuration file:\n"
+"button. It can be loaded on startup with the following expression\n"
+"(including parentheses) in the gschemrc configuration file:\n"
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
 
@@ -86,20 +86,6 @@ msgstr "A ~A objektum nem tálható a jelen gschem lapon."
 msgid "Invalid text name/value visibility ~A."
 msgstr "Érvénytelen szöveg név/érték megjelenés ~A."
 
-#, fuzzy, c-format
-msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
-msgstr "gEDA/gschem verzió %s%s.%s\n"
-
-#, c-format
-msgid ""
-"but you have a version [%1$s] gschemrc file:\n"
-"[%2$s]\n"
-msgstr ""
-
-#, c-format
-msgid "Please be sure that you have the latest rc file.\n"
-msgstr ""
-
 msgid "Object ~A is not directly included in a page."
 msgstr ""
 
@@ -109,28 +95,15 @@ msgstr ""
 msgid "Found invalid lepton-schematic window smob ~S"
 msgstr ""
 
-#, fuzzy, c-format
-msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
-msgstr "gEDA/gschem verzió %s%s.%s\n"
-
-#, c-format
-msgid "This is the MINGW32 port.\n"
-msgstr "Ez a MinGW32 port.\n"
-
-#, fuzzy, c-format
-msgid "Current locale settings: %1$s\n"
-msgstr "Jelenlegi területi beállítás: %s\n"
-
-#, c-format
-msgid ""
-"ERROR: Failed to load or evaluate startup script.\n"
-"\n"
-"The lepton-schematic log may contain more information.\n"
-msgstr ""
-
 #, c-format
 msgid "%s (git: %.7s)"
 msgstr ""
+
+#, fuzzy, c-format
+msgid ""
+"Could not load image at file: %1$s\n"
+"%2$s"
+msgstr "A [%s] rajz mentése nem sikerült.\n"
 
 msgid "Lepton Electronic Design Automation"
 msgstr ""
@@ -723,11 +696,20 @@ msgstr "Összeköttetés üzemmód"
 msgid "Translating schematic [%1$d %2$d]"
 msgstr "[%s] rajz betöltése\n"
 
-#, fuzzy, c-format
-msgid "Delete locked object?"
-msgid_plural "Delete %1$u locked objects?"
-msgstr[0] "Kiválasztott objektumok"
-msgstr[1] "Kiválasztott objektumok"
+msgid ""
+"Warning: the selection contains locked objects.\n"
+"Please choose what objects you'd like to delete:"
+msgstr ""
+
+#, fuzzy
+msgid "Delete _all"
+msgstr "Törlés"
+
+msgid "All, _except locked"
+msgstr ""
+
+msgid "Delete"
+msgstr "Törlés"
 
 msgid "Hidden text is now visible"
 msgstr ""
@@ -809,28 +791,6 @@ msgstr ""
 #, fuzzy
 msgid "Undo/Redo is disabled in configuration"
 msgstr "A visszavonás/újra művelet nem használható rc fájlban.\n"
-
-#, c-format
-msgid ""
-"Usage: %1$s [OPTION ...] [--] [FILE ...]\n"
-"\n"
-"Interactively edit Lepton EDA schematics or symbols.\n"
-"If one or more FILEs are specified, open them for\n"
-"editing; otherwise, create a new, empty schematic.\n"
-"\n"
-"Options:\n"
-"  -q, --quiet              Quiet mode.\n"
-"  -v, --verbose            Verbose mode.\n"
-"  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
-"  -s FILE                  Scheme script to run at startup.\n"
-"  -V, --version            Show version information.\n"
-"  -h, --help               Help; this message.\n"
-"  --                       Treat all remaining arguments as filenames.\n"
-"\n"
-"Report bugs at <%2$s>\n"
-"Lepton EDA homepage: <%3$s>\n"
-msgstr ""
 
 msgid "Schematic not found in source library."
 msgstr ""
@@ -981,83 +941,7 @@ msgid "Clipboard insertion failed"
 msgstr ""
 
 #, c-format
-msgid "Tried to get an invalid color: %1$d\n"
-msgstr ""
-
-msgid "Background"
-msgstr ""
-
-msgid "Pin"
-msgstr "Alkatrészláb"
-
-msgid "Net endpoint"
-msgstr ""
-
-msgid "Graphic"
-msgstr ""
-
-msgid "Net"
-msgstr "Net"
-
-msgid "Attribute"
-msgstr "Attribútum"
-
-msgid "Logic bubble"
-msgstr ""
-
-msgid "Grid point"
-msgstr ""
-
-#, fuzzy
-msgid "Detached attribute"
-msgstr "Attribútumok szerkesztése"
-
-msgid "Bus"
-msgstr "Busz"
-
-#, fuzzy
-msgid "Selection"
-msgstr "Kiválasztás"
-
-msgid "Bounding box"
-msgstr ""
-
-#, fuzzy
-msgid "Zoom box"
-msgstr "Doboz nagyítás"
-
-msgid "Stroke"
-msgstr ""
-
-msgid "Lock"
-msgstr "Zárolás"
-
-msgid "Output background"
-msgstr ""
-
-msgid "Freestyle 1"
-msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-#, fuzzy
-msgid "Net junction"
-msgstr "Funkció"
-
-msgid "Mesh grid major"
-msgstr ""
-
-msgid "Mesh grid minor"
-msgstr ""
-
-msgid "Unknown"
+msgid "%s [ disabled ]"
 msgstr ""
 
 #, fuzzy
@@ -1327,9 +1211,6 @@ msgstr ""
 msgid "Duplicate"
 msgstr "Megkettőzés"
 
-msgid "Delete"
-msgstr "Törlés"
-
 #, fuzzy
 msgid "Copy to all"
 msgstr "Másolás 1-be"
@@ -1585,6 +1466,9 @@ msgid ""
 "Right mouse button to cancel"
 msgstr "Busz hozzáadása mód"
 
+msgid "Bus"
+msgstr "Busz"
+
 msgid "Add Text..."
 msgstr "Szöveg hozzáadása"
 
@@ -1603,6 +1487,9 @@ msgstr "A következővel kezdődő szöveg mutatása:"
 
 msgid "none"
 msgstr "semmi"
+
+msgid "Stroke"
+msgstr ""
 
 #, fuzzy
 msgid "Repeat"
@@ -1718,6 +1605,9 @@ msgstr "Szöveg szerkesztése..."
 
 msgid "Slot..."
 msgstr ""
+
+msgid "Lock"
+msgstr "Zárolás"
 
 msgid "Unlock"
 msgstr "Zárolás feloldása"
@@ -2312,10 +2202,11 @@ msgstr "Alkatrész dokumentáció"
 msgid "View documentation for selected component"
 msgstr ""
 
-msgid "Lepton EDA Manuals"
-msgstr ""
+#, fuzzy
+msgid "Lepton EDA Manual"
+msgstr "gEDA kapcsolásirajz-szerkesztő"
 
-msgid "View the front page of the Lepton EDA documentation in a browser."
+msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr ""
 
 #, fuzzy
@@ -2361,6 +2252,81 @@ msgstr ""
 #, scheme-format
 msgid "Invalid text alignment ~A."
 msgstr ""
+
+#, scheme-format
+msgid ""
+"Usage: ~A [OPTION ...] [--] [FILE ...]\n"
+"\n"
+"\n"
+"Interactively edit Lepton EDA schematics or symbols.\n"
+"If one or more FILEs are specified, open them for\n"
+"editing; otherwise, create a new, empty schematic.\n"
+"\n"
+"Options:\n"
+"  -q, --quiet              Quiet mode.\n"
+"  -v, --verbose            Verbose mode.\n"
+"  -L DIR                   Add DIR to Scheme search path.\n"
+"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -s FILE                  Scheme script to run at startup.\n"
+"  -V, --version            Show version information.\n"
+"  -h, --help               Help; this message.\n"
+"  --                       Treat all remaining arguments as filenames.\n"
+"\n"
+"Report bugs at ~S\n"
+"Lepton EDA homepage: ~S\n"
+msgstr ""
+
+#, scheme-format
+msgid ""
+"ERROR: Unknown option ~A.\n"
+"Run `~A --help' for more information.\n"
+msgstr ""
+
+#, fuzzy
+#~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
+#~ msgstr "gEDA/gschem verzió %s%s.%s\n"
+
+#, fuzzy
+#~ msgid "Lepton EDA/lepton-schematic version %1$s%2$s.%3$s git: %4$.7s"
+#~ msgstr "gEDA/gschem verzió %s%s.%s\n"
+
+#~ msgid "This is the MINGW32 port.\n"
+#~ msgstr "Ez a MinGW32 port.\n"
+
+#, fuzzy
+#~ msgid "Current locale settings: %1$s\n"
+#~ msgstr "Jelenlegi területi beállítás: %s\n"
+
+#, fuzzy
+#~ msgid "Delete locked object?"
+#~ msgid_plural "Delete %1$u locked objects?"
+#~ msgstr[0] "Kiválasztott objektumok"
+#~ msgstr[1] "Kiválasztott objektumok"
+
+#~ msgid "Pin"
+#~ msgstr "Alkatrészláb"
+
+#~ msgid "Net"
+#~ msgstr "Net"
+
+#~ msgid "Attribute"
+#~ msgstr "Attribútum"
+
+#, fuzzy
+#~ msgid "Detached attribute"
+#~ msgstr "Attribútumok szerkesztése"
+
+#, fuzzy
+#~ msgid "Selection"
+#~ msgstr "Kiválasztás"
+
+#, fuzzy
+#~ msgid "Zoom box"
+#~ msgstr "Doboz nagyítás"
+
+#, fuzzy
+#~ msgid "Net junction"
+#~ msgstr "Funkció"
 
 #~ msgid "<b>Edit Attribute</b>"
 #~ msgstr "<b>Attribútum szerkesztése</b>"
