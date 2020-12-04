@@ -29,6 +29,11 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
   programs with GTK3.  Please see [README](README.md) for more
   information.
 
+- Build with `-Wl,--no-undefined`, broken in the previous release,
+  has been revamped by merging two libraries, `liblepton` and
+  `libleptonrenderer`.
+
+- Build for Cygwin has been fixed as well by the above change.
 
 - The build option `--disable-attrib` broken in the previous
   release has been fixed.
@@ -37,6 +42,9 @@ Notable changes in Lepton EDA 1.9.12 (upcoming)
   removed from the toolset.
 
 ### Changes in `liblepton`:
+
+- Code from the library `libleptonrenderer` has been merged into
+  `liblepton`.
 
 - A new module, `(lepton eval)`, has been added. The new module
   exports Scheme versions of functions `eval-protected()` and
