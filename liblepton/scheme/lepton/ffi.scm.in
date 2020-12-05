@@ -27,6 +27,7 @@
             edascm_to_object
 
             lepton_object_get_id
+            lepton_object_get_type
 
             set_render_placeholders
             colors_count
@@ -86,3 +87,4 @@
 
 ;;; object.c
 (define-lff lepton_object_get_id int '(*))
+(define-lff lepton_object_get_type int '(*))

@@ -29,17 +29,8 @@
 #include "libleptonguile_priv.h"
 
 SCM_SYMBOL (wrong_type_arg_sym , "wrong-type-arg");
-SCM_SYMBOL (line_sym , "line");
 SCM_SYMBOL (net_sym , "net");
 SCM_SYMBOL (bus_sym , "bus");
-SCM_SYMBOL (box_sym , "box");
-SCM_SYMBOL (picture_sym , "picture");
-SCM_SYMBOL (circle_sym , "circle");
-SCM_SYMBOL (complex_sym , "complex");
-SCM_SYMBOL (text_sym , "text");
-SCM_SYMBOL (path_sym , "path");
-SCM_SYMBOL (pin_sym , "pin");
-SCM_SYMBOL (arc_sym , "arc");
 
 SCM_SYMBOL (lower_left_sym , "lower-left");
 SCM_SYMBOL (middle_left_sym , "middle-left");
@@ -188,47 +179,6 @@ SCM_DEFINE (copy_object, "%copy-object", 1, 0, 0,
   /* At the moment, the only pointer to the object is owned by the
    * smob. */
   edascm_c_set_gc (result, TRUE);
-
-  return result;
-}
-
-/*! \brief Get the type of an object.
- * \par Function Description
- * Returns a symbol describing the type of the #LeptonObject smob \a obj_s.
- *
- * \note Scheme API: Implements the %object-type procedure in the
- * (lepton core object) module.
- *
- * \param [in] obj_s an #LeptonObject smob.
- * \return a Scheme symbol representing the object type.
- */
-SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
-            (SCM obj_s), "Get an object smob's type")
-{
-  SCM result;
-
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_object_type);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  switch (lepton_object_get_type (obj)) {
-  case OBJ_LINE:    result = line_sym;       break;
-  case OBJ_NET:     result = net_sym;        break;
-  case OBJ_BUS:     result = bus_sym;        break;
-  case OBJ_BOX:     result = box_sym;        break;
-  case OBJ_PICTURE: result = picture_sym;    break;
-  case OBJ_CIRCLE:  result = circle_sym;     break;
-  case OBJ_TEXT:    result = text_sym;       break;
-  case OBJ_PATH:    result = path_sym;       break;
-  case OBJ_PIN:     result = pin_sym;        break;
-  case OBJ_ARC:     result = arc_sym;        break;
-  case OBJ_COMPONENT:
-                    result = complex_sym;    break;
-  default:
-    scm_misc_error (s_object_type, _("Object ~A has bad type '~A'"),
-                    scm_list_2 (obj_s,
-                                scm_integer_to_char (scm_from_int (lepton_object_get_type (obj)))));
-  }
 
   return result;
 }
@@ -2340,8 +2290,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_object_type,
-                s_copy_object,
+  scm_c_export (s_copy_object,
                 s_object_bounds,
                 s_object_stroke,
                 s_set_object_stroke_x,

@@ -26,11 +26,24 @@
 
   ;; Import C procedures
   #:use-module (lepton core component)
+  #:use-module (lepton core gettext)
   #:use-module (lepton core object)
   #:use-module (lepton ffi)
 
   #:export (object?
-            object-id))
+            object-id
+            object-type
+            arc?
+            box?
+            bus?
+            circle?
+            component?
+            line?
+            net?
+            path?
+            picture?
+            pin?
+            text?))
 
 (define (object? object)
   "Returns #t if OBJECT is a #<geda-object> instance, otherwise
@@ -45,13 +58,42 @@ returns #f."
 (define (pointer->geda-object pointer)
   (pointer->scm (edascm_from_object pointer)))
 
-(define-public object-type %object-type)
 
 (define (object-id object)
   "Returns an internal id number of the OBJECT."
   (let ((id (lepton_object_get_id (geda-object->pointer object))))
     (and (not (= id -1))
          id)))
+
+
+(define-syntax-rule
+  (check-object-type <object> <check-proc-name>)
+  (let ((proc (delay (pointer->procedure
+                      int
+                      (dynamic-func (symbol->string (quote <check-proc-name>))
+                                    liblepton)
+                      '(*))))
+        (*object (geda-object->pointer <object>)))
+    (true? ((force proc) *object))))
+
+
+(define (object-type object)
+  "Returns a Scheme symbol representing the type of OBJECT."
+  (cond
+   ((arc? object) 'arc)
+   ((box? object) 'box)
+   ((bus? object) 'bus)
+   ((circle? object) 'circle)
+   ((component? object) 'complex)
+   ((line? object) 'line)
+   ((net? object) 'net)
+   ((path? object) 'path)
+   ((picture? object) 'picture)
+   ((pin? object) 'pin)
+   ((text? object) 'text)
+   (else (error (G_ "Object ~A has bad type '~A'")
+                object
+                (integer->char (lepton_object_get_type object))))))
 
 (define-public (object-type? x type)
   (if (object? x)
@@ -69,8 +111,8 @@ returns #f."
 
 ;;;; Lines
 
-(define-public (line? l)
-  (object-type? l 'line))
+(define (line? object)
+  (check-object-type object lepton_object_is_line))
 
 (define*-public (set-line! l start end #:optional color)
   (%set-line! l
@@ -100,8 +142,8 @@ returns #f."
 
 ;;;; Nets
 
-(define-public (net? l)
-  (object-type? l 'net))
+(define-public (net? object)
+  (check-object-type object lepton_object_is_net))
 
 (define*-public (make-net start end #:optional color)
   (let ((l (%make-net)))
@@ -109,8 +151,8 @@ returns #f."
 
 ;;;; Buses
 
-(define-public (bus? l)
-  (object-type? l 'bus))
+(define (bus? object)
+  (check-object-type object lepton_object_is_bus))
 
 (define*-public (make-bus start end #:optional color)
   (let ((l (%make-bus)))
@@ -118,8 +160,8 @@ returns #f."
 
 ;;;; Pins
 
-(define-public (pin? l)
-  (object-type? l 'pin))
+(define (pin? object)
+  (check-object-type object lepton_object_is_pin))
 
 (define-public (net-pin? l)
   (and (pin? l) (equal? (%pin-type l) 'net)))
@@ -138,8 +180,8 @@ returns #f."
 ;;;; Boxes
 
 
-(define-public (box? l)
-  (object-type? l 'box))
+(define (box? object)
+  (check-object-type object lepton_object_is_box))
 
 (define*-public (set-box! b top-left bottom-right #:optional color)
   (%set-box! b
@@ -169,8 +211,8 @@ returns #f."
 
 ;;;; Circles
 
-(define-public (circle? c)
-  (object-type? c 'circle))
+(define (circle? object)
+  (check-object-type object lepton_object_is_circle))
 
 (define*-public (set-circle! c center radius #:optional color)
   (%set-circle! c
@@ -199,8 +241,8 @@ returns #f."
 
 ;;;; Arcs
 
-(define-public (arc? a)
-  (object-type? a 'arc))
+(define (arc? object)
+  (check-object-type object lepton_object_is_arc))
 
 (define*-public (set-arc! a center radius start-angle sweep-angle
                           #:optional color)
@@ -239,8 +281,8 @@ returns #f."
 
 ;;;; Paths
 
-(define-public (path? x)
-  (object-type? x 'path))
+(define (path? object)
+  (check-object-type object lepton_object_is_path))
 
 (define*-public (make-path #:optional color)
   (let ((p (%make-path)))
@@ -285,8 +327,8 @@ returns #f."
 
 ;;;; Pictures
 
-(define-public (picture? x)
-  (object-type? x 'picture))
+(define (picture? object)
+  (check-object-type object lepton_object_is_picture))
 
 (define-public (set-picture! p top-left bottom-right angle mirror)
   (%set-picture! p (car top-left) (cdr top-left)
@@ -325,8 +367,8 @@ returns #f."
 
 ;;;; Text
 
-(define-public (text? t)
-  (object-type? t 'text))
+(define (text? object)
+  (check-object-type object lepton_object_is_text))
 
 (define*-public (set-text! t anchor align angle string size visible show
                            #:optional color)
@@ -377,8 +419,8 @@ returns #f."
 
 ;;;; Component objects
 
-(define-public (component? c)
-  (object-type? c 'complex))
+(define (component? object)
+  (check-object-type object lepton_object_is_component))
 
 (define-public (set-component! c position angle mirror locked)
   (%set-component! c (car position) (cdr position) angle mirror locked))
