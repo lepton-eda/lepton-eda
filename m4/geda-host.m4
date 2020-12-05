@@ -48,6 +48,8 @@ AC_DEFUN([AX_HOST],
       ;;
   esac
 
+  AM_CONDITIONAL([CYGWIN], [test x$OS_CYGWIN = xyes])
+
   AC_MSG_CHECKING([for Linux host])
   AC_MSG_RESULT([$OS_LINUX])
 
