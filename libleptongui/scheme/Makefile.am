@@ -24,7 +24,6 @@ nobase_dist_scmdata_DATA = \
 	schematic/builtins.scm \
 	schematic/core/gettext.scm \
 	schematic/dialog.scm \
-	schematic/ffi.scm \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
 	schematic/hook.scm \
@@ -46,12 +45,23 @@ nobase_dist_scmdata_DATA = \
 
 nobase_scmdata_DATA = \
 	schematic/gschemdoc.scm \
-	schematic/ffi/gtk.scm
+	schematic/ffi/gtk.scm \
+	schematic/ffi.scm
 
+if CYGWIN
+LIBLEPTONGUI=cygleptongui-1
+if ENABLE_GTK3
+LIBGTK = cyggtk-3-0
+else
+LIBGTK = cyggtk-x11-2.0-0
+endif
+else
+LIBLEPTONGUI=libleptongui
 if ENABLE_GTK3
 LIBGTK = libgtk-3
 else
 LIBGTK = libgtk-x11-2.0
+endif
 endif
 
 schematic/gschemdoc.scm: schematic/gschemdoc.scm.in
@@ -62,12 +72,18 @@ schematic/ffi/gtk.scm: schematic/ffi/gtk.scm.in
 	$(MKDIR_P) schematic/ffi/; \
 	sed -e 's,[@]LIBGTK[@],$(LIBGTK),g' < $(srcdir)/$@.in > $@
 
+schematic/ffi.scm: schematic/ffi.scm.in
+	$(MKDIR_P) schematic/; \
+	sed -e 's,[@]LIBLEPTONGUI[@],$(LIBLEPTONGUI),g' < $(srcdir)/$@.in > $@
+
 
 EXTRA_DIST = \
 	schematic/gschemdoc.scm.in \
-	schematic/ffi/gtk.scm.in
+	schematic/ffi/gtk.scm.in \
+	schematic/ffi.scm.in
 
 CLEANFILES = \
 	schematic/gschemdoc.scm \
 	schematic/precompile-config.scm \
-	schematic/ffi/gtk.scm
+	schematic/ffi/gtk.scm \
+	schematic/ffi.scm
