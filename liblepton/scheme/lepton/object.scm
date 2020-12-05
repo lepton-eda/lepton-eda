@@ -29,7 +29,8 @@
   #:use-module (lepton core object)
   #:use-module (lepton ffi)
 
-  #:export (object?))
+  #:export (object?
+            object-id))
 
 (define (object? object)
   "Returns #t if OBJECT is a #<geda-object> instance, otherwise
@@ -45,7 +46,12 @@ returns #f."
   (pointer->scm (edascm_from_object pointer)))
 
 (define-public object-type %object-type)
-(define-public object-id %object-id)
+
+(define (object-id object)
+  "Returns an internal id number of the OBJECT."
+  (let ((id (lepton_object_get_id (geda-object->pointer object))))
+    (and (not (= id -1))
+         id)))
 
 (define-public (object-type? x type)
   (if (object? x)

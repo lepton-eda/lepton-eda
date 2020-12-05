@@ -25,6 +25,9 @@
             edascm_is_page
             edascm_from_object
             edascm_to_object
+
+            lepton_object_get_id
+
             set_render_placeholders
             colors_count
             g_rc_parse
@@ -80,3 +83,6 @@
 (define-lff edascm_is_page int '(*))
 (define-lff edascm_to_object '* '(*))
 (define-lff edascm_from_object '* '(*))
+
+;;; object.c
+(define-lff lepton_object_get_id int '(*))

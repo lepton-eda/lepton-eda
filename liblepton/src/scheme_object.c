@@ -233,27 +233,6 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
   return result;
 }
 
-/*! \brief Get the internal id of an object.
- * \par Function Description
- * Returns an internal id number of the #LeptonObject smob \a obj_s.
- *
- * \note Scheme API: Implements the %object-id procedure in the
- * (lepton core object) module.
- *
- * \param [in] obj_s an #LeptonObject smob.
- * \return a Scheme symbol representing the object type.
- */
-SCM_DEFINE (object_id, "%object-id", 1, 0, 0,
-            (SCM obj_s), "Get an object smob's id")
-{
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_object_type);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-
-  return scm_from_int (lepton_object_get_id (obj));
-}
-
 /*! \brief Get the bounds of a list of objects
  * \par Function Description
  * Returns the bounds of the objects in the variable-length argument
@@ -2361,8 +2340,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_object_id,
-                s_object_type,
+  scm_c_export (s_object_type,
                 s_copy_object,
                 s_object_bounds,
                 s_object_stroke,
