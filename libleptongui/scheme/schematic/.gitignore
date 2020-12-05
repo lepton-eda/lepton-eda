@@ -1,3 +1,4 @@
 gschemdoc.scm
 precompile-config.scm
 ffi/gtk.scm
+ffi.scm

@@ -22,4 +22,4 @@
   #:export (libleptongui))
 
 (define libleptongui
-  (dynamic-link (or (getenv "LIBLEPTONGUI") "libleptongui")))
+  (dynamic-link (or (getenv "LIBLEPTONGUI") "@LIBLEPTONGUI@")))
