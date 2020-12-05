@@ -31,7 +31,7 @@
 ;; Logging messages
 ;; ================================================================
 
-(define libglib (dynamic-link "libglib-2.0"))
+(define libglib (dynamic-link "@LIBGLIB@"))
 
 (define g_log
   (let ((proc (delay (pointer->procedure
