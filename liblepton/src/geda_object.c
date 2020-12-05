@@ -86,6 +86,34 @@ lepton_object_set_id (LeptonObject *object, int id)
 }
 
 
+/*! \brief Get object's type
+ *
+ *  If this function fails, it returns -1.
+ *
+ *  \param [in] object The object to obtain the type of.
+ *  \return The object type as int.
+ */
+int
+lepton_object_get_type (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, -1);
+  return object->type;
+}
+
+
+/*! \brief Set object's type
+ *
+ *  \param [in] object The object to obtain the type of.
+ *  \return The object type as int.
+ */
+void
+lepton_object_set_type (LeptonObject *object, int type)
+{
+  g_return_if_fail (object != NULL);
+  object->type = type;
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.

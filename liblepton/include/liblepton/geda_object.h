@@ -96,6 +96,12 @@ lepton_object_get_id (LeptonObject *object);
 void
 lepton_object_set_id (LeptonObject *object,
                       int id);
+int
+lepton_object_get_type (const LeptonObject *object);
+
+void
+lepton_object_set_type (LeptonObject *object,
+                        int type);
 
 /* construction, destruction */
 
