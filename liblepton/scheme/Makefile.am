@@ -14,11 +14,9 @@ nobase_dist_scmdata_DATA = \
 	lepton/color-map.scm \
 	lepton/config.scm \
 	lepton/eval.scm \
-	lepton/ffi.scm \
 	lepton/file-system.scm \
 	lepton/library.scm \
 	lepton/library/component.scm \
-	lepton/log.scm \
 	lepton/log-rotate.scm \
 	lepton/object.scm \
 	lepton/option.scm \
@@ -83,7 +81,10 @@ nobase_dist_scmdata_DATA = \
 	symcheck/option.scm \
 	symcheck/report.scm
 
-nobase_scmdata_DATA = lepton/core/gettext.scm
+nobase_scmdata_DATA = \
+	lepton/core/gettext.scm \
+	lepton/ffi.scm \
+	lepton/log.scm
 
 TESTS = \
 	unit-tests/backend-spice-noqsi.scm \
@@ -171,7 +172,20 @@ SCM_LOG_DRIVER = \
 	-L $(abs_top_builddir)/symcheck/scheme \
 	--no-auto-compile -e main/with-toplevel -s $(abs_top_srcdir)/liblepton/scheme/unit-test.scm
 
-dist_noinst_DATA = lepton/core/gettext.scm.in unit-test.scm $(TESTS)
+dist_noinst_DATA = \
+	lepton/core/gettext.scm.in \
+	unit-test.scm \
+	$(TESTS) \
+	lepton/ffi.scm.in \
+	lepton/log.scm.in
+
+if CYGWIN
+LIBLEPTON=cyglepton-7
+LIBGLIB=cygglib-2.0-0
+else
+LIBLEPTON=liblepton
+LIBGLIB=libglib-2.0
+endif
 
 lepton/core/gettext.scm: $(srcdir)/lepton/core/gettext.scm.in Makefile
 	@domain=$(LIBLEPTON_GETTEXT_DOMAIN); \
@@ -183,4 +197,17 @@ lepton/core/gettext.scm: $(srcdir)/lepton/core/gettext.scm.in Makefile
 	  echo "Recreating $@"; mv $@.new $@; \
 	fi
 
-CLEANFILES = lepton/core/gettext.scm unit-tests/dummy.sym unit-tests/dummy.xpm
+lepton/ffi.scm: $(srcdir)/lepton/ffi.scm.in
+	$(MKDIR_P) lepton/; \
+	sed -e 's,[@]LIBLEPTON[@],$(LIBLEPTON),g' < $(srcdir)/$@.in > $@
+
+lepton/log.scm: $(srcdir)/lepton/log.scm.in
+	$(MKDIR_P) lepton/; \
+	sed -e 's,[@]LIBGLIB[@],$(LIBGLIB),g' < $(srcdir)/$@.in > $@
+
+CLEANFILES = \
+	lepton/core/gettext.scm \
+	unit-tests/dummy.sym \
+	unit-tests/dummy.xpm \
+	lepton/ffi.scm \
+	lepton/log.scm

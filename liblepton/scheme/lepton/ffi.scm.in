@@ -21,4 +21,4 @@
   #:export (liblepton))
 
 (define liblepton
-  (dynamic-link (or (getenv "LIBLEPTON") "liblepton")))
+  (dynamic-link (or (getenv "LIBLEPTON") "@LIBLEPTON@")))
