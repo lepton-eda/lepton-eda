@@ -43,7 +43,8 @@
             path?
             picture?
             pin?
-            text?))
+            text?
+            copy-object))
 
 (define (object? object)
   "Returns #t if OBJECT is a #<geda-object> instance, otherwise
@@ -82,7 +83,12 @@ returns #f."
   (and (object? x)
        (eq? (object-type x) type)))
 
-(define-public copy-object %copy-object)
+(define (copy-object object)
+  "Returns a copy of OBJECT."
+  (define pointer (geda-object->pointer* object 1))
+
+  (pointer->geda-object (lepton_object_copy pointer)))
+
 
 (define-public object-color %object-color)
 (define-public set-object-color! %set-object-color!)

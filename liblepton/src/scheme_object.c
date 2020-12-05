@@ -154,35 +154,6 @@ edascm_is_object_type (SCM smob, int type)
   return (lepton_object_get_type (obj) == type);
 }
 
-/*! \brief Copy an object.
- * \par Function Description
- * Returns a copy of the #LeptonObject contained in smob \a obj_s as a new
- * smob.
- *
- * \note Scheme API: Implements the %copy-object procedure in the
- * (lepton core object) module.
- *
- * \param [in] obj_s an #LeptonObject smob.
- * \return a new #LeptonObject smob containing a copy of the #LeptonObject in \a obj_s.
- */
-SCM_DEFINE (copy_object, "%copy-object", 1, 0, 0,
-            (SCM obj_s), "Copy an object.")
-{
-  SCM result;
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_copy_object);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-
-  result = edascm_from_object (lepton_object_copy (obj));
-
-  /* At the moment, the only pointer to the object is owned by the
-   * smob. */
-  edascm_c_set_gc (result, TRUE);
-
-  return result;
-}
-
 /*! \brief Get the bounds of a list of objects
  * \par Function Description
  * Returns the bounds of the objects in the variable-length argument
@@ -2296,8 +2267,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_copy_object,
-                s_object_bounds,
+  scm_c_export (s_object_bounds,
                 s_object_stroke,
                 s_set_object_stroke_x,
                 s_object_fill,

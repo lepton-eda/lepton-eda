@@ -45,6 +45,8 @@
             lepton_object_is_pin
             lepton_object_is_text
 
+            lepton_object_copy
+
             set_render_placeholders
             colors_count
             g_rc_parse
@@ -117,6 +119,7 @@
 (define-lff lepton_object_is_pin int '(*))
 (define-lff lepton_object_is_text int '(*))
 
+(define-lff lepton_object_copy '* '(*))
 
 ;;; Helper transformers between #<geda-object> smobs and C object
 ;;; pointers.
