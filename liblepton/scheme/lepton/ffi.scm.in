@@ -23,6 +23,8 @@
             edascm_is_config
             edascm_is_object
             edascm_is_page
+            edascm_from_object
+            edascm_to_object
             set_render_placeholders
             colors_count
             g_rc_parse
@@ -76,3 +78,5 @@
 (define-lff edascm_is_config int '(*))
 (define-lff edascm_is_object int '(*))
 (define-lff edascm_is_page int '(*))
+(define-lff edascm_to_object '* '(*))
+(define-lff edascm_from_object '* '(*))
