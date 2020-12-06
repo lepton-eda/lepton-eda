@@ -137,8 +137,6 @@ main_prog (SCM file_list_s)
 
   cwd = g_get_current_dir();
 
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-
   /* Set up atexit handlers */
   gschem_atexit (i_vars_atexit_save_cache_config, NULL);
 
@@ -210,5 +208,4 @@ main_prog (SCM file_list_s)
     x_widgets_show_log (w_current);
   }
 
-  scm_dynwind_end ();
 }
