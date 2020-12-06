@@ -59,6 +59,39 @@
 
 static void show_entry(GtkWidget *widget, gpointer data);
 
+
+static gchar* current_cell_text = NULL;
+
+
+static gboolean
+on_activate (GtkSheet* sheet,
+             gint      row,
+             gint      column,
+             gpointer  data)
+{
+  current_cell_text = gtk_sheet_get_entry_text (sheet);
+
+  return FALSE; /* ignored */
+}
+
+
+static gboolean
+on_deactivate (GtkSheet* sheet,
+               gint      row,
+               gint      column,
+               gpointer  data)
+{
+  gchar* str = gtk_sheet_get_entry_text (sheet);
+
+  if (strcmp (str, current_cell_text) != 0)
+  {
+    sheet_head->CHANGED = TRUE;
+  }
+
+  return TRUE; /* TRUE => allow deactivation */
+}
+
+
 /*! \brief Create the GtkSheet
  *
  * Creates and initializes the GtkSheet widget, which is the
@@ -142,6 +175,18 @@ x_gtksheet_init()
        *  gattrib, but leave the code in just in case I want to put it back.  */
       g_signal_connect (gtk_sheet_get_entry (GTK_SHEET (sheets[i])),
                         "changed", (GCallback) show_entry, NULL);
+
+
+      g_signal_connect (sheets[i],
+                        "activate",
+                        G_CALLBACK (&on_activate),
+                        NULL);
+
+      g_signal_connect (sheets[i],
+                        "deactivate",
+                        G_CALLBACK (&on_deactivate),
+                        NULL);
+
     }
   }
 }

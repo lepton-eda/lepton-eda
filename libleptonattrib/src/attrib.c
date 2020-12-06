@@ -95,6 +95,19 @@ gboolean attrib_really_quit(void)
   eda_config_save (cfg, NULL);
 
 
+  /* Deactivate the current cell to trigger "deactivate" signal.
+   * This allows changing of the sheet_head->CHANGED flag in the
+   * on_deactivate() handler function if needed.
+  */
+  for (int i = 0; i < NUM_SHEETS; ++i)
+  {
+    if (sheets[i] != NULL)
+    {
+       gtk_sheet_set_active_cell (sheets[i], -1, -1);
+    }
+  }
+
+
   if (sheet_head->CHANGED == TRUE) {
     x_dialog_unsaved_data();
   } else {
