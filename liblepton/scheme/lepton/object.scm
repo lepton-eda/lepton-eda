@@ -47,7 +47,8 @@
             text?
             copy-object
             object-bounds
-            object-selectable?))
+            object-selectable?
+            set-object-selectable!))
 
 (define (object? object)
   "Returns #t if OBJECT is a #<geda-object> instance, otherwise
@@ -580,7 +581,18 @@ Returns #t if OBJECT is selectable, otherwise returns #f."
   (true? (lepton_object_get_selectable pointer)))
 
 
-( define-public set-object-selectable! %set-object-selectable! )
+(define (set-object-selectable! object selectable?)
+  "Sets OBJECT's selectable flag to SELECTABLE?, thus locking or
+unlocking OBJECT.  Locked objects cannot be selected in GUI.
+Returns OBJECT."
+  (define pointer (geda-object->pointer* object 1))
+
+  (unless (eq? (object-selectable? object) selectable?)
+    (lepton_object_set_selectable pointer (if selectable? 1 0))
+    (lepton_object_page_set_changed pointer))
+
+  object)
+
 
 ( define-public object-embedded?     %object-embedded? )
 ( define-public set-object-embedded! %set-object-embedded! )

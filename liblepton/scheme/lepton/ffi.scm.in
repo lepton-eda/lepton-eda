@@ -32,6 +32,7 @@
 
             lepton_object_get_id
             lepton_object_get_selectable
+            lepton_object_set_selectable
             lepton_object_get_type
 
             lepton_object_is_arc
@@ -55,6 +56,7 @@
             lepton_colormap_color_by_id
             lepton_colormap_disable_color
             lepton_colormap_set_color
+            lepton_object_page_set_changed
             print_colors_array
             s_attrib_uniq
             s_attrib_add_entry
@@ -108,6 +110,7 @@
 ;;; object.c
 (define-lff lepton_object_get_id int '(*))
 (define-lff lepton_object_get_selectable int '(*))
+(define-lff lepton_object_set_selectable void (list '* int))
 (define-lff lepton_object_get_type int '(*))
 
 (define-lff lepton_object_is_arc int '(*))
@@ -124,6 +127,8 @@
 
 (define-lff lepton_object_calculate_visible_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_copy '* '(*))
+
+(define-lff lepton_object_page_set_changed void '(*))
 
 ;;; Helper transformers between #<geda-object> smobs and C object
 ;;; pointers.

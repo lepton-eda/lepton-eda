@@ -550,47 +550,6 @@ SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
 }
 
 
-
-/*! \brief Lock or unlock an object.
- *
- * \par Function Description
- * Set object's selectable flag: locked objects cannot be selected.
- *
- * \note Scheme API: Implements the %set-object-selectable! procedure in
- * the (lepton core object) module.
- *
- * \param obj_s         #LeptonObject smob to modify.
- * \param selectable_s  boolean: object's selectable flag.
- *
- * \return          the object (\a obj_s).
- */
-SCM_DEFINE (set_object_selectable_x, "%set-object-selectable!", 2, 0, 0,
-            (SCM obj_s, SCM selectable_s), "Lock or unlock an object.")
-{
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_set_object_selectable_x);
-  SCM_ASSERT (scm_is_bool (selectable_s), selectable_s,
-              SCM_ARG2, s_set_object_selectable_x);
-
-  LeptonObject* obj = edascm_to_object (obj_s);
-
-  int selectable = scm_is_true (selectable_s);
-
-  if (obj->selectable != selectable)
-  {
-    obj->selectable = selectable;
-
-    /* mark the page as changed:
-    */
-    lepton_object_page_set_changed (obj);
-  }
-
-  return obj_s;
-
-} /* set_object_selectable_x() */
-
-
-
 /*! \brief Check whether an object is embedded.
  *
  * \note Scheme API: Implements the %object-embedded? procedure in the
@@ -2228,7 +2187,6 @@ init_module_lepton_core_object (void *unused)
                 s_translate_object_x,
                 s_rotate_object_x,
                 s_mirror_object_x,
-                s_set_object_selectable_x,
                 s_object_embedded_p,
                 s_set_object_embedded_x,
                 NULL);
