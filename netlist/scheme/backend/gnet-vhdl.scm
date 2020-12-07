@@ -408,7 +408,7 @@ ENTITY ~A IS
 ;;;    The disconnection specification will not be used.
 ;;;
 ;;;    The use clause will not be used since we pass the responsibility to the
-;;;    primary unit (where it ís not yet supported).
+;;;    primary unit (where it is not yet supported).
 ;;;
 ;;;    The signal declation will be used to convey signals held within the
 ;;;    architecture.
