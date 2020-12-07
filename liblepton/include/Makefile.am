@@ -52,8 +52,7 @@ libleptoninclude_HEADERS = \
 	liblepton/struct.h \
 	liblepton/edacairo.h \
 	liblepton/edapangorenderer.h \
-	liblepton/edarenderer.h \
-	liblepton/libleptonrenderer.h
+	liblepton/edarenderer.h
 
 
 noinst_HEADERS = \
