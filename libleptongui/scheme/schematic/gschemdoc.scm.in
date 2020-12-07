@@ -99,7 +99,7 @@
        (else c)))
    name))
 
-(define* (show-wiki #:optional (page "index"))
+(define* (show-wiki #:optional (page "geda:documentation"))
   "show-wiki PAGE
 
 Launch a browser to display a page from the offline version of the
