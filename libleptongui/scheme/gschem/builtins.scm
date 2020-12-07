@@ -120,8 +120,6 @@
                ;; Documentation-related actions
                &hierarchy-documentation
                &help-manual
-               &help-guide
-               &help-faq
                &help-wiki
                &help-about
                ;; Backward compatibility:

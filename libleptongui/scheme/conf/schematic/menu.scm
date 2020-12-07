@@ -301,8 +301,6 @@
 
 ( define help-menu-items
 ( list
-  ( list (N_ "User _Guide")    '&help-guide  "gtk-help" )
-  ( list (N_ "_FAQ")           '&help-faq    "help-faq" )
   ( list (N_ "Docu_mentation") '&help-manual "help-browser" )
   ( list (N_ "_Wiki")          '&help-wiki   "web-browser" )
   ( list "SEPARATOR" #f #f )
