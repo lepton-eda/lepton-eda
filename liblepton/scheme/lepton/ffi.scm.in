@@ -31,6 +31,7 @@
             edascm_is_page
 
             lepton_object_get_id
+            lepton_object_get_selectable
             lepton_object_get_type
 
             lepton_object_is_arc
@@ -106,6 +107,7 @@
 
 ;;; object.c
 (define-lff lepton_object_get_id int '(*))
+(define-lff lepton_object_get_selectable int '(*))
 (define-lff lepton_object_get_type int '(*))
 
 (define-lff lepton_object_is_arc int '(*))

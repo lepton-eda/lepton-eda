@@ -551,33 +551,6 @@ SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
 
 
 
-/*! \brief Check whether an object is locked.
- *
- * \par Function Description
- * Check the state of an object's selectable flag: if it's true, the
- * object is considered to be unlocked, otherwise it is locked.
- *
- * \note Scheme API: Implements the %object-selectable? procedure in the
- * (lepton core object) module.
- *
- * \param obj_s  #LeptonObject smob to inspect.
- *
- * \return       Boolean value indicating whether \a obj_s is selectable.
- */
-SCM_DEFINE (object_selectable_p, "%object-selectable?", 1, 0, 0,
-            (SCM obj_s), "Check whether an object is locked.")
-{
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_object_selectable_p);
-
-  LeptonObject* obj = edascm_to_object (obj_s);
-
-  return scm_from_bool (obj->selectable);
-
-} /* object_selectable_p() */
-
-
-
 /*! \brief Lock or unlock an object.
  *
  * \par Function Description
@@ -2255,7 +2228,6 @@ init_module_lepton_core_object (void *unused)
                 s_translate_object_x,
                 s_rotate_object_x,
                 s_mirror_object_x,
-                s_object_selectable_p,
                 s_set_object_selectable_x,
                 s_object_embedded_p,
                 s_set_object_embedded_x,
