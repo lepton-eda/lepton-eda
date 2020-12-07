@@ -7,7 +7,9 @@
 #include <libguile.h>
 #include <liblepton/liblepton.h>
 #include <liblepton/libgedaguile.h>
-#include <liblepton/libleptonrenderer.h>
+#include <liblepton/edarenderer.h>
+#include <liblepton/edacairo.h>
+
 
 /* forward declaration, until everyone stops referencing it */
 typedef struct st_gschem_toplevel GschemToplevel;
