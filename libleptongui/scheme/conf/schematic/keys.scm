@@ -95,8 +95,6 @@
 
 (global-set-key "H A" '&help-about)
 (global-set-key "H M" '&help-manual)
-(global-set-key "H F" '&help-faq)
-(global-set-key "H G" '&help-guide)
 (global-set-key "H W" '&help-wiki)
 (global-set-key "H H" '&help-hotkeys)
 (global-set-key "H C" '&hierarchy-documentation)

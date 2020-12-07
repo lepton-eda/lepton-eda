@@ -526,18 +526,6 @@ found, shows a dialog with an error message."
 
 
 (define-action-public
-    (&help-guide #:label (G_ "lepton-schematic User Guide") #:icon "gtk-help"
-                 #:tooltip (G_ "View the lepton-schematic User Guide in a browser."))
-  (show-wiki "geda:gschem_ug"))
-
-
-(define-action-public
-    (&help-faq #:label (G_ "lepton-schematic FAQ") #:icon "help-faq"
-     #:tooltip (G_ "Frequently Asked Questions about using lepton-schematic."))
-  (show-wiki "geda:faq-gschem"))
-
-
-(define-action-public
     (&help-wiki #:label (G_ "Lepton EDA wiki") #:icon "web-browser"
      #:tooltip (G_ "View the front page of the Lepton EDA wiki in a browser."))
   (show-wiki))
