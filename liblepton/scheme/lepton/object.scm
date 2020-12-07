@@ -23,6 +23,7 @@
   #:use-module (ice-9 optargs)
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
+  #:use-module (rnrs bytevectors)
 
   ;; Import C procedures
   #:use-module (lepton core component)
@@ -44,7 +45,8 @@
             picture?
             pin?
             text?
-            copy-object))
+            copy-object
+            object-bounds))
 
 (define (object? object)
   "Returns #t if OBJECT is a #<geda-object> instance, otherwise
@@ -497,22 +499,55 @@ returns #f."
 
 ;;;; Object bounds
 
-(define-public object-bounds %object-bounds)
+;;; Get bounds of one object.
+(define (one-object-bounds object)
+  (define pointer (geda-object->pointer* object 1))
+  (define xmin (make-bytevector (sizeof int)))
+  (define ymin (make-bytevector (sizeof int)))
+  (define xmax (make-bytevector (sizeof int)))
+  (define ymax (make-bytevector (sizeof int)))
+
+  (let ((result (lepton_object_calculate_visible_bounds
+                 pointer
+                 ;; If to include hidden text objects.
+                 1
+                 (bytevector->pointer xmin)
+                 (bytevector->pointer ymin)
+                 (bytevector->pointer xmax)
+                 (bytevector->pointer ymax))))
+    (and (= result 1)
+         (cons (cons (bytevector-sint-ref xmin 0 (native-endianness) (sizeof int))
+                     (bytevector-sint-ref ymax 0 (native-endianness) (sizeof int)))
+               (cons (bytevector-sint-ref xmax 0 (native-endianness) (sizeof int))
+                     (bytevector-sint-ref ymin 0 (native-endianness) (sizeof int)))))))
+
 
 (define-public (fold-bounds . bounds)
   (fold
    (lambda (a b)
      (if (and a b)
-         ;; calc bounds
+         ;; Calculate bounds.
          (cons (cons (min (caar a) (caar b))    ; left
                      (max (cdar a) (cdar b)))   ; top
                (cons (max (cadr a) (cadr b))    ; right
-                     (min (cddr a) (cddr b)))) ; bottom
+                     (min (cddr a) (cddr b))))  ; bottom
 
-         ;; return whichever isn't #f
+         ;; Return whichever isn't #f.
          (or a b)))
-   #f ;; default
+   ;; Default.
+   #f
    bounds))
+
+(define (object-bounds . objects)
+  "Returns the bounds of the objects in the variable-length
+argument list OBJECTS.  The bounds are returned as a pair
+structure of the form: ((left . top) . (right . bottom)).  If the
+list OBJECTS is empty, or none of the objects has any
+bounds (e.g. because they are all empty components and/or text
+strings), returns #f.  Warning: This function always returns the
+actual bounds of the objects, not the visible bounds."
+  (apply fold-bounds (map one-object-bounds objects)))
+
 
 ;;;; Object transformations
 

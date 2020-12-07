@@ -154,57 +154,6 @@ edascm_is_object_type (SCM smob, int type)
   return (lepton_object_get_type (obj) == type);
 }
 
-/*! \brief Get the bounds of a list of objects
- * \par Function Description
- * Returns the bounds of the objects in the variable-length argument
- * list \a rst_s. The bounds are returned as a pair structure of the
- * form:
- *
- * \code
- * ((left . top) . (right . bottom))
- * \endcode
- *
- * If \a rst_s is empty, or none of the objects has any bounds
- * (e.g. because they are all empty components and/or text strings),
- * returns SCM_BOOL_F.
- *
- * \warning This function always returns the actual bounds of the
- * objects, not the visible bounds.
- *
- * \note Scheme API: Implements the %object-bounds procedure in the
- * (lepton core object) module.  The procedure takes any number of
- * #LeptonObject smobs as arguments.
- *
- * \param [in] rst_s Variable-length list of #LeptonObject arguments.
- * \return bounds of objects or SCM_BOOL_F.
- */
-SCM_DEFINE (object_bounds, "%object-bounds", 0, 0, 1,
-            (SCM rst_s), "Get the bounds of a list of objects")
-{
-  GList *obj_list = edascm_to_object_glist (rst_s, s_object_bounds);
-
-  int success, left, top, right, bottom;
-  success = world_get_object_glist_bounds (obj_list,
-                                           /* Include hidden text. */
-                                           TRUE,
-                                           &left,
-                                           &top,
-                                           &right,
-                                           &bottom);
-
-  SCM result = SCM_BOOL_F;
-  if (success) {
-    result = scm_cons (scm_cons (scm_from_int (MIN(left, right)),
-                                 scm_from_int (MAX(top, bottom))),
-                       scm_cons (scm_from_int (MAX(left, right)),
-                                 scm_from_int (MIN(top, bottom))));
-  }
-
-  scm_remember_upto_here_1 (rst_s);
-  return result;
-}
-
-
 /*! \brief Get the stroke properties of an object.
  * \par Function Description
  * Returns the stroke settings of the object \a obj_s.  If \a obj_s is
@@ -2267,8 +2216,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_object_bounds,
-                s_object_stroke,
+  scm_c_export (s_object_stroke,
                 s_set_object_stroke_x,
                 s_object_fill,
                 s_set_object_fill_x,
