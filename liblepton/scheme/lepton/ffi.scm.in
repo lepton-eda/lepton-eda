@@ -52,6 +52,9 @@
             lepton_object_calculate_visible_bounds
             lepton_object_copy
 
+            lepton_component_object_get_embedded
+            lepton_picture_object_get_embedded
+
             set_render_placeholders
             colors_count
             g_rc_parse
@@ -133,6 +136,9 @@
 (define-lff lepton_object_copy '* '(*))
 
 (define-lff lepton_object_page_set_changed void '(*))
+
+(define-lff lepton_component_object_get_embedded int '(*))
+(define-lff lepton_picture_object_get_embedded int '(*))
 
 ;;; Helper transformers between #<geda-object> smobs and C object
 ;;; pointers.

@@ -498,39 +498,6 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
   return obj_s;
 }
 
-/*! \brief Check whether an object is embedded.
- *
- * \note Scheme API: Implements the %object-embedded? procedure in the
- * (lepton core object) module.
- *
- * \param obj_s  #LeptonObject smob to inspect.
- *
- * \return       Boolean value indicating whether \a obj_s is embedded.
- */
-SCM_DEFINE (object_embedded_p, "%object-embedded?", 1, 0, 0,
-            (SCM obj_s), "Check whether an object is embedded.")
-{
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_object_embedded_p);
-
-  LeptonObject*  obj = edascm_to_object (obj_s);
-  gboolean ret = FALSE;
-
-  if (lepton_object_is_component (obj))
-  {
-    ret = lepton_component_object_get_embedded (obj);
-  }
-  else
-  if (lepton_object_is_picture (obj))
-  {
-    ret = lepton_picture_object_get_embedded (obj);
-  }
-
-  return scm_from_bool (ret);
-
-} /* object_embedded_p() */
-
-
 
 /*! \brief Embed or unembed an object.
  *
@@ -2133,7 +2100,6 @@ init_module_lepton_core_object (void *unused)
                 s_translate_object_x,
                 s_rotate_object_x,
                 s_mirror_object_x,
-                s_object_embedded_p,
                 s_set_object_embedded_x,
                 NULL);
 }

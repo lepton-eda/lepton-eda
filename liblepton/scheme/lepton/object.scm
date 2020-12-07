@@ -49,6 +49,7 @@
             object-bounds
             object-color
             set-object-color!
+            object-embedded?
             object-selectable?
             set-object-selectable!))
 
@@ -613,5 +614,12 @@ Returns OBJECT."
   object)
 
 
-( define-public object-embedded?     %object-embedded? )
+
+(define (object-embedded? object)
+  "Check whether OBJECT is embedded."
+  (define pointer (geda-object->pointer* object 1))
+
+  (or (true? (lepton_component_object_get_embedded pointer))
+      (true? (lepton_picture_object_get_embedded pointer))))
+
 ( define-public set-object-embedded! %set-object-embedded! )
