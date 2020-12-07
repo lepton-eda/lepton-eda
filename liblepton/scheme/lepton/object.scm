@@ -50,6 +50,7 @@
             object-color
             set-object-color!
             object-embedded?
+            set-object-embedded!
             object-selectable?
             set-object-selectable!))
 
@@ -622,4 +623,25 @@ Returns OBJECT."
   (or (true? (lepton_component_object_get_embedded pointer))
       (true? (lepton_picture_object_get_embedded pointer))))
 
-( define-public set-object-embedded! %set-object-embedded! )
+
+(define (set-object-embedded! object embed?)
+  "Unembeds OBJECT if EMBED? is #f, otherwise embeds it.  OBJECT
+must be a component or a picture, otherwise the procedure does
+nothing.  Returns OBJECT."
+  (define (embed-func embed unembed)
+    (if embed? embed unembed))
+
+  (define (embed-component x)
+    ((embed-func lepton_component_object_embed
+                 lepton_component_object_unembed) x))
+
+  (define (embed-picture x)
+    ((embed-func lepton_picture_object_embed
+                 lepton_picture_object_unembed) x))
+
+  (define pointer (geda-object->pointer* object 1))
+
+  (or (and (component? object) (embed-component pointer))
+      (and (picture? object) (embed-picture pointer)))
+
+  object)

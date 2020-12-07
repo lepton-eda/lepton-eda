@@ -499,54 +499,6 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
 }
 
 
-/*! \brief Embed or unembed an object.
- *
- * \par Function Description
- * Embeds (or unembeds) component or picture.
- * If either the object \a obj_s is already embedded and \a embed_s is #t,
- * or \a obj_s is not embedded and \a embed_s is #f,
- * or \a obj_s is not a component or picture, does nothing.
- *
- * \note Scheme API: Implements the %set-object-embedded! procedure in
- * the (lepton core object) module.
- *
- * \param obj_s    #LeptonObject smob to modify.
- * \param embed_s  boolean: whether to embed (#t) or unembed (#f) the object.
- *
- * \return         the object (\a obj_s).
- */
-SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
-            (SCM obj_s, SCM embed_s), "Embed or unembed an object.")
-{
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_set_object_embedded_x);
-  SCM_ASSERT (scm_is_bool (embed_s), embed_s,
-              SCM_ARG2, s_set_object_embedded_x);
-
-  LeptonObject* obj   = edascm_to_object (obj_s);
-  int     embed = scm_is_true (embed_s);
-
-  if (lepton_object_is_component (obj))
-  {
-    if (embed)
-      lepton_component_object_embed (obj);
-    else
-      lepton_component_object_unembed (obj);
-  }
-  else if (lepton_object_is_picture (obj))
-  {
-    if (embed)
-      lepton_picture_object_embed (obj);
-    else
-      lepton_picture_object_unembed (obj);
-  }
-
-  return obj_s;
-
-} /* set_object_embedded_x() */
-
-
-
 /*! \brief Create a new line.
  * \par Function Description
  * Creates a new line object, with all its parameters set to default
@@ -2100,7 +2052,6 @@ init_module_lepton_core_object (void *unused)
                 s_translate_object_x,
                 s_rotate_object_x,
                 s_mirror_object_x,
-                s_set_object_embedded_x,
                 NULL);
 }
 
