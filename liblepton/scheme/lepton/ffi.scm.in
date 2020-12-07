@@ -51,6 +51,9 @@
 
             lepton_object_calculate_visible_bounds
             lepton_object_copy
+            lepton_object_emit_change_notify
+            lepton_object_emit_pre_change_notify
+            lepton_object_mirror
 
             lepton_component_object_get_embedded
             lepton_component_object_embed
@@ -139,6 +142,9 @@
 
 (define-lff lepton_object_calculate_visible_bounds int (list '* int '* '* '* '*))
 (define-lff lepton_object_copy '* '(*))
+(define-lff lepton_object_emit_change_notify void '(*))
+(define-lff lepton_object_emit_pre_change_notify void '(*))
+(define-lff lepton_object_mirror void (list int int '*))
 
 (define-lff lepton_object_page_set_changed void '(*))
 

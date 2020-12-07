@@ -453,7 +453,7 @@ Returns OBJECT."
   (let ((obj (%set-component! c 0 0 0 #f locked)))
     (%translate-object!
       (%rotate-object!
-        (if mirror (%mirror-object! obj 0) obj)
+        (if mirror (mirror-object! obj 0) obj)
         0 0 angle)
     (car position)
     (cdr position))))
@@ -588,7 +588,7 @@ actual bounds of the objects, not the visible bounds."
 
 (define-public (mirror-objects! x . objects)
   (for-each
-   (lambda (obj) (%mirror-object! obj x))
+   (lambda (obj) (mirror-object! obj x))
    objects)
   objects)
 
@@ -643,5 +643,17 @@ nothing.  Returns OBJECT."
 
   (or (and (component? object) (embed-component pointer))
       (and (picture? object) (embed-picture pointer)))
+
+  object)
+
+;;; Mirrors OBJECT using X as x-coordinate of centre of rotation.
+;;; Returns OBJECT.
+(define (mirror-object! object x)
+  (define pointer (geda-object->pointer* object 1))
+
+  (lepton_object_emit_pre_change_notify pointer)
+  (lepton_object_mirror x 0 pointer)
+  (lepton_object_emit_change_notify pointer)
+  (lepton_object_page_set_changed pointer)
 
   object)
