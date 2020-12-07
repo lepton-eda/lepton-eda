@@ -301,8 +301,8 @@
 
 ( define help-menu-items
 ( list
-  ( list (N_ "Docu_mentation") '&help-manual "help-browser" )
-  ( list (N_ "_Wiki")          '&help-wiki   "web-browser" )
+  ( list (N_ "Lepton EDA Reference _Manual") '&help-manual "help-browser" )
+  ( list (N_ "gEDA _Wiki Documentation")     '&help-wiki   "web-browser" )
   ( list "SEPARATOR" #f #f )
   ( list (N_ "Find Component D_ocumentation") '&hierarchy-documentation "symbol-datasheet" )
   ( list "SEPARATOR" #f #f )
