@@ -20,6 +20,9 @@
 #ifndef __EDA_RENDERER_H__
 #define __EDA_RENDERER_H__
 
+#include <cairo.h>
+#include <pango/pango.h>
+
 G_BEGIN_DECLS
 
 #define EDA_TYPE_RENDERER (eda_renderer_get_type ())
