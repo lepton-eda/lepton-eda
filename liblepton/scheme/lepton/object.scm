@@ -717,9 +717,43 @@ of the arc."
 
 ;;;; Pictures
 
+
+(define (%set-picture! object x1 y1 x2 y2 angle mirror)
+  "Sets the parameters of picture OBJECT.  X1 and Y1 are the new x
+and y coordinates of the top lefot of the picture.  X2 and Y2 are
+the new x and y coordinates of the bottom right of the picture.
+ANGLE is the new rotation angle.  MIRROR is the boolean value
+which sets whether the picture object should be mirrored."
+  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+
+  ;; Angle
+  ;; These are all fine.
+  (unless (or (= angle 0)
+              (= angle 90)
+              (= angle 180)
+              (= angle 270))
+    ;; Otherwise not fine.
+    (error "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees."
+           angle))
+
+  (lepton_object_emit_pre_change_notify pointer)
+
+  (lepton_picture_object_set_angle pointer angle)
+  (lepton_picture_object_set_mirrored pointer mirror)
+  (lepton_picture_object_modify_all pointer x1 y1 x2 y2)
+
+  (lepton_object_emit_change_notify pointer)
+
+  object)
+
 (define-public (set-picture! p top-left bottom-right angle mirror)
-  (%set-picture! p (car top-left) (cdr top-left)
-                 (car bottom-right) (cdr bottom-right) angle mirror))
+  (%set-picture! p
+                 (car top-left)
+                 (cdr top-left)
+                 (car bottom-right)
+                 (cdr bottom-right)
+                 angle
+                 (if mirror 1 0)))
 
 (define (make-picture)
   "Creates and returns a new, empty picture object with no

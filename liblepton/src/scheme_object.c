@@ -488,66 +488,6 @@ SCM_DEFINE (picture_info, "%picture-info", 1, 0, 0,
                      SCM_UNDEFINED);
 }
 
-/* \brief Set picture object parameters.
- * \par Function Description
- * Sets the parameters of the picture object \a obj_s.
- *
- * \note Scheme API: Implements the %set-picture! procedure in the
- * (lepton core object) module.
- *
- * \param obj_s       the picture object to modify
- * \param x1_s  the new x-coordinate of the top left of the picture.
- * \param y1_s  the new y-coordinate of the top left of the picture.
- * \param x2_s  the new x-coordinate of the bottom right of the picture.
- * \param y2_s  the new y-coordinate of the bottom right of the picture.
- * \param angle_s     the new rotation angle.
- * \param mirror_s    whether the picture object should be mirrored.
- * \return the modify \a obj_s.
- */
-SCM_DEFINE (set_picture_x, "%set-picture!", 7, 0, 0,
-            (SCM obj_s, SCM x1_s, SCM y1_s, SCM x2_s, SCM y2_s, SCM angle_s,
-             SCM mirror_s), "Set picture object parameters")
-{
-  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PICTURE), obj_s,
-              SCM_ARG1, s_set_picture_x);
-  SCM_ASSERT (scm_is_integer (x1_s), x1_s, SCM_ARG2, s_set_picture_x);
-  SCM_ASSERT (scm_is_integer (y1_s), x1_s, SCM_ARG3, s_set_picture_x);
-  SCM_ASSERT (scm_is_integer (x2_s), x1_s, SCM_ARG4, s_set_picture_x);
-  SCM_ASSERT (scm_is_integer (y2_s), x1_s, SCM_ARG5, s_set_picture_x);
-  SCM_ASSERT (scm_is_integer (angle_s), angle_s, SCM_ARG6, s_set_picture_x);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-
-  /* Angle */
-  int angle = scm_to_int (angle_s);
-  switch (angle) {
-  case 0:
-  case 90:
-  case 180:
-  case 270:
-    /* These are all fine. */
-    break;
-  default:
-    /* Otherwise, not fine. */
-    scm_misc_error (s_set_picture_x,
-                    _("Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"),
-                    scm_list_1 (angle_s));
-  }
-
-  lepton_object_emit_pre_change_notify (obj);
-
-  lepton_picture_object_set_angle (obj, scm_to_int (angle_s));
-  lepton_picture_object_set_mirrored (obj, scm_is_true (mirror_s));
-  lepton_picture_object_modify_all (obj,
-                                    scm_to_int (x1_s),
-                                    scm_to_int (y1_s),
-                                    scm_to_int (x2_s),
-                                    scm_to_int (y2_s));
-
-  lepton_object_emit_change_notify (obj);
-  return obj_s;
-}
-
 /*! \brief Set a picture object's data from a vector.
  * \par Function Description
  * Sets the image data for the picture object \a obj_s from the vector
@@ -638,7 +578,6 @@ init_module_lepton_core_object (void *unused)
                 s_path_remove_x,
                 s_path_insert_x,
                 s_picture_info,
-                s_set_picture_x,
                 s_set_picture_data_vector_x,
                 NULL);
 }
