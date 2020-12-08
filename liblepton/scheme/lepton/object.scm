@@ -452,7 +452,7 @@ Returns OBJECT."
 (define-public (set-component-with-transform! c position angle mirror locked)
   (let ((obj (%set-component! c 0 0 0 #f locked)))
     (%translate-object!
-      (%rotate-object!
+      (rotate-object!
         (if mirror (mirror-object! obj 0) obj)
         0 0 angle)
     (car position)
@@ -582,7 +582,7 @@ actual bounds of the objects, not the visible bounds."
 
 (define-public (rotate-objects! center angle . objects)
   (for-each
-   (lambda (x) (%rotate-object! x (car center) (cdr center) angle))
+   (lambda (x) (rotate-object! x (car center) (cdr center) angle))
    objects)
   objects)
 
@@ -657,3 +657,21 @@ nothing.  Returns OBJECT."
   (lepton_object_page_set_changed pointer)
 
   object)
+
+
+;;; Rotates OBJECT anti-clockwise by ANGLE about the coordinate of
+;;; centre of rotation specified by X and Y.  ANGLE must be an
+;;; integer multiple of 90 degrees.  Returns OBJECT.
+(define (rotate-object! object x y angle)
+  (define pointer (geda-object->pointer* object 1))
+
+  (let ((angle (euclidean-remainder angle 360)))
+    (when (not (zero? (euclidean-remainder angle 90)))
+      (error "Wrong rotation angle: ~A" angle))
+
+    (lepton_object_emit_pre_change_notify pointer)
+    (lepton_object_rotate x y angle pointer)
+    (lepton_object_emit_change_notify pointer)
+    (lepton_object_page_set_changed pointer)
+
+    object))
