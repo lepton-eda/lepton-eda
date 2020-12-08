@@ -135,9 +135,12 @@
             lepton_net_object_modify
             lepton_net_object_new
 
+            lepton_picture_object_set_angle
             lepton_picture_object_get_embedded
+            lepton_picture_object_set_mirrored
             lepton_picture_object_embed
             lepton_picture_object_unembed
+            lepton_picture_object_modify_all
             lepton_picture_object_new
 
             lepton_pin_object_is_bus_pin
@@ -345,9 +348,12 @@
 (define-lff lepton_net_object_modify void (list '* int int int))
 (define-lff lepton_net_object_new '* (list int int int int int))
 
+(define-lff lepton_picture_object_set_angle void (list '* int))
 (define-lff lepton_picture_object_get_embedded int '(*))
+(define-lff lepton_picture_object_set_mirrored void (list '* int))
 (define-lff lepton_picture_object_embed void '(*))
 (define-lff lepton_picture_object_unembed void '(*))
+(define-lff lepton_picture_object_modify_all void (list '* int int int int))
 (define-lff lepton_picture_object_new '* (list '* int '* int int int int int int int))
 
 (define-lff lepton_pin_object_is_bus_pin int '(*))
