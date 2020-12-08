@@ -310,7 +310,7 @@ lepton_picture_object_new (const gchar *file_content,
 
   picture->ratio = fabs ((double) (x1 - x2) / (y1 - y2));
   picture->filename = g_strdup (filename);
-  picture->angle = angle;
+  lepton_picture_object_set_angle (new_node, angle);
   picture->mirrored = mirrored;
   picture->embedded = embedded;
 
@@ -1011,4 +1011,74 @@ lepton_picture_object_get_filename (const LeptonObject *object)
   g_return_val_if_fail (object->type == OBJ_PICTURE, NULL);
 
   return object->picture->filename;
+}
+
+/*! \brief Get the angle of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to get the angle value of.
+ *  \return angle  The angle value.
+ */
+int
+lepton_picture_object_get_angle (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->picture != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
+
+  return object->picture->angle;
+}
+
+
+/*! \brief Set the angle of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to set the angle value of.
+ *  \param [in] angle  The angle value.
+ */
+void
+lepton_picture_object_set_angle (LeptonObject *object,
+                                 int angle)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->picture != NULL);
+  g_return_if_fail (object->type == OBJ_PICTURE);
+  g_return_if_fail ((angle == 0)
+                    || (angle == 90)
+                    || (angle == 180)
+                    || (angle == 270));
+
+  object->picture->angle = angle;
+}
+
+
+/*! \brief Get the mirrored flag of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to get the mirrored value of.
+ *  \return mirrored  The mirrored flag value.
+ */
+gboolean
+lepton_picture_object_get_mirrored (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->picture != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
+
+  return object->picture->mirrored;
+}
+
+
+/*! \brief Set the mirrored flag of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to set the mirrored value of.
+ *  \param [in] mirrored The mirrored flag value.
+ */
+void
+lepton_picture_object_set_mirrored (LeptonObject *object,
+                                    int mirrored)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->picture != NULL);
+  g_return_if_fail (object->type == OBJ_PICTURE);
+  g_return_if_fail ((mirrored == 0) || (mirrored == 1));
+
+  object->picture->mirrored = mirrored;
 }

@@ -118,4 +118,17 @@ lepton_picture_object_embed (LeptonObject *object);
 void
 lepton_picture_object_unembed (LeptonObject *object);
 
+int
+lepton_picture_object_get_angle (const LeptonObject *object);
+
+void
+lepton_picture_object_set_angle (LeptonObject *object,
+                                 int angle);
+gboolean
+lepton_picture_object_get_mirrored (const LeptonObject *object);
+
+void
+lepton_picture_object_set_mirrored (LeptonObject *object,
+                                    gboolean mirrored);
+
 G_END_DECLS
