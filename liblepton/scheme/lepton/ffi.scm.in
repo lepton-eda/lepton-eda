@@ -138,6 +138,7 @@
             lepton_picture_object_get_embedded
             lepton_picture_object_embed
             lepton_picture_object_unembed
+            lepton_picture_object_new
 
             lepton_pin_object_is_bus_pin
             lepton_pin_object_is_net_pin
@@ -347,6 +348,7 @@
 (define-lff lepton_picture_object_get_embedded int '(*))
 (define-lff lepton_picture_object_embed void '(*))
 (define-lff lepton_picture_object_unembed void '(*))
+(define-lff lepton_picture_object_new '* (list '* int '* int int int int int int int))
 
 (define-lff lepton_pin_object_is_bus_pin int '(*))
 (define-lff lepton_pin_object_is_net_pin int '(*))

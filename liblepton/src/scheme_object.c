@@ -445,39 +445,6 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   return obj_s;
 }
 
-/*! \brief Create a new, empty picture object.
- * \par Function Description
- * Creates a new picture object with no filename, no image data and
- * all other parameters set to default values.  It is initially set to
- * be embedded.
- *
- * \note Scheme API: Implements the %make-picture procedure in the
- * (lepton core object) module.
- *
- * \return a newly-created picture object.
- */
-SCM_DEFINE (make_picture, "%make-picture", 0, 0, 0, (),
-            "Create a new picture object")
-{
-  LeptonObject *obj = lepton_picture_object_new (NULL,
-                                                 0,
-                                                 NULL,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 FALSE,
-                                                 TRUE);
-  SCM result = edascm_from_object (obj);
-
-  /* At the moment, the only pointer to the object is owned by the
-   * smob. */
-  edascm_c_set_gc (result, 1);
-
-  return result;
-}
-
 /*! \brief Get picture object parameters.
  * \par Function Description
  * Retrieves the parameters of a picture object.  The return value is
@@ -670,7 +637,6 @@ init_module_lepton_core_object (void *unused)
                 s_path_ref,
                 s_path_remove_x,
                 s_path_insert_x,
-                s_make_picture,
                 s_picture_info,
                 s_set_picture_x,
                 s_set_picture_data_vector_x,

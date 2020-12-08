@@ -721,8 +721,39 @@ of the arc."
   (%set-picture! p (car top-left) (cdr top-left)
                  (car bottom-right) (cdr bottom-right) angle mirror))
 
+(define (make-picture)
+  "Creates and returns a new, empty picture object with no
+filename, no image data and all other parameters set to default
+values.  It is initially set to be embedded."
+  ;; C boolean values.
+  (define TRUE 1)
+  (define FALSE 0)
+
+  ;; Assign default values.
+  (let ((file-content %null-pointer)
+        (file-length 0)
+        (filename %null-pointer)
+        (x1 0)
+        (y1 0)
+        (x2 0)
+        (y2 0)
+        (angle 0)
+        (mirrored FALSE)
+        (embedded TRUE))
+    (pointer->geda-object
+     (lepton_picture_object_new file-content
+                                file-length
+                                filename
+                                x1
+                                y1
+                                x2
+                                y2
+                                angle
+                                mirrored
+                                embedded))))
+
 (define-public (make-picture/vector vec filename . args)
-  (let ((p (%make-picture)))
+  (let ((p (make-picture)))
     (%set-picture-data/vector! p vec filename)
     (apply set-picture! p args)))
 
