@@ -36,3 +36,15 @@
   ( assoc-ref (invert-mapping) index )
 )
 
+
+
+; Top-level code:
+;
+( format (current-error-port)
+"
+WARNING: You are loading color-map.scm file, which is deprecated.
+Please use the new (lepton color-map) module instead.
+
+"
+)
+
