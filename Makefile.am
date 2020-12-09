@@ -103,6 +103,7 @@ install-data-local:
 
 uninstall-local:
 	rm -vfr $(DESTDIR)$(includedir)/liblepton
+	rm -vfr $(DESTDIR)$(includedir)/libleptonattrib
 	rm -vfr $(DESTDIR)$(pkgdatadir)
 	rm -vfr $(DESTDIR)$(docdir)
 
