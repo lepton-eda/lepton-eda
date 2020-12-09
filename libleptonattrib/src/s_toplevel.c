@@ -337,9 +337,6 @@ void s_toplevel_delete_attrib_col() {
      *  attrib.  However, that is difficult.  Therefore, I will just
      *  destroy the old table and recreate it for now. */
 
-    s_table_destroy(sheet_head->component_table, 
-		    sheet_head->comp_count, sheet_head->comp_attrib_count);
-
     /*  Get name (label) of the col to delete from the gtk sheet */
     attrib_name = g_strdup( gtk_sheet_column_button_get_label(sheet, mincol) );
     
@@ -352,6 +349,9 @@ void s_toplevel_delete_attrib_col() {
       return;
     }
     
+    s_table_destroy(sheet_head->component_table,
+        sheet_head->comp_count, sheet_head->comp_attrib_count);
+
     g_debug ("s_toplevel_delete_attrib_col: "
             "Before deleting comp attrib: comp_attrib_count = %d\n",
             sheet_head->comp_attrib_count);
