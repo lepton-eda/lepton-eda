@@ -49,6 +49,43 @@
 
 /* ===================  Public Functions  ====================== */
 
+
+#ifdef DEBUG
+
+/*! \brief Debug: print table's contents to STDOUT
+ *
+ * \param src   2-dimensional array of TABLE structures to print
+ * \param rows  number of rows in src
+ * \param cols  number of columns in src
+ */
+void
+s_table_print (TABLE** src, int rows, int cols)
+{
+  printf( "\n\n ++ ++ s_table_print( rows: [%d] cols: [%d] )\n", rows, cols );
+
+  for ( int j = 0; j < rows; j++ )
+  {
+    printf( "== row: [%d] name: [%s]\n", j, src[j][0].row_name );
+
+    for ( int k = 0; k < cols; k++ )
+    {
+      printf( "  -- col: [%d] [%s] == [%s]\n", k,
+                                               src[j][k].col_name,
+                                               src[j][k].attrib_value );
+
+      printf( "     ->row: [%d] ->col: [%d]\n", src[j][k].row,
+                                                src[j][k].col );
+      printf( "     ->vis: [%d] ->sho: [%d]\n", src[j][k].visibility,
+                                                src[j][k].show_name_value );
+    }
+  }
+
+  printf( "\n" );
+}
+
+#endif
+
+
 /*------------------------------------------------------------------*/
 /*! \brief Create a new table
  *
