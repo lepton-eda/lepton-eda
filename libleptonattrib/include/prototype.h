@@ -51,6 +51,7 @@ void s_string_list_sort_master_pin_attrib_list();
 
 
 /* ------------- s_table.c ------------- */
+void s_table_print (TABLE** src, int rows, int cols);
 TABLE **s_table_new(int rows, int cols);
 TABLE **s_table_resize(TABLE **table,
                        int rows, int old_cols, int new_cols);
