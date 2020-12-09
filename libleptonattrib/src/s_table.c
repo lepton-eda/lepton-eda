@@ -131,6 +131,62 @@ TABLE **s_table_new(int rows, int cols)
 }
 
 
+/*! \brief Make a copy of the \a src array
+ *
+ * \par Function Description
+ * Returns a copy of the 2-dimensional array of the TABLE
+ * structures \a src, excluding data in the culumn \a col_skip.
+ * It's a helper function to be used in the "delete attrib
+ * column" operation: s_toplevel_delete_attrib_col().
+ * The resulting array has a dimensions of \a rows x \a cols - 1.
+ *
+ * \param src       an array of the TABLE structures to copy
+ * \param col_skip  index of the column to skip (0-based)
+ * \param rows      number of rows in \a src
+ * \param cols      number of columns in \a src
+ *
+ * \return          a copy of \a src, minus data in the \a col_skip column
+ */
+TABLE**
+s_table_copy (TABLE** src, int col_skip, int rows, int cols)
+{
+  g_return_val_if_fail (src != NULL, NULL);
+  g_return_val_if_fail (col_skip < cols, NULL);
+
+  TABLE** dst = s_table_new (rows, cols - 1);
+  g_return_val_if_fail (dst != NULL, NULL);
+
+  for (int j = 0; j < rows; j++)
+  {
+    int K = 0;
+
+    for (int k = 0; k < cols - 1; k++)
+    {
+      if (k == col_skip)
+      {
+        K ++ ;
+      }
+
+      dst[j][k].row             = j;
+      dst[j][k].col             = k;
+      dst[j][k].visibility      = src[j][ K ].visibility;
+      dst[j][k].show_name_value = src[j][ K ].show_name_value;
+
+      dst[j][k].row_name     = g_strdup( src[j][ K ].row_name );
+      dst[j][k].col_name     = g_strdup( src[j][ K ].col_name );
+      dst[j][k].attrib_value = g_strdup( src[j][ K ].attrib_value );
+
+      K ++ ;
+
+    } /* for: columns */
+
+  } /* for: rows */
+
+  return dst;
+
+} /* s_table_copy() */
+
+
 /*------------------------------------------------------------------*/
 /*! \brief Resize a TABLE
  *
