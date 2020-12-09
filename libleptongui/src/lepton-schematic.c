@@ -125,7 +125,7 @@ void gschem_quit(void)
  *  It handles initializing all libraries and gSchem variables
  *  and passes control to the gtk main loop.
  */
-void
+GschemToplevel*
 main_prog (SCM file_list_s)
 {
   char *cwd = NULL;
@@ -211,4 +211,5 @@ main_prog (SCM file_list_s)
   }
 
   scm_dynwind_end ();
+  return w_current;
 }
