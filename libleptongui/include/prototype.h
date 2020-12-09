@@ -168,7 +168,7 @@ void g_init_window ();
 typedef void (*gschem_atexit_func)(gpointer data);
 void gschem_atexit(gschem_atexit_func func, gpointer data);
 void gschem_quit(void);
-void
+GschemToplevel*
 main_prog (SCM file_list_s);
 void
 set_verbose_mode ();

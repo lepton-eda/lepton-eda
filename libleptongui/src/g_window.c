@@ -25,52 +25,6 @@ SCM scheme_window_fluid = SCM_UNDEFINED;
 
 scm_t_bits window_smob_tag;
 
-/*! \brief Free a #GschemToplevel smob.
- * \par Function Description
- * Finalizes a window smob for deletion.
- *
- * Used internally to Guile
- */
-static size_t
-smob_free (SCM smob)
-{
-  GschemToplevel *window = (GschemToplevel *) SCM_SMOB_DATA (smob);
-
-  /* If the weak ref has been cleared, do nothing */
-  if (window == NULL) return 0;
-
-  /* Otherwise, go away. */
-  window->smob = SCM_UNDEFINED;
-
-  return 0;
-}
-
-/*! \brief Print a representation of a #GschemToplevel smob.
- * \par Function Description
- * Outputs a string representing the \a smob to a Scheme output
- * \a port. The format used is "#<gschem-window b7ef65d0>".
- *
- * Used internally to Guile.
- */
-static int
-smob_print (SCM smob, SCM port, scm_print_state *pstate)
-{
-  gchar *hexstring;
-
-  scm_puts ("#<gschem-window", port);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  hexstring = g_strdup_printf (" %zx", SCM_SMOB_DATA (smob));
-  scm_dynwind_unwind_handler (g_free, hexstring, SCM_F_WIND_EXPLICITLY);
-  scm_puts (hexstring, port);
-  scm_dynwind_end ();
-
-  scm_puts (">", port);
-
-  /* Non-zero means success */
-  return 1;
-}
-
 /*! \brief Get the smob for a #GschemToplevel.
  * \par Function Description
  * Return a smob representing \a window.
@@ -84,7 +38,7 @@ g_scm_from_window (GschemToplevel *w_current)
   g_assert (w_current != NULL);
 
   if (scm_is_eq (w_current->smob, SCM_UNDEFINED)) {
-    SCM_NEWSMOB (w_current->smob, window_smob_tag, w_current);
+    w_current->smob = scm_from_pointer (w_current, NULL);
     scm_gc_protect_object (w_current->smob);
   }
 
@@ -104,6 +58,7 @@ g_scm_from_window (GschemToplevel *w_current)
 void
 g_dynwind_window (GschemToplevel *w_current)
 {
+  g_assert (w_current != NULL);
   SCM window_s = g_scm_from_window (w_current);
   scm_dynwind_fluid (scheme_window_fluid, window_s);
   edascm_dynwind_toplevel (w_current->toplevel);
@@ -135,14 +90,15 @@ GschemToplevel *
 g_current_window ()
 {
   SCM window_s = current_window ();
+  GschemToplevel *w_current = (GschemToplevel *) scm_to_pointer (window_s);
 
-  if (!(SCM_SMOB_PREDICATE (window_smob_tag, window_s)
-        &&  ((void *)SCM_SMOB_DATA (window_s) != NULL))) {
-    scm_misc_error (NULL, _("Found invalid lepton-schematic window smob ~S"),
+  if (w_current == NULL)
+  {
+    scm_misc_error (NULL, _("Found invalid lepton-schematic window SCM: ~S"),
                     scm_list_1 (window_s));
   }
 
-  return (GschemToplevel *) SCM_SMOB_DATA (window_s);
+  return w_current;
 }
 
 /*!
@@ -329,11 +285,6 @@ init_module_schematic_core_window (void *unused)
 void
 g_init_window ()
 {
-  /* Register Lepton EDA smob type */
-  window_smob_tag = scm_make_smob_type ("gschem-window", 0);
-  scm_set_smob_free (window_smob_tag, smob_free);
-  scm_set_smob_print (window_smob_tag, smob_print);
-
   /* Create fluid */
   scheme_window_fluid = scm_permanent_object (scm_make_fluid ());
   scm_c_define ("%lepton-window", scheme_window_fluid);

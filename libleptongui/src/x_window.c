@@ -661,7 +661,6 @@ void x_window_close(GschemToplevel *w_current)
 
   /* Allow Scheme value for this window to be garbage-collected */
   if (!scm_is_eq (w_current->smob, SCM_UNDEFINED)) {
-    SCM_SET_SMOB_DATA (w_current->smob, NULL);
     scm_gc_unprotect_object (w_current->smob);
     w_current->smob = SCM_UNDEFINED;
   }

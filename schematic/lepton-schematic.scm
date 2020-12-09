@@ -267,7 +267,7 @@ Run `~A --help' for more information.\n")
 
 (define main
   (pointer->procedure
-   void
+   '*
    (dynamic-func "main_prog" libleptongui)
    (list '*)))
 
@@ -298,10 +298,23 @@ Run `~A --help' for more information.\n")
 (init-color)
 (init-undo*)
 
-(let ((schematics (parse-commandline)))
-  (main (scm->pointer schematics)))
+(let* ((schematics (parse-commandline))
+       ;; Foreign pointer to w_current.
+       (window (main (scm->pointer schematics))))
 
-(eval-post-load-expr!)
+  ;; %lepton-window is a fluid defined in C code, namely in
+  ;; g_window.c.  When a new lepton-schematic window is created,
+  ;; the fluid is initialized to the window's own pointer to
+  ;; itself.  Thus, any Scheme callback procedure called inside
+  ;; the window may use just the value of the fluid to reference
+  ;; its window, thus avoiding the need of any additional
+  ;; arguments.  Here we reference the fluid to enter into the
+  ;; dynamic state of the new window created above and eval
+  ;; post-load expressions (if any) within it.  'window' is
+  ;; already a Scheme pointer object (wrapping a C pointer), so we
+  ;; don't have to use pointer->scm to make the fluid happy.
+  (with-fluid* %lepton-window window
+               eval-post-load-expr!))
 
 ;;; Run main GTK loop.
 (gtk_main)
