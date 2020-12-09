@@ -328,6 +328,8 @@ void s_toplevel_delete_attrib_col() {
   g_debug ("s_toplevel_delete_attrib_col: "
            "Checks were OK, now do real work\n");
 
+  TABLE** table_new = NULL;
+
   /*  Rebuild the gattrib-specific data structures  */
   switch (cur_page) {
 
@@ -348,26 +350,37 @@ void s_toplevel_delete_attrib_col() {
       fprintf (stderr, _("Can't get attrib name\n"));
       return;
     }
+
+    /* Make a copy of the TABLE array, minus data in col to delete:
+    */
+    table_new = s_table_copy (sheet_head->component_table,
+                              mincol,
+                              sheet_head->comp_count,
+                              sheet_head->comp_attrib_count);
     
+    /* Destroy the current TABLE array:
+    */
     s_table_destroy(sheet_head->component_table,
         sheet_head->comp_count, sheet_head->comp_attrib_count);
 
     g_debug ("s_toplevel_delete_attrib_col: "
             "Before deleting comp attrib: comp_attrib_count = %d\n",
             sheet_head->comp_attrib_count);
+
     s_string_list_delete_item(&(sheet_head->master_comp_attrib_list_head),
 			      &(sheet_head->comp_attrib_count), 
 			      attrib_name);
     s_string_list_sort_master_comp_attrib_list(); /* this renumbers list also */
+
     g_free(attrib_name);
     
     g_debug ("s_toplevel_delete_attrib_col: "
             "Just updated comp_attrib string list: new comp_attrib_count = %d\n",
             sheet_head->comp_attrib_count);
 
-    /* Now create new table with new attrib count*/
-    sheet_head->component_table = s_table_new(sheet_head->comp_count, 
-					      sheet_head->comp_attrib_count);
+    /* Use the copy made above as the current TABLE array:
+    */
+    sheet_head->component_table = table_new;
 
     g_debug ("s_toplevel_delete_attrib_col: Updated SHEET_DATA info.\n");
     break;
