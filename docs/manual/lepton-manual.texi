@@ -52,7 +52,7 @@ Documentation License.''
 * Communication::               Places for discussions and chatting.
 * Development::                 Useful information for developers.
 * gEDA file format::            File format currently in use.
-* Index::
+* Topic Index::
 
 @detailmenu
  --- The Detailed Node Listing ---
