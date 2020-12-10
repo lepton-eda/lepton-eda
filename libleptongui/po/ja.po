@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-04 05:12+0300\n"
+"POT-Creation-Date: 2020-12-11 02:03+0300\n"
 "PO-Revision-Date: 2012-01-31 12:07+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Could not launch URI ~S: ~A"
 msgstr ""
 
-msgid "Found invalid lepton-schematic window smob ~S"
+msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr ""
 
 #, c-format
@@ -1828,18 +1828,12 @@ msgstr "新規ウィンドウ"
 msgid "_1 allegro"
 msgstr ""
 
-msgid "User _Guide"
-msgstr ""
-
-msgid "_FAQ"
+msgid "Lepton EDA Reference _Manual"
 msgstr ""
 
 #, fuzzy
-msgid "Docu_mentation"
+msgid "gEDA _Wiki Documentation"
 msgstr "部品モード"
-
-msgid "_Wiki"
-msgstr ""
 
 #, fuzzy
 msgid "Find Component D_ocumentation"
@@ -2157,19 +2151,6 @@ msgstr ""
 msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr ""
 
-msgid "lepton-schematic User Guide"
-msgstr ""
-
-msgid "View the lepton-schematic User Guide in a browser."
-msgstr ""
-
-#, fuzzy
-msgid "lepton-schematic FAQ"
-msgstr "選択"
-
-msgid "Frequently Asked Questions about using lepton-schematic."
-msgstr ""
-
 msgid "Lepton EDA wiki"
 msgstr ""
 
@@ -2226,6 +2207,10 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "lepton-schematic FAQ"
+#~ msgstr "選択"
 
 #~ msgid "This is the MINGW32 port.\n"
 #~ msgstr "MIGW32版です。\n"

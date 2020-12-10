@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-04 05:12+0300\n"
+"POT-Creation-Date: 2020-12-11 02:03+0300\n"
 "PO-Revision-Date: 2014-12-29 20:06+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -97,7 +97,7 @@ msgid "Could not launch URI ~S: ~A"
 msgstr "Impossibile avviare l'URI ~S: ~A"
 
 #, fuzzy
-msgid "Found invalid lepton-schematic window smob ~S"
+msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr "Trovato smob finestra gschem non valido ~S"
 
 #, fuzzy, c-format
@@ -1954,18 +1954,12 @@ msgid "_1 allegro"
 msgstr ""
 
 #, fuzzy
-msgid "User _Guide"
-msgstr "Guida utente di gschem"
-
-msgid "_FAQ"
-msgstr ""
+msgid "Lepton EDA Reference _Manual"
+msgstr "Manuali gEDA"
 
 #, fuzzy
-msgid "Docu_mentation"
-msgstr "D_ocumentazione..."
-
-msgid "_Wiki"
-msgstr ""
+msgid "gEDA _Wiki Documentation"
+msgstr "Docu_mentazione di gEDA..."
 
 #, fuzzy
 msgid "Find Component D_ocumentation"
@@ -2254,22 +2248,6 @@ msgstr ""
 "Visualizza la pagina principale della documentazione gEDA in un browser."
 
 #, fuzzy
-msgid "lepton-schematic User Guide"
-msgstr "Guida utente di gschem"
-
-#, fuzzy
-msgid "View the lepton-schematic User Guide in a browser."
-msgstr "Mostra la guida utente di gschem in un browser."
-
-#, fuzzy
-msgid "lepton-schematic FAQ"
-msgstr "S_eleziona lo schema che vuoi salvare:"
-
-#, fuzzy
-msgid "Frequently Asked Questions about using lepton-schematic."
-msgstr "Le domande ricorrenti su gschem."
-
-#, fuzzy
 msgid "Lepton EDA wiki"
 msgstr "Wiki di gEDA"
 
@@ -2352,6 +2330,30 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "User _Guide"
+#~ msgstr "Guida utente di gschem"
+
+#, fuzzy
+#~ msgid "Docu_mentation"
+#~ msgstr "D_ocumentazione..."
+
+#, fuzzy
+#~ msgid "lepton-schematic User Guide"
+#~ msgstr "Guida utente di gschem"
+
+#, fuzzy
+#~ msgid "View the lepton-schematic User Guide in a browser."
+#~ msgstr "Mostra la guida utente di gschem in un browser."
+
+#, fuzzy
+#~ msgid "lepton-schematic FAQ"
+#~ msgstr "S_eleziona lo schema che vuoi salvare:"
+
+#, fuzzy
+#~ msgid "Frequently Asked Questions about using lepton-schematic."
+#~ msgstr "Le domande ricorrenti su gschem."
 
 #, fuzzy
 #~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
@@ -2770,9 +2772,6 @@ msgstr ""
 
 #~ msgid "gschem _FAQ..."
 #~ msgstr "_FAQ di gschem..."
-
-#~ msgid "gEDA Docu_mentation..."
-#~ msgstr "Docu_mentazione di gEDA..."
 
 #~ msgid "gEDA _Wiki..."
 #~ msgstr "_Wiki di gEDA..."

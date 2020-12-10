@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-04 05:12+0300\n"
+"POT-Creation-Date: 2020-12-11 02:03+0300\n"
 "PO-Revision-Date: 2020-03-20 15:30+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -109,7 +109,8 @@ msgid "Could not launch URI ~S: ~A"
 msgstr "Не удалось открыть URI ~S: ~A"
 
 # smob -- представление данных объекта для Scheme
-msgid "Found invalid lepton-schematic window smob ~S"
+#, fuzzy
+msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr "Обнаружена недопустимая структура данных smob окна lepton-schematic ~S"
 
 #, c-format
@@ -1871,17 +1872,13 @@ msgstr "Окно _журнала"
 msgid "_1 allegro"
 msgstr "_1 allegro"
 
-msgid "User _Guide"
-msgstr "_Руководство пользователя"
+#, fuzzy
+msgid "Lepton EDA Reference _Manual"
+msgstr "Документация Lepton EDA"
 
-msgid "_FAQ"
-msgstr "_ЧаВо"
-
-msgid "Docu_mentation"
+#, fuzzy
+msgid "gEDA _Wiki Documentation"
 msgstr "_Документация"
-
-msgid "_Wiki"
-msgstr "_Вики"
 
 msgid "Find Component D_ocumentation"
 msgstr "Документация на _компонент"
@@ -2164,18 +2161,6 @@ msgstr "Документация Lepton EDA"
 msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr "Открыть основную страницу документации Lepton EDA в браузере."
 
-msgid "lepton-schematic User Guide"
-msgstr "Руководство пользователя lepton-schematic"
-
-msgid "View the lepton-schematic User Guide in a browser."
-msgstr "Открыть «Руководство пользователя lepton-schematic» в браузере."
-
-msgid "lepton-schematic FAQ"
-msgstr "ЧаВо по lepton-schematic"
-
-msgid "Frequently Asked Questions about using lepton-schematic."
-msgstr "Часто задаваемые вопросы по использованию lepton-schematic."
-
 msgid "Lepton EDA wiki"
 msgstr "Lepton EDA вики"
 
@@ -2250,6 +2235,27 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "User _Guide"
+#~ msgstr "_Руководство пользователя"
+
+#~ msgid "_FAQ"
+#~ msgstr "_ЧаВо"
+
+#~ msgid "_Wiki"
+#~ msgstr "_Вики"
+
+#~ msgid "lepton-schematic User Guide"
+#~ msgstr "Руководство пользователя lepton-schematic"
+
+#~ msgid "View the lepton-schematic User Guide in a browser."
+#~ msgstr "Открыть «Руководство пользователя lepton-schematic» в браузере."
+
+#~ msgid "lepton-schematic FAQ"
+#~ msgstr "ЧаВо по lepton-schematic"
+
+#~ msgid "Frequently Asked Questions about using lepton-schematic."
+#~ msgstr "Часто задаваемые вопросы по использованию lepton-schematic."
 
 #~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
 #~ msgstr "Вы работаете с lepton-schematic версии %1$s%2$s.%3$s,\n"

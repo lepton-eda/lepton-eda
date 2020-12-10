@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-04 05:12+0300\n"
+"POT-Creation-Date: 2020-12-11 02:03+0300\n"
 "PO-Revision-Date: 2012-01-27 14:23+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -87,7 +87,7 @@ msgstr ""
 msgid "Could not launch URI ~S: ~A"
 msgstr ""
 
-msgid "Found invalid lepton-schematic window smob ~S"
+msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr ""
 
 #, c-format
@@ -1760,16 +1760,10 @@ msgstr "חלון חדש"
 msgid "_1 allegro"
 msgstr ""
 
-msgid "User _Guide"
+msgid "Lepton EDA Reference _Manual"
 msgstr ""
 
-msgid "_FAQ"
-msgstr ""
-
-msgid "Docu_mentation"
-msgstr ""
-
-msgid "_Wiki"
+msgid "gEDA _Wiki Documentation"
 msgstr ""
 
 msgid "Find Component D_ocumentation"
@@ -2069,19 +2063,6 @@ msgstr ""
 msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr ""
 
-msgid "lepton-schematic User Guide"
-msgstr ""
-
-msgid "View the lepton-schematic User Guide in a browser."
-msgstr ""
-
-#, fuzzy
-msgid "lepton-schematic FAQ"
-msgstr "מצב בחירה"
-
-msgid "Frequently Asked Questions about using lepton-schematic."
-msgstr ""
-
 msgid "Lepton EDA wiki"
 msgstr ""
 
@@ -2137,6 +2118,10 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "lepton-schematic FAQ"
+#~ msgstr "מצב בחירה"
 
 #~ msgid "Pin"
 #~ msgstr "פין"

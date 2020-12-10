@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-04 05:12+0300\n"
+"POT-Creation-Date: 2020-12-11 02:03+0300\n"
 "PO-Revision-Date: 2012-04-12 22:09+0000\n"
 "Last-Translator: Dennis Baudys <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -95,7 +95,7 @@ msgid "Could not launch URI ~S: ~A"
 msgstr "Die URI ~S konnte nicht geladen werden: ~A"
 
 #, fuzzy
-msgid "Found invalid lepton-schematic window smob ~S"
+msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr "~S ist keine gültige Tasten-Kombination."
 
 #, fuzzy, c-format
@@ -1950,18 +1950,12 @@ msgid "_1 allegro"
 msgstr ""
 
 #, fuzzy
-msgid "User _Guide"
-msgstr "gschem-_FAQ …"
-
-msgid "_FAQ"
-msgstr ""
+msgid "Lepton EDA Reference _Manual"
+msgstr "gEDA-_Wiki …"
 
 #, fuzzy
-msgid "Docu_mentation"
-msgstr "_Dokumentation …"
-
-msgid "_Wiki"
-msgstr ""
+msgid "gEDA _Wiki Documentation"
+msgstr "gEDA-_Dokumentation …"
 
 #, fuzzy
 msgid "Find Component D_ocumentation"
@@ -2301,20 +2295,6 @@ msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr ""
 
 #, fuzzy
-msgid "lepton-schematic User Guide"
-msgstr "gschem-_FAQ …"
-
-msgid "View the lepton-schematic User Guide in a browser."
-msgstr ""
-
-#, fuzzy
-msgid "lepton-schematic FAQ"
-msgstr "_Wählen Sie die zu speichernden Seiten:"
-
-msgid "Frequently Asked Questions about using lepton-schematic."
-msgstr ""
-
-#, fuzzy
 msgid "Lepton EDA wiki"
 msgstr "gEDA-_Wiki …"
 
@@ -2372,6 +2352,22 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "User _Guide"
+#~ msgstr "gschem-_FAQ …"
+
+#, fuzzy
+#~ msgid "Docu_mentation"
+#~ msgstr "_Dokumentation …"
+
+#, fuzzy
+#~ msgid "lepton-schematic User Guide"
+#~ msgstr "gschem-_FAQ …"
+
+#, fuzzy
+#~ msgid "lepton-schematic FAQ"
+#~ msgstr "_Wählen Sie die zu speichernden Seiten:"
 
 #, fuzzy
 #~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
@@ -2788,9 +2784,6 @@ msgstr ""
 
 #~ msgid "gschem _FAQ..."
 #~ msgstr "gschem-_FAQ …"
-
-#~ msgid "gEDA Docu_mentation..."
-#~ msgstr "gEDA-_Dokumentation …"
 
 #~ msgid "gEDA _Wiki..."
 #~ msgstr "gEDA-_Wiki …"

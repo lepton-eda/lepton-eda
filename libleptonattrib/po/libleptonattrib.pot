@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.12\n"
+"Project-Id-Version: lepton-eda 1.9.13\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-04 05:12+0300\n"
+"POT-Creation-Date: 2020-12-11 02:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -138,22 +138,22 @@ msgstr ""
 msgid "Couldn't delete item %1$s\n"
 msgstr ""
 
-#: libleptonattrib/src/s_table.c:242
+#: libleptonattrib/src/s_table.c:335
 #, c-format
 msgid "We didn't find the row name in the row list!\n"
 msgstr ""
 
-#: libleptonattrib/src/s_table.c:285
+#: libleptonattrib/src/s_table.c:378
 #, c-format
 msgid "Start internal component TABLE creation\n"
 msgstr ""
 
-#: libleptonattrib/src/s_table.c:340 libleptonattrib/src/s_table.c:537
+#: libleptonattrib/src/s_table.c:433 libleptonattrib/src/s_table.c:630
 #, c-format
 msgid "We didn't find either row or col in the lists!\n"
 msgstr ""
 
-#: libleptonattrib/src/s_table.c:479
+#: libleptonattrib/src/s_table.c:572
 #, c-format
 msgid "Start internal pin TABLE creation\n"
 msgstr ""
@@ -172,22 +172,22 @@ msgstr ""
 msgid "_cancel"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:351
+#: libleptonattrib/src/s_toplevel.c:350
 #, c-format
 msgid "Can't get attrib name\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:570
+#: libleptonattrib/src/s_toplevel.c:583
 #, c-format
 msgid "We didn't find the refdes in the master list.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:897
+#: libleptonattrib/src/s_toplevel.c:910
 #, c-format
 msgid "Either refdes or pinnumber of object missing.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:906
+#: libleptonattrib/src/s_toplevel.c:919
 #, c-format
 msgid "We didn't find the refdes:pin in the master list.\n"
 msgstr ""
@@ -305,30 +305,30 @@ msgstr ""
 msgid "Open..."
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:71 libleptonattrib/src/x_gtksheet.c:79
+#: libleptonattrib/src/x_gtksheet.c:104 libleptonattrib/src/x_gtksheet.c:112
 msgid "Components"
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:72 libleptonattrib/src/x_gtksheet.c:88
-#: libleptonattrib/src/x_gtksheet.c:91
+#: libleptonattrib/src/x_gtksheet.c:105 libleptonattrib/src/x_gtksheet.c:121
+#: libleptonattrib/src/x_gtksheet.c:124
 msgid "Nets"
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:73 libleptonattrib/src/x_gtksheet.c:104
-#: libleptonattrib/src/x_gtksheet.c:107
+#: libleptonattrib/src/x_gtksheet.c:106 libleptonattrib/src/x_gtksheet.c:137
+#: libleptonattrib/src/x_gtksheet.c:140
 msgid "Pins"
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:81
+#: libleptonattrib/src/x_gtksheet.c:114
 msgid ""
 "No components found in design.  Please check your schematic and try again!\n"
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:92 libleptonattrib/src/x_gtksheet.c:94
+#: libleptonattrib/src/x_gtksheet.c:125 libleptonattrib/src/x_gtksheet.c:127
 msgid "TBD"
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:354
+#: libleptonattrib/src/x_gtksheet.c:399
 msgid "couldn't allocate color"
 msgstr ""
 

@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.12\n"
+"Project-Id-Version: lepton-eda 1.9.13\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-04 05:12+0300\n"
+"POT-Creation-Date: 2020-12-11 02:03+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -105,8 +105,8 @@ msgstr ""
 msgid "Could not launch URI ~S: ~A"
 msgstr ""
 
-#: libleptongui/src/g_window.c:141
-msgid "Found invalid lepton-schematic window smob ~S"
+#: libleptongui/src/g_window.c:95
+msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr ""
 
 #: libleptongui/src/gschem_about_dialog.c:49
@@ -277,7 +277,7 @@ msgid "Filename"
 msgstr ""
 
 #: libleptongui/src/gschem_find_text_state.c:779
-#: libleptongui/src/x_window.c:1207 libleptongui/src/x_window.c:1454
+#: libleptongui/src/x_window.c:1206 libleptongui/src/x_window.c:1453
 msgid "Text"
 msgstr ""
 
@@ -320,7 +320,7 @@ msgstr ""
 msgid "_Filter:"
 msgstr ""
 
-#: libleptongui/src/gschem_hotkey_dialog.c:250 libleptongui/src/x_window.c:1325
+#: libleptongui/src/gschem_hotkey_dialog.c:250 libleptongui/src/x_window.c:1324
 msgid "Action"
 msgstr ""
 
@@ -492,12 +492,12 @@ msgid "Preview Buffer"
 msgstr ""
 
 #: libleptongui/src/gschem_show_hide_text_widget.c:148
-#: libleptongui/src/x_window.c:1249
+#: libleptongui/src/x_window.c:1248
 msgid "Hide"
 msgstr ""
 
 #: libleptongui/src/gschem_show_hide_text_widget.c:157
-#: libleptongui/src/x_window.c:1250
+#: libleptongui/src/x_window.c:1249
 msgid "Hide text starting with:"
 msgstr ""
 
@@ -546,7 +546,7 @@ msgstr ""
 msgid "Translate"
 msgstr ""
 
-#: libleptongui/src/i_basic.c:65 libleptongui/src/x_window.c:1385
+#: libleptongui/src/i_basic.c:65 libleptongui/src/x_window.c:1384
 #: libleptongui/scheme/conf/schematic/menu.scm:61
 #: libleptongui/scheme/schematic/builtins.scm:103
 msgid "Select Mode"
@@ -1030,7 +1030,7 @@ msgstr ""
 msgid "Components"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:474 libleptongui/src/x_window.c:1195
+#: libleptongui/src/x_attribedit.c:474 libleptongui/src/x_window.c:1194
 msgid "Nets"
 msgstr ""
 
@@ -1251,7 +1251,7 @@ msgstr ""
 msgid "Schematics and symbols (*.sch *.sym)"
 msgstr ""
 
-#: libleptongui/src/x_fileselect.c:329 libleptongui/src/x_window.c:1160
+#: libleptongui/src/x_fileselect.c:329 libleptongui/src/x_window.c:1159
 msgid "Open"
 msgstr ""
 
@@ -1645,7 +1645,7 @@ msgstr ""
 msgid "_Close"
 msgstr ""
 
-#: libleptongui/src/x_widgets.c:170 libleptongui/src/x_window.c:1458
+#: libleptongui/src/x_widgets.c:170 libleptongui/src/x_window.c:1457
 msgid "Options"
 msgstr ""
 
@@ -1658,11 +1658,11 @@ msgstr ""
 msgid "Object Properties"
 msgstr ""
 
-#: libleptongui/src/x_widgets.c:236 libleptongui/src/x_window.c:1484
+#: libleptongui/src/x_widgets.c:236 libleptongui/src/x_window.c:1483
 msgid "Log"
 msgstr ""
 
-#: libleptongui/src/x_widgets.c:257 libleptongui/src/x_window.c:1480
+#: libleptongui/src/x_widgets.c:257 libleptongui/src/x_window.c:1479
 msgid "Find Text"
 msgstr ""
 
@@ -1680,88 +1680,88 @@ msgstr ""
 msgid "Page Manager"
 msgstr ""
 
-#: libleptongui/src/x_window.c:751
+#: libleptongui/src/x_window.c:750
 #, c-format
 msgid "Loading schematic [%1$s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:846
+#: libleptongui/src/x_window.c:845
 #, c-format
 msgid "Could NOT save page [%1$s]\n"
 msgstr ""
 
-#: libleptongui/src/x_window.c:847
+#: libleptongui/src/x_window.c:846
 msgid "Error while trying to save"
 msgstr ""
 
-#: libleptongui/src/x_window.c:857
+#: libleptongui/src/x_window.c:856
 msgid "Failed to save file"
 msgstr ""
 
-#: libleptongui/src/x_window.c:867
+#: libleptongui/src/x_window.c:866
 #, c-format
 msgid "Saved as [%1$s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:869
+#: libleptongui/src/x_window.c:868
 #, c-format
 msgid "Saved [%1$s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:871
+#: libleptongui/src/x_window.c:870
 msgid "Saved"
 msgstr ""
 
-#: libleptongui/src/x_window.c:948
+#: libleptongui/src/x_window.c:947
 #, c-format
 msgid "Discarding page [%1$s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:948
+#: libleptongui/src/x_window.c:947
 #, c-format
 msgid "Closing [%1$s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1156
+#: libleptongui/src/x_window.c:1155
 msgid "New"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1156
+#: libleptongui/src/x_window.c:1155
 msgid "New file"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1160
+#: libleptongui/src/x_window.c:1159
 msgid "Open file"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1164
+#: libleptongui/src/x_window.c:1163
 #: libleptongui/scheme/schematic/builtins.scm:63
 msgid "Save"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1164
+#: libleptongui/src/x_window.c:1163
 msgid "Save file"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1170
+#: libleptongui/src/x_window.c:1169
 #: libleptongui/scheme/schematic/builtins.scm:97
 msgid "Undo"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1170
+#: libleptongui/src/x_window.c:1169
 msgid "Undo last operation"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1174
+#: libleptongui/src/x_window.c:1173
 #: libleptongui/scheme/schematic/builtins.scm:100
 msgid "Redo"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1174
+#: libleptongui/src/x_window.c:1173
 msgid "Redo last undo"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1179
+#: libleptongui/src/x_window.c:1178
 msgid ""
 "Add component...\n"
 "Select library and component from list, move the mouse into main window, "
@@ -1769,85 +1769,85 @@ msgid ""
 "Right mouse button to cancel"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1184
+#: libleptongui/src/x_window.c:1183
 msgid "Component"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1190
+#: libleptongui/src/x_window.c:1189
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1198
+#: libleptongui/src/x_window.c:1197
 msgid ""
 "Add buses mode\n"
 "Right mouse button to cancel"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1203
+#: libleptongui/src/x_window.c:1202
 msgid "Bus"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1207
+#: libleptongui/src/x_window.c:1206
 msgid "Add Text..."
 msgstr ""
 
-#: libleptongui/src/x_window.c:1214
+#: libleptongui/src/x_window.c:1213
 msgid "Select"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1214
+#: libleptongui/src/x_window.c:1213
 msgid "Select mode"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1269
+#: libleptongui/src/x_window.c:1268
 msgid "Show"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1270
+#: libleptongui/src/x_window.c:1269
 msgid "Show text starting with:"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1317 libleptongui/src/x_window.c:1352
+#: libleptongui/src/x_window.c:1316 libleptongui/src/x_window.c:1351
 msgid "none"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1321
+#: libleptongui/src/x_window.c:1320
 msgid "Stroke"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1328
+#: libleptongui/src/x_window.c:1327
 msgid "Repeat"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1331 libleptongui/src/x_window.c:1348
+#: libleptongui/src/x_window.c:1330 libleptongui/src/x_window.c:1347
 #: libleptongui/scheme/schematic/builtins.scm:193
 msgid "Pan"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1334 libleptongui/src/x_window.c:1343
+#: libleptongui/src/x_window.c:1333 libleptongui/src/x_window.c:1342
 msgid "Menu"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1357
+#: libleptongui/src/x_window.c:1356
 msgid "/Cancel"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1375
+#: libleptongui/src/x_window.c:1374
 msgid "Pick"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1450
+#: libleptongui/src/x_window.c:1449
 msgid "Object"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1594
+#: libleptongui/src/x_window.c:1593
 #, c-format
 msgid "New file [%s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1624
+#: libleptongui/src/x_window.c:1623
 #, c-format
 msgid ""
 "<b>An error occurred while loading the requested file.</b>\n"
@@ -1861,11 +1861,11 @@ msgid ""
 "monitor program's output in terminal window."
 msgstr ""
 
-#: libleptongui/src/x_window.c:1643
+#: libleptongui/src/x_window.c:1642
 msgid "Failed to load file"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1742
+#: libleptongui/src/x_window.c:1741
 #, c-format
 msgid "Skipping existing file [%s]"
 msgstr ""
@@ -2287,70 +2287,62 @@ msgid "_1 allegro"
 msgstr ""
 
 #: libleptongui/scheme/conf/schematic/menu.scm:304
-msgid "User _Guide"
+msgid "Lepton EDA Reference _Manual"
 msgstr ""
 
 #: libleptongui/scheme/conf/schematic/menu.scm:305
-msgid "_FAQ"
-msgstr ""
-
-#: libleptongui/scheme/conf/schematic/menu.scm:306
-msgid "Docu_mentation"
+msgid "gEDA _Wiki Documentation"
 msgstr ""
 
 #: libleptongui/scheme/conf/schematic/menu.scm:307
-msgid "_Wiki"
-msgstr ""
-
-#: libleptongui/scheme/conf/schematic/menu.scm:309
 msgid "Find Component D_ocumentation"
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:311
+#: libleptongui/scheme/conf/schematic/menu.scm:309
 msgid "_Hotkeys..."
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:312
+#: libleptongui/scheme/conf/schematic/menu.scm:310
 msgid "_About"
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:322
+#: libleptongui/scheme/conf/schematic/menu.scm:320
 msgid "_File"
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:323
+#: libleptongui/scheme/conf/schematic/menu.scm:321
 msgid "_Edit"
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:325
+#: libleptongui/scheme/conf/schematic/menu.scm:323
 msgid "_View"
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:326
+#: libleptongui/scheme/conf/schematic/menu.scm:324
 msgid "_Page"
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:327
+#: libleptongui/scheme/conf/schematic/menu.scm:325
 msgid "_Add"
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:328
+#: libleptongui/scheme/conf/schematic/menu.scm:326
 msgid "Hie_rarchy"
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:329
+#: libleptongui/scheme/conf/schematic/menu.scm:327
 msgid "A_ttributes"
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:330
+#: libleptongui/scheme/conf/schematic/menu.scm:328
 msgid "_Options"
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:331
+#: libleptongui/scheme/conf/schematic/menu.scm:329
 msgid "_Netlist"
 msgstr ""
 
-#: libleptongui/scheme/conf/schematic/menu.scm:332
+#: libleptongui/scheme/conf/schematic/menu.scm:330
 msgid "_Help"
 msgstr ""
 
@@ -2670,30 +2662,14 @@ msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr ""
 
 #: libleptongui/scheme/schematic/builtins.scm:529
-msgid "lepton-schematic User Guide"
-msgstr ""
-
-#: libleptongui/scheme/schematic/builtins.scm:530
-msgid "View the lepton-schematic User Guide in a browser."
-msgstr ""
-
-#: libleptongui/scheme/schematic/builtins.scm:535
-msgid "lepton-schematic FAQ"
-msgstr ""
-
-#: libleptongui/scheme/schematic/builtins.scm:536
-msgid "Frequently Asked Questions about using lepton-schematic."
-msgstr ""
-
-#: libleptongui/scheme/schematic/builtins.scm:541
 msgid "Lepton EDA wiki"
 msgstr ""
 
-#: libleptongui/scheme/schematic/builtins.scm:542
+#: libleptongui/scheme/schematic/builtins.scm:530
 msgid "View the front page of the Lepton EDA wiki in a browser."
 msgstr ""
 
-#: libleptongui/scheme/schematic/builtins.scm:546
+#: libleptongui/scheme/schematic/builtins.scm:534
 msgid "About lepton-schematic"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-04 05:12+0300\n"
+"POT-Creation-Date: 2020-12-11 02:03+0300\n"
 "PO-Revision-Date: 2012-03-23 03:04+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -95,7 +95,7 @@ msgid "Could not launch URI ~S: ~A"
 msgstr "No se puede abrir la URI ~S: ~A"
 
 #, fuzzy
-msgid "Found invalid lepton-schematic window smob ~S"
+msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr "Se encontró `smob' de ventana de gschem inválido ~S"
 
 #, fuzzy, c-format
@@ -1957,18 +1957,12 @@ msgid "_1 allegro"
 msgstr ""
 
 #, fuzzy
-msgid "User _Guide"
-msgstr "PU_F de gschem"
-
-msgid "_FAQ"
-msgstr ""
+msgid "Lepton EDA Reference _Manual"
+msgstr "_Wiki de gEDA..."
 
 #, fuzzy
-msgid "Docu_mentation"
-msgstr "D_ocumentación"
-
-msgid "_Wiki"
-msgstr ""
+msgid "gEDA _Wiki Documentation"
+msgstr "Docu_mentación de gEDA"
 
 #, fuzzy
 msgid "Find Component D_ocumentation"
@@ -2308,20 +2302,6 @@ msgid "View the main page of the Lepton EDA Reference Manual in a browser."
 msgstr ""
 
 #, fuzzy
-msgid "lepton-schematic User Guide"
-msgstr "PU_F de gschem"
-
-msgid "View the lepton-schematic User Guide in a browser."
-msgstr ""
-
-#, fuzzy
-msgid "lepton-schematic FAQ"
-msgstr "S_eleccione los esquemas que quiere guardar:"
-
-msgid "Frequently Asked Questions about using lepton-schematic."
-msgstr ""
-
-#, fuzzy
 msgid "Lepton EDA wiki"
 msgstr "_Wiki de gEDA..."
 
@@ -2401,6 +2381,22 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "User _Guide"
+#~ msgstr "PU_F de gschem"
+
+#, fuzzy
+#~ msgid "Docu_mentation"
+#~ msgstr "D_ocumentación"
+
+#, fuzzy
+#~ msgid "lepton-schematic User Guide"
+#~ msgstr "PU_F de gschem"
+
+#, fuzzy
+#~ msgid "lepton-schematic FAQ"
+#~ msgstr "S_eleccione los esquemas que quiere guardar:"
 
 #, fuzzy
 #~ msgid "You are running lepton-schematic version [%1$s%2$s.%3$s],\n"
@@ -2849,9 +2845,6 @@ msgstr ""
 
 #~ msgid "gschem _FAQ..."
 #~ msgstr "PU_F de gschem"
-
-#~ msgid "gEDA Docu_mentation..."
-#~ msgstr "Docu_mentación de gEDA"
 
 #~ msgid "gEDA _Wiki..."
 #~ msgstr "_Wiki de gEDA..."
