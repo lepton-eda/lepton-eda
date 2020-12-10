@@ -23,8 +23,6 @@
 
 SCM scheme_window_fluid = SCM_UNDEFINED;
 
-scm_t_bits window_smob_tag;
-
 /*! \brief Get the smob for a #GschemToplevel.
  * \par Function Description
  * Return a smob representing \a window.
