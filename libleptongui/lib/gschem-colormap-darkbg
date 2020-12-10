@@ -1,4 +1,5 @@
-;                                                         -*-Scheme-*-
+( use-modules ( lepton color-map ) )
+
 ;
 ; Dark background color map for gschem
 ;
