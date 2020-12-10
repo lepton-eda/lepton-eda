@@ -66,13 +66,18 @@
   (map (lambda (x) (cons (cdr x) (car x))) %color-name-map))
 
 
-;; Look up the internal system ID for a symbolic color.
 (define (color-map-name-to-index x)
+  "Returns an integer index given one of a color
+symbols like 'background, 'net, 'text, etc.
+Returns #f (false) if wrong symbol is specified."
   (assq-ref %color-name-map x))
 
 
 ;; Look up the symbolic color for an internal system ID.
 (define (color-map-name-from-index id)
+  "Returns one of a color symbols like 'background,
+'net, 'text, etc., given an integer index.
+Returns #f (false) if wrong index is specified."
   (assq-ref %color-name-reverse-map id))
 
 

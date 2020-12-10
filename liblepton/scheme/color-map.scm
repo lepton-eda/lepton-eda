@@ -15,23 +15,11 @@
 )
 
 
-; Function: color-map-name-to-index()
-;
-; Returns an integer index given one of a color
-; symbols like 'background, 'net, 'text, etc.
-; Returns #f (false) if wrong symbol is specified.
-;
 ( define color-map-name-to-index
   ( @ (lepton color-map) color-map-name-to-index )
 )
 
 
-; Function: color-map-name-from-index()
-;
-; Returns one of a color symbols like 'background,
-; 'net, 'text, etc., given an integer index.
-; Returns #f (false) if wrong index is specified.
-;
 ( define color-map-name-from-index
   ( @ (lepton color-map) color-map-name-from-index )
 )
