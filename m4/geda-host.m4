@@ -3,6 +3,7 @@
 
 dnl Checks for host platform and features
 dnl Copyright (C) 2011  Peter TB Brett <peter@peter-b.co.uk>
+dnl Copyright (C) 2020 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
