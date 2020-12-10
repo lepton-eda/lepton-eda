@@ -5,6 +5,36 @@ This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
 
+Notable changes in Lepton EDA 1.9.12 (upcoming)
+-----------------------------------------------
+
+Bugfix release.
+
+### Changes when building from source:
+
+- Build for Cygwin has been fixed in that the Lepton GUI tools now
+  actually work.
+
+- Fixed installation of images into the info directory.
+
+### Changes in `lepton-attrib`:
+
+- Two long standing bugs in the program, that manifested
+  themselves when the user deleted an attribute column in the
+  spreadsheet, have been fixed:
+  - The program did not prompt the user on unsaved changes on
+    exit.
+  - All invisible attributes became visible.
+
+### Changes in `lepton-gui`:
+
+- Fixed processing of options `-c` and `-s` broken in the previous
+  release.
+
+- Reduced the number of Help menu items pointing to obsolete wiki
+  documentation.
+
+
 Notable changes in Lepton EDA 1.9.12 (20201204)
 -----------------------------------------------
 ### General changes:
