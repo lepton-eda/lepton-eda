@@ -3,18 +3,26 @@
 ; Copyright (C) 2020 Lepton EDA Contributors
 ; License: GPLv2+. See the COPYING file
 
-( use-modules ( lepton color-map ) )
+
+; Association list: %color-name-map
+;
+; Defines mapping between color symbols
+; like 'background, 'net, 'text, etc.
+; and integer values.
+;
+( define %color-name-map
+  ( @ (lepton color-map) %color-name-map )
+)
 
 
 ; Function: color-map-name-to-index()
 ;
 ; Returns an integer index given one of a color
 ; symbols like 'background, 'net, 'text, etc.
-; Returns #f (false) if wrong symbol is specified.
+; Returns its argument if wrong symbol is specified.
 ;
-( define ( color-map-name-to-index sym-name )
-  ; return:
-  ( assoc-ref %color-name-map sym-name )
+( define color-map-name-to-index
+  ( @ (lepton color-map) color-map-name-to-index )
 )
 
 
@@ -22,18 +30,10 @@
 ;
 ; Returns one of a color symbols like 'background,
 ; 'net, 'text, etc., given an integer index.
-; Returns #f (false) if index is out of bounds.
+; Returns its argument if wrong index is specified.
 ;
-( define ( color-map-name-from-index index )
-  ( define ( swap-pair ent )
-    ( cons (cdr ent) (car ent) )
-  )
-  ( define ( invert-mapping )
-    ( map swap-pair %color-name-map )
-  )
-
-  ; return:
-  ( assoc-ref (invert-mapping) index )
+( define color-map-name-from-index
+  ( @ (lepton color-map) color-map-name-from-index )
 )
 
 
