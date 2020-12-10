@@ -68,16 +68,12 @@
 
 ;; Look up the internal system ID for a symbolic color.
 (define (color-map-name-to-index x)
-  (if (symbol? x)
-      (assq-ref %color-name-map x)
-      x))
+  (assq-ref %color-name-map x))
 
 
 ;; Look up the symbolic color for an internal system ID.
 (define (color-map-name-from-index id)
-  (or (assq-ref %color-name-reverse-map id)
-      ;; Fall back to the index if no symbol found.
-      id))
+  (assq-ref %color-name-reverse-map id))
 
 
 (define colors-count

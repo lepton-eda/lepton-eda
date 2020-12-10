@@ -19,7 +19,7 @@
 ;
 ; Returns an integer index given one of a color
 ; symbols like 'background, 'net, 'text, etc.
-; Returns its argument if wrong symbol is specified.
+; Returns #f (false) if wrong symbol is specified.
 ;
 ( define color-map-name-to-index
   ( @ (lepton color-map) color-map-name-to-index )
@@ -30,7 +30,7 @@
 ;
 ; Returns one of a color symbols like 'background,
 ; 'net, 'text, etc., given an integer index.
-; Returns its argument if wrong index is specified.
+; Returns #f (false) if wrong index is specified.
 ;
 ( define color-map-name-from-index
   ( @ (lepton color-map) color-map-name-from-index )
