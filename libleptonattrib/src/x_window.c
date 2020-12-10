@@ -127,6 +127,49 @@ x_window_init ()
   gtk_notebook_set_tab_pos(GTK_NOTEBOOK(notebook), GTK_POS_BOTTOM);
   gtk_box_pack_start(GTK_BOX(main_vbox), notebook, TRUE, TRUE, 0);
 
+
+  /* Status bar:
+  */
+  GtkWidget* sbar = gtk_statusbar_new();
+  gtk_box_pack_start (GTK_BOX (main_vbox), sbar, FALSE, TRUE, 0);
+  GtkWidget* marea = gtk_statusbar_get_message_area (GTK_STATUSBAR (sbar));
+
+  GtkWidget* label_1 = gtk_label_new (NULL);
+  gtk_label_set_markup (GTK_LABEL (label_1), _("   Color Legend:  "));
+
+  GtkWidget* label_inv      = gtk_label_new (_(" Invisible ") );
+  GtkWidget* label_val      = gtk_label_new (_(" Show value "));
+  GtkWidget* label_name     = gtk_label_new (_(" Show name "));
+  GtkWidget* label_name_val = gtk_label_new (_(" Show name and value "));
+
+  gtk_box_pack_start (GTK_BOX (marea), label_1, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (marea), gtk_vseparator_new() , FALSE, TRUE, 0);
+
+  gtk_box_pack_start (GTK_BOX (marea), label_inv, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (marea), gtk_vseparator_new() , FALSE, TRUE, 0);
+
+  gtk_box_pack_start (GTK_BOX (marea), label_val, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (marea), gtk_vseparator_new() , FALSE, TRUE, 0);
+
+  gtk_box_pack_start (GTK_BOX (marea), label_name, FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (marea), gtk_vseparator_new() , FALSE, TRUE, 0);
+
+  gtk_box_pack_start (GTK_BOX (marea), label_name_val, FALSE, TRUE, 0);
+
+  GdkColor color;
+  gdk_color_parse ("grey", &color);
+  gtk_widget_modify_fg (label_inv, GTK_STATE_NORMAL, &color);
+
+  gdk_color_parse ("black", &color);
+  gtk_widget_modify_fg (label_val, GTK_STATE_NORMAL, &color);
+
+  gdk_color_parse ("red", &color);
+  gtk_widget_modify_fg (label_name, GTK_STATE_NORMAL, &color);
+
+  gdk_color_parse ("blue", &color);
+  gtk_widget_modify_fg (label_name_val, GTK_STATE_NORMAL, &color);
+
+
   /* -----  Now malloc -- but don't fill out -- space for sheets  ----- */
   /* This basically sets up the overhead for the sheets, as I understand
    * it.  The memory for the actual sheet cells is allocated later,
