@@ -17,6 +17,9 @@ Bugfix release.
 
 - Fixed installation of images into the info directory.
 
+- File `color-map.scm`, removed in the previous release, has been
+  restored for backward compatibility.
+
 ### Changes in `lepton-attrib`:
 
 - Two long standing bugs in the program, that manifested
