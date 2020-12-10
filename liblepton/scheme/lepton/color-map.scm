@@ -31,7 +31,9 @@
   #:export (%color-name-map
             display-color-map
             display-outline-color-map
-            print-color-map))
+            print-color-map
+            color-map-name-to-index
+            color-map-name-from-index))
 
 ;;; Map between color index numbers and symbolic color names.
 (define %color-name-map
@@ -64,6 +66,20 @@
   (map (lambda (x) (cons (cdr x) (car x))) %color-name-map))
 
 
+;; Look up the internal system ID for a symbolic color.
+(define (color-map-name-to-index x)
+  (if (symbol? x)
+      (assq-ref %color-name-map x)
+      x))
+
+
+;; Look up the symbolic color for an internal system ID.
+(define (color-map-name-from-index id)
+  (or (assq-ref %color-name-reverse-map id)
+      ;; Fall back to the index if no symbol found.
+      id))
+
+
 (define colors-count
   (pointer->procedure
    size_t
@@ -93,11 +109,6 @@
 ;;; "#RRGGBB" or "#RRGGBBAA" code. The shorter form is used when
 ;;; the alpha component is 0xff.
 (define (color-map->scm color-map)
-  ;; Look up the symbolic color for an internal system ID.
-  (define (color-map-name-from-index id)
-    (or (assq-ref %color-name-reverse-map id)
-        ;; Fall back to the index if no symbol found.
-        id))
 
   (define (id->color id)
     (let ((color (parse-c-struct (color-map-id->color color-map id)
@@ -151,11 +162,6 @@
        (< id (colors-count))))
 
 (define (scm->color-map color-map ls)
-  ;; Look up the internal system ID for a symbolic color.
-  (define (color-map-name-to-index x)
-    (if (symbol? x)
-        (assq-ref %color-name-map x)
-        x))
 
   (define (parse-entry entry)
     ;; Check if map entry has correct type.
