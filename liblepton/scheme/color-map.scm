@@ -4,24 +4,16 @@
 ; License: GPLv2+. See the COPYING file
 
 
-; Association list: %color-name-map
-;
-; Defines mapping between color symbols
-; like 'background, 'net, 'text, etc.
-; and integer values.
-;
-( define %color-name-map
-  ( @ (lepton color-map) %color-name-map )
+( use-modules
+(
+  ( lepton color-map )
+  #:select
+  (
+    %color-name-map
+    color-map-name-to-index
+    color-map-name-from-index
+  )
 )
-
-
-( define color-map-name-to-index
-  ( @ (lepton color-map) color-map-name-to-index )
-)
-
-
-( define color-map-name-from-index
-  ( @ (lepton color-map) color-map-name-from-index )
 )
 
 
