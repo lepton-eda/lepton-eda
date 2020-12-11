@@ -488,76 +488,6 @@ SCM_DEFINE (picture_info, "%picture-info", 1, 0, 0,
                      SCM_UNDEFINED);
 }
 
-/*! \brief Set a picture object's data from a vector.
- * \par Function Description
- * Sets the image data for the picture object \a obj_s from the vector
- * \a data_s, and set its \a filename.  If the contents of \a data_s
- * could not be successfully loaded as an image, raises an error.  The
- * contents of \a data_s should be image data encoded in on-disk
- * format.
- *
- * \note Scheme API: Implements the %set-picture-data/vector!
- * procedure in the (lepton core object) module.
- *
- * \param obj_s       The picture object to modify.
- * \param data_s      Vector containing encoded image data.
- * \param filename_s  New filename for \a obj_s.
- * \return \a obj_s.
- */
-SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
-            3, 0, 0, (SCM obj_s, SCM data_s, SCM filename_s),
-            "Set a picture object's data from a vector.")
-{
-  SCM vec_s = scm_any_to_s8vector (data_s);
-  /* Check argument types */
-  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PICTURE), obj_s,
-              SCM_ARG1, s_set_picture_data_vector_x);
-  SCM_ASSERT (scm_is_true (scm_s8vector_p (vec_s)), data_s, SCM_ARG2,
-              s_set_picture_data_vector_x);
-  SCM_ASSERT (scm_is_string (filename_s), filename_s, SCM_ARG3,
-              s_set_picture_data_vector_x);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-
-  /* Convert vector to contiguous buffer */
-  scm_t_array_handle handle;
-  size_t len;
-  ssize_t inc;
-  const int8_t *elt = scm_s8vector_elements (vec_s, &handle, &len, &inc);
-  gchar *buf = (gchar*) g_malloc (len);
-  guint i;
-
-  scm_dynwind_unwind_handler (g_free, buf, SCM_F_WIND_EXPLICITLY);
-
-  for (i = 0; i < len; i++, elt += inc) {
-    buf[i] = (gchar) *elt;
-  }
-  scm_array_handle_release (&handle);
-
-  gboolean status;
-  GError *error = NULL;
-  LeptonObject *obj = edascm_to_object (obj_s);
-  gchar *filename = scm_to_utf8_string (filename_s);
-  scm_dynwind_unwind_handler (g_free, filename, SCM_F_WIND_EXPLICITLY);
-
-  status = lepton_picture_object_set_from_buffer (obj,
-                                                  filename,
-                                                  buf,
-                                                  len,
-                                                  &error);
-  if (!status) {
-    scm_dynwind_unwind_handler ((void (*)(void *)) g_error_free, error,
-                                SCM_F_WIND_EXPLICITLY);
-    scm_misc_error (s_set_picture_data_vector_x,
-                    "Failed to set picture image data from vector: ~S",
-                    scm_list_1 (scm_from_utf8_string (error->message)));
-  }
-
-  lepton_object_page_set_changed (obj);
-  scm_dynwind_end ();
-  return obj_s;
-}
-
 /*!
  * \brief Create the (lepton core object) Scheme module.
  * \par Function Description
@@ -578,7 +508,6 @@ init_module_lepton_core_object (void *unused)
                 s_path_remove_x,
                 s_path_insert_x,
                 s_picture_info,
-                s_set_picture_data_vector_x,
                 NULL);
 }
 

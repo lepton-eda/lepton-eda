@@ -23,6 +23,7 @@
   #:use-module (ice-9 match)
   #:use-module (ice-9 optargs)
   #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-4 gnu)
   #:use-module (system foreign)
   #:use-module (rnrs bytevectors)
 
@@ -31,6 +32,7 @@
   #:use-module (lepton core object)
 
   #:use-module (lepton color-map)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton object type)
 
@@ -791,6 +793,49 @@ values.  It is initially set to be embedded."
                                 angle
                                 mirrored
                                 embedded))))
+
+;;; Sets the image data for the picture object PICTURE from
+;;; VECTOR-DATA, and set its FILENAME.  If the contents of
+;;; VECTOR-DATA could not be successfully loaded as an image,
+;;; raises an error.  The contents of VECTOR-DATA should be image
+;;; data encoded in on-disk format.  Returns the modified object
+;;; PICTURE.
+(define (%set-picture-data/vector! object vector-data filename)
+  "Set a picture object's data from a vector."
+  (define (gerror-list *err)
+    ;; GError struct consists of:
+    ;; GQuark (uint32) domain
+    ;; gint (int) code
+    ;; gchar* (char*) message
+    (parse-c-struct *err (list uint32 int '*)))
+
+  (define (gerror->message *err)
+    (pointer->string (third (gerror-list *err))))
+
+  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+
+  (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*))))
+         (status
+          (lepton_picture_object_set_from_buffer pointer
+                                                 (string->pointer filename)
+                                                 (string->pointer
+                                                  (list->string
+                                                   (map integer->char vector-data)))
+                                                 (s8vector-length (any->s8vector vector-data))
+                                                 *error)))
+
+    ;; Parse error output if something went wrong.
+    (when (zero? status)
+      (let ((*err (dereference-pointer *error)))
+        (unless (null-pointer? *err)
+          (let ((message (gerror->message *err)))
+            (g_clear_error *error)
+            (error (format #f
+                           "Failed to set picture image data from vector: ~S"
+                           message))))))
+    (lepton_object_page_set_changed pointer)
+    ;; Return picture object.
+    object))
 
 (define-public (make-picture/vector vec filename . args)
   (let ((p (make-picture)))
