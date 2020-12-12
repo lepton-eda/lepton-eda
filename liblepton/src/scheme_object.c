@@ -2014,7 +2014,7 @@ SCM_DEFINE (picture_info, "%picture-info", 1, 0, 0,
               SCM_ARG1, s_picture_info);
 
   LeptonObject *obj = edascm_to_object (obj_s);
-  const gchar *filename = o_picture_get_filename (obj);
+  const gchar *filename = lepton_picture_object_get_filename (obj);
 
   SCM filename_s = SCM_BOOL_F;
   if (filename != NULL) {
