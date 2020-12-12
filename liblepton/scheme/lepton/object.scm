@@ -90,6 +90,7 @@
             make-bus-pin
             make-net-pin
 
+            picture-info
             set-picture!
 
             text-info
@@ -842,16 +843,34 @@ values.  It is initially set to be embedded."
     (%set-picture-data/vector! p vec filename)
     (apply set-picture! p args)))
 
-(define-public (picture-info p)
-  (let* ((params (%picture-info p))
-         (filename (car params))
-         (tail (cdr params)))
-    (apply list filename
-           (cons (list-ref tail 0)
-                 (list-ref tail 1))
-           (cons (list-ref tail 2)
-                 (list-ref tail 3))
-           (list-tail tail 4))))
+(define (picture-info object)
+  "Retrieves the parameters of PICTURE.  Returns the list
+of parameters in the form:
+  (filename (x1 . y1) (x2 . y2) angle mirrored)
+where:
+  filename - filename of PICTURE.
+  x1 - X-coordinate of top left of PICTURE.
+  y1 - Y-coordinate of top left of PICTURE.
+  x2 - X-coordinate of bottom right of PICTURE.
+  y2 - Y-coordinate of bottom right of PICTURE.
+  angle - rotation angle.
+  mirrored - whether PICTURE object is mirrored."
+  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+
+  (let* ((filename* (lepton_picture_object_get_filename pointer))
+         (filename (and (not (null-pointer? filename*))
+                        (pointer->string filename*))))
+
+    (list filename
+          (cons
+           (lepton_picture_object_get_upper_x pointer)
+           (lepton_picture_object_get_upper_y pointer))
+          (cons
+           (lepton_picture_object_get_lower_x pointer)
+           (lepton_picture_object_get_lower_y pointer))
+          (lepton_picture_object_get_angle pointer)
+          (not (zero? (lepton_picture_object_get_mirrored pointer))))))
+
 
 (define-public (picture-filename p)
   (list-ref (picture-info p) 0))
