@@ -1008,6 +1008,7 @@ lepton_picture_object_get_filename (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->picture != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_PICTURE, NULL);
 
   return object->picture->filename;
 }
