@@ -507,7 +507,7 @@ lepton_picture_object_to_buffer (const LeptonObject *object)
   }
 
   /* Cope with null filename */
-  filename = o_picture_get_filename (object);
+  filename = lepton_picture_object_get_filename (object);
   if (filename == NULL) filename = "";
 
   if (lepton_picture_object_get_embedded (object) &&
@@ -1051,7 +1051,7 @@ o_picture_copy (LeptonObject *object)
 void
 o_picture_embed (LeptonObject *object)
 {
-  const gchar *filename = o_picture_get_filename (object);
+  const gchar *filename = lepton_picture_object_get_filename (object);
   gchar *basename;
 
   if (lepton_picture_object_get_embedded (object)) return;
@@ -1082,7 +1082,7 @@ void
 o_picture_unembed (LeptonObject *object)
 {
   GError *err = NULL;
-  const gchar *filename = o_picture_get_filename (object);
+  const gchar *filename = lepton_picture_object_get_filename (object);
   gchar *basename;
 
   if (!lepton_picture_object_get_embedded (object)) return;
@@ -1285,7 +1285,7 @@ o_picture_set_from_file (LeptonObject *object,
  * \return the filename associated with \a object.
  */
 const gchar *
-o_picture_get_filename (const LeptonObject *object)
+lepton_picture_object_get_filename (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->picture != NULL, NULL);

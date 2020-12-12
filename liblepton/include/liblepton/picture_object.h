@@ -91,7 +91,7 @@ o_picture_set_from_file (LeptonObject *object,
                          const gchar *filename,
                          GError **error);
 const gchar*
-o_picture_get_filename (const LeptonObject *object);
+lepton_picture_object_get_filename (const LeptonObject *object);
 
 GdkPixbuf*
 o_picture_get_fallback_pixbuf () G_GNUC_WARN_UNUSED_RESULT;
