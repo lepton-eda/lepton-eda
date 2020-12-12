@@ -445,49 +445,6 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   return obj_s;
 }
 
-/*! \brief Get picture object parameters.
- * \par Function Description
- * Retrieves the parameters of a picture object.  The return value is
- * a list of parameters:
- *
- * -# Filename of picture.
- * -# X-coordinate of top left of picture.
- * -# Y-coordinate of top left of picture.
- * -# X-coordinate of bottom right of picture.
- * -# Y-coordinate of bottom right of picture.
- * -# Rotation angle.
- * -# Whether object is mirrored.
- *
- * \note Scheme API: Implements the %picture-info procedure in the
- * (lepton core object) module.
- *
- * \param obj_s the picture object to inspect.
- * \return a list of picture object parameters.
- */
-SCM_DEFINE (picture_info, "%picture-info", 1, 0, 0,
-            (SCM obj_s), "Get picture object parameters")
-{
-  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PICTURE), obj_s,
-              SCM_ARG1, s_picture_info);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  const gchar *filename = lepton_picture_object_get_filename (obj);
-
-  SCM filename_s = SCM_BOOL_F;
-  if (filename != NULL) {
-    filename_s = scm_from_utf8_string (filename);
-  }
-
-  return scm_list_n (filename_s,
-                     scm_from_int (lepton_picture_object_get_upper_x (obj)),
-                     scm_from_int (lepton_picture_object_get_upper_y (obj)),
-                     scm_from_int (lepton_picture_object_get_lower_x (obj)),
-                     scm_from_int (lepton_picture_object_get_lower_y (obj)),
-                     scm_from_int (lepton_picture_object_get_angle (obj)),
-                     (lepton_picture_object_get_mirrored (obj) ? SCM_BOOL_T : SCM_BOOL_F),
-                     SCM_UNDEFINED);
-}
-
 /*!
  * \brief Create the (lepton core object) Scheme module.
  * \par Function Description
@@ -507,7 +464,6 @@ init_module_lepton_core_object (void *unused)
                 s_path_ref,
                 s_path_remove_x,
                 s_path_insert_x,
-                s_picture_info,
                 NULL);
 }
 
