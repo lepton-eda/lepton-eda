@@ -1077,6 +1077,138 @@ lepton_picture_object_get_filename (const LeptonObject *object)
   return object->picture->filename;
 }
 
+/*! \brief Get the upper X coordinate of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to get the upper X value of.
+ *  \return upper_x The angle value.
+ */
+int
+lepton_picture_object_get_upper_x (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->picture != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
+
+  return object->picture->upper_x;
+}
+
+
+/*! \brief Set the upper X coordinate of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to set the upper X value of.
+ *  \param [in] x  The new upper X value.
+ */
+void
+lepton_picture_object_set_upper_x (LeptonObject *object,
+                                   int x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->picture != NULL);
+  g_return_if_fail (object->type == OBJ_PICTURE);
+
+  object->picture->upper_x = x;
+}
+
+
+/*! \brief Get the lower X coordinate of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to get the lower X value of.
+ *  \return lower_x The angle value.
+ */
+int
+lepton_picture_object_get_lower_x (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->picture != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
+
+  return object->picture->lower_x;
+}
+
+
+/*! \brief Set the lower X coordinate of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to set the lower X value of.
+ *  \param [in] x  The new lower X value.
+ */
+void
+lepton_picture_object_set_lower_x (LeptonObject *object,
+                                   int x)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->picture != NULL);
+  g_return_if_fail (object->type == OBJ_PICTURE);
+
+  object->picture->lower_x = x;
+}
+
+
+/*! \brief Get the upper Y coordinate of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to get the upper Y value of.
+ *  \return upper_y The angle value.
+ */
+int
+lepton_picture_object_get_upper_y (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->picture != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
+
+  return object->picture->upper_y;
+}
+
+
+/*! \brief Set the upper Y coordinate of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to set the upper Y value of.
+ *  \param [in] y  The new upper Y value.
+ */
+void
+lepton_picture_object_set_upper_y (LeptonObject *object,
+                                   int y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->picture != NULL);
+  g_return_if_fail (object->type == OBJ_PICTURE);
+
+  object->picture->upper_y = y;
+}
+
+
+/*! \brief Get the lower Y coordinate of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to get the lower Y value of.
+ *  \return lower_y The angle value.
+ */
+int
+lepton_picture_object_get_lower_y (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->picture != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
+
+  return object->picture->lower_y;
+}
+
+
+/*! \brief Set the lower Y coordinate of a picture.
+ *
+ *  \param [in] object Picture LeptonObject to set the lower Y value of.
+ *  \param [in] y  The new lower Y value.
+ */
+void
+lepton_picture_object_set_lower_y (LeptonObject *object,
+                                   int y)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->picture != NULL);
+  g_return_if_fail (object->type == OBJ_PICTURE);
+
+  object->picture->lower_y = y;
+}
+
+
 /*! \brief Get the angle of a picture.
  *
  *  \param [in] object Picture LeptonObject to get the angle value of.

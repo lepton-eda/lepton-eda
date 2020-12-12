@@ -128,6 +128,30 @@ void
 lepton_picture_object_unembed (LeptonObject *object);
 
 int
+lepton_picture_object_get_upper_x (const LeptonObject *object);
+
+void
+lepton_picture_object_set_upper_x (LeptonObject *object,
+                                   int x);
+int
+lepton_picture_object_get_lower_x (const LeptonObject *object);
+
+void
+lepton_picture_object_set_lower_x (LeptonObject *object,
+                                   int x);
+int
+lepton_picture_object_get_upper_y (const LeptonObject *object);
+
+void
+lepton_picture_object_set_upper_y (LeptonObject *object,
+                                   int y);
+int
+lepton_picture_object_get_lower_y (const LeptonObject *object);
+
+void
+lepton_picture_object_set_lower_y (LeptonObject *object,
+                                   int y);
+int
 lepton_picture_object_get_angle (const LeptonObject *object);
 
 void
