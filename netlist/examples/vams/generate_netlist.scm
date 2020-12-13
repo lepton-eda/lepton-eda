@@ -24,7 +24,8 @@
 ;; This function only put together the gnetlist command for the
 ;; generating-netlist-call.
 
-(use-modules (lepton attrib)
+(use-modules (ice-9 format)
+             (lepton attrib)
              (lepton log)
              (lepton object)
              (lepton page))

@@ -20,6 +20,7 @@
 (define-module (netlist)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
+  #:use-module (ice-9 format)
   #:use-module (ice-9 match)
   #:use-module ((ice-9 rdelim) #:select (read-string) #:prefix rdelim:)
   #:use-module (ice-9 ftw)
