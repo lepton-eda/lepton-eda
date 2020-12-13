@@ -26,6 +26,7 @@
 
 (use-modules (srfi srfi-1)
              (srfi srfi-26)
+             (ice-9 format)
              (netlist port)
              (netlist schematic-component)
              (netlist schematic)
