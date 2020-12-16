@@ -18,11 +18,11 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-/*! \defgroup guile_c_iface gEDA Scheme API: C interface
- * \brief Interface to the gEDA Scheme API for programs written in C.
+/*! \defgroup guile_c_iface Lepton EDA Scheme API: C interface
+ * \brief Interface to the Lepton EDA Scheme API for programs written in C.
  *
  * This module contains a variety of functions for use in applications
- * that use libgeda and which need to make use of or extend the gEDA
+ * that use liblepton and which need to make use of or extend the Lepton EDA
  * Scheme API.
  *
  * To initialise the API, edascm_init() needs to be called before any
@@ -30,7 +30,7 @@
  * this module are called.  Normally, this will be called
  * automatically by liblepton_init().
  *
- * The Scheme API requires a libgeda #TOPLEVEL context to be available
+ * The Scheme API requires a liblepton #TOPLEVEL context to be available
  * at any given time.  The #TOPLEVEL can be set on a per-thread basis
  * using the edascm_dynwind_toplevel() or edascm_c_with_toplevel()
  * functions.  For example:
@@ -62,7 +62,7 @@
  * For more information on dynamic wind, see the Guile Reference
  * Manual.
  *
- * The remaining functions in this module allow you to convert gEDA
+ * The remaining functions in this module allow you to convert Lepton EDA
  * #OBJECT and #PAGE structures to and from Scheme values ("smobs").
  *
  * When an #OBJECT is created by Scheme code, it is permitted to be
@@ -109,7 +109,7 @@ void edascm_init_rc ();
  * for the convenience of the other C functions used by the Scheme
  * API. */
 
-/*! The tag used to identify gEDA data structures in Scheme. */
+/*! The tag used to identify Lepton EDA data structures in Scheme. */
 extern scm_t_bits geda_smob_tag;
 
 /*! The flags used to determine which C structure a smob contains. */
@@ -123,26 +123,26 @@ enum geda_smob_flags {
   GEDA_SMOB_GC_FLAG = 0x100
 };
 
-/*! Retrieve the type flags for a gEDA smob. */
+/*! Retrieve the type flags for a Lepton EDA smob. */
 #define EDASCM_SMOB_TYPE(x) (SCM_SMOB_FLAGS (x) & GEDA_SMOB_TYPE_MASK)
 
-/*! \brief Test the type of a gEDA smob.
+/*! \brief Test the type of a Lepton EDA smob.
  * \par Macro Description
- * Returns non-zero if \a x is a gEDA smob and the type flags of \a x
+ * Returns non-zero if \a x is a Lepton EDA smob and the type flags of \a x
  * match \a type.
  */
 #define EDASCM_SMOB_TYPEP(x, type) \
   (SCM_SMOB_PREDICATE (geda_smob_tag, x) && (EDASCM_SMOB_TYPE (x) == type))
 
-/*! \brief Test whether a gEDA smob is valid.
+/*! \brief Test whether a Lepton EDA smob is valid.
  * \par Macro Description
- * Returns non-zero if \a x is a gEDA smob and the pointer it contains
+ * Returns non-zero if \a x is a Lepton EDA smob and the pointer it contains
  * is valid.
  */
 #define EDASCM_SMOB_VALIDP(x) \
   (SCM_SMOB_PREDICATE (geda_smob_tag, x) && ((void *)SCM_SMOB_DATA (x) != NULL))
 
-/*! \brief Assert that a gEDA smob is valid.
+/*! \brief Assert that a Lepton EDA smob is valid.
  * \par Macro Description
  * Throw an error if assertions are enabled and \a x is invalid.
  */
