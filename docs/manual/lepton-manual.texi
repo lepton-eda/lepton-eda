@@ -145,6 +145,7 @@ Resources
 
 Schematic capture
 
+* Introduction to lepton-schematic::
 * Component libraries::
 
 Component libraries

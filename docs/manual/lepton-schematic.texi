@@ -4,8 +4,29 @@
 @cindex schematic capture
 
 @menu
+* Introduction to lepton-schematic::
 * Component libraries::
 @end menu
+
+@node Introduction to lepton-schematic, Component libraries, lepton-schematic, lepton-schematic
+@section Introduction to lepton-schematic
+@cindex lepton-schematic, introduction
+@cindex introduction to lepton-schematic
+
+@command{lepton-schematic} is a @dfn{schematic capture} application in
+the Lepton toolset.  It is mostly used for interactive creation of
+electronic @dfn{schematics} and @dfn{symbols}, though you can do some
+other graphical work in it, for example, draw block diagrams.
+Schematics represent electronic circuits, and symbols stand for their
+logical blocks such as components or subcircuits.  The connections
+between the blocks are represented by @dfn{nets} (wires).  Symbols can
+be obtained either from a standard Lepton @ref{Component libraries, ,
+component library}, from some net resources, or created by the user.
+
+After creation, schematics may be printed, converted to several image
+formats, including PDF, or exported to several netlist formats for
+processing by other tools.
+
 
 @node Component libraries,  , lepton-schematic, lepton-schematic
 @section Component libraries
