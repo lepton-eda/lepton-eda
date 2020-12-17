@@ -146,6 +146,8 @@ Resources
 Schematic capture
 
 * Introduction to lepton-schematic::
+* Running lepton-schematic::
+* lepton-schematic command line options::
 * Component libraries::
 
 Component libraries

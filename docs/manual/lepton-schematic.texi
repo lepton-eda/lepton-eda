@@ -5,10 +5,12 @@
 
 @menu
 * Introduction to lepton-schematic::
+* Running lepton-schematic::
+* lepton-schematic command line options::
 * Component libraries::
 @end menu
 
-@node Introduction to lepton-schematic, Component libraries, lepton-schematic, lepton-schematic
+@node Introduction to lepton-schematic, Running lepton-schematic, lepton-schematic, lepton-schematic
 @section Introduction to lepton-schematic
 @cindex lepton-schematic, introduction
 @cindex introduction to lepton-schematic
@@ -27,8 +29,51 @@ After creation, schematics may be printed, converted to several image
 formats, including PDF, or exported to several netlist formats for
 processing by other tools.
 
+@node Running lepton-schematic, lepton-schematic command line options, Introduction to lepton-schematic, lepton-schematic
+@section Running lepton-schematic
+@cindex Running lepton-schematic
+@cindex lepton-schematic, running
 
-@node Component libraries,  , lepton-schematic, lepton-schematic
+@command{lepton-schematic} is a GUI tool, so there are different ways
+of running it.  You can launch it from your window manager menu, by
+clicking onto an appropriate schematic or symbol icon (@file{.sch} or
+@file{.sym}), or from your terminal.  To launch it from menu, look up
+for @clicksequence{Development}, @clicksequence{Electronics}, or
+@clicksequence{Engineering} submenus.  The last way is most powerful
+and versatile.  You can run the command without any arguments just to
+open a new, untitled schematic:
+
+@example
+lepton-schematic
+@end example
+
+or you can specify the names of schematic and symbol files:
+
+@example
+lepton-schematic schematic.sch /path/to/symbol.sym
+@end example
+
+@command{lepton-schematic} accepts several @ref{lepton-schematic
+command line options, command line options}. Please look the
+@code{lepton-schematic(1)} manual page for more information.
+Alternatively, run:
+
+@example
+lepton-schematic --help
+@end example
+
+to get the brief description of all the options supported.
+
+
+
+@node lepton-schematic command line options, Component libraries, Running lepton-schematic, lepton-schematic
+@section lepton-schematic command line options
+@cindex lepton-schematic command line options
+@cindex lepton-schematic, command-line
+@cindex command line options, lepton-schematic
+
+
+@node Component libraries,  , lepton-schematic command line options, lepton-schematic
 @section Component libraries
 @cindex component libraries
 
