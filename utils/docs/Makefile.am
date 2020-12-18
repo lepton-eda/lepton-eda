@@ -28,7 +28,6 @@ EXTRA_DIST = \
 	README.lepton-tragesym \
 	TODO.lepton-renum \
 	why.lepton-renum \
-	logo.png \
 	utils.dox
 
 docsreadmedir = $(docdir)/readmes

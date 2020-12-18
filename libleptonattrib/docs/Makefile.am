@@ -1,7 +1,6 @@
 EXTRA_DIST = \
 	lepton-attrib.dox \
 	what-is-lepton-attrib.html \
-	logo.png \
 	lepton-attrib.1.in
 
 all:

@@ -1,6 +1,5 @@
 EXTRA_DIST = \
 	$(html_man_files) \
-	logo.png \
 	schematic.dox \
 	lepton-schematic.1.in
 
