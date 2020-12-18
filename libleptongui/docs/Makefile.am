@@ -1,15 +1,15 @@
 EXTRA_DIST = \
 	$(html_man_files) \
-	schematic.dox \
+	libleptongui.dox \
 	lepton-schematic.1.in
 
 all:
 	@echo 'Type: make doxygen to create doxygen documentation for gschem'
 
-doxygen: schematic.dox
+doxygen: libleptongui.dox
 	@echo 'Creating doxygen documentation for gschem...'
 if ENABLE_DOXYGEN
-	$(DOXYGEN) schematic.dox
+	$(DOXYGEN) libleptongui.dox
 else
 	@echo 'configure was not run with the --enable-doxygen switch.'
 	@echo 'The documentation cannot be built from the sources.'
