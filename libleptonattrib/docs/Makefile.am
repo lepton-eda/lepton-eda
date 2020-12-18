@@ -1,15 +1,15 @@
 EXTRA_DIST = \
-	lepton-attrib.dox \
+	libleptonattrib.dox \
 	what-is-lepton-attrib.html \
 	lepton-attrib.1.in
 
 all:
-	@echo 'Type: make doxygen  to create doxygen documentation for lepton-attrib'
+	@echo 'Type: make doxygen  to create doxygen documentation for libleptonattrib'
 
-doxygen: lepton-attrib.dox
-	@echo 'Creating doxygen documentation for lepton-attrib...'
+doxygen: libleptonattrib.dox
+	@echo 'Creating doxygen documentation for libleptonattrib...'
 if ENABLE_DOXYGEN
-	$(DOXYGEN) lepton-attrib.dox
+	$(DOXYGEN) libleptonattrib.dox
 else
 	@echo 'configure was not run with the --enable-doxygen switch.'
 	@echo 'The documentation cannot be built from the sources.'
