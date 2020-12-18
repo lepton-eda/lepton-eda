@@ -1,7 +1,9 @@
 SUBDIRS = images
 
-EXTRA_DIST =		libgeda-main.txt what-is-geda.html \
-			what-is-libgeda.html logo.png liblepton.dox README.libleptonrenderer
+EXTRA_DIST = \
+	logo.png \
+	liblepton.dox \
+	README.libleptonrenderer
 
 SUFFIXES =		.html .tex .pdf
 

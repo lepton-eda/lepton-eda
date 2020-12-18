@@ -1,7 +1,0 @@
-/*! \mainpage lepton-schematic - The Lepton Electronic Design Automation schematic capture tool.
-\image html logo.png
-\section geda-intro Lepton EDA Introduction
-    \htmlinclude what-is-geda.html
-\section gschem-intro gSchem Introduction
-    \htmlinclude what-is-lepton-schematic.html
-*/

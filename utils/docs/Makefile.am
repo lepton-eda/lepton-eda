@@ -29,10 +29,7 @@ EXTRA_DIST = \
 	TODO.lepton-renum \
 	why.lepton-renum \
 	logo.png \
-	utils-main.txt \
-	utils.dox \
-	what-is-geda.html \
-	what-is-utils.html
+	utils.dox
 
 docsreadmedir = $(docdir)/readmes
 docsreadme_DATA = \
