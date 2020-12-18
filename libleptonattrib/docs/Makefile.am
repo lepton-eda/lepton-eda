@@ -1,5 +1,8 @@
-EXTRA_DIST = lepton-attrib.dox what-is-lepton-attrib.html what-is-geda.html \
-	     attrib-main.txt logo.png lepton-attrib.1.in
+EXTRA_DIST = \
+	lepton-attrib.dox \
+	what-is-lepton-attrib.html \
+	logo.png \
+	lepton-attrib.1.in
 
 all:
 	@echo 'Type: make doxygen  to create doxygen documentation for lepton-attrib'
