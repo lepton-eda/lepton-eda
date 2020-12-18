@@ -1,7 +1,7 @@
 SUBDIRS = images
 
 EXTRA_DIST = \
-	logo.png \
+	geda-logo.png \
 	liblepton.dox \
 	README.libleptonrenderer
 
