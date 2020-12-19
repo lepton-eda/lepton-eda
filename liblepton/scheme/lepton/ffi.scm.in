@@ -31,6 +31,7 @@
             s_clib_add_directory
             s_clib_add_scm
             s_clib_init
+            s_menu_add_entry
             s_toplevel_page_current))
 
 (define liblepton
@@ -62,3 +63,5 @@
 ;;; s_attrib.c
 (define-lff s_attrib_uniq int (list '*))
 (define-lff s_attrib_add_entry int (list '*))
+;;; s_menu.c
+(define-lff s_menu_add_entry int '(* *))

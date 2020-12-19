@@ -25,15 +25,9 @@
 
   #:export (add-menu))
 
-(define add-menu-entry!
-  (pointer->procedure
-   int
-   (dynamic-func "s_menu_add_entry" liblepton)
-   (list '* '*)))
-
 (define (add-menu name items)
   (and (string? name)
        (list? items)
-       (add-menu-entry! (string->pointer name)
-                        (scm->pointer items))
+       (s_menu_add_entry (string->pointer name)
+                         (scm->pointer items))
        #t))
