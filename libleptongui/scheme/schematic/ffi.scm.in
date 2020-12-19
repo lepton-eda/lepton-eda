@@ -19,7 +19,29 @@
 (define-module (schematic ffi)
   #:use-module (system foreign)
 
-  #:export (libleptongui))
+  #:export (libleptongui
+            g_init_action
+            g_init_attrib
+            g_init_builtins
+            g_init_hook
+            g_init_keys
+            g_init_select
+            g_init_util
+            g_init_window
+            g_register_funcs
+            gschem_toplevel_get_toplevel
+            o_buffer_init
+            o_undo_init
+            scheme_init_undo
+            set_quiet_mode
+            set_render_placeholders
+            set_verbose_mode
+            x_color_init
+            x_stroke_init
+            x_widgets_show_log
+            x_window_new
+            x_window_open_page
+            x_window_set_current_page))
 
 (define libleptongui
   (dynamic-link (or (getenv "LIBLEPTONGUI") "@LIBLEPTONGUI@")))
@@ -34,3 +56,35 @@
                            (dynamic-func (symbol->string (quote name)) libleptongui)
                            args))))
          (force proc))))))
+
+
+(define-lff g_init_action void '())
+(define-lff g_init_attrib void '())
+(define-lff g_init_builtins void '())
+(define-lff g_init_hook void '())
+(define-lff g_init_keys void '())
+(define-lff g_init_select void '())
+(define-lff g_init_util void '())
+(define-lff g_init_window void '())
+(define-lff g_register_funcs void '())
+(define-lff gschem_toplevel_get_toplevel '* '(*))
+(define-lff o_buffer_init void '())
+(define-lff o_undo_init void '())
+(define-lff scheme_init_undo void '())
+(define-lff set_quiet_mode void '())
+(define-lff set_render_placeholders void '())
+(define-lff set_verbose_mode void '())
+(define-lff x_color_init void '())
+(define-lff x_widgets_show_log void (list '*))
+(define-lff x_window_new '* '())
+(define-lff x_window_open_page '* '(* *))
+(define-lff x_window_set_current_page void '(* *))
+
+;;; This is a special case: the function may be not defined in C
+;;; if libstroke was not found on the configure stage.
+(define (x_stroke_init)
+  (let ((func (delay (false-if-exception (dynamic-func "x_stroke_init"
+                                                       libleptongui)))))
+    (and (force func)
+         (let ((proc (delay (pointer->procedure void (force func) '()))))
+           ((force proc))))))
