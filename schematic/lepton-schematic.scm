@@ -42,91 +42,91 @@ exec @GUILE@ -s "$0" "$@"
                               (schematic ffi)
                               (schematic ffi gtk)))
 
-(define register-funcs
+(define g_register_funcs
   (pointer->procedure
    void
    (dynamic-func "g_register_funcs" libleptongui)
    '()))
 
-(define init-window
+(define g_init_window
   (pointer->procedure
    void
    (dynamic-func "g_init_window" libleptongui)
    '()))
 
-(define init-select
+(define g_init_select
   (pointer->procedure
    void
    (dynamic-func "g_init_select" libleptongui)
    '()))
 
-(define init-hook
+(define g_init_hook
   (pointer->procedure
    void
    (dynamic-func "g_init_hook" libleptongui)
    '()))
 
-(define init-action
+(define g_init_action
   (pointer->procedure
    void
    (dynamic-func "g_init_action" libleptongui)
    '()))
 
-(define init-attrib
+(define g_init_attrib
   (pointer->procedure
    void
    (dynamic-func "g_init_attrib" libleptongui)
    '()))
 
-(define init-keys
+(define g_init_keys
   (pointer->procedure
    void
    (dynamic-func "g_init_keys" libleptongui)
    '()))
 
-(define init-builtins
+(define g_init_builtins
   (pointer->procedure
    void
    (dynamic-func "g_init_builtins" libleptongui)
    '()))
 
-(define init-util
+(define g_init_util
   (pointer->procedure
    void
    (dynamic-func "g_init_util" libleptongui)
    '()))
 
-(define init-undo
+(define scheme_init_undo
   (pointer->procedure
    void
    (dynamic-func "scheme_init_undo" libleptongui)
    '()))
 
-(define init-buffers
+(define o_buffer_init
   (pointer->procedure
    void
    (dynamic-func "o_buffer_init" libleptongui)
    '()))
 
-(define init-color
+(define x_color_init
   (pointer->procedure
    void
    (dynamic-func "x_color_init" libleptongui)
    '()))
 
-(define init-undo*
+(define o_undo_init
   (pointer->procedure
    void
    (dynamic-func "o_undo_init" libleptongui)
    '()))
 
-(define set-quiet-mode!
+(define set_quiet_mode
   (pointer->procedure
    void
    (dynamic-func "set_quiet_mode" libleptongui)
    '()))
 
-(define set-verbose-mode!
+(define set_verbose_mode
   (pointer->procedure
    void
    (dynamic-func "set_verbose_mode" libleptongui)
@@ -153,16 +153,16 @@ exec @GUILE@ -s "$0" "$@"
   (set! %load-compiled-path (cons "@ccachedir@"
                                   %load-compiled-path)))
 (define (register-guile-funcs)
-  (register-funcs)
-  (init-window)
-  (init-select)
-  (init-hook)
-  (init-action)
-  (init-attrib)
-  (init-keys)
-  (init-builtins)
-  (init-util)
-  (init-undo))
+  (g_register_funcs)
+  (g_init_window)
+  (g_init_select)
+  (g_init_hook)
+  (g_init_action)
+  (g_init_attrib)
+  (g_init_keys)
+  (g_init_builtins)
+  (g_init_util)
+  (scheme_init_undo))
 
 (define (precompile-run)
   (let ((script (getenv "LEPTON_SCM_PRECOMPILE_SCRIPT")))
@@ -231,11 +231,11 @@ Lepton EDA homepage: ~S\n")
     (list
      (option '(#\q "quiet") #f #f
              (lambda (opt name arg seeds)
-               (set-quiet-mode!)
+               (set_quiet_mode)
                seeds))
      (option '(#\v "verbose") #f #f
              (lambda (opt name arg seeds)
-               (set-verbose-mode!)
+               (set_verbose_mode)
                seeds))
      (option '(#\L) #t #f
              (lambda (opt name arg seeds)
@@ -420,15 +420,15 @@ Run `~A --help' for more information.\n")
 (gtk_init %null-pointer %null-pointer)
 
 ;;; Init global buffers.
-(init-buffers)
+(o_buffer_init)
 
 ;;; Register guile (scheme) functions
 (register-guile-funcs)
 
 ;;; Initialise color map (need to do this before reading rc
 ;;; files).
-(init-color)
-(init-undo*)
+(x_color_init)
+(o_undo_init)
 
 ;;; Parse custom GTK resource files.
 (parse-gtkrc)
