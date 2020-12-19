@@ -81,25 +81,25 @@ Returns #f (false) if wrong index is specified."
   (assq-ref %color-name-reverse-map id))
 
 
-(define colors-count
+(define colors_count
   (pointer->procedure
    size_t
    (dynamic-func "colors_count" liblepton)
    '()))
 
-(define color-map-id->color
+(define lepton_colormap_color_by_id
   (pointer->procedure
    '*
    (dynamic-func "lepton_colormap_color_by_id" liblepton)
    (list '* size_t)))
 
-(define colormap-disable-color!
+(define lepton_colormap_disable_color
   (pointer->procedure
    void
    (dynamic-func "lepton_colormap_disable_color" liblepton)
    (list '* size_t)))
 
-(define colormap-set-color!
+(define lepton_colormap_set_color
   (pointer->procedure
    void
    (dynamic-func "lepton_colormap_set_color" liblepton)
@@ -112,7 +112,7 @@ Returns #f (false) if wrong index is specified."
 (define (color-map->scm color-map)
 
   (define (id->color id)
-    (let ((color (parse-c-struct (color-map-id->color color-map id)
+    (let ((color (parse-c-struct (lepton_colormap_color_by_id color-map id)
                                  ;; '(r g b a enabled)
                                  (list uint8 uint8 uint8 uint8 int))))
       (match color
@@ -126,7 +126,7 @@ Returns #f (false) if wrong index is specified."
                   (G_ "Wrong C color struct: ~S")
                   color)))))
 
-  (map id->color (iota (colors-count))))
+  (map id->color (iota (colors_count))))
 
 
 ;;; Decode a hexadecimal RGB or RGBA color code.
@@ -160,7 +160,7 @@ Returns #f (false) if wrong index is specified."
 
 (define (valid-color-id? id)
   (and (>= id 0)
-       (< id (colors-count))))
+       (< id (colors_count))))
 
 (define (scm->color-map color-map ls)
 
@@ -204,8 +204,8 @@ Returns #f (false) if wrong index is specified."
     (match (parse-entry entry)
       ((id enabled r g b a)
        (if enabled
-           (colormap-set-color! color-map id r g b a)
-           (colormap-disable-color! color-map id)))
+           (lepton_colormap_set_color color-map id r g b a)
+           (lepton_colormap_disable_color color-map id)))
       (_ #f)))
 
   (for-each process-entry ls))
@@ -247,7 +247,7 @@ Returns #f (false) if wrong index is specified."
                      display-outline-colors
                      "display-outline-color-map"))
 
-(define print-colors-array
+(define print_colors_array
   (pointer->procedure
    '*
    (dynamic-func "print_colors_array" liblepton)
@@ -255,5 +255,5 @@ Returns #f (false) if wrong index is specified."
 
 (define* (print-color-map #:optional color-map)
   (process-color-map color-map
-                     (print-colors-array)
+                     (print_colors_array)
                      "print-color-map"))
