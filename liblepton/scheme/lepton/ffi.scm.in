@@ -24,6 +24,10 @@
             lepton_colormap_disable_color
             lepton_colormap_set_color
             print_colors_array
+            s_clib_add_command
+            s_clib_add_directory
+            s_clib_add_scm
+            s_clib_init
             s_toplevel_page_current))
 
 (define liblepton
@@ -45,4 +49,8 @@
 (define-lff lepton_colormap_disable_color void (list '* size_t))
 (define-lff lepton_colormap_set_color void (list '* size_t uint8 uint8 uint8 uint8))
 (define-lff print_colors_array '* '())
+(define-lff s_clib_add_command '* '(* * *))
+(define-lff s_clib_add_directory '* '(* *))
+(define-lff s_clib_add_scm '* '(* * *))
+(define-lff s_clib_init void '())
 (define-lff s_toplevel_page_current '* (list '*))
