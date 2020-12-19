@@ -222,46 +222,51 @@ Run `~A --help' for more information.\n")
           (loop (cdr sys-dirs))))))
 
 
+
+(define (get-absolute-filenames filename-list cwd)
+  (define (get-absolute-filename filename)
+    (if (absolute-file-name? filename)
+        ;; Path is already absolute so no need to do any concat of
+        ;; cwd.
+        filename
+        ;; Get absolute path.  At this point the filename might be
+        ;; unnormalized, like /path/to/foo/../bar/baz.sch.  Bad
+        ;; filenames will be normalized in f_open (called by
+        ;; x_window_open_page). This works for Linux and MINGW32.
+        (string-append cwd
+                       file-name-separator-string
+                       filename)))
+
+  (map get-absolute-filename filename-list))
+
+
 (define (main file-list)
-  ;; Create a new window and associated TOPLEVEL object:
-  (let ((window (x_window_new))
-        (cwd (getcwd)))
-    (let loop ((ls file-list))
-      (or (null? ls)
-          (let* ((element (car ls))
-                 (filename (if (absolute-file-name? element)
-                               ;; Path is already absolute so no
-                               ;; need to do any concat of cwd.
-                               element
-                               ;; Get absolute path.
-                               (string-append cwd
-                                              file-name-separator-string
-                                              element))))
+  ;; Create a new window and associated TOPLEVEL object.
+  (define window (x_window_new))
+  ;; Current directory.
+  (define cwd (getcwd))
 
-            ;; SDB notes: at this point the filename might be
-            ;; unnormalized, like /path/to/foo/../bar/baz.sch.
-            ;; Bad filenames will be normalized in f_open (called
-            ;; by x_window_open_page). This works for Linux and
-            ;; MINGW32.
-            (x_window_open_page window (string->pointer filename))
-            (loop (cdr ls)))))
+  (define (open-page filename)
+    (x_window_open_page window (string->pointer filename)))
 
-    ;; Update the window to show the current page:
-    (let* ((current-page
-            (s_toplevel_page_current (gschem_toplevel_get_toplevel window)))
-           (page (if (eq? current-page %null-pointer)
-                     (x_window_open_page window %null-pointer)
-                     current-page)))
+  (for-each open-page (get-absolute-filenames file-list cwd))
 
-      (x_window_set_current_page window page))
+  ;; Update the window to show the current page:
+  (let* ((current-page
+          (s_toplevel_page_current (gschem_toplevel_get_toplevel window)))
+         (page (if (eq? current-page %null-pointer)
+                   (x_window_open_page window %null-pointer)
+                   current-page)))
 
-    ;; Open up log window on startup if requested in config.
-    (let ((cfg (path-config-context (getcwd))))
-      (when (string= (config-string cfg "schematic" "log-window")
-                     "startup")
-        (x_widgets_show_log window)))
-    ;; Return the new window.
-    window))
+    (x_window_set_current_page window page))
+
+  ;; Open up log window on startup if requested in config.
+  (let ((cfg (path-config-context (getcwd))))
+    (when (string= (config-string cfg "schematic" "log-window")
+                   "startup")
+      (x_widgets_show_log window)))
+  ;; Return the new window.
+  window)
 
 
 ;;; Init logging.
