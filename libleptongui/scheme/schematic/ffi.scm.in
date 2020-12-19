@@ -23,3 +23,14 @@
 
 (define libleptongui
   (dynamic-link (or (getenv "LIBLEPTONGUI") "@LIBLEPTONGUI@")))
+
+;;; Brief syntax macro for defining lazy foreign functions.
+(define-syntax define-lff
+  (syntax-rules ()
+    ((_ name type args)
+     (define name
+       (let ((proc (delay (pointer->procedure
+                           type
+                           (dynamic-func (symbol->string (quote name)) libleptongui)
+                           args))))
+         (force proc))))))

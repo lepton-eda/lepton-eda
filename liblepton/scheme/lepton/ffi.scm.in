@@ -24,8 +24,15 @@
 (define liblepton
   (dynamic-link (or (getenv "LIBLEPTON") "@LIBLEPTON@")))
 
-(define s_toplevel_page_current
-  (pointer->procedure
-   '*
-   (dynamic-func "s_toplevel_page_current" liblepton)
-   (list '*)))
+;;; Brief syntax macro for defining lazy foreign functions.
+(define-syntax define-lff
+  (syntax-rules ()
+    ((_ name type args)
+     (define name
+       (let ((proc (delay (pointer->procedure
+                           type
+                           (dynamic-func (symbol->string (quote name)) liblepton)
+                           args))))
+         (force proc))))))
+
+(define-lff s_toplevel_page_current '* (list '*))
