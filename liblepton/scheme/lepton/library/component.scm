@@ -59,30 +59,6 @@
   (name symbol-library-name set-symbol-library-name!)
   (path symbol-library-path set-symbol-library-path!))
 
-(define s_clib_init
-  (pointer->procedure
-   void
-   (dynamic-func "s_clib_init" liblepton)
-   '()))
-
-(define s_clib_add_directory
-  (pointer->procedure
-   '*
-   (dynamic-func "s_clib_add_directory" liblepton)
-   '(* *)))
-
-(define s_clib_add_command
-  (pointer->procedure
-   '*
-   (dynamic-func "s_clib_add_command" liblepton)
-   '(* * *)))
-
-(define s_clib_add_scm
-  (pointer->procedure
-   '*
-   (dynamic-func "s_clib_add_scm" liblepton)
-   '(* * *)))
-
 
 (define %component-libraries '())
 (define (component-libraries)
