@@ -19,8 +19,7 @@
 (define-module (schematic ffi)
   #:use-module (system foreign)
 
-  #:export (libleptongui
-            g_init_action
+  #:export (g_init_action
             g_init_attrib
             g_init_builtins
             g_init_hook
