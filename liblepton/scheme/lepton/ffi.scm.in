@@ -25,6 +25,8 @@
             lepton_colormap_disable_color
             lepton_colormap_set_color
             print_colors_array
+            s_attrib_uniq
+            s_attrib_add_entry
             s_clib_add_command
             s_clib_add_directory
             s_clib_add_scm
@@ -57,3 +59,6 @@
 (define-lff s_toplevel_page_current '* (list '*))
 ;;; g_rc.c
 (define-lff g_rc_parse void '(* * *))
+;;; s_attrib.c
+(define-lff s_attrib_uniq int (list '*))
+(define-lff s_attrib_add_entry int (list '*))

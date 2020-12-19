@@ -47,22 +47,6 @@
 (define-public add-attrib! %add-attrib!)
 
 
-(define s_attrib_uniq
-  (let ((proc (delay
-                (pointer->procedure
-                 int
-                 (dynamic-func "s_attrib_uniq" liblepton)
-                 (list '*)))))
-    (force proc)))
-
-(define s_attrib_add_entry
-  (let ((proc (delay
-                (pointer->procedure
-                 int
-                 (dynamic-func "s_attrib_add_entry" liblepton)
-                 (list '*)))))
-    (force proc)))
-
 (define (attribute-name name)
   "Adds attribute NAME to the list of attributes shown in the
 \"Add attribute\" and \"Edit attribute\" dialogs.  Returns #t if
