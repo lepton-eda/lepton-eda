@@ -81,30 +81,6 @@ Returns #f (false) if wrong index is specified."
   (assq-ref %color-name-reverse-map id))
 
 
-(define colors_count
-  (pointer->procedure
-   size_t
-   (dynamic-func "colors_count" liblepton)
-   '()))
-
-(define lepton_colormap_color_by_id
-  (pointer->procedure
-   '*
-   (dynamic-func "lepton_colormap_color_by_id" liblepton)
-   (list '* size_t)))
-
-(define lepton_colormap_disable_color
-  (pointer->procedure
-   void
-   (dynamic-func "lepton_colormap_disable_color" liblepton)
-   (list '* size_t)))
-
-(define lepton_colormap_set_color
-  (pointer->procedure
-   void
-   (dynamic-func "lepton_colormap_set_color" liblepton)
-   (list '* size_t uint8 uint8 uint8 uint8)))
-
 ;;; Transforms COLOR-MAP into a list of elements '(id color) where
 ;;; each color is a string representing the color in a hexadecimal
 ;;; "#RRGGBB" or "#RRGGBBAA" code. The shorter form is used when
@@ -246,12 +222,6 @@ Returns #f (false) if wrong index is specified."
   (process-color-map color-map
                      display-outline-colors
                      "display-outline-color-map"))
-
-(define print_colors_array
-  (pointer->procedure
-   '*
-   (dynamic-func "print_colors_array" liblepton)
-   '()))
 
 (define* (print-color-map #:optional color-map)
   (process-color-map color-map

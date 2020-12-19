@@ -19,6 +19,11 @@
   #:use-module (system foreign)
 
   #:export (liblepton
+            colors_count
+            lepton_colormap_color_by_id
+            lepton_colormap_disable_color
+            lepton_colormap_set_color
+            print_colors_array
             s_toplevel_page_current))
 
 (define liblepton
@@ -35,4 +40,9 @@
                            args))))
          (force proc))))))
 
+(define-lff colors_count size_t '())
+(define-lff lepton_colormap_color_by_id '* (list '* size_t))
+(define-lff lepton_colormap_disable_color void (list '* size_t))
+(define-lff lepton_colormap_set_color void (list '* size_t uint8 uint8 uint8 uint8))
+(define-lff print_colors_array '* '())
 (define-lff s_toplevel_page_current '* (list '*))
