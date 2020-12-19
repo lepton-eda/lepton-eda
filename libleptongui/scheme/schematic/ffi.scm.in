@@ -29,6 +29,9 @@
             g_init_util
             g_init_window
             g_register_funcs
+            generic_confirm_dialog
+            generic_filesel_dialog
+            generic_msg_dialog
             gschem_toplevel_get_toplevel
             o_buffer_init
             o_undo_init
@@ -79,6 +82,10 @@
 (define-lff x_window_new '* '())
 (define-lff x_window_open_page '* '(* *))
 (define-lff x_window_set_current_page void '(* *))
+;;; x_dialog.c
+(define-lff generic_confirm_dialog int '(*))
+(define-lff generic_filesel_dialog '* (list '* '* int))
+(define-lff generic_msg_dialog void '(*))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.

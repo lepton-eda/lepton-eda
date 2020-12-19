@@ -28,33 +28,15 @@
             schematic-confirm-dialog
             schematic-fileselect-dialog))
 
-(define generic-msg-dialog
-  (pointer->procedure
-   void
-   (dynamic-func "generic_msg_dialog" libleptongui)
-   (list '*)))
-
 (define (schematic-message-dialog message)
   "Opens GTK message dialog with MESSAGE and one OK button."
-  (generic-msg-dialog (string->pointer message)))
-
-(define generic-confirm-dialog
-  (pointer->procedure
-   int
-   (dynamic-func "generic_confirm_dialog" libleptongui)
-   (list '*)))
+  (generic_msg_dialog (string->pointer message)))
 
 (define (schematic-confirm-dialog message)
   "Opens GTK confirmation dialog with MESSAGE and buttons YES and
 NO.  Returns #t if the button YES was pressed.  Otherwise returns
 #f."
-  (not (zero? (generic-confirm-dialog (string->pointer message)))))
-
-(define generic-fileselect-dialog
-  (pointer->procedure
-   '*
-   (dynamic-func "generic_filesel_dialog" libleptongui)
-   (list '* '* int)))
+  (not (zero? (generic_confirm_dialog (string->pointer message)))))
 
 (define (schematic-fileselect-dialog message template . flags)
   "Opens GTK file selection dialog with MESSAGE as dialog's title.
@@ -79,8 +61,8 @@ of selected file, or #f if nothing has been selected."
       result))
 
   (let* ((bit-flags (apply logior (filter-map flag->int flags)))
-         (str-pointer (generic-fileselect-dialog (string->pointer message)
-                                                 (string->pointer template)
-                                                 bit-flags)))
+         (str-pointer (generic_filesel_dialog (string->pointer message)
+                                              (string->pointer template)
+                                              bit-flags)))
     (and (not (null-pointer? str-pointer))
          (pointer->string str-pointer))))
