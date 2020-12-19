@@ -76,15 +76,9 @@ path (rather than the regular Scheme load path)."
   "Parses RC file RC-NAME in the namespace of PROGRAM-NAME.
 RC-NAME should be a basename of RC file, such as, for example,
 \"gafrc\"."
-  (define rc-parse
-    (pointer->procedure
-     void
-     (dynamic-func "g_rc_parse" liblepton)
-     (list '* '* '*)))
-
-  (rc-parse (string->pointer program-name)
-            (string->pointer rc-name)
-            %null-pointer))
+  (g_rc_parse (string->pointer program-name)
+              (string->pointer rc-name)
+              %null-pointer))
 
 
 ;;; List of processed rc directories.

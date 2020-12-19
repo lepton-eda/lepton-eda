@@ -20,6 +20,7 @@
 
   #:export (liblepton
             colors_count
+            g_rc_parse
             lepton_colormap_color_by_id
             lepton_colormap_disable_color
             lepton_colormap_set_color
@@ -54,3 +55,5 @@
 (define-lff s_clib_add_scm '* '(* * *))
 (define-lff s_clib_init void '())
 (define-lff s_toplevel_page_current '* (list '*))
+;;; g_rc.c
+(define-lff g_rc_parse void '(* * *))
