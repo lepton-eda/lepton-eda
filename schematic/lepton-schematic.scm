@@ -222,6 +222,12 @@ Run `~A --help' for more information.\n")
           (loop (cdr sys-dirs))))))
 
 
+(define (open-log-window)
+  (let ((cfg (path-config-context (getcwd))))
+    (when (string= (config-string cfg "schematic" "log-window")
+                   "startup")
+      (x_widgets_show_log window))))
+
 
 (define (get-absolute-filenames filename-list cwd)
   (define (get-absolute-filename filename)
@@ -249,6 +255,9 @@ Run `~A --help' for more information.\n")
   (define (open-page filename)
     (x_window_open_page window (string->pointer filename)))
 
+  ;; Open up log window on startup if requested in config.
+  (open-log-window)
+
   (for-each open-page (get-absolute-filenames file-list cwd))
 
   ;; Update the window to show the current page:
@@ -260,11 +269,6 @@ Run `~A --help' for more information.\n")
 
     (x_window_set_current_page window page))
 
-  ;; Open up log window on startup if requested in config.
-  (let ((cfg (path-config-context (getcwd))))
-    (when (string= (config-string cfg "schematic" "log-window")
-                   "startup")
-      (x_widgets_show_log window)))
   ;; Return the new window.
   window)
 
