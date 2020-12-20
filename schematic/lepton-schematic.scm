@@ -281,13 +281,13 @@ Run `~A --help' for more information.\n")
 (display-lepton-version #:print-name #t #:log #t)
 
 ;;; Precompilation.
-(if (precompile-mode)
-    (precompile-prepare)
-    (set-guile-compiled-path))
-
-;;; Run precompilation.
+;;; If precompilation is requested, run it and exit.
 (when (precompile-mode)
+  (precompile-prepare)
   (primitive-exit (precompile-run)))
+
+;;; Set up paths for Lepton's compiled Scheme modules.
+(set-guile-compiled-path)
 
 ;;; Initialize GTK.
 (gtk_init %null-pointer %null-pointer)
