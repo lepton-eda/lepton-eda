@@ -23,6 +23,7 @@ exec @GUILE@ -s "$0" "$@"
 
 
 (use-modules (ice-9 match)
+             (srfi srfi-1)
              (srfi srfi-37)
              (system foreign))
 
@@ -261,17 +262,15 @@ Run `~A --help' for more information.\n")
   ;; Open up log window on startup if requested in config.
   (open-log-window)
 
-  (for-each open-page
-            (string-ls->pointer-ls (get-absolute-filenames file-list cwd)))
+  (let* ((filenames (get-absolute-filenames file-list cwd))
+         (*filenames (if (null? filenames)
+                         (list %null-pointer)
+                         (string-ls->pointer-ls filenames)))
+         (*pages (map open-page *filenames))
+         (*current-page (last *pages)))
 
-  ;; Update the window to show the current page:
-  (let* ((current-page
-          (s_toplevel_page_current (gschem_toplevel_get_toplevel window)))
-         (page (if (eq? current-page %null-pointer)
-                   (x_window_open_page window %null-pointer)
-                   current-page)))
-
-    (x_window_set_current_page window page))
+    ;; Update the window to show the current page:
+    (x_window_set_current_page window *current-page))
 
   ;; Return the new window.
   window)
