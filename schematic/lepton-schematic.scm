@@ -252,13 +252,17 @@ Run `~A --help' for more information.\n")
   ;; Current directory.
   (define cwd (getcwd))
 
-  (define (open-page filename)
-    (x_window_open_page window (string->pointer filename)))
+  (define (open-page *filename)
+    (x_window_open_page window *filename))
+
+  (define (string-ls->pointer-ls ls)
+    (map string->pointer ls))
 
   ;; Open up log window on startup if requested in config.
   (open-log-window)
 
-  (for-each open-page (get-absolute-filenames file-list cwd))
+  (for-each open-page
+            (string-ls->pointer-ls (get-absolute-filenames file-list cwd)))
 
   ;; Update the window to show the current page:
   (let* ((current-page
