@@ -120,9 +120,6 @@ DEFINE_G_KEYS(options_show_coord_window)
 DEFINE_G_KEYS(options_select_font)
 DEFINE_G_KEYS(options_draw_grips)
 
-DEFINE_G_KEYS(help_about)
-DEFINE_G_KEYS(help_hotkeys)
-
 /* be sure that you don't use the widget parameter in this one, since it is
 being called with a null, I suppose we should call it with the right param.
 hack */

@@ -480,7 +480,7 @@
 ;;;; Configuration actions
 
 (define-action-public (&help-hotkeys #:label (G_ "Show Hotkeys") #:icon "preferences-desktop-keyboard-shortcuts")
-  (%help-hotkeys))
+  (run-callback i_callback_help_hotkeys "&help-hotkeys"))
 
 (define-action-public (&options-grid #:label (G_ "Switch Grid Style"))
   (%options-grid))
@@ -549,8 +549,7 @@ found, shows a dialog with an error message."
 
 
 (define-action-public (&help-about #:label (G_ "About lepton-schematic") #:icon "gtk-about")
-  (%help-about))
-
+  (run-callback i_callback_help_about "&help-about"))
 
 
 ; Backward compatibility:

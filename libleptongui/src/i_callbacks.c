@@ -2723,7 +2723,8 @@ DEFINE_I_CALLBACK(cancel)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(help_about)
+void
+i_callback_help_about (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -2736,7 +2737,8 @@ DEFINE_I_CALLBACK(help_about)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(help_hotkeys)
+void
+i_callback_help_hotkeys (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
