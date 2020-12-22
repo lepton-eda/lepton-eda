@@ -196,7 +196,6 @@ void i_callback_file_save_as(gpointer data, guint callback_action, GtkWidget *wi
 void i_callback_file_print(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_write_png(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_close(gpointer data, guint callback_action, GtkWidget *widget);
-int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_file_quit(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_edit_undo(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_toolbar_edit_undo(GtkWidget *widget, gpointer data);

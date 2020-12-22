@@ -360,25 +360,6 @@ DEFINE_I_CALLBACK(file_close)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *  This function is called when you send a delete event to gschem
- *
- *  \note
- *  Also DON'T ref the widget parameter since they can be null
- *  \todo Need a cleaner way of doing this. This routine is used by the
- *  delete event signals
- */
-int i_callback_close(gpointer data, guint callback_action, GtkWidget *widget)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_val_if_fail ((w_current != NULL), FALSE);
-  i_callback_file_close(w_current, 0, widget);
-  return(FALSE);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
  *
  */
 DEFINE_I_CALLBACK(file_quit)
