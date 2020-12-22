@@ -100,6 +100,14 @@
             i_callback_options_show_log_window
             i_callback_options_snap
             i_callback_options_snap_size
+            i_callback_page_close
+            i_callback_page_manager
+            i_callback_page_next
+            i_callback_page_next_tab
+            i_callback_page_prev
+            i_callback_page_prev_tab
+            i_callback_page_print
+            i_callback_page_revert
             i_callback_view_bw_colors
             i_callback_view_color_edit
             i_callback_view_dark_colors
@@ -258,6 +266,14 @@
 (define-lff i_callback_view_zoom_full void '(* *))
 (define-lff i_callback_view_zoom_in void '(* *))
 (define-lff i_callback_view_zoom_out void '(* *))
+(define-lff i_callback_page_close void '(* *))
+(define-lff i_callback_page_manager void '(* *))
+(define-lff i_callback_page_next void '(* *))
+(define-lff i_callback_page_next_tab void '(* *))
+(define-lff i_callback_page_prev void '(* *))
+(define-lff i_callback_page_prev_tab void '(* *))
+(define-lff i_callback_page_print void '(* *))
+(define-lff i_callback_page_revert void '(* *))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.
