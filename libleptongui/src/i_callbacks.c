@@ -28,10 +28,10 @@
  *
  */
 /* every i_callback functions have the same footprint */
-#define DEFINE_I_CALLBACK(name)				\
-	void i_callback_ ## name(gpointer data,		\
-			         guint callback_action,	\
-			         GtkWidget *widget)
+#define DEFINE_I_CALLBACK(name)                         \
+        void i_callback_ ## name(gpointer data,         \
+                                 guint callback_action, \
+                                 GtkWidget *widget)
 
 /*! \section callback-intro Callback Functions
  * right now, all callbacks except for the ones on the File menu have
@@ -878,7 +878,7 @@ DEFINE_I_CALLBACK(edit_embed)
       o_current = (OBJECT *) s_current->data;
       g_assert (o_current != NULL);
       if ( (o_current->type == OBJ_COMPONENT) ||
-	   (o_current->type == OBJ_PICTURE) ) {
+           (o_current->type == OBJ_PICTURE) ) {
         o_embed (o_current);
       }
       s_current = g_list_next(s_current);
@@ -1578,9 +1578,9 @@ DEFINE_I_CALLBACK(page_revert)
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-					  GTK_RESPONSE_YES,
-					  GTK_RESPONSE_NO,
-					  -1);
+                                          GTK_RESPONSE_YES,
+                                          GTK_RESPONSE_NO,
+                                          -1);
 
   response = gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
@@ -2841,7 +2841,7 @@ DEFINE_I_CALLBACK(options_draw_grips)
  *  signal to the app
  */
 gboolean i_callback_close_wm ( GtkWidget *widget, GdkEvent *event,
-	                   gpointer data )
+                           gpointer data )
 {
 
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
