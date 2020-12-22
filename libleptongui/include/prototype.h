@@ -28,9 +28,6 @@ EdascmHookProxy *g_hook_new_proxy_by_name (const char *name);
 /* g_keys.c */
 void g_keys_reset (GschemToplevel *w_current);
 int g_keys_execute(GschemToplevel *w_current, GdkEventKey *event);
-SCM g_keys_clipboard_copy(SCM rest);
-SCM g_keys_clipboard_cut(SCM rest);
-SCM g_keys_clipboard_paste(SCM rest);
 SCM g_keys_buffer_copy1(SCM rest);
 SCM g_keys_buffer_copy2(SCM rest);
 SCM g_keys_buffer_copy3(SCM rest);
@@ -210,9 +207,9 @@ void i_callback_page_next_tab(gpointer data, guint callback_action, GtkWidget *w
 void i_callback_page_prev_tab(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_revert(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_page_print(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_clipboard_copy(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_clipboard_cut(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_clipboard_paste(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_clipboard_copy (GtkWidget *widget, gpointer data);
+void i_callback_clipboard_cut (GtkWidget *widget, gpointer data);
+void i_callback_clipboard_paste (GtkWidget *widget, gpointer data);
 void i_callback_buffer_copy1(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_buffer_copy2(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_buffer_copy3(gpointer data, guint callback_action, GtkWidget *widget);

@@ -488,9 +488,9 @@
 (define-deprecated edit-hide-text)
 (define-deprecated edit-autonumber)
 
-(define-public clipboard-copy %clipboard-copy)
-(define-public clipboard-cut %clipboard-cut)
-(define-public clipboard-paste %clipboard-paste)
+(define-deprecated clipboard-copy)
+(define-deprecated clipboard-cut)
+(define-deprecated clipboard-paste)
 
 (define-public buffer-copy1 %buffer-copy1)
 (define-public buffer-copy2 %buffer-copy2)

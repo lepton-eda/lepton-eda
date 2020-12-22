@@ -33,10 +33,6 @@ struct BuiltinInfo {
 };
 
 static struct BuiltinInfo builtins[] = {
-  { "%clipboard-copy",               0, 0, 0, (SCM (*) ()) g_keys_clipboard_copy },
-  { "%clipboard-cut",                0, 0, 0, (SCM (*) ()) g_keys_clipboard_cut },
-  { "%clipboard-paste",              0, 0, 0, (SCM (*) ()) g_keys_clipboard_paste },
-
   { "%buffer-copy1",                 0, 0, 0, (SCM (*) ()) g_keys_buffer_copy1 },
   { "%buffer-copy2",                 0, 0, 0, (SCM (*) ()) g_keys_buffer_copy2 },
   { "%buffer-copy3",                 0, 0, 0, (SCM (*) ()) g_keys_buffer_copy3 },
