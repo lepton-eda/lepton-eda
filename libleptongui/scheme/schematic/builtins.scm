@@ -112,73 +112,73 @@
 ;;;; General editing actions
 
 (define-action-public (&edit-undo #:label (G_ "Undo") #:icon "gtk-undo")
-  (%edit-undo))
+  (run-callback i_callback_edit_undo "&edit-undo"))
 
 (define-action-public (&edit-redo #:label (G_ "Redo") #:icon "gtk-redo")
-  (%edit-redo))
+  (run-callback i_callback_edit_redo "&edit-redo"))
 
 (define-action-public (&edit-select #:label (G_ "Select Mode") #:icon "select")
-  (%edit-select))
+  (run-callback i_callback_edit_select "&edit-select"))
 
 (define-action-public (&edit-select-all #:label (G_ "Select All") #:icon "gtk-select-all")
-  (%edit-select-all))
+  (run-callback i_callback_edit_select_all "&edit-select-all"))
 
 (define-action-public (&edit-deselect #:label (G_ "Deselect"))
-  (%edit-deselect))
+  (run-callback i_callback_edit_deselect "&edit-deselect"))
 
 (define-action-public (&edit-delete #:label (G_ "Delete") #:icon "gtk-delete")
-  (%edit-delete))
+  (run-callback i_callback_edit_delete "&edit-delete"))
 
 (define-action-public (&edit-move #:label (G_ "Move Mode"))
-  (%edit-move))
+  (run-callback i_callback_edit_move "&edit-move"))
 
 (define-action-public (&edit-copy #:label (G_ "Copy Mode") #:icon "clone")
-  (%edit-copy))
+  (run-callback i_callback_edit_copy "&edit-copy"))
 
 (define-action-public (&edit-mcopy #:label (G_ "Multiple Copy Mode") #:icon "multi-clone")
-  (%edit-mcopy))
+  (run-callback i_callback_edit_mcopy "&edit-mcopy"))
 
 (define-action-public (&edit-rotate-90 #:label (G_ "Rotate Mode") #:icon "object-rotate-left")
-  (%edit-rotate-90))
+  (run-callback i_callback_edit_rotate_90 "&edit-rotate-90"))
 
 (define-action-public (&edit-mirror #:label (G_ "Mirror Mode") #:icon "object-flip-horizontal")
-  (%edit-mirror))
+  (run-callback i_callback_edit_mirror "&edit-mirror"))
 
 (define-action-public (&edit-edit #:label (G_ "Edit..."))
-  (%edit-edit))
+  (run-callback i_callback_edit_edit "&edit-edit"))
 
 (define-action-public (&edit-text #:label (G_ "Edit Text") #:icon "gtk-edit")
-  (%edit-text))
+  (run-callback i_callback_edit_text "&edit-text"))
 
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
-  (%edit-slot))
+  (run-callback i_callback_edit_slot "&edit-slot"))
 
 (define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")
-  (%edit-object-properties))
+  (run-callback i_callback_edit_object_properties "&edit-object-properties"))
 
 (define-action-public (&edit-translate #:label (G_ "Translate Symbol"))
-  (%edit-translate))
+  (run-callback i_callback_edit_translate "&edit-translate"))
 
 (define-action-public (&edit-lock #:label (G_ "Lock"))
-  (%edit-lock))
+  (run-callback i_callback_edit_lock "&edit-lock"))
 
 (define-action-public (&edit-unlock #:label (G_ "Unlock"))
-  (%edit-unlock))
+  (run-callback i_callback_edit_unlock "&edit-unlock"))
 
 (define-action-public (&edit-invoke-macro #:label (G_ "Invoke Macro"))
-  (%edit-invoke-macro))
+  (run-callback i_callback_edit_invoke_macro "&edit-invoke-macro"))
 
 (define-action-public (&edit-embed #:label (G_ "Embed Component/Picture"))
-  (%edit-embed))
+  (run-callback i_callback_edit_embed "&edit-embed"))
 
 (define-action-public (&edit-unembed #:label (G_ "Unembed Component/Picture"))
-  (%edit-unembed))
+  (run-callback i_callback_edit_unembed "&edit-unembed"))
 
 (define-action-public (&edit-update #:label (G_ "Update Component") #:icon "gtk-refresh")
-  (%edit-update))
+  (run-callback i_callback_edit_update "&edit-update"))
 
 (define-action-public (&edit-show-hidden #:label (G_ "Show/Hide Invisible Text"))
-  (%edit-show-hidden))
+  (run-callback i_callback_edit_show_hidden "&edit-show-hidden"))
 
 ;; -------------------------------------------------------------------
 ;;;; Clipboard actions
@@ -465,16 +465,16 @@
   (%attributes-visibility-toggle))
 
 (define-action-public (&edit-find-text #:label (G_ "Find Specific Text") #:icon "gtk-find")
-  (%edit-find-text))
+  (run-callback i_callback_edit_find "&edit-find-text"))
 
 (define-action-public (&edit-hide-text #:label (G_ "Hide Specific Text"))
-  (%edit-hide-text))
+  (run-callback i_callback_edit_hide_text "&edit-hide-text"))
 
 (define-action-public (&edit-show-text #:label (G_ "Show Specific Text"))
-  (%edit-show-text))
+  (run-callback i_callback_edit_show_text "&edit-show-text"))
 
 (define-action-public (&edit-autonumber #:label (G_ "Autonumber Text"))
-  (%edit-autonumber))
+  (run-callback i_callback_edit_autonumber_text "&edit-autonumber"))
 
 ;; -------------------------------------------------------------------
 ;;;; Configuration actions
