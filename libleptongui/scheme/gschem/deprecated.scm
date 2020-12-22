@@ -565,8 +565,8 @@
 (define-public options-draw-grips %options-draw-grips)
 (define-public options-show-log-window %options-show-log-window)
 (define-public options-show-coord-window %options-show-coord-window)
-(define-public help-about %help-about)
-(define-public help-hotkeys %help-hotkeys)
+(define-deprecated help-about)
+(define-deprecated help-hotkeys)
 (define-public cancel %cancel)
 
 

@@ -73,6 +73,8 @@
             i_callback_file_save_as
             i_callback_file_script
             i_callback_file_write_png
+            i_callback_help_about
+            i_callback_help_hotkeys
             o_buffer_init
             o_undo_init
             scheme_init_undo
@@ -168,6 +170,8 @@
 (define-lff i_callback_file_save_as void '(* *))
 (define-lff i_callback_file_script void '(* *))
 (define-lff i_callback_file_write_png void '(* *))
+(define-lff i_callback_help_about void '(* *))
+(define-lff i_callback_help_hotkeys void '(* *))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.
