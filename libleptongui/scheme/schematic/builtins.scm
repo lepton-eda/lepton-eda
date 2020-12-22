@@ -184,13 +184,13 @@
 ;;;; Clipboard actions
 
 (define-action-public (&clipboard-cut #:label (G_ "Cut") #:icon "gtk-cut")
-  (%clipboard-cut))
+  (run-callback i_callback_clipboard_cut "&clipboard-cut"))
 
 (define-action-public (&clipboard-copy #:label (G_ "Copy") #:icon "gtk-copy")
-  (%clipboard-copy))
+  (run-callback i_callback_clipboard_copy "&clipboard-copy"))
 
 (define-action-public (&clipboard-paste #:label (G_ "Paste") #:icon "gtk-paste")
-  (%clipboard-paste))
+  (run-callback i_callback_clipboard_paste "&clipboard-paste"))
 
 ;; -------------------------------------------------------------------
 ;;;; View control actions

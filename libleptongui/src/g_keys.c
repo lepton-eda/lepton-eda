@@ -33,10 +33,6 @@ SCM g_keys_ ## name(SCM rest)                           \
 }
 
 /* Select also does not update the middle button shortcut */
-DEFINE_G_KEYS(clipboard_copy)
-DEFINE_G_KEYS(clipboard_cut)
-DEFINE_G_KEYS(clipboard_paste)
-
 DEFINE_G_KEYS(buffer_copy1)
 DEFINE_G_KEYS(buffer_copy2)
 DEFINE_G_KEYS(buffer_copy3)

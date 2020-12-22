@@ -1605,7 +1605,8 @@ DEFINE_I_CALLBACK(page_print)
  *  \par Function Description
  * Copies the current selection to the clipboard, via buffer 0.
  */
-DEFINE_I_CALLBACK(clipboard_copy)
+void
+i_callback_clipboard_copy (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1619,7 +1620,8 @@ DEFINE_I_CALLBACK(clipboard_copy)
  *  \par Function Description
  * Cut the current selection to the clipboard, via buffer 0.
  */
-DEFINE_I_CALLBACK(clipboard_cut)
+void
+i_callback_clipboard_cut (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1634,7 +1636,8 @@ DEFINE_I_CALLBACK(clipboard_cut)
  *  \par Function Description
  * Start pasting the current clipboard contents, via buffer 0.
  */
-DEFINE_I_CALLBACK(clipboard_paste)
+void
+i_callback_clipboard_paste (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   int empty;
