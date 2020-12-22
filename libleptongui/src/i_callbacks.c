@@ -341,7 +341,8 @@ i_callback_file_quit (GtkWidget *widget, gpointer data)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_undo)
+void
+i_callback_edit_undo (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -378,7 +379,7 @@ DEFINE_I_CALLBACK(edit_undo)
  */
 void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
 {
-  i_callback_edit_undo (data, 0, widget);
+  i_callback_edit_undo (widget, data);
 }
 
 /*! \todo Finish function documentation!!!
@@ -386,7 +387,8 @@ void i_callback_toolbar_edit_undo(GtkWidget* widget, gpointer data)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_redo)
+void
+i_callback_edit_redo (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -411,7 +413,7 @@ DEFINE_I_CALLBACK(edit_redo)
  */
 void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
 {
-  i_callback_edit_redo (data, 0, widget);
+  i_callback_edit_redo (widget, data);
 }
 
 /*! \todo Finish function documentation!!!
@@ -421,7 +423,8 @@ void i_callback_toolbar_edit_redo(GtkWidget* widget, gpointer data)
  *  \note
  *  Select also does not update the middle button shortcut.
  */
-DEFINE_I_CALLBACK(edit_select)
+void
+i_callback_edit_select (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   o_redraw_cleanstates(w_current);
@@ -448,7 +451,7 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
     if (!o_invalidate_rubber (w_current)) {
       i_callback_cancel(w_current, 0, NULL);
     }
-    i_callback_edit_select(data, 0, NULL);
+    i_callback_edit_select (widget, data);
   }
 }
 
@@ -456,7 +459,8 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
  * \par Function Description
  * Sets all objects on page as selected.
  */
-DEFINE_I_CALLBACK (edit_select_all)
+void
+i_callback_edit_select_all (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   o_redraw_cleanstates (w_current);
@@ -472,7 +476,8 @@ DEFINE_I_CALLBACK (edit_select_all)
  * \par Function Description
  * Sets all objects on page as deselected.
  */
-DEFINE_I_CALLBACK (edit_deselect)
+void
+i_callback_edit_deselect (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   o_redraw_cleanstates (w_current);
@@ -489,7 +494,8 @@ DEFINE_I_CALLBACK (edit_deselect)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_copy)
+void
+i_callback_edit_copy (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
@@ -512,7 +518,8 @@ DEFINE_I_CALLBACK(edit_copy)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_mcopy)
+void
+i_callback_edit_mcopy (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
@@ -535,7 +542,8 @@ DEFINE_I_CALLBACK(edit_mcopy)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_move)
+void
+i_callback_edit_move (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
@@ -558,7 +566,8 @@ DEFINE_I_CALLBACK(edit_move)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_delete)
+void
+i_callback_edit_delete (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -580,7 +589,8 @@ DEFINE_I_CALLBACK(edit_delete)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_edit)
+void
+i_callback_edit_edit (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -594,7 +604,8 @@ DEFINE_I_CALLBACK(edit_edit)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_text)
+void
+i_callback_edit_text (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -608,7 +619,8 @@ DEFINE_I_CALLBACK(edit_text)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_slot)
+void
+i_callback_edit_slot (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   OBJECT *object;
@@ -625,7 +637,8 @@ DEFINE_I_CALLBACK(edit_slot)
 /*! \brief Show "object properties" widget
  *
  */
-DEFINE_I_CALLBACK(edit_object_properties)
+void
+i_callback_edit_object_properties (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -640,7 +653,8 @@ DEFINE_I_CALLBACK(edit_object_properties)
  *  This function rotate all objects in the selection list by 90 degrees.
  *
  */
-DEFINE_I_CALLBACK(edit_rotate_90)
+void
+i_callback_edit_rotate_90 (GtkWidget *widget, gpointer data)
 {
   gint wx, wy;
   GList *object_list;
@@ -685,7 +699,8 @@ DEFINE_I_CALLBACK(edit_rotate_90)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_mirror)
+void
+i_callback_edit_mirror (GtkWidget *widget, gpointer data)
 {
   gint wx, wy;
   GList *object_list;
@@ -730,7 +745,8 @@ DEFINE_I_CALLBACK(edit_mirror)
  *  This function locks all objects in selection list.
  *
  */
-DEFINE_I_CALLBACK(edit_lock)
+void
+i_callback_edit_lock (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -746,7 +762,8 @@ DEFINE_I_CALLBACK(edit_lock)
  *  \par Function Description
  *  Thus function unlocks all objects in selection list.
  */
-DEFINE_I_CALLBACK(edit_unlock)
+void
+i_callback_edit_unlock (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -762,7 +779,8 @@ DEFINE_I_CALLBACK(edit_unlock)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_translate)
+void
+i_callback_edit_translate (GtkWidget *widget, gpointer data)
 {
   SNAP_STATE snap_mode;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
@@ -791,7 +809,8 @@ DEFINE_I_CALLBACK(edit_translate)
   gtk_widget_grab_focus (gschem_translate_widget_get_entry (GSCHEM_TRANSLATE_WIDGET (w_current->translate_widget)));
 }
 
-DEFINE_I_CALLBACK(edit_invoke_macro)
+void
+i_callback_edit_invoke_macro (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -806,7 +825,8 @@ DEFINE_I_CALLBACK(edit_invoke_macro)
  *  This function embedds all objects in selection list
  *
  */
-DEFINE_I_CALLBACK(edit_embed)
+void
+i_callback_edit_embed (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   OBJECT *o_current;
@@ -848,7 +868,8 @@ DEFINE_I_CALLBACK(edit_embed)
  *  This function unembedds all objects in selection list.
  *
  */
-DEFINE_I_CALLBACK(edit_unembed)
+void
+i_callback_edit_unembed (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   OBJECT *o_current;
@@ -890,7 +911,8 @@ DEFINE_I_CALLBACK(edit_unembed)
  *  This function updates components
  *
  */
-DEFINE_I_CALLBACK(edit_update)
+void
+i_callback_edit_update (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -933,7 +955,8 @@ DEFINE_I_CALLBACK(edit_update)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_show_hidden)
+void
+i_callback_edit_show_hidden (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -948,7 +971,8 @@ DEFINE_I_CALLBACK(edit_show_hidden)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_find)
+void
+i_callback_edit_find (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -967,7 +991,8 @@ DEFINE_I_CALLBACK(edit_find)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_hide_text)
+void
+i_callback_edit_hide_text (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -986,7 +1011,8 @@ DEFINE_I_CALLBACK(edit_hide_text)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_show_text)
+void
+i_callback_edit_show_text (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1005,7 +1031,8 @@ DEFINE_I_CALLBACK(edit_show_text)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(edit_autonumber_text)
+void
+i_callback_edit_autonumber_text (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
