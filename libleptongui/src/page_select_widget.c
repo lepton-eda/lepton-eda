@@ -333,7 +333,7 @@ pagesel_callback_popup_close_page (GtkMenuItem* mitem, gpointer data)
   PageSelectWidget* pagesel = (PageSelectWidget*) data;
   GschemToplevel* toplevel = pagesel->toplevel_;
 
-  i_callback_page_close (toplevel, 0, NULL);
+  i_callback_page_close (NULL, toplevel);
 }
 
 

@@ -1366,7 +1366,8 @@ i_callback_view_color_edit (GtkWidget *widget, gpointer data)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(page_manager)
+void
+i_callback_page_manager (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1381,7 +1382,8 @@ DEFINE_I_CALLBACK(page_manager)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(page_next)
+void
+i_callback_page_next (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -1416,7 +1418,8 @@ DEFINE_I_CALLBACK(page_next)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(page_prev)
+void
+i_callback_page_prev (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -1450,7 +1453,8 @@ DEFINE_I_CALLBACK(page_prev)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(page_close)
+void
+i_callback_page_close (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -1471,7 +1475,8 @@ DEFINE_I_CALLBACK(page_close)
 
 
 
-DEFINE_I_CALLBACK(page_next_tab)
+void
+i_callback_page_next_tab (GtkWidget *widget, gpointer data)
 {
   GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1480,7 +1485,8 @@ DEFINE_I_CALLBACK(page_next_tab)
 
 
 
-DEFINE_I_CALLBACK(page_prev_tab)
+void
+i_callback_page_prev_tab (GtkWidget *widget, gpointer data)
 {
   GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1495,7 +1501,8 @@ DEFINE_I_CALLBACK(page_prev_tab)
  *
  *  \bug may have memory leak?
  */
-DEFINE_I_CALLBACK(page_revert)
+void
+i_callback_page_revert (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   PAGE *page_current = NULL;
@@ -1611,7 +1618,8 @@ DEFINE_I_CALLBACK(page_revert)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(page_print)
+void
+i_callback_page_print (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 

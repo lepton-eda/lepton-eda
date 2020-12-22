@@ -253,28 +253,28 @@
 ;;;; Page-related actions
 
 (define-action-public (&page-revert #:label (G_ "Revert Changes") #:icon "gtk-revert-to-saved")
-  (%page-revert))
+  (run-callback i_callback_page_revert "&page-revert"))
 
 (define-action-public (&page-manager #:label (G_ "Page Manager"))
-  (%page-manager))
+  (run-callback i_callback_page_manager "&page-manager"))
 
 (define-action-public (&page-prev #:label (G_ "Previous Page") #:icon "gtk-go-back")
-  (%page-prev))
+  (run-callback i_callback_page_prev "&page-prev"))
 
 (define-action-public (&page-next #:label (G_ "Next Page") #:icon "gtk-go-forward")
-  (%page-next))
+  (run-callback i_callback_page_next "&page-next"))
 
 (define-action-public (&page-close #:label (G_ "Close Page") #:icon "gtk-close")
-  (%page-close))
+  (run-callback i_callback_page_close "&page-close"))
 
 (define-action-public (&page-next-tab #:label (G_ "Next Tab") #:icon "gtk-go-forward")
-  (%page-next-tab))
+  (run-callback i_callback_page_next_tab "&page-next-tab"))
 
 (define-action-public (&page-prev-tab #:label (G_ "Previous Tab") #:icon "gtk-go-back")
-  (%page-prev-tab))
+  (run-callback i_callback_page_prev_tab "&page-prev-tab"))
 
 (define-action-public (&page-print #:label (G_ "Print Page") #:icon "gtk-print")
-  (%page-print))
+  (run-callback i_callback_page_print "&page-print"))
 
 ;; -------------------------------------------------------------------
 ;;;; Actions related to adding things
