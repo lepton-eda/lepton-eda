@@ -24,12 +24,12 @@
 #include <gdk/gdkkeysyms.h>
 
 
-#define DEFINE_G_KEYS(name)				\
-SCM g_keys_ ## name(SCM rest)				\
-{							\
-   GschemToplevel *w_current = g_current_window ();	\
+#define DEFINE_G_KEYS(name)                             \
+SCM g_keys_ ## name(SCM rest)                           \
+{                                                       \
+   GschemToplevel *w_current = g_current_window ();     \
    i_callback_ ## name(w_current, 0, NULL);                   \
-   return SCM_BOOL_T;				\
+   return SCM_BOOL_T;                           \
 }
 
 /*! \brief test-comment
@@ -612,4 +612,3 @@ g_init_keys ()
                        (void (*)(void*)) init_module_schematic_core_keymap,
                        NULL);
 }
-
