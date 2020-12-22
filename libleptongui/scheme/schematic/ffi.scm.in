@@ -100,6 +100,24 @@
             i_callback_options_show_log_window
             i_callback_options_snap
             i_callback_options_snap_size
+            i_callback_view_bw_colors
+            i_callback_view_color_edit
+            i_callback_view_dark_colors
+            i_callback_view_find_text_state
+            i_callback_view_light_colors
+            i_callback_view_pan
+            i_callback_view_pan_down
+            i_callback_view_pan_left
+            i_callback_view_pan_right
+            i_callback_view_pan_up
+            i_callback_view_redraw
+            i_callback_view_sidebar
+            i_callback_view_status
+            i_callback_view_zoom_box
+            i_callback_view_zoom_extents
+            i_callback_view_zoom_full
+            i_callback_view_zoom_in
+            i_callback_view_zoom_out
             o_buffer_init
             o_undo_init
             scheme_init_undo
@@ -222,6 +240,24 @@
 (define-lff i_callback_options_show_log_window void '(* *))
 (define-lff i_callback_options_snap void '(* *))
 (define-lff i_callback_options_snap_size void '(* *))
+(define-lff i_callback_view_bw_colors void '(* *))
+(define-lff i_callback_view_color_edit void '(* *))
+(define-lff i_callback_view_dark_colors void '(* *))
+(define-lff i_callback_view_find_text_state void '(* *))
+(define-lff i_callback_view_light_colors void '(* *))
+(define-lff i_callback_view_pan void '(* *))
+(define-lff i_callback_view_pan_down void '(* *))
+(define-lff i_callback_view_pan_left void '(* *))
+(define-lff i_callback_view_pan_right void '(* *))
+(define-lff i_callback_view_pan_up void '(* *))
+(define-lff i_callback_view_redraw void '(* *))
+(define-lff i_callback_view_sidebar void '(* *))
+(define-lff i_callback_view_status void '(* *))
+(define-lff i_callback_view_zoom_box void '(* *))
+(define-lff i_callback_view_zoom_extents void '(* *))
+(define-lff i_callback_view_zoom_full void '(* *))
+(define-lff i_callback_view_zoom_in void '(* *))
+(define-lff i_callback_view_zoom_out void '(* *))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.
