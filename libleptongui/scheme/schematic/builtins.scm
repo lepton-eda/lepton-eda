@@ -196,58 +196,58 @@
 ;;;; View control actions
 
 (define-action-public (&view-sidebar #:label (G_ "Sidebar"))
-  (%view-sidebar))
+  (run-callback i_callback_view_sidebar "&view-sidebar"))
 
 (define-action-public (&view-status #:label (G_ "Status"))
-  (%view-status))
+  (run-callback i_callback_view_status "&view-status"))
 
 (define-action-public (&view-find-text-state #:label (G_ "Find Text State"))
-  (%view-find-text-state))
+  (run-callback i_callback_view_find_text_state "&view-find-text-state"))
 
 (define-action-public (&view-redraw #:label (G_ "Redraw") #:icon "gtk-refresh")
-  (%view-redraw))
+  (run-callback i_callback_view_redraw "&view-redraw"))
 
 (define-action-public (&view-pan #:label (G_ "Pan"))
-  (%view-pan))
+  (run-callback i_callback_view_pan "&view-pan"))
 
 (define-action-public (&view-pan-left #:label (G_ "Pan Left"))
-  (%view-pan-left))
+  (run-callback i_callback_view_pan_left "&view-pan-left"))
 
 (define-action-public (&view-pan-right #:label (G_ "Pan Right"))
-  (%view-pan-right))
+  (run-callback i_callback_view_pan_right "&view-pan-right"))
 
 (define-action-public (&view-pan-up #:label (G_ "Pan Up"))
-  (%view-pan-up))
+  (run-callback i_callback_view_pan_up "&view-pan-up"))
 
 (define-action-public (&view-pan-down #:label (G_ "Pan Down"))
-  (%view-pan-down))
+  (run-callback i_callback_view_pan_down "&view-pan-down"))
 
 (define-action-public (&view-zoom-box #:label (G_ "Zoom Box"))
-  (%view-zoom-box))
+  (run-callback i_callback_view_zoom_box "&view-zoom-box"))
 
 (define-action-public (&view-zoom-extents #:label (G_ "Zoom Extents") #:icon "gtk-zoom-fit")
-  (%view-zoom-extents))
+  (run-callback i_callback_view_zoom_extents "&view-zoom-extents"))
 
 (define-action-public (&view-zoom-in #:label (G_ "Zoom In") #:icon "gtk-zoom-in")
-  (%view-zoom-in))
+  (run-callback i_callback_view_zoom_in "&view-zoom-in"))
 
 (define-action-public (&view-zoom-out #:label (G_ "Zoom Out") #:icon "gtk-zoom-out")
-  (%view-zoom-out))
+  (run-callback i_callback_view_zoom_out "&view-zoom-out"))
 
 (define-action-public (&view-zoom-full #:label (G_ "Zoom Full"))
-  (%view-zoom-full))
+  (run-callback i_callback_view_zoom_full "&view-zoom-full"))
 
 (define-action-public (&view-dark-colors #:label (G_ "Dark Color Scheme"))
-  (%view-dark-colors))
+  (run-callback i_callback_view_dark_colors "&view-dark-colors"))
 
 (define-action-public (&view-light-colors #:label (G_ "Light Color Scheme"))
-  (%view-light-colors))
+  (run-callback i_callback_view_light_colors "&view-light-colors"))
 
 (define-action-public (&view-bw-colors #:label (G_ "Monochrome Color Scheme"))
-  (%view-bw-colors))
+  (run-callback i_callback_view_bw_colors "&view-bw-colors"))
 
 (define-action-public (&view-color-edit #:label (G_ "Show Color Scheme Editor"))
- (%view-color-edit))
+  (run-callback i_callback_view_color_edit "&view-color-edit"))
 
 ;; -------------------------------------------------------------------
 ;;;; Page-related actions

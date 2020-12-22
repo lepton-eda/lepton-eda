@@ -1023,7 +1023,8 @@ i_callback_edit_autonumber_text (GtkWidget *widget, gpointer data)
 /*! \section view-menu View Menu Callback Functions */
 /*! \brief Toggle the visibility of the sidebar
  */
-DEFINE_I_CALLBACK(view_sidebar)
+void
+i_callback_view_sidebar (GtkWidget *widget, gpointer data)
 {
   gboolean visible;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
@@ -1036,7 +1037,8 @@ DEFINE_I_CALLBACK(view_sidebar)
 
 /*! \brief Toggle the visibility of the status window
  */
-DEFINE_I_CALLBACK(view_status)
+void
+i_callback_view_status (GtkWidget *widget, gpointer data)
 {
   gboolean visible;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
@@ -1049,7 +1051,8 @@ DEFINE_I_CALLBACK(view_status)
 
 /*! \brief Show the find text state window
  */
-DEFINE_I_CALLBACK(view_find_text_state)
+void
+i_callback_view_find_text_state (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1066,7 +1069,8 @@ DEFINE_I_CALLBACK(view_find_text_state)
  *  repeat middle shortcut doesn't make sense on redraw, just hit right
  *  button
  */
-DEFINE_I_CALLBACK(view_redraw)
+void
+i_callback_view_redraw (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -1081,7 +1085,8 @@ DEFINE_I_CALLBACK(view_redraw)
  *  \note
  *  repeat middle shortcut would get into the way of what user is try to do
  */
-DEFINE_I_CALLBACK(view_zoom_full)
+void
+i_callback_view_zoom_full (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -1104,7 +1109,8 @@ DEFINE_I_CALLBACK(view_zoom_full)
  *  \note
  *  repeat middle shortcut would get into the way of what user is try to do
  */
-DEFINE_I_CALLBACK(view_zoom_extents)
+void
+i_callback_view_zoom_extents (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -1126,7 +1132,8 @@ DEFINE_I_CALLBACK(view_zoom_extents)
  *  \note
  *  repeat middle shortcut would get into the way of what user is try to do
  */
-DEFINE_I_CALLBACK(view_zoom_box)
+void
+i_callback_view_zoom_box (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
@@ -1149,7 +1156,8 @@ DEFINE_I_CALLBACK(view_zoom_box)
  *  \note
  *  repeat middle shortcut would get into the way of what user is try to do
  */
-DEFINE_I_CALLBACK(view_zoom_in)
+void
+i_callback_view_zoom_in (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -1174,7 +1182,8 @@ DEFINE_I_CALLBACK(view_zoom_in)
  *  \note
  *  repeat middle shortcut would get into the way of what user is try to do
  */
-DEFINE_I_CALLBACK(view_zoom_out)
+void
+i_callback_view_zoom_out (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -1197,7 +1206,8 @@ DEFINE_I_CALLBACK(view_zoom_out)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(view_pan)
+void
+i_callback_view_pan (GtkWidget *widget, gpointer data)
 {
   gint wx, wy;
 
@@ -1223,7 +1233,8 @@ DEFINE_I_CALLBACK(view_pan)
  *
  * The distance can be set with "keyboardpan-gain" scheme callback.
  */
-DEFINE_I_CALLBACK(view_pan_left)
+void
+i_callback_view_pan_left (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -1238,7 +1249,8 @@ DEFINE_I_CALLBACK(view_pan_left)
  *
  * The distance can be set with "keyboardpan-gain" scheme callback.
  */
-DEFINE_I_CALLBACK(view_pan_right)
+void
+i_callback_view_pan_right (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -1254,7 +1266,8 @@ DEFINE_I_CALLBACK(view_pan_right)
  *
  * The distance can be set with "keyboardpan-gain" scheme callback.
  */
-DEFINE_I_CALLBACK(view_pan_up)
+void
+i_callback_view_pan_up (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -1269,7 +1282,8 @@ DEFINE_I_CALLBACK(view_pan_up)
  *
  * The distance can be set with "keyboardpan-gain" scheme callback.
  */
-DEFINE_I_CALLBACK(view_pan_down)
+void
+i_callback_view_pan_down (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -1285,7 +1299,8 @@ DEFINE_I_CALLBACK(view_pan_down)
 
 /*! \brief Load the Dark color scheme
  */
-DEFINE_I_CALLBACK (view_dark_colors)
+void
+i_callback_view_dark_colors (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1301,7 +1316,8 @@ DEFINE_I_CALLBACK (view_dark_colors)
 
 /*! \brief Load the Light color scheme
  */
-DEFINE_I_CALLBACK (view_light_colors)
+void
+i_callback_view_light_colors (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1317,7 +1333,8 @@ DEFINE_I_CALLBACK (view_light_colors)
 
 /*! \brief Load the Black & White color scheme
  */
-DEFINE_I_CALLBACK (view_bw_colors)
+void
+i_callback_view_bw_colors (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1333,7 +1350,8 @@ DEFINE_I_CALLBACK (view_bw_colors)
 
 /*! \brief Show color scheme editor widget
  */
-DEFINE_I_CALLBACK (view_color_edit)
+void
+i_callback_view_color_edit (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 

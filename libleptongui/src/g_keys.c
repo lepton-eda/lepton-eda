@@ -49,31 +49,6 @@ DEFINE_G_KEYS(buffer_paste3)
 DEFINE_G_KEYS(buffer_paste4)
 DEFINE_G_KEYS(buffer_paste5)
 
-DEFINE_G_KEYS(view_sidebar)
-DEFINE_G_KEYS(view_status)
-DEFINE_G_KEYS(view_find_text_state)
-
-/* repeat middle shortcut doesn't make sense on redraw, just hit right
- * button */
-DEFINE_G_KEYS(view_redraw)
-
-/* for these functions, repeat middle shortcut would get into the way
- * of what user is try to do */
-DEFINE_G_KEYS(view_zoom_full)
-DEFINE_G_KEYS(view_zoom_extents)
-DEFINE_G_KEYS(view_zoom_in)
-DEFINE_G_KEYS(view_zoom_out)
-
-DEFINE_G_KEYS(view_zoom_box)
-DEFINE_G_KEYS(view_pan)
-DEFINE_G_KEYS(view_pan_left)
-DEFINE_G_KEYS(view_pan_right)
-DEFINE_G_KEYS(view_pan_up)
-DEFINE_G_KEYS(view_pan_down)
-DEFINE_G_KEYS(view_dark_colors)
-DEFINE_G_KEYS(view_light_colors)
-DEFINE_G_KEYS(view_bw_colors)
-DEFINE_G_KEYS(view_color_edit)
 DEFINE_G_KEYS(page_manager)
 DEFINE_G_KEYS(page_next)
 DEFINE_G_KEYS(page_prev)
