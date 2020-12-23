@@ -24,19 +24,6 @@
 #include <gdk/gdkkeysyms.h>
 
 
-#define DEFINE_G_KEYS(name)                             \
-SCM g_keys_ ## name(SCM rest)                           \
-{                                                       \
-   GschemToplevel *w_current = g_current_window ();     \
-   i_callback_ ## name(w_current, 0, NULL);                   \
-   return SCM_BOOL_T;                           \
-}
-
-/* Select also does not update the middle button shortcut */
-DEFINE_G_KEYS(hierarchy_down_schematic)
-DEFINE_G_KEYS(hierarchy_down_symbol)
-DEFINE_G_KEYS(hierarchy_up)
-
 /*! Contains the smob tag for key smobs */
 static scm_t_bits g_key_smob_tag;
 #define G_SCM_IS_KEY(x) SCM_SMOB_PREDICATE (g_key_smob_tag, (x))

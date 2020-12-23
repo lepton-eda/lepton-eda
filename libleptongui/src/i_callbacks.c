@@ -22,22 +22,7 @@
 #include "gschem.h"
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-/* every i_callback functions have the same footprint */
-#define DEFINE_I_CALLBACK(name)                         \
-        void i_callback_ ## name(gpointer data,         \
-                                 guint callback_action, \
-                                 GtkWidget *widget)
-
-/*! \section callback-intro Callback Functions
- * right now, all callbacks except for the ones on the File menu have
- * the middle button shortcut. Let me (Ales) know if we should also
- * shortcut the File button
- */
+/*! \section callback-intro Callback Functions */
 
 /*! \section file-menu File Menu Callback Functions */
 /*! \todo Finish function documentation!!!
@@ -2073,7 +2058,8 @@ i_callback_add_pin (GtkWidget *widget, gpointer data)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(hierarchy_down_schematic)
+void
+i_callback_hierarchy_down_schematic (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   char *attrib=NULL;
@@ -2228,7 +2214,8 @@ DEFINE_I_CALLBACK(hierarchy_down_schematic)
  *  \par Function Description
  *  \bug may cause problems with non-directory symbols
  */
-DEFINE_I_CALLBACK(hierarchy_down_symbol)
+void
+i_callback_hierarchy_down_symbol (GtkWidget *widget, gpointer data)
 {
   GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -2282,7 +2269,8 @@ DEFINE_I_CALLBACK(hierarchy_down_symbol)
  * Return to the page which is parent for the current page in the
  * hierarchy of schematics.
  */
-DEFINE_I_CALLBACK(hierarchy_up)
+void
+i_callback_hierarchy_up (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   PAGE *page = NULL;
@@ -2779,8 +2767,6 @@ i_callback_options_draw_grips (GtkWidget *widget, gpointer data)
   gschem_page_view_invalidate_all (view);
 }
 
-/* these is a special wrapper function which cannot use the above */
-/* DEFINE_I_CALLBACK macro */
 
 /*! \todo Finish function documentation!!!
  *  \brief

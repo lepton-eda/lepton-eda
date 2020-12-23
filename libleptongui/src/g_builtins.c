@@ -33,10 +33,6 @@ struct BuiltinInfo {
 };
 
 static struct BuiltinInfo builtins[] = {
-  { "%hierarchy-down-schematic",     0, 0, 0, (SCM (*) ()) g_keys_hierarchy_down_schematic },
-  { "%hierarchy-down-symbol",        0, 0, 0, (SCM (*) ()) g_keys_hierarchy_down_symbol },
-  { "%hierarchy-up",                 0, 0, 0, (SCM (*) ()) g_keys_hierarchy_up },
-
   { NULL, 0, 0, 0, NULL }, /* Custodian */
 };
 

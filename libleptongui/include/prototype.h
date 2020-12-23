@@ -28,9 +28,6 @@ EdascmHookProxy *g_hook_new_proxy_by_name (const char *name);
 /* g_keys.c */
 void g_keys_reset (GschemToplevel *w_current);
 int g_keys_execute(GschemToplevel *w_current, GdkEventKey *event);
-SCM g_keys_hierarchy_down_schematic(SCM rest);
-SCM g_keys_hierarchy_down_symbol(SCM rest);
-SCM g_keys_hierarchy_up(SCM rest);
 void g_init_keys ();
 
 /* g_register.c */
@@ -164,9 +161,9 @@ void i_callback_add_picture (GtkWidget *widget, gpointer data);
 void i_callback_add_circle (GtkWidget *widget, gpointer data);
 void i_callback_add_arc (GtkWidget *widget, gpointer data);
 void i_callback_add_pin (GtkWidget *widget, gpointer data);
-void i_callback_hierarchy_down_schematic(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_hierarchy_down_symbol(gpointer data, guint callback_action, GtkWidget *widget);
-void i_callback_hierarchy_up(gpointer data, guint callback_action, GtkWidget *widget);
+void i_callback_hierarchy_down_schematic (GtkWidget *widget, gpointer data);
+void i_callback_hierarchy_down_symbol (GtkWidget *widget, gpointer data);
+void i_callback_hierarchy_up (GtkWidget *widget, gpointer data);
 void i_callback_attributes_show_name (GtkWidget *widget, gpointer data);
 void i_callback_attributes_show_value (GtkWidget *widget, gpointer data);
 void i_callback_attributes_show_both (GtkWidget *widget, gpointer data);
