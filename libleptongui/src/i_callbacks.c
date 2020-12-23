@@ -65,18 +65,6 @@ i_callback_file_new (GtkWidget *widget, gpointer data)
   g_message (_("New page created [%1$s]"), s_page_get_filename (page));
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  don't use the widget parameter on this function, or do some checking...
- *  since there is a call: widget = NULL, data = 0 (will be w_current hack)
- */
-void i_callback_toolbar_file_new(GtkWidget* widget, gpointer data)
-{
-  i_callback_file_new (widget, data);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -119,22 +107,6 @@ i_callback_file_open (GtkWidget *widget, gpointer data)
 
   x_fileselect_open (w_current);
 }
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  don't use the widget parameter on this function, or do some
- *  checking...
- *  since there is a call: widget = NULL, data = 0 (will be w_current)
- *  \todo This should be renamed to page_open perhaps...
- */
-void i_callback_toolbar_file_open(GtkWidget* widget, gpointer data)
-{
-  i_callback_file_open (widget, data);
-}
-
 
 
 /*! \brief Open the "Execute Script" dialog, execute the selected Scheme file
@@ -224,24 +196,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
   }
 
 } /* i_callback_file_save() */
-
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  don't use the widget parameter on this function, or do some
- *  checking...
- *  since there is a call: widget = NULL, data = 0 (will be w_current)
- *  \todo This should be renamed to page_open perhaps...
- */
-void i_callback_toolbar_file_save(GtkWidget* widget, gpointer data)
-{
-  i_callback_file_save (widget, data);
-}
-
 
 
 /*! \brief Save all opened pages
