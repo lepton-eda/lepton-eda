@@ -1143,7 +1143,7 @@ create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
 
   create_toolbar_button (w_current, toolbar,
                          "insert-symbol", _("Component"), text,
-                         G_CALLBACK (&i_callback_toolbar_add_component), 7);
+                         G_CALLBACK (&i_callback_add_component), 7);
 
 
   GSList *radio_group = NULL;

@@ -199,7 +199,6 @@ void i_callback_buffer_paste3(gpointer data, guint callback_action, GtkWidget *w
 void i_callback_buffer_paste4(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_buffer_paste5(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_add_component (GtkWidget *widget, gpointer data);
-void i_callback_toolbar_add_component(GtkWidget *widget, gpointer data);
 void i_callback_add_attribute (GtkWidget *widget, gpointer data);
 void i_callback_add_net (GtkWidget *widget, gpointer data);
 void i_callback_toolbar_add_net(GtkWidget *widget, gpointer data);
