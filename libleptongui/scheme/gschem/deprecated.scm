@@ -40,6 +40,27 @@
   #:use-module (schematic selection)
   #:use-module (schematic window))
 
+
+(define (deprecation-warning name)
+  (format (current-error-port)
+          "WARNING: The function ~S() is deprecated and does nothing.~%"
+          name))
+
+(define-syntax define-deprecated
+  (syntax-rules ()
+    ((_ (name . args))
+     (begin
+       (define (name . args)
+         (deprecation-warning (quote name))
+         #f)
+       (export name)))
+    ((_ name)
+     (begin
+       (define (name)
+         (deprecation-warning (quote name))
+         #f)
+       (export name)))))
+
 ;; add-attribute-to-object object name value visible show
 ;;
 ;; Add an attribute "name=value" to object.  If visible is #f, the new
@@ -420,20 +441,9 @@
 (add-hook!/full-attribs select-objects-hook select-net-hook net?)
 
 
-(define-public (gschem-image filename)
-  (format (current-error-port)
-   "WARNING: gschem-image function is deprecated and does nothing.~%")
-)
-
-(define-public (gschem-pdf filename)
-  (format (current-error-port)
-   "WARNING: gschem-pdf function is deprecated and does nothing.~%")
-)
-
-(define-public (gschem-use-rc-values)
-  (format (current-error-port)
-   "WARNING: gschem-use-rc-values function is deprecated and does nothing.~%")
-)
+(define-deprecated (gschem-image filename))
+(define-deprecated (gschem-pdf filename))
+(define-deprecated (gschem-use-rc-values))
 
 
 ;;; Deprecated procedures replaced with actions
@@ -566,6 +576,4 @@
 (define-public gschem-msg schematic-message-dialog)
 (define-public gschem-confirm schematic-confirm-dialog)
 (define-public gschem-filesel schematic-fileselect-dialog)
-(define-public (gschem-version version)
-  (format (current-error-port)
-   "WARNING: The function gschem-version() is deprecated and does nothing.~%"))
+(define-deprecated (gschem-version version))
