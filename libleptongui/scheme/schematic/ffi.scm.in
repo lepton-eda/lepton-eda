@@ -92,6 +92,9 @@
             i_callback_file_write_png
             i_callback_help_about
             i_callback_help_hotkeys
+            i_callback_hierarchy_down_schematic
+            i_callback_hierarchy_down_symbol
+            i_callback_hierarchy_up
             i_callback_options_afeedback
             i_callback_options_draw_grips
             i_callback_options_grid
@@ -244,6 +247,9 @@
 (define-lff i_callback_file_write_png void '(* *))
 (define-lff i_callback_help_about void '(* *))
 (define-lff i_callback_help_hotkeys void '(* *))
+(define-lff i_callback_hierarchy_down_schematic void '(* *))
+(define-lff i_callback_hierarchy_down_symbol void '(* *))
+(define-lff i_callback_hierarchy_up void '(* *))
 (define-lff i_callback_options_afeedback void '(* *))
 (define-lff i_callback_options_draw_grips void '(* *))
 (define-lff i_callback_options_grid void '(* *))

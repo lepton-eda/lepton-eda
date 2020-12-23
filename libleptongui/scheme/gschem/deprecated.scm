@@ -549,9 +549,9 @@
 (define-deprecated add-arc)
 (define-deprecated add-pin)
 
-(define-public hierarchy-down-schematic %hierarchy-down-schematic)
-(define-public hierarchy-down-symbol %hierarchy-down-symbol)
-(define-public hierarchy-up %hierarchy-up)
+(define-deprecated hierarchy-down-schematic)
+(define-deprecated hierarchy-down-symbol)
+(define-deprecated hierarchy-up)
 
 (define-deprecated attributes-show-name)
 (define-deprecated attributes-show-value)

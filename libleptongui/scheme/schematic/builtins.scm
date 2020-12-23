@@ -319,13 +319,13 @@
 ;;;; Hierarchy actions
 
 (define-action-public (&hierarchy-down-schematic #:label (G_ "Down Schematic") #:icon "gtk-go-down")
-  (%hierarchy-down-schematic))
+  (run-callback i_callback_hierarchy_down_schematic "&hierarchy-down-schematic"))
 
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
-  (%hierarchy-down-symbol))
+  (run-callback i_callback_hierarchy_down_symbol "&hierarchy-down-symbol"))
 
 (define-action-public (&hierarchy-up #:label (G_ "Up Hierarchy") #:icon "gtk-go-up")
-  (%hierarchy-up))
+  (run-callback i_callback_hierarchy_up "&hierarchy-up"))
 
 ;; -------------------------------------------------------------------
 ;;;; Attribute actions
