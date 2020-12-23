@@ -1115,15 +1115,15 @@ create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
 
   create_toolbar_button (w_current, toolbar,
                          "new", _("New"), _("New file"),
-                         G_CALLBACK (&i_callback_toolbar_file_new), 0);
+                         G_CALLBACK (&i_callback_file_new), 0);
 
   create_toolbar_button (w_current, toolbar,
                          "open", _("Open"), _("Open file"),
-                         G_CALLBACK (&i_callback_toolbar_file_open), 1);
+                         G_CALLBACK (&i_callback_file_open), 1);
 
   create_toolbar_button (w_current, toolbar,
                          "save", _("Save"), _("Save file"),
-                         G_CALLBACK (&i_callback_toolbar_file_save), 2);
+                         G_CALLBACK (&i_callback_file_save), 2);
 
   create_toolbar_separator (toolbar, 3);
 
