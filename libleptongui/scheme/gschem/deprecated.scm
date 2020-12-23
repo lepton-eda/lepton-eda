@@ -567,7 +567,8 @@
 (define-public options-show-coord-window %options-show-coord-window)
 (define-deprecated help-about)
 (define-deprecated help-hotkeys)
-(define-public cancel %cancel)
+
+(define-deprecated cancel)
 
 
 (define-public (gschem-exit) (primitive-exit 0))

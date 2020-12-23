@@ -356,7 +356,7 @@ i_callback_edit_undo (GtkWidget *widget, gpointer data)
    * crash occurs when the page objects are free'd.
    * */
   if (w_current->inside_action) {
-    i_callback_cancel (w_current, 0, NULL);
+    i_callback_cancel (widget, w_current);
   } else {
     GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
     g_return_if_fail (page_view != NULL);
@@ -423,7 +423,7 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
 
   if (gtk_toggle_tool_button_get_active (GTK_TOGGLE_TOOL_BUTTON (widget))) {
     if (!o_invalidate_rubber (w_current)) {
-      i_callback_cancel(w_current, 0, NULL);
+      i_callback_cancel (widget, w_current);
     }
     i_callback_edit_select (widget, data);
   }
@@ -2659,7 +2659,8 @@ DEFINE_I_CALLBACK(options_show_log_window)
  *  since it is being called with a null, I suppose we should call it
  *  with the right param.
  */
-DEFINE_I_CALLBACK(cancel)
+void
+i_callback_cancel (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);

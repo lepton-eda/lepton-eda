@@ -66,7 +66,7 @@
 ;;;; Special actions
 
 (define-action-public (&cancel #:label (G_ "Cancel"))
-  (%cancel))
+  (run-callback i_callback_cancel "&cancel"))
 
 ;; -------------------------------------------------------------------
 ;;;; File menu actions
