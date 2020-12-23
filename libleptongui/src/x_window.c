@@ -1166,7 +1166,7 @@ create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
 
   create_toolbar_button (w_current, toolbar,
                          "insert-text", _("Text"), _("Add Text..."),
-                         G_CALLBACK (&i_callback_toolbar_add_text), 10);
+                         G_CALLBACK (&i_callback_add_text), 10);
 
   create_toolbar_separator (toolbar, 11);
 

@@ -1905,19 +1905,6 @@ i_callback_add_text (GtkWidget *widget, gpointer data)
  *  \brief
  *  \par Function Description
  *
- *  \note
- *  don't use the widget parameter on this function, or do some checking...
- *  since there is a call: widget = NULL, data = 0 (will be w_current hack)
- */
-void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
-{
-  i_callback_add_text (widget, data);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  */
 void
 i_callback_add_line (GtkWidget *widget, gpointer data)
