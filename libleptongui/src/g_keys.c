@@ -37,9 +37,6 @@ DEFINE_G_KEYS(hierarchy_down_schematic)
 DEFINE_G_KEYS(hierarchy_down_symbol)
 DEFINE_G_KEYS(hierarchy_up)
 
-/* i_callback_script_console is not currently implemented */
-DEFINE_G_KEYS(script_console)
-
 /*! Contains the smob tag for key smobs */
 static scm_t_bits g_key_smob_tag;
 #define G_SCM_IS_KEY(x) SCM_SMOB_PREDICATE (g_key_smob_tag, (x))

@@ -31,7 +31,6 @@ int g_keys_execute(GschemToplevel *w_current, GdkEventKey *event);
 SCM g_keys_hierarchy_down_schematic(SCM rest);
 SCM g_keys_hierarchy_down_symbol(SCM rest);
 SCM g_keys_hierarchy_up(SCM rest);
-SCM g_keys_script_console(SCM rest);
 void g_init_keys ();
 
 /* g_register.c */
@@ -172,7 +171,6 @@ void i_callback_attributes_show_name (GtkWidget *widget, gpointer data);
 void i_callback_attributes_show_value (GtkWidget *widget, gpointer data);
 void i_callback_attributes_show_both (GtkWidget *widget, gpointer data);
 void i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data);
-void i_callback_script_console(gpointer data, guint callback_action, GtkWidget *widget);
 void i_callback_options_snap_size (GtkWidget *widget, gpointer data);
 void i_callback_options_scale_up_snap_size (GtkWidget *widget, gpointer data);
 void i_callback_options_scale_down_snap_size (GtkWidget *widget, gpointer data);
