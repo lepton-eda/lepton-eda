@@ -105,21 +105,6 @@ DEFINE_G_KEYS(attributes_visibility_toggle)
 /* i_callback_script_console is not currently implemented */
 DEFINE_G_KEYS(script_console)
 
-/* repeat last command doesn't make sense on options either??? (does
- * it?) */
-DEFINE_G_KEYS(options_afeedback)
-DEFINE_G_KEYS(options_grid)
-DEFINE_G_KEYS(options_snap)
-DEFINE_G_KEYS(options_snap_size)
-DEFINE_G_KEYS(options_scale_up_snap_size)
-DEFINE_G_KEYS(options_scale_down_snap_size)
-DEFINE_G_KEYS(options_rubberband)
-DEFINE_G_KEYS(options_magneticnet)
-DEFINE_G_KEYS(options_show_log_window)
-DEFINE_G_KEYS(options_show_coord_window)
-DEFINE_G_KEYS(options_select_font)
-DEFINE_G_KEYS(options_draw_grips)
-
 /*! Contains the smob tag for key smobs */
 static scm_t_bits g_key_smob_tag;
 #define G_SCM_IS_KEY(x) SCM_SMOB_PREDICATE (g_key_smob_tag, (x))

@@ -2465,7 +2465,8 @@ DEFINE_I_CALLBACK(script_console)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(options_snap_size)
+void
+i_callback_options_snap_size (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -2478,7 +2479,8 @@ DEFINE_I_CALLBACK(options_snap_size)
  *  Callback function for the scale-up snap grid size hotkey.
  *  Multiply by two the snap grid size.
  */
-DEFINE_I_CALLBACK(options_scale_up_snap_size)
+void
+i_callback_options_scale_up_snap_size (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -2492,7 +2494,8 @@ DEFINE_I_CALLBACK(options_scale_up_snap_size)
  *  Callback function for the scale-down snap grid size hotkey.
  *  Divide by two the snap grid size (if it's and even number).
  */
-DEFINE_I_CALLBACK(options_scale_down_snap_size)
+void
+i_callback_options_scale_down_snap_size (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -2509,7 +2512,8 @@ DEFINE_I_CALLBACK(options_scale_down_snap_size)
  *  repeat last command doesn't make sense on options either??? (does
  *  it?)
  */
-DEFINE_I_CALLBACK(options_afeedback)
+void
+i_callback_options_afeedback (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -2532,7 +2536,8 @@ DEFINE_I_CALLBACK(options_afeedback)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(options_grid)
+void
+i_callback_options_grid (GtkWidget *widget, gpointer data)
 {
   GRID_MODE grid_mode;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
@@ -2556,7 +2561,8 @@ DEFINE_I_CALLBACK(options_grid)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(options_snap)
+void
+i_callback_options_snap (GtkWidget *widget, gpointer data)
 {
   SNAP_STATE snap_mode;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
@@ -2595,7 +2601,8 @@ DEFINE_I_CALLBACK(options_snap)
  *  Added on/off option from the pull down menu
  *  Chris Ellec - January 2001
  */
-DEFINE_I_CALLBACK(options_rubberband)
+void
+i_callback_options_rubberband (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -2616,7 +2623,8 @@ DEFINE_I_CALLBACK(options_rubberband)
  *  This function just toggles a variable to switch the magnetic net
  *  mode ON and OFF
  */
-DEFINE_I_CALLBACK(options_magneticnet)
+void
+i_callback_options_magneticnet (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -2640,7 +2648,8 @@ DEFINE_I_CALLBACK(options_magneticnet)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(options_show_log_window)
+void
+i_callback_options_show_log_window (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -2752,7 +2761,8 @@ i_callback_help_hotkeys (GtkWidget *widget, gpointer data)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(options_show_coord_window)
+void
+i_callback_options_show_coord_window (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -2760,7 +2770,8 @@ DEFINE_I_CALLBACK(options_show_coord_window)
   coord_dialog (w_current, 0, 0);
 }
 
-DEFINE_I_CALLBACK(options_select_font)
+void
+i_callback_options_select_font (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -2769,7 +2780,8 @@ DEFINE_I_CALLBACK(options_select_font)
   x_widgets_show_font_select (w_current);
 }
 
-DEFINE_I_CALLBACK(options_draw_grips)
+void
+i_callback_options_draw_grips (GtkWidget *widget, gpointer data)
 {
   GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);

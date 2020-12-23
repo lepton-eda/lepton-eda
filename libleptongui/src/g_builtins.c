@@ -94,18 +94,6 @@ static struct BuiltinInfo builtins[] = {
   { "%attributes-show-value",        0, 0, 0, (SCM (*) ()) g_keys_attributes_show_value },
   { "%attributes-show-both",         0, 0, 0, (SCM (*) ()) g_keys_attributes_show_both },
   { "%attributes-visibility-toggle", 0, 0, 0, (SCM (*) ()) g_keys_attributes_visibility_toggle },
-  { "%options-snap-size",            0, 0, 0, (SCM (*) ()) g_keys_options_snap_size },
-  { "%options-scale-up-snap-size",   0, 0, 0, (SCM (*) ()) g_keys_options_scale_up_snap_size },
-  { "%options-scale-down-snap-size", 0, 0, 0, (SCM (*) ()) g_keys_options_scale_down_snap_size },
-  { "%options-action-feedback",      0, 0, 0, (SCM (*) ()) g_keys_options_afeedback },
-  { "%options-grid",                 0, 0, 0, (SCM (*) ()) g_keys_options_grid },
-  { "%options-snap",                 0, 0, 0, (SCM (*) ()) g_keys_options_snap },
-  { "%options-rubberband",           0, 0, 0, (SCM (*) ()) g_keys_options_rubberband },
-  { "%options-magneticnet",          0, 0, 0, (SCM (*) ()) g_keys_options_magneticnet },
-  { "%options-show-log-window",      0, 0, 0, (SCM (*) ()) g_keys_options_show_log_window },
-  { "%options-show-coord-window",    0, 0, 0, (SCM (*) ()) g_keys_options_show_coord_window },
-  { "%options-select-font",          0, 0, 0, (SCM (*) ()) g_keys_options_select_font },
-  { "%options-draw-grips",           0, 0, 0, (SCM (*) ()) g_keys_options_draw_grips },
 
   { NULL, 0, 0, 0, NULL }, /* Custodian */
 };

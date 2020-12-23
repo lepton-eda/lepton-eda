@@ -483,40 +483,40 @@
   (run-callback i_callback_help_hotkeys "&help-hotkeys"))
 
 (define-action-public (&options-grid #:label (G_ "Switch Grid Style"))
-  (%options-grid))
+  (run-callback i_callback_options_grid "&options-grid"))
 
 (define-action-public (&options-snap #:label (G_ "Switch Snap Mode"))
-  (%options-snap))
+  (run-callback i_callback_options_snap "&options-snap"))
 
 (define-action-public (&options-snap-size #:label (G_ "Set Grid Spacing"))
-  (%options-snap-size))
+  (run-callback i_callback_options_snap_size "&options-snap-size"))
 
 (define-action-public (&options-scale-up-snap-size #:label (G_ "Increase Grid Spacing"))
-  (%options-scale-up-snap-size))
+  (run-callback i_callback_options_scale_up_snap_size "&options-scale-up-snap-size"))
 
 (define-action-public (&options-scale-down-snap-size #:label (G_ "Decrease Grid Spacing"))
-  (%options-scale-down-snap-size))
+  (run-callback i_callback_options_scale_down_snap_size "&options-scale-down-snap-size"))
 
 (define-action-public (&options-action-feedback #:label (G_ "Toggle Outline Drawing"))
-  (%options-action-feedback))
+  (run-callback i_callback_options_afeedback "&options-action-feedback"))
 
 (define-action-public (&options-rubberband #:label (G_ "Toggle Net Rubber Band"))
-  (%options-rubberband))
+  (run-callback i_callback_options_rubberband "&options-rubberband"))
 
 (define-action-public (&options-magneticnet #:label (G_ "Toggle Magnetic Nets"))
-  (%options-magneticnet))
+  (run-callback i_callback_options_magneticnet "&options-magneticnet"))
 
 (define-action-public (&options-show-log-window #:label (G_ "Show Log Window"))
-  (%options-show-log-window))
+  (run-callback i_callback_options_show_log_window "&options-show-log-window"))
 
 (define-action-public (&options-show-coord-window #:label (G_ "Show Coordinate Window"))
-  (%options-show-coord-window))
+  (run-callback i_callback_options_show_coord_window "&options-show-coord-window"))
 
 (define-action-public (&options-select-font #:label (G_ "Select Schematic Font"))
-  (%options-select-font))
+  (run-callback i_callback_options_select_font "&options-select-font"))
 
 (define-action-public (&options-draw-grips #:label (G_ "Toggle Grips"))
-  (%options-draw-grips))
+  (run-callback i_callback_options_draw_grips "&options-draw-grips"))
 
 ;; -------------------------------------------------------------------
 ;;;; Documentation-related actions
