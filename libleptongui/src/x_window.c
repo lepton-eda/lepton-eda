@@ -1129,11 +1129,11 @@ create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
 
   create_toolbar_button (w_current, toolbar,
                          "undo", _("Undo"), _("Undo last operation"),
-                         G_CALLBACK (&i_callback_toolbar_edit_undo), 4);
+                         G_CALLBACK (&i_callback_edit_undo), 4);
 
   create_toolbar_button (w_current, toolbar,
                          "redo", _("Redo"), _("Redo last undo"),
-                         G_CALLBACK (&i_callback_toolbar_edit_redo), 5);
+                         G_CALLBACK (&i_callback_edit_redo), 5);
 
   create_toolbar_separator (toolbar, 6);
 
