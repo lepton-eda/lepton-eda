@@ -32,6 +32,18 @@
             generic_filesel_dialog
             generic_msg_dialog
             gschem_toplevel_get_toplevel
+            i_callback_add_arc
+            i_callback_add_attribute
+            i_callback_add_box
+            i_callback_add_bus
+            i_callback_add_circle
+            i_callback_add_component
+            i_callback_add_line
+            i_callback_add_net
+            i_callback_add_path
+            i_callback_add_picture
+            i_callback_add_pin
+            i_callback_add_text
             i_callback_cancel
             i_callback_clipboard_copy
             i_callback_clipboard_cut
@@ -142,6 +154,18 @@
 (define-lff generic_filesel_dialog '* (list '* '* int))
 (define-lff generic_msg_dialog void '(*))
 ;;; i_callbacks.c
+(define-lff i_callback_add_arc void '(* *))
+(define-lff i_callback_add_attribute void '(* *))
+(define-lff i_callback_add_box void '(* *))
+(define-lff i_callback_add_bus void '(* *))
+(define-lff i_callback_add_circle void '(* *))
+(define-lff i_callback_add_component void '(* *))
+(define-lff i_callback_add_line void '(* *))
+(define-lff i_callback_add_net void '(* *))
+(define-lff i_callback_add_path void '(* *))
+(define-lff i_callback_add_picture void '(* *))
+(define-lff i_callback_add_pin void '(* *))
+(define-lff i_callback_add_text void '(* *))
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_clipboard_copy void '(* *))
 (define-lff i_callback_clipboard_cut void '(* *))

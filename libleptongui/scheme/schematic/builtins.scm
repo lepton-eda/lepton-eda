@@ -280,40 +280,40 @@
 ;;;; Actions related to adding things
 
 (define-action-public (&add-component #:label (G_ "Add Component") #:icon "insert-symbol")
-  (%add-component))
+  (run-callback i_callback_add_component "&add-component"))
 
 (define-action-public (&add-attribute #:label (G_ "Add Attribute") #:icon "insert-attribute")
-  (%add-attribute))
+  (run-callback i_callback_add_attribute "&add-attribute"))
 
 (define-action-public (&add-net #:label (G_ "Add Net") #:icon "insert-net")
-  (%add-net))
+  (run-callback i_callback_add_net "&add-net"))
 
 (define-action-public (&add-bus #:label (G_ "Add Bus") #:icon "insert-bus")
-  (%add-bus))
+  (run-callback i_callback_add_bus "&add-bus"))
 
 (define-action-public (&add-text #:label (G_ "Add Text") #:icon "insert-text")
-  (%add-text))
+  (run-callback i_callback_add_text "&add-text"))
 
 (define-action-public (&add-line #:label (G_ "Add Line") #:icon "insert-line")
-  (%add-line))
+  (run-callback i_callback_add_line "&add-line"))
 
 (define-action-public (&add-path #:label (G_ "Add Path") #:icon "insert-path")
-  (%add-path))
+  (run-callback i_callback_add_path "&add-path"))
 
 (define-action-public (&add-box #:label (G_ "Add Box") #:icon "insert-box")
-  (%add-box))
+  (run-callback i_callback_add_box "&add-box"))
 
 (define-action-public (&add-circle #:label (G_ "Add Circle") #:icon "insert-circle")
-  (%add-circle))
+  (run-callback i_callback_add_circle "&add-circle"))
 
 (define-action-public (&add-arc #:label (G_ "Add Arc") #:icon "insert-arc")
-  (%add-arc))
+  (run-callback i_callback_add_arc "&add-arc"))
 
 (define-action-public (&add-pin #:label (G_ "Add Pin") #:icon "insert-pin")
-  (%add-pin))
+  (run-callback i_callback_add_pin "&add-pin"))
 
 (define-action-public (&add-picture #:label (G_ "Add Picture") #:icon "insert-image")
-  (%add-picture))
+  (run-callback i_callback_add_picture "&add-picture"))
 
 ;; -------------------------------------------------------------------
 ;;;; Hierarchy actions

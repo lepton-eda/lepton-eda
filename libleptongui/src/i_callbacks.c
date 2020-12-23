@@ -1763,7 +1763,8 @@ DEFINE_I_CALLBACK_BUF(paste,5)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_component)
+void
+i_callback_add_component (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1787,7 +1788,7 @@ DEFINE_I_CALLBACK(add_component)
  */
 void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
 {
-  i_callback_add_component (data, 0, widget);
+  i_callback_add_component (widget, data);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1795,7 +1796,8 @@ void i_callback_toolbar_add_component(GtkWidget* widget, gpointer data)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_attribute)
+void
+i_callback_add_attribute (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1812,7 +1814,8 @@ DEFINE_I_CALLBACK(add_attribute)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_net)
+void
+i_callback_add_net (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
@@ -1843,7 +1846,7 @@ void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
   if (gtk_toggle_tool_button_get_active (GTK_TOGGLE_TOOL_BUTTON (widget))) {
-    i_callback_add_net (w_current, 0, widget);
+    i_callback_add_net (widget, w_current);
   }
   scm_dynwind_end ();
 }
@@ -1853,7 +1856,8 @@ void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_bus)
+void
+i_callback_add_bus (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
@@ -1884,7 +1888,7 @@ void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
   if (gtk_toggle_tool_button_get_active (GTK_TOGGLE_TOOL_BUTTON (widget))) {
-    i_callback_add_bus (w_current, 0, widget);
+    i_callback_add_bus (widget, w_current);
   }
   scm_dynwind_end ();
 }
@@ -1894,7 +1898,8 @@ void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_text)
+void
+i_callback_add_text (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1919,7 +1924,7 @@ DEFINE_I_CALLBACK(add_text)
  */
 void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
 {
-  i_callback_add_text (data, 0, widget);
+  i_callback_add_text (widget, data);
 }
 
 /*! \todo Finish function documentation!!!
@@ -1927,7 +1932,8 @@ void i_callback_toolbar_add_text(GtkWidget* widget, gpointer data)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_line)
+void
+i_callback_add_line (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
@@ -1944,7 +1950,8 @@ DEFINE_I_CALLBACK(add_line)
   }
 }
 
-DEFINE_I_CALLBACK(add_path)
+void
+i_callback_add_path (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1964,7 +1971,8 @@ DEFINE_I_CALLBACK(add_path)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_box)
+void
+i_callback_add_box (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
@@ -1986,7 +1994,8 @@ DEFINE_I_CALLBACK(add_box)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_picture)
+void
+i_callback_add_picture (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -2005,7 +2014,8 @@ DEFINE_I_CALLBACK(add_picture)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_circle)
+void
+i_callback_add_circle (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
@@ -2027,7 +2037,8 @@ DEFINE_I_CALLBACK(add_circle)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_arc)
+void
+i_callback_add_arc (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
@@ -2049,7 +2060,8 @@ DEFINE_I_CALLBACK(add_arc)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(add_pin)
+void
+i_callback_add_pin (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   gint wx, wy;
