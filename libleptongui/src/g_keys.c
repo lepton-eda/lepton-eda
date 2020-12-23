@@ -120,11 +120,6 @@ DEFINE_G_KEYS(options_show_coord_window)
 DEFINE_G_KEYS(options_select_font)
 DEFINE_G_KEYS(options_draw_grips)
 
-/* be sure that you don't use the widget parameter in this one, since it is
-being called with a null, I suppose we should call it with the right param.
-hack */
-DEFINE_G_KEYS(cancel)
-
 /*! Contains the smob tag for key smobs */
 static scm_t_bits g_key_smob_tag;
 #define G_SCM_IS_KEY(x) SCM_SMOB_PREDICATE (g_key_smob_tag, (x))

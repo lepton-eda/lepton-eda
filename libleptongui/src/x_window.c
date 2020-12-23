@@ -598,7 +598,7 @@ void x_window_close(GschemToplevel *w_current)
   /* If we're closing whilst inside an action, re-wind the
    * page contents back to their state before we started */
   if (w_current->inside_action) {
-    i_callback_cancel (w_current, 0, NULL);
+    i_callback_cancel (NULL, w_current);
   }
 
   /* last chance to save possible unsaved pages */
@@ -915,7 +915,7 @@ x_window_close_page_impl (GschemToplevel *w_current, PAGE *page)
   /* If we're closing whilst inside an action, re-wind the
    * page contents back to their state before we started */
   if (w_current->inside_action) {
-    i_callback_cancel (w_current, 0, NULL);
+    i_callback_cancel (NULL, w_current);
   }
 
   if (page == toplevel->page_current) {

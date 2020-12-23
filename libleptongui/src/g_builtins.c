@@ -106,7 +106,6 @@ static struct BuiltinInfo builtins[] = {
   { "%options-show-coord-window",    0, 0, 0, (SCM (*) ()) g_keys_options_show_coord_window },
   { "%options-select-font",          0, 0, 0, (SCM (*) ()) g_keys_options_select_font },
   { "%options-draw-grips",           0, 0, 0, (SCM (*) ()) g_keys_options_draw_grips },
-  { "%cancel",                       0, 0, 0, (SCM (*) ()) g_keys_cancel },
 
   { NULL, 0, 0, 0, NULL }, /* Custodian */
 };
