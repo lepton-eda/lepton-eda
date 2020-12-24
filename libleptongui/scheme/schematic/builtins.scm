@@ -30,7 +30,6 @@
   #:use-module (lepton repl)
 
   #:use-module (schematic action)
-  #:use-module (schematic core builtins)
   #:use-module (schematic core gettext)
   #:use-module (schematic ffi)
   #:use-module (schematic gschemdoc)

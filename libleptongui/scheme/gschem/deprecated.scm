@@ -32,7 +32,6 @@
   #:use-module (lepton object)
   #:use-module (lepton page)
 
-  #:use-module (schematic core builtins)
   #:use-module (schematic attrib)
   #:use-module (schematic core gettext)
   #:use-module (schematic dialog)
@@ -447,8 +446,6 @@
 
 
 ;;; Deprecated procedures replaced with actions
-;;
-;; - defined in the module (schematic core builtins)
 (define-deprecated file-close-window)
 (define-deprecated file-image)
 (define-deprecated file-new)

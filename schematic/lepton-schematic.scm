@@ -71,7 +71,6 @@ exec @GUILE@ -s "$0" "$@"
   (g_init_action)
   (g_init_attrib)
   (g_init_keys)
-  (g_init_builtins)
   (g_init_util)
   (scheme_init_undo))
 
