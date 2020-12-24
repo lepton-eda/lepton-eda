@@ -453,16 +453,16 @@
 
 
 (define-action-public (&attributes-show-value #:label (G_ "Show Attribute Value") #:icon "attribute-show-value")
-  (%attributes-show-value))
+  (run-callback i_callback_attributes_show_value "&attributes-show-value"))
 
 (define-action-public (&attributes-show-name #:label (G_ "Show Attribute Name") #:icon "attribute-show-name")
-  (%attributes-show-name))
+  (run-callback i_callback_attributes_show_name "&attributes-show-name"))
 
 (define-action-public (&attributes-show-both #:label (G_ "Show Name & Value") #:icon "attribute-show-both")
-  (%attributes-show-both))
+  (run-callback i_callback_attributes_show_both "&attributes-show-both"))
 
 (define-action-public (&attributes-visibility-toggle #:label (G_ "Toggle Text Visibility"))
-  (%attributes-visibility-toggle))
+  (run-callback i_callback_attributes_visibility_toggle "&attributes-visibility-toggle"))
 
 (define-action-public (&edit-find-text #:label (G_ "Find Specific Text") #:icon "gtk-find")
   (run-callback i_callback_edit_find "&edit-find-text"))

@@ -44,6 +44,10 @@
             i_callback_add_picture
             i_callback_add_pin
             i_callback_add_text
+            i_callback_attributes_show_both
+            i_callback_attributes_show_name
+            i_callback_attributes_show_value
+            i_callback_attributes_visibility_toggle
             i_callback_cancel
             i_callback_clipboard_copy
             i_callback_clipboard_cut
@@ -192,6 +196,10 @@
 (define-lff i_callback_add_picture void '(* *))
 (define-lff i_callback_add_pin void '(* *))
 (define-lff i_callback_add_text void '(* *))
+(define-lff i_callback_attributes_show_both void '(* *))
+(define-lff i_callback_attributes_show_name void '(* *))
+(define-lff i_callback_attributes_show_value void '(* *))
+(define-lff i_callback_attributes_visibility_toggle void '(* *))
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_clipboard_copy void '(* *))
 (define-lff i_callback_clipboard_cut void '(* *))
