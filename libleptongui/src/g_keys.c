@@ -33,22 +33,6 @@ SCM g_keys_ ## name(SCM rest)                           \
 }
 
 /* Select also does not update the middle button shortcut */
-DEFINE_G_KEYS(buffer_copy1)
-DEFINE_G_KEYS(buffer_copy2)
-DEFINE_G_KEYS(buffer_copy3)
-DEFINE_G_KEYS(buffer_copy4)
-DEFINE_G_KEYS(buffer_copy5)
-DEFINE_G_KEYS(buffer_cut1)
-DEFINE_G_KEYS(buffer_cut2)
-DEFINE_G_KEYS(buffer_cut3)
-DEFINE_G_KEYS(buffer_cut4)
-DEFINE_G_KEYS(buffer_cut5)
-DEFINE_G_KEYS(buffer_paste1)
-DEFINE_G_KEYS(buffer_paste2)
-DEFINE_G_KEYS(buffer_paste3)
-DEFINE_G_KEYS(buffer_paste4)
-DEFINE_G_KEYS(buffer_paste5)
-
 DEFINE_G_KEYS(hierarchy_down_schematic)
 DEFINE_G_KEYS(hierarchy_down_symbol)
 DEFINE_G_KEYS(hierarchy_up)

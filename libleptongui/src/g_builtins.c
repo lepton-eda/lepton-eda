@@ -33,22 +33,6 @@ struct BuiltinInfo {
 };
 
 static struct BuiltinInfo builtins[] = {
-  { "%buffer-copy1",                 0, 0, 0, (SCM (*) ()) g_keys_buffer_copy1 },
-  { "%buffer-copy2",                 0, 0, 0, (SCM (*) ()) g_keys_buffer_copy2 },
-  { "%buffer-copy3",                 0, 0, 0, (SCM (*) ()) g_keys_buffer_copy3 },
-  { "%buffer-copy4",                 0, 0, 0, (SCM (*) ()) g_keys_buffer_copy4 },
-  { "%buffer-copy5",                 0, 0, 0, (SCM (*) ()) g_keys_buffer_copy5 },
-  { "%buffer-cut1",                  0, 0, 0, (SCM (*) ()) g_keys_buffer_cut1 },
-  { "%buffer-cut2",                  0, 0, 0, (SCM (*) ()) g_keys_buffer_cut2 },
-  { "%buffer-cut3",                  0, 0, 0, (SCM (*) ()) g_keys_buffer_cut3 },
-  { "%buffer-cut4",                  0, 0, 0, (SCM (*) ()) g_keys_buffer_cut4 },
-  { "%buffer-cut5",                  0, 0, 0, (SCM (*) ()) g_keys_buffer_cut5 },
-  { "%buffer-paste1",                0, 0, 0, (SCM (*) ()) g_keys_buffer_paste1 },
-  { "%buffer-paste2",                0, 0, 0, (SCM (*) ()) g_keys_buffer_paste2 },
-  { "%buffer-paste3",                0, 0, 0, (SCM (*) ()) g_keys_buffer_paste3 },
-  { "%buffer-paste4",                0, 0, 0, (SCM (*) ()) g_keys_buffer_paste4 },
-  { "%buffer-paste5",                0, 0, 0, (SCM (*) ()) g_keys_buffer_paste5 },
-
   { "%hierarchy-down-schematic",     0, 0, 0, (SCM (*) ()) g_keys_hierarchy_down_schematic },
   { "%hierarchy-down-symbol",        0, 0, 0, (SCM (*) ()) g_keys_hierarchy_down_symbol },
   { "%hierarchy-up",                 0, 0, 0, (SCM (*) ()) g_keys_hierarchy_up },
