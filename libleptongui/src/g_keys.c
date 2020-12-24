@@ -36,10 +36,6 @@ SCM g_keys_ ## name(SCM rest)                           \
 DEFINE_G_KEYS(hierarchy_down_schematic)
 DEFINE_G_KEYS(hierarchy_down_symbol)
 DEFINE_G_KEYS(hierarchy_up)
-DEFINE_G_KEYS(attributes_show_name)
-DEFINE_G_KEYS(attributes_show_value)
-DEFINE_G_KEYS(attributes_show_both)
-DEFINE_G_KEYS(attributes_visibility_toggle)
 
 /* i_callback_script_console is not currently implemented */
 DEFINE_G_KEYS(script_console)

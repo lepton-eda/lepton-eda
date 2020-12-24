@@ -2312,7 +2312,8 @@ DEFINE_I_CALLBACK(hierarchy_up)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(attributes_show_name)
+void
+i_callback_attributes_show_name (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -2346,7 +2347,8 @@ DEFINE_I_CALLBACK(attributes_show_name)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(attributes_show_value)
+void
+i_callback_attributes_show_value (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -2380,7 +2382,8 @@ DEFINE_I_CALLBACK(attributes_show_value)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(attributes_show_both)
+void
+i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -2414,7 +2417,8 @@ DEFINE_I_CALLBACK(attributes_show_both)
  *  \par Function Description
  *
  */
-DEFINE_I_CALLBACK(attributes_visibility_toggle)
+void
+i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);

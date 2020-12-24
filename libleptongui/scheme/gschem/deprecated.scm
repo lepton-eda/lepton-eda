@@ -552,10 +552,11 @@
 (define-public hierarchy-down-schematic %hierarchy-down-schematic)
 (define-public hierarchy-down-symbol %hierarchy-down-symbol)
 (define-public hierarchy-up %hierarchy-up)
-(define-public attributes-show-name %attributes-show-name)
-(define-public attributes-show-value %attributes-show-value)
-(define-public attributes-show-both %attributes-show-both)
-(define-public attributes-visibility-toggle %attributes-visibility-toggle)
+
+(define-deprecated attributes-show-name)
+(define-deprecated attributes-show-value)
+(define-deprecated attributes-show-both)
+(define-deprecated attributes-visibility-toggle)
 
 (define-deprecated options-snap-size)
 (define-deprecated options-scale-up-snap-size)
