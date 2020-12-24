@@ -14,8 +14,6 @@ void a_zoom_box_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
 gboolean g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name);
 gboolean g_action_get_position (gboolean snap, int *x, int *y);
 void g_init_action (void);
-/* g_builtins.c */
-void g_init_builtins (void);
 /* g_attrib.c */
 void g_init_attrib ();
 /* g_hook.c */
