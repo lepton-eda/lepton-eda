@@ -1691,10 +1691,8 @@ i_callback_clipboard_paste (GtkWidget *widget, gpointer data)
  *  \par Function Description
  *
  */
-void
-i_callback_buffer_copy (gpointer data, guint callback_action,
-                        GtkWidget *widget, int n,
-                        void (*f)(gpointer, guint, GtkWidget *))
+static void
+buffer_copy (gpointer data, int n)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1712,10 +1710,8 @@ i_callback_buffer_copy (gpointer data, guint callback_action,
  *  \par Function Description
  *
  */
-void
-i_callback_buffer_cut (gpointer data, guint callback_action,
-                       GtkWidget *widget, int n,
-                       void (*f)(gpointer, guint, GtkWidget *))
+static void
+buffer_cut (gpointer data, int n)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -1734,9 +1730,7 @@ i_callback_buffer_cut (gpointer data, guint callback_action,
  *
  */
 static void
-i_callback_buffer_paste (gpointer data, guint callback_action,
-                         GtkWidget *widget, int n,
-                         void (*f)(gpointer, guint, GtkWidget *))
+buffer_paste (gpointer data, int n)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   int empty;
@@ -1757,31 +1751,24 @@ i_callback_buffer_paste (gpointer data, guint callback_action,
   }
 }
 
-#define DEFINE_I_CALLBACK_BUF(op, n) \
-  DEFINE_I_CALLBACK(buffer_ ## op ## n) { \
-    i_callback_buffer_ ## op (data, callback_action, widget, n, \
-                              i_callback_buffer_ ## op ## n); \
-  }
+void i_callback_buffer_copy1 (GtkWidget *widget, gpointer data) {buffer_copy (data, 1);}
+void i_callback_buffer_copy2 (GtkWidget *widget, gpointer data) {buffer_copy (data, 2);}
+void i_callback_buffer_copy3 (GtkWidget *widget, gpointer data) {buffer_copy (data, 3);}
+void i_callback_buffer_copy4 (GtkWidget *widget, gpointer data) {buffer_copy (data, 4);}
+void i_callback_buffer_copy5 (GtkWidget *widget, gpointer data) {buffer_copy (data, 5);}
 
-DEFINE_I_CALLBACK_BUF(copy,1)
-DEFINE_I_CALLBACK_BUF(copy,2)
-DEFINE_I_CALLBACK_BUF(copy,3)
-DEFINE_I_CALLBACK_BUF(copy,4)
-DEFINE_I_CALLBACK_BUF(copy,5)
+void i_callback_buffer_cut1 (GtkWidget *widget, gpointer data) {buffer_cut (data, 1);}
+void i_callback_buffer_cut2 (GtkWidget *widget, gpointer data) {buffer_cut (data, 2);}
+void i_callback_buffer_cut3 (GtkWidget *widget, gpointer data) {buffer_cut (data, 3);}
+void i_callback_buffer_cut4 (GtkWidget *widget, gpointer data) {buffer_cut (data, 4);}
+void i_callback_buffer_cut5 (GtkWidget *widget, gpointer data) {buffer_cut (data, 5);}
 
-DEFINE_I_CALLBACK_BUF(cut,1)
-DEFINE_I_CALLBACK_BUF(cut,2)
-DEFINE_I_CALLBACK_BUF(cut,3)
-DEFINE_I_CALLBACK_BUF(cut,4)
-DEFINE_I_CALLBACK_BUF(cut,5)
+void i_callback_buffer_paste1 (GtkWidget *widget, gpointer data) {buffer_paste (data, 1);}
+void i_callback_buffer_paste2 (GtkWidget *widget, gpointer data) {buffer_paste (data, 2);}
+void i_callback_buffer_paste3 (GtkWidget *widget, gpointer data) {buffer_paste (data, 3);}
+void i_callback_buffer_paste4 (GtkWidget *widget, gpointer data) {buffer_paste (data, 4);}
+void i_callback_buffer_paste5 (GtkWidget *widget, gpointer data) {buffer_paste (data, 5);}
 
-DEFINE_I_CALLBACK_BUF(paste,1)
-DEFINE_I_CALLBACK_BUF(paste,2)
-DEFINE_I_CALLBACK_BUF(paste,3)
-DEFINE_I_CALLBACK_BUF(paste,4)
-DEFINE_I_CALLBACK_BUF(paste,5)
-
-#undef DEFINE_I_CALLBACK_BUF
 
 /*! \section add-menu Add Menu Callback Functions */
 /*! \todo Finish function documentation!!!
