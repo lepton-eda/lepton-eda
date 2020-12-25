@@ -222,7 +222,7 @@ Run `~A --help' for more information.\n")
           (loop (cdr sys-dirs))))))
 
 
-(define (open-log-window)
+(define (open-log-window window)
   (let ((cfg (path-config-context (getcwd))))
     (when (string= (config-string cfg "schematic" "log-window")
                    "startup")
@@ -259,7 +259,7 @@ Run `~A --help' for more information.\n")
     (map string->pointer ls))
 
   ;; Open up log window on startup if requested in config.
-  (open-log-window)
+  (open-log-window window)
 
   (let* ((filenames (get-absolute-filenames file-list cwd))
          (*filenames (if (null? filenames)
