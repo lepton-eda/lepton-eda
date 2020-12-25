@@ -98,6 +98,10 @@ When writing C code:
 - Do not use C++-style comments `// ...`; use C-style `/* ... */`
   comments instead.
 
+- Avoid using macros for definition of function names, they
+  obfuscate the code and make git-grepping over it harder for the
+  developers.
+
 - This set of options to GNU `indent` approximates the lepton-eda C
   indentation style: (note the `-nut` option, which disables
   the use of tab characters: please use spaces for code indentation)
