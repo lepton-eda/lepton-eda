@@ -30,7 +30,6 @@
             generic_confirm_dialog
             generic_filesel_dialog
             generic_msg_dialog
-            get_main_menu
             gschem_toplevel_get_toplevel
             i_callback_add_arc
             i_callback_add_attribute
@@ -133,6 +132,8 @@
             i_callback_view_zoom_full
             i_callback_view_zoom_in
             i_callback_view_zoom_out
+            make_menu_action
+            make_separator_menu_item
             o_buffer_init
             o_undo_init
             scheme_init_undo
@@ -140,13 +141,15 @@
             set_render_placeholders
             set_verbose_mode
             x_color_init
+            x_menu_attach_recent_files_submenu
             x_stroke_init
             x_widgets_show_log
             x_window_create_main
             x_window_new
             x_window_open_page
             x_window_set_current_page
-            x_window_setup))
+            x_window_setup
+            ))
 
 (define libleptongui
   (dynamic-link (or (getenv "LIBLEPTONGUI") "@LIBLEPTONGUI@")))
@@ -180,6 +183,10 @@
 (define-lff set_verbose_mode void '())
 (define-lff x_color_init void '())
 (define-lff x_widgets_show_log void (list '*))
+;;; x_menus.c
+(define-lff make_separator_menu_item '* '())
+(define-lff make_menu_action '* '(* * * * *))
+(define-lff x_menu_attach_recent_files_submenu void '(* *))
 ;;; x_window.c
 (define-lff x_window_new '* '())
 (define-lff x_window_open_page '* '(* *))
@@ -292,7 +299,6 @@
 (define-lff i_callback_page_prev_tab void '(* *))
 (define-lff i_callback_page_print void '(* *))
 (define-lff i_callback_page_revert void '(* *))
-(define-lff get_main_menu '* '(*))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.

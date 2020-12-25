@@ -34,6 +34,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic gschemdoc)
   #:use-module (schematic hook)
+  #:use-module (schematic menu)
   #:use-module (schematic repl)
   #:use-module (schematic selection)
   #:use-module (schematic undo)
@@ -100,7 +101,7 @@
 
   (x_window_open_page
    (x_window_create_main new-window
-                         (get_main_menu new-window))
+                         (make-main-menu new-window))
    %null-pointer))
 
 (define-action-public (&file-new-window #:label (G_ "New Window") #:icon "window-new")
