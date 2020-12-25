@@ -23,6 +23,8 @@
   ; Import C procedures
   #:use-module (schematic core window)
 
+  #:use-module (schematic ffi)
+
   #:use-module (lepton page)
   #:re-export (close-page!))
 

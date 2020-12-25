@@ -41,7 +41,8 @@ exec @GUILE@ -s "$0" "$@"
                               (lepton version)
                               (schematic core gettext)
                               (schematic ffi)
-                              (schematic ffi gtk)))
+                              (schematic ffi gtk)
+                              (schematic menu)))
 
 
 ;;; Localization.
@@ -250,7 +251,7 @@ Run `~A --help' for more information.\n")
   (define new-window (x_window_setup (x_window_new)))
 
   (x_window_create_main new-window
-                        (get_main_menu new-window)))
+                        (make-main-menu new-window)))
 
 (define (main file-list)
   ;; Create a new window and associated TOPLEVEL object.

@@ -511,7 +511,6 @@ void x_linetypecb_set_index (GtkWidget *widget, int index);
 /* x_misc.c */
 gboolean x_show_uri (GschemToplevel *w_current, const gchar *buf, GError **err);
 /* x_menus.c */
-GtkWidget *get_main_menu(GschemToplevel *w_current);
 GtkWidget *get_main_popup(GschemToplevel *w_current);
 gint do_popup(GschemToplevel *w_current, GdkEventButton *event);
 void x_menus_sensitivity (GtkWidget* menu, const gchar* action_name, gboolean sensitive);
