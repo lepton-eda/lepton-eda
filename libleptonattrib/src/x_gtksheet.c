@@ -85,7 +85,7 @@ on_deactivate (GtkSheet* sheet,
 
   if (strcmp (str, current_cell_text) != 0)
   {
-    sheet_head->CHANGED = TRUE;
+    s_sheet_data_set_changed (sheet_head, TRUE);
   }
 
   return TRUE; /* TRUE => allow deactivation */

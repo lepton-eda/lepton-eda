@@ -108,7 +108,7 @@ gboolean attrib_really_quit(void)
   }
 
 
-  if (sheet_head->CHANGED == TRUE) {
+  if (s_sheet_data_changed (sheet_head)) {
     x_dialog_unsaved_data();
   } else {
     attrib_quit(0);

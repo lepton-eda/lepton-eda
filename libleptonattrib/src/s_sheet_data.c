@@ -50,6 +50,20 @@
 #include "../include/gettext.h"
 
 
+int
+s_sheet_data_changed (const SHEET_DATA* data)
+{
+  return data->CHANGED;
+}
+
+
+void
+s_sheet_data_set_changed (SHEET_DATA* data, int changed)
+{
+  data->CHANGED = changed;
+}
+
+
 /*------------------------------------------------------------------*/
 /*!
  * \brief Create a SHEET_DATA struct.
