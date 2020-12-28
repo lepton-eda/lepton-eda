@@ -94,23 +94,6 @@ Options:
   -V, --version          Show version information
   -h, --help             This help menu
 
-FAQ:
-  *  What do the colors of the cell text mean?
-     The cell colors indicate the visibility of the attribute.
-     Black = Visible attribute, value displayed only.
-     Grey  = Invisible attribute.
-     Red   = Visible attribute, name displayed only.
-     Blue  = Visible attribute, both name and value displayed.
-
-  *  What does the period (\".\") at the end of some component refdeses mean?
-     The period is placed after the refdeses of slotted components.
-     If slots are present on the component, then the different slots appear
-     in different rows with the slot number after the period.  Example:  C101.2.
-
-Copyright (C) 2003-2006 Stuart D. Brorson.
-Copyright (C) 2007-2016 gEDA Contributors.
-Copyright (C) 2017-2020 Lepton EDA Contributors.
-
 Report bugs at ~S
 Lepton EDA homepage: ~S
 ")
