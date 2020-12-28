@@ -200,7 +200,7 @@ s_toplevel_save_sheet ()
 
   /* Save all pages in design. */
   s_page_save_all (toplevel);
-  sheet_head->CHANGED = FALSE;
+  s_sheet_data_set_changed (sheet_head, FALSE);
 
   return;
 }
@@ -400,7 +400,8 @@ void s_toplevel_delete_attrib_col() {
   gtk_sheet_delete_columns (sheet, mincol, 1);
   g_debug ("s_toplevel_delete_attrib_col: Done deleting col in gtksheet.\n");
 
-  sheet_head->CHANGED = TRUE;  /* Set changed flag so user is prompted when exiting */
+  /* Set changed flag so user is prompted when exiting */
+  s_sheet_data_set_changed (sheet_head, TRUE);
 
   return;
 }
