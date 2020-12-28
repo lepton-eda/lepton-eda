@@ -23,6 +23,7 @@
   #:use-module (srfi srfi-1)
 
   #:use-module (lepton eval)
+  #:use-module (schematic ffi gobject)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
 
