@@ -345,6 +345,39 @@ void x_dialog_about_dialog()
   gtk_widget_destroy(dialog);
 }
 
+
+/*! \brief: If file \a fname exists, open confirmation dialog.
+ *
+ *  \return  Is it OK to overwrite file \a fname.
+ */
+static gboolean
+x_dialog_confirm_overwrite (const gchar* fname)
+{
+  if (!g_file_test (fname, G_FILE_TEST_EXISTS))
+  {
+    return TRUE;
+  }
+
+  GtkWidget* dlg = gtk_message_dialog_new(
+    NULL,
+    (GtkDialogFlags) (GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT),
+    GTK_MESSAGE_QUESTION,
+    GTK_BUTTONS_YES_NO,
+    _("The selected file `%1$s' already exists.\n\n"
+      "Would you like to overwrite it?"),
+    fname);
+
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Overwrite file?"));
+  gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_NO);
+
+  gint res = gtk_dialog_run (GTK_DIALOG (dlg));
+  gtk_widget_destroy (dlg);
+
+  return res == GTK_RESPONSE_YES;
+
+}
+
+
 /*! \brief Export file dialog
  *
  * This asks for the filename for the CSV export file and then
@@ -367,7 +400,12 @@ void x_dialog_export_file()
     case GTK_RESPONSE_ACCEPT:
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
       if(filename != NULL) {
-        f_export_components(filename);
+
+        if (x_dialog_confirm_overwrite (filename))
+        {
+          f_export_components (filename);
+        }
+
         g_free(filename);
       }
       break;
