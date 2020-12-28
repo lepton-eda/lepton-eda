@@ -94,8 +94,17 @@
 (define-action-public (&file-script #:label (G_ "Run Script") #:icon "gtk-execute")
   (run-callback i_callback_file_script "&file-script"))
 
+(define (make-schematic-window)
+  (define new-window (x_window_setup (x_window_new)))
+
+
+  (x_window_open_page
+   (x_window_create_main new-window
+                         (get_main_menu new-window))
+   %null-pointer))
+
 (define-action-public (&file-new-window #:label (G_ "New Window") #:icon "window-new")
-  (i_callback_file_new_window %null-pointer %null-pointer))
+  (make-schematic-window))
 
 (define-action-public (&file-close-window #:label (G_ "Close Window") #:icon "gtk-close")
   (run-callback i_callback_file_close "&file-close-window"))

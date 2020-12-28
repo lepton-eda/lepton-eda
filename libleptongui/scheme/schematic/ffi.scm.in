@@ -30,6 +30,7 @@
             generic_confirm_dialog
             generic_filesel_dialog
             generic_msg_dialog
+            get_main_menu
             gschem_toplevel_get_toplevel
             i_callback_add_arc
             i_callback_add_attribute
@@ -141,9 +142,11 @@
             x_color_init
             x_stroke_init
             x_widgets_show_log
+            x_window_create_main
             x_window_new
             x_window_open_page
-            x_window_set_current_page))
+            x_window_set_current_page
+            x_window_setup))
 
 (define libleptongui
   (dynamic-link (or (getenv "LIBLEPTONGUI") "@LIBLEPTONGUI@")))
@@ -177,9 +180,12 @@
 (define-lff set_verbose_mode void '())
 (define-lff x_color_init void '())
 (define-lff x_widgets_show_log void (list '*))
+;;; x_window.c
 (define-lff x_window_new '* '())
 (define-lff x_window_open_page '* '(* *))
 (define-lff x_window_set_current_page void '(* *))
+(define-lff x_window_setup '* '(*))
+(define-lff x_window_create_main '* '(* *))
 ;;; x_dialog.c
 (define-lff generic_confirm_dialog int '(*))
 (define-lff generic_filesel_dialog '* (list '* '* int))
@@ -286,6 +292,7 @@
 (define-lff i_callback_page_prev_tab void '(* *))
 (define-lff i_callback_page_print void '(* *))
 (define-lff i_callback_page_revert void '(* *))
+(define-lff get_main_menu '* '(*))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.

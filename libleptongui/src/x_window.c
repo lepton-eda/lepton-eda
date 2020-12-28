@@ -24,8 +24,9 @@
 
 
 static void
-create_menubar (GschemToplevel *w_current, GtkWidget *main_box);
-
+create_menubar (GschemToplevel *w_current,
+                GtkWidget *main_box,
+                GtkWidget *menubar);
 
 static void
 create_toolbar_button (GschemToplevel *w_current,
@@ -111,7 +112,8 @@ x_window_new_page (GschemToplevel* w_current);
  *  \par Function Description
  *
  */
-void x_window_setup (GschemToplevel *w_current)
+GschemToplevel*
+x_window_setup (GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
@@ -127,8 +129,7 @@ void x_window_setup (GschemToplevel *w_current)
   /* Add to the list of windows */
   global_window_list = g_list_append (global_window_list, w_current);
 
-  /* X related stuff */
-  x_window_create_main (w_current);
+  return w_current;
 }
 
 /*! \todo Finish function documentation!!!
@@ -426,7 +427,8 @@ x_window_translate_response (GschemTranslateWidget *widget, gint response, Gsche
  *  \par Function Description
  *
  */
-void x_window_create_main(GschemToplevel *w_current)
+GschemToplevel*
+x_window_create_main (GschemToplevel *w_current, GtkWidget *menubar)
 {
   GtkWidget *main_box = NULL;
   GtkWidget *hpaned = NULL;
@@ -465,7 +467,7 @@ void x_window_create_main(GschemToplevel *w_current)
   /*
   *  main menu:
   */
-  create_menubar (w_current, main_box);
+  create_menubar (w_current, main_box, menubar);
 
 
   gtk_widget_realize (w_current->main_window);
@@ -582,6 +584,7 @@ void x_window_create_main(GschemToplevel *w_current)
   /* focus page view: */
   gtk_widget_grab_focus (w_current->drawing_area);
 
+  return w_current;
 } /* x_window_create_main() */
 
 
@@ -991,17 +994,14 @@ GschemToplevel* x_window_new ()
   /* Initialize tabbed GUI: */
   x_tabs_init();
 
-  x_window_setup (w_current);
-
   return w_current;
 }
 
 
 
 static void
-create_menubar (GschemToplevel *w_current, GtkWidget *main_box)
+create_menubar (GschemToplevel *w_current, GtkWidget *main_box, GtkWidget *menubar)
 {
-  GtkWidget *menubar = get_main_menu (w_current);
 
 #ifdef ENABLE_GTK3
   gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
