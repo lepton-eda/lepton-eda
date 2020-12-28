@@ -546,6 +546,35 @@ x_window_set_title (GList* plist)
 }
 
 
+/*! \brief Indicate if document has \a changed in the title.
+ */
+void
+x_window_set_title_changed (int changed)
+{
+  const gchar* title = gtk_window_get_title (GTK_WINDOW (window));
+  const gchar* prefix = "* ";
+
+  if (changed)
+  {
+    if (!g_str_has_prefix (title, prefix))
+    {
+      gchar* title_new = g_strdup_printf ("%s%s", prefix, title);
+      gtk_window_set_title (GTK_WINDOW (window), title_new);
+      g_free (title_new);
+    }
+  }
+  else
+  {
+    if (g_str_has_prefix (title, prefix))
+    {
+      gchar* title_new = g_strdup (title + strlen (prefix));
+      gtk_window_set_title (GTK_WINDOW (window), title_new);
+      g_free (title_new);
+    }
+  }
+}
+
+
 /*! \brief Open lepton-attrib window.
  *
  * The function populates the spreadsheet data structure and

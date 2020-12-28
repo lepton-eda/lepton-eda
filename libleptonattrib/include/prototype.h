@@ -180,5 +180,7 @@ TOPLEVEL*
 x_window_get_toplevel ();
 void
 lepton_attrib_window ();
+void
+x_window_set_title_changed (int changed);
 
 G_END_DECLS
