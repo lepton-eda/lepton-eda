@@ -326,25 +326,37 @@ void x_dialog_fatal_error(const gchar *string, gint return_code)
 /*! \brief The About dialog */
 void x_dialog_about_dialog()
 {
-  GtkWidget *dialog;
-  const char *string =
+  GtkWidget* dlg = gtk_about_dialog_new();
+  GtkAboutDialog* adlg = GTK_ABOUT_DIALOG (dlg);
+
+  gtk_about_dialog_set_program_name (adlg, "lepton-attrib");
+
+  gtk_about_dialog_set_comments (adlg,
     _("Lepton Electronic Design Automation\n\n"
-      "lepton-attrib - Lepton EDA attribute editor\n\n"
-      "lepton-attrib version: %1$s%2$s.%3$s\n\n"
-      "lepton-attrib is Lepton's successor of gEDA gattrib\n");
+      "lepton-attrib is Lepton's successor of gEDA gattrib"));
 
-  /* Create the dialog */
-  dialog = gtk_message_dialog_new (NULL, GTK_DIALOG_MODAL,
-                                   GTK_MESSAGE_INFO,
-                                   GTK_BUTTONS_OK,
-                                   string, PREPEND_VERSION_STRING, 
-                                   PACKAGE_DOTTED_VERSION,
-                                   PACKAGE_DATE_VERSION);
-  
-  gtk_window_set_title(GTK_WINDOW(dialog), _("About..."));
+  gchar* version_string = g_strdup_printf (_("%s (git: %.7s)"),
+                                           PACKAGE_DOTTED_VERSION,
+                                           PACKAGE_GIT_COMMIT);
+  gtk_about_dialog_set_version (adlg, version_string);
 
-  gtk_dialog_run(GTK_DIALOG(dialog));
-  gtk_widget_destroy(dialog);
+  gtk_about_dialog_set_copyright (adlg,
+    _("Copyright © 2003-2006 Stuart D. Brorson\n"
+      "Copyright © 2007-2016 gEDA Contributors\n"
+      "Copyright © 2017-2020 Lepton EDA Contributors"));
+
+  gtk_about_dialog_set_license (adlg,
+    _("Lepton EDA is freely distributable under the\n"
+    "GNU Public License (GPL) version 2.0 or (at your option) any later version.\n"
+    "See the COPYING file for the full text of the license."));
+
+  gtk_about_dialog_set_website (adlg, "http://github.com/lepton-eda/lepton-eda");
+
+  gtk_widget_show_all (dlg);
+  gtk_dialog_run (GTK_DIALOG (dlg));
+
+  gtk_widget_destroy (dlg);
+  g_free (version_string);
 }
 
 
