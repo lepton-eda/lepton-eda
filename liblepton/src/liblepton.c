@@ -43,7 +43,6 @@ void liblepton_init(void)
   eda_paths_init();
 
   s_clib_init();
-  s_menu_init();
   s_attrib_init();
   s_color_init();
 

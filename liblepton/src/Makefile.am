@@ -84,7 +84,6 @@ liblepton_la_SOURCES = \
 	s_conn.c \
 	s_encoding.c \
 	s_log.c \
-	s_menu.c \
 	s_slot.c \
 	s_textbuffer.c \
 	s_weakref.c \

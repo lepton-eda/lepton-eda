@@ -60,7 +60,6 @@ void gschem_quit(void)
 {
   i_vars_atexit_save_cache_config (NULL);
   s_clib_free();
-  s_menu_free();
   s_attrib_free();
 #ifdef HAVE_LIBSTROKE
   x_stroke_free ();

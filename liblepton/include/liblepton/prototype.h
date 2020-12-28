@@ -180,14 +180,6 @@ lepton_log_level_info ();
 GLogLevelFlags
 lepton_log_level_debug ();
 
-/* s_menu.c */
-int s_menu_return_num(void);
-SCM s_menu_return_entry(int index, char **menu_name);
-int s_menu_add_entry(char *new_menu, SCM menu_items);
-void s_menu_print(void);
-void s_menu_free(void);
-void s_menu_init(void);
-
 /* s_slot.c */
 char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
 
