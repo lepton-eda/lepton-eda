@@ -547,13 +547,13 @@ void x_stroke_record (GschemToplevel *w_current, gint x, gint y);
 gint x_stroke_translate_and_execute (GschemToplevel *w_current);
 
 /* x_window.c */
-void x_window_setup (GschemToplevel *w_current);
+GschemToplevel* x_window_setup (GschemToplevel *w_current);
 void x_window_create_drawing(GtkWidget *drawbox, GschemToplevel *w_current);
 void x_window_setup_draw_events_main_wnd (GschemToplevel* w_current,
                                           GtkWidget*      main_window);
 void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
                                               GschemPageView* drawing_area);
-void x_window_create_main(GschemToplevel *w_current);
+GschemToplevel* x_window_create_main (GschemToplevel *w_current, GtkWidget *menubar);
 void x_window_close(GschemToplevel *w_current);
 void x_window_close_all(GschemToplevel *w_current);
 PAGE *x_window_open_page (GschemToplevel *w_current, const gchar *filename);

@@ -245,10 +245,16 @@ Run `~A --help' for more information.\n")
 
   (map get-absolute-filename filename-list))
 
+;;; Creates a new window in lepton-schematic.
+(define (make-schematic-window)
+  (define new-window (x_window_setup (x_window_new)))
+
+  (x_window_create_main new-window
+                        (get_main_menu new-window)))
 
 (define (main file-list)
   ;; Create a new window and associated TOPLEVEL object.
-  (define window (x_window_new))
+  (define window (make-schematic-window))
   ;; Current directory.
   (define cwd (getcwd))
 
