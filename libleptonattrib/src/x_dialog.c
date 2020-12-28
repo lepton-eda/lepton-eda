@@ -149,6 +149,8 @@ void x_dialog_delattrib()
                                   _("Are you sure you want to delete this attribute?"));
   
   gtk_window_set_title(GTK_WINDOW(dialog), _("Delete attribute"));
+  gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_NO);
+
   switch(gtk_dialog_run(GTK_DIALOG(dialog))) {
     case GTK_RESPONSE_YES:
       /* call the fcn to actually delete the attrib column.  */
