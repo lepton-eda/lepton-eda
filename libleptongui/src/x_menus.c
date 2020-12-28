@@ -92,6 +92,43 @@ make_separator_menu_item ()
 }
 
 
+static GschemAction*
+make_menu_action (const char *action_name,
+                  const char *menu_item_name,
+                  const char *menu_item_keys,
+                  const char *menu_item_stock,
+                  GschemToplevel *w_current)
+{
+  GtkStockItem stock_info;
+  GschemAction *action =
+    GSCHEM_ACTION (g_object_new (GSCHEM_TYPE_ACTION,
+                                 "name", action_name,
+                                 "label", menu_item_name,
+                                 "tooltip", menu_item_name,
+                                 "multikey-accel", menu_item_keys,
+                                 NULL));
+
+  /* If stock name corresponds to a GTK stock item, then use it.
+   * Otherwise, look it up in the icon theme. */
+  if (menu_item_stock != NULL &&
+      gtk_stock_lookup (menu_item_stock, &stock_info))
+  {
+    gtk_action_set_stock_id (GTK_ACTION (action), menu_item_stock);
+  }
+  else
+  {
+    gtk_action_set_icon_name (GTK_ACTION (action), menu_item_stock);
+  }
+
+  g_signal_connect (G_OBJECT (action),
+                    "activate",
+                    G_CALLBACK (g_menu_execute),
+                    w_current);
+
+  return action;
+}
+
+
 /*! \brief Create and return the main menu widget.
  *
 *  \par Function Description
@@ -222,22 +259,11 @@ get_main_menu (GschemToplevel* w_current)
             menu_item_stock = scm_to_utf8_string (scm_item_stock);
 
           action_name = scm_to_utf8_string (scm_symbol_to_string (scm_item_func));
-          action = GSCHEM_ACTION (g_object_new (GSCHEM_TYPE_ACTION,
-                                                "name", action_name,
-                                                "label", menu_item_name,
-                                                "tooltip", menu_item_name,
-                                                "multikey-accel", menu_item_keys,
-                                                NULL));
-
-          /* If stock name corresponds to a GTK stock item, then use
-           * it.  Otherwise, look it up in the icon theme. */
-          if (menu_item_stock != NULL &&
-              gtk_stock_lookup (menu_item_stock, &stock_info)) {
-            gtk_action_set_stock_id (GTK_ACTION(action), menu_item_stock);
-          } else {
-            gtk_action_set_icon_name (GTK_ACTION(action), menu_item_stock);
-          }
-
+          action = make_menu_action (action_name,
+                                     menu_item_name,
+                                     menu_item_keys,
+                                     menu_item_stock,
+                                     w_current);
 
           g_object_set_data (G_OBJECT (menu_bar), action_name, action);
 
@@ -246,9 +272,6 @@ get_main_menu (GschemToplevel* w_current)
           free(menu_item_stock);
 
           menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
-          g_signal_connect (G_OBJECT(action), "activate",
-                            G_CALLBACK(g_menu_execute),
-                            w_current);
 
         } /* scm_item_func == TRUE */
 
@@ -319,22 +342,11 @@ get_main_popup (GschemToplevel* w_current)
     }
 
     /* Don't bother showing keybindings in the popup menu */
-    action = GSCHEM_ACTION (g_object_new (GSCHEM_TYPE_ACTION,
-                                          "name", e.action,
-                                          "label", gettext (e.name),
-                                          "tooltip", gettext (e.name),
-                                          NULL));
-    /* If there's a matching stock item, use it. Otherwise lookup the
-       name in the icon theme. */
-    if (e.stock_id != NULL && gtk_stock_lookup (e.stock_id, &stock_info)) {
-      gtk_action_set_stock_id (GTK_ACTION (action), e.stock_id);
-    } else {
-      gtk_action_set_icon_name (GTK_ACTION (action), e.stock_id);
-    }
-
-    /* Connect things up so that the actions get run */
-    g_signal_connect (G_OBJECT (action), "activate",
-                      G_CALLBACK (g_menu_execute), w_current);
+    action = make_menu_action (e.action,
+                               gettext (e.name),
+                               NULL,
+                               e.stock_id,
+                               w_current);
 
     menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
