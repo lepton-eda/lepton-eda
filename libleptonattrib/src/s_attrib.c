@@ -121,8 +121,14 @@ char *s_attrib_get_refdes(OBJECT *object)
   if (numslots_value != NULL) {  /* this is a slotted component; 
 				    append slot number to refdes. */
     slot_value = s_slot_search_slot (object, &slot_text_object);
-    g_debug ("  Found slotted component with slot = %s\n", slot_value);
-    temp_uref = g_strconcat(temp_uref, ".", slot_value, NULL);
+
+    /* Mark component as slotted only if it has a "slot" attribute:
+    */
+    if (slot_value != NULL)
+    {
+      g_debug ("  Found slotted component with slot = %s\n", slot_value);
+      temp_uref = g_strconcat (temp_uref, ".", slot_value, NULL);
+    }
   }
 
   g_debug ("  Return refdes %s.\n", temp_uref);
