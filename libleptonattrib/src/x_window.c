@@ -68,6 +68,9 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
 static void
 x_window_set_default_icon( void );
 
+static void
+x_window_set_title (GList* plist);
+
 static TOPLEVEL *window_toplevel = NULL;
 
 void
@@ -102,8 +105,6 @@ x_window_init ()
 
   /*  window is a global declared in globals.h.  */
   window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-
-  gtk_window_set_title( GTK_WINDOW(window), _("lepton-attrib - Lepton EDA attribute editor"));
 
   g_signal_connect(window, "delete_event",
                    G_CALLBACK (attrib_really_quit), 0);
@@ -507,6 +508,43 @@ x_window_set_default_icon( void )
 }
 
 
+/*! \brief Set the main window's title.
+ *
+ *  \param plist  The list of PAGE objects (opened pages).
+ */
+static void
+x_window_set_title (GList* plist)
+{
+  g_return_if_fail (plist != NULL);
+  g_return_if_fail (window != NULL);
+
+  const gchar* prog_name = "lepton-attrib";
+  gchar* title = NULL;
+
+  if (g_list_length (plist) == 1)
+  {
+    const gchar* fpath = s_page_get_filename (plist->data);
+    gchar* fname = g_path_get_basename (fpath);
+
+    title = g_strdup_printf ("%s - %s", fname, prog_name);
+
+    g_free (fname);
+  }
+  else
+  if (g_list_length (plist) > 1)
+  {
+    title = g_strdup_printf ("%s - %s", _("Multiple files"), prog_name);
+  }
+  else
+  {
+    title = g_strdup_printf ("%s", prog_name);
+  }
+
+  gtk_window_set_title (GTK_WINDOW (window), title);
+  g_free (title);
+}
+
+
 /*! \brief Open lepton-attrib window.
  *
  * The function populates the spreadsheet data structure and
@@ -601,4 +639,6 @@ lepton_attrib_window ()
 
   /* ---------- Now verify correctness of entire design.  ---------- */
   s_toplevel_verify_design(toplevel);  /* toplevel is a global */
+
+  x_window_set_title (geda_list_get_glist (toplevel->pages));
 }
