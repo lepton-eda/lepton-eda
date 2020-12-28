@@ -53,9 +53,11 @@
         ;; else
         (let* ((scheme-expression `(find-key (quote ,func)))
                ;; Look up key binding in global keymap
-               (keys (eval-protected scheme-expression (interaction-environment)))
+               (keys (eval-protected scheme-expression
+                                     (interaction-environment)))
                (menu-item-keys (if (not keys) "" keys))
-               (menu-item-stock (if (not stock) %null-pointer (string->pointer stock)))
+               (menu-item-stock
+                (if (not stock) %null-pointer (string->pointer stock)))
                (action-name (string->pointer (symbol->string func)))
                (action (make_menu_action action-name
                                          (string->pointer name)
@@ -102,7 +104,8 @@
       (gtk_widget_show tearoff-menu-item)))
 
   (define (make-root-menu menu-name submenu)
-    (let ((root-menu (gtk_menu_item_new_with_mnemonic (string->pointer menu-name))))
+    (let ((root-menu
+           (gtk_menu_item_new_with_mnemonic (string->pointer menu-name))))
       (gtk_widget_show root-menu)
       (gtk_menu_item_set_submenu root-menu submenu)
       root-menu))
@@ -128,10 +131,12 @@
 
   (let ((menu-bar (gtk_menu_bar_new)))
 
-    (map (lambda (menu-section-list)
-           (gtk_menu_shell_append menu-bar
-                                  (section-list->root-menu menu-section-list menu-bar)))
-         (main-menu-list))
+    (map
+     (lambda (menu-section-list)
+       (gtk_menu_shell_append menu-bar
+                              (section-list->root-menu menu-section-list
+                                                       menu-bar)))
+     (main-menu-list))
 
     ;; return
     menu-bar))
