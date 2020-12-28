@@ -515,6 +515,17 @@ GtkWidget *get_main_menu(GschemToplevel *w_current);
 GtkWidget *get_main_popup(GschemToplevel *w_current);
 gint do_popup(GschemToplevel *w_current, GdkEventButton *event);
 void x_menus_sensitivity (GtkWidget* menu, const gchar* action_name, gboolean sensitive);
+GtkWidget*
+make_separator_menu_item ();
+GschemAction*
+make_menu_action (const char *action_name,
+                  const char *menu_item_name,
+                  const char *menu_item_keys,
+                  const char *menu_item_stock,
+                  GschemToplevel *w_current);
+void
+x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
+                                    GtkWidget*      menuitem);
 /* x_multiattrib.c */
 void x_multiattrib_open (GschemToplevel *w_current);
 void x_multiattrib_close (GschemToplevel *w_current);

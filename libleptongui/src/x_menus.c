@@ -64,13 +64,6 @@ static struct PopupEntry popup_items[] =
 };
 
 
-
-static void
-x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
-                                    GtkWidget*      menuitem);
-
-
-
 /*! \brief Callback function for menu items. Execute action \a action.
  */
 static void g_menu_execute(GtkAction *action, gpointer user_data)
@@ -81,7 +74,7 @@ static void g_menu_execute(GtkAction *action, gpointer user_data)
 }
 
 
-static GtkWidget*
+GtkWidget*
 make_separator_menu_item ()
 {
 #ifdef ENABLE_GTK3
@@ -92,7 +85,7 @@ make_separator_menu_item ()
 }
 
 
-static GschemAction*
+GschemAction*
 make_menu_action (const char *action_name,
                   const char *menu_item_name,
                   const char *menu_item_keys,
@@ -430,7 +423,7 @@ recent_chooser_item_activated (GtkRecentChooser *chooser, GschemToplevel *w_curr
 
 /*! \brief Attach 'Open Recent' submenu to \a menuitem.
  */
-static void
+void
 x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
                                     GtkWidget*      menuitem)
 {
