@@ -61,6 +61,7 @@ void
 s_sheet_data_set_changed (SHEET_DATA* data, int changed)
 {
   data->CHANGED = changed;
+  x_window_set_title_changed (changed);
 }
 
 
