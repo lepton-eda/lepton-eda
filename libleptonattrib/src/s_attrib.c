@@ -127,7 +127,7 @@ char *s_attrib_get_refdes(OBJECT *object)
     if (slot_value != NULL)
     {
       g_debug ("  Found slotted component with slot = %s\n", slot_value);
-      temp_uref = g_strconcat (temp_uref, ".", slot_value, NULL);
+      temp_uref = g_strdup_printf (_("%s (slot %s)"), temp_uref, slot_value);
     }
   }
 
