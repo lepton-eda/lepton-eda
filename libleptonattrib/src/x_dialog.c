@@ -342,7 +342,7 @@ void x_dialog_about_dialog()
 
   gtk_about_dialog_set_copyright (adlg,
     _("Copyright © 2003-2006 Stuart D. Brorson\n"
-      "Copyright © 2007-2016 gEDA Contributors\n"
+      "Copyright © 2003-2016 gEDA Contributors\n"
       "Copyright © 2017-2020 Lepton EDA Contributors"));
 
   gtk_about_dialog_set_license (adlg,
