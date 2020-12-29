@@ -516,6 +516,7 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
                                 filename);
 
       gtk_window_set_title (GTK_WINDOW (checkdialog), _("Overwrite file?"));
+      gtk_dialog_set_default_response (GTK_DIALOG (checkdialog), GTK_RESPONSE_NO);
 
       if (gtk_dialog_run (GTK_DIALOG (checkdialog)) != GTK_RESPONSE_YES)
       {

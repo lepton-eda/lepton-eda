@@ -515,6 +515,7 @@ dlg_confirm_overwrite (GtkWidget* parent, const gchar* fname)
     fname);
 
   gtk_window_set_title (GTK_WINDOW (dlg), _("Overwrite file?"));
+  gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_NO);
 
   gint res = gtk_dialog_run (GTK_DIALOG (dlg));
   gtk_widget_destroy (dlg);
