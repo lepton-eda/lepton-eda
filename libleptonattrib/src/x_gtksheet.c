@@ -92,6 +92,28 @@ on_deactivate (GtkSheet* sheet,
 }
 
 
+/*! \brief Call it just after the sheet has been saved.
+ *
+ *  \par Function Description
+ *
+ *  Update the current_cell_text global variable, so that
+ *  on_deactivate() handler won't mark the sheet as modified
+ *  when the current cell is deactivated.
+ *
+ *  We need this to handle a particular use case:
+ *  while editing text in a cell, instead of pressing Enter
+ *  to commit the changes, the user presses Ctrl+S (Save).
+ *  If we do not update current_cell_text after that, the
+ *  consequent cell deactivation will mark the document as
+ *  dirty, while it is, in fact, just has been saved.
+ */
+void
+x_gtksheet_set_saved()
+{
+  current_cell_text = gtk_sheet_get_entry_text (sheets[0]);
+}
+
+
 /*! \brief Create the GtkSheet
  *
  * Creates and initializes the GtkSheet widget, which is the

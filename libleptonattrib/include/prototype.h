@@ -159,6 +159,7 @@ void x_dialog_about_dialog();
 void x_dialog_export_file();
 
 /* ------------- x_gtksheet.c ------------- */
+void x_gtksheet_set_saved();
 void x_gtksheet_init();
 void x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
