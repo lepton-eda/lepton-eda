@@ -136,7 +136,6 @@ get_main_popup (GschemToplevel* w_current)
   GschemAction *action;
   GtkWidget *menu_item;
   GtkWidget *menu;
-  GtkStockItem stock_info;
   int i;
 
   menu = gtk_menu_new ();
