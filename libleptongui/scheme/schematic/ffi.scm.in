@@ -138,7 +138,6 @@
             o_undo_init
             scheme_init_undo
             set_quiet_mode
-            set_render_placeholders
             set_verbose_mode
             x_color_init
             x_menu_attach_recent_files_submenu
@@ -179,7 +178,6 @@
 (define-lff o_undo_init void '())
 (define-lff scheme_init_undo void '())
 (define-lff set_quiet_mode void '())
-(define-lff set_render_placeholders void '())
 (define-lff set_verbose_mode void '())
 (define-lff x_color_init void '())
 (define-lff x_widgets_show_log void (list '*))
