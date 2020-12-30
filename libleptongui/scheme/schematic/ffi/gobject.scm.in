@@ -21,7 +21,7 @@
 
   #:export (g_object_set_data))
 
-(define libgobject (dynamic-link "libgobject-2.0"))
+(define libgobject (dynamic-link "@LIBGOBJECT@"))
 
 (define g_object_set_data
   (let ((proc (delay (pointer->procedure
