@@ -19,6 +19,7 @@
   #:use-module (system foreign)
 
   #:export (liblepton
+            set_render_placeholders
             colors_count
             g_rc_parse
             lepton_colormap_color_by_id
@@ -47,6 +48,7 @@
                            args))))
          (force proc))))))
 
+(define-lff set_render_placeholders void '())
 (define-lff colors_count size_t '())
 (define-lff lepton_colormap_color_by_id '* (list '* size_t))
 (define-lff lepton_colormap_disable_color void (list '* size_t))
