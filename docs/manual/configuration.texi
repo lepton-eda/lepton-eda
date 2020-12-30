@@ -294,6 +294,7 @@ configuration file location: @file{$PREFIX/share/lepton-eda/}
 @item USER
 @itemize
 @item
+@anchor{user-configuration}
 contains per-user settings
 @item
 configuration file: @file{lepton-user.conf} (@since{1.9.10} Formerly
@@ -311,6 +312,7 @@ parent context: @samp{SYSTEM}
 @item PATH
 @itemize
 @item
+@anchor{project-configuration}
 contains per-project (per-directory) settings
 @item
 configuration file: @file{lepton.conf} (@since{1.9.10} Formerly it
@@ -824,6 +826,7 @@ mouse clicks just selects the clicked net
 @tab @cfgtype{string}
 @tab @cfgval{title-B.sym}
 @tab
+@anchor{default-titleblock}
 Symbol (usually, a title block) to be automatically added when a new
 page is created.  If you do not want to use a title block, set this
 option to an empty string.  @since{1.9.10}
