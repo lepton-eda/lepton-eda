@@ -42,6 +42,21 @@ Documentation License.''
 @top Lepton EDA Reference Manual
 @end ifnottex
 
+@c Some useful macros
+@macro schematic
+@command{lepton-schematic}
+@end macro
+@macro netlist
+@command{lepton-netlist}
+@end macro
+@macro cli
+@command{lepton-cli}
+@end macro
+@c This won't work: @macro attrib
+@macro lattrib
+@command{lepton-attrib}
+@end macro
+
 @menu
 * Overview::                    Overview of program components.
 * Installation::                Installation of the tool suite.
