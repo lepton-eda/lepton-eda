@@ -45,6 +45,7 @@ nobase_dist_scmdata_DATA = \
 
 nobase_scmdata_DATA = \
 	schematic/gschemdoc.scm \
+	schematic/ffi/gobject.scm \
 	schematic/ffi/gtk.scm \
 	schematic/ffi.scm
 
