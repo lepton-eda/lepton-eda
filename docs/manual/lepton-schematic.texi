@@ -15,13 +15,13 @@
 @cindex lepton-schematic, introduction
 @cindex introduction to lepton-schematic
 
-@command{lepton-schematic} is a @dfn{schematic capture} application in
-the Lepton toolset.  It is mostly used for interactive creation of
-electronic @dfn{schematics} and @dfn{symbols}, though you can do some
-other graphical work in it, for example, draw block diagrams.
-Schematics represent electronic circuits, and symbols stand for their
-logical blocks such as components or subcircuits.  The connections
-between the blocks are represented by @dfn{nets} (wires).  Symbols can
+@schematic{} is a @dfn{schematic capture} application in the Lepton
+toolset.  It is mostly used for interactive creation of electronic
+@dfn{schematics} and @dfn{symbols}, though you can do some other
+graphical work in it, for example, draw block diagrams.  Schematics
+represent electronic circuits, and symbols stand for their logical
+blocks such as components or subcircuits.  The connections between the
+blocks are represented by @dfn{nets} (wires).  Component symbols can
 be obtained either from a standard Lepton @ref{Component libraries, ,
 component library}, from some net resources, or created by the user.
 
@@ -34,7 +34,7 @@ processing by other tools.
 @cindex Running lepton-schematic
 @cindex lepton-schematic, running
 
-@command{lepton-schematic} is a GUI tool, so there are different ways
+@schematic{} is a GUI tool, so there are different ways
 of running it.  You can launch it from your window manager menu, by
 clicking onto an appropriate schematic or symbol icon (@file{.sch} or
 @file{.sym}), or from your terminal.  To launch it from menu, look up
@@ -53,7 +53,7 @@ or you can specify the names of schematic and symbol files:
 lepton-schematic schematic.sch /path/to/symbol.sym
 @end example
 
-@command{lepton-schematic} accepts several @ref{lepton-schematic
+@schematic{} accepts several @ref{lepton-schematic
 command line options, command line options}. Please look the
 @code{lepton-schematic(1)} manual page for more information.
 Alternatively, run:
@@ -171,7 +171,7 @@ this function is convenient if you want each of your library to have a
 unique descriptive name.  It can be specified with the second argument
 @var{name}.  The name is optional, if it is omitted, @var{path} is
 used instead.  The name will be displayed in the @samp{Select
-component} window of @command{lepton-schematic}.  Obviously, it is
+component} window of @schematic.  Obviously, it is
 useless for CLI Lepton tools.
 
 
@@ -300,7 +300,7 @@ or put it directly to @file{gafrc}.
 component library.  Thus, the user can define a new set of component
 resources from scratch.  For example, sometimes it is convenient to
 get rid of default symbols in the library window of
-@command{lepton-schematic} and work only with those in your own custom
+@schematic{} and work only with those in your own custom
 libraries.
 
 Use the command before other component library commands, such as
