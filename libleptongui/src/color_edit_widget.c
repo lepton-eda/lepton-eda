@@ -462,7 +462,7 @@ static GtkWidget*
 dlg_save_as (GtkWidget* parent)
 {
   GtkWidget* dlg = gtk_file_chooser_dialog_new(
-    _("Save Color Scheme As..."),
+    _("Save Color Scheme"),
     GTK_WINDOW (parent),
     GTK_FILE_CHOOSER_ACTION_SAVE,
     GTK_STOCK_SAVE,   GTK_RESPONSE_ACCEPT,
