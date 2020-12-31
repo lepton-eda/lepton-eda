@@ -1684,10 +1684,11 @@ Each configuration context may have a @dfn{parent context}.  If, when
 looking up a parameter, it has no value set in the selected context,
 the parent context is checked, and so on.
 
-Three special contexts are always automatically defined: the
-@dfn{default context}, the @dfn{system context} and the @dfn{user
-context}.  The user context is the default parent context for all
-other configuration contexts, including newly-created ones.
+Several special contexts are always automatically defined: the
+@dfn{default context}, the @dfn{system context}, the @dfn{user
+context} and the @dfn{cache context}.  The user context is the
+default parent context for all other configuration contexts,
+including newly-created ones.
 
 @subsubsection Obtaining a context
 @cindex System configuration context
@@ -1744,6 +1745,17 @@ loaded from @file{lepton-user.conf} in @code{user-config-dir}.
 Its parent context is the system context.
 
 Since 1.10.
+@end defun
+
+@defun cache-config-context
+The cache context is used to store program-specific settings,
+like dialog geometry and command history.
+It has no parent configuration context.
+The associated file is @file{gui.conf}
+in @file{$XDG_CACHE_HOME/lepton-eda/} directory (usually,
+@file{~/.cache/lepton-eda/}).
+That path can be determined by calling @code{user-cache-dir}
+function from the @code{(lepton os)} module.
 @end defun
 
 @subsubsection Loading and saving configuration files
