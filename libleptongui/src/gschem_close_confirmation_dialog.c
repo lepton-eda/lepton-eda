@@ -762,6 +762,8 @@ x_dialog_close_changed_page (GschemToplevel *w_current, PAGE *page)
   dialog = GTK_WIDGET (g_object_new (TYPE_CLOSE_CONFIRMATION_DIALOG,
                                      "unsaved-page", page,
                                      NULL));
+
+  gtk_window_set_title (GTK_WINDOW (dialog), "lepton-schematic");
   /* set default response signal. This is usually triggered by the
      "Return" key */
   gtk_dialog_set_default_response(GTK_DIALOG(dialog),
