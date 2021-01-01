@@ -54,7 +54,6 @@ void about_dialog (GschemToplevel *w_current)
                            G_DIR_SEPARATOR_S, "gschem-about-logo.png", NULL);
 
   logo = gdk_pixbuf_new_from_file (logo_file, &error);
-  g_free (logo_file);
 
   if (error != NULL) {
     g_assert (logo == NULL);
@@ -62,6 +61,8 @@ void about_dialog (GschemToplevel *w_current)
                logo_file, error->message);
     g_error_free (error);
   }
+
+  g_free (logo_file);
 
 
   GtkWidget* dlg = gtk_about_dialog_new();
