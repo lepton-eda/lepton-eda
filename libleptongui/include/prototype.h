@@ -236,6 +236,7 @@ void o_buffer_free(GschemToplevel *w_current);
 /* o_bus.c */
 void o_bus_start(GschemToplevel *w_current, int x, int y);
 void o_bus_end(GschemToplevel *w_current, int x, int y);
+void o_bus_reset(GschemToplevel *w_current);
 void o_bus_motion(GschemToplevel *w_current, int x, int y);
 void o_bus_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer);
 void o_bus_invalidate_rubber(GschemToplevel *w_current);

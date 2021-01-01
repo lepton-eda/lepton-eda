@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -286,7 +286,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
           case (ARCMODE)    : o_arc_invalidate_rubber     (w_current); break;
           case (BOXMODE)    : o_box_invalidate_rubber     (w_current); break;
-          case (BUSMODE)    : o_bus_invalidate_rubber     (w_current); break;
+          case (BUSMODE)    : o_bus_reset                 (w_current); break;
           case (CIRCLEMODE) : o_circle_invalidate_rubber  (w_current); break;
           case (LINEMODE)   : o_line_invalidate_rubber    (w_current); break;
           case (NETMODE)    : o_net_reset                 (w_current); break;

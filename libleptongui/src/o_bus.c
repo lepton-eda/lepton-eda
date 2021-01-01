@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -192,4 +192,13 @@ o_bus_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
                   w_current->second_wx, w_current->second_wy);
   eda_cairo_set_source_color (cr, SELECT_COLOR, color_map);
   eda_cairo_stroke (cr, flags, TYPE_SOLID, END_NONE, size, -1, -1);
+}
+
+
+
+void
+o_bus_reset (GschemToplevel* w_current)
+{
+  o_bus_invalidate_rubber (w_current);
+  i_action_stop (w_current);
 }
