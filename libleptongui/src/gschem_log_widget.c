@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -391,6 +391,7 @@ log_window_clear (GtkMenuItem* item, gpointer data)
                                            GTK_BUTTONS_OK_CANCEL,
                                            _("Clear log window?"));
 
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Clear Log"));
   gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_CANCEL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dlg),
