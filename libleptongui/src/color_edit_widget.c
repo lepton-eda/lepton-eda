@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018-2020 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2020 Lepton EDA Contributors
+ * Copyright (C) 2018-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -422,7 +422,7 @@ on_btn_save (GtkWidget* btn, gpointer p)
 
   if (!ok)
   {
-    gtk_message_dialog_new(
+    GtkWidget* dlg = gtk_message_dialog_new(
       GTK_WINDOW (widget->toplevel_->main_window),
       GTK_DIALOG_MODAL,
       GTK_MESSAGE_ERROR,
@@ -430,6 +430,10 @@ on_btn_save (GtkWidget* btn, gpointer p)
       _("Could not save file [%s]:\n%s"),
       fname,
       err->message);
+
+    gtk_window_set_title (GTK_WINDOW (dlg), _("Failed to save file"));
+    gtk_dialog_run (GTK_DIALOG (dlg));
+    gtk_widget_destroy (dlg);
   }
 
   g_clear_error (&err);
