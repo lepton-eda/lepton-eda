@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1213,7 +1213,7 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   GtkWidget *label3;
 
 
-  autonumber_text = gschem_dialog_new_with_buttons(_("Autonumber text"),
+  autonumber_text = gschem_dialog_new_with_buttons(_("Autonumber Text"),
                                                    GTK_WINDOW(w_current->main_window),
                                                    (GtkDialogFlags) 0, /* not modal */
                                                    "autonumber", w_current,
