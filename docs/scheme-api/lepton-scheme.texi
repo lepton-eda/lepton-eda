@@ -2228,6 +2228,11 @@ Returns the directory in which to store user-specific Lepton
 configuration information.
 @end defun
 
+@defun user-cache-dir
+Returns the directory in which to store program-specific Lepton
+configuration information.
+@end defun
+
 @defun expand-env-variables str
 Recursively expands @var{str} until no more environment variables can be
 expanded, and return the expanded string. Environment variables are in
