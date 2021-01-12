@@ -7,6 +7,11 @@ lepton_manual_TEXINFOS = \
 	index.texi \
 	installation.texi \
 	lepton-attrib.texi \
+	lepton-cli-config.texi \
+	lepton-cli-export.texi \
+	lepton-cli-shell.texi \
+	lepton-cli.texi \
+	lepton-eda-fonts.texi \
 	lepton-netlist.texi \
 	lepton-schematic.texi \
 	overview.texi

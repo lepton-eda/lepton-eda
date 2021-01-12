@@ -1,0 +1,61 @@
+@node lepton-cli shell
+@section lepton-cli shell
+@cindex lepton-cli shell
+
+@code{lepton-cli shell} provides an interactive Scheme Read-Eval-Print
+Loop (REPL) for automating processing of schematic and symbol
+files. It is designed to be used with the Lepton EDA Scheme API.
+@xref{Top,,, lepton-scheme, Lepton EDA Scheme Reference Manual} for
+more information on which Lepton EDA Scheme procedures you can use.
+
+Usage:
+
+@example
+lepton-cli shell [OPTION ...]
+@end example
+
+Options:
+
+@table @option
+
+@item -L @var{DIRECTORY}
+Prepend @var{DIRECTORY} to the list of directories to be searched for
+Scheme files.
+
+@item -l @var{FILE}
+Evaluate Scheme source code from @var{FILE}.
+
+@item -s @var{FILE}
+Evaluate Scheme source code from @var{FILE}, and exit.
+
+@item -c @var{EXPR}
+Evaluate the Scheme expression @var{EXPR}, and exit.
+
+@item --
+Stop scanning arguments; run interactively.
+
+@end table
+
+The switches @samp{-s}, @samp{-c} and @samp{--} stop argument
+processing and pass all the remaining arguments as the value of
+@code{(command-line)}.
+
+
+A couple of simple examples would not harm?  Imagine you would want to
+find out the path to your user configuration directory. Type:
+
+@example
+lepton-cli shell -c "(use-modules (lepton os)) (display (user-config-dir))"
+@print{} /home/user/.config/lepton-eda
+@end example
+
+Now, suppose you want to know where is better to put your system-wide
+configuration files:
+
+@example
+lepton-cli shell -c "(use-modules (lepton os)) (display (sys-config-dirs))"
+@print{} (/etc/xdg/lepton-eda /usr/local/share/lepton-eda)
+@end example
+
+Hopefully, you don't need this for any of your project's directories
+;-) But who knows...  If so, try to compose a useful command yourself.

@@ -1,0 +1,104 @@
+@node Lepton EDA fonts, Topic Index, gEDA file format, Top
+@appendix Lepton EDA fonts
+@cindex Lepton EDA fonts
+@cindex Fonts configuration in Lepton EDA
+
+On Linux, font configuring is handled by @code{Fontconfig}, and modern
+systems (particularly @code{pango} and @code{cairo}) rely on its
+library in looking up any font specified.  You can provide the
+@cli command with a pattern containing the font name wanted
+and, optionally, with some settings for that font.  Fontconfig
+performs matching of the pattern against all the fonts available in
+your system. The closest matching font is selected.  This ensures that
+a font will always be returned, but doesn't ensure that it is anything
+like the requested pattern.
+
+If you want to find out which fonts are available in your system, you
+can use the @command{fc-list}(1) utility from the fontconfig package.
+To check whether fontconfig could find an appropriate font by the
+specified pattern (or to see which font will correspond to your
+pattern), use the @command{fc-match}(1) utility.
+
+See the
+@url{http://freedesktop.org/software/fontconfig/fontconfig-user.html,
+fontconfig documentation} for more information on how to specify the
+font name you want to use.
+
+In some circumstances, the font system can even embed more than one
+font into your document.  This occurs, for instance, if the most
+appropriate font chosen by fontconfig doesn't contain some glyphs for
+one of the languages used in the document.  In this case it will add
+some other font that does have the glyphs required.
+
+The next table lists possible settings (acquired from the Pango
+documentation) which you can use in your font name patterns.  There
+are some examples in the @ref{lepton-cli config} section.
+
+@float Table,table:fonts
+@caption{Possible font settings}
+
+@multitable @columnfractions .5 .5
+@headitem Setting @tab Value
+
+@item
+Style
+@tab
+Normal
+
+Oblique
+
+Italic
+
+@item
+Weight
+@tab
+Thin
+
+Ultralight
+
+Light
+
+Book
+
+Normal
+
+Medium
+
+Semibold
+
+Bold
+
+Ultrabold
+
+Heavy
+
+Ultraheavy
+
+@item
+Variant
+@tab
+Normal
+
+SmallCaps
+
+@item
+Stretch @tab  UltraCondensed
+
+ExtraCondensed
+
+Condensed
+
+SemiCondensed
+
+Normal
+
+SemiExpanded
+
+Expanded
+
+ExtraExpanded
+
+UltraExpanded
+
+@end multitable
+@end float

@@ -1,0 +1,146 @@
+@node lepton-cli export
+@section lepton-cli export
+@cindex lepton-cli export
+
+The command @code{lepton-cli export} is used to export schematic and
+symbol files in a variety of image formats.  The resulting images can
+be then used for printing or embedding into other documents.  It
+currently supports single-page PNG, SVG and EPS output, and multi-page
+PS and PDF output.  It accepts a variety of options for controlling
+how the output is formatted.
+
+@quotation Note
+@code{lepton-cli export} can produce multi-page PDF and PS documents
+in one go.
+@end quotation
+
+
+Usage:
+
+@example
+lepton-cli export [OPTION ...] -o OUTPUT [--] FILE ...
+@end example
+
+The command can be used with the options described below.
+
+@table @option
+@item -o @var{FILE}
+@itemx --output=@var{FILE}
+Output generated image data to @var{FILE}.
+
+@item -f @var{FORMAT}
+@itemx --format=@var{FORMAT}
+Specify an output format.  @var{FORMAT} can be one of @samp{png},
+@samp{pdf}, @samp{svg}, @samp{ps}, or @samp{eps}. Usually, this option
+is not required, because @cli will infer the correct format from the
+file extension of the output file.
+
+@item -p @var{NAME}
+@itemx --paper=@var{NAME}
+Size the output for a particular paper size.  The @var{NAME} should be
+a PWG 5101.1-2002 paper name.  For example, valid values include
+@samp{iso_a4}, @samp{na_letter}, or @samp{na_d}.  You can use the
+@option{--paper-names} option (see below) to obtain all valid names.
+
+@item -P
+@itemx --paper-names
+Print paper size names suitable to pass to the @option{--paper} option
+and exit.
+
+@item -l @var{LAYOUT}
+@itemx --layout=@var{LAYOUT}
+When using a paper size, set the orientation of the output.
+@var{LAYOUT} can be one of @samp{auto}, @samp{landscape}, or
+@samp{portrait}.  If @samp{auto} layout is used, @cli selects the
+orientation that best fits the drawing.
+
+@item -s @var{SIZE}
+@itemx --size=@var{SIZE}
+Size the output with specific dimensions.  @var{SIZE} can be specified
+either as @samp{auto}, or as two numbers in the format
+@samp{WIDTH:HEIGHT}.  If the size is @samp{auto}, select the size that
+best fits the drawing.
+
+@item -k @var{FACTOR}
+@itemx --scale=@var{FACTOR}
+Set the output scale @var{FACTOR}. This is a distance identical with
+100 points (1 default grid spacing) in @ref{lepton-schematic} coordinate
+space. It is used to size the output when neither @option{--paper} nor
+@option{--size} are given, and defaults to 100 mil.
+
+@item -m @var{MARGINS}
+@itemx --margins=@var{MARGINS}
+Set the widths of the margins to be used.  @var{MARGINS} can be
+specified either as @samp{auto}, or as a set from one to four numbers
+separated by colons.  If @samp{auto} margins are specified, a sensible
+default value will be chosen.  Up to four margin widths can be
+provided.  If one is provided, it will be used on all four sides.  If
+two are provided, the first will be used for the top/bottom and the
+second for the left/right.  If three are provided, the first will be
+used for the top, the second for left/right, and the third for the
+bottom.  This is summarized here:
+
+@multitable {@option{-m TOP:LEFT:BOTTOM:LEFT}} {@expansion{}} {@option{-m TOP:LEFT:BOTTOM:LEFT}}
+
+@item
+@option{-m TOP:LEFT:BOTTOM:RIGHT} @tab @tab all widths defined
+
+@item
+@option{-m TOP} @tab @expansion{} @tab @option{-m TOP:TOP:TOP:TOP}
+
+@item
+@option{-m TOP:LEFT} @tab @expansion{} @tab @option{-m TOP:LEFT:TOP:LEFT}
+
+@item
+@option{-m TOP:LEFT:BOTTOM} @tab @expansion{} @tab @option{-m TOP:LEFT:BOTTOM:LEFT}
+
+@end multitable
+
+@item -a @var{ALIGN}
+@itemx --align=@var{ALIGN}
+Set how the drawing is aligned within the page.  @var{ALIGN} can be
+specified either as @samp{auto}, or as two numbers in the format
+@samp{HALIGN:VALIGN}.  @samp{HALIGN} controls the horizontal
+alignment, and @samp{VALIGN} the vertical.  Each alignment value
+should be in the range 0.0 to 1.0.  The @samp{auto} alignment is
+equivalent to a value of @samp{0.5:0.5}, i.e. centered.
+
+@item -d @var{DPI}
+@itemx --dpi=@var{DPI}
+Set the number of pixels per inch used when generating PNG output.
+
+@item -c
+@itemx --color
+Enable color output.
+
+@item --no-color
+Disable color output.
+
+@item -F @var{FONT-FAMILY}
+@itemx --font=@var{FONT-FAMILY}
+Set the font to be used for drawing text.
+
+@item -h
+@itemx --help
+Display usage information of the command @code{lepton-cli export} and
+exit.
+
+@item --
+Treat all remaining arguments as schematic or symbol filenames.  Use
+this if you have a schematic or symbol filename which begins with
+@samp{-}.
+
+@end table
+
+The @option{--size}, @option{--margins}, or @option{--scale} options
+described above accept values using units of @samp{mm}, @samp{cm},
+@samp{in}, @samp{pc}, @samp{px}, or @samp{pt}.  If you do not provide
+a unit, points are assumed.  N.b. that @samp{px} are evaluated
+relative to the current @option{--dpi} setting.
+
+
+When using the @option{--size}, @option{--margins}, or
+@option{--align} options with multiple values, you may use @samp{;},
+or @samp{ } (space) as a separator between them instead of
+@samp{:}. In such a case, remember to properly quote your arguments to
+avoid them to be interpreted by your shell.

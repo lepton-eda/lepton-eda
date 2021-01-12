@@ -1,4 +1,4 @@
-@node lepton-netlist, lepton-attrib, lepton-schematic, Top
+@node lepton-netlist, lepton-cli, lepton-schematic, Top
 @chapter Netlister
 @cindex lepton-netlist
 @cindex netlist

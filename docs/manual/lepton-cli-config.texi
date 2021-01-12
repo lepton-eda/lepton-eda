@@ -1,0 +1,238 @@
+@node lepton-cli config
+@section lepton-cli config
+@cindex lepton-cli config
+
+This section describes how to set up Lepton tools with the
+@code{lepton-cli config} command.
+
+@code{lepton-cli config} is a basic utility for inspecting and
+modifying Lepton EDA configuration stores.
+
+The usage of the command:
+
+@example
+lepton-cli config [OPTION] [GROUP KEY [VALUE]]
+@end example
+
+If a @var{GROUP} and @var{KEY} are specified, it retrieves the value
+of that configuration parameter.  If a @var{VALUE} is specified as
+well, it sets the value of that parameter.
+
+The options @option{-p}, @option{-u}, and @option{-s}, listed below,
+can be used to select what configuration store should be affected (by
+default, the project configuration store for the current working
+directory).  If no @var{GROUP} and @var{KEY} are provided, the command
+outputs the filename of the selected configuration store.
+
+@table @option
+@item -p [@var{PATH}]
+@itemx --project[=@var{PATH}]
+Select the project configuration store of the project located in
+@var{PATH}.  If no @var{PATH} is provided, selects the project in the
+current working directory.
+
+@item -u
+@item --user
+Select the user configuration store.
+
+@item -s
+@itemx --system
+Select the system configuration store.  Depending on user permissions,
+the system configuration store may be read-only.
+
+@item -c
+@item --cache
+Select the program-specific configuration store
+(@ref{cache-configuration-context, , CACHE configuration context}).
+
+@end table
+
+
+@subsection Configuration files
+
+Configuration settings used to configure these programs are written to
+Lepton config files.  Naming and location of those files, file format,
+as well as configuration settings available, are described in the
+chapter @ref{Configuration, , Configuration system}.
+
+@quotation Note
+Apart from using @cli for modifying the files, you can just edit them
+manually in your favorite text editor.
+@end quotation
+
+All the config files consist of sections, called groups, containing
+key-value pairs.
+
+Values of some keys in the Lepton config files are lists.  Note that
+unlike the @ref{lepton-cli export} command, where several list
+separators can be used, the only separator between list values in the
+config files is semicolon @samp{;}.
+
+@quotation Note
+Always properly escape semicolons in key values.  Use double quotes or
+backslash for that.  Otherwise your shell may interpret your command
+wrong.
+@end quotation
+
+Another difference between @code{export} and @code{config} commands is
+that when using the latter, you always have to specify all parameters
+of the used list. Thus, for example, this command is wrong:
+
+@example
+lepton-cli config --project export size 1000
+@end example
+
+The right command will look like this:
+
+@example
+lepton-cli config --project export size "1000;1000"
+@end example
+
+
+@quotation Note
+All sizes in the configuration files, and therefore in the
+@command{lepton-cli config} command line, @strong{must} be given in
+Adobe points (72 points = 1 inch).  Suffixes such as @samp{pt},
+@samp{mm}, and others, which can be used with the @ref{lepton-cli
+export} command, are not yet supported in the config files.  Fixes are
+welcome.
+@end quotation
+
+In some cases, your configuration may work wrongly if ever.
+While @cli supports locales for the @code{export} command, it is not
+so for @code{config}.
+
+@quotation Note
+It is recommended to always use @emph{dot} (@samp{.}) as decimal point
+separator with @cli.
+@end quotation
+
+
+Suppose, for example, that comma is used in your locale as decimal
+point separator.  Despite it, the following command results with wrong
+values in your project's configuration file, and the config just won't
+work properly:
+
+@example
+lepton-cli config --project export align "1,0;0,0"
+@end example
+
+Unlike it, the following @emph{exporting} command will work OK under
+such conditions:
+
+@example
+lepton-cli export -a 0,0:1.0 -o file.pdf file.sch
+@end example
+
+@subsection lepton-cli config examples
+
+@subsubsection Set up exporting
+Use the ``landscape'' layout by default for a local project:
+
+@example
+lepton-cli config --project export layout landscape
+@end example
+
+Use the ``letter'' paper size by default for all your printouts:
+
+@example
+lepton-cli config --user export paper na_letter
+@end example
+
+Set paper size to the definite value of 1x2 inch for a local project:
+
+@example
+lepton-cli config --project export size "72;144"
+@end example
+
+Set margins as a half of inch for left and right sides and as a
+quarter of inch for top and bottom for a local project:
+
+@example
+lepton-cli config --project export margins "18;36;18;36"
+@end example
+
+This command will align your project's schematics to the right.
+
+@example
+lepton-cli config --project export align "1.0;0.5"
+@end example
+
+Export schematics in a project in color (note: @samp{False} or
+@samp{FALSE} will not work):
+
+@example
+lepton-cli config --project export monochrome false
+@end example
+
+Set up a custom user font:
+
+@example
+lepton-cli config --user export font "OpenGost Type B TT Italic"
+@end example
+
+Choose another font for a local project:
+
+@example
+lepton-cli config --project export font "Arial Bold"
+@end example
+
+
+@subsubsection Set up netlisting
+
+Use shorter net names for unnamed nets in all netlists:
+
+@example
+lepton-cli config --user netlist default-net-name net
+@end example
+
+Ensure that a local project will use hierarchical net names despite of
+settings in @file{lepton-user.conf}:
+
+@example
+lepton-cli config --project netlist.hierarchy traverse-hierarchy true
+@end example
+
+Promote @samp{net} attribute over @samp{netname}:
+
+@example
+lepton-cli config --project netlist net-naming-priority net-attribute
+@end example
+
+
+@subsubsection Set up lepton-schematic
+
+Use shorter names for new pages:
+
+@example
+lepton-cli config --user schematic default-filename empty
+@end example
+
+
+Set up select component widget to always show all attributes:
+
+@example
+lepton-cli config --project schematic.library component-attributes "*"
+@end example
+
+Please be careful when using this command in the command line. If you
+forget the quotes, your shell will substitute the first file name in
+the working directory file list for the attribute name. This is most
+likely not what you want.
+
+Display only attributes that are in the filter list:
+
+@example
+lepton-cli config --project lepton-schematic.library \
+  component-attributes "refdes;device;description"
+@end example
+
+Please note that if you replace semicolons with commas, @schematic
+will consider the string in quotes just one attribute name, which is
+obviously wrong, and you will see no attribute at all.
+
+Sort component library in @schematic alphabetically:
+
+@example
+lepton-cli config --user schematic.library sort true
+@end example

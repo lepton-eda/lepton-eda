@@ -326,6 +326,7 @@ parent context: @samp{USER}
 @end itemize
 
 @item CACHE
+@anchor{cache-configuration-context}
 @itemize
 @item
 contains program-specific settings (dialog geometry, command history,

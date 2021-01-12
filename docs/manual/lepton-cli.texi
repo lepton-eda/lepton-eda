@@ -1,0 +1,46 @@
+@node lepton-cli, lepton-attrib, lepton-netlist, Top
+@chapter lepton-cli - Lepton command-line utility
+@cindex lepton-cli
+
+@cli provides a number of small command-line utilities for
+working with Lepton schematic and symbol files, and is designed to be
+used for batch processing of designs created using the schematic
+editor @ref{lepton-schematic}.
+
+General usage is:
+
+@example
+lepton-cli [OPTION...] COMMAND [ARGS ...]
+@end example
+
+Currently, @var{COMMAND} can be one of @code{config}, @code{export},
+or @code{shell}.
+
+Here is the description of @cli's general options:
+
+@table @option
+@item --no-rcfiles
+Prevent @ref{gafrc} Scheme initialisation files from being loaded.
+
+@item -h
+@itemx --help
+Print a help message.
+
+@item -V
+@itemx --version
+Print @cli version information.
+
+@end table
+
+
+
+@menu
+* lepton-cli export:: Export images from schematic and symbol files.
+* lepton-cli config:: Configure all Lepton tools.
+* lepton-cli shell:: Scheme REPL for interactively processing schematics.
+@end menu
+
+
+@include lepton-cli-export.texi
+@include lepton-cli-config.texi
+@include lepton-cli-shell.texi

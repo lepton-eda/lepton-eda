@@ -1,3 +1,3 @@
-@node Topic Index, , gEDA file format, Top
+@node Topic Index, , Lepton EDA fonts, Top
 @unnumbered Topic Index
 @printindex cp

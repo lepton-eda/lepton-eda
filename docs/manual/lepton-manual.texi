@@ -63,10 +63,12 @@ Documentation License.''
 * Configuration::               Configuration system.
 * lepton-schematic::            Lepton EDA schematic capture program.
 * lepton-netlist::              Lepton EDA netlister.
+* lepton-cli::
 * lepton-attrib::               Lepton EDA spreadsheet attribute editor.
 * Communication::               Places for discussions and chatting.
 * Development::                 Useful information for developers.
 * gEDA file format::            File format currently in use.
+* Lepton EDA fonts::
 * Topic Index::
 
 @detailmenu
@@ -150,6 +152,12 @@ Component library setup
 * component-library-funcs::
 * reset-component-library::
 
+lepton-cli - Lepton command-line utility
+
+* lepton-cli export:: Export images from schematic and symbol files.
+* lepton-cli config:: Configure all Lepton tools.
+* lepton-cli shell:: Scheme REPL for interactively processing schematics.
+
 Introduction to lepton-attrib
 
 * Usage of lepton-attrib::
@@ -203,10 +211,12 @@ Object types
 @include configuration.texi
 @include lepton-schematic.texi
 @include lepton-netlist.texi
+@include lepton-cli.texi
 @include lepton-attrib.texi
 @include communication.texi
 @include development.texi
 @include geda-file-format-spec.texi
+@include lepton-eda-fonts.texi
 @include index.texi
 
 @bye
