@@ -231,6 +231,23 @@ keys.scm} files.
 @node New configuration system, Configuration of Lepton tools, Legacy configuration, Configuration
 @section Overview of the new configuration system
 
+@quotation Important
+In definitions of location and naming of configuration files as well
+as their format we were guided by the two following standards:
+
+@itemize
+@item
+@url{http://standards.freedesktop.org/basedir-spec/latest/, , XDG Base
+Directory Specification}, and
+
+@item
+@url{http://standards.freedesktop.org/desktop-entry-spec/1.0/, ,
+Desktop Entry Specification}.
+
+@end itemize
+@end quotation
+
+
 Configuration parameters are always evaluated within a
 @dfn{configuration context} which defines what configuration files are
 processed and the processing order.  Each context is associated with a
