@@ -1334,7 +1334,7 @@ via the @attrib{netname=} or @attrib{net=} attributes.
 @tab @cfgval{"unnamed_bus"}
 @tab
 Default name used for buses for which the user has set no explicit
-name via the @attrib{netname=} or @attrib{net=} attributes.
+name.  Buses are still not used in @netlist.
 
 @item @cfgkey{net-naming-priority}
 @tab @cfgtype{string}
