@@ -1447,7 +1447,7 @@ Set the font to be used for drawing text.
 @tab @cfgtype{string}
 @tab @cfgval{auto}
 @tab
-Possible values: @cfgval{auto}, @code{portrait}, @code{landscape}.
+Possible values: @cfgval{auto}, @cfgval{portrait}, @cfgval{landscape}.
 When using a paper size, set the orientation of the output. If
 @cfgval{auto} layout is used, the orientation that best fits the
 drawing will be used.
