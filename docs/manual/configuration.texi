@@ -1127,7 +1127,7 @@ Before 1.9.10 it was @code{gschem.library} group.
 @tab
 List of attribute names (semicolon-separated) that are displayed in
 the component select dialog.  An empty list will disable the attribute
-view.  If the first list element is an asterisk @samp{"*"}, all
+view.  If the first list element is an asterisk (@samp{*}), all
 attributes will be displayed in the alphabetical order.
 
 @item @cfgkey{sort}
