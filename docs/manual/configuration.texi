@@ -357,6 +357,29 @@ for example:
 key=value
 @end example
 
+Any @var{value} can be of one of the following types:
+@table @samp
+@item string
+@item boolean
+@item integer
+@item double
+@item list
+@end table
+
+Values in lists are separated with semicolons (@kbd{;}).
+
+@quotation Important
+List values @strong{must} have exactly the number of elements
+specified below in the manual for corresponding configuration keys.
+Wrong number of elements will be considered an error.
+@end quotation
+
+@quotation Important
+Always use @strong{point} (@kbd{.}) as separator for floating point
+numbers if you edit a configuration file manually.
+@end quotation
+
+
 Lines beginning with a @samp{#} and blank lines are considered
 comments:
 @example
