@@ -56,7 +56,7 @@ as well as configuration settings available, are described in the
 chapter @ref{Configuration, , Configuration system}.
 
 @quotation Note
-Apart from using @cli for modifying the files, you can just edit them
+Apart from using @cli{} for modifying the files, you can just edit them
 manually in your favorite text editor.
 @end quotation
 
@@ -99,7 +99,7 @@ welcome.
 @end quotation
 
 In some cases, your configuration may work wrongly if ever.
-While @cli supports locales for the @code{export} command, it is not
+While @cli{} supports locales for the @code{export} command, it is not
 so for @code{config}.
 
 @quotation Note

@@ -2,7 +2,7 @@
 @chapter lepton-cli - Lepton command-line utility
 @cindex lepton-cli
 
-@cli provides a number of small command-line utilities for
+@cli{} provides a number of small command-line utilities for
 working with Lepton schematic and symbol files, and is designed to be
 used for batch processing of designs created using the schematic
 editor @ref{lepton-schematic}.
@@ -28,7 +28,7 @@ Print a help message.
 
 @item -V
 @itemx --version
-Print @cli version information.
+Print @cli{} version information.
 
 @end table
 

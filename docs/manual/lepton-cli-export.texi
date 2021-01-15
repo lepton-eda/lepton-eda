@@ -32,7 +32,7 @@ Output generated image data to @var{FILE}.
 @itemx --format=@var{FORMAT}
 Specify an output format.  @var{FORMAT} can be one of @samp{png},
 @samp{pdf}, @samp{svg}, @samp{ps}, or @samp{eps}. Usually, this option
-is not required, because @cli will infer the correct format from the
+is not required, because @cli{} will infer the correct format from the
 file extension of the output file.
 
 @item -p @var{NAME}
@@ -51,7 +51,7 @@ and exit.
 @itemx --layout=@var{LAYOUT}
 When using a paper size, set the orientation of the output.
 @var{LAYOUT} can be one of @samp{auto}, @samp{landscape}, or
-@samp{portrait}.  If @samp{auto} layout is used, @cli selects the
+@samp{portrait}.  If @samp{auto} layout is used, @cli{} selects the
 orientation that best fits the drawing.
 
 @item -s @var{SIZE}

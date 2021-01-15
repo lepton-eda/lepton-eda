@@ -6,7 +6,7 @@
 On Linux, font configuring is handled by @code{Fontconfig}, and modern
 systems (particularly @code{pango} and @code{cairo}) rely on its
 library in looking up any font specified.  You can provide the
-@cli command with a pattern containing the font name wanted
+@cli{} command with a pattern containing the font name wanted
 and, optionally, with some settings for that font.  Fontconfig
 performs matching of the pattern against all the fonts available in
 your system. The closest matching font is selected.  This ensures that
