@@ -45,7 +45,8 @@ A couple of simple examples would not harm?  Imagine you would want to
 find out the path to your user configuration directory. Type:
 
 @example
-lepton-cli shell -c "(use-modules (lepton os)) (display (user-config-dir))"
+lepton-cli shell -c \
+  "(use-modules (lepton os)) (display (user-config-dir))"
 @print{} /home/user/.config/lepton-eda
 @end example
 
@@ -53,7 +54,8 @@ Now, suppose you want to know where is better to put your system-wide
 configuration files:
 
 @example
-lepton-cli shell -c "(use-modules (lepton os)) (display (sys-config-dirs))"
+lepton-cli shell -c \
+  "(use-modules (lepton os)) (display (sys-config-dirs))"
 @print{} (/etc/xdg/lepton-eda /usr/local/share/lepton-eda)
 @end example
 
