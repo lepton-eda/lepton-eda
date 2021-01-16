@@ -108,41 +108,172 @@ The Menubar widget contains several menus grouped by actions.
 @subsection Menu File
 @cindex menu File
 
+@table @emph
+@item New
+@item Open...
+@item Open Recent
+@item Save
+@item Save As...
+@item Save all
+@item Print...
+@item Write Image...
+@item Invoke macro...
+@item Execute Script...
+@item REPL...
+@item New Window
+@item Close Window
+@item Quit
+@end table
+
 @node Menu Edit, Menu View, Menu File, lepton-schematic window
 @subsection Menu Edit
 @cindex menu Edit
+
+@table @emph
+@item Undo
+@item Redo
+@item Cut
+@item Copy
+@item Paste
+@item Delete
+@item Select Mode
+@item Select All
+@item Deselect
+@item Copy Mode
+@item Multiple Copy Mode
+@item Move Mode
+@item Rotate 90 Mode
+@item Mirror Mode
+@item Object Properties...
+@item Edit...
+@item Edit Text...
+@item Slot...
+@item Lock
+@item Unlock
+@item Embed Component/Picture
+@item Unembed Component/Picture
+@item Update Component
+@item Symbol Translate...
+@end table
 
 @node Menu View, Menu Page, Menu Edit, lepton-schematic window
 @subsection Menu View
 @cindex menu View
 
+@table @emph
+@item Find Text Results
+@item Redraw
+@item Pan
+@item Zoom Box
+@item Zoom Extents
+@item Zoom In
+@item Zoom Out
+@item Zoom Full
+@item Dark Color Scheme
+@item Light Color Scheme
+@item BW Color Scheme
+@item Color Scheme Editor...
+@end table
+
 @node Menu Page, Menu Add, Menu View, lepton-schematic window
 @subsection Menu Page
 @cindex menu Page
+
+@table @emph
+@item Manager...
+@item Previous
+@item Next
+@item Close
+@item Revert...
+@item Next Tab
+@item Previous Tab
+@end table
 
 @node Menu Add, Menu Hierarchy, Menu Page, lepton-schematic window
 @subsection Menu Add
 @cindex menu Add
 
+@table @emph
+@item Component...
+@item Net
+@item Bus
+@item Attribute...
+@item Text...
+@item Line
+@item Path
+@item Box
+@item Circle
+@item Arc
+@item Pin
+@item Picture...
+@end table
+
 @node Menu Hierarchy, Menu Attributes, Menu Add, lepton-schematic window
 @subsection Menu Hierarchy
 @cindex menu Hierarchy
+
+@table @emph
+@item Up
+@item Down Schematic
+@item Down Symbol
+@end table
 
 @node Menu Attributes, Menu Options, Menu Hierarchy, lepton-schematic window
 @subsection Menu Attributes
 @cindex menu Attributes
 
+@table @emph
+@item Attach
+@item Detach
+@item Show Value
+@item Show Name
+@item Show Both
+@item Toggle Visibility
+@item Hide Specific Text...
+@item Show Specific Text...
+@item Show/Hide Hidden Text
+@item Find Text/Check Symbol
+@item Autonumber Text...
+@end table
+
 @node Menu Options, Menu Netlist, Menu Attributes, lepton-schematic window
 @subsection Menu Options
 @cindex menu Options
+
+@table @emph
+@item Options...
+@item Font...
+@item Grid +
+@item Grid -
+@item Grid Style: Cycle Dots/Mesh/Off
+@item Grid Snap: Cycle Grid/Resnap/Off
+@item Grips: On/Off
+@item Feedback Mode: Outline/Box
+@item Net: Rubberband On/Off
+@item Net: Magnetic On/Off
+@item Coord Window
+@item Log Window
+@end table
 
 @node Menu Netlist, Menu Help, Menu Options, lepton-schematic window
 @subsection Menu Netlist
 @cindex menu Netlist
 
+@table @emph
+@item 1 allegro
+@end table
+
 @node Menu Help,  , Menu Netlist, lepton-schematic window
 @subsection Menu Help
 @cindex menu Help
+
+@table @emph
+@item Lepton EDA Reference Manual
+@item gEDA Wiki Documentation
+@item Find Component Documentation
+@item Hotkeys...
+@item About
+@end table
 
 
 @node Dialog boxes, Selecting objects, lepton-schematic window, lepton-schematic
