@@ -6,6 +6,7 @@
 @menu
 * Introduction to lepton-schematic::
 * Running lepton-schematic::
+* lepton-schematic window::
 * Dialog boxes::
 * Selecting objects::
 * lepton-schematic command line options::
@@ -31,7 +32,7 @@ After creation, schematics may be printed, converted to several image
 formats, including PDF, or exported to several netlist formats for
 processing by other tools.
 
-@node Running lepton-schematic, Dialog boxes, Introduction to lepton-schematic, lepton-schematic
+@node Running lepton-schematic, lepton-schematic window, Introduction to lepton-schematic, lepton-schematic
 @section Running lepton-schematic
 @cindex Running lepton-schematic
 @cindex lepton-schematic, running
@@ -66,7 +67,85 @@ lepton-schematic --help
 
 to get the brief description of all the options supported.
 
-@node Dialog boxes, Selecting objects, Running lepton-schematic, lepton-schematic
+@node lepton-schematic window, Dialog boxes, Running lepton-schematic, lepton-schematic
+@section Main lepton-schematic window
+@cindex lepton-schematic window
+@cindex main lepton-schematic window
+@cindex window, lepton-schematic
+@cindex main window, lepton-schematic
+
+The window of @schematic{} consists of the following widgets:
+
+@itemize
+@item Menubar
+@item Toolbar
+@item Tabs notebook
+@item Drawing area (Page view)
+@item Right dock
+@item Bottom dock
+@item Context menus
+@end itemize
+
+@menu
+* Menubar::
+* Menu File::
+* Menu Edit::
+* Menu View::
+* Menu Page::
+* Menu Add::
+* Menu Hierarchy::
+* Menu Attributes::
+* Menu Options::
+* Menu Netlist::
+* Menu Help::
+@end menu
+
+@node Menubar, Menu File, lepton-schematic window, lepton-schematic window
+@subsection Menubar
+The Menubar widget contains several menus grouped by actions.
+
+@node Menu File, Menu Edit, Menubar, lepton-schematic window
+@subsection Menu File
+@cindex menu File
+
+@node Menu Edit, Menu View, Menu File, lepton-schematic window
+@subsection Menu Edit
+@cindex menu Edit
+
+@node Menu View, Menu Page, Menu Edit, lepton-schematic window
+@subsection Menu View
+@cindex menu View
+
+@node Menu Page, Menu Add, Menu View, lepton-schematic window
+@subsection Menu Page
+@cindex menu Page
+
+@node Menu Add, Menu Hierarchy, Menu Page, lepton-schematic window
+@subsection Menu Add
+@cindex menu Add
+
+@node Menu Hierarchy, Menu Attributes, Menu Add, lepton-schematic window
+@subsection Menu Hierarchy
+@cindex menu Hierarchy
+
+@node Menu Attributes, Menu Options, Menu Hierarchy, lepton-schematic window
+@subsection Menu Attributes
+@cindex menu Attributes
+
+@node Menu Options, Menu Netlist, Menu Attributes, lepton-schematic window
+@subsection Menu Options
+@cindex menu Options
+
+@node Menu Netlist, Menu Help, Menu Options, lepton-schematic window
+@subsection Menu Netlist
+@cindex menu Netlist
+
+@node Menu Help,  , Menu Netlist, lepton-schematic window
+@subsection Menu Help
+@cindex menu Help
+
+
+@node Dialog boxes, Selecting objects, lepton-schematic window, lepton-schematic
 @section Dialog boxes
 @cindex dialog boxes
 @cindex dialog box

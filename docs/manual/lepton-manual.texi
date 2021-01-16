@@ -152,10 +152,25 @@ Schematic capture
 
 * Introduction to lepton-schematic::
 * Running lepton-schematic::
+* lepton-schematic window::
 * Dialog boxes::
 * Selecting objects::
 * lepton-schematic command line options::
 * Component libraries::
+
+Main lepton-schematic window
+
+* Menubar::
+* Menu File::
+* Menu Edit::
+* Menu View::
+* Menu Page::
+* Menu Add::
+* Menu Hierarchy::
+* Menu Attributes::
+* Menu Options::
+* Menu Netlist::
+* Menu Help::
 
 Dialog boxes
 
