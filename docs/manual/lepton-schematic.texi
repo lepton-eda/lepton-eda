@@ -124,6 +124,15 @@ created every time you run @schematic{} without arguments in a
 terminal, or from your window manager menu.
 
 @item Open...
+
+@clicksequence{File @click{} Open} (@kbd{Ctrl-O} or @kbd{F O}) opens a
+dialog for choosing an existing schematic or symbol file.  Select the
+file you need and click the button @samp{Open} to actually open it, or
+@samp{Cancel} to cancel with it.  At the bottom-right of the dialog
+there is a filter button.  With it, you can change view to see
+schematics or symbols only, both schematics and symbols, or any files
+in case you want to look at other stuff in the selected directory.
+
 @item Open Recent
 @item Save
 @item Save As...
