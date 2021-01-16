@@ -1042,6 +1042,7 @@ Before 1.9.10 it was @code{gschem} group.
 @tab @cfgtype{string}
 @tab @cfgval{"untitled"}
 @tab
+@anchor{default-filename}
 Default file name for any new schematic files.  It is used to create
 filenames of the form @file{untitled_N.sch} where @cfgval{N} is a
 number.

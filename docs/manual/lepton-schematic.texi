@@ -110,6 +110,19 @@ The Menubar widget contains several menus grouped by actions.
 
 @table @emph
 @item New
+
+@clicksequence{File @click{} New} (@kbd{Ctrl-N} or @kbd{F N})
+allows you to open a new untitled schematic page.  The same as
+@clicksequence{Page @click{} New}.
+
+The default page name for new pages is formed as a filename prefix
+defined in the configuration key @ref{default-filename} and a serial
+number which is incremented every time a new page is created,
+e.g. @file{untitled_3.sch}.  Usually, a title block symbol is
+inserted, @pxref{Title block symbol}.  A new page is also always
+created every time you run @schematic{} without arguments in a
+terminal, or from your window manager menu.
+
 @item Open...
 @item Open Recent
 @item Save
