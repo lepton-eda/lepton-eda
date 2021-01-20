@@ -3,3 +3,10 @@ body
   background-color: #f0f0f0
 }
 
+table, th, td {
+    border: 3px solid #f0f0f0;
+    border-collapse: collapse;
+    background-color: #f4f4f4;
+    vertical-align: top;
+    padding: 5px;
+}
