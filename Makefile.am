@@ -52,6 +52,7 @@ TESTS = \
 	tests/embed.test \
 	tests/export.test \
 	tests/netlist.test \
+	tests/sch2pcb.test \
 	tests/shell.test \
 	tests/symcheck.test \
 	tests/tragesym.test \

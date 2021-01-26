@@ -1,0 +1,21 @@
+(use-modules (srfi srfi-64)
+             (ice-9 receive))
+
+(load-from-path "env.scm")
+
+
+(test-begin "sch2pcb-exists")
+
+(test-assert (file-exists? lepton-sch2pcb))
+
+(test-end)
+
+
+(test-begin "sch2pcb")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-sch2pcb)
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "usage: lepton-sch2pcb")))
+
+(test-end)
