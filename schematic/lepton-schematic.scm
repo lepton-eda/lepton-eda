@@ -118,7 +118,7 @@ Options:
   -q, --quiet              Quiet mode.
   -v, --verbose            Verbose mode.
   -L DIR                   Add DIR to Scheme search path.
-  -c EXPR                  Scheme expression to run at startup.
+  -c EXPR, --command=EXPR  Scheme expression to run at startup.
   -s FILE                  Scheme script to run at startup.
   -V, --version            Show version information.
   -h, --help               Help; this message.
@@ -156,7 +156,7 @@ Lepton EDA homepage: ~S\n")
              (lambda (opt name arg seeds)
                (add-post-load-expr! arg #t)
                seeds))
-     (option '(#\c) #t #f
+     (option '(#\c "command") #t #f
              (lambda (opt name arg seeds)
                (add-post-load-expr! arg #f)
                seeds))
