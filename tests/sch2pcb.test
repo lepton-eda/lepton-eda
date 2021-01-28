@@ -19,3 +19,38 @@
   (test-assert (string-contains <stdout> "usage: lepton-sch2pcb")))
 
 (test-end)
+
+
+(test-begin "sch2pcb -h")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-sch2pcb "-h")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "usage: lepton-sch2pcb")))
+
+(test-end)
+
+
+(test-begin "sch2pcb --help")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-sch2pcb "--help")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "usage: lepton-sch2pcb")))
+
+(test-end)
+
+
+(test-begin "sch2pcb wrong options")
+
+(test-expect-fail 2)
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-sch2pcb "--unexisting-option")
+  (test-eq EXIT_FAILURE <status>))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-sch2pcb "-broken-option")
+  (test-eq EXIT_FAILURE <status>))
+
+(test-end)
