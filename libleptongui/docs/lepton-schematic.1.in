@@ -36,7 +36,7 @@ Scheme files.
 \fB-s\fR \fIFILE\fR
 Specify a Scheme script to be executed at startup.
 .TP 8
-\fB-c\fR \fIEXPR\fR
+\fB-c\fR \fIEXPR\fR, \fB--command\fR=\fIEXPR\fR
 Specify a Scheme expression to be evaluated at startup.
 .TP 8
 \fB-h\fR, \fB--help\fR
