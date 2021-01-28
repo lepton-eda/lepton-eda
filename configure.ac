@@ -393,6 +393,7 @@ AC_CONFIG_FILES([Makefile
                  tools/sch2pcb/src/Makefile
                  tools/sch2pcb/examples/Makefile
                  tools/sch2pcb/docs/Makefile
+                 tools/sch2pcb/tests/Makefile
 
                  tools/tragesym/Makefile
                  tools/tragesym/examples/Makefile

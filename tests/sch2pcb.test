@@ -4,6 +4,19 @@
 (load-from-path "env.scm")
 
 
+(define cwd (getcwd))
+(define *testdir* (build-filename (getcwd) "sch2pcb-tmp"))
+
+;;; Setup/teardown directories/files needed by tests.
+(define (test-setup)
+  (mkdir *testdir*)
+  (chdir *testdir*))
+
+(define (test-teardown)
+  (chdir cwd)
+  (system* "rm" "-rf" *testdir*))
+
+
 (test-begin "sch2pcb-exists")
 
 (test-assert (file-exists? lepton-sch2pcb))
@@ -27,6 +40,39 @@
     (command-values lepton-sch2pcb "-h")
   (test-eq EXIT_SUCCESS <status>)
   (test-assert (string-contains <stdout> "usage: lepton-sch2pcb")))
+
+(test-end)
+
+
+;;; First part of multi-page schematic.
+(define one.sch "one.sch")
+(define tests/one.sch
+  (build-filename *abs-top-srcdir* "tools" "sch2pcb" "tests" one.sch))
+(define *testdir*/one.sch (build-filename *testdir* one.sch))
+
+;;; Second part of multi-page schematic.
+(define two.sch "two.sch")
+(define tests/two.sch
+  (build-filename *abs-top-srcdir* "tools" "sch2pcb" "tests" two.sch))
+(define *testdir*/two.sch (build-filename *testdir* two.sch))
+
+
+(test-begin "sch2pcb-schematics")
+
+(test-group-with-cleanup "sch2pcb-schematics"
+
+  ;; Prepare test directory with necessary schematic files.
+  (test-setup)
+  (copy-file tests/one.sch *testdir*/one.sch)
+  (copy-file tests/two.sch *testdir*/two.sch)
+
+  ;; No project file, no PCB elements, just schematic.
+  ;; lepton-sch2pcb exits with status 0.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>))
+
+  (test-teardown))
 
 (test-end)
 
