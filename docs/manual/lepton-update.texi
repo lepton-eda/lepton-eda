@@ -1,4 +1,4 @@
-@node lepton-update, Communication, lepton-attrib, Top
+@node lepton-update, Communication, lepton-sch2pcb, Top
 @chapter lepton-update
 @pindex lepton-update
 

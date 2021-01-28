@@ -78,6 +78,7 @@ Documentation License.''
 * lepton-netlist::              Lepton EDA netlister.
 * lepton-cli::                  Lepton EDA command line interface.
 * lepton-attrib::               Lepton EDA spreadsheet attribute editor.
+* lepton-sch2pcb::              Lepton EDA interface to PCB layout programs.
 * lepton-update::
 * Communication::               Places for discussions and chatting.
 * Development::                 Useful information for developers.
@@ -361,6 +362,7 @@ Obsolete Attributes
 @include lepton-netlist.texi
 @include lepton-cli.texi
 @include lepton-attrib.texi
+@include lepton-sch2pcb.texi
 @include lepton-update.texi
 @include communication.texi
 @include development.texi

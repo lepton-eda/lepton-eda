@@ -1,0 +1,12 @@
+@node lepton-sch2pcb, lepton-update, lepton-attrib, Top
+@chapter lepton-sch2pcb - interface to PCB layout programs
+@cindex lepton-sch2pcb
+
+@schpcb{} is a bridge between @schematic{} and PCB layout programs
+such as @command{pcb} or @command{pcb-rnd}.  It is Lepton's successor
+to @command{gsch2pcb} in the @emph{geda-gaf} project.  The program is
+used to forward annotate changes in schematics to PCB layout programs
+so that the schematics are always in sync with the layout created from
+them.  Additions and deletions of elements in the design layout as
+well as changes in their interconnections are automatically driven by
+changes in the design schematics.

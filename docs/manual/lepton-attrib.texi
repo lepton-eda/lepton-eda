@@ -1,4 +1,4 @@
-@node lepton-attrib, lepton-update, lepton-cli, Top
+@node lepton-attrib, lepton-sch2pcb, lepton-cli, Top
 @chapter Spreadsheet attribute editor
 @pindex lepton-attrib
 @cindex spreadsheet attribute editor
