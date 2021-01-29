@@ -71,39 +71,6 @@
 (test-end)
 
 
-;;; First part of multi-page schematic.
-(define one.sch "one.sch")
-(define tests/one.sch
-  (build-filename *abs-top-srcdir* "tools" "sch2pcb" "tests" one.sch))
-(define *testdir*/one.sch (build-filename *testdir* one.sch))
-
-;;; Second part of multi-page schematic.
-(define two.sch "two.sch")
-(define tests/two.sch
-  (build-filename *abs-top-srcdir* "tools" "sch2pcb" "tests" two.sch))
-(define *testdir*/two.sch (build-filename *testdir* two.sch))
-
-
-(test-begin "sch2pcb-schematics")
-
-(test-group-with-cleanup "sch2pcb-schematics"
-
-  ;; Prepare test directory with necessary schematic files.
-  (test-setup)
-  (copy-file tests/one.sch *testdir*/one.sch)
-  (copy-file tests/two.sch *testdir*/two.sch)
-
-  ;; No project file, no PCB elements, just schematic.
-  ;; lepton-sch2pcb exits with status 0.
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb one.sch two.sch)
-    (test-eq EXIT_SUCCESS <status>))
-
-  (test-teardown))
-
-(test-end)
-
-
 (test-begin "sch2pcb --help")
 
 (receive (<status> <stdout> <stderr>)
@@ -125,5 +92,88 @@
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-sch2pcb "-broken-option")
   (test-eq EXIT_FAILURE <status>))
+
+(test-end)
+
+
+;;; Test directory in the repository.
+(define tests/
+  (build-filename *abs-top-srcdir* "tools" "sch2pcb" "tests"))
+
+;;; First part of multi-page schematic.
+(define one.sch "one.sch")
+(define tests/one.sch (build-filename tests/ one.sch))
+
+;;; Second part of multi-page schematic.
+(define two.sch "two.sch")
+(define tests/two.sch (build-filename tests/ two.sch))
+
+(define one.pcb "one.pcb")
+(define one.cmd "one.cmd")
+(define one.net "one.net")
+(define tests/one.pcb (build-filename tests/ one.pcb))
+(define tests/one.cmd (build-filename tests/ one.cmd))
+(define tests/one.net (build-filename tests/ one.net))
+(define m4-pcbdir (build-filename tests/ "m4-elements"))
+
+(define gafrc "gafrc")
+(define tests/gafrc (build-filename tests/ gafrc))
+
+(define %symbols
+  '("2N3904-1.sym"
+    "BNC-1.sym"
+    "dual-opamp-1.sym"
+    "gnd-1.sym"
+    "input-2.sym"
+    "output-2.sym"
+    "resistor-2.sym"
+    "vcc-1.sym"
+    "vee-1.sym"))
+
+;;; Prepare test directory with necessary schematic files.
+(define (prepare-test-directory)
+  (test-setup)
+  (mkdir "sym")
+  (copy-file tests/one.sch one.sch)
+  (copy-file tests/two.sch two.sch)
+  (copy-file tests/gafrc gafrc)
+  (for-each
+   (lambda (symbol-name)
+     (copy-file (build-filename tests/ "sym" symbol-name)
+                (build-filename "sym" symbol-name)))
+   %symbols))
+
+(test-begin "sch2pcb-schematics")
+(test-group-with-cleanup "sch2pcb-schematics"
+  (prepare-test-directory)
+
+  ;; No project file, no PCB elements, just schematic.
+  ;; lepton-sch2pcb exits with status 0.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>))
+
+  (test-assert (file-exists? m4-pcbdir))
+
+  ;; Produce one.pcb, one.cmd, and one.net.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>))
+
+  ;; Check that all necessary files exist.
+  (test-assert (file-exists? tests/one.pcb))
+  (test-assert (file-exists? tests/one.cmd))
+  (test-assert (file-exists? tests/one.net))
+  ;; Check that new files have been created.
+  (test-assert (file-exists? one.pcb))
+  (test-assert (file-exists? one.cmd))
+  (test-assert (file-exists? one.net))
+  ;; Check that there is no difference with new and "golden"
+  ;; files.
+  (test-run-success "diff" one.pcb tests/one.pcb)
+  (test-run-success "diff" one.cmd tests/one.cmd)
+  (test-run-success "diff" one.net tests/one.net)
+
+  (test-teardown))
 
 (test-end)
