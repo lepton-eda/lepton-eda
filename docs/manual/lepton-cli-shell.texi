@@ -5,7 +5,7 @@
 @code{lepton-cli shell} provides an interactive Scheme Read-Eval-Print
 Loop (REPL) for automating processing of schematic and symbol
 files. It is designed to be used with the Lepton EDA Scheme API.
-@xref{Top,,, lepton-scheme, Lepton EDA Scheme Reference Manual} for
+@xref{Top,,, lepton-scheme@inlinefmt{html, .html}, Lepton EDA Scheme Reference Manual} for
 more information on which Lepton EDA Scheme procedures you can use.
 
 Usage:
