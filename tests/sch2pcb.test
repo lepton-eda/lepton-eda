@@ -3,6 +3,9 @@
 
 (load-from-path "env.scm")
 
+;;; sch2pcb should be aware of where the netlister sits.
+(setenv "NETLISTER" *netlister*)
+
 
 (define cwd (getcwd))
 (define *testdir* (build-filename (getcwd) "sch2pcb-tmp"))
