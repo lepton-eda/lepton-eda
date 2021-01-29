@@ -1,3 +1,5 @@
+SUBDIRS = examples
+
 noinst_PROGRAMS = gmk_sym convert_sym
 
 dist_noinst_MANS = convert_sym.1 gmk_sym.1

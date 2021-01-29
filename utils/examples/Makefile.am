@@ -1,1 +1,1 @@
-SUBDIRS = gmk_sym tragesym gsch2pcb
+SUBDIRS = tragesym gsch2pcb

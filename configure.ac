@@ -288,7 +288,6 @@ AC_CONFIG_FILES([Makefile
                  utils/Makefile
                  utils/docs/Makefile
                  utils/examples/Makefile
-                 utils/examples/gmk_sym/Makefile
                  utils/examples/gsch2pcb/Makefile
                  utils/examples/tragesym/Makefile
                  utils/scripts/Makefile
@@ -322,6 +321,7 @@ AC_CONFIG_FILES([Makefile
                  contrib/smash_megafile/Makefile
                  contrib/olib/Makefile
                  contrib/gmk_sym/Makefile
+                 contrib/gmk_sym/examples/Makefile
                  contrib/sarlacc_schem/Makefile
                  contrib/scripts/Makefile
                  contrib/scripts/sw2asc
