@@ -1,4 +1,4 @@
-SUBDIRS = toplevel wiki scheme-api changelogs manual
+SUBDIRS = toplevel wiki scheme-api changelogs manual news
 
 EXTRA_DIST = ChangeLog
 
