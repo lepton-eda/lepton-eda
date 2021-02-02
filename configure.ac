@@ -296,6 +296,9 @@ AC_CONFIG_FILES([Makefile
                  utils/tests/refdes_renum/inputs/Makefile
                  utils/tests/refdes_renum/outputs/Makefile
 
+                 utils/sch2pcb/Makefile
+                 utils/sch2pcb/src/Makefile
+
                  symbols/Makefile
                  symbols/documentation/Makefile
                  symbols/gnetman/Makefile

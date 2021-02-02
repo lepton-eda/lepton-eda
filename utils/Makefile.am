@@ -3,7 +3,8 @@ SUBDIRS = \
 	examples \
 	scripts \
 	src \
-	tests
+	tests \
+	sch2pcb
 
 EXTRA_DIST = \
 	AUTHORS \

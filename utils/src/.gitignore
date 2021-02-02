@@ -2,9 +2,7 @@ Makefile.in
 .deps
 .libs
 Makefile
-lepton-sch2pcb
 lepton-renum
 *.o
 *~
 lepton-renum.exe
-lepton-sch2pcb.exe
