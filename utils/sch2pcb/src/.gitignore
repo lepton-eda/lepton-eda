@@ -1,0 +1,8 @@
+Makefile.in
+Makefile
+.deps
+.libs
+lepton-sch2pcb
+*.o
+*~
+lepton-sch2pcb.exe
