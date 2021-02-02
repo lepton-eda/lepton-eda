@@ -258,7 +258,6 @@ AC_CONFIG_FILES([Makefile
                  libleptonattrib/po/Makefile.in
                  libleptonattrib/include/Makefile
                  libleptonattrib/src/Makefile
-                 libleptonattrib/design/Makefile
                  libleptonattrib/data/Makefile
                  libleptonattrib/docs/Makefile
 
@@ -311,6 +310,7 @@ AC_CONFIG_FILES([Makefile
                  docs/toplevel/gedadocs.html
                  docs/wiki/Makefile
                  docs/news/Makefile
+                 docs/design/Makefile
 
                  examples/Makefile
                  examples/RF_Amp/Makefile
