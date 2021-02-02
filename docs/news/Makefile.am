@@ -1,0 +1,1 @@
+EXTRA_DIST = NEWS-1.9.2.txt

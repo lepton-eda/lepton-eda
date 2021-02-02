@@ -310,6 +310,7 @@ AC_CONFIG_FILES([Makefile
                  docs/toplevel/Makefile
                  docs/toplevel/gedadocs.html
                  docs/wiki/Makefile
+                 docs/news/Makefile
 
                  examples/Makefile
                  examples/RF_Amp/Makefile
