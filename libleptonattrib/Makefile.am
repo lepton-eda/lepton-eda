@@ -16,7 +16,7 @@ LIBGTK = libgtk-x11-2.0
 endif
 endif
 
-SUBDIRS = po src include design data docs
+SUBDIRS = po src include data docs
 
 pkgconfigdir            = $(libdir)/pkgconfig
 pkgconfig_DATA          = libleptonattrib.pc
