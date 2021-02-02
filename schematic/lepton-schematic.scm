@@ -134,8 +134,9 @@ Lepton EDA homepage: ~S\n")
 
 ;;; Parse lepton-schematic command-line options, displaying usage
 ;;; message or version information as required.
-(define (parse-commandline)
-  "Parse command line options"
+(define (parse-commandline*)
+  "Parse command line options.  Return the list of non-option
+arguments which should represent the list of schematics to open."
   (reverse
    (args-fold
     (cdr (program-arguments))
@@ -178,6 +179,21 @@ Run `~A --help' for more information.\n")
       (primitive-exit 1))
     (lambda (op seeds) (cons op seeds))
     '())))
+
+;;; Catch for errors in parse-commandline*().
+(define (parse-commandline)
+  (catch 'misc-error
+    parse-commandline*
+    (lambda (key . args)
+      ;; Throw away the first arg (function name: args-fold), and
+      ;; all the rest.
+      (let ((message (second args))
+            (option-name (third args)))
+        (format #t (G_ "ERROR: ~A.
+Run `~A --help' for more information.\n")
+                (apply format #f message option-name)
+                (basename (car (program-arguments))))
+        (exit 1)))))
 
 
 ;;; Load GTK resource files.
