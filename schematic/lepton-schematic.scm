@@ -129,7 +129,7 @@ Lepton EDA homepage: ~S\n")
           (car (program-arguments))
           (lepton-version-ref 'bugs)
           (lepton-version-ref 'url))
-  (primitive-exit 0))
+  (exit 0))
 
 
 ;;; Parse lepton-schematic command-line options, displaying usage
@@ -167,7 +167,7 @@ arguments which should represent the list of schematics to open."
      (option '(#\V "version") #f #f
              (lambda (opt name arg seeds)
                (display-lepton-version #:print-name #t #:copyright #t)
-               (primitive-exit 0))))
+               (exit 0))))
     (lambda (opt name arg seeds)
       (format #t
               (G_ "ERROR: Unknown option ~A.
@@ -176,7 +176,7 @@ Run `~A --help' for more information.\n")
                   (string-append "-" (char-set->string (char-set name)))
                   (string-append "--" name))
               (basename (car (program-arguments))))
-      (primitive-exit 1))
+      (exit 1))
     (lambda (op seeds) (cons op seeds))
     '())))
 
@@ -306,7 +306,7 @@ Run `~A --help' for more information.\n")
 ;;; If precompilation is requested, run it and exit.
 (when (precompile-mode)
   (precompile-prepare)
-  (primitive-exit (precompile-run)))
+  (exit (precompile-run)))
 
 ;;; Set up paths for Lepton's compiled Scheme modules.
 (set-guile-compiled-path)
