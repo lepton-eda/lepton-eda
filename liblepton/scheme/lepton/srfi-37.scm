@@ -103,13 +103,14 @@ encountered more than once."
      options)
     lookup))
 
-(define-syntax-rule (report-error msg arg ...)
-  (begin
+(define-syntax-rule (report-error msg arg)
+  (let ((message (format #f (G_ msg) arg))
+        (program-name (basename (car (program-arguments)))))
     (format (current-error-port)
             (G_ "ERROR: ~A.
 Run `~A --help' for more information.\n")
-            (format #f (G_ msg) arg ...)
-            (basename (car (program-arguments))))
+            message
+            program-name)
     (exit 1)))
 
 (define (args-fold args options unrecognized-option-proc
