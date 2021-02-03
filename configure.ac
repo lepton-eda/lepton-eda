@@ -287,7 +287,6 @@ AC_CONFIG_FILES([Makefile
                  utils/Makefile
                  utils/docs/Makefile
                  utils/examples/Makefile
-                 utils/examples/gsch2pcb/Makefile
                  utils/examples/tragesym/Makefile
                  utils/scripts/Makefile
                  utils/src/Makefile
@@ -298,6 +297,7 @@ AC_CONFIG_FILES([Makefile
 
                  utils/sch2pcb/Makefile
                  utils/sch2pcb/src/Makefile
+                 utils/sch2pcb/examples/Makefile
 
                  symbols/Makefile
                  symbols/documentation/Makefile
