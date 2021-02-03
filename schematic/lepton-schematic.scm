@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 export GUILE_LOAD_COMPILED_PATH="@ccachedir@:${GUILE_LOAD_COMPILED_PATH}"
+export GUILE_LOAD_PATH="@LEPTON_SCHEME_MODULE_DIRECTORY@:${GUILE_LOAD_PATH}"
 exec @GUILE@ -s "$0" "$@"
 !#
 
