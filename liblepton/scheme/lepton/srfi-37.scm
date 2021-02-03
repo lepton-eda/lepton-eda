@@ -42,6 +42,7 @@
 ;;;; Module definition & exports
 (define-module (lepton srfi-37)
   #:use-module (srfi srfi-9)
+  #:use-module (lepton core gettext)
   #:export (option option-names option-required-arg?
             option-optional-arg? option-processor
             args-fold))
@@ -99,7 +100,11 @@ encountered more than once."
 
 (define-syntax-rule (error msg arg ...)
   (begin
-    (format (current-error-port) msg arg ...)
+    (format (current-error-port)
+            (G_ "ERROR: ~A.
+Run `~A --help' for more information.\n")
+            (format #f (G_ msg) arg ...)
+            (basename (car (program-arguments))))
     (exit 1)))
 
 (define (args-fold args options unrecognized-option-proc
