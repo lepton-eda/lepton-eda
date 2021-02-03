@@ -22,7 +22,7 @@ endif
 
 
 distclean-local:
-	-rm -rf html latex
+	-rm -rf html
 
 maintainer-clean-local:
-	-rm -rf html latex
+	-rm -rf html
