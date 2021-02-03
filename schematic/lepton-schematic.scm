@@ -25,7 +25,7 @@ exec @GUILE@ -s "$0" "$@"
 
 (use-modules (ice-9 match)
              (srfi srfi-1)
-             (srfi srfi-37)
+             (lepton srfi-37)
              (system foreign))
 
 ;;; Load and initialize liblepton library.

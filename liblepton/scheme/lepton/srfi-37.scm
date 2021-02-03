@@ -40,7 +40,7 @@
 
 
 ;;;; Module definition & exports
-(define-module (srfi srfi-37)
+(define-module (lepton srfi-37)
   #:use-module (srfi srfi-9)
   #:export (option option-names option-required-arg?
             option-optional-arg? option-processor
