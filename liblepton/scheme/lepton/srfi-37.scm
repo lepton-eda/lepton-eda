@@ -98,7 +98,7 @@ encountered more than once."
      options)
     lookup))
 
-(define-syntax-rule (error msg arg ...)
+(define-syntax-rule (report-error msg arg ...)
   (begin
     (format (current-error-port)
             (G_ "ERROR: ~A.
@@ -174,7 +174,7 @@ program-arguments in ARGS, as decided by the OPTIONS'
                     option-here opt-name
                     (lambda ()
                       (or (short-option-argument position)
-                          (error "Missing required argument after `-~A'" opt-name)))
+                          (report-error "Missing required argument after `-~A'" opt-name)))
                     (lambda ()
                       ;; edge case: -xo -zf or -xo -- where opt-name=#\o
                       ;; GNU getopt_long resolves these like I do
@@ -207,11 +207,11 @@ program-arguments in ARGS, as decided by the OPTIONS'
                  (lambda ()
                    (if index
                        (substring arg (1+ index))
-                       (error "Missing required argument after `--~A'" opt-name)))
+                       (report-error "Missing required argument after `--~A'" opt-name)))
                  (lambda () (and index (substring arg (1+ index))))
                  (lambda ()
                    (if index
-                       (error "Extraneous argument after `--~A'" opt-name))))))))
+                       (report-error "Extraneous argument after `--~A'" opt-name))))))))
       (set! args (cdr args)))
 
     ;; Process the remaining in ARGS.  Basically like calling
