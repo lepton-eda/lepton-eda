@@ -46,8 +46,6 @@
             option-optional-arg? option-processor
             args-fold))
 
-(cond-expand-provide (current-module) '(srfi-37))
-
 ;;;; args-fold and periphery procedures
 
 ;;; An option as answered by `option'.  `names' is a list of
