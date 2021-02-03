@@ -1,9 +1,8 @@
-# geda-liblepton.m4                                       -*-Autoconf-*-
+# lepton-assert.m4                                        -*-Autoconf-*-
 # serial 1.0
 
-dnl liblepton-specific setup
+dnl Optionally disable assertions
 dnl Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
-dnl Copyright (C) 2019 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -19,21 +18,22 @@ dnl You should have received a copy of the GNU General Public License
 dnl along with this program; if not, write to the Free Software
 dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-# Work out the gettext domain that liblepton should use
-AC_DEFUN([AX_LIBLEPTON],
+# Check if assertions should be disabled.
+AC_DEFUN([AX_OPTION_ASSERT],
 [
   AC_PREREQ([2.60])dnl
+  AC_PROVIDE([AC_HEADER_ASSERT])dnl
 
-  # First argument is the shared library version to use.
-  AC_MSG_CHECKING([liblepton shared library version])
-  AC_MSG_RESULT($1)
-  AC_SUBST([LIBLEPTON_SHLIB_VERSION], $1)
+  AC_MSG_CHECKING([whether to enable assertions])
+  AC_ARG_ENABLE([assert],
+    [AS_HELP_STRING([--disable-assert], [turn off assertions])],
+    [], [enable_assert="yes"])
 
-  # Work out the gettext domain to use
-  AC_MSG_CHECKING([liblepton gettext domain])
-  LIBLEPTON_GETTEXT_DOMAIN="liblepton"
-  AC_MSG_RESULT([$LIBLEPTON_GETTEXT_DOMAIN])
-  AC_SUBST([LIBLEPTON_GETTEXT_DOMAIN])
-  AC_DEFINE_UNQUOTED([LIBLEPTON_GETTEXT_DOMAIN], ["$LIBLEPTON_GETTEXT_DOMAIN"],
-    "Name of liblepton's gettext domain.")
-])
+  if test "X$enable_assert" = "Xyes"; then
+    AC_MSG_RESULT([yes])
+  else
+    AC_MSG_RESULT([no])
+    AC_DEFINE([NDEBUG], 1, [Define to 1 if assertions should be disabled.])
+    AC_DEFINE([G_DISABLE_ASSERT], 1, [Define to 1 if GLib assertions should be disabled.])
+  fi
+])dnl AX_OPTION_ASSERT

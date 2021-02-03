@@ -1,4 +1,4 @@
-# geda-awk.m4                                           -*-Autoconf-*-
+# lepton-awk.m4                                           -*-Autoconf-*-
 # serial 1
 
 dnl Improved checks for awk executable path and features

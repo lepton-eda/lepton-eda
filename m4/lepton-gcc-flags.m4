@@ -1,7 +1,7 @@
-# geda-assert.m4                                        -*-Autoconf-*-
+# lepton-gcc-flags.m4                                     -*-Autoconf-*-
 # serial 1.0
 
-dnl Optionally disable assertions
+dnl Add GCC-specific C compiler flags
 dnl Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
 dnl
 dnl This program is free software; you can redistribute it and/or modify
@@ -18,22 +18,15 @@ dnl You should have received a copy of the GNU General Public License
 dnl along with this program; if not, write to the Free Software
 dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-# Check if assertions should be disabled.
-AC_DEFUN([AX_OPTION_ASSERT],
+# Adds the argument to GCC_CFLAGS if the compiler is GCC.
+AC_DEFUN([AX_GCC_FLAGS],
 [
   AC_PREREQ([2.60])dnl
-  AC_PROVIDE([AC_HEADER_ASSERT])dnl
+  AC_REQUIRE([AC_PROG_CC])dnl
 
-  AC_MSG_CHECKING([whether to enable assertions])
-  AC_ARG_ENABLE([assert],
-    [AS_HELP_STRING([--disable-assert], [turn off assertions])],
-    [], [enable_assert="yes"])
-
-  if test "X$enable_assert" = "Xyes"; then
-    AC_MSG_RESULT([yes])
-  else
-    AC_MSG_RESULT([no])
-    AC_DEFINE([NDEBUG], 1, [Define to 1 if assertions should be disabled.])
-    AC_DEFINE([G_DISABLE_ASSERT], 1, [Define to 1 if GLib assertions should be disabled.])
+  if test "X$GCC" = "Xyes"; then
+    GCC_CFLAGS="$1 $GCC_CFLAGS"
   fi
-])dnl AX_OPTION_ASSERT
+
+  AC_SUBST([GCC_CFLAGS])
+])

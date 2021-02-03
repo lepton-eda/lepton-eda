@@ -1,4 +1,4 @@
-# geda-git-version.m4                                   -*-Autoconf-*-
+# lepton-git-version.m4                                   -*-Autoconf-*-
 # serial 3
 
 dnl Extract gEDA version parameters from a git repository, if present.

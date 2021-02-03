@@ -1,4 +1,4 @@
-# geda-desktop-i18n.m4                                  -*-Autoconf-*-
+# lepton-desktop-i18n.m4                                  -*-Autoconf-*-
 # serial 1
 
 dnl Carry out configuration tasks needed by desktop-i18n tool

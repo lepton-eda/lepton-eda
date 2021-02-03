@@ -1,4 +1,4 @@
-# geda-cairo.m4                                           -*-Autoconf-*-
+# lepton-cairo.m4                                           -*-Autoconf-*-
 # serial 1
 
 dnl Check for CAIRO

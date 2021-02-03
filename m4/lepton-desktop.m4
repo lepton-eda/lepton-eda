@@ -1,4 +1,4 @@
-# geda-desktop.m4                                       -*-Autoconf-*-
+# lepton-desktop.m4                                       -*-Autoconf-*-
 # serial 1.0
 
 dnl MIME & desktop icon directories, and MIME database update options

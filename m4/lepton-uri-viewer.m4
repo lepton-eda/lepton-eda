@@ -1,4 +1,4 @@
-# geda-uri-viewer.m4                                    -*-Autoconf-*-
+# lepton-uri-viewer.m4                                    -*-Autoconf-*-
 # serial 1
 
 dnl Checks for default URI launcher method

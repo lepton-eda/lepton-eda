@@ -1,4 +1,4 @@
-# geda-git.m4                                           -*-Autoconf-*-
+# lepton-git.m4                                           -*-Autoconf-*-
 # serial 2
 
 dnl Generic checks relating to git tools & repositories
