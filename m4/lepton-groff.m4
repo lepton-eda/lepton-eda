@@ -1,4 +1,4 @@
-# geda-groff.m4                                         -*-Autoconf-*-
+# lepton-groff.m4                                         -*-Autoconf-*-
 # serial 1
 
 dnl Look for GNU troff

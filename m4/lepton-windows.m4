@@ -1,4 +1,4 @@
-# geda-windows.m4                                           -*-Autoconf-*-
+# lepton-windows.m4                                           -*-Autoconf-*-
 # serial 1
 
 dnl Check Windows-specific flags

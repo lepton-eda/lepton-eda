@@ -1,4 +1,4 @@
-# geda-doxygen.m4                                       -*-Autoconf-*-
+# lepton-doxygen.m4                                       -*-Autoconf-*-
 # serial 2
 
 dnl Optional Doxygen API documentation support

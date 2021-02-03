@@ -1,4 +1,4 @@
-# geda-guile.m4                                           -*-Autoconf-*-
+# lepton-guile.m4                                           -*-Autoconf-*-
 # serial 3
 
 dnl Check for guile

@@ -1,4 +1,4 @@
-# geda-contrib.m4                 -*- Autoconf -*-
+# lepton-contrib.m4                 -*- Autoconf -*-
 # serial 1
 
 dnl Optionally disable build and install of contributed software.

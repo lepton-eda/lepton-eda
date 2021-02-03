@@ -1,4 +1,4 @@
-# geda-host.m4                                          -*-Autoconf-*-
+# lepton-host.m4                                          -*-Autoconf-*-
 # serial 1
 
 dnl Checks for host platform and features
