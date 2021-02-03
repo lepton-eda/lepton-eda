@@ -97,16 +97,17 @@ encountered more than once."
      options)
     lookup))
 
+(define-syntax-rule (error msg arg ...)
+  (begin
+    (format (current-error-port) msg arg ...)
+    (exit 1)))
+
 (define (args-fold args options unrecognized-option-proc
                    operand-proc . seeds)
   "Answer the results of folding SEEDS as multiple values against the
 program-arguments in ARGS, as decided by the OPTIONS'
 `option-processor's, UNRECOGNIZED-OPTION-PROC, and OPERAND-PROC."
   (let ((lookup (build-options-lookup options)))
-    ;; I don't like Guile's `error' here
-    (define (error msg . args)
-      (scm-error 'misc-error "args-fold" msg args #f))
-
     (define (mutate-seeds! procedure . params)
       (set! seeds (call-with-values
                       (lambda ()
