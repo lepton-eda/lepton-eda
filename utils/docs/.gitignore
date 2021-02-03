@@ -1,7 +1,6 @@
 Makefile
 Makefile.in
 html
-latex
 *~
 *.1
 
@@ -10,7 +9,6 @@ lepton-embed.html
 lepton-pcb_backannotate.html
 lepton-refdes_renum.html
 lepton-renum.html
-lepton-sch2pcb.html
 lepton-schdiff.html
 lepton-symfix.html
 lepton-symcheck.html

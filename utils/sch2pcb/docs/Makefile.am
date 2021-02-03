@@ -1,45 +1,13 @@
 dist_man_MANS = \
-	lepton-archive.1 \
-	lepton-embed.1 \
-	lepton-pcb_backannotate.1 \
-	lepton-refdes_renum.1 \
-	lepton-renum.1 \
-	lepton-schdiff.1 \
-	lepton-symcheck.1 \
-	lepton-symfix.1 \
-	lepton-tragesym.1 \
-	lepton-upcfg.1
+	lepton-sch2pcb.1
 
 EXTRA_DIST = \
-	lepton-archive.1.in \
-	lepton-embed.1.in \
-	lepton-pcb_backannotate.1.in \
-	lepton-refdes_renum.1.in \
-	lepton-renum.1.in \
-	lepton-schdiff.1.in \
-	lepton-symcheck.1.in \
-	lepton-symfix.1.in \
-	lepton-tragesym.1.in \
-	lepton-upcfg.1.in \
-	README.lepton-renum \
-	README.lepton-tragesym \
-	TODO.lepton-renum \
-	why.lepton-renum \
-	utils.dox
+	lepton-sch2pcb.1.in \
+	README.lepton-sch2pcb
 
 docsreadmedir = $(docdir)/readmes
 docsreadme_DATA = \
-	README.lepton-renum \
-	README.lepton-tragesym
-
-doxygen: utils.dox
-	@echo 'Creating doxygen documentation for utils...'
-if ENABLE_DOXYGEN
-	$(DOXYGEN) utils.dox
-else
-	@echo 'configure was not run with the --enable-doxygen switch.'
-	@echo 'The documentation cannot be built from the sources.'
-endif
+	README.lepton-sch2pcb
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \
