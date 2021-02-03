@@ -1,3 +1,8 @@
+;;; Lepton EDA library - Scheme API
+;;; Copyright (C) 2021 Lepton EDA Contributors
+;;; This module has been copied from the Guile repository and modified
+;;; specially for Lepton EDA.
+
 ;;; srfi-37.scm --- args-fold
 
 ;;      Copyright (C) 2007, 2008, 2013 Free Software Foundation, Inc.
