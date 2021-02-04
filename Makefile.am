@@ -77,7 +77,7 @@ endif HAVE_GIT_REPO
 doxygen:
 if ENABLE_DOXYGEN
 	@for subdir in libleptonattrib/docs libleptongui/docs \
-	  liblepton/docs utils/docs ; do \
+	  liblepton/docs ; do \
 	  (cd $$subdir; $(MAKE) doxygen) || exit 1; \
 	done
 else

@@ -35,9 +35,3 @@ else
 endif
 
 CLEANFILES = $(dist_man_MANS) $(html_man_files)
-
-distclean-local:
-	-rm -rf html
-
-maintainer-clean-local:
-	-rm -rf html

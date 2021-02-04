@@ -24,22 +24,12 @@ EXTRA_DIST = \
 	README.lepton-renum \
 	README.lepton-tragesym \
 	TODO.lepton-renum \
-	why.lepton-renum \
-	utils.dox
+	why.lepton-renum
 
 docsreadmedir = $(docdir)/readmes
 docsreadme_DATA = \
 	README.lepton-renum \
 	README.lepton-tragesym
-
-doxygen: utils.dox
-	@echo 'Creating doxygen documentation for utils...'
-if ENABLE_DOXYGEN
-	$(DOXYGEN) utils.dox
-else
-	@echo 'configure was not run with the --enable-doxygen switch.'
-	@echo 'The documentation cannot be built from the sources.'
-endif
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \
@@ -67,9 +57,3 @@ else
 endif
 
 CLEANFILES = $(dist_man_MANS) $(html_man_files)
-
-distclean-local:
-	-rm -rf html
-
-maintainer-clean-local:
-	-rm -rf html
