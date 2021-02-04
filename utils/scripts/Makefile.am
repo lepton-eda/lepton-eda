@@ -7,7 +7,6 @@ bin_SCRIPTS = \
 	lepton-schdiff \
 	lepton-symcheck \
 	lepton-symfix \
-	lepton-tragesym \
 	lepton-upcfg
 
 EXTRA_DIST = \
@@ -19,7 +18,6 @@ EXTRA_DIST = \
 	lepton-schdiff \
 	lepton-symfix \
 	lepton-symcheck.in \
-	lepton-tragesym.in \
 	lepton-upcfg.in
 
 do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
@@ -28,10 +26,6 @@ do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
 	-e 's,[@]ccachedir[@],@LEPTON_SCM_PRECOMPILE_DIR@,g'
 
 lepton-archive: lepton-archive.in
-	$(do_subst) < $(srcdir)/$@.in > $@
-	chmod +x $@
-
-lepton-tragesym: lepton-tragesym.in
 	$(do_subst) < $(srcdir)/$@.in > $@
 	chmod +x $@
 
@@ -54,7 +48,6 @@ lepton-netlist: lepton-netlist.in Makefile
 CLEANFILES = \
 	lepton-archive \
 	lepton-embed \
-	lepton-tragesym \
 	lepton-upcfg \
 	lepton-symcheck \
 	lepton-netlist
