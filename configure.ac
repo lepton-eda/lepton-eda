@@ -289,10 +289,6 @@ AC_CONFIG_FILES([Makefile
                  utils/examples/Makefile
                  utils/examples/tragesym/Makefile
                  utils/scripts/Makefile
-                 utils/tests/Makefile
-                 utils/tests/refdes_renum/Makefile
-                 utils/tests/refdes_renum/inputs/Makefile
-                 utils/tests/refdes_renum/outputs/Makefile
 
                  utils/sch2pcb/Makefile
                  utils/sch2pcb/src/Makefile
@@ -301,6 +297,9 @@ AC_CONFIG_FILES([Makefile
 
                  utils/renum/Makefile
                  utils/renum/src/Makefile
+                 utils/renum/tests/Makefile
+                 utils/renum/tests/inputs/Makefile
+                 utils/renum/tests/outputs/Makefile
 
                  symbols/Makefile
                  symbols/documentation/Makefile
