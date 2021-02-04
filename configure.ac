@@ -302,6 +302,8 @@ AC_CONFIG_FILES([Makefile
                  utils/renum/tests/outputs/Makefile
                  utils/renum/docs/Makefile
 
+                 utils/tragesym/Makefile
+
                  symbols/Makefile
                  symbols/documentation/Makefile
                  symbols/gnetman/Makefile
