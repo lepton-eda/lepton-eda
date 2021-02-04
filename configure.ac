@@ -302,6 +302,7 @@ AC_CONFIG_FILES([Makefile
 
                  utils/tragesym/Makefile
                  utils/tragesym/examples/Makefile
+                 utils/tragesym/docs/Makefile
 
                  symbols/Makefile
                  symbols/documentation/Makefile
