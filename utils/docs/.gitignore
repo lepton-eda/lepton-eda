@@ -1,6 +1,5 @@
 Makefile
 Makefile.in
-html
 *~
 *.1
 
