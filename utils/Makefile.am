@@ -2,9 +2,9 @@ SUBDIRS = \
 	docs \
 	examples \
 	scripts \
-	src \
 	tests \
-	sch2pcb
+	sch2pcb \
+	renum
 
 EXTRA_DIST = \
 	AUTHORS \
