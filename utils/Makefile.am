@@ -1,6 +1,5 @@
 SUBDIRS = \
 	docs \
-	examples \
 	scripts \
 	sch2pcb \
 	renum \

@@ -1,3 +1,5 @@
+SUBDIRS = examples
+
 bin_SCRIPTS = \
 	lepton-tragesym
 

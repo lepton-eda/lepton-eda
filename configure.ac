@@ -286,8 +286,6 @@ AC_CONFIG_FILES([Makefile
 
                  utils/Makefile
                  utils/docs/Makefile
-                 utils/examples/Makefile
-                 utils/examples/tragesym/Makefile
                  utils/scripts/Makefile
 
                  utils/sch2pcb/Makefile
@@ -303,6 +301,7 @@ AC_CONFIG_FILES([Makefile
                  utils/renum/docs/Makefile
 
                  utils/tragesym/Makefile
+                 utils/tragesym/examples/Makefile
 
                  symbols/Makefile
                  symbols/documentation/Makefile
