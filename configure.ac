@@ -300,6 +300,7 @@ AC_CONFIG_FILES([Makefile
                  utils/renum/tests/Makefile
                  utils/renum/tests/inputs/Makefile
                  utils/renum/tests/outputs/Makefile
+                 utils/renum/docs/Makefile
 
                  symbols/Makefile
                  symbols/documentation/Makefile

@@ -1,29 +1,15 @@
 dist_man_MANS = \
-	lepton-archive.1 \
-	lepton-embed.1 \
-	lepton-pcb_backannotate.1 \
-	lepton-refdes_renum.1 \
-	lepton-schdiff.1 \
-	lepton-symcheck.1 \
-	lepton-symfix.1 \
-	lepton-tragesym.1 \
-	lepton-upcfg.1
+	lepton-renum.1
 
 EXTRA_DIST = \
-	lepton-archive.1.in \
-	lepton-embed.1.in \
-	lepton-pcb_backannotate.1.in \
-	lepton-refdes_renum.1.in \
-	lepton-schdiff.1.in \
-	lepton-symcheck.1.in \
-	lepton-symfix.1.in \
-	lepton-tragesym.1.in \
-	lepton-upcfg.1.in \
-	README.lepton-tragesym
+	lepton-renum.1.in \
+	README.lepton-renum \
+	TODO.lepton-renum \
+	why.lepton-renum
 
 docsreadmedir = $(docdir)/readmes
 docsreadme_DATA = \
-	README.lepton-tragesym
+	README.lepton-renum
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \
