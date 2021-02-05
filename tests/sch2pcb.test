@@ -10,6 +10,30 @@
 (define cwd (getcwd))
 (define *testdir* (build-filename (getcwd) "sch2pcb-tmp"))
 
+(define repo-module-path (build-filename "liblepton" "scheme"))
+(define repo-backend-path (build-filename "tools" "netlist" "scheme" "backend"))
+;;; Where built modules live.
+(define built-module-path (build-filename *abs-top-builddir* repo-module-path))
+;;; Where other modules live.
+(define source-module-path (build-filename *abs-top-srcdir* repo-module-path))
+;;; Where built backends (gsch2pcb) live.
+(define built-backend-path (build-filename *abs-top-builddir* repo-backend-path))
+;;; Where other backends live.
+(define source-backend-path (build-filename *abs-top-srcdir* repo-backend-path))
+
+;;; Now, the netlister needs to know where Scheme modules and
+;;; backends are.
+(setenv "GUILE_LOAD_PATH"
+        (string-join (append (list built-module-path
+                                   source-module-path
+                                   built-backend-path
+                                   source-backend-path)
+                             ;; Current GUILE_LOAD_PATH.
+                             %load-path)
+                     ;; Delimiter.
+                     ":"))
+
+
 ;;; Setup/teardown directories/files needed by tests.
 (define (test-setup)
   (mkdir *testdir*)
