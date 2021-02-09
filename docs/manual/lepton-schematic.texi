@@ -432,8 +432,14 @@ schematics}.
 @subsection Menu Netlist
 @cindex menu Netlist
 
+Currently, the menu consist of an only item demonstrating the
+possibility to run Lepton netlisting code in GUI.
+
 @table @emph
 @item 1 allegro
+Produce Allegro netlist.  The output will go to the file
+@file{allegro.out} in the current working directory.  @xref{Allegro
+backend} for more.
 @end table
 
 @node Menu Help,  , Menu Netlist, lepton-schematic window
