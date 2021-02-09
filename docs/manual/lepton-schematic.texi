@@ -205,29 +205,77 @@ all open windows of @schematic{}.  @xref{Quitting the program}.
 
 @table @emph
 @item Undo
+@clicksequence{Edit @click{} Undo} (@kbd{Ctrl-Z} or @kbd{E Shift-U})
+
 @item Redo
+@clicksequence{Edit @click{} Redo} (@kbd{Shift-Ctrl-Z} or @kbd{E Shift-R})
+
 @item Cut
+@clicksequence{Edit @click{} Cut} (@kbd{Ctrl-X})
+
 @item Copy
+@clicksequence{Edit @click{} Copy} (@kbd{Ctrl-C})
+
 @item Paste
+@clicksequence{Edit @click{} Paste} (@kbd{Ctrl-V})
+
 @item Delete
+@clicksequence{Edit @click{} Delete} (@kbd{Delete}, @kbd{D}, or @kbd{E D})
+
 @item Select Mode
+@clicksequence{Edit @click{} Select Mode} (@kbd{S} or @kbd{E S})
+
 @item Select All
+@clicksequence{Edit @click{} Select All} (@kbd{Ctrl-A})
+
 @item Deselect
+@clicksequence{Edit @click{} Deselect} (@kbd{Shift-Ctrl-A})
+
 @item Copy Mode
+@clicksequence{Edit @click{} Copy Mode} (@kbd{C} or @kbd{E C})
+
 @item Multiple Copy Mode
+@clicksequence{Edit @click{} Multiple Copy Mode} (@kbd{E Y})
+
 @item Move Mode
+@clicksequence{Edit @click{} Move Mode} (@kbd{M} or @kbd{E M})
+
 @item Rotate 90 Mode
+@clicksequence{Edit @click{} Rotate 90 Mode} (@kbd{E R})
+
 @item Mirror Mode
+@clicksequence{Edit @click{} Mirror mode} (@kbd{E I})
+
 @item Object Properties...
+@clicksequence{Edit @click{} Object Properties...} (@kbd{E O})
+
 @item Edit...
+@clicksequence{Edit @click{} Edit...} (@kbd{E E})
+
 @item Edit Text...
+@clicksequence{Edit @click{} Edit Text...} (@kbd{E X})
+
 @item Slot...
+@clicksequence{Edit @click{} Slot...} (@kbd{E Shift-S})
+
 @item Lock
+@clicksequence{Edit @click{} Lock} (@kbd{E L})
+
 @item Unlock
+@clicksequence{Edit @click{} Unlock} (@kbd{E Shift-L})
+
 @item Embed Component/Picture
+@clicksequence{Edit @click{} Embed Component/Picture} (@kbd{E B})
+
 @item Unembed Component/Picture
+@clicksequence{Edit @click{} Unembed Component/Picture} (@kbd{E Shift-B})
+
 @item Update Component
+@clicksequence{Edit @click{} Update Component} (@kbd{E U})
+
 @item Symbol Translate...
+@clicksequence{Edit @click{} Symbol Translate...} (@kbd{E T})
+
 @end table
 
 @node Menu View, Menu Page, Menu Edit, lepton-schematic window
