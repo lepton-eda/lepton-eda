@@ -205,10 +205,15 @@ all open windows of @schematic{}.  @xref{Quitting the program}.
 
 @table @emph
 @item Undo
-@clicksequence{Edit @click{} Undo} (@kbd{Ctrl-Z} or @kbd{E Shift-U})
+
+@clicksequence{Edit @click{} Undo} (@kbd{Ctrl-Z}, @kbd{U},
+@kbd{Shift-U}, or @kbd{E Shift-U}) undoes the last editing action.
 
 @item Redo
-@clicksequence{Edit @click{} Redo} (@kbd{Shift-Ctrl-Z} or @kbd{E Shift-R})
+
+@clicksequence{Edit @click{} Redo} (@kbd{Shift-Ctrl-Z}, @kbd{Ctrl-Y},
+@kbd{Shift-R}, or @kbd{E Shift-R}) restores the results of the last
+editing action undone with @clicksequence{Edit @click{} Undo}.
 
 @item Cut
 @clicksequence{Edit @click{} Cut} (@kbd{Ctrl-X})
