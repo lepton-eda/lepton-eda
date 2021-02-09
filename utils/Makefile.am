@@ -5,7 +5,8 @@ SUBDIRS = \
 	renum \
 	tragesym \
 	symfix \
-	archive
+	archive \
+	embed
 
 EXTRA_DIST = \
 	AUTHORS \
