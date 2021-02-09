@@ -288,6 +288,9 @@ AC_CONFIG_FILES([Makefile
                  utils/docs/Makefile
                  utils/scripts/Makefile
 
+                 utils/symfix/Makefile
+                 utils/symfix/docs/Makefile
+
                  utils/sch2pcb/Makefile
                  utils/sch2pcb/src/Makefile
                  utils/sch2pcb/examples/Makefile

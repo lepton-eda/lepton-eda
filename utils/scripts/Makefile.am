@@ -6,7 +6,6 @@ bin_SCRIPTS = \
 	lepton-refdes_renum \
 	lepton-schdiff \
 	lepton-symcheck \
-	lepton-symfix \
 	lepton-upcfg
 
 EXTRA_DIST = \
@@ -16,7 +15,6 @@ EXTRA_DIST = \
 	lepton-pcb_backannotate \
 	lepton-refdes_renum \
 	lepton-schdiff \
-	lepton-symfix \
 	lepton-symcheck.in \
 	lepton-upcfg.in
 

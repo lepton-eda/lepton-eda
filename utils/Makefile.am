@@ -3,7 +3,8 @@ SUBDIRS = \
 	scripts \
 	sch2pcb \
 	renum \
-	tragesym
+	tragesym \
+	symfix
 
 EXTRA_DIST = \
 	AUTHORS \
