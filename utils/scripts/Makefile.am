@@ -1,6 +1,5 @@
 bin_SCRIPTS = \
 	lepton-netlist \
-	lepton-pcb_backannotate \
 	lepton-refdes_renum \
 	lepton-schdiff \
 	lepton-symcheck \
@@ -8,7 +7,6 @@ bin_SCRIPTS = \
 
 EXTRA_DIST = \
 	lepton-netlist.in \
-	lepton-pcb_backannotate \
 	lepton-refdes_renum \
 	lepton-schdiff \
 	lepton-symcheck.in \

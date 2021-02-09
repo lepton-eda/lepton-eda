@@ -3,7 +3,6 @@ Makefile.in
 *~
 *.1
 
-lepton-pcb_backannotate.html
 lepton-refdes_renum.html
 lepton-schdiff.html
 lepton-symcheck.html

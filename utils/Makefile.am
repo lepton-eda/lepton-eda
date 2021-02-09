@@ -6,7 +6,8 @@ SUBDIRS = \
 	tragesym \
 	symfix \
 	archive \
-	embed
+	embed \
+	pcb_backannotate
 
 EXTRA_DIST = \
 	AUTHORS \
