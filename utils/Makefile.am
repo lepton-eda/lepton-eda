@@ -4,7 +4,8 @@ SUBDIRS = \
 	sch2pcb \
 	renum \
 	tragesym \
-	symfix
+	symfix \
+	archive
 
 EXTRA_DIST = \
 	AUTHORS \

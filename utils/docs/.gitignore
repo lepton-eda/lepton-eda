@@ -3,7 +3,6 @@ Makefile.in
 *~
 *.1
 
-lepton-archive.html
 lepton-embed.html
 lepton-pcb_backannotate.html
 lepton-refdes_renum.html

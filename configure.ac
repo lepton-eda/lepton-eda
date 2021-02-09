@@ -291,6 +291,9 @@ AC_CONFIG_FILES([Makefile
                  utils/symfix/Makefile
                  utils/symfix/docs/Makefile
 
+                 utils/archive/docs/Makefile
+                 utils/archive/Makefile
+
                  utils/sch2pcb/Makefile
                  utils/sch2pcb/src/Makefile
                  utils/sch2pcb/examples/Makefile

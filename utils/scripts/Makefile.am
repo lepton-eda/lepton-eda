@@ -1,5 +1,4 @@
 bin_SCRIPTS = \
-	lepton-archive \
 	lepton-embed \
 	lepton-netlist \
 	lepton-pcb_backannotate \
@@ -9,7 +8,6 @@ bin_SCRIPTS = \
 	lepton-upcfg
 
 EXTRA_DIST = \
-	lepton-archive.in \
 	lepton-embed.in \
 	lepton-netlist.in \
 	lepton-pcb_backannotate \
@@ -22,10 +20,6 @@ do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
 	-e 's,[@]GUILE[@],$(GUILE),g' \
 	-e 's,[@]localedir[@],$(localedir),g' \
 	-e 's,[@]ccachedir[@],@LEPTON_SCM_PRECOMPILE_DIR@,g'
-
-lepton-archive: lepton-archive.in
-	$(do_subst) < $(srcdir)/$@.in > $@
-	chmod +x $@
 
 lepton-embed: lepton-embed.in
 	$(do_subst) < $(srcdir)/$@.in > $@
@@ -44,7 +38,6 @@ lepton-netlist: lepton-netlist.in Makefile
 	chmod +x $@
 
 CLEANFILES = \
-	lepton-archive \
 	lepton-embed \
 	lepton-upcfg \
 	lepton-symcheck \

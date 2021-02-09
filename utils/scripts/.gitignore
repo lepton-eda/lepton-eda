@@ -1,6 +1,5 @@
 Makefile
 Makefile.in
-lepton-archive
 lepton-embed
 lepton-upcfg
 lepton-symcheck
