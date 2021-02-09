@@ -153,7 +153,7 @@ opened for each of untitled pages.
 
 @item Print...
 
-@clicksequence{File @click{} Print...} (@kbd{F P} or @kbd{Ctrl+P})
+@clicksequence{File @click{} Print...} (@kbd{F P} or @kbd{Ctrl-P})
 opens a standard GTK printing dialog in which you can preview and
 print schematics.  @xref{Printing and exporting}.
 
@@ -177,7 +177,7 @@ to execute a Scheme script file stored in your file system.
 
 @item REPL...
 
-@clicksequence{File @click{} REPL...} (@kbd{F Shift+R}) lets you hack
+@clicksequence{File @click{} REPL...} (@kbd{F Shift-R}) lets you hack
 your Scheme extensions interactively, using the REPL in the background
 terminal where you started @schematic.  @xref{Interactive work with
 Scheme code}.
@@ -904,7 +904,7 @@ REPL.  There are two ways to start it:
 @itemize
 
 @item
-Use @clicksequence{File @click{} REPL...} (@kbd{F Shift+R}) to start
+Use @clicksequence{File @click{} REPL...} (@kbd{F Shift-R}) to start
 REPL in the background terminal where you started @schematic{}, move
 to the terminal and hack your Scheme code interactively.  If you
 didn't use a terminal for launching the program, the feature is not
