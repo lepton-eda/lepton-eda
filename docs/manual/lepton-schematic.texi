@@ -124,6 +124,11 @@ opens a dialog box for choosing and opening an existing schematic or
 symbol file.  @xref{Creating and opening schematics}.
 
 @item Open Recent
+
+@clicksequence{File @click{} Open Recent} (@kbd{F O}) lets you open
+one of the recently opened files without the need of searching it in
+the file system.
+
 @item Save
 @item Save As...
 @item Save all
