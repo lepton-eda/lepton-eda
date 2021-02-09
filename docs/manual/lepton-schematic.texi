@@ -442,10 +442,34 @@ schematics}.
 
 @table @emph
 @item Lepton EDA Reference Manual
+
+@clicksequence{Help @click{} Lepton EDA Reference Manual} (@kbd{H M})
+will open the manual you're reading just now in your HTML browser.
+
 @item gEDA Wiki Documentation
+
+@clicksequence{Help @click{} gEDA Wiki Documentation} (@kbd{H W}) will
+open the documentation page of the legacy gEDA wiki in your HTML
+browser.  It may still be helpful in some cases.
+
 @item Find Component Documentation
+
+@clicksequence{Help @click{} Find Component Documentation} (@kbd{H C}
+or @kbd{H O}) tries hard to find any documentation for the first
+component amongst selected objects.  If no component is selected, the
+action is unavailable.
+
 @item Hotkeys...
+
+@clicksequence{Help @click{} Hotkeys...} (@kbd{H H}) may be used to
+look up for some action you do not know shortcut for.  It displays a
+dialog with all action menu names and their corresponding hotkeys.
+
 @item About
+
+@clicksequence{Help @click{} About} (@kbd{H A}) opens the standard GTK
+About dialog with some useful information on @schematic.
+
 @end table
 
 
