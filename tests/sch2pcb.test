@@ -95,6 +95,46 @@
 
 (test-end)
 
+(define remove-attrib-prog
+  '((use-modules (srfi srfi-1)
+                 (srfi srfi-26)
+                 (lepton attrib)
+                 (lepton object)
+                 (lepton page))
+
+    (define (get-attrib object attr-name)
+      (define (required-attrib? a)
+        (and (string= (attrib-name a) attr-name)
+             a))
+
+      (let ((ls (filter required-attrib? (object-attribs object))))
+        (and (not (null? ls))
+             (car ls))))
+
+    (define (has-refdes? c refdes)
+      (let ((object-refdes (get-attrib c "refdes")))
+        (and object-refdes
+             (string= (attrib-value object-refdes) refdes)
+             c)))
+
+    (define (object-with-refdes page refdes)
+      (let ((ls (filter-map (cut has-refdes? <> refdes)
+                            (filter component? (page-contents page)))))
+        (and (not (null? ls))
+             (car ls))))
+
+    (define (save-page page filename)
+      (with-output-to-file filename
+        (lambda () (display (page->string page)))))
+
+    (define (remove-attrib! filename refdes attr-name)
+      (let* ((page (file->page filename))
+             (object (object-with-refdes page refdes))
+             (attrib (get-attrib object attr-name)))
+        (detach-attribs! object attrib)
+        (page-remove! page attrib)
+        (save-page page (string-append filename ".new"))))))
+
 
 ;;; Test directory in the repository.
 (define tests/
@@ -173,6 +213,19 @@
   (test-run-success "diff" one.pcb tests/one.pcb)
   (test-run-success "diff" one.cmd tests/one.cmd)
   (test-run-success "diff" one.net tests/one.net)
+
+  ;; lepton-shell will be needed for the next test.
+  (test-assert (file-exists? lepton-shell))
+  (with-output-to-file "script.scm"
+    (lambda ()
+      (for-each write remove-attrib-prog)
+      (write '(remove-attrib! "one.sch" "R101" "value"))))
+  (test-assert (file-exists? "script.scm"))
+  (test-run-success lepton-shell "-s" "script.scm")
+  (delete-file one.sch)
+  (rename-file "one.sch.new" one.sch)
+  (test-run-success lepton-sch2pcb one.sch two.sch)
+  (test-run-success "diff" one.pcb (string-append tests/one.pcb ".remove-R101-value"))
 
   (test-teardown))
 

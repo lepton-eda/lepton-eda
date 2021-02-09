@@ -3,6 +3,7 @@ EXTRA_DIST = \
 	one.cmd \
 	one.net \
 	one.pcb \
+	one.pcb.remove-R101-value \
 	one.sch \
 	two.sch \
 	sym/2N3904-1.sym \
