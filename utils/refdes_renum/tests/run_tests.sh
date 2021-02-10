@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Copyright (C) 2007-2008 Dan McMahill
- 
+
 # This file is part of lepton-refdes_renum.
 
 # This program is free software; you can redistribute it and/or
@@ -16,7 +16,7 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 # 02110-1301, USA.
 
 regen=no
@@ -42,14 +42,14 @@ Options
 Description
 
 $0 reads a file, tests.list,  describing tests to run on lepton-refdes_renum.
-If no specific test is specified on the $0 command line, then all 
+If no specific test is specified on the $0 command line, then all
 tests are run.
 
 Examples
 
 $0
 $0 basic_renum
-$0 --regen new_test 
+$0 --regen new_test
 
 EOF
 }
@@ -163,12 +163,12 @@ for t in $all_tests ; do
 	    chmod 644 ${rundir}/${f}
 	done
     fi
-    
+
     # run lepton-refdes_renum
     #
-    
+
     echo "${PERL} -w ${top_srcdir}/refdes_renum/lepton-refdes_renum $args $files"
-    cd ${rundir} && ${PERL} -w ${top_srcdir}/refdes_renum/lepton-refdes_renum $args $files 
+    cd ${rundir} && ${PERL} -w ${top_srcdir}/refdes_renum/lepton-refdes_renum $args $files
     rc=$?
     if test $rc -ne $code ; then
 	echo "FAILED:  lepton-refdes_renum returned $rc which did not match the expected $code"
@@ -210,7 +210,7 @@ for t in $all_tests ; do
     skip=`expr $skip + $soso`
 
     cd $here
-    
+
     # clean up the rundirectory
     rm -fr ${rundir}
 
