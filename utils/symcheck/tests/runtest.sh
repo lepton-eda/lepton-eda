@@ -3,7 +3,7 @@ export LANG=C
 
 INPUT=$1
 rundir=${abs_builddir}/run
-SYMCHECK=${abs_top_builddir}/utils/scripts/lepton-symcheck
+SYMCHECK=${abs_top_builddir}/utils/symcheck/lepton-symcheck
 # Hack to enable `make distcheck'
 
 # create temporary run directory and required subdirs
@@ -24,7 +24,7 @@ tmpfile=${rundir}/tmp$$
 
 # ERRORLOG is a variable exported in Makefile
 cd ${rundir} &&
-    GUILE_LOAD_PATH="${abs_top_srcdir}/symcheck/scheme:${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme" \
+    GUILE_LOAD_PATH="${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme" \
                    ${SYMCHECK} -vv ${in} 1> ${tmpfile} 2>> ${ERRORLOG}
 
 cat ${tmpfile} | \

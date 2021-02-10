@@ -12,7 +12,6 @@ SUBDIRS = \
 	libleptongui \
 	cli \
 	schematic \
-	symcheck \
 	netlist \
 	utils \
 	symbols \

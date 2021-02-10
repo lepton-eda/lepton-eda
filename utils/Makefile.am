@@ -1,5 +1,4 @@
 SUBDIRS = \
-	docs \
 	scripts \
 	sch2pcb \
 	renum \
@@ -10,7 +9,8 @@ SUBDIRS = \
 	pcb_backannotate \
 	refdes_renum \
 	schdiff \
-	upcfg
+	upcfg \
+	symcheck
 
 EXTRA_DIST = \
 	AUTHORS \

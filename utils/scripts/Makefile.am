@@ -1,24 +1,17 @@
 bin_SCRIPTS = \
-	lepton-netlist \
-	lepton-symcheck
+	lepton-netlist
 
 EXTRA_DIST = \
-	lepton-netlist.in \
-	lepton-symcheck.in
+	lepton-netlist.in
 
 do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
 	-e 's,[@]GUILE[@],$(GUILE),g' \
 	-e 's,[@]localedir[@],$(localedir),g' \
 	-e 's,[@]ccachedir[@],@LEPTON_SCM_PRECOMPILE_DIR@,g'
 
-lepton-symcheck: lepton-symcheck.in
-	$(do_subst) < $(srcdir)/$@.in > $@
-	chmod +x $@
-
 lepton-netlist: lepton-netlist.in Makefile
 	$(do_subst) < $(srcdir)/$@.in > $@
 	chmod +x $@
 
 CLEANFILES = \
-	lepton-symcheck \
 	lepton-netlist

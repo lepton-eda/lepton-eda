@@ -261,8 +261,9 @@ AC_CONFIG_FILES([Makefile
                  libleptonattrib/data/Makefile
                  libleptonattrib/docs/Makefile
 
-                 symcheck/tests/Makefile
-                 symcheck/Makefile
+                 utils/symcheck/tests/Makefile
+                 utils/symcheck/docs/Makefile
+                 utils/symcheck/Makefile
 
                  netlist/Makefile
                  netlist/scheme/Makefile
@@ -285,7 +286,6 @@ AC_CONFIG_FILES([Makefile
                  netlist/examples/analog/voltage_doubler/Makefile
 
                  utils/Makefile
-                 utils/docs/Makefile
                  utils/scripts/Makefile
 
                  utils/symfix/Makefile
