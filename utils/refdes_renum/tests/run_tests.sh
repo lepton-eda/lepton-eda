@@ -167,8 +167,8 @@ for t in $all_tests ; do
     # run lepton-refdes_renum
     #
     
-    echo "${PERL} -w ${top_srcdir}/scripts/lepton-refdes_renum $args $files"
-    cd ${rundir} && ${PERL} -w ${top_srcdir}/scripts/lepton-refdes_renum $args $files 
+    echo "${PERL} -w ${top_srcdir}/refdes_renum/lepton-refdes_renum $args $files"
+    cd ${rundir} && ${PERL} -w ${top_srcdir}/refdes_renum/lepton-refdes_renum $args $files 
     rc=$?
     if test $rc -ne $code ; then
 	echo "FAILED:  lepton-refdes_renum returned $rc which did not match the expected $code"
