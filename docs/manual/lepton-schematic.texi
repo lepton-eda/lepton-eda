@@ -239,6 +239,17 @@ unlocked ones will appear.  There you can also cancel the deletion.
 
 @item Select Mode
 @clicksequence{Edit @click{} Select Mode} (@kbd{S} or @kbd{E S})
+switches on the selection mode.  All unfinished actions are rejected,
+and all unfinished object changes are rejected.  If you just started a
+primitive object creation, it will be rejected as well.  In the mode
+you may select object by clicking at them, or by selection box.
+Selected object are always rendered in the selection color so you can
+easily distinguish them from all other objects.  You cannot select
+locked objects this way.  They can only be selected by selection box.
+Hitting @key{Ctrl} will toggle the selection state of the objects you
+are clicking at or selecting by selection box, while hitting
+@key{Shift} in the same situation will always add objects to
+the selection.
 
 @item Select All
 @clicksequence{Edit @click{} Select All} (@kbd{Ctrl-A})
