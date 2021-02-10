@@ -1,0 +1,6 @@
+Makefile
+Makefile.in
+*~
+*.1
+
+lepton-refdes_renum.html

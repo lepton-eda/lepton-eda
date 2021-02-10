@@ -7,7 +7,8 @@ SUBDIRS = \
 	symfix \
 	archive \
 	embed \
-	pcb_backannotate
+	pcb_backannotate \
+	refdes_renum
 
 EXTRA_DIST = \
 	AUTHORS \

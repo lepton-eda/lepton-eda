@@ -300,6 +300,9 @@ AC_CONFIG_FILES([Makefile
                  utils/pcb_backannotate/Makefile
                  utils/pcb_backannotate/docs/Makefile
 
+                 utils/refdes_renum/Makefile
+                 utils/refdes_renum/docs/Makefile
+
                  utils/sch2pcb/Makefile
                  utils/sch2pcb/src/Makefile
                  utils/sch2pcb/examples/Makefile
