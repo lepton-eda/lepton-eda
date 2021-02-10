@@ -1,1 +1,1 @@
-SUBDIRS = src tests docs
+SUBDIRS = src docs

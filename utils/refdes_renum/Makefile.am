@@ -1,5 +1,6 @@
 SUBDIRS = \
-	docs
+	docs \
+	tests
 
 bin_SCRIPTS = \
 	lepton-refdes_renum
