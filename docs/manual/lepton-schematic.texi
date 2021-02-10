@@ -252,10 +252,14 @@ are clicking at or selecting by selection box, while hitting
 the selection.
 
 @item Select All
-@clicksequence{Edit @click{} Select All} (@kbd{Ctrl-A})
+
+@clicksequence{Edit @click{} Select All} (@kbd{Ctrl-A}) selects all
+non-locked objects on a page.
 
 @item Deselect
-@clicksequence{Edit @click{} Deselect} (@kbd{Shift-Ctrl-A})
+
+@clicksequence{Edit @click{} Deselect} (@kbd{Shift-Ctrl-A}) deselects
+all selected objects, if any.
 
 @item Copy Mode
 @clicksequence{Edit @click{} Copy Mode} (@kbd{C} or @kbd{E C})
