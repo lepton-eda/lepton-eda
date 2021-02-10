@@ -1,6 +1,5 @@
 Makefile
 Makefile.in
-lepton-upcfg
 lepton-symcheck
 lepton-netlist
 *~

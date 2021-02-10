@@ -9,7 +9,8 @@ SUBDIRS = \
 	embed \
 	pcb_backannotate \
 	refdes_renum \
-	schdiff
+	schdiff \
+	upcfg
 
 EXTRA_DIST = \
 	AUTHORS \
