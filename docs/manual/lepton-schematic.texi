@@ -263,10 +263,18 @@ one-time copy of selected objects.
 allows to make several copies of the same objects.
 
 @item Move Mode
-@clicksequence{Edit @click{} Move Mode} (@kbd{M} or @kbd{E M})
+
+@clicksequence{Edit @click{} Move Mode} (@kbd{M} or @kbd{E M}) allows
+you to move selected objects without depressing the left mouse button.
+Hitting the button once will place them on the canvas.
 
 @item Rotate 90 Mode
-@clicksequence{Edit @click{} Rotate 90 Mode} (@kbd{E R})
+
+@clicksequence{Edit @click{} Rotate 90 Mode} (@kbd{E R}) rotates
+selected objects by 90 degrees counter-clockwise each time.  The
+object are rotated around the mouse cursor.  You may also quickly
+rotate new components chosen in the Insert component dialog during
+their adding.
 
 @item Mirror Mode
 @clicksequence{Edit @click{} Mirror mode} (@kbd{E I})
