@@ -1,12 +1,10 @@
 bin_SCRIPTS = \
 	lepton-netlist \
-	lepton-schdiff \
 	lepton-symcheck \
 	lepton-upcfg
 
 EXTRA_DIST = \
 	lepton-netlist.in \
-	lepton-schdiff \
 	lepton-symcheck.in \
 	lepton-upcfg.in
 

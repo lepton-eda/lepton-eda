@@ -8,7 +8,8 @@ SUBDIRS = \
 	archive \
 	embed \
 	pcb_backannotate \
-	refdes_renum
+	refdes_renum \
+	schdiff
 
 EXTRA_DIST = \
 	AUTHORS \

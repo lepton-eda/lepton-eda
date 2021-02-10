@@ -1,10 +1,8 @@
 dist_man_MANS = \
-	lepton-symcheck.1 \
-	lepton-upcfg.1
+	lepton-schdiff.1
 
 EXTRA_DIST = \
-	lepton-symcheck.1.in \
-	lepton-upcfg.1.in
+	lepton-schdiff.1.in
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \

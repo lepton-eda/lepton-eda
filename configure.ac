@@ -306,6 +306,9 @@ AC_CONFIG_FILES([Makefile
                  utils/refdes_renum/tests/inputs/Makefile
                  utils/refdes_renum/tests/outputs/Makefile
 
+                 utils/schdiff/Makefile
+                 utils/schdiff/docs/Makefile
+
                  utils/sch2pcb/Makefile
                  utils/sch2pcb/src/Makefile
                  utils/sch2pcb/examples/Makefile

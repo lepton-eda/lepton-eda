@@ -3,6 +3,5 @@ Makefile.in
 *~
 *.1
 
-lepton-schdiff.html
 lepton-symcheck.html
 lepton-upcfg.html
