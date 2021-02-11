@@ -1,8 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,17 +42,17 @@
  *
  *  The returned value will only come from an attached attribute.
  *
- *  \param [in] object        OBJECT list to search.
+ *  \param [in] object        LeptonObject list to search.
  *  \param [in] return_found  attached slot attribute if found, NULL otherwise.
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
  *  Caller must g_free returned character string
  */
-char *s_slot_search_slot (OBJECT *object, OBJECT **return_found)
+char *s_slot_search_slot (LeptonObject *object, LeptonObject **return_found)
 {
   GList *attributes;
-  OBJECT *attrib;
+  LeptonObject *attrib;
   char *value = NULL;
 
   attributes = o_attrib_return_attribs (object);
@@ -74,14 +73,14 @@ char *s_slot_search_slot (OBJECT *object, OBJECT **return_found)
  *  \par Function Description
  *  Search for slotdef attribute.
  *
- *  \param [in] object      The OBJECT list to search.
+ *  \param [in] object      The LeptonObject list to search.
  *  \param [in] slotnumber  The slot number to search for.
  *  \return Character string with attribute value, NULL otherwise.
  *
  *  \warning
  *  Caller must g_free returned character string.
  */
-static char *s_slot_search_slotdef (OBJECT *object, int slotnumber)
+static char *s_slot_search_slotdef (LeptonObject *object, int slotnumber)
 {
   int counter = 0;
   char *slotdef;
@@ -115,13 +114,13 @@ static char *s_slot_search_slotdef (OBJECT *object, int slotnumber)
  *  parts, but on slotted parts, this is what sets the
  *  pinnumber= attribute on slots 2, 3, 4....
  *
- *  \param [in,out] object     The OBJECT to update.
+ *  \param [in,out] object     The LeptonObject to update.
  */
 void
-s_slot_update_object (OBJECT *object)
+s_slot_update_object (LeptonObject *object)
 {
-  OBJECT *o_pin_object;
-  OBJECT *o_pinnum_attrib;
+  LeptonObject *o_pin_object;
+  LeptonObject *o_pinnum_attrib;
   GList *attributes;
   char *string;
   char *slotdef;

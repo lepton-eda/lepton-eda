@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,12 +27,12 @@
  *  The text is stored and printed in several different representations.
  *
  *  In the gEDA files the text is just a string. It is stored unmodified
- *  in <b>OBJECT->text->string</b>.
+ *  in <b>LeptonObject->text->string</b>.
  *
  *  If the string is an attribute with an equal sign as delimiter between
  *  an attribute name and an attribute value, then it is possible to
  *  hide some parts of the text. The still visible part of an attribute
- *  is stored in <b>OBJECT->text->disp_string</b>.
+ *  is stored in <b>LeptonObject->text->disp_string</b>.
  *
  *  \image html o_text_text_overview.png
  *  \image latex o_text_text_overview.pdf "text overview" width=14cm
@@ -347,10 +347,10 @@ geda_text_object_set_y (LeptonObject *object, gint y)
  *  This functions updates the text->disp_string according
  *  to the object->show_name_value settings
  *
- *  \param [in] object  The OBJECT to update
+ *  \param [in] object  The LeptonObject to update
  */
 static void
-update_disp_string (OBJECT *object)
+update_disp_string (LeptonObject *object)
 {
   char *name = NULL;
   char *value = NULL;
@@ -396,9 +396,9 @@ update_disp_string (OBJECT *object)
   }
 }
 
-/*! \brief Creates a text OBJECT and the graphical objects representing it
+/*! \brief Creates a text LeptonObject and the graphical objects representing it
  *  \par Function Description
- *  Create an OBJECT of type OBJ_TEXT.
+ *  Create an LeptonObject of type OBJ_TEXT.
  *
  *  \param [in]  type                   OBJ_TEXT (TODO: why bother)
  *  \param [in]  color                  The color of the text.
@@ -410,7 +410,7 @@ update_disp_string (OBJECT *object)
  *  \param [in]  size                   Text size.
  *  \param [in]  visibility             VISIBLE or INVISIBLE.
  *  \param [in]  show_name_value        SHOW_NAME_VALUE or friends.
- *  \return Pointer to text OBJECT.
+ *  \return Pointer to text LeptonObject.
  *
  *  \note
  *  Caller is responsible for string; this function allocates its own copy.
@@ -469,14 +469,14 @@ geda_text_object_new (gint color,
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
-OBJECT*
+LeptonObject*
 o_text_read (const char *first_line,
              TextBuffer *tb,
              unsigned int release_ver,
              unsigned int fileformat_ver,
              GError **err)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   char type;
   int x, y;
   int color;
@@ -655,7 +655,7 @@ geda_text_object_to_buffer (const LeptonObject *object)
  *  \param o_current The text object to update
  */
 void
-o_text_recreate (OBJECT *o_current)
+o_text_recreate (LeptonObject *o_current)
 {
   o_emit_pre_change_notify (o_current);
   update_disp_string (o_current);
@@ -725,7 +725,7 @@ void
 geda_text_object_rotate (int world_centerx,
                          int world_centery,
                          int angle,
-                         OBJECT *object)
+                         LeptonObject *object)
 {
   int x, y;
   int newx, newy;
@@ -763,7 +763,7 @@ geda_text_object_rotate (int world_centerx,
 void
 geda_text_object_mirror (int world_centerx,
                          int world_centery,
-                         OBJECT *object)
+                         LeptonObject *object)
 {
   int origx, origy;
   int x, y;
@@ -850,7 +850,7 @@ geda_text_object_mirror (int world_centerx,
  *  This function will calculate the distance to the text regardless
  *  if the text is visible or not.
  *
- *  \param [in] object         The text OBJECT.
+ *  \param [in] object         The text LeptonObject.
  *  \param [in] x              The x coordinate of the given point.
  *  \param [in] y              The y coordinate of the given point.
  *  \param [in] force_solid    If true, force treating the object as solid.
@@ -861,7 +861,7 @@ geda_text_object_mirror (int world_centerx,
  *  returns G_MAXDOUBLE.
  */
 double
-geda_text_object_shortest_distance (OBJECT *object,
+geda_text_object_shortest_distance (LeptonObject *object,
                                     int x,
                                     int y,
                                     int force_solid,
@@ -897,7 +897,7 @@ geda_text_object_shortest_distance (OBJECT *object,
  *  \param [in]  new_string            The new value.
  */
 void
-o_text_set_string (OBJECT *obj,
+o_text_set_string (LeptonObject *obj,
                    const gchar *new_string)
 {
   g_return_if_fail (obj != NULL);

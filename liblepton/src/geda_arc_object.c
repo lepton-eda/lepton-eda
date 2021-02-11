@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -314,7 +314,7 @@ geda_arc_object_set_sweep_angle (LeptonObject *object, gint angle)
  *  \param [in]     whichone
  */
 void
-geda_arc_object_modify (OBJECT *object,
+geda_arc_object_modify (LeptonObject *object,
                         int x,
                         int y,
                         int whichone)
@@ -375,15 +375,15 @@ geda_arc_object_modify (OBJECT *object,
  *  \param [in] buf
  *  \param [in] release_ver
  *  \param [in] fileformat_ver
- *  \return The ARC OBJECT that was created, or NULL on error.
+ *  \return The ARC LeptonObject that was created, or NULL on error.
  */
-OBJECT
+LeptonObject
 *o_arc_read (const char buf[],
              unsigned int release_ver,
              unsigned int fileformat_ver,
              GError **err)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   char type;
   int x1, y1;
   int radius;
@@ -534,7 +534,7 @@ void
 geda_arc_object_rotate (int world_centerx,
                         int world_centery,
                         int angle,
-                        OBJECT *object)
+                        LeptonObject *object)
 {
   int x, y, newx, newy;
 
@@ -583,7 +583,7 @@ geda_arc_object_rotate (int world_centerx,
 void
 geda_arc_object_mirror (int world_centerx,
                         int world_centery,
-                        OBJECT *object)
+                        LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->arc != NULL);
@@ -609,7 +609,7 @@ geda_arc_object_mirror (int world_centerx,
 /*! \brief
  *  \par Function Description
  *  This function calculates the smallest rectangle the arc can be drawn into.
- *  The <B>OBJECT</B> pointed by object is assumed to be an arc.
+ *  The <B>LeptonObject</B> pointed by object is assumed to be an arc.
  *  The <B>left</B>, <B>top</B>, <B>right</B> and <B>bottom</B> pointed integers define
  *  this rectangle at the end of the function. It is expressed in world units.
  *  The process is divided into two steps : the first step is to calculate the
@@ -624,7 +624,7 @@ geda_arc_object_mirror (int world_centerx,
  *  \param [out] bottom
  */
 void
-geda_arc_object_calculate_bounds (const OBJECT *object,
+geda_arc_object_calculate_bounds (const LeptonObject *object,
                                   gint *left,
                                   gint *top,
                                   gint *right,
@@ -717,7 +717,7 @@ geda_arc_object_get_position (const LeptonObject *object, gint *x, gint *y)
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the arc.
  *
- *  \param [in] object         The arc OBJECT.
+ *  \param [in] object         The arc LeptonObject.
  *  \param [in] x              The x coordinate of the given point.
  *  \param [in] y              The y coordinate of the given point.
  *  \param [in] force_solid    If true, force treating the object as solid.
@@ -726,7 +726,7 @@ geda_arc_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-geda_arc_object_shortest_distance (OBJECT *object,
+geda_arc_object_shortest_distance (LeptonObject *object,
                                    int x,
                                    int y,
                                    int force_solid,

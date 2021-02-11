@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2017 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -124,7 +124,7 @@ world_get_object_glist_bounds (const GList *head,
                                int *bottom)
 {
   const GList *s_current=NULL;
-  OBJECT *o_current=NULL;
+  LeptonObject *o_current=NULL;
   int rleft, rtop, rright, rbottom;
   int found = 0;
 
@@ -132,7 +132,7 @@ world_get_object_glist_bounds (const GList *head,
 
   /* Find the first object with bounds, and set the bounds variables, then expand as necessary */
   while ( s_current != NULL ) {
-    o_current = (OBJECT *) s_current->data;
+    o_current = (LeptonObject *) s_current->data;
 
     /* Sanity check */
     g_return_val_if_fail ((o_current != NULL), found);
@@ -171,7 +171,7 @@ world_get_object_glist_bounds (const GList *head,
  *  \param [out] bounds The bounds of the component object
  */
 void
-geda_component_object_calculate_bounds (const OBJECT *object,
+geda_component_object_calculate_bounds (const LeptonObject *object,
                                         gboolean include_hidden,
                                         GedaBounds *bounds)
 {
@@ -227,7 +227,7 @@ geda_component_object_get_position (const LeptonObject *object, gint *x, gint *y
  *  \return TRUE if the object is a eligible attribute, FALSE otherwise
  */
 static int
-o_component_is_eligible_attribute (OBJECT *object)
+o_component_is_eligible_attribute (LeptonObject *object)
 {
   gboolean promote_invisible;
   g_return_val_if_fail (object, FALSE);
@@ -271,7 +271,7 @@ o_component_is_eligible_attribute (OBJECT *object)
  *  \return 1 if embedded, 0 otherwise
  */
 int
-o_component_is_embedded (OBJECT *o_current)
+o_component_is_embedded (LeptonObject *o_current)
 {
   g_return_val_if_fail(o_current != NULL, 0);
 
@@ -289,25 +289,25 @@ o_component_is_embedded (OBJECT *o_current)
 /*! \brief Get attributes eligible for promotion from inside a component
  *
  *  \par Function Description
- *  Returns a GList of OBJECTs which are eligible for promotion from
- *  within the passed component OBJECT.
+ *  Returns a GList of LeptonObjects which are eligible for
+ *  promotion from within the passed component LeptonObject.
  *
  *  If detach is TRUE, the function removes these attribute objects
  *  from the prim_objs of the component.  If detach is FALSE, the
- *  OBJECTs are left in place.
+ *  LeptonObjects are left in place.
  *
  *  \param [in]  object   The component object being modified.
  *  \param [in]  detach   Should the attributes be detached?
- *  \returns              A linked list of OBJECTs to promote.
+ *  \returns              A linked list of LeptonObjects to promote.
  */
 GList*
-o_component_get_promotable (OBJECT *object,
+o_component_get_promotable (LeptonObject *object,
                             int detach)
 {
   GList *promoted = NULL;
   GList *attribs;
   GList *iter;
-  OBJECT *tmp;
+  LeptonObject *tmp;
   gboolean attribute_promotion;
 
   cfg_read_bool ("schematic.attrib", "promote",
@@ -319,7 +319,7 @@ o_component_get_promotable (OBJECT *object,
   attribs = o_attrib_find_floating_attribs (object->component->prim_objs);
 
   for (iter = attribs; iter != NULL; iter = g_list_next (iter)) {
-    tmp = (OBJECT*) iter->data;
+    tmp = (LeptonObject*) iter->data;
 
     /* Is it an attribute we want to promote? */
     if (!o_component_is_eligible_attribute (tmp))
@@ -341,16 +341,16 @@ o_component_get_promotable (OBJECT *object,
 }
 
 
-/*! \brief Promote attributes from a component OBJECT
+/*! \brief Promote attributes from a component LeptonObject
  *  \par Function Description
  *  Selects promotable attributes from \a object, and returns a new
  *  #GList containing them (suitable for appending to a #PAGE).
  *
- *  \param [in]  object   The component #OBJECT to promote from.
+ *  \param [in]  object   The component #LeptonObject to promote from.
  *  \return A #GList of promoted attributes.
  */
 GList*
-o_component_promote_attribs (OBJECT *object)
+o_component_promote_attribs (LeptonObject *object)
 {
   GList *promoted = NULL;
   GList *promotable = NULL;
@@ -367,8 +367,8 @@ o_component_promote_attribs (OBJECT *object)
    * remove them. */
   if (keep_invisible) {
     for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
-      OBJECT *o_kept = (OBJECT *) iter->data;
-      OBJECT *o_copy = o_object_copy (o_kept);
+      LeptonObject *o_kept = (LeptonObject *) iter->data;
+      LeptonObject *o_copy = o_object_copy (o_kept);
       o_set_visibility (o_kept, INVISIBLE);
       o_copy->parent = NULL;
       promoted = g_list_prepend (promoted, o_copy);
@@ -376,7 +376,7 @@ o_component_promote_attribs (OBJECT *object)
     promoted = g_list_reverse (promoted);
   } else {
     for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
-      OBJECT *o_removed = (OBJECT *) iter->data;
+      LeptonObject *o_removed = (LeptonObject *) iter->data;
       o_removed->parent = NULL;
       object->component->prim_objs =
         g_list_remove (object->component->prim_objs, o_removed);
@@ -392,10 +392,10 @@ o_component_promote_attribs (OBJECT *object)
 }
 
 
-/*! \brief Delete or hide promotable from the passed OBJECT
+/*! \brief Delete or hide promotable from the passed LeptonObject
  *
  *  \par Function Description
- *  Deletes or hides promotable attributes from the passed OBJECT.
+ *  Deletes or hides promotable attributes from the passed LeptonObject.
  *  This is used when loading symbols during the load of a schematic from
  *  disk. The schematic will already contain local copies of symbol's
  *  promotable objects, so we delete or hide the symbol's copies.
@@ -408,7 +408,7 @@ o_component_promote_attribs (OBJECT *object)
  *  \param [in]  object   The component object being altered.
  */
 static void
-o_component_remove_promotable_attribs (OBJECT *object)
+o_component_remove_promotable_attribs (LeptonObject *object)
 {
   GList *promotable, *iter;
   gboolean keep_invisible;
@@ -422,7 +422,7 @@ o_component_remove_promotable_attribs (OBJECT *object)
                  default_keep_invisible, &keep_invisible);
 
   for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *a_object = (OBJECT*) iter->data;
+    LeptonObject *a_object = (LeptonObject*) iter->data;
     if (keep_invisible == TRUE) {   /* Hide promotable attributes */
       o_set_visibility (a_object, INVISIBLE);
     } else {                                /* Delete promotable attributes */
@@ -474,23 +474,23 @@ render_placeholders()
  *
  */
 static void
-create_placeholder_small (OBJECT* node, int x, int y)
+create_placeholder_small (LeptonObject* node, int x, int y)
 {
   const gint color = DETACHED_ATTRIBUTE_COLOR;
   const gint text_size = 6;
 
   /* two crossed lines to mark component's origin:
   */
-  OBJECT* line1 = geda_line_object_new (color,
+  LeptonObject* line1 = geda_line_object_new (color,
                                         x - 30, y + 30,
                                         x + 30, y - 30 );
-  OBJECT* line2 = geda_line_object_new (color,
+  LeptonObject* line2 = geda_line_object_new (color,
                                         x - 30, y - 30,
                                         x + 50, y + 50 );
 
   /* text - symbol file name:
   */
-  OBJECT* txt = geda_text_object_new (color,
+  LeptonObject* txt = geda_text_object_new (color,
                                       x + 100, y + 100,
                                       LOWER_LEFT,
                                       0,
@@ -507,14 +507,14 @@ create_placeholder_small (OBJECT* node, int x, int y)
 
   /* two lines at the left and bottom sides of the text:
   */
-  OBJECT* line3 = geda_line_object_new (color,
+  LeptonObject* line3 = geda_line_object_new (color,
                                         x + 50, y + 50,
                                         x + 50, bounds.max_y + 10 );
-  OBJECT* line4 = geda_line_object_new (color,
+  LeptonObject* line4 = geda_line_object_new (color,
                                         x + 50, y + 50,
                                         bounds.max_x + 10, y + 50 );
 
-  OBJECT* objs[] =
+  LeptonObject* objs[] =
   {
       line1,
       line2,
@@ -555,10 +555,10 @@ create_placeholder_small (OBJECT* node, int x, int y)
  *
  */
 static void
-create_placeholder_classic (OBJECT *new_node, int x, int y)
+create_placeholder_classic (LeptonObject *new_node, int x, int y)
 {
     GedaBounds bounds;
-    OBJECT *new_prim_obj;
+    LeptonObject *new_prim_obj;
     char *not_found_text = NULL;
     int x_offset, y_offset;
 
@@ -647,7 +647,7 @@ create_placeholder_classic (OBJECT *new_node, int x, int y)
  *
  */
 static void
-create_placeholder (OBJECT* node, int x, int y)
+create_placeholder (LeptonObject* node, int x, int y)
 {
     /* Put placeholder into object list.  Changed by SDB on
      * 1.19.2005 to fix problem that symbols were silently
@@ -683,14 +683,14 @@ create_placeholder (OBJECT* node, int x, int y)
  *  \par Function Description
  *
  */
-OBJECT *o_component_new (PAGE *page,
+LeptonObject *o_component_new (PAGE *page,
                          char type,
                          int color, int x, int y, int angle,
                          int mirror, const CLibSymbol *clib,
                          const gchar *basename,
                          int selectable)
 {
-  OBJECT *new_node=NULL;
+  LeptonObject *new_node=NULL;
   GList *iter;
   gchar *buffer = NULL;
 
@@ -747,7 +747,7 @@ OBJECT *o_component_new (PAGE *page,
 
   /* set the parent field now */
   for (iter = new_node->component->prim_objs; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *tmp = (OBJECT*) iter->data;
+    LeptonObject *tmp = (LeptonObject*) iter->data;
     tmp->parent = new_node;
   }
 
@@ -768,7 +768,7 @@ OBJECT *o_component_new (PAGE *page,
  *  \param [in]  selectable whether the object can be selected with the mouse
  *  \return a new component object
  */
-OBJECT*
+LeptonObject*
 o_component_new_embedded (char type,
                           int color,
                           int x,
@@ -778,7 +778,7 @@ o_component_new_embedded (char type,
                           const gchar *basename,
                           int selectable)
 {
-  OBJECT *new_node=NULL;
+  LeptonObject *new_node=NULL;
 
   new_node = s_basic_new_object(type, "complex");
 
@@ -815,13 +815,13 @@ o_component_new_embedded (char type,
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
-OBJECT *o_component_read (PAGE *page,
+LeptonObject *o_component_read (PAGE *page,
                           const char buf[],
                           unsigned int release_ver,
                           unsigned int fileformat_ver,
                           GError **err)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   char type;
   int x1, y1;
   int angle;
@@ -905,8 +905,8 @@ OBJECT *o_component_read (PAGE *page,
  *
  *  On failure, this function returns NULL.
  *
- *  \param [in] object  a component OBJECT
- *  \return the string representation of the component OBJECT
+ *  \param [in] object  a component LeptonObject
+ *  \return the string representation of the component LeptonObject
  */
 gchar*
 geda_component_object_to_buffer (const LeptonObject *object)
@@ -969,10 +969,10 @@ geda_component_object_translate (LeptonObject *object, int dx, int dy)
  *  \param [in] o_current    The object that is copied
  *  \return a new component object
  */
-OBJECT*
-o_component_copy (OBJECT *o_current)
+LeptonObject*
+o_component_copy (LeptonObject *o_current)
 {
-  OBJECT *o_new;
+  LeptonObject *o_new;
   GList *iter;
 
   g_return_val_if_fail(o_current != NULL, NULL);
@@ -997,7 +997,7 @@ o_component_copy (OBJECT *o_current)
   for (iter = o_new->component->prim_objs;
        iter != NULL;
        iter = g_list_next (iter)) {
-    ((OBJECT*) iter->data)->parent = o_new;
+    ((LeptonObject*) iter->data)->parent = o_new;
   }
 
   /* Delete or hide attributes eligible for promotion inside the
@@ -1031,7 +1031,7 @@ void
 geda_component_object_rotate (int centerx,
                               int centery,
                               int angle,
-                              OBJECT *object)
+                              LeptonObject *object)
 {
   int x, y;
   int newx, newy;
@@ -1069,7 +1069,7 @@ geda_component_object_rotate (int centerx,
 void
 geda_component_object_mirror (int world_centerx,
                               int world_centery,
-                              OBJECT *object)
+                              LeptonObject *object)
 {
   int x, y;
 
@@ -1107,18 +1107,18 @@ geda_component_object_mirror (int world_centerx,
  *  Search for a pin inside the given component which has an attribute
  *  matching those passed.
  *
- *  \param [in] object        component OBJECT whos pins to search.
+ *  \param [in] object        component LeptonObject whos pins to search.
  *  \param [in] name          the attribute name to search for.
  *  \param [in] wanted_value  the attribute value to search for.
- *  \return The pin OBJECT with the given attribute, NULL otherwise.
+ *  \return The pin LeptonObject with the given attribute, NULL otherwise.
  */
-OBJECT*
-o_component_find_pin_by_attribute (OBJECT *object,
+LeptonObject*
+o_component_find_pin_by_attribute (LeptonObject *object,
                                    const char *name,
                                    char *wanted_value)
 {
   GList *iter;
-  OBJECT *o_current;
+  LeptonObject *o_current;
   char *value;
   int found;
 
@@ -1128,7 +1128,7 @@ o_component_find_pin_by_attribute (OBJECT *object,
 
   for (iter = object->component->prim_objs; iter != NULL;
        iter = g_list_next (iter)) {
-    o_current = (OBJECT*) iter->data;
+    o_current = (LeptonObject*) iter->data;
 
     if (o_current->type != OBJ_PIN)
       continue;
@@ -1154,10 +1154,10 @@ o_component_find_pin_by_attribute (OBJECT *object,
  *  to the messaging system.
  *
  *  \param page      The PAGE object
- *  \param object    The component OBJECT
+ *  \param object    The component LeptonObject
  */
 void
-o_component_check_symversion (PAGE* page, OBJECT* object)
+o_component_check_symversion (PAGE* page, LeptonObject* object)
 {
   char *inside = NULL;
   char *outside = NULL;
@@ -1368,7 +1368,7 @@ done:
  *        force treating them as solid filled.
  *        We ignore the force_solid argument to this function.
  *
- *  \param [in] object         The component OBJECT.
+ *  \param [in] object         The component LeptonObject.
  *  \param [in] x              The x coordinate of the given point.
  *  \param [in] y              The y coordinate of the given point.
  *  \param [in] force_solid    If true, force treating the object as solid.
@@ -1379,7 +1379,7 @@ done:
  *  G_MAXDOUBLE.
  */
 double
-geda_component_object_shortest_distance (OBJECT *object,
+geda_component_object_shortest_distance (LeptonObject *object,
                                          int x,
                                          int y,
                                          int force_solid,
@@ -1395,7 +1395,7 @@ geda_component_object_shortest_distance (OBJECT *object,
 
   for (iter = object->component->prim_objs;
        iter != NULL; iter= g_list_next (iter)) {
-    OBJECT *obj = (OBJECT*) iter->data;
+    LeptonObject *obj = (LeptonObject*) iter->data;
     int left, top, right, bottom;
 
     /* Collect the bounds of any lines and arcs in the symbol */

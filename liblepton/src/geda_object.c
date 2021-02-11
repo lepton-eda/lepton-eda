@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
 /*! \file o_basic.c
  *  \brief functions for the basic object type
  *
- *  This file contains the code used to handle OBJECTs (st_object).
+ *  This file contains the code used to handle LeptonObjects (st_object).
  *  The object is the basic type of all elements stored in schematic
  *  and symbol files.
  *
@@ -131,22 +131,22 @@ geda_object_set_selectable (LeptonObject *object, gboolean selectable)
   object->selectable = selectable;
 }
 
-static OBJECT*
-s_basic_init_object (OBJECT *new_node, int type, char const *name);
+static LeptonObject*
+s_basic_init_object (LeptonObject *new_node, int type, char const *name);
 
 /*! \brief Helper to allocate and initialise an object.
  *
  *  \par Function Description
- *  Allocates memory for an OBJECT and then calls s_basic_init_object() on it.
+ *  Allocates memory for an LeptonObject and then calls s_basic_init_object() on it.
  *
  *  \param [in] type      The sub-type of the object to create; one of the OBJ_* constants.
  *  \param [in] prefix    The name prefix for the session-unique object name.
- *  \return A pointer to the fully constructed OBJECT.
+ *  \return A pointer to the fully constructed LeptonObject.
  */
-OBJECT*
+LeptonObject*
 s_basic_new_object (int type, char const *prefix)
 {
-  return s_basic_init_object ((OBJECT*) g_malloc(sizeof (OBJECT)), type, prefix);
+  return s_basic_init_object ((LeptonObject*) g_malloc(sizeof (LeptonObject)), type, prefix);
 }
 
 /*! \todo Finish documentation!!!!
@@ -157,12 +157,12 @@ s_basic_new_object (int type, char const *prefix)
  *  copies selected to list_head (!! returns new list)
  *
  *  \param [in]  selected
- *  \return OBJECT pointer.
+ *  \return LeptonObject pointer.
  */
-OBJECT*
-o_object_copy (OBJECT *selected)
+LeptonObject*
+o_object_copy (LeptonObject *selected)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
 
   g_return_val_if_fail (selected != NULL, NULL);
 
@@ -237,7 +237,7 @@ o_object_copy (OBJECT *selected)
  *
  */
 void
-s_delete_object (OBJECT *o_current)
+s_delete_object (LeptonObject *o_current)
 {
   if (o_current != NULL) {
     /* If currently attached to a page, remove it from the page */
@@ -315,7 +315,7 @@ s_delete_object (OBJECT *o_current)
   }
 }
 
-/*! \brief Add a weak reference watcher to an OBJECT.
+/*! \brief Add a weak reference watcher to an LeptonObject.
  * \par Function Description
  * Adds the weak reference callback \a notify_func to \a object.  When
  * \a object is destroyed, \a notify_func will be called with two
@@ -328,7 +328,7 @@ s_delete_object (OBJECT *o_current)
  * \param [in] user_data      Data to be passed to \a notify_func.
  */
 void
-s_object_weak_ref (OBJECT *object,
+s_object_weak_ref (LeptonObject *object,
                    void (*notify_func)(void *, void *),
                    void *user_data)
 {
@@ -336,7 +336,7 @@ s_object_weak_ref (OBJECT *object,
   object->weak_refs = s_weakref_add (object->weak_refs, notify_func, user_data);
 }
 
-/*! \brief Remove a weak reference watcher from an OBJECT.
+/*! \brief Remove a weak reference watcher from an LeptonObject.
  * \par Function Description
  * Removes the weak reference callback \a notify_func from \a object.
  *
@@ -347,7 +347,7 @@ s_object_weak_ref (OBJECT *object,
  * \param [in] user_data      Data to to search for.
  */
 void
-s_object_weak_unref (OBJECT *object,
+s_object_weak_unref (LeptonObject *object,
                      void (*notify_func)(void *, void *),
                      void *user_data)
 {
@@ -356,7 +356,7 @@ s_object_weak_unref (OBJECT *object,
                                         notify_func, user_data);
 }
 
-/*! \brief Add a weak pointer to an OBJECT.
+/*! \brief Add a weak pointer to an LeptonObject.
  * \par Function Description
  * Adds the weak pointer at \a weak_pointer_loc to \a object. The
  * value of \a weak_pointer_loc will be set to NULL when \a object is
@@ -368,7 +368,7 @@ s_object_weak_unref (OBJECT *object,
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
 void
-s_object_add_weak_ptr (OBJECT *object,
+s_object_add_weak_ptr (LeptonObject *object,
                        void *weak_pointer_loc)
 {
   g_return_if_fail (object != NULL);
@@ -376,7 +376,7 @@ s_object_add_weak_ptr (OBJECT *object,
                                          (void**) weak_pointer_loc);
 }
 
-/*! \brief Remove a weak pointer from an OBJECT.
+/*! \brief Remove a weak pointer from an LeptonObject.
  * \par Function Description
  * Removes the weak pointer at \a weak_pointer_loc from \a object.
  *
@@ -386,7 +386,7 @@ s_object_add_weak_ptr (OBJECT *object,
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
 void
-s_object_remove_weak_ptr (OBJECT *object,
+s_object_remove_weak_ptr (LeptonObject *object,
                           void *weak_pointer_loc)
 {
   g_return_if_fail (object != NULL);
@@ -394,13 +394,13 @@ s_object_remove_weak_ptr (OBJECT *object,
                                             (void**) weak_pointer_loc);
 }
 
-/*! \brief Set an #OBJECT's line options.
+/*! \brief Set an #LeptonObject's line options.
  *  \par Function Description
  *  This function allows a line's end, type, width, length and space to be set.
  *  See #OBJECT_END and #OBJECT_TYPE for information on valid
  *  object end and type values.
  *
- *  \param [in,out] o_current  OBJECT to set line options on.
+ *  \param [in,out] o_current  LeptonObject to set line options on.
  *  \param [in]     end        An OBJECT_END.
  *  \param [in]     type       An OBJECT_TYPE.
  *  \param [in]     width      Line width.
@@ -411,7 +411,7 @@ s_object_remove_weak_ptr (OBJECT *object,
  *        If a max value is not required, then it would simplify the code.
  */
 void
-o_set_line_options (OBJECT *o_current,
+o_set_line_options (LeptonObject *o_current,
                     OBJECT_END end,
                     OBJECT_TYPE type,
                     int width,
@@ -460,13 +460,13 @@ o_set_line_options (OBJECT *o_current,
 
 }
 
-/*! \brief get #OBJECT's line properties.
+/*! \brief get #LeptonObject's line properties.
  *  \par Function Description
- *  This function get's the #OBJECT's line options.
+ *  This function get's the #LeptonObject's line options.
  *  See #OBJECT_END and #OBJECT_TYPE for information on valid
  *  object end and type values.
  *
- *  \param [in]   object    OBJECT to read the properties
+ *  \param [in]   object    LeptonObject to read the properties
  *  \param [out]  end       An OBJECT_END.
  *  \param [out]  type      An OBJECT_TYPE.
  *  \param [out]  width     Line width.
@@ -475,7 +475,7 @@ o_set_line_options (OBJECT *o_current,
  *  \return TRUE on succes, FALSE otherwise
  *
  */
-gboolean o_get_line_options(OBJECT *object,
+gboolean o_get_line_options(LeptonObject *object,
                             OBJECT_END *end, OBJECT_TYPE *type,
                             int *width, int *length, int *space)
 {
@@ -495,12 +495,12 @@ gboolean o_get_line_options(OBJECT *object,
   return TRUE;
 }
 
-/*! \brief Set #OBJECT's fill options.
+/*! \brief Set #LeptonObject's fill options.
  *  \par Function Description
- *  This function allows an #OBJECT's fill options to be configured.
+ *  This function allows an #LeptonObject's fill options to be configured.
  *  See #OBJECT_FILLING for information on valid fill types.
  *
- *  \param [in,out]  o_current  OBJECT to be updated.
+ *  \param [in,out]  o_current  LeptonObject to be updated.
  *  \param [in]      type       OBJECT_FILLING type.
  *  \param [in]      width      fill width.
  *  \param [in]      pitch1     cross hatch line distance
@@ -510,7 +510,7 @@ gboolean o_get_line_options(OBJECT *object,
  *
  */
 void
-o_set_fill_options (OBJECT *o_current,
+o_set_fill_options (LeptonObject *o_current,
                     OBJECT_FILLING type,
                     int width,
                     int pitch1,
@@ -565,12 +565,12 @@ o_set_fill_options (OBJECT *o_current,
   o_emit_change_notify (o_current);
 }
 
-/*! \brief get #OBJECT's fill properties.
+/*! \brief get #LeptonObject's fill properties.
  *  \par Function Description
- *  This function get's the #OBJECT's fill options.
+ *  This function get's the #LeptonObject's fill options.
  *  See #OBJECT_FILLING for information on valid fill types.
  *
- *  \param [in]   object    OBJECT to read the properties
+ *  \param [in]   object    LeptonObject to read the properties
  *  \param [out]  type      OBJECT_FILLING type
  *  \param [out]  width     fill width.
  *  \param [out]  pitch1    cross hatch line distance
@@ -580,7 +580,7 @@ o_set_fill_options (OBJECT *o_current,
  *  \return TRUE on succes, FALSE otherwise
  *
  */
-gboolean o_get_fill_options(OBJECT *object,
+gboolean o_get_fill_options(LeptonObject *object,
                             OBJECT_FILLING *type, int *width,
                             int *pitch1, int *angle1,
                             int *pitch2, int *angle2)
@@ -695,9 +695,9 @@ void
 geda_object_rotate (int world_centerx,
                     int world_centery,
                     int angle,
-                    OBJECT *object)
+                    LeptonObject *object)
 {
-  void (*func) (int, int, int, OBJECT*) = NULL;
+  void (*func) (int, int, int, LeptonObject*) = NULL;
 
   switch (object->type) {
       case OBJ_LINE:    func = geda_line_object_rotate;    break;
@@ -731,14 +731,14 @@ geda_object_rotate (int world_centerx,
  *
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
- *  \param [in,out] object         The OBJECT to mirror.
+ *  \param [in,out] object         The LeptonObject to mirror.
  */
 void
 geda_object_mirror (int world_centerx,
                     int world_centery,
-                    OBJECT *object)
+                    LeptonObject *object)
 {
-  void (*func) (int, int, OBJECT*) = NULL;
+  void (*func) (int, int, LeptonObject*) = NULL;
 
   switch (object->type) {
       case OBJ_LINE:    func = geda_line_object_mirror;    break;
@@ -778,7 +778,7 @@ geda_object_mirror (int world_centerx,
  *  G_MAXDOUBLE.
  */
 double
-geda_object_shortest_distance (OBJECT *object, int x, int y, gboolean include_hidden)
+geda_object_shortest_distance (LeptonObject *object, int x, int y, gboolean include_hidden)
 {
   return geda_object_shortest_distance_full (object, x, y, FALSE, include_hidden);
 }
@@ -797,14 +797,14 @@ geda_object_shortest_distance (OBJECT *object, int x, int y, gboolean include_hi
  *  G_MAXDOUBLE.
  */
 double
-geda_object_shortest_distance_full (OBJECT *object,
+geda_object_shortest_distance_full (LeptonObject *object,
                                     int x,
                                     int y,
                                     int force_solid,
                                     gboolean include_hidden)
 {
   double shortest_distance = G_MAXDOUBLE;
-  double (*func) (OBJECT *, int, int, int, gboolean) = NULL;
+  double (*func) (LeptonObject *, int, int, int, gboolean) = NULL;
 
   g_return_val_if_fail (object != NULL, G_MAXDOUBLE);
 
@@ -836,11 +836,11 @@ geda_object_shortest_distance_full (OBJECT *object,
 
 /*! \brief Change the color of an object
  *
- *  \param [in] object    The OBJECT to change color.
+ *  \param [in] object    The LeptonObject to change color.
  *  \param [in] color     The new color.
  */
 void
-o_set_color (OBJECT *object,
+o_set_color (LeptonObject *object,
              int color)
 {
   g_return_if_fail (object != NULL);
@@ -860,13 +860,13 @@ o_set_color (OBJECT *object,
  * not currently associated with a PAGE, returns NULL. If \a object is
  * part of a compound object, recurses upward.
  *
- * \param [in] object    The OBJECT for which to retrieve the parent PAGE.
+ * \param [in] object    The LeptonObject for which to retrieve the parent PAGE.
  * \return The PAGE which owns \a object or NULL.
  *
  * \sa s_page_append_object() s_page_append() s_page_remove()
  */
 PAGE *
-o_get_page (OBJECT *object)
+o_get_page (LeptonObject *object)
 {
   if (object->parent != NULL) {
     return o_get_page (object->parent);
@@ -877,14 +877,14 @@ o_get_page (OBJECT *object)
 /*! \brief Get an object's containing component object.
  *
  * \par Function Description
- * If \a object is part of a component #OBJECT, returns that
- * #OBJECT. Otherwise, returns NULL.
+ * If \a object is part of a component #LeptonObject, returns that
+ * #LeptonObject. Otherwise, returns NULL.
  *
- * \param [in] object    The OBJECT for which to get the containing OBJECT.
- * \return The component OBJECT which owns \a object, or NULL.
+ * \param [in] object    The LeptonObject for which to get the containing LeptonObject.
+ * \return The component LeptonObject which owns \a object, or NULL.
  */
-OBJECT *
-o_get_parent (OBJECT *object)
+LeptonObject *
+o_get_parent (LeptonObject *object)
 {
   g_return_val_if_fail ((object != NULL), NULL);
 
@@ -972,14 +972,14 @@ o_remove_change_notify (TOPLEVEL *toplevel,
  *
  * Calls each pre-change callback function registered with \a
  * object's #TOPLEVEL to notify listeners that \a object is about
- * to be modified.  All liblepton functions that modify #OBJECT
+ * to be modified.  All liblepton functions that modify #LeptonObject
  * structures should call this just before making a change to an
- * #OBJECT.
+ * #LeptonObject.
  *
- * \param object   #OBJECT structure to emit notifications for.
+ * \param object   #LeptonObject structure to emit notifications for.
  */
 void
-o_emit_pre_change_notify (OBJECT *object)
+o_emit_pre_change_notify (LeptonObject *object)
 {
   GList *iter;
 
@@ -1010,14 +1010,14 @@ o_emit_pre_change_notify (OBJECT *object)
  *
  * Calls each change callback function registered with \a object's
  * #TOPLEVEL to notify listeners that \a object has just been
- * modified.  All liblepton functions that modify #OBJECT
+ * modified.  All liblepton functions that modify #LeptonObject
  * structures should call this just after making a change to an
- * #OBJECT.
+ * #LeptonObject.
  *
- * \param object   #OBJECT structure to emit notifications for.
+ * \param object   #LeptonObject structure to emit notifications for.
  */
 void
-o_emit_change_notify (OBJECT *object)
+o_emit_change_notify (LeptonObject *object)
 {
   GList *iter;
 
@@ -1047,11 +1047,11 @@ o_emit_change_notify (OBJECT *object)
  *  \par Function Description
  *  Attribute getter for the visible field within the object.
  *
- *  \param object   The OBJECT structure to be queried
+ *  \param object   The LeptonObject structure to be queried
  *  \return TRUE when VISIBLE, FALSE otherwise
  */
 gboolean
-o_is_visible (const OBJECT *object)
+o_is_visible (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   return object->visibility == VISIBLE;
@@ -1059,7 +1059,7 @@ o_is_visible (const OBJECT *object)
 
 /*! \brief Get the visibility of an object
  *
- *  \param [in] object The OBJECT structure to be queried
+ *  \param [in] object The LeptonObject structure to be queried
  *  \return VISIBLE or INVISIBLE
  */
 gint
@@ -1072,11 +1072,11 @@ geda_object_get_visible (const LeptonObject *object)
 
 /*! \brief Set visibility of the object.
  *
- *  \param object     The #OBJECT structure to be modified
+ *  \param object     The #LeptonObject structure to be modified
  *  \param visibility If the object should be visible
  */
 void
-o_set_visibility (OBJECT *object, int visibility)
+o_set_visibility (LeptonObject *object, int visibility)
 {
   g_return_if_fail (object != NULL);
   object->visibility = visibility;
@@ -1097,7 +1097,7 @@ o_set_visibility (OBJECT *object, int visibility)
  *  \retval 1 Bound was found
  */
 gboolean
-geda_object_calculate_visible_bounds (OBJECT *o_current,
+geda_object_calculate_visible_bounds (LeptonObject *o_current,
                                       gboolean include_hidden,
                                       gint *rleft,
                                       gint *rtop,
@@ -1236,15 +1236,15 @@ geda_object_calculate_visible_bounds (OBJECT *o_current,
 /*! \private
  *  \brief Initialize an already-allocated object.
  *  \par Function Description
- *  Initializes the members of the OBJECT structure.
+ *  Initializes the members of the LeptonObject structure.
  *
- *  \param [in] new_node  A pointer to an allocated OBJECT
+ *  \param [in] new_node  A pointer to an allocated LeptonObject
  *  \param [in] type      The object type; one of the OBJ_* constants.
  *  \param [in] name      A prefix for the object's session-unique name.
  *  \return A pointer to the initialized object.
  */
-static OBJECT*
-s_basic_init_object (OBJECT *new_node, int type, char const *name)
+static LeptonObject*
+s_basic_init_object (LeptonObject *new_node, int type, char const *name)
 {
   /* setup sid */
   new_node->sid = global_sid++;

@@ -1,7 +1,7 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -167,12 +167,12 @@ SCM_DEFINE (set_page_filename_x, "%set-page-filename!", 2, 0, 0,
 /*! \brief Get a list of objects in a page.
  * \par Function Description
  * Retrieves the contents of a the #PAGE smob \a page_s as a Scheme
- * list of #OBJECT smobs.
+ * list of #LeptonObject smobs.
  *
  * \note Scheme API: Implements the %page-contents procedure of the
  * (lepton core page) module.
  *
- * \return a list of #OBJECT smobs.
+ * \return a list of #LeptonObject smobs.
  */
 SCM_DEFINE (page_contents, "%page-contents", 1, 0, 0,
             (SCM page_s), "Get a page's contents.")
@@ -196,7 +196,7 @@ SCM_DEFINE (page_contents, "%page-contents", 1, 0, 0,
  * \note Scheme API: Implements the %object-page procedure in the
  * (lepton core page) module.
  *
- * \param [in] obj_s an #OBJECT smob.
+ * \param [in] obj_s an #LeptonObject smob.
  * \return a #PAGE smob or SCM_BOOL_F.
  */
 SCM_DEFINE (object_page, "%object-page", 1, 0, 0,
@@ -218,7 +218,7 @@ SCM_DEFINE (object_page, "%object-page", 1, 0, 0,
 /*! \brief Add an object to a page.
  * \par Function Description
  * Adds \a obj_s to \a page_s.  If \a obj_s is already attached to a
- * #PAGE or to a component #OBJECT, throws a Scheme error.
+ * #PAGE or to a component #LeptonObject, throws a Scheme error.
  *
  * \note Scheme API: Implements the %page-append! procedure of the
  * (lepton core page) module.
@@ -235,7 +235,7 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
               SCM_ARG2, s_page_append_x);
 
   PAGE *page = edascm_to_page (page_s);
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
 
   /* Check that the object isn't already attached to something. */
   PAGE *curr_page = o_get_page (obj);
@@ -261,7 +261,7 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
 /*! \brief Remove an object from a page.
  * \par Function Description
  * Removes \a obj_s from \a page_s.  If \a obj_s is attached to a
- * #PAGE other than \a page_s, or to a component #OBJECT, throws a
+ * #PAGE other than \a page_s, or to a component #LeptonObject, throws a
  * Scheme error. If \a obj_s is not attached to a page, does nothing.
  *
  * \note Scheme API: Implements the %page-remove! procedure of the
@@ -279,7 +279,7 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
               SCM_ARG2, s_page_remove_x);
 
   PAGE *page = edascm_to_page (page_s);
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
 
   /* Check that the object is not attached to something else. */
   PAGE *curr_page = o_get_page (obj);

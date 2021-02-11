@@ -1,6 +1,6 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2013, 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2010-2016 Lepton EDA Contributors
+ * Copyright (C) 2010-2021 Lepton EDA Contributors
  * Copyright (C) 2017-2020 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
@@ -25,7 +25,7 @@
  * In order for Scheme code to be able to manipulate liblepton data
  * structures, it is convenient for it to be able to get handles to
  * several of the different C structures that liblepton uses, in
- * particular #TOPLEVEL, #PAGE and #OBJECT.
+ * particular #TOPLEVEL, #PAGE and #LeptonObject.
  *
  * A particular issue is that, in principle, Guile can stash a
  * variable somewhere and only try and access it much later, possibly
@@ -38,14 +38,15 @@
  * code, it must explicitly be destroyed if the Scheme code doesn't
  * want the #PAGE to hang around after it returns.
  *
- * #OBJECT handles are a more complex case. It's possible that Scheme
- * code may legitimately want to create an #OBJECT and do something
- * with it (or, similarly, pull an #OBJECT out of a #PAGE), without
- * needing to carefully keep track of the #OBJECT to avoid dropping it
- * on the floor. In that case, users should be able to rely on the
+ * #LeptonObject handles are a more complex case. It's possible
+ * that Scheme code may legitimately want to create an
+ * #LeptonObject and do something with it (or, similarly, pull an
+ * #LeptonObject out of a #PAGE), without needing to carefully
+ * keep track of the #LeptonObject to avoid dropping it on the
+ * floor. In that case, users should be able to rely on the
  * garbage collector.
  *
- * For that reason, an #OBJECT is marked to be destroyed by
+ * For that reason, an #LeptonObject is marked to be destroyed by
  * garbage-collection in two cases:
  *
  * -# If they have been created by Scheme code, but not yet added to a
@@ -266,9 +267,9 @@ smob_free (SCM smob)
                        unpack_as_pointer (smob));
     break;
   case GEDA_SMOB_OBJECT:
-    /* See edascm_from_object() for an explanation of why OBJECT
+    /* See edascm_from_object() for an explanation of why LeptonObject
      * smobs store a TOPLEVEL in the second data word */
-    s_object_weak_unref ((OBJECT *) data, smob_weakref2_notify,
+    s_object_weak_unref ((LeptonObject *) data, smob_weakref2_notify,
                          unpack_as_pointer (smob));
     break;
   case GEDA_SMOB_CONFIG:
@@ -298,7 +299,7 @@ smob_free (SCM smob)
                  __FUNCTION__, data);
       break;
     case GEDA_SMOB_OBJECT:
-      s_delete_object ((OBJECT *) data);
+      s_delete_object ((LeptonObject *) data);
       break;
     case GEDA_SMOB_CONFIG:
       /* These are reference counted, so the structure will have
@@ -486,11 +487,11 @@ edascm_to_page (SCM smob)
  * TOPLEVEL fluid and potentially causing a race condition (see bug
  * 909358).
  *
- * \param object #OBJECT to create a smob for.
+ * \param object #LeptonObject to create a smob for.
  * \return a smob representing \a object.
  */
 SCM
-edascm_from_object (OBJECT *object)
+edascm_from_object (LeptonObject *object)
 {
   SCM smob = smob_cache_lookup (object);
 
@@ -515,12 +516,12 @@ edascm_from_object (OBJECT *object)
 /*! \brief Get a schematic object from a smob.
  * \ingroup guile_c_iface
  * \par Function Description
- * Return the #OBJECT represented by \a smob.
+ * Return the #LeptonObject represented by \a smob.
  *
- * \param [in] smob Guile value to retrieve #OBJECT from.
- * \return the #OBJECT represented by \a smob.
+ * \param [in] smob Guile value to retrieve #LeptonObject from.
+ * \return the #LeptonObject represented by \a smob.
  */
-OBJECT *
+LeptonObject *
 edascm_to_object (SCM smob)
 {
   g_debug ("edascm_to_object()\n");
@@ -530,7 +531,7 @@ edascm_to_object (SCM smob)
 #endif
   EDASCM_ASSERT_SMOB_VALID (smob);
 
-  return (OBJECT *) SCM_SMOB_DATA (smob);
+  return (LeptonObject *) SCM_SMOB_DATA (smob);
 }
 
 /*! \brief Get a smob for a configuration context.
@@ -624,15 +625,15 @@ edascm_c_set_gc (SCM smob, int gc)
   EDASCM_SMOB_SET_GC (smob, gc);
 }
 
-/*! \brief Test whether a smob is a #OBJECT instance
+/*! \brief Test whether a smob is a #LeptonObject instance
  * \ingroup guile_c_iface
  * \par Function Description
- * If \a smob is a #OBJECT instance, returns non-zero. Otherwise,
- * returns zero.
+ * If \a smob is a #LeptonObject instance, returns
+ * non-zero. Otherwise, returns zero.
  *
  * \param [in] smob Guile value to test.
  *
- * \return non-zero iff \a smob is a #OBJECT instance.
+ * \return non-zero iff \a smob is a #LeptonObject instance.
  */
 int
 edascm_is_object (SCM smob)
@@ -690,21 +691,21 @@ SCM_DEFINE (page_p, "%page?", 1, 0, 0,
   return (EDASCM_PAGEP (page_smob) ? SCM_BOOL_T : SCM_BOOL_F);
 }
 
-/*! \brief Test whether a smob is an #OBJECT instance.
+/*! \brief Test whether a smob is an #LeptonObject instance.
  * \par Function Description
- * If \a object_smob is an #OBJECT instance, returns \b SCM_BOOL_T;
- * otherwise returns \b SCM_BOOL_F.
+ * If \a object_smob is an #LeptonObject instance, returns \b
+ * SCM_BOOL_T; otherwise returns \b SCM_BOOL_F.
  *
  * \note Scheme API: Implements the %object? procedure in the
  * (lepton core smob) module.
  *
  * \param [in] object_smob Guile value to test.
  *
- * \return SCM_BOOL_T iff \a object_smob is an #OBJECT instance.
+ * \return SCM_BOOL_T iff \a object_smob is an #LeptonObject instance.
  */
 SCM_DEFINE (object_p, "%object?", 1, 0, 0,
             (SCM object_smob),
-            "Test whether the value is a Lepton EDA OBJECT instance.")
+            "Test whether the value is a Lepton EDA LeptonObject instance.")
 {
   return (EDASCM_OBJECTP (object_smob) ? SCM_BOOL_T : SCM_BOOL_F);
 }

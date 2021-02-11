@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -54,10 +54,10 @@
 
 static gint global_pid = 0;
 
-/* Called just before removing an OBJECT from a PAGE
- * or after appending an OBJECT to a PAGE. */
+/* Called just before removing an LeptonObject from a PAGE
+ * or after appending an LeptonObject to a PAGE. */
 static void
-object_added (PAGE *page, OBJECT *object)
+object_added (PAGE *page, LeptonObject *object)
 {
   /* Set up object parent pointer */
 #ifndef NDEBUG
@@ -73,9 +73,9 @@ object_added (PAGE *page, OBJECT *object)
   o_emit_change_notify (object);
 }
 
-/* Called just before removing an OBJECT from a PAGE. */
+/* Called just before removing an LeptonObject from a PAGE. */
 static void
-pre_object_removed (PAGE *page, OBJECT *object)
+pre_object_removed (PAGE *page, LeptonObject *object)
 {
   o_emit_pre_change_notify (object);
 
@@ -625,31 +625,31 @@ gint s_page_autosave (TOPLEVEL *toplevel)
   return toplevel->auto_save_interval;
 }
 
-/*! \brief Append an OBJECT to the PAGE
+/*! \brief Append an LeptonObject to the PAGE
  *
  *  \par Function Description
- *  Links the passed OBJECT to the end of the PAGE's
+ *  Links the passed LeptonObject to the end of the PAGE's
  *  linked list of objects.
  *
  *  \param [in] page      The PAGE the object is being added to.
- *  \param [in] object    The OBJECT being added to the page.
+ *  \param [in] object    The LeptonObject being added to the page.
  */
 void
 s_page_append (PAGE *page,
-               OBJECT *object)
+               LeptonObject *object)
 {
   page->_object_list = g_list_append (page->_object_list, object);
   object_added (page, object);
 }
 
-/*! \brief Append a GList of OBJECTs to the PAGE
+/*! \brief Append a GList of LeptonObjects to the PAGE
  *
  *  \par Function Description
- *  Links the passed OBJECT GList to the end of the PAGE's
+ *  Links the passed LeptonObject GList to the end of the PAGE's
  *  object_list.
  *
  *  \param [in] page      The PAGE the objects are being added to.
- *  \param [in] obj_list  The OBJECT list being added to the page.
+ *  \param [in] obj_list  The LeptonObject list being added to the page.
  */
 void
 s_page_append_list (PAGE *page,
@@ -658,28 +658,28 @@ s_page_append_list (PAGE *page,
   GList *iter;
   page->_object_list = g_list_concat (page->_object_list, obj_list);
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    object_added (page, (OBJECT*) iter->data);
+    object_added (page, (LeptonObject*) iter->data);
   }
 }
 
-/*! \brief Remove an OBJECT from the PAGE
+/*! \brief Remove an LeptonObject from the PAGE
  *
  *  \par Function Description
- *  Removes the passed OBJECT from the PAGE's
+ *  Removes the passed LeptonObject from the PAGE's
  *  linked list of objects.
  *
  *  \param [in] page      The PAGE the object is being removed from.
- *  \param [in] object    The OBJECT being removed from the page.
+ *  \param [in] object    The LeptonObject being removed from the page.
  */
 void
 s_page_remove (PAGE *page,
-               OBJECT *object)
+               LeptonObject *object)
 {
   pre_object_removed (page, object);
   page->_object_list = g_list_remove (page->_object_list, object);
 }
 
-/*! \brief Replace an OBJECT in a PAGE, in the same list position.
+/*! \brief Replace an LeptonObject in a PAGE, in the same list position.
  *
  * \par Function Description
  * Removes \a object1 from \a page's linked list of objects, and puts
@@ -687,13 +687,13 @@ s_page_remove (PAGE *page,
  * page, object2 is appended to \a page.
  *
  * \param [in] page      The PAGE to be modified.
- * \param [in] object1   The OBJECT being removed from the page.
- * \param [in] object2   The OBJECT being added to the page.
+ * \param [in] object1   The LeptonObject being removed from the page.
+ * \param [in] object2   The LeptonObject being added to the page.
  */
 void
 s_page_replace (PAGE *page,
-                OBJECT *object1,
-                OBJECT *object2)
+                LeptonObject *object1,
+                LeptonObject *object2)
 {
   GList *iter = g_list_find (page->_object_list, object1);
 
@@ -708,7 +708,7 @@ s_page_replace (PAGE *page,
   object_added (page, object2);
 }
 
-/*! \brief Remove and free all OBJECTs from the PAGE
+/*! \brief Remove and free all LeptonObjects from the PAGE
  *
  *  \param [in] page      The PAGE being cleared.
  */
@@ -718,14 +718,14 @@ s_page_delete_objects (PAGE *page)
   GList *objects = page->_object_list;
   GList *iter;
   for (iter = objects; iter != NULL; iter = g_list_next (iter)) {
-    pre_object_removed (page, (OBJECT*) iter->data);
+    pre_object_removed (page, (LeptonObject*) iter->data);
   }
   page->_object_list = NULL;
   geda_object_list_delete (objects);
 }
 
 
-/*! \brief Return a GList of OBJECTs on the PAGE
+/*! \brief Return a GList of LeptonObjects on the PAGE
  *
  *  \par Function Description
  *  An accessor for the PAGE's GList of objects.
@@ -753,7 +753,7 @@ const GList *s_page_objects (PAGE *page)
  *  \param [in] rects     The BOX regions to check.
  *  \param [in] n_rects   The number of regions.
  *  \param [in] include_hidden Calculate bounds of hidden objects.
- *  \return The GList of OBJECTs in the region.
+ *  \return The GList of LeptonObjects in the region.
  */
 GList*
 s_page_objects_in_regions (TOPLEVEL *toplevel,
@@ -767,7 +767,7 @@ s_page_objects_in_regions (TOPLEVEL *toplevel,
   int i;
 
   for (iter = page->_object_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     int left, top, right, bottom;
     int visible;
 

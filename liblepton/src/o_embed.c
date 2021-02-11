@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,10 +35,10 @@
  *  liblepton. Currently component objects are just marked to
  *  be embedded later. Picture objects are embedded immediately.
  *
- *  \param o_current The OBJECT to embed
+ *  \param o_current The LeptonObject to embed
  */
 void
-o_embed (OBJECT *o_current)
+o_embed (LeptonObject *o_current)
 {
   int page_modified = 0;
   PAGE *page = NULL;
@@ -78,10 +78,10 @@ o_embed (OBJECT *o_current)
  *  liblepton structure. Component objects are just marked to
  *  be not embedded. Picture objects are unembedded immediately.
  *
- *  \param o_current The OBJECT to unembed
+ *  \param o_current The LeptonObject to unembed
  */
 void
-o_unembed (OBJECT *o_current)
+o_unembed (LeptonObject *o_current)
 {
   const CLibSymbol *sym;
   int page_modified = 0;

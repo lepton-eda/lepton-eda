@@ -1,7 +1,7 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,7 +45,7 @@ SCM_DEFINE (make_component, "%make-component", 1, 0, 0,
   SCM_ASSERT (scm_is_string (basename_s), basename_s, SCM_ARG1, s_make_component);
 
   char *tmp = scm_to_utf8_string (basename_s);
-  OBJECT *obj = o_component_new_embedded (OBJ_COMPONENT, default_color_id(), 0, 0, 0,
+  LeptonObject *obj = o_component_new_embedded (OBJ_COMPONENT, default_color_id(), 0, 0, 0,
                                           FALSE, tmp, TRUE);
   free (tmp);
 
@@ -90,7 +90,7 @@ SCM_DEFINE (make_component_library, "%make-component/library", 1, 0, 0,
   SCM result = SCM_BOOL_F;
   const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
   if (clib != NULL) {
-    OBJECT *obj = o_component_new (toplevel->page_current,
+    LeptonObject *obj = o_component_new (toplevel->page_current,
                                    OBJ_COMPONENT, default_color_id(), 0, 0, 0,
                                    FALSE, clib, basename, TRUE);
 
@@ -134,7 +134,7 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
   SCM_ASSERT (scm_is_bool (mirror_s), mirror_s,  SCM_ARG5, s_set_component_x);
   SCM_ASSERT (scm_is_bool (locked_s), locked_s,  SCM_ARG6, s_set_component_x);
 
-  OBJECT *obj = edascm_to_object (component_s);
+  LeptonObject *obj = edascm_to_object (component_s);
 
   /* Angle */
   int angle = scm_to_int (angle_s);
@@ -194,7 +194,7 @@ SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
               component_s,
               SCM_ARG1, s_component_info);
 
-  OBJECT *obj = edascm_to_object (component_s);
+  LeptonObject *obj = edascm_to_object (component_s);
 
   return scm_list_n (scm_from_utf8_string (obj->component_basename),
                      scm_from_int (obj->component->x),
@@ -222,7 +222,7 @@ SCM_DEFINE (component_contents, "%component-contents", 1, 0, 0,
                edascm_is_object_type (component_s, OBJ_PLACEHOLDER)),
               component_s, SCM_ARG1, s_component_contents);
 
-  OBJECT *obj = edascm_to_object (component_s);
+  LeptonObject *obj = edascm_to_object (component_s);
 
   if (edascm_is_object_type (component_s, OBJ_COMPONENT)) {
     return edascm_from_object_glist (obj->component->prim_objs);
@@ -257,8 +257,8 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
                && !edascm_is_object_type (obj_s, OBJ_PLACEHOLDER)),
               obj_s, SCM_ARG2, s_component_append_x);
 
-  OBJECT *parent = edascm_to_object (component_s);
-  OBJECT *child = edascm_to_object (obj_s);
+  LeptonObject *parent = edascm_to_object (component_s);
+  LeptonObject *child = edascm_to_object (obj_s);
 
   PAGE* page = o_get_page (child);
   /* Check that object is not already attached to a page or a
@@ -319,8 +319,8 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
               SCM_ARG1, s_component_remove_x);
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s, SCM_ARG2, s_component_remove_x);
 
-  OBJECT *parent = edascm_to_object (component_s);
-  OBJECT *child = edascm_to_object (obj_s);
+  LeptonObject *parent = edascm_to_object (component_s);
+  LeptonObject *child = edascm_to_object (obj_s);
   PAGE *child_page = o_get_page (child);
 
   /* Check that object is not attached to a different component. */
@@ -396,7 +396,7 @@ SCM_DEFINE (component_filename, "%component-filename", 1, 0, 0,
               SCM_ARG1,
               s_component_filename);
 
-  OBJECT* obj = edascm_to_object (component_s);
+  LeptonObject* obj = edascm_to_object (component_s);
   const CLibSymbol* sym = s_clib_get_symbol_by_name (obj->component_basename);
 
   SCM result = SCM_BOOL_F;
@@ -444,7 +444,7 @@ init_module_lepton_core_component (void *unused)
  * \brief Initialise the basic Lepton EDA component object manipulation procedures.
  * \par Function Description
  * Registers some Scheme procedures for working with component
- * #OBJECT smobs. Should only be called by edascm_init().
+ * #LeptonObject smobs. Should only be called by edascm_init().
  */
 void
 edascm_init_component ()

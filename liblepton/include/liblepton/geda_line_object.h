@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,13 +36,13 @@ geda_line_object_new (gint color,
                       gint x2,
                       gint y2);
 
-OBJECT*
-geda_line_object_copy (OBJECT *o_current);
+LeptonObject*
+geda_line_object_copy (LeptonObject *o_current);
 
 /* methods */
 
 void
-geda_line_object_calculate_bounds (const OBJECT *object,
+geda_line_object_calculate_bounds (const LeptonObject *object,
                                    GedaBounds *bounds);
 
 gboolean
@@ -61,15 +61,15 @@ gint
 geda_line_object_get_y1 (const LeptonObject *object);
 
 double
-geda_line_object_length (OBJECT *object);
+geda_line_object_length (LeptonObject *object);
 
 void
 geda_line_object_mirror (int world_centerx,
                          int world_centery,
-                         OBJECT *object);
+                         LeptonObject *object);
 
 void
-geda_line_object_modify (OBJECT *object,
+geda_line_object_modify (LeptonObject *object,
                          int x,
                          int y,
                          int whichone);
@@ -78,7 +78,7 @@ void
 geda_line_object_rotate (int world_centerx,
                          int world_centery,
                          int angle,
-                         OBJECT *object);
+                         LeptonObject *object);
 
 void
 geda_line_object_set_x0 (LeptonObject *object, gint x);
@@ -93,7 +93,7 @@ void
 geda_line_object_set_y1 (LeptonObject *object, gint y);
 
 double
-geda_line_object_shortest_distance (OBJECT *object,
+geda_line_object_shortest_distance (LeptonObject *object,
                                     int x,
                                     int y,
                                     int force_soild,
@@ -105,7 +105,7 @@ geda_line_object_to_buffer (const LeptonObject *object);
 void
 geda_line_object_translate (LeptonObject *object, int dx, int dy);
 
-OBJECT*
+LeptonObject*
 o_line_read (const char buf[],
              unsigned int release_ver,
              unsigned int fileformat_ver,

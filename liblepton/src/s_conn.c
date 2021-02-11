@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@
  *
  *  \return The new connection object
  */
-CONN *s_conn_return_new(OBJECT * other_object, int type, int x, int y,
+CONN *s_conn_return_new(LeptonObject * other_object, int type, int x, int y,
                         int whichone, int other_whichone)
 {
   CONN *new_conn;
@@ -104,16 +104,16 @@ int s_conn_uniq(GList * conn_list, CONN * input_conn)
 
 /*! \brief remove a object from the connection list of another object
  *  \par Function Description
- *  This function removes the OBJECT <b>to_remove</b> from the connection
- *  list of the OBJECT <b>other_object</b>.
+ *  This function removes the LeptonObject <b>to_remove</b> from the connection
+ *  list of the LeptonObject <b>other_object</b>.
  *
- *  \param other_object OBJECT from that the to_remove OBJECT needs to be removed
- *  \param to_remove OBJECT to remove
+ *  \param other_object LeptonObject from that the to_remove LeptonObject needs to be removed
+ *  \param to_remove LeptonObject to remove
  *  \return TRUE if a connection has been deleted, FALSE otherwise
  */
 int
-s_conn_remove_other (OBJECT *other_object,
-                     OBJECT *to_remove)
+s_conn_remove_other (LeptonObject *other_object,
+                     LeptonObject *to_remove)
 {
   GList *c_current = NULL;
   CONN *conn = NULL;
@@ -159,20 +159,20 @@ s_conn_remove_other (OBJECT *other_object,
   return (FALSE);
 }
 
-/*! \brief remove an OBJECT from the connection system
+/*! \brief remove an LeptonObject from the connection system
  *  \par Function Description
- *  This function removes all connections from and to the OBJECT
+ *  This function removes all connections from and to the LeptonObject
  *  <b>to_remove</b>.
  *
- *  \param to_remove OBJECT to unconnected from all other objects
+ *  \param to_remove LeptonObject to unconnected from all other objects
  */
 void
-s_conn_remove_object_connections (OBJECT *to_remove)
+s_conn_remove_object_connections (LeptonObject *to_remove)
 {
   GList *c_iter;
   CONN *conn;
   GList *iter;
-  OBJECT *o_current;
+  LeptonObject *o_current;
 
   switch (to_remove->type) {
     case OBJ_PIN:
@@ -198,23 +198,23 @@ s_conn_remove_object_connections (OBJECT *to_remove)
     case OBJ_COMPONENT:
     case OBJ_PLACEHOLDER:
       for (iter = to_remove->component->prim_objs; iter != NULL; iter = g_list_next (iter)) {
-        o_current = (OBJECT*) iter->data;
+        o_current = (LeptonObject*) iter->data;
         s_conn_remove_object_connections (o_current);
       }
       break;
   }
 }
 
-/*! \brief Checks if a point is a midpoint of an OBJECT
+/*! \brief Checks if a point is a midpoint of an LeptonObject
  *  \par Function Description
- *  Checks if the point (<b>x</b>,<b>y</b>) is on the OBJECT
+ *  Checks if the point (<b>x</b>,<b>y</b>) is on the LeptonObject
  *  and between it's endpoints.
- *  \return TRUE if the point is a midpoint of the OBJECT. FALSE
- *  if the point is not a midpoinit or if the OBJECT is not a
- *  NET a PIN or a BUS or if the OBJECT
+ *  \return TRUE if the point is a midpoint of the LeptonObject. FALSE
+ *  if the point is not a midpoinit or if the LeptonObject is not a
+ *  NET a PIN or a BUS or if the LeptonObject
  *  has neither horizontal nor vertical orientation.
  */
-OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
+LeptonObject *s_conn_check_midpoint(LeptonObject *o_current, int x, int y)
 {
   int min_x, min_y, max_x, max_y;
 
@@ -259,22 +259,22 @@ OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
   return(NULL);
 }
 
-/*! \brief adds a GList of OBJECTs to the connection system
+/*! \brief adds a GList of LeptonObjects to the connection system
  *
  *  \par Function Description
  *  This function adds all connections from and to the OBJECTS
  *  of the given GList.
  *
  *  \param page      The PAGE structure
- *  \param obj_list  GList of OBJECTs to add into the connection system
+ *  \param obj_list  GList of LeptonObjects to add into the connection system
  */
 void s_conn_update_glist (PAGE* page, GList *obj_list)
 {
-  OBJECT *o_current;
+  LeptonObject *o_current;
   GList *iter;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    o_current = (OBJECT*) iter->data;
+    o_current = (LeptonObject*) iter->data;
     s_conn_update_object (page, o_current);
   }
 }
@@ -285,10 +285,10 @@ void s_conn_update_glist (PAGE* page, GList *obj_list)
  *  \par Function Description
  *  Checks if an object is a bus or a bus pin
  *
- *  \param object  The OBJECT to test
+ *  \param object  The LeptonObject to test
  *  \return TRUE if the objects is a bis, or bus pin
  */
-static int is_bus_related (OBJECT *object)
+static int is_bus_related (LeptonObject *object)
 {
   return (object->type == OBJ_BUS ||
            (object->type == OBJ_PIN && object->pin_type == PIN_TYPE_BUS));
@@ -300,17 +300,17 @@ static int is_bus_related (OBJECT *object)
  *  \par Function Description
  *  Checks if two objects are legal to be connected together
  *
- *  \param object1  First OBJECT
- *  \param object2  Second OBJECT
+ *  \param object1  First LeptonObject
+ *  \param object2  Second LeptonObject
  *  \return TRUE if the objects are compatible, FALSE if not
  */
-static int check_direct_compat (OBJECT *object1, OBJECT *object2)
+static int check_direct_compat (LeptonObject *object1, LeptonObject *object2)
 {
   return (is_bus_related (object1) == is_bus_related (object2));
 }
 
 
-static void add_connection (OBJECT *object, OBJECT *other_object,
+static void add_connection (LeptonObject *object, LeptonObject *other_object,
                             int type, int x, int y,
                             int whichone, int other_whichone)
 {
@@ -325,22 +325,22 @@ static void add_connection (OBJECT *object, OBJECT *other_object,
   }
 }
 
-/*! \brief add a line OBJECT to the connection system
+/*! \brief add a line LeptonObject to the connection system
  *  \par Function Description
- *  This function searches for all geometrical connections of the OBJECT
- *  <b>object</b> to all other connectable objects. It adds connections
- *  to the object and from all other
+ *  This function searches for all geometrical connections of the
+ *  LeptonObject <b>object</b> to all other connectable
+ *  objects. It adds connections to the object and from all other
  *  objects to this one.
  *  \param page   The PAGE structure
- *  \param object OBJECT to add into the connection system
+ *  \param object LeptonObject to add into the connection system
  */
-static void s_conn_update_line_object (PAGE* page, OBJECT *object)
+static void s_conn_update_line_object (PAGE* page, LeptonObject *object)
 {
   GList *object_list;
-  OBJECT *other_object;
-  OBJECT *found;
+  LeptonObject *other_object;
+  LeptonObject *found;
   int j, k;
-  OBJECT *component, *other_component;
+  LeptonObject *component, *other_component;
 
   component = o_get_parent (object);
 
@@ -348,7 +348,7 @@ static void s_conn_update_line_object (PAGE* page, OBJECT *object)
   for (object_list = page->connectible_list;
        object_list != NULL;
        object_list = g_list_next (object_list)) {
-    other_object = (OBJECT*) object_list->data;
+    other_object = (LeptonObject*) object_list->data;
 
     if (object == other_object)
       continue;
@@ -474,17 +474,18 @@ static void s_conn_update_line_object (PAGE* page, OBJECT *object)
 #endif
 }
 
-/*! \brief add an OBJECT to the connection system
+/*! \brief add an LeptonObject to the connection system
  *
  *  \par Function Description
- *  This function searches for all geometrical connections of the OBJECT
- *  <b>object</b> to all other connectable objects. It adds connections
- *  to the object and from all other objects to this one.
+ *  This function searches for all geometrical connections of the
+ *  LeptonObject <b>object</b> to all other connectable
+ *  objects. It adds connections to the object and from all other
+ *  objects to this one.
  *
  *  \param page   The PAGE structure
- *  \param object OBJECT to add into the connection system
+ *  \param object LeptonObject to add into the connection system
  */
-void s_conn_update_object (PAGE* page, OBJECT *object)
+void s_conn_update_object (PAGE* page, LeptonObject *object)
 {
 
   /* Add object to the list of connectible objects */
@@ -537,13 +538,13 @@ void s_conn_print(GList * conn_list)
  *  This method searches the connection list for the first matching
  *  connection with the given x, y, and whichone endpoint.
  *
- *  \param [in] new_net    Net OBJECT to compare to.
+ *  \param [in] new_net    Net LeptonObject to compare to.
  *  \param [in] whichone   The connection number to check.
  *  \param [in] conn_list  List of existing connections to compare
  *                         <B>new_net</B> to.
  *  \return TRUE if a matching connection is found, FALSE otherwise.
  */
-int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list)
+int s_conn_net_search(LeptonObject* new_net, int whichone, GList * conn_list)
 {
   CONN *conn;
   GList *cl_current;
@@ -565,14 +566,14 @@ int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list)
   return FALSE;
 }
 
-/*! \brief get a list of all objects connected to a list of OBJECTs.
+/*! \brief get a list of all objects connected to a list of LeptonObjects.
  *
  *  \par Function Description
  *  This function gets all other_object from the connection
- *  list of the OBJECTs in the pased list.
+ *  list of the LeptonObjects in the pased list.
  *
- *  \param [in] input_list GList of OBJECT's or NULL
- *  \param [in] obj_list   The GList of OBJECT to get connections from
+ *  \param [in] input_list GList of LeptonObject's or NULL
+ *  \param [in] obj_list   The GList of LeptonObject to get connections from
  *  \return A GList of objects
  *
  *  \warning
@@ -583,12 +584,12 @@ static GList *s_conn_return_glist_others (GList *input_list, GList *obj_list)
 {
   GList *return_list;
   GList *iter;
-  OBJECT *o_current;
+  LeptonObject *o_current;
 
   return_list = input_list;
 
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    o_current = (OBJECT*) iter->data;
+    o_current = (LeptonObject*) iter->data;
     return_list = s_conn_return_others (return_list, o_current);
   }
 
@@ -602,15 +603,15 @@ static GList *s_conn_return_glist_others (GList *input_list, GList *obj_list)
  *  Component objects are entered, and their prim_objs processed. If an <b>input_list</b>
  *  is given, the other objects are appended to that list.
  *
- *  \param [in] input_list   GList of OBJECT's
- *  \param [in] object       OBJECT to get other OBJECTs from
- *  \return A GList of OBJECTs
+ *  \param [in] input_list   GList of LeptonObject's
+ *  \param [in] object       LeptonObject to get other LeptonObjects from
+ *  \return A GList of LeptonObjects
  *
  *  \warning
  *  Caller must g_list_free returned GList pointer.
  *  Do not free individual data items in list.
  */
-GList *s_conn_return_others(GList *input_list, OBJECT *object)
+GList *s_conn_return_others(GList *input_list, LeptonObject *object)
 {
   GList *c_iter;
   GList *return_list;
@@ -644,9 +645,9 @@ GList *s_conn_return_others(GList *input_list, OBJECT *object)
 /*! \brief add a line object to the list of connectible objects
  *  \par Function Description
  *  \param page   The PAGE structure
- *  \param object The line OBJECT to add
+ *  \param object The line LeptonObject to add
  */
-static void s_conn_add_line_object (PAGE *page, OBJECT *object)
+static void s_conn_add_line_object (PAGE *page, LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -670,9 +671,9 @@ static void s_conn_add_line_object (PAGE *page, OBJECT *object)
  *  function, depending on its type.
  *
  *  \param page   The PAGE structure
- *  \param object The line OBJECT to add
+ *  \param object The line LeptonObject to add
  */
-void s_conn_add_object (PAGE *page, OBJECT *object)
+void s_conn_add_object (PAGE *page, LeptonObject *object)
 {
   GList *iter;
 
@@ -688,7 +689,7 @@ void s_conn_add_object (PAGE *page, OBJECT *object)
     for (iter = object->component->prim_objs;
          iter != NULL;
          iter = g_list_next (iter)) {
-      s_conn_add_object (page, (OBJECT*) iter->data);
+      s_conn_add_object (page, (LeptonObject*) iter->data);
     }
   }
 }
@@ -697,7 +698,7 @@ void s_conn_add_object (PAGE *page, OBJECT *object)
  *  \par Function Description
  *  \param object The object to remove
  */
-void s_conn_remove_object(PAGE* page, OBJECT *object)
+void s_conn_remove_object(PAGE* page, LeptonObject *object)
 {
   GList *iter;
 
@@ -710,7 +711,7 @@ void s_conn_remove_object(PAGE* page, OBJECT *object)
     for (iter = object->component->prim_objs;
          iter != NULL;
          iter = g_list_next (iter)) {
-      s_conn_remove_object (page, (OBJECT*) iter->data);
+      s_conn_remove_object (page, (LeptonObject*) iter->data);
     }
   }
 

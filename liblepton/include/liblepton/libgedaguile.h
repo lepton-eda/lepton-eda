@@ -1,6 +1,6 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2014 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ void edascm_dynwind_toplevel (TOPLEVEL *toplevel);
 SCM edascm_from_page (PAGE *page);
 
 /* Create a Guile value from an object structure. */
-SCM edascm_from_object (OBJECT *object);
+SCM edascm_from_object (LeptonObject *object);
 
 /* Create a Guile value from a configuration context structure. */
 SCM edascm_from_config (EdaConfig *cfg);
@@ -52,7 +52,7 @@ SCM edascm_from_config (EdaConfig *cfg);
 PAGE *edascm_to_page (SCM smob);
 
 /* Retrieve an object structure from a Guile value. */
-OBJECT *edascm_to_object (SCM smob);
+LeptonObject *edascm_to_object (SCM smob);
 
 /* Retrieve an configuration context structure from a Guile value. */
 EdaConfig *edascm_to_config (SCM smob);

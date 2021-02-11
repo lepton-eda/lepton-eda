@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ struct st_object
 
   gboolean component_embedded;          /* is embedded component? */
   gchar *component_basename;            /* Component Library Symbol name */
-  OBJECT *parent;                       /* Parent object pointer */
+  LeptonObject *parent;                 /* Parent object pointer */
 
   int color;                            /* Which color */
   int dont_redraw;                      /* Flag to skip redrawing */
@@ -83,27 +83,27 @@ struct st_object
   GList *attribs;       /* attribute stuff */
   int show_name_value;
   int visibility;
-  OBJECT *attached_to;  /* when object is an attribute */
-  OBJECT *copied_to;    /* used when copying attributes */
+  LeptonObject *attached_to;  /* when object is an attribute */
+  LeptonObject *copied_to;    /* used when copying attributes */
 
   GList *weak_refs; /* Weak references */
 };
 
 /* construction, destruction */
 
-OBJECT*
+LeptonObject*
 s_basic_new_object (int type, char const *prefix);
 
-OBJECT*
-o_object_copy (OBJECT *selected);
+LeptonObject*
+o_object_copy (LeptonObject *selected);
 
 void
-s_delete_object (OBJECT *o_current);
+s_delete_object (LeptonObject *o_current);
 
 /* methods */
 
 gboolean
-geda_object_calculate_visible_bounds (OBJECT *o_current,
+geda_object_calculate_visible_bounds (LeptonObject *o_current,
                                       gboolean include_hidden,
                                       gint *rleft,
                                       gint *rtop,
@@ -129,24 +129,24 @@ void
 geda_object_rotate (int world_centerx,
                     int world_centery,
                     int angle,
-                    OBJECT *object);
+                    LeptonObject *object);
 
 void
 geda_object_mirror (int world_centerx,
                     int world_centery,
-                    OBJECT *object);
+                    LeptonObject *object);
 
 void
 geda_object_set_selectable (LeptonObject *object, gboolean selectable);
 
 double
-geda_object_shortest_distance (OBJECT *object,
+geda_object_shortest_distance (LeptonObject *object,
                                int x,
                                int y,
                                gboolean include_hidden);
 
 double
-geda_object_shortest_distance_full (OBJECT *object,
+geda_object_shortest_distance_full (LeptonObject *object,
                                     int x,
                                     int y,
                                     int force_solid,
@@ -156,7 +156,7 @@ void
 geda_object_translate (LeptonObject *object, gint dx, gint dy);
 
 gboolean
-o_get_fill_options (OBJECT *object,
+o_get_fill_options (LeptonObject *object,
                     OBJECT_FILLING *type,
                     int *width,
                     int *pitch1,
@@ -165,7 +165,7 @@ o_get_fill_options (OBJECT *object,
                     int *angle2);
 
 gboolean
-o_get_line_options (OBJECT *object,
+o_get_line_options (LeptonObject *object,
                     OBJECT_END *end,
                     OBJECT_TYPE *type,
                     int *width,
@@ -173,20 +173,20 @@ o_get_line_options (OBJECT *object,
                     int *space);
 
 PAGE*
-o_get_page (OBJECT *object);
+o_get_page (LeptonObject *object);
 
-OBJECT*
-o_get_parent (OBJECT *object);
+LeptonObject*
+o_get_parent (LeptonObject *object);
 
 gboolean
-o_is_visible (const OBJECT *object);
+o_is_visible (const LeptonObject *object);
 
 void
-o_set_color (OBJECT *object,
+o_set_color (LeptonObject *object,
              int color);
 
 void
-o_set_fill_options (OBJECT *o_current,
+o_set_fill_options (LeptonObject *o_current,
                     OBJECT_FILLING type,
                     int width,
                     int pitch1,
@@ -195,7 +195,7 @@ o_set_fill_options (OBJECT *o_current,
                     int angle2);
 
 void
-o_set_line_options (OBJECT *o_current,
+o_set_line_options (LeptonObject *o_current,
                     OBJECT_END end,
                     OBJECT_TYPE type,
                     int width,
@@ -203,7 +203,7 @@ o_set_line_options (OBJECT *o_current,
                     int space);
 
 void
-o_set_visibility (OBJECT *object,
+o_set_visibility (LeptonObject *object,
                   int visibility);
 
 void
@@ -219,19 +219,19 @@ o_remove_change_notify (TOPLEVEL *toplevel,
                         void *user_data);
 
 void
-s_object_weak_ref (OBJECT *object,
+s_object_weak_ref (LeptonObject *object,
                    void (*notify_func)(void *, void *),
                    void *user_data);
 
 void
-s_object_weak_unref (OBJECT *object,
+s_object_weak_unref (LeptonObject *object,
                      void (*notify_func)(void *, void *),
                      void *user_data);
 
 void
-s_object_add_weak_ptr (OBJECT *object, void *weak_pointer_loc);
+s_object_add_weak_ptr (LeptonObject *object, void *weak_pointer_loc);
 
 void
-s_object_remove_weak_ptr (OBJECT *object, void *weak_pointer_loc);
+s_object_remove_weak_ptr (LeptonObject *object, void *weak_pointer_loc);
 
 G_END_DECLS

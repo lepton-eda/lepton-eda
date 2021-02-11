@@ -1,6 +1,6 @@
-/* libleptonrenderer - Rendering Lepton EDA schematics with Cairo
+/* Lepton EDA library
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -129,38 +129,38 @@ static void eda_renderer_update_contexts (EdaRenderer *renderer, cairo_t *new_cr
                                           PangoContext *new_pc);
 
 static void eda_renderer_set_color (EdaRenderer *renderer, int color);
-static int eda_renderer_is_drawable (EdaRenderer *renderer, OBJECT *object);
-static int eda_renderer_draw_hatch (EdaRenderer *renderer, OBJECT *object);
+static int eda_renderer_is_drawable (EdaRenderer *renderer, LeptonObject *object);
+static int eda_renderer_draw_hatch (EdaRenderer *renderer, LeptonObject *object);
 
-static void eda_renderer_default_draw (EdaRenderer *renderer, OBJECT *object);
+static void eda_renderer_default_draw (EdaRenderer *renderer, LeptonObject *object);
 static void eda_renderer_draw_list (EdaRenderer *renderer, GList *objects);
-static void eda_renderer_draw_line (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_pin (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_net (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_bus (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_box (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_arc (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_circle (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_path (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_text (EdaRenderer *renderer, OBJECT *object);
+static void eda_renderer_draw_line (EdaRenderer *renderer, LeptonObject *object);
+static void eda_renderer_draw_pin (EdaRenderer *renderer, LeptonObject *object);
+static void eda_renderer_draw_net (EdaRenderer *renderer, LeptonObject *object);
+static void eda_renderer_draw_bus (EdaRenderer *renderer, LeptonObject *object);
+static void eda_renderer_draw_box (EdaRenderer *renderer, LeptonObject *object);
+static void eda_renderer_draw_arc (EdaRenderer *renderer, LeptonObject *object);
+static void eda_renderer_draw_circle (EdaRenderer *renderer, LeptonObject *object);
+static void eda_renderer_draw_path (EdaRenderer *renderer, LeptonObject *object);
+static void eda_renderer_draw_text (EdaRenderer *renderer, LeptonObject *object);
 static int eda_renderer_prepare_text (EdaRenderer *renderer, const LeptonObject *object);
 static void eda_renderer_calc_text_position (EdaRenderer *renderer, const LeptonObject *object,
                                              double *x, double *y);
-static void eda_renderer_draw_picture (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_component (EdaRenderer *renderer, OBJECT *object);
+static void eda_renderer_draw_picture (EdaRenderer *renderer, LeptonObject *object);
+static void eda_renderer_draw_component (EdaRenderer *renderer, LeptonObject *object);
 
-static void eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object);
+static void eda_renderer_default_draw_grips (EdaRenderer *renderer, LeptonObject *object);
 static void eda_renderer_draw_grips_list (EdaRenderer *renderer, GList *objects) G_GNUC_UNUSED;
 static void eda_renderer_draw_grips_impl (EdaRenderer *renderer, int type, int n_grips, ...);
-static void eda_renderer_draw_arc_grips (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_path_grips (EdaRenderer *renderer, OBJECT *object);
-static void eda_renderer_draw_text_grips (EdaRenderer *renderer, OBJECT *object);
+static void eda_renderer_draw_arc_grips (EdaRenderer *renderer, LeptonObject *object);
+static void eda_renderer_draw_path_grips (EdaRenderer *renderer, LeptonObject *object);
+static void eda_renderer_draw_text_grips (EdaRenderer *renderer, LeptonObject *object);
 
-static void eda_renderer_default_draw_cues (EdaRenderer *renderer, OBJECT *object);
+static void eda_renderer_default_draw_cues (EdaRenderer *renderer, LeptonObject *object);
 static void eda_renderer_draw_cues_list (EdaRenderer *renderer, GList *objects);
-static void eda_renderer_draw_end_cues (EdaRenderer *renderer, OBJECT *object,
+static void eda_renderer_draw_end_cues (EdaRenderer *renderer, LeptonObject *object,
                                         int end);
-static void eda_renderer_draw_mid_cues (EdaRenderer *renderer, OBJECT *object);
+static void eda_renderer_draw_mid_cues (EdaRenderer *renderer, LeptonObject *object);
 static void eda_renderer_draw_junction_cue (EdaRenderer *renderer, int x, int y,
                                             int is_bus);
 
@@ -476,12 +476,12 @@ eda_renderer_draw_list (EdaRenderer *renderer, GList *objects)
   GList *iter;
 
   for (iter = objects; iter != NULL; iter = g_list_next (iter)) {
-    eda_renderer_draw (renderer, (OBJECT *) iter->data);
+    eda_renderer_draw (renderer, (LeptonObject *) iter->data);
   }
 }
 
 void
-eda_renderer_draw (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw (EdaRenderer *renderer, LeptonObject *object)
 {
   g_return_if_fail (EDA_IS_RENDERER(renderer));
 
@@ -489,9 +489,9 @@ eda_renderer_draw (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_default_draw (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_default_draw (EdaRenderer *renderer, LeptonObject *object)
 {
-  void (*draw_func)(EdaRenderer *, OBJECT *);
+  void (*draw_func)(EdaRenderer *, LeptonObject *);
 
   g_return_if_fail (object != NULL);
   g_return_if_fail (renderer->priv->cr != NULL);
@@ -551,7 +551,7 @@ eda_renderer_is_drawable_color (EdaRenderer *renderer, int color,
 }
 
 static int
-eda_renderer_is_drawable (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_is_drawable (EdaRenderer *renderer, LeptonObject *object)
 {
   int color = geda_object_get_drawing_color (object);
 
@@ -563,7 +563,7 @@ eda_renderer_is_drawable (EdaRenderer *renderer, OBJECT *object)
 }
 
 static int
-eda_renderer_draw_hatch (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_hatch (EdaRenderer *renderer, LeptonObject *object)
 {
   void (*hatch_func)(void *, gint, gint, GArray *);
   void *hatch_data;
@@ -627,14 +627,14 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_component (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_component (EdaRenderer *renderer, LeptonObject *object)
 {
   /* Recurse */
   eda_renderer_draw_list (renderer, object->component->prim_objs);
 }
 
 static void
-eda_renderer_draw_line (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_line (EdaRenderer *renderer, LeptonObject *object)
 {
   eda_cairo_line (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                   object->line_end,
@@ -650,7 +650,7 @@ eda_renderer_draw_line (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_net (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_net (EdaRenderer *renderer, LeptonObject *object)
 {
   eda_cairo_line (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                   END_SQUARE, NET_WIDTH,
@@ -663,7 +663,7 @@ eda_renderer_draw_net (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_bus (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_bus (EdaRenderer *renderer, LeptonObject *object)
 {
   eda_cairo_line (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                   END_SQUARE, BUS_WIDTH,
@@ -676,7 +676,7 @@ eda_renderer_draw_bus (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_pin (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_pin (EdaRenderer *renderer, LeptonObject *object)
 {
   int width = geda_pin_object_get_width (object);
 
@@ -691,7 +691,7 @@ eda_renderer_draw_pin (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_box (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_box (EdaRenderer *renderer, LeptonObject *object)
 {
   int fill_solid = FALSE;
 
@@ -711,7 +711,7 @@ eda_renderer_draw_box (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_arc (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_arc (EdaRenderer *renderer, LeptonObject *object)
 {
   eda_cairo_arc (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                  object->line_width,
@@ -730,7 +730,7 @@ eda_renderer_draw_arc (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_circle (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_circle (EdaRenderer *renderer, LeptonObject *object)
 {
   int fill_solid = FALSE;
 
@@ -752,7 +752,7 @@ eda_renderer_draw_circle (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_path (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_path (EdaRenderer *renderer, LeptonObject *object)
 {
   int fill_solid = FALSE;
 
@@ -772,7 +772,7 @@ eda_renderer_draw_path (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_text (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_text (EdaRenderer *renderer, LeptonObject *object)
 {
   double x, y;
   double dummy = 0, small_dist = TEXT_MARKER_SIZE;
@@ -992,7 +992,7 @@ eda_renderer_calc_text_position (EdaRenderer *renderer, const LeptonObject *obje
 }
 
 static void
-eda_renderer_draw_picture (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_picture (EdaRenderer *renderer, LeptonObject *object)
 {
   int swap_wh;
   double orig_width, orig_height;
@@ -1068,12 +1068,12 @@ eda_renderer_draw_grips_list (EdaRenderer *renderer, GList *objects)
 {
   GList *iter;
   for (iter = objects; iter != NULL; iter = g_list_next (iter)) {
-    eda_renderer_draw_grips (renderer, (OBJECT *) iter->data);
+    eda_renderer_draw_grips (renderer, (LeptonObject *) iter->data);
   }
 }
 
 void
-eda_renderer_draw_grips (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_grips (EdaRenderer *renderer, LeptonObject *object)
 {
   g_return_if_fail (EDA_IS_RENDERER (renderer));
 
@@ -1081,7 +1081,7 @@ eda_renderer_draw_grips (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_default_draw_grips (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_default_draw_grips (EdaRenderer *renderer, LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (EDA_IS_RENDERER (renderer));
@@ -1183,7 +1183,7 @@ eda_renderer_draw_grips_impl (EdaRenderer *renderer, int type, int n_grips, ...)
 }
 
 static void
-eda_renderer_draw_arc_grips (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_arc_grips (EdaRenderer *renderer, LeptonObject *object)
 {
   double radius, start_angle, sweep_angle;
   int x1, y1, x2, y2, x3, y3;
@@ -1216,7 +1216,7 @@ eda_renderer_draw_arc_grips (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_path_grips (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_path_grips (EdaRenderer *renderer, LeptonObject *object)
 {
   int i, last_x = 0, last_y = 0, next_x, next_y;
   for (i = 0; i < object->path->num_sections; i++) {
@@ -1260,7 +1260,7 @@ eda_renderer_draw_path_grips (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_text_grips (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_text_grips (EdaRenderer *renderer, LeptonObject *object)
 {
   double dummy = 0, small_dist = TEXT_MARKER_SIZE;
   int x = object->text->x;
@@ -1307,19 +1307,19 @@ eda_renderer_draw_cues_list (EdaRenderer *renderer, GList *objects)
   GList *iter;
 
   for (iter = objects; iter != NULL; iter = g_list_next (iter)) {
-    eda_renderer_draw_cues (renderer, (OBJECT *) iter->data);
+    eda_renderer_draw_cues (renderer, (LeptonObject *) iter->data);
   }
 }
 
 void
-eda_renderer_draw_cues (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_cues (EdaRenderer *renderer, LeptonObject *object)
 {
   g_return_if_fail (EDA_IS_RENDERER (renderer));
   EDA_RENDERER_GET_CLASS (renderer)->draw_cues (renderer, object);
 }
 
 static void
-eda_renderer_default_draw_cues (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_default_draw_cues (EdaRenderer *renderer, LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (renderer->priv->cr != NULL);
@@ -1354,7 +1354,7 @@ eda_renderer_default_draw_cues (EdaRenderer *renderer, OBJECT *object)
 }
 
 static void
-eda_renderer_draw_end_cues (EdaRenderer *renderer, OBJECT *object, int end)
+eda_renderer_draw_end_cues (EdaRenderer *renderer, LeptonObject *object, int end)
 {
   int x = object->line->x[end], y = object->line->y[end];
   int conn_count = 0;
@@ -1421,7 +1421,7 @@ eda_renderer_draw_end_cues (EdaRenderer *renderer, OBJECT *object, int end)
 }
 
 static void
-eda_renderer_draw_mid_cues (EdaRenderer *renderer, OBJECT *object)
+eda_renderer_draw_mid_cues (EdaRenderer *renderer, LeptonObject *object)
 {
   GList *iter;
   for (iter = object->conn_list; iter != NULL; iter = g_list_next (iter)) {
@@ -1498,7 +1498,7 @@ eda_renderer_default_get_user_bounds (EdaRenderer *renderer,
   case OBJ_NET:
   case OBJ_BUS:
   case OBJ_PIN:
-    /* No rendered bounds available for most OBJECT types. */
+    /* No rendered bounds available for most LeptonObject types. */
     return FALSE;
   default:
     g_return_val_if_reached (FALSE);

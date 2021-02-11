@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@
  *  \param [out] bounds   The bounds of the pin
  */
 void
-geda_pin_object_calculate_bounds (const OBJECT *object,
+geda_pin_object_calculate_bounds (const LeptonObject *object,
                                   GedaBounds *bounds)
 {
   gint expand;
@@ -282,9 +282,9 @@ geda_pin_object_set_y1 (LeptonObject *object, gint y)
  *  \param [in]     y2          y-coord of the second point
  *  \param [in]     pin_type    type of pin (PIN_TYPE_NET or PIN_TYPE_BUS)
  *  \param [in]     whichend    The connectable end of the pin
- *  \return A new pin OBJECT
+ *  \return A new pin LeptonObject
  */
-OBJECT*
+LeptonObject*
 geda_pin_object_new (int color,
                      int x1,
                      int y1,
@@ -293,7 +293,7 @@ geda_pin_object_new (int color,
                      int pin_type,
                      int whichend)
 {
-  OBJECT *new_node;
+  LeptonObject *new_node;
 
   new_node = s_basic_new_object(OBJ_PIN, "pin");
   new_node->color = color;
@@ -323,13 +323,13 @@ geda_pin_object_new (int color,
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
-OBJECT*
+LeptonObject*
 o_pin_read (const char buf[],
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   char type;
   int x1, y1;
   int x2, y2;
@@ -438,10 +438,10 @@ geda_pin_object_translate (LeptonObject *object, int dx, int dy)
  *  \param [in] o_current    The object that is copied
  *  \return a new pin object
  */
-OBJECT*
-geda_pin_object_copy (OBJECT *o_current)
+LeptonObject*
+geda_pin_object_copy (LeptonObject *o_current)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
 
   g_return_val_if_fail (o_current != NULL, NULL);
   g_return_val_if_fail (o_current->line != NULL, NULL);
@@ -473,7 +473,7 @@ void
 geda_pin_object_rotate (int world_centerx,
                         int world_centery,
                         int angle,
-                        OBJECT *object)
+                        LeptonObject *object)
 {
   int newx, newy;
 
@@ -514,7 +514,7 @@ geda_pin_object_rotate (int world_centerx,
 void
 geda_pin_object_mirror (int world_centerx,
                         int world_centery,
-                        OBJECT *object)
+                        LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -536,14 +536,14 @@ geda_pin_object_mirror (int world_centerx,
  *  is specified by the \a whichone variable and the new coordinate
  *  is (\a x, \a y).
  *
- *  \param object     The pin OBJECT to modify
+ *  \param object     The pin LeptonObject to modify
  *  \param x          new x-coord of the pin point
  *  \param y          new y-coord of the pin point
  *  \param whichone   pin point to modify
  *
  */
 void
-geda_pin_object_modify (OBJECT *object,
+geda_pin_object_modify (LeptonObject *object,
                         int x,
                         int y,
                         int whichone)
@@ -567,7 +567,7 @@ geda_pin_object_modify (OBJECT *object,
  *  The side of the pins that are closer to the boundary of the box are
  *  set as active ends of the pins.
  *
- *  \param object_list list of OBJECTs
+ *  \param object_list list of LeptonObjects
  *  \param force_boundingbox Use the whole symbol bounding box to
  *                           find pin connection points.
  */
@@ -575,7 +575,7 @@ void
 geda_pin_object_update_whichend (GList *object_list,
                                  gboolean force_boundingbox)
 {
-  OBJECT *o_current;
+  LeptonObject *o_current;
   GList *iter;
   GList *pin_list = NULL;
   int top = 0, left = 0;
@@ -590,7 +590,7 @@ geda_pin_object_update_whichend (GList *object_list,
   for (iter = object_list;
        iter != NULL;
        iter = g_list_next (iter)) {
-    o_current = (OBJECT *)iter->data;
+    o_current = (LeptonObject *)iter->data;
     if (o_current->type == OBJ_PIN) {
       pin_list = g_list_prepend (pin_list, o_current);
     }
@@ -620,7 +620,7 @@ geda_pin_object_update_whichend (GList *object_list,
 
   iter = pin_list;
   while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
+    o_current = (LeptonObject *)iter->data;
     /* Determine which end of the pin is on or nearest the boundary */
     if (o_current->whichend == -1) {
       if (o_current->line->y[0] == o_current->line->y[1]) {
@@ -696,11 +696,11 @@ geda_pin_object_update_whichend (GList *object_list,
  *  \par Function Description
  *  Sets the pin's type and width to a particular style.
  *
- *  \param [in] o_current  The pin OBJECT being modified
+ *  \param [in] o_current  The pin LeptonObject being modified
  *  \param [in] pin_type   The new type of this pin
  */
 void
-geda_pin_object_set_type (OBJECT *o_current,
+geda_pin_object_set_type (LeptonObject *o_current,
                           int pin_type)
 {
   g_return_if_fail (o_current != NULL);

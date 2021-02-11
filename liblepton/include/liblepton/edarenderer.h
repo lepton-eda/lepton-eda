@@ -1,6 +1,6 @@
-/* libleptonrenderer - Rendering Lepton EDA schematics with Cairo
+/* Lepton EDA library
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -41,9 +41,9 @@ struct _EdaRendererClass
   GObjectClass parent_class;
 
   /* Virtual public methods */
-  void (*draw)(EdaRenderer *renderer, OBJECT *object);
-  void (*draw_grips)(EdaRenderer *renderer, OBJECT *object);
-  void (*draw_cues)(EdaRenderer *renderer, OBJECT *object);
+  void (*draw)(EdaRenderer *renderer, LeptonObject *object);
+  void (*draw_grips)(EdaRenderer *renderer, LeptonObject *object);
+  void (*draw_cues)(EdaRenderer *renderer, LeptonObject *object);
   gboolean (*user_bounds)(EdaRenderer *renderer, const LeptonObject *object,
                           double *left, double *top,
                           double *right, double *bottom);
@@ -81,9 +81,9 @@ GType eda_renderer_flags_get_type (void) G_GNUC_CONST;
 EdaRenderer *eda_renderer_new (cairo_t *cr, PangoContext *pc) G_GNUC_WARN_UNUSED_RESULT;
 void eda_renderer_destroy (EdaRenderer *renderer);
 
-void eda_renderer_draw (EdaRenderer *renderer, OBJECT *object);
-void eda_renderer_draw_grips (EdaRenderer *renderer, OBJECT *object);
-void eda_renderer_draw_cues (EdaRenderer *renderer, OBJECT *object);
+void eda_renderer_draw (EdaRenderer *renderer, LeptonObject *object);
+void eda_renderer_draw_grips (EdaRenderer *renderer, LeptonObject *object);
+void eda_renderer_draw_cues (EdaRenderer *renderer, LeptonObject *object);
 
 GArray *eda_renderer_get_color_map (EdaRenderer *renderer);
 void eda_renderer_set_color_map (EdaRenderer *renderer, GArray *map);
