@@ -204,11 +204,11 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 
     /* Delete the backup file */
     if ( (g_file_test (backup_filename, G_FILE_TEST_EXISTS)) &&
-	 (!g_file_test(backup_filename, G_FILE_TEST_IS_DIR)) )
+         (!g_file_test(backup_filename, G_FILE_TEST_IS_DIR)) )
     {
       if (unlink(backup_filename) != 0) {
         g_message ("s_page_delete:");
-	g_message (_("Unable to delete backup file %1$s."),
+        g_message (_("Unable to delete backup file %1$s."),
                    backup_filename);
       }
     }

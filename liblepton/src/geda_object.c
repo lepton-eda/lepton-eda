@@ -259,15 +259,15 @@ s_delete_object (OBJECT *o_current)
     geda_path_free (o_current->path);
     o_current->path = NULL;
 
-    /*	printf("sdeleting circle\n");*/
+    /* printf("sdeleting circle\n");*/
     geda_circle_free (o_current->circle);
     o_current->circle = NULL;
 
-    /*	printf("sdeleting arc\n");*/
+    /* printf("sdeleting arc\n");*/
     geda_arc_free (o_current->arc);
     o_current->arc = NULL;
 
-    /*	printf("sdeleting box\n");*/
+    /* printf("sdeleting box\n");*/
     geda_box_free (o_current->box);
     o_current->box = NULL;
 
@@ -279,17 +279,17 @@ s_delete_object (OBJECT *o_current)
       g_free(o_current->text->string);
       o_current->text->string = NULL;
       g_free(o_current->text->disp_string);
-      /*	printf("sdeleting text\n");*/
+      /* printf("sdeleting text\n");*/
       g_free(o_current->text);
     }
     o_current->text = NULL;
 
-    /*	printf("sdeleting name\n");*/
+    /* printf("sdeleting name\n");*/
     g_free(o_current->name);
     o_current->name = NULL;
 
 
-    /*	printf("sdeleting component_basename\n");*/
+    /* printf("sdeleting component_basename\n");*/
     g_free(o_current->component_basename);
     o_current->component_basename = NULL;
 
@@ -309,9 +309,9 @@ s_delete_object (OBJECT *o_current)
 
     o_current->weak_refs = s_weakref_notify (o_current, o_current->weak_refs);
 
-    g_free(o_current);	/* assuming it is not null */
+    g_free(o_current); /* assuming it is not null */
 
-    o_current=NULL;		/* misc clean up */
+    o_current=NULL;    /* misc clean up */
   }
 }
 

@@ -740,7 +740,7 @@ init_module_lepton_core_smob (void *unused)
   /* Register the functions. */
   #include "scheme_smob.x"
 
-  /* Add them to the module's public definitions. */ 
+  /* Add them to the module's public definitions. */
   scm_c_export (s_page_p, s_object_p, s_config_p, NULL);
 }
 

@@ -234,7 +234,7 @@ static gint compare_symbol_name (gconstpointer a, gconstpointer b);
 static void cache_find_oldest (gpointer key, gpointer value, gpointer user_data);
 static gchar *run_source_command (const gchar *command);
 static CLibSymbol *source_has_symbol (const CLibSource *source,
-				      const gchar *name);
+                                      const gchar *name);
 static gchar *uniquify_source_name (const gchar *name);
 static void refresh_directory (CLibSource *source);
 static void refresh_command (CLibSource *source);
@@ -511,7 +511,7 @@ GList *s_clib_get_sources (const gboolean sorted)
  *  \return The matching symbol, or \b NULL if no match was found.
  */
 static CLibSymbol *source_has_symbol (const CLibSource *source,
-				      const gchar *name)
+                                      const gchar *name)
 {
   GList *symlist;
   CLibSymbol *symbol;
@@ -630,7 +630,7 @@ static void refresh_directory (CLibSource *source)
 
   /* Now sort the list of symbols by name. */
   source->symbols = g_list_sort (source->symbols,
-				 (GCompareFunc) compare_symbol_name);
+                                 (GCompareFunc) compare_symbol_name);
 
   s_clib_flush_search_cache();
   s_clib_flush_symbol_cache();
@@ -693,7 +693,7 @@ static void refresh_command (CLibSource *source)
 
   /* Sort all symbols by name. */
   source->symbols = g_list_sort (source->symbols,
-				 (GCompareFunc) compare_symbol_name);
+                                 (GCompareFunc) compare_symbol_name);
 
   s_clib_flush_search_cache();
   s_clib_flush_symbol_cache();
@@ -754,7 +754,7 @@ static void refresh_scm (CLibSource *source)
 
   /* Now sort the list of symbols by name. */
   source->symbols = g_list_sort (source->symbols,
-				 (GCompareFunc) compare_symbol_name);
+                                 (GCompareFunc) compare_symbol_name);
 
   s_clib_flush_search_cache();
   s_clib_flush_symbol_cache();
@@ -779,16 +779,16 @@ void s_clib_refresh ()
     switch (source->type)
       {
       case CLIB_DIR:
-	refresh_directory(source);
-	break;
+        refresh_directory(source);
+        break;
       case CLIB_CMD:
-	refresh_command (source);
-	break;
+        refresh_command (source);
+        break;
       case CLIB_SCM:
-	refresh_scm (source);
-	break;
+        refresh_scm (source);
+        break;
       default:
-	g_critical("s_clib_refresh: source %1$p has bad source type %2$i\n",
+        g_critical("s_clib_refresh: source %1$p has bad source type %2$i\n",
                    source, (gint) source->type);
         break;
       }
@@ -835,7 +835,7 @@ const CLibSource *s_clib_get_source_by_name (const gchar *name)
  *  \return The #CLibSource associated with the directory.
  */
 const CLibSource *s_clib_add_directory (const gchar *directory,
-					const gchar *name)
+                                        const gchar *name)
 {
   CLibSource *source;
   gchar *intname, *realname;
@@ -882,7 +882,7 @@ const CLibSource *s_clib_add_directory (const gchar *directory,
  */
 const CLibSource *s_clib_add_command (const gchar *list_cmd,
                                       const gchar *get_cmd,
-				      const gchar *name)
+                                      const gchar *name)
 {
   CLibSource *source;
   gchar *realname;
@@ -1065,7 +1065,7 @@ static gchar *get_data_directory (const CLibSymbol *symbol)
   g_return_val_if_fail ((symbol->source->type == CLIB_DIR), NULL);
 
   filename = g_build_filename(symbol->source->directory,
-			      symbol->name, NULL);
+                              symbol->name, NULL);
 
   g_file_get_contents (filename, &data, NULL, &e);
 
@@ -1127,7 +1127,7 @@ static gchar *get_data_scm (const CLibSymbol *symbol)
   g_return_val_if_fail ((symbol->source->type == CLIB_SCM), NULL);
 
   symdata = scm_call_1 (symbol->source->get_fn,
-			scm_from_utf8_string (symbol->name));
+                        scm_from_utf8_string (symbol->name));
 
   if (!scm_is_string (symdata)) {
     g_message (_("Failed to load symbol data [%1$s] from source [%2$s]"),
@@ -1284,24 +1284,24 @@ GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
     source = (CLibSource *) sourcelist->data;
 
     for (symlist = source->symbols;
-	 symlist != NULL;
-	 symlist = g_list_next(symlist)) {
+         symlist != NULL;
+         symlist = g_list_next(symlist)) {
 
       symbol = (CLibSymbol *) symlist->data;
 
       switch (mode)
-	{
-	case CLIB_EXACT:
-	  if (strcmp (pattern, symbol->name) == 0) {
-	    result = g_list_prepend (result, symbol);
-	  }
-	  break;
-	case CLIB_GLOB:
-	  if (g_pattern_match_string (globpattern, symbol->name)) {
-	    result = g_list_prepend (result, symbol);
-	  }
-	  break;
-	}
+        {
+        case CLIB_EXACT:
+          if (strcmp (pattern, symbol->name) == 0) {
+            result = g_list_prepend (result, symbol);
+          }
+          break;
+        case CLIB_GLOB:
+          if (g_pattern_match_string (globpattern, symbol->name)) {
+            result = g_list_prepend (result, symbol);
+          }
+          break;
+        }
     }
   }
 

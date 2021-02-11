@@ -465,5 +465,3 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
 
   return g_string_free (acc, FALSE);
 }
-
-

@@ -38,13 +38,13 @@ struct st_page
    * s_page_get_filename() */
   char *_filename;
 
-  int CHANGED;			/* changed flag */
+  int CHANGED;                  /* changed flag */
 
   /* Undo/Redo Stacks and pointers */
   /* needs to go into page mechanism actually */
   UNDO *undo_bottom;
   UNDO *undo_current;
-  UNDO *undo_tos; 	/* Top Of Stack */
+  UNDO *undo_tos;       /* Top Of Stack */
 
   /* up and down the hierarchy */
   /* this holds the pid of the parent page */

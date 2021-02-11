@@ -344,10 +344,10 @@ o_circle_read (const char buf[],
      * meaning of each item is described in the file format documentation.
      */
     if (sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-	       &type, &x1, &y1, &radius, &color,
-	       &circle_width, &circle_end, &circle_type,
-	       &circle_length, &circle_space, &circle_fill,
-	       &fill_width, &angle1, &pitch1, &angle2, &pitch2) != 16) {
+               &type, &x1, &y1, &radius, &color,
+               &circle_width, &circle_end, &circle_type,
+               &circle_length, &circle_space, &circle_fill,
+               &fill_width, &angle1, &pitch1, &angle2, &pitch2) != 16) {
       g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse circle object"));
       return NULL;
     }
@@ -624,4 +624,3 @@ geda_circle_object_shortest_distance (GedaObject *object,
 
   return geda_circle_shortest_distance (object->circle, x, y, solid);
 }
-

@@ -135,12 +135,12 @@ GList *s_clib_get_sources (const gboolean sorted);
 const CLibSource *s_clib_get_source_by_name (const gchar *name);
 void s_clib_refresh ();
 const CLibSource *s_clib_add_directory (const gchar *directory,
-					const gchar *name);
+                                        const gchar *name);
 const CLibSource *s_clib_add_command (const gchar *list_cmd,
                                       const gchar *get_cmd,
-				      const gchar *name);
+                                      const gchar *name);
 const CLibSource *s_clib_add_scm (SCM listfunc, SCM getfunc,
-				  const gchar *name);
+                                  const gchar *name);
 const gchar *s_clib_source_get_name (const CLibSource *source);
 GList *s_clib_source_get_symbols (const CLibSource *source);
 const gchar *s_clib_symbol_get_name (const CLibSymbol *symbol);

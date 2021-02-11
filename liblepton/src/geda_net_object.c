@@ -404,7 +404,7 @@ void
 geda_net_object_rotate (int world_centerx,
                         int world_centery,
                         int angle,
-			OBJECT *object)
+                        OBJECT *object)
 {
   int newx, newy;
 
@@ -444,7 +444,7 @@ geda_net_object_rotate (int world_centerx,
  */
 void
 geda_net_object_mirror (int world_centerx,
-			int world_centery,
+                        int world_centery,
                         OBJECT *object)
 {
   g_return_if_fail (object != NULL);
@@ -471,15 +471,15 @@ geda_net_object_mirror (int world_centerx,
 int
 geda_net_object_orientation (OBJECT *object)
 {
-    if (object->line->y[0] == object->line->y[1]) {
-	return (HORIZONTAL);
-    }
+  if (object->line->y[0] == object->line->y[1]) {
+    return (HORIZONTAL);
+  }
 
-    if (object->line->x[0] == object->line->x[1]) {
-	return (VERTICAL);
-    }
+  if (object->line->x[0] == object->line->x[1]) {
+    return (VERTICAL);
+  }
 
-    return (NEITHER);
+  return (NEITHER);
 }
 
 

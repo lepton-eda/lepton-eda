@@ -340,7 +340,7 @@ o_bus_read (const char buf[],
     ripper_dir = 0;
   } else {
     if (sscanf (buf, "%c %d %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2, &color,
-		&ripper_dir) != 7) {
+                &ripper_dir) != 7) {
       g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse bus object"));
       return NULL;
     }
