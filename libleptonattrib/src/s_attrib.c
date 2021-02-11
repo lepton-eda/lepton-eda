@@ -79,7 +79,7 @@ int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
 
 /*------------------------------------------------------------------*/
 /*! \brief Locate the refdes associated with an object.
- * 
+ *
  * This fcn takes an object, finds its refdes and returns it.
  * \param object Pointer to the object to search for.
  * \return For normal components, it returns a pointer to a
@@ -108,7 +108,7 @@ char *s_attrib_get_refdes(OBJECT *object)
                "Found non-graphical component with no refdes: component_basename = %s\n",
                object->component_basename);
       return NULL;
-    } 
+    }
   }
 
   g_debug ("s_attrib_get_refdes: "
@@ -118,8 +118,8 @@ char *s_attrib_get_refdes(OBJECT *object)
   /* Find out if this is a multislotted component */
   numslots_value =
     o_attrib_search_object_attribs_by_name (object, "numslots", 0);
-  if (numslots_value != NULL) {  /* this is a slotted component; 
-				    append slot number to refdes. */
+  if (numslots_value != NULL) {  /* this is a slotted component;
+                                    append slot number to refdes. */
     slot_value = s_slot_search_slot (object, &slot_text_object);
 
     /* Mark component as slotted only if it has a "slot" attribute:
@@ -136,4 +136,3 @@ char *s_attrib_get_refdes(OBJECT *object)
   return temp_uref;
 
 }
-

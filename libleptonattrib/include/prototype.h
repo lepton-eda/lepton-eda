@@ -60,19 +60,19 @@ TABLE **s_table_resize(TABLE **table,
                        int rows, int old_cols, int new_cols);
 void s_table_destroy(TABLE **table, int row_count, int col_count);
 int s_table_get_index(STRING_LIST *list, char *string);
-STRING_LIST *s_table_create_attrib_pair(gchar *row_name, 
-					TABLE **table, 
-					STRING_LIST *row_list,
-					int num_attribs);
+STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
+                                        TABLE **table,
+                                        STRING_LIST *row_list,
+                                        int num_attribs);
 
 void s_table_add_toplevel_comp_items_to_comp_table(const GList *obj_list);
 void s_table_add_toplevel_net_items_to_net_table(const GList *obj_list);
 void s_table_add_toplevel_pin_items_to_pin_table(const GList *obj_list);
 
 void s_table_gtksheet_to_all_tables();
-void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, 
-			      STRING_LIST *master_row_list, STRING_LIST *master_col_list, 
-			      TABLE **local_table, int num_rows, int num_cols);
+void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet,
+                               STRING_LIST *master_row_list, STRING_LIST *master_col_list,
+                               TABLE **local_table, int num_rows, int num_cols);
 
 /* ------------- s_toplevel.c ------------- */
 int s_toplevel_read_page(TOPLEVEL *toplevel, char *filename);
@@ -85,16 +85,16 @@ void s_toplevel_sheetdata_to_toplevel(TOPLEVEL *toplevel, PAGE *page);
 
 STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes);
 void s_toplevel_update_component_attribs_in_toplevel(
-					    TOPLEVEL *toplevel,
-					    OBJECT *o_current,
-					    STRING_LIST *new_comp_attrib_list);
+                                            TOPLEVEL *toplevel,
+                                            OBJECT *o_current,
+                                            STRING_LIST *new_comp_attrib_list);
 STRING_LIST *s_toplevel_get_net_attribs_in_sheet(char *netname);
-void s_toplevel_update_net_attribs_in_toplevel(OBJECT *o_current, 
-					 STRING_LIST *new_net_attrib_list);
+void s_toplevel_update_net_attribs_in_toplevel(OBJECT *o_current,
+                                               STRING_LIST *new_net_attrib_list);
 STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin);
 void s_toplevel_update_pin_attribs_in_toplevel(TOPLEVEL *toplevel,
-					 char *refdes, OBJECT *pin,
-					 STRING_LIST *new_pin_attrib_list);
+                                               char *refdes, OBJECT *pin,
+                                               STRING_LIST *new_pin_attrib_list);
 gint
 s_page_save_all (TOPLEVEL *toplevel);
 
@@ -145,8 +145,8 @@ void s_visibility_set_invisible();
 void s_visibility_set_name_only();
 void s_visibility_set_value_only();
 void s_visibility_set_name_and_value();
-void s_visibility_set_cell(gint cur_page, gint row, gint col, 
-			   gint visibility, gint show_name_value);
+void s_visibility_set_cell(gint cur_page, gint row, gint col,
+                           gint visibility, gint show_name_value);
 
 /* ------------- x_dialog.c ------------- */
 void x_dialog_newattrib();
@@ -163,10 +163,10 @@ void x_gtksheet_set_saved();
 void x_gtksheet_init();
 void x_gtksheet_add_row_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
 void x_gtksheet_add_col_labels(GtkSheet *sheet, int count, STRING_LIST *list_head);
-void x_gtksheet_add_cell_item(GtkSheet *sheet, gint i, gint j, 
-			      char *text, gint visibility, gint show_name_value);
-void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col, 
-				    gint color_name);
+void x_gtksheet_add_cell_item(GtkSheet *sheet, gint i, gint j,
+                              char *text, gint visibility, gint show_name_value);
+void x_gtksheet_set_cell_text_color(GtkSheet *sheet, gint row, gint col,
+                                    gint color_name);
 int x_gtksheet_get_min_col(GtkSheet *sheet);
 int x_gtksheet_get_max_col(GtkSheet *sheet);
 

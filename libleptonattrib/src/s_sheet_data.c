@@ -129,7 +129,7 @@ SHEET_DATA *s_sheet_data_new()
 void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
   char *temp_uref;
   const GList *iter;
-  
+
   g_debug ("==== Enter s_sheet_data_add_master_comp_list_items()\n");
 
   if (verbose_mode) {
@@ -152,23 +152,23 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
         g_debug ("s_sheet_data_add_master_comp_list_items: "
                  "Found component on page: component_basename = %s\n",
                  o_current->component_basename);
-	verbose_print(" C");
-      
-	temp_uref = s_attrib_get_refdes(o_current);
-	
-	/* Now that we have refdes, store refdes and attach attrib list to component */
-	if (temp_uref) {
+        verbose_print(" C");
+
+        temp_uref = s_attrib_get_refdes(o_current);
+
+        /* Now that we have refdes, store refdes and attach attrib list to component */
+        if (temp_uref) {
           g_debug ("s_sheet_data_add_master_comp_list_items: "
                    "About to add to master list refdes = %s\n", temp_uref);
-	  s_string_list_add_item(sheet_head->master_comp_list_head,
-				  &(sheet_head->comp_count), temp_uref);
-	  g_free(temp_uref);
-	}
-	
+          s_string_list_add_item(sheet_head->master_comp_list_head,
+                                  &(sheet_head->comp_count), temp_uref);
+          g_free(temp_uref);
+        }
+
       } /*  if (o_current->type == OBJ_COMPONENT . . . . .) */
-      
+
   }
-  
+
   return;
 }
 
@@ -177,10 +177,10 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
 /*! \brief Add attributes to master list
  *
  * Add to the master list of comp attributes by running
- * through each component on the page and recording all attribs 
- * it discovers. Then it sorts them into an order used for the 
+ * through each component on the page and recording all attribs
+ * it discovers. Then it sorts them into an order used for the
  * horiz listing of the attribs on the spreadsheet.
- * Data struct being searched is: 
+ * Data struct being searched is:
  * sheet_head->component_list_head->attrib->name;
  * \param obj_list pointer to list of attributes being added
  */
@@ -190,7 +190,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
   const GList *o_iter;
   GList *a_iter;
   OBJECT *a_current;
-  
+
   g_debug ("==== Enter s_sheet_data_add_master_comp_attrib_list_items()\n");
 
   if (verbose_mode) {
@@ -208,40 +208,40 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
       if (o_current->type == OBJ_COMPONENT &&
           o_current->attribs != NULL) {
 
-	verbose_print(" C");
-	
-	/*------ Iterate through all attribs found on component -----*/
-	a_iter = o_current->attribs; /* This has a side effect.  Why? */
-	while (a_iter != NULL) {
-	  a_current = (OBJECT*) a_iter->data;
-	  if (a_current->type == OBJ_TEXT
-	      && a_current->text != NULL) {  /* found an attribute */
-	    attrib_text = g_strdup(geda_text_object_get_string (a_current));
-	    attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
+        verbose_print(" C");
 
-	      /* Don't include "refdes" or "slot" because they form the row name */
-	      /* Also don't include "net" per bug found by Steve W. -- 4.3.2007, SDB */
-	    if ( (strcmp(attrib_name, "refdes") != 0) &&
-		 (strcmp(attrib_name, "net") != 0) &&
-		 (strcmp(attrib_name, "slot") != 0) ) {  
+        /*------ Iterate through all attribs found on component -----*/
+        a_iter = o_current->attribs; /* This has a side effect.  Why? */
+        while (a_iter != NULL) {
+          a_current = (OBJECT*) a_iter->data;
+          if (a_current->type == OBJ_TEXT
+              && a_current->text != NULL) {  /* found an attribute */
+            attrib_text = g_strdup(geda_text_object_get_string (a_current));
+            attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
+
+              /* Don't include "refdes" or "slot" because they form the row name */
+              /* Also don't include "net" per bug found by Steve W. -- 4.3.2007, SDB */
+            if ( (strcmp(attrib_name, "refdes") != 0) &&
+                 (strcmp(attrib_name, "net") != 0) &&
+                 (strcmp(attrib_name, "slot") != 0) ) {
               g_debug ("... from this component, "
                        "about to add to master comp attrib list attrib=%s\n",
                        attrib_name);
-	      s_string_list_add_item(sheet_head->master_comp_attrib_list_head,
-				     &(sheet_head->comp_attrib_count), attrib_name);
-	    }   /* if (strcmp(attrib_name, "refdes") != 0) */ 
-	    g_free(attrib_name);
-	    g_free(attrib_text);
-	  }
-	  a_iter = g_list_next (a_iter);
-	}   /*  while  */
-	
+              s_string_list_add_item(sheet_head->master_comp_attrib_list_head,
+                                     &(sheet_head->comp_attrib_count), attrib_name);
+            }   /* if (strcmp(attrib_name, "refdes") != 0) */
+            g_free(attrib_name);
+            g_free(attrib_text);
+          }
+          a_iter = g_list_next (a_iter);
+        }   /*  while  */
+
       }   /* if (o_current->type == OBJ_COMPONENT) */
-      
+
   }
-  
+
   /* -----  Now sort component list into alphabetical order  ----- */
-  
+
   return;
 }
 
@@ -252,7 +252,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
  *
  * Build the master list of net names by running
  * through the individual cells and recording the net refdeses
- * it discovers. 
+ * it discovers.
  * It's currently empty, waiting for implementation of net
  * attributes.
  */
@@ -353,7 +353,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
 
     }  /*  if (o_current->type == OBJ_COMPONENT)  */
   }
-      
+
   return;
 }
 
@@ -362,7 +362,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
 /*! \brief Add pin attributes to master list.
  *
  * Build the master
- * list of pin attributes.  It writes 
+ * list of pin attributes.  It writes
  * each attrib name into the master pin attrib list.
  * Algorithm:
  * -# Loop on o_current looking for OBJ_COMPONENT
@@ -383,7 +383,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
   const GList *o_iter;
   GList *o_lower_iter, *a_iter;
   OBJECT *pin_attrib;
-  
+
   g_debug ("==== Enter s_sheet_data_add_master_pin_attrib_list_items()\n");
 
   if (verbose_mode) {
@@ -399,10 +399,10 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
              o_current->name);
 
       if (o_current->type == OBJ_COMPONENT) {
-	temp_uref = s_attrib_get_refdes(o_current);
-	if (temp_uref != NULL) {      /* make sure object component has a refdes  */
-	  
-	  /* -----  Now iterate through lower level objects looking for pins.  ----- */
+        temp_uref = s_attrib_get_refdes(o_current);
+        if (temp_uref != NULL) {      /* make sure object component has a refdes  */
+
+          /* -----  Now iterate through lower level objects looking for pins.  ----- */
           for (o_lower_iter = o_current->component->prim_objs;
                o_lower_iter != NULL;
                o_lower_iter = g_list_next (o_lower_iter)) {
@@ -410,41 +410,41 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
             g_debug ("s_sheet_data_add_master_pin_attrib_list_items: "
                      "Examining component refdes = %s\n",
                      temp_uref);
-	    if (o_lower_current->type == OBJ_PIN) {
-	      /* -----  Found a pin.  Now get attrib head and loop on attribs.  ----- */
-	      a_iter = o_lower_current->attribs;
-	      while (a_iter != NULL) {
-		pin_attrib = (OBJECT*) a_iter->data;
-		if (pin_attrib->type == OBJ_TEXT
-		    && pin_attrib->text != NULL) {  /* found an attribute */
-		  attrib_text = g_strdup(geda_text_object_get_string (pin_attrib));
-		  attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
-		  attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
-		  if ( (strcmp(attrib_name, "pinnumber") != 0) 
-		       && (attrib_value != NULL) ) {  
-		    /* Don't include "pinnumber" because it is already in other master list.
-		     * Also guard against pathalogical symbols which have non-attrib text inside pins. */
+            if (o_lower_current->type == OBJ_PIN) {
+              /* -----  Found a pin.  Now get attrib head and loop on attribs.  ----- */
+              a_iter = o_lower_current->attribs;
+              while (a_iter != NULL) {
+                pin_attrib = (OBJECT*) a_iter->data;
+                if (pin_attrib->type == OBJ_TEXT
+                    && pin_attrib->text != NULL) {  /* found an attribute */
+                  attrib_text = g_strdup(geda_text_object_get_string (pin_attrib));
+                  attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
+                  attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
+                  if ( (strcmp(attrib_name, "pinnumber") != 0)
+                       && (attrib_value != NULL) ) {
+                    /* Don't include "pinnumber" because it is already in other master list.
+                     * Also guard against pathalogical symbols which have non-attrib text inside pins. */
 
                     g_debug ("s_sheet_data_add_master_pin_attrib_list_items: "
                              "Found pin attrib = %s\n"
                              "Add it to master_pin_attrib_list.\n",
                              attrib_name);
 
-		    s_string_list_add_item(sheet_head->master_pin_attrib_list_head, 
-					   &(sheet_head->pin_attrib_count), attrib_name);
-		  }   /* if (strcmp(attrib_name, "pinnumber") != 0) */ 
-		  g_free(attrib_value);
-		  g_free(attrib_name);
-		  g_free(attrib_text);
-		}
-		a_iter = g_list_next (a_iter);
-	      }   /*   while (pin_attrib != NULL)  */
-	    }
-	  }
+                    s_string_list_add_item(sheet_head->master_pin_attrib_list_head,
+                                           &(sheet_head->pin_attrib_count), attrib_name);
+                  }   /* if (strcmp(attrib_name, "pinnumber") != 0) */
+                  g_free(attrib_value);
+                  g_free(attrib_name);
+                  g_free(attrib_text);
+                }
+                a_iter = g_list_next (a_iter);
+              }   /*   while (pin_attrib != NULL)  */
+            }
+          }
 
-	  g_free(temp_uref);
-	}  /*  if (temp_uref != NULL )  */
-	
+          g_free(temp_uref);
+        }  /*  if (temp_uref != NULL )  */
+
       }  /* if (o_current->type == OBJ_COMPONENT)  */
   }
   return;
@@ -469,7 +469,3 @@ void s_sheet_data_gtksheet_to_sheetdata() {
 
   return;
 }
-
-
-
-

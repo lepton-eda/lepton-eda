@@ -186,27 +186,27 @@ s_object_replace_attrib_in_object(OBJECT *o_current,
   while (a_iter != NULL) {
     a_current = (OBJECT*) a_iter->data;
     if (a_current->type == OBJ_TEXT
-	&& a_current->text != NULL) {  /* found an attribute */
+        && a_current->text != NULL) {  /* found an attribute */
 
       /* may need to check more thoroughly here. . . . */
       old_attrib_text = g_strdup(geda_text_object_get_string (a_current));
       old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
 
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
-	/* create attrib=value text string */
-	new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
+        /* create attrib=value text string */
+        new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
         o_text_set_string (a_current, new_attrib_text);
-	if (visibility != LEAVE_VISIBILITY_ALONE)
-	  o_set_visibility (a_current, visibility);
-	if (show_name_value != LEAVE_NAME_VALUE_ALONE)
-	  a_current->show_name_value = show_name_value;
-	g_free(new_attrib_text);
-	g_free(old_attrib_text);
-	g_free(old_attrib_name);
-	return;     /* we are done -- leave. */
+        if (visibility != LEAVE_VISIBILITY_ALONE)
+          o_set_visibility (a_current, visibility);
+        if (show_name_value != LEAVE_NAME_VALUE_ALONE)
+          a_current->show_name_value = show_name_value;
+        g_free(new_attrib_text);
+        g_free(old_attrib_text);
+        g_free(old_attrib_name);
+        return;     /* we are done -- leave. */
       } else {
-	g_free(old_attrib_text);
-	g_free(old_attrib_name);
+        g_free(old_attrib_text);
+        g_free(old_attrib_name);
       }  /* if (strcmp . . . . */
     } /* if (a_current . . . . */
 
@@ -247,24 +247,24 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
   while (a_iter != NULL) {
     a_current = (OBJECT*) a_iter->data;
     if (a_current->type == OBJ_TEXT
-	&& a_current->text != NULL) {  /* found an attribute */
+        && a_current->text != NULL) {  /* found an attribute */
 
       /* may need to check more thoroughly here. . . . */
       old_attrib_text = g_strdup(geda_text_object_get_string (a_current));
       old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
 
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
-	/* We've found the attrib.  Delete it and then return. */
+        /* We've found the attrib.  Delete it and then return. */
 
-	g_debug ("s_object_remove_attrib_in_object: "
+        g_debug ("s_object_remove_attrib_in_object: "
                  "Removing attrib with name = %1$s\n", old_attrib_name);
 
-	attribute_object = a_current;
-	s_object_delete_text_object_in_object (toplevel, attribute_object);
+        attribute_object = a_current;
+        s_object_delete_text_object_in_object (toplevel, attribute_object);
 
-	g_free(old_attrib_text);
-	g_free(old_attrib_name);
-	return;     /* we are done -- leave. */
+        g_free(old_attrib_text);
+        g_free(old_attrib_name);
+        return;     /* we are done -- leave. */
       }
     g_free(old_attrib_text);
     g_free(old_attrib_name);

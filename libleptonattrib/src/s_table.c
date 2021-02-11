@@ -23,7 +23,7 @@
  *  \brief Functions to manipulate the TABLE structure
  *
  * This file holds functions involved in manipulating the TABLE structure,
- * which is subsidiary to SHEET_DATA.  TABLE is a 2 dimensional array 
+ * which is subsidiary to SHEET_DATA.  TABLE is a 2 dimensional array
  * of structs; each struct corresponds to the data about an element
  * in a single cell of the spreadsheet.
  * \todo TABLE should also store its dimensions in its own data
@@ -109,7 +109,7 @@ TABLE **s_table_new(int rows, int cols)
   new_table = (TABLE **) g_malloc(rows*sizeof(TABLE *));
   for (i = 0; i < rows; i++) {
     new_table[i] = (TABLE *) g_malloc(cols * sizeof(TABLE));
-    /* Note that I should put some checks in here to verify that 
+    /* Note that I should put some checks in here to verify that
      * malloc worked correctly. */
   }
 
@@ -121,7 +121,7 @@ TABLE **s_table_new(int rows, int cols)
       (new_table[i][j]).col_name = NULL;
       (new_table[i][j]).row = i;
       (new_table[i][j]).col = j;
-      (new_table[i][j]).visibility = VISIBLE; 
+      (new_table[i][j]).visibility = VISIBLE;
       (new_table[i][j]).show_name_value = SHOW_VALUE;
     }
   }
@@ -193,7 +193,7 @@ s_table_copy (TABLE** src, int col_skip, int rows, int cols)
  * This function recreates the table with
  * a new size.  It can only increase
  * the number of cols.  You can't increase the number of rows since
- * gattrib doesn't allow you to input new components.  Decreasing the 
+ * gattrib doesn't allow you to input new components.  Decreasing the
  * number of cols is also TBD.
  * \param table Table to resize
  * \param rows Number of rows in the table
@@ -203,8 +203,8 @@ s_table_copy (TABLE** src, int col_skip, int rows, int cols)
  * \todo The row and column information could be stored in the
  *       TABLE struct.
  */
-TABLE **s_table_resize(TABLE **table, 
-		       int rows, int old_cols, int new_cols)
+TABLE **s_table_resize(TABLE **table,
+                       int rows, int old_cols, int new_cols)
 {
   int i, j;
 
@@ -272,7 +272,7 @@ void s_table_destroy(TABLE **table, int row_count, int col_count)
 /*! \brief Get a string index number
  *
  * This function returns the index number
- * when given a STRING_LIST and a 
+ * when given a STRING_LIST and a
  * string to match.  It finds the index
  * number by iterating through the master  list.
  * \param local_list
@@ -315,16 +315,16 @@ int s_table_get_index(STRING_LIST *local_list, char *local_string) {
  * \param num_attribs
  * \returns STRING_LIST of name=value pairs
  */
-STRING_LIST *s_table_create_attrib_pair(gchar *row_name, 
-					TABLE **table, 
-					STRING_LIST *row_list,
-					int num_attribs)
+STRING_LIST *s_table_create_attrib_pair(gchar *row_name,
+                                        TABLE **table,
+                                        STRING_LIST *row_list,
+                                        int num_attribs)
 {
   STRING_LIST *attrib_pair_list;
   char *attrib_name, *attrib_value, *name_value_pair;
   int row, col;
   int count = 0;
-  
+
   attrib_pair_list = s_string_list_new();
 
   row = s_table_get_index(row_list, row_name);
@@ -415,14 +415,14 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
             attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
             old_visibility = o_is_visible (a_current)
               ? VISIBLE : INVISIBLE;
-	    old_show_name_value = a_current->show_name_value;
+            old_show_name_value = a_current->show_name_value;
 
-	    /* Don't include "refdes" or "slot" because they form the row name. */
-	    /* Also don't include "net" per bug found by Steve W.  4.3.2007 -- SDB */
+            /* Don't include "refdes" or "slot" because they form the row name. */
+            /* Also don't include "net" per bug found by Steve W.  4.3.2007 -- SDB */
             if ( (strcmp(attrib_name, "refdes") != 0) &&
-		 (strcmp(attrib_name, "net") != 0) &&
-		 (strcmp(attrib_name, "slot") != 0) ) {
-               
+                 (strcmp(attrib_name, "net") != 0) &&
+                 (strcmp(attrib_name, "slot") != 0) ) {
+
               /* Get row and col where to put this attrib */
               row = s_table_get_index(sheet_head->master_comp_list_head, temp_uref);
               col = s_table_get_index(sheet_head->master_comp_attrib_list_head, attrib_name);
@@ -453,17 +453,17 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
             g_free(attrib_value);
           }
           a_iter = g_list_next (a_iter);
-           
+
         }  /* while (a_current != NULL) */
         g_free(temp_uref);
       }  /* if (temp_uref) */
     }    /* if (o_current->type == OBJ_COMPONENT)  */
   }
- 
+
   verbose_done();
- 
+
 }
- 
+
 #if 0
 /*------------------------------------------------------------------*/
 /*! \brief Add nets to net table
@@ -487,17 +487,17 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
   char *attrib_name;
   char *attrib_value;
   ATTRIB *a_current;
- 
+
   /* -----  Iterate through all objects found on page  ----- */
   o_current = start_obj;
   while (o_current != NULL) {
- 
+
     /* -----  Now process objects found on page  ----- */
     if (o_current->type == OBJ_NET) {
       g_debug ("s_table_add_toplevel_net_items_to_net_table: "
                "Found net on page.\n");
       verbose_print(" N");
- 
+
       /* Having found a net, we stick it into the table. */
       a_current = o_current->attribs;
       while (a_current != NULL) {
@@ -509,7 +509,7 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
           attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
           if (strcmp(attrib_name, "netname") != 0) {
             /* Don't include "netname" */
-             
+
             /* Get row and col where to put this attrib */
             row = s_table_get_index(sheet_head->master_net_list_head, temp_netname);
             col = s_table_get_index(sheet_head->master_net_attrib_list_head, attrib_name);
@@ -530,18 +530,18 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
           g_free(attrib_value);
         }
         a_current = a_current->next;
- 
+
       }  /* while (a_current != NULL) */
       g_free(temp_netname);
- 
+
     }    /*--- if (o_current->type == OBJ_NET)   ---*/
-       
- 
+
+
     o_current = o_current->next;  /* iterate to next object on page */
   }  /* while o_current != NULL */
- 
+
   verbose_done();
- 
+
   g_debug ("s_table_add_toplevel_net_items_to_net_table: Return.\n");
 }
 #endif
@@ -552,7 +552,7 @@ void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
  *
  * This function iterates over adds all items found on this page
  * looking for pins.  WHen it finds a pin, it gathers all
- * pin attribs and sticks them into the pin table. 
+ * pin attribs and sticks them into the pin table.
  * \param obj_list List of objects on page
  */
 void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
@@ -590,39 +590,39 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
       temp_uref = s_attrib_get_refdes(o_current);
       if (temp_uref) {
 
-	/* -----  Now iterate through lower level objects looking for pins.  ----- */
+        /* -----  Now iterate through lower level objects looking for pins.  ----- */
         for (o_lower_iter = o_current->component->prim_objs;
              o_lower_iter != NULL;
              o_lower_iter = g_list_next (o_lower_iter)) {
           OBJECT *o_lower_current = (OBJECT*) o_lower_iter->data;
 
-	  if (o_lower_current->type == OBJ_PIN) {
-	    /* -----  Found a pin.  First get its pinnumber.  then get attrib head and loop on attribs.  ----- */
-	    pinnumber = o_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0);
-	    row_label = g_strconcat(temp_uref, ":", pinnumber, NULL);
+          if (o_lower_current->type == OBJ_PIN) {
+            /* -----  Found a pin.  First get its pinnumber.  then get attrib head and loop on attribs.  ----- */
+            pinnumber = o_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0);
+            row_label = g_strconcat(temp_uref, ":", pinnumber, NULL);
 
             g_debug ("s_table_add_toplevel_pin_items_to_pin_table: "
                      "Examining pin %s\n",
                      row_label);
 
-	    a_iter = o_lower_current->attribs;
-	    while (a_iter != NULL) {
-	      pin_attrib = (OBJECT*) a_iter->data;
-	      if (pin_attrib->type == OBJ_TEXT
-		  && pin_attrib->text != NULL) {  /* found an attribute */
+            a_iter = o_lower_current->attribs;
+            while (a_iter != NULL) {
+              pin_attrib = (OBJECT*) a_iter->data;
+              if (pin_attrib->type == OBJ_TEXT
+                  && pin_attrib->text != NULL) {  /* found an attribute */
           attrib_text = g_strdup(geda_text_object_get_string (pin_attrib));
-		attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
-		attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
- 
-		if ( (strcmp(attrib_name, "pinnumber") != 0) 
-		     && (attrib_value != 0) ) {
-		  /* Don't include "pinnumber" because it is already in other master list.
-		   * Also must ensure that value is non-null; certain symbols are not well formed.
-		   */
+                attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
+                attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
 
-		  /* Get row and col where to put this attrib */
-		  row = s_table_get_index(sheet_head->master_pin_list_head, row_label);
-		  col = s_table_get_index(sheet_head->master_pin_attrib_list_head, attrib_name);
+                if ( (strcmp(attrib_name, "pinnumber") != 0)
+                     && (attrib_value != 0) ) {
+                  /* Don't include "pinnumber" because it is already in other master list.
+                   * Also must ensure that value is non-null; certain symbols are not well formed.
+                   */
+
+                  /* Get row and col where to put this attrib */
+                  row = s_table_get_index(sheet_head->master_pin_list_head, row_label);
+                  col = s_table_get_index(sheet_head->master_pin_attrib_list_head, attrib_name);
                   /* Sanity check */
                   if (row == -1 || col == -1) {
                     /* we didn't find the item in the table */
@@ -643,16 +643,16 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
                     ((sheet_head->pin_table)[row][col]).attrib_value = g_strdup(attrib_value);
                   }
                 }
-		g_free(attrib_name);
-		g_free(attrib_text);
-		g_free(attrib_value);
-	      }
-	      a_iter = g_list_next (a_iter);
-           
-	    }  /* while (pin_attrib != NULL) */
-	    g_free(pinnumber);
-	    g_free(row_label);
-	  }
+                g_free(attrib_name);
+                g_free(attrib_text);
+                g_free(attrib_value);
+              }
+              a_iter = g_list_next (a_iter);
+
+            }  /* while (pin_attrib != NULL) */
+            g_free(pinnumber);
+            g_free(row_label);
+          }
 
         }
       }
@@ -661,7 +661,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
     }
 
   }
- 
+
   verbose_done();
 }
 
@@ -681,7 +681,7 @@ void s_table_gtksheet_to_all_tables() {
   STRING_LIST *master_row_list;
   STRING_LIST *master_col_list;
   TABLE **local_table;
-  GtkSheet *local_gtk_sheet;     
+  GtkSheet *local_gtk_sheet;
 
   /* First handle component sheet */
   num_rows = sheet_head->comp_count;
@@ -696,8 +696,8 @@ void s_table_gtksheet_to_all_tables() {
   g_debug ("s_table_gtksheet_to_all_tables: "
            "Now about to fill out new component table.\n");
   s_table_gtksheet_to_table(local_gtk_sheet, master_row_list,
-		       master_col_list, local_table,
-		       num_rows, num_cols);
+                       master_col_list, local_table,
+                       num_rows, num_cols);
 
 #if 0
   /* Next handle net sheet */
@@ -708,9 +708,9 @@ void s_table_gtksheet_to_all_tables() {
   master_col_list = sheet_head->master_net_attrib_list_head;
   local_table = sheet_head->net_table;
 
-  s_table_gtksheet_to_table(local_gtk_sheet, master_row_list, 
-		       master_col_list, local_table,
-		       num_rows, num_cols);
+  s_table_gtksheet_to_table(local_gtk_sheet, master_row_list,
+                       master_col_list, local_table,
+                       num_rows, num_cols);
 #endif
 
 #ifdef UNIMPLEMENTED_FEATURES
@@ -723,9 +723,9 @@ void s_table_gtksheet_to_all_tables() {
   /*  local_table = s_table_new(num_rows, num_cols);  */
   local_table = sheet_head->pin_table;
 
-  s_table_gtksheet_to_table(local_gtk_sheet, master_row_list, 
-		       master_col_list, local_table,
-		       num_rows, num_cols);
+  s_table_gtksheet_to_table(local_gtk_sheet, master_row_list,
+                       master_col_list, local_table,
+                       num_rows, num_cols);
 #endif
 
   return;
@@ -748,9 +748,9 @@ void s_table_gtksheet_to_all_tables() {
  * \param num_rows Number of rows in table
  * \param num_cols Number of columns in table
  */
-void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_row_list, 
-			 STRING_LIST *master_col_list, TABLE **local_table,
-			 int num_rows, int num_cols) 
+void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_row_list,
+                         STRING_LIST *master_col_list, TABLE **local_table,
+                         int num_rows, int num_cols)
 {
   int row, col;
 
@@ -759,7 +759,7 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 
   STRING_LIST *col_list_item;
   gchar *col_title;
-  
+
   gchar *attrib_value;
 
   g_debug ("==== Enter s_table_gtksheet_to_table()\n");
@@ -777,8 +777,8 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 
 #if 0
       if (strlen(attrib_value) == 0) {
-	/* g_free(attrib_value);  */   /* sometimes we have spurious, zero length strings creep */
-	attrib_value = NULL;    /* into the GtkSheet                                     */
+        /* g_free(attrib_value);  */   /* sometimes we have spurious, zero length strings creep */
+        attrib_value = NULL;    /* into the GtkSheet                                     */
       }
 #endif
 
@@ -790,27 +790,27 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
       g_debug ("    Updating attrib_value %s\n", attrib_value);
       g_free( local_table[row][col].attrib_value );
       if (attrib_value != NULL) {
-	local_table[row][col].attrib_value = (gchar *) g_strdup(attrib_value);
+        local_table[row][col].attrib_value = (gchar *) g_strdup(attrib_value);
       } else {
-	local_table[row][col].attrib_value = NULL;
+        local_table[row][col].attrib_value = NULL;
       }
 
       /* next handle name of row (also held in TABLE cell) */
       g_debug ("    Updating row_name %s\n", row_title);
       g_free( local_table[row][col].row_name );
       if (row_title != NULL) {
-	local_table[row][col].row_name = (gchar *) g_strdup(row_title);
+        local_table[row][col].row_name = (gchar *) g_strdup(row_title);
       } else {
-	local_table[row][col].row_name = NULL;
+        local_table[row][col].row_name = NULL;
       }
 
       /* finally handle name of col */
       g_debug ("    Updating col_name %s\n", col_title);
       g_free( local_table[row][col].col_name );
       if (col_title != NULL) {
-	local_table[row][col].col_name = (gchar *) g_strdup(col_title);
+        local_table[row][col].col_name = (gchar *) g_strdup(col_title);
       } else {
-	local_table[row][col].col_name = NULL;
+        local_table[row][col].col_name = NULL;
       }
 
       /* get next col list item and then iterate. */
@@ -822,4 +822,3 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet, STRING_LIST *master_ro
 
   return;
 }
-
