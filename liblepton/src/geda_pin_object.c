@@ -346,7 +346,7 @@ o_pin_read (const char buf[],
     whichend = -1;
   } else {
     if (sscanf (buf, "%c %d %d %d %d %d %d %d\n", &type, &x1, &y1, &x2, &y2,
-		&color, &pin_type, &whichend) != 8) {
+                &color, &pin_type, &whichend) != 8) {
       g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse pin object"));
       return NULL;
     }
@@ -471,9 +471,9 @@ geda_pin_object_copy (OBJECT *o_current)
  */
 void
 geda_pin_object_rotate (int world_centerx,
-			int world_centery,
+                        int world_centery,
                         int angle,
-			OBJECT *object)
+                        OBJECT *object)
 {
   int newx, newy;
 

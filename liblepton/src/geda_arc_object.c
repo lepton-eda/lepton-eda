@@ -320,36 +320,36 @@ geda_arc_object_modify (OBJECT *object,
                         int whichone)
 {
 
-	o_emit_pre_change_notify (object);
+  o_emit_pre_change_notify (object);
 
-	switch(whichone) {
-		case ARC_CENTER:
-		/* modify the center of arc object */
-		object->arc->x = x;
-		object->arc->y = y;
-		break;
+  switch(whichone) {
+  case ARC_CENTER:
+    /* modify the center of arc object */
+    object->arc->x = x;
+    object->arc->y = y;
+    break;
 
-		case ARC_RADIUS:
-		/* modify the radius of arc object */
-		object->arc->radius = x;
-		break;
+  case ARC_RADIUS:
+    /* modify the radius of arc object */
+    object->arc->radius = x;
+    break;
 
-		case ARC_START_ANGLE:
-		/* modify the start angle of the arc object */
-		object->arc->start_angle = x;
-		break;
+  case ARC_START_ANGLE:
+    /* modify the start angle of the arc object */
+    object->arc->start_angle = x;
+    break;
 
-		case ARC_SWEEP_ANGLE:
-		/* modify the end angle of the arc object */
-		object->arc->sweep_angle = x;
-		break;
+  case ARC_SWEEP_ANGLE:
+    /* modify the end angle of the arc object */
+    object->arc->sweep_angle = x;
+    break;
 
-		default:
-		break;
-	}
+  default:
+    break;
+  }
 
-	/* update the screen coords and the bounding box */
-	o_emit_change_notify (object);
+  /* update the screen coords and the bounding box */
+  o_emit_change_notify (object);
 }
 
 /*! \brief
@@ -401,7 +401,7 @@ OBJECT
    */
   if(release_ver <= VERSION_20000704) {
     if (sscanf(buf, "%c %d %d %d %d %d %d", &type,
-	       &x1, &y1, &radius, &start_angle, &sweep_angle, &color) != 7) {
+               &x1, &y1, &radius, &start_angle, &sweep_angle, &color) != 7) {
       g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse arc object"));
       return NULL;
     }
@@ -413,8 +413,8 @@ OBJECT
     arc_length= -1;
   } else {
     if (sscanf(buf, "%c %d %d %d %d %d %d %d %d %d %d %d", &type,
-	       &x1, &y1, &radius, &start_angle, &sweep_angle, &color,
-	       &arc_width, &arc_end, &arc_type, &arc_length, &arc_space) != 12) {
+               &x1, &y1, &radius, &start_angle, &sweep_angle, &color,
+               &arc_width, &arc_end, &arc_type, &arc_length, &arc_space) != 12) {
       g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse arc object"));
       return NULL;
     }
@@ -583,7 +583,7 @@ geda_arc_object_rotate (int world_centerx,
 void
 geda_arc_object_mirror (int world_centerx,
                         int world_centery,
-			OBJECT *object)
+                        OBJECT *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->arc != NULL);

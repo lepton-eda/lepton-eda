@@ -373,7 +373,7 @@ o_line_read (const char buf[],
      * They are set to default.
      */
     if (sscanf (buf, "%c %d %d %d %d %d\n", &type,
-		&x1, &y1, &x2, &y2, &color) != 6) {
+                &x1, &y1, &x2, &y2, &color) != 6) {
       g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse line object"));
       return NULL;
     }
@@ -390,8 +390,8 @@ o_line_read (const char buf[],
      * The meaning of each item is described in the file format documentation.
      */
       if (sscanf (buf, "%c %d %d %d %d %d %d %d %d %d %d\n", &type,
-		  &x1, &y1, &x2, &y2, &color,
-		  &line_width, &line_end, &line_type, &line_length, &line_space) != 11) {
+                  &x1, &y1, &x2, &y2, &color,
+                  &line_width, &line_end, &line_type, &line_length, &line_space) != 11) {
         g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse line object"));
         return NULL;
       }
@@ -515,7 +515,7 @@ void
 geda_line_object_rotate (int world_centerx,
                          int world_centery,
                          int angle,
-			 OBJECT *object)
+                         OBJECT *object)
 {
   int newx, newy;
 
@@ -542,14 +542,14 @@ geda_line_object_rotate (int world_centerx,
 
   /* rotate line end 1 */
   geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
-		  &newx, &newy);
+                        &newx, &newy);
 
   object->line->x[0] = newx;
   object->line->y[0] = newy;
 
   /* rotate line end 2 */
   geda_point_rotate_90 (object->line->x[1], object->line->y[1], angle,
-		  &newx, &newy);
+                        &newx, &newy);
 
   object->line->x[1] = newx;
   object->line->y[1] = newy;
@@ -573,7 +573,7 @@ geda_line_object_rotate (int world_centerx,
  */
 void
 geda_line_object_mirror (int world_centerx,
-			 int world_centery,
+                         int world_centery,
                          OBJECT *object)
 {
   g_return_if_fail (object != NULL);
@@ -698,4 +698,3 @@ geda_line_object_shortest_distance (OBJECT *object,
 {
   return geda_line_shortest_distance (object->line, x, y);
 }
-

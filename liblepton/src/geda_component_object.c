@@ -832,7 +832,7 @@ OBJECT *o_component_read (PAGE *page,
   int mirror;
 
   if (sscanf(buf, "%c %d %d %d %d %d %s\n",
-	     &type, &x1, &y1, &selectable, &angle, &mirror, basename) != 7) {
+             &type, &x1, &y1, &selectable, &angle, &mirror, basename) != 7) {
     g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse component object"));
     g_free (basename);
     return NULL;
@@ -1172,7 +1172,7 @@ o_component_check_symversion (PAGE* page, OBJECT* object)
 
   g_return_if_fail (object != NULL);
   g_return_if_fail ((object->type == OBJ_COMPONENT ||
-		     object->type == OBJ_PLACEHOLDER));
+                     object->type == OBJ_PLACEHOLDER));
   g_return_if_fail (object->component != NULL);
 
 

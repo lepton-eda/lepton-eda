@@ -56,7 +56,7 @@ o_selection_add (SELECTION *selection,
 }
 
 /*! \brief Removes the given object from the selection list
- *  \par Removes the given object from the selection list and does the 
+ *  \par Removes the given object from the selection list and does the
  *  needed work to make the object visually unselected.
  *  It's ok to call this function with an object which is not necessarily
  *  selected.
@@ -103,7 +103,7 @@ void o_selection_print_all(const SELECTION *selection)
 }
 
 /*! \brief Selects the given object.
- *  \par Sets the select flag, saves the color, and then selects the 
+ *  \par Sets the select flag, saves the color, and then selects the
  *  given object
  *
  *  \param [in] object    Object to select.
@@ -136,4 +136,3 @@ o_selection_unselect (OBJECT *object)
   object->selected = FALSE;
   o_emit_change_notify (object);
 }
-

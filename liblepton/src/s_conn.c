@@ -29,17 +29,17 @@
 
 /*! \file s_conn.c
  *  \brief The connection system
- *  
+ *
  *  The connection system stores and tracks the connections between
  *  connected <b>OBJECTS</b>. The connected OBJECTS are either
  *  <b>pins</b>, <b>nets</b> and <b>busses</b>.
- *  
+ *
  *  Each connection object with the type <b>st_conn</b> represents a
  *  single unidirectional relation to another object.
- *  
+ *
  *  The following figure with two nets and a pin shows the relations
  *  between connections and OBJECTS:
- *  
+ *
  *  \image html s_conn_overview.png
  *  \image latex s_conn_overview.pdf "Connection overview" width=14cm
  */
@@ -47,13 +47,13 @@
 
 /*! \brief create a new connection object
  *  \par Function Description
- *  create a single st_conn object and initialize it with the 
+ *  create a single st_conn object and initialize it with the
  *  given parameters.
- *  
+ *
  *  \return The new connection object
  */
 CONN *s_conn_return_new(OBJECT * other_object, int type, int x, int y,
-			int whichone, int other_whichone)
+                        int whichone, int other_whichone)
 {
   CONN *new_conn;
 
@@ -115,48 +115,48 @@ int
 s_conn_remove_other (OBJECT *other_object,
                      OBJECT *to_remove)
 {
-    GList *c_current = NULL;
-    CONN *conn = NULL;
+  GList *c_current = NULL;
+  CONN *conn = NULL;
 
-    o_emit_pre_change_notify (other_object);
+  o_emit_pre_change_notify (other_object);
 
-    c_current = other_object->conn_list;
-    while (c_current != NULL) {
-	conn = (CONN *) c_current->data;
+  c_current = other_object->conn_list;
+  while (c_current != NULL) {
+    conn = (CONN *) c_current->data;
 
-	if (conn->other_object == to_remove) {
-	    other_object->conn_list =
-		g_list_remove(other_object->conn_list, conn);
+    if (conn->other_object == to_remove) {
+      other_object->conn_list =
+        g_list_remove(other_object->conn_list, conn);
 
 #if DEBUG
-	    printf("Found other_object in remove_other\n");
-	    printf("Freeing other: %s %d %d\n", conn->other_object->name,
-		   conn->x, conn->y);
+      printf("Found other_object in remove_other\n");
+      printf("Freeing other: %s %d %d\n", conn->other_object->name,
+             conn->x, conn->y);
 #endif
 
-	    /* Do not write modify c_current like this, since this will cause */
-	    /* very nasty data corruption and upset glib's memory slice */
-	    /* allocator. */
-	    /* c_current->data = NULL;   Do not comment in */
+      /* Do not write modify c_current like this, since this will cause */
+      /* very nasty data corruption and upset glib's memory slice */
+      /* allocator. */
+      /* c_current->data = NULL;   Do not comment in */
 
-	    g_free(conn);
+      g_free(conn);
 
 #if 0 /* this does not work right */
-            if (other_object->type == OBJ_BUS &&
-                other_object->conn_list == NULL) {
-              other_object->bus_ripper_direction = 0;
-            }
+      if (other_object->type == OBJ_BUS &&
+          other_object->conn_list == NULL) {
+        other_object->bus_ripper_direction = 0;
+      }
 #endif
-            
-	    return (TRUE);
-	}
 
-	c_current = g_list_next(c_current);
+      return (TRUE);
     }
 
-    o_emit_change_notify (other_object);
+    c_current = g_list_next(c_current);
+  }
 
-    return (FALSE);
+  o_emit_change_notify (other_object);
+
+  return (FALSE);
 }
 
 /*! \brief remove an OBJECT from the connection system
@@ -209,52 +209,52 @@ s_conn_remove_object_connections (OBJECT *to_remove)
  *  \par Function Description
  *  Checks if the point (<b>x</b>,<b>y</b>) is on the OBJECT
  *  and between it's endpoints.
- *  \return TRUE if the point is a midpoint of the OBJECT. FALSE 
- *  if the point is not a midpoinit or if the OBJECT is not a 
- *  NET a PIN or a BUS or if the OBJECT 
- *  has neither horizontal nor vertical orientation. 
+ *  \return TRUE if the point is a midpoint of the OBJECT. FALSE
+ *  if the point is not a midpoinit or if the OBJECT is not a
+ *  NET a PIN or a BUS or if the OBJECT
+ *  has neither horizontal nor vertical orientation.
  */
 OBJECT *s_conn_check_midpoint(OBJECT *o_current, int x, int y)
 {
   int min_x, min_y, max_x, max_y;
 
   switch(o_current->type) {
-    case(OBJ_NET):
-    case(OBJ_PIN):
-    case(OBJ_BUS):
-      min_y = MIN(o_current->line->y[0], 
-                  o_current->line->y[1]);
-      max_y = MAX(o_current->line->y[0], 
-                  o_current->line->y[1]);
+  case(OBJ_NET):
+  case(OBJ_PIN):
+  case(OBJ_BUS):
+    min_y = MIN(o_current->line->y[0],
+                o_current->line->y[1]);
+    max_y = MAX(o_current->line->y[0],
+                o_current->line->y[1]);
 
-				/* vertical */
-      if ( (o_current->line->x[0] == x) &&
-           (y > min_y) && (y < max_y) &&
-           (o_current->line->x[0] ==
-            o_current->line->x[1]) ) {
+    /* vertical */
+    if ( (o_current->line->x[0] == x) &&
+         (y > min_y) && (y < max_y) &&
+         (o_current->line->x[0] ==
+          o_current->line->x[1]) ) {
 #if DEBUG
-        printf("Found vertical point\n");
+      printf("Found vertical point\n");
 #endif
-        return(o_current);
-      }
+      return(o_current);
+    }
 
-      min_x = MIN(o_current->line->x[0], 
-                  o_current->line->x[1]);
-      max_x = MAX(o_current->line->x[0], 
-                  o_current->line->x[1]);
+    min_x = MIN(o_current->line->x[0],
+                o_current->line->x[1]);
+    max_x = MAX(o_current->line->x[0],
+                o_current->line->x[1]);
 
-				/* horizontal */
-      if ( (o_current->line->y[0] == y) &&
-           (x > min_x) && (x < max_x) &&
-           (o_current->line->y[0] ==
-            o_current->line->y[1]) ) {
+    /* horizontal */
+    if ( (o_current->line->y[0] == y) &&
+         (x > min_x) && (x < max_x) &&
+         (o_current->line->y[0] ==
+          o_current->line->y[1]) ) {
 #if DEBUG
-        printf("Found horizontal point\n");
+      printf("Found horizontal point\n");
 #endif
-        return(o_current);
-      }
+      return(o_current);
+    }
 
-      break;
+    break;
   }
   return(NULL);
 }
@@ -541,7 +541,7 @@ void s_conn_print(GList * conn_list)
  *  \param [in] whichone   The connection number to check.
  *  \param [in] conn_list  List of existing connections to compare
  *                         <B>new_net</B> to.
- *  \return TRUE if a matching connection is found, FALSE otherwise. 
+ *  \return TRUE if a matching connection is found, FALSE otherwise.
  */
 int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list)
 {
@@ -552,16 +552,16 @@ int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list)
   while (cl_current != NULL) {
 
     conn = (CONN *) cl_current->data;
-    if (conn != NULL && conn->whichone == whichone && 
+    if (conn != NULL && conn->whichone == whichone &&
         conn->x == new_net->line->x[whichone] &&
-	conn->y == new_net->line->y[whichone])
+        conn->y == new_net->line->y[whichone])
     {
        return TRUE;
     }
 
     cl_current = g_list_next(cl_current);
   }
- 
+
   return FALSE;
 }
 

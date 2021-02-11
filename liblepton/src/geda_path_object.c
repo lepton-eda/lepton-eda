@@ -184,9 +184,9 @@ o_path_read (const char *first_line,
    */
   /* Allocate enough space */
   if (sscanf (first_line, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-	      &type, &color, &line_width, &line_end, &line_type,
-	      &line_length, &line_space, &fill_type, &fill_width, &angle1,
-	      &pitch1, &angle2, &pitch2, &num_lines) != 14) {
+              &type, &color, &line_width, &line_end, &line_type,
+              &line_length, &line_space, &fill_type, &fill_width, &angle1,
+              &pitch1, &angle2, &pitch2, &num_lines) != 14) {
     g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse path object"));
     return NULL;
   }
@@ -608,4 +608,3 @@ geda_path_object_shortest_distance (OBJECT *object,
 
   return s_path_shortest_distance (object->path, x, y, solid);
 }
-

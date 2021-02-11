@@ -24,7 +24,7 @@ G_BEGIN_DECLS
 
 struct st_object
 {
-  int type;				/* Basic information */
+  int type;                             /* Basic information */
   int sid;
   char *name;
 
@@ -41,7 +41,7 @@ struct st_object
   PICTURE *picture;
   PATH *path;
 
-  GList *conn_list;			/* List of connections */
+  GList *conn_list;                     /* List of connections */
   /* to and from this object */
 
   /* every graphical primitive have more or less the same options. */
@@ -62,10 +62,10 @@ struct st_object
   gchar *component_basename;            /* Component Library Symbol name */
   OBJECT *parent;                       /* Parent object pointer */
 
-  int color; 				/* Which color */
-  int dont_redraw;			/* Flag to skip redrawing */
-  int selectable;			/* object selectable flag */
-  int selected;				/* object selected flag */
+  int color;                            /* Which color */
+  int dont_redraw;                      /* Flag to skip redrawing */
+  int selectable;                       /* object selectable flag */
+  int selected;                         /* object selected flag */
 
   /* controls which direction bus rippers go */
   /* it is either 0 for un-inited, */
@@ -74,8 +74,8 @@ struct st_object
   int bus_ripper_direction;             /* only valid on buses */
 
 
-  int font_text_size;			/* used only with fonts defs */
-  GList *font_prim_objs;			/* used only with fonts defs */
+  int font_text_size;                   /* used only with fonts defs */
+  GList *font_prim_objs;                /* used only with fonts defs */
 
   int whichend;    /* for pins only, either 0 or 1 */
   int pin_type;    /* for pins only, either NET or BUS */

@@ -187,50 +187,50 @@ geda_box_object_modify (OBJECT *object,
                         int y,
                         int whichone)
 {
-	int tmp;
+  int tmp;
 
-	o_emit_pre_change_notify (object);
+  o_emit_pre_change_notify (object);
 
-	/* change the position of the selected corner */
-	switch(whichone) {
-		case BOX_UPPER_LEFT:
-			object->box->upper_x = x;
-			object->box->upper_y = y;
-			break;
+  /* change the position of the selected corner */
+  switch(whichone) {
+  case BOX_UPPER_LEFT:
+    object->box->upper_x = x;
+    object->box->upper_y = y;
+    break;
 
-		case BOX_LOWER_LEFT:
-			object->box->upper_x = x;
-			object->box->lower_y = y;
-			break;
+  case BOX_LOWER_LEFT:
+    object->box->upper_x = x;
+    object->box->lower_y = y;
+    break;
 
-		case BOX_UPPER_RIGHT:
-			object->box->lower_x = x;
-			object->box->upper_y = y;
-			break;
+  case BOX_UPPER_RIGHT:
+    object->box->lower_x = x;
+    object->box->upper_y = y;
+    break;
 
-		case BOX_LOWER_RIGHT:
-			object->box->lower_x = x;
-			object->box->lower_y = y;
-			break;
+  case BOX_LOWER_RIGHT:
+    object->box->lower_x = x;
+    object->box->lower_y = y;
+    break;
 
-		default:
-			return;
-	}
+  default:
+    return;
+  }
 
-	/* need to update the upper left and lower right corners */
-	if(object->box->upper_x > object->box->lower_x) {
-		tmp                  = object->box->upper_x;
-		object->box->upper_x = object->box->lower_x;
-		object->box->lower_x = tmp;
-	}
+  /* need to update the upper left and lower right corners */
+  if(object->box->upper_x > object->box->lower_x) {
+    tmp                  = object->box->upper_x;
+    object->box->upper_x = object->box->lower_x;
+    object->box->lower_x = tmp;
+  }
 
-	if(object->box->upper_y < object->box->lower_y) {
-		tmp                  = object->box->upper_y;
-		object->box->upper_y = object->box->lower_y;
-		object->box->lower_y = tmp;
-	}
+  if(object->box->upper_y < object->box->lower_y) {
+    tmp                  = object->box->upper_y;
+    object->box->upper_y = object->box->lower_y;
+    object->box->lower_y = tmp;
+  }
 
-	o_emit_change_notify (object);
+  o_emit_change_notify (object);
 
 }
 
@@ -279,7 +279,7 @@ o_box_read (const char buf[],
    */
 
     if (sscanf (buf, "%c %d %d %d %d %d\n",
-		&type, &x1, &y1, &width, &height, &color) != 6) {
+                &type, &x1, &y1, &width, &height, &color) != 6) {
       g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse box object"));
       return NULL;
     }
@@ -305,10 +305,10 @@ o_box_read (const char buf[],
      *  each item is described in the file format documentation.
      */
     if (sscanf (buf, "%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d\n",
-		&type, &x1, &y1, &width, &height, &color,
-		&box_width, &box_end, &box_type, &box_length,
-		&box_space, &box_filling,
-		&fill_width, &angle1, &pitch1, &angle2, &pitch2) != 17) {
+                &type, &x1, &y1, &width, &height, &color,
+                &box_width, &box_end, &box_type, &box_length,
+                &box_space, &box_filling,
+                &fill_width, &angle1, &pitch1, &angle2, &pitch2) != 17) {
       g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse box object"));
       return NULL;
     }
@@ -421,11 +421,11 @@ geda_box_object_to_buffer (const GedaObject *object)
   pitch2     = object->fill_pitch2;
 
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
-			object->type,
-			x1, y1, width, height, geda_object_get_color (object),
-			box_width, box_end, box_type, box_length, box_space,
-			box_fill,
-			fill_width, angle1, pitch1, angle2, pitch2);
+                        object->type,
+                        x1, y1, width, height, geda_object_get_color (object),
+                        box_width, box_end, box_type, box_length, box_space,
+                        box_fill,
+                        fill_width, angle1, pitch1, angle2, pitch2);
 
   return(buf);
 }
@@ -470,7 +470,7 @@ void
 geda_box_object_rotate (int world_centerx,
                         int world_centery,
                         int angle,
-			OBJECT *object)
+                        OBJECT *object)
 {
   int newx1, newy1;
   int newx2, newy2;
@@ -502,11 +502,11 @@ geda_box_object_rotate (int world_centerx,
 
   /* rotate the upper left corner of the box */
   geda_point_rotate_90 (object->box->upper_x, object->box->upper_y, angle,
-		  &newx1, &newy1);
+                        &newx1, &newy1);
 
   /* rotate the lower left corner of the box */
   geda_point_rotate_90 (object->box->lower_x, object->box->lower_y, angle,
-		  &newx2, &newy2);
+                        &newx2, &newy2);
 
   /* reorder the corners after rotation */
   object->box->upper_x = MIN(newx1,newx2);
@@ -536,7 +536,7 @@ geda_box_object_rotate (int world_centerx,
 void
 geda_box_object_mirror (int world_centerx,
                         int world_centery,
-			OBJECT *object)
+                        OBJECT *object)
 {
   int newx1, newy1;
   int newx2, newy2;
@@ -655,4 +655,3 @@ geda_box_object_shortest_distance (OBJECT *object,
 
   return geda_box_shortest_distance (object->box, x, y, solid);
 }
-

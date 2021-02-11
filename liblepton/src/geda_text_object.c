@@ -492,9 +492,9 @@ o_text_read (const char *first_line,
 
   if (fileformat_ver >= 1) {
     if (sscanf(first_line, "%c %d %d %d %d %d %d %d %d %d\n", &type, &x, &y,
-	       &color, &size,
-	       &visibility, &show_name_value,
-	       &angle, &alignment, &num_lines) != 10) {
+               &color, &size,
+               &visibility, &show_name_value,
+               &angle, &alignment, &num_lines) != 10) {
       g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse text object"));
       return NULL;
     }
@@ -502,9 +502,9 @@ o_text_read (const char *first_line,
     /* yes, above less than (not less than and equal) is correct. The format */
     /* change occurred in 20000220 */
     if (sscanf(first_line, "%c %d %d %d %d %d %d %d\n", &type, &x, &y,
-	       &color, &size,
-	       &visibility, &show_name_value,
-	       &angle) != 8) {
+               &color, &size,
+               &visibility, &show_name_value,
+               &angle) != 8) {
       g_set_error(err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse text object"));
       return NULL;
     }
@@ -512,8 +512,8 @@ o_text_read (const char *first_line,
     num_lines = 1; /* only support a single line */
   } else {
     if (sscanf(first_line, "%c %d %d %d %d %d %d %d %d\n", &type, &x, &y,
-	       &color, &size,
-	       &visibility, &show_name_value,
+               &color, &size,
+               &visibility, &show_name_value,
            &angle, &alignment) != 9) {
       g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Failed to parse text object"));
       return NULL;
