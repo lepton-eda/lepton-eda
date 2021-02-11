@@ -131,7 +131,7 @@ gint autonumber_sort_numbers(gconstpointer a, gconstpointer b) {
 
 /*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This Funcion takes two <B>OBJECT*</B> arguments and compares the
+ *  This function takes two <B>OBJECT*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the x location,
  *  the second sort criteria is the y location.
  *  The Function is used as GCompareFunc by g_list_sort().
@@ -153,7 +153,7 @@ gint autonumber_sort_xy(gconstpointer a, gconstpointer b) {
 
 /*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This funcion takes two <B>OBJECT*</B> arguments and compares the
+ *  This function takes two <B>OBJECT*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the x location,
  *  the second sort criteria is the y location.
  *  This function sorts the objects in reverse order.
@@ -176,7 +176,7 @@ gint autonumber_sort_xy_rev(gconstpointer a, gconstpointer b) {
 
 /*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This funcion takes two <B>OBJECT*</B> arguments and compares the
+ *  This function takes two <B>OBJECT*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the y location,
  *  the second sort criteria is the x location.
  *  The function is used as GCompareFunc by g_list_sort().
@@ -198,7 +198,7 @@ int autonumber_sort_yx(gconstpointer a, gconstpointer b) {
 
 /*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This Funcion takes two <B>OBJECT*</B> arguments and compares the
+ *  This function takes two <B>OBJECT*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the y location,
  *  the second sort criteria is the x location.
  *  This function sorts the objects in reverse order.
@@ -221,7 +221,7 @@ int autonumber_sort_yx_rev(gconstpointer a, gconstpointer b) {
 
 /*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This Funcion takes two <B>OBJECT*</B> arguments and compares the
+ *  This function takes two <B>OBJECT*</B> arguments and compares the
  *  location of the two text objects. The sort criteria is the combined x- and the
  *  y-location. The function sorts from top left to bottom right.
  *  The function is used as GCompareFunc by g_list_sort().
@@ -238,7 +238,7 @@ int autonumber_sort_diagonal(gconstpointer a, gconstpointer b) {
 
 /*! \brief GCompareFunc function to acces <B>AUTONUMBER_SLOT</B> object in a GList
  *  \par Function Description
- *  This Funcion takes two <B>AUTONUMBER_SLOT*</B> arguments and compares them.
+ *  This function takes two <B>AUTONUMBER_SLOT*</B> arguments and compares them.
  *  Sorting criteria is are the AUTONUMBER_SLOT members: first the symbolname, than the
  *  number and last the slotnr.
  *  If the number or the slotnr is set to zero it acts as a wildcard.
@@ -274,7 +274,7 @@ gint freeslot_compare(gconstpointer a, gconstpointer b)
 
 /*! \brief Prints a <B>GList</B> of <B>AUTONUMBER_SLOT</B> elements
  *  \par Function Description
- *  This funcion prints the elements of a GList that contains <B>AUTONUMBER_SLOT</B> elements
+ *  This function prints the elements of a GList that contains <B>AUTONUMBER_SLOT</B> elements
  *  It is only used for debugging purposes.
  */
 void freeslot_print(GList *list) {
