@@ -1,0 +1,5 @@
+*.o
+*.x
+.deps
+.libs
+lepton-cli
