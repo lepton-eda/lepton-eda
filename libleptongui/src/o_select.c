@@ -155,7 +155,7 @@ void o_select_run_hooks(GschemToplevel *w_current, OBJECT *o_current, int flag)
  *      or it can be MULTIPLE meaning selection is a selection box
  */
 void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
-		     int type, int count)
+                     int type, int count)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int SHIFTKEY;
@@ -474,28 +474,28 @@ void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
   while (1) {
     netnameiter = g_list_last(netnamestack);
     for (iter1 = g_list_last(netstack);
-	 iter1 != NULL;
-	 iter1 = g_list_previous(iter1), count++) {
+         iter1 != NULL;
+         iter1 = g_list_previous(iter1), count++) {
       o_current = (OBJECT*) iter1->data;
       if (o_current->type == OBJ_NET &&
-	  (!o_current->selected || count == 0)) {
-	o_select_object (w_current, o_current, SINGLE, count);
-	if (w_current->net_selection_state > 1) {
-	  /* collect nets */
-	  netstack = g_list_concat(s_conn_return_others(NULL, o_current), netstack);
-	}
-	if (w_current->net_selection_state > 2) {
-	  /* collect netnames */
-	  netname = o_attrib_search_object_attribs_by_name (o_current, "netname", 0);
-	  if (netname != NULL) {
-	    if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) == NULL) {
-	      netnamestack = g_list_append(netnamestack, netname);
-	    }
-	    else {
-	      g_free(netname);
-	    }
-	  }
-	}
+          (!o_current->selected || count == 0)) {
+        o_select_object (w_current, o_current, SINGLE, count);
+        if (w_current->net_selection_state > 1) {
+          /* collect nets */
+          netstack = g_list_concat(s_conn_return_others(NULL, o_current), netstack);
+        }
+        if (w_current->net_selection_state > 2) {
+          /* collect netnames */
+          netname = o_attrib_search_object_attribs_by_name (o_current, "netname", 0);
+          if (netname != NULL) {
+            if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) == NULL) {
+              netnamestack = g_list_append(netnamestack, netname);
+            }
+            else {
+              g_free(netname);
+            }
+          }
+        }
       }
     }
     g_list_free(netstack);
@@ -510,16 +510,16 @@ void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
          o_iter = g_list_next (o_iter)) {
       o_current = (OBJECT*) o_iter->data;
       if (o_current->type == OBJ_TEXT
-	  && o_current->attached_to != NULL) {
-	if (o_current->attached_to->type == OBJ_NET) {
-	  netname = o_attrib_search_object_attribs_by_name (o_current->attached_to, "netname", 0);
-	  if (netname != NULL) {
-	    if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) != NULL) {
-	      netstack = g_list_prepend(netstack, o_current->attached_to);
-	    }
-	    g_free(netname);
-	  }
-	}
+          && o_current->attached_to != NULL) {
+        if (o_current->attached_to->type == OBJ_NET) {
+          netname = o_attrib_search_object_attribs_by_name (o_current->attached_to, "netname", 0);
+          if (netname != NULL) {
+            if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) != NULL) {
+              netstack = g_list_prepend(netstack, o_current->attached_to);
+            }
+            g_free(netname);
+          }
+        }
       }
     }
   }

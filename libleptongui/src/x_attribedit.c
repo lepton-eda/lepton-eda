@@ -116,11 +116,11 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
     while (s_current != NULL) {
       object = (OBJECT *)s_current->data;
       if (object == NULL) {
-	fprintf (stderr, "attrib_edit_dialog_ok: ERROR: Got an unexpected NULL\n");
-	exit(-1);
+        fprintf (stderr, "attrib_edit_dialog_ok: ERROR: Got an unexpected NULL\n");
+        exit(-1);
       }
       if (!object->attached_to) {
-	nsel++;
+        nsel++;
       }
       s_current = g_list_next(s_current);
     }
@@ -144,19 +144,19 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
                                        "overwritebutton"));
 
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(overwritebutton))) {
-	replace = 1;
+        replace = 1;
       } else {
-	replace = 0;
+        replace = 0;
       }
 
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(addtoallbutton))) {
-	addto = 7;
+        addto = 7;
       }
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(addtocompsbutton))) {
-	addto = 2;
+        addto = 2;
       }
       if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(addtonetsbutton))) {
-	addto = 1;
+        addto = 1;
       }
 
       while (s_current != NULL) {
@@ -214,13 +214,13 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
       printf("invocation flag: %d\n", invocation_flag);
 #endif
       if (invocation_flag == FROM_HOTKEY
-	  && wx != -1 && wy != -1) {
-	o_invalidate (w_current, new_object);
-	new_object->text->x = wx;
-	new_object->text->y = wy;
-	o_text_recreate (new_object);
+          && wx != -1 && wy != -1) {
+        o_invalidate (w_current, new_object);
+        new_object->text->x = wx;
+        new_object->text->y = wy;
+        o_text_recreate (new_object);
     gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
-	o_undo_savestate_old(w_current, UNDO_ALL);
+        o_undo_savestate_old(w_current, UNDO_ALL);
       }
     }
   } else {
@@ -240,7 +240,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
  *  attribute dialog.
  */
 void attribute_edit_dialog_response(GtkWidget *w, gint response,
-				 GschemToplevel *w_current)
+                                    GschemToplevel *w_current)
 {
   switch(response) {
   case GTK_RESPONSE_APPLY:
@@ -314,9 +314,9 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
                                             NULL);
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(aewindow),
-					  GTK_RESPONSE_APPLY,
-					  GTK_RESPONSE_REJECT,
-					  -1);
+                                          GTK_RESPONSE_APPLY,
+                                          GTK_RESPONSE_REJECT,
+                                          -1);
 
   g_signal_connect (G_OBJECT (aewindow), "response",
                     G_CALLBACK (attribute_edit_dialog_response),
@@ -329,7 +329,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 
   vbox = gtk_dialog_get_content_area (GTK_DIALOG (aewindow));
   gtk_container_set_border_width(GTK_CONTAINER(aewindow),
-				 DIALOG_BORDER_SPACING);
+                                 DIALOG_BORDER_SPACING);
   gtk_box_set_spacing(GTK_BOX(vbox), DIALOG_V_SPACING);
 
   if (attr_obj != NULL)
@@ -343,7 +343,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 
   alignment = gtk_alignment_new(0,0,1,1);
   gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
-			    DIALOG_INDENTATION, 0);
+                            DIALOG_INDENTATION, 0);
   gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
 
   table = gtk_table_new (3, 2, FALSE);
@@ -431,7 +431,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 
     alignment = gtk_alignment_new(0,0,1,1);
     gtk_alignment_set_padding(GTK_ALIGNMENT(alignment), 0, 0,
-			    DIALOG_INDENTATION, 0);
+                              DIALOG_INDENTATION, 0);
     gtk_box_pack_start(GTK_BOX(vbox), alignment, TRUE, TRUE, 0);
 
     table = gtk_table_new (2, 3, FALSE);
@@ -528,7 +528,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
 
     if ((object = o_select_return_first_object(w_current))) {
       if (object->type == OBJ_NET)
-	name = g_strdup("netname");
+        name = g_strdup("netname");
     }
 
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);

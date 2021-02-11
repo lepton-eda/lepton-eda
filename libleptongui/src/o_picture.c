@@ -24,14 +24,14 @@
 #include "gschem.h"
 
 /* This works, but using one macro inside of other doesn't */
-#define GET_PICTURE_WIDTH(w)			\
+#define GET_PICTURE_WIDTH(w) \
   abs((w)->second_wx - (w)->first_wx)
-#define GET_PICTURE_HEIGHT(w)						\
+#define GET_PICTURE_HEIGHT(w) \
   (w)->pixbuf_wh_ratio == 0 ? 0 : abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio
-#define GET_PICTURE_LEFT(w)			\
+#define GET_PICTURE_LEFT(w) \
   MIN((w)->first_wx, (w)->second_wx)
-#define GET_PICTURE_TOP(w)						\
-  (w)->first_wy > (w)->second_wy ? (w)->first_wy  :			\
+#define GET_PICTURE_TOP(w) \
+  (w)->first_wy > (w)->second_wy ? (w)->first_wy  : \
   (w)->first_wy+abs((w)->second_wx - (w)->first_wx)/(w)->pixbuf_wh_ratio
 
 /*! \brief Start process to input a new picture.
@@ -175,25 +175,25 @@ void picture_selection_dialog (GschemToplevel *w_current)
   GError *error = NULL;
 
   GtkWidget* pfswindow = gtk_file_chooser_dialog_new (_("Add Picture"),
-						      GTK_WINDOW(w_current->main_window),
-						      GTK_FILE_CHOOSER_ACTION_OPEN,
-						      GTK_STOCK_CANCEL,
-						      GTK_RESPONSE_CANCEL,
-						      GTK_STOCK_OPEN,
-						      GTK_RESPONSE_ACCEPT,
-						      NULL);
+                                                      GTK_WINDOW(w_current->main_window),
+                                                      GTK_FILE_CHOOSER_ACTION_OPEN,
+                                                      GTK_STOCK_CANCEL,
+                                                      GTK_RESPONSE_CANCEL,
+                                                      GTK_STOCK_OPEN,
+                                                      GTK_RESPONSE_ACCEPT,
+                                                      NULL);
 
   setup_filechooser_filters (GTK_FILE_CHOOSER (pfswindow));
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(pfswindow),
-					  GTK_RESPONSE_ACCEPT,
-					  GTK_RESPONSE_CANCEL,
-					  -1);
+                                          GTK_RESPONSE_ACCEPT,
+                                          GTK_RESPONSE_CANCEL,
+                                          -1);
 
   if (w_current->pixbuf_filename)
     gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(pfswindow),
-				  w_current->pixbuf_filename);
+                                  w_current->pixbuf_filename);
 
   if (gtk_dialog_run (GTK_DIALOG (pfswindow)) == GTK_RESPONSE_ACCEPT) {
 
@@ -204,11 +204,11 @@ void picture_selection_dialog (GschemToplevel *w_current)
       GtkWidget *dialog;
 
       dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
-				       GTK_DIALOG_DESTROY_WITH_PARENT,
-				       GTK_MESSAGE_ERROR,
-				       GTK_BUTTONS_CLOSE,
-				       _("Failed to load picture: %1$s"),
-				       error->message);
+                                       GTK_DIALOG_DESTROY_WITH_PARENT,
+                                       GTK_MESSAGE_ERROR,
+                                       GTK_BUTTONS_CLOSE,
+                                       _("Failed to load picture: %1$s"),
+                                       error->message);
       /* Wait for any user response */
       gtk_dialog_run (GTK_DIALOG (dialog));
 
@@ -380,25 +380,25 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
   GError *error = NULL;
 
   GtkWidget* pfswindow = gtk_file_chooser_dialog_new (_("Select Picture"),
-						      GTK_WINDOW(w_current->main_window),
-						      GTK_FILE_CHOOSER_ACTION_OPEN,
-						      GTK_STOCK_CANCEL,
-						      GTK_RESPONSE_CANCEL,
-						      GTK_STOCK_OPEN,
-						      GTK_RESPONSE_ACCEPT,
-						      NULL);
+                                                      GTK_WINDOW(w_current->main_window),
+                                                      GTK_FILE_CHOOSER_ACTION_OPEN,
+                                                      GTK_STOCK_CANCEL,
+                                                      GTK_RESPONSE_CANCEL,
+                                                      GTK_STOCK_OPEN,
+                                                      GTK_RESPONSE_ACCEPT,
+                                                      NULL);
 
   setup_filechooser_filters (GTK_FILE_CHOOSER (pfswindow));
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(pfswindow),
-					  GTK_RESPONSE_ACCEPT,
-					  GTK_RESPONSE_CANCEL,
-					  -1);
+                                          GTK_RESPONSE_ACCEPT,
+                                          GTK_RESPONSE_CANCEL,
+                                          -1);
 
   if (w_current->pixbuf_filename)
     gtk_file_chooser_set_filename(GTK_FILE_CHOOSER(pfswindow),
-				  w_current->pixbuf_filename);
+                                  w_current->pixbuf_filename);
 
   if (gtk_dialog_run (GTK_DIALOG (pfswindow)) == GTK_RESPONSE_ACCEPT) {
 
@@ -409,11 +409,11 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
       GtkWidget *dialog;
 
       dialog = gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
-				       GTK_DIALOG_DESTROY_WITH_PARENT,
-				       GTK_MESSAGE_ERROR,
-				       GTK_BUTTONS_CLOSE,
-				       _("Failed to replace pictures: %s"),
-				       error->message);
+                                       GTK_DIALOG_DESTROY_WITH_PARENT,
+                                       GTK_MESSAGE_ERROR,
+                                       GTK_BUTTONS_CLOSE,
+                                       _("Failed to replace pictures: %s"),
+                                       error->message);
       /* Wait for any user response */
       gtk_dialog_run (GTK_DIALOG (dialog));
 
