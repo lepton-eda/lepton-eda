@@ -1,8 +1,4 @@
-*.o
-*.x
-.deps
-.libs
-lepton-cli
-lepton-cli.1
-lepton-cli.html
+Makefile
+Makefile.in
+*~
 ChangeLog
