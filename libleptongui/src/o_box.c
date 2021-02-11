@@ -23,13 +23,13 @@
 
 #include "gschem.h"
 
-#define GET_BOX_WIDTH(w)			\
-	abs((w)->second_wx - (w)->first_wx)
-#define GET_BOX_HEIGHT(w)			\
-	abs((w)->second_wy - (w)->first_wy)
-#define GET_BOX_LEFT(w)				\
-	MIN((w)->first_wx, (w)->second_wx)
-#define GET_BOX_TOP(w)				\
+#define GET_BOX_WIDTH(w)                        \
+        abs((w)->second_wx - (w)->first_wx)
+#define GET_BOX_HEIGHT(w)                       \
+        abs((w)->second_wy - (w)->first_wy)
+#define GET_BOX_LEFT(w)                         \
+        MIN((w)->first_wx, (w)->second_wx)
+#define GET_BOX_TOP(w)                          \
         MAX((w)->first_wy, (w)->second_wy)
 
 /*! \todo Finish function documentation!!!
@@ -126,11 +126,11 @@ void o_box_end(GschemToplevel *w_current, int w_x, int w_y)
 
   /* boxes with null width or height are not allowed */
   if ((box_width == 0) || (box_height == 0)) {
-	  /* cancel the object creation */
-	  w_current->first_wx = (-1);
-	  w_current->first_wy = (-1);
-	  w_current->second_wx  = (-1);
-	  w_current->second_wy  = (-1);
+    /* cancel the object creation */
+    w_current->first_wx = (-1);
+    w_current->first_wy = (-1);
+    w_current->second_wx  = (-1);
+    w_current->second_wy  = (-1);
 
   } else {
 
