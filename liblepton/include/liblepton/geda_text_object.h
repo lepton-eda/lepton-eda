@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -77,13 +77,13 @@ geda_text_object_get_y (const LeptonObject *object);
 void
 geda_text_object_mirror (int world_centerx,
                          int world_centery,
-                         OBJECT *object);
+                         LeptonObject *object);
 
 void
 geda_text_object_rotate (int world_centerx,
                          int world_centery,
                          int angle,
-                         OBJECT *object);
+                         LeptonObject *object);
 
 void
 geda_text_object_set_alignment (LeptonObject *object, gint alignment);
@@ -101,7 +101,7 @@ void
 geda_text_object_set_y (LeptonObject *object, gint y);
 
 double
-geda_text_object_shortest_distance (OBJECT *object,
+geda_text_object_shortest_distance (LeptonObject *object,
                                     int x,
                                     int y,
                                     int force_soild,
@@ -116,13 +116,13 @@ geda_text_object_translate (LeptonObject *object, int dx, int dy);
 /* older methods, need renaming */
 
 void
-o_text_recreate (OBJECT *o_current);
+o_text_recreate (LeptonObject *o_current);
 
 void
-o_text_set_string (OBJECT *obj,
+o_text_set_string (LeptonObject *obj,
                    const gchar *new_string);
 
-OBJECT*
+LeptonObject*
 o_text_read (const char *first_line,
              TextBuffer *tb,
              unsigned int release_ver,

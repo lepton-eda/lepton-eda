@@ -67,56 +67,56 @@ void m_polygon_append_point(GArray *points, int x, int y);
 
 /* o_attrib.c */
 void
-o_attrib_add (OBJECT *object,
-              OBJECT *item);
+o_attrib_add (LeptonObject *object,
+              LeptonObject *item);
 
 void
-o_attrib_attach (OBJECT *attrib,
-                 OBJECT *object,
+o_attrib_attach (LeptonObject *attrib,
+                 LeptonObject *object,
                  int set_color);
 
 void
 o_attrib_attach_list (GList *attr_list,
-                      OBJECT *object,
+                      LeptonObject *object,
                       int set_color);
 
 void
-o_attrib_detach_all (OBJECT *object);
+o_attrib_detach_all (LeptonObject *object);
 
 void o_attrib_print(GList *attributes);
 
 void
 o_attrib_remove (GList **list,
-                 OBJECT *remove);
+                 LeptonObject *remove);
 
 gboolean o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr);
-gboolean o_attrib_get_name_value (const OBJECT *attrib, gchar **name_ptr, gchar **value_ptr);
-const char *o_attrib_get_name (const OBJECT *attrib);
+gboolean o_attrib_get_name_value (const LeptonObject *attrib, gchar **name_ptr, gchar **value_ptr);
+const char *o_attrib_get_name (const LeptonObject *attrib);
 GList *o_attrib_find_floating_attribs (const GList *list);
 char *o_attrib_search_floating_attribs_by_name (const GList *list, const char *name, int counter);
-char *o_attrib_search_attached_attribs_by_name (OBJECT *object, const char *name, int counter);
-char *o_attrib_search_inherited_attribs_by_name (OBJECT *object, const char *name, int counter);
-char *o_attrib_search_object_attribs_by_name (OBJECT *object, const char *name, int counter);
-GList *o_attrib_return_attribs(OBJECT *object);
-int o_attrib_is_inherited(const OBJECT *attrib);
-gboolean o_attrib_is_attrib (const OBJECT *attrib);
+char *o_attrib_search_attached_attribs_by_name (LeptonObject *object, const char *name, int counter);
+char *o_attrib_search_inherited_attribs_by_name (LeptonObject *object, const char *name, int counter);
+char *o_attrib_search_object_attribs_by_name (LeptonObject *object, const char *name, int counter);
+GList *o_attrib_return_attribs(LeptonObject *object);
+int o_attrib_is_inherited(const LeptonObject *attrib);
+gboolean o_attrib_is_attrib (const LeptonObject *attrib);
 
 /* o_embed.c */
-void o_embed (OBJECT *o_current);
-void o_unembed (OBJECT *o_current);
+void o_embed (LeptonObject *o_current);
+void o_unembed (LeptonObject *o_current);
 
 /* o_selection.c */
 SELECTION *o_selection_new( void );
 
 void
 o_selection_add (SELECTION *selection,
-                 OBJECT *o_selected);
+                 LeptonObject *o_selected);
 
 void o_selection_print_all(const SELECTION *selection);
 
 void
 o_selection_remove (SELECTION *selection,
-                    OBJECT *o_selected);
+                    LeptonObject *o_selected);
 
 /* s_attrib.c */
 int s_attrib_add_entry(char *new_attrib);
@@ -156,10 +156,10 @@ gchar *s_clib_symbol_get_data_by_name (const gchar *name);
 GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel);
 
 /* s_conn.c */
-void s_conn_remove_object_connections (OBJECT *to_remove);
-void s_conn_update_object (PAGE* page, OBJECT *object);
-int s_conn_net_search(OBJECT* new_net, int whichone, GList * conn_list);
-GList *s_conn_return_others(GList *input_list, OBJECT *object);
+void s_conn_remove_object_connections (LeptonObject *to_remove);
+void s_conn_update_object (PAGE* page, LeptonObject *object);
+int s_conn_net_search(LeptonObject* new_net, int whichone, GList * conn_list);
+GList *s_conn_return_others(GList *input_list, LeptonObject *object);
 
 /* s_log.c */
 void s_log_init (const gchar *filename);
@@ -181,10 +181,10 @@ GLogLevelFlags
 lepton_log_level_debug ();
 
 /* s_slot.c */
-char *s_slot_search_slot(OBJECT *object, OBJECT **return_found);
+char *s_slot_search_slot(LeptonObject *object, LeptonObject **return_found);
 
 void
-s_slot_update_object (OBJECT *object);
+s_slot_update_object (LeptonObject *object);
 
 /* s_textbuffer.c */
 TextBuffer *s_textbuffer_new (const gchar *data, const gint size, const gchar* name);

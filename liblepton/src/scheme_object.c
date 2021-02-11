@@ -1,7 +1,7 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2011-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -74,7 +74,7 @@ SCM_SYMBOL (lineto_sym , "lineto");
 SCM_SYMBOL (curveto_sym , "curveto");
 SCM_SYMBOL (closepath_sym , "closepath");
 
-void o_page_changed (OBJECT *o)
+void o_page_changed (LeptonObject *o)
 {
   PAGE *p = o_get_page (o);
   if (p != NULL) p->CHANGED = TRUE;
@@ -82,18 +82,18 @@ void o_page_changed (OBJECT *o)
 
 /*! \brief Convert a Scheme object list to a GList.
  * \par Function Description
- * Takes a Scheme list of #OBJECT smobs, and returns a GList
- * containing the objects. If \a objs is not a list of #OBJECT smobs,
+ * Takes a Scheme list of #LeptonObject smobs, and returns a GList
+ * containing the objects. If \a objs is not a list of #LeptonObject smobs,
  * throws a Scheme error.
  *
- * \warning If the #OBJECT structures in the GList are to be stored by
+ * \warning If the #LeptonObject structures in the GList are to be stored by
  * C code and later free()'d directly, the smobs must be marked as
  * unsafe for garbage collection (by calling edascm_c_set_gc()).
  *
- * \param [in] objs a Scheme list of #OBJECT smobs.
+ * \param [in] objs a Scheme list of #LeptonObject smobs.
  * \param [in] subr the name of the Scheme subroutine (used for error
  *                  messages).
- * \return a #GList of #OBJECT.
+ * \return a #GList of #LeptonObject.
  */
 GList *
 edascm_to_object_glist (SCM objs, const char *subr)
@@ -122,15 +122,15 @@ edascm_to_object_glist (SCM objs, const char *subr)
 
 /*! \brief Convert a GList of objects into a Scheme list.
  * \par Function Description
- * Takes a GList of #OBJECT and returns a Scheme list of corresponding
+ * Takes a GList of #LeptonObject and returns a Scheme list of corresponding
  * object smobs.
  *
- * \warning If the #OBJECT structures are to be subsequently managed
+ * \warning If the #LeptonObject structures are to be subsequently managed
  * only by Scheme, the smobs in the returned list must be marked as
  * safe for garbage collection (by calling edascm_c_set_gc()).
  *
- * \param [in] objs a #GList of #OBJECT instances.
- * \return a Scheme list of smobs corresponding to each #OBJECT.
+ * \param [in] objs a #GList of #LeptonObject instances.
+ * \return a Scheme list of smobs corresponding to each #LeptonObject.
  */
 SCM
 edascm_from_object_glist (const GList *objs)
@@ -140,7 +140,7 @@ edascm_from_object_glist (const GList *objs)
   GList *iter = (GList *) objs;
 
   while (iter != NULL) {
-    lst = scm_cons (edascm_from_object ((OBJECT*) iter->data), lst);
+    lst = scm_cons (edascm_from_object ((LeptonObject*) iter->data), lst);
     iter = g_list_next (iter);
   }
 
@@ -152,33 +152,33 @@ edascm_from_object_glist (const GList *objs)
 
 /*! \brief Test if an object smob is of a particular type.
  * \par Function Description
- * Checks if \a smob contains an #OBJECT of the given \a type. This is
+ * Checks if \a smob contains an #LeptonObject of the given \a type. This is
  * intended to be used by C-based Scheme procedures for working with
  * particular object types.
  *
  * \param [in] smob Scheme value to check type for.
  * \param [in] type Type to check against (e.g. OBJ_LINE).
- * \return non-zero if \a smob is an #OBJECT smob of \a type.
+ * \return non-zero if \a smob is an #LeptonObject smob of \a type.
  */
 int
 edascm_is_object_type (SCM smob, int type)
 {
   if (!EDASCM_OBJECTP(smob)) return 0;
 
-  OBJECT *obj = edascm_to_object (smob);
+  LeptonObject *obj = edascm_to_object (smob);
   return (obj->type == type);
 }
 
 /*! \brief Copy an object.
  * \par Function Description
- * Returns a copy of the #OBJECT contained in smob \a obj_s as a new
+ * Returns a copy of the #LeptonObject contained in smob \a obj_s as a new
  * smob.
  *
  * \note Scheme API: Implements the %copy-object procedure in the
  * (lepton core object) module.
  *
- * \param [in] obj_s an #OBJECT smob.
- * \return a new #OBJECT smob containing a copy of the #OBJECT in \a obj_s.
+ * \param [in] obj_s an #LeptonObject smob.
+ * \return a new #LeptonObject smob containing a copy of the #LeptonObject in \a obj_s.
  */
 SCM_DEFINE (copy_object, "%copy-object", 1, 0, 0,
             (SCM obj_s), "Copy an object.")
@@ -187,7 +187,7 @@ SCM_DEFINE (copy_object, "%copy-object", 1, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG1, s_copy_object);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
 
   result = edascm_from_object (o_object_copy (obj));
 
@@ -200,12 +200,12 @@ SCM_DEFINE (copy_object, "%copy-object", 1, 0, 0,
 
 /*! \brief Get the type of an object.
  * \par Function Description
- * Returns a symbol describing the type of the #OBJECT smob \a obj_s.
+ * Returns a symbol describing the type of the #LeptonObject smob \a obj_s.
  *
  * \note Scheme API: Implements the %object-type procedure in the
  * (lepton core object) module.
  *
- * \param [in] obj_s an #OBJECT smob.
+ * \param [in] obj_s an #LeptonObject smob.
  * \return a Scheme symbol representing the object type.
  */
 SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
@@ -216,7 +216,7 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG1, s_object_type);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   switch (obj->type) {
   case OBJ_LINE:    result = line_sym;       break;
   case OBJ_NET:     result = net_sym;        break;
@@ -242,12 +242,12 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
 
 /*! \brief Get the internal id of an object.
  * \par Function Description
- * Returns an internal id number of the #OBJECT smob \a obj_s.
+ * Returns an internal id number of the #LeptonObject smob \a obj_s.
  *
  * \note Scheme API: Implements the %object-id procedure in the
  * (lepton core object) module.
  *
- * \param [in] obj_s an #OBJECT smob.
+ * \param [in] obj_s an #LeptonObject smob.
  * \return a Scheme symbol representing the object type.
  */
 SCM_DEFINE (object_id, "%object-id", 1, 0, 0,
@@ -256,7 +256,7 @@ SCM_DEFINE (object_id, "%object-id", 1, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG1, s_object_type);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
 
   return scm_from_int (obj->sid);
 }
@@ -280,9 +280,9 @@ SCM_DEFINE (object_id, "%object-id", 1, 0, 0,
  *
  * \note Scheme API: Implements the %object-bounds procedure in the
  * (lepton core object) module.  The procedure takes any number of
- * #OBJECT smobs as arguments.
+ * #LeptonObject smobs as arguments.
  *
- * \param [in] rst_s Variable-length list of #OBJECT arguments.
+ * \param [in] rst_s Variable-length list of #LeptonObject arguments.
  * \return bounds of objects or SCM_BOOL_F.
  */
 SCM_DEFINE (object_bounds, "%object-bounds", 0, 0, 1,
@@ -342,7 +342,7 @@ SCM_DEFINE (object_stroke, "%object-stroke", 1, 0, 0,
                || edascm_is_object_type (obj_s, OBJ_PATH)),
               obj_s, SCM_ARG1, s_object_stroke);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
 
   int end, type, width, length, space;
   o_get_line_options (obj, (OBJECT_END *) &end, (OBJECT_TYPE *) &type, &width,
@@ -418,7 +418,7 @@ SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
                || edascm_is_object_type (obj_s, OBJ_PATH)),
               obj_s, SCM_ARG1, s_set_object_stroke_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   int cap, type, width, length = -1, space = -1;
 
   SCM_ASSERT (scm_is_integer (width_s), width_s,
@@ -513,7 +513,7 @@ SCM_DEFINE (object_fill, "%object-fill", 1, 0, 0,
                || edascm_is_object_type (obj_s, OBJ_PATH)),
               obj_s, SCM_ARG1, s_object_fill);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
 
   int type, width, pitch1, angle1, pitch2, angle2;
   o_get_fill_options (obj, (OBJECT_FILLING *) &type, &width, &pitch1, &angle1,
@@ -572,7 +572,7 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
                || edascm_is_object_type (obj_s, OBJ_PATH)),
               obj_s, SCM_ARG1, s_set_object_fill_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   int type, width = -1, angle1 = -1, space1 = -1, angle2 = -1, space2 = -1;
 
   if      (scm_is_eq (type_s, hollow_sym)) { type = FILLING_HOLLOW;   }
@@ -649,14 +649,14 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
 
 /*! \brief Get the color of an object.
  * \par Function Description
- * Returns the colormap index of the color used to draw the #OBJECT
+ * Returns the colormap index of the color used to draw the #LeptonObject
  * smob \a obj_s. Note that the color may not be meaningful for some
  * object types.
  *
  * \note Scheme API: Implements the %object-color procedure in the
  * (lepton core object) module.
  *
- * \param [in] obj_s #OBJECT smob to inspect.
+ * \param [in] obj_s #LeptonObject smob to inspect.
  * \return The colormap index used by \a obj_s.
  */
 SCM_DEFINE (object_color, "%object-color", 1, 0, 0,
@@ -665,20 +665,20 @@ SCM_DEFINE (object_color, "%object-color", 1, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG1, s_object_color);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   return scm_from_int (obj->color);
 }
 
 /*! \brief Set the color of an object.
  * \par Function Description
- * Set the colormap index of the color used to draw the #OBJECT smob
+ * Set the colormap index of the color used to draw the #LeptonObject smob
  * \a obj_s to \a color_s. Note that the color may not be meaningful
  * for some object types.
  *
  * \note Scheme API: Implements the %set-object-color! procedure in
  * the (lepton core object) module.
  *
- * \param obj_s   #OBJECT smob to modify.
+ * \param obj_s   #LeptonObject smob to modify.
  * \param color_s new colormap index to use for \a obj_s.
  * \return the modified \a obj_s.
  */
@@ -690,7 +690,7 @@ SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
   SCM_ASSERT (scm_is_integer (color_s), color_s,
               SCM_ARG2, s_set_object_color_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   o_set_color (obj, scm_to_int (color_s));
 
   o_page_changed (obj);
@@ -709,7 +709,7 @@ SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
  * \note Scheme API: Implements the %object-selectable? procedure in the
  * (lepton core object) module.
  *
- * \param obj_s  #OBJECT smob to inspect.
+ * \param obj_s  #LeptonObject smob to inspect.
  *
  * \return       Boolean value indicating whether \a obj_s is selectable.
  */
@@ -719,7 +719,7 @@ SCM_DEFINE (object_selectable_p, "%object-selectable?", 1, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG1, s_object_selectable_p);
 
-  OBJECT* obj = edascm_to_object (obj_s);
+  LeptonObject* obj = edascm_to_object (obj_s);
 
   return scm_from_bool (obj->selectable);
 
@@ -735,7 +735,7 @@ SCM_DEFINE (object_selectable_p, "%object-selectable?", 1, 0, 0,
  * \note Scheme API: Implements the %set-object-selectable! procedure in
  * the (lepton core object) module.
  *
- * \param obj_s         #OBJECT smob to modify.
+ * \param obj_s         #LeptonObject smob to modify.
  * \param selectable_s  boolean: object's selectable flag.
  *
  * \return          the object (\a obj_s).
@@ -748,7 +748,7 @@ SCM_DEFINE (set_object_selectable_x, "%set-object-selectable!", 2, 0, 0,
   SCM_ASSERT (scm_is_bool (selectable_s), selectable_s,
               SCM_ARG2, s_set_object_selectable_x);
 
-  OBJECT* obj = edascm_to_object (obj_s);
+  LeptonObject* obj = edascm_to_object (obj_s);
 
   int selectable = scm_is_true (selectable_s);
 
@@ -772,7 +772,7 @@ SCM_DEFINE (set_object_selectable_x, "%set-object-selectable!", 2, 0, 0,
  * \note Scheme API: Implements the %object-embedded? procedure in the
  * (lepton core object) module.
  *
- * \param obj_s  #OBJECT smob to inspect.
+ * \param obj_s  #LeptonObject smob to inspect.
  *
  * \return       Boolean value indicating whether \a obj_s is embedded.
  */
@@ -782,7 +782,7 @@ SCM_DEFINE (object_embedded_p, "%object-embedded?", 1, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG1, s_object_embedded_p);
 
-  OBJECT*  obj = edascm_to_object (obj_s);
+  LeptonObject*  obj = edascm_to_object (obj_s);
   gboolean ret = FALSE;
 
   if (obj->type == OBJ_COMPONENT)
@@ -812,7 +812,7 @@ SCM_DEFINE (object_embedded_p, "%object-embedded?", 1, 0, 0,
  * \note Scheme API: Implements the %set-object-embedded! procedure in
  * the (lepton core object) module.
  *
- * \param obj_s    #OBJECT smob to modify.
+ * \param obj_s    #LeptonObject smob to modify.
  * \param embed_s  boolean: whether to embed (#t) or unembed (#f) the object.
  *
  * \return         the object (\a obj_s).
@@ -825,7 +825,7 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
   SCM_ASSERT (scm_is_bool (embed_s), embed_s,
               SCM_ARG2, s_set_object_embedded_x);
 
-  OBJECT* obj   = edascm_to_object (obj_s);
+  LeptonObject* obj   = edascm_to_object (obj_s);
   int     embed = scm_is_true (embed_s);
 
   gboolean component  = obj->type == OBJ_COMPONENT;
@@ -920,7 +920,7 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   SCM_ASSERT (scm_is_integer (y2_s),    y2_s,    SCM_ARG5, s_set_line_x);
   SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_line_x);
 
-  OBJECT *obj = edascm_to_object (line_s);
+  LeptonObject *obj = edascm_to_object (line_s);
   int x1 = scm_to_int (x1_s);
   int y1 = scm_to_int (y1_s);
   int x2 = scm_to_int (x2_s);
@@ -989,7 +989,7 @@ SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
                || edascm_is_object_type (line_s, OBJ_PIN)),
               line_s, SCM_ARG1, s_line_info);
 
-  OBJECT *obj = edascm_to_object (line_s);
+  LeptonObject *obj = edascm_to_object (line_s);
   SCM x1 = scm_from_int (geda_line_object_get_x0 (obj));
   SCM y1 = scm_from_int (geda_line_object_get_y0 (obj));
   SCM x2 = scm_from_int (geda_line_object_get_x1 (obj));
@@ -1019,7 +1019,7 @@ SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
 SCM_DEFINE (make_net, "%make-net", 0, 0, 0,
             (), "Create a new net object.")
 {
-  OBJECT *obj;
+  LeptonObject *obj;
   SCM result;
 
   obj = geda_net_object_new (OBJ_NET, NET_COLOR, 0, 0, 0, 0);
@@ -1049,7 +1049,7 @@ SCM_DEFINE (make_net, "%make-net", 0, 0, 0,
 SCM_DEFINE (make_bus, "%make-bus", 0, 0, 0,
             (), "Create a new bus object.")
 {
-  OBJECT *obj;
+  LeptonObject *obj;
   SCM result;
 
   obj = geda_bus_object_new (BUS_COLOR,
@@ -1096,13 +1096,13 @@ SCM_DEFINE (make_pin, "%make-pin", 1, 0, 0,
                     scm_list_1 (type_s));
   }
 
-  OBJECT *obj = geda_pin_object_new (PIN_COLOR,
-                                     0,
-                                     0,
-                                     0,
-                                     0,
-                                     type,
-                                     0);
+  LeptonObject *obj = geda_pin_object_new (PIN_COLOR,
+                                           0,
+                                           0,
+                                           0,
+                                           0,
+                                           type,
+                                           0);
   SCM result = edascm_from_object (obj);
 
   /* At the moment, the only pointer to the object is owned by the
@@ -1128,7 +1128,7 @@ SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (pin_s, OBJ_PIN), pin_s,
               SCM_ARG1, s_pin_type);
 
-  OBJECT *obj = edascm_to_object (pin_s);
+  LeptonObject *obj = edascm_to_object (pin_s);
   SCM result;
 
   switch (obj->pin_type) {
@@ -1160,8 +1160,8 @@ SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
 SCM_DEFINE (make_box, "%make-box", 0, 0, 0,
             (), "Create a new box object.")
 {
-  OBJECT *obj = geda_box_object_new (OBJ_BOX, default_color_id(),
-                                     0, 0, 0, 0);
+  LeptonObject *obj = geda_box_object_new (OBJ_BOX, default_color_id(),
+                                           0, 0, 0, 0);
 
   SCM result = edascm_from_object (obj);
 
@@ -1201,7 +1201,7 @@ SCM_DEFINE (set_box_x, "%set-box!", 6, 0, 0,
   SCM_ASSERT (scm_is_integer (y2_s),    y2_s,    SCM_ARG5, s_set_box_x);
   SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_box_x);
 
-  OBJECT *obj = edascm_to_object (box_s);
+  LeptonObject *obj = edascm_to_object (box_s);
   geda_box_object_modify_all (obj,
                               scm_to_int (x1_s), scm_to_int (y1_s),
                               scm_to_int (x2_s), scm_to_int (y2_s));
@@ -1232,7 +1232,7 @@ SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (box_s, OBJ_BOX), box_s,
               SCM_ARG1, s_box_info);
 
-  OBJECT *obj = edascm_to_object (box_s);
+  LeptonObject *obj = edascm_to_object (box_s);
 
   return scm_list_n (scm_from_int (obj->box->upper_x),
                      scm_from_int (obj->box->upper_y),
@@ -1297,7 +1297,7 @@ SCM_DEFINE (set_circle_x, "%set-circle!", 5, 0, 0,
   SCM_ASSERT (scm_is_integer (r_s),     r_s,     SCM_ARG4, s_set_circle_x);
   SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG5, s_set_circle_x);
 
-  OBJECT *obj = edascm_to_object (circle_s);
+  LeptonObject *obj = edascm_to_object (circle_s);
   geda_circle_object_modify (obj, scm_to_int(x_s), scm_to_int(y_s),
                              CIRCLE_CENTER);
   geda_circle_object_modify (obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
@@ -1328,7 +1328,7 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (circle_s, OBJ_CIRCLE),
               circle_s, SCM_ARG1, s_circle_info);
 
-  OBJECT *obj = edascm_to_object (circle_s);
+  LeptonObject *obj = edascm_to_object (circle_s);
 
   return scm_list_n (scm_from_int (geda_circle_object_get_center_x (obj)),
                      scm_from_int (geda_circle_object_get_center_y (obj)),
@@ -1400,7 +1400,7 @@ SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
   SCM_ASSERT (scm_is_integer (end_angle_s),
                                   end_angle_s, SCM_ARG6, s_set_arc_x);
 
-  OBJECT *obj = edascm_to_object (arc_s);
+  LeptonObject *obj = edascm_to_object (arc_s);
   geda_arc_object_modify (obj, scm_to_int(x_s), scm_to_int(y_s), ARC_CENTER);
   geda_arc_object_modify (obj, scm_to_int(r_s), 0, ARC_RADIUS);
   geda_arc_object_modify (obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
@@ -1436,7 +1436,7 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (arc_s, OBJ_ARC),
               arc_s, SCM_ARG1, s_arc_info);
 
-  OBJECT *obj = edascm_to_object (arc_s);
+  LeptonObject *obj = edascm_to_object (arc_s);
 
   return scm_list_n (scm_from_int (geda_arc_object_get_center_x (obj)),
                      scm_from_int (geda_arc_object_get_center_y (obj)),
@@ -1460,15 +1460,15 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
 SCM_DEFINE (make_text, "%make-text", 0, 0, 0,
             (), "Create a new text object.")
 {
-  OBJECT *obj = geda_text_object_new (default_color_id(),
-                                      0,
-                                      0,
-                                      LOWER_LEFT,
-                                      0,
-                                      "",
-                                      10,
-                                      VISIBLE,
-                                      SHOW_NAME_VALUE);
+  LeptonObject *obj = geda_text_object_new (default_color_id(),
+                                            0,
+                                            0,
+                                            LOWER_LEFT,
+                                            0,
+                                            "",
+                                            10,
+                                            VISIBLE,
+                                            SHOW_NAME_VALUE);
 
   SCM result = edascm_from_object (obj);
 
@@ -1523,7 +1523,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   SCM_ASSERT (scm_is_symbol (show_s),    show_s,     9, s_set_text_x);
   SCM_ASSERT (scm_is_integer (color_s),  color_s,   10, s_set_text_x);
 
-  OBJECT *obj = edascm_to_object (text_s);
+  LeptonObject *obj = edascm_to_object (text_s);
 
   /* Alignment. Sadly we can't switch on pointers. :-( */
   int align;
@@ -1632,7 +1632,7 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (text_s, OBJ_TEXT),
               text_s, SCM_ARG1, s_text_info);
 
-  OBJECT *obj = edascm_to_object (text_s);
+  LeptonObject *obj = edascm_to_object (text_s);
   SCM align_s, visible_s, show_s;
 
   switch (geda_text_object_get_alignment (obj)) {
@@ -1692,8 +1692,8 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
  * \note Scheme API: Implements the %object-connections procedure of
  * the (lepton core object) module.
  *
- * \param obj_s #OBJECT smob for object to get connections for.
- * \return a list of #OBJECT smobs.
+ * \param obj_s #LeptonObject smob for object to get connections for.
+ * \return a list of #LeptonObject smobs.
  */
 SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
             (SCM obj_s), "Get objects that are connected to an object.")
@@ -1702,7 +1702,7 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
               SCM_ARG1, s_object_connections);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   if (o_get_page (obj) == NULL) {
     scm_error (edascm_object_state_sym,
                s_object_connections,
@@ -1724,8 +1724,8 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
  * \note Scheme API: Implements the %object-component procedure of the
  * (lepton core object) module.
  *
- * \param obj_s #OBJECT smob for object to get component of.
- * \return the #OBJECT smob of the containing component, or SCM_BOOL_F.
+ * \param obj_s #LeptonObject smob for object to get component of.
+ * \return the #LeptonObject smob of the containing component, or SCM_BOOL_F.
  */
 SCM_DEFINE (object_component, "%object-component", 1, 0, 0,
             (SCM obj_s), "Get containing component object of an object.")
@@ -1734,8 +1734,8 @@ SCM_DEFINE (object_component, "%object-component", 1, 0, 0,
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
               SCM_ARG1, s_object_component);
 
-  OBJECT *obj = edascm_to_object (obj_s);
-  OBJECT *parent = o_get_parent (obj);
+  LeptonObject *obj = edascm_to_object (obj_s);
+  LeptonObject *parent = o_get_parent (obj);
 
   if (parent == NULL) return SCM_BOOL_F;
 
@@ -1755,7 +1755,7 @@ SCM_DEFINE (object_component, "%object-component", 1, 0, 0,
 SCM_DEFINE (make_path, "%make-path", 0, 0, 0,
             (), "Create a new path object")
 {
-  OBJECT *obj = geda_path_object_new (OBJ_PATH, default_color_id(), "");
+  LeptonObject *obj = geda_path_object_new (OBJ_PATH, default_color_id(), "");
 
   SCM result = edascm_from_object (obj);
 
@@ -1773,7 +1773,7 @@ SCM_DEFINE (make_path, "%make-path", 0, 0, 0,
  * \note Scheme API: Implements the %path-length procedure in the
  * (lepton core object) module.
  *
- * \param obj_s #OBJECT smob for path object to inspect.
+ * \param obj_s #LeptonObject smob for path object to inspect.
  * \return The number of path elements in \a obj_s.
  */
 SCM_DEFINE (path_length, "%path-length", 1, 0, 0,
@@ -1783,7 +1783,7 @@ SCM_DEFINE (path_length, "%path-length", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PATH), obj_s,
               SCM_ARG1, s_path_length);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   return scm_from_int (obj->path->num_sections);
 }
 
@@ -1811,7 +1811,7 @@ SCM_DEFINE (path_length, "%path-length", 1, 0, 0,
  * \note Scheme API: Implements the %path-ref procedure in the
  * (lepton core object) module.
  *
- * \param obj_s   #OBJECT smob of path object to get element from.
+ * \param obj_s   #LeptonObject smob of path object to get element from.
  * \param index_s Index of element to retrieve from \a obj_s
  * \return A list containing the requested path element data.
  */
@@ -1824,7 +1824,7 @@ SCM_DEFINE (path_ref, "%path-ref", 2, 0, 0,
               SCM_ARG1, s_path_ref);
   SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_ref);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   int idx = scm_to_int (index_s);
 
   /* Check index is valid for path */
@@ -1872,7 +1872,7 @@ SCM_DEFINE (path_ref, "%path-ref", 2, 0, 0,
  * \note Scheme API: Implements the %path-remove! procedure in the
  * (lepton core object) module.
  *
- * \param obj_s   #OBJECT smob of path object to remove element from.
+ * \param obj_s   #LeptonObject smob of path object to remove element from.
  * \param index_s Index of element to remove from \a obj_s.
  * \return \a obj_s.
  */
@@ -1885,7 +1885,7 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
               SCM_ARG1, s_path_ref);
   SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_ref);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   int idx = scm_to_int (index_s);
 
   if ((idx < 0) || (idx >= obj->path->num_sections)) {
@@ -1937,7 +1937,7 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
  * \note Scheme API: Implements the %path-insert! procedure of the
  * (lepton core object) module.
  *
- * \param obj_s   #OBJECT smob for the path object to modify.
+ * \param obj_s   #LeptonObject smob for the path object to modify.
  * \param index_s Index at which to insert new element.
  * \param type_s  Symbol indicating what type of element to insert.
  * \param x1_s    X-coordinate of first coordinate pair.
@@ -1958,7 +1958,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_insert_x);
   SCM_ASSERT (scm_is_symbol (type_s), type_s, SCM_ARG3, s_path_insert_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   PATH *path = obj->path;
   PATH_SECTION section = {(PATH_CODE) 0, 0, 0, 0, 0, 0, 0};
 
@@ -2043,7 +2043,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
 SCM_DEFINE (make_picture, "%make-picture", 0, 0, 0, (),
             "Create a new picture object")
 {
-  OBJECT *obj = o_picture_new (NULL, 0, NULL, OBJ_PICTURE,
+  LeptonObject *obj = o_picture_new (NULL, 0, NULL, OBJ_PICTURE,
                                0, 0, 0, 0, 0, FALSE, TRUE);
   SCM result = edascm_from_object (obj);
 
@@ -2079,7 +2079,7 @@ SCM_DEFINE (picture_info, "%picture-info", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PICTURE), obj_s,
               SCM_ARG1, s_picture_info);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   const gchar *filename = o_picture_get_filename (obj);
 
   SCM filename_s = SCM_BOOL_F;
@@ -2125,7 +2125,7 @@ SCM_DEFINE (set_picture_x, "%set-picture!", 7, 0, 0,
   SCM_ASSERT (scm_is_integer (y2_s), x1_s, SCM_ARG5, s_set_picture_x);
   SCM_ASSERT (scm_is_integer (angle_s), angle_s, SCM_ARG6, s_set_picture_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
 
   /* Angle */
   int angle = scm_to_int (angle_s);
@@ -2203,7 +2203,7 @@ SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
 
   gboolean status;
   GError *error = NULL;
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   gchar *filename = scm_to_utf8_string (filename_s);
   scm_dynwind_unwind_handler (g_free, filename, SCM_F_WIND_EXPLICITLY);
 
@@ -2233,7 +2233,7 @@ SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
  * \note Scheme API: Implements the %translate-object! procedure of the
  * (lepton core object) module.
  *
- * \param obj_s  #OBJECT smob for object to translate.
+ * \param obj_s  #LeptonObject smob for object to translate.
  * \param dx_s   Integer distance to translate along x-axis.
  * \param dy_s   Integer distance to translate along y-axis.
  * \return \a obj_s.
@@ -2249,7 +2249,7 @@ SCM_DEFINE (translate_object_x, "%translate-object!", 3, 0, 0,
   SCM_ASSERT (scm_is_integer (dy_s), dy_s,
               SCM_ARG3, s_translate_object_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   int dx = scm_to_int (dx_s);
   int dy = scm_to_int (dy_s);
 
@@ -2270,7 +2270,7 @@ SCM_DEFINE (translate_object_x, "%translate-object!", 3, 0, 0,
  * \note Scheme API: Implements the %rotate-object! procedure of the
  * (lepton core object) module.
  *
- * \param obj_s    #OBJECT smob for object to translate.
+ * \param obj_s    #LeptonObject smob for object to translate.
  * \param x_s      x-coordinate of centre of rotation.
  * \param y_s      y-coordinate of centre of rotation.
  * \param angle_s  Angle to rotate by.
@@ -2290,7 +2290,7 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
   SCM_ASSERT (scm_is_integer (angle_s), angle_s,
               SCM_ARG4, s_rotate_object_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   int x = scm_to_int (x_s);
   int y = scm_to_int (y_s);
   int angle = scm_to_int (angle_s);
@@ -2318,7 +2318,7 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
  * \note Scheme API: Implements the %mirror-object! procedure of the
  * (lepton core object) module.
  *
- * \param obj_s    #OBJECT smob for object to translate.
+ * \param obj_s    #LeptonObject smob for object to translate.
  * \param x_s      x-coordinate of centre of rotation.
  * \return \a obj_s.
  */
@@ -2332,7 +2332,7 @@ SCM_DEFINE (mirror_object_x, "%mirror-object!", 2, 0, 0,
   SCM_ASSERT (scm_is_integer (x_s), x_s,
               SCM_ARG2, s_mirror_object_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   int x = scm_to_int (x_s);
 
   o_emit_pre_change_notify (obj);
@@ -2409,7 +2409,7 @@ init_module_lepton_core_object (void *unused)
 /*!
  * \brief Initialise the basic Lepton EDA object manipulation procedures.
  * \par Function Description
- * Registers some Scheme procedures for working with #OBJECT
+ * Registers some Scheme procedures for working with #LeptonObject
  * smobs. Should only be called by edascm_init().
  */
 void

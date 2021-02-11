@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,33 +29,34 @@ G_BEGIN_DECLS
 #define PICTURE_UPPER_RIGHT 2
 #define PICTURE_LOWER_LEFT  3
 
-OBJECT *o_picture_new (const gchar *file_content,
-                       gsize file_length,
-                       const gchar *filename,
-                       char type,
-                       int x1,
-                       int y1,
-                       int x2,
-                       int y2,
-                       int angle,
-                       int mirrored,
-                       int embedded) G_GNUC_WARN_UNUSED_RESULT;
+LeptonObject*
+o_picture_new (const gchar *file_content,
+               gsize file_length,
+               const gchar *filename,
+               char type,
+               int x1,
+               int y1,
+               int x2,
+               int y2,
+               int angle,
+               int mirrored,
+               int embedded) G_GNUC_WARN_UNUSED_RESULT;
 
 void
-geda_picture_object_calculate_bounds (const OBJECT *object,
+geda_picture_object_calculate_bounds (const LeptonObject *object,
                                       GedaBounds *bounds);
 
 double
-o_picture_get_ratio (OBJECT *object);
+o_picture_get_ratio (LeptonObject *object);
 
 void
-o_picture_modify (OBJECT *object,
+o_picture_modify (LeptonObject *object,
                   int x,
                   int y,
                   int whichone);
 
 void
-o_picture_modify_all (OBJECT *object,
+o_picture_modify_all (LeptonObject *object,
                       int x1,
                       int y1,
                       int x2,
@@ -65,34 +66,34 @@ void
 geda_picture_object_rotate (int world_centerx,
                             int world_centery,
                             int angle,
-                            OBJECT *object);
+                            LeptonObject *object);
 
 void
 geda_picture_object_mirror (int world_centerx,
                             int world_centery,
-                            OBJECT *object);
+                            LeptonObject *object);
 
 void
 geda_picture_object_translate (LeptonObject *object, int dx, int dy);
 
-OBJECT*
-o_picture_copy (OBJECT *o_current) G_GNUC_WARN_UNUSED_RESULT;
+LeptonObject*
+o_picture_copy (LeptonObject *o_current) G_GNUC_WARN_UNUSED_RESULT;
 
 gboolean
-o_picture_is_embedded (const OBJECT *object);
+o_picture_is_embedded (const LeptonObject *object);
 
 GdkPixbuf*
-o_picture_get_pixbuf (OBJECT *object) G_GNUC_WARN_UNUSED_RESULT;
+o_picture_get_pixbuf (LeptonObject *object) G_GNUC_WARN_UNUSED_RESULT;
 
 gboolean
-o_picture_set_from_buffer (OBJECT *object,
+o_picture_set_from_buffer (LeptonObject *object,
                            const gchar *filename,
                            const gchar *data,
                            size_t len,
                            GError **error);
 
 gboolean
-o_picture_set_from_file (OBJECT *object,
+o_picture_set_from_file (LeptonObject *object,
                          const gchar *filename,
                          GError **error);
 const gchar*
@@ -101,7 +102,7 @@ o_picture_get_filename (const LeptonObject *object);
 GdkPixbuf*
 o_picture_get_fallback_pixbuf () G_GNUC_WARN_UNUSED_RESULT;
 
-OBJECT*
+LeptonObject*
 o_picture_read (const char *first_line,
                 TextBuffer *tb,
                 unsigned int release_ver,
@@ -112,7 +113,7 @@ gchar*
 geda_picture_object_to_buffer (const LeptonObject *object);
 
 double
-geda_picture_object_shortest_distance (OBJECT *object,
+geda_picture_object_shortest_distance (LeptonObject *object,
                                        int x,
                                        int y,
                                        int force_soild,
@@ -122,9 +123,9 @@ gboolean
 geda_picture_object_get_position (const LeptonObject *object, gint *x, gint *y);
 
 void
-o_picture_embed (OBJECT *object);
+o_picture_embed (LeptonObject *object);
 
 void
-o_picture_unembed (OBJECT *object);
+o_picture_unembed (LeptonObject *object);
 
 G_END_DECLS

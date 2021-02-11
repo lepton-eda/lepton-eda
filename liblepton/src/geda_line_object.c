@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
 
 #include "libgeda_priv.h"
 
-/*! \brief Create and add line OBJECT to list.
+/*! \brief Create and add line LeptonObject to list.
  *  \par Function Description
  *  This function creates a new object representing a line.
  *
@@ -39,7 +39,7 @@
  *  The <B>color</B> parameter corresponds to the color the box
  *  will be drawn with.
  *
- *  The #OBJECT structure is allocated with the #s_basic_new_object()
+ *  The #LeptonObject structure is allocated with the #s_basic_new_object()
  *  function. The structure describing the line is allocated and
  *  initialized with the parameters given to the function.
  *
@@ -63,7 +63,7 @@ geda_line_object_new (gint color,
                       gint x2,
                       gint y2)
 {
-  OBJECT *new_node;
+  LeptonObject *new_node;
 
   /* create the object */
   new_node = s_basic_new_object (OBJ_LINE, "line");
@@ -101,13 +101,13 @@ geda_line_object_new (gint color,
  *  This function creates a verbatim copy of the
  *  object pointed by <B>o_current</B> describing a line.
  *
- *  \param [in]  o_current  Line OBJECT to copy.
- *  \return The new OBJECT
+ *  \param [in]  o_current  Line LeptonObject to copy.
+ *  \return The new LeptonObject
  */
-OBJECT*
-geda_line_object_copy (OBJECT *o_current)
+LeptonObject*
+geda_line_object_copy (LeptonObject *o_current)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
 
   new_obj = geda_line_object_new (o_current->color,
                                   o_current->line->x[0],
@@ -286,7 +286,7 @@ geda_line_object_set_y1 (LeptonObject *object, gint y)
   object->line->y[1] = y;
 }
 
-/*! \brief Modify the description of a line OBJECT.
+/*! \brief Modify the description of a line LeptonObject.
  *  \par Function Description
  *  This function modifies the coordinates of one of the two ends of
  *  the line described by <B>*object</B>. The new coordinates of this end,
@@ -296,7 +296,7 @@ geda_line_object_set_y1 (LeptonObject *object, gint y)
  *  The coordinates of the end of line is modified in the world
  *  coordinate system. Screen coordinates and boundings are then updated.
  *
- *  \param [in,out] object     Line OBJECT to modify.
+ *  \param [in,out] object     Line LeptonObject to modify.
  *  \param [in]     x          New x coordinate.
  *  \param [in]     y          New y coordinate.
  *  \param [in]     whichone   Which line parameter to modify.
@@ -308,7 +308,7 @@ geda_line_object_set_y1 (LeptonObject *object, gint y)
  *  </DL>
  */
 void
-geda_line_object_modify (OBJECT *object,
+geda_line_object_modify (LeptonObject *object,
                          int x, int y, int whichone)
 {
   o_emit_pre_change_notify (object);
@@ -331,10 +331,10 @@ geda_line_object_modify (OBJECT *object,
   o_emit_change_notify (object);
 }
 
-/*! \brief Create line OBJECT from character string.
+/*! \brief Create line LeptonObject from character string.
  *  \par Function Description
- *  This function creates a line OBJECT from the character string
- *  <B>*buf</B> the description of a box.
+ *  This function creates a line LeptonObject from the character
+ *  string <B>*buf</B> the description of a box.
  *
  *  The function returns a pointer on the new last element, that is
  *  the added line object.
@@ -351,13 +351,13 @@ geda_line_object_modify (OBJECT *object,
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new line object, or NULL on error.
  */
-OBJECT*
+LeptonObject*
 o_line_read (const char buf[],
              unsigned int release_ver,
              unsigned int fileformat_ver,
              GError ** err)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   char type;
   int x1, y1;
   int x2, y2;
@@ -441,15 +441,15 @@ o_line_read (const char buf[],
   return new_obj;
 }
 
-/*! \brief Create a character string representation of a line OBJECT.
+/*! \brief Create a character string representation of a line LeptonObject.
  *  \par Function Description
  *  The function formats a string in the buffer <B>*buff</B> to describe
  *  the box object <B>*object</B>.
  *  It follows the post-20000704 release file format that handle the
  *  line type and fill options - filling is irrelevant here.
  *
- *  \param [in] object  Line OBJECT to create string from.
- *  \return A pointer to the line OBJECT character string.
+ *  \param [in] object  Line LeptonObject to create string from.
+ *  \return A pointer to the line LeptonObject character string.
  *
  *  \note
  *  Caller must g_free returned character string.
@@ -499,7 +499,7 @@ geda_line_object_translate (LeptonObject *object, int dx, int dy)
   object->line->y[1] = object->line->y[1] + dy;
 }
 
-/*! \brief Rotate Line OBJECT using WORLD coordinates.
+/*! \brief Rotate Line LeptonObject using WORLD coordinates.
  *  \par Function Description
  *  This function rotates the line described by
  *  <B>*object</B> around the (<B>world_centerx</B>,<B>world_centery</B>)
@@ -509,13 +509,13 @@ geda_line_object_translate (LeptonObject *object, int dx, int dy)
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
- *  \param [in,out]  object         Line OBJECT to rotate.
+ *  \param [in,out]  object         Line LeptonObject to rotate.
  */
 void
 geda_line_object_rotate (int world_centerx,
                          int world_centery,
                          int angle,
-                         OBJECT *object)
+                         LeptonObject *object)
 {
   int newx, newy;
 
@@ -569,12 +569,12 @@ geda_line_object_rotate (int world_centerx,
  *
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
- *  \param [in,out] object         Line OBJECT to mirror.
+ *  \param [in,out] object         Line LeptonObject to mirror.
  */
 void
 geda_line_object_mirror (int world_centerx,
                          int world_centery,
-                         OBJECT *object)
+                         LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -600,7 +600,7 @@ geda_line_object_mirror (int world_centerx,
  *  \param [out] bounds   The bounds of the line
  */
 void
-geda_line_object_calculate_bounds (const OBJECT *object,
+geda_line_object_calculate_bounds (const LeptonObject *object,
                                    GedaBounds *bounds)
 {
   gint expand;
@@ -650,11 +650,11 @@ geda_line_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  \par Function Description
  *  This function calculates the length of a line object
  *
- *  \param [in] object  a line OBJECT
+ *  \param [in] object  a line LeptonObject
  *  \return The length of the line
  */
 double
-geda_line_object_length (OBJECT *object)
+geda_line_object_length (LeptonObject *object)
 {
   double length;
   double dx, dy;
@@ -681,7 +681,7 @@ geda_line_object_length (OBJECT *object)
  *  If the line represents a single point (the endpoints are the same), this
  *  function calcualtes the distance to that point.
  *
- *  \param [in] object         The line OBJECT.
+ *  \param [in] object         The line LeptonObject.
  *  \param [in] x              The x coordinate of the given point.
  *  \param [in] y              The y coordinate of the given point.
  *  \param [in] force_solid    If true, force treating the object as solid.
@@ -690,7 +690,7 @@ geda_line_object_length (OBJECT *object)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-geda_line_object_shortest_distance (OBJECT *object,
+geda_line_object_shortest_distance (LeptonObject *object,
                                     int x,
                                     int y,
                                     int force_solid,

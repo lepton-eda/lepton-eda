@@ -1,6 +1,6 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@ SCM_DEFINE (get_line_width, "%get-line-width", 1, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG1, s_get_line_width);
 
-  OBJECT *object = edascm_to_object (obj_s);
+  LeptonObject *object = edascm_to_object (obj_s);
 
   return scm_from_int(object->line_width);
 }

@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -49,7 +49,7 @@ typedef enum { F_OPEN_RC           = 1,
 } FOpenFlags;
 
 
-/*! \brief Structure for connections between OBJECTs
+/*! \brief Structure for connections between LeptonObjects
  *
  * The st_conn structure contains a single connection
  * to another object.
@@ -57,7 +57,7 @@ typedef enum { F_OPEN_RC           = 1,
  */
 struct st_conn {
   /*! \brief The "other" object connected to this one */
-  OBJECT *other_object;
+  LeptonObject *other_object;
   /*! \brief type of connection. Always in reference to how the "other"
     object is connected to the current one */
   int type;
@@ -72,7 +72,7 @@ struct st_conn {
 };
 
 /*! \brief Type of callback function for object damage notification */
-typedef int(*ChangeNotifyFunc)(void *, OBJECT *);
+typedef int(*ChangeNotifyFunc)(void *, LeptonObject *);
 
 /*! \brief Type of callback function for querying loading of backups */
 typedef gboolean(*LoadBackupQueryFunc)(void *, GString *);

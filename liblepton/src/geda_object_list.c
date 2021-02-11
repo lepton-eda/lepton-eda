@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,7 @@ o_glist_copy_all (const GList *src_list,
 {
   const GList *src;
   GList *dest;
-  OBJECT *src_object, *dst_object;
+  LeptonObject *src_object, *dst_object;
   int selected_save;
 
   src = src_list;
@@ -71,7 +71,7 @@ o_glist_copy_all (const GList *src_list,
 
   /* first do all NON text items */
   while(src != NULL) {
-    src_object = (OBJECT *) src->data;
+    src_object = (LeptonObject *) src->data;
 
     /* unselect the object before the copy */
     selected_save = src_object->selected;
@@ -95,7 +95,7 @@ o_glist_copy_all (const GList *src_list,
 
   /* then do all text items */
   while(src != NULL) {
-    src_object = (OBJECT *) src->data;
+    src_object = (LeptonObject *) src->data;
 
     /* unselect the object before the copy */
     selected_save = src_object->selected;
@@ -129,7 +129,7 @@ o_glist_copy_all (const GList *src_list,
   /* Clean up dangling copied_to pointers */
   src = src_list;
   while(src != NULL) {
-    src_object = (OBJECT*) src->data;
+    src_object = (LeptonObject*) src->data;
     src_object->copied_to = NULL;
     src = g_list_next (src);
   }
@@ -149,14 +149,14 @@ o_glist_copy_all (const GList *src_list,
 void
 geda_object_list_delete (GList *objects)
 {
-  OBJECT *o_current=NULL;
+  LeptonObject *o_current=NULL;
   GList *ptr;
 
   ptr = g_list_last(objects);
 
   /* do the delete backwards */
   while(ptr != NULL) {
-    o_current = (OBJECT *) ptr->data;
+    o_current = (LeptonObject *) ptr->data;
     s_delete_object (o_current);
     ptr = g_list_previous (ptr);
   }
@@ -172,13 +172,13 @@ geda_object_list_delete (GList *objects)
 void
 geda_object_list_print (GList *objects)
 {
-  OBJECT *o_current=NULL;
+  LeptonObject *o_current=NULL;
   GList *iter;
 
   iter = objects;
   printf("TRYING to PRINT\n");
   while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
+    o_current = (LeptonObject *)iter->data;
     printf("Name: %s\n", o_current->name);
     printf("Type: %d\n", o_current->type);
     printf("Sid: %d\n", o_current->sid);
@@ -295,7 +295,8 @@ geda_object_list_set_selectable (const GList *objects, gboolean selectable)
  *  This function saves a whole schematic into a buffer in libgeda
  *  format. The buffer should be freed when no longer needed.
  *
- *  \param [in] objects The head of a GList of OBJECTs to save.
+ *  \param [in] objects The head of a GList of LeptonObjects to
+ *  save.
  *  \returns a buffer containing schematic data or NULL on failure.
  */
 gchar*
@@ -350,7 +351,7 @@ static const gchar
 static gchar*
 o_save_objects (const GList *object_list, gboolean save_attribs)
 {
-  OBJECT *o_current;
+  LeptonObject *o_current;
   const GList *iter;
   gchar *out;
   GString *acc;
@@ -361,7 +362,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
   iter = object_list;
 
   while ( iter != NULL ) {
-    o_current = (OBJECT *)iter->data;
+    o_current = (LeptonObject *)iter->data;
 
     if (save_attribs || o_current->attached_to == NULL) {
 

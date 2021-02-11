@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* construction, destruction */
 
-OBJECT*
+LeptonObject*
 geda_pin_object_new (int color,
                      int x1,
                      int y1,
@@ -35,13 +35,13 @@ geda_pin_object_new (int color,
                      int pin_type,
                      int whichend);
 
-OBJECT*
-geda_pin_object_copy (OBJECT *o_current);
+LeptonObject*
+geda_pin_object_copy (LeptonObject *o_current);
 
 /* methods */
 
 void
-geda_pin_object_calculate_bounds (const OBJECT *object,
+geda_pin_object_calculate_bounds (const LeptonObject *object,
                                   GedaBounds *bounds);
 
 gboolean
@@ -65,10 +65,10 @@ geda_pin_object_get_y1 (const LeptonObject *object);
 void
 geda_pin_object_mirror (int world_centerx,
                         int world_centery,
-                        OBJECT *object);
+                        LeptonObject *object);
 
 void
-geda_pin_object_modify (OBJECT *object,
+geda_pin_object_modify (LeptonObject *object,
                         int x,
                         int y,
                         int whichone);
@@ -77,10 +77,10 @@ void
 geda_pin_object_rotate (int world_centerx,
                         int world_centery,
                         int angle,
-                        OBJECT *object);
+                        LeptonObject *object);
 
 void
-geda_pin_object_set_type (OBJECT *o_current,
+geda_pin_object_set_type (LeptonObject *o_current,
                           int pin_type);
 
 void
@@ -105,7 +105,7 @@ void
 geda_pin_object_update_whichend (GList *object_list,
                                  int num_pins);
 
-OBJECT*
+LeptonObject*
 o_pin_read (const char buf[],
             unsigned int release_ver,
             unsigned int fileformat_ver,

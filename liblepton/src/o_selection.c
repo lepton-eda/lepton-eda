@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ SELECTION *o_selection_new( void )
  */
 void
 o_selection_add (SELECTION *selection,
-                 OBJECT *o_selected)
+                 LeptonObject *o_selected)
 {
   if (o_selected->selected == FALSE)
   {
@@ -66,7 +66,7 @@ o_selection_add (SELECTION *selection,
  */
 void
 o_selection_remove (SELECTION *selection,
-                    OBJECT *o_selected)
+                    LeptonObject *o_selected)
 {
   if (o_selected == NULL) {
     fprintf(stderr, "Got NULL for o_selected in o_selection_remove\n");
@@ -94,7 +94,7 @@ void o_selection_print_all(const SELECTION *selection)
   printf("START printing selection ********************\n");
   while(s_current != NULL) {
     if (s_current->data) {
-      printf("Selected object: %1$d\n", ((OBJECT *)s_current->data)->sid );
+      printf("Selected object: %1$d\n", ((LeptonObject *)s_current->data)->sid );
     }
     s_current = g_list_next( s_current );
   }
@@ -109,7 +109,7 @@ void o_selection_print_all(const SELECTION *selection)
  *  \param [in] object    Object to select.
  */
 void
-o_selection_select (OBJECT *object)
+o_selection_select (LeptonObject *object)
 {
   if (object->selected == TRUE)
     return;
@@ -127,7 +127,7 @@ o_selection_select (OBJECT *object)
  *  \param [in] object    Object to unselect.
  */
 void
-o_selection_unselect (OBJECT *object)
+o_selection_unselect (LeptonObject *object)
 {
   if (object->selected == FALSE)
     return;

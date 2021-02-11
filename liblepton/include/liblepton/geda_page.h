@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2017 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ struct st_page
   GList *_object_list;
   SELECTION *selection_list; /* new selection mechanism */
   GList *place_list;
-  OBJECT *object_lastplace; /* the last found item */
+  LeptonObject *object_lastplace; /* the last found item */
   GList *connectible_list;  /* connectible page objects */
 
   /* The page filename. You must access this field only via the
@@ -118,19 +118,19 @@ s_page_autosave (TOPLEVEL *toplevel);
 
 void
 s_page_append (PAGE *page,
-               OBJECT *object);
+               LeptonObject *object);
 
 void
 s_page_append_list (PAGE *page,
                     GList *obj_list);
 
 void
-s_page_remove (PAGE *page, OBJECT *object);
+s_page_remove (PAGE *page, LeptonObject *object);
 
 void
 s_page_replace (PAGE *page,
-                OBJECT *object1,
-                OBJECT *object2);
+                LeptonObject *object1,
+                LeptonObject *object2);
 
 void
 s_page_delete_objects (PAGE *page);

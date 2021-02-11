@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -332,10 +332,10 @@ static const char* fallback_xpm[] = {
 
 
 
-/*! \brief Create picture OBJECT from character string.
+/*! \brief Create picture LeptonObject from character string.
  *  \par Function Description
  *  Parses \a first_line and subsequent lines from \a tb, and returns
- *  a newly-created picture #OBJECT.
+ *  a newly-created picture #LeptonObject.
  *
  *  \param [in]  first_line      Character string with picture description.
  *  \param [in]  tb              Text buffer to load embedded data from.
@@ -343,14 +343,14 @@ static const char* fallback_xpm[] = {
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new picture object, or NULL on error.
  */
-OBJECT*
+LeptonObject*
 o_picture_read (const char *first_line,
                 TextBuffer *tb,
                 unsigned int release_ver,
                 unsigned int fileformat_ver,
                 GError **err)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   int x1, y1;
   int width, height, angle;
   int mirrored, embedded;
@@ -461,13 +461,13 @@ o_picture_read (const char *first_line,
   return new_obj;
 }
 
-/*! \brief Create a character string representation of a picture OBJECT.
+/*! \brief Create a character string representation of a picture LeptonObject.
  *  \par Function Description
  *  This function formats a string in the buffer <B>*buff</B> to describe
  *  the picture object <B>*object</B>.
  *
- *  \param [in] object  Picture OBJECT to create string from.
- *  \return A pointer to the picture OBJECT character string.
+ *  \param [in] object  Picture LeptonObject to create string from.
+ *  \return A pointer to the picture LeptonObject character string.
  *
  *  \note
  *  Caller must g_free returned character string.
@@ -564,9 +564,9 @@ geda_picture_object_to_buffer (const LeptonObject *object)
  *  \param [in]     angle         Picture rotation angle.
  *  \param [in]     mirrored      Whether the image should be mirrored or not.
  *  \param [in]     embedded      Whether the embedded flag should be set or not.
- *  \return A pointer to a new picture #OBJECT.
+ *  \return A pointer to a new picture #LeptonObject.
  */
-OBJECT *o_picture_new (const gchar *file_content,
+LeptonObject *o_picture_new (const gchar *file_content,
                        gsize file_length,
                        const gchar *filename,
                        char type,
@@ -578,7 +578,7 @@ OBJECT *o_picture_new (const gchar *file_content,
                        int mirrored,
                        int embedded)
 {
-  OBJECT *new_node;
+  LeptonObject *new_node;
   PICTURE *picture;
 
   /* create the object */
@@ -635,11 +635,11 @@ OBJECT *o_picture_new (const gchar *file_content,
  *
  *  On failure, this function sets the bounds to empty.
  *
- *  \param [in]  object    Picture OBJECT to read coordinates from.
+ *  \param [in]  object    Picture LeptonObject to read coordinates from.
  *  \param [out] bounds    The bounds of the picture
  */
 void
-geda_picture_object_calculate_bounds (const OBJECT *object,
+geda_picture_object_calculate_bounds (const LeptonObject *object,
                                       GedaBounds *bounds)
 {
   geda_bounds_init (bounds);
@@ -689,11 +689,11 @@ geda_picture_object_get_position (const LeptonObject *object, gint *x, gint *y)
  * Returns the width/height ratio of picture \a object, taking the
  * image rotation into account.
  *
- * \param object    Picture #OBJECT to inspect.
+ * \param object    Picture #LeptonObject to inspect.
  * \return width/height ratio for \a object.
  */
 double
-o_picture_get_ratio (OBJECT *object)
+o_picture_get_ratio (LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 1);
   g_return_val_if_fail (object->picture != NULL, 1);
@@ -714,7 +714,7 @@ o_picture_get_ratio (OBJECT *object)
   return 0;
 }
 
-/*! \brief Modify the description of a picture OBJECT.
+/*! \brief Modify the description of a picture LeptonObject.
  *  \par Function Description
  *  This function modifies the coordinates of one of the four corner of
  *  the picture. The new coordinates of the corner identified by
@@ -723,7 +723,7 @@ o_picture_get_ratio (OBJECT *object)
  *  The coordinates of the corner is modified in the world coordinate system.
  *  Screen coordinates and boundings are then updated.
  *
- *  \param [in,out] object     Picture OBJECT to modify.
+ *  \param [in,out] object     Picture LeptonObject to modify.
  *  \param [in]     x          New x coordinate.
  *  \param [in]     y          New y coordinate.
  *  \param [in]     whichone   Which picture parameter to modify.
@@ -737,7 +737,7 @@ o_picture_get_ratio (OBJECT *object)
  *  </DL>
  */
 void
-o_picture_modify (OBJECT *object,
+o_picture_modify (LeptonObject *object,
                   int x,
                   int y,
                   int whichone)
@@ -812,14 +812,14 @@ o_picture_modify (OBJECT *object,
  * the points (\a x1, \a y1) and (\a x2, \a y2), and scaled as large
  * as possible to still fit within that rectangle.
  *
- * \param [in,out] object   picture #OBJECT to be modified.
+ * \param [in,out] object   picture #LeptonObject to be modified.
  * \param [in]     x1       x coordinate of first corner of box.
  * \param [in]     y1       y coordinate of first corner of box.
  * \param [in]     x2       x coordinate of second corner of box.
  * \param [in]     y2       y coordinate of second corner of box.
  */
 void
-o_picture_modify_all (OBJECT *object,
+o_picture_modify_all (LeptonObject *object,
                       int x1,
                       int y1,
                       int x2,
@@ -836,7 +836,7 @@ o_picture_modify_all (OBJECT *object,
   o_emit_change_notify (object);
 }
 
-/*! \brief Rotate picture OBJECT using WORLD coordinates.
+/*! \brief Rotate picture LeptonObject using WORLD coordinates.
  *  \par Function Description
  *  This function rotates the picture described by <B>*object</B> around
  *  the (<B>world_centerx</B>, <B>world_centery</B>) point by <B>angle</B>
@@ -848,13 +848,13 @@ o_picture_modify_all (OBJECT *object,
  *  \param [in]      world_centery  Rotation center y coordinate in
  *                                  WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
- *  \param [in,out]  object         Picture OBJECT to rotate.
+ *  \param [in,out]  object         Picture LeptonObject to rotate.
  */
 void
 geda_picture_object_rotate (int world_centerx,
                             int world_centery,
                             int angle,
-                            OBJECT *object)
+                            LeptonObject *object)
 {
   int newx1, newy1;
   int newx2, newy2;
@@ -913,12 +913,12 @@ geda_picture_object_rotate (int world_centerx,
  *
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
- *  \param [in,out] object         Picture OBJECT to mirror.
+ *  \param [in,out] object         Picture LeptonObject to mirror.
  */
 void
 geda_picture_object_mirror (int world_centerx,
                             int world_centery,
-                            OBJECT *object)
+                            LeptonObject *object)
 {
   int newx1, newy1;
   int newx2, newy2;
@@ -992,13 +992,13 @@ geda_picture_object_translate (LeptonObject *object, int dx, int dy)
  *  This function creates a verbatim copy of the object pointed by
  *  <B>o_current</B> describing a picture.
  *
- *  \param [in]  object     Picture OBJECT to copy.
- *  \return The new OBJECT
+ *  \param [in]  object     Picture LeptonObject to copy.
+ *  \return The new LeptonObject
  */
-OBJECT*
-o_picture_copy (OBJECT *object)
+LeptonObject*
+o_picture_copy (LeptonObject *object)
 {
-  OBJECT *new_node;
+  LeptonObject *new_node;
   PICTURE *picture;
 
   /* create the object */
@@ -1041,10 +1041,10 @@ o_picture_copy (OBJECT *object)
  * Verify that a picture has valid data associated with it, and if so,
  * mark it to be embedded.
  *
- *  \param [in]     object       The picture OBJECT to embed
+ *  \param [in]     object       The picture LeptonObject to embed
  */
 void
-o_picture_embed (OBJECT *object)
+o_picture_embed (LeptonObject *object)
 {
   const gchar *filename = o_picture_get_filename (object);
   gchar *basename;
@@ -1071,10 +1071,10 @@ o_picture_embed (OBJECT *object)
  * Verify that the file associated with \a object exists on disk and
  * is usable, and if so, reload the picture and mark it as unembedded.
  *
- *  \param [in]     object       The picture OBJECT to unembed
+ *  \param [in]     object       The picture LeptonObject to unembed
  */
 void
-o_picture_unembed (OBJECT *object)
+o_picture_unembed (LeptonObject *object)
 {
   GError *err = NULL;
   const gchar *filename = o_picture_get_filename (object);
@@ -1104,7 +1104,7 @@ o_picture_unembed (OBJECT *object)
  *
  *  Interrior points within the picture return a distance of zero.
  *
- *  \param [in] object         The picture OBJECT.
+ *  \param [in] object         The picture LeptonObject.
  *  \param [in] x              The x coordinate of the given point.
  *  \param [in] y              The y coordinate of the given point.
  *  \param [in] force_solid    If true, force treating the object as solid.
@@ -1113,7 +1113,7 @@ o_picture_unembed (OBJECT *object)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-geda_picture_object_shortest_distance (OBJECT *object,
+geda_picture_object_shortest_distance (LeptonObject *object,
                                        int x,
                                        int y,
                                        int force_solid,
@@ -1144,11 +1144,11 @@ geda_picture_object_shortest_distance (OBJECT *object,
  * in a schematic or symbol file; returns FALSE if its data will be
  * obtained from a separate file.
  *
- * \param object    The picture #OBJECT to inspect.
+ * \param object    The picture #LeptonObject to inspect.
  * \return TRUE if \a object is embedded.
  */
 gboolean
-o_picture_is_embedded (const OBJECT *object)
+o_picture_is_embedded (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->picture != NULL, FALSE);
@@ -1164,11 +1164,11 @@ o_picture_is_embedded (const OBJECT *object)
  * The returned value should have its reference count decremented with
  * g_object_unref() when no longer needed.
  *
- * \param object    The picture #OBJECT to inspect.
+ * \param object    The picture #LeptonObject to inspect.
  * \return A #GdkPixbuf for the picture.
  */
 GdkPixbuf *
-o_picture_get_pixbuf (OBJECT *object)
+o_picture_get_pixbuf (LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->picture != NULL, NULL);
@@ -1186,7 +1186,7 @@ o_picture_get_pixbuf (OBJECT *object)
  * Sets the contents of the picture \a object by reading image data
  * from a buffer.  The buffer should be in on-disk format.
  *
- * \param object   The picture #OBJECT to modify.
+ * \param object   The picture #LeptonObject to modify.
  * \param filename The new filename for the picture.
  * \param data     The new image data buffer.
  * \param len      The size of the data buffer.
@@ -1194,7 +1194,7 @@ o_picture_get_pixbuf (OBJECT *object)
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-o_picture_set_from_buffer (OBJECT *object,
+o_picture_set_from_buffer (LeptonObject *object,
                            const gchar *filename,
                            const gchar *data,
                            size_t len,
@@ -1246,13 +1246,13 @@ o_picture_set_from_buffer (OBJECT *object,
  * Sets the contents of the picture \a object by reading image data
  * from a file.
  *
- * \param object   The picture #OBJECT to modify.
+ * \param object   The picture #LeptonObject to modify.
  * \param filename The filename to load image data from.
  * \param error    Location to return error information.
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-o_picture_set_from_file (OBJECT *object,
+o_picture_set_from_file (LeptonObject *object,
                          const gchar *filename,
                          GError **error)
 {
@@ -1276,7 +1276,7 @@ o_picture_set_from_file (OBJECT *object,
  * \par Function Description
  * Returns the filename associated with the picture \a object.
  *
- * \param object   The picture #OBJECT to inspect.
+ * \param object   The picture #LeptonObject to inspect.
  * \return the filename associated with \a object.
  */
 const gchar *

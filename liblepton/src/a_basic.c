@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,7 +37,7 @@
  *  \bug g_access introduces a race condition in certain cases, but
  *  solves bug #698565 in the normal use-case
  *
- *  \param [in] object_list The head of a GList of OBJECTs to save.
+ *  \param [in] object_list The head of a GList of LeptonObjects to save.
  *  \param [in] filename    The filename to save the data to.
  *  \param [in,out] err     #GError structure for error reporting.
  *  \return 1 on success, 0 on failure.
@@ -94,14 +94,14 @@ GList *o_read_buffer (PAGE *page, GList *object_list,
 
   char objtype;
   GList *object_list_save=NULL;
-  OBJECT *new_obj=NULL;
+  LeptonObject *new_obj=NULL;
   GList *new_attrs_list;
   GList *new_object_list = NULL;
   GList *iter;
   unsigned int release_ver = 0;
   unsigned int fileformat_ver = 0;
   int found_pin = 0;
-  OBJECT* last_component = NULL;
+  LeptonObject* last_component = NULL;
   int itemsread = 0;
 
   int embedded_level = 0;
@@ -276,14 +276,14 @@ GList *o_read_buffer (PAGE *page, GList *object_list,
            */
           new_object_list = g_list_reverse (new_object_list);
 
-          new_obj = (OBJECT*) object_list_save->data;
+          new_obj = (LeptonObject*) object_list_save->data;
           new_obj->component->prim_objs = new_object_list;
           new_object_list = object_list_save;
 
           /* set the parent field now */
           for (iter = new_obj->component->prim_objs;
                iter != NULL; iter = g_list_next (iter)) {
-            OBJECT *tmp = (OBJECT*) iter->data;
+            LeptonObject *tmp = (LeptonObject*) iter->data;
             tmp->parent = new_obj;
           }
 

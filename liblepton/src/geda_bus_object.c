@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -279,7 +279,7 @@ geda_bus_object_calculate_bounds (const LeptonObject *object,
  *  \param [in]     x2          x-coord of the second point
  *  \param [in]     y2          y-coord of the second point
  *  \param [in]  bus_ripper_direction direction of the bus rippers
- *  \return A new bus OBJECT
+ *  \return A new bus LeptonObject
  */
 LeptonObject*
 geda_bus_object_new (gint color,
@@ -374,8 +374,8 @@ o_bus_read (const char buf[],
  *  This function takes a bus \a object and return a string
  *  according to the file format definition.
  *
- *  \param [in] object  a bus OBJECT
- *  \return the string representation of the bus OBJECT
+ *  \param [in] object  a bus LeptonObject
+ *  \return the string representation of the bus LeptonObject
  */
 gchar*
 geda_bus_object_to_buffer (const LeptonObject *object)
@@ -557,7 +557,7 @@ geda_bus_object_orientation (const LeptonObject *object)
  *  is specified by the \a whichone variable and the new coordinate
  *  is (\a x, \a y).
  *
- *  \param [in,out] object     The bus OBJECT to modify
+ *  \param [in,out] object     The bus LeptonObject to modify
  *  \param [in]     x          new x-coord of the bus point
  *  \param [in]     y          new y-coord of the bus point
  *  \param [in]     whichone   bus point to modify

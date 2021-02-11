@@ -1,7 +1,7 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ SCM_DEFINE (parse_attrib, "%parse-attrib", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (text_s, OBJ_TEXT), text_s,
               SCM_ARG1, s_parse_attrib);
 
-  OBJECT *text = edascm_to_object (text_s);
+  LeptonObject *text = edascm_to_object (text_s);
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   scm_dynwind_unwind_handler (g_free, name, SCM_F_WIND_EXPLICITLY);
@@ -93,7 +93,7 @@ SCM_DEFINE (attrib_name, "%attrib-name", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (text_s, OBJ_TEXT), text_s,
               SCM_ARG1, s_attrib_name);
 
-  OBJECT *text = edascm_to_object (text_s);
+  LeptonObject *text = edascm_to_object (text_s);
   const gchar *name = o_attrib_get_name (text);
 
   if (!name) {
@@ -110,13 +110,13 @@ SCM_DEFINE (attrib_name, "%attrib-name", 1, 0, 0,
 /*! \brief Get a list of an object's attributes.
  * \par Function Description
  * Retrieves the attributes of the smob \a obj_s as a Scheme list of
- * #OBJECT smobs.
+ * #LeptonObject smobs.
  *
  * \note Scheme API: Implements the %object-attribs procedure of the
  * (lepton core attrib) module.
  *
  * \param obj_s object to get attributes for.
- * \return a list of #OBJECT smobs.
+ * \return a list of #LeptonObject smobs.
  */
 SCM_DEFINE (object_attribs, "%object-attribs", 1, 0, 0,
             (SCM obj_s), "Get an object's attributes.")
@@ -125,14 +125,14 @@ SCM_DEFINE (object_attribs, "%object-attribs", 1, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG1, s_object_attribs);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
 
   return edascm_from_object_glist (obj->attribs);
 }
 
 /*! \brief Get the object that an attribute is attached to.
  * \par Function Description
- * Returns the #OBJECT smob that \a attrib_s is attached to.  If \a
+ * Returns the #LeptonObject smob that \a attrib_s is attached to.  If \a
  * attrib_s is not attached as an attribute, returns SCM_BOOL_F.
  *
  * \note Scheme API: Implements the %attrib-attachment procedure of
@@ -148,7 +148,7 @@ SCM_DEFINE (attrib_attachment, "%attrib-attachment", 1, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (attrib_s), attrib_s,
               SCM_ARG1, s_attrib_attachment);
 
-  OBJECT *obj = edascm_to_object (attrib_s);
+  LeptonObject *obj = edascm_to_object (attrib_s);
 
   if (obj->attached_to == NULL) {
     return SCM_BOOL_F;
@@ -190,8 +190,8 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
   SCM_ASSERT (edascm_is_object_type (attrib_s, OBJ_TEXT), attrib_s,
               SCM_ARG2, s_attach_attrib_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
-  OBJECT *attrib = edascm_to_object (attrib_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
+  LeptonObject *attrib = edascm_to_object (attrib_s);
 
   /* Check that attachment doesn't already exist */
   if (attrib->attached_to == obj) return obj_s;
@@ -250,8 +250,8 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
   SCM_ASSERT (edascm_is_object_type (attrib_s, OBJ_TEXT), attrib_s,
               SCM_ARG2, s_detach_attrib_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
-  OBJECT *attrib = edascm_to_object (attrib_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
+  LeptonObject *attrib = edascm_to_object (attrib_s);
 
   /* If attrib isn't attached, do nothing */
   if (attrib->attached_to == NULL) {
@@ -292,7 +292,7 @@ SCM_DEFINE (promotable_attribs, "%promotable-attribs", 1, 0, 0,
   SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
               SCM_ARG1, s_promotable_attribs);
 
-  OBJECT *obj = edascm_to_object (component_s);
+  LeptonObject *obj = edascm_to_object (component_s);
 
   GList *lst = o_component_get_promotable (obj, FALSE);
 

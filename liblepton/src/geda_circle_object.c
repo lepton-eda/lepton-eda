@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
 #include "libgeda_priv.h"
 
 
-/*! \brief Create and add circle OBJECT to list.
+/*! \brief Create and add circle LeptonObject to list.
  *  \par Function Description
  *  This function creates a new object representing a circle.
  *
@@ -41,7 +41,7 @@
  *  The <B>type</B> parameter must be equal to <B>OBJ_CIRCLE</B>. The <B>color</B>
  *  corresponds to the color the box will be drawn with.
  *
- *  The <B>OBJECT</B> structure is allocated with the #s_basic_new_object()
+ *  The <B>LeptonObject</B> structure is allocated with the #s_basic_new_object()
  *  function. The structure describing the circle is allocated and initialized
  *  with the parameters given to the function.
  *
@@ -98,8 +98,8 @@ geda_circle_object_new (gint color,
  *  The function #geda_circle_object_copy() creates a verbatim copy of the object
  *  pointed by <B>o_current</B> describing a circle.
  *
- *  \param [in]  o_current  Circle OBJECT to copy.
- *  \return The new OBJECT
+ *  \param [in]  o_current  Circle LeptonObject to copy.
+ *  \return The new LeptonObject
  */
 LeptonObject*
 geda_circle_object_copy (const LeptonObject *object)
@@ -226,7 +226,7 @@ geda_circle_object_set_radius (LeptonObject *object, gint radius)
   object->circle->radius = radius;
 }
 
-/*! \brief Modify the description of a circle OBJECT.
+/*! \brief Modify the description of a circle LeptonObject.
  *  \par Function Description
  *  This function modifies the description of the circle object <B>*object</B>
  *  depending on <B>whichone</B> that give the meaning of the <B>x</B> and <B>y</B>
@@ -241,7 +241,7 @@ geda_circle_object_set_radius (LeptonObject *object, gint radius)
  *  The bounding box of the circle object is updated after the modification of its
  *  parameters.
  *
- *  \param [in,out] object     Circle OBJECT to modify.
+ *  \param [in,out] object     Circle LeptonObject to modify.
  *  \param [in]     x          New center x coordinate, or radius value.
  *  \param [in]     y          New center y coordinate.
  *                             Unused if radius is being modified.
@@ -278,7 +278,7 @@ geda_circle_object_modify (LeptonObject *object,
   o_emit_change_notify (object);
 }
 
-/*! \brief Create circle OBJECT from character string.
+/*! \brief Create circle LeptonObject from character string.
  *  \par Function Description
  *  The #o_circle_read() function gets from the character string <B>*buff</B> the
  *  description of a circle.
@@ -394,15 +394,15 @@ o_circle_read (const char buf[],
   return new_obj;
 }
 
-/*! \brief Create a character string representation of a circle OBJECT.
+/*! \brief Create a character string representation of a circle LeptonObject.
  *  \par Function Description
  *  This function formats a string in the buffer <B>*buff</B> to describe the
  *  circle object <B>*object</B>.
  *  It follows the post-20000704 release file format that handle the line
  *  type and fill options.
  *
- *  \param [in] object  Circle OBJECT to create string from.
- *  \return A pointer to the circle OBJECT character string.
+ *  \param [in] object  Circle LeptonObject to create string from.
+ *  \return A pointer to the circle LeptonObject character string.
  *
  *  \note
  *  Caller must g_free returned character string.
@@ -455,7 +455,7 @@ geda_circle_object_translate (LeptonObject *object, gint dx, gint dy)
   object->circle->center_y = object->circle->center_y + dy;
 }
 
-/*! \brief Rotate Circle OBJECT using WORLD coordinates.
+/*! \brief Rotate Circle LeptonObject using WORLD coordinates.
  *  \par Function Description
  *  The function #geda_circle_object_rotate() rotate the circle described by
  *  <B>*object</B> around the (<B>world_centerx</B>,<B>world_centery</B>) point by
@@ -465,7 +465,7 @@ geda_circle_object_translate (LeptonObject *object, gint dx, gint dy)
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
- *  \param [in,out]  object         Circle OBJECT to rotate.
+ *  \param [in,out]  object         Circle LeptonObject to rotate.
  */
 void
 geda_circle_object_rotate (gint world_centerx,
@@ -515,11 +515,11 @@ geda_circle_object_rotate (gint world_centerx,
  *  circle object from its world coords.
  *
  *  The circle coordinates and its bounding are recalculated as well as the
- *  OBJECT specific (line width, filling ...).
+ *  LeptonObject specific (line width, filling ...).
  *
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
- *  \param [in,out] object         Circle OBJECT to mirror.
+ *  \param [in,out] object         Circle LeptonObject to mirror.
  */
 void
 geda_circle_object_mirror (gint world_centerx,
@@ -546,7 +546,7 @@ geda_circle_object_mirror (gint world_centerx,
  *  parameters to the boundings of the circle object described in <B>*circle</B>
  *  in world units.
  *
- *  \param [in]  object    Circle OBJECT to read coordinates from.
+ *  \param [in]  object    Circle LeptonObject to read coordinates from.
  *  \param [out] bounds    The bounds of the circle object.
  */
 void
@@ -599,7 +599,7 @@ geda_circle_object_get_position (const LeptonObject *object, gint *x, gint *y)
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the circle.
  *
- *  \param [in] object         The circle OBJECT.
+ *  \param [in] object         The circle LeptonObject.
  *  \param [in] x              The x coordinate of the given point.
  *  \param [in] y              The y coordinate of the given point.
  *  \param [in] force_solid    If true, force treating the object as solid.

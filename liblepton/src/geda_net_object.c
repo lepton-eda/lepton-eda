@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -216,7 +216,7 @@ geda_net_object_set_y1 (LeptonObject *object, gint y)
  *  \param [out] bounds   The bounds of the net
  */
 void
-geda_net_object_calculate_bounds (const OBJECT *object,
+geda_net_object_calculate_bounds (const LeptonObject *object,
                                   GedaBounds *bounds)
 {
   gint expand;
@@ -239,15 +239,15 @@ geda_net_object_calculate_bounds (const OBJECT *object,
  *  \par Function Description
  *  This function creates and returns a new net object.
  *
- *  \param [in]     type        The OBJECT type (usually OBJ_NET)
+ *  \param [in]     type        The LeptonObject type (usually OBJ_NET)
  *  \param [in]     color       The color of the net
  *  \param [in]     x1          x-coord of the first point
  *  \param [in]     y1          y-coord of the first point
  *  \param [in]     x2          x-coord of the second point
  *  \param [in]     y2          y-coord of the second point
- *  \return A new net OBJECT
+ *  \return A new net LeptonObject
  */
-OBJECT*
+LeptonObject*
 geda_net_object_new (char type,
                      int color,
                      int x1,
@@ -255,7 +255,7 @@ geda_net_object_new (char type,
                      int x2,
                      int y2)
 {
-  OBJECT *new_node;
+  LeptonObject *new_node;
 
   new_node = s_basic_new_object(type, "net");
   new_node->color = color;
@@ -283,13 +283,13 @@ geda_net_object_new (char type,
  *  \return The object list, or NULL on error.
  *
  */
-OBJECT*
+LeptonObject*
 o_net_read (const char buf[],
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   char type;
   int x1, y1;
   int x2, y2;
@@ -322,8 +322,8 @@ o_net_read (const char buf[],
  *  This function takes a net \a object and return a string
  *  according to the file format definition.
  *
- *  \param [in] object  a net OBJECT
- *  \return the string representation of the net OBJECT
+ *  \param [in] object  a net LeptonObject
+ *  \return the string representation of the net LeptonObject
  */
 gchar*
 geda_net_object_to_buffer (const LeptonObject *object)
@@ -370,10 +370,10 @@ geda_net_object_translate (LeptonObject *object, int dx, int dy)
  *  \param [in] o_current    The object that is copied
  *  \return a new net object
  */
-OBJECT*
-geda_net_object_copy (OBJECT *o_current)
+LeptonObject*
+geda_net_object_copy (LeptonObject *o_current)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
 
   /* make sure you fix this in pin and bus as well */
   /* still doesn't work... you need to pass in the new values */
@@ -404,7 +404,7 @@ void
 geda_net_object_rotate (int world_centerx,
                         int world_centery,
                         int angle,
-                        OBJECT *object)
+                        LeptonObject *object)
 {
   int newx, newy;
 
@@ -445,7 +445,7 @@ geda_net_object_rotate (int world_centerx,
 void
 geda_net_object_mirror (int world_centerx,
                         int world_centery,
-                        OBJECT *object)
+                        LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -469,7 +469,7 @@ geda_net_object_mirror (int world_centerx,
  *  \return The orientation: HORIZONTAL, VERTICAL or NEITHER
  */
 int
-geda_net_object_orientation (OBJECT *object)
+geda_net_object_orientation (LeptonObject *object)
 {
   if (object->line->y[0] == object->line->y[1]) {
     return (HORIZONTAL);
@@ -497,14 +497,14 @@ geda_net_object_orientation (OBJECT *object)
  *  \note The first net \a object gets the attributes of the second net
  *  \a del_object if the two nets are merged together.
  */
-static void o_net_consolidate_lowlevel (OBJECT *object,
-                                        OBJECT *del_object, int orient)
+static void o_net_consolidate_lowlevel (LeptonObject *object,
+                                        LeptonObject *del_object, int orient)
 {
   int temp1, temp2;
   int final1, final2;
   int changed = 0;
   GList *a_iter;
-  OBJECT *a_current;
+  LeptonObject *a_current;
 
 #if DEBUG
   printf("o %d %d %d %d\n", object->line->x[0], object->line->y[0],
@@ -558,7 +558,7 @@ static void o_net_consolidate_lowlevel (OBJECT *object,
     /* Reassign the attached_to pointer on attributes from the del object */
     a_iter = del_object->attribs;
     while (a_iter != NULL) {
-      a_current = (OBJECT*) a_iter->data;
+      a_current = (LeptonObject*) a_iter->data;
       a_current->attached_to = object;
       a_iter = g_list_next (a_iter);
     }
@@ -576,12 +576,12 @@ static void o_net_consolidate_lowlevel (OBJECT *object,
  *  between it's endpoints. Net segment's only can be merged if there
  *  is no midpoint connection.
  *
- *  \param object  a net OBJECT to check
+ *  \param object  a net LeptonObject to check
  *  \param x       x-coord of the connection location
  *  \param y       y-coord of the connection location
  *  \return TRUE if there's no midpoint connection, else return FALSE
  */
-static int o_net_consolidate_nomidpoint (OBJECT *object, int x, int y)
+static int o_net_consolidate_nomidpoint (LeptonObject *object, int x, int y)
 {
   GList *c_current;
   CONN *conn;
@@ -616,13 +616,13 @@ static int o_net_consolidate_nomidpoint (OBJECT *object, int x, int y)
  *
  */
 static int
-o_net_consolidate_segments (OBJECT *object)
+o_net_consolidate_segments (LeptonObject *object)
 {
   int object_orient;
   int other_orient;
   GList *c_current;
   CONN *conn;
-  OBJECT *other_object;
+  LeptonObject *other_object;
   PAGE *page;
   int changed = 0;
 
@@ -696,7 +696,7 @@ o_net_consolidate_segments (OBJECT *object)
 void
 geda_net_object_consolidate (PAGE *page)
 {
-  OBJECT *o_current;
+  LeptonObject *o_current;
   const GList *iter;
   int status = 0;
   gboolean net_consolidate;
@@ -712,7 +712,7 @@ geda_net_object_consolidate (PAGE *page)
   iter = s_page_objects (page);
 
   while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
+    o_current = (LeptonObject *)iter->data;
 
     if (o_current->type == OBJ_NET) {
       status = o_net_consolidate_segments (o_current);
@@ -733,14 +733,14 @@ geda_net_object_consolidate (PAGE *page)
  *  is specified by the \a whichone variable and the new coordinate
  *  is (\a x, \a y).
  *
- *  \param object     The net OBJECT to modify
+ *  \param object     The net LeptonObject to modify
  *  \param x          new x-coord of the net point
  *  \param y          new y-coord of the net point
  *  \param whichone   net point to modify
  *
  */
 void
-geda_net_object_modify (OBJECT *object,
+geda_net_object_modify (LeptonObject *object,
                         int x,
                         int y,
                         int whichone)

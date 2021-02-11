@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@
  *  will be drawn with.
  *  The path shape is created by parsing \a path_string.
  *
- *  The #OBJECT structure is allocated with the
+ *  The #LeptonObject structure is allocated with the
  *  #s_basic_init_object() function. The structure describing
  *  the path is allocated and initialized with the parameters given
  *  to the function.
@@ -54,7 +54,7 @@
  *  \param [in]     path_string  The string representation of the path
  *  \return A pointer to the new end of the object list.
  */
-OBJECT*
+LeptonObject*
 geda_path_object_new (char type,
                       int color,
                       const char *path_string)
@@ -66,9 +66,9 @@ geda_path_object_new (char type,
 
 /*! \brief Create a new path object.
  *  \par Function Description
- *  This function creates and returns a new OBJECT representing a path
+ *  This function creates and returns a new LeptonObject representing a path
  *  using the path shape data stored in \a path_data.  The \a
- *  path_data is subsequently owned by the returned OBJECT.
+ *  path_data is subsequently owned by the returned LeptonObject.
  *
  *  \see geda_path_object_new().
  *
@@ -77,12 +77,12 @@ geda_path_object_new (char type,
  *  \param [in]     path_data    The #PATH data structure to use.
  *  \return A pointer to the new end of the object list.
  */
-OBJECT*
+LeptonObject*
 geda_path_object_new_take_path (char type,
                                 int color,
                                 PATH *path_data)
 {
-  OBJECT *new_node;
+  LeptonObject *new_node;
 
   /* create the object */
   new_node        = s_basic_new_object (type, "path");
@@ -112,13 +112,13 @@ geda_path_object_new_take_path (char type,
  *  is added at the end of the list following the <B>list_tail</B>
  *  parameter.
  *
- *  \param [in]  o_current  Line OBJECT to copy.
+ *  \param [in]  o_current  Line LeptonObject to copy.
  *  \return A new pointer to the end of the object list.
  */
-OBJECT*
-geda_path_object_copy (OBJECT *o_current)
+LeptonObject*
+geda_path_object_copy (LeptonObject *o_current)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   char *path_string;
 
   path_string = s_path_string_from_path (o_current->path);
@@ -139,9 +139,9 @@ geda_path_object_copy (OBJECT *o_current)
 }
 
 
-/*! \brief Create path OBJECT from character string.
+/*! \brief Create path LeptonObject from character string.
  *  \par Function Description
- *  This function creates a path OBJECT from the character string
+ *  This function creates a path LeptonObject from the character string
  *  <B>*buf</B> and a number of lines following that describing the
  *  path, read from <B>*tb</B>.
  *
@@ -158,14 +158,14 @@ geda_path_object_copy (OBJECT *o_current)
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new path object, or NULL on error;
  */
-OBJECT*
+LeptonObject*
 o_path_read (const char *first_line,
              TextBuffer *tb,
              unsigned int release_ver,
              unsigned int fileformat_ver,
              GError **err)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   char type;
   int color;
   int line_width, line_space, line_length;
@@ -248,13 +248,13 @@ o_path_read (const char *first_line,
 }
 
 
-/*! \brief Create a character string representation of a path OBJECT.
+/*! \brief Create a character string representation of a path LeptonObject.
  *  \par Function Description
  *  The function formats a string in the buffer <B>*buff</B> to describe
  *  the path object <B>*object</B>.
  *
- *  \param [in] object  path OBJECT to create string from.
- *  \return A pointer to the path OBJECT character string.
+ *  \param [in] object  path LeptonObject to create string from.
+ *  \return A pointer to the path LeptonObject character string.
  *
  *  \note
  *  Caller must g_free returned character string.
@@ -309,13 +309,13 @@ geda_path_object_to_buffer (const LeptonObject *object)
  *
  *  The new position is given by <B>x</B> and <B>y</B>.
  *
- *  \param [in,out] object    The path OBJECT
+ *  \param [in,out] object    The path LeptonObject
  *  \param [in]     x         New x coordinate for the control point
  *  \param [in]     y         New y coordinate for the control point
  *  \param [in]     whichone  Which control point is being modified
  */
 void
-geda_path_object_modify (OBJECT *object,
+geda_path_object_modify (LeptonObject *object,
                          int x,
                          int y,
                          int whichone)
@@ -401,7 +401,7 @@ geda_path_object_translate (LeptonObject *object, int dx, int dy)
 }
 
 
-/*! \brief Rotate Line OBJECT using WORLD coordinates.
+/*! \brief Rotate Line LeptonObject using WORLD coordinates.
  *  \par Function Description
  *  This function rotates the path described by
  *  <B>*object</B> around the (<B>world_centerx</B>,<B>world_centery</B>)
@@ -411,13 +411,13 @@ geda_path_object_translate (LeptonObject *object, int dx, int dy)
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
- *  \param [in,out]  object         Line OBJECT to rotate.
+ *  \param [in,out]  object         Line LeptonObject to rotate.
  */
 void
 geda_path_object_rotate (int world_centerx,
                          int world_centery,
                          int angle,
-                         OBJECT *object)
+                         LeptonObject *object)
 {
   PATH_SECTION *section;
   int i;
@@ -461,12 +461,12 @@ geda_path_object_rotate (int world_centerx,
  *
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
- *  \param [in,out] object         Line OBJECT to mirror.
+ *  \param [in,out] object         Line LeptonObject to mirror.
  */
 void
 geda_path_object_mirror (int world_centerx,
                          int world_centery,
-                         OBJECT *object)
+                         LeptonObject *object)
 {
   PATH_SECTION *section;
   int i;
@@ -505,7 +505,7 @@ geda_path_object_mirror (int world_centerx,
  *  \param [out] bounds    The bounds of the path
  */
 void
-geda_path_object_calculate_bounds (const OBJECT *object,
+geda_path_object_calculate_bounds (const LeptonObject *object,
                                    GedaBounds *bounds)
 {
   gint expand;
@@ -587,7 +587,7 @@ geda_path_object_get_position (const LeptonObject *object, gint *x, gint *y)
 /*! \brief Calculates the distance between the given point and the closest
  *  point on the given path segment.
  *
- *  \param [in] object         The path OBJECT.
+ *  \param [in] object         The path LeptonObject.
  *  \param [in] x              The x coordinate of the given point.
  *  \param [in] y              The y coordinate of the given point.
  *  \param [in] force_solid    If true, force treating the object as solid.
@@ -596,7 +596,7 @@ geda_path_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-geda_path_object_shortest_distance (OBJECT *object,
+geda_path_object_shortest_distance (LeptonObject *object,
                                     int x,
                                     int y,
                                     int force_solid,

@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,12 +32,12 @@ world_get_object_glist_bounds (const GList *head,
                                int *right,
                                int *bottom);
 
-int o_component_is_embedded (OBJECT *o_current);
+int o_component_is_embedded (LeptonObject *o_current);
 
 GList*
-o_component_promote_attribs (OBJECT *object);
+o_component_promote_attribs (LeptonObject *object);
 
-OBJECT*
+LeptonObject*
 o_component_new (PAGE *page,
                  char type,
                  int color,
@@ -49,7 +49,7 @@ o_component_new (PAGE *page,
                  const gchar *basename,
                  int selectable);
 
-OBJECT*
+LeptonObject*
 o_component_new_embedded (char type,
                           int color,
                           int x,
@@ -60,35 +60,37 @@ o_component_new_embedded (char type,
                           int selectable);
 
 void
-geda_component_object_calculate_bounds (const OBJECT *object,
+geda_component_object_calculate_bounds (const LeptonObject *object,
                                         gboolean include_hidden,
                                         GedaBounds *bounds);
 
 void
 geda_component_object_translate (LeptonObject *object, int dx, int dy);
 
-OBJECT *
-o_component_copy (OBJECT *o_current);
+LeptonObject *
+o_component_copy (LeptonObject *o_current);
 
 void
 geda_component_object_rotate (int world_centerx,
                               int world_centery,
                               int angle,
-                              OBJECT *object);
+                              LeptonObject *object);
 
 void
 geda_component_object_mirror (int world_centerx,
                               int world_centery,
-                              OBJECT *object);
+                              LeptonObject *object);
 
-OBJECT *
-o_component_find_pin_by_attribute (OBJECT *object, const char *name, char *wanted_value);
+LeptonObject *
+o_component_find_pin_by_attribute (LeptonObject *object,
+                                   const char *name,
+                                   char *wanted_value);
 
 void
 o_component_check_symversion (PAGE* page,
-                              OBJECT* object);
+                              LeptonObject* object);
 
-OBJECT*
+LeptonObject*
 o_component_read (PAGE *page,
                   const char buf[],
                   unsigned int release_ver,
@@ -98,7 +100,7 @@ gchar*
 geda_component_object_to_buffer (const LeptonObject *object);
 
 double
-geda_component_object_shortest_distance (OBJECT *object,
+geda_component_object_shortest_distance (LeptonObject *object,
                                          int x,
                                          int y,
                                          int force_soild,
@@ -108,7 +110,7 @@ gboolean
 geda_component_object_get_position (const LeptonObject *object, gint *x, gint *y);
 
 GList*
-o_component_get_promotable (OBJECT *object,
+o_component_get_promotable (LeptonObject *object,
                             int detach);
 
 void

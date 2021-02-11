@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 2010-2013 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -63,16 +63,16 @@
  * Manual.
  *
  * The remaining functions in this module allow you to convert Lepton EDA
- * #OBJECT and #PAGE structures to and from Scheme values ("smobs").
+ * #LeptonObject and #PAGE structures to and from Scheme values ("smobs").
  *
- * When an #OBJECT is created by Scheme code, it is permitted to be
+ * When an #LeptonObject is created by Scheme code, it is permitted to be
  * garbage-collected if all references to it are lost; this is an
  * important part of allowing Scheme programmers to write efficient
- * code.  However, because #OBJECT instances are not reference
- * counted, each Scheme object that contains an #OBJECT has a flag
+ * code.  However, because #LeptonObject instances are not reference
+ * counted, each Scheme object that contains an #LeptonObject has a flag
  * that indicates whether it is wholly owned by Scheme or whether
  * there are any remaining references to it from C code.  If you use
- * edascm_from_object() to create a Scheme value for an #OBJECT that
+ * edascm_from_object() to create a Scheme value for an #LeptonObject that
  * has no remaining references from other C structures, you should use
  * edascm_c_set_gc() to mark it as garbage-collectable.
  */
@@ -164,7 +164,7 @@ SCM edascm_from_toplevel (TOPLEVEL *toplevel);
 /*! Tests whether a Scheme value is a PAGE smob. */
 #define EDASCM_PAGEP(x) EDASCM_SMOB_TYPEP(x, GEDA_SMOB_PAGE)
 
-/*! Tests whether a Scheme value is an OBJECT smob. */
+/*! Tests whether a Scheme value is an LeptonObject smob. */
 #define EDASCM_OBJECTP(x) EDASCM_SMOB_TYPEP(x, GEDA_SMOB_OBJECT)
 
 /*! Tests whether a Scheme value is an EdaConfig smob. */
@@ -206,7 +206,7 @@ int edascm_is_object_type (SCM smob, int type);
 
 
 /*! \brief Flag an object's page as having been changed. */
-extern void o_page_changed (OBJECT *o);
+extern void o_page_changed (LeptonObject *o);
 
 /* ---------------------------------------- */
 

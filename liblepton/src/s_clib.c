@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1431,7 +1431,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
 {
   GList *result = NULL;
   GList *iter = NULL;
-  OBJECT *o = NULL;
+  LeptonObject *o = NULL;
   PAGE *page;
   GList *symlist = NULL;
   CLibSymbol *sym = NULL;
@@ -1447,7 +1447,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
     for (o_iter = s_page_objects (page);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
-      o = (OBJECT *)o_iter->data;
+      o = (LeptonObject *)o_iter->data;
       if (o->type != OBJ_COMPONENT) continue;
       if (o->component_basename == NULL)  continue;
 

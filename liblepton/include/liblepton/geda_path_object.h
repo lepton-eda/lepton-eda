@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,25 +24,25 @@
 
 G_BEGIN_DECLS
 
-OBJECT*
+LeptonObject*
 geda_path_object_new (char type,
                       int color,
                       const char *path_string);
 
-OBJECT*
+LeptonObject*
 geda_path_object_new_take_path (char type,
                                 int color,
                                 PATH *path_data);
 
-OBJECT*
-geda_path_object_copy (OBJECT *o_current);
+LeptonObject*
+geda_path_object_copy (LeptonObject *o_current);
 
 void
-geda_path_object_calculate_bounds (const OBJECT *object,
+geda_path_object_calculate_bounds (const LeptonObject *object,
                                    GedaBounds *bounds);
 
 void
-geda_path_object_modify (OBJECT *object,
+geda_path_object_modify (LeptonObject *object,
                          int x,
                          int y,
                          int whichone);
@@ -54,14 +54,14 @@ void
 geda_path_object_rotate (int world_centerx,
                          int world_centery,
                          int angle,
-                         OBJECT *object);
+                         LeptonObject *object);
 
 void
 geda_path_object_mirror (int world_centerx,
                          int world_centery,
-                         OBJECT *object);
+                         LeptonObject *object);
 
-OBJECT*
+LeptonObject*
 o_path_read (const char *first_line,
              TextBuffer *tb,
              unsigned int release_ver,
@@ -72,7 +72,7 @@ gchar*
 geda_path_object_to_buffer (const LeptonObject *object);
 
 double
-geda_path_object_shortest_distance (OBJECT *object,
+geda_path_object_shortest_distance (LeptonObject *object,
                                     int x,
                                     int y,
                                     int force_soild,

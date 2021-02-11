@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@
 
 #include "libgeda_priv.h"
 
-/*! \brief Create a BOX OBJECT
+/*! \brief Create a BOX LeptonObject
  *  \par Function Description
  *  This function creates a new object representing a box.
  *
@@ -36,7 +36,7 @@
  *  its lower right corner - <B>x2</B>, <B>y2</B>.
  *  The <B>type</B> parameter must be equal to <B>OBJ_BOX</B>. The <B>color</B>
  *  corresponds to the color the box will be drawn with.
- *  The <B>OBJECT</B> structure is allocated with the #s_basic_new_object()
+ *  The <B>LeptonObject</B> structure is allocated with the #s_basic_new_object()
  *  function. The structure describing the box is allocated and initialized
  *  with the parameters given to the function.
  *
@@ -50,9 +50,9 @@
  *  \param [in]     y1           Upper y coordinate.
  *  \param [in]     x2           Lower x coordinate.
  *  \param [in]     y2           Lower y coordinate.
- *  \return The new OBJECT
+ *  \return The new LeptonObject
  */
-OBJECT*
+LeptonObject*
 geda_box_object_new (char type,
                      int color,
                      int x1,
@@ -60,7 +60,7 @@ geda_box_object_new (char type,
                      int x2,
                      int y2)
 {
-  OBJECT *new_node;
+  LeptonObject *new_node;
   BOX *box;
 
   /* create the object */
@@ -95,13 +95,13 @@ geda_box_object_new (char type,
  *  The function #geda_box_object_copy() creates a verbatim copy of the object
  *  pointed by <B>o_current</B> describing a box.
  *
- *  \param [in]      o_current  BOX OBJECT to copy.
- *  \return The new OBJECT
+ *  \param [in]      o_current  BOX LeptonObject to copy.
+ *  \return The new LeptonObject
  */
-OBJECT*
-geda_box_object_copy (OBJECT *o_current)
+LeptonObject*
+geda_box_object_copy (LeptonObject *o_current)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
 
   /* A new box object is created with #geda_box_object_new().
    * Values for its fields are default and need to be modified. */
@@ -128,20 +128,20 @@ geda_box_object_copy (OBJECT *o_current)
   return new_obj;
 }
 
-/*! \brief Modify a BOX OBJECT's coordinates.
+/*! \brief Modify a BOX LeptonObject's coordinates.
  * \par Function Description
  * Modifies the coordinates of all four corners of \a box, by setting
  * the box to the rectangle enclosed by the points (\a x1, \a y1) and
  * (\a x2, \a y2).
  *
- * \param [in,out] object   box #OBJECT to be modified.
+ * \param [in,out] object   box #LeptonObject to be modified.
  * \param [in]     x1       x coordinate of first corner of box.
  * \param [in]     y1       y coordinate of first corner of box.
  * \param [in]     x2       x coordinate of second corner of box.
  * \param [in]     y2       y coordinate of second corner of box,
  */
 void
-geda_box_object_modify_all (OBJECT *object,
+geda_box_object_modify_all (LeptonObject *object,
                             int x1,
                             int y1,
                             int x2,
@@ -158,7 +158,7 @@ geda_box_object_modify_all (OBJECT *object,
   o_emit_change_notify (object);
 }
 
-/*! \brief Modify a BOX OBJECT's coordinates.
+/*! \brief Modify a BOX LeptonObject's coordinates.
  *  \par Function Description
  *  This function modifies the coordinates of one of the four corner of
  *  the box. The new coordinates of the corner identified by <B>whichone</B>
@@ -167,7 +167,7 @@ geda_box_object_modify_all (OBJECT *object,
  *  The coordinates of the corner is modified in the world coordinate system.
  *  Screen coordinates and boundings are then updated.
  *
- *  \param [in,out] object     BOX OBJECT to be modified.
+ *  \param [in,out] object     BOX LeptonObject to be modified.
  *  \param [in]     x          x coordinate.
  *  \param [in]     y          y coordinate.
  *  \param [in]     whichone   coordinate to change.
@@ -182,7 +182,7 @@ geda_box_object_modify_all (OBJECT *object,
  *  </DL>
  */
 void
-geda_box_object_modify (OBJECT *object,
+geda_box_object_modify (LeptonObject *object,
                         int x,
                         int y,
                         int whichone)
@@ -249,15 +249,15 @@ geda_box_object_modify (OBJECT *object,
  *  \param [in]     buf             Character string with box description.
  *  \param [in]     release_ver     libgeda release version number.
  *  \param [in]     fileformat_ver  libgeda file format version number.
- *  \return The BOX OBJECT that was created, or NULL on error.
+ *  \return The BOX LeptonObject that was created, or NULL on error.
  */
-OBJECT*
+LeptonObject*
 o_box_read (const char buf[],
             unsigned int release_ver,
             unsigned int fileformat_ver,
             GError **err)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   char type;
   int x1, y1;
   int width, height;
@@ -369,7 +369,7 @@ o_box_read (const char buf[],
  *  It follows the post-20000704 release file format that handle the line type
  *  and fill options.
  *
- *  \param [in] object  The BOX OBJECT to create string from.
+ *  \param [in] object  The BOX LeptonObject to create string from.
  *  \return A pointer to the BOX character string.
  *
  *  \warning
@@ -453,7 +453,7 @@ geda_box_object_translate (LeptonObject *object, int dx, int dy)
   object->box->lower_y = object->box->lower_y + dy;
 }
 
-/*! \brief Rotate BOX OBJECT using WORLD coordinates.
+/*! \brief Rotate BOX LeptonObject using WORLD coordinates.
  *  \par Function Description
  *  The function #o_box_rotate_world() rotate the box described by
  *  <B>*object</B> around the (<B>world_centerx</B>, <B>world_centery</B>) point by
@@ -463,14 +463,14 @@ geda_box_object_translate (LeptonObject *object, int dx, int dy)
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
- *  \param [in,out]  object         BOX OBJECT to rotate.
+ *  \param [in,out]  object         BOX LeptonObject to rotate.
  *
  */
 void
 geda_box_object_rotate (int world_centerx,
                         int world_centery,
                         int angle,
-                        OBJECT *object)
+                        LeptonObject *object)
 {
   int newx1, newy1;
   int newx2, newy2;
@@ -531,12 +531,12 @@ geda_box_object_rotate (int world_centerx,
  *
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
- *  \param [in,out] object         BOX OBJECT to mirror.
+ *  \param [in,out] object         BOX LeptonObject to mirror.
  */
 void
 geda_box_object_mirror (int world_centerx,
                         int world_centery,
-                        OBJECT *object)
+                        LeptonObject *object)
 {
   int newx1, newy1;
   int newx2, newy2;
@@ -576,14 +576,14 @@ geda_box_object_mirror (int world_centerx,
  *  parameters to the boundings of the box object described in <B>*box</B>
  *  in world units.
  *
- *  \param [in]  object     BOX OBJECT to read coordinates from.
+ *  \param [in]  object     BOX LeptonObject to read coordinates from.
  *  \param [out] left       Left box coordinate in WORLD units.
  *  \param [out] top        Top box coordinate in WORLD units.
  *  \param [out] right      Right box coordinate in WORLD units.
  *  \param [out] bottom     Bottom box coordinate in WORLD units.
  */
 void
-geda_box_object_calculate_bounds (const OBJECT *object,
+geda_box_object_calculate_bounds (const LeptonObject *object,
                                   GedaBounds *bounds)
 {
   gint expand;
@@ -632,7 +632,7 @@ geda_box_object_get_position (const LeptonObject *object, gint *x, gint *y)
 /*! \brief Calculates the distance between the given point and the closest
  * point on the perimeter of the box.
  *
- *  \param [in] object         The box OBJECT.
+ *  \param [in] object         The box LeptonObject.
  *  \param [in] x              The x coordinate of the given point.
  *  \param [in] y              The y coordinate of the given point.
  *  \param [in] force_solid    If true, force treating the object as solid.
@@ -641,7 +641,7 @@ geda_box_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-geda_box_object_shortest_distance (OBJECT *object,
+geda_box_object_shortest_distance (LeptonObject *object,
                                    int x,
                                    int y,
                                    int force_solid,
