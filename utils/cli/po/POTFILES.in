@@ -1,5 +1,5 @@
 # List of translatable files
-utils/cli/lepton-cli.c
-utils/cli/config.c
-utils/cli/export.c
-utils/cli/shell.c
+utils/cli/src/lepton-cli.c
+utils/cli/src/config.c
+utils/cli/src/export.c
+utils/cli/src/shell.c
