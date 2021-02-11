@@ -10,7 +10,6 @@ SUBDIRS = \
 	liblepton \
 	${ATTRIB_DIR} \
 	libleptongui \
-	cli \
 	schematic \
 	netlist \
 	utils \
