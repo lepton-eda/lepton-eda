@@ -1,6 +1,6 @@
-SUBDIRS = po src
+SUBDIRS = po src docs
 
-EXTRA_DIST = $(html_man_files) lepton-cli.1.in ChangeLog
+EXTRA_DIST = ChangeLog
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git
@@ -10,32 +10,3 @@ ChangeLog: $(top_builddir)/stamp-git
 	  echo "WARNING: ChangeLog information not available from git" >&2 ; \
 	) > $@
 endif HAVE_GIT_REPO
-
-.1.in.1:
-	d=`$(GUILE) -c '(setlocale LC_ALL "C") \
-	  (display (strftime "%B %-d, %Y" \
-	  (car (strptime "%Y%m%d" (cadr (program-arguments))))))' $(DATE_VERSION)` ; \
-	v="$(DOTTED_VERSION).$(DATE_VERSION)" ; \
-	y=`echo $(DATE_VERSION)| sed -e"s/\(....\).*/\1/"`; \
-	sed -e"s:[@]DATE@:$$d:" -e"s:[@]VERSION@:$$v:" -e"s:[@]YEAR@:$$y:" < $< > $@
-
-# Rules for converting man->html
-dist_man_MANS = lepton-cli.1
-html_man_files = lepton-cli.html
-
-docsmandir=$(docdir)/man
-docsman_DATA=$(html_man_files)
-if ENABLE_GROFF_HTML
-.1.html:
-	rm -rf $@.tmp && \
-	LC_NUMERIC=C $(GROFF) -man -T html  $< >$@.tmp && \
-	mv -f $@.tmp $@
-else
-.1.html:
-	@echo "No working groff available: cannot create $@"
-	@! :
-endif
-
-SUFFIXES = .1.in .1 .html
-
-CLEANFILES = $(dist_man_MANS) $(html_man_files)
