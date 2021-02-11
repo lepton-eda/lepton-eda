@@ -65,7 +65,7 @@ geda_component_object_calculate_bounds (const OBJECT *object,
                                         GedaBounds *bounds);
 
 void
-geda_component_object_translate (GedaObject *object, int dx, int dy);
+geda_component_object_translate (LeptonObject *object, int dx, int dy);
 
 OBJECT *
 o_component_copy (OBJECT *o_current);
@@ -95,7 +95,7 @@ o_component_read (PAGE *page,
                   unsigned int fileformat_ver,
                   GError **err);
 gchar*
-geda_component_object_to_buffer (const GedaObject *object);
+geda_component_object_to_buffer (const LeptonObject *object);
 
 double
 geda_component_object_shortest_distance (OBJECT *object,
@@ -105,7 +105,7 @@ geda_component_object_shortest_distance (OBJECT *object,
                                          gboolean include_hidden);
 
 gboolean
-geda_component_object_get_position (const GedaObject *object, gint *x, gint *y);
+geda_component_object_get_position (const LeptonObject *object, gint *x, gint *y);
 
 GList*
 o_component_get_promotable (OBJECT *object,

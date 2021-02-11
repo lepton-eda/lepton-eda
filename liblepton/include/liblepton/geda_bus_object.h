@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* construction, destruction */
 
-GedaObject*
+LeptonObject*
 geda_bus_object_new (gint color,
                      gint x1,
                      gint y1,
@@ -34,32 +34,32 @@ geda_bus_object_new (gint color,
                      gint y2,
                      gint bus_ripper_direction);
 
-GedaObject*
-geda_bus_object_copy (const GedaObject *o_current);
+LeptonObject*
+geda_bus_object_copy (const LeptonObject *o_current);
 
 /* methods */
 
 void
-geda_bus_object_calculate_bounds (const GedaObject *object,
+geda_bus_object_calculate_bounds (const LeptonObject *object,
                                   GedaBounds *bounds);
 
 gboolean
-geda_bus_object_get_position (const GedaObject *object, gint *x, gint *y);
+geda_bus_object_get_position (const LeptonObject *object, gint *x, gint *y);
 
 gint
-geda_bus_object_get_ripper_direction (const GedaObject *object);
+geda_bus_object_get_ripper_direction (const LeptonObject *object);
 
 gint
-geda_bus_object_get_x0 (const GedaObject *object);
+geda_bus_object_get_x0 (const LeptonObject *object);
 
 gint
-geda_bus_object_get_x1 (const GedaObject *object);
+geda_bus_object_get_x1 (const LeptonObject *object);
 
 gint
-geda_bus_object_get_y0 (const GedaObject *object);
+geda_bus_object_get_y0 (const LeptonObject *object);
 
 gint
-geda_bus_object_get_y1 (const GedaObject *object);
+geda_bus_object_get_y1 (const LeptonObject *object);
 
 void
 geda_bus_object_mirror (gint world_centerx,
@@ -67,42 +67,42 @@ geda_bus_object_mirror (gint world_centerx,
                         OBJECT *object);
 
 void
-geda_bus_object_modify (GedaObject *object,
+geda_bus_object_modify (LeptonObject *object,
                         gint x,
                         gint y,
                         gint whichone);
 
 gint
-geda_bus_object_orientation (const GedaObject *object);
+geda_bus_object_orientation (const LeptonObject *object);
 
 void
 geda_bus_object_rotate (gint world_centerx,
                         gint world_centery,
                         gint angle,
-                        GedaObject *object);
+                        LeptonObject *object);
 
 void
-geda_bus_object_set_ripper_direction (GedaObject *object, gint direction);
+geda_bus_object_set_ripper_direction (LeptonObject *object, gint direction);
 
 void
-geda_bus_object_set_x0 (GedaObject *object, gint x);
+geda_bus_object_set_x0 (LeptonObject *object, gint x);
 
 void
-geda_bus_object_set_x1 (GedaObject *object, gint x);
+geda_bus_object_set_x1 (LeptonObject *object, gint x);
 
 void
-geda_bus_object_set_y0 (GedaObject *object, gint y);
+geda_bus_object_set_y0 (LeptonObject *object, gint y);
 
 void
-geda_bus_object_set_y1 (GedaObject *object, gint y);
+geda_bus_object_set_y1 (LeptonObject *object, gint y);
 
 gchar*
-geda_bus_object_to_buffer (const GedaObject *object);
+geda_bus_object_to_buffer (const LeptonObject *object);
 
 void
-geda_bus_object_translate (GedaObject *object, gint dx, gint dy);
+geda_bus_object_translate (LeptonObject *object, gint dx, gint dy);
 
-GedaObject*
+LeptonObject*
 o_bus_read (const char buf[],
             unsigned int release_ver,
             unsigned int fileformat_ver,

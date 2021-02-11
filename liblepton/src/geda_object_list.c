@@ -206,7 +206,7 @@ geda_object_list_translate (const GList *objects, int dx, int dy)
   const GList *iter = objects;
 
   while (iter != NULL) {
-    GedaObject *object = (GedaObject*)iter->data;
+    LeptonObject *object = (LeptonObject*)iter->data;
 
     geda_object_translate (object, dx, dy);
     iter = g_list_next (iter);
@@ -226,7 +226,7 @@ geda_object_list_rotate (const GList *objects, int x, int y, int angle)
   const GList *iter = objects;
 
   while (iter != NULL) {
-    GedaObject *object = (GedaObject*)iter->data;
+    LeptonObject *object = (LeptonObject*)iter->data;
 
     geda_object_rotate (x, y, angle, object);
     iter = g_list_next (iter);
@@ -245,7 +245,7 @@ geda_object_list_mirror (const GList *objects, int x, int y)
   const GList *iter = objects;
 
   while (iter != NULL) {
-    GedaObject *object = (GedaObject*)iter->data;
+    LeptonObject *object = (LeptonObject*)iter->data;
 
     geda_object_mirror (x, y, object);
     iter = g_list_next (iter);
@@ -265,7 +265,7 @@ geda_object_list_set_color (const GList *objects,
   const GList *iter = objects;
 
   while (iter != NULL) {
-    GedaObject *object = (GedaObject*)iter->data;
+    LeptonObject *object = (LeptonObject*)iter->data;
 
     o_set_color (object, color);
     iter = g_list_next (iter);
@@ -283,7 +283,7 @@ geda_object_list_set_selectable (const GList *objects, gboolean selectable)
   const GList *iter = objects;
 
   while (iter != NULL) {
-    GedaObject *object = (GedaObject*)iter->data;
+    LeptonObject *object = (LeptonObject*)iter->data;
 
     geda_object_set_selectable (object, selectable);
     iter = g_list_next (iter);

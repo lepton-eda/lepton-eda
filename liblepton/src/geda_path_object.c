@@ -261,7 +261,7 @@ o_path_read (const char *first_line,
  *
  */
 gchar*
-geda_path_object_to_buffer (const GedaObject *object)
+geda_path_object_to_buffer (const LeptonObject *object)
 {
   int line_width, line_space, line_length;
   char *buf;
@@ -364,12 +364,12 @@ geda_path_object_modify (OBJECT *object,
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the path
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in,out] object     Line GedaObject to translate.
+ *  \param [in,out] object     Line LeptonObject to translate.
  *  \param [in]     dx         x distance to move.
  *  \param [in]     dy         y distance to move.
  */
 void
-geda_path_object_translate (GedaObject *object, int dx, int dy)
+geda_path_object_translate (LeptonObject *object, int dx, int dy)
 {
   PATH_SECTION *section;
   int i;
@@ -563,7 +563,7 @@ geda_path_object_calculate_bounds (const OBJECT *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_path_object_get_position (const GedaObject *object, gint *x, gint *y)
+geda_path_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_PATH, FALSE);

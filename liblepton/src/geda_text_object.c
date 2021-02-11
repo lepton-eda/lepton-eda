@@ -76,7 +76,7 @@ int tab_in_chars = 8;
  *
  *  The responsibility of calculating the bounds of any object should probably
  *  be moved to EdaRenderer. And, this method should not be a virtual method
- *  of GedaObject.
+ *  of LeptonObject.
  *
  *  \param [in]  object         a text object
  *  \param [in]  include_hidden if hidden text should be taken into
@@ -85,7 +85,7 @@ int tab_in_chars = 8;
  *  \return TRUE if successful, FALSE if unsuccessful
  */
 gboolean
-geda_text_object_calculate_bounds (const GedaObject *object,
+geda_text_object_calculate_bounds (const LeptonObject *object,
                                    gboolean include_hidden,
                                    GedaBounds *bounds)
 {
@@ -118,7 +118,7 @@ geda_text_object_calculate_bounds (const GedaObject *object,
  *  \return The text alignmemt
  */
 gint
-geda_text_object_get_alignment (const GedaObject *object)
+geda_text_object_get_alignment (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, LOWER_LEFT);
   g_return_val_if_fail (object->text != NULL, LOWER_LEFT);
@@ -135,7 +135,7 @@ geda_text_object_get_alignment (const GedaObject *object)
  *  \return The text angle
  */
 gint
-geda_text_object_get_angle (const GedaObject *object)
+geda_text_object_get_angle (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->text != NULL, 0);
@@ -155,7 +155,7 @@ geda_text_object_get_angle (const GedaObject *object)
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_text_object_get_position (const GedaObject *object, gint *x, gint *y)
+geda_text_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->text != NULL, FALSE);
@@ -178,7 +178,7 @@ geda_text_object_get_position (const GedaObject *object, gint *x, gint *y)
  *  \return The text size
  */
 gint
-geda_text_object_get_size (const GedaObject *object)
+geda_text_object_get_size (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, DEFAULT_TEXT_SIZE);
   g_return_val_if_fail (object->text != NULL, DEFAULT_TEXT_SIZE);
@@ -198,7 +198,7 @@ geda_text_object_get_size (const GedaObject *object)
  *  \return The text size in postscript points.
  */
 gdouble
-geda_text_object_get_size_in_points (const GedaObject *object)
+geda_text_object_get_size_in_points (const LeptonObject *object)
 {
   return GEDA_FONT_FACTOR * geda_text_object_get_size (object);
 }
@@ -210,7 +210,7 @@ geda_text_object_get_size_in_points (const GedaObject *object)
  *  object -- do not free.
  */
 const gchar*
-geda_text_object_get_string (const GedaObject *object)
+geda_text_object_get_string (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->text != NULL, NULL);
@@ -226,7 +226,7 @@ geda_text_object_get_string (const GedaObject *object)
  *  \return The x coordinate of the insertion point
  */
 gint
-geda_text_object_get_x (const GedaObject *object)
+geda_text_object_get_x (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->text != NULL, 0);
@@ -241,7 +241,7 @@ geda_text_object_get_x (const GedaObject *object)
  *  \return The y coodinate of the insertion point
  */
 gint
-geda_text_object_get_y (const GedaObject *object)
+geda_text_object_get_y (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->text != NULL, 0);
@@ -258,7 +258,7 @@ geda_text_object_get_y (const GedaObject *object)
  *  \param [in] alignment The text alignmemt
  */
 void
-geda_text_object_set_alignment (GedaObject *object, gint alignment)
+geda_text_object_set_alignment (LeptonObject *object, gint alignment)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
@@ -281,7 +281,7 @@ geda_text_object_set_alignment (GedaObject *object, gint alignment)
  *  \param [in] angle The text angle in degrees.
  */
 void
-geda_text_object_set_angle (GedaObject *object, gint angle)
+geda_text_object_set_angle (LeptonObject *object, gint angle)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
@@ -300,7 +300,7 @@ geda_text_object_set_angle (GedaObject *object, gint angle)
  *  \param [in] size The text size
  */
 void
-geda_text_object_set_size (GedaObject *object, gint size)
+geda_text_object_set_size (LeptonObject *object, gint size)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
@@ -316,7 +316,7 @@ geda_text_object_set_size (GedaObject *object, gint size)
  *  \param [in] x the x coordinate of the text insertion point
  */
 void
-geda_text_object_set_x (GedaObject *object, gint x)
+geda_text_object_set_x (LeptonObject *object, gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
@@ -331,7 +331,7 @@ geda_text_object_set_x (GedaObject *object, gint x)
  *  \param [in] y the y coordinate of the text insertion point
  */
 void
-geda_text_object_set_y (GedaObject *object, gint y)
+geda_text_object_set_y (LeptonObject *object, gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
@@ -415,7 +415,7 @@ update_disp_string (OBJECT *object)
  *  \note
  *  Caller is responsible for string; this function allocates its own copy.
  */
-GedaObject*
+LeptonObject*
 geda_text_object_new (gint color,
                       gint x,
                       gint y,
@@ -426,7 +426,7 @@ geda_text_object_new (gint color,
                       gint visibility,
                       gint show_name_value)
 {
-  GedaObject *new_node=NULL;
+  LeptonObject *new_node=NULL;
   TEXT *text;
 
   g_return_val_if_fail (string != NULL, NULL);
@@ -621,7 +621,7 @@ o_text_read (const char *first_line,
  *  \return the string representation of the text object
  */
 gchar*
-geda_text_object_to_buffer (const GedaObject *object)
+geda_text_object_to_buffer (const LeptonObject *object)
 {
   const gchar *string;
 
@@ -666,12 +666,12 @@ o_text_recreate (OBJECT *o_current)
  *  \par Function Description
  *  This function changes the position of a text object.
  *
- *  \param [ref] object  The text GedaObject to be moved
+ *  \param [ref] object  The text LeptonObject to be moved
  *  \param [in]  dx      The x-distance to move the object
  *  \param [in]  dy      The y-distance to move the object
  */
 void
-geda_text_object_translate (GedaObject *object, int dx, int dy)
+geda_text_object_translate (LeptonObject *object, int dx, int dy)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->text != NULL);
@@ -688,10 +688,10 @@ geda_text_object_translate (GedaObject *object, int dx, int dy)
  *  \param [in] object    The object that is copied
  *  \return a new text object
  */
-GedaObject*
-geda_text_object_copy (const GedaObject *object)
+LeptonObject*
+geda_text_object_copy (const LeptonObject *object)
 {
-  GedaObject *new_obj;
+  LeptonObject *new_obj;
 
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->text != NULL, NULL);

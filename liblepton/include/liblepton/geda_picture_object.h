@@ -73,7 +73,7 @@ geda_picture_object_mirror (int world_centerx,
                             OBJECT *object);
 
 void
-geda_picture_object_translate (GedaObject *object, int dx, int dy);
+geda_picture_object_translate (LeptonObject *object, int dx, int dy);
 
 OBJECT*
 o_picture_copy (OBJECT *o_current) G_GNUC_WARN_UNUSED_RESULT;
@@ -96,7 +96,7 @@ o_picture_set_from_file (OBJECT *object,
                          const gchar *filename,
                          GError **error);
 const gchar*
-o_picture_get_filename (const GedaObject *object);
+o_picture_get_filename (const LeptonObject *object);
 
 GdkPixbuf*
 o_picture_get_fallback_pixbuf () G_GNUC_WARN_UNUSED_RESULT;
@@ -109,7 +109,7 @@ o_picture_read (const char *first_line,
                 GError **err);
 
 gchar*
-geda_picture_object_to_buffer (const GedaObject *object);
+geda_picture_object_to_buffer (const LeptonObject *object);
 
 double
 geda_picture_object_shortest_distance (OBJECT *object,
@@ -119,7 +119,7 @@ geda_picture_object_shortest_distance (OBJECT *object,
                                        gboolean include_hidden);
 
 gboolean
-geda_picture_object_get_position (const GedaObject *object, gint *x, gint *y);
+geda_picture_object_get_position (const LeptonObject *object, gint *x, gint *y);
 
 void
 o_picture_embed (OBJECT *object);

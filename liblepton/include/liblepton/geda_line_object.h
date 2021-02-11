@@ -29,7 +29,7 @@ G_BEGIN_DECLS
 
 /* construction, destruction */
 
-GedaObject*
+LeptonObject*
 geda_line_object_new (gint color,
                       gint x1,
                       gint y1,
@@ -46,19 +46,19 @@ geda_line_object_calculate_bounds (const OBJECT *object,
                                    GedaBounds *bounds);
 
 gboolean
-geda_line_object_get_position (const GedaObject *object, gint *x, gint *y);
+geda_line_object_get_position (const LeptonObject *object, gint *x, gint *y);
 
 gint
-geda_line_object_get_x0 (const GedaObject *object);
+geda_line_object_get_x0 (const LeptonObject *object);
 
 gint
-geda_line_object_get_x1 (const GedaObject *object);
+geda_line_object_get_x1 (const LeptonObject *object);
 
 gint
-geda_line_object_get_y0 (const GedaObject *object);
+geda_line_object_get_y0 (const LeptonObject *object);
 
 gint
-geda_line_object_get_y1 (const GedaObject *object);
+geda_line_object_get_y1 (const LeptonObject *object);
 
 double
 geda_line_object_length (OBJECT *object);
@@ -81,16 +81,16 @@ geda_line_object_rotate (int world_centerx,
                          OBJECT *object);
 
 void
-geda_line_object_set_x0 (GedaObject *object, gint x);
+geda_line_object_set_x0 (LeptonObject *object, gint x);
 
 void
-geda_line_object_set_x1 (GedaObject *object, gint x);
+geda_line_object_set_x1 (LeptonObject *object, gint x);
 
 void
-geda_line_object_set_y0 (GedaObject *object, gint y);
+geda_line_object_set_y0 (LeptonObject *object, gint y);
 
 void
-geda_line_object_set_y1 (GedaObject *object, gint y);
+geda_line_object_set_y1 (LeptonObject *object, gint y);
 
 double
 geda_line_object_shortest_distance (OBJECT *object,
@@ -100,10 +100,10 @@ geda_line_object_shortest_distance (OBJECT *object,
                                     gboolean include_hidden);
 
 gchar*
-geda_line_object_to_buffer (const GedaObject *object);
+geda_line_object_to_buffer (const LeptonObject *object);
 
 void
-geda_line_object_translate (GedaObject *object, int dx, int dy);
+geda_line_object_translate (LeptonObject *object, int dx, int dy);
 
 OBJECT*
 o_line_read (const char buf[],

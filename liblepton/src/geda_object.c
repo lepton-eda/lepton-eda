@@ -66,7 +66,7 @@ int global_sid=0;
  *  \return the color index of the object
  */
 gint
-geda_object_get_color (const GedaObject *object)
+geda_object_get_color (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, default_color_id());
   g_return_val_if_fail (color_id_valid (object->color), default_color_id());
@@ -86,7 +86,7 @@ geda_object_get_color (const GedaObject *object)
  *  \return the color index the draw the object
  */
 gint
-geda_object_get_drawing_color (const GedaObject *object)
+geda_object_get_drawing_color (const LeptonObject *object)
 {
   gint color;
 
@@ -109,7 +109,7 @@ geda_object_get_drawing_color (const GedaObject *object)
  *  \retval FALSE if a failure occured
  */
 gboolean
-geda_object_get_selectable (const GedaObject *object)
+geda_object_get_selectable (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, FALSE);
 
@@ -124,7 +124,7 @@ geda_object_get_selectable (const GedaObject *object)
  *  \param [in] selectable true if the object is selectable
  */
 void
-geda_object_set_selectable (GedaObject *object, gboolean selectable)
+geda_object_set_selectable (LeptonObject *object, gboolean selectable)
 {
   g_return_if_fail (object != NULL);
 
@@ -610,9 +610,9 @@ gboolean o_get_fill_options(OBJECT *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_object_get_position (const GedaObject *object, gint *x, gint *y)
+geda_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
-  gboolean (*func) (const GedaObject*, int*, int*) = NULL;
+  gboolean (*func) (const LeptonObject*, int*, int*) = NULL;
 
   g_return_val_if_fail (object != NULL, FALSE);
 
@@ -652,9 +652,9 @@ geda_object_get_position (const GedaObject *object, gint *x, gint *y)
  *  \param [in] dy       Amount to vertically translate object
  */
 void
-geda_object_translate (GedaObject *object, gint dx, gint dy)
+geda_object_translate (LeptonObject *object, gint dx, gint dy)
 {
-  void (*func) (GedaObject*, int, int) = NULL;
+  void (*func) (LeptonObject*, int, int) = NULL;
 
   switch (object->type) {
       case OBJ_LINE:    func = geda_line_object_translate;    break;
@@ -1063,7 +1063,7 @@ o_is_visible (const OBJECT *object)
  *  \return VISIBLE or INVISIBLE
  */
 gint
-geda_object_get_visible (const GedaObject *object)
+geda_object_get_visible (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, VISIBLE);
 

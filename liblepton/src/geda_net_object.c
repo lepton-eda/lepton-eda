@@ -39,7 +39,7 @@
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_net_object_get_position (const GedaObject *object, gint *x, gint *y)
+geda_net_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_NET, FALSE);
@@ -66,7 +66,7 @@ geda_net_object_get_position (const GedaObject *object, gint *x, gint *y)
  *  \return The x coordinate for the first endpoint
  */
 gint
-geda_net_object_get_x0 (const GedaObject *object)
+geda_net_object_get_x0 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -85,7 +85,7 @@ geda_net_object_get_x0 (const GedaObject *object)
  *  \return The x coordinate for the second endpoint
  */
 gint
-geda_net_object_get_x1 (const GedaObject *object)
+geda_net_object_get_x1 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -104,7 +104,7 @@ geda_net_object_get_x1 (const GedaObject *object)
  *  \return The y coordinate for the first endpoint
  */
 gint
-geda_net_object_get_y0 (const GedaObject *object)
+geda_net_object_get_y0 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -123,7 +123,7 @@ geda_net_object_get_y0 (const GedaObject *object)
  *  \return The y coordinate for the second endpoint
  */
 gint
-geda_net_object_get_y1 (const GedaObject *object)
+geda_net_object_get_y1 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -142,7 +142,7 @@ geda_net_object_get_y1 (const GedaObject *object)
  *  \param [in] x The new x coordinate for the first endpoint
  */
 void
-geda_net_object_set_x0 (GedaObject *object, gint x)
+geda_net_object_set_x0 (LeptonObject *object, gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -161,7 +161,7 @@ geda_net_object_set_x0 (GedaObject *object, gint x)
  *  \param [in] x The new x coordinate for the second endpoint
  */
 void
-geda_net_object_set_x1 (GedaObject *object, gint x)
+geda_net_object_set_x1 (LeptonObject *object, gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -180,7 +180,7 @@ geda_net_object_set_x1 (GedaObject *object, gint x)
  *  \param [in] y The new y coordinate for the first endpoint
  */
 void
-geda_net_object_set_y0 (GedaObject *object, gint y)
+geda_net_object_set_y0 (LeptonObject *object, gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -199,7 +199,7 @@ geda_net_object_set_y0 (GedaObject *object, gint y)
  *  \param [in] y The new y coordinate for the second endpoint
  */
 void
-geda_net_object_set_y1 (GedaObject *object, gint y)
+geda_net_object_set_y1 (LeptonObject *object, gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -326,7 +326,7 @@ o_net_read (const char buf[],
  *  \return the string representation of the net OBJECT
  */
 gchar*
-geda_net_object_to_buffer (const GedaObject *object)
+geda_net_object_to_buffer (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
@@ -345,12 +345,12 @@ geda_net_object_to_buffer (const GedaObject *object)
  *  \par Function Description
  *  This function changes the position of a net \a object.
  *
- *  \param [ref] object The net GedaObject to be moved
+ *  \param [ref] object The net LeptonObject to be moved
  *  \param [in]  dx     The x-distance to move the object
  *  \param [in]  dy     The y-distance to move the object
  */
 void
-geda_net_object_translate (GedaObject *object, int dx, int dy)
+geda_net_object_translate (LeptonObject *object, int dx, int dy)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);

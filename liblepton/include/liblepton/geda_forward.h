@@ -20,7 +20,7 @@
 /*! \file geda_forward.h
  */
 
-typedef struct st_object GedaObject;
+typedef struct st_object LeptonObject;
 typedef struct st_object OBJECT;
 
 typedef struct st_page GedaPage;

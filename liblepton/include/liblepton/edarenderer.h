@@ -44,7 +44,7 @@ struct _EdaRendererClass
   void (*draw)(EdaRenderer *renderer, OBJECT *object);
   void (*draw_grips)(EdaRenderer *renderer, OBJECT *object);
   void (*draw_cues)(EdaRenderer *renderer, OBJECT *object);
-  gboolean (*user_bounds)(EdaRenderer *renderer, const GedaObject *object,
+  gboolean (*user_bounds)(EdaRenderer *renderer, const LeptonObject *object,
                           double *left, double *top,
                           double *right, double *bottom);
 };
@@ -93,14 +93,14 @@ int eda_renderer_get_cairo_flags (EdaRenderer *renderer);
 
 gboolean
 eda_renderer_get_user_bounds (EdaRenderer *renderer,
-                              const GedaObject *object,
+                              const LeptonObject *object,
                               double *left,
                               double *top,
                               double *right,
                               double *bottom);
 
 gboolean
-eda_renderer_get_text_user_bounds (const GedaObject *object,
+eda_renderer_get_text_user_bounds (const LeptonObject *object,
                                    gboolean enable_hidden,
                                    double *left,
                                    double *top,

@@ -15,7 +15,7 @@ check_construction ()
     gint color = g_test_rand_int_range (0, colors_count());
     gint ripper = g_test_rand_int_range (-1, 2);
 
-    GedaObject *object0 = geda_bus_object_new (color,
+    LeptonObject *object0 = geda_bus_object_new (color,
                                                x0,
                                                y0,
                                                x1,
@@ -32,7 +32,7 @@ check_construction ()
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
     g_assert_cmpint (ripper, ==, geda_bus_object_get_ripper_direction (object0));
 
-    GedaObject *object1 = geda_bus_object_copy (object0);
+    LeptonObject *object1 = geda_bus_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
@@ -67,7 +67,7 @@ check_accessors ()
     gint color = g_test_rand_int_range (0, colors_count());
     gint ripper = g_test_rand_int_range (-1, 2);
 
-    GedaObject *object0 = geda_bus_object_new (color,
+    LeptonObject *object0 = geda_bus_object_new (color,
                                                x0,
                                                y0,
                                                x1,
@@ -123,7 +123,7 @@ check_serialization ()
     gint color = g_test_rand_int_range (0, colors_count());
     gint ripper = g_test_rand_int_range (-1, 2);
 
-    GedaObject *object0 = geda_bus_object_new (color,
+    LeptonObject *object0 = geda_bus_object_new (color,
                                                x0,
                                                y0,
                                                x1,
@@ -136,7 +136,7 @@ check_serialization ()
     s_delete_object (object0);
     g_assert (buffer0 != NULL);
 
-    GedaObject *object1 = o_bus_read (buffer0,
+    LeptonObject *object1 = o_bus_read (buffer0,
                                       version,
                                       FILEFORMAT_VERSION,
                                       NULL);

@@ -111,19 +111,19 @@ geda_object_calculate_visible_bounds (OBJECT *o_current,
                                       gint *rbottom);
 
 gint
-geda_object_get_color (const GedaObject *object);
+geda_object_get_color (const LeptonObject *object);
 
 gint
-geda_object_get_drawing_color (const GedaObject *object);
+geda_object_get_drawing_color (const LeptonObject *object);
 
 gboolean
-geda_object_get_position (const GedaObject *object, gint *x, gint *y);
+geda_object_get_position (const LeptonObject *object, gint *x, gint *y);
 
 gboolean
-geda_object_get_selectable (const GedaObject *object);
+geda_object_get_selectable (const LeptonObject *object);
 
 gint
-geda_object_get_visible (const GedaObject *object);
+geda_object_get_visible (const LeptonObject *object);
 
 void
 geda_object_rotate (int world_centerx,
@@ -137,7 +137,7 @@ geda_object_mirror (int world_centerx,
                     OBJECT *object);
 
 void
-geda_object_set_selectable (GedaObject *object, gboolean selectable);
+geda_object_set_selectable (LeptonObject *object, gboolean selectable);
 
 double
 geda_object_shortest_distance (OBJECT *object,
@@ -153,7 +153,7 @@ geda_object_shortest_distance_full (OBJECT *object,
                                     gboolean include_hidden);
 
 void
-geda_object_translate (GedaObject *object, gint dx, gint dy);
+geda_object_translate (LeptonObject *object, gint dx, gint dy);
 
 gboolean
 o_get_fill_options (OBJECT *object,

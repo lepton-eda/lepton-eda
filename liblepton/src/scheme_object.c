@@ -869,7 +869,7 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
 SCM_DEFINE (make_line, "%make-line", 0, 0, 0,
             (), "Create a new line object.")
 {
-  GedaObject *object = geda_line_object_new (default_color_id(),
+  LeptonObject *object = geda_line_object_new (default_color_id(),
                                              0,
                                              0,
                                              0,
@@ -1256,7 +1256,7 @@ SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
 SCM_DEFINE (make_circle, "%make-circle", 0, 0, 0,
             (), "Create a new circle object.")
 {
-  GedaObject *object = geda_circle_object_new (default_color_id(),
+  LeptonObject *object = geda_circle_object_new (default_color_id(),
                                                0,
                                                0,
                                                1);
@@ -1350,7 +1350,7 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
 SCM_DEFINE (make_arc, "%make-arc", 0, 0, 0,
             (), "Create a new arc object.")
 {
-  GedaObject *object = geda_arc_object_new (default_color_id(),
+  LeptonObject *object = geda_arc_object_new (default_color_id(),
                                             0,
                                             0,
                                             1,

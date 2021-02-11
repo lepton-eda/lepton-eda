@@ -55,13 +55,13 @@
  *  \param [in]     radius       Radius of new circle.
  *  \return A pointer to the new end of the object list.
  */
-GedaObject*
+LeptonObject*
 geda_circle_object_new (gint color,
                         gint center_x,
                         gint center_y,
                         gint radius)
 {
-  GedaObject *new_node;
+  LeptonObject *new_node;
 
   /* create the object */
   new_node = s_basic_new_object (OBJ_CIRCLE, "circle");
@@ -101,10 +101,10 @@ geda_circle_object_new (gint color,
  *  \param [in]  o_current  Circle OBJECT to copy.
  *  \return The new OBJECT
  */
-GedaObject*
-geda_circle_object_copy (const GedaObject *object)
+LeptonObject*
+geda_circle_object_copy (const LeptonObject *object)
 {
-  GedaObject *new_obj;
+  LeptonObject *new_obj;
 
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->circle != NULL, NULL);
@@ -139,7 +139,7 @@ geda_circle_object_copy (const GedaObject *object)
  *  \return The x coordinate of the center of the circle
  */
 gint
-geda_circle_object_get_center_x (const GedaObject *object)
+geda_circle_object_get_center_x (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->circle != NULL, 0);
@@ -154,7 +154,7 @@ geda_circle_object_get_center_x (const GedaObject *object)
  *  \return The y coordinate of the center of the circle
  */
 gint
-geda_circle_object_get_center_y (const GedaObject *object)
+geda_circle_object_get_center_y (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->circle != NULL, 0);
@@ -169,7 +169,7 @@ geda_circle_object_get_center_y (const GedaObject *object)
  *  \return The radius of the circle
  */
 gint
-geda_circle_object_get_radius (const GedaObject *object)
+geda_circle_object_get_radius (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->circle != NULL, 0);
@@ -184,7 +184,7 @@ geda_circle_object_get_radius (const GedaObject *object)
  *  \param [in] x The new y coordinate for the circle center
  */
 void
-geda_circle_object_set_center_x (GedaObject *object, gint x)
+geda_circle_object_set_center_x (LeptonObject *object, gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->circle != NULL);
@@ -199,7 +199,7 @@ geda_circle_object_set_center_x (GedaObject *object, gint x)
  *  \param [in] y The new y coordinate for the circle center
  */
 void
-geda_circle_object_set_center_y (GedaObject *object, gint y)
+geda_circle_object_set_center_y (LeptonObject *object, gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->circle != NULL);
@@ -216,7 +216,7 @@ geda_circle_object_set_center_y (GedaObject *object, gint y)
  *  \param [in] radius The new radius for the circle
  */
 void
-geda_circle_object_set_radius (GedaObject *object, gint radius)
+geda_circle_object_set_radius (LeptonObject *object, gint radius)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->circle != NULL);
@@ -254,7 +254,7 @@ geda_circle_object_set_radius (GedaObject *object, gint radius)
  *  </DL>
  */
 void
-geda_circle_object_modify (GedaObject *object,
+geda_circle_object_modify (LeptonObject *object,
                            gint x,
                            gint y,
                            gint whichone)
@@ -295,13 +295,13 @@ geda_circle_object_modify (GedaObject *object,
  *  \param [in]  fileformat_ver  libgeda file format version number.
  *  \return A pointer to the new circle object, or NULL on error.
  */
-GedaObject*
+LeptonObject*
 o_circle_read (const char buf[],
                unsigned int release_ver,
                unsigned int fileformat_ver,
                GError ** err)
 {
-  GedaObject *new_obj;
+  LeptonObject *new_obj;
   char type;
   int x1, y1;
   int radius;
@@ -409,7 +409,7 @@ o_circle_read (const char buf[],
  *
  */
 gchar*
-geda_circle_object_to_buffer (const GedaObject *object)
+geda_circle_object_to_buffer (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->circle != NULL, NULL);
@@ -439,12 +439,12 @@ geda_circle_object_to_buffer (const GedaObject *object)
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the circle
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in,out] object  Circle GedaObject to translate.
+ *  \param [in,out] object  Circle LeptonObject to translate.
  *  \param [in]     dx      x distance to move.
  *  \param [in]     dy      y distance to move.
  */
 void
-geda_circle_object_translate (GedaObject *object, gint dx, gint dy)
+geda_circle_object_translate (LeptonObject *object, gint dx, gint dy)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->circle != NULL);
@@ -471,7 +471,7 @@ void
 geda_circle_object_rotate (gint world_centerx,
                            gint world_centery,
                            gint angle,
-                           GedaObject *object)
+                           LeptonObject *object)
 {
   int newx, newy;
   int x, y;
@@ -524,7 +524,7 @@ geda_circle_object_rotate (gint world_centerx,
 void
 geda_circle_object_mirror (gint world_centerx,
                            gint world_centery,
-                           GedaObject *object)
+                           LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->circle != NULL);
@@ -550,7 +550,7 @@ geda_circle_object_mirror (gint world_centerx,
  *  \param [out] bounds    The bounds of the circle object.
  */
 void
-geda_circle_object_calculate_bounds (const GedaObject *object,
+geda_circle_object_calculate_bounds (const LeptonObject *object,
                                      GedaBounds *bounds)
 {
   gint expand;
@@ -579,7 +579,7 @@ geda_circle_object_calculate_bounds (const GedaObject *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_circle_object_get_position (const GedaObject *object, gint *x, gint *y)
+geda_circle_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_CIRCLE, FALSE);
@@ -608,7 +608,7 @@ geda_circle_object_get_position (const GedaObject *object, gint *x, gint *y)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 gdouble
-geda_circle_object_shortest_distance (GedaObject *object,
+geda_circle_object_shortest_distance (LeptonObject *object,
                                       gint x,
                                       gint y,
                                       gint force_solid,
