@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,10 +79,10 @@ get_subpages (GschemToplevel *w_current,
               PAGE *page);
 
 static void
-object_weakref_cb (OBJECT *object, GschemFindTextState *state);
+object_weakref_cb (LeptonObject *object, GschemFindTextState *state);
 
 static void
-remove_object (GschemFindTextState *state, OBJECT *object);
+remove_object (GschemFindTextState *state, LeptonObject *object);
 
 static void
 select_cb (GtkTreeSelection *selection, GschemFindTextState *state);
@@ -184,7 +184,7 @@ assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text)
 
   while (object_iter != NULL) {
     char *basename;
-    OBJECT *object = (OBJECT*) object_iter->data;
+    LeptonObject *object = (LeptonObject*) object_iter->data;
     const char *str;
     GtkTreeIter tree_iter;
 
@@ -311,7 +311,7 @@ clear_store (GschemFindTextState *state)
                               &value);
 
     if (G_VALUE_HOLDS_POINTER (&value)) {
-      OBJECT *object = (OBJECT*) g_value_get_pointer (&value);
+      LeptonObject *object = (LeptonObject*) g_value_get_pointer (&value);
 
       s_object_weak_unref (object, (NotifyFunc) object_weakref_cb, state);
     }
@@ -359,7 +359,7 @@ find_objects_using_pattern (GSList *pages,
     object_iter = s_page_objects (page);
 
     while (object_iter != NULL) {
-      OBJECT *object = (OBJECT*) object_iter->data;
+      LeptonObject *object = (LeptonObject*) object_iter->data;
       const char *str;
 
       object_iter = g_list_next (object_iter);
@@ -438,7 +438,7 @@ find_objects_using_regex (GSList *pages,
     object_iter = s_page_objects (page);
 
     while (object_iter != NULL) {
-      OBJECT *object = (OBJECT*) object_iter->data;
+      LeptonObject *object = (LeptonObject*) object_iter->data;
       const char *str;
 
       object_iter = g_list_next (object_iter);
@@ -506,7 +506,7 @@ find_objects_using_substring (GSList *pages,
     object_iter = s_page_objects (page);
 
     while (object_iter != NULL) {
-      OBJECT *object = (OBJECT*) object_iter->data;
+      LeptonObject *object = (LeptonObject*) object_iter->data;
       const char *str;
 
       object_iter = g_list_next (object_iter);
@@ -681,7 +681,7 @@ get_subpages (GschemToplevel *w_current,
     char *attrib;
     char **filenames;
     char **iter;
-    OBJECT *object = (OBJECT*) object_iter->data;
+    LeptonObject *object = (LeptonObject*) object_iter->data;
 
     object_iter = g_list_next (object_iter);
 
@@ -797,7 +797,7 @@ gschem_find_text_state_init (GschemFindTextState *state)
  *  \param [in] state
  */
 static void
-object_weakref_cb (OBJECT *object, GschemFindTextState *state)
+object_weakref_cb (LeptonObject *object, GschemFindTextState *state)
 {
   g_return_if_fail (state != NULL);
 
@@ -817,7 +817,7 @@ object_weakref_cb (OBJECT *object, GschemFindTextState *state)
  *  \param [in] object the object to remove from the store
  */
 static void
-remove_object (GschemFindTextState *state, OBJECT *object)
+remove_object (GschemFindTextState *state, LeptonObject *object)
 {
   GtkTreeIter iter;
   gboolean valid;
@@ -837,7 +837,7 @@ remove_object (GschemFindTextState *state, OBJECT *object)
                               &value);
 
     if (G_VALUE_HOLDS_POINTER (&value)) {
-      OBJECT *other = (OBJECT*) g_value_get_pointer (&value);
+      LeptonObject *other = (LeptonObject*) g_value_get_pointer (&value);
 
       if (object == other) {
         g_value_unset (&value);
@@ -877,7 +877,7 @@ select_cb (GtkTreeSelection *selection, GschemFindTextState *state)
                               &value);
 
     if (G_VALUE_HOLDS_POINTER (&value)) {
-      OBJECT *object = (OBJECT*) g_value_get_pointer (&value);
+      LeptonObject *object = (LeptonObject*) g_value_get_pointer (&value);
 
       if (object != NULL) {
         g_signal_emit_by_name (state, "select-object", object);

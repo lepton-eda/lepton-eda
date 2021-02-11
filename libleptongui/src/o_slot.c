@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
  *  \par Function Description
  *
  */
-void o_slot_start (GschemToplevel *w_current, OBJECT *object)
+void o_slot_start (GschemToplevel *w_current, LeptonObject *object)
 {
   char *slot_count;
   char *slot_value;
@@ -62,13 +62,13 @@ void o_slot_start (GschemToplevel *w_current, OBJECT *object)
  *  \par Function Description
  *
  */
-void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string)
+void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *string)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   char *slot_value;
   char *numslots_value;
-  OBJECT *o_slot;
+  LeptonObject *o_slot;
   char *value = NULL;
   int numslots;
   int new_slot_number;

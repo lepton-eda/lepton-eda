@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -197,7 +197,7 @@ void o_redraw_rect (GschemToplevel *w_current,
 
   /* First pass -- render non-selected objects */
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
+    LeptonObject *o_current = (LeptonObject*) iter->data;
 
     if (!(o_current->dont_redraw || o_current->selected)) {
       eda_renderer_draw (renderer, o_current);
@@ -206,7 +206,7 @@ void o_redraw_rect (GschemToplevel *w_current,
 
   /* Second pass -- render cues */
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
+    LeptonObject *o_current = (LeptonObject*) iter->data;
 
     if (!(o_current->dont_redraw || o_current->selected)) {
       eda_renderer_draw_cues (renderer, o_current);
@@ -222,7 +222,7 @@ void o_redraw_rect (GschemToplevel *w_current,
                   NULL);
     for (iter = geda_list_get_glist (page->selection_list);
          iter != NULL; iter = g_list_next (iter)) {
-      OBJECT *o_current = (OBJECT*) iter->data;
+      LeptonObject *o_current = (LeptonObject*) iter->data;
       if (!o_current->dont_redraw) {
         eda_renderer_draw (renderer, o_current);
         eda_renderer_draw_cues (renderer, o_current);
@@ -482,12 +482,12 @@ void o_invalidate_rect (GschemToplevel *w_current,
  *
  *  \par Function Description
  *  This function calls o_invalidate_rect() with the bounds of the
- *  passed OBJECT, converted to screen coordinates.
+ *  passed LeptonObject, converted to screen coordinates.
  *
  *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] object     The OBJECT invalidated on screen.
+ *  \param [in] object     The LeptonObject invalidated on screen.
  */
-void o_invalidate (GschemToplevel *w_current, OBJECT *object)
+void o_invalidate (GschemToplevel *w_current, LeptonObject *object)
 {
   if (w_current == NULL || w_current->dont_invalidate) return;
 

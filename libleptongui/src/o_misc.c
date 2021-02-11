@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,14 +43,14 @@
  */
 void o_edit(GschemToplevel *w_current, GList *list)
 {
-  OBJECT *o_current;
+  LeptonObject *o_current;
   const gchar *str = NULL;
 
   if (list == NULL) {
     return;
   }
 
-  o_current = (OBJECT *) list->data;
+  o_current = (LeptonObject *) list->data;
   if (o_current == NULL) {
     fprintf (stderr, "o_edit: ERROR: Got an unexpected NULL\n");
     exit(-1);
@@ -111,10 +111,10 @@ void o_lock(GschemToplevel *w_current)
 
   /* lock selected objects:
   */
-  OBJECT* obj = NULL;
+  LeptonObject* obj = NULL;
   for (GList* iter = objs; iter != NULL; iter = g_list_next (iter))
   {
-    obj = (OBJECT*) iter->data;
+    obj = (LeptonObject*) iter->data;
     geda_object_set_selectable (obj, FALSE);
 
     /* for objects with attributes, also lock them:
@@ -160,10 +160,10 @@ void o_unlock(GschemToplevel *w_current)
 
   /* unlock selected objects:
   */
-  OBJECT* obj = NULL;
+  LeptonObject* obj = NULL;
   for (GList* iter = objs; iter != NULL; iter = g_list_next (iter))
   {
-    obj = (OBJECT*) iter->data;
+    obj = (LeptonObject*) iter->data;
     geda_object_set_selectable (obj, TRUE);
 
     /* for objects with attributes, also unlock them:
@@ -203,7 +203,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
                            int centerx, int centery, int angle, GList *list)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  OBJECT *o_current;
+  LeptonObject *o_current;
   GList *o_iter;
 
   /* this is okay if you just hit rotate and have nothing selected */
@@ -220,7 +220,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
    * to the selection, not those within in it.
    */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    o_current = (OBJECT*) o_iter->data;
+    o_current = (LeptonObject*) o_iter->data;
 
     s_conn_remove_object_connections (o_current);
   }
@@ -232,7 +232,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
    * to the selection, not those within in it.
    */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    o_current = (OBJECT*) o_iter->data;
+    o_current = (LeptonObject*) o_iter->data;
 
     s_conn_update_object (o_current->page, o_current);
   }
@@ -262,7 +262,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
 void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, GList *list)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  OBJECT *o_current;
+  LeptonObject *o_current;
   GList *o_iter;
 
   if (list == NULL) {
@@ -278,7 +278,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
    * to the selection, not those within in it.
    */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    o_current = (OBJECT*) o_iter->data;
+    o_current = (LeptonObject*) o_iter->data;
 
     s_conn_remove_object_connections (o_current);
   }
@@ -290,7 +290,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
    * to the selection, not those within in it.
    */
   for (o_iter = list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    o_current = (OBJECT*) o_iter->data;
+    o_current = (LeptonObject*) o_iter->data;
 
     s_conn_update_object (o_current->page, o_current);
   }
@@ -316,12 +316,12 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
 void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
                                   const GList *o_list)
 {
-  OBJECT *o_current;
+  LeptonObject *o_current;
   const GList *iter;
 
   iter = o_list;
   while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
+    o_current = (LeptonObject *)iter->data;
     if (o_current->type == OBJ_TEXT && !o_is_visible (o_current)) {
 
       /* don't toggle the visibility flag */
@@ -373,12 +373,12 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
                                 const char *stext)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  OBJECT *o_current;
+  LeptonObject *o_current;
   const GList *iter;
 
   iter = o_list;
   while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
+    o_current = (LeptonObject *)iter->data;
 
     if (o_current->type == OBJ_TEXT) {
       const gchar *str = geda_text_object_get_string (o_current);
@@ -407,12 +407,12 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
                                 const char *stext)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  OBJECT *o_current;
+  LeptonObject *o_current;
   const GList *iter;
 
   iter = o_list;
   while (iter != NULL) {
-    o_current = (OBJECT *)iter->data;
+    o_current = (LeptonObject *)iter->data;
 
     if (o_current->type == OBJ_TEXT) {
       const gchar *str = geda_text_object_get_string (o_current);
@@ -436,20 +436,20 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
  * \par Function Description
  * Updates \a o_current to the latest version of the symbol available
  * in the symbol library, while preserving any attributes set in the
- * current schematic. On success, returns the new OBJECT which
+ * current schematic. On success, returns the new LeptonObject which
  * replaces \a o_current on the page; \a o_current is deleted. On
  * failure, returns NULL, and \a o_current is left unchanged.
  *
  * \param [in]     w_current The GschemToplevel object.
- * \param [in,out] o_current The OBJECT to be updated.
+ * \param [in,out] o_current The LeptonObject to be updated.
  *
- * \return the new OBJECT that replaces \a o_current.
+ * \return the new LeptonObject that replaces \a o_current.
  */
-OBJECT *
-o_update_component (GschemToplevel *w_current, OBJECT *o_current)
+LeptonObject *
+o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  OBJECT *o_new;
+  LeptonObject *o_new;
   PAGE *page;
   GList *new_attribs;
   GList *old_attribs;
@@ -494,12 +494,12 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
 
   /* Cull any attributes from new COMPONENT that are already attached to
    * old COMPONENT. Note that the new_attribs list is kept consistent by
-   * setting GList data pointers to NULL if their OBJECTs are
+   * setting GList data pointers to NULL if their LeptonObjects are
    * culled. At the end, the new_attribs list is updated by removing
    * all list items with NULL data. This is slightly magic, but
    * works. */
   for (iter = new_attribs; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *attr_new = (OBJECT*) iter->data;
+    LeptonObject *attr_new = (LeptonObject*) iter->data;
     gchar *name;
     gchar *value;
 
@@ -519,7 +519,7 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   }
   new_attribs = g_list_remove_all (new_attribs, NULL);
 
-  /* Detach attributes from old OBJECT and attach to new OBJECT */
+  /* Detach attributes from old LeptonObject and attach to new LeptonObject */
   old_attribs = g_list_copy (o_current->attribs);
   o_attrib_detach_all (o_current);
   o_attrib_attach_list (old_attribs, o_new, 1);
@@ -531,11 +531,11 @@ o_update_component (GschemToplevel *w_current, OBJECT *o_current)
   /* Update pinnumbers for current slot */
   s_slot_update_object (o_new);
 
-  /* Replace old OBJECT with new OBJECT */
+  /* Replace old LeptonObject with new LeptonObject */
   s_page_replace (page, o_current, o_new);
   s_delete_object (o_current);
 
-  /* Select new OBJECT */
+  /* Select new LeptonObject */
   o_selection_add (page->selection_list, o_new);
 
   /* mark the page as modified */

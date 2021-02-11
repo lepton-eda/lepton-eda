@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -215,12 +215,12 @@ x_print_draw_page (TOPLEVEL *toplevel, PAGE *page,
   for (iter = (GList *) s_page_objects (page);
        iter != NULL;
        iter = g_list_next (iter)) {
-    eda_renderer_draw (renderer, (OBJECT *) iter->data);
+    eda_renderer_draw (renderer, (LeptonObject *) iter->data);
   }
   for (iter = (GList *) s_page_objects (page);
        iter != NULL;
        iter = g_list_next (iter)) {
-    eda_renderer_draw_cues (renderer, (OBJECT *) iter->data);
+    eda_renderer_draw_cues (renderer, (LeptonObject *) iter->data);
   }
 
   cairo_restore (cr);

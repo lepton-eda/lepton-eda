@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
- * libgeda - gEDA's library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
  *  \par Function Description
  *
  */
-GList *s_stretch_add (GList *list, OBJECT *object, int whichone)
+GList *s_stretch_add (GList *list, LeptonObject *object, int whichone)
 {
   GList *s_iter;
   STRETCH *s_new;
@@ -50,19 +50,19 @@ GList *s_stretch_add (GList *list, OBJECT *object, int whichone)
 }
 
 
-/*! \brief Test if a STRETCH structure points at a given OBJECT
+/*! \brief Test if a STRETCH structure points at a given LeptonObject
  *
  *  \brief
  *  \par Function Description
- *  Compares if (STRETCH *)a->object == (OBJECT *)b
+ *  Compares if (STRETCH *)a->object == (LeptonObject *)b
  *
  * \param [in] a  The STRETCH structure
- * \param [in] b  The OBJECT to test for
- * \returns 0 if STRETCH *a points to OBJECT *b, otherwise 1.
+ * \param [in] b  The LeptonObject to test for
+ * \returns 0 if STRETCH *a points to LeptonObject *b, otherwise 1.
  */
 static gint find_object (gconstpointer a, gconstpointer b)
 {
-  return (((STRETCH *)a)->object == (OBJECT *)b) ? 0 : 1;
+  return (((STRETCH *)a)->object == (LeptonObject *)b) ? 0 : 1;
 }
 
 
@@ -71,7 +71,7 @@ static gint find_object (gconstpointer a, gconstpointer b)
  *  \par Function Description
  *
  */
-GList *s_stretch_remove (GList *list, OBJECT *object)
+GList *s_stretch_remove (GList *list, LeptonObject *object)
 {
   GList *item;
 

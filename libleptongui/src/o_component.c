@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,7 +38,7 @@ o_component_prepare_place (GschemToplevel *w_current,
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *temp_list;
-  OBJECT *o_current;
+  LeptonObject *o_current;
   char *buffer;
   const gchar *sym_name = s_clib_symbol_get_name (sym);
   GError *err = NULL;
@@ -85,7 +85,7 @@ o_component_prepare_place (GschemToplevel *w_current,
       g_list_concat (toplevel->page_current->place_list, temp_list);
 
   } else { /* if (w_current->include_component) {..} else { */
-    OBJECT *new_object;
+    LeptonObject *new_object;
 
     new_object = o_component_new (toplevel->page_current, OBJ_COMPONENT, default_color_id(),
                                   0, 0, 0, 0, sym, sym_name, 1);
@@ -107,7 +107,7 @@ o_component_prepare_place (GschemToplevel *w_current,
           g_list_append (toplevel->page_current->place_list, new_object);
 
       /* Flag the symbol as embedded if necessary */
-      o_current = (OBJECT*) (g_list_last (toplevel->page_current->place_list))->data;
+      o_current = (LeptonObject*) (g_list_last (toplevel->page_current->place_list))->data;
       if (w_current->embed_component) {
         o_current->component_embedded = TRUE;
       }
@@ -144,7 +144,7 @@ o_component_place_changed_run_hook (GschemToplevel *w_current)
     while (ptr) {
       SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),
                              complex_place_list_changed_hook,
-                             edascm_from_object ((OBJECT *) ptr->data));
+                             edascm_from_object ((LeptonObject *) ptr->data));
       g_scm_eval_protected (expr, scm_interaction_environment ());
       ptr = g_list_next(ptr);
     }
@@ -165,7 +165,7 @@ o_component_translate_all (GschemToplevel *w_current, int offset)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   int w_rleft, w_rtop, w_rright, w_rbottom;
-  OBJECT *o_current;
+  LeptonObject *o_current;
   const GList *iter;
   int x, y;
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
@@ -193,7 +193,7 @@ o_component_translate_all (GschemToplevel *w_current, int offset)
 
   for (iter = s_page_objects (toplevel->page_current);
        iter != NULL; iter = g_list_next (iter)) {
-    o_current = (OBJECT*) iter->data;
+    o_current = (LeptonObject*) iter->data;
     s_conn_remove_object_connections (o_current);
   }
 
@@ -208,7 +208,7 @@ o_component_translate_all (GschemToplevel *w_current, int offset)
 
   for (iter = s_page_objects (toplevel->page_current);
        iter != NULL;  iter = g_list_next (iter)) {
-    o_current = (OBJECT*) iter->data;
+    o_current = (LeptonObject*) iter->data;
     s_conn_update_object (toplevel->page_current, o_current);
   }
 

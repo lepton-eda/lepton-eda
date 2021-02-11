@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,12 +151,12 @@ struct st_gschem_toplevel {
   int distance;
   int inside_action;                    /* Are we doing an action? */
   int rubber_visible;                   /* Are there any rubber lines on
-					   the screen? */
+                                           the screen? */
   int net_direction;                    /* bit field to guess the best net direction */
   int which_grip;                       /* Which grip is being manipulated.
                                            Its range of values depends on the
                                            type of object being manipulated. */
-  OBJECT *which_object;                 /* Object being manipulated */
+  LeptonObject *which_object;           /* Object being manipulated */
   PATH *temp_path;                      /* Path being created */
   gboolean pathcontrol;                 /* Set path control point while path creating */ /* FIXME: can we do without it? */
 

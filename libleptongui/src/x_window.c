@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -384,7 +384,9 @@ x_window_show_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
 
 
 void
-x_window_select_object (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current)
+x_window_select_object (GschemFindTextState *state,
+                        LeptonObject *object,
+                        GschemToplevel *w_current)
 {
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);

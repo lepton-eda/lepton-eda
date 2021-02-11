@@ -18,7 +18,7 @@ void g_init_action (void);
 void g_init_attrib ();
 /* g_hook.c */
 void g_init_hook ();
-void g_run_hook_object (GschemToplevel *w_current, const char *name, OBJECT *obj);
+void g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *obj);
 void g_run_hook_object_list (GschemToplevel *w_current, const char *name, GList *obj_lst);
 void g_run_hook_page (GschemToplevel *w_current, const char *name, PAGE *page);
 void g_run_hook_action_mode (GschemToplevel *w_current, const char *name, const gchar *action_mode);
@@ -198,12 +198,12 @@ void o_arc_end4(GschemToplevel *w_current, int radius, int start_angle, int swee
 void o_arc_motion(GschemToplevel *w_current, int x, int y, int whichone);
 void o_arc_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
 /* o_attrib.c */
-void o_attrib_add_selected(GschemToplevel *w_current, SELECTION *selection, OBJECT *selected);
-void o_attrib_deselect_invisible(GschemToplevel *w_current, SELECTION *selection, OBJECT *selected);
-void o_attrib_select_invisible(GschemToplevel *w_current, SELECTION *selection, OBJECT *selected);
-void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object);
-void o_attrib_toggle_show_name_value(GschemToplevel *w_current, OBJECT *object, int new_show_name_value);
-OBJECT *o_attrib_add_attrib(GschemToplevel *w_current, const char *text_string, int visibility, int show_name_value, OBJECT *object);
+void o_attrib_add_selected(GschemToplevel *w_current, SELECTION *selection, LeptonObject *selected);
+void o_attrib_deselect_invisible(GschemToplevel *w_current, SELECTION *selection, LeptonObject *selected);
+void o_attrib_select_invisible(GschemToplevel *w_current, SELECTION *selection, LeptonObject *selected);
+void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object);
+void o_attrib_toggle_show_name_value(GschemToplevel *w_current, LeptonObject *object, int new_show_name_value);
+LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current, const char *text_string, int visibility, int show_name_value, LeptonObject *object);
 /* o_basic.c */
 #ifdef ENABLE_GTK3
 void
@@ -218,10 +218,10 @@ void o_redraw_rect (GschemToplevel *w_current, GdkDrawable *drawable, PAGE *page
 int o_invalidate_rubber(GschemToplevel *w_current);
 int o_redraw_cleanstates(GschemToplevel *w_current);
 void o_invalidate_rect(GschemToplevel *w_current, int x1, int y1, int x2, int y2);
-void o_invalidate(GschemToplevel *w_current, OBJECT *object);
+void o_invalidate(GschemToplevel *w_current, LeptonObject *object);
 void o_invalidate_glist(GschemToplevel *w_current, GList *list);
 /* o_box.c */
-void o_box_draw(GschemToplevel *w_current, OBJECT *o_current);
+void o_box_draw(GschemToplevel *w_current, LeptonObject *o_current);
 void o_box_invalidate_rubber(GschemToplevel *w_current);
 void o_box_start(GschemToplevel *w_current, int x, int y);
 void o_box_end(GschemToplevel *w_current, int x, int y);
@@ -241,7 +241,7 @@ void o_bus_motion(GschemToplevel *w_current, int x, int y);
 void o_bus_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer);
 void o_bus_invalidate_rubber(GschemToplevel *w_current);
 /* o_circle.c */
-void o_circle_draw(GschemToplevel *w_current, OBJECT *o_current);
+void o_circle_draw(GschemToplevel *w_current, LeptonObject *o_current);
 void o_circle_invalidate_rubber(GschemToplevel *w_current);
 void o_circle_start(GschemToplevel *w_current, int x, int y);
 void o_circle_end(GschemToplevel *w_current, int x, int y);
@@ -255,20 +255,20 @@ void o_component_translate_all (GschemToplevel *w_current, int offset);
 void o_copy_start(GschemToplevel *w_current, int x, int y);
 void o_copy_end(GschemToplevel *w_current);
 /* o_delete.c */
-void o_delete(GschemToplevel *w_current, OBJECT *object);
+void o_delete(GschemToplevel *w_current, LeptonObject *object);
 void o_delete_selected(GschemToplevel *w_current);
 /* o_find.c */
 gboolean o_find_object(GschemToplevel *w_current, int x, int y,
                        gboolean deselect_afterwards);
 gboolean o_find_selected_object(GschemToplevel *w_current, int x, int y);
 /* o_grips.c */
-OBJECT *o_grips_search_world(GschemToplevel *w_current, int x, int y, int *whichone);
-OBJECT *o_grips_search_arc_world(GschemToplevel *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-OBJECT *o_grips_search_box_world(GschemToplevel *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-OBJECT *o_grips_search_path_world(GschemToplevel *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-OBJECT *o_grips_search_picture_world(GschemToplevel *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-OBJECT *o_grips_search_circle_world(GschemToplevel *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
-OBJECT *o_grips_search_line_world(GschemToplevel *w_current, OBJECT *o_current, int x, int y, int size, int *whichone);
+LeptonObject *o_grips_search_world(GschemToplevel *w_current, int x, int y, int *whichone);
+LeptonObject *o_grips_search_arc_world(GschemToplevel *w_current, LeptonObject *o_current, int x, int y, int size, int *whichone);
+LeptonObject *o_grips_search_box_world(GschemToplevel *w_current, LeptonObject *o_current, int x, int y, int size, int *whichone);
+LeptonObject *o_grips_search_path_world(GschemToplevel *w_current, LeptonObject *o_current, int x, int y, int size, int *whichone);
+LeptonObject *o_grips_search_picture_world(GschemToplevel *w_current, LeptonObject *o_current, int x, int y, int size, int *whichone);
+LeptonObject *o_grips_search_circle_world(GschemToplevel *w_current, LeptonObject *o_current, int x, int y, int size, int *whichone);
+LeptonObject *o_grips_search_line_world(GschemToplevel *w_current, LeptonObject *o_current, int x, int y, int size, int *whichone);
 void o_grips_start(GschemToplevel *w_current, int x, int y);
 void o_grips_motion(GschemToplevel *w_current, int x, int y);
 void o_grips_end(GschemToplevel *w_current);
@@ -291,20 +291,20 @@ void o_edit_show_hidden_lowlevel(GschemToplevel *w_current, const GList *o_list)
 void o_edit_show_hidden(GschemToplevel *w_current, const GList *o_list);
 void o_edit_hide_specific_text(GschemToplevel *w_current, const GList *o_list, const char *stext);
 void o_edit_show_specific_text(GschemToplevel *w_current, const GList *o_list, const char *stext);
-OBJECT *o_update_component(GschemToplevel *w_current, OBJECT *o_current);
+LeptonObject *o_update_component(GschemToplevel *w_current, LeptonObject *o_current);
 void o_autosave_backups(GschemToplevel *w_current);
 /* o_move.c */
 void o_move_start(GschemToplevel *w_current, int x, int y);
-void o_move_end_lowlevel(GschemToplevel *w_current, OBJECT *object, int diff_x, int diff_y);
+void o_move_end_lowlevel(GschemToplevel *w_current, LeptonObject *object, int diff_x, int diff_y);
 void o_move_end(GschemToplevel *w_current);
 void o_move_cancel(GschemToplevel *w_current);
 void o_move_motion(GschemToplevel *w_current, int x, int y);
 void o_move_invalidate_rubber(GschemToplevel *w_current, int drawing);
 void o_move_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
-int o_move_return_whichone(OBJECT *object, int x, int y);
-void o_move_check_endpoint(GschemToplevel *w_current, OBJECT *object);
+int o_move_return_whichone(LeptonObject *object, int x, int y);
+void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject *object);
 void o_move_prep_rubberband(GschemToplevel *w_current);
-int o_move_zero_length(OBJECT *object);
+int o_move_zero_length(LeptonObject *object);
 void o_move_end_rubberband(GschemToplevel *w_current, int world_diff_x, int world_diff_y, GList **objects);
 /* o_net.c */
 void o_net_reset(GschemToplevel *w_current);
@@ -317,7 +317,7 @@ void o_net_end(GschemToplevel *w_current, int x, int y);
 void o_net_motion(GschemToplevel *w_current, int x, int y);
 void o_net_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
 void o_net_invalidate_rubber(GschemToplevel *w_current);
-int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj, GList *other_objects);
+int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj, GList *other_objects);
 /* o_picture.c */
 void o_picture_start(GschemToplevel *w_current, int x, int y);
 void o_picture_end(GschemToplevel *w_current, int x, int y);
@@ -358,26 +358,26 @@ void o_place_mirror(GschemToplevel *w_current);
 void o_select_start(GschemToplevel *w_current, int x, int y);
 void o_select_end(GschemToplevel *w_current, int x, int y);
 void o_select_motion(GschemToplevel *w_current, int x, int y);
-void o_select_run_hooks(GschemToplevel *w_current, OBJECT *o_current, int flag);
-void o_select_object(GschemToplevel *w_current, OBJECT *o_current, int type, int count);
+void o_select_run_hooks(GschemToplevel *w_current, LeptonObject *o_current, int flag);
+void o_select_object(GschemToplevel *w_current, LeptonObject *o_current, int type, int count);
 void o_select_box_start(GschemToplevel *w_current, int x, int y);
 void o_select_box_end(GschemToplevel *w_current, int x, int y);
 void o_select_box_motion(GschemToplevel *w_current, int x, int y);
 void o_select_box_invalidate_rubber(GschemToplevel *w_current);
 void o_select_box_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
 void o_select_box_search(GschemToplevel *w_current);
-void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_current);
-OBJECT *o_select_return_first_object(GschemToplevel *w_current);
+void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_current);
+LeptonObject *o_select_return_first_object(GschemToplevel *w_current);
 int o_select_selected(GschemToplevel *w_current);
 void o_select_unselect_all(GschemToplevel *w_current);
 void o_select_visible_unlocked(GschemToplevel *w_current);
 void o_select_move_to_place_list(GschemToplevel *w_current);
 /* o_slot.c */
-void o_slot_start(GschemToplevel *w_current, OBJECT *object);
-void o_slot_end(GschemToplevel *w_current, OBJECT *object, const char *string);
+void o_slot_start(GschemToplevel *w_current, LeptonObject *object);
+void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *string);
 /* o_text.c */
 void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int align, int rotate, int size);
-void o_text_change(GschemToplevel *w_current, OBJECT *object, char *string, int visibility, int show);
+void o_text_change(GschemToplevel *w_current, LeptonObject *object, char *string, int visibility, int show);
 /* o_undo.c */
 void o_undo_init(void);
 void o_undo_savestate(GschemToplevel *w_current, PAGE *page, int flag);
@@ -387,8 +387,8 @@ GList *o_undo_find_prev_object_head(UNDO *start);
 void o_undo_callback(GschemToplevel *w_current, PAGE *page, int type);
 void o_undo_cleanup(void);
 /* s_stretch.c */
-GList *s_stretch_add(GList *list, OBJECT *object, int whichone);
-GList *s_stretch_remove(GList *list, OBJECT *object);
+GList *s_stretch_add(GList *list, LeptonObject *object, int whichone);
+GList *s_stretch_remove(GList *list, LeptonObject *object);
 void s_stretch_destroy_all(GList *list);
 /* gschem_alignment_combo.c */
 GtkWidget* gschem_alignment_combo_new ();
@@ -396,7 +396,7 @@ int gschem_alignment_combo_get_align (GtkWidget *widget);
 void gschem_alignment_combo_set_align (GtkWidget *widget, int align);
 /* x_attribedit.c */
 void attrib_edit_dialog_ok(GtkWidget *w, GschemToplevel *w_current);
-void attrib_edit_dialog(GschemToplevel *w_current, OBJECT *attr_obj, int flag);
+void attrib_edit_dialog(GschemToplevel *w_current, LeptonObject *attr_obj, int flag);
 /* x_autonumber.c */
 void autonumber_text_dialog(GschemToplevel *w_current);
 /* x_basic.c */
@@ -429,7 +429,7 @@ int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);
 void select_all_text_in_textview(GtkTextView *textview);
 void text_input_dialog(GschemToplevel *w_current);
 void text_edit_dialog(GschemToplevel *w_current);
-void arc_angle_dialog(GschemToplevel *w_current, OBJECT *arc_object);
+void arc_angle_dialog(GschemToplevel *w_current, LeptonObject *arc_object);
 void snap_size_dialog(GschemToplevel *w_current);
 void slot_edit_dialog(GschemToplevel *w_current, const char *count, const char *string);
 void about_dialog(GschemToplevel *w_current);
@@ -564,7 +564,7 @@ gint x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *fil
 void x_window_close_page (GschemToplevel *w_current, PAGE *page);
 PAGE* x_window_close_page_impl (GschemToplevel *w_current, PAGE *page);
 GschemToplevel* x_window_new ();
-void x_window_select_object (GschemFindTextState *state, OBJECT *object, GschemToplevel *w_current);
+void x_window_select_object (GschemFindTextState *state, LeptonObject *object, GschemToplevel *w_current);
 void x_window_setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled);
 gboolean x_window_untitled_page (PAGE* page);
 

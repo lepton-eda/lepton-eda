@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -269,7 +269,7 @@ void i_set_state(GschemToplevel *w_current, enum x_states newstate)
  *   *EK* Egil Kvaleberg
  */
 void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate,
-		     const char *message)
+                     const char *message)
 {
   if ((newstate != w_current->event_state) || (message != NULL)) {
     w_current->event_state = newstate;
@@ -286,7 +286,7 @@ void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate,
 void i_update_toolbar(GschemToplevel *w_current)
 {
   if (!w_current->toolbars)
-	return;
+    return;
 
   switch(w_current->event_state) {
     case(SELECT):
@@ -350,16 +350,16 @@ static void clipboard_usable_cb (int usable, void *userdata)
  *  \param page  The page to search for selected object.
  *  \param type      object type constant (OBJ_TEXT, OBJ_COMPONENT, etc.) (o_types.h)
  */
-static OBJECT*
+static LeptonObject*
 obj_selected (PAGE* page, int type)
 {
-  OBJECT* result = FALSE;
+  LeptonObject* result = FALSE;
   SELECTION* selection = page->selection_list;
 
   GList* gl = geda_list_get_glist (selection);
   for ( ; gl != NULL; gl = g_list_next (gl) )
   {
-    OBJECT* obj = (OBJECT*) gl->data;
+    LeptonObject* obj = (LeptonObject*) gl->data;
     if (obj->type == type)
     {
 #ifdef DEBUG
@@ -383,7 +383,7 @@ static gboolean
 parent_comp_selected (PAGE* page)
 {
   gboolean result = FALSE;
-  OBJECT* obj = obj_selected (page, OBJ_COMPONENT);
+  LeptonObject* obj = obj_selected (page, OBJ_COMPONENT);
 
   if (obj != NULL)
   {
@@ -599,4 +599,3 @@ i_update_net_options_status (GschemToplevel* w_current)
     GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
     gschem_options_get_magnetic_net_mode (w_current->options));
 }
-

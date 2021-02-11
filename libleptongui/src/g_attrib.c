@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2011-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ SCM_DEFINE (add_attrib_x, "%add-attrib!", 5, 0, 0,
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* Check target object, if present */
-  OBJECT *obj = NULL;
+  LeptonObject *obj = NULL;
   if (edascm_is_object (target_s)) {
     obj = edascm_to_object (target_s);
     if (o_get_page (obj) != toplevel->page_current) {
@@ -128,7 +128,7 @@ SCM_DEFINE (add_attrib_x, "%add-attrib!", 5, 0, 0,
   gchar *str = g_strdup_printf ("%s=%s", name, value);
   scm_dynwind_unwind_handler (g_free, str, SCM_F_WIND_EXPLICITLY);
 
-  OBJECT *result = o_attrib_add_attrib (w_current, str, visibility, show, obj);
+  LeptonObject *result = o_attrib_add_attrib (w_current, str, visibility, show, obj);
 
   scm_dynwind_end ();
 

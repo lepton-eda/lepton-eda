@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -489,7 +489,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 
   if (end_path || close_path) {
     /* Add object to page and clean up path drawing state */
-    OBJECT *obj = geda_path_object_new_take_path (OBJ_PATH,
+    LeptonObject *obj = geda_path_object_new_take_path (OBJ_PATH,
                                                   GRAPHIC_COLOR, p);
     w_current->temp_path = NULL;
     w_current->first_wx = -1;
@@ -527,7 +527,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 void
 o_path_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
-  OBJECT object;
+  LeptonObject object;
   int added_sections = 0;
 
   /* Draw a helper for when we're dragging a control point */
@@ -551,7 +551,7 @@ o_path_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
   added_sections = path_next_sections (w_current);
 
   /* Setup a fake object to pass the drawing routine */
-  memset (&object, 0, sizeof (OBJECT));
+  memset (&object, 0, sizeof (LeptonObject));
   object.type = OBJ_PATH;
   object.color = SELECT_COLOR;
   object.line_width = 0; /* clamped to 1 pixel in circle_path */
@@ -622,10 +622,10 @@ void o_path_motion_grips (GschemToplevel *w_current, int w_x, int w_y)
 void
 o_path_draw_rubber_grips (GschemToplevel *w_current, EdaRenderer *renderer)
 {
-  OBJECT object;
+  LeptonObject object;
 
   /* Setup a fake object to pass the drawing routine */
-  memset (&object, 0, sizeof (OBJECT));
+  memset (&object, 0, sizeof (LeptonObject));
   object.type = OBJ_PATH;
   object.color = SELECT_COLOR;
   object.line_width = 0; /* clamped to 1 pixel in circle_path */

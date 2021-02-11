@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -83,7 +83,7 @@ void o_picture_start(GschemToplevel *w_current, int w_x, int w_y)
 void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   int picture_width, picture_height;
   int picture_left, picture_top;
 
@@ -346,7 +346,7 @@ o_picture_exchange (GschemToplevel *w_current,
        iter != NULL;
        iter = g_list_next (iter)) {
 
-    OBJECT *object = (OBJECT *) iter->data;
+    LeptonObject *object = (LeptonObject *) iter->data;
     g_assert (object != NULL);
 
     if (object->type == OBJ_PICTURE) {

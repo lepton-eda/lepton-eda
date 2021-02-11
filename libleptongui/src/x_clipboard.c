@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -207,8 +207,8 @@ x_clipboard_set (GschemToplevel *w_current, const GList *object_list)
  *
  * \param [in,out] w_current   The current GschemToplevel.
  *
- * \returns Any OBJECTs retrieved from the system clipboard, or NULL
- *          if none were available.
+ * \returns Any LeptonObjects retrieved from the system clipboard,
+ *          or NULL if none were available.
  */
 GList *
 x_clipboard_get (GschemToplevel *w_current)
@@ -225,7 +225,7 @@ x_clipboard_get (GschemToplevel *w_current)
   selection_data = gtk_clipboard_wait_for_contents (cb, type);
   if (selection_data == NULL) return FALSE;
 
-  /* Convert the data buffer to OBJECTs */
+  /* Convert the data buffer to LeptonObjects */
 #if GTK_CHECK_VERSION(2,14,0)
   buf = gtk_selection_data_get_data (selection_data);
 #else

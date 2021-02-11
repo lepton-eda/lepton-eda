@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,12 +58,12 @@
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
  *  \param [out] whichone   Which grip point is selected.
- *  \return Pointer to OBJECT the grip is on, NULL otherwise.
+ *  \return Pointer to LeptonObject the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_world(GschemToplevel *w_current, int x, int y, int *whichone)
+LeptonObject *o_grips_search_world(GschemToplevel *w_current, int x, int y, int *whichone)
 {
-  OBJECT *object=NULL;
-  OBJECT *found=NULL;
+  LeptonObject *object=NULL;
+  LeptonObject *found=NULL;
   GList *s_current;
   int size;
   int w_size;
@@ -85,7 +85,7 @@ OBJECT *o_grips_search_world(GschemToplevel *w_current, int x, int y, int *which
 
   s_current = geda_list_get_glist( toplevel->page_current->selection_list );
   while (s_current != NULL) {
-    object = (OBJECT *) s_current->data;
+    object = (LeptonObject *) s_current->data;
     if (object) {
       switch(object->type) {
         case(OBJ_ARC):
@@ -198,14 +198,14 @@ static gboolean inside_grip( int x, int y, int grip_x, int grip_y, int size )
  *  representing a grip in world units.
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Arc OBJECT to check.
+ *  \param [in]  o_current  Arc LeptonObject to check.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
  *  \param [in]  size       Half the width of the grip square in world units.
  *  \param [out] whichone   Which grip point is selected.
- *  \return Pointer to OBJECT the grip is on, NULL otherwise.
+ *  \return Pointer to LeptonObject the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_arc_world(GschemToplevel *w_current, OBJECT *o_current,
+LeptonObject *o_grips_search_arc_world(GschemToplevel *w_current, LeptonObject *o_current,
                                  int x, int y, int size, int *whichone)
 {
   int centerx, centery, radius, start_angle, sweep_angle;
@@ -263,14 +263,14 @@ OBJECT *o_grips_search_arc_world(GschemToplevel *w_current, OBJECT *o_current,
  *  the square representing a grip in world units.
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Box OBJECT to check.
+ *  \param [in]  o_current  Box LeptonObject to check.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
  *  \param [in]  size       Half the width of the grip square in world units.
  *  \param [out] whichone   Which grip point is selected.
- *  \return Pointer to OBJECT the grip is on, NULL otherwise.
+ *  \return Pointer to LeptonObject the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_box_world(GschemToplevel *w_current, OBJECT *o_current,
+LeptonObject *o_grips_search_box_world(GschemToplevel *w_current, LeptonObject *o_current,
                                  int x, int y, int size, int *whichone)
 {
   /* inside upper left grip ? */
@@ -328,14 +328,14 @@ OBJECT *o_grips_search_box_world(GschemToplevel *w_current, OBJECT *o_current,
  *  square representing a grip in world units.
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Picture OBJECT to check.
+ *  \param [in]  o_current  Picture LeptonObject to check.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
  *  \param [in]  size       Half the width of the grip square in world units.
  *  \param [out] whichone   Which grip point is selected.
- *  \return Pointer to OBJECT the grip is on, NULL otherwise.
+ *  \return Pointer to LeptonObject the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_path_world(GschemToplevel *w_current, OBJECT *o_current,
+LeptonObject *o_grips_search_path_world(GschemToplevel *w_current, LeptonObject *o_current,
                                      int x, int y, int size, int *whichone)
 {
   PATH_SECTION *section;
@@ -398,14 +398,14 @@ OBJECT *o_grips_search_path_world(GschemToplevel *w_current, OBJECT *o_current,
  *  square representing a grip in world units.
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Picture OBJECT to check.
+ *  \param [in]  o_current  Picture LeptonObject to check.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
  *  \param [in]  size       Half the width of the grip square in world units.
  *  \param [out] whichone   Which grip point is selected.
- *  \return Pointer to OBJECT the grip is on, NULL otherwise.
+ *  \return Pointer to LeptonObject the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_picture_world(GschemToplevel *w_current, OBJECT *o_current,
+LeptonObject *o_grips_search_picture_world(GschemToplevel *w_current, LeptonObject *o_current,
                                      int x, int y, int size, int *whichone)
 {
   /* inside upper left grip ? */
@@ -461,14 +461,14 @@ OBJECT *o_grips_search_picture_world(GschemToplevel *w_current, OBJECT *o_curren
  *  The identifier of this grip is <B>CIRCLE_RADIUS</B>.
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Circle OBJECT to check.
+ *  \param [in]  o_current  Circle LeptonObject to check.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
  *  \param [in]  size       Half the width of the grip square in world units.
  *  \param [out] whichone   Which grip point is selected.
- *  \return Pointer to OBJECT the grip is on, NULL otherwise.
+ *  \return Pointer to LeptonObject the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_circle_world(GschemToplevel *w_current, OBJECT *o_current,
+LeptonObject *o_grips_search_circle_world(GschemToplevel *w_current, LeptonObject *o_current,
                                     int x, int y, int size, int *whichone)
 {
   gint center_x = geda_circle_object_get_center_x (o_current);
@@ -500,14 +500,14 @@ OBJECT *o_grips_search_circle_world(GschemToplevel *w_current, OBJECT *o_current
  *  The parameter <B>size</B> is half the size of the grip in world units.
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Line OBJECT to check.
+ *  \param [in]  o_current  Line LeptonObject to check.
  *  \param [in]  x          Current x coordinate of pointer in world units.
  *  \param [in]  y          Current y coordinate of pointer in world units.
  *  \param [in]  size       Half the width of the grip square in world units.
  *  \param [out] whichone   Which grip point is selected.
- *  \return Pointer to OBJECT the grip is on, NULL otherwise.
+ *  \return Pointer to LeptonObject the grip is on, NULL otherwise.
  */
-OBJECT *o_grips_search_line_world(GschemToplevel *w_current, OBJECT *o_current,
+LeptonObject *o_grips_search_line_world(GschemToplevel *w_current, LeptonObject *o_current,
                                   int x, int y, int size, int *whichone)
 {
   /* check the grip on the end of line 1 */
@@ -549,12 +549,12 @@ OBJECT *o_grips_search_line_world(GschemToplevel *w_current, OBJECT *o_current,
  *  These angles are expressed in degrees.
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Arc OBJECT to check.
+ *  \param [in]  o_current  Arc LeptonObject to check.
  *  \param [in]  x          (unused)
  *  \param [in]  y          (unused)
  *  \param [out] whichone   (unused)
  */
-static void o_grips_start_arc(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_start_arc(GschemToplevel *w_current, LeptonObject *o_current,
                               int x, int y, int whichone)
 {
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
@@ -590,12 +590,12 @@ static void o_grips_start_arc(GschemToplevel *w_current, OBJECT *o_current,
  *  to change during the action.
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Box OBJECT to check.
+ *  \param [in]  o_current  Box LeptonObject to check.
  *  \param [in]  x          (unused)
  *  \param [in]  y          (unused)
  *  \param [out] whichone   Which coordinate to check.
  */
-static void o_grips_start_box(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_start_box(GschemToplevel *w_current, LeptonObject *o_current,
                               int x, int y, int whichone)
 {
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
@@ -653,12 +653,12 @@ static void o_grips_start_box(GschemToplevel *w_current, OBJECT *o_current,
  *  suppose to change during the action.
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Picture OBJECT to check.
+ *  \param [in]  o_current  Picture LeptonObject to check.
  *  \param [in]  x          (unused)
  *  \param [in]  y          (unused)
  *  \param [out] whichone   Which coordinate to check.
  */
-static void o_grips_start_path(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_start_path(GschemToplevel *w_current, LeptonObject *o_current,
                                int x, int y, int whichone)
 {
   PATH_SECTION *section;
@@ -723,12 +723,12 @@ static void o_grips_start_path(GschemToplevel *w_current, OBJECT *o_current,
  *  suppose to change during the action.
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Picture OBJECT to check.
+ *  \param [in]  o_current  Picture LeptonObject to check.
  *  \param [in]  x          (unused)
  *  \param [in]  y          (unused)
  *  \param [out] whichone   Which coordinate to check.
  */
-static void o_grips_start_picture(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_start_picture(GschemToplevel *w_current, LeptonObject *o_current,
                                   int x, int y, int whichone)
 {
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
@@ -790,12 +790,12 @@ static void o_grips_start_picture(GschemToplevel *w_current, OBJECT *o_current,
  *  The radius of the circle is stored in <B>w_current->distance</B>.
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Circle OBJECT to check.
+ *  \param [in]  o_current  Circle LeptonObject to check.
  *  \param [in]  x          (unused)
  *  \param [in]  y          (unused)
  *  \param [out] whichone   Which coordinate to check.
  */
-static void o_grips_start_circle(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_start_circle(GschemToplevel *w_current, LeptonObject *o_current,
                                  int x, int y, int whichone)
 {
 
@@ -823,12 +823,12 @@ static void o_grips_start_circle(GschemToplevel *w_current, OBJECT *o_current,
  *  (<B>w_current->second_wx</B>,<B>w_current->second_wy</B>).
  *
  *  \param [in]  w_current  The GschemToplevel object.
- *  \param [in]  o_current  Line OBJECT to check.
+ *  \param [in]  o_current  Line LeptonObject to check.
  *  \param [in]  x          (unused)
  *  \param [in]  y          (unused)
  *  \param [out] whichone   Which coordinate to check.
  */
-static void o_grips_start_line(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_start_line(GschemToplevel *w_current, LeptonObject *o_current,
                                int x, int y, int whichone)
 {
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
@@ -869,9 +869,9 @@ static void o_grips_start_line(GschemToplevel *w_current, OBJECT *o_current,
  */
 void o_grips_start(GschemToplevel *w_current, int w_x, int w_y)
 {
-  OBJECT *object;
+  LeptonObject *object;
   int whichone;
-  void (*func) (GschemToplevel*, OBJECT*, int, int, int) = NULL;
+  void (*func) (GschemToplevel*, LeptonObject*, int, int, int) = NULL;
 
   /* search if there is a grip on a selected object at (w_x,w_y) */
   object = o_grips_search_world(w_current, w_x, w_y, &whichone);
@@ -978,7 +978,7 @@ void o_grips_motion(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_grips_cancel(GschemToplevel *w_current)
 {
-  OBJECT *object = w_current->which_object;
+  LeptonObject *object = w_current->which_object;
 
   /* reset global variables */
   w_current->which_grip = -1;
@@ -1009,10 +1009,10 @@ void o_grips_cancel(GschemToplevel *w_current)
  *  #geda_arc_object_modify() function.
  *
  *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] o_current  Arc OBJECT to end modification on.
+ *  \param [in] o_current  Arc LeptonObject to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-static void o_grips_end_arc(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_end_arc(GschemToplevel *w_current, LeptonObject *o_current,
                             int whichone)
 {
   int arg1, arg2;
@@ -1056,10 +1056,10 @@ static void o_grips_end_arc(GschemToplevel *w_current, OBJECT *o_current,
  *  \par Function Description
  *
  *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] o_current  Box OBJECT to end modification on.
+ *  \param [in] o_current  Box LeptonObject to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-static void o_grips_end_box(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_end_box(GschemToplevel *w_current, LeptonObject *o_current,
                             int whichone)
 {
   int box_width, box_height;
@@ -1084,10 +1084,10 @@ static void o_grips_end_box(GschemToplevel *w_current, OBJECT *o_current,
  *  \par Function Description
  *
  *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] o_current  Picture OBJECT to end modification on.
+ *  \param [in] o_current  Picture LeptonObject to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-static void o_grips_end_path(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_end_path(GschemToplevel *w_current, LeptonObject *o_current,
                              int whichone)
 {
   geda_path_object_modify (o_current,
@@ -1101,10 +1101,10 @@ static void o_grips_end_path(GschemToplevel *w_current, OBJECT *o_current,
  *  \par Function Description
  *
  *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] o_current  Picture OBJECT to end modification on.
+ *  \param [in] o_current  Picture LeptonObject to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-static void o_grips_end_picture(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_end_picture(GschemToplevel *w_current, LeptonObject *o_current,
                                 int whichone)
 {
   /* don't allow zero width/height pictures
@@ -1138,10 +1138,10 @@ static void o_grips_end_picture(GschemToplevel *w_current, OBJECT *o_current,
  *  The last value of the radius is in <B>w_current->distance</B> in screen units.
  *
  *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] o_current  Circle OBJECT to end modification on.
+ *  \param [in] o_current  Circle LeptonObject to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-static void o_grips_end_circle(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_end_circle(GschemToplevel *w_current, LeptonObject *o_current,
                                int whichone)
 {
   /* don't allow zero radius circles
@@ -1170,10 +1170,10 @@ static void o_grips_end_circle(GschemToplevel *w_current, OBJECT *o_current,
  *  allowed. In this case, the process is stopped and the line unchanged.
  *
  *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] o_current  Line OBJECT to end modification on.
+ *  \param [in] o_current  Line LeptonObject to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-static void o_grips_end_line(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_end_line(GschemToplevel *w_current, LeptonObject *o_current,
                              int whichone)
 {
   /* don't allow zero length nets / lines / pins
@@ -1205,10 +1205,10 @@ static void o_grips_end_line(GschemToplevel *w_current, OBJECT *o_current,
  *  allowed. In this case, the process is stopped and the line unchanged.
  *
  *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] o_current  Net OBJECT to end modification on.
+ *  \param [in] o_current  Net LeptonObject to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-static void o_grips_end_net(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_end_net(GschemToplevel *w_current, LeptonObject *o_current,
                             int whichone)
 {
   GList *connected_objects;
@@ -1246,10 +1246,10 @@ static void o_grips_end_net(GschemToplevel *w_current, OBJECT *o_current,
  *  allowed. In this case, the process is stopped and the line unchanged.
  *
  *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] o_current  Net OBJECT to end modification on.
+ *  \param [in] o_current  Net LeptonObject to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-static void o_grips_end_pin(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_end_pin(GschemToplevel *w_current, LeptonObject *o_current,
                             int whichone)
 {
   /* don't allow zero length pin
@@ -1282,10 +1282,10 @@ static void o_grips_end_pin(GschemToplevel *w_current, OBJECT *o_current,
  *  allowed. In this case, the process is stopped and the bus unchanged.
  *
  *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] o_current  bus OBJECT to end modification on.
+ *  \param [in] o_current  bus LeptonObject to end modification on.
  *  \param [in] whichone   Which grip is pointed to.
  */
-static void o_grips_end_bus(GschemToplevel *w_current, OBJECT *o_current,
+static void o_grips_end_bus(GschemToplevel *w_current, LeptonObject *o_current,
                             int whichone)
 {
   /* don't allow zero length bus
@@ -1323,7 +1323,7 @@ static void o_grips_end_bus(GschemToplevel *w_current, OBJECT *o_current,
 void o_grips_end(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  OBJECT *object;
+  LeptonObject *object;
   int grip;
 
   g_assert (w_current->inside_action != 0);

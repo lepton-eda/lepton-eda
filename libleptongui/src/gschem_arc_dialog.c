@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
 {
   GtkWidget *spinentry;
   gint radius, start_angle, sweep_angle;
-  OBJECT *arc_object = NULL;
+  LeptonObject *arc_object = NULL;
 
   switch (response) {
   case GTK_RESPONSE_REJECT:
@@ -64,7 +64,7 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
     spinentry = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->aawindow),
                                                "spin_sweep"));
     sweep_angle = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON(spinentry));
-    arc_object = (OBJECT*) g_object_get_data(G_OBJECT(w_current->aawindow),"arc_object");
+    arc_object = (LeptonObject*) g_object_get_data(G_OBJECT(w_current->aawindow),"arc_object");
 
     if (arc_object != NULL) {
       geda_arc_object_modify (arc_object, radius, 0, ARC_RADIUS);
@@ -85,14 +85,14 @@ void arc_angle_dialog_response(GtkWidget *w, gint response,
 /*! \brief Creates the arc angle dialog
  *  \par Function Description
  *  This function creates the arc angle dialog. Depending on the
- *  \a arc_object the entries are filled with the arc OBJECT properties
+ *  \a arc_object the entries are filled with the arc LeptonObject properties
  *  or with some standard values.
  *
  *  \param [in] w_current   The GschemToplevel object
- *  \param [in] arc_object  an arc OBJECT if used to modify an arc
+ *  \param [in] arc_object  an arc LeptonObject if used to modify an arc
  *                          or NULL to create a new arc.
  */
-void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
+void arc_angle_dialog (GschemToplevel *w_current, LeptonObject *arc_object)
 {
   GtkWidget *label[3];
   GtkWidget *vbox;
@@ -149,7 +149,7 @@ void arc_angle_dialog (GschemToplevel *w_current, OBJECT *arc_object)
     widget[2] = gtk_spin_button_new_with_range (-360,360,1);
     gtk_entry_set_activates_default(GTK_ENTRY(widget[2]), TRUE);
 
-	table = gschem_dialog_misc_create_property_table (label, widget, 3);
+        table = gschem_dialog_misc_create_property_table (label, widget, 3);
     gtk_container_add (GTK_CONTAINER(alignment), table);
 
     GLADE_HOOKUP_OBJECT(w_current->aawindow, widget[0], "radius");

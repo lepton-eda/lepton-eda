@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ void o_place_end (GschemToplevel *w_current,
                   const char* hook_name)
 {
   int w_diff_x, w_diff_y;
-  OBJECT *o_current;
+  LeptonObject *o_current;
   GList *temp_dest_list = NULL;
   GList *connected_objects = NULL;
   GList *iter;
@@ -108,7 +108,7 @@ void o_place_end (GschemToplevel *w_current,
   /* Attach each item back onto the page's object list. Update object
    * connectivity and add the new objects to the selection list.*/
   for (iter = temp_dest_list; iter != NULL; iter = g_list_next (iter)) {
-    o_current = (OBJECT*) iter->data;
+    o_current = (LeptonObject*) iter->data;
 
     s_page_append (page, o_current);
 
@@ -166,7 +166,7 @@ void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
 }
 
 
-/*! \brief Invalidate bounding box or outline for OBJECT placement
+/*! \brief Invalidate bounding box or outline for LeptonObject placement
  *
  *  \par Function Description
  *  This function invalidates the bounding box where objects would be
@@ -265,7 +265,7 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
 }
 
 
-/*! \brief Draw a bounding box or outline for OBJECT placement
+/*! \brief Draw a bounding box or outline for LeptonObject placement
  *  \par Function Description
  *  This function draws either the OBJECTS in the place list
  *  or a rectangle around their bounding box, depending upon the
@@ -347,7 +347,7 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
     GList *iter;
     for (iter = page->place_list; iter != NULL;
          iter = g_list_next (iter)) {
-      eda_renderer_draw (renderer, (OBJECT *) iter->data);
+      eda_renderer_draw (renderer, (LeptonObject *) iter->data);
     }
   }
   cairo_restore (cr);

@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,10 +48,10 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
   GtkWidget *visbutton, *show_options;
   GtkWidget *addtocompsbutton, *addtonetsbutton, *addtoallbutton;
   GtkWidget *overwritebutton;
-  OBJECT *attribptr;
-  OBJECT *object;
+  LeptonObject *attribptr;
+  LeptonObject *object;
   GList *s_current = NULL;
-  OBJECT *a_current;
+  LeptonObject *a_current;
   GList *a_iter;
   int vis, show;
   int invocation_flag;
@@ -108,13 +108,13 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
   }
 
   attribptr =
-    (OBJECT*) g_object_get_data (G_OBJECT (w_current->aewindow), "attrib");
+    (LeptonObject*) g_object_get_data (G_OBJECT (w_current->aewindow), "attrib");
   if (!attribptr) {
-    OBJECT *new_object = NULL;
+    LeptonObject *new_object = NULL;
 
     s_current = geda_list_get_glist( toplevel->page_current->selection_list );
     while (s_current != NULL) {
-      object = (OBJECT *)s_current->data;
+      object = (LeptonObject *)s_current->data;
       if (object == NULL) {
         fprintf (stderr, "attrib_edit_dialog_ok: ERROR: Got an unexpected NULL\n");
         exit(-1);
@@ -162,7 +162,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
       while (s_current != NULL) {
         gboolean replaced;
 
-        object = (OBJECT *) s_current->data;
+        object = (LeptonObject *) s_current->data;
         if (object && !object->attached_to && object->type != OBJ_TEXT ) {
           addmask = 4;
           if (object->type == OBJ_COMPONENT || object->type == OBJ_PLACEHOLDER) {
@@ -176,7 +176,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
             a_iter = object->attribs;
             if (replace) {
               while (a_iter != NULL) {
-                a_current = (OBJECT*) a_iter->data;
+                a_current = (LeptonObject*) a_iter->data;
                 const gchar *str = geda_text_object_get_string (a_current);
                 if (str) {
                   if (!strncmp (str, newtext, strchr (newtext, '=') - newtext)) {
@@ -264,7 +264,7 @@ void attribute_edit_dialog_response(GtkWidget *w, gint response,
  *  \par Function Description
  *  This function creates the single attribute edit dialog.
  */
-void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
+void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int flag)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GtkWidget *aewindow;
@@ -287,7 +287,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   int nsel=0, i, len;
   char *name = NULL;
   char *val = NULL;
-  OBJECT *attrib = NULL;
+  LeptonObject *attrib = NULL;
   gint wx, wy;
 
   /* gschem specific */
@@ -298,7 +298,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
   for (s_current = geda_list_get_glist( toplevel->page_current->selection_list );
        s_current != NULL;
        s_current = g_list_next(s_current)) {
-    if (!((OBJECT *) s_current->data)->attached_to) {
+    if (!((LeptonObject *) s_current->data)->attached_to) {
       nsel++;
     }
   }
@@ -522,7 +522,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, OBJECT *attr_obj, int flag)
       gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 2);
     }
   } else {
-    OBJECT *object;
+    LeptonObject *object;
 
     attrib = NULL;
 

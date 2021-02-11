@@ -131,14 +131,14 @@ gint autonumber_sort_numbers(gconstpointer a, gconstpointer b) {
 
 /*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This function takes two <B>OBJECT*</B> arguments and compares the
+ *  This function takes two <B>LeptonObject*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the x location,
  *  the second sort criteria is the y location.
  *  The Function is used as GCompareFunc by g_list_sort().
  */
 gint autonumber_sort_xy(gconstpointer a, gconstpointer b) {
-  OBJECT *aa, *bb;
-  aa=(OBJECT *) a;  bb=(OBJECT *) b;
+  LeptonObject *aa, *bb;
+  aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
   if (aa->text->x < bb->text->x)
     return -1;
   if (aa->text->x > bb->text->x)
@@ -153,15 +153,15 @@ gint autonumber_sort_xy(gconstpointer a, gconstpointer b) {
 
 /*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This function takes two <B>OBJECT*</B> arguments and compares the
+ *  This function takes two <B>LeptonObject*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the x location,
  *  the second sort criteria is the y location.
  *  This function sorts the objects in reverse order.
  *  The function is used as GCompareFunc by g_list_sort().
  */
 gint autonumber_sort_xy_rev(gconstpointer a, gconstpointer b) {
-  OBJECT *aa, *bb;
-  aa=(OBJECT *) a;  bb=(OBJECT *) b;
+  LeptonObject *aa, *bb;
+  aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
   if (aa->text->x < bb->text->x)
     return 1;
   if (aa->text->x > bb->text->x)
@@ -176,14 +176,14 @@ gint autonumber_sort_xy_rev(gconstpointer a, gconstpointer b) {
 
 /*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This function takes two <B>OBJECT*</B> arguments and compares the
+ *  This function takes two <B>LeptonObject*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the y location,
  *  the second sort criteria is the x location.
  *  The function is used as GCompareFunc by g_list_sort().
  */
 int autonumber_sort_yx(gconstpointer a, gconstpointer b) {
-  OBJECT *aa, *bb;
-  aa=(OBJECT *) a;  bb=(OBJECT *) b;
+  LeptonObject *aa, *bb;
+  aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
   if (aa->text->y > bb->text->y)
     return -1;
   if (aa->text->y < bb->text->y)
@@ -198,15 +198,15 @@ int autonumber_sort_yx(gconstpointer a, gconstpointer b) {
 
 /*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This function takes two <B>OBJECT*</B> arguments and compares the
+ *  This function takes two <B>LeptonObject*</B> arguments and compares the
  *  location of the two text objects. The first sort criteria is the y location,
  *  the second sort criteria is the x location.
  *  This function sorts the objects in reverse order.
  *  The function is used as GCompareFunc by g_list_sort().
  */
 int autonumber_sort_yx_rev(gconstpointer a, gconstpointer b) {
-  OBJECT *aa, *bb;
-  aa=(OBJECT *) a;  bb=(OBJECT *) b;
+  LeptonObject *aa, *bb;
+  aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
   if (aa->text->y > bb->text->y)
     return 1;
   if (aa->text->y < bb->text->y)
@@ -221,14 +221,14 @@ int autonumber_sort_yx_rev(gconstpointer a, gconstpointer b) {
 
 /*! \brief GCompareFunc function to sort text objects by there location
  *  \par Function Description
- *  This function takes two <B>OBJECT*</B> arguments and compares the
+ *  This function takes two <B>LeptonObject*</B> arguments and compares the
  *  location of the two text objects. The sort criteria is the combined x- and the
  *  y-location. The function sorts from top left to bottom right.
  *  The function is used as GCompareFunc by g_list_sort().
  */
 int autonumber_sort_diagonal(gconstpointer a, gconstpointer b) {
-  OBJECT *aa, *bb;
-  aa=(OBJECT *) a;  bb=(OBJECT *) b;
+  LeptonObject *aa, *bb;
+  aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
   if (aa->text->x - aa->text->y < bb->text->x - bb->text->y)
     return -1;
   if (aa->text->x - aa->text->y > bb->text->x - bb->text->y)
@@ -312,16 +312,16 @@ void autonumber_clear_database (AUTONUMBER_TEXT *autotext)
   }
 }
 
-/*! \brief Function to test, whether the OBJECT matches the autotext criterias
+/*! \brief Function to test, whether the LeptonObject matches the autotext criterias
  *  \par Function Description
  *  The criterias are those of the autonumber text dialog. The function decides
- *  whether the <B>OBJECT</B> has to be renumberd, ignored or taken care of when
+ *  whether the <B>LeptonObject</B> has to be renumberd, ignored or taken care of when
  *  renumbering all other objects.
  *  \return one of these integer values: <B>AUTONUMBER_IGNORE</B>,
  *  <B>AUTONUMBER_RESPECT</B> or <B>AUTONUMBER_RENUMBER</B> and the current number
  *  of the text object in <B>*number</B>.
  */
-gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number)
+gint autonumber_match(AUTONUMBER_TEXT *autotext, LeptonObject *o_current, gint *number)
 {
   gint i, isnumbered=1;
   size_t len;
@@ -385,7 +385,7 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, OBJECT *o_current, gint *number
 void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 {
   gint number, numslots, slotnr, i;
-  OBJECT *o_current, *o_parent;
+  LeptonObject *o_current, *o_parent;
   AUTONUMBER_SLOT *slot;
   GList *slot_item;
   char *numslot_str, *slot_str;
@@ -394,7 +394,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
   for (iter = s_page_objects (w_current->toplevel->page_current);
        iter != NULL;
        iter = g_list_next (iter)) {
-    o_current = (OBJECT*) iter->data;
+    o_current = (LeptonObject*) iter->data;
     if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RESPECT) {
       /* check slot and maybe add it to the lists */
       o_parent = o_current->attached_to;
@@ -469,20 +469,20 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
 
 /*! \brief Gets or generates free numbers for the autonumbering process.
  *  \par Function Description
- *  This function gets or generates new numbers for the <B>OBJECT o_current</B>.
+ *  This function gets or generates new numbers for the <B>LeptonObject o_current</B>.
  *  It uses the element numbers <B>used_numbers</B> and the list of the free slots
  *  <B>free_slots</B> of the <B>AUTONUMBER_TEXT</B> struct.
  *  \return
  *  The new number is returned into the <B>number</B> parameter.
  *  <B>slot</B> is set if autoslotting is active, else it is set to zero.
  */
-void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
+void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, LeptonObject *o_current,
                                 gint *number, gint *slot)
 {
   GList *item;
   gint new_number, numslots, i;
   AUTONUMBER_SLOT *freeslot;
-  OBJECT *o_parent = NULL;
+  LeptonObject *o_parent = NULL;
   GList *freeslot_item;
   gchar *numslot_str;
 
@@ -563,9 +563,9 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, OBJECT *o_current,
  *  @param o_current Pointer to the object from which to remove the number
  *
  */
-void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
+void autonumber_remove_number(AUTONUMBER_TEXT * autotext, LeptonObject *o_current)
 {
-  OBJECT *o_parent, *o_slot;
+  LeptonObject *o_parent, *o_slot;
   gchar *slot_str;
   gchar *str = NULL;
 
@@ -593,13 +593,13 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, OBJECT *o_current)
                                         autotext->w_current->toplevel->page_current);
 }
 
-/*! \brief Changes the number <B>OBJECT</B> element. Changes the slot attribute.
+/*! \brief Changes the number <B>LeptonObject</B> element. Changes the slot attribute.
  *  \par Function Description
  *  This function updates the text content of the <B>o_current</B> object.
  *  If the <B>slot</B> value is not zero. It updates the slot attribut of the
  *  component element that is also the parent object of the o_current element.
  */
-void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, OBJECT *o_current,
+void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, LeptonObject *o_current,
                                gint number, gint slot)
 {
   char *str;
@@ -635,7 +635,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   GList *pages;
   GList *searchtext_list=NULL;
   GList *text_item, *obj_item, *page_item;
-  OBJECT *o_current;
+  LeptonObject *o_current;
   GschemToplevel *w_current;
   gchar *searchtext;
   gchar *scope_text;
@@ -691,7 +691,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
       for (iter = s_page_objects (w_current->toplevel->page_current);
            iter != NULL;
            iter = g_list_next (iter)) {
-        o_current = (OBJECT*) iter->data;
+        o_current = (LeptonObject*) iter->data;
         if (o_current->type == OBJ_TEXT) {
           if (autotext->scope_number == SCOPE_HIERARCHY
               || autotext->scope_number == SCOPE_PAGE
@@ -762,7 +762,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
       for (iter = s_page_objects (w_current->toplevel->page_current);
            iter != NULL;
            iter = g_list_next (iter)) {
-        o_current = (OBJECT*) iter->data;
+        o_current = (LeptonObject*) iter->data;
         if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RENUMBER) {
           /* put number into the used list */
           o_list = g_list_append(o_list, o_current);
@@ -792,7 +792,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 
       /* 3. renumber/reslot the objects */
       for(obj_item=o_list; obj_item != NULL; obj_item=g_list_next(obj_item)) {
-        o_current = (OBJECT*) obj_item->data;
+        o_current = (LeptonObject*) obj_item->data;
         if(autotext->removenum) {
           autonumber_remove_number(autotext, o_current);
         } else {

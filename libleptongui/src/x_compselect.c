@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -418,7 +418,7 @@ tree_row_activated (GtkTreeView       *tree_view,
 /*! \brief GCompareFunc to sort an text object list by the object strings
  */
 static gint
-sort_object_text (OBJECT *a, OBJECT *b)
+sort_object_text (LeptonObject *a, LeptonObject *b)
 {
   return strcmp (geda_text_object_get_string (a),
                  geda_text_object_get_string (b));
@@ -445,7 +445,7 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
   GtkTreeViewColumn *column;
   GList *o_iter, *o_attrlist;
   gchar *name, *value;
-  OBJECT *o_current;
+  LeptonObject *o_current;
   EdaConfig *cfg;
   gchar **filter_list;
   guint i;
@@ -483,7 +483,7 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
     /* display all attributes in alphabetical order */
     o_attrlist = g_list_sort (o_attrlist, (GCompareFunc) sort_object_text);
     for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-      o_current = (OBJECT*) o_iter->data;
+      o_current = (LeptonObject*) o_iter->data;
       o_attrib_get_name_value (o_current, &name, &value);
       gtk_list_store_append (model, &iter);
       gtk_list_store_set (model, &iter, 0, name, 1, value, -1);
@@ -494,7 +494,7 @@ update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
     /* display only attribute that are in the filter list */
     for (i = 0; i < n; i++) {
       for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-        o_current = (OBJECT*) o_iter->data;
+        o_current = (LeptonObject*) o_iter->data;
         if (o_attrib_get_name_value (o_current, &name, &value)) {
           if (strcmp (name, filter_list[i]) == 0) {
             gtk_list_store_append (model, &iter);

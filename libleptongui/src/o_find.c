@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,23 +25,23 @@
 #include "gschem.h"
 
 
-/*! \brief Tests a if a given OBJECT was hit at a given set of coordinates
+/*! \brief Tests a if a given LeptonObject was hit at a given set of coordinates
  *
  *  \par Function Description
- *  Tests a if a given OBJECT was hit at a given set of coordinates. If an
+ *  Tests a if a given LeptonObject was hit at a given set of coordinates. If an
  *  object is not selectable (e.g. it is locked), or it is invisible and
  *  not being rendered, this function will return FALSE.
  *
  *  \param [in] w_current         The GschemToplevel object.
- *  \param [in] object            The OBJECT being hit-tested.
+ *  \param [in] object            The LeptonObject being hit-tested.
  *  \param [in] w_x               The X coordinate to test (in world coords).
  *  \param [in] w_y               The Y coordinate to test (in world coords).
  *  \param [in] w_slack           The slack applied to the hit-test.
  *
- *  \returns TRUE if the OBJECT was hit, otherwise FALSE.
+ *  \returns TRUE if the LeptonObject was hit, otherwise FALSE.
  */
 static gboolean
-is_object_hit (GschemToplevel *w_current, OBJECT *object,
+is_object_hit (GschemToplevel *w_current, LeptonObject *object,
                int w_x, int w_y, int w_slack)
 {
   int left, top, right, bottom;
@@ -80,24 +80,24 @@ is_object_hit (GschemToplevel *w_current, OBJECT *object,
 }
 
 
-/*! \brief Tests a if a given OBJECT was hit at a given set of coordinates
+/*! \brief Tests a if a given LeptonObject was hit at a given set of coordinates
  *
  *  \par Function Description
- *  Tests a if a given OBJECT was hit at a given set of coordinates. If so,
+ *  Tests a if a given LeptonObject was hit at a given set of coordinates. If so,
  *  processes selection changes as appropriate for the object and passed
  *  flag. Saves a pointer to the found object so future find operations
  *  resume after this object.
  *
  *  \param [in] w_current         The GschemToplevel object.
- *  \param [in] object            The OBJECT being hit-tested.
+ *  \param [in] object            The LeptonObject being hit-tested.
  *  \param [in] w_x               The X coordinate to test (in world coords).
  *  \param [in] w_y               The Y coordinate to test (in world coords).
  *  \param [in] w_slack           The slack applied to the hit-test.
  *  \param [in] change_selection  Whether to select the found object or not.
- *  \returns TRUE if the OBJECT was hit, otherwise FALSE.
+ *  \returns TRUE if the LeptonObject was hit, otherwise FALSE.
  */
 static gboolean
-find_single_object (GschemToplevel *w_current, OBJECT *object,
+find_single_object (GschemToplevel *w_current, LeptonObject *object,
                     int w_x, int w_y, int w_slack,
                     int change_selection)
 {
@@ -118,7 +118,7 @@ find_single_object (GschemToplevel *w_current, OBJECT *object,
 }
 
 
-/*! \brief Find an OBJECT at a given set of coordinates
+/*! \brief Find an LeptonObject at a given set of coordinates
  *
  *  \par Function Description
  *  Tests for OBJECTS hit at a given set of coordinates. If
@@ -163,7 +163,7 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
 
   /* do first search (if we found any objects after the last found object) */
   while (iter != NULL) {
-    OBJECT *o_current = (OBJECT*) iter->data;
+    LeptonObject *o_current = (LeptonObject*) iter->data;
     if (find_single_object (w_current, o_current,
                             w_x, w_y, w_slack, change_selection)) {
       return TRUE;
@@ -174,7 +174,7 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
   /* now search from the beginning up until the object_lastplace */
   for (iter = s_page_objects (toplevel->page_current);
        iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
+    LeptonObject *o_current = (LeptonObject*) iter->data;
     if (find_single_object (w_current, o_current,
                             w_x, w_y, w_slack, change_selection)) {
       return TRUE;
@@ -216,7 +216,7 @@ o_find_selected_object (GschemToplevel *w_current, int w_x, int w_y)
 
   for (s_current = geda_list_get_glist (toplevel->page_current->selection_list);
        s_current != NULL; s_current = g_list_next (s_current)) {
-    OBJECT *o_current = (OBJECT*) s_current->data;
+    LeptonObject *o_current = (LeptonObject*) s_current->data;
 
     if (is_object_hit (w_current, o_current, w_x, w_y, w_slack))
       return TRUE;
