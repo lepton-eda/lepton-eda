@@ -64,10 +64,10 @@ int s_toplevel_read_page(TOPLEVEL *toplevel, char *filename)
 {
   int file_return_code;
   GError *err = NULL;
-    
+
   /* Set the new filename */
   s_page_set_filename (toplevel->page_current, filename);
-  
+
   /* read in and fill out toplevel using f_open and its callees */
   file_return_code = f_open (toplevel, toplevel->page_current, filename, &err);
 
@@ -236,28 +236,28 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
   switch (cur_page) {
   case 0:  /* component attribute  */
 
-    /*  Eventually, I want to just resize the table to accomodate the 
+    /*  Eventually, I want to just resize the table to accomodate the
      *  new attrib.  However, that is difficult.  Therefore, I will just
      *  destroy the old table and recreate it for now. */
 
-    /* 
-    s_table_destroy(sheet_head->component_table, 
-		    sheet_head->comp_count, sheet_head->comp_attrib_count);
+    /*
+    s_table_destroy(sheet_head->component_table,
+                    sheet_head->comp_count, sheet_head->comp_attrib_count);
     */
     old_comp_attrib_count = sheet_head->comp_attrib_count;
     g_debug ("s_toplevel_add_new_attrib: "
              "Before adding new comp attrib: comp_attrib_count = %d\n",
              old_comp_attrib_count);
 
-    s_string_list_add_item(sheet_head->master_comp_attrib_list_head, 
-			   &(sheet_head->comp_attrib_count), 
-			   new_attrib_name);
+    s_string_list_add_item(sheet_head->master_comp_attrib_list_head,
+                           &(sheet_head->comp_attrib_count),
+                           new_attrib_name);
     s_string_list_sort_master_comp_attrib_list();
 
     /* Now, determine what index the new attrib ended up at
      * This is necessary to tell gtk_sheet_insert_columns
      * where the data should be shifted                    */
-    new_index = s_string_list_find_in_list(sheet_head->master_comp_attrib_list_head, 
+    new_index = s_string_list_find_in_list(sheet_head->master_comp_attrib_list_head,
                                            (char*)new_attrib_name);
 
     g_debug ("s_toplevel_add_new_attrib: "
@@ -265,23 +265,23 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
             sheet_head->comp_attrib_count);
 
     /* Now create new table */
-    /*     sheet_head->component_table = s_table_new(sheet_head->comp_count, 
-					      sheet_head->comp_attrib_count);
+    /*     sheet_head->component_table = s_table_new(sheet_head->comp_count,
+                                              sheet_head->comp_attrib_count);
     */
 
     /* resize table to accomodate new attrib col */
-    sheet_head->component_table = 
-      s_table_resize(sheet_head->component_table, 
-		     sheet_head->comp_count, 
-		     old_comp_attrib_count, sheet_head->comp_attrib_count);
+    sheet_head->component_table =
+      s_table_resize(sheet_head->component_table,
+                     sheet_head->comp_count,
+                     old_comp_attrib_count, sheet_head->comp_attrib_count);
 
     g_debug ("s_toplevel_add_new_attrib: Resized component table.\n");
 
     /* Fill out new sheet with new stuff from gtksheet */
     gtk_sheet_insert_columns(GTK_SHEET(sheets[0]), new_index, 1);
-    x_gtksheet_add_col_labels(GTK_SHEET(sheets[0]), 
-			      sheet_head->comp_attrib_count, 
-			      sheet_head->master_comp_attrib_list_head);
+    x_gtksheet_add_col_labels(GTK_SHEET(sheets[0]),
+                              sheet_head->comp_attrib_count,
+                              sheet_head->master_comp_attrib_list_head);
 
     g_debug ("s_toplevel_add_new_attrib: Updated gtksheet.\n");
 
@@ -290,7 +290,7 @@ void s_toplevel_add_new_attrib(gchar *new_attrib_name) {
   case 1:  /* net attribute  */
     /* insert into net attribute list  */
     break;
-    
+
   case 2:  /* pin attribute  */
     /* insert into pin attribute list  */
     break;
@@ -341,7 +341,7 @@ void s_toplevel_delete_attrib_col() {
 
     /*  Get name (label) of the col to delete from the gtk sheet */
     attrib_name = g_strdup( gtk_sheet_column_button_get_label(sheet, mincol) );
-    
+
     if (attrib_name != NULL) {
       g_debug ("s_toplevel_delete_attrib_col: Attrib to delete = %s\n",
                attrib_name);
@@ -357,7 +357,7 @@ void s_toplevel_delete_attrib_col() {
                               mincol,
                               sheet_head->comp_count,
                               sheet_head->comp_attrib_count);
-    
+
     /* Destroy the current TABLE array:
     */
     s_table_destroy(sheet_head->component_table,
@@ -368,12 +368,12 @@ void s_toplevel_delete_attrib_col() {
             sheet_head->comp_attrib_count);
 
     s_string_list_delete_item(&(sheet_head->master_comp_attrib_list_head),
-			      &(sheet_head->comp_attrib_count), 
-			      attrib_name);
+                              &(sheet_head->comp_attrib_count),
+                              attrib_name);
     s_string_list_sort_master_comp_attrib_list(); /* this renumbers list also */
 
     g_free(attrib_name);
-    
+
     g_debug ("s_toplevel_delete_attrib_col: "
             "Just updated comp_attrib string list: new comp_attrib_count = %d\n",
             sheet_head->comp_attrib_count);
@@ -388,7 +388,7 @@ void s_toplevel_delete_attrib_col() {
   case 1:  /* net attribute  */
     /* insert into net attribute list  */
     break;
-    
+
   case 2:  /* pin attribute  */
     /* insert into pin attribute list  */
     break;
@@ -414,10 +414,10 @@ void s_toplevel_delete_attrib_col() {
  *
  * This function
  * loops through all objects on (PAGE page)->(OBJECT *start_obj).
- * It takes the updated SHEET_DATA->TABLE data and then updates the 
+ * It takes the updated SHEET_DATA->TABLE data and then updates the
  * objects with the new attribs & attrib values.
- * For each component, it updates the attached 
- * attrib values using the updated values held in the SHEET_DATA->TABLE 
+ * For each component, it updates the attached
+ * attrib values using the updated values held in the SHEET_DATA->TABLE
  * structure.  It does so in three steps:
  * -# First find and update component attribs.
  * -# Then find and update net attribs.
@@ -463,22 +463,22 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
 
       temp_uref = s_attrib_get_refdes(o_current);
       if (temp_uref != NULL) {
-	/* Must create a name=value pair list for each particular component
-	 * which we can pass to function updating o_current.  This function
+        /* Must create a name=value pair list for each particular component
+         * which we can pass to function updating o_current.  This function
          * places all attribs
-	 * found in the row into new_comp_attrib_pair_list.  */
-	new_comp_attrib_pair_list = s_table_create_attrib_pair(temp_uref,
-							       sheet_head->component_table, 
-							       sheet_head->master_comp_list_head,
-							       sheet_head->comp_attrib_count);
+         * found in the row into new_comp_attrib_pair_list.  */
+        new_comp_attrib_pair_list = s_table_create_attrib_pair(temp_uref,
+                                                               sheet_head->component_table,
+                                                               sheet_head->master_comp_list_head,
+                                                               sheet_head->comp_attrib_count);
 
 
-	/* Now update attribs in toplevel using this list.  */
-	s_toplevel_update_component_attribs_in_toplevel(toplevel,
-							o_current,
-							new_comp_attrib_pair_list);
+        /* Now update attribs in toplevel using this list.  */
+        s_toplevel_update_component_attribs_in_toplevel(toplevel,
+                                                        o_current,
+                                                        new_comp_attrib_pair_list);
 
-	g_free(temp_uref);
+        g_free(temp_uref);
       } else {
         g_debug ("s_toplevel_sheetdata_to_toplevel: "
                  "Found component with no refdes. name = %s\n",
@@ -520,7 +520,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
        *  1.  Loop over prim_objects, looking for pins.
        *  2.  When a pin is found, create refdes:pinnumber pair
        *      used in searching TABLE.
-       *  3.  Search TABLE using refdes:pinnumber as key, and get list of 
+       *  3.  Search TABLE using refdes:pinnumber as key, and get list of
        *      attribs corresponding to this refdes:pinnumber
        *  4.  Stick the attribs into the TOPLEVEL data structure.
        */
@@ -542,7 +542,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
          }
         }
       }     /* if(temp_uref  */
-      
+
       g_free(temp_uref);
     }
   }
@@ -597,7 +597,7 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
     if ( ((sheet_head->component_table)[row][i]).attrib_value ) {
       new_attrib_value = g_strdup( ((sheet_head->component_table)[row][i]).attrib_value );
       name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-      g_free(new_attrib_value);      
+      g_free(new_attrib_value);
     } else {
       name_value_pair = g_strconcat(new_attrib_name, "=", NULL);  /* empty attrib */
     }
@@ -617,7 +617,7 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
     i++;
     local_attrib_list = local_attrib_list->next;
   } /* while (local_attrib_list != NULL)  */
-  
+
   return new_attrib_list;
 }
 
@@ -671,11 +671,11 @@ s_toplevel_update_component_attribs_in_toplevel (
 
   g_debug ("==== Enter s_toplevel_update_component_attribs_in_toplevel()\n");
 
-  /* 
-   * To remove dead attribs from o_current, we need to form a complete list of unique 
-   * attribs by taking the union of the new attribs from the SHEET_DATA, and 
+  /*
+   * To remove dead attribs from o_current, we need to form a complete list of unique
+   * attribs by taking the union of the new attribs from the SHEET_DATA, and
    * the old attribs living on o_current.  That's what we're doing here.
-   * Later, we can delete those attribs in o_current which don't apear in 
+   * Later, we can delete those attribs in o_current which don't apear in
    * new_comp_attrib_list.
    */
   /* First duplicate new_comp_attrib_list */
@@ -687,7 +687,7 @@ s_toplevel_update_component_attribs_in_toplevel (
   while (a_iter != NULL) {
     a_current = (OBJECT*) a_iter->data;
     if (a_current->type == OBJ_TEXT
-	&& a_current->text != NULL) {  /* found a name=value attribute pair. */
+        && a_current->text != NULL) {  /* found a name=value attribute pair. */
       /* may need to check more thoroughly here. . . . */
       old_name_value_pair = g_strdup(geda_text_object_get_string (a_current));
 
@@ -695,26 +695,26 @@ s_toplevel_update_component_attribs_in_toplevel (
 #if 1
       old_attrib_name = u_basic_breakup_string(old_name_value_pair, '=', 0);
       if ( (strcmp(old_attrib_name, "refdes") != 0) &&
-	   (strcmp(old_attrib_name, "net") != 0) &&
-	   (strcmp(old_attrib_name, "slot") != 0) &&
-	   (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
-	s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
+           (strcmp(old_attrib_name, "net") != 0) &&
+           (strcmp(old_attrib_name, "slot") != 0) &&
+           (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
+        s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
       }
 #else
       /* might now compile now, but this #if'd out branch isn't being built */
-      gint status;  
+      gint status;
       status = o_attrib_get_name_value (a_current, &old_attrib_name, &old_attrib_value);
       if (status == 0) {
         /* Don't put "refdes" or "slot" into list.  Don't put old name=value pair into list if a new
          * one is already in there. */
         if ( (strcmp(old_attrib_name, "refdes") != 0) &&
-	     (strcmp(old_attrib_name, "net") != 0) &&
-	     (strcmp(old_attrib_name, "slot") != 0) &&
-	     (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
-	  s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
+             (strcmp(old_attrib_name, "net") != 0) &&
+             (strcmp(old_attrib_name, "slot") != 0) &&
+             (s_attrib_name_in_list(new_comp_attrib_list, old_attrib_name) == FALSE) ) {
+          s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
         }
-	g_free (old_attrib_name);
-	g_free (old_attrib_value);
+        g_free (old_attrib_name);
+        g_free (old_attrib_value);
       }
  #endif
      g_free(old_name_value_pair);
@@ -724,14 +724,14 @@ s_toplevel_update_component_attribs_in_toplevel (
   }  /* while (a_current != NULL) */
 
 
-  /* 
+  /*
    *Now the main business of this function:  updating the attribs attached to this o_current.
    * Loop on name=value pairs held in complete_comp_attrib_list , and then use this to get the
    * name=value pairs out of new_comp_attrib_list and from o_current.
    */
 
   /* First handle a special case: the component has no attribs (beside refdes). */
-  if (complete_comp_attrib_list->data == NULL) 
+  if (complete_comp_attrib_list->data == NULL)
     return;
 
   /* Now the normal case. . . . */
@@ -742,9 +742,9 @@ s_toplevel_update_component_attribs_in_toplevel (
              "Handling entry in complete list %s.\n",
              local_list->data);
 
-  /*  Now get the old attrib name & value from complete_comp_attrib_list 
+  /*  Now get the old attrib name & value from complete_comp_attrib_list
    *  and value from o_current  */
-  old_attrib_name = u_basic_breakup_string(local_list->data, '=', 0); 
+  old_attrib_name = u_basic_breakup_string(local_list->data, '=', 0);
   old_attrib_value = o_attrib_search_attached_attribs_by_name (o_current, old_attrib_name, 0);
 
   g_debug ("s_toplevel_update_component_attribs_in_toplevel: "
@@ -756,7 +756,7 @@ s_toplevel_update_component_attribs_in_toplevel (
   /*  Next try to get this attrib from new_comp_attrib_list  */
   new_attrib_name = u_basic_breakup_string(local_list->data, '=', 0);
   if (s_string_list_in_list(new_comp_attrib_list, local_list->data)) {
-    new_attrib_value = s_misc_remaining_string(local_list->data, '=', 1);      
+    new_attrib_value = s_misc_remaining_string(local_list->data, '=', 1);
   } else {
     new_attrib_value = NULL;
   }
@@ -766,7 +766,7 @@ s_toplevel_update_component_attribs_in_toplevel (
            new_attrib_name,
            new_attrib_value);
 
-  /* Now get row and col where this new attrib lives.  Then get 
+  /* Now get row and col where this new attrib lives.  Then get
    * visibility of the new attrib stored in the component table */
   /* We'll need this later */
   refdes = g_strdup(s_attrib_get_refdes(o_current));
@@ -831,7 +831,7 @@ s_toplevel_update_component_attribs_in_toplevel (
     }
 
     /* Toggle attribute visibility and name/value setting */
-    
+
 
     /* free everything and iterate */
     g_free(new_attrib_name);
@@ -859,8 +859,8 @@ STRING_LIST *s_toplevel_get_net_attribs_in_sheet(char *netname)
 /*!
  * \todo Function doesn't do anything - candidate for removal?
  */
-void s_toplevel_update_net_attribs_in_toplevel(OBJECT *o_current, 
-				   STRING_LIST *new_net_attrib_list)
+void s_toplevel_update_net_attribs_in_toplevel(OBJECT *o_current,
+                                   STRING_LIST *new_net_attrib_list)
 {
   /* must be filled in */
   return;
@@ -871,7 +871,7 @@ void s_toplevel_update_net_attribs_in_toplevel(OBJECT *o_current,
 /*! \brief Get pin attributes
  *
  * This function takes a pointer to the OBJECT pin, and returns a list
- * of attribs found attached to the pin.  The returned list is a 
+ * of attribs found attached to the pin.  The returned list is a
  * STRING_LIST where the ->data holds a name=value string.
  * The algorithm is as follows:
  * -# Form refdes:pinnumber label for this pin.
@@ -933,7 +933,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
     if ( ((sheet_head->pin_table)[row][i]).attrib_value ) {
       new_attrib_value = g_strdup( ((sheet_head->pin_table)[row][i]).attrib_value );
       name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-      g_free(new_attrib_value);      
+      g_free(new_attrib_value);
     } else {
       name_value_pair = g_strconcat(new_attrib_name, "=", NULL);  /* empty attrib */
     }
@@ -953,7 +953,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
     i++;
     local_attrib_list = local_attrib_list->next;
   } /* while (local_attrib_list != NULL)  */
-  
+
   return new_attrib_list;
 }
 
@@ -1005,11 +1005,11 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
   new_attrib_value = u_basic_breakup_string(new_name_value_pair, '=', 1);
 
   if (strlen(new_attrib_value) == 0) {
-    g_free(new_attrib_value);   
+    g_free(new_attrib_value);
     new_attrib_value = NULL;  /* s_misc_remaining_string doesn't return NULL for empty substring. */
   }
   old_attrib_value = o_attrib_search_attached_attribs_by_name (o_pin, new_attrib_name, 0);
-                                                                                                       
+
     /* -------  Four cases to consider: Case 1: old and new attribs exist ----- */
     if ( (old_attrib_value != NULL) && (new_attrib_value != NULL) && (strlen(new_attrib_value) != 0) ) {
       /* simply write new attrib into place of old one. */
@@ -1023,7 +1023,7 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
                                          LEAVE_VISIBILITY_ALONE,
                                          LEAVE_NAME_VALUE_ALONE);
     }
-                                                                                                       
+
     /* -------  Four cases to consider: Case 2: old attrib exists, new one doesn't ----- */
     else if ( (old_attrib_value != NULL) && (new_attrib_value == NULL) ) {
       /* remove attrib from pin */
@@ -1033,11 +1033,11 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
                old_attrib_value);
       s_object_remove_attrib_in_object (toplevel, o_pin, new_attrib_name);
     }
-                                                                                                       
+
     /* -------  Four cases to consider: Case 3: No old attrib, new one exists. ----- */
     else if ( (old_attrib_value == NULL) && (new_attrib_value != NULL) ) {
       /* add new attrib to pin. */
-                                                                                                       
+
       g_debug ("s_toplevel_update_pin_attribs_in_toplevel: "
                "About to add new attrib with name= %s, value= %s\n",
                new_attrib_name,
@@ -1054,7 +1054,7 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
       g_debug ("s_toplevel_update_pin_attribs_in_toplevel: "
                "Nothing needs to be done.\n");
     }
-                                                                                                       
+
     /* free everything and iterate */
     g_free(new_name_value_pair);
     g_free(new_attrib_name);
@@ -1065,7 +1065,3 @@ s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
 
   return;
 }
-
-
-
-
