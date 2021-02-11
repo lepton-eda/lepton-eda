@@ -10,7 +10,8 @@ SUBDIRS = \
 	refdes_renum \
 	schdiff \
 	upcfg \
-	symcheck
+	symcheck \
+	cli
 
 EXTRA_DIST = \
 	AUTHORS \
