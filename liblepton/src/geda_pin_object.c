@@ -66,7 +66,7 @@ geda_pin_object_calculate_bounds (const OBJECT *object,
  *  \return The line width to draw the pin
  */
 gint
-geda_pin_object_get_width (const GedaObject *object)
+geda_pin_object_get_width (const LeptonObject *object)
 {
   gint width = PIN_WIDTH_NET;
 
@@ -100,7 +100,7 @@ geda_pin_object_get_width (const GedaObject *object)
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_pin_object_get_position (const GedaObject *object, gint *x, gint *y)
+geda_pin_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_PIN, FALSE);
@@ -129,7 +129,7 @@ geda_pin_object_get_position (const GedaObject *object, gint *x, gint *y)
  *  \return The x coordinate for the first endpoint
  */
 gint
-geda_pin_object_get_x0 (const GedaObject *object)
+geda_pin_object_get_x0 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -148,7 +148,7 @@ geda_pin_object_get_x0 (const GedaObject *object)
  *  \return The x coordinate for the second endpoint
  */
 gint
-geda_pin_object_get_x1 (const GedaObject *object)
+geda_pin_object_get_x1 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -167,7 +167,7 @@ geda_pin_object_get_x1 (const GedaObject *object)
  *  \return The y coordinate for the first endpoint
  */
 gint
-geda_pin_object_get_y0 (const GedaObject *object)
+geda_pin_object_get_y0 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -186,7 +186,7 @@ geda_pin_object_get_y0 (const GedaObject *object)
  *  \return The y coordinate for the second endpoint
  */
 gint
-geda_pin_object_get_y1 (const GedaObject *object)
+geda_pin_object_get_y1 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -205,7 +205,7 @@ geda_pin_object_get_y1 (const GedaObject *object)
  *  \param [in] x The new x coordinate for the first endpoint
  */
 void
-geda_pin_object_set_x0 (GedaObject *object, gint x)
+geda_pin_object_set_x0 (LeptonObject *object, gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -224,7 +224,7 @@ geda_pin_object_set_x0 (GedaObject *object, gint x)
  *  \param [in] x The new x coordinate for the second endpoint
  */
 void
-geda_pin_object_set_x1 (GedaObject *object, gint x)
+geda_pin_object_set_x1 (LeptonObject *object, gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -243,7 +243,7 @@ geda_pin_object_set_x1 (GedaObject *object, gint x)
  *  \param [in] y The new y coordinate for the first endpoint
  */
 void
-geda_pin_object_set_y0 (GedaObject *object, gint y)
+geda_pin_object_set_y0 (LeptonObject *object, gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -262,7 +262,7 @@ geda_pin_object_set_y0 (GedaObject *object, gint y)
  *  \param [in] y The new y coordinate for the second endpoint
  */
 void
-geda_pin_object_set_y1 (GedaObject *object, gint y)
+geda_pin_object_set_y1 (LeptonObject *object, gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -392,7 +392,7 @@ o_pin_read (const char buf[],
  *  \return a string representation of the pin object
  */
 gchar*
-geda_pin_object_to_buffer (const GedaObject *object)
+geda_pin_object_to_buffer (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
@@ -413,12 +413,12 @@ geda_pin_object_to_buffer (const GedaObject *object)
  *  \par Function Description
  *  This function changes the position of a pin \a object.
  *
- *  \param [ref] object  The pin GedaObject to be moved
+ *  \param [ref] object  The pin LeptonObject to be moved
  *  \param [in] dx       The x-distance to move the object
  *  \param [in] dy       The y-distance to move the object
  */
 void
-geda_pin_object_translate (GedaObject *object, int dx, int dy)
+geda_pin_object_translate (LeptonObject *object, int dx, int dy)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);

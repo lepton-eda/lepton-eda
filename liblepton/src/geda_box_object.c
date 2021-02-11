@@ -376,7 +376,7 @@ o_box_read (const char buf[],
  *  Caller must g_free returned character string.
  */
 gchar*
-geda_box_object_to_buffer (const GedaObject *object)
+geda_box_object_to_buffer (const LeptonObject *object)
 {
   int x1, y1;
   int width, height;
@@ -435,12 +435,12 @@ geda_box_object_to_buffer (const GedaObject *object)
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the box
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in,out] object     BOX GedaObject to translate.
+ *  \param [in,out] object     BOX LeptonObject to translate.
  *  \param [in]     dx         x distance to move.
  *  \param [in]     dy         y distance to move.
  */
 void
-geda_box_object_translate (GedaObject *object, int dx, int dy)
+geda_box_object_translate (LeptonObject *object, int dx, int dy)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->box != NULL);
@@ -612,7 +612,7 @@ geda_box_object_calculate_bounds (const OBJECT *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_box_object_get_position (const GedaObject *object, gint *x, gint *y)
+geda_box_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_BOX, FALSE);

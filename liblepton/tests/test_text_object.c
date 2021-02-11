@@ -32,7 +32,7 @@ check_construction ()
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
-    GedaObject *object0 = geda_text_object_new (color,
+    LeptonObject *object0 = geda_text_object_new (color,
                                                 x,
                                                 y,
                                                 alignment,
@@ -54,7 +54,7 @@ check_construction ()
     g_assert_cmpint (visible, ==, geda_object_get_visible (object0));
     g_assert_cmpstr (string, ==, geda_text_object_get_string (object0));
 
-    GedaObject *object1 = geda_text_object_copy (object0);
+    LeptonObject *object1 = geda_text_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
@@ -94,7 +94,7 @@ check_accessors ()
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
-    GedaObject *object0 = geda_text_object_new (color,
+    LeptonObject *object0 = geda_text_object_new (color,
                                                 x,
                                                 y,
                                                 alignment,
@@ -169,7 +169,7 @@ check_serialization ()
     const gchar *string = strings[g_test_rand_int_range (0, STRINGS_COUNT)];
     gboolean visible = g_test_rand_bit ();
 
-    GedaObject *object0 = geda_text_object_new (color,
+    LeptonObject *object0 = geda_text_object_new (color,
                                                 x,
                                                 y,
                                                 alignment,
@@ -189,7 +189,7 @@ check_serialization ()
                                        "test_text_object.c::check_serialization()");
     const gchar *line = s_textbuffer_next_line (tb);
 
-    GedaObject *object1 = o_text_read (line,
+    LeptonObject *object1 = o_text_read (line,
                                        tb,
                                        version,
                                        FILEFORMAT_VERSION,

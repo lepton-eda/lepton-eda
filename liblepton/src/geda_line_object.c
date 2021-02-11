@@ -56,7 +56,7 @@
  *  \param [in]     y2           Lower y coordinate.
  *  \return A pointer to the new end of the object list.
  */
-GedaObject*
+LeptonObject*
 geda_line_object_new (gint color,
                       gint x1,
                       gint y1,
@@ -144,7 +144,7 @@ geda_line_object_copy (OBJECT *o_current)
  *  \return The x coordinate for the first endpoint
  */
 gint
-geda_line_object_get_x0 (const GedaObject *object)
+geda_line_object_get_x0 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -163,7 +163,7 @@ geda_line_object_get_x0 (const GedaObject *object)
  *  \return The x coordinate for the second endpoint
  */
 gint
-geda_line_object_get_x1 (const GedaObject *object)
+geda_line_object_get_x1 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -182,7 +182,7 @@ geda_line_object_get_x1 (const GedaObject *object)
  *  \return The y coordinate for the first endpoint
  */
 gint
-geda_line_object_get_y0 (const GedaObject *object)
+geda_line_object_get_y0 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -201,7 +201,7 @@ geda_line_object_get_y0 (const GedaObject *object)
  *  \return The y coordinate for the second endpoint
  */
 gint
-geda_line_object_get_y1 (const GedaObject *object)
+geda_line_object_get_y1 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -220,7 +220,7 @@ geda_line_object_get_y1 (const GedaObject *object)
  *  \param [in] x The new x coordinate for the first endpoint
  */
 void
-geda_line_object_set_x0 (GedaObject *object, gint x)
+geda_line_object_set_x0 (LeptonObject *object, gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -239,7 +239,7 @@ geda_line_object_set_x0 (GedaObject *object, gint x)
  *  \param [in] x The new x coordinate for the second endpoint
  */
 void
-geda_line_object_set_x1 (GedaObject *object, gint x)
+geda_line_object_set_x1 (LeptonObject *object, gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -258,7 +258,7 @@ geda_line_object_set_x1 (GedaObject *object, gint x)
  *  \param [in] y The new y coordinate for the first endpoint
  */
 void
-geda_line_object_set_y0 (GedaObject *object, gint y)
+geda_line_object_set_y0 (LeptonObject *object, gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -277,7 +277,7 @@ geda_line_object_set_y0 (GedaObject *object, gint y)
  *  \param [in] y The new y coordinate for the second endpoint
  */
 void
-geda_line_object_set_y1 (GedaObject *object, gint y)
+geda_line_object_set_y1 (LeptonObject *object, gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -456,7 +456,7 @@ o_line_read (const char buf[],
  *
  */
 gchar*
-geda_line_object_to_buffer (const GedaObject *object)
+geda_line_object_to_buffer (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
@@ -481,12 +481,12 @@ geda_line_object_to_buffer (const GedaObject *object)
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the line
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in,out] object     Line GedaObject to translate.
+ *  \param [in,out] object     Line LeptonObject to translate.
  *  \param [in]     dx         x distance to move.
  *  \param [in]     dy         y distance to move.
  */
 void
-geda_line_object_translate (GedaObject *object, int dx, int dy)
+geda_line_object_translate (LeptonObject *object, int dx, int dy)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -629,7 +629,7 @@ geda_line_object_calculate_bounds (const OBJECT *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_line_object_get_position (const GedaObject *object, gint *x, gint *y)
+geda_line_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_LINE, FALSE);

@@ -45,22 +45,22 @@ geda_pin_object_calculate_bounds (const OBJECT *object,
                                   GedaBounds *bounds);
 
 gboolean
-geda_pin_object_get_position (const GedaObject *object, gint *x, gint *y);
+geda_pin_object_get_position (const LeptonObject *object, gint *x, gint *y);
 
 gint
-geda_pin_object_get_width (const GedaObject *object);
+geda_pin_object_get_width (const LeptonObject *object);
 
 gint
-geda_pin_object_get_x0 (const GedaObject *object);
+geda_pin_object_get_x0 (const LeptonObject *object);
 
 gint
-geda_pin_object_get_x1 (const GedaObject *object);
+geda_pin_object_get_x1 (const LeptonObject *object);
 
 gint
-geda_pin_object_get_y0 (const GedaObject *object);
+geda_pin_object_get_y0 (const LeptonObject *object);
 
 gint
-geda_pin_object_get_y1 (const GedaObject *object);
+geda_pin_object_get_y1 (const LeptonObject *object);
 
 void
 geda_pin_object_mirror (int world_centerx,
@@ -84,22 +84,22 @@ geda_pin_object_set_type (OBJECT *o_current,
                           int pin_type);
 
 void
-geda_pin_object_set_x0 (GedaObject *object, gint x);
+geda_pin_object_set_x0 (LeptonObject *object, gint x);
 
 void
-geda_pin_object_set_x1 (GedaObject *object, gint x);
+geda_pin_object_set_x1 (LeptonObject *object, gint x);
 
 void
-geda_pin_object_set_y0 (GedaObject *object, gint y);
+geda_pin_object_set_y0 (LeptonObject *object, gint y);
 
 void
-geda_pin_object_set_y1 (GedaObject *object, gint y);
+geda_pin_object_set_y1 (LeptonObject *object, gint y);
 
 gchar*
-geda_pin_object_to_buffer (const GedaObject *object);
+geda_pin_object_to_buffer (const LeptonObject *object);
 
 void
-geda_pin_object_translate (GedaObject *object, int dx, int dy);
+geda_pin_object_translate (LeptonObject *object, int dx, int dy);
 
 void
 geda_pin_object_update_whichend (GList *object_list,

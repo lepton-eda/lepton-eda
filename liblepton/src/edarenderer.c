@@ -143,8 +143,8 @@ static void eda_renderer_draw_arc (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_circle (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_path (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_text (EdaRenderer *renderer, OBJECT *object);
-static int eda_renderer_prepare_text (EdaRenderer *renderer, const GedaObject *object);
-static void eda_renderer_calc_text_position (EdaRenderer *renderer, const GedaObject *object,
+static int eda_renderer_prepare_text (EdaRenderer *renderer, const LeptonObject *object);
+static void eda_renderer_calc_text_position (EdaRenderer *renderer, const LeptonObject *object,
                                              double *x, double *y);
 static void eda_renderer_draw_picture (EdaRenderer *renderer, OBJECT *object);
 static void eda_renderer_draw_component (EdaRenderer *renderer, OBJECT *object);
@@ -166,7 +166,7 @@ static void eda_renderer_draw_junction_cue (EdaRenderer *renderer, int x, int y,
 
 static gboolean
 eda_renderer_default_get_user_bounds (EdaRenderer *renderer,
-                                      const GedaObject *object,
+                                      const LeptonObject *object,
                                       double *left,
                                       double *top,
                                       double *right,
@@ -851,7 +851,7 @@ eda_renderer_draw_text (EdaRenderer *renderer, OBJECT *object)
 }
 
 static int
-eda_renderer_prepare_text (EdaRenderer *renderer, const GedaObject *object)
+eda_renderer_prepare_text (EdaRenderer *renderer, const LeptonObject *object)
 {
   gint angle;
   double points_size, dx, dy;
@@ -924,7 +924,7 @@ eda_renderer_prepare_text (EdaRenderer *renderer, const GedaObject *object)
 /* Calculate position to draw text relative to text origin marker, in
  * world coordinates. */
 static void
-eda_renderer_calc_text_position (EdaRenderer *renderer, const GedaObject *object,
+eda_renderer_calc_text_position (EdaRenderer *renderer, const LeptonObject *object,
                                  double *x, double *y)
 {
   PangoRectangle inked_rect, logical_rect;
@@ -1459,7 +1459,7 @@ eda_renderer_draw_junction_cue (EdaRenderer *renderer, int x, int y, int is_bus)
 
 gboolean
 eda_renderer_get_user_bounds (EdaRenderer *renderer,
-                              const GedaObject *object,
+                              const LeptonObject *object,
                               double *left,
                               double *top,
                               double *right,
@@ -1474,7 +1474,7 @@ eda_renderer_get_user_bounds (EdaRenderer *renderer,
 
 static gboolean
 eda_renderer_default_get_user_bounds (EdaRenderer *renderer,
-                                      const GedaObject *object,
+                                      const LeptonObject *object,
                                       double *left,
                                       double *top,
                                       double *right,
@@ -1506,7 +1506,7 @@ eda_renderer_default_get_user_bounds (EdaRenderer *renderer,
 }
 
 gboolean
-eda_renderer_get_text_user_bounds (const GedaObject *object,
+eda_renderer_get_text_user_bounds (const LeptonObject *object,
                                    gboolean enable_hidden,
                                    double *left,
                                    double *top,

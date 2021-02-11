@@ -200,7 +200,7 @@ geda_component_object_calculate_bounds (const OBJECT *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_component_object_get_position (const GedaObject *object, gint *x, gint *y)
+geda_component_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)), FALSE);
@@ -909,7 +909,7 @@ OBJECT *o_component_read (PAGE *page,
  *  \return the string representation of the component OBJECT
  */
 gchar*
-geda_component_object_to_buffer (const GedaObject *object)
+geda_component_object_to_buffer (const LeptonObject *object)
 {
   gchar *basename;
   gchar *buffer;
@@ -944,12 +944,12 @@ geda_component_object_to_buffer (const GedaObject *object)
  *  \par Function Description
  *  This function changes the position of a component \a object.
  *
- *  \param [ref] object  The component GedaObject to be moved
+ *  \param [ref] object  The component LeptonObject to be moved
  *  \param [in]  dx      The x-distance to move the object
  *  \param [in]  dy      The y-distance to move the object
  */
 void
-geda_component_object_translate (GedaObject *object, int dx, int dy)
+geda_component_object_translate (LeptonObject *object, int dx, int dy)
 {
   g_return_if_fail (object != NULL &&
                     (object->type == OBJ_COMPONENT ||

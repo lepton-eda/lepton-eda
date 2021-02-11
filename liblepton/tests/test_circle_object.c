@@ -13,7 +13,7 @@ check_construction ()
     gint color = g_test_rand_int_range (0, colors_count());
     gint radius = g_test_rand_int_range (0, G_MAXINT);
 
-    GedaObject *object0 = geda_circle_object_new (color,
+    LeptonObject *object0 = geda_circle_object_new (color,
                                                   center_x,
                                                   center_y,
                                                   radius);
@@ -26,7 +26,7 @@ check_construction ()
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
     g_assert_cmpint (radius, ==, geda_circle_object_get_radius (object0));
 
-    GedaObject *object1 = geda_circle_object_copy (object0);
+    LeptonObject *object1 = geda_circle_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
@@ -57,7 +57,7 @@ check_accessors ()
     gint color = g_test_rand_int_range (0, colors_count());
     gint radius = g_test_rand_int_range (0, G_MAXINT);
 
-    GedaObject *object0 = geda_circle_object_new (color,
+    LeptonObject *object0 = geda_circle_object_new (color,
                                                   center_x,
                                                   center_y,
                                                   radius);
@@ -103,7 +103,7 @@ check_serialization ()
     gint color = g_test_rand_int_range (0, colors_count());
     gint radius = g_test_rand_int_range (0, G_MAXINT);
 
-    GedaObject *object0 = geda_circle_object_new (color,
+    LeptonObject *object0 = geda_circle_object_new (color,
                                                   center_x,
                                                   center_y,
                                                   radius);
@@ -114,7 +114,7 @@ check_serialization ()
     s_delete_object (object0);
     g_assert (buffer0 != NULL);
 
-    GedaObject *object1 = o_circle_read (buffer0,
+    LeptonObject *object1 = o_circle_read (buffer0,
                                          version,
                                          FILEFORMAT_VERSION,
                                          NULL);

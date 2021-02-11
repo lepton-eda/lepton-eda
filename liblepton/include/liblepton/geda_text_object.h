@@ -29,7 +29,7 @@ G_BEGIN_DECLS
 
 /* construction, destruction */
 
-GedaObject*
+LeptonObject*
 geda_text_object_new (gint color,
                       gint x,
                       gint y,
@@ -40,39 +40,39 @@ geda_text_object_new (gint color,
                       gint visibility,
                       gint show_name_value);
 
-GedaObject*
-geda_text_object_copy (const GedaObject *object);
+LeptonObject*
+geda_text_object_copy (const LeptonObject *object);
 
 /* methods */
 
 gboolean
-geda_text_object_calculate_bounds (const GedaObject *object,
+geda_text_object_calculate_bounds (const LeptonObject *object,
                                    gboolean include_hidden,
                                    GedaBounds *bounds);
 
 gint
-geda_text_object_get_alignment (const GedaObject *object);
+geda_text_object_get_alignment (const LeptonObject *object);
 
 gint
-geda_text_object_get_angle (const GedaObject *object);
+geda_text_object_get_angle (const LeptonObject *object);
 
 gboolean
-geda_text_object_get_position (const GedaObject *object, gint *x, gint *y);
+geda_text_object_get_position (const LeptonObject *object, gint *x, gint *y);
 
 gint
-geda_text_object_get_size (const GedaObject *object);
+geda_text_object_get_size (const LeptonObject *object);
 
 gdouble
-geda_text_object_get_size_in_points (const GedaObject *object);
+geda_text_object_get_size_in_points (const LeptonObject *object);
 
 const gchar*
-geda_text_object_get_string (const GedaObject *object);
+geda_text_object_get_string (const LeptonObject *object);
 
 gint
-geda_text_object_get_x (const GedaObject *object);
+geda_text_object_get_x (const LeptonObject *object);
 
 gint
-geda_text_object_get_y (const GedaObject *object);
+geda_text_object_get_y (const LeptonObject *object);
 
 void
 geda_text_object_mirror (int world_centerx,
@@ -86,19 +86,19 @@ geda_text_object_rotate (int world_centerx,
                          OBJECT *object);
 
 void
-geda_text_object_set_alignment (GedaObject *object, gint alignment);
+geda_text_object_set_alignment (LeptonObject *object, gint alignment);
 
 void
-geda_text_object_set_angle (GedaObject *object, gint angle);
+geda_text_object_set_angle (LeptonObject *object, gint angle);
 
 void
-geda_text_object_set_size (GedaObject *object, gint size);
+geda_text_object_set_size (LeptonObject *object, gint size);
 
 void
-geda_text_object_set_x (GedaObject *object, gint x);
+geda_text_object_set_x (LeptonObject *object, gint x);
 
 void
-geda_text_object_set_y (GedaObject *object, gint y);
+geda_text_object_set_y (LeptonObject *object, gint y);
 
 double
 geda_text_object_shortest_distance (OBJECT *object,
@@ -108,10 +108,10 @@ geda_text_object_shortest_distance (OBJECT *object,
                                     gboolean include_hidden);
 
 gchar*
-geda_text_object_to_buffer (const GedaObject *object);
+geda_text_object_to_buffer (const LeptonObject *object);
 
 void
-geda_text_object_translate (GedaObject *object, int dx, int dy);
+geda_text_object_translate (LeptonObject *object, int dx, int dy);
 
 /* older methods, need renaming */
 

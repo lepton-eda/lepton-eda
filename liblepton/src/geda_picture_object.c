@@ -474,7 +474,7 @@ o_picture_read (const char *first_line,
  *
  */
 gchar*
-geda_picture_object_to_buffer (const GedaObject *object)
+geda_picture_object_to_buffer (const LeptonObject *object)
 {
   int width, height, x1, y1;
   gchar *encoded_picture=NULL;
@@ -665,7 +665,7 @@ geda_picture_object_calculate_bounds (const OBJECT *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_picture_object_get_position (const GedaObject *object, gint *x, gint *y)
+geda_picture_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_PICTURE, FALSE);
@@ -969,12 +969,12 @@ geda_picture_object_mirror (int world_centerx,
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the picture
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world units.
  *
- *  \param [in,out] object     Picture GedaObject to translate.
+ *  \param [in,out] object     Picture LeptonObject to translate.
  *  \param [in]     dx         x distance to move.
  *  \param [in]     dy         y distance to move.
  */
 void
-geda_picture_object_translate (GedaObject *object, int dx, int dy)
+geda_picture_object_translate (LeptonObject *object, int dx, int dy)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->picture != NULL);
@@ -1280,7 +1280,7 @@ o_picture_set_from_file (OBJECT *object,
  * \return the filename associated with \a object.
  */
 const gchar *
-o_picture_get_filename (const GedaObject *object)
+o_picture_get_filename (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->picture != NULL, NULL);

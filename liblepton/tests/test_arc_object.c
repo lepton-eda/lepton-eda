@@ -15,7 +15,7 @@ check_construction ()
     gint start_angle = g_test_rand_int_range (0, 359);
     gint sweep_angle = g_test_rand_int_range (0, 360);
 
-    GedaObject *object0 = geda_arc_object_new (color,
+    LeptonObject *object0 = geda_arc_object_new (color,
                                                center_x,
                                                center_y,
                                                radius,
@@ -32,7 +32,7 @@ check_construction ()
     g_assert_cmpint (start_angle, ==, geda_arc_object_get_start_angle (object0));
     g_assert_cmpint (sweep_angle, ==, geda_arc_object_get_sweep_angle (object0));
 
-    GedaObject *object1 = geda_arc_object_copy (object0);
+    LeptonObject *object1 = geda_arc_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
@@ -67,7 +67,7 @@ check_accessors ()
     gint start_angle = g_test_rand_int_range (0, 359);
     gint sweep_angle = g_test_rand_int_range (0, 360);
 
-    GedaObject *object0 = geda_arc_object_new (color,
+    LeptonObject *object0 = geda_arc_object_new (color,
                                                center_x,
                                                center_y,
                                                radius,
@@ -123,7 +123,7 @@ check_serialization ()
     gint start_angle = g_test_rand_int_range (0, 359);
     gint sweep_angle = g_test_rand_int_range (0, 360);
 
-    GedaObject *object0 = geda_arc_object_new (color,
+    LeptonObject *object0 = geda_arc_object_new (color,
                                                center_x,
                                                center_y,
                                                radius,
@@ -136,7 +136,7 @@ check_serialization ()
     s_delete_object (object0);
     g_assert (buffer0 != NULL);
 
-    GedaObject *object1 = o_arc_read (buffer0,
+    LeptonObject *object1 = o_arc_read (buffer0,
                                       version,
                                       FILEFORMAT_VERSION,
                                       NULL);

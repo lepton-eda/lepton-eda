@@ -16,7 +16,7 @@ check_construction ()
     gint type = g_test_rand_int_range (0, 2);
     gint which = g_test_rand_int_range (0, 2);
 
-    GedaObject *object0 = geda_pin_object_new (color,
+    LeptonObject *object0 = geda_pin_object_new (color,
                                                x0,
                                                y0,
                                                x1,
@@ -33,7 +33,7 @@ check_construction ()
     g_assert_cmpint (y1, ==, geda_pin_object_get_y1 (object0));
     g_assert_cmpint (color, ==, geda_object_get_color (object0));
 
-    GedaObject *object1 = geda_pin_object_copy (object0);
+    LeptonObject *object1 = geda_pin_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
@@ -68,7 +68,7 @@ check_accessors ()
     gint type = g_test_rand_int_range (0, 2);
     gint which = g_test_rand_int_range (0, 2);
 
-    GedaObject *object0 = geda_pin_object_new (color,
+    LeptonObject *object0 = geda_pin_object_new (color,
                                                x0,
                                                y0,
                                                x1,
@@ -123,7 +123,7 @@ check_serialization ()
     gint type = g_test_rand_int_range (0, 2);
     gint which = g_test_rand_int_range (0, 2);
 
-    GedaObject *object0 = geda_pin_object_new (color,
+    LeptonObject *object0 = geda_pin_object_new (color,
                                                x0,
                                                y0,
                                                x1,
@@ -137,7 +137,7 @@ check_serialization ()
     s_delete_object (object0);
     g_assert (buffer0 != NULL);
 
-    GedaObject *object1 = o_pin_read (buffer0,
+    LeptonObject *object1 = o_pin_read (buffer0,
                                       version,
                                       FILEFORMAT_VERSION,
                                       NULL);

@@ -49,7 +49,7 @@ geda_box_object_calculate_bounds (const OBJECT *object,
                                   GedaBounds *bounds);
 
 gboolean
-geda_box_object_get_position (const GedaObject *object, gint *x, gint *y);
+geda_box_object_get_position (const LeptonObject *object, gint *x, gint *y);
 
 void
 geda_box_object_mirror (int world_centerx,
@@ -83,10 +83,10 @@ geda_box_object_shortest_distance (OBJECT *object,
                                    gboolean include_hidden);
 
 gchar*
-geda_box_object_to_buffer (const GedaObject *object);
+geda_box_object_to_buffer (const LeptonObject *object);
 
 void
-geda_box_object_translate (GedaObject *object, int dx, int dy);
+geda_box_object_translate (LeptonObject *object, int dx, int dy);
 
 OBJECT*
 o_box_read (const char buf[],

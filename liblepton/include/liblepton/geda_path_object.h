@@ -48,7 +48,7 @@ geda_path_object_modify (OBJECT *object,
                          int whichone);
 
 void
-geda_path_object_translate (GedaObject *object, int dx, int dy);
+geda_path_object_translate (LeptonObject *object, int dx, int dy);
 
 void
 geda_path_object_rotate (int world_centerx,
@@ -69,7 +69,7 @@ o_path_read (const char *first_line,
              GError **err);
 
 gchar*
-geda_path_object_to_buffer (const GedaObject *object);
+geda_path_object_to_buffer (const LeptonObject *object);
 
 double
 geda_path_object_shortest_distance (OBJECT *object,
@@ -79,6 +79,6 @@ geda_path_object_shortest_distance (OBJECT *object,
                                     gboolean include_hidden);
 
 gboolean
-geda_path_object_get_position (const GedaObject *object, gint *x, gint *y);
+geda_path_object_get_position (const LeptonObject *object, gint *x, gint *y);
 
 G_END_DECLS
