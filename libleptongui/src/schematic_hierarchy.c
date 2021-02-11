@@ -1,7 +1,7 @@
-/* Lepton EDA library
+/* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -297,7 +297,7 @@ s_hierarchy_traversepages (GschemToplevel *w_current,
                            PAGE *p_current,
                            gint flags)
 {
-  OBJECT *o_current;
+  LeptonObject *o_current;
   PAGE *child_page;
   char *filename = NULL;
   static GList *pages = NULL;
@@ -324,7 +324,7 @@ s_hierarchy_traversepages (GschemToplevel *w_current,
   for (iter = s_page_objects (p_current);
        iter != NULL ;
        iter = g_list_next (iter)) {
-    o_current = (OBJECT *)iter->data;
+    o_current = (LeptonObject *)iter->data;
 
     /* only complex things like symbols can contain attributes */
     if (o_current->type != OBJ_COMPONENT) continue;

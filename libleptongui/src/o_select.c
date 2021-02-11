@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -130,7 +130,7 @@ void o_select_motion (GschemToplevel *w_current, int wx, int wy)
  *  \par Function Description
  *
  */
-void o_select_run_hooks(GschemToplevel *w_current, OBJECT *o_current, int flag)
+void o_select_run_hooks(GschemToplevel *w_current, LeptonObject *o_current, int flag)
 {
   switch (flag) {
   /* If flag == 0, then we are deselecting something. */
@@ -154,7 +154,7 @@ void o_select_run_hooks(GschemToplevel *w_current, OBJECT *o_current, int flag)
  *  type can be either SINGLE meaning selection is a single mouse click
  *      or it can be MULTIPLE meaning selection is a selection box
  */
-void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
+void o_select_object(GschemToplevel *w_current, LeptonObject *o_current,
                      int type, int count)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
@@ -166,7 +166,7 @@ void o_select_object(GschemToplevel *w_current, OBJECT *o_current,
   CONTROLKEY = w_current->CONTROLKEY;
 
 #if DEBUG
-  printf("OBJECT id: %d\n", o_current->sid);
+  printf("LeptonObject id: %d\n", o_current->sid);
 #endif
 
   switch(o_current->selected) {
@@ -383,7 +383,7 @@ void o_select_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 void o_select_box_search(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  OBJECT *o_current=NULL;
+  LeptonObject *o_current=NULL;
   int count = 0; /* object count */
   int SHIFTKEY = w_current->SHIFTKEY;
   int CONTROLKEY = w_current->CONTROLKEY;
@@ -399,7 +399,7 @@ void o_select_box_search(GschemToplevel *w_current)
 
   iter = s_page_objects (toplevel->page_current);
   while (iter != NULL) {
-    o_current = (OBJECT*) iter->data;
+    o_current = (LeptonObject*) iter->data;
     /* only select visible objects */
     if (o_is_visible (o_current) || show_hidden_text) {
       int cleft, ctop, cright, cbottom;
@@ -439,12 +439,12 @@ void o_select_box_search(GschemToplevel *w_current)
  *  \param [in] w_current  GschemToplevel struct.
  *  \param [in] o_net      Pointer to a single net object
  */
-void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
+void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   const GList *o_iter;
   GList *iter1;
-  OBJECT *o_current;
+  LeptonObject *o_current;
   int count=0;
   gchar* netname;
 
@@ -476,7 +476,7 @@ void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
     for (iter1 = g_list_last(netstack);
          iter1 != NULL;
          iter1 = g_list_previous(iter1), count++) {
-      o_current = (OBJECT*) iter1->data;
+      o_current = (LeptonObject*) iter1->data;
       if (o_current->type == OBJ_NET &&
           (!o_current->selected || count == 0)) {
         o_select_object (w_current, o_current, SINGLE, count);
@@ -508,7 +508,7 @@ void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
     for (o_iter = s_page_objects (toplevel->page_current);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
-      o_current = (OBJECT*) o_iter->data;
+      o_current = (LeptonObject*) o_iter->data;
       if (o_current->type == OBJ_TEXT
           && o_current->attached_to != NULL) {
         if (o_current->attached_to->type == OBJ_NET) {
@@ -535,13 +535,13 @@ void o_select_connected_nets(GschemToplevel *w_current, OBJECT* o_net)
 
 /* This is a wrapper for o_selection_return_first_object */
 /* This function always looks at the current page selection list */
-OBJECT *o_select_return_first_object(GschemToplevel *w_current)
+LeptonObject *o_select_return_first_object(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   if (! (w_current && toplevel->page_current && geda_list_get_glist( toplevel->page_current->selection_list )))
     return NULL;
   else
-    return (OBJECT *)g_list_first( geda_list_get_glist( toplevel->page_current->selection_list ))->data;
+    return (LeptonObject *)g_list_first( geda_list_get_glist( toplevel->page_current->selection_list ))->data;
 }
 
 /*! \todo Finish function documentation!!!
@@ -575,7 +575,7 @@ void o_select_unselect_all(GschemToplevel *w_current)
 
   removed = g_list_copy (geda_list_get_glist (selection));
   for (iter = removed; iter != NULL; iter = g_list_next (iter)) {
-    o_selection_remove (selection, (OBJECT *) iter->data);
+    o_selection_remove (selection, (LeptonObject *) iter->data);
   }
 
   /* Call hooks */
@@ -606,7 +606,7 @@ o_select_visible_unlocked (GschemToplevel *w_current)
   for (iter = s_page_objects (toplevel->page_current);
        iter != NULL;
        iter = g_list_next (iter)) {
-    OBJECT *obj = (OBJECT *) iter->data;
+    LeptonObject *obj = (LeptonObject *) iter->data;
 
     /* Skip invisible objects. */
     if (!o_is_visible (obj) && !show_hidden_text)

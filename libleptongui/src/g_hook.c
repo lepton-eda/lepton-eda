@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,13 +53,13 @@ g_get_hook_by_name (const char *name)
 
 /*! \brief Runs a object hook for a list of objects.
  * \par Function Description
- * Runs a hook called \a name, which should expect a list of #OBJECT
+ * Runs a hook called \a name, which should expect a list of #LeptonObject
  * smobs as its argument, with \a obj_lst as the argument list.
  *
  * \see g_run_hook_object()
  *
  * \param name    name of hook to run.
- * \param obj_lst list of #OBJECT smobs as hook argument.
+ * \param obj_lst list of #LeptonObject smobs as hook argument.
  */
 void
 g_run_hook_object_list (GschemToplevel *w_current, const char *name,
@@ -72,7 +72,7 @@ g_run_hook_object_list (GschemToplevel *w_current, const char *name,
   g_dynwind_window (w_current);
 
   for (iter = obj_lst; iter != NULL; iter = g_list_next (iter)) {
-    lst = scm_cons (edascm_from_object ((OBJECT *) iter->data), lst);
+    lst = scm_cons (edascm_from_object ((LeptonObject *) iter->data), lst);
   }
   SCM expr = scm_list_3 (run_hook_sym,
                          g_get_hook_by_name (name),
@@ -84,18 +84,18 @@ g_run_hook_object_list (GschemToplevel *w_current, const char *name,
   scm_remember_upto_here_1 (expr);
 }
 
-/*! \brief Runs a object hook with a single OBJECT.
+/*! \brief Runs a object hook with a single LeptonObject.
  * \par Function Description
- * Runs a hook called \a name, which should expect a list of #OBJECT
+ * Runs a hook called \a name, which should expect a list of #LeptonObject
  * smobs as its argument, with a single-element list containing only \a obj.
  *
  * \see g_run_hook_object_list()
  *
  * \param name name of hook to run.
- * \param obj  #OBJECT argument for hook.
+ * \param obj  #LeptonObject argument for hook.
  */
 void
-g_run_hook_object (GschemToplevel *w_current, const char *name, OBJECT *obj)
+g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *obj)
 {
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);

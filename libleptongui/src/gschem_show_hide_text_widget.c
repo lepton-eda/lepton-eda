@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,7 +82,7 @@ static GObjectClass *gschem_show_hide_text_widget_parent_class = NULL;
  */
 void hide_text_dialog (GschemToplevel *w_current)
 {
-  OBJECT *object;
+  LeptonObject *object;
 
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);
@@ -105,7 +106,7 @@ void hide_text_dialog (GschemToplevel *w_current)
  */
 void show_text_dialog (GschemToplevel *w_current)
 {
-  OBJECT *object;
+  LeptonObject *object;
 
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (w_current->toplevel != NULL);

@@ -1,7 +1,7 @@
-/* Lepton EDA library
+/* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,7 +31,7 @@
  *  \param [in] w_current The GschemToplevel object.
  *  \param [in] object    The object to delete.
  */
-void o_delete (GschemToplevel *w_current, OBJECT *object)
+void o_delete (GschemToplevel *w_current, LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
 
@@ -59,7 +59,7 @@ void o_delete_selected (GschemToplevel *w_current)
   SELECTION *selection = toplevel->page_current->selection_list;
   GList *to_remove;
   GList *iter;
-  OBJECT *obj;
+  LeptonObject *obj;
   unsigned int locked_num = 0;
 
   g_return_if_fail (o_select_selected (w_current));
@@ -67,7 +67,7 @@ void o_delete_selected (GschemToplevel *w_current)
   to_remove = g_list_copy (geda_list_get_glist (selection));
 
   for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
-    obj = (OBJECT *) iter->data;
+    obj = (LeptonObject *) iter->data;
     if (obj->selectable == FALSE)
       locked_num++;
   }
@@ -100,7 +100,7 @@ void o_delete_selected (GschemToplevel *w_current)
       break;
     case GTK_RESPONSE_NO:   /* Remove non locked */
       for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
-        obj = (OBJECT *) iter->data;
+        obj = (LeptonObject *) iter->data;
         if (obj->selectable == TRUE)
           non_locked = g_list_append (non_locked, iter->data);
       }
@@ -114,7 +114,7 @@ void o_delete_selected (GschemToplevel *w_current)
   }
 
   for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
-    obj = (OBJECT *) iter->data;
+    obj = (LeptonObject *) iter->data;
     o_selection_remove (selection, obj);
     s_page_remove (toplevel->page_current, obj);
   }
@@ -132,7 +132,7 @@ void o_delete_selected (GschemToplevel *w_current)
   }
 
   for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
-    obj = (OBJECT *) iter->data;
+    obj = (LeptonObject *) iter->data;
     s_delete_object (obj);
   }
 

@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -582,7 +582,7 @@ void
 i_callback_edit_slot (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  OBJECT *object;
+  LeptonObject *object;
 
   g_return_if_fail (w_current != NULL);
 
@@ -788,7 +788,7 @@ void
 i_callback_edit_embed (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  OBJECT *o_current;
+  LeptonObject *o_current;
 
   g_return_if_fail (w_current != NULL);
 
@@ -800,7 +800,7 @@ i_callback_edit_embed (GtkWidget *widget, gpointer data)
     GList*    s_current = geda_list_get_glist (page->selection_list);
 
     while (s_current != NULL) {
-      o_current = (OBJECT *) s_current->data;
+      o_current = (LeptonObject *) s_current->data;
       g_assert (o_current != NULL);
       if ( (o_current->type == OBJ_COMPONENT) ||
            (o_current->type == OBJ_PICTURE) ) {
@@ -831,7 +831,7 @@ void
 i_callback_edit_unembed (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  OBJECT *o_current;
+  LeptonObject *o_current;
 
   g_return_if_fail (w_current != NULL);
 
@@ -843,7 +843,7 @@ i_callback_edit_unembed (GtkWidget *widget, gpointer data)
     GList*    s_current = geda_list_get_glist (page->selection_list);
 
     while (s_current != NULL) {
-      o_current = (OBJECT *) s_current->data;
+      o_current = (LeptonObject *) s_current->data;
       g_assert (o_current != NULL);
       if ( (o_current->type == OBJ_COMPONENT) ||
            (o_current->type == OBJ_PICTURE) ) {
@@ -883,19 +883,19 @@ i_callback_edit_update (GtkWidget *widget, gpointer data)
 
   if (o_select_selected(w_current)) {
 
-    /* Updating components modifies the selection. Therefore, create a
-     * new list of only the OBJECTs we want to update from the current
-     * selection, then iterate over that new list to perform the
-     * update. */
+    /* Updating components modifies the selection. Therefore,
+     * create a new list of only the LeptonObjects we want to
+     * update from the current selection, then iterate over that
+     * new list to perform the update. */
     selection = geda_list_get_glist (toplevel->page_current->selection_list);
     for (iter = selection; iter != NULL; iter = g_list_next (iter)) {
-      OBJECT *o_current = (OBJECT *) iter->data;
+      LeptonObject *o_current = (LeptonObject *) iter->data;
       if (o_current != NULL && o_current->type == OBJ_COMPONENT) {
         selected_components = g_list_prepend (selected_components, o_current);
       }
     }
     for (iter = selected_components; iter != NULL; iter = g_list_next (iter)) {
-      OBJECT *o_current = (OBJECT *) iter->data;
+      LeptonObject *o_current = (LeptonObject *) iter->data;
       iter->data = o_update_component (w_current, o_current);
     }
     g_list_free (selected_components);
@@ -2065,7 +2065,7 @@ i_callback_hierarchy_down_schematic (GtkWidget *widget, gpointer data)
   char *attrib=NULL;
   char *current_filename=NULL;
   int count=0;
-  OBJECT *object=NULL;
+  LeptonObject *object=NULL;
   PAGE *save_first_page=NULL;
   PAGE *parent=NULL;
   PAGE *child = NULL;
@@ -2220,7 +2220,7 @@ i_callback_hierarchy_down_symbol (GtkWidget *widget, gpointer data)
   GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
 
-  OBJECT* object = o_select_return_first_object (w_current);
+  LeptonObject* object = o_select_return_first_object (w_current);
 
   /* only allow going into symbols */
   if (object == NULL || object->type != OBJ_COMPONENT)
@@ -2321,7 +2321,7 @@ i_callback_attributes_show_name (GtkWidget *widget, gpointer data)
     for (s_current = geda_list_get_glist (selection);
          s_current != NULL;
          s_current = g_list_next (s_current)) {
-      OBJECT *object = (OBJECT*)s_current->data;
+      LeptonObject *object = (LeptonObject*)s_current->data;
       if (object->type == OBJ_TEXT)
         o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME);
     }
@@ -2356,7 +2356,7 @@ i_callback_attributes_show_value (GtkWidget *widget, gpointer data)
     for (s_current = geda_list_get_glist (selection);
          s_current != NULL;
          s_current = g_list_next (s_current)) {
-      OBJECT *object = (OBJECT*)s_current->data;
+      LeptonObject *object = (LeptonObject*)s_current->data;
       if (object->type == OBJ_TEXT)
         o_attrib_toggle_show_name_value (w_current, object, SHOW_VALUE);
     }
@@ -2391,7 +2391,7 @@ i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
     for (s_current = geda_list_get_glist (selection);
          s_current != NULL;
          s_current = g_list_next (s_current)) {
-      OBJECT *object = (OBJECT*)s_current->data;
+      LeptonObject *object = (LeptonObject*)s_current->data;
       if (object->type == OBJ_TEXT)
         o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME_VALUE);
     }
@@ -2426,7 +2426,7 @@ i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
     for (s_current = geda_list_get_glist (selection);
          s_current != NULL;
          s_current = g_list_next (s_current)) {
-      OBJECT *object = (OBJECT*)s_current->data;
+      LeptonObject *object = (LeptonObject*)s_current->data;
       if (object->type == OBJ_TEXT)
         o_attrib_toggle_visibility (w_current, object);
     }

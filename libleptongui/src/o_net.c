@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,7 +87,7 @@ void o_net_guess_direction(GschemToplevel *w_current,
   int xmin, ymin, xmax, ymax;
   int orientation;
   GList *object_list, *iter1, *iter2;
-  OBJECT *o_current;
+  LeptonObject *o_current;
 
   int *current_rules;
   /* badness values       {OVERWRITE, ORTHO, CONTINUE} */
@@ -105,7 +105,7 @@ void o_net_guess_direction(GschemToplevel *w_current,
 
   for (iter1 = object_list; iter1 != NULL; iter1 = g_list_next(iter1)) {
     for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
-      o_current = (OBJECT*) iter2->data;
+      o_current = (LeptonObject*) iter2->data;
 
       if ((orientation = geda_net_object_orientation (o_current)) == NEITHER)
         continue;
@@ -214,8 +214,8 @@ void o_net_find_magnetic(GschemToplevel *w_current,
   double mindist, minbest, dist1, dist2;
   double weight, min_weight;
   int magnetic_reach = 0;
-  OBJECT *o_current;
-  OBJECT *o_magnetic = NULL;
+  LeptonObject *o_current;
+  LeptonObject *o_magnetic = NULL;
   GList *object_list, *iter1, *iter2;
 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
@@ -236,7 +236,7 @@ void o_net_find_magnetic(GschemToplevel *w_current,
   for (iter1 = object_list; iter1 != NULL; iter1 = g_list_next(iter1)) {
     for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
       int left, top, right, bottom;
-      o_current = (OBJECT*) iter2->data;
+      o_current = (LeptonObject*) iter2->data;
 
       if (!geda_object_calculate_visible_bounds (o_current,
                                                  FALSE,
@@ -471,7 +471,7 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   int save_wx, save_wy;
 
   GList *prev_conn_objects;
-  OBJECT *new_net = NULL;
+  LeptonObject *new_net = NULL;
 
   /* Save a list of added objects to run the %add-objects-hook later */
   GList *added_objects = NULL;
@@ -754,13 +754,13 @@ void o_net_invalidate_rubber (GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
+int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
                          GList *prev_conn_objects)
 
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   GList *cl_current = NULL;
-  OBJECT *bus_object = NULL;
+  LeptonObject *bus_object = NULL;
   CONN *found_conn = NULL;
   int done;
   int otherone;
@@ -796,7 +796,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, OBJECT *net_obj,
   cl_current = prev_conn_objects;
   while (cl_current != NULL) {
 
-    bus_object = (OBJECT *) cl_current->data;
+    bus_object = (LeptonObject *) cl_current->data;
     if (bus_object && bus_object->type == OBJ_BUS) {
       /* yes, using the net routine is okay */
       int bus_orientation = geda_net_object_orientation (bus_object);

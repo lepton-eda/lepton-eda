@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ SCM_SYMBOL (object_state_sym, "object-state");
  * (schematic core selection) module.
  *
  * \param page_s #PAGE smob for the page from which to get the selection.
- * \return a list of #OBJECT smobs.
+ * \return a list of #LeptonObject smobs.
  */
 SCM_DEFINE (page_selection, "%page-selection", 1, 0, 0,
             (SCM page_s), "Get a list of a page's selected objects")
@@ -44,7 +44,7 @@ SCM_DEFINE (page_selection, "%page-selection", 1, 0, 0,
   SCM result = SCM_EOL;
   for (iter = geda_list_get_glist (page->selection_list);
        iter != NULL; iter = g_list_next (iter)) {
-    result = scm_cons (edascm_from_object ((OBJECT *) iter->data), result);
+    result = scm_cons (edascm_from_object ((LeptonObject *) iter->data), result);
   }
 
   return result;
@@ -60,7 +60,7 @@ SCM_DEFINE (page_selection, "%page-selection", 1, 0, 0,
  * \note Scheme API: Implements the %select-object! procedure in the
  * (schematic core selection) module.
  *
- * \param obj_s #OBJECT smob for object to be selected.
+ * \param obj_s #LeptonObject smob for object to be selected.
  * \return obj_s.
  */
 SCM_DEFINE (select_object_x, "%select-object!", 1, 0, 0,
@@ -70,7 +70,7 @@ SCM_DEFINE (select_object_x, "%select-object!", 1, 0, 0,
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
               SCM_ARG1, s_select_object_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   PAGE *page = o_get_page (obj);
   if ((page == NULL) || (obj->parent != NULL)) {
     scm_error (object_state_sym,
@@ -96,7 +96,7 @@ SCM_DEFINE (select_object_x, "%select-object!", 1, 0, 0,
  * \note Scheme API: Implements the %deselect-object! procedure in the
  * (schematic core selection) module.
  *
- * \param obj_s #OBJECT smob for object to be deselected.
+ * \param obj_s #LeptonObject smob for object to be deselected.
  * \return obj_s.
  */
 SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
@@ -106,7 +106,7 @@ SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
               SCM_ARG1, s_deselect_object_x);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   PAGE *page = o_get_page (obj);
   if ((page == NULL) || (obj->parent != NULL)) {
     scm_error (object_state_sym,
@@ -131,7 +131,7 @@ SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
  * \note Scheme API: Implements the %object-selected? procedure in the
  * (schematic core selection) module.
  *
- * \param obj_s #OBJECT smob to be tested.
+ * \param obj_s #LeptonObject smob to be tested.
  * \return SCM_BOOL_T if \a obj_s is selected, otherwise SCM_BOOL_F.
  */
 SCM_DEFINE (object_selected_p, "%object-selected?", 1, 0, 0,
@@ -141,7 +141,7 @@ SCM_DEFINE (object_selected_p, "%object-selected?", 1, 0, 0,
   SCM_ASSERT (edascm_is_object (obj_s), obj_s,
               SCM_ARG1, s_object_selected_p);
 
-  OBJECT *obj = edascm_to_object (obj_s);
+  LeptonObject *obj = edascm_to_object (obj_s);
   PAGE *page = o_get_page (obj);
   if ((page == NULL) || (obj->parent != NULL)) {
     scm_error (object_state_sym,

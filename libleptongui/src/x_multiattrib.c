@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -561,10 +561,10 @@ static void multiattrib_popup_menu (Multiattrib *multiattrib,
  *
  *  Returns TRUE/FALSE if the given object may have attributes attached.
  *
- *  \param [in] object  The OBJECT to test.
+ *  \param [in] object  The LeptonObject to test.
  *  \returns  TRUE/FALSE if the given object may have attributes attached.
  */
-static gboolean is_multiattrib_object (OBJECT *object)
+static gboolean is_multiattrib_object (LeptonObject *object)
 {
   if (object->type == OBJ_COMPONENT ||
       object->type == OBJ_PLACEHOLDER ||
@@ -589,7 +589,7 @@ multiattrib_action_add_attribute (Multiattrib *multiattrib,
                                   gint visible,
                                   gint show_name_value)
 {
-  OBJECT *object;
+  LeptonObject *object;
   gchar *newtext;
   GList *iter;
   GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
@@ -604,7 +604,7 @@ multiattrib_action_add_attribute (Multiattrib *multiattrib,
   for (iter = geda_list_get_glist (multiattrib->object_list);
        iter != NULL;
        iter = g_list_next (iter)) {
-    object = (OBJECT *)iter->data;
+    object = (LeptonObject *)iter->data;
 
     if (is_multiattrib_object (object)) {
 
@@ -635,7 +635,7 @@ multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
   for (iter = attr_list;
        iter != NULL;
        iter = g_list_next (iter)) {
-    OBJECT *o_attrib = (OBJECT *)iter->data;
+    LeptonObject *o_attrib = (LeptonObject *)iter->data;
 
     /* create a new attribute and link it */
     o_attrib_add_attrib (w_current,
@@ -660,13 +660,13 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
 {
   GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
   TOPLEVEL *toplevel = w_current->toplevel;
-  OBJECT *o_new;
+  LeptonObject *o_new;
   GList *iter;
 
   for (iter = attr_list;
        iter != NULL;
        iter = g_list_next (iter)) {
-    OBJECT *o_attrib = (OBJECT *)iter->data;
+    LeptonObject *o_attrib = (LeptonObject *)iter->data;
 
     if (o_is_visible (o_attrib)) {
       /* If the attribute we're promoting is visible, don't clone its location */
@@ -703,10 +703,10 @@ multiattrib_action_delete_attributes (Multiattrib *multiattrib,
 {
   GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
   GList *a_iter;
-  OBJECT *o_attrib;
+  LeptonObject *o_attrib;
 
   for (a_iter = attr_list; a_iter != NULL; a_iter = g_list_next (a_iter)) {
-    o_attrib = (OBJECT*) a_iter->data;
+    o_attrib = (LeptonObject*) a_iter->data;
     /* actually deletes the attribute */
     o_delete (w_current, o_attrib);
   }
@@ -734,18 +734,18 @@ multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
   for (iter = attr_list;
        iter != NULL;
        iter = g_list_next (iter)) {
-    OBJECT *o_attrib = (OBJECT *)iter->data;
+    LeptonObject *o_attrib = (LeptonObject *)iter->data;
 
     objects_needing_add = g_list_remove (objects_needing_add, o_attrib->attached_to);
   }
 
   for (iter = objects_needing_add; iter != NULL; iter = g_list_next (iter)) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
 
     if (is_multiattrib_object (object)) {
 
       /* Pick the first instance to copy from */
-      OBJECT *attrib_to_copy = (OBJECT*) attr_list->data;
+      LeptonObject *attrib_to_copy = (LeptonObject*) attr_list->data;
 
       int visibility = o_is_visible (attrib_to_copy)
           ? VISIBLE : INVISIBLE;
@@ -947,7 +947,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   GtkTreeIter iter;
   GedaList *attr_list;
   GList *a_iter;
-  OBJECT *o_attrib;
+  LeptonObject *o_attrib;
   GschemToplevel *w_current;
   gchar *value, *newtext;
   int visibility;
@@ -1001,7 +1001,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   for (a_iter = geda_list_get_glist (attr_list);
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    o_attrib = (OBJECT*) a_iter->data;
+    o_attrib = (LeptonObject*) a_iter->data;
 
     visibility = o_is_visible (o_attrib)
         ? VISIBLE : INVISIBLE;
@@ -1040,7 +1040,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   GtkTreeIter iter;
   GedaList *attr_list;
   GList *a_iter;
-  OBJECT *o_attrib;
+  LeptonObject *o_attrib;
   GschemToplevel *w_current;
   char *name;
   char *old_value;
@@ -1088,7 +1088,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   for (a_iter = geda_list_get_glist (attr_list);
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    o_attrib = (OBJECT *)a_iter->data;
+    o_attrib = (LeptonObject *)a_iter->data;
 
     visibility = o_is_visible (o_attrib)
         ? VISIBLE : INVISIBLE;
@@ -1126,7 +1126,7 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  OBJECT *o_attrib;
+  LeptonObject *o_attrib;
   GschemToplevel *w_current;
   gboolean new_visibility;
   GedaList *attr_list;
@@ -1148,7 +1148,7 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
   for (a_iter = geda_list_get_glist (attr_list);
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    o_attrib = (OBJECT *)a_iter->data;
+    o_attrib = (LeptonObject *)a_iter->data;
 
     /* actually modifies the attribute */
     o_invalidate (w_current, o_attrib);
@@ -1203,7 +1203,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
   for (a_iter = geda_list_get_glist (attr_list);
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    OBJECT *o_attrib = (OBJECT *)a_iter->data;
+    LeptonObject *o_attrib = (LeptonObject *)a_iter->data;
 
     gboolean value_visible = snv_shows_value (o_attrib->show_name_value);
 
@@ -1267,7 +1267,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
   for (a_iter = geda_list_get_glist (attr_list);
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    OBJECT *o_attrib = (OBJECT *)a_iter->data;
+    LeptonObject *o_attrib = (LeptonObject *)a_iter->data;
 
     gboolean name_visible = snv_shows_name (o_attrib->show_name_value);
 
@@ -2465,7 +2465,7 @@ typedef struct {
   GedaList *attribute_gedalist;
 } MODEL_ROW;
 
-/*! \brief For a given OBJECT, produce a GList of MODEL_ROW records
+/*! \brief For a given LeptonObject, produce a GList of MODEL_ROW records
  *
  *  \par Function Description
  *
@@ -2474,11 +2474,11 @@ typedef struct {
  *  together.
  *
  *  \param [in] multiattrib  The multi-attribute editor dialog
- *  \param [in] object       The OBJECT * whos attributes we are processing
+ *  \param [in] object       The LeptonObject * whos attributes we are processing
  *  \returns  A GList of MODEL_ROW records detailing object's attributes.
  */
 static GList *
-object_attributes_to_model_rows (Multiattrib *multiattrib, OBJECT *object)
+object_attributes_to_model_rows (Multiattrib *multiattrib, LeptonObject *object)
 {
   GList *model_rows = NULL;
   GList *a_iter;
@@ -2487,7 +2487,7 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, OBJECT *object)
   for (a_iter = object_attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
 
-    OBJECT *a_current = (OBJECT*) a_iter->data;
+    LeptonObject *a_current = (LeptonObject*) a_iter->data;
     MODEL_ROW *m_row = g_new0 (MODEL_ROW, 1);
     GList *m_iter;
 
@@ -2497,7 +2497,7 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, OBJECT *object)
     m_row->show_name_value = a_current->show_name_value;
     m_row->nth_with_name = 0; /* Provisional value until we check below */
 
-    /* The following fields are always true for a single OBJECT */
+    /* The following fields are always true for a single LeptonObject */
     m_row->present_in_all = TRUE;
     m_row->identical_value = TRUE;
     m_row->identical_visibility = TRUE;
@@ -2550,7 +2550,7 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
   for (o_iter = multiattrib->object_list == NULL ? NULL : geda_list_get_glist (multiattrib->object_list);
        o_iter != NULL;
        o_iter = g_list_next (o_iter)) {
-    OBJECT *object = (OBJECT*) o_iter->data;
+    LeptonObject *object = (LeptonObject*) o_iter->data;
     MODEL_ROW *m_row;
 
     /* Consider a selected text object might be an attribute */
@@ -2741,7 +2741,7 @@ multiattrib_update (Multiattrib *multiattrib)
   for (o_iter = multiattrib->object_list == NULL ? NULL : geda_list_get_glist (multiattrib->object_list);
        o_iter != NULL;
        o_iter = g_list_next (o_iter)) {
-    OBJECT *object = (OBJECT*) o_iter->data;
+    LeptonObject *object = (LeptonObject*) o_iter->data;
 
     GList *object_rows;
     GList *or_iter;

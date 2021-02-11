@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -98,7 +98,7 @@ gschem_selection_adapter_get_cap_style (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     OBJECT_END temp_cap_style;
     gint temp_dash_length;
@@ -146,7 +146,7 @@ gschem_selection_adapter_get_dash_length (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     OBJECT_END temp_cap_style;
     gint temp_dash_length;
@@ -194,7 +194,7 @@ gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     OBJECT_END temp_cap_style;
     gint temp_dash_length;
@@ -242,7 +242,7 @@ gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -293,7 +293,7 @@ gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -344,7 +344,7 @@ gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -395,7 +395,7 @@ gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -446,7 +446,7 @@ gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -497,7 +497,7 @@ gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -548,7 +548,7 @@ gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     OBJECT_END temp_cap_style;
     gint temp_dash_length;
@@ -596,7 +596,7 @@ gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     OBJECT_END temp_cap_style;
     gint temp_dash_length;
@@ -644,7 +644,7 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT* object = (OBJECT *) iter->data;
+    LeptonObject* object = (LeptonObject *) iter->data;
     iter = g_list_next (iter);
     if ((object != NULL) && (
         (object->type == OBJ_ARC)    ||
@@ -663,7 +663,7 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
   /* Check if all other objects have the same properties */
 
   while (iter != NULL) {
-    OBJECT* object = (OBJECT *) iter->data;
+    LeptonObject* object = (LeptonObject *) iter->data;
     if ((object != NULL) && (
         (object->type == OBJ_ARC)    ||
         (object->type == OBJ_BOX)    ||
@@ -699,7 +699,7 @@ gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT* object = (OBJECT *) iter->data;
+    LeptonObject* object = (LeptonObject *) iter->data;
     iter = g_list_next (iter);
     if ((object != NULL) && (object->type == OBJ_PIN)) {
       type = object->pin_type;
@@ -710,7 +710,7 @@ gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter)
   /* Check if all other objects have the same properties */
 
   while (iter != NULL) {
-    OBJECT* object = (OBJECT *) iter->data;
+    LeptonObject* object = (LeptonObject *) iter->data;
     if ((object != NULL) && (object->type == OBJ_PIN)) {
       if (type != object->pin_type) {
         type = MULTIPLE_VALUES;
@@ -755,7 +755,7 @@ gschem_selection_adapter_get_text_alignment (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
 
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
       int temp_alignment = geda_text_object_get_alignment (object);
@@ -792,7 +792,7 @@ gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT* object = (OBJECT *) iter->data;
+    LeptonObject* object = (LeptonObject *) iter->data;
     iter = g_list_next (iter);
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
       color = geda_object_get_color (object);
@@ -803,7 +803,7 @@ gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
   /* Check if all other objects have the same properties */
 
   while (iter != NULL) {
-    OBJECT* object = (OBJECT *) iter->data;
+    LeptonObject* object = (LeptonObject *) iter->data;
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
       if (color != geda_object_get_color (object)) {
         color = MULTIPLE_VALUES;
@@ -833,7 +833,7 @@ gschem_selection_adapter_get_text_rotation (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
 
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
       int temp_angle = geda_text_object_get_angle (object);
@@ -870,7 +870,7 @@ gschem_selection_adapter_get_text_size (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
 
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
       int temp_size = geda_text_object_get_size (object);
@@ -905,7 +905,7 @@ gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter)
   GList *iter = get_selection_iter (adapter);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
 
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
       if (string == NULL) {
@@ -1006,7 +1006,7 @@ gschem_selection_adapter_set_fill_angle1 (GschemSelectionAdapter *adapter, int a
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -1065,7 +1065,7 @@ gschem_selection_adapter_set_fill_angle2 (GschemSelectionAdapter *adapter, int a
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -1126,7 +1126,7 @@ gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int p
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -1185,7 +1185,7 @@ gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int p
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -1246,7 +1246,7 @@ gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fil
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -1311,7 +1311,7 @@ gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int fi
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
@@ -1371,7 +1371,7 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     OBJECT_END temp_cap_style;
     int temp_dash_length;
@@ -1430,7 +1430,7 @@ gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int li
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     OBJECT_END temp_cap_style;
     int temp_dash_length;
@@ -1487,7 +1487,7 @@ gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int d
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     OBJECT_END temp_cap_style;
     int temp_dash_length;
@@ -1544,7 +1544,7 @@ gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int da
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     OBJECT_END temp_cap_style;
     int temp_dash_length;
@@ -1601,7 +1601,7 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
     OBJECT_END temp_cap_style;
     int temp_dash_length;
@@ -1673,7 +1673,7 @@ gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
 
     if (object->type == OBJ_PIN && object->pin_type != type) {
       s_conn_remove_object_connections (object);
@@ -1754,7 +1754,7 @@ gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, in
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
 
     if (object->type == OBJ_TEXT) {
       geda_text_object_set_alignment (object, alignment);
@@ -1787,7 +1787,7 @@ gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int co
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
 
     if (object->type == OBJ_TEXT) {
       o_set_color (object, color);
@@ -1821,7 +1821,7 @@ gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
 
     if (object->type == OBJ_TEXT) {
       geda_text_object_set_angle (object, angle);
@@ -1855,7 +1855,7 @@ gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int siz
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
 
     if (object->type == OBJ_TEXT) {
       geda_text_object_set_size (object, size);
@@ -1891,7 +1891,7 @@ gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const
   iter = geda_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
-    OBJECT *object = (OBJECT*) iter->data;
+    LeptonObject *object = (LeptonObject*) iter->data;
 
     if (object->type == OBJ_TEXT) {
       o_text_set_string (object, string);

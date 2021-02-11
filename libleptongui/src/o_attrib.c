@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,9 +52,9 @@
  *  \todo get a better name
  */
 void o_attrib_add_selected(GschemToplevel *w_current, SELECTION *selection,
-                           OBJECT *selected)
+                           LeptonObject *selected)
 {
-  OBJECT *a_current;
+  LeptonObject *a_current;
   GList *a_iter;
   GList *selected_objects = NULL;
 
@@ -62,7 +62,7 @@ void o_attrib_add_selected(GschemToplevel *w_current, SELECTION *selection,
 
   for (a_iter = selected->attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    a_current = (OBJECT*) a_iter->data;
+    a_current = (LeptonObject*) a_iter->data;
 
     /* make sure object isn't selected already */
     if (!a_current->selected) {
@@ -88,13 +88,13 @@ void o_attrib_add_selected(GschemToplevel *w_current, SELECTION *selection,
  *
  *  \param [in]     w_current  The GschemToplevel object.
  *  \param [in,out] selection  The SELECTION list to remove from.
- *  \param [in]     object     The OBJECT whose invisible attributes to remove.
+ *  \param [in]     object     The LeptonObject whose invisible attributes to remove.
  */
 void o_attrib_deselect_invisible (GschemToplevel *w_current,
                                   SELECTION *selection,
-                                  OBJECT *selected)
+                                  LeptonObject *selected)
 {
-  OBJECT *a_current;
+  LeptonObject *a_current;
   GList *a_iter;
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
@@ -107,7 +107,7 @@ void o_attrib_deselect_invisible (GschemToplevel *w_current,
 
   for (a_iter = selected->attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    a_current = (OBJECT*) a_iter->data;
+    a_current = (LeptonObject*) a_iter->data;
 
     if (a_current->selected && !o_is_visible (a_current)) {
       o_selection_remove (selection, a_current);
@@ -124,13 +124,13 @@ void o_attrib_deselect_invisible (GschemToplevel *w_current,
  *
  *  \param [in]     w_current  The GschemToplevel object.
  *  \param [in,out] selection  The SELECTION list to add to.
- *  \param [in]     object     The OBJECT whose invisible attributes to add.
+ *  \param [in]     object     The LeptonObject whose invisible attributes to add.
  */
 void o_attrib_select_invisible (GschemToplevel *w_current,
                                   SELECTION *selection,
-                                  OBJECT *selected)
+                                  LeptonObject *selected)
 {
-  OBJECT *a_current;
+  LeptonObject *a_current;
   GList *a_iter;
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
@@ -143,7 +143,7 @@ void o_attrib_select_invisible (GschemToplevel *w_current,
 
   for (a_iter = selected->attribs; a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
-    a_current = (OBJECT*) a_iter->data;
+    a_current = (LeptonObject*) a_iter->data;
 
     if (!a_current->selected && !o_is_visible (a_current)) {
       o_selection_add (selection, a_current);
@@ -160,7 +160,7 @@ void o_attrib_select_invisible (GschemToplevel *w_current,
  *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] object     The attribute object.
  */
-void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object)
+void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
@@ -207,7 +207,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, OBJECT *object)
  *  \param [in] show_name_value  The new display flag for attribute.
  */
 void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
-                                     OBJECT *object, int show_name_value)
+                                     LeptonObject *object, int show_name_value)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
@@ -228,18 +228,18 @@ void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
  */
 /* This function no longer returns NULL, but will always return the new */
 /* text item */
-OBJECT *o_attrib_add_attrib(GschemToplevel *w_current,
-			    const char *text_string, int visibility,
-			    int show_name_value, OBJECT *object)
+LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current,
+                            const char *text_string, int visibility,
+                            int show_name_value, LeptonObject *object)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
   int world_x = - 1, world_y = -1;
   int align = LOWER_LEFT;
   int angle = 0;
   int color;
   int left, right, top, bottom;
-  OBJECT *o_current;
+  LeptonObject *o_current;
 
   color = DETACHED_ATTRIBUTE_COLOR;
 

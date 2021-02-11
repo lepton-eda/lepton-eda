@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -129,7 +129,7 @@ void o_arc_end1(GschemToplevel *w_current, int w_x, int w_y)
  *  \param [in] sweep_angle  Angle sweep in degrees.
  */
 void o_arc_end4(GschemToplevel *w_current, int radius,
-		int start_angle, int sweep_angle)
+                int start_angle, int sweep_angle)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -137,7 +137,7 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
   PAGE *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
 
   /* create, initialize and link the new arc object */
   new_obj = geda_arc_object_new (GRAPHIC_COLOR,

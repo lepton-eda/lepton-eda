@@ -5,6 +5,6 @@ typedef struct st_stretch STRETCH;
 
 struct st_stretch
 {
-  OBJECT *object;
+  LeptonObject *object;
   int whichone;
 };

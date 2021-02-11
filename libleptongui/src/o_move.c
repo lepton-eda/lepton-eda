@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -86,12 +86,12 @@ static void o_move_end_lowlevel_glist (GschemToplevel *w_current,
                                        GList *list,
                                        int diff_x, int diff_y)
 {
-  OBJECT *object;
+  LeptonObject *object;
   GList *iter;
 
   iter = list;
   while (iter != NULL) {
-    object = (OBJECT *)iter->data;
+    object = (LeptonObject *)iter->data;
     o_move_end_lowlevel (w_current, object, diff_x, diff_y);
     iter = g_list_next (iter);
   }
@@ -104,7 +104,7 @@ static void o_move_end_lowlevel_glist (GschemToplevel *w_current,
  *
  */
 void o_move_end_lowlevel (GschemToplevel *w_current,
-                         OBJECT *object,
+                         LeptonObject *object,
                          int diff_x, int diff_y)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
@@ -143,7 +143,7 @@ void o_move_end(GschemToplevel *w_current)
   g_return_if_fail (page != NULL);
 
   GList *s_current = NULL;
-  OBJECT *object;
+  LeptonObject *object;
   int diff_x, diff_y;
   GList *s_iter;
   GList *rubbernet_objects = NULL;
@@ -187,7 +187,7 @@ void o_move_end(GschemToplevel *w_current)
 
   while (s_current != NULL) {
 
-    object = (OBJECT *) s_current->data;
+    object = (LeptonObject *) s_current->data;
 
     if (object == NULL) {
       fprintf (stderr, "o_move_end: ERROR: Got an unexpected NULL\n");
@@ -292,7 +292,7 @@ void o_move_cancel (GschemToplevel *w_current)
 void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   GList *selection, *s_current;
-  OBJECT *object = NULL;
+  LeptonObject *object = NULL;
   gint object_x, object_y;
   SNAP_STATE snap_mode;
 
@@ -325,12 +325,12 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
     object = NULL;
 
   } else if (1 == g_list_length (selection)) {
-    object = (OBJECT *) selection->data;
+    object = (LeptonObject *) selection->data;
 
   } else {
 
     /* The object that things are supposed to be attached to */
-    OBJECT *attached = NULL;
+    LeptonObject *attached = NULL;
 
     /* Scan the selection, searching for an object that's not attached
      * to any other object.  As we go, also check whether everything
@@ -340,7 +340,7 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
          NULL != s_current;
          s_current = g_list_next (s_current)) {
 
-      OBJECT *candidate = (OBJECT *) s_current->data;
+      LeptonObject *candidate = (LeptonObject *) s_current->data;
 
       if (NULL == candidate->attached_to) {
 
@@ -415,7 +415,7 @@ void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
     for (s_iter = w_current->stretch_list;
          s_iter != NULL; s_iter = g_list_next (s_iter)) {
       STRETCH *s_current = (STRETCH*) s_iter->data;
-      OBJECT *object = s_current->object;
+      LeptonObject *object = s_current->object;
 
       switch (object->type) {
         case (OBJ_NET):
@@ -469,7 +469,7 @@ o_move_draw_rubber (GschemToplevel *w_current,
   for (s_iter = w_current->stretch_list;
        s_iter != NULL; s_iter = g_list_next (s_iter)) {
     STRETCH *s_current = (STRETCH*) s_iter->data;
-    OBJECT *object = s_current->object;
+    LeptonObject *object = s_current->object;
     int whichone = s_current->whichone;
 
     /* We can only stretch nets and buses */
@@ -502,7 +502,7 @@ o_move_draw_rubber (GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-int o_move_return_whichone(OBJECT * object, int x, int y)
+int o_move_return_whichone(LeptonObject * object, int x, int y)
 {
   if (object->line->x[0] == x && object->line->y[0] == y) {
     return (0);
@@ -522,11 +522,11 @@ int o_move_return_whichone(OBJECT * object, int x, int y)
  *  \par Function Description
  *
  */
-void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
+void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
 {
   GList *cl_current;
   CONN *c_current;
-  OBJECT *other;
+  LeptonObject *other;
   int whichone;
 
   g_return_if_fail (object != NULL);
@@ -571,7 +571,7 @@ void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
      /* (object->type == OBJ_NET &&
           other->type == OBJ_PIN && other->pin_type == PIN_TYPE_NET) */
 
-      OBJECT *new_net;
+      LeptonObject *new_net;
       /* other object is a pin, insert a net */
       new_net = geda_net_object_new (OBJ_NET, NET_COLOR,
                                      c_current->x, c_current->y,
@@ -616,8 +616,8 @@ void o_move_check_endpoint(GschemToplevel *w_current, OBJECT * object)
 void o_move_prep_rubberband(GschemToplevel *w_current)
 {
   GList *s_current;
-  OBJECT *object;
-  OBJECT *o_current;
+  LeptonObject *object;
+  LeptonObject *o_current;
   GList *iter;
 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
@@ -628,7 +628,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
 
   for (s_current = geda_list_get_glist (page->selection_list);
        s_current != NULL; s_current = g_list_next (s_current)) {
-    object = (OBJECT*) s_current->data;
+    object = (LeptonObject*) s_current->data;
 
     if (object == NULL)
       continue;
@@ -644,7 +644,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
       case (OBJ_PLACEHOLDER):
         for (iter = object->component->prim_objs;
              iter != NULL; iter = g_list_next (iter)) {
-          o_current = (OBJECT*) iter->data;
+          o_current = (LeptonObject*) iter->data;
 
           if (o_current->type == OBJ_PIN) {
             o_move_check_endpoint (w_current, o_current);
@@ -660,7 +660,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
  *  \par Function Description
  *
  */
-int o_move_zero_length(OBJECT * object)
+int o_move_zero_length(LeptonObject * object)
 {
 #if DEBUG
   printf("x: %d %d y: %d %d\n",
@@ -696,7 +696,7 @@ void o_move_end_rubberband (GschemToplevel *w_current,
   for (s_iter = w_current->stretch_list;
        s_iter != NULL; s_iter = s_iter_next) {
     STRETCH *s_current = (STRETCH*) s_iter->data;
-    OBJECT *object = s_current->object;
+    LeptonObject *object = s_current->object;
     int whichone = s_current->whichone;
 
     /* Store this now, since we may delete the current item */

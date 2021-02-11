@@ -59,7 +59,7 @@ void o_bus_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
