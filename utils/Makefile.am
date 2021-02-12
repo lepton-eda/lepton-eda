@@ -1,5 +1,4 @@
 SUBDIRS = \
-	scripts \
 	sch2pcb \
 	renum \
 	tragesym \
