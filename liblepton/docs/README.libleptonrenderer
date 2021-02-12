@@ -3,7 +3,7 @@
 ====================================
 
 Copyright (C) 1998-2017 gEDA Developers
-Copyright (C) 2017-2020 Lepton EDA Developers
+Copyright (C) 2017-2021 Lepton EDA Developers
 
 Cairo-based schematic and symbol renderer
 =========================================
@@ -68,9 +68,9 @@ coordinates match coordinates on the schematic or symbol page.
 The EdaRenderer class
 ---------------------
 
-The EdaRenderer class is the main interface to the library.  It uses
-information from liblepton OBJECT structures to draw various schematic
-elements, control grips, and cues.
+The EdaRenderer class is the main interface to the library.  It
+uses information from liblepton LeptonObject structures to draw
+various schematic elements, control grips, and cues.
 
 EdaRenderer is a GObject class, with several properties that control
 its behaviour:
@@ -116,22 +116,22 @@ A EdaRendererFlags value can include any of these flags:
 To actually draw things, EdaRenderer has three methods:
 
   eda_renderer_draw()
-      This does basic drawing of an OBJECT.
+      This does basic drawing of an LeptonObject.
 
   eda_renderer_draw_grips()
-      Draw grips at all of the control points of an OBJECT.
+      Draw grips at all of the control points of an LeptonObject.
 
   eda_renderer_draw_cues()
       Draw cues for an object (e.g. at the unconnected ends of pins and
       nets, and at junctions in nets and buses).
 
 Sometimes, it is useful to obtain the rendered bounding box of an
-OBJECT (for example, a text OBJECT's bounding box is determined by the
-font).
+LeptonObject (for example, a text LeptonObject's bounding box is
+determined by the font).
 
   eda_renderer_get_user_bounds()
       Obtain the user bounds (which should be the same as world
-      bounds) for an OBJECT.
+      bounds) for an LeptonObject.
 
 These four methods all can be overridden from subclasses.
 
