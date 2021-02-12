@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -370,7 +370,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
   gchar *attrib_value;
   const GList *o_iter;
   GList *a_iter;
-  OBJECT *a_current;
+  LeptonObject *a_current;
   gint old_visibility, old_show_name_value;
 
 
@@ -382,7 +382,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
 
   /* -----  Iterate through all objects found on page  ----- */
   for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    OBJECT *o_current = (OBJECT*) o_iter->data;
+    LeptonObject *o_current = (LeptonObject*) o_iter->data;
 
     g_debug ("s_table_add_toplevel_comp_items_to_comp_table: "
              "Examining o_current->name = %s\n",
@@ -406,7 +406,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
          * into cells in the table. */
         a_iter = o_current->attribs;
         while (a_iter != NULL) {
-          a_current = (OBJECT*) a_iter->data;
+          a_current = (LeptonObject*) a_iter->data;
           if (a_current->type == OBJ_TEXT
               && a_current->text != NULL) {  /* found an attribute */
             /* may need to check more thoroughly here. . . . */
@@ -477,10 +477,10 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
  *
  * \todo Why do the calling semantics of this function disagree with
  *       s_table_add_toplevel_pin_items_to_pin_table()?  That function
- *       takes a GList, this one takes a pointer to OBJECT.
+ *       takes a GList, this one takes a pointer to LeptonObject.
  */
-void s_table_add_toplevel_net_items_to_net_table(OBJECT *start_obj) {
-  OBJECT *o_current;
+void s_table_add_toplevel_net_items_to_net_table(LeptonObject *start_obj) {
+  LeptonObject *o_current;
   char *temp_netname;
   int row, col;
   char *attrib_text;
@@ -566,7 +566,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
   const GList *o_iter;
   GList *a_iter;
   GList *o_lower_iter;
-  OBJECT *pin_attrib;
+  LeptonObject *pin_attrib;
 
   if (verbose_mode) {
     printf (_("Start internal pin TABLE creation\n"));
@@ -576,7 +576,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
 
   /* -----  Iterate through all objects found on page  ----- */
   for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    OBJECT *o_current = (OBJECT*) o_iter->data;
+    LeptonObject *o_current = (LeptonObject*) o_iter->data;
 
     g_debug ("s_table_add_toplevel_pin_items_to_pin_table: "
              "Examining o_current->name = %s\n",
@@ -594,7 +594,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
         for (o_lower_iter = o_current->component->prim_objs;
              o_lower_iter != NULL;
              o_lower_iter = g_list_next (o_lower_iter)) {
-          OBJECT *o_lower_current = (OBJECT*) o_lower_iter->data;
+          LeptonObject *o_lower_current = (LeptonObject*) o_lower_iter->data;
 
           if (o_lower_current->type == OBJ_PIN) {
             /* -----  Found a pin.  First get its pinnumber.  then get attrib head and loop on attribs.  ----- */
@@ -607,7 +607,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
 
             a_iter = o_lower_current->attribs;
             while (a_iter != NULL) {
-              pin_attrib = (OBJECT*) a_iter->data;
+              pin_attrib = (LeptonObject*) a_iter->data;
               if (pin_attrib->type == OBJ_TEXT
                   && pin_attrib->text != NULL) {  /* found an attribute */
           attrib_text = g_strdup(geda_text_object_get_string (pin_attrib));

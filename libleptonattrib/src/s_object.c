@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,12 +20,13 @@
 
 /*------------------------------------------------------------------*/
 /*! \file
- * \brief Functions for manipulating OBJECTs.
+ * \brief Functions for manipulating LeptonObjects.
  *
- * This file holds functions involved in manipulating the OBJECT data
- * structure.  OBJECT is defined in libgeda.  An OBJECT is a graphical
- * primitive normally used in gschem.  Example OBJECTs: some text,
- * a component, a pin, a line, etc.
+ * This file holds functions involved in manipulating the
+ * LeptonObject data structure.  LeptonObject is defined in
+ * libgeda.  An LeptonObject is a graphical primitive normally
+ * used in gschem.  Example LeptonObjects: some text, a component, a
+ * pin, a line, etc.
  *
  * The functions herein are functions which I wrote as wrappers to the
  * fcns in libgeda.
@@ -58,7 +59,7 @@
 /* ===================  Public Functions  ====================== */
 
 /*------------------------------------------------------------------*/
-/*! \brief Add an attribute to an OBJECT
+/*! \brief Add an attribute to an LeptonObject
  *
  * This fcn adds a new attrib to o_current, when o_current is a
  * component.  It does it in the following
@@ -67,7 +68,7 @@
  * -# It gets the position info from o_current's refdes attrib and
  *    calls o_text_new() to add position info and name=value string
  *    to attrib_graphic.
- * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute OBJECT )
+ * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute LeptonObject )
  * \param toplevel TOPLEVEL structure
  * \param o_current pointer to object to add attribute to
  * \param new_attrib_name name of the attribute to add
@@ -77,7 +78,7 @@
  */
 void
 s_object_add_comp_attrib_to_object (TOPLEVEL *toplevel,
-                                    OBJECT *o_current,
+                                    LeptonObject *o_current,
                                     char *new_attrib_name,
                                     char *new_attrib_value,
                                     gint visibility,
@@ -107,7 +108,7 @@ s_object_add_comp_attrib_to_object (TOPLEVEL *toplevel,
  */
 void
 s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
-                                   OBJECT *o_current,
+                                   LeptonObject *o_current,
                                    char *new_attrib_name,
                                    char *new_attrib_value)
 {
@@ -116,7 +117,7 @@ s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
 
 
 /*------------------------------------------------------------------*/
-/*! \brief Add a new attribute to an pin OBJECT
+/*! \brief Add a new attribute to an pin LeptonObject
  *
  * Add a new attribute to o_current, when o_current is a
  * pin.  It does it in the following
@@ -125,7 +126,8 @@ s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
  * -# It gets the position info from o_current's refdes attrib and
  *    calls o_text_new() to add position info and name=value string
  *    to attrib_graphic.
- * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute OBJECT )
+ * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute
+      LeptonObject)
  * \param toplevel TOPLEVEL structure
  * \param o_current Pointer to pin object
  * \param new_attrib_name Name of attribute to add
@@ -135,7 +137,7 @@ s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
  */
 void
 s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
-                                   OBJECT *o_current,
+                                   LeptonObject *o_current,
                                    char *new_attrib_name,
                                    char *new_attrib_value)
 {
@@ -169,14 +171,14 @@ s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
  * \param show_name_value set visibility of attribute name and value
  */
 void
-s_object_replace_attrib_in_object(OBJECT *o_current,
+s_object_replace_attrib_in_object(LeptonObject *o_current,
                                   char *new_attrib_name,
                                   char *new_attrib_value,
                                   gint visibility,
                                   gint show_name_value)
 {
   GList *a_iter;
-  OBJECT *a_current;
+  LeptonObject *a_current;
   char *old_attrib_text;
   char *old_attrib_name;
   char *new_attrib_text;
@@ -184,7 +186,7 @@ s_object_replace_attrib_in_object(OBJECT *o_current,
 
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
-    a_current = (OBJECT*) a_iter->data;
+    a_current = (LeptonObject*) a_iter->data;
     if (a_current->type == OBJ_TEXT
         && a_current->text != NULL) {  /* found an attribute */
 
@@ -234,18 +236,18 @@ s_object_replace_attrib_in_object(OBJECT *o_current,
  */
 void
 s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
-                                  OBJECT *o_current,
+                                  LeptonObject *o_current,
                                   char *new_attrib_name)
 {
   GList *a_iter;
-  OBJECT *a_current;
-  OBJECT *attribute_object;
+  LeptonObject *a_current;
+  LeptonObject *attribute_object;
   char *old_attrib_text;
   char *old_attrib_name;
 
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
-    a_current = (OBJECT*) a_iter->data;
+    a_current = (LeptonObject*) a_iter->data;
     if (a_current->type == OBJ_TEXT
         && a_current->text != NULL) {  /* found an attribute */
 
@@ -286,7 +288,7 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
 /*------------------------------------------------------------------*/
 /*! \brief Attach attribute to object.
  *
- * Attach the name=value pair to the OBJECT "object". This function
+ * Attach the name=value pair to the LeptonObject "object". This function
  * was stolen from gschem/src/o_attrib.c:o_attrib_add_attrib and
  * hacked for gattrib.
  * \param toplevel TOPLEVEL to operate on
@@ -295,18 +297,18 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
  * \param show_name_value
  * \param o_current
  * \returns pointer to the object
- * \todo Does it need to return OBJECT?
+ * \todo Does it need to return LeptonObject?
  */
-OBJECT *
+LeptonObject *
 s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
                                       char *text_string,
                                       int visibility,
                                       int show_name_value,
-                                      OBJECT * o_current)
+                                      LeptonObject * o_current)
 {
   int world_x = -1, world_y = -1;
   int color;
-  OBJECT *new_obj;
+  LeptonObject *new_obj;
 
   g_return_val_if_fail ((o_current != NULL), NULL);
 
@@ -379,7 +381,7 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
  */
 void
 s_object_delete_text_object_in_object (TOPLEVEL *toplevel,
-                                       OBJECT * text_object)
+                                       LeptonObject * text_object)
 {
   s_page_remove (toplevel->page_current, text_object);
   s_delete_object (text_object);
@@ -394,7 +396,7 @@ s_object_delete_text_object_in_object (TOPLEVEL *toplevel,
  *
  * \returns 0 = valid symbol file, 1 = no symbol file found.
  */
-int s_object_has_sym_file(OBJECT *object)
+int s_object_has_sym_file(LeptonObject *object)
 {
   char *filename;
 
