@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,12 +87,12 @@ int s_attrib_name_in_list(STRING_LIST *name_value_list, char *name)
  *         it returns a refdes of the form
  *         refdes.slot. If no refdes is found, it returns NULL.
  */
-char *s_attrib_get_refdes(OBJECT *object)
+char *s_attrib_get_refdes(LeptonObject *object)
 {
   char *temp_uref;
   char *numslots_value;
   char *slot_value;
-  OBJECT *slot_text_object;
+  LeptonObject *slot_text_object;
 
   /*------ Try to get the refdes -----*/
   temp_uref = o_attrib_search_object_attribs_by_name (object, "refdes", 0);

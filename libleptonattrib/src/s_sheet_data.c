@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -123,7 +123,7 @@ SHEET_DATA *s_sheet_data_new()
  * Add to the master list of components refdeses by running through
  * the components and recording the comp refdeses it discovers. Then
  * it sorts them into alphabetical order.  Data struct being searched
- * is: OBJECT->attribs(->next. . .)->object->text->string
+ * is: LeptonObject->attribs(->next. . .)->object->text->string
  * \param obj_list pointer to the component list to be added.
  */
 void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
@@ -140,7 +140,7 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
   for (iter = obj_list;
        iter != NULL;
        iter = g_list_next (iter)) {
-    OBJECT *o_current = (OBJECT*) iter->data;
+    LeptonObject *o_current = (LeptonObject*) iter->data;
 
     g_debug ("s_sheet_data_add_master_comp_list_items: "
              "Examining o_current->name = %s\n", o_current->name);
@@ -189,7 +189,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
   char *attrib_name;
   const GList *o_iter;
   GList *a_iter;
-  OBJECT *a_current;
+  LeptonObject *a_current;
 
   g_debug ("==== Enter s_sheet_data_add_master_comp_attrib_list_items()\n");
 
@@ -199,7 +199,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
 
   /* -----  Iterate through all objects found on page looking for components (OBJ_COMPONENT) ----- */
   for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    OBJECT *o_current = (OBJECT*) o_iter->data;
+    LeptonObject *o_current = (LeptonObject*) o_iter->data;
 
     g_debug ("s_sheet_data_add_master_comp_attrib_list_items: "
              "Examining o_current->name = %s\n", o_current->name);
@@ -213,7 +213,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
         /*------ Iterate through all attribs found on component -----*/
         a_iter = o_current->attribs; /* This has a side effect.  Why? */
         while (a_iter != NULL) {
-          a_current = (OBJECT*) a_iter->data;
+          a_current = (LeptonObject*) a_iter->data;
           if (a_current->type == OBJ_TEXT
               && a_current->text != NULL) {  /* found an attribute */
             attrib_text = g_strdup(geda_text_object_get_string (a_current));
@@ -307,7 +307,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
   for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    OBJECT *o_current = (OBJECT*) o_iter->data;
+    LeptonObject *o_current = (LeptonObject*) o_iter->data;
 
     g_debug ("s_sheet_data_add_master_pin_list_items: "
              "Examining o_current->name = %s\n", o_current->name);
@@ -320,7 +320,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
         for (o_lower_iter = o_current->component->prim_objs;
              o_lower_iter != NULL;
              o_lower_iter = g_list_next (o_lower_iter)) {
-          OBJECT *o_lower_current = (OBJECT*) o_lower_iter->data;
+          LeptonObject *o_lower_current = (LeptonObject*) o_lower_iter->data;
           g_debug ("s_sheet_data_add_master_pin_list_items: "
                    "Examining object name %s\n",
                    o_lower_current->name);
@@ -382,7 +382,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
   char *attrib_value;
   const GList *o_iter;
   GList *o_lower_iter, *a_iter;
-  OBJECT *pin_attrib;
+  LeptonObject *pin_attrib;
 
   g_debug ("==== Enter s_sheet_data_add_master_pin_attrib_list_items()\n");
 
@@ -392,7 +392,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
 
   /* -----  Iterate through all objects found on page looking for components  ----- */
   for (o_iter = obj_list; o_iter != NULL; o_iter = g_list_next (o_iter)) {
-    OBJECT *o_current = (OBJECT*) o_iter->data;
+    LeptonObject *o_current = (LeptonObject*) o_iter->data;
 
     g_debug ("s_sheet_data_add_master_pin_attrib_list_items: "
              "Examining o_current->name = %s\n",
@@ -406,7 +406,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
           for (o_lower_iter = o_current->component->prim_objs;
                o_lower_iter != NULL;
                o_lower_iter = g_list_next (o_lower_iter)) {
-            OBJECT *o_lower_current = (OBJECT*) o_lower_iter->data;
+            LeptonObject *o_lower_current = (LeptonObject*) o_lower_iter->data;
             g_debug ("s_sheet_data_add_master_pin_attrib_list_items: "
                      "Examining component refdes = %s\n",
                      temp_uref);
@@ -414,7 +414,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
               /* -----  Found a pin.  Now get attrib head and loop on attribs.  ----- */
               a_iter = o_lower_current->attribs;
               while (a_iter != NULL) {
-                pin_attrib = (OBJECT*) a_iter->data;
+                pin_attrib = (LeptonObject*) a_iter->data;
                 if (pin_attrib->type == OBJ_TEXT
                     && pin_attrib->text != NULL) {  /* found an attribute */
                   attrib_text = g_strdup(geda_text_object_get_string (pin_attrib));

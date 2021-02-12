@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2014 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -107,7 +107,7 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
     for (o_iter = s_page_objects (p_current);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
-      OBJECT *o_current = (OBJECT*) o_iter->data;
+      LeptonObject *o_current = (LeptonObject*) o_iter->data;
 
       /* --- look for object, and verify that it has a symbol file attached. ---- */
       if (o_current->type == OBJ_PLACEHOLDER) {
@@ -413,7 +413,7 @@ void s_toplevel_delete_attrib_col() {
 /*! \brief Copy SHEET_DATA content to TOP_LEVEL
  *
  * This function
- * loops through all objects on (PAGE page)->(OBJECT *start_obj).
+ * loops through all objects on (PAGE page)->(LeptonObject *start_obj).
  * It takes the updated SHEET_DATA->TABLE data and then updates the
  * objects with the new attribs & attrib values.
  * For each component, it updates the attached
@@ -450,7 +450,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
   for (o_iter = g_list_last (copy_list);
        o_iter != NULL;
        o_iter = g_list_previous (o_iter)) {
-    OBJECT *o_current = (OBJECT*) o_iter->data;
+    LeptonObject *o_current = (LeptonObject*) o_iter->data;
 
     /* ------- Object is a component.  Handle component attributes. ------- */
     if (o_current->type == OBJ_COMPONENT) {    /* Note that OBJ_COMPONENT = component + attribs */
@@ -510,7 +510,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
   for (o_iter = g_list_last (copy_list);
        o_iter != NULL;
        o_iter = g_list_previous (o_iter)) {
-    OBJECT *o_current = (OBJECT*) o_iter->data;
+    LeptonObject *o_current = (LeptonObject*) o_iter->data;
 
     /* ------- Object is a component.  Handle pins by looking ------ */
     /* ------- for all pins attached to a component.        ------ */
@@ -530,7 +530,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
         for (prim_iter = o_current->component->prim_objs;
              prim_iter != NULL;
              prim_iter = g_list_next (prim_iter)) {
-          OBJECT *comp_prim_obj = (OBJECT*) prim_iter->data;
+          LeptonObject *comp_prim_obj = (LeptonObject*) prim_iter->data;
 
           if (comp_prim_obj->type == OBJ_PIN) {
             new_pin_attrib_list =
@@ -649,7 +649,7 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
 void
 s_toplevel_update_component_attribs_in_toplevel (
                                         TOPLEVEL *toplevel,
-                                        OBJECT *o_current,
+                                        LeptonObject *o_current,
                                         STRING_LIST *new_comp_attrib_list)
 {
   STRING_LIST *local_list;
@@ -661,7 +661,7 @@ s_toplevel_update_component_attribs_in_toplevel (
   char *old_attrib_value;
   gchar *refdes;
   GList *a_iter;
-  OBJECT *a_current;
+  LeptonObject *a_current;
   int count = 0;  /* This is to fake out a function called later */
   gint row, col;
   gint visibility = 0;
@@ -685,7 +685,7 @@ s_toplevel_update_component_attribs_in_toplevel (
   *  the loop below when updating attributes.  */
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
-    a_current = (OBJECT*) a_iter->data;
+    a_current = (LeptonObject*) a_iter->data;
     if (a_current->type == OBJ_TEXT
         && a_current->text != NULL) {  /* found a name=value attribute pair. */
       /* may need to check more thoroughly here. . . . */
@@ -859,7 +859,7 @@ STRING_LIST *s_toplevel_get_net_attribs_in_sheet(char *netname)
 /*!
  * \todo Function doesn't do anything - candidate for removal?
  */
-void s_toplevel_update_net_attribs_in_toplevel(OBJECT *o_current,
+void s_toplevel_update_net_attribs_in_toplevel(LeptonObject *o_current,
                                    STRING_LIST *new_net_attrib_list)
 {
   /* must be filled in */
@@ -870,9 +870,10 @@ void s_toplevel_update_net_attribs_in_toplevel(OBJECT *o_current,
 /*------------------------------------------------------------------*/
 /*! \brief Get pin attributes
  *
- * This function takes a pointer to the OBJECT pin, and returns a list
- * of attribs found attached to the pin.  The returned list is a
- * STRING_LIST where the ->data holds a name=value string.
+ * This function takes a pointer to the LeptonObject pin, and
+ * returns a list of attribs found attached to the pin.  The
+ * returned list is a STRING_LIST where the ->data holds a
+ * name=value string.
  * The algorithm is as follows:
  * -# Form refdes:pinnumber label for this pin.
  * -# Get row number of this refdes:pinnumber
@@ -884,7 +885,7 @@ void s_toplevel_update_net_attribs_in_toplevel(OBJECT *o_current,
  * \param pin Pin object
  * \returns name=value pair as a STRING_LIST
  */
-STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
+STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, LeptonObject *pin)
 {
   STRING_LIST *new_attrib_list;
   STRING_LIST *local_attrib_list;
@@ -980,7 +981,7 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, OBJECT *pin)
 void
 s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
                                            char *refdes,
-                                           OBJECT *o_pin,
+                                           LeptonObject *o_pin,
                                            STRING_LIST *new_pin_attrib_list)
 {
   STRING_LIST *local_list;
