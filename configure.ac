@@ -288,7 +288,6 @@ AC_CONFIG_FILES([Makefile
                  utils/netlist/examples/analog/voltage_doubler/Makefile
 
                  utils/Makefile
-                 utils/scripts/Makefile
 
                  utils/symfix/Makefile
                  utils/symfix/docs/Makefile
