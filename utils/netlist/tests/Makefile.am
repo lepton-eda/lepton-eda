@@ -55,7 +55,7 @@ input_files = \
 	drc2/duplicated_slot.sch \
 	drc2/gnd-with-nc-directive.sch \
 	drc2/gnd-without-nc-directive.sch \
-	drc2/net-not-driven-with-dont-check-if-driven-directive.sch \
+	drc2/nndwdcidd.sch \
 	drc2/net-not-driven-with-nc-directive.sch \
 	drc2/net-not-driven.sch \
 	drc2/net-with-only-one-connection.sch \
@@ -149,7 +149,7 @@ TESTS = stack_1-geda.out \
 	drc2/gnd-with-nc-directive-drc2.out \
 	drc2/gnd-without-nc-directive-drc2.out \
 	drc2/net-not-driven-drc2.out \
-	drc2/net-not-driven-with-dont-check-if-driven-directive-drc2.out \
+	drc2/nndwdcidd-drc2.out \
 	drc2/net-not-driven-with-nc-directive-drc2.out \
 	drc2/net-with-only-one-connection-drc2.out \
 	drc2/numslots-is-not-an-integer-drc2.out \
