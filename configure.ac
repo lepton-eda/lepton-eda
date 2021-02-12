@@ -267,25 +267,25 @@ AC_CONFIG_FILES([Makefile
                  utils/symcheck/docs/Makefile
                  utils/symcheck/Makefile
 
-                 netlist/Makefile
-                 netlist/scheme/Makefile
-                 netlist/examples/Makefile
-                 netlist/tests/Makefile
-                 netlist/docs/Makefile
-                 netlist/docs/vams/Makefile
-                 netlist/examples/spice-noqsi/Makefile
-                 netlist/examples/vams/Makefile
-                 netlist/examples/vams/vhdl/Makefile
-                 netlist/examples/vams/vhdl/basic-vhdl/Makefile
-                 netlist/examples/vams/vhdl/new-vhdl/Makefile
-                 netlist/examples/switcap/Makefile
-                 netlist/examples/verilog/Makefile
-                 netlist/examples/verilog/T_FF_example/Makefile
-                 netlist/examples/verilog/T_FF_example/verilog_modules/Makefile
-                 netlist/examples/analog/Makefile
-                 netlist/examples/analog/varactor_osc/Makefile
-                 netlist/examples/analog/bandpass/Makefile
-                 netlist/examples/analog/voltage_doubler/Makefile
+                 utils/netlist/Makefile
+                 utils/netlist/scheme/Makefile
+                 utils/netlist/examples/Makefile
+                 utils/netlist/tests/Makefile
+                 utils/netlist/docs/Makefile
+                 utils/netlist/docs/vams/Makefile
+                 utils/netlist/examples/spice-noqsi/Makefile
+                 utils/netlist/examples/vams/Makefile
+                 utils/netlist/examples/vams/vhdl/Makefile
+                 utils/netlist/examples/vams/vhdl/basic-vhdl/Makefile
+                 utils/netlist/examples/vams/vhdl/new-vhdl/Makefile
+                 utils/netlist/examples/switcap/Makefile
+                 utils/netlist/examples/verilog/Makefile
+                 utils/netlist/examples/verilog/T_FF_example/Makefile
+                 utils/netlist/examples/verilog/T_FF_example/verilog_modules/Makefile
+                 utils/netlist/examples/analog/Makefile
+                 utils/netlist/examples/analog/varactor_osc/Makefile
+                 utils/netlist/examples/analog/bandpass/Makefile
+                 utils/netlist/examples/analog/voltage_doubler/Makefile
 
                  utils/Makefile
                  utils/scripts/Makefile

@@ -11,7 +11,8 @@ SUBDIRS = \
 	schdiff \
 	upcfg \
 	symcheck \
-	cli
+	cli \
+	netlist
 
 EXTRA_DIST = \
 	AUTHORS \
