@@ -2,7 +2,7 @@
  * Lepton EDA command-line utility
  * Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2014-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -468,9 +468,9 @@ export_draw_page (PAGE *page)
   /* Draw objects & cues */
   contents = s_page_objects (page);
   for (iter = (GList *) contents; iter != NULL; iter = g_list_next (iter))
-    eda_renderer_draw (renderer, (OBJECT *) iter->data);
+    eda_renderer_draw (renderer, (LeptonObject *) iter->data);
   for (iter = (GList *) contents; iter != NULL; iter = g_list_next (iter))
-    eda_renderer_draw_cues (renderer, (OBJECT *) iter->data);
+    eda_renderer_draw_cues (renderer, (LeptonObject *) iter->data);
 }
 
 static void
