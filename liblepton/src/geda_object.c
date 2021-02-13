@@ -86,7 +86,7 @@ lepton_object_get_color (const LeptonObject *object)
  *  \return the color index the draw the object
  */
 gint
-geda_object_get_drawing_color (const LeptonObject *object)
+lepton_object_get_drawing_color (const LeptonObject *object)
 {
   gint color;
 
