@@ -27,7 +27,7 @@ check_construction ()
     g_assert_cmpint (y0, ==, geda_line_object_get_y0 (object0));
     g_assert_cmpint (x1, ==, geda_line_object_get_x1 (object0));
     g_assert_cmpint (y1, ==, geda_line_object_get_y1 (object0));
-    g_assert_cmpint (color, ==, geda_object_get_color (object0));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object0));
 
     LeptonObject *object1 = geda_line_object_copy (object0);
 
@@ -41,7 +41,7 @@ check_construction ()
     g_assert_cmpint (y0, ==, geda_line_object_get_y0 (object1));
     g_assert_cmpint (x1, ==, geda_line_object_get_x1 (object1));
     g_assert_cmpint (y1, ==, geda_line_object_get_y1 (object1));
-    g_assert_cmpint (color, ==, geda_object_get_color (object1));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object1));
 
     s_delete_object (object1);
   }
@@ -87,7 +87,7 @@ check_accessors ()
     g_assert_cmpint (y0, ==, geda_line_object_get_y0 (object0));
     g_assert_cmpint (x1, ==, geda_line_object_get_x1 (object0));
     g_assert_cmpint (y1, ==, geda_line_object_get_y1 (object0));
-    g_assert_cmpint (color, ==, geda_object_get_color (object0));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object0));
 
     s_delete_object (object0);
   }
@@ -136,7 +136,7 @@ check_serialization ()
     g_assert_cmpint (y0, ==, geda_line_object_get_y0 (object1));
     g_assert_cmpint (x1, ==, geda_line_object_get_x1 (object1));
     g_assert_cmpint (y1, ==, geda_line_object_get_y1 (object1));
-    g_assert_cmpint (color, ==, geda_object_get_color (object1));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object1));
 
     gchar *buffer1 = geda_line_object_to_buffer (object1);
     s_delete_object (object1);

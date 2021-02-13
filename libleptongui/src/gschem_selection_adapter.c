@@ -655,7 +655,7 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
         (object->type == OBJ_TEXT)   ||
         (object->type == OBJ_NET)    ||
         (object->type == OBJ_BUS))) {
-      color = geda_object_get_color (object);
+      color = lepton_object_get_color (object);
       break;
     }
   }
@@ -671,7 +671,7 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
         (object->type == OBJ_LINE)   ||
         (object->type == OBJ_PATH)   ||
         (object->type == OBJ_TEXT))) {
-      if (color != geda_object_get_color (object)) {
+      if (color != lepton_object_get_color (object)) {
         color = MULTIPLE_VALUES;
         break;
       }
@@ -795,7 +795,7 @@ gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
     LeptonObject* object = (LeptonObject *) iter->data;
     iter = g_list_next (iter);
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
-      color = geda_object_get_color (object);
+      color = lepton_object_get_color (object);
       break;
     }
   }
@@ -805,7 +805,7 @@ gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject* object = (LeptonObject *) iter->data;
     if ((object != NULL) && (object->type == OBJ_TEXT)) {
-      if (color != geda_object_get_color (object)) {
+      if (color != lepton_object_get_color (object)) {
         color = MULTIPLE_VALUES;
         break;
       }

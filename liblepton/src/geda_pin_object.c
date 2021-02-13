@@ -404,7 +404,7 @@ geda_pin_object_to_buffer (const LeptonObject *object)
                           geda_pin_object_get_y0 (object),
                           geda_pin_object_get_x1 (object),
                           geda_pin_object_get_y1 (object),
-                          geda_object_get_color (object),
+                          lepton_object_get_color (object),
                           object->pin_type,
                           object->whichend);
 }

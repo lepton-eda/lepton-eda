@@ -111,7 +111,7 @@ geda_object_calculate_visible_bounds (LeptonObject *o_current,
                                       gint *rbottom);
 
 gint
-geda_object_get_color (const LeptonObject *object);
+lepton_object_get_color (const LeptonObject *object);
 
 gint
 geda_object_get_drawing_color (const LeptonObject *object);

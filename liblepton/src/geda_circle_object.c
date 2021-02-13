@@ -420,7 +420,7 @@ geda_circle_object_to_buffer (const LeptonObject *object)
                           geda_circle_object_get_center_x (object),
                           geda_circle_object_get_center_y (object),
                           geda_circle_object_get_radius (object),
-                          geda_object_get_color (object),
+                          lepton_object_get_color (object),
                           object->line_width,
                           object->line_end,
                           object->line_type,

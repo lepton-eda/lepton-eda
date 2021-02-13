@@ -422,7 +422,7 @@ geda_box_object_to_buffer (const LeptonObject *object)
 
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
                         object->type,
-                        x1, y1, width, height, geda_object_get_color (object),
+                        x1, y1, width, height, lepton_object_get_color (object),
                         box_width, box_end, box_type, box_length, box_space,
                         box_fill,
                         fill_width, angle1, pitch1, angle2, pitch2);

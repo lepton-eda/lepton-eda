@@ -468,7 +468,7 @@ geda_line_object_to_buffer (const LeptonObject *object)
                           geda_line_object_get_y0 (object),
                           geda_line_object_get_x1 (object),
                           geda_line_object_get_y1 (object),
-                          geda_object_get_color (object),
+                          lepton_object_get_color (object),
                           object->line_width,
                           object->line_end,
                           object->line_type,
