@@ -78,7 +78,7 @@ lepton_object_get_color (const LeptonObject *object)
  *
  *  If this function fails, it returns the default color ID.
  *
- *  The output of this funtion is ependent on other variables than just the
+ *  The output of this funtion is dependent on other variables than just the
  *  object color. If the object is locked, it will return the LOCK_COLOR.
  *  This value should not be used for saving or editing the object.
  *
