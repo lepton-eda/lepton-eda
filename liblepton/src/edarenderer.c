@@ -519,7 +519,7 @@ eda_renderer_default_draw (EdaRenderer *renderer, LeptonObject *object)
     g_return_if_reached ();
   }
 
-  eda_renderer_set_color (renderer, geda_object_get_drawing_color (object));
+  eda_renderer_set_color (renderer, lepton_object_get_drawing_color (object));
   draw_func (renderer, object);
 }
 
@@ -553,7 +553,7 @@ eda_renderer_is_drawable_color (EdaRenderer *renderer, int color,
 static int
 eda_renderer_is_drawable (EdaRenderer *renderer, LeptonObject *object)
 {
-  int color = geda_object_get_drawing_color (object);
+  int color = lepton_object_get_drawing_color (object);
 
   /* Always attempt to draw component objects */
   if ((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)) {

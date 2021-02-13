@@ -114,7 +114,7 @@ gint
 lepton_object_get_color (const LeptonObject *object);
 
 gint
-geda_object_get_drawing_color (const LeptonObject *object);
+lepton_object_get_drawing_color (const LeptonObject *object);
 
 gboolean
 geda_object_get_position (const LeptonObject *object, gint *x, gint *y);
