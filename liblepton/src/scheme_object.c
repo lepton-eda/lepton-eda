@@ -691,7 +691,7 @@ SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
               SCM_ARG2, s_set_object_color_x);
 
   LeptonObject *obj = edascm_to_object (obj_s);
-  o_set_color (obj, scm_to_int (color_s));
+  lepton_object_set_color (obj, scm_to_int (color_s));
 
   o_page_changed (obj);
 
@@ -950,7 +950,7 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   default:
     return line_s;
   }
-  o_set_color (obj, scm_to_int (color_s));
+  lepton_object_set_color (obj, scm_to_int (color_s));
 
   /* We may need to update connectivity. */
   PAGE *page = o_get_page (obj);
@@ -1205,7 +1205,7 @@ SCM_DEFINE (set_box_x, "%set-box!", 6, 0, 0,
   geda_box_object_modify_all (obj,
                               scm_to_int (x1_s), scm_to_int (y1_s),
                               scm_to_int (x2_s), scm_to_int (y2_s));
-  o_set_color (obj, scm_to_int (color_s));
+  lepton_object_set_color (obj, scm_to_int (color_s));
 
   o_page_changed (obj);
 
@@ -1301,7 +1301,7 @@ SCM_DEFINE (set_circle_x, "%set-circle!", 5, 0, 0,
   geda_circle_object_modify (obj, scm_to_int(x_s), scm_to_int(y_s),
                              CIRCLE_CENTER);
   geda_circle_object_modify (obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
-  o_set_color (obj, scm_to_int (color_s));
+  lepton_object_set_color (obj, scm_to_int (color_s));
 
   o_page_changed (obj);
 
@@ -1405,7 +1405,7 @@ SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
   geda_arc_object_modify (obj, scm_to_int(r_s), 0, ARC_RADIUS);
   geda_arc_object_modify (obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
   geda_arc_object_modify (obj, scm_to_int(end_angle_s), 0, ARC_SWEEP_ANGLE);
-  o_set_color (obj, scm_to_int (color_s));
+  lepton_object_set_color (obj, scm_to_int (color_s));
 
   o_page_changed (obj);
 
@@ -1598,7 +1598,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   o_text_recreate (obj);
 
   /* Color */
-  o_set_color (obj, scm_to_int (color_s));
+  lepton_object_set_color (obj, scm_to_int (color_s));
 
   o_page_changed (obj);
 

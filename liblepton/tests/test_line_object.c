@@ -81,7 +81,7 @@ check_accessors ()
     geda_line_object_set_y0 (object0, y0);
     geda_line_object_set_x1 (object0, x1);
     geda_line_object_set_y1 (object0, y1);
-    o_set_color (object0, color);
+    lepton_object_set_color (object0, color);
 
     g_assert_cmpint (x0, ==, geda_line_object_get_x0 (object0));
     g_assert_cmpint (y0, ==, geda_line_object_get_y0 (object0));
