@@ -50,7 +50,7 @@ check_construction ()
     g_assert_cmpint (alignment, ==, geda_text_object_get_alignment (object0));
     g_assert_cmpint (angle, ==, geda_text_object_get_angle (object0));
     g_assert_cmpint (size, ==, geda_text_object_get_size (object0));
-    g_assert_cmpint (color, ==, geda_object_get_color (object0));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object0));
     g_assert_cmpint (visible, ==, geda_object_get_visible (object0));
     g_assert_cmpstr (string, ==, geda_text_object_get_string (object0));
 
@@ -67,7 +67,7 @@ check_construction ()
     g_assert_cmpint (alignment, ==, geda_text_object_get_alignment (object1));
     g_assert_cmpint (angle, ==, geda_text_object_get_angle (object1));
     g_assert_cmpint (size, ==, geda_text_object_get_size (object1));
-    g_assert_cmpint (color, ==, geda_object_get_color (object1));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object1));
     g_assert_cmpint (visible, ==, geda_object_get_visible (object1));
     g_assert_cmpstr (string, ==, geda_text_object_get_string (object1));
 
@@ -131,7 +131,7 @@ check_accessors ()
     g_assert_cmpint (alignment, ==, geda_text_object_get_alignment (object0));
     g_assert_cmpint (angle, ==, geda_text_object_get_angle (object0));
     g_assert_cmpint (size, ==, geda_text_object_get_size (object0));
-    g_assert_cmpint (color, ==, geda_object_get_color (object0));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object0));
     g_assert_cmpint (visible, ==, geda_object_get_visible (object0));
     g_assert_cmpstr (string, ==, geda_text_object_get_string (object0));
 
@@ -203,7 +203,7 @@ check_serialization ()
     g_assert_cmpint (alignment, ==, geda_text_object_get_alignment (object1));
     g_assert_cmpint (angle, ==, geda_text_object_get_angle (object1));
     g_assert_cmpint (size, ==, geda_text_object_get_size (object1));
-    g_assert_cmpint (color, ==, geda_object_get_color (object1));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object1));
     g_assert_cmpint (visible, ==, geda_object_get_visible (object1));
     g_assert_cmpstr (string, ==, geda_text_object_get_string (object1));
 

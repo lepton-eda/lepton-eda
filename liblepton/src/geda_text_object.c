@@ -637,7 +637,7 @@ geda_text_object_to_buffer (const LeptonObject *object)
                           OBJ_TEXT,
                           geda_text_object_get_x (object),
                           geda_text_object_get_y (object),
-                          geda_object_get_color (object),
+                          lepton_object_get_color (object),
                           geda_text_object_get_size (object),
                           geda_object_get_visible (object),
                           object->show_name_value,

@@ -390,7 +390,7 @@ geda_bus_object_to_buffer (const LeptonObject *object)
                           geda_bus_object_get_y0 (object),
                           geda_bus_object_get_x1 (object),
                           geda_bus_object_get_y1 (object),
-                          geda_object_get_color (object),
+                          lepton_object_get_color (object),
                           geda_bus_object_get_ripper_direction (object));
 }
 

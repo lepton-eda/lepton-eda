@@ -66,7 +66,7 @@ int global_sid=0;
  *  \return the color index of the object
  */
 gint
-geda_object_get_color (const LeptonObject *object)
+lepton_object_get_color (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, default_color_id());
   g_return_val_if_fail (color_id_valid (object->color), default_color_id());

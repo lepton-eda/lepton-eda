@@ -482,7 +482,7 @@ geda_arc_object_to_buffer (const LeptonObject *object)
                           geda_arc_object_get_radius (object),
                           geda_arc_object_get_start_angle (object),
                           geda_arc_object_get_sweep_angle (object),
-                          geda_object_get_color (object),
+                          lepton_object_get_color (object),
                           object->line_width,
                           object->line_end,
                           object->line_type,

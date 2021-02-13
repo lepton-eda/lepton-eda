@@ -27,7 +27,7 @@ check_construction ()
 
     g_assert_cmpint (center_x, ==, geda_arc_object_get_center_x (object0));
     g_assert_cmpint (center_y, ==, geda_arc_object_get_center_y (object0));
-    g_assert_cmpint (color, ==, geda_object_get_color (object0));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object0));
     g_assert_cmpint (radius, ==, geda_arc_object_get_radius (object0));
     g_assert_cmpint (start_angle, ==, geda_arc_object_get_start_angle (object0));
     g_assert_cmpint (sweep_angle, ==, geda_arc_object_get_sweep_angle (object0));
@@ -42,7 +42,7 @@ check_construction ()
 
     g_assert_cmpint (center_x, ==, geda_arc_object_get_center_x (object1));
     g_assert_cmpint (center_y, ==, geda_arc_object_get_center_y (object1));
-    g_assert_cmpint (color, ==, geda_object_get_color (object1));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object1));
     g_assert_cmpint (radius, ==, geda_arc_object_get_radius (object1));
     g_assert_cmpint (start_angle, ==, geda_arc_object_get_start_angle (object1));
     g_assert_cmpint (sweep_angle, ==, geda_arc_object_get_sweep_angle (object1));
@@ -93,7 +93,7 @@ check_accessors ()
 
     g_assert_cmpint (center_x, ==, geda_arc_object_get_center_x (object0));
     g_assert_cmpint (center_y, ==, geda_arc_object_get_center_y (object0));
-    g_assert_cmpint (color, ==, geda_object_get_color (object0));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object0));
     g_assert_cmpint (radius, ==, geda_arc_object_get_radius (object0));
     g_assert_cmpint (start_angle, ==, geda_arc_object_get_start_angle (object0));
     g_assert_cmpint (sweep_angle, ==, geda_arc_object_get_sweep_angle (object0));
@@ -145,7 +145,7 @@ check_serialization ()
 
     g_assert_cmpint (center_x, ==, geda_arc_object_get_center_x (object1));
     g_assert_cmpint (center_y, ==, geda_arc_object_get_center_y (object1));
-    g_assert_cmpint (color, ==, geda_object_get_color (object1));
+    g_assert_cmpint (color, ==, lepton_object_get_color (object1));
     g_assert_cmpint (radius, ==, geda_arc_object_get_radius (object1));
     g_assert_cmpint (start_angle, ==, geda_arc_object_get_start_angle (object1));
     g_assert_cmpint (sweep_angle, ==, geda_arc_object_get_sweep_angle (object1));

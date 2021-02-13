@@ -1007,7 +1007,7 @@ o_picture_copy (LeptonObject *object)
   picture = (PICTURE*) g_malloc (sizeof(PICTURE));
   new_node->picture = picture;
 
-  new_node->color = geda_object_get_color (object);
+  new_node->color = lepton_object_get_color (object);
   new_node->selectable = geda_object_get_selectable (object);
 
   /* describe the picture with its upper left and lower right corner */
