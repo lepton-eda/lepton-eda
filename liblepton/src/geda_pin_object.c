@@ -296,7 +296,7 @@ geda_pin_object_new (int color,
   LeptonObject *new_node;
 
   new_node = s_basic_new_object(OBJ_PIN, "pin");
-  new_node->color = color;
+  lepton_object_set_color (new_node, color);
 
   new_node->line = geda_line_new ();
 
@@ -447,7 +447,7 @@ geda_pin_object_copy (LeptonObject *o_current)
   g_return_val_if_fail (o_current->line != NULL, NULL);
   g_return_val_if_fail (o_current->type == OBJ_PIN, NULL);
 
-  new_obj = geda_pin_object_new (o_current->color,
+  new_obj = geda_pin_object_new (lepton_object_get_color (o_current),
                                  o_current->line->x[0],
                                  o_current->line->y[0],
                                  o_current->line->x[1],

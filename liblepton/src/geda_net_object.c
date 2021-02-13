@@ -258,7 +258,7 @@ geda_net_object_new (char type,
   LeptonObject *new_node;
 
   new_node = s_basic_new_object(type, "net");
-  new_node->color = color;
+  lepton_object_set_color (new_node, color);
 
   new_node->line = geda_line_new ();
 
@@ -380,7 +380,7 @@ geda_net_object_copy (LeptonObject *o_current)
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
   new_obj = geda_net_object_new (OBJ_NET,
-                                 o_current->color,
+                                 lepton_object_get_color (o_current),
                                  o_current->line->x[0],
                                  o_current->line->y[0],
                                  o_current->line->x[1],

@@ -65,7 +65,7 @@ geda_box_object_new (char type,
 
   /* create the object */
   new_node = s_basic_new_object(type, "box");
-  new_node->color = color;
+  lepton_object_set_color (new_node, color);
 
   box = geda_box_new ();
   new_node->box   = box;
@@ -105,7 +105,9 @@ geda_box_object_copy (LeptonObject *o_current)
 
   /* A new box object is created with #geda_box_object_new().
    * Values for its fields are default and need to be modified. */
-  new_obj = geda_box_object_new (OBJ_BOX, o_current->color, 0, 0, 0, 0);
+  new_obj = geda_box_object_new (OBJ_BOX,
+                                 lepton_object_get_color (o_current),
+                                 0, 0, 0, 0);
 
   /*
    * The dimensions of the new box are set with the ones of the original box.

@@ -86,7 +86,7 @@ geda_path_object_new_take_path (char type,
 
   /* create the object */
   new_node        = s_basic_new_object (type, "path");
-  new_node->color = color;
+  lepton_object_set_color (new_node, color);
 
   new_node->path  = path_data;
 
@@ -122,7 +122,9 @@ geda_path_object_copy (LeptonObject *o_current)
   char *path_string;
 
   path_string = s_path_string_from_path (o_current->path);
-  new_obj = geda_path_object_new (OBJ_PATH, o_current->color, path_string);
+  new_obj = geda_path_object_new (OBJ_PATH,
+                                  lepton_object_get_color (o_current),
+                                  path_string);
   g_free (path_string);
 
   /* copy the path type and filling options */
