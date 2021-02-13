@@ -840,8 +840,8 @@ geda_object_shortest_distance_full (LeptonObject *object,
  *  \param [in] color     The new color.
  */
 void
-o_set_color (LeptonObject *object,
-             int color)
+lepton_object_set_color (LeptonObject *object,
+                         int color)
 {
   g_return_if_fail (object != NULL);
 

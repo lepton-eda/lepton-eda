@@ -267,7 +267,7 @@ geda_object_list_set_color (const GList *objects,
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*)iter->data;
 
-    o_set_color (object, color);
+    lepton_object_set_color (object, color);
     iter = g_list_next (iter);
   }
 }

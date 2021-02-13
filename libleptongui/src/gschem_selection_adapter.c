@@ -1790,7 +1790,7 @@ gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int co
     LeptonObject *object = (LeptonObject*) iter->data;
 
     if (object->type == OBJ_TEXT) {
-      o_set_color (object, color);
+      lepton_object_set_color (object, color);
     }
 
     iter = g_list_next (iter);

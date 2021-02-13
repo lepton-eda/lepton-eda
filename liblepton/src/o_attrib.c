@@ -105,7 +105,7 @@ o_attrib_attach (LeptonObject *attrib,
   o_attrib_add (object, attrib);
 
   if (set_color)
-    o_set_color (attrib, ATTRIBUTE_COLOR);
+    lepton_object_set_color (attrib, ATTRIBUTE_COLOR);
 }
 
 
@@ -142,7 +142,7 @@ o_attrib_detach_all (LeptonObject *object)
     a_current = (LeptonObject*) a_iter->data;
 
     a_current->attached_to = NULL;
-    o_set_color (a_current, DETACHED_ATTRIBUTE_COLOR);
+    lepton_object_set_color (a_current, DETACHED_ATTRIBUTE_COLOR);
   }
 
   g_list_free (object->attribs);

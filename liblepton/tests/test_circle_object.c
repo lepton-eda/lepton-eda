@@ -72,7 +72,7 @@ check_accessors ()
 
     geda_circle_object_set_center_x (object0, center_x);
     geda_circle_object_set_center_y (object0, center_y);
-    o_set_color (object0, color);
+    lepton_object_set_color (object0, color);
     geda_circle_object_set_radius (object0, radius);
 
     g_assert_cmpint (center_x, ==, geda_circle_object_get_center_x (object0));

@@ -182,8 +182,8 @@ gboolean
 o_is_visible (const LeptonObject *object);
 
 void
-o_set_color (LeptonObject *object,
-             int color);
+lepton_object_set_color (LeptonObject *object,
+                         int color);
 
 void
 o_set_fill_options (LeptonObject *o_current,
