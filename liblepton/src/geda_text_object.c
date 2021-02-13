@@ -447,7 +447,7 @@ geda_text_object_new (gint color,
 
   new_node->text = text;
 
-  new_node->color = color;
+  lepton_object_set_color (new_node, color);
   o_set_visibility (new_node, visibility);
   new_node->show_name_value = show_name_value;
 
@@ -697,7 +697,7 @@ geda_text_object_copy (const LeptonObject *object)
   g_return_val_if_fail (object->text != NULL, NULL);
   g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
 
-  new_obj = geda_text_object_new (object->color,
+  new_obj = geda_text_object_new (lepton_object_get_color (object),
                                   object->text->x,
                                   object->text->y,
                                   object->text->alignment,

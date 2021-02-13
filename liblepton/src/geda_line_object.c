@@ -67,7 +67,7 @@ geda_line_object_new (gint color,
 
   /* create the object */
   new_node = s_basic_new_object (OBJ_LINE, "line");
-  new_node->color = color;
+  lepton_object_set_color (new_node, color);
 
   new_node->line  = geda_line_new ();
 
@@ -109,7 +109,7 @@ geda_line_object_copy (LeptonObject *o_current)
 {
   LeptonObject *new_obj;
 
-  new_obj = geda_line_object_new (o_current->color,
+  new_obj = geda_line_object_new (lepton_object_get_color (o_current),
                                   o_current->line->x[0],
                                   o_current->line->y[0],
                                   o_current->line->x[1],

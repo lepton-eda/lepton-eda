@@ -54,7 +54,7 @@ geda_arc_object_new (gint color,
 
   new_node = s_basic_new_object (OBJ_ARC, "arc");
 
-  new_node->color = color;
+  lepton_object_set_color (new_node, color);
 
   new_node->arc = geda_arc_new ();
 
@@ -109,7 +109,7 @@ geda_arc_object_copy (const LeptonObject *object)
   g_return_val_if_fail (object->arc != NULL, NULL);
   g_return_val_if_fail (object->type == OBJ_ARC, NULL);
 
-  new_object = geda_arc_object_new (object->color,
+  new_object = geda_arc_object_new (lepton_object_get_color (object),
                                     object->arc->x,
                                     object->arc->y,
                                     object->arc->radius,

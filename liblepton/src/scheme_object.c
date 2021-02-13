@@ -666,7 +666,7 @@ SCM_DEFINE (object_color, "%object-color", 1, 0, 0,
               SCM_ARG1, s_object_color);
 
   LeptonObject *obj = edascm_to_object (obj_s);
-  return scm_from_int (obj->color);
+  return scm_from_int (lepton_object_get_color (obj));
 }
 
 /*! \brief Set the color of an object.
@@ -994,7 +994,7 @@ SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
   SCM y1 = scm_from_int (geda_line_object_get_y0 (obj));
   SCM x2 = scm_from_int (geda_line_object_get_x1 (obj));
   SCM y2 = scm_from_int (geda_line_object_get_y1 (obj));
-  SCM color = scm_from_int (obj->color);
+  SCM color = scm_from_int (lepton_object_get_color (obj));
 
   /* Swap ends according to pin's whichend flag. */
   if ((obj->type == OBJ_PIN) && obj->whichend) {
@@ -1238,7 +1238,7 @@ SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
                      scm_from_int (obj->box->upper_y),
                      scm_from_int (obj->box->lower_x),
                      scm_from_int (obj->box->lower_y),
-                     scm_from_int (obj->color),
+                     scm_from_int (lepton_object_get_color (obj)),
                      SCM_UNDEFINED);
 }
 
@@ -1333,7 +1333,7 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
   return scm_list_n (scm_from_int (geda_circle_object_get_center_x (obj)),
                      scm_from_int (geda_circle_object_get_center_y (obj)),
                      scm_from_int (geda_circle_object_get_radius (obj)),
-                     scm_from_int (obj->color),
+                     scm_from_int (lepton_object_get_color (obj)),
                      SCM_UNDEFINED);
 }
 
@@ -1443,7 +1443,7 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
                      scm_from_int (geda_arc_object_get_radius (obj)),
                      scm_from_int (geda_arc_object_get_start_angle (obj)),
                      scm_from_int (geda_arc_object_get_sweep_angle (obj)),
-                     scm_from_int (obj->color),
+                     scm_from_int (lepton_object_get_color (obj)),
                      SCM_UNDEFINED);
 }
 
@@ -1678,7 +1678,7 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
                      scm_from_int (geda_text_object_get_size (obj)),
                      visible_s,
                      show_s,
-                     scm_from_int (obj->color),
+                     scm_from_int (lepton_object_get_color (obj)),
                      SCM_UNDEFINED);
 }
 

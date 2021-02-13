@@ -65,7 +65,7 @@ geda_circle_object_new (gint color,
 
   /* create the object */
   new_node = s_basic_new_object (OBJ_CIRCLE, "circle");
-  new_node->color  = color;
+  lepton_object_set_color (new_node, color);
 
   new_node->circle = geda_circle_new ();
 
@@ -110,7 +110,7 @@ geda_circle_object_copy (const LeptonObject *object)
   g_return_val_if_fail (object->circle != NULL, NULL);
   g_return_val_if_fail (object->type == OBJ_CIRCLE, NULL);
 
-  new_obj = geda_circle_object_new (object->color,
+  new_obj = geda_circle_object_new (lepton_object_get_color (object),
                                     object->circle->center_x,
                                     object->circle->center_y,
                                     object->circle->radius);

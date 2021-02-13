@@ -292,7 +292,7 @@ geda_bus_object_new (gint color,
   LeptonObject *new_node;
 
   new_node = s_basic_new_object(OBJ_BUS, "bus");
-  new_node->color = color;
+  lepton_object_set_color (new_node, color);
 
   new_node->line = geda_line_new ();
   /* check for null */
@@ -436,7 +436,7 @@ geda_bus_object_copy (const LeptonObject *object)
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
-  new_obj = geda_bus_object_new (object->color,
+  new_obj = geda_bus_object_new (lepton_object_get_color (object),
                                  object->line->x[0],
                                  object->line->y[0],
                                  object->line->x[1],
