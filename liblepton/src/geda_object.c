@@ -847,8 +847,9 @@ lepton_object_set_color (LeptonObject *object,
 
   object->color = color;
 
-  if (object->type == OBJ_COMPONENT ||
-      object->type == OBJ_PLACEHOLDER)
+  if ((object->type == OBJ_COMPONENT ||
+       object->type == OBJ_PLACEHOLDER)
+       && (object->component != NULL))
     geda_object_list_set_color (object->component->prim_objs, color);
 }
 
