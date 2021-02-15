@@ -37,7 +37,7 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   g_return_if_fail (w_current->stretch_list == NULL);
@@ -110,7 +110,7 @@ void o_move_end_lowlevel (GschemToplevel *w_current,
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   switch (object->type) {
@@ -139,7 +139,7 @@ void o_move_end(GschemToplevel *w_current)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   GList *s_current = NULL;
@@ -255,7 +255,7 @@ void o_move_cancel (GschemToplevel *w_current)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   /* Unset the dont_redraw flag on rubberbanded objects.
@@ -301,7 +301,7 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
 
@@ -537,7 +537,7 @@ void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   for (cl_current = object->conn_list;
@@ -623,7 +623,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   for (s_current = geda_list_get_glist (page->selection_list);
@@ -690,7 +690,7 @@ void o_move_end_rubberband (GschemToplevel *w_current,
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   for (s_iter = w_current->stretch_list;

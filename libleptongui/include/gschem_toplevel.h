@@ -292,8 +292,8 @@ void
 gschem_toplevel_set_toplevel (GschemToplevel *w_current, TOPLEVEL *toplevel);
 
 void
-gschem_toplevel_page_content_changed (GschemToplevel *w_current, PAGE *page);
-
+gschem_toplevel_page_content_changed (GschemToplevel *w_current,
+                                      LeptonPage *page);
 gboolean
 gschem_toplevel_get_show_hidden_text (GschemToplevel *w_current);
 

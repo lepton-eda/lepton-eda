@@ -29,7 +29,7 @@ SCM_SYMBOL (object_state_sym, "object-state");
  * \note Scheme API: Implements the %page-selection procedure in the
  * (schematic core selection) module.
  *
- * \param page_s #PAGE smob for the page from which to get the selection.
+ * \param page_s #LeptonPage smob for the page from which to get the selection.
  * \return a list of #LeptonObject smobs.
  */
 SCM_DEFINE (page_selection, "%page-selection", 1, 0, 0,
@@ -39,7 +39,7 @@ SCM_DEFINE (page_selection, "%page-selection", 1, 0, 0,
   SCM_ASSERT (edascm_is_page (page_s), page_s,
               SCM_ARG1, s_page_selection);
 
-  PAGE *page = edascm_to_page (page_s);
+  LeptonPage *page = edascm_to_page (page_s);
   GList *iter;
   SCM result = SCM_EOL;
   for (iter = geda_list_get_glist (page->selection_list);
@@ -71,7 +71,7 @@ SCM_DEFINE (select_object_x, "%select-object!", 1, 0, 0,
               SCM_ARG1, s_select_object_x);
 
   LeptonObject *obj = edascm_to_object (obj_s);
-  PAGE *page = o_get_page (obj);
+  LeptonPage *page = o_get_page (obj);
   if ((page == NULL) || (obj->parent != NULL)) {
     scm_error (object_state_sym,
                s_select_object_x,
@@ -107,7 +107,7 @@ SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
               SCM_ARG1, s_deselect_object_x);
 
   LeptonObject *obj = edascm_to_object (obj_s);
-  PAGE *page = o_get_page (obj);
+  LeptonPage *page = o_get_page (obj);
   if ((page == NULL) || (obj->parent != NULL)) {
     scm_error (object_state_sym,
                s_deselect_object_x,
@@ -142,7 +142,7 @@ SCM_DEFINE (object_selected_p, "%object-selected?", 1, 0, 0,
               SCM_ARG1, s_object_selected_p);
 
   LeptonObject *obj = edascm_to_object (obj_s);
-  PAGE *page = o_get_page (obj);
+  LeptonPage *page = o_get_page (obj);
   if ((page == NULL) || (obj->parent != NULL)) {
     scm_error (object_state_sym,
                s_object_selected_p,

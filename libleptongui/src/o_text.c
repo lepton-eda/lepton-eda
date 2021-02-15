@@ -41,7 +41,7 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   if (page == NULL) {
     return;
   }
@@ -94,7 +94,7 @@ void o_text_change(GschemToplevel *w_current, LeptonObject *object, char *string
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
 
   g_return_if_fail (page != NULL);
 

@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2020 Lepton EDA Contributors
+ * Copyright (C) 2018-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -166,7 +166,7 @@ struct _TabInfo
 
   gint            ndx_;   /* just for debugging; will be removed */
 
-  PAGE*           page_;
+  LeptonPage*     page_;
   GschemPageView* pview_;
   GtkWidget*      wtab_;  /* tab widget, i.e. scrolled wnd, parent of pview_ */
 
@@ -193,7 +193,7 @@ x_tabs_info_cur (GschemToplevel* w_current);
 static TabInfo*
 x_tabs_info_add (GschemToplevel* w_current,
                  gint            ndx,
-                 PAGE*           page,
+                 LeptonPage*     page,
                  GschemPageView* pview,
                  GtkWidget*      wtab);
 
@@ -210,8 +210,8 @@ static gint
 x_tabs_info_cmp_wtab (gconstpointer elem, gconstpointer data);
 
 static TabInfo*
-x_tabs_info_find_by_page (GList* nfos, PAGE* page);
-
+x_tabs_info_find_by_page (GList* nfos,
+                          LeptonPage* page);
 static TabInfo*
 x_tabs_info_find_by_pview (GList* nfos, GschemPageView* pview);
 
@@ -222,12 +222,12 @@ x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab);
 
 /* GschemToplevel accessors: */
 
-static PAGE*
+static LeptonPage*
 x_tabs_tl_page_cur (GschemToplevel* w_current);
 
 static void
-x_tabs_tl_page_cur_set (GschemToplevel* w_current, PAGE* page);
-
+x_tabs_tl_page_cur_set (GschemToplevel* w_current,
+                        LeptonPage* page);
 static GschemPageView*
 x_tabs_tl_pview_cur (GschemToplevel* w_current);
 
@@ -235,8 +235,8 @@ static void
 x_tabs_tl_pview_cur_set (GschemToplevel* w_current, GschemPageView* pview);
 
 static gboolean
-x_tabs_tl_page_find (GschemToplevel* w_current, PAGE* page);
-
+x_tabs_tl_page_find (GschemToplevel* w_current,
+                     LeptonPage* page);
 
 
 /* notebook: */
@@ -246,13 +246,13 @@ x_tabs_nbook_create (GschemToplevel* w_current, GtkWidget* work_box);
 
 static gint
 x_tabs_nbook_page_add (GschemToplevel* w_current,
-                       PAGE*           page,
+                       LeptonPage*     page,
                        GschemPageView* pview,
                        GtkWidget*      wtab);
 
 static void
-x_tabs_nbook_page_close (GschemToplevel* w_current, PAGE* page);
-
+x_tabs_nbook_page_close (GschemToplevel* w_current,
+                         LeptonPage* page);
 static void
 x_tabs_page_on_sel (GtkNotebook* nbook,
                     GtkWidget*   wtab,
@@ -287,7 +287,7 @@ x_tabs_menu_item_on_activate (GtkAction* action, gpointer data);
 
 static GschemPageView*
 x_tabs_pview_create (GschemToplevel* w_current,
-                     PAGE*           page,
+                     LeptonPage*     page,
                      GtkWidget**     ppwtab);
 
 /*
@@ -394,7 +394,7 @@ x_tabs_dbg_pages_dump (GschemToplevel* w_current)
 
   for ( ; ptr != NULL; ptr = g_list_next( ptr ) )
   {
-    PAGE* page = (PAGE*) ptr->data;
+    LeptonPage* page = (LeptonPage*) ptr->data;
     printf( "\n" );
     printf( "    page:  [%p]\n", (void*) page );
     printf( "    fname: [%s]\n", page->_filename );
@@ -416,7 +416,7 @@ x_tabs_dbg_pages_dump_simple (GschemToplevel* w_current)
         node != NULL;
         node = g_list_next( node ) )
   {
-    PAGE* p = node->data;
+    LeptonPage* p = node->data;
     printf( "    p: [%s]\n", g_path_get_basename( s_page_get_filename(p) ) );
   }
 
@@ -449,7 +449,7 @@ x_tabs_info_cur (GschemToplevel* w_current)
 static TabInfo*
 x_tabs_info_add (GschemToplevel* w_current,
                  gint            ndx,
-                 PAGE*           page,
+                 LeptonPage*     page,
                  GschemPageView* pview,
                  GtkWidget*      wtab)
 {
@@ -489,8 +489,8 @@ x_tabs_info_rm (GschemToplevel* w_current, TabInfo* nfo)
 static gint
 x_tabs_info_cmp_page (gconstpointer elem, gconstpointer data)
 {
-  TabInfo* nfo  = (TabInfo*) elem;
-  PAGE*    page = (PAGE*)    data;
+  TabInfo*    nfo  = (TabInfo*)    elem;
+  LeptonPage* page = (LeptonPage*) data;
 
   if (nfo->page_ == page)
     return 0;
@@ -529,7 +529,8 @@ x_tabs_info_cmp_wtab (gconstpointer elem, gconstpointer data)
 
 
 static TabInfo*
-x_tabs_info_find_by_page (GList* nfos, PAGE* page)
+x_tabs_info_find_by_page (GList* nfos,
+                          LeptonPage* page)
 {
   GList* ptr = g_list_find_custom (nfos,
                                    (gconstpointer) page,
@@ -568,7 +569,7 @@ x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab)
  *
  */
 
-static PAGE*
+static LeptonPage*
 x_tabs_tl_page_cur (GschemToplevel* w_current)
 {
   return w_current->toplevel->page_current;
@@ -577,7 +578,8 @@ x_tabs_tl_page_cur (GschemToplevel* w_current)
 
 
 static void
-x_tabs_tl_page_cur_set (GschemToplevel* w_current, PAGE* page)
+x_tabs_tl_page_cur_set (GschemToplevel* w_current,
+                        LeptonPage* page)
 {
   s_page_goto (w_current->toplevel, page);
 
@@ -613,13 +615,14 @@ x_tabs_tl_pview_cur_set (GschemToplevel* w_current, GschemPageView* pview)
  *
  */
 static gboolean
-x_tabs_tl_page_find (GschemToplevel* w_current, PAGE* page)
+x_tabs_tl_page_find (GschemToplevel* w_current,
+                     LeptonPage* page)
 {
   GList* ptr = geda_list_get_glist (w_current->toplevel->pages);
 
   for ( ; ptr != NULL; ptr = g_list_next (ptr) )
   {
-    PAGE* pg = (PAGE*) ptr->data;
+    LeptonPage* pg = (LeptonPage*) ptr->data;
     if (pg == page)
       return TRUE;
   }
@@ -683,7 +686,7 @@ x_tabs_nbook_create (GschemToplevel* w_current, GtkWidget* work_box)
 
 static gint
 x_tabs_nbook_page_add (GschemToplevel* w_current,
-                       PAGE*           page,
+                       LeptonPage*     page,
                        GschemPageView* pview,
                        GtkWidget*      wtab)
 {
@@ -702,7 +705,8 @@ x_tabs_nbook_page_add (GschemToplevel* w_current,
 
 
 static void
-x_tabs_nbook_page_close (GschemToplevel* w_current, PAGE* page)
+x_tabs_nbook_page_close (GschemToplevel* w_current,
+                         LeptonPage* page)
 {
   TabInfo* nfo = x_tabs_info_find_by_page (w_current->xtabs_info_list, page);
   if (!nfo)
@@ -728,7 +732,7 @@ x_tabs_nbook_page_close (GschemToplevel* w_current, PAGE* page)
 
 static GschemPageView*
 x_tabs_pview_create (GschemToplevel* w_current,
-                     PAGE*           page,
+                     LeptonPage*     page,
                      GtkWidget**     ppwtab)
 {
 #ifdef DEBUG
@@ -880,7 +884,7 @@ x_tabs_hdr_create (TabInfo* nfo)
   /* setup "up" btn:
   */
   TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (nfo->tl_);
-  PAGE* parent = s_hierarchy_find_up_page (toplevel->pages, nfo->page_);
+  LeptonPage* parent = s_hierarchy_find_up_page (toplevel->pages, nfo->page_);
 
   if (x_tabs_show_up_button() && parent != NULL)
   {
@@ -963,7 +967,8 @@ x_tabs_hdr_set (GtkNotebook* nbook, TabInfo* nfo)
  *  For now, it simply recreates the header.
  */
 void
-x_tabs_hdr_update (GschemToplevel* w_current, PAGE* page)
+x_tabs_hdr_update (GschemToplevel* w_current,
+                   LeptonPage* page)
 {
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
@@ -1092,14 +1097,14 @@ static void
 x_tabs_hier_up (GschemToplevel* w_current)
 {
   TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
-  PAGE* page = toplevel->page_current;
+  LeptonPage* page = toplevel->page_current;
 
   if (page == NULL)
   {
     return;
   }
 
-  PAGE* parent = s_hierarchy_find_up_page (toplevel->pages, page);
+  LeptonPage* parent = s_hierarchy_find_up_page (toplevel->pages, page);
 
   if (parent == NULL)
   {
@@ -1187,7 +1192,8 @@ x_tabs_prev (GschemToplevel* w_current)
  *  \return                 A pointer to the new TabInfo structure.
  */
 static TabInfo*
-x_tabs_page_new (GschemToplevel* w_current, PAGE* page)
+x_tabs_page_new (GschemToplevel* w_current,
+                 LeptonPage* page)
 {
 #ifdef DEBUG
   printf( "x_tabs_new_page(): page: %p\n", page);
@@ -1241,7 +1247,7 @@ x_tabs_create (GschemToplevel* w_current, GtkWidget* work_box)
  *  \return                The page opened.
  *
  */
-PAGE*
+LeptonPage*
 x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
@@ -1278,7 +1284,7 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
   }
 
 
-  PAGE* page = NULL;
+  LeptonPage* page = NULL;
   if (filename != NULL)
     page = s_page_search (w_current->toplevel, filename);
 
@@ -1360,7 +1366,8 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
  *
  */
 void
-x_tabs_page_set_cur (GschemToplevel* w_current, PAGE* page)
+x_tabs_page_set_cur (GschemToplevel* w_current,
+                     LeptonPage* page)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -1432,7 +1439,8 @@ x_tabs_page_set_cur (GschemToplevel* w_current, PAGE* page)
  *
  */
 void
-x_tabs_page_close (GschemToplevel* w_current, PAGE* page)
+x_tabs_page_close (GschemToplevel* w_current,
+                   LeptonPage* page)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -1449,7 +1457,7 @@ x_tabs_page_close (GschemToplevel* w_current, PAGE* page)
 
   /* page to be set as current after the [page] is closed:
   */
-  PAGE* new_cur_page = x_window_close_page_impl (w_current, nfo_cur->page_);
+  LeptonPage* new_cur_page = x_window_close_page_impl (w_current, nfo_cur->page_);
 
   x_tabs_nbook_page_close (w_current, nfo_cur->page_);
 
@@ -1464,7 +1472,7 @@ x_tabs_page_close (GschemToplevel* w_current, PAGE* page)
   else
   {
 #ifdef DEBUG
-    printf( "x_tabs_page_close(): NEW PAGE\n" );
+    printf( "x_tabs_page_close(): NEW LeptonPage\n" );
 #endif
 
     x_tabs_page_new  (w_current, NULL);
@@ -1498,7 +1506,7 @@ x_tabs_page_on_sel (GtkNotebook* nbook,
 {
   GschemToplevel* w_current = (GschemToplevel*) data;
 
-  PAGE*           p_cur  = x_tabs_tl_page_cur  (w_current);
+  LeptonPage*     p_cur  = x_tabs_tl_page_cur  (w_current);
   GschemPageView* pv_cur = x_tabs_tl_pview_cur (w_current);
 
   if (p_cur == NULL && pv_cur == NULL)

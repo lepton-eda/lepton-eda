@@ -98,7 +98,7 @@ void o_net_guess_direction(GschemToplevel *w_current,
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   object_list = g_list_append (NULL, page->connectible_list);
@@ -221,7 +221,7 @@ void o_net_find_magnetic(GschemToplevel *w_current,
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   minbest = min_x = min_y = 0;
@@ -481,7 +481,7 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   o_net_invalidate_rubber (w_current);
@@ -779,7 +779,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_val_if_fail (page != NULL, FALSE);
 
   length = geda_line_object_length (net_obj);

@@ -56,14 +56,15 @@
  * the page orientation that best fits the page contents is chosen.
  *
  * \param toplevel A #TOPLEVEL structure.
- * \param page     The #PAGE to generate a page setup for.
+ * \param page     The #LeptonPage to generate a page setup for.
  * \param paper_size_name   The name of the paper size to use.
  * \param orientation       The paper orientation to use.
  *
  * \returns A newly-created page setup.
  */
 static GtkPageSetup *
-x_print_default_page_setup (TOPLEVEL *toplevel, PAGE *page)
+x_print_default_page_setup (TOPLEVEL *toplevel,
+                            LeptonPage *page)
 {
   GtkPageSetup *setup = gtk_page_setup_new ();
   GtkPaperSize *papersize;
@@ -118,7 +119,7 @@ x_print_default_page_setup (TOPLEVEL *toplevel, PAGE *page)
  * image.
  *
  * \param toplevel A #TOPLEVEL structure.
- * \param page     The #PAGE to be rendered.
+ * \param page     The #LeptonPage to be rendered.
  * \param cr       The Cairo context to render to.
  * \param pc       A Pango context for text rendering, or NULL.
  * \param cr_width The width of the drawing area.
@@ -127,10 +128,14 @@ x_print_default_page_setup (TOPLEVEL *toplevel, PAGE *page)
  * \param is_raster TRUE if drawing to a raster image surface; FALSE otherwise.
  */
 static void
-x_print_draw_page (TOPLEVEL *toplevel, PAGE *page,
-                   cairo_t *cr, PangoContext *pc,
-                   double cr_width, double cr_height,
-                   gboolean is_color, gboolean is_raster)
+x_print_draw_page (TOPLEVEL *toplevel,
+                   LeptonPage *page,
+                   cairo_t *cr,
+                   PangoContext *pc,
+                   double cr_width,
+                   double cr_height,
+                   gboolean is_color,
+                   gboolean is_raster)
 {
   EdaRenderer *renderer;
   cairo_matrix_t mtx;
@@ -237,7 +242,7 @@ draw_page__print_operation (GtkPrintOperation *print,
                             gpointer user_data)
 {
   GschemToplevel *w_current = (GschemToplevel *) user_data;
-  PAGE *page;
+  LeptonPage *page;
   cairo_t *cr;
   PangoContext *pc;
   double width, height;
@@ -283,7 +288,7 @@ gboolean
 x_print_export_pdf_page (GschemToplevel *w_current,
                          const gchar *filename)
 {
-  PAGE *page;
+  LeptonPage *page;
   cairo_surface_t *surface;
   cairo_status_t status;
   cairo_t *cr;
@@ -438,7 +443,7 @@ x_print (GschemToplevel *w_current)
 
   /* derive output file name from the file name of the current page:
   */
-  PAGE* page = w_current->toplevel->page_current;
+  LeptonPage* page = w_current->toplevel->page_current;
   if (page != NULL)
   {
     const gchar* path = s_page_get_filename (page);

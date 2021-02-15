@@ -61,7 +61,7 @@ struct _GschemPageView
   gboolean show_hidden_text;
 
   /*< private >*/
-  PAGE *_page;
+  LeptonPage *_page;
 
   GHashTable *_geometry_cache;
 };
@@ -71,7 +71,7 @@ struct _GschemPageView
 GtkAdjustment*
 gschem_page_view_get_hadjustment (GschemPageView *view);
 
-PAGE*
+LeptonPage*
 gschem_page_view_get_page (GschemPageView *view);
 
 GschemPageGeometry*
@@ -96,7 +96,7 @@ void
 gschem_page_view_invalidate_world_rect (GschemPageView *view, int left, int top, int right, int bottom);
 
 GschemPageView*
-gschem_page_view_new_with_page (PAGE *page);
+gschem_page_view_new_with_page (LeptonPage *page);
 
 void
 gschem_page_view_pan_general(GschemPageView *page_view, int x, int y, double relativ_zoom_factor);
@@ -135,7 +135,8 @@ void
 gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustment);
 
 void
-gschem_page_view_set_page (GschemPageView *view, PAGE *page);
+gschem_page_view_set_page (GschemPageView *view,
+                           LeptonPage *page);
 
 void
 gschem_page_view_set_vadjustment (GschemPageView *view, GtkAdjustment *vadjustment);

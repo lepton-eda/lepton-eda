@@ -51,17 +51,17 @@ static int page_control_counter=0;
  *  flag can either be HIERARCHY_NORMAL_LOAD or HIERARCHY_FORCE_LOAD
  *  flag is mainly used by gnetlist where pushed down schematics MUST be unique
  */
-PAGE *
+LeptonPage *
 s_hierarchy_down_schematic_single (GschemToplevel *w_current,
                                    const gchar *filename,
-                                   PAGE *parent,
+                                   LeptonPage *parent,
                                    int page_control,
                                    int flag,
                                    GError **err)
 {
   gchar *string;
-  PAGE *found = NULL;
-  PAGE *forbear;
+  LeptonPage *found = NULL;
+  LeptonPage *forbear;
 
   g_return_val_if_fail ((w_current != NULL), NULL);
 
@@ -150,9 +150,9 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
 void
 s_hierarchy_down_symbol (GschemToplevel *w_current,
                          const CLibSymbol *symbol,
-                         PAGE *parent)
+                         LeptonPage *parent)
 {
-  PAGE *page;
+  LeptonPage *page;
   gchar *filename;
 
   g_return_if_fail (w_current != NULL);
@@ -200,9 +200,9 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
  *  \param [in] current_page The reference page for the search.
  *  \returns A pointer on the page found or NULL if not found.
  */
-PAGE *
+LeptonPage *
 s_hierarchy_find_up_page (LeptonPageList *page_list,
-                          PAGE *current_page)
+                          LeptonPage *current_page)
 {
   g_return_val_if_fail (current_page != NULL, NULL);
   if (current_page->up < 0) {
@@ -229,14 +229,14 @@ s_hierarchy_find_up_page (LeptonPageList *page_list,
  *  \param [out] error
  *  \return A pointer to the subpage or NULL if an error occured.
  */
-PAGE*
+LeptonPage*
 s_hierarchy_load_subpage (GschemToplevel *w_current,
-                          PAGE *page,
+                          LeptonPage *page,
                           const char *filename,
                           GError **error)
 {
   char *string;
-  PAGE *subpage = NULL;
+  LeptonPage *subpage = NULL;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (page != NULL, NULL);
@@ -286,20 +286,20 @@ s_hierarchy_load_subpage (GschemToplevel *w_current,
  *  hierarchy tree and returns a postorder list instead of preorder.
  *
  *  \param w_current The GschemToplevel structure.
- *  \param p_current The PAGE to traverse hierarchy for.
+ *  \param p_current The LeptonPage to traverse hierarchy for.
  *  \param flags Flags controlling form of return value.
- *  \return A GList of PAGE pointers.
+ *  \return A GList of LeptonPage pointers.
  *
  *  \warning
  *  Caller must destroy returned GList with g_list_free().
  */
 GList *
 s_hierarchy_traversepages (GschemToplevel *w_current,
-                           PAGE *p_current,
+                           LeptonPage *p_current,
                            gint flags)
 {
   LeptonObject *o_current;
-  PAGE *child_page;
+  LeptonPage *child_page;
   char *filename = NULL;
   static GList *pages = NULL;
   const GList *iter;
@@ -381,7 +381,8 @@ s_hierarchy_traversepages (GschemToplevel *w_current,
  *  Test function which only prints the name of a page and its number.
  */
 gint
-s_hierarchy_print_page (PAGE *p_current, void * data)
+s_hierarchy_print_page (LeptonPage *p_current,
+                        void * data)
 {
   printf("pagefilename: %s pageid: %d\n",
          s_page_get_filename (p_current), p_current->pid);
@@ -403,9 +404,9 @@ s_hierarchy_print_page (PAGE *p_current, void * data)
  *  \param [in] current_page The reference page for the search.
  *  \returns A pointer on the page found or NULL if not found.
   */
-PAGE *
+LeptonPage *
 s_hierarchy_find_prev_page (LeptonPageList *page_list,
-                            PAGE *current_page)
+                            LeptonPage *current_page)
 {
   const GList *iter;
 
@@ -414,7 +415,7 @@ s_hierarchy_find_prev_page (LeptonPageList *page_list,
        iter != NULL;
        iter = g_list_previous (iter)) {
 
-    PAGE *page = (PAGE *)iter->data;
+    LeptonPage *page = (LeptonPage *)iter->data;
     if (page->page_control == current_page->page_control) {
       return page;
     }
@@ -438,9 +439,9 @@ s_hierarchy_find_prev_page (LeptonPageList *page_list,
  *  \param [in] current_page The reference page for the search.
  *  \returns A pointer on the page found or NULL if not found.
   */
-PAGE *
+LeptonPage *
 s_hierarchy_find_next_page (LeptonPageList *page_list,
-                            PAGE *current_page)
+                            LeptonPage *current_page)
 {
   const GList *iter;
 
@@ -449,7 +450,7 @@ s_hierarchy_find_next_page (LeptonPageList *page_list,
        iter != NULL;
        iter = g_list_next (iter)) {
 
-    PAGE *page = (PAGE *)iter->data;
+    LeptonPage *page = (LeptonPage *)iter->data;
     if (page->page_control == current_page->page_control) {
       return page;
     }

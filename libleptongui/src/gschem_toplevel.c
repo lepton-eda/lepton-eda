@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -684,7 +684,8 @@ gschem_toplevel_page_changed (GschemToplevel *w_current)
  *  \param [in] page      The page that underwent changes.
  */
 void
-gschem_toplevel_page_content_changed (GschemToplevel *w_current, PAGE *page)
+gschem_toplevel_page_content_changed (GschemToplevel *w_current,
+                                      LeptonPage *page)
 {
   g_return_if_fail (page != NULL);
   g_return_if_fail (w_current != NULL);

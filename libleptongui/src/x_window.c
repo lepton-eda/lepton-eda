@@ -102,7 +102,7 @@ untitled_next_index (GschemToplevel* w_current);
 static gchar*
 untitled_filename (GschemToplevel* w_current, gboolean log_skipped);
 
-static PAGE*
+static LeptonPage*
 x_window_new_page (GschemToplevel* w_current);
 
 
@@ -139,7 +139,7 @@ x_window_setup (GschemToplevel *w_current)
  */
 void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
 {
-  PAGE* page = w_current->toplevel->page_current;
+  LeptonPage* page = w_current->toplevel->page_current;
   GschemPageView* view = gschem_page_view_new_with_page (page);
 
 #ifdef ENABLE_GTK3
@@ -391,7 +391,7 @@ x_window_select_object (GschemFindTextState *state,
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (view);
+  LeptonPage *page = gschem_page_view_get_page (view);
   g_return_if_fail (page != NULL);
 
   g_return_if_fail (object != NULL);
@@ -703,12 +703,12 @@ void x_window_close_all(GschemToplevel *w_current)
  *  \private
  *  \par Function Description
  *  This function opens the file whose name is <B>filename</B> in a
- *  new PAGE of <B>toplevel</B>.
+ *  new LeptonPage of <B>toplevel</B>.
  *
- *  If there is no page for <B>filename</B> in <B>toplevel</B>'s list
- *  of pages, it creates a new PAGE, loads the file in it and returns
- *  a pointer on the new page. Otherwise it returns a pointer on the
- *  existing page.
+ *  If there is no page for <B>filename</B> in <B>toplevel</B>'s
+ *  list of pages, it creates a new LeptonPage, loads the file in
+ *  it and returns a pointer on the new page. Otherwise it returns
+ *  a pointer on the existing page.
  *
  *  If the filename passed is NULL, this function creates an empty,
  *  untitled page.  The name of the untitled page is build from
@@ -723,8 +723,9 @@ void x_window_close_all(GschemToplevel *w_current)
  *  \bug This code should check to make sure any untitled filename
  *  does not conflict with a file on disk.
  */
-PAGE*
-x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename)
+LeptonPage*
+x_window_open_page_impl (GschemToplevel *w_current,
+                         const gchar *filename)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
@@ -735,7 +736,7 @@ x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename)
 
 
   /* Return existing page if it is already loaded: */
-  PAGE* page = s_page_search (toplevel, filename);
+  LeptonPage* page = s_page_search (toplevel, filename);
   if (page != NULL)
     return page;
 
@@ -795,7 +796,8 @@ x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename)
  *  \param [in] page      The page to become current page.
  */
 void
-x_window_set_current_page_impl (GschemToplevel *w_current, PAGE *page)
+x_window_set_current_page_impl (GschemToplevel *w_current,
+                                LeptonPage *page)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -830,7 +832,9 @@ x_window_set_current_page_impl (GschemToplevel *w_current, PAGE *page)
  *  \returns 1 on success, 0 otherwise.
  */
 gint
-x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename)
+x_window_save_page (GschemToplevel *w_current,
+                    LeptonPage *page,
+                    const gchar *filename)
 {
   const gchar *log_msg, *state_msg;
   gint ret;
@@ -903,13 +907,14 @@ x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename
  *
  *  \param [in] w_current The toplevel environment.
  *  \param [in] page      The page to close.
- *  \return               Pointer to a new current PAGE object.
+ *  \return               Pointer to a new current LeptonPage object.
  */
-PAGE*
-x_window_close_page_impl (GschemToplevel *w_current, PAGE *page)
+LeptonPage*
+x_window_close_page_impl (GschemToplevel *w_current,
+                          LeptonPage *page)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  PAGE *new_current = NULL;
+  LeptonPage *new_current = NULL;
   GList *iter;
 
   g_return_val_if_fail (toplevel != NULL, NULL);
@@ -933,9 +938,9 @@ x_window_close_page_impl (GschemToplevel *w_current, PAGE *page)
       iter = g_list_find( geda_list_get_glist( toplevel->pages ), page );
 
       if ( g_list_previous( iter ) ) {
-        new_current = (PAGE *)g_list_previous( iter )->data;
+        new_current = (LeptonPage *)g_list_previous( iter )->data;
       } else if ( g_list_next( iter ) ) {
-        new_current = (PAGE *)g_list_next( iter )->data;
+        new_current = (LeptonPage *)g_list_next( iter )->data;
       } else {
         /* need to add a new untitled page */
         new_current = NULL;
@@ -1461,10 +1466,10 @@ create_notebook_bottom (GschemToplevel* w_current)
  *  \see x_window_open_page_impl()
  *  \see x_tabs_page_open()
  */
-PAGE*
+LeptonPage*
 x_window_open_page (GschemToplevel* w_current, const gchar* filename)
 {
-  PAGE* page = NULL;
+  LeptonPage* page = NULL;
 
   if (x_tabs_enabled())
   {
@@ -1494,7 +1499,8 @@ x_window_open_page (GschemToplevel* w_current, const gchar* filename)
  *  \see x_tabs_page_set_cur()
  */
 void
-x_window_set_current_page (GschemToplevel* w_current, PAGE* page)
+x_window_set_current_page (GschemToplevel* w_current,
+                           LeptonPage* page)
 {
   if (x_tabs_enabled())
   {
@@ -1514,7 +1520,8 @@ x_window_set_current_page (GschemToplevel* w_current, PAGE* page)
  *  \see x_tabs_page_close()
  */
 void
-x_window_close_page (GschemToplevel* w_current, PAGE* page)
+x_window_close_page (GschemToplevel* w_current,
+                     LeptonPage* page)
 {
   if (x_tabs_enabled())
   {
@@ -1535,7 +1542,7 @@ x_window_close_page (GschemToplevel* w_current, PAGE* page)
  *
  *  \param w_current The toplevel environment.
  */
-static PAGE*
+static LeptonPage*
 x_window_new_page (GschemToplevel* w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
@@ -1547,7 +1554,7 @@ x_window_new_page (GschemToplevel* w_current)
   gchar* filename = untitled_filename (w_current, TRUE);
 
   /* Create a new page: */
-  PAGE* page = s_page_new (toplevel, filename);
+  LeptonPage* page = s_page_new (toplevel, filename);
 
   /* Switch to a new page: */
   s_page_goto (toplevel, page);
@@ -1735,7 +1742,7 @@ untitled_filename (GschemToplevel* w_current, gboolean log_skipped)
  *  \return           TRUE if a \a page looks like "untitled" one.
  */
 gboolean
-x_window_untitled_page (PAGE* page)
+x_window_untitled_page (LeptonPage* page)
 {
   g_return_val_if_fail (page != NULL, TRUE);
 

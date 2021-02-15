@@ -709,7 +709,7 @@ GdkPixbuf
 {
   GdkPixbuf *pixbuf;
   GschemPageView *page_view;
-  PAGE *page;
+  LeptonPage *page;
   int origin_x, origin_y, bottom, right;
   GschemPageGeometry *old_geometry, *new_geometry;
 

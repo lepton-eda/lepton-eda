@@ -123,7 +123,9 @@ o_undo_modify_viewport()
  *  </DL>
  */
 void
-o_undo_savestate (GschemToplevel *w_current, PAGE *page, int flag)
+o_undo_savestate (GschemToplevel *w_current,
+                  LeptonPage *page,
+                  int flag)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   char *filename = NULL;
@@ -318,7 +320,7 @@ o_undo_savestate_old (GschemToplevel *w_current, int flag)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
 
   o_undo_savestate (w_current, page, flag);
 }
@@ -376,7 +378,9 @@ GList *o_undo_find_prev_object_head (UNDO *start)
  *  </DL>
  */
 void
-o_undo_callback (GschemToplevel *w_current, PAGE *page, int type)
+o_undo_callback (GschemToplevel *w_current,
+                 LeptonPage *page,
+                 int type)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   UNDO *u_current;

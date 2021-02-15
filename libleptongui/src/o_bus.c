@@ -66,7 +66,7 @@ void o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
 
   g_assert( w_current->inside_action != 0 );
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   GList *prev_conn_objects = NULL;

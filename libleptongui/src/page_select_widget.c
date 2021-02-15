@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -160,7 +160,7 @@ page_select_widget_update (GschemToplevel* w_current)
   }
 
   GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE* page = gschem_page_view_get_page (view);
+  LeptonPage* page = gschem_page_view_get_page (view);
 
   if (page == NULL)
   {
@@ -187,7 +187,7 @@ pagesel_callback_selection_changed (GtkTreeSelection* selection,
   GtkTreeIter iter;
   PageSelectWidget *pagesel = (PageSelectWidget*) data;
   GschemToplevel *w_current;
-  PAGE *page;
+  LeptonPage *page;
 
   if (!gtk_tree_selection_get_selected (selection, &model, &iter))
   {
@@ -611,18 +611,18 @@ widget_create (PageSelectWidget* pagesel)
  *  \param [in] model   GtkTreeModel to update.
  *  \param [in] parent  GtkTreeIter pointer to tree root.
  *  \param [in] pages   LeptonPageList of pages for this toplevel.
- *  \param [in] page    The PAGE object to update tree model from.
+ *  \param [in] page    The LeptonPage object to update tree model from.
  *  \param [in] pagesel The Pagesel object.
  */
 static void
 add_page (GtkTreeModel *model,
           GtkTreeIter *parent,
           LeptonPageList *pages,
-          PAGE *page,
+          LeptonPage *page,
           PageSelectWidget *pagesel)
 {
   GtkTreeIter iter;
-  PAGE *p_current;
+  LeptonPage *p_current;
   GList *p_iter;
 
   /* add the page to the store */
@@ -649,7 +649,7 @@ add_page (GtkTreeModel *model,
         p_iter != NULL;
         p_iter = g_list_next( p_iter ) ) {
 
-    p_current = (PAGE *)p_iter->data;
+    p_current = (LeptonPage *)p_iter->data;
     if (p_current->up == page->pid) {
       add_page (model, &iter, pages, p_current, pagesel);
     }
@@ -662,11 +662,13 @@ add_page (GtkTreeModel *model,
 /*! \brief Recursive function to select the current page in the treeview.
  */
 static void
-select_page(GtkTreeView* treeview, GtkTreeIter* parent, PAGE* page)
+select_page (GtkTreeView* treeview,
+             GtkTreeIter* parent,
+             LeptonPage* page)
 {
   GtkTreeModel *treemodel = gtk_tree_view_get_model (treeview);
   GtkTreeIter iter;
-  PAGE *p_current;
+  LeptonPage *p_current;
 
   if (!gtk_tree_model_iter_children (treemodel, &iter, parent)) {
     return;
@@ -710,7 +712,7 @@ pagesel_update (PageSelectWidget* pagesel)
 {
   GtkTreeModel *model;
   TOPLEVEL *toplevel;
-  PAGE *p_current;
+  LeptonPage *p_current;
   GList *iter;
 
   g_assert (IS_PAGE_SELECT_WIDGET (pagesel));
@@ -735,7 +737,7 @@ pagesel_update (PageSelectWidget* pagesel)
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
-    p_current = (PAGE *)iter->data;
+    p_current = (LeptonPage *)iter->data;
     /* find every page that is not a hierarchy-down of another page */
     if (p_current->up < 0 ||
         s_page_search_by_page_id (toplevel->pages,
