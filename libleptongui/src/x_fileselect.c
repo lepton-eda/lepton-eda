@@ -335,9 +335,9 @@ x_fileselect_open(GschemToplevel *w_current)
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-					  GTK_RESPONSE_ACCEPT,
-					  GTK_RESPONSE_CANCEL,
-					  -1);
+                                          GTK_RESPONSE_ACCEPT,
+                                          GTK_RESPONSE_CANCEL,
+                                          -1);
 
   if (w_current->file_preview)
   {
@@ -425,9 +425,9 @@ x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
   /* Set the alternative button order (ok, cancel, help) for other systems:
   */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-					  GTK_RESPONSE_ACCEPT,
-					  GTK_RESPONSE_CANCEL,
-					  -1);
+                                          GTK_RESPONSE_ACCEPT,
+                                          GTK_RESPONSE_CANCEL,
+                                          -1);
 
   /* set default response signal. This is usually triggered by the
    * "Return" key:
@@ -589,9 +589,9 @@ x_fileselect_load_backup (GschemToplevel *w_current,
   gtk_window_set_title (GTK_WINDOW (dialog), "Load Backup");
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
-					  GTK_RESPONSE_YES,
-					  GTK_RESPONSE_NO,
-					  -1);
+                                          GTK_RESPONSE_YES,
+                                          GTK_RESPONSE_NO,
+                                          -1);
 
   gtk_widget_show (dialog);
   if (gtk_dialog_run ((GtkDialog*)dialog) == GTK_RESPONSE_YES) {
