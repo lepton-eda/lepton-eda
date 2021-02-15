@@ -37,7 +37,7 @@ SCM_SYMBOL (edascm_string_format_sym , "string-format");
  * \note Scheme API: Implements the %active-pages procedure of the
  * (lepton core page) module.
  *
- * \return a Scheme list of #PAGE smobs.
+ * \return a Scheme list of #LeptonPage smobs.
  */
 SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
             (), "Retrieve a list of currently-opened pages")
@@ -48,7 +48,7 @@ SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
   GList *page_list = geda_list_get_glist (toplevel->pages);
 
   while (page_list != NULL) {
-    lst = scm_cons (edascm_from_page ((PAGE*) page_list->data), lst);
+    lst = scm_cons (edascm_from_page ((LeptonPage*) page_list->data), lst);
     page_list = g_list_next (page_list);
   }
 
@@ -59,21 +59,22 @@ SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
 
 /*! \brief Create a new page.
  * \par Function Description
- * Creates and initialises a new #PAGE structure associated with the
- * filename \a filename_s. Note that this does not check that a file
- * exists with that name, or attempt to load any data from it.
+ * Creates and initialises a new #LeptonPage structure associated
+ * with the filename \a filename_s. Note that this does not check
+ * that a file exists with that name, or attempt to load any data
+ * from it.
  *
  * \note Scheme API: Implements the %new-page procedure of the
  * (lepton core page) module.
  *
- * \return a newly-created #PAGE smob.
+ * \return a newly-created #LeptonPage smob.
  */
 SCM_DEFINE (new_page, "%new-page", 1, 0, 0,
             (SCM filename_s), "Create a new page")
 {
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   char *filename;
-  PAGE *page;
+  LeptonPage *page;
 
   /* Ensure that the argument is a string */
   SCM_ASSERT (scm_is_string (filename_s), filename_s,
@@ -88,10 +89,9 @@ SCM_DEFINE (new_page, "%new-page", 1, 0, 0,
 
 /*! \brief Close a page
  * \par Function Description
-
- * Destroys the #PAGE structure \a page_s, freeing all of its
- * resources.  Attempting to use \a page_s after calling this function
- * will cause an error.
+ * Destroys the #LeptonPage structure \a page_s, freeing all of
+ * its resources.  Attempting to use \a page_s after calling this
+ * function will cause an error.
  *
  * \note Scheme API: Implements the %close-page procedure of the
  * (lepton core page) module.
@@ -107,7 +107,7 @@ SCM_DEFINE (close_page_x, "%close-page!", 1, 0, 0,
               SCM_ARG1, s_close_page_x);
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
-  PAGE *page = edascm_to_page (page_s);
+  LeptonPage *page = edascm_to_page (page_s);
 
   s_page_delete (toplevel, page);
 
@@ -116,7 +116,7 @@ SCM_DEFINE (close_page_x, "%close-page!", 1, 0, 0,
 
 /*! \brief Get the filename associated with a page.
  * \par Function Description
- * Retrieves the filename associated with the #PAGE smob \a page_s.
+ * Retrieves the filename associated with the #LeptonPage smob \a page_s.
  *
  * \note Scheme API: Implements the %page-filename procedure of the
  * (lepton core page) module.
@@ -126,7 +126,7 @@ SCM_DEFINE (close_page_x, "%close-page!", 1, 0, 0,
 SCM_DEFINE (page_filename, "%page-filename", 1, 0, 0,
             (SCM page_s), "Get a page's associated filename")
 {
-  PAGE *page;
+  LeptonPage *page;
 
   /* Ensure that the argument is a page smob */
   SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
@@ -139,7 +139,7 @@ SCM_DEFINE (page_filename, "%page-filename", 1, 0, 0,
 
 /*! \brief Change the filename associated with a page.
  * \par Function Description
- * Sets the filename associated with the #PAGE smob \a page_s.
+ * Sets the filename associated with the #LeptonPage smob \a page_s.
  *
  * \note Scheme API: Implements the %set-page-filename! procedure of
  * the (lepton core page) module.
@@ -156,7 +156,7 @@ SCM_DEFINE (set_page_filename_x, "%set-page-filename!", 2, 0, 0,
   SCM_ASSERT (scm_is_string (filename_s), filename_s,
               SCM_ARG2, s_set_page_filename_x);
 
-  PAGE *page = edascm_to_page (page_s);
+  LeptonPage *page = edascm_to_page (page_s);
   char *new_fn = scm_to_utf8_string (filename_s);
   s_page_set_filename (page, new_fn);
   free (new_fn);
@@ -166,7 +166,7 @@ SCM_DEFINE (set_page_filename_x, "%set-page-filename!", 2, 0, 0,
 
 /*! \brief Get a list of objects in a page.
  * \par Function Description
- * Retrieves the contents of a the #PAGE smob \a page_s as a Scheme
+ * Retrieves the contents of a the #LeptonPage smob \a page_s as a Scheme
  * list of #LeptonObject smobs.
  *
  * \note Scheme API: Implements the %page-contents procedure of the
@@ -177,7 +177,7 @@ SCM_DEFINE (set_page_filename_x, "%set-page-filename!", 2, 0, 0,
 SCM_DEFINE (page_contents, "%page-contents", 1, 0, 0,
             (SCM page_s), "Get a page's contents.")
 {
-  PAGE *page;
+  LeptonPage *page;
 
   /* Ensure that the argument is a page smob */
   SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
@@ -190,14 +190,15 @@ SCM_DEFINE (page_contents, "%page-contents", 1, 0, 0,
 
 /*! \brief Get the page an object belongs to.
  * \par Function Description
- * Returns a smob for the #PAGE that \a obj_s belongs to.  If \a obj_s
- * does not belong to a #PAGE, returns SCM_BOOL_F.
+ * Returns a smob for the #LeptonPage that \a obj_s belongs to.
+ * If \a obj_s does not belong to a #LeptonPage, returns
+ * SCM_BOOL_F.
  *
  * \note Scheme API: Implements the %object-page procedure in the
  * (lepton core page) module.
  *
  * \param [in] obj_s an #LeptonObject smob.
- * \return a #PAGE smob or SCM_BOOL_F.
+ * \return a #LeptonPage smob or SCM_BOOL_F.
  */
 SCM_DEFINE (object_page, "%object-page", 1, 0, 0,
             (SCM obj_s), "Get the page that an object smob belongs to")
@@ -205,7 +206,7 @@ SCM_DEFINE (object_page, "%object-page", 1, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG1, s_object_page);
 
-  PAGE *page = o_get_page (edascm_to_object (obj_s));
+  LeptonPage *page = o_get_page (edascm_to_object (obj_s));
 
   if (page != NULL) {
     return edascm_from_page (page);
@@ -218,7 +219,7 @@ SCM_DEFINE (object_page, "%object-page", 1, 0, 0,
 /*! \brief Add an object to a page.
  * \par Function Description
  * Adds \a obj_s to \a page_s.  If \a obj_s is already attached to a
- * #PAGE or to a component #LeptonObject, throws a Scheme error.
+ * #LeptonPage or to a component #LeptonObject, throws a Scheme error.
  *
  * \note Scheme API: Implements the %page-append! procedure of the
  * (lepton core page) module.
@@ -234,11 +235,11 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG2, s_page_append_x);
 
-  PAGE *page = edascm_to_page (page_s);
+  LeptonPage *page = edascm_to_page (page_s);
   LeptonObject *obj = edascm_to_object (obj_s);
 
   /* Check that the object isn't already attached to something. */
-  PAGE *curr_page = o_get_page (obj);
+  LeptonPage *curr_page = o_get_page (obj);
   if (((curr_page != NULL) && (curr_page != page))
       || (obj->parent != NULL)) {
     scm_error (edascm_object_state_sym, s_page_append_x,
@@ -261,8 +262,9 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
 /*! \brief Remove an object from a page.
  * \par Function Description
  * Removes \a obj_s from \a page_s.  If \a obj_s is attached to a
- * #PAGE other than \a page_s, or to a component #LeptonObject, throws a
- * Scheme error. If \a obj_s is not attached to a page, does nothing.
+ * #LeptonPage other than \a page_s, or to a component
+ * #LeptonObject, throws a Scheme error. If \a obj_s is not
+ * attached to a page, does nothing.
  *
  * \note Scheme API: Implements the %page-remove! procedure of the
  * (lepton core page) module.
@@ -278,11 +280,11 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
   SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
               SCM_ARG2, s_page_remove_x);
 
-  PAGE *page = edascm_to_page (page_s);
+  LeptonPage *page = edascm_to_page (page_s);
   LeptonObject *obj = edascm_to_object (obj_s);
 
   /* Check that the object is not attached to something else. */
-  PAGE *curr_page = o_get_page (obj);
+  LeptonPage *curr_page = o_get_page (obj);
   if ((curr_page != NULL && curr_page != page)
       || (obj->parent != NULL)) {
     scm_error (edascm_object_state_sym, s_page_remove_x,
@@ -336,7 +338,7 @@ SCM_DEFINE (page_dirty, "%page-dirty?", 1, 0, 0,
   SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
               SCM_ARG1, s_page_dirty);
 
-  PAGE *page = edascm_to_page (page_s);
+  LeptonPage *page = edascm_to_page (page_s);
   return page->CHANGED ? SCM_BOOL_T : SCM_BOOL_F;
 }
 
@@ -360,7 +362,7 @@ SCM_DEFINE (set_page_dirty_x, "%set-page-dirty!", 2, 0, 0,
   SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
               SCM_ARG1, s_set_page_dirty_x);
 
-  PAGE *page = edascm_to_page (page_s);
+  LeptonPage *page = edascm_to_page (page_s);
   page->CHANGED = scm_is_true (flag_s);
   return page_s;
 }
@@ -383,7 +385,7 @@ SCM_DEFINE (page_to_string, "%page->string", 1, 0, 0,
   SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
               SCM_ARG1, s_page_to_string);
 
-  PAGE *page = edascm_to_page (page_s);
+  LeptonPage *page = edascm_to_page (page_s);
 
   gchar *buf = geda_object_list_to_buffer (s_page_objects (page));
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
@@ -418,7 +420,7 @@ SCM_DEFINE (string_to_page, "%string->page", 2, 0, 0,
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   char *filename = scm_to_utf8_string (filename_s);
-  PAGE *page = s_page_new (toplevel, filename);
+  LeptonPage *page = s_page_new (toplevel, filename);
   free (filename);
 
   size_t len;
@@ -464,7 +466,7 @@ init_module_lepton_core_page (void *unused)
 /*!
  * \brief Initialise the basic Lepton EDA page manipulation procedures.
  * \par Function Description
- * Registers some Scheme procedures for working with #PAGE
+ * Registers some Scheme procedures for working with #LeptonPage
  * smobs. Should only be called by edascm_init().
  */
 void

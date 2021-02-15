@@ -193,17 +193,20 @@ o_attrib_remove (GList **list,
 
 /*! \brief Read attributes from a TextBuffer.
  *
- *  \param [in]  page                   The PAGE object.
+ *  \param [in]  page                   The LeptonPage object.
  *  \param [in]  object_to_get_attribs  Object which gets these attribs.
  *  \param [in]  tb                     The text buffer to read from.
  *  \param [in]  release_ver            libgeda release version number.
  *  \param [in]  fileformat_ver         file format version number.
  *  \return GList of attributes read, or NULL on error.
  */
-GList *o_read_attribs (PAGE *page,
-                       LeptonObject *object_to_get_attribs,
-                       TextBuffer *tb,
-                       unsigned int release_ver, unsigned int fileformat_ver, GError ** err)
+GList*
+o_read_attribs (LeptonPage *page,
+                LeptonObject *object_to_get_attribs,
+                TextBuffer *tb,
+                unsigned int release_ver,
+                unsigned int fileformat_ver,
+                GError ** err)
 {
   GList *object_list = NULL;
   LeptonObject *new_obj;

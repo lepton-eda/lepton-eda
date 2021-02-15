@@ -2,7 +2,7 @@
  * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2017 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,7 +100,7 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
  *  \param [in] toplevel This toplevel.
  *  \return The \a page_current field of the \a toplevel.
  */
-PAGE*
+LeptonPage*
 s_toplevel_page_current (TOPLEVEL *toplevel)
 {
   g_return_val_if_fail (toplevel != NULL, NULL);
@@ -115,7 +115,8 @@ s_toplevel_page_current (TOPLEVEL *toplevel)
  *  \param [in]     page     The new current page
  */
 void
-s_toplevel_set_page_current (TOPLEVEL *toplevel, PAGE *page)
+s_toplevel_set_page_current (TOPLEVEL *toplevel,
+                             LeptonPage *page)
 {
   g_return_if_fail (toplevel != NULL);
 

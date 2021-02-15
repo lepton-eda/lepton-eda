@@ -13,7 +13,7 @@ double m_polygon_shortest_distance(GArray *points, int x, int y, gboolean closed
 
 /* o_attrib.c */
 GList*
-o_read_attribs (PAGE *page,
+o_read_attribs (LeptonPage *page,
                 LeptonObject *object_to_get_attribs,
                 TextBuffer *tb,
                 unsigned int release_ver,
@@ -35,8 +35,12 @@ int s_conn_uniq(GList *conn_list, CONN *input_conn);
 int s_conn_remove_other (LeptonObject *other_object, LeptonObject *to_remove);
 LeptonObject *s_conn_check_midpoint(LeptonObject *o_current, int x, int y);
 void s_conn_print(GList *conn_list);
-void s_conn_add_object(PAGE *page, LeptonObject *object);
-void s_conn_remove_object(PAGE *page, LeptonObject *object);
+void
+s_conn_add_object (LeptonPage *page,
+                   LeptonObject *object);
+void
+s_conn_remove_object (LeptonPage *page,
+                      LeptonObject *object);
 
 /* s_encoding.c */
 gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean strict);

@@ -6,25 +6,33 @@ o_save (const GList *object_list,
         const char *filename,
         GError **err);
 GList*
-o_read_buffer (PAGE *page,
+o_read_buffer (LeptonPage *page,
                GList *object_list,
                char *buffer,
                const int size,
                const char *name,
                GError **err);
-PAGE*
-o_read (PAGE *page,
+LeptonPage*
+o_read (LeptonPage *page,
         char *filename,
         GError **err);
 
 /* f_basic.c */
 gchar *f_get_autosave_filename (const gchar *filename);
 gboolean f_has_active_autosave (const gchar *filename, GError **err);
-int f_open(TOPLEVEL *toplevel, PAGE *page, const gchar *filename, GError **err);
-int f_open_flags(TOPLEVEL *toplevel, PAGE *page, const gchar *filename,
-                 const gint flags, GError **err);
 int
-f_save (PAGE *page,
+f_open (TOPLEVEL *toplevel,
+        LeptonPage *page,
+        const gchar *filename,
+        GError **err);
+int
+f_open_flags (TOPLEVEL *toplevel,
+              LeptonPage *page,
+              const gchar *filename,
+              const gint flags,
+              GError **err);
+int
+f_save (LeptonPage *page,
         const char *filename,
         GError **error);
 
@@ -157,7 +165,9 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel);
 
 /* s_conn.c */
 void s_conn_remove_object_connections (LeptonObject *to_remove);
-void s_conn_update_object (PAGE* page, LeptonObject *object);
+void
+s_conn_update_object (LeptonPage* page,
+                      LeptonObject *object);
 int s_conn_net_search(LeptonObject* new_net, int whichone, GList * conn_list);
 GList *s_conn_return_others(GList *input_list, LeptonObject *object);
 

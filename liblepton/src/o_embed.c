@@ -41,7 +41,7 @@ void
 o_embed (LeptonObject *o_current)
 {
   int page_modified = 0;
-  PAGE *page = NULL;
+  LeptonPage *page = NULL;
 
   page = o_get_page (o_current);
 
@@ -85,7 +85,7 @@ o_unembed (LeptonObject *o_current)
 {
   const CLibSymbol *sym;
   int page_modified = 0;
-  PAGE *page = NULL;
+  LeptonPage *page = NULL;
 
   page = o_get_page (o_current);
 

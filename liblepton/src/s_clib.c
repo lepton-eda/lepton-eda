@@ -1432,7 +1432,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
   GList *result = NULL;
   GList *iter = NULL;
   LeptonObject *o = NULL;
-  PAGE *page;
+  LeptonPage *page;
   GList *symlist = NULL;
   CLibSymbol *sym = NULL;
   const GList *p_iter;
@@ -1443,7 +1443,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
   for ( p_iter = geda_list_get_glist( toplevel->pages );
         p_iter != NULL;
         p_iter = g_list_next( p_iter )) {
-    page = (PAGE *)p_iter->data;
+    page = (LeptonPage *) p_iter->data;
     for (o_iter = s_page_objects (page);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {

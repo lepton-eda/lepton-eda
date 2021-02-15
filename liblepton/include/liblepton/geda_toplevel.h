@@ -2,7 +2,7 @@
  * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ struct st_toplevel
   GList *RC_list;
 
   /* page system */
-  PAGE *page_current;
+  LeptonPage *page_current;
   LeptonPageList *pages;
 
   /* backup variables */
@@ -54,12 +54,12 @@ s_toplevel_new (void);
 void
 s_toplevel_remove_weak_ptr (TOPLEVEL *toplevel, void *weak_pointer_loc);
 
-PAGE*
+LeptonPage*
 s_toplevel_page_current (TOPLEVEL *toplevel);
 
 void
-s_toplevel_set_page_current (TOPLEVEL *toplevel, PAGE *page);
-
+s_toplevel_set_page_current (TOPLEVEL *toplevel,
+                             LeptonPage *page);
 void
 s_toplevel_weak_ref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), void *user_data);
 

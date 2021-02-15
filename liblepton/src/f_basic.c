@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -158,8 +158,11 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
  *
  *  \return 0 on failure, 1 on success.
  */
-int f_open(TOPLEVEL *toplevel, PAGE *page,
-           const gchar *filename, GError **err)
+int
+f_open (TOPLEVEL *toplevel,
+        LeptonPage *page,
+        const gchar *filename,
+        GError **err)
 {
   return f_open_flags (toplevel, page, filename,
                        F_OPEN_RC | F_OPEN_CHECK_BACKUP, err);
@@ -211,9 +214,12 @@ f_backup_message (gchar *backup_filename,
  *
  *  \return 0 on failure, 1 on success.
  */
-int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
-                 const gchar *filename,
-                 const gint flags, GError **err)
+int
+f_open_flags (TOPLEVEL *toplevel,
+              LeptonPage *page,
+              const gchar *filename,
+              const gint flags,
+              GError **err)
 {
   int opened=FALSE;
   char *full_filename = NULL;
@@ -224,7 +230,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   GError *tmp_err = NULL;
 
   /* has the head been freed yet? */
-  /* probably not hack PAGE */
+  /* probably not hack LeptonPage */
 
   /* Cache the cwd so we can restore it later. */
   if (flags & F_OPEN_RESTORE_CWD) {
@@ -357,7 +363,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
  *  \return 1 on success, 0 on failure.
  */
 int
-f_save (PAGE *page,
+f_save (LeptonPage *page,
         const char *filename,
         GError **err)
 {

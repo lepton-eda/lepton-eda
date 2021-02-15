@@ -1,7 +1,7 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2013, 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2010-2021 Lepton EDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2010-2016 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,23 +25,23 @@
  * In order for Scheme code to be able to manipulate liblepton data
  * structures, it is convenient for it to be able to get handles to
  * several of the different C structures that liblepton uses, in
- * particular #TOPLEVEL, #PAGE and #LeptonObject.
+ * particular #TOPLEVEL, #LeptonPage and #LeptonObject.
  *
  * A particular issue is that, in principle, Guile can stash a
  * variable somewhere and only try and access it much later, possibly
  * after the underlying C structure has already been freed.
  *
  * In order to avoid this situation causing a segmentation fault, weak
- * references are used. In the case of #PAGE and #TOPLEVEL handles,
+ * references are used. In the case of #LeptonPage and #TOPLEVEL handles,
  * the usage is quite straightforward; Scheme code can never create or
- * destroy a #TOPLEVEL; and although a #PAGE can be created by Scheme
+ * destroy a #TOPLEVEL; and although a #LeptonPage can be created by Scheme
  * code, it must explicitly be destroyed if the Scheme code doesn't
- * want the #PAGE to hang around after it returns.
+ * want the #LeptonPage to hang around after it returns.
  *
  * #LeptonObject handles are a more complex case. It's possible
  * that Scheme code may legitimately want to create an
  * #LeptonObject and do something with it (or, similarly, pull an
- * #LeptonObject out of a #PAGE), without needing to carefully
+ * #LeptonObject out of a #LeptonPage), without needing to carefully
  * keep track of the #LeptonObject to avoid dropping it on the
  * floor. In that case, users should be able to rely on the
  * garbage collector.
@@ -50,9 +50,9 @@
  * garbage-collection in two cases:
  *
  * -# If they have been created by Scheme code, but not yet added to a
- *    PAGE.
- * -# If they have been removed from a #PAGE by Scheme code, but not
- *    yet re-added to a #PAGE.
+ *    LeptonPage.
+ * -# If they have been removed from a #LeptonPage by Scheme code, but not
+ *    yet re-added to a #LeptonPage.
  *
  * The cost of allocating a Scheme value is quite high.  While a C
  * structure is not garbage-collectable, its Scheme value is protected
@@ -263,7 +263,7 @@ smob_free (SCM smob)
                            unpack_as_pointer (smob));
     break;
   case GEDA_SMOB_PAGE:
-    s_page_weak_unref ((PAGE *) data, smob_weakref_notify,
+    s_page_weak_unref ((LeptonPage *) data, smob_weakref_notify,
                        unpack_as_pointer (smob));
     break;
   case GEDA_SMOB_OBJECT:
@@ -285,7 +285,7 @@ smob_free (SCM smob)
   /* If the smob is marked as garbage-collectable, destroy its
    * contents.
    *
-   * Because PAGEs and TOPLEVELs should never be garbage collected,
+   * Because LeptonPages and TOPLEVELs should never be garbage collected,
    * emit critical warnings if the GC tries to free them.
    */
   if (EDASCM_SMOB_GCP (smob)) {
@@ -295,7 +295,7 @@ smob_free (SCM smob)
                  __FUNCTION__, data);
       break;
     case GEDA_SMOB_PAGE:
-      g_critical ("%s: Blocked garbage-collection of PAGE %p",
+      g_critical ("%s: Blocked garbage-collection of LeptonPage %p",
                  __FUNCTION__, data);
       break;
     case GEDA_SMOB_OBJECT:
@@ -422,11 +422,11 @@ edascm_from_toplevel (TOPLEVEL *toplevel)
  * \par Function Description
  * Create a new smob representing \a page.
  *
- * \param page #PAGE to create a smob for.
+ * \param page #LeptonPage to create a smob for.
  * \return a smob representing \a page.
  */
 SCM
-edascm_from_page (PAGE *page)
+edascm_from_page (LeptonPage *page)
 {
   SCM smob = smob_cache_lookup (page);
 
@@ -449,12 +449,12 @@ edascm_from_page (PAGE *page)
 /*! \brief Get a page from a smob.
  * \ingroup guile_c_iface
  * \par Function Description
- * Return the #PAGE represented by \a smob.
+ * Return the #LeptonPage represented by \a smob.
  *
- * \param [in] smob Guile value to retrieve #PAGE from.
- * \return the #PAGE represented by \a smob.
+ * \param [in] smob Guile value to retrieve #LeptonPage from.
+ * \return the #LeptonPage represented by \a smob.
  */
-PAGE *
+LeptonPage *
 edascm_to_page (SCM smob)
 {
   g_debug ("edascm_to_page()\n");
@@ -464,7 +464,7 @@ edascm_to_page (SCM smob)
 #endif
   EDASCM_ASSERT_SMOB_VALID (smob);
 
-  return (PAGE *) SCM_SMOB_DATA (smob);
+  return (LeptonPage *) SCM_SMOB_DATA (smob);
 }
 
 /*! \brief Get a smob for a schematic object.
@@ -641,15 +641,15 @@ edascm_is_object (SCM smob)
   return EDASCM_OBJECTP (smob);
 }
 
-/*! \brief Test whether a smob is a #PAGE instance
+/*! \brief Test whether a smob is a #LeptonPage instance
  * \ingroup guile_c_iface
  * \par Function Description
- * If \a smob is a #PAGE instance, returns non-zero. Otherwise,
+ * If \a smob is a #LeptonPage instance, returns non-zero. Otherwise,
  * returns zero.
  *
  * \param [in] smob Guile value to test.
  *
- * \return non-zero iff \a smob is a #PAGE instance.
+ * \return non-zero iff \a smob is a #LeptonPage instance.
  */
 int
 edascm_is_page (SCM smob)
@@ -672,9 +672,9 @@ edascm_is_config (SCM smob)
   return EDASCM_CONFIGP (smob);
 }
 
-/*! \brief Test whether a smob is a #PAGE instance.
+/*! \brief Test whether a smob is a #LeptonPage instance.
  * \par Function Description
- * If \a page_smob is a #PAGE instance, returns \b SCM_BOOL_T;
+ * If \a page_smob is a #LeptonPage instance, returns \b SCM_BOOL_T;
  * otherwise returns \b SCM_BOOL_F.
  *
  * \note Scheme API: Implements the %page? procedure in the
@@ -682,11 +682,11 @@ edascm_is_config (SCM smob)
  *
  * \param [in] page_smob Guile value to test.
  *
- * \return SCM_BOOL_T iff \a page_smob is a #PAGE instance.
+ * \return SCM_BOOL_T iff \a page_smob is a #LeptonPage instance.
  */
 SCM_DEFINE (page_p, "%page?", 1, 0, 0,
             (SCM page_smob),
-            "Test whether the value is a Lepton EDA PAGE instance.")
+            "Test whether the value is a Lepton EDA LeptonPage instance.")
 {
   return (EDASCM_PAGEP (page_smob) ? SCM_BOOL_T : SCM_BOOL_F);
 }

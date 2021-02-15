@@ -76,7 +76,7 @@ SCM_SYMBOL (closepath_sym , "closepath");
 
 void o_page_changed (LeptonObject *o)
 {
-  PAGE *p = o_get_page (o);
+  LeptonPage *p = o_get_page (o);
   if (p != NULL) p->CHANGED = TRUE;
 }
 
@@ -953,7 +953,7 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   o_set_color (obj, scm_to_int (color_s));
 
   /* We may need to update connectivity. */
-  PAGE *page = o_get_page (obj);
+  LeptonPage *page = o_get_page (obj);
   if (page != NULL) {
     s_conn_update_object (page, obj);
   }
