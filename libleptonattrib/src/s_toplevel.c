@@ -102,7 +102,7 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
   for (p_iter = geda_list_get_glist (toplevel->pages);
        p_iter != NULL;
        p_iter = g_list_next (p_iter)) {
-    PAGE *p_current = (PAGE*) p_iter->data;
+    LeptonPage *p_current = (LeptonPage*) p_iter->data;
 
     for (o_iter = s_page_objects (p_current);
          o_iter != NULL;
@@ -132,14 +132,14 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
 gint s_page_save_all (TOPLEVEL *toplevel)
 {
   const GList *iter;
-  PAGE *p_current;
+  LeptonPage *p_current;
   gint status = 0;
 
   for ( iter = geda_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
-    p_current = (PAGE *)iter->data;
+    p_current = (LeptonPage *)iter->data;
 
     if (f_save (p_current, s_page_get_filename (p_current), NULL)) {
       g_message (_("Saved [%1$s]"),
@@ -171,7 +171,7 @@ void
 s_toplevel_save_sheet ()
 {
   GList *iter;
-  PAGE *p_current;
+  LeptonPage *p_current;
 
   g_debug ("==== Enter s_toplevel_gtksheet_to_toplevel()\n");
 
@@ -188,7 +188,7 @@ s_toplevel_save_sheet ()
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
-    p_current = (PAGE *)iter->data;
+    p_current = (LeptonPage *)iter->data;
     /* only traverse pages which are toplevel */
     if (p_current->page_control == 0) {
       s_toplevel_sheetdata_to_toplevel (toplevel, p_current);    /* adds all objects from page */
@@ -413,7 +413,7 @@ void s_toplevel_delete_attrib_col() {
 /*! \brief Copy SHEET_DATA content to TOP_LEVEL
  *
  * This function
- * loops through all objects on (PAGE page)->(LeptonObject *start_obj).
+ * loops through all objects on (LeptonPage page)->(LeptonObject *start_obj).
  * It takes the updated SHEET_DATA->TABLE data and then updates the
  * objects with the new attribs & attrib values.
  * For each component, it updates the attached
@@ -426,7 +426,8 @@ void s_toplevel_delete_attrib_col() {
  * \param page schematic page to copy
  */
 void
-s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel, PAGE *page)
+s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel,
+                                  LeptonPage *page)
 {
   GList *copy_list;
   GList *o_iter, *prim_iter;

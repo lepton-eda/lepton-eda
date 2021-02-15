@@ -2,7 +2,7 @@
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2003-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -511,7 +511,7 @@ x_window_set_default_icon( void )
 
 /*! \brief Set the main window's title.
  *
- *  \param plist  The list of PAGE objects (opened pages).
+ *  \param plist  The list of LeptonPage objects (opened pages).
  */
 static void
 x_window_set_title (GList* plist)
@@ -524,7 +524,7 @@ x_window_set_title (GList* plist)
 
   if (g_list_length (plist) == 1)
   {
-    const gchar* fpath = s_page_get_filename ((PAGE *) plist->data);
+    const gchar* fpath = s_page_get_filename ((LeptonPage *) plist->data);
     gchar* fname = g_path_get_basename (fpath);
 
     title = g_strdup_printf ("%s - %s", fname, prog_name);
@@ -584,7 +584,7 @@ void
 lepton_attrib_window ()
 {
   GList *iter;
-  PAGE *p_local;
+  LeptonPage *p_local;
 
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   x_window_set_toplevel (toplevel);
@@ -600,7 +600,7 @@ lepton_attrib_window ()
        iter != NULL;
        iter = g_list_next (iter)) {
 
-    p_local = (PAGE*) iter->data;
+    p_local = (LeptonPage*) iter->data;
     s_toplevel_set_page_current (toplevel, p_local);
 
     /* Now add all items found to the master lists */
@@ -642,7 +642,7 @@ lepton_attrib_window ()
   for ( iter = geda_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
-    p_local = (PAGE *)iter->data;
+    p_local = (LeptonPage *)iter->data;
 
     /* only traverse pages which are toplevel */
     if (p_local->page_control == 0) {

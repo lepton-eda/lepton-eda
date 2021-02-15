@@ -81,7 +81,9 @@ void
 s_toplevel_save_sheet ();
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_delete_attrib_col();
-void s_toplevel_sheetdata_to_toplevel(TOPLEVEL *toplevel, PAGE *page);
+void
+s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel,
+                                  LeptonPage *page);
 
 STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes);
 void s_toplevel_update_component_attribs_in_toplevel(TOPLEVEL *toplevel,
