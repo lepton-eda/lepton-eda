@@ -610,13 +610,16 @@ widget_create (PageSelectWidget* pagesel)
  *
  *  \param [in] model   GtkTreeModel to update.
  *  \param [in] parent  GtkTreeIter pointer to tree root.
- *  \param [in] pages   GedaPageList of pages for this toplevel.
+ *  \param [in] pages   LeptonPageList of pages for this toplevel.
  *  \param [in] page    The PAGE object to update tree model from.
  *  \param [in] pagesel The Pagesel object.
  */
 static void
-add_page (GtkTreeModel *model, GtkTreeIter *parent,
-          GedaPageList *pages, PAGE *page, PageSelectWidget *pagesel)
+add_page (GtkTreeModel *model,
+          GtkTreeIter *parent,
+          LeptonPageList *pages,
+          PAGE *page,
+          PageSelectWidget *pagesel)
 {
   GtkTreeIter iter;
   PAGE *p_current;

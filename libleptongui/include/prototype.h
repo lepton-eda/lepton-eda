@@ -613,7 +613,7 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
                          const CLibSymbol *symbol,
                          PAGE *parent);
 PAGE*
-s_hierarchy_find_up_page (GedaPageList *page_list,
+s_hierarchy_find_up_page (LeptonPageList *page_list,
                           PAGE *current_page);
 PAGE*
 s_hierarchy_load_subpage (GschemToplevel *w_current,
@@ -628,10 +628,10 @@ gint
 s_hierarchy_print_page (PAGE *p_current,
                         void * data);
 PAGE*
-s_hierarchy_find_prev_page (GedaPageList *page_list,
+s_hierarchy_find_prev_page (LeptonPageList *page_list,
                             PAGE *current_page);
 PAGE*
-s_hierarchy_find_next_page (GedaPageList *page_list,
+s_hierarchy_find_next_page (LeptonPageList *page_list,
                             PAGE *current_page);
 
 G_END_DECLS

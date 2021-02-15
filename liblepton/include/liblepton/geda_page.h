@@ -99,16 +99,17 @@ PAGE*
 s_page_search_by_basename (TOPLEVEL *toplevel, const gchar *filename);
 
 PAGE*
-s_page_search_by_page_id (GedaPageList *list, int pid);
+s_page_search_by_page_id (LeptonPageList *list,
+                          int pid);
 
 void
 s_page_print_all (TOPLEVEL *toplevel);
 
 gboolean
-s_page_check_changed (GedaPageList *list);
+s_page_check_changed (LeptonPageList *list);
 
 void
-s_page_clear_changed (GedaPageList *list);
+s_page_clear_changed (LeptonPageList *list);
 
 void
 s_page_autosave_init(TOPLEVEL *toplevel);

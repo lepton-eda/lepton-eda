@@ -25,7 +25,7 @@
 
 /* Wrappers around a new list mechanism */
 typedef struct _GedaList SELECTION;
-typedef struct _GedaList GedaPageList;
+typedef struct _GedaList LeptonPageList;
 
 /* lepton-schematic structures */
 typedef struct st_conn CONN;
