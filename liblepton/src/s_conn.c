@@ -265,10 +265,11 @@ LeptonObject *s_conn_check_midpoint(LeptonObject *o_current, int x, int y)
  *  This function adds all connections from and to the OBJECTS
  *  of the given GList.
  *
- *  \param page      The PAGE structure
+ *  \param page      The LeptonPage structure
  *  \param obj_list  GList of LeptonObjects to add into the connection system
  */
-void s_conn_update_glist (PAGE* page, GList *obj_list)
+void s_conn_update_glist (LeptonPage* page,
+                          GList *obj_list)
 {
   LeptonObject *o_current;
   GList *iter;
@@ -331,10 +332,12 @@ static void add_connection (LeptonObject *object, LeptonObject *other_object,
  *  LeptonObject <b>object</b> to all other connectable
  *  objects. It adds connections to the object and from all other
  *  objects to this one.
- *  \param page   The PAGE structure
+ *  \param page   The LeptonPage structure
  *  \param object LeptonObject to add into the connection system
  */
-static void s_conn_update_line_object (PAGE* page, LeptonObject *object)
+static void
+s_conn_update_line_object (LeptonPage* page,
+                           LeptonObject *object)
 {
   GList *object_list;
   LeptonObject *other_object;
@@ -482,10 +485,12 @@ static void s_conn_update_line_object (PAGE* page, LeptonObject *object)
  *  objects. It adds connections to the object and from all other
  *  objects to this one.
  *
- *  \param page   The PAGE structure
+ *  \param page   The LeptonPage structure
  *  \param object LeptonObject to add into the connection system
  */
-void s_conn_update_object (PAGE* page, LeptonObject *object)
+void
+s_conn_update_object (LeptonPage* page,
+                      LeptonObject *object)
 {
 
   /* Add object to the list of connectible objects */
@@ -644,10 +649,12 @@ GList *s_conn_return_others(GList *input_list, LeptonObject *object)
 
 /*! \brief add a line object to the list of connectible objects
  *  \par Function Description
- *  \param page   The PAGE structure
+ *  \param page   The LeptonPage structure
  *  \param object The line LeptonObject to add
  */
-static void s_conn_add_line_object (PAGE *page, LeptonObject *object)
+static void
+s_conn_add_line_object (LeptonPage *page,
+                        LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -670,10 +677,12 @@ static void s_conn_add_line_object (PAGE *page, LeptonObject *object)
  *  This function takes dispatches the object to the correct
  *  function, depending on its type.
  *
- *  \param page   The PAGE structure
+ *  \param page   The LeptonPage structure
  *  \param object The line LeptonObject to add
  */
-void s_conn_add_object (PAGE *page, LeptonObject *object)
+void
+s_conn_add_object (LeptonPage *page,
+                   LeptonObject *object)
 {
   GList *iter;
 
@@ -698,7 +707,9 @@ void s_conn_add_object (PAGE *page, LeptonObject *object)
  *  \par Function Description
  *  \param object The object to remove
  */
-void s_conn_remove_object(PAGE* page, LeptonObject *object)
+void
+s_conn_remove_object (LeptonPage* page,
+                      LeptonObject *object)
 {
   GList *iter;
 

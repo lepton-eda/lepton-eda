@@ -54,10 +54,11 @@
 
 static gint global_pid = 0;
 
-/* Called just before removing an LeptonObject from a PAGE
- * or after appending an LeptonObject to a PAGE. */
+/* Called just before removing an LeptonObject from a LeptonPage
+ * or after appending an LeptonObject to a LeptonPage. */
 static void
-object_added (PAGE *page, LeptonObject *object)
+object_added (LeptonPage *page,
+              LeptonObject *object)
 {
   /* Set up object parent pointer */
 #ifndef NDEBUG
@@ -73,9 +74,10 @@ object_added (PAGE *page, LeptonObject *object)
   o_emit_change_notify (object);
 }
 
-/* Called just before removing an LeptonObject from a PAGE. */
+/* Called just before removing an LeptonObject from a LeptonPage. */
 static void
-pre_object_removed (PAGE *page, LeptonObject *object)
+pre_object_removed (LeptonPage *page,
+                    LeptonObject *object)
 {
   o_emit_pre_change_notify (object);
 
@@ -103,19 +105,21 @@ pre_object_removed (PAGE *page, LeptonObject *object)
  *  \par Function Description
  *  Creates a new page and add it to <B>toplevel</B>'s list of pages.
  *
- *  It initializes the #PAGE structure and set its <B>page_filename</B>
- *  to <B>filename</B>. <B>toplevel</B>'s current page is not changed by
- *  this function.
+ *  It initializes the #LeptonPage structure and set its
+ *  <B>page_filename</B> to <B>filename</B>. <B>toplevel</B>'s
+ *  current page is not changed by this function.
  */
-PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
+LeptonPage*
+s_page_new (TOPLEVEL *toplevel,
+            const gchar *filename)
 {
   g_return_val_if_fail (toplevel, NULL);
   g_return_val_if_fail (filename, NULL);
 
-  PAGE *page;
+  LeptonPage *page;
 
   /* Now create a blank page */
-  page = (PAGE*)g_new0 (PAGE, 1);
+  page = (LeptonPage*)g_new0 (LeptonPage, 1);
 
   page->pid = global_pid++;
 
@@ -169,9 +173,11 @@ PAGE *s_page_new (TOPLEVEL *toplevel, const gchar *filename)
  *  the function sets the field <B>page_current</B> of the TOPLEVEL
  *  struct to NULL.
  */
-void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
+void
+s_page_delete (TOPLEVEL *toplevel,
+               LeptonPage *page)
 {
-  PAGE *tmp;
+  LeptonPage *tmp;
   gchar *backup_filename;
   gchar *real_filename;
 
@@ -279,13 +285,13 @@ void s_page_delete (TOPLEVEL *toplevel, PAGE *page)
 void s_page_delete_list(TOPLEVEL *toplevel)
 {
   GList *list_copy, *iter;
-  PAGE *page;
+  LeptonPage *page;
 
   /* s_page_delete removes items from the page list, so make a copy */
   list_copy = g_list_copy (geda_list_get_glist (toplevel->pages));
 
   for (iter = list_copy; iter != NULL; iter = g_list_next (iter)) {
-    page = (PAGE *)iter->data;
+    page = (LeptonPage *)iter->data;
 
     s_page_delete (toplevel, page);
   }
@@ -296,7 +302,7 @@ void s_page_delete_list(TOPLEVEL *toplevel)
   s_toplevel_set_page_current (toplevel, NULL);
 }
 
-/*! \brief Add a weak reference watcher to an PAGE.
+/*! \brief Add a weak reference watcher to an LeptonPage.
  * \par Function Description
  * Adds the weak reference callback \a notify_func to \a page.  When
  * \a page is destroyed, \a notify_func will be called with two
@@ -309,7 +315,7 @@ void s_page_delete_list(TOPLEVEL *toplevel)
  * \param [in] user_data      Data to be passed to \a notify_func.
  */
 void
-s_page_weak_ref (PAGE *page,
+s_page_weak_ref (LeptonPage *page,
                  void (*notify_func)(void *, void *),
                  void *user_data)
 {
@@ -317,7 +323,7 @@ s_page_weak_ref (PAGE *page,
   page->weak_refs = s_weakref_add (page->weak_refs, notify_func, user_data);
 }
 
-/*! \brief Remove a weak reference watcher from an PAGE.
+/*! \brief Remove a weak reference watcher from an LeptonPage.
  * \par Function Description
  * Removes the weak reference callback \a notify_func from \a page.
  *
@@ -328,7 +334,7 @@ s_page_weak_ref (PAGE *page,
  * \param [in] user_data      Data to to search for.
  */
 void
-s_page_weak_unref (PAGE *page,
+s_page_weak_unref (LeptonPage *page,
                    void (*notify_func)(void *, void *),
                    void *user_data)
 {
@@ -337,7 +343,7 @@ s_page_weak_unref (PAGE *page,
                                       notify_func, user_data);
 }
 
-/*! \brief Add a weak pointer to an PAGE.
+/*! \brief Add a weak pointer to an LeptonPage.
  * \par Function Description
  * Adds the weak pointer at \a weak_pointer_loc to \a page. The
  * value of \a weak_pointer_loc will be set to NULL when \a page is
@@ -349,7 +355,7 @@ s_page_weak_unref (PAGE *page,
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
 void
-s_page_add_weak_ptr (PAGE *page,
+s_page_add_weak_ptr (LeptonPage *page,
                      void *weak_pointer_loc)
 {
   g_return_if_fail (page != NULL);
@@ -357,7 +363,7 @@ s_page_add_weak_ptr (PAGE *page,
                                        (void**) weak_pointer_loc);
 }
 
-/*! \brief Remove a weak pointer from an PAGE.
+/*! \brief Remove a weak pointer from an LeptonPage.
  * \par Function Description
  * Removes the weak pointer at \a weak_pointer_loc from \a page.
  *
@@ -367,7 +373,7 @@ s_page_add_weak_ptr (PAGE *page,
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
 void
-s_page_remove_weak_ptr (PAGE *page,
+s_page_remove_weak_ptr (LeptonPage *page,
                         void *weak_pointer_loc)
 {
   g_return_if_fail (page != NULL);
@@ -380,9 +386,11 @@ s_page_remove_weak_ptr (PAGE *page,
  *  Changes the current page in \a toplevel to the page \a p_new.
  *
  *  \param toplevel  The TOPLEVEL object
- *  \param p_new     The PAGE to go to
+ *  \param p_new     The LeptonPage to go to
  */
-void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new)
+void
+s_page_goto (TOPLEVEL *toplevel,
+             LeptonPage *p_new)
 {
   gchar *dirname;
 
@@ -408,18 +416,20 @@ void s_page_goto (TOPLEVEL *toplevel, PAGE *p_new)
  *  \param toplevel  The TOPLEVEL object
  *  \param filename  The filename string to search for
  *
- *  \return PAGE pointer to a matching page, NULL otherwise.
+ *  \return LeptonPage pointer to a matching page, NULL otherwise.
  */
-PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename)
+LeptonPage*
+s_page_search (TOPLEVEL *toplevel,
+               const gchar *filename)
 {
   const GList *iter;
-  PAGE *page;
+  LeptonPage *page;
 
   for ( iter = geda_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
-    page = (PAGE *)iter->data;
+    page = (LeptonPage *)iter->data;
     /* FIXME this may not be correct on platforms with
      * case-insensitive filesystems. */
     if ( strcmp( s_page_get_filename (page), filename ) == 0 )
@@ -436,19 +446,21 @@ PAGE *s_page_search (TOPLEVEL *toplevel, const gchar *filename)
  *  \param toplevel  The TOPLEVEL object
  *  \param filename  The filename string to search for
  *
- *  \return PAGE pointer to a matching page, NULL otherwise.
+ *  \return LeptonPage pointer to a matching page, NULL otherwise.
  */
-PAGE *s_page_search_by_basename (TOPLEVEL *toplevel, const gchar *filename)
+LeptonPage*
+s_page_search_by_basename (TOPLEVEL *toplevel,
+                           const gchar *filename)
 {
   const GList* iter   = NULL;
-  PAGE*        page   = NULL;
-  PAGE*        result = NULL;
+  LeptonPage*  page   = NULL;
+  LeptonPage*  result = NULL;
 
   for ( iter = geda_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) )
   {
-    page = (PAGE*) iter->data;
+    page = (LeptonPage*) iter->data;
 
     const gchar* fname = s_page_get_filename (page);
     gchar* bname = g_path_get_basename (fname);
@@ -479,7 +491,7 @@ PAGE *s_page_search_by_basename (TOPLEVEL *toplevel, const gchar *filename)
  *  \param [in] pid       The ID of the page to find.
  *  \returns A pointer on the page found or NULL if not found.
  */
-PAGE*
+LeptonPage*
 s_page_search_by_page_id (LeptonPageList *list,
                           int pid)
 {
@@ -488,7 +500,7 @@ s_page_search_by_page_id (LeptonPageList *list,
   for ( iter = geda_list_get_glist (list);
         iter != NULL;
         iter = g_list_next (iter) ) {
-    PAGE *page = (PAGE *)iter->data;
+    LeptonPage *page = (LeptonPage *)iter->data;
     if (page->pid == pid) {
       return page;
     }
@@ -507,13 +519,13 @@ s_page_search_by_page_id (LeptonPageList *list,
 void s_page_print_all (TOPLEVEL *toplevel)
 {
   const GList *iter;
-  PAGE *page;
+  LeptonPage *page;
 
   for ( iter = geda_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
-    page = (PAGE *)iter->data;
+    page = (LeptonPage *) iter->data;
     printf ("FILENAME: %1$s\n", s_page_get_filename (page));
     geda_object_list_print (page->_object_list);
   }
@@ -532,13 +544,13 @@ gboolean
 s_page_check_changed (LeptonPageList *list)
 {
   const GList *iter;
-  PAGE *p_current;
+  LeptonPage *p_current;
 
   for ( iter = geda_list_get_glist( list );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
-    p_current = (PAGE *)iter->data;
+    p_current = (LeptonPage *)iter->data;
     if (p_current->CHANGED) {
       return TRUE;
     }
@@ -551,19 +563,19 @@ s_page_check_changed (LeptonPageList *list)
  *  \par Function Description
  *  This function resets the CHANGED flag of each page following \a head.
  *
- *  \param [in,out] list  PAGE list to set CHANGED flags in.
+ *  \param [in,out] list  LeptonPage list to set CHANGED flags in.
  */
 void
 s_page_clear_changed (LeptonPageList *list)
 {
   const GList *iter;
-  PAGE *p_current;
+  LeptonPage *p_current;
 
   for ( iter = geda_list_get_glist( list );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
-    p_current = (PAGE *)iter->data;
+    p_current = (LeptonPage *) iter->data;
     p_current->CHANGED = 0;
   }
 }
@@ -598,7 +610,7 @@ void s_page_autosave_init(TOPLEVEL *toplevel)
 gint s_page_autosave (TOPLEVEL *toplevel)
 {
   const GList *iter;
-  PAGE *p_current;
+  LeptonPage *p_current;
 
   if (toplevel == NULL) {
     return 0;
@@ -618,7 +630,7 @@ gint s_page_autosave (TOPLEVEL *toplevel)
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
-    p_current = (PAGE *)iter->data;
+    p_current = (LeptonPage *) iter->data;
 
     if (p_current->ops_since_last_backup != 0) {
       /* Real autosave is done in o_undo_savestate */
@@ -629,34 +641,34 @@ gint s_page_autosave (TOPLEVEL *toplevel)
   return toplevel->auto_save_interval;
 }
 
-/*! \brief Append an LeptonObject to the PAGE
+/*! \brief Append an LeptonObject to the LeptonPage
  *
  *  \par Function Description
- *  Links the passed LeptonObject to the end of the PAGE's
+ *  Links the passed LeptonObject to the end of the LeptonPage's
  *  linked list of objects.
  *
- *  \param [in] page      The PAGE the object is being added to.
+ *  \param [in] page      The LeptonPage the object is being added to.
  *  \param [in] object    The LeptonObject being added to the page.
  */
 void
-s_page_append (PAGE *page,
+s_page_append (LeptonPage *page,
                LeptonObject *object)
 {
   page->_object_list = g_list_append (page->_object_list, object);
   object_added (page, object);
 }
 
-/*! \brief Append a GList of LeptonObjects to the PAGE
+/*! \brief Append a GList of LeptonObjects to the LeptonPage
  *
  *  \par Function Description
- *  Links the passed LeptonObject GList to the end of the PAGE's
+ *  Links the passed LeptonObject GList to the end of the LeptonPage's
  *  object_list.
  *
- *  \param [in] page      The PAGE the objects are being added to.
+ *  \param [in] page      The LeptonPage the objects are being added to.
  *  \param [in] obj_list  The LeptonObject list being added to the page.
  */
 void
-s_page_append_list (PAGE *page,
+s_page_append_list (LeptonPage *page,
                     GList *obj_list)
 {
   GList *iter;
@@ -666,36 +678,36 @@ s_page_append_list (PAGE *page,
   }
 }
 
-/*! \brief Remove an LeptonObject from the PAGE
+/*! \brief Remove an LeptonObject from the LeptonPage
  *
  *  \par Function Description
- *  Removes the passed LeptonObject from the PAGE's
+ *  Removes the passed LeptonObject from the LeptonPage's
  *  linked list of objects.
  *
- *  \param [in] page      The PAGE the object is being removed from.
+ *  \param [in] page      The LeptonPage the object is being removed from.
  *  \param [in] object    The LeptonObject being removed from the page.
  */
 void
-s_page_remove (PAGE *page,
+s_page_remove (LeptonPage *page,
                LeptonObject *object)
 {
   pre_object_removed (page, object);
   page->_object_list = g_list_remove (page->_object_list, object);
 }
 
-/*! \brief Replace an LeptonObject in a PAGE, in the same list position.
+/*! \brief Replace an LeptonObject in a LeptonPage, in the same list position.
  *
  * \par Function Description
  * Removes \a object1 from \a page's linked list of objects, and puts
  * \a object2 in the position thus vacated. If \a object1 is not in \a
  * page, object2 is appended to \a page.
  *
- * \param [in] page      The PAGE to be modified.
+ * \param [in] page      The LeptonPage to be modified.
  * \param [in] object1   The LeptonObject being removed from the page.
  * \param [in] object2   The LeptonObject being added to the page.
  */
 void
-s_page_replace (PAGE *page,
+s_page_replace (LeptonPage *page,
                 LeptonObject *object1,
                 LeptonObject *object2)
 {
@@ -712,12 +724,12 @@ s_page_replace (PAGE *page,
   object_added (page, object2);
 }
 
-/*! \brief Remove and free all LeptonObjects from the PAGE
+/*! \brief Remove and free all LeptonObjects from the LeptonPage
  *
- *  \param [in] page      The PAGE being cleared.
+ *  \param [in] page      The LeptonPage being cleared.
  */
 void
-s_page_delete_objects (PAGE *page)
+s_page_delete_objects (LeptonPage *page)
 {
   GList *objects = page->_object_list;
   GList *iter;
@@ -729,18 +741,18 @@ s_page_delete_objects (PAGE *page)
 }
 
 
-/*! \brief Return a GList of LeptonObjects on the PAGE
+/*! \brief Return a GList of LeptonObjects on the LeptonPage
  *
  *  \par Function Description
- *  An accessor for the PAGE's GList of objects.
+ *  An accessor for the LeptonPage's GList of objects.
  *
- *  NB: This GList is owned by the PAGE, and must not be
+ *  NB: This GList is owned by the LeptonPage, and must not be
  *      free'd or modified by the caller.
  *
- *  \param [in] page      The PAGE to get objects on.
- *  \returns a const pointer to the PAGE's GList of objects
+ *  \param [in] page      The LeptonPage to get objects on.
+ *  \returns a const pointer to the LeptonPage's GList of objects
  */
-const GList *s_page_objects (PAGE *page)
+const GList *s_page_objects (LeptonPage *page)
 {
   return page->_object_list;
 }
@@ -753,7 +765,7 @@ const GList *s_page_objects (PAGE *page)
  *  the passed box shaped region.
  *
  *  \param [in] toplevel  The TOPLEVEL object.
- *  \param [in] page      The PAGE to find objects on.
+ *  \param [in] page      The LeptonPage to find objects on.
  *  \param [in] rects     The BOX regions to check.
  *  \param [in] n_rects   The number of regions.
  *  \param [in] include_hidden Calculate bounds of hidden objects.
@@ -761,7 +773,7 @@ const GList *s_page_objects (PAGE *page)
  */
 GList*
 s_page_objects_in_regions (TOPLEVEL *toplevel,
-                           PAGE *page,
+                           LeptonPage *page,
                            BOX *rects,
                            int n_rects,
                            gboolean include_hidden)
@@ -803,11 +815,11 @@ s_page_objects_in_regions (TOPLEVEL *toplevel,
  * Retrieve the filename associated with \a page.  The returned string
  * remains owned by \a page and must not be modified or freed.
  *
- * \param page  A #PAGE pointer
+ * \param page  A #LeptonPage pointer
  * \return the full path to the underlying file of the \a page
  */
 const gchar *
-s_page_get_filename (const PAGE *page)
+s_page_get_filename (const LeptonPage *page)
 {
   g_return_val_if_fail (page, "");
   g_return_val_if_fail (page->_filename, "");
@@ -821,11 +833,11 @@ s_page_get_filename (const PAGE *page)
  * is relative, it will be made absolute relative the current working
  * directory.
  *
- * \param page      The #PAGE for which to set the filename
+ * \param page      The #LeptonPage for which to set the filename
  * \param filename  The new file path for \a page
  */
 void
-s_page_set_filename (PAGE *page,
+s_page_set_filename (LeptonPage *page,
                      const char *filename)
 {
   g_return_if_fail (page);

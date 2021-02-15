@@ -62,8 +62,9 @@
  * For more information on dynamic wind, see the Guile Reference
  * Manual.
  *
- * The remaining functions in this module allow you to convert Lepton EDA
- * #LeptonObject and #PAGE structures to and from Scheme values ("smobs").
+ * The remaining functions in this module allow you to convert
+ * Lepton EDA #LeptonObject and #LeptonPage structures to and from
+ * Scheme values ("smobs").
  *
  * When an #LeptonObject is created by Scheme code, it is permitted to be
  * garbage-collected if all references to it are lost; this is an
@@ -161,7 +162,7 @@ SCM edascm_from_toplevel (TOPLEVEL *toplevel);
 /*! Tests whether a Scheme value is a TOPLEVEL smob. */
 #define EDASCM_TOPLEVELP(x) EDASCM_SMOB_TYPEP(x, GEDA_SMOB_TOPLEVEL)
 
-/*! Tests whether a Scheme value is a PAGE smob. */
+/*! Tests whether a Scheme value is a LeptonPage smob. */
 #define EDASCM_PAGEP(x) EDASCM_SMOB_TYPEP(x, GEDA_SMOB_PAGE)
 
 /*! Tests whether a Scheme value is an LeptonObject smob. */

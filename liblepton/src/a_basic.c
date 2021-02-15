@@ -78,16 +78,20 @@ o_save (const GList *object_list,
  *  The name argument is used for debugging, and should be set to a
  *  meaningful string (e.g. the name of the file the data is from).
  *
- *  \param [in,out] page         The PAGE object.
+ *  \param [in,out] page         The LeptonPage object.
  *  \param [in]     object_list  The object_list to read data to.
  *  \param [in]     buffer       The memory buffer to read from.
  *  \param [in]     size         The size of the buffer.
  *  \param [in]     name         The name to describe the data with.
  *  \return GList of objects if successful read, or NULL on error.
  */
-GList *o_read_buffer (PAGE *page, GList *object_list,
-                      char *buffer, const int size,
-                      const char *name, GError **err)
+GList
+*o_read_buffer (LeptonPage *page,
+                GList *object_list,
+                char *buffer,
+                const int size,
+                const char *name,
+                GError **err)
 {
   const char *line = NULL;
   TextBuffer *tb = NULL;
@@ -374,14 +378,14 @@ error:
  *  \par Function Description
  *  This function reads a file in gEDA format.
  *
- *  \param [in,out] page         The PAGE object.
+ *  \param [in,out] page         The LeptonPage object.
  *  \param [in]     filename     The filename to read from.
  *  \param [in,out] err          #GError structure for error reporting, or
  *                               NULL to disable error reporting
  *  \return page
  */
-PAGE*
-o_read (PAGE *page,
+LeptonPage*
+o_read (LeptonPage *page,
         char *filename,
         GError **err)
 {

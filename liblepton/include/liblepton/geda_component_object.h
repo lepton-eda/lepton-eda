@@ -38,7 +38,7 @@ GList*
 o_component_promote_attribs (LeptonObject *object);
 
 LeptonObject*
-o_component_new (PAGE *page,
+o_component_new (LeptonPage *page,
                  char type,
                  int color,
                  int x,
@@ -87,11 +87,11 @@ o_component_find_pin_by_attribute (LeptonObject *object,
                                    char *wanted_value);
 
 void
-o_component_check_symversion (PAGE* page,
+o_component_check_symversion (LeptonPage* page,
                               LeptonObject* object);
 
 LeptonObject*
-o_component_read (PAGE *page,
+o_component_read (LeptonPage *page,
                   const char buf[],
                   unsigned int release_ver,
                   unsigned int fileformat_ver,

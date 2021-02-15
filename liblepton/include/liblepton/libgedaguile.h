@@ -40,7 +40,7 @@ TOPLEVEL *edascm_c_current_toplevel ();
 void edascm_dynwind_toplevel (TOPLEVEL *toplevel);
 
 /* Create a Guile value from a page structure. */
-SCM edascm_from_page (PAGE *page);
+SCM edascm_from_page (LeptonPage *page);
 
 /* Create a Guile value from an object structure. */
 SCM edascm_from_object (LeptonObject *object);
@@ -49,7 +49,7 @@ SCM edascm_from_object (LeptonObject *object);
 SCM edascm_from_config (EdaConfig *cfg);
 
 /* Retrieve a page structure from a Guile value. */
-PAGE *edascm_to_page (SCM smob);
+LeptonPage *edascm_to_page (SCM smob);
 
 /* Retrieve an object structure from a Guile value. */
 LeptonObject *edascm_to_object (SCM smob);

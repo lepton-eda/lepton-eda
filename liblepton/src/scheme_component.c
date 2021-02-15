@@ -233,13 +233,14 @@ SCM_DEFINE (component_contents, "%component-contents", 1, 0, 0,
 
 /*! \brief Add a primitive object to a component object.
  * \par Function Description
- * Adds \a obj_s to \a component_s.  If \a obj_s is already attached to
- * another component object or to a #PAGE, or if \a obj_s is itself a
- * component object, throws a Scheme error.  If \a obj_s is already
- * attached to \a component_s, does nothing.
+ * Adds \a obj_s to \a component_s.  If \a obj_s is already
+ * attached to another component object or to a #LeptonPage, or if
+ * \a obj_s is itself a component object, throws a Scheme error.
+ * If \a obj_s is already attached to \a component_s, does
+ * nothing.
  *
- * \note Scheme API: Implements the %component-append! procedure of the
- * (lepton core component) module.
+ * \note Scheme API: Implements the %component-append! procedure
+ * of the (lepton core component) module.
  *
  * \param component_s component object to modify.
  * \param obj_s     primitive object to add.
@@ -260,7 +261,7 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
   LeptonObject *parent = edascm_to_object (component_s);
   LeptonObject *child = edascm_to_object (obj_s);
 
-  PAGE* page = o_get_page (child);
+  LeptonPage* page = o_get_page (child);
   /* Check that object is not already attached to a page or a
      different component. */
   if ((page != NULL)
@@ -284,7 +285,7 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
     g_list_append (parent->component->prim_objs, child);
   child->parent = parent;
 
-  PAGE* parent_page = o_get_page (parent);
+  LeptonPage* parent_page = o_get_page (parent);
   /* We may need to update connections */
   if (parent_page != NULL) {
     s_conn_update_object (parent_page, child);
@@ -299,9 +300,10 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
 
 /*! \brief Remove a primitive object from a component object.
  * \par Function Description
- * Removes \a obj_s from \a component_s.  If \a obj_s is attached to a
- * #PAGE or to a component object other than \a component_s, throws a
- * Scheme error.  If \a obj_s is unattached, does nothing.
+ * Removes \a obj_s from \a component_s.  If \a obj_s is attached
+ * to a #LeptonPage or to a component object other than \a
+ * component_s, throws a Scheme error.  If \a obj_s is unattached,
+ * does nothing.
  *
  * \note Scheme API: Implements the %component-remove! procedure of the
  * (lepton core component) module.
@@ -321,7 +323,7 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
 
   LeptonObject *parent = edascm_to_object (component_s);
   LeptonObject *child = edascm_to_object (obj_s);
-  PAGE *child_page = o_get_page (child);
+  LeptonPage *child_page = o_get_page (child);
 
   /* Check that object is not attached to a different component. */
   if ((child->parent != NULL) && (child->parent != parent)) {

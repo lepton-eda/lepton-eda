@@ -344,7 +344,7 @@ o_component_get_promotable (LeptonObject *object,
 /*! \brief Promote attributes from a component LeptonObject
  *  \par Function Description
  *  Selects promotable attributes from \a object, and returns a new
- *  #GList containing them (suitable for appending to a #PAGE).
+ *  #GList containing them (suitable for appending to a #LeptonPage).
  *
  *  \param [in]  object   The component #LeptonObject to promote from.
  *  \return A #GList of promoted attributes.
@@ -683,7 +683,7 @@ create_placeholder (LeptonObject* node, int x, int y)
  *  \par Function Description
  *
  */
-LeptonObject *o_component_new (PAGE *page,
+LeptonObject *o_component_new (LeptonPage *page,
                          char type,
                          int color, int x, int y, int angle,
                          int mirror, const CLibSymbol *clib,
@@ -812,13 +812,13 @@ o_component_new_embedded (char type,
  *  If the component object was read successfully, a new object is
  *  allocated and appended to the \a object_list.
  *
- *  \param [in] page         The PAGE object
+ *  \param [in] page         The LeptonPage object
  *  \param [in] buf          a text buffer (usually a line of a schematic file)
  *  \param [in] release_ver  The release number gEDA
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
-LeptonObject *o_component_read (PAGE *page,
+LeptonObject *o_component_read (LeptonPage *page,
                           const char buf[],
                           unsigned int release_ver,
                           unsigned int fileformat_ver,
@@ -1160,11 +1160,12 @@ o_component_find_pin_by_attribute (LeptonObject *object,
  *  (page->major_changed_refdes), minor changes are reported
  *  to the messaging system.
  *
- *  \param page      The PAGE object
+ *  \param page      The LeptonPage object
  *  \param object    The component LeptonObject
  */
 void
-o_component_check_symversion (PAGE* page, LeptonObject* object)
+o_component_check_symversion (LeptonPage* page,
+                              LeptonObject* object)
 {
   char *inside = NULL;
   char *outside = NULL;

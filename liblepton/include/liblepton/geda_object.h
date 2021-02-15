@@ -28,7 +28,7 @@ struct st_object
   int sid;
   char *name;
 
-  PAGE *page; /* Parent page */
+  LeptonPage *page; /* Parent page */
 
   GedaBounds bounds;
 
@@ -172,7 +172,7 @@ o_get_line_options (LeptonObject *object,
                     int *length,
                     int *space);
 
-PAGE*
+LeptonPage*
 o_get_page (LeptonObject *object);
 
 LeptonObject*

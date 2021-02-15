@@ -49,7 +49,7 @@ geda_net_object_calculate_bounds (const LeptonObject *object,
                                   GedaBounds *bounds);
 
 void
-geda_net_object_consolidate (PAGE *page);
+geda_net_object_consolidate (LeptonPage *page);
 
 gboolean
 geda_net_object_get_position (const LeptonObject *object, gint *x, gint *y);

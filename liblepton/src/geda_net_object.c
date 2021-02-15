@@ -623,7 +623,7 @@ o_net_consolidate_segments (LeptonObject *object)
   GList *c_current;
   CONN *conn;
   LeptonObject *other_object;
-  PAGE *page;
+  LeptonPage *page;
   int changed = 0;
 
   g_return_val_if_fail ((object != NULL), 0);
@@ -691,10 +691,10 @@ o_net_consolidate_segments (LeptonObject *object)
  *  This function consolidates all net objects in a page until no more
  *  consolidations are possible.
  *
- *  \param page      The PAGE to consolidate nets in.
+ *  \param page      The LeptonPage to consolidate nets in.
  */
 void
-geda_net_object_consolidate (PAGE *page)
+geda_net_object_consolidate (LeptonPage *page)
 {
   LeptonObject *o_current;
   const GList *iter;

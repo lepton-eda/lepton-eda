@@ -854,19 +854,21 @@ lepton_object_set_color (LeptonObject *object,
 }
 
 
-/*! \brief Get an object's parent PAGE.
+/*! \brief Get an object's parent LeptonPage.
  *
  * \par Function Description
- * Returns the PAGE structure which owns \a object. If \a object is
- * not currently associated with a PAGE, returns NULL. If \a object is
- * part of a compound object, recurses upward.
+ * Returns the LeptonPage structure which owns \a object. If \a
+ * object is not currently associated with a LeptonPage, returns
+ * NULL. If \a object is part of a compound object, recurses
+ * upward.
  *
- * \param [in] object    The LeptonObject for which to retrieve the parent PAGE.
- * \return The PAGE which owns \a object or NULL.
+ * \param [in] object The LeptonObject for which to retrieve the
+ *                    parent LeptonPage.
+ * \return The LeptonPage which owns \a object or NULL.
  *
  * \sa s_page_append_object() s_page_append() s_page_remove()
  */
-PAGE *
+LeptonPage *
 o_get_page (LeptonObject *object)
 {
   if (object->parent != NULL) {

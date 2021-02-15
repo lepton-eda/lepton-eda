@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -262,7 +262,7 @@ int s_undo_levels(UNDO *head)
  *  \par Function Description
  *
  */
-void s_undo_init(PAGE *p_current)
+void s_undo_init (LeptonPage *p_current)
 {
   p_current->undo_tos = p_current->undo_bottom = NULL;
   p_current->undo_current = NULL;
@@ -274,7 +274,7 @@ void s_undo_init(PAGE *p_current)
  *
  */
 void
-s_undo_free_all (PAGE *p_current)
+s_undo_free_all (LeptonPage *p_current)
 {
   s_undo_destroy_all (p_current->undo_bottom);
   p_current->undo_bottom = NULL;
