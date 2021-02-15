@@ -201,7 +201,8 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
  *  \returns A pointer on the page found or NULL if not found.
  */
 PAGE *
-s_hierarchy_find_up_page (GedaPageList *page_list, PAGE *current_page)
+s_hierarchy_find_up_page (LeptonPageList *page_list,
+                          PAGE *current_page)
 {
   g_return_val_if_fail (current_page != NULL, NULL);
   if (current_page->up < 0) {
@@ -403,7 +404,8 @@ s_hierarchy_print_page (PAGE *p_current, void * data)
  *  \returns A pointer on the page found or NULL if not found.
   */
 PAGE *
-s_hierarchy_find_prev_page (GedaPageList *page_list, PAGE *current_page)
+s_hierarchy_find_prev_page (LeptonPageList *page_list,
+                            PAGE *current_page)
 {
   const GList *iter;
 
@@ -437,7 +439,8 @@ s_hierarchy_find_prev_page (GedaPageList *page_list, PAGE *current_page)
  *  \returns A pointer on the page found or NULL if not found.
   */
 PAGE *
-s_hierarchy_find_next_page (GedaPageList *page_list, PAGE *current_page)
+s_hierarchy_find_next_page (LeptonPageList *page_list,
+                            PAGE *current_page)
 {
   const GList *iter;
 

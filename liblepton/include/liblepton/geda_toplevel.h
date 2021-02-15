@@ -30,7 +30,7 @@ struct st_toplevel
 
   /* page system */
   PAGE *page_current;
-  GedaPageList *pages;
+  LeptonPageList *pages;
 
   /* backup variables */
   int auto_save_interval;

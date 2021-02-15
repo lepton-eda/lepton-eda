@@ -479,7 +479,9 @@ PAGE *s_page_search_by_basename (TOPLEVEL *toplevel, const gchar *filename)
  *  \param [in] pid       The ID of the page to find.
  *  \returns A pointer on the page found or NULL if not found.
  */
-PAGE *s_page_search_by_page_id (GedaPageList *list, int pid)
+PAGE*
+s_page_search_by_page_id (LeptonPageList *list,
+                          int pid)
 {
   const GList *iter;
 
@@ -523,10 +525,11 @@ void s_page_print_all (TOPLEVEL *toplevel)
  *  This function checks the CHANGED flag for all pages in the <B>list</B>
  *  object.
  *
- *  \param [in] list  GedaPageList to check CHANGED flag in.
+ *  \param [in] list  LeptonPageList to check CHANGED flag in.
  *  \return 1 if any page has the CHANGED flag set, 0 otherwise.
  */
-gboolean s_page_check_changed (GedaPageList *list)
+gboolean
+s_page_check_changed (LeptonPageList *list)
 {
   const GList *iter;
   PAGE *p_current;
@@ -550,7 +553,8 @@ gboolean s_page_check_changed (GedaPageList *list)
  *
  *  \param [in,out] list  PAGE list to set CHANGED flags in.
  */
-void s_page_clear_changed (GedaPageList *list)
+void
+s_page_clear_changed (LeptonPageList *list)
 {
   const GList *iter;
   PAGE *p_current;

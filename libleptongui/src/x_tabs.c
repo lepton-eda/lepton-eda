@@ -1543,7 +1543,7 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
   TabInfo* nfo = x_tabs_info_find_by_wtab (w_current->xtabs_info_list, wtab);
   g_return_if_fail (nfo != NULL);
 
-  GedaPageList* pages = w_current->toplevel->pages;
+  LeptonPageList* pages = w_current->toplevel->pages;
   geda_list_move_item (pages, nfo->page_, newindex);
 
   gtk_widget_grab_focus (GTK_WIDGET (nfo->pview_));
