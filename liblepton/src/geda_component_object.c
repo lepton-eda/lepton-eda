@@ -704,7 +704,6 @@ LeptonObject *o_component_new (PAGE *page,
 
 
   new_node->component_embedded = FALSE;
-  new_node->color = color;
   new_node->selectable = selectable;
 
   new_node->component = (COMPONENT *) g_malloc(sizeof(COMPONENT));
@@ -713,6 +712,9 @@ LeptonObject *o_component_new (PAGE *page,
   new_node->component->mirror = mirror;
   new_node->component->x = x;
   new_node->component->y = y;
+  /* Do setting color after initialization of prim_objs as the
+     function sets color of prim_objs as well. */
+  lepton_object_set_color (new_node, color);
 
   /* get the symbol data */
   if (clib != NULL) {
@@ -793,10 +795,11 @@ o_component_new_embedded (char type,
 
   new_node->component_embedded = TRUE;
 
-  new_node->color = color;
   new_node->selectable = selectable;
 
   new_node->component->prim_objs = NULL;
+
+  lepton_object_set_color (new_node, color);
 
   /* don't have to translate/rotate/mirror here at all since the */
   /* object is in place */
@@ -978,7 +981,6 @@ o_component_copy (LeptonObject *o_current)
   g_return_val_if_fail(o_current != NULL, NULL);
 
   o_new = s_basic_new_object(o_current->type, "complex");
-  o_new->color = o_current->color;
   o_new->selectable = o_current->selectable;
   o_new->component_basename = g_strdup(o_current->component_basename);
   o_new->component_embedded = o_current->component_embedded;
@@ -988,6 +990,11 @@ o_component_copy (LeptonObject *o_current)
   o_new->component->y = o_current->component->y;
   o_new->component->angle = o_current->component->angle;
   o_new->component->mirror = o_current->component->mirror;
+
+  /* Set prim_objs temporarily to NULL to prevent crashes on color
+     initialization. */
+  o_new->component->prim_objs = NULL;
+  lepton_object_set_color (o_new, lepton_object_get_color (o_current));
 
   /* Copy contents and set the parent pointers on the copied objects. */
   o_new->component->prim_objs =
