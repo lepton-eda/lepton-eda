@@ -1,6 +1,10 @@
 SUBDIRS = vams
 
-EXTRA_DIST = $(html_man_files) lepton-netlist.1.in mk_verilog_syms.1.in
+EXTRA_DIST = \
+	$(html_man_files) \
+	lepton-netlist.1.in \
+	mk_verilog_syms.1.in \
+	BUGS
 
 docsreadmedir = $(docdir)/readmes
 dist_docsreadme_DATA = \

@@ -46,6 +46,9 @@ do_subst = sed \
 	-e 's,[@]localedir[@],$(localedir),g' \
 	-e 's,[@]ccachedir[@],@LEPTON_SCM_PRECOMPILE_DIR@,g'
 
-EXTRA_DIST = lepton-attrib.scm NOTES README ChangeLog ToDos
+EXTRA_DIST = \
+	lepton-attrib.scm \
+	README \
+	ChangeLog
 
 CLEANFILES = $(bin_SCRIPTS)

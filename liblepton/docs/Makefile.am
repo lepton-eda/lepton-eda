@@ -3,7 +3,8 @@ SUBDIRS = images
 EXTRA_DIST = \
 	geda-logo.png \
 	liblepton.dox \
-	README.libleptonrenderer
+	README.libleptonrenderer \
+	HACKING
 
 SUFFIXES =		.html .tex .pdf
 

@@ -3,7 +3,9 @@ SUBDIRS = scheme examples tests docs
 bin_SCRIPTS = \
 	lepton-netlist
 
-EXTRA_DIST = BUGS ChangeLog lepton-netlist.in
+EXTRA_DIST = \
+	ChangeLog \
+	lepton-netlist.in
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git
