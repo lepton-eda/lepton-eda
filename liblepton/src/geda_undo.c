@@ -112,7 +112,7 @@ void s_undo_destroy_head(UNDO *u_head)
  *
  */
 UNDO *s_undo_add (UNDO *head, int type, char *filename, GList *object_list,
-		 int x, int y, double scale, int page_control, int up)
+                  int x, int y, double scale, int page_control, int up)
 {
   UNDO *tail;
   UNDO *u_new;
@@ -264,8 +264,8 @@ int s_undo_levels(UNDO *head)
  */
 void s_undo_init(PAGE *p_current)
 {
-	p_current->undo_tos = p_current->undo_bottom = NULL;
-	p_current->undo_current = NULL;
+  p_current->undo_tos = p_current->undo_bottom = NULL;
+  p_current->undo_current = NULL;
 }
 
 /*! \todo Finish function documentation!!!

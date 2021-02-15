@@ -24,10 +24,10 @@
 
 #include <config.h>
 
-#include <stdio.h> 
+#include <stdio.h>
 
 #ifdef HAVE_UNISTD_H
-#include <unistd.h> 
+#include <unistd.h>
 #endif
 
 #include <sys/param.h>
@@ -248,7 +248,7 @@ int f_open_flags(TOPLEVEL *toplevel, PAGE *page,
   /* First cd into file's directory. */
   file_directory = g_path_get_dirname (full_filename);
 
-  if (file_directory) { 
+  if (file_directory) {
     if (chdir (file_directory)) {
       /* Error occurred with chdir */
       /* FIXME[2017-02-21] Libraries should not be changing the
@@ -385,50 +385,50 @@ f_save (PAGE *page,
   }
 
   /* Check to see if filename is writable */
-  if (g_file_test(filename, G_FILE_TEST_EXISTS) && 
+  if (g_file_test(filename, G_FILE_TEST_EXISTS) &&
       g_access(filename, W_OK) != 0) {
     g_set_error (err, G_FILE_ERROR, G_FILE_ERROR_PERM,
                  _("File %1$s is read-only"), filename);
-    return 0;      
+    return 0;
   }
-  
+
   /* Get the directory in which the real filename lives */
   dirname = g_path_get_dirname (real_filename);
-  only_filename = g_path_get_basename(real_filename);  
+  only_filename = g_path_get_basename(real_filename);
 
   /* Do a backup if it's not an undo file backup and it was never saved.
    * Only do a backup if backup files are enabled */
   if (page->saved_since_first_loaded == 0 && make_backup_files == TRUE) {
-    if ( (g_file_test (real_filename, G_FILE_TEST_EXISTS)) && 
-	 (!g_file_test(real_filename, G_FILE_TEST_IS_DIR)) )
+    if ( (g_file_test (real_filename, G_FILE_TEST_EXISTS)) &&
+         (!g_file_test(real_filename, G_FILE_TEST_IS_DIR)) )
     {
-      backup_filename = g_strdup_printf("%s%c%s~", dirname, 
-					G_DIR_SEPARATOR, only_filename);
+      backup_filename = g_strdup_printf("%s%c%s~", dirname,
+                                        G_DIR_SEPARATOR, only_filename);
 
       /* Make the backup file read-write before saving a new one */
-      if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) && 
-	   (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
-	if (chmod(backup_filename, S_IREAD|S_IWRITE) != 0) {
-	  g_message (_("Could NOT set previous backup file [%1$s] read-write."),
+      if ( g_file_test (backup_filename, G_FILE_TEST_EXISTS) &&
+           (! g_file_test (backup_filename, G_FILE_TEST_IS_DIR))) {
+        if (chmod(backup_filename, S_IREAD|S_IWRITE) != 0) {
+          g_message (_("Could NOT set previous backup file [%1$s] read-write."),
                      backup_filename);
-	}
+        }
       }
-	
+
       if (rename(real_filename, backup_filename) != 0) {
-	g_message (_("Can't save backup file: %1$s."), backup_filename);
+        g_message (_("Can't save backup file: %1$s."), backup_filename);
       }
       else {
-	/* Make the backup file readonly so a 'rm *' command will ask 
-	   the user before deleting it */
-	saved_umask = umask(0);
-	mask = (S_IWRITE|S_IWGRP|S_IEXEC|S_IXGRP|S_IXOTH);
-	mask = (~mask)&0777;
-	mask &= ((~saved_umask) & 0777);
-	if (chmod(backup_filename, mask) != 0) {
-	  g_message (_("Could NOT set backup file [%1$s] readonly."),
+        /* Make the backup file readonly so a 'rm *' command will ask
+           the user before deleting it */
+        saved_umask = umask(0);
+        mask = (S_IWRITE|S_IWGRP|S_IEXEC|S_IXGRP|S_IXOTH);
+        mask = (~mask)&0777;
+        mask &= ((~saved_umask) & 0777);
+        if (chmod(backup_filename, mask) != 0) {
+          g_message (_("Could NOT set backup file [%1$s] readonly."),
                      backup_filename);
-	}
-	umask(saved_umask);
+        }
+        umask(saved_umask);
       }
 
       g_free(backup_filename);
@@ -437,30 +437,30 @@ f_save (PAGE *page,
     /* If there is not an existing file with that name, compute the
      * permissions and uid/gid that we will use for the newly-created file.
      */
-       
+
   if (stat (real_filename, &st) != 0)
   {
     struct stat dir_st;
     int result;
-    
+
     /* Use default permissions */
     saved_umask = umask(0);
     st.st_mode = 0666 & ~saved_umask;
     umask(saved_umask);
 #ifdef HAVE_CHOWN
     st.st_uid = getuid ();
-    
+
     result = stat (dirname, &dir_st);
-    
+
     if (result == 0 && (dir_st.st_mode & S_ISGID))
-	  st.st_gid = dir_st.st_gid;
+          st.st_gid = dir_st.st_gid;
     else
     st.st_gid = getgid ();
 #endif /* HAVE_CHOWN */
   }
   g_free (dirname);
   g_free (only_filename);
-  
+
   if (o_save (s_page_objects (page), real_filename, &tmp_err)) {
 
     page->saved_since_first_loaded = 1;
