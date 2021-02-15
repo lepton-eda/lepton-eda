@@ -1,6 +1,6 @@
 SUBDIRS = po data docs include lib src scheme tests
 
-EXTRA_DIST = HACKING ChangeLog
+EXTRA_DIST = ChangeLog
 
 pkgconfigdir            = $(libdir)/pkgconfig
 pkgconfig_DATA          = liblepton.pc
