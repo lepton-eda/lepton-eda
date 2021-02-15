@@ -34,7 +34,7 @@ SCM_DEFINE (undo_save_state, "%undo-save-state", 0, 0, 0,
   GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
   g_return_val_if_fail (view != NULL, SCM_BOOL_F);
 
-  GedaPage* page = gschem_page_view_get_page (view);
+  LeptonPage* page = gschem_page_view_get_page (view);
   g_return_val_if_fail (page != NULL, SCM_BOOL_F);
 
   o_undo_savestate (w_current, page, UNDO_ALL);

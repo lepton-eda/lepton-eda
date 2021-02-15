@@ -22,7 +22,7 @@
 
 typedef struct st_object LeptonObject;
 
-typedef struct st_page GedaPage;
+typedef struct st_page LeptonPage;
 typedef struct st_page PAGE;
 
 typedef struct st_toplevel GedaToplevel;
