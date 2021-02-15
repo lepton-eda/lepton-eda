@@ -42,11 +42,11 @@
 #include <cairo-pdf.h>
 #include <cairo-ps.h>
 
-static void export_layout_page (PAGE *page,
+static void export_layout_page (LeptonPage *page,
                                 cairo_rectangle_t *extents,
                                 cairo_matrix_t *mtx,
                                 gboolean postscript);
-static void export_draw_page (PAGE *page);
+static void export_draw_page (LeptonPage *page);
 
 static void export_png (void);
 static void export_postscript (gboolean is_eps);
@@ -261,7 +261,7 @@ cmd_export_impl (void *data, int argc, char **argv)
 
   /* Load schematic files */
   while (optind < argc) {
-    PAGE *page;
+    LeptonPage *page;
     tmp = argv[optind++];
 
     page = s_page_new (toplevel, tmp);
@@ -306,7 +306,7 @@ export_cairo_check_error (cairo_status_t status)
  * Takes into account all of the margin/orientation/paper settings,
  * and the size of the drawing itself. */
 static void
-export_layout_page (PAGE *page,
+export_layout_page (LeptonPage *page,
                     cairo_rectangle_t *extents,
                     cairo_matrix_t *mtx,
                     gboolean postscript)
@@ -321,7 +321,7 @@ export_layout_page (PAGE *page,
   if (page == NULL) {
     const GList *pages = geda_list_get_glist (toplevel->pages);
     g_assert (pages != NULL && pages->data != NULL);
-    page = (PAGE *) pages->data;
+    page = (LeptonPage *) pages->data;
   }
 
   /* Set the margins. If none were provided by the user, get them
@@ -446,7 +446,7 @@ export_layout_page (PAGE *page,
 
 /* Actually draws a page.  If page is NULL, uses the first open page. */
 static void
-export_draw_page (PAGE *page)
+export_draw_page (LeptonPage *page)
 {
   const GList *contents;
   GList *iter;
@@ -457,7 +457,7 @@ export_draw_page (PAGE *page)
   if (page == NULL) {
     const GList *pages = geda_list_get_glist (toplevel->pages);
     g_assert (pages != NULL && pages->data != NULL);
-    page = (PAGE *) pages->data;
+    page = (LeptonPage *) pages->data;
   }
 
   /* Draw background */
@@ -542,7 +542,7 @@ export_postscript (gboolean is_eps)
   for (iter = geda_list_get_glist (toplevel->pages);
        iter != NULL;
        iter = g_list_next (iter)) {
-    PAGE *page = (PAGE *) iter->data;
+    LeptonPage *page = (LeptonPage *) iter->data;
 
     export_layout_page (page, &extents, &mtx, !is_eps);
 
@@ -606,7 +606,7 @@ export_pdf (void)
   for (iter = geda_list_get_glist (toplevel->pages);
        iter != NULL;
        iter = g_list_next (iter)) {
-    PAGE *page = (PAGE *) iter->data;
+    LeptonPage *page = (LeptonPage *) iter->data;
 
     export_layout_page (page, &extents, &mtx, FALSE);
     cairo_pdf_surface_set_size (surface, extents.width, extents.height);
