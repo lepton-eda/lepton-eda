@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -201,7 +201,7 @@ static gchar*
 get_page_name (GtkTreeModel *model, GtkTreeIter *piter, gboolean full_path)
 {
   GtkTreeIter iter;
-  PAGE *page;
+  LeptonPage *page;
 
   g_return_val_if_fail (GTK_IS_TREE_MODEL (model), NULL);
 
@@ -679,9 +679,9 @@ close_confirmation_dialog_get_property (GObject    *object,
  *  This is the <B>GtkTreeModelForeachFunc</B> for function
  *  <B>close_confirmation_dialog_get_selected_pages()</B>.
  *
- *  It builds from the tree model a list of PAGEs for which a save
- *  action has been requested. Each selected page is appended to the
- *  GList pointed by <B>data</B>
+ *  It builds from the tree model a list of LeptonPages for which
+ *  a save action has been requested. Each selected page is
+ *  appended to the GList pointed by <B>data</B>
  *
  *  \param [in] model The tree model.
  *  \param [in] path  .
@@ -695,7 +695,7 @@ get_selected_pages (GtkTreeModel *model,
                     GtkTreeIter  *iter,
                     gpointer     data)
 {
-  PAGE *page;
+  LeptonPage *page;
   gboolean save;
 
   gtk_tree_model_get (model, iter,
@@ -718,7 +718,7 @@ get_selected_pages (GtkTreeModel *model,
  *  The returned list must be freed.
  *
  *  \param [in] dialog The dialog.
- *  \returns A GList of selected PAGE* in dialog.
+ *  \returns A GList of selected LeptonPage* in dialog.
  */
 GList*
 close_confirmation_dialog_get_selected_pages (CloseConfirmationDialog *dialog)
@@ -749,10 +749,10 @@ close_confirmation_dialog_get_selected_pages (CloseConfirmationDialog *dialog)
  *  otherwise.
  */
 gboolean
-x_dialog_close_changed_page (GschemToplevel *w_current, PAGE *page)
+x_dialog_close_changed_page (GschemToplevel *w_current, LeptonPage *page)
 {
   GtkWidget *dialog;
-  PAGE *keep_page;
+  LeptonPage *keep_page;
   gboolean result = FALSE;
 
   g_return_val_if_fail (page != NULL && page->CHANGED, TRUE);
@@ -831,8 +831,8 @@ x_dialog_close_window (GschemToplevel *w_current)
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *iter;
   GtkWidget *dialog;
-  PAGE *p_current;
-  PAGE *keep_page;
+  LeptonPage *p_current;
+  LeptonPage *keep_page;
   GList *unsaved_pages, *p_unsaved;
   gboolean ret = FALSE;
 
@@ -842,7 +842,7 @@ x_dialog_close_window (GschemToplevel *w_current)
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
-    p_current = (PAGE*)iter->data;
+    p_current = (LeptonPage*)iter->data;
 
     if (p_current->CHANGED) {
       unsaved_pages = g_list_append (unsaved_pages, (gpointer)p_current);
@@ -878,7 +878,7 @@ x_dialog_close_window (GschemToplevel *w_current)
         for (p_unsaved = unsaved_pages, ret = TRUE;
              p_unsaved != NULL;
              p_unsaved = g_list_next (p_unsaved)) {
-          p_current = (PAGE*)p_unsaved->data;
+          p_current = (LeptonPage*) p_unsaved->data;
 
           s_page_goto (toplevel, p_current);
           gschem_toplevel_page_changed (w_current);

@@ -20,7 +20,10 @@ void g_init_attrib ();
 void g_init_hook ();
 void g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *obj);
 void g_run_hook_object_list (GschemToplevel *w_current, const char *name, GList *obj_lst);
-void g_run_hook_page (GschemToplevel *w_current, const char *name, PAGE *page);
+void
+g_run_hook_page (GschemToplevel *w_current,
+                 const char *name,
+                 LeptonPage *page);
 void g_run_hook_action_mode (GschemToplevel *w_current, const char *name, const gchar *action_mode);
 EdascmHookProxy *g_hook_new_proxy_by_name (const char *name);
 /* g_keys.c */
@@ -209,11 +212,16 @@ LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current, const char *text_st
 void
 o_redraw_rect (GschemToplevel *w_current,
                GtkWidget *widget,
-               PAGE *page,
+               LeptonPage *page,
                GschemPageGeometry *geometry,
                cairo_t *cr);
 #else
-void o_redraw_rect (GschemToplevel *w_current, GdkDrawable *drawable, PAGE *page, GschemPageGeometry *geometry, GdkRectangle *rectangle);
+void
+o_redraw_rect (GschemToplevel *w_current,
+               GdkDrawable *drawable,
+               LeptonPage *page,
+               GschemPageGeometry *geometry,
+               GdkRectangle *rectangle);
 #endif
 int o_invalidate_rubber(GschemToplevel *w_current);
 int o_redraw_cleanstates(GschemToplevel *w_current);
@@ -380,11 +388,17 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
 void o_text_change(GschemToplevel *w_current, LeptonObject *object, char *string, int visibility, int show);
 /* o_undo.c */
 void o_undo_init(void);
-void o_undo_savestate(GschemToplevel *w_current, PAGE *page, int flag);
+void
+o_undo_savestate (GschemToplevel *w_current,
+                  LeptonPage *page,
+                  int flag);
 void o_undo_savestate_old(GschemToplevel *w_current, int flag);
 char *o_undo_find_prev_filename(UNDO *start);
 GList *o_undo_find_prev_object_head(UNDO *start);
-void o_undo_callback(GschemToplevel *w_current, PAGE *page, int type);
+void
+o_undo_callback (GschemToplevel *w_current,
+                 LeptonPage *page,
+                 int type);
 void o_undo_cleanup(void);
 /* s_stretch.c */
 GList *s_stretch_add(GList *list, LeptonObject *object, int whichone);
@@ -446,7 +460,9 @@ void find_text_dialog(GschemToplevel *w_current);
 void hide_text_dialog(GschemToplevel *w_current);
 void show_text_dialog(GschemToplevel *w_current);
 void major_changed_dialog(GschemToplevel* w_current);
-gboolean x_dialog_close_changed_page (GschemToplevel *w_current, PAGE *page);
+gboolean
+x_dialog_close_changed_page (GschemToplevel *w_current,
+                             LeptonPage *page);
 gboolean x_dialog_close_window (GschemToplevel *w_current);
 int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
 /* x_event.c */
@@ -472,11 +488,13 @@ void x_compselect_open (GschemToplevel *w_current);
 void x_compselect_deselect (GschemToplevel *w_current);
 /* x_fileselect.c */
 void x_fileselect_open(GschemToplevel *w_current);
-gboolean x_fileselect_save(GschemToplevel *w_current, PAGE* page, gboolean* result);
-
+gboolean
+x_fileselect_save (GschemToplevel *w_current,
+                   LeptonPage* page,
+                   gboolean* result);
 gboolean
 schematic_file_open (GschemToplevel *w_current,
-                     PAGE *page,
+                     LeptonPage *page,
                      const gchar *filename,
                      GError **err);
 
@@ -556,17 +574,33 @@ void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
 GschemToplevel* x_window_create_main (GschemToplevel *w_current, GtkWidget *menubar);
 void x_window_close(GschemToplevel *w_current);
 void x_window_close_all(GschemToplevel *w_current);
-PAGE *x_window_open_page (GschemToplevel *w_current, const gchar *filename);
-PAGE *x_window_open_page_impl (GschemToplevel *w_current, const gchar *filename);
-void x_window_set_current_page (GschemToplevel *w_current, PAGE *page);
-void x_window_set_current_page_impl (GschemToplevel *w_current, PAGE *page);
-gint x_window_save_page (GschemToplevel *w_current, PAGE *page, const gchar *filename);
-void x_window_close_page (GschemToplevel *w_current, PAGE *page);
-PAGE* x_window_close_page_impl (GschemToplevel *w_current, PAGE *page);
+LeptonPage*
+x_window_open_page (GschemToplevel *w_current,
+                    const gchar *filename);
+LeptonPage*
+x_window_open_page_impl (GschemToplevel *w_current,
+                         const gchar *filename);
+void
+x_window_set_current_page (GschemToplevel *w_current,
+                           LeptonPage *page);
+void
+x_window_set_current_page_impl (GschemToplevel *w_current,
+                                LeptonPage *page);
+gint
+x_window_save_page (GschemToplevel *w_current,
+                    LeptonPage *page,
+                    const gchar *filename);
+void
+x_window_close_page (GschemToplevel *w_current,
+                     LeptonPage *page);
+LeptonPage*
+x_window_close_page_impl (GschemToplevel *w_current,
+                          LeptonPage *page);
 GschemToplevel* x_window_new ();
 void x_window_select_object (GschemFindTextState *state, LeptonObject *object, GschemToplevel *w_current);
 void x_window_setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled);
-gboolean x_window_untitled_page (PAGE* page);
+gboolean
+x_window_untitled_page (LeptonPage* page);
 
 /* x_widgets.c */
 gboolean x_widgets_use_docks();
@@ -586,12 +620,20 @@ void x_widgets_destroy_dialogs (GschemToplevel* w_current);
 gboolean x_tabs_enabled();
 void x_tabs_init();
 void x_tabs_create (GschemToplevel* w_current, GtkWidget* work_box);
-PAGE* x_tabs_page_open (GschemToplevel* w_current, const gchar* filename);
-void x_tabs_page_set_cur (GschemToplevel* w_current, PAGE* page);
-void x_tabs_page_close (GschemToplevel* w_current, PAGE* page);
+LeptonPage*
+x_tabs_page_open (GschemToplevel* w_current,
+                  const gchar* filename);
+void
+x_tabs_page_set_cur (GschemToplevel* w_current,
+                     LeptonPage* page);
+void
+x_tabs_page_close (GschemToplevel* w_current,
+                   LeptonPage* page);
 void x_tabs_next (GschemToplevel* w_current);
 void x_tabs_prev (GschemToplevel* w_current);
-void x_tabs_hdr_update (GschemToplevel* w_current, PAGE* page);
+void
+x_tabs_hdr_update (GschemToplevel* w_current,
+                   LeptonPage* page);
 #ifdef DEBUG
 void x_tabs_dbg_infos_dump (GschemToplevel* w_current);
 void x_tabs_dbg_pages_dump (GschemToplevel* w_current);
@@ -601,38 +643,38 @@ void x_tabs_dbg_pages_dump (GschemToplevel* w_current);
 void color_edit_widget_update (GschemToplevel* w_current);
 
 /* schematic_hierarchy.c */
-PAGE*
+LeptonPage*
 s_hierarchy_down_schematic_single (GschemToplevel *w_current,
                                    const gchar *filename,
-                                   PAGE *parent,
+                                   LeptonPage *parent,
                                    int page_control,
                                    int flag,
                                    GError **err);
 void
 s_hierarchy_down_symbol (GschemToplevel *w_current,
                          const CLibSymbol *symbol,
-                         PAGE *parent);
-PAGE*
+                         LeptonPage *parent);
+LeptonPage*
 s_hierarchy_find_up_page (LeptonPageList *page_list,
-                          PAGE *current_page);
-PAGE*
+                          LeptonPage *current_page);
+LeptonPage*
 s_hierarchy_load_subpage (GschemToplevel *w_current,
-                          PAGE *page,
+                          LeptonPage *page,
                           const char *filename,
                           GError **error);
 GList*
 s_hierarchy_traversepages (GschemToplevel *w_current,
-                           PAGE *p_current,
+                           LeptonPage *p_current,
                            gint flags);
 gint
-s_hierarchy_print_page (PAGE *p_current,
+s_hierarchy_print_page (LeptonPage *p_current,
                         void * data);
-PAGE*
+LeptonPage*
 s_hierarchy_find_prev_page (LeptonPageList *page_list,
-                            PAGE *current_page);
-PAGE*
+                            LeptonPage *current_page);
+LeptonPage*
 s_hierarchy_find_next_page (LeptonPageList *page_list,
-                            PAGE *current_page);
+                            LeptonPage *current_page);
 
 G_END_DECLS
 

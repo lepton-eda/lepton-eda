@@ -81,7 +81,7 @@ x_event_expose (GschemPageView *view,
 gint
 x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current)
 {
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
@@ -316,7 +316,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 gint
 x_event_button_released (GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current)
 {
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   int unsnapped_wx, unsnapped_wy;
   int w_x, w_y;
 
@@ -444,7 +444,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 gint
 x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current)
 {
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
   int skip_event=0;
@@ -568,7 +568,7 @@ x_event_configure (GschemPageView    *page_view,
 {
   GtkAllocation current_allocation;
   GList *iter;
-  PAGE *p_current = gschem_page_view_get_page (page_view);
+  LeptonPage *p_current = gschem_page_view_get_page (page_view);
 
   if (p_current == NULL) {
     /* don't want to call this if the current page isn't setup yet */
@@ -612,7 +612,7 @@ x_event_configure (GschemPageView    *page_view,
         iter != NULL;
         iter = g_list_next (iter) ) {
 
-    gschem_page_view_set_page (page_view, (PAGE *)iter->data);
+    gschem_page_view_set_page (page_view, (LeptonPage *)iter->data);
 
     if (page_view->configured) {
       gschem_page_view_pan_mouse (page_view, 0, 0);
@@ -727,7 +727,7 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   int pan_direction = 1;
   int zoom_direction = ZOOM_IN;
   GschemPageView *view = NULL;
-  PAGE *page = NULL;
+  LeptonPage *page = NULL;
 
   g_return_val_if_fail ((w_current != NULL), 0);
 

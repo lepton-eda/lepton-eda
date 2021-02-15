@@ -451,7 +451,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   o_path_invalidate_rubber (w_current);

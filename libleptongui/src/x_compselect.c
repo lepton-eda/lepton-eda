@@ -848,7 +848,7 @@ create_lib_tree_model (Compselect *compselect)
 {
   GtkTreeStore *store;
   GList *srchead, *srclist;
-  PAGE *page = GSCHEM_DIALOG(compselect)->w_current->toplevel->page_current;
+  LeptonPage *page = GSCHEM_DIALOG(compselect)->w_current->toplevel->page_current;
   EdaConfig *cfg = eda_config_get_context_for_path (s_page_get_filename (page));
   gboolean sort = eda_config_get_boolean (cfg, "schematic.library", "sort", NULL);
 

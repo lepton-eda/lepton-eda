@@ -111,14 +111,16 @@ g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *ob
 
 /*! \brief Runs a page hook.
  * \par Function Description
- * Runs a hook called \a name, which should expect the single #PAGE \a
- * page as its argument.
+ * Runs a hook called \a name, which should expect the single
+ * #LeptonPage \a page as its argument.
  *
  * \param name name of hook to run
- * \param page #PAGE argument for hook.
+ * \param page #LeptonPage argument for hook.
  */
 void
-g_run_hook_page (GschemToplevel *w_current, const char *name, PAGE *page)
+g_run_hook_page (GschemToplevel *w_current,
+                 const char *name,
+                 LeptonPage *page)
 {
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);

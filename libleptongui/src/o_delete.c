@@ -35,7 +35,7 @@ void o_delete (GschemToplevel *w_current, LeptonObject *object)
 {
   g_return_if_fail (object != NULL);
 
-  PAGE *page = object->page;
+  LeptonPage *page = object->page;
   g_return_if_fail (page != NULL);
 
   o_selection_remove (page->selection_list, object);

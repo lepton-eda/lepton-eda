@@ -103,9 +103,13 @@ vadjustment_value_changed (GtkAdjustment *vadjustment, GschemPageView *view);
 
 static void geometry_cache_create (GschemPageView *view);
 
-static GschemPageGeometry *geometry_cache_lookup (const GschemPageView *view, const PAGE *page);
-
-static void geometry_cache_insert (GschemPageView *view, PAGE *page, GschemPageGeometry *geometry);
+static
+GschemPageGeometry *geometry_cache_lookup (const GschemPageView *view,
+                                           const LeptonPage *page);
+static void
+geometry_cache_insert (GschemPageView *view,
+                       LeptonPage *page,
+                       GschemPageGeometry *geometry);
 
 static void geometry_cache_dispose (GschemPageView *view);
 
@@ -464,7 +468,7 @@ gschem_page_view_get_vscroll_policy (GschemPageView *view)
  *  \param [in] view The view
  *  \return The page for the view
  */
-PAGE*
+LeptonPage*
 gschem_page_view_get_page (GschemPageView *view)
 {
   g_return_val_if_fail (view != NULL, NULL);
@@ -482,7 +486,7 @@ gschem_page_view_get_page (GschemPageView *view)
 GschemPageGeometry*
 gschem_page_view_get_page_geometry (GschemPageView *view)
 {
-  PAGE *page = NULL;
+  LeptonPage *page = NULL;
   GschemPageGeometry *geometry = NULL;
   int screen_width;
   int screen_height;
@@ -781,7 +785,7 @@ gschem_page_view_init (GschemPageView *view)
  *  \return A new instance of the GschemPageView
  */
 GschemPageView*
-gschem_page_view_new_with_page (PAGE *page)
+gschem_page_view_new_with_page (LeptonPage *page)
 {
   GschemPageView *view = GSCHEM_PAGE_VIEW (g_object_new (GSCHEM_TYPE_PAGE_VIEW,
                                                          "page", page,
@@ -1033,7 +1037,8 @@ gschem_page_view_set_hadjustment (GschemPageView *view, GtkAdjustment *hadjustme
  *  \param [in]     page The page
  */
 void
-gschem_page_view_set_page (GschemPageView *view, PAGE *page)
+gschem_page_view_set_page (GschemPageView *view,
+                           LeptonPage *page)
 {
   g_return_if_fail (view != NULL);
 
@@ -1185,7 +1190,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_PAGE:
-      gschem_page_view_set_page (view, (PAGE*) g_value_get_pointer (value));
+      gschem_page_view_set_page (view, (LeptonPage*) g_value_get_pointer (value));
       break;
 
     case PROP_VADJUSTMENT:
@@ -1471,7 +1476,7 @@ void
 gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
 {
   GschemPageGeometry *geometry = NULL;
-  PAGE *page = NULL;
+  LeptonPage *page = NULL;
   const GList *temp = objects;
 
   g_return_if_fail (view != NULL);
@@ -1574,7 +1579,7 @@ gschem_page_view_redraw (GschemPageView *view,
                          GschemToplevel *w_current)
 {
   GschemPageGeometry *geometry;
-  PAGE *page;
+  LeptonPage *page;
 
 #if DEBUG
   printf("EXPOSE\n");
@@ -1632,7 +1637,7 @@ geometry_cache_create (GschemPageView *view)
 
 static GschemPageGeometry *
 geometry_cache_lookup (const GschemPageView *view,
-                       const PAGE *page)
+                       const LeptonPage *page)
 {
   g_return_val_if_fail (view && view->_geometry_cache, NULL);
   g_return_val_if_fail (page, NULL);
@@ -1642,7 +1647,7 @@ geometry_cache_lookup (const GschemPageView *view,
 
 static void
 geometry_cache_insert (GschemPageView *view,
-                       PAGE *page,
+                       LeptonPage *page,
                        GschemPageGeometry *geometry)
 {
   g_return_if_fail (view && view->_geometry_cache);
@@ -1659,7 +1664,7 @@ geometry_cache_dispose_func (gpointer key,
                              gpointer value,
                              gpointer user_data)
 {
-  s_page_weak_unref ((PAGE*) key, geometry_cache_page_weak_ref_notify, user_data);
+  s_page_weak_unref ((LeptonPage*) key, geometry_cache_page_weak_ref_notify, user_data);
   gschem_page_geometry_free ((GschemPageGeometry*) value);
   return TRUE;
 }

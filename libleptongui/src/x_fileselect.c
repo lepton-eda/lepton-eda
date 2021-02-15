@@ -322,7 +322,7 @@ x_fileselect_add_preview (GtkFileChooser *filechooser)
 void
 x_fileselect_open(GschemToplevel *w_current)
 {
-  PAGE *page = NULL;
+  LeptonPage *page = NULL;
   GtkWidget *dialog;
   gchar *cwd;
 
@@ -403,7 +403,9 @@ x_fileselect_open(GschemToplevel *w_current)
  *  \return                    TRUE if dialog was closed with ACCEPT response.
  */
 gboolean
-x_fileselect_save (GschemToplevel *w_current, PAGE* page, gboolean* result)
+x_fileselect_save (GschemToplevel *w_current,
+                   LeptonPage* page,
+                   gboolean* result)
 {
   g_return_val_if_fail (w_current != NULL, FALSE);
   g_return_val_if_fail (page != NULL, FALSE);
@@ -607,7 +609,7 @@ x_fileselect_load_backup (GschemToplevel *w_current,
 
 gboolean
 schematic_file_open (GschemToplevel *w_current,
-                     PAGE *page,
+                     LeptonPage *page,
                      const gchar *filename,
                      GError **err)
 {

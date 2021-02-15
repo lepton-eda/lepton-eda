@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,7 +139,7 @@ SCM_DEFINE (set_active_page_x, "%set-active-page!", 1, 0, 0,
 {
   SCM_ASSERT (edascm_is_page (page_s), page_s, SCM_ARG1, s_set_active_page_x);
 
-  PAGE *page = edascm_to_page (page_s);
+  LeptonPage *page = edascm_to_page (page_s);
   x_window_set_current_page (g_current_window (), page);
 
   return page_s;
@@ -166,11 +166,11 @@ SCM_DEFINE (override_close_page_x, "%close-page!", 1, 0, 0,
 
   GschemToplevel *w_current = g_current_window ();
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  PAGE *page = edascm_to_page (page_s);
+  LeptonPage *page = edascm_to_page (page_s);
 
   /* If page is not the current page, switch pages, then switch back
    * after closing page. */
-  PAGE *curr_page = toplevel->page_current;
+  LeptonPage *curr_page = toplevel->page_current;
   int reset_page = (page != curr_page);
   if (reset_page)
     x_window_set_current_page (w_current, page);

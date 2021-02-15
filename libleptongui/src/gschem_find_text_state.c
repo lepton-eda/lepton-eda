@@ -76,7 +76,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 
 static GList*
 get_subpages (GschemToplevel *w_current,
-              PAGE *page);
+              LeptonPage *page);
 
 static void
 object_weakref_cb (LeptonObject *object, GschemFindTextState *state);
@@ -347,7 +347,7 @@ find_objects_using_pattern (GSList *pages,
 
   while (page_iter != NULL) {
     const GList *object_iter;
-    PAGE *page = (PAGE*) page_iter->data;
+    LeptonPage *page = (LeptonPage*) page_iter->data;
 
     page_iter = g_slist_next (page_iter);
 
@@ -426,7 +426,7 @@ find_objects_using_regex (GSList *pages,
 
   while (page_iter != NULL) {
     const GList *object_iter;
-    PAGE *page = (PAGE*) page_iter->data;
+    LeptonPage *page = (LeptonPage*) page_iter->data;
 
     page_iter = g_slist_next (page_iter);
 
@@ -494,7 +494,7 @@ find_objects_using_substring (GSList *pages,
 
   while (page_iter != NULL) {
     const GList *object_iter;
-    PAGE *page = (PAGE*) page_iter->data;
+    LeptonPage *page = (LeptonPage*) page_iter->data;
 
     page_iter = g_slist_next (page_iter);
 
@@ -581,7 +581,7 @@ scm_to_gslist (SCM list_s)
 static GSList*
 find_objects_using_check (GSList *pages)
 {
-  PAGE *page = (PAGE*) pages->data;
+  LeptonPage *page = (LeptonPage*) pages->data;
   TOPLEVEL *toplevel = page->toplevel;
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   edascm_dynwind_toplevel (toplevel);
@@ -610,7 +610,7 @@ get_pages (GschemToplevel *w_current,
   GHashTable *visit_list = g_hash_table_new (NULL, NULL);
 
   while (input_list != NULL) {
-    PAGE *page = (PAGE*) input_list->data;
+    LeptonPage *page = (LeptonPage*) input_list->data;
 
     input_list = g_list_delete_link (input_list, input_list);
 
@@ -668,7 +668,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  */
 static GList*
 get_subpages (GschemToplevel *w_current,
-              PAGE *page)
+              LeptonPage *page)
 {
   const GList *object_iter;
   GList *page_list = NULL;
@@ -715,7 +715,7 @@ get_subpages (GschemToplevel *w_current,
     }
 
     for (iter = filenames; *iter != NULL; iter++) {
-      PAGE *subpage = s_hierarchy_load_subpage (w_current, page, *iter, NULL);
+      LeptonPage *subpage = s_hierarchy_load_subpage (w_current, page, *iter, NULL);
 
       if (subpage != NULL) {
         page_list = g_list_prepend (page_list, subpage);

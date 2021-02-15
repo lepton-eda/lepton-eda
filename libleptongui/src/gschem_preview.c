@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ gschem_preview_new ()
 static const char*
 preview_get_filename (GschemPreview *preview)
 {
-  PAGE *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview));
+  LeptonPage *page = gschem_page_view_get_page (GSCHEM_PAGE_VIEW (preview));
 
   g_return_val_if_fail (page != NULL, "");
 
@@ -169,7 +169,7 @@ preview_update (GschemPreview *preview)
   GschemPageView *preview_view = GSCHEM_PAGE_VIEW (preview);
 
   g_return_if_fail (preview_view != NULL);
-  PAGE *preview_page = gschem_page_view_get_page (preview_view);
+  LeptonPage *preview_page = gschem_page_view_get_page (preview_view);
 
   if (preview_page == NULL) {
     return;

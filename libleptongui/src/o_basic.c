@@ -40,13 +40,13 @@ extern GedaColorMap display_outline_colors;
 void
 o_redraw_rect (GschemToplevel *w_current,
                GtkWidget *widget,
-               PAGE *page,
+               LeptonPage *page,
                GschemPageGeometry *geometry,
                cairo_t *cr)
 #else
 void o_redraw_rect (GschemToplevel *w_current,
                     GdkDrawable *drawable,
-                    PAGE *page,
+                    LeptonPage *page,
                     GschemPageGeometry *geometry,
                     GdkRectangle *rectangle)
 #endif
@@ -494,7 +494,7 @@ void o_invalidate (GschemToplevel *w_current, LeptonObject *object)
   int left, top, bottom, right;
 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
 
@@ -534,7 +534,7 @@ void o_invalidate_glist (GschemToplevel *w_current, GList *list)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   gboolean show_hidden_text =

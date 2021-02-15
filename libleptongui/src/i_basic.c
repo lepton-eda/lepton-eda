@@ -351,7 +351,8 @@ static void clipboard_usable_cb (int usable, void *userdata)
  *  \param type      object type constant (OBJ_TEXT, OBJ_COMPONENT, etc.) (o_types.h)
  */
 static LeptonObject*
-obj_selected (PAGE* page, int type)
+obj_selected (LeptonPage *page,
+              int type)
 {
   LeptonObject* result = FALSE;
   SELECTION* selection = page->selection_list;
@@ -380,7 +381,7 @@ obj_selected (PAGE* page, int type)
  *  \param [in] w_current  GschemToplevel structure
  */
 static gboolean
-parent_comp_selected (PAGE* page)
+parent_comp_selected (LeptonPage* page)
 {
   gboolean result = FALSE;
   LeptonObject* obj = obj_selected (page, OBJ_COMPONENT);
@@ -413,7 +414,7 @@ void i_update_menus (GschemToplevel* w_current)
   TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
-  PAGE* page = toplevel->page_current;
+  LeptonPage* page = toplevel->page_current;
   g_return_if_fail (page != NULL);
 
   /* update Edit->Paste sensitivity in clipboard_usable_cb():

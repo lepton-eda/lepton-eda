@@ -79,7 +79,7 @@ void o_place_end (GschemToplevel *w_current,
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   /* erase old image */
@@ -151,7 +151,7 @@ void o_place_end (GschemToplevel *w_current,
  */
 void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
-  PAGE *page = gschem_page_view_get_page (gschem_toplevel_get_current_page_view (w_current));
+  LeptonPage *page = gschem_page_view_get_page (gschem_toplevel_get_current_page_view (w_current));
   g_return_if_fail (page != NULL);
 
   g_return_if_fail (page->place_list != NULL);
@@ -208,7 +208,7 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
 
@@ -290,7 +290,7 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
   g_return_if_fail (page->place_list != NULL);
 
@@ -368,7 +368,7 @@ void o_place_rotate (GschemToplevel *w_current)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   o_place_invalidate_rubber (w_current, FALSE);
@@ -399,7 +399,7 @@ void o_place_mirror (GschemToplevel *w_current)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  PAGE *page = gschem_page_view_get_page (page_view);
+  LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
   o_place_invalidate_rubber (w_current, FALSE);
