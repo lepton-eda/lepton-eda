@@ -302,4 +302,11 @@ void
 lepton_object_remove_weak_ptr (LeptonObject *object,
                                void *weak_pointer_loc);
 
+/* object.c */
+void
+lepton_object_emit_pre_change_notify (LeptonObject *object);
+
+void
+lepton_object_emit_change_notify (LeptonObject *object);
+
 G_END_DECLS
