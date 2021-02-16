@@ -148,7 +148,6 @@ geda_line_object_get_x0 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  /* g_return_val_if_fail (object->type == OBJ_LINE, 0); */
 
   return object->line->x[0];
 }
@@ -167,7 +166,6 @@ geda_line_object_get_x1 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  /* g_return_val_if_fail (object->type == OBJ_LINE, 0); */
 
   return object->line->x[1];
 }
@@ -186,7 +184,6 @@ geda_line_object_get_y0 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  /* g_return_val_if_fail (object->type == OBJ_LINE, 0); */
 
   return object->line->y[0];
 }
@@ -205,7 +202,6 @@ geda_line_object_get_y1 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  /* g_return_val_if_fail (object->type == OBJ_LINE, 0); */
 
   return object->line->y[1];
 }
@@ -224,7 +220,6 @@ geda_line_object_set_x0 (LeptonObject *object, gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
-  /* g_return_if_fail (object->type == OBJ_LINE); */
 
   object->line->x[0] = x;
 }
@@ -243,7 +238,6 @@ geda_line_object_set_x1 (LeptonObject *object, gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
-  /* g_return_if_fail (object->type == OBJ_LINE); */
 
   object->line->x[1] = x;
 }
@@ -262,7 +256,6 @@ geda_line_object_set_y0 (LeptonObject *object, gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
-  /* g_return_if_fail (object->type == OBJ_LINE); */
 
   object->line->y[0] = y;
 }
@@ -281,7 +274,6 @@ geda_line_object_set_y1 (LeptonObject *object, gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
-  /* g_return_if_fail (object->type == OBJ_LINE); */
 
   object->line->y[1] = y;
 }
