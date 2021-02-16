@@ -166,7 +166,7 @@ void o_select_object(GschemToplevel *w_current, LeptonObject *o_current,
   CONTROLKEY = w_current->CONTROLKEY;
 
 #if DEBUG
-  printf("LeptonObject id: %d\n", o_current->sid);
+  printf("LeptonObject id: %d\n", lepton_object_get_id (o_current));
 #endif
 
   switch(o_current->selected) {

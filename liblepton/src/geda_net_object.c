@@ -590,7 +590,7 @@ static int o_net_consolidate_nomidpoint (LeptonObject *object, int x, int y)
   while(c_current != NULL) {
     conn = (CONN *) c_current->data;
     if (conn->other_object) {
-      if (conn->other_object->sid != object->sid &&
+      if (lepton_object_get_id (conn->other_object) != lepton_object_get_id (object) &&
           conn->x == x && conn->y == y &&
           conn->type == CONN_MIDPOINT) {
 #if DEBUG
@@ -651,7 +651,7 @@ o_net_consolidate_segments (LeptonObject *object)
         /* - both objects have the same orientation (either vert or horiz) */
         /* - it's not the same object */
         if (object_orient == other_orient &&
-            object->sid != other_object->sid &&
+            lepton_object_get_id (object) != lepton_object_get_id (other_object) &&
             other_orient != NEITHER) {
 
 #if DEBUG

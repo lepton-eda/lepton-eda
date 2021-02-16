@@ -94,7 +94,8 @@ void o_selection_print_all(const SELECTION *selection)
   printf("START printing selection ********************\n");
   while(s_current != NULL) {
     if (s_current->data) {
-      printf("Selected object: %1$d\n", ((LeptonObject *)s_current->data)->sid );
+      printf("Selected object: %1$d\n",
+             lepton_object_get_id ((LeptonObject *)s_current->data));
     }
     s_current = g_list_next( s_current );
   }

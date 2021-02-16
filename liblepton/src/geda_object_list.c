@@ -80,7 +80,7 @@ o_glist_copy_all (const GList *src_list,
 
     if (src_object->type != OBJ_TEXT) {
       dst_object = o_object_copy (src_object);
-      dst_object->sid = global_sid++;
+      lepton_object_set_id (dst_object, global_sid++);
       dest = g_list_prepend (dest, dst_object);
     }
 
@@ -104,7 +104,7 @@ o_glist_copy_all (const GList *src_list,
 
     if (src_object->type == OBJ_TEXT) {
       dst_object = o_object_copy (src_object);
-      dst_object->sid = global_sid++;
+      lepton_object_set_id (dst_object, global_sid++);
       dest = g_list_prepend (dest, dst_object);
 
       if (src_object->attached_to != NULL &&
@@ -181,7 +181,7 @@ geda_object_list_print (GList *objects)
     o_current = (LeptonObject *)iter->data;
     printf("Name: %s\n", o_current->name);
     printf("Type: %d\n", o_current->type);
-    printf("Sid: %d\n", o_current->sid);
+    printf("Sid: %d\n", lepton_object_get_id (o_current));
 
     if (o_current->type == OBJ_COMPONENT || o_current->type == OBJ_PLACEHOLDER) {
       geda_object_list_print (o_current->component->prim_objs);
