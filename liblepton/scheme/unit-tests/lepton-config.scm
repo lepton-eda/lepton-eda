@@ -57,7 +57,8 @@
 (test-end "user-config-context")
 
 
-(test-group-with-cleanup "path-config-context"
+(test-begin "path-config-context")
+(test-group-with-cleanup "path-config-context-grp"
   (config-test-setup)
   ;; Unfortunately, there's no reliable way of testing the "recurse
   ;; all the way to root and then give up" functionality, because we
@@ -81,9 +82,11 @@
     (test-equal #f (config-trusted? a)))
   ;; Clean up.
   (config-test-teardown))
+(test-end "path-config-context")
 
 
-(test-group-with-cleanup "config-load"
+(test-begin "config-load")
+(test-group-with-cleanup "config-load-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdirA*)))
     (test-equal #f (config-loaded? a))
@@ -95,9 +98,11 @@
   (test-assert-thrown 'system-error (config-load! (default-config-context) #:force-load #t))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-load")
 
 
-(test-group-with-cleanup "config-save"
+(test-begin "config-save")
+(test-group-with-cleanup "config-save-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdirA*)))
     (test-equal a (config-save! a)))
@@ -106,9 +111,11 @@
   ;; FIXME test writing a file without permissions to write it.
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-save")
 
 
-(test-group-with-cleanup "config-parent"
+(test-begin "config-parent")
+(test-group-with-cleanup "config-parent-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdirA*))
         (b (path-config-context *testdir*)))
@@ -134,9 +141,11 @@
     (test-equal (user-config-context) (config-parent a)))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-parent")
 
 
-(test-group-with-cleanup "config-trust"
+(test-begin "config-trust")
+(test-group-with-cleanup "config-trust-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdirA*)))
     (test-equal #f (config-trusted? a))
@@ -152,9 +161,11 @@
     (test-equal #f (config-trusted? a)))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-trust")
 
 
-(test-group-with-cleanup "config-changed"
+(test-begin "config-changed")
+(test-group-with-cleanup "config-changed-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdirA*)))
     (config-load! a #:force-load #t)
@@ -169,9 +180,11 @@
     (test-equal #f (config-changed? a)))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-changed")
 
 
-(test-group-with-cleanup "config-groups"
+(test-begin "config-groups")
+(test-group-with-cleanup "config-groups-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdir*))
         (b (path-config-context *testdirA*)))
@@ -202,9 +215,11 @@
       (lambda () (set-config-parent! b (user-config-context)))))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-groups")
 
 
-(test-group-with-cleanup "config-source"
+(test-begin "config-source")
+(test-group-with-cleanup "config-source-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdir*))
         (b (path-config-context *testdirA*)))
@@ -223,9 +238,11 @@
       (lambda () (set-config-parent! b (user-config-context)))))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-source")
 
 
-(test-group-with-cleanup "config-keys"
+(test-begin "config-keys")
+(test-group-with-cleanup "config-keys-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdir*))
         (b (path-config-context *testdirA*)))
@@ -255,9 +272,11 @@
       (lambda () (set-config-parent! b (user-config-context)))))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-keys")
 
 
-(test-group-with-cleanup "config-boolean"
+(test-begin "config-boolean")
+(test-group-with-cleanup "config-boolean-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdir*)))
     (config-load! a)
@@ -271,9 +290,11 @@
     (test-equal '(#t #f) (config-boolean-list a "foo" "bar")))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-boolean")
 
 
-(test-group-with-cleanup "config-int"
+(test-begin "config-int")
+(test-group-with-cleanup "config-int-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdir*)))
     (config-load! a)
@@ -285,9 +306,11 @@
     (test-equal '(42 144) (config-int-list a "foo" "bar")))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-int")
 
 
-(test-group-with-cleanup "config-real"
+(test-begin "config-real")
+(test-group-with-cleanup "config-real-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdir*)))
     (config-load! a)
@@ -299,9 +322,11 @@
     (test-equal '(42.0 144.0) (config-real-list a "foo" "bar")))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-real")
 
 
-(test-group-with-cleanup "config-string"
+(test-begin "config-string")
+(test-group-with-cleanup "config-string-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdir*)))
     (config-load! a)
@@ -313,9 +338,11 @@
     (test-equal '("wib;ble" "wobble") (config-string-list a "foo" "bar")))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-string")
 
 
-(test-group-with-cleanup "config-get-set-errors"
+(test-begin "config-get-set-errors")
+(test-group-with-cleanup "config-get-set-errors-grp"
   (config-test-setup)
   (let ((a (path-config-context *testdir*)))
     (config-load! a)
@@ -329,9 +356,11 @@
     (test-assert-thrown 'config-error (config-real a "foo" "bar")))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-get-set-errors")
 
 
-(test-group-with-cleanup "config-events"
+(test-begin "config-events")
+(test-group-with-cleanup "config-events-grp"
   (config-test-setup)
   (let* ((a (path-config-context *testdir*))
          (call-count 0)
@@ -353,11 +382,13 @@
     (test-equal 2 call-count))
   ;; Clean up.
   (config-test-teardown))
+(test-end "config-events")
 
 
 ; Unit test for config-remove-key! function:
 ;
-(test-group-with-cleanup "config-remove-key"
+(test-begin "config-remove-key")
+(test-group-with-cleanup "config-remove-key-grp"
   (config-test-setup)
 ( let*
   (
@@ -405,11 +436,13 @@
   ;; Clean up.
   (config-test-teardown)
 ) ; 'config-remove-key()
+(test-end "config-remove-key")
 
 
 ; Unit test for config-remove-group! function:
 ;
-(test-group-with-cleanup "config-remove-group"
+(test-begin "config-remove-group")
+(test-group-with-cleanup "config-remove-group-grp"
   (config-test-setup)
 ( let*
   (
@@ -457,3 +490,4 @@
   ;; Clean up.
   (config-test-teardown)
 ) ; 'config-remove-group()
+(test-end "config-remove-group")

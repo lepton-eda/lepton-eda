@@ -252,6 +252,7 @@
 (reset-component-library)
 
 ;;; Test component file names.
+(test-begin "geda:component-filename")
 (let*
     (
      ( fname1  ( format #f "~a.sym" (tmpnam) ) )
@@ -304,7 +305,7 @@
   ( set! comp1 ( mk-comp1 ) )
   ( set! comp2 ( mk-comp2 ) )
 
-  (test-group-with-cleanup "geda:component-filename"
+  (test-group-with-cleanup "geda:component-filename-grp"
 
     (test-equal (geda:component-filename comp1) fname1)
     (test-assert (not (geda:component-filename comp2)))
@@ -312,3 +313,4 @@
     (begin
       (reset-component-library)
       (delete-file fname1))))
+(test-end "geda:component-filename")

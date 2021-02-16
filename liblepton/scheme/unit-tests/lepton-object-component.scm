@@ -254,6 +254,7 @@
 
 
 ;;; Test component file names.
+(test-begin "component-filename")
 (let* ((fname1  (format #f "~a.sym" (tmpnam)))
        (symdir (dirname  fname1))
        (basename1 (basename fname1))
@@ -300,7 +301,7 @@
   (let ((temp-component (make-real-component))
         (non-existing-component (make-bogus-component)))
 
-    (test-group-with-cleanup "component-filename"
+    (test-group-with-cleanup "component-filename-grp"
 
       (test-equal (component-filename temp-component) fname1)
       (test-assert (not (component-filename non-existing-component)))
@@ -308,6 +309,7 @@
       (begin
         (reset-component-library)
         (delete-file fname1)))))
+(test-end "component-filename")
 
 
 ;;; Test component-library-command().
@@ -316,6 +318,7 @@
                                        "/docs/manual/cmd-component.sh")
     read-string))
 
+(test-begin "component-library-command")
 (let* ((script-name (tmpnam))
        (get-command script-name)
        (list-command (string-append script-name " -l")))
@@ -330,9 +333,10 @@
   (let ((C1 (make-component/library "symname1.sym" '(0 . 0) 0 #f #f))
         (C2 (make-component/library "symname2.sym" '(1000 . 1000) 0 #f #f)))
 
-    (test-group-with-cleanup "component-library-command"
+    (test-group-with-cleanup "component-library-command-grp"
 
       (test-assert (component? C1))
       (test-assert (component? C2))
       ;; Clean up.
       (delete-file get-command))))
+(test-end "component-library-command")
