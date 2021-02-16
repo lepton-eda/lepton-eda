@@ -57,7 +57,8 @@
 (test-end "geda:user-config-context")
 
 
-(test-group-with-cleanup "geda:path-config-context"
+(test-begin "geda:default-config-context")
+(test-group-with-cleanup "geda:path-config-context-grp"
   (config-geda-test-setup)
   ;; Unfortunately, there's no reliable way of testing the "recurse
   ;; all the way to root and then give up" functionality, because we
@@ -81,9 +82,11 @@
     (test-equal #f (geda:config-trusted? a)))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:default-config-context")
 
 
-(test-group-with-cleanup "geda:config-load"
+(test-begin "geda:config-load")
+(test-group-with-cleanup "geda:config-load-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda-A*)))
     (test-equal #f (geda:config-loaded? a))
@@ -95,9 +98,11 @@
   (test-assert-thrown 'system-error (geda:config-load! (geda:default-config-context) #:force-load #t))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-load")
 
 
-(test-group-with-cleanup "geda:config-save"
+(test-begin "geda:config-save")
+(test-group-with-cleanup "geda:config-save-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda-A*)))
     (test-equal a (geda:config-save! a)))
@@ -106,9 +111,11 @@
   ;; FIXME test writing a file without permissions to write it.
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-save")
 
 
-(test-group-with-cleanup "geda:config-parent"
+(test-begin "geda:config-parent")
+(test-group-with-cleanup "geda:config-parent-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda-A*))
         (b (geda:path-config-context *testdir-geda*)))
@@ -135,9 +142,11 @@
     )
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-parent")
 
 
-(test-group-with-cleanup "geda:config-trust"
+(test-begin "geda:config-trust")
+(test-group-with-cleanup "geda:config-trust-end"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda-A*)))
     (test-equal #f (geda:config-trusted? a))
@@ -153,9 +162,11 @@
     (test-equal #f (geda:config-trusted? a)))
     ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-trust")
 
 
-(test-group-with-cleanup "geda:config-changed"
+(test-begin "geda:config-changed")
+(test-group-with-cleanup "geda:config-changed-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda-A*)))
     (geda:config-load! a #:force-load #t)
@@ -170,9 +181,11 @@
     (test-equal #f (geda:config-changed? a)))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-changed")
 
 
-(test-group-with-cleanup "geda:config-groups"
+(test-begin "geda:config-groups")
+(test-group-with-cleanup "geda:config-groups-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda*))
         (b (geda:path-config-context *testdir-geda-A*)))
@@ -203,9 +216,11 @@
        (lambda () (geda:set-config-parent! b (geda:user-config-context)))))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-groups")
 
 
-(test-group-with-cleanup "geda:config-source"
+(test-begin "geda:config-source")
+(test-group-with-cleanup "geda:config-source-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda*))
         (b (geda:path-config-context *testdir-geda-A*)))
@@ -224,9 +239,11 @@
         (lambda () (geda:set-config-parent! b (geda:user-config-context)))))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-source")
 
 
-(test-group-with-cleanup "geda:config-keys"
+(test-begin "geda:config-keys")
+(test-group-with-cleanup "geda:config-keys-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda*))
         (b (geda:path-config-context *testdir-geda-A*)))
@@ -256,9 +273,11 @@
        (lambda () (geda:set-config-parent! b (geda:user-config-context)))))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-keys")
 
 
-(test-group-with-cleanup "geda:config-boolean"
+(test-begin "geda:config-boolean")
+(test-group-with-cleanup "geda:config-boolean-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda*)))
     (geda:config-load! a)
@@ -272,9 +291,11 @@
     (test-equal '(#t #f) (geda:config-boolean-list a "foo" "bar")))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-boolean")
 
 
-(test-group-with-cleanup "geda:config-int"
+(test-begin "geda:config-int")
+(test-group-with-cleanup "geda:config-int-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda*)))
     (geda:config-load! a)
@@ -286,9 +307,11 @@
     (test-equal '(42 144) (geda:config-int-list a "foo" "bar")))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-int")
 
 
-(test-group-with-cleanup "geda:config-real"
+(test-begin "geda:config-real")
+(test-group-with-cleanup "geda:config-real-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda*)))
     (geda:config-load! a)
@@ -300,9 +323,11 @@
     (test-equal '(42.0 144.0) (geda:config-real-list a "foo" "bar")))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-real")
 
 
-(test-group-with-cleanup "geda:config-string"
+(test-begin "geda:config-string")
+(test-group-with-cleanup "geda:config-string-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda*)))
     (geda:config-load! a)
@@ -314,9 +339,11 @@
     (test-equal '("wib;ble" "wobble") (geda:config-string-list a "foo" "bar")))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-string")
 
 
-(test-group-with-cleanup "geda:config-get-set-errors"
+(test-begin "geda:config-get-set-errors")
+(test-group-with-cleanup "geda:config-get-set-errors-grp"
   (config-geda-test-setup)
   (let ((a (geda:path-config-context *testdir-geda*)))
     (geda:config-load! a)
@@ -330,9 +357,11 @@
     (test-assert-thrown 'config-error (geda:config-real a "foo" "bar")))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-get-set-errors")
 
 
-(test-group-with-cleanup "geda:config-events"
+(test-begin "geda:config-events")
+(test-group-with-cleanup "geda:config-events-grp"
   (config-geda-test-setup)
   (let* ((a (geda:path-config-context *testdir-geda*))
          (call-count 0)
@@ -354,12 +383,14 @@
     (test-equal 2 call-count))
   ;; Clean up.
   (config-geda-test-teardown))
+(test-end "geda:config-events")
 
 
 
 ; Unit test for geda:config-remove-key! function:
 ;
-(test-group-with-cleanup "geda:config-remove-key"
+(test-begin "geda:config-remove-key")
+(test-group-with-cleanup "geda:config-remove-key-grp"
   (config-geda-test-setup)
 ( let*
   (
@@ -406,12 +437,14 @@
 ) ; let
   ;; Clean up.
   (config-geda-test-teardown)) ; 'config-remove-key()
+(test-end "geda:config-remove-key")
 
 
 
 ; Unit test for geda:config-remove-group! function:
 ;
-(test-group-with-cleanup "geda:config-remove-group"
+(test-begin "geda:config-remove-group")
+(test-group-with-cleanup "geda:config-remove-group-grp"
   (config-geda-test-setup)
 ( let*
   (
@@ -458,3 +491,4 @@
 ) ; let
   ;; Clean up.
   (config-geda-test-teardown)) ; 'config-remove-group()
+(test-end "geda:config-remove-group")
