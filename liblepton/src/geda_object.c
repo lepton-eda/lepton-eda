@@ -253,7 +253,7 @@ o_object_copy (LeptonObject *selected)
 
   /* make sure sid is the same! */
   if (selected) {
-    new_obj->sid = selected->sid;
+    lepton_object_set_id (new_obj, lepton_object_get_id (selected));
   }
 
   return new_obj;
@@ -1278,11 +1278,11 @@ static LeptonObject*
 s_basic_init_object (LeptonObject *new_node, int type, char const *name)
 {
   /* setup sid */
-  new_node->sid = global_sid++;
+  lepton_object_set_id (new_node, global_sid++);
   new_node->type = type;
 
   /* Setup the name */
-  new_node->name = g_strdup_printf("%s.%d", name, new_node->sid);
+  new_node->name = g_strdup_printf("%s.%d", name, lepton_object_get_id (new_node));
 
   /* Don't associate with a page, initially */
   new_node->page = NULL;

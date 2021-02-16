@@ -37,7 +37,7 @@ GList *s_stretch_add (GList *list, LeptonObject *object, int whichone)
   /* Check if the object is already in the stretch list */
   for (s_iter = list; s_iter != NULL; s_iter = g_list_next (s_iter)) {
     STRETCH *s_current = (STRETCH*) s_iter->data;
-    if (s_current->object->sid == object->sid) {
+    if (lepton_object_get_id (s_current->object) == lepton_object_get_id (object)) {
       return list;
     }
   }

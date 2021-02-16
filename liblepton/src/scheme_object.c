@@ -258,7 +258,7 @@ SCM_DEFINE (object_id, "%object-id", 1, 0, 0,
 
   LeptonObject *obj = edascm_to_object (obj_s);
 
-  return scm_from_int (obj->sid);
+  return scm_from_int (lepton_object_get_id (obj));
 }
 
 /*! \brief Get the bounds of a list of objects
