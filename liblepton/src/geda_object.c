@@ -58,6 +58,34 @@
 int global_sid=0;
 
 
+/*! \brief Get object's unique id
+ *
+ *  If this function fails, it returns -1.
+ *
+ *  \param [in] object The object to obtain the id of.
+ *  \return The object id.
+ */
+int
+lepton_object_get_id (LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, -1);
+  return object->sid;
+}
+
+
+/*! \brief Set object's id
+ *
+ *  \param [in] object The object to set the id.
+ *  \param [in] id     The new object id.
+ */
+void
+lepton_object_set_id (LeptonObject *object, int id)
+{
+  g_return_if_fail (object != NULL);
+  object->sid = id;
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.

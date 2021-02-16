@@ -89,6 +89,15 @@ struct st_object
   GList *weak_refs; /* Weak references */
 };
 
+
+/* Accessors. */
+int
+lepton_object_get_id (LeptonObject *object);
+
+void
+lepton_object_set_id (LeptonObject *object,
+                      int id);
+
 /* construction, destruction */
 
 LeptonObject*
