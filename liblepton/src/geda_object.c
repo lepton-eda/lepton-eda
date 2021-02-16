@@ -365,7 +365,7 @@ o_object_copy (LeptonObject *selected)
 
   g_return_val_if_fail (selected != NULL, NULL);
 
-  switch(selected->type) {
+  switch (lepton_object_get_type (selected)) {
 
     case(OBJ_LINE):
       new_obj = geda_line_object_copy (selected);
@@ -413,7 +413,7 @@ o_object_copy (LeptonObject *selected)
 
     default:
       g_critical ("o_list_copy_to: object %1$p has bad type '%2$c'\n",
-                  selected, selected->type);
+                  selected, lepton_object_get_type (selected));
       return NULL;
   }
 
@@ -814,7 +814,7 @@ geda_object_get_position (const LeptonObject *object, gint *x, gint *y)
 
   g_return_val_if_fail (object != NULL, FALSE);
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
       case OBJ_LINE:    func = geda_line_object_get_position;    break;
       case OBJ_NET:     func = geda_net_object_get_position;     break;
       case OBJ_BUS:     func = geda_bus_object_get_position;     break;
@@ -828,7 +828,7 @@ geda_object_get_position (const LeptonObject *object, gint *x, gint *y)
       case OBJ_COMPONENT: func = lepton_component_object_get_position; break;
       default:
         g_critical ("geda_object_get_position: object %1$p has bad type '%2$c'\n",
-                    object, object->type);
+                    object, lepton_object_get_type (object));
   }
 
   if (func != NULL) {
@@ -852,7 +852,7 @@ geda_object_translate (LeptonObject *object, gint dx, gint dy)
 {
   void (*func) (LeptonObject*, int, int) = NULL;
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
       case OBJ_LINE:    func = geda_line_object_translate;    break;
       case OBJ_NET:     func = geda_net_object_translate;     break;
       case OBJ_BUS:     func = geda_bus_object_translate;     break;
@@ -866,7 +866,7 @@ geda_object_translate (LeptonObject *object, gint dx, gint dy)
       case OBJ_COMPONENT: func = lepton_component_object_translate; break;
       default:
         g_critical ("geda_object_translate: object %1$p has bad type '%2$c'\n",
-                    object, object->type);
+                    object, lepton_object_get_type (object));
   }
 
   if (func != NULL) {
@@ -893,7 +893,7 @@ geda_object_rotate (int world_centerx,
 {
   void (*func) (int, int, int, LeptonObject*) = NULL;
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
       case OBJ_LINE:    func = geda_line_object_rotate;    break;
       case OBJ_NET:     func = geda_net_object_rotate;     break;
       case OBJ_BUS:     func = geda_bus_object_rotate;     break;
@@ -907,7 +907,7 @@ geda_object_rotate (int world_centerx,
       case OBJ_COMPONENT: func = lepton_component_object_rotate; break;
       default:
         g_critical ("geda_object_rotate: object %1$p has bad type '%2$c'\n",
-                    object, object->type);
+                    object, lepton_object_get_type (object));
   }
 
   if (func != NULL) {
@@ -932,7 +932,7 @@ geda_object_mirror (int world_centerx,
 {
   void (*func) (int, int, LeptonObject*) = NULL;
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
       case OBJ_LINE:    func = geda_line_object_mirror;    break;
       case OBJ_NET:     func = geda_net_object_mirror;     break;
       case OBJ_BUS:     func = geda_bus_object_mirror;     break;
@@ -946,7 +946,7 @@ geda_object_mirror (int world_centerx,
       case OBJ_COMPONENT: func = lepton_component_object_mirror; break;
       default:
         g_critical ("geda_object_mirror: object %1$p has bad type '%2$c'\n",
-                    object, object->type);
+                    object, lepton_object_get_type (object));
   }
 
   if (func != NULL) {
@@ -998,7 +998,7 @@ geda_object_shortest_distance_full (LeptonObject *object,
 
   g_return_val_if_fail (object != NULL, G_MAXDOUBLE);
 
-  switch(object->type) {
+  switch(lepton_object_get_type (object)) {
     case OBJ_BUS:
     case OBJ_NET:
     case OBJ_PIN:
@@ -1012,7 +1012,7 @@ geda_object_shortest_distance_full (LeptonObject *object,
     case OBJ_ARC:         func = geda_arc_object_shortest_distance;      break;
     default:
       g_critical ("geda_object_shortest_distance: object %1$p has bad type '%2$c'\n",
-                  object, object->type);
+                  object, lepton_object_get_type (object));
   }
 
   if (func != NULL) {
@@ -1307,7 +1307,7 @@ geda_object_calculate_visible_bounds (LeptonObject *o_current,
 
   GedaBounds bounds;
 
-  switch(o_current->type) {
+  switch (lepton_object_get_type (o_current)) {
 
   case(OBJ_LINE):
     if (o_current->line == NULL) {
@@ -1433,7 +1433,7 @@ s_basic_init_object (LeptonObject *new_node, int type, char const *name)
 {
   /* setup sid */
   lepton_object_set_id (new_node, global_sid++);
-  new_node->type = type;
+  lepton_object_set_type (new_node, type);
 
   /* Setup the name */
   new_node->name = g_strdup_printf("%s.%d", name, lepton_object_get_id (new_node));

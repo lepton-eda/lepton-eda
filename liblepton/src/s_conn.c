@@ -174,7 +174,7 @@ s_conn_remove_object_connections (LeptonObject *to_remove)
   GList *iter;
   LeptonObject *o_current;
 
-  switch (to_remove->type) {
+  switch (lepton_object_get_type (to_remove)) {
     case OBJ_PIN:
     case OBJ_NET:
     case OBJ_BUS:
@@ -217,7 +217,7 @@ LeptonObject *s_conn_check_midpoint(LeptonObject *o_current, int x, int y)
 {
   int min_x, min_y, max_x, max_y;
 
-  switch(o_current->type) {
+  switch (lepton_object_get_type (o_current)) {
   case(OBJ_NET):
   case(OBJ_PIN):
   case(OBJ_BUS):
@@ -507,7 +507,7 @@ s_conn_update_object (LeptonPage* page,
   /* Add object to the list of connectible objects */
   s_conn_add_object (page, object);
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
     case OBJ_PIN:
     case OBJ_NET:
     case OBJ_BUS:
@@ -633,7 +633,7 @@ GList *s_conn_return_others(GList *input_list, LeptonObject *object)
 
   return_list = input_list;
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
     case OBJ_PIN:
     case OBJ_NET:
     case OBJ_BUS:
@@ -695,7 +695,7 @@ s_conn_add_object (LeptonPage *page,
 {
   GList *iter;
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
     case OBJ_NET:
     case OBJ_PIN:
     case OBJ_BUS:

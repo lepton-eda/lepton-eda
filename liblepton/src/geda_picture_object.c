@@ -513,7 +513,7 @@ geda_picture_object_to_buffer (const LeptonObject *object)
   if (o_picture_is_embedded (object) &&
       encoded_picture != NULL) {
     out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s\n%s\n%s",
-                          object->type,
+                          lepton_object_get_type (object),
                           x1, y1, width, height,
                           object->picture->angle,
                           /* Convert the (0,1) chars to ASCII */
@@ -525,7 +525,7 @@ geda_picture_object_to_buffer (const LeptonObject *object)
   }
   else {
     out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s",
-                          object->type,
+                          lepton_object_get_type (object),
                           x1, y1, width, height,
                           object->picture->angle,
                           /* Convert the (0,1) chars to ASCII */
@@ -997,7 +997,7 @@ o_picture_copy (LeptonObject *object)
   PICTURE *picture;
 
   /* create the object */
-  new_node = s_basic_new_object(object->type, "picture");
+  new_node = s_basic_new_object (lepton_object_get_type (object), "picture");
 
   picture = (PICTURE*) g_malloc (sizeof(PICTURE));
   new_node->picture = picture;

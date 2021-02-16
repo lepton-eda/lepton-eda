@@ -182,7 +182,7 @@ geda_object_list_print (GList *objects)
   while (iter != NULL) {
     o_current = (LeptonObject *)iter->data;
     printf("Name: %s\n", o_current->name);
-    printf("Type: %d\n", o_current->type);
+    printf("Type: %d\n", lepton_object_get_type (o_current));
     printf("Sid: %d\n", lepton_object_get_id (o_current));
 
     if (lepton_object_is_component (o_current))
@@ -369,7 +369,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
 
     if (save_attribs || o_current->attached_to == NULL) {
 
-      switch (o_current->type) {
+      switch (lepton_object_get_type (o_current)) {
 
         case(OBJ_LINE):
           out = geda_line_object_to_buffer (o_current);
@@ -434,7 +434,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
            *  than killing the program, which is what this used to
            *  do... */
           g_critical (_("o_save_objects: object %1$p has unknown type '%2$c'\n"),
-                      o_current, o_current->type);
+                      o_current, lepton_object_get_type (o_current));
           /* Dump string built so far */
           g_string_free (acc, TRUE);
           return NULL;

@@ -166,7 +166,7 @@ edascm_is_object_type (SCM smob, int type)
   if (!EDASCM_OBJECTP(smob)) return 0;
 
   LeptonObject *obj = edascm_to_object (smob);
-  return (obj->type == type);
+  return (lepton_object_get_type (obj) == type);
 }
 
 /*! \brief Copy an object.
@@ -217,7 +217,7 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
               SCM_ARG1, s_object_type);
 
   LeptonObject *obj = edascm_to_object (obj_s);
-  switch (obj->type) {
+  switch (lepton_object_get_type (obj)) {
   case OBJ_LINE:    result = line_sym;       break;
   case OBJ_NET:     result = net_sym;        break;
   case OBJ_BUS:     result = bus_sym;        break;
@@ -233,7 +233,7 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
   default:
     scm_misc_error (s_object_type, _("Object ~A has bad type '~A'"),
                     scm_list_2 (obj_s,
-                                scm_integer_to_char (scm_from_int (obj->type))));
+                                scm_integer_to_char (scm_from_int (lepton_object_get_type (obj)))));
   }
 
   return result;
@@ -928,7 +928,7 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   /* We may need to update connectivity. */
   s_conn_remove_object_connections (obj);
 
-  switch (obj->type) {
+  switch (lepton_object_get_type (obj)) {
   case OBJ_LINE:
     geda_line_object_modify (obj, x1, y1, LINE_END1);
     geda_line_object_modify (obj, x2, y2, LINE_END2);

@@ -500,7 +500,7 @@ eda_renderer_default_draw (EdaRenderer *renderer, LeptonObject *object)
 
   if (!eda_renderer_is_drawable (renderer, object)) return;
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
   case OBJ_LINE:        draw_func = eda_renderer_draw_line; break;
   case OBJ_NET:         draw_func = eda_renderer_draw_net; break;
   case OBJ_BUS:         draw_func = eda_renderer_draw_bus; break;
@@ -570,7 +570,7 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, LeptonObject *object)
   guint i;
 
   /* Horrible horrible hacks! */
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
   case OBJ_BOX:
     hatch_func = (void (*)(void *, gint, gint, GArray *)) m_hatch_box;
     hatch_data = (void *) object->box;
@@ -1091,7 +1091,7 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, LeptonObject *object)
   if (!eda_renderer_is_drawable_color (renderer, GRIP_STROKE_COLOR, FALSE))
     return;
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
   case OBJ_LINE:
   case OBJ_NET:
   case OBJ_BUS:
@@ -1322,7 +1322,7 @@ eda_renderer_default_draw_cues (EdaRenderer *renderer, LeptonObject *object)
   g_return_if_fail (object != NULL);
   g_return_if_fail (renderer->priv->cr != NULL);
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
   case OBJ_LINE:
   case OBJ_BOX:
   case OBJ_ARC:
@@ -1399,7 +1399,7 @@ eda_renderer_draw_end_cues (EdaRenderer *renderer, LeptonObject *object, int end
     return;
   eda_renderer_set_color (renderer, NET_ENDPOINT_COLOR);
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
   case OBJ_NET:
   case OBJ_PIN:
     /* If less than one thing was connected to this end of the net
@@ -1482,7 +1482,7 @@ eda_renderer_default_get_user_bounds (EdaRenderer *renderer,
   g_return_val_if_fail ((object != NULL), FALSE);
   g_return_val_if_fail ((renderer->priv->cr != NULL), FALSE);
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
   case OBJ_TEXT:
     return eda_renderer_get_text_user_bounds (object, FALSE,
                                               left, top, right, bottom);
