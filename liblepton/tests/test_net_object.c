@@ -22,7 +22,7 @@ check_construction ()
                                                y1);
 
     g_assert (object0 != NULL);
-    g_assert_cmpint (OBJ_NET, ==, object0->type);
+    g_assert_cmpint (OBJ_NET, ==, lepton_object_get_type (object0));
 
     g_assert_cmpint (x0, ==, geda_net_object_get_x0 (object0));
     g_assert_cmpint (y0, ==, geda_net_object_get_y0 (object0));
@@ -34,7 +34,7 @@ check_construction ()
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
-    g_assert_cmpint (OBJ_NET, ==, object1->type);
+    g_assert_cmpint (OBJ_NET, ==, lepton_object_get_type (object1));
 
     s_delete_object (object0);
 
@@ -71,7 +71,7 @@ check_accessors ()
                                                y1);
 
     g_assert (object0 != NULL);
-    g_assert_cmpint (OBJ_NET, ==, object0->type);
+    g_assert_cmpint (OBJ_NET, ==, lepton_object_get_type (object0));
 
     x0 = g_test_rand_int ();
     y0 = g_test_rand_int ();

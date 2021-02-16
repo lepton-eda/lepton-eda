@@ -19,7 +19,7 @@ check_construction ()
                                                   radius);
 
     g_assert (object0 != NULL);
-    g_assert_cmpint (OBJ_CIRCLE, ==, object0->type);
+    g_assert_cmpint (OBJ_CIRCLE, ==, lepton_object_get_type (object0));
 
     g_assert_cmpint (center_x, ==, geda_circle_object_get_center_x (object0));
     g_assert_cmpint (center_y, ==, geda_circle_object_get_center_y (object0));
@@ -30,7 +30,7 @@ check_construction ()
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
-    g_assert_cmpint (OBJ_CIRCLE, ==, object1->type);
+    g_assert_cmpint (OBJ_CIRCLE, ==, lepton_object_get_type (object1));
 
     s_delete_object (object0);
 
@@ -63,7 +63,7 @@ check_accessors ()
                                                   radius);
 
     g_assert (object0 != NULL);
-    g_assert_cmpint (OBJ_CIRCLE, ==, object0->type);
+    g_assert_cmpint (OBJ_CIRCLE, ==, lepton_object_get_type (object0));
 
     center_x = g_test_rand_int ();
     center_y = g_test_rand_int ();

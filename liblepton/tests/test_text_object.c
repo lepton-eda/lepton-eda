@@ -43,7 +43,7 @@ check_construction ()
                                                 show_name_value);
 
     g_assert (object0 != NULL);
-    g_assert_cmpint (OBJ_TEXT, ==, object0->type);
+    g_assert_cmpint (OBJ_TEXT, ==, lepton_object_get_type (object0));
 
     g_assert_cmpint (x, ==, geda_text_object_get_x (object0));
     g_assert_cmpint (y, ==, geda_text_object_get_y (object0));
@@ -58,7 +58,7 @@ check_construction ()
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
-    g_assert_cmpint (OBJ_TEXT, ==, object1->type);
+    g_assert_cmpint (OBJ_TEXT, ==, lepton_object_get_type (object1));
 
     s_delete_object (object0);
 
@@ -105,7 +105,7 @@ check_accessors ()
                                                 show_name_value);
 
     g_assert (object0 != NULL);
-    g_assert_cmpint (OBJ_TEXT, ==, object0->type);
+    g_assert_cmpint (OBJ_TEXT, ==, lepton_object_get_type (object0));
 
     x = g_test_rand_int ();
     y = g_test_rand_int ();
