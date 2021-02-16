@@ -127,7 +127,6 @@
 (global-set-key "P P" '&page-prev)
 (global-set-key "P R" '&page-revert)
 (global-set-key "P C" '&page-close)
-(global-set-key "P <Shift>P" '&page-print)
 
 (global-set-key "<Alt>Q" '&file-quit)
 (global-set-key "R" '&view-redraw)

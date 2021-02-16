@@ -880,9 +880,6 @@ the snap grid size should be set to 100")))
 (define-action-public (&page-prev-tab #:label (G_ "Previous Tab") #:icon "gtk-go-back")
   (x_tabs_prev (*current-window)))
 
-(define-action-public (&page-print #:label (G_ "Print Page") #:icon "gtk-print")
-  (run-callback i_callback_page_print "&page-print"))
-
 ;; -------------------------------------------------------------------
 ;;;; Actions related to adding things
 

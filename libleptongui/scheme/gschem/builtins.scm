@@ -74,7 +74,6 @@
                &page-close
                &page-next-tab
                &page-prev-tab
-               &page-print
                ;; Actions related to adding things
                &add-component
                &add-attribute

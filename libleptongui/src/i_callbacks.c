@@ -182,18 +182,6 @@ i_callback_page_revert (GtkWidget *widget, gpointer data)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_page_print (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  lepton_toplevel_print_all (gschem_toplevel_get_toplevel (w_current));
-}
 
 
 /*! \todo Finish function documentation!!!
