@@ -620,7 +620,7 @@ geda_text_object_to_buffer (const LeptonObject *object)
   g_return_val_if_fail (string != NULL, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s",
-                          OBJ_TEXT,
+                          lepton_object_get_type (object),
                           geda_text_object_get_x (object),
                           geda_text_object_get_y (object),
                           lepton_object_get_color (object),

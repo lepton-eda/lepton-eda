@@ -408,7 +408,7 @@ geda_circle_object_to_buffer (const LeptonObject *object)
   g_return_val_if_fail (object->circle != NULL, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
-                          OBJ_CIRCLE,
+                          lepton_object_get_type (object),
                           geda_circle_object_get_center_x (object),
                           geda_circle_object_get_center_y (object),
                           geda_circle_object_get_radius (object),

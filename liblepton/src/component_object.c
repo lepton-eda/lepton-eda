@@ -960,7 +960,7 @@ lepton_component_object_to_buffer (const LeptonObject *object)
    * types.
    */
   buffer = g_strdup_printf ("%c %d %d %d %d %d %s",
-                            OBJ_COMPONENT,
+                            lepton_object_get_type (object),
                             object->component->x,
                             object->component->y,
                             geda_object_get_selectable (object),

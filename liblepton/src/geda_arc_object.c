@@ -464,7 +464,7 @@ geda_arc_object_to_buffer (const LeptonObject *object)
   /* Describe a circle with post-20000704 file format */
 
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d %d",
-                          OBJ_ARC,
+                          lepton_object_get_type (object),
                           geda_arc_object_get_center_x (object),
                           geda_arc_object_get_center_y (object),
                           geda_arc_object_get_radius (object),

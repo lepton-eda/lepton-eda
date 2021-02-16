@@ -372,7 +372,7 @@ geda_bus_object_to_buffer (const LeptonObject *object)
   g_return_val_if_fail (object->line != NULL, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d %d",
-                          OBJ_BUS,
+                          lepton_object_get_type (object),
                           geda_bus_object_get_x0 (object),
                           geda_bus_object_get_y0 (object),
                           geda_bus_object_get_x1 (object),
