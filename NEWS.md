@@ -2384,5 +2384,5 @@ Please check `info geda-scheme` for full details.
 
 ----------------------------------------------------------------
 
-Please see [NEWS-1.9.2.txt](docs/NEWS-1.9.2.txt) for info on
+Please see [NEWS-1.9.2.txt](docs/news/NEWS-1.9.2.txt) for info on
 pre-1.9.3 changes (before *Lepton EDA* has forked from *geda-gaf*).
