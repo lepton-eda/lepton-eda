@@ -179,6 +179,19 @@ lepton_object_is_component (const LeptonObject *object)
 }
 
 
+/*! \brief Test if object is a line object.
+ *
+ *  \param [in] object The object to test.
+ *  \return TRUE, if the object is line, otherwise FALSE.
+ */
+gboolean
+lepton_object_is_line (const LeptonObject *object)
+{
+  return (object != NULL &&
+          lepton_object_get_type (object) == OBJ_LINE);
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.
@@ -599,7 +612,7 @@ gboolean o_get_line_options(LeptonObject *object,
                             OBJECT_END *end, OBJECT_TYPE *type,
                             int *width, int *length, int *space)
 {
-  if (object->type != OBJ_LINE
+  if (!lepton_object_is_line (object)
       && !lepton_object_is_arc (object)
       && !lepton_object_is_box (object)
       && !lepton_object_is_circle (object)

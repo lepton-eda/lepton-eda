@@ -458,9 +458,8 @@ o_line_read (const char buf[],
 gchar*
 geda_line_object_to_buffer (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_line (object), NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_LINE, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d",
                           OBJ_LINE,
@@ -488,9 +487,8 @@ geda_line_object_to_buffer (const LeptonObject *object)
 void
 geda_line_object_translate (LeptonObject *object, int dx, int dy)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_line (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_LINE);
 
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
@@ -519,9 +517,8 @@ geda_line_object_rotate (int world_centerx,
 {
   int newx, newy;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_line (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_LINE);
 
   if (angle == 0)
     return;
@@ -576,9 +573,8 @@ geda_line_object_mirror (int world_centerx,
                          int world_centery,
                          LeptonObject *object)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_line (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_LINE);
 
   /* translate object to origin */
   geda_line_object_translate (object, -world_centerx, -world_centery);
@@ -607,8 +603,7 @@ geda_line_object_calculate_bounds (const LeptonObject *object,
 
   geda_bounds_init (bounds);
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (object->type == OBJ_LINE);
+  g_return_if_fail (lepton_object_is_line (object));
   g_return_if_fail (object->line != NULL);
 
   geda_line_calculate_bounds (object->line, bounds);
@@ -631,8 +626,7 @@ geda_line_object_calculate_bounds (const LeptonObject *object,
 gboolean
 geda_line_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_LINE, FALSE);
+  g_return_val_if_fail (lepton_object_is_line (object), FALSE);
   g_return_val_if_fail (object->line != NULL, FALSE);
 
   if (x != NULL) {

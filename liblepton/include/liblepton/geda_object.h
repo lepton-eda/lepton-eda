@@ -120,6 +120,9 @@ lepton_object_is_circle (const LeptonObject *object);
 gboolean
 lepton_object_is_component (const LeptonObject *object);
 
+gboolean
+lepton_object_is_line (const LeptonObject *object);
+
 /* construction, destruction */
 
 LeptonObject*
