@@ -328,7 +328,7 @@ s_hierarchy_traversepages (GschemToplevel *w_current,
     o_current = (LeptonObject *)iter->data;
 
     /* only complex things like symbols can contain attributes */
-    if (o_current->type != OBJ_COMPONENT) continue;
+    if (!lepton_object_is_component (o_current)) continue;
 
     filename =
       o_attrib_search_attached_attribs_by_name (o_current, "source", 0);

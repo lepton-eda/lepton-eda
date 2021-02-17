@@ -802,7 +802,7 @@ i_callback_edit_embed (GtkWidget *widget, gpointer data)
     while (s_current != NULL) {
       o_current = (LeptonObject *) s_current->data;
       g_assert (o_current != NULL);
-      if ( (o_current->type == OBJ_COMPONENT) ||
+      if (lepton_object_is_component (o_current) ||
            (o_current->type == OBJ_PICTURE) ) {
         o_embed (o_current);
       }
@@ -845,7 +845,7 @@ i_callback_edit_unembed (GtkWidget *widget, gpointer data)
     while (s_current != NULL) {
       o_current = (LeptonObject *) s_current->data;
       g_assert (o_current != NULL);
-      if ( (o_current->type == OBJ_COMPONENT) ||
+      if (lepton_object_is_component (o_current) ||
            (o_current->type == OBJ_PICTURE) ) {
         o_unembed (o_current);
       }
@@ -890,7 +890,7 @@ i_callback_edit_update (GtkWidget *widget, gpointer data)
     selection = geda_list_get_glist (toplevel->page_current->selection_list);
     for (iter = selection; iter != NULL; iter = g_list_next (iter)) {
       LeptonObject *o_current = (LeptonObject *) iter->data;
-      if (o_current != NULL && o_current->type == OBJ_COMPONENT) {
+      if (lepton_object_is_component (o_current)) {
         selected_components = g_list_prepend (selected_components, o_current);
       }
     }
@@ -2079,7 +2079,7 @@ i_callback_hierarchy_down_schematic (GtkWidget *widget, gpointer data)
   object = o_select_return_first_object(w_current);
 
   /* only allow going into symbols */
-  if (object == NULL || object->type != OBJ_COMPONENT)
+  if (!lepton_object_is_component (object))
     return;
 
   parent = gschem_toplevel_get_toplevel (w_current)->page_current;
@@ -2223,7 +2223,7 @@ i_callback_hierarchy_down_symbol (GtkWidget *widget, gpointer data)
   LeptonObject* object = o_select_return_first_object (w_current);
 
   /* only allow going into symbols */
-  if (object == NULL || object->type != OBJ_COMPONENT)
+  if (!lepton_object_is_component (object))
     return;
 
   g_message (_("Searching for symbol [%1$s]"), object->component_basename);

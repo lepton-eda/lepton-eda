@@ -690,7 +690,8 @@ get_subpages (GschemToplevel *w_current,
       continue;
     }
 
-    if (object->type != OBJ_COMPONENT) {
+    if (!lepton_object_is_component (object))
+    {
       continue;
     }
 

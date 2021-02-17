@@ -327,7 +327,8 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
       o_text_recreate (o_current);
     }
 
-    if (o_current->type == OBJ_COMPONENT) {
+    if (lepton_object_is_component (o_current))
+    {
       o_edit_show_hidden_lowlevel(w_current, o_current->component->prim_objs);
     }
 
@@ -455,8 +456,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   GList *iter;
   const CLibSymbol *clib;
 
-  g_return_val_if_fail (o_current != NULL, NULL);
-  g_return_val_if_fail (o_current->type == OBJ_COMPONENT, NULL);
+  g_return_val_if_fail (lepton_object_is_component (o_current), NULL);
   g_return_val_if_fail (o_current->component_basename != NULL, NULL);
 
   page = o_get_page (o_current);

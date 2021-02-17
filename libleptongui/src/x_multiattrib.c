@@ -566,7 +566,7 @@ static void multiattrib_popup_menu (Multiattrib *multiattrib,
  */
 static gboolean is_multiattrib_object (LeptonObject *object)
 {
-  if (object->type == OBJ_COMPONENT ||
+  if (lepton_object_is_component (object) ||
       object->type == OBJ_NET ||
       lepton_object_is_bus (object) ||
       object->type == OBJ_PIN) {
@@ -2751,7 +2751,8 @@ multiattrib_update (Multiattrib *multiattrib)
     /* Count the different objects we are editing */
     multiattrib->total_num_in_list++;
 
-    if (object->type == OBJ_COMPONENT) {
+    if (lepton_object_is_component (object))
+    {
       multiattrib->num_comp_in_list++;
 
       if (component_title_name == NULL)

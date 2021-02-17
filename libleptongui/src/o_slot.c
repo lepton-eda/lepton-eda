@@ -39,7 +39,7 @@ void o_slot_start (GschemToplevel *w_current, LeptonObject *object)
   char *slot_value;
 
   /* single object for now */
-  if (object->type != OBJ_COMPONENT)
+  if (!lepton_object_is_component (object))
     return;
 
   slot_count = o_attrib_search_object_attribs_by_name (object, "numslots", 0);
