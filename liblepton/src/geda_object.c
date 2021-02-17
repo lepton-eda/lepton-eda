@@ -153,6 +153,19 @@ lepton_object_is_bus (const LeptonObject *object)
 }
 
 
+/*! \brief Test if object is a circle object.
+ *
+ *  \param [in] object The object to test.
+ *  \return TRUE, if the object is circle, otherwise FALSE.
+ */
+gboolean
+lepton_object_is_circle (const LeptonObject *object)
+{
+  return (object != NULL &&
+          lepton_object_get_type (object) == OBJ_CIRCLE);
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.
@@ -576,7 +589,7 @@ gboolean o_get_line_options(LeptonObject *object,
   if (object->type != OBJ_LINE
       && !lepton_object_is_arc (object)
       && !lepton_object_is_box (object)
-      && object->type != OBJ_CIRCLE
+      && !lepton_object_is_circle (object)
       && object->type != OBJ_PATH)
     return FALSE;
 
@@ -680,7 +693,7 @@ gboolean o_get_fill_options(LeptonObject *object,
                             int *pitch2, int *angle2)
 {
   if (!lepton_object_is_box (object)
-      && object->type != OBJ_CIRCLE
+      && !lepton_object_is_circle (object)
       && object->type != OBJ_PATH)
     return FALSE;
 

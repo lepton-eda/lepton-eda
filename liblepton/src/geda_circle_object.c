@@ -106,9 +106,8 @@ geda_circle_object_copy (const LeptonObject *object)
 {
   LeptonObject *new_obj;
 
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_circle (object), NULL);
   g_return_val_if_fail (object->circle != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_CIRCLE, NULL);
 
   new_obj = geda_circle_object_new (lepton_object_get_color (object),
                                     object->circle->center_x,
@@ -141,9 +140,8 @@ geda_circle_object_copy (const LeptonObject *object)
 gint
 geda_circle_object_get_center_x (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_circle (object), 0);
   g_return_val_if_fail (object->circle != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_CIRCLE, 0);
 
   return object->circle->center_x;
 }
@@ -156,9 +154,8 @@ geda_circle_object_get_center_x (const LeptonObject *object)
 gint
 geda_circle_object_get_center_y (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_circle (object), 0);
   g_return_val_if_fail (object->circle != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_CIRCLE, 0);
 
   return object->circle->center_y;
 }
@@ -171,9 +168,8 @@ geda_circle_object_get_center_y (const LeptonObject *object)
 gint
 geda_circle_object_get_radius (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_circle (object), 0);
   g_return_val_if_fail (object->circle != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_CIRCLE, 0);
 
   return object->circle->radius;
 }
@@ -186,9 +182,8 @@ geda_circle_object_get_radius (const LeptonObject *object)
 void
 geda_circle_object_set_center_x (LeptonObject *object, gint x)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
-  g_return_if_fail (object->type == OBJ_CIRCLE);
 
   object->circle->center_x = x;
 }
@@ -201,9 +196,8 @@ geda_circle_object_set_center_x (LeptonObject *object, gint x)
 void
 geda_circle_object_set_center_y (LeptonObject *object, gint y)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
-  g_return_if_fail (object->type == OBJ_CIRCLE);
 
   object->circle->center_y = y;
 }
@@ -218,9 +212,8 @@ geda_circle_object_set_center_y (LeptonObject *object, gint y)
 void
 geda_circle_object_set_radius (LeptonObject *object, gint radius)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
-  g_return_if_fail (object->type == OBJ_CIRCLE);
   g_return_if_fail (radius > 0);
 
   object->circle->radius = radius;
@@ -411,9 +404,8 @@ o_circle_read (const char buf[],
 gchar*
 geda_circle_object_to_buffer (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_circle (object), NULL);
   g_return_val_if_fail (object->circle != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_CIRCLE, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
                           OBJ_CIRCLE,
@@ -446,9 +438,8 @@ geda_circle_object_to_buffer (const LeptonObject *object)
 void
 geda_circle_object_translate (LeptonObject *object, gint dx, gint dy)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
-  g_return_if_fail (object->type == OBJ_CIRCLE);
 
   /* Do world coords */
   object->circle->center_x = object->circle->center_x + dx;
@@ -476,9 +467,8 @@ geda_circle_object_rotate (gint world_centerx,
   int newx, newy;
   int x, y;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
-  g_return_if_fail (object->type == OBJ_CIRCLE);
 
   /* Only 90 degree multiple and positive angles are allowed. */
   /* angle must be positive */
@@ -526,9 +516,8 @@ geda_circle_object_mirror (gint world_centerx,
                            gint world_centery,
                            LeptonObject *object)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
-  g_return_if_fail (object->type == OBJ_CIRCLE);
 
   /* translate object to origin */
   object->circle->center_x -= world_centerx;
@@ -557,8 +546,7 @@ geda_circle_object_calculate_bounds (const LeptonObject *object,
 
   geda_bounds_init (bounds);
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (object->type == OBJ_CIRCLE);
+  g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
 
   geda_circle_calculate_bounds (object->circle, bounds);
@@ -581,8 +569,7 @@ geda_circle_object_calculate_bounds (const LeptonObject *object,
 gboolean
 geda_circle_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_CIRCLE, FALSE);
+  g_return_val_if_fail (lepton_object_is_circle (object), FALSE);
   g_return_val_if_fail (object->circle != NULL, FALSE);
 
   if (x != NULL) {
@@ -616,9 +603,8 @@ geda_circle_object_shortest_distance (LeptonObject *object,
 {
   gboolean solid;
 
-  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (lepton_object_is_circle (object), FALSE);
   g_return_val_if_fail (object->circle != NULL, G_MAXDOUBLE);
-  g_return_val_if_fail (object->type == OBJ_CIRCLE, FALSE);
 
   solid = force_solid || object->fill_type != FILLING_HOLLOW;
 
