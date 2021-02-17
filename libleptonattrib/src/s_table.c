@@ -407,7 +407,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
         a_iter = o_current->attribs;
         while (a_iter != NULL) {
           a_current = (LeptonObject*) a_iter->data;
-          if (a_current->type == OBJ_TEXT
+          if (lepton_object_is_text (a_current)
               && a_current->text != NULL) {  /* found an attribute */
             /* may need to check more thoroughly here. . . . */
             attrib_text = g_strdup(geda_text_object_get_string (a_current));
@@ -501,7 +501,7 @@ void s_table_add_toplevel_net_items_to_net_table(LeptonObject *start_obj) {
       /* Having found a net, we stick it into the table. */
       a_current = o_current->attribs;
       while (a_current != NULL) {
-        if (a_current->object->type == OBJ_TEXT
+        if (lepton_object_is_text (a_current->object)
             && a_current->object->text != NULL) {  /* found an attribute */
           /* may need to check more thoroughly here. . . . */
           attrib_text = g_strdup(a_current->object->text->string);
@@ -609,7 +609,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
             a_iter = o_lower_current->attribs;
             while (a_iter != NULL) {
               pin_attrib = (LeptonObject*) a_iter->data;
-              if (pin_attrib->type == OBJ_TEXT
+              if (lepton_object_is_text (pin_attrib)
                   && pin_attrib->text != NULL) {  /* found an attribute */
           attrib_text = g_strdup(geda_text_object_get_string (pin_attrib));
                 attrib_name = u_basic_breakup_string(attrib_text, '=', 0);

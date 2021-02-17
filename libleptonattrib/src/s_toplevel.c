@@ -689,7 +689,7 @@ s_toplevel_update_component_attribs_in_toplevel (
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
     a_current = (LeptonObject*) a_iter->data;
-    if (a_current->type == OBJ_TEXT
+    if (lepton_object_is_text (a_current)
         && a_current->text != NULL) {  /* found a name=value attribute pair. */
       /* may need to check more thoroughly here. . . . */
       old_name_value_pair = g_strdup(geda_text_object_get_string (a_current));

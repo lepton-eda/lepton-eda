@@ -214,7 +214,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
         a_iter = o_current->attribs; /* This has a side effect.  Why? */
         while (a_iter != NULL) {
           a_current = (LeptonObject*) a_iter->data;
-          if (a_current->type == OBJ_TEXT
+          if (lepton_object_is_text (a_current)
               && a_current->text != NULL) {  /* found an attribute */
             attrib_text = g_strdup(geda_text_object_get_string (a_current));
             attrib_name = u_basic_breakup_string(attrib_text, '=', 0);
@@ -419,7 +419,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
               a_iter = o_lower_current->attribs;
               while (a_iter != NULL) {
                 pin_attrib = (LeptonObject*) a_iter->data;
-                if (pin_attrib->type == OBJ_TEXT
+                if (lepton_object_is_text (pin_attrib)
                     && pin_attrib->text != NULL) {  /* found an attribute */
                   attrib_text = g_strdup(geda_text_object_get_string (pin_attrib));
                   attrib_name = u_basic_breakup_string(attrib_text, '=', 0);

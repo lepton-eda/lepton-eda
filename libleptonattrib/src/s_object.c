@@ -187,7 +187,7 @@ s_object_replace_attrib_in_object(LeptonObject *o_current,
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
     a_current = (LeptonObject*) a_iter->data;
-    if (a_current->type == OBJ_TEXT
+    if (lepton_object_is_text (a_current)
         && a_current->text != NULL) {  /* found an attribute */
 
       /* may need to check more thoroughly here. . . . */
@@ -248,7 +248,7 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
   a_iter = o_current->attribs;
   while (a_iter != NULL) {
     a_current = (LeptonObject*) a_iter->data;
-    if (a_current->type == OBJ_TEXT
+    if (lepton_object_is_text (a_current)
         && a_current->text != NULL) {  /* found an attribute */
 
       /* may need to check more thoroughly here. . . . */
