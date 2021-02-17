@@ -149,8 +149,8 @@ An example project file might look like:
 specifies the \fBnetlister\fR(1) program to run.  The default is
 `lepton-netlist'.
 
-.SH AUTHORS
-See the `AUTHORS' file included with this program.
+.SH AUTHOR
+Bill Wilson
 
 .SH COPYRIGHT
 .nf
