@@ -396,5 +396,4 @@ void printver()
 	printf("This is lepton-renum, an advanced refdes renumber utility for Lepton EDA's lepton-schematic.\n");
 	printf("Version %s.  Lepton EDA version %s.%s\n",GRVERSION,
                PACKAGE_DOTTED_VERSION, PACKAGE_DATE_VERSION);
-	printf("Compiled on %s at %s\n",COMP_DATE,COMP_TIME);
 	}
