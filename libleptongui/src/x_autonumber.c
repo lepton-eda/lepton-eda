@@ -329,7 +329,7 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, LeptonObject *o_current, gint *
 
   len = strlen(autotext->current_searchtext);
   /* first find out whether we can ignore that object */
-  if (o_current->type != OBJ_TEXT)  /* text object */
+  if (!lepton_object_is_text (o_current))  /* text object */
     return AUTONUMBER_IGNORE;
 
   str = geda_text_object_get_string (o_current);
@@ -692,7 +692,8 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
            iter != NULL;
            iter = g_list_next (iter)) {
         o_current = (LeptonObject*) iter->data;
-        if (o_current->type == OBJ_TEXT) {
+        if (lepton_object_is_text (o_current))
+        {
           if (autotext->scope_number == SCOPE_HIERARCHY
               || autotext->scope_number == SCOPE_PAGE
               || ((autotext->scope_number == SCOPE_SELECTED) && (o_current->selected))) {

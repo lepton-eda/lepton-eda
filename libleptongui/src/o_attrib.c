@@ -164,7 +164,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
-  g_return_if_fail (object != NULL && object->type == OBJ_TEXT);
+  g_return_if_fail (lepton_object_is_text (object));
 
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
@@ -211,7 +211,7 @@ void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
 
-  g_return_if_fail (object != NULL && object->type == OBJ_TEXT);
+  g_return_if_fail (lepton_object_is_text (object));
 
   o_invalidate (w_current, object);
   object->show_name_value = show_name_value;

@@ -2324,7 +2324,7 @@ i_callback_attributes_show_name (GtkWidget *widget, gpointer data)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       LeptonObject *object = (LeptonObject*)s_current->data;
-      if (object->type == OBJ_TEXT)
+      if (lepton_object_is_text (object))
         o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME);
     }
 
@@ -2359,7 +2359,7 @@ i_callback_attributes_show_value (GtkWidget *widget, gpointer data)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       LeptonObject *object = (LeptonObject*)s_current->data;
-      if (object->type == OBJ_TEXT)
+      if (lepton_object_is_text (object))
         o_attrib_toggle_show_name_value (w_current, object, SHOW_VALUE);
     }
 
@@ -2394,7 +2394,7 @@ i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       LeptonObject *object = (LeptonObject*)s_current->data;
-      if (object->type == OBJ_TEXT)
+      if (lepton_object_is_text (object))
         o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME_VALUE);
     }
 
@@ -2429,7 +2429,7 @@ i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       LeptonObject *object = (LeptonObject*)s_current->data;
-      if (object->type == OBJ_TEXT)
+      if (lepton_object_is_text (object))
         o_attrib_toggle_visibility (w_current, object);
     }
 

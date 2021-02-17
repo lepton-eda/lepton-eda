@@ -201,7 +201,8 @@ void find_text_dialog (GschemToplevel *w_current)
 
   object = o_select_return_first_object(w_current);
 
-  if ((object != NULL) && (object->type == OBJ_TEXT)) {
+  if (lepton_object_is_text (object))
+  {
     gschem_find_text_widget_set_find_text_string(
             GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget),
             geda_text_object_get_string (object)

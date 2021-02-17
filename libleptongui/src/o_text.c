@@ -102,7 +102,8 @@ void o_text_change(GschemToplevel *w_current, LeptonObject *object, char *string
     return;
   }
 
-  if (object->type != OBJ_TEXT) {
+  if (!lepton_object_is_text (object))
+  {
     return;
   }
 

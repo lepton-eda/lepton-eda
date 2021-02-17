@@ -509,7 +509,7 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
       o_current = (LeptonObject*) o_iter->data;
-      if (o_current->type == OBJ_TEXT
+      if (lepton_object_is_text (o_current)
           && o_current->attached_to != NULL) {
         if (lepton_object_is_net (o_current->attached_to)) {
           netname = o_attrib_search_object_attribs_by_name (o_current->attached_to, "netname", 0);

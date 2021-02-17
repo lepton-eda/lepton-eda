@@ -163,7 +163,10 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
         gboolean replaced;
 
         object = (LeptonObject *) s_current->data;
-        if (object && !object->attached_to && object->type != OBJ_TEXT ) {
+        if (object &&
+            !object->attached_to &&
+            !lepton_object_is_text (object))
+        {
           addmask = 4;
           if (lepton_object_is_component (object))
           {

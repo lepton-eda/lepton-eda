@@ -200,7 +200,8 @@ assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text)
       continue;
     }
 
-    if (filter_text && (object->type != OBJ_TEXT)) {
+    if (filter_text && !lepton_object_is_text (object))
+    {
       g_warning ("expecting a text object");
       continue;
     }
@@ -369,7 +370,8 @@ find_objects_using_pattern (GSList *pages,
         continue;
       }
 
-      if (object->type != OBJ_TEXT) {
+      if (!lepton_object_is_text (object))
+      {
         continue;
       }
 
@@ -448,7 +450,8 @@ find_objects_using_regex (GSList *pages,
         continue;
       }
 
-      if (object->type != OBJ_TEXT) {
+      if (!lepton_object_is_text (object))
+      {
         continue;
       }
 
@@ -516,7 +519,8 @@ find_objects_using_substring (GSList *pages,
         continue;
       }
 
-      if (object->type != OBJ_TEXT) {
+      if (!lepton_object_is_text (object))
+      {
         continue;
       }
 

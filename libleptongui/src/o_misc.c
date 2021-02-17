@@ -321,7 +321,9 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
   iter = o_list;
   while (iter != NULL) {
     o_current = (LeptonObject *)iter->data;
-    if (o_current->type == OBJ_TEXT && !o_is_visible (o_current)) {
+    if (lepton_object_is_text (o_current) &&
+        !o_is_visible (o_current))
+    {
 
       /* don't toggle the visibility flag */
       o_text_recreate (o_current);
@@ -380,7 +382,8 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
   while (iter != NULL) {
     o_current = (LeptonObject *)iter->data;
 
-    if (o_current->type == OBJ_TEXT) {
+    if (lepton_object_is_text (o_current))
+    {
       const gchar *str = geda_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
         if (o_is_visible (o_current)) {
@@ -414,7 +417,8 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
   while (iter != NULL) {
     o_current = (LeptonObject *)iter->data;
 
-    if (o_current->type == OBJ_TEXT) {
+    if (lepton_object_is_text (o_current))
+    {
       const gchar *str = geda_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
         if (!o_is_visible (o_current)) {
@@ -502,7 +506,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
     gchar *name;
     gchar *value;
 
-    g_assert (attr_new->type == OBJ_TEXT);
+    g_assert (lepton_object_is_text (attr_new));
 
     o_attrib_get_name_value (attr_new, &name, NULL);
 

@@ -647,14 +647,14 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
     LeptonObject* object = (LeptonObject *) iter->data;
     iter = g_list_next (iter);
     if ((object != NULL) &&
-        (lepton_object_is_arc (object)    ||
-         lepton_object_is_box (object)    ||
-         lepton_object_is_bus (object)    ||
-         lepton_object_is_net (object)    ||
-         lepton_object_is_line (object)   ||
-         lepton_object_is_path (object)   ||
-         lepton_object_is_circle (object) ||
-        (object->type == OBJ_TEXT)))
+        (lepton_object_is_arc (object)  ||
+         lepton_object_is_box (object)  ||
+         lepton_object_is_bus (object)  ||
+         lepton_object_is_net (object)  ||
+         lepton_object_is_line (object) ||
+         lepton_object_is_path (object) ||
+         lepton_object_is_text (object) ||
+         lepton_object_is_circle (object)))
     {
       color = lepton_object_get_color (object);
       break;
@@ -666,12 +666,13 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject* object = (LeptonObject *) iter->data;
     if ((object != NULL) &&
-        (lepton_object_is_arc (object)    ||
-         lepton_object_is_box (object)    ||
-         lepton_object_is_line (object)   ||
-         lepton_object_is_path (object)   ||
-         lepton_object_is_circle (object) ||
-        (object->type == OBJ_TEXT))) {
+        (lepton_object_is_arc (object)  ||
+         lepton_object_is_box (object)  ||
+         lepton_object_is_line (object) ||
+         lepton_object_is_path (object) ||
+         lepton_object_is_text (object) ||
+         lepton_object_is_circle (object)))
+    {
       if (color != lepton_object_get_color (object)) {
         color = MULTIPLE_VALUES;
         break;
@@ -760,7 +761,8 @@ gschem_selection_adapter_get_text_alignment (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
 
-    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+    if (lepton_object_is_text (object))
+    {
       int temp_alignment = geda_text_object_get_alignment (object);
 
       if (alignment < 0) {
@@ -797,7 +799,8 @@ gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject* object = (LeptonObject *) iter->data;
     iter = g_list_next (iter);
-    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+    if (lepton_object_is_text (object))
+    {
       color = lepton_object_get_color (object);
       break;
     }
@@ -807,7 +810,8 @@ gschem_selection_adapter_get_text_color (GschemSelectionAdapter *adapter)
 
   while (iter != NULL) {
     LeptonObject* object = (LeptonObject *) iter->data;
-    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+    if (lepton_object_is_text (object))
+    {
       if (color != lepton_object_get_color (object)) {
         color = MULTIPLE_VALUES;
         break;
@@ -838,7 +842,8 @@ gschem_selection_adapter_get_text_rotation (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
 
-    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+    if (lepton_object_is_text (object))
+    {
       int temp_angle = geda_text_object_get_angle (object);
 
       if (angle < 0) {
@@ -875,7 +880,8 @@ gschem_selection_adapter_get_text_size (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
 
-    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+    if (lepton_object_is_text (object))
+    {
       int temp_size = geda_text_object_get_size (object);
 
       if (size < 0) {
@@ -910,7 +916,8 @@ gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
 
-    if ((object != NULL) && (object->type == OBJ_TEXT)) {
+    if (lepton_object_is_text (object))
+    {
       if (string == NULL) {
         string = geda_text_object_get_string (object);
       } else {
@@ -1760,7 +1767,8 @@ gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, in
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
 
-    if (object->type == OBJ_TEXT) {
+    if (lepton_object_is_text (object))
+    {
       geda_text_object_set_alignment (object, alignment);
       o_text_recreate (object);
     }
@@ -1793,7 +1801,8 @@ gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int co
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
 
-    if (object->type == OBJ_TEXT) {
+    if (lepton_object_is_text (object))
+    {
       lepton_object_set_color (object, color);
     }
 
@@ -1827,7 +1836,8 @@ gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
 
-    if (object->type == OBJ_TEXT) {
+    if (lepton_object_is_text (object))
+    {
       geda_text_object_set_angle (object, angle);
       o_text_recreate (object);
     }
@@ -1861,7 +1871,8 @@ gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int siz
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
 
-    if (object->type == OBJ_TEXT) {
+    if (lepton_object_is_text (object))
+    {
       geda_text_object_set_size (object, size);
       o_text_recreate (object);
     }
@@ -1897,7 +1908,8 @@ gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
 
-    if (object->type == OBJ_TEXT) {
+    if (lepton_object_is_text (object))
+    {
       o_text_set_string (object, string);
 
       /* handle slot= attribute, it's a special case */
