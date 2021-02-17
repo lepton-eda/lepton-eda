@@ -1,4 +1,4 @@
-Lepton EDA utilities
+Lepton EDA utilities (in contrib/)
 
 * gmk_sym
    Updated by Matthew Ettus, matt@ettus.com
@@ -129,40 +129,6 @@ Lepton EDA utilities
     to gEDA component definition in .sym format file.
 
 
-* lepton-refdes_renum
-    Dan McMahill
-
-    lepton-refdes_renum reads a gschem schematic file or files and renumbers
-    all reference designators.  The reference designators are numbered
-    starting with 1 and the old schematic file is replaced by the modified
-    schematic file.
-
-    Run the program with no parameters or with --help to see usage
-    information.
-
-
- * lepton-tragesym
-    Werner Hoch
-
-    lepton-tragesym is a symbol creator for gEDA/gaf.  The aim of
-    this script is to make it easier (and faster) to create
-    symbols for Lepton EDA.
-
-    Program features:
-
-    * create pins and arrange their elements (clocksign, dot, type, pinnumber,
-      label)
-    * sort pins alphabetical and numerical
-    * swap words of pinlabels if wished
-    * draw negation lines on the labels
-    * rotate pinlabels if wished
-    * some syntax check to the input file
-
-    Please see the README.tragesym and ChangeLog.tragesym for more info.
-    Be sure to look at the examples in examples/tragesym.  There you will
-    find the template.src file referenced in the README.tragesym file.
-
-
 * pads_backannotate
     Dan McMahill
 
@@ -171,29 +137,3 @@ Lepton EDA utilities
 
     Please see the pads_backannotate.[dvi|html|ps|pdf] documentation for more
     details.
-
-
-    gsch2pcb
-    Bill Wilson
-
-    gsch2pcb is conceptually based on the gschem2pcb shell script
-    distributed with gnetlist, but additionally handles multiple
-    schematics, handles element file footprints, and removes pc board
-    elements corresponding to components deleted from the schematics.
-    It also forward annotates component value changes.
-
-    Please see the README.gsch2pcb file for more information.  Also see
-    examples/gsch2pcb/project.sample for an example of a project file.
-
-
-* lepton-archive
-
-Create design archive from a set of schematics and configuration
-files including symbols, SPICE source files, etc.  See
-lepton-archive(1) for more information.
-
-* lepton-schdiff
-    Alan Somers
-    This script is used to produce graphical diffs of gschem files.  It
-    integrates with Git, Mercurial, and Subversion.  It requires ImageMagick
-    to run.  Run lepton-schdiff -h for usage instructions.
