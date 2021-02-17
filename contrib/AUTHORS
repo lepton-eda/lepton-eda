@@ -1,9 +1,4 @@
-gEDA
-
-GPL Electronic Design Automation
-------------------------------------------------------------------------------
-
-utils AUTHORS
+Lepton EDA utilities (in contrib/) - AUTHORS
 
 gmk_sym
 char_width.c
@@ -26,15 +21,5 @@ Written by: Ales Hvezda
 olib
 Written by: Mario Pascucci
 
-refdes_renum
-Written by: Dan McMahill
-
-tragesym
-Written by: Werner Hoch
-
 pads_backannotate
 Written by: Dan McMahill
-
-gsch2pcb
-Written by: Bill Wilson
-
