@@ -493,7 +493,7 @@ void s_table_add_toplevel_net_items_to_net_table(LeptonObject *start_obj) {
   while (o_current != NULL) {
 
     /* -----  Now process objects found on page  ----- */
-    if (o_current->type == OBJ_NET) {
+    if (lepton_object_is_net (o_current)) {
       g_debug ("s_table_add_toplevel_net_items_to_net_table: "
                "Found net on page.\n");
       verbose_print(" N");
@@ -534,7 +534,7 @@ void s_table_add_toplevel_net_items_to_net_table(LeptonObject *start_obj) {
       }  /* while (a_current != NULL) */
       g_free(temp_netname);
 
-    }    /*--- if (o_current->type == OBJ_NET)   ---*/
+    }    /*--- if (lepton_object_is_net (o_current))   ---*/
 
 
     o_current = o_current->next;  /* iterate to next object on page */
