@@ -2,4 +2,4 @@
 (component-library-search "./sym")
 ;;; Verilog symbol library in the lepton repository.
 ;;; Fix the path if you move the example somewhere else.
-(component-library "../../../../symbols/verilog/")
+(component-library "../../../../../symbols/sym-verilog/")
