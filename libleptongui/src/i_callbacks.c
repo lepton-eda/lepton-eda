@@ -803,7 +803,8 @@ i_callback_edit_embed (GtkWidget *widget, gpointer data)
       o_current = (LeptonObject *) s_current->data;
       g_assert (o_current != NULL);
       if (lepton_object_is_component (o_current) ||
-           (o_current->type == OBJ_PICTURE) ) {
+          lepton_object_is_picture (o_current))
+      {
         o_embed (o_current);
       }
       s_current = g_list_next(s_current);
@@ -846,7 +847,8 @@ i_callback_edit_unembed (GtkWidget *widget, gpointer data)
       o_current = (LeptonObject *) s_current->data;
       g_assert (o_current != NULL);
       if (lepton_object_is_component (o_current) ||
-           (o_current->type == OBJ_PICTURE) ) {
+          lepton_object_is_picture (o_current))
+      {
         o_unembed (o_current);
       }
       s_current = g_list_next(s_current);

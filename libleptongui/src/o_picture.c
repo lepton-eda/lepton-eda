@@ -349,7 +349,8 @@ o_picture_exchange (GschemToplevel *w_current,
     LeptonObject *object = (LeptonObject *) iter->data;
     g_assert (object != NULL);
 
-    if (object->type == OBJ_PICTURE) {
+    if (lepton_object_is_picture (object))
+    {
       gboolean status;
 
       /* Erase previous picture */
