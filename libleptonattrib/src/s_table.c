@@ -596,7 +596,8 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
              o_lower_iter = g_list_next (o_lower_iter)) {
           LeptonObject *o_lower_current = (LeptonObject*) o_lower_iter->data;
 
-          if (o_lower_current->type == OBJ_PIN) {
+          if (lepton_object_is_pin (o_lower_current))
+          {
             /* -----  Found a pin.  First get its pinnumber.  then get attrib head and loop on attribs.  ----- */
             pinnumber = o_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0);
             row_label = g_strconcat(temp_uref, ":", pinnumber, NULL);

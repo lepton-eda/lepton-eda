@@ -325,7 +325,8 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
           g_debug ("s_sheet_data_add_master_pin_list_items: "
                    "Examining object name %s\n",
                    o_lower_current->name);
-          if (o_lower_current->type == OBJ_PIN) {
+          if (lepton_object_is_pin (o_lower_current))
+          {
             temp_pinnumber = o_attrib_search_object_attribs_by_name (o_lower_current, "pinnumber", 0);
 
             if (temp_pinnumber != NULL) {
@@ -412,7 +413,8 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
             g_debug ("s_sheet_data_add_master_pin_attrib_list_items: "
                      "Examining component refdes = %s\n",
                      temp_uref);
-            if (o_lower_current->type == OBJ_PIN) {
+            if (lepton_object_is_pin (o_lower_current))
+            {
               /* -----  Found a pin.  Now get attrib head and loop on attribs.  ----- */
               a_iter = o_lower_current->attribs;
               while (a_iter != NULL) {

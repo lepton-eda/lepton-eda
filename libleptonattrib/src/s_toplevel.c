@@ -534,7 +534,8 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel,
              prim_iter = g_list_next (prim_iter)) {
           LeptonObject *comp_prim_obj = (LeptonObject*) prim_iter->data;
 
-          if (comp_prim_obj->type == OBJ_PIN) {
+          if (lepton_object_is_pin (comp_prim_obj))
+          {
             new_pin_attrib_list =
               s_toplevel_get_pin_attribs_in_sheet (temp_uref, comp_prim_obj);
            s_toplevel_update_pin_attribs_in_toplevel (toplevel,
