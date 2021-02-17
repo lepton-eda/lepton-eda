@@ -192,6 +192,19 @@ lepton_object_is_line (const LeptonObject *object)
 }
 
 
+/*! \brief Test if object is a net object.
+ *
+ *  \param [in] object The object to test.
+ *  \return TRUE, if the object is net, otherwise FALSE.
+ */
+gboolean
+lepton_object_is_net (const LeptonObject *object)
+{
+  return (object != NULL &&
+          lepton_object_get_type (object) == OBJ_NET);
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.

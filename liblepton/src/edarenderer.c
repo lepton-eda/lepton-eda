@@ -1387,7 +1387,8 @@ eda_renderer_draw_end_cues (EdaRenderer *renderer, LeptonObject *object, int end
 
   /* Draw a midpoint, if necessary */
   if ((conn_type == CONN_MIDPOINT)
-      || ((object->type == OBJ_NET) && (conn_count > 1))) {
+      || (lepton_object_is_net (object) && (conn_count > 1)))
+  {
     eda_renderer_draw_junction_cue (renderer, x, y, is_bus);
     return;
   }

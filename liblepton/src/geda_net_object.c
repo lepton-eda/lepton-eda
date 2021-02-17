@@ -41,8 +41,7 @@
 gboolean
 geda_net_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_NET, FALSE);
+  g_return_val_if_fail (lepton_object_is_net (object), FALSE);
   g_return_val_if_fail (object->line != NULL, FALSE);
 
   if (x != NULL) {
@@ -68,9 +67,8 @@ geda_net_object_get_position (const LeptonObject *object, gint *x, gint *y)
 gint
 geda_net_object_get_x0 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_net (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_NET, 0);
 
   return object->line->x[0];
 }
@@ -87,9 +85,8 @@ geda_net_object_get_x0 (const LeptonObject *object)
 gint
 geda_net_object_get_x1 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_net (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_NET, 0);
 
   return object->line->x[1];
 }
@@ -106,9 +103,8 @@ geda_net_object_get_x1 (const LeptonObject *object)
 gint
 geda_net_object_get_y0 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_net (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_NET, 0);
 
   return object->line->y[0];
 }
@@ -125,9 +121,8 @@ geda_net_object_get_y0 (const LeptonObject *object)
 gint
 geda_net_object_get_y1 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_net (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_NET, 0);
 
   return object->line->y[1];
 }
@@ -144,9 +139,8 @@ geda_net_object_get_y1 (const LeptonObject *object)
 void
 geda_net_object_set_x0 (LeptonObject *object, gint x)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_NET);
 
   object->line->x[0] = x;
 }
@@ -163,9 +157,8 @@ geda_net_object_set_x0 (LeptonObject *object, gint x)
 void
 geda_net_object_set_x1 (LeptonObject *object, gint x)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_NET);
 
   object->line->x[1] = x;
 }
@@ -182,9 +175,8 @@ geda_net_object_set_x1 (LeptonObject *object, gint x)
 void
 geda_net_object_set_y0 (LeptonObject *object, gint y)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_NET);
 
   object->line->y[0] = y;
 }
@@ -201,9 +193,8 @@ geda_net_object_set_y0 (LeptonObject *object, gint y)
 void
 geda_net_object_set_y1 (LeptonObject *object, gint y)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_NET);
 
   object->line->y[1] = y;
 }
@@ -223,8 +214,7 @@ geda_net_object_calculate_bounds (const LeptonObject *object,
 
   geda_bounds_init (bounds);
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (object->type == OBJ_NET);
+  g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
 
   geda_line_calculate_bounds (object->line, bounds);
@@ -328,9 +318,8 @@ o_net_read (const char buf[],
 gchar*
 geda_net_object_to_buffer (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_net (object), NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_NET, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d",
                           OBJ_NET,
@@ -352,9 +341,8 @@ geda_net_object_to_buffer (const LeptonObject *object)
 void
 geda_net_object_translate (LeptonObject *object, int dx, int dy)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_NET);
 
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
@@ -408,9 +396,8 @@ geda_net_object_rotate (int world_centerx,
 {
   int newx, newy;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_NET);
 
   if (angle == 0)
     return;
@@ -447,9 +434,8 @@ geda_net_object_mirror (int world_centerx,
                         int world_centery,
                         LeptonObject *object)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_NET);
 
   /* translate object to origin */
   geda_net_object_translate (object, -world_centerx, -world_centery);
@@ -626,8 +612,7 @@ o_net_consolidate_segments (LeptonObject *object)
   LeptonPage *page;
   int changed = 0;
 
-  g_return_val_if_fail ((object != NULL), 0);
-  g_return_val_if_fail ((object->type == OBJ_NET), 0);
+  g_return_val_if_fail (lepton_object_is_net (object), 0);
 
   /* It's meaningless to do anything here if the object isn't in a page. */
   page = o_get_page (object);
@@ -645,7 +630,8 @@ o_net_consolidate_segments (LeptonObject *object)
         conn->other_whichone != -1 && conn->whichone != -1 &&
         o_net_consolidate_nomidpoint(object, conn->x, conn->y) ) {
 
-      if (other_object->type == OBJ_NET) {
+      if (lepton_object_is_net (other_object))
+      {
         other_orient = geda_net_object_orientation (other_object);
 
         /* - both objects have the same orientation (either vert or horiz) */
@@ -714,7 +700,8 @@ geda_net_object_consolidate (LeptonPage *page)
   while (iter != NULL) {
     o_current = (LeptonObject *)iter->data;
 
-    if (o_current->type == OBJ_NET) {
+    if (lepton_object_is_net (o_current))
+    {
       status = o_net_consolidate_segments (o_current);
     }
 

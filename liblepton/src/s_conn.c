@@ -428,7 +428,7 @@ s_conn_update_line_object (LeptonPage* page,
       /* Allow nets to connect to the middle of buses. */
       /* Allow compatible objects to connect. */
       if (found && other_object->type != OBJ_PIN &&
-          ((object->type == OBJ_NET &&
+          ((lepton_object_is_net (object) &&
             lepton_object_is_bus (other_object)) ||
             check_direct_compat (object, other_object))) {
 
@@ -459,7 +459,7 @@ s_conn_update_line_object (LeptonPage* page,
       /* Allow compatible objects to connect. */
       if (found && object->type != OBJ_PIN &&
            ((lepton_object_is_bus (object) &&
-             other_object->type == OBJ_NET) ||
+             lepton_object_is_net (other_object)) ||
              check_direct_compat (object, other_object))) {
 
         add_connection (object, other_object, CONN_MIDPOINT,
