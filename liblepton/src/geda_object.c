@@ -127,6 +127,19 @@ lepton_object_is_arc (const LeptonObject *object)
 }
 
 
+/*! \brief Test if object is a box object.
+ *
+ *  \param [in] object The object to test.
+ *  \return TRUE, if the object is box, otherwise FALSE.
+ */
+gboolean
+lepton_object_is_box (const LeptonObject *object)
+{
+  return (object != NULL &&
+          lepton_object_get_type (object) == OBJ_BOX);
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.
@@ -549,7 +562,7 @@ gboolean o_get_line_options(LeptonObject *object,
 {
   if (object->type != OBJ_LINE
       && !lepton_object_is_arc (object)
-      && object->type != OBJ_BOX
+      && !lepton_object_is_box (object)
       && object->type != OBJ_CIRCLE
       && object->type != OBJ_PATH)
     return FALSE;
@@ -653,7 +666,7 @@ gboolean o_get_fill_options(LeptonObject *object,
                             int *pitch1, int *angle1,
                             int *pitch2, int *angle2)
 {
-  if (object->type != OBJ_BOX
+  if (!lepton_object_is_box (object)
       && object->type != OBJ_CIRCLE
       && object->type != OBJ_PATH)
     return FALSE;

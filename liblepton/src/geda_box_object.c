@@ -444,9 +444,8 @@ geda_box_object_to_buffer (const LeptonObject *object)
 void
 geda_box_object_translate (LeptonObject *object, int dx, int dy)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_box (object));
   g_return_if_fail (object->box != NULL);
-  g_return_if_fail (object->type == OBJ_BOX);
 
   /* Do world coords */
   object->box->upper_x = object->box->upper_x + dx;
@@ -477,9 +476,8 @@ geda_box_object_rotate (int world_centerx,
   int newx1, newy1;
   int newx2, newy2;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_box (object));
   g_return_if_fail (object->box != NULL);
-  g_return_if_fail (object->type == OBJ_BOX);
 
   /*! \note
    *  Only 90 degree multiple and positive angles are allowed.
@@ -543,9 +541,8 @@ geda_box_object_mirror (int world_centerx,
   int newx1, newy1;
   int newx2, newy2;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_box (object));
   g_return_if_fail (object->box != NULL);
-  g_return_if_fail (object->type == OBJ_BOX);
 
   /* translate object to origin */
   object->box->upper_x -= world_centerx;
@@ -592,8 +589,7 @@ geda_box_object_calculate_bounds (const LeptonObject *object,
 
   geda_bounds_init (bounds);
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (object->type == OBJ_BOX);
+  g_return_if_fail (lepton_object_is_box (object));
   g_return_if_fail (object->box != NULL);
 
   geda_box_calculate_bounds (object->box, bounds);
@@ -616,8 +612,7 @@ geda_box_object_calculate_bounds (const LeptonObject *object,
 gboolean
 geda_box_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_BOX, FALSE);
+  g_return_val_if_fail (lepton_object_is_box (object), FALSE);
   g_return_val_if_fail (object->box != NULL, FALSE);
 
   if (x != NULL) {

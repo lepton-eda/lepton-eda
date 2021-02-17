@@ -108,6 +108,9 @@ lepton_object_set_type (LeptonObject *object,
 gboolean
 lepton_object_is_arc (const LeptonObject *object);
 
+gboolean
+lepton_object_is_box (const LeptonObject *object);
+
 /* construction, destruction */
 
 LeptonObject*
