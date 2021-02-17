@@ -173,7 +173,7 @@
 
 ;; Set up component library, making blatant assumptions about the
 ;; directory layout.
-(component-library (string-join (list (getenv "srcdir") "../../symbols/analog") "/")
+(component-library (string-join (list (getenv "srcdir") "../../symbols/sym/analog") "/")
                    "Basic devices")
 
 (test-begin "geda:component/library" 8)
