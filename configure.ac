@@ -328,6 +328,7 @@ AC_CONFIG_FILES([Makefile
 
                  symbols/Makefile
                  symbols/docs/Makefile
+                 symbols/sym/Makefile
                  symbols/sym-gnetman/Makefile
                  symbols/sym-verilog/Makefile
                  symbols/sym-vhdl/Makefile
