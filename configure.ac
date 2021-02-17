@@ -336,8 +336,6 @@ AC_CONFIG_FILES([Makefile
                  docs/changelogs/Makefile
                  docs/manual/Makefile
                  docs/scheme-api/Makefile
-                 docs/toplevel/Makefile
-                 docs/toplevel/gedadocs.html
                  docs/wiki/Makefile
                  docs/news/Makefile
                  docs/design/Makefile
