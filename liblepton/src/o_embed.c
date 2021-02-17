@@ -59,8 +59,9 @@ o_embed (LeptonObject *o_current)
   }
 
   /* If it's a picture and it's not embedded */
-  if ( (o_current->type == OBJ_PICTURE) &&
-       !o_picture_is_embedded (o_current) ) {
+  if (lepton_object_is_picture (o_current) &&
+      !o_picture_is_embedded (o_current))
+  {
     o_picture_embed (o_current);
 
     page_modified = 1;
@@ -115,8 +116,9 @@ o_unembed (LeptonObject *o_current)
   }
 
   /* If it's a picture and it's embedded */
-  if ( (o_current->type == OBJ_PICTURE) &&
-       o_picture_is_embedded (o_current)) {
+  if (lepton_object_is_picture (o_current) &&
+      o_picture_is_embedded (o_current))
+  {
     o_picture_unembed (o_current);
 
     page_modified = 1;

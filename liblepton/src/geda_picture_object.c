@@ -644,8 +644,7 @@ geda_picture_object_calculate_bounds (const LeptonObject *object,
 {
   geda_bounds_init (bounds);
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (object->type == OBJ_PICTURE);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
 
   geda_bounds_init_with_points (bounds,
@@ -667,8 +666,7 @@ geda_picture_object_calculate_bounds (const LeptonObject *object,
 gboolean
 geda_picture_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_PICTURE, FALSE);
+  g_return_val_if_fail (lepton_object_is_picture (object), FALSE);
   g_return_val_if_fail (object->picture != NULL, FALSE);
 
   if (x != NULL) {
@@ -859,9 +857,8 @@ geda_picture_object_rotate (int world_centerx,
   int newx1, newy1;
   int newx2, newy2;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
-  g_return_if_fail (object->type == OBJ_PICTURE);
 
   /* Only 90 degree multiple and positive angles are allowed. */
   /* angle must be positive */
@@ -923,9 +920,8 @@ geda_picture_object_mirror (int world_centerx,
   int newx1, newy1;
   int newx2, newy2;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
-  g_return_if_fail (object->type == OBJ_PICTURE);
 
   /* Set info in object. Sometimes it's necessary to change the
    * rotation angle as well as the mirror flag. */
@@ -976,9 +972,8 @@ geda_picture_object_mirror (int world_centerx,
 void
 geda_picture_object_translate (LeptonObject *object, int dx, int dy)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
-  g_return_if_fail (object->type == OBJ_PICTURE);
 
   /* Do world coords */
   object->picture->upper_x = object->picture->upper_x + dx;
