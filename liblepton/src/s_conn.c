@@ -291,7 +291,7 @@ void s_conn_update_glist (LeptonPage* page,
 static int is_bus_related (LeptonObject *object)
 {
   return (lepton_object_is_bus (object) ||
-           (object->type == OBJ_PIN && object->pin_type == PIN_TYPE_BUS));
+          (lepton_object_is_pin (object) && object->pin_type == PIN_TYPE_BUS));
 }
 
 
@@ -365,16 +365,21 @@ s_conn_update_line_object (LeptonPage* page,
     if (component && other_component) {
       /* If inside different symbols, both must be pins to connect. */
       if (component != other_component
-          && (object->type != OBJ_PIN || other_object->type != OBJ_PIN)) {
+          && (!lepton_object_is_pin (object) ||
+              !lepton_object_is_pin (other_object))) {
         continue;
       }
 
     /* 2. Updating object is inside a symbol, but other object is not. */
-    } else if (component && !other_component) {
-      if (object->type != OBJ_PIN) continue;
+    }
+    else if (component && !other_component)
+    {
+      if (!lepton_object_is_pin (object)) continue;
     /* 3. Updating object not inside symbol, but other object is. */
-    } else if (!component && other_component) {
-      if (other_object->type != OBJ_PIN) continue;
+    }
+    else if (!component && other_component)
+    {
+      if (!lepton_object_is_pin (other_object)) continue;
     }
 
     /* Here is where you check the end points */
@@ -382,14 +387,16 @@ s_conn_update_line_object (LeptonPage* page,
     for (k = 0; k < 2; k++) {
 
       /* If the other object is a pin, only check the correct end */
-      if (other_object->type == OBJ_PIN && other_object->whichend != k)
+      if (lepton_object_is_pin (other_object) &&
+          other_object->whichend != k)
         continue;
 
       /* Check both end points of the object */
       for (j = 0; j < 2; j++) {
 
         /* If the object is a pin, only check the correct end */
-        if (object->type == OBJ_PIN && object->whichend != j)
+        if (lepton_object_is_pin (object) &&
+            object->whichend != j)
           continue;
 
         /* Check for coincidence and compatibility between
@@ -417,7 +424,8 @@ s_conn_update_line_object (LeptonPage* page,
     for (k = 0; k < 2; k++) {
 
       /* If the object is a pin, only check the correct end */
-      if (object->type == OBJ_PIN && object->whichend != k)
+      if (lepton_object_is_pin (object) &&
+          object->whichend != k)
         continue;
 
       /* check for midpoint of other object, k endpoint of current obj*/
@@ -427,10 +435,11 @@ s_conn_update_line_object (LeptonPage* page,
       /* Pins are not allowed midpoint connections onto them. */
       /* Allow nets to connect to the middle of buses. */
       /* Allow compatible objects to connect. */
-      if (found && other_object->type != OBJ_PIN &&
+      if (found && !lepton_object_is_pin (other_object) &&
           ((lepton_object_is_net (object) &&
             lepton_object_is_bus (other_object)) ||
-            check_direct_compat (object, other_object))) {
+           check_direct_compat (object, other_object)))
+      {
 
         add_connection (object, other_object, CONN_MIDPOINT,
                         object->line->x[k],
@@ -446,7 +455,8 @@ s_conn_update_line_object (LeptonPage* page,
     for (k = 0; k < 2; k++) {
 
       /* If the other object is a pin, only check the correct end */
-      if (other_object->type == OBJ_PIN && other_object->whichend != k)
+      if (lepton_object_is_pin (other_object) &&
+          other_object->whichend != k)
         continue;
 
       /* do object's endpoints cross the middle of other_object? */
@@ -457,10 +467,10 @@ s_conn_update_line_object (LeptonPage* page,
       /* Pins are not allowed midpoint connections onto them. */
       /* Allow nets to connect to the middle of buses. */
       /* Allow compatible objects to connect. */
-      if (found && object->type != OBJ_PIN &&
-           ((lepton_object_is_bus (object) &&
-             lepton_object_is_net (other_object)) ||
-             check_direct_compat (object, other_object))) {
+      if (found && !lepton_object_is_pin (object) &&
+          ((lepton_object_is_bus (object) &&
+            lepton_object_is_net (other_object)) ||
+           check_direct_compat (object, other_object))) {
 
         add_connection (object, other_object, CONN_MIDPOINT,
                         other_object->line->x[k],

@@ -1161,7 +1161,7 @@ o_component_find_pin_by_attribute (LeptonObject *object,
        iter = g_list_next (iter)) {
     o_current = (LeptonObject*) iter->data;
 
-    if (o_current->type != OBJ_PIN)
+    if (!lepton_object_is_pin (o_current))
       continue;
 
     value = o_attrib_search_object_attribs_by_name (o_current, name, 0);

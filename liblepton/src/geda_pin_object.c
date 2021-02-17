@@ -44,8 +44,7 @@ geda_pin_object_calculate_bounds (const LeptonObject *object,
 
   geda_bounds_init (bounds);
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (object->type == OBJ_PIN);
+  g_return_if_fail (lepton_object_is_pin (object));
   g_return_if_fail (object->line != NULL);
 
   geda_line_calculate_bounds (object->line, bounds);
@@ -70,8 +69,7 @@ geda_pin_object_get_width (const LeptonObject *object)
 {
   gint width = PIN_WIDTH_NET;
 
-  g_return_val_if_fail (object != NULL, PIN_WIDTH_NET);
-  g_return_val_if_fail (object->type == OBJ_PIN, PIN_WIDTH_NET);
+  g_return_val_if_fail (lepton_object_is_pin (object), PIN_WIDTH_NET);
 
   switch (object->pin_type)
   {
@@ -102,8 +100,7 @@ geda_pin_object_get_width (const LeptonObject *object)
 gboolean
 geda_pin_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_PIN, FALSE);
+  g_return_val_if_fail (lepton_object_is_pin (object), FALSE);
   g_return_val_if_fail (object->line != NULL, FALSE);
   g_return_val_if_fail (object->whichend >= 0, FALSE);
   g_return_val_if_fail (object->whichend < 2, FALSE);
@@ -131,9 +128,8 @@ geda_pin_object_get_position (const LeptonObject *object, gint *x, gint *y)
 gint
 geda_pin_object_get_x0 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_pin (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_PIN, 0);
 
   return object->line->x[0];
 }
@@ -150,9 +146,8 @@ geda_pin_object_get_x0 (const LeptonObject *object)
 gint
 geda_pin_object_get_x1 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_pin (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_PIN, 0);
 
   return object->line->x[1];
 }
@@ -169,9 +164,8 @@ geda_pin_object_get_x1 (const LeptonObject *object)
 gint
 geda_pin_object_get_y0 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_pin (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_PIN, 0);
 
   return object->line->y[0];
 }
@@ -188,9 +182,8 @@ geda_pin_object_get_y0 (const LeptonObject *object)
 gint
 geda_pin_object_get_y1 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_pin (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_PIN, 0);
 
   return object->line->y[1];
 }
@@ -207,9 +200,8 @@ geda_pin_object_get_y1 (const LeptonObject *object)
 void
 geda_pin_object_set_x0 (LeptonObject *object, gint x)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_pin (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_PIN);
 
   object->line->x[0] = x;
 }
@@ -226,9 +218,8 @@ geda_pin_object_set_x0 (LeptonObject *object, gint x)
 void
 geda_pin_object_set_x1 (LeptonObject *object, gint x)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_pin (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_PIN);
 
   object->line->x[1] = x;
 }
@@ -245,9 +236,8 @@ geda_pin_object_set_x1 (LeptonObject *object, gint x)
 void
 geda_pin_object_set_y0 (LeptonObject *object, gint y)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_pin (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_PIN);
 
   object->line->y[0] = y;
 }
@@ -264,9 +254,8 @@ geda_pin_object_set_y0 (LeptonObject *object, gint y)
 void
 geda_pin_object_set_y1 (LeptonObject *object, gint y)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_pin (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_PIN);
 
   object->line->y[1] = y;
 }
@@ -394,9 +383,8 @@ o_pin_read (const char buf[],
 gchar*
 geda_pin_object_to_buffer (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_pin (object), NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_PIN, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d %d %d",
                           OBJ_PIN,
@@ -420,9 +408,8 @@ geda_pin_object_to_buffer (const LeptonObject *object)
 void
 geda_pin_object_translate (LeptonObject *object, int dx, int dy)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_pin (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_PIN);
 
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
@@ -443,9 +430,8 @@ geda_pin_object_copy (LeptonObject *o_current)
 {
   LeptonObject *new_obj;
 
-  g_return_val_if_fail (o_current != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_pin (o_current), NULL);
   g_return_val_if_fail (o_current->line != NULL, NULL);
-  g_return_val_if_fail (o_current->type == OBJ_PIN, NULL);
 
   new_obj = geda_pin_object_new (lepton_object_get_color (o_current),
                                  o_current->line->x[0],
@@ -477,9 +463,8 @@ geda_pin_object_rotate (int world_centerx,
 {
   int newx, newy;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_pin (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_PIN);
 
   if (angle == 0)
     return;
@@ -516,9 +501,8 @@ geda_pin_object_mirror (int world_centerx,
                         int world_centery,
                         LeptonObject *object)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_pin (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_PIN);
 
   /* translate object to origin */
   geda_pin_object_translate (object, -world_centerx, -world_centery);
@@ -548,9 +532,8 @@ geda_pin_object_modify (LeptonObject *object,
                         int y,
                         int whichone)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_pin (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_PIN);
   g_return_if_fail (object->whichend >= 0);
   g_return_if_fail (object->whichend < 2);
 
@@ -591,7 +574,8 @@ geda_pin_object_update_whichend (GList *object_list,
        iter != NULL;
        iter = g_list_next (iter)) {
     o_current = (LeptonObject *)iter->data;
-    if (o_current->type == OBJ_PIN) {
+    if (lepton_object_is_pin (o_current))
+    {
       pin_list = g_list_prepend (pin_list, o_current);
     }
   }
@@ -703,8 +687,7 @@ void
 geda_pin_object_set_type (LeptonObject *o_current,
                           int pin_type)
 {
-  g_return_if_fail (o_current != NULL);
-  g_return_if_fail (o_current->type == OBJ_PIN);
+  g_return_if_fail (lepton_object_is_pin (o_current));
 
   o_emit_pre_change_notify (o_current);
   switch (pin_type) {

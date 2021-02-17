@@ -996,7 +996,8 @@ SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
   SCM color = scm_from_int (lepton_object_get_color (obj));
 
   /* Swap ends according to pin's whichend flag. */
-  if ((obj->type == OBJ_PIN) && obj->whichend) {
+  if (lepton_object_is_pin (obj) && obj->whichend)
+  {
     SCM s;
     s = x1; x1 = x2; x2 = s;
     s = y1; y1 = y2; y2 = s;
