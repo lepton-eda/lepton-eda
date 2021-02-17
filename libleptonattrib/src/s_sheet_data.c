@@ -146,7 +146,7 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
              "Examining o_current->name = %s\n", o_current->name);
 
       /*-----  only process if this is a component with attributes ----*/
-      if (o_current->type == OBJ_COMPONENT &&
+    if (lepton_object_is_component (o_current) &&
           o_current->attribs != NULL) {
 
         g_debug ("s_sheet_data_add_master_comp_list_items: "
@@ -165,7 +165,7 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
           g_free(temp_uref);
         }
 
-      } /*  if (o_current->type == OBJ_COMPONENT . . . . .) */
+      } /*  if (lepton_object_is_component (o_current) . . . . .) */
 
   }
 
@@ -205,7 +205,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
              "Examining o_current->name = %s\n", o_current->name);
 
       /*-----  only process if this is a component with attributes ----*/
-      if (o_current->type == OBJ_COMPONENT &&
+    if (lepton_object_is_component (o_current) &&
           o_current->attribs != NULL) {
 
         verbose_print(" C");
@@ -236,7 +236,7 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
           a_iter = g_list_next (a_iter);
         }   /*  while  */
 
-      }   /* if (o_current->type == OBJ_COMPONENT) */
+      }   /* if (lepton_object_is_component (o_current)) */
 
   }
 
@@ -312,7 +312,8 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
     g_debug ("s_sheet_data_add_master_pin_list_items: "
              "Examining o_current->name = %s\n", o_current->name);
 
-    if (o_current->type == OBJ_COMPONENT) {
+    if (lepton_object_is_component (o_current))
+    {
       temp_uref = s_attrib_get_refdes (o_current);
       if (temp_uref != NULL) {      /* make sure object component has a refdes  */
 
@@ -351,7 +352,7 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
       }
       g_free (temp_uref);
 
-    }  /*  if (o_current->type == OBJ_COMPONENT)  */
+    }  /*  if (lepton_object_is_component (o_current))  */
   }
 
   return;
@@ -398,7 +399,8 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
              "Examining o_current->name = %s\n",
              o_current->name);
 
-      if (o_current->type == OBJ_COMPONENT) {
+    if (lepton_object_is_component (o_current))
+    {
         temp_uref = s_attrib_get_refdes(o_current);
         if (temp_uref != NULL) {      /* make sure object component has a refdes  */
 
@@ -445,7 +447,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
           g_free(temp_uref);
         }  /*  if (temp_uref != NULL )  */
 
-      }  /* if (o_current->type == OBJ_COMPONENT)  */
+      }  /* if (lepton_object_is_component (o_current))  */
   }
   return;
 

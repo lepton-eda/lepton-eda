@@ -107,8 +107,9 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
       LeptonObject *o_current = (LeptonObject*) o_iter->data;
 
       /* --- look for object, and verify that it has a symbol file attached. ---- */
-      if (o_current->type == OBJ_COMPONENT &&
-          lepton_component_object_get_missing (o_current)) {
+      if (lepton_object_is_component (o_current) &&
+          lepton_component_object_get_missing (o_current))
+      {
         missing_sym_flag = 1;  /* flag to signal that problem exists.  */
       }
     }
@@ -452,7 +453,8 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel,
     LeptonObject *o_current = (LeptonObject*) o_iter->data;
 
     /* ------- Object is a component.  Handle component attributes. ------- */
-    if (o_current->type == OBJ_COMPONENT) {    /* Note that OBJ_COMPONENT = component + attribs */
+    if (lepton_object_is_component (o_current)) /* Note that OBJ_COMPONENT = component + attribs */
+    {
 
 #if 0
       if (o_attrib_search_object_attribs_by_name (o_current, "graphical", 0)) {
@@ -483,7 +485,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel,
                  "Found component with no refdes. name = %s\n",
                  o_current->name);
       }
-    }  /* if (o_current->type == OBJ_COMPONENT) */
+    }  /* if (lepton_object_is_component (o_current)) */
 
   }
 
@@ -513,7 +515,8 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel,
 
     /* ------- Object is a component.  Handle pins by looking ------ */
     /* ------- for all pins attached to a component.        ------ */
-    if (o_current->type == OBJ_COMPONENT) {
+    if (lepton_object_is_component (o_current))
+    {
       /*  Upon finding a component, here's what to do:
        *  0.  Get refdes of component.
        *  1.  Loop over prim_objects, looking for pins.
