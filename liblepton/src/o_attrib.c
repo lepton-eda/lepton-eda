@@ -574,7 +574,7 @@ char *o_attrib_search_inherited_attribs_by_name (LeptonObject *object,
                                                  const char *name,
                                                  int counter)
 {
-  g_return_val_if_fail (object->type == OBJ_COMPONENT, NULL);
+  g_return_val_if_fail (lepton_object_is_component (object), NULL);
 
   return o_attrib_search_floating_attribs_by_name (object->component->prim_objs, name, counter);
 }
@@ -650,8 +650,8 @@ GList * o_attrib_return_attribs (LeptonObject *object)
   attribs = g_list_reverse (attribs);
 
   /* Inherited attributes (inside component objects) */
-  if (object->type == OBJ_COMPONENT) {
-
+  if (lepton_object_is_component (object))
+  {
     inherited_attribs =
       o_attrib_find_floating_attribs (object->component->prim_objs);
 

@@ -784,7 +784,7 @@ SCM_DEFINE (object_embedded_p, "%object-embedded?", 1, 0, 0,
   LeptonObject*  obj = edascm_to_object (obj_s);
   gboolean ret = FALSE;
 
-  if (obj->type == OBJ_COMPONENT)
+  if (lepton_object_is_component (obj))
   {
     ret = lepton_component_object_get_embedded (obj);
   }
@@ -827,7 +827,7 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
   LeptonObject* obj   = edascm_to_object (obj_s);
   int     embed = scm_is_true (embed_s);
 
-  gboolean component  = obj->type == OBJ_COMPONENT;
+  gboolean component  = lepton_object_is_component (obj);
   gboolean picture    = obj->type == OBJ_PICTURE;
   gboolean embeddable = component || picture;
 

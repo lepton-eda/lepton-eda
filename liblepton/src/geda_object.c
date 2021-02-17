@@ -166,6 +166,19 @@ lepton_object_is_circle (const LeptonObject *object)
 }
 
 
+/*! \brief Test if object is a component object.
+ *
+ *  \param [in] object The object to test.
+ *  \return TRUE, if the object is component, otherwise FALSE.
+ */
+gboolean
+lepton_object_is_component (const LeptonObject *object)
+{
+  return (object != NULL &&
+          lepton_object_get_type (object) == OBJ_COMPONENT);
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.
@@ -945,7 +958,7 @@ lepton_object_set_color (LeptonObject *object,
 
   object->color = color;
 
-  if (object->type == OBJ_COMPONENT && object->component != NULL)
+  if (lepton_object_is_component (object) && object->component != NULL)
     geda_object_list_set_color (object->component->prim_objs, color);
 }
 

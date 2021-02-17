@@ -554,7 +554,7 @@ eda_renderer_is_drawable (EdaRenderer *renderer, LeptonObject *object)
   int color = lepton_object_get_drawing_color (object);
 
   /* Always attempt to draw component objects */
-  if (object->type == OBJ_COMPONENT)
+  if (lepton_object_is_component (object))
   {
     return TRUE;
   }

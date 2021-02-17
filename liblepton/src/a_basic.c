@@ -239,7 +239,7 @@ GList
           }
 
           /* slots only apply to component objects */
-          if (new_obj != NULL && new_obj->type == OBJ_COMPONENT)
+          if (lepton_object_is_component (new_obj))
           {
             s_slot_update_object (new_obj);
           }
@@ -254,7 +254,7 @@ GList
         break;
 
       case(START_EMBEDDED):
-        if (new_obj != NULL && new_obj->type == OBJ_COMPONENT)
+        if (lepton_object_is_component (new_obj))
         {
           object_list_save = new_object_list;
           new_object_list = new_obj->component->prim_objs;

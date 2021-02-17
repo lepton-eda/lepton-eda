@@ -183,7 +183,8 @@ geda_object_list_print (GList *objects)
     printf("Type: %d\n", o_current->type);
     printf("Sid: %d\n", lepton_object_get_id (o_current));
 
-    if (o_current->type == OBJ_COMPONENT) {
+    if (lepton_object_is_component (o_current))
+    {
       geda_object_list_print (o_current->component->prim_objs);
     }
 

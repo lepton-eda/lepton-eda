@@ -716,7 +716,8 @@ s_conn_remove_object (LeptonPage* page,
   }
 
   /* Correctly deal with compound objects */
-  if (object->type == OBJ_COMPONENT) {
+  if (lepton_object_is_component (object))
+  {
     for (iter = object->component->prim_objs;
          iter != NULL;
          iter = g_list_next (iter)) {

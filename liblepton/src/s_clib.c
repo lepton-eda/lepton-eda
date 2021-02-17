@@ -1448,7 +1448,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
       o = (LeptonObject *)o_iter->data;
-      if (o->type != OBJ_COMPONENT) continue;
+      if (!lepton_object_is_component (o)) continue;
       if (o->component_basename == NULL)  continue;
 
       /* Since we're not looking at embedded symbols, the first
