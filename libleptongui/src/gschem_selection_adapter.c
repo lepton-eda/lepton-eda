@@ -649,12 +649,13 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
     if ((object != NULL) &&
         (lepton_object_is_arc (object)    ||
          lepton_object_is_box (object)    ||
+         lepton_object_is_bus (object)    ||
         (object->type == OBJ_CIRCLE) ||
         (object->type == OBJ_LINE)   ||
         (object->type == OBJ_PATH)   ||
         (object->type == OBJ_TEXT)   ||
-        (object->type == OBJ_NET)    ||
-        (object->type == OBJ_BUS))) {
+        (object->type == OBJ_NET)))
+    {
       color = lepton_object_get_color (object);
       break;
     }

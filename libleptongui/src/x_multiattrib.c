@@ -568,7 +568,7 @@ static gboolean is_multiattrib_object (LeptonObject *object)
 {
   if (object->type == OBJ_COMPONENT ||
       object->type == OBJ_NET ||
-      object->type == OBJ_BUS ||
+      lepton_object_is_bus (object) ||
       object->type == OBJ_PIN) {
     return TRUE;
   }
@@ -2766,7 +2766,7 @@ multiattrib_update (Multiattrib *multiattrib)
     if (object->type == OBJ_NET)
       multiattrib->num_nets_in_list++;
 
-    if (object->type == OBJ_BUS)
+    if (lepton_object_is_bus (object))
       multiattrib->num_buses_in_list++;
 
     /* populate the store with any attributes from this object */

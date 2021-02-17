@@ -256,7 +256,8 @@ void o_net_find_magnetic(GschemToplevel *w_current,
       }
 
       else if (o_current->type == OBJ_NET
-               || o_current->type == OBJ_BUS) {
+               || lepton_object_is_bus (o_current))
+      {
         /* we have 3 possible points to connect:
            2 endpoints and 1 midpoint point */
         x1 = o_current->line->x[0];
@@ -297,7 +298,7 @@ void o_net_find_magnetic(GschemToplevel *w_current,
           }
         }
 
-        if (o_current->type == OBJ_BUS)
+        if (lepton_object_is_bus (o_current))
           weight = mindist / MAGNETIC_BUS_WEIGHT;
         else /* OBJ_NET */
           weight = mindist / MAGNETIC_NET_WEIGHT;
@@ -797,7 +798,8 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
   while (cl_current != NULL) {
 
     bus_object = (LeptonObject *) cl_current->data;
-    if (bus_object && bus_object->type == OBJ_BUS) {
+    if (lepton_object_is_bus (bus_object))
+    {
       /* yes, using the net routine is okay */
       int bus_orientation = geda_net_object_orientation (bus_object);
       int net_orientation = geda_net_object_orientation (net_obj);
