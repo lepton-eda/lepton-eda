@@ -14,7 +14,6 @@ SUBDIRS = \
 	netlist
 
 EXTRA_DIST = \
-	AUTHORS \
 	ChangeLog
 
 if HAVE_GIT_REPO
