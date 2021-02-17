@@ -1360,10 +1360,6 @@ geda_object_calculate_visible_bounds (LeptonObject *o_current,
     break;
 
   case(OBJ_COMPONENT):
-    /* realc routine Add this somewhere */
-    /* libhack */
-    /* o_recalc(toplevel, o_current->component);*/
-
     if (o_current->component->prim_objs == NULL)
       return 0;
 
