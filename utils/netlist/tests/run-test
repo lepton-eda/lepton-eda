@@ -49,7 +49,7 @@ cat > "${rundir}/gafrc" << EOF
        (component-library
         (string-join (list "${abs_top_srcdir}/symbols/" x) "")))
      '("io" "74" "analog" "power" "misc" "diode" "linear" "connector" "switch"
-       "asic" "spice" "cascade" "titleblock" "memory" "verilog"))
+       "asic" "spice" "cascade" "titleblock" "memory" "sym-verilog"))
 
 ;; Rather than checking what m4 and pcb's m4 files do with
 ;; the output we produce, just see what output gnetlist produces.

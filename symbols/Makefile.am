@@ -45,9 +45,9 @@ symbol_dirs = \
 
 SUBDIRS = \
 	documentation \
-	gnetman \
-	verilog \
-	vhdl
+	sym-gnetman \
+	sym-verilog \
+	sym-vhdl
 
 gafrcddir = $(LEPTONDATADIR)/scheme/autoload
 dist_gafrcd_DATA = config-symbol-libraries.scm
