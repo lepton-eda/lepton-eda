@@ -39,8 +39,7 @@
 gint
 geda_bus_object_get_ripper_direction (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_BUS, 0);
+  g_return_val_if_fail (lepton_object_is_bus (object), 0);
   g_return_val_if_fail (object->bus_ripper_direction >= -1, -1);
   g_return_val_if_fail (object->bus_ripper_direction <= 1, 1);
 
@@ -59,9 +58,8 @@ geda_bus_object_get_ripper_direction (const LeptonObject *object)
 gint
 geda_bus_object_get_x0 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_bus (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_BUS, 0);
 
   return object->line->x[0];
 }
@@ -78,9 +76,8 @@ geda_bus_object_get_x0 (const LeptonObject *object)
 gint
 geda_bus_object_get_x1 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_bus (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_BUS, 0);
 
   return object->line->x[1];
 }
@@ -97,9 +94,8 @@ geda_bus_object_get_x1 (const LeptonObject *object)
 gint
 geda_bus_object_get_y0 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_bus (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_BUS, 0);
 
   return object->line->y[0];
 }
@@ -116,9 +112,8 @@ geda_bus_object_get_y0 (const LeptonObject *object)
 gint
 geda_bus_object_get_y1 (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_bus (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_BUS, 0);
 
   return object->line->y[1];
 }
@@ -131,8 +126,7 @@ geda_bus_object_get_y1 (const LeptonObject *object)
 void
 geda_bus_object_set_ripper_direction (LeptonObject *object, gint direction)
 {
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (object->type == OBJ_BUS);
+  g_return_if_fail (lepton_object_is_bus (object));
   g_return_if_fail (direction >= -1);
   g_return_if_fail (direction <= 1);
 
@@ -151,9 +145,8 @@ geda_bus_object_set_ripper_direction (LeptonObject *object, gint direction)
 void
 geda_bus_object_set_x0 (LeptonObject *object, gint x)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_bus (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_BUS);
 
   object->line->x[0] = x;
 }
@@ -170,9 +163,8 @@ geda_bus_object_set_x0 (LeptonObject *object, gint x)
 void
 geda_bus_object_set_x1 (LeptonObject *object, gint x)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_bus (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_BUS);
 
   object->line->x[1] = x;
 }
@@ -189,9 +181,8 @@ geda_bus_object_set_x1 (LeptonObject *object, gint x)
 void
 geda_bus_object_set_y0 (LeptonObject *object, gint y)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_bus (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_BUS);
 
   object->line->y[0] = y;
 }
@@ -208,9 +199,8 @@ geda_bus_object_set_y0 (LeptonObject *object, gint y)
 void
 geda_bus_object_set_y1 (LeptonObject *object, gint y)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_bus (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_BUS);
 
   object->line->y[1] = y;
 }
@@ -227,8 +217,7 @@ geda_bus_object_set_y1 (LeptonObject *object, gint y)
 gboolean
 geda_bus_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_BUS, FALSE);
+  g_return_val_if_fail (lepton_object_is_bus (object), FALSE);
   g_return_val_if_fail (object->line != NULL, FALSE);
 
   if (x != NULL) {
@@ -257,8 +246,7 @@ geda_bus_object_calculate_bounds (const LeptonObject *object,
 
   geda_bounds_init (bounds);
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (object->type == OBJ_BUS);
+  g_return_if_fail (lepton_object_is_bus (object));
   g_return_if_fail (object->line != NULL);
 
   geda_line_calculate_bounds (object->line, bounds);
@@ -380,9 +368,8 @@ o_bus_read (const char buf[],
 gchar*
 geda_bus_object_to_buffer (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_bus (object), NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_BUS, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d %d",
                           OBJ_BUS,
@@ -405,9 +392,8 @@ geda_bus_object_to_buffer (const LeptonObject *object)
 void
 geda_bus_object_translate (LeptonObject *object, gint dx, gint dy)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_bus (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_BUS);
 
   /* Update world coords */
   object->line->x[0] = object->line->x[0] + dx;
@@ -428,9 +414,8 @@ geda_bus_object_copy (const LeptonObject *object)
 {
   LeptonObject *new_obj;
 
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_bus (object), NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_BUS, NULL);
 
   /* make sure you fix this in pin and bus as well */
   /* still doesn't work... you need to pass in the new values */
@@ -465,9 +450,8 @@ geda_bus_object_rotate (gint world_centerx,
 {
   gint newx, newy;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_bus (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_BUS);
   g_return_if_fail (geda_angle_is_ortho (angle));
 
   if (angle == 0) {
@@ -512,9 +496,8 @@ geda_bus_object_mirror (gint world_centerx,
                         gint world_centery,
                         LeptonObject *object)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_bus (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_BUS);
 
   /* translate object to origin */
   geda_bus_object_translate (object, -world_centerx, -world_centery);
@@ -536,9 +519,8 @@ geda_bus_object_mirror (gint world_centerx,
 gint
 geda_bus_object_orientation (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, NEITHER);
+  g_return_val_if_fail (lepton_object_is_bus (object), NEITHER);
   g_return_val_if_fail (object->line != NULL, NEITHER);
-  g_return_val_if_fail (object->type == OBJ_BUS, NEITHER);
 
   if (object->line->y[0] == object->line->y[1]) {
     return(HORIZONTAL);
@@ -568,9 +550,8 @@ geda_bus_object_modify (LeptonObject *object,
                         gint y,
                         gint whichone)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_bus (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (object->type == OBJ_BUS);
   g_return_if_fail (whichone >= LINE_END1);
   g_return_if_fail (whichone <= LINE_END2);
 

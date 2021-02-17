@@ -1363,7 +1363,7 @@ eda_renderer_draw_end_cues (EdaRenderer *renderer, LeptonObject *object, int end
   g_return_if_fail ((object->type != OBJ_PIN) || (object->whichend == end));
 
   /* Check whether the current object is a bus or bus pin */
-  is_bus = ((object->type == OBJ_BUS)
+  is_bus = (lepton_object_is_bus (object)
             || ((object->type == OBJ_PIN)
                 && (object->pin_type == PIN_TYPE_BUS)));
 
@@ -1372,7 +1372,7 @@ eda_renderer_draw_end_cues (EdaRenderer *renderer, LeptonObject *object, int end
     if ((conn->x != x) || (conn->y != y)) continue;
 
     /* Check whether the connected object is a bus or bus pin */
-    is_bus |= ((conn->other_object->type == OBJ_BUS)
+    is_bus |= (lepton_object_is_bus (conn->other_object)
                || ((conn->other_object->type == OBJ_PIN)
                    && (conn->other_object->pin_type == PIN_TYPE_BUS)));
 
@@ -1425,8 +1425,8 @@ eda_renderer_draw_mid_cues (EdaRenderer *renderer, LeptonObject *object)
     CONN *conn = (CONN *) iter->data;
 
     if (conn->type == CONN_MIDPOINT) {
-      int is_bus = ((object->type == OBJ_BUS)
-                    || (conn->other_object->type == OBJ_BUS)
+      int is_bus = (lepton_object_is_bus (object)
+                    || lepton_object_is_bus (conn->other_object)
                     || ((conn->other_object->type == OBJ_PIN)
                         && (conn->other_object->pin_type == PIN_TYPE_BUS)));
       eda_renderer_draw_junction_cue (renderer, conn->x, conn->y, is_bus);

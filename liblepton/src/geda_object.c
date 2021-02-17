@@ -140,6 +140,19 @@ lepton_object_is_box (const LeptonObject *object)
 }
 
 
+/*! \brief Test if object is a bus object.
+ *
+ *  \param [in] object The object to test.
+ *  \return TRUE, if the object is bus, otherwise FALSE.
+ */
+gboolean
+lepton_object_is_bus (const LeptonObject *object)
+{
+  return (object != NULL &&
+          lepton_object_get_type (object) == OBJ_BUS);
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.

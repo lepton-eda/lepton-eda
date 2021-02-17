@@ -111,6 +111,9 @@ lepton_object_is_arc (const LeptonObject *object);
 gboolean
 lepton_object_is_box (const LeptonObject *object);
 
+gboolean
+lepton_object_is_bus (const LeptonObject *object);
+
 /* construction, destruction */
 
 LeptonObject*

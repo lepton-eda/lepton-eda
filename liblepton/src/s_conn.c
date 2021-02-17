@@ -142,7 +142,7 @@ s_conn_remove_other (LeptonObject *other_object,
       g_free(conn);
 
 #if 0 /* this does not work right */
-      if (other_object->type == OBJ_BUS &&
+      if (lepton_object_is_bus (other_object) &&
           other_object->conn_list == NULL) {
         other_object->bus_ripper_direction = 0;
       }
@@ -290,7 +290,7 @@ void s_conn_update_glist (LeptonPage* page,
  */
 static int is_bus_related (LeptonObject *object)
 {
-  return (object->type == OBJ_BUS ||
+  return (lepton_object_is_bus (object) ||
            (object->type == OBJ_PIN && object->pin_type == PIN_TYPE_BUS));
 }
 
@@ -428,7 +428,8 @@ s_conn_update_line_object (LeptonPage* page,
       /* Allow nets to connect to the middle of buses. */
       /* Allow compatible objects to connect. */
       if (found && other_object->type != OBJ_PIN &&
-          ((object->type == OBJ_NET && other_object->type == OBJ_BUS) ||
+          ((object->type == OBJ_NET &&
+            lepton_object_is_bus (other_object)) ||
             check_direct_compat (object, other_object))) {
 
         add_connection (object, other_object, CONN_MIDPOINT,
@@ -457,7 +458,8 @@ s_conn_update_line_object (LeptonPage* page,
       /* Allow nets to connect to the middle of buses. */
       /* Allow compatible objects to connect. */
       if (found && object->type != OBJ_PIN &&
-           ((object->type == OBJ_BUS && other_object->type == OBJ_NET) ||
+           ((lepton_object_is_bus (object) &&
+             other_object->type == OBJ_NET) ||
              check_direct_compat (object, other_object))) {
 
         add_connection (object, other_object, CONN_MIDPOINT,
