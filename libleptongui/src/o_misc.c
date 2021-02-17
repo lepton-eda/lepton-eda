@@ -57,7 +57,7 @@ void o_edit(GschemToplevel *w_current, GList *list)
   }
 
   /* for now deal with only the first item */
-  switch(o_current->type) {
+  switch (lepton_object_get_type (o_current)) {
 
     /* also add the ability to multi attrib edit: nets, busses, pins */
     case(OBJ_COMPONENT):

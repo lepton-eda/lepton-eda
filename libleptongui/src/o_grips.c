@@ -87,7 +87,7 @@ LeptonObject *o_grips_search_world(GschemToplevel *w_current, int x, int y, int 
   while (s_current != NULL) {
     object = (LeptonObject *) s_current->data;
     if (object) {
-      switch(object->type) {
+      switch (lepton_object_get_type (object)) {
         case(OBJ_ARC):
           /* check the grips of the arc object */
           found = o_grips_search_arc_world(w_current, object,
@@ -886,7 +886,7 @@ void o_grips_start(GschemToplevel *w_current, int w_x, int w_y)
 
     /* there is one */
     /* depending on its type, start the modification process */
-    switch (object->type) {
+    switch (lepton_object_get_type (object)) {
     case OBJ_ARC:     func = o_grips_start_arc;     break;
     case OBJ_BOX:     func = o_grips_start_box;     break;
     case OBJ_PATH:    func = o_grips_start_path;    break;
@@ -933,7 +933,7 @@ void o_grips_motion(GschemToplevel *w_current, int w_x, int w_y)
   g_assert( w_current->inside_action != 0 );
   g_return_if_fail( w_current->which_object != NULL );
 
-  switch(w_current->which_object->type) {
+  switch (lepton_object_get_type (w_current->which_object)) {
     case OBJ_ARC:
       o_arc_motion (w_current, w_x, w_y, grip);
       break;
@@ -1338,7 +1338,7 @@ void o_grips_end(GschemToplevel *w_current)
     return;
   }
 
-  switch(object->type) {
+  switch (lepton_object_get_type (object)) {
 
     case(OBJ_ARC):
     /* modify an arc object */
@@ -1418,7 +1418,7 @@ void o_grips_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 {
   g_return_if_fail (w_current->which_object != NULL);
 
-  switch(w_current->which_object->type) {
+  switch (lepton_object_get_type (w_current->which_object)) {
     case OBJ_ARC:
       o_arc_draw_rubber (w_current, renderer);
       break;

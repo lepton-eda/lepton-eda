@@ -248,7 +248,7 @@ LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current,
   /* creating a toplevel or unattached attribute */
   if (o_current) {
     /* get coordinates of where to place the text object */
-    switch(o_current->type) {
+    switch (lepton_object_get_type (o_current)) {
       case(OBJ_COMPONENT):
         world_x = o_current->component->x;
         world_y = o_current->component->y;

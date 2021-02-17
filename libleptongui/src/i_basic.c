@@ -361,10 +361,10 @@ obj_selected (LeptonPage *page,
   for ( ; gl != NULL; gl = g_list_next (gl) )
   {
     LeptonObject* obj = (LeptonObject*) gl->data;
-    if (obj->type == type)
+    if (lepton_object_get_type (obj) == type)
     {
 #ifdef DEBUG
-      printf (" >> obj_selected(): obj->type: [%c]\n", obj->type);
+      printf (" >> obj_selected(): obj->type: [%c]\n", lepton_object_get_type (obj));
 #endif
       result = obj;
       break;

@@ -110,7 +110,7 @@ void o_net_guess_direction(GschemToplevel *w_current,
       if ((orientation = geda_net_object_orientation (o_current)) == NEITHER)
         continue;
 
-      switch (o_current->type) {
+      switch (lepton_object_get_type (o_current)) {
       case OBJ_NET:
         current_rules = (int*) net_rules;
         break;
@@ -247,7 +247,8 @@ void o_net_find_magnetic(GschemToplevel *w_current,
           !visible (w_current, left, top, right, bottom))
         continue; /* skip invisible objects */
 
-      if (lepton_object_is_pin (o_current)) {
+      if (lepton_object_is_pin (o_current))
+      {
         min_x = o_current->line->x[o_current->whichend];
         min_y = o_current->line->y[o_current->whichend];
 
@@ -320,7 +321,7 @@ void o_net_find_magnetic(GschemToplevel *w_current,
 
   /* check whether we found an object and if it's close enough */
   if (o_magnetic != NULL) {
-    switch (o_magnetic->type) {
+    switch (lepton_object_get_type (o_magnetic)) {
     case (OBJ_PIN): magnetic_reach = MAGNETIC_PIN_REACH; break;
     case (OBJ_NET): magnetic_reach = MAGNETIC_NET_REACH; break;
     case (OBJ_BUS): magnetic_reach = MAGNETIC_BUS_REACH; break;

@@ -113,7 +113,7 @@ void o_move_end_lowlevel (GschemToplevel *w_current,
   LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
-  switch (object->type) {
+  switch (lepton_object_get_type (object)) {
 
     case (OBJ_NET):
     case (OBJ_BUS):
@@ -195,7 +195,7 @@ void o_move_end(GschemToplevel *w_current)
     }
 
 
-    switch (object->type) {
+    switch (lepton_object_get_type (object)) {
       case (OBJ_COMPONENT):
 
         /* TODO: Fix so we can just pass the component to o_move_end_lowlevel,
@@ -416,7 +416,7 @@ void o_move_invalidate_rubber (GschemToplevel *w_current, int drawing)
       STRETCH *s_current = (STRETCH*) s_iter->data;
       LeptonObject *object = s_current->object;
 
-      switch (object->type) {
+      switch (lepton_object_get_type (object)) {
         case (OBJ_NET):
         case (OBJ_BUS):
           if (s_current->whichone == 0) {
@@ -472,7 +472,7 @@ o_move_draw_rubber (GschemToplevel *w_current,
     int whichone = s_current->whichone;
 
     /* We can only stretch nets and buses */
-    switch (object->type) {
+    switch (lepton_object_get_type (object)) {
       case OBJ_NET:
       case OBJ_BUS:
         break;
@@ -632,7 +632,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
     if (object == NULL)
       continue;
 
-    switch (object->type) {
+    switch (lepton_object_get_type (object)) {
       case (OBJ_NET):
       case (OBJ_PIN):
       case (OBJ_BUS):
