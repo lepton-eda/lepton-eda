@@ -44,7 +44,7 @@ symbol_dirs = \
 	xilinx
 
 SUBDIRS = \
-	documentation \
+	docs \
 	sym-gnetman \
 	sym-verilog \
 	sym-vhdl
