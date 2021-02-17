@@ -652,8 +652,8 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
          lepton_object_is_bus (object)    ||
          lepton_object_is_net (object)    ||
          lepton_object_is_line (object)   ||
+         lepton_object_is_path (object)   ||
          lepton_object_is_circle (object) ||
-        (object->type == OBJ_PATH)   ||
         (object->type == OBJ_TEXT)))
     {
       color = lepton_object_get_color (object);
@@ -669,8 +669,8 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter)
         (lepton_object_is_arc (object)    ||
          lepton_object_is_box (object)    ||
          lepton_object_is_line (object)   ||
+         lepton_object_is_path (object)   ||
          lepton_object_is_circle (object) ||
-        (object->type == OBJ_PATH)   ||
         (object->type == OBJ_TEXT))) {
       if (color != lepton_object_get_color (object)) {
         color = MULTIPLE_VALUES;
