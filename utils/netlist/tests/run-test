@@ -47,9 +47,11 @@ cat > "${rundir}/gafrc" << EOF
 ;; We want to use the symbols that haven't been installed yet
 (map (lambda (x)
        (component-library
-        (string-join (list "${abs_top_srcdir}/symbols/" x) "")))
+        (string-join (list "${abs_top_srcdir}/symbols/sym/" x) "")))
      '("io" "74" "analog" "power" "misc" "diode" "linear" "connector" "switch"
-       "asic" "spice" "cascade" "titleblock" "memory" "sym-verilog"))
+       "asic" "spice" "cascade" "titleblock" "memory"))
+
+(component-library "${abs_top_srcdir}/symbols/sym-verilog")
 
 ;; Rather than checking what m4 and pcb's m4 files do with
 ;; the output we produce, just see what output gnetlist produces.
