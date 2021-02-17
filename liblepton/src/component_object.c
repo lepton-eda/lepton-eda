@@ -705,12 +705,17 @@ create_placeholder (LeptonObject* node, int x, int y)
  *  \par Function Description
  *
  */
-LeptonObject *o_component_new (LeptonPage *page,
-                               char type,
-                               int color, int x, int y, int angle,
-                               int mirror, const CLibSymbol *clib,
-                               const gchar *basename,
-                               int selectable)
+LeptonObject*
+o_component_new (LeptonPage *page,
+                 char type,
+                 int color,
+                 int x,
+                 int y,
+                 int angle,
+                 int mirror,
+                 const CLibSymbol *clib,
+                 const gchar *basename,
+                 int selectable)
 {
   LeptonObject *new_node=NULL;
   GList *iter;
