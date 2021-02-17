@@ -12,9 +12,9 @@ Many thanks to the following individuals who contributed code/other stuff:
 
 Stefan Petersen		- For contributing the following symbols:
 
-				crystal-1.sym resistor-2.sym 
+				crystal-1.sym resistor-2.sym
 				mt8870-1.sym vdd-2.sym
-			
+
 	 		  Pointing out some bugs in the io symbols
 
 Ron Van Dam		- Contributed (10) 74x symbols
@@ -22,10 +22,10 @@ Ron Van Dam		- Contributed (10) 74x symbols
 				74151-1.sym 74153-1.sym 74154-1.sym
 				74161-1.sym 74164-1.sym 74245-1.sym
 				74574-1.sym
-				
+
 			  Contributed a bunch of CPU and EPROM symbols
-				27256-1.sym, 62256-1.sym, 8088-1.sym, 
-				8255A-1.sym, 27512-1.sym, 8086-1.sym, 
+				27256-1.sym, 62256-1.sym, 8088-1.sym,
+				8255A-1.sym, 27512-1.sym, 8086-1.sym,
 				8254-1.sym, 8259A-1.sym
 
 Stephen Tell		- Contributed zener-1.sym and diode-1.sym (minor
@@ -47,11 +47,11 @@ Arno Peters		- For contributing a bunch of analog/network symbols
 
 			- For sending in some updates to the following symbols
 
-				battery-1.sym battery-2.sym battery-3.sym 
-				coil-1.sym coil-2.sym inamp-1.sym 
-				inductor-1.sym nmos-1.sym nmos-2.sym 
-				npn-1.sym npn-2.sym npn-3.sym opamp-1.sym 
-				pmos-1.sym pmos-2.sym pnp-1.sym pnp-2.sym 
+				battery-1.sym battery-2.sym battery-3.sym
+				coil-1.sym coil-2.sym inamp-1.sym
+				inductor-1.sym nmos-1.sym nmos-2.sym
+				npn-1.sym npn-2.sym npn-3.sym opamp-1.sym
+				pmos-1.sym pmos-2.sym pnp-1.sym pnp-2.sym
 				pnp-3.sym
 
 
@@ -60,18 +60,18 @@ Roger Williams 		- For contributing the IE417 symbol set.  Lots of
 
 Tom Javen 		- For contributing code and font .sym files:
 
-			  	A-diaeresis.sym A-ring.sym O-diaeresis.sym 
+			  	A-diaeresis.sym A-ring.sym O-diaeresis.sym
 				a-diaeresis.sym a-ring.sym o-diaeresis.sym
-			
+
 			  (finnish and swedish character-sets)
 
-Kenneth Scharf		- For contributing tube/radio symbols: 
-		
-    				12SA7.sym 12SK7.sym 12SQ7.sym 35Z5GT.sym 
-				50L6GT.sym IF_Trans_AirCore.sym 
+Kenneth Scharf		- For contributing tube/radio symbols:
+
+    				12SA7.sym 12SK7.sym 12SQ7.sym 35Z5GT.sym
+				50L6GT.sym IF_Trans_AirCore.sym
 				Loop_Antenna.sym Osc_Coil_AirCore.sym
-				resister-pot.sym AF_Output_Transformer.sym 
-				speaker.sym Capacitor_Variable.sym 
+				resister-pot.sym AF_Output_Transformer.sym
+				speaker.sym Capacitor_Variable.sym
 
 			  (names/symbols changed to comply with the other
 			   symbol libraries)
@@ -84,13 +84,13 @@ Kenneth Scharf		- For contributing tube/radio symbols:
 	 		  file to mk_sym
 
 Eric Smith		- For contributing the following symbols:
-		
-				74109-1.sym 74273-1.sym 74139-2.sym 
+
+				74109-1.sym 74273-1.sym 74139-2.sym
 				idt7204-1.sym 74244-1.sym 74244-2.sym
 
 Arnim Littek		- For contributing the following symbols:
 
-				4040-1.sym 4051-1.sym 4020-1.sym 
+				4040-1.sym 4051-1.sym 4020-1.sym
 				4046-1.sym icl7660-1.sym
 
 			  For contributing the following symbols:
@@ -99,7 +99,7 @@ Arnim Littek		- For contributing the following symbols:
 				bridge-1.sym
 
 			  For providing updates/bugfixes to these symbols:
-			
+
 				4051-1.sym
 
 			  As well as a sample schematic (filter_1.sch)
@@ -132,7 +132,7 @@ Arnim Littek		- For contributing the following symbols:
 
 			  For contributing the following symbols:
 
-				diode-2.sym lt1108-1.sym 
+				diode-2.sym lt1108-1.sym
 
 Jerry O'Keefe		- For contributing the following symbols:
 			  (Ales renamed and did some minor touch ups)
@@ -143,7 +143,7 @@ Jerry O'Keefe		- For contributing the following symbols:
 
 			- Sending in an update of DB25-1.sym
 
-			- For volunteering to cleanup the 75 symbols (listed 
+			- For volunteering to cleanup the 75 symbols (listed
 			  below) and making sure that they conform to
 			  the current symbol specs.
 
@@ -160,48 +160,48 @@ Jason Watson		- For contributing the following symbols:
 Randy M. Thurman-Keup	- For contributing the following symbols:
 
 				connector26-1.sym connector16-1.sym
-				connector10-1.sym connector6-1.sym 
-				connector3-1.sym fuse-1.sym 
-				input-1.sym output-1.sym 
-				resistorpack10-1.sym resistorpack6-1.sym 
-				ssrelay-spdt-lcc110-1.sym 
-				ssrelay-spst-lcb110-1.sym 
-				switch-dip-4.sym switch-dip8-1.sym 
+				connector10-1.sym connector6-1.sym
+				connector3-1.sym fuse-1.sym
+				input-1.sym output-1.sym
+				resistorpack10-1.sym resistorpack6-1.sym
+				ssrelay-spdt-lcc110-1.sym
+				ssrelay-spst-lcb110-1.sym
+				switch-dip-4.sym switch-dip8-1.sym
 				switch-pushbutton-nc-1.sym
 				switch-pushbutton-spdt-1.sym
 				lm311-1.sym lm324-1.sym lm339-1.sym lm393-1.sym
-				4N29-1.sym hcpl-2630-1.sym dac08sm-1.sym 
-				EPF10k-1.sym EPC1LC20-1.sym 
+				4N29-1.sym hcpl-2630-1.sym dac08sm-1.sym
+				EPF10k-1.sym EPC1LC20-1.sym
 
 			  (Ales renamed these symbols and made adjustments so
 			   that they fit into the current symbol conventions)
 
-Ruben Leote Mendes	- For contributing the following symbols: 
+Ruben Leote Mendes	- For contributing the following symbols:
 
 				10K10LC84-1.sym header10-1.sym
 
-			  (Ales renamed them and did some very minor 
+			  (Ales renamed them and did some very minor
 			   cosmetic changes)
 
 Salman  		- For contributing a whole bunch of maxim symbols:
 ssheikh@erols.com
 				adc0820-1.sym max038-1.sym max100-1.sym
 				max1005-1.sym max1011-1.sym max1055-1.sym
-				max1114-1.sym max135-1.sym max1588-1.sym 
-				max1620-1.sym max1637-1.sym max186-1.sym 
+				max1114-1.sym max135-1.sym max1588-1.sym
+				max1620-1.sym max1637-1.sym max186-1.sym
 
-			  (Ales renamed them (added the -1) and did some 
+			  (Ales renamed them (added the -1) and did some
 	 		   minor cosmetic updates)
 
 			  Not integrated: max1150-1.sym
 
 			  For contributing or update the following symbols:
 
-				adc0820-1.sym max038-1.sym max100-1.sym 
+				adc0820-1.sym max038-1.sym max100-1.sym
 				max1005-1.sym max1011-1.sym max101A-1.sym
 				max1055-1.sym max1114-1.sym max135-1.sym
 				max147-1.sym max1480A-1.sym max1482-1.sym
-				max1588-1.sym max1614-1.sym max1620-1.sym 
+				max1588-1.sym max1614-1.sym max1620-1.sym
 				max1637-1.sym max186-1.sym max214-1.sym
 				max218-1.sym max3120-1.sym max378-1.sym
 				max400-1.sym max4005-1.sym max436-1.sym
@@ -210,7 +210,7 @@ ssheikh@erols.com
 			  For contributing the following symbols:
 
 				2N5245-1.sym 2N5911-1.sym 2S2K3-1.sym
-				capacitor-variable-2.sym 
+				capacitor-variable-2.sym
 				microphone-1.sym photo-resistor-1.sym
 				relay-1.sym switch-spst-1.sym
 				vcc-1.sym vcc-minus-1.sym
@@ -219,58 +219,58 @@ José Daniel Muñoz Daniel Frías
 			- For contributing the following symbols:
 
 				hcpl-4534-1.sym lm358-1.sym
-			 	resistor-variable-1.sym	
+			 	resistor-variable-1.sym
 
 
 Mike Jarabek		- For contributing the following symbols:
 
-				block-1.sym high-1.sym iopad-1.sym 
-				ipad-1.sym low-1.sym opad-1.sym 
+				block-1.sym high-1.sym iopad-1.sym
+				ipad-1.sym low-1.sym opad-1.sym
 				test_verilog.sym
 
-			  These symbols support the verilog netlist 
+			  These symbols support the verilog netlist
 			  backend.
-		
-			  For contributing a whole bunch more verilog 
+
+			  For contributing a whole bunch more verilog
 		 	  symbols (auto generated by mk_verilog_syms):
-		
+
 				and2-1.sym and2-2.sym and3-1.sym and3-2.sym
-				and4-1.sym and4-2.sym and5-1.sym and5-2.sym 
+				and4-1.sym and4-2.sym and5-1.sym and5-2.sym
 				and6-1.sym and6-2.sym and7-1.sym and7-2.sym
 				and8-1.sym and8-2.sym and9-1.sym and9-2.sym
-				buf.sym bufif0.sym bufif1.sym high.sym 
-				iopad.sym ipad.sym low.sym nand2-1.sym 
+				buf.sym bufif0.sym bufif1.sym high.sym
+				iopad.sym ipad.sym low.sym nand2-1.sym
 				nand2-2.sym nand3-1.sym nand3-2.sym nand4-1.sym
 				nand4-2.sym nand5-1.sym nand5-2.sym nand6-1.sym
 				nand6-2.sym nand7-1.sym nand7-2.sym nand8-1.sym
 				nand8-2.sym nand9-1.sym nand9-2.sym nor2-1.sym
 				nor2-2.sym nor3-1.sym nor3-2.sym nor4-1.sym
-				nor4-2.sym nor5-1.sym nor5-2.sym nor6-1.sym 
-				nor6-2.sym nor7-1.sym nor7-2.sym nor8-1.sym 
-				nor8-2.sym nor9-1.sym nor9-2.sym not.sym 
-				notif0.sym notif1.sym opad.sym or2-1.sym 
-				or2-2.sym or3-1.sym or3-2.sym or4-1.sym 
-				or4-2.sym or5-1.sym or5-2.sym or6-1.sym 
-				or6-2.sym or7-1.sym or7-2.sym or8-1.sym 
-				or8-2.sym or9-1.sym or9-2.sym pulldown.sym 
-				pullup.sym xnor2-1.sym xnor3-1.sym 
-				xnor4-1.sym xnor5-1.sym xnor6-1.sym 
-				xnor7-1.sym xnor8-1.sym xnor9-1.sym 
-				xor2-1.sym xor3-1.sym xor4-1.sym 
-				xor5-1.sym xor6-1.sym xor7-1.sym 
-				xor8-1.sym xor9-1.sym 
+				nor4-2.sym nor5-1.sym nor5-2.sym nor6-1.sym
+				nor6-2.sym nor7-1.sym nor7-2.sym nor8-1.sym
+				nor8-2.sym nor9-1.sym nor9-2.sym not.sym
+				notif0.sym notif1.sym opad.sym or2-1.sym
+				or2-2.sym or3-1.sym or3-2.sym or4-1.sym
+				or4-2.sym or5-1.sym or5-2.sym or6-1.sym
+				or6-2.sym or7-1.sym or7-2.sym or8-1.sym
+				or8-2.sym or9-1.sym or9-2.sym pulldown.sym
+				pullup.sym xnor2-1.sym xnor3-1.sym
+				xnor4-1.sym xnor5-1.sym xnor6-1.sym
+				xnor7-1.sym xnor8-1.sym xnor9-1.sym
+				xor2-1.sym xor3-1.sym xor4-1.sym
+				xor5-1.sym xor6-1.sym xor7-1.sym
+				xor8-1.sym xor9-1.sym
 
 Ansel Sermersheim	- For contributing about 100 symbols of which 75 were
 			  used (cleaned up by Jerry):
 
-				74107-1.sym 74109-1.sym 74112-1.sym 
+				74107-1.sym 74109-1.sym 74112-1.sym
 				74113-1.sym 74114-1.sym 74121-1.sym
  				74122-1.sym 74123-1.sym 74124-1.sym
 				74125-1.sym 74126-1.sym 74131-1.sym
 				74137-1.sym 74138-1.sym 74139-1.sym
 				74141-1.sym 74145-1.sym 74147-1.sym
 				74148-1.sym 74150-1.sym 74151-1.sym
-				74152-1.sym 74153-1.sym 74154-1.sym 
+				74152-1.sym 74153-1.sym 74154-1.sym
 				74157-1.sym 74158-1.sym 74159-1.sym
 				74160-1.sym 74161-1.sym 74162-1.sym
 				74163-1.sym 74164-1.sym 74165-1.sym
@@ -288,29 +288,29 @@ Ansel Sermersheim	- For contributing about 100 symbols of which 75 were
 				7483-1.sym 7485-1.sym 7490-1.sym
 				7491-1.sym 7492-1.sym 7493-1.sym
 				7495-1.sym 7496-1.sym 7497-1.sym
-		
+
 			  Ales renamed some of the above to -2 or -3 if there
 			  was a name clash
 
 Bas Gieltjes 		- For contributing the following symbols:
 
-				cccs-1.sym ccvs-1.sym nullor-1.sym 
+				cccs-1.sym ccvs-1.sym nullor-1.sym
 				vccs-1.sym vcvs-1.sym
-			 
+
 			  For contributing the following gnetlist spice backend
 			  symbol:
-				
+
 				include-1.sym
 
 Magnus Danielson	- For contributing the following symbols:
-	
-				N82S100N-1.sym 74373-1.sym 74374-1.sym          
+
+				N82S100N-1.sym 74373-1.sym 74374-1.sym
 				N82S23N-1.sym am27S13D-1.sym HM6264P15-1.sym
 				DC310ES-1.sym DC8640-1.sym DC319-1.sym
 				LSI11BUS-1.sym
 
 			  (Some rename/cleanup by Ales)
-			
+
 			  For making updates/changes/fixes to the following
 			  symbol:
 
@@ -353,19 +353,19 @@ Marcus Isaksson		- For contribute the following gmk_sym generated
 
 JM Routoure 		- For contributing the following symbols:
 
-				4093-1.sym 4N25-1.sym 
-				ad633jn-2.sym ad633jr-1.sym aop-spice-1.sym 
+				4093-1.sym 4N25-1.sym
+				ad633jn-2.sym ad633jr-1.sym aop-spice-1.sym
 				aop-std-1.sym zener-2.sym
 
 Luke Stras		- For contribute the following symbols:
 
-				DS26C61-1.sym max3491-1.sym	
+				DS26C61-1.sym max3491-1.sym
 
 Matt Ettus		- For contributing and fixing a bunch of symbol(s)
  			  (See ChangeLog for which ones)
 
 
-Bob Smith		- For contributing the following symbols 
+Bob Smith		- For contributing the following symbols
 
 				4015-1.sym 4024-1.sym 4047-1.sym 4052-1.sym
 				4518-1.sym
@@ -374,15 +374,15 @@ Bob Smith		- For contributing the following symbols
 	 		  more work done on 4047-1.sym (bigger box)
 
 Chris Ellec		- For contributing the follwing symbol:
-	
+
 				7414-1.sym
 
 			  For contributing the following additional symbols:
 
-				7414-1.sym 7805-1.sym MC100ELT23-1.sym 
-				MC10E104-1.sym MC10E137-1.sym 74573-1.sym  
-				HFA1100-1.sym MC100ELT23-2.sym MC10E104-2.sym  
-				MC10E137-2.sym 7474-1.sym MC100ELT21-1.sym 
+				7414-1.sym 7805-1.sym MC100ELT23-1.sym
+				MC10E104-1.sym MC10E137-1.sym 74573-1.sym
+				HFA1100-1.sym MC100ELT23-2.sym MC10E104-2.sym
+				MC10E137-2.sym 7474-1.sym MC100ELT21-1.sym
 				MC100ELT24-1.sym MC10E136-1.sym MC12429-1.sym
 
 			  Ales had to minorly tweek some of them /
@@ -390,23 +390,23 @@ Chris Ellec		- For contributing the follwing symbol:
 
 Eduardo Tavares      	- For contributing the following symbols:
 
-				6n137-1.sym AT89S8252-24PC.sym LM628N-6.sym 
+				6n137-1.sym AT89S8252-24PC.sym LM628N-6.sym
 			        max865EUA-1.sym AN82527.sym HCPL4701-1.sym
 			        max3226-1.sym si9200-1.sym
 
 Bert Timmerman		- For contributing the following symbols:
 
-				27C256-1.sym 62256-2.sym MAX807-1.sym 
-				SAB80C537-1.sym ULN2801A-1.sym 
-				connector20-1.sym diode-bridge-1.sym 
-				header26-1.sym header3-1.sym led-2.sym 
-				switch-dip4-2.sym switch-dip5-1.sym 
-				switch-dip5-2.sym switch-dip6-2.sym 
+				27C256-1.sym 62256-2.sym MAX807-1.sym
+				SAB80C537-1.sym ULN2801A-1.sym
+				connector20-1.sym diode-bridge-1.sym
+				header26-1.sym header3-1.sym led-2.sym
+				switch-dip4-2.sym switch-dip5-1.sym
+				switch-dip5-2.sym switch-dip6-2.sym
 				switch-dip8-2.sym
-				74HCT01-1.sym 74HCT03-1.sym 74HCT05-1.sym 
+				74HCT01-1.sym 74HCT03-1.sym 74HCT05-1.sym
 				74HCT08-1.sym 74HCT245-1.sym 74HCT541-1.sym
-				max189-1.sym max237-1.sym max478-1.sym 
-				max492-1.sym max531-1.sym max663-1.sym 
+				max189-1.sym max237-1.sym max478-1.sym
+				max492-1.sym max531-1.sym max663-1.sym
 				max664-1.sym
 				lm2822m-1.sym lm741-1.sym lm7905-1.sym
 				DB31-1.sym DB9-2.sym
@@ -415,11 +415,11 @@ Bert Timmerman		- For contributing the following symbols:
 				ADC0804-1.sym DAC0808-1.sym
 				CS5396-1.sym HA5221-1.sym TDA2822M-1.sym
 				PCM2702E-1.sym UAA170-1.sym
-				lm7805-1.sym lm7805c-1.sym lm78l05-1.sym 
-				lm78l05ac-1.sym lm78l05c-1.sym lm78m05-1.sym 
+				lm7805-1.sym lm7805c-1.sym lm78l05-1.sym
+				lm78l05ac-1.sym lm78l05c-1.sym lm78m05-1.sym
 				lm79m05-1.sym
-				switch-LORLIN-12pos-1com-1.sym 
-				switch-pushbutton-nc-1.sym 
+				switch-LORLIN-12pos-1com-1.sym
+				switch-pushbutton-nc-1.sym
 				switch-pushbutton-no-1.sym
 				TC5516AP-1.sym
 				4021-2.sym 4094-2.sym 74HCT4094-1.sym
@@ -429,12 +429,12 @@ Bert Timmerman		- For contributing the following symbols:
 
 Karel 'Clock' Kulhavy	- For contributing the following symbols:
 
-				HSDL7000-1.sym NE-592-1.sym 
+				HSDL7000-1.sym NE-592-1.sym
 				MAC160-1.sym photodiode-1.sym 74132-1.sym
                                 74123-3.sym dgnmos-1.sym glow-lamp-1.sym
-				aui-1.sym dual-opamp-1.sym 
-				DS26LS31-1.sym 74133-1.sym switch-spdt-2.sym 
-				2N3904-1.sym (added footprint) BC547-1.sym 
+				aui-1.sym dual-opamp-1.sym
+				DS26LS31-1.sym 74133-1.sym switch-spdt-2.sym
+				2N3904-1.sym (added footprint) BC547-1.sym
 				BC557-1.sym tl062-1.sym tl072-1.sym tl082-1.sym
 				7404-1.sym (correct visible attribute)
 				mc3487-1.sym
@@ -442,11 +442,11 @@ Karel 'Clock' Kulhavy	- For contributing the following symbols:
 				gnucap-directive-1.sym gnucap-include-1.sym
 				gnucap-model-1.sym gnucap-npn-1.sym
 				gnucap-options-1.sym
-	
+
 				schottky-1.sym transformer-5.sym
 				terminal-1.sym 7404-4.sym 74133-1.sym (repair)
 				74133-2.sym 7414-2.sym 7432-3.sym
-				7474-3.sym 74power-1.sym DB25-3.sym 
+				7474-3.sym 74power-1.sym DB25-3.sym
 				lm319-1.sym (repaired) 2N3904-2.sym
 				2N3906-1.sym
 				BC547-3.sym (renamed to -3, -2 was in use)
@@ -480,7 +480,7 @@ Mark Moss		- For contributing the following symbols:
 				40373-1.sym  4508-1.sym   4521-1.sym
 				4555-1.sym
 
-Werner Hoch:		- For contribute the following symbols:	
+Werner Hoch:		- For contribute the following symbols:
 
 				AT43USB320A.sym AT89C51_DIP.sym
 				AT89C51_PLCC.sym AT89C51_TQFP.sym
@@ -533,12 +533,12 @@ Eric Winsor		- For contributing the following symbols:
 				title-bordered-C.sym
 
 Daniel Nilsson		- For contributing the following symbols:
-	
-				tline.sym  wline-1x.sym	
+
+				tline.sym  wline-1x.sym
 
 Al Williams		- For contributing the following symbol:
 
-				basicstamp-1.sym	
+				basicstamp-1.sym
 
 Jim Battle		- For contributing the following symbols:
 
@@ -555,7 +555,7 @@ Dan McMahill		- For contributing the following symbols:
 			 	ax4106-1.sym max4107-1.sym arfx1229-1.sym
 				max1211-1.sym pot-1.sym pot-2.sym
 				testpt-1.sym
-		
+
 			  For contributing the following symbols:
 
 				ADT1-1WT-1.sym ADT1-1WT-2.sym T1-1T-W38-1.sym
@@ -566,67 +566,67 @@ Dan McMahill		- For contributing the following symbols:
 
 Jesse Alexander		- For contributing the following symbol:
 
-				8052basic-1.sym 
+				8052basic-1.sym
 
 Egil Kvaleberg 		- For contributing lots of code and support on the
 			  search for documentation from within gschem feature.
-		
-			  For contributing the initial version of 
+
+			  For contributing the initial version of
 		          	busripper-1.sym
 
 Jan Stap:		- For contributing the following symbols:
 
-			  	tiny-tiger-1.sym, max3223e-1.sym, 
+			  	tiny-tiger-1.sym, max3223e-1.sym,
 				FND5148-1.sym, QT60040-1.sym
 
 Onno Kortmann:		- For contributing the following symbols:
 
- 			  	voltmeter-1.sym lm1877-1.sym 
-				mosfet-with-diode-1.sym ntc-1.sym, 
-				l200-1.sym, tfds4500-1.sym 
+ 			  	voltmeter-1.sym lm1877-1.sym
+				mosfet-with-diode-1.sym ntc-1.sym,
+				l200-1.sym, tfds4500-1.sym
 				photo-transistor-1.sym
 
 				ATtiny15L-1.sym
 
 Thomas Maeke:		- For contributing the following symbols:
 
-			  	max1080-1.sym max1608-1.sym Si9986.sym 
+			  	max1080-1.sym max1608-1.sym Si9986.sym
    			  	max1081-1.sym max1609-1.sym
 
 
 Walter Fetter:		- For contributing the following symbols:
 
-			  	max4420-1.sym max4429-1.sym osc-2.sym 
-			  	22V10-DIP-1.sym 6N135-1.sym 6N136-1.sym 
-				74HC244-1.sym 74HC244-2.sym 74HC373-1.sym 
-				74HC374-1.sym 
-			  	DIN41612C48-2.sym DIN41612C56-2.sym 
+			  	max4420-1.sym max4429-1.sym osc-2.sym
+			  	22V10-DIP-1.sym 6N135-1.sym 6N136-1.sym
+				74HC244-1.sym 74HC244-2.sym 74HC373-1.sym
+				74HC374-1.sym
+			  	DIN41612C48-2.sym DIN41612C56-2.sym
 			  	DIN41612C96-2.sym HCPL4502-1.sym HCTL-2000-1.sym
 			  	HCTL-2016-1.sym IRF1010N-1.sym IRLZ24N-1.sym
 			  	PCA82C250-1.sym TINIm390-RevD.sym header50-1.sym
 			  	header8-1.sym header8-2.sym input-2.sym
 			  	io-1.sym led-3.sym lt1160-1.sym lt1162-1.sym
-			  	mxt429-1.sym nmos-3.sym output-2.sym 
+			  	mxt429-1.sym nmos-3.sym output-2.sym
 				passive-1.sym pmos-3.sym
 
 faisal (e-mail only)	- For contributing the following symbols:
-	
+
 			  	lm3909-1.sym lm386-1.sym
 
 vince (e-mail only)	- For contributing the following symbols:
 
 			  	ISA-98W-SOCKET-1.sym
 
-richard (e-mail only)	- For contributing the following symbols: 
+richard (e-mail only)	- For contributing the following symbols:
 
 			  	mc68hc908gp32cp-1.sym
 
 Stuart Brorson: 	- For contributing the following symbols:
 
 			  	spice/idc-1.sym spice/spice-directive-1.sym
-			  	spice/spice-include-1.sym 
+			  	spice/spice-include-1.sym
 				spice/spice-model-1.sym
-			  	spice/spice-options-1.sym 
+			  	spice/spice-options-1.sym
 			  	spice/spice-subcircuit-IO-1.sym
 			  	spice/spice-subcircuit-LL-1.sym
 
@@ -634,7 +634,7 @@ Mario Klebsch		- For contributing the following symbol:
 
 			  7432-2.sym
 
-			  For pointing out the swap between 7408-2 and 
+			  For pointing out the swap between 7408-2 and
 			  7409-2.
 
 Gabriel Paubert		- For contributing the following symbol:
@@ -643,10 +643,10 @@ Gabriel Paubert		- For contributing the following symbol:
 
 Terry Porter		- For contributing the following symbols:
 
-			  	6821-2.sym 74688-2.sym 810-1.sym 
+			  	6821-2.sym 74688-2.sym 810-1.sym
 
 Bob Paddock		- For contributing the following symbols:
-	
+
 			  	header26-2.sym header32-2.sym
 				header50-3.sym header50r-1.sym
 
@@ -656,10 +656,10 @@ voncarstadsl (e-mail only) - For contributing the following symbol:
 
 			  	lm2576T-1.sym
 
-michalsc (e-mail only)	- For contributing the following symbols: 
+michalsc (e-mail only)	- For contributing the following symbols:
 
-				lm339-2.sym  
-				
+				lm339-2.sym
+
 			  And pointing out the errors in lm339-1.sym
 
 moncheto (e-mail only)  - For contributing the following symbol:
@@ -691,7 +691,7 @@ Jon Noble		- For contributing the following symbol:
 				hcnr201-1.sym
 
 Take Vos		- For contributing the following symbol:
-	
+
 				mc3479-1.sym
 
 Holger Dietze		- For contributing the following symbol:
@@ -699,7 +699,7 @@ Holger Dietze		- For contributing the following symbol:
 				628512-1.sym
 
 Dermot Tynan		- For contributing the following symbols:
-	
+
 				DS26C31-1.sym DS26C32-2.sym
 				rj45-1.sym
 
@@ -716,11 +716,11 @@ easyb (e-mail only)	- For contributing the following symbol:
 				capacitor-4.sym
 
 Piotr Buciak		- For contributing the following symbol:
-		
+
 				resistorpack7-2.sym
 
 Leon Kos		- For contributing the following symbols:
-	
+
 				PCF8563-1.sym PCF8563-1.sym DS75176-1.sym
 				DS89C450-1.sym
 
@@ -751,20 +751,20 @@ Leon Kos		- For contributing the following symbols:
 				connector40-2.sym connector5-2.sym
 				connector6-2.sym connector7-2.sym
 				connector8-2.sym connector9-2.sym
-	
+
 Geert Stappers		- For contributing the following symbols:
 
-				switch-dip12.sym 27C2001-1.sym 
+				switch-dip12.sym 27C2001-1.sym
 
 Jean-Francios L. Blavier - For conributing the following symbol:
-				
+
 				hcpl-2430-1.sym
 
 Mark Salyzyn		- For contributing the following symbols:
 
 				varistor-1.sym ips3310-1.sym ips521-1.sym
 				ATmega8-1.sym ltp-757g-1.sym
-	
+
 Gregory Davis		- For contributing the following symbols:
 
 				max122-1.sym max507-1.sym
@@ -777,7 +777,7 @@ Fernando Pereira	- For contributing the following symbol:
 
 				pic18f4431-1.sym
 
-William R. Dieter	- For contributing the following symbols: 
+William R. Dieter	- For contributing the following symbols:
 
 				pic12F675-2.sym pic12F675.sym
 				lp2954IT-1.sym ips021-1.sym
@@ -807,7 +807,7 @@ Steve Cole		- For contributing the following symbols:
 				BC182-1.sym BC547-2.sym BC557-2.sym
 
 Paul Saenen		- For contributing the following symbol:
-				
+
 				BC307-1.sym
 
 Rui Guerreiro		- For contributing the following symbol:
@@ -847,7 +847,7 @@ Jens-Peter Kaps		- For contributing the following symbol:
 				2732-1.sym
 
 Jeff Jackowski		- For contributing the following symbol:
-		
+
 				25Cxx-1.sym
 
 Ludwig			- For contributing the following symbol:
@@ -890,7 +890,7 @@ Nathan (nuttykongs)	- For contributing the following symbol:
 
 Fredrik Simonsson	- For contributing the following symbols:
 
-				ADG601-1.sym ADG602-1.sym ADG619-1.sym 
+				ADG601-1.sym ADG602-1.sym ADG619-1.sym
 				ADG620-1.sym
 
 Tomeu Capó		- For contributing the following symbol:
@@ -931,5 +931,5 @@ Thanks.
 
 Also thanks go to all the people on the geda-dev mailing list.  Many of
 the subscribers provided good suggestions which are greatly appreciated
-(and even implemented :-).  
+(and even implemented :-).
 
