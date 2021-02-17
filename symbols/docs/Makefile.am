@@ -1,6 +1,11 @@
 doc_DATA = nc.pdf
 
-EXTRA_DIST = nc.doc nc.ps nc.pdf
+EXTRA_DIST = \
+	nc.doc \
+	nc.ps \
+	nc.pdf \
+	README.radio \
+	AUTHORS
 
 BUILT_SOURCES = nc.pdf nc.ps
 
