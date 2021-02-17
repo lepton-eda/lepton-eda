@@ -135,6 +135,9 @@ lepton_object_is_picture (const LeptonObject *object);
 gboolean
 lepton_object_is_pin (const LeptonObject *object);
 
+gboolean
+lepton_object_is_text (const LeptonObject *object);
+
 /* construction, destruction */
 
 LeptonObject*

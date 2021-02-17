@@ -87,7 +87,8 @@ o_attrib_attach (LeptonObject *attrib,
     return;
   }
 
-  if (attrib->type != OBJ_TEXT) {
+  if (!lepton_object_is_text (attrib))
+  {
     g_warning (_("Attempt to attach non text item as an attribute!\n"));
     return;
   }
@@ -385,7 +386,7 @@ o_attrib_get_name_value (const LeptonObject *attrib,
                          gchar **name_ptr,
                          gchar **value_ptr)
 {
-  g_return_val_if_fail (attrib->type == OBJ_TEXT, FALSE);
+  g_return_val_if_fail (lepton_object_is_text (attrib), FALSE);
 
   return o_attrib_string_get_name_value (geda_text_object_get_string (attrib),
                                          name_ptr, value_ptr);
@@ -405,7 +406,8 @@ const gchar *
 o_attrib_get_name (const LeptonObject *attrib)
 {
   g_return_val_if_fail (attrib, 0);
-  g_return_val_if_fail (attrib->type == OBJ_TEXT, 0);
+  g_return_val_if_fail (lepton_object_is_text (attrib), 0);
+
   return attrib->text->name;
 }
 
@@ -462,7 +464,7 @@ LeptonObject *o_attrib_find_attrib_by_name (const GList *list,
 
   for (const GList *iter = list; iter; iter = g_list_next (iter)) {
     LeptonObject *attrib = (LeptonObject*) iter->data;
-    g_return_val_if_fail (attrib->type == OBJ_TEXT, NULL);
+    g_return_val_if_fail (lepton_object_is_text (attrib), NULL);
 
     if ((needle == o_attrib_get_name (attrib)) &&
         (num_found++ == count)) {
@@ -637,7 +639,7 @@ GList * o_attrib_return_attribs (LeptonObject *object)
        a_iter = g_list_next (a_iter)) {
     a_current = (LeptonObject*) a_iter->data;
 
-    if (a_current->type != OBJ_TEXT)
+    if (!lepton_object_is_text (a_current))
       continue;
 
     /* Don't add invalid attributes to the list */
@@ -684,7 +686,6 @@ int o_attrib_is_inherited (const LeptonObject *attrib)
 gboolean
 o_attrib_is_attrib (const LeptonObject *obj)
 {
-  return (obj &&
-          (obj->type == OBJ_TEXT) &&
+  return (lepton_object_is_text (obj) &&
           o_attrib_get_name (obj));
 }

@@ -94,9 +94,8 @@ geda_text_object_calculate_bounds (const LeptonObject *object,
 
   geda_bounds_init (bounds);
 
-  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (lepton_object_is_text (object), FALSE);
   g_return_val_if_fail (object->text != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
 
   double t, l, r, b;
   gboolean result = eda_renderer_get_text_user_bounds (object,
@@ -120,9 +119,8 @@ geda_text_object_calculate_bounds (const LeptonObject *object,
 gint
 geda_text_object_get_alignment (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, LOWER_LEFT);
+  g_return_val_if_fail (lepton_object_is_text (object), LOWER_LEFT);
   g_return_val_if_fail (object->text != NULL, LOWER_LEFT);
-  g_return_val_if_fail (object->type == OBJ_TEXT, LOWER_LEFT);
   g_return_val_if_fail (object->text->alignment >= LOWER_LEFT, LOWER_LEFT);
   g_return_val_if_fail (object->text->alignment <= UPPER_RIGHT, LOWER_LEFT);
 
@@ -137,9 +135,8 @@ geda_text_object_get_alignment (const LeptonObject *object)
 gint
 geda_text_object_get_angle (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_text (object), 0);
   g_return_val_if_fail (object->text != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
 
   return object->text->angle;
 }
@@ -157,9 +154,8 @@ geda_text_object_get_angle (const LeptonObject *object)
 gboolean
 geda_text_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (lepton_object_is_text (object), FALSE);
   g_return_val_if_fail (object->text != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_TEXT, FALSE);
 
   if (x != NULL) {
     *x = geda_text_object_get_x (object);
@@ -180,9 +176,8 @@ geda_text_object_get_position (const LeptonObject *object, gint *x, gint *y)
 gint
 geda_text_object_get_size (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, DEFAULT_TEXT_SIZE);
+  g_return_val_if_fail (lepton_object_is_text (object), DEFAULT_TEXT_SIZE);
   g_return_val_if_fail (object->text != NULL, DEFAULT_TEXT_SIZE);
-  g_return_val_if_fail (object->type == OBJ_TEXT, DEFAULT_TEXT_SIZE);
   g_return_val_if_fail (object->text->size >= MINIMUM_TEXT_SIZE,
                         DEFAULT_TEXT_SIZE);
 
@@ -212,10 +207,9 @@ geda_text_object_get_size_in_points (const LeptonObject *object)
 const gchar*
 geda_text_object_get_string (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_text (object), NULL);
   g_return_val_if_fail (object->text != NULL, NULL);
   g_return_val_if_fail (object->text->string != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
 
   return object->text->string;
 }
@@ -228,9 +222,8 @@ geda_text_object_get_string (const LeptonObject *object)
 gint
 geda_text_object_get_x (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_text (object), 0);
   g_return_val_if_fail (object->text != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
 
   return object->text->x;
 }
@@ -243,9 +236,8 @@ geda_text_object_get_x (const LeptonObject *object)
 gint
 geda_text_object_get_y (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_text (object), 0);
   g_return_val_if_fail (object->text != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_TEXT, 0);
 
   return object->text->y;
 }
@@ -260,9 +252,8 @@ geda_text_object_get_y (const LeptonObject *object)
 void
 geda_text_object_set_alignment (LeptonObject *object, gint alignment)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
-  g_return_if_fail (object->type == OBJ_TEXT);
   g_return_if_fail (alignment >= LOWER_LEFT);
   g_return_if_fail (alignment <= UPPER_RIGHT);
 
@@ -283,9 +274,8 @@ geda_text_object_set_alignment (LeptonObject *object, gint alignment)
 void
 geda_text_object_set_angle (LeptonObject *object, gint angle)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
-  g_return_if_fail (object->type == OBJ_TEXT);
   g_return_if_fail (geda_angle_is_ortho (angle));
 
   object->text->angle = geda_angle_normalize (angle);
@@ -302,9 +292,8 @@ geda_text_object_set_angle (LeptonObject *object, gint angle)
 void
 geda_text_object_set_size (LeptonObject *object, gint size)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
-  g_return_if_fail (object->type == OBJ_TEXT);
   g_return_if_fail (size >= MINIMUM_TEXT_SIZE);
 
   object->text->size = size;
@@ -318,9 +307,8 @@ geda_text_object_set_size (LeptonObject *object, gint size)
 void
 geda_text_object_set_x (LeptonObject *object, gint x)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
-  g_return_if_fail (object->type == OBJ_TEXT);
 
   object->text->x = x;
 }
@@ -333,9 +321,8 @@ geda_text_object_set_x (LeptonObject *object, gint x)
 void
 geda_text_object_set_y (LeptonObject *object, gint y)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
-  g_return_if_fail (object->type == OBJ_TEXT);
 
   object->text->y = y;
 }
@@ -625,9 +612,8 @@ geda_text_object_to_buffer (const LeptonObject *object)
 {
   const gchar *string;
 
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_text (object), NULL);
   g_return_val_if_fail (object->text != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
 
   string = geda_text_object_get_string (object);
 
@@ -673,9 +659,8 @@ o_text_recreate (LeptonObject *o_current)
 void
 geda_text_object_translate (LeptonObject *object, int dx, int dy)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
-  g_return_if_fail (object->type == OBJ_TEXT);
 
   object->text->x = object->text->x + dx;
   object->text->y = object->text->y + dy;
@@ -693,9 +678,8 @@ geda_text_object_copy (const LeptonObject *object)
 {
   LeptonObject *new_obj;
 
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_text (object), NULL);
   g_return_val_if_fail (object->text != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_TEXT, NULL);
 
   new_obj = geda_text_object_new (lepton_object_get_color (object),
                                   object->text->x,
@@ -730,9 +714,8 @@ geda_text_object_rotate (int world_centerx,
   int x, y;
   int newx, newy;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
-  g_return_if_fail (object->type == OBJ_TEXT);
   g_return_if_fail (geda_angle_is_ortho (angle));
 
   object->text->angle = geda_angle_normalize (object->text->angle + angle);
@@ -768,9 +751,8 @@ geda_text_object_mirror (int world_centerx,
   int origx, origy;
   int x, y;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
-  g_return_if_fail (object->type == OBJ_TEXT);
 
   origx = object->text->x;
   origy = object->text->y;
@@ -900,8 +882,7 @@ void
 o_text_set_string (LeptonObject *obj,
                    const gchar *new_string)
 {
-  g_return_if_fail (obj != NULL);
-  g_return_if_fail (obj->type == OBJ_TEXT);
+  g_return_if_fail (lepton_object_is_text (obj));
   g_return_if_fail (obj->text != NULL);
   g_return_if_fail (new_string != NULL);
 

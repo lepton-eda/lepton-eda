@@ -244,6 +244,19 @@ lepton_object_is_pin (const LeptonObject *object)
 }
 
 
+/*! \brief Test if object is a text object.
+ *
+ *  \param [in] object The object to test.
+ *  \return TRUE, if the object is text, otherwise FALSE.
+ */
+gboolean
+lepton_object_is_text (const LeptonObject *object)
+{
+  return (object != NULL &&
+          lepton_object_get_type (object) == OBJ_TEXT);
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.
@@ -1287,7 +1300,7 @@ geda_object_calculate_visible_bounds (LeptonObject *o_current,
 
   /* only do bounding boxes for visible or doing show_hidden_text*/
   /* you might lose some attrs though */
-  if (o_current->type == OBJ_TEXT &&
+  if (lepton_object_is_text (o_current) &&
       ! (o_is_visible (o_current) || include_hidden)) {
     return 0;
   }

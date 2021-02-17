@@ -78,7 +78,8 @@ o_glist_copy_all (const GList *src_list,
     if (selected_save)
       o_selection_unselect (src_object);
 
-    if (src_object->type != OBJ_TEXT) {
+    if (!lepton_object_is_text (src_object))
+    {
       dst_object = o_object_copy (src_object);
       lepton_object_set_id (dst_object, global_sid++);
       dest = g_list_prepend (dest, dst_object);
@@ -102,7 +103,8 @@ o_glist_copy_all (const GList *src_list,
     if (selected_save)
       o_selection_unselect (src_object);
 
-    if (src_object->type == OBJ_TEXT) {
+    if (lepton_object_is_text (src_object))
+    {
       dst_object = o_object_copy (src_object);
       lepton_object_set_id (dst_object, global_sid++);
       dest = g_list_prepend (dest, dst_object);
