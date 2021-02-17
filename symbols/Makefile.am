@@ -55,9 +55,7 @@ dist_gafrcd_DATA = config-symbol-libraries.scm
 datasymdir = $(LEPTONDATADIR)/sym
 
 EXTRA_DIST = \
-	ChangeLog \
-	radio/README \
-	AUTHORS
+	ChangeLog
 
 if HAVE_GIT_REPO
 ChangeLog: $(top_builddir)/stamp-git
