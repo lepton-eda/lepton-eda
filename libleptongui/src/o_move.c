@@ -530,7 +530,7 @@ void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
 
   g_return_if_fail (object != NULL);
   g_return_if_fail (lepton_object_is_bus (object) ||
-                    (object->type == OBJ_NET) ||
+                    lepton_object_is_net (object) ||
                     (object->type == OBJ_PIN));
 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
@@ -567,7 +567,7 @@ void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
           other->type == OBJ_PIN &&  other->pin_type == PIN_TYPE_NET)) {
 
      /* net to (net)pin contact */
-     /* (object->type == OBJ_NET &&
+     /* (lepton_object_is_net (object) &&
           other->type == OBJ_PIN && other->pin_type == PIN_TYPE_NET) */
 
       LeptonObject *new_net;
@@ -583,7 +583,7 @@ void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
     }
 
     /* Only attempt to stretch nets and buses */
-    if (other->type != OBJ_NET && !lepton_object_is_bus (other))
+    if (!lepton_object_is_net (other) && !lepton_object_is_bus (other))
       continue;
 
     whichone = o_move_return_whichone (other, c_current->x, c_current->y);
@@ -700,7 +700,7 @@ void o_move_end_rubberband (GschemToplevel *w_current,
     /* Store this now, since we may delete the current item */
     s_iter_next = g_list_next (s_iter);
 
-    if (object->type == OBJ_NET ||
+    if (lepton_object_is_net (object) ||
         lepton_object_is_bus (object))
     {
       /* remove the object's connections */

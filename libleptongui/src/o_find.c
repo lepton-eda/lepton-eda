@@ -106,7 +106,7 @@ find_single_object (GschemToplevel *w_current, LeptonObject *object,
 
   if (change_selection) {
     /* FIXME: should this be moved to o_select_object()? (Werner) */
-    if (object->type == OBJ_NET && w_current->net_selection_mode)
+    if (lepton_object_is_net (object) && w_current->net_selection_mode)
       o_select_connected_nets (w_current, object);
     else
       o_select_object (w_current, object, SINGLE, 0); /* 0 is count */

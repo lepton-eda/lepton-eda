@@ -452,7 +452,7 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
   GList *netnamestack = NULL;
   GList *netnameiter;
 
-  g_assert(o_net->type == OBJ_NET);
+  g_assert (lepton_object_is_net (o_net));
 
   /* If either SHIFT or CTRL are pressed, behave exactly the same as a
    * single object selection.  This makes it possible to <mouse-1> on
@@ -477,7 +477,7 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
          iter1 != NULL;
          iter1 = g_list_previous(iter1), count++) {
       o_current = (LeptonObject*) iter1->data;
-      if (o_current->type == OBJ_NET &&
+      if (lepton_object_is_net (o_current) &&
           (!o_current->selected || count == 0)) {
         o_select_object (w_current, o_current, SINGLE, count);
         if (w_current->net_selection_state > 1) {
@@ -511,7 +511,7 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
       o_current = (LeptonObject*) o_iter->data;
       if (o_current->type == OBJ_TEXT
           && o_current->attached_to != NULL) {
-        if (o_current->attached_to->type == OBJ_NET) {
+        if (lepton_object_is_net (o_current->attached_to)) {
           netname = o_attrib_search_object_attribs_by_name (o_current->attached_to, "netname", 0);
           if (netname != NULL) {
             if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) != NULL) {

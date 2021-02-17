@@ -255,7 +255,7 @@ void o_net_find_magnetic(GschemToplevel *w_current,
         weight = mindist / MAGNETIC_PIN_WEIGHT;
       }
 
-      else if (o_current->type == OBJ_NET
+      else if (lepton_object_is_net (o_current)
                || lepton_object_is_bus (o_current))
       {
         /* we have 3 possible points to connect:

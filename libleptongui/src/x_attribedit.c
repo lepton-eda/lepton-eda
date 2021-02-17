@@ -169,7 +169,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
           {
             addmask = 2;
           }
-          if (object->type == OBJ_NET) {
+          if (lepton_object_is_net (object)) {
             addmask = 1;
           }
           replaced = FALSE;
@@ -528,7 +528,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
     attrib = NULL;
 
     if ((object = o_select_return_first_object(w_current))) {
-      if (object->type == OBJ_NET)
+      if (lepton_object_is_net (object))
         name = g_strdup("netname");
     }
 

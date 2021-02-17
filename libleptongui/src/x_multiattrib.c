@@ -567,7 +567,7 @@ static void multiattrib_popup_menu (Multiattrib *multiattrib,
 static gboolean is_multiattrib_object (LeptonObject *object)
 {
   if (lepton_object_is_component (object) ||
-      object->type == OBJ_NET ||
+      lepton_object_is_net (object) ||
       lepton_object_is_bus (object) ||
       object->type == OBJ_PIN) {
     return TRUE;
@@ -2764,7 +2764,7 @@ multiattrib_update (Multiattrib *multiattrib)
     if (object->type == OBJ_PIN)
       multiattrib->num_pins_in_list++;
 
-    if (object->type == OBJ_NET)
+    if (lepton_object_is_net (object))
       multiattrib->num_nets_in_list++;
 
     if (lepton_object_is_bus (object))
