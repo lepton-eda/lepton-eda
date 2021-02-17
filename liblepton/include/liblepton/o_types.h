@@ -22,31 +22,31 @@
 #define _O_TYPES_H_INCL
 
 /* Object types */
-#define OBJ_LINE        'L'
-#define OBJ_PATH        'H'
-#define OBJ_BOX         'B'
-#define OBJ_PICTURE     'G'
-#define OBJ_CIRCLE      'V'
-#define OBJ_NET         'N'
-#define OBJ_BUS         'U'
-#define OBJ_COMPONENT   'C'
-#define OBJ_TEXT        'T'
-#define OBJ_PIN         'P'
-#define OBJ_ARC         'A' 
-#define OBJ_PLACEHOLDER 'X'  /* added 1.19.2005 by SDB to prevent
-			      * deletion of unfound symbol files */
+#define OBJ_LINE         'L'
+#define OBJ_PATH         'H'
+#define OBJ_BOX          'B'
+#define OBJ_PICTURE      'G'
+#define OBJ_CIRCLE       'V'
+#define OBJ_NET          'N'
+#define OBJ_BUS          'U'
+#define OBJ_COMPONENT    'C'
+#define OBJ_TEXT         'T'
+#define OBJ_PIN          'P'
+#define OBJ_ARC          'A'
+#define OBJ_PLACEHOLDER  'X' /* added 1.19.2005 by SDB to prevent
+                              * deletion of unfound symbol files */
 
 
-#define STARTATTACH_ATTR	'{'	
-#define ENDATTACH_ATTR		'}'	
-#define START_EMBEDDED		'['	
-#define END_EMBEDDED		']'	
+#define STARTATTACH_ATTR '{'
+#define ENDATTACH_ATTR   '}'
+#define START_EMBEDDED   '['
+#define END_EMBEDDED     ']'
 
 /* font stuff */
-#define INFO_FONT         'F' 
-#define VERSION_CHAR      'v' 
+#define INFO_FONT        'F'
+#define VERSION_CHAR     'v'
 
 /* misc stuff */
-#define COMMENT         '#' 
+#define COMMENT          '#'
 
 #endif
