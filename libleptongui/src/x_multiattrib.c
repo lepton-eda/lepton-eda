@@ -569,7 +569,8 @@ static gboolean is_multiattrib_object (LeptonObject *object)
   if (lepton_object_is_component (object) ||
       lepton_object_is_net (object) ||
       lepton_object_is_bus (object) ||
-      object->type == OBJ_PIN) {
+      lepton_object_is_pin (object))
+  {
     return TRUE;
   }
   return FALSE;
@@ -2761,7 +2762,7 @@ multiattrib_update (Multiattrib *multiattrib)
         component_title_name = _("<various>");
     }
 
-    if (object->type == OBJ_PIN)
+    if (lepton_object_is_pin (object))
       multiattrib->num_pins_in_list++;
 
     if (lepton_object_is_net (object))

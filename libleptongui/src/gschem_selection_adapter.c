@@ -702,7 +702,8 @@ gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject* object = (LeptonObject *) iter->data;
     iter = g_list_next (iter);
-    if ((object != NULL) && (object->type == OBJ_PIN)) {
+    if (lepton_object_is_pin (object))
+    {
       type = object->pin_type;
       break;
     }
@@ -712,7 +713,8 @@ gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter)
 
   while (iter != NULL) {
     LeptonObject* object = (LeptonObject *) iter->data;
-    if ((object != NULL) && (object->type == OBJ_PIN)) {
+    if (lepton_object_is_pin (object))
+    {
       if (type != object->pin_type) {
         type = MULTIPLE_VALUES;
         break;
@@ -1676,7 +1678,8 @@ gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
 
-    if (object->type == OBJ_PIN && object->pin_type != type) {
+    if (lepton_object_is_pin (object) && object->pin_type != type)
+    {
       s_conn_remove_object_connections (object);
       geda_pin_object_set_type (object, type);
       s_conn_update_object (object->page, object);

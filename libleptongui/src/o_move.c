@@ -531,7 +531,7 @@ void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
   g_return_if_fail (object != NULL);
   g_return_if_fail (lepton_object_is_bus (object) ||
                     lepton_object_is_net (object) ||
-                    (object->type == OBJ_PIN));
+                    lepton_object_is_pin (object));
 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -563,12 +563,12 @@ void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
       continue;
 
     if (/* (net)pin to (net)pin contact */
-        (object->type == OBJ_PIN && object->pin_type == PIN_TYPE_NET &&
-          other->type == OBJ_PIN &&  other->pin_type == PIN_TYPE_NET)) {
+        (lepton_object_is_pin (object) && object->pin_type == PIN_TYPE_NET &&
+         lepton_object_is_pin (other) && other->pin_type  == PIN_TYPE_NET)) {
 
      /* net to (net)pin contact */
      /* (lepton_object_is_net (object) &&
-          other->type == OBJ_PIN && other->pin_type == PIN_TYPE_NET) */
+         lepton_object_is_pin (other) && other->pin_type == PIN_TYPE_NET) */
 
       LeptonObject *new_net;
       /* other object is a pin, insert a net */
@@ -644,7 +644,8 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
              iter != NULL; iter = g_list_next (iter)) {
           o_current = (LeptonObject*) iter->data;
 
-          if (o_current->type == OBJ_PIN) {
+          if (lepton_object_is_pin (o_current))
+          {
             o_move_check_endpoint (w_current, o_current);
           }
         }

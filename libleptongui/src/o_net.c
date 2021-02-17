@@ -247,7 +247,7 @@ void o_net_find_magnetic(GschemToplevel *w_current,
           !visible (w_current, left, top, right, bottom))
         continue; /* skip invisible objects */
 
-      if (o_current->type == OBJ_PIN) {
+      if (lepton_object_is_pin (o_current)) {
         min_x = o_current->line->x[o_current->whichend];
         min_y = o_current->line->y[o_current->whichend];
 
