@@ -1446,7 +1446,7 @@ lepton_component_object_shortest_distance (LeptonObject *object,
     int left, top, right, bottom;
 
     /* Collect the bounds of any lines and arcs in the symbol */
-    if ((obj->type == OBJ_LINE || obj->type == OBJ_ARC) &&
+    if ((obj->type == OBJ_LINE || lepton_object_is_arc (obj)) &&
         geda_object_calculate_visible_bounds (obj,
                                               include_hidden,
                                               &left,

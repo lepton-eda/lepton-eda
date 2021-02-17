@@ -114,6 +114,19 @@ lepton_object_set_type (LeptonObject *object, int type)
 }
 
 
+/*! \brief Test if object is an arc object.
+ *
+ *  \param [in] object The object to test.
+ *  \return TRUE if the object is arc, otherwise FALSE.
+ */
+gboolean
+lepton_object_is_arc (const LeptonObject *object)
+{
+  return (object != NULL &&
+          lepton_object_get_type (object) == OBJ_ARC);
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.
@@ -535,7 +548,7 @@ gboolean o_get_line_options(LeptonObject *object,
                             int *width, int *length, int *space)
 {
   if (object->type != OBJ_LINE
-      && object->type != OBJ_ARC
+      && !lepton_object_is_arc (object)
       && object->type != OBJ_BOX
       && object->type != OBJ_CIRCLE
       && object->type != OBJ_PATH)

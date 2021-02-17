@@ -105,9 +105,8 @@ geda_arc_object_copy (const LeptonObject *object)
 {
   LeptonObject *new_object;
 
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_arc (object), NULL);
   g_return_val_if_fail (object->arc != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_ARC, NULL);
 
   new_object = geda_arc_object_new (lepton_object_get_color (object),
                                     object->arc->x,
@@ -142,9 +141,8 @@ geda_arc_object_copy (const LeptonObject *object)
 gint
 geda_arc_object_get_center_x (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_arc (object), 0);
   g_return_val_if_fail (object->arc != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_ARC, 0);
 
   return object->arc->x;
 }
@@ -157,9 +155,8 @@ geda_arc_object_get_center_x (const LeptonObject *object)
 gint
 geda_arc_object_get_center_y (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_arc (object), 0);
   g_return_val_if_fail (object->arc != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_ARC, 0);
 
   return object->arc->y;
 }
@@ -172,9 +169,8 @@ geda_arc_object_get_center_y (const LeptonObject *object)
 gint
 geda_arc_object_get_radius (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_arc (object), 0);
   g_return_val_if_fail (object->arc != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_ARC, 0);
 
   return object->arc->radius;
 }
@@ -187,9 +183,8 @@ geda_arc_object_get_radius (const LeptonObject *object)
 gint
 geda_arc_object_get_start_angle (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_arc (object), 0);
   g_return_val_if_fail (object->arc != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_ARC, 0);
 
   return object->arc->start_angle;
 }
@@ -202,9 +197,8 @@ geda_arc_object_get_start_angle (const LeptonObject *object)
 gint
 geda_arc_object_get_sweep_angle (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_arc (object), 0);
   g_return_val_if_fail (object->arc != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_ARC, 0);
 
   return object->arc->sweep_angle;
 }
@@ -217,9 +211,8 @@ geda_arc_object_get_sweep_angle (const LeptonObject *object)
 void
 geda_arc_object_set_center_x (LeptonObject *object, gint x)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
-  g_return_if_fail (object->type == OBJ_ARC);
 
   object->arc->x = x;
 }
@@ -232,9 +225,8 @@ geda_arc_object_set_center_x (LeptonObject *object, gint x)
 void
 geda_arc_object_set_center_y (LeptonObject *object, gint y)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
-  g_return_if_fail (object->type == OBJ_ARC);
 
   object->arc->y = y;
 }
@@ -247,9 +239,8 @@ geda_arc_object_set_center_y (LeptonObject *object, gint y)
 void
 geda_arc_object_set_radius (LeptonObject *object, gint radius)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
-  g_return_if_fail (object->type == OBJ_ARC);
 
   object->arc->radius = radius;
 }
@@ -262,9 +253,8 @@ geda_arc_object_set_radius (LeptonObject *object, gint radius)
 void
 geda_arc_object_set_start_angle (LeptonObject *object, gint angle)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
-  g_return_if_fail (object->type == OBJ_ARC);
 
   object->arc->start_angle = angle;
 }
@@ -277,9 +267,8 @@ geda_arc_object_set_start_angle (LeptonObject *object, gint angle)
 void
 geda_arc_object_set_sweep_angle (LeptonObject *object, gint angle)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
-  g_return_if_fail (object->type == OBJ_ARC);
 
   object->arc->sweep_angle = angle;
 }
@@ -469,9 +458,8 @@ LeptonObject
 gchar*
 geda_arc_object_to_buffer (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_arc (object), NULL);
   g_return_val_if_fail (object->arc != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_ARC, NULL);
 
   /* Describe a circle with post-20000704 file format */
 
@@ -502,9 +490,8 @@ geda_arc_object_to_buffer (const LeptonObject *object)
 void
 geda_arc_object_translate (LeptonObject *object, int dx, int dy)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
-  g_return_if_fail (object->type == OBJ_ARC);
 
   /* Do world coords */
   object->arc->x = object->arc->x + dx;
@@ -538,9 +525,8 @@ geda_arc_object_rotate (int world_centerx,
 {
   int x, y, newx, newy;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
-  g_return_if_fail (object->type == OBJ_ARC);
 
   /* translate object to origin */
   object->arc->x -= world_centerx;
@@ -585,9 +571,8 @@ geda_arc_object_mirror (int world_centerx,
                         int world_centery,
                         LeptonObject *object)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
-  g_return_if_fail (object->type == OBJ_ARC);
 
   /* translate object to origin */
   object->arc->x -= world_centerx;
@@ -699,8 +684,7 @@ geda_arc_object_calculate_bounds (const LeptonObject *object,
 gboolean
 geda_arc_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_ARC, FALSE);
+  g_return_val_if_fail (lepton_object_is_arc (object), FALSE);
   g_return_val_if_fail (object->arc != NULL, FALSE);
 
   if (x != NULL) {

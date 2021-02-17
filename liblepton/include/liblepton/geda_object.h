@@ -103,6 +103,11 @@ void
 lepton_object_set_type (LeptonObject *object,
                         int type);
 
+/* Helpers. */
+
+gboolean
+lepton_object_is_arc (const LeptonObject *object);
+
 /* construction, destruction */
 
 LeptonObject*
