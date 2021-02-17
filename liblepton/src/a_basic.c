@@ -246,9 +246,13 @@ GList
           new_obj = NULL;
         }
         else {
-          g_set_error (err, EDA_ERROR, EDA_ERROR_PARSE, _("Read unexpected attach "
-                                                                 "symbol start marker in [%1$s] :\n>>\n%2$s<<\n"),
-                       name, line);
+          g_set_error (err,
+                       EDA_ERROR,
+                       EDA_ERROR_PARSE,
+                       _("Read unexpected attach "
+                         "symbol start marker in [%1$s] :\n>>\n%2$s<<\n"),
+                       name,
+                       line);
           goto error;
         }
         break;
