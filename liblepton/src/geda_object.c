@@ -205,6 +205,19 @@ lepton_object_is_net (const LeptonObject *object)
 }
 
 
+/*! \brief Test if object is a path object.
+ *
+ *  \param [in] object The object to test.
+ *  \return TRUE, if the object is path, otherwise FALSE.
+ */
+gboolean
+lepton_object_is_path (const LeptonObject *object)
+{
+  return (object != NULL &&
+          lepton_object_get_type (object) == OBJ_PATH);
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.
@@ -629,7 +642,7 @@ gboolean o_get_line_options(LeptonObject *object,
       && !lepton_object_is_arc (object)
       && !lepton_object_is_box (object)
       && !lepton_object_is_circle (object)
-      && object->type != OBJ_PATH)
+      && !lepton_object_is_path (object))
     return FALSE;
 
   *end = object->line_end;
@@ -733,7 +746,7 @@ gboolean o_get_fill_options(LeptonObject *object,
 {
   if (!lepton_object_is_box (object)
       && !lepton_object_is_circle (object)
-      && object->type != OBJ_PATH)
+      && !lepton_object_is_path (object))
     return FALSE;
 
   *type = object->fill_type;

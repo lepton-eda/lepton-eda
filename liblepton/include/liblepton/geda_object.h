@@ -126,6 +126,9 @@ lepton_object_is_line (const LeptonObject *object);
 gboolean
 lepton_object_is_net (const LeptonObject *object);
 
+gboolean
+lepton_object_is_path (const LeptonObject *object);
+
 /* construction, destruction */
 
 LeptonObject*

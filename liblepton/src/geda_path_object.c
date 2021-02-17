@@ -376,9 +376,8 @@ geda_path_object_translate (LeptonObject *object, int dx, int dy)
   PATH_SECTION *section;
   int i;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_path (object));
   g_return_if_fail (object->path != NULL);
-  g_return_if_fail (object->type == OBJ_PATH);
 
   for (i = 0; i < object->path->num_sections; i++) {
     section = &object->path->sections[i];
@@ -424,9 +423,8 @@ geda_path_object_rotate (int world_centerx,
   PATH_SECTION *section;
   int i;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_path (object));
   g_return_if_fail (object->path != NULL);
-  g_return_if_fail (object->type == OBJ_PATH);
 
   for (i = 0; i < object->path->num_sections; i++) {
     section = &object->path->sections[i];
@@ -473,9 +471,8 @@ geda_path_object_mirror (int world_centerx,
   PATH_SECTION *section;
   int i;
 
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_path (object));
   g_return_if_fail (object->path != NULL);
-  g_return_if_fail (object->type == OBJ_PATH);
 
   for (i = 0; i < object->path->num_sections; i++) {
     section = &object->path->sections[i];
@@ -515,8 +512,7 @@ geda_path_object_calculate_bounds (const LeptonObject *object,
 
   geda_bounds_init (bounds);
 
-  g_return_if_fail (object != NULL);
-  g_return_if_fail (object->type == OBJ_PATH);
+  g_return_if_fail (lepton_object_is_path (object));
   g_return_if_fail (object->path != NULL);
 
   /* Find the bounds of the path region */
@@ -567,8 +563,7 @@ geda_path_object_calculate_bounds (const LeptonObject *object,
 gboolean
 geda_path_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_PATH, FALSE);
+  g_return_val_if_fail (lepton_object_is_path (object), FALSE);
   g_return_val_if_fail (object->path != NULL, FALSE);
 
   if (object->path->num_sections == 0) {
