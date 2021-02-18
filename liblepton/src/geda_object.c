@@ -654,7 +654,7 @@ geda_object_get_position (const LeptonObject *object, gint *x, gint *y)
       case OBJ_PATH:    func = geda_path_object_get_position;    break;
       case OBJ_PIN:     func = geda_pin_object_get_position;     break;
       case OBJ_ARC:     func = geda_arc_object_get_position;     break;
-      case OBJ_COMPONENT: func = geda_component_object_get_position; break;
+      case OBJ_COMPONENT: func = lepton_component_object_get_position; break;
       default:
         g_critical ("geda_object_get_position: object %1$p has bad type '%2$c'\n",
                     object, object->type);
@@ -692,7 +692,7 @@ geda_object_translate (LeptonObject *object, gint dx, gint dy)
       case OBJ_PATH:    func = geda_path_object_translate;    break;
       case OBJ_PIN:     func = geda_pin_object_translate;     break;
       case OBJ_ARC:     func = geda_arc_object_translate;     break;
-      case OBJ_COMPONENT: func = geda_component_object_translate; break;
+      case OBJ_COMPONENT: func = lepton_component_object_translate; break;
       default:
         g_critical ("geda_object_translate: object %1$p has bad type '%2$c'\n",
                     object, object->type);
@@ -733,7 +733,7 @@ geda_object_rotate (int world_centerx,
       case OBJ_PATH:    func = geda_path_object_rotate;    break;
       case OBJ_PIN:     func = geda_pin_object_rotate;     break;
       case OBJ_ARC:     func = geda_arc_object_rotate;     break;
-      case OBJ_COMPONENT: func = geda_component_object_rotate; break;
+      case OBJ_COMPONENT: func = lepton_component_object_rotate; break;
       default:
         g_critical ("geda_object_rotate: object %1$p has bad type '%2$c'\n",
                     object, object->type);
@@ -772,7 +772,7 @@ geda_object_mirror (int world_centerx,
       case OBJ_PATH:    func = geda_path_object_mirror;    break;
       case OBJ_PIN:     func = geda_pin_object_mirror;     break;
       case OBJ_ARC:     func = geda_arc_object_mirror;     break;
-      case OBJ_COMPONENT: func = geda_component_object_mirror; break;
+      case OBJ_COMPONENT: func = lepton_component_object_mirror; break;
       default:
         g_critical ("geda_object_mirror: object %1$p has bad type '%2$c'\n",
                     object, object->type);
@@ -835,7 +835,7 @@ geda_object_shortest_distance_full (LeptonObject *object,
     case OBJ_BOX:         func = geda_box_object_shortest_distance;      break;
     case OBJ_PICTURE:     func = geda_picture_object_shortest_distance;  break;
     case OBJ_CIRCLE:      func = geda_circle_object_shortest_distance;   break;
-    case OBJ_COMPONENT:   func = geda_component_object_shortest_distance;  break;
+    case OBJ_COMPONENT:   func = lepton_component_object_shortest_distance;  break;
     case OBJ_TEXT:        func = geda_text_object_shortest_distance;     break;
     case OBJ_PATH:        func = geda_path_object_shortest_distance;     break;
     case OBJ_ARC:         func = geda_arc_object_shortest_distance;      break;
@@ -1196,9 +1196,9 @@ geda_object_calculate_visible_bounds (LeptonObject *o_current,
     if (o_current->component->prim_objs == NULL)
       return 0;
 
-    geda_component_object_calculate_bounds (o_current,
-                                            include_hidden,
-                                            &bounds);
+    lepton_component_object_calculate_bounds (o_current,
+                                              include_hidden,
+                                              &bounds);
     break;
 
   case(OBJ_PIN):

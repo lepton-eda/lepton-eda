@@ -389,7 +389,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           break;
 
         case(OBJ_COMPONENT):
-          out = geda_component_object_to_buffer (o_current);
+          out = lepton_component_object_to_buffer (o_current);
           g_string_append_printf(acc, "%s\n", out);
           already_wrote = TRUE;
           g_free(out); /* need to free here because of the above flag */

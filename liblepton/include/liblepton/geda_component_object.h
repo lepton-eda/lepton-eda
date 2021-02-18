@@ -60,26 +60,25 @@ o_component_new_embedded (char type,
                           int selectable);
 
 void
-geda_component_object_calculate_bounds (const LeptonObject *object,
-                                        gboolean include_hidden,
-                                        GedaBounds *bounds);
-
+lepton_component_object_calculate_bounds (const LeptonObject *object,
+                                          gboolean include_hidden,
+                                          GedaBounds *bounds);
 void
-geda_component_object_translate (LeptonObject *object, int dx, int dy);
-
+lepton_component_object_translate (LeptonObject *object,
+                                   int dx,
+                                   int dy);
 LeptonObject *
 o_component_copy (LeptonObject *o_current);
 
 void
-geda_component_object_rotate (int world_centerx,
-                              int world_centery,
-                              int angle,
-                              LeptonObject *object);
-
+lepton_component_object_rotate (int world_centerx,
+                                int world_centery,
+                                int angle,
+                                LeptonObject *object);
 void
-geda_component_object_mirror (int world_centerx,
-                              int world_centery,
-                              LeptonObject *object);
+lepton_component_object_mirror (int world_centerx,
+                                int world_centery,
+                                LeptonObject *object);
 gboolean
 lepton_component_object_get_missing (const LeptonObject *object);
 
@@ -102,18 +101,18 @@ o_component_read (LeptonPage *page,
                   unsigned int fileformat_ver,
                   GError **err);
 gchar*
-geda_component_object_to_buffer (const LeptonObject *object);
+lepton_component_object_to_buffer (const LeptonObject *object);
 
 double
-geda_component_object_shortest_distance (LeptonObject *object,
-                                         int x,
-                                         int y,
-                                         int force_soild,
-                                         gboolean include_hidden);
-
+lepton_component_object_shortest_distance (LeptonObject *object,
+                                           int x,
+                                           int y,
+                                           int force_soild,
+                                           gboolean include_hidden);
 gboolean
-geda_component_object_get_position (const LeptonObject *object, gint *x, gint *y);
-
+lepton_component_object_get_position (const LeptonObject *object,
+                                      gint *x,
+                                      gint *y);
 GList*
 o_component_get_promotable (LeptonObject *object,
                             int detach);
