@@ -482,22 +482,22 @@ create_placeholder_small (LeptonObject* node, int x, int y)
   /* two crossed lines to mark component's origin:
   */
   LeptonObject* line1 = geda_line_object_new (color,
-                                        x - 30, y + 30,
-                                        x + 30, y - 30 );
+                                              x - 30, y + 30,
+                                              x + 30, y - 30 );
   LeptonObject* line2 = geda_line_object_new (color,
-                                        x - 30, y - 30,
-                                        x + 50, y + 50 );
+                                              x - 30, y - 30,
+                                              x + 50, y + 50 );
 
   /* text - symbol file name:
   */
   LeptonObject* txt = geda_text_object_new (color,
-                                      x + 100, y + 100,
-                                      LOWER_LEFT,
-                                      0,
-                                      node->component_basename,
-                                      text_size,
-                                      VISIBLE,
-                                      SHOW_NAME_VALUE);
+                                            x + 100, y + 100,
+                                            LOWER_LEFT,
+                                            0,
+                                            node->component_basename,
+                                            text_size,
+                                            VISIBLE,
+                                            SHOW_NAME_VALUE);
 
   GedaBounds bounds;
   geda_text_object_calculate_bounds (txt, FALSE, &bounds);
@@ -508,25 +508,25 @@ create_placeholder_small (LeptonObject* node, int x, int y)
   /* two lines at the left and bottom sides of the text:
   */
   LeptonObject* line3 = geda_line_object_new (color,
-                                        x + 50, y + 50,
-                                        x + 50, bounds.max_y + 10 );
+                                              x + 50, y + 50,
+                                              x + 50, bounds.max_y + 10 );
   LeptonObject* line4 = geda_line_object_new (color,
-                                        x + 50, y + 50,
-                                        bounds.max_x + 10, y + 50 );
+                                              x + 50, y + 50,
+                                              bounds.max_x + 10, y + 50 );
 
   LeptonObject* objs[] =
   {
-      line1,
-      line2,
-      txt,
-      line3,
-      line4
+    line1,
+    line2,
+    txt,
+    line3,
+    line4
   };
 
   for ( size_t i = 0; i < sizeof(objs) / sizeof(objs[0]); ++i )
   {
-      node->component->prim_objs =
-        g_list_append (node->component->prim_objs, objs[i]);
+    node->component->prim_objs =
+      g_list_append (node->component->prim_objs, objs[i]);
   }
 
 } /* create_placeholder_small() */
@@ -557,77 +557,77 @@ create_placeholder_small (LeptonObject* node, int x, int y)
 static void
 create_placeholder_classic (LeptonObject *new_node, int x, int y)
 {
-    GedaBounds bounds;
-    LeptonObject *new_prim_obj;
-    char *not_found_text = NULL;
-    int x_offset, y_offset;
+  GedaBounds bounds;
+  LeptonObject *new_prim_obj;
+  char *not_found_text = NULL;
+  int x_offset, y_offset;
 
-    /* Mark the origin of the missing component */
-    new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                         x - 50, y, x + 50, y);
-    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
-    new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                         x, y + 50, x, y - 50);
-    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
+  /* Mark the origin of the missing component */
+  new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                       x - 50, y, x + 50, y);
+  new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
+  new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                       x, y + 50, x, y - 50);
+  new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
 
-    /* Add some useful text */
-    not_found_text =
-      g_strdup_printf (_("Component not found:\n %1$s"),
-           new_node->component_basename);
-    new_prim_obj = geda_text_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                         x + NOT_FOUND_TEXT_X,
-                                         y + NOT_FOUND_TEXT_Y,
-                                         LOWER_LEFT,
-                                         0,
-                                         not_found_text,
-                                         8,
-                                         VISIBLE, SHOW_NAME_VALUE);
-    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
-    g_free(not_found_text);
+  /* Add some useful text */
+  not_found_text =
+    g_strdup_printf (_("Component not found:\n %1$s"),
+                     new_node->component_basename);
+  new_prim_obj = geda_text_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                       x + NOT_FOUND_TEXT_X,
+                                       y + NOT_FOUND_TEXT_Y,
+                                       LOWER_LEFT,
+                                       0,
+                                       not_found_text,
+                                       8,
+                                       VISIBLE, SHOW_NAME_VALUE);
+  new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
+  g_free(not_found_text);
 
-    /* figure out where to put the hazard triangle */
-    geda_text_object_calculate_bounds (new_prim_obj,
-                                       FALSE,
-                                       &bounds);
-    x_offset = (bounds.max_x - bounds.min_x) / 4;
-    y_offset = bounds.max_y - bounds.min_y + 100;  /* 100 is just an additional offset */
+  /* figure out where to put the hazard triangle */
+  geda_text_object_calculate_bounds (new_prim_obj,
+                                     FALSE,
+                                     &bounds);
+  x_offset = (bounds.max_x - bounds.min_x) / 4;
+  y_offset = bounds.max_y - bounds.min_y + 100;  /* 100 is just an additional offset */
 
-    /* add hazard triangle */
-    new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                         x + NOT_FOUND_TEXT_X + x_offset,
-                                         y + NOT_FOUND_TEXT_Y + y_offset,
-                                         x + NOT_FOUND_TEXT_X + x_offset + 600,
-                                         y + NOT_FOUND_TEXT_Y + y_offset);
-    o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
-                        50, -1, -1);
-    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
-    new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                         x + NOT_FOUND_TEXT_X + x_offset,
-                                         y + NOT_FOUND_TEXT_Y + y_offset,
-                                         x + NOT_FOUND_TEXT_X + x_offset + 300,
-                                         y + NOT_FOUND_TEXT_Y + y_offset + 500);
-    o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
-                        50, -1, -1);
-    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
-    new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                         x + NOT_FOUND_TEXT_X + x_offset + 300,
-                                         y + NOT_FOUND_TEXT_Y + y_offset + 500,
-                                         x + NOT_FOUND_TEXT_X + x_offset + 600,
-                                         y + NOT_FOUND_TEXT_Y + y_offset);
-    o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
-                        50, -1, -1);
-    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
-    new_prim_obj = geda_text_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                         x + NOT_FOUND_TEXT_X + x_offset + 270,
-                                         y + NOT_FOUND_TEXT_Y + y_offset + 90,
-                                         LOWER_LEFT,
-                                         0,
-                                         "!",
-                                         18,
-                                         VISIBLE,
-                                         SHOW_NAME_VALUE);
-    new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
-    new_node->component->prim_objs = g_list_reverse(new_node->component->prim_objs);
+  /* add hazard triangle */
+  new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                       x + NOT_FOUND_TEXT_X + x_offset,
+                                       y + NOT_FOUND_TEXT_Y + y_offset,
+                                       x + NOT_FOUND_TEXT_X + x_offset + 600,
+                                       y + NOT_FOUND_TEXT_Y + y_offset);
+  o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
+                      50, -1, -1);
+  new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
+  new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                       x + NOT_FOUND_TEXT_X + x_offset,
+                                       y + NOT_FOUND_TEXT_Y + y_offset,
+                                       x + NOT_FOUND_TEXT_X + x_offset + 300,
+                                       y + NOT_FOUND_TEXT_Y + y_offset + 500);
+  o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
+                      50, -1, -1);
+  new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
+  new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                       x + NOT_FOUND_TEXT_X + x_offset + 300,
+                                       y + NOT_FOUND_TEXT_Y + y_offset + 500,
+                                       x + NOT_FOUND_TEXT_X + x_offset + 600,
+                                       y + NOT_FOUND_TEXT_Y + y_offset);
+  o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
+                      50, -1, -1);
+  new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
+  new_prim_obj = geda_text_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                       x + NOT_FOUND_TEXT_X + x_offset + 270,
+                                       y + NOT_FOUND_TEXT_Y + y_offset + 90,
+                                       LOWER_LEFT,
+                                       0,
+                                       "!",
+                                       18,
+                                       VISIBLE,
+                                       SHOW_NAME_VALUE);
+  new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
+  new_node->component->prim_objs = g_list_reverse(new_node->component->prim_objs);
 
 } /* create_placeholder_classic() */
 
@@ -649,27 +649,27 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
 static void
 create_placeholder (LeptonObject* node, int x, int y)
 {
-    lepton_component_object_set_missing (node, TRUE);
+  lepton_component_object_set_missing (node, TRUE);
 
-    /* Some programs (e.g. netlister) don't need to render
-     * anything, so we just return here. */
-    if (!render_placeholders())
-    {
-      return;
-    }
+  /* Some programs (e.g. netlister) don't need to render
+   * anything, so we just return here. */
+  if (!render_placeholders())
+  {
+    return;
+  }
 
-    gboolean small_placeholders = TRUE;
-    cfg_read_bool ("schematic.gui", "small-placeholders",
-                   TRUE, &small_placeholders);
+  gboolean small_placeholders = TRUE;
+  cfg_read_bool ("schematic.gui", "small-placeholders",
+                 TRUE, &small_placeholders);
 
-    if (small_placeholders)
-    {
-      create_placeholder_small (node, x, y);
-    }
-    else
-    {
-      create_placeholder_classic (node, x, y);
-    }
+  if (small_placeholders)
+  {
+    create_placeholder_small (node, x, y);
+  }
+  else
+  {
+    create_placeholder_classic (node, x, y);
+  }
 
 } /* create_placeholder() */
 
@@ -681,11 +681,11 @@ create_placeholder (LeptonObject* node, int x, int y)
  *
  */
 LeptonObject *o_component_new (LeptonPage *page,
-                         char type,
-                         int color, int x, int y, int angle,
-                         int mirror, const CLibSymbol *clib,
-                         const gchar *basename,
-                         int selectable)
+                               char type,
+                               int color, int x, int y, int angle,
+                               int mirror, const CLibSymbol *clib,
+                               const gchar *basename,
+                               int selectable)
 {
   LeptonObject *new_node=NULL;
   GList *iter;
@@ -823,10 +823,10 @@ o_component_new_embedded (char type,
  *  \return The object list, or NULL on error.
  */
 LeptonObject *o_component_read (LeptonPage *page,
-                          const char buf[],
-                          unsigned int release_ver,
-                          unsigned int fileformat_ver,
-                          GError **err)
+                                const char buf[],
+                                unsigned int release_ver,
+                                unsigned int fileformat_ver,
+                                GError **err)
 {
   LeptonObject *new_obj;
   char type;
