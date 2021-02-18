@@ -28,7 +28,7 @@ struct st_component
 
   int angle;           /* orientation, only multiples of 90 degrees allowed */
                        /* in degrees */
-  int mirror;
+  int mirror;          /* If the component should be mirrored */
 
   GList *prim_objs;    /* Primitive objects objects which make up */
                        /* the component */
