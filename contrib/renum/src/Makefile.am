@@ -1,4 +1,4 @@
-bin_PROGRAMS = lepton-renum
+noinst_PROGRAMS = lepton-renum
 lepton_renum_SOURCES = lepton-renum.c lepton-renum.h
 
 AM_CFLAGS = $(GCC_CFLAGS) $(MINGW_CFLAGS)
