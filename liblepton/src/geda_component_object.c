@@ -957,8 +957,9 @@ geda_component_object_to_buffer (const LeptonObject *object)
 void
 geda_component_object_translate (LeptonObject *object, int dx, int dy)
 {
-  g_return_if_fail (object != NULL &&
-                    object->type == OBJ_COMPONENT);
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->type == OBJ_COMPONENT);
+  g_return_if_fail (object->component != NULL);
 
   object->component->x = object->component->x + dx;
   object->component->y = object->component->y + dy;
