@@ -224,13 +224,12 @@ SCM_DEFINE (object_type, "%object-type", 1, 0, 0,
   case OBJ_BOX:     result = box_sym;        break;
   case OBJ_PICTURE: result = picture_sym;    break;
   case OBJ_CIRCLE:  result = circle_sym;     break;
-  case OBJ_PLACEHOLDER:
-  case OBJ_COMPONENT:
-                    result = complex_sym;    break;
   case OBJ_TEXT:    result = text_sym;       break;
   case OBJ_PATH:    result = path_sym;       break;
   case OBJ_PIN:     result = pin_sym;        break;
   case OBJ_ARC:     result = arc_sym;        break;
+  case OBJ_COMPONENT:
+                    result = complex_sym;    break;
   default:
     scm_misc_error (s_object_type, _("Object ~A has bad type '~A'"),
                     scm_list_2 (obj_s,

@@ -178,7 +178,7 @@ geda_component_object_calculate_bounds (const LeptonObject *object,
   geda_bounds_init (bounds);
 
   g_return_if_fail (object != NULL);
-  g_return_if_fail (((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)));
+  g_return_if_fail (object->type == OBJ_COMPONENT);
   g_return_if_fail (object->component != NULL);
 
   world_get_object_glist_bounds (object->component->prim_objs,
@@ -203,7 +203,7 @@ gboolean
 geda_component_object_get_position (const LeptonObject *object, gint *x, gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
-  g_return_val_if_fail (((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)), FALSE);
+  g_return_val_if_fail (object->type == OBJ_COMPONENT, FALSE);
   g_return_val_if_fail (object->component != NULL, FALSE);
 
   if (x != NULL) {
@@ -649,10 +649,7 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
 static void
 create_placeholder (LeptonObject* node, int x, int y)
 {
-    /* Put placeholder into object list.  Changed by SDB on
-     * 1.19.2005 to fix problem that symbols were silently
-     * deleted by gattrib when RC files were messed up.  */
-    node->type = OBJ_PLACEHOLDER;
+    lepton_component_object_set_missing (node, TRUE);
 
     /* Some programs (e.g. netlister) don't need to render
      * anything, so we just return here. */
@@ -715,6 +712,10 @@ LeptonObject *o_component_new (LeptonPage *page,
   /* Do setting color after initialization of prim_objs as the
      function sets color of prim_objs as well. */
   lepton_object_set_color (new_node, color);
+  /* For now, consider the component exists in the library. If
+     something goes wrong, this will be changed in
+     create_placeholder(). */
+  lepton_component_object_set_missing (new_node, FALSE);
 
   /* get the symbol data */
   if (clib != NULL) {
@@ -800,6 +801,9 @@ o_component_new_embedded (char type,
   new_node->component->prim_objs = NULL;
 
   lepton_object_set_color (new_node, color);
+  /* Consider embedded components always exist since they are read
+     from schematic file. */
+  lepton_component_object_set_missing (new_node, FALSE);
 
   /* don't have to translate/rotate/mirror here at all since the */
   /* object is in place */
@@ -919,8 +923,7 @@ geda_component_object_to_buffer (const LeptonObject *object)
 
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->component != NULL, NULL);
-  g_return_val_if_fail ((object->type == OBJ_COMPONENT) ||
-                        (object->type == OBJ_PLACEHOLDER), NULL);
+  g_return_val_if_fail (object->type == OBJ_COMPONENT, NULL);
 
   basename = g_strdup_printf ("%s%s",
                               object->component_embedded ? "EMBEDDED" : "",
@@ -955,8 +958,7 @@ void
 geda_component_object_translate (LeptonObject *object, int dx, int dy)
 {
   g_return_if_fail (object != NULL &&
-                    (object->type == OBJ_COMPONENT ||
-                     object->type == OBJ_PLACEHOLDER));
+                    object->type == OBJ_COMPONENT);
 
   object->component->x = object->component->x + dx;
   object->component->y = object->component->y + dy;
@@ -995,6 +997,8 @@ o_component_copy (LeptonObject *o_current)
      initialization. */
   o_new->component->prim_objs = NULL;
   lepton_object_set_color (o_new, lepton_object_get_color (o_current));
+  lepton_component_object_set_missing (o_new,
+                                       lepton_component_object_get_missing (o_current));
 
   /* Copy contents and set the parent pointers on the copied objects. */
   o_new->component->prim_objs =
@@ -1044,8 +1048,7 @@ geda_component_object_rotate (int centerx,
   int newx, newy;
 
   g_return_if_fail (object!=NULL);
-  g_return_if_fail ((object->type == OBJ_COMPONENT) ||
-                    (object->type == OBJ_PLACEHOLDER));
+  g_return_if_fail (object->type == OBJ_COMPONENT);
 
   x = object->component->x + (-centerx);
   y = object->component->y + (-centery);
@@ -1081,8 +1084,7 @@ geda_component_object_mirror (int world_centerx,
   int x, y;
 
   g_return_if_fail( object != NULL );
-  g_return_if_fail( (object->type == OBJ_COMPONENT ||
-                     object->type == OBJ_PLACEHOLDER) );
+  g_return_if_fail (object->type == OBJ_COMPONENT);
   g_return_if_fail( object->component != NULL );
 
   x = 2 * world_centerx - object->component->x;
@@ -1130,8 +1132,7 @@ o_component_find_pin_by_attribute (LeptonObject *object,
   int found;
 
   g_return_val_if_fail (object != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_COMPONENT ||
-                        object->type == OBJ_PLACEHOLDER, NULL);
+  g_return_val_if_fail (object->type == OBJ_COMPONENT, NULL);
 
   for (iter = object->component->prim_objs; iter != NULL;
        iter = g_list_next (iter)) {
@@ -1179,8 +1180,7 @@ o_component_check_symversion (LeptonPage* page,
   double outside_major, outside_minor;
 
   g_return_if_fail (object != NULL);
-  g_return_if_fail ((object->type == OBJ_COMPONENT ||
-                     object->type == OBJ_PLACEHOLDER));
+  g_return_if_fail (object->type == OBJ_COMPONENT);
   g_return_if_fail (object->component != NULL);
 
 
@@ -1441,4 +1441,36 @@ geda_component_object_shortest_distance (LeptonObject *object,
   }
 
   return shortest_distance;
+}
+
+/*! \brief Test component object's 'missing' flag.
+ *
+ *  \param [in] object The component object to test.
+ *  \return The value of the 'missing' flag.
+ */
+gboolean
+lepton_component_object_get_missing (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, TRUE);
+  g_return_val_if_fail (object->type == OBJ_COMPONENT, TRUE);
+  g_return_val_if_fail (object->component != NULL, TRUE);
+
+  return object->component->missing;
+}
+
+
+/*! \brief Set component object's 'missing' flag.
+ *
+ *  \param [in] object  The component object to amend.
+ *  \param [in] missing The new value of the 'missing' flag.
+ */
+void
+lepton_component_object_set_missing (const LeptonObject *object,
+                                     gboolean missing)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->type == OBJ_COMPONENT);
+  g_return_if_fail (object->component != NULL);
+
+  object->component->missing = missing;
 }

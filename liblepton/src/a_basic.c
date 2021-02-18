@@ -184,7 +184,6 @@ GList
         break;
 
       case(OBJ_COMPONENT):
-      case(OBJ_PLACEHOLDER):
         if ((new_obj = o_component_read (page, line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
         new_object_list = g_list_prepend (new_object_list, new_obj);
@@ -240,9 +239,8 @@ GList
           }
 
           /* slots only apply to component objects */
-          if (new_obj != NULL &&
-              (new_obj->type == OBJ_COMPONENT ||
-               new_obj->type == OBJ_PLACEHOLDER)) {
+          if (new_obj != NULL && new_obj->type == OBJ_COMPONENT)
+          {
             s_slot_update_object (new_obj);
           }
           new_obj = NULL;
@@ -256,10 +254,8 @@ GList
         break;
 
       case(START_EMBEDDED):
-        if (new_obj != NULL &&
-            (new_obj->type == OBJ_COMPONENT ||
-             new_obj->type == OBJ_PLACEHOLDER)) {
-
+        if (new_obj != NULL && new_obj->type == OBJ_COMPONENT)
+        {
           object_list_save = new_object_list;
           new_object_list = new_obj->component->prim_objs;
 

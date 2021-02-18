@@ -250,7 +250,6 @@ LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current,
     /* get coordinates of where to place the text object */
     switch(o_current->type) {
       case(OBJ_COMPONENT):
-      case(OBJ_PLACEHOLDER):
         world_x = o_current->component->x;
         world_y = o_current->component->y;
         align = LOWER_LEFT;

@@ -254,7 +254,6 @@ o_read_attribs (LeptonPage *page,
         break;
 
       case(OBJ_COMPONENT):
-      case(OBJ_PLACEHOLDER):
         if ((new_obj = o_component_read (page, line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
         object_list = g_list_prepend (object_list, new_obj);
@@ -575,8 +574,7 @@ char *o_attrib_search_inherited_attribs_by_name (LeptonObject *object,
                                                  const char *name,
                                                  int counter)
 {
-  g_return_val_if_fail (object->type == OBJ_COMPONENT ||
-                        object->type == OBJ_PLACEHOLDER, NULL);
+  g_return_val_if_fail (object->type == OBJ_COMPONENT, NULL);
 
   return o_attrib_search_floating_attribs_by_name (object->component->prim_objs, name, counter);
 }
@@ -652,8 +650,7 @@ GList * o_attrib_return_attribs (LeptonObject *object)
   attribs = g_list_reverse (attribs);
 
   /* Inherited attributes (inside component objects) */
-  if (object->type == OBJ_COMPONENT ||
-      object->type == OBJ_PLACEHOLDER) {
+  if (object->type == OBJ_COMPONENT) {
 
     inherited_attribs =
       o_attrib_find_floating_attribs (object->component->prim_objs);

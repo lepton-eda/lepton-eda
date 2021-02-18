@@ -189,8 +189,7 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
 SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
             (SCM component_s), "Get component object parameters.")
 {
-  SCM_ASSERT ((edascm_is_object_type (component_s, OBJ_COMPONENT) ||
-               edascm_is_object_type (component_s, OBJ_PLACEHOLDER)),
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT),
               component_s,
               SCM_ARG1, s_component_info);
 
@@ -218,8 +217,7 @@ SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
 SCM_DEFINE (component_contents, "%component-contents", 1, 0, 0,
             (SCM component_s), "Get component object contents.")
 {
-  SCM_ASSERT ((edascm_is_object_type (component_s, OBJ_COMPONENT) ||
-               edascm_is_object_type (component_s, OBJ_PLACEHOLDER)),
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT),
               component_s, SCM_ARG1, s_component_contents);
 
   LeptonObject *obj = edascm_to_object (component_s);
@@ -254,8 +252,7 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
   SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
               SCM_ARG1, s_component_append_x);
   SCM_ASSERT ((EDASCM_OBJECTP (obj_s)
-               && !edascm_is_object_type (obj_s, OBJ_COMPONENT)
-               && !edascm_is_object_type (obj_s, OBJ_PLACEHOLDER)),
+               && !edascm_is_object_type (obj_s, OBJ_COMPONENT)),
               obj_s, SCM_ARG2, s_component_append_x);
 
   LeptonObject *parent = edascm_to_object (component_s);
@@ -392,8 +389,7 @@ SCM_DEFINE (component_filename, "%component-filename", 1, 0, 0,
             (SCM component_s),
             "Get component's symbol full file name")
 {
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT) ||
-              edascm_is_object_type (component_s, OBJ_PLACEHOLDER),
+  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT),
               component_s,
               SCM_ARG1,
               s_component_filename);

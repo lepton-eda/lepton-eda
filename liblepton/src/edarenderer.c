@@ -511,9 +511,7 @@ eda_renderer_default_draw (EdaRenderer *renderer, LeptonObject *object)
   case OBJ_PATH:        draw_func = eda_renderer_draw_path; break;
   case OBJ_TEXT:        draw_func = eda_renderer_draw_text; break;
   case OBJ_PICTURE:     draw_func = eda_renderer_draw_picture; break;
-
-  case OBJ_COMPONENT:
-  case OBJ_PLACEHOLDER: draw_func = eda_renderer_draw_component; break;
+  case OBJ_COMPONENT:   draw_func = eda_renderer_draw_component; break;
 
   default:
     g_return_if_reached ();
@@ -556,7 +554,8 @@ eda_renderer_is_drawable (EdaRenderer *renderer, LeptonObject *object)
   int color = lepton_object_get_drawing_color (object);
 
   /* Always attempt to draw component objects */
-  if ((object->type == OBJ_COMPONENT) || (object->type == OBJ_PLACEHOLDER)) {
+  if (object->type == OBJ_COMPONENT)
+  {
     return TRUE;
   }
   return eda_renderer_is_drawable_color (renderer, color, TRUE);
@@ -1131,7 +1130,6 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, LeptonObject *object)
         object->picture->lower_x, object->picture->lower_y);
     break;
   case OBJ_COMPONENT:
-  case OBJ_PLACEHOLDER:
     /* No grips */
     break;
   default:
@@ -1334,7 +1332,6 @@ eda_renderer_default_draw_cues (EdaRenderer *renderer, LeptonObject *object)
   case OBJ_PICTURE:
     break;
   case OBJ_COMPONENT:
-  case OBJ_PLACEHOLDER:
     /* Recurse */
     eda_renderer_draw_cues_list (renderer, object->component->prim_objs);
     break;
@@ -1494,7 +1491,6 @@ eda_renderer_default_get_user_bounds (EdaRenderer *renderer,
   case OBJ_PATH:
   case OBJ_PICTURE:
   case OBJ_COMPONENT:
-  case OBJ_PLACEHOLDER:
   case OBJ_NET:
   case OBJ_BUS:
   case OBJ_PIN:

@@ -183,7 +183,7 @@ geda_object_list_print (GList *objects)
     printf("Type: %d\n", o_current->type);
     printf("Sid: %d\n", o_current->sid);
 
-    if (o_current->type == OBJ_COMPONENT || o_current->type == OBJ_PLACEHOLDER) {
+    if (o_current->type == OBJ_COMPONENT) {
       geda_object_list_print (o_current->component->prim_objs);
     }
 
@@ -403,10 +403,6 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
 
             g_string_append(acc, "]\n");
           }
-          break;
-
-        case(OBJ_PLACEHOLDER):  /* new type by SDB 1.20.2005 */
-          out = geda_component_object_to_buffer (o_current);
           break;
 
         case(OBJ_TEXT):
