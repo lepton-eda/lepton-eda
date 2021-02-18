@@ -1767,6 +1767,11 @@ The context is considered untrusted, unless the @var{trusted}
 parameter is set to @samp{#t}.
 @end defun
 
+@defun config? cfg
+Returns @samp{#t} if and only if @var{cfg} is a configuration
+context object.
+@end defun
+
 @subsubsection Loading and saving configuration files
 @cindex Loading configuration
 @cindex Saving configuration
