@@ -3,10 +3,8 @@ SUBDIRS = \
 	sym \
 	sym-gnetman \
 	sym-verilog \
-	sym-vhdl
-
-gafrcddir = $(LEPTONDATADIR)/scheme/autoload
-dist_gafrcd_DATA = config-symbol-libraries.scm
+	sym-vhdl \
+	scheme
 
 EXTRA_DIST = \
 	ChangeLog
