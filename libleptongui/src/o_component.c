@@ -90,9 +90,9 @@ o_component_prepare_place (GschemToplevel *w_current,
     new_object = o_component_new (toplevel->page_current, OBJ_COMPONENT, default_color_id(),
                                   0, 0, 0, 0, sym, sym_name, 1);
 
-    if (new_object->type == OBJ_PLACEHOLDER) {
-      /* If created object is a placeholder, the loading failed and we end the insert action */
-
+    if (lepton_component_object_get_missing (new_object)) {
+      /* If created object is missing, the loading failed and we
+         end the insert action. */
       s_delete_object (new_object);
       i_set_state (w_current, SELECT);
       i_action_stop (w_current);

@@ -61,7 +61,6 @@ void o_edit(GschemToplevel *w_current, GList *list)
 
     /* also add the ability to multi attrib edit: nets, busses, pins */
     case(OBJ_COMPONENT):
-    case(OBJ_PLACEHOLDER):
     case(OBJ_NET):
     case(OBJ_PIN):
     case(OBJ_BUS):
@@ -328,7 +327,7 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
       o_text_recreate (o_current);
     }
 
-    if (o_current->type == OBJ_COMPONENT || o_current->type == OBJ_PLACEHOLDER) {
+    if (o_current->type == OBJ_COMPONENT) {
       o_edit_show_hidden_lowlevel(w_current, o_current->component->prim_objs);
     }
 

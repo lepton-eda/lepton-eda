@@ -83,14 +83,11 @@ int s_toplevel_read_page(TOPLEVEL *toplevel, char *filename)
 
 /*! \brief Verify the entire design
  *
- * This function loops through all components in the
- * design looking for components which are placeholders.
+ * This function loops through all objects in the design looking
+ * for missing components, that is, those components for which no
+ * corresponding symbol files was found.
  *
- *  Placeholders are inserted into the object list when
- *  no symbol file is found.  If this function finds a
- *  placeholder, it warns the user.
- *
- *  \param toplevel pointer to the toplevel object to be verified
+ * \param toplevel The #TOPLEVEL object to be verified.
  */
 void s_toplevel_verify_design (TOPLEVEL *toplevel)
 {
@@ -110,7 +107,8 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
       LeptonObject *o_current = (LeptonObject*) o_iter->data;
 
       /* --- look for object, and verify that it has a symbol file attached. ---- */
-      if (o_current->type == OBJ_PLACEHOLDER) {
+      if (o_current->type == OBJ_COMPONENT &&
+          lepton_component_object_get_missing (o_current)) {
         missing_sym_flag = 1;  /* flag to signal that problem exists.  */
       }
     }

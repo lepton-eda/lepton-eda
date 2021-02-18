@@ -196,7 +196,6 @@ s_conn_remove_object_connections (LeptonObject *to_remove)
       break;
 
     case OBJ_COMPONENT:
-    case OBJ_PLACEHOLDER:
       for (iter = to_remove->component->prim_objs; iter != NULL; iter = g_list_next (iter)) {
         o_current = (LeptonObject*) iter->data;
         s_conn_remove_object_connections (o_current);
@@ -504,7 +503,6 @@ s_conn_update_object (LeptonPage* page,
       break;
 
     case OBJ_COMPONENT:
-    case OBJ_PLACEHOLDER:
       s_conn_update_glist (page, object->component->prim_objs);
       break;
   }
@@ -638,7 +636,6 @@ GList *s_conn_return_others(GList *input_list, LeptonObject *object)
       break;
 
     case OBJ_COMPONENT:
-    case OBJ_PLACEHOLDER:
       return_list = s_conn_return_glist_others (return_list,
                                                 object->component->prim_objs);
       break;
@@ -694,7 +691,6 @@ s_conn_add_object (LeptonPage *page,
       break;
 
   case OBJ_COMPONENT:
-  case OBJ_PLACEHOLDER:
     for (iter = object->component->prim_objs;
          iter != NULL;
          iter = g_list_next (iter)) {
@@ -718,7 +714,7 @@ s_conn_remove_object (LeptonPage* page,
   }
 
   /* Correctly deal with compound objects */
-  if (object->type == OBJ_COMPONENT || object->type == OBJ_PLACEHOLDER) {
+  if (object->type == OBJ_COMPONENT) {
     for (iter = object->component->prim_objs;
          iter != NULL;
          iter = g_list_next (iter)) {

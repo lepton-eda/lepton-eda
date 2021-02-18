@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2012 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -33,8 +33,7 @@
 #define OBJ_TEXT         'T'
 #define OBJ_PIN          'P'
 #define OBJ_ARC          'A'
-#define OBJ_PLACEHOLDER  'X' /* added 1.19.2005 by SDB to prevent
-                              * deletion of unfound symbol files */
+#define OBJ_PLACEHOLDER  'X' /* deprecated */
 
 
 #define STARTATTACH_ATTR '{'

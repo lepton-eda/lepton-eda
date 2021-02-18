@@ -80,7 +80,12 @@ void
 geda_component_object_mirror (int world_centerx,
                               int world_centery,
                               LeptonObject *object);
+gboolean
+lepton_component_object_get_missing (const LeptonObject *object);
 
+void
+lepton_component_object_set_missing (const LeptonObject *object,
+                                     gboolean missing);
 LeptonObject *
 o_component_find_pin_by_attribute (LeptonObject *object,
                                    const char *name,
