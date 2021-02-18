@@ -1,6 +1,5 @@
 SUBDIRS = \
 	sch2pcb \
-	renum \
 	tragesym \
 	symfix \
 	archive \

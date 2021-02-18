@@ -1,4 +1,10 @@
-SUBDIRS = smash_megafile olib gmk_sym sarlacc_schem scripts
+SUBDIRS = \
+	gmk_sym \
+	olib \
+	renum \
+	sarlacc_schem \
+	scripts \
+	smash_megafile
 
 EXTRA_DIST = \
 	README \

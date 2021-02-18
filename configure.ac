@@ -318,10 +318,6 @@ AC_CONFIG_FILES([Makefile
                  utils/sch2pcb/examples/Makefile
                  utils/sch2pcb/docs/Makefile
 
-                 utils/renum/Makefile
-                 utils/renum/src/Makefile
-                 utils/renum/docs/Makefile
-
                  utils/tragesym/Makefile
                  utils/tragesym/examples/Makefile
                  utils/tragesym/docs/Makefile
@@ -356,5 +352,8 @@ AC_CONFIG_FILES([Makefile
                  contrib/sarlacc_schem/Makefile
                  contrib/scripts/Makefile
                  contrib/scripts/sw2asc
+                 contrib/renum/Makefile
+                 contrib/renum/src/Makefile
+                 contrib/renum/docs/Makefile
 ])
 AC_OUTPUT
