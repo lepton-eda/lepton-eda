@@ -171,9 +171,9 @@ world_get_object_glist_bounds (const GList *head,
  *  \param [out] bounds The bounds of the component object
  */
 void
-geda_component_object_calculate_bounds (const LeptonObject *object,
-                                        gboolean include_hidden,
-                                        GedaBounds *bounds)
+lepton_component_object_calculate_bounds (const LeptonObject *object,
+                                          gboolean include_hidden,
+                                          GedaBounds *bounds)
 {
   geda_bounds_init (bounds);
 
@@ -200,7 +200,9 @@ geda_component_object_calculate_bounds (const LeptonObject *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_component_object_get_position (const LeptonObject *object, gint *x, gint *y)
+lepton_component_object_get_position (const LeptonObject *object,
+                                      gint *x,
+                                      gint *y)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->type == OBJ_COMPONENT, FALSE);
@@ -916,7 +918,7 @@ LeptonObject *o_component_read (LeptonPage *page,
  *  \return the string representation of the component LeptonObject
  */
 gchar*
-geda_component_object_to_buffer (const LeptonObject *object)
+lepton_component_object_to_buffer (const LeptonObject *object)
 {
   gchar *basename;
   gchar *buffer;
@@ -955,7 +957,7 @@ geda_component_object_to_buffer (const LeptonObject *object)
  *  \param [in]  dy      The y-distance to move the object
  */
 void
-geda_component_object_translate (LeptonObject *object, int dx, int dy)
+lepton_component_object_translate (LeptonObject *object, int dx, int dy)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->type == OBJ_COMPONENT);
@@ -1040,10 +1042,10 @@ o_component_copy (LeptonObject *o_current)
  *  \param [in,out]  object    Component object to rotate.
  */
 void
-geda_component_object_rotate (int centerx,
-                              int centery,
-                              int angle,
-                              LeptonObject *object)
+lepton_component_object_rotate (int centerx,
+                                int centery,
+                                int angle,
+                                LeptonObject *object)
 {
   int x, y;
   int newx, newy;
@@ -1059,14 +1061,14 @@ geda_component_object_rotate (int centerx,
   x = newx + (centerx);
   y = newy + (centery);
 
-  geda_component_object_translate (object, -object->component->x, -object->component->y);
+  lepton_component_object_translate (object, -object->component->x, -object->component->y);
 
   geda_object_list_rotate (object->component->prim_objs, 0, 0, angle);
 
   object->component->x = 0;
   object->component->y = 0;
 
-  geda_component_object_translate (object, x, y);
+  lepton_component_object_translate (object, x, y);
 
   object->component->angle = ( object->component->angle + angle ) % 360;
 }
@@ -1078,9 +1080,9 @@ geda_component_object_rotate (int centerx,
  *
  */
 void
-geda_component_object_mirror (int world_centerx,
-                              int world_centery,
-                              LeptonObject *object)
+lepton_component_object_mirror (int world_centerx,
+                                int world_centery,
+                                LeptonObject *object)
 {
   int x, y;
 
@@ -1091,7 +1093,7 @@ geda_component_object_mirror (int world_centerx,
   x = 2 * world_centerx - object->component->x;
   y = object->component->y;
 
-  geda_component_object_translate (object, -object->component->x, -object->component->y);
+  lepton_component_object_translate (object, -object->component->x, -object->component->y);
 
   geda_object_list_mirror (object->component->prim_objs, 0, 0);
 
@@ -1108,7 +1110,7 @@ geda_component_object_mirror (int world_centerx,
 
   object->component->mirror = !object->component->mirror;
 
-  geda_component_object_translate (object, x, y);
+  lepton_component_object_translate (object, x, y);
 }
 
 
@@ -1388,11 +1390,11 @@ done:
  *  G_MAXDOUBLE.
  */
 double
-geda_component_object_shortest_distance (LeptonObject *object,
-                                         int x,
-                                         int y,
-                                         int force_solid,
-                                         gboolean include_hidden)
+lepton_component_object_shortest_distance (LeptonObject *object,
+                                           int x,
+                                           int y,
+                                           int force_solid,
+                                           gboolean include_hidden)
 {
   double shortest_distance = G_MAXDOUBLE;
   double distance;

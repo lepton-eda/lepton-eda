@@ -272,7 +272,7 @@ GList
         if (embedded_level>0) {
           /* don't do this since objects are already
            * stored/read translated
-           * geda_component_object_translate (new_object_list->x, new_object_list->y, new_object_list->component);
+           * lepton_component_object_translate (new_object_list->x, new_object_list->y, new_object_list->component);
            */
           new_object_list = g_list_reverse (new_object_list);
 
