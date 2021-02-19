@@ -273,7 +273,7 @@ o_component_is_eligible_attribute (LeptonObject *object)
  *  \return TRUE if embedded, FALSE otherwise
  */
 gboolean
-lepton_component_object_get_embedded (LeptonObject *o_current)
+lepton_component_object_get_embedded (const LeptonObject *o_current)
 {
   g_return_val_if_fail (o_current != NULL, FALSE);
   g_return_val_if_fail (o_current->type == OBJ_COMPONENT, FALSE);
