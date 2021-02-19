@@ -265,12 +265,12 @@ o_component_is_eligible_attribute (LeptonObject *object)
   return TRUE;
 }
 
-/*! \brief get the embedded state of an component object
+/*! \brief Get the embedded state of an component object
  *  \par Function Description
  *  Checks and returns the status of the component object.
  *
  *  \param o_current  The object to check
- *  \return 1 if embedded, 0 otherwise
+ *  \return TRUE if embedded, FALSE otherwise
  */
 gboolean
 lepton_component_object_get_embedded (LeptonObject *o_current)
