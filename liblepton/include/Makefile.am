@@ -1,5 +1,6 @@
 libleptonincludedir = $(includedir)/liblepton
 libleptoninclude_HEADERS = \
+	liblepton/component_object.h \
 	liblepton/defines.h \
 	liblepton/edaconfig.h \
 	liblepton/edaerrors.h \
@@ -19,7 +20,6 @@ libleptoninclude_HEADERS = \
 	liblepton/geda_circle_object.h \
 	liblepton/geda_color.h \
 	liblepton/geda_component.h \
-	liblepton/geda_component_object.h \
 	liblepton/geda_coord.h \
 	liblepton/geda_forward.h \
 	liblepton/geda_fill_type.h \
