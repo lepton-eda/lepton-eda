@@ -786,7 +786,7 @@ SCM_DEFINE (object_embedded_p, "%object-embedded?", 1, 0, 0,
 
   if (obj->type == OBJ_COMPONENT)
   {
-    ret = o_component_is_embedded (obj);
+    ret = lepton_component_object_get_embedded (obj);
   }
   else
   if (obj->type == OBJ_PICTURE)
@@ -833,7 +833,7 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
 
   if (embeddable)
   {
-    gboolean  embedded = component ? o_component_is_embedded (obj)
+    gboolean  embedded = component ? lepton_component_object_get_embedded (obj)
                                    : o_picture_is_embedded (obj);
 
     if (embed && !embedded)

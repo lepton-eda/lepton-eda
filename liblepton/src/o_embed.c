@@ -47,7 +47,7 @@ o_embed (LeptonObject *o_current)
 
   /* check o_current is a component and is not already embedded */
   if (o_current->type == OBJ_COMPONENT &&
-      !o_component_is_embedded (o_current))
+      !lepton_component_object_get_embedded (o_current))
   {
 
     /* set the embedded flag */
@@ -91,7 +91,7 @@ o_unembed (LeptonObject *o_current)
 
   /* check o_current is an embedded component */
   if (o_current->type == OBJ_COMPONENT &&
-      o_component_is_embedded (o_current))
+      lepton_component_object_get_embedded (o_current))
   {
 
     /* search for the symbol in the library */

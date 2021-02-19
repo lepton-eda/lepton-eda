@@ -394,7 +394,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           already_wrote = TRUE;
           g_free(out); /* need to free here because of the above flag */
 
-          if (o_component_is_embedded (o_current)) {
+          if (lepton_component_object_get_embedded (o_current)) {
             g_string_append(acc, "[\n");
 
             out = o_save_objects(o_current->component->prim_objs, FALSE);
