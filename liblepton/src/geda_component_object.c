@@ -272,17 +272,17 @@ o_component_is_eligible_attribute (LeptonObject *object)
  *  \param o_current  The object to check
  *  \return 1 if embedded, 0 otherwise
  */
-int
+gboolean
 o_component_is_embedded (LeptonObject *o_current)
 {
-  g_return_val_if_fail (o_current != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_COMPONENT, 0);
-  g_return_val_if_fail (o_current->component != NULL, 0);
+  g_return_val_if_fail (o_current != NULL, FALSE);
+  g_return_val_if_fail (o_current->type == OBJ_COMPONENT, FALSE);
+  g_return_val_if_fail (o_current->component != NULL, FALSE);
 
   if (o_current->component_embedded) {
-    return 1;
+    return TRUE;
   } else {
-    return 0;
+    return FALSE;
   }
 }
 
