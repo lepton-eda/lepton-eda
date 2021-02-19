@@ -485,7 +485,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
                            clib,
                            o_current->component_basename,
                            1);
-  if (o_component_is_embedded (o_current)) {
+  if (lepton_component_object_get_embedded (o_current)) {
     o_embed (o_new);
   }
 
