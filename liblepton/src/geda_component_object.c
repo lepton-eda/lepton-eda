@@ -279,11 +279,7 @@ o_component_is_embedded (LeptonObject *o_current)
   g_return_val_if_fail (o_current->type == OBJ_COMPONENT, FALSE);
   g_return_val_if_fail (o_current->component != NULL, FALSE);
 
-  if (o_current->component_embedded) {
-    return TRUE;
-  } else {
-    return FALSE;
-  }
+  return o_current->component_embedded;
 }
 
 
