@@ -683,10 +683,12 @@ compselect_callback_filter_button_clicked (GtkButton *button,
  *  that the requested behavior for the next adding of a component has
  *  been changed.
  *
+ *  \param [in] optionmenu The behavior option menu.
  *  \param [in] user_data  The component selection dialog.
  */
 static void
-compselect_callback_behavior_changed (gpointer user_data)
+compselect_callback_behavior_changed (GtkComboBox *widget,
+                                      gpointer user_data)
 {
   Compselect *compselect = (Compselect*)user_data;
 
