@@ -716,8 +716,6 @@ LeptonObject *o_component_new (LeptonPage *page,
     new_node->component_basename = g_strdup (basename);
   }
 
-
-  new_node->component_embedded = FALSE;
   new_node->selectable = selectable;
 
   new_node->component = (COMPONENT *) g_malloc(sizeof(COMPONENT));
@@ -733,6 +731,7 @@ LeptonObject *o_component_new (LeptonPage *page,
      something goes wrong, this will be changed in
      create_placeholder(). */
   lepton_component_object_set_missing (new_node, FALSE);
+  lepton_component_object_set_embedded (new_node, FALSE);
 
   /* get the symbol data */
   if (clib != NULL) {
@@ -811,8 +810,6 @@ o_component_new_embedded (char type,
 
   new_node->component_basename = g_strdup(basename);
 
-  new_node->component_embedded = TRUE;
-
   new_node->selectable = selectable;
 
   new_node->component->prim_objs = NULL;
@@ -821,6 +818,7 @@ o_component_new_embedded (char type,
   /* Consider embedded components always exist since they are read
      from schematic file. */
   lepton_component_object_set_missing (new_node, FALSE);
+  lepton_component_object_set_embedded (new_node, TRUE);
 
   /* don't have to translate/rotate/mirror here at all since the */
   /* object is in place */
@@ -1003,7 +1001,6 @@ o_component_copy (LeptonObject *o_current)
   o_new = s_basic_new_object(o_current->type, "complex");
   o_new->selectable = o_current->selectable;
   o_new->component_basename = g_strdup(o_current->component_basename);
-  o_new->component_embedded = lepton_component_object_get_embedded (o_current);
 
   o_new->component = (COMPONENT*) g_malloc0 (sizeof (COMPONENT));
   o_new->component->x = o_current->component->x;
@@ -1017,6 +1014,8 @@ o_component_copy (LeptonObject *o_current)
   lepton_object_set_color (o_new, lepton_object_get_color (o_current));
   lepton_component_object_set_missing (o_new,
                                        lepton_component_object_get_missing (o_current));
+  lepton_component_object_set_embedded (o_new,
+                                        lepton_component_object_get_embedded (o_current));
 
   /* Copy contents and set the parent pointers on the copied objects. */
   o_new->component->prim_objs =

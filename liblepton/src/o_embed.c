@@ -51,7 +51,7 @@ o_embed (LeptonObject *o_current)
   {
 
     /* set the embedded flag */
-    o_current->component_embedded = TRUE;
+    lepton_component_object_set_embedded (o_current, TRUE);
 
     g_message (_("Component [%1$s] has been embedded."),
                o_current->component_basename);
@@ -105,7 +105,7 @@ o_unembed (LeptonObject *o_current)
 
     } else {
       /* clear the embedded flag */
-      o_current->component_embedded = FALSE;
+      lepton_component_object_set_embedded (o_current, FALSE);
 
       g_message (_("Component [%1$s] has been successfully unembedded."),
                  o_current->component_basename);
