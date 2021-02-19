@@ -275,10 +275,9 @@ o_component_is_eligible_attribute (LeptonObject *object)
 int
 o_component_is_embedded (LeptonObject *o_current)
 {
-  g_return_val_if_fail(o_current != NULL, 0);
-
-  if(o_current->component == NULL)
-    return 0;
+  g_return_val_if_fail (o_current != NULL, 0);
+  g_return_val_if_fail (object->type == OBJ_COMPONENT, 0);
+  g_return_val_if_fail (o_current->component != NULL, 0);
 
   if (o_current->component_embedded) {
     return 1;
