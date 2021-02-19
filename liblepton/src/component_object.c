@@ -327,6 +327,10 @@ o_component_get_promotable (LeptonObject *object,
   LeptonObject *tmp;
   gboolean attribute_promotion;
 
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_COMPONENT, NULL);
+  g_return_val_if_fail (object->component != NULL, NULL);
+
   cfg_read_bool ("schematic.attrib", "promote",
                  default_attribute_promotion, &attribute_promotion);
 
@@ -373,6 +377,10 @@ o_component_promote_attribs (LeptonObject *object)
   GList *promotable = NULL;
   GList *iter = NULL;
   gboolean keep_invisible;
+
+  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (object->type == OBJ_COMPONENT, NULL);
+  g_return_val_if_fail (object->component != NULL, NULL);
 
   cfg_read_bool ("schematic.attrib", "keep-invisible",
                  default_keep_invisible, &keep_invisible);
@@ -493,6 +501,10 @@ render_placeholders()
 static void
 create_placeholder_small (LeptonObject* node, int x, int y)
 {
+  g_return_if_fail (node != NULL);
+  g_return_if_fail (node->type == OBJ_COMPONENT);
+  g_return_if_fail (node->component != NULL);
+
   const gint color = DETACHED_ATTRIBUTE_COLOR;
   const gint text_size = 6;
 
@@ -578,6 +590,10 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
   LeptonObject *new_prim_obj;
   char *not_found_text = NULL;
   int x_offset, y_offset;
+
+  g_return_if_fail (new_node != NULL);
+  g_return_if_fail (new_node->type == OBJ_COMPONENT);
+  g_return_if_fail (new_node->component != NULL);
 
   /* Mark the origin of the missing component */
   new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
@@ -996,7 +1012,9 @@ o_component_copy (LeptonObject *o_current)
   LeptonObject *o_new;
   GList *iter;
 
-  g_return_val_if_fail(o_current != NULL, NULL);
+  g_return_val_if_fail (o_current != NULL, NULL);
+  g_return_val_if_fail (o_current->type == OBJ_COMPONENT, NULL);
+  g_return_val_if_fail (o_current->component != NULL, NULL);
 
   o_new = s_basic_new_object(o_current->type, "complex");
   o_new->selectable = o_current->selectable;
@@ -1066,6 +1084,7 @@ lepton_component_object_rotate (int centerx,
 
   g_return_if_fail (object!=NULL);
   g_return_if_fail (object->type == OBJ_COMPONENT);
+  g_return_if_fail (object->component != NULL);
 
   x = object->component->x + (-centerx);
   y = object->component->y + (-centery);
@@ -1150,6 +1169,7 @@ o_component_find_pin_by_attribute (LeptonObject *object,
 
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->type == OBJ_COMPONENT, NULL);
+  g_return_val_if_fail (object->component != NULL, NULL);
 
   for (iter = object->component->prim_objs; iter != NULL;
        iter = g_list_next (iter)) {
@@ -1416,6 +1436,8 @@ lepton_component_object_shortest_distance (LeptonObject *object,
   BOX line_bounds;
   GList *iter;
 
+  g_return_val_if_fail (object != NULL, G_MAXDOUBLE);
+  g_return_val_if_fail (object->type == OBJ_COMPONENT, G_MAXDOUBLE);
   g_return_val_if_fail (object->component != NULL, G_MAXDOUBLE);
 
   for (iter = object->component->prim_objs;
