@@ -923,7 +923,7 @@ lepton_component_object_to_buffer (const LeptonObject *object)
   g_return_val_if_fail (object->type == OBJ_COMPONENT, NULL);
 
   basename = g_strdup_printf ("%s%s",
-                              object->component_embedded ? "EMBEDDED" : "",
+                              lepton_component_object_get_embedded (object) ? "EMBEDDED" : "",
                               object->component_basename);
 
   /* We force the object type to be output as OBJ_COMPONENT for both these object
@@ -983,7 +983,7 @@ o_component_copy (LeptonObject *o_current)
   o_new = s_basic_new_object(o_current->type, "complex");
   o_new->selectable = o_current->selectable;
   o_new->component_basename = g_strdup(o_current->component_basename);
-  o_new->component_embedded = o_current->component_embedded;
+  o_new->component_embedded = lepton_component_object_get_embedded (o_current);
 
   o_new->component = (COMPONENT*) g_malloc0 (sizeof (COMPONENT));
   o_new->component->x = o_current->component->x;
