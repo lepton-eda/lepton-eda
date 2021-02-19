@@ -30,6 +30,8 @@ struct st_component
                        /* in degrees */
   int mirror;          /* If the component should be mirrored */
 
+  gboolean embedded;   /* If the component is embedded */
+
   gboolean missing;    /* TRUE if the component has not been */
                        /* found in the component library */
 

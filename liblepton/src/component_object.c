@@ -279,7 +279,7 @@ lepton_component_object_get_embedded (const LeptonObject *o_current)
   g_return_val_if_fail (o_current->type == OBJ_COMPONENT, FALSE);
   g_return_val_if_fail (o_current->component != NULL, FALSE);
 
-  return o_current->component_embedded;
+  return o_current->component->embedded;
 }
 
 
@@ -299,7 +299,7 @@ lepton_component_object_set_embedded (LeptonObject *o_current,
   g_return_if_fail (o_current->type == OBJ_COMPONENT);
   g_return_if_fail (o_current->component != NULL);
 
-  o_current->component_embedded = embedded;
+  o_current->component->embedded = embedded;
 }
 
 
