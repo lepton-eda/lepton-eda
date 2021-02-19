@@ -34,6 +34,9 @@ world_get_object_glist_bounds (const GList *head,
 gboolean
 lepton_component_object_get_embedded (const LeptonObject *o_current);
 
+void
+lepton_component_object_set_embedded (LeptonObject *o_current,
+                                      gboolean embedded);
 GList*
 o_component_promote_attribs (LeptonObject *object);
 

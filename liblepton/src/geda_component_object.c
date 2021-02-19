@@ -283,6 +283,26 @@ lepton_component_object_get_embedded (const LeptonObject *o_current)
 }
 
 
+/*! \brief Set the embedded state of an component object
+ *  \par Function Description
+ *  Amends the status of embedding for the component object.
+ *
+ *  \param [in] o_current  The object to amend.
+ *  \param [in] embedded   TRUE if the object should be embedded,
+ *                         FALSE otherwise.
+ */
+void
+lepton_component_object_set_embedded (LeptonObject *o_current,
+                                      gboolean embedded)
+{
+  g_return_if_fail (o_current != NULL);
+  g_return_if_fail (o_current->type == OBJ_COMPONENT);
+  g_return_if_fail (o_current->component != NULL);
+
+  o_current->component_embedded = embedded;
+}
+
+
 /*! \brief Get attributes eligible for promotion from inside a component
  *
  *  \par Function Description
