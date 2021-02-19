@@ -31,8 +31,8 @@ world_get_object_glist_bounds (const GList *head,
                                int *top,
                                int *right,
                                int *bottom);
-
-int o_component_is_embedded (LeptonObject *o_current);
+gboolean
+o_component_is_embedded (LeptonObject *o_current);
 
 GList*
 o_component_promote_attribs (LeptonObject *object);
