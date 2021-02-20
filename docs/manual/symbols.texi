@@ -1,0 +1,10 @@
+@node Symbols, lepton-schematic, Configuration, Top
+@chapter Symbols
+@cindex symbols
+@cindex schematic symbols
+
+@menu
+* No-connect symbols::
+@end menu
+
+@include no-connect-symbol.texi

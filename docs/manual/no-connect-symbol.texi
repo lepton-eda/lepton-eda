@@ -1,0 +1,136 @@
+@node No-connect symbols
+@section No Connection Short Form Data Sheet
+@cindex no-connection symbol
+@cindex no-connect symbol
+@cindex nc symbol
+@cindex symbol, no-connection
+@cindex symbol, no-connect
+@cindex symbol, nc
+
+@strong{General description}
+
+The component is a mono‐pole with unique properties.
+
+@strong{Applications}
+
+@itemize
+@item
+Digital circuits
+
+@item
+Analog circuits
+
+@item
+Mixed signal circuits
+
+@item
+Consumer products
+
+@item
+Industry products
+@end itemize
+
+@strong{Features}
+
+@itemize
+@item
+ESD tolerant
+
+@item
+Latchup free
+
+@item
+Operates with zero power supplies
+
+@item
+Simple connection
+@end itemize
+
+@strong{Electrical Characteristics}
+
+@multitable @columnfractions .2 .1 .2 .4 .1
+@headitem
+Parameter
+@tab Symbol
+@tab Conditions
+@tab Min @ @ @ Typ @ @ @ Max
+@tab Units
+
+@item
+Supply Voltage
+@tab Vcc
+@tab Any
+@tab 0 @ @ @ @ @ @ @ @ @ @U{221E}
+@tab V
+
+@item
+Supply Current
+@tab Icc
+@tab Any
+@tab 0 @ @ @ 0 @ @ @ 0
+@tab mA
+
+@end multitable
+
+
+@strong{Pin Descriptions}
+
+@multitable @columnfractions  .3 .3 .4
+@headitem
+Pin @tab Name @tab Function
+
+@item
+1 @tab NC @tab None whatsoever
+@end multitable
+
+@strong{Detailed Description}
+
+The component really does nothing, except making it perfectly clear
+that when it is connected to pins on other components, they should
+not, or at least need not, be connected to anything else.
+
+@strong{Ordering Information}
+
+@multitable @columnfractions  .25 .25 .25 .25
+@headitem
+Part
+@tab Temp. Range
+@tab Terminal
+@tab Package
+
+@item
+nc‐left
+@tab @minus{}273.16@textdegree{}C to +@U{221E}@textdegree{}C
+@tab Left
+@tab None
+
+@item
+nc‐right
+@tab @minus{}273.16@textdegree{}C to +@U{221E}@textdegree{}C
+@tab Right
+@tab None
+
+@item
+nc‐top
+@tab @minus{}273.16@textdegree{}C to +@U{221E}@textdegree{}C
+@tab Top
+@tab None
+
+@item
+nc‐bottom
+@tab @minus{}273.16@textdegree{}C to +@U{221E}@textdegree{}C
+@tab Bottom
+@tab None
+
+@end multitable
+
+@strong{References}
+
+@itemize
+@item
+@url{http://www.gedasymbols.org/}
+
+@item
+@url{https://github.com/lepton-eda/lepton-eda/tree/master/symbols,
+Lepton symbols}
+@end itemize

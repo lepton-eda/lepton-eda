@@ -14,7 +14,9 @@ lepton_manual_TEXINFOS = \
 	lepton-eda-fonts.texi \
 	lepton-netlist.texi \
 	lepton-schematic.texi \
-	overview.texi
+	no-connect-symbol.texi \
+	overview.texi \
+	symbols.texi
 
 AM_MAKEINFOHTMLFLAGS = --css-ref=lepton-manual.css
 

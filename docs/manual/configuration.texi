@@ -1,4 +1,4 @@
-@node Configuration, lepton-schematic, Installation, Top
+@node Configuration, Symbols, Installation, Top
 @chapter Configuration system
 @cindex config
 @cindex configuration
