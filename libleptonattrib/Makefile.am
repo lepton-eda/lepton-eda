@@ -29,15 +29,6 @@ lepton-attrib: lepton-attrib.scm Makefile
 	$(do_subst) < $(srcdir)/$@.scm > $@
 	chmod +x $@
 
-if HAVE_GIT_REPO
-ChangeLog: $(top_builddir)/stamp-git
-	( \
-	  cd $(srcdir) && \
-	  $(GIT) log --pretty=medium $(CHANGELOG_BASE).. -- . || \
-	  echo "WARNING: ChangeLog information not available from git" >&2 ; \
-	) > $@
-endif HAVE_GIT_REPO
-
 do_subst = sed \
 	-e 's,[@]libdir[@],$(libdir),g' \
 	-e 's,[@]GUILE[@],$(GUILE),g' \
@@ -48,7 +39,6 @@ do_subst = sed \
 
 EXTRA_DIST = \
 	lepton-attrib.scm \
-	README \
-	ChangeLog
+	README
 
 CLEANFILES = $(bin_SCRIPTS)
