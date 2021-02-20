@@ -31,8 +31,18 @@ DISTCHECK_CONFIGURE_FLAGS = \
 	--disable-update-xdg-database
 
 BUILT_SOURCES = version.h
-EXTRA_DIST = autogen.sh version.h version.h.in CODE_OF_CONDUCT.md \
-	CONTRIBUTING.md COPYING COPYING.LGPL NEWS.md README.md
+
+EXTRA_DIST = \
+	autogen.sh \
+	version.h \
+	version.h.in \
+	CODE_OF_CONDUCT.md \
+	CONTRIBUTING.md \
+	COPYING \
+	COPYING.LGPL \
+	NEWS.md \
+	README.md \
+	ChangeLog
 
 # Generate version.h. This works by looking at any git repository that
 # is present in the source directory (detected at configure time). If

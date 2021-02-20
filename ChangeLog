@@ -1,0 +1,14 @@
+We do not longer maintain ChangeLog files used to
+be generated from the git history.
+User-visible changes can be found in the NEWS.md file
+distributed with the Lepton EDA suite and installed
+to $PREFIX/share/doc/lepton-eda/.
+Consult the detailed history on github project's
+page [1] or clone the repository [2] and use
+'git log' and 'git whatchanged' commands.
+Old changelogs (<= 2007) are stored in the
+docs/changelogs/ directory in the source tree.
+
+[1] https://github.com/lepton-eda/lepton-eda
+[2] Described in README.md
+
