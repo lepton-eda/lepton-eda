@@ -12,5 +12,4 @@ EXTRA_DIST = \
 	IEC417.sch \
 	logo_1.sch \
 	multiplex_1.sch \
-	stack_1.sch \
-	README.agile
+	stack_1.sch
