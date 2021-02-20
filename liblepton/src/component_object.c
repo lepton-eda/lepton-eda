@@ -785,7 +785,7 @@ LeptonObject *o_component_new (LeptonPage *page,
  *  \par Function Description
  *  This function creates a new embedded object.
  *
- *  \param [in]  type      The type of the object (usually OBJ_COMLEX)
+ *  \param [in]  type      The type of the object (usually OBJ_COMPONENT)
  *  \param [in]  color     The color of the object
  *  \param [in]  x         The x location of the component object
  *  \param [in]  y         The y location of the component object
