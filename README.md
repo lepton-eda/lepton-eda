@@ -244,7 +244,7 @@ stage:
 
 ### --enable-contrib
 
-This option enables build and installation of several contributed
+This option enables build of several contributed
 tools that may come in handy for some tasks.  Please see Lepton
 reference manual for more information on what utilities are
 available.
