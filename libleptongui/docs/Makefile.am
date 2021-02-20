@@ -2,7 +2,8 @@ EXTRA_DIST = \
 	$(html_man_files) \
 	libleptongui.dox \
 	lepton-schematic.1.in \
-	TODO
+	TODO \
+	README.agile
 
 all:
 	@echo 'Type: make doxygen to create doxygen documentation for gschem'

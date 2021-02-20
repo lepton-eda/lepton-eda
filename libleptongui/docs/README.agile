@@ -1,3 +1,6 @@
+README for tests/agile-vfo-block_1.sch schematic
+------------------------------------------------
+
 This is the block diagram for an actual commercial product being
 developed with gEDA.  It is a agile VFO which will serve as part of
 the reference hardware implementation for an open-source encrypted
