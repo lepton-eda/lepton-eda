@@ -60,7 +60,7 @@ Parameter
 Supply Voltage
 @tab Vcc
 @tab Any
-@tab 0 @tab @tab @U{221E}
+@tab 0 @tab @tab ∞
 @tab V
 
 @item
@@ -100,25 +100,25 @@ Part
 
 @item
 nc‐left
-@tab @minus{}273.16@textdegree{}C to +@U{221E}@textdegree{}C
+@tab @minus{}273.16@textdegree{}C to +∞@textdegree{}C
 @tab Left
 @tab None
 
 @item
 nc‐right
-@tab @minus{}273.16@textdegree{}C to +@U{221E}@textdegree{}C
+@tab @minus{}273.16@textdegree{}C to +∞@textdegree{}C
 @tab Right
 @tab None
 
 @item
 nc‐top
-@tab @minus{}273.16@textdegree{}C to +@U{221E}@textdegree{}C
+@tab @minus{}273.16@textdegree{}C to +∞@textdegree{}C
 @tab Top
 @tab None
 
 @item
 nc‐bottom
-@tab @minus{}273.16@textdegree{}C to +@U{221E}@textdegree{}C
+@tab @minus{}273.16@textdegree{}C to +∞@textdegree{}C
 @tab Bottom
 @tab None
 
