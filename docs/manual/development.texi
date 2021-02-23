@@ -43,12 +43,14 @@ In ice-9/boot-9.scm:
 many more lines
 ...
 In ice-9/boot-9.scm:
-105: 1 [#<procedure 55e36e0eee80 at ice-9/boot-9.scm:100:6 (thrown-k . args)> wrong-type-arg ...]
+105: 1 [#<procedure 55e36e0eee80 at ice-9/boot-9.scm:100:6
+(thrown-k . args)> wrong-type-arg ...]
 In unknown file:
 ?: 0 [apply-smob/1 #<catch-closure 55e36e0edae0> wrong-type-arg ...]
 
 ERROR: In procedure apply-smob/1:
-ERROR: In procedure struct-vtable: Wrong type argument in position 1 (expecting struct): #f
+ERROR: In procedure struct-vtable: Wrong type argument in position 1
+(expecting struct): #f
 @end example
 
 The output is incomprehensible, isn't it?  The issue gets worse due to
@@ -125,5 +127,6 @@ Then, you can use the following command to fiddle with them in
 @command{gdb}:
 
 @example
-G_DEBUG=fatal_criticals gdb --args guile -s /usr/local/bin/lepton-schematic
+G_DEBUG=fatal_criticals gdb --args \
+  guile -s /usr/local/bin/lepton-schematic
 @end example
