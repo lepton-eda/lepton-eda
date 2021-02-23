@@ -24,7 +24,8 @@
           (set-stroke! (make-line '(55 . 50) '(145 . 50)  3))
           (set-stroke! (make-line '(80 . 10) '(120 . 10)  3))))
         (net-attrib
-         (make-text '(300 . 100) 'lower-left  0 "net=GND:1" 10 #f 'value 8)))
+         (make-text
+          '(300 . 100) 'lower-left  0 "net=GND:1" 10 #f 'value 8)))
 
     (apply page-append!
            page
@@ -43,7 +44,8 @@
         (line
          (set-stroke! (make-line '(0 . 300) '(200 . 300) 3)))
         (net-attrib
-         (make-text '(300 . 100) 'lower-left  0 "net=Vss:1" 10 #f 'value 8)))
+         (make-text
+          '(300 . 100) 'lower-left  0 "net=Vss:1" 10 #f 'value 8)))
 
     (apply page-append!
            page
