@@ -48,26 +48,26 @@ Simple connection
 
 @strong{Electrical Characteristics}
 
-@multitable @columnfractions .2 .1 .2 .4 .1
+@multitable @columnfractions .2 .2 .2 .1 .1 .1 .1
 @headitem
 Parameter
 @tab Symbol
 @tab Conditions
-@tab Min @ @ @ Typ @ @ @ Max
+@tab Min @tab Typ @tab Max
 @tab Units
 
 @item
 Supply Voltage
 @tab Vcc
 @tab Any
-@tab 0 @ @ @ @ @ @ @ @ @ @U{221E}
+@tab 0 @tab @tab @U{221E}
 @tab V
 
 @item
 Supply Current
 @tab Icc
 @tab Any
-@tab 0 @ @ @ 0 @ @ @ 0
+@tab 0 @tab 0 @tab 0
 @tab mA
 
 @end multitable
