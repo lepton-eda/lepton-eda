@@ -542,7 +542,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel,
                                                       temp_uref,
                                                       comp_prim_obj,
                                                       new_pin_attrib_list);
-         }
+          }
         }
       }     /* if(temp_uref  */
 
