@@ -10,4 +10,5 @@ SUBDIRS = \
 	upcfg \
 	symcheck \
 	cli \
-	netlist
+	netlist \
+	attrib

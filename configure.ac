@@ -260,6 +260,8 @@ AC_CONFIG_FILES([Makefile
                  libleptonattrib/data/Makefile
                  libleptonattrib/docs/Makefile
 
+                 utils/attrib/Makefile
+
                  utils/symcheck/tests/Makefile
                  utils/symcheck/docs/Makefile
                  utils/symcheck/Makefile
