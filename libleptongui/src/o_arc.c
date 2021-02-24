@@ -140,12 +140,12 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
   LeptonObject *new_obj;
 
   /* create, initialize and link the new arc object */
-  new_obj = geda_arc_object_new (GRAPHIC_COLOR,
-                                 w_current->first_wx,
-                                 w_current->first_wy,
-                                 radius,
-                                 start_angle,
-                                 sweep_angle);
+  new_obj = lepton_arc_object_new (GRAPHIC_COLOR,
+                                   w_current->first_wx,
+                                   w_current->first_wy,
+                                   radius,
+                                   start_angle,
+                                   sweep_angle);
 
   s_page_append (page, new_obj);
 

@@ -714,11 +714,11 @@ eda_renderer_draw_arc (EdaRenderer *renderer, LeptonObject *object)
 {
   eda_cairo_arc (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                  object->line_width,
-                 geda_arc_object_get_center_x (object),
-                 geda_arc_object_get_center_y (object),
-                 geda_arc_object_get_radius (object),
-                 geda_arc_object_get_start_angle (object),
-                 geda_arc_object_get_sweep_angle (object));
+                 lepton_arc_object_get_center_x (object),
+                 lepton_arc_object_get_center_y (object),
+                 lepton_arc_object_get_radius (object),
+                 lepton_arc_object_get_start_angle (object),
+                 lepton_arc_object_get_sweep_angle (object));
 
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     object->line_type,
@@ -1195,12 +1195,12 @@ eda_renderer_draw_arc_grips (EdaRenderer *renderer, LeptonObject *object)
    *   <DT>*</DT><DD>one at the end of the arc - at (<B>x2</B>,<B>y2</B>).
    */
 
-  x1 = geda_arc_object_get_center_x (object);
-  y1 = geda_arc_object_get_center_y (object);
+  x1 = lepton_arc_object_get_center_x (object);
+  y1 = lepton_arc_object_get_center_y (object);
 
-  radius      = geda_arc_object_get_radius (object);
-  start_angle = geda_arc_object_get_start_angle (object);
-  sweep_angle = geda_arc_object_get_sweep_angle (object);
+  radius      = lepton_arc_object_get_radius (object);
+  start_angle = lepton_arc_object_get_start_angle (object);
+  sweep_angle = lepton_arc_object_get_sweep_angle (object);
 
   x2 = x1 + radius * cos ( start_angle                * M_PI / 180);
   y2 = y1 + radius * sin ( start_angle                * M_PI / 180);

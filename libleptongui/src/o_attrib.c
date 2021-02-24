@@ -258,8 +258,8 @@ LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current,
         break;
 
       case(OBJ_ARC):
-        world_x = geda_arc_object_get_center_x (o_current);
-        world_y = geda_arc_object_get_center_y (o_current);
+        world_x = lepton_arc_object_get_center_x (o_current);
+        world_y = lepton_arc_object_get_center_y (o_current);
         align = LOWER_LEFT;
         angle = 0;
         color = ATTRIBUTE_COLOR;

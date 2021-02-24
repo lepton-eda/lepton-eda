@@ -421,7 +421,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           break;
 
         case(OBJ_ARC):
-          out = geda_arc_object_to_buffer (o_current);
+          out = lepton_arc_object_to_buffer (o_current);
           break;
 
         case(OBJ_PICTURE):

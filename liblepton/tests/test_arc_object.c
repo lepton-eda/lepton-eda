@@ -15,24 +15,24 @@ check_construction ()
     gint start_angle = g_test_rand_int_range (0, 359);
     gint sweep_angle = g_test_rand_int_range (0, 360);
 
-    LeptonObject *object0 = geda_arc_object_new (color,
-                                               center_x,
-                                               center_y,
-                                               radius,
-                                               start_angle,
-                                               sweep_angle);
+    LeptonObject *object0 = lepton_arc_object_new (color,
+                                                   center_x,
+                                                   center_y,
+                                                   radius,
+                                                   start_angle,
+                                                   sweep_angle);
 
     g_assert (object0 != NULL);
     g_assert_cmpint (OBJ_ARC, ==, lepton_object_get_type (object0));
 
-    g_assert_cmpint (center_x, ==, geda_arc_object_get_center_x (object0));
-    g_assert_cmpint (center_y, ==, geda_arc_object_get_center_y (object0));
+    g_assert_cmpint (center_x, ==, lepton_arc_object_get_center_x (object0));
+    g_assert_cmpint (center_y, ==, lepton_arc_object_get_center_y (object0));
     g_assert_cmpint (color, ==, lepton_object_get_color (object0));
-    g_assert_cmpint (radius, ==, geda_arc_object_get_radius (object0));
-    g_assert_cmpint (start_angle, ==, geda_arc_object_get_start_angle (object0));
-    g_assert_cmpint (sweep_angle, ==, geda_arc_object_get_sweep_angle (object0));
+    g_assert_cmpint (radius, ==, lepton_arc_object_get_radius (object0));
+    g_assert_cmpint (start_angle, ==, lepton_arc_object_get_start_angle (object0));
+    g_assert_cmpint (sweep_angle, ==, lepton_arc_object_get_sweep_angle (object0));
 
-    LeptonObject *object1 = geda_arc_object_copy (object0);
+    LeptonObject *object1 = lepton_arc_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
@@ -40,12 +40,12 @@ check_construction ()
 
     s_delete_object (object0);
 
-    g_assert_cmpint (center_x, ==, geda_arc_object_get_center_x (object1));
-    g_assert_cmpint (center_y, ==, geda_arc_object_get_center_y (object1));
+    g_assert_cmpint (center_x, ==, lepton_arc_object_get_center_x (object1));
+    g_assert_cmpint (center_y, ==, lepton_arc_object_get_center_y (object1));
     g_assert_cmpint (color, ==, lepton_object_get_color (object1));
-    g_assert_cmpint (radius, ==, geda_arc_object_get_radius (object1));
-    g_assert_cmpint (start_angle, ==, geda_arc_object_get_start_angle (object1));
-    g_assert_cmpint (sweep_angle, ==, geda_arc_object_get_sweep_angle (object1));
+    g_assert_cmpint (radius, ==, lepton_arc_object_get_radius (object1));
+    g_assert_cmpint (start_angle, ==, lepton_arc_object_get_start_angle (object1));
+    g_assert_cmpint (sweep_angle, ==, lepton_arc_object_get_sweep_angle (object1));
 
     s_delete_object (object1);
   }
@@ -67,7 +67,7 @@ check_accessors ()
     gint start_angle = g_test_rand_int_range (0, 359);
     gint sweep_angle = g_test_rand_int_range (0, 360);
 
-    LeptonObject *object0 = geda_arc_object_new (color,
+    LeptonObject *object0 = lepton_arc_object_new (color,
                                                center_x,
                                                center_y,
                                                radius,
@@ -84,19 +84,19 @@ check_accessors ()
     start_angle = g_test_rand_int_range (0, 359);
     sweep_angle = g_test_rand_int_range (0, 360);
 
-    geda_arc_object_set_center_x (object0, center_x);
-    geda_arc_object_set_center_y (object0, center_y);
+    lepton_arc_object_set_center_x (object0, center_x);
+    lepton_arc_object_set_center_y (object0, center_y);
     lepton_object_set_color (object0, color);
-    geda_arc_object_set_radius (object0, radius);
-    geda_arc_object_set_start_angle (object0, start_angle);
-    geda_arc_object_set_sweep_angle (object0, sweep_angle);
+    lepton_arc_object_set_radius (object0, radius);
+    lepton_arc_object_set_start_angle (object0, start_angle);
+    lepton_arc_object_set_sweep_angle (object0, sweep_angle);
 
-    g_assert_cmpint (center_x, ==, geda_arc_object_get_center_x (object0));
-    g_assert_cmpint (center_y, ==, geda_arc_object_get_center_y (object0));
+    g_assert_cmpint (center_x, ==, lepton_arc_object_get_center_x (object0));
+    g_assert_cmpint (center_y, ==, lepton_arc_object_get_center_y (object0));
     g_assert_cmpint (color, ==, lepton_object_get_color (object0));
-    g_assert_cmpint (radius, ==, geda_arc_object_get_radius (object0));
-    g_assert_cmpint (start_angle, ==, geda_arc_object_get_start_angle (object0));
-    g_assert_cmpint (sweep_angle, ==, geda_arc_object_get_sweep_angle (object0));
+    g_assert_cmpint (radius, ==, lepton_arc_object_get_radius (object0));
+    g_assert_cmpint (start_angle, ==, lepton_arc_object_get_start_angle (object0));
+    g_assert_cmpint (sweep_angle, ==, lepton_arc_object_get_sweep_angle (object0));
 
     s_delete_object (object0);
   }
@@ -123,7 +123,7 @@ check_serialization ()
     gint start_angle = g_test_rand_int_range (0, 359);
     gint sweep_angle = g_test_rand_int_range (0, 360);
 
-    LeptonObject *object0 = geda_arc_object_new (color,
+    LeptonObject *object0 = lepton_arc_object_new (color,
                                                center_x,
                                                center_y,
                                                radius,
@@ -132,7 +132,7 @@ check_serialization ()
 
     g_assert (object0 != NULL);
 
-    gchar *buffer0 = geda_arc_object_to_buffer (object0);
+    gchar *buffer0 = lepton_arc_object_to_buffer (object0);
     s_delete_object (object0);
     g_assert (buffer0 != NULL);
 
@@ -143,14 +143,14 @@ check_serialization ()
 
     g_assert (object1 != NULL);
 
-    g_assert_cmpint (center_x, ==, geda_arc_object_get_center_x (object1));
-    g_assert_cmpint (center_y, ==, geda_arc_object_get_center_y (object1));
+    g_assert_cmpint (center_x, ==, lepton_arc_object_get_center_x (object1));
+    g_assert_cmpint (center_y, ==, lepton_arc_object_get_center_y (object1));
     g_assert_cmpint (color, ==, lepton_object_get_color (object1));
-    g_assert_cmpint (radius, ==, geda_arc_object_get_radius (object1));
-    g_assert_cmpint (start_angle, ==, geda_arc_object_get_start_angle (object1));
-    g_assert_cmpint (sweep_angle, ==, geda_arc_object_get_sweep_angle (object1));
+    g_assert_cmpint (radius, ==, lepton_arc_object_get_radius (object1));
+    g_assert_cmpint (start_angle, ==, lepton_arc_object_get_start_angle (object1));
+    g_assert_cmpint (sweep_angle, ==, lepton_arc_object_get_sweep_angle (object1));
 
-    gchar *buffer1 = geda_arc_object_to_buffer (object1);
+    gchar *buffer1 = lepton_arc_object_to_buffer (object1);
     s_delete_object (object1);
     g_assert (buffer1 != NULL);
 

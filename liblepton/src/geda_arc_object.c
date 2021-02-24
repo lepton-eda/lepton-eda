@@ -42,12 +42,12 @@
  *  \return the new arc object
  */
 LeptonObject*
-geda_arc_object_new (gint color,
-                     gint center_x,
-                     gint center_y,
-                     gint radius,
-                     gint start_angle,
-                     gint sweep_angle)
+lepton_arc_object_new (gint color,
+                       gint center_x,
+                       gint center_y,
+                       gint radius,
+                       gint start_angle,
+                       gint sweep_angle)
 {
 
   LeptonObject *new_node;
@@ -101,19 +101,19 @@ geda_arc_object_new (gint color,
  *  \return The new arc object
  */
 LeptonObject*
-geda_arc_object_copy (const LeptonObject *object)
+lepton_arc_object_copy (const LeptonObject *object)
 {
   LeptonObject *new_object;
 
   g_return_val_if_fail (lepton_object_is_arc (object), NULL);
   g_return_val_if_fail (object->arc != NULL, NULL);
 
-  new_object = geda_arc_object_new (lepton_object_get_color (object),
-                                    object->arc->x,
-                                    object->arc->y,
-                                    object->arc->radius,
-                                    object->arc->start_angle,
-                                    object->arc->sweep_angle);
+  new_object = lepton_arc_object_new (lepton_object_get_color (object),
+                                      object->arc->x,
+                                      object->arc->y,
+                                      object->arc->radius,
+                                      object->arc->start_angle,
+                                      object->arc->sweep_angle);
 
   o_set_line_options (new_object,
                       object->line_end,
@@ -139,7 +139,7 @@ geda_arc_object_copy (const LeptonObject *object)
  *  \return The x coordinate of the center of the arc
  */
 gint
-geda_arc_object_get_center_x (const LeptonObject *object)
+lepton_arc_object_get_center_x (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_arc (object), 0);
   g_return_val_if_fail (object->arc != NULL, 0);
@@ -153,7 +153,7 @@ geda_arc_object_get_center_x (const LeptonObject *object)
  *  \return The y coordinate of the center of the arc
  */
 gint
-geda_arc_object_get_center_y (const LeptonObject *object)
+lepton_arc_object_get_center_y (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_arc (object), 0);
   g_return_val_if_fail (object->arc != NULL, 0);
@@ -167,7 +167,7 @@ geda_arc_object_get_center_y (const LeptonObject *object)
  *  \return The raduis of the arc
  */
 gint
-geda_arc_object_get_radius (const LeptonObject *object)
+lepton_arc_object_get_radius (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_arc (object), 0);
   g_return_val_if_fail (object->arc != NULL, 0);
@@ -181,7 +181,7 @@ geda_arc_object_get_radius (const LeptonObject *object)
  *  \return The starting angle of the arc
  */
 gint
-geda_arc_object_get_start_angle (const LeptonObject *object)
+lepton_arc_object_get_start_angle (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_arc (object), 0);
   g_return_val_if_fail (object->arc != NULL, 0);
@@ -195,7 +195,7 @@ geda_arc_object_get_start_angle (const LeptonObject *object)
  *  \return The sweep angle of the arc
  */
 gint
-geda_arc_object_get_sweep_angle (const LeptonObject *object)
+lepton_arc_object_get_sweep_angle (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_arc (object), 0);
   g_return_val_if_fail (object->arc != NULL, 0);
@@ -209,7 +209,8 @@ geda_arc_object_get_sweep_angle (const LeptonObject *object)
  *  \param [in] x The new y coordinate for the arc center
  */
 void
-geda_arc_object_set_center_x (LeptonObject *object, gint x)
+lepton_arc_object_set_center_x (LeptonObject *object,
+                                gint x)
 {
   g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
@@ -223,7 +224,8 @@ geda_arc_object_set_center_x (LeptonObject *object, gint x)
  *  \param [in] y The new y coordinate for the arc center
  */
 void
-geda_arc_object_set_center_y (LeptonObject *object, gint y)
+lepton_arc_object_set_center_y (LeptonObject *object,
+                                gint y)
 {
   g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
@@ -237,7 +239,8 @@ geda_arc_object_set_center_y (LeptonObject *object, gint y)
  *  \param [in] radius The new raduis for the arc
  */
 void
-geda_arc_object_set_radius (LeptonObject *object, gint radius)
+lepton_arc_object_set_radius (LeptonObject *object,
+                              gint radius)
 {
   g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
@@ -251,7 +254,8 @@ geda_arc_object_set_radius (LeptonObject *object, gint radius)
  *  \param [in] angle The new starting angle for the arc
  */
 void
-geda_arc_object_set_start_angle (LeptonObject *object, gint angle)
+lepton_arc_object_set_start_angle (LeptonObject *object,
+                                   gint angle)
 {
   g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
@@ -265,7 +269,8 @@ geda_arc_object_set_start_angle (LeptonObject *object, gint angle)
  *  \param [in] angle The new sweep angle for the arc
  */
 void
-geda_arc_object_set_sweep_angle (LeptonObject *object, gint angle)
+lepton_arc_object_set_sweep_angle (LeptonObject *object,
+                                   gint angle)
 {
   g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
@@ -303,10 +308,10 @@ geda_arc_object_set_sweep_angle (LeptonObject *object, gint angle)
  *  \param [in]     whichone
  */
 void
-geda_arc_object_modify (LeptonObject *object,
-                        int x,
-                        int y,
-                        int whichone)
+lepton_arc_object_modify (LeptonObject *object,
+                          int x,
+                          int y,
+                          int whichone)
 {
 
   o_emit_pre_change_notify (object);
@@ -357,7 +362,8 @@ geda_arc_object_modify (LeptonObject *object,
  *  The object is initialized with the functions #o_set_line_options() and #o_set_fill_options().
  *  The second one is only used to put initialize unused values for an arc as an arc can not be filled.
  *
- *  The arc is allocated initialized with the function #geda_arc_object_new().
+ *  The arc is allocated initialized with the function
+ *  #lepton_arc_object_new().
  *
  *  A negative or null radius is not allowed.
  *
@@ -424,12 +430,12 @@ LeptonObject
   }
 
   /* Allocation and initialization */
-  new_obj = geda_arc_object_new (color,
-                                 x1,
-                                 y1,
-                                 radius,
-                                 start_angle,
-                                 sweep_angle);
+  new_obj = lepton_arc_object_new (color,
+                                   x1,
+                                   y1,
+                                   radius,
+                                   start_angle,
+                                   sweep_angle);
 
   o_set_line_options (new_obj,
                       (OBJECT_END) arc_end,
@@ -456,7 +462,7 @@ LeptonObject
  *  \return the string representation of the arc object
  */
 gchar*
-geda_arc_object_to_buffer (const LeptonObject *object)
+lepton_arc_object_to_buffer (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_arc (object), NULL);
   g_return_val_if_fail (object->arc != NULL, NULL);
@@ -465,11 +471,11 @@ geda_arc_object_to_buffer (const LeptonObject *object)
 
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d %d",
                           lepton_object_get_type (object),
-                          geda_arc_object_get_center_x (object),
-                          geda_arc_object_get_center_y (object),
-                          geda_arc_object_get_radius (object),
-                          geda_arc_object_get_start_angle (object),
-                          geda_arc_object_get_sweep_angle (object),
+                          lepton_arc_object_get_center_x (object),
+                          lepton_arc_object_get_center_y (object),
+                          lepton_arc_object_get_radius (object),
+                          lepton_arc_object_get_start_angle (object),
+                          lepton_arc_object_get_sweep_angle (object),
                           lepton_object_get_color (object),
                           object->line_width,
                           object->line_end,
@@ -488,7 +494,9 @@ geda_arc_object_to_buffer (const LeptonObject *object)
  *  \param [in]     dy         y distance to move.
  */
 void
-geda_arc_object_translate (LeptonObject *object, int dx, int dy)
+lepton_arc_object_translate (LeptonObject *object,
+                             int dx,
+                             int dy)
 {
   g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
@@ -518,10 +526,10 @@ geda_arc_object_translate (LeptonObject *object, int dx, int dy)
  *  \param [in] object
  */
 void
-geda_arc_object_rotate (int world_centerx,
-                        int world_centery,
-                        int angle,
-                        LeptonObject *object)
+lepton_arc_object_rotate (int world_centerx,
+                          int world_centery,
+                          int angle,
+                          LeptonObject *object)
 {
   int x, y, newx, newy;
 
@@ -567,9 +575,9 @@ geda_arc_object_rotate (int world_centerx,
  *  \param [in] object
  */
 void
-geda_arc_object_mirror (int world_centerx,
-                        int world_centery,
-                        LeptonObject *object)
+lepton_arc_object_mirror (int world_centerx,
+                          int world_centery,
+                          LeptonObject *object)
 {
   g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
@@ -609,11 +617,11 @@ geda_arc_object_mirror (int world_centerx,
  *  \param [out] bottom
  */
 void
-geda_arc_object_calculate_bounds (const LeptonObject *object,
-                                  gint *left,
-                                  gint *top,
-                                  gint *right,
-                                  gint *bottom)
+lepton_arc_object_calculate_bounds (const LeptonObject *object,
+                                    gint *left,
+                                    gint *top,
+                                    gint *right,
+                                    gint *bottom)
 {
   int x1, y1, x2, y2, x3, y3;
   int radius, start_angle, sweep_angle;
@@ -682,7 +690,9 @@ geda_arc_object_calculate_bounds (const LeptonObject *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_arc_object_get_position (const LeptonObject *object, gint *x, gint *y)
+lepton_arc_object_get_position (const LeptonObject *object,
+                                gint *x,
+                                gint *y)
 {
   g_return_val_if_fail (lepton_object_is_arc (object), FALSE);
   g_return_val_if_fail (object->arc != NULL, FALSE);
@@ -710,11 +720,11 @@ geda_arc_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-geda_arc_object_shortest_distance (LeptonObject *object,
-                                   int x,
-                                   int y,
-                                   int force_solid,
-                                   gboolean include_hidden)
+lepton_arc_object_shortest_distance (LeptonObject *object,
+                                     int x,
+                                     int y,
+                                     int force_solid,
+                                     gboolean include_hidden)
 {
   double shortest_distance;
   double radius;

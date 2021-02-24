@@ -32,88 +32,85 @@ G_BEGIN_DECLS
 /* construction, destruction */
 
 LeptonObject*
-geda_arc_object_new (gint color,
-                     gint center_x,
-                     gint center_y,
-                     gint radius,
-                     gint start_angle,
-                     gint sweep_angle);
+lepton_arc_object_new (gint color,
+                       gint center_x,
+                       gint center_y,
+                       gint radius,
+                       gint start_angle,
+                       gint sweep_angle);
 
 LeptonObject*
-geda_arc_object_copy (const LeptonObject *object);
+lepton_arc_object_copy (const LeptonObject *object);
 
 /* methods */
 
 void
-geda_arc_object_calculate_bounds (const LeptonObject *object,
-                                  gint *left,
-                                  gint *top,
-                                  gint *right,
-                                  gint *bottom);
+lepton_arc_object_calculate_bounds (const LeptonObject *object,
+                                    gint *left,
+                                    gint *top,
+                                    gint *right,
+                                    gint *bottom);
+gint
+lepton_arc_object_get_center_x (const LeptonObject *object);
 
 gint
-geda_arc_object_get_center_x (const LeptonObject *object);
-
-gint
-geda_arc_object_get_center_y (const LeptonObject *object);
+lepton_arc_object_get_center_y (const LeptonObject *object);
 
 gboolean
-geda_arc_object_get_position (const LeptonObject *object, gint *x, gint *y);
+lepton_arc_object_get_position (const LeptonObject *object,
+                                gint *x,
+                                gint *y);
+gint
+lepton_arc_object_get_radius (const LeptonObject *object);
 
 gint
-geda_arc_object_get_radius (const LeptonObject *object);
+lepton_arc_object_get_start_angle (const LeptonObject *object);
 
 gint
-geda_arc_object_get_start_angle (const LeptonObject *object);
-
-gint
-geda_arc_object_get_sweep_angle (const LeptonObject *object);
+lepton_arc_object_get_sweep_angle (const LeptonObject *object);
 
 void
-geda_arc_object_mirror (int world_centerx,
-                        int world_centery,
-                        LeptonObject *object);
-
+lepton_arc_object_mirror (int world_centerx,
+                          int world_centery,
+                          LeptonObject *object);
 void
-geda_arc_object_modify (LeptonObject *object,
-                        int x,
-                        int y,
-                        int whichone);
-
+lepton_arc_object_modify (LeptonObject *object,
+                          int x,
+                          int y,
+                          int whichone);
 void
-geda_arc_object_rotate (int world_centerx,
-                        int world_centery,
-                        int angle,
-                        LeptonObject *object);
-
+lepton_arc_object_rotate (int world_centerx,
+                          int world_centery,
+                          int angle,
+                          LeptonObject *object);
 void
-geda_arc_object_set_center_x (LeptonObject *object, gint x);
-
+lepton_arc_object_set_center_x (LeptonObject *object,
+                                gint x);
 void
-geda_arc_object_set_center_y (LeptonObject *object, gint y);
-
+lepton_arc_object_set_center_y (LeptonObject *object,
+                                gint y);
 void
-geda_arc_object_set_radius (LeptonObject *object, gint radius);
-
+lepton_arc_object_set_radius (LeptonObject *object,
+                              gint radius);
 void
-geda_arc_object_set_start_angle (LeptonObject *object, gint angle);
-
+lepton_arc_object_set_start_angle (LeptonObject *object,
+                                   gint angle);
 void
-geda_arc_object_set_sweep_angle (LeptonObject *object, gint angle);
-
+lepton_arc_object_set_sweep_angle (LeptonObject *object,
+                                   gint angle);
 double
-geda_arc_object_shortest_distance (LeptonObject *object,
-                                   int x,
-                                   int y,
-                                   int force_soild,
-                                   gboolean include_hidden);
-
+lepton_arc_object_shortest_distance (LeptonObject *object,
+                                     int x,
+                                     int y,
+                                     int force_soild,
+                                     gboolean include_hidden);
 gchar*
-geda_arc_object_to_buffer (const LeptonObject *object);
+lepton_arc_object_to_buffer (const LeptonObject *object);
 
 void
-geda_arc_object_translate (LeptonObject *object, int dx, int dy);
-
+lepton_arc_object_translate (LeptonObject *object,
+                             int dx,
+                             int dy);
 LeptonObject*
 o_arc_read (const char buf[],
             unsigned int release_ver,

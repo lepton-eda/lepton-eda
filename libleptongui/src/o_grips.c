@@ -211,11 +211,11 @@ LeptonObject *o_grips_search_arc_world(GschemToplevel *w_current, LeptonObject *
   int centerx, centery, radius, start_angle, sweep_angle;
   double tmp;
 
-  centerx     = geda_arc_object_get_center_x (o_current);
-  centery     = geda_arc_object_get_center_y (o_current);
-  radius      = geda_arc_object_get_radius (o_current);
-  start_angle = geda_arc_object_get_start_angle (o_current);
-  sweep_angle = geda_arc_object_get_sweep_angle (o_current);
+  centerx     = lepton_arc_object_get_center_x (o_current);
+  centery     = lepton_arc_object_get_center_y (o_current);
+  radius      = lepton_arc_object_get_radius (o_current);
+  start_angle = lepton_arc_object_get_start_angle (o_current);
+  sweep_angle = lepton_arc_object_get_sweep_angle (o_current);
 
   /* check the grip on the center of the arc */
   if (inside_grip(x, y, centerx, centery, size)) {
@@ -561,13 +561,13 @@ static void o_grips_start_arc(GschemToplevel *w_current, LeptonObject *o_current
 
   /* describe the arc with GschemToplevel variables */
   /* center */
-  w_current->first_wx = geda_arc_object_get_center_x (o_current);
-  w_current->first_wy = geda_arc_object_get_center_y (o_current);
+  w_current->first_wx = lepton_arc_object_get_center_x (o_current);
+  w_current->first_wy = lepton_arc_object_get_center_y (o_current);
   /* radius */
-  w_current->distance = geda_arc_object_get_radius (o_current);
+  w_current->distance = lepton_arc_object_get_radius (o_current);
   /* angles */
-  w_current->second_wx = geda_arc_object_get_start_angle (o_current);
-  w_current->second_wy = geda_arc_object_get_sweep_angle (o_current);
+  w_current->second_wx = lepton_arc_object_get_start_angle (o_current);
+  w_current->second_wy = lepton_arc_object_get_sweep_angle (o_current);
 
   /* draw the first temporary arc */
   /* o_arc_invalidate_rubber (w_current); */
@@ -1002,11 +1002,11 @@ void o_grips_cancel(GschemToplevel *w_current)
  *  If the grip at the center of the arc has been moved - modifying the radius
  *  of the arc -, the new radius is calculated expressed in world unit
  *  (the center is unchanged). It is updated with the function
- *  #geda_arc_object_modify().
+ *  #lepton_arc_object_modify().
  *
  *  If one of the end of arc grip has been moved - modifying one of the
  *  angles describing the arc -, this angle is updated with the
- *  #geda_arc_object_modify() function.
+ *  #lepton_arc_object_modify() function.
  *
  *  \param [in] w_current  The GschemToplevel object.
  *  \param [in] o_current  Arc LeptonObject to end modification on.
@@ -1048,7 +1048,7 @@ static void o_grips_end_arc(GschemToplevel *w_current, LeptonObject *o_current,
   }
 
   /* modify the arc with the parameters determined above */
-  geda_arc_object_modify (o_current, arg1, arg2, whichone);
+  lepton_arc_object_modify (o_current, arg1, arg2, whichone);
 }
 
 /*! \todo Finish function documentation!!!

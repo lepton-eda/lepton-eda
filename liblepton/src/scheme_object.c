@@ -1350,12 +1350,12 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
 SCM_DEFINE (make_arc, "%make-arc", 0, 0, 0,
             (), "Create a new arc object.")
 {
-  LeptonObject *object = geda_arc_object_new (default_color_id(),
-                                            0,
-                                            0,
-                                            1,
-                                            0,
-                                            0);
+  LeptonObject *object = lepton_arc_object_new (default_color_id(),
+                                                0,
+                                                0,
+                                                1,
+                                                0,
+                                                0);
 
   SCM result = edascm_from_object (object);
 
@@ -1401,10 +1401,10 @@ SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
                                   end_angle_s, SCM_ARG6, s_set_arc_x);
 
   LeptonObject *obj = edascm_to_object (arc_s);
-  geda_arc_object_modify (obj, scm_to_int(x_s), scm_to_int(y_s), ARC_CENTER);
-  geda_arc_object_modify (obj, scm_to_int(r_s), 0, ARC_RADIUS);
-  geda_arc_object_modify (obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
-  geda_arc_object_modify (obj, scm_to_int(end_angle_s), 0, ARC_SWEEP_ANGLE);
+  lepton_arc_object_modify (obj, scm_to_int(x_s), scm_to_int(y_s), ARC_CENTER);
+  lepton_arc_object_modify (obj, scm_to_int(r_s), 0, ARC_RADIUS);
+  lepton_arc_object_modify (obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
+  lepton_arc_object_modify (obj, scm_to_int(end_angle_s), 0, ARC_SWEEP_ANGLE);
   lepton_object_set_color (obj, scm_to_int (color_s));
 
   o_page_changed (obj);
@@ -1438,11 +1438,11 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
 
   LeptonObject *obj = edascm_to_object (arc_s);
 
-  return scm_list_n (scm_from_int (geda_arc_object_get_center_x (obj)),
-                     scm_from_int (geda_arc_object_get_center_y (obj)),
-                     scm_from_int (geda_arc_object_get_radius (obj)),
-                     scm_from_int (geda_arc_object_get_start_angle (obj)),
-                     scm_from_int (geda_arc_object_get_sweep_angle (obj)),
+  return scm_list_n (scm_from_int (lepton_arc_object_get_center_x (obj)),
+                     scm_from_int (lepton_arc_object_get_center_y (obj)),
+                     scm_from_int (lepton_arc_object_get_radius (obj)),
+                     scm_from_int (lepton_arc_object_get_start_angle (obj)),
+                     scm_from_int (lepton_arc_object_get_sweep_angle (obj)),
                      scm_from_int (lepton_object_get_color (obj)),
                      SCM_UNDEFINED);
 }
