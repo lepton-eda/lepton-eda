@@ -938,8 +938,8 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
     geda_net_object_modify (obj, x2, y2, 1);
     break;
   case OBJ_BUS:
-    geda_bus_object_modify (obj, x1, y1, 0);
-    geda_bus_object_modify (obj, x2, y2, 1);
+    lepton_bus_object_modify (obj, x1, y1, 0);
+    lepton_bus_object_modify (obj, x2, y2, 1);
     break;
   case OBJ_PIN:
     /* Swap ends according to pin's whichend flag. */
@@ -1052,7 +1052,7 @@ SCM_DEFINE (make_bus, "%make-bus", 0, 0, 0,
   LeptonObject *obj;
   SCM result;
 
-  obj = geda_bus_object_new (BUS_COLOR,
+  obj = lepton_bus_object_new (BUS_COLOR,
                              0,
                              0,
                              0,

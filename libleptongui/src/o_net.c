@@ -832,7 +832,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
         /* printf("found horiz bus %s %d!\n", bus_object->name,
            found_conn->whichone);*/
 
-        sign = geda_bus_object_get_ripper_direction (bus_object);
+        sign = lepton_bus_object_get_ripper_direction (bus_object);
         if (!sign) {
           if (bus_object->line->x[0] < bus_object->line->x[1]) {
             first = 0;
@@ -852,7 +852,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
           } else {
             sign = -1;
           }
-          geda_bus_object_set_ripper_direction (bus_object, sign);
+          lepton_bus_object_set_ripper_direction (bus_object, sign);
         }
         /* printf("hor sign: %d\n", sign); */
 
@@ -937,7 +937,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
         /* printf("found vert bus %s %d!\n", bus_object->name,
            found_conn->whichone); */
 
-        sign = geda_bus_object_get_ripper_direction (bus_object);
+        sign = lepton_bus_object_get_ripper_direction (bus_object);
         if (!sign) {
           if (bus_object->line->y[0] < bus_object->line->y[1]) {
             first = 0;
@@ -957,7 +957,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
           } else {
             sign = -1;
           }
-          geda_bus_object_set_ripper_direction (bus_object, sign);
+          lepton_bus_object_set_ripper_direction (bus_object, sign);
         }
         /* printf("ver sign: %d\n", sign); */
 

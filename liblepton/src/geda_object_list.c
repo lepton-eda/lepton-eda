@@ -380,7 +380,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           break;
 
         case(OBJ_BUS):
-          out = geda_bus_object_to_buffer (o_current);
+          out = lepton_bus_object_to_buffer (o_current);
           break;
 
         case(OBJ_BOX):
