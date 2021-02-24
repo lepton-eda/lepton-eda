@@ -739,9 +739,9 @@ eda_renderer_draw_circle (EdaRenderer *renderer, LeptonObject *object)
   /* Draw outline of circle */
   eda_cairo_arc (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                  object->line_width,
-                 geda_circle_object_get_center_x (object),
-                 geda_circle_object_get_center_y (object),
-                 geda_circle_object_get_radius (object),
+                 lepton_circle_object_get_center_x (object),
+                 lepton_circle_object_get_center_y (object),
+                 lepton_circle_object_get_radius (object),
                  0, 360);
   if (fill_solid) cairo_fill_preserve (renderer->priv->cr);
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
@@ -1113,8 +1113,8 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, LeptonObject *object)
   case OBJ_CIRCLE:
     /* Grip at bottom right of containing square */
     eda_renderer_draw_grips_impl (renderer, GRIP_SQUARE, 1,
-        geda_circle_object_get_center_x (object) + geda_circle_object_get_radius (object),
-        geda_circle_object_get_center_y (object) - geda_circle_object_get_radius (object));
+        lepton_circle_object_get_center_x (object) + lepton_circle_object_get_radius (object),
+        lepton_circle_object_get_center_y (object) - lepton_circle_object_get_radius (object));
     break;
   case OBJ_PATH:
     eda_renderer_draw_path_grips (renderer, object);

@@ -266,8 +266,8 @@ LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current,
         break;
 
       case(OBJ_CIRCLE):
-        world_x = geda_circle_object_get_center_x (o_current);
-        world_y = geda_circle_object_get_center_y (o_current);
+        world_x = lepton_circle_object_get_center_x (o_current);
+        world_y = lepton_circle_object_get_center_y (o_current);
         align = LOWER_LEFT;
         angle = 0;
         color = ATTRIBUTE_COLOR;

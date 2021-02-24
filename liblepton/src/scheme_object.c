@@ -1256,10 +1256,10 @@ SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
 SCM_DEFINE (make_circle, "%make-circle", 0, 0, 0,
             (), "Create a new circle object.")
 {
-  LeptonObject *object = geda_circle_object_new (default_color_id(),
-                                               0,
-                                               0,
-                                               1);
+  LeptonObject *object = lepton_circle_object_new (default_color_id(),
+                                                   0,
+                                                   0,
+                                                   1);
 
   SCM result = edascm_from_object (object);
 
@@ -1298,9 +1298,9 @@ SCM_DEFINE (set_circle_x, "%set-circle!", 5, 0, 0,
   SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG5, s_set_circle_x);
 
   LeptonObject *obj = edascm_to_object (circle_s);
-  geda_circle_object_modify (obj, scm_to_int(x_s), scm_to_int(y_s),
-                             CIRCLE_CENTER);
-  geda_circle_object_modify (obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
+  lepton_circle_object_modify (obj, scm_to_int(x_s), scm_to_int(y_s),
+                               CIRCLE_CENTER);
+  lepton_circle_object_modify (obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
   lepton_object_set_color (obj, scm_to_int (color_s));
 
   o_page_changed (obj);
@@ -1330,9 +1330,9 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
 
   LeptonObject *obj = edascm_to_object (circle_s);
 
-  return scm_list_n (scm_from_int (geda_circle_object_get_center_x (obj)),
-                     scm_from_int (geda_circle_object_get_center_y (obj)),
-                     scm_from_int (geda_circle_object_get_radius (obj)),
+  return scm_list_n (scm_from_int (lepton_circle_object_get_center_x (obj)),
+                     scm_from_int (lepton_circle_object_get_center_y (obj)),
+                     scm_from_int (lepton_circle_object_get_radius (obj)),
                      scm_from_int (lepton_object_get_color (obj)),
                      SCM_UNDEFINED);
 }

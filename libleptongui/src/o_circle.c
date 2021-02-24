@@ -114,10 +114,10 @@ void o_circle_end(GschemToplevel *w_current, int w_x, int w_y)
   }
 
   /* create the object */
-  new_obj = geda_circle_object_new (GRAPHIC_COLOR,
-                                    w_current->first_wx,
-                                    w_current->first_wy,
-                                    w_current->distance);
+  new_obj = lepton_circle_object_new (GRAPHIC_COLOR,
+                                      w_current->first_wx,
+                                      w_current->first_wy,
+                                      w_current->distance);
 
   s_page_append (page, new_obj);
 

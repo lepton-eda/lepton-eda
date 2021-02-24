@@ -56,10 +56,10 @@
  *  \return A pointer to the new end of the object list.
  */
 LeptonObject*
-geda_circle_object_new (gint color,
-                        gint center_x,
-                        gint center_y,
-                        gint radius)
+lepton_circle_object_new (gint color,
+                          gint center_x,
+                          gint center_y,
+                          gint radius)
 {
   LeptonObject *new_node;
 
@@ -95,24 +95,25 @@ geda_circle_object_new (gint color,
 
 /*! \brief Create a copy of a circle.
  *  \par Function Description
- *  The function #geda_circle_object_copy() creates a verbatim copy of the object
- *  pointed by <B>o_current</B> describing a circle.
+ *  The function #lepton_circle_object_copy() creates a verbatim
+ *  copy of the object pointed by <B>o_current</B> describing a
+ *  circle.
  *
  *  \param [in]  o_current  Circle LeptonObject to copy.
  *  \return The new LeptonObject
  */
 LeptonObject*
-geda_circle_object_copy (const LeptonObject *object)
+lepton_circle_object_copy (const LeptonObject *object)
 {
   LeptonObject *new_obj;
 
   g_return_val_if_fail (lepton_object_is_circle (object), NULL);
   g_return_val_if_fail (object->circle != NULL, NULL);
 
-  new_obj = geda_circle_object_new (lepton_object_get_color (object),
-                                    object->circle->center_x,
-                                    object->circle->center_y,
-                                    object->circle->radius);
+  new_obj = lepton_circle_object_new (lepton_object_get_color (object),
+                                      object->circle->center_x,
+                                      object->circle->center_y,
+                                      object->circle->radius);
 
   o_set_line_options (new_obj,
                       object->line_end,
@@ -138,7 +139,7 @@ geda_circle_object_copy (const LeptonObject *object)
  *  \return The x coordinate of the center of the circle
  */
 gint
-geda_circle_object_get_center_x (const LeptonObject *object)
+lepton_circle_object_get_center_x (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_circle (object), 0);
   g_return_val_if_fail (object->circle != NULL, 0);
@@ -152,7 +153,7 @@ geda_circle_object_get_center_x (const LeptonObject *object)
  *  \return The y coordinate of the center of the circle
  */
 gint
-geda_circle_object_get_center_y (const LeptonObject *object)
+lepton_circle_object_get_center_y (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_circle (object), 0);
   g_return_val_if_fail (object->circle != NULL, 0);
@@ -166,7 +167,7 @@ geda_circle_object_get_center_y (const LeptonObject *object)
  *  \return The radius of the circle
  */
 gint
-geda_circle_object_get_radius (const LeptonObject *object)
+lepton_circle_object_get_radius (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_circle (object), 0);
   g_return_val_if_fail (object->circle != NULL, 0);
@@ -180,7 +181,8 @@ geda_circle_object_get_radius (const LeptonObject *object)
  *  \param [in] x The new y coordinate for the circle center
  */
 void
-geda_circle_object_set_center_x (LeptonObject *object, gint x)
+lepton_circle_object_set_center_x (LeptonObject *object,
+                                   gint x)
 {
   g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
@@ -194,7 +196,8 @@ geda_circle_object_set_center_x (LeptonObject *object, gint x)
  *  \param [in] y The new y coordinate for the circle center
  */
 void
-geda_circle_object_set_center_y (LeptonObject *object, gint y)
+lepton_circle_object_set_center_y (LeptonObject *object,
+                                   gint y)
 {
   g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
@@ -210,7 +213,8 @@ geda_circle_object_set_center_y (LeptonObject *object, gint y)
  *  \param [in] radius The new radius for the circle
  */
 void
-geda_circle_object_set_radius (LeptonObject *object, gint radius)
+lepton_circle_object_set_radius (LeptonObject *object,
+                                 gint radius)
 {
   g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
@@ -247,21 +251,21 @@ geda_circle_object_set_radius (LeptonObject *object, gint radius)
  *  </DL>
  */
 void
-geda_circle_object_modify (LeptonObject *object,
-                           gint x,
-                           gint y,
-                           gint whichone)
+lepton_circle_object_modify (LeptonObject *object,
+                             gint x,
+                             gint y,
+                             gint whichone)
 {
   o_emit_pre_change_notify (object);
 
   switch(whichone) {
     case CIRCLE_CENTER:
-      geda_circle_object_set_center_x (object, x);
-      geda_circle_object_set_center_y (object, y);
+      lepton_circle_object_set_center_x (object, x);
+      lepton_circle_object_set_center_y (object, y);
       break;
 
     case CIRCLE_RADIUS:
-      geda_circle_object_set_radius (object, x);
+      lepton_circle_object_set_radius (object, x);
       break;
 
     default:
@@ -368,7 +372,7 @@ o_circle_read (const char buf[],
    * Its filling and line type are set according to the values of the field
    * on the line.
    */
-  new_obj = geda_circle_object_new (color, x1, y1, radius);
+  new_obj = lepton_circle_object_new (color, x1, y1, radius);
 
   o_set_line_options (new_obj,
                       (OBJECT_END) circle_end,
@@ -402,16 +406,16 @@ o_circle_read (const char buf[],
  *
  */
 gchar*
-geda_circle_object_to_buffer (const LeptonObject *object)
+lepton_circle_object_to_buffer (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_circle (object), NULL);
   g_return_val_if_fail (object->circle != NULL, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
                           lepton_object_get_type (object),
-                          geda_circle_object_get_center_x (object),
-                          geda_circle_object_get_center_y (object),
-                          geda_circle_object_get_radius (object),
+                          lepton_circle_object_get_center_x (object),
+                          lepton_circle_object_get_center_y (object),
+                          lepton_circle_object_get_radius (object),
                           lepton_object_get_color (object),
                           object->line_width,
                           object->line_end,
@@ -436,7 +440,9 @@ geda_circle_object_to_buffer (const LeptonObject *object)
  *  \param [in]     dy      y distance to move.
  */
 void
-geda_circle_object_translate (LeptonObject *object, gint dx, gint dy)
+lepton_circle_object_translate (LeptonObject *object,
+                                gint dx,
+                                gint dy)
 {
   g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
@@ -448,9 +454,10 @@ geda_circle_object_translate (LeptonObject *object, gint dx, gint dy)
 
 /*! \brief Rotate Circle LeptonObject using WORLD coordinates.
  *  \par Function Description
- *  The function #geda_circle_object_rotate() rotate the circle described by
- *  <B>*object</B> around the (<B>world_centerx</B>,<B>world_centery</B>) point by
- *  angle <B>angle</B> degrees.
+ *  The function #lepton_circle_object_rotate() rotate the circle
+ *  described by <B>*object</B> around the
+ *  (<B>world_centerx</B>,<B>world_centery</B>) point by angle
+ *  <B>angle</B> degrees.
  *  The center of rotation is in world unit.
  *
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
@@ -459,10 +466,10 @@ geda_circle_object_translate (LeptonObject *object, gint dx, gint dy)
  *  \param [in,out]  object         Circle LeptonObject to rotate.
  */
 void
-geda_circle_object_rotate (gint world_centerx,
-                           gint world_centery,
-                           gint angle,
-                           LeptonObject *object)
+lepton_circle_object_rotate (gint world_centerx,
+                             gint world_centery,
+                             gint angle,
+                             LeptonObject *object)
 {
   int newx, newy;
   int x, y;
@@ -512,9 +519,9 @@ geda_circle_object_rotate (gint world_centerx,
  *  \param [in,out] object         Circle LeptonObject to mirror.
  */
 void
-geda_circle_object_mirror (gint world_centerx,
-                           gint world_centery,
-                           LeptonObject *object)
+lepton_circle_object_mirror (gint world_centerx,
+                             gint world_centery,
+                             LeptonObject *object)
 {
   g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
@@ -539,8 +546,8 @@ geda_circle_object_mirror (gint world_centerx,
  *  \param [out] bounds    The bounds of the circle object.
  */
 void
-geda_circle_object_calculate_bounds (const LeptonObject *object,
-                                     GedaBounds *bounds)
+lepton_circle_object_calculate_bounds (const LeptonObject *object,
+                                       GedaBounds *bounds)
 {
   gint expand;
 
@@ -567,7 +574,9 @@ geda_circle_object_calculate_bounds (const LeptonObject *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_circle_object_get_position (const LeptonObject *object, gint *x, gint *y)
+lepton_circle_object_get_position (const LeptonObject *object,
+                                   gint *x,
+                                   gint *y)
 {
   g_return_val_if_fail (lepton_object_is_circle (object), FALSE);
   g_return_val_if_fail (object->circle != NULL, FALSE);
@@ -595,11 +604,11 @@ geda_circle_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 gdouble
-geda_circle_object_shortest_distance (LeptonObject *object,
-                                      gint x,
-                                      gint y,
-                                      gint force_solid,
-                                      gboolean include_hidden)
+lepton_circle_object_shortest_distance (LeptonObject *object,
+                                        gint x,
+                                        gint y,
+                                        gint force_solid,
+                                        gboolean include_hidden)
 {
   gboolean solid;
 

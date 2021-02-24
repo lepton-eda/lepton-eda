@@ -30,71 +30,67 @@ G_BEGIN_DECLS
 /* construction, destruction */
 
 LeptonObject*
-geda_circle_object_new (gint color,
-                        gint x,
-                        gint y,
-                        gint radius);
-
+lepton_circle_object_new (gint color,
+                          gint x,
+                          gint y,
+                          gint radius);
 LeptonObject*
-geda_circle_object_copy (const LeptonObject *o_current);
+lepton_circle_object_copy (const LeptonObject *o_current);
 
 /* methods */
 
 void
-geda_circle_object_calculate_bounds (const LeptonObject *object,
-                                     GedaBounds *bounds);
+lepton_circle_object_calculate_bounds (const LeptonObject *object,
+                                       GedaBounds *bounds);
+gint
+lepton_circle_object_get_center_x (const LeptonObject *object);
 
 gint
-geda_circle_object_get_center_x (const LeptonObject *object);
-
-gint
-geda_circle_object_get_center_y (const LeptonObject *object);
+lepton_circle_object_get_center_y (const LeptonObject *object);
 
 gboolean
-geda_circle_object_get_position (const LeptonObject *object, gint *x, gint *y);
-
+lepton_circle_object_get_position (const LeptonObject *object,
+                                   gint *x,
+                                   gint *y);
 gint
-geda_circle_object_get_radius (const LeptonObject *object);
+lepton_circle_object_get_radius (const LeptonObject *object);
 
 void
-geda_circle_object_mirror (gint world_centerx,
-                           gint world_centery,
-                           LeptonObject *object);
-
+lepton_circle_object_mirror (gint world_centerx,
+                             gint world_centery,
+                             LeptonObject *object);
 void
-geda_circle_object_modify (LeptonObject *object,
-                           gint x,
-                           gint y,
-                           gint whichone);
-
+lepton_circle_object_modify (LeptonObject *object,
+                             gint x,
+                             gint y,
+                             gint whichone);
 void
-geda_circle_object_rotate (gint world_centerx,
-                           gint world_centery,
-                           gint angle,
-                           LeptonObject *object);
-
+lepton_circle_object_rotate (gint world_centerx,
+                             gint world_centery,
+                             gint angle,
+                             LeptonObject *object);
 void
-geda_circle_object_set_center_x (LeptonObject *object, gint x);
-
+lepton_circle_object_set_center_x (LeptonObject *object,
+                                   gint x);
 void
-geda_circle_object_set_center_y (LeptonObject *object, gint y);
-
+lepton_circle_object_set_center_y (LeptonObject *object,
+                                   gint y);
 void
-geda_circle_object_set_radius (LeptonObject *object, gint radius);
-
+lepton_circle_object_set_radius (LeptonObject *object,
+                                 gint radius);
 gdouble
-geda_circle_object_shortest_distance (LeptonObject *object,
-                                      gint x,
-                                      gint y,
-                                      gint force_soild,
-                                      gboolean include_hidden);
-
+lepton_circle_object_shortest_distance (LeptonObject *object,
+                                        gint x,
+                                        gint y,
+                                        gint force_soild,
+                                        gboolean include_hidden);
 gchar*
-geda_circle_object_to_buffer (const LeptonObject *object);
+lepton_circle_object_to_buffer (const LeptonObject *object);
 
 void
-geda_circle_object_translate (LeptonObject *object, gint dx, gint dy);
-
+lepton_circle_object_translate (LeptonObject *object,
+                                gint dx,
+                                gint dy);
 LeptonObject*
 o_circle_read (const char buf[],
                unsigned int release_ver,

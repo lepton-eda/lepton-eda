@@ -471,9 +471,9 @@ LeptonObject *o_grips_search_picture_world(GschemToplevel *w_current, LeptonObje
 LeptonObject *o_grips_search_circle_world(GschemToplevel *w_current, LeptonObject *o_current,
                                     int x, int y, int size, int *whichone)
 {
-  gint center_x = geda_circle_object_get_center_x (o_current);
-  gint center_y = geda_circle_object_get_center_y (o_current);
-  gint radius = geda_circle_object_get_radius (o_current);
+  gint center_x = lepton_circle_object_get_center_x (o_current);
+  gint center_y = lepton_circle_object_get_center_y (o_current);
+  gint radius = lepton_circle_object_get_radius (o_current);
 
   /* check the grip for radius */
   if (inside_grip(x, y,
@@ -802,9 +802,9 @@ static void o_grips_start_circle(GschemToplevel *w_current, LeptonObject *o_curr
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* store circle center and radius in GschemToplevel structure */
-  w_current->first_wx = geda_circle_object_get_center_x (o_current);
-  w_current->first_wy = geda_circle_object_get_center_y (o_current);
-  w_current->distance = geda_circle_object_get_radius (o_current);
+  w_current->first_wx = lepton_circle_object_get_center_x (o_current);
+  w_current->first_wy = lepton_circle_object_get_center_y (o_current);
+  w_current->distance = lepton_circle_object_get_radius (o_current);
 
   /* draw the first temporary circle */
   /* o_circle_invalidate_rubber (w_current); */
@@ -1154,7 +1154,7 @@ static void o_grips_end_circle(GschemToplevel *w_current, LeptonObject *o_curren
   }
 
   /* modify the radius of the circle */
-  geda_circle_object_modify (o_current, w_current->distance, -1, CIRCLE_RADIUS);
+  lepton_circle_object_modify (o_current, w_current->distance, -1, CIRCLE_RADIUS);
 }
 
 /*! \brief End process of modifying line object with grip.

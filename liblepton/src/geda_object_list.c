@@ -388,7 +388,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           break;
 
         case(OBJ_CIRCLE):
-          out = geda_circle_object_to_buffer (o_current);
+          out = lepton_circle_object_to_buffer (o_current);
           break;
 
         case(OBJ_COMPONENT):
