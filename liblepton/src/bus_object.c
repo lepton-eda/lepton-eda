@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file geda_bus_object.c
+/*! \file lepton_bus_object.c
  *
  *  \brief Functions operating on bus objects
  */

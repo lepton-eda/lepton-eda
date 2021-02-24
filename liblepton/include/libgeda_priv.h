@@ -46,7 +46,7 @@
 #include "component_object.h"
 #include "arc_object.h"
 #include "box_object.h"
-#include "geda_bus_object.h"
+#include "bus_object.h"
 #include "geda_circle_object.h"
 #include "geda_line_object.h"
 #include "geda_net_object.h"
