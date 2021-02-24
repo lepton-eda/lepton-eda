@@ -3,7 +3,8 @@ EXTRA_DIST = \
 	what-is-lepton-attrib.html \
 	lepton-attrib.1.in \
 	NOTES \
-	TODO
+	TODO \
+	README
 
 all:
 	@echo 'Type: make doxygen  to create doxygen documentation for libleptonattrib'
