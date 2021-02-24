@@ -3,6 +3,7 @@ libleptoninclude_HEADERS = \
 	liblepton/arc_object.h \
 	liblepton/box_object.h \
 	liblepton/bus_object.h \
+	liblepton/circle_object.h \
 	liblepton/component_object.h \
 	liblepton/defines.h \
 	liblepton/edaconfig.h \
@@ -17,7 +18,6 @@ libleptoninclude_HEADERS = \
 	liblepton/geda_bounds.h \
 	liblepton/geda_box.h \
 	liblepton/geda_circle.h \
-	liblepton/geda_circle_object.h \
 	liblepton/geda_color.h \
 	liblepton/geda_component.h \
 	liblepton/geda_coord.h \

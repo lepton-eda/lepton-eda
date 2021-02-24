@@ -7,6 +7,7 @@ liblepton/src/a_basic.c
 liblepton/src/arc_object.c
 liblepton/src/box_object.c
 liblepton/src/bus_object.c
+liblepton/src/circle_object.c
 liblepton/src/component_object.c
 liblepton/src/f_basic.c
 liblepton/src/g_basic.c
@@ -15,7 +16,6 @@ liblepton/src/geda_fill_type.c
 liblepton/src/geda_page.c
 liblepton/src/o_attrib.c
 liblepton/src/geda_object.c
-liblepton/src/geda_circle_object.c
 liblepton/src/geda_color.c
 liblepton/src/o_embed.c
 liblepton/src/geda_line_object.c

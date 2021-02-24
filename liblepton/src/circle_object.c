@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file geda_circle_object.c
+/*! \file circle_object.c
  *
  *  \brief Functions operating on circle drawing objects
  */
