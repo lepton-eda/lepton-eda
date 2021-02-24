@@ -32,62 +32,57 @@ G_BEGIN_DECLS
 /* construction, destruction */
 
 LeptonObject*
-geda_box_object_new (char type,
-                     int color,
-                     int x1,
-                     int y1,
-                     int x2,
-                     int y2);
-
+lepton_box_object_new (char type,
+                       int color,
+                       int x1,
+                       int y1,
+                       int x2,
+                       int y2);
 LeptonObject*
-geda_box_object_copy (LeptonObject *o_current);
+lepton_box_object_copy (LeptonObject *o_current);
 
 /* methods */
 
 void
-geda_box_object_calculate_bounds (const LeptonObject *object,
-                                  GedaBounds *bounds);
-
+lepton_box_object_calculate_bounds (const LeptonObject *object,
+                                    GedaBounds *bounds);
 gboolean
-geda_box_object_get_position (const LeptonObject *object, gint *x, gint *y);
-
+lepton_box_object_get_position (const LeptonObject *object,
+                                gint *x,
+                                gint *y);
 void
-geda_box_object_mirror (int world_centerx,
-                        int world_centery,
-                        LeptonObject *object);
-
+lepton_box_object_mirror (int world_centerx,
+                          int world_centery,
+                          LeptonObject *object);
 void
-geda_box_object_modify (LeptonObject *object,
-                        int x,
-                        int y,
-                        int whichone);
-
+lepton_box_object_modify (LeptonObject *object,
+                          int x,
+                          int y,
+                          int whichone);
 void
-geda_box_object_modify_all (LeptonObject *object,
-                            int x1,
-                            int y1,
-                            int x2,
-                            int y2);
-
+lepton_box_object_modify_all (LeptonObject *object,
+                              int x1,
+                              int y1,
+                              int x2,
+                              int y2);
 void
-geda_box_object_rotate (int world_centerx,
-                        int world_centery,
-                        int angle,
-                        LeptonObject *object);
-
+lepton_box_object_rotate (int world_centerx,
+                          int world_centery,
+                          int angle,
+                          LeptonObject *object);
 double
-geda_box_object_shortest_distance (LeptonObject *object,
-                                   int x,
-                                   int y,
-                                   int force_soild,
-                                   gboolean include_hidden);
-
+lepton_box_object_shortest_distance (LeptonObject *object,
+                                     int x,
+                                     int y,
+                                     int force_soild,
+                                     gboolean include_hidden);
 gchar*
-geda_box_object_to_buffer (const LeptonObject *object);
+lepton_box_object_to_buffer (const LeptonObject *object);
 
 void
-geda_box_object_translate (LeptonObject *object, int dx, int dy);
-
+lepton_box_object_translate (LeptonObject *object,
+                             int dx,
+                             int dy);
 LeptonObject*
 o_box_read (const char buf[],
             unsigned int release_ver,

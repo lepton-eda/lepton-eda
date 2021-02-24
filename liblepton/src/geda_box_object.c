@@ -53,12 +53,12 @@
  *  \return The new LeptonObject
  */
 LeptonObject*
-geda_box_object_new (char type,
-                     int color,
-                     int x1,
-                     int y1,
-                     int x2,
-                     int y2)
+lepton_box_object_new (char type,
+                       int color,
+                       int x1,
+                       int y1,
+                       int x2,
+                       int y2)
 {
   LeptonObject *new_node;
   BOX *box;
@@ -92,22 +92,22 @@ geda_box_object_new (char type,
 
 /*! \brief Copy a box to a list.
  *  \par Function Description
- *  The function #geda_box_object_copy() creates a verbatim copy of the object
- *  pointed by <B>o_current</B> describing a box.
+ *  The function #lepton_box_object_copy() creates a verbatim copy
+ *  of the object pointed by <B>o_current</B> describing a box.
  *
  *  \param [in]      o_current  BOX LeptonObject to copy.
  *  \return The new LeptonObject
  */
 LeptonObject*
-geda_box_object_copy (LeptonObject *o_current)
+lepton_box_object_copy (LeptonObject *o_current)
 {
   LeptonObject *new_obj;
 
-  /* A new box object is created with #geda_box_object_new().
+  /* A new box object is created with #lepton_box_object_new().
    * Values for its fields are default and need to be modified. */
-  new_obj = geda_box_object_new (OBJ_BOX,
-                                 lepton_object_get_color (o_current),
-                                 0, 0, 0, 0);
+  new_obj = lepton_box_object_new (OBJ_BOX,
+                                   lepton_object_get_color (o_current),
+                                   0, 0, 0, 0);
 
   /*
    * The dimensions of the new box are set with the ones of the original box.
@@ -143,11 +143,11 @@ geda_box_object_copy (LeptonObject *o_current)
  * \param [in]     y2       y coordinate of second corner of box,
  */
 void
-geda_box_object_modify_all (LeptonObject *object,
-                            int x1,
-                            int y1,
-                            int x2,
-                            int y2)
+lepton_box_object_modify_all (LeptonObject *object,
+                              int x1,
+                              int y1,
+                              int x2,
+                              int y2)
 {
   o_emit_pre_change_notify (object);
 
@@ -184,10 +184,10 @@ geda_box_object_modify_all (LeptonObject *object,
  *  </DL>
  */
 void
-geda_box_object_modify (LeptonObject *object,
-                        int x,
-                        int y,
-                        int whichone)
+lepton_box_object_modify (LeptonObject *object,
+                          int x,
+                          int y,
+                          int whichone)
 {
   int tmp;
 
@@ -347,7 +347,7 @@ o_box_read (const char buf[],
   d_y2 = y1;
 
   /* create a new box */
-  new_obj = geda_box_object_new (type, color, d_x1, d_y1, d_x2, d_y2);
+  new_obj = lepton_box_object_new (type, color, d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
   o_set_line_options (new_obj,
                       (OBJECT_END) box_end,
@@ -378,7 +378,7 @@ o_box_read (const char buf[],
  *  Caller must g_free returned character string.
  */
 gchar*
-geda_box_object_to_buffer (const LeptonObject *object)
+lepton_box_object_to_buffer (const LeptonObject *object)
 {
   int x1, y1;
   int width, height;
@@ -442,7 +442,9 @@ geda_box_object_to_buffer (const LeptonObject *object)
  *  \param [in]     dy         y distance to move.
  */
 void
-geda_box_object_translate (LeptonObject *object, int dx, int dy)
+lepton_box_object_translate (LeptonObject *object,
+                             int dx,
+                             int dy)
 {
   g_return_if_fail (lepton_object_is_box (object));
   g_return_if_fail (object->box != NULL);
@@ -468,10 +470,10 @@ geda_box_object_translate (LeptonObject *object, int dx, int dy)
  *
  */
 void
-geda_box_object_rotate (int world_centerx,
-                        int world_centery,
-                        int angle,
-                        LeptonObject *object)
+lepton_box_object_rotate (int world_centerx,
+                          int world_centery,
+                          int angle,
+                          LeptonObject *object)
 {
   int newx1, newy1;
   int newx2, newy2;
@@ -534,9 +536,9 @@ geda_box_object_rotate (int world_centerx,
  *  \param [in,out] object         BOX LeptonObject to mirror.
  */
 void
-geda_box_object_mirror (int world_centerx,
-                        int world_centery,
-                        LeptonObject *object)
+lepton_box_object_mirror (int world_centerx,
+                          int world_centery,
+                          LeptonObject *object)
 {
   int newx1, newy1;
   int newx2, newy2;
@@ -582,8 +584,8 @@ geda_box_object_mirror (int world_centerx,
  *  \param [out] bottom     Bottom box coordinate in WORLD units.
  */
 void
-geda_box_object_calculate_bounds (const LeptonObject *object,
-                                  GedaBounds *bounds)
+lepton_box_object_calculate_bounds (const LeptonObject *object,
+                                    GedaBounds *bounds)
 {
   gint expand;
 
@@ -610,7 +612,9 @@ geda_box_object_calculate_bounds (const LeptonObject *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_box_object_get_position (const LeptonObject *object, gint *x, gint *y)
+lepton_box_object_get_position (const LeptonObject *object,
+                                gint *x,
+                                gint *y)
 {
   g_return_val_if_fail (lepton_object_is_box (object), FALSE);
   g_return_val_if_fail (object->box != NULL, FALSE);
@@ -638,11 +642,11 @@ geda_box_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-geda_box_object_shortest_distance (LeptonObject *object,
-                                   int x,
-                                   int y,
-                                   int force_solid,
-                                   gboolean include_hidden)
+lepton_box_object_shortest_distance (LeptonObject *object,
+                                     int x,
+                                     int y,
+                                     int force_solid,
+                                     gboolean include_hidden)
 {
   int solid;
 

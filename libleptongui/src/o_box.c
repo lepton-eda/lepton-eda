@@ -135,9 +135,9 @@ void o_box_end(GschemToplevel *w_current, int w_x, int w_y)
   } else {
 
     /* create the object */
-    new_obj = geda_box_object_new (OBJ_BOX, GRAPHIC_COLOR,
-                                   box_left, box_top,
-                                   box_left + box_width, box_top - box_height);
+    new_obj = lepton_box_object_new (OBJ_BOX, GRAPHIC_COLOR,
+                                     box_left, box_top,
+                                     box_left + box_width, box_top - box_height);
     s_page_append (page, new_obj);
 
 #if DEBUG

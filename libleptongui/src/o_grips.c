@@ -1076,7 +1076,7 @@ static void o_grips_end_box(GschemToplevel *w_current, LeptonObject *o_current,
     return;
   }
 
-  geda_box_object_modify (o_current, w_current->second_wx, w_current->second_wy, whichone);
+  lepton_box_object_modify (o_current, w_current->second_wx, w_current->second_wy, whichone);
 }
 
 /*! \todo Finish function documentation!!!

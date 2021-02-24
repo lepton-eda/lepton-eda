@@ -380,7 +380,7 @@ o_object_copy (LeptonObject *selected)
       break;
 
     case(OBJ_BOX):
-      new_obj = geda_box_object_copy (selected);
+      new_obj = lepton_box_object_copy (selected);
       break;
 
     case(OBJ_PICTURE):
@@ -818,7 +818,7 @@ geda_object_get_position (const LeptonObject *object, gint *x, gint *y)
       case OBJ_LINE:    func = geda_line_object_get_position;    break;
       case OBJ_NET:     func = geda_net_object_get_position;     break;
       case OBJ_BUS:     func = geda_bus_object_get_position;     break;
-      case OBJ_BOX:     func = geda_box_object_get_position;     break;
+      case OBJ_BOX:     func = lepton_box_object_get_position;     break;
       case OBJ_PICTURE: func = geda_picture_object_get_position; break;
       case OBJ_CIRCLE:  func = geda_circle_object_get_position;  break;
       case OBJ_TEXT:    func = geda_text_object_get_position;    break;
@@ -856,7 +856,7 @@ geda_object_translate (LeptonObject *object, gint dx, gint dy)
       case OBJ_LINE:    func = geda_line_object_translate;    break;
       case OBJ_NET:     func = geda_net_object_translate;     break;
       case OBJ_BUS:     func = geda_bus_object_translate;     break;
-      case OBJ_BOX:     func = geda_box_object_translate;     break;
+      case OBJ_BOX:     func = lepton_box_object_translate;     break;
       case OBJ_PICTURE: func = geda_picture_object_translate; break;
       case OBJ_CIRCLE:  func = geda_circle_object_translate;  break;
       case OBJ_TEXT:    func = geda_text_object_translate;    break;
@@ -897,7 +897,7 @@ geda_object_rotate (int world_centerx,
       case OBJ_LINE:    func = geda_line_object_rotate;    break;
       case OBJ_NET:     func = geda_net_object_rotate;     break;
       case OBJ_BUS:     func = geda_bus_object_rotate;     break;
-      case OBJ_BOX:     func = geda_box_object_rotate;     break;
+      case OBJ_BOX:     func = lepton_box_object_rotate;     break;
       case OBJ_PICTURE: func = geda_picture_object_rotate; break;
       case OBJ_CIRCLE:  func = geda_circle_object_rotate;  break;
       case OBJ_TEXT:    func = geda_text_object_rotate;    break;
@@ -936,7 +936,7 @@ geda_object_mirror (int world_centerx,
       case OBJ_LINE:    func = geda_line_object_mirror;    break;
       case OBJ_NET:     func = geda_net_object_mirror;     break;
       case OBJ_BUS:     func = geda_bus_object_mirror;     break;
-      case OBJ_BOX:     func = geda_box_object_mirror;     break;
+      case OBJ_BOX:     func = lepton_box_object_mirror;     break;
       case OBJ_PICTURE: func = geda_picture_object_mirror; break;
       case OBJ_CIRCLE:  func = geda_circle_object_mirror;  break;
       case OBJ_TEXT:    func = geda_text_object_mirror;    break;
@@ -1003,7 +1003,7 @@ geda_object_shortest_distance_full (LeptonObject *object,
     case OBJ_NET:
     case OBJ_PIN:
     case OBJ_LINE:        func = geda_line_object_shortest_distance;     break;
-    case OBJ_BOX:         func = geda_box_object_shortest_distance;      break;
+    case OBJ_BOX:         func = lepton_box_object_shortest_distance;      break;
     case OBJ_PICTURE:     func = geda_picture_object_shortest_distance;  break;
     case OBJ_CIRCLE:      func = geda_circle_object_shortest_distance;   break;
     case OBJ_COMPONENT:   func = lepton_component_object_shortest_distance;  break;
@@ -1334,7 +1334,7 @@ geda_object_calculate_visible_bounds (LeptonObject *o_current,
     if (o_current->box == NULL) {
       return 0;
     }
-    geda_box_object_calculate_bounds (o_current, &bounds);
+    lepton_box_object_calculate_bounds (o_current, &bounds);
     break;
 
   case(OBJ_PATH):

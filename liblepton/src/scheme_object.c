@@ -1160,8 +1160,8 @@ SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
 SCM_DEFINE (make_box, "%make-box", 0, 0, 0,
             (), "Create a new box object.")
 {
-  LeptonObject *obj = geda_box_object_new (OBJ_BOX, default_color_id(),
-                                           0, 0, 0, 0);
+  LeptonObject *obj = lepton_box_object_new (OBJ_BOX, default_color_id(),
+                                             0, 0, 0, 0);
 
   SCM result = edascm_from_object (obj);
 
@@ -1202,9 +1202,9 @@ SCM_DEFINE (set_box_x, "%set-box!", 6, 0, 0,
   SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_box_x);
 
   LeptonObject *obj = edascm_to_object (box_s);
-  geda_box_object_modify_all (obj,
-                              scm_to_int (x1_s), scm_to_int (y1_s),
-                              scm_to_int (x2_s), scm_to_int (y2_s));
+  lepton_box_object_modify_all (obj,
+                                scm_to_int (x1_s), scm_to_int (y1_s),
+                                scm_to_int (x2_s), scm_to_int (y2_s));
   lepton_object_set_color (obj, scm_to_int (color_s));
 
   o_page_changed (obj);
