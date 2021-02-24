@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2012 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -61,7 +61,7 @@ G_BEGIN_DECLS
 #include <liblepton/geda_toplevel.h>
 #include <liblepton/geda_undo.h>
 
-#include <liblepton/geda_arc_object.h>
+#include <liblepton/arc_object.h>
 #include <liblepton/geda_box_object.h>
 #include <liblepton/geda_bus_object.h>
 #include <liblepton/geda_circle_object.h>

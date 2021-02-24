@@ -1,5 +1,6 @@
 libleptonincludedir = $(includedir)/liblepton
 libleptoninclude_HEADERS = \
+	liblepton/arc_object.h \
 	liblepton/component_object.h \
 	liblepton/defines.h \
 	liblepton/edaconfig.h \
@@ -10,7 +11,6 @@ libleptoninclude_HEADERS = \
 	liblepton/funcs.h \
 	liblepton/geda_angle.h \
 	liblepton/geda_arc.h \
-	liblepton/geda_arc_object.h \
 	liblepton/geda_bezier.h \
 	liblepton/geda_bounds.h \
 	liblepton/geda_box.h \

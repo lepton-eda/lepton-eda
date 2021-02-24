@@ -1009,7 +1009,7 @@ geda_object_shortest_distance_full (LeptonObject *object,
     case OBJ_COMPONENT:   func = lepton_component_object_shortest_distance;  break;
     case OBJ_TEXT:        func = geda_text_object_shortest_distance;     break;
     case OBJ_PATH:        func = geda_path_object_shortest_distance;     break;
-    case OBJ_ARC:         func = lepton_arc_object_shortest_distance;        break;
+    case OBJ_ARC:         func = lepton_arc_object_shortest_distance;      break;
     default:
       g_critical ("geda_object_shortest_distance: object %1$p has bad type '%2$c'\n",
                   object, lepton_object_get_type (object));

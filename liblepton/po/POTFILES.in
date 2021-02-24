@@ -4,13 +4,13 @@ liblepton/data/x-lepton-schematic.desktop.in
 liblepton/data/x-lepton-symbol.desktop.in
 
 liblepton/src/a_basic.c
+liblepton/src/arc_object.c
 liblepton/src/component_object.c
 liblepton/src/f_basic.c
 liblepton/src/g_basic.c
 liblepton/src/g_rc.c
 liblepton/src/geda_fill_type.c
 liblepton/src/geda_page.c
-liblepton/src/geda_arc_object.c
 liblepton/src/o_attrib.c
 liblepton/src/geda_object.c
 liblepton/src/geda_box_object.c

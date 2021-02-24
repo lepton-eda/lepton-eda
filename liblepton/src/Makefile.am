@@ -34,6 +34,7 @@ scheme_api_sources = \
 liblepton_la_SOURCES = \
 	$(scheme_api_sources) \
 	a_basic.c \
+	arc_object.c \
 	component_object.c \
 	edapaths.c \
 	edaconfig.c \
@@ -42,7 +43,6 @@ liblepton_la_SOURCES = \
 	g_basic.c \
 	geda_angle.c \
 	geda_arc.c \
-	geda_arc_object.c \
 	geda_bounds.c \
 	geda_box.c \
 	geda_box_object.c \

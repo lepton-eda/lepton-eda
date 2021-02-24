@@ -44,7 +44,7 @@
 #include "geda_undo.h"
 
 #include "component_object.h"
-#include "geda_arc_object.h"
+#include "arc_object.h"
 #include "geda_box_object.h"
 #include "geda_bus_object.h"
 #include "geda_circle_object.h"
