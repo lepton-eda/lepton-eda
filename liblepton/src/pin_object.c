@@ -24,7 +24,7 @@
 
 #include "libgeda_priv.h"
 
-/*! \file o_pin_basic.c
+/*! \file pin_object.c
  *  \brief functions for the pin object
  */
 
