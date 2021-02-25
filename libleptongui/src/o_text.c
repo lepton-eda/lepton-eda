@@ -61,17 +61,17 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
   /* here you need to add OBJ_TEXT when it's done */
   page->place_list =
     g_list_append(page->place_list,
-                  geda_text_object_new (color,
-                                        0,
-                                        0,
-                                        align,
-                                        rotate, /* zero is angle */
-                                        text,
-                                        size,
-                              /* has to be visible so you can place it */
-                              /* visibility is set when you create the object */
-                                        VISIBLE,
-                                        SHOW_NAME_VALUE));
+                  lepton_text_object_new (color,
+                                          0,
+                                          0,
+                                          align,
+                                          rotate, /* zero is angle */
+                                          text,
+                                          size,
+                                          /* has to be visible so you can place it */
+                                          /* visibility is set when you create the object */
+                                          VISIBLE,
+                                          SHOW_NAME_VALUE));
 
   i_action_start (w_current);
   i_set_state (w_current, TEXTMODE);

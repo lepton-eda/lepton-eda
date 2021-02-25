@@ -420,8 +420,8 @@ tree_row_activated (GtkTreeView       *tree_view,
 static gint
 sort_object_text (LeptonObject *a, LeptonObject *b)
 {
-  return strcmp (geda_text_object_get_string (a),
-                 geda_text_object_get_string (b));
+  return strcmp (lepton_text_object_get_string (a),
+                 lepton_text_object_get_string (b));
 }
 
 enum {

@@ -1460,15 +1460,15 @@ SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
 SCM_DEFINE (make_text, "%make-text", 0, 0, 0,
             (), "Create a new text object.")
 {
-  LeptonObject *obj = geda_text_object_new (default_color_id(),
-                                            0,
-                                            0,
-                                            LOWER_LEFT,
-                                            0,
-                                            "",
-                                            10,
-                                            VISIBLE,
-                                            SHOW_NAME_VALUE);
+  LeptonObject *obj = lepton_text_object_new (default_color_id(),
+                                              0,
+                                              0,
+                                              LOWER_LEFT,
+                                              0,
+                                              "",
+                                              10,
+                                              VISIBLE,
+                                              SHOW_NAME_VALUE);
 
   SCM result = edascm_from_object (obj);
 
@@ -1582,10 +1582,10 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
 
   obj->text->x = scm_to_int (x_s);
   obj->text->y = scm_to_int (y_s);
-  geda_text_object_set_alignment (obj, align);
-  geda_text_object_set_angle (obj, angle);
+  lepton_text_object_set_alignment (obj, align);
+  lepton_text_object_set_angle (obj, angle);
 
-  geda_text_object_set_size (obj, scm_to_int (size_s));
+  lepton_text_object_set_size (obj, scm_to_int (size_s));
   obj->visibility = visibility;
   obj->show_name_value = show;
 
@@ -1635,7 +1635,7 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
   LeptonObject *obj = edascm_to_object (text_s);
   SCM align_s, visible_s, show_s;
 
-  switch (geda_text_object_get_alignment (obj)) {
+  switch (lepton_text_object_get_alignment (obj)) {
   case LOWER_LEFT:    align_s = lower_left_sym;    break;
   case MIDDLE_LEFT:   align_s = middle_left_sym;   break;
   case UPPER_LEFT:    align_s = upper_left_sym;    break;
@@ -1648,7 +1648,7 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
   default:
     scm_misc_error (s_text_info,
                     _("Text object ~A has invalid text alignment ~A"),
-                    scm_list_2 (text_s, scm_from_int (geda_text_object_get_alignment (obj))));
+                    scm_list_2 (text_s, scm_from_int (lepton_text_object_get_alignment (obj))));
   }
 
   switch (obj->visibility) {
@@ -1673,9 +1673,9 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
   return scm_list_n (scm_from_int (obj->text->x),
                      scm_from_int (obj->text->y),
                      align_s,
-                     scm_from_int (geda_text_object_get_angle (obj)),
-                     scm_from_utf8_string (geda_text_object_get_string (obj)),
-                     scm_from_int (geda_text_object_get_size (obj)),
+                     scm_from_int (lepton_text_object_get_angle (obj)),
+                     scm_from_utf8_string (lepton_text_object_get_string (obj)),
+                     scm_from_int (lepton_text_object_get_size (obj)),
                      visible_s,
                      show_s,
                      scm_from_int (lepton_object_get_color (obj)),

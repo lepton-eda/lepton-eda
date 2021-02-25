@@ -205,7 +205,7 @@ void find_text_dialog (GschemToplevel *w_current)
   {
     gschem_find_text_widget_set_find_text_string(
             GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget),
-            geda_text_object_get_string (object)
+            lepton_text_object_get_string (object)
             );
   }
 

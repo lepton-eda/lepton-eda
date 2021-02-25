@@ -74,7 +74,7 @@ void o_edit(GschemToplevel *w_current, GList *list)
     arc_angle_dialog(w_current, o_current);
     break;
     case(OBJ_TEXT):
-      str = geda_text_object_get_string (o_current);
+      str = lepton_text_object_get_string (o_current);
       if (o_attrib_is_attrib (o_current) &&
         /* attribute editor only accept 1-line values for attribute */
         o_text_num_lines (str) == 1) {
@@ -384,7 +384,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
 
     if (lepton_object_is_text (o_current))
     {
-      const gchar *str = geda_text_object_get_string (o_current);
+      const gchar *str = lepton_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
         if (o_is_visible (o_current)) {
           o_set_visibility (o_current, INVISIBLE);
@@ -419,7 +419,7 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
 
     if (lepton_object_is_text (o_current))
     {
-      const gchar *str = geda_text_object_get_string (o_current);
+      const gchar *str = lepton_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
         if (!o_is_visible (o_current)) {
           o_set_visibility (o_current, VISIBLE);

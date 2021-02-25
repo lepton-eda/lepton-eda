@@ -115,7 +115,7 @@ o_glist_copy_all (const GList *src_list,
                          src_object->attached_to->copied_to,
                          FALSE);
         /* handle slot= attribute, it's a special case */
-        if (g_ascii_strncasecmp (geda_text_object_get_string (dst_object),
+        if (g_ascii_strncasecmp (lepton_text_object_get_string (dst_object),
                                  "slot=", 5) == 0)
           s_slot_update_object (src_object->attached_to->copied_to);
       }
@@ -409,7 +409,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           break;
 
         case(OBJ_TEXT):
-          out = geda_text_object_to_buffer (o_current);
+          out = lepton_text_object_to_buffer (o_current);
           break;
 
         case(OBJ_PATH):

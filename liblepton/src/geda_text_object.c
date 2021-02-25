@@ -85,9 +85,9 @@ int tab_in_chars = 8;
  *  \return TRUE if successful, FALSE if unsuccessful
  */
 gboolean
-geda_text_object_calculate_bounds (const LeptonObject *object,
-                                   gboolean include_hidden,
-                                   GedaBounds *bounds)
+lepton_text_object_calculate_bounds (const LeptonObject *object,
+                                     gboolean include_hidden,
+                                     GedaBounds *bounds)
 {
   if (! (o_is_visible (object) || include_hidden))
     return FALSE;
@@ -117,7 +117,7 @@ geda_text_object_calculate_bounds (const LeptonObject *object,
  *  \return The text alignmemt
  */
 gint
-geda_text_object_get_alignment (const LeptonObject *object)
+lepton_text_object_get_alignment (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_text (object), LOWER_LEFT);
   g_return_val_if_fail (object->text != NULL, LOWER_LEFT);
@@ -133,7 +133,7 @@ geda_text_object_get_alignment (const LeptonObject *object)
  *  \return The text angle
  */
 gint
-geda_text_object_get_angle (const LeptonObject *object)
+lepton_text_object_get_angle (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_text (object), 0);
   g_return_val_if_fail (object->text != NULL, 0);
@@ -152,17 +152,19 @@ geda_text_object_get_angle (const LeptonObject *object)
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_text_object_get_position (const LeptonObject *object, gint *x, gint *y)
+lepton_text_object_get_position (const LeptonObject *object,
+                                 gint *x,
+                                 gint *y)
 {
   g_return_val_if_fail (lepton_object_is_text (object), FALSE);
   g_return_val_if_fail (object->text != NULL, FALSE);
 
   if (x != NULL) {
-    *x = geda_text_object_get_x (object);
+    *x = lepton_text_object_get_x (object);
   }
 
   if (y != NULL) {
-    *y = geda_text_object_get_y (object);
+    *y = lepton_text_object_get_y (object);
   }
 
   return TRUE;
@@ -174,7 +176,7 @@ geda_text_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  \return The text size
  */
 gint
-geda_text_object_get_size (const LeptonObject *object)
+lepton_text_object_get_size (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_text (object), DEFAULT_TEXT_SIZE);
   g_return_val_if_fail (object->text != NULL, DEFAULT_TEXT_SIZE);
@@ -193,9 +195,9 @@ geda_text_object_get_size (const LeptonObject *object)
  *  \return The text size in postscript points.
  */
 gdouble
-geda_text_object_get_size_in_points (const LeptonObject *object)
+lepton_text_object_get_size_in_points (const LeptonObject *object)
 {
-  return GEDA_FONT_FACTOR * geda_text_object_get_size (object);
+  return GEDA_FONT_FACTOR * lepton_text_object_get_size (object);
 }
 
 /*! \brief Get the text string
@@ -205,7 +207,7 @@ geda_text_object_get_size_in_points (const LeptonObject *object)
  *  object -- do not free.
  */
 const gchar*
-geda_text_object_get_string (const LeptonObject *object)
+lepton_text_object_get_string (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_text (object), NULL);
   g_return_val_if_fail (object->text != NULL, NULL);
@@ -220,7 +222,7 @@ geda_text_object_get_string (const LeptonObject *object)
  *  \return The x coordinate of the insertion point
  */
 gint
-geda_text_object_get_x (const LeptonObject *object)
+lepton_text_object_get_x (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_text (object), 0);
   g_return_val_if_fail (object->text != NULL, 0);
@@ -234,7 +236,7 @@ geda_text_object_get_x (const LeptonObject *object)
  *  \return The y coodinate of the insertion point
  */
 gint
-geda_text_object_get_y (const LeptonObject *object)
+lepton_text_object_get_y (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_text (object), 0);
   g_return_val_if_fail (object->text != NULL, 0);
@@ -250,7 +252,8 @@ geda_text_object_get_y (const LeptonObject *object)
  *  \param [in] alignment The text alignmemt
  */
 void
-geda_text_object_set_alignment (LeptonObject *object, gint alignment)
+lepton_text_object_set_alignment (LeptonObject *object,
+                                  gint alignment)
 {
   g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
@@ -272,7 +275,8 @@ geda_text_object_set_alignment (LeptonObject *object, gint alignment)
  *  \param [in] angle The text angle in degrees.
  */
 void
-geda_text_object_set_angle (LeptonObject *object, gint angle)
+lepton_text_object_set_angle (LeptonObject *object,
+                              gint angle)
 {
   g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
@@ -290,7 +294,8 @@ geda_text_object_set_angle (LeptonObject *object, gint angle)
  *  \param [in] size The text size
  */
 void
-geda_text_object_set_size (LeptonObject *object, gint size)
+lepton_text_object_set_size (LeptonObject *object,
+                             gint size)
 {
   g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
@@ -305,7 +310,8 @@ geda_text_object_set_size (LeptonObject *object, gint size)
  *  \param [in] x the x coordinate of the text insertion point
  */
 void
-geda_text_object_set_x (LeptonObject *object, gint x)
+lepton_text_object_set_x (LeptonObject *object,
+                          gint x)
 {
   g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
@@ -319,7 +325,8 @@ geda_text_object_set_x (LeptonObject *object, gint x)
  *  \param [in] y the y coordinate of the text insertion point
  */
 void
-geda_text_object_set_y (LeptonObject *object, gint y)
+lepton_text_object_set_y (LeptonObject *object,
+                          gint y)
 {
   g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
@@ -403,15 +410,15 @@ update_disp_string (LeptonObject *object)
  *  Caller is responsible for string; this function allocates its own copy.
  */
 LeptonObject*
-geda_text_object_new (gint color,
-                      gint x,
-                      gint y,
-                      gint alignment,
-                      gint angle,
-                      const gchar *string,
-                      gint size,
-                      gint visibility,
-                      gint show_name_value)
+lepton_text_object_new (gint color,
+                        gint x,
+                        gint y,
+                        gint alignment,
+                        gint angle,
+                        const gchar *string,
+                        gint size,
+                        gint visibility,
+                        gint show_name_value)
 {
   LeptonObject *new_node=NULL;
   TEXT *text;
@@ -584,15 +591,15 @@ o_text_read (const char *first_line,
     }
   }
 
-  new_obj = geda_text_object_new (color,
-                                  x,
-                                  y,
-                                  alignment,
-                                  angle,
-                                  string,
-                                  size,
-                                  visibility,
-                                  show_name_value);
+  new_obj = lepton_text_object_new (color,
+                                    x,
+                                    y,
+                                    alignment,
+                                    angle,
+                                    string,
+                                    size,
+                                    visibility,
+                                    show_name_value);
   g_free(string);
 
   return new_obj;
@@ -608,27 +615,27 @@ o_text_read (const char *first_line,
  *  \return the string representation of the text object
  */
 gchar*
-geda_text_object_to_buffer (const LeptonObject *object)
+lepton_text_object_to_buffer (const LeptonObject *object)
 {
   const gchar *string;
 
   g_return_val_if_fail (lepton_object_is_text (object), NULL);
   g_return_val_if_fail (object->text != NULL, NULL);
 
-  string = geda_text_object_get_string (object);
+  string = lepton_text_object_get_string (object);
 
   g_return_val_if_fail (string != NULL, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d\n%s",
                           lepton_object_get_type (object),
-                          geda_text_object_get_x (object),
-                          geda_text_object_get_y (object),
+                          lepton_text_object_get_x (object),
+                          lepton_text_object_get_y (object),
                           lepton_object_get_color (object),
-                          geda_text_object_get_size (object),
+                          lepton_text_object_get_size (object),
                           geda_object_get_visible (object),
                           object->show_name_value,
-                          geda_text_object_get_angle (object),
-                          geda_text_object_get_alignment (object),
+                          lepton_text_object_get_angle (object),
+                          lepton_text_object_get_alignment (object),
                           o_text_num_lines (string),
                           string);
 }
@@ -657,7 +664,9 @@ o_text_recreate (LeptonObject *o_current)
  *  \param [in]  dy      The y-distance to move the object
  */
 void
-geda_text_object_translate (LeptonObject *object, int dx, int dy)
+lepton_text_object_translate (LeptonObject *object,
+                              int dx,
+                              int dy)
 {
   g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
@@ -674,22 +683,22 @@ geda_text_object_translate (LeptonObject *object, int dx, int dy)
  *  \return a new text object
  */
 LeptonObject*
-geda_text_object_copy (const LeptonObject *object)
+lepton_text_object_copy (const LeptonObject *object)
 {
   LeptonObject *new_obj;
 
   g_return_val_if_fail (lepton_object_is_text (object), NULL);
   g_return_val_if_fail (object->text != NULL, NULL);
 
-  new_obj = geda_text_object_new (lepton_object_get_color (object),
-                                  object->text->x,
-                                  object->text->y,
-                                  object->text->alignment,
-                                  object->text->angle,
-                                  object->text->string,
-                                  object->text->size,
-                                  geda_object_get_visible (object),
-                                  object->show_name_value);
+  new_obj = lepton_text_object_new (lepton_object_get_color (object),
+                                    object->text->x,
+                                    object->text->y,
+                                    object->text->alignment,
+                                    object->text->angle,
+                                    object->text->string,
+                                    object->text->size,
+                                    geda_object_get_visible (object),
+                                    object->show_name_value);
 
   return new_obj;
 }
@@ -706,10 +715,10 @@ geda_text_object_copy (const LeptonObject *object)
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
 void
-geda_text_object_rotate (int world_centerx,
-                         int world_centery,
-                         int angle,
-                         LeptonObject *object)
+lepton_text_object_rotate (int world_centerx,
+                           int world_centery,
+                           int angle,
+                           LeptonObject *object)
 {
   int x, y;
   int newx, newy;
@@ -728,7 +737,7 @@ geda_text_object_rotate (int world_centerx,
   x = newx + (world_centerx);
   y = newy + (world_centery);
 
-  geda_text_object_translate (object, x-object->text->x, y-object->text->y);
+  lepton_text_object_translate (object, x-object->text->x, y-object->text->y);
 
   o_text_recreate (object);
 }
@@ -744,9 +753,9 @@ geda_text_object_rotate (int world_centerx,
  *  \param [in] object        The text object
  */
 void
-geda_text_object_mirror (int world_centerx,
-                         int world_centery,
-                         LeptonObject *object)
+lepton_text_object_mirror (int world_centerx,
+                           int world_centery,
+                           LeptonObject *object)
 {
   int origx, origy;
   int x, y;
@@ -843,11 +852,11 @@ geda_text_object_mirror (int world_centerx,
  *  returns G_MAXDOUBLE.
  */
 double
-geda_text_object_shortest_distance (LeptonObject *object,
-                                    int x,
-                                    int y,
-                                    int force_solid,
-                                    gboolean include_hidden)
+lepton_text_object_shortest_distance (LeptonObject *object,
+                                      int x,
+                                      int y,
+                                      int force_solid,
+                                      gboolean include_hidden)
 {
   int left, top, right, bottom;
   double dx, dy;

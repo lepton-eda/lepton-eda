@@ -191,7 +191,7 @@ s_object_replace_attrib_in_object(LeptonObject *o_current,
         && a_current->text != NULL) {  /* found an attribute */
 
       /* may need to check more thoroughly here. . . . */
-      old_attrib_text = g_strdup(geda_text_object_get_string (a_current));
+      old_attrib_text = g_strdup (lepton_text_object_get_string (a_current));
       old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
 
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
@@ -252,7 +252,7 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
         && a_current->text != NULL) {  /* found an attribute */
 
       /* may need to check more thoroughly here. . . . */
-      old_attrib_text = g_strdup(geda_text_object_get_string (a_current));
+      old_attrib_text = g_strdup (lepton_text_object_get_string (a_current));
       old_attrib_name = u_basic_breakup_string(old_attrib_text, '=', 0);
 
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
@@ -342,15 +342,15 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
            "     show_name_value = %d\n",
            color, text_string, visibility, show_name_value);
 
-  new_obj = geda_text_object_new (color,
-                                  world_x,
-                                  world_y,
-                                  LOWER_LEFT,
-                                  0, /* zero is angle */
-                                  text_string,
-                                  DEFAULT_TEXT_SIZE,
-                                  visibility,
-                                  show_name_value);
+  new_obj = lepton_text_object_new (color,
+                                    world_x,
+                                    world_y,
+                                    LOWER_LEFT,
+                                    0, /* zero is angle */
+                                    text_string,
+                                    DEFAULT_TEXT_SIZE,
+                                    visibility,
+                                    show_name_value);
   s_page_append (toplevel->page_current, new_obj);
 
   /* now toplevel->page_current->object_tail contains new text item */

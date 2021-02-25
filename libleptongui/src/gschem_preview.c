@@ -201,15 +201,15 @@ preview_update (GschemPreview *preview)
       }
       else {
         s_page_append (preview_page,
-                       geda_text_object_new (2,
-                                             100,
-                                             100,
-                                             LOWER_MIDDLE,
-                                             0,
-                                             err->message,
-                                             10,
-                                             VISIBLE,
-                                             SHOW_NAME_VALUE));
+                       lepton_text_object_new (2,
+                                               100,
+                                               100,
+                                               LOWER_MIDDLE,
+                                               0,
+                                               err->message,
+                                               10,
+                                               VISIBLE,
+                                               SHOW_NAME_VALUE));
         g_error_free(err);
       }
     }

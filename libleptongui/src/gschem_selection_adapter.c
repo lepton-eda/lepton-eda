@@ -763,7 +763,7 @@ gschem_selection_adapter_get_text_alignment (GschemSelectionAdapter *adapter)
 
     if (lepton_object_is_text (object))
     {
-      int temp_alignment = geda_text_object_get_alignment (object);
+      int temp_alignment = lepton_text_object_get_alignment (object);
 
       if (alignment < 0) {
         alignment = temp_alignment;
@@ -844,7 +844,7 @@ gschem_selection_adapter_get_text_rotation (GschemSelectionAdapter *adapter)
 
     if (lepton_object_is_text (object))
     {
-      int temp_angle = geda_text_object_get_angle (object);
+      int temp_angle = lepton_text_object_get_angle (object);
 
       if (angle < 0) {
         angle = temp_angle;
@@ -882,7 +882,7 @@ gschem_selection_adapter_get_text_size (GschemSelectionAdapter *adapter)
 
     if (lepton_object_is_text (object))
     {
-      int temp_size = geda_text_object_get_size (object);
+      int temp_size = lepton_text_object_get_size (object);
 
       if (size < 0) {
         size = temp_size;
@@ -919,7 +919,7 @@ gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter)
     if (lepton_object_is_text (object))
     {
       if (string == NULL) {
-        string = geda_text_object_get_string (object);
+        string = lepton_text_object_get_string (object);
       } else {
         string = NULL;
         break;
@@ -1769,7 +1769,7 @@ gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, in
 
     if (lepton_object_is_text (object))
     {
-      geda_text_object_set_alignment (object, alignment);
+      lepton_text_object_set_alignment (object, alignment);
       o_text_recreate (object);
     }
 
@@ -1838,7 +1838,7 @@ gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int
 
     if (lepton_object_is_text (object))
     {
-      geda_text_object_set_angle (object, angle);
+      lepton_text_object_set_angle (object, angle);
       o_text_recreate (object);
     }
 
@@ -1873,7 +1873,7 @@ gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int siz
 
     if (lepton_object_is_text (object))
     {
-      geda_text_object_set_size (object, size);
+      lepton_text_object_set_size (object, size);
       o_text_recreate (object);
     }
 

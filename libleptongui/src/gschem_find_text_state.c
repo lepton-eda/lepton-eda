@@ -207,7 +207,7 @@ assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text)
     }
 
     if (filter_text) {
-      str = geda_text_object_get_string (object);
+      str = lepton_text_object_get_string (object);
     } else {
       str = scm_to_utf8_string (scm_call_1 (scm_c_public_ref ("schematic symbol check",
                                                               "object-blaming-info"),
@@ -379,7 +379,7 @@ find_objects_using_pattern (GSList *pages,
         continue;
       }
 
-      str = geda_text_object_get_string (object);
+      str = lepton_text_object_get_string (object);
 
       if (str == NULL) {
         g_warning ("NULL string encountered");
@@ -459,7 +459,7 @@ find_objects_using_regex (GSList *pages,
         continue;
       }
 
-      str = geda_text_object_get_string (object);
+      str = lepton_text_object_get_string (object);
 
       if (str == NULL) {
         g_warning ("NULL string encountered");
@@ -528,7 +528,7 @@ find_objects_using_substring (GSList *pages,
         continue;
       }
 
-      str = geda_text_object_get_string (object);
+      str = lepton_text_object_get_string (object);
 
       if (str == NULL) {
         g_warning ("NULL string encountered");

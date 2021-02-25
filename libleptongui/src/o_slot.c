@@ -117,15 +117,15 @@ void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *str
   } else {
     /* here you need to do the add the slot
        attribute since it doesn't exist */
-    new_obj = geda_text_object_new (ATTRIBUTE_COLOR,
-                                    object->component->x,
-                                    object->component->y,
-                                    LOWER_LEFT,
-                                    0, /* zero is angle */
-                                    string,
-                                    10,
-                                    INVISIBLE,
-                                    SHOW_NAME_VALUE);
+    new_obj = lepton_text_object_new (ATTRIBUTE_COLOR,
+                                      object->component->x,
+                                      object->component->y,
+                                      LOWER_LEFT,
+                                      0, /* zero is angle */
+                                      string,
+                                      10,
+                                      INVISIBLE,
+                                      SHOW_NAME_VALUE);
     s_page_append (toplevel->page_current, new_obj);
 
     /* manually attach attribute */

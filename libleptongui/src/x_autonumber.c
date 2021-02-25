@@ -332,7 +332,7 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, LeptonObject *o_current, gint *
   if (!lepton_object_is_text (o_current))  /* text object */
     return AUTONUMBER_IGNORE;
 
-  str = geda_text_object_get_string (o_current);
+  str = lepton_text_object_get_string (o_current);
 
   if (!(strlen(str) - len > 0)
       || !g_str_has_prefix(str, autotext->current_searchtext))
@@ -697,7 +697,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
           if (autotext->scope_number == SCOPE_HIERARCHY
               || autotext->scope_number == SCOPE_PAGE
               || ((autotext->scope_number == SCOPE_SELECTED) && (o_current->selected))) {
-            const gchar *str = geda_text_object_get_string (o_current);
+            const gchar *str = lepton_text_object_get_string (o_current);
             if (g_str_has_prefix (str, searchtext)) {
               /* the beginnig of the current text matches with the searchtext now */
               /* strip of the trailing [0-9?] chars and add it too the searchtext */

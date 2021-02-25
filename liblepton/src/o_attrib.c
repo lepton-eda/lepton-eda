@@ -83,7 +83,7 @@ o_attrib_attach (LeptonObject *attrib,
   /* is the object already part of the list ? */
   if (g_list_find (object->attribs, attrib)) {
     g_warning (_("Attribute [%1$s] already attached\n"),
-               geda_text_object_get_string (attrib));
+               lepton_text_object_get_string (attrib));
     return;
   }
 
@@ -165,7 +165,7 @@ void o_attrib_print(GList *attributes)
     a_current = (LeptonObject*) a_iter->data;
     printf("Attribute points to: %1$s\n", a_current->name);
     if (a_current->text) {
-      printf("\tText is: %1$s\n", geda_text_object_get_string (a_current));
+      printf("\tText is: %1$s\n", lepton_text_object_get_string (a_current));
     }
 
     a_iter = g_list_next (a_iter);
@@ -388,7 +388,7 @@ o_attrib_get_name_value (const LeptonObject *attrib,
 {
   g_return_val_if_fail (lepton_object_is_text (attrib), FALSE);
 
-  return o_attrib_string_get_name_value (geda_text_object_get_string (attrib),
+  return o_attrib_string_get_name_value (lepton_text_object_get_string (attrib),
                                          name_ptr, value_ptr);
 }
 

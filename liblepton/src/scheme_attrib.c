@@ -66,7 +66,7 @@ SCM_DEFINE (parse_attrib, "%parse-attrib", 1, 0, 0,
     scm_error (attribute_format_sym, s_parse_attrib,
                _("~A is not a valid attribute: invalid string '~A'."),
                scm_list_2 (text_s,
-                           scm_from_utf8_string (geda_text_object_get_string (text))),
+                           scm_from_utf8_string (lepton_text_object_get_string (text))),
                SCM_EOL);
   }
   scm_dynwind_end ();
@@ -100,7 +100,7 @@ SCM_DEFINE (attrib_name, "%attrib-name", 1, 0, 0,
     scm_error (attribute_format_sym, s_parse_attrib,
                _("~A is not a valid attribute: invalid string '~A'."),
                scm_list_2 (text_s,
-                           scm_from_utf8_string (geda_text_object_get_string (text))),
+                           scm_from_utf8_string (lepton_text_object_get_string (text))),
                SCM_EOL);
   }
 

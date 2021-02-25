@@ -512,17 +512,17 @@ create_placeholder_small (LeptonObject* node, int x, int y)
 
   /* text - symbol file name:
   */
-  LeptonObject* txt = geda_text_object_new (color,
-                                            x + 100, y + 100,
-                                            LOWER_LEFT,
-                                            0,
-                                            node->component_basename,
-                                            text_size,
-                                            VISIBLE,
-                                            SHOW_NAME_VALUE);
+  LeptonObject* txt = lepton_text_object_new (color,
+                                              x + 100, y + 100,
+                                              LOWER_LEFT,
+                                              0,
+                                              node->component_basename,
+                                              text_size,
+                                              VISIBLE,
+                                              SHOW_NAME_VALUE);
 
   GedaBounds bounds;
-  geda_text_object_calculate_bounds (txt, FALSE, &bounds);
+  lepton_text_object_calculate_bounds (txt, FALSE, &bounds);
 
   bounds.max_x = geda_coord_snap (bounds.max_x, 100);
   bounds.max_y = geda_coord_snap (bounds.max_y, 100);
@@ -599,21 +599,21 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
   not_found_text =
     g_strdup_printf (_("Component not found:\n %1$s"),
                      new_node->component_basename);
-  new_prim_obj = geda_text_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                       x + NOT_FOUND_TEXT_X,
-                                       y + NOT_FOUND_TEXT_Y,
-                                       LOWER_LEFT,
-                                       0,
-                                       not_found_text,
-                                       8,
-                                       VISIBLE, SHOW_NAME_VALUE);
+  new_prim_obj = lepton_text_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                         x + NOT_FOUND_TEXT_X,
+                                         y + NOT_FOUND_TEXT_Y,
+                                         LOWER_LEFT,
+                                         0,
+                                         not_found_text,
+                                         8,
+                                         VISIBLE, SHOW_NAME_VALUE);
   new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
   g_free(not_found_text);
 
   /* figure out where to put the hazard triangle */
-  geda_text_object_calculate_bounds (new_prim_obj,
-                                     FALSE,
-                                     &bounds);
+  lepton_text_object_calculate_bounds (new_prim_obj,
+                                       FALSE,
+                                       &bounds);
   x_offset = (bounds.max_x - bounds.min_x) / 4;
   y_offset = bounds.max_y - bounds.min_y + 100;  /* 100 is just an additional offset */
 
@@ -642,15 +642,15 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
   o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
                       50, -1, -1);
   new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
-  new_prim_obj = geda_text_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                       x + NOT_FOUND_TEXT_X + x_offset + 270,
-                                       y + NOT_FOUND_TEXT_Y + y_offset + 90,
-                                       LOWER_LEFT,
-                                       0,
-                                       "!",
-                                       18,
-                                       VISIBLE,
-                                       SHOW_NAME_VALUE);
+  new_prim_obj = lepton_text_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                         x + NOT_FOUND_TEXT_X + x_offset + 270,
+                                         y + NOT_FOUND_TEXT_Y + y_offset + 90,
+                                         LOWER_LEFT,
+                                         0,
+                                         "!",
+                                         18,
+                                         VISIBLE,
+                                         SHOW_NAME_VALUE);
   new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
   new_node->component->prim_objs = g_list_reverse(new_node->component->prim_objs);
 

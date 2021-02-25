@@ -181,7 +181,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
             if (replace) {
               while (a_iter != NULL) {
                 a_current = (LeptonObject*) a_iter->data;
-                const gchar *str = geda_text_object_get_string (a_current);
+                const gchar *str = lepton_text_object_get_string (a_current);
                 if (str) {
                   if (!strncmp (str, newtext, strchr (newtext, '=') - newtext)) {
                     o_text_change(w_current, a_current, newtext, vis, show);

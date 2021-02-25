@@ -860,7 +860,7 @@ eda_renderer_prepare_text (EdaRenderer *renderer, const LeptonObject *object)
   PangoFontDescription *desc;
   PangoAttrList *attrs;
 
-  points_size = geda_text_object_get_size_in_points (object);
+  points_size = lepton_text_object_get_size_in_points (object);
   size = lrint (points_size * PANGO_SCALE);
 
   /* Set hinting as appropriate */
@@ -899,7 +899,7 @@ eda_renderer_prepare_text (EdaRenderer *renderer, const LeptonObject *object)
   cairo_translate (renderer->priv->cr, object->text->x, object->text->y);
 
   /* Special case turns upside-down text back upright */
-  angle = geda_text_object_get_angle (object);
+  angle = lepton_text_object_get_angle (object);
   if (angle != 180) {
     cairo_rotate (renderer->priv->cr, M_PI * angle / 180.);
   }
@@ -954,7 +954,7 @@ eda_renderer_calc_text_position (EdaRenderer *renderer, const LeptonObject *obje
   y_middle = y_upper - logical_rect.height / 2.;  /* Middle of inked extents */
   y_lower  = y_upper - logical_rect.height;       /* Baseline of bottom line */
 
-  switch (geda_text_object_get_alignment (object)) {
+  switch (lepton_text_object_get_alignment (object)) {
     case LOWER_LEFT:
     case LOWER_MIDDLE:
     case LOWER_RIGHT:
@@ -966,12 +966,12 @@ eda_renderer_calc_text_position (EdaRenderer *renderer, const LeptonObject *obje
    * the text is rotated to 180 degrees, since the drawing code
    * does not rotate the text to be shown upside down.
    */
-  if (geda_text_object_get_angle (object) == 180) {
+  if (lepton_text_object_get_angle (object) == 180) {
     temp = y_lower; y_lower = y_upper; y_upper = temp;
     temp = x_left;  x_left  = x_right; x_right = temp;
   }
 
-  switch (geda_text_object_get_alignment (object)) {
+  switch (lepton_text_object_get_alignment (object)) {
     default:
       /* Fall through to LOWER_left case */
     case LOWER_LEFT:    *y = y_lower;  *x = x_left;   break;
