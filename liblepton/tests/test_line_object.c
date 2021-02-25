@@ -14,22 +14,22 @@ check_construction ()
     gint y1 = g_test_rand_int ();
     gint color = g_test_rand_int_range (0, colors_count());
 
-    LeptonObject *object0 = geda_line_object_new (color,
-                                                x0,
-                                                y0,
-                                                x1,
-                                                y1);
+    LeptonObject *object0 = lepton_line_object_new (color,
+                                                    x0,
+                                                    y0,
+                                                    x1,
+                                                    y1);
 
     g_assert (object0 != NULL);
     g_assert_cmpint (OBJ_LINE, ==, lepton_object_get_type (object0));
 
-    g_assert_cmpint (x0, ==, geda_line_object_get_x0 (object0));
-    g_assert_cmpint (y0, ==, geda_line_object_get_y0 (object0));
-    g_assert_cmpint (x1, ==, geda_line_object_get_x1 (object0));
-    g_assert_cmpint (y1, ==, geda_line_object_get_y1 (object0));
+    g_assert_cmpint (x0, ==, lepton_line_object_get_x0 (object0));
+    g_assert_cmpint (y0, ==, lepton_line_object_get_y0 (object0));
+    g_assert_cmpint (x1, ==, lepton_line_object_get_x1 (object0));
+    g_assert_cmpint (y1, ==, lepton_line_object_get_y1 (object0));
     g_assert_cmpint (color, ==, lepton_object_get_color (object0));
 
-    LeptonObject *object1 = geda_line_object_copy (object0);
+    LeptonObject *object1 = lepton_line_object_copy (object0);
 
     g_assert (object1 != NULL);
     g_assert (object1 != object0);
@@ -37,10 +37,10 @@ check_construction ()
 
     s_delete_object (object0);
 
-    g_assert_cmpint (x0, ==, geda_line_object_get_x0 (object1));
-    g_assert_cmpint (y0, ==, geda_line_object_get_y0 (object1));
-    g_assert_cmpint (x1, ==, geda_line_object_get_x1 (object1));
-    g_assert_cmpint (y1, ==, geda_line_object_get_y1 (object1));
+    g_assert_cmpint (x0, ==, lepton_line_object_get_x0 (object1));
+    g_assert_cmpint (y0, ==, lepton_line_object_get_y0 (object1));
+    g_assert_cmpint (x1, ==, lepton_line_object_get_x1 (object1));
+    g_assert_cmpint (y1, ==, lepton_line_object_get_y1 (object1));
     g_assert_cmpint (color, ==, lepton_object_get_color (object1));
 
     s_delete_object (object1);
@@ -62,11 +62,11 @@ check_accessors ()
     gint y1 = g_test_rand_int ();
     gint color = g_test_rand_int_range (0, colors_count());
 
-    LeptonObject *object0 = geda_line_object_new (color,
-                                                x0,
-                                                y0,
-                                                x1,
-                                                y1);
+    LeptonObject *object0 = lepton_line_object_new (color,
+                                                    x0,
+                                                    y0,
+                                                    x1,
+                                                    y1);
 
     g_assert (object0 != NULL);
     g_assert_cmpint (OBJ_LINE, ==, lepton_object_get_type (object0));
@@ -77,16 +77,16 @@ check_accessors ()
     y1 = g_test_rand_int ();
     color = g_test_rand_int_range (0, colors_count());
 
-    geda_line_object_set_x0 (object0, x0);
-    geda_line_object_set_y0 (object0, y0);
-    geda_line_object_set_x1 (object0, x1);
-    geda_line_object_set_y1 (object0, y1);
+    lepton_line_object_set_x0 (object0, x0);
+    lepton_line_object_set_y0 (object0, y0);
+    lepton_line_object_set_x1 (object0, x1);
+    lepton_line_object_set_y1 (object0, y1);
     lepton_object_set_color (object0, color);
 
-    g_assert_cmpint (x0, ==, geda_line_object_get_x0 (object0));
-    g_assert_cmpint (y0, ==, geda_line_object_get_y0 (object0));
-    g_assert_cmpint (x1, ==, geda_line_object_get_x1 (object0));
-    g_assert_cmpint (y1, ==, geda_line_object_get_y1 (object0));
+    g_assert_cmpint (x0, ==, lepton_line_object_get_x0 (object0));
+    g_assert_cmpint (y0, ==, lepton_line_object_get_y0 (object0));
+    g_assert_cmpint (x1, ==, lepton_line_object_get_x1 (object0));
+    g_assert_cmpint (y1, ==, lepton_line_object_get_y1 (object0));
     g_assert_cmpint (color, ==, lepton_object_get_color (object0));
 
     s_delete_object (object0);
@@ -113,15 +113,15 @@ check_serialization ()
     gint y1 = g_test_rand_int ();
     gint color = g_test_rand_int_range (0, colors_count());
 
-    LeptonObject *object0 = geda_line_object_new (color,
-                                                x0,
-                                                y0,
-                                                x1,
-                                                y1);
+    LeptonObject *object0 = lepton_line_object_new (color,
+                                                    x0,
+                                                    y0,
+                                                    x1,
+                                                    y1);
 
     g_assert (object0 != NULL);
 
-    gchar *buffer0 = geda_line_object_to_buffer (object0);
+    gchar *buffer0 = lepton_line_object_to_buffer (object0);
     s_delete_object (object0);
     g_assert (buffer0 != NULL);
 
@@ -132,13 +132,13 @@ check_serialization ()
 
     g_assert (object1 != NULL);
 
-    g_assert_cmpint (x0, ==, geda_line_object_get_x0 (object1));
-    g_assert_cmpint (y0, ==, geda_line_object_get_y0 (object1));
-    g_assert_cmpint (x1, ==, geda_line_object_get_x1 (object1));
-    g_assert_cmpint (y1, ==, geda_line_object_get_y1 (object1));
+    g_assert_cmpint (x0, ==, lepton_line_object_get_x0 (object1));
+    g_assert_cmpint (y0, ==, lepton_line_object_get_y0 (object1));
+    g_assert_cmpint (x1, ==, lepton_line_object_get_x1 (object1));
+    g_assert_cmpint (y1, ==, lepton_line_object_get_y1 (object1));
     g_assert_cmpint (color, ==, lepton_object_get_color (object1));
 
-    gchar *buffer1 = geda_line_object_to_buffer (object1);
+    gchar *buffer1 = lepton_line_object_to_buffer (object1);
     s_delete_object (object1);
     g_assert (buffer1 != NULL);
 

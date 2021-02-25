@@ -372,7 +372,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
       switch (lepton_object_get_type (o_current)) {
 
         case(OBJ_LINE):
-          out = geda_line_object_to_buffer (o_current);
+          out = lepton_line_object_to_buffer (o_current);
           break;
 
         case(OBJ_NET):

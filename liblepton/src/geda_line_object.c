@@ -57,11 +57,11 @@
  *  \return A pointer to the new end of the object list.
  */
 LeptonObject*
-geda_line_object_new (gint color,
-                      gint x1,
-                      gint y1,
-                      gint x2,
-                      gint y2)
+lepton_line_object_new (gint color,
+                        gint x1,
+                        gint y1,
+                        gint x2,
+                        gint y2)
 {
   LeptonObject *new_node;
 
@@ -105,15 +105,15 @@ geda_line_object_new (gint color,
  *  \return The new LeptonObject
  */
 LeptonObject*
-geda_line_object_copy (LeptonObject *o_current)
+lepton_line_object_copy (LeptonObject *o_current)
 {
   LeptonObject *new_obj;
 
-  new_obj = geda_line_object_new (lepton_object_get_color (o_current),
-                                  o_current->line->x[0],
-                                  o_current->line->y[0],
-                                  o_current->line->x[1],
-                                  o_current->line->y[1]);
+  new_obj = lepton_line_object_new (lepton_object_get_color (o_current),
+                                    o_current->line->x[0],
+                                    o_current->line->y[0],
+                                    o_current->line->x[1],
+                                    o_current->line->y[1]);
 
   /* copy the line type and filling options */
   o_set_line_options (new_obj,
@@ -144,7 +144,7 @@ geda_line_object_copy (LeptonObject *o_current)
  *  \return The x coordinate for the first endpoint
  */
 gint
-geda_line_object_get_x0 (const LeptonObject *object)
+lepton_line_object_get_x0 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -162,7 +162,7 @@ geda_line_object_get_x0 (const LeptonObject *object)
  *  \return The x coordinate for the second endpoint
  */
 gint
-geda_line_object_get_x1 (const LeptonObject *object)
+lepton_line_object_get_x1 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -180,7 +180,7 @@ geda_line_object_get_x1 (const LeptonObject *object)
  *  \return The y coordinate for the first endpoint
  */
 gint
-geda_line_object_get_y0 (const LeptonObject *object)
+lepton_line_object_get_y0 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -198,7 +198,7 @@ geda_line_object_get_y0 (const LeptonObject *object)
  *  \return The y coordinate for the second endpoint
  */
 gint
-geda_line_object_get_y1 (const LeptonObject *object)
+lepton_line_object_get_y1 (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -216,7 +216,8 @@ geda_line_object_get_y1 (const LeptonObject *object)
  *  \param [in] x The new x coordinate for the first endpoint
  */
 void
-geda_line_object_set_x0 (LeptonObject *object, gint x)
+lepton_line_object_set_x0 (LeptonObject *object,
+                           gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -234,7 +235,8 @@ geda_line_object_set_x0 (LeptonObject *object, gint x)
  *  \param [in] x The new x coordinate for the second endpoint
  */
 void
-geda_line_object_set_x1 (LeptonObject *object, gint x)
+lepton_line_object_set_x1 (LeptonObject *object,
+                           gint x)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -252,7 +254,8 @@ geda_line_object_set_x1 (LeptonObject *object, gint x)
  *  \param [in] y The new y coordinate for the first endpoint
  */
 void
-geda_line_object_set_y0 (LeptonObject *object, gint y)
+lepton_line_object_set_y0 (LeptonObject *object,
+                           gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -270,7 +273,8 @@ geda_line_object_set_y0 (LeptonObject *object, gint y)
  *  \param [in] y The new y coordinate for the second endpoint
  */
 void
-geda_line_object_set_y1 (LeptonObject *object, gint y)
+lepton_line_object_set_y1 (LeptonObject *object,
+                           gint y)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->line != NULL);
@@ -300,20 +304,22 @@ geda_line_object_set_y1 (LeptonObject *object, gint y)
  *  </DL>
  */
 void
-geda_line_object_modify (LeptonObject *object,
-                         int x, int y, int whichone)
+lepton_line_object_modify (LeptonObject *object,
+                           int x,
+                           int y,
+                           int whichone)
 {
   o_emit_pre_change_notify (object);
 
   switch (whichone) {
     case LINE_END1:
-      geda_line_object_set_x0 (object, x);
-      geda_line_object_set_y0 (object, y);
+      lepton_line_object_set_x0 (object, x);
+      lepton_line_object_set_y0 (object, y);
       break;
 
     case LINE_END2:
-      geda_line_object_set_x1 (object, x);
-      geda_line_object_set_y1 (object, y);
+      lepton_line_object_set_x1 (object, x);
+      lepton_line_object_set_y1 (object, y);
       break;
 
     default:
@@ -413,11 +419,11 @@ o_line_read (const char buf[],
    * type is set according to the values of the fields on the line.
    */
   /* create and add the line to the list */
-  new_obj = geda_line_object_new (color,
-                                  x1,
-                                  y1,
-                                  x2,
-                                  y2);
+  new_obj = lepton_line_object_new (color,
+                                    x1,
+                                    y1,
+                                    x2,
+                                    y2);
 
   /* set its line options */
   o_set_line_options (new_obj,
@@ -448,17 +454,17 @@ o_line_read (const char buf[],
  *
  */
 gchar*
-geda_line_object_to_buffer (const LeptonObject *object)
+lepton_line_object_to_buffer (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_line (object), NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d",
                           lepton_object_get_type (object),
-                          geda_line_object_get_x0 (object),
-                          geda_line_object_get_y0 (object),
-                          geda_line_object_get_x1 (object),
-                          geda_line_object_get_y1 (object),
+                          lepton_line_object_get_x0 (object),
+                          lepton_line_object_get_y0 (object),
+                          lepton_line_object_get_x1 (object),
+                          lepton_line_object_get_y1 (object),
                           lepton_object_get_color (object),
                           object->line_width,
                           object->line_end,
@@ -477,7 +483,9 @@ geda_line_object_to_buffer (const LeptonObject *object)
  *  \param [in]     dy         y distance to move.
  */
 void
-geda_line_object_translate (LeptonObject *object, int dx, int dy)
+lepton_line_object_translate (LeptonObject *object,
+                              int dx,
+                              int dy)
 {
   g_return_if_fail (lepton_object_is_line (object));
   g_return_if_fail (object->line != NULL);
@@ -502,10 +510,10 @@ geda_line_object_translate (LeptonObject *object, int dx, int dy)
  *  \param [in,out]  object         Line LeptonObject to rotate.
  */
 void
-geda_line_object_rotate (int world_centerx,
-                         int world_centery,
-                         int angle,
-                         LeptonObject *object)
+lepton_line_object_rotate (int world_centerx,
+                           int world_centery,
+                           int angle,
+                           LeptonObject *object)
 {
   int newx, newy;
 
@@ -527,7 +535,7 @@ geda_line_object_rotate (int world_centerx,
    * back to its previous location.
    */
   /* translate object to origin */
-  geda_line_object_translate (object, -world_centerx, -world_centery);
+  lepton_line_object_translate (object, -world_centerx, -world_centery);
 
   /* rotate line end 1 */
   geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
@@ -544,7 +552,7 @@ geda_line_object_rotate (int world_centerx,
   object->line->y[1] = newy;
 
   /* translate object back to normal position */
-  geda_line_object_translate (object, world_centerx, world_centery);
+  lepton_line_object_translate (object, world_centerx, world_centery);
 
 }
 
@@ -561,22 +569,22 @@ geda_line_object_rotate (int world_centerx,
  *  \param [in,out] object         Line LeptonObject to mirror.
  */
 void
-geda_line_object_mirror (int world_centerx,
-                         int world_centery,
-                         LeptonObject *object)
+lepton_line_object_mirror (int world_centerx,
+                           int world_centery,
+                           LeptonObject *object)
 {
   g_return_if_fail (lepton_object_is_line (object));
   g_return_if_fail (object->line != NULL);
 
   /* translate object to origin */
-  geda_line_object_translate (object, -world_centerx, -world_centery);
+  lepton_line_object_translate (object, -world_centerx, -world_centery);
 
   /* mirror the line ends */
   object->line->x[0] = -object->line->x[0];
   object->line->x[1] = -object->line->x[1];
 
   /* translate back in position */
-  geda_line_object_translate (object, world_centerx, world_centery);
+  lepton_line_object_translate (object, world_centerx, world_centery);
 
 }
 
@@ -588,8 +596,8 @@ geda_line_object_mirror (int world_centerx,
  *  \param [out] bounds   The bounds of the line
  */
 void
-geda_line_object_calculate_bounds (const LeptonObject *object,
-                                   GedaBounds *bounds)
+lepton_line_object_calculate_bounds (const LeptonObject *object,
+                                     GedaBounds *bounds)
 {
   gint expand;
 
@@ -616,7 +624,9 @@ geda_line_object_calculate_bounds (const LeptonObject *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_line_object_get_position (const LeptonObject *object, gint *x, gint *y)
+lepton_line_object_get_position (const LeptonObject *object,
+                                 gint *x,
+                                 gint *y)
 {
   g_return_val_if_fail (lepton_object_is_line (object), FALSE);
   g_return_val_if_fail (object->line != NULL, FALSE);
@@ -640,7 +650,7 @@ geda_line_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  \return The length of the line
  */
 double
-geda_line_object_length (LeptonObject *object)
+lepton_line_object_length (LeptonObject *object)
 {
   double length;
   double dx, dy;
@@ -676,11 +686,11 @@ geda_line_object_length (LeptonObject *object)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-geda_line_object_shortest_distance (LeptonObject *object,
-                                    int x,
-                                    int y,
-                                    int force_solid,
-                                    gboolean include_hidden)
+lepton_line_object_shortest_distance (LeptonObject *object,
+                                      int x,
+                                      int y,
+                                      int force_solid,
+                                      gboolean include_hidden)
 {
   return geda_line_shortest_distance (object->line, x, y);
 }

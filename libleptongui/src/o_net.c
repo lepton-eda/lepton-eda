@@ -784,7 +784,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
   LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_val_if_fail (page != NULL, FALSE);
 
-  length = geda_line_object_length (net_obj);
+  length = lepton_line_object_length (net_obj);
 
   if (!prev_conn_objects) {
     return(FALSE);

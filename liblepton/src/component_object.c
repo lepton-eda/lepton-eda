@@ -503,12 +503,12 @@ create_placeholder_small (LeptonObject* node, int x, int y)
 
   /* two crossed lines to mark component's origin:
   */
-  LeptonObject* line1 = geda_line_object_new (color,
-                                              x - 30, y + 30,
-                                              x + 30, y - 30 );
-  LeptonObject* line2 = geda_line_object_new (color,
-                                              x - 30, y - 30,
-                                              x + 50, y + 50 );
+  LeptonObject* line1 = lepton_line_object_new (color,
+                                                x - 30, y + 30,
+                                                x + 30, y - 30 );
+  LeptonObject* line2 = lepton_line_object_new (color,
+                                                x - 30, y - 30,
+                                                x + 50, y + 50 );
 
   /* text - symbol file name:
   */
@@ -529,12 +529,12 @@ create_placeholder_small (LeptonObject* node, int x, int y)
 
   /* two lines at the left and bottom sides of the text:
   */
-  LeptonObject* line3 = geda_line_object_new (color,
-                                              x + 50, y + 50,
-                                              x + 50, bounds.max_y + 10 );
-  LeptonObject* line4 = geda_line_object_new (color,
-                                              x + 50, y + 50,
-                                              bounds.max_x + 10, y + 50 );
+  LeptonObject* line3 = lepton_line_object_new (color,
+                                                x + 50, y + 50,
+                                                x + 50, bounds.max_y + 10 );
+  LeptonObject* line4 = lepton_line_object_new (color,
+                                                x + 50, y + 50,
+                                                bounds.max_x + 10, y + 50 );
 
   LeptonObject* objs[] =
   {
@@ -588,11 +588,11 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
   g_return_if_fail (new_node->component != NULL);
 
   /* Mark the origin of the missing component */
-  new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                       x - 50, y, x + 50, y);
+  new_prim_obj = lepton_line_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                         x - 50, y, x + 50, y);
   new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
-  new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                       x, y + 50, x, y - 50);
+  new_prim_obj = lepton_line_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                         x, y + 50, x, y - 50);
   new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
 
   /* Add some useful text */
@@ -618,27 +618,27 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
   y_offset = bounds.max_y - bounds.min_y + 100;  /* 100 is just an additional offset */
 
   /* add hazard triangle */
-  new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                       x + NOT_FOUND_TEXT_X + x_offset,
-                                       y + NOT_FOUND_TEXT_Y + y_offset,
-                                       x + NOT_FOUND_TEXT_X + x_offset + 600,
-                                       y + NOT_FOUND_TEXT_Y + y_offset);
+  new_prim_obj = lepton_line_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                         x + NOT_FOUND_TEXT_X + x_offset,
+                                         y + NOT_FOUND_TEXT_Y + y_offset,
+                                         x + NOT_FOUND_TEXT_X + x_offset + 600,
+                                         y + NOT_FOUND_TEXT_Y + y_offset);
   o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
                       50, -1, -1);
   new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
-  new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                       x + NOT_FOUND_TEXT_X + x_offset,
-                                       y + NOT_FOUND_TEXT_Y + y_offset,
-                                       x + NOT_FOUND_TEXT_X + x_offset + 300,
-                                       y + NOT_FOUND_TEXT_Y + y_offset + 500);
+  new_prim_obj = lepton_line_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                         x + NOT_FOUND_TEXT_X + x_offset,
+                                         y + NOT_FOUND_TEXT_Y + y_offset,
+                                         x + NOT_FOUND_TEXT_X + x_offset + 300,
+                                         y + NOT_FOUND_TEXT_Y + y_offset + 500);
   o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
                       50, -1, -1);
   new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);
-  new_prim_obj = geda_line_object_new (DETACHED_ATTRIBUTE_COLOR,
-                                       x + NOT_FOUND_TEXT_X + x_offset + 300,
-                                       y + NOT_FOUND_TEXT_Y + y_offset + 500,
-                                       x + NOT_FOUND_TEXT_X + x_offset + 600,
-                                       y + NOT_FOUND_TEXT_Y + y_offset);
+  new_prim_obj = lepton_line_object_new (DETACHED_ATTRIBUTE_COLOR,
+                                         x + NOT_FOUND_TEXT_X + x_offset + 300,
+                                         y + NOT_FOUND_TEXT_Y + y_offset + 500,
+                                         x + NOT_FOUND_TEXT_X + x_offset + 600,
+                                         y + NOT_FOUND_TEXT_Y + y_offset);
   o_set_line_options (new_prim_obj, END_ROUND, TYPE_SOLID,
                       50, -1, -1);
   new_node->component->prim_objs = g_list_prepend (new_node->component->prim_objs, new_prim_obj);

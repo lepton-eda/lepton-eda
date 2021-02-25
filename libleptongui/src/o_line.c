@@ -104,11 +104,11 @@ void o_line_end(GschemToplevel *w_current, int w_x, int w_y)
        (w_current->first_wy != w_current->second_wy) ) {
 
     /* create the line object and draw it */
-    new_obj = geda_line_object_new (GRAPHIC_COLOR,
-                                    w_current->first_wx,
-                                    w_current->first_wy,
-                                    w_current->second_wx,
-                                    w_current->second_wy);
+    new_obj = lepton_line_object_new (GRAPHIC_COLOR,
+                                      w_current->first_wx,
+                                      w_current->first_wy,
+                                      w_current->second_wx,
+                                      w_current->second_wy);
 
     s_page_append (page, new_obj);
 

@@ -868,11 +868,11 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
 SCM_DEFINE (make_line, "%make-line", 0, 0, 0,
             (), "Create a new line object.")
 {
-  LeptonObject *object = geda_line_object_new (default_color_id(),
-                                             0,
-                                             0,
-                                             0,
-                                             0);
+  LeptonObject *object = lepton_line_object_new (default_color_id(),
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0);
 
   SCM result = edascm_from_object (object);
 
@@ -930,8 +930,8 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
 
   switch (lepton_object_get_type (obj)) {
   case OBJ_LINE:
-    geda_line_object_modify (obj, x1, y1, LINE_END1);
-    geda_line_object_modify (obj, x2, y2, LINE_END2);
+    lepton_line_object_modify (obj, x1, y1, LINE_END1);
+    lepton_line_object_modify (obj, x2, y2, LINE_END2);
     break;
   case OBJ_NET:
     geda_net_object_modify (obj, x1, y1, 0);
@@ -989,10 +989,10 @@ SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
               line_s, SCM_ARG1, s_line_info);
 
   LeptonObject *obj = edascm_to_object (line_s);
-  SCM x1 = scm_from_int (geda_line_object_get_x0 (obj));
-  SCM y1 = scm_from_int (geda_line_object_get_y0 (obj));
-  SCM x2 = scm_from_int (geda_line_object_get_x1 (obj));
-  SCM y2 = scm_from_int (geda_line_object_get_y1 (obj));
+  SCM x1 = scm_from_int (lepton_line_object_get_x0 (obj));
+  SCM y1 = scm_from_int (lepton_line_object_get_y0 (obj));
+  SCM x2 = scm_from_int (lepton_line_object_get_x1 (obj));
+  SCM y2 = scm_from_int (lepton_line_object_get_y1 (obj));
   SCM color = scm_from_int (lepton_object_get_color (obj));
 
   /* Swap ends according to pin's whichend flag. */
