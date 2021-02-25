@@ -25,7 +25,7 @@
 #include "libgeda_priv.h"
 
 
-/*! \file o_net_basic.c
+/*! \file net_object.c
  *  \brief functions for the net object
  */
 
