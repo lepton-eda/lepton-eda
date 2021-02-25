@@ -46,7 +46,8 @@ is_object_hit (GschemToplevel *w_current, LeptonObject *object,
 {
   int left, top, right, bottom;
 
-  if (!geda_object_get_selectable (object)) {
+  if (!lepton_object_get_selectable (object))
+  {
     return FALSE;
   }
 
@@ -62,21 +63,21 @@ is_object_hit (GschemToplevel *w_current, LeptonObject *object,
   /* Do a coarse test first to avoid computing distances for objects ouside
    * of the hit range.
    */
-  if (!geda_object_calculate_visible_bounds (object,
-                                             show_hidden_text,
-                                             &left,
-                                             &top,
-                                             &right,
-                                             &bottom) ||
+  if (!lepton_object_calculate_visible_bounds (object,
+                                               show_hidden_text,
+                                               &left,
+                                               &top,
+                                               &right,
+                                               &bottom) ||
       !inside_region (left  - w_slack, top    - w_slack,
                       right + w_slack, bottom + w_slack,
                       w_x, w_y))
     return FALSE;
 
-  return (geda_object_shortest_distance (object,
-                                         w_x,
-                                         w_y,
-                                         show_hidden_text) < w_slack);
+  return (lepton_object_shortest_distance (object,
+                                           w_x,
+                                           w_y,
+                                           show_hidden_text) < w_slack);
 }
 
 

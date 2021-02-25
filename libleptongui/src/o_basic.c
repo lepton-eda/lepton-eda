@@ -503,12 +503,13 @@ void o_invalidate (GschemToplevel *w_current, LeptonObject *object)
     return;
   }
 
-  if (geda_object_calculate_visible_bounds (object,
-                                            show_hidden_text,
-                                            &left,
-                                            &top,
-                                            &right,
-                                            &bottom)) {
+  if (lepton_object_calculate_visible_bounds (object,
+                                              show_hidden_text,
+                                              &left,
+                                              &top,
+                                              &right,
+                                              &bottom))
+  {
     gschem_page_view_invalidate_world_rect (page_view,
                                             left,
                                             top,

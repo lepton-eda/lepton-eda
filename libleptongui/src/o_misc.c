@@ -114,7 +114,7 @@ void o_lock(GschemToplevel *w_current)
   for (GList* iter = objs; iter != NULL; iter = g_list_next (iter))
   {
     obj = (LeptonObject*) iter->data;
-    geda_object_set_selectable (obj, FALSE);
+    lepton_object_set_selectable (obj, FALSE);
 
     /* for objects with attributes, also lock them:
     */
@@ -163,7 +163,7 @@ void o_unlock(GschemToplevel *w_current)
   for (GList* iter = objs; iter != NULL; iter = g_list_next (iter))
   {
     obj = (LeptonObject*) iter->data;
-    geda_object_set_selectable (obj, TRUE);
+    lepton_object_set_selectable (obj, TRUE);
 
     /* for objects with attributes, also unlock them:
     */

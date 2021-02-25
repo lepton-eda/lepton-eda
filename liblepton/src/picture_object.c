@@ -1007,7 +1007,7 @@ o_picture_copy (LeptonObject *object)
   new_node->picture = picture;
 
   lepton_object_set_color (new_node, lepton_object_get_color (object));
-  new_node->selectable = geda_object_get_selectable (object);
+  new_node->selectable = lepton_object_get_selectable (object);
 
   /* describe the picture with its upper left and lower right corner */
   picture->upper_x = object->picture->upper_x;

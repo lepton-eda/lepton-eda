@@ -137,12 +137,13 @@ world_get_object_glist_bounds (const GList *head,
     /* Sanity check */
     g_return_val_if_fail ((o_current != NULL), found);
 
-    if (geda_object_calculate_visible_bounds (o_current,
-                                              include_hidden,
-                                              &rleft,
-                                              &rtop,
-                                              &rright,
-                                              &rbottom)) {
+    if (lepton_object_calculate_visible_bounds (o_current,
+                                                include_hidden,
+                                                &rleft,
+                                                &rtop,
+                                                &rright,
+                                                &rbottom))
+    {
       if ( found ) {
         *left = MIN( *left, rleft );
         *top = MIN( *top, rtop );
@@ -963,7 +964,7 @@ lepton_component_object_to_buffer (const LeptonObject *object)
                             lepton_object_get_type (object),
                             object->component->x,
                             object->component->y,
-                            geda_object_get_selectable (object),
+                            lepton_object_get_selectable (object),
                             object->component->angle,
                             object->component->mirror,
                             basename);
@@ -1436,12 +1437,13 @@ lepton_component_object_shortest_distance (LeptonObject *object,
 
     /* Collect the bounds of any lines and arcs in the symbol */
     if ((lepton_object_is_line (obj) || lepton_object_is_arc (obj)) &&
-        geda_object_calculate_visible_bounds (obj,
-                                              include_hidden,
-                                              &left,
-                                              &top,
-                                              &right,
-                                              &bottom)) {
+        lepton_object_calculate_visible_bounds (obj,
+                                                include_hidden,
+                                                &left,
+                                                &top,
+                                                &right,
+                                                &bottom))
+    {
       if (found_line_bounds) {
         line_bounds.lower_x = MIN (line_bounds.lower_x, left);
         line_bounds.lower_y = MIN (line_bounds.lower_y, top);
@@ -1455,7 +1457,7 @@ lepton_component_object_shortest_distance (LeptonObject *object,
         found_line_bounds = 1;
       }
     } else {
-      distance = geda_object_shortest_distance_full (obj, x, y, TRUE, include_hidden);
+      distance = lepton_object_shortest_distance_full (obj, x, y, TRUE, include_hidden);
       shortest_distance = MIN (shortest_distance, distance);
     }
 

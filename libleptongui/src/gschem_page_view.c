@@ -1523,12 +1523,12 @@ gschem_page_view_zoom_object (GschemPageView *view, LeptonObject *object)
   g_return_if_fail (object->page != NULL);
   g_return_if_fail (object->page->toplevel != NULL);
 
-  success = geda_object_calculate_visible_bounds (object,
-                                                  view->show_hidden_text,
-                                                  &x[0],
-                                                  &y[0],
-                                                  &x[1],
-                                                  &y[1]);
+  success = lepton_object_calculate_visible_bounds (object,
+                                                    view->show_hidden_text,
+                                                    &x[0],
+                                                    &y[0],
+                                                    &x[1],
+                                                    &y[1]);
 
   if (success) {
 

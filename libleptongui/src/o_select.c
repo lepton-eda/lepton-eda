@@ -404,16 +404,17 @@ void o_select_box_search(GschemToplevel *w_current)
     if (o_is_visible (o_current) || show_hidden_text) {
       int cleft, ctop, cright, cbottom;
 
-      if (geda_object_calculate_visible_bounds (o_current,
-                                                show_hidden_text,
-                                                &cleft,
-                                                &ctop,
-                                                &cright,
-                                                &cbottom) &&
+      if (lepton_object_calculate_visible_bounds (o_current,
+                                                  show_hidden_text,
+                                                  &cleft,
+                                                  &ctop,
+                                                  &cright,
+                                                  &cbottom) &&
           cleft   >= left &&
           cright  <= right  &&
           ctop    >= top  &&
-          cbottom <= bottom) {
+          cbottom <= bottom)
+      {
 
         o_select_object(w_current, o_current, MULTIPLE, count);
         count++;

@@ -152,13 +152,12 @@ s_delete_object (LeptonObject *o_current);
 /* methods */
 
 gboolean
-geda_object_calculate_visible_bounds (LeptonObject *o_current,
-                                      gboolean include_hidden,
-                                      gint *rleft,
-                                      gint *rtop,
-                                      gint *rright,
-                                      gint *rbottom);
-
+lepton_object_calculate_visible_bounds (LeptonObject *o_current,
+                                        gboolean include_hidden,
+                                        gint *rleft,
+                                        gint *rtop,
+                                        gint *rright,
+                                        gint *rbottom);
 gint
 lepton_object_get_color (const LeptonObject *object);
 
@@ -166,44 +165,42 @@ gint
 lepton_object_get_drawing_color (const LeptonObject *object);
 
 gboolean
-geda_object_get_position (const LeptonObject *object, gint *x, gint *y);
-
+lepton_object_get_position (const LeptonObject *object,
+                            gint *x,
+                            gint *y);
 gboolean
-geda_object_get_selectable (const LeptonObject *object);
+lepton_object_get_selectable (const LeptonObject *object);
 
 gint
-geda_object_get_visible (const LeptonObject *object);
+lepton_object_get_visible (const LeptonObject *object);
 
 void
-geda_object_rotate (int world_centerx,
-                    int world_centery,
-                    int angle,
-                    LeptonObject *object);
-
+lepton_object_rotate (int world_centerx,
+                      int world_centery,
+                      int angle,
+                      LeptonObject *object);
 void
-geda_object_mirror (int world_centerx,
-                    int world_centery,
-                    LeptonObject *object);
-
+lepton_object_mirror (int world_centerx,
+                      int world_centery,
+                      LeptonObject *object);
 void
-geda_object_set_selectable (LeptonObject *object, gboolean selectable);
-
+lepton_object_set_selectable (LeptonObject *object,
+                              gboolean selectable);
 double
-geda_object_shortest_distance (LeptonObject *object,
-                               int x,
-                               int y,
-                               gboolean include_hidden);
-
+lepton_object_shortest_distance (LeptonObject *object,
+                                 int x,
+                                 int y,
+                                 gboolean include_hidden);
 double
-geda_object_shortest_distance_full (LeptonObject *object,
-                                    int x,
-                                    int y,
-                                    int force_solid,
-                                    gboolean include_hidden);
-
+lepton_object_shortest_distance_full (LeptonObject *object,
+                                      int x,
+                                      int y,
+                                      int force_solid,
+                                      gboolean include_hidden);
 void
-geda_object_translate (LeptonObject *object, gint dx, gint dy);
-
+lepton_object_translate (LeptonObject *object,
+                         gint dx,
+                         gint dy);
 gboolean
 o_get_fill_options (LeptonObject *object,
                     OBJECT_FILLING *type,

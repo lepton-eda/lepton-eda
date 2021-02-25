@@ -787,12 +787,12 @@ s_page_objects_in_regions (TOPLEVEL *toplevel,
     int left, top, right, bottom;
     int visible;
 
-    visible = geda_object_calculate_visible_bounds (object,
-                                                    include_hidden,
-                                                    &left,
-                                                    &top,
-                                                    &right,
-                                                    &bottom);
+    visible = lepton_object_calculate_visible_bounds (object,
+                                                      include_hidden,
+                                                      &left,
+                                                      &top,
+                                                      &right,
+                                                      &bottom);
     if (visible) {
       for (i = 0; i < n_rects; i++) {
         if (right  >= rects[i].lower_x &&

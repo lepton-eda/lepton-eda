@@ -308,7 +308,7 @@ lepton_object_get_drawing_color (const LeptonObject *object)
  *  \retval FALSE if a failure occured
  */
 gboolean
-geda_object_get_selectable (const LeptonObject *object)
+lepton_object_get_selectable (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, FALSE);
 
@@ -323,7 +323,8 @@ geda_object_get_selectable (const LeptonObject *object)
  *  \param [in] selectable true if the object is selectable
  */
 void
-geda_object_set_selectable (LeptonObject *object, gboolean selectable)
+lepton_object_set_selectable (LeptonObject *object,
+                              gboolean selectable)
 {
   g_return_if_fail (object != NULL);
 
@@ -808,7 +809,9 @@ gboolean o_get_fill_options(LeptonObject *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_object_get_position (const LeptonObject *object, gint *x, gint *y)
+lepton_object_get_position (const LeptonObject *object,
+                            gint *x,
+                            gint *y)
 {
   gboolean (*func) (const LeptonObject*, int*, int*) = NULL;
 
@@ -827,7 +830,7 @@ geda_object_get_position (const LeptonObject *object, gint *x, gint *y)
     case OBJ_ARC:       func = lepton_arc_object_get_position;       break;
     case OBJ_COMPONENT: func = lepton_component_object_get_position; break;
     default:
-      g_critical ("geda_object_get_position: object %1$p has bad type '%2$c'\n",
+      g_critical ("lepton_object_get_position: object %1$p has bad type '%2$c'\n",
                   object, lepton_object_get_type (object));
   }
 
@@ -848,7 +851,9 @@ geda_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  \param [in] dy       Amount to vertically translate object
  */
 void
-geda_object_translate (LeptonObject *object, gint dx, gint dy)
+lepton_object_translate (LeptonObject *object,
+                         gint dx,
+                         gint dy)
 {
   void (*func) (LeptonObject*, int, int) = NULL;
 
@@ -865,7 +870,7 @@ geda_object_translate (LeptonObject *object, gint dx, gint dy)
     case OBJ_ARC:       func = lepton_arc_object_translate;       break;
     case OBJ_COMPONENT: func = lepton_component_object_translate; break;
     default:
-      g_critical ("geda_object_translate: object %1$p has bad type '%2$c'\n",
+      g_critical ("lepton_object_translate: object %1$p has bad type '%2$c'\n",
                   object, lepton_object_get_type (object));
   }
 
@@ -886,10 +891,10 @@ geda_object_translate (LeptonObject *object, gint dx, gint dy)
  *  \param [in] object         The object to rotate.
  */
 void
-geda_object_rotate (int world_centerx,
-                    int world_centery,
-                    int angle,
-                    LeptonObject *object)
+lepton_object_rotate (int world_centerx,
+                      int world_centery,
+                      int angle,
+                      LeptonObject *object)
 {
   void (*func) (int, int, int, LeptonObject*) = NULL;
 
@@ -906,7 +911,7 @@ geda_object_rotate (int world_centerx,
     case OBJ_ARC:       func = lepton_arc_object_rotate;       break;
     case OBJ_COMPONENT: func = lepton_component_object_rotate; break;
     default:
-      g_critical ("geda_object_rotate: object %1$p has bad type '%2$c'\n",
+      g_critical ("lepton_object_rotate: object %1$p has bad type '%2$c'\n",
                   object, lepton_object_get_type (object));
   }
 
@@ -926,9 +931,9 @@ geda_object_rotate (int world_centerx,
  *  \param [in,out] object         The LeptonObject to mirror.
  */
 void
-geda_object_mirror (int world_centerx,
-                    int world_centery,
-                    LeptonObject *object)
+lepton_object_mirror (int world_centerx,
+                      int world_centery,
+                      LeptonObject *object)
 {
   void (*func) (int, int, LeptonObject*) = NULL;
 
@@ -945,7 +950,7 @@ geda_object_mirror (int world_centerx,
     case OBJ_ARC:       func = lepton_arc_object_mirror;       break;
     case OBJ_COMPONENT: func = lepton_component_object_mirror; break;
     default:
-      g_critical ("geda_object_mirror: object %1$p has bad type '%2$c'\n",
+      g_critical ("lepton_object_mirror: object %1$p has bad type '%2$c'\n",
                   object, lepton_object_get_type (object));
   }
 
@@ -968,9 +973,12 @@ geda_object_mirror (int world_centerx,
  *  G_MAXDOUBLE.
  */
 double
-geda_object_shortest_distance (LeptonObject *object, int x, int y, gboolean include_hidden)
+lepton_object_shortest_distance (LeptonObject *object,
+                                 int x,
+                                 int y,
+                                 gboolean include_hidden)
 {
-  return geda_object_shortest_distance_full (object, x, y, FALSE, include_hidden);
+  return lepton_object_shortest_distance_full (object, x, y, FALSE, include_hidden);
 }
 
 /*! \brief Calculates the distance between the given point and the closest
@@ -987,11 +995,11 @@ geda_object_shortest_distance (LeptonObject *object, int x, int y, gboolean incl
  *  G_MAXDOUBLE.
  */
 double
-geda_object_shortest_distance_full (LeptonObject *object,
-                                    int x,
-                                    int y,
-                                    int force_solid,
-                                    gboolean include_hidden)
+lepton_object_shortest_distance_full (LeptonObject *object,
+                                      int x,
+                                      int y,
+                                      int force_solid,
+                                      gboolean include_hidden)
 {
   double shortest_distance = G_MAXDOUBLE;
   double (*func) (LeptonObject *, int, int, int, gboolean) = NULL;
@@ -1011,7 +1019,7 @@ geda_object_shortest_distance_full (LeptonObject *object,
     case OBJ_PATH:      func = lepton_path_object_shortest_distance;      break;
     case OBJ_ARC:       func = lepton_arc_object_shortest_distance;       break;
     default:
-      g_critical ("geda_object_shortest_distance: object %1$p has bad type '%2$c'\n",
+      g_critical ("lepton_object_shortest_distance: object %1$p has bad type '%2$c'\n",
                   object, lepton_object_get_type (object));
   }
 
@@ -1253,7 +1261,7 @@ o_is_visible (const LeptonObject *object)
  *  \return VISIBLE or INVISIBLE
  */
 gint
-geda_object_get_visible (const LeptonObject *object)
+lepton_object_get_visible (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, VISIBLE);
 
@@ -1287,12 +1295,12 @@ o_set_visibility (LeptonObject *object, int visibility)
  *  \retval 1 Bound was found
  */
 gboolean
-geda_object_calculate_visible_bounds (LeptonObject *o_current,
-                                      gboolean include_hidden,
-                                      gint *rleft,
-                                      gint *rtop,
-                                      gint *rright,
-                                      gint *rbottom)
+lepton_object_calculate_visible_bounds (LeptonObject *o_current,
+                                        gboolean include_hidden,
+                                        gint *rleft,
+                                        gint *rtop,
+                                        gint *rright,
+                                        gint *rbottom)
 {
   if (o_current == NULL) {
     return 0;

@@ -632,7 +632,7 @@ lepton_text_object_to_buffer (const LeptonObject *object)
                           lepton_text_object_get_y (object),
                           lepton_object_get_color (object),
                           lepton_text_object_get_size (object),
-                          geda_object_get_visible (object),
+                          lepton_object_get_visible (object),
                           object->show_name_value,
                           lepton_text_object_get_angle (object),
                           lepton_text_object_get_alignment (object),
@@ -697,7 +697,7 @@ lepton_text_object_copy (const LeptonObject *object)
                                     object->text->angle,
                                     object->text->string,
                                     object->text->size,
-                                    geda_object_get_visible (object),
+                                    lepton_object_get_visible (object),
                                     object->show_name_value);
 
   return new_obj;
@@ -863,12 +863,12 @@ lepton_text_object_shortest_distance (LeptonObject *object,
 
   g_return_val_if_fail (object->text != NULL, G_MAXDOUBLE);
 
-  if (!geda_object_calculate_visible_bounds (object,
-                                             include_hidden,
-                                             &left,
-                                             &top,
-                                             &right,
-                                             &bottom))
+  if (!lepton_object_calculate_visible_bounds (object,
+                                               include_hidden,
+                                               &left,
+                                               &top,
+                                               &right,
+                                               &bottom))
     return G_MAXDOUBLE;
 
   dx = MIN (x - left, right - x);

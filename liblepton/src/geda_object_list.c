@@ -211,7 +211,7 @@ geda_object_list_translate (const GList *objects, int dx, int dy)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*)iter->data;
 
-    geda_object_translate (object, dx, dy);
+    lepton_object_translate (object, dx, dy);
     iter = g_list_next (iter);
   }
 }
@@ -231,7 +231,7 @@ geda_object_list_rotate (const GList *objects, int x, int y, int angle)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*)iter->data;
 
-    geda_object_rotate (x, y, angle, object);
+    lepton_object_rotate (x, y, angle, object);
     iter = g_list_next (iter);
   }
 }
@@ -250,7 +250,7 @@ geda_object_list_mirror (const GList *objects, int x, int y)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*)iter->data;
 
-    geda_object_mirror (x, y, object);
+    lepton_object_mirror (x, y, object);
     iter = g_list_next (iter);
   }
 }
@@ -288,7 +288,7 @@ geda_object_list_set_selectable (const GList *objects, gboolean selectable)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*)iter->data;
 
-    geda_object_set_selectable (object, selectable);
+    lepton_object_set_selectable (object, selectable);
     iter = g_list_next (iter);
   }
 }
