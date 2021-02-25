@@ -54,6 +54,9 @@ Rather than parsing and processing schematic files directly, this utility should
 be rewritten using the Lepton EDA scheme API.  This would take advantage of the existing
 parsers for the schematic files.
 
+.SH AUTHOR
+Dan McMahill <danmcmahill@netbsd.org>
+
 .SH SEE ALSO
 lepton-netlist(1), lepton-schematic(1), pcb(1)
 
