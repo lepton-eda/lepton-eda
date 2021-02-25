@@ -71,7 +71,7 @@ G_BEGIN_DECLS
 #include <liblepton/path_object.h>
 #include <liblepton/picture_object.h>
 #include <liblepton/pin_object.h>
-#include <liblepton/geda_text_object.h>
+#include <liblepton/text_object.h>
 
 #include <liblepton/globals.h>
 #include <liblepton/o_types.h>

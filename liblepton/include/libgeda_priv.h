@@ -53,7 +53,7 @@
 #include "path_object.h"
 #include "picture_object.h"
 #include "pin_object.h"
-#include "geda_text_object.h"
+#include "text_object.h"
 
 #include "globals.h"
 #include "o_types.h"

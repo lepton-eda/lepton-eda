@@ -35,7 +35,6 @@ libleptoninclude_HEADERS = \
 	liblepton/geda_point.h \
 	liblepton/geda_string.h \
 	liblepton/geda_text.h \
-	liblepton/geda_text_object.h \
 	liblepton/geda_toplevel.h \
 	liblepton/geda_transform.h \
 	liblepton/geda_undo.h \
@@ -50,6 +49,7 @@ libleptoninclude_HEADERS = \
 	liblepton/picture_object.h \
 	liblepton/pin_object.h \
 	liblepton/struct.h \
+	liblepton/text_object.h \
 	liblepton/edacairo.h \
 	liblepton/edapangorenderer.h \
 	liblepton/edarenderer.h

@@ -61,7 +61,6 @@ liblepton_la_SOURCES = \
 	geda_picture.c \
 	geda_point.c \
 	geda_string.c \
-	geda_text_object.c \
 	geda_toplevel.c \
 	geda_transform.c \
 	geda_undo.c \
@@ -87,6 +86,7 @@ liblepton_la_SOURCES = \
 	s_slot.c \
 	s_textbuffer.c \
 	s_weakref.c \
+	text_object.c \
 	version.c \
 	edacairo.c \
 	edapangorenderer.c \
