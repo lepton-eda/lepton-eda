@@ -354,8 +354,8 @@ GList
     cfg_read_bool ("schematic.gui", "force-boundingbox",
                    default_force_boundingbox, &force_boundingbox);
 
-    geda_pin_object_update_whichend (new_object_list,
-                                     (found_pin == 1 || force_boundingbox));
+    lepton_pin_object_update_whichend (new_object_list,
+                                       (found_pin == 1 || force_boundingbox));
   }
 
   s_textbuffer_free(tb);

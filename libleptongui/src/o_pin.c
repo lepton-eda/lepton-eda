@@ -64,13 +64,13 @@ void o_pin_end(GschemToplevel *w_current, int x, int y)
     return;
   }
 
-  new_obj = geda_pin_object_new (PIN_COLOR,
-                                 w_current->first_wx,
-                                 w_current->first_wy,
-                                 w_current->second_wx,
-                                 w_current->second_wy,
-                                 PIN_TYPE_NET,
-                                 0);
+  new_obj = lepton_pin_object_new (PIN_COLOR,
+                                   w_current->first_wx,
+                                   w_current->first_wy,
+                                   w_current->second_wx,
+                                   w_current->second_wy,
+                                   PIN_TYPE_NET,
+                                   0);
   s_page_append (page, new_obj);
 
   /* Call add-objects-hook */

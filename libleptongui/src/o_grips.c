@@ -1262,10 +1262,10 @@ static void o_grips_end_pin(GschemToplevel *w_current, LeptonObject *o_current,
   }
 
   s_conn_remove_object_connections (o_current);
-  geda_pin_object_modify (o_current,
-                          w_current->second_wx,
-                          w_current->second_wy,
-                          w_current->which_grip);
+  lepton_pin_object_modify (o_current,
+                            w_current->second_wx,
+                            w_current->second_wy,
+                            w_current->which_grip);
   s_conn_update_object (o_current->page, o_current);
 }
 

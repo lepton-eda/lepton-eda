@@ -943,8 +943,8 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
     break;
   case OBJ_PIN:
     /* Swap ends according to pin's whichend flag. */
-    geda_pin_object_modify (obj, x1, y1, obj->whichend ? 1 : 0);
-    geda_pin_object_modify (obj, x2, y2, obj->whichend ? 0 : 1);
+    lepton_pin_object_modify (obj, x1, y1, obj->whichend ? 1 : 0);
+    lepton_pin_object_modify (obj, x2, y2, obj->whichend ? 0 : 1);
     break;
   default:
     return line_s;
@@ -1096,13 +1096,13 @@ SCM_DEFINE (make_pin, "%make-pin", 1, 0, 0,
                     scm_list_1 (type_s));
   }
 
-  LeptonObject *obj = geda_pin_object_new (PIN_COLOR,
-                                           0,
-                                           0,
-                                           0,
-                                           0,
-                                           type,
-                                           0);
+  LeptonObject *obj = lepton_pin_object_new (PIN_COLOR,
+                                             0,
+                                             0,
+                                             0,
+                                             0,
+                                             type,
+                                             0);
   SCM result = edascm_from_object (obj);
 
   /* At the moment, the only pointer to the object is owned by the

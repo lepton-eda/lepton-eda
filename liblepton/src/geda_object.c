@@ -404,7 +404,7 @@ o_object_copy (LeptonObject *selected)
       break;
 
     case(OBJ_PIN):
-      new_obj = geda_pin_object_copy (selected);
+      new_obj = lepton_pin_object_copy (selected);
       break;
 
     case(OBJ_ARC):
@@ -823,7 +823,7 @@ geda_object_get_position (const LeptonObject *object, gint *x, gint *y)
       case OBJ_CIRCLE:  func = lepton_circle_object_get_position;  break;
       case OBJ_TEXT:    func = geda_text_object_get_position;    break;
       case OBJ_PATH:    func = lepton_path_object_get_position;    break;
-      case OBJ_PIN:     func = geda_pin_object_get_position;     break;
+      case OBJ_PIN:     func = lepton_pin_object_get_position;     break;
       case OBJ_ARC:     func = lepton_arc_object_get_position;     break;
       case OBJ_COMPONENT: func = lepton_component_object_get_position; break;
       default:
@@ -861,7 +861,7 @@ geda_object_translate (LeptonObject *object, gint dx, gint dy)
       case OBJ_CIRCLE:  func = lepton_circle_object_translate;  break;
       case OBJ_TEXT:    func = geda_text_object_translate;    break;
       case OBJ_PATH:    func = lepton_path_object_translate;    break;
-      case OBJ_PIN:     func = geda_pin_object_translate;     break;
+      case OBJ_PIN:     func = lepton_pin_object_translate;     break;
       case OBJ_ARC:     func = lepton_arc_object_translate;     break;
       case OBJ_COMPONENT: func = lepton_component_object_translate; break;
       default:
@@ -902,7 +902,7 @@ geda_object_rotate (int world_centerx,
       case OBJ_CIRCLE:  func = lepton_circle_object_rotate;  break;
       case OBJ_TEXT:    func = geda_text_object_rotate;    break;
       case OBJ_PATH:    func = lepton_path_object_rotate;    break;
-      case OBJ_PIN:     func = geda_pin_object_rotate;     break;
+      case OBJ_PIN:     func = lepton_pin_object_rotate;     break;
       case OBJ_ARC:     func = lepton_arc_object_rotate;     break;
       case OBJ_COMPONENT: func = lepton_component_object_rotate; break;
       default:
@@ -941,7 +941,7 @@ geda_object_mirror (int world_centerx,
       case OBJ_CIRCLE:  func = lepton_circle_object_mirror;  break;
       case OBJ_TEXT:    func = geda_text_object_mirror;    break;
       case OBJ_PATH:    func = lepton_path_object_mirror;    break;
-      case OBJ_PIN:     func = geda_pin_object_mirror;     break;
+      case OBJ_PIN:     func = lepton_pin_object_mirror;     break;
       case OBJ_ARC:     func = lepton_arc_object_mirror;     break;
       case OBJ_COMPONENT: func = lepton_component_object_mirror; break;
       default:
@@ -1372,7 +1372,7 @@ geda_object_calculate_visible_bounds (LeptonObject *o_current,
     if (o_current->line == NULL) {
       return 0;
     }
-    geda_pin_object_calculate_bounds (o_current, &bounds);
+    lepton_pin_object_calculate_bounds (o_current, &bounds);
     break;
 
   case(OBJ_ARC):

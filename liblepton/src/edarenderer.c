@@ -677,7 +677,7 @@ eda_renderer_draw_bus (EdaRenderer *renderer, LeptonObject *object)
 static void
 eda_renderer_draw_pin (EdaRenderer *renderer, LeptonObject *object)
 {
-  int width = geda_pin_object_get_width (object);
+  int width = lepton_pin_object_get_width (object);
 
   eda_cairo_line (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                   END_SQUARE, width,
