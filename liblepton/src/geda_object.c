@@ -815,20 +815,20 @@ geda_object_get_position (const LeptonObject *object, gint *x, gint *y)
   g_return_val_if_fail (object != NULL, FALSE);
 
   switch (lepton_object_get_type (object)) {
-      case OBJ_LINE:    func = lepton_line_object_get_position;    break;
-      case OBJ_NET:     func = lepton_net_object_get_position;     break;
-      case OBJ_BUS:     func = lepton_bus_object_get_position;     break;
-      case OBJ_BOX:     func = lepton_box_object_get_position;     break;
-      case OBJ_PICTURE: func = lepton_picture_object_get_position; break;
-      case OBJ_CIRCLE:  func = lepton_circle_object_get_position;  break;
-      case OBJ_TEXT:    func = lepton_text_object_get_position;    break;
-      case OBJ_PATH:    func = lepton_path_object_get_position;    break;
-      case OBJ_PIN:     func = lepton_pin_object_get_position;     break;
-      case OBJ_ARC:     func = lepton_arc_object_get_position;     break;
-      case OBJ_COMPONENT: func = lepton_component_object_get_position; break;
-      default:
-        g_critical ("geda_object_get_position: object %1$p has bad type '%2$c'\n",
-                    object, lepton_object_get_type (object));
+    case OBJ_LINE:      func = lepton_line_object_get_position;      break;
+    case OBJ_NET:       func = lepton_net_object_get_position;       break;
+    case OBJ_BUS:       func = lepton_bus_object_get_position;       break;
+    case OBJ_BOX:       func = lepton_box_object_get_position;       break;
+    case OBJ_PICTURE:   func = lepton_picture_object_get_position;   break;
+    case OBJ_CIRCLE:    func = lepton_circle_object_get_position;    break;
+    case OBJ_TEXT:      func = lepton_text_object_get_position;      break;
+    case OBJ_PATH:      func = lepton_path_object_get_position;      break;
+    case OBJ_PIN:       func = lepton_pin_object_get_position;       break;
+    case OBJ_ARC:       func = lepton_arc_object_get_position;       break;
+    case OBJ_COMPONENT: func = lepton_component_object_get_position; break;
+    default:
+      g_critical ("geda_object_get_position: object %1$p has bad type '%2$c'\n",
+                  object, lepton_object_get_type (object));
   }
 
   if (func != NULL) {
@@ -853,20 +853,20 @@ geda_object_translate (LeptonObject *object, gint dx, gint dy)
   void (*func) (LeptonObject*, int, int) = NULL;
 
   switch (lepton_object_get_type (object)) {
-      case OBJ_LINE:    func = lepton_line_object_translate;    break;
-      case OBJ_NET:     func = lepton_net_object_translate;     break;
-      case OBJ_BUS:     func = lepton_bus_object_translate;     break;
-      case OBJ_BOX:     func = lepton_box_object_translate;     break;
-      case OBJ_PICTURE: func = lepton_picture_object_translate; break;
-      case OBJ_CIRCLE:  func = lepton_circle_object_translate;  break;
-      case OBJ_TEXT:    func = lepton_text_object_translate;    break;
-      case OBJ_PATH:    func = lepton_path_object_translate;    break;
-      case OBJ_PIN:     func = lepton_pin_object_translate;     break;
-      case OBJ_ARC:     func = lepton_arc_object_translate;     break;
-      case OBJ_COMPONENT: func = lepton_component_object_translate; break;
-      default:
-        g_critical ("geda_object_translate: object %1$p has bad type '%2$c'\n",
-                    object, lepton_object_get_type (object));
+    case OBJ_LINE:      func = lepton_line_object_translate;      break;
+    case OBJ_NET:       func = lepton_net_object_translate;       break;
+    case OBJ_BUS:       func = lepton_bus_object_translate;       break;
+    case OBJ_BOX:       func = lepton_box_object_translate;       break;
+    case OBJ_PICTURE:   func = lepton_picture_object_translate;   break;
+    case OBJ_CIRCLE:    func = lepton_circle_object_translate;    break;
+    case OBJ_TEXT:      func = lepton_text_object_translate;      break;
+    case OBJ_PATH:      func = lepton_path_object_translate;      break;
+    case OBJ_PIN:       func = lepton_pin_object_translate;       break;
+    case OBJ_ARC:       func = lepton_arc_object_translate;       break;
+    case OBJ_COMPONENT: func = lepton_component_object_translate; break;
+    default:
+      g_critical ("geda_object_translate: object %1$p has bad type '%2$c'\n",
+                  object, lepton_object_get_type (object));
   }
 
   if (func != NULL) {
@@ -894,20 +894,20 @@ geda_object_rotate (int world_centerx,
   void (*func) (int, int, int, LeptonObject*) = NULL;
 
   switch (lepton_object_get_type (object)) {
-      case OBJ_LINE:    func = lepton_line_object_rotate;    break;
-      case OBJ_NET:     func = lepton_net_object_rotate;     break;
-      case OBJ_BUS:     func = lepton_bus_object_rotate;     break;
-      case OBJ_BOX:     func = lepton_box_object_rotate;     break;
-      case OBJ_PICTURE: func = lepton_picture_object_rotate; break;
-      case OBJ_CIRCLE:  func = lepton_circle_object_rotate;  break;
-      case OBJ_TEXT:    func = lepton_text_object_rotate;    break;
-      case OBJ_PATH:    func = lepton_path_object_rotate;    break;
-      case OBJ_PIN:     func = lepton_pin_object_rotate;     break;
-      case OBJ_ARC:     func = lepton_arc_object_rotate;     break;
-      case OBJ_COMPONENT: func = lepton_component_object_rotate; break;
-      default:
-        g_critical ("geda_object_rotate: object %1$p has bad type '%2$c'\n",
-                    object, lepton_object_get_type (object));
+    case OBJ_LINE:      func = lepton_line_object_rotate;      break;
+    case OBJ_NET:       func = lepton_net_object_rotate;       break;
+    case OBJ_BUS:       func = lepton_bus_object_rotate;       break;
+    case OBJ_BOX:       func = lepton_box_object_rotate;       break;
+    case OBJ_PICTURE:   func = lepton_picture_object_rotate;   break;
+    case OBJ_CIRCLE:    func = lepton_circle_object_rotate;    break;
+    case OBJ_TEXT:      func = lepton_text_object_rotate;      break;
+    case OBJ_PATH:      func = lepton_path_object_rotate;      break;
+    case OBJ_PIN:       func = lepton_pin_object_rotate;       break;
+    case OBJ_ARC:       func = lepton_arc_object_rotate;       break;
+    case OBJ_COMPONENT: func = lepton_component_object_rotate; break;
+    default:
+      g_critical ("geda_object_rotate: object %1$p has bad type '%2$c'\n",
+                  object, lepton_object_get_type (object));
   }
 
   if (func != NULL) {
@@ -933,20 +933,20 @@ geda_object_mirror (int world_centerx,
   void (*func) (int, int, LeptonObject*) = NULL;
 
   switch (lepton_object_get_type (object)) {
-      case OBJ_LINE:    func = lepton_line_object_mirror;    break;
-      case OBJ_NET:     func = lepton_net_object_mirror;     break;
-      case OBJ_BUS:     func = lepton_bus_object_mirror;     break;
-      case OBJ_BOX:     func = lepton_box_object_mirror;     break;
-      case OBJ_PICTURE: func = lepton_picture_object_mirror; break;
-      case OBJ_CIRCLE:  func = lepton_circle_object_mirror;  break;
-      case OBJ_TEXT:    func = lepton_text_object_mirror;    break;
-      case OBJ_PATH:    func = lepton_path_object_mirror;    break;
-      case OBJ_PIN:     func = lepton_pin_object_mirror;     break;
-      case OBJ_ARC:     func = lepton_arc_object_mirror;     break;
-      case OBJ_COMPONENT: func = lepton_component_object_mirror; break;
-      default:
-        g_critical ("geda_object_mirror: object %1$p has bad type '%2$c'\n",
-                    object, lepton_object_get_type (object));
+    case OBJ_LINE:      func = lepton_line_object_mirror;      break;
+    case OBJ_NET:       func = lepton_net_object_mirror;       break;
+    case OBJ_BUS:       func = lepton_bus_object_mirror;       break;
+    case OBJ_BOX:       func = lepton_box_object_mirror;       break;
+    case OBJ_PICTURE:   func = lepton_picture_object_mirror;   break;
+    case OBJ_CIRCLE:    func = lepton_circle_object_mirror;    break;
+    case OBJ_TEXT:      func = lepton_text_object_mirror;      break;
+    case OBJ_PATH:      func = lepton_path_object_mirror;      break;
+    case OBJ_PIN:       func = lepton_pin_object_mirror;       break;
+    case OBJ_ARC:       func = lepton_arc_object_mirror;       break;
+    case OBJ_COMPONENT: func = lepton_component_object_mirror; break;
+    default:
+      g_critical ("geda_object_mirror: object %1$p has bad type '%2$c'\n",
+                  object, lepton_object_get_type (object));
   }
 
   if (func != NULL) {
@@ -1002,14 +1002,14 @@ geda_object_shortest_distance_full (LeptonObject *object,
     case OBJ_BUS:
     case OBJ_NET:
     case OBJ_PIN:
-    case OBJ_LINE:        func = lepton_line_object_shortest_distance;     break;
-    case OBJ_BOX:         func = lepton_box_object_shortest_distance;      break;
-    case OBJ_PICTURE:     func = lepton_picture_object_shortest_distance;  break;
-    case OBJ_CIRCLE:      func = lepton_circle_object_shortest_distance;   break;
-    case OBJ_COMPONENT:   func = lepton_component_object_shortest_distance;  break;
-    case OBJ_TEXT:        func = lepton_text_object_shortest_distance;     break;
-    case OBJ_PATH:        func = lepton_path_object_shortest_distance;     break;
-    case OBJ_ARC:         func = lepton_arc_object_shortest_distance;      break;
+    case OBJ_LINE:      func = lepton_line_object_shortest_distance;      break;
+    case OBJ_BOX:       func = lepton_box_object_shortest_distance;       break;
+    case OBJ_PICTURE:   func = lepton_picture_object_shortest_distance;   break;
+    case OBJ_CIRCLE:    func = lepton_circle_object_shortest_distance;    break;
+    case OBJ_COMPONENT: func = lepton_component_object_shortest_distance; break;
+    case OBJ_TEXT:      func = lepton_text_object_shortest_distance;      break;
+    case OBJ_PATH:      func = lepton_path_object_shortest_distance;      break;
+    case OBJ_ARC:       func = lepton_arc_object_shortest_distance;       break;
     default:
       g_critical ("geda_object_shortest_distance: object %1$p has bad type '%2$c'\n",
                   object, lepton_object_get_type (object));
