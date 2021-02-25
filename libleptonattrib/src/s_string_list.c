@@ -61,13 +61,13 @@
  */
 STRING_LIST *s_string_list_new() {
   STRING_LIST *local_string_list;
-  
+
   local_string_list = (STRING_LIST*) g_malloc (sizeof (STRING_LIST));
   local_string_list->data = NULL;
   local_string_list->next = NULL;
   local_string_list->prev = NULL;
   local_string_list->pos = -1;   /* can look for this later . . .  */
-  
+
   return local_string_list;
 }
 
@@ -88,7 +88,7 @@ STRING_LIST *s_string_list_duplicate_string_list(STRING_LIST *old_string_list) {
 
   new_string_list = s_string_list_new();
 
-  if (old_string_list->data == NULL) 
+  if (old_string_list->data == NULL)
     /* This is an empty string list */
     return new_string_list;
 
@@ -119,14 +119,14 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   gchar *trial_item = NULL;
   STRING_LIST *prev;
   STRING_LIST *local_list;
-  
+
   if (list == NULL) {
     fprintf (stderr, "s_string_list_add_item: ");
     fprintf (stderr, _("Tried to add to a NULL list.\n"));
     return;
   }
 
-  /* First check to see if list is empty.  Handle insertion of first item 
+  /* First check to see if list is empty.  Handle insertion of first item
      into empty list separately.  (Is this necessary?) */
   if (list->data == NULL) {
     g_debug ("s_string_list_add_item: "
@@ -142,7 +142,7 @@ void s_string_list_add_item(STRING_LIST *list, int *count, char *item) {
   /* Otherwise, loop through list looking for duplicates */
   prev = list;
   while (list != NULL) {
-    trial_item = (gchar *) g_strdup(list->data);        
+    trial_item = (gchar *) g_strdup(list->data);
     if (strcmp(trial_item, item) == 0) {
       /* Found item already in list.  Just return. */
       g_free(trial_item);
@@ -198,7 +198,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
   /* Now loop through list looking for item */
   list_item = (*list);
   while (list_item != NULL) {
-    trial_item = (gchar *) g_strdup(list_item->data);        
+    trial_item = (gchar *) g_strdup(list_item->data);
     g_debug ("s_string_list_delete_item: "
              "Matching item against trial item = %s from list.\n",
              trial_item);
@@ -226,7 +226,7 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
 	prev_item->next = next_item;
 	next_item->prev = prev_item;
       }
-      
+
       g_debug ("s_string_list_delete_item: "
                "Free list_item.\n");
       g_free(list_item);  /* free current list item */
@@ -265,9 +265,9 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
 int s_string_list_in_list(STRING_LIST *list, char *item) {
 
   gchar *trial_item = NULL;
-  
+
   /* First check to see if list is empty.  If empty, return
-   * 0 automatically.  (I probably don't need to handle this 
+   * 0 automatically.  (I probably don't need to handle this
    * separately.)  */
   if (list->data == NULL) {
     return 0;
@@ -275,7 +275,7 @@ int s_string_list_in_list(STRING_LIST *list, char *item) {
 
   /* Otherwise, loop through list looking for duplicates */
   while (list != NULL) {
-    trial_item = (gchar *) g_strdup(list->data);        
+    trial_item = (gchar *) g_strdup(list->data);
     if (strcmp(trial_item, item) == 0) {
       /* Found item already in list.  return 1. */
       g_free(trial_item);
@@ -285,7 +285,7 @@ int s_string_list_in_list(STRING_LIST *list, char *item) {
     list = list->next;
   }
 
-  /* If we are here, it's 'cause we didn't find the item 
+  /* If we are here, it's 'cause we didn't find the item
    * pre-existing in the list.  In this case, return 0 */
   return 0;
 
@@ -299,14 +299,14 @@ int s_string_list_in_list(STRING_LIST *list, char *item) {
  * Intended to be a more useful variant of s_string_list_in_list.
  *
  * \param list pointer to the STRING_LIST struct
- * \param item string to search for 
+ * \param item string to search for
  * \returns -1 if absent, index number if present
  */
 gint s_string_list_find_in_list(STRING_LIST *list, char *item) {
 
   gint index = 0;
-  gchar *trial_item = NULL; 
-  
+  gchar *trial_item = NULL;
+
   /* First check to see if list is empty.  If empty, return -1. */
   if (list->data == NULL) {
     return -1;
@@ -314,7 +314,7 @@ gint s_string_list_find_in_list(STRING_LIST *list, char *item) {
 
   /* Otherwise, loop through list looking for the item */
   while (list != NULL) {
-    trial_item = (gchar *) g_strdup(list->data);        
+    trial_item = (gchar *) g_strdup(list->data);
     if (strcmp(trial_item, item) == 0) {
       /* Found item in list; return index. */
       g_free(trial_item);
@@ -325,7 +325,7 @@ gint s_string_list_find_in_list(STRING_LIST *list, char *item) {
     index++;
   }
 
-  /* If we are here, it's 'cause we didn't find the item 
+  /* If we are here, it's 'cause we didn't find the item
    * pre-existing in the list.  In this case, return -1 */
   return -1;
 
@@ -341,7 +341,7 @@ gint s_string_list_find_in_list(STRING_LIST *list, char *item) {
  * \returns NULL if there is a problem otherwise a pointer to
  *          the string.
  */
-gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index) 
+gchar *s_string_list_get_data_at_index(STRING_LIST *list, gint index)
 {
   gint i;
   STRING_LIST *local_item;
@@ -388,7 +388,7 @@ void s_string_list_sort_master_comp_list() {
    * in the list.  */
   while (local_list != NULL) {  /* make sure item is not null */
     local_list->pos = i;
-    if (local_list->next != NULL) {  
+    if (local_list->next != NULL) {
       i++;
       local_list = local_list->next;
     } else {
@@ -440,8 +440,8 @@ void s_string_list_sort_master_comp_attrib_list() {
   local_list = sheet_head->master_comp_attrib_list_head;
 
   /*
-   * Note that this sort is TBD -- it is more than just an alphabetic sort 'cause we want 
-   * certain attribs to go first. 
+   * Note that this sort is TBD -- it is more than just an alphabetic sort 'cause we want
+   * certain attribs to go first.
    */
   for (p=local_list; p; p=p->next) {
     int i;
@@ -500,7 +500,7 @@ void s_string_list_sort_master_net_list() {
  * Take the master net attribute list
  * sheet_head->master_net_attrib_list_head
  * and sort it in this order:
- * value, footprint, model-name, file, 
+ * value, footprint, model-name, file,
  * <all other attributes in alphabetical order>
  */
 /*------------------------------------------------------------------*/
@@ -547,7 +547,7 @@ void s_string_list_sort_master_pin_list() {
    * in the list.  */
   while (local_list != NULL) {  /* make sure item is not null */
     local_list->pos = i;
-    if (local_list->next != NULL) {  
+    if (local_list->next != NULL) {
       i++;
       local_list = local_list->next;
     } else {
@@ -583,10 +583,10 @@ void s_string_list_sort_master_pin_attrib_list() {
   /* Here's where we do the sort */
 
   /*
-   * Note that this sort is TBD -- it is more than just an alphabetic sort 'cause we want 
-   * certain attribs to go first. 
+   * Note that this sort is TBD -- it is more than just an alphabetic sort 'cause we want
+   * certain attribs to go first.
    */
-  
+
 
   /* Do this after sorting is done.  This resets the order of the individual items
    * in the list.  */

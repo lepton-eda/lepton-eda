@@ -48,7 +48,7 @@
 /* \brief Export components to CSV
  *
  * This function is invoked when the user selects file ->
- * export from the pull-down menu.  It writes out a CSV file 
+ * export from the pull-down menu.  It writes out a CSV file
  * of the design for external processing.
  *
  * \param filename The name of the file to export to
@@ -68,8 +68,8 @@ void f_export_components(gchar *filename)
   if (cur_page != 0) {
     /* We only export the component table */
     /* XXXXX  Maybe throw up error message in window instead? */
-    x_dialog_unimplemented_feature(); 
-    return;    
+    x_dialog_unimplemented_feature();
+    return;
 
   }
 
@@ -84,7 +84,7 @@ void f_export_components(gchar *filename)
   }
 
 
-  /* -----  Now write out data  ----- */    
+  /* -----  Now write out data  ----- */
   num_rows = sheet_head->comp_count;
   num_cols = sheet_head->comp_attrib_count;
 
@@ -162,6 +162,6 @@ void f_export_components(gchar *filename)
   }  /* close of for over rows */
 
   fclose(fp);
-  
+
 return;
 }

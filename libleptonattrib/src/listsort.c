@@ -1,7 +1,7 @@
 
 /*----------------------------------------------------------------*/
 /*! \file
- * Linked list sorting code taken from 
+ * Linked list sorting code taken from
  * http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html
  * and hacked to serve in gattrib by SDB.
  *
@@ -9,21 +9,21 @@
 
 /*
  * Demonstration code for sorting a linked list.
- * 
+ *
  * The algorithm used is Mergesort, because that works really well
  * on linked lists, without requiring the O(N) extra space it needs
  * when you do it on arrays.
- * 
+ *
  * This code can handle singly and doubly linked lists, and
  * circular and linear lists too. For any serious application,
  * you'll probably want to remove the conditionals on `is_circular'
- * and `is_double' to adapt the code to your own purpose. 
- * 
+ * and `is_double' to adapt the code to your own purpose.
+ *
  */
 
 /*
  * This file is copyright 2001 Simon Tatham.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
  * files (the "Software"), to deal in the Software without
@@ -32,10 +32,10 @@
  * sell copies of the Software, and to permit persons to whom the
  * Software is furnished to do so, subject to the following
  * conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be
  * included in all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
  * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -46,8 +46,8 @@
  * SOFTWARE.
  */
 
-/* ---  We don't need these 'cause they are already defined elsewhere --- 
- * #define FALSE 0 
+/* ---  We don't need these 'cause they are already defined elsewhere ---
+ * #define FALSE 0
  * #define TRUE 1
  */
 
@@ -119,11 +119,11 @@ int cmp(STRING_LIST *al, STRING_LIST *bl) {
  * head of the list. (It has to, because the head will not
  * generally be the same element after the sort.) So unlike sorting
  * an array, where you can do
- * 
+ *
  * - sort(myarray);
- * 
+ *
  * you now have to do
- * 
+ *
  * - list = listsort(mylist);
  *
  * \param list The linked STRING_LIST to be sorted

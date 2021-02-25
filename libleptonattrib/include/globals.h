@@ -26,39 +26,39 @@
  * \section sdb_note SDB note about philosophy behind globals
  *
  * I made the "TOPLEVEL project" and all the GTK window stuff into
- * global variables.  I know that this is supposedly bad programming form.    
+ * global variables.  I know that this is supposedly bad programming form.
  * However, here are some observations:
  * - I wanted to use gEDA's TOPLEVEL structure as much as possible, at
- *    least to hold info about the design's netlist & components.  
- *    The TOPLEVEL strucuture is architected to hold info about gschem's 
+ *    least to hold info about the design's netlist & components.
+ *    The TOPLEVEL strucuture is architected to hold info about gschem's
  *    window also.  HOwever, gschem's windows are architected differently
  *    than mine in gattrib.  This is because my windowing system does
  *    completely different things, and also uses the GtkSheet widget, which
  *    is architected completely differently from TOPLEVEL.
  * - Since I couldn't easily or naturally cram my windowing scheme into
- *    TOPLEVEL (or so I think), I decided to use a separate set of windows 
+ *    TOPLEVEL (or so I think), I decided to use a separate set of windows
  *    from those defined under TOPLEVEL for my application.
  * - The problem arises when using callbacks.  Callbacks from GTK allow
- *    only one argument to be passed.  Given the way I set up the menu bar, 
+ *    only one argument to be passed.  Given the way I set up the menu bar,
  *    I didn't have easy acces to the information inside both the GtkSHeet
  *    objects *and* the TOPLEVEL stuff while only having one callback
- *    argument.  This makes it hard to have access to e.g. a GtkSheet window 
+ *    argument.  This makes it hard to have access to e.g. a GtkSheet window
  *    and a list of files (in TOPLEVEL) simultaneously.
  * - Therefore, I decided to make both the window stuff and TOPLEVEL
  *    globals.
  * - Similarly, because I couldn't cram the SHEET_DATA struct into any
  *    hook in TOPLEVEL, I just made it a global also.
  * - Finally, in my defense, in gschem and gnetlist, (TOPLEVEL *w_current
- *    or pr_current) is passed  to almost every function.  Since it 
- *    is just a pointer to a huge struct of stuff, manipulating 
+ *    or pr_current) is passed  to almost every function.  Since it
+ *    is just a pointer to a huge struct of stuff, manipulating
  *    the stuff in the struct has a global
- *    effect.  That is, manipulating w_current (or pr_current) has side 
- *    effects, so it is basically a global anyway.  The real problem with 
+ *    effect.  That is, manipulating w_current (or pr_current) has side
+ *    effects, so it is basically a global anyway.  The real problem with
  *    globals occurs when you have a global variable caled "i" or "temp"
  *    which conflicts with a global in a module written by somebody else.
- *    Since pr_current is a very uncommon name, this should not be a 
- *    problem here.  Therefore, I decided 
- *    to make life easy for myself dealing with callbacks by making both 
+ *    Since pr_current is a very uncommon name, this should not be a
+ *    problem here.  Therefore, I decided
+ *    to make life easy for myself dealing with callbacks by making both
  *    the windows and TOPLEVEL global variables.
  *
  * If there is a better way to solve this problem, I'd like to hear it.

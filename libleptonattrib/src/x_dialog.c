@@ -72,14 +72,14 @@ void x_dialog_newattrib()
   gchar *entry_text;
 
   /* Create the dialog */
-  dialog = gtk_dialog_new_with_buttons(_("Add new attribute"), NULL, 
+  dialog = gtk_dialog_new_with_buttons(_("Add new attribute"), NULL,
 				       GTK_DIALOG_MODAL,
 				       GTK_STOCK_OK, GTK_RESPONSE_OK,
 				       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
 				       NULL);
- 
+
   gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
-  
+
   /*  Create a text label for the dialog window */
   label = gtk_label_new (_("Enter new attribute name"));
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
@@ -93,18 +93,18 @@ void x_dialog_newattrib()
   gtk_widget_set_size_request (dialog, 260, 140);
 
   gtk_widget_show_all(dialog);
-  
+
   switch(gtk_dialog_run(GTK_DIALOG(dialog))) {
     case GTK_RESPONSE_OK:
       entry_text = g_strdup( gtk_entry_get_text(GTK_ENTRY(attrib_entry)) );
-  
+
       /* Perhaps do some other checks . . . . */
       if (entry_text != NULL) {
         s_toplevel_add_new_attrib(entry_text);
         g_free(entry_text);
       }
       break;
-  
+
     case GTK_RESPONSE_CANCEL:
     default:
       /* do nothing */
@@ -127,7 +127,7 @@ void x_dialog_delattrib()
   GtkSheet *sheet;
   gint cur_page;
 
-  /* First verify that exactly one column is selected.  */ 
+  /* First verify that exactly one column is selected.  */
   cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
   sheet = GTK_SHEET(sheets[cur_page]);
   if (sheet == NULL) {
@@ -147,7 +147,7 @@ void x_dialog_delattrib()
                                   GTK_MESSAGE_QUESTION,
                                   GTK_BUTTONS_YES_NO,
                                   _("Are you sure you want to delete this attribute?"));
-  
+
   gtk_window_set_title(GTK_WINDOW(dialog), _("Delete attribute"));
   gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_NO);
 
@@ -189,7 +189,7 @@ void x_dialog_missing_sym()
                                   GTK_BUTTONS_NONE,
                                   "%s", string);
 
-  gtk_dialog_add_buttons(GTK_DIALOG(dialog), 
+  gtk_dialog_add_buttons(GTK_DIALOG(dialog),
                   GTK_STOCK_QUIT, GTK_RESPONSE_REJECT,
                   GTK_STOCK_GO_FORWARD, GTK_RESPONSE_ACCEPT,
                   NULL);
@@ -305,7 +305,7 @@ void x_dialog_unimplemented_feature()
 void x_dialog_fatal_error(const gchar *string, gint return_code)
 {
   GtkWidget *dialog;
-  
+
   fprintf(stderr, "%s\n", string);
 
   /* Create the dialog */
@@ -318,7 +318,7 @@ void x_dialog_fatal_error(const gchar *string, gint return_code)
 
   gtk_dialog_run(GTK_DIALOG(dialog));
   gtk_widget_destroy(dialog);
-  
+
   exit(GPOINTER_TO_INT(return_code));
 }
 

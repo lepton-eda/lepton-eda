@@ -79,7 +79,7 @@
  *
  * This sets the selected cells to INVISIBLE.
  * This function is called from the menu, it assumes you have
- * selected a range of cells which are carried in the global 
+ * selected a range of cells which are carried in the global
  * variable "sheet".
  */
 void s_visibility_set_invisible() {
@@ -90,15 +90,15 @@ void s_visibility_set_invisible() {
 
   cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
   sheet = sheets[cur_page];
-  
+
   g_return_if_fail (sheet != NULL);
   g_return_if_fail (GTK_IS_SHEET (sheet));
 
   switch (sheet->state) {
 
-  case GTK_SHEET_RANGE_SELECTED: 
-  case GTK_SHEET_COLUMN_SELECTED:  
-  case GTK_SHEET_ROW_SELECTED: 
+  case GTK_SHEET_RANGE_SELECTED:
+  case GTK_SHEET_COLUMN_SELECTED:
+  case GTK_SHEET_ROW_SELECTED:
 
     g_debug ("s_visibility_set_invisible: Range/col/row selected.\n");
 
@@ -109,13 +109,13 @@ void s_visibility_set_invisible() {
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
 	/* first set cell in SHEET_DATA to invisible */
-	s_visibility_set_cell(cur_page, i, j, 
-			      INVISIBLE, 
+	s_visibility_set_cell(cur_page, i, j,
+			      INVISIBLE,
 			      LEAVE_NAME_VALUE_ALONE);
 	/* Now set cell in gtksheet to desired color */
-	/* Color names are defined 
+	/* Color names are defined
 	 * in liblepton/include/colors.h */
-	x_gtksheet_set_cell_text_color(sheet, i, j, GREY); 
+	x_gtksheet_set_cell_text_color(sheet, i, j, GREY);
 
       }
     }
@@ -126,14 +126,14 @@ void s_visibility_set_invisible() {
   case GTK_SHEET_NORMAL:
     g_debug ("s_visibility_set_invisible: Normal selection.\n");
     s_visibility_set_cell(cur_page,
-			  sheet->active_cell.row, 
-			  sheet->active_cell.col, 
-			  INVISIBLE, 
+			  sheet->active_cell.row,
+			  sheet->active_cell.col,
+			  INVISIBLE,
 			  LEAVE_NAME_VALUE_ALONE);
 
-    x_gtksheet_set_cell_text_color(sheet, 
-				   sheet->active_cell.row, 
-				   sheet->active_cell.col, 
+    x_gtksheet_set_cell_text_color(sheet,
+				   sheet->active_cell.row,
+				   sheet->active_cell.col,
 				   GREY);
 
     break;
@@ -148,7 +148,7 @@ void s_visibility_set_invisible() {
  *
  * This sets the selected cells to NAME_ONLY.
  * This function is invoked from the menu, it assumes you have
- * selected a range of cells which are carried in the global 
+ * selected a range of cells which are carried in the global
  * variable "sheet".
  */
 void s_visibility_set_name_only() {
@@ -164,10 +164,10 @@ void s_visibility_set_name_only() {
   g_return_if_fail (GTK_IS_SHEET (sheet));
 
   switch (sheet->state) {
- 
+
   case GTK_SHEET_RANGE_SELECTED:
-  case GTK_SHEET_COLUMN_SELECTED:  
-  case GTK_SHEET_ROW_SELECTED: 
+  case GTK_SHEET_COLUMN_SELECTED:
+  case GTK_SHEET_ROW_SELECTED:
     g_debug ("s_visibility_set_name_only: Range/col/row selected.\n");
     row_start = sheet->range.row0;
     row_end = sheet->range.rowi;
@@ -176,9 +176,9 @@ void s_visibility_set_name_only() {
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
 	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_NAME);
-	/* Color names are defined 
+	/* Color names are defined
 	 * in liblepton/include/colors.h */
-	x_gtksheet_set_cell_text_color(sheet, i, j, RED); 
+	x_gtksheet_set_cell_text_color(sheet, i, j, RED);
 
       }
     }
@@ -189,12 +189,12 @@ void s_visibility_set_name_only() {
 
   case GTK_SHEET_NORMAL:
     s_visibility_set_cell(cur_page,
-			  sheet->active_cell.row, 
-			  sheet->active_cell.col, 
+			  sheet->active_cell.row,
+			  sheet->active_cell.col,
 			  VISIBLE, SHOW_NAME);
-    x_gtksheet_set_cell_text_color(sheet, 
-				   sheet->active_cell.row, 
-				   sheet->active_cell.col, 
+    x_gtksheet_set_cell_text_color(sheet,
+				   sheet->active_cell.row,
+				   sheet->active_cell.col,
 				   RED);
 
     break;
@@ -207,7 +207,7 @@ void s_visibility_set_name_only() {
  *
  * s_visibility_set_value_only -- This sets the selected cells to VALUE_ONLY.
  * This fcn is invoked from the menu, it assumes you have
- * selected a range of cells which are carried in the global 
+ * selected a range of cells which are carried in the global
  * variable "sheet".
  */
 void s_visibility_set_value_only() {
@@ -223,10 +223,10 @@ void s_visibility_set_value_only() {
   g_return_if_fail (GTK_IS_SHEET (sheet));
 
   switch (sheet->state) {
- 
+
   case GTK_SHEET_RANGE_SELECTED:
-  case GTK_SHEET_COLUMN_SELECTED:  
-  case GTK_SHEET_ROW_SELECTED: 
+  case GTK_SHEET_COLUMN_SELECTED:
+  case GTK_SHEET_ROW_SELECTED:
     g_debug ("s_visibility_set_value_only: Range/col/row selected.\n");
     row_start = sheet->range.row0;
     row_end = sheet->range.rowi;
@@ -235,9 +235,9 @@ void s_visibility_set_value_only() {
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
 	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_VALUE);
-	/* Color names are defined 
+	/* Color names are defined
 	 * in liblepton/include/colors.h */
-	x_gtksheet_set_cell_text_color(sheet, i, j, BLACK); 
+	x_gtksheet_set_cell_text_color(sheet, i, j, BLACK);
 
       }
     }
@@ -249,12 +249,12 @@ void s_visibility_set_value_only() {
   case GTK_SHEET_NORMAL:
     g_debug ("s_visibility_set_value_only: Sheet normal selected.\n");
     s_visibility_set_cell(cur_page,
-			  sheet->active_cell.row, 
-			  sheet->active_cell.col, 
+			  sheet->active_cell.row,
+			  sheet->active_cell.col,
 			  VISIBLE, SHOW_VALUE);
-    x_gtksheet_set_cell_text_color(sheet, 
-				   sheet->active_cell.row, 
-				   sheet->active_cell.col, 
+    x_gtksheet_set_cell_text_color(sheet,
+				   sheet->active_cell.row,
+				   sheet->active_cell.col,
 				   BLACK);
     break;
 
@@ -267,7 +267,7 @@ void s_visibility_set_value_only() {
  * This sets the selected cells
  * to NAME_AND_VALUE
  * This fcn is invoked from the menu, it assumes you have
- * selected a range of cells which are carried in the global 
+ * selected a range of cells which are carried in the global
  * variable "sheet".
  *
  */
@@ -279,15 +279,15 @@ void s_visibility_set_name_and_value() {
 
   cur_page = gtk_notebook_get_current_page(GTK_NOTEBOOK(notebook));
   sheet = sheets[cur_page];
-  
+
   g_return_if_fail (sheet != NULL);
   g_return_if_fail (GTK_IS_SHEET (sheet));
 
   switch (sheet->state) {
 
   case GTK_SHEET_RANGE_SELECTED:
-  case GTK_SHEET_COLUMN_SELECTED:  
-  case GTK_SHEET_ROW_SELECTED: 
+  case GTK_SHEET_COLUMN_SELECTED:
+  case GTK_SHEET_ROW_SELECTED:
     row_start = sheet->range.row0;
     row_end = sheet->range.rowi;
     col_start = sheet->range.col0;
@@ -295,9 +295,9 @@ void s_visibility_set_name_and_value() {
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
 	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_NAME_VALUE);
-	/* Color names are defined 
+	/* Color names are defined
 	 * in liblepton/include/colors.h */
-	x_gtksheet_set_cell_text_color(sheet, i, j, BLUE); 
+	x_gtksheet_set_cell_text_color(sheet, i, j, BLUE);
 
       }
     }
@@ -307,14 +307,14 @@ void s_visibility_set_name_and_value() {
     break;
 
   case GTK_SHEET_NORMAL:
-    s_visibility_set_cell(cur_page, 
-			  sheet->active_cell.row, 
-			  sheet->active_cell.col, 
-			  VISIBLE, 
+    s_visibility_set_cell(cur_page,
+			  sheet->active_cell.row,
+			  sheet->active_cell.col,
+			  VISIBLE,
 			  SHOW_NAME_VALUE);
-    x_gtksheet_set_cell_text_color(sheet, 
-				   sheet->active_cell.row, 
-				   sheet->active_cell.col, 
+    x_gtksheet_set_cell_text_color(sheet,
+				   sheet->active_cell.row,
+				   sheet->active_cell.col,
 				   BLUE);
 
     break;
@@ -336,8 +336,8 @@ void s_visibility_set_name_and_value() {
  * \param visibility Visibility value to set cell to
  * \param show_name_value Name, Value visibility flag
  */
-void s_visibility_set_cell(gint cur_page, gint row, gint col, 
-			   gint visibility, 
+void s_visibility_set_cell(gint cur_page, gint row, gint col,
+			   gint visibility,
 			   gint show_name_value) {
   TABLE **local_table = NULL;
 
@@ -364,7 +364,7 @@ void s_visibility_set_cell(gint cur_page, gint row, gint col,
   /* cell has been updated.  */
   s_sheet_data_set_changed (sheet_head, TRUE);
 
-  if (show_name_value != LEAVE_NAME_VALUE_ALONE) { 
+  if (show_name_value != LEAVE_NAME_VALUE_ALONE) {
     local_table[row][col].show_name_value = show_name_value;
     /* cell has been updated.  */
     s_sheet_data_set_changed (sheet_head, TRUE);
