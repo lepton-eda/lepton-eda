@@ -176,7 +176,7 @@ exit;
 sub executeRENAME {
   my $line = shift(@_);
 
-  return $line unless defined %cmd_rename;
+  return $line unless %cmd_rename;
   return $line unless $line =~ /^refdes=/;
 
   # pick out the reference designator
