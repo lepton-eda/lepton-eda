@@ -55,7 +55,7 @@ void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int 
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   /* remove the old place list if it exists */
-  geda_object_list_delete (page->place_list);
+  lepton_object_list_delete (page->place_list);
   page->place_list = NULL;
 
   /* here you need to add OBJ_TEXT when it's done */

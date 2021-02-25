@@ -163,7 +163,7 @@ void s_undo_print_all( UNDO *head )
     if (u_current->filename) printf("%s\n", u_current->filename);
 
     if (u_current->object_list) {
-      geda_object_list_print (u_current->object_list);
+      lepton_object_list_print (u_current->object_list);
     }
 
     printf("\t%d %d %f\n", u_current->x, u_current->y, u_current->scale);
@@ -194,7 +194,7 @@ s_undo_destroy_all (UNDO *head)
     g_free(u_current->filename);
 
     if (u_current->object_list) {
-      geda_object_list_delete (u_current->object_list);
+      lepton_object_list_delete (u_current->object_list);
       u_current->object_list = NULL;
     }
 
@@ -226,7 +226,7 @@ s_undo_remove_rest (UNDO *head)
     }
 
     if (u_current->object_list) {
-      geda_object_list_delete (u_current->object_list);
+      lepton_object_list_delete (u_current->object_list);
       u_current->object_list = NULL;
     }
 

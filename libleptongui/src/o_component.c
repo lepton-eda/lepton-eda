@@ -47,7 +47,7 @@ o_component_prepare_place (GschemToplevel *w_current,
   i_action_start (w_current);
 
   /* remove the old place list if it exists */
-  geda_object_list_delete (toplevel->page_current->place_list);
+  lepton_object_list_delete (toplevel->page_current->place_list);
   toplevel->page_current->place_list = NULL;
 
   /* Insert the new object into the buffer at world coordinates (0,0).
@@ -199,11 +199,11 @@ o_component_translate_all (GschemToplevel *w_current, int offset)
 
   if (offset == 0) {
     g_message (_("Translating schematic [%1$d %2$d]"), -x, -y);
-    geda_object_list_translate (s_page_objects (toplevel->page_current), -x, -y);
+    lepton_object_list_translate (s_page_objects (toplevel->page_current), -x, -y);
   } else {
     g_message (_("Translating schematic [%1$d %2$d]"),
                offset, offset);
-    geda_object_list_translate (s_page_objects (toplevel->page_current), offset, offset);
+    lepton_object_list_translate (s_page_objects (toplevel->page_current), offset, offset);
   }
 
   for (iter = s_page_objects (toplevel->page_current);

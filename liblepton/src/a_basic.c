@@ -58,7 +58,7 @@ o_save (const GList *object_list,
     return 0;
   }
 
-  buffer = geda_object_list_to_buffer (object_list);
+  buffer = lepton_object_list_to_buffer (object_list);
   if (!g_file_set_contents (filename, buffer, strlen(buffer), err)) {
     g_free (buffer);
     return 0;
@@ -366,7 +366,7 @@ GList
   return(object_list);
 
 error:
-  geda_object_list_delete (new_object_list);
+  lepton_object_list_delete (new_object_list);
 
   unsigned long linenum = s_textbuffer_linenum (tb);
   g_prefix_error (err, "Parsing stopped at line %lu:\n", linenum);

@@ -1070,7 +1070,7 @@ x_tabs_cancel_all (GschemToplevel* w_current)
   TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
   if (toplevel->page_current != NULL)
   {
-    geda_object_list_delete (toplevel->page_current->place_list);
+    lepton_object_list_delete (toplevel->page_current->place_list);
     toplevel->page_current->place_list = NULL;
   }
 

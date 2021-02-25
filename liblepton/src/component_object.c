@@ -767,11 +767,11 @@ o_component_new (LeptonPage *page,
     }
     else {
       if (mirror) {
-        geda_object_list_mirror (new_node->component->prim_objs, 0, 0);
+        lepton_object_list_mirror (new_node->component->prim_objs, 0, 0);
       }
 
-      geda_object_list_rotate (new_node->component->prim_objs, 0, 0, angle);
-      geda_object_list_translate (new_node->component->prim_objs, x, y);
+      lepton_object_list_rotate (new_node->component->prim_objs, 0, 0, angle);
+      lepton_object_list_translate (new_node->component->prim_objs, x, y);
     }
 
     g_free (buffer);
@@ -991,7 +991,7 @@ lepton_component_object_translate (LeptonObject *object, int dx, int dy)
   object->component->x = object->component->x + dx;
   object->component->y = object->component->y + dy;
 
-  geda_object_list_translate (object->component->prim_objs, dx, dy);
+  lepton_object_list_translate (object->component->prim_objs, dx, dy);
 }
 
 /*! \brief Create a copy of a component object
@@ -1090,7 +1090,7 @@ lepton_component_object_rotate (int centerx,
 
   lepton_component_object_translate (object, -object->component->x, -object->component->y);
 
-  geda_object_list_rotate (object->component->prim_objs, 0, 0, angle);
+  lepton_object_list_rotate (object->component->prim_objs, 0, 0, angle);
 
   object->component->x = 0;
   object->component->y = 0;
@@ -1121,7 +1121,7 @@ lepton_component_object_mirror (int world_centerx,
 
   lepton_component_object_translate (object, -object->component->x, -object->component->y);
 
-  geda_object_list_mirror (object->component->prim_objs, 0, 0);
+  lepton_object_list_mirror (object->component->prim_objs, 0, 0);
 
   switch(object->component->angle) {
     case(90):

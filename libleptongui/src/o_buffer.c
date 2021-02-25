@@ -43,7 +43,7 @@ clipboard_to_buffer(GschemToplevel *w_current, int buf_num)
   object_list = x_clipboard_get (w_current);
 
   if (object_buffer[buf_num] != NULL) {
-    geda_object_list_delete (object_buffer[buf_num]);
+    lepton_object_list_delete (object_buffer[buf_num]);
   }
 
   object_buffer[buf_num] = object_list;
@@ -69,7 +69,7 @@ selection_to_buffer(GschemToplevel *w_current, int buf_num)
   s_current = geda_list_get_glist (toplevel->page_current->selection_list);
 
   if (object_buffer[buf_num] != NULL) {
-    geda_object_list_delete (object_buffer[buf_num]);
+    lepton_object_list_delete (object_buffer[buf_num]);
     object_buffer[buf_num] = NULL;
   }
 
@@ -165,7 +165,7 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   }
 
   /* remove the old place list if it exists */
-  geda_object_list_delete (toplevel->page_current->place_list);
+  lepton_object_list_delete (toplevel->page_current->place_list);
   toplevel->page_current->place_list = NULL;
 
   toplevel->page_current->place_list =
@@ -192,9 +192,9 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   x = snap_grid (w_current, rleft);
   y = snap_grid (w_current, rtop);
 
-  geda_object_list_translate (toplevel->page_current->place_list,
-                              w_x - x,
-                              w_y - y);
+  lepton_object_list_translate (toplevel->page_current->place_list,
+                                w_x - x,
+                                w_y - y);
 
   i_set_state(w_current, PASTEMODE);
   o_place_start (w_current, w_x, w_y);
@@ -238,7 +238,7 @@ void o_buffer_free(GschemToplevel *w_current)
 
   for (i = 0 ; i < MAX_BUFFERS; i++) {
     if (object_buffer[i]) {
-      geda_object_list_delete (object_buffer[i]);
+      lepton_object_list_delete (object_buffer[i]);
       object_buffer[i] = NULL;
     }
   }

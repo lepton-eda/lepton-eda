@@ -648,7 +648,7 @@ o_select_move_to_place_list(GschemToplevel *w_current)
   GList *selection_copy;
 
   /* remove the old place list if it exists */
-  geda_object_list_delete (toplevel->page_current->place_list);
+  lepton_object_list_delete (toplevel->page_current->place_list);
   toplevel->page_current->place_list = NULL;
 
   selection = geda_list_get_glist( toplevel->page_current->selection_list );

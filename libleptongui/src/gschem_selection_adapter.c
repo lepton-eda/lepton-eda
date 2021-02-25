@@ -1656,8 +1656,8 @@ gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int 
   g_return_if_fail (adapter != NULL);
   g_return_if_fail (color_id_valid (color));
 
-  geda_object_list_set_color (geda_list_get_glist (adapter->selection),
-                              color);
+  lepton_object_list_set_color (geda_list_get_glist (adapter->selection),
+                                color);
 
   g_object_notify (G_OBJECT (adapter), "object-color");
   g_object_notify (G_OBJECT (adapter), "text-color");

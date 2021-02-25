@@ -120,7 +120,7 @@ void o_lock(GschemToplevel *w_current)
     */
     if (obj->attribs != NULL)
     {
-      geda_object_list_set_selectable (obj->attribs, FALSE);
+      lepton_object_list_set_selectable (obj->attribs, FALSE);
     }
   }
 
@@ -169,7 +169,7 @@ void o_unlock(GschemToplevel *w_current)
     */
     if (obj->attribs != NULL)
     {
-      geda_object_list_set_selectable (obj->attribs, TRUE);
+      lepton_object_list_set_selectable (obj->attribs, TRUE);
     }
   }
 
@@ -224,7 +224,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
     s_conn_remove_object_connections (o_current);
   }
 
-  geda_object_list_rotate (list, centerx, centery, angle);
+  lepton_object_list_rotate (list, centerx, centery, angle);
 
   /* Find connected objects, adding each object in turn back to the
    * connection list. We only _really_ want those objects connected
@@ -282,7 +282,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
     s_conn_remove_object_connections (o_current);
   }
 
-  geda_object_list_mirror (list, centerx, centery);
+  lepton_object_list_mirror (list, centerx, centery);
 
   /* Find connected objects, adding each object in turn back to the
    * connection list. We only _really_ want those objects connected

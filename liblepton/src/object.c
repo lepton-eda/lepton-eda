@@ -496,7 +496,7 @@ s_delete_object (LeptonObject *o_current)
 
       if (o_current->component->prim_objs) {
         /* printf("sdeleting component's primitive objects\n");*/
-        geda_object_list_delete (o_current->component->prim_objs);
+        lepton_object_list_delete (o_current->component->prim_objs);
         o_current->component->prim_objs = NULL;
       }
 
@@ -1045,7 +1045,7 @@ lepton_object_set_color (LeptonObject *object,
   object->color = color;
 
   if (lepton_object_is_component (object) && object->component != NULL)
-    geda_object_list_set_color (object->component->prim_objs, color);
+    lepton_object_list_set_color (object->component->prim_objs, color);
 }
 
 

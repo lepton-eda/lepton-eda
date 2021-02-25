@@ -307,7 +307,7 @@ o_read_attribs (LeptonPage *page,
                _("Unexpected end-of-file in attribute list"));
 
 error:
-  geda_object_list_delete (object_list);
+  lepton_object_list_delete (object_list);
   return NULL;
 }
 

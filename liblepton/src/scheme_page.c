@@ -387,7 +387,7 @@ SCM_DEFINE (page_to_string, "%page->string", 1, 0, 0,
 
   LeptonPage *page = edascm_to_page (page_s);
 
-  gchar *buf = geda_object_list_to_buffer (s_page_objects (page));
+  gchar *buf = lepton_object_list_to_buffer (s_page_objects (page));
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   scm_dynwind_unwind_handler (g_free, buf, SCM_F_WIND_EXPLICITLY);
   SCM result = scm_from_utf8_string (buf);

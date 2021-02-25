@@ -149,7 +149,7 @@ o_glist_copy_all (const GList *src_list,
  *  \param [in] objects A GList of objects to delete.
  */
 void
-geda_object_list_delete (GList *objects)
+lepton_object_list_delete (GList *objects)
 {
   LeptonObject *o_current=NULL;
   GList *ptr;
@@ -172,7 +172,7 @@ geda_object_list_delete (GList *objects)
  *  \param [in] objects A GList of objects to print.
  */
 void
-geda_object_list_print (GList *objects)
+lepton_object_list_print (GList *objects)
 {
   LeptonObject *o_current=NULL;
   GList *iter;
@@ -187,7 +187,7 @@ geda_object_list_print (GList *objects)
 
     if (lepton_object_is_component (o_current))
     {
-      geda_object_list_print (o_current->component->prim_objs);
+      lepton_object_list_print (o_current->component->prim_objs);
     }
 
     o_attrib_print (o_current->attribs);
@@ -204,7 +204,9 @@ geda_object_list_print (GList *objects)
  *  \param [in]     dy      The y distance to move.
  */
 void
-geda_object_list_translate (const GList *objects, int dx, int dy)
+lepton_object_list_translate (const GList *objects,
+                              int dx,
+                              int dy)
 {
   const GList *iter = objects;
 
@@ -224,7 +226,10 @@ geda_object_list_translate (const GList *objects, int dx, int dy)
  *  \param [in]     angle    The angle rotation in multiples of 90 degrees.
  */
 void
-geda_object_list_rotate (const GList *objects, int x, int y, int angle)
+lepton_object_list_rotate (const GList *objects,
+                           int x,
+                           int y,
+                           int angle)
 {
   const GList *iter = objects;
 
@@ -243,7 +248,9 @@ geda_object_list_rotate (const GList *objects, int x, int y, int angle)
  *  \param [in]     y        Unused, essentially
  */
 void
-geda_object_list_mirror (const GList *objects, int x, int y)
+lepton_object_list_mirror (const GList *objects,
+                           int x,
+                           int y)
 {
   const GList *iter = objects;
 
@@ -262,8 +269,8 @@ geda_object_list_mirror (const GList *objects, int x, int y)
  *  \param [in]     color    The new color.
  */
 void
-geda_object_list_set_color (const GList *objects,
-                            int color)
+lepton_object_list_set_color (const GList *objects,
+                              int color)
 {
   const GList *iter = objects;
 
@@ -281,7 +288,8 @@ geda_object_list_set_color (const GList *objects,
  *  \param [in] selectable the new state of the objects
  */
 void
-geda_object_list_set_selectable (const GList *objects, gboolean selectable)
+lepton_object_list_set_selectable (const GList *objects,
+                                   gboolean selectable)
 {
   const GList *iter = objects;
 
@@ -303,7 +311,7 @@ geda_object_list_set_selectable (const GList *objects, gboolean selectable)
  *  \returns a buffer containing schematic data or NULL on failure.
  */
 gchar*
-geda_object_list_to_buffer (const GList *objects)
+lepton_object_list_to_buffer (const GList *objects)
 {
   GString *acc;
   gchar *buffer;

@@ -23,35 +23,33 @@
 G_BEGIN_DECLS
 
 void
-geda_object_list_delete (GList *list);
+lepton_object_list_delete (GList *list);
 
 void
-geda_object_list_mirror (const GList *objects,
-                         int x,
-                         int y);
+lepton_object_list_mirror (const GList *objects,
+                           int x,
+                           int y);
+void
+lepton_object_list_print (GList *objects);
 
 void
-geda_object_list_print (GList *objects);
-
+lepton_object_list_rotate (const GList *objects,
+                           int x,
+                           int y,
+                           int angle);
 void
-geda_object_list_rotate (const GList *objects,
-                         int x,
-                         int y,
-                         int angle);
-
+lepton_object_list_set_color (const GList *objects,
+                              int color);
 void
-geda_object_list_set_color (const GList *objects,
-                            int color);
-
-void
-geda_object_list_set_selectable (const GList *objects, gboolean selectable);
-
+lepton_object_list_set_selectable (const GList *objects,
+                                   gboolean selectable);
 gchar*
-geda_object_list_to_buffer (const GList *objects);
+lepton_object_list_to_buffer (const GList *objects);
 
 void
-geda_object_list_translate (const GList *objects, int dx, int dy);
-
+lepton_object_list_translate (const GList *objects,
+                              int dx,
+                              int dy);
 GList*
 o_glist_copy_all (const GList *src_list,
                   GList *dest_list);

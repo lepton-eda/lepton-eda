@@ -271,7 +271,7 @@ o_undo_savestate (GschemToplevel *w_current,
       }
 
       if (u_current->object_list) {
-        geda_object_list_delete (u_current->object_list);
+        lepton_object_list_delete (u_current->object_list);
         u_current->object_list = NULL;
       }
 
@@ -450,7 +450,7 @@ o_undo_callback (GschemToplevel *w_current,
     s_page_delete_objects (page);
 
     /* Free the objects in the place list. */
-    geda_object_list_delete (page->place_list);
+    lepton_object_list_delete (page->place_list);
     page->place_list = NULL;
 
     gschem_toplevel_page_content_changed (w_current, page);

@@ -229,7 +229,7 @@ s_page_delete (TOPLEVEL *toplevel,
   s_page_delete_objects (page);
 
   /* Free the objects in the place list. */
-  geda_object_list_delete (page->place_list);
+  lepton_object_list_delete (page->place_list);
   page->place_list = NULL;
 
   /*  This removes all objects from the list of connectible objects
@@ -527,7 +527,7 @@ void s_page_print_all (TOPLEVEL *toplevel)
 
     page = (LeptonPage *) iter->data;
     printf ("FILENAME: %1$s\n", s_page_get_filename (page));
-    geda_object_list_print (page->_object_list);
+    lepton_object_list_print (page->_object_list);
   }
 }
 
@@ -737,7 +737,7 @@ s_page_delete_objects (LeptonPage *page)
     pre_object_removed (page, (LeptonObject*) iter->data);
   }
   page->_object_list = NULL;
-  geda_object_list_delete (objects);
+  lepton_object_list_delete (objects);
 }
 
 
