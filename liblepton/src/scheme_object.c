@@ -1755,7 +1755,7 @@ SCM_DEFINE (object_component, "%object-component", 1, 0, 0,
 SCM_DEFINE (make_path, "%make-path", 0, 0, 0,
             (), "Create a new path object")
 {
-  LeptonObject *obj = geda_path_object_new (OBJ_PATH, default_color_id(), "");
+  LeptonObject *obj = lepton_path_object_new (OBJ_PATH, default_color_id(), "");
 
   SCM result = edascm_from_object (obj);
 

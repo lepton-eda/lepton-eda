@@ -55,12 +55,12 @@
  *  \return A pointer to the new end of the object list.
  */
 LeptonObject*
-geda_path_object_new (char type,
-                      int color,
-                      const char *path_string)
+lepton_path_object_new (char type,
+                        int color,
+                        const char *path_string)
 {
-  return geda_path_object_new_take_path (type, color,
-                                         s_path_parse (path_string));
+  return lepton_path_object_new_take_path (type, color,
+                                           s_path_parse (path_string));
 }
 
 
@@ -70,7 +70,7 @@ geda_path_object_new (char type,
  *  using the path shape data stored in \a path_data.  The \a
  *  path_data is subsequently owned by the returned LeptonObject.
  *
- *  \see geda_path_object_new().
+ *  \see lepton_path_object_new().
  *
  *  \param [in]     type         Must be OBJ_PATH.
  *  \param [in]     color        The path color.
@@ -78,9 +78,9 @@ geda_path_object_new (char type,
  *  \return A pointer to the new end of the object list.
  */
 LeptonObject*
-geda_path_object_new_take_path (char type,
-                                int color,
-                                PATH *path_data)
+lepton_path_object_new_take_path (char type,
+                                  int color,
+                                  PATH *path_data)
 {
   LeptonObject *new_node;
 
@@ -116,15 +116,15 @@ geda_path_object_new_take_path (char type,
  *  \return A new pointer to the end of the object list.
  */
 LeptonObject*
-geda_path_object_copy (LeptonObject *o_current)
+lepton_path_object_copy (LeptonObject *o_current)
 {
   LeptonObject *new_obj;
   char *path_string;
 
   path_string = s_path_string_from_path (o_current->path);
-  new_obj = geda_path_object_new (OBJ_PATH,
-                                  lepton_object_get_color (o_current),
-                                  path_string);
+  new_obj = lepton_path_object_new (OBJ_PATH,
+                                    lepton_object_get_color (o_current),
+                                    path_string);
   g_free (path_string);
 
   /* copy the path type and filling options */
@@ -227,7 +227,7 @@ o_path_read (const char *first_line,
   string = geda_string_remove_ending_newline (string);
 
   /* create a new path */
-  new_obj = geda_path_object_new (type, color, string);
+  new_obj = lepton_path_object_new (type, color, string);
   g_free (string);
 
   /* set its line options */
@@ -263,7 +263,7 @@ o_path_read (const char *first_line,
  *
  */
 gchar*
-geda_path_object_to_buffer (const LeptonObject *object)
+lepton_path_object_to_buffer (const LeptonObject *object)
 {
   int line_width, line_space, line_length;
   char *buf;
@@ -319,10 +319,10 @@ geda_path_object_to_buffer (const LeptonObject *object)
  *  \param [in]     whichone  Which control point is being modified
  */
 void
-geda_path_object_modify (LeptonObject *object,
-                         int x,
-                         int y,
-                         int whichone)
+lepton_path_object_modify (LeptonObject *object,
+                           int x,
+                           int y,
+                           int whichone)
 {
   int i;
   int grip_no = 0;
@@ -373,7 +373,9 @@ geda_path_object_modify (LeptonObject *object,
  *  \param [in]     dy         y distance to move.
  */
 void
-geda_path_object_translate (LeptonObject *object, int dx, int dy)
+lepton_path_object_translate (LeptonObject *object,
+                              int dx,
+                              int dy)
 {
   PATH_SECTION *section;
   int i;
@@ -417,10 +419,10 @@ geda_path_object_translate (LeptonObject *object, int dx, int dy)
  *  \param [in,out]  object         Line LeptonObject to rotate.
  */
 void
-geda_path_object_rotate (int world_centerx,
-                         int world_centery,
-                         int angle,
-                         LeptonObject *object)
+lepton_path_object_rotate (int world_centerx,
+                           int world_centery,
+                           int angle,
+                           LeptonObject *object)
 {
   PATH_SECTION *section;
   int i;
@@ -466,9 +468,9 @@ geda_path_object_rotate (int world_centerx,
  *  \param [in,out] object         Line LeptonObject to mirror.
  */
 void
-geda_path_object_mirror (int world_centerx,
-                         int world_centery,
-                         LeptonObject *object)
+lepton_path_object_mirror (int world_centerx,
+                           int world_centery,
+                           LeptonObject *object)
 {
   PATH_SECTION *section;
   int i;
@@ -506,8 +508,8 @@ geda_path_object_mirror (int world_centerx,
  *  \param [out] bounds    The bounds of the path
  */
 void
-geda_path_object_calculate_bounds (const LeptonObject *object,
-                                   GedaBounds *bounds)
+lepton_path_object_calculate_bounds (const LeptonObject *object,
+                                     GedaBounds *bounds)
 {
   gint expand;
   gint i;
@@ -563,7 +565,9 @@ geda_path_object_calculate_bounds (const LeptonObject *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_path_object_get_position (const LeptonObject *object, gint *x, gint *y)
+lepton_path_object_get_position (const LeptonObject *object,
+                                 gint *x,
+                                 gint *y)
 {
   g_return_val_if_fail (lepton_object_is_path (object), FALSE);
   g_return_val_if_fail (object->path != NULL, FALSE);
@@ -595,11 +599,11 @@ geda_path_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-geda_path_object_shortest_distance (LeptonObject *object,
-                                    int x,
-                                    int y,
-                                    int force_solid,
-                                    gboolean include_hidden)
+lepton_path_object_shortest_distance (LeptonObject *object,
+                                      int x,
+                                      int y,
+                                      int force_solid,
+                                      gboolean include_hidden)
 {
   int solid;
 

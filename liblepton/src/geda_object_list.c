@@ -413,7 +413,7 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           break;
 
         case(OBJ_PATH):
-          out = geda_path_object_to_buffer (o_current);
+          out = lepton_path_object_to_buffer (o_current);
           break;
 
         case(OBJ_PIN):

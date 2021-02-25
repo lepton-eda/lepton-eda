@@ -1090,10 +1090,10 @@ static void o_grips_end_box(GschemToplevel *w_current, LeptonObject *o_current,
 static void o_grips_end_path(GschemToplevel *w_current, LeptonObject *o_current,
                              int whichone)
 {
-  geda_path_object_modify (o_current,
-                           w_current->second_wx,
-                           w_current->second_wy,
-                           whichone);
+  lepton_path_object_modify (o_current,
+                             w_current->second_wx,
+                             w_current->second_wy,
+                             whichone);
 }
 
 /*! \todo Finish function documentation!!!

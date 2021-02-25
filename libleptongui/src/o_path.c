@@ -489,8 +489,8 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 
   if (end_path || close_path) {
     /* Add object to page and clean up path drawing state */
-    LeptonObject *obj = geda_path_object_new_take_path (OBJ_PATH,
-                                                  GRAPHIC_COLOR, p);
+    LeptonObject *obj = lepton_path_object_new_take_path (OBJ_PATH,
+                                                          GRAPHIC_COLOR, p);
     w_current->temp_path = NULL;
     w_current->first_wx = -1;
     w_current->first_wy = -1;
