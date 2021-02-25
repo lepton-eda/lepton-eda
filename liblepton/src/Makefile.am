@@ -53,7 +53,6 @@ liblepton_la_SOURCES = \
 	geda_coord.c \
 	geda_fill_type.c \
 	geda_line.c \
-	geda_line_object.c \
 	geda_list.c \
 	geda_net_object.c \
 	geda_object.c \
@@ -73,6 +72,7 @@ liblepton_la_SOURCES = \
 	g_register.c \
 	i_vars.c \
 	liblepton.c \
+	line_object.c \
 	m_hatch.c \
 	m_polygon.c \
 	o_attrib.c \

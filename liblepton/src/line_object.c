@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file o_line_basic.c
+/*! \file line_object.c
  *  \brief functions for the line object
  */
 

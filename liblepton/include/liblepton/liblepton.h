@@ -66,7 +66,7 @@ G_BEGIN_DECLS
 #include <liblepton/bus_object.h>
 #include <liblepton/circle_object.h>
 #include <liblepton/component_object.h>
-#include <liblepton/geda_line_object.h>
+#include <liblepton/line_object.h>
 #include <liblepton/geda_net_object.h>
 #include <liblepton/geda_path_object.h>
 #include <liblepton/geda_picture_object.h>
