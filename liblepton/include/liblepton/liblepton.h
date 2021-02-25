@@ -55,7 +55,7 @@ G_BEGIN_DECLS
 #include <liblepton/geda_forward.h>
 
 #include <liblepton/struct.h>
-#include <liblepton/geda_object.h>
+#include <liblepton/object.h>
 #include <liblepton/geda_object_list.h>
 #include <liblepton/geda_page.h>
 #include <liblepton/geda_toplevel.h>

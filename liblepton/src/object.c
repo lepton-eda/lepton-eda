@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file o_basic.c
+/*! \file object.c
  *  \brief functions for the basic object type
  *
  *  This file contains the code used to handle LeptonObjects (st_object).

@@ -21,7 +21,7 @@ liblepton/src/g_rc.c
 liblepton/src/geda_fill_type.c
 liblepton/src/geda_page.c
 liblepton/src/o_attrib.c
-liblepton/src/geda_object.c
+liblepton/src/object.c
 liblepton/src/geda_color.c
 liblepton/src/o_embed.c
 liblepton/src/s_clib.c
