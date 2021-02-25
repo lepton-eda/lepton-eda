@@ -37,8 +37,8 @@ install:
   - ./autogen.sh
   - ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=2'
 
-# Compile gEDA and run its tests.  Skip this if this is a Coverity
-# analysis build.
+# Compile lepton-eda and run its tests.
+# Skip this if this is a Coverity analysis build.
 script: |
   if test "${COVERITY_SCAN_BRANCH}" != "1"; then
     make -sj4 distcheck
