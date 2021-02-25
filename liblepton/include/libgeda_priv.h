@@ -50,7 +50,7 @@
 #include "circle_object.h"
 #include "line_object.h"
 #include "net_object.h"
-#include "geda_path_object.h"
+#include "path_object.h"
 #include "geda_picture_object.h"
 #include "geda_pin_object.h"
 #include "geda_text_object.h"

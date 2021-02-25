@@ -31,7 +31,6 @@ libleptoninclude_HEADERS = \
 	liblepton/geda_object_list.h \
 	liblepton/geda_page.h \
 	liblepton/geda_path.h \
-	liblepton/geda_path_object.h \
 	liblepton/geda_picture.h \
 	liblepton/geda_picture_object.h \
 	liblepton/geda_pin_object.h \
@@ -49,6 +48,7 @@ libleptoninclude_HEADERS = \
 	liblepton/libgedaguile.h \
 	liblepton/line_object.h \
 	liblepton/net_object.h \
+	liblepton/path_object.h \
 	liblepton/struct.h \
 	liblepton/edacairo.h \
 	liblepton/edapangorenderer.h \

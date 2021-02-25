@@ -58,7 +58,6 @@ liblepton_la_SOURCES = \
 	geda_object_list.c \
 	geda_page.c \
 	geda_path.c \
-	geda_path_object.c \
 	geda_picture.c \
 	geda_picture_object.c \
 	geda_pin_object.c \
@@ -78,6 +77,7 @@ liblepton_la_SOURCES = \
 	o_attrib.c \
 	o_embed.c \
 	o_selection.c \
+	path_object.c \
 	s_attrib.c \
 	s_basic.c \
 	s_clib.c \

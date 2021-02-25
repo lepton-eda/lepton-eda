@@ -25,6 +25,10 @@
 
 #include "libgeda_priv.h"
 
+/*! \file path_object.c
+ *  \brief functions for the path object
+ */
+
 
 /*! \brief Create a new path object.
  *  \par Function Description
