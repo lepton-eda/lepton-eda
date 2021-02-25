@@ -27,6 +27,10 @@
 
 #include "libgeda_priv.h"
 
+/*! \file object_list.c
+ *  \brief Functions dealing with object lists.
+ */
+
 static const gchar*
 o_file_format_header ();
 

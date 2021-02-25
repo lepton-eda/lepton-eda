@@ -38,7 +38,7 @@
 
 #include "struct.h"
 #include "object.h"
-#include "geda_object_list.h"
+#include "object_list.h"
 #include "geda_page.h"
 #include "geda_toplevel.h"
 #include "geda_undo.h"
