@@ -41,11 +41,9 @@ o_picture_new (const gchar *file_content,
                int angle,
                int mirrored,
                int embedded) G_GNUC_WARN_UNUSED_RESULT;
-
 void
-geda_picture_object_calculate_bounds (const LeptonObject *object,
-                                      GedaBounds *bounds);
-
+lepton_picture_object_calculate_bounds (const LeptonObject *object,
+                                        GedaBounds *bounds);
 double
 o_picture_get_ratio (LeptonObject *object);
 
@@ -54,28 +52,25 @@ o_picture_modify (LeptonObject *object,
                   int x,
                   int y,
                   int whichone);
-
 void
 o_picture_modify_all (LeptonObject *object,
                       int x1,
                       int y1,
                       int x2,
                       int y2);
-
 void
-geda_picture_object_rotate (int world_centerx,
-                            int world_centery,
-                            int angle,
-                            LeptonObject *object);
-
+lepton_picture_object_rotate (int world_centerx,
+                              int world_centery,
+                              int angle,
+                              LeptonObject *object);
 void
-geda_picture_object_mirror (int world_centerx,
-                            int world_centery,
-                            LeptonObject *object);
-
+lepton_picture_object_mirror (int world_centerx,
+                              int world_centery,
+                              LeptonObject *object);
 void
-geda_picture_object_translate (LeptonObject *object, int dx, int dy);
-
+lepton_picture_object_translate (LeptonObject *object,
+                                 int dx,
+                                 int dy);
 LeptonObject*
 o_picture_copy (LeptonObject *o_current) G_GNUC_WARN_UNUSED_RESULT;
 
@@ -91,7 +86,6 @@ o_picture_set_from_buffer (LeptonObject *object,
                            const gchar *data,
                            size_t len,
                            GError **error);
-
 gboolean
 o_picture_set_from_file (LeptonObject *object,
                          const gchar *filename,
@@ -108,20 +102,19 @@ o_picture_read (const char *first_line,
                 unsigned int release_ver,
                 unsigned int fileformat_ver,
                 GError **err);
-
 gchar*
-geda_picture_object_to_buffer (const LeptonObject *object);
+lepton_picture_object_to_buffer (const LeptonObject *object);
 
 double
-geda_picture_object_shortest_distance (LeptonObject *object,
-                                       int x,
-                                       int y,
-                                       int force_soild,
-                                       gboolean include_hidden);
-
+lepton_picture_object_shortest_distance (LeptonObject *object,
+                                         int x,
+                                         int y,
+                                         int force_soild,
+                                         gboolean include_hidden);
 gboolean
-geda_picture_object_get_position (const LeptonObject *object, gint *x, gint *y);
-
+lepton_picture_object_get_position (const LeptonObject *object,
+                                    gint *x,
+                                    gint *y);
 void
 o_picture_embed (LeptonObject *object);
 

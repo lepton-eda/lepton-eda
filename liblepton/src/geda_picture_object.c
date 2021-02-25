@@ -474,7 +474,7 @@ o_picture_read (const char *first_line,
  *
  */
 gchar*
-geda_picture_object_to_buffer (const LeptonObject *object)
+lepton_picture_object_to_buffer (const LeptonObject *object)
 {
   int width, height, x1, y1;
   gchar *encoded_picture=NULL;
@@ -639,8 +639,8 @@ LeptonObject *o_picture_new (const gchar *file_content,
  *  \param [out] bounds    The bounds of the picture
  */
 void
-geda_picture_object_calculate_bounds (const LeptonObject *object,
-                                      GedaBounds *bounds)
+lepton_picture_object_calculate_bounds (const LeptonObject *object,
+                                        GedaBounds *bounds)
 {
   geda_bounds_init (bounds);
 
@@ -664,7 +664,9 @@ geda_picture_object_calculate_bounds (const LeptonObject *object,
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_picture_object_get_position (const LeptonObject *object, gint *x, gint *y)
+lepton_picture_object_get_position (const LeptonObject *object,
+                                    gint *x,
+                                    gint *y)
 {
   g_return_val_if_fail (lepton_object_is_picture (object), FALSE);
   g_return_val_if_fail (object->picture != NULL, FALSE);
@@ -849,10 +851,10 @@ o_picture_modify_all (LeptonObject *object,
  *  \param [in,out]  object         Picture LeptonObject to rotate.
  */
 void
-geda_picture_object_rotate (int world_centerx,
-                            int world_centery,
-                            int angle,
-                            LeptonObject *object)
+lepton_picture_object_rotate (int world_centerx,
+                              int world_centery,
+                              int angle,
+                              LeptonObject *object)
 {
   int newx1, newy1;
   int newx2, newy2;
@@ -913,9 +915,9 @@ geda_picture_object_rotate (int world_centerx,
  *  \param [in,out] object         Picture LeptonObject to mirror.
  */
 void
-geda_picture_object_mirror (int world_centerx,
-                            int world_centery,
-                            LeptonObject *object)
+lepton_picture_object_mirror (int world_centerx,
+                              int world_centery,
+                              LeptonObject *object)
 {
   int newx1, newy1;
   int newx2, newy2;
@@ -970,7 +972,9 @@ geda_picture_object_mirror (int world_centerx,
  *  \param [in]     dy         y distance to move.
  */
 void
-geda_picture_object_translate (LeptonObject *object, int dx, int dy)
+lepton_picture_object_translate (LeptonObject *object,
+                                 int dx,
+                                 int dy)
 {
   g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
@@ -1108,11 +1112,11 @@ o_picture_unembed (LeptonObject *object)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-geda_picture_object_shortest_distance (LeptonObject *object,
-                                       int x,
-                                       int y,
-                                       int force_solid,
-                                       gboolean include_hidden)
+lepton_picture_object_shortest_distance (LeptonObject *object,
+                                         int x,
+                                         int y,
+                                         int force_solid,
+                                         gboolean include_hidden)
 {
   double dx, dy;
   double x1, y1, x2, y2;
