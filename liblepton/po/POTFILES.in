@@ -12,6 +12,7 @@ liblepton/src/component_object.c
 liblepton/src/line_object.c
 liblepton/src/net_object.c
 liblepton/src/path_object.c
+liblepton/src/picture_object.c
 liblepton/src/f_basic.c
 liblepton/src/g_basic.c
 liblepton/src/g_rc.c
@@ -21,7 +22,6 @@ liblepton/src/o_attrib.c
 liblepton/src/geda_object.c
 liblepton/src/geda_color.c
 liblepton/src/o_embed.c
-liblepton/src/geda_picture_object.c
 liblepton/src/geda_pin_object.c
 liblepton/src/geda_text_object.c
 liblepton/src/s_clib.c
