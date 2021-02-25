@@ -107,7 +107,7 @@ void o_net_guess_direction(GschemToplevel *w_current,
     for (iter2 = (GList*) iter1->data; iter2 != NULL; iter2 = g_list_next(iter2)) {
       o_current = (LeptonObject*) iter2->data;
 
-      if ((orientation = geda_net_object_orientation (o_current)) == NEITHER)
+      if ((orientation = lepton_net_object_orientation (o_current)) == NEITHER)
         continue;
 
       switch (lepton_object_get_type (o_current)) {
@@ -517,7 +517,7 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
 
   if (!primary_zero_length ) {
   /* create primary net */
-      new_net = geda_net_object_new (OBJ_NET, NET_COLOR,
+    new_net = lepton_net_object_new (OBJ_NET, NET_COLOR,
                                      w_current->first_wx, w_current->first_wy,
                                      w_current->second_wx, w_current->second_wy);
       s_page_append (page, new_net);
@@ -552,7 +552,7 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   if (!secondary_zero_length && !found_primary_connection) {
 
       /* Add secondary net */
-      new_net = geda_net_object_new (OBJ_NET, NET_COLOR,
+    new_net = lepton_net_object_new (OBJ_NET, NET_COLOR,
                                      w_current->second_wx, w_current->second_wy,
                                      w_current->third_wx, w_current->third_wy);
       s_page_append (page, new_net);
@@ -802,8 +802,8 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
     if (lepton_object_is_bus (bus_object))
     {
       /* yes, using the net routine is okay */
-      int bus_orientation = geda_net_object_orientation (bus_object);
-      int net_orientation = geda_net_object_orientation (net_obj);
+      int bus_orientation = lepton_net_object_orientation (bus_object);
+      int net_orientation = lepton_net_object_orientation (net_obj);
 
       /* find the CONN structure which is associated with this object */
       GList *cl_current2 = net_obj->conn_list;
@@ -1054,9 +1054,9 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
 
     for (i = 0; i < ripper_count; i++) {
       if (w_current->bus_ripper_type == NET_BUS_RIPPER) {
-        new_obj = geda_net_object_new (OBJ_NET, NET_COLOR,
-                                       rippers[i].x[0], rippers[i].y[0],
-                                       rippers[i].x[1], rippers[i].y[1]);
+        new_obj = lepton_net_object_new (OBJ_NET, NET_COLOR,
+                                         rippers[i].x[0], rippers[i].y[0],
+                                         rippers[i].x[1], rippers[i].y[1]);
         s_page_append (page, new_obj);
       } else {
 

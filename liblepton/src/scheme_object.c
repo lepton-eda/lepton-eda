@@ -934,8 +934,8 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
     lepton_line_object_modify (obj, x2, y2, LINE_END2);
     break;
   case OBJ_NET:
-    geda_net_object_modify (obj, x1, y1, 0);
-    geda_net_object_modify (obj, x2, y2, 1);
+    lepton_net_object_modify (obj, x1, y1, 0);
+    lepton_net_object_modify (obj, x2, y2, 1);
     break;
   case OBJ_BUS:
     lepton_bus_object_modify (obj, x1, y1, 0);
@@ -1022,7 +1022,7 @@ SCM_DEFINE (make_net, "%make-net", 0, 0, 0,
   LeptonObject *obj;
   SCM result;
 
-  obj = geda_net_object_new (OBJ_NET, NET_COLOR, 0, 0, 0, 0);
+  obj = lepton_net_object_new (OBJ_NET, NET_COLOR, 0, 0, 0, 0);
 
 
   result = edascm_from_object (obj);

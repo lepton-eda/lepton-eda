@@ -24,7 +24,7 @@
 
 G_BEGIN_DECLS
 
-/* for geda_net_object_orientation */
+/* for lepton_net_object_orientation */
 #define NEITHER    0
 #define HORIZONTAL 1
 #define VERTICAL   2
@@ -32,78 +32,75 @@ G_BEGIN_DECLS
 /* construction, destruction */
 
 LeptonObject*
-geda_net_object_new (char type,
-                     int color,
-                     int x1,
-                     int y1,
-                     int x2,
-                     int y2);
-
+lepton_net_object_new (char type,
+                       int color,
+                       int x1,
+                       int y1,
+                       int x2,
+                       int y2);
 LeptonObject*
-geda_net_object_copy (LeptonObject *o_current);
+lepton_net_object_copy (LeptonObject *o_current);
 
 /* methods */
 
 void
-geda_net_object_calculate_bounds (const LeptonObject *object,
-                                  GedaBounds *bounds);
-
+lepton_net_object_calculate_bounds (const LeptonObject *object,
+                                    GedaBounds *bounds);
 void
-geda_net_object_consolidate (LeptonPage *page);
+lepton_net_object_consolidate (LeptonPage *page);
 
 gboolean
-geda_net_object_get_position (const LeptonObject *object, gint *x, gint *y);
+lepton_net_object_get_position (const LeptonObject *object,
+                                gint *x,
+                                gint *y);
+gint
+lepton_net_object_get_x0 (const LeptonObject *object);
 
 gint
-geda_net_object_get_x0 (const LeptonObject *object);
+lepton_net_object_get_x1 (const LeptonObject *object);
 
 gint
-geda_net_object_get_x1 (const LeptonObject *object);
+lepton_net_object_get_y0 (const LeptonObject *object);
 
 gint
-geda_net_object_get_y0 (const LeptonObject *object);
-
-gint
-geda_net_object_get_y1 (const LeptonObject *object);
+lepton_net_object_get_y1 (const LeptonObject *object);
 
 void
-geda_net_object_mirror (int world_centerx,
-                        int world_centery,
-                        LeptonObject *object);
-
+lepton_net_object_mirror (int world_centerx,
+                          int world_centery,
+                          LeptonObject *object);
 void
-geda_net_object_modify (LeptonObject *object,
-                        int x,
-                        int y,
-                        int whichone);
-
+lepton_net_object_modify (LeptonObject *object,
+                          int x,
+                          int y,
+                          int whichone);
 int
-geda_net_object_orientation (LeptonObject *object);
+lepton_net_object_orientation (LeptonObject *object);
 
 void
-geda_net_object_rotate (int world_centerx,
-                        int world_centery,
-                        int angle,
-                        LeptonObject *object);
-
+lepton_net_object_rotate (int world_centerx,
+                          int world_centery,
+                          int angle,
+                          LeptonObject *object);
 void
-geda_net_object_set_x0 (LeptonObject *object, gint x);
-
+lepton_net_object_set_x0 (LeptonObject *object,
+                          gint x);
 void
-geda_net_object_set_x1 (LeptonObject *object, gint x);
-
+lepton_net_object_set_x1 (LeptonObject *object,
+                          gint x);
 void
-geda_net_object_set_y0 (LeptonObject *object, gint y);
-
+lepton_net_object_set_y0 (LeptonObject *object,
+                          gint y);
 void
-geda_net_object_set_y1 (LeptonObject *object, gint y);
-
+lepton_net_object_set_y1 (LeptonObject *object,
+                          gint y);
 gchar*
-geda_net_object_to_buffer (const LeptonObject *object);
+lepton_net_object_to_buffer (const LeptonObject *object);
 
 void
-geda_net_object_translate (LeptonObject *object, int dx, int dy);
-
+lepton_net_object_translate (LeptonObject *object,
+                             int dx,
+                             int dy);
 LeptonObject*
 o_net_read (const char buf[],
             unsigned int release_ver,

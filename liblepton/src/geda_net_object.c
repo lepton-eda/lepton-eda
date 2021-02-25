@@ -39,7 +39,9 @@
  *  \return TRUE if successfully determined the position, FALSE otherwise
  */
 gboolean
-geda_net_object_get_position (const LeptonObject *object, gint *x, gint *y)
+lepton_net_object_get_position (const LeptonObject *object,
+                                gint *x,
+                                gint *y)
 {
   g_return_val_if_fail (lepton_object_is_net (object), FALSE);
   g_return_val_if_fail (object->line != NULL, FALSE);
@@ -65,7 +67,7 @@ geda_net_object_get_position (const LeptonObject *object, gint *x, gint *y)
  *  \return The x coordinate for the first endpoint
  */
 gint
-geda_net_object_get_x0 (const LeptonObject *object)
+lepton_net_object_get_x0 (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_net (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -83,7 +85,7 @@ geda_net_object_get_x0 (const LeptonObject *object)
  *  \return The x coordinate for the second endpoint
  */
 gint
-geda_net_object_get_x1 (const LeptonObject *object)
+lepton_net_object_get_x1 (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_net (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -101,7 +103,7 @@ geda_net_object_get_x1 (const LeptonObject *object)
  *  \return The y coordinate for the first endpoint
  */
 gint
-geda_net_object_get_y0 (const LeptonObject *object)
+lepton_net_object_get_y0 (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_net (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -119,7 +121,7 @@ geda_net_object_get_y0 (const LeptonObject *object)
  *  \return The y coordinate for the second endpoint
  */
 gint
-geda_net_object_get_y1 (const LeptonObject *object)
+lepton_net_object_get_y1 (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_net (object), 0);
   g_return_val_if_fail (object->line != NULL, 0);
@@ -137,7 +139,8 @@ geda_net_object_get_y1 (const LeptonObject *object)
  *  \param [in] x The new x coordinate for the first endpoint
  */
 void
-geda_net_object_set_x0 (LeptonObject *object, gint x)
+lepton_net_object_set_x0 (LeptonObject *object,
+                          gint x)
 {
   g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
@@ -155,7 +158,8 @@ geda_net_object_set_x0 (LeptonObject *object, gint x)
  *  \param [in] x The new x coordinate for the second endpoint
  */
 void
-geda_net_object_set_x1 (LeptonObject *object, gint x)
+lepton_net_object_set_x1 (LeptonObject *object,
+                          gint x)
 {
   g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
@@ -173,7 +177,8 @@ geda_net_object_set_x1 (LeptonObject *object, gint x)
  *  \param [in] y The new y coordinate for the first endpoint
  */
 void
-geda_net_object_set_y0 (LeptonObject *object, gint y)
+lepton_net_object_set_y0 (LeptonObject *object,
+                          gint y)
 {
   g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
@@ -191,7 +196,8 @@ geda_net_object_set_y0 (LeptonObject *object, gint y)
  *  \param [in] y The new y coordinate for the second endpoint
  */
 void
-geda_net_object_set_y1 (LeptonObject *object, gint y)
+lepton_net_object_set_y1 (LeptonObject *object,
+                          gint y)
 {
   g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
@@ -207,8 +213,8 @@ geda_net_object_set_y1 (LeptonObject *object, gint y)
  *  \param [out] bounds   The bounds of the net
  */
 void
-geda_net_object_calculate_bounds (const LeptonObject *object,
-                                  GedaBounds *bounds)
+lepton_net_object_calculate_bounds (const LeptonObject *object,
+                                    GedaBounds *bounds)
 {
   gint expand;
 
@@ -238,12 +244,12 @@ geda_net_object_calculate_bounds (const LeptonObject *object,
  *  \return A new net LeptonObject
  */
 LeptonObject*
-geda_net_object_new (char type,
-                     int color,
-                     int x1,
-                     int y1,
-                     int x2,
-                     int y2)
+lepton_net_object_new (char type,
+                       int color,
+                       int x1,
+                       int y1,
+                       int x2,
+                       int y2)
 {
   LeptonObject *new_node;
 
@@ -302,7 +308,7 @@ o_net_read (const char buf[],
     color = default_color_id();
   }
 
-  new_obj = geda_net_object_new (type, color, x1, y1, x2, y2);
+  new_obj = lepton_net_object_new (type, color, x1, y1, x2, y2);
 
   return new_obj;
 }
@@ -316,17 +322,17 @@ o_net_read (const char buf[],
  *  \return the string representation of the net LeptonObject
  */
 gchar*
-geda_net_object_to_buffer (const LeptonObject *object)
+lepton_net_object_to_buffer (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_net (object), NULL);
   g_return_val_if_fail (object->line != NULL, NULL);
 
   return g_strdup_printf ("%c %d %d %d %d %d",
                           lepton_object_get_type (object),
-                          geda_net_object_get_x0 (object),
-                          geda_net_object_get_y0 (object),
-                          geda_net_object_get_x1 (object),
-                          geda_net_object_get_y1 (object),
+                          lepton_net_object_get_x0 (object),
+                          lepton_net_object_get_y0 (object),
+                          lepton_net_object_get_x1 (object),
+                          lepton_net_object_get_y1 (object),
                           lepton_object_get_color (object));
 }
 
@@ -339,7 +345,9 @@ geda_net_object_to_buffer (const LeptonObject *object)
  *  \param [in]  dy     The y-distance to move the object
  */
 void
-geda_net_object_translate (LeptonObject *object, int dx, int dy)
+lepton_net_object_translate (LeptonObject *object,
+                             int dx,
+                             int dy)
 {
   g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
@@ -359,7 +367,7 @@ geda_net_object_translate (LeptonObject *object, int dx, int dy)
  *  \return a new net object
  */
 LeptonObject*
-geda_net_object_copy (LeptonObject *o_current)
+lepton_net_object_copy (LeptonObject *o_current)
 {
   LeptonObject *new_obj;
 
@@ -367,12 +375,12 @@ geda_net_object_copy (LeptonObject *o_current)
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
-  new_obj = geda_net_object_new (OBJ_NET,
-                                 lepton_object_get_color (o_current),
-                                 o_current->line->x[0],
-                                 o_current->line->y[0],
-                                 o_current->line->x[1],
-                                 o_current->line->y[1]);
+  new_obj = lepton_net_object_new (OBJ_NET,
+                                   lepton_object_get_color (o_current),
+                                   o_current->line->x[0],
+                                   o_current->line->y[0],
+                                   o_current->line->x[1],
+                                   o_current->line->y[1]);
 
   return new_obj;
 }
@@ -389,10 +397,10 @@ geda_net_object_copy (LeptonObject *o_current)
  *  \note only steps of 90 degrees are allowed for the \a angle
  */
 void
-geda_net_object_rotate (int world_centerx,
-                        int world_centery,
-                        int angle,
-                        LeptonObject *object)
+lepton_net_object_rotate (int world_centerx,
+                          int world_centery,
+                          int angle,
+                          LeptonObject *object)
 {
   int newx, newy;
 
@@ -403,7 +411,7 @@ geda_net_object_rotate (int world_centerx,
     return;
 
   /* translate object to origin */
-  geda_net_object_translate (object, -world_centerx, -world_centery);
+  lepton_net_object_translate (object, -world_centerx, -world_centery);
 
   geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
                   &newx, &newy);
@@ -417,7 +425,7 @@ geda_net_object_rotate (int world_centerx,
   object->line->x[1] = newx;
   object->line->y[1] = newy;
 
-  geda_net_object_translate (object, world_centerx, world_centery);
+  lepton_net_object_translate (object, world_centerx, world_centery);
 }
 
 /*! \brief mirror a net object horizontaly at a centerpoint
@@ -430,21 +438,21 @@ geda_net_object_rotate (int world_centerx,
  *  \param [in] object        The net object
  */
 void
-geda_net_object_mirror (int world_centerx,
-                        int world_centery,
-                        LeptonObject *object)
+lepton_net_object_mirror (int world_centerx,
+                          int world_centery,
+                          LeptonObject *object)
 {
   g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
 
   /* translate object to origin */
-  geda_net_object_translate (object, -world_centerx, -world_centery);
+  lepton_net_object_translate (object, -world_centerx, -world_centery);
 
   object->line->x[0] = -object->line->x[0];
 
   object->line->x[1] = -object->line->x[1];
 
-  geda_net_object_translate (object, world_centerx, world_centery);
+  lepton_net_object_translate (object, world_centerx, world_centery);
 }
 
 /*! \brief calculate the orientation of a net object
@@ -455,7 +463,7 @@ geda_net_object_mirror (int world_centerx,
  *  \return The orientation: HORIZONTAL, VERTICAL or NEITHER
  */
 int
-geda_net_object_orientation (LeptonObject *object)
+lepton_net_object_orientation (LeptonObject *object)
 {
   if (object->line->y[0] == object->line->y[1]) {
     return (HORIZONTAL);
@@ -618,7 +626,7 @@ o_net_consolidate_segments (LeptonObject *object)
   page = o_get_page (object);
   g_return_val_if_fail ((page != NULL), 0);
 
-  object_orient = geda_net_object_orientation (object);
+  object_orient = lepton_net_object_orientation (object);
 
   c_current = object->conn_list;
   while(c_current != NULL) {
@@ -632,7 +640,7 @@ o_net_consolidate_segments (LeptonObject *object)
 
       if (lepton_object_is_net (other_object))
       {
-        other_orient = geda_net_object_orientation (other_object);
+        other_orient = lepton_net_object_orientation (other_object);
 
         /* - both objects have the same orientation (either vert or horiz) */
         /* - it's not the same object */
@@ -680,7 +688,7 @@ o_net_consolidate_segments (LeptonObject *object)
  *  \param page      The LeptonPage to consolidate nets in.
  */
 void
-geda_net_object_consolidate (LeptonPage *page)
+lepton_net_object_consolidate (LeptonPage *page)
 {
   LeptonObject *o_current;
   const GList *iter;
@@ -727,10 +735,10 @@ geda_net_object_consolidate (LeptonPage *page)
  *
  */
 void
-geda_net_object_modify (LeptonObject *object,
-                        int x,
-                        int y,
-                        int whichone)
+lepton_net_object_modify (LeptonObject *object,
+                          int x,
+                          int y,
+                          int whichone)
 {
   object->line->x[whichone] = x;
   object->line->y[whichone] = y;

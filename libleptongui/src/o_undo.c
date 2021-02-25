@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -162,7 +162,7 @@ o_undo_savestate (GschemToplevel *w_current,
     /* This is where the net consolidation call would have been
      * triggered before it was removed from o_save_buffer().
      */
-    geda_net_object_consolidate (page);
+    lepton_net_object_consolidate (page);
   }
 
   if (w_current->undo_type == UNDO_DISK && flag == UNDO_ALL) {
