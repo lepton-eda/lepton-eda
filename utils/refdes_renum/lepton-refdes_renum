@@ -375,20 +375,17 @@ sub usage {
 #---------------------------------
 
 sub version {
-  open(PROG,"$0") or die_sdb(4, "Could not open \"$0\" to find version\n\n");
   my $pname = $0;
   $pname =~ s/.*\///g;
 
-  while($line = <PROG>) {
-    if( $line =~ /^#\s*\$Id.*\$/) {
-      @words = split ' ',,$line;
-      $version = $words[3];
-      $date = $words[4];
-      print "$pname ($0):  Version $version, $date\n";
-      exit(0);
-    }
-  }
-  die_sdb(4, "Could not determine version of \"$0\"\n\n");
+  print "Lepton EDA 1.9.13.20201211\n";
+  print "$pname was written by Dan McMahill <dmcmahill\@netbsd.org>\n";
+
+  print "Copyright (C) 2003-2007 Dan McMahill\n";
+  print "Copyright (C) 2003-2016 gEDA Contributors\n";
+  print "Copyright (C) 2017-2021 Lepton EDA Contributors\n";
+
+  exit(0);
 }
 
 #-------------------------------------------
