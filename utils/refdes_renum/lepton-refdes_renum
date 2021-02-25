@@ -35,7 +35,7 @@ use POSIX;
 $Getopt::Long::autoabbrev=0;
 
 #  my $clear; # reset all refdes
-&GetOptions(("help|h" => \&usage, 
+&GetOptions(("help|h" => \&usage,
 	     "nocopy" => \$nocopy,
 	     "pgskip:100" => \$pgskip,
 	     "verbose" => \$verbose,
@@ -50,13 +50,13 @@ usage() if $Getopt::Long::error;
 
 # By default pgskip is empty.  But if the user gives
 # the --pgskip option with no value, then assign pgskip
-# to 100.  
-if (defined($pgskip) && ($pgskip == 0)) {  
-    $pgskip = 100; 
+# to 100.
+if (defined($pgskip) && ($pgskip == 0)) {
+    $pgskip = 100;
 }
 
 
-# This makes --gentle the default behavior.  To 
+# This makes --gentle the default behavior.  To
 # force refdes renumbering, use --force.
 $gentle = 1;
 if ( defined($force) || defined($clear) ) {
@@ -79,13 +79,13 @@ $filecnt = $i;  # number of files to open
 if($verbose) {print "Found $filecnt files to process\n";}
 
 # To refdes an entire design, we normally just loop through all files
-# and process each one in order.  However if --gentle option is set, 
+# and process each one in order.  However if --gentle option is set,
 # we need to make two passes through all files.  First to create a hash
-# of the highest refdeses used, and second to update unnumbered 
+# of the highest refdeses used, and second to update unnumbered
 # refdeses.  The hash is used to know where to start the refdes numbering.
 #
 # It gets more complicated.  If --pgskip is not set, then we only need
-# to find the highest refdes overall.  But if --pgskip is set, then 
+# to find the highest refdes overall.  But if --pgskip is set, then
 # we need to know the highest refdes on each *page*.  This is accomplished
 # on the first scan by creating the variable $highdev{$i, $pre} when --pgskip
 # is defined, but using the variable $highdev{$pre} when it is not.
@@ -115,21 +115,21 @@ if (defined($gentle)) {  # First scan through design to build hash
 		    # Part has no pre-existing refdes.
 		    # Skip to next part.
 		    next;
-		} elsif (!defined($highdev{$i, $pre})) { 
-                    # refdes is not cached, but refdes exists on part.  
+		} elsif (!defined($highdev{$i, $pre})) {
+                    # refdes is not cached, but refdes exists on part.
 		    # Create new cache entry
 		    if ($suf < $pgskip) {
 			# if pgskip=100, on pg 1, and suf = 23, set highdev=123.
 			$highdev{$i, $pre} = ($i+1)*$pgskip + $suf;
-		    } elsif ( ( ($i+1)*$pgskip < $suf) && 
-			      ( ($i+2)*$pgskip > $suf) ) { 
+		    } elsif ( ( ($i+1)*$pgskip < $suf) &&
+			      ( ($i+2)*$pgskip > $suf) ) {
 			# if pgskip=100, we're on pg 2, and suf = 204, set highdev=204.
 			$highdev{$i, $pre} = $suf;
 		    } else {
 			# I don't know what to do!
 			die_sdb(3, "Encountered refdes incompatable with --pgskip setting.  Refdes=$pre$suf.\n");
 		    }
-			
+
 		} elsif ($highdev{$i, $pre} < $suf) {
 		    # part has refdes and refdes is higher than cached
                     # value.  Store this new value as highest value.
@@ -150,7 +150,7 @@ if (defined($gentle)) {  # First scan through design to build hash
 		if ($suf eq "?") {
 		    # Part has no pre-existing refdes.
 		    next;
-		} elsif (!defined($highdev{$pre}) ) { 
+		} elsif (!defined($highdev{$pre}) ) {
                     # refdes is not cached, and refdes exists on part.  Create new
                     # cache entry
 		    $highdev{$pre} = $suf;
@@ -170,7 +170,7 @@ if (defined($gentle)) {  # First scan through design to build hash
 		    print "Caching highest refdes $pre$highdev{$pre}\n";
 		}
 	    }
-	    
+
 	}  # while($line = <NETLIST>)
 	close(NETLIST);
     }  # for($i=0; $i < $filecnt; $i++)
@@ -182,13 +182,13 @@ if (defined($gentle)) {  # First scan through design to build hash
 for($i=0; $i < $filecnt; $i++) {   # $i is the file index.
     print "Now processing input file #".($i+1).": $fname[$i]\n";
     open(NETLIST,"$fname[$i]") or die_sdb(1, "Can't open $fname[$i]: $!\n");
-    
+
     # open output netlist
     $outfname="$fname[$i].renum";
     open(OUTNET,">$outfname") or die_sdb(2, "Can't open $outfname: $!\n");
-    
+
     # Iterate over lines found in .sch file.
-    while($line = <NETLIST>) {  
+    while($line = <NETLIST>) {
 	unless( $line =~ /^refdes/) {
 	    print OUTNET $line;
 	    next;
@@ -196,7 +196,7 @@ for($i=0; $i < $filecnt; $i++) {   # $i is the file index.
 
 	# Found refdes line.  Eat the newline.
 	$line =~ s/\n//;
-	
+
 	# Now extract component prefix and suffix.
 	if($verbose) {print ("Processing $line ....\n");}
 	$line =~ /refdes=([a-zA-Z_]+)(\d+|\??)/i;
@@ -217,7 +217,7 @@ for($i=0; $i < $filecnt; $i++) {   # $i is the file index.
 	    } elsif (!defined($devcnt{$i, $pre}) && !defined($highdev{$i, $pre})) {
 		$devcnt{$i, $pre} = ($i+1)*$pgskip ;
 	    }
-	    
+
 	    if ($suf eq "?") {
 		$devcnt{$i, $pre}++;
 		if ($devcnt{$i, $pre} >= ($i+2)*$pgskip) {
@@ -278,7 +278,7 @@ for($i=0; $i < $filecnt; $i++) {   # $i is the file index.
     close(NETLIST);
     close(OUTNET);
 
-    
+
     # make this an option to not overwrite the original
     if( $nocopy ) {
 	print "Leaving page #",$i+1," output in $outfname\n";
