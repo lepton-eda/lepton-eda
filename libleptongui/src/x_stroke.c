@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,10 +113,10 @@ x_stroke_record (GschemToplevel *w_current, gint x, gint y)
     cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (GTK_WIDGET(view)));
     GedaColor *color = x_color_lookup (STROKE_COLOR);
     cairo_set_source_rgba (cr,
-                           geda_color_get_red_double (color),
-                           geda_color_get_green_double (color),
-                           geda_color_get_blue_double (color),
-                           geda_color_get_alpha_double (color));
+                           lepton_color_get_red_double (color),
+                           lepton_color_get_green_double (color),
+                           lepton_color_get_blue_double (color),
+                           lepton_color_get_alpha_double (color));
 
     cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (geometry));
     x0 = x;

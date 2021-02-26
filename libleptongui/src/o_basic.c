@@ -168,10 +168,10 @@ void o_redraw_rect (GschemToplevel *w_current,
   GedaColor *color = x_color_lookup (BACKGROUND_COLOR);
 
   cairo_set_source_rgba (cr,
-                         geda_color_get_red_double (color),
-                         geda_color_get_green_double (color),
-                         geda_color_get_blue_double (color),
-                         geda_color_get_alpha_double (color));
+                         lepton_color_get_red_double (color),
+                         lepton_color_get_green_double (color),
+                         lepton_color_get_blue_double (color),
+                         lepton_color_get_alpha_double (color));
 
 #ifdef ENABLE_GTK3
   double cx=wx, cy=wy;
