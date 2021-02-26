@@ -33,8 +33,8 @@ G_BEGIN_DECLS
 
 #include <liblepton/color.h>
 #include <liblepton/fill_type.h>
-#include <liblepton/geda_line_type.h>
-#include <liblepton/geda_line_cap_type.h>
+#include <liblepton/line_type.h>
+#include <liblepton/line_cap_type.h>
 #include <liblepton/point.h>
 #include <liblepton/geda_string.h>
 
@@ -46,7 +46,7 @@ G_BEGIN_DECLS
 #include <liblepton/circle.h>
 #include <liblepton/geda_component.h>
 #include <liblepton/coord.h>
-#include <liblepton/geda_line.h>
+#include <liblepton/line.h>
 #include <liblepton/geda_path.h>
 #include <liblepton/geda_picture.h>
 #include <liblepton/geda_text.h>

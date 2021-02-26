@@ -15,8 +15,8 @@
 
 #include "color.h"
 #include "fill_type.h"
-#include "geda_line_type.h"
-#include "geda_line_cap_type.h"
+#include "line_type.h"
+#include "line_cap_type.h"
 #include "point.h"
 #include "geda_string.h"
 
@@ -28,7 +28,7 @@
 #include "circle.h"
 #include "geda_component.h"
 #include "coord.h"
-#include "geda_line.h"
+#include "line.h"
 #include "geda_path.h"
 #include "geda_picture.h"
 #include "geda_text.h"
