@@ -1083,7 +1083,7 @@ lepton_component_object_rotate (int centerx,
   x = object->component->x + (-centerx);
   y = object->component->y + (-centery);
 
-  geda_point_rotate_90 (x, y, angle, &newx, &newy);
+  lepton_point_rotate_90 (x, y, angle, &newx, &newy);
 
   x = newx + (centerx);
   y = newy + (centery);

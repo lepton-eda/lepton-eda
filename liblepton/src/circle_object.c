@@ -497,7 +497,7 @@ lepton_circle_object_rotate (gint world_centerx,
   /* rotate the center of the circle around the origin */
   x = object->circle->center_x;
   y = object->circle->center_y;
-  geda_point_rotate_90 (x, y, angle, &newx, &newy);
+  lepton_point_rotate_90 (x, y, angle, &newx, &newy);
   object->circle->center_x = newx;
   object->circle->center_y = newy;
 

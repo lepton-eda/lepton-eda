@@ -442,8 +442,8 @@ lepton_path_object_rotate (int world_centerx,
       /* Two control point grips */
       section->x1 -= world_centerx; section->y1 -= world_centery;
       section->x2 -= world_centerx; section->y2 -= world_centery;
-      geda_point_rotate_90 (section->x1, section->y1, angle, &section->x1, &section->y1);
-      geda_point_rotate_90 (section->x2, section->y2, angle, &section->x2, &section->y2);
+      lepton_point_rotate_90 (section->x1, section->y1, angle, &section->x1, &section->y1);
+      lepton_point_rotate_90 (section->x2, section->y2, angle, &section->x2, &section->y2);
       section->x1 += world_centerx; section->y1 += world_centery;
       section->x2 += world_centerx; section->y2 += world_centery;
       /* Fall through */
@@ -452,7 +452,11 @@ lepton_path_object_rotate (int world_centerx,
     case PATH_LINETO:
       /* Destination point grip */
       section->x3 -= world_centerx; section->y3 -= world_centery;
-      geda_point_rotate_90 (section->x3, section->y3, angle, &section->x3, &section->y3);
+      lepton_point_rotate_90 (section->x3,
+                              section->y3,
+                              angle,
+                              &section->x3,
+                              &section->y3);
       section->x3 += world_centerx; section->y3 += world_centery;
       break;
     case PATH_END:

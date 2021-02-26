@@ -503,12 +503,18 @@ lepton_box_object_rotate (int world_centerx,
   object->box->lower_y -= world_centery;
 
   /* rotate the upper left corner of the box */
-  geda_point_rotate_90 (object->box->upper_x, object->box->upper_y, angle,
-                        &newx1, &newy1);
+  lepton_point_rotate_90 (object->box->upper_x,
+                          object->box->upper_y,
+                          angle,
+                          &newx1,
+                          &newy1);
 
   /* rotate the lower left corner of the box */
-  geda_point_rotate_90 (object->box->lower_x, object->box->lower_y, angle,
-                        &newx2, &newy2);
+  lepton_point_rotate_90 (object->box->lower_x,
+                          object->box->lower_y,
+                          angle,
+                          &newx2,
+                          &newy2);
 
   /* reorder the corners after rotation */
   object->box->upper_x = MIN(newx1,newx2);
