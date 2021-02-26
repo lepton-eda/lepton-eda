@@ -18,8 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef GEDA_COLOR_H_
-#define GEDA_COLOR_H_
+#ifndef LEPTON_COLOR_H_
+#define LEPTON_COLOR_H_
 
 
 G_BEGIN_DECLS
@@ -118,4 +118,4 @@ print_colors_array ();
 G_END_DECLS
 
 
-#endif /* GEDA_COLOR_H_ */
+#endif /* LEPTON_COLOR_H_ */

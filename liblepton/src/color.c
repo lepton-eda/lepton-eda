@@ -19,7 +19,7 @@
  */
 
 /*!
- * \file  geda_color.c
+ * \file  color.c
  * \brief Colors and color maps
  */
 
