@@ -35,6 +35,7 @@ liblepton_la_SOURCES = \
 	$(scheme_api_sources) \
 	a_basic.c \
 	angle.c \
+	arc.c \
 	arc_object.c \
 	box_object.c \
 	bus_object.c \
@@ -45,7 +46,6 @@ liblepton_la_SOURCES = \
 	edaerrors.c \
 	f_basic.c \
 	g_basic.c \
-	geda_arc.c \
 	geda_bounds.c \
 	geda_box.c \
 	geda_color.c \

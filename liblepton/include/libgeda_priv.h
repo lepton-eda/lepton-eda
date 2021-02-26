@@ -21,7 +21,7 @@
 #include "geda_string.h"
 
 #include "angle.h"
-#include "geda_arc.h"
+#include "arc.h"
 #include "geda_bezier.h"
 #include "geda_bounds.h"
 #include "geda_box.h"
