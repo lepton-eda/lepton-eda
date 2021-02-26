@@ -20,7 +20,7 @@ libleptoninclude_HEADERS = \
 	liblepton/circle.h \
 	liblepton/color.h \
 	liblepton/geda_component.h \
-	liblepton/geda_coord.h \
+	liblepton/coord.h \
 	liblepton/geda_forward.h \
 	liblepton/geda_fill_type.h \
 	liblepton/geda_line.h \

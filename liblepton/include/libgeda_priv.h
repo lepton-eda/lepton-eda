@@ -27,7 +27,7 @@
 #include "box.h"
 #include "circle.h"
 #include "geda_component.h"
-#include "geda_coord.h"
+#include "coord.h"
 #include "geda_line.h"
 #include "geda_path.h"
 #include "geda_picture.h"
