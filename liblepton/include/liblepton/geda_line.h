@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,13 +31,15 @@ struct _GedaLine
 };
 
 GedaLine*
-geda_line_new ();
+lepton_line_new ();
 
 void
-geda_line_free (GedaLine *line);
+lepton_line_free (GedaLine *line);
 
 void
-geda_line_calculate_bounds (const GedaLine *line, GedaBounds *bounds);
-
+lepton_line_calculate_bounds (const GedaLine *line,
+                              GedaBounds *bounds);
 gdouble
-geda_line_shortest_distance (const GedaLine *line, gint x, gint y);
+lepton_line_shortest_distance (const GedaLine *line,
+                               gint x,
+                               gint y);

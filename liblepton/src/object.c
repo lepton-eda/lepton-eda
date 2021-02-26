@@ -452,7 +452,7 @@ s_delete_object (LeptonObject *o_current)
     }
 
     /* printf("sdeleting line\n"); */
-    geda_line_free (o_current->line);
+    lepton_line_free (o_current->line);
     o_current->line = NULL;
 
     geda_path_free (o_current->path);

@@ -47,7 +47,7 @@ lepton_pin_object_calculate_bounds (const LeptonObject *object,
   g_return_if_fail (lepton_object_is_pin (object));
   g_return_if_fail (object->line != NULL);
 
-  geda_line_calculate_bounds (object->line, bounds);
+  lepton_line_calculate_bounds (object->line, bounds);
 
   width = lepton_pin_object_get_width (object);
 
@@ -293,7 +293,7 @@ lepton_pin_object_new (int color,
   new_node = s_basic_new_object(OBJ_PIN, "pin");
   lepton_object_set_color (new_node, color);
 
-  new_node->line = geda_line_new ();
+  new_node->line = lepton_line_new ();
 
   new_node->line->x[0] = x1;
   new_node->line->y[0] = y1;
