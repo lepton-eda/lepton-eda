@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,16 +31,16 @@ struct _GedaCircle
 };
 
 GedaCircle*
-geda_circle_new ();
+lepton_circle_new ();
 
 void
-geda_circle_free (GedaCircle *circle);
+lepton_circle_free (GedaCircle *circle);
 
 void
-geda_circle_calculate_bounds (const GedaCircle *circle, GedaBounds *bounds);
-
+lepton_circle_calculate_bounds (const GedaCircle *circle,
+                                GedaBounds *bounds);
 gdouble
-geda_circle_shortest_distance (const GedaCircle *circle,
-                               gint x,
-                               gint y,
-                               gboolean solid);
+lepton_circle_shortest_distance (const GedaCircle *circle,
+                                 gint x,
+                                 gint y,
+                                 gboolean solid);

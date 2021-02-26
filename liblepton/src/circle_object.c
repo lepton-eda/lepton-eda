@@ -67,7 +67,7 @@ lepton_circle_object_new (gint color,
   new_node = s_basic_new_object (OBJ_CIRCLE, "circle");
   lepton_object_set_color (new_node, color);
 
-  new_node->circle = geda_circle_new ();
+  new_node->circle = lepton_circle_new ();
 
   /* describe the circle with its center and radius */
   new_node->circle->center_x = center_x;
@@ -556,7 +556,7 @@ lepton_circle_object_calculate_bounds (const LeptonObject *object,
   g_return_if_fail (lepton_object_is_circle (object));
   g_return_if_fail (object->circle != NULL);
 
-  geda_circle_calculate_bounds (object->circle, bounds);
+  lepton_circle_calculate_bounds (object->circle, bounds);
 
   expand = (object->line_width + 1) / 2;
 
@@ -617,5 +617,5 @@ lepton_circle_object_shortest_distance (LeptonObject *object,
 
   solid = force_solid || object->fill_type != FILLING_HOLLOW;
 
-  return geda_circle_shortest_distance (object->circle, x, y, solid);
+  return lepton_circle_shortest_distance (object->circle, x, y, solid);
 }
