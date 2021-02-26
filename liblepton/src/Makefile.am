@@ -50,7 +50,7 @@ liblepton_la_SOURCES = \
 	box.c \
 	color.c \
 	circle.c \
-	geda_coord.c \
+	coord.c \
 	geda_fill_type.c \
 	geda_line.c \
 	geda_list.c \

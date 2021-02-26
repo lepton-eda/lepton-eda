@@ -45,7 +45,7 @@ G_BEGIN_DECLS
 #include <liblepton/box.h>
 #include <liblepton/circle.h>
 #include <liblepton/geda_component.h>
-#include <liblepton/geda_coord.h>
+#include <liblepton/coord.h>
 #include <liblepton/geda_line.h>
 #include <liblepton/geda_path.h>
 #include <liblepton/geda_picture.h>
