@@ -38,7 +38,7 @@ G_BEGIN_DECLS
 #include <liblepton/point.h>
 #include <liblepton/geda_string.h>
 
-#include <liblepton/geda_angle.h>
+#include <liblepton/angle.h>
 #include <liblepton/geda_arc.h>
 #include <liblepton/geda_bezier.h>
 #include <liblepton/geda_bounds.h>
