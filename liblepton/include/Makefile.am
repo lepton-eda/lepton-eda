@@ -16,7 +16,7 @@ libleptoninclude_HEADERS = \
 	liblepton/edascmvaluetypes.h \
 	liblepton/funcs.h \
 	liblepton/geda_bezier.h \
-	liblepton/geda_box.h \
+	liblepton/box.h \
 	liblepton/geda_circle.h \
 	liblepton/geda_color.h \
 	liblepton/geda_component.h \

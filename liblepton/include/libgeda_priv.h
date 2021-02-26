@@ -24,7 +24,7 @@
 #include "arc.h"
 #include "geda_bezier.h"
 #include "bounds.h"
-#include "geda_box.h"
+#include "box.h"
 #include "geda_circle.h"
 #include "geda_component.h"
 #include "geda_coord.h"
