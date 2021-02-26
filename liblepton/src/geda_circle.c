@@ -31,10 +31,10 @@
 
 /*! \brief Allocate an circle
  *
- *  \return a pointer to a circle, which must be freed with geda_circle_free.
+ *  \return a pointer to a circle, which must be freed with lepton_circle_free.
  */
 GedaCircle*
-geda_circle_new ()
+lepton_circle_new ()
 {
   return g_new0 (GedaCircle, 1);
 }
@@ -44,7 +44,7 @@ geda_circle_new ()
  *  \param [in] circle the circle to be freed
  */
 void
-geda_circle_free (GedaCircle *circle)
+lepton_circle_free (GedaCircle *circle)
 {
   g_free (circle);
 }
@@ -59,7 +59,8 @@ geda_circle_free (GedaCircle *circle)
  *  \param [out] bounds the bounds of the circle
  */
 void
-geda_circle_calculate_bounds (const GedaCircle *circle, GedaBounds *bounds)
+lepton_circle_calculate_bounds (const GedaCircle *circle,
+                                GedaBounds *bounds)
 {
   if (circle == NULL) {
     lepton_bounds_init (bounds);
@@ -86,10 +87,10 @@ geda_circle_calculate_bounds (const GedaCircle *circle, GedaBounds *bounds)
  *  an invalid parameter, this function returns G_MAXDOUBLE.
  */
 gdouble
-geda_circle_shortest_distance (const GedaCircle *circle,
-                               gint x,
-                               gint y,
-                               gboolean solid)
+lepton_circle_shortest_distance (const GedaCircle *circle,
+                                 gint x,
+                                 gint y,
+                                 gboolean solid)
 {
   double shortest_distance;
   double distance_to_center;
