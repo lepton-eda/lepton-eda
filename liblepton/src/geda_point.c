@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,11 @@
  *  \param [out] newy   Output point y coordinate.
  */
 void
-geda_point_rotate (int x, int y, int angle, int *newx, int *newy)
+lepton_point_rotate (int x,
+                     int y,
+                     int angle,
+                     int *newx,
+                     int *newy)
 {
   double costheta, sintheta;
   double rad;
@@ -67,7 +71,11 @@ geda_point_rotate (int x, int y, int angle, int *newx, int *newy)
  *  \param [out] newy   Output point y coordinate.
  */
 void
-geda_point_rotate_90 (int x, int y, int angle, int *newx, int *newy)
+lepton_point_rotate_90 (int x,
+                        int y,
+                        int angle,
+                        int *newx,
+                        int *newy)
 {
   double costheta=1;
   double sintheta=0;

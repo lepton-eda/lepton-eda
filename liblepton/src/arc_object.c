@@ -544,9 +544,9 @@ lepton_arc_object_rotate (int world_centerx,
   x = object->arc->x;
   y = object->arc->y;
   if(angle % 90 == 0) {
-    geda_point_rotate_90 (x, y, angle % 360, &newx, &newy);
+    lepton_point_rotate_90 (x, y, angle % 360, &newx, &newy);
   } else {
-    geda_point_rotate (x, y, angle % 360, &newx, &newy);
+    lepton_point_rotate (x, y, angle % 360, &newx, &newy);
   }
   object->arc->x = newx;
   object->arc->y = newy;

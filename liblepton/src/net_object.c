@@ -413,14 +413,20 @@ lepton_net_object_rotate (int world_centerx,
   /* translate object to origin */
   lepton_net_object_translate (object, -world_centerx, -world_centery);
 
-  geda_point_rotate_90 (object->line->x[0], object->line->y[0], angle,
-                  &newx, &newy);
+  lepton_point_rotate_90 (object->line->x[0],
+                          object->line->y[0],
+                          angle,
+                          &newx,
+                          &newy);
 
   object->line->x[0] = newx;
   object->line->y[0] = newy;
 
-  geda_point_rotate_90 (object->line->x[1], object->line->y[1], angle,
-                  &newx, &newy);
+  lepton_point_rotate_90 (object->line->x[1],
+                          object->line->y[1],
+                          angle,
+                          &newx,
+                          &newy);
 
   object->line->x[1] = newx;
   object->line->y[1] = newy;

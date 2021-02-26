@@ -732,7 +732,7 @@ lepton_text_object_rotate (int world_centerx,
   x = object->text->x + (-world_centerx);
   y = object->text->y + (-world_centery);
 
-  geda_point_rotate_90 (x, y, angle, &newx, &newy);
+  lepton_point_rotate_90 (x, y, angle, &newx, &newy);
 
   x = newx + (world_centerx);
   y = newy + (world_centery);

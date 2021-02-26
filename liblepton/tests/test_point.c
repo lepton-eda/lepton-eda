@@ -13,7 +13,7 @@ check_rotate ()
     gint x1;
     gint y1;
 
-    geda_point_rotate (x0, y0, angle, &x1, &y1);
+    lepton_point_rotate (x0, y0, angle, &x1, &y1);
 
     /* distance to origin (center of rotation) should be the same */
     gdouble d0 = hypot (x0, y0);
@@ -56,7 +56,7 @@ check_rotate_90 ()
     gint x1;
     gint y1;
 
-    geda_point_rotate_90 (x0, y0, angle, &x1, &y1);
+    lepton_point_rotate_90 (x0, y0, angle, &x1, &y1);
 
     /* distance to origin (center of rotation) should be the same */
     gdouble d0 = hypot (x0, y0);
