@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,10 +36,10 @@ struct _GedaArc
 };
 
 GedaArc*
-geda_arc_new ();
+lepton_arc_new ();
 
 void
-geda_arc_free (GedaArc *arc);
+lepton_arc_free (GedaArc *arc);
 
 gboolean
-geda_arc_within_sweep (const GedaArc *arc, gint x, gint y);
+lepton_arc_within_sweep (const GedaArc *arc, gint x, gint y);

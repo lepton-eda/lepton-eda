@@ -463,7 +463,7 @@ s_delete_object (LeptonObject *o_current)
     o_current->circle = NULL;
 
     /* printf("sdeleting arc\n");*/
-    geda_arc_free (o_current->arc);
+    lepton_arc_free (o_current->arc);
     o_current->arc = NULL;
 
     /* printf("sdeleting box\n");*/
