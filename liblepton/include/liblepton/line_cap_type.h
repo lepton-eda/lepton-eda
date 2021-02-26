@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,23 +17,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file geda_line_type.h
+/*! \file line_cap_type.h
+ *
+ *  \brief line end style for an open line of an object
  */
 
-/*! \brief The line type of objects such as arcs, boxes, circles, and lines
- *
- *  The numeric values of this enumeration are used inside files and must be
- *  preserved for compatibility.
- */
-enum _GedaLineType
+enum _GedaLineCapType
 {
-  TYPE_SOLID,
-  TYPE_DOTTED,
-  TYPE_DASHED,
-  TYPE_CENTER,
-  TYPE_PHANTOM,
-  TYPE_ERASE
+  END_NONE,
+  END_SQUARE,
+  END_ROUND,
+  END_VOID
 };
 
-typedef enum _GedaLineType GedaLineType;
-typedef enum _GedaLineType OBJECT_TYPE;
+typedef enum _GedaLineCapType GedaLineCapType;
+typedef enum _GedaLineCapType OBJECT_END;

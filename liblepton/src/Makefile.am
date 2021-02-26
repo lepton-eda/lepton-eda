@@ -52,7 +52,7 @@ liblepton_la_SOURCES = \
 	circle.c \
 	coord.c \
 	fill_type.c \
-	geda_line.c \
+	line.c \
 	geda_list.c \
 	geda_page.c \
 	geda_path.c \
