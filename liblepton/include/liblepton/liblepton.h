@@ -43,7 +43,7 @@ G_BEGIN_DECLS
 #include <liblepton/geda_bezier.h>
 #include <liblepton/bounds.h>
 #include <liblepton/box.h>
-#include <liblepton/geda_circle.h>
+#include <liblepton/circle.h>
 #include <liblepton/geda_component.h>
 #include <liblepton/geda_coord.h>
 #include <liblepton/geda_line.h>
