@@ -671,7 +671,7 @@ static void refresh_command (CLibSource *source)
     if (line == NULL) break;
     if (line[0] == '.') continue;  /* TODO is this sane? */
 
-    name = geda_string_get_first_line (g_strdup(line));
+    name = lepton_str_get_first_line (g_strdup(line));
 
     /* skip symbols already known about */
     if (source_has_symbol (source, name) != NULL) {

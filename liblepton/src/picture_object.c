@@ -406,7 +406,7 @@ o_picture_read (const char *first_line,
   }
 
   filename = g_strdup(s_textbuffer_next_line(tb));
-  filename = geda_string_remove_ending_newline (filename);
+  filename = lepton_str_remove_ending_newline (filename);
 
   /* Handle empty filenames */
   if (strlen (filename) == 0) {

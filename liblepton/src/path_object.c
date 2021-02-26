@@ -228,7 +228,7 @@ o_path_read (const char *first_line,
 
   /* retrieve the character string from the GString */
   string = g_string_free (pathstr, FALSE);
-  string = geda_string_remove_ending_newline (string);
+  string = lepton_str_remove_ending_newline (string);
 
   /* create a new path */
   new_obj = lepton_path_object_new (type, color, string);

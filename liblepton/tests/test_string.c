@@ -29,7 +29,7 @@ check_get_first_line ()
     gchar *expected = test_data[index].expected;
     gchar *input = g_strdup (test_data[index].input);
 
-    actual = geda_string_get_first_line (input);
+    actual = lepton_str_get_first_line (input);
     g_assert_cmpstr (actual, ==, expected);
   }
 }
@@ -57,7 +57,7 @@ check_remove_ending_newline ()
     gchar *expected = test_data[index].expected;
     gchar *input = g_strdup (test_data[index].input);
 
-    actual = geda_string_remove_ending_newline (input);
+    actual = lepton_str_remove_ending_newline (input);
     g_assert_cmpstr (actual, ==, expected);
   }
 }
