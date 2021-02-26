@@ -13,7 +13,7 @@
 
 #include "defines.h"
 
-#include "geda_color.h"
+#include "color.h"
 #include "geda_fill_type.h"
 #include "geda_line_type.h"
 #include "geda_line_cap_type.h"
