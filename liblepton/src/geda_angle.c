@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,7 @@
  *  \retval TRUE if the angle is [0,360)
  */
 gboolean
-geda_angle_is_normal (gint angle)
+lepton_angle_is_normal (gint angle)
 {
   return ((0 <= angle) && (angle < 360));
 }
@@ -46,7 +46,7 @@ geda_angle_is_normal (gint angle)
  *  \retval TRUE if the angle is a multiple of 90 degrees
  */
 gboolean
-geda_angle_is_ortho (gint angle)
+lepton_angle_is_ortho (gint angle)
 {
   return ((angle % 90) == 0);
 }
@@ -59,7 +59,7 @@ geda_angle_is_ortho (gint angle)
  *  \return the orthographic angle
  */
 gint
-geda_angle_make_ortho (gint angle)
+lepton_angle_make_ortho (gint angle)
 {
   return round (angle / 90.0) * 90;
 }
@@ -70,7 +70,7 @@ geda_angle_make_ortho (gint angle)
  *  \return the normalized angle inside [0,360)
  */
 gint
-geda_angle_normalize (gint angle)
+lepton_angle_normalize (gint angle)
 {
   if (angle < 0) {
     angle = 360 - (-angle % 360);

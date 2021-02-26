@@ -25,7 +25,7 @@ check_construction ()
     gint x = g_test_rand_int ();
     gint y = g_test_rand_int ();
     gint alignment = g_test_rand_int_range (0, 9);
-    gint angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
+    gint angle = lepton_angle_normalize (lepton_angle_make_ortho (g_test_rand_int ()));
     gint color = g_test_rand_int_range (0, colors_count());
     gint show_name_value = g_test_rand_int_range (0, 3);
     gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);
@@ -87,7 +87,7 @@ check_accessors ()
     gint x = g_test_rand_int ();
     gint y = g_test_rand_int ();
     gint alignment = g_test_rand_int_range (0, 9);
-    gint angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
+    gint angle = lepton_angle_normalize (lepton_angle_make_ortho (g_test_rand_int ()));
     gint color = g_test_rand_int_range (0, colors_count());
     gint show_name_value = g_test_rand_int_range (0, 3);
     gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);
@@ -110,7 +110,7 @@ check_accessors ()
     x = g_test_rand_int ();
     y = g_test_rand_int ();
     alignment = g_test_rand_int_range (0, 9);
-    angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
+    angle = lepton_angle_normalize (lepton_angle_make_ortho (g_test_rand_int ()));
     color = g_test_rand_int_range (0, colors_count());
     show_name_value = g_test_rand_int_range (0, 3);
     size = g_test_rand_int_range (0, G_MAXINT);
@@ -162,7 +162,7 @@ check_serialization ()
     gint x = g_test_rand_int ();
     gint y = g_test_rand_int ();
     gint alignment = g_test_rand_int_range (0, 9);
-    gint angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
+    gint angle = lepton_angle_normalize (lepton_angle_make_ortho (g_test_rand_int ()));
     gint color = g_test_rand_int_range (0, colors_count());
     gint show_name_value = g_test_rand_int_range (0, 3);
     gint size = g_test_rand_int_range (MINIMUM_TEXT_SIZE, G_MAXINT);

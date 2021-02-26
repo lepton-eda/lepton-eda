@@ -8,17 +8,17 @@ check_is_normal ()
 
   for (count = 0; count < 10000; count++) {
     gint angle = g_test_rand_int_range (G_MININT, 0);
-    g_assert_false (geda_angle_is_normal (angle));
+    g_assert_false (lepton_angle_is_normal (angle));
   }
 
   for (count = 0; count < 10000; count++) {
     gint angle = g_test_rand_int_range (360, G_MAXINT);
-    g_assert_false (geda_angle_is_normal (angle));
+    g_assert_false (lepton_angle_is_normal (angle));
   }
 
   for (count = 0; count < 100; count++) {
     gint angle = g_test_rand_int_range (0, 360);
-    g_assert_true (geda_angle_is_normal (angle));
+    g_assert_true (lepton_angle_is_normal (angle));
   }
 }
 
@@ -30,13 +30,13 @@ check_is_ortho ()
   for (count = 0; count < 10000; count++) {
     gint angle = 90 * (g_test_rand_int () / 100);
 
-    g_assert_true (geda_angle_is_ortho (angle));
+    g_assert_true (lepton_angle_is_ortho (angle));
   }
 
   for (count = 0; count < 10000; count++) {
     gint angle = 90 * (g_test_rand_int () / 100) + g_test_rand_int_range (1, 90);
 
-    g_assert_false (geda_angle_is_ortho (angle));
+    g_assert_false (lepton_angle_is_ortho (angle));
   }
 }
 
@@ -48,12 +48,12 @@ check_make_ortho ()
   for (count = 0; count < 100000; count++) {
     gint angle = g_test_rand_int ();
 
-    gint ortho = geda_angle_make_ortho (angle);
+    gint ortho = lepton_angle_make_ortho (angle);
 
     gint delta = abs (ortho - angle);
     g_assert_cmpint (delta, <=, 45);
 
-    g_assert_true (geda_angle_is_ortho (ortho));
+    g_assert_true (lepton_angle_is_ortho (ortho));
   }
 }
 
@@ -67,7 +67,7 @@ check_normalize ()
     gint multiplier = g_test_rand_int_range (-10000, 10001);
     gint not_normalized = angle + 360 * multiplier;
 
-    gint normalized = geda_angle_normalize (not_normalized);
+    gint normalized = lepton_angle_normalize (not_normalized);
 
     g_assert_cmpint (normalized, >=, 0);
     g_assert_cmpint (normalized, <, 360);
