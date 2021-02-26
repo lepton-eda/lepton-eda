@@ -29,6 +29,9 @@
 #endif
 
 #include "libgeda_priv.h"
+/*! \file str.c
+ *  \brief Functions for working with strings.
+ */
 
 /*! \brief count the lines of a text string
  *  \par Function Description
