@@ -525,8 +525,8 @@ create_placeholder_small (LeptonObject* node, int x, int y)
   GedaBounds bounds;
   lepton_text_object_calculate_bounds (txt, FALSE, &bounds);
 
-  bounds.max_x = geda_coord_snap (bounds.max_x, 100);
-  bounds.max_y = geda_coord_snap (bounds.max_y, 100);
+  bounds.max_x = lepton_coord_snap (bounds.max_x, 100);
+  bounds.max_y = lepton_coord_snap (bounds.max_y, 100);
 
   /* two lines at the left and bottom sides of the text:
   */

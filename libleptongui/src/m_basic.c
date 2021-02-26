@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +44,7 @@ int snap_grid(GschemToplevel *w_current, int coord)
   if (snap_mode != SNAP_OFF) {
     gint snap_size = gschem_options_get_snap_size (w_current->options);
 
-    coord = geda_coord_snap (coord, snap_size);
+    coord = lepton_coord_snap (coord, snap_size);
   }
 
   return coord;
