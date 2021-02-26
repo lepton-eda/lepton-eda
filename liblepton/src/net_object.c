@@ -218,7 +218,7 @@ lepton_net_object_calculate_bounds (const LeptonObject *object,
 {
   gint expand;
 
-  geda_bounds_init (bounds);
+  lepton_bounds_init (bounds);
 
   g_return_if_fail (lepton_object_is_net (object));
   g_return_if_fail (object->line != NULL);
@@ -228,7 +228,7 @@ lepton_net_object_calculate_bounds (const LeptonObject *object,
   expand = ceil (0.5 * G_SQRT2 * NET_WIDTH);
 
   /* This isn't strictly correct, but a 1st order approximation */
-  geda_bounds_expand (bounds, bounds, expand, expand);
+  lepton_bounds_expand (bounds, bounds, expand, expand);
 }
 
 /*! \brief create a new net object

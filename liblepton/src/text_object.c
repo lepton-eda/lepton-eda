@@ -92,7 +92,7 @@ lepton_text_object_calculate_bounds (const LeptonObject *object,
   if (! (o_is_visible (object) || include_hidden))
     return FALSE;
 
-  geda_bounds_init (bounds);
+  lepton_bounds_init (bounds);
 
   g_return_val_if_fail (lepton_object_is_text (object), FALSE);
   g_return_val_if_fail (object->text != NULL, FALSE);

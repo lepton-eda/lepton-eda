@@ -607,7 +607,7 @@ lepton_line_object_calculate_bounds (const LeptonObject *object,
 {
   gint expand;
 
-  geda_bounds_init (bounds);
+  lepton_bounds_init (bounds);
 
   g_return_if_fail (lepton_object_is_line (object));
   g_return_if_fail (object->line != NULL);
@@ -617,7 +617,7 @@ lepton_line_object_calculate_bounds (const LeptonObject *object,
   expand = ceil (0.5 * G_SQRT2 * object->line_width);
 
   /* This isn't strictly correct, but a 1st order approximation */
-  geda_bounds_expand (bounds, bounds, expand, expand);
+  lepton_bounds_expand (bounds, bounds, expand, expand);
 }
 
 /*! \brief get the position of the first line point

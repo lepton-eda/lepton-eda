@@ -642,16 +642,16 @@ void
 lepton_picture_object_calculate_bounds (const LeptonObject *object,
                                         GedaBounds *bounds)
 {
-  geda_bounds_init (bounds);
+  lepton_bounds_init (bounds);
 
   g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
 
-  geda_bounds_init_with_points (bounds,
-                                object->picture->lower_x,
-                                object->picture->lower_y,
-                                object->picture->upper_x,
-                                object->picture->upper_y);
+  lepton_bounds_init_with_points (bounds,
+                                  object->picture->lower_x,
+                                  object->picture->lower_y,
+                                  object->picture->upper_x,
+                                  object->picture->upper_y);
 }
 
 /*! \brief get the position of the left bottom point

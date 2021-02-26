@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,30 +33,43 @@ struct _GedaBounds
 };
 
 gboolean
-geda_bounds_empty (const GedaBounds *bounds);
+lepton_bounds_empty (const GedaBounds *bounds);
 
 gboolean
-geda_bounds_equal (const GedaBounds *a, const GedaBounds *b);
+lepton_bounds_equal (const GedaBounds *a,
+                     const GedaBounds *b);
+void
+lepton_bounds_expand (GedaBounds *r,
+                      const GedaBounds *a,
+                      gint x,
+                      gint y);
+void
+lepton_bounds_init (GedaBounds *bounds);
 
 void
-geda_bounds_expand (GedaBounds *r, const GedaBounds *a, gint x, gint y);
-
-void
-geda_bounds_init (GedaBounds *bounds);
-
-void
-geda_bounds_init_with_points (GedaBounds *bounds, gint x0, gint y0, gint x1, gint y1);
-
+lepton_bounds_init_with_points (GedaBounds *bounds,
+                                gint x0,
+                                gint y0,
+                                gint x1,
+                                gint y1);
 gboolean
-geda_bounds_interior_point (const GedaBounds *bounds, gint x, gint y);
-
+lepton_bounds_interior_point (const GedaBounds *bounds,
+                              gint x,
+                              gint y);
 void
-geda_bounds_of_points (GedaBounds *bounds, const GedaPoint points[], gint count);
-
+lepton_bounds_of_points (GedaBounds *bounds,
+                         const GedaPoint points[],
+                         gint count);
 void
-geda_bounds_union (GedaBounds *r, const GedaBounds *a, const GedaBounds *b);
-
+lepton_bounds_union (GedaBounds *r,
+                     const GedaBounds *a,
+                     const GedaBounds *b);
 int
-inside_region (int xmin, int ymin, int xmax, int ymax, int x, int y);
+inside_region (int xmin,
+               int ymin,
+               int xmax,
+               int ymax,
+               int x,
+               int y);
 
 G_END_DECLS
