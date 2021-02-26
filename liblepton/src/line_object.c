@@ -69,7 +69,7 @@ lepton_line_object_new (gint color,
   new_node = s_basic_new_object (OBJ_LINE, "line");
   lepton_object_set_color (new_node, color);
 
-  new_node->line  = geda_line_new ();
+  new_node->line  = lepton_line_new ();
 
   /* describe the line with its two ends */
   new_node->line->x[0] = x1;
@@ -612,7 +612,7 @@ lepton_line_object_calculate_bounds (const LeptonObject *object,
   g_return_if_fail (lepton_object_is_line (object));
   g_return_if_fail (object->line != NULL);
 
-  geda_line_calculate_bounds (object->line, bounds);
+  lepton_line_calculate_bounds (object->line, bounds);
 
   expand = ceil (0.5 * G_SQRT2 * object->line_width);
 
@@ -698,5 +698,5 @@ lepton_line_object_shortest_distance (LeptonObject *object,
                                       int force_solid,
                                       gboolean include_hidden)
 {
-  return geda_line_shortest_distance (object->line, x, y);
+  return lepton_line_shortest_distance (object->line, x, y);
 }

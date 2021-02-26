@@ -31,10 +31,10 @@
 
 /*! \brief Allocate a line
  *
- *  \return a pointer to an line, which must be freed with geda_line_free.
+ *  \return a pointer to an line, which must be freed with lepton_line_free.
  */
 GedaLine*
-geda_line_new ()
+lepton_line_new ()
 {
   return g_new0 (GedaLine, 1);
 }
@@ -44,7 +44,7 @@ geda_line_new ()
  *  \param [in] line the line to be freed
  */
 void
-geda_line_free (GedaLine *line)
+lepton_line_free (GedaLine *line)
 {
   g_free (line);
 }
@@ -59,7 +59,8 @@ geda_line_free (GedaLine *line)
  *  \param [out] bounds the bounds of the line
  */
 void
-geda_line_calculate_bounds (const GedaLine *line, GedaBounds *bounds)
+lepton_line_calculate_bounds (const GedaLine *line,
+                              GedaBounds *bounds)
 {
   if (line == NULL) {
     lepton_bounds_init (bounds);
@@ -90,7 +91,8 @@ geda_line_calculate_bounds (const GedaLine *line, GedaBounds *bounds)
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 gdouble
-geda_line_shortest_distance (const GedaLine *line, gint x, gint y)
+lepton_line_shortest_distance (const GedaLine *line,
+                               gint x, gint y)
 {
   double cx, cy;
   double dx, dy;
