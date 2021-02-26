@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,10 @@ int
 o_text_num_lines(const char *string);
 
 gchar*
-geda_string_remove_ending_newline (gchar *string);
+lepton_str_remove_ending_newline (gchar *string);
 
 gchar*
-geda_string_get_first_line (gchar *string);
+lepton_str_get_first_line (gchar *string);
 
 char*
 u_basic_breakup_string (char *string, char delimiter, int count);

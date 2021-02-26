@@ -574,7 +574,7 @@ o_text_read (const char *first_line,
   /* retrieve the character string from the GString */
   string = g_string_free (textstr, FALSE);
 
-  string = geda_string_remove_ending_newline (string);
+  string = lepton_str_remove_ending_newline (string);
 
   /* convert the character string to UTF-8 if necessary */
   if (!g_utf8_validate (string, -1, NULL)) {
