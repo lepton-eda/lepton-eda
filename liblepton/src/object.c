@@ -467,7 +467,7 @@ s_delete_object (LeptonObject *o_current)
     o_current->arc = NULL;
 
     /* printf("sdeleting box\n");*/
-    geda_box_free (o_current->box);
+    lepton_box_free (o_current->box);
     o_current->box = NULL;
 
     geda_picture_free (o_current->picture);

@@ -1466,7 +1466,7 @@ lepton_component_object_shortest_distance (LeptonObject *object,
   }
 
   if (found_line_bounds) {
-    distance = geda_box_shortest_distance (&line_bounds, x, y, TRUE);
+    distance = lepton_box_shortest_distance (&line_bounds, x, y, TRUE);
     shortest_distance = MIN (shortest_distance, distance);
   }
 
