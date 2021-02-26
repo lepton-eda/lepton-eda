@@ -56,7 +56,7 @@ lepton_arc_object_new (gint color,
 
   lepton_object_set_color (new_node, color);
 
-  new_node->arc = geda_arc_new ();
+  new_node->arc = lepton_arc_new ();
 
   /*! \note
    *  The ARC structure is initialized with the parameters.
@@ -733,7 +733,8 @@ lepton_arc_object_shortest_distance (LeptonObject *object,
 
   radius = (double)object->arc->radius;
 
-  if (geda_arc_within_sweep (object->arc, x, y)) {
+  if (lepton_arc_within_sweep (object->arc, x, y))
+  {
     double distance_to_center;
 
     distance_to_center = hypot (x - object->arc->x, y - object->arc->y);

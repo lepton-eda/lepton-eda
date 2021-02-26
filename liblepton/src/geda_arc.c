@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,10 +30,10 @@
 
 /*! \brief Allocate an arc
  *
- *  \return a pointer to an arc, which must be freed with geda_arc_free.
+ *  \return a pointer to an arc, which must be freed with lepton_arc_free.
  */
 GedaArc*
-geda_arc_new ()
+lepton_arc_new ()
 {
   return g_new0 (GedaArc, 1);
 }
@@ -43,7 +43,7 @@ geda_arc_new ()
  *  \param [in] arc the arc to be freed
  */
 void
-geda_arc_free (GedaArc *arc)
+lepton_arc_free (GedaArc *arc)
 {
   g_free (arc);
 }
@@ -58,7 +58,9 @@ geda_arc_free (GedaArc *arc)
  *  invalid parameter, this function returns FALSE.
  */
 gboolean
-geda_arc_within_sweep (const GedaArc *arc, gint x, gint y)
+lepton_arc_within_sweep (const GedaArc *arc,
+                         gint x,
+                         gint y)
 {
   gdouble a0;
   gdouble a1;
