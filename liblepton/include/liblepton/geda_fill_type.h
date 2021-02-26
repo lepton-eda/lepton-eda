@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,9 +40,9 @@ typedef enum _GedaFillType GedaFillType;
 typedef enum _GedaFillType OBJECT_FILLING;
 
 gboolean
-geda_fill_type_draw_first_hatch (int fill_type);
+lepton_fill_type_draw_first_hatch (int fill_type);
 
 gboolean
-geda_fill_type_draw_second_hatch (int fill_type);
+lepton_fill_type_draw_second_hatch (int fill_type);
 
 G_END_DECLS
