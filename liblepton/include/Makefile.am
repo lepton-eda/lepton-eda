@@ -30,7 +30,7 @@ libleptoninclude_HEADERS = \
 	liblepton/geda_page.h \
 	liblepton/geda_path.h \
 	liblepton/geda_picture.h \
-	liblepton/geda_point.h \
+	liblepton/point.h \
 	liblepton/geda_string.h \
 	liblepton/geda_text.h \
 	liblepton/geda_toplevel.h \
