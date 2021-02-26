@@ -51,7 +51,7 @@ liblepton_la_SOURCES = \
 	color.c \
 	circle.c \
 	coord.c \
-	geda_fill_type.c \
+	fill_type.c \
 	geda_line.c \
 	geda_list.c \
 	geda_page.c \

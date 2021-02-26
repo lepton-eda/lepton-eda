@@ -14,7 +14,7 @@
 #include "defines.h"
 
 #include "color.h"
-#include "geda_fill_type.h"
+#include "fill_type.h"
 #include "geda_line_type.h"
 #include "geda_line_cap_type.h"
 #include "point.h"

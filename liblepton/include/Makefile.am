@@ -22,7 +22,7 @@ libleptoninclude_HEADERS = \
 	liblepton/geda_component.h \
 	liblepton/coord.h \
 	liblepton/geda_forward.h \
-	liblepton/geda_fill_type.h \
+	liblepton/fill_type.h \
 	liblepton/geda_line.h \
 	liblepton/geda_line_type.h \
 	liblepton/geda_line_cap_type.h \
