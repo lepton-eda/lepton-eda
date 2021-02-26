@@ -722,7 +722,8 @@ o_set_fill_options (LeptonObject *o_current,
   }
 
   /* do some error checking / correcting */
-  if (geda_fill_type_draw_first_hatch (type)) {
+  if (lepton_fill_type_draw_first_hatch (type))
+  {
     if (width < 0) {
       width = 1;
     }
@@ -738,7 +739,8 @@ o_set_fill_options (LeptonObject *o_current,
     pitch1 = -1;
   }
 
-  if (geda_fill_type_draw_second_hatch (type)) {
+  if (lepton_fill_type_draw_second_hatch (type))
+  {
     if (angle2 < 0) {
       angle2 = 135;
     }

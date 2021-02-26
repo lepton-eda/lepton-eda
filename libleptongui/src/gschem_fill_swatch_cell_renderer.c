@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -304,7 +304,8 @@ render (GtkCellRenderer      *cell,
 
     cairo_close_path (cr);
 
-    if (geda_fill_type_draw_first_hatch (swatch->fill_type)) {
+    if (lepton_fill_type_draw_first_hatch (swatch->fill_type))
+    {
       BOX box;
       guint index;
       GArray *lines = g_array_new (FALSE, FALSE, sizeof (GedaLine));
@@ -320,7 +321,8 @@ render (GtkCellRenderer      *cell,
 
       m_hatch_box (&box, 135, SWATCH_LINE_PITCH, lines);
 
-      if (geda_fill_type_draw_second_hatch (swatch->fill_type)) {
+      if (lepton_fill_type_draw_second_hatch (swatch->fill_type))
+      {
         m_hatch_box (&box, 45, SWATCH_LINE_PITCH, lines);
       }
 
