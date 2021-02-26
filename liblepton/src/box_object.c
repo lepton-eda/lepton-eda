@@ -67,7 +67,7 @@ lepton_box_object_new (char type,
   new_node = s_basic_new_object(type, "box");
   lepton_object_set_color (new_node, color);
 
-  box = geda_box_new ();
+  box = lepton_box_new ();
   new_node->box   = box;
 
   /* describe the box with its upper left and lower right corner */
@@ -600,7 +600,7 @@ lepton_box_object_calculate_bounds (const LeptonObject *object,
   g_return_if_fail (lepton_object_is_box (object));
   g_return_if_fail (object->box != NULL);
 
-  geda_box_calculate_bounds (object->box, bounds);
+  lepton_box_calculate_bounds (object->box, bounds);
 
   expand = (object->line_width + 1) / 2;
 
@@ -660,5 +660,5 @@ lepton_box_object_shortest_distance (LeptonObject *object,
 
   solid = force_solid || object->fill_type != FILLING_HOLLOW;
 
-  return geda_box_shortest_distance (object->box, x, y, solid);
+  return lepton_box_shortest_distance (object->box, x, y, solid);
 }
