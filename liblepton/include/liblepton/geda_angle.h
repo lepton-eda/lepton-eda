@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +23,13 @@
  */
 
 gboolean
-geda_angle_is_normal (gint angle);
+lepton_angle_is_normal (gint angle);
 
 gboolean
-geda_angle_is_ortho (gint angle);
+lepton_angle_is_ortho (gint angle);
 
 gint
-geda_angle_make_ortho (gint angle);
+lepton_angle_make_ortho (gint angle);
 
 gint
-geda_angle_normalize (gint angle);
+lepton_angle_normalize (gint angle);

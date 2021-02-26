@@ -461,7 +461,7 @@ lepton_bus_object_rotate (gint world_centerx,
 
   g_return_if_fail (lepton_object_is_bus (object));
   g_return_if_fail (object->line != NULL);
-  g_return_if_fail (geda_angle_is_ortho (angle));
+  g_return_if_fail (lepton_angle_is_ortho (angle));
 
   if (angle == 0) {
     return;

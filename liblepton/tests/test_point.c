@@ -32,7 +32,7 @@ check_rotate ()
     if (d0 > 100.0) {
       gdouble a0 = atan2 (y0, x0);
       gdouble a1 = atan2 (y1, x1);
-      /* gint normalized = geda_angle_normalize (angle); */
+      /* gint normalized = lepton_angle_normalize (angle); */
 
       gdouble dd = 180.0 * (a1 - a0) / G_PI;
       while (dd < 0) {
@@ -50,7 +50,7 @@ check_rotate_90 ()
   gint count;
 
   for (count = 0; count < 10000; count++) {
-    gint angle = geda_angle_normalize (geda_angle_make_ortho (g_test_rand_int ()));
+    gint angle = lepton_angle_normalize (lepton_angle_make_ortho (g_test_rand_int ()));
     gint x0 = g_test_rand_int_range (-80000, 80001);
     gint y0 = g_test_rand_int_range (-80000, 80001);
     gint x1;
@@ -76,7 +76,7 @@ check_rotate_90 ()
     if (d0 > 100.0) {
       gdouble a0 = atan2 (y0, x0);
       gdouble a1 = atan2 (y1, x1);
-      /* gint normalized = geda_angle_normalize (angle); */
+      /* gint normalized = lepton_angle_normalize (angle); */
 
       gdouble dd = 180.0 * (a1 - a0) / G_PI;
       while (dd < 0) {

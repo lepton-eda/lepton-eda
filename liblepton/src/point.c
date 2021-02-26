@@ -80,8 +80,8 @@ lepton_point_rotate_90 (int x,
   double costheta=1;
   double sintheta=0;
 
-  g_return_if_fail (geda_angle_is_normal (angle));
-  g_return_if_fail (geda_angle_is_ortho (angle));
+  g_return_if_fail (lepton_angle_is_normal (angle));
+  g_return_if_fail (lepton_angle_is_ortho (angle));
 
   /* I could have used sine/cosine for this, but I want absolute
    * accuracy */
