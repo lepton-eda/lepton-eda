@@ -36,7 +36,7 @@ G_BEGIN_DECLS
 #include <liblepton/line_type.h>
 #include <liblepton/line_cap_type.h>
 #include <liblepton/point.h>
-#include <liblepton/geda_string.h>
+#include <liblepton/str.h>
 
 #include <liblepton/angle.h>
 #include <liblepton/arc.h>

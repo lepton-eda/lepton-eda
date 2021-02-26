@@ -18,7 +18,7 @@
 #include "line_type.h"
 #include "line_cap_type.h"
 #include "point.h"
-#include "geda_string.h"
+#include "str.h"
 
 #include "angle.h"
 #include "arc.h"
