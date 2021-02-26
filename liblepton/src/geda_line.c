@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,15 +62,15 @@ void
 geda_line_calculate_bounds (const GedaLine *line, GedaBounds *bounds)
 {
   if (line == NULL) {
-    geda_bounds_init (bounds);
+    lepton_bounds_init (bounds);
     g_return_if_fail (line != NULL);
   }
 
-  geda_bounds_init_with_points (bounds,
-                                line->x[0],
-                                line->y[0],
-                                line->x[1],
-                                line->y[1]);
+  lepton_bounds_init_with_points (bounds,
+                                  line->x[0],
+                                  line->y[0],
+                                  line->x[1],
+                                  line->y[1]);
 }
 
 /*! \brief Calculates the distance between the given point and the closest

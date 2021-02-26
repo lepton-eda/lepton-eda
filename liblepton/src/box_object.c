@@ -595,7 +595,7 @@ lepton_box_object_calculate_bounds (const LeptonObject *object,
 {
   gint expand;
 
-  geda_bounds_init (bounds);
+  lepton_bounds_init (bounds);
 
   g_return_if_fail (lepton_object_is_box (object));
   g_return_if_fail (object->box != NULL);
@@ -605,7 +605,7 @@ lepton_box_object_calculate_bounds (const LeptonObject *object,
   expand = (object->line_width + 1) / 2;
 
   /* This isn't strictly correct, but a 1st order approximation */
-  geda_bounds_expand (bounds, bounds, expand, expand);
+  lepton_bounds_expand (bounds, bounds, expand, expand);
 }
 
 /*! \brief get the position of the left bottom point

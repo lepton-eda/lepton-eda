@@ -176,7 +176,7 @@ lepton_component_object_calculate_bounds (const LeptonObject *object,
                                           gboolean include_hidden,
                                           GedaBounds *bounds)
 {
-  geda_bounds_init (bounds);
+  lepton_bounds_init (bounds);
 
   g_return_if_fail (lepton_object_is_component (object));
   g_return_if_fail (object->component != NULL);

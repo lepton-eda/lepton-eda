@@ -1451,7 +1451,7 @@ s_basic_init_object (LeptonObject *new_node, int type, char const *name)
   new_node->page = NULL;
 
   /* Setup the bounding box */
-  geda_bounds_init (&(new_node->bounds));
+  lepton_bounds_init (&(new_node->bounds));
 
   /* Setup line/circle structs */
   new_node->line = NULL;

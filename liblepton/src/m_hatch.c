@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -281,7 +281,7 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
   /* sort sweep events in ascending order by starting y coordinate */
   g_array_sort(events, compare_events);
 
-  geda_bounds_of_points(&bounds, (sPOINT*)points2->data, points2->len);
+  lepton_bounds_of_points(&bounds, (sPOINT*)points2->data, points2->len);
   sweep_y = calculate_initial_sweep(10 * pitch, bounds.min_y, bounds.max_y);
 
   while ( events->len > 0 || status->len > 0 ) {
@@ -337,4 +337,3 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
   g_array_free(points2, TRUE);
   g_array_free(status, TRUE);
 }
-

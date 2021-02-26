@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -62,15 +62,15 @@ void
 geda_box_calculate_bounds (const GedaBox *box, GedaBounds *bounds)
 {
   if (box == NULL) {
-    geda_bounds_init (bounds);
+    lepton_bounds_init (bounds);
     g_return_if_fail (box != NULL);
   }
 
-  geda_bounds_init_with_points (bounds,
-                                box->lower_x,
-                                box->lower_y,
-                                box->upper_x,
-                                box->upper_y);
+  lepton_bounds_init_with_points (bounds,
+                                  box->lower_x,
+                                  box->lower_y,
+                                  box->upper_x,
+                                  box->upper_y);
 }
 /*! \brief Calculates the distance between the given point and the closest
  *  point on the perimeter or interior of the box.

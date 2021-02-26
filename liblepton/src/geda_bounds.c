@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
  *  \param [in] bounds The bounds to check
  */
 gboolean
-geda_bounds_empty (const GedaBounds *bounds)
+lepton_bounds_empty (const GedaBounds *bounds)
 {
   g_return_val_if_fail (bounds != NULL, TRUE);
 
@@ -43,7 +43,8 @@ geda_bounds_empty (const GedaBounds *bounds)
  *  \return TRUE of the two bounds are equal
  */
 gboolean
-geda_bounds_equal (const GedaBounds *a, const GedaBounds *b)
+lepton_bounds_equal (const GedaBounds *a,
+                     const GedaBounds *b)
 {
   g_return_val_if_fail (a != NULL, FALSE);
   g_return_val_if_fail (b != NULL, FALSE);
@@ -69,12 +70,16 @@ geda_bounds_equal (const GedaBounds *a, const GedaBounds *b)
  *  \param [in] y The amount to expand on the top and bottom
  */
 void
-geda_bounds_expand (GedaBounds *r, const GedaBounds *a, gint x, gint y)
+lepton_bounds_expand (GedaBounds *r,
+                      const GedaBounds *a,
+                      gint x,
+                      gint y)
 {
   g_return_if_fail (r != NULL);
 
-  if ((a == NULL) || (geda_bounds_empty (a))) {
-    geda_bounds_init (r);
+  if ((a == NULL) || (lepton_bounds_empty (a)))
+  {
+    lepton_bounds_init (r);
   }
   else {
     r->min_x = a->min_x - x;
@@ -83,8 +88,9 @@ geda_bounds_expand (GedaBounds *r, const GedaBounds *a, gint x, gint y)
     r->max_y = a->max_y + y;
 
     /* "normalize" an empty bounds */
-    if (geda_bounds_empty (r)) {
-      geda_bounds_init (r);
+    if (lepton_bounds_empty (r))
+    {
+      lepton_bounds_init (r);
     }
   }
 }
@@ -94,7 +100,7 @@ geda_bounds_expand (GedaBounds *r, const GedaBounds *a, gint x, gint y)
  *  \param [out] bounds The bounds to set to empty
  */
 void
-geda_bounds_init (GedaBounds *bounds)
+lepton_bounds_init (GedaBounds *bounds)
 {
   g_return_if_fail (bounds != NULL);
 
@@ -113,7 +119,11 @@ geda_bounds_init (GedaBounds *bounds)
  *  \param [in] y1 The y coordinate of the second point
  */
 void
-geda_bounds_init_with_points (GedaBounds *bounds, gint x0, gint y0, gint x1, gint y1)
+lepton_bounds_init_with_points (GedaBounds *bounds,
+                                gint x0,
+                                gint y0,
+                                gint x1,
+                                gint y1)
 {
   g_return_if_fail (bounds != NULL);
 
@@ -131,7 +141,9 @@ geda_bounds_init_with_points (GedaBounds *bounds, gint x0, gint y0, gint x1, gin
  *  \return TRUE if the points lies inside the bounds
  */
 gboolean
-geda_bounds_interior_point (const GedaBounds *bounds, gint x, gint y)
+lepton_bounds_interior_point (const GedaBounds *bounds,
+                              gint x,
+                              gint y)
 {
   g_return_val_if_fail (bounds != NULL, FALSE);
 
@@ -151,11 +163,13 @@ geda_bounds_interior_point (const GedaBounds *bounds, gint x, gint y)
  *  \param [in]count The number of points in the set.
  */
 void
-geda_bounds_of_points (GedaBounds *bounds, const GedaPoint points[], gint count)
+lepton_bounds_of_points (GedaBounds *bounds,
+                         const GedaPoint points[],
+                         gint count)
 {
   gint index;
 
-  geda_bounds_init(bounds);
+  lepton_bounds_init(bounds);
 
   for (index=0; index<count; index++) {
     gint x = points[index].x;
@@ -189,7 +203,9 @@ geda_bounds_of_points (GedaBounds *bounds, const GedaPoint points[], gint count)
  *  rectange.
  */
 void
-geda_bounds_union (GedaBounds *r, const GedaBounds *a, const GedaBounds *b)
+lepton_bounds_union (GedaBounds *r,
+                     const GedaBounds *a,
+                     const GedaBounds *b)
 {
   g_return_if_fail (r != NULL);
 
@@ -206,7 +222,7 @@ geda_bounds_union (GedaBounds *r, const GedaBounds *a, const GedaBounds *b)
     *r = *b;
   }
   else {
-    geda_bounds_init (r);
+    lepton_bounds_init (r);
   }
 }
 
@@ -228,4 +244,3 @@ inside_region (int xmin, int ymin, int xmax, int ymax, int x, int y)
 {
   return ((x >= xmin && x <= xmax && y >= ymin && y <= ymax) ? 1 : 0);
 }
-
