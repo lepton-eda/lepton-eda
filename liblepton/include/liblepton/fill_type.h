@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,30 +17,32 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-
-#include <config.h>
-#include "libgeda_priv.h"
-
-
-/*! \brief Check if the first hatch pattern needs to be drawn
- *
- *  \param [in] fill_type The fill type
- *  \return TRUE if the first hatch pattern needs to be drawn
+/*! \file fill_type.h
  */
-gboolean
-lepton_fill_type_draw_first_hatch (int fill_type)
-{
-  return ((fill_type == FILLING_MESH) || (fill_type == FILLING_HATCH));
-}
 
+G_BEGIN_DECLS
 
-/*! \brief Check if the second hatch pattern needs to be drawn
+/*! \brief The fill type of objects like box, circle, and path
  *
- *  \param [in] fill_type The fill type
- *  \return TRUE if the second hatch pattern needs to be drawn
+ *  The numeric values of this enumeration are used inside files and must be
+ *  preserved for compatibility.
  */
-gboolean
-lepton_fill_type_draw_second_hatch (int fill_type)
+enum _GedaFillType
 {
-  return (fill_type == FILLING_MESH);
-}
+  FILLING_HOLLOW,
+  FILLING_FILL,
+  FILLING_MESH,
+  FILLING_HATCH,
+  FILLING_VOID
+};
+
+typedef enum _GedaFillType GedaFillType;
+typedef enum _GedaFillType OBJECT_FILLING;
+
+gboolean
+lepton_fill_type_draw_first_hatch (int fill_type);
+
+gboolean
+lepton_fill_type_draw_second_hatch (int fill_type);
+
+G_END_DECLS
