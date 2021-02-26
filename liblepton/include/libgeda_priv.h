@@ -20,7 +20,7 @@
 #include "point.h"
 #include "geda_string.h"
 
-#include "geda_angle.h"
+#include "angle.h"
 #include "geda_arc.h"
 #include "geda_bezier.h"
 #include "geda_bounds.h"
