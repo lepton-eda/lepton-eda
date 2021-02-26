@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -131,7 +131,7 @@ lepton_colormap_set_color (GedaColor *color_map,
  *  \return the blue value
  */
 gdouble
-geda_color_get_blue_double (const GedaColor *color)
+lepton_color_get_blue_double (const GedaColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
@@ -146,7 +146,7 @@ geda_color_get_blue_double (const GedaColor *color)
  *  \return the green value
  */
 gdouble
-geda_color_get_green_double (const GedaColor *color)
+lepton_color_get_green_double (const GedaColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
@@ -161,7 +161,7 @@ geda_color_get_green_double (const GedaColor *color)
  *  \return the red value
  */
 gdouble
-geda_color_get_red_double (const GedaColor *color)
+lepton_color_get_red_double (const GedaColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
@@ -176,7 +176,7 @@ geda_color_get_red_double (const GedaColor *color)
  *  \return the alpha value
  */
 gdouble
-geda_color_get_alpha_double (const GedaColor *color)
+lepton_color_get_alpha_double (const GedaColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
@@ -192,7 +192,7 @@ geda_color_get_alpha_double (const GedaColor *color)
  *  \param map Color map to initialise.
  */
 void
-geda_color_map_init (GedaColorMap map)
+lepton_color_map_init (GedaColorMap map)
 {
   for (size_t i = 0; i < colors_count(); ++i)
   {
@@ -209,7 +209,7 @@ geda_color_map_init (GedaColorMap map)
 void
 s_color_init()
 {
-  geda_color_map_init (print_colors);
+  lepton_color_map_init (print_colors);
 }
 
 GedaColor*

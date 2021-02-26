@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,16 +34,16 @@ typedef struct st_color GedaColor;
 
 
 gdouble
-geda_color_get_blue_double (const GedaColor *color);
+lepton_color_get_blue_double (const GedaColor *color);
 
 gdouble
-geda_color_get_green_double (const GedaColor *color);
+lepton_color_get_green_double (const GedaColor *color);
 
 gdouble
-geda_color_get_red_double (const GedaColor *color);
+lepton_color_get_red_double (const GedaColor *color);
 
 gdouble
-geda_color_get_alpha_double (const GedaColor *color);
+lepton_color_get_alpha_double (const GedaColor *color);
 
 
 #define BACKGROUND_COLOR                0
@@ -101,7 +101,7 @@ lepton_colormap_set_color (GedaColor *color_map,
                            guint8 b,
                            guint8 a);
 void
-geda_color_map_init (GedaColorMap map);
+lepton_color_map_init (GedaColorMap map);
 
 void
 s_color_init (void);

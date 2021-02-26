@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,8 +33,8 @@ extern GedaColorMap display_outline_colors;
 void
 x_color_init()
 {
-  geda_color_map_init (display_colors);
-  geda_color_map_init (display_outline_colors);
+  lepton_color_map_init (display_colors);
+  lepton_color_map_init (display_outline_colors);
 }
 
 
@@ -177,4 +177,3 @@ x_color_map2str_outline()
 {
   return x_color_map2str (display_outline_colors);;
 }
-

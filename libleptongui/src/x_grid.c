@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -105,10 +105,10 @@ draw_dots_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int
 
   GedaColor *color = x_color_lookup (DOTS_GRID_COLOR);
   cairo_set_source_rgba (cr,
-                         geda_color_get_red_double (color),
-                         geda_color_get_green_double (color),
-                         geda_color_get_blue_double (color),
-                         geda_color_get_alpha_double (color));
+                         lepton_color_get_red_double (color),
+                         lepton_color_get_green_double (color),
+                         lepton_color_get_blue_double (color),
+                         lepton_color_get_alpha_double (color));
 
   cairo_matrix_t user_to_device_matrix;
   double x_start = x - 1;
@@ -187,10 +187,10 @@ static void draw_mesh (GschemToplevel *w_current,
   }
 
   cairo_set_source_rgba (cr,
-                         geda_color_get_red_double (color),
-                         geda_color_get_green_double (color),
-                         geda_color_get_blue_double (color),
-                         geda_color_get_alpha_double (color));
+                         lepton_color_get_red_double (color),
+                         lepton_color_get_green_double (color),
+                         lepton_color_get_blue_double (color),
+                         lepton_color_get_alpha_double (color));
 
   cairo_set_line_width (cr, 1.);
   cairo_set_line_cap (cr, CAIRO_LINE_CAP_SQUARE);
