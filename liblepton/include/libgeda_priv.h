@@ -23,7 +23,7 @@
 #include "angle.h"
 #include "arc.h"
 #include "geda_bezier.h"
-#include "geda_bounds.h"
+#include "bounds.h"
 #include "geda_box.h"
 #include "geda_circle.h"
 #include "geda_component.h"
