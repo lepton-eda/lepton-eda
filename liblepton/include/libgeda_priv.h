@@ -17,7 +17,7 @@
 #include "geda_fill_type.h"
 #include "geda_line_type.h"
 #include "geda_line_cap_type.h"
-#include "geda_point.h"
+#include "point.h"
 #include "geda_string.h"
 
 #include "geda_angle.h"
