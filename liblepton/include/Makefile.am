@@ -29,7 +29,7 @@ libleptoninclude_HEADERS = \
 	liblepton/list.h \
 	liblepton/page.h \
 	liblepton/path.h \
-	liblepton/geda_picture.h \
+	liblepton/picture.h \
 	liblepton/point.h \
 	liblepton/str.h \
 	liblepton/geda_text.h \
