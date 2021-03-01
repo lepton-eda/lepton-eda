@@ -6,7 +6,7 @@
 #include <gtk/gtk.h>
 #include <libguile.h>
 #include <liblepton/liblepton.h>
-#include <liblepton/libgedaguile.h>
+#include <liblepton/libleptonguile.h>
 #include <liblepton/edarenderer.h>
 #include <liblepton/edacairo.h>
 

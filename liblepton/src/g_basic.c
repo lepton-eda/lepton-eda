@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
 #endif
 
 #include "libgeda_priv.h"
-#include "libgedaguile.h"
+#include "libleptonguile.h"
 
 static void process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err);
 

@@ -40,7 +40,7 @@ libleptoninclude_HEADERS = \
 	liblepton/liblepton.h \
 	liblepton/o_types.h \
 	liblepton/prototype.h \
-	liblepton/libgedaguile.h \
+	liblepton/libleptonguile.h \
 	liblepton/line_object.h \
 	liblepton/net_object.h \
 	liblepton/object.h \
@@ -61,4 +61,4 @@ noinst_HEADERS = \
 	i_vars_priv.h \
 	libgeda_priv.h \
 	prototype_priv.h \
-	libgedaguile_priv.h
+	libleptonguile_priv.h

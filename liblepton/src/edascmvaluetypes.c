@@ -1,6 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library - Scheme API
+/* Lepton EDA library
  * Copyright (C) 2013-2014 Peter Brett <peter@peter-b.co.uk>
+ * Copyright (C) 2013-2017 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +21,7 @@
 #include <config.h>
 
 #include "libgeda_priv.h"
-#include "libgedaguile_priv.h"
+#include "libleptonguile_priv.h"
 
 #include <gobject/gvaluecollector.h>
 

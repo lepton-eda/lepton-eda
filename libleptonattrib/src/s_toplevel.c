@@ -41,7 +41,7 @@
  * Gattrib specific includes
  *------------------------------------------------------------------*/
 #include <liblepton/liblepton.h>
-#include <liblepton/libgedaguile.h>
+#include <liblepton/libleptonguile.h>
 #include "../include/struct.h"     /* typdef and struct declarations */
 #include "../include/prototype.h"  /* function prototypes */
 #include "../include/globals.h"
