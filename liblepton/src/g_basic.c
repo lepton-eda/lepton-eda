@@ -52,7 +52,7 @@ static SCM protected_pre_unwind_handler (void *data, SCM key, SCM args)
  * This actually does the work of parsing the stack and generating log
  * messages. */
 static SCM protected_post_unwind_handler (void *data, SCM key, SCM args)
-{ 
+{
   /* The stack was captured pre-unwind */
   SCM s_stack = *(SCM *) data;
 
