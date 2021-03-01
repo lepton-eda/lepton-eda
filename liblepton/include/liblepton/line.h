@@ -22,24 +22,24 @@
  *  \brief Low-level mathematical functions for lines
  */
 
-typedef struct _GedaLine GedaLine;
+typedef struct _LeptonLine LeptonLine;
 
-struct _GedaLine
+struct _LeptonLine
 {
   gint x[2];
   gint y[2];
 };
 
-GedaLine*
+LeptonLine*
 lepton_line_new ();
 
 void
-lepton_line_free (GedaLine *line);
+lepton_line_free (LeptonLine *line);
 
 void
-lepton_line_calculate_bounds (const GedaLine *line,
+lepton_line_calculate_bounds (const LeptonLine *line,
                               LeptonBounds *bounds);
 gdouble
-lepton_line_shortest_distance (const GedaLine *line,
+lepton_line_shortest_distance (const LeptonLine *line,
                                gint x,
                                gint y);

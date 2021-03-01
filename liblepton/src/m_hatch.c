@@ -179,7 +179,7 @@ m_hatch_circle (LeptonCircle *circle,
   sweep_y = calculate_initial_sweep(100 * pitch, -radius, radius);
 
   while ( sweep_y < radius ) {
-    GedaLine line;
+    LeptonLine line;
     gint x = round(sqrt(pow(radius,2) - pow(sweep_y,2)));
 
     line.x[0] = -x;
@@ -324,7 +324,7 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
     /* draw hatch segments */
     index = 0;
     while ( index+1 < status->len ) {
-      GedaLine line;
+      LeptonLine line;
       line.x[0] = g_array_index(status, SWEEP_STATUS, index ).x;
       line.y[0] = sweep_y;
       line.x[1] = g_array_index(status, SWEEP_STATUS, index+1 ).x;

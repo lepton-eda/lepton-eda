@@ -99,7 +99,7 @@ lepton_transform_invert (LeptonTransform *transform,
  */
 void
 lepton_transform_line (LeptonTransform *transform,
-                       GedaLine *line)
+                       LeptonLine *line)
 {
   g_return_if_fail(transform!=NULL);
   g_return_if_fail(line!=NULL);
@@ -123,7 +123,7 @@ lepton_transform_lines (LeptonTransform *transform,
   g_return_if_fail(lines!=NULL);
 
   for (index=0; index<lines->len; index++) {
-    GedaLine *line = &g_array_index(lines, GedaLine, index);
+    LeptonLine *line = &g_array_index(lines, LeptonLine, index);
     lepton_transform_line(transform, line);
   }
 }

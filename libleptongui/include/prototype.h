@@ -288,7 +288,13 @@ void o_line_start(GschemToplevel *w_current, int x, int y);
 void o_line_end(GschemToplevel *w_current, int x, int y);
 void o_line_motion(GschemToplevel *w_current, int x, int y);
 void o_line_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
-int o_line_visible(GschemToplevel *w_current, GedaLine *line, int *x1, int *y1, int *x2, int *y2);
+int
+o_line_visible (GschemToplevel *w_current,
+                LeptonLine *line,
+                int *x1,
+                int *y1,
+                int *x2,
+                int *y2);
 /* o_misc.c */
 void o_edit(GschemToplevel *w_current, GList *list);
 void o_lock(GschemToplevel *w_current);

@@ -25,7 +25,7 @@
  *  The numeric values of this enumeration are used inside files and must be
  *  preserved for compatibility.
  */
-enum _GedaLineType
+enum _LeptonLineType
 {
   TYPE_SOLID,
   TYPE_DOTTED,
@@ -35,5 +35,5 @@ enum _GedaLineType
   TYPE_ERASE
 };
 
-typedef enum _GedaLineType GedaLineType;
-typedef enum _GedaLineType OBJECT_TYPE;
+typedef enum _LeptonLineType LeptonLineType;
+typedef enum _LeptonLineType OBJECT_TYPE;
