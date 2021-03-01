@@ -53,7 +53,7 @@ struct st_path
 };
 
 void
-geda_path_free (LeptonPath *path);
+lepton_path_free (LeptonPath *path);
 
 PATH*
 s_path_parse (const char *path_str);

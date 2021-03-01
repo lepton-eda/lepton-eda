@@ -84,7 +84,7 @@ s_path_new_from (PATH_SECTION *sections)
 
 
 void
-geda_path_free (LeptonPath * path)
+lepton_path_free (LeptonPath * path)
 {
   if (path != NULL) {
     g_free (path->sections);
