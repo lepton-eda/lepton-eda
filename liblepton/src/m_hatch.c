@@ -166,10 +166,10 @@ void m_hatch_circle(GedaCircle *circle, gint angle, gint pitch, GArray *lines)
   g_return_if_fail(circle!=NULL);
   g_return_if_fail(lines!=NULL);
 
-  geda_transform_init(&transform);
-  geda_transform_rotate(&transform, angle);
-  geda_transform_scale(&transform, 0.01);
-  geda_transform_translate(&transform, circle->center_x, circle->center_y );
+  lepton_transform_init(&transform);
+  lepton_transform_rotate(&transform, angle);
+  lepton_transform_scale(&transform, 0.01);
+  lepton_transform_translate(&transform, circle->center_x, circle->center_y );
 
   radius = 100 * circle->radius;
   sweep_y = calculate_initial_sweep(100 * pitch, -radius, radius);
@@ -183,7 +183,7 @@ void m_hatch_circle(GedaCircle *circle, gint angle, gint pitch, GArray *lines)
     line.x[1] = x;
     line.y[1] = sweep_y;
 
-    geda_transform_line(&transform, &line);
+    lepton_transform_line(&transform, &line);
     g_array_append_val(lines, line);
 
     sweep_y += 100 * pitch;
@@ -252,13 +252,13 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
   points2 = g_array_sized_new(FALSE, FALSE, sizeof(sPOINT), points->len);
   status = g_array_new(FALSE, FALSE, sizeof(SWEEP_STATUS));
 
-  geda_transform_init(&transform);
-  geda_transform_scale(&transform, 10);
-  geda_transform_rotate(&transform, -angle);
-  geda_transform_invert(&transform, &inverse);
+  lepton_transform_init(&transform);
+  lepton_transform_scale(&transform, 10);
+  lepton_transform_rotate(&transform, -angle);
+  lepton_transform_invert(&transform, &inverse);
 
   g_array_append_vals(points2, points->data, points->len);
-  geda_transform_points(&transform, points2);
+  lepton_transform_points(&transform, points2);
 
   /* build list of sweep events */
   if ( points2->len > 1 ) {
@@ -325,7 +325,7 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
       line.y[0] = sweep_y;
       line.x[1] = g_array_index(status, SWEEP_STATUS, index+1 ).x;
       line.y[1] = sweep_y;
-      geda_transform_line(&inverse, &line);
+      lepton_transform_line(&inverse, &line);
       g_array_append_val(lines, line);
       index += 2;
     }
