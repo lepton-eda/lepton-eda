@@ -38,7 +38,7 @@ lepton_line_free (GedaLine *line);
 
 void
 lepton_line_calculate_bounds (const GedaLine *line,
-                              GedaBounds *bounds);
+                              LeptonBounds *bounds);
 gdouble
 lepton_line_shortest_distance (const GedaLine *line,
                                gint x,

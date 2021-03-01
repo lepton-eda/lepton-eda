@@ -7,8 +7,8 @@ check_equal ()
   gint count;
 
   for (count = 0; count < 100; count++) {
-    GedaBounds a;
-    GedaBounds b;
+    LeptonBounds a;
+    LeptonBounds b;
     gint x0 = g_test_rand_int ();
     gint y0 = g_test_rand_int ();
     gint x1 = g_test_rand_int ();
@@ -36,12 +36,12 @@ void
 check_expand ()
 {
   gint count;
-  GedaBounds empty;
+  LeptonBounds empty;
   lepton_bounds_init (&empty);
 
   for (count = 0; count < 100000; count++) {
-    GedaBounds bounds;
-    GedaBounds result;
+    LeptonBounds bounds;
+    LeptonBounds result;
     gint x = g_test_rand_int_range (-80000, 80001);
     gint y = g_test_rand_int_range (-80000, 80001);
     gint x0 = g_test_rand_int_range (-80000, 80001);
@@ -143,13 +143,13 @@ void
 check_init ()
 {
   gint count;
-  GedaBounds bounds;
+  LeptonBounds bounds;
 
   lepton_bounds_init (&bounds);
   g_assert_true (lepton_bounds_empty (&bounds));
 
   for (count = 0; count < 100000; count++) {
-    GedaBounds result;
+    LeptonBounds result;
     gint x0 = g_test_rand_int ();
     gint y0 = g_test_rand_int ();
     gint x1 = g_test_rand_int ();
@@ -202,7 +202,7 @@ check_interior_point ()
   int pindex;
 
   for (pindex = 0; pindex < pcount; pindex++) {
-    GedaBounds bounds;
+    LeptonBounds bounds;
     gint dindex;
     gboolean interior;
 
@@ -236,10 +236,10 @@ check_union ()
   gint count;
 
   for (count = 0; count < 100000; count++) {
-    GedaBounds bounds[2];
+    LeptonBounds bounds[2];
     gint index;
     GedaPoint points[4];
-    GedaBounds result;
+    LeptonBounds result;
 
     for (index = 0; index < 4; index++) {
       points[index].x = g_test_rand_int ();

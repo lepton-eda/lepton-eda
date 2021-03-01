@@ -29,7 +29,7 @@
  *  \param [in] bounds The bounds to check
  */
 gboolean
-lepton_bounds_empty (const GedaBounds *bounds)
+lepton_bounds_empty (const LeptonBounds *bounds)
 {
   g_return_val_if_fail (bounds != NULL, TRUE);
 
@@ -43,8 +43,8 @@ lepton_bounds_empty (const GedaBounds *bounds)
  *  \return TRUE of the two bounds are equal
  */
 gboolean
-lepton_bounds_equal (const GedaBounds *a,
-                     const GedaBounds *b)
+lepton_bounds_equal (const LeptonBounds *a,
+                     const LeptonBounds *b)
 {
   g_return_val_if_fail (a != NULL, FALSE);
   g_return_val_if_fail (b != NULL, FALSE);
@@ -70,8 +70,8 @@ lepton_bounds_equal (const GedaBounds *a,
  *  \param [in] y The amount to expand on the top and bottom
  */
 void
-lepton_bounds_expand (GedaBounds *r,
-                      const GedaBounds *a,
+lepton_bounds_expand (LeptonBounds *r,
+                      const LeptonBounds *a,
                       gint x,
                       gint y)
 {
@@ -100,7 +100,7 @@ lepton_bounds_expand (GedaBounds *r,
  *  \param [out] bounds The bounds to set to empty
  */
 void
-lepton_bounds_init (GedaBounds *bounds)
+lepton_bounds_init (LeptonBounds *bounds)
 {
   g_return_if_fail (bounds != NULL);
 
@@ -119,7 +119,7 @@ lepton_bounds_init (GedaBounds *bounds)
  *  \param [in] y1 The y coordinate of the second point
  */
 void
-lepton_bounds_init_with_points (GedaBounds *bounds,
+lepton_bounds_init_with_points (LeptonBounds *bounds,
                                 gint x0,
                                 gint y0,
                                 gint x1,
@@ -141,7 +141,7 @@ lepton_bounds_init_with_points (GedaBounds *bounds,
  *  \return TRUE if the points lies inside the bounds
  */
 gboolean
-lepton_bounds_interior_point (const GedaBounds *bounds,
+lepton_bounds_interior_point (const LeptonBounds *bounds,
                               gint x,
                               gint y)
 {
@@ -163,7 +163,7 @@ lepton_bounds_interior_point (const GedaBounds *bounds,
  *  \param [in]count The number of points in the set.
  */
 void
-lepton_bounds_of_points (GedaBounds *bounds,
+lepton_bounds_of_points (LeptonBounds *bounds,
                          const GedaPoint points[],
                          gint count)
 {
@@ -203,9 +203,9 @@ lepton_bounds_of_points (GedaBounds *bounds,
  *  rectange.
  */
 void
-lepton_bounds_union (GedaBounds *r,
-                     const GedaBounds *a,
-                     const GedaBounds *b)
+lepton_bounds_union (LeptonBounds *r,
+                     const LeptonBounds *a,
+                     const LeptonBounds *b)
 {
   g_return_if_fail (r != NULL);
 

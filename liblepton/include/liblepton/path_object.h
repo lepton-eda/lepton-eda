@@ -37,7 +37,7 @@ lepton_path_object_copy (LeptonObject *o_current);
 
 void
 lepton_path_object_calculate_bounds (const LeptonObject *object,
-                                     GedaBounds *bounds);
+                                     LeptonBounds *bounds);
 void
 lepton_path_object_modify (LeptonObject *object,
                            int x,

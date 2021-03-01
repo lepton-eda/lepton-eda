@@ -41,7 +41,7 @@ lepton_pin_object_copy (LeptonObject *o_current);
 
 void
 lepton_pin_object_calculate_bounds (const LeptonObject *object,
-                                    GedaBounds *bounds);
+                                    LeptonBounds *bounds);
 gboolean
 lepton_pin_object_get_position (const LeptonObject *object,
                                 gint *x,

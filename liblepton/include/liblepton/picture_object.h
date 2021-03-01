@@ -43,7 +43,7 @@ o_picture_new (const gchar *file_content,
                int embedded) G_GNUC_WARN_UNUSED_RESULT;
 void
 lepton_picture_object_calculate_bounds (const LeptonObject *object,
-                                        GedaBounds *bounds);
+                                        LeptonBounds *bounds);
 double
 o_picture_get_ratio (LeptonObject *object);
 

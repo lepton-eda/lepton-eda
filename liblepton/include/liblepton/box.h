@@ -40,7 +40,7 @@ lepton_box_free (GedaBox *box);
 
 void
 lepton_box_calculate_bounds (const GedaBox *box,
-                             GedaBounds *bounds);
+                             LeptonBounds *bounds);
 double
 lepton_box_shortest_distance (GedaBox *box,
                               int x,

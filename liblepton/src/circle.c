@@ -60,7 +60,7 @@ lepton_circle_free (GedaCircle *circle)
  */
 void
 lepton_circle_calculate_bounds (const GedaCircle *circle,
-                                GedaBounds *bounds)
+                                LeptonBounds *bounds)
 {
   if (circle == NULL) {
     lepton_bounds_init (bounds);

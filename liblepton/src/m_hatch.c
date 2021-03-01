@@ -236,7 +236,7 @@ void m_hatch_path (PATH *path, gint angle, gint pitch, GArray *lines)
  */
 void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
 {
-  GedaBounds bounds;
+  LeptonBounds bounds;
   GArray *events;
   LeptonTransform inverse;
   GArray *points2;

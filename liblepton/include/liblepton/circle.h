@@ -38,7 +38,7 @@ lepton_circle_free (GedaCircle *circle);
 
 void
 lepton_circle_calculate_bounds (const GedaCircle *circle,
-                                GedaBounds *bounds);
+                                LeptonBounds *bounds);
 gdouble
 lepton_circle_shortest_distance (const GedaCircle *circle,
                                  gint x,

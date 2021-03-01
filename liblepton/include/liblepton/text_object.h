@@ -47,7 +47,7 @@ lepton_text_object_copy (const LeptonObject *object);
 gboolean
 lepton_text_object_calculate_bounds (const LeptonObject *object,
                                      gboolean include_hidden,
-                                     GedaBounds *bounds);
+                                     LeptonBounds *bounds);
 gint
 lepton_text_object_get_alignment (const LeptonObject *object);
 
