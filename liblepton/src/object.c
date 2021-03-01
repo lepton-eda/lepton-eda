@@ -1094,28 +1094,30 @@ o_get_parent (LeptonObject *object)
   return NULL;
 }
 
-/* Structure for each entry in a TOPLEVEL's list of registered change
- * notification handlers */
+/* Structure for each entry in a LeptonToplevel's list of
+ * registered change notification handlers */
 struct change_notify_entry {
   ChangeNotifyFunc pre_change_func;
   ChangeNotifyFunc change_func;
   void *user_data;
 };
 
-/*! \brief Add change notification handlers to a TOPLEVEL.
+/*! \brief Add change notification handlers to a LeptonToplevel.
  * \par Function Description
- * Adds a set of change notification handlers to a #TOPLEVEL instance.
+ * Adds a set of change notification handlers to a #LeptonToplevel
+ * instance.
+ *
  * \a pre_change_func will be called just before an object is
  * modified, and \a change_func will be called just after an object is
  * modified, with the affected object and the given \a user_data.
  *
- * \param toplevel #TOPLEVEL structure to add handlers to.
+ * \param toplevel #LeptonToplevel structure to add handlers to.
  * \param pre_change_func Function to be called just before changes.
  * \param change_func Function to be called just after changes.
  * \param user_data User data to be passed to callback functions.
  */
 void
-o_add_change_notify (TOPLEVEL *toplevel,
+o_add_change_notify (LeptonToplevel *toplevel,
                      ChangeNotifyFunc pre_change_func,
                      ChangeNotifyFunc change_func,
                      void *user_data)
@@ -1128,7 +1130,7 @@ o_add_change_notify (TOPLEVEL *toplevel,
     g_list_prepend (toplevel->change_notify_funcs, entry);
 }
 
-/*! \brief Remove change notification handlers from a TOPLEVEL.
+/*! \brief Remove change notification handlers from a LeptonToplevel.
  * \par Function Description
  * Removes a set of change notification handlers and their associated
  * \a user_data from \a toplevel.  If no registered set of handlers
@@ -1137,13 +1139,13 @@ o_add_change_notify (TOPLEVEL *toplevel,
  *
  * \see o_add_change_notify()
  *
- * \param toplevel #TOPLEVEL structure to remove handlers from.
+ * \param toplevel #LeptonToplevel structure to remove handlers from.
  * \param pre_change_func Function called just before changes.
  * \param change_func Function called just after changes.
  * \param user_data User data passed to callback functions.
  */
 void
-o_remove_change_notify (TOPLEVEL *toplevel,
+o_remove_change_notify (LeptonToplevel *toplevel,
                         ChangeNotifyFunc pre_change_func,
                         ChangeNotifyFunc change_func,
                         void *user_data)
@@ -1171,7 +1173,7 @@ o_remove_change_notify (TOPLEVEL *toplevel,
  * \par Function Description
  *
  * Calls each pre-change callback function registered with \a
- * object's #TOPLEVEL to notify listeners that \a object is about
+ * object's #LeptonToplevel to notify listeners that \a object is about
  * to be modified.  All liblepton functions that modify #LeptonObject
  * structures should call this just before making a change to an
  * #LeptonObject.
@@ -1187,7 +1189,7 @@ o_emit_pre_change_notify (LeptonObject *object)
     return;
   }
 
-  TOPLEVEL *toplevel = object->page->toplevel;
+  LeptonToplevel *toplevel = object->page->toplevel;
 
   if (toplevel == NULL) {
     return;
@@ -1209,7 +1211,7 @@ o_emit_pre_change_notify (LeptonObject *object)
  * \par Function Description
  *
  * Calls each change callback function registered with \a object's
- * #TOPLEVEL to notify listeners that \a object has just been
+ * #LeptonToplevel to notify listeners that \a object has just been
  * modified.  All liblepton functions that modify #LeptonObject
  * structures should call this just after making a change to an
  * #LeptonObject.
@@ -1225,7 +1227,7 @@ o_emit_change_notify (LeptonObject *object)
     return;
   }
 
-  TOPLEVEL *toplevel = object->page->toplevel;
+  LeptonToplevel *toplevel = object->page->toplevel;
 
   if (toplevel == NULL) {
     return;

@@ -34,18 +34,19 @@
 #include "liblepton_priv.h"
 
 /*!
- *  \brief Create a TOPLEVEL object
+ *  \brief Create a LeptonToplevel object
  *  \par Function Description
- *  Create and return an empty TOPLEVEL object with sensible defaults
- *  for its properties.
+ *  Create and return an empty LeptonToplevel object with sensible
+ *  defaults for its properties.
  *
- *  \returns the newly created TOPLEVEL.
+ *  \returns the newly created LeptonToplevel.
  */
-TOPLEVEL *s_toplevel_new (void)
+LeptonToplevel*
+s_toplevel_new ()
 {
-  TOPLEVEL *toplevel;
+  LeptonToplevel *toplevel;
 
-  toplevel = (TOPLEVEL*)g_new (TOPLEVEL, 1);
+  toplevel = (LeptonToplevel*) g_new (LeptonToplevel, 1);
 
   toplevel->RC_list = NULL;
 
@@ -67,7 +68,8 @@ TOPLEVEL *s_toplevel_new (void)
  *  \par Function Description
  *
  */
-void s_toplevel_delete (TOPLEVEL *toplevel)
+void
+s_toplevel_delete (LeptonToplevel *toplevel)
 {
   GList *iter;
 
@@ -101,7 +103,7 @@ void s_toplevel_delete (TOPLEVEL *toplevel)
  *  \return The \a page_current field of the \a toplevel.
  */
 LeptonPage*
-s_toplevel_page_current (TOPLEVEL *toplevel)
+s_toplevel_page_current (LeptonToplevel *toplevel)
 {
   g_return_val_if_fail (toplevel != NULL, NULL);
 
@@ -115,7 +117,7 @@ s_toplevel_page_current (TOPLEVEL *toplevel)
  *  \param [in]     page     The new current page
  */
 void
-s_toplevel_set_page_current (TOPLEVEL *toplevel,
+s_toplevel_set_page_current (LeptonToplevel *toplevel,
                              LeptonPage *page)
 {
   g_return_if_fail (toplevel != NULL);
@@ -124,7 +126,7 @@ s_toplevel_set_page_current (TOPLEVEL *toplevel,
 }
 
 
-/*! \brief Add a weak reference watcher to an TOPLEVEL.
+/*! \brief Add a weak reference watcher to an LeptonToplevel.
  * \par Function Description
  * Adds the weak reference callback \a notify_func to \a toplevel.  When
  * \a toplevel is destroyed, \a notify_func will be called with two
@@ -137,7 +139,7 @@ s_toplevel_set_page_current (TOPLEVEL *toplevel,
  * \param [in] user_data      Data to be passed to \a notify_func.
  */
 void
-s_toplevel_weak_ref (TOPLEVEL *toplevel,
+s_toplevel_weak_ref (LeptonToplevel *toplevel,
                      void (*notify_func)(void *, void *),
                      void *user_data)
 {
@@ -146,7 +148,7 @@ s_toplevel_weak_ref (TOPLEVEL *toplevel,
                                        notify_func, user_data);
 }
 
-/*! \brief Remove a weak reference watcher from an TOPLEVEL.
+/*! \brief Remove a weak reference watcher from an LeptonToplevel.
  * \par Function Description
  * Removes the weak reference callback \a notify_func from \a toplevel.
  *
@@ -157,7 +159,7 @@ s_toplevel_weak_ref (TOPLEVEL *toplevel,
  * \param [in] user_data      Data to to search for.
  */
 void
-s_toplevel_weak_unref (TOPLEVEL *toplevel,
+s_toplevel_weak_unref (LeptonToplevel *toplevel,
                        void (*notify_func)(void *, void *),
                        void *user_data)
 {
@@ -166,7 +168,7 @@ s_toplevel_weak_unref (TOPLEVEL *toplevel,
                                           notify_func, user_data);
 }
 
-/*! \brief Add a weak pointer to an TOPLEVEL.
+/*! \brief Add a weak pointer to an LeptonToplevel.
  * \par Function Description
  * Adds the weak pointer at \a weak_pointer_loc to \a toplevel. The
  * value of \a weak_pointer_loc will be set to NULL when \a toplevel is
@@ -178,7 +180,7 @@ s_toplevel_weak_unref (TOPLEVEL *toplevel,
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
 void
-s_toplevel_add_weak_ptr (TOPLEVEL *toplevel,
+s_toplevel_add_weak_ptr (LeptonToplevel *toplevel,
                          void *weak_pointer_loc)
 {
   g_return_if_fail (toplevel != NULL);
@@ -186,7 +188,7 @@ s_toplevel_add_weak_ptr (TOPLEVEL *toplevel,
                                            (void**) weak_pointer_loc);
 }
 
-/*! \brief Remove a weak pointer from an TOPLEVEL.
+/*! \brief Remove a weak pointer from an LeptonToplevel.
  * \par Function Description
  * Removes the weak pointer at \a weak_pointer_loc from \a toplevel.
  *
@@ -196,7 +198,7 @@ s_toplevel_add_weak_ptr (TOPLEVEL *toplevel,
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
 void
-s_toplevel_remove_weak_ptr (TOPLEVEL *toplevel,
+s_toplevel_remove_weak_ptr (LeptonToplevel *toplevel,
                             void *weak_pointer_loc)
 {
   g_return_if_fail (toplevel != NULL);

@@ -85,7 +85,7 @@ SCM_DEFINE (make_component_library, "%make-component/library", 1, 0, 0,
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   scm_dynwind_unwind_handler (free, basename, SCM_F_WIND_EXPLICITLY);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
 
   SCM result = SCM_BOOL_F;
   const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);

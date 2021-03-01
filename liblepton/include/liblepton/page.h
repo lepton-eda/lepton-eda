@@ -24,7 +24,7 @@ G_BEGIN_DECLS
 
 struct st_page
 {
-  TOPLEVEL* toplevel;
+  LeptonToplevel* toplevel;
   int pid;
 
   GList *_object_list;
@@ -69,13 +69,13 @@ struct st_page
 
 
 LeptonPage*
-s_page_new (TOPLEVEL *toplevel,
+s_page_new (LeptonToplevel *toplevel,
             const gchar *filename);
 void
-s_page_delete (TOPLEVEL *toplevel,
+s_page_delete (LeptonToplevel *toplevel,
                LeptonPage *page);
 void
-s_page_delete_list(TOPLEVEL *toplevel);
+s_page_delete_list(LeptonToplevel *toplevel);
 
 void
 s_page_weak_ref (LeptonPage *page,
@@ -92,20 +92,20 @@ void
 s_page_remove_weak_ptr (LeptonPage *page,
                         void *weak_pointer_loc);
 void
-s_page_goto (TOPLEVEL *toplevel,
+s_page_goto (LeptonToplevel *toplevel,
              LeptonPage *p_new);
 LeptonPage*
-s_page_search (TOPLEVEL *toplevel,
+s_page_search (LeptonToplevel *toplevel,
                const gchar *filename);
 LeptonPage*
-s_page_search_by_basename (TOPLEVEL *toplevel,
+s_page_search_by_basename (LeptonToplevel *toplevel,
                            const gchar *filename);
 LeptonPage*
 s_page_search_by_page_id (LeptonPageList *list,
                           int pid);
 
 void
-s_page_print_all (TOPLEVEL *toplevel);
+s_page_print_all (LeptonToplevel *toplevel);
 
 gboolean
 s_page_check_changed (LeptonPageList *list);
@@ -114,10 +114,10 @@ void
 s_page_clear_changed (LeptonPageList *list);
 
 void
-s_page_autosave_init(TOPLEVEL *toplevel);
+s_page_autosave_init (LeptonToplevel *toplevel);
 
 gint
-s_page_autosave (TOPLEVEL *toplevel);
+s_page_autosave (LeptonToplevel *toplevel);
 
 void
 s_page_append (LeptonPage *page,
@@ -139,7 +139,7 @@ const GList*
 s_page_objects (LeptonPage *page);
 
 GList*
-s_page_objects_in_regions (TOPLEVEL *toplevel,
+s_page_objects_in_regions (LeptonToplevel *toplevel,
                            LeptonPage *page,
                            BOX *rects,
                            int n_rects,

@@ -30,10 +30,10 @@
  * this module are called.  Normally, this will be called
  * automatically by liblepton_init().
  *
- * The Scheme API requires a liblepton #TOPLEVEL context to be available
- * at any given time.  The #TOPLEVEL can be set on a per-thread basis
- * using the edascm_dynwind_toplevel() or edascm_c_with_toplevel()
- * functions.  For example:
+ * The Scheme API requires a liblepton #LeptonToplevel context to
+ * be available at any given time.  The #LeptonToplevel can be set
+ * on a per-thread basis using the edascm_dynwind_toplevel() or
+ * edascm_c_with_toplevel() functions.  For example:
  *
  * \code
  * static SCM worker (void *user_data)
@@ -41,7 +41,7 @@
  *   // ...run Scheme code and/or call Scheme API C functions...
  * }
  *
- * void myfunc(TOPLEVEL *toplevel)
+ * void myfunc(LeptonToplevel *toplevel)
  * {
  *   void *mydata;
  *
@@ -156,10 +156,10 @@ enum geda_smob_flags {
     } } while (0)
 #endif
 
-/* Create a Guile value from a TOPLEVEL structure. */
-SCM edascm_from_toplevel (TOPLEVEL *toplevel);
+/* Create a Guile value from a LeptonToplevel structure. */
+SCM edascm_from_toplevel (LeptonToplevel *toplevel);
 
-/*! Tests whether a Scheme value is a TOPLEVEL smob. */
+/*! Tests whether a Scheme value is a LeptonToplevel smob. */
 #define EDASCM_TOPLEVELP(x) EDASCM_SMOB_TYPEP(x, GEDA_SMOB_TOPLEVEL)
 
 /*! Tests whether a Scheme value is a LeptonPage smob. */

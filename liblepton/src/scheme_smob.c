@@ -25,18 +25,19 @@
  * In order for Scheme code to be able to manipulate liblepton data
  * structures, it is convenient for it to be able to get handles to
  * several of the different C structures that liblepton uses, in
- * particular #TOPLEVEL, #LeptonPage and #LeptonObject.
+ * particular #LeptonToplevel, #LeptonPage and #LeptonObject.
  *
  * A particular issue is that, in principle, Guile can stash a
  * variable somewhere and only try and access it much later, possibly
  * after the underlying C structure has already been freed.
  *
- * In order to avoid this situation causing a segmentation fault, weak
- * references are used. In the case of #LeptonPage and #TOPLEVEL handles,
- * the usage is quite straightforward; Scheme code can never create or
- * destroy a #TOPLEVEL; and although a #LeptonPage can be created by Scheme
- * code, it must explicitly be destroyed if the Scheme code doesn't
- * want the #LeptonPage to hang around after it returns.
+ * In order to avoid this situation causing a segmentation fault,
+ * weak references are used. In the case of #LeptonPage and
+ * #LeptonToplevel handles, the usage is quite straightforward;
+ * Scheme code can never create or destroy a #LeptonToplevel; and
+ * although a #LeptonPage can be created by Scheme code, it must
+ * explicitly be destroyed if the Scheme code doesn't want the
+ * #LeptonPage to hang around after it returns.
  *
  * #LeptonObject handles are a more complex case. It's possible
  * that Scheme code may legitimately want to create an
@@ -259,7 +260,7 @@ smob_free (SCM smob)
   /* Otherwise, clear the weak reference */
   switch (EDASCM_SMOB_TYPE (smob)) {
   case GEDA_SMOB_TOPLEVEL:
-    s_toplevel_weak_unref ((TOPLEVEL *) data, smob_weakref_notify,
+    s_toplevel_weak_unref ((LeptonToplevel *) data, smob_weakref_notify,
                            unpack_as_pointer (smob));
     break;
   case GEDA_SMOB_PAGE:
@@ -268,7 +269,7 @@ smob_free (SCM smob)
     break;
   case GEDA_SMOB_OBJECT:
     /* See edascm_from_object() for an explanation of why LeptonObject
-     * smobs store a TOPLEVEL in the second data word */
+     * smobs store a LeptonToplevel in the second data word */
     s_object_weak_unref ((LeptonObject *) data, smob_weakref2_notify,
                          unpack_as_pointer (smob));
     break;
@@ -285,13 +286,13 @@ smob_free (SCM smob)
   /* If the smob is marked as garbage-collectable, destroy its
    * contents.
    *
-   * Because LeptonPages and TOPLEVELs should never be garbage collected,
+   * Because LeptonPages and LeptonToplevels should never be garbage collected,
    * emit critical warnings if the GC tries to free them.
    */
   if (EDASCM_SMOB_GCP (smob)) {
     switch (EDASCM_SMOB_TYPE (smob)) {
     case GEDA_SMOB_TOPLEVEL:
-      g_critical ("%s: Blocked garbage-collection of TOPLEVEL %p",
+      g_critical ("%s: Blocked garbage-collection of LeptonToplevel %p",
                  __FUNCTION__, data);
       break;
     case GEDA_SMOB_PAGE:
@@ -388,16 +389,16 @@ smob_equalp (SCM obj1, SCM obj2)
   }
 }
 
-/*! \brief Get the smob for a TOPLEVEL.
+/*! \brief Get the smob for a LeptonToplevel.
  * \ingroup guile_c_iface
  * \par Function Description
  * Create a new smob representing \a toplevel.
  *
- * \param toplevel #TOPLEVEL to create a smob for.
+ * \param toplevel #LeptonToplevel to create a smob for.
  * \return a smob representing \a toplevel.
  */
 SCM
-edascm_from_toplevel (TOPLEVEL *toplevel)
+edascm_from_toplevel (LeptonToplevel *toplevel)
 {
   SCM smob = smob_cache_lookup (toplevel);
 
@@ -481,10 +482,10 @@ edascm_to_page (SCM smob)
  *   edascm_c_set_gc (x, 1);
  * \endcode
  *
- * \note We currently have to bake a TOPLEVEL pointer into the smob,
+ * \note We currently have to bake a LeptonToplevel pointer into the smob,
  * so that if the object becomes garbage-collectable we can obtain a
- * TOPLEVEL to use for deleting the smob without accessing the
- * TOPLEVEL fluid and potentially causing a race condition (see bug
+ * LeptonToplevel to use for deleting the smob without accessing the
+ * LeptonToplevel fluid and potentially causing a race condition (see bug
  * 909358).
  *
  * \param object #LeptonObject to create a smob for.
@@ -499,7 +500,7 @@ edascm_from_object (LeptonObject *object)
     return smob;
   }
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
 
   SCM_NEWSMOB2 (smob, geda_smob_tag, object, toplevel);
   SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_OBJECT);

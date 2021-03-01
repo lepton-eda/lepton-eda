@@ -42,7 +42,7 @@ SCM_SYMBOL (edascm_string_format_sym , "string-format");
 SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
             (), "Retrieve a list of currently-opened pages")
 {
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
   SCM lst = SCM_EOL;
   SCM rlst;
   GList *page_list = lepton_list_get_glist (toplevel->pages);
@@ -72,7 +72,7 @@ SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
 SCM_DEFINE (new_page, "%new-page", 1, 0, 0,
             (SCM filename_s), "Create a new page")
 {
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
   char *filename;
   LeptonPage *page;
 
@@ -106,7 +106,7 @@ SCM_DEFINE (close_page_x, "%close-page!", 1, 0, 0,
   SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
               SCM_ARG1, s_close_page_x);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
   LeptonPage *page = edascm_to_page (page_s);
 
   s_page_delete (toplevel, page);
@@ -418,7 +418,7 @@ SCM_DEFINE (string_to_page, "%string->page", 2, 0, 0,
   SCM_ASSERT (scm_is_string (str_s), str_s,
               SCM_ARG2, s_string_to_page);
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
   char *filename = scm_to_utf8_string (filename_s);
   LeptonPage *page = s_page_new (toplevel, filename);
   free (filename);

@@ -1411,8 +1411,8 @@ gchar *s_clib_symbol_get_data_by_name (const gchar *name)
 /*! \brief Get a list of symbols used.
  *  \par Function Description
  *
- *  Scan a #TOPLEVEL structure's object list looking for symbols, and
- *  return them in a list.
+ *  Scan a #LeptonToplevel structure's object list looking for
+ *  symbols, and return them in a list.
  *
  *  \warning The #CLibSymbol instances in the \b GList returned belong
  *  to the component library, and should be considered constants; they
@@ -1424,10 +1424,11 @@ gchar *s_clib_symbol_get_data_by_name (const gchar *name)
  *  \bug Only includes components which are not embedded, but they
  *  should (probably) also appear in the list.
  *
- *  \param toplevel #TOPLEVEL structure to scan.
+ *  \param toplevel #LeptonToplevel structure to scan.
  *  \return GList of symbols.
  */
-GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
+GList*
+s_toplevel_get_symbols (const LeptonToplevel *toplevel)
 {
   GList *result = NULL;
   GList *iter = NULL;

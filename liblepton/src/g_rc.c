@@ -54,13 +54,15 @@
  *
  * \note Should only be called by g_rc_parse_file().
  *
- * \param toplevel  The current #TOPLEVEL structure.
+ * \param toplevel  The current #LeptonToplevel structure.
  * \param filename  The RC file name to test.
  * \param err       Return location for errors, or NULL.
  * \return TRUE if \a filename not already loaded, FALSE otherwise.
  */
 static gboolean
-g_rc_try_mark_read (TOPLEVEL *toplevel, gchar *filename, GError **err)
+g_rc_try_mark_read (LeptonToplevel *toplevel,
+                    gchar *filename,
+                    GError **err)
 {
   GList *found = NULL;
   g_return_val_if_fail ((toplevel != NULL), FALSE);
@@ -76,7 +78,7 @@ g_rc_try_mark_read (TOPLEVEL *toplevel, gchar *filename, GError **err)
   }
 
   toplevel->RC_list = g_list_append (toplevel->RC_list, filename);
-  /* N.b. don't free name_norm here; it's stored in the TOPLEVEL. */
+  /* N.b. don't free name_norm here; it's stored in the LeptonToplevel. */
   return TRUE;
 }
 
@@ -87,15 +89,17 @@ SCM scheme_rc_config_fluid = SCM_UNDEFINED;
  * Load and run the Scheme initialisation file \a rcfile, reporting
  * errors via \a err.
  *
- * \param toplevel  The current #TOPLEVEL structure.
+ * \param toplevel  The current #LeptonToplevel structure.
  * \param rcfile    The filename of the RC file to load.
  * \param cfg       The configuration context to use while loading.
  * \param err       Return location for errors, or NULL;
  * \return TRUE on success, FALSE on failure.
  */
 static gboolean
-g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
-                 EdaConfig *cfg, GError **err)
+g_rc_parse_file (LeptonToplevel *toplevel,
+                 const gchar *rcfile,
+                 EdaConfig *cfg,
+                 GError **err)
 {
   gchar *name_norm = NULL;
   GError *tmp_err = NULL;
@@ -156,13 +160,15 @@ g_rc_parse_file (TOPLEVEL *toplevel, const gchar *rcfile,
  * basename \a rcname.  The string "system-" is prefixed to \a rcname.
  * If \a rcname is NULL, the default value of "gafrc" is used.
  *
- * \param toplevel  The current #TOPLEVEL structure.
+ * \param toplevel  The current #LeptonToplevel structure.
  * \param rcname    The basename of the RC file to load, or NULL.
  * \param err       Return location for errors, or NULL.
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
+g_rc_parse_system (LeptonToplevel *toplevel,
+                   const gchar *rcname,
+                   GError **err)
 {
   gchar *sysname = NULL;
   gchar *rcfile = NULL;
@@ -199,13 +205,15 @@ g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
  * \a rcname.  If \a rcname is NULL, the default value of "gafrc" is
  * used.
  *
- * \param toplevel  The current #TOPLEVEL structure.
+ * \param toplevel  The current #LeptonToplevel structure.
  * \param rcname    The basename of the RC file to load, or NULL.
  * \param err       Return location for errors, or NULL.
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
+g_rc_parse_user (LeptonToplevel *toplevel,
+                 const gchar *rcname,
+                 GError **err)
 {
   gchar *rcfile = NULL;
   gboolean status;
@@ -230,14 +238,16 @@ g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err)
  * directory. If \a rcname is NULL, the default value of "gafrc" is
  * used.
  *
- * \param toplevel  The current #TOPLEVEL structure.
+ * \param toplevel  The current #LeptonToplevel structure.
  * \param rcname    The basename of the RC file to load, or NULL.
  * \param path      The path to load a RC file for, or NULL.
  * \param err       Return location for errors, or NULL.
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar *path,
+g_rc_parse_local (LeptonToplevel *toplevel,
+                  const gchar *rcname,
+                  const gchar *path,
                   GError **err)
 {
   gchar *dir = NULL;
@@ -320,7 +330,7 @@ g_rc_parse (const gchar *pname,
             const gchar *rcname,
             const gchar *rcfile)
 {
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
   g_rc_parse_handler (toplevel, rcname, rcfile,
                       (ConfigParseErrorFunc) g_rc_parse__process_error,
                       (void *) pname);
@@ -340,16 +350,18 @@ g_rc_parse (const gchar *pname,
  *
  * \see g_rc_parse().
  *
- * \param toplevel  The current #TOPLEVEL structure.
+ * \param toplevel  The current #LeptonToplevel structure.
  * \param rcname    RC file basename, or NULL.
  * \param rcfile    Specific RC file path, or NULL.
  * \param handler   Handler function for RC errors.
  * \param user_data Data to be passed to \a handler.
  */
 void
-g_rc_parse_handler (TOPLEVEL *toplevel,
-                    const gchar *rcname, const gchar *rcfile,
-                    ConfigParseErrorFunc handler, void *user_data)
+g_rc_parse_handler (LeptonToplevel *toplevel,
+                    const gchar *rcname,
+                    const gchar *rcfile,
+                    ConfigParseErrorFunc handler,
+                    void *user_data)
 {
   GError *err = NULL;
 
@@ -425,12 +437,13 @@ SCM_DEFINE (scheme_directory,"%scheme-directory", 1, 0, 0,
 
 /*! \brief Load cache configuration data.
  *
- * \param toplevel  The current #TOPLEVEL structure.
+ * \param toplevel  The current #LeptonToplevel structure.
  * \param err       Return location for errors, or NULL.
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-g_rc_load_cache_config (TOPLEVEL* toplevel, GError** err)
+g_rc_load_cache_config (LeptonToplevel* toplevel,
+                        GError** err)
 {
   g_return_val_if_fail (toplevel != NULL, FALSE);
 

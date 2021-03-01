@@ -194,13 +194,15 @@ g_read_file__pre_handler (struct g_read_file_data_t *data, SCM key, SCM args)
  * \bug Most other functions in the libgeda API return TRUE on success
  * and FALSE on failure. g_read_file() shouldn't be an exception.
  *
- * \param toplevel  The TOPLEVEL structure.
+ * \param toplevel  The LeptonToplevel structure.
  * \param filename  The file name of the Scheme file to load.
  * \param err       Return location for errors, or NULL.
  *  \return TRUE on success, FALSE on failure.
  */
 gboolean
-g_read_file(TOPLEVEL *toplevel, const gchar *filename, GError **err)
+g_read_file(LeptonToplevel *toplevel,
+            const gchar *filename,
+            GError **err)
 {
   struct g_read_file_data_t data;
 
