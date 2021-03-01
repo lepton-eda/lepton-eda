@@ -159,9 +159,9 @@ void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines)
  */
 void m_hatch_circle(GedaCircle *circle, gint angle, gint pitch, GArray *lines)
 {
-  gint          radius;
-  gint          sweep_y;
-  GedaTransform transform;
+  gint            radius;
+  gint            sweep_y;
+  LeptonTransform transform;
 
   g_return_if_fail(circle!=NULL);
   g_return_if_fail(lines!=NULL);
@@ -238,11 +238,11 @@ void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines)
 {
   GedaBounds bounds;
   GArray *events;
-  GedaTransform inverse;
+  LeptonTransform inverse;
   GArray *points2;
   GArray *status;
   gint sweep_y;
-  GedaTransform transform;
+  LeptonTransform transform;
 
   g_return_if_fail(points!=NULL);
   g_return_if_fail(pitch>0);

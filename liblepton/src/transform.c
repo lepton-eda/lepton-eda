@@ -35,9 +35,9 @@
  *  \param b [in] The second operand.
  */
 void
-lepton_transform_combine (GedaTransform *result,
-                          GedaTransform *a,
-                          GedaTransform *b)
+lepton_transform_combine (LeptonTransform *result,
+                          LeptonTransform *a,
+                          LeptonTransform *b)
 {
   g_return_if_fail(result!=NULL);
   g_return_if_fail(a!=NULL);
@@ -56,7 +56,7 @@ lepton_transform_combine (GedaTransform *result,
  *  \param transform [out] The transform to initialize with the identity matrix.
  */
 void
-lepton_transform_init (GedaTransform *transform)
+lepton_transform_init (LeptonTransform *transform)
 {
   g_return_if_fail(transform!=NULL);
 
@@ -74,8 +74,8 @@ lepton_transform_init (GedaTransform *transform)
  *  \param inverse [out] The inverse of the given matrix.
  */
 void
-lepton_transform_invert (GedaTransform *transform,
-                         GedaTransform *inverse)
+lepton_transform_invert (LeptonTransform *transform,
+                         LeptonTransform *inverse)
 {
   gdouble d;
 
@@ -98,7 +98,7 @@ lepton_transform_invert (GedaTransform *transform,
  *  \param line [inout] The line to transform.
  */
 void
-lepton_transform_line (GedaTransform *transform,
+lepton_transform_line (LeptonTransform *transform,
                        GedaLine *line)
 {
   g_return_if_fail(transform!=NULL);
@@ -114,7 +114,7 @@ lepton_transform_line (GedaTransform *transform,
  *  \param lines [inout] The GArray of LINE to transform.
  */
 void
-lepton_transform_lines (GedaTransform *transform,
+lepton_transform_lines (LeptonTransform *transform,
                         GArray *lines)
 {
   guint index;
@@ -135,7 +135,7 @@ lepton_transform_lines (GedaTransform *transform,
  *  \param transform [in] The transform function.
  */
 void
-lepton_transform_point (GedaTransform *transform,
+lepton_transform_point (LeptonTransform *transform,
                         gint *x,
                         gint *y)
 {
@@ -159,7 +159,7 @@ lepton_transform_point (GedaTransform *transform,
  *  \param points [inout] The GArray of sPOINT to transform.
  */
 void
-lepton_transform_points (GedaTransform *transform,
+lepton_transform_points (LeptonTransform *transform,
                          GArray *points)
 {
   guint index;
@@ -179,13 +179,13 @@ lepton_transform_points (GedaTransform *transform,
  *  \param angle [in] The angle to rotate
  */
 void
-lepton_transform_rotate (GedaTransform *transform,
+lepton_transform_rotate (LeptonTransform *transform,
                          gdouble angle)
 {
   gdouble r = G_PI*angle/180.0;
   gdouble c = cos(r);
   gdouble s = sin(r);
-  GedaTransform temp;
+  LeptonTransform temp;
 
   g_return_if_fail(transform!=NULL);
 
@@ -204,7 +204,7 @@ lepton_transform_rotate (GedaTransform *transform,
  *  not be zero, or the matrix becomes singular.
  */
 void
-lepton_transform_scale (GedaTransform *transform,
+lepton_transform_scale (LeptonTransform *transform,
                         gdouble factor)
 {
   g_return_if_fail(transform!=NULL);
@@ -223,7 +223,7 @@ lepton_transform_scale (GedaTransform *transform,
  *  \param dy [in] The amount to translate on the y axis.
  */
 void
-lepton_transform_translate (GedaTransform *transform,
+lepton_transform_translate (LeptonTransform *transform,
                             gdouble dx,
                             gdouble dy)
 {
