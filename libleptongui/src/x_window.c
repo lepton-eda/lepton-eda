@@ -319,7 +319,7 @@ x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
     count = gschem_find_text_state_find (
         w_current,
         GSCHEM_FIND_TEXT_STATE (w_current->find_text_state),
-        geda_list_get_glist (w_current->toplevel->pages),
+        lepton_list_get_glist (w_current->toplevel->pages),
         gschem_find_text_widget_get_find_type (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
         gschem_find_text_widget_get_find_text_string (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
         gschem_find_text_widget_get_descend (GSCHEM_FIND_TEXT_WIDGET (w_current->find_text_widget)),
@@ -935,7 +935,7 @@ x_window_close_page_impl (GschemToplevel *w_current,
 
     if (new_current == NULL) {
       /* no up in hierarchy, choice is prev, next, new page */
-      iter = g_list_find( geda_list_get_glist( toplevel->pages ), page );
+      iter = g_list_find( lepton_list_get_glist( toplevel->pages ), page );
 
       if ( g_list_previous( iter ) ) {
         new_current = (LeptonPage *)g_list_previous( iter )->data;

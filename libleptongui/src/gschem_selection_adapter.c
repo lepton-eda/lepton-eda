@@ -76,8 +76,8 @@ static void
 instance_init (GschemSelectionAdapter *adapter);
 
 static void
-selection_changed (GedaList *selection, GschemSelectionAdapter *adapter);
-
+selection_changed (LeptonList *selection,
+                   GschemSelectionAdapter *adapter);
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
 
@@ -1013,7 +1013,7 @@ gschem_selection_adapter_set_fill_angle1 (GschemSelectionAdapter *adapter, int a
   g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
   g_return_if_fail (angle >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1072,7 +1072,7 @@ gschem_selection_adapter_set_fill_angle2 (GschemSelectionAdapter *adapter, int a
   g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
   g_return_if_fail (angle >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1133,7 +1133,7 @@ gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int p
   g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
   g_return_if_fail (pitch >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1192,7 +1192,7 @@ gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int p
   g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
   g_return_if_fail (pitch >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1253,7 +1253,7 @@ gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fil
   g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
   g_return_if_fail (fill_type >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1318,7 +1318,7 @@ gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int fi
   g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
   g_return_if_fail (fill_width >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1378,7 +1378,7 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
   g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
   g_return_if_fail (line_type >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1437,7 +1437,7 @@ gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int li
   g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
   g_return_if_fail (line_width >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1494,7 +1494,7 @@ gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int d
   g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
   g_return_if_fail (dash_length >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1551,7 +1551,7 @@ gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int da
   g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
   g_return_if_fail (dash_space >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1608,7 +1608,7 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
   g_return_if_fail (adapter->toplevel->page_current->selection_list == adapter->selection);
   g_return_if_fail (cap_style >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1656,7 +1656,7 @@ gschem_selection_adapter_set_object_color (GschemSelectionAdapter *adapter, int 
   g_return_if_fail (adapter != NULL);
   g_return_if_fail (color_id_valid (color));
 
-  lepton_object_list_set_color (geda_list_get_glist (adapter->selection),
+  lepton_object_list_set_color (lepton_list_get_glist (adapter->selection),
                                 color);
 
   g_object_notify (G_OBJECT (adapter), "object-color");
@@ -1680,7 +1680,7 @@ gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type
   g_return_if_fail (adapter != NULL);
   g_return_if_fail ((type == PIN_TYPE_NET) || (type == PIN_TYPE_BUS));
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1762,7 +1762,7 @@ gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, in
   g_return_if_fail (adapter->toplevel != NULL);
   g_return_if_fail (alignment >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1796,7 +1796,7 @@ gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int co
   g_return_if_fail (adapter != NULL);
   g_return_if_fail (color_id_valid (color));
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1831,7 +1831,7 @@ gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int
   g_return_if_fail (adapter->toplevel != NULL);
   g_return_if_fail (angle >= 0);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1866,7 +1866,7 @@ gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int siz
   g_return_if_fail (adapter->toplevel != NULL);
   g_return_if_fail (size >= MINIMUM_TEXT_SIZE);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -1903,7 +1903,7 @@ gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const
   g_return_if_fail (adapter->toplevel != NULL);
   g_return_if_fail (string != NULL);
 
-  iter = geda_list_get_glist (adapter->selection);
+  iter = lepton_list_get_glist (adapter->selection);
 
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
@@ -2183,7 +2183,7 @@ get_selection_iter (GschemSelectionAdapter *adapter)
   SELECTION *selection = gschem_selection_adapter_get_selection (adapter);
 
   if (selection != NULL) {
-    iter = geda_list_get_glist (selection);
+    iter = lepton_list_get_glist (selection);
   }
 
   return iter;
@@ -2305,7 +2305,8 @@ instance_init (GschemSelectionAdapter *adapter)
  *  \param [in] adapter   This adapter
  */
 static void
-selection_changed (GedaList *selection, GschemSelectionAdapter *adapter)
+selection_changed (LeptonList *selection,
+                   GschemSelectionAdapter *adapter)
 {
   g_return_if_fail (adapter != NULL);
   g_return_if_fail (selection != NULL);

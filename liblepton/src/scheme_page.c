@@ -45,7 +45,7 @@ SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
   TOPLEVEL *toplevel = edascm_c_current_toplevel ();
   SCM lst = SCM_EOL;
   SCM rlst;
-  GList *page_list = geda_list_get_glist (toplevel->pages);
+  GList *page_list = lepton_list_get_glist (toplevel->pages);
 
   while (page_list != NULL) {
     lst = scm_cons (edascm_from_page ((LeptonPage*) page_list->data), lst);

@@ -124,7 +124,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
      * allow resetting of the inside_action flag so we do it
      * manually here before processing the double-click event. */
     i_action_stop (w_current);
-    o_edit(w_current, geda_list_get_glist( page->selection_list ));
+    o_edit(w_current, lepton_list_get_glist( page->selection_list ));
     scm_dynwind_end ();
     return(0);
   }
@@ -188,9 +188,9 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
     switch(w_current->event_state) {
       case(ROTATEMODE):   o_rotate_world_update(w_current, w_x, w_y, 90,
-                            geda_list_get_glist(page->selection_list)); break;
+                            lepton_list_get_glist(page->selection_list)); break;
       case(MIRRORMODE):   o_mirror_world_update(w_current, w_x, w_y,
-                            geda_list_get_glist(page->selection_list)); break;
+                            lepton_list_get_glist(page->selection_list)); break;
 
       case(PAN):
         gschem_page_view_pan (page_view, w_x, w_y);
@@ -608,7 +608,7 @@ x_event_configure (GschemPageView    *page_view,
 
 
   /* re-pan each page of the TOPLEVEL */
-  for ( iter = geda_list_get_glist (p_current->toplevel->pages);
+  for ( iter = lepton_list_get_glist (p_current->toplevel->pages);
         iter != NULL;
         iter = g_list_next (iter) ) {
 

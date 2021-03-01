@@ -49,7 +49,7 @@ TOPLEVEL *s_toplevel_new (void)
 
   toplevel->RC_list = NULL;
 
-  toplevel->pages = geda_list_new();
+  toplevel->pages = lepton_list_new();
   toplevel->page_current = NULL;
 
   toplevel->change_notify_funcs = NULL;

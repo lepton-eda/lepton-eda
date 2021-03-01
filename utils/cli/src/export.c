@@ -319,7 +319,7 @@ export_layout_page (LeptonPage *page,
   gdouble slack[2]; /* Calculated alignment slack */
 
   if (page == NULL) {
-    const GList *pages = geda_list_get_glist (toplevel->pages);
+    const GList *pages = lepton_list_get_glist (toplevel->pages);
     g_assert (pages != NULL && pages->data != NULL);
     page = (LeptonPage *) pages->data;
   }
@@ -455,7 +455,7 @@ export_draw_page (LeptonPage *page)
   cr = eda_renderer_get_cairo_context (renderer);
 
   if (page == NULL) {
-    const GList *pages = geda_list_get_glist (toplevel->pages);
+    const GList *pages = lepton_list_get_glist (toplevel->pages);
     g_assert (pages != NULL && pages->data != NULL);
     page = (LeptonPage *) pages->data;
   }
@@ -539,7 +539,7 @@ export_postscript (gboolean is_eps)
   cr = cairo_create (surface);
   g_object_set (renderer, "cairo-context", cr, NULL);
 
-  for (iter = geda_list_get_glist (toplevel->pages);
+  for (iter = lepton_list_get_glist (toplevel->pages);
        iter != NULL;
        iter = g_list_next (iter)) {
     LeptonPage *page = (LeptonPage *) iter->data;
@@ -603,7 +603,7 @@ export_pdf (void)
   cr = cairo_create (surface);
   g_object_set (renderer, "cairo-context", cr, NULL);
 
-  for (iter = geda_list_get_glist (toplevel->pages);
+  for (iter = lepton_list_get_glist (toplevel->pages);
        iter != NULL;
        iter = g_list_next (iter)) {
     LeptonPage *page = (LeptonPage *) iter->data;

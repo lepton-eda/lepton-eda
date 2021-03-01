@@ -596,7 +596,7 @@ lepton_attrib_window ()
      in globals.h) */
   sheet_head = s_sheet_data_new();
 
-  for (iter = geda_list_get_glist (toplevel->pages);
+  for (iter = lepton_list_get_glist (toplevel->pages);
        iter != NULL;
        iter = g_list_next (iter)) {
 
@@ -639,7 +639,7 @@ lepton_attrib_window ()
   sheet_head->pin_table = s_table_new(sheet_head->pin_count, sheet_head->pin_attrib_count);
 
   /* must iterate over all pages in design */
-  for ( iter = geda_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
     p_local = (LeptonPage *)iter->data;
@@ -670,5 +670,5 @@ lepton_attrib_window ()
   /* ---------- Now verify correctness of entire design.  ---------- */
   s_toplevel_verify_design(toplevel);  /* toplevel is a global */
 
-  x_window_set_title (geda_list_get_glist (toplevel->pages));
+  x_window_set_title (lepton_list_get_glist (toplevel->pages));
 }

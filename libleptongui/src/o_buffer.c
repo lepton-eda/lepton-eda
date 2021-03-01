@@ -66,7 +66,7 @@ selection_to_buffer(GschemToplevel *w_current, int buf_num)
   g_return_if_fail (buf_num >= 0);
   g_return_if_fail (buf_num < MAX_BUFFERS);
 
-  s_current = geda_list_get_glist (toplevel->page_current->selection_list);
+  s_current = lepton_list_get_glist (toplevel->page_current->selection_list);
 
   if (object_buffer[buf_num] != NULL) {
     lepton_object_list_delete (object_buffer[buf_num]);

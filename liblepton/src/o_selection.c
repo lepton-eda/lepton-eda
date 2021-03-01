@@ -33,7 +33,7 @@
  */
 SELECTION *o_selection_new( void )
 {
-  return (SELECTION*)geda_list_new();
+  return (SELECTION*)lepton_list_new();
 }
 
 /*! \brief Selects the given object and adds it to the selection list
@@ -51,7 +51,7 @@ o_selection_add (SELECTION *selection,
   if (o_selected->selected == FALSE)
   {
     o_selection_select (o_selected);
-    geda_list_add( (GedaList *)selection, o_selected );
+    lepton_list_add( (LeptonList *)selection, o_selected );
   }
 }
 
@@ -73,9 +73,9 @@ o_selection_remove (SELECTION *selection,
     return;
   }
 
-  if (g_list_find( geda_list_get_glist( selection ), o_selected ) != NULL) {
+  if (g_list_find( lepton_list_get_glist( selection ), o_selected ) != NULL) {
     o_selection_unselect (o_selected);
-    geda_list_remove( (GedaList *)selection, o_selected );
+    lepton_list_remove( (LeptonList *)selection, o_selected );
   }
 }
 
@@ -89,7 +89,7 @@ void o_selection_print_all(const SELECTION *selection)
 {
   const GList *s_current;
 
-  s_current = geda_list_get_glist( selection );
+  s_current = lepton_list_get_glist( selection );
 
   printf("START printing selection ********************\n");
   while(s_current != NULL) {

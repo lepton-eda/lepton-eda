@@ -24,8 +24,8 @@
 #include <glib.h>  /* Include needed to make GList work. */
 
 /* Wrappers around a new list mechanism */
-typedef struct _GedaList SELECTION;
-typedef struct _GedaList LeptonPageList;
+typedef struct _LeptonList SELECTION;
+typedef struct _LeptonList LeptonPageList;
 
 /* lepton-schematic structures */
 typedef struct st_conn CONN;

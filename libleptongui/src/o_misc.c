@@ -106,7 +106,7 @@ void o_lock(GschemToplevel *w_current)
   g_return_if_fail (w_current->toplevel->page_current != NULL);
 
   LeptonPage*  page = w_current->toplevel->page_current;
-  GList* objs = geda_list_get_glist (page->selection_list);
+  GList* objs = lepton_list_get_glist (page->selection_list);
 
   /* lock selected objects:
   */
@@ -155,7 +155,7 @@ void o_unlock(GschemToplevel *w_current)
   g_return_if_fail (w_current->toplevel->page_current != NULL);
 
   LeptonPage*  page = w_current->toplevel->page_current;
-  GList* objs = geda_list_get_glist (page->selection_list);
+  GList* objs = lepton_list_get_glist (page->selection_list);
 
   /* unlock selected objects:
   */
@@ -571,7 +571,7 @@ void o_autosave_backups(GschemToplevel *w_current)
   /* save current page */
   p_save = toplevel->page_current;
 
-  for ( iter = geda_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 

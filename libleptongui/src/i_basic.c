@@ -357,7 +357,7 @@ obj_selected (LeptonPage *page,
   LeptonObject* result = FALSE;
   SELECTION* selection = page->selection_list;
 
-  GList* gl = geda_list_get_glist (selection);
+  GList* gl = lepton_list_get_glist (selection);
   for ( ; gl != NULL; gl = g_list_next (gl) )
   {
     LeptonObject* obj = (LeptonObject*) gl->data;

@@ -22,7 +22,7 @@
  *  \brief The page system
  *
  *  libgeda can handle multiple schematic or symbol pages. libgeda keeps
- *  track of the currently opened pages with a managed _GedaList.
+ *  track of the currently opened pages with a managed _LeptonList.
  *  The currently used page is refered with an extra pointer.
  *
  *  Each page carries a list of the objects that are on the page.
@@ -157,7 +157,7 @@ s_page_new (TOPLEVEL *toplevel,
   page->major_changed_refdes = NULL;
 
   /* now append page to page list of toplevel */
-  geda_list_add( toplevel->pages, page );
+  lepton_list_add( toplevel->pages, page );
   page->toplevel = toplevel;
 
   return page;
@@ -250,7 +250,7 @@ s_page_delete (TOPLEVEL *toplevel,
   page->up = -2;
   g_free (page->_filename);
 
-  geda_list_remove( toplevel->pages, page );
+  lepton_list_remove( toplevel->pages, page );
 
   page->weak_refs = s_weakref_notify (page, page->weak_refs);
 
@@ -288,7 +288,7 @@ void s_page_delete_list(TOPLEVEL *toplevel)
   LeptonPage *page;
 
   /* s_page_delete removes items from the page list, so make a copy */
-  list_copy = g_list_copy (geda_list_get_glist (toplevel->pages));
+  list_copy = g_list_copy (lepton_list_get_glist (toplevel->pages));
 
   for (iter = list_copy; iter != NULL; iter = g_list_next (iter)) {
     page = (LeptonPage *)iter->data;
@@ -425,7 +425,7 @@ s_page_search (TOPLEVEL *toplevel,
   const GList *iter;
   LeptonPage *page;
 
-  for ( iter = geda_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
@@ -456,7 +456,7 @@ s_page_search_by_basename (TOPLEVEL *toplevel,
   LeptonPage*  page   = NULL;
   LeptonPage*  result = NULL;
 
-  for ( iter = geda_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) )
   {
@@ -497,7 +497,7 @@ s_page_search_by_page_id (LeptonPageList *list,
 {
   const GList *iter;
 
-  for ( iter = geda_list_get_glist (list);
+  for ( iter = lepton_list_get_glist (list);
         iter != NULL;
         iter = g_list_next (iter) ) {
     LeptonPage *page = (LeptonPage *)iter->data;
@@ -521,7 +521,7 @@ void s_page_print_all (TOPLEVEL *toplevel)
   const GList *iter;
   LeptonPage *page;
 
-  for ( iter = geda_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
@@ -546,7 +546,7 @@ s_page_check_changed (LeptonPageList *list)
   const GList *iter;
   LeptonPage *p_current;
 
-  for ( iter = geda_list_get_glist( list );
+  for ( iter = lepton_list_get_glist( list );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
@@ -571,7 +571,7 @@ s_page_clear_changed (LeptonPageList *list)
   const GList *iter;
   LeptonPage *p_current;
 
-  for ( iter = geda_list_get_glist( list );
+  for ( iter = lepton_list_get_glist( list );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
@@ -626,7 +626,7 @@ gint s_page_autosave (TOPLEVEL *toplevel)
   if ( toplevel->pages == NULL)
     return toplevel->auto_save_interval;
 
-  for ( iter = geda_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
