@@ -59,7 +59,7 @@ G_BEGIN_DECLS
 #include <liblepton/object_list.h>
 #include <liblepton/page.h>
 #include <liblepton/toplevel.h>
-#include <liblepton/geda_undo.h>
+#include <liblepton/undo.h>
 
 #include <liblepton/arc_object.h>
 #include <liblepton/box_object.h>

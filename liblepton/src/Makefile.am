@@ -60,7 +60,7 @@ liblepton_la_SOURCES = \
 	str.c \
 	toplevel.c \
 	transform.c \
-	geda_undo.c \
+	undo.c \
 	g_register.c \
 	i_vars.c \
 	liblepton.c \
