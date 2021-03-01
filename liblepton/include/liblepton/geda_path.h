@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 
 typedef struct st_path_section PATH_SECTION;
 
-typedef struct st_path GedaPath;
+typedef struct st_path LeptonPath;
 typedef struct st_path PATH;
 
 typedef enum
@@ -53,7 +53,7 @@ struct st_path
 };
 
 void
-geda_path_free (GedaPath *path);
+geda_path_free (LeptonPath *path);
 
 PATH*
 s_path_parse (const char *path_str);
