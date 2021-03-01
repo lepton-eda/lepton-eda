@@ -15,7 +15,7 @@ libleptoninclude_HEADERS = \
 	liblepton/edascmhookproxy.h \
 	liblepton/edascmvaluetypes.h \
 	liblepton/funcs.h \
-	liblepton/geda_bezier.h \
+	liblepton/bezier.h \
 	liblepton/box.h \
 	liblepton/circle.h \
 	liblepton/color.h \
