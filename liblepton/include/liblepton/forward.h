@@ -27,5 +27,5 @@ typedef struct st_page LeptonPage;
 typedef struct st_toplevel LeptonToplevel;
 typedef struct st_toplevel TOPLEVEL;
 
-typedef struct st_undo GedaUndo;
+typedef struct st_undo LeptonUndo;
 typedef struct st_undo UNDO;
