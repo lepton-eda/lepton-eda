@@ -1,6 +1,6 @@
 /* libleptonrenderer - Rendering Lepton EDA schematics with Cairo
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,13 +57,13 @@ WORLDtoSCREEN (cairo_t *cr, double wx, double wy, double *sx, double *sy)
 void
 eda_cairo_set_source_color (cairo_t *cr, int color, GArray *map)
 {
-  GedaColor c;
+  LeptonColor c;
 
   g_return_if_fail (color >= 0);
   g_return_if_fail (map != NULL);
   g_return_if_fail ((color >= 0) && ((int) map->len > color));
 
-  c = g_array_index (map, GedaColor, color);
+  c = g_array_index (map, LeptonColor, color);
 
   cairo_set_source_rgba (cr, (double)c.r / 255.0,
                              (double)c.g / 255.0,

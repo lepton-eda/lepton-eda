@@ -30,20 +30,20 @@ struct st_color
   gboolean enabled;
 };
 
-typedef struct st_color GedaColor;
+typedef struct st_color LeptonColor;
 
 
 gdouble
-lepton_color_get_blue_double (const GedaColor *color);
+lepton_color_get_blue_double (const LeptonColor *color);
 
 gdouble
-lepton_color_get_green_double (const GedaColor *color);
+lepton_color_get_green_double (const LeptonColor *color);
 
 gdouble
-lepton_color_get_red_double (const GedaColor *color);
+lepton_color_get_red_double (const LeptonColor *color);
 
 gdouble
-lepton_color_get_alpha_double (const GedaColor *color);
+lepton_color_get_alpha_double (const LeptonColor *color);
 
 
 #define BACKGROUND_COLOR                0
@@ -74,7 +74,7 @@ lepton_color_get_alpha_double (const GedaColor *color);
 
 #define COLORS_COUNT 24
 
-typedef GedaColor LeptonColorMap[ COLORS_COUNT ];
+typedef LeptonColor LeptonColorMap[ COLORS_COUNT ];
 
 
 size_t
@@ -86,15 +86,15 @@ color_id_valid (size_t id);
 size_t
 default_color_id();
 
-const GedaColor*
-lepton_colormap_color_by_id (const GedaColor *color_map,
+const LeptonColor*
+lepton_colormap_color_by_id (const LeptonColor *color_map,
                              size_t id);
 
 void
-lepton_colormap_disable_color (GedaColor *color_map,
+lepton_colormap_disable_color (LeptonColor *color_map,
                                size_t id);
 void
-lepton_colormap_set_color (GedaColor *color_map,
+lepton_colormap_set_color (LeptonColor *color_map,
                            size_t id,
                            guint8 r,
                            guint8 g,
@@ -112,7 +112,7 @@ color_get_name (int color_index);
 const char*
 color_get_strname (int color_index);
 
-GedaColor*
+LeptonColor*
 print_colors_array ();
 
 G_END_DECLS

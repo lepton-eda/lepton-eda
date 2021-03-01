@@ -232,17 +232,17 @@ cmd_export_impl (void *data, int argc, char **argv)
 
   /* Create color map */
   render_color_map =
-    g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), colors_count());
-  GedaColor* print_colors = print_colors_array();
+    g_array_sized_new (FALSE, FALSE, sizeof(LeptonColor), colors_count());
+  LeptonColor* print_colors = print_colors_array();
   render_color_map =
     g_array_append_vals (render_color_map, print_colors, colors_count());
   if (!settings.color) {
     /* Create a black and white color map.  All non-background colors
      * are black. */
-    GedaColor white = {255, 255, 255, 255, TRUE};
-    GedaColor black = {0, 0, 0, 255, TRUE};
+    LeptonColor white = {255, 255, 255, 255, TRUE};
+    LeptonColor black = {0, 0, 0, 255, TRUE};
     for (i = 0; i < colors_count(); i++) {
-      GedaColor *c = &g_array_index (render_color_map, GedaColor, i);
+      LeptonColor *c = &g_array_index (render_color_map, LeptonColor, i);
       if (!c->enabled) continue;
 
       if (c->a == 0) {

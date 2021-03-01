@@ -46,7 +46,7 @@ x_color_init()
 GdkColor*
 x_color_lookup_gdk (size_t color_id)
 {
-  GedaColor* color = x_color_lookup (color_id);
+  LeptonColor* color = x_color_lookup (color_id);
 
   /* Extrapolate 8-bpp color into 16-bpp GDK color:
   */
@@ -62,7 +62,7 @@ x_color_lookup_gdk (size_t color_id)
 
 /*! \brief Get a color for specified \a color_id from the display color map.
  */
-GedaColor*
+LeptonColor*
 x_color_lookup (size_t color_id)
 {
   g_return_val_if_fail (color_id_valid (color_id),
@@ -122,7 +122,7 @@ x_color_map2str (LeptonColorMap cmap)
 
   for (size_t color_index = 0; color_index < colors_count(); color_index++)
   {
-    GedaColor color = cmap[ color_index ];
+    LeptonColor color = cmap[ color_index ];
 
     const gchar* scm_str = color_get_name (color_index);
 

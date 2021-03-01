@@ -103,7 +103,7 @@ draw_dots_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int
 
   int dot_size = MIN (w_current->dots_grid_dot_size, 5);
 
-  GedaColor *color = x_color_lookup (DOTS_GRID_COLOR);
+  LeptonColor *color = x_color_lookup (DOTS_GRID_COLOR);
   cairo_set_source_rgba (cr,
                          lepton_color_get_red_double (color),
                          lepton_color_get_green_double (color),
@@ -162,7 +162,7 @@ draw_dots_grid_region (GschemToplevel *w_current, cairo_t *cr, int x, int y, int
 static void draw_mesh (GschemToplevel *w_current,
                        cairo_t *cr,
                        cairo_matrix_t *user_to_device_matrix,
-                       GedaColor *color,
+                       LeptonColor *color,
                        int x_start, int y_start, int x_end, int y_end,
                        int incr, int coarse_mult)
 {

@@ -39,7 +39,7 @@ LeptonColorMap display_outline_colors;
 #define GRAY    {0x88, 0x88, 0x88, 0xff, TRUE}
 #define BLACK   {0x00, 0x00, 0x00, 0xff, TRUE}
 
-static GedaColor default_colors[] =
+static LeptonColor default_colors[] =
 {
   WHITE,           /*  0: background         */
   BLACK,           /*  1: pin                */
@@ -93,22 +93,22 @@ default_color_id()
 }
 
 
-const GedaColor*
-lepton_colormap_color_by_id (const GedaColor *color_map,
+const LeptonColor*
+lepton_colormap_color_by_id (const LeptonColor *color_map,
                              size_t id)
 {
   return &color_map[id];
 }
 
 void
-lepton_colormap_disable_color (GedaColor *color_map,
+lepton_colormap_disable_color (LeptonColor *color_map,
                                size_t id)
 {
   color_map[id].enabled = FALSE;
 }
 
 void
-lepton_colormap_set_color (GedaColor *color_map,
+lepton_colormap_set_color (LeptonColor *color_map,
                            size_t id,
                            guint8 r,
                            guint8 g,
@@ -131,7 +131,7 @@ lepton_colormap_set_color (GedaColor *color_map,
  *  \return the blue value
  */
 gdouble
-lepton_color_get_blue_double (const GedaColor *color)
+lepton_color_get_blue_double (const LeptonColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
@@ -146,7 +146,7 @@ lepton_color_get_blue_double (const GedaColor *color)
  *  \return the green value
  */
 gdouble
-lepton_color_get_green_double (const GedaColor *color)
+lepton_color_get_green_double (const LeptonColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
@@ -161,7 +161,7 @@ lepton_color_get_green_double (const GedaColor *color)
  *  \return the red value
  */
 gdouble
-lepton_color_get_red_double (const GedaColor *color)
+lepton_color_get_red_double (const LeptonColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
@@ -176,7 +176,7 @@ lepton_color_get_red_double (const GedaColor *color)
  *  \return the alpha value
  */
 gdouble
-lepton_color_get_alpha_double (const GedaColor *color)
+lepton_color_get_alpha_double (const LeptonColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
@@ -212,7 +212,7 @@ s_color_init()
   lepton_color_map_init (print_colors);
 }
 
-GedaColor*
+LeptonColor*
 print_colors_array ()
 {
   return print_colors;
