@@ -21,9 +21,10 @@
 /*! \file geda_page.c
  *  \brief The page system
  *
- *  libgeda can handle multiple schematic or symbol pages. libgeda keeps
- *  track of the currently opened pages with a managed _LeptonList.
- *  The currently used page is refered with an extra pointer.
+ *  liblepton can handle multiple schematic or symbol
+ *  pages. liblepton keeps track of the currently opened pages
+ *  with a managed _LeptonList.  The currently used page is
+ *  refered with an extra pointer.
  *
  *  Each page carries a list of the objects that are on the page.
  *  The first and the last element are referenced by the head and tail
