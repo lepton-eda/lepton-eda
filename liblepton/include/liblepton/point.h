@@ -20,7 +20,7 @@
 /*! \file point.h
  */
 
-typedef struct st_point GedaPoint;
+typedef struct st_point LeptonPoint;
 typedef struct st_point sPOINT;
 
 struct st_point

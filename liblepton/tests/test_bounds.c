@@ -177,7 +177,7 @@ check_init ()
 void
 check_interior_point ()
 {
-  static const GedaPoint dirs[] =
+  static const LeptonPoint dirs[] =
   {
       { -1, -1 },
       { -1,  0 },
@@ -189,7 +189,7 @@ check_interior_point ()
       {  1,  1 }
   };
 
-  static const GedaPoint points[] =
+  static const LeptonPoint points[] =
   {
       {  8000,  1850 },
       { -1111,   720 },
@@ -197,8 +197,8 @@ check_interior_point ()
       {  -256, -2001 }
   };
 
-  int dcount = sizeof (dirs) / sizeof (GedaPoint);
-  int pcount = sizeof (points) / sizeof (GedaPoint);
+  int dcount = sizeof (dirs) / sizeof (LeptonPoint);
+  int pcount = sizeof (points) / sizeof (LeptonPoint);
   int pindex;
 
   for (pindex = 0; pindex < pcount; pindex++) {
@@ -216,7 +216,7 @@ check_interior_point ()
     g_assert_true (interior);
 
     for (dindex = 0; dindex < dcount; dindex++) {
-      GedaPoint point = points[pindex];
+      LeptonPoint point = points[pindex];
 
       point.x += dirs[dindex].x;
       point.y += dirs[dindex].y;
@@ -238,7 +238,7 @@ check_union ()
   for (count = 0; count < 100000; count++) {
     LeptonBounds bounds[2];
     gint index;
-    GedaPoint points[4];
+    LeptonPoint points[4];
     LeptonBounds result;
 
     for (index = 0; index < 4; index++) {

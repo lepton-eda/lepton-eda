@@ -164,7 +164,7 @@ lepton_bounds_interior_point (const LeptonBounds *bounds,
  */
 void
 lepton_bounds_of_points (LeptonBounds *bounds,
-                         const GedaPoint points[],
+                         const LeptonPoint points[],
                          gint count)
 {
   gint index;
