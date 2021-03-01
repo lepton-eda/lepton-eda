@@ -30,7 +30,7 @@
 #include "coord.h"
 #include "line.h"
 #include "path.h"
-#include "geda_picture.h"
+#include "picture.h"
 #include "geda_text.h"
 #include "geda_transform.h"
 
