@@ -49,7 +49,7 @@ G_BEGIN_DECLS
 #include <liblepton/line.h>
 #include <liblepton/path.h>
 #include <liblepton/picture.h>
-#include <liblepton/geda_text.h>
+#include <liblepton/text.h>
 #include <liblepton/transform.h>
 
 #include <liblepton/forward.h>
