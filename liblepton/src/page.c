@@ -111,7 +111,7 @@ pre_object_removed (LeptonPage *page,
  *  current page is not changed by this function.
  */
 LeptonPage*
-s_page_new (TOPLEVEL *toplevel,
+s_page_new (LeptonToplevel *toplevel,
             const gchar *filename)
 {
   g_return_val_if_fail (toplevel, NULL);
@@ -171,11 +171,11 @@ s_page_new (TOPLEVEL *toplevel,
  *  See #s_page_delete_list() to delete all pages of a <B>toplevel</B>
  *
  *  If the current page of toplevel is given as parameter <B>page</B>,
- *  the function sets the field <B>page_current</B> of the TOPLEVEL
+ *  the function sets the field <B>page_current</B> of the LeptonToplevel
  *  struct to NULL.
  */
 void
-s_page_delete (TOPLEVEL *toplevel,
+s_page_delete (LeptonToplevel *toplevel,
                LeptonPage *page)
 {
   LeptonPage *tmp;
@@ -281,9 +281,10 @@ s_page_delete (TOPLEVEL *toplevel,
  *  Deletes the list of pages of <B>toplevel</B>.
  *  This function should only be called when you are finishing up.
  *
- *  \param toplevel  The TOPLEVEL object.
+ *  \param toplevel  The LeptonToplevel object.
  */
-void s_page_delete_list(TOPLEVEL *toplevel)
+void
+s_page_delete_list(LeptonToplevel *toplevel)
 {
   GList *list_copy, *iter;
   LeptonPage *page;
@@ -386,11 +387,11 @@ s_page_remove_weak_ptr (LeptonPage *page,
  *  \par Function Description
  *  Changes the current page in \a toplevel to the page \a p_new.
  *
- *  \param toplevel  The TOPLEVEL object
+ *  \param toplevel  The LeptonToplevel object
  *  \param p_new     The LeptonPage to go to
  */
 void
-s_page_goto (TOPLEVEL *toplevel,
+s_page_goto (LeptonToplevel *toplevel,
              LeptonPage *p_new)
 {
   gchar *dirname;
@@ -414,13 +415,13 @@ s_page_goto (TOPLEVEL *toplevel,
  *  Searches in \a toplevel's list of pages for a page with a filename
  *  equal to \a filename.
  *
- *  \param toplevel  The TOPLEVEL object
+ *  \param toplevel  The LeptonToplevel object
  *  \param filename  The filename string to search for
  *
  *  \return LeptonPage pointer to a matching page, NULL otherwise.
  */
 LeptonPage*
-s_page_search (TOPLEVEL *toplevel,
+s_page_search (LeptonToplevel *toplevel,
                const gchar *filename)
 {
   const GList *iter;
@@ -444,13 +445,13 @@ s_page_search (TOPLEVEL *toplevel,
  *  Searches in \a toplevel's list of pages for a page with
  *  basename( filename ) equal to \a filename.
  *
- *  \param toplevel  The TOPLEVEL object
+ *  \param toplevel  The LeptonToplevel object
  *  \param filename  The filename string to search for
  *
  *  \return LeptonPage pointer to a matching page, NULL otherwise.
  */
 LeptonPage*
-s_page_search_by_basename (TOPLEVEL *toplevel,
+s_page_search_by_basename (LeptonToplevel *toplevel,
                            const gchar *filename)
 {
   const GList* iter   = NULL;
@@ -510,14 +511,15 @@ s_page_search_by_page_id (LeptonPageList *list,
   return NULL;
 }
 
-/*! \brief Print full TOPLEVEL structure.
+/*! \brief Print full LeptonToplevel structure.
  *  \par Function Description
  *  This function prints the internal structure of <B>toplevel</B>'s
  *  list of pages.
  *
- *  \param [in] toplevel  The TOPLEVEL object to print.
+ *  \param [in] toplevel  The LeptonToplevel object to print.
  */
-void s_page_print_all (TOPLEVEL *toplevel)
+void
+s_page_print_all (LeptonToplevel *toplevel)
 {
   const GList *iter;
   LeptonPage *page;
@@ -585,9 +587,10 @@ s_page_clear_changed (LeptonPageList *list)
  *  \par Function Description
  *  This function sets up the autosave callback function.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] toplevel  The LeptonToplevel object.
  */
-void s_page_autosave_init(TOPLEVEL *toplevel)
+void
+s_page_autosave_init (LeptonToplevel *toplevel)
 {
   if (toplevel->auto_save_interval != 0) {
 
@@ -605,10 +608,11 @@ void s_page_autosave_init(TOPLEVEL *toplevel)
  *  It is called every "interval" milliseconds and it sets a flag to save
  *  a backup copy of the opened pages.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] toplevel  The LeptonToplevel object.
  *  \return The length in milliseconds to set for next interval.
  */
-gint s_page_autosave (TOPLEVEL *toplevel)
+gint
+s_page_autosave (LeptonToplevel *toplevel)
 {
   const GList *iter;
   LeptonPage *p_current;
@@ -765,7 +769,7 @@ const GList *s_page_objects (LeptonPage *page)
  *  Finds the objects which are inside, or intersect
  *  the passed box shaped region.
  *
- *  \param [in] toplevel  The TOPLEVEL object.
+ *  \param [in] toplevel  The LeptonToplevel object.
  *  \param [in] page      The LeptonPage to find objects on.
  *  \param [in] rects     The BOX regions to check.
  *  \param [in] n_rects   The number of regions.
@@ -773,7 +777,7 @@ const GList *s_page_objects (LeptonPage *page)
  *  \return The GList of LeptonObjects in the region.
  */
 GList*
-s_page_objects_in_regions (TOPLEVEL *toplevel,
+s_page_objects_in_regions (LeptonToplevel *toplevel,
                            LeptonPage *page,
                            BOX *rects,
                            int n_rects,

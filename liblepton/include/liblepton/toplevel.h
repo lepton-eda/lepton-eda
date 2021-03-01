@@ -43,27 +43,30 @@ struct st_toplevel
 };
 
 void
-s_toplevel_add_weak_ptr (TOPLEVEL *toplevel, void *weak_pointer_loc);
-
+s_toplevel_add_weak_ptr (LeptonToplevel *toplevel,
+                         void *weak_pointer_loc);
 void
-s_toplevel_delete (TOPLEVEL *toplevel);
+s_toplevel_delete (LeptonToplevel *toplevel);
 
-TOPLEVEL*
+LeptonToplevel*
 s_toplevel_new (void);
 
 void
-s_toplevel_remove_weak_ptr (TOPLEVEL *toplevel, void *weak_pointer_loc);
-
+s_toplevel_remove_weak_ptr (LeptonToplevel *toplevel,
+                            void *weak_pointer_loc);
 LeptonPage*
-s_toplevel_page_current (TOPLEVEL *toplevel);
+s_toplevel_page_current (LeptonToplevel *toplevel);
 
 void
-s_toplevel_set_page_current (TOPLEVEL *toplevel,
+s_toplevel_set_page_current (LeptonToplevel *toplevel,
                              LeptonPage *page);
 void
-s_toplevel_weak_ref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), void *user_data);
-
+s_toplevel_weak_ref (LeptonToplevel *toplevel,
+                     void (*notify_func)(void *, void *),
+                     void *user_data);
 void
-s_toplevel_weak_unref (TOPLEVEL *toplevel, void (*notify_func)(void *, void *), void *user_data);
+s_toplevel_weak_unref (LeptonToplevel *toplevel,
+                       void (*notify_func)(void *, void *),
+                       void *user_data);
 
 G_END_DECLS

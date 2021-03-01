@@ -21,12 +21,12 @@ o_read (LeptonPage *page,
 gchar *f_get_autosave_filename (const gchar *filename);
 gboolean f_has_active_autosave (const gchar *filename, GError **err);
 int
-f_open (TOPLEVEL *toplevel,
+f_open (LeptonToplevel *toplevel,
         LeptonPage *page,
         const gchar *filename,
         GError **err);
 int
-f_open_flags (TOPLEVEL *toplevel,
+f_open_flags (LeptonToplevel *toplevel,
               LeptonPage *page,
               const gchar *filename,
               const gint flags,
@@ -47,18 +47,39 @@ f_backup_message (gchar *backup_filename,
 SCM g_scm_eval_protected (SCM exp, SCM module_or_state);
 SCM g_scm_eval_string_protected (SCM str);
 SCM g_scm_c_eval_string_protected (const gchar *str);
-gboolean g_read_file(TOPLEVEL *toplevel, const gchar *filename, GError **err);
+
+gboolean
+g_read_file (LeptonToplevel *toplevel,
+             const gchar *filename,
+             GError **err);
 
 /* g_rc.c */
-gboolean g_rc_parse_system (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
-gboolean g_rc_parse_user (TOPLEVEL *toplevel, const gchar *rcname, GError **err);
-gboolean g_rc_parse_local (TOPLEVEL *toplevel, const gchar *rcname, const gchar *path, GError **err);
-gboolean g_rc_load_cache_config (TOPLEVEL* toplevel, GError** err);
+gboolean
+g_rc_parse_system (LeptonToplevel *toplevel,
+                   const gchar *rcname,
+                   GError **err);
+gboolean
+g_rc_parse_user (LeptonToplevel *toplevel,
+                 const gchar *rcname,
+                 GError **err);
+gboolean
+g_rc_parse_local (LeptonToplevel *toplevel,
+                  const gchar *rcname,
+                  const gchar *path,
+                  GError **err);
+gboolean
+g_rc_load_cache_config (LeptonToplevel* toplevel,
+                        GError** err);
 void
 g_rc_parse (const gchar* pname,
             const gchar* rcname,
             const gchar* rcfile);
-void g_rc_parse_handler (TOPLEVEL *toplevel, const gchar *rcname, const gchar *rcfile, ConfigParseErrorFunc handler, void *user_data);
+void
+g_rc_parse_handler (LeptonToplevel *toplevel,
+                    const gchar *rcname,
+                    const gchar *rcfile,
+                    ConfigParseErrorFunc handler,
+                    void *user_data);
 
 /* liblepton.c */
 void liblepton_init(void);
@@ -175,7 +196,8 @@ void s_clib_flush_symbol_cache ();
 void s_clib_symbol_invalidate_data (const CLibSymbol *symbol);
 const CLibSymbol *s_clib_get_symbol_by_name (const gchar *name);
 gchar *s_clib_symbol_get_data_by_name (const gchar *name);
-GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel);
+GList*
+s_toplevel_get_symbols (const LeptonToplevel *toplevel);
 
 /* s_conn.c */
 void s_conn_remove_object_connections (LeptonObject *to_remove);

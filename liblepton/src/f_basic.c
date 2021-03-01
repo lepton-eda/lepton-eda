@@ -150,7 +150,7 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
  *  Opens the schematic file by calling f_open_flags() with the
  *  F_OPEN_RC and F_OPEN_CHECK_BACKUP flags.
  *
- *  \param [in,out] toplevel  The TOPLEVEL object to load the schematic into.
+ *  \param [in,out] toplevel  The LeptonToplevel object to load the schematic into.
  *  \param [in]      filename  A character string containing the file name
  *                             to open.
  *  \param [in,out] err  #GError structure for error reporting, or
@@ -159,7 +159,7 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
  *  \return 0 on failure, 1 on success.
  */
 int
-f_open (TOPLEVEL *toplevel,
+f_open (LeptonToplevel *toplevel,
         LeptonPage *page,
         const gchar *filename,
         GError **err)
@@ -205,7 +205,7 @@ f_backup_message (gchar *backup_filename,
  *  If #F_OPEN_RESTORE_CWD is set, does not change the working
  *  directory to that of the file being loaded.
  *
- *  \param [in,out] toplevel  The TOPLEVEL object to load the schematic into.
+ *  \param [in,out] toplevel  The LeptonToplevel object to load the schematic into.
  *  \param [in]     filename   A character string containing the file name
  *                             to open.
  *  \param [in]     flags      Combination of #FOpenFlags values.
@@ -215,7 +215,7 @@ f_backup_message (gchar *backup_filename,
  *  \return 0 on failure, 1 on success.
  */
 int
-f_open_flags (TOPLEVEL *toplevel,
+f_open_flags (LeptonToplevel *toplevel,
               LeptonPage *page,
               const gchar *filename,
               const gint flags,

@@ -33,11 +33,11 @@ G_BEGIN_DECLS
 /* Initialise the Scheme API. */
 void edascm_init ();
 
-/* Get the value of the #TOPLEVEL fluid. */
-TOPLEVEL *edascm_c_current_toplevel ();
+/* Get the value of the #LeptonToplevel fluid. */
+LeptonToplevel *edascm_c_current_toplevel ();
 
-/* Set the #TOPLEVEL fluid in the current dynamic context. */
-void edascm_dynwind_toplevel (TOPLEVEL *toplevel);
+/* Set the #LeptonToplevel fluid in the current dynamic context. */
+void edascm_dynwind_toplevel (LeptonToplevel *toplevel);
 
 /* Create a Guile value from a page structure. */
 SCM edascm_from_page (LeptonPage *page);

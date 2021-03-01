@@ -19,7 +19,7 @@
 
 /*!
  * \file scheme_toplevel.c
- * \brief Scheme API procedures for working with the TOPLEVEL.
+ * \brief Scheme API procedures for working with the LeptonToplevel.
  */
 
 #include <config.h>
@@ -36,25 +36,25 @@ SCM scheme_toplevel_fluid = SCM_UNDEFINED;
  */
 SCM_DEFINE (edascm_make_toplevel, "%make-toplevel", 0, 0, 0,
             (),
-            "Make new TOPLEVEL.")
+            "Make new LeptonToplevel.")
 {
-  TOPLEVEL* toplevel = s_toplevel_new();
+  LeptonToplevel* toplevel = s_toplevel_new();
   return edascm_from_toplevel (toplevel);
 }
 
 
 /*!
- * \brief Set the #TOPLEVEL fluid in the current dynamic context.
+ * \brief Set the #LeptonToplevel fluid in the current dynamic context.
  * \ingroup guile_c_iface
  * \par Function Description
  * This function must be used inside a pair of calls to
  * scm_dynwind_begin() and scm_dynwind_end(). During the dynwind
- * context, the #TOPLEVEL fluid is set to \a toplevel.
+ * context, the #LeptonToplevel fluid is set to \a toplevel.
  *
  * \note This is a part of the public C interface to the Scheme API.
  */
 void
-edascm_dynwind_toplevel (TOPLEVEL *toplevel)
+edascm_dynwind_toplevel (LeptonToplevel *toplevel)
 {
   SCM s_toplevel = edascm_from_toplevel (toplevel);
 
@@ -62,28 +62,28 @@ edascm_dynwind_toplevel (TOPLEVEL *toplevel)
 }
 
 /*!
- * \brief Get the value of the #TOPLEVEL fluid.
+ * \brief Get the value of the #LeptonToplevel fluid.
  * \par Function Description
- * Return the value of the #TOPLEVEL fluid in the current dynamic
+ * Return the value of the #LeptonToplevel fluid in the current dynamic
  * context.
  */
 SCM_DEFINE (edascm_current_toplevel, "%current-toplevel", 0, 0, 0,
             (),
-            "Get the TOPLEVEL for the current dynamic context.")
+            "Get the LeptonToplevel for the current dynamic context.")
 {
   return scm_fluid_ref (scheme_toplevel_fluid);
 }
 
 /*!
- * \brief Get the value of the #TOPLEVEL fluid.
+ * \brief Get the value of the #LeptonToplevel fluid.
  * \ingroup guile_c_iface
  * \par Function Description
- * Return the value of the #TOPLEVEL fluid in the current dynamic
+ * Return the value of the #LeptonToplevel fluid in the current dynamic
  * context.
  *
  * \note This is a part of the public C interface to the Scheme API.
  */
-TOPLEVEL *
+LeptonToplevel *
 edascm_c_current_toplevel ()
 {
   g_debug ("edascm_c_current_toplevel()\n");
@@ -91,17 +91,17 @@ edascm_c_current_toplevel ()
 
   EDASCM_ASSERT_SMOB_VALID(s_toplevel);
 
-  return (TOPLEVEL *) SCM_SMOB_DATA (s_toplevel);
+  return (LeptonToplevel *) SCM_SMOB_DATA (s_toplevel);
 }
 
 /*!
- * \brief Set the current #TOPLEVEL temporarily.
+ * \brief Set the current #LeptonToplevel temporarily.
  * \par Function Description
- * Set the #TOPLEVEL fluid to \a toplevel and call \a thunk.
+ * Set the #LeptonToplevel fluid to \a toplevel and call \a thunk.
  */
 SCM_DEFINE (edascm_with_toplevel, "%with-toplevel", 2, 0, 0,
             (SCM toplevel, SCM thunk),
-            "Call `thunk', setting the TOPLEVEL fluid to `toplevel'.")
+            "Call `thunk', setting the LeptonToplevel fluid to `toplevel'.")
 {
   return scm_with_fluid (scheme_toplevel_fluid, toplevel, thunk);
 }
@@ -126,10 +126,10 @@ init_module_lepton_core_toplevel (void *unused)
 }
 
 /*!
- * \brief Initialise the TOPLEVEL manipulation procedures.
+ * \brief Initialise the LeptonToplevel manipulation procedures.
  * \par Function Description
- * Registers some Scheme procedures for working with #TOPLEVEL smobs
- * and creates the #TOPLEVEL fluid. Should only be called by
+ * Registers some Scheme procedures for working with #LeptonToplevel smobs
+ * and creates the #LeptonToplevel fluid. Should only be called by
  * edascm_init().
  */
 void
