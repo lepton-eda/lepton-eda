@@ -52,7 +52,7 @@ G_BEGIN_DECLS
 #include <liblepton/geda_text.h>
 #include <liblepton/transform.h>
 
-#include <liblepton/geda_forward.h>
+#include <liblepton/forward.h>
 
 #include <liblepton/struct.h>
 #include <liblepton/object.h>

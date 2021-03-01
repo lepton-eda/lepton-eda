@@ -34,7 +34,7 @@
 #include "geda_text.h"
 #include "transform.h"
 
-#include "geda_forward.h"
+#include "forward.h"
 
 #include "struct.h"
 #include "object.h"
