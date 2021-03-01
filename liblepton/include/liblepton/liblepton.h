@@ -58,7 +58,7 @@ G_BEGIN_DECLS
 #include <liblepton/object.h>
 #include <liblepton/object_list.h>
 #include <liblepton/page.h>
-#include <liblepton/geda_toplevel.h>
+#include <liblepton/toplevel.h>
 #include <liblepton/geda_undo.h>
 
 #include <liblepton/arc_object.h>
