@@ -44,7 +44,7 @@ lepton_transform_invert (LeptonTransform *transform,
                          LeptonTransform *inverse);
 void
 lepton_transform_line (LeptonTransform *transform,
-                       GedaLine *line);
+                       LeptonLine *line);
 void
 lepton_transform_lines (LeptonTransform *transform,
                         GArray *lines);

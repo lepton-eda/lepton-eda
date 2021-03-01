@@ -601,7 +601,7 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, LeptonObject *object)
   }
 
   /* Handle mesh and hatch fill types */
-  fill_lines = g_array_new (FALSE, FALSE, sizeof (GedaLine));
+  fill_lines = g_array_new (FALSE, FALSE, sizeof (LeptonLine));
   if (lepton_fill_type_draw_first_hatch (object->fill_type))
   {
     hatch_func (hatch_data, object->fill_angle1, object->fill_pitch1, fill_lines);
@@ -613,7 +613,7 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, LeptonObject *object)
 
   /* Draw fill pattern */
   for (i = 0; i < fill_lines->len; i++) {
-    GedaLine *line = &g_array_index (fill_lines, GedaLine, i);
+    LeptonLine *line = &g_array_index (fill_lines, LeptonLine, i);
     eda_cairo_line (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     END_NONE, object->fill_width,
                     line->x[0], line->y[0], line->x[1], line->y[1]);

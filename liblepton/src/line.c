@@ -33,10 +33,10 @@
  *
  *  \return a pointer to an line, which must be freed with lepton_line_free.
  */
-GedaLine*
+LeptonLine*
 lepton_line_new ()
 {
-  return g_new0 (GedaLine, 1);
+  return g_new0 (LeptonLine, 1);
 }
 
 /*! \brief Free memory associated with the line
@@ -44,7 +44,7 @@ lepton_line_new ()
  *  \param [in] line the line to be freed
  */
 void
-lepton_line_free (GedaLine *line)
+lepton_line_free (LeptonLine *line)
 {
   g_free (line);
 }
@@ -59,7 +59,7 @@ lepton_line_free (GedaLine *line)
  *  \param [out] bounds the bounds of the line
  */
 void
-lepton_line_calculate_bounds (const GedaLine *line,
+lepton_line_calculate_bounds (const LeptonLine *line,
                               LeptonBounds *bounds)
 {
   if (line == NULL) {
@@ -84,14 +84,14 @@ lepton_line_calculate_bounds (const GedaLine *line,
  *  If the line represents a single point (the endpoints are the same), this
  *  function calcualtes the distance to that point.
  *
- *  \param [in] line  The GedaLine object.
+ *  \param [in] line  The LeptonLine object.
  *  \param [in] x     The x coordinate of the given point.
  *  \param [in] y     The y coordinate of the given point.
  *  \return The shortest distance from the object to the point. With an
  *  invalid parameter, this function returns G_MAXDOUBLE.
  */
 gdouble
-lepton_line_shortest_distance (const GedaLine *line,
+lepton_line_shortest_distance (const LeptonLine *line,
                                gint x, gint y)
 {
   double cx, cy;
