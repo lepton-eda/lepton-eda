@@ -20,7 +20,7 @@
 /*! \file text.h
  */
 
-typedef struct st_text GedaText;
+typedef struct st_text LeptonText;
 typedef struct st_text TEXT;
 
 struct st_text
