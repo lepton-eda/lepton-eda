@@ -70,12 +70,16 @@ m_hatch_box (LeptonBox *box,
              gint angle,
              gint pitch,
              GArray *lines);
-
-void m_hatch_circle(GedaCircle *circle, gint angle, gint pitch, GArray *lines);
-void m_hatch_path (LeptonPath *path,
-                   gint angle,
-                   gint pitch,
-                   GArray *lines);
+void
+m_hatch_circle (LeptonCircle *circle,
+                gint angle,
+                gint pitch,
+                GArray *lines);
+void
+m_hatch_path (LeptonPath *path,
+              gint angle,
+              gint pitch,
+              GArray *lines);
 /* m_polygon.c */
 void
 m_polygon_append_bezier (GArray *points,

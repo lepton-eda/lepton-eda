@@ -157,7 +157,11 @@ void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines)
  *  segments.  This function appends new line segments to the GArray and leaves
  *  existing GArray contents unchanged.
  */
-void m_hatch_circle(GedaCircle *circle, gint angle, gint pitch, GArray *lines)
+void
+m_hatch_circle (LeptonCircle *circle,
+                gint angle,
+                gint pitch,
+                GArray *lines)
 {
   gint            radius;
   gint            sweep_y;
