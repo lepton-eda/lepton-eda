@@ -34,7 +34,7 @@ libleptoninclude_HEADERS = \
 	liblepton/str.h \
 	liblepton/geda_text.h \
 	liblepton/toplevel.h \
-	liblepton/geda_transform.h \
+	liblepton/transform.h \
 	liblepton/geda_undo.h \
 	liblepton/globals.h \
 	liblepton/liblepton.h \
