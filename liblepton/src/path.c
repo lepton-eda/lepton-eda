@@ -742,7 +742,7 @@ s_path_to_polygon (LeptonPath *path,
   }
 
   for (i = 0; i < path->num_sections; i++) {
-    GedaBezier bezier;
+    LeptonBezier bezier;
     PATH_SECTION *section = &path->sections[i];
 
     switch (section->code) {

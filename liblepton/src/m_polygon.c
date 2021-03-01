@@ -29,7 +29,10 @@
  *  \param bezier [in] The bezier curve to append.
  *  \param segments [in] The number of segments to subdivide the bezier curve into.
  */
-void m_polygon_append_bezier (GArray *points, GedaBezier *bezier, int segments)
+void
+m_polygon_append_bezier (GArray *points,
+                         LeptonBezier *bezier,
+                         int segments)
 {
   m_polygon_append_point (points, bezier->x[0], bezier->y[0]);
 
