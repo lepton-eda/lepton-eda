@@ -32,10 +32,10 @@
  *
  *  \return a pointer to an box, which must be freed with lepton_box_free.
  */
-GedaBox*
+LeptonBox*
 lepton_box_new ()
 {
-  return g_new0 (GedaBox, 1);
+  return g_new0 (LeptonBox, 1);
 }
 
 /*! \brief Free memory associated with the box
@@ -43,7 +43,7 @@ lepton_box_new ()
  *  \param [in] box the box to be freed
  */
 void
-lepton_box_free (GedaBox *box)
+lepton_box_free (LeptonBox *box)
 {
   g_free (box);
 }
@@ -59,7 +59,7 @@ lepton_box_free (GedaBox *box)
  *  \param [out] bounds the bounds of the box
  */
 void
-lepton_box_calculate_bounds (const GedaBox *box,
+lepton_box_calculate_bounds (const LeptonBox *box,
                              LeptonBounds *bounds)
 {
   if (box == NULL) {
@@ -86,7 +86,7 @@ lepton_box_calculate_bounds (const GedaBox *box,
  *  an invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-lepton_box_shortest_distance (GedaBox *box,
+lepton_box_shortest_distance (LeptonBox *box,
                               int x,
                               int y,
                               int solid)

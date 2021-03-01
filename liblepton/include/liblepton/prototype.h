@@ -65,7 +65,12 @@ void liblepton_init(void);
 void set_guile_compiled_path();
 
 /* m_hatch.c */
-void m_hatch_box(GedaBox *box, gint angle, gint pitch, GArray *lines);
+void
+m_hatch_box (LeptonBox *box,
+             gint angle,
+             gint pitch,
+             GArray *lines);
+
 void m_hatch_circle(GedaCircle *circle, gint angle, gint pitch, GArray *lines);
 void m_hatch_path (LeptonPath *path,
                    gint angle,

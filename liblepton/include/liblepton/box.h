@@ -22,27 +22,27 @@
  *  \brief Low-level mathematical functions for boxes
  */
 
-typedef struct _GedaBox GedaBox;
-typedef struct _GedaBox BOX;
+typedef struct _LeptonBox LeptonBox;
+typedef struct _LeptonBox BOX;
 
-struct _GedaBox
+struct _LeptonBox
 {
   /* upper is considered the origin */
   int upper_x, upper_y; /* world */
   int lower_x, lower_y;
 };
 
-GedaBox*
+LeptonBox*
 lepton_box_new ();
 
 void
-lepton_box_free (GedaBox *box);
+lepton_box_free (LeptonBox *box);
 
 void
-lepton_box_calculate_bounds (const GedaBox *box,
+lepton_box_calculate_bounds (const LeptonBox *box,
                              LeptonBounds *bounds);
 double
-lepton_box_shortest_distance (GedaBox *box,
+lepton_box_shortest_distance (LeptonBox *box,
                               int x,
                               int y,
                               int solid);
