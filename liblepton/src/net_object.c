@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 
 /*! \file net_object.c

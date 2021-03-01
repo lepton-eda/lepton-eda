@@ -22,7 +22,7 @@
 
 #include "config.h"
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*! \brief Allocate a picture
  *

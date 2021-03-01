@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@
 #include <unistd.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 
 /*! \brief Enable scheme loading from a shared data directory

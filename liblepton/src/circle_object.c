@@ -29,7 +29,7 @@
 #include <math.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 
 /*! \brief Create and add circle LeptonObject to list.

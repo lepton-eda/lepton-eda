@@ -25,7 +25,7 @@
 #include <stdlib.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*! \brief Returns a pointer to a new SELECTION object.
  *  \par Returns a pointer to a new SELECTION object.

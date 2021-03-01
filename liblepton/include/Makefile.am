@@ -59,6 +59,6 @@ noinst_HEADERS = \
 	defines_priv.h \
 	gettext_priv.h \
 	i_vars_priv.h \
-	libgeda_priv.h \
+	liblepton_priv.h \
 	prototype_priv.h \
 	libleptonguile_priv.h

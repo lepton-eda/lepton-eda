@@ -27,7 +27,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*! \brief create a new arc object
  *

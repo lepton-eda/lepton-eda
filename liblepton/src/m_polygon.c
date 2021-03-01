@@ -20,7 +20,7 @@
 #include <config.h>
 #include <math.h>
 #include <string.h>
-#include <libgeda_priv.h>
+#include <liblepton_priv.h>
 
 /*! \brief Appends a bezier curve to the polygon
  *

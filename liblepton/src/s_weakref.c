@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
- * Copyright (C) 2010 gEDA Contributors (see ChangeLog for details)
+/* Lepton EDA library
+ * Copyright (C) 2010 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
  */
 #include <config.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*!
  * \file s_weakref.c

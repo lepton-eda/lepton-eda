@@ -25,7 +25,7 @@
 #include <string.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*! \file object_list.c
  *  \brief Functions dealing with object lists.

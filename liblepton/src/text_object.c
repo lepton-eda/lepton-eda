@@ -50,7 +50,7 @@
 #include <unistd.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 #include <liblepton/edarenderer.h>
 
 

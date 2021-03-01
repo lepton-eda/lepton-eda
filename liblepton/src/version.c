@@ -25,7 +25,7 @@
 #include <config.h>
 #include <version.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 const char*
 lepton_version_prepend ()

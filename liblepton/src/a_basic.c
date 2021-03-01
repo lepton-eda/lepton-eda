@@ -28,7 +28,7 @@
 #include <string.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*! \brief Save a file
  *  \par Function Description

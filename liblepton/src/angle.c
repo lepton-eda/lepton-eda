@@ -26,7 +26,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 
 /*! \brief Checks if an angle is [0,360)

@@ -81,7 +81,7 @@
 /*!
  * \file libleptonguile_priv.h
  * Scheme API private declarations and definitions.
- * \warning Don't include from libgeda_priv.h: should only be included
+ * \warning Don't include from liblepton_priv.h: should only be included
  * by Scheme API source files.
  */
 

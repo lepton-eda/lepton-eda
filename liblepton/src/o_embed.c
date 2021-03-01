@@ -26,7 +26,7 @@
 
 #include <stdio.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 
 /*! \brief embed an object into a schematic

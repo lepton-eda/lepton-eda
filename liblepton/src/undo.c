@@ -31,7 +31,7 @@
 #include <unistd.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*! \todo Finish function documentation!!!
  *  \brief

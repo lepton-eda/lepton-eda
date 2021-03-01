@@ -49,7 +49,7 @@
 #endif
 #include <math.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 
 /*! \brief Add an attribute to an existing attribute list.
