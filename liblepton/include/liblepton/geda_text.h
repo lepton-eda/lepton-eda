@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010,2017 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2017 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,13 +25,13 @@ typedef struct st_text TEXT;
 
 struct st_text
 {
-  int x, y;		/* world origin */
+  int x, y;             /* world origin */
 
-  char *string;			/* text stuff */
+  char *string;         /* text stuff */
   char *disp_string;
   int length;
   int size;
   int alignment;
   int angle;
-  const gchar *name; /* not owned by st_text */
+  const gchar *name;    /* not owned by st_text */
 };
