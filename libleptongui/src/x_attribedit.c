@@ -112,7 +112,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
   if (!attribptr) {
     LeptonObject *new_object = NULL;
 
-    s_current = geda_list_get_glist( toplevel->page_current->selection_list );
+    s_current = lepton_list_get_glist( toplevel->page_current->selection_list );
     while (s_current != NULL) {
       object = (LeptonObject *)s_current->data;
       if (object == NULL) {
@@ -124,7 +124,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
       }
       s_current = g_list_next(s_current);
     }
-    s_current = geda_list_get_glist( toplevel->page_current->selection_list );
+    s_current = lepton_list_get_glist( toplevel->page_current->selection_list );
     if (nsel > 1) {
 
       addtoallbutton =
@@ -299,7 +299,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
     return;
 
   /* gschem specific: What do we count here? (Werner)  */
-  for (s_current = geda_list_get_glist( toplevel->page_current->selection_list );
+  for (s_current = lepton_list_get_glist( toplevel->page_current->selection_list );
        s_current != NULL;
        s_current = g_list_next(s_current)) {
     if (!((LeptonObject *) s_current->data)->attached_to) {

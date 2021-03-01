@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 2007-2010 Peter Clifton
  * Copyright (C) 2011-2015 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,44 +26,43 @@
 
 G_BEGIN_DECLS
 
-#define GEDA_TYPE_LIST            (geda_list_get_type())
-#define GEDA_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), GEDA_TYPE_LIST, GedaList))
-#define GEDA_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass),  GEDA_TYPE_LIST, GedaListClass))
-#define GEDA_IS_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), GEDA_TYPE_LIST))
-#define GEDA_IS_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass),  GEDA_TYPE_LIST))
-#define GEDA_LIST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj),  GEDA_TYPE_LIST, GedaListClass))
+#define LEPTON_TYPE_LIST            (lepton_list_get_type())
+#define LEPTON_LIST(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), LEPTON_TYPE_LIST, LeptonList))
+#define LEPTON_LIST_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST((klass),  LEPTON_TYPE_LIST, LeptonListClass))
+#define LEPTON_IS_LIST(obj)         (G_TYPE_CHECK_INSTANCE_TYPE((obj), LEPTON_TYPE_LIST))
+#define LEPTON_IS_LIST_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE((klass),  LEPTON_TYPE_LIST))
+#define LEPTON_LIST_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj),  LEPTON_TYPE_LIST, LeptonListClass))
 
 
-typedef struct _GedaList      GedaList;
-typedef struct _GedaListClass GedaListClass;
+typedef struct _LeptonList      LeptonList;
+typedef struct _LeptonListClass LeptonListClass;
 
-struct _GedaList {
+struct _LeptonList {
   GObject parent;
   GList *glist;
 };
 
-struct _GedaListClass {
+struct _LeptonListClass {
   GObjectClass parent;
 };
 
-GType geda_list_get_type (void);
+GType lepton_list_get_type (void);
 
 /* It would be nice to add const qualifiers to some of these, but GLib
  * is buggy in this respect, and doesn't have const where necessary. */
-GedaList *geda_list_new( void );
-void geda_list_add( GedaList *list, gpointer item );
-void geda_list_add_glist( GedaList *list, GList *items );
-void geda_list_remove( GedaList *list, gpointer item );
-/*void geda_list_remove_glist( GedaList *list, GList *items ); */ /* Undemanded as yet */
-void geda_list_remove_all( GedaList *list );
-void geda_list_move_item( GedaList* list, gpointer item, gint newpos );
+LeptonList *lepton_list_new( void );
+void lepton_list_add( LeptonList *list, gpointer item );
+void lepton_list_add_glist( LeptonList *list, GList *items );
+void lepton_list_remove( LeptonList *list, gpointer item );
+/*void lepton_list_remove_glist( LeptonList *list, GList *items ); */ /* Undemanded as yet */
+void lepton_list_remove_all( LeptonList *list );
+void lepton_list_move_item( LeptonList* list, gpointer item, gint newpos );
 
 
 
-/*const GList *geda_list_get_glist( GedaList *list ); */
-#define geda_list_get_glist(list) (list->glist)
+/*const GList *lepton_list_get_glist( LeptonList *list ); */
+#define lepton_list_get_glist(list) (list->glist)
 
 G_END_DECLS
 
 #endif /* __GEDA_LIST_H__ */
-

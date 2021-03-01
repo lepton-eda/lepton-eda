@@ -215,7 +215,7 @@ o_find_selected_object (GschemToplevel *w_current, int w_x, int w_y)
   int w_slack = gschem_page_view_WORLDabs (page_view, w_current->select_slack_pixels);
   GList *s_current;
 
-  for (s_current = geda_list_get_glist (toplevel->page_current->selection_list);
+  for (s_current = lepton_list_get_glist (toplevel->page_current->selection_list);
        s_current != NULL; s_current = g_list_next (s_current)) {
     LeptonObject *o_current = (LeptonObject*) s_current->data;
 

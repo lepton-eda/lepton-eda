@@ -838,7 +838,7 @@ x_dialog_close_window (GschemToplevel *w_current)
 
   keep_page = toplevel->page_current;
 
-  for ( iter = geda_list_get_glist( toplevel->pages ), unsaved_pages = NULL;
+  for ( iter = lepton_list_get_glist( toplevel->pages ), unsaved_pages = NULL;
         iter != NULL;
         iter = g_list_next( iter ) ) {
 

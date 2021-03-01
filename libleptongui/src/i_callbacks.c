@@ -192,7 +192,7 @@ i_callback_file_save_all (GtkWidget *widget, gpointer data)
   g_return_if_fail (w_current != NULL);
 
   TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
-  GList*    pages    = geda_list_get_glist (toplevel->pages);
+  GList*    pages    = lepton_list_get_glist (toplevel->pages);
 
   gboolean result = TRUE;
   gboolean res    = FALSE;
@@ -555,7 +555,7 @@ i_callback_edit_edit (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  o_edit(w_current, geda_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list ) );
+  o_edit(w_current, lepton_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list ) );
 }
 
 /*! \todo Finish function documentation!!!
@@ -645,7 +645,7 @@ i_callback_edit_rotate_90 (GtkWidget *widget, gpointer data)
 
   o_redraw_cleanstates(w_current);
 
-  object_list = geda_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
+  object_list = lepton_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
 
   if (object_list) {
     /* Allow o_rotate_world_update to redraw the objects */
@@ -691,7 +691,7 @@ i_callback_edit_mirror (GtkWidget *widget, gpointer data)
 
   o_redraw_cleanstates(w_current);
 
-  object_list = geda_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
+  object_list = lepton_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
 
   if (object_list) {
     o_mirror_world_update(w_current, wx, wy, object_list);
@@ -797,7 +797,7 @@ i_callback_edit_embed (GtkWidget *widget, gpointer data)
     /* yes, embed each selected component */
     TOPLEVEL*   toplevel  = gschem_toplevel_get_toplevel (w_current);
     LeptonPage* page      = toplevel->page_current;
-    GList*      s_current = geda_list_get_glist (page->selection_list);
+    GList*      s_current = lepton_list_get_glist (page->selection_list);
 
     while (s_current != NULL) {
       o_current = (LeptonObject *) s_current->data;
@@ -841,7 +841,7 @@ i_callback_edit_unembed (GtkWidget *widget, gpointer data)
     /* yes, unembed each selected component */
     TOPLEVEL*   toplevel  = gschem_toplevel_get_toplevel (w_current);
     LeptonPage* page      = toplevel->page_current;
-    GList*      s_current = geda_list_get_glist (page->selection_list);
+    GList*      s_current = lepton_list_get_glist (page->selection_list);
 
     while (s_current != NULL) {
       o_current = (LeptonObject *) s_current->data;
@@ -889,7 +889,7 @@ i_callback_edit_update (GtkWidget *widget, gpointer data)
      * create a new list of only the LeptonObjects we want to
      * update from the current selection, then iterate over that
      * new list to perform the update. */
-    selection = geda_list_get_glist (toplevel->page_current->selection_list);
+    selection = lepton_list_get_glist (toplevel->page_current->selection_list);
     for (iter = selection; iter != NULL; iter = g_list_next (iter)) {
       LeptonObject *o_current = (LeptonObject *) iter->data;
       if (lepton_object_is_component (o_current)) {
@@ -1380,7 +1380,7 @@ i_callback_page_next (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  iter = g_list_find( geda_list_get_glist( toplevel->pages ), p_current );
+  iter = g_list_find( lepton_list_get_glist( toplevel->pages ), p_current );
   iter = g_list_next( iter );
 
   if (iter == NULL) {
@@ -1416,7 +1416,7 @@ i_callback_page_prev (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  iter = g_list_find( geda_list_get_glist( toplevel->pages ), p_current );
+  iter = g_list_find( lepton_list_get_glist( toplevel->pages ), p_current );
   iter = g_list_previous( iter );
 
   if ( iter == NULL  )
@@ -1547,7 +1547,7 @@ i_callback_page_revert (GtkWidget *widget, gpointer data)
   if (response != GTK_RESPONSE_YES )
     return;
 
-  GList* pages = geda_list_get_glist (w_current->toplevel->pages);
+  GList* pages = lepton_list_get_glist (w_current->toplevel->pages);
   LeptonPage* page_dummy = NULL;
   if (g_list_length (pages) == 1)
   {
@@ -2320,7 +2320,7 @@ i_callback_attributes_show_name (GtkWidget *widget, gpointer data)
     SELECTION *selection = toplevel->page_current->selection_list;
     GList *s_current;
 
-    for (s_current = geda_list_get_glist (selection);
+    for (s_current = lepton_list_get_glist (selection);
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       LeptonObject *object = (LeptonObject*)s_current->data;
@@ -2355,7 +2355,7 @@ i_callback_attributes_show_value (GtkWidget *widget, gpointer data)
     SELECTION *selection = toplevel->page_current->selection_list;
     GList *s_current;
 
-    for (s_current = geda_list_get_glist (selection);
+    for (s_current = lepton_list_get_glist (selection);
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       LeptonObject *object = (LeptonObject*)s_current->data;
@@ -2390,7 +2390,7 @@ i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
     SELECTION *selection = toplevel->page_current->selection_list;
     GList *s_current;
 
-    for (s_current = geda_list_get_glist (selection);
+    for (s_current = lepton_list_get_glist (selection);
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       LeptonObject *object = (LeptonObject*)s_current->data;
@@ -2425,7 +2425,7 @@ i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
     SELECTION *selection = toplevel->page_current->selection_list;
     GList *s_current;
 
-    for (s_current = geda_list_get_glist (selection);
+    for (s_current = lepton_list_get_glist (selection);
          s_current != NULL;
          s_current = g_list_next (s_current)) {
       LeptonObject *object = (LeptonObject*)s_current->data;

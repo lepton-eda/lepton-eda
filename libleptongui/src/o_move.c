@@ -54,7 +54,7 @@ void o_move_start(GschemToplevel *w_current, int w_x, int w_y)
     w_current->first_wx = w_current->second_wx = w_x;
     w_current->first_wy = w_current->second_wy = w_y;
 
-    o_invalidate_glist (w_current, geda_list_get_glist (page->selection_list));
+    o_invalidate_glist (w_current, lepton_list_get_glist (page->selection_list));
 
     if (net_rubber_band_mode) {
       o_move_prep_rubberband(w_current);
@@ -183,7 +183,7 @@ void o_move_end(GschemToplevel *w_current)
     stretch->object->dont_redraw = FALSE;
   }
 
-  s_current = geda_list_get_glist( page->selection_list );
+  s_current = lepton_list_get_glist( page->selection_list );
 
   while (s_current != NULL) {
 
@@ -216,7 +216,7 @@ void o_move_end(GschemToplevel *w_current)
   }
 
   /* Draw the objects that were moved */
-  o_invalidate_glist (w_current, geda_list_get_glist (page->selection_list));
+  o_invalidate_glist (w_current, lepton_list_get_glist (page->selection_list));
 
   /* Draw the connected nets/buses that were also changed */
   o_invalidate_glist (w_current, rubbernet_objects);
@@ -306,7 +306,7 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
 
   snap_mode = gschem_options_get_snap_mode (w_current->options);
 
-  selection = geda_list_get_glist (page->selection_list);
+  selection = lepton_list_get_glist (page->selection_list);
 
   /* There are three posssibilities:
    *
@@ -626,7 +626,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
   LeptonPage *page = gschem_page_view_get_page (page_view);
   g_return_if_fail (page != NULL);
 
-  for (s_current = geda_list_get_glist (page->selection_list);
+  for (s_current = lepton_list_get_glist (page->selection_list);
        s_current != NULL; s_current = g_list_next (s_current)) {
     object = (LeptonObject*) s_current->data;
 

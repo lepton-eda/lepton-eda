@@ -1440,7 +1440,7 @@ GList *s_toplevel_get_symbols (const TOPLEVEL *toplevel)
 
   g_return_val_if_fail ((toplevel != NULL), NULL);
 
-  for ( p_iter = geda_list_get_glist( toplevel->pages );
+  for ( p_iter = lepton_list_get_glist( toplevel->pages );
         p_iter != NULL;
         p_iter = g_list_next( p_iter )) {
     page = (LeptonPage *) p_iter->data;

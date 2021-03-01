@@ -220,7 +220,7 @@ void o_redraw_rect (GschemToplevel *w_current,
     g_object_set (G_OBJECT (renderer),
                   "override-color", SELECT_COLOR,
                   NULL);
-    for (iter = geda_list_get_glist (page->selection_list);
+    for (iter = lepton_list_get_glist (page->selection_list);
          iter != NULL; iter = g_list_next (iter)) {
       LeptonObject *o_current = (LeptonObject*) iter->data;
       if (!o_current->dont_redraw) {

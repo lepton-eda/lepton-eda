@@ -83,7 +83,7 @@ LeptonObject *o_grips_search_world(GschemToplevel *w_current, int x, int y, int 
   size = GRIP_SIZE / 2;
   w_size = gschem_page_view_WORLDabs (page_view, size);
 
-  s_current = geda_list_get_glist( toplevel->page_current->selection_list );
+  s_current = lepton_list_get_glist( toplevel->page_current->selection_list );
   while (s_current != NULL) {
     object = (LeptonObject *) s_current->data;
     if (object) {

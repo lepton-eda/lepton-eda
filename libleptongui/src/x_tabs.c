@@ -388,7 +388,7 @@ x_tabs_dbg_infos_dump (GschemToplevel* w_current)
 void
 x_tabs_dbg_pages_dump (GschemToplevel* w_current)
 {
-  GList* ptr = geda_list_get_glist( w_current->toplevel->pages );
+  GList* ptr = lepton_list_get_glist( w_current->toplevel->pages );
 
   printf( "\n vvvvvvvvvvvvvv pages vvvvvvvvvvvvvvvvvv\n" );
 
@@ -618,7 +618,7 @@ static gboolean
 x_tabs_tl_page_find (GschemToplevel* w_current,
                      LeptonPage* page)
 {
-  GList* ptr = geda_list_get_glist (w_current->toplevel->pages);
+  GList* ptr = lepton_list_get_glist (w_current->toplevel->pages);
 
   for ( ; ptr != NULL; ptr = g_list_next (ptr) )
   {
@@ -1552,7 +1552,7 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
   g_return_if_fail (nfo != NULL);
 
   LeptonPageList* pages = w_current->toplevel->pages;
-  geda_list_move_item (pages, nfo->page_, newindex);
+  lepton_list_move_item (pages, nfo->page_, newindex);
 
   gtk_widget_grab_focus (GTK_WIDGET (nfo->pview_));
   page_select_widget_update (w_current);

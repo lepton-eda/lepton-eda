@@ -410,7 +410,7 @@ s_hierarchy_find_prev_page (LeptonPageList *page_list,
 {
   const GList *iter;
 
-  iter = g_list_find (geda_list_get_glist (page_list), current_page);
+  iter = g_list_find (lepton_list_get_glist (page_list), current_page);
   for (iter = g_list_previous (iter);
        iter != NULL;
        iter = g_list_previous (iter)) {
@@ -445,7 +445,7 @@ s_hierarchy_find_next_page (LeptonPageList *page_list,
 {
   const GList *iter;
 
-  iter = g_list_find (geda_list_get_glist (page_list), current_page);
+  iter = g_list_find (lepton_list_get_glist (page_list), current_page);
   for (iter = g_list_next (iter);
        iter != NULL;
        iter = g_list_next (iter)) {

@@ -342,7 +342,7 @@ o_picture_exchange (GschemToplevel *w_current,
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *iter;
 
-  for (iter = geda_list_get_glist (toplevel->page_current->selection_list);
+  for (iter = lepton_list_get_glist (toplevel->page_current->selection_list);
        iter != NULL;
        iter = g_list_next (iter)) {
 

@@ -96,7 +96,7 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
 
   int missing_sym_flag = 0;
 
-  for (p_iter = geda_list_get_glist (toplevel->pages);
+  for (p_iter = lepton_list_get_glist (toplevel->pages);
        p_iter != NULL;
        p_iter = g_list_next (p_iter)) {
     LeptonPage *p_current = (LeptonPage*) p_iter->data;
@@ -134,7 +134,7 @@ gint s_page_save_all (TOPLEVEL *toplevel)
   LeptonPage *p_current;
   gint status = 0;
 
-  for ( iter = geda_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
@@ -183,7 +183,7 @@ s_toplevel_save_sheet ()
            "Done writing stuff from gtksheet into SHEET_DATA.\n");
 
   /* must iterate over all pages in design */
-  for ( iter = geda_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 

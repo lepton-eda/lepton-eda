@@ -539,10 +539,12 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
 LeptonObject *o_select_return_first_object(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  if (! (w_current && toplevel->page_current && geda_list_get_glist( toplevel->page_current->selection_list )))
+  if (! (w_current &&
+         toplevel->page_current &&
+         lepton_list_get_glist( toplevel->page_current->selection_list )))
     return NULL;
   else
-    return (LeptonObject *)g_list_first( geda_list_get_glist( toplevel->page_current->selection_list ))->data;
+    return (LeptonObject *)g_list_first( lepton_list_get_glist( toplevel->page_current->selection_list ))->data;
 }
 
 /*! \todo Finish function documentation!!!
@@ -555,7 +557,7 @@ LeptonObject *o_select_return_first_object(GschemToplevel *w_current)
 int o_select_selected(GschemToplevel *w_current)
 {
   TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
-  if ( geda_list_get_glist( toplevel->page_current->selection_list )) {
+  if ( lepton_list_get_glist( toplevel->page_current->selection_list )) {
     return(TRUE);
   }
   return(FALSE);
@@ -574,7 +576,7 @@ void o_select_unselect_all(GschemToplevel *w_current)
   GList *removed = NULL;
   GList *iter;
 
-  removed = g_list_copy (geda_list_get_glist (selection));
+  removed = g_list_copy (lepton_list_get_glist (selection));
   for (iter = removed; iter != NULL; iter = g_list_next (iter)) {
     o_selection_remove (selection, (LeptonObject *) iter->data);
   }
@@ -629,7 +631,7 @@ o_select_visible_unlocked (GschemToplevel *w_current)
   }
 
   /* Run hooks for all items selected */
-  added = geda_list_get_glist (selection);
+  added = lepton_list_get_glist (selection);
   if (added != NULL) {
     g_run_hook_object_list (w_current, "%select-objects-hook", added);
   }
@@ -651,7 +653,7 @@ o_select_move_to_place_list(GschemToplevel *w_current)
   lepton_object_list_delete (toplevel->page_current->place_list);
   toplevel->page_current->place_list = NULL;
 
-  selection = geda_list_get_glist( toplevel->page_current->selection_list );
+  selection = lepton_list_get_glist( toplevel->page_current->selection_list );
   selection_copy = g_list_copy( selection );
   toplevel->page_current->place_list = selection_copy;
 }

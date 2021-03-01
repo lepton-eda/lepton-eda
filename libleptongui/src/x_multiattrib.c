@@ -601,7 +601,7 @@ multiattrib_action_add_attribute (Multiattrib *multiattrib,
     return;
   }
 
-  for (iter = geda_list_get_glist (multiattrib->object_list);
+  for (iter = lepton_list_get_glist (multiattrib->object_list);
        iter != NULL;
        iter = g_list_next (iter)) {
     object = (LeptonObject *)iter->data;
@@ -728,7 +728,7 @@ multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
   GList *iter;
   GList *objects_needing_add;
 
-  objects_needing_add = g_list_copy (geda_list_get_glist (multiattrib->object_list));
+  objects_needing_add = g_list_copy (lepton_list_get_glist (multiattrib->object_list));
 
   /* Remove objects which already have this attribute from the list */
   for (iter = attr_list;
@@ -945,7 +945,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GedaList *attr_list;
+  LeptonList *attr_list;
   GList *a_iter;
   LeptonObject *o_attrib;
   GschemToplevel *w_current;
@@ -998,7 +998,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
     return;
   }
 
-  for (a_iter = geda_list_get_glist (attr_list);
+  for (a_iter = lepton_list_get_glist (attr_list);
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
     o_attrib = (LeptonObject*) a_iter->data;
@@ -1038,7 +1038,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GedaList *attr_list;
+  LeptonList *attr_list;
   GList *a_iter;
   LeptonObject *o_attrib;
   GschemToplevel *w_current;
@@ -1085,7 +1085,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
     return;
   }
 
-  for (a_iter = geda_list_get_glist (attr_list);
+  for (a_iter = lepton_list_get_glist (attr_list);
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
     o_attrib = (LeptonObject *)a_iter->data;
@@ -1129,7 +1129,7 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
   LeptonObject *o_attrib;
   GschemToplevel *w_current;
   gboolean new_visibility;
-  GedaList *attr_list;
+  LeptonList *attr_list;
   GList *a_iter;
 
   model = gtk_tree_view_get_model (multiattrib->treeview);
@@ -1145,7 +1145,7 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
 
   new_visibility = !gtk_cell_renderer_toggle_get_active (cell_renderer);
 
-  for (a_iter = geda_list_get_glist (attr_list);
+  for (a_iter = lepton_list_get_glist (attr_list);
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
     o_attrib = (LeptonObject *)a_iter->data;
@@ -1183,7 +1183,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
   GtkTreeIter iter;
   GschemToplevel *w_current;
   gboolean new_name_visible;
-  GedaList *attr_list;
+  LeptonList *attr_list;
   GList *a_iter;
   gint new_snv;
 
@@ -1200,7 +1200,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
 
   new_name_visible = !gtk_cell_renderer_toggle_get_active (cell_renderer);
 
-  for (a_iter = geda_list_get_glist (attr_list);
+  for (a_iter = lepton_list_get_glist (attr_list);
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
     LeptonObject *o_attrib = (LeptonObject *)a_iter->data;
@@ -1247,7 +1247,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
   GtkTreeIter iter;
   GschemToplevel *w_current;
   gboolean new_value_visible;
-  GedaList *attr_list;
+  LeptonList *attr_list;
   GList *a_iter;
   gint new_snv;
 
@@ -1264,7 +1264,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
 
   new_value_visible = !gtk_cell_renderer_toggle_get_active (cell_renderer);
 
-  for (a_iter = geda_list_get_glist (attr_list);
+  for (a_iter = lepton_list_get_glist (attr_list);
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
     LeptonObject *o_attrib = (LeptonObject *)a_iter->data;
@@ -1312,7 +1312,7 @@ multiattrib_callback_key_pressed (GtkWidget *widget,
       (event->keyval == GDK_KEY_Delete || event->keyval == GDK_KEY_KP_Delete)) {
     GtkTreeModel *model;
     GtkTreeIter iter;
-    GedaList *attr_list;
+    LeptonList *attr_list;
     int inherited;
     /* delete the currently selected attribute */
 
@@ -1333,7 +1333,7 @@ multiattrib_callback_key_pressed (GtkWidget *widget,
       return FALSE;
 
     multiattrib_action_delete_attributes (multiattrib,
-                                          geda_list_get_glist (attr_list));
+                                          lepton_list_get_glist (attr_list));
 
     g_object_unref (attr_list);
 
@@ -1433,7 +1433,7 @@ multiattrib_callback_popup_duplicate (GtkMenuItem *menuitem,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GedaList *attr_list;
+  LeptonList *attr_list;
 
   if (!gtk_tree_selection_get_selected (
         gtk_tree_view_get_selection (multiattrib->treeview),
@@ -1445,7 +1445,7 @@ multiattrib_callback_popup_duplicate (GtkMenuItem *menuitem,
   gtk_tree_model_get (model, &iter,
                       COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  multiattrib_action_duplicate_attributes (multiattrib, geda_list_get_glist (attr_list));
+  multiattrib_action_duplicate_attributes (multiattrib, lepton_list_get_glist (attr_list));
   g_object_unref (attr_list);
 
   /* update the treeview contents */
@@ -1464,7 +1464,7 @@ multiattrib_callback_popup_promote (GtkMenuItem *menuitem,
   Multiattrib *multiattrib = MULTIATTRIB (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GedaList *attr_list;
+  LeptonList *attr_list;
 
   if (!gtk_tree_selection_get_selected (
          gtk_tree_view_get_selection (multiattrib->treeview),
@@ -1476,7 +1476,7 @@ multiattrib_callback_popup_promote (GtkMenuItem *menuitem,
   gtk_tree_model_get (model, &iter,
                       COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  multiattrib_action_promote_attributes (multiattrib, geda_list_get_glist (attr_list));
+  multiattrib_action_promote_attributes (multiattrib, lepton_list_get_glist (attr_list));
   g_object_unref (attr_list);
 
   /* update the treeview contents */
@@ -1495,7 +1495,7 @@ multiattrib_callback_popup_delete (GtkMenuItem *menuitem,
   Multiattrib *multiattrib = (Multiattrib*)user_data;
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GedaList *attr_list;
+  LeptonList *attr_list;
 
   if (!gtk_tree_selection_get_selected (
         gtk_tree_view_get_selection (multiattrib->treeview),
@@ -1507,7 +1507,7 @@ multiattrib_callback_popup_delete (GtkMenuItem *menuitem,
   gtk_tree_model_get (model, &iter,
                       COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  multiattrib_action_delete_attributes (multiattrib, geda_list_get_glist (attr_list));
+  multiattrib_action_delete_attributes (multiattrib, lepton_list_get_glist (attr_list));
   g_object_unref (attr_list);
 
   /* update the treeview contents */
@@ -1526,7 +1526,7 @@ multiattrib_callback_popup_copy_to_all (GtkMenuItem *menuitem,
   Multiattrib *multiattrib = MULTIATTRIB (user_data);
   GtkTreeModel *model;
   GtkTreeIter iter;
-  GedaList *attr_list;
+  LeptonList *attr_list;
 
   if (!gtk_tree_selection_get_selected (
          gtk_tree_view_get_selection (multiattrib->treeview),
@@ -1538,7 +1538,7 @@ multiattrib_callback_popup_copy_to_all (GtkMenuItem *menuitem,
   gtk_tree_model_get (model, &iter,
                       COLUMN_ATTRIBUTE_GEDALIST, &attr_list,
                       -1);
-  multiattrib_action_copy_attribute_to_all (multiattrib, geda_list_get_glist (attr_list));
+  multiattrib_action_copy_attribute_to_all (multiattrib, lepton_list_get_glist (attr_list));
   g_object_unref (attr_list);
 
   /* update the treeview contents */
@@ -1860,21 +1860,21 @@ multiattrib_get_type ()
  *
  *  \par Function Description
  *
- *  \param [in] selection    The GedaList object of we are watching/
+ *  \param [in] selection    The LeptonList object of we are watching/
  *  \param [in] multiattrib  The multi-attribute editor dialog.
  */
 static void
-object_list_changed_cb (GedaList *object_list, Multiattrib *multiattrib)
+object_list_changed_cb (LeptonList *object_list, Multiattrib *multiattrib)
 {
   multiattrib_update (multiattrib);
 }
 
 
-/*! \brief Update the dialog when the current object GedaList object is destroyed
+/*! \brief Update the dialog when the current object LeptonList object is destroyed
  *
  *  \par Function Description
  *
- *  This handler is called when the g_object_weak_ref() on the GedaList object
+ *  This handler is called when the g_object_weak_ref() on the LeptonList object
  *  we're watching expires. We reset our multiattrib->object_list pointer to NULL
  *  to avoid attempting to access the destroyed object. NB: Our signal handlers
  *  were automatically disconnected during the destruction process.
@@ -1892,18 +1892,18 @@ object_list_weak_ref_cb (gpointer data, GObject *where_the_object_was)
 }
 
 
-/*! \brief Connect signal handler and weak_ref on the GedaList object
+/*! \brief Connect signal handler and weak_ref on the LeptonList object
  *
  *  \par Function Description
  *
  *  Connect the "changed" signal and add a weak reference
- *  on the GedaList object we are going to watch.
+ *  on the LeptonList object we are going to watch.
  *
  *  \param [in] multiattrib  The Multiattrib dialog.
- *  \param [in] object_list  The GedaList object to watch.
+ *  \param [in] object_list  The LeptonList object to watch.
  */
 static void
-connect_object_list (Multiattrib *multiattrib, GedaList *object_list)
+connect_object_list (Multiattrib *multiattrib, LeptonList *object_list)
 {
   multiattrib->object_list = object_list;
   if (multiattrib->object_list != NULL) {
@@ -1924,11 +1924,11 @@ connect_object_list (Multiattrib *multiattrib, GedaList *object_list)
 }
 
 
-/*! \brief Disconnect signal handler and weak_ref on the GedaList object
+/*! \brief Disconnect signal handler and weak_ref on the LeptonList object
  *
  *  \par Function Description
  *
- *  If the dialog is watching a GedaList object, disconnect the
+ *  If the dialog is watching a LeptonList object, disconnect the
  *  "changed" signal and remove our weak reference on the object.
  *
  *  \param [in] multiattrib  The Multiattrib dialog.
@@ -1951,7 +1951,7 @@ disconnect_object_list (Multiattrib *multiattrib)
  *  \par Function Description
  *
  *  Just before the Multiattrib GObject is finalized, disconnect from
- *  the GedaList object being watched and then chain up to the parent
+ *  the LeptonList object being watched and then chain up to the parent
  *  class's finalize handler.
  *
  *  \param [in] object  The GObject being finalized.
@@ -2412,7 +2412,7 @@ multiattrib_set_property (GObject *object,
   switch(property_id) {
       case PROP_OBJECT_LIST:
         disconnect_object_list (multiattrib);
-        connect_object_list (multiattrib, GEDA_LIST (g_value_get_pointer (value)));
+        connect_object_list (multiattrib, LEPTON_LIST (g_value_get_pointer (value)));
         break;
       default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -2462,7 +2462,7 @@ typedef struct {
   gboolean identical_show_name;
   gboolean identical_show_value;
 
-  GedaList *attribute_gedalist;
+  LeptonList *attribute_gedalist;
 } MODEL_ROW;
 
 /*! \brief For a given LeptonObject, produce a GList of MODEL_ROW records
@@ -2504,8 +2504,8 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, LeptonObject *object)
     m_row->identical_show_name = TRUE;
     m_row->identical_show_value = TRUE;
 
-    m_row->attribute_gedalist = geda_list_new ();
-    geda_list_add (m_row->attribute_gedalist, a_current);
+    m_row->attribute_gedalist = lepton_list_new ();
+    lepton_list_add (m_row->attribute_gedalist, a_current);
 
     /* Search already processed attributes to see if we need to bump m_row->nth_with_name */
     for (m_iter = model_rows;
@@ -2526,7 +2526,7 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, LeptonObject *object)
   return model_rows;
 }
 
-/*! \brief Produce a GList of MODEL_ROW records for all attribute objects in our GedaList
+/*! \brief Produce a GList of MODEL_ROW records for all attribute objects in our LeptonList
  *
  *  \par Function Description
  *
@@ -2534,7 +2534,7 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, LeptonObject *object)
  *  attributes, or attributes which are selected separately from their owning
  *  object.
  *
- *  It is not expected this will be called when the GedaList the dialog is watching
+ *  It is not expected this will be called when the LeptonList the dialog is watching
  *  contains any higher level objects on which we could edit attributes.
  *
  *  \param [in] multiattrib  The multi-attribute editor dialog
@@ -2547,7 +2547,7 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
   GList *model_rows = NULL;
 
   /* populate the store with attributes */
-  for (o_iter = multiattrib->object_list == NULL ? NULL : geda_list_get_glist (multiattrib->object_list);
+  for (o_iter = multiattrib->object_list == NULL ? NULL : lepton_list_get_glist (multiattrib->object_list);
        o_iter != NULL;
        o_iter = g_list_next (o_iter)) {
     LeptonObject *object = (LeptonObject*) o_iter->data;
@@ -2576,8 +2576,8 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
     m_row->identical_show_name = TRUE;
     m_row->identical_show_value = TRUE;
 
-    m_row->attribute_gedalist = geda_list_new ();
-    geda_list_add (m_row->attribute_gedalist, object);
+    m_row->attribute_gedalist = lepton_list_new ();
+    lepton_list_add (m_row->attribute_gedalist, object);
 
     model_rows = g_list_append (model_rows, m_row);
   }
@@ -2614,7 +2614,7 @@ multiattrib_populate_liststore (Multiattrib *multiattrib,
     MODEL_ROW *model_row = (MODEL_ROW*) m_iter->data;
 
     model_row->present_in_all =
-      ((int) g_list_length (geda_list_get_glist (model_row->attribute_gedalist))
+      ((int) g_list_length (lepton_list_get_glist (model_row->attribute_gedalist))
        == multiattrib->total_num_in_list);
 
     gtk_list_store_append (liststore, &tree_iter);
@@ -2633,7 +2633,7 @@ multiattrib_populate_liststore (Multiattrib *multiattrib,
                         COLUMN_ATTRIBUTE_GEDALIST,   model_row->attribute_gedalist,
                         -1);
 
-    /* Drop our ref on the GedaList so it is freed when the model has done with it */
+    /* Drop our ref on the LeptonList so it is freed when the model has done with it */
     g_object_unref (model_row->attribute_gedalist);
   }
 
@@ -2739,7 +2739,7 @@ multiattrib_update (Multiattrib *multiattrib)
   multiattrib->num_lone_attribs_in_list = 0;
 
   /* populate the store with attributes */
-  for (o_iter = multiattrib->object_list == NULL ? NULL : geda_list_get_glist (multiattrib->object_list);
+  for (o_iter = multiattrib->object_list == NULL ? NULL : lepton_list_get_glist (multiattrib->object_list);
        o_iter != NULL;
        o_iter = g_list_next (o_iter)) {
     LeptonObject *object = (LeptonObject*) o_iter->data;
@@ -2817,9 +2817,9 @@ multiattrib_update (Multiattrib *multiattrib)
             snv_shows_value (object_row->show_name_value))
           model_row->identical_show_value = FALSE;
 
-        /* Add the underlying attribute to the row's GedaList of attributes */
-        geda_list_add_glist (model_row->attribute_gedalist,
-                             geda_list_get_glist (object_row->attribute_gedalist));
+        /* Add the underlying attribute to the row's LeptonList of attributes */
+        lepton_list_add_glist (model_row->attribute_gedalist,
+                             lepton_list_get_glist (object_row->attribute_gedalist));
 
         g_object_unref (object_row->attribute_gedalist);
         g_free (object_row);

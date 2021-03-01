@@ -64,7 +64,7 @@ void o_delete_selected (GschemToplevel *w_current)
 
   g_return_if_fail (o_select_selected (w_current));
 
-  to_remove = g_list_copy (geda_list_get_glist (selection));
+  to_remove = g_list_copy (lepton_list_get_glist (selection));
 
   for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
     obj = (LeptonObject *) iter->data;

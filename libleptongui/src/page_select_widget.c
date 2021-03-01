@@ -645,7 +645,7 @@ add_page (GtkTreeModel *model,
   g_free (display_filename);
 
   /* search a page that has a up field == p_current->pid */
-  for ( p_iter = geda_list_get_glist( pages );
+  for ( p_iter = lepton_list_get_glist( pages );
         p_iter != NULL;
         p_iter = g_list_next( p_iter ) ) {
 
@@ -733,7 +733,7 @@ pagesel_update (PageSelectWidget* pagesel)
   gtk_tree_store_clear (GTK_TREE_STORE (model));
 #endif
   /* now rebuild */
-  for ( iter = geda_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist( toplevel->pages );
         iter != NULL;
         iter = g_list_next( iter ) ) {
 

@@ -42,7 +42,7 @@ SCM_DEFINE (page_selection, "%page-selection", 1, 0, 0,
   LeptonPage *page = edascm_to_page (page_s);
   GList *iter;
   SCM result = SCM_EOL;
-  for (iter = geda_list_get_glist (page->selection_list);
+  for (iter = lepton_list_get_glist (page->selection_list);
        iter != NULL; iter = g_list_next (iter)) {
     result = scm_cons (edascm_from_object ((LeptonObject *) iter->data), result);
   }

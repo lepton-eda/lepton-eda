@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -45,13 +45,13 @@ struct _MultiattribClass {
 struct _Multiattrib {
   GschemDialog parent_instance;
 
-  GedaList *object_list;
-  int       total_num_in_list;
-  int       num_comp_in_list;
-  int       num_pins_in_list;
-  int       num_nets_in_list;
-  int       num_buses_in_list;
-  int       num_lone_attribs_in_list;
+  LeptonList *object_list;
+  int         total_num_in_list;
+  int         num_comp_in_list;
+  int         num_pins_in_list;
+  int         num_nets_in_list;
+  int         num_buses_in_list;
+  int         num_lone_attribs_in_list;
 
   GtkTreeView    *treeview;
 
