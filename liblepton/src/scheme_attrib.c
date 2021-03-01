@@ -26,7 +26,7 @@
 #include <config.h>
 
 #include "libgeda_priv.h"
-#include "libgedaguile_priv.h"
+#include "libleptonguile_priv.h"
 
 SCM_SYMBOL (attribute_format_sym, "attribute-format");
 

@@ -23,7 +23,7 @@
 G_BEGIN_DECLS
 
 /*!
- * \file libgedaguile.h
+ * \file libleptonguile.h
  * \ingroup guile_c_iface
  * Scheme API public declarations and definitions.
  * \warning Don't include from liblepton.h: should only be included

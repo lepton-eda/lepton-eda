@@ -79,13 +79,13 @@
  */
 
 /*!
- * \file libgedaguile_priv.h
+ * \file libleptonguile_priv.h
  * Scheme API private declarations and definitions.
  * \warning Don't include from libgeda_priv.h: should only be included
  * by Scheme API source files.
  */
 
-#include <liblepton/libgedaguile.h>
+#include <liblepton/libleptonguile.h>
 
 void edascm_init_smob ();
 void edascm_init_toplevel ();

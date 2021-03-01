@@ -24,7 +24,7 @@
 #include <config.h>
 
 #include "libgeda_priv.h"
-#include "libgedaguile_priv.h"
+#include "libleptonguile_priv.h"
 
 /*! \brief Get the width of line used to draw an object
  * \par Function Description
