@@ -72,7 +72,10 @@ void m_hatch_path (LeptonPath *path,
                    gint pitch,
                    GArray *lines);
 /* m_polygon.c */
-void m_polygon_append_bezier(GArray *points, GedaBezier *bezier, int segments);
+void
+m_polygon_append_bezier (GArray *points,
+                         LeptonBezier *bezier,
+                         int segments);
 void m_polygon_append_point(GArray *points, int x, int y);
 
 /* o_attrib.c */
