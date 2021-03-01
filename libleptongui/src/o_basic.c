@@ -51,7 +51,7 @@ void o_redraw_rect (GschemToplevel *w_current,
                     GdkRectangle *rectangle)
 #endif
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean draw_selected;
   int grip_half_size;
   double cue_half_size;
@@ -366,7 +366,7 @@ int o_invalidate_rubber (GschemToplevel *w_current)
  */
 int o_redraw_cleanstates(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   /* returns FALSE if the function was'nt nessecary */
   if (w_current->inside_action == 0) {
     return FALSE;

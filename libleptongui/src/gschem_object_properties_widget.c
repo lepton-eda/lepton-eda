@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -621,7 +621,7 @@ set_selection_adapter (GschemObjectPropertiesWidget *dialog, GschemSelectionAdap
 static void
 update_cap_style_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
-  TOPLEVEL *toplevel;
+  LeptonToplevel *toplevel;
   GschemToplevel *w_current;
 
   g_return_if_fail (dialog != NULL);
@@ -687,7 +687,7 @@ update_cap_style_widget (GschemObjectPropertiesWidget *dialog)
 static void
 update_fill_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
-  TOPLEVEL *toplevel;
+  LeptonToplevel *toplevel;
   GschemToplevel *w_current;
 
   g_return_if_fail (dialog != NULL);
@@ -752,7 +752,7 @@ update_fill_type_widget (GschemObjectPropertiesWidget *dialog)
 static void
 update_line_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
-  TOPLEVEL *toplevel;
+  LeptonToplevel *toplevel;
   GschemToplevel *w_current;
 
   g_return_if_fail (dialog != NULL);
@@ -817,7 +817,7 @@ update_line_type_widget (GschemObjectPropertiesWidget *dialog)
 static void
 update_object_color_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
-  TOPLEVEL *toplevel;
+  LeptonToplevel *toplevel;
   GschemToplevel *w_current;
 
   g_return_if_fail (dialog != NULL);
@@ -881,7 +881,7 @@ update_object_color_widget (GschemObjectPropertiesWidget *dialog)
 static void
 update_pin_type_model (GtkWidget *widget, GschemObjectPropertiesWidget *dialog)
 {
-  TOPLEVEL *toplevel;
+  LeptonToplevel *toplevel;
   GschemToplevel *w_current;
 
   g_return_if_fail (dialog != NULL);

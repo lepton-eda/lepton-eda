@@ -462,7 +462,7 @@ void o_net_start(GschemToplevel *w_current, int w_x, int w_y)
  * position.
  *
  * The rubber nets are removed, the nets and cues are drawn and the
- * net is added to the TOPLEVEL structure.
+ * net is added to the LeptonToplevel structure.
  *
  * The function returns TRUE if it has drawn a net, FALSE otherwise.
  */

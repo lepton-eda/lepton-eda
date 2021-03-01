@@ -711,7 +711,7 @@ static void
 pagesel_update (PageSelectWidget* pagesel)
 {
   GtkTreeModel *model;
-  TOPLEVEL *toplevel;
+  LeptonToplevel *toplevel;
   LeptonPage *p_current;
   GList *iter;
 

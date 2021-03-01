@@ -289,7 +289,7 @@ x_image_get_type_from_description (const char *description)
 static void
 x_image_update_dialog_filename (GtkComboBoxText *combo,
                                 GschemToplevel *w_current) {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   char* image_type_descr = NULL;
   gchar *image_type = NULL;
   const char *old_image_filename = NULL;
@@ -849,7 +849,7 @@ GdkPixbuf
   int origin_x, origin_y, bottom, right;
   GschemToplevel new_w_current;
   GschemOptions options;
-  TOPLEVEL toplevel;
+  LeptonToplevel toplevel;
   GdkRectangle rect;
   GschemPageGeometry *old_geometry, *new_geometry;
   GdkPixmap *window = NULL;
@@ -863,7 +863,7 @@ GdkPixbuf
   /* Do a copy of the options struct and work with it */
   memcpy(&options, w_current->options, sizeof(GschemOptions));
   /* Do a copy of the toplevel struct and work with it */
-  memcpy(&toplevel, w_current->toplevel, sizeof(TOPLEVEL));
+  memcpy(&toplevel, w_current->toplevel, sizeof(LeptonToplevel));
 
   new_w_current.toplevel = &toplevel;
   new_w_current.options = &options;

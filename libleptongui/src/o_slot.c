@@ -64,7 +64,7 @@ void o_slot_start (GschemToplevel *w_current, LeptonObject *object)
  */
 void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *string)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *new_obj;
   char *slot_value;
   char *numslots_value;

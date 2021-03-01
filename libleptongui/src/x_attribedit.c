@@ -41,7 +41,7 @@
  */
 void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   const char *value, *label;
   char *newtext;
   GtkEntry *value_entry, *name_entry;
@@ -270,7 +270,7 @@ void attribute_edit_dialog_response(GtkWidget *w, gint response,
  */
 void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int flag)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GtkWidget *aewindow;
   GtkWidget *vbox, *label, *table, *alignment;
   GtkWidget *show_options;

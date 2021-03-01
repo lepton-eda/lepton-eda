@@ -103,7 +103,7 @@ x_compselect_callback_response (GtkDialog *dialog,
 {
   Compselect *compselect = (Compselect*)dialog;
   GschemToplevel *w_current = (GschemToplevel *)user_data;
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   switch (arg1) {
       case COMPSELECT_RESPONSE_PLACE: {
@@ -438,7 +438,8 @@ enum {
  *  \param [in] preview_toplevel The toplevel of the preview widget
  */
 void
-update_attributes_model (Compselect *compselect, TOPLEVEL *preview_toplevel)
+update_attributes_model (Compselect *compselect,
+                         LeptonToplevel *preview_toplevel)
 {
   GtkListStore *model;
   GtkTreeIter iter;

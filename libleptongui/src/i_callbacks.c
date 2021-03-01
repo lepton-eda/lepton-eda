@@ -161,7 +161,7 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
 
-  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonPage* page = toplevel->page_current;
 
   if (page == NULL) {
@@ -191,7 +191,7 @@ i_callback_file_save_all (GtkWidget *widget, gpointer data)
   GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
 
-  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
   GList*    pages    = lepton_list_get_glist (toplevel->pages);
 
   gboolean result = TRUE;
@@ -252,7 +252,7 @@ i_callback_file_save_as (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonPage* page = toplevel->page_current;
 
   x_fileselect_save (w_current, page, NULL);
@@ -795,7 +795,7 @@ i_callback_edit_embed (GtkWidget *widget, gpointer data)
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     /* yes, embed each selected component */
-    TOPLEVEL*   toplevel  = gschem_toplevel_get_toplevel (w_current);
+    LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
     LeptonPage* page      = toplevel->page_current;
     GList*      s_current = lepton_list_get_glist (page->selection_list);
 
@@ -839,7 +839,7 @@ i_callback_edit_unembed (GtkWidget *widget, gpointer data)
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     /* yes, unembed each selected component */
-    TOPLEVEL*   toplevel  = gschem_toplevel_get_toplevel (w_current);
+    LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
     LeptonPage* page      = toplevel->page_current;
     GList*      s_current = lepton_list_get_glist (page->selection_list);
 
@@ -876,7 +876,7 @@ void
 i_callback_edit_update (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *selection;
   GList *selected_components = NULL;
   GList *iter;
@@ -1373,7 +1373,7 @@ void
 i_callback_page_next (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonPage *p_current = toplevel->page_current;
   LeptonPage *p_new;
   GList *iter;
@@ -1409,7 +1409,7 @@ void
 i_callback_page_prev (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonPage *p_current = toplevel->page_current;
   LeptonPage *p_new;
   GList *iter;
@@ -2244,7 +2244,7 @@ i_callback_hierarchy_down_symbol (GtkWidget *widget, gpointer data)
   g_free (fname);
 
 
-  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
 
   s_hierarchy_down_symbol (w_current, sym, toplevel->page_current);
   gschem_toplevel_page_changed (w_current);
@@ -2306,7 +2306,7 @@ void
 i_callback_attributes_show_name (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (w_current != NULL);
 
@@ -2341,7 +2341,7 @@ void
 i_callback_attributes_show_value (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (w_current != NULL);
 
@@ -2376,7 +2376,7 @@ void
 i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (w_current != NULL);
 
@@ -2411,7 +2411,7 @@ void
 i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (w_current != NULL);
 
@@ -2649,7 +2649,7 @@ void
 i_callback_cancel (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GValue value = { 0, };
 
   g_return_if_fail (w_current != NULL);

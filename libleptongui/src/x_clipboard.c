@@ -214,7 +214,7 @@ GList *
 x_clipboard_get (GschemToplevel *w_current)
 {
   GtkClipboard *cb = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GdkAtom type = gdk_atom_intern (MIME_TYPE_SCHEMATIC, FALSE);
   GtkSelectionData *selection_data;
   GList *object_list = NULL;

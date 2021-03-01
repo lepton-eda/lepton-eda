@@ -201,7 +201,7 @@ void o_unlock(GschemToplevel *w_current)
 void o_rotate_world_update(GschemToplevel *w_current,
                            int centerx, int centery, int angle, GList *list)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *o_current;
   GList *o_iter;
 
@@ -260,7 +260,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
  */
 void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, GList *list)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *o_current;
   GList *o_iter;
 
@@ -374,7 +374,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
                                 const GList *o_list,
                                 const char *stext)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *o_current;
   const GList *iter;
 
@@ -409,7 +409,7 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
                                 const GList *o_list,
                                 const char *stext)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *o_current;
   const GList *iter;
 
@@ -452,7 +452,7 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
 LeptonObject *
 o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *o_new;
   LeptonPage *page;
   GList *new_attribs;
@@ -557,7 +557,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
  */
 void o_autosave_backups(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *iter;
   LeptonPage *p_save, *p_current;
   gchar *backup_filename;

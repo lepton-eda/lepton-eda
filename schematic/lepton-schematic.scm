@@ -256,7 +256,7 @@ Run `~A --help' for more information.\n")
                         (make-main-menu new-window)))
 
 (define (main file-list)
-  ;; Create a new window and associated TOPLEVEL object.
+  ;; Create a new window and associated LeptonToplevel object.
   (define window (make-schematic-window))
   ;; Current directory.
   (define cwd (getcwd))

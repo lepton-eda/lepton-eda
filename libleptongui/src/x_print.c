@@ -55,7 +55,7 @@
  * be LANDSCAPE, PORTRAIT or AUTOLAYOUT.  If \a AUTOLAYOUT is chosen,
  * the page orientation that best fits the page contents is chosen.
  *
- * \param toplevel A #TOPLEVEL structure.
+ * \param toplevel A #LeptonToplevel structure.
  * \param page     The #LeptonPage to generate a page setup for.
  * \param paper_size_name   The name of the paper size to use.
  * \param orientation       The paper orientation to use.
@@ -63,7 +63,7 @@
  * \returns A newly-created page setup.
  */
 static GtkPageSetup *
-x_print_default_page_setup (TOPLEVEL *toplevel,
+x_print_default_page_setup (LeptonToplevel *toplevel,
                             LeptonPage *page)
 {
   GtkPageSetup *setup = gtk_page_setup_new ();
@@ -118,7 +118,7 @@ x_print_default_page_setup (TOPLEVEL *toplevel,
  * is_raster should be set if drawing to a raster surface such as an
  * image.
  *
- * \param toplevel A #TOPLEVEL structure.
+ * \param toplevel A #LeptonToplevel structure.
  * \param page     The #LeptonPage to be rendered.
  * \param cr       The Cairo context to render to.
  * \param pc       A Pango context for text rendering, or NULL.
@@ -128,7 +128,7 @@ x_print_default_page_setup (TOPLEVEL *toplevel,
  * \param is_raster TRUE if drawing to a raster image surface; FALSE otherwise.
  */
 static void
-x_print_draw_page (TOPLEVEL *toplevel,
+x_print_draw_page (LeptonToplevel *toplevel,
                    LeptonPage *page,
                    cairo_t *cr,
                    PangoContext *pc,

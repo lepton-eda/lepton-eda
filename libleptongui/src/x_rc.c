@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,8 +81,9 @@ x_rc_parse_gschem_error (GError **err)
  * \param rcfile     Specific config file path, or NULL.
  */
 void
-x_rc_parse_gschem (TOPLEVEL *toplevel, const gchar *rcfile) {
-
+x_rc_parse_gschem (LeptonToplevel *toplevel,
+                   const gchar *rcfile)
+{
   static gsize initialized = 0;
 
   if (g_once_init_enter (&initialized)) {

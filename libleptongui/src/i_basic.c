@@ -411,7 +411,7 @@ void i_update_menus (GschemToplevel* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   LeptonPage* page = toplevel->page_current;

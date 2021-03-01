@@ -115,7 +115,7 @@ x_window_new_page (GschemToplevel* w_current);
 GschemToplevel*
 x_window_setup (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* immediately setup user params */
   i_vars_set(w_current);
@@ -727,7 +727,7 @@ LeptonPage*
 x_window_open_page_impl (GschemToplevel *w_current,
                          const gchar *filename)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
 
   /* New blank page requested: */
@@ -913,7 +913,7 @@ LeptonPage*
 x_window_close_page_impl (GschemToplevel *w_current,
                           LeptonPage *page)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonPage *new_current = NULL;
   GList *iter;
 
@@ -985,7 +985,7 @@ x_window_close_page_impl (GschemToplevel *w_current,
  */
 GschemToplevel* x_window_new ()
 {
-  TOPLEVEL *toplevel = s_toplevel_new ();
+  LeptonToplevel *toplevel = s_toplevel_new ();
 
   /* Load old (*rc files) and new (*.conf) configuration: */
   x_rc_parse_gschem (toplevel, NULL);
@@ -1547,7 +1547,7 @@ x_window_new_page (GschemToplevel* w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
 
-  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
 
   /* New page file name: */
@@ -1687,7 +1687,7 @@ untitled_filename (GschemToplevel* w_current, gboolean log_skipped)
   gchar* fname = NULL;
   gchar* fpath = NULL;
 
-  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
 
   for (;;)
   {

@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 struct st_gschem_toplevel {
 
-  TOPLEVEL *toplevel;
+  LeptonToplevel *toplevel;
 
   /* ------------------- */
   /* main window widgets */
@@ -276,7 +276,7 @@ gschem_toplevel_get_selection_adapter (GschemToplevel *w_current);
 GtkListStore*
 gschem_toplevel_get_text_size_list_store (GschemToplevel *w_current);
 
-TOPLEVEL*
+LeptonToplevel*
 gschem_toplevel_get_toplevel (GschemToplevel *w_current);
 
 GschemToplevel*
@@ -289,8 +289,8 @@ void
 gschem_toplevel_page_changed (GschemToplevel *w_current);
 
 void
-gschem_toplevel_set_toplevel (GschemToplevel *w_current, TOPLEVEL *toplevel);
-
+gschem_toplevel_set_toplevel (GschemToplevel *w_current,
+                              LeptonToplevel *toplevel);
 void
 gschem_toplevel_page_content_changed (GschemToplevel *w_current,
                                       LeptonPage *page);

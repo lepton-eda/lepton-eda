@@ -71,7 +71,7 @@ LeptonObject *o_grips_search_world(GschemToplevel *w_current, int x, int y, int 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, NULL);
 
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
 
 
@@ -1322,7 +1322,7 @@ static void o_grips_end_bus(GschemToplevel *w_current, LeptonObject *o_current,
  */
 void o_grips_end(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *object;
   int grip;
 

@@ -127,7 +127,7 @@ o_undo_savestate (GschemToplevel *w_current,
                   LeptonPage *page,
                   int flag)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   char *filename = NULL;
   GList *object_list = NULL;
   int levels;
@@ -382,7 +382,7 @@ o_undo_callback (GschemToplevel *w_current,
                  LeptonPage *page,
                  int type)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   UNDO *u_current;
   UNDO *u_next;
   UNDO *save_bottom;

@@ -659,7 +659,7 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
                                        GList *attr_list)
 {
   GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
-  TOPLEVEL *toplevel = w_current->toplevel;
+  LeptonToplevel *toplevel = w_current->toplevel;
   LeptonObject *o_new;
   GList *iter;
 
