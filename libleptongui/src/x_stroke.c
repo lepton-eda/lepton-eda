@@ -111,7 +111,7 @@ x_stroke_record (GschemToplevel *w_current, gint x, gint y)
     g_array_append_val (stroke_points, point);
 
     cairo_t *cr = gdk_cairo_create (gtk_widget_get_window (GTK_WIDGET(view)));
-    GedaColor *color = x_color_lookup (STROKE_COLOR);
+    LeptonColor *color = x_color_lookup (STROKE_COLOR);
     cairo_set_source_rgba (cr,
                            lepton_color_get_red_double (color),
                            lepton_color_get_green_double (color),

@@ -424,7 +424,7 @@ GList *x_clipboard_get (GschemToplevel *w_current);
 /* x_color.c */
 void x_color_init();
 GdkColor *x_color_lookup_gdk(size_t color_id);
-GedaColor *x_color_lookup(size_t color_id);
+LeptonColor *x_color_lookup(size_t color_id);
 gboolean x_color_display_enabled (size_t color_id);
 void x_color_set_display (size_t color_id, GdkColor* color);
 void x_color_set_outline (size_t color_id, GdkColor* color);

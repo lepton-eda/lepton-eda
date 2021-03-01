@@ -789,7 +789,7 @@ GdkPixbuf
 
   /* This color map is used for "normal" rendering. */
   render_color_map =
-    g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), colors_count());
+    g_array_sized_new (FALSE, FALSE, sizeof(LeptonColor), colors_count());
   render_color_map =
     g_array_append_vals (render_color_map, display_colors, colors_count());
 
@@ -802,7 +802,7 @@ GdkPixbuf
                 NULL);
 
   /* Paint background */
-  GedaColor *color = x_color_lookup (BACKGROUND_COLOR);
+  LeptonColor *color = x_color_lookup (BACKGROUND_COLOR);
 
   cairo_set_source_rgba (cr,
                          lepton_color_get_red_double (color),

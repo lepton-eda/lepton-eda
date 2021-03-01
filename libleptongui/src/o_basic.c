@@ -143,14 +143,14 @@ void o_redraw_rect (GschemToplevel *w_current,
 
   /* This color map is used for "normal" rendering. */
   render_color_map =
-    g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), colors_count());
+    g_array_sized_new (FALSE, FALSE, sizeof(LeptonColor), colors_count());
   render_color_map =
     g_array_append_vals (render_color_map, display_colors, colors_count());
 
   /* This color map is used for rendering rubberbanding nets and
      buses, and objects which are in the process of being placed. */
   render_outline_color_map =
-    g_array_sized_new (FALSE, FALSE, sizeof(GedaColor), colors_count());
+    g_array_sized_new (FALSE, FALSE, sizeof(LeptonColor), colors_count());
   render_outline_color_map =
     g_array_append_vals (render_outline_color_map, display_outline_colors,
                          colors_count());
@@ -165,7 +165,7 @@ void o_redraw_rect (GschemToplevel *w_current,
                 NULL);
 
   /* Paint background */
-  GedaColor *color = x_color_lookup (BACKGROUND_COLOR);
+  LeptonColor *color = x_color_lookup (BACKGROUND_COLOR);
 
   cairo_set_source_rgba (cr,
                          lepton_color_get_red_double (color),
