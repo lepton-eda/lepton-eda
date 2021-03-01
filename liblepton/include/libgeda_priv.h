@@ -63,7 +63,7 @@
 #include "edaerrors.h"
 #include "edapaths.h"
 
-#include "geda_list.h"
+#include "list.h"
 
 /* Private headers */
 #include "defines_priv.h"
