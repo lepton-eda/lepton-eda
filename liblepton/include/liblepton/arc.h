@@ -22,9 +22,9 @@
  *  \brief Low-level mathematical functions for arcs
  */
 
-typedef struct _GedaArc GedaArc;
+typedef struct _LeptonArc LeptonArc;
 
-struct _GedaArc
+struct _LeptonArc
 {
   gint x;
   gint y;
@@ -35,11 +35,11 @@ struct _GedaArc
   gint sweep_angle;
 };
 
-GedaArc*
+LeptonArc*
 lepton_arc_new ();
 
 void
-lepton_arc_free (GedaArc *arc);
+lepton_arc_free (LeptonArc *arc);
 
 gboolean
-lepton_arc_within_sweep (const GedaArc *arc, gint x, gint y);
+lepton_arc_within_sweep (const LeptonArc *arc, gint x, gint y);

@@ -32,10 +32,10 @@
  *
  *  \return a pointer to an arc, which must be freed with lepton_arc_free.
  */
-GedaArc*
+LeptonArc*
 lepton_arc_new ()
 {
-  return g_new0 (GedaArc, 1);
+  return g_new0 (LeptonArc, 1);
 }
 
 /*! \brief Free memory associated with the arc
@@ -43,7 +43,7 @@ lepton_arc_new ()
  *  \param [in] arc the arc to be freed
  */
 void
-lepton_arc_free (GedaArc *arc)
+lepton_arc_free (LeptonArc *arc)
 {
   g_free (arc);
 }
@@ -58,7 +58,7 @@ lepton_arc_free (GedaArc *arc)
  *  invalid parameter, this function returns FALSE.
  */
 gboolean
-lepton_arc_within_sweep (const GedaArc *arc,
+lepton_arc_within_sweep (const LeptonArc *arc,
                          gint x,
                          gint y)
 {
