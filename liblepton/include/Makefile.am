@@ -21,7 +21,7 @@ libleptoninclude_HEADERS = \
 	liblepton/color.h \
 	liblepton/component.h \
 	liblepton/coord.h \
-	liblepton/geda_forward.h \
+	liblepton/forward.h \
 	liblepton/fill_type.h \
 	liblepton/line.h \
 	liblepton/line_type.h \
