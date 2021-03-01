@@ -265,10 +265,10 @@ init_module_schematic_core_window (void *unused)
 
   /* Override procedures in the (lepton core page) module */
   {
-    SCM geda_page_module = scm_c_resolve_module ("lepton core page");
+    SCM lepton_page_module = scm_c_resolve_module ("lepton core page");
     SCM close_page_proc =
       scm_variable_ref (scm_c_lookup (s_override_close_page_x));
-    scm_c_module_define (geda_page_module, "%close-page!", close_page_proc);
+    scm_c_module_define (lepton_page_module, "%close-page!", close_page_proc);
   }
 }
 
