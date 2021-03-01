@@ -120,7 +120,7 @@ static struct ExportFormat formats[] =
   };
 
 static EdaRenderer *renderer = NULL;
-static TOPLEVEL *toplevel = NULL;
+static LeptonToplevel *toplevel = NULL;
 
 static struct ExportSettings settings = {
   0,

@@ -77,7 +77,7 @@ static void
 cmd_shell_impl (void *data, int argc, char **argv)
 {
   int c, interactive = 1;
-  TOPLEVEL *toplevel;
+  LeptonToplevel *toplevel;
 
   #include "shell.x"
 
