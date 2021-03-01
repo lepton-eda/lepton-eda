@@ -28,10 +28,10 @@
  *
  *  \return a pointer to a picture, which must be freed with lepton_picture_free.
  */
-GedaPicture*
+LeptonPicture*
 lepton_picture_new ()
 {
-  return g_new0 (GedaPicture, 1);
+  return g_new0 (LeptonPicture, 1);
 }
 
 /*! \brief Free memory associated with the picture
@@ -39,7 +39,7 @@ lepton_picture_new ()
  *  \param [in] picture the picture to be freed
  */
 void
-lepton_picture_free (GedaPicture *picture)
+lepton_picture_free (LeptonPicture *picture)
 {
   if (picture) {
 

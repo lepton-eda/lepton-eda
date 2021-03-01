@@ -20,7 +20,7 @@
 /*! \file picture.h
  */
 
-typedef struct st_picture GedaPicture;
+typedef struct st_picture LeptonPicture;
 typedef struct st_picture PICTURE;
 
 struct st_picture
@@ -40,8 +40,8 @@ struct st_picture
   int lower_x, lower_y;
 };
 
-GedaPicture*
+LeptonPicture*
 lepton_picture_new ();
 
 void
-lepton_picture_free (GedaPicture *picture);
+lepton_picture_free (LeptonPicture *picture);
