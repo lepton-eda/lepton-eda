@@ -32,7 +32,7 @@
 #include "path.h"
 #include "picture.h"
 #include "geda_text.h"
-#include "geda_transform.h"
+#include "transform.h"
 
 #include "geda_forward.h"
 

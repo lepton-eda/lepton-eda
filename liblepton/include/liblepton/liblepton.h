@@ -50,7 +50,7 @@ G_BEGIN_DECLS
 #include <liblepton/path.h>
 #include <liblepton/picture.h>
 #include <liblepton/geda_text.h>
-#include <liblepton/geda_transform.h>
+#include <liblepton/transform.h>
 
 #include <liblepton/geda_forward.h>
 
