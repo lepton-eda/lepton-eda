@@ -607,7 +607,7 @@ x_event_configure (GschemPageView    *page_view,
   }
 
 
-  /* re-pan each page of the TOPLEVEL */
+  /* re-pan each page of the LeptonToplevel */
   for ( iter = lepton_list_get_glist (p_current->toplevel->pages);
         iter != NULL;
         iter = g_list_next (iter) ) {

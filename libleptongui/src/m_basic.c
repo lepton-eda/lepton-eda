@@ -70,7 +70,7 @@ struct st_halfspace {
 /*! \brief Encode WORLD coordinates as halfspace matrix.
  *  \par Function Description
  *  This function takes a point and checks if it is in the bounds
- *  of the current TOPLEVEL object's page coordinates. It
+ *  of the current LeptonToplevel object's page coordinates. It
  *  handles points with WORLD coordinates.
  *
  *  \param [in]  w_current  The GschemToplevel object.

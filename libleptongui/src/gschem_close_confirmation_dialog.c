@@ -828,7 +828,7 @@ x_dialog_close_changed_page (GschemToplevel *w_current, LeptonPage *page)
 gboolean
 x_dialog_close_window (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *iter;
   GtkWidget *dialog;
   LeptonPage *p_current;

@@ -36,7 +36,7 @@ void
 o_component_prepare_place (GschemToplevel *w_current,
                            const CLibSymbol *sym)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *temp_list;
   LeptonObject *o_current;
   char *buffer;
@@ -131,7 +131,7 @@ o_component_prepare_place (GschemToplevel *w_current,
 void
 o_component_place_changed_run_hook (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *ptr = NULL;
 
   /* Run the component place list changed hook */
@@ -163,7 +163,7 @@ o_component_place_changed_run_hook (GschemToplevel *w_current)
 void
 o_component_translate_all (GschemToplevel *w_current, int offset)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   int w_rleft, w_rtop, w_rright, w_rbottom;
   LeptonObject *o_current;
   const GList *iter;

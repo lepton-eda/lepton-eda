@@ -631,7 +631,7 @@ gschem_toplevel_get_text_size_list_store (GschemToplevel *w_current)
  *  \param [in] w_current This gschem toplevel
  *  \return The libgeda toplevel
  */
-TOPLEVEL*
+LeptonToplevel*
 gschem_toplevel_get_toplevel (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
@@ -702,7 +702,8 @@ gschem_toplevel_page_content_changed (GschemToplevel *w_current,
  *  \param [in] toplevel The libgeda toplevel
  */
 void
-gschem_toplevel_set_toplevel (GschemToplevel *w_current, TOPLEVEL *toplevel)
+gschem_toplevel_set_toplevel (GschemToplevel *w_current,
+                              LeptonToplevel *toplevel)
 {
   g_return_if_fail (w_current != NULL);
 
@@ -716,7 +717,7 @@ gschem_toplevel_set_toplevel (GschemToplevel *w_current, TOPLEVEL *toplevel)
 static void
 handle_undo (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel;
+  LeptonToplevel *toplevel;
 
   g_return_if_fail (w_current != NULL);
 

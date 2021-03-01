@@ -55,7 +55,7 @@ void o_delete (GschemToplevel *w_current, LeptonObject *object)
  */
 void o_delete_selected (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   SELECTION *selection = toplevel->page_current->selection_list;
   GList *to_remove;
   GList *iter;

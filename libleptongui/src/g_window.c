@@ -114,7 +114,7 @@ g_current_window ()
 SCM_DEFINE (active_page, "%active-page", 0, 0, 0,
             (), "Get the active page.")
 {
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
   if (toplevel->page_current != NULL) {
     return edascm_from_page (toplevel->page_current);
   } else {
@@ -165,7 +165,7 @@ SCM_DEFINE (override_close_page_x, "%close-page!", 1, 0, 0,
               SCM_ARG1, s_override_close_page_x);
 
   GschemToplevel *w_current = g_current_window ();
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonPage *page = edascm_to_page (page_s);
 
   /* If page is not the current page, switch pages, then switch back

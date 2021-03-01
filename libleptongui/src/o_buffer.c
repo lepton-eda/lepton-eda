@@ -58,7 +58,7 @@ clipboard_to_buffer(GschemToplevel *w_current, int buf_num)
 static void
 selection_to_buffer(GschemToplevel *w_current, int buf_num)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *s_current = NULL;
 
   g_return_if_fail (w_current != NULL);
@@ -86,7 +86,7 @@ selection_to_buffer(GschemToplevel *w_current, int buf_num)
 void
 o_buffer_copy(GschemToplevel *w_current, int buf_num)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (toplevel != NULL);
@@ -113,7 +113,7 @@ o_buffer_copy(GschemToplevel *w_current, int buf_num)
 void
 o_buffer_cut(GschemToplevel *w_current, int buf_num)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (toplevel != NULL);
@@ -137,7 +137,7 @@ o_buffer_cut(GschemToplevel *w_current, int buf_num)
 int
 o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   int rleft, rtop, rbottom, rright;
   int x, y;
 

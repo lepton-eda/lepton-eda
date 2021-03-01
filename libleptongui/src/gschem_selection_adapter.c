@@ -940,7 +940,7 @@ gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter)
  *  \param [in] adapter This adapter
  *  \return The libgeda toplevel
  */
-TOPLEVEL*
+LeptonToplevel*
 gschem_selection_adapter_get_toplevel (GschemSelectionAdapter *adapter)
 {
   g_return_val_if_fail (adapter != NULL, NULL);
@@ -1936,7 +1936,8 @@ gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const
  *  \param [in] toplevel
  */
 void
-gschem_selection_adapter_set_toplevel (GschemSelectionAdapter *adapter, TOPLEVEL *toplevel)
+gschem_selection_adapter_set_toplevel (GschemSelectionAdapter *adapter,
+                                       LeptonToplevel *toplevel)
 {
   g_return_if_fail (adapter != NULL);
 

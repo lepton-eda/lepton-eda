@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,7 +52,7 @@ struct _GschemSelectionAdapter
   GObject parent;
 
   SELECTION *selection;
-  TOPLEVEL *toplevel;
+  LeptonToplevel *toplevel;
 };
 
 GType
@@ -114,7 +115,7 @@ gschem_selection_adapter_get_text_size (GschemSelectionAdapter *adapter);
 const char*
 gschem_selection_adapter_get_text_string (GschemSelectionAdapter *adapter);
 
-TOPLEVEL*
+LeptonToplevel*
 gschem_selection_adapter_get_toplevel (GschemSelectionAdapter *adapter);
 
 GschemSelectionAdapter*
@@ -178,4 +179,5 @@ void
 gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const char *string, GschemToplevel *w_current);
 
 void
-gschem_selection_adapter_set_toplevel (GschemSelectionAdapter *adapter, TOPLEVEL *toplevel);
+gschem_selection_adapter_set_toplevel (GschemSelectionAdapter *adapter,
+                                       LeptonToplevel *toplevel);

@@ -157,7 +157,7 @@ void o_select_run_hooks(GschemToplevel *w_current, LeptonObject *o_current, int 
 void o_select_object(GschemToplevel *w_current, LeptonObject *o_current,
                      int type, int count)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   int SHIFTKEY;
   int CONTROLKEY;
   int removing_obj = 0;
@@ -382,7 +382,7 @@ void o_select_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
  */
 void o_select_box_search(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *o_current=NULL;
   int count = 0; /* object count */
   int SHIFTKEY = w_current->SHIFTKEY;
@@ -442,7 +442,7 @@ void o_select_box_search(GschemToplevel *w_current)
  */
 void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   const GList *o_iter;
   GList *iter1;
   LeptonObject *o_current;
@@ -538,7 +538,7 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
 /* This function always looks at the current page selection list */
 LeptonObject *o_select_return_first_object(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   if (! (w_current &&
          toplevel->page_current &&
          lepton_list_get_glist( toplevel->page_current->selection_list )))
@@ -556,7 +556,7 @@ LeptonObject *o_select_return_first_object(GschemToplevel *w_current)
  */
 int o_select_selected(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   if ( lepton_list_get_glist( toplevel->page_current->selection_list )) {
     return(TRUE);
   }
@@ -571,7 +571,7 @@ int o_select_selected(GschemToplevel *w_current)
  */
 void o_select_unselect_all(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   SELECTION *selection = toplevel->page_current->selection_list;
   GList *removed = NULL;
   GList *iter;
@@ -598,7 +598,7 @@ void o_select_unselect_all(GschemToplevel *w_current)
 void
 o_select_visible_unlocked (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   SELECTION *selection = toplevel->page_current->selection_list;
   const GList *iter;
   GList *added;
@@ -645,7 +645,7 @@ o_select_visible_unlocked (GschemToplevel *w_current)
 void
 o_select_move_to_place_list(GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *selection;
   GList *selection_copy;
 

@@ -65,7 +65,7 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
 
   g_return_val_if_fail ((w_current != NULL), NULL);
 
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_val_if_fail ((toplevel != NULL), NULL);
   g_return_val_if_fail ((filename != NULL), NULL);
@@ -157,7 +157,7 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
 
   g_return_if_fail (w_current != NULL);
 
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_if_fail (toplevel != NULL);
 
   filename = s_clib_symbol_get_filename (symbol);

@@ -162,7 +162,7 @@ void o_attrib_select_invisible (GschemToplevel *w_current,
  */
 void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (lepton_object_is_text (object));
 
@@ -209,7 +209,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
 void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
                                      LeptonObject *object, int show_name_value)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (lepton_object_is_text (object));
 
@@ -232,7 +232,7 @@ LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current,
                             const char *text_string, int visibility,
                             int show_name_value, LeptonObject *object)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *new_obj;
   int world_x = - 1, world_y = -1;
   int align = LOWER_LEFT;

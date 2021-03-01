@@ -175,7 +175,7 @@ preview_update (GschemPreview *preview)
     return;
   }
 
-  TOPLEVEL *preview_toplevel = preview_page->toplevel;
+  LeptonToplevel *preview_toplevel = preview_page->toplevel;
 
   /* delete old preview */
   s_page_delete_objects (preview_page);

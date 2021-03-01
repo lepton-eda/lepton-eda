@@ -883,7 +883,7 @@ x_tabs_hdr_create (TabInfo* nfo)
 
   /* setup "up" btn:
   */
-  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (nfo->tl_);
+  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (nfo->tl_);
   LeptonPage* parent = s_hierarchy_find_up_page (toplevel->pages, nfo->page_);
 
   if (x_tabs_show_up_button() && parent != NULL)
@@ -1067,7 +1067,7 @@ x_tabs_cancel_all (GschemToplevel* w_current)
     o_grips_cancel (w_current);
   }
 
-  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
   if (toplevel->page_current != NULL)
   {
     lepton_object_list_delete (toplevel->page_current->place_list);
@@ -1096,7 +1096,7 @@ x_tabs_cancel_all (GschemToplevel* w_current)
 static void
 x_tabs_hier_up (GschemToplevel* w_current)
 {
-  TOPLEVEL* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonPage* page = toplevel->page_current;
 
   if (page == NULL)

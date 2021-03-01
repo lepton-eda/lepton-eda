@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -128,7 +128,7 @@ i_vars_set_options (GschemOptions* opts)
 void
 i_vars_set (GschemToplevel* w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* this will be false if logging cannot be enabled */
   if (do_logging != FALSE)
@@ -447,4 +447,3 @@ i_vars_atexit_save_cache_config (gpointer user_data)
     g_clear_error (&err);
   }
 }
-

@@ -82,7 +82,7 @@ void o_picture_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *new_obj;
   int picture_width, picture_height;
   int picture_left, picture_top;
@@ -169,7 +169,7 @@ setup_filechooser_filters (GtkFileChooser* filechooser)
  */
 void picture_selection_dialog (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   gchar *filename;
   GdkPixbuf *pixbuf;
   GError *error = NULL;
@@ -339,7 +339,7 @@ gboolean
 o_picture_exchange (GschemToplevel *w_current,
                     const gchar *filename, GError **error)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *iter;
 
   for (iter = lepton_list_get_glist (toplevel->page_current->selection_list);
@@ -375,7 +375,7 @@ o_picture_exchange (GschemToplevel *w_current,
  */
 void picture_change_filename_dialog (GschemToplevel *w_current)
 {
-  TOPLEVEL *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   gchar *filename;
   gboolean result;
   GError *error = NULL;
