@@ -18,11 +18,11 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
-/*! \file geda_list.h
+/*! \file list.h
  */
 
-#ifndef __GEDA_LIST_H__
-#define __GEDA_LIST_H__
+#ifndef __LIST_H__
+#define __LIST_H__
 
 G_BEGIN_DECLS
 
@@ -65,4 +65,4 @@ void lepton_list_move_item( LeptonList* list, gpointer item, gint newpos );
 
 G_END_DECLS
 
-#endif /* __GEDA_LIST_H__ */
+#endif /* __LIST_H__ */

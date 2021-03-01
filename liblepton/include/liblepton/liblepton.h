@@ -83,6 +83,6 @@ G_END_DECLS
 #include <liblepton/edaconfig.h>
 #include <liblepton/edaerrors.h>
 #include <liblepton/edapaths.h>
-#include <liblepton/geda_list.h>
+#include <liblepton/list.h>
 
 #endif

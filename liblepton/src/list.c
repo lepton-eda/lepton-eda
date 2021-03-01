@@ -19,7 +19,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-/*! \file geda_list.c
+/*! \file list.c
  *  \brief list derived from GList with GObject properties
  *
  *  This LeptonList with the GObject properties can use the signaling
@@ -30,7 +30,7 @@
 
 #include <glib-object.h>
 
-#include "geda_list.h"
+#include "list.h"
 
 
 enum {
