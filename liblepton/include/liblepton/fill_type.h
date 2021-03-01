@@ -27,7 +27,7 @@ G_BEGIN_DECLS
  *  The numeric values of this enumeration are used inside files and must be
  *  preserved for compatibility.
  */
-enum _GedaFillType
+enum _LeptonFillType
 {
   FILLING_HOLLOW,
   FILLING_FILL,
@@ -36,8 +36,8 @@ enum _GedaFillType
   FILLING_VOID
 };
 
-typedef enum _GedaFillType GedaFillType;
-typedef enum _GedaFillType OBJECT_FILLING;
+typedef enum _LeptonFillType LeptonFillType;
+typedef enum _LeptonFillType OBJECT_FILLING;
 
 gboolean
 lepton_fill_type_draw_first_hatch (int fill_type);
