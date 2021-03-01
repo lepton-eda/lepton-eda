@@ -19,7 +19,7 @@
  */
 
 #include <config.h>
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*!
  * \file  fill_type.c

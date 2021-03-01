@@ -32,7 +32,7 @@
 
 #include <gio/gio.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 
 

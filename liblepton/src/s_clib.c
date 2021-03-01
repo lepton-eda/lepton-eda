@@ -128,7 +128,7 @@
 
 #include <time.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /* Constant definitions
  * ===================

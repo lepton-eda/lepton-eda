@@ -20,7 +20,7 @@
 #include <config.h>
 #include <math.h>
 #include <string.h>
-#include <libgeda_priv.h>
+#include <liblepton_priv.h>
 
 typedef struct st_sweep_event SWEEP_EVENT;
 typedef struct st_sweep_status SWEEP_STATUS;

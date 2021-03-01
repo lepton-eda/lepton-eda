@@ -49,7 +49,7 @@
 #  include <windows.h> /* for GetFullPathName */
 # endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*! \brief Get the autosave filename for a file
  *  \par Function description

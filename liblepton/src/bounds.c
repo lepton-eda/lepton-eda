@@ -21,7 +21,7 @@
  */
 
 #include <config.h>
-#include <libgeda_priv.h>
+#include <liblepton_priv.h>
 
 
 /*! \brief Check if the bounds are empty

@@ -69,7 +69,7 @@
 
 #include <config.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 #include "libleptonguile_priv.h"
 
 scm_t_bits geda_smob_tag;

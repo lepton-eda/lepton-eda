@@ -25,7 +25,7 @@
 
 #include <config.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 #include "libleptonguile_priv.h"
 
 SCM_SYMBOL (wrong_type_arg_sym , "wrong-type-arg");

@@ -31,7 +31,7 @@
 #include <stdlib.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*!
  *  \brief Create a TOPLEVEL object

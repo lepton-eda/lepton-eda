@@ -41,7 +41,7 @@
 
 #include <glib.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 #define NUM_BEZIER_SEGMENTS 100
 

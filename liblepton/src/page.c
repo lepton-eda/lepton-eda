@@ -51,7 +51,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 static gint global_pid = 0;
 

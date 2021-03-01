@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 
 /*! \brief Rotate a point by an arbitrary angle.

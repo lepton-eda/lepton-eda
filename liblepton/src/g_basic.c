@@ -33,7 +33,7 @@
 #include <string.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 #include "libleptonguile.h"
 
 static void process_error_stack (SCM s_stack, SCM s_key, SCM s_args, GError **err);

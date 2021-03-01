@@ -52,7 +52,7 @@
 #include <unistd.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*! this is modified here and in o_list.c */
 int global_sid=0;

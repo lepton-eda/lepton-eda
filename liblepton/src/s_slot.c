@@ -30,7 +30,7 @@
 #endif
 #include <math.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*! Basic string splitting delimiters */
 #define DELIMITERS ",; "

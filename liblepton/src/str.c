@@ -28,7 +28,7 @@
 #include <stdlib.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 /*! \file str.c
  *  \brief Functions for working with strings.
  */

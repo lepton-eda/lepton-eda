@@ -35,7 +35,7 @@
 #include <unistd.h>
 #endif
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 
 /*! \brief Return the array of attributes to always promote. */

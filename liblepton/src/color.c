@@ -24,7 +24,7 @@
  */
 
 #include <config.h>
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 
 #define DEFAULT_COLOR GRAPHIC_COLOR

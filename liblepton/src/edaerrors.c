@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's Library
- * Copyright (C) 2011      gEDA Contributors (see ChangeLog for details)
+/* Lepton EDA library
+ * Copyright (C) 2011 gEDA Contributors
+ * Copyright (C) 2020-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,7 +17,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 #include <config.h>
-#include <libgeda_priv.h>
+#include <liblepton_priv.h>
 
 /* Used by EDA_ERROR. Returns a GQuark used to identify GErrors
  * originating in libgeda. Should not be called directly. */

@@ -23,7 +23,7 @@
 #include <math.h>
 #include <string.h>
 
-#include "libgeda_priv.h"
+#include "liblepton_priv.h"
 
 /*! \file path_object.c
  *  \brief functions for the path object
