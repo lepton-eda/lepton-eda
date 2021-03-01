@@ -20,48 +20,48 @@
 /*! \file transform.h
  */
 
-typedef struct _GedaTransform GedaTransform;
+typedef struct _LeptonTransform LeptonTransform;
 
 /** A structure to store a 2D affine transform.
  *
  *  The transforms get stored in a 3x3 matrix. Code assumes the bottom row to
  *  remain constant at [0 0 1].
  */
-struct _GedaTransform
+struct _LeptonTransform
 {
   gdouble m[2][3];    /* m[row][column] */
 };
 
 void
-lepton_transform_combine (GedaTransform *result,
-                          GedaTransform *a,
-                          GedaTransform *b);
+lepton_transform_combine (LeptonTransform *result,
+                          LeptonTransform *a,
+                          LeptonTransform *b);
 void
-lepton_transform_init (GedaTransform *transform);
+lepton_transform_init (LeptonTransform *transform);
 
 void
-lepton_transform_invert (GedaTransform *transform,
-                         GedaTransform *inverse);
+lepton_transform_invert (LeptonTransform *transform,
+                         LeptonTransform *inverse);
 void
-lepton_transform_line (GedaTransform *transform,
+lepton_transform_line (LeptonTransform *transform,
                        GedaLine *line);
 void
-lepton_transform_lines (GedaTransform *transform,
+lepton_transform_lines (LeptonTransform *transform,
                         GArray *lines);
 void
-lepton_transform_point (GedaTransform *transform,
+lepton_transform_point (LeptonTransform *transform,
                         gint *x,
                         gint *y);
 void
-lepton_transform_points (GedaTransform *transform,
+lepton_transform_points (LeptonTransform *transform,
                          GArray *points);
 void
-lepton_transform_rotate (GedaTransform *transform,
+lepton_transform_rotate (LeptonTransform *transform,
                          gdouble angle);
 void
-lepton_transform_scale (GedaTransform *transform,
+lepton_transform_scale (LeptonTransform *transform,
                         gdouble factor);
 void
-lepton_transform_translate (GedaTransform *transform,
+lepton_transform_translate (LeptonTransform *transform,
                             gdouble dx,
                             gdouble dy);
