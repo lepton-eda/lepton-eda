@@ -40,7 +40,7 @@
 #include "object.h"
 #include "object_list.h"
 #include "page.h"
-#include "geda_toplevel.h"
+#include "toplevel.h"
 #include "geda_undo.h"
 
 #include "component_object.h"

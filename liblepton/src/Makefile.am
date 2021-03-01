@@ -58,7 +58,7 @@ liblepton_la_SOURCES = \
 	path.c \
 	picture.c \
 	str.c \
-	geda_toplevel.c \
+	toplevel.c \
 	geda_transform.c \
 	geda_undo.c \
 	g_register.c \
