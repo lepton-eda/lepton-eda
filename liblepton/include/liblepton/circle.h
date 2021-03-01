@@ -20,9 +20,9 @@
 /*! \file circle.h
  */
 
-typedef struct _GedaCircle GedaCircle;
+typedef struct _LeptonCircle LeptonCircle;
 
-struct _GedaCircle
+struct _LeptonCircle
 {
   gint center_x;
   gint center_y;
@@ -30,17 +30,17 @@ struct _GedaCircle
   gint radius;
 };
 
-GedaCircle*
+LeptonCircle*
 lepton_circle_new ();
 
 void
-lepton_circle_free (GedaCircle *circle);
+lepton_circle_free (LeptonCircle *circle);
 
 void
-lepton_circle_calculate_bounds (const GedaCircle *circle,
+lepton_circle_calculate_bounds (const LeptonCircle *circle,
                                 LeptonBounds *bounds);
 gdouble
-lepton_circle_shortest_distance (const GedaCircle *circle,
+lepton_circle_shortest_distance (const LeptonCircle *circle,
                                  gint x,
                                  gint y,
                                  gboolean solid);

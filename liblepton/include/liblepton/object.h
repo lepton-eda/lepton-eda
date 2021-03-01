@@ -34,7 +34,7 @@ struct st_object
 
   COMPONENT *component;
   GedaLine *line;
-  GedaCircle *circle;
+  LeptonCircle *circle;
   LeptonArc *arc;
   BOX *box;
   TEXT *text;
