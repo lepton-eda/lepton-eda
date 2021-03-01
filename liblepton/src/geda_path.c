@@ -1,6 +1,6 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+/* Lepton EDA library
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * Code originally from librsvg 2.22.2 (LGPL) Copyright (C) 2000 Eazel, Inc.
  *
@@ -46,11 +46,12 @@
 #define NUM_BEZIER_SEGMENTS 100
 
 
-GedaPath *s_path_new (void)
+LeptonPath*
+s_path_new (void)
 {
-  GedaPath *path;
+  LeptonPath *path;
 
-  path = g_new (GedaPath, 1);
+  path = g_new (LeptonPath, 1);
   path->num_sections = 0;
   path->num_sections_max = 16;
   path->sections = g_new (PATH_SECTION, path->num_sections_max);
@@ -59,9 +60,10 @@ GedaPath *s_path_new (void)
 }
 
 
-GedaPath *s_path_new_from (PATH_SECTION *sections)
+LeptonPath*
+s_path_new_from (PATH_SECTION *sections)
 {
-  GedaPath *path;
+  LeptonPath *path;
   int i;
 
   g_return_val_if_fail (sections != NULL, NULL);
@@ -70,7 +72,7 @@ GedaPath *s_path_new_from (PATH_SECTION *sections)
   if (i <= 0)
     return s_path_new ();
 
-  path = g_new (GedaPath, 1);
+  path = g_new (LeptonPath, 1);
 
   path->num_sections = i;
   path->num_sections_max = i;
@@ -82,7 +84,7 @@ GedaPath *s_path_new_from (PATH_SECTION *sections)
 
 
 void
-geda_path_free (GedaPath * path)
+geda_path_free (LeptonPath * path)
 {
   if (path != NULL) {
     g_free (path->sections);
@@ -91,7 +93,10 @@ geda_path_free (GedaPath * path)
 }
 
 
-void s_path_moveto (GedaPath *path, double x, double y)
+void
+s_path_moveto (LeptonPath *path,
+               double x,
+               double y)
 {
   PATH_SECTION *sections;
   int num_sections;
@@ -122,7 +127,10 @@ void s_path_moveto (GedaPath *path, double x, double y)
 }
 
 
-void s_path_lineto (GedaPath *path, double x, double y)
+void
+s_path_lineto (LeptonPath *path,
+               double x,
+               double y)
 {
   PATH_SECTION *sections;
   int num_sections;
@@ -141,8 +149,14 @@ void s_path_lineto (GedaPath *path, double x, double y)
 }
 
 
-void s_path_curveto (GedaPath *path, double x1, double y1,
-                     double x2, double y2, double x3, double y3)
+void
+s_path_curveto (LeptonPath *path,
+                double x1,
+                double y1,
+                double x2,
+                double y2,
+                double x3,
+                double y3)
 {
   PATH_SECTION *sections;
   int num_sections;
@@ -165,7 +179,8 @@ void s_path_curveto (GedaPath *path, double x1, double y1,
 }
 
 
-void s_path_art_finish (GedaPath * path)
+void
+s_path_art_finish (LeptonPath * path)
 {
   int num_sections;
 
@@ -180,7 +195,7 @@ void s_path_art_finish (GedaPath * path)
 }
 
 
-/* This module parses an SVG style path element into a GedaPath.
+/* This module parses an SVG style path element into a LeptonPath.
 
   At present, there is no support for <marker> or any other contextual
   information from the SVG file. The API will need to change rather
@@ -192,7 +207,7 @@ void s_path_art_finish (GedaPath * path)
 typedef struct _RSVGParsePathCtx RSVGParsePathCtx;
 
 struct _RSVGParsePathCtx {
-  GedaPath *path;
+  LeptonPath *path;
   double cpx, cpy;    /* current point */
   double rpx, rpy;    /* reflection point (for 's' and 't' commands) */
   double mpx, mpy;    /* Last moved to point (for path closures) */
@@ -641,7 +656,8 @@ static void s_path_parse_data (RSVGParsePathCtx * ctx, const char *data)
 }
 
 
-GedaPath *s_path_parse (const char *path_str)
+LeptonPath*
+s_path_parse (const char *path_str)
 {
   RSVGParsePathCtx ctx;
 
@@ -662,7 +678,8 @@ GedaPath *s_path_parse (const char *path_str)
 }
 
 
-char *s_path_string_from_path (const GedaPath *path)
+char*
+s_path_string_from_path (const LeptonPath *path)
 {
   PATH_SECTION *section;
   GString *path_string;
@@ -712,7 +729,9 @@ char *s_path_string_from_path (const GedaPath *path)
  *  must not be NULL.
  *  \return TRUE if the path is closed, FALSE if it is open.
  */
-int s_path_to_polygon (GedaPath *path, GArray *points)
+int
+s_path_to_polygon (LeptonPath *path,
+                   GArray *points)
 {
   int closed = FALSE;
   int i;
@@ -772,7 +791,11 @@ int s_path_to_polygon (GedaPath *path, GArray *points)
  *  shape, this function returns a distance of zero for interior points.  With
  *  an invalid parameter, this function returns G_MAXDOUBLE.
  */
-double s_path_shortest_distance (GedaPath *path, int x, int y, int solid)
+double
+s_path_shortest_distance (LeptonPath *path,
+                          int x,
+                          int y,
+                          int solid)
 {
   double shortest_distance = G_MAXDOUBLE;
   int closed;

@@ -67,8 +67,10 @@ void set_guile_compiled_path();
 /* m_hatch.c */
 void m_hatch_box(GedaBox *box, gint angle, gint pitch, GArray *lines);
 void m_hatch_circle(GedaCircle *circle, gint angle, gint pitch, GArray *lines);
-void m_hatch_path(GedaPath *path, gint angle, gint pitch, GArray *lines);
-
+void m_hatch_path (LeptonPath *path,
+                   gint angle,
+                   gint pitch,
+                   GArray *lines);
 /* m_polygon.c */
 void m_polygon_append_bezier(GArray *points, GedaBezier *bezier, int segments);
 void m_polygon_append_point(GArray *points, int x, int y);
