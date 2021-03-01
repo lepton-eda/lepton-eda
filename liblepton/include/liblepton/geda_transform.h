@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,31 +33,35 @@ struct _GedaTransform
 };
 
 void
-geda_transform_combine (GedaTransform *result, GedaTransform *a, GedaTransform *b);
+lepton_transform_combine (GedaTransform *result,
+                          GedaTransform *a,
+                          GedaTransform *b);
+void
+lepton_transform_init (GedaTransform *transform);
 
 void
-geda_transform_init (GedaTransform *transform);
-
+lepton_transform_invert (GedaTransform *transform,
+                         GedaTransform *inverse);
 void
-geda_transform_invert (GedaTransform *transform, GedaTransform *inverse);
-
+lepton_transform_line (GedaTransform *transform,
+                       GedaLine *line);
 void
-geda_transform_line (GedaTransform *transform, GedaLine *line);
-
+lepton_transform_lines (GedaTransform *transform,
+                        GArray *lines);
 void
-geda_transform_lines (GedaTransform *transform, GArray *lines);
-
+lepton_transform_point (GedaTransform *transform,
+                        gint *x,
+                        gint *y);
 void
-geda_transform_point (GedaTransform *transform, gint *x, gint *y);
-
+lepton_transform_points (GedaTransform *transform,
+                         GArray *points);
 void
-geda_transform_points (GedaTransform *transform, GArray *points);
-
+lepton_transform_rotate (GedaTransform *transform,
+                         gdouble angle);
 void
-geda_transform_rotate (GedaTransform *transform, gdouble angle);
-
+lepton_transform_scale (GedaTransform *transform,
+                        gdouble factor);
 void
-geda_transform_scale (GedaTransform *transform, gdouble factor);
-
-void
-geda_transform_translate (GedaTransform *transform, gdouble dx, gdouble dy);
+lepton_transform_translate (GedaTransform *transform,
+                            gdouble dx,
+                            gdouble dy);
