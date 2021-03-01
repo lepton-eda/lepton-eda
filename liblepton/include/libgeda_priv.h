@@ -41,7 +41,7 @@
 #include "object_list.h"
 #include "page.h"
 #include "toplevel.h"
-#include "geda_undo.h"
+#include "undo.h"
 
 #include "component_object.h"
 #include "arc_object.h"
