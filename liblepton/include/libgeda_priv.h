@@ -26,7 +26,7 @@
 #include "bounds.h"
 #include "box.h"
 #include "circle.h"
-#include "geda_component.h"
+#include "component.h"
 #include "coord.h"
 #include "line.h"
 #include "path.h"

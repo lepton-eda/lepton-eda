@@ -44,7 +44,7 @@ G_BEGIN_DECLS
 #include <liblepton/bounds.h>
 #include <liblepton/box.h>
 #include <liblepton/circle.h>
-#include <liblepton/geda_component.h>
+#include <liblepton/component.h>
 #include <liblepton/coord.h>
 #include <liblepton/line.h>
 #include <liblepton/path.h>
