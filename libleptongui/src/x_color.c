@@ -23,8 +23,8 @@
 
 
 
-extern GedaColorMap display_colors;
-extern GedaColorMap display_outline_colors;
+extern LeptonColorMap display_colors;
+extern LeptonColorMap display_outline_colors;
 
 
 
@@ -114,7 +114,7 @@ x_color_set_outline (size_t color_id, GdkColor* color)
  *  \return        Scheme code as a string
  */
 static GString*
-x_color_map2str (GedaColorMap cmap)
+x_color_map2str (LeptonColorMap cmap)
 {
   GString* str = g_string_new(NULL);
 

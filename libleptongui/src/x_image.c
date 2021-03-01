@@ -23,7 +23,7 @@
 #include "gschem.h"
 
 
-extern GedaColorMap display_colors;
+extern LeptonColorMap display_colors;
 
 #define X_IMAGE_DEFAULT_SIZE "800x600"
 #define X_IMAGE_DEFAULT_TYPE "PNG"

@@ -24,8 +24,8 @@
 
 #define INVALIDATE_MARGIN 1
 
-extern GedaColorMap display_colors;
-extern GedaColorMap display_outline_colors;
+extern LeptonColorMap display_colors;
+extern LeptonColorMap display_outline_colors;
 
 /*! \todo Lots of Gross code... needs lots of cleanup - mainly
  * readability issues

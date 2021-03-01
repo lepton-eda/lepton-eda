@@ -74,7 +74,7 @@ lepton_color_get_alpha_double (const GedaColor *color);
 
 #define COLORS_COUNT 24
 
-typedef GedaColor GedaColorMap[ COLORS_COUNT ];
+typedef GedaColor LeptonColorMap[ COLORS_COUNT ];
 
 
 size_t
@@ -101,7 +101,7 @@ lepton_colormap_set_color (GedaColor *color_map,
                            guint8 b,
                            guint8 a);
 void
-lepton_color_map_init (GedaColorMap map);
+lepton_color_map_init (LeptonColorMap map);
 
 void
 s_color_init (void);

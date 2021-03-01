@@ -30,9 +30,9 @@
 #define DEFAULT_COLOR GRAPHIC_COLOR
 
 
-static GedaColorMap print_colors;
-GedaColorMap display_colors;
-GedaColorMap display_outline_colors;
+static LeptonColorMap print_colors;
+LeptonColorMap display_colors;
+LeptonColorMap display_outline_colors;
 
 
 #define WHITE   {0xff, 0xff, 0xff, 0xff, TRUE}
@@ -192,7 +192,7 @@ lepton_color_get_alpha_double (const GedaColor *color)
  *  \param map Color map to initialise.
  */
 void
-lepton_color_map_init (GedaColorMap map)
+lepton_color_map_init (LeptonColorMap map)
 {
   for (size_t i = 0; i < colors_count(); ++i)
   {
