@@ -40,7 +40,7 @@ G_BEGIN_DECLS
 
 #include <liblepton/angle.h>
 #include <liblepton/arc.h>
-#include <liblepton/geda_bezier.h>
+#include <liblepton/bezier.h>
 #include <liblepton/bounds.h>
 #include <liblepton/box.h>
 #include <liblepton/circle.h>
