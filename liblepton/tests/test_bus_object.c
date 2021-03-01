@@ -5,7 +5,7 @@ void
 check_construction ()
 {
   gint count;
-  GedaToplevel *toplevel = s_toplevel_new ();
+  LeptonToplevel *toplevel = s_toplevel_new ();
 
   for (count = 0; count < 1000; count++) {
     gint x0 = g_test_rand_int ();
@@ -57,7 +57,7 @@ void
 check_accessors ()
 {
   gint count;
-  GedaToplevel *toplevel = s_toplevel_new ();
+  LeptonToplevel *toplevel = s_toplevel_new ();
 
   for (count = 0; count < 1000; count++) {
     gint x0 = g_test_rand_int ();
@@ -109,7 +109,7 @@ check_serialization ()
 {
   gint count;
   gint converted;
-  GedaToplevel *toplevel = s_toplevel_new ();
+  LeptonToplevel *toplevel = s_toplevel_new ();
   guint version;
 
   converted = sscanf (PACKAGE_DATE_VERSION, "%u", &version);
