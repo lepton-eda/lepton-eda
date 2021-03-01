@@ -470,7 +470,7 @@ s_delete_object (LeptonObject *o_current)
     lepton_box_free (o_current->box);
     o_current->box = NULL;
 
-    geda_picture_free (o_current->picture);
+    lepton_picture_free (o_current->picture);
     o_current->picture = NULL;
 
     if (o_current->text) {

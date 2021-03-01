@@ -584,7 +584,7 @@ LeptonObject *o_picture_new (const gchar *file_content,
   /* create the object */
   new_node = s_basic_new_object(type, "picture");
 
-  picture = geda_picture_new ();
+  picture = lepton_picture_new ();
   new_node->picture = picture;
 
   /* describe the picture with its upper left and lower right corner */

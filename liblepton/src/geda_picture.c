@@ -1,7 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * libgeda - gEDA's library
+/* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2016 gEDA Contributors
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,10 +26,10 @@
 
 /*! \brief Allocate a picture
  *
- *  \return a pointer to an picture, which must be freed with geda_picture_free.
+ *  \return a pointer to a picture, which must be freed with lepton_picture_free.
  */
 GedaPicture*
-geda_picture_new ()
+lepton_picture_new ()
 {
   return g_new0 (GedaPicture, 1);
 }
@@ -39,7 +39,7 @@ geda_picture_new ()
  *  \param [in] picture the picture to be freed
  */
 void
-geda_picture_free (GedaPicture *picture)
+lepton_picture_free (GedaPicture *picture)
 {
   if (picture) {
 
