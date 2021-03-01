@@ -31,7 +31,7 @@
 #include "line.h"
 #include "path.h"
 #include "picture.h"
-#include "geda_text.h"
+#include "text.h"
 #include "transform.h"
 
 #include "forward.h"

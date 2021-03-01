@@ -32,7 +32,7 @@ libleptoninclude_HEADERS = \
 	liblepton/picture.h \
 	liblepton/point.h \
 	liblepton/str.h \
-	liblepton/geda_text.h \
+	liblepton/text.h \
 	liblepton/toplevel.h \
 	liblepton/transform.h \
 	liblepton/undo.h \
