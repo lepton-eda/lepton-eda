@@ -640,7 +640,7 @@ LeptonObject *o_picture_new (const gchar *file_content,
  */
 void
 lepton_picture_object_calculate_bounds (const LeptonObject *object,
-                                        GedaBounds *bounds)
+                                        LeptonBounds *bounds)
 {
   lepton_bounds_init (bounds);
 

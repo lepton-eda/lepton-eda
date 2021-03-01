@@ -65,7 +65,7 @@ o_component_new_embedded (char type,
 void
 lepton_component_object_calculate_bounds (const LeptonObject *object,
                                           gboolean include_hidden,
-                                          GedaBounds *bounds);
+                                          LeptonBounds *bounds);
 void
 lepton_component_object_translate (LeptonObject *object,
                                    int dx,

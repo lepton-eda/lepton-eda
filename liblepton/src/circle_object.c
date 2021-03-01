@@ -547,7 +547,7 @@ lepton_circle_object_mirror (gint world_centerx,
  */
 void
 lepton_circle_object_calculate_bounds (const LeptonObject *object,
-                                       GedaBounds *bounds)
+                                       LeptonBounds *bounds)
 {
   gint expand;
 

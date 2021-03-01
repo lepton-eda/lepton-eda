@@ -214,7 +214,7 @@ lepton_net_object_set_y1 (LeptonObject *object,
  */
 void
 lepton_net_object_calculate_bounds (const LeptonObject *object,
-                                    GedaBounds *bounds)
+                                    LeptonBounds *bounds)
 {
   gint expand;
 

@@ -40,7 +40,7 @@ lepton_bus_object_copy (const LeptonObject *o_current);
 
 void
 lepton_bus_object_calculate_bounds (const LeptonObject *object,
-                                    GedaBounds *bounds);
+                                    LeptonBounds *bounds);
 gboolean
 lepton_bus_object_get_position (const LeptonObject *object,
                                 gint *x,

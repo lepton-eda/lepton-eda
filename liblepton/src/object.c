@@ -1315,7 +1315,7 @@ lepton_object_calculate_visible_bounds (LeptonObject *o_current,
     return 0;
   }
 
-  GedaBounds bounds;
+  LeptonBounds bounds;
 
   switch (lepton_object_get_type (o_current)) {
 

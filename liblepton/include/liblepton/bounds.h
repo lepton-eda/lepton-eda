@@ -22,9 +22,9 @@
 
 G_BEGIN_DECLS
 
-typedef struct _GedaBounds GedaBounds;
+typedef struct _LeptonBounds LeptonBounds;
 
-struct _GedaBounds
+struct _LeptonBounds
 {
   gint min_x;
   gint min_y;
@@ -33,37 +33,37 @@ struct _GedaBounds
 };
 
 gboolean
-lepton_bounds_empty (const GedaBounds *bounds);
+lepton_bounds_empty (const LeptonBounds *bounds);
 
 gboolean
-lepton_bounds_equal (const GedaBounds *a,
-                     const GedaBounds *b);
+lepton_bounds_equal (const LeptonBounds *a,
+                     const LeptonBounds *b);
 void
-lepton_bounds_expand (GedaBounds *r,
-                      const GedaBounds *a,
+lepton_bounds_expand (LeptonBounds *r,
+                      const LeptonBounds *a,
                       gint x,
                       gint y);
 void
-lepton_bounds_init (GedaBounds *bounds);
+lepton_bounds_init (LeptonBounds *bounds);
 
 void
-lepton_bounds_init_with_points (GedaBounds *bounds,
+lepton_bounds_init_with_points (LeptonBounds *bounds,
                                 gint x0,
                                 gint y0,
                                 gint x1,
                                 gint y1);
 gboolean
-lepton_bounds_interior_point (const GedaBounds *bounds,
+lepton_bounds_interior_point (const LeptonBounds *bounds,
                               gint x,
                               gint y);
 void
-lepton_bounds_of_points (GedaBounds *bounds,
+lepton_bounds_of_points (LeptonBounds *bounds,
                          const GedaPoint points[],
                          gint count);
 void
-lepton_bounds_union (GedaBounds *r,
-                     const GedaBounds *a,
-                     const GedaBounds *b);
+lepton_bounds_union (LeptonBounds *r,
+                     const LeptonBounds *a,
+                     const LeptonBounds *b);
 int
 inside_region (int xmin,
                int ymin,

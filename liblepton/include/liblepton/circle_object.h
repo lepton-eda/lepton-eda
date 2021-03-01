@@ -41,7 +41,7 @@ lepton_circle_object_copy (const LeptonObject *o_current);
 
 void
 lepton_circle_object_calculate_bounds (const LeptonObject *object,
-                                       GedaBounds *bounds);
+                                       LeptonBounds *bounds);
 gint
 lepton_circle_object_get_center_x (const LeptonObject *object);
 

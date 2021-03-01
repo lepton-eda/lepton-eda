@@ -37,7 +37,7 @@
  */
 void
 lepton_pin_object_calculate_bounds (const LeptonObject *object,
-                                    GedaBounds *bounds)
+                                    LeptonBounds *bounds)
 {
   gint expand;
   gint width;

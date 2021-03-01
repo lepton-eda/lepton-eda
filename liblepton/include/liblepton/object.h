@@ -30,7 +30,7 @@ struct st_object
 
   LeptonPage *page; /* Parent page */
 
-  GedaBounds bounds;
+  LeptonBounds bounds;
 
   COMPONENT *component;
   GedaLine *line;

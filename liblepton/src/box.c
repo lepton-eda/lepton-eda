@@ -60,7 +60,7 @@ lepton_box_free (GedaBox *box)
  */
 void
 lepton_box_calculate_bounds (const GedaBox *box,
-                             GedaBounds *bounds)
+                             LeptonBounds *bounds)
 {
   if (box == NULL) {
     lepton_bounds_init (bounds);

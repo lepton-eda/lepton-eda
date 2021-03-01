@@ -174,7 +174,7 @@ world_get_object_glist_bounds (const GList *head,
 void
 lepton_component_object_calculate_bounds (const LeptonObject *object,
                                           gboolean include_hidden,
-                                          GedaBounds *bounds)
+                                          LeptonBounds *bounds)
 {
   lepton_bounds_init (bounds);
 
@@ -522,7 +522,7 @@ create_placeholder_small (LeptonObject* node, int x, int y)
                                               VISIBLE,
                                               SHOW_NAME_VALUE);
 
-  GedaBounds bounds;
+  LeptonBounds bounds;
   lepton_text_object_calculate_bounds (txt, FALSE, &bounds);
 
   bounds.max_x = lepton_coord_snap (bounds.max_x, 100);
@@ -580,7 +580,7 @@ create_placeholder_small (LeptonObject* node, int x, int y)
 static void
 create_placeholder_classic (LeptonObject *new_node, int x, int y)
 {
-  GedaBounds bounds;
+  LeptonBounds bounds;
   LeptonObject *new_prim_obj;
   char *not_found_text = NULL;
   int x_offset, y_offset;

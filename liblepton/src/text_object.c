@@ -87,7 +87,7 @@ int tab_in_chars = 8;
 gboolean
 lepton_text_object_calculate_bounds (const LeptonObject *object,
                                      gboolean include_hidden,
-                                     GedaBounds *bounds)
+                                     LeptonBounds *bounds)
 {
   if (! (o_is_visible (object) || include_hidden))
     return FALSE;

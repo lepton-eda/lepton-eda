@@ -247,7 +247,7 @@ lepton_bus_object_get_position (const LeptonObject *object,
  */
 void
 lepton_bus_object_calculate_bounds (const LeptonObject *object,
-                                    GedaBounds *bounds)
+                                    LeptonBounds *bounds)
 {
   gint expand;
 
