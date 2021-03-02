@@ -20,10 +20,10 @@
 
 /*------------------------------------------------------------------*/
 /*! \file
- *  \brief Functions to manipulate the TOPLEVEL struct.
+ *  \brief Functions to manipulate the LeptonToplevel struct.
  *
- * This file holds functions involved in manipulating the TOPLEVEL data
- * structure.  TOPLEVEL is the data structure inherited from gEDA's
+ * This file holds functions involved in manipulating the LeptonToplevel data
+ * structure.  LeptonToplevel is the data structure inherited from gEDA's
  * other programs, and holds all info about a project in a form
  * native to gEDA.
  */
@@ -56,11 +56,13 @@
  * Reads in a schematic page & calls f_open, which fills out the
  * toplevel structure.
  *
- *  \param toplevel TOPLEVEL structure
+ *  \param toplevel LeptonToplevel structure
  *  \param filename file to be opened
  *  \returns 1 on success, 0 on failure
  */
-int s_toplevel_read_page(TOPLEVEL *toplevel, char *filename)
+int
+s_toplevel_read_page (LeptonToplevel *toplevel,
+                      char *filename)
 {
   int file_return_code;
   GError *err = NULL;
@@ -87,9 +89,9 @@ int s_toplevel_read_page(TOPLEVEL *toplevel, char *filename)
  * for missing components, that is, those components for which no
  * corresponding symbol files was found.
  *
- * \param toplevel The #TOPLEVEL object to be verified.
+ * \param toplevel The #LeptonToplevel object to be verified.
  */
-void s_toplevel_verify_design (TOPLEVEL *toplevel)
+void s_toplevel_verify_design (LeptonToplevel *toplevel)
 {
   GList *p_iter;
   const GList *o_iter;
@@ -121,14 +123,15 @@ void s_toplevel_verify_design (TOPLEVEL *toplevel)
 }
 
 
-/*! \brief Saves all the pages of a TOPLEVEL object.
+/*! \brief Saves all the pages of a LeptonToplevel object.
  *  \par Function Description
  *  Saves all the pages in the <B>toplevel</B> parameter.
  *
- *  \param [in] toplevel  The TOPLEVEL to save pages from.
+ *  \param [in] toplevel  The LeptonToplevel to save pages from.
  *  \return The number of failed tries to save a page.
  */
-gint s_page_save_all (TOPLEVEL *toplevel)
+gint
+s_page_save_all (LeptonToplevel *toplevel)
 {
   const GList *iter;
   LeptonPage *p_current;
@@ -160,7 +163,7 @@ gint s_page_save_all (TOPLEVEL *toplevel)
 
 
 /*------------------------------------------------------------------*/
-/*! \brief Copy data from gtksheet into TOPLEVEL struct
+/*! \brief Copy data from gtksheet into LeptonToplevel struct
  *
  * Called when the user invokes "save".  It first
  * places all data from gtksheet into SHEET_DATA.  Then it
@@ -174,7 +177,7 @@ s_toplevel_save_sheet ()
 
   g_debug ("==== Enter s_toplevel_gtksheet_to_toplevel()\n");
 
-  TOPLEVEL *toplevel = x_window_get_toplevel ();
+  LeptonToplevel *toplevel = x_window_get_toplevel ();
 
   g_return_if_fail (toplevel != NULL);
 
@@ -421,11 +424,11 @@ void s_toplevel_delete_attrib_col() {
  * -# First find and update component attribs.
  * -# Then find and update net attribs.
  * -# Finally find and update pin attribs.
- * \param toplevel TOPLEVEL structure
+ * \param toplevel LeptonToplevel structure
  * \param page schematic page to copy
  */
 void
-s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel,
+s_toplevel_sheetdata_to_toplevel (LeptonToplevel *toplevel,
                                   LeptonPage *page)
 {
   GList *copy_list;
@@ -524,7 +527,7 @@ s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel,
        *      used in searching TABLE.
        *  3.  Search TABLE using refdes:pinnumber as key, and get list of
        *      attribs corresponding to this refdes:pinnumber
-       *  4.  Stick the attribs into the TOPLEVEL data structure.
+       *  4.  Stick the attribs into the LeptonToplevel data structure.
        */
       temp_uref =  s_attrib_get_refdes(o_current);
       if ( (temp_uref != NULL) && (o_current->component->prim_objs) ) {    /* make sure object component has a refdes  */
@@ -644,16 +647,15 @@ STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes)
  * -# If the attribs doesn't exist on o_current, but is non-null in
  *    the name=value pair, create an attrib object and add it to the part
  *    on o_current.
- * \param toplevel TOPLEVEL structure
+ * \param toplevel LeptonToplevel structure
  * \param o_current Component to be updated.
  * \param new_comp_attrib_list list of name=value attribute pairs
  *                             from SHEET_DATA.
  */
 void
-s_toplevel_update_component_attribs_in_toplevel (
-                                        TOPLEVEL *toplevel,
-                                        LeptonObject *o_current,
-                                        STRING_LIST *new_comp_attrib_list)
+s_toplevel_update_component_attribs_in_toplevel (LeptonToplevel *toplevel,
+                                                 LeptonObject *o_current,
+                                                 STRING_LIST *new_comp_attrib_list)
 {
   STRING_LIST *local_list;
   STRING_LIST *complete_comp_attrib_list;
@@ -976,13 +978,13 @@ STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, LeptonObject *pin
  *    delete the attrib.
  * -# If the attribs doesn't exist on pin, but is non-null in
  *    the name=value pair, create an attrib object and add it to the pin.
- * \param toplevel TOPLEVEL structure
+ * \param toplevel LeptonToplevel structure
  * \param refdes Unused - needs refactored out
  * \param [in,out] o_pin pin to update
  * \param [in] new_pin_attrib_list New pin attribute list to apply
  */
 void
-s_toplevel_update_pin_attribs_in_toplevel (TOPLEVEL *toplevel,
+s_toplevel_update_pin_attribs_in_toplevel (LeptonToplevel *toplevel,
                                            char *refdes,
                                            LeptonObject *o_pin,
                                            STRING_LIST *new_pin_attrib_list)

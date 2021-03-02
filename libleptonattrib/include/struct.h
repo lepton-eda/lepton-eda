@@ -1,8 +1,7 @@
-/* gEDA - GPL Electronic Design Automation
- * gattrib -- gEDA component and net attribute manipulation using spreadsheet.
+/* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2011 gEDA Contributors
- * Copyright (C) 2020 Lepton EDA Contributors
+ * Copyright (C) 2020-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -103,8 +102,8 @@ struct st_sheet_data {
  * st_table defined what is held in a spreadsheet cell for both
  * comp and net spreadsheets.  Holds pointer to individual comp/net name, and
  * pointer to attrib list.  Ideally, the name pointer points to the
- * refdes/netname string held in the TOPLEVEL data structure, so that
- * when SHEET_DATA is manipulated, so is TOPLEVEL.
+ * refdes/netname string held in the LeptonToplevel data structure, so that
+ * when SHEET_DATA is manipulated, so is LeptonToplevel.
  */
 /* -------------------------------------------------------------------- */
 struct st_table {

@@ -71,15 +71,15 @@ x_window_set_default_icon( void );
 static void
 x_window_set_title (GList* plist);
 
-static TOPLEVEL *window_toplevel = NULL;
+static LeptonToplevel *window_toplevel = NULL;
 
 void
-x_window_set_toplevel (TOPLEVEL *toplevel)
+x_window_set_toplevel (LeptonToplevel *toplevel)
 {
   window_toplevel = toplevel;
 }
 
-TOPLEVEL*
+LeptonToplevel*
 x_window_get_toplevel ()
 {
   return window_toplevel;
@@ -586,7 +586,7 @@ lepton_attrib_window ()
   GList *iter;
   LeptonPage *p_local;
 
-  TOPLEVEL *toplevel = edascm_c_current_toplevel ();
+  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
   x_window_set_toplevel (toplevel);
 
   /* Initialize GTK window. */
