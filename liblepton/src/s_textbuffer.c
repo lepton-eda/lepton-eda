@@ -56,7 +56,7 @@ struct _TextBuffer
 
 /*! \brief Create a new managed text buffer.
  *
- *  \par Function description 
+ *  \par Function description
  *  Allocates and initialises a new TextBuffer to manage the given data
  *  buffer.
  *
@@ -250,4 +250,3 @@ s_textbuffer_linenum (TextBuffer* tb)
 
   return tb->linenum;
 }
-

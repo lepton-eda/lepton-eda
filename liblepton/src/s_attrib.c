@@ -30,7 +30,7 @@
 
 #include "liblepton_priv.h"
 
-#define MAX_ATTRIBS	128
+#define MAX_ATTRIBS 128
 
 /*! \brief */
 struct st_attrib_names {
@@ -50,16 +50,19 @@ static struct st_attrib_names attrib[MAX_ATTRIBS];
  *  \par Function Description
  *
  */
-int s_attrib_add_entry(char *new_attrib) 
+int
+s_attrib_add_entry (char *new_attrib)
 {
-  if (new_attrib == NULL) {
-    return(-1); 
+  if (new_attrib == NULL)
+  {
+    return(-1);
   }
 
-  if (attrib_index >= MAX_ATTRIBS) {
-    return(-1); 
+  if (attrib_index >= MAX_ATTRIBS)
+  {
+    return(-1);
   }
-	
+
   attrib[attrib_index].attrib_name = g_strdup (new_attrib);
 
   attrib_index++;
@@ -111,9 +114,10 @@ void s_attrib_free()
 void s_attrib_init()
 {
   int i;
-  for (i = 0; i < MAX_ATTRIBS; i++) {
-    attrib[i].attrib_name = NULL;	
-  } 
+  for (i = 0; i < MAX_ATTRIBS; i++)
+  {
+    attrib[i].attrib_name = NULL;
+  }
 }
 
 /*! \todo Finish function documentation!!!
