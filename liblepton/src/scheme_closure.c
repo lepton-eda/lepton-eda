@@ -32,8 +32,8 @@ SCM_SYMBOL (args_sym, "args");
 
 static SCM marshal_proc;
 
-/*! \brief Unpack and call a C closure 
- * 
+/*! \brief Unpack and call a C closure
+ *
  * Unpack the C function pointer and user data pointer from a C
  * closure \a smob, and then make a function call of the form:
  *
@@ -99,7 +99,7 @@ edascm_c_make_closure (SCM (*func)(SCM, gpointer), gpointer user_data)
                      scm_list_3 (marshal_proc, args_sym, smob));
   result = g_scm_eval_protected (expr, scm_current_module ());
   g_warn_if_fail (scm_is_true (scm_procedure_p (result)));
-  return result; 
+  return result;
 }
 
 /*!
