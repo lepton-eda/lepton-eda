@@ -30,8 +30,17 @@ void o_selection_select (LeptonObject *object);
 void o_selection_unselect (LeptonObject *object);
 
 /* s_conn.c */
-CONN *s_conn_return_new(LeptonObject *other_object, int type, int x, int y, int whichone, int other_whichone);
-int s_conn_uniq(GList *conn_list, CONN *input_conn);
+LeptonConn*
+s_conn_return_new (LeptonObject *other_object,
+                   int type,
+                   int x,
+                   int y,
+                   int whichone,
+                   int other_whichone);
+int
+s_conn_uniq (GList *conn_list,
+             LeptonConn *input_conn);
+
 int s_conn_remove_other (LeptonObject *other_object, LeptonObject *to_remove);
 LeptonObject *s_conn_check_midpoint(LeptonObject *o_current, int x, int y);
 void s_conn_print(GList *conn_list);

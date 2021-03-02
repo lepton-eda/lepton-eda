@@ -28,7 +28,7 @@ typedef struct _LeptonList LeptonSelection;
 typedef struct _LeptonList LeptonPageList;
 
 /* lepton-schematic structures */
-typedef struct st_conn CONN;
+typedef struct st_conn LeptonConn;
 
 /* Managed text buffers */
 typedef struct _TextBuffer TextBuffer;

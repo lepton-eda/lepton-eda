@@ -584,11 +584,11 @@ static void o_net_consolidate_lowlevel (LeptonObject *object,
 static int o_net_consolidate_nomidpoint (LeptonObject *object, int x, int y)
 {
   GList *c_current;
-  CONN *conn;
+  LeptonConn *conn;
 
   c_current = object->conn_list;
   while(c_current != NULL) {
-    conn = (CONN *) c_current->data;
+    conn = (LeptonConn *) c_current->data;
     if (conn->other_object) {
       if (lepton_object_get_id (conn->other_object) != lepton_object_get_id (object) &&
           conn->x == x && conn->y == y &&
@@ -621,7 +621,7 @@ o_net_consolidate_segments (LeptonObject *object)
   int object_orient;
   int other_orient;
   GList *c_current;
-  CONN *conn;
+  LeptonConn *conn;
   LeptonObject *other_object;
   LeptonPage *page;
   int changed = 0;
@@ -636,7 +636,7 @@ o_net_consolidate_segments (LeptonObject *object)
 
   c_current = object->conn_list;
   while(c_current != NULL) {
-    conn = (CONN *) c_current->data;
+    conn = (LeptonConn *) c_current->data;
     other_object = conn->other_object;
 
     /* only look at end points which have a valid end on the other side */

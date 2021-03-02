@@ -525,7 +525,7 @@ int o_move_return_whichone(LeptonObject * object, int x, int y)
 void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
 {
   GList *cl_current;
-  CONN *c_current;
+  LeptonConn *c_current;
   LeptonObject *other;
   int whichone;
 
@@ -544,7 +544,7 @@ void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
        cl_current != NULL;
        cl_current = g_list_next(cl_current)) {
 
-    c_current = (CONN *) cl_current->data;
+    c_current = (LeptonConn *) cl_current->data;
     other = c_current->other_object;
 
     if (other == NULL)

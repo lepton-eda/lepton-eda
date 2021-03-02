@@ -52,12 +52,17 @@
  *
  *  \return The new connection object
  */
-CONN *s_conn_return_new(LeptonObject * other_object, int type, int x, int y,
-                        int whichone, int other_whichone)
+LeptonConn*
+s_conn_return_new (LeptonObject *other_object,
+                   int type,
+                   int x,
+                   int y,
+                   int whichone,
+                   int other_whichone)
 {
-  CONN *new_conn;
+  LeptonConn *new_conn;
 
-  new_conn = (CONN *) g_malloc(sizeof(CONN));
+  new_conn = (LeptonConn *) g_malloc(sizeof(LeptonConn));
 
 #if DEBUG
   printf("** creating: %s %d %d\n", other_object->name, x, y);
@@ -79,16 +84,18 @@ CONN *s_conn_return_new(LeptonObject * other_object, int type, int x, int y,
  *  in the list of connections.
  *  \param conn_list list of connection objects
  *  \param input_conn single connection object.
- *  \return TRUE if the CONN structure is unique, FALSE otherwise.
+ *  \return TRUE if the LeptonConn structure is unique, FALSE otherwise.
  */
-int s_conn_uniq(GList * conn_list, CONN * input_conn)
+int
+s_conn_uniq (GList * conn_list,
+             LeptonConn * input_conn)
 {
   GList *c_current;
-  CONN *conn;
+  LeptonConn *conn;
 
   c_current = conn_list;
   while (c_current != NULL) {
-    conn = (CONN *) c_current->data;
+    conn = (LeptonConn *) c_current->data;
 
     if (conn->other_object == input_conn->other_object &&
         conn->x == input_conn->x && conn->y == input_conn->y &&
@@ -116,13 +123,13 @@ s_conn_remove_other (LeptonObject *other_object,
                      LeptonObject *to_remove)
 {
   GList *c_current = NULL;
-  CONN *conn = NULL;
+  LeptonConn *conn = NULL;
 
   o_emit_pre_change_notify (other_object);
 
   c_current = other_object->conn_list;
   while (c_current != NULL) {
-    conn = (CONN *) c_current->data;
+    conn = (LeptonConn *) c_current->data;
 
     if (conn->other_object == to_remove) {
       other_object->conn_list =
@@ -170,7 +177,7 @@ void
 s_conn_remove_object_connections (LeptonObject *to_remove)
 {
   GList *c_iter;
-  CONN *conn;
+  LeptonConn *conn;
   GList *iter;
   LeptonObject *o_current;
 
@@ -181,7 +188,7 @@ s_conn_remove_object_connections (LeptonObject *to_remove)
       for (c_iter = to_remove->conn_list;
            c_iter != NULL;
            c_iter = g_list_next (c_iter)) {
-        conn = (CONN *) c_iter->data;
+        conn = (LeptonConn *) c_iter->data;
 
         /* keep calling this till it returns false (all refs removed) */
         /* there is NO body to this while loop */
@@ -315,8 +322,8 @@ static void add_connection (LeptonObject *object, LeptonObject *other_object,
                             int whichone, int other_whichone)
 {
   /* Describe the connection */
-  CONN *new_conn = s_conn_return_new (other_object, type, x, y,
-                                      whichone, other_whichone);
+  LeptonConn *new_conn =
+    s_conn_return_new (other_object, type, x, y, whichone, other_whichone);
   /* Do uniqness check */
   if (s_conn_uniq (object->conn_list, new_conn)) {
     object->conn_list = g_list_append (object->conn_list, new_conn);
@@ -527,14 +534,14 @@ s_conn_update_object (LeptonPage* page,
  */
 void s_conn_print(GList * conn_list)
 {
-  CONN *conn;
+  LeptonConn *conn;
   GList *cl_current;
 
   printf("\nStarting s_conn_print\n");
   cl_current = conn_list;
   while (cl_current != NULL) {
 
-    conn = (CONN *) cl_current->data;
+    conn = (LeptonConn *) cl_current->data;
     printf("-----------------------------------\n");
     printf("other object: %s\n", conn->other_object->name);
     printf("type: %d\n", conn->type);
@@ -561,13 +568,13 @@ void s_conn_print(GList * conn_list)
  */
 int s_conn_net_search(LeptonObject* new_net, int whichone, GList * conn_list)
 {
-  CONN *conn;
+  LeptonConn *conn;
   GList *cl_current;
 
   cl_current = conn_list;
   while (cl_current != NULL) {
 
-    conn = (CONN *) cl_current->data;
+    conn = (LeptonConn *) cl_current->data;
     if (conn != NULL && conn->whichone == whichone &&
         conn->x == new_net->line->x[whichone] &&
         conn->y == new_net->line->y[whichone])
@@ -639,7 +646,7 @@ GList *s_conn_return_others(GList *input_list, LeptonObject *object)
     case OBJ_BUS:
       for (c_iter = object->conn_list;
            c_iter != NULL; c_iter = g_list_next (c_iter)) {
-        CONN *conn = (CONN *) c_iter->data;
+        LeptonConn *conn = (LeptonConn *) c_iter->data;
 
         if (conn->other_object && conn->other_object != object) {
           return_list = g_list_append(return_list, conn->other_object);

@@ -763,7 +763,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
   LeptonObject *new_obj;
   GList *cl_current = NULL;
   LeptonObject *bus_object = NULL;
-  CONN *found_conn = NULL;
+  LeptonConn *found_conn = NULL;
   int done;
   int otherone;
   BUS_RIPPER rippers[2];
@@ -805,11 +805,11 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
       int bus_orientation = lepton_net_object_orientation (bus_object);
       int net_orientation = lepton_net_object_orientation (net_obj);
 
-      /* find the CONN structure which is associated with this object */
+      /* find the LeptonConn structure which is associated with this object */
       GList *cl_current2 = net_obj->conn_list;
       done = FALSE;
       while (cl_current2 != NULL && !done) {
-        CONN *tmp_conn = (CONN *) cl_current2->data;
+        LeptonConn *tmp_conn = (LeptonConn *) cl_current2->data;
 
         if (tmp_conn && tmp_conn->other_object &&
             tmp_conn->other_object == bus_object) {
