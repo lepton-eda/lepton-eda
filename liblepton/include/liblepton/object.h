@@ -38,7 +38,7 @@ struct st_object
   LeptonArc *arc;
   LeptonBox *box;
   TEXT *text;
-  PICTURE *picture;
+  LeptonPicture *picture;
   PATH *path;
 
   GList *conn_list;                     /* List of connections */

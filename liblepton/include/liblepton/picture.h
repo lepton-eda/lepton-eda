@@ -21,7 +21,6 @@
  */
 
 typedef struct st_picture LeptonPicture;
-typedef struct st_picture PICTURE;
 
 struct st_picture
 {
