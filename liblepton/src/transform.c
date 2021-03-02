@@ -156,7 +156,7 @@ lepton_transform_point (LeptonTransform *transform,
 /*! \brief Transforms a polyline or polygon
  *
  *  \param transform [in] The transform function.
- *  \param points [inout] The GArray of sPOINT to transform.
+ *  \param points [inout] The GArray of LeptonPoint to transform.
  */
 void
 lepton_transform_points (LeptonTransform *transform,
@@ -168,7 +168,7 @@ lepton_transform_points (LeptonTransform *transform,
   g_return_if_fail(points!=NULL);
 
   for (index=0; index<points->len; index++) {
-    sPOINT *point = &g_array_index(points, sPOINT, index);
+    LeptonPoint *point = &g_array_index(points, LeptonPoint, index);
     lepton_transform_point(transform, &(point->x), &(point->y));
   }
 }

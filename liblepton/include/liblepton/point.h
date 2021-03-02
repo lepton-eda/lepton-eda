@@ -21,7 +21,6 @@
  */
 
 typedef struct st_point LeptonPoint;
-typedef struct st_point sPOINT;
 
 struct st_point
 {

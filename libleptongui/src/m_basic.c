@@ -79,8 +79,10 @@ struct st_halfspace {
  *
  *  \warning halfspace must be allocated before this function is called
  */
-static void WORLDencode_halfspace (GschemPageGeometry *geometry,
-                                   sPOINT *point, HALFSPACE *halfspace)
+static void
+WORLDencode_halfspace (GschemPageGeometry *geometry,
+                       LeptonPoint *point,
+                       HALFSPACE *halfspace)
 {
   halfspace->left = point->x < geometry->viewport_left;
   halfspace->right = point->x > geometry->viewport_right;
@@ -105,8 +107,8 @@ int clip_nochange (GschemPageGeometry *geometry, int x1, int y1, int x2, int y2)
 {
   HALFSPACE half1, half2;
   HALFSPACE tmp_half;
-  sPOINT tmp_point;
-  sPOINT point1, point2;
+  LeptonPoint tmp_point;
+  LeptonPoint point1, point2;
   float slope;
   int in1, in2, done;
   int visible;

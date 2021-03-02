@@ -735,7 +735,7 @@ s_path_to_polygon (LeptonPath *path,
 {
   int closed = FALSE;
   int i;
-  sPOINT point = { 0, 0 };
+  LeptonPoint point = { 0, 0 };
 
   if (points->len > 0) {
     g_array_remove_range (points, 0, points->len - 1);
@@ -801,7 +801,7 @@ s_path_shortest_distance (LeptonPath *path,
   int closed;
   GArray *points;
 
-  points = g_array_new (FALSE, FALSE, sizeof (sPOINT));
+  points = g_array_new (FALSE, FALSE, sizeof (LeptonPoint));
 
   closed = s_path_to_polygon (path, points);
 
