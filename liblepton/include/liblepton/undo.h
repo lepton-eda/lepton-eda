@@ -41,36 +41,43 @@ struct st_undo
   /* used to control which pages are viewable when moving around */
   int page_control;
 
-  UNDO *prev;
-  UNDO *next;
+  LeptonUndo *prev;
+  LeptonUndo *next;
 };
 
-UNDO*
-s_undo_return_tail (UNDO *head);
+LeptonUndo*
+s_undo_return_tail (LeptonUndo *head);
 
-UNDO *
-s_undo_return_head (UNDO *tail);
+LeptonUndo*
+s_undo_return_head (LeptonUndo *tail);
 
-UNDO *
+LeptonUndo*
 s_undo_new_head (void);
 
 void
-s_undo_destroy_head (UNDO *u_head);
+s_undo_destroy_head (LeptonUndo *u_head);
 
-UNDO *
-s_undo_add (UNDO *head, int type, char *filename, GList *object_list, int x, int y, double scale, int page_control, int up);
+LeptonUndo*
+s_undo_add (LeptonUndo *head,
+            int type,
+            char *filename,
+            GList *object_list,
+            int x,
+            int y,
+            double scale,
+            int page_control,
+            int up);
+void
+s_undo_print_all (LeptonUndo *head);
 
 void
-s_undo_print_all (UNDO *head);
+s_undo_destroy_all (LeptonUndo *head);
 
 void
-s_undo_destroy_all (UNDO *head);
-
-void
-s_undo_remove_rest (UNDO *head);
+s_undo_remove_rest (LeptonUndo *head);
 
 int
-s_undo_levels (UNDO *head);
+s_undo_levels (LeptonUndo *head);
 
 void
 s_undo_init (LeptonPage *p_current);

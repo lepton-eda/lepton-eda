@@ -42,9 +42,9 @@ struct st_page
 
   /* Undo/Redo Stacks and pointers */
   /* needs to go into page mechanism actually */
-  UNDO *undo_bottom;
-  UNDO *undo_current;
-  UNDO *undo_tos;       /* Top Of Stack */
+  LeptonUndo *undo_bottom;
+  LeptonUndo *undo_current;
+  LeptonUndo *undo_tos;       /* Top Of Stack */
 
   /* up and down the hierarchy */
   /* this holds the pid of the parent page */

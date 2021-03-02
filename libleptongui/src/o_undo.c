@@ -131,8 +131,8 @@ o_undo_savestate (GschemToplevel *w_current,
   char *filename = NULL;
   GList *object_list = NULL;
   int levels;
-  UNDO *u_current;
-  UNDO *u_current_next;
+  LeptonUndo *u_current;
+  LeptonUndo *u_current_next;
 
   GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (view != NULL);
@@ -330,9 +330,10 @@ o_undo_savestate_old (GschemToplevel *w_current, int flag)
  *  \par Function Description
  *
  */
-char *o_undo_find_prev_filename(UNDO *start)
+char*
+o_undo_find_prev_filename (LeptonUndo *start)
 {
-  UNDO *u_current;
+  LeptonUndo *u_current;
 
   u_current = start->prev;
 
@@ -351,9 +352,9 @@ char *o_undo_find_prev_filename(UNDO *start)
  *  \par Function Description
  *
  */
-GList *o_undo_find_prev_object_head (UNDO *start)
+GList *o_undo_find_prev_object_head (LeptonUndo *start)
 {
-  UNDO *u_current;
+  LeptonUndo *u_current;
 
   u_current = start->prev;
 
@@ -383,11 +384,11 @@ o_undo_callback (GschemToplevel *w_current,
                  int type)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  UNDO *u_current;
-  UNDO *u_next;
-  UNDO *save_bottom;
-  UNDO *save_tos;
-  UNDO *save_current;
+  LeptonUndo *u_current;
+  LeptonUndo *u_next;
+  LeptonUndo *save_bottom;
+  LeptonUndo *save_tos;
+  LeptonUndo *save_current;
   int save_logging;
   int find_prev_data=FALSE;
 

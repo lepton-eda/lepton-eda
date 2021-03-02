@@ -38,10 +38,11 @@
  *  \par Function Description
  *
  */
-UNDO *s_undo_return_tail(UNDO *head)
+LeptonUndo*
+s_undo_return_tail (LeptonUndo *head)
 {
-  UNDO *u_current=NULL;
-  UNDO *ret_struct=NULL;
+  LeptonUndo *u_current=NULL;
+  LeptonUndo *ret_struct=NULL;
 
   u_current = head;
   while ( u_current != NULL ) { /* goto end of list */
@@ -57,10 +58,11 @@ UNDO *s_undo_return_tail(UNDO *head)
  *  \par Function Description
  *
  */
-UNDO *s_undo_return_head(UNDO *tail)
+LeptonUndo*
+s_undo_return_head(LeptonUndo *tail)
 {
-  UNDO *u_current=NULL;
-  UNDO *ret_struct=NULL;
+  LeptonUndo *u_current=NULL;
+  LeptonUndo *ret_struct=NULL;
 
   u_current = tail;
   while ( u_current != NULL ) { /* goto end of list */
@@ -76,11 +78,12 @@ UNDO *s_undo_return_head(UNDO *tail)
  *  \par Function Description
  *
  */
-UNDO *s_undo_new_head(void)
+LeptonUndo*
+s_undo_new_head(void)
 {
-  UNDO *u_new;
+  LeptonUndo *u_new;
 
-  u_new = (UNDO *) g_malloc(sizeof(UNDO));
+  u_new = (LeptonUndo *) g_malloc (sizeof (LeptonUndo));
   u_new->type = -1;
   u_new->filename = NULL;
   u_new->object_list = NULL;
@@ -101,7 +104,8 @@ UNDO *s_undo_new_head(void)
  *  \par Function Description
  *
  */
-void s_undo_destroy_head(UNDO *u_head)
+void
+s_undo_destroy_head (LeptonUndo *u_head)
 {
   g_free(u_head);
 }
@@ -111,13 +115,21 @@ void s_undo_destroy_head(UNDO *u_head)
  *  \par Function Description
  *
  */
-UNDO *s_undo_add (UNDO *head, int type, char *filename, GList *object_list,
-                  int x, int y, double scale, int page_control, int up)
+LeptonUndo*
+s_undo_add (LeptonUndo *head,
+            int type,
+            char *filename,
+            GList *object_list,
+            int x,
+            int y,
+            double scale,
+            int page_control,
+            int up)
 {
-  UNDO *tail;
-  UNDO *u_new;
+  LeptonUndo *tail;
+  LeptonUndo *u_new;
 
-  u_new = (UNDO *) g_malloc(sizeof(UNDO));
+  u_new = (LeptonUndo *) g_malloc (sizeof (LeptonUndo));
 
   u_new->filename = g_strdup (filename);
 
@@ -150,9 +162,10 @@ UNDO *s_undo_add (UNDO *head, int type, char *filename, GList *object_list,
  *  \par Function Description
  *
  */
-void s_undo_print_all( UNDO *head )
+void
+s_undo_print_all (LeptonUndo *head)
 {
-  UNDO *u_current;
+  LeptonUndo *u_current;
 
   u_current = head;
 
@@ -182,10 +195,10 @@ void s_undo_print_all( UNDO *head )
  *
  */
 void
-s_undo_destroy_all (UNDO *head)
+s_undo_destroy_all (LeptonUndo *head)
 {
-  UNDO *u_current;
-  UNDO *u_prev;
+  LeptonUndo *u_current;
+  LeptonUndo *u_prev;
 
   u_current = s_undo_return_tail(head);
 
@@ -210,10 +223,10 @@ s_undo_destroy_all (UNDO *head)
  *
  */
 void
-s_undo_remove_rest (UNDO *head)
+s_undo_remove_rest (LeptonUndo *head)
 {
-  UNDO *u_current;
-  UNDO *u_next;
+  LeptonUndo *u_current;
+  LeptonUndo *u_next;
 
   u_current = head;
 
@@ -240,9 +253,10 @@ s_undo_remove_rest (UNDO *head)
  *  \par Function Description
  *
  */
-int s_undo_levels(UNDO *head)
+int
+s_undo_levels (LeptonUndo *head)
 {
-  UNDO *u_current;
+  LeptonUndo *u_current;
   int count = 0;
 
   u_current = head;

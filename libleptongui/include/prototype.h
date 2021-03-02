@@ -399,8 +399,13 @@ o_undo_savestate (GschemToplevel *w_current,
                   LeptonPage *page,
                   int flag);
 void o_undo_savestate_old(GschemToplevel *w_current, int flag);
-char *o_undo_find_prev_filename(UNDO *start);
-GList *o_undo_find_prev_object_head(UNDO *start);
+
+char*
+o_undo_find_prev_filename (LeptonUndo *start);
+
+GList*
+o_undo_find_prev_object_head (LeptonUndo *start);
+
 void
 o_undo_callback (GschemToplevel *w_current,
                  LeptonPage *page,
