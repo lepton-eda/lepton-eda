@@ -338,7 +338,7 @@ LeptonObject *o_grips_search_box_world(GschemToplevel *w_current, LeptonObject *
 LeptonObject *o_grips_search_path_world(GschemToplevel *w_current, LeptonObject *o_current,
                                      int x, int y, int size, int *whichone)
 {
-  PATH_SECTION *section;
+  LeptonPathSection *section;
   int i;
   int grip_no = 0;
 
@@ -661,7 +661,7 @@ static void o_grips_start_box(GschemToplevel *w_current, LeptonObject *o_current
 static void o_grips_start_path(GschemToplevel *w_current, LeptonObject *o_current,
                                int x, int y, int whichone)
 {
-  PATH_SECTION *section;
+  LeptonPathSection *section;
   int i;
   int grip_no = 0;
   int gx = -1;

@@ -37,13 +37,14 @@ static PATH *path_copy_modify (PATH *path, int dx, int dy,
   int grip_no = 0;
 
   new_path = (PATH*) g_malloc (sizeof (PATH));
-  new_path->sections = (PATH_SECTION*) g_malloc (path->num_sections * sizeof (PATH_SECTION));
+  new_path->sections =
+    (LeptonPathSection*) g_malloc (path->num_sections * sizeof (LeptonPathSection));
   new_path->num_sections = path->num_sections;
   new_path->num_sections_max = path->num_sections;
 
   for (i = 0; i <  path->num_sections; i++) {
-    PATH_SECTION *section     = &path->sections[i];
-    PATH_SECTION *new_section = &new_path->sections[i];
+    LeptonPathSection *section     = &path->sections[i];
+    LeptonPathSection *new_section = &new_path->sections[i];
 
     x1 = section->x1 + dx; y1 = section->y1 + dy;
     x2 = section->x2 + dx; y2 = section->y2 + dy;
@@ -107,7 +108,7 @@ path_rubber_bbox (GschemToplevel *w_current, PATH *path,
   whichone = w_current->which_grip;
 
   for (i = 0; i <  path->num_sections; i++) {
-    PATH_SECTION *section = &path->sections[i];
+    LeptonPathSection *section = &path->sections[i];
 
     x1 = section->x1; y1 = section->y1;
     x2 = section->x2; y2 = section->y2;
@@ -158,7 +159,7 @@ path_expand (GschemToplevel *w_current)
   PATH *p = w_current->temp_path;
   if (p->num_sections == p->num_sections_max) {
     p->num_sections_max *= 2;
-    p->sections = g_renew (PATH_SECTION, p->sections,
+    p->sections = g_renew (LeptonPathSection, p->sections,
                            p->num_sections_max);
   }
 }
@@ -191,7 +192,7 @@ path_next_sections (GschemToplevel *w_current)
 {
   gboolean cusp_point, cusp_prev, close_path, end_path, start_path;
   PATH *p;
-  PATH_SECTION *section, *prev_section;
+  LeptonPathSection *section, *prev_section;
   int x1, y1, x2, y2, x3, y3;
   int save_num_sections;
 
@@ -353,7 +354,7 @@ o_path_start(GschemToplevel *w_current, int w_x, int w_y)
     w_current->temp_path->num_sections = 0;
   } else {
     PATH *p = g_new0 (PATH, 1);
-    p->sections = g_new0 (PATH_SECTION, TEMP_PATH_DEFAULT_SIZE);
+    p->sections = g_new0 (LeptonPathSection, TEMP_PATH_DEFAULT_SIZE);
     p->num_sections = 0;
     p->num_sections_max = TEMP_PATH_DEFAULT_SIZE;
     w_current->temp_path = p;
@@ -440,7 +441,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   gboolean close_path, end_path, start_path;
   PATH *p;
-  PATH_SECTION *section, *prev_section;
+  LeptonPathSection *section, *prev_section;
   int x1, y1, x2, y2;
 
   g_assert (w_current);

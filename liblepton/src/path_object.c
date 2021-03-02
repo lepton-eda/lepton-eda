@@ -330,7 +330,7 @@ lepton_path_object_modify (LeptonObject *object,
 {
   int i;
   int grip_no = 0;
-  PATH_SECTION *section;
+  LeptonPathSection *section;
 
   o_emit_pre_change_notify (object);
 
@@ -381,7 +381,7 @@ lepton_path_object_translate (LeptonObject *object,
                               int dx,
                               int dy)
 {
-  PATH_SECTION *section;
+  LeptonPathSection *section;
   int i;
 
   g_return_if_fail (lepton_object_is_path (object));
@@ -428,7 +428,7 @@ lepton_path_object_rotate (int world_centerx,
                            int angle,
                            LeptonObject *object)
 {
-  PATH_SECTION *section;
+  LeptonPathSection *section;
   int i;
 
   g_return_if_fail (lepton_object_is_path (object));
@@ -480,7 +480,7 @@ lepton_path_object_mirror (int world_centerx,
                            int world_centery,
                            LeptonObject *object)
 {
-  PATH_SECTION *section;
+  LeptonPathSection *section;
   int i;
 
   g_return_if_fail (lepton_object_is_path (object));
@@ -529,7 +529,7 @@ lepton_path_object_calculate_bounds (const LeptonObject *object,
 
   /* Find the bounds of the path region */
   for (i = 0; i < object->path->num_sections; i++) {
-    PATH_SECTION *section = &object->path->sections[i];
+    LeptonPathSection *section = &object->path->sections[i];
 
     switch (section->code) {
       case PATH_CURVETO:

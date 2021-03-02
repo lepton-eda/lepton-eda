@@ -20,7 +20,7 @@
 /*! \file path.h
  */
 
-typedef struct st_path_section PATH_SECTION;
+typedef struct st_path_section LeptonPathSection;
 
 typedef struct st_path LeptonPath;
 typedef struct st_path PATH;
@@ -47,7 +47,7 @@ struct st_path_section
 
 struct st_path
 {
-  PATH_SECTION *sections; /* Bezier path segments  */
+  LeptonPathSection *sections; /* Bezier path segments  */
   int num_sections;       /* Number with data      */
   int num_sections_max;   /* Number allocated      */
 };

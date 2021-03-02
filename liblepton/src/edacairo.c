@@ -495,8 +495,11 @@ eda_cairo_path_hint (cairo_t *cr, int flags,
 }
 
 void
-eda_cairo_path (cairo_t *cr, int flags, double line_width,
-                int nsections, PATH_SECTION *sections)
+eda_cairo_path (cairo_t *cr,
+                int flags,
+                double line_width,
+                int nsections,
+                LeptonPathSection *sections)
 {
   int i;
   int s_line_width;
@@ -514,7 +517,7 @@ eda_cairo_path (cairo_t *cr, int flags, double line_width,
   }
 
   for (i = 0; i < nsections; i++) {
-    PATH_SECTION *section = sections + i;
+    LeptonPathSection *section = sections + i;
     double x1 = section->x1;
     double x2 = section->x2;
     double x3 = section->x3;

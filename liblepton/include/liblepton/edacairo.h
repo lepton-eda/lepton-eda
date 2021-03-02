@@ -49,9 +49,12 @@ void eda_cairo_center_arc (cairo_t *cr, int flags, double center_width,
 
 void eda_cairo_stroke (cairo_t *cr, int flags, int line_type, int line_end,
                        double wwidth, double wlength, double wspace);
-
-void eda_cairo_path (cairo_t *cr, int flags, double line_width, int nsections,
-                     PATH_SECTION *sections);
+void
+eda_cairo_path (cairo_t *cr,
+                int flags,
+                double line_width,
+                int nsections,
+                LeptonPathSection *sections);
 
 G_END_DECLS
 #endif /* !__EDA_CAIRO_H__ */

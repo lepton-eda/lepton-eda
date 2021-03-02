@@ -1832,7 +1832,7 @@ SCM_DEFINE (path_ref, "%path-ref", 2, 0, 0,
     scm_out_of_range (s_path_ref, index_s);
   }
 
-  PATH_SECTION *section = &obj->path->sections[idx];
+  LeptonPathSection *section = &obj->path->sections[idx];
 
   switch (section->code) {
   case PATH_MOVETO:
@@ -1905,7 +1905,7 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
      * location down. */
     memmove (&obj->path->sections[idx],
              &obj->path->sections[idx+1],
-             sizeof (PATH_SECTION) * (obj->path->num_sections - idx - 1));
+             sizeof (LeptonPathSection) * (obj->path->num_sections - idx - 1));
     obj->path->num_sections--;
   }
 
@@ -1960,7 +1960,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
 
   LeptonObject *obj = edascm_to_object (obj_s);
   PATH *path = obj->path;
-  PATH_SECTION section = {(PATH_CODE) 0, 0, 0, 0, 0, 0, 0};
+  LeptonPathSection section = {(PATH_CODE) 0, 0, 0, 0, 0, 0, 0};
 
   /* Check & extract path element type. */
   if      (scm_is_eq (type_s, closepath_sym)) { section.code = PATH_END;     }
@@ -2006,8 +2006,10 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
 
   /* Make sure there's enough space for the new element */
   if (path->num_sections == path->num_sections_max) {
-    path->sections = (PATH_SECTION*) g_realloc (path->sections,
-                                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
+    path->sections =
+      (LeptonPathSection*) g_realloc (path->sections,
+                                      (path->num_sections_max <<= 1) *
+                                      sizeof (LeptonPathSection));
   }
 
   /* Move path contents to make a gap in the right place. */
@@ -2017,7 +2019,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
     idx = path->num_sections;
   } else {
     memmove (&path->sections[idx+1], &path->sections[idx],
-             sizeof (PATH_SECTION) * (path->num_sections - idx));
+             sizeof (LeptonPathSection) * (path->num_sections - idx));
   }
 
   path->num_sections++;

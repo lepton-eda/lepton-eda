@@ -1220,7 +1220,7 @@ eda_renderer_draw_path_grips (EdaRenderer *renderer, LeptonObject *object)
 {
   int i, last_x = 0, last_y = 0, next_x, next_y;
   for (i = 0; i < object->path->num_sections; i++) {
-    PATH_SECTION *section = object->path->sections + i;
+    LeptonPathSection *section = object->path->sections + i;
 
     if (section->code != PATH_END) {
       next_x = section->x3;

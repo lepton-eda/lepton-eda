@@ -54,14 +54,14 @@ s_path_new (void)
   path = g_new (LeptonPath, 1);
   path->num_sections = 0;
   path->num_sections_max = 16;
-  path->sections = g_new (PATH_SECTION, path->num_sections_max);
+  path->sections = g_new (LeptonPathSection, path->num_sections_max);
 
   return path;
 }
 
 
 LeptonPath*
-s_path_new_from (PATH_SECTION *sections)
+s_path_new_from (LeptonPathSection *sections)
 {
   LeptonPath *path;
   int i;
@@ -76,9 +76,9 @@ s_path_new_from (PATH_SECTION *sections)
 
   path->num_sections = i;
   path->num_sections_max = i;
-  path->sections = g_new (PATH_SECTION, i);
+  path->sections = g_new (LeptonPathSection, i);
 
-  memcpy (path->sections, sections, i * sizeof (PATH_SECTION));
+  memcpy (path->sections, sections, i * sizeof (LeptonPathSection));
   return path;
 }
 
@@ -98,7 +98,7 @@ s_path_moveto (LeptonPath *path,
                double x,
                double y)
 {
-  PATH_SECTION *sections;
+  LeptonPathSection *sections;
   int num_sections;
 
   g_return_if_fail (path != NULL);
@@ -118,8 +118,10 @@ s_path_moveto (LeptonPath *path,
   num_sections = path->num_sections++;
 
   if (num_sections == path->num_sections_max)
-    path->sections = (PATH_SECTION*) g_realloc (path->sections,
-                                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
+    path->sections =
+      (LeptonPathSection*) g_realloc (path->sections,
+                                      (path->num_sections_max <<= 1) *
+                                      sizeof (LeptonPathSection));
   sections = path->sections;
   sections[num_sections].code = PATH_MOVETO_OPEN;
   sections[num_sections].x3 = x;
@@ -132,7 +134,7 @@ s_path_lineto (LeptonPath *path,
                double x,
                double y)
 {
-  PATH_SECTION *sections;
+  LeptonPathSection *sections;
   int num_sections;
 
   g_return_if_fail (path != NULL);
@@ -140,8 +142,10 @@ s_path_lineto (LeptonPath *path,
   num_sections = path->num_sections++;
 
   if (num_sections == path->num_sections_max)
-    path->sections = (PATH_SECTION*) g_realloc (path->sections,
-                                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
+    path->sections =
+      (LeptonPathSection*) g_realloc (path->sections,
+                                      (path->num_sections_max <<= 1) *
+                                      sizeof (LeptonPathSection));
   sections = path->sections;
   sections[num_sections].code = PATH_LINETO;
   sections[num_sections].x3 = x;
@@ -158,7 +162,7 @@ s_path_curveto (LeptonPath *path,
                 double x3,
                 double y3)
 {
-  PATH_SECTION *sections;
+  LeptonPathSection *sections;
   int num_sections;
 
   g_return_if_fail (path != NULL);
@@ -166,8 +170,10 @@ s_path_curveto (LeptonPath *path,
   num_sections = path->num_sections++;
 
   if (num_sections == path->num_sections_max)
-    path->sections = (PATH_SECTION*) g_realloc (path->sections,
-                                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
+    path->sections =
+      (LeptonPathSection*) g_realloc (path->sections,
+                                      (path->num_sections_max <<= 1) *
+                                      sizeof (LeptonPathSection));
   sections = path->sections;
   sections[num_sections].code = PATH_CURVETO;
   sections[num_sections].x1 = x1;
@@ -189,8 +195,10 @@ s_path_art_finish (LeptonPath * path)
   num_sections = path->num_sections++;
 
   if (num_sections == path->num_sections_max)
-    path->sections = (PATH_SECTION*) g_realloc (path->sections,
-                                                (path->num_sections_max <<= 1) * sizeof (PATH_SECTION));
+    path->sections =
+      (LeptonPathSection*) g_realloc (path->sections,
+                                      (path->num_sections_max <<= 1) *
+                                      sizeof (LeptonPathSection));
   path->sections[num_sections].code = PATH_END;
 }
 
@@ -681,7 +689,7 @@ s_path_parse (const char *path_str)
 char*
 s_path_string_from_path (const LeptonPath *path)
 {
-  PATH_SECTION *section;
+  LeptonPathSection *section;
   GString *path_string;
   int i;
 
@@ -743,7 +751,7 @@ s_path_to_polygon (LeptonPath *path,
 
   for (i = 0; i < path->num_sections; i++) {
     LeptonBezier bezier;
-    PATH_SECTION *section = &path->sections[i];
+    LeptonPathSection *section = &path->sections[i];
 
     switch (section->code) {
       case PATH_CURVETO:
