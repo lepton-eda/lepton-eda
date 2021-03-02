@@ -565,7 +565,7 @@ x_fileselect_save (GschemToplevel *w_current,
  *  \todo Make this a registered callback function with user data,
  *        as we'd rather be passed a GschemToplevel than a LeptonToplevel.
  *
- *  \param [in] user_data The TOPLEVEL object.
+ *  \param [in] user_data The GschemToplevel object.
  *  \param [in] message   Message to display to user.
  *  \return TRUE if the user wants to load the backup file, FALSE otherwise.
  */
