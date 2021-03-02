@@ -161,8 +161,8 @@ char *u_basic_breakup_string(char *string, char delimiter, int count)
     j = 0;
 
     /* Old forgiving parsing */
-    /*		while(string[i] != ',' && string[i] != ';' && */
-    /*		      string[i] != ' ' && string[i] != '\0') {*/
+    /*   while(string[i] != ',' && string[i] != ';' && */
+    /*         string[i] != ' ' && string[i] != '\0') {*/
 
     while(string[i] != delimiter && string[i] != '\0') {
       return_value[j] = string[i];
