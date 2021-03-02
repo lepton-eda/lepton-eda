@@ -375,7 +375,7 @@ o_circle_read (const char buf[],
   new_obj = lepton_circle_object_new (color, x1, y1, radius);
 
   o_set_line_options (new_obj,
-                      (OBJECT_END) circle_end,
+                      (LeptonLineCapType) circle_end,
                       (LeptonLineType) circle_type,
                       circle_width,
                       circle_length,

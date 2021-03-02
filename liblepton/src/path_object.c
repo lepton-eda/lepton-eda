@@ -236,7 +236,7 @@ o_path_read (const char *first_line,
 
   /* set its line options */
   o_set_line_options (new_obj,
-                      (OBJECT_END) line_end,
+                      (LeptonLineCapType) line_end,
                       (LeptonLineType) line_type,
                       line_width,
                       line_length,
@@ -272,7 +272,7 @@ lepton_path_object_to_buffer (const LeptonObject *object)
   int line_width, line_space, line_length;
   char *buf;
   int num_lines;
-  OBJECT_END line_end;
+  LeptonLineCapType line_end;
   LeptonLineType line_type;
   OBJECT_FILLING fill_type;
   int fill_width, angle1, pitch1, angle2, pitch2;

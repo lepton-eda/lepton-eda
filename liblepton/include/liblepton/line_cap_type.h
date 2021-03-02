@@ -31,4 +31,3 @@ enum _LeptonLineCapType
 };
 
 typedef enum _LeptonLineCapType LeptonLineCapType;
-typedef enum _LeptonLineCapType OBJECT_END;
