@@ -2317,7 +2317,7 @@ i_callback_attributes_show_name (GtkWidget *widget, gpointer data)
   }
 
   if (o_select_selected (w_current)) {
-    SELECTION *selection = toplevel->page_current->selection_list;
+    LeptonSelection *selection = toplevel->page_current->selection_list;
     GList *s_current;
 
     for (s_current = lepton_list_get_glist (selection);
@@ -2352,7 +2352,7 @@ i_callback_attributes_show_value (GtkWidget *widget, gpointer data)
   }
 
   if (o_select_selected (w_current)) {
-    SELECTION *selection = toplevel->page_current->selection_list;
+    LeptonSelection *selection = toplevel->page_current->selection_list;
     GList *s_current;
 
     for (s_current = lepton_list_get_glist (selection);
@@ -2387,7 +2387,7 @@ i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
   }
 
   if (o_select_selected (w_current)) {
-    SELECTION *selection = toplevel->page_current->selection_list;
+    LeptonSelection *selection = toplevel->page_current->selection_list;
     GList *s_current;
 
     for (s_current = lepton_list_get_glist (selection);
@@ -2422,7 +2422,7 @@ i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
   }
 
   if (o_select_selected (w_current)) {
-    SELECTION *selection = toplevel->page_current->selection_list;
+    LeptonSelection *selection = toplevel->page_current->selection_list;
     GList *s_current;
 
     for (s_current = lepton_list_get_glist (selection);

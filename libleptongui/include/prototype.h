@@ -201,9 +201,18 @@ void o_arc_end4(GschemToplevel *w_current, int radius, int start_angle, int swee
 void o_arc_motion(GschemToplevel *w_current, int x, int y, int whichone);
 void o_arc_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
 /* o_attrib.c */
-void o_attrib_add_selected(GschemToplevel *w_current, SELECTION *selection, LeptonObject *selected);
-void o_attrib_deselect_invisible(GschemToplevel *w_current, SELECTION *selection, LeptonObject *selected);
-void o_attrib_select_invisible(GschemToplevel *w_current, SELECTION *selection, LeptonObject *selected);
+void
+o_attrib_add_selected (GschemToplevel *w_current,
+                       LeptonSelection *selection,
+                       LeptonObject *selected);
+void
+o_attrib_deselect_invisible (GschemToplevel *w_current,
+                             LeptonSelection *selection,
+                             LeptonObject *selected);
+void
+o_attrib_select_invisible (GschemToplevel *w_current,
+                           LeptonSelection *selection,
+                           LeptonObject *selected);
 void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object);
 void o_attrib_toggle_show_name_value(GschemToplevel *w_current, LeptonObject *object, int new_show_name_value);
 LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current, const char *text_string, int visibility, int show_name_value, LeptonObject *object);

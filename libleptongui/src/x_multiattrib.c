@@ -126,7 +126,7 @@ x_multiattrib_close (GschemToplevel *w_current)
  *  \par Function Description
  *
  *  If the GschemToplevel has an open multiattrib dialog, switch to
- *  watching the current page's SELECTION object for changes.
+ *  watching the current page's LeptonSelection object for changes.
  *
  *  \param [in] w_current  The GschemToplevel object.
  */

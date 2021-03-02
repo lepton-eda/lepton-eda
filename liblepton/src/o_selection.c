@@ -27,13 +27,14 @@
 
 #include "liblepton_priv.h"
 
-/*! \brief Returns a pointer to a new SELECTION object.
- *  \par Returns a pointer to a new SELECTION object.
- *  \return pointer to the new SELECTION object.
+/*! \brief Returns a pointer to a new LeptonSelection object.
+ *  \par Returns a pointer to a new LeptonSelection object.
+ *  \return pointer to the new LeptonSelection object.
  */
-SELECTION *o_selection_new( void )
+LeptonSelection*
+o_selection_new ()
 {
-  return (SELECTION*)lepton_list_new();
+  return (LeptonSelection*) lepton_list_new ();
 }
 
 /*! \brief Selects the given object and adds it to the selection list
@@ -45,7 +46,7 @@ SELECTION *o_selection_new( void )
  *  \param [in] o_selected Object to select.
  */
 void
-o_selection_add (SELECTION *selection,
+o_selection_add (LeptonSelection *selection,
                  LeptonObject *o_selected)
 {
   if (o_selected->selected == FALSE)
@@ -65,7 +66,7 @@ o_selection_add (SELECTION *selection,
  *  \param [in] o_selected Object to unselect and remove from the list.
  */
 void
-o_selection_remove (SELECTION *selection,
+o_selection_remove (LeptonSelection *selection,
                     LeptonObject *o_selected)
 {
   if (o_selected == NULL) {
@@ -85,7 +86,8 @@ o_selection_remove (SELECTION *selection,
  *  \param [in] selection Pointer to selection list to print.
  *
  */
-void o_selection_print_all(const SELECTION *selection)
+void
+o_selection_print_all (const LeptonSelection *selection)
 {
   const GList *s_current;
 

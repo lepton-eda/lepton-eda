@@ -28,7 +28,7 @@ struct st_page
   int pid;
 
   GList *_object_list;
-  SELECTION *selection_list; /* new selection mechanism */
+  LeptonSelection *selection_list; /* selection mechanism */
   GList *place_list;
   LeptonObject *object_lastplace; /* the last found item */
   GList *connectible_list;  /* connectible page objects */

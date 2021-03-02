@@ -355,7 +355,7 @@ obj_selected (LeptonPage *page,
               int type)
 {
   LeptonObject* result = FALSE;
-  SELECTION* selection = page->selection_list;
+  LeptonSelection* selection = page->selection_list;
 
   GList* gl = lepton_list_get_glist (selection);
   for ( ; gl != NULL; gl = g_list_next (gl) )

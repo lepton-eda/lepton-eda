@@ -149,16 +149,17 @@ void o_embed (LeptonObject *o_current);
 void o_unembed (LeptonObject *o_current);
 
 /* o_selection.c */
-SELECTION *o_selection_new( void );
+LeptonSelection*
+o_selection_new ();
 
 void
-o_selection_add (SELECTION *selection,
+o_selection_add (LeptonSelection *selection,
                  LeptonObject *o_selected);
-
-void o_selection_print_all(const SELECTION *selection);
+void
+o_selection_print_all (const LeptonSelection *selection);
 
 void
-o_selection_remove (SELECTION *selection,
+o_selection_remove (LeptonSelection *selection,
                     LeptonObject *o_selected);
 
 /* s_attrib.c */

@@ -572,7 +572,7 @@ int o_select_selected(GschemToplevel *w_current)
 void o_select_unselect_all(GschemToplevel *w_current)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  SELECTION *selection = toplevel->page_current->selection_list;
+  LeptonSelection *selection = toplevel->page_current->selection_list;
   GList *removed = NULL;
   GList *iter;
 
@@ -599,7 +599,7 @@ void
 o_select_visible_unlocked (GschemToplevel *w_current)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  SELECTION *selection = toplevel->page_current->selection_list;
+  LeptonSelection *selection = toplevel->page_current->selection_list;
   const GList *iter;
   GList *added;
   gboolean show_hidden_text =

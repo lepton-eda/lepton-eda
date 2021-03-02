@@ -734,7 +734,7 @@ gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter)
  *  \param [in] adapter This adapter
  *  \return The libgeda selection
  */
-SELECTION*
+LeptonSelection*
 gschem_selection_adapter_get_selection (GschemSelectionAdapter *adapter)
 {
   g_return_val_if_fail (adapter != NULL, NULL);
@@ -1708,7 +1708,8 @@ gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type
  *  \param [in] selection
  */
 void
-gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTION *selection)
+gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter,
+                                        LeptonSelection *selection)
 {
   g_return_if_fail (adapter != NULL);
 
@@ -2181,7 +2182,7 @@ static GList*
 get_selection_iter (GschemSelectionAdapter *adapter)
 {
   GList *iter = NULL;
-  SELECTION *selection = gschem_selection_adapter_get_selection (adapter);
+  LeptonSelection *selection = gschem_selection_adapter_get_selection (adapter);
 
   if (selection != NULL) {
     iter = lepton_list_get_glist (selection);

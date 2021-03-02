@@ -51,7 +51,7 @@ struct _GschemSelectionAdapter
 {
   GObject parent;
 
-  SELECTION *selection;
+  LeptonSelection *selection;
   LeptonToplevel *toplevel;
 };
 
@@ -97,7 +97,7 @@ gschem_selection_adapter_get_object_color (GschemSelectionAdapter *adapter);
 int
 gschem_selection_adapter_get_pin_type (GschemSelectionAdapter *adapter);
 
-SELECTION *
+LeptonSelection *
 gschem_selection_adapter_get_selection (GschemSelectionAdapter *adapter);
 
 int
@@ -161,7 +161,8 @@ void
 gschem_selection_adapter_set_pin_type (GschemSelectionAdapter *adapter, int type);
 
 void
-gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter, SELECTION *selection);
+gschem_selection_adapter_set_selection (GschemSelectionAdapter *adapter,
+                                        LeptonSelection *selection);
 
 void
 gschem_selection_adapter_set_text_color (GschemSelectionAdapter *adapter, int color);

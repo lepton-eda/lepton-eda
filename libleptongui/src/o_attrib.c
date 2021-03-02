@@ -51,8 +51,10 @@
  *
  *  \todo get a better name
  */
-void o_attrib_add_selected(GschemToplevel *w_current, SELECTION *selection,
-                           LeptonObject *selected)
+void
+o_attrib_add_selected (GschemToplevel *w_current,
+                       LeptonSelection *selection,
+                       LeptonObject *selected)
 {
   LeptonObject *a_current;
   GList *a_iter;
@@ -87,12 +89,13 @@ void o_attrib_add_selected(GschemToplevel *w_current, SELECTION *selection,
  *  function returns immediately.
  *
  *  \param [in]     w_current  The GschemToplevel object.
- *  \param [in,out] selection  The SELECTION list to remove from.
+ *  \param [in,out] selection  The LeptonSelection list to remove from.
  *  \param [in]     object     The LeptonObject whose invisible attributes to remove.
  */
-void o_attrib_deselect_invisible (GschemToplevel *w_current,
-                                  SELECTION *selection,
-                                  LeptonObject *selected)
+void
+o_attrib_deselect_invisible (GschemToplevel *w_current,
+                             LeptonSelection *selection,
+                             LeptonObject *selected)
 {
   LeptonObject *a_current;
   GList *a_iter;
@@ -123,12 +126,13 @@ void o_attrib_deselect_invisible (GschemToplevel *w_current,
  *  function returns immediately.
  *
  *  \param [in]     w_current  The GschemToplevel object.
- *  \param [in,out] selection  The SELECTION list to add to.
+ *  \param [in,out] selection  The LeptonSelection list to add to.
  *  \param [in]     object     The LeptonObject whose invisible attributes to add.
  */
-void o_attrib_select_invisible (GschemToplevel *w_current,
-                                  SELECTION *selection,
-                                  LeptonObject *selected)
+void
+o_attrib_select_invisible (GschemToplevel *w_current,
+                           LeptonSelection *selection,
+                           LeptonObject *selected)
 {
   LeptonObject *a_current;
   GList *a_iter;
