@@ -185,7 +185,7 @@ void s_log_close (void)
 
   /* remove the handler */
   g_log_remove_handler (NULL, log_handler_id);
-  
+
   /* close the file */
   if (logfile_fd != -1) {
     close (logfile_fd);
@@ -204,11 +204,11 @@ void s_log_close (void)
 gchar *s_log_read (void)
 {
   gboolean tmp;
-#define BUFSIZE 200  
+#define BUFSIZE 200
   gchar buf[BUFSIZE];
   GString *contents;
   gint len;
-  
+
   if (logfile_fd == -1) {
     return NULL;
   }
@@ -240,15 +240,15 @@ gchar *s_log_read (void)
  *
  *  \param [in] log_domain  (unused).
  *  \param [in] log_level   (unused).
- *  \param [in] message     Character string containing message to 
+ *  \param [in] message     Character string containing message to
  *                          write to log.
  *  \param [in] user_data   (unused).
  *
  */
 static void s_log_handler (const gchar *log_domain,
-			   GLogLevelFlags log_level,
-			   const gchar *message,
-			   gpointer user_data)
+                           GLogLevelFlags log_level,
+                           const gchar *message,
+                           gpointer user_data)
 {
   if (do_logging == FALSE) {
     return;
