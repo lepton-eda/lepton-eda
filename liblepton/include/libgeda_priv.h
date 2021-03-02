@@ -29,7 +29,7 @@
 #include "geda_component.h"
 #include "coord.h"
 #include "line.h"
-#include "geda_path.h"
+#include "path.h"
 #include "geda_picture.h"
 #include "geda_text.h"
 #include "geda_transform.h"
