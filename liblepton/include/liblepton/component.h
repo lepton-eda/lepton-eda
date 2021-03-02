@@ -20,7 +20,7 @@
 /*! \file component.h
  */
 
-typedef struct st_component COMPONENT;
+typedef struct st_component LeptonComponent;
 
 struct st_component
 {

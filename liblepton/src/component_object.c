@@ -732,7 +732,7 @@ o_component_new (LeptonPage *page,
 
   new_node->selectable = selectable;
 
-  new_node->component = (COMPONENT *) g_malloc(sizeof(COMPONENT));
+  new_node->component = (LeptonComponent *) g_malloc (sizeof (LeptonComponent));
   new_node->component->prim_objs = NULL;
   new_node->component->angle = angle;
   new_node->component->mirror = mirror;
@@ -815,7 +815,7 @@ o_component_new_embedded (char type,
 
   new_node = s_basic_new_object(type, "complex");
 
-  new_node->component = (COMPONENT *) g_malloc(sizeof(COMPONENT));
+  new_node->component = (LeptonComponent *) g_malloc (sizeof (LeptonComponent));
   new_node->component->x = x;
   new_node->component->y = y;
 
@@ -1015,7 +1015,7 @@ o_component_copy (LeptonObject *o_current)
   o_new->selectable = o_current->selectable;
   o_new->component_basename = g_strdup(o_current->component_basename);
 
-  o_new->component = (COMPONENT*) g_malloc0 (sizeof (COMPONENT));
+  o_new->component = (LeptonComponent*) g_malloc0 (sizeof (LeptonComponent));
   o_new->component->x = o_current->component->x;
   o_new->component->y = o_current->component->y;
   o_new->component->angle = o_current->component->angle;

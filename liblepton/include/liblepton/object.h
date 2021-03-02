@@ -32,7 +32,7 @@ struct st_object
 
   LeptonBounds bounds;
 
-  COMPONENT *component;
+  LeptonComponent *component;
   LeptonLine *line;
   LeptonCircle *circle;
   LeptonArc *arc;
