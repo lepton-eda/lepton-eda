@@ -36,4 +36,3 @@ enum _LeptonLineType
 };
 
 typedef enum _LeptonLineType LeptonLineType;
-typedef enum _LeptonLineType OBJECT_TYPE;

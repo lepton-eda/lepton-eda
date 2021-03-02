@@ -203,7 +203,7 @@ struct FillStyle fillmap[26] =
 struct LineStyle {
   int line_width;             /* width of line */
   OBJECT_END line_capstyle;   /* gEDA line cap style (end style) */
-  OBJECT_TYPE line_dashstyle; /* gEDA line dash style */
+  LeptonLineType line_dashstyle; /* gEDA line dash style */
   int line_dashlength;        /* length of line dashes */
   int line_dashspace;         /* space between line dashes */
 };

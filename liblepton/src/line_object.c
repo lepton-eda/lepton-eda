@@ -428,7 +428,7 @@ o_line_read (const char buf[],
   /* set its line options */
   o_set_line_options (new_obj,
                       (OBJECT_END) line_end,
-                      (OBJECT_TYPE) line_type,
+                      (LeptonLineType) line_type,
                       line_width,
                       line_length,
                       line_space);

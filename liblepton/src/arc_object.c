@@ -439,7 +439,7 @@ LeptonObject
 
   o_set_line_options (new_obj,
                       (OBJECT_END) arc_end,
-                      (OBJECT_TYPE) arc_type,
+                      (LeptonLineType) arc_type,
                       arc_width,
                       arc_length,
                       arc_space);

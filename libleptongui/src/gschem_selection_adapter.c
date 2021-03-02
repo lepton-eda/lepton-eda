@@ -103,7 +103,7 @@ gschem_selection_adapter_get_cap_style (GschemSelectionAdapter *adapter)
     OBJECT_END temp_cap_style;
     gint temp_dash_length;
     gint temp_dash_space;
-    OBJECT_TYPE temp_line_type;
+    LeptonLineType temp_line_type;
     gint temp_line_width;
 
     success = o_get_line_options (object,
@@ -151,7 +151,7 @@ gschem_selection_adapter_get_dash_length (GschemSelectionAdapter *adapter)
     OBJECT_END temp_cap_style;
     gint temp_dash_length;
     gint temp_dash_space;
-    OBJECT_TYPE temp_line_type;
+    LeptonLineType temp_line_type;
     gint temp_line_width;
 
     success = o_get_line_options (object,
@@ -199,7 +199,7 @@ gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter)
     OBJECT_END temp_cap_style;
     gint temp_dash_length;
     gint temp_dash_space;
-    OBJECT_TYPE temp_line_type;
+    LeptonLineType temp_line_type;
     gint temp_line_width;
 
     success = o_get_line_options (object,
@@ -553,7 +553,7 @@ gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter)
     OBJECT_END temp_cap_style;
     gint temp_dash_length;
     gint temp_dash_space;
-    OBJECT_TYPE temp_line_type;
+    LeptonLineType temp_line_type;
     gint temp_line_width;
 
     success = o_get_line_options (object,
@@ -601,7 +601,7 @@ gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter)
     OBJECT_END temp_cap_style;
     gint temp_dash_length;
     gint temp_dash_space;
-    OBJECT_TYPE temp_line_type;
+    LeptonLineType temp_line_type;
     gint temp_line_width;
 
     success = o_get_line_options (object,
@@ -1386,7 +1386,7 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
     OBJECT_END temp_cap_style;
     int temp_dash_length;
     int temp_dash_space;
-    OBJECT_TYPE temp_line_type;
+    LeptonLineType temp_line_type;
     int temp_line_width;
 
     success = o_get_line_options (object,
@@ -1399,7 +1399,7 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
     if (success) {
       o_set_line_options (object,
                           temp_cap_style,
-                          (OBJECT_TYPE) line_type,
+                          (LeptonLineType) line_type,
                           temp_line_width,
                           temp_dash_length,
                           temp_dash_space);
@@ -1445,7 +1445,7 @@ gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int li
     OBJECT_END temp_cap_style;
     int temp_dash_length;
     int temp_dash_space;
-    OBJECT_TYPE temp_line_type;
+    LeptonLineType temp_line_type;
     int temp_line_width;
 
     success = o_get_line_options (object,
@@ -1502,7 +1502,7 @@ gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int d
     OBJECT_END temp_cap_style;
     int temp_dash_length;
     int temp_dash_space;
-    OBJECT_TYPE temp_line_type;
+    LeptonLineType temp_line_type;
     int temp_line_width;
 
     success = o_get_line_options (object,
@@ -1559,7 +1559,7 @@ gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int da
     OBJECT_END temp_cap_style;
     int temp_dash_length;
     int temp_dash_space;
-    OBJECT_TYPE temp_line_type;
+    LeptonLineType temp_line_type;
     int temp_line_width;
 
     success = o_get_line_options (object,
@@ -1616,7 +1616,7 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
     OBJECT_END temp_cap_style;
     int temp_dash_length;
     int temp_dash_space;
-    OBJECT_TYPE temp_line_type;
+    LeptonLineType temp_line_type;
     int temp_line_width;
 
     success = o_get_line_options (object,

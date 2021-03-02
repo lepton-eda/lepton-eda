@@ -596,12 +596,12 @@ s_object_remove_weak_ptr (LeptonObject *object,
 /*! \brief Set an #LeptonObject's line options.
  *  \par Function Description
  *  This function allows a line's end, type, width, length and space to be set.
- *  See #OBJECT_END and #OBJECT_TYPE for information on valid
+ *  See #OBJECT_END and #LeptonLineType for information on valid
  *  object end and type values.
  *
  *  \param [in,out] o_current  LeptonObject to set line options on.
  *  \param [in]     end        An OBJECT_END.
- *  \param [in]     type       An OBJECT_TYPE.
+ *  \param [in]     type       An LeptonLineType.
  *  \param [in]     width      Line width.
  *  \param [in]     length     Line length.
  *  \param [in]     space      Spacing between dashes/dots. Cannot be negative.
@@ -612,7 +612,7 @@ s_object_remove_weak_ptr (LeptonObject *object,
 void
 o_set_line_options (LeptonObject *o_current,
                     OBJECT_END end,
-                    OBJECT_TYPE type,
+                    LeptonLineType type,
                     int width,
                     int length,
                     int space)
@@ -662,12 +662,12 @@ o_set_line_options (LeptonObject *o_current,
 /*! \brief get #LeptonObject's line properties.
  *  \par Function Description
  *  This function get's the #LeptonObject's line options.
- *  See #OBJECT_END and #OBJECT_TYPE for information on valid
+ *  See #OBJECT_END and #LeptonLineType for information on valid
  *  object end and type values.
  *
  *  \param [in]   object    LeptonObject to read the properties
  *  \param [out]  end       An OBJECT_END.
- *  \param [out]  type      An OBJECT_TYPE.
+ *  \param [out]  type      An LeptonLineType.
  *  \param [out]  width     Line width.
  *  \param [out]  length    Line length.
  *  \param [out]  space     Spacing between dashes/dots.
@@ -675,7 +675,7 @@ o_set_line_options (LeptonObject *o_current,
  *
  */
 gboolean o_get_line_options(LeptonObject *object,
-                            OBJECT_END *end, OBJECT_TYPE *type,
+                            OBJECT_END *end, LeptonLineType *type,
                             int *width, int *length, int *space)
 {
   if (!lepton_object_is_line (object)
