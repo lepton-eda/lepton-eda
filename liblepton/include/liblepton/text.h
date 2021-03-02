@@ -21,7 +21,6 @@
  */
 
 typedef struct st_text LeptonText;
-typedef struct st_text TEXT;
 
 struct st_text
 {

@@ -348,7 +348,7 @@ update_disp_string (LeptonObject *object)
 {
   char *name = NULL;
   char *value = NULL;
-  TEXT *text = object->text;
+  LeptonText *text = object->text;
 
   g_free (text->disp_string);
 
@@ -421,13 +421,13 @@ lepton_text_object_new (gint color,
                         gint show_name_value)
 {
   LeptonObject *new_node=NULL;
-  TEXT *text;
+  LeptonText *text;
 
   g_return_val_if_fail (string != NULL, NULL);
 
   new_node = s_basic_new_object (OBJ_TEXT, "text");
 
-  text = (TEXT *) g_malloc(sizeof(TEXT));
+  text = (LeptonText *) g_malloc (sizeof (LeptonText));
 
   text->string = g_strdup (string);
   text->disp_string = NULL; /* We'll fix this up later */
