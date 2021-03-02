@@ -75,46 +75,56 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet,
                                TABLE **local_table, int num_rows, int num_cols);
 
 /* ------------- s_toplevel.c ------------- */
-int s_toplevel_read_page(TOPLEVEL *toplevel, char *filename);
-void s_toplevel_verify_design(TOPLEVEL *toplevel);
+int
+s_toplevel_read_page (LeptonToplevel *toplevel,
+                      char *filename);
+void
+s_toplevel_verify_design (LeptonToplevel *toplevel);
+
 void
 s_toplevel_save_sheet ();
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_delete_attrib_col();
 void
-s_toplevel_sheetdata_to_toplevel (TOPLEVEL *toplevel,
+s_toplevel_sheetdata_to_toplevel (LeptonToplevel *toplevel,
                                   LeptonPage *page);
 
 STRING_LIST *s_toplevel_get_component_attribs_in_sheet(char *refdes);
-void s_toplevel_update_component_attribs_in_toplevel(TOPLEVEL *toplevel,
-                                                     LeptonObject *o_current,
-                                                     STRING_LIST *new_comp_attrib_list);
+void
+s_toplevel_update_component_attribs_in_toplevel (LeptonToplevel *toplevel,
+                                                 LeptonObject *o_current,
+                                                 STRING_LIST *new_comp_attrib_list);
 STRING_LIST *s_toplevel_get_net_attribs_in_sheet(char *netname);
 void s_toplevel_update_net_attribs_in_toplevel(LeptonObject *o_current,
                                                STRING_LIST *new_net_attrib_list);
 STRING_LIST *s_toplevel_get_pin_attribs_in_sheet(char *refdes, LeptonObject *pin);
-void s_toplevel_update_pin_attribs_in_toplevel(TOPLEVEL *toplevel,
-                                               char *refdes, LeptonObject *pin,
-                                               STRING_LIST *new_pin_attrib_list);
+void
+s_toplevel_update_pin_attribs_in_toplevel (LeptonToplevel *toplevel,
+                                           char *refdes,
+                                           LeptonObject *pin,
+                                           STRING_LIST *new_pin_attrib_list);
 gint
-s_page_save_all (TOPLEVEL *toplevel);
+s_page_save_all (LeptonToplevel *toplevel);
 
 
 /* ------------- s_object.c ------------- */
-void s_object_add_comp_attrib_to_object (TOPLEVEL *toplevel,
-                                         LeptonObject *o_current,
-                                         char *new_attrib_name,
-                                         char *new_attrib_value,
-                                         gint visibility,
-                                         gint show_name_value);
-void s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
-                                        LeptonObject *o_current,
-                                        char *new_attrib_name,
-                                        char *new_attrib_value);
-void s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
-                                        LeptonObject *o_current,
-                                        char *new_attrib_name,
-                                        char *new_attrib_value);
+void
+s_object_add_comp_attrib_to_object (LeptonToplevel *toplevel,
+                                    LeptonObject *o_current,
+                                    char *new_attrib_name,
+                                    char *new_attrib_value,
+                                    gint visibility,
+                                    gint show_name_value);
+void
+s_object_add_net_attrib_to_object (LeptonToplevel *toplevel,
+                                   LeptonObject *o_current,
+                                   char *new_attrib_name,
+                                   char *new_attrib_value);
+void
+s_object_add_pin_attrib_to_object (LeptonToplevel *toplevel,
+                                   LeptonObject *o_current,
+                                   char *new_attrib_name,
+                                   char *new_attrib_value);
 
 void s_object_replace_attrib_in_object (LeptonObject *o_current,
                                         char *new_attrib_name,
@@ -122,18 +132,18 @@ void s_object_replace_attrib_in_object (LeptonObject *o_current,
                                         gint visibility,
                                         gint show_name_value);
 
-void s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
-                                       LeptonObject *o_current,
-                                       char *new_attrib_name);
-
+void
+s_object_remove_attrib_in_object (LeptonToplevel *toplevel,
+                                  LeptonObject *o_current,
+                                  char *new_attrib_name);
 LeptonObject *
-s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
+s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
                                       char *text_string,
                                       gint visibility,
                                       gint show_name_value,
                                       LeptonObject * object);
 void
-s_object_delete_text_object_in_object (TOPLEVEL *toplevel,
+s_object_delete_text_object_in_object (LeptonToplevel *toplevel,
                                        LeptonObject *test_object);
 int s_object_has_sym_file(LeptonObject *object);
 
@@ -180,8 +190,8 @@ GSList *x_fileselect_open (void);
 /* ------------- x_window.c ------------- */
 void x_window_add_items();
 void
-x_window_set_toplevel (TOPLEVEL *toplevel);
-TOPLEVEL*
+x_window_set_toplevel (LeptonToplevel *toplevel);
+LeptonToplevel*
 x_window_get_toplevel ();
 void
 lepton_attrib_window ();

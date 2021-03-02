@@ -27,7 +27,7 @@
  *
  * This file holds functions involved in manipulating an entire
  * SHEET_DATA structure.  The SHEET_DATA structure is the intermediate
- * structure between TOPLEVEL (gEDA's native format) and the graphical
+ * structure between LeptonToplevel (gEDA's native format) and the graphical
  * gtksheet widget (from gtkextra), which is the spreadsheet widget
  * displaying the attribs.
  */

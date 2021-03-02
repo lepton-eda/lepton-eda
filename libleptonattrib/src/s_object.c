@@ -69,7 +69,7 @@
  *    calls o_text_new() to add position info and name=value string
  *    to attrib_graphic.
  * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute LeptonObject )
- * \param toplevel TOPLEVEL structure
+ * \param toplevel LeptonToplevel structure
  * \param o_current pointer to object to add attribute to
  * \param new_attrib_name name of the attribute to add
  * \param new_attrib_value value of the attribute to add
@@ -77,7 +77,7 @@
  * \param show_name_value Control visibility of name and value.
  */
 void
-s_object_add_comp_attrib_to_object (TOPLEVEL *toplevel,
+s_object_add_comp_attrib_to_object (LeptonToplevel *toplevel,
                                     LeptonObject *o_current,
                                     char *new_attrib_name,
                                     char *new_attrib_value,
@@ -107,7 +107,7 @@ s_object_add_comp_attrib_to_object (TOPLEVEL *toplevel,
  * \todo This needs to be filled in.
  */
 void
-s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
+s_object_add_net_attrib_to_object (LeptonToplevel *toplevel,
                                    LeptonObject *o_current,
                                    char *new_attrib_name,
                                    char *new_attrib_value)
@@ -128,7 +128,7 @@ s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
  *    to attrib_graphic.
  * -# It calls o_attrib_add() to wrap attrib_graphic with (attribute
       LeptonObject)
- * \param toplevel TOPLEVEL structure
+ * \param toplevel LeptonToplevel structure
  * \param o_current Pointer to pin object
  * \param new_attrib_name Name of attribute to add
  * \param new_attrib_value Value of attribute to add
@@ -136,7 +136,7 @@ s_object_add_net_attrib_to_object (TOPLEVEL *toplevel,
  * pins???
  */
 void
-s_object_add_pin_attrib_to_object (TOPLEVEL *toplevel,
+s_object_add_pin_attrib_to_object (LeptonToplevel *toplevel,
                                    LeptonObject *o_current,
                                    char *new_attrib_name,
                                    char *new_attrib_value)
@@ -230,12 +230,12 @@ s_object_replace_attrib_in_object(LeptonObject *o_current,
  * \brief Remove attribute from object
  *
  * Remove an attribute from an object.
- * \param toplevel TOPLEVEL structure
+ * \param toplevel LeptonToplevel structure
  * \param o_current Object to remove attribute from
  * \param new_attrib_name Name of attribute to remove
  */
 void
-s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
+s_object_remove_attrib_in_object (LeptonToplevel *toplevel,
                                   LeptonObject *o_current,
                                   char *new_attrib_name)
 {
@@ -291,7 +291,7 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
  * Attach the name=value pair to the LeptonObject "object". This function
  * was stolen from gschem/src/o_attrib.c:o_attrib_add_attrib and
  * hacked for gattrib.
- * \param toplevel TOPLEVEL to operate on
+ * \param toplevel LeptonToplevel to operate on
  * \param text_string
  * \param visibility
  * \param show_name_value
@@ -300,7 +300,7 @@ s_object_remove_attrib_in_object (TOPLEVEL *toplevel,
  * \todo Does it need to return LeptonObject?
  */
 LeptonObject *
-s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
+s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
                                       char *text_string,
                                       int visibility,
                                       int show_name_value,
@@ -376,11 +376,11 @@ s_object_attrib_add_attrib_in_object (TOPLEVEL *toplevel,
  * Delete the text object pointed to by text_object.  This function
  * was shamelessly stolen from gschem/src/o_delete.c and hacked
  * for gattrib by SDB.
- * \param toplevel TOPLEVEL to be operated on
+ * \param toplevel LeptonToplevel to be operated on
  * \param test_object text object to be deleted
  */
 void
-s_object_delete_text_object_in_object (TOPLEVEL *toplevel,
+s_object_delete_text_object_in_object (LeptonToplevel *toplevel,
                                        LeptonObject * text_object)
 {
   s_page_remove (toplevel->page_current, text_object);
