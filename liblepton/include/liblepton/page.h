@@ -141,7 +141,7 @@ s_page_objects (LeptonPage *page);
 GList*
 s_page_objects_in_regions (LeptonToplevel *toplevel,
                            LeptonPage *page,
-                           BOX *rects,
+                           LeptonBox *rects,
                            int n_rects,
                            gboolean include_hidden);
 const gchar*

@@ -23,7 +23,6 @@
  */
 
 typedef struct _LeptonBox LeptonBox;
-typedef struct _LeptonBox BOX;
 
 struct _LeptonBox
 {

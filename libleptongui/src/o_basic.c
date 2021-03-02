@@ -59,7 +59,7 @@ void o_redraw_rect (GschemToplevel *w_current,
   double dummy = 0.0;
   GList *obj_list;
   GList *iter;
-  BOX *world_rect;
+  LeptonBox *world_rect;
   EdaRenderer *renderer;
   int render_flags;
   GArray *render_color_map = NULL;
@@ -89,7 +89,7 @@ void o_redraw_rect (GschemToplevel *w_current,
   bloat = MAX (grip_half_size, (int)cue_half_size);
 
 
-  world_rect = g_new (BOX, 1);
+  world_rect = g_new (LeptonBox, 1);
 
 #ifdef ENABLE_GTK3
   gint wx, wy;

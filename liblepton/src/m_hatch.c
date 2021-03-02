@@ -112,7 +112,11 @@ static gint compare_status(gconstpointer a, gconstpointer b)
  *  segments.  This function appends new line segments to the GArray and leaves
  *  existing GArray contents unchanged.
  */
-void m_hatch_box(BOX *box, gint angle, gint pitch, GArray *lines)
+void
+m_hatch_box (LeptonBox *box,
+             gint angle,
+             gint pitch,
+             GArray *lines)
 {
   GArray *corners;
   LeptonPoint point;

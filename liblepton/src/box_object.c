@@ -28,7 +28,7 @@
 
 #include "liblepton_priv.h"
 
-/*! \brief Create a BOX LeptonObject
+/*! \brief Create a box LeptonObject
  *  \par Function Description
  *  This function creates a new object representing a box.
  *
@@ -61,7 +61,7 @@ lepton_box_object_new (char type,
                        int y2)
 {
   LeptonObject *new_node;
-  BOX *box;
+  LeptonBox *box;
 
   /* create the object */
   new_node = s_basic_new_object(type, "box");
@@ -95,7 +95,7 @@ lepton_box_object_new (char type,
  *  The function #lepton_box_object_copy() creates a verbatim copy
  *  of the object pointed by <B>o_current</B> describing a box.
  *
- *  \param [in]      o_current  BOX LeptonObject to copy.
+ *  \param [in]      o_current  Box LeptonObject to copy.
  *  \return The new LeptonObject
  */
 LeptonObject*
@@ -130,7 +130,7 @@ lepton_box_object_copy (LeptonObject *o_current)
   return new_obj;
 }
 
-/*! \brief Modify a BOX LeptonObject's coordinates.
+/*! \brief Modify a box LeptonObject's coordinates.
  * \par Function Description
  * Modifies the coordinates of all four corners of \a box, by setting
  * the box to the rectangle enclosed by the points (\a x1, \a y1) and
@@ -160,7 +160,7 @@ lepton_box_object_modify_all (LeptonObject *object,
   o_emit_change_notify (object);
 }
 
-/*! \brief Modify a BOX LeptonObject's coordinates.
+/*! \brief Modify a box LeptonObject's coordinates.
  *  \par Function Description
  *  This function modifies the coordinates of one of the four corner of
  *  the box. The new coordinates of the corner identified by <B>whichone</B>
@@ -169,7 +169,7 @@ lepton_box_object_modify_all (LeptonObject *object,
  *  The coordinates of the corner is modified in the world coordinate system.
  *  Screen coordinates and boundings are then updated.
  *
- *  \param [in,out] object     BOX LeptonObject to be modified.
+ *  \param [in,out] object     Box LeptonObject to be modified.
  *  \param [in]     x          x coordinate.
  *  \param [in]     y          y coordinate.
  *  \param [in]     whichone   coordinate to change.
@@ -251,7 +251,7 @@ lepton_box_object_modify (LeptonObject *object,
  *  \param [in]     buf             Character string with box description.
  *  \param [in]     release_ver     libgeda release version number.
  *  \param [in]     fileformat_ver  libgeda file format version number.
- *  \return The BOX LeptonObject that was created, or NULL on error.
+ *  \return The box LeptonObject that was created, or NULL on error.
  */
 LeptonObject*
 o_box_read (const char buf[],
@@ -364,15 +364,15 @@ o_box_read (const char buf[],
   return new_obj;
 }
 
-/*! \brief Create a character string representation of a BOX.
+/*! \brief Create a character string representation of a box object.
  *  \par Function Description
  *  This function formats a string in the buffer <B>*buff</B> to describe the
  *  box object <B>*object</B>.
  *  It follows the post-20000704 release file format that handle the line type
  *  and fill options.
  *
- *  \param [in] object  The BOX LeptonObject to create string from.
- *  \return A pointer to the BOX character string.
+ *  \param [in] object  The box LeptonObject to create string from.
+ *  \return A pointer to the box character string.
  *
  *  \warning
  *  Caller must g_free returned character string.
@@ -432,12 +432,12 @@ lepton_box_object_to_buffer (const LeptonObject *object)
   return(buf);
 }
 
-/*! \brief Translate a BOX position in WORLD coordinates by a delta.
+/*! \brief Translate a box position in WORLD coordinates by a delta.
  *  \par Function Description
  *  This function applies a translation of (<B>x1</B>,<B>y1</B>) to the box
  *  described by <B>*object</B>. <B>x1</B> and <B>y1</B> are in world unit.
  *
- *  \param [in,out] object     BOX LeptonObject to translate.
+ *  \param [in,out] object     Box LeptonObject to translate.
  *  \param [in]     dx         x distance to move.
  *  \param [in]     dy         y distance to move.
  */
@@ -456,7 +456,7 @@ lepton_box_object_translate (LeptonObject *object,
   object->box->lower_y = object->box->lower_y + dy;
 }
 
-/*! \brief Rotate BOX LeptonObject using WORLD coordinates.
+/*! \brief Rotate box LeptonObject using WORLD coordinates.
  *  \par Function Description
  *  The function #o_box_rotate_world() rotate the box described by
  *  <B>*object</B> around the (<B>world_centerx</B>, <B>world_centery</B>) point by
@@ -466,7 +466,7 @@ lepton_box_object_translate (LeptonObject *object,
  *  \param [in]      world_centerx  Rotation center x coordinate in WORLD units.
  *  \param [in]      world_centery  Rotation center y coordinate in WORLD units.
  *  \param [in]      angle          Rotation angle in degrees (See note below).
- *  \param [in,out]  object         BOX LeptonObject to rotate.
+ *  \param [in,out]  object         Box LeptonObject to rotate.
  *
  */
 void
@@ -529,7 +529,7 @@ lepton_box_object_rotate (int world_centerx,
   object->box->lower_y += world_centery;
 }
 
-/*! \brief Mirror BOX using WORLD coordinates.
+/*! \brief Mirror box using WORLD coordinates.
  *  \par Function Description
  *  This function mirrors the box from the point
  *  (<B>world_centerx</B>,<B>world_centery</B>) in world unit.
@@ -539,7 +539,7 @@ lepton_box_object_rotate (int world_centerx,
  *
  *  \param [in]     world_centerx  Origin x coordinate in WORLD units.
  *  \param [in]     world_centery  Origin y coordinate in WORLD units.
- *  \param [in,out] object         BOX LeptonObject to mirror.
+ *  \param [in,out] object         Box LeptonObject to mirror.
  */
 void
 lepton_box_object_mirror (int world_centerx,
@@ -577,13 +577,13 @@ lepton_box_object_mirror (int world_centerx,
   object->box->lower_y += world_centery;
 }
 
-/*! \brief Get BOX bounding rectangle in WORLD coordinates.
+/*! \brief Get box bounding rectangle in WORLD coordinates.
  *  \par Function Description
  *  This function sets the <B>left</B>, <B>top</B>, <B>right</B> and <B>bottom</B>
  *  parameters to the boundings of the box object described in <B>*box</B>
  *  in world units.
  *
- *  \param [in]  object     BOX LeptonObject to read coordinates from.
+ *  \param [in]  object     Box LeptonObject to read coordinates from.
  *  \param [out] left       Left box coordinate in WORLD units.
  *  \param [out] top        Top box coordinate in WORLD units.
  *  \param [out] right      Right box coordinate in WORLD units.

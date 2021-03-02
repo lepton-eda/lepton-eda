@@ -1424,7 +1424,7 @@ lepton_component_object_shortest_distance (LeptonObject *object,
   double shortest_distance = G_MAXDOUBLE;
   double distance;
   int found_line_bounds = 0;
-  BOX line_bounds;
+  LeptonBox line_bounds;
   GList *iter;
 
   g_return_val_if_fail (lepton_object_is_component (object), G_MAXDOUBLE);

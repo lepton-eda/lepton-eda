@@ -715,7 +715,7 @@ GdkPixbuf
 
   GList *obj_list;
   GList *iter;
-  BOX *world_rect;
+  LeptonBox *world_rect;
   EdaRenderer *renderer;
   int render_flags;
   GArray *render_color_map = NULL;
@@ -756,7 +756,7 @@ GdkPixbuf
 
   cairo_set_matrix (cr, gschem_page_geometry_get_world_to_screen_matrix (new_geometry));
 
-  world_rect = g_new (BOX, 1);
+  world_rect = g_new (LeptonBox, 1);
 
   double lower_x = 0;
   double lower_y = height;

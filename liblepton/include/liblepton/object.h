@@ -36,7 +36,7 @@ struct st_object
   LeptonLine *line;
   LeptonCircle *circle;
   LeptonArc *arc;
-  BOX *box;
+  LeptonBox *box;
   TEXT *text;
   PICTURE *picture;
   PATH *path;

@@ -771,7 +771,7 @@ const GList *s_page_objects (LeptonPage *page)
  *
  *  \param [in] toplevel  The LeptonToplevel object.
  *  \param [in] page      The LeptonPage to find objects on.
- *  \param [in] rects     The BOX regions to check.
+ *  \param [in] rects     The LeptonBox regions to check.
  *  \param [in] n_rects   The number of regions.
  *  \param [in] include_hidden Calculate bounds of hidden objects.
  *  \return The GList of LeptonObjects in the region.
@@ -779,7 +779,7 @@ const GList *s_page_objects (LeptonPage *page)
 GList*
 s_page_objects_in_regions (LeptonToplevel *toplevel,
                            LeptonPage *page,
-                           BOX *rects,
+                           LeptonBox *rects,
                            int n_rects,
                            gboolean include_hidden)
 {
