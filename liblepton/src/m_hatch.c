@@ -212,7 +212,11 @@ m_hatch_circle (LeptonCircle *circle,
  *  segments.  This function appends new line segments to the GArray and leaves
  *  existing GArray contents unchanged.
  */
-void m_hatch_path (PATH *path, gint angle, gint pitch, GArray *lines)
+void
+m_hatch_path (LeptonPath *path,
+              gint angle,
+              gint pitch,
+              GArray *lines)
 {
   GArray *points;
 

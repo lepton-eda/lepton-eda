@@ -23,7 +23,6 @@
 typedef struct st_path_section LeptonPathSection;
 
 typedef struct st_path LeptonPath;
-typedef struct st_path PATH;
 
 typedef enum
 {
@@ -55,14 +54,17 @@ struct st_path
 void
 lepton_path_free (LeptonPath *path);
 
-PATH*
+LeptonPath*
 s_path_parse (const char *path_str);
 
 double
-s_path_shortest_distance (PATH *path, int x, int y, int solid);
-
+s_path_shortest_distance (LeptonPath *path,
+                          int x,
+                          int y,
+                          int solid);
 char*
-s_path_string_from_path (const PATH *path);
+s_path_string_from_path (const LeptonPath *path);
 
 int
-s_path_to_polygon(PATH *path, GArray *points);
+s_path_to_polygon (LeptonPath *path,
+                   GArray *points);

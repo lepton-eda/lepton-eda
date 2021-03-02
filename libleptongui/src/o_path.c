@@ -28,15 +28,20 @@
 #define NUM_BEZIER_SEGMENTS 100
 
 
-static PATH *path_copy_modify (PATH *path, int dx, int dy,
-                               int new_x, int new_y, int whichone)
+static LeptonPath*
+path_copy_modify (LeptonPath *path,
+                  int dx,
+                  int dy,
+                  int new_x,
+                  int new_y,
+                  int whichone)
 {
-  PATH *new_path;
+  LeptonPath *new_path;
   int x1, y1, x2, y2, x3, y3;
   int i;
   int grip_no = 0;
 
-  new_path = (PATH*) g_malloc (sizeof (PATH));
+  new_path = (LeptonPath*) g_malloc (sizeof (LeptonPath));
   new_path->sections =
     (LeptonPathSection*) g_malloc (path->num_sections * sizeof (LeptonPathSection));
   new_path->num_sections = path->num_sections;
@@ -83,12 +88,16 @@ static PATH *path_copy_modify (PATH *path, int dx, int dy,
  *  \par Function Description
  * Calculate the bounding box of \a path, returning its bounds in \a
  * min_x, \a max_y, \a max_x and \a min_y.  If \a path is NULL, the
- * PATH object currently being edited is used, with any required
+ * LeptonPath object currently being edited is used, with any required
  * control point changes applied.
  */
 static void
-path_rubber_bbox (GschemToplevel *w_current, PATH *path,
-                  int *min_x, int *max_y, int *max_x, int *min_y)
+path_rubber_bbox (GschemToplevel *w_current,
+                  LeptonPath *path,
+                  int *min_x,
+                  int *max_y,
+                  int *max_x,
+                  int *min_y)
 {
   int x1, y1, x2, y2, x3, y3;
   int new_x, new_y, whichone;
@@ -147,16 +156,16 @@ path_rubber_bbox (GschemToplevel *w_current, PATH *path,
  * sections. */
 #define TEMP_PATH_DEFAULT_SIZE 8
 
-/*! \brief Add elements to the temporary PATH.
+/*! \brief Add elements to the temporary LeptonPath.
  * \par Function Description
- * Check if the temporary #PATH object used when interactively
+ * Check if the temporary #LeptonPath object used when interactively
  * creating paths has room for additional sections.  If not, doubles
  * its capacity.
  */
 static void
 path_expand (GschemToplevel *w_current)
 {
-  PATH *p = w_current->temp_path;
+  LeptonPath *p = w_current->temp_path;
   if (p->num_sections == p->num_sections_max) {
     p->num_sections_max *= 2;
     p->sections = g_renew (LeptonPathSection, p->sections,
@@ -175,7 +184,7 @@ path_expand (GschemToplevel *w_current)
  *     point's control point.
  *   - third_wx and third_wy contain the location of the previous
  *     point's control point.
- *   - temp_path is the new #PATH object (i.e. sequence of path
+ *   - temp_path is the new #LeptonPath object (i.e. sequence of path
  *     sections that comprise the path drawn so far).
  *
  * path_next_sections() adds up to two additional sections to the
@@ -191,7 +200,7 @@ static int
 path_next_sections (GschemToplevel *w_current)
 {
   gboolean cusp_point, cusp_prev, close_path, end_path, start_path;
-  PATH *p;
+  LeptonPath *p;
   LeptonPathSection *section, *prev_section;
   int x1, y1, x2, y2, x3, y3;
   int save_num_sections;
@@ -353,7 +362,7 @@ o_path_start(GschemToplevel *w_current, int w_x, int w_y)
   if (w_current->temp_path != NULL) {
     w_current->temp_path->num_sections = 0;
   } else {
-    PATH *p = g_new0 (PATH, 1);
+    LeptonPath *p = g_new0 (LeptonPath, 1);
     p->sections = g_new0 (LeptonPathSection, TEMP_PATH_DEFAULT_SIZE);
     p->num_sections = 0;
     p->num_sections_max = TEMP_PATH_DEFAULT_SIZE;
@@ -440,7 +449,7 @@ void
 o_path_end(GschemToplevel *w_current, int w_x, int w_y)
 {
   gboolean close_path, end_path, start_path;
-  PATH *p;
+  LeptonPath *p;
   LeptonPathSection *section, *prev_section;
   int x1, y1, x2, y2;
 

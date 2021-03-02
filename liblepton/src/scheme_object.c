@@ -1959,7 +1959,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   SCM_ASSERT (scm_is_symbol (type_s), type_s, SCM_ARG3, s_path_insert_x);
 
   LeptonObject *obj = edascm_to_object (obj_s);
-  PATH *path = obj->path;
+  LeptonPath *path = obj->path;
   LeptonPathSection section = {(PATH_CODE) 0, 0, 0, 0, 0, 0, 0};
 
   /* Check & extract path element type. */

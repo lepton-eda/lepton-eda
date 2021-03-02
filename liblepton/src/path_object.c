@@ -78,13 +78,13 @@ lepton_path_object_new (char type,
  *
  *  \param [in]     type         Must be OBJ_PATH.
  *  \param [in]     color        The path color.
- *  \param [in]     path_data    The #PATH data structure to use.
+ *  \param [in]     path_data    The #LeptonPath data structure to use.
  *  \return A pointer to the new end of the object list.
  */
 LeptonObject*
 lepton_path_object_new_take_path (char type,
                                   int color,
-                                  PATH *path_data)
+                                  LeptonPath *path_data)
 {
   LeptonObject *new_node;
 

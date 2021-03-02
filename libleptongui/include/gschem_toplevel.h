@@ -157,7 +157,7 @@ struct st_gschem_toplevel {
                                            Its range of values depends on the
                                            type of object being manipulated. */
   LeptonObject *which_object;           /* Object being manipulated */
-  PATH *temp_path;                      /* Path being created */
+  LeptonPath *temp_path;                /* Path being created */
   gboolean pathcontrol;                 /* Set path control point while path creating */ /* FIXME: can we do without it? */
 
   /* ------------------ */
