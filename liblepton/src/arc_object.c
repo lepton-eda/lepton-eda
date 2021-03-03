@@ -125,7 +125,7 @@ lepton_arc_object_copy (const LeptonObject *object)
                                   lepton_object_get_stroke_type (object),
                                   lepton_object_get_stroke_width (object),
                                   lepton_object_get_stroke_dash_length (object),
-                                  object->line_space);
+                                  lepton_object_get_stroke_space_length (object));
 
   lepton_object_set_fill_options (new_object,
                                   FILLING_HOLLOW,
@@ -493,7 +493,7 @@ lepton_arc_object_to_buffer (const LeptonObject *object)
                           lepton_object_get_stroke_cap_type (object),
                           lepton_object_get_stroke_type (object),
                           lepton_object_get_stroke_dash_length (object),
-                          object->line_space);
+                          lepton_object_get_stroke_space_length (object));
 }
 
 /*! \brief
