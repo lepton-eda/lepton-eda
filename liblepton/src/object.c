@@ -443,6 +443,35 @@ lepton_object_set_stroke_dash_length (LeptonObject *object,
   object->line_length = length;
 }
 
+
+/*! \brief Get the line stroke dash space of an object.
+ *
+ *  \param [in] object The object.
+ *  \return The line stroke dash space of the object.
+ */
+int
+lepton_object_get_stroke_space_length (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+
+  return object->line_space;
+}
+
+/*! \brief Sets the line stroke dash space of an object.
+ *
+ *  \param [in] object The object.
+ *  \param [in] space  The new line stroke dash space.
+ */
+void
+lepton_object_set_stroke_space_length (LeptonObject *object,
+                                       int space)
+{
+  g_return_if_fail (object != NULL);
+
+  object->line_space = space;
+}
+
+
 /*! \brief Make and return a copy of an object.
  *
  *  \par Function Description
@@ -747,7 +776,7 @@ lepton_object_set_line_options (LeptonObject *o_current,
   lepton_object_set_stroke_cap_type (o_current, end);
   lepton_object_set_stroke_type (o_current, type);
   lepton_object_set_stroke_dash_length (o_current, length);
-  o_current->line_space  = space;
+  lepton_object_set_stroke_space_length (o_current, space);
 
   lepton_object_emit_change_notify (o_current);
 
@@ -787,7 +816,7 @@ lepton_object_get_line_options (LeptonObject *object,
   *type = lepton_object_get_stroke_type (object);
   *width = lepton_object_get_stroke_width (object);
   *length = lepton_object_get_stroke_dash_length (object);
-  *space = object->line_space;
+  *space = lepton_object_get_stroke_space_length (object);
 
   return TRUE;
 }
@@ -1606,7 +1635,7 @@ lepton_object_new (int type,
   lepton_object_set_stroke_type (new_node, TYPE_SOLID);
   lepton_object_set_stroke_width (new_node, 0);
   lepton_object_set_stroke_dash_length (new_node, 0);
-  new_node->line_space = 0;
+  lepton_object_set_stroke_space_length (new_node, 0);
   new_node->fill_width = 0;
   new_node->fill_angle1 = 0;
   new_node->fill_angle2 = 0;

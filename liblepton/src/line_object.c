@@ -121,7 +121,7 @@ lepton_line_object_copy (LeptonObject *o_current)
                                   lepton_object_get_stroke_type (o_current),
                                   lepton_object_get_stroke_width (o_current),
                                   lepton_object_get_stroke_dash_length (o_current),
-                                  o_current->line_space);
+                                  lepton_object_get_stroke_space_length (o_current));
 
   lepton_object_set_fill_options (new_obj,
                                   o_current->fill_type,
@@ -475,7 +475,7 @@ lepton_line_object_to_buffer (const LeptonObject *object)
                           lepton_object_get_stroke_cap_type (object),
                           lepton_object_get_stroke_type (object),
                           lepton_object_get_stroke_dash_length (object),
-                          object->line_space);
+                          lepton_object_get_stroke_space_length (object));
 }
 
 /*! \brief Translate a line position in WORLD coordinates by a delta.

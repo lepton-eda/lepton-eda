@@ -648,7 +648,7 @@ eda_renderer_draw_line (EdaRenderer *renderer, LeptonObject *object)
                     EDA_RENDERER_STROKE_WIDTH (renderer,
                                                lepton_object_get_stroke_width (object)),
                     lepton_object_get_stroke_dash_length (object),
-                    object->line_space);
+                    lepton_object_get_stroke_space_length (object));
 }
 
 static void
@@ -712,7 +712,7 @@ eda_renderer_draw_box (EdaRenderer *renderer, LeptonObject *object)
                     EDA_RENDERER_STROKE_WIDTH (renderer,
                                                lepton_object_get_stroke_width (object)),
                     lepton_object_get_stroke_dash_length (object),
-                    object->line_space);
+                    lepton_object_get_stroke_space_length (object));
 }
 
 static void
@@ -732,7 +732,7 @@ eda_renderer_draw_arc (EdaRenderer *renderer, LeptonObject *object)
                     EDA_RENDERER_STROKE_WIDTH (renderer,
                                                lepton_object_get_stroke_width (object)),
                     lepton_object_get_stroke_dash_length (object),
-                    object->line_space);
+                    lepton_object_get_stroke_space_length (object));
 }
 
 static void
@@ -757,7 +757,7 @@ eda_renderer_draw_circle (EdaRenderer *renderer, LeptonObject *object)
                     EDA_RENDERER_STROKE_WIDTH (renderer,
                                                lepton_object_get_stroke_width (object)),
                     lepton_object_get_stroke_dash_length (object),
-                    object->line_space);
+                    lepton_object_get_stroke_space_length (object));
 }
 
 static void
@@ -781,7 +781,7 @@ eda_renderer_draw_path (EdaRenderer *renderer, LeptonObject *object)
                     EDA_RENDERER_STROKE_WIDTH0 (renderer,
                                                 lepton_object_get_stroke_width (object)),
                     lepton_object_get_stroke_dash_length (object),
-                    object->line_space);
+                    lepton_object_get_stroke_space_length (object));
 }
 
 static void

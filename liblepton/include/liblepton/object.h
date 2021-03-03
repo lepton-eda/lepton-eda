@@ -210,6 +210,12 @@ lepton_object_get_stroke_dash_length (const LeptonObject *object);
 void
 lepton_object_set_stroke_dash_length (LeptonObject *object,
                                       int length);
+void
+lepton_object_set_stroke_space_length (LeptonObject *object,
+                                       int space);
+int
+lepton_object_get_stroke_space_length (const LeptonObject *object);
+
 double
 lepton_object_shortest_distance (LeptonObject *object,
                                  int x,
