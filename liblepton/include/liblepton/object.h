@@ -186,6 +186,12 @@ lepton_object_mirror (int world_centerx,
 void
 lepton_object_set_selectable (LeptonObject *object,
                               gboolean selectable);
+LeptonStrokeType
+lepton_object_get_stroke_type (const LeptonObject *object);
+
+void
+lepton_object_set_stroke_type (LeptonObject *object,
+                               LeptonStrokeType line_type);
 double
 lepton_object_shortest_distance (LeptonObject *object,
                                  int x,
