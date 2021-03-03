@@ -342,7 +342,7 @@ lepton_object_set_selectable (LeptonObject *object,
  *  \return LeptonObject pointer.
  */
 LeptonObject*
-o_object_copy (LeptonObject *selected)
+lepton_object_copy (LeptonObject *selected)
 {
   LeptonObject *new_obj;
 

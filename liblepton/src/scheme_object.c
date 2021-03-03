@@ -183,7 +183,7 @@ SCM_DEFINE (copy_object, "%copy-object", 1, 0, 0,
 
   LeptonObject *obj = edascm_to_object (obj_s);
 
-  result = edascm_from_object (o_object_copy (obj));
+  result = edascm_from_object (lepton_object_copy (obj));
 
   /* At the moment, the only pointer to the object is owned by the
    * smob. */
