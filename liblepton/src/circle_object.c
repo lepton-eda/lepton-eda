@@ -119,7 +119,7 @@ lepton_circle_object_copy (const LeptonObject *object)
   lepton_object_set_line_options (new_obj,
                                   lepton_object_get_stroke_cap_type (object),
                                   lepton_object_get_stroke_type (object),
-                                  object->line_width,
+                                  lepton_object_get_stroke_width (object),
                                   object->line_length,
                                   object->line_space);
 
@@ -418,7 +418,7 @@ lepton_circle_object_to_buffer (const LeptonObject *object)
                           lepton_circle_object_get_center_y (object),
                           lepton_circle_object_get_radius (object),
                           lepton_object_get_color (object),
-                          object->line_width,
+                          lepton_object_get_stroke_width (object),
                           lepton_object_get_stroke_cap_type (object),
                           lepton_object_get_stroke_type (object),
                           object->line_length,
@@ -559,7 +559,7 @@ lepton_circle_object_calculate_bounds (const LeptonObject *object,
 
   lepton_circle_calculate_bounds (object->circle, bounds);
 
-  expand = (object->line_width + 1) / 2;
+  expand = (lepton_object_get_stroke_width (object) + 1) / 2;
 
   /* This isn't strictly correct, but a 1st order approximation */
   lepton_bounds_expand (bounds, bounds, expand, expand);

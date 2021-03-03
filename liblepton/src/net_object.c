@@ -260,7 +260,7 @@ lepton_net_object_new (int color,
   new_node->line->y[0] = y1;
   new_node->line->x[1] = x2;
   new_node->line->y[1] = y2;
-  new_node->line_width = NET_WIDTH;
+  lepton_object_set_stroke_width (new_node, NET_WIDTH);
 
   return new_node;
 }

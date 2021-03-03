@@ -198,6 +198,12 @@ lepton_object_get_stroke_cap_type (const LeptonObject *object);
 void
 lepton_object_set_stroke_cap_type (LeptonObject *object,
                                    LeptonStrokeCapType cap_type);
+int
+lepton_object_get_stroke_width (const LeptonObject *object);
+
+void
+lepton_object_set_stroke_width (LeptonObject *object,
+                                int width);
 double
 lepton_object_shortest_distance (LeptonObject *object,
                                  int x,

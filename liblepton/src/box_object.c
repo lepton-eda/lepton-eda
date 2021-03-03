@@ -126,7 +126,7 @@ lepton_box_object_copy (LeptonObject *o_current)
   lepton_object_set_line_options (new_obj,
                                   lepton_object_get_stroke_cap_type (o_current),
                                   lepton_object_get_stroke_type (o_current),
-                                  o_current->line_width,
+                                  lepton_object_get_stroke_width (o_current),
                                   o_current->line_length,
                                   o_current->line_space);
   lepton_object_set_fill_options (new_obj,
@@ -422,7 +422,7 @@ lepton_box_object_to_buffer (const LeptonObject *object)
 
   /* description of the line type for the outline */
   box_end    = lepton_object_get_stroke_cap_type (object);
-  box_width  = object->line_width;
+  box_width  = lepton_object_get_stroke_width (object);
   box_type   = lepton_object_get_stroke_type (object);
   box_length = object->line_length;
   box_space  = object->line_space;
@@ -615,7 +615,7 @@ lepton_box_object_calculate_bounds (const LeptonObject *object,
 
   lepton_box_calculate_bounds (object->box, bounds);
 
-  expand = (object->line_width + 1) / 2;
+  expand = (lepton_object_get_stroke_width (object) + 1) / 2;
 
   /* This isn't strictly correct, but a 1st order approximation */
   lepton_bounds_expand (bounds, bounds, expand, expand);

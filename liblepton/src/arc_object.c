@@ -123,7 +123,7 @@ lepton_arc_object_copy (const LeptonObject *object)
   lepton_object_set_line_options (new_object,
                                   lepton_object_get_stroke_cap_type (object),
                                   lepton_object_get_stroke_type (object),
-                                  object->line_width,
+                                  lepton_object_get_stroke_width (object),
                                   object->line_length,
                                   object->line_space);
 
@@ -489,7 +489,7 @@ lepton_arc_object_to_buffer (const LeptonObject *object)
                           lepton_arc_object_get_start_angle (object),
                           lepton_arc_object_get_sweep_angle (object),
                           lepton_object_get_color (object),
-                          object->line_width,
+                          lepton_object_get_stroke_width (object),
                           lepton_object_get_stroke_cap_type (object),
                           lepton_object_get_stroke_type (object),
                           object->line_length,
@@ -640,7 +640,7 @@ lepton_arc_object_calculate_bounds (const LeptonObject *object,
   int i, angle;
   int halfwidth;
 
-  halfwidth = object->line_width / 2;
+  halfwidth = lepton_object_get_stroke_width (object) / 2;
 
   radius      = object->arc->radius;
   start_angle = object->arc->start_angle;
