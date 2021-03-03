@@ -331,6 +331,34 @@ lepton_object_set_selectable (LeptonObject *object,
   object->selectable = selectable;
 }
 
+
+/*! \brief Get the line stroke type of an object.
+ *
+ *  \param [in] object The object.
+ *  \return The line stroke type of the object.
+ */
+LeptonStrokeType
+lepton_object_get_stroke_type (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, TYPE_SOLID);
+
+  return object->line_type;
+}
+
+/*! \brief Sets the line stroke type of an object.
+ *
+ *  \param [in] object    The object.
+ *  \param [in] line_type The new line stroke type.
+ */
+void
+lepton_object_set_stroke_type (LeptonObject *object,
+                               LeptonStrokeType line_type)
+{
+  g_return_if_fail (object != NULL);
+
+  object->line_type = line_type;
+}
+
 /*! \brief Make and return a copy of an object.
  *
  *  \par Function Description
@@ -633,7 +661,7 @@ lepton_object_set_line_options (LeptonObject *o_current,
 
   o_current->line_width = width;
   o_current->line_end   = end;
-  o_current->line_type  = type;
+  lepton_object_set_stroke_type (o_current, type);
 
   o_current->line_length = length;
   o_current->line_space  = space;
@@ -673,7 +701,7 @@ lepton_object_get_line_options (LeptonObject *object,
     return FALSE;
 
   *end = object->line_end;
-  *type = object->line_type;
+  *type = lepton_object_get_stroke_type (object);
   *width = object->line_width;
   *length = object->line_length;
   *space = object->line_space;
@@ -1492,7 +1520,7 @@ lepton_object_new (int type,
   new_node->bus_ripper_direction = 0;
 
   new_node->line_end = END_NONE;
-  new_node->line_type = TYPE_SOLID;
+  lepton_object_set_stroke_type (new_node, TYPE_SOLID);
   new_node->line_width = 0;
   new_node->line_space = 0;
   new_node->line_length = 0;

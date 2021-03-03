@@ -118,7 +118,7 @@ lepton_line_object_copy (LeptonObject *o_current)
   /* copy the line type and filling options */
   lepton_object_set_line_options (new_obj,
                                   o_current->line_end,
-                                  o_current->line_type,
+                                  lepton_object_get_stroke_type (o_current),
                                   o_current->line_width,
                                   o_current->line_length,
                                   o_current->line_space);
@@ -473,7 +473,7 @@ lepton_line_object_to_buffer (const LeptonObject *object)
                           lepton_object_get_color (object),
                           object->line_width,
                           object->line_end,
-                          object->line_type,
+                          lepton_object_get_stroke_type (object),
                           object->line_length,
                           object->line_space);
 }

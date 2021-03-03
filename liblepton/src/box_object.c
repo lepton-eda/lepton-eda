@@ -125,7 +125,7 @@ lepton_box_object_copy (LeptonObject *o_current)
 
   lepton_object_set_line_options (new_obj,
                                   o_current->line_end,
-                                  o_current->line_type,
+                                  lepton_object_get_stroke_type (o_current),
                                   o_current->line_width,
                                   o_current->line_length,
                                   o_current->line_space);
@@ -423,7 +423,7 @@ lepton_box_object_to_buffer (const LeptonObject *object)
   /* description of the line type for the outline */
   box_end    = object->line_end;
   box_width  = object->line_width;
-  box_type   = object->line_type;
+  box_type   = lepton_object_get_stroke_type (object);
   box_length = object->line_length;
   box_space  = object->line_space;
 
