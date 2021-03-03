@@ -117,7 +117,7 @@ lepton_circle_object_copy (const LeptonObject *object)
                                       object->circle->radius);
 
   lepton_object_set_line_options (new_obj,
-                                  object->line_end,
+                                  lepton_object_get_stroke_cap_type (object),
                                   lepton_object_get_stroke_type (object),
                                   object->line_width,
                                   object->line_length,
@@ -419,7 +419,7 @@ lepton_circle_object_to_buffer (const LeptonObject *object)
                           lepton_circle_object_get_radius (object),
                           lepton_object_get_color (object),
                           object->line_width,
-                          object->line_end,
+                          lepton_object_get_stroke_cap_type (object),
                           lepton_object_get_stroke_type (object),
                           object->line_length,
                           object->line_space,
