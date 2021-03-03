@@ -336,80 +336,80 @@ lepton_object_set_selectable (LeptonObject *object,
  *  \par Function Description
  *  returns head !!!!!!!!!!!!!!!!!!!
  *  look at above.. this returns what was passed in!!!!
- *  copies selected to list_head (!! returns new list)
+ *  copies object to list_head (!! returns new list)
  *
- *  \param [in]  selected
+ *  \param [in] object
  *  \return LeptonObject pointer.
  */
 LeptonObject*
-lepton_object_copy (LeptonObject *selected)
+lepton_object_copy (LeptonObject *object)
 {
-  LeptonObject *new_obj;
+  LeptonObject *new_object;
 
-  g_return_val_if_fail (selected != NULL, NULL);
+  g_return_val_if_fail (object != NULL, NULL);
 
-  switch (lepton_object_get_type (selected)) {
+  switch (lepton_object_get_type (object)) {
 
     case(OBJ_LINE):
-      new_obj = lepton_line_object_copy (selected);
+      new_object = lepton_line_object_copy (object);
       break;
 
     case(OBJ_NET):
-      new_obj = lepton_net_object_copy (selected);
+      new_object = lepton_net_object_copy (object);
       break;
 
     case(OBJ_BUS):
-      new_obj = lepton_bus_object_copy (selected);
+      new_object = lepton_bus_object_copy (object);
       break;
 
     case(OBJ_BOX):
-      new_obj = lepton_box_object_copy (selected);
+      new_object = lepton_box_object_copy (object);
       break;
 
     case(OBJ_PICTURE):
-      new_obj = o_picture_copy (selected);
+      new_object = o_picture_copy (object);
       break;
 
     case(OBJ_CIRCLE):
-      new_obj = lepton_circle_object_copy (selected);
+      new_object = lepton_circle_object_copy (object);
       break;
 
     case(OBJ_COMPONENT):
-      new_obj = o_component_copy (selected);
+      new_object = o_component_copy (object);
       break;
 
     case(OBJ_TEXT):
-      new_obj = lepton_text_object_copy (selected);
+      new_object = lepton_text_object_copy (object);
       break;
 
     case(OBJ_PATH):
-      new_obj = lepton_path_object_copy (selected);
+      new_object = lepton_path_object_copy (object);
       break;
 
     case(OBJ_PIN):
-      new_obj = lepton_pin_object_copy (selected);
+      new_object = lepton_pin_object_copy (object);
       break;
 
     case(OBJ_ARC):
-      new_obj = lepton_arc_object_copy (selected);
+      new_object = lepton_arc_object_copy (object);
       break;
 
     default:
       g_critical ("o_list_copy_to: object %1$p has bad type '%2$c'\n",
-                  selected, lepton_object_get_type (selected));
+                  object, lepton_object_get_type (object));
       return NULL;
   }
 
   /* Store a reference in the copied object to where it was copied.
    * Used to retain associations when copying attributes */
-  selected->copied_to = new_obj;
+  object->copied_to = new_object;
 
   /* make sure sid is the same! */
-  if (selected) {
-    lepton_object_set_id (new_obj, lepton_object_get_id (selected));
+  if (object) {
+    lepton_object_set_id (new_object, lepton_object_get_id (object));
   }
 
-  return new_obj;
+  return new_object;
 }
 
 /*! \todo Finish function documentation!!!

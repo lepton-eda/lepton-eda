@@ -144,7 +144,7 @@ LeptonObject*
 lepton_object_new (int type,
                    char const *prefix);
 LeptonObject*
-lepton_object_copy (LeptonObject *selected);
+lepton_object_copy (LeptonObject *object);
 
 void
 s_delete_object (LeptonObject *o_current);
