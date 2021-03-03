@@ -331,15 +331,15 @@ lepton_object_set_selectable (LeptonObject *object,
   object->selectable = selectable;
 }
 
-/*! \todo Finish documentation!!!!
- *  \brief
- *  \par Function Description
- *  returns head !!!!!!!!!!!!!!!!!!!
- *  look at above.. this returns what was passed in!!!!
- *  copies object to list_head (!! returns new list)
+/*! \brief Make and return a copy of an object.
  *
- *  \param [in] object
- *  \return LeptonObject pointer.
+ *  \par Function Description
+ *  Creates a copy of a LeptonObject with the same id storing a
+ *  reference in the copied object to the new object in order to
+ *  retain associations when copying attributes.
+ *
+ *  \param [in] object The #LeptonObject to copy.
+ *  \return #LeptonObject pointer to the newly created object.
  */
 LeptonObject*
 lepton_object_copy (LeptonObject *object)
