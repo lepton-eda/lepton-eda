@@ -296,7 +296,7 @@ lepton_bus_object_new (gint color,
   new_node->line->y[0] = y1;
   new_node->line->x[1] = x2;
   new_node->line->y[1] = y2;
-  new_node->line_width = BUS_WIDTH;
+  lepton_object_set_stroke_width (new_node, BUS_WIDTH);
 
   new_node->bus_ripper_direction = bus_ripper_direction;
 

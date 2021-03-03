@@ -563,7 +563,7 @@ o_path_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
   memset (&object, 0, sizeof (LeptonObject));
   lepton_object_set_type (&object, OBJ_PATH);
   lepton_object_set_color (&object, SELECT_COLOR);
-  object.line_width = 0; /* clamped to 1 pixel in circle_path */
+  lepton_object_set_stroke_width (&object, 0); /* clamped to 1 pixel in circle_path */
   object.path = w_current->temp_path;
 
   eda_renderer_draw (renderer, &object);
@@ -637,7 +637,7 @@ o_path_draw_rubber_grips (GschemToplevel *w_current, EdaRenderer *renderer)
   memset (&object, 0, sizeof (LeptonObject));
   lepton_object_set_type (&object, OBJ_PATH);
   lepton_object_set_color (&object, SELECT_COLOR);
-  object.line_width = 0; /* clamped to 1 pixel in circle_path */
+  lepton_object_set_stroke_width (&object, 0); /* clamped to 1 pixel in circle_path */
   object.path = path_copy_modify (w_current->which_object->path, 0, 0,
                                   w_current->second_wx,
                                   w_current->second_wy, w_current->which_grip);

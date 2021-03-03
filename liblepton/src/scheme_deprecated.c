@@ -43,7 +43,7 @@ SCM_DEFINE (get_line_width, "%get-line-width", 1, 0, 0,
 
   LeptonObject *object = edascm_to_object (obj_s);
 
-  return scm_from_int(object->line_width);
+  return scm_from_int (lepton_object_get_stroke_width (object));
 }
 
 /*!

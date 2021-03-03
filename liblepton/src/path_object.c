@@ -135,7 +135,7 @@ lepton_path_object_copy (LeptonObject *o_current)
   lepton_object_set_line_options (new_obj,
                                   lepton_object_get_stroke_cap_type (o_current),
                                   lepton_object_get_stroke_type (o_current),
-                                  o_current->line_width,
+                                  lepton_object_get_stroke_width (o_current),
                                   o_current->line_length,
                                   o_current->line_space);
   lepton_object_set_fill_options (new_obj,
@@ -285,7 +285,7 @@ lepton_path_object_to_buffer (const LeptonObject *object)
   char *path_string;
 
   /* description of the line type */
-  line_width  = object->line_width;
+  line_width  = lepton_object_get_stroke_width (object);
   line_end    = lepton_object_get_stroke_cap_type (object);
   line_type   = lepton_object_get_stroke_type (object);
   line_length = object->line_length;
@@ -563,7 +563,7 @@ lepton_path_object_calculate_bounds (const LeptonObject *object,
     }
   }
 
-  expand = ceil (0.5 * G_SQRT2 * object->line_width);
+  expand = ceil (0.5 * G_SQRT2 * lepton_object_get_stroke_width (object));
 
   /* This isn't strictly correct, but a 1st order approximation */
   lepton_bounds_expand (bounds, bounds, expand, expand);

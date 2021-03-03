@@ -639,13 +639,14 @@ eda_renderer_draw_line (EdaRenderer *renderer, LeptonObject *object)
 {
   eda_cairo_line (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                   lepton_object_get_stroke_cap_type (object),
-                  object->line_width,
+                  lepton_object_get_stroke_width (object),
                   object->line->x[0], object->line->y[0],
                   object->line->x[1], object->line->y[1]);
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     lepton_object_get_stroke_type (object),
                     lepton_object_get_stroke_cap_type (object),
-                    EDA_RENDERER_STROKE_WIDTH (renderer, object->line_width),
+                    EDA_RENDERER_STROKE_WIDTH (renderer,
+                                               lepton_object_get_stroke_width (object)),
                     object->line_length,
                     object->line_space);
 }
@@ -701,14 +702,15 @@ eda_renderer_draw_box (EdaRenderer *renderer, LeptonObject *object)
 
   /* Draw outline of box */
   eda_cairo_box (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
-                 object->line_width,
+                 lepton_object_get_stroke_width (object),
                  object->box->lower_x, object->box->lower_y,
                  object->box->upper_x, object->box->upper_y);
   if (fill_solid) cairo_fill_preserve (renderer->priv->cr);
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     lepton_object_get_stroke_type (object),
                     lepton_object_get_stroke_cap_type (object),
-                    EDA_RENDERER_STROKE_WIDTH (renderer, object->line_width),
+                    EDA_RENDERER_STROKE_WIDTH (renderer,
+                                               lepton_object_get_stroke_width (object)),
                     object->line_length, object->line_space);
 }
 
@@ -716,7 +718,7 @@ static void
 eda_renderer_draw_arc (EdaRenderer *renderer, LeptonObject *object)
 {
   eda_cairo_arc (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
-                 object->line_width,
+                 lepton_object_get_stroke_width (object),
                  lepton_arc_object_get_center_x (object),
                  lepton_arc_object_get_center_y (object),
                  lepton_arc_object_get_radius (object),
@@ -726,7 +728,8 @@ eda_renderer_draw_arc (EdaRenderer *renderer, LeptonObject *object)
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     lepton_object_get_stroke_type (object),
                     lepton_object_get_stroke_cap_type (object),
-                    EDA_RENDERER_STROKE_WIDTH (renderer, object->line_width),
+                    EDA_RENDERER_STROKE_WIDTH (renderer,
+                                               lepton_object_get_stroke_width (object)),
                     object->line_length,
                     object->line_space);
 }
@@ -741,7 +744,7 @@ eda_renderer_draw_circle (EdaRenderer *renderer, LeptonObject *object)
 
   /* Draw outline of circle */
   eda_cairo_arc (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
-                 object->line_width,
+                 lepton_object_get_stroke_width (object),
                  lepton_circle_object_get_center_x (object),
                  lepton_circle_object_get_center_y (object),
                  lepton_circle_object_get_radius (object),
@@ -750,7 +753,8 @@ eda_renderer_draw_circle (EdaRenderer *renderer, LeptonObject *object)
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     lepton_object_get_stroke_type (object),
                     lepton_object_get_stroke_cap_type (object),
-                    EDA_RENDERER_STROKE_WIDTH (renderer, object->line_width),
+                    EDA_RENDERER_STROKE_WIDTH (renderer,
+                                               lepton_object_get_stroke_width (object)),
                     object->line_length, object->line_space);
 }
 
@@ -764,14 +768,16 @@ eda_renderer_draw_path (EdaRenderer *renderer, LeptonObject *object)
 
   /* Draw outline of path */
   eda_cairo_path (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
-                  object->line_width, object->path->num_sections,
+                  lepton_object_get_stroke_width (object),
+                  object->path->num_sections,
                   object->path->sections);
 
   if (fill_solid) cairo_fill_preserve (renderer->priv->cr);
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     lepton_object_get_stroke_type (object),
                     lepton_object_get_stroke_cap_type (object),
-                    EDA_RENDERER_STROKE_WIDTH0 (renderer, object->line_width),
+                    EDA_RENDERER_STROKE_WIDTH0 (renderer,
+                                                lepton_object_get_stroke_width (object)),
                     object->line_length, object->line_space);
 }
 

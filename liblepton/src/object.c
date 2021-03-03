@@ -387,6 +387,34 @@ lepton_object_set_stroke_cap_type (LeptonObject *object,
   object->line_end = cap_type;
 }
 
+
+/*! \brief Get the line stroke width of an object.
+ *
+ *  \param [in] object The object.
+ *  \return The line stroke width of the object.
+ */
+int
+lepton_object_get_stroke_width (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+
+  return object->line_width;
+}
+
+/*! \brief Sets the line stroke width of an object.
+ *
+ *  \param [in] object The object.
+ *  \param [in] width  The new line stroke width.
+ */
+void
+lepton_object_set_stroke_width (LeptonObject *object,
+                                int width)
+{
+  g_return_if_fail (object != NULL);
+
+  object->line_width = width;
+}
+
 /*! \brief Make and return a copy of an object.
  *
  *  \par Function Description
@@ -687,7 +715,7 @@ lepton_object_set_line_options (LeptonObject *o_current,
 
   lepton_object_emit_pre_change_notify (o_current);
 
-  o_current->line_width = width;
+  lepton_object_set_stroke_width (o_current, width);
   lepton_object_set_stroke_cap_type (o_current, end);
   lepton_object_set_stroke_type (o_current, type);
 
@@ -730,7 +758,7 @@ lepton_object_get_line_options (LeptonObject *object,
 
   *end = lepton_object_get_stroke_cap_type (object);
   *type = lepton_object_get_stroke_type (object);
-  *width = object->line_width;
+  *width = lepton_object_get_stroke_width (object);
   *length = object->line_length;
   *space = object->line_space;
 
@@ -1549,7 +1577,7 @@ lepton_object_new (int type,
 
   lepton_object_set_stroke_cap_type (new_node, END_NONE);
   lepton_object_set_stroke_type (new_node, TYPE_SOLID);
-  new_node->line_width = 0;
+  lepton_object_set_stroke_width (new_node, 0);
   new_node->line_space = 0;
   new_node->line_length = 0;
   new_node->fill_width = 0;

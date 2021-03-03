@@ -709,11 +709,11 @@ lepton_pin_object_set_type (LeptonObject *o_current,
       g_critical ("lepton_pin_object_set_type: Got invalid pin type %1$i\n", pin_type);
       /* Fall through */
     case PIN_TYPE_NET:
-      o_current->line_width = PIN_WIDTH_NET;
+      lepton_object_set_stroke_width (o_current, PIN_WIDTH_NET);
       o_current->pin_type = PIN_TYPE_NET;
       break;
     case PIN_TYPE_BUS:
-      o_current->line_width = PIN_WIDTH_BUS;
+      lepton_object_set_stroke_width (o_current, PIN_WIDTH_BUS);
       o_current->pin_type = PIN_TYPE_BUS;
       break;
   }
