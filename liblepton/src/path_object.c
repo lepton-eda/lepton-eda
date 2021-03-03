@@ -133,7 +133,7 @@ lepton_path_object_copy (LeptonObject *o_current)
 
   /* copy the path type and filling options */
   lepton_object_set_line_options (new_obj,
-                                  o_current->line_end,
+                                  lepton_object_get_stroke_cap_type (o_current),
                                   lepton_object_get_stroke_type (o_current),
                                   o_current->line_width,
                                   o_current->line_length,
@@ -286,7 +286,7 @@ lepton_path_object_to_buffer (const LeptonObject *object)
 
   /* description of the line type */
   line_width  = object->line_width;
-  line_end    = object->line_end;
+  line_end    = lepton_object_get_stroke_cap_type (object);
   line_type   = lepton_object_get_stroke_type (object);
   line_length = object->line_length;
   line_space  = object->line_space;

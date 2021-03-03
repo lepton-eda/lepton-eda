@@ -359,6 +359,34 @@ lepton_object_set_stroke_type (LeptonObject *object,
   object->line_type = line_type;
 }
 
+
+/*! \brief Get the line stroke cap type of an object.
+ *
+ *  \param [in] object   The object.
+ *  \return The line cap type of the object.
+ */
+LeptonStrokeCapType
+lepton_object_get_stroke_cap_type (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, END_NONE);
+
+  return object->line_end;
+}
+
+/*! \brief Sets the line cap type of an object.
+ *
+ *  \param [in] object   The object.
+ *  \param [in] cap_type The new line cap type.
+ */
+void
+lepton_object_set_stroke_cap_type (LeptonObject *object,
+                                   LeptonStrokeCapType cap_type)
+{
+  g_return_if_fail (object != NULL);
+
+  object->line_end = cap_type;
+}
+
 /*! \brief Make and return a copy of an object.
  *
  *  \par Function Description
@@ -660,7 +688,7 @@ lepton_object_set_line_options (LeptonObject *o_current,
   lepton_object_emit_pre_change_notify (o_current);
 
   o_current->line_width = width;
-  o_current->line_end   = end;
+  lepton_object_set_stroke_cap_type (o_current, end);
   lepton_object_set_stroke_type (o_current, type);
 
   o_current->line_length = length;
@@ -700,7 +728,7 @@ lepton_object_get_line_options (LeptonObject *object,
       && !lepton_object_is_path (object))
     return FALSE;
 
-  *end = object->line_end;
+  *end = lepton_object_get_stroke_cap_type (object);
   *type = lepton_object_get_stroke_type (object);
   *width = object->line_width;
   *length = object->line_length;
@@ -1519,7 +1547,7 @@ lepton_object_new (int type,
 
   new_node->bus_ripper_direction = 0;
 
-  new_node->line_end = END_NONE;
+  lepton_object_set_stroke_cap_type (new_node, END_NONE);
   lepton_object_set_stroke_type (new_node, TYPE_SOLID);
   new_node->line_width = 0;
   new_node->line_space = 0;

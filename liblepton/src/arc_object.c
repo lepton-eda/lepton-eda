@@ -121,7 +121,7 @@ lepton_arc_object_copy (const LeptonObject *object)
                                       object->arc->sweep_angle);
 
   lepton_object_set_line_options (new_object,
-                                  object->line_end,
+                                  lepton_object_get_stroke_cap_type (object),
                                   lepton_object_get_stroke_type (object),
                                   object->line_width,
                                   object->line_length,
@@ -490,7 +490,7 @@ lepton_arc_object_to_buffer (const LeptonObject *object)
                           lepton_arc_object_get_sweep_angle (object),
                           lepton_object_get_color (object),
                           object->line_width,
-                          object->line_end,
+                          lepton_object_get_stroke_cap_type (object),
                           lepton_object_get_stroke_type (object),
                           object->line_length,
                           object->line_space);
