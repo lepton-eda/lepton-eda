@@ -24,14 +24,14 @@ libleptoninclude_HEADERS = \
 	liblepton/forward.h \
 	liblepton/fill_type.h \
 	liblepton/line.h \
-	liblepton/line_type.h \
-	liblepton/line_cap_type.h \
 	liblepton/list.h \
 	liblepton/page.h \
 	liblepton/path.h \
 	liblepton/picture.h \
 	liblepton/point.h \
 	liblepton/str.h \
+	liblepton/stroke_type.h \
+	liblepton/stroke_cap_type.h \
 	liblepton/text.h \
 	liblepton/toplevel.h \
 	liblepton/transform.h \
