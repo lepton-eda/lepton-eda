@@ -47,7 +47,7 @@ struct st_object
   /* every graphical primitive have more or less the same options. */
   /* depending on its nature a primitive is concerned with one or more */
   /* of these fields. If not, value must be ignored. */
-  LeptonLineCapType line_end;
+  LeptonStrokeCapType line_end;
   LeptonStrokeType line_type;
   int line_width;
   int line_space;
@@ -211,7 +211,7 @@ lepton_object_get_fill_options (LeptonObject *object,
                                 int *angle2);
 gboolean
 lepton_object_get_line_options (LeptonObject *object,
-                                LeptonLineCapType *end,
+                                LeptonStrokeCapType *end,
                                 LeptonStrokeType *type,
                                 int *width,
                                 int *length,
@@ -242,7 +242,7 @@ lepton_object_set_fill_options (LeptonObject *o_current,
                                 int angle2);
 void
 lepton_object_set_line_options (LeptonObject *o_current,
-                                LeptonLineCapType end,
+                                LeptonStrokeCapType end,
                                 LeptonStrokeType type,
                                 int width,
                                 int length,

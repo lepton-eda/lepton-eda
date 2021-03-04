@@ -100,7 +100,7 @@ gschem_selection_adapter_get_cap_style (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
-    LeptonLineCapType temp_cap_style;
+    LeptonStrokeCapType temp_cap_style;
     gint temp_dash_length;
     gint temp_dash_space;
     LeptonStrokeType temp_line_type;
@@ -148,7 +148,7 @@ gschem_selection_adapter_get_dash_length (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
-    LeptonLineCapType temp_cap_style;
+    LeptonStrokeCapType temp_cap_style;
     gint temp_dash_length;
     gint temp_dash_space;
     LeptonStrokeType temp_line_type;
@@ -196,7 +196,7 @@ gschem_selection_adapter_get_dash_space (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
-    LeptonLineCapType temp_cap_style;
+    LeptonStrokeCapType temp_cap_style;
     gint temp_dash_length;
     gint temp_dash_space;
     LeptonStrokeType temp_line_type;
@@ -550,7 +550,7 @@ gschem_selection_adapter_get_line_type (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
-    LeptonLineCapType temp_cap_style;
+    LeptonStrokeCapType temp_cap_style;
     gint temp_dash_length;
     gint temp_dash_space;
     LeptonStrokeType temp_line_type;
@@ -598,7 +598,7 @@ gschem_selection_adapter_get_line_width (GschemSelectionAdapter *adapter)
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
-    LeptonLineCapType temp_cap_style;
+    LeptonStrokeCapType temp_cap_style;
     gint temp_dash_length;
     gint temp_dash_space;
     LeptonStrokeType temp_line_type;
@@ -1383,7 +1383,7 @@ gschem_selection_adapter_set_line_type (GschemSelectionAdapter *adapter, int lin
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
-    LeptonLineCapType temp_cap_style;
+    LeptonStrokeCapType temp_cap_style;
     int temp_dash_length;
     int temp_dash_space;
     LeptonStrokeType temp_line_type;
@@ -1442,7 +1442,7 @@ gschem_selection_adapter_set_line_width (GschemSelectionAdapter *adapter, int li
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
-    LeptonLineCapType temp_cap_style;
+    LeptonStrokeCapType temp_cap_style;
     int temp_dash_length;
     int temp_dash_space;
     LeptonStrokeType temp_line_type;
@@ -1499,7 +1499,7 @@ gschem_selection_adapter_set_dash_length (GschemSelectionAdapter *adapter, int d
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
-    LeptonLineCapType temp_cap_style;
+    LeptonStrokeCapType temp_cap_style;
     int temp_dash_length;
     int temp_dash_space;
     LeptonStrokeType temp_line_type;
@@ -1556,7 +1556,7 @@ gschem_selection_adapter_set_dash_space (GschemSelectionAdapter *adapter, int da
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
-    LeptonLineCapType temp_cap_style;
+    LeptonStrokeCapType temp_cap_style;
     int temp_dash_length;
     int temp_dash_space;
     LeptonStrokeType temp_line_type;
@@ -1613,7 +1613,7 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
   while (iter != NULL) {
     LeptonObject *object = (LeptonObject*) iter->data;
     gboolean success;
-    LeptonLineCapType temp_cap_style;
+    LeptonStrokeCapType temp_cap_style;
     int temp_dash_length;
     int temp_dash_space;
     LeptonStrokeType temp_line_type;
@@ -1628,7 +1628,7 @@ gschem_selection_adapter_set_cap_style (GschemSelectionAdapter *adapter, int cap
 
     if (success) {
       lepton_object_set_line_options (object,
-                                      (LeptonLineCapType) cap_style,
+                                      (LeptonStrokeCapType) cap_style,
                                       temp_line_type,
                                       temp_line_width,
                                       temp_dash_length,
