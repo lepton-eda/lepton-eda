@@ -17,9 +17,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file line_cap_type.h
+
+/*! \file stroke.h
  *
- *  \brief line end style for an open line of an object
+ *  \brief Line stroke style of objects such as arcs, boxes, circles, and lines.
  */
 
 enum _LeptonStrokeCapType
@@ -31,3 +32,33 @@ enum _LeptonStrokeCapType
 };
 
 typedef enum _LeptonStrokeCapType LeptonStrokeCapType;
+
+enum _LeptonStrokeType
+{
+  TYPE_SOLID,
+  TYPE_DOTTED,
+  TYPE_DASHED,
+  TYPE_CENTER,
+  TYPE_PHANTOM,
+  TYPE_ERASE
+};
+
+typedef enum _LeptonStrokeType LeptonStrokeType;
+
+
+typedef struct _LeptonStroke LeptonStroke;
+
+struct _LeptonStroke
+{
+  LeptonStrokeCapType line_end;
+  LeptonStrokeType line_type;
+  int line_width;
+  int line_space;
+  int line_length;
+};
+
+LeptonStroke*
+lepton_stroke_new ();
+
+void
+lepton_stroke_free (LeptonStroke * stroke);

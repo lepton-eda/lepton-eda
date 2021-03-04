@@ -44,14 +44,8 @@ struct st_object
   GList *conn_list;                     /* List of connections */
   /* to and from this object */
 
-  /* every graphical primitive have more or less the same options. */
-  /* depending on its nature a primitive is concerned with one or more */
-  /* of these fields. If not, value must be ignored. */
-  LeptonStrokeCapType line_end;
-  LeptonStrokeType line_type;
-  int line_width;
-  int line_space;
-  int line_length;
+  /* Visible appearance of lines in graphical primitives. */
+  LeptonStroke *stroke;
 
   LeptonFillType fill_type;
   int fill_width;

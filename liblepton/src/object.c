@@ -341,8 +341,9 @@ LeptonStrokeType
 lepton_object_get_stroke_type (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, TYPE_SOLID);
+  g_return_val_if_fail (object->stroke != NULL, TYPE_SOLID);
 
-  return object->line_type;
+  return object->stroke->line_type;
 }
 
 /*! \brief Sets the line stroke type of an object.
@@ -355,8 +356,9 @@ lepton_object_set_stroke_type (LeptonObject *object,
                                LeptonStrokeType line_type)
 {
   g_return_if_fail (object != NULL);
+  g_return_if_fail (object->stroke != NULL);
 
-  object->line_type = line_type;
+  object->stroke->line_type = line_type;
 }
 
 
@@ -369,8 +371,9 @@ LeptonStrokeCapType
 lepton_object_get_stroke_cap_type (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, END_NONE);
+  g_return_val_if_fail (object->stroke != NULL, END_NONE);
 
-  return object->line_end;
+  return object->stroke->line_end;
 }
 
 /*! \brief Sets the line cap type of an object.
@@ -383,8 +386,9 @@ lepton_object_set_stroke_cap_type (LeptonObject *object,
                                    LeptonStrokeCapType cap_type)
 {
   g_return_if_fail (object != NULL);
+  g_return_if_fail (object->stroke != NULL);
 
-  object->line_end = cap_type;
+  object->stroke->line_end = cap_type;
 }
 
 
@@ -397,8 +401,9 @@ int
 lepton_object_get_stroke_width (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->stroke != NULL, 0);
 
-  return object->line_width;
+  return object->stroke->line_width;
 }
 
 /*! \brief Sets the line stroke width of an object.
@@ -411,8 +416,9 @@ lepton_object_set_stroke_width (LeptonObject *object,
                                 int width)
 {
   g_return_if_fail (object != NULL);
+  g_return_if_fail (object->stroke != NULL);
 
-  object->line_width = width;
+  object->stroke->line_width = width;
 }
 
 
@@ -425,8 +431,9 @@ int
 lepton_object_get_stroke_dash_length (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->stroke != NULL, 0);
 
-  return object->line_length;
+  return object->stroke->line_length;
 }
 
 /*! \brief Sets the line stroke dash length of an object.
@@ -439,8 +446,9 @@ lepton_object_set_stroke_dash_length (LeptonObject *object,
                                       int length)
 {
   g_return_if_fail (object != NULL);
+  g_return_if_fail (object->stroke != NULL);
 
-  object->line_length = length;
+  object->stroke->line_length = length;
 }
 
 
@@ -453,8 +461,9 @@ int
 lepton_object_get_stroke_space_length (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->stroke != NULL, 0);
 
-  return object->line_space;
+  return object->stroke->line_space;
 }
 
 /*! \brief Sets the line stroke dash space of an object.
@@ -467,8 +476,9 @@ lepton_object_set_stroke_space_length (LeptonObject *object,
                                        int space)
 {
   g_return_if_fail (object != NULL);
+  g_return_if_fail (object->stroke != NULL);
 
-  object->line_space = space;
+  object->stroke->line_space = space;
 }
 
 
@@ -610,6 +620,8 @@ lepton_object_delete (LeptonObject *o_current)
     g_free(o_current->name);
     o_current->name = NULL;
 
+    lepton_stroke_free (o_current->stroke);
+    o_current->stroke = NULL;
 
     /* printf("sdeleting component_basename\n");*/
     g_free(o_current->component_basename);
@@ -1620,6 +1632,8 @@ lepton_object_new (int type,
 
   new_node->conn_list = NULL;
 
+  new_node->stroke = lepton_stroke_new ();
+
   new_node->component_basename = NULL;
   new_node->parent = NULL;
 
@@ -1631,11 +1645,6 @@ lepton_object_new (int type,
 
   new_node->bus_ripper_direction = 0;
 
-  lepton_object_set_stroke_cap_type (new_node, END_NONE);
-  lepton_object_set_stroke_type (new_node, TYPE_SOLID);
-  lepton_object_set_stroke_width (new_node, 0);
-  lepton_object_set_stroke_dash_length (new_node, 0);
-  lepton_object_set_stroke_space_length (new_node, 0);
   new_node->fill_width = 0;
   new_node->fill_angle1 = 0;
   new_node->fill_angle2 = 0;
