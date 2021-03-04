@@ -57,6 +57,7 @@ liblepton_la_SOURCES = \
 	path.c \
 	picture.c \
 	str.c \
+	stroke.c \
 	toplevel.c \
 	transform.c \
 	undo.c \

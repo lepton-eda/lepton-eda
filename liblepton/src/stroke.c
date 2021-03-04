@@ -17,22 +17,36 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
-/*! \file line_type.h
+
+/*! \file stroke.c
+ *  \brief Functions for dealing with object's line stroke.
  */
 
-/*! \brief The line type of objects such as arcs, boxes, circles, and lines
- *
- *  The numeric values of this enumeration are used inside files and must be
- *  preserved for compatibility.
+#include "config.h"
+
+#include "liblepton_priv.h"
+
+/*! \brief Init a new #LeptonStroke.
  */
-enum _LeptonStrokeType
+LeptonStroke*
+lepton_stroke_new ()
 {
-  TYPE_SOLID,
-  TYPE_DOTTED,
-  TYPE_DASHED,
-  TYPE_CENTER,
-  TYPE_PHANTOM,
-  TYPE_ERASE
-};
+  LeptonStroke *stroke;
 
-typedef enum _LeptonStrokeType LeptonStrokeType;
+  stroke = g_new (LeptonStroke, 1);
+  stroke->line_end = END_NONE;
+  stroke->line_type = TYPE_SOLID;
+  stroke->line_width = 0;
+  stroke->line_length = 0;
+  stroke->line_space = 0;
+
+  return stroke;
+}
+
+/*! \brief Free a #LeptonStroke.
+ */
+void
+lepton_stroke_free (LeptonStroke * stroke)
+{
+  g_free (stroke);
+}

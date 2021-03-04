@@ -30,8 +30,7 @@ libleptoninclude_HEADERS = \
 	liblepton/picture.h \
 	liblepton/point.h \
 	liblepton/str.h \
-	liblepton/stroke_type.h \
-	liblepton/stroke_cap_type.h \
+	liblepton/stroke.h \
 	liblepton/text.h \
 	liblepton/toplevel.h \
 	liblepton/transform.h \
