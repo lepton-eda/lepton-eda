@@ -15,10 +15,10 @@
 
 #include "color.h"
 #include "fill_type.h"
-#include "line_type.h"
-#include "line_cap_type.h"
 #include "point.h"
 #include "str.h"
+#include "stroke_type.h"
+#include "stroke_cap_type.h"
 
 #include "angle.h"
 #include "arc.h"
