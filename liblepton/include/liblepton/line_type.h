@@ -25,7 +25,7 @@
  *  The numeric values of this enumeration are used inside files and must be
  *  preserved for compatibility.
  */
-enum _LeptonLineType
+enum _LeptonStrokeType
 {
   TYPE_SOLID,
   TYPE_DOTTED,
@@ -35,4 +35,4 @@ enum _LeptonLineType
   TYPE_ERASE
 };
 
-typedef enum _LeptonLineType LeptonLineType;
+typedef enum _LeptonStrokeType LeptonStrokeType;

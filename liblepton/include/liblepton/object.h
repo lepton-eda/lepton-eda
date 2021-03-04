@@ -48,7 +48,7 @@ struct st_object
   /* depending on its nature a primitive is concerned with one or more */
   /* of these fields. If not, value must be ignored. */
   LeptonLineCapType line_end;
-  LeptonLineType line_type;
+  LeptonStrokeType line_type;
   int line_width;
   int line_space;
   int line_length;
@@ -212,7 +212,7 @@ lepton_object_get_fill_options (LeptonObject *object,
 gboolean
 lepton_object_get_line_options (LeptonObject *object,
                                 LeptonLineCapType *end,
-                                LeptonLineType *type,
+                                LeptonStrokeType *type,
                                 int *width,
                                 int *length,
                                 int *space);
@@ -243,7 +243,7 @@ lepton_object_set_fill_options (LeptonObject *o_current,
 void
 lepton_object_set_line_options (LeptonObject *o_current,
                                 LeptonLineCapType end,
-                                LeptonLineType type,
+                                LeptonStrokeType type,
                                 int width,
                                 int length,
                                 int space);
