@@ -377,7 +377,7 @@ o_circle_read (const char buf[],
 
   lepton_object_set_line_options (new_obj,
                                   (LeptonLineCapType) circle_end,
-                                  (LeptonLineType) circle_type,
+                                  (LeptonStrokeType) circle_type,
                                   circle_width,
                                   circle_length,
                                   circle_space);

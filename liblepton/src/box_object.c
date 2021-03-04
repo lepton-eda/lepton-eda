@@ -361,7 +361,7 @@ o_box_read (const char buf[],
   /* set its line options */
   lepton_object_set_line_options (new_obj,
                                   (LeptonLineCapType) box_end,
-                                  (LeptonLineType) box_type,
+                                  (LeptonStrokeType) box_type,
                                   box_width,
                                   box_length,
                                   box_space);
@@ -398,7 +398,7 @@ lepton_box_object_to_buffer (const LeptonObject *object)
   int box_width, box_space, box_length;
   int fill_width, angle1, pitch1, angle2, pitch2;
   LeptonLineCapType box_end;
-  LeptonLineType box_type;
+  LeptonStrokeType box_type;
   LeptonFillType box_fill;
   char *buf;
 
