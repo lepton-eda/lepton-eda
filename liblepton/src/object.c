@@ -578,12 +578,12 @@ lepton_object_remove_weak_ptr (LeptonObject *object,
 /*! \brief Set an #LeptonObject's line options.
  *  \par Function Description
  *  This function allows a line's end, type, width, length and
- *  space to be set.  See #LeptonLineCapType and
+ *  space to be set.  See #LeptonStrokeCapType and
  *  #LeptonStrokeType for information on valid object end and
  *  type values.
  *
  *  \param [in,out] o_current  LeptonObject to set line options on.
- *  \param [in]     end        An LeptonLineCapType.
+ *  \param [in]     end        An LeptonStrokeCapType.
  *  \param [in]     type       An LeptonStrokeType.
  *  \param [in]     width      Line width.
  *  \param [in]     length     Line length.
@@ -594,7 +594,7 @@ lepton_object_remove_weak_ptr (LeptonObject *object,
  */
 void
 lepton_object_set_line_options (LeptonObject *o_current,
-                                LeptonLineCapType end,
+                                LeptonStrokeCapType end,
                                 LeptonStrokeType type,
                                 int width,
                                 int length,
@@ -645,11 +645,11 @@ lepton_object_set_line_options (LeptonObject *o_current,
 /*! \brief get #LeptonObject's line properties.
  *  \par Function Description
  *  This function get's the #LeptonObject's line options.
- *  See #LeptonLineCapType and #LeptonStrokeType for information on valid
- *  object end and type values.
+ *  See #LeptonStrokeCapType and #LeptonStrokeType for
+ *  information on valid object end and type values.
  *
  *  \param [in]   object    LeptonObject to read the properties
- *  \param [out]  end       An LeptonLineCapType.
+ *  \param [out]  end       An LeptonStrokeCapType.
  *  \param [out]  type      An LeptonStrokeType.
  *  \param [out]  width     Line width.
  *  \param [out]  length    Line length.
@@ -659,7 +659,7 @@ lepton_object_set_line_options (LeptonObject *o_current,
  */
 gboolean
 lepton_object_get_line_options (LeptonObject *object,
-                                LeptonLineCapType *end,
+                                LeptonStrokeCapType *end,
                                 LeptonStrokeType *type,
                                 int *width,
                                 int *length,

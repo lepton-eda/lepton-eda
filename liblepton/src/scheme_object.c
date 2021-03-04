@@ -268,7 +268,7 @@ SCM_DEFINE (object_stroke, "%object-stroke", 1, 0, 0,
 
   int end, type, width, length, space;
   lepton_object_get_line_options (obj,
-                                  (LeptonLineCapType *) &end,
+                                  (LeptonStrokeCapType *) &end,
                                   (LeptonStrokeType *) &type,
                                   &width,
                                   &length,
@@ -402,7 +402,7 @@ SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
   }
 
   lepton_object_set_line_options (obj,
-                                  (LeptonLineCapType) cap,
+                                  (LeptonStrokeCapType) cap,
                                   (LeptonStrokeType) type,
                                   width,
                                   length,

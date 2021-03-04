@@ -22,7 +22,7 @@
  *  \brief line end style for an open line of an object
  */
 
-enum _LeptonLineCapType
+enum _LeptonStrokeCapType
 {
   END_NONE,
   END_SQUARE,
@@ -30,4 +30,4 @@ enum _LeptonLineCapType
   END_VOID
 };
 
-typedef enum _LeptonLineCapType LeptonLineCapType;
+typedef enum _LeptonStrokeCapType LeptonStrokeCapType;

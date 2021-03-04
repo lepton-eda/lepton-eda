@@ -427,7 +427,7 @@ o_line_read (const char buf[],
 
   /* set its line options */
   lepton_object_set_line_options (new_obj,
-                                  (LeptonLineCapType) line_end,
+                                  (LeptonStrokeCapType) line_end,
                                   (LeptonStrokeType) line_type,
                                   line_width,
                                   line_length,

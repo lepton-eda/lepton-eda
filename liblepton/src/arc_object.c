@@ -445,7 +445,7 @@ LeptonObject
                                    sweep_angle);
 
   lepton_object_set_line_options (new_obj,
-                                  (LeptonLineCapType) arc_end,
+                                  (LeptonStrokeCapType) arc_end,
                                   (LeptonStrokeType) arc_type,
                                   arc_width,
                                   arc_length,
