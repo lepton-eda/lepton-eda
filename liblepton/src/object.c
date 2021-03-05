@@ -332,6 +332,20 @@ lepton_object_set_selectable (LeptonObject *object,
 }
 
 
+/*! \brief Get the stroke of an object.
+ *
+ *  \param [in] object    The object.
+ *  \return Object's #LeptonStroke pointer.
+ */
+LeptonStroke*
+lepton_object_get_stroke (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, NULL);
+
+  return object->stroke;
+}
+
+
 /*! \brief Get the line stroke type of an object.
  *
  *  \param [in] object The object.
