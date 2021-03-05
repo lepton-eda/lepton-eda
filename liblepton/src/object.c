@@ -355,9 +355,10 @@ LeptonStrokeType
 lepton_object_get_stroke_type (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, TYPE_SOLID);
-  g_return_val_if_fail (object->stroke != NULL, TYPE_SOLID);
 
-  return object->stroke->type;
+  LeptonStroke *stroke = lepton_object_get_stroke (object);
+
+  return lepton_stroke_get_type (stroke);
 }
 
 /*! \brief Sets the line stroke type of an object.
@@ -370,9 +371,10 @@ lepton_object_set_stroke_type (LeptonObject *object,
                                LeptonStrokeType type)
 {
   g_return_if_fail (object != NULL);
-  g_return_if_fail (object->stroke != NULL);
 
-  object->stroke->type = type;
+  LeptonStroke *stroke = lepton_object_get_stroke (object);
+
+  lepton_stroke_set_type (stroke, type);
 }
 
 
@@ -385,9 +387,10 @@ LeptonStrokeCapType
 lepton_object_get_stroke_cap_type (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, END_NONE);
-  g_return_val_if_fail (object->stroke != NULL, END_NONE);
 
-  return object->stroke->cap_type;
+  LeptonStroke *stroke = lepton_object_get_stroke (object);
+
+  return lepton_stroke_get_cap_type (stroke);
 }
 
 /*! \brief Sets the line cap type of an object.
@@ -400,9 +403,10 @@ lepton_object_set_stroke_cap_type (LeptonObject *object,
                                    LeptonStrokeCapType cap_type)
 {
   g_return_if_fail (object != NULL);
-  g_return_if_fail (object->stroke != NULL);
 
-  object->stroke->cap_type = cap_type;
+  LeptonStroke *stroke = lepton_object_get_stroke (object);
+
+  lepton_stroke_set_cap_type (stroke, cap_type);
 }
 
 
@@ -415,9 +419,10 @@ int
 lepton_object_get_stroke_width (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
-  g_return_val_if_fail (object->stroke != NULL, 0);
 
-  return object->stroke->width;
+  LeptonStroke *stroke = lepton_object_get_stroke (object);
+
+  return lepton_stroke_get_width (stroke);
 }
 
 /*! \brief Sets the line stroke width of an object.
@@ -430,9 +435,10 @@ lepton_object_set_stroke_width (LeptonObject *object,
                                 int width)
 {
   g_return_if_fail (object != NULL);
-  g_return_if_fail (object->stroke != NULL);
 
-  object->stroke->width = width;
+  LeptonStroke *stroke = lepton_object_get_stroke (object);
+
+  lepton_stroke_set_width (stroke, width);
 }
 
 
@@ -445,9 +451,10 @@ int
 lepton_object_get_stroke_dash_length (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
-  g_return_val_if_fail (object->stroke != NULL, 0);
 
-  return object->stroke->dash_length;
+  LeptonStroke *stroke = lepton_object_get_stroke (object);
+
+  return lepton_stroke_get_dash_length (stroke);
 }
 
 /*! \brief Sets the line stroke dash length of an object.
@@ -460,9 +467,10 @@ lepton_object_set_stroke_dash_length (LeptonObject *object,
                                       int length)
 {
   g_return_if_fail (object != NULL);
-  g_return_if_fail (object->stroke != NULL);
 
-  object->stroke->dash_length = length;
+  LeptonStroke *stroke = lepton_object_get_stroke (object);
+
+  lepton_stroke_set_dash_length (stroke, length);
 }
 
 
@@ -475,9 +483,10 @@ int
 lepton_object_get_stroke_space_length (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 0);
-  g_return_val_if_fail (object->stroke != NULL, 0);
 
-  return object->stroke->space_length;
+  LeptonStroke *stroke = lepton_object_get_stroke (object);
+
+  return lepton_stroke_get_space_length (stroke);
 }
 
 /*! \brief Sets the line stroke dash space of an object.
@@ -490,9 +499,10 @@ lepton_object_set_stroke_space_length (LeptonObject *object,
                                        int space)
 {
   g_return_if_fail (object != NULL);
-  g_return_if_fail (object->stroke != NULL);
 
-  object->stroke->space_length = space;
+  LeptonStroke *stroke = lepton_object_get_stroke (object);
+
+  lepton_stroke_set_space_length (stroke, space);
 }
 
 
