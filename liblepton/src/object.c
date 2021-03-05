@@ -463,7 +463,7 @@ lepton_object_get_stroke_space_length (const LeptonObject *object)
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->stroke != NULL, 0);
 
-  return object->stroke->line_space;
+  return object->stroke->space_length;
 }
 
 /*! \brief Sets the line stroke dash space of an object.
@@ -478,7 +478,7 @@ lepton_object_set_stroke_space_length (LeptonObject *object,
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->stroke != NULL);
 
-  object->stroke->line_space = space;
+  object->stroke->space_length = space;
 }
 
 

@@ -54,7 +54,7 @@ struct _LeptonStroke
   LeptonStrokeCapType cap_type;
   int width;
   int dash_length;
-  int line_space;
+  int space_length;
 };
 
 LeptonStroke*
