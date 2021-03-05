@@ -50,8 +50,8 @@ typedef struct _LeptonStroke LeptonStroke;
 
 struct _LeptonStroke
 {
-  LeptonStrokeCapType line_end;
   LeptonStrokeType line_type;
+  LeptonStrokeCapType cap_type;
   int line_width;
   int line_space;
   int line_length;
