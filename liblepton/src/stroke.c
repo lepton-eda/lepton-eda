@@ -38,7 +38,7 @@ lepton_stroke_new ()
   stroke->type = TYPE_SOLID;
   stroke->width = 0;
   stroke->dash_length = 0;
-  stroke->line_space = 0;
+  stroke->space_length = 0;
 
   return stroke;
 }
