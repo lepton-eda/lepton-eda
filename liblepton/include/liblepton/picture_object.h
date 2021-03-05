@@ -75,7 +75,7 @@ LeptonObject*
 o_picture_copy (LeptonObject *o_current) G_GNUC_WARN_UNUSED_RESULT;
 
 gboolean
-o_picture_is_embedded (const LeptonObject *object);
+lepton_picture_object_get_embedded (const LeptonObject *object);
 
 GdkPixbuf*
 o_picture_get_pixbuf (LeptonObject *object) G_GNUC_WARN_UNUSED_RESULT;
