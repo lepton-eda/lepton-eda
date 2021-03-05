@@ -373,7 +373,7 @@ lepton_object_get_stroke_cap_type (const LeptonObject *object)
   g_return_val_if_fail (object != NULL, END_NONE);
   g_return_val_if_fail (object->stroke != NULL, END_NONE);
 
-  return object->stroke->line_end;
+  return object->stroke->cap_type;
 }
 
 /*! \brief Sets the line cap type of an object.
@@ -388,7 +388,7 @@ lepton_object_set_stroke_cap_type (LeptonObject *object,
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->stroke != NULL);
 
-  object->stroke->line_end = cap_type;
+  object->stroke->cap_type = cap_type;
 }
 
 

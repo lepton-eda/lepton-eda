@@ -34,7 +34,7 @@ lepton_stroke_new ()
   LeptonStroke *stroke;
 
   stroke = g_new (LeptonStroke, 1);
-  stroke->line_end = END_NONE;
+  stroke->cap_type = END_NONE;
   stroke->line_type = TYPE_SOLID;
   stroke->line_width = 0;
   stroke->line_length = 0;
