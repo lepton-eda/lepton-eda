@@ -91,3 +91,16 @@ lepton_stroke_get_space_length (const LeptonStroke *stroke);
 void
 lepton_stroke_set_space_length (LeptonStroke *stroke,
                                 int space_length);
+
+/* Helpers for Scheme. */
+const char*
+lepton_stroke_cap_type_to_string (LeptonStrokeCapType cap_type);
+
+LeptonStrokeCapType
+lepton_stroke_cap_type_from_string (char *s);
+
+const char*
+lepton_stroke_type_to_string (LeptonStrokeType cap_type);
+
+LeptonStrokeType
+lepton_stroke_type_from_string (char *s);

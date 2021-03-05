@@ -190,3 +190,67 @@ lepton_stroke_set_space_length (LeptonStroke *stroke,
 
   stroke->space_length = space_length;
 }
+
+
+const char*
+lepton_stroke_cap_type_to_string (LeptonStrokeCapType cap_type)
+{
+  const char *result = NULL;
+
+  switch (cap_type)
+  {
+  case END_NONE:   result = "none";   break;
+  case END_SQUARE: result = "square"; break;
+  case END_ROUND:  result = "round";  break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+LeptonStrokeCapType
+lepton_stroke_cap_type_from_string (char *s)
+{
+  LeptonStrokeCapType result = END_NONE;
+
+  if      (strcmp (s, "none")   == 0) { result = END_NONE;   }
+  else if (strcmp (s, "square") == 0) { result = END_SQUARE; }
+  else if (strcmp (s, "round")  == 0) { result = END_ROUND;  }
+
+  return result;
+}
+
+
+const char*
+lepton_stroke_type_to_string (LeptonStrokeType stroke_type)
+{
+  const char *result = NULL;
+
+  switch (stroke_type)
+  {
+  case TYPE_SOLID:   result = "solid";   break;
+  case TYPE_DOTTED:  result = "dotted";  break;
+  case TYPE_DASHED:  result = "dashed";  break;
+  case TYPE_CENTER:  result = "center";  break;
+  case TYPE_PHANTOM: result = "phantom"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+LeptonStrokeType
+lepton_stroke_type_from_string (char *s)
+{
+  LeptonStrokeType result = TYPE_SOLID;
+
+  if      (strcmp (s, "solid")   == 0) { result = TYPE_SOLID;   }
+  else if (strcmp (s, "dotted")  == 0) { result = TYPE_DOTTED;  }
+  else if (strcmp (s, "dashed")  == 0) { result = TYPE_DASHED;  }
+  else if (strcmp (s, "center")  == 0) { result = TYPE_CENTER;  }
+  else if (strcmp (s, "phantom") == 0) { result = TYPE_PHANTOM; }
+
+  return result;
+}
