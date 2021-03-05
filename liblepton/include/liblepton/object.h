@@ -180,6 +180,9 @@ lepton_object_mirror (int world_centerx,
 void
 lepton_object_set_selectable (LeptonObject *object,
                               gboolean selectable);
+LeptonStroke*
+lepton_object_get_stroke (const LeptonObject *object);
+
 LeptonStrokeType
 lepton_object_get_stroke_type (const LeptonObject *object);
 
