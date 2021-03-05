@@ -243,7 +243,7 @@ o_path_read (const char *first_line,
                       line_space);
   /* set its fill options */
   o_set_fill_options (new_obj,
-                      (OBJECT_FILLING) fill_type,
+                      (LeptonFillType) fill_type,
                       fill_width,
                       pitch1,
                       angle1,
@@ -274,7 +274,7 @@ lepton_path_object_to_buffer (const LeptonObject *object)
   int num_lines;
   LeptonLineCapType line_end;
   LeptonLineType line_type;
-  OBJECT_FILLING fill_type;
+  LeptonFillType fill_type;
   int fill_width, angle1, pitch1, angle2, pitch2;
   char *path_string;
 

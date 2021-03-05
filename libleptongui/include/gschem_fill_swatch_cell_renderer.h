@@ -40,7 +40,7 @@ struct _GschemFillSwatchCellRenderer
   GtkCellRendererText parent;
 
   gboolean enabled;
-  OBJECT_FILLING fill_type;
+  LeptonFillType fill_type;
 };
 
 GType

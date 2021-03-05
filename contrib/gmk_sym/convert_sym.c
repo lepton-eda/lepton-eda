@@ -132,7 +132,7 @@ int colormap[16] =   /* index is viewlogic colour, entry is geda color */
 
 /* Fill style structure */
 struct FillStyle {
-  OBJECT_FILLING fill_type;  /* gEDA object fill type */
+  LeptonFillType fill_type;  /* gEDA object fill type */
   int fill_width;            /* width of the fill lines */
   int fill_angle1;           /* first angle of fill lines */
   int fill_pitch1;           /* first pitch/spacing of fill lines */

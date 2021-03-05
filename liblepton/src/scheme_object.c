@@ -515,7 +515,7 @@ SCM_DEFINE (object_fill, "%object-fill", 1, 0, 0,
   LeptonObject *obj = edascm_to_object (obj_s);
 
   int type, width, pitch1, angle1, pitch2, angle2;
-  o_get_fill_options (obj, (OBJECT_FILLING *) &type, &width, &pitch1, &angle1,
+  o_get_fill_options (obj, (LeptonFillType *) &type, &width, &pitch1, &angle1,
                       &pitch2, &angle2);
 
   SCM width_s = scm_from_int (width);
@@ -635,7 +635,7 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
   }
 
   o_set_fill_options (obj,
-                      (OBJECT_FILLING) type,
+                      (LeptonFillType) type,
                       width,
                       space1,
                       angle1,

@@ -37,7 +37,6 @@ enum _LeptonFillType
 };
 
 typedef enum _LeptonFillType LeptonFillType;
-typedef enum _LeptonFillType OBJECT_FILLING;
 
 gboolean
 lepton_fill_type_draw_first_hatch (int fill_type);

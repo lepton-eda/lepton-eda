@@ -53,7 +53,7 @@ struct st_object
   int line_space;
   int line_length;
 
-  OBJECT_FILLING fill_type;
+  LeptonFillType fill_type;
   int fill_width;
   int fill_angle1, fill_pitch1;
   int fill_angle2, fill_pitch2;
@@ -203,7 +203,7 @@ lepton_object_translate (LeptonObject *object,
                          gint dy);
 gboolean
 o_get_fill_options (LeptonObject *object,
-                    OBJECT_FILLING *type,
+                    LeptonFillType *type,
                     int *width,
                     int *pitch1,
                     int *angle1,
@@ -233,7 +233,7 @@ lepton_object_set_color (LeptonObject *object,
 
 void
 o_set_fill_options (LeptonObject *o_current,
-                    OBJECT_FILLING type,
+                    LeptonFillType type,
                     int width,
                     int pitch1,
                     int angle1,

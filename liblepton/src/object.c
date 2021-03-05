@@ -701,10 +701,10 @@ o_get_line_options (LeptonObject *object,
 /*! \brief Set #LeptonObject's fill options.
  *  \par Function Description
  *  This function allows an #LeptonObject's fill options to be configured.
- *  See #OBJECT_FILLING for information on valid fill types.
+ *  See #LeptonFillType for information on valid fill types.
  *
  *  \param [in,out]  o_current  LeptonObject to be updated.
- *  \param [in]      type       OBJECT_FILLING type.
+ *  \param [in]      type       LeptonFillType type.
  *  \param [in]      width      fill width.
  *  \param [in]      pitch1     cross hatch line distance
  *  \param [in]      angle1     cross hatch angle
@@ -714,7 +714,7 @@ o_get_line_options (LeptonObject *object,
  */
 void
 o_set_fill_options (LeptonObject *o_current,
-                    OBJECT_FILLING type,
+                    LeptonFillType type,
                     int width,
                     int pitch1,
                     int angle1,
@@ -773,10 +773,10 @@ o_set_fill_options (LeptonObject *o_current,
 /*! \brief get #LeptonObject's fill properties.
  *  \par Function Description
  *  This function get's the #LeptonObject's fill options.
- *  See #OBJECT_FILLING for information on valid fill types.
+ *  See #LeptonFillType for information on valid fill types.
  *
  *  \param [in]   object    LeptonObject to read the properties
- *  \param [out]  type      OBJECT_FILLING type
+ *  \param [out]  type      LeptonFillType type
  *  \param [out]  width     fill width.
  *  \param [out]  pitch1    cross hatch line distance
  *  \param [out]  angle1    cross hatch angle
@@ -785,10 +785,14 @@ o_set_fill_options (LeptonObject *o_current,
  *  \return TRUE on succes, FALSE otherwise
  *
  */
-gboolean o_get_fill_options(LeptonObject *object,
-                            OBJECT_FILLING *type, int *width,
-                            int *pitch1, int *angle1,
-                            int *pitch2, int *angle2)
+gboolean
+o_get_fill_options (LeptonObject *object,
+                    LeptonFillType *type,
+                    int *width,
+                    int *pitch1,
+                    int *angle1,
+                    int *pitch2,
+                    int *angle2)
 {
   if (!lepton_object_is_box (object)
       && !lepton_object_is_circle (object)

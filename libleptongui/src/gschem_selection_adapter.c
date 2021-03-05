@@ -246,7 +246,7 @@ gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter)
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;
@@ -297,7 +297,7 @@ gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter)
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;
@@ -348,7 +348,7 @@ gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter)
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;
@@ -399,7 +399,7 @@ gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter)
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;
@@ -450,7 +450,7 @@ gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter)
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;
@@ -501,7 +501,7 @@ gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter)
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;
@@ -1020,7 +1020,7 @@ gschem_selection_adapter_set_fill_angle1 (GschemSelectionAdapter *adapter, int a
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;
@@ -1079,7 +1079,7 @@ gschem_selection_adapter_set_fill_angle2 (GschemSelectionAdapter *adapter, int a
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;
@@ -1140,7 +1140,7 @@ gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int p
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;
@@ -1199,7 +1199,7 @@ gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int p
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;
@@ -1260,7 +1260,7 @@ gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fil
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;
@@ -1275,7 +1275,7 @@ gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fil
 
     if (success) {
       o_set_fill_options (object,
-                          (OBJECT_FILLING) fill_type,
+                          (LeptonFillType) fill_type,
                           temp_width,
                           temp_pitch1,
                           temp_angle1,
@@ -1325,7 +1325,7 @@ gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int fi
     gboolean success;
     gint temp_angle1;
     gint temp_angle2;
-    OBJECT_FILLING temp_fill_type;
+    LeptonFillType temp_fill_type;
     gint temp_pitch1;
     gint temp_pitch2;
     gint temp_width;

@@ -381,7 +381,7 @@ o_circle_read (const char buf[],
                       circle_length,
                       circle_space);
   o_set_fill_options (new_obj,
-                      (OBJECT_FILLING) circle_fill,
+                      (LeptonFillType) circle_fill,
                       fill_width,
                       pitch1,
                       angle1,
