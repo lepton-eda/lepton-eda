@@ -50,3 +50,143 @@ lepton_stroke_free (LeptonStroke * stroke)
 {
   g_free (stroke);
 }
+
+
+/*! \brief Get the type of a stroke.
+ *
+ *  \param [in] stroke The stroke.
+ *  \return type The line type of the stroke.
+ */
+LeptonStrokeType
+lepton_stroke_get_type (const LeptonStroke *stroke)
+{
+  g_return_val_if_fail (stroke != NULL, TYPE_SOLID);
+
+  return stroke->type;
+}
+
+/*! \brief Set the type of a stroke.
+ *
+ *  \param [in] stroke The stroke.
+ *  \param [in] type   The new stroke type.
+ */
+void
+lepton_stroke_set_type (LeptonStroke *stroke,
+                        LeptonStrokeType type)
+{
+  g_return_if_fail (stroke != NULL);
+
+  stroke->type = type;
+}
+
+
+/*! \brief Get the cap type of a stroke.
+ *
+ *  \param [in] stroke The stroke.
+ *  \return The cap type of the stroke.
+ */
+LeptonStrokeCapType
+lepton_stroke_get_cap_type (const LeptonStroke *stroke)
+{
+  g_return_val_if_fail (stroke != NULL, END_NONE);
+
+  return stroke->cap_type;
+}
+
+/*! \brief Set the cap_type of a stroke.
+ *
+ *  \param [in] stroke   The stroke.
+ *  \param [in] cap_type The new stroke cap type.
+ */
+void
+lepton_stroke_set_cap_type (LeptonStroke *stroke,
+                            LeptonStrokeCapType cap_type)
+{
+  g_return_if_fail (stroke != NULL);
+
+  stroke->cap_type = cap_type;
+}
+
+
+/*! \brief Get the width of a stroke.
+ *
+ *  \param [in] stroke The stroke.
+ *  \return The width of the stroke.
+ */
+int
+lepton_stroke_get_width (const LeptonStroke *stroke)
+{
+  g_return_val_if_fail (stroke != NULL, END_NONE);
+
+  return stroke->width;
+}
+
+/*! \brief Set the width of a stroke.
+ *
+ *  \param [in] stroke The stroke.
+ *  \param [in] width  The new stroke width.
+ */
+void
+lepton_stroke_set_width (LeptonStroke *stroke,
+                         int width)
+{
+  g_return_if_fail (stroke != NULL);
+
+  stroke->width = width;
+}
+
+
+/*! \brief Get the dash length of a stroke.
+ *
+ *  \param [in] stroke The stroke.
+ *  \return The dash length of the stroke.
+ */
+int
+lepton_stroke_get_dash_length (const LeptonStroke *stroke)
+{
+  g_return_val_if_fail (stroke != NULL, END_NONE);
+
+  return stroke->dash_length;
+}
+
+/*! \brief Set the dash length of a stroke.
+ *
+ *  \param [in] stroke      The stroke.
+ *  \param [in] dash_length The new stroke dash length.
+ */
+void
+lepton_stroke_set_dash_length (LeptonStroke *stroke,
+                               int dash_length)
+{
+  g_return_if_fail (stroke != NULL);
+
+  stroke->dash_length = dash_length;
+}
+
+
+/*! \brief Get the space length of a stroke.
+ *
+ *  \param [in] stroke The stroke.
+ *  \return The space length of the stroke.
+ */
+int
+lepton_stroke_get_space_length (const LeptonStroke *stroke)
+{
+  g_return_val_if_fail (stroke != NULL, END_NONE);
+
+  return stroke->space_length;
+}
+
+/*! \brief Set the space length of a stroke.
+ *
+ *  \param [in] stroke       The stroke.
+ *  \param [in] space_length The new stroke space length.
+ */
+void
+lepton_stroke_set_space_length (LeptonStroke *stroke,
+                                int space_length)
+{
+  g_return_if_fail (stroke != NULL);
+
+  stroke->space_length = space_length;
+}

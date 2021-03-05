@@ -62,3 +62,34 @@ lepton_stroke_new ();
 
 void
 lepton_stroke_free (LeptonStroke * stroke);
+
+LeptonStrokeType
+lepton_stroke_get_type (const LeptonStroke *stroke);
+
+void
+lepton_stroke_set_type (LeptonStroke *stroke,
+                        LeptonStrokeType type);
+LeptonStrokeCapType
+lepton_stroke_get_cap_type (const LeptonStroke *stroke);
+
+void
+lepton_stroke_set_cap_type (LeptonStroke *stroke,
+                            LeptonStrokeCapType cap_type);
+int
+lepton_stroke_get_width (const LeptonStroke *stroke);
+
+void
+lepton_stroke_set_width (LeptonStroke *stroke,
+                         int width);
+int
+lepton_stroke_get_dash_length (const LeptonStroke *stroke);
+
+void
+lepton_stroke_set_dash_length (LeptonStroke *stroke,
+                               int dash_length);
+int
+lepton_stroke_get_space_length (const LeptonStroke *stroke);
+
+void
+lepton_stroke_set_space_length (LeptonStroke *stroke,
+                                int space_length);
