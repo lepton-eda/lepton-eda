@@ -433,7 +433,7 @@ lepton_object_get_stroke_dash_length (const LeptonObject *object)
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->stroke != NULL, 0);
 
-  return object->stroke->line_length;
+  return object->stroke->dash_length;
 }
 
 /*! \brief Sets the line stroke dash length of an object.
@@ -448,7 +448,7 @@ lepton_object_set_stroke_dash_length (LeptonObject *object,
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->stroke != NULL);
 
-  object->stroke->line_length = length;
+  object->stroke->dash_length = length;
 }
 
 
