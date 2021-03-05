@@ -60,7 +60,7 @@ o_embed (LeptonObject *o_current)
 
   /* If it's a picture and it's not embedded */
   if (lepton_object_is_picture (o_current) &&
-      !o_picture_is_embedded (o_current))
+      !lepton_picture_object_get_embedded (o_current))
   {
     o_picture_embed (o_current);
 
@@ -117,7 +117,7 @@ o_unembed (LeptonObject *o_current)
 
   /* If it's a picture and it's embedded */
   if (lepton_object_is_picture (o_current) &&
-      o_picture_is_embedded (o_current))
+      lepton_picture_object_get_embedded (o_current))
   {
     o_picture_unembed (o_current);
 

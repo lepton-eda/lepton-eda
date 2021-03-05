@@ -495,7 +495,7 @@ lepton_picture_object_to_buffer (const LeptonObject *object)
 #endif
 
   /* Encode the picture if it's embedded */
-  if (o_picture_is_embedded (object)) {
+  if (lepton_picture_object_get_embedded (object)) {
     encoded_picture =
       s_encoding_base64_encode( (char *)object->picture->file_content,
                                 object->picture->file_length,
@@ -510,7 +510,7 @@ lepton_picture_object_to_buffer (const LeptonObject *object)
   filename = o_picture_get_filename (object);
   if (filename == NULL) filename = "";
 
-  if (o_picture_is_embedded (object) &&
+  if (lepton_picture_object_get_embedded (object) &&
       encoded_picture != NULL) {
     out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s\n%s\n%s",
                           lepton_object_get_type (object),
@@ -1054,7 +1054,7 @@ o_picture_embed (LeptonObject *object)
   const gchar *filename = o_picture_get_filename (object);
   gchar *basename;
 
-  if (o_picture_is_embedded (object)) return;
+  if (lepton_picture_object_get_embedded (object)) return;
 
   if (object->picture->file_content == NULL) {
     g_message (_("Picture [%1$s] has no image data."), filename);
@@ -1085,7 +1085,7 @@ o_picture_unembed (LeptonObject *object)
   const gchar *filename = o_picture_get_filename (object);
   gchar *basename;
 
-  if (!o_picture_is_embedded (object)) return;
+  if (!lepton_picture_object_get_embedded (object)) return;
 
   o_picture_set_from_file (object, filename, &err);
 
@@ -1153,7 +1153,7 @@ lepton_picture_object_shortest_distance (LeptonObject *object,
  * \return TRUE if \a object is embedded.
  */
 gboolean
-o_picture_is_embedded (const LeptonObject *object)
+lepton_picture_object_get_embedded (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->picture != NULL, FALSE);
