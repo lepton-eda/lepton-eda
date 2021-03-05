@@ -343,22 +343,22 @@ lepton_object_get_stroke_type (const LeptonObject *object)
   g_return_val_if_fail (object != NULL, TYPE_SOLID);
   g_return_val_if_fail (object->stroke != NULL, TYPE_SOLID);
 
-  return object->stroke->line_type;
+  return object->stroke->type;
 }
 
 /*! \brief Sets the line stroke type of an object.
  *
- *  \param [in] object    The object.
- *  \param [in] line_type The new line stroke type.
+ *  \param [in] object The object.
+ *  \param [in] type   The new stroke type.
  */
 void
 lepton_object_set_stroke_type (LeptonObject *object,
-                               LeptonStrokeType line_type)
+                               LeptonStrokeType type)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->stroke != NULL);
 
-  object->stroke->line_type = line_type;
+  object->stroke->type = type;
 }
 
 
