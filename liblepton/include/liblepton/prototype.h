@@ -144,10 +144,6 @@ GList *o_attrib_return_attribs(LeptonObject *object);
 int o_attrib_is_inherited(const LeptonObject *attrib);
 gboolean o_attrib_is_attrib (const LeptonObject *attrib);
 
-/* o_embed.c */
-void o_embed (LeptonObject *o_current);
-void o_unembed (LeptonObject *o_current);
-
 /* o_selection.c */
 LeptonSelection*
 o_selection_new ();

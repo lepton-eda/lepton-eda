@@ -1514,3 +1514,78 @@ lepton_component_object_set_missing (const LeptonObject *object,
 
   object->component->missing = missing;
 }
+
+
+/*! \brief Embed a component object into its schematic.
+ *  \par Function Description
+ *  This function embeds a component object into its schematic.
+ *  The object is just marked as embedded.
+ *
+ *  \param object The #LeptonObject to embed
+ */
+void
+lepton_component_object_embed (LeptonObject *object)
+{
+  LeptonPage *page;
+
+  g_return_if_fail (lepton_object_is_component (object));
+
+  page = lepton_object_get_page (object);
+
+  /* Check the component is not embedded. */
+  if (lepton_component_object_get_embedded (object))
+    return;
+
+  /* Set the embedded flag. */
+  lepton_component_object_set_embedded (object, TRUE);
+
+  g_message (_("Component [%1$s] has been embedded."),
+             object->component_basename);
+  /* Page content has been modified. */
+  lepton_page_set_changed (page, 1);
+}
+
+
+/*! \brief Unembed a component object from its schematic.
+ *  \par Function Description
+ *  This function unembeds a component object from its
+ *  schematic. The object is just marked as not embedded.
+ *
+ *  \param object The #LeptonObject to unembed
+ */
+void
+lepton_component_object_unembed (LeptonObject *object)
+{
+  LeptonPage *page;
+  const CLibSymbol *sym;
+
+  g_return_if_fail (lepton_object_is_component (object));
+
+  page = lepton_object_get_page (object);
+
+  /* Check the component is embedded. */
+  if (!lepton_component_object_get_embedded (object))
+    return;
+
+  /* Search for the symbol in the component library. */
+  sym = s_clib_get_symbol_by_name (object->component_basename);
+
+  if (sym == NULL)
+  {
+    /* Symbol not found in the symbol library: signal an error. */
+    g_message (_("Could not find component [%1$s], while trying to "
+                 "unembed. Component is still embedded."),
+               object->component_basename);
+  }
+  else
+  {
+    /* Clear the embedded flag. */
+    lepton_component_object_set_embedded (object, FALSE);
+
+    g_message (_("Component [%1$s] has been successfully unembedded."),
+               object->component_basename);
+
+    /* Page content has been modified. */
+    lepton_page_set_changed (page, 1);
+  }
+}

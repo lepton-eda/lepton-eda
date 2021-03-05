@@ -69,7 +69,6 @@ liblepton_la_SOURCES = \
 	m_hatch.c \
 	m_polygon.c \
 	o_attrib.c \
-	o_embed.c \
 	o_selection.c \
 	object.c \
 	object_list.c \

@@ -123,4 +123,10 @@ o_component_get_promotable (LeptonObject *object,
 void
 set_render_placeholders();
 
+void
+lepton_component_object_embed (LeptonObject *object);
+
+void
+lepton_component_object_unembed (LeptonObject *object);
+
 G_END_DECLS

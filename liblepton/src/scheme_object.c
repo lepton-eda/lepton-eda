@@ -759,26 +759,19 @@ SCM_DEFINE (set_object_embedded_x, "%set-object-embedded!", 2, 0, 0,
   LeptonObject* obj   = edascm_to_object (obj_s);
   int     embed = scm_is_true (embed_s);
 
-  gboolean component  = lepton_object_is_component (obj);
-  gboolean picture    = lepton_object_is_picture (obj);
-  gboolean embeddable = component || picture;
-
-  if (embeddable)
+  if (lepton_object_is_component (obj))
   {
-    gboolean  embedded = component ? lepton_component_object_get_embedded (obj)
-                                   : lepton_picture_object_get_embedded (obj);
-
-    if (embed && !embedded)
-    {
-      o_embed (obj);
-      lepton_object_page_set_changed (obj);
-    }
+    if (embed)
+      lepton_component_object_embed (obj);
     else
-    if (!embed && embedded)
-    {
-      o_unembed (obj);
-      lepton_object_page_set_changed (obj);
-    }
+      lepton_component_object_unembed (obj);
+  }
+  else if (lepton_object_is_picture (obj))
+  {
+    if (embed)
+      lepton_picture_object_embed (obj);
+    else
+      lepton_picture_object_unembed (obj);
   }
 
   return obj_s;

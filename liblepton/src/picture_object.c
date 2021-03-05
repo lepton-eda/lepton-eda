@@ -825,68 +825,101 @@ lepton_picture_object_copy (LeptonObject *object)
   return new_node;
 }
 
-/*! \brief Embed the image file associated with a picture
- * \par Function Description
- * Verify that a picture has valid data associated with it, and if so,
- * mark it to be embedded.
+/*! \brief Embed a picture object into its schematic.
+ *  \par Function Description
+ *  This functions embeds a picture object into its schematic if
+ *  it has valid image data associated with it.
  *
- *  \param [in]     object       The picture LeptonObject to embed
+ *  \param object The picture #LeptonObject to embed.
  */
 void
 lepton_picture_object_embed (LeptonObject *object)
 {
-  const gchar *filename = lepton_picture_object_get_filename (object);
+  LeptonPage *page;
+  const gchar *filename;
   gchar *basename;
 
-  if (lepton_picture_object_get_embedded (object)) return;
+  g_return_if_fail (lepton_object_is_picture (object));
 
-  if (object->picture->file_content == NULL) {
+  page = lepton_object_get_page (object);
+
+  /* Return if the picture is already embedded. */
+  if (lepton_picture_object_get_embedded (object))
+    return;
+
+  filename = lepton_picture_object_get_filename (object);
+
+  if (object->picture->file_content == NULL)
+  {
+    /* Image has no data: signal an error. */
     g_message (_("Picture [%1$s] has no image data."), filename);
     g_message (_("Falling back to file loading. Picture is still unembedded."));
-    lepton_picture_object_set_embedded (object, FALSE);
-    return;
   }
+  else
+  {
+    /* Set the embedded flag. */
+    lepton_picture_object_set_embedded (object, TRUE);
 
-  lepton_picture_object_set_embedded (object, TRUE);
+    basename = g_path_get_basename (filename);
+    g_message (_("Picture [%1$s] has been embedded."), basename);
+    g_free (basename);
 
-  basename = g_path_get_basename (filename);
-  g_message (_("Picture [%1$s] has been embedded."), basename);
-  g_free (basename);
+    lepton_page_set_changed (page, 1);
+  }
 }
 
 
-/*! \brief Unembed a picture, reloading the image from disk
- * \par Function Description
- * Verify that the file associated with \a object exists on disk and
- * is usable, and if so, reload the picture and mark it as unembedded.
+/*! \brief Unembed a picture object from its schematic.
+ *  \par Function Description
+ *  This function unembeds a picture object from its schematic
+ *  after checking that it is possible.  It verifies that the file
+ *  associated with the picture exists on disk and is usable.  If
+ *  so, the picture is reloaded and marked as not embedded.
  *
- *  \param [in]     object       The picture LeptonObject to unembed
+ *  \param [in] object The picture #LeptonObject to unembed.
  */
 void
 lepton_picture_object_unembed (LeptonObject *object)
 {
-  GError *err = NULL;
-  const gchar *filename = lepton_picture_object_get_filename (object);
+  LeptonPage *page;
+  const gchar *filename;
   gchar *basename;
+  GError *err = NULL;
 
-  if (!lepton_picture_object_get_embedded (object)) return;
+  g_return_if_fail (lepton_object_is_picture (object));
 
+  page = lepton_object_get_page (object);
+
+  /* Return if the picture is already not embedded. */
+  if (!lepton_picture_object_get_embedded (object))
+    return;
+
+  filename = lepton_picture_object_get_filename (object);
+
+  /* Get picture data from file. */
   lepton_picture_object_set_from_file (object, filename, &err);
 
-  if (err != NULL) {
+  if (err != NULL)
+  {
+    /* Warn the user that the picture could not be loaded. */
     g_message (_("Failed to load image from file [%1$s]: %2$s"),
                filename, err->message);
     g_message (_("Picture is still embedded."));
     g_error_free (err);
-    return;
   }
+  else
+  {
+    /* Clear the embedded flag. */
+    lepton_picture_object_set_embedded (object, FALSE);
 
-  object->picture->embedded = 0;
+    basename = g_path_get_basename (filename);
+    g_message (_("Picture [%1$s] has been unembedded."), basename);
+    g_free (basename);
 
-  basename = g_path_get_basename(filename);
-  g_message (_("Picture [%1$s] has been unembedded."), basename);
-  g_free(basename);
+    lepton_page_set_changed (page, 1);
+  }
 }
+
 
 /*! \brief Calculates the distance between the given point and the closest
  * point in the picture.
