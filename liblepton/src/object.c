@@ -403,7 +403,7 @@ lepton_object_get_stroke_width (const LeptonObject *object)
   g_return_val_if_fail (object != NULL, 0);
   g_return_val_if_fail (object->stroke != NULL, 0);
 
-  return object->stroke->line_width;
+  return object->stroke->width;
 }
 
 /*! \brief Sets the line stroke width of an object.
@@ -418,7 +418,7 @@ lepton_object_set_stroke_width (LeptonObject *object,
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->stroke != NULL);
 
-  object->stroke->line_width = width;
+  object->stroke->width = width;
 }
 
 
