@@ -55,6 +55,34 @@
 
 static gint global_pid = 0;
 
+/*! \brief Get page's CHANGED flag value.
+ *
+ *  \param [in] page The page to obtain the flag of.
+ *  \return The value of the CHANGED flag.
+ */
+int
+lepton_page_get_changed (LeptonPage *page)
+{
+  g_return_val_if_fail (page != NULL, 0);
+
+  return page->CHANGED;
+}
+
+/*! \brief Set page's CHANGED flag value.
+ *
+ *  \param [in] page    The page.
+ *  \param [in] changed The new CHANGED value.
+ */
+void
+lepton_page_set_changed (LeptonPage *page,
+                         int changed)
+{
+  g_return_if_fail (page != NULL);
+
+  page->CHANGED = changed;
+}
+
+
 /* Called just before removing an LeptonObject from a LeptonPage
  * or after appending an LeptonObject to a LeptonPage. */
 static void
