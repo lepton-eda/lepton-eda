@@ -67,7 +67,12 @@ struct st_page
   GList *weak_refs; /* Weak references */
 };
 
+int
+lepton_page_get_changed (LeptonPage *page);
 
+void
+lepton_page_set_changed (LeptonPage *page,
+                         int changed);
 LeptonPage*
 s_page_new (LeptonToplevel *toplevel,
             const gchar *filename);
