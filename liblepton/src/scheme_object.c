@@ -498,36 +498,6 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
   return obj_s;
 }
 
-/*! \brief Set the color of an object.
- * \par Function Description
- * Set the colormap index of the color used to draw the #LeptonObject smob
- * \a obj_s to \a color_s. Note that the color may not be meaningful
- * for some object types.
- *
- * \note Scheme API: Implements the %set-object-color! procedure in
- * the (lepton core object) module.
- *
- * \param obj_s   #LeptonObject smob to modify.
- * \param color_s new colormap index to use for \a obj_s.
- * \return the modified \a obj_s.
- */
-SCM_DEFINE (set_object_color_x, "%set-object-color!", 2, 0, 0,
-            (SCM obj_s, SCM color_s), "Set the color of an object.")
-{
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_set_object_color_x);
-  SCM_ASSERT (scm_is_integer (color_s), color_s,
-              SCM_ARG2, s_set_object_color_x);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  lepton_object_set_color (obj, scm_to_int (color_s));
-
-  lepton_object_page_set_changed (obj);
-
-  return obj_s;
-}
-
-
 /*! \brief Check whether an object is embedded.
  *
  * \note Scheme API: Implements the %object-embedded? procedure in the
@@ -2130,7 +2100,6 @@ init_module_lepton_core_object (void *unused)
                 s_set_object_stroke_x,
                 s_object_fill,
                 s_set_object_fill_x,
-                s_set_object_color_x,
                 s_make_line,
                 s_make_net,
                 s_make_bus,

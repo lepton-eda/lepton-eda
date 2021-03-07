@@ -31,6 +31,7 @@
             edascm_is_page
 
             lepton_object_get_color
+            lepton_object_set_color
             lepton_object_get_id
             lepton_object_get_selectable
             lepton_object_set_selectable
@@ -110,6 +111,7 @@
 
 ;;; object.c
 (define-lff lepton_object_get_color int '(*))
+(define-lff lepton_object_set_color void (list '* int))
 (define-lff lepton_object_get_id int '(*))
 (define-lff lepton_object_get_selectable int '(*))
 (define-lff lepton_object_set_selectable void (list '* int))
