@@ -498,28 +498,6 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
   return obj_s;
 }
 
-/*! \brief Get the color of an object.
- * \par Function Description
- * Returns the colormap index of the color used to draw the #LeptonObject
- * smob \a obj_s. Note that the color may not be meaningful for some
- * object types.
- *
- * \note Scheme API: Implements the %object-color procedure in the
- * (lepton core object) module.
- *
- * \param [in] obj_s #LeptonObject smob to inspect.
- * \return The colormap index used by \a obj_s.
- */
-SCM_DEFINE (object_color, "%object-color", 1, 0, 0,
-            (SCM obj_s), "Get the color of an object.")
-{
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_object_color);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  return scm_from_int (lepton_object_get_color (obj));
-}
-
 /*! \brief Set the color of an object.
  * \par Function Description
  * Set the colormap index of the color used to draw the #LeptonObject smob
@@ -2152,7 +2130,6 @@ init_module_lepton_core_object (void *unused)
                 s_set_object_stroke_x,
                 s_object_fill,
                 s_set_object_fill_x,
-                s_object_color,
                 s_set_object_color_x,
                 s_make_line,
                 s_make_net,

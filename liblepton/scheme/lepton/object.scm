@@ -47,6 +47,7 @@
             text?
             copy-object
             object-bounds
+            object-color
             object-selectable?
             set-object-selectable!))
 
@@ -94,7 +95,15 @@ returns #f."
   (pointer->geda-object (lepton_object_copy pointer)))
 
 
-(define-public object-color %object-color)
+(define (object-color object)
+  "Returns the colormap index of the color used to draw
+OBJECT. Note that the color may not be meaningful for some object
+types."
+  (define pointer (geda-object->pointer* object 1))
+
+  (lepton_object_get_color pointer))
+
+
 (define-public set-object-color! %set-object-color!)
 
 (define-public object-connections %object-connections)
