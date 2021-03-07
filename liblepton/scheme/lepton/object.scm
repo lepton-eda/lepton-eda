@@ -49,6 +49,7 @@
             object-bounds
             object-color
             set-object-color!
+            object-component
             object-embedded?
             set-object-embedded!
             object-selectable?
@@ -120,7 +121,14 @@ Returns OBJECT."
 
 (define-public object-connections %object-connections)
 
-(define-public object-component %object-component)
+(define (object-component object)
+  "Returns the component object that contains OBJECT.
+If OBJECT is not part of a component, returns #f."
+  (define pointer (geda-object->pointer* object 1))
+
+  (let ((parent-pointer (lepton_object_get_parent pointer)))
+    (and (not (null-pointer? parent-pointer))
+         (pointer->geda-object parent-pointer))))
 
 ;;;; Lines
 

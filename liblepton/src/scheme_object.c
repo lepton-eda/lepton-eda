@@ -1360,32 +1360,6 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
   return result;
 }
 
-/*! \brief Get the component object that contains an object.
- * \par Function Description
- * Returns the component object that contains the object \a obj_s.
- * If \a obj_s is not part of a component, returns SCM_BOOL_F.
- *
- * \note Scheme API: Implements the %object-component procedure of the
- * (lepton core object) module.
- *
- * \param obj_s #LeptonObject smob for object to get component of.
- * \return the #LeptonObject smob of the containing component, or SCM_BOOL_F.
- */
-SCM_DEFINE (object_component, "%object-component", 1, 0, 0,
-            (SCM obj_s), "Get containing component object of an object.")
-{
-  /* Ensure that the argument is an object smob */
-  SCM_ASSERT (edascm_is_object (obj_s), obj_s,
-              SCM_ARG1, s_object_component);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  LeptonObject *parent = lepton_object_get_parent (obj);
-
-  if (parent == NULL) return SCM_BOOL_F;
-
-  return edascm_from_object (parent);
-}
-
 /*! \brief Make a new, empty path object.
  * \par Function Description
  * Creates a new, empty path object with default color, stroke and
@@ -1919,7 +1893,6 @@ init_module_lepton_core_object (void *unused)
                 s_set_text_x,
                 s_text_info,
                 s_object_connections,
-                s_object_component,
                 s_make_path,
                 s_path_length,
                 s_path_ref,
