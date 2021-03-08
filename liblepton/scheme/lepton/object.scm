@@ -62,7 +62,9 @@
             arc-sweep-angle
             arc-end-angle
             make-arc
-            set-arc!))
+            set-arc!
+
+            make-box))
 
 (define (object? object)
   "Returns #t if OBJECT is a #<geda-object> instance, otherwise
@@ -226,9 +228,28 @@ If OBJECT is not part of a component, returns #f."
                  (object-color b)
                  color)))
 
-(define*-public (make-box top-left bottom-right #:optional color)
-  (let ((l (%make-box)))
-    (set-box! l top-left bottom-right color)))
+(define* (make-box top-left bottom-right #:optional color)
+  "Creates and returns a new box object with given parameters.
+TOP-LEFT is the position of the top left of the new box in the
+form '(x . y), and BOTTOM-RIGHT is the position of the bottom
+right of the box.  If optional COLOR is specified, it should be
+the integer color map index of the color with which to draw the
+box.  If COLOR is not specified, the default box color is used."
+  (let* ((init-color (default_color_id))
+         (init-left-x 0)
+         (init-upper-y 0)
+         (init-right-x 0)
+         (init-bottom-y 0)
+         (object (pointer->geda-object
+                  (lepton_box_object_new init-color
+                                         init-left-x
+                                         init-upper-y
+                                         init-right-x
+                                         init-bottom-y))))
+    (set-box! object
+              top-left
+              bottom-right
+              (or color init-color))))
 
 (define-public (box-info b)
   (let ((params (%box-info b)))
