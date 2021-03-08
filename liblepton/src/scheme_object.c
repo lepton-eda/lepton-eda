@@ -263,40 +263,6 @@ SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
   return scm_list_n (x1, y1, x2, y2, color, SCM_UNDEFINED);
 }
 
-/*! \brief Create a new bus.
- * \par Function Description
- * Creates a new bus object, with all its parameters set to default
- * values.
- *
- * \note Scheme API: Implements the %make-bus procedure in the
- * (lepton core object) module.
- *
- * \todo Do we need a way to get/set bus ripper direction?
- *
- * \return a newly-created bus object.
- */
-SCM_DEFINE (make_bus, "%make-bus", 0, 0, 0,
-            (), "Create a new bus object.")
-{
-  LeptonObject *obj;
-  SCM result;
-
-  obj = lepton_bus_object_new (BUS_COLOR,
-                             0,
-                             0,
-                             0,
-                             0,
-                             0); /* Bus ripper direction */
-
-  result = edascm_from_object (obj);
-
-  /* At the moment, the only pointer to the object is owned by the
-   * smob. */
-  edascm_c_set_gc (result, 1);
-
-  return result;
-}
-
 /*! \brief Create a new pin.
  * \par Function description
  * Creates a new pin object, with all parameters set to default
@@ -1253,8 +1219,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_make_bus,
-                s_make_pin,
+  scm_c_export (s_make_pin,
                 s_pin_type,
                 s_set_line_x,
                 s_line_info,

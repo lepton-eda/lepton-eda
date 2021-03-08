@@ -69,6 +69,8 @@
             make-box
             set-box!
 
+            make-bus
+
             make-line
 
             make-net)
@@ -203,9 +205,23 @@ values."
 
 ;;;; Buses
 
-(define*-public (make-bus start end #:optional color)
-  (let ((l (%make-bus)))
-    (set-line! l start end color)))
+(define* (make-bus start end #:optional color)
+  "Make and return a new bus object with given START and END
+coordinates and given COLOR.  The coordinates must be pairs of the
+form '(x . y).  All its other parameters are set to default
+values."
+  (check-coord start 1)
+  (check-coord end 2)
+  (and color (check-integer color 3))
+
+  (let ((x1 (car start))
+        (y1 (cdr start))
+        (x2 (car end))
+        (y2 (cdr end))
+        (color (or color (color-map-name-to-index 'bus)))
+        (ripper-direction 0))
+    (pointer->geda-object
+     (lepton_bus_object_new color x1 y1 x2 y2 ripper-direction))))
 
 
 ;;;; Pins
