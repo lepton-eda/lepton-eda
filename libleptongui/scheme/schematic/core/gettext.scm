@@ -27,5 +27,5 @@
   #:export (%schematic-gettext-domain
             G_))
 
-(define %schematic-gettext-domain "lepton-schematic")
+(define %schematic-gettext-domain "libleptongui")
 (define (G_ msg) (gettext msg %schematic-gettext-domain))
