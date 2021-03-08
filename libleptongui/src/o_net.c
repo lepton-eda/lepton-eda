@@ -517,9 +517,11 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
 
   if (!primary_zero_length ) {
   /* create primary net */
-    new_net = lepton_net_object_new (OBJ_NET, NET_COLOR,
-                                     w_current->first_wx, w_current->first_wy,
-                                     w_current->second_wx, w_current->second_wy);
+    new_net = lepton_net_object_new (NET_COLOR,
+                                     w_current->first_wx,
+                                     w_current->first_wy,
+                                     w_current->second_wx,
+                                     w_current->second_wy);
       s_page_append (page, new_net);
 
       added_objects = g_list_prepend (added_objects, new_net);
@@ -552,9 +554,11 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   if (!secondary_zero_length && !found_primary_connection) {
 
       /* Add secondary net */
-    new_net = lepton_net_object_new (OBJ_NET, NET_COLOR,
-                                     w_current->second_wx, w_current->second_wy,
-                                     w_current->third_wx, w_current->third_wy);
+    new_net = lepton_net_object_new (NET_COLOR,
+                                     w_current->second_wx,
+                                     w_current->second_wy,
+                                     w_current->third_wx,
+                                     w_current->third_wy);
       s_page_append (page, new_net);
 
       added_objects = g_list_prepend (added_objects, new_net);
@@ -1054,9 +1058,11 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
 
     for (i = 0; i < ripper_count; i++) {
       if (w_current->bus_ripper_type == NET_BUS_RIPPER) {
-        new_obj = lepton_net_object_new (OBJ_NET, NET_COLOR,
-                                         rippers[i].x[0], rippers[i].y[0],
-                                         rippers[i].x[1], rippers[i].y[1]);
+        new_obj = lepton_net_object_new (NET_COLOR,
+                                         rippers[i].x[0],
+                                         rippers[i].y[0],
+                                         rippers[i].x[1],
+                                         rippers[i].y[1]);
         s_page_append (page, new_obj);
       } else {
 

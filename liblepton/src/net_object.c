@@ -235,7 +235,6 @@ lepton_net_object_calculate_bounds (const LeptonObject *object,
  *  \par Function Description
  *  This function creates and returns a new net object.
  *
- *  \param [in]     type        The LeptonObject type (usually OBJ_NET)
  *  \param [in]     color       The color of the net
  *  \param [in]     x1          x-coord of the first point
  *  \param [in]     y1          y-coord of the first point
@@ -244,8 +243,7 @@ lepton_net_object_calculate_bounds (const LeptonObject *object,
  *  \return A new net LeptonObject
  */
 LeptonObject*
-lepton_net_object_new (char type,
-                       int color,
+lepton_net_object_new (int color,
                        int x1,
                        int y1,
                        int x2,
@@ -253,7 +251,7 @@ lepton_net_object_new (char type,
 {
   LeptonObject *new_node;
 
-  new_node = lepton_object_new (type, "net");
+  new_node = lepton_object_new (OBJ_NET, "net");
   lepton_object_set_color (new_node, color);
 
   new_node->line = lepton_line_new ();
@@ -308,7 +306,7 @@ o_net_read (const char buf[],
     color = default_color_id();
   }
 
-  new_obj = lepton_net_object_new (type, color, x1, y1, x2, y2);
+  new_obj = lepton_net_object_new (color, x1, y1, x2, y2);
 
   return new_obj;
 }
@@ -375,8 +373,7 @@ lepton_net_object_copy (LeptonObject *o_current)
   /* still doesn't work... you need to pass in the new values */
   /* or don't update and update later */
   /* I think for now I'll disable the update and manually update */
-  new_obj = lepton_net_object_new (OBJ_NET,
-                                   lepton_object_get_color (o_current),
+  new_obj = lepton_net_object_new (lepton_object_get_color (o_current),
                                    o_current->line->x[0],
                                    o_current->line->y[0],
                                    o_current->line->x[1],

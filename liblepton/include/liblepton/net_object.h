@@ -32,8 +32,7 @@ G_BEGIN_DECLS
 /* construction, destruction */
 
 LeptonObject*
-lepton_net_object_new (char type,
-                       int color,
+lepton_net_object_new (int color,
                        int x1,
                        int y1,
                        int x2,
