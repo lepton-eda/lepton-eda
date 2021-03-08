@@ -29,6 +29,8 @@
   ;; Import C procedures
   #:use-module (lepton core component)
   #:use-module (lepton core object)
+
+  #:use-module (lepton color-map)
   #:use-module (lepton ffi)
   #:use-module (lepton object type)
 
@@ -67,7 +69,9 @@
             make-box
             set-box!
 
-            make-line)
+            make-line
+
+            make-net)
 
   #:re-export (arc?
                box?
@@ -179,9 +183,22 @@ values."
 
 ;;;; Nets
 
-(define*-public (make-net start end #:optional color)
-  (let ((l (%make-net)))
-    (set-line! l start end color)))
+(define* (make-net start end #:optional color)
+  "Make and return a new net object with given START and END
+coordinates and given COLOR.  The coordinates must be pairs of the
+form '(x . y).  All its other parameters are set to default
+values."
+  (check-coord start 1)
+  (check-coord end 2)
+  (and color (check-integer color 3))
+
+  (let ((x1 (car start))
+        (y1 (cdr start))
+        (x2 (car end))
+        (y2 (cdr end))
+        (color (or color (color-map-name-to-index 'net))))
+    (pointer->geda-object
+     (lepton_net_object_new color x1 y1 x2 y2))))
 
 
 ;;;; Buses

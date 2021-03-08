@@ -263,34 +263,6 @@ SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
   return scm_list_n (x1, y1, x2, y2, color, SCM_UNDEFINED);
 }
 
-/*! \brief Create a new net.
- * \par Function Description
- * Creates a new net object, with all its parameters set to default
- * values.
- *
- * \note Scheme API: Implements the %make-net procedure in the
- * (lepton core object) module.
- *
- * \return a newly-created net object.
- */
-SCM_DEFINE (make_net, "%make-net", 0, 0, 0,
-            (), "Create a new net object.")
-{
-  LeptonObject *obj;
-  SCM result;
-
-  obj = lepton_net_object_new (NET_COLOR, 0, 0, 0, 0);
-
-
-  result = edascm_from_object (obj);
-
-  /* At the moment, the only pointer to the object is owned by the
-   * smob. */
-  edascm_c_set_gc (result, 1);
-
-  return result;
-}
-
 /*! \brief Create a new bus.
  * \par Function Description
  * Creates a new bus object, with all its parameters set to default
@@ -1281,8 +1253,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_make_net,
-                s_make_bus,
+  scm_c_export (s_make_bus,
                 s_make_pin,
                 s_pin_type,
                 s_set_line_x,
