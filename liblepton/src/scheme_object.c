@@ -140,34 +140,6 @@ edascm_is_object_type (SCM smob, int type)
 }
 
 
-/*! \brief Create a new line.
- * \par Function Description
- * Creates a new line object, with all its parameters set to default
- * values.
- *
- * \note Scheme API: Implements the %make-line procedure in the
- * (lepton core object) module.
- *
- * \return a newly-created line object.
- */
-SCM_DEFINE (make_line, "%make-line", 0, 0, 0,
-            (), "Create a new line object.")
-{
-  LeptonObject *object = lepton_line_object_new (default_color_id(),
-                                                 0,
-                                                 0,
-                                                 0,
-                                                 0);
-
-  SCM result = edascm_from_object (object);
-
-  /* At the moment, the only pointer to the object is owned by the
-   * smob. */
-  edascm_c_set_gc (result, TRUE);
-
-  return result;
-}
-
 /*! \brief Set line parameters.
  * \par Function Description
  * Modifies a line object by setting its parameters to new values.
@@ -1309,8 +1281,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_make_line,
-                s_make_net,
+  scm_c_export (s_make_net,
                 s_make_bus,
                 s_make_pin,
                 s_pin_type,

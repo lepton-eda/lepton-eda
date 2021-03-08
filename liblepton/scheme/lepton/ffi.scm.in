@@ -109,6 +109,8 @@
             lepton_component_object_embed
             lepton_component_object_unembed
 
+            lepton_line_object_new
+
             lepton_picture_object_get_embedded
             lepton_picture_object_embed
             lepton_picture_object_unembed
@@ -260,6 +262,8 @@
 (define-lff lepton_component_object_get_embedded int '(*))
 (define-lff lepton_component_object_embed void '(*))
 (define-lff lepton_component_object_unembed void '(*))
+
+(define-lff lepton_line_object_new '* (list int int int int int))
 
 (define-lff lepton_picture_object_get_embedded int '(*))
 (define-lff lepton_picture_object_embed void '(*))

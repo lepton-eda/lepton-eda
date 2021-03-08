@@ -65,7 +65,9 @@
             box-bottom-right
             box-top-left
             make-box
-            set-box!)
+            set-box!
+
+            make-line)
 
   #:re-export (arc?
                box?
@@ -143,9 +145,22 @@ If OBJECT is not part of a component, returns #f."
                   (object-color l)
                   color)))
 
-(define*-public (make-line start end #:optional color)
-  (let ((l (%make-line)))
-    (set-line! l start end color)))
+(define* (make-line start end #:optional color)
+  "Make and return a new line object with given START and END
+coordinates and given COLOR.  The coordinates must be pairs of the
+form '(x . y).  All its other parameters are set to default
+values."
+  (check-coord start 1)
+  (check-coord end 2)
+  (and color (check-integer color 3))
+
+  (let ((x1 (car start))
+        (y1 (cdr start))
+        (x2 (car end))
+        (y2 (cdr end))
+        (color (or color (default_color_id))))
+    (pointer->geda-object
+     (lepton_line_object_new color x1 y1 x2 y2))))
 
 (define-public (line-info l)
   (let ((params (%line-info l)))
