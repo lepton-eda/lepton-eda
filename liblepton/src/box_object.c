@@ -46,7 +46,6 @@
  *  #lepton_object_set_line_options() and
  *  #lepton_object_set_fill_options().
  *
- *  \param [in]     type         Box type.
  *  \param [in]     color        Box border color.
  *  \param [in]     x1           Upper x coordinate.
  *  \param [in]     y1           Upper y coordinate.
@@ -55,8 +54,7 @@
  *  \return The new LeptonObject
  */
 LeptonObject*
-lepton_box_object_new (char type,
-                       int color,
+lepton_box_object_new (int color,
                        int x1,
                        int y1,
                        int x2,
@@ -66,7 +64,7 @@ lepton_box_object_new (char type,
   LeptonBox *box;
 
   /* create the object */
-  new_node = lepton_object_new (type, "box");
+  new_node = lepton_object_new (OBJ_BOX, "box");
   lepton_object_set_color (new_node, color);
 
   box = lepton_box_new ();
@@ -112,8 +110,7 @@ lepton_box_object_copy (LeptonObject *o_current)
 
   /* A new box object is created with #lepton_box_object_new().
    * Values for its fields are default and need to be modified. */
-  new_obj = lepton_box_object_new (OBJ_BOX,
-                                   lepton_object_get_color (o_current),
+  new_obj = lepton_box_object_new (lepton_object_get_color (o_current),
                                    0, 0, 0, 0);
 
   /*
@@ -360,7 +357,7 @@ o_box_read (const char buf[],
   d_y2 = y1;
 
   /* create a new box */
-  new_obj = lepton_box_object_new (type, color, d_x1, d_y1, d_x2, d_y2);
+  new_obj = lepton_box_object_new (color, d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
   lepton_object_set_line_options (new_obj,
                                   (LeptonLineCapType) box_end,

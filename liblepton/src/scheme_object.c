@@ -1092,7 +1092,7 @@ SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
 SCM_DEFINE (make_box, "%make-box", 0, 0, 0,
             (), "Create a new box object.")
 {
-  LeptonObject *obj = lepton_box_object_new (OBJ_BOX, default_color_id(),
+  LeptonObject *obj = lepton_box_object_new (default_color_id(),
                                              0, 0, 0, 0);
 
   SCM result = edascm_from_object (obj);
