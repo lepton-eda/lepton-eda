@@ -69,6 +69,8 @@ struct _Multiattrib {
   GdkColor       not_present_in_all_text_color;
 
   gulong object_list_changed_id;
+
+  gboolean add_attr_section_expanded;
 };
 
 

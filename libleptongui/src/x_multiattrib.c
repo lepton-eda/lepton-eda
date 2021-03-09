@@ -1786,6 +1786,12 @@ multiattrib_geometry_save (GschemDialog *dialog, EdaConfig *cfg, gchar *group_na
   show_inherited =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (MULTIATTRIB (dialog)->show_inherited));
   eda_config_set_boolean (cfg, group_name, "show_inherited", show_inherited);
+
+
+  gboolean expand_add_attr =
+      gtk_expander_get_expanded (GTK_EXPANDER (MULTIATTRIB (dialog)->add_frame));
+
+  eda_config_set_boolean (cfg, group_name, "expand_add_attr", expand_add_attr);
 }
 
 
@@ -1812,9 +1818,22 @@ multiattrib_geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar *group
   show_inherited = eda_config_get_boolean (cfg, group_name, "show_inherited", &error);
   if (error != NULL) {
     show_inherited = TRUE;
-    g_error_free (error);
   }
+  g_clear_error (&error);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (MULTIATTRIB (dialog)->show_inherited), show_inherited);
+
+
+  gboolean expand_add_attr =
+    eda_config_get_boolean (cfg, group_name, "expand_add_attr", &error);
+
+  if (error != NULL)
+  {
+    expand_add_attr = TRUE;
+  }
+
+  g_clear_error (&error);
+  gtk_expander_set_expanded (GTK_EXPANDER (MULTIATTRIB (dialog)->add_frame),
+                             expand_add_attr);
 }
 
 
@@ -2009,6 +2028,19 @@ multiattrib_show_inherited_toggled (GtkToggleButton *button,
 
   /* update the treeview contents */
   multiattrib_update (multiattrib);
+}
+
+
+/*! \brief Remember "expanded" state of the "Add Attribute" section.
+ */
+static void
+multiattrib_callback_expander_activate (GtkExpander* expander,
+                                        gpointer     data)
+{
+  Multiattrib* multiattrib = (Multiattrib*) data;
+
+  multiattrib->add_attr_section_expanded =
+    gtk_expander_get_expanded (expander);
 }
 
 
@@ -2371,8 +2403,13 @@ multiattrib_init (Multiattrib *multiattrib)
 
 
   multiattrib->add_frame =
-      gschem_dialog_misc_create_section_widget
-        ( _("<b>Add Attribute</b>"), table );
+    gschem_dialog_misc_create_section_widget(
+      _("<b>Add Attribute</b>"), table);
+
+  g_signal_connect (multiattrib->add_frame,
+                    "activate",
+                    G_CALLBACK (multiattrib_callback_expander_activate),
+                    multiattrib);
 
 
   /* pack the frame in the dialog */
