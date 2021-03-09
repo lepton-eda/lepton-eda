@@ -2245,10 +2245,7 @@ multiattrib_init (Multiattrib *multiattrib)
                       TRUE, TRUE, 1);
   gtk_widget_show_all (multiattrib->list_frame);
 
-  /* create the add/edit frame */
-  multiattrib->add_frame = GTK_WIDGET (g_object_new (GTK_TYPE_FRAME,
-                                       "label", _("Add Attribute"),
-                                       NULL));
+
   table = GTK_WIDGET (g_object_new (GTK_TYPE_TABLE,
                                     /* GtkTable */
                                     "n-rows",      4,
@@ -2372,8 +2369,12 @@ multiattrib_init (Multiattrib *multiattrib)
                     (GtkAttachOptions) 0,
                     6, 3);
 
-  /* add the table to the frame */
-  gtk_container_add (GTK_CONTAINER (multiattrib->add_frame), table);
+
+  multiattrib->add_frame =
+      gschem_dialog_misc_create_section_widget
+        ( _("<b>Add Attribute</b>"), table );
+
+
   /* pack the frame in the dialog */
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (multiattrib))),
                       multiattrib->add_frame,
