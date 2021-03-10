@@ -901,7 +901,7 @@ x_tabs_hdr_create (TabInfo* nfo)
   if (nfo->page_->CHANGED)
   {
     gtk_widget_set_tooltip_text (btn_save, _("Save"));
-    gtk_box_pack_start (GTK_BOX (box_btns_left), btn_save, FALSE, FALSE, 0);
+    gtk_box_pack_end (GTK_BOX (box_btns_left), btn_save, FALSE, FALSE, 0);
 
     g_signal_connect (btn_save,
                       "clicked",
