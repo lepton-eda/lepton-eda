@@ -137,34 +137,6 @@ edascm_is_object_type (SCM smob, int type)
 }
 
 
-/*! \brief Create a new circle.
- * \par Function Description
-
- * Creates a new circle object, with all its parameters set to default
- * values.
- *
- * \note Scheme API: Implements the %make-circle procedure in the
- * (lepton core object) module.
- *
- * \return a newly-created circle object.
- */
-SCM_DEFINE (make_circle, "%make-circle", 0, 0, 0,
-            (), "Create a new circle object.")
-{
-  LeptonObject *object = lepton_circle_object_new (default_color_id(),
-                                                   0,
-                                                   0,
-                                                   1);
-
-  SCM result = edascm_from_object (object);
-
-  /* At the moment, the only pointer to the object is owned by the
-   * smob. */
-  edascm_c_set_gc (result, 1);
-
-  return result;
-}
-
 /*! \brief Set circle parameters.
  * \par Function Description
  * Modifies a circle object by setting its parameters to new values.
@@ -1014,8 +986,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_make_circle,
-                s_set_circle_x,
+  scm_c_export (s_set_circle_x,
                 s_circle_info,
                 s_make_text,
                 s_set_text_x,

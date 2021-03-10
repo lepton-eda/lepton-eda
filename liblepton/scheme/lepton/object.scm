@@ -69,6 +69,8 @@
             make-box
             set-box!
 
+            make-circle
+
             make-bus
 
             line-end
@@ -489,8 +491,11 @@ OBJECT. The return value is a list of the parameters in the form:
                     (object-color c)
                     color)))
 
-(define*-public (make-circle center radius #:optional color)
-  (let ((c (%make-circle)))
+(define* (make-circle center radius #:optional color)
+  "Creates and returns a new circle object, with all its
+parameters set to default values."
+  (let ((c (pointer->geda-object
+            (lepton_circle_object_new (default_color_id) 0 0 1))))
     (set-circle! c center radius color)))
 
 (define-public (circle-info c)
