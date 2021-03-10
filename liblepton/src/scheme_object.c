@@ -175,34 +175,6 @@ SCM_DEFINE (set_circle_x, "%set-circle!", 5, 0, 0,
   return circle_s;
 }
 
-/*! \brief Get circle parameters.
- * \par Function Description
-
- * Retrieves the parameters of a circle object. The return value is a
- * list of parameters:
- *
- * -# X-coordinate of center of circle
- * -# Y-coordinate of center of circle
- * -# Radius of circle
- * -# Colormap index of color to be used for drawing the circle
- *
- * \param circle_s the circle object to inspect.
- * \return a list of circle parameters.
- */
-SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
-            (SCM circle_s), "Get circle parameters.")
-{
-  SCM_ASSERT (edascm_is_object_type (circle_s, OBJ_CIRCLE),
-              circle_s, SCM_ARG1, s_circle_info);
-
-  LeptonObject *obj = edascm_to_object (circle_s);
-
-  return scm_list_n (scm_from_int (lepton_circle_object_get_center_x (obj)),
-                     scm_from_int (lepton_circle_object_get_center_y (obj)),
-                     scm_from_int (lepton_circle_object_get_radius (obj)),
-                     scm_from_int (lepton_object_get_color (obj)),
-                     SCM_UNDEFINED);
-}
 
 
 /*! \brief Create a new text item.
@@ -987,7 +959,6 @@ init_module_lepton_core_object (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_set_circle_x,
-                s_circle_info,
                 s_make_text,
                 s_set_text_x,
                 s_text_info,
