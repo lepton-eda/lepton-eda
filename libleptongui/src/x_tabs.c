@@ -315,6 +315,9 @@ x_tabs_hdr_on_btn_close (GtkToolButton* btn, gpointer p);
 static void
 x_tabs_hdr_on_btn_up (GtkToolButton* btn, gpointer p);
 
+static void
+x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p);
+
 
 
 /* helpers: */
@@ -899,6 +902,11 @@ x_tabs_hdr_create (TabInfo* nfo)
   {
     gtk_widget_set_tooltip_text (btn_save, _("Save"));
     gtk_box_pack_start (GTK_BOX (box_btns_left), btn_save, FALSE, FALSE, 0);
+
+    g_signal_connect (btn_save,
+                      "clicked",
+                      G_CALLBACK (&x_tabs_hdr_on_btn_save),
+                      nfo->tl_);
   }
 
 
@@ -1041,6 +1049,18 @@ x_tabs_hdr_on_btn_up (GtkToolButton* btn, gpointer p)
   }
 
 } /* x_tabs_hdr_on_btn_up() */
+
+
+
+static void
+x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p)
+{
+  GschemToplevel* toplevel    = (GschemToplevel*) p;
+  const gchar*    action_name = "&file-save";
+
+  g_action_eval_by_name (toplevel, action_name);
+
+} /* x_tabs_hdr_on_btn_save() */
 
 
 
