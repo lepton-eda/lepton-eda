@@ -219,50 +219,6 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   return line_s;
 }
 
-/*! \brief Get line parameters.
- * \par Function Description
- * Retrieves the parameters of a line object. The return value is a
- * list of parameters:
- *
- * -# X-coordinate of start of line
- * -# Y-coordinate of start of line
- * -# X-coordinate of end of line
- * -# Y-coordinate of end of line
- * -# Colormap index of color to be used for drawing the line
- *
- * This function also works on net, bus and pin objects.  For pins,
- * the start is the connectable point on the pin.
- *
- * \param line_s the line object to inspect.
- * \return a list of line parameters.
- */
-SCM_DEFINE (line_info, "%line-info", 1, 0, 0,
-            (SCM line_s), "Get line parameters.")
-{
-  SCM_ASSERT ((edascm_is_object_type (line_s, OBJ_LINE)
-               || edascm_is_object_type (line_s, OBJ_NET)
-               || edascm_is_object_type (line_s, OBJ_BUS)
-               || edascm_is_object_type (line_s, OBJ_PIN)),
-              line_s, SCM_ARG1, s_line_info);
-
-  LeptonObject *obj = edascm_to_object (line_s);
-  SCM x1 = scm_from_int (lepton_line_object_get_x0 (obj));
-  SCM y1 = scm_from_int (lepton_line_object_get_y0 (obj));
-  SCM x2 = scm_from_int (lepton_line_object_get_x1 (obj));
-  SCM y2 = scm_from_int (lepton_line_object_get_y1 (obj));
-  SCM color = scm_from_int (lepton_object_get_color (obj));
-
-  /* Swap ends according to pin's whichend flag. */
-  if (lepton_object_is_pin (obj) && obj->whichend)
-  {
-    SCM s;
-    s = x1; x1 = x2; x2 = s;
-    s = y1; y1 = y2; y2 = s;
-  }
-
-  return scm_list_n (x1, y1, x2, y2, color, SCM_UNDEFINED);
-}
-
 /*! \brief Create a new pin.
  * \par Function description
  * Creates a new pin object, with all parameters set to default
@@ -1222,7 +1178,6 @@ init_module_lepton_core_object (void *unused)
   scm_c_export (s_make_pin,
                 s_pin_type,
                 s_set_line_x,
-                s_line_info,
                 s_make_circle,
                 s_set_circle_x,
                 s_circle_info,

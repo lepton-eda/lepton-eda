@@ -724,6 +724,22 @@ lepton_object_set_fill_angle2 (LeptonObject *object,
 }
 
 
+/*! \brief Get object's 'whichend'.
+ *
+ *  \par Function Description
+ *  Obtains 'whichend' field of the #LeptonObject structure.  For
+ *  pins it defines which end of the pin is connectible.
+ *  \param [in] object The object to obtain the 'whichend' of.
+ *  \return The object 'whichend'.
+ */
+int
+lepton_object_get_whichend (LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, -1);
+  return object->whichend;
+}
+
+
 /*! \brief Make and return a copy of an object.
  *
  *  \par Function Description

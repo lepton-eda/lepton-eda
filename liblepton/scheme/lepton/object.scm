@@ -168,13 +168,33 @@ values."
     (pointer->geda-object
      (lepton_line_object_new color x1 y1 x2 y2))))
 
-(define-public (line-info l)
-  (let ((params (%line-info l)))
-    (list (cons (list-ref params 0)
-                (list-ref params 1))
-          (cons (list-ref params 2)
-                (list-ref params 3))
-          (list-ref params 4))))
+
+(define-public (line-info object)
+  "Retrieves and returns parameters of line OBJECT as a list of
+the form '((X0 . Y0) (X1 . Y1) COLOR). The return list includes
+parameters as follows: coordinate of the start of the line,
+coordinate of the end of the line, and colormap index of color to
+be used for drawing the line.  This function works on line, net,
+bus, and pin objects.  For pins, the start is the connectible
+point on the pin."
+  (define pointer (geda-object->pointer* object 1))
+
+  (and (or (line? object)
+           (net? object)
+           (bus? object)
+           (pin? object))
+       (let ((x0 (lepton_line_object_get_x0 pointer))
+             (y0 (lepton_line_object_get_y0 pointer))
+             (x1 (lepton_line_object_get_x1 pointer))
+             (y1 (lepton_line_object_get_y1 pointer))
+             (color (lepton_object_get_color pointer))
+             (whichend (true? (lepton_object_get_whichend pointer))))
+
+         (if (and (pin? object)
+                  whichend)
+             ;; Swap ends according to pin's whichend flag.
+             (list (cons x1 y1) (cons x0 y0) color)
+             (list (cons x0 y0) (cons x1 y1) color)))))
 
 (define-public (line-start l)
   (list-ref (line-info l) 0))

@@ -337,4 +337,7 @@ lepton_object_emit_pre_change_notify (LeptonObject *object);
 void
 lepton_object_emit_change_notify (LeptonObject *object);
 
+int
+lepton_object_get_whichend (LeptonObject *object);
+
 G_END_DECLS

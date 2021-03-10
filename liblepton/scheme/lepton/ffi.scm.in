@@ -62,6 +62,7 @@
             lepton_object_get_stroke_space_length
             lepton_object_set_stroke_space_length
             lepton_object_get_type
+            lepton_object_get_whichend
 
             lepton_object_is_arc
             lepton_object_is_box
@@ -111,6 +112,10 @@
             lepton_component_object_embed
             lepton_component_object_unembed
 
+            lepton_line_object_get_x0
+            lepton_line_object_get_y0
+            lepton_line_object_get_x1
+            lepton_line_object_get_y1
             lepton_line_object_new
 
             lepton_net_object_new
@@ -218,6 +223,7 @@
 (define-lff lepton_object_get_stroke_space_length int '(*))
 (define-lff lepton_object_set_stroke_space_length void (list '* int))
 (define-lff lepton_object_get_type int '(*))
+(define-lff lepton_object_get_whichend int '(*))
 
 (define-lff lepton_object_is_arc int '(*))
 (define-lff lepton_object_is_box int '(*))
@@ -268,6 +274,11 @@
 (define-lff lepton_component_object_get_embedded int '(*))
 (define-lff lepton_component_object_embed void '(*))
 (define-lff lepton_component_object_unembed void '(*))
+
+(define-lff lepton_line_object_get_x0 int '(*))
+(define-lff lepton_line_object_get_y0 int '(*))
+(define-lff lepton_line_object_get_x1 int '(*))
+(define-lff lepton_line_object_get_y1 int '(*))
 
 (define-lff lepton_line_object_new '* (list int int int int int))
 
