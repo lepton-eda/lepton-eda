@@ -863,6 +863,7 @@ x_tabs_hdr_create (TabInfo* nfo)
   GtkWidget* img_close = gtk_image_new_from_stock (GTK_STOCK_CLOSE,
                                                    GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (btn_close), img_close);
+  gtk_widget_set_tooltip_text (btn_close, _("Close"));
 
 
   /* "up" btn:
@@ -887,6 +888,7 @@ x_tabs_hdr_create (TabInfo* nfo)
   GtkWidget* img_save = gtk_image_new_from_stock (GTK_STOCK_SAVE,
                                                   GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (btn_save), img_save);
+  gtk_widget_set_tooltip_text (btn_save, _("Save"));
 
 
   /* pack button boxes and label box to hdr box:
@@ -900,7 +902,6 @@ x_tabs_hdr_create (TabInfo* nfo)
   */
   if (nfo->page_->CHANGED)
   {
-    gtk_widget_set_tooltip_text (btn_save, _("Save"));
     gtk_box_pack_end (GTK_BOX (box_btns_left), btn_save, FALSE, FALSE, 0);
 
     g_signal_connect (btn_save,
