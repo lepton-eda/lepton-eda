@@ -31,6 +31,32 @@ G_BEGIN_DECLS
 
 /* construction, destruction */
 
+
+int
+lepton_box_object_get_upper_x (const LeptonObject *object);
+
+int
+lepton_box_object_get_upper_y (const LeptonObject *object);
+
+int
+lepton_box_object_get_lower_x (const LeptonObject *object);
+
+int
+lepton_box_object_get_lower_y (const LeptonObject *object);
+
+void
+lepton_box_object_set_upper_x (LeptonObject *object,
+                               int val);
+void
+lepton_box_object_set_upper_y (LeptonObject *object,
+                               int val);
+void
+lepton_box_object_set_lower_x (LeptonObject *object,
+                               int val);
+void
+lepton_box_object_set_lower_y (LeptonObject *object,
+                               int val);
+
 LeptonObject*
 lepton_box_object_new (int color,
                        int x1,
