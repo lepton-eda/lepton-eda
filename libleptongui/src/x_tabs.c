@@ -815,7 +815,7 @@ x_tabs_hdr_create (TabInfo* nfo)
   gchar* lab_txt = NULL;
 
   if (nfo->page_->CHANGED)
-    lab_txt = g_strdup_printf ("* <b>%s</b>", bname);
+    lab_txt = g_strdup_printf ("<b>%s</b>", bname);
   else
     lab_txt = g_strdup (bname);
 
