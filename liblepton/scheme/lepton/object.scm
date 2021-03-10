@@ -60,7 +60,8 @@
             arc-radius
             arc-start-angle
             arc-sweep-angle
-            arc-end-angle))
+            arc-end-angle
+            make-arc))
 
 (define (object? object)
   "Returns #t if OBJECT is a #<geda-object> instance, otherwise
@@ -288,9 +289,35 @@ If OBJECT is not part of a component, returns #f."
                  (object-color a)
                  color)))
 
-(define*-public (make-arc center radius start-angle sweep-angle #:optional color)
-  (let ((c (%make-arc)))
-    (set-arc! c center radius start-angle sweep-angle color)))
+(define* (make-arc center radius start-angle sweep-angle #:optional color)
+  "Creates and returns a new arc object with given parameters.
+CENTER is the position of the center of the new arc in the form
+'(x . y), and RADIUS is the integer radius of the arc.
+START-ANGLE is the angle at which to start the arc, in degrees.
+SWEEP-ANGLE is the number of degrees between the start and end
+angles.  If optional COLOR is specified, it should be the integer
+color map index of the color with which to draw the arc.  If COLOR
+is not specified, the default arc color is used."
+
+  (let* ((init-color (default_color_id))
+         (init-center-x 0)
+         (init-center-y 0)
+         (init-radius 1)
+         (init-start-angle 0)
+         (init-sweep-angle 0)
+         (object (pointer->geda-object
+                  (lepton_arc_object_new init-color
+                                         init-center-x
+                                         init-center-y
+                                         init-radius
+                                         init-start-angle
+                                         init-sweep-angle))))
+    (set-arc! object
+              center
+              radius
+              start-angle
+              sweep-angle
+              (or color init-color))))
 
 (define-public (arc-info object)
   "Returns the parameters of arc OBJECT as a list of its center

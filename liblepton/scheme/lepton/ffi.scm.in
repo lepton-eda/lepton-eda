@@ -63,6 +63,7 @@
             lepton_arc_object_get_radius
             lepton_arc_object_get_start_angle
             lepton_arc_object_get_sweep_angle
+            lepton_arc_object_new
 
             lepton_component_object_get_embedded
             lepton_component_object_embed
@@ -74,6 +75,7 @@
 
             set_render_placeholders
             colors_count
+            default_color_id
             g_rc_parse
             lepton_colormap_color_by_id
             lepton_colormap_disable_color
@@ -107,6 +109,7 @@
 
 (define-lff set_render_placeholders void '())
 (define-lff colors_count size_t '())
+(define-lff default_color_id int '())
 (define-lff lepton_colormap_color_by_id '* (list '* size_t))
 (define-lff lepton_colormap_disable_color void (list '* size_t))
 (define-lff lepton_colormap_set_color void (list '* size_t uint8 uint8 uint8 uint8))
@@ -165,6 +168,7 @@
 (define-lff lepton_arc_object_get_radius int '(*))
 (define-lff lepton_arc_object_get_start_angle int '(*))
 (define-lff lepton_arc_object_get_sweep_angle int '(*))
+(define-lff lepton_arc_object_new '* (list int int int int int int))
 
 (define-lff lepton_component_object_get_embedded int '(*))
 (define-lff lepton_component_object_embed void '(*))
