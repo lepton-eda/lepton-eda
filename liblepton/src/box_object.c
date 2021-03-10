@@ -28,6 +28,79 @@
 
 #include "liblepton_priv.h"
 
+int
+lepton_box_object_get_upper_x (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_box (object), 0);
+  g_return_val_if_fail (object->box != NULL, 0);
+
+  return object->box->upper_x;
+}
+
+int
+lepton_box_object_get_upper_y (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_box (object), 0);
+  g_return_val_if_fail (object->box != NULL, 0);
+
+  return object->box->upper_y;
+}
+
+int
+lepton_box_object_get_lower_x (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_box (object), 0);
+  g_return_val_if_fail (object->box != NULL, 0);
+
+  return object->box->lower_x;
+}
+
+int
+lepton_box_object_get_lower_y (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_box (object), 0);
+  g_return_val_if_fail (object->box != NULL, 0);
+
+  return object->box->lower_y;
+}
+
+
+void
+lepton_box_object_set_upper_x (LeptonObject *object, int val)
+{
+  g_return_if_fail (lepton_object_is_box (object));
+  g_return_if_fail (object->box != NULL);
+
+  object->box->upper_x = val;
+}
+
+void
+lepton_box_object_set_upper_y (LeptonObject *object, int val)
+{
+  g_return_if_fail (lepton_object_is_box (object));
+  g_return_if_fail (object->box != NULL);
+
+  object->box->upper_y = val;
+}
+
+void
+lepton_box_object_set_lower_x (LeptonObject *object, int val)
+{
+  g_return_if_fail (lepton_object_is_box (object));
+  g_return_if_fail (object->box != NULL);
+
+  object->box->lower_x = val;
+}
+
+void
+lepton_box_object_set_lower_y (LeptonObject *object, int val)
+{
+  g_return_if_fail (lepton_object_is_box (object));
+  g_return_if_fail (object->box != NULL);
+
+  object->box->lower_y = val;
+}
+
 /*! \brief Create a box LeptonObject
  *  \par Function Description
  *  This function creates a new object representing a box.
