@@ -893,6 +893,15 @@ x_tabs_hdr_create (TabInfo* nfo)
   gtk_box_pack_start (GTK_BOX (box_hdr), box_btns_right, FALSE, FALSE, 0);
 
 
+  /* setup "save" btn:
+  */
+  if (nfo->page_->CHANGED)
+  {
+    gtk_widget_set_tooltip_text (btn_save, _("Save"));
+    gtk_box_pack_start (GTK_BOX (box_btns_left), btn_save, FALSE, FALSE, 0);
+  }
+
+
   /* setup "up" btn:
   */
   LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (nfo->tl_);
