@@ -69,6 +69,7 @@
             make-box
             set-box!
 
+            circle-info
             make-circle
 
             make-bus
@@ -515,12 +516,18 @@ parameters set to default values."
                              (cdr center)
                              radius)))
 
-(define-public (circle-info c)
-  (let* ((params (%circle-info c))
-         (tail (cddr params)))
-    (cons (cons (list-ref params 0)
-                (list-ref params 1))
-          tail)))
+(define (circle-info object)
+  "Retrieves and returns the parameters of a circle OBJECT. The
+return value is a list of parameters in the form: '(CENTER RADIUS
+COLOR).  CENTER is the coordinate of the circle which is a pair of
+integers, RADIUS is integer, and COLOR is the colormap index of
+color to be used for drawing the circle."
+  (define pointer (geda-object->pointer* object 1 circle? 'circle))
+
+  (list (cons (lepton_circle_object_get_center_x pointer)
+              (lepton_circle_object_get_center_y pointer))
+        (lepton_circle_object_get_radius pointer)
+        (lepton_object_get_color pointer)))
 
 (define-public (circle-center c)
   (list-ref (circle-info c) 0))
