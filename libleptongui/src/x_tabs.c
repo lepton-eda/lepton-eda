@@ -906,7 +906,7 @@ x_tabs_hdr_create (TabInfo* nfo)
     g_signal_connect (btn_save,
                       "clicked",
                       G_CALLBACK (&x_tabs_hdr_on_btn_save),
-                      nfo->tl_);
+                      nfo);
   }
 
 
@@ -1055,10 +1055,11 @@ x_tabs_hdr_on_btn_up (GtkToolButton* btn, gpointer p)
 static void
 x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p)
 {
-  GschemToplevel* toplevel    = (GschemToplevel*) p;
-  const gchar*    action_name = "&file-save";
+  TabInfo* nfo = (TabInfo*) p;
+  g_return_if_fail (nfo != NULL);
 
-  g_action_eval_by_name (toplevel, action_name);
+  x_tabs_page_set_cur (nfo->tl_, nfo->page_);
+  g_action_eval_by_name (nfo->tl_, "&file-save");
 
 } /* x_tabs_hdr_on_btn_save() */
 
