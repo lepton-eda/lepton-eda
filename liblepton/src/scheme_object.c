@@ -981,35 +981,6 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
                      SCM_UNDEFINED);
 }
 
-/*! \brief Create a new arc.
- * \par Function Description
- * Creates a new arc object, with all its parameters set to default
- * values.
- *
- * \note Scheme API: Implements the %make-arc procedure in the
- * (lepton core object) module.
- *
- * \return a newly-created arc object.
- */
-SCM_DEFINE (make_arc, "%make-arc", 0, 0, 0,
-            (), "Create a new arc object.")
-{
-  LeptonObject *object = lepton_arc_object_new (default_color_id(),
-                                                0,
-                                                0,
-                                                1,
-                                                0,
-                                                0);
-
-  SCM result = edascm_from_object (object);
-
-  /* At the moment, the only pointer to the object is owned by the
-   * smob. */
-  edascm_c_set_gc (result, 1);
-
-  return result;
-}
-
 /*! \brief Set arc parameters.
  * \par Function Description
  * Modifies a arc object by setting its parameters to new values.
@@ -1852,7 +1823,6 @@ init_module_lepton_core_object (void *unused)
                 s_make_circle,
                 s_set_circle_x,
                 s_circle_info,
-                s_make_arc,
                 s_set_arc_x,
                 s_make_text,
                 s_set_text_x,
