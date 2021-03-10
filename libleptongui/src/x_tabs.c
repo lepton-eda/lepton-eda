@@ -874,6 +874,18 @@ x_tabs_hdr_create (TabInfo* nfo)
   gtk_container_add (GTK_CONTAINER (btn_up), img_up);
 
 
+  /* "save" btn:
+  */
+  GtkWidget* btn_save = gtk_button_new();
+  gtk_widget_set_name (btn_save, "lepton-tab-btn");
+  gtk_button_set_relief (GTK_BUTTON (btn_save), GTK_RELIEF_NONE);
+  gtk_button_set_focus_on_click (GTK_BUTTON (btn_save), FALSE);
+
+  GtkWidget* img_save = gtk_image_new_from_stock (GTK_STOCK_SAVE,
+                                                  GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (btn_save), img_save);
+
+
   /* pack button boxes and label box to hdr box:
   */
   gtk_box_pack_start (GTK_BOX (box_hdr), box_btns_left,  FALSE, FALSE, 0);
