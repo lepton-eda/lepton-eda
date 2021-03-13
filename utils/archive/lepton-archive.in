@@ -86,6 +86,7 @@ exec @GUILE@ -s "$0" "$@"
                (lepton os)
                (lepton page)
                (lepton rc)
+               (lepton version)
                (netlist schematic)
                (netlist schematic-component)))
 
@@ -114,6 +115,7 @@ archive.  The two modes of operation are \"archive mode\"
 
 Command line switches:
   -h,--help             -- Print usage information.
+  -V,--version          -- Print version information.
   -v,--verbose          -- Verbose mode.
   -f,--files-from=FILE  -- Additionally read filenames to archive
                            from FILE.
@@ -146,9 +148,13 @@ Example usage:
           default-archive-name
           default-archive-name))
 
+(define (print-version)
+  (display-lepton-version #:print-name #t #:copyright #t))
+
 (define %option-spec
   '((help (single-char #\h) (value #f))
     (files-from (single-char #\f) (value #t))
+    (version (single-char #\V) (value #f))
     (verbose (single-char #\v) (value #f))
     (extract (single-char #\e) (value #f))
     (archive (single-char #\a) (value #f))
@@ -179,6 +185,7 @@ Example usage:
 (define output-archive-name (option-ref %options 'output #f))
 (define archiverc-name (option-ref %options 'files-from #f))
 (define help-mode? (option-ref %options 'help #f))
+(define version-mode? (option-ref %options 'version #f))
 (define verbose-mode? (option-ref %options 'verbose #f))
 (define command-line-file-list (option-ref %options '() '()))
 
@@ -841,6 +848,10 @@ the file manually.\n"))
 (define (main)
   (when help-mode?
     (display usage-info)
+    (primitive-exit 0))
+
+  (when version-mode?
+    (print-version)
     (primitive-exit 0))
 
   (if (and extract-mode? archive-mode?)
