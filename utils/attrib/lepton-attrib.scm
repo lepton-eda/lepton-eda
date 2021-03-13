@@ -84,7 +84,7 @@ exec @GUILE@ -s "$0" "$@"
 
 (define (usage)
   (format #t
-          (G_ "Usage: ~A [OPTIONS] filename1 ... filenameN
+          (G_ "Usage: ~A [OPTIONS] FILE ...
 
 lepton-attrib: Lepton EDA attribute editor.
 Presents schematic attributes in easy-to-edit spreadsheet format.
@@ -97,7 +97,7 @@ Options:
 Report bugs at ~S
 Lepton EDA homepage: ~S
 ")
-          (car (program-arguments))
+          (basename (car (program-arguments)))
           (lepton-version-ref 'bugs)
           (lepton-version-ref 'url))
 
