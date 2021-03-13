@@ -50,7 +50,7 @@ General options:
 Report bugs at <~A>
 Lepton EDA homepage: <~A>
 ")
-          (car (program-arguments))
+          (basename (car (program-arguments)))
           (lepton-version-ref 'bugs)
           (lepton-version-ref 'url))
   (primitive-exit 0))
