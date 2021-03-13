@@ -87,7 +87,7 @@ Run `~A --help' for more information.\n")
         (version (symcheck-option-ref 'version))
         (interactive (symcheck-option-ref 'interactive)))
     (when version
-      (display-lepton-version #:print-name #t)
+      (display-lepton-version #:print-name #t #:copyright #t)
       (primitive-exit 0))
     (if help
         (usage))
