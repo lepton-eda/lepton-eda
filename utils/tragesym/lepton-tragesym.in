@@ -294,7 +294,7 @@ Cheat fraudulent label names for them to sort them properly."))
 Based on original \"tragesym\" version
 (C) 2001,2002,2003,2004,2006,2007 by Werner Hoch <werner.ho@gmx.de>
 "
-        (car (command-line))))
+        (basename (car (command-line)))))
 
 
 (define (parse-label s)
