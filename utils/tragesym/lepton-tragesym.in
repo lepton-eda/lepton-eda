@@ -44,6 +44,7 @@ exec @GUILE@ -s "$0" "$@"
                               (lepton attrib)
                               (lepton object)
                               (lepton page)
+                              (lepton version)
                               (netlist attrib compare)))
 
 (use-modules (ice-9 getopt-long)
@@ -55,7 +56,8 @@ exec @GUILE@ -s "$0" "$@"
              (sxml match))
 
 (define %option-spec
-  '((help    (single-char #\h) (value #f))))
+  '((help    (single-char #\h) (value #f))
+   (version (single-char #\V) (value #f))))
 
 (define %options
   (getopt-long (command-line) %option-spec))
@@ -295,6 +297,9 @@ Based on original \"tragesym\" version
 (C) 2001,2002,2003,2004,2006,2007 by Werner Hoch <werner.ho@gmx.de>
 "
         (basename (car (command-line)))))
+
+(define (print-version)
+  (display-lepton-version #:print-name #t #:copyright #t))
 
 
 (define (parse-label s)
@@ -987,6 +992,10 @@ which values are equal in terms of F-EQUAL?."
 
 (when (option-ref %options 'help #f)
   (usage)
+  (primitive-exit 0))
+
+(when (option-ref %options 'version #f)
+  (print-version)
   (primitive-exit 0))
 
 (unless (= (length file-args) 2)
