@@ -104,7 +104,7 @@ Lepton EDA homepage: <~a>
 
 
 ( define ( version )
-  ( display-lepton-version )
+  ( display-lepton-version #:print-name #t #:copyright #t )
   ( primitive-exit 0 )
 )
 
