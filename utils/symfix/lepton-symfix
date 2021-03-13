@@ -11,7 +11,7 @@ use Getopt::Long;
 # don't allow -he to be interpreted as --help
 $Getopt::Long::autoabbrev=0;
 
-&GetOptions(("help|h" => \&usage, 
+&GetOptions(("help|h" => \&usage,
 	     "verbose" => \$verbose,
 	     "vverbose" => \$vverbose,
 	     "version" => \&version
@@ -53,17 +53,17 @@ while($line = <NETLIST>) {
   $file_line++;
   #==========================
   if( $state == $st_scan ) {
-    if( $line =~ /^P/) { 
-      $state = $st_pin_start; 
+    if( $line =~ /^P/) {
+      $state = $st_pin_start;
       if($vverbose){print "Pin start...\n";}
     }
-    elsif( $line =~ /^numslots=/) { 
+    elsif( $line =~ /^numslots=/) {
       $found_numslots_attr = 1;
     }
-    elsif( $line =~ /^device=/) { 
+    elsif( $line =~ /^device=/) {
       $found_device_attr = 1;
     }
-    elsif( $line =~ /^footprint=/) { 
+    elsif( $line =~ /^footprint=/) {
       $found_footprint_attr = 1;
     }
     print OUTNET $line;
@@ -77,7 +77,7 @@ while($line = <NETLIST>) {
       $found_pintype_attr = 0;
       $found_pinlabel_attr = 0;
       print OUTNET $line;
-    } 
+    }
     else {
       print STDERR "*** ERROR: No pin left bracket found at line $file_line\n";
       exit(-1);
