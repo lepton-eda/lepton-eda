@@ -817,7 +817,7 @@ General options:
 Report bugs at <https://github.com/lepton-eda/lepton-eda/issues>
 Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 ")
-          (car (program-arguments)))
+          (basename (car (program-arguments))))
   (primitive-exit 0))
 
 
