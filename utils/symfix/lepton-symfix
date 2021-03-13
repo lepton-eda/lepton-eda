@@ -225,7 +225,15 @@ sub usage {
 sub version {
   my $pname = $0;
   $pname =~ s/.*\///g;
-  print "$pname ($0):  Version $version\n";
+
+  print "Lepton EDA 1.9.13.20201211\n";
+  print "$pname was written by Mike Skerritt <mike\@acornpacket.com>\n";
+
+  print "Copyright (C) 2004      Mike Skerritt\n";
+  print "Copyright (C) 2004-2016 gEDA Contributors\n";
+  print "Copyright (C) 2017-2021 Lepton EDA Contributors\n";
+
+  exit(0);
 }
 
 
