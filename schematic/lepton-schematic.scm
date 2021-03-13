@@ -110,7 +110,6 @@ exec @GUILE@ -s "$0" "$@"
   (format #t
           (G_ "Usage: ~A [OPTION ...] [--] [FILE ...]
 
-
 Interactively edit Lepton EDA schematics or symbols.
 If one or more FILEs are specified, open them for
 editing; otherwise, create a new, empty schematic.
@@ -127,7 +126,7 @@ Options:
 
 Report bugs at ~S
 Lepton EDA homepage: ~S\n")
-          (car (program-arguments))
+          (basename (car (program-arguments)))
           (lepton-version-ref 'bugs)
           (lepton-version-ref 'url))
   (exit 0))
