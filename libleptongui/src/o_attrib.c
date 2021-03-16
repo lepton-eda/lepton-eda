@@ -278,8 +278,8 @@ LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current,
         break;
 
       case(OBJ_BOX):
-        world_x = o_current->box->upper_x;
-        world_y = o_current->box->upper_y;
+        world_x = lepton_box_object_get_upper_x (o_current);
+        world_y = lepton_box_object_get_upper_y (o_current);
         align = LOWER_LEFT;
         angle = 0;
         color = ATTRIBUTE_COLOR;

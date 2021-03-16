@@ -703,8 +703,10 @@ eda_renderer_draw_box (EdaRenderer *renderer, LeptonObject *object)
   /* Draw outline of box */
   eda_cairo_box (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                  lepton_object_get_stroke_width (object),
-                 object->box->lower_x, object->box->lower_y,
-                 object->box->upper_x, object->box->upper_y);
+                 lepton_box_object_get_lower_x (object),
+                 lepton_box_object_get_lower_y (object),
+                 lepton_box_object_get_upper_x (object),
+                 lepton_box_object_get_upper_y (object));
   if (fill_solid) cairo_fill_preserve (renderer->priv->cr);
   eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                     lepton_object_get_stroke_type (object),
@@ -1122,11 +1124,17 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, LeptonObject *object)
         object->line->x[1], object->line->y[1]);
     break;
   case OBJ_BOX:
-    eda_renderer_draw_grips_impl (renderer, GRIP_SQUARE, 4,
-        object->box->upper_x, object->box->upper_y,
-        object->box->lower_x, object->box->upper_y,
-        object->box->upper_x, object->box->lower_y,
-        object->box->lower_x, object->box->lower_y);
+    eda_renderer_draw_grips_impl (renderer,
+                                  GRIP_SQUARE,
+                                  4,
+                                  lepton_box_object_get_upper_x (object),
+                                  lepton_box_object_get_upper_y (object),
+                                  lepton_box_object_get_lower_x (object),
+                                  lepton_box_object_get_upper_y (object),
+                                  lepton_box_object_get_upper_x (object),
+                                  lepton_box_object_get_lower_y (object),
+                                  lepton_box_object_get_lower_x (object),
+                                  lepton_box_object_get_lower_y (object));
     break;
   case OBJ_ARC:
     eda_renderer_draw_arc_grips (renderer, object);

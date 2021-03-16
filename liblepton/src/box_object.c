@@ -220,6 +220,7 @@ LeptonObject*
 lepton_box_object_copy (LeptonObject *o_current)
 {
   LeptonObject *new_obj;
+  int upper_x, upper_y, lower_x, lower_y;
 
   /* A new box object is created with #lepton_box_object_new().
    * Values for its fields are default and need to be modified. */
@@ -230,11 +231,15 @@ lepton_box_object_copy (LeptonObject *o_current)
    * The dimensions of the new box are set with the ones of the original box.
    * The two boxes have the same line type and the same filling options.
    */
+  upper_x = lepton_box_object_get_upper_x (o_current);
+  upper_y = lepton_box_object_get_upper_y (o_current);
+  lower_x = lepton_box_object_get_lower_x (o_current);
+  lower_y = lepton_box_object_get_lower_y (o_current);
 
-  new_obj->box->upper_x = o_current->box->upper_x;
-  new_obj->box->upper_y = o_current->box->upper_y;
-  new_obj->box->lower_x = o_current->box->lower_x;
-  new_obj->box->lower_y = o_current->box->lower_y;
+  lepton_box_object_set_upper_x (new_obj, upper_x);
+  lepton_box_object_set_upper_y (new_obj, upper_y);
+  lepton_box_object_set_lower_x (new_obj, lower_x);
+  lepton_box_object_set_lower_y (new_obj, lower_y);
 
   lepton_object_set_line_options (new_obj,
                                   lepton_object_get_stroke_cap_type (o_current),
@@ -274,11 +279,11 @@ lepton_box_object_modify_all (LeptonObject *object,
 {
   lepton_object_emit_pre_change_notify (object);
 
-  object->box->lower_x = (x1 > x2) ? x1 : x2;
-  object->box->lower_y = (y1 > y2) ? y2 : y1;
+  lepton_box_object_set_lower_x (object, (x1 > x2) ? x1 : x2);
+  lepton_box_object_set_lower_y (object, (y1 > y2) ? y2 : y1);
 
-  object->box->upper_x = (x1 > x2) ? x2 : x1;
-  object->box->upper_y = (y1 > y2) ? y1 : y2;
+  lepton_box_object_set_upper_x (object, (x1 > x2) ? x2 : x1);
+  lepton_box_object_set_upper_y (object, (y1 > y2) ? y1 : y2);
 
   lepton_object_emit_change_notify (object);
 }
@@ -319,40 +324,48 @@ lepton_box_object_modify (LeptonObject *object,
   /* change the position of the selected corner */
   switch(whichone) {
   case BOX_UPPER_LEFT:
-    object->box->upper_x = x;
-    object->box->upper_y = y;
+    lepton_box_object_set_upper_x (object, x);
+    lepton_box_object_set_upper_y (object, y);
     break;
 
   case BOX_LOWER_LEFT:
-    object->box->upper_x = x;
-    object->box->lower_y = y;
+    lepton_box_object_set_upper_x (object, x);
+    lepton_box_object_set_lower_y (object, y);
     break;
 
   case BOX_UPPER_RIGHT:
-    object->box->lower_x = x;
-    object->box->upper_y = y;
+    lepton_box_object_set_lower_x (object, x);
+    lepton_box_object_set_upper_y (object, y);
     break;
 
   case BOX_LOWER_RIGHT:
-    object->box->lower_x = x;
-    object->box->lower_y = y;
+    lepton_box_object_set_lower_x (object, x);
+    lepton_box_object_set_lower_y (object, y);
     break;
 
   default:
     return;
   }
 
+  int upper_x, upper_y, lower_x, lower_y;
+  upper_x = lepton_box_object_get_upper_x (object);
+  upper_y = lepton_box_object_get_upper_y (object);
+  lower_x = lepton_box_object_get_lower_x (object);
+  lower_y = lepton_box_object_get_lower_y (object);
+
   /* need to update the upper left and lower right corners */
-  if(object->box->upper_x > object->box->lower_x) {
-    tmp                  = object->box->upper_x;
-    object->box->upper_x = object->box->lower_x;
-    object->box->lower_x = tmp;
+  if (upper_x > lower_x)
+  {
+    tmp = upper_x;
+    lepton_box_object_set_upper_x (object, lower_x);
+    lepton_box_object_set_lower_x (object, tmp);
   }
 
-  if(object->box->upper_y < object->box->lower_y) {
-    tmp                  = object->box->upper_y;
-    object->box->upper_y = object->box->lower_y;
-    object->box->lower_y = tmp;
+  if (upper_y < lower_y)
+  {
+    tmp = upper_y;
+    lepton_box_object_set_upper_y (object, lower_y);
+    lepton_box_object_set_lower_y (object, tmp);
   }
 
   lepton_object_emit_change_notify (object);
@@ -514,6 +527,7 @@ lepton_box_object_to_buffer (const LeptonObject *object)
   LeptonStrokeType box_type;
   LeptonFillType box_fill;
   char *buf;
+  int upper_x, upper_y, lower_x, lower_y;
 
   /*! \note
    *  A box is internally represented by its lower right and upper left corner
@@ -521,13 +535,18 @@ lepton_box_object_to_buffer (const LeptonObject *object)
    *  its width and height.
    */
 
+  upper_x = lepton_box_object_get_upper_x (object);
+  upper_y = lepton_box_object_get_upper_y (object);
+  lower_x = lepton_box_object_get_lower_x (object);
+  lower_y = lepton_box_object_get_lower_y (object);
+
   /* calculate the width and height of the box */
-  width  = abs(object->box->lower_x - object->box->upper_x);
-  height = abs(object->box->upper_y - object->box->lower_y);
+  width  = abs (lower_x - upper_x);
+  height = abs (upper_y - lower_y);
 
   /* calculate the lower left corner of the box */
-  x1 = object->box->upper_x;
-  y1 = object->box->upper_y - height; /* move the origin to 0, 0*/
+  x1 = upper_x;
+  y1 = upper_y - height; /* move the origin to 0, 0*/
 
 #if DEBUG
   printf("box: %d %d %d %d\n", x1, y1, width, height);
@@ -574,12 +593,18 @@ lepton_box_object_translate (LeptonObject *object,
 {
   g_return_if_fail (lepton_object_is_box (object));
   g_return_if_fail (object->box != NULL);
+  int upper_x, upper_y, lower_x, lower_y;
 
   /* Do world coords */
-  object->box->upper_x = object->box->upper_x + dx;
-  object->box->upper_y = object->box->upper_y + dy;
-  object->box->lower_x = object->box->lower_x + dx;
-  object->box->lower_y = object->box->lower_y + dy;
+  upper_x = lepton_box_object_get_upper_x (object);
+  upper_y = lepton_box_object_get_upper_y (object);
+  lower_x = lepton_box_object_get_lower_x (object);
+  lower_y = lepton_box_object_get_lower_y (object);
+
+  lepton_box_object_set_upper_x (object, upper_x + dx);
+  lepton_box_object_set_upper_y (object, upper_y + dy);
+  lepton_box_object_set_lower_x (object, lower_x + dx);
+  lepton_box_object_set_lower_y (object, lower_y + dy);
 }
 
 /*! \brief Rotate box LeptonObject using WORLD coordinates.
@@ -623,36 +648,30 @@ lepton_box_object_rotate (int world_centerx,
    *  to its previous location.
    */
   /* translate object to origin */
-  object->box->upper_x -= world_centerx;
-  object->box->upper_y -= world_centery;
-  object->box->lower_x -= world_centerx;
-  object->box->lower_y -= world_centery;
+  lepton_box_object_translate (object, -world_centerx, -world_centery);
 
   /* rotate the upper left corner of the box */
-  lepton_point_rotate_90 (object->box->upper_x,
-                          object->box->upper_y,
+  lepton_point_rotate_90 (lepton_box_object_get_upper_x (object),
+                          lepton_box_object_get_upper_y (object),
                           angle,
                           &newx1,
                           &newy1);
 
   /* rotate the lower left corner of the box */
-  lepton_point_rotate_90 (object->box->lower_x,
-                          object->box->lower_y,
+  lepton_point_rotate_90 (lepton_box_object_get_lower_x (object),
+                          lepton_box_object_get_lower_y (object),
                           angle,
                           &newx2,
                           &newy2);
 
   /* reorder the corners after rotation */
-  object->box->upper_x = MIN(newx1,newx2);
-  object->box->upper_y = MAX(newy1,newy2);
-  object->box->lower_x = MAX(newx1,newx2);
-  object->box->lower_y = MIN(newy1,newy2);
+  lepton_box_object_set_upper_x (object, MIN (newx1, newx2));
+  lepton_box_object_set_upper_y (object, MAX (newy1, newy2));
+  lepton_box_object_set_lower_x (object, MAX (newx1, newx2));
+  lepton_box_object_set_lower_y (object, MIN (newy1, newy2));
 
   /* translate object back to normal position */
-  object->box->upper_x += world_centerx;
-  object->box->upper_y += world_centery;
-  object->box->lower_x += world_centerx;
-  object->box->lower_y += world_centery;
+  lepton_box_object_translate (object, world_centerx, world_centery);
 }
 
 /*! \brief Mirror box using WORLD coordinates.
@@ -672,6 +691,7 @@ lepton_box_object_mirror (int world_centerx,
                           int world_centery,
                           LeptonObject *object)
 {
+  int upper_x, upper_y, lower_x, lower_y;
   int newx1, newy1;
   int newx2, newy2;
 
@@ -679,28 +699,27 @@ lepton_box_object_mirror (int world_centerx,
   g_return_if_fail (object->box != NULL);
 
   /* translate object to origin */
-  object->box->upper_x -= world_centerx;
-  object->box->upper_y -= world_centery;
-  object->box->lower_x -= world_centerx;
-  object->box->lower_y -= world_centery;
+  lepton_box_object_translate (object, -world_centerx, -world_centery);
+
+  upper_x = lepton_box_object_get_upper_x (object);
+  upper_y = lepton_box_object_get_upper_y (object);
+  lower_x = lepton_box_object_get_lower_x (object);
+  lower_y = lepton_box_object_get_lower_y (object);
 
   /* mirror the corners */
-  newx1 = -object->box->upper_x;
-  newy1 = object->box->upper_y;
-  newx2 = -object->box->lower_x;
-  newy2 = object->box->lower_y;
+  newx1 = -upper_x;
+  newy1 = upper_y;
+  newx2 = -lower_x;
+  newy2 = lower_y;
 
   /* reorder the corners */
-  object->box->upper_x = MIN(newx1,newx2);
-  object->box->upper_y = MAX(newy1,newy2);
-  object->box->lower_x = MAX(newx1,newx2);
-  object->box->lower_y = MIN(newy1,newy2);
+  lepton_box_object_set_upper_x (object, MIN (newx1, newx2));
+  lepton_box_object_set_upper_y (object, MAX (newy1, newy2));
+  lepton_box_object_set_lower_x (object, MAX (newx1, newx2));
+  lepton_box_object_set_lower_y (object, MIN (newy1, newy2));
 
   /* translate back in position */
-  object->box->upper_x += world_centerx;
-  object->box->upper_y += world_centery;
-  object->box->lower_x += world_centerx;
-  object->box->lower_y += world_centery;
+  lepton_box_object_translate (object, world_centerx, world_centery);
 }
 
 /*! \brief Get box bounding rectangle in WORLD coordinates.
@@ -752,11 +771,13 @@ lepton_box_object_get_position (const LeptonObject *object,
   g_return_val_if_fail (object->box != NULL, FALSE);
 
   if (x != NULL) {
-    *x = MIN (object->box->lower_x, object->box->upper_x);
+    *x = MIN (lepton_box_object_get_lower_x (object),
+              lepton_box_object_get_upper_x (object));
   }
 
   if (y != NULL) {
-    *y = MIN (object->box->lower_y, object->box->upper_y);
+    *y = MIN (lepton_box_object_get_lower_y (object),
+              lepton_box_object_get_upper_y (object));
   }
 
   return TRUE;
