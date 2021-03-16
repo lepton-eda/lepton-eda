@@ -1057,41 +1057,6 @@ SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
   return arc_s;
 }
 
-/*! \brief Get arc parameters.
- * \par Function Description
- * Retrieves the parameters of a arc object. The return value is a
- * list of parameters:
- *
- * -# X-coordinate of center of arc
- * -# Y-coordinate of center of arc
- * -# Radius of arc
- * -# Start angle of arc
- * -# End angle of arc
- * -# Colormap index of color to be used for drawing the arc
- *
- * \note Scheme API: Implements the %arc-info procedure in the
- * (lepton core object) module.
- *
- * \param arc_s the arc object to inspect.
- * \return a list of arc parameters.
- */
-SCM_DEFINE (arc_info, "%arc-info", 1, 0, 0,
-            (SCM arc_s), "Get arc parameters.")
-{
-  SCM_ASSERT (edascm_is_object_type (arc_s, OBJ_ARC),
-              arc_s, SCM_ARG1, s_arc_info);
-
-  LeptonObject *obj = edascm_to_object (arc_s);
-
-  return scm_list_n (scm_from_int (lepton_arc_object_get_center_x (obj)),
-                     scm_from_int (lepton_arc_object_get_center_y (obj)),
-                     scm_from_int (lepton_arc_object_get_radius (obj)),
-                     scm_from_int (lepton_arc_object_get_start_angle (obj)),
-                     scm_from_int (lepton_arc_object_get_sweep_angle (obj)),
-                     scm_from_int (lepton_object_get_color (obj)),
-                     SCM_UNDEFINED);
-}
-
 /*! \brief Create a new text item.
  * \par Function Description
  * Creates a new text object, with all its parameters set to default
@@ -1889,7 +1854,6 @@ init_module_lepton_core_object (void *unused)
                 s_circle_info,
                 s_make_arc,
                 s_set_arc_x,
-                s_arc_info,
                 s_make_text,
                 s_set_text_x,
                 s_text_info,

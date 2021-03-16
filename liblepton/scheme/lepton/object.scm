@@ -53,7 +53,14 @@
             object-embedded?
             set-object-embedded!
             object-selectable?
-            set-object-selectable!))
+            set-object-selectable!
+
+            arc-info
+            arc-center
+            arc-radius
+            arc-start-angle
+            arc-sweep-angle
+            arc-end-angle))
 
 (define (object? object)
   "Returns #t if OBJECT is a #<geda-object> instance, otherwise
@@ -285,27 +292,45 @@ If OBJECT is not part of a component, returns #f."
   (let ((c (%make-arc)))
     (set-arc! c center radius start-angle sweep-angle color)))
 
-(define-public (arc-info c)
-  (let* ((params (%arc-info c))
-         (tail (cddr params)))
-    (cons (cons (list-ref params 0)
-                (list-ref params 1))
-          tail)))
+(define-public (arc-info object)
+  "Returns the parameters of arc OBJECT as a list of its center
+coordinate, radius, start and sweep angles, and color in the form:
+'((center-x . center-y) radius start-angle sweep-angle color)"
+  (list (arc-center object)
+        (arc-radius object)
+        (arc-start-angle object)
+        (arc-sweep-angle object)
+        (object-color object)))
 
-(define-public (arc-center a)
-  (list-ref (arc-info a) 0))
+(define (arc-center object)
+  "Returns the position of the center of arc OBJECT as a pair of
+two integers in the form '(x . y)."
+  (define pointer (geda-object->pointer* object 1))
+  (cons (lepton_arc_object_get_center_x pointer)
+        (lepton_arc_object_get_center_y pointer)))
 
-(define-public (arc-radius a)
-  (list-ref (arc-info a) 1))
+(define (arc-radius object)
+  "Returns the radius of arc OBJECT as an integer."
+  (define pointer (geda-object->pointer* object 1))
+  (lepton_arc_object_get_radius pointer))
 
-(define-public (arc-start-angle a)
-  (list-ref (arc-info a) 2))
+(define (arc-start-angle object)
+  "Returns the start angle of arc OBJECT as an integer number of
+degrees."
+  (define pointer (geda-object->pointer* object 1))
+  (lepton_arc_object_get_start_angle pointer))
 
-(define-public (arc-sweep-angle a)
-  (list-ref (arc-info a) 3))
+(define (arc-sweep-angle object)
+  "Returns the sweep angle of arc OBJECT as an integer number of
+degrees."
+  (define pointer (geda-object->pointer* object 1))
+  (lepton_arc_object_get_sweep_angle pointer))
 
-(define-public (arc-end-angle a)
-  (+ (arc-start-angle a) (arc-sweep-angle a)))
+(define (arc-end-angle object)
+  "Returns the end angle of arc OBJECT as an integer number of
+degrees.  The end angle is the sum of the start and sweep angles
+of the arc."
+  (+ (arc-start-angle object) (arc-sweep-angle object)))
 
 ;;;; Paths
 
