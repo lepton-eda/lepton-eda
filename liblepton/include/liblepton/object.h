@@ -66,10 +66,6 @@ struct st_object
   /* 1 for up, -1 for down (vertial bus) */
   int bus_ripper_direction;             /* only valid on buses */
 
-
-  int font_text_size;                   /* used only with fonts defs */
-  GList *font_prim_objs;                /* used only with fonts defs */
-
   int whichend;    /* for pins only, either 0 or 1 */
   int pin_type;    /* for pins only, either NET or BUS */
 
