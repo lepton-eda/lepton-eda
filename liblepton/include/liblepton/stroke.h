@@ -27,8 +27,7 @@ enum _LeptonStrokeCapType
 {
   END_NONE,
   END_SQUARE,
-  END_ROUND,
-  END_VOID
+  END_ROUND
 };
 
 typedef enum _LeptonStrokeCapType LeptonStrokeCapType;
@@ -39,8 +38,7 @@ enum _LeptonStrokeType
   TYPE_DOTTED,
   TYPE_DASHED,
   TYPE_CENTER,
-  TYPE_PHANTOM,
-  TYPE_ERASE
+  TYPE_PHANTOM
 };
 
 typedef enum _LeptonStrokeType LeptonStrokeType;
