@@ -64,6 +64,7 @@
             make-arc
             set-arc!
 
+            box-info
             make-box))
 
 (define (object? object)
@@ -251,13 +252,21 @@ box.  If COLOR is not specified, the default box color is used."
               bottom-right
               (or color init-color))))
 
-(define-public (box-info b)
-  (let ((params (%box-info b)))
-    (list (cons (list-ref params 0)
-                (list-ref params 1))
-          (cons (list-ref params 2)
-                (list-ref params 3))
-          (list-ref params 4))))
+(define (box-info object)
+  "Retrieves and returns the coordinates and color of a box
+OBJECT. The return value is a list of the parameters in the form:
+'((upper_x . upper_y) (lower_x . lower_y) color)"
+  (define pointer (geda-object->pointer* object 1))
+
+  (and (box? object)
+       (let ((upper-x (lepton_box_object_get_upper_x pointer))
+             (upper-y (lepton_box_object_get_upper_y pointer))
+             (lower-x (lepton_box_object_get_lower_x pointer))
+             (lower-y (lepton_box_object_get_lower_y pointer))
+             (color (lepton_object_get_color pointer)))
+         (list (cons upper-x upper-y)
+               (cons lower-x lower-y)
+               color))))
 
 (define-public (box-top-left l)
   (list-ref (box-info l) 0))

@@ -831,36 +831,6 @@ SCM_DEFINE (set_box_x, "%set-box!", 6, 0, 0,
   return box_s;
 }
 
-/*! \brief Get box parameters.
- * \par Function Description
- * Retrieves the parameters of a box object. The return value is a
- * list of parameters:
- *
- * -# X-coordinate of top left of box
- * -# Y-coordinate of top left of box
- * -# X-coordinate of bottom right of box
- * -# Y-coordinate of bottom right of box
- * -# Colormap index of color to be used for drawing the box
- *
- * \param box_s the box object to inspect.
- * \return a list of box parameters.
- */
-SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
-            (SCM box_s), "Get box parameters.")
-{
-  SCM_ASSERT (edascm_is_object_type (box_s, OBJ_BOX), box_s,
-              SCM_ARG1, s_box_info);
-
-  LeptonObject *obj = edascm_to_object (box_s);
-
-  return scm_list_n (scm_from_int (lepton_box_object_get_upper_x (obj)),
-                     scm_from_int (lepton_box_object_get_upper_y (obj)),
-                     scm_from_int (lepton_box_object_get_lower_x (obj)),
-                     scm_from_int (lepton_box_object_get_lower_y (obj)),
-                     scm_from_int (lepton_object_get_color (obj)),
-                     SCM_UNDEFINED);
-}
-
 /*! \brief Create a new circle.
  * \par Function Description
 
@@ -1747,7 +1717,6 @@ init_module_lepton_core_object (void *unused)
                 s_set_line_x,
                 s_line_info,
                 s_set_box_x,
-                s_box_info,
                 s_make_circle,
                 s_set_circle_x,
                 s_circle_info,
