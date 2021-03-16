@@ -101,7 +101,25 @@
       (assert-dirties P (apply set-component! C
                                (list-tail (component-info C) 1)))
 
-      (assert-dirties P (apply set-object-stroke! l (object-stroke l)))
+      ;; The same stroke parameters do not modify the page.
+      (assert-not-dirties P (apply set-object-stroke! l (object-stroke l)))
+
+      (set-object-stroke! l 1 'none 'solid)
+      ;; Reset dirty flag if it was set.
+      (set-page-dirty! P #f)
+      ;; Change stroke width.
+      (assert-dirties P (set-object-stroke! l 2 'none 'solid))
+      ;; Change cap style.
+      (assert-dirties P (set-object-stroke! l 2 'round 'solid))
+      ;; Change dash style.
+      (assert-dirties P (set-object-stroke! l 2 'round 'dotted 1))
+      ;; Change space between dots/dashes.
+      (assert-dirties P (set-object-stroke! l 2 'round 'dotted 2))
+      ;; Change dash style once again to check other parameters.
+      (assert-dirties P (set-object-stroke! l 2 'round 'dashed 1 1))
+      ;; Change dash length.
+      (assert-dirties P (set-object-stroke! l 2 'round 'dashed 1 2))
+
       (assert-dirties P (apply set-object-fill! b (object-fill b)))
 
       ;; Remove primitives from page
@@ -152,7 +170,25 @@
       (assert-dirties P (apply set-circle! c (circle-info c)))
       (assert-dirties P (apply set-text! t (text-info t)))
 
-      (assert-dirties P (apply set-object-stroke! l (object-stroke l)))
+      ;; The same stroke parameters do not modify the page.
+      (assert-not-dirties P (apply set-object-stroke! l (object-stroke l)))
+
+      (set-object-stroke! l 1 'none 'solid)
+      ;; Reset dirty flag if it was set.
+      (set-page-dirty! P #f)
+      ;; Change stroke width.
+      (assert-dirties P (set-object-stroke! l 2 'none 'solid))
+      ;; Change cap style.
+      (assert-dirties P (set-object-stroke! l 2 'round 'solid))
+      ;; Change dash style.
+      (assert-dirties P (set-object-stroke! l 2 'round 'dotted 1))
+      ;; Change space between dots/dashes.
+      (assert-dirties P (set-object-stroke! l 2 'round 'dotted 2))
+      ;; Change dash style once again to check other parameters.
+      (assert-dirties P (set-object-stroke! l 2 'round 'dashed 1 1))
+      ;; Change dash length.
+      (assert-dirties P (set-object-stroke! l 2 'round 'dashed 1 2))
+
       (assert-dirties P (apply set-object-fill! b (object-fill b)))
 
       ;; Remove primitives from component

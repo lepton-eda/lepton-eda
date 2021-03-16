@@ -71,7 +71,7 @@
       (geda:assert-dirties P (apply set-component! C
                                     (list-tail (component-info C) 1)))
 
-      (geda:assert-dirties P (apply set-object-stroke! l (object-stroke l)))
+      (geda:assert-not-dirties P (apply set-object-stroke! l (object-stroke l)))
       (geda:assert-dirties P (apply set-object-fill! b (object-fill b)))
 
       ;; Remove primitives from page
@@ -89,7 +89,7 @@
       (geda:assert-not-dirties P (apply set-arc! a (arc-info a)))
       (geda:assert-dirties P (apply set-text! t (text-info t)))
 
-      (geda:assert-dirties P (apply set-object-stroke! l (object-stroke l)))
+      (geda:assert-not-dirties P (apply set-object-stroke! l (object-stroke l)))
       (geda:assert-dirties P (apply set-object-fill! b (object-fill b)))
 
       ;; Remove primitives from component
