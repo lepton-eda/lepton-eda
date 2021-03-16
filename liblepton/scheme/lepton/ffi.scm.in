@@ -38,6 +38,11 @@
             lepton_object_get_parent
             lepton_object_get_selectable
             lepton_object_set_selectable
+            lepton_object_get_stroke_cap_type
+            lepton_object_get_stroke_type
+            lepton_object_get_stroke_width
+            lepton_object_get_stroke_dash_length
+            lepton_object_get_stroke_space_length
             lepton_object_get_type
 
             lepton_object_is_arc
@@ -89,6 +94,9 @@
             lepton_picture_object_get_embedded
             lepton_picture_object_embed
             lepton_picture_object_unembed
+
+            lepton_stroke_cap_type_to_string
+            lepton_stroke_type_to_string
 
             set_render_placeholders
             colors_count
@@ -156,6 +164,11 @@
 (define-lff lepton_object_get_parent '* '(*))
 (define-lff lepton_object_get_selectable int '(*))
 (define-lff lepton_object_set_selectable void (list '* int))
+(define-lff lepton_object_get_stroke_cap_type int '(*))
+(define-lff lepton_object_get_stroke_type int '(*))
+(define-lff lepton_object_get_stroke_width int '(*))
+(define-lff lepton_object_get_stroke_dash_length int '(*))
+(define-lff lepton_object_get_stroke_space_length int '(*))
 (define-lff lepton_object_get_type int '(*))
 
 (define-lff lepton_object_is_arc int '(*))
@@ -209,6 +222,9 @@
 (define-lff lepton_picture_object_get_embedded int '(*))
 (define-lff lepton_picture_object_embed void '(*))
 (define-lff lepton_picture_object_unembed void '(*))
+
+(define-lff lepton_stroke_cap_type_to_string '* (list int))
+(define-lff lepton_stroke_type_to_string '* (list int))
 
 ;;; Helper transformers between #<geda-object> smobs and C object
 ;;; pointers.

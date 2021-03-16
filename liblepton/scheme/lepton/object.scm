@@ -55,6 +55,8 @@
             object-selectable?
             set-object-selectable!
 
+            object-stroke
+
             arc-info
             arc-center
             arc-radius
@@ -668,7 +670,82 @@ of the arc."
 
 ;;;; Fill and stroke
 
-(define-public object-stroke %object-stroke)
+;;; Helper function to check if OBJECT supports stroke
+;;; modification.
+(define (strokable? object)
+  (or (line? object)
+      (box? object)
+      (circle? object)
+      (arc? object)
+      (path? object)))
+
+(define (object-stroke object)
+  "Returns the stroke properties of OBJECT.  If OBJECT is not a
+line, box, circle, arc, or path, throws a Scheme error.  The
+return value is a list of parameters:
+  - stroke width
+  - cap style (a symbol: 'none, 'square or 'round)
+  - dash style (a symbol: 'solid, 'dotted, 'dashed, 'center, or
+    'phantom)
+  - up to two dash parameters, depending on the dash style:
+    - For solid lines, no parameters.
+    - For dotted lines, dot spacing.
+    - For other styles, dot/dash spacing and dash length.
+The dash parameters are ignored in case they are not supported for
+the dash style."
+
+  ;; Check if CAP is a valid cap type symbol.
+  (define (check-cap-type-symbol cap)
+    (if (or (eq? cap 'none)
+            (eq? cap 'square)
+            (eq? cap 'round))
+        cap
+        (error "Unsupported cap style for object ~A: ~A." object cap)))
+
+  ;; Check if STROKE-TYPE is a valid stroke type symbol.
+  (define (check-stroke-type-symbol stroke-type)
+    (if (or (eq? stroke-type 'solid)
+            (eq? stroke-type 'dotted)
+            (eq? stroke-type 'dashed)
+            (eq? stroke-type 'center)
+            (eq? stroke-type 'phantom))
+        stroke-type
+        (error "Unsupported line type for object ~A: ~A." object stroke-type)))
+
+  ;; Transforms cap type integer value obtained from C code into a
+  ;; symbol.  Reports an error if the value is invalid.
+  (define (cap-type->symbol cap-type)
+    (let ((c-string-pointer (lepton_stroke_cap_type_to_string cap-type)))
+      (if (null-pointer? c-string-pointer)
+          (error "Invalid stroke cap style for object ~A." object)
+          (check-cap-type-symbol
+           (string->symbol (pointer->string c-string-pointer))))))
+
+  ;; Transforms stroke type integer value obtained from C code
+  ;; into a symbol.  Reports an error if the value is invalid.
+  (define (stroke-type->symbol stroke-type)
+    (let ((c-string-pointer (lepton_stroke_type_to_string stroke-type)))
+      (if (null-pointer? c-string-pointer)
+          (error "Invalid stroke line type for object ~A." object)
+          (check-stroke-type-symbol
+           (string->symbol (pointer->string c-string-pointer))))))
+
+  (define pointer (geda-object->pointer* object 1 strokable? 'strokable))
+
+  (let ((cap-type
+         (cap-type->symbol (lepton_object_get_stroke_cap_type pointer)))
+        (line-type
+         (stroke-type->symbol (lepton_object_get_stroke_type pointer)))
+        (width (lepton_object_get_stroke_width pointer))
+        (dash-length (lepton_object_get_stroke_dash_length pointer))
+        (space-length (lepton_object_get_stroke_space_length pointer)))
+    (case line-type
+      ((solid) (list width cap-type line-type))
+      ((dotted) (list width cap-type line-type space-length))
+      ;; dashed, center, and phantom.
+      (else  (list width cap-type line-type space-length dash-length)))))
+
+
 (define-public set-object-stroke! %set-object-stroke!)
 
 (define-public (object-stroke-width obj)
