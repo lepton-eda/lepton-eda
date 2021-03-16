@@ -878,10 +878,10 @@ SCM_DEFINE (box_info, "%box-info", 1, 0, 0,
 
   LeptonObject *obj = edascm_to_object (box_s);
 
-  return scm_list_n (scm_from_int (obj->box->upper_x),
-                     scm_from_int (obj->box->upper_y),
-                     scm_from_int (obj->box->lower_x),
-                     scm_from_int (obj->box->lower_y),
+  return scm_list_n (scm_from_int (lepton_box_object_get_upper_x (obj)),
+                     scm_from_int (lepton_box_object_get_upper_y (obj)),
+                     scm_from_int (lepton_box_object_get_lower_x (obj)),
+                     scm_from_int (lepton_box_object_get_lower_y (obj)),
                      scm_from_int (lepton_object_get_color (obj)),
                      SCM_UNDEFINED);
 }
