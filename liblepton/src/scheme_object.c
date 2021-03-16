@@ -154,104 +154,6 @@ edascm_is_object_type (SCM smob, int type)
   return (lepton_object_get_type (obj) == type);
 }
 
-/*! \brief Set the stroke properties of an object.
- * \par Function Description
- * Updates the stroke settings of the object \a obj_s.  If \a obj_s is
- * not a line, box, circle, arc, or path, throws a Scheme error.  The
- * optional parameters \a space_s and \a length_s can be set to
- * SCM_UNDEFINED if not required by the dash style \a dash_s.
- *
- * \note Scheme API: Implements the %object-stroke procedure in the
- * (lepton core object) module.
- *
- * \param obj_s object to set stroke settings for.
- * \param width_s new stroke width for \a obj_s.
- * \param cap_s new stroke cap style for \a obj_s.
- * \param dash_s new dash style for \a obj_s.
- * \param space_s dot/dash spacing for dash styles other than solid.
- * \param length_s dash length for dash styles other than solid or
- *                 dotted.
- * \return \a obj_s.
- */
-SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
-            (SCM obj_s, SCM width_s, SCM cap_s, SCM dash_s, SCM space_s,
-             SCM length_s), "Set the stroke properties of an object.")
-{
-  SCM_ASSERT ((edascm_is_object_type (obj_s, OBJ_LINE)
-               || edascm_is_object_type (obj_s, OBJ_BOX)
-               || edascm_is_object_type (obj_s, OBJ_CIRCLE)
-               || edascm_is_object_type (obj_s, OBJ_ARC)
-               || edascm_is_object_type (obj_s, OBJ_PATH)),
-              obj_s, SCM_ARG1, s_set_object_stroke_x);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  int cap, type, width, length = -1, space = -1;
-
-  SCM_ASSERT (scm_is_integer (width_s), width_s,
-              SCM_ARG2, s_set_object_stroke_x);
-  SCM_ASSERT (scm_is_symbol (cap_s), cap_s,
-              SCM_ARG3, s_set_object_stroke_x);
-  SCM_ASSERT (scm_is_symbol (dash_s), dash_s,
-              SCM_ARG4, s_set_object_stroke_x);
-
-  width = scm_to_int (width_s);
-
-  if      (scm_is_eq (cap_s, none_sym))   { cap = END_NONE;   }
-  else if (scm_is_eq (cap_s, square_sym)) { cap = END_SQUARE; }
-  else if (scm_is_eq (cap_s, round_sym))  { cap = END_ROUND;  }
-  else {
-    scm_misc_error (s_set_object_stroke_x,
-                    _("Invalid stroke cap style ~A."),
-                    scm_list_1 (cap_s));
-  }
-
-  if      (scm_is_eq (dash_s, solid_sym))   { type = TYPE_SOLID;   }
-  else if (scm_is_eq (dash_s, dotted_sym))  { type = TYPE_DOTTED;  }
-  else if (scm_is_eq (dash_s, dashed_sym))  { type = TYPE_DASHED;  }
-  else if (scm_is_eq (dash_s, center_sym))  { type = TYPE_CENTER;  }
-  else if (scm_is_eq (dash_s, phantom_sym)) { type = TYPE_PHANTOM; }
-  else {
-    scm_misc_error (s_set_object_stroke_x,
-                    _("Invalid stroke dash style ~A."),
-                    scm_list_1 (dash_s));
-  }
-
-  switch (type) {
-  case TYPE_DASHED:
-  case TYPE_CENTER:
-  case TYPE_PHANTOM:
-    if (!edascm_is_defined (length_s)) {
-      scm_misc_error (s_set_object_stroke_x,
-                      _("Missing dash length parameter for dash style ~A."),
-                      scm_list_1 (length_s));
-    }
-    SCM_ASSERT (scm_is_integer (length_s), length_s,
-                SCM_ARG6, s_set_object_stroke_x);
-    length = scm_to_int (length_s);
-    /* This case intentionally falls through */
-  case TYPE_DOTTED:
-    if (!edascm_is_defined (space_s)) {
-      scm_misc_error (s_set_object_stroke_x,
-                      _("Missing dot/dash space parameter for dash style ~A."),
-                      scm_list_1 (space_s));
-    }
-    SCM_ASSERT (scm_is_integer (space_s), space_s,
-                SCM_ARG5, s_set_object_stroke_x);
-    space = scm_to_int (space_s);
-    /* This case intentionally falls through */
-  }
-
-  lepton_object_set_line_options (obj,
-                                  (LeptonStrokeCapType) cap,
-                                  (LeptonStrokeType) type,
-                                  width,
-                                  length,
-                                  space);
-  lepton_object_page_set_changed (obj);
-
-  return obj_s;
-}
-
 /*! \brief Get the fill properties of an object.
  * \par Function Description
  * Returns the fill settings of the object \a obj_s.  If \a obj_s is
@@ -1588,8 +1490,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_set_object_stroke_x,
-                s_object_fill,
+  scm_c_export (s_object_fill,
                 s_set_object_fill_x,
                 s_make_line,
                 s_make_net,

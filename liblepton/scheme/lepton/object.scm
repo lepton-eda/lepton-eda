@@ -59,6 +59,7 @@
             object-stroke-cap
             object-stroke-dash
             object-stroke-width
+            set-object-stroke!
 
             arc-info
             arc-center
@@ -709,8 +710,93 @@ the dash style."
       ;; dashed, center, and phantom.
       (else  (list width cap-type line-type space-length dash-length)))))
 
+(define* (set-object-stroke! object
+                             width
+                             cap-type
+                             dash-type
+                             #:optional
+                             space-length
+                             dash-length)
+  "Sets and updates the stroke properties of OBJECT.
+If OBJECT is not a line, box, circle, arc, or path, throws a
+Scheme error.  Parameters SPACE-LENGTH and DASH-LENGTH are
+optional.  The following parameters are used:
+  - OBJECT is the object to set stroke settings for.
+  - WIDTH is a new stroke integer width.
+  - CAP-TYPE is a new stroke cap type.  It may be 'none, 'square,
+    or 'round.
+  - DASH-TYPE is a new dash type.  It may be 'solid, 'dotted,
+    'dashed, 'center, or 'phantom
+  - SPACE-LENGTH is an integer dot/dash spacing for dash styles
+    other than 'solid.
+  - DASH-LENGTH is an integer dash length for dash styles other
+    than 'solid or 'dotted.
+Returns modified OBJECT."
 
-(define-public set-object-stroke! %set-object-stroke!)
+  (define valid-cap-type?
+    (or (eq? cap-type 'none)
+        (eq? cap-type 'square)
+        (eq? cap-type 'round)))
+
+  (define valid-dash-type?
+    (or (eq? dash-type 'solid)
+        (eq? dash-type 'dotted)
+        (eq? dash-type 'dashed)
+        (eq? dash-type 'center)
+        (eq? dash-type 'phantom)))
+
+  (define with-dashes?
+    (or (eq? dash-type 'dashed)
+        (eq? dash-type 'center)
+        (eq? dash-type 'phantom)))
+
+  (define with-spaces?
+    (or (eq? dash-type 'dashed)
+        (eq? dash-type 'center)
+        (eq? dash-type 'phantom)
+        (eq? dash-type 'dotted)))
+
+  (define pointer (geda-object->pointer* object 1 strokable? 'strokable))
+
+  (check-symbol cap-type 3)
+  (unless valid-cap-type?
+    (error "Invalid stroke cap style ~A."
+           cap-type))
+
+  (check-symbol dash-type 4)
+  (unless valid-dash-type?
+    (error "Invalid stroke dash style ~A."
+           dash-type))
+
+  (when with-spaces?
+    (unless space-length
+      (error "Missing dot/dash space parameter for dash style ~A."
+             space-length))
+    (check-integer space-length 5))
+
+  (when with-dashes?
+    (unless dash-length
+      (error "Missing dash length parameter for dash style ~A."
+             dash-length))
+    (check-integer dash-length 6))
+
+  (let ((cap-type (lepton_stroke_cap_type_from_string
+                   (string->pointer (symbol->string cap-type))))
+        (dash-type (lepton_stroke_type_from_string
+                    (string->pointer (symbol->string dash-type)))))
+
+    (lepton_object_set_stroke_type pointer dash-type)
+    (lepton_object_set_stroke_cap_type pointer cap-type)
+    (lepton_object_set_stroke_width pointer width)
+    (when with-spaces?
+      (lepton_object_set_stroke_space_length pointer space-length))
+
+    (when with-dashes?
+      (lepton_object_set_stroke_dash_length pointer dash-length))
+
+    (lepton_object_page_set_changed pointer)
+    ;; Return the modified object.
+    object))
 
 (define (object-stroke-width object)
   "Returns the integer stroke width of OBJECT, which must be a

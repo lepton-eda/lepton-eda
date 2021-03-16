@@ -26,6 +26,7 @@
             pointer->geda-object
             check-coord
             check-integer
+            check-symbol
 
             ;; Foreign functions.
             edascm_is_config
@@ -39,10 +40,15 @@
             lepton_object_get_selectable
             lepton_object_set_selectable
             lepton_object_get_stroke_cap_type
+            lepton_object_set_stroke_cap_type
             lepton_object_get_stroke_type
+            lepton_object_set_stroke_type
             lepton_object_get_stroke_width
+            lepton_object_set_stroke_width
             lepton_object_get_stroke_dash_length
+            lepton_object_set_stroke_dash_length
             lepton_object_get_stroke_space_length
+            lepton_object_set_stroke_space_length
             lepton_object_get_type
 
             lepton_object_is_arc
@@ -95,7 +101,9 @@
             lepton_picture_object_embed
             lepton_picture_object_unembed
 
+            lepton_stroke_cap_type_from_string
             lepton_stroke_cap_type_to_string
+            lepton_stroke_type_from_string
             lepton_stroke_type_to_string
 
             set_render_placeholders
@@ -165,10 +173,15 @@
 (define-lff lepton_object_get_selectable int '(*))
 (define-lff lepton_object_set_selectable void (list '* int))
 (define-lff lepton_object_get_stroke_cap_type int '(*))
+(define-lff lepton_object_set_stroke_cap_type void (list '* int))
 (define-lff lepton_object_get_stroke_type int '(*))
+(define-lff lepton_object_set_stroke_type void (list '* int))
 (define-lff lepton_object_get_stroke_width int '(*))
+(define-lff lepton_object_set_stroke_width void (list '* int))
 (define-lff lepton_object_get_stroke_dash_length int '(*))
+(define-lff lepton_object_set_stroke_dash_length void (list '* int))
 (define-lff lepton_object_get_stroke_space_length int '(*))
+(define-lff lepton_object_set_stroke_space_length void (list '* int))
 (define-lff lepton_object_get_type int '(*))
 
 (define-lff lepton_object_is_arc int '(*))
@@ -223,7 +236,9 @@
 (define-lff lepton_picture_object_embed void '(*))
 (define-lff lepton_picture_object_unembed void '(*))
 
+(define-lff lepton_stroke_cap_type_from_string int '(*))
 (define-lff lepton_stroke_cap_type_to_string '* (list int))
+(define-lff lepton_stroke_type_from_string int '(*))
 (define-lff lepton_stroke_type_to_string '* (list int))
 
 ;;; Helper transformers between #<geda-object> smobs and C object
@@ -308,5 +323,16 @@
                    (frame-procedure-name (stack-ref (make-stack #t) 1))
                    '??)
                "Wrong type argument in position ~A (expecting a pair of integers): ~A"
+               (list pos val)
+               #f)))
+
+(define-syntax-rule (check-symbol val pos)
+  (unless (symbol? val)
+    (scm-error 'wrong-type-arg
+               ;; Provision against Guile-2.0 that does not have the procedure.
+               (if (defined? 'frame-procedure-name)
+                   (frame-procedure-name (stack-ref (make-stack #t) 1))
+                   '??)
+               "Wrong type argument in position ~A (expecting symbol): ~A"
                (list pos val)
                #f)))
