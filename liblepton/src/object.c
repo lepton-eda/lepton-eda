@@ -768,13 +768,13 @@ o_set_fill_options (LeptonObject *o_current,
  *
  */
 gboolean
-o_get_fill_options (LeptonObject *object,
-                    LeptonFillType *type,
-                    int *width,
-                    int *pitch1,
-                    int *angle1,
-                    int *pitch2,
-                    int *angle2)
+lepton_object_get_fill_options (LeptonObject *object,
+                                LeptonFillType *type,
+                                int *width,
+                                int *pitch1,
+                                int *angle1,
+                                int *pitch2,
+                                int *angle2)
 {
   if (!lepton_object_is_box (object)
       && !lepton_object_is_circle (object)

@@ -251,13 +251,13 @@ gschem_selection_adapter_get_fill_angle1 (GschemSelectionAdapter *adapter)
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
 
     if (success) {
@@ -302,13 +302,13 @@ gschem_selection_adapter_get_fill_angle2 (GschemSelectionAdapter *adapter)
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
 
     if (success) {
@@ -353,13 +353,13 @@ gschem_selection_adapter_get_fill_pitch1 (GschemSelectionAdapter *adapter)
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
 
     if (success) {
@@ -404,13 +404,13 @@ gschem_selection_adapter_get_fill_pitch2 (GschemSelectionAdapter *adapter)
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
 
     if (success) {
@@ -455,13 +455,13 @@ gschem_selection_adapter_get_fill_type (GschemSelectionAdapter *adapter)
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
 
     if (success) {
@@ -506,13 +506,13 @@ gschem_selection_adapter_get_fill_width (GschemSelectionAdapter *adapter)
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
 
     if (success) {
@@ -1025,13 +1025,13 @@ gschem_selection_adapter_set_fill_angle1 (GschemSelectionAdapter *adapter, int a
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
     if (success) {
       o_set_fill_options (object,
@@ -1084,13 +1084,13 @@ gschem_selection_adapter_set_fill_angle2 (GschemSelectionAdapter *adapter, int a
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
     if (success) {
       o_set_fill_options (object,
@@ -1145,13 +1145,13 @@ gschem_selection_adapter_set_fill_pitch1 (GschemSelectionAdapter *adapter, int p
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
     if (success) {
       o_set_fill_options (object,
@@ -1204,13 +1204,13 @@ gschem_selection_adapter_set_fill_pitch2 (GschemSelectionAdapter *adapter, int p
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
     if (success) {
       o_set_fill_options (object,
@@ -1265,13 +1265,13 @@ gschem_selection_adapter_set_fill_type (GschemSelectionAdapter *adapter, int fil
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
     if (success) {
       o_set_fill_options (object,
@@ -1330,13 +1330,13 @@ gschem_selection_adapter_set_fill_width (GschemSelectionAdapter *adapter, int fi
     gint temp_pitch2;
     gint temp_width;
 
-    success = o_get_fill_options(object,
-                                 &temp_fill_type,
-                                 &temp_width,
-                                 &temp_pitch1,
-                                 &temp_angle1,
-                                 &temp_pitch2,
-                                 &temp_angle2);
+    success = lepton_object_get_fill_options (object,
+                                              &temp_fill_type,
+                                              &temp_width,
+                                              &temp_pitch1,
+                                              &temp_angle1,
+                                              &temp_pitch2,
+                                              &temp_angle2);
 
     if (success) {
       o_set_fill_options (object,

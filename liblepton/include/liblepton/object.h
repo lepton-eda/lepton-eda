@@ -202,14 +202,13 @@ lepton_object_translate (LeptonObject *object,
                          gint dx,
                          gint dy);
 gboolean
-o_get_fill_options (LeptonObject *object,
-                    LeptonFillType *type,
-                    int *width,
-                    int *pitch1,
-                    int *angle1,
-                    int *pitch2,
-                    int *angle2);
-
+lepton_object_get_fill_options (LeptonObject *object,
+                                LeptonFillType *type,
+                                int *width,
+                                int *pitch1,
+                                int *angle1,
+                                int *pitch2,
+                                int *angle2);
 gboolean
 o_get_line_options (LeptonObject *object,
                     LeptonLineCapType *end,
