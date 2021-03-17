@@ -674,22 +674,6 @@ edascm_is_config (SCM smob)
 }
 
 /*!
- * \brief Create the (lepton core smob) Scheme module.
- * \par Function Description
- * Defines procedures in the (lepton core smob) module. The module can
- * be accessed using (use-modules (lepton core smob)).
- */
-static void
-init_module_lepton_core_smob (void *unused)
-{
-  /* Register the functions. */
-  #include "scheme_smob.x"
-
-  /* Add them to the module's public definitions. */
-  scm_c_export (NULL);
-}
-
-/*!
  * \brief Initialise the basic Lepton EDA smob types.
  * \par Function Description
  * Registers the Lepton EDA core smob types and some procedures
@@ -709,9 +693,4 @@ edascm_init_smob ()
   scm_set_smob_free (geda_smob_tag, smob_free);
   scm_set_smob_print (geda_smob_tag, smob_print);
   scm_set_smob_equalp (geda_smob_tag, smob_equalp);
-
-  /* Define the (lepton core smob) module */
-  scm_c_define_module ("lepton core smob",
-                       (void (*)(void*)) init_module_lepton_core_smob,
-                       NULL);
 }

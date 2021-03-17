@@ -3,7 +3,6 @@ lib_LTLIBRARIES = liblepton.la
 
 BUILT_SOURCES = \
 	scheme_init.x \
-	scheme_smob.x \
 	scheme_toplevel.x \
 	scheme_object.x \
 	scheme_component.x \
