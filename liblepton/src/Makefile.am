@@ -48,7 +48,7 @@ liblepton_la_SOURCES = \
 	color.c \
 	circle.c \
 	coord.c \
-	fill_type.c \
+	fill.c \
 	line.c \
 	list.c \
 	page.c \

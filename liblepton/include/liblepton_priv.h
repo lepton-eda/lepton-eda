@@ -14,7 +14,7 @@
 #include "defines.h"
 
 #include "color.h"
-#include "fill_type.h"
+#include "fill.h"
 #include "point.h"
 #include "str.h"
 #include "stroke.h"
