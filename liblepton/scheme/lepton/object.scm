@@ -1,7 +1,7 @@
 ;; Lepton EDA library - Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2012-2016 gEDA Contributors
-;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;; Copyright (C) 2017-2021 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,15 +22,25 @@
   ;; Optional arguments
   #:use-module (ice-9 optargs)
   #:use-module (srfi srfi-1)
+  #:use-module (system foreign)
 
   ;; Import C procedures
   #:use-module (lepton core component)
   #:use-module (lepton core object)
-  #:use-module (lepton core smob))
+  #:use-module (lepton ffi)
+
+  #:export (object?))
+
+(define non-zero? (negate zero?))
+(define true? non-zero?)
+
+(define (object? object)
+  "Returns #t if OBJECT is a #<geda-object> instance, otherwise
+returns #f."
+  (true? (edascm_is_object (scm->pointer object))))
 
 (define-public object-type %object-type)
 (define-public object-id %object-id)
-(define-public object? %object?)
 
 (define-public (object-type? x type)
   (if (object? x)

@@ -692,25 +692,6 @@ SCM_DEFINE (page_p, "%page?", 1, 0, 0,
   return (EDASCM_PAGEP (page_smob) ? SCM_BOOL_T : SCM_BOOL_F);
 }
 
-/*! \brief Test whether a smob is an #LeptonObject instance.
- * \par Function Description
- * If \a object_smob is an #LeptonObject instance, returns \b
- * SCM_BOOL_T; otherwise returns \b SCM_BOOL_F.
- *
- * \note Scheme API: Implements the %object? procedure in the
- * (lepton core smob) module.
- *
- * \param [in] object_smob Guile value to test.
- *
- * \return SCM_BOOL_T iff \a object_smob is an #LeptonObject instance.
- */
-SCM_DEFINE (object_p, "%object?", 1, 0, 0,
-            (SCM object_smob),
-            "Test whether the value is a Lepton EDA LeptonObject instance.")
-{
-  return (EDASCM_OBJECTP (object_smob) ? SCM_BOOL_T : SCM_BOOL_F);
-}
-
 /*! \brief Test whether a smob is an #EdaConfig instance.
  * \par Function Description
  * If \a config_smob is a configuration context, returns \b
@@ -743,7 +724,7 @@ init_module_lepton_core_smob (void *unused)
   #include "scheme_smob.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_page_p, s_object_p, s_config_p, NULL);
+  scm_c_export (s_page_p, s_config_p, NULL);
 }
 
 /*!

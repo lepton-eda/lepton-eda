@@ -19,6 +19,7 @@
   #:use-module (system foreign)
 
   #:export (liblepton
+            edascm_is_object
             set_render_placeholders
             colors_count
             g_rc_parse
@@ -64,3 +65,6 @@
 ;;; s_attrib.c
 (define-lff s_attrib_uniq int (list '*))
 (define-lff s_attrib_add_entry int (list '*))
+
+;;; scheme_smob.c
+(define-lff edascm_is_object int '(*))
