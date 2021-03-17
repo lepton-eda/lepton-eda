@@ -145,72 +145,6 @@ edascm_is_object_type (SCM smob, int type)
   return (lepton_object_get_type (obj) == type);
 }
 
-/*! \brief Get the fill properties of an object.
- * \par Function Description
- * Returns the fill settings of the object \a obj_s.  If \a obj_s is
- * not a box, circle, or path, throws a Scheme error.  The return
- * value is a list of parameters:
- *
- * -# fill style (a symbol: hollow, solid, mesh or hatch)
- * -# up to five fill parameters, depending on fill style:
- *   -# none for hollow or solid fills
- *   -# line width, line angle, and line spacing for hatch fills.
- *   -# line width, first angle and spacing, and second angle and
- *      spacing for mesh fills.
- *
- * \note Scheme API: Implements the %object-fill procedure in the
- * (lepton core object) module.
- *
- * \param obj_s object to get fill settings for.
- * \return a list of fill parameters.
- */
-SCM_DEFINE (object_fill, "%object-fill", 1, 0, 0,
-            (SCM obj_s), "Get the fill properties of an object.")
-{
-  SCM_ASSERT ((edascm_is_object_type (obj_s, OBJ_BOX)
-               || edascm_is_object_type (obj_s, OBJ_CIRCLE)
-               || edascm_is_object_type (obj_s, OBJ_PATH)),
-              obj_s, SCM_ARG1, s_object_fill);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-
-  int type, width, pitch1, angle1, pitch2, angle2;
-  lepton_object_get_fill_options (obj,
-                                  (LeptonFillType *) &type,
-                                  &width,
-                                  &pitch1,
-                                  &angle1,
-                                  &pitch2,
-                                  &angle2);
-
-  SCM width_s = scm_from_int (width);
-  SCM pitch1_s = scm_from_int (pitch1);
-  SCM angle1_s = scm_from_int (angle1);
-  SCM pitch2_s = scm_from_int (pitch2);
-  SCM angle2_s = scm_from_int (angle2);
-
-  SCM type_s;
-  switch (type) {
-  case FILLING_HOLLOW: type_s = hollow_sym; break;
-  case FILLING_FILL: type_s = solid_sym; break;
-  case FILLING_MESH: type_s = mesh_sym; break;
-  case FILLING_HATCH: type_s = hatch_sym; break;
-  default:
-    scm_misc_error (s_object_fill,
-                    _("Object ~A has invalid fill style ~A"),
-                    scm_list_2 (obj_s, scm_from_int (type)));
-  }
-
-  switch (type) {
-  case FILLING_MESH:
-    return scm_list_n (type_s, width_s, pitch1_s, angle1_s, pitch2_s, angle2_s,
-                       SCM_UNDEFINED);
-  case FILLING_HATCH:
-    return scm_list_4 (type_s, width_s, pitch1_s, angle1_s);
-  default:
-    return scm_list_1 (type_s);
-  }
-}
 
 /*! \brief Set the fill properties of an object.
  * \par Function Description
@@ -1481,8 +1415,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_object_fill,
-                s_set_object_fill_x,
+  scm_c_export (s_set_object_fill_x,
                 s_make_line,
                 s_make_net,
                 s_make_bus,

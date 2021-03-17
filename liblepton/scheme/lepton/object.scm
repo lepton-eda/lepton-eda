@@ -56,6 +56,8 @@
             object-selectable?
             set-object-selectable!
 
+            object-fill
+
             object-stroke
             object-stroke-cap
             object-stroke-dash
@@ -880,7 +882,58 @@ one and three parameters:
       ;; dashed, center, and phantom.
       (else  (list line-type space-length dash-length)))))
 
-(define-public object-fill %object-fill)
+
+;;; Helper function to check if OBJECT supports filling
+;;; modification.
+(define (fillable? object)
+  (or (box? object)
+      (circle? object)
+      (path? object)))
+
+(define (object-fill object)
+  "Returns the fill properties of OBJECT.  If OBJECT is
+not a box, circle, or path, throws a Scheme error.  The return
+value is a list of parameters:
+  - fill style (a symbol: 'hollow, 'solid, 'mesh, or 'hatch)
+  - up to five fill parameters, depending on fill style:
+    - none for hollow or solid fills;
+    - line width, line angle, and line spacing for hatch fills;
+    - line width, first angle and spacing, and second angle and
+      spacing for mesh fills."
+  (define (fill-type->symbol fill_type)
+    (let ((c_string (lepton_fill_type_to_string fill_type)))
+      (if (null-pointer? c_string)
+          (error ("Invalid fill type for object ~A.") object)
+          (let ((fill-type (string->symbol (pointer->string c_string))))
+            (if (or (eq? fill-type 'hollow)
+                    (eq? fill-type 'solid)
+                    (eq? fill-type 'mesh)
+                    (eq? fill-type 'hatch))
+                fill-type
+                (error ("Unsupported fill type for object ~A: ~A." object fill-type)))))))
+
+  (define pointer (geda-object->pointer* object 1 fillable? 'fillable))
+
+  (let ((fill-type
+         (fill-type->symbol (lepton_object_get_fill_type pointer)))
+        (width (lepton_object_get_fill_width pointer))
+        (pitch1 (lepton_object_get_fill_pitch1 pointer))
+        (angle1 (lepton_object_get_fill_angle1 pointer))
+        (pitch2 (lepton_object_get_fill_pitch2 pointer))
+        (angle2 (lepton_object_get_fill_angle2 pointer)))
+
+    (unless (or (eq? fill-type 'hollow)
+                (eq? fill-type 'solid)
+                (eq? fill-type 'mesh)
+                (eq? fill-type 'hatch))
+      (error "Object ~A has invalid fill style ~A"
+             object fill-type))
+
+    (case fill-type
+      ((mesh) (list fill-type width pitch1 angle1 pitch2 angle2))
+      ((hatch) (list fill-type width pitch1 angle1))
+      (else (list fill-type)))))
+
 (define-public set-object-fill! %set-object-fill!)
 
 ;;;; Object bounds
