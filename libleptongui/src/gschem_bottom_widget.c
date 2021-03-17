@@ -495,6 +495,151 @@ gschem_bottom_widget_get_type ()
 
 
 
+static void
+set_snap_info_widget_text (GschemBottomWidget* widget,
+                           gchar* str)
+{
+  g_return_if_fail (widget != NULL);
+
+  gtk_label_set_markup (GTK_LABEL(widget->grid_snap_widget), str);
+  g_free (str);
+}
+
+
+
+static void
+set_snap_info_widget_color (GschemBottomWidget* widget,
+                            const gchar* color_name)
+{
+  g_return_if_fail (widget != NULL);
+
+  GdkColor color;
+  gdk_color_parse (color_name, &color);
+  gtk_widget_modify_fg (GTK_WIDGET (widget->grid_snap_widget),
+                        GTK_STATE_NORMAL,
+                        &color);
+}
+
+
+
+static void
+set_snap_info_widget (GschemBottomWidget* widget,
+                      gchar* str,
+                      const gchar* color_name)
+{
+  g_return_if_fail (widget != NULL);
+
+  set_snap_info_widget_text (widget, str);
+  set_snap_info_widget_color (widget, color_name);
+}
+
+
+
+static void
+reset_snap_info_widget (GschemBottomWidget* widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  gchar* txt = g_strdup_printf ("Snap: %d", widget->snap_size);
+  set_snap_info_widget (widget, txt, "black");
+}
+
+
+
+static void
+update_snap_info_widget (GschemBottomWidget* widget)
+{
+  g_return_if_fail (widget != NULL);
+//  g_return_if_fail ( && "widget->snap_mode out of range");
+
+  gchar* cwd = g_get_current_dir();
+  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
+  g_free (cwd);
+
+  gint default_snap_size = 100;
+
+  if (cfg != NULL)
+  {
+    GError* err = NULL;
+    gint val = eda_config_get_int (cfg,
+                                   "schematic.gui",
+                                   "snap-size",
+                                   &err);
+    if (err == NULL)
+    {
+      default_snap_size = val;
+    }
+
+    g_clear_error (&err);
+  }
+
+
+  reset_snap_info_widget (widget);
+
+  gchar* txt = NULL;
+
+  if (widget->snap_mode == SNAP_OFF)
+  {
+      txt = g_strdup_printf (_("<b>Snap: OFF</b>"));
+      set_snap_info_widget (widget, txt, "blue");
+  }
+  else
+  if (widget->snap_mode == SNAP_GRID)
+  {
+    if (widget->snap_size != default_snap_size)
+    {
+      txt = g_strdup_printf ("Snap: <b>%d</b>", widget->snap_size);
+      set_snap_info_widget (widget, txt, "red");
+    }
+    else
+    {
+      reset_snap_info_widget (widget);
+    }
+  }
+  else
+  if (widget->snap_mode == SNAP_RESNAP)
+  {
+    if (widget->snap_size != default_snap_size)
+    {
+      txt = g_strdup_printf ("<u>Re</u>snap: <b>%d</b>", widget->snap_size);
+      set_snap_info_widget_text(widget, txt);
+      set_snap_info_widget_color(widget, "red");
+    }
+    else
+    {
+      txt = g_strdup_printf ("<u>Re</u>snap: %d", widget->snap_size);
+      set_snap_info_widget_text(widget, txt);
+    }
+  }
+  else
+  {
+    g_critical ("%s: update_grid_label(): widget->snap_mode out of range: %d\n",
+                __FILE__,
+                widget->snap_mode);
+  }
+
+} /* update_snap_info_widget() */
+
+
+
+static void
+create_snap_info_widget (GschemBottomWidget* widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->grid_snap_widget = gtk_label_new (NULL);
+  gtk_label_set_markup (GTK_LABEL(widget->grid_snap_widget),
+                        "Snap: <b>100</b>");
+
+  gtk_misc_set_padding (GTK_MISC (widget->grid_snap_widget),
+                        LABEL_XPAD,
+                        LABEL_YPAD);
+  gtk_box_pack_start (GTK_BOX (widget), widget->grid_snap_widget, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+}
+
+
+
 /*! \brief Initialize GschemBottomWidget instance
  *
  *  \param [in,out] view the gschem page view
@@ -604,6 +749,9 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
     gtk_box_pack_start (GTK_BOX (widget), widget->right_button_label, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
   }
+
+
+  create_snap_info_widget (widget);
 
 
   widget->grid_label = gtk_label_new (NULL);
@@ -955,6 +1103,9 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 static void
 update_grid_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused)
 {
+  update_snap_info_widget (widget);
+
+
   if (widget->grid_label != NULL) {
     gchar *grid_text = NULL;
     gchar *label_text = NULL;
