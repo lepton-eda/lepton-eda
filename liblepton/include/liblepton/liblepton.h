@@ -32,7 +32,7 @@ G_BEGIN_DECLS
 #include <liblepton/defines.h>
 
 #include <liblepton/color.h>
-#include <liblepton/fill_type.h>
+#include <liblepton/fill.h>
 #include <liblepton/stroke.h>
 #include <liblepton/point.h>
 #include <liblepton/str.h>

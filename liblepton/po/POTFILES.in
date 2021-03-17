@@ -18,7 +18,6 @@ liblepton/src/text_object.c
 liblepton/src/f_basic.c
 liblepton/src/g_basic.c
 liblepton/src/g_rc.c
-liblepton/src/fill_type.c
 liblepton/src/page.c
 liblepton/src/o_attrib.c
 liblepton/src/object.c

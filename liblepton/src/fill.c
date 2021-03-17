@@ -22,8 +22,8 @@
 #include "liblepton_priv.h"
 
 /*!
- * \file  fill_type.c
- * \brief Filling types.
+ * \file  fill.c
+ * \brief Functions for working with object filling.
  */
 
 
