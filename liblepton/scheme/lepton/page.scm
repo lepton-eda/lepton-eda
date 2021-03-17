@@ -35,9 +35,6 @@
   #:export (file->page
             page?))
 
-(define non-zero? (negate zero?))
-(define true? non-zero?)
-
 (define (page? page)
   "Returns #t if PAGE is a #<geda-page> instance, otherwise
 returns #f."

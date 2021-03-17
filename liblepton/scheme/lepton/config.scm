@@ -27,9 +27,6 @@
 
   #:export (config?))
 
-(define non-zero? (negate zero?))
-(define true? non-zero?)
-
 (define (config? config)
   "Returns #t if PAGE is a #<geda-config> instance, otherwise
 returns #f."

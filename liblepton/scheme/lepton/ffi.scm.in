@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020 Lepton EDA Contributors
+;;; Copyright (C) 2020-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
   #:use-module (system foreign)
 
   #:export (liblepton
+            true?
             edascm_is_config
             edascm_is_object
             edascm_is_page
@@ -36,6 +37,9 @@
             s_clib_add_scm
             s_clib_init
             s_toplevel_page_current))
+
+;;; Helper to check if result of C function is TRUE (non-zero).
+(define true? (negate zero?))
 
 (define liblepton
   (dynamic-link (or (getenv "LIBLEPTON") "@LIBLEPTON@")))
