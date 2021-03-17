@@ -673,25 +673,6 @@ edascm_is_config (SCM smob)
   return EDASCM_CONFIGP (smob);
 }
 
-/*! \brief Test whether a smob is a #LeptonPage instance.
- * \par Function Description
- * If \a page_smob is a #LeptonPage instance, returns \b SCM_BOOL_T;
- * otherwise returns \b SCM_BOOL_F.
- *
- * \note Scheme API: Implements the %page? procedure in the
- * (lepton core smob) module.
- *
- * \param [in] page_smob Guile value to test.
- *
- * \return SCM_BOOL_T iff \a page_smob is a #LeptonPage instance.
- */
-SCM_DEFINE (page_p, "%page?", 1, 0, 0,
-            (SCM page_smob),
-            "Test whether the value is a Lepton EDA LeptonPage instance.")
-{
-  return (EDASCM_PAGEP (page_smob) ? SCM_BOOL_T : SCM_BOOL_F);
-}
-
 /*! \brief Test whether a smob is an #EdaConfig instance.
  * \par Function Description
  * If \a config_smob is a configuration context, returns \b
@@ -724,7 +705,7 @@ init_module_lepton_core_smob (void *unused)
   #include "scheme_smob.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_page_p, s_config_p, NULL);
+  scm_c_export (s_config_p, NULL);
 }
 
 /*!

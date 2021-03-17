@@ -20,6 +20,7 @@
 
   #:export (liblepton
             edascm_is_object
+            edascm_is_page
             set_render_placeholders
             colors_count
             g_rc_parse
@@ -68,3 +69,4 @@
 
 ;;; scheme_smob.c
 (define-lff edascm_is_object int '(*))
+(define-lff edascm_is_page int '(*))

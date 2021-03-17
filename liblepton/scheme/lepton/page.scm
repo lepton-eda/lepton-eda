@@ -1,7 +1,7 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
 ;;; Copyright (C) 2010-2017 gEDA Contributors
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,19 +23,28 @@
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
                 #:prefix rdelim:)
+  #:use-module (system foreign)
 
   ;; Import C procedures
   #:use-module (lepton core gettext)
   #:use-module (lepton core page)
-  #:use-module (lepton core smob)
+  #:use-module (lepton ffi)
 
   #:use-module (lepton os)
 
-  #:export (file->page))
+  #:export (file->page
+            page?))
+
+(define non-zero? (negate zero?))
+(define true? non-zero?)
+
+(define (page? page)
+  "Returns #t if PAGE is a #<geda-page> instance, otherwise
+returns #f."
+  (true? (edascm_is_page (scm->pointer page))))
 
 (define-public object-page %object-page)
 
-(define-public page? %page?)
 (define-public active-pages %active-pages)
 (define-public make-page %new-page)
 (define-public close-page! %close-page!)
