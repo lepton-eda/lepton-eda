@@ -5,6 +5,14 @@ This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
 
+Notable changes in Lepton EDA 1.9.14 (upcoming)
+-----------------------------------------------
+### Changes in `liblepton`:
+
+- The module `(lepton core smob)` written in C does no longer
+  exist.  Its exported functions have been reimplemented using
+  Scheme FFI.
+
 Notable changes in Lepton EDA 1.9.13 (20201211)
 -----------------------------------------------
 
