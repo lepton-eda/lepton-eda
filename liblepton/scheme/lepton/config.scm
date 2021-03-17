@@ -1,7 +1,7 @@
 ;;; Lepton EDA
 ;;; liblepton - Lepton's library - Scheme API
 ;;; Copyright (C) 2011-2012 Peter Brett <peter@peter-b.co.uk>
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,12 +19,22 @@
 
 (define-module (lepton config)
   #:use-module (ice-9 optargs) ; for define*-public
+  #:use-module (system foreign)
 
   ; Import C procedures
   #:use-module (lepton core config)
-  #:use-module (lepton core smob))
+  #:use-module (lepton ffi)
 
-(define-public config? %config?)
+  #:export (config?))
+
+(define non-zero? (negate zero?))
+(define true? non-zero?)
+
+(define (config? config)
+  "Returns #t if PAGE is a #<geda-config> instance, otherwise
+returns #f."
+  (true? (edascm_is_config (scm->pointer config))))
+
 (define-public default-config-context %default-config-context)
 (define-public system-config-context %system-config-context)
 (define-public user-config-context %user-config-context)
@@ -85,4 +95,3 @@
 
 (define-public config-set-legacy-mode! %config-set-legacy-mode!)
 (define-public config-legacy-mode? %config-legacy-mode?)
-

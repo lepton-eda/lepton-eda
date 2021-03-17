@@ -19,6 +19,7 @@
   #:use-module (system foreign)
 
   #:export (liblepton
+            edascm_is_config
             edascm_is_object
             edascm_is_page
             set_render_placeholders
@@ -68,5 +69,6 @@
 (define-lff s_attrib_add_entry int (list '*))
 
 ;;; scheme_smob.c
+(define-lff edascm_is_config int '(*))
 (define-lff edascm_is_object int '(*))
 (define-lff edascm_is_page int '(*))

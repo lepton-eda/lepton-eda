@@ -673,25 +673,6 @@ edascm_is_config (SCM smob)
   return EDASCM_CONFIGP (smob);
 }
 
-/*! \brief Test whether a smob is an #EdaConfig instance.
- * \par Function Description
- * If \a config_smob is a configuration context, returns \b
- * SCM_BOOL_T; otherwise returns \b SCM_BOOL_F.
- *
- * \note Scheme API: Implements the %config? procedure in the
- * (lepton core smob) module.
- *
- * \param [in] config_smob Guile value to test.
- *
- * \return SCM_BOOL_T iff \a config_smob is an #EdaConfig instance.
- */
-SCM_DEFINE (config_p, "%config?", 1, 0, 0,
-            (SCM config_smob),
-            "Test whether the value is a Lepton EDA configuration context.")
-{
-  return (EDASCM_CONFIGP (config_smob) ? SCM_BOOL_T : SCM_BOOL_F);
-}
-
 /*!
  * \brief Create the (lepton core smob) Scheme module.
  * \par Function Description
@@ -705,7 +686,7 @@ init_module_lepton_core_smob (void *unused)
   #include "scheme_smob.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_config_p, NULL);
+  scm_c_export (NULL);
 }
 
 /*!
