@@ -41,8 +41,8 @@ struct st_object
   LeptonPicture *picture;
   LeptonPath *path;
 
-  GList *conn_list;                     /* List of connections */
-  /* to and from this object */
+  /* List of connections to and from this object. */
+  GList *conn_list;
 
   /* Visible appearance of lines in graphical primitives. */
   LeptonStroke *stroke;
