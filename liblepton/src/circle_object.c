@@ -124,12 +124,12 @@ lepton_circle_object_copy (const LeptonObject *object)
                                   lepton_object_get_stroke_space_length (object));
 
   lepton_object_set_fill_options (new_obj,
-                                  object->fill_type,
-                                  object->fill_width,
-                                  object->fill_pitch1,
-                                  object->fill_angle1,
-                                  object->fill_pitch2,
-                                  object->fill_angle2);
+                                  lepton_object_get_fill_type (object),
+                                  lepton_object_get_fill_width (object),
+                                  lepton_object_get_fill_pitch1 (object),
+                                  lepton_object_get_fill_angle1 (object),
+                                  lepton_object_get_fill_pitch2 (object),
+                                  lepton_object_get_fill_angle2 (object));
 
   return new_obj;
 }
@@ -423,12 +423,12 @@ lepton_circle_object_to_buffer (const LeptonObject *object)
                           lepton_object_get_stroke_type (object),
                           lepton_object_get_stroke_dash_length (object),
                           lepton_object_get_stroke_space_length (object),
-                          object->fill_type,
-                          object->fill_width,
-                          object->fill_angle1,
-                          object->fill_pitch1,
-                          object->fill_angle2,
-                          object->fill_pitch2);
+                          lepton_object_get_fill_type (object),
+                          lepton_object_get_fill_width (object),
+                          lepton_object_get_fill_angle1 (object),
+                          lepton_object_get_fill_pitch1 (object),
+                          lepton_object_get_fill_angle2 (object),
+                          lepton_object_get_fill_pitch2 (object));
 }
 
 /*! \brief Translate a circle position in WORLD coordinates by a delta.
@@ -616,7 +616,8 @@ lepton_circle_object_shortest_distance (LeptonObject *object,
   g_return_val_if_fail (lepton_object_is_circle (object), FALSE);
   g_return_val_if_fail (object->circle != NULL, G_MAXDOUBLE);
 
-  solid = force_solid || object->fill_type != FILLING_HOLLOW;
+  solid = force_solid ||
+    lepton_object_get_fill_type (object) != FILLING_HOLLOW;
 
   return lepton_circle_shortest_distance (object->circle, x, y, solid);
 }

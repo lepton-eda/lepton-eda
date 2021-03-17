@@ -506,6 +506,192 @@ lepton_object_set_stroke_space_length (LeptonObject *object,
 }
 
 
+/*! \brief Get the fill of an object.
+ *
+ *  \param [in] object The object.
+ *  \return Object's #LeptonFill pointer.
+ */
+LeptonFill*
+lepton_object_get_fill (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, NULL);
+
+  return object->fill;
+}
+
+
+/*! \brief Get the fill type of an object.
+ *
+ *  \param [in] object The object.
+ *  \return The fill type of the object.
+ */
+LeptonFillType
+lepton_object_get_fill_type (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, FILLING_HOLLOW);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  return lepton_fill_get_type (fill);
+}
+
+/*! \brief Get the fill width of an object.
+ *
+ * \note Fill width is meaningful only for some types of fill.
+ *
+ *  \param [in] object The object.
+ *  \return The fill width of the object.
+ */
+int
+lepton_object_get_fill_width (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  return lepton_fill_get_width (fill);
+}
+
+/*! \brief Get the first pitch of the fill of an object.
+ *
+ *  \param [in] object The object.
+ *  \return The first pitch of the fill of the object.
+ */
+int
+lepton_object_get_fill_pitch1 (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  return lepton_fill_get_pitch1 (fill);
+}
+
+/*! \brief Get the first pitch angle of the fill of an object.
+ *
+ *  \param [in] object The object.
+ *  \return The first pitch angle of the fill of the object.
+ */
+int
+lepton_object_get_fill_angle1 (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  return lepton_fill_get_angle1 (fill);
+}
+
+/*! \brief Get the second pitch of the fill of an object.
+ *
+ *  \param [in] object The object.
+ *  \return The second pitch of the fill of the object.
+ */
+int
+lepton_object_get_fill_pitch2 (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  return lepton_fill_get_pitch2 (fill);
+}
+
+/*! \brief Get the second pitch angle of the fill of an object.
+ *
+ *  \param [in] object The object.
+ *  \return The second pitch angle of the fill of the object.
+ */
+int
+lepton_object_get_fill_angle2 (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  return lepton_fill_get_angle2 (fill);
+}
+
+
+void
+lepton_object_set_fill_type (LeptonObject *object,
+                             LeptonFillType fill_type)
+{
+  g_return_if_fail (object != NULL);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  g_return_if_fail (fill != NULL);
+
+  lepton_fill_set_type (fill, fill_type);
+}
+
+void
+lepton_object_set_fill_width (LeptonObject *object,
+                              int width)
+{
+  g_return_if_fail (object != NULL);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  g_return_if_fail (fill != NULL);
+
+  lepton_fill_set_width (fill, width);
+}
+
+void
+lepton_object_set_fill_pitch1 (LeptonObject *object,
+                               int pitch)
+{
+  g_return_if_fail (object != NULL);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  g_return_if_fail (fill != NULL);
+
+  lepton_fill_set_pitch1 (fill, pitch);
+}
+
+void
+lepton_object_set_fill_angle1 (LeptonObject *object,
+                               int angle)
+{
+  g_return_if_fail (object != NULL);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  g_return_if_fail (fill != NULL);
+
+  lepton_fill_set_angle1 (fill, angle);
+}
+
+void
+lepton_object_set_fill_pitch2 (LeptonObject *object,
+                               int pitch)
+{
+  g_return_if_fail (object != NULL);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  g_return_if_fail (fill != NULL);
+
+  lepton_fill_set_pitch2 (fill, pitch);
+}
+
+void
+lepton_object_set_fill_angle2 (LeptonObject *object,
+                               int angle)
+{
+  g_return_if_fail (object != NULL);
+
+  LeptonFill *fill = lepton_object_get_fill (object);
+
+  g_return_if_fail (fill != NULL);
+
+  lepton_fill_set_angle2 (fill, angle);
+}
+
+
 /*! \brief Make and return a copy of an object.
  *
  *  \par Function Description
@@ -646,6 +832,9 @@ lepton_object_delete (LeptonObject *o_current)
 
     lepton_stroke_free (o_current->stroke);
     o_current->stroke = NULL;
+
+    lepton_fill_free (o_current->fill);
+    o_current->fill = NULL;
 
     /* printf("sdeleting component_basename\n");*/
     g_free(o_current->component_basename);
@@ -917,14 +1106,14 @@ lepton_object_set_fill_options (LeptonObject *o_current,
 
   lepton_object_emit_pre_change_notify (o_current);
 
-  o_current->fill_type = type;
-  o_current->fill_width = width;
+  lepton_object_set_fill_type (o_current, type);
+  lepton_object_set_fill_width (o_current, width);
 
-  o_current->fill_pitch1 = pitch1;
-  o_current->fill_angle1 = angle1;
+  lepton_object_set_fill_pitch1 (o_current, pitch1);
+  lepton_object_set_fill_angle1 (o_current, angle1);
 
-  o_current->fill_pitch2 = pitch2;
-  o_current->fill_angle2 = angle2;
+  lepton_object_set_fill_pitch2 (o_current, pitch2);
+  lepton_object_set_fill_angle2 (o_current, angle2);
 
   lepton_object_emit_change_notify (o_current);
 }
@@ -958,12 +1147,12 @@ lepton_object_get_fill_options (LeptonObject *object,
       && !lepton_object_is_path (object))
     return FALSE;
 
-  *type = object->fill_type;
-  *width = object->fill_width;
-  *pitch1 = object->fill_pitch1;
-  *angle1 = object->fill_angle1;
-  *pitch2 = object->fill_pitch2;
-  *angle2 = object->fill_angle2;
+  *type = lepton_object_get_fill_type (object);
+  *width = lepton_object_get_fill_width (object);
+  *pitch1 = lepton_object_get_fill_pitch1 (object);
+  *angle1 = lepton_object_get_fill_angle1 (object);
+  *pitch2 = lepton_object_get_fill_pitch2 (object);
+  *angle2 = lepton_object_get_fill_angle2 (object);
 
   return TRUE;
 }
@@ -1617,6 +1806,7 @@ lepton_object_new (int type,
   new_node->conn_list = NULL;
 
   new_node->stroke = lepton_stroke_new ();
+  new_node->fill = lepton_fill_new ();
 
   new_node->component_basename = NULL;
   new_node->parent = NULL;
@@ -1628,12 +1818,6 @@ lepton_object_new (int type,
   new_node->selected = FALSE;
 
   new_node->bus_ripper_direction = 0;
-
-  new_node->fill_width = 0;
-  new_node->fill_angle1 = 0;
-  new_node->fill_angle2 = 0;
-  new_node->fill_pitch1 = 0;
-  new_node->fill_pitch2 = 0;
 
   new_node->attribs = NULL;
   new_node->attached_to = NULL;

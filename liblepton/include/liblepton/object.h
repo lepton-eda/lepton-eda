@@ -47,10 +47,8 @@ struct st_object
   /* Visible appearance of lines in graphical primitives. */
   LeptonStroke *stroke;
 
-  LeptonFillType fill_type;
-  int fill_width;
-  int fill_angle1, fill_pitch1;
-  int fill_angle2, fill_pitch2;
+  /* Visible appearance of filling of graphical primitives. */
+  LeptonFill *fill;
 
   gchar *component_basename;            /* Component Library Symbol name */
   LeptonObject *parent;                 /* Parent object pointer */
@@ -204,6 +202,45 @@ lepton_object_set_stroke_space_length (LeptonObject *object,
 int
 lepton_object_get_stroke_space_length (const LeptonObject *object);
 
+LeptonFill*
+lepton_object_get_fill (const LeptonObject *object);
+
+LeptonFillType
+lepton_object_get_fill_type (const LeptonObject *object);
+
+int
+lepton_object_get_fill_width (const LeptonObject *object);
+
+int
+lepton_object_get_fill_pitch1 (const LeptonObject *object);
+
+int
+lepton_object_get_fill_angle1 (const LeptonObject *object);
+
+int
+lepton_object_get_fill_pitch2 (const LeptonObject *object);
+
+int
+lepton_object_get_fill_angle2 (const LeptonObject *object);
+
+void
+lepton_object_set_fill_type (LeptonObject *object,
+                             LeptonFillType fill_type);
+void
+lepton_object_set_fill_width (LeptonObject *object,
+                              int width);
+void
+lepton_object_set_fill_pitch1 (LeptonObject *object,
+                               int pitch1);
+void
+lepton_object_set_fill_angle1 (LeptonObject *object,
+                               int angle1);
+void
+lepton_object_set_fill_pitch2 (LeptonObject *object,
+                               int pitch2);
+void
+lepton_object_set_fill_angle2 (LeptonObject *object,
+                               int angle2);
 double
 lepton_object_shortest_distance (LeptonObject *object,
                                  int x,

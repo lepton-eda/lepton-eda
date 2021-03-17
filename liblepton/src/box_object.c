@@ -248,12 +248,12 @@ lepton_box_object_copy (LeptonObject *o_current)
                                   lepton_object_get_stroke_dash_length (o_current),
                                   lepton_object_get_stroke_space_length (o_current));
   lepton_object_set_fill_options (new_obj,
-                                  o_current->fill_type,
-                                  o_current->fill_width,
-                                  o_current->fill_pitch1,
-                                  o_current->fill_angle1,
-                                  o_current->fill_pitch2,
-                                  o_current->fill_angle2);
+                                  lepton_object_get_fill_type (o_current),
+                                  lepton_object_get_fill_width (o_current),
+                                  lepton_object_get_fill_pitch1 (o_current),
+                                  lepton_object_get_fill_angle1 (o_current),
+                                  lepton_object_get_fill_pitch2 (o_current),
+                                  lepton_object_get_fill_angle2 (o_current));
 
   return new_obj;
 }
@@ -530,12 +530,12 @@ lepton_box_object_to_buffer (const LeptonObject *object)
   box_space  = lepton_object_get_stroke_space_length (object);
 
   /* description of the filling of the box */
-  box_fill   = object->fill_type;
-  fill_width = object->fill_width;
-  angle1     = object->fill_angle1;
-  pitch1     = object->fill_pitch1;
-  angle2     = object->fill_angle2;
-  pitch2     = object->fill_pitch2;
+  box_fill   = lepton_object_get_fill_type (object);
+  fill_width = lepton_object_get_fill_width (object);
+  angle1     = lepton_object_get_fill_angle1 (object);
+  pitch1     = lepton_object_get_fill_pitch1 (object);
+  angle2     = lepton_object_get_fill_angle2 (object);
+  pitch2     = lepton_object_get_fill_pitch2 (object);
 
   buf = g_strdup_printf("%c %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d",
                         lepton_object_get_type (object),
@@ -775,7 +775,8 @@ lepton_box_object_shortest_distance (LeptonObject *object,
 
   g_return_val_if_fail (object->box != NULL, G_MAXDOUBLE);
 
-  solid = force_solid || object->fill_type != FILLING_HOLLOW;
+  solid = force_solid ||
+    lepton_object_get_fill_type (object) != FILLING_HOLLOW;
 
   return lepton_box_shortest_distance (object->box, x, y, solid);
 }

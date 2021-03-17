@@ -139,12 +139,12 @@ lepton_path_object_copy (LeptonObject *o_current)
                                   lepton_object_get_stroke_dash_length (o_current),
                                   lepton_object_get_stroke_space_length (o_current));
   lepton_object_set_fill_options (new_obj,
-                                  o_current->fill_type,
-                                  o_current->fill_width,
-                                  o_current->fill_pitch1,
-                                  o_current->fill_angle1,
-                                  o_current->fill_pitch2,
-                                  o_current->fill_angle2);
+                                  lepton_object_get_fill_type (o_current),
+                                  lepton_object_get_fill_width (o_current),
+                                  lepton_object_get_fill_pitch1 (o_current),
+                                  lepton_object_get_fill_angle1 (o_current),
+                                  lepton_object_get_fill_pitch2 (o_current),
+                                  lepton_object_get_fill_angle2 (o_current));
 
   /* return the new tail of the object list */
   return new_obj;
@@ -292,12 +292,12 @@ lepton_path_object_to_buffer (const LeptonObject *object)
   line_space  = lepton_object_get_stroke_space_length (object);
 
   /* filling parameters */
-  fill_type    = object->fill_type;
-  fill_width   = object->fill_width;
-  angle1       = object->fill_angle1;
-  pitch1       = object->fill_pitch1;
-  angle2       = object->fill_angle2;
-  pitch2       = object->fill_pitch2;
+  fill_type    = lepton_object_get_fill_type (object);
+  fill_width   = lepton_object_get_fill_width (object);
+  angle1       = lepton_object_get_fill_angle1 (object);
+  pitch1       = lepton_object_get_fill_pitch1 (object);
+  angle2       = lepton_object_get_fill_angle2 (object);
+  pitch2       = lepton_object_get_fill_pitch2 (object);
 
   path_string = s_path_string_from_path (object->path);
   num_lines = o_text_num_lines (path_string);
@@ -621,7 +621,8 @@ lepton_path_object_shortest_distance (LeptonObject *object,
 {
   int solid;
 
-  solid = force_solid || object->fill_type != FILLING_HOLLOW;
+  solid = force_solid ||
+    lepton_object_get_fill_type (object) != FILLING_HOLLOW;
 
   return s_path_shortest_distance (object->path, x, y, solid);
 }

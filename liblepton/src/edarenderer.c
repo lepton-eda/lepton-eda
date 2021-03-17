@@ -588,7 +588,8 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, LeptonObject *object)
   }
 
   /* Handle solid and hollow fill types */
-  switch (object->fill_type) {
+  switch (lepton_object_get_fill_type (object))
+  {
   case FILLING_MESH:
   case FILLING_HATCH:
     break;
@@ -602,26 +603,41 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, LeptonObject *object)
 
   /* Handle mesh and hatch fill types */
   fill_lines = g_array_new (FALSE, FALSE, sizeof (LeptonLine));
-  if (lepton_fill_type_draw_first_hatch (object->fill_type))
+  if (lepton_fill_type_draw_first_hatch (lepton_object_get_fill_type (object)))
   {
-    hatch_func (hatch_data, object->fill_angle1, object->fill_pitch1, fill_lines);
+    hatch_func (hatch_data,
+                lepton_object_get_fill_angle1 (object),
+                lepton_object_get_fill_pitch1 (object),
+                fill_lines);
   }
-  if (lepton_fill_type_draw_second_hatch (object->fill_type))
+  if (lepton_fill_type_draw_second_hatch (lepton_object_get_fill_type (object)))
   {
-    hatch_func (hatch_data, object->fill_angle2, object->fill_pitch2, fill_lines);
+    hatch_func (hatch_data,
+                lepton_object_get_fill_angle2 (object),
+                lepton_object_get_fill_pitch2 (object),
+                fill_lines);
   }
 
   /* Draw fill pattern */
   for (i = 0; i < fill_lines->len; i++) {
     LeptonLine *line = &g_array_index (fill_lines, LeptonLine, i);
-    eda_cairo_line (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
-                    END_NONE, object->fill_width,
-                    line->x[0], line->y[0], line->x[1], line->y[1]);
+    eda_cairo_line (renderer->priv->cr,
+                    EDA_RENDERER_CAIRO_FLAGS (renderer),
+                    END_NONE,
+                    lepton_object_get_fill_width (object),
+                    line->x[0],
+                    line->y[0],
+                    line->x[1],
+                    line->y[1]);
   }
-  eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
-                    TYPE_SOLID, END_NONE,
-                    EDA_RENDERER_STROKE_WIDTH (renderer, object->fill_width),
-                    -1, -1);
+  eda_cairo_stroke (renderer->priv->cr,
+                    EDA_RENDERER_CAIRO_FLAGS (renderer),
+                    TYPE_SOLID,
+                    END_NONE,
+                    EDA_RENDERER_STROKE_WIDTH (renderer,
+                    lepton_object_get_fill_width (object)),
+                    -1,
+                    -1);
 
   g_array_free (fill_lines, TRUE);
   return FALSE;

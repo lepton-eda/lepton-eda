@@ -124,12 +124,12 @@ lepton_line_object_copy (LeptonObject *o_current)
                                   lepton_object_get_stroke_space_length (o_current));
 
   lepton_object_set_fill_options (new_obj,
-                                  o_current->fill_type,
-                                  o_current->fill_width,
-                                  o_current->fill_pitch1,
-                                  o_current->fill_angle1,
-                                  o_current->fill_pitch2,
-                                  o_current->fill_angle2);
+                                  lepton_object_get_fill_type (o_current),
+                                  lepton_object_get_fill_width (o_current),
+                                  lepton_object_get_fill_pitch1 (o_current),
+                                  lepton_object_get_fill_angle1 (o_current),
+                                  lepton_object_get_fill_pitch2 (o_current),
+                                  lepton_object_get_fill_angle2 (o_current));
 
   return new_obj;
 }
