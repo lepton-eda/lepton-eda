@@ -38,6 +38,68 @@ enum _LeptonFillType
 
 typedef enum _LeptonFillType LeptonFillType;
 
+typedef struct _LeptonFill LeptonFill;
+
+struct _LeptonFill
+{
+  LeptonFillType type;
+  int width;
+  int pitch1;
+  int angle1;
+  int pitch2;
+  int angle2;
+};
+
+
+
+LeptonFill*
+lepton_fill_new ();
+
+void
+lepton_fill_free (LeptonFill *fill);
+
+LeptonFillType
+lepton_fill_get_type (const LeptonFill *fill);
+
+void
+lepton_fill_set_type (LeptonFill *fill,
+                      LeptonFillType type);
+int
+lepton_fill_get_width (const LeptonFill *fill);
+
+void
+lepton_fill_set_width (LeptonFill *fill,
+                       int width);
+int
+lepton_fill_get_pitch1 (const LeptonFill *fill);
+
+void
+lepton_fill_set_pitch1 (LeptonFill *fill,
+                        int pitch);
+int
+lepton_fill_get_angle1 (const LeptonFill *fill);
+
+void
+lepton_fill_set_angle1 (LeptonFill *fill,
+                        int angle);
+int
+lepton_fill_get_pitch2 (const LeptonFill *fill);
+
+void
+lepton_fill_set_pitch2 (LeptonFill *fill,
+                        int pitch);
+int
+lepton_fill_get_angle2 (const LeptonFill *fill);
+
+void
+lepton_fill_set_angle2 (LeptonFill *fill,
+                        int angle);
+const char*
+lepton_fill_type_to_string (LeptonFillType type);
+
+LeptonFillType
+lepton_fill_type_from_string (char *s);
+
 gboolean
 lepton_fill_type_draw_first_hatch (int fill_type);
 
