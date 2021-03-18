@@ -825,11 +825,6 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   create_grid_size_widget (widget);
 
 
-  widget->grid_label = gtk_label_new (NULL);
-  gtk_widget_set_tooltip_text (widget->grid_label, _("(Snap size, Grid size)"));
-  gtk_misc_set_padding (GTK_MISC (widget->grid_label), LABEL_XPAD, LABEL_YPAD);
-  gtk_box_pack_start (GTK_BOX (widget), widget->grid_label, FALSE, FALSE, 0);
-
   separator = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
@@ -1165,7 +1160,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
 
 
-/*! \brief Write the grid settings to the gschem "status bar."
+/*! \brief Write the snap and grid settings to the status bar.
  *
  *  \param [in] widget This GschemBottomWidget
  *  \param [in] pspec  The parameter that changed
@@ -1176,48 +1171,6 @@ update_grid_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unuse
 {
   update_snap_info_widget (widget);
   update_grid_size_widget (widget);
-
-
-  if (widget->grid_label != NULL) {
-    gchar *grid_text = NULL;
-    gchar *label_text = NULL;
-    gchar *snap_text = NULL;
-
-    switch (widget->snap_mode) {
-      case SNAP_OFF:
-        snap_text = g_strdup (_("OFF"));
-        break;
-
-      case SNAP_GRID:
-        snap_text = g_strdup_printf ("%d", widget->snap_size);
-        break;
-
-      case SNAP_RESNAP:
-        snap_text = g_strdup_printf ("%dR", widget->snap_size);
-        break;
-
-      default:
-        g_critical ("%s: update_grid_label(): widget->snap_mode out of range: %d\n", __FILE__, widget->snap_mode);
-    }
-
-    if (widget->grid_mode == GRID_MODE_NONE) {
-      grid_text = g_strdup (_("OFF"));
-    } else {
-      if (widget->grid_size <= 0) {
-        grid_text = g_strdup (_("NONE"));
-      } else {
-        grid_text = g_strdup_printf ("%d", widget->grid_size);
-      }
-    }
-
-    label_text = g_strdup_printf (_("Grid(%1$s, %2$s)"), snap_text, grid_text);
-
-    gtk_label_set_text (GTK_LABEL (widget->grid_label), label_text);
-
-    g_free (grid_text);
-    g_free (label_text);
-    g_free (snap_text);
-  }
 }
 
 
