@@ -550,7 +550,6 @@ static void
 update_snap_info_widget (GschemBottomWidget* widget)
 {
   g_return_if_fail (widget != NULL);
-//  g_return_if_fail ( && "widget->snap_mode out of range");
 
   gchar* cwd = g_get_current_dir();
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
@@ -588,7 +587,7 @@ update_snap_info_widget (GschemBottomWidget* widget)
   {
     if (widget->snap_size != default_snap_size)
     {
-      txt = g_strdup_printf ("Snap: <b>%d</b>", widget->snap_size);
+      txt = g_strdup_printf (_("Snap: <b>%d</b>"), widget->snap_size);
       set_snap_info_widget (widget, txt, "red");
     }
     else
@@ -601,13 +600,13 @@ update_snap_info_widget (GschemBottomWidget* widget)
   {
     if (widget->snap_size != default_snap_size)
     {
-      txt = g_strdup_printf ("<u>Re</u>snap: <b>%d</b>", widget->snap_size);
+      txt = g_strdup_printf (_("<u>Re</u>snap: <b>%d</b>"), widget->snap_size);
       set_snap_info_widget_text(widget, txt);
       set_snap_info_widget_color(widget, "red");
     }
     else
     {
-      txt = g_strdup_printf ("<u>Re</u>snap: %d", widget->snap_size);
+      txt = g_strdup_printf (_("<u>Re</u>snap: %d"), widget->snap_size);
       set_snap_info_widget_text(widget, txt);
     }
   }
@@ -616,6 +615,27 @@ update_snap_info_widget (GschemBottomWidget* widget)
     g_critical ("%s: update_grid_label(): widget->snap_mode out of range: %d\n",
                 __FILE__,
                 widget->snap_mode);
+  }
+
+
+  if (widget->snap_mode != SNAP_OFF &&
+      widget->snap_size != default_snap_size)
+  {
+    gchar* tooltip = tooltip = g_strdup_printf(
+      _("Snap size.\n"
+        "Attention: current snap size (%d) differs\n"
+        "from the value set in configuration: %d."),
+        widget->snap_size,
+        default_snap_size);
+
+    gtk_widget_set_tooltip_text (widget->grid_snap_widget,
+                                   tooltip);
+    g_free (tooltip);
+  }
+  else
+  {
+    gtk_widget_set_tooltip_text (widget->grid_snap_widget,
+                                 _("Snap size"));
   }
 
 } /* update_snap_info_widget() */
