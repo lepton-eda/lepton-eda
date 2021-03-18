@@ -51,14 +51,6 @@
 returns #f."
   (true? (edascm_is_object (scm->pointer object))))
 
-;;; Helper transformers between #<geda-object> smobs and C object
-;;; pointers.
-(define (geda-object->pointer smob)
-  (edascm_to_object (scm->pointer smob)))
-
-(define (pointer->geda-object pointer)
-  (pointer->scm (edascm_from_object pointer)))
-
 
 (define (object-id object)
   "Returns an internal id number of the OBJECT."

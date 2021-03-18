@@ -19,12 +19,15 @@
   #:use-module (system foreign)
 
   #:export (liblepton
+            ;; Helpers.
             true?
+            geda-object->pointer
+            pointer->geda-object
+
+            ;; Foreign functions.
             edascm_is_config
             edascm_is_object
             edascm_is_page
-            edascm_from_object
-            edascm_to_object
 
             lepton_object_get_id
             lepton_object_get_type
@@ -88,3 +91,13 @@
 ;;; object.c
 (define-lff lepton_object_get_id int '(*))
 (define-lff lepton_object_get_type int '(*))
+
+
+
+;;; Helper transformers between #<geda-object> smobs and C object
+;;; pointers.
+(define (geda-object->pointer smob)
+  (edascm_to_object (scm->pointer smob)))
+
+(define (pointer->geda-object pointer)
+  (pointer->scm (edascm_from_object pointer)))
