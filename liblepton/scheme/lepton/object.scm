@@ -33,6 +33,7 @@
   #:export (object?
             object-id
             object-type
+            object-type?
             arc?
             box?
             bus?
@@ -95,7 +96,7 @@ returns #f."
                 object
                 (integer->char (lepton_object_get_type object))))))
 
-(define-public (object-type? x type)
+(define (object-type? x type)
   (if (object? x)
       (eq? (object-type x) type)
       #f))
