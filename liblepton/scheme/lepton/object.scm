@@ -97,9 +97,8 @@ returns #f."
                 (integer->char (lepton_object_get_type object))))))
 
 (define (object-type? x type)
-  (if (object? x)
-      (eq? (object-type x) type)
-      #f))
+  (and (object? x)
+       (eq? (object-type x) type)))
 
 (define-public copy-object %copy-object)
 
