@@ -44,7 +44,6 @@ struct _GschemBottomWidget
   GtkWidget *grid_snap_widget;
   GtkWidget *grid_size_widget;
 
-  GtkWidget *grid_label;
   int       grid_mode;
   int       grid_size;
   GtkWidget *left_button_label;
