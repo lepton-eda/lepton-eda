@@ -94,7 +94,7 @@ returns #f."
 
 (define (line? object)
   "Returns #t if OBJECT is a line object, otherwise returns #f."
-  (check-object-type object lepton_object_is_line))
+  (true? (lepton_object_is_line (geda-object->pointer object))))
 
 (define*-public (set-line! l start end #:optional color)
   (%set-line! l
@@ -126,7 +126,7 @@ returns #f."
 
 (define-public (net? object)
   "Returns #t if OBJECT is a net object, otherwise returns #f."
-  (check-object-type object lepton_object_is_net))
+  (true? (lepton_object_is_net (geda-object->pointer object))))
 
 (define*-public (make-net start end #:optional color)
   (let ((l (%make-net)))
@@ -136,7 +136,7 @@ returns #f."
 
 (define (bus? object)
   "Returns #t if OBJECT is a bus object, otherwise returns #f."
-  (check-object-type object lepton_object_is_bus))
+  (true? (lepton_object_is_bus (geda-object->pointer object))))
 
 (define*-public (make-bus start end #:optional color)
   (let ((l (%make-bus)))
@@ -146,7 +146,7 @@ returns #f."
 
 (define (pin? object)
   "Returns #t if OBJECT is a pin object, otherwise returns #f."
-  (check-object-type object lepton_object_is_pin))
+  (true? (lepton_object_is_pin (geda-object->pointer object))))
 
 (define-public (net-pin? l)
   (and (pin? l) (equal? (%pin-type l) 'net)))
@@ -167,7 +167,7 @@ returns #f."
 
 (define (box? object)
   "Returns #t if OBJECT is a box object, otherwise returns #f."
-  (check-object-type object lepton_object_is_box))
+  (true? (lepton_object_is_box (geda-object->pointer object))))
 
 (define*-public (set-box! b top-left bottom-right #:optional color)
   (%set-box! b
@@ -199,7 +199,7 @@ returns #f."
 
 (define (circle? object)
   "Returns #t if OBJECT is a circle object, otherwise returns #f."
-  (check-object-type object lepton_object_is_circle))
+  (true? (lepton_object_is_circle (geda-object->pointer object))))
 
 (define*-public (set-circle! c center radius #:optional color)
   (%set-circle! c
@@ -230,7 +230,7 @@ returns #f."
 
 (define (arc? object)
   "Returns #t if OBJECT is a arc object, otherwise returns #f."
-  (check-object-type object lepton_object_is_arc))
+  (true? (lepton_object_is_arc (geda-object->pointer object))))
 
 (define*-public (set-arc! a center radius start-angle sweep-angle
                           #:optional color)
@@ -271,7 +271,7 @@ returns #f."
 
 (define (path? object)
   "Returns #t if OBJECT is a path object, otherwise returns #f."
-  (check-object-type object lepton_object_is_path))
+  (true? (lepton_object_is_path (geda-object->pointer object))))
 
 (define*-public (make-path #:optional color)
   (let ((p (%make-path)))
@@ -318,7 +318,7 @@ returns #f."
 
 (define (picture? object)
   "Returns #t if OBJECT is a picture object, otherwise returns #f."
-  (check-object-type object lepton_object_is_picture))
+  (true? (lepton_object_is_picture (geda-object->pointer object))))
 
 (define-public (set-picture! p top-left bottom-right angle mirror)
   (%set-picture! p (car top-left) (cdr top-left)
@@ -359,7 +359,7 @@ returns #f."
 
 (define (text? object)
   "Returns #t if OBJECT is a text object, otherwise returns #f."
-  (check-object-type object lepton_object_is_text))
+  (true? (lepton_object_is_text (geda-object->pointer object))))
 
 (define*-public (set-text! t anchor align angle string size visible show
                            #:optional color)
@@ -412,7 +412,7 @@ returns #f."
 
 (define (component? object)
   "Returns #t if OBJECT is a component object, otherwise returns #f."
-  (check-object-type object lepton_object_is_component))
+  (true? (lepton_object_is_component (geda-object->pointer object))))
 
 (define-public (set-component! c position angle mirror locked)
   (%set-component! c (car position) (cdr position) angle mirror locked))

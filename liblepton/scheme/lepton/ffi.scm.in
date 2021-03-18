@@ -23,7 +23,6 @@
             true?
             geda-object->pointer
             pointer->geda-object
-            check-object-type
 
             ;; Foreign functions.
             edascm_is_config
@@ -32,6 +31,18 @@
 
             lepton_object_get_id
             lepton_object_get_type
+
+            lepton_object_is_arc
+            lepton_object_is_box
+            lepton_object_is_bus
+            lepton_object_is_circle
+            lepton_object_is_component
+            lepton_object_is_line
+            lepton_object_is_net
+            lepton_object_is_path
+            lepton_object_is_picture
+            lepton_object_is_pin
+            lepton_object_is_text
 
             set_render_placeholders
             colors_count
@@ -93,6 +104,17 @@
 (define-lff lepton_object_get_id int '(*))
 (define-lff lepton_object_get_type int '(*))
 
+(define-lff lepton_object_is_arc int '(*))
+(define-lff lepton_object_is_box int '(*))
+(define-lff lepton_object_is_bus int '(*))
+(define-lff lepton_object_is_circle int '(*))
+(define-lff lepton_object_is_component int '(*))
+(define-lff lepton_object_is_line int '(*))
+(define-lff lepton_object_is_net int '(*))
+(define-lff lepton_object_is_path int '(*))
+(define-lff lepton_object_is_picture int '(*))
+(define-lff lepton_object_is_pin int '(*))
+(define-lff lepton_object_is_text int '(*))
 
 
 ;;; Helper transformers between #<geda-object> smobs and C object
@@ -102,15 +124,3 @@
 
 (define (pointer->geda-object pointer)
   (pointer->scm (edascm_from_object pointer)))
-
-
-;;; Helper syntax rule for object type checking.
-(define-syntax-rule
-  (check-object-type <object> <check-proc-name>)
-  (let ((proc (delay (pointer->procedure
-                      int
-                      (dynamic-func (symbol->string (quote <check-proc-name>))
-                                    liblepton)
-                      '(*))))
-        (*object (geda-object->pointer <object>)))
-    (true? ((force proc) *object))))
