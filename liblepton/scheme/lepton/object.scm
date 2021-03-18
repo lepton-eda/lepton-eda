@@ -93,6 +93,7 @@ returns #f."
 ;;;; Lines
 
 (define (line? object)
+  "Returns #t if OBJECT is a line object, otherwise returns #f."
   (check-object-type object lepton_object_is_line))
 
 (define*-public (set-line! l start end #:optional color)
@@ -124,6 +125,7 @@ returns #f."
 ;;;; Nets
 
 (define-public (net? object)
+  "Returns #t if OBJECT is a net object, otherwise returns #f."
   (check-object-type object lepton_object_is_net))
 
 (define*-public (make-net start end #:optional color)
@@ -133,6 +135,7 @@ returns #f."
 ;;;; Buses
 
 (define (bus? object)
+  "Returns #t if OBJECT is a bus object, otherwise returns #f."
   (check-object-type object lepton_object_is_bus))
 
 (define*-public (make-bus start end #:optional color)
@@ -142,6 +145,7 @@ returns #f."
 ;;;; Pins
 
 (define (pin? object)
+  "Returns #t if OBJECT is a pin object, otherwise returns #f."
   (check-object-type object lepton_object_is_pin))
 
 (define-public (net-pin? l)
@@ -162,6 +166,7 @@ returns #f."
 
 
 (define (box? object)
+  "Returns #t if OBJECT is a box object, otherwise returns #f."
   (check-object-type object lepton_object_is_box))
 
 (define*-public (set-box! b top-left bottom-right #:optional color)
@@ -193,6 +198,7 @@ returns #f."
 ;;;; Circles
 
 (define (circle? object)
+  "Returns #t if OBJECT is a circle object, otherwise returns #f."
   (check-object-type object lepton_object_is_circle))
 
 (define*-public (set-circle! c center radius #:optional color)
@@ -223,6 +229,7 @@ returns #f."
 ;;;; Arcs
 
 (define (arc? object)
+  "Returns #t if OBJECT is a arc object, otherwise returns #f."
   (check-object-type object lepton_object_is_arc))
 
 (define*-public (set-arc! a center radius start-angle sweep-angle
@@ -263,6 +270,7 @@ returns #f."
 ;;;; Paths
 
 (define (path? object)
+  "Returns #t if OBJECT is a path object, otherwise returns #f."
   (check-object-type object lepton_object_is_path))
 
 (define*-public (make-path #:optional color)
@@ -309,6 +317,7 @@ returns #f."
 ;;;; Pictures
 
 (define (picture? object)
+  "Returns #t if OBJECT is a picture object, otherwise returns #f."
   (check-object-type object lepton_object_is_picture))
 
 (define-public (set-picture! p top-left bottom-right angle mirror)
@@ -349,6 +358,7 @@ returns #f."
 ;;;; Text
 
 (define (text? object)
+  "Returns #t if OBJECT is a text object, otherwise returns #f."
   (check-object-type object lepton_object_is_text))
 
 (define*-public (set-text! t anchor align angle string size visible show
@@ -401,6 +411,7 @@ returns #f."
 ;;;; Component objects
 
 (define (component? object)
+  "Returns #t if OBJECT is a component object, otherwise returns #f."
   (check-object-type object lepton_object_is_component))
 
 (define-public (set-component! c position angle mirror locked)
