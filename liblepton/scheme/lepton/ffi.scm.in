@@ -23,6 +23,7 @@
             true?
             geda-object->pointer
             pointer->geda-object
+            check-object-type
 
             ;; Foreign functions.
             edascm_is_config
@@ -101,3 +102,15 @@
 
 (define (pointer->geda-object pointer)
   (pointer->scm (edascm_from_object pointer)))
+
+
+;;; Helper syntax rule for object type checking.
+(define-syntax-rule
+  (check-object-type <object> <check-proc-name>)
+  (let ((proc (delay (pointer->procedure
+                      int
+                      (dynamic-func (symbol->string (quote <check-proc-name>))
+                                    liblepton)
+                      '(*))))
+        (*object (geda-object->pointer <object>)))
+    (true? ((force proc) *object))))

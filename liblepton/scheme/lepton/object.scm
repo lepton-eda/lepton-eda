@@ -59,17 +59,6 @@ returns #f."
          id)))
 
 
-(define-syntax-rule
-  (check-object-type <object> <check-proc-name>)
-  (let ((proc (delay (pointer->procedure
-                      int
-                      (dynamic-func (symbol->string (quote <check-proc-name>))
-                                    liblepton)
-                      '(*))))
-        (*object (geda-object->pointer <object>)))
-    (true? ((force proc) *object))))
-
-
 (define (object-type object)
   "Returns a Scheme symbol representing the type of OBJECT."
   (cond
