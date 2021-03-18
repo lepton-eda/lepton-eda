@@ -57,6 +57,7 @@
             set-object-selectable!
 
             object-fill
+            set-object-fill!
 
             object-stroke
             object-stroke-cap
@@ -934,7 +935,86 @@ value is a list of parameters:
       ((hatch) (list fill-type width pitch1 angle1))
       (else (list fill-type)))))
 
-(define-public set-object-fill! %set-object-fill!)
+(define* (set-object-fill! object
+                           type
+                           #:optional
+                           width
+                           space1
+                           angle1
+                           space2
+                           angle2)
+  "Sets the fill properties of OBJECT.  If OBJECT is not a box,
+circle, or path, throws a Scheme error.  The TYPE parameter
+defines the type of the filling which can be 'hollow, 'solid,
+'hatch, or 'mesh.  Optional arguments specify properties of
+two possible filling strokes if 'hatch or 'mesh types are
+used. WIDTH defines the width of the strokes, ANGLE1 and SPACE1
+define the angle and pitch of the first hatch lines, ANGLE2 and
+SPACE2 define the angle and pitch of the second hatch lines.  The
+second hatch is used for the 'mesh type only.  Returns OBJECT."
+  (define valid-filling-type?
+    (or (eq? type 'hollow)
+        (eq? type 'solid)
+        (eq? type 'hatch)
+        (eq? type 'mesh)))
+
+  (define with-first-hatch?
+    (or (eq? type 'mesh)
+        (eq? type 'hatch)))
+
+  (define with-second-hatch?
+    (eq? type 'mesh))
+
+  (define pointer (geda-object->pointer* object 1 fillable? 'fillable))
+
+  (unless valid-filling-type?
+    (error "Invalid fill style ~A." type))
+
+  (when with-first-hatch?
+    (unless width
+      (error "Missing stroke width parameter for fill style ~A."
+             width))
+    (check-integer width 3)
+
+    (unless space1
+      (error "Missing space parameter for fill style ~A."
+             space1))
+    (check-integer space1 4)
+
+    (unless angle1
+      (error "Missing angle parameter for fill style ~A."
+             angle1))
+    (check-integer angle1 5))
+
+  (when with-second-hatch?
+    (unless space2
+      (error "Missing second space parameter for fill style ~A."
+             space2))
+    (check-integer space2 6)
+
+    (unless angle2
+      (error "Missing second angle parameter for fill style ~A."
+             angle2))
+    (check-integer angle2 7))
+
+  (let ((type (lepton_fill_type_from_string
+               (string->pointer (symbol->string type))))
+        (width (or width -1))
+        (space1 (or space1 -1))
+        (angle1 (or angle1 -1))
+        (space2 (or space2 -1))
+        (angle2 (or angle2 -1)))
+
+    (lepton_object_set_fill_options pointer
+                                    type
+                                    width
+                                    space1
+                                    angle1
+                                    space2
+                                    angle2)
+    (lepton_object_page_set_changed pointer)
+
+    object))
 
 ;;;; Object bounds
 

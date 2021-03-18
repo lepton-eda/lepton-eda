@@ -146,106 +146,6 @@ edascm_is_object_type (SCM smob, int type)
 }
 
 
-/*! \brief Set the fill properties of an object.
- * \par Function Description
-
- * Updates the fill settings of the object \a obj_s.  If \a obj_s is
- * not a box, circle, or path, throws a Scheme error.  The optional
- * parameters \a width_s, \a angle1_s, \a space1_s, \a angle2_s and
- * space2_s
- *
- * \note Scheme API: Implements the %object-fill procedure in the
- * (lepton core object) module.
- *
- * \param obj_s object to set fill settings for.
- * \return \a obj_s.
- */
-SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
-            (SCM obj_s, SCM type_s, SCM width_s, SCM space1_s, SCM angle1_s,
-             SCM space2_s, SCM angle2_s),
-            "Set the fill properties of an object.")
-{
-  SCM_ASSERT ((edascm_is_object_type (obj_s, OBJ_BOX)
-               || edascm_is_object_type (obj_s, OBJ_CIRCLE)
-               || edascm_is_object_type (obj_s, OBJ_PATH)),
-              obj_s, SCM_ARG1, s_set_object_fill_x);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  int type, width = -1, angle1 = -1, space1 = -1, angle2 = -1, space2 = -1;
-
-  if      (scm_is_eq (type_s, hollow_sym)) { type = FILLING_HOLLOW;   }
-  else if (scm_is_eq (type_s, solid_sym))  { type = FILLING_FILL; }
-  else if (scm_is_eq (type_s, hatch_sym))  { type = FILLING_HATCH;  }
-  else if (scm_is_eq (type_s, mesh_sym))   { type = FILLING_MESH;  }
-  else {
-    scm_misc_error (s_set_object_fill_x,
-                    _("Invalid fill style ~A."),
-                    scm_list_1 (type_s));
-  }
-
-  switch (type) {
-  case FILLING_MESH:
-    if (!edascm_is_defined (space2_s)) {
-      scm_misc_error (s_set_object_fill_x,
-                      _("Missing second space parameter for fill style ~A."),
-                      scm_list_1 (space2_s));
-    }
-    SCM_ASSERT (scm_is_integer (space2_s), space2_s,
-                SCM_ARG6, s_set_object_fill_x);
-    space2 = scm_to_int (space2_s);
-
-    if (!edascm_is_defined (angle2_s)) {
-      scm_misc_error (s_set_object_fill_x,
-                      _("Missing second angle parameter for fill style ~A."),
-                      scm_list_1 (angle2_s));
-    }
-    SCM_ASSERT (scm_is_integer (angle2_s), angle2_s,
-                SCM_ARG7, s_set_object_fill_x);
-    angle2 = scm_to_int (angle2_s);
-    /* This case intentionally falls through */
-  case FILLING_HATCH:
-    if (!edascm_is_defined (width_s)) {
-      scm_misc_error (s_set_object_fill_x,
-                      _("Missing stroke width parameter for fill style ~A."),
-                      scm_list_1 (width_s));
-    }
-    SCM_ASSERT (scm_is_integer (width_s), width_s,
-                SCM_ARG3, s_set_object_fill_x);
-    width = scm_to_int (width_s);
-
-    if (!edascm_is_defined (space1_s)) {
-      scm_misc_error (s_set_object_fill_x,
-                      _("Missing space parameter for fill style ~A."),
-                      scm_list_1 (space1_s));
-    }
-    SCM_ASSERT (scm_is_integer (space1_s), space1_s,
-                SCM_ARG4, s_set_object_fill_x);
-    space1 = scm_to_int (space1_s);
-
-    if (!edascm_is_defined(angle1_s)) {
-      scm_misc_error (s_set_object_fill_x,
-                      _("Missing angle parameter for fill style ~A."),
-                      scm_list_1 (angle1_s));
-    }
-    SCM_ASSERT (scm_is_integer (angle1_s), angle1_s,
-                SCM_ARG5, s_set_object_fill_x);
-    angle1 = scm_to_int (angle1_s);
-    /* This case intentionally falls through */
-  }
-
-  lepton_object_set_fill_options (obj,
-                                  (LeptonFillType) type,
-                                  width,
-                                  space1,
-                                  angle1,
-                                  space2,
-                                  angle2);
-  lepton_object_page_set_changed (obj);
-
-  return obj_s;
-}
-
-
 /*! \brief Create a new line.
  * \par Function Description
  * Creates a new line object, with all its parameters set to default
@@ -1415,8 +1315,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_set_object_fill_x,
-                s_make_line,
+  scm_c_export (s_make_line,
                 s_make_net,
                 s_make_bus,
                 s_make_pin,
