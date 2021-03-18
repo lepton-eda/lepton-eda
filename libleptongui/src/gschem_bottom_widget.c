@@ -621,7 +621,7 @@ update_snap_info_widget (GschemBottomWidget* widget)
   if (widget->snap_mode != SNAP_OFF &&
       widget->snap_size != default_snap_size)
   {
-    gchar* tooltip = tooltip = g_strdup_printf(
+    gchar* tooltip = g_strdup_printf(
       _("Snap size.\n"
         "Attention: current snap size (%d) differs\n"
         "from the value set in configuration: %d."),
@@ -655,6 +655,56 @@ create_snap_info_widget (GschemBottomWidget* widget)
                         LABEL_XPAD,
                         LABEL_YPAD);
   gtk_box_pack_start (GTK_BOX (widget), widget->grid_snap_widget, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+}
+
+
+
+static void
+update_grid_size_widget (GschemBottomWidget* widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  gchar* str = NULL;
+
+  if (widget->grid_mode == GRID_MODE_NONE)
+  {
+    str = g_strdup (_("Grid: OFF"));
+  }
+  else
+  if (widget->grid_size <= 0)
+  {
+    str = g_strdup (_("Grid: NONE"));
+  }
+  else
+  {
+    str = g_strdup_printf ("Grid: %d", widget->grid_size);
+  }
+
+  gtk_label_set_label (GTK_LABEL(widget->grid_size_widget), str);
+  gtk_widget_set_tooltip_text (widget->grid_size_widget,
+                               _("Grid size"));
+  g_free (str);
+}
+
+
+
+static void
+create_grid_size_widget (GschemBottomWidget* widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  widget->grid_size_widget = gtk_label_new (NULL);
+
+  gchar* str = g_strdup_printf ("Grid: %d", widget->grid_size);
+  gtk_label_set_markup (GTK_LABEL(widget->grid_size_widget),
+                        str);
+  g_free (str);
+
+  gtk_misc_set_padding (GTK_MISC (widget->grid_size_widget),
+                        LABEL_XPAD,
+                        LABEL_YPAD);
+  gtk_box_pack_start (GTK_BOX (widget), widget->grid_size_widget, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
 }
 
@@ -772,6 +822,7 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
 
 
   create_snap_info_widget (widget);
+  create_grid_size_widget (widget);
 
 
   widget->grid_label = gtk_label_new (NULL);
@@ -1124,6 +1175,7 @@ static void
 update_grid_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused)
 {
   update_snap_info_widget (widget);
+  update_grid_size_widget (widget);
 
 
   if (widget->grid_label != NULL) {
