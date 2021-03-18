@@ -47,6 +47,7 @@
             lepton_object_get_fill_pitch2
             lepton_object_get_fill_type
             lepton_object_get_fill_width
+            lepton_object_set_fill_options
             lepton_object_get_id
             lepton_object_get_parent
             lepton_object_get_selectable
@@ -113,6 +114,7 @@
             lepton_picture_object_embed
             lepton_picture_object_unembed
 
+            lepton_fill_type_from_string
             lepton_fill_type_to_string
 
             lepton_stroke_cap_type_from_string
@@ -195,6 +197,7 @@
 (define-lff lepton_object_get_fill_pitch2 int '(*))
 (define-lff lepton_object_get_fill_type int '(*))
 (define-lff lepton_object_get_fill_width int '(*))
+(define-lff lepton_object_set_fill_options void (list '* int int int int int int))
 (define-lff lepton_object_get_id int '(*))
 (define-lff lepton_object_get_parent '* '(*))
 (define-lff lepton_object_get_selectable int '(*))
@@ -263,6 +266,7 @@
 (define-lff lepton_picture_object_embed void '(*))
 (define-lff lepton_picture_object_unembed void '(*))
 
+(define-lff lepton_fill_type_from_string int '(*))
 (define-lff lepton_fill_type_to_string '* (list int))
 
 (define-lff lepton_stroke_cap_type_from_string int '(*))
