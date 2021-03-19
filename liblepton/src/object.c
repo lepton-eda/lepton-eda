@@ -1115,10 +1115,7 @@ o_get_parent (LeptonObject *object)
 {
   g_return_val_if_fail ((object != NULL), NULL);
 
-  if (object->parent != NULL) {
-    return object->parent;
-  }
-  return NULL;
+  return object->parent;
 }
 
 /* Structure for each entry in a LeptonToplevel's list of
