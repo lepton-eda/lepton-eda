@@ -206,10 +206,6 @@ SCM edascm_from_object_glist (const GList *objs);
 int edascm_is_object_type (SCM smob, int type);
 
 
-/*! \brief Flag an object's page as having been changed. */
-extern void
-lepton_object_page_set_changed (LeptonObject *object);
-
 /* ---------------------------------------- */
 
 extern SCM edascm_object_state_sym;

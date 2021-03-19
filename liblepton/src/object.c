@@ -1082,6 +1082,25 @@ o_get_page (LeptonObject *object)
   return object->page;
 }
 
+
+/*! \brief Flag an object's page as having been changed.
+ *
+ * \par Function Description
+ * Sets the page of \a object as having been changed by setting
+ * its CHANGED flag to TRUE.  This is primarily used in cases when
+ * there is no another way to do it yet, e.g. in Scheme core
+ * modules.
+ *
+ * \param [in] object The #LeptonObject which page should be changed.
+ */
+void
+lepton_object_page_set_changed (LeptonObject *object)
+{
+  LeptonPage *page = o_get_page (object);
+  if (page != NULL) page->CHANGED = TRUE;
+}
+
+
 /*! \brief Get an object's containing component object.
  *
  * \par Function Description

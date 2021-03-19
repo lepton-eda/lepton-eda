@@ -74,13 +74,6 @@ SCM_SYMBOL (lineto_sym , "lineto");
 SCM_SYMBOL (curveto_sym , "curveto");
 SCM_SYMBOL (closepath_sym , "closepath");
 
-void
-lepton_object_page_set_changed (LeptonObject *object)
-{
-  LeptonPage *page = o_get_page (object);
-  if (page != NULL) page->CHANGED = TRUE;
-}
-
 /*! \brief Convert a Scheme object list to a GList.
  * \par Function Description
  * Takes a Scheme list of #LeptonObject smobs, and returns a GList

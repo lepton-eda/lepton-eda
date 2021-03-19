@@ -221,6 +221,9 @@ o_get_line_options (LeptonObject *object,
 LeptonPage*
 o_get_page (LeptonObject *object);
 
+void
+lepton_object_page_set_changed (LeptonObject *object);
+
 LeptonObject*
 o_get_parent (LeptonObject *object);
 
