@@ -12,6 +12,7 @@
 
   (test-equal 'complex (object-type a))
   (test-assert (object-type? a 'complex))
+  (test-assert (not (object-type? a 'x)))
 
   (test-assert (component? a))
 

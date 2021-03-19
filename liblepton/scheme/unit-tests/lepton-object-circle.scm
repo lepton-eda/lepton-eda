@@ -9,6 +9,7 @@
 
   (test-equal 'circle (object-type a))
   (test-assert (object-type? a 'circle))
+  (test-assert (not (object-type? a 'x)))
 
   (test-assert (circle? a))
   (test-assert (circle? b))

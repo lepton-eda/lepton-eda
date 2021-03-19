@@ -9,6 +9,7 @@
 
   (test-equal 'arc (object-type a))
   (test-assert (object-type? a 'arc))
+  (test-assert (not (object-type? a 'x)))
 
   (test-assert (arc? a))
   (test-assert (arc? b))

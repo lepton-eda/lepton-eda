@@ -9,6 +9,7 @@
 
   (test-equal 'path (object-type a))
   (test-assert (object-type? a 'path))
+  (test-assert (not (object-type? a 'x)))
   (test-assert (path? a))
   (test-equal 0 (path-length a))
   (test-assert-thrown 'out-of-range (path-ref a 0))

@@ -10,6 +10,7 @@
 
   (test-equal 'line (object-type a))
   (test-assert (object-type? a 'line))
+  (test-assert (not (object-type? a 'x)))
 
   (test-assert (line? a))
 
@@ -41,6 +42,7 @@
 
   (test-equal 'net (object-type a))
   (test-assert (object-type? a 'net))
+  (test-assert (not (object-type? a 'x)))
 
   (test-assert (net? a))
 
@@ -72,6 +74,7 @@
 
   (test-equal 'bus (object-type a))
   (test-assert (object-type? a 'bus))
+  (test-assert (not (object-type? a 'x)))
 
   (test-assert (bus? a))
 
@@ -103,6 +106,7 @@
 
   (test-equal 'pin (object-type a))
   (test-assert (object-type? a 'pin))
+  (test-assert (not (object-type? a 'x)))
 
   (test-assert (pin? a))
   (test-assert (net-pin? a))
@@ -136,6 +140,7 @@
 
   (test-equal 'pin (object-type a))
   (test-assert (object-type? a 'pin))
+  (test-assert (not (object-type? a 'x)))
 
   (test-assert (pin? a))
   (test-assert (bus-pin? a))

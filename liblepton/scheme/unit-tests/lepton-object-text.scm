@@ -9,6 +9,7 @@
 
   (test-equal 'text (object-type a))
   (test-assert (object-type? a 'text))
+  (test-assert (not (object-type? a 'x)))
 
   (test-assert (text? a))
   (test-assert (text? b))

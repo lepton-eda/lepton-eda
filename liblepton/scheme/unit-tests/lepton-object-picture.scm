@@ -19,6 +19,7 @@ static char * test_image_xpm[] = {
 
   (test-equal 'picture (object-type a))
   (test-assert (object-type? a 'picture))
+  (test-assert (not (object-type? a 'x)))
   (test-assert (picture? a))
 
   (test-equal "test_image.xpm" (picture-filename a))
