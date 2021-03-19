@@ -141,6 +141,7 @@ TESTS = \
 	unit-tests/lepton-object-stroke.scm \
 	unit-tests/lepton-object-text.scm \
 	unit-tests/lepton-object-transform.scm \
+	unit-tests/lepton-object-wrong.scm \
 	unit-tests/lepton-os-basic.scm \
 	unit-tests/lepton-os-expand-env-variables.scm \
 	unit-tests/lepton-page-basic.scm \
