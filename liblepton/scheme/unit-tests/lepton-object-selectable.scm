@@ -77,3 +77,11 @@
   )
 
 (test-end "object-selectable")
+
+(test-begin "object-selectable-wrong-argument")
+
+(test-assert-thrown 'wrong-type-arg (object-selectable? 'a))
+(test-assert-thrown 'wrong-type-arg (set-object-selectable! 'a #t))
+(test-assert-thrown 'wrong-type-arg (set-object-selectable! 'a #f))
+
+(test-end "object-selectable-wrong-argument")
