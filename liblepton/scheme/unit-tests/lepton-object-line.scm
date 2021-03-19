@@ -9,6 +9,7 @@
       (b (make-line '(1 . 2) '(3 . 4))))
 
   (test-equal 'line (object-type a))
+  (test-assert (object-type? a 'line))
 
   (test-assert (line? a))
 
@@ -39,6 +40,7 @@
       (b (make-net '(1 . 2) '(3 . 4))))
 
   (test-equal 'net (object-type a))
+  (test-assert (object-type? a 'net))
 
   (test-assert (net? a))
 
@@ -69,6 +71,7 @@
       (b (make-bus '(1 . 2) '(3 . 4))))
 
   (test-equal 'bus (object-type a))
+  (test-assert (object-type? a 'bus))
 
   (test-assert (bus? a))
 
@@ -99,6 +102,7 @@
       (b (make-net-pin '(1 . 2) '(3 . 4))))
 
   (test-equal 'pin (object-type a))
+  (test-assert (object-type? a 'pin))
 
   (test-assert (pin? a))
   (test-assert (net-pin? a))
@@ -131,6 +135,7 @@
       (b (make-bus-pin '(1 . 2) '(3 . 4))))
 
   (test-equal 'pin (object-type a))
+  (test-assert (object-type? a 'pin))
 
   (test-assert (pin? a))
   (test-assert (bus-pin? a))

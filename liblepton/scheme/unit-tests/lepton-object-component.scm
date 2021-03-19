@@ -11,6 +11,7 @@
 (let ((a (make-component "test component" '(1 . 2) 0 #t #f)))
 
   (test-equal 'complex (object-type a))
+  (test-assert (object-type? a 'complex))
 
   (test-assert (component? a))
 

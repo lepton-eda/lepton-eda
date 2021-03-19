@@ -8,6 +8,7 @@
        (b (copy-object a)))
 
   (test-equal 'arc (object-type a))
+  (test-assert (object-type? a 'arc))
 
   (test-assert (arc? a))
   (test-assert (arc? b))

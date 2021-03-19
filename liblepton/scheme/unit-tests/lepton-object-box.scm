@@ -8,6 +8,7 @@
        (b (copy-object a)))
 
   (test-equal 'box (object-type a))
+  (test-assert (object-type? a 'box))
 
   (test-assert (box? a))
   (test-assert (box? b))

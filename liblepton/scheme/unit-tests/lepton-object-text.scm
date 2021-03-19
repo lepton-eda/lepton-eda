@@ -8,6 +8,7 @@
       (b (make-text '(1 . 2) 'lower-left 0 "test text" 10 #t 'both)))
 
   (test-equal 'text (object-type a))
+  (test-assert (object-type? a 'text))
 
   (test-assert (text? a))
   (test-assert (text? b))

@@ -18,6 +18,7 @@ static char * test_image_xpm[] = {
        (b (copy-object a)))
 
   (test-equal 'picture (object-type a))
+  (test-assert (object-type? a 'picture))
   (test-assert (picture? a))
 
   (test-equal "test_image.xpm" (picture-filename a))
