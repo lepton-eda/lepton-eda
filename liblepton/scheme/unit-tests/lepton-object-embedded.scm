@@ -155,3 +155,8 @@
   )
 
 (test-end "object-embedded")
+
+
+(test-begin "object-embedded-wrong-argument")
+(test-assert-thrown 'wrong-type-arg (object-embedded? 'a))
+(test-end "object-embedded-wrong-argument")
