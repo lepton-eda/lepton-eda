@@ -49,3 +49,7 @@
   (test-equal #f (member p (component-contents (copy-object A)))))
 
 (test-end "copy-object-deep-component")
+
+(test-begin "copy-object-wrong-argument")
+(test-assert-thrown 'wrong-type-arg (copy-object 'a))
+(test-end "copy-object-wrong-argument")
