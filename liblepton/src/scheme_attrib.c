@@ -222,7 +222,7 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
   o_attrib_attach (attrib, obj, TRUE);
   o_emit_change_notify (attrib);
 
-  o_page_changed (obj);
+  lepton_object_page_set_changed (obj);
 
   scm_remember_upto_here_1 (attrib_s);
   return obj_s;
@@ -271,7 +271,7 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
   lepton_object_set_color (attrib, DETACHED_ATTRIBUTE_COLOR);
   o_emit_change_notify (attrib);
 
-  o_page_changed (obj);
+  lepton_object_page_set_changed (obj);
 
   scm_remember_upto_here_1 (attrib_s);
   return obj_s;

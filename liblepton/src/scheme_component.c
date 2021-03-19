@@ -163,7 +163,7 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
 
   o_emit_change_notify (obj);
 
-  o_page_changed (obj);
+  lepton_object_page_set_changed (obj);
 
   return component_s;
 }
@@ -290,7 +290,7 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
 
   o_emit_change_notify (parent);
 
-  o_page_changed (parent);
+  lepton_object_page_set_changed (parent);
 
   return component_s;
 }
@@ -366,7 +366,7 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
 
   o_emit_change_notify (parent);
 
-  o_page_changed (parent);
+  lepton_object_page_set_changed (parent);
 
   /* Object cleanup now managed by Guile. */
   edascm_c_set_gc (obj_s, 1);

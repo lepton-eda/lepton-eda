@@ -207,7 +207,8 @@ int edascm_is_object_type (SCM smob, int type);
 
 
 /*! \brief Flag an object's page as having been changed. */
-extern void o_page_changed (LeptonObject *o);
+extern void
+lepton_object_page_set_changed (LeptonObject *object);
 
 /* ---------------------------------------- */
 
