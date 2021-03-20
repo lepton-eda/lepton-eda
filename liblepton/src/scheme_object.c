@@ -1882,44 +1882,6 @@ SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
   return obj_s;
 }
 
-
-
-/*! \brief Translate an object.
- * \par Function Description
- * Translates \a obj_s by \a dx_s in the x-axis and \a dy_s in the
- * y-axis.
- *
- * \note Scheme API: Implements the %translate-object! procedure of the
- * (lepton core object) module.
- *
- * \param obj_s  #LeptonObject smob for object to translate.
- * \param dx_s   Integer distance to translate along x-axis.
- * \param dy_s   Integer distance to translate along y-axis.
- * \return \a obj_s.
- */
-SCM_DEFINE (translate_object_x, "%translate-object!", 3, 0, 0,
-            (SCM obj_s, SCM dx_s, SCM dy_s), "Translate an object.")
-{
-  /* Check argument types */
-  SCM_ASSERT (edascm_is_object (obj_s), obj_s,
-              SCM_ARG1, s_translate_object_x);
-  SCM_ASSERT (scm_is_integer (dx_s), dx_s,
-              SCM_ARG2, s_translate_object_x);
-  SCM_ASSERT (scm_is_integer (dy_s), dy_s,
-              SCM_ARG3, s_translate_object_x);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  int dx = scm_to_int (dx_s);
-  int dy = scm_to_int (dy_s);
-
-  lepton_object_emit_pre_change_notify (obj);
-  lepton_object_translate (obj, dx, dy);
-  lepton_object_emit_change_notify (obj);
-  lepton_object_page_set_changed (obj);
-
-  return obj_s;
-}
-
 /*!
  * \brief Create the (lepton core object) Scheme module.
  * \par Function Description
@@ -1967,7 +1929,6 @@ init_module_lepton_core_object (void *unused)
                 s_picture_info,
                 s_set_picture_x,
                 s_set_picture_data_vector_x,
-                s_translate_object_x,
                 NULL);
 }
 

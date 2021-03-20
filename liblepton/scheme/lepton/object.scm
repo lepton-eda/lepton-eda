@@ -451,7 +451,7 @@ Returns OBJECT."
 
 (define-public (set-component-with-transform! c position angle mirror locked)
   (let ((obj (%set-component! c 0 0 0 #f locked)))
-    (%translate-object!
+    (translate-object!
       (rotate-object!
         (if mirror (mirror-object! obj 0) obj)
         0 0 angle)
@@ -576,7 +576,7 @@ actual bounds of the objects, not the visible bounds."
 
 (define-public (translate-objects! vector . objects)
   (for-each
-   (lambda (x) (%translate-object! x (car vector) (cdr vector)))
+   (lambda (x) (translate-object! x (car vector) (cdr vector)))
    objects)
   objects)
 
@@ -675,3 +675,16 @@ nothing.  Returns OBJECT."
     (lepton_object_page_set_changed pointer)
 
     object))
+
+;;; Translate OBJECT by DX in the x-axis and DY in the y-axis.  DX
+;;; and DY are integer distances along corresponding axes.
+;;; Returns OBJECT.
+(define (translate-object! object dx dy)
+  (define pointer (geda-object->pointer* object 1))
+
+  (lepton_object_emit_pre_change_notify pointer)
+  (lepton_object_translate pointer dx dy)
+  (lepton_object_emit_change_notify pointer)
+  (lepton_object_page_set_changed pointer)
+
+  object)
