@@ -502,7 +502,7 @@ lepton_object_delete (LeptonObject *o_current)
  * \a object is destroyed, \a notify_func will be called with two
  * arguments: the \a object, and the \a user_data.
  *
- * \sa s_object_weak_unref
+ * \sa lepton_object_weak_unref
  *
  * \param [in,out] object     Object to weak-reference.
  * \param [in] notify_func    Weak reference notify function.
@@ -528,9 +528,9 @@ lepton_object_weak_ref (LeptonObject *object,
  * \param [in] user_data      Data to to search for.
  */
 void
-s_object_weak_unref (LeptonObject *object,
-                     void (*notify_func)(void *, void *),
-                     void *user_data)
+lepton_object_weak_unref (LeptonObject *object,
+                          void (*notify_func)(void *, void *),
+                          void *user_data)
 {
   g_return_if_fail (object != NULL);
   object->weak_refs = s_weakref_remove (object->weak_refs,

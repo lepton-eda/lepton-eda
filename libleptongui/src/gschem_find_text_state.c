@@ -314,7 +314,7 @@ clear_store (GschemFindTextState *state)
     if (G_VALUE_HOLDS_POINTER (&value)) {
       LeptonObject *object = (LeptonObject*) g_value_get_pointer (&value);
 
-      s_object_weak_unref (object, (NotifyFunc) object_weakref_cb, state);
+      lepton_object_weak_unref (object, (NotifyFunc) object_weakref_cb, state);
     }
 
     g_value_unset (&value);

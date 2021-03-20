@@ -270,8 +270,9 @@ smob_free (SCM smob)
   case GEDA_SMOB_OBJECT:
     /* See edascm_from_object() for an explanation of why LeptonObject
      * smobs store a LeptonToplevel in the second data word */
-    s_object_weak_unref ((LeptonObject *) data, smob_weakref2_notify,
-                         unpack_as_pointer (smob));
+    lepton_object_weak_unref ((LeptonObject *) data,
+                              smob_weakref2_notify,
+                              unpack_as_pointer (smob));
     break;
   case GEDA_SMOB_CONFIG:
     g_object_unref (G_OBJECT (data));
