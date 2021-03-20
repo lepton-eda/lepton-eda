@@ -513,7 +513,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
     value = o_attrib_search_attached_attribs_by_name (o_current, name, 0);
     if (value != NULL) {
       o_attrib_remove (&o_new->attribs, attr_new);
-      s_delete_object (attr_new);
+      lepton_object_delete (attr_new);
       iter->data = NULL;
     }
 
@@ -536,7 +536,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
 
   /* Replace old LeptonObject with new LeptonObject */
   s_page_replace (page, o_current, o_new);
-  s_delete_object (o_current);
+  lepton_object_delete (o_current);
 
   /* Select new LeptonObject */
   o_selection_add (page->selection_list, o_new);

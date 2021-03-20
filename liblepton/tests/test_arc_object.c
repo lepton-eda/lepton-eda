@@ -38,7 +38,7 @@ check_construction ()
     g_assert (object1 != object0);
     g_assert_cmpint (OBJ_ARC, ==, lepton_object_get_type (object1));
 
-    s_delete_object (object0);
+    lepton_object_delete (object0);
 
     g_assert_cmpint (center_x, ==, lepton_arc_object_get_center_x (object1));
     g_assert_cmpint (center_y, ==, lepton_arc_object_get_center_y (object1));
@@ -47,7 +47,7 @@ check_construction ()
     g_assert_cmpint (start_angle, ==, lepton_arc_object_get_start_angle (object1));
     g_assert_cmpint (sweep_angle, ==, lepton_arc_object_get_sweep_angle (object1));
 
-    s_delete_object (object1);
+    lepton_object_delete (object1);
   }
 
   s_toplevel_delete (toplevel);
@@ -98,7 +98,7 @@ check_accessors ()
     g_assert_cmpint (start_angle, ==, lepton_arc_object_get_start_angle (object0));
     g_assert_cmpint (sweep_angle, ==, lepton_arc_object_get_sweep_angle (object0));
 
-    s_delete_object (object0);
+    lepton_object_delete (object0);
   }
 
   s_toplevel_delete (toplevel);
@@ -133,7 +133,7 @@ check_serialization ()
     g_assert (object0 != NULL);
 
     gchar *buffer0 = lepton_arc_object_to_buffer (object0);
-    s_delete_object (object0);
+    lepton_object_delete (object0);
     g_assert (buffer0 != NULL);
 
     LeptonObject *object1 = o_arc_read (buffer0,
@@ -151,7 +151,7 @@ check_serialization ()
     g_assert_cmpint (sweep_angle, ==, lepton_arc_object_get_sweep_angle (object1));
 
     gchar *buffer1 = lepton_arc_object_to_buffer (object1);
-    s_delete_object (object1);
+    lepton_object_delete (object1);
     g_assert (buffer1 != NULL);
 
     g_assert_cmpstr (buffer0, ==, buffer1);

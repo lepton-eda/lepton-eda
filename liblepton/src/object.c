@@ -418,7 +418,7 @@ lepton_object_copy (LeptonObject *object)
  *
  */
 void
-s_delete_object (LeptonObject *o_current)
+lepton_object_delete (LeptonObject *o_current)
 {
   if (o_current != NULL) {
     /* If currently attached to a page, remove it from the page */

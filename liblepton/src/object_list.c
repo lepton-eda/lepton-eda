@@ -163,7 +163,7 @@ lepton_object_list_delete (GList *objects)
   /* do the delete backwards */
   while(ptr != NULL) {
     o_current = (LeptonObject *) ptr->data;
-    s_delete_object (o_current);
+    lepton_object_delete (o_current);
     ptr = g_list_previous (ptr);
   }
   g_list_free(objects);

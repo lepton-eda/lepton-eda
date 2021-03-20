@@ -147,7 +147,7 @@ LeptonObject*
 lepton_object_copy (LeptonObject *object);
 
 void
-s_delete_object (LeptonObject *o_current);
+lepton_object_delete (LeptonObject *o_current);
 
 /* methods */
 

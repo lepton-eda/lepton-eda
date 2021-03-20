@@ -300,7 +300,7 @@ smob_free (SCM smob)
                  __FUNCTION__, data);
       break;
     case GEDA_SMOB_OBJECT:
-      s_delete_object ((LeptonObject *) data);
+      lepton_object_delete ((LeptonObject *) data);
       break;
     case GEDA_SMOB_CONFIG:
       /* These are reference counted, so the structure will have

@@ -60,7 +60,7 @@ check_construction ()
     g_assert (object1 != object0);
     g_assert_cmpint (OBJ_TEXT, ==, lepton_object_get_type (object1));
 
-    s_delete_object (object0);
+    lepton_object_delete (object0);
 
     g_assert_cmpint (x, ==, lepton_text_object_get_x (object1));
     g_assert_cmpint (y, ==, lepton_text_object_get_y (object1));
@@ -71,7 +71,7 @@ check_construction ()
     g_assert_cmpint (visible, ==, lepton_object_get_visible (object1));
     g_assert_cmpstr (string, ==, lepton_text_object_get_string (object1));
 
-    s_delete_object (object1);
+    lepton_object_delete (object1);
   }
 
   s_toplevel_delete (toplevel);
@@ -141,7 +141,7 @@ check_accessors ()
     g_assert_cmpint (x, ==, temp_x);
     g_assert_cmpint (y, ==, temp_y);
 
-    s_delete_object (object0);
+    lepton_object_delete (object0);
   }
 
   s_toplevel_delete (toplevel);
@@ -182,7 +182,7 @@ check_serialization ()
     g_assert (object0 != NULL);
 
     gchar *buffer0 = lepton_text_object_to_buffer (object0);
-    s_delete_object (object0);
+    lepton_object_delete (object0);
     g_assert (buffer0 != NULL);
 
     TextBuffer *tb = s_textbuffer_new (buffer0, -1,
@@ -208,7 +208,7 @@ check_serialization ()
     g_assert_cmpstr (string, ==, lepton_text_object_get_string (object1));
 
     gchar *buffer1 = lepton_text_object_to_buffer (object1);
-    s_delete_object (object1);
+    lepton_object_delete (object1);
     g_assert (buffer1 != NULL);
 
     g_assert_cmpstr (buffer0, ==, buffer1);

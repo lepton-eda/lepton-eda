@@ -672,7 +672,7 @@ o_net_consolidate_segments (LeptonObject *object)
             }
           }
 
-          s_delete_object (other_object);
+          lepton_object_delete (other_object);
           s_conn_update_object (page, object);
           return(-1);
         }

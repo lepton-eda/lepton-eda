@@ -448,7 +448,7 @@ o_component_remove_promotable_attribs (LeptonObject *object)
     } else {                                /* Delete promotable attributes */
       object->component->prim_objs =
         g_list_remove (object->component->prim_objs, a_object);
-      s_delete_object (a_object);
+      lepton_object_delete (a_object);
     }
   }
 

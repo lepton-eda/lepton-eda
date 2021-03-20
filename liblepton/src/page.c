@@ -187,7 +187,7 @@ s_page_delete (LeptonToplevel *toplevel,
    * deleting objects from the current page.
    *
    * These functions are known to include:
-   *   s_delete_object ()
+   *   lepton_object_delete ()
    */
 
   /* save page_current and switch to page */
