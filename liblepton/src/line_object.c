@@ -39,7 +39,7 @@
  *  The <B>color</B> parameter corresponds to the color the box
  *  will be drawn with.
  *
- *  The #LeptonObject structure is allocated with the #s_basic_new_object()
+ *  The #LeptonObject structure is allocated with the #lepton_object_new()
  *  function. The structure describing the line is allocated and
  *  initialized with the parameters given to the function.
  *
@@ -66,7 +66,7 @@ lepton_line_object_new (gint color,
   LeptonObject *new_node;
 
   /* create the object */
-  new_node = s_basic_new_object (OBJ_LINE, "line");
+  new_node = lepton_object_new (OBJ_LINE, "line");
   lepton_object_set_color (new_node, color);
 
   new_node->line  = lepton_line_new ();

@@ -425,7 +425,7 @@ lepton_text_object_new (gint color,
 
   g_return_val_if_fail (string != NULL, NULL);
 
-  new_node = s_basic_new_object (OBJ_TEXT, "text");
+  new_node = lepton_object_new (OBJ_TEXT, "text");
 
   text = (LeptonText *) g_malloc (sizeof (LeptonText));
 

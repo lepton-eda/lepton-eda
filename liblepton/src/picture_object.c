@@ -582,7 +582,7 @@ LeptonObject *o_picture_new (const gchar *file_content,
   LeptonPicture *picture;
 
   /* create the object */
-  new_node = s_basic_new_object(type, "picture");
+  new_node = lepton_object_new (type, "picture");
 
   picture = lepton_picture_new ();
   new_node->picture = picture;
@@ -1007,7 +1007,7 @@ o_picture_copy (LeptonObject *object)
   LeptonPicture *picture;
 
   /* create the object */
-  new_node = s_basic_new_object (lepton_object_get_type (object), "picture");
+  new_node = lepton_object_new (lepton_object_get_type (object), "picture");
 
   picture = (LeptonPicture*) g_malloc (sizeof (LeptonPicture));
   new_node->picture = picture;

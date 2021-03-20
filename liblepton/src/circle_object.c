@@ -41,7 +41,7 @@
  *  The <B>type</B> parameter must be equal to <B>OBJ_CIRCLE</B>. The <B>color</B>
  *  corresponds to the color the box will be drawn with.
  *
- *  The <B>LeptonObject</B> structure is allocated with the #s_basic_new_object()
+ *  The <B>LeptonObject</B> structure is allocated with the #lepton_object_new()
  *  function. The structure describing the circle is allocated and initialized
  *  with the parameters given to the function.
  *
@@ -64,7 +64,7 @@ lepton_circle_object_new (gint color,
   LeptonObject *new_node;
 
   /* create the object */
-  new_node = s_basic_new_object (OBJ_CIRCLE, "circle");
+  new_node = lepton_object_new (OBJ_CIRCLE, "circle");
   lepton_object_set_color (new_node, color);
 
   new_node->circle = lepton_circle_new ();

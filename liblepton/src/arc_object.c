@@ -52,7 +52,7 @@ lepton_arc_object_new (gint color,
 
   LeptonObject *new_node;
 
-  new_node = s_basic_new_object (OBJ_ARC, "arc");
+  new_node = lepton_object_new (OBJ_ARC, "arc");
 
   lepton_object_set_color (new_node, color);
 

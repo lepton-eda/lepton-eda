@@ -1448,7 +1448,8 @@ lepton_object_calculate_visible_bounds (LeptonObject *o_current,
  *  \return A pointer to the fully constructed #LeptonObject.
  */
 LeptonObject*
-s_basic_new_object (int type, char const *name)
+lepton_object_new (int type,
+                   char const *name)
 {
   LeptonObject* new_node = g_new0 (LeptonObject, 1);
 

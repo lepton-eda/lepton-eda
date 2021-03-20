@@ -290,7 +290,7 @@ lepton_pin_object_new (int color,
 {
   LeptonObject *new_node;
 
-  new_node = s_basic_new_object(OBJ_PIN, "pin");
+  new_node = lepton_object_new (OBJ_PIN, "pin");
   lepton_object_set_color (new_node, color);
 
   new_node->line = lepton_line_new ();

@@ -141,8 +141,8 @@ lepton_object_is_text (const LeptonObject *object);
 /* construction, destruction */
 
 LeptonObject*
-s_basic_new_object (int type, char const *prefix);
-
+lepton_object_new (int type,
+                   char const *prefix);
 LeptonObject*
 o_object_copy (LeptonObject *selected);
 

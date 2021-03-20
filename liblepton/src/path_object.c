@@ -41,7 +41,7 @@
  *  The path shape is created by parsing \a path_string.
  *
  *  The #LeptonObject structure is allocated with the
- *  #s_basic_new_object() function. The structure describing the
+ *  #lepton_object_new() function. The structure describing the
  *  path is allocated and initialized with the parameters given to
  *  the function.
  *
@@ -89,7 +89,7 @@ lepton_path_object_new_take_path (char type,
   LeptonObject *new_node;
 
   /* create the object */
-  new_node        = s_basic_new_object (type, "path");
+  new_node        = lepton_object_new (type, "path");
   lepton_object_set_color (new_node, color);
 
   new_node->path  = path_data;

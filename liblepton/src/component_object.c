@@ -722,7 +722,7 @@ o_component_new (LeptonPage *page,
   GList *iter;
   gchar *buffer = NULL;
 
-  new_node = s_basic_new_object(type, "complex");
+  new_node = lepton_object_new (type, "complex");
 
   if (clib != NULL) {
     new_node->component_basename = g_strdup (s_clib_symbol_get_name (clib));
@@ -813,7 +813,7 @@ o_component_new_embedded (char type,
 {
   LeptonObject *new_node=NULL;
 
-  new_node = s_basic_new_object(type, "complex");
+  new_node = lepton_object_new (type, "complex");
 
   new_node->component = (LeptonComponent *) g_malloc (sizeof (LeptonComponent));
   new_node->component->x = x;
@@ -1011,7 +1011,7 @@ o_component_copy (LeptonObject *o_current)
   g_return_val_if_fail (lepton_object_is_component (o_current), NULL);
   g_return_val_if_fail (o_current->component != NULL, NULL);
 
-  o_new = s_basic_new_object (lepton_object_get_type (o_current), "complex");
+  o_new = lepton_object_new (lepton_object_get_type (o_current), "complex");
   o_new->selectable = o_current->selectable;
   o_new->component_basename = g_strdup(o_current->component_basename);
 

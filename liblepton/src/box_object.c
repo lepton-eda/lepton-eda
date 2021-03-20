@@ -36,7 +36,7 @@
  *  its lower right corner - <B>x2</B>, <B>y2</B>.
  *  The <B>type</B> parameter must be equal to <B>OBJ_BOX</B>. The <B>color</B>
  *  corresponds to the color the box will be drawn with.
- *  The <B>LeptonObject</B> structure is allocated with the #s_basic_new_object()
+ *  The <B>LeptonObject</B> structure is allocated with the #lepton_object_new()
  *  function. The structure describing the box is allocated and initialized
  *  with the parameters given to the function.
  *
@@ -64,7 +64,7 @@ lepton_box_object_new (char type,
   LeptonBox *box;
 
   /* create the object */
-  new_node = s_basic_new_object(type, "box");
+  new_node = lepton_object_new (type, "box");
   lepton_object_set_color (new_node, color);
 
   box = lepton_box_new ();
