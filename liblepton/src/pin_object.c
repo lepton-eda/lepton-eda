@@ -717,5 +717,5 @@ lepton_pin_object_set_type (LeptonObject *o_current,
       o_current->pin_type = PIN_TYPE_BUS;
       break;
   }
-  o_emit_change_notify (o_current);
+  lepton_object_emit_change_notify (o_current);
 }

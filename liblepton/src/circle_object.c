@@ -273,7 +273,7 @@ lepton_circle_object_modify (LeptonObject *object,
       break;
   }
 
-  o_emit_change_notify (object);
+  lepton_object_emit_change_notify (object);
 }
 
 /*! \brief Create circle LeptonObject from character string.

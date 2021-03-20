@@ -170,7 +170,7 @@ lepton_box_object_modify_all (LeptonObject *object,
   object->box->upper_x = (x1 > x2) ? x2 : x1;
   object->box->upper_y = (y1 > y2) ? y1 : y2;
 
-  o_emit_change_notify (object);
+  lepton_object_emit_change_notify (object);
 }
 
 /*! \brief Modify a box LeptonObject's coordinates.
@@ -245,7 +245,7 @@ lepton_box_object_modify (LeptonObject *object,
     object->box->lower_y = tmp;
   }
 
-  o_emit_change_notify (object);
+  lepton_object_emit_change_notify (object);
 
 }
 

@@ -326,7 +326,7 @@ lepton_line_object_modify (LeptonObject *object,
       return;
   }
 
-  o_emit_change_notify (object);
+  lepton_object_emit_change_notify (object);
 }
 
 /*! \brief Create line LeptonObject from character string.

@@ -72,7 +72,7 @@ object_added (LeptonPage *page,
   /* Update object connection tracking */
   s_conn_update_object (page, object);
 
-  o_emit_change_notify (object);
+  lepton_object_emit_change_notify (object);
 }
 
 /* Called just before removing an LeptonObject from a LeptonPage. */

@@ -637,7 +637,7 @@ lepton_object_set_line_options (LeptonObject *o_current,
   o_current->line_length = length;
   o_current->line_space  = space;
 
-  o_emit_change_notify (o_current);
+  lepton_object_emit_change_notify (o_current);
 
 }
 
@@ -749,7 +749,7 @@ lepton_object_set_fill_options (LeptonObject *o_current,
   o_current->fill_pitch2 = pitch2;
   o_current->fill_angle2 = angle2;
 
-  o_emit_change_notify (o_current);
+  lepton_object_emit_change_notify (o_current);
 }
 
 /*! \brief get #LeptonObject's fill properties.
@@ -1225,7 +1225,7 @@ lepton_object_emit_pre_change_notify (LeptonObject *object)
  * \param object   #LeptonObject structure to emit notifications for.
  */
 void
-o_emit_change_notify (LeptonObject *object)
+lepton_object_emit_change_notify (LeptonObject *object)
 {
   GList *iter;
 

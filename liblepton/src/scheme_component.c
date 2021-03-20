@@ -161,7 +161,7 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
   obj->component->mirror = scm_is_true (mirror_s);
   obj->selectable = scm_is_false (locked_s);
 
-  o_emit_change_notify (obj);
+  lepton_object_emit_change_notify (obj);
 
   lepton_object_page_set_changed (obj);
 
@@ -288,7 +288,7 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
     s_conn_update_object (parent_page, child);
   }
 
-  o_emit_change_notify (parent);
+  lepton_object_emit_change_notify (parent);
 
   lepton_object_page_set_changed (parent);
 
@@ -364,7 +364,7 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
   s_conn_remove_object (child_page, child);
   s_conn_remove_object_connections (child);
 
-  o_emit_change_notify (parent);
+  lepton_object_emit_change_notify (parent);
 
   lepton_object_page_set_changed (parent);
 

@@ -348,7 +348,7 @@ lepton_arc_object_modify (LeptonObject *object,
   }
 
   /* update the screen coords and the bounding box */
-  o_emit_change_notify (object);
+  lepton_object_emit_change_notify (object);
 }
 
 /*! \brief

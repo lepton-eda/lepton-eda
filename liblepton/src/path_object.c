@@ -374,7 +374,7 @@ lepton_path_object_modify (LeptonObject *object,
     }
   }
 
-  o_emit_change_notify (object);
+  lepton_object_emit_change_notify (object);
 }
 
 

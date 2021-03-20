@@ -220,7 +220,7 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
   /* Carry out the attachment */
   lepton_object_emit_pre_change_notify (attrib);
   o_attrib_attach (attrib, obj, TRUE);
-  o_emit_change_notify (attrib);
+  lepton_object_emit_change_notify (attrib);
 
   lepton_object_page_set_changed (obj);
 
@@ -269,7 +269,7 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
   lepton_object_emit_pre_change_notify (attrib);
   o_attrib_remove (&obj->attribs, attrib);
   lepton_object_set_color (attrib, DETACHED_ATTRIBUTE_COLOR);
-  o_emit_change_notify (attrib);
+  lepton_object_emit_change_notify (attrib);
 
   lepton_object_page_set_changed (obj);
 

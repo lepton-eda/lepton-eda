@@ -23,7 +23,7 @@ LeptonObject *o_attrib_find_attrib_by_name (const GList *list, const char *name,
 
 /* object.c */
 void lepton_object_emit_pre_change_notify (LeptonObject *object);
-void o_emit_change_notify (LeptonObject *object);
+void lepton_object_emit_change_notify (LeptonObject *object);
 
 /* o_selection.c */
 void o_selection_select (LeptonObject *object);

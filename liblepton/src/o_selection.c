@@ -119,7 +119,7 @@ o_selection_select (LeptonObject *object)
 
   lepton_object_emit_pre_change_notify (object);
   object->selected = TRUE;
-  o_emit_change_notify (object);
+  lepton_object_emit_change_notify (object);
 }
 
 /*! \brief Unselects the given object.
@@ -137,5 +137,5 @@ o_selection_unselect (LeptonObject *object)
 
   lepton_object_emit_pre_change_notify (object);
   object->selected = FALSE;
-  o_emit_change_notify (object);
+  lepton_object_emit_change_notify (object);
 }

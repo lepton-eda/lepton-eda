@@ -1592,7 +1592,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   obj->visibility = visibility;
   obj->show_name_value = show;
 
-  o_emit_change_notify (obj);
+  lepton_object_emit_change_notify (obj);
 
   char *tmp = scm_to_utf8_string (string_s);
   o_text_set_string (obj, tmp);
@@ -1912,7 +1912,7 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
     obj->path->num_sections--;
   }
 
-  o_emit_change_notify (obj);
+  lepton_object_emit_change_notify (obj);
   lepton_object_page_set_changed (obj);
 
   return obj_s;
@@ -2028,7 +2028,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   path->num_sections++;
   path->sections[idx] = section;
 
-  o_emit_change_notify (obj);
+  lepton_object_emit_change_notify (obj);
   lepton_object_page_set_changed (obj);
 
   return obj_s;
@@ -2156,7 +2156,7 @@ SCM_DEFINE (set_picture_x, "%set-picture!", 7, 0, 0,
                         scm_to_int (x1_s), scm_to_int (y1_s),
                         scm_to_int (x2_s), scm_to_int (y2_s));
 
-  o_emit_change_notify (obj);
+  lepton_object_emit_change_notify (obj);
   return obj_s;
 }
 
@@ -2260,7 +2260,7 @@ SCM_DEFINE (translate_object_x, "%translate-object!", 3, 0, 0,
 
   lepton_object_emit_pre_change_notify (obj);
   lepton_object_translate (obj, dx, dy);
-  o_emit_change_notify (obj);
+  lepton_object_emit_change_notify (obj);
   lepton_object_page_set_changed (obj);
 
   return obj_s;
@@ -2310,7 +2310,7 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
 
   lepton_object_emit_pre_change_notify (obj);
   lepton_object_rotate (x, y, angle, obj);
-  o_emit_change_notify (obj);
+  lepton_object_emit_change_notify (obj);
   lepton_object_page_set_changed (obj);
 
   return obj_s;
@@ -2342,7 +2342,7 @@ SCM_DEFINE (mirror_object_x, "%mirror-object!", 2, 0, 0,
 
   lepton_object_emit_pre_change_notify (obj);
   lepton_object_mirror (x, 0, obj);
-  o_emit_change_notify (obj);
+  lepton_object_emit_change_notify (obj);
   lepton_object_page_set_changed (obj);
 
   return obj_s;

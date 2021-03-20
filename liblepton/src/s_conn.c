@@ -161,7 +161,7 @@ s_conn_remove_other (LeptonObject *other_object,
     c_current = g_list_next(c_current);
   }
 
-  o_emit_change_notify (other_object);
+  lepton_object_emit_change_notify (other_object);
 
   return (FALSE);
 }
@@ -422,7 +422,7 @@ s_conn_update_line_object (LeptonPage* page,
                           object->line->x[j],
                           object->line->y[j], k, j);
 
-          o_emit_change_notify (other_object);
+          lepton_object_emit_change_notify (other_object);
         }
       }
     }
