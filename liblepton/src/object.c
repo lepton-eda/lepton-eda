@@ -1123,10 +1123,10 @@ struct change_notify_entry {
  * \param user_data User data to be passed to callback functions.
  */
 void
-o_add_change_notify (LeptonToplevel *toplevel,
-                     ChangeNotifyFunc pre_change_func,
-                     ChangeNotifyFunc change_func,
-                     void *user_data)
+lepton_object_add_change_notify (LeptonToplevel *toplevel,
+                                 ChangeNotifyFunc pre_change_func,
+                                 ChangeNotifyFunc change_func,
+                                 void *user_data)
 {
   struct change_notify_entry *entry = g_new0 (struct change_notify_entry, 1);
   entry->pre_change_func = pre_change_func;
@@ -1143,7 +1143,7 @@ o_add_change_notify (LeptonToplevel *toplevel,
  * matches the given \a pre_change_func, \a change_func and \a
  * user_data, does nothing.
  *
- * \see o_add_change_notify()
+ * \see lepton_object_add_change_notify()
  *
  * \param toplevel #LeptonToplevel structure to remove handlers from.
  * \param pre_change_func Function called just before changes.

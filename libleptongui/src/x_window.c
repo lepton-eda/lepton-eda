@@ -994,9 +994,10 @@ GschemToplevel* x_window_new ()
   gschem_toplevel_set_toplevel (w_current, toplevel);
 
   /* Damage notifications should invalidate the object on screen */
-  o_add_change_notify (toplevel,
-                       (ChangeNotifyFunc) o_invalidate,
-                       (ChangeNotifyFunc) o_invalidate, w_current);
+  lepton_object_add_change_notify (toplevel,
+                                   (ChangeNotifyFunc) o_invalidate,
+                                   (ChangeNotifyFunc) o_invalidate,
+                                   w_current);
 
   /* Initialize tabbed GUI: */
   x_tabs_init();

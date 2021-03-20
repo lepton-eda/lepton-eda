@@ -251,11 +251,10 @@ void
 lepton_object_set_visibility (LeptonObject *object,
                               int visibility);
 void
-o_add_change_notify (LeptonToplevel *toplevel,
-                     ChangeNotifyFunc pre_change_func,
-                     ChangeNotifyFunc change_func,
-                     void *user_data);
-
+lepton_object_add_change_notify (LeptonToplevel *toplevel,
+                                 ChangeNotifyFunc pre_change_func,
+                                 ChangeNotifyFunc change_func,
+                                 void *user_data);
 void
 o_remove_change_notify (LeptonToplevel *toplevel,
                         ChangeNotifyFunc pre_change_func,
