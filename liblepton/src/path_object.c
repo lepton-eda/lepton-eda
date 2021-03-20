@@ -41,9 +41,9 @@
  *  The path shape is created by parsing \a path_string.
  *
  *  The #LeptonObject structure is allocated with the
- *  #s_basic_init_object() function. The structure describing
- *  the path is allocated and initialized with the parameters given
- *  to the function.
+ *  #s_basic_new_object() function. The structure describing the
+ *  path is allocated and initialized with the parameters given to
+ *  the function.
  *
  *  Both the path type and the filling type are set to default
  *  values : solid path type with a width of 0, and no filling.

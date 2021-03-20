@@ -331,24 +331,6 @@ lepton_object_set_selectable (LeptonObject *object,
   object->selectable = selectable;
 }
 
-static LeptonObject*
-s_basic_init_object (LeptonObject *new_node, int type, char const *name);
-
-/*! \brief Helper to allocate and initialise an object.
- *
- *  \par Function Description
- *  Allocates memory for an LeptonObject and then calls s_basic_init_object() on it.
- *
- *  \param [in] type      The sub-type of the object to create; one of the OBJ_* constants.
- *  \param [in] prefix    The name prefix for the session-unique object name.
- *  \return A pointer to the fully constructed LeptonObject.
- */
-LeptonObject*
-s_basic_new_object (int type, char const *prefix)
-{
-  return s_basic_init_object ((LeptonObject*) g_malloc(sizeof (LeptonObject)), type, prefix);
-}
-
 /*! \todo Finish documentation!!!!
  *  \brief
  *  \par Function Description
@@ -1455,19 +1437,21 @@ lepton_object_calculate_visible_bounds (LeptonObject *o_current,
   return 1;
 }
 
-/*! \private
- *  \brief Initialize an already-allocated object.
+
+/*! \brief Allocate and initialise an object.
  *  \par Function Description
- *  Initializes the members of the LeptonObject structure.
+ *  Allocates memory for an #LeptonObject and then initializes the
+ *  members of its structure.
  *
- *  \param [in] new_node  A pointer to an allocated LeptonObject
  *  \param [in] type      The object type; one of the OBJ_* constants.
  *  \param [in] name      A prefix for the object's session-unique name.
- *  \return A pointer to the initialized object.
+ *  \return A pointer to the fully constructed #LeptonObject.
  */
-static LeptonObject*
-s_basic_init_object (LeptonObject *new_node, int type, char const *name)
+LeptonObject*
+s_basic_new_object (int type, char const *name)
 {
+  LeptonObject* new_node = (LeptonObject*) g_malloc(sizeof (LeptonObject));
+
   /* setup sid */
   lepton_object_set_id (new_node, global_sid++);
   lepton_object_set_type (new_node, type);
