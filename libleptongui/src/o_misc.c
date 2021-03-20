@@ -322,7 +322,7 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
   while (iter != NULL) {
     o_current = (LeptonObject *)iter->data;
     if (lepton_object_is_text (o_current) &&
-        !o_is_visible (o_current))
+        !lepton_object_is_visible (o_current))
     {
 
       /* don't toggle the visibility flag */
@@ -386,7 +386,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
     {
       const gchar *str = lepton_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
-        if (o_is_visible (o_current)) {
+        if (lepton_object_is_visible (o_current)) {
           o_set_visibility (o_current, INVISIBLE);
           o_text_recreate (o_current);
 
@@ -421,7 +421,7 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
     {
       const gchar *str = lepton_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
-        if (!o_is_visible (o_current)) {
+        if (!lepton_object_is_visible (o_current)) {
           o_set_visibility (o_current, VISIBLE);
           o_text_recreate (o_current);
 

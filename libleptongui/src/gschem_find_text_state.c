@@ -375,7 +375,7 @@ find_objects_using_pattern (GSList *pages,
         continue;
       }
 
-      if (!(o_is_visible (object) || include_hidden)) {
+      if (!(lepton_object_is_visible (object) || include_hidden)) {
         continue;
       }
 
@@ -455,7 +455,7 @@ find_objects_using_regex (GSList *pages,
         continue;
       }
 
-      if (!(o_is_visible (object) || include_hidden)) {
+      if (!(lepton_object_is_visible (object) || include_hidden)) {
         continue;
       }
 
@@ -524,7 +524,7 @@ find_objects_using_substring (GSList *pages,
         continue;
       }
 
-      if (!(o_is_visible (object) || include_hidden)) {
+      if (!(lepton_object_is_visible (object) || include_hidden)) {
         continue;
       }
 

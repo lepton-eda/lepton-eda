@@ -256,7 +256,7 @@ o_component_is_eligible_attribute (LeptonObject *object)
   }
 
   /* object is invisible and we do not want to promote invisible text */
-  if ((!o_is_visible (object)) &&
+  if ((!lepton_object_is_visible (object)) &&
       (promote_invisible == FALSE))
     return FALSE; /* attribute not eligible for promotion */
 

@@ -1259,7 +1259,7 @@ o_emit_change_notify (LeptonObject *object)
  *  \return TRUE when VISIBLE, FALSE otherwise
  */
 gboolean
-o_is_visible (const LeptonObject *object)
+lepton_object_is_visible (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   return object->visibility == VISIBLE;
@@ -1319,7 +1319,7 @@ lepton_object_calculate_visible_bounds (LeptonObject *o_current,
   /* only do bounding boxes for visible or doing show_hidden_text*/
   /* you might lose some attrs though */
   if (lepton_object_is_text (o_current) &&
-      ! (o_is_visible (o_current) || include_hidden)) {
+      ! (lepton_object_is_visible (o_current) || include_hidden)) {
     return 0;
   }
 

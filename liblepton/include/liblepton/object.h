@@ -226,7 +226,7 @@ LeptonObject*
 lepton_object_get_parent (LeptonObject *object);
 
 gboolean
-o_is_visible (const LeptonObject *object);
+lepton_object_is_visible (const LeptonObject *object);
 
 void
 lepton_object_set_color (LeptonObject *object,
