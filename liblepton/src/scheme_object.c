@@ -338,8 +338,12 @@ SCM_DEFINE (object_stroke, "%object-stroke", 1, 0, 0,
   LeptonObject *obj = edascm_to_object (obj_s);
 
   int end, type, width, length, space;
-  o_get_line_options (obj, (LeptonLineCapType *) &end, (LeptonLineType *) &type, &width,
-                      &length, &space);
+  lepton_object_get_line_options (obj,
+                                  (LeptonLineCapType *) &end,
+                                  (LeptonLineType *) &type,
+                                  &width,
+                                  &length,
+                                  &space);
 
   SCM width_s = scm_from_int (width);
   SCM length_s = scm_from_int (length);

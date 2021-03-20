@@ -657,12 +657,12 @@ o_set_line_options (LeptonObject *o_current,
  *
  */
 gboolean
-o_get_line_options (LeptonObject *object,
-                    LeptonLineCapType *end,
-                    LeptonLineType *type,
-                    int *width,
-                    int *length,
-                    int *space)
+lepton_object_get_line_options (LeptonObject *object,
+                                LeptonLineCapType *end,
+                                LeptonLineType *type,
+                                int *width,
+                                int *length,
+                                int *space)
 {
   if (!lepton_object_is_line (object)
       && !lepton_object_is_arc (object)

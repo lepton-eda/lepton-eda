@@ -210,13 +210,12 @@ lepton_object_get_fill_options (LeptonObject *object,
                                 int *pitch2,
                                 int *angle2);
 gboolean
-o_get_line_options (LeptonObject *object,
-                    LeptonLineCapType *end,
-                    LeptonLineType *type,
-                    int *width,
-                    int *length,
-                    int *space);
-
+lepton_object_get_line_options (LeptonObject *object,
+                                LeptonLineCapType *end,
+                                LeptonLineType *type,
+                                int *width,
+                                int *length,
+                                int *space);
 LeptonPage*
 o_get_page (LeptonObject *object);
 
