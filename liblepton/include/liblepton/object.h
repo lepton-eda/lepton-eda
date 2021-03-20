@@ -272,6 +272,7 @@ void
 lepton_object_add_weak_ptr (LeptonObject *object,
                             void *weak_pointer_loc);
 void
-s_object_remove_weak_ptr (LeptonObject *object, void *weak_pointer_loc);
+lepton_object_remove_weak_ptr (LeptonObject *object,
+                               void *weak_pointer_loc);
 
 G_END_DECLS

@@ -543,7 +543,7 @@ lepton_object_weak_unref (LeptonObject *object,
  * value of \a weak_pointer_loc will be set to NULL when \a object is
  * destroyed.
  *
- * \sa s_object_remove_weak_ptr
+ * \sa lepton_object_remove_weak_ptr
  *
  * \param [in,out] object        Object to weak-reference.
  * \param [in] weak_pointer_loc  Memory address of a pointer.
@@ -567,8 +567,8 @@ lepton_object_add_weak_ptr (LeptonObject *object,
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
 void
-s_object_remove_weak_ptr (LeptonObject *object,
-                          void *weak_pointer_loc)
+lepton_object_remove_weak_ptr (LeptonObject *object,
+                               void *weak_pointer_loc)
 {
   g_return_if_fail (object != NULL);
   object->weak_refs = s_weakref_remove_ptr (object->weak_refs,
