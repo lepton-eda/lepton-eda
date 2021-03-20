@@ -1151,10 +1151,10 @@ lepton_object_add_change_notify (LeptonToplevel *toplevel,
  * \param user_data User data passed to callback functions.
  */
 void
-o_remove_change_notify (LeptonToplevel *toplevel,
-                        ChangeNotifyFunc pre_change_func,
-                        ChangeNotifyFunc change_func,
-                        void *user_data)
+lepton_object_remove_change_notify (LeptonToplevel *toplevel,
+                                    ChangeNotifyFunc pre_change_func,
+                                    ChangeNotifyFunc change_func,
+                                    void *user_data)
 {
   GList *iter;
   for (iter = toplevel->change_notify_funcs;
