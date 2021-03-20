@@ -42,7 +42,7 @@
  *
  *  Both the line type and the filling type are set to default values : solid
  *  line type with a width of 0, and no filling. It can be changed after
- *  with the #o_set_line_options() and #o_set_fill_options().
+ *  with the #o_set_line_options() and #lepton_object_set_fill_options().
  *
  *  \param [in]     type         Box type.
  *  \param [in]     color        Box border color.
@@ -84,8 +84,13 @@ lepton_box_object_new (char type,
                       -1,
                       -1);
 
-  o_set_fill_options (new_node,
-                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
+  lepton_object_set_fill_options (new_node,
+                                  FILLING_HOLLOW,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1);
 
   return new_node;
 }
@@ -122,10 +127,13 @@ lepton_box_object_copy (LeptonObject *o_current)
   o_set_line_options (new_obj, o_current->line_end,
                       o_current->line_type, o_current->line_width,
                       o_current->line_length, o_current->line_space);
-  o_set_fill_options (new_obj,
-                      o_current->fill_type, o_current->fill_width,
-                      o_current->fill_pitch1, o_current->fill_angle1,
-                      o_current->fill_pitch2, o_current->fill_angle2);
+  lepton_object_set_fill_options (new_obj,
+                                  o_current->fill_type,
+                                  o_current->fill_width,
+                                  o_current->fill_pitch1,
+                                  o_current->fill_angle1,
+                                  o_current->fill_pitch2,
+                                  o_current->fill_angle2);
 
   return new_obj;
 }
@@ -356,10 +364,13 @@ o_box_read (const char buf[],
                       box_length,
                       box_space);
   /* set its fill options */
-  o_set_fill_options (new_obj,
-                      (LeptonFillType) box_filling,
-                      fill_width,
-                      pitch1, angle1, pitch2, angle2);
+  lepton_object_set_fill_options (new_obj,
+                                  (LeptonFillType) box_filling,
+                                  fill_width,
+                                  pitch1,
+                                  angle1,
+                                  pitch2,
+                                  angle2);
 
   return new_obj;
 }

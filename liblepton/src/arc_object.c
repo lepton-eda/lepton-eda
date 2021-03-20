@@ -89,8 +89,13 @@ lepton_arc_object_new (gint color,
                       -1,
                       -1);
 
-  o_set_fill_options (new_node,
-                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
+  lepton_object_set_fill_options (new_node,
+                                  FILLING_HOLLOW,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1);
 
   return new_node;
 }
@@ -122,13 +127,13 @@ lepton_arc_object_copy (const LeptonObject *object)
                       object->line_length,
                       object->line_space);
 
-  o_set_fill_options (new_object,
-                      FILLING_HOLLOW,
-                      -1,
-                      -1,
-                      -1,
-                      -1,
-                      -1);
+  lepton_object_set_fill_options (new_object,
+                                  FILLING_HOLLOW,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1);
 
   return new_object;
 }
@@ -359,8 +364,10 @@ lepton_arc_object_modify (LeptonObject *object,
  *  To get information on the various file formats have a
  *  look to the fileformats.html document.
  *
- *  The object is initialized with the functions #o_set_line_options() and #o_set_fill_options().
- *  The second one is only used to put initialize unused values for an arc as an arc can not be filled.
+ *  The object is initialized with the functions
+ *  #o_set_line_options() and #lepton_object_set_fill_options().
+ *  The second one is only used to put initialize unused values
+ *  for an arc as an arc can not be filled.
  *
  *  The arc is allocated initialized with the function
  *  #lepton_arc_object_new().
@@ -443,8 +450,13 @@ LeptonObject
                       arc_width,
                       arc_length,
                       arc_space);
-  o_set_fill_options (new_obj,
-                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
+  lepton_object_set_fill_options (new_obj,
+                                  FILLING_HOLLOW,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1);
 
   return new_obj;
 }

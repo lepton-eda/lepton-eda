@@ -47,7 +47,7 @@
  *
  *  Both the line type and the filling type are set to default values : solid
  *  line type with a width of 0, and no filling. It can be changed after
- *  with #o_set_line_options() and #o_set_fill_options().
+ *  with #o_set_line_options() and #lepton_object_set_fill_options().
  *
  *  \param [in]     color        Circle line color.
  *  \param [in]     center_x     Center x coordinate.
@@ -82,13 +82,13 @@ lepton_circle_object_new (gint color,
                       -1,
                       -1);
 
-  o_set_fill_options (new_node,
-                      FILLING_HOLLOW,
-                      -1,
-                      -1,
-                      -1,
-                      -1,
-                      -1);
+  lepton_object_set_fill_options (new_node,
+                                  FILLING_HOLLOW,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1);
 
   return new_node;
 }
@@ -122,13 +122,13 @@ lepton_circle_object_copy (const LeptonObject *object)
                       object->line_length,
                       object->line_space);
 
-  o_set_fill_options (new_obj,
-                      object->fill_type,
-                      object->fill_width,
-                      object->fill_pitch1,
-                      object->fill_angle1,
-                      object->fill_pitch2,
-                      object->fill_angle2);
+  lepton_object_set_fill_options (new_obj,
+                                  object->fill_type,
+                                  object->fill_width,
+                                  object->fill_pitch1,
+                                  object->fill_angle1,
+                                  object->fill_pitch2,
+                                  object->fill_angle2);
 
   return new_obj;
 }
@@ -380,13 +380,13 @@ o_circle_read (const char buf[],
                       circle_width,
                       circle_length,
                       circle_space);
-  o_set_fill_options (new_obj,
-                      (LeptonFillType) circle_fill,
-                      fill_width,
-                      pitch1,
-                      angle1,
-                      pitch2,
-                      angle2);
+  lepton_object_set_fill_options (new_obj,
+                                  (LeptonFillType) circle_fill,
+                                  fill_width,
+                                  pitch1,
+                                  angle1,
+                                  pitch2,
+                                  angle2);
 
   return new_obj;
 }

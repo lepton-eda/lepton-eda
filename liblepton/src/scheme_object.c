@@ -637,13 +637,13 @@ SCM_DEFINE (set_object_fill_x, "%set-object-fill!", 2, 5, 0,
     /* This case intentionally falls through */
   }
 
-  o_set_fill_options (obj,
-                      (LeptonFillType) type,
-                      width,
-                      space1,
-                      angle1,
-                      space2,
-                      angle2);
+  lepton_object_set_fill_options (obj,
+                                  (LeptonFillType) type,
+                                  width,
+                                  space1,
+                                  angle1,
+                                  space2,
+                                  angle2);
   lepton_object_page_set_changed (obj);
 
   return obj_s;

@@ -48,7 +48,7 @@
  *  Both the path type and the filling type are set to default
  *  values : solid path type with a width of 0, and no filling.
  *  It can be changed after with the #o_set_line_options() and
- *  #o_set_fill_options().
+ *  #lepton_object_set_fill_options().
  *
  *  The object is added to the end of the list described by the
  *  <B>object_list</B> parameter by the #s_basic_link_object().
@@ -102,8 +102,13 @@ lepton_path_object_new_take_path (char type,
                       -1,
                       -1);
 
-  o_set_fill_options (new_node,
-                      FILLING_HOLLOW, -1, -1, -1, -1, -1);
+  lepton_object_set_fill_options (new_node,
+                                  FILLING_HOLLOW,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1,
+                                  -1);
 
   return new_node;
 }
@@ -135,10 +140,13 @@ lepton_path_object_copy (LeptonObject *o_current)
   o_set_line_options (new_obj, o_current->line_end,
                       o_current->line_type, o_current->line_width,
                       o_current->line_length, o_current->line_space);
-  o_set_fill_options (new_obj,
-                      o_current->fill_type, o_current->fill_width,
-                      o_current->fill_pitch1, o_current->fill_angle1,
-                      o_current->fill_pitch2, o_current->fill_angle2);
+  lepton_object_set_fill_options (new_obj,
+                                  o_current->fill_type,
+                                  o_current->fill_width,
+                                  o_current->fill_pitch1,
+                                  o_current->fill_angle1,
+                                  o_current->fill_pitch2,
+                                  o_current->fill_angle2);
 
   /* return the new tail of the object list */
   return new_obj;
@@ -242,13 +250,13 @@ o_path_read (const char *first_line,
                       line_length,
                       line_space);
   /* set its fill options */
-  o_set_fill_options (new_obj,
-                      (LeptonFillType) fill_type,
-                      fill_width,
-                      pitch1,
-                      angle1,
-                      pitch2,
-                      angle2);
+  lepton_object_set_fill_options (new_obj,
+                                  (LeptonFillType) fill_type,
+                                  fill_width,
+                                  pitch1,
+                                  angle1,
+                                  pitch2,
+                                  angle2);
 
   return new_obj;
 }

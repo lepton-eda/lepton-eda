@@ -233,14 +233,13 @@ lepton_object_set_color (LeptonObject *object,
                          int color);
 
 void
-o_set_fill_options (LeptonObject *o_current,
-                    LeptonFillType type,
-                    int width,
-                    int pitch1,
-                    int angle1,
-                    int pitch2,
-                    int angle2);
-
+lepton_object_set_fill_options (LeptonObject *o_current,
+                                LeptonFillType type,
+                                int width,
+                                int pitch1,
+                                int angle1,
+                                int pitch2,
+                                int angle2);
 void
 o_set_line_options (LeptonObject *o_current,
                     LeptonLineCapType end,
