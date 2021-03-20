@@ -1271,7 +1271,7 @@ lepton_object_is_visible (const LeptonObject *object)
  *  \return VISIBLE or INVISIBLE
  */
 gint
-lepton_object_get_visible (const LeptonObject *object)
+lepton_object_get_visibility (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, VISIBLE);
 

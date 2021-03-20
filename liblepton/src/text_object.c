@@ -633,7 +633,7 @@ lepton_text_object_to_buffer (const LeptonObject *object)
                           lepton_text_object_get_y (object),
                           lepton_object_get_color (object),
                           lepton_text_object_get_size (object),
-                          lepton_object_get_visible (object),
+                          lepton_object_get_visibility (object),
                           object->show_name_value,
                           lepton_text_object_get_angle (object),
                           lepton_text_object_get_alignment (object),
@@ -698,7 +698,7 @@ lepton_text_object_copy (const LeptonObject *object)
                                     object->text->angle,
                                     object->text->string,
                                     object->text->size,
-                                    lepton_object_get_visible (object),
+                                    lepton_object_get_visibility (object),
                                     object->show_name_value);
 
   return new_obj;

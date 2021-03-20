@@ -172,7 +172,7 @@ gboolean
 lepton_object_get_selectable (const LeptonObject *object);
 
 gint
-lepton_object_get_visible (const LeptonObject *object);
+lepton_object_get_visibility (const LeptonObject *object);
 
 void
 lepton_object_rotate (int world_centerx,
