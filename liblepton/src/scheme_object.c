@@ -1738,7 +1738,7 @@ SCM_DEFINE (object_component, "%object-component", 1, 0, 0,
               SCM_ARG1, s_object_component);
 
   LeptonObject *obj = edascm_to_object (obj_s);
-  LeptonObject *parent = o_get_parent (obj);
+  LeptonObject *parent = lepton_object_get_parent (obj);
 
   if (parent == NULL) return SCM_BOOL_F;
 

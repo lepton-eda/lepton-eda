@@ -223,7 +223,7 @@ void
 lepton_object_page_set_changed (LeptonObject *object);
 
 LeptonObject*
-o_get_parent (LeptonObject *object);
+lepton_object_get_parent (LeptonObject *object);
 
 gboolean
 o_is_visible (const LeptonObject *object);

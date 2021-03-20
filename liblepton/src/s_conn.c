@@ -351,7 +351,7 @@ s_conn_update_line_object (LeptonPage* page,
   int j, k;
   LeptonObject *component, *other_component;
 
-  component = o_get_parent (object);
+  component = lepton_object_get_parent (object);
 
   /* loop over all connectible objects */
   for (object_list = page->connectible_list;
@@ -362,7 +362,7 @@ s_conn_update_line_object (LeptonPage* page,
     if (object == other_object)
       continue;
 
-    other_component = o_get_parent (other_object);
+    other_component = lepton_object_get_parent (other_object);
 
     /* An object inside a symbol can only be connected up to another
      * object if they are (a) both inside the same object, or (b)
