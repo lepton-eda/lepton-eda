@@ -1581,7 +1581,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   }
 
   /* Actually make changes */
-  o_emit_pre_change_notify (obj);
+  lepton_object_emit_pre_change_notify (obj);
 
   obj->text->x = scm_to_int (x_s);
   obj->text->y = scm_to_int (y_s);
@@ -1897,7 +1897,7 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
 
   }
 
-  o_emit_pre_change_notify (obj);
+  lepton_object_emit_pre_change_notify (obj);
 
   if (idx + 1 == obj->path->num_sections) {
     /* Section is last in path */
@@ -2005,7 +2005,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
   }
 
   /* Start making changes */
-  o_emit_pre_change_notify (obj);
+  lepton_object_emit_pre_change_notify (obj);
 
   /* Make sure there's enough space for the new element */
   if (path->num_sections == path->num_sections_max) {
@@ -2148,7 +2148,7 @@ SCM_DEFINE (set_picture_x, "%set-picture!", 7, 0, 0,
                     scm_list_1 (angle_s));
   }
 
-  o_emit_pre_change_notify (obj);
+  lepton_object_emit_pre_change_notify (obj);
 
   obj->picture->angle = scm_to_int (angle_s);
   obj->picture->mirrored = scm_is_true (mirror_s);
@@ -2258,7 +2258,7 @@ SCM_DEFINE (translate_object_x, "%translate-object!", 3, 0, 0,
   int dx = scm_to_int (dx_s);
   int dy = scm_to_int (dy_s);
 
-  o_emit_pre_change_notify (obj);
+  lepton_object_emit_pre_change_notify (obj);
   lepton_object_translate (obj, dx, dy);
   o_emit_change_notify (obj);
   lepton_object_page_set_changed (obj);
@@ -2308,7 +2308,7 @@ SCM_DEFINE (rotate_object_x, "%rotate-object!", 4, 0, 0,
   SCM_ASSERT (angle % 90 == 0, angle_s,
               SCM_ARG4, s_rotate_object_x);
 
-  o_emit_pre_change_notify (obj);
+  lepton_object_emit_pre_change_notify (obj);
   lepton_object_rotate (x, y, angle, obj);
   o_emit_change_notify (obj);
   lepton_object_page_set_changed (obj);
@@ -2340,7 +2340,7 @@ SCM_DEFINE (mirror_object_x, "%mirror-object!", 2, 0, 0,
   LeptonObject *obj = edascm_to_object (obj_s);
   int x = scm_to_int (x_s);
 
-  o_emit_pre_change_notify (obj);
+  lepton_object_emit_pre_change_notify (obj);
   lepton_object_mirror (x, 0, obj);
   o_emit_change_notify (obj);
   lepton_object_page_set_changed (obj);

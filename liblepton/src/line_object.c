@@ -309,7 +309,7 @@ lepton_line_object_modify (LeptonObject *object,
                            int y,
                            int whichone)
 {
-  o_emit_pre_change_notify (object);
+  lepton_object_emit_pre_change_notify (object);
 
   switch (whichone) {
     case LINE_END1:

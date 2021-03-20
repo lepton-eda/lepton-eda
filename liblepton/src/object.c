@@ -628,7 +628,7 @@ lepton_object_set_line_options (LeptonObject *o_current,
     break;
   }
 
-  o_emit_pre_change_notify (o_current);
+  lepton_object_emit_pre_change_notify (o_current);
 
   o_current->line_width = width;
   o_current->line_end   = end;
@@ -738,7 +738,7 @@ lepton_object_set_fill_options (LeptonObject *o_current,
     pitch2 = -1;
   }
 
-  o_emit_pre_change_notify (o_current);
+  lepton_object_emit_pre_change_notify (o_current);
 
   o_current->fill_type = type;
   o_current->fill_width = width;
@@ -1187,7 +1187,7 @@ lepton_object_remove_change_notify (LeptonToplevel *toplevel,
  * \param object   #LeptonObject structure to emit notifications for.
  */
 void
-o_emit_pre_change_notify (LeptonObject *object)
+lepton_object_emit_pre_change_notify (LeptonObject *object)
 {
   GList *iter;
 

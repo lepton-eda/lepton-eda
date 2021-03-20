@@ -703,7 +703,7 @@ lepton_pin_object_set_type (LeptonObject *o_current,
 {
   g_return_if_fail (lepton_object_is_pin (o_current));
 
-  o_emit_pre_change_notify (o_current);
+  lepton_object_emit_pre_change_notify (o_current);
   switch (pin_type) {
     default:
       g_critical ("lepton_pin_object_set_type: Got invalid pin type %1$i\n", pin_type);

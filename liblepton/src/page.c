@@ -80,7 +80,7 @@ static void
 pre_object_removed (LeptonPage *page,
                     LeptonObject *object)
 {
-  o_emit_pre_change_notify (object);
+  lepton_object_emit_pre_change_notify (object);
 
   /* Remove object from the list of connectible objects */
   s_conn_remove_object (page, object);

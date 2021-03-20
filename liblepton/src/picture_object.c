@@ -745,7 +745,7 @@ o_picture_modify (LeptonObject *object,
   int tmp;
   double ratio = o_picture_get_ratio (object);
 
-  o_emit_pre_change_notify (object);
+  lepton_object_emit_pre_change_notify (object);
 
   /* change the position of the selected corner */
   switch(whichone) {
@@ -825,7 +825,7 @@ o_picture_modify_all (LeptonObject *object,
                       int x2,
                       int y2)
 {
-  o_emit_pre_change_notify (object);
+  lepton_object_emit_pre_change_notify (object);
 
   /* Normalise the requested rectangle. */
   object->picture->lower_x = (x1 > x2) ? x1 : x2;
@@ -1220,7 +1220,7 @@ o_picture_set_from_buffer (LeptonObject *object,
   g_object_unref (stream);
   if (pixbuf == NULL) return FALSE;
 
-  o_emit_pre_change_notify (object);
+  lepton_object_emit_pre_change_notify (object);
 
   if (object->picture->pixbuf != NULL) {
     g_object_unref (object->picture->pixbuf);

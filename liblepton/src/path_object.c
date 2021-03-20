@@ -343,7 +343,7 @@ lepton_path_object_modify (LeptonObject *object,
   int grip_no = 0;
   LeptonPathSection *section;
 
-  o_emit_pre_change_notify (object);
+  lepton_object_emit_pre_change_notify (object);
 
   for (i = 0; i <  object->path->num_sections; i++) {
     section = &object->path->sections[i];

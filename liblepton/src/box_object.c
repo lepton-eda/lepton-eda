@@ -162,7 +162,7 @@ lepton_box_object_modify_all (LeptonObject *object,
                               int x2,
                               int y2)
 {
-  o_emit_pre_change_notify (object);
+  lepton_object_emit_pre_change_notify (object);
 
   object->box->lower_x = (x1 > x2) ? x1 : x2;
   object->box->lower_y = (y1 > y2) ? y2 : y1;
@@ -204,7 +204,7 @@ lepton_box_object_modify (LeptonObject *object,
 {
   int tmp;
 
-  o_emit_pre_change_notify (object);
+  lepton_object_emit_pre_change_notify (object);
 
   /* change the position of the selected corner */
   switch(whichone) {

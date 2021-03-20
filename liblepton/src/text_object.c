@@ -651,7 +651,7 @@ lepton_text_object_to_buffer (const LeptonObject *object)
 void
 o_text_recreate (LeptonObject *o_current)
 {
-  o_emit_pre_change_notify (o_current);
+  lepton_object_emit_pre_change_notify (o_current);
   update_disp_string (o_current);
   o_emit_change_notify (o_current);
 }

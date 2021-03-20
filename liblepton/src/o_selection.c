@@ -117,7 +117,7 @@ o_selection_select (LeptonObject *object)
   if (object->selected == TRUE)
     return;
 
-  o_emit_pre_change_notify (object);
+  lepton_object_emit_pre_change_notify (object);
   object->selected = TRUE;
   o_emit_change_notify (object);
 }
@@ -135,7 +135,7 @@ o_selection_unselect (LeptonObject *object)
   if (object->selected == FALSE)
     return;
 
-  o_emit_pre_change_notify (object);
+  lepton_object_emit_pre_change_notify (object);
   object->selected = FALSE;
   o_emit_change_notify (object);
 }

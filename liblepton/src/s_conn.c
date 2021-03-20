@@ -125,7 +125,7 @@ s_conn_remove_other (LeptonObject *other_object,
   GList *c_current = NULL;
   LeptonConn *conn = NULL;
 
-  o_emit_pre_change_notify (other_object);
+  lepton_object_emit_pre_change_notify (other_object);
 
   c_current = other_object->conn_list;
   while (c_current != NULL) {
@@ -412,7 +412,7 @@ s_conn_update_line_object (LeptonPage* page,
             object->line->y[j] == other_object->line->y[k] &&
             check_direct_compat (object, other_object)) {
 
-          o_emit_pre_change_notify (other_object);
+          lepton_object_emit_pre_change_notify (other_object);
 
           add_connection (object, other_object, CONN_ENDPOINT,
                           other_object->line->x[k],
