@@ -219,7 +219,7 @@ assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text)
       continue;
     }
 
-    s_object_weak_ref (object, (NotifyFunc) object_weakref_cb, state);
+    lepton_object_weak_ref (object, (NotifyFunc) object_weakref_cb, state);
 
     gtk_list_store_append (state->store, &tree_iter);
 

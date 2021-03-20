@@ -506,8 +506,9 @@ edascm_from_object (LeptonObject *object)
   SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_OBJECT);
 
   /* Set weak references */
-  s_object_weak_ref (object, smob_weakref2_notify,
-                     unpack_as_pointer (smob));
+  lepton_object_weak_ref (object,
+                          smob_weakref2_notify,
+                          unpack_as_pointer (smob));
 
   smob_cache_add (object, smob);
 

@@ -509,9 +509,9 @@ lepton_object_delete (LeptonObject *o_current)
  * \param [in] user_data      Data to be passed to \a notify_func.
  */
 void
-s_object_weak_ref (LeptonObject *object,
-                   void (*notify_func)(void *, void *),
-                   void *user_data)
+lepton_object_weak_ref (LeptonObject *object,
+                        void (*notify_func)(void *, void *),
+                        void *user_data)
 {
   g_return_if_fail (object != NULL);
   object->weak_refs = s_weakref_add (object->weak_refs, notify_func, user_data);
@@ -521,7 +521,7 @@ s_object_weak_ref (LeptonObject *object,
  * \par Function Description
  * Removes the weak reference callback \a notify_func from \a object.
  *
- * \sa s_object_weak_ref()
+ * \sa lepton_object_weak_ref()
  *
  * \param [in,out] object     Object to weak-reference.
  * \param [in] notify_func    Notify function to search for.
