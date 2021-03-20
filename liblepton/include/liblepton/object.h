@@ -269,8 +269,8 @@ lepton_object_weak_unref (LeptonObject *object,
                           void (*notify_func)(void *, void *),
                           void *user_data);
 void
-s_object_add_weak_ptr (LeptonObject *object, void *weak_pointer_loc);
-
+lepton_object_add_weak_ptr (LeptonObject *object,
+                            void *weak_pointer_loc);
 void
 s_object_remove_weak_ptr (LeptonObject *object, void *weak_pointer_loc);
 
