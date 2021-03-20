@@ -1450,7 +1450,7 @@ lepton_object_calculate_visible_bounds (LeptonObject *o_current,
 LeptonObject*
 s_basic_new_object (int type, char const *name)
 {
-  LeptonObject* new_node = (LeptonObject*) g_malloc(sizeof (LeptonObject));
+  LeptonObject* new_node = g_new0 (LeptonObject, 1);
 
   /* setup sid */
   lepton_object_set_id (new_node, global_sid++);
