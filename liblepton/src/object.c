@@ -592,12 +592,12 @@ s_object_remove_weak_ptr (LeptonObject *object,
  *        If a max value is not required, then it would simplify the code.
  */
 void
-o_set_line_options (LeptonObject *o_current,
-                    LeptonLineCapType end,
-                    LeptonLineType type,
-                    int width,
-                    int length,
-                    int space)
+lepton_object_set_line_options (LeptonObject *o_current,
+                                LeptonLineCapType end,
+                                LeptonLineType type,
+                                int width,
+                                int length,
+                                int space)
 {
   g_return_if_fail (o_current != NULL);
 

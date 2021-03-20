@@ -82,12 +82,12 @@ lepton_arc_object_new (gint color,
   new_node->arc->sweep_angle = sweep_angle;
 
   /* Default init */
-  o_set_line_options (new_node,
-                      DEFAULT_OBJECT_END,
-                      TYPE_SOLID,
-                      LINE_WIDTH,
-                      -1,
-                      -1);
+  lepton_object_set_line_options (new_node,
+                                  DEFAULT_OBJECT_END,
+                                  TYPE_SOLID,
+                                  LINE_WIDTH,
+                                  -1,
+                                  -1);
 
   lepton_object_set_fill_options (new_node,
                                   FILLING_HOLLOW,
@@ -120,12 +120,12 @@ lepton_arc_object_copy (const LeptonObject *object)
                                       object->arc->start_angle,
                                       object->arc->sweep_angle);
 
-  o_set_line_options (new_object,
-                      object->line_end,
-                      object->line_type,
-                      object->line_width,
-                      object->line_length,
-                      object->line_space);
+  lepton_object_set_line_options (new_object,
+                                  object->line_end,
+                                  object->line_type,
+                                  object->line_width,
+                                  object->line_length,
+                                  object->line_space);
 
   lepton_object_set_fill_options (new_object,
                                   FILLING_HOLLOW,
@@ -365,7 +365,7 @@ lepton_arc_object_modify (LeptonObject *object,
  *  look to the fileformats.html document.
  *
  *  The object is initialized with the functions
- *  #o_set_line_options() and #lepton_object_set_fill_options().
+ *  #lepton_object_set_line_options() and #lepton_object_set_fill_options().
  *  The second one is only used to put initialize unused values
  *  for an arc as an arc can not be filled.
  *
@@ -444,12 +444,12 @@ LeptonObject
                                    start_angle,
                                    sweep_angle);
 
-  o_set_line_options (new_obj,
-                      (LeptonLineCapType) arc_end,
-                      (LeptonLineType) arc_type,
-                      arc_width,
-                      arc_length,
-                      arc_space);
+  lepton_object_set_line_options (new_obj,
+                                  (LeptonLineCapType) arc_end,
+                                  (LeptonLineType) arc_type,
+                                  arc_width,
+                                  arc_length,
+                                  arc_space);
   lepton_object_set_fill_options (new_obj,
                                   FILLING_HOLLOW,
                                   -1,

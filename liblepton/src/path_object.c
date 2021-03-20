@@ -47,7 +47,7 @@
  *
  *  Both the path type and the filling type are set to default
  *  values : solid path type with a width of 0, and no filling.
- *  It can be changed after with the #o_set_line_options() and
+ *  It can be changed after with the #lepton_object_set_line_options() and
  *  #lepton_object_set_fill_options().
  *
  *  The object is added to the end of the list described by the
@@ -95,12 +95,12 @@ lepton_path_object_new_take_path (char type,
   new_node->path  = path_data;
 
   /* path type and filling initialized to default */
-  o_set_line_options (new_node,
-                      DEFAULT_OBJECT_END,
-                      TYPE_SOLID,
-                      LINE_WIDTH,
-                      -1,
-                      -1);
+  lepton_object_set_line_options (new_node,
+                                  DEFAULT_OBJECT_END,
+                                  TYPE_SOLID,
+                                  LINE_WIDTH,
+                                  -1,
+                                  -1);
 
   lepton_object_set_fill_options (new_node,
                                   FILLING_HOLLOW,
@@ -137,9 +137,12 @@ lepton_path_object_copy (LeptonObject *o_current)
   g_free (path_string);
 
   /* copy the path type and filling options */
-  o_set_line_options (new_obj, o_current->line_end,
-                      o_current->line_type, o_current->line_width,
-                      o_current->line_length, o_current->line_space);
+  lepton_object_set_line_options (new_obj,
+                                  o_current->line_end,
+                                  o_current->line_type,
+                                  o_current->line_width,
+                                  o_current->line_length,
+                                  o_current->line_space);
   lepton_object_set_fill_options (new_obj,
                                   o_current->fill_type,
                                   o_current->fill_width,
@@ -243,12 +246,12 @@ o_path_read (const char *first_line,
   g_free (string);
 
   /* set its line options */
-  o_set_line_options (new_obj,
-                      (LeptonLineCapType) line_end,
-                      (LeptonLineType) line_type,
-                      line_width,
-                      line_length,
-                      line_space);
+  lepton_object_set_line_options (new_obj,
+                                  (LeptonLineCapType) line_end,
+                                  (LeptonLineType) line_type,
+                                  line_width,
+                                  line_length,
+                                  line_space);
   /* set its fill options */
   lepton_object_set_fill_options (new_obj,
                                   (LeptonFillType) fill_type,

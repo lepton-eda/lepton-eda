@@ -40,9 +40,11 @@
  *  function. The structure describing the box is allocated and initialized
  *  with the parameters given to the function.
  *
- *  Both the line type and the filling type are set to default values : solid
- *  line type with a width of 0, and no filling. It can be changed after
- *  with the #o_set_line_options() and #lepton_object_set_fill_options().
+ *  Both the line type and the filling type are set to default
+ *  values : solid line type with a width of 0, and no filling. It
+ *  can be changed after with the
+ *  #lepton_object_set_line_options() and
+ *  #lepton_object_set_fill_options().
  *
  *  \param [in]     type         Box type.
  *  \param [in]     color        Box border color.
@@ -77,12 +79,12 @@ lepton_box_object_new (char type,
   box->lower_y = y2;
 
   /* line type and filling initialized to default */
-  o_set_line_options (new_node,
-                      DEFAULT_OBJECT_END,
-                      TYPE_SOLID,
-                      LINE_WIDTH,
-                      -1,
-                      -1);
+  lepton_object_set_line_options (new_node,
+                                  DEFAULT_OBJECT_END,
+                                  TYPE_SOLID,
+                                  LINE_WIDTH,
+                                  -1,
+                                  -1);
 
   lepton_object_set_fill_options (new_node,
                                   FILLING_HOLLOW,
@@ -124,9 +126,12 @@ lepton_box_object_copy (LeptonObject *o_current)
   new_obj->box->lower_x = o_current->box->lower_x;
   new_obj->box->lower_y = o_current->box->lower_y;
 
-  o_set_line_options (new_obj, o_current->line_end,
-                      o_current->line_type, o_current->line_width,
-                      o_current->line_length, o_current->line_space);
+  lepton_object_set_line_options (new_obj,
+                                  o_current->line_end,
+                                  o_current->line_type,
+                                  o_current->line_width,
+                                  o_current->line_length,
+                                  o_current->line_space);
   lepton_object_set_fill_options (new_obj,
                                   o_current->fill_type,
                                   o_current->fill_width,
@@ -357,12 +362,12 @@ o_box_read (const char buf[],
   /* create a new box */
   new_obj = lepton_box_object_new (type, color, d_x1, d_y1, d_x2, d_y2);
   /* set its line options */
-  o_set_line_options (new_obj,
-                      (LeptonLineCapType) box_end,
-                      (LeptonLineType) box_type,
-                      box_width,
-                      box_length,
-                      box_space);
+  lepton_object_set_line_options (new_obj,
+                                  (LeptonLineCapType) box_end,
+                                  (LeptonLineType) box_type,
+                                  box_width,
+                                  box_length,
+                                  box_space);
   /* set its fill options */
   lepton_object_set_fill_options (new_obj,
                                   (LeptonFillType) box_filling,

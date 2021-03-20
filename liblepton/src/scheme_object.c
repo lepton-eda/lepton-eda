@@ -472,12 +472,12 @@ SCM_DEFINE (set_object_stroke_x, "%set-object-stroke!", 4, 2, 0,
     /* This case intentionally falls through */
   }
 
-  o_set_line_options (obj,
-                      (LeptonLineCapType) cap,
-                      (LeptonLineType) type,
-                      width,
-                      length,
-                      space);
+  lepton_object_set_line_options (obj,
+                                  (LeptonLineCapType) cap,
+                                  (LeptonLineType) type,
+                                  width,
+                                  length,
+                                  space);
   lepton_object_page_set_changed (obj);
 
   return obj_s;

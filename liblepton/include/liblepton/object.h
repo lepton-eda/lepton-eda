@@ -241,13 +241,12 @@ lepton_object_set_fill_options (LeptonObject *o_current,
                                 int pitch2,
                                 int angle2);
 void
-o_set_line_options (LeptonObject *o_current,
-                    LeptonLineCapType end,
-                    LeptonLineType type,
-                    int width,
-                    int length,
-                    int space);
-
+lepton_object_set_line_options (LeptonObject *o_current,
+                                LeptonLineCapType end,
+                                LeptonLineType type,
+                                int width,
+                                int length,
+                                int space);
 void
 o_set_visibility (LeptonObject *object,
                   int visibility);

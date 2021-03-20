@@ -45,9 +45,10 @@
  *  function. The structure describing the circle is allocated and initialized
  *  with the parameters given to the function.
  *
- *  Both the line type and the filling type are set to default values : solid
- *  line type with a width of 0, and no filling. It can be changed after
- *  with #o_set_line_options() and #lepton_object_set_fill_options().
+ *  Both the line type and the filling type are set to default
+ *  values : solid line type with a width of 0, and no filling. It
+ *  can be changed after with #lepton_object_set_line_options()
+ *  and #lepton_object_set_fill_options().
  *
  *  \param [in]     color        Circle line color.
  *  \param [in]     center_x     Center x coordinate.
@@ -75,12 +76,12 @@ lepton_circle_object_new (gint color,
   new_node->circle->radius   = radius;
 
   /* line type and filling initialized to default */
-  o_set_line_options (new_node,
-                      DEFAULT_OBJECT_END,
-                      TYPE_SOLID,
-                      LINE_WIDTH,
-                      -1,
-                      -1);
+  lepton_object_set_line_options (new_node,
+                                  DEFAULT_OBJECT_END,
+                                  TYPE_SOLID,
+                                  LINE_WIDTH,
+                                  -1,
+                                  -1);
 
   lepton_object_set_fill_options (new_node,
                                   FILLING_HOLLOW,
@@ -115,12 +116,12 @@ lepton_circle_object_copy (const LeptonObject *object)
                                       object->circle->center_y,
                                       object->circle->radius);
 
-  o_set_line_options (new_obj,
-                      object->line_end,
-                      object->line_type,
-                      object->line_width,
-                      object->line_length,
-                      object->line_space);
+  lepton_object_set_line_options (new_obj,
+                                  object->line_end,
+                                  object->line_type,
+                                  object->line_width,
+                                  object->line_length,
+                                  object->line_space);
 
   lepton_object_set_fill_options (new_obj,
                                   object->fill_type,
@@ -374,12 +375,12 @@ o_circle_read (const char buf[],
    */
   new_obj = lepton_circle_object_new (color, x1, y1, radius);
 
-  o_set_line_options (new_obj,
-                      (LeptonLineCapType) circle_end,
-                      (LeptonLineType) circle_type,
-                      circle_width,
-                      circle_length,
-                      circle_space);
+  lepton_object_set_line_options (new_obj,
+                                  (LeptonLineCapType) circle_end,
+                                  (LeptonLineType) circle_type,
+                                  circle_width,
+                                  circle_length,
+                                  circle_space);
   lepton_object_set_fill_options (new_obj,
                                   (LeptonFillType) circle_fill,
                                   fill_width,
