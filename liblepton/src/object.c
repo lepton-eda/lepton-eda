@@ -1284,7 +1284,8 @@ lepton_object_get_visible (const LeptonObject *object)
  *  \param visibility If the object should be visible
  */
 void
-o_set_visibility (LeptonObject *object, int visibility)
+lepton_object_set_visibility (LeptonObject *object,
+                              int visibility)
 {
   g_return_if_fail (object != NULL);
   object->visibility = visibility;

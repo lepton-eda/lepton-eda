@@ -248,9 +248,8 @@ lepton_object_set_line_options (LeptonObject *o_current,
                                 int length,
                                 int space);
 void
-o_set_visibility (LeptonObject *object,
-                  int visibility);
-
+lepton_object_set_visibility (LeptonObject *object,
+                              int visibility);
 void
 o_add_change_notify (LeptonToplevel *toplevel,
                      ChangeNotifyFunc pre_change_func,

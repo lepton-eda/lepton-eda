@@ -1152,7 +1152,7 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
 
     /* actually modifies the attribute */
     o_invalidate (w_current, o_attrib);
-    o_set_visibility (o_attrib, new_visibility ? VISIBLE : INVISIBLE);
+    lepton_object_set_visibility (o_attrib, new_visibility ? VISIBLE : INVISIBLE);
     o_text_recreate (o_attrib);
   }
 

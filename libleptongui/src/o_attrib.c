@@ -179,7 +179,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
       o_invalidate (w_current, object);
     }
 
-    o_set_visibility (object, INVISIBLE);
+    lepton_object_set_visibility (object, INVISIBLE);
 
     if (show_hidden_text) {
       /* draw text so that little I is drawn */
@@ -193,7 +193,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
       o_invalidate (w_current, object);
     }
 
-    o_set_visibility (object, VISIBLE);
+    lepton_object_set_visibility (object, VISIBLE);
     o_text_recreate (object);
   }
 

@@ -389,7 +389,7 @@ o_component_promote_attribs (LeptonObject *object)
     for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
       LeptonObject *o_kept = (LeptonObject *) iter->data;
       LeptonObject *o_copy = lepton_object_copy (o_kept);
-      o_set_visibility (o_kept, INVISIBLE);
+      lepton_object_set_visibility (o_kept, INVISIBLE);
       o_copy->parent = NULL;
       promoted = g_list_prepend (promoted, o_copy);
     }
@@ -444,7 +444,7 @@ o_component_remove_promotable_attribs (LeptonObject *object)
   for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
     LeptonObject *a_object = (LeptonObject*) iter->data;
     if (keep_invisible == TRUE) {   /* Hide promotable attributes */
-      o_set_visibility (a_object, INVISIBLE);
+      lepton_object_set_visibility (a_object, INVISIBLE);
     } else {                                /* Delete promotable attributes */
       object->component->prim_objs =
         g_list_remove (object->component->prim_objs, a_object);
