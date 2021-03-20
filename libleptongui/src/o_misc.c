@@ -463,7 +463,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   g_return_val_if_fail (lepton_object_is_component (o_current), NULL);
   g_return_val_if_fail (o_current->component_basename != NULL, NULL);
 
-  page = o_get_page (o_current);
+  page = lepton_object_get_page (o_current);
 
   /* Force symbol data to be reloaded from source */
   clib = s_clib_get_symbol_by_name (o_current->component_basename);

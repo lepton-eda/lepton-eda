@@ -43,7 +43,7 @@ o_embed (LeptonObject *o_current)
   int page_modified = 0;
   LeptonPage *page = NULL;
 
-  page = o_get_page (o_current);
+  page = lepton_object_get_page (o_current);
 
   /* check o_current is a component and is not already embedded */
   if (lepton_object_is_component (o_current) &&
@@ -88,7 +88,7 @@ o_unembed (LeptonObject *o_current)
   int page_modified = 0;
   LeptonPage *page = NULL;
 
-  page = o_get_page (o_current);
+  page = lepton_object_get_page (o_current);
 
   /* check o_current is an embedded component */
   if (lepton_object_is_component (o_current) &&

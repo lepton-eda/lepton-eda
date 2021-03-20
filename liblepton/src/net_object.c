@@ -629,7 +629,7 @@ o_net_consolidate_segments (LeptonObject *object)
   g_return_val_if_fail (lepton_object_is_net (object), 0);
 
   /* It's meaningless to do anything here if the object isn't in a page. */
-  page = o_get_page (object);
+  page = lepton_object_get_page (object);
   g_return_val_if_fail ((page != NULL), 0);
 
   object_orient = lepton_net_object_orientation (object);

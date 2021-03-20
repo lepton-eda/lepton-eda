@@ -198,8 +198,8 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
 
   /* Check that both are in the same page and/or component object */
   if ((obj->parent != attrib->parent)
-      || (o_get_page (obj) != o_get_page (attrib))
-      || ((obj->parent == NULL) && (o_get_page (obj) == NULL))) {
+      || (lepton_object_get_page (obj) != lepton_object_get_page (attrib))
+      || ((obj->parent == NULL) && (lepton_object_get_page (obj) == NULL))) {
     scm_error (edascm_object_state_sym, s_attach_attrib_x,
                _("Objects ~A and ~A are not part of the same page and/or component object"),
                scm_list_2 (obj_s, attrib_s), SCM_EOL);

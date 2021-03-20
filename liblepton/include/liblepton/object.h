@@ -217,7 +217,7 @@ lepton_object_get_line_options (LeptonObject *object,
                                 int *length,
                                 int *space);
 LeptonPage*
-o_get_page (LeptonObject *object);
+lepton_object_get_page (LeptonObject *object);
 
 void
 lepton_object_page_set_changed (LeptonObject *object);

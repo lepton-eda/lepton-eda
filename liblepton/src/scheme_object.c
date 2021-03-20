@@ -955,7 +955,7 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   lepton_object_set_color (obj, scm_to_int (color_s));
 
   /* We may need to update connectivity. */
-  LeptonPage *page = o_get_page (obj);
+  LeptonPage *page = lepton_object_get_page (obj);
   if (page != NULL) {
     s_conn_update_object (page, obj);
   }
@@ -1706,7 +1706,7 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
               SCM_ARG1, s_object_connections);
 
   LeptonObject *obj = edascm_to_object (obj_s);
-  if (o_get_page (obj) == NULL) {
+  if (lepton_object_get_page (obj) == NULL) {
     scm_error (edascm_object_state_sym,
                s_object_connections,
                _("Object ~A is not included in a page."),

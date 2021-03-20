@@ -1056,10 +1056,10 @@ lepton_object_set_color (LeptonObject *object,
  * \sa s_page_append_object() s_page_append() s_page_remove()
  */
 LeptonPage *
-o_get_page (LeptonObject *object)
+lepton_object_get_page (LeptonObject *object)
 {
   if (object->parent != NULL) {
-    return o_get_page (object->parent);
+    return lepton_object_get_page (object->parent);
   }
   return object->page;
 }
@@ -1078,7 +1078,7 @@ o_get_page (LeptonObject *object)
 void
 lepton_object_page_set_changed (LeptonObject *object)
 {
-  LeptonPage *page = o_get_page (object);
+  LeptonPage *page = lepton_object_get_page (object);
   if (page != NULL) page->CHANGED = TRUE;
 }
 
