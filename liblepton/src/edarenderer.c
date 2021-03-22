@@ -998,6 +998,7 @@ eda_renderer_draw_picture (EdaRenderer *renderer, LeptonObject *object)
   int swap_wh;
   double orig_width, orig_height;
   GdkPixbuf *pixbuf;
+  int angle;
 
   /* Get a pixbuf. If image doesn't exist, libgeda should
    * provide a fallback image. */
@@ -1021,7 +1022,9 @@ eda_renderer_draw_picture (EdaRenderer *renderer, LeptonObject *object)
 
   cairo_save (renderer->priv->cr);
 
-  swap_wh = ((object->picture->angle == 90) || (object->picture->angle == 270));
+  angle = lepton_picture_object_get_angle (object);
+
+  swap_wh = ((angle == 90) || (angle == 270));
   orig_width  = swap_wh ? gdk_pixbuf_get_height (object->picture->pixbuf)
                         : gdk_pixbuf_get_width (object->picture->pixbuf);
   orig_height = swap_wh ? gdk_pixbuf_get_width (object->picture->pixbuf)
@@ -1034,14 +1037,14 @@ eda_renderer_draw_picture (EdaRenderer *renderer, LeptonObject *object)
                - abs (object->picture->upper_y - object->picture->lower_y) / orig_height);
 
   /* Evil magic translates picture origin to the right position for a given rotation */
-  switch (object->picture->angle) {
+  switch (angle) {
     case 0:                                                                    break;
     case 90:   cairo_translate (renderer->priv->cr, 0,          orig_height);  break;
     case 180:  cairo_translate (renderer->priv->cr, orig_width, orig_height);  break;
     case 270:  cairo_translate (renderer->priv->cr, orig_width, 0          );  break;
   }
 
-  cairo_rotate (renderer->priv->cr, -object->picture->angle * M_PI / 180.);
+  cairo_rotate (renderer->priv->cr, -angle * M_PI / 180.);
   if (object->picture->mirrored) {
     cairo_translate (renderer->priv->cr, gdk_pixbuf_get_width (pixbuf), 0);
     cairo_scale (renderer->priv->cr, -1, 1);

@@ -225,7 +225,7 @@ lepton_picture_object_to_buffer (const LeptonObject *object)
     out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s\n%s\n%s",
                           lepton_object_get_type (object),
                           x1, y1, width, height,
-                          object->picture->angle,
+                          lepton_picture_object_get_angle (object),
                           /* Convert the (0,1) chars to ASCII */
                           (object->picture->mirrored)+0x30,
                           '1',
@@ -237,7 +237,7 @@ lepton_picture_object_to_buffer (const LeptonObject *object)
     out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s",
                           lepton_object_get_type (object),
                           x1, y1, width, height,
-                          object->picture->angle,
+                          lepton_picture_object_get_angle (object),
                           /* Convert the (0,1) chars to ASCII */
                           (object->picture->mirrored)+0x30,
                           '0',
@@ -411,12 +411,15 @@ lepton_picture_object_get_position (const LeptonObject *object,
 double
 lepton_picture_object_get_ratio (LeptonObject *object)
 {
+  int angle;
   g_return_val_if_fail (object != NULL, 1);
   g_return_val_if_fail (object->picture != NULL, 1);
 
+  angle = lepton_picture_object_get_angle (object);
+
   /* The effective ratio varies depending on the rotation of the
    * image. */
-  switch (object->picture->angle) {
+  switch (angle) {
   case 0:
   case 180:
     return object->picture->ratio;
@@ -424,8 +427,7 @@ lepton_picture_object_get_ratio (LeptonObject *object)
   case 270:
     return 1.0 / object->picture->ratio;
   default:
-    g_critical (_("Picture %1$p has invalid angle %2$i\n"), object,
-                object->picture->angle);
+    g_critical (_("Picture %1$p has invalid angle %2$i\n"), object, angle);
   }
   return 0;
 }
@@ -574,6 +576,7 @@ lepton_picture_object_rotate (int world_centerx,
 {
   int newx1, newy1;
   int newx2, newy2;
+  int new_angle;
 
   g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
@@ -584,7 +587,9 @@ lepton_picture_object_rotate (int world_centerx,
   /* angle must be a 90 multiple or no rotation performed */
   if((angle % 90) != 0) return;
 
-  object->picture->angle = ( object->picture->angle + angle ) % 360;
+  new_angle = (lepton_picture_object_get_angle (object) + angle) % 360;
+
+  lepton_picture_object_set_angle (object, new_angle) ;
 
   /* The center of rotation (<B>world_centerx</B>, <B>world_centery</B>) is
    * translated to the origin. The rotation of the upper left and lower
@@ -650,12 +655,12 @@ lepton_picture_object_mirror (int world_centerx,
   /* Set info in object. Sometimes it's necessary to change the
    * rotation angle as well as the mirror flag. */
   object->picture->mirrored = !object->picture->mirrored;
-  switch (object->picture->angle) {
+  switch (lepton_picture_object_get_angle (object)) {
   case 90:
-    object->picture->angle = 270;
+    lepton_picture_object_set_angle (object, 270);
     break;
   case 270:
-    object->picture->angle = 90;
+    lepton_picture_object_set_angle (object, 90);
     break;
   }
 
@@ -747,7 +752,7 @@ lepton_picture_object_copy (LeptonObject *object)
   picture->file_length = object->picture->file_length;
   picture->filename    = g_strdup (object->picture->filename);
   picture->ratio       = object->picture->ratio;
-  picture->angle       = object->picture->angle;
+  lepton_picture_object_set_angle (new_node, lepton_picture_object_get_angle (object));
   picture->mirrored    = object->picture->mirrored;
   picture->embedded    = object->picture->embedded;
 
