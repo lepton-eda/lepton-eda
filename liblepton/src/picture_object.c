@@ -340,7 +340,7 @@ lepton_picture_object_new (const gchar *file_content,
                  filename, error->message);
       g_error_free (error);
       /* picture not found; try to open a fall back pixbuf */
-      picture->pixbuf = o_picture_get_fallback_pixbuf ();
+      picture->pixbuf = lepton_picture_get_fallback_pixbuf ();
     }
   }
 
