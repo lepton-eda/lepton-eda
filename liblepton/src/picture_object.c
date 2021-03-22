@@ -612,8 +612,12 @@ lepton_picture_object_new (const gchar *file_content,
 
   if (file_content != NULL) {
     GError *error = NULL;
-    if (!o_picture_set_from_buffer (new_node, filename,
-                                    file_content, file_length, &error)) {
+    if (!lepton_picture_object_set_from_buffer (new_node,
+                                                filename,
+                                                file_content,
+                                                file_length,
+                                                &error))
+    {
       g_message (_("Failed to load buffer image [%1$s]: %2$s"),
                  filename, error->message);
       g_error_free (error);
@@ -1206,11 +1210,11 @@ lepton_picture_object_get_pixbuf (LeptonObject *object)
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-o_picture_set_from_buffer (LeptonObject *object,
-                           const gchar *filename,
-                           const gchar *data,
-                           size_t len,
-                           GError **error)
+lepton_picture_object_set_from_buffer (LeptonObject *object,
+                                       const gchar *filename,
+                                       const gchar *data,
+                                       size_t len,
+                                       GError **error)
 {
   GdkPixbuf *pixbuf;
   GInputStream *stream;
@@ -1278,8 +1282,11 @@ o_picture_set_from_file (LeptonObject *object,
     return FALSE;
   }
 
-  status = o_picture_set_from_buffer (object, filename,
-                                      buf, len, error);
+  status = lepton_picture_object_set_from_buffer (object,
+                                                  filename,
+                                                  buf,
+                                                  len,
+                                                  error);
   g_free (buf);
   return status;
 }

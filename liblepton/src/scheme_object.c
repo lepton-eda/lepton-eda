@@ -2152,9 +2152,11 @@ SCM_DEFINE (set_picture_data_vector_x, "%set-picture-data/vector!",
   gchar *filename = scm_to_utf8_string (filename_s);
   scm_dynwind_unwind_handler (g_free, filename, SCM_F_WIND_EXPLICITLY);
 
-  status = o_picture_set_from_buffer (obj, filename,
-                                      buf, len, &error);
-
+  status = lepton_picture_object_set_from_buffer (obj,
+                                                  filename,
+                                                  buf,
+                                                  len,
+                                                  &error);
   if (!status) {
     scm_dynwind_unwind_handler ((void (*)(void *)) g_error_free, error,
                                 SCM_F_WIND_EXPLICITLY);
