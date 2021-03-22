@@ -1977,8 +1977,17 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
 SCM_DEFINE (make_picture, "%make-picture", 0, 0, 0, (),
             "Create a new picture object")
 {
-  LeptonObject *obj = o_picture_new (NULL, 0, NULL, OBJ_PICTURE,
-                               0, 0, 0, 0, 0, FALSE, TRUE);
+  LeptonObject *obj = lepton_picture_object_new (NULL,
+                                                 0,
+                                                 NULL,
+                                                 OBJ_PICTURE,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 0,
+                                                 FALSE,
+                                                 TRUE);
   SCM result = edascm_from_object (obj);
 
   /* At the moment, the only pointer to the object is owned by the
