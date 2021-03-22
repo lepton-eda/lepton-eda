@@ -1043,7 +1043,7 @@ lepton_picture_object_copy (LeptonObject *object)
   picture->embedded    = object->picture->embedded;
 
   /* Get the picture data */
-  picture->pixbuf = o_picture_get_pixbuf (object);
+  picture->pixbuf = lepton_picture_object_get_pixbuf (object);
 
   return new_node;
 }
@@ -1180,7 +1180,7 @@ lepton_picture_object_get_embedded (const LeptonObject *object)
  * \return A #GdkPixbuf for the picture.
  */
 GdkPixbuf *
-o_picture_get_pixbuf (LeptonObject *object)
+lepton_picture_object_get_pixbuf (LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, NULL);
   g_return_val_if_fail (object->picture != NULL, NULL);
