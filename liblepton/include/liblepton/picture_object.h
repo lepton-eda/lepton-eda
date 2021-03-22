@@ -93,9 +93,6 @@ lepton_picture_object_set_from_file (LeptonObject *object,
 const gchar*
 lepton_picture_object_get_filename (const LeptonObject *object);
 
-GdkPixbuf*
-o_picture_get_fallback_pixbuf () G_GNUC_WARN_UNUSED_RESULT;
-
 LeptonObject*
 lepton_picture_object_read (const char *first_line,
                             TextBuffer *tb,
