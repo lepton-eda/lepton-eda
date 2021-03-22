@@ -744,10 +744,10 @@ lepton_picture_object_get_ratio (LeptonObject *object)
  *  </DL>
  */
 void
-o_picture_modify (LeptonObject *object,
-                  int x,
-                  int y,
-                  int whichone)
+lepton_picture_object_modify (LeptonObject *object,
+                              int x,
+                              int y,
+                              int whichone)
 {
   int tmp;
   double ratio = lepton_picture_object_get_ratio (object);

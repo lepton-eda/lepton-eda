@@ -1116,8 +1116,10 @@ static void o_grips_end_picture(GschemToplevel *w_current, LeptonObject *o_curre
     return;
   }
 
-  o_picture_modify (o_current,
-                    w_current->second_wx, w_current->second_wy, whichone);
+  lepton_picture_object_modify (o_current,
+                                w_current->second_wx,
+                                w_current->second_wy,
+                                whichone);
 
   g_object_unref (w_current->current_pixbuf);
   w_current->current_pixbuf = NULL;
