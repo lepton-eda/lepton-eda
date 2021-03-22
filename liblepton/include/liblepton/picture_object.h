@@ -116,6 +116,6 @@ void
 lepton_picture_object_embed (LeptonObject *object);
 
 void
-o_picture_unembed (LeptonObject *object);
+lepton_picture_object_unembed (LeptonObject *object);
 
 G_END_DECLS
