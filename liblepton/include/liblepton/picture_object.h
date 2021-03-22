@@ -81,11 +81,11 @@ GdkPixbuf*
 lepton_picture_object_get_pixbuf (LeptonObject *object) G_GNUC_WARN_UNUSED_RESULT;
 
 gboolean
-o_picture_set_from_buffer (LeptonObject *object,
-                           const gchar *filename,
-                           const gchar *data,
-                           size_t len,
-                           GError **error);
+lepton_picture_object_set_from_buffer (LeptonObject *object,
+                                       const gchar *filename,
+                                       const gchar *data,
+                                       size_t len,
+                                       GError **error);
 gboolean
 o_picture_set_from_file (LeptonObject *object,
                          const gchar *filename,
