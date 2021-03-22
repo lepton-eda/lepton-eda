@@ -630,7 +630,8 @@ lepton_picture_object_new (const gchar *file_content,
   }
   if (picture->pixbuf == NULL && filename != NULL) {
     GError *error = NULL;
-    if (!o_picture_set_from_file (new_node, filename, &error)) {
+    if (!lepton_picture_object_set_from_file (new_node, filename, &error))
+    {
       g_message (_("Failed to load image from [%1$s]: %2$s"),
                  filename, error->message);
       g_error_free (error);
@@ -1098,7 +1099,7 @@ o_picture_unembed (LeptonObject *object)
 
   if (!lepton_picture_object_get_embedded (object)) return;
 
-  o_picture_set_from_file (object, filename, &err);
+  lepton_picture_object_set_from_file (object, filename, &err);
 
   if (err != NULL) {
     g_message (_("Failed to load image from file [%1$s]: %2$s"),
@@ -1268,9 +1269,9 @@ lepton_picture_object_set_from_buffer (LeptonObject *object,
  * \return TRUE on success, FALSE on failure.
  */
 gboolean
-o_picture_set_from_file (LeptonObject *object,
-                         const gchar *filename,
-                         GError **error)
+lepton_picture_object_set_from_file (LeptonObject *object,
+                                     const gchar *filename,
+                                     GError **error)
 {
   gchar *buf;
   size_t len;

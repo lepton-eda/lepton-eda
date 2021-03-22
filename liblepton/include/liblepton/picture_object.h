@@ -87,9 +87,9 @@ lepton_picture_object_set_from_buffer (LeptonObject *object,
                                        size_t len,
                                        GError **error);
 gboolean
-o_picture_set_from_file (LeptonObject *object,
-                         const gchar *filename,
-                         GError **error);
+lepton_picture_object_set_from_file (LeptonObject *object,
+                                     const gchar *filename,
+                                     GError **error);
 const gchar*
 lepton_picture_object_get_filename (const LeptonObject *object);
 
