@@ -733,7 +733,7 @@ static void o_grips_start_picture(GschemToplevel *w_current, LeptonObject *o_cur
 {
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
-  w_current->current_pixbuf = o_picture_get_pixbuf (o_current);
+  w_current->current_pixbuf = lepton_picture_object_get_pixbuf (o_current);
   w_current->pixbuf_filename =
     g_strdup (lepton_picture_object_get_filename (o_current));
   w_current->pixbuf_wh_ratio = lepton_picture_object_get_ratio (o_current);
