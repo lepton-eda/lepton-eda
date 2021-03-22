@@ -308,7 +308,7 @@ lepton_picture_object_new (const gchar *file_content,
   picture->file_content = NULL;
   picture->file_length = 0;
 
-  picture->ratio = fabs ((double) (x1 - x2) / (y1 - y2));
+  lepton_picture_object_set_ratio (new_node, fabs ((double) (x1 - x2) / (y1 - y2)));
   picture->filename = g_strdup (filename);
   lepton_picture_object_set_angle (new_node, angle);
   picture->mirrored = mirrored;
@@ -432,20 +432,23 @@ double
 lepton_picture_object_get_real_ratio (LeptonObject *object)
 {
   int angle;
+  double ratio;
+
   g_return_val_if_fail (object != NULL, 1);
   g_return_val_if_fail (object->picture != NULL, 1);
 
   angle = lepton_picture_object_get_angle (object);
+  ratio = lepton_picture_object_get_ratio (object);
 
   /* The effective ratio varies depending on the rotation of the
    * image. */
   switch (angle) {
   case 0:
   case 180:
-    return object->picture->ratio;
+    return ratio;
   case 90:
   case 270:
-    return 1.0 / object->picture->ratio;
+    return 1.0 / ratio;
   default:
     g_critical (_("Picture %1$p has invalid angle %2$i\n"), object, angle);
   }
@@ -789,7 +792,7 @@ lepton_picture_object_copy (LeptonObject *object)
 
   picture->file_length = object->picture->file_length;
   picture->filename    = g_strdup (object->picture->filename);
-  picture->ratio       = object->picture->ratio;
+  lepton_picture_object_set_ratio (new_node, lepton_picture_object_get_ratio (object));
   lepton_picture_object_set_angle (new_node, lepton_picture_object_get_angle (object));
   picture->mirrored    = object->picture->mirrored;
   picture->embedded    = object->picture->embedded;
@@ -986,8 +989,9 @@ lepton_picture_object_set_from_buffer (LeptonObject *object,
   }
   object->picture->pixbuf = pixbuf;
 
-  object->picture->ratio = ((double) gdk_pixbuf_get_width(pixbuf) /
-                            gdk_pixbuf_get_height(pixbuf));
+  lepton_picture_object_set_ratio (object,
+                                   ((double) gdk_pixbuf_get_width(pixbuf) /
+                                    gdk_pixbuf_get_height(pixbuf)));
 
   tmp = g_strdup (filename);
   g_free (object->picture->filename);
