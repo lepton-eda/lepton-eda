@@ -826,11 +826,11 @@ lepton_picture_object_modify (LeptonObject *object,
  * \param [in]     y2       y coordinate of second corner of box.
  */
 void
-o_picture_modify_all (LeptonObject *object,
-                      int x1,
-                      int y1,
-                      int x2,
-                      int y2)
+lepton_picture_object_modify_all (LeptonObject *object,
+                                  int x1,
+                                  int y1,
+                                  int x2,
+                                  int y2)
 {
   lepton_object_emit_pre_change_notify (object);
 

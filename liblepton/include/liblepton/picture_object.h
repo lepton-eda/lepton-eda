@@ -53,11 +53,11 @@ lepton_picture_object_modify (LeptonObject *object,
                               int y,
                               int whichone);
 void
-o_picture_modify_all (LeptonObject *object,
-                      int x1,
-                      int y1,
-                      int x2,
-                      int y2);
+lepton_picture_object_modify_all (LeptonObject *object,
+                                  int x1,
+                                  int y1,
+                                  int x2,
+                                  int y2);
 void
 lepton_picture_object_rotate (int world_centerx,
                               int world_centery,
