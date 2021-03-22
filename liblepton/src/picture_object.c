@@ -700,7 +700,7 @@ lepton_picture_object_get_position (const LeptonObject *object,
  * \return width/height ratio for \a object.
  */
 double
-o_picture_get_ratio (LeptonObject *object)
+lepton_picture_object_get_ratio (LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, 1);
   g_return_val_if_fail (object->picture != NULL, 1);
@@ -750,7 +750,7 @@ o_picture_modify (LeptonObject *object,
                   int whichone)
 {
   int tmp;
-  double ratio = o_picture_get_ratio (object);
+  double ratio = lepton_picture_object_get_ratio (object);
 
   lepton_object_emit_pre_change_notify (object);
 

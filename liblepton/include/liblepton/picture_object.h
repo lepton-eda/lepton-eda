@@ -45,7 +45,7 @@ void
 lepton_picture_object_calculate_bounds (const LeptonObject *object,
                                         LeptonBounds *bounds);
 double
-o_picture_get_ratio (LeptonObject *object);
+lepton_picture_object_get_ratio (LeptonObject *object);
 
 void
 o_picture_modify (LeptonObject *object,
