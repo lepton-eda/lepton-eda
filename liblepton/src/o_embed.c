@@ -62,7 +62,7 @@ o_embed (LeptonObject *o_current)
   if (lepton_object_is_picture (o_current) &&
       !lepton_picture_object_get_embedded (o_current))
   {
-    o_picture_embed (o_current);
+    lepton_picture_object_embed (o_current);
 
     page_modified = 1;
   }
