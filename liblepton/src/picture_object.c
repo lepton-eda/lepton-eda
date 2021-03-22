@@ -795,7 +795,7 @@ lepton_picture_object_embed (LeptonObject *object)
  *  \param [in]     object       The picture LeptonObject to unembed
  */
 void
-o_picture_unembed (LeptonObject *object)
+lepton_picture_object_unembed (LeptonObject *object)
 {
   GError *err = NULL;
   const gchar *filename = lepton_picture_object_get_filename (object);
