@@ -113,7 +113,7 @@ lepton_picture_object_get_position (const LeptonObject *object,
                                     gint *x,
                                     gint *y);
 void
-o_picture_embed (LeptonObject *object);
+lepton_picture_object_embed (LeptonObject *object);
 
 void
 o_picture_unembed (LeptonObject *object);

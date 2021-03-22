@@ -765,7 +765,7 @@ lepton_picture_object_copy (LeptonObject *object)
  *  \param [in]     object       The picture LeptonObject to embed
  */
 void
-o_picture_embed (LeptonObject *object)
+lepton_picture_object_embed (LeptonObject *object)
 {
   const gchar *filename = lepton_picture_object_get_filename (object);
   gchar *basename;
