@@ -344,11 +344,11 @@ static const char* fallback_xpm[] = {
  *  \return A pointer to the new picture object, or NULL on error.
  */
 LeptonObject*
-o_picture_read (const char *first_line,
-                TextBuffer *tb,
-                unsigned int release_ver,
-                unsigned int fileformat_ver,
-                GError **err)
+lepton_picture_object_read (const char *first_line,
+                            TextBuffer *tb,
+                            unsigned int release_ver,
+                            unsigned int fileformat_ver,
+                            GError **err)
 {
   LeptonObject *new_obj;
   int x1, y1;

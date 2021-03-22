@@ -97,11 +97,11 @@ GdkPixbuf*
 o_picture_get_fallback_pixbuf () G_GNUC_WARN_UNUSED_RESULT;
 
 LeptonObject*
-o_picture_read (const char *first_line,
-                TextBuffer *tb,
-                unsigned int release_ver,
-                unsigned int fileformat_ver,
-                GError **err);
+lepton_picture_object_read (const char *first_line,
+                            TextBuffer *tb,
+                            unsigned int release_ver,
+                            unsigned int fileformat_ver,
+                            GError **err);
 gchar*
 lepton_picture_object_to_buffer (const LeptonObject *object);
 
