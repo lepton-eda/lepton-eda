@@ -367,7 +367,7 @@ lepton_object_copy (LeptonObject *object)
       break;
 
     case(OBJ_PICTURE):
-      new_object = o_picture_copy (object);
+      new_object = lepton_picture_object_copy (object);
       break;
 
     case(OBJ_CIRCLE):

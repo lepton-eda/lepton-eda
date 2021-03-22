@@ -72,7 +72,7 @@ lepton_picture_object_translate (LeptonObject *object,
                                  int dx,
                                  int dy);
 LeptonObject*
-o_picture_copy (LeptonObject *o_current) G_GNUC_WARN_UNUSED_RESULT;
+lepton_picture_object_copy (LeptonObject *o_current) G_GNUC_WARN_UNUSED_RESULT;
 
 gboolean
 lepton_picture_object_get_embedded (const LeptonObject *object);
