@@ -2090,9 +2090,11 @@ SCM_DEFINE (set_picture_x, "%set-picture!", 7, 0, 0,
 
   obj->picture->angle = scm_to_int (angle_s);
   obj->picture->mirrored = scm_is_true (mirror_s);
-  o_picture_modify_all (obj,
-                        scm_to_int (x1_s), scm_to_int (y1_s),
-                        scm_to_int (x2_s), scm_to_int (y2_s));
+  lepton_picture_object_modify_all (obj,
+                                    scm_to_int (x1_s),
+                                    scm_to_int (y1_s),
+                                    scm_to_int (x2_s),
+                                    scm_to_int (y2_s));
 
   lepton_object_emit_change_notify (obj);
   return obj_s;
