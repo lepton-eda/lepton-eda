@@ -1008,7 +1008,7 @@ lepton_picture_object_translate (LeptonObject *object,
  *  \return The new LeptonObject
  */
 LeptonObject*
-o_picture_copy (LeptonObject *object)
+lepton_picture_object_copy (LeptonObject *object)
 {
   LeptonObject *new_node;
   LeptonPicture *picture;
