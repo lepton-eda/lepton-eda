@@ -25,8 +25,7 @@
 G_BEGIN_DECLS
 
 LeptonObject*
-lepton_path_object_new (char type,
-                        int color,
+lepton_path_object_new (int color,
                         const char *path_string);
 LeptonObject*
 lepton_path_object_new_take_path (char type,
