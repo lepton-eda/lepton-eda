@@ -409,7 +409,7 @@ lepton_picture_object_get_position (const LeptonObject *object,
  * \return width/height ratio for \a object.
  */
 double
-lepton_picture_object_get_ratio (LeptonObject *object)
+lepton_picture_object_get_real_ratio (LeptonObject *object)
 {
   int angle;
   g_return_val_if_fail (object != NULL, 1);
@@ -461,7 +461,7 @@ lepton_picture_object_modify (LeptonObject *object,
                               int whichone)
 {
   int tmp;
-  double ratio = lepton_picture_object_get_ratio (object);
+  double ratio = lepton_picture_object_get_real_ratio (object);
 
   lepton_object_emit_pre_change_notify (object);
 
