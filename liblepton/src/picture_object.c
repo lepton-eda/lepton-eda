@@ -452,6 +452,24 @@ lepton_picture_object_get_real_ratio (LeptonObject *object)
   return 0;
 }
 
+/*! \brief Set the width/height ratio of an image.
+ * \par Function Description
+
+ * Sets the width/height ratio of picture \a object.
+ *
+ * \param object Picture #LeptonObject to amend.
+ * \param ratio  New width/height ratio for the picture.
+ */
+void
+lepton_picture_object_set_ratio (LeptonObject *object,
+                                 double ratio)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->picture != NULL);
+
+  object->picture->ratio = ratio;
+}
+
 /*! \brief Modify the description of a picture LeptonObject.
  *  \par Function Description
  *  This function modifies the coordinates of one of the four corner of
