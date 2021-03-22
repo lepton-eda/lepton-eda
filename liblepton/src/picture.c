@@ -362,7 +362,7 @@ lepton_picture_free (LeptonPicture *picture)
  * \return a #GdkPixbuf containing a warning image.
  */
 GdkPixbuf *
-o_picture_get_fallback_pixbuf ()
+lepton_picture_get_fallback_pixbuf ()
 {
   static GdkPixbuf *pixbuf = NULL;
   static gboolean failed = FALSE;

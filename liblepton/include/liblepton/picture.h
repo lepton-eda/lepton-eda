@@ -46,4 +46,4 @@ void
 lepton_picture_free (LeptonPicture *picture);
 
 GdkPixbuf*
-o_picture_get_fallback_pixbuf () G_GNUC_WARN_UNUSED_RESULT;
+lepton_picture_get_fallback_pixbuf () G_GNUC_WARN_UNUSED_RESULT;
