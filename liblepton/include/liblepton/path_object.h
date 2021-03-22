@@ -28,8 +28,7 @@ LeptonObject*
 lepton_path_object_new (int color,
                         const char *path_string);
 LeptonObject*
-lepton_path_object_new_take_path (char type,
-                                  int color,
+lepton_path_object_new_take_path (int color,
                                   LeptonPath *path_data);
 LeptonObject*
 lepton_path_object_copy (LeptonObject *o_current);
