@@ -450,11 +450,17 @@ lepton_picture_object_read (const char *first_line,
 
   /* create the picture */
   /* The picture is described by its upper left and lower right corner */
-  new_obj = o_picture_new (file_content, file_length, filename,
-                           type,
-                           x1, y1+height, x1+width, y1,
-                           angle, mirrored, embedded);
-
+  new_obj = lepton_picture_object_new (file_content,
+                                       file_length,
+                                       filename,
+                                       type,
+                                       x1,
+                                       y1+height,
+                                       x1+width,
+                                       y1,
+                                       angle,
+                                       mirrored,
+                                       embedded);
   g_free (file_content);
   g_free (filename);
 
@@ -566,17 +572,18 @@ lepton_picture_object_to_buffer (const LeptonObject *object)
  *  \param [in]     embedded      Whether the embedded flag should be set or not.
  *  \return A pointer to a new picture #LeptonObject.
  */
-LeptonObject *o_picture_new (const gchar *file_content,
-                       gsize file_length,
-                       const gchar *filename,
-                       char type,
-                       int x1,
-                       int y1,
-                       int x2,
-                       int y2,
-                       int angle,
-                       int mirrored,
-                       int embedded)
+LeptonObject*
+lepton_picture_object_new (const gchar *file_content,
+                           gsize file_length,
+                           const gchar *filename,
+                           char type,
+                           int x1,
+                           int y1,
+                           int x2,
+                           int y2,
+                           int angle,
+                           int mirrored,
+                           int embedded)
 {
   LeptonObject *new_node;
   LeptonPicture *picture;

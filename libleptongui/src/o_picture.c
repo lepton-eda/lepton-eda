@@ -102,12 +102,17 @@ void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
   if ((picture_width != 0) && (picture_height != 0)) {
 
     /* create the object */
-    new_obj = o_picture_new (NULL, 0, w_current->pixbuf_filename,
-                             OBJ_PICTURE,
-                             picture_left, picture_top,
-                             picture_left + picture_width,
-                             picture_top - picture_height,
-                             0, FALSE, FALSE);
+    new_obj = lepton_picture_object_new (NULL,
+                                         0,
+                                         w_current->pixbuf_filename,
+                                         OBJ_PICTURE,
+                                         picture_left,
+                                         picture_top,
+                                         picture_left + picture_width,
+                                         picture_top - picture_height,
+                                         0,
+                                         FALSE,
+                                         FALSE);
     s_page_append (toplevel->page_current, new_obj);
 
     /* Run %add-objects-hook */
