@@ -402,6 +402,26 @@ lepton_picture_object_get_position (const LeptonObject *object,
 /*! \brief Get the width/height ratio of an image.
  * \par Function Description
 
+ * Returns the width/height ratio of picture \a object.  The
+ * function does not take into account the image rotation but
+ * simply returns the value of the 'ratio' field of the
+ * #LeptonPicture structure.
+ *
+ * \param object Picture #LeptonObject to inspect.
+ * \return Width/height ratio for the picture object.
+ */
+double
+lepton_picture_object_get_ratio (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (object->picture != NULL, 0);
+
+  return object->picture->ratio;
+}
+
+/*! \brief Get the width/height ratio of an image.
+ * \par Function Description
+
  * Returns the width/height ratio of picture \a object, taking the
  * image rotation into account.
  *
