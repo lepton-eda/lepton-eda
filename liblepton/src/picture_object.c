@@ -222,25 +222,23 @@ lepton_picture_object_to_buffer (const LeptonObject *object)
 
   if (lepton_picture_object_get_embedded (object) &&
       encoded_picture != NULL) {
-    out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s\n%s\n%s",
+    out = g_strdup_printf("%c %d %d %d %d %d %d %d\n%s\n%s\n%s",
                           lepton_object_get_type (object),
                           x1, y1, width, height,
                           lepton_picture_object_get_angle (object),
-                          /* Convert the (0,1) chars to ASCII */
-                          (object->picture->mirrored)+0x30,
-                          '1',
+                          object->picture->mirrored,
+                          TRUE,
                           filename,
                           encoded_picture,
                           ".");
   }
   else {
-    out = g_strdup_printf("%c %d %d %d %d %d %c %c\n%s",
+    out = g_strdup_printf("%c %d %d %d %d %d %d %d\n%s",
                           lepton_object_get_type (object),
                           x1, y1, width, height,
                           lepton_picture_object_get_angle (object),
-                          /* Convert the (0,1) chars to ASCII */
-                          (object->picture->mirrored)+0x30,
-                          '0',
+                          object->picture->mirrored,
+                          FALSE,
                           filename);
   }
   g_free(encoded_picture);
@@ -286,8 +284,8 @@ lepton_picture_object_new (const gchar *file_content,
                            int x2,
                            int y2,
                            int angle,
-                           int mirrored,
-                           int embedded)
+                           gboolean mirrored,
+                           gboolean embedded)
 {
   LeptonObject *new_node;
   LeptonPicture *picture;
@@ -821,11 +819,11 @@ lepton_picture_object_embed (LeptonObject *object)
   if (object->picture->file_content == NULL) {
     g_message (_("Picture [%1$s] has no image data."), filename);
     g_message (_("Falling back to file loading. Picture is still unembedded."));
-    lepton_picture_object_set_embedded (object, 0);
+    lepton_picture_object_set_embedded (object, FALSE);
     return;
   }
 
-  lepton_picture_object_set_embedded (object, 1);
+  lepton_picture_object_set_embedded (object, TRUE);
 
   basename = g_path_get_basename (filename);
   g_message (_("Picture [%1$s] has been embedded."), basename);
@@ -1138,7 +1136,7 @@ lepton_picture_object_get_mirrored (const LeptonObject *object)
  */
 void
 lepton_picture_object_set_mirrored (LeptonObject *object,
-                                    int mirrored)
+                                    gboolean mirrored)
 {
   g_return_if_fail (object != NULL);
   g_return_if_fail (object->picture != NULL);

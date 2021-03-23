@@ -31,8 +31,8 @@ struct st_picture
   double ratio;
   char *filename;
   int angle;
-  char mirrored;
-  char embedded;
+  gboolean mirrored;
+  gboolean embedded;
 
   /* upper is considered the origin */
   int upper_x, upper_y; /* world */
