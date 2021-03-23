@@ -924,6 +924,23 @@ lepton_picture_object_get_embedded (const LeptonObject *object)
   return object->picture->embedded;
 }
 
+/*! \brief Set the \a embedded flag of a picture object.
+ *
+ * \param object   The picture #LeptonObject to amend.
+ * \param embedded If the picture object should be embedded.
+ */
+void
+lepton_picture_object_set_embedded (LeptonObject *object,
+                                    gboolean embedded)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (object->picture != NULL);
+  g_return_if_fail (object->type == OBJ_PICTURE);
+
+  object->picture->embedded = embedded;
+}
+
+
 /*! \brief Get a pixel buffer for a picture object.
  * \par Function Description
  * Returns a #GdkPixbuf for the picture object \a object, or NULL if
