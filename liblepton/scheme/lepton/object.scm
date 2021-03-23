@@ -26,7 +26,6 @@
 
   ;; Import C procedures
   #:use-module (lepton core component)
-  #:use-module (lepton core gettext)
   #:use-module (lepton core object)
   #:use-module (lepton ffi)
 
@@ -75,7 +74,7 @@ returns #f."
    ((picture? object) 'picture)
    ((pin? object) 'pin)
    ((text? object) 'text)
-   (else (error (G_ "Object ~A has bad type '~A'")
+   (else (error "Object ~A has bad type '~A'"
                 object
                 (integer->char (lepton_object_get_type pointer))))))
 
