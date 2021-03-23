@@ -312,7 +312,7 @@ lepton_picture_object_new (const gchar *file_content,
   picture->filename = g_strdup (filename);
   lepton_picture_object_set_angle (new_node, angle);
   picture->mirrored = mirrored;
-  picture->embedded = embedded;
+  lepton_picture_object_set_embedded (new_node, embedded);
 
   if (file_content != NULL) {
     GError *error = NULL;
@@ -795,7 +795,7 @@ lepton_picture_object_copy (LeptonObject *object)
   lepton_picture_object_set_ratio (new_node, lepton_picture_object_get_ratio (object));
   lepton_picture_object_set_angle (new_node, lepton_picture_object_get_angle (object));
   picture->mirrored    = object->picture->mirrored;
-  picture->embedded    = object->picture->embedded;
+  lepton_picture_object_set_embedded (new_node, lepton_picture_object_get_embedded (object));
 
   /* Get the picture data */
   picture->pixbuf = lepton_picture_object_get_pixbuf (object);
@@ -821,11 +821,11 @@ lepton_picture_object_embed (LeptonObject *object)
   if (object->picture->file_content == NULL) {
     g_message (_("Picture [%1$s] has no image data."), filename);
     g_message (_("Falling back to file loading. Picture is still unembedded."));
-    object->picture->embedded = 0;
+    lepton_picture_object_set_embedded (object, 0);
     return;
   }
 
-  object->picture->embedded = 1;
+  lepton_picture_object_set_embedded (object, 1);
 
   basename = g_path_get_basename (filename);
   g_message (_("Picture [%1$s] has been embedded."), basename);
