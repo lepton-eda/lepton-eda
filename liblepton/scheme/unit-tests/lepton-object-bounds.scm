@@ -56,3 +56,10 @@
     (test-equal #f (fold-bounds #f #f))))
 
 (test-end "fold-bounds")
+
+
+(test-begin "object-bounds-wrong-argument")
+
+(test-assert-thrown 'wrong-type-arg (object-bounds 'a))
+
+(test-end "object-bounds-wrong-argument")
