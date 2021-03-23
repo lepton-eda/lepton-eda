@@ -2036,7 +2036,7 @@ SCM_DEFINE (picture_info, "%picture-info", 1, 0, 0,
                      scm_from_int (obj->picture->lower_x),
                      scm_from_int (obj->picture->lower_y),
                      scm_from_int (lepton_picture_object_get_angle (obj)),
-                     (obj->picture->mirrored ? SCM_BOOL_T : SCM_BOOL_F),
+                     (lepton_picture_object_get_mirrored (obj) ? SCM_BOOL_T : SCM_BOOL_F),
                      SCM_UNDEFINED);
 }
 
@@ -2089,7 +2089,7 @@ SCM_DEFINE (set_picture_x, "%set-picture!", 7, 0, 0,
   lepton_object_emit_pre_change_notify (obj);
 
   lepton_picture_object_set_angle (obj, scm_to_int (angle_s));
-  obj->picture->mirrored = scm_is_true (mirror_s);
+  lepton_picture_object_set_mirrored (obj, scm_is_true (mirror_s));
   lepton_picture_object_modify_all (obj,
                                     scm_to_int (x1_s),
                                     scm_to_int (y1_s),

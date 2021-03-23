@@ -1045,7 +1045,8 @@ eda_renderer_draw_picture (EdaRenderer *renderer, LeptonObject *object)
   }
 
   cairo_rotate (renderer->priv->cr, -angle * M_PI / 180.);
-  if (object->picture->mirrored) {
+  if (lepton_picture_object_get_mirrored (object))
+  {
     cairo_translate (renderer->priv->cr, gdk_pixbuf_get_width (pixbuf), 0);
     cairo_scale (renderer->priv->cr, -1, 1);
   }

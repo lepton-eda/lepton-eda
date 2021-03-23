@@ -226,7 +226,7 @@ lepton_picture_object_to_buffer (const LeptonObject *object)
                           lepton_object_get_type (object),
                           x1, y1, width, height,
                           lepton_picture_object_get_angle (object),
-                          object->picture->mirrored,
+                          lepton_picture_object_get_mirrored (object),
                           TRUE,
                           filename,
                           encoded_picture,
@@ -237,7 +237,7 @@ lepton_picture_object_to_buffer (const LeptonObject *object)
                           lepton_object_get_type (object),
                           x1, y1, width, height,
                           lepton_picture_object_get_angle (object),
-                          object->picture->mirrored,
+                          lepton_picture_object_get_mirrored (object),
                           FALSE,
                           filename);
   }
@@ -309,7 +309,7 @@ lepton_picture_object_new (const gchar *file_content,
   lepton_picture_object_set_ratio (new_node, fabs ((double) (x1 - x2) / (y1 - y2)));
   picture->filename = g_strdup (filename);
   lepton_picture_object_set_angle (new_node, angle);
-  picture->mirrored = mirrored;
+  lepton_picture_object_set_mirrored (new_node, mirrored);
   lepton_picture_object_set_embedded (new_node, embedded);
 
   if (file_content != NULL) {
@@ -693,7 +693,8 @@ lepton_picture_object_mirror (int world_centerx,
 
   /* Set info in object. Sometimes it's necessary to change the
    * rotation angle as well as the mirror flag. */
-  object->picture->mirrored = !object->picture->mirrored;
+  lepton_picture_object_set_mirrored (object,
+                                      !lepton_picture_object_get_mirrored (object));
   switch (lepton_picture_object_get_angle (object)) {
   case 90:
     lepton_picture_object_set_angle (object, 270);
@@ -792,7 +793,7 @@ lepton_picture_object_copy (LeptonObject *object)
   picture->filename    = g_strdup (object->picture->filename);
   lepton_picture_object_set_ratio (new_node, lepton_picture_object_get_ratio (object));
   lepton_picture_object_set_angle (new_node, lepton_picture_object_get_angle (object));
-  picture->mirrored    = object->picture->mirrored;
+  lepton_picture_object_set_mirrored (new_node, lepton_picture_object_get_mirrored (object));
   lepton_picture_object_set_embedded (new_node, lepton_picture_object_get_embedded (object));
 
   /* Get the picture data */
