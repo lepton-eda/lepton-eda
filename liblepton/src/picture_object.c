@@ -919,6 +919,7 @@ lepton_picture_object_get_embedded (const LeptonObject *object)
 {
   g_return_val_if_fail (object != NULL, FALSE);
   g_return_val_if_fail (object->picture != NULL, FALSE);
+  g_return_val_if_fail (object->type == OBJ_PICTURE, FALSE);
 
   return object->picture->embedded;
 }
