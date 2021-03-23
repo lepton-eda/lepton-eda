@@ -22,6 +22,7 @@
             ;; Helpers.
             true?
             geda-object->pointer
+            geda-object->pointer*
             pointer->geda-object
 
             ;; Foreign functions.
@@ -127,3 +128,23 @@
 (define (pointer->geda-object pointer)
   ;; Return #f if the pointer is wrong.
   (false-if-exception (pointer->scm (edascm_from_object pointer))))
+
+;;; This syntax rule is intended for use in toplevel 'define' or
+;;; 'let' forms in the functions where the check for wrong type of
+;;; OBJECT is necessary.  The rule checks the object and, if it is
+;;; not #<geda-object>, throws an error with the 'wrong-type-arg
+;;; key reporting the function name and position POS of the
+;;; OBJECT argument.  In short, the usage is as follows:
+;;;   (define (myfunc object)
+;;;     (define pointer (geda-object->pointer* object 1))
+;;;     (function-body))
+(define-syntax-rule (geda-object->pointer* object pos)
+  (let ((pointer (geda-object->pointer object)))
+    (if (null-pointer? pointer)
+        (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
+          (scm-error 'wrong-type-arg
+                     proc-name
+                     "Wrong type argument in position ~A: ~A"
+                     (list pos object)
+                     #f))
+        pointer)))
