@@ -419,7 +419,7 @@ lepton_picture_object_get_position (const LeptonObject *object,
 double
 lepton_picture_object_get_ratio (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_picture (object), 0);
   g_return_val_if_fail (object->picture != NULL, 0);
 
   return object->picture->ratio;
@@ -440,7 +440,7 @@ lepton_picture_object_get_real_ratio (LeptonObject *object)
   int angle;
   double ratio;
 
-  g_return_val_if_fail (object != NULL, 1);
+  g_return_val_if_fail (lepton_object_is_picture (object), 1);
   g_return_val_if_fail (object->picture != NULL, 1);
 
   angle = lepton_picture_object_get_angle (object);
@@ -473,7 +473,7 @@ void
 lepton_picture_object_set_ratio (LeptonObject *object,
                                  double ratio)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
 
   object->picture->ratio = ratio;
@@ -911,6 +911,7 @@ lepton_picture_object_shortest_distance (LeptonObject *object,
   double dx, dy;
   double x1, y1, x2, y2;
 
+  g_return_val_if_fail (lepton_object_is_picture (object), G_MAXDOUBLE);
   g_return_val_if_fail (object->picture != NULL, G_MAXDOUBLE);
 
   x1 = (double) MIN (lepton_picture_object_get_upper_x (object),
@@ -943,9 +944,8 @@ lepton_picture_object_shortest_distance (LeptonObject *object,
 gboolean
 lepton_picture_object_get_embedded (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (lepton_object_is_picture (object), FALSE);
   g_return_val_if_fail (object->picture != NULL, FALSE);
-  g_return_val_if_fail (object->type == OBJ_PICTURE, FALSE);
 
   return object->picture->embedded;
 }
@@ -959,9 +959,8 @@ void
 lepton_picture_object_set_embedded (LeptonObject *object,
                                     gboolean embedded)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
-  g_return_if_fail (object->type == OBJ_PICTURE);
 
   object->picture->embedded = embedded;
 }
@@ -981,7 +980,7 @@ lepton_picture_object_set_embedded (LeptonObject *object,
 GdkPixbuf *
 lepton_picture_object_get_pixbuf (LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_picture (object), NULL);
   g_return_val_if_fail (object->picture != NULL, NULL);
 
   if (object->picture->pixbuf != NULL) {
@@ -1015,7 +1014,7 @@ lepton_picture_object_set_from_buffer (LeptonObject *object,
   GInputStream *stream;
   gchar *tmp;
 
-  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (lepton_object_is_picture (object), FALSE);
   g_return_val_if_fail (object->picture != NULL, FALSE);
   g_return_val_if_fail (data != NULL, FALSE);
 
@@ -1097,9 +1096,8 @@ lepton_picture_object_set_from_file (LeptonObject *object,
 const gchar *
 lepton_picture_object_get_filename (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, NULL);
+  g_return_val_if_fail (lepton_object_is_picture (object), NULL);
   g_return_val_if_fail (object->picture != NULL, NULL);
-  g_return_val_if_fail (object->type == OBJ_PICTURE, NULL);
 
   return object->picture->filename;
 }
@@ -1112,9 +1110,8 @@ lepton_picture_object_get_filename (const LeptonObject *object)
 int
 lepton_picture_object_get_upper_x (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_picture (object), 0);
   g_return_val_if_fail (object->picture != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
 
   return object->picture->upper_x;
 }
@@ -1129,9 +1126,8 @@ void
 lepton_picture_object_set_upper_x (LeptonObject *object,
                                    int x)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
-  g_return_if_fail (object->type == OBJ_PICTURE);
 
   object->picture->upper_x = x;
 }
@@ -1145,9 +1141,8 @@ lepton_picture_object_set_upper_x (LeptonObject *object,
 int
 lepton_picture_object_get_lower_x (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_picture (object), 0);
   g_return_val_if_fail (object->picture != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
 
   return object->picture->lower_x;
 }
@@ -1162,9 +1157,8 @@ void
 lepton_picture_object_set_lower_x (LeptonObject *object,
                                    int x)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
-  g_return_if_fail (object->type == OBJ_PICTURE);
 
   object->picture->lower_x = x;
 }
@@ -1178,9 +1172,8 @@ lepton_picture_object_set_lower_x (LeptonObject *object,
 int
 lepton_picture_object_get_upper_y (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_picture (object), 0);
   g_return_val_if_fail (object->picture != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
 
   return object->picture->upper_y;
 }
@@ -1195,9 +1188,8 @@ void
 lepton_picture_object_set_upper_y (LeptonObject *object,
                                    int y)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
-  g_return_if_fail (object->type == OBJ_PICTURE);
 
   object->picture->upper_y = y;
 }
@@ -1211,9 +1203,8 @@ lepton_picture_object_set_upper_y (LeptonObject *object,
 int
 lepton_picture_object_get_lower_y (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_picture (object), 0);
   g_return_val_if_fail (object->picture != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
 
   return object->picture->lower_y;
 }
@@ -1228,9 +1219,8 @@ void
 lepton_picture_object_set_lower_y (LeptonObject *object,
                                    int y)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
-  g_return_if_fail (object->type == OBJ_PICTURE);
 
   object->picture->lower_y = y;
 }
@@ -1244,9 +1234,8 @@ lepton_picture_object_set_lower_y (LeptonObject *object,
 int
 lepton_picture_object_get_angle (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_picture (object), 0);
   g_return_val_if_fail (object->picture != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
 
   return object->picture->angle;
 }
@@ -1261,9 +1250,8 @@ void
 lepton_picture_object_set_angle (LeptonObject *object,
                                  int angle)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
-  g_return_if_fail (object->type == OBJ_PICTURE);
   g_return_if_fail ((angle == 0)
                     || (angle == 90)
                     || (angle == 180)
@@ -1281,9 +1269,8 @@ lepton_picture_object_set_angle (LeptonObject *object,
 gboolean
 lepton_picture_object_get_mirrored (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, 0);
+  g_return_val_if_fail (lepton_object_is_picture (object), 0);
   g_return_val_if_fail (object->picture != NULL, 0);
-  g_return_val_if_fail (object->type == OBJ_PICTURE, 0);
 
   return object->picture->mirrored;
 }
@@ -1298,9 +1285,8 @@ void
 lepton_picture_object_set_mirrored (LeptonObject *object,
                                     gboolean mirrored)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
-  g_return_if_fail (object->type == OBJ_PICTURE);
   g_return_if_fail ((mirrored == 0) || (mirrored == 1));
 
   object->picture->mirrored = mirrored;
