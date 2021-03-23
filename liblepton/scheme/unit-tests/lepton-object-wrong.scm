@@ -8,4 +8,6 @@
 (test-assert-thrown 'wrong-type-arg (object-type 'a))
 (test-assert (not (object-type? 'a 'a)))
 
+(test-assert-thrown 'wrong-type-arg (object-color 'a))
+
 (test-end "non-object")
