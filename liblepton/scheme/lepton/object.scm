@@ -61,24 +61,23 @@ returns #f."
 
 (define (object-type object)
   "Returns a Scheme symbol representing the type of OBJECT."
-  (if (object? object)
-      (cond
-       ((arc? object) 'arc)
-       ((box? object) 'box)
-       ((bus? object) 'bus)
-       ((circle? object) 'circle)
-       ((component? object) 'complex)
-       ((line? object) 'line)
-       ((net? object) 'net)
-       ((path? object) 'path)
-       ((picture? object) 'picture)
-       ((pin? object) 'pin)
-       ((text? object) 'text)
-       (else (error (G_ "Object ~A has bad type '~A'")
-                    object
-                    (integer->char (lepton_object_get_type object)))))
-      (throw 'wrong-type-arg (G_ "object-type: Wrong type argument: ~A")
-             object)))
+  (define pointer (geda-object->pointer* object 1))
+
+  (cond
+   ((arc? object) 'arc)
+   ((box? object) 'box)
+   ((bus? object) 'bus)
+   ((circle? object) 'circle)
+   ((component? object) 'complex)
+   ((line? object) 'line)
+   ((net? object) 'net)
+   ((path? object) 'path)
+   ((picture? object) 'picture)
+   ((pin? object) 'pin)
+   ((text? object) 'text)
+   (else (error (G_ "Object ~A has bad type '~A'")
+                object
+                (integer->char (lepton_object_get_type pointer))))))
 
 (define (object-type? x type)
   (and (object? x)
