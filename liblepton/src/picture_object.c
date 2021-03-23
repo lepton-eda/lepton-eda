@@ -191,14 +191,20 @@ lepton_picture_object_to_buffer (const LeptonObject *object)
   gchar *out=NULL;
   guint encoded_picture_length;
   const gchar *filename = NULL;
+  int lower_x, lower_y, upper_x, upper_y;
+
+  lower_x = lepton_picture_object_get_lower_x (object);
+  lower_y = lepton_picture_object_get_lower_y (object);
+  upper_x = lepton_picture_object_get_upper_x (object);
+  upper_y = lepton_picture_object_get_upper_y (object);
 
   /* calculate the width and height of the box */
-  width  = abs(object->picture->lower_x - object->picture->upper_x);
-  height = abs(object->picture->upper_y - object->picture->lower_y);
+  width  = abs (lower_x - upper_x);
+  height = abs (upper_y - lower_y);
 
   /* calculate the lower left corner of the box */
-  x1 = object->picture->upper_x;
-  y1 = object->picture->upper_y - height; /* move the origin to 0, 0*/
+  x1 = upper_x;
+  y1 = upper_y - height; /* move the origin to 0, 0*/
 
 #if DEBUG
   printf("picture: %d %d %d %d\n", x1, y1, width, height);
@@ -297,10 +303,10 @@ lepton_picture_object_new (const gchar *file_content,
   new_node->picture = picture;
 
   /* describe the picture with its upper left and lower right corner */
-  picture->upper_x = (x1 > x2) ? x2 : x1;
-  picture->upper_y = (y1 > y2) ? y1 : y2;
-  picture->lower_x = (x1 > x2) ? x1 : x2;
-  picture->lower_y = (y1 > y2) ? y2 : y1;
+  lepton_picture_object_set_upper_x (new_node, (x1 > x2) ? x2 : x1);
+  lepton_picture_object_set_upper_y (new_node, (y1 > y2) ? y1 : y2);
+  lepton_picture_object_set_lower_x (new_node, (x1 > x2) ? x1 : x2);
+  lepton_picture_object_set_lower_y (new_node, (y1 > y2) ? y2 : y1);
 
   picture->pixbuf = NULL;
   picture->file_content = NULL;
@@ -362,10 +368,10 @@ lepton_picture_object_calculate_bounds (const LeptonObject *object,
   g_return_if_fail (object->picture != NULL);
 
   lepton_bounds_init_with_points (bounds,
-                                  object->picture->lower_x,
-                                  object->picture->lower_y,
-                                  object->picture->upper_x,
-                                  object->picture->upper_y);
+                                  lepton_picture_object_get_lower_x (object),
+                                  lepton_picture_object_get_lower_y (object),
+                                  lepton_picture_object_get_upper_x (object),
+                                  lepton_picture_object_get_upper_y (object));
 }
 
 /*! \brief get the position of the left bottom point
@@ -386,11 +392,13 @@ lepton_picture_object_get_position (const LeptonObject *object,
   g_return_val_if_fail (object->picture != NULL, FALSE);
 
   if (x != NULL) {
-    *x = MIN (object->picture->lower_x, object->picture->upper_x);
+    *x = MIN (lepton_picture_object_get_lower_x (object),
+              lepton_picture_object_get_upper_x (object));
   }
 
   if (y != NULL) {
-    *y = MIN (object->picture->lower_y, object->picture->upper_y);
+    *y = MIN (lepton_picture_object_get_lower_y (object),
+              lepton_picture_object_get_upper_y (object));
   }
 
   return TRUE;
@@ -500,6 +508,7 @@ lepton_picture_object_modify (LeptonObject *object,
                               int whichone)
 {
   int tmp;
+  int lower_x, lower_y, upper_x, upper_y;
   double ratio = lepton_picture_object_get_real_ratio (object);
 
   lepton_object_emit_pre_change_notify (object);
@@ -507,56 +516,75 @@ lepton_picture_object_modify (LeptonObject *object,
   /* change the position of the selected corner */
   switch(whichone) {
     case PICTURE_UPPER_LEFT:
-      object->picture->upper_x = x;
-      tmp = abs(object->picture->upper_x - object->picture->lower_x) / ratio;
-      if (y < object->picture->lower_y) {
+      lepton_picture_object_set_upper_x (object, x);
+      tmp = abs (lepton_picture_object_get_upper_x (object) -
+                 lepton_picture_object_get_lower_x (object)) / ratio;
+      if (y < lepton_picture_object_get_lower_y (object))
+      {
         tmp = -tmp;
       }
-      object->picture->upper_y = object->picture->lower_y + tmp;
+      lepton_picture_object_set_upper_y (object,
+                                         lepton_picture_object_get_lower_y (object) + tmp);
       break;
 
     case PICTURE_LOWER_LEFT:
-      object->picture->upper_x = x;
-      tmp = abs(object->picture->upper_x - object->picture->lower_x) / ratio;
-      if (y > object->picture->upper_y) {
+      lepton_picture_object_set_upper_x (object, x);
+      tmp = abs (lepton_picture_object_get_upper_x (object) -
+                 lepton_picture_object_get_lower_x (object)) / ratio;
+      if (y > lepton_picture_object_get_upper_y (object))
+      {
         tmp = -tmp;
       }
-      object->picture->lower_y = object->picture->upper_y - tmp;
+      lepton_picture_object_set_lower_y (object,
+                                         lepton_picture_object_get_upper_y (object) - tmp);
       break;
 
     case PICTURE_UPPER_RIGHT:
-      object->picture->lower_x = x;
-      tmp = abs(object->picture->upper_x - object->picture->lower_x) / ratio;
-      if (y < object->picture->lower_y) {
+      lepton_picture_object_set_lower_x (object, x);
+      tmp = abs (lepton_picture_object_get_upper_x (object) -
+                 lepton_picture_object_get_lower_x (object)) / ratio;
+      if (y < lepton_picture_object_get_lower_y (object))
+      {
         tmp = -tmp;
       }
-      object->picture->upper_y = object->picture->lower_y + tmp;
+      lepton_picture_object_set_upper_y (object,
+                                         lepton_picture_object_get_lower_y (object) + tmp);
       break;
 
     case PICTURE_LOWER_RIGHT:
-      object->picture->lower_x = x;
-      tmp = abs(object->picture->upper_x - object->picture->lower_x) / ratio;
-      if (y > object->picture->upper_y) {
+      lepton_picture_object_set_lower_x (object, x);
+      tmp = abs (lepton_picture_object_get_upper_x (object) -
+                 lepton_picture_object_get_lower_x (object)) / ratio;
+      if (y > lepton_picture_object_get_upper_y (object))
+      {
         tmp = -tmp;
       }
-      object->picture->lower_y = object->picture->upper_y - tmp;
+      lepton_picture_object_set_lower_y (object,
+                                         lepton_picture_object_get_upper_y (object) - tmp);
       break;
 
     default:
       return;
   }
 
+  lower_x = lepton_picture_object_get_lower_x (object);
+  lower_y = lepton_picture_object_get_lower_y (object);
+  upper_x = lepton_picture_object_get_upper_x (object);
+  upper_y = lepton_picture_object_get_upper_y (object);
+
   /* need to update the upper left and lower right corners */
-  if(object->picture->upper_x > object->picture->lower_x) {
-    tmp                      = object->picture->upper_x;
-    object->picture->upper_x = object->picture->lower_x;
-    object->picture->lower_x = tmp;
+  if (upper_x > lower_x)
+  {
+    tmp = upper_x;
+    lepton_picture_object_set_upper_x (object, lower_x);
+    lepton_picture_object_set_lower_x (object, tmp);
   }
 
-  if(object->picture->upper_y < object->picture->lower_y) {
-    tmp                      = object->picture->upper_y;
-    object->picture->upper_y = object->picture->lower_y;
-    object->picture->lower_y = tmp;
+  if (upper_y < lower_y)
+  {
+    tmp = upper_y;
+    lepton_picture_object_set_upper_y (object, lower_y);
+    lepton_picture_object_set_lower_y (object, tmp);
   }
 
   lepton_object_emit_change_notify (object);
@@ -585,10 +613,10 @@ lepton_picture_object_modify_all (LeptonObject *object,
   lepton_object_emit_pre_change_notify (object);
 
   /* Normalise the requested rectangle. */
-  object->picture->lower_x = (x1 > x2) ? x1 : x2;
-  object->picture->lower_y = (y1 > y2) ? y2 : y1;
-  object->picture->upper_x = (x1 > x2) ? x2 : x1;
-  object->picture->upper_y = (y1 > y2) ? y1 : y2;
+  lepton_picture_object_set_lower_x (object, (x1 > x2) ? x1 : x2);
+  lepton_picture_object_set_lower_y (object, (y1 > y2) ? y2 : y1);
+  lepton_picture_object_set_upper_x (object, (x1 > x2) ? x2 : x1);
+  lepton_picture_object_set_upper_y (object, (y1 > y2) ? y1 : y2);
 
   lepton_object_emit_change_notify (object);
 }
@@ -636,36 +664,30 @@ lepton_picture_object_rotate (int world_centerx,
    * translated back to its previous location.
    */
   /* translate object to origin */
-  object->picture->upper_x -= world_centerx;
-  object->picture->upper_y -= world_centery;
-  object->picture->lower_x -= world_centerx;
-  object->picture->lower_y -= world_centery;
+  lepton_picture_object_translate (object, -world_centerx, -world_centery);
 
   /* rotate the upper left corner of the picture */
-  lepton_point_rotate_90 (object->picture->upper_x,
-                          object->picture->upper_y,
+  lepton_point_rotate_90 (lepton_picture_object_get_upper_x (object),
+                          lepton_picture_object_get_upper_y (object),
                           angle,
                           &newx1,
                           &newy1);
 
   /* rotate the lower left corner of the picture */
-  lepton_point_rotate_90 (object->picture->lower_x,
-                          object->picture->lower_y,
+  lepton_point_rotate_90 (lepton_picture_object_get_lower_x (object),
+                          lepton_picture_object_get_lower_y (object),
                           angle,
                           &newx2,
                           &newy2);
 
   /* reorder the corners after rotation */
-  object->picture->upper_x = MIN(newx1,newx2);
-  object->picture->upper_y = MAX(newy1,newy2);
-  object->picture->lower_x = MAX(newx1,newx2);
-  object->picture->lower_y = MIN(newy1,newy2);
+  lepton_picture_object_set_upper_x (object, MIN (newx1, newx2));
+  lepton_picture_object_set_upper_y (object, MAX (newy1, newy2));
+  lepton_picture_object_set_lower_x (object, MAX (newx1, newx2));
+  lepton_picture_object_set_lower_y (object, MIN (newy1, newy2));
 
   /* translate object back to normal position */
-  object->picture->upper_x += world_centerx;
-  object->picture->upper_y += world_centery;
-  object->picture->lower_x += world_centerx;
-  object->picture->lower_y += world_centery;
+  lepton_picture_object_translate (object, world_centerx, world_centery);
 }
 
 /*! \brief Mirror a picture using WORLD coordinates.
@@ -705,28 +727,22 @@ lepton_picture_object_mirror (int world_centerx,
   }
 
   /* translate object to origin */
-  object->picture->upper_x -= world_centerx;
-  object->picture->upper_y -= world_centery;
-  object->picture->lower_x -= world_centerx;
-  object->picture->lower_y -= world_centery;
+  lepton_picture_object_translate (object, -world_centerx, -world_centery);
 
   /* mirror the corners */
-  newx1 = -object->picture->upper_x;
-  newy1 = object->picture->upper_y;
-  newx2 = -object->picture->lower_x;
-  newy2 = object->picture->lower_y;
+  newx1 = -lepton_picture_object_get_upper_x (object);
+  newy1 = lepton_picture_object_get_upper_y (object);
+  newx2 = -lepton_picture_object_get_lower_x (object);
+  newy2 = lepton_picture_object_get_lower_y (object);
 
   /* reorder the corners */
-  object->picture->upper_x = MIN(newx1,newx2);
-  object->picture->upper_y = MAX(newy1,newy2);
-  object->picture->lower_x = MAX(newx1,newx2);
-  object->picture->lower_y = MIN(newy1,newy2);
+  lepton_picture_object_set_upper_x (object, MIN (newx1, newx2));
+  lepton_picture_object_set_upper_y (object, MAX (newy1, newy2));
+  lepton_picture_object_set_lower_x (object, MAX (newx1, newx2));
+  lepton_picture_object_set_lower_y (object, MIN (newy1, newy2));
 
   /* translate back in position */
-  object->picture->upper_x += world_centerx;
-  object->picture->upper_y += world_centery;
-  object->picture->lower_x += world_centerx;
-  object->picture->lower_y += world_centery;
+  lepton_picture_object_translate (object, world_centerx, world_centery);
 }
 
 /*! \brief Translate a picture position in WORLD coordinates by a delta.
@@ -743,14 +759,21 @@ lepton_picture_object_translate (LeptonObject *object,
                                  int dx,
                                  int dy)
 {
+  int lower_x, lower_y, upper_x, upper_y;
+
   g_return_if_fail (lepton_object_is_picture (object));
   g_return_if_fail (object->picture != NULL);
 
+  upper_x = lepton_picture_object_get_upper_x (object);
+  upper_y = lepton_picture_object_get_upper_y (object);
+  lower_x = lepton_picture_object_get_lower_x (object);
+  lower_y = lepton_picture_object_get_lower_y (object);
+
   /* Do world coords */
-  object->picture->upper_x = object->picture->upper_x + dx;
-  object->picture->upper_y = object->picture->upper_y + dy;
-  object->picture->lower_x = object->picture->lower_x + dx;
-  object->picture->lower_y = object->picture->lower_y + dy;
+  lepton_picture_object_set_upper_x (object, upper_x + dx);
+  lepton_picture_object_set_upper_y (object, upper_y + dy);
+  lepton_picture_object_set_lower_x (object, lower_x + dx);
+  lepton_picture_object_set_lower_y (object, lower_y + dy);
 }
 
 /*! \brief Create a copy of a picture.
@@ -777,10 +800,10 @@ lepton_picture_object_copy (LeptonObject *object)
   new_node->selectable = lepton_object_get_selectable (object);
 
   /* describe the picture with its upper left and lower right corner */
-  picture->upper_x = object->picture->upper_x;
-  picture->upper_y = object->picture->upper_y;
-  picture->lower_x = object->picture->lower_x;
-  picture->lower_y = object->picture->lower_y;
+  lepton_picture_object_set_upper_x (new_node, lepton_picture_object_get_upper_x (object));
+  lepton_picture_object_set_upper_y (new_node, lepton_picture_object_get_upper_y (object));
+  lepton_picture_object_set_lower_x (new_node, lepton_picture_object_get_lower_x (object));
+  lepton_picture_object_set_lower_y (new_node, lepton_picture_object_get_lower_y (object));
 
   if (object->picture->file_content != NULL) {
     picture->file_content = (gchar*) g_memdup (object->picture->file_content,
@@ -890,10 +913,14 @@ lepton_picture_object_shortest_distance (LeptonObject *object,
 
   g_return_val_if_fail (object->picture != NULL, G_MAXDOUBLE);
 
-  x1 = (double)MIN (object->picture->upper_x, object->picture->lower_x);
-  y1 = (double)MIN (object->picture->upper_y, object->picture->lower_y);
-  x2 = (double)MAX (object->picture->upper_x, object->picture->lower_x);
-  y2 = (double)MAX (object->picture->upper_y, object->picture->lower_y);
+  x1 = (double) MIN (lepton_picture_object_get_upper_x (object),
+                     lepton_picture_object_get_lower_x (object));
+  y1 = (double) MIN (lepton_picture_object_get_upper_y (object),
+                     lepton_picture_object_get_lower_y (object));
+  x2 = (double) MAX (lepton_picture_object_get_upper_x (object),
+                     lepton_picture_object_get_lower_x (object));
+  y2 = (double) MAX (lepton_picture_object_get_upper_y (object),
+                     lepton_picture_object_get_lower_y (object));
 
   dx = MIN (((double)x) - x1, x2 - ((double)x));
   dy = MIN (((double)y) - y1, y2 - ((double)y));

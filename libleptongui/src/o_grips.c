@@ -408,34 +408,37 @@ LeptonObject *o_grips_search_path_world(GschemToplevel *w_current, LeptonObject 
 LeptonObject *o_grips_search_picture_world(GschemToplevel *w_current, LeptonObject *o_current,
                                      int x, int y, int size, int *whichone)
 {
+  int lower_x, lower_y, upper_x, upper_y;
+
+  lower_x = lepton_picture_object_get_lower_x (o_current);
+  lower_y = lepton_picture_object_get_lower_y (o_current);
+  upper_x = lepton_picture_object_get_upper_x (o_current);
+  upper_y = lepton_picture_object_get_upper_y (o_current);
+
   /* inside upper left grip ? */
-  if (inside_grip(x, y,
-                  o_current->picture->upper_x,
-                  o_current->picture->upper_y, size)) {
+  if (inside_grip (x, y, upper_x, upper_y, size))
+  {
     *whichone = PICTURE_UPPER_LEFT;
     return(o_current);
   }
 
   /* inside lower right grip ? */
-  if (inside_grip(x, y,
-                  o_current->picture->lower_x,
-                  o_current->picture->lower_y, size)) {
+  if (inside_grip (x, y, lower_x, lower_y, size))
+  {
     *whichone = PICTURE_LOWER_RIGHT;
     return(o_current);
   }
 
   /* inside upper right grip ? */
-  if (inside_grip(x, y,
-                  o_current->picture->lower_x,
-                  o_current->picture->upper_y, size)) {
+  if (inside_grip (x, y, lower_x, upper_y, size))
+  {
     *whichone = PICTURE_UPPER_RIGHT;
     return(o_current);
   }
 
   /* inside lower left grip ? */
-  if (inside_grip(x, y,
-                  o_current->picture->upper_x,
-                  o_current->picture->lower_y, size)) {
+  if (inside_grip (x, y, upper_x, lower_y, size))
+  {
     *whichone = PICTURE_LOWER_LEFT;
     return(o_current);
   }
@@ -731,6 +734,13 @@ static void o_grips_start_path(GschemToplevel *w_current, LeptonObject *o_curren
 static void o_grips_start_picture(GschemToplevel *w_current, LeptonObject *o_current,
                                   int x, int y, int whichone)
 {
+  int lower_x, lower_y, upper_x, upper_y;
+
+  lower_x = lepton_picture_object_get_lower_x (o_current);
+  lower_y = lepton_picture_object_get_lower_y (o_current);
+  upper_x = lepton_picture_object_get_upper_x (o_current);
+  upper_y = lepton_picture_object_get_upper_y (o_current);
+
   w_current->last_drawb_mode = LAST_DRAWB_MODE_NONE;
 
   w_current->current_pixbuf = lepton_picture_object_get_pixbuf (o_current);
@@ -742,28 +752,28 @@ static void o_grips_start_picture(GschemToplevel *w_current, LeptonObject *o_cur
   /* (first_wx, first_wy) is the opposite corner */
   switch(whichone) {
     case PICTURE_UPPER_LEFT:
-      w_current->second_wx = o_current->picture->upper_x;
-      w_current->second_wy = o_current->picture->upper_y;
-      w_current->first_wx = o_current->picture->lower_x;
-      w_current->first_wy = o_current->picture->lower_y;
+      w_current->second_wx = upper_x;
+      w_current->second_wy = upper_y;
+      w_current->first_wx  = lower_x;
+      w_current->first_wy  = lower_y;
       break;
     case PICTURE_LOWER_RIGHT:
-      w_current->second_wx = o_current->picture->lower_x;
-      w_current->second_wy = o_current->picture->lower_y;
-      w_current->first_wx = o_current->picture->upper_x;
-      w_current->first_wy = o_current->picture->upper_y;
+      w_current->second_wx = lower_x;
+      w_current->second_wy = lower_y;
+      w_current->first_wx  = upper_x;
+      w_current->first_wy  = upper_y;
       break;
     case PICTURE_UPPER_RIGHT:
-      w_current->second_wx = o_current->picture->lower_x;
-      w_current->second_wy = o_current->picture->upper_y;
-      w_current->first_wx = o_current->picture->upper_x;
-      w_current->first_wy = o_current->picture->lower_y;
+      w_current->second_wx = lower_x;
+      w_current->second_wy = upper_y;
+      w_current->first_wx  = upper_x;
+      w_current->first_wy  = lower_y;
       break;
     case PICTURE_LOWER_LEFT:
-      w_current->second_wx = o_current->picture->upper_x;
-      w_current->second_wy = o_current->picture->lower_y;
-      w_current->first_wx = o_current->picture->lower_x;
-      w_current->first_wy = o_current->picture->upper_y;
+      w_current->second_wx = upper_x;
+      w_current->second_wy = lower_y;
+      w_current->first_wx  = lower_x;
+      w_current->first_wy  = upper_y;
       break;
     default:
       return; /* error */

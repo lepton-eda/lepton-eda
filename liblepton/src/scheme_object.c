@@ -2031,10 +2031,10 @@ SCM_DEFINE (picture_info, "%picture-info", 1, 0, 0,
   }
 
   return scm_list_n (filename_s,
-                     scm_from_int (obj->picture->upper_x),
-                     scm_from_int (obj->picture->upper_y),
-                     scm_from_int (obj->picture->lower_x),
-                     scm_from_int (obj->picture->lower_y),
+                     scm_from_int (lepton_picture_object_get_upper_x (obj)),
+                     scm_from_int (lepton_picture_object_get_upper_y (obj)),
+                     scm_from_int (lepton_picture_object_get_lower_x (obj)),
+                     scm_from_int (lepton_picture_object_get_lower_y (obj)),
                      scm_from_int (lepton_picture_object_get_angle (obj)),
                      (lepton_picture_object_get_mirrored (obj) ? SCM_BOOL_T : SCM_BOOL_F),
                      SCM_UNDEFINED);

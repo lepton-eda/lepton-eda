@@ -999,18 +999,22 @@ eda_renderer_draw_picture (EdaRenderer *renderer, LeptonObject *object)
   double orig_width, orig_height;
   GdkPixbuf *pixbuf;
   int angle;
+  int lower_x, lower_y, upper_x, upper_y;
 
   /* Get a pixbuf. If image doesn't exist, libgeda should
    * provide a fallback image. */
   pixbuf = GDK_PIXBUF (g_object_ref (object->picture->pixbuf));
 
+  lower_x = lepton_picture_object_get_lower_x (object);
+  lower_y = lepton_picture_object_get_lower_y (object);
+  upper_x = lepton_picture_object_get_upper_x (object);
+  upper_y = lepton_picture_object_get_upper_y (object);
+
   /* If no pixbuf was found, fall back to drawing an outline */
   if (pixbuf == NULL || EDA_RENDERER_CHECK_FLAG (renderer,
                                                  FLAG_PICTURE_OUTLINE)) {
     eda_cairo_box (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
-                   0,
-                   object->picture->lower_x, object->picture->lower_y,
-                   object->picture->upper_x, object->picture->upper_y);
+                   0, lower_x, lower_y, upper_x, upper_y);
     eda_cairo_stroke (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                       TYPE_SOLID, END_SQUARE,
                       EDA_RENDERER_STROKE_WIDTH (renderer, 0),
@@ -1030,11 +1034,10 @@ eda_renderer_draw_picture (EdaRenderer *renderer, LeptonObject *object)
   orig_height = swap_wh ? gdk_pixbuf_get_width (object->picture->pixbuf)
                         : gdk_pixbuf_get_height (object->picture->pixbuf);
 
-  cairo_translate (renderer->priv->cr,
-                   object->picture->upper_x, object->picture->upper_y);
+  cairo_translate (renderer->priv->cr, upper_x, upper_y);
   cairo_scale (renderer->priv->cr,
-               abs (object->picture->upper_x - object->picture->lower_x) / orig_width,
-               - abs (object->picture->upper_y - object->picture->lower_y) / orig_height);
+               abs (upper_x - lower_x) / orig_width,
+               - abs (upper_y - lower_y) / orig_height);
 
   /* Evil magic translates picture origin to the right position for a given rotation */
   switch (angle) {
@@ -1129,11 +1132,17 @@ eda_renderer_default_draw_grips (EdaRenderer *renderer, LeptonObject *object)
     eda_renderer_draw_text_grips (renderer, object);
     break;
   case OBJ_PICTURE:
-    eda_renderer_draw_grips_impl (renderer, GRIP_SQUARE, 4,
-        object->picture->upper_x, object->picture->upper_y,
-        object->picture->lower_x, object->picture->upper_y,
-        object->picture->upper_x, object->picture->lower_y,
-        object->picture->lower_x, object->picture->lower_y);
+    eda_renderer_draw_grips_impl (renderer,
+                                  GRIP_SQUARE,
+                                  4,
+                                  lepton_picture_object_get_upper_x (object),
+                                  lepton_picture_object_get_upper_y (object),
+                                  lepton_picture_object_get_lower_x (object),
+                                  lepton_picture_object_get_upper_y (object),
+                                  lepton_picture_object_get_upper_x (object),
+                                  lepton_picture_object_get_lower_y (object),
+                                  lepton_picture_object_get_lower_x (object),
+                                  lepton_picture_object_get_lower_y (object));
     break;
   case OBJ_COMPONENT:
     /* No grips */
