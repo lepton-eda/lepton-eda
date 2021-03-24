@@ -13,4 +13,6 @@
 
 (test-assert-thrown 'wrong-type-arg (mirror-objects! 0 'a))
 (test-assert-thrown 'wrong-type-arg (rotate-objects! '(0 . 0) 90 'a))
+(test-assert-thrown 'wrong-type-arg (translate-objects! '(100 . 100) 'a))
+
 (test-end "non-object")
