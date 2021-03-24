@@ -42,3 +42,14 @@
   )
 
 (test-end "arcs")
+
+(test-begin "arc-wrong-argument")
+
+(test-assert-thrown 'wrong-type-arg (arc-info 'a))
+(test-assert-thrown 'wrong-type-arg (arc-center 'a))
+(test-assert-thrown 'wrong-type-arg (arc-radius 'a))
+(test-assert-thrown 'wrong-type-arg (arc-start-angle 'a))
+(test-assert-thrown 'wrong-type-arg (arc-sweep-angle 'a))
+(test-assert-thrown 'wrong-type-arg (arc-end-angle 'a))
+
+(test-end "arc-wrong-argument")
