@@ -1,5 +1,3 @@
-Makefile.in
-Makefile
-latex
 html
-*~
+images/*.png
+images/*.pdf

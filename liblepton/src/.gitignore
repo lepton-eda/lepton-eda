@@ -1,9 +1,6 @@
-*.lo
 .deps
 .libs
-Makefile
-Makefile.in
 liblepton.la
+*.lo
 *.o
 *.x
-*~

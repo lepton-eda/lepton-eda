@@ -1,13 +1,1 @@
-Makefile
-Makefile.in
 liblepton.pc
-*~
-*#
-TAGS
-GPATH
-GRTAGS
-GSYMS
-GTAGS
-HTML
-docs/images/*png
-docs/images/*pdf
