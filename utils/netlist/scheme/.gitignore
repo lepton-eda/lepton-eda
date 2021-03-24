@@ -1,6 +1,1 @@
-Makefile
-Makefile.in
 config-netlist.scm
-*.log
-*.trs
-*~
