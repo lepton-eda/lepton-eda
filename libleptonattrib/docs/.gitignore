@@ -1,7 +1,3 @@
-Makefile
-Makefile.in
 html
-latex
-*~
 lepton-attrib.1
 lepton-attrib.html
