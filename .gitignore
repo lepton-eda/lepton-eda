@@ -1,8 +1,10 @@
 *~
+
+Makefile.in
+Makefile
+
 .desktop-i18n
 ABOUT-NLS
-Makefile
-Makefile.in
 TAGS
 tags
 aclocal.m4
