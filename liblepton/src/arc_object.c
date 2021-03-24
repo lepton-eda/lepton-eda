@@ -548,7 +548,7 @@ lepton_arc_object_rotate (int world_centerx,
                           int angle,
                           LeptonObject *object)
 {
-  int x, y, newx, newy;
+  int x, y, newx, newy, old_start_angle;
 
   g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
@@ -564,8 +564,10 @@ lepton_arc_object_rotate (int world_centerx,
     lepton_point_rotate (x, y, angle % 360, &newx, &newy);
   }
 
-  /* apply rotation to angles */
-  object->arc->start_angle = (object->arc->start_angle + angle) % 360;
+  /* Apply rotation to angles.  Only start angle changes, sweep
+   * angle remains the same. */
+  old_start_angle = lepton_arc_object_get_start_angle (object);
+  lepton_arc_object_set_start_angle (object, (old_start_angle + angle) % 360);
 
   /* Translate new coords to the previous place. */
   lepton_arc_object_set_center_x (object, newx + world_centerx);
