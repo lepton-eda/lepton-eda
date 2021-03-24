@@ -112,9 +112,9 @@ lepton_arc_object_translate (LeptonObject *object,
                              int dx,
                              int dy);
 LeptonObject*
-o_arc_read (const char buf[],
-            unsigned int release_ver,
-            unsigned int fileformat_ver,
-            GError **err);
+lepton_arc_object_read (const char buf[],
+                        unsigned int release_ver,
+                        unsigned int fileformat_ver,
+                        GError **err);
 
 G_END_DECLS
