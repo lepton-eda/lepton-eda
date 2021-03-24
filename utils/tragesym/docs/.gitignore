@@ -1,6 +1,2 @@
-Makefile
-Makefile.in
-*~
 *.1
-
 lepton-tragesym.html
