@@ -1,12 +1,8 @@
 .deps
 .libs
-Makefile
-Makefile.in
 lepton-schematic
 lepton-schematic.exe
 *.o
 *.x
-*~
-TAGS
 *.la
 *.lo

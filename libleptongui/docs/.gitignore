@@ -1,7 +1,3 @@
-Makefile
-Makefile.in
-latex
 html
-*~
 lepton-schematic.1
 lepton-schematic.html
