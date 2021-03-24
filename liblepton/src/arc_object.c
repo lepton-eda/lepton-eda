@@ -379,11 +379,11 @@ lepton_arc_object_modify (LeptonObject *object,
  *  \param [in] fileformat_ver
  *  \return The ARC LeptonObject that was created, or NULL on error.
  */
-LeptonObject
-*o_arc_read (const char buf[],
-             unsigned int release_ver,
-             unsigned int fileformat_ver,
-             GError **err)
+LeptonObject*
+lepton_arc_object_read (const char buf[],
+                        unsigned int release_ver,
+                        unsigned int fileformat_ver,
+                        GError **err)
 {
   LeptonObject *new_obj;
   char type;

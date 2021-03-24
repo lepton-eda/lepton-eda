@@ -136,10 +136,10 @@ check_serialization ()
     lepton_object_delete (object0);
     g_assert (buffer0 != NULL);
 
-    LeptonObject *object1 = o_arc_read (buffer0,
-                                      version,
-                                      FILEFORMAT_VERSION,
-                                      NULL);
+    LeptonObject *object1 = lepton_arc_object_read (buffer0,
+                                                    version,
+                                                    FILEFORMAT_VERSION,
+                                                    NULL);
 
     g_assert (object1 != NULL);
 
