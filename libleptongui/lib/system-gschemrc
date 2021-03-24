@@ -1,8 +1,3 @@
-;                                                         -*-Scheme-*-
-;
-; Init file for lepton-schematic
-;
-
 (use-modules (gschem deprecated)
              (schematic action)
              (schematic attrib)

@@ -1,6 +1,14 @@
 SUBDIRS = \
-	po bitmap data docs examples include lib scheme \
-	src tests
+	bitmap \
+	data \
+	docs \
+	examples \
+	include \
+	lib \
+	po \
+	scheme \
+	src \
+	tests
 
 pkgconfigdir   = $(libdir)/pkgconfig
 pkgconfig_DATA = libleptongui.pc
