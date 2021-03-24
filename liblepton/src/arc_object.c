@@ -114,11 +114,11 @@ lepton_arc_object_copy (const LeptonObject *object)
   g_return_val_if_fail (object->arc != NULL, NULL);
 
   new_object = lepton_arc_object_new (lepton_object_get_color (object),
-                                      object->arc->x,
-                                      object->arc->y,
-                                      object->arc->radius,
-                                      object->arc->start_angle,
-                                      object->arc->sweep_angle);
+                                      lepton_arc_object_get_center_x (object),
+                                      lepton_arc_object_get_center_y (object),
+                                      lepton_arc_object_get_radius (object),
+                                      lepton_arc_object_get_start_angle (object),
+                                      lepton_arc_object_get_sweep_angle (object));
 
   lepton_object_set_line_options (new_object,
                                   lepton_object_get_stroke_cap_type (object),
