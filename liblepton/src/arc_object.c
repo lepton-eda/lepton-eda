@@ -510,12 +510,17 @@ lepton_arc_object_translate (LeptonObject *object,
                              int dx,
                              int dy)
 {
+  int x, y;
+
   g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
 
+  x = lepton_arc_object_get_center_x (object);
+  y = lepton_arc_object_get_center_y (object);
+
   /* Do world coords */
-  object->arc->x = object->arc->x + dx;
-  object->arc->y = object->arc->y + dy;
+  lepton_arc_object_set_center_x (object, x + dx);
+  lepton_arc_object_set_center_y (object, y + dy);
 }
 
 /*! \brief
