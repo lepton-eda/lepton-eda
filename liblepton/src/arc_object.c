@@ -324,23 +324,23 @@ lepton_arc_object_modify (LeptonObject *object,
   switch(whichone) {
   case ARC_CENTER:
     /* modify the center of arc object */
-    object->arc->x = x;
-    object->arc->y = y;
+    lepton_arc_object_set_center_x (object, x);
+    lepton_arc_object_set_center_y (object, y);
     break;
 
   case ARC_RADIUS:
     /* modify the radius of arc object */
-    object->arc->radius = x;
+    lepton_arc_object_set_radius (object, x);
     break;
 
   case ARC_START_ANGLE:
     /* modify the start angle of the arc object */
-    object->arc->start_angle = x;
+    lepton_arc_object_set_start_angle (object, x);
     break;
 
   case ARC_SWEEP_ANGLE:
     /* modify the end angle of the arc object */
-    object->arc->sweep_angle = x;
+    lepton_arc_object_set_sweep_angle (object, x);
     break;
 
   default:
