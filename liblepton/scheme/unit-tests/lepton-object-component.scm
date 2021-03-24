@@ -342,3 +342,9 @@
       ;; Clean up.
       (delete-file get-command))))
 (test-end "component-library-command")
+
+(test-begin "object-component-wrong-argument")
+
+(test-assert-thrown 'wrong-type-arg (object-component 'a))
+
+(test-end "object-component-wrong-argument")
