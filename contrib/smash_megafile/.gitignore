@@ -1,7 +1,4 @@
 smash_megafile
-*~
-Makefile.in
-Makefile
 .deps
 *.o
 smash_megafile.exe

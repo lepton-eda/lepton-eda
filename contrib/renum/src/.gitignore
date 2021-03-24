@@ -1,8 +1,4 @@
-Makefile.in
 .deps
-.libs
-Makefile
-lepton-renum
 *.o
-*~
+lepton-renum
 lepton-renum.exe
