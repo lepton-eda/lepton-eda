@@ -67,9 +67,9 @@ lepton_arc_object_new (gint color,
    */
 
   /* World coordinates */
-  new_node->arc->x      = center_x;
-  new_node->arc->y      = center_y;
-  new_node->arc->radius = radius;
+  lepton_arc_object_set_center_x (new_node, center_x);
+  lepton_arc_object_set_center_y (new_node, center_y);
+  lepton_arc_object_set_radius (new_node, radius);
 
   /* must check the sign of start_angle, sweep_angle ... */
   if(sweep_angle < 0) {
@@ -78,8 +78,8 @@ lepton_arc_object_new (gint color,
   }
   if(start_angle < 0) start_angle = 360 + start_angle;
 
-  new_node->arc->start_angle = start_angle;
-  new_node->arc->sweep_angle = sweep_angle;
+  lepton_arc_object_set_start_angle (new_node, start_angle);
+  lepton_arc_object_set_sweep_angle (new_node, sweep_angle);
 
   /* Default init */
   lepton_object_set_line_options (new_node,
