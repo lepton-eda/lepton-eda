@@ -1,4 +1,4 @@
-*~
+ar-lib
 compile
 config.guess
 config.rpath
@@ -8,7 +8,6 @@ install-sh
 ltmain.sh
 mdate-sh
 missing
+test-driver
 texinfo.tex
 ylwrap
-test-driver
-ar-lib
