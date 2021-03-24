@@ -553,12 +553,9 @@ lepton_arc_object_rotate (int world_centerx,
   g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
 
-  x = lepton_arc_object_get_center_x (object);
-  y = lepton_arc_object_get_center_y (object);
-
-  /* translate center coords to origin */
-  x -= world_centerx;
-  y -= world_centery;
+  /* Get arc coords and translate them to origin. */
+  x = lepton_arc_object_get_center_x (object) - world_centerx;
+  y = lepton_arc_object_get_center_y (object) - world_centery;
 
   /* rotate center coords */
   if(angle % 90 == 0) {
@@ -566,17 +563,13 @@ lepton_arc_object_rotate (int world_centerx,
   } else {
     lepton_point_rotate (x, y, angle % 360, &newx, &newy);
   }
-  x = newx;
-  y = newy;
 
   /* apply rotation to angles */
   object->arc->start_angle = (object->arc->start_angle + angle) % 360;
 
-  /* translate coords to their previous place */
-  x += world_centerx;
-  y += world_centery;
-  lepton_arc_object_set_center_x (object, x);
-  lepton_arc_object_set_center_y (object, y);
+  /* Translate new coords to the previous place. */
+  lepton_arc_object_set_center_x (object, newx + world_centerx);
+  lepton_arc_object_set_center_y (object, newy + world_centery);
 }
 
 /*! \brief Mirror the WORLD coordinates of an ARC.
