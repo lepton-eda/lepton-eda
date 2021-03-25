@@ -648,12 +648,12 @@ lepton_arc_object_calculate_bounds (const LeptonObject *object,
 
   halfwidth = lepton_object_get_stroke_width (object) / 2;
 
-  radius      = object->arc->radius;
-  start_angle = object->arc->start_angle;
-  sweep_angle = object->arc->sweep_angle;
+  radius      = lepton_arc_object_get_radius (object);
+  start_angle = lepton_arc_object_get_start_angle (object);
+  sweep_angle = lepton_arc_object_get_sweep_angle (object);
 
-  x1 = object->arc->x;
-  y1 = object->arc->y;
+  x1 = lepton_arc_object_get_center_x (object);
+  y1 = lepton_arc_object_get_center_y (object);
   x2 = x1 + radius * cos(start_angle * M_PI / 180);
   y2 = y1 + radius * sin(start_angle * M_PI / 180);
   x3 = x1 + radius * cos((start_angle + sweep_angle) * M_PI / 180);
