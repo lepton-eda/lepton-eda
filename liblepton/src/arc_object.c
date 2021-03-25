@@ -746,17 +746,25 @@ lepton_arc_object_shortest_distance (LeptonObject *object,
 {
   double shortest_distance;
   double radius;
+  double center_x, center_y;
+  double start_angle, sweep_angle;
 
   g_return_val_if_fail (lepton_object_is_arc (object), G_MAXDOUBLE);
   g_return_val_if_fail (object->arc != NULL, G_MAXDOUBLE);
 
-  radius = (double)object->arc->radius;
+  radius = (double) lepton_arc_object_get_radius (object);
+
+  center_x = (double) lepton_arc_object_get_center_x (object);
+  center_y = (double) lepton_arc_object_get_center_y (object);
+
+  start_angle = (double) lepton_arc_object_get_start_angle (object);
+  sweep_angle = (double) lepton_arc_object_get_sweep_angle (object);
 
   if (lepton_arc_within_sweep (object->arc, x, y))
   {
     double distance_to_center;
 
-    distance_to_center = hypot (x - object->arc->x, y - object->arc->y);
+    distance_to_center = hypot (x - center_x, y - center_y);
 
     shortest_distance = fabs (distance_to_center - radius);
 
@@ -766,17 +774,17 @@ lepton_arc_object_shortest_distance (LeptonObject *object,
     double distance_to_end1;
     double dx, dy;
 
-    angle = G_PI * ((double)object->arc->start_angle) / 180;
+    angle = G_PI * start_angle / 180;
 
-    dx = ((double)x) - radius * cos (angle) - ((double)object->arc->x);
-    dy = ((double)y) - radius * sin (angle) - ((double)object->arc->y);
+    dx = ((double)x) - radius * cos (angle) - center_x;
+    dy = ((double)y) - radius * sin (angle) - center_y;
 
     distance_to_end0 = hypot (dx, dy);
 
-    angle += G_PI * ((double)object->arc->sweep_angle) / 180;
+    angle += G_PI * sweep_angle / 180;
 
-    dx = ((double)x) - radius * cos (angle) - ((double)object->arc->x);
-    dy = ((double)y) - radius * sin (angle) - ((double)object->arc->y);
+    dx = ((double)x) - radius * cos (angle) - center_x;
+    dy = ((double)y) - radius * sin (angle) - center_y;
 
     distance_to_end1 = hypot (dx, dy);
 
