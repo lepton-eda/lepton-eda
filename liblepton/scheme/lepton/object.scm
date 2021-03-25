@@ -61,7 +61,8 @@
             arc-start-angle
             arc-sweep-angle
             arc-end-angle
-            make-arc))
+            make-arc
+            set-arc!))
 
 (define (object? object)
   "Returns #t if OBJECT is a #<geda-object> instance, otherwise
@@ -280,14 +281,32 @@ If OBJECT is not part of a component, returns #f."
   "Returns #t if OBJECT is a arc object, otherwise returns #f."
   (true? (lepton_object_is_arc (geda-object->pointer object))))
 
-(define*-public (set-arc! a center radius start-angle sweep-angle
-                          #:optional color)
-  (%set-arc! a
-             (car center) (cdr center)
-             radius start-angle sweep-angle
-             (if (not color)
-                 (object-color a)
-                 color)))
+(define* (set-arc! object center radius start-angle sweep-angle
+                   #:optional color)
+  "Modifies arc OBJECT by setting its parameters to new values and
+returns the modified object.  CENTER is the coordinate of the
+center of the arc in the form '(x . y). RADIUS, START-ANGLE, and
+SWEEP-ANGLE correspondingly represent its radius, start and sweep
+angle.  If optional COLOR is specified, it should be the integer
+color map index of the color with which to draw the arc.  If COLOR
+is not specified, the default arc color is used."
+  (define pointer (geda-object->pointer* object 1))
+
+  (let ((info (arc-info object))
+        (center-x (car center))
+        (center-y (cdr center)))
+    (lepton_arc_object_set_center_x pointer center-x)
+    (lepton_arc_object_set_center_y pointer center-y)
+    (lepton_arc_object_set_radius pointer radius)
+    (lepton_arc_object_set_start_angle pointer start-angle)
+    (lepton_arc_object_set_sweep_angle pointer sweep-angle)
+    (and color (lepton_object_set_color pointer color))
+
+    ;; Check if arc info has been changed and update its page.
+    (unless (equal? info (arc-info object))
+      (lepton_object_page_set_changed pointer))
+    ;; Return the modified object.
+    object))
 
 (define* (make-arc center radius start-angle sweep-angle #:optional color)
   "Creates and returns a new arc object with given parameters.
