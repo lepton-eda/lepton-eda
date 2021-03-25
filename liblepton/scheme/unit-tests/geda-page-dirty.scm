@@ -12,6 +12,13 @@
             (test-assert (geda:page-dirty? P))
             (geda:set-page-dirty! P #f)))))
 
+(define-syntax geda:assert-not-dirties
+  (syntax-rules ()
+    ((_ P . test-forms)
+     (begin (begin . test-forms)
+            (test-assert (not (geda:page-dirty? P)))))))
+
+
 (test-begin "geda:page-dirty")
 
 (let ((P (geda:make-page "/test/page/A"))

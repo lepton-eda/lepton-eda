@@ -12,6 +12,12 @@
             (test-assert (page-dirty? P))
             (set-page-dirty! P #f)))))
 
+(define-syntax assert-not-dirties
+  (syntax-rules ()
+    ((_ P . test-forms)
+     (begin (begin . test-forms)
+            (test-assert (not (page-dirty? P)))))))
+
 (test-begin "page-dirty")
 
 (let ((P (make-page "/test/page/A"))
