@@ -864,7 +864,10 @@ lepton_picture_object_embed (LeptonObject *object)
     g_message (_("Picture [%1$s] has been embedded."), basename);
     g_free (basename);
 
-    lepton_page_set_changed (page, 1);
+    if (page != NULL)
+    {
+      lepton_page_set_changed (page, 1);
+    }
   }
 }
 
@@ -916,7 +919,10 @@ lepton_picture_object_unembed (LeptonObject *object)
     g_message (_("Picture [%1$s] has been unembedded."), basename);
     g_free (basename);
 
-    lepton_page_set_changed (page, 1);
+    if (page != NULL)
+    {
+      lepton_page_set_changed (page, 1);
+    }
   }
 }
 

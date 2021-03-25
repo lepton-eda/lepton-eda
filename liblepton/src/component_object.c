@@ -1542,7 +1542,10 @@ lepton_component_object_embed (LeptonObject *object)
   g_message (_("Component [%1$s] has been embedded."),
              object->component_basename);
   /* Page content has been modified. */
-  lepton_page_set_changed (page, 1);
+  if (page != NULL)
+  {
+    lepton_page_set_changed (page, 1);
+  }
 }
 
 
@@ -1586,6 +1589,9 @@ lepton_component_object_unembed (LeptonObject *object)
                object->component_basename);
 
     /* Page content has been modified. */
-    lepton_page_set_changed (page, 1);
+    if (page != NULL)
+    {
+      lepton_page_set_changed (page, 1);
+    }
   }
 }
