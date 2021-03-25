@@ -61,11 +61,27 @@
       ;; Add everything to the page
       (assert-dirties P (for-each (lambda (x) (page-append! P x))
                                   (list l b c a t C)))
+      ;; Arc.
+      ;; The same parameters do not modify the page.
+      (assert-not-dirties P (apply set-arc! a (arc-info a)))
+      ;; Set color explicitly to facilitate next tests.
+      (set-arc! a '(1 . 2) 3 45 90 3)
+      ;; Change center-x.
+      (assert-dirties P (apply set-arc! a '((2 . 2) 3 45 90 3)))
+      ;; Change center-y.
+      (assert-dirties P (apply set-arc! a '((2 . 3) 3 45 90 3)))
+      ;; Change radius.
+      (assert-dirties P (apply set-arc! a '((2 . 3) 4 45 90 3)))
+      ;; Change start-angle.
+      (assert-dirties P (apply set-arc! a '((2 . 3) 4 90 90 3)))
+      ;; Change sweep-angle.
+      (assert-dirties P (apply set-arc! a '((2 . 3) 4 90 45 3)))
+      ;; Change color.
+      (assert-dirties P (apply set-arc! a '((2 . 3) 4 90 45 4)))
 
       (assert-dirties P (apply set-line! l (line-info l)))
       (assert-dirties P (apply set-box! b (box-info b)))
       (assert-dirties P (apply set-circle! c (circle-info c)))
-      (assert-dirties P (apply set-arc! a (arc-info a)))
       (assert-dirties P (apply set-text! t (text-info t)))
       (assert-dirties P (apply set-component! C
                                (list-tail (component-info C) 1)))
@@ -82,10 +98,28 @@
                 (list l b c a t))
 
       ;; Modify primitives within component
+
+      ;; Arc.
+      ;; The same parameters do not modify the page.
+      (assert-not-dirties P (apply set-arc! a (arc-info a)))
+      ;; Set color explicitly to facilitate next tests.
+      (set-arc! a '(1 . 2) 3 45 90 3)
+      ;; Change center-x.
+      (assert-dirties P (apply set-arc! a '((2 . 2) 3 45 90 3)))
+      ;; Change center-y.
+      (assert-dirties P (apply set-arc! a '((2 . 3) 3 45 90 3)))
+      ;; Change radius.
+      (assert-dirties P (apply set-arc! a '((2 . 3) 4 45 90 3)))
+      ;; Change start-angle.
+      (assert-dirties P (apply set-arc! a '((2 . 3) 4 90 90 3)))
+      ;; Change sweep-angle.
+      (assert-dirties P (apply set-arc! a '((2 . 3) 4 90 45 3)))
+      ;; Change color.
+      (assert-dirties P (apply set-arc! a '((2 . 3) 4 90 45 4)))
+
       (assert-dirties P (apply set-line! l (line-info l)))
       (assert-dirties P (apply set-box! b (box-info b)))
       (assert-dirties P (apply set-circle! c (circle-info c)))
-      (assert-dirties P (apply set-arc! a (arc-info a)))
       (assert-dirties P (apply set-text! t (text-info t)))
 
       (assert-dirties P (apply set-object-stroke! l (object-stroke l)))
