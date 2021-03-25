@@ -105,7 +105,6 @@ void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
     new_obj = lepton_picture_object_new (NULL,
                                          0,
                                          w_current->pixbuf_filename,
-                                         OBJ_PICTURE,
                                          picture_left,
                                          picture_top,
                                          picture_left + picture_width,
