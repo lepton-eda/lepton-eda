@@ -33,7 +33,6 @@ LeptonObject*
 lepton_picture_object_new (const gchar *file_content,
                            gsize file_length,
                            const gchar *filename,
-                           char type,
                            int x1,
                            int y1,
                            int x2,

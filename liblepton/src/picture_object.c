@@ -157,7 +157,6 @@ lepton_picture_object_read (const char *first_line,
   new_obj = lepton_picture_object_new (file_content,
                                        file_length,
                                        filename,
-                                       type,
                                        x1,
                                        y1+height,
                                        x1+width,
@@ -270,7 +269,6 @@ lepton_picture_object_to_buffer (const LeptonObject *object)
  *  \param [in]     file_content  Raw data of the image file, or NULL.
  *  \param [in]     file_length   Length of raw data buffer
  *  \param [in]     filename      File name backing this picture, or NULL.
- *  \param [in]     type          Must be OBJ_PICTURE.
  *  \param [in]     x1            Upper x coordinate.
  *  \param [in]     y1            Upper y coordinate.
  *  \param [in]     x2            Lower x coordinate.
@@ -284,7 +282,6 @@ LeptonObject*
 lepton_picture_object_new (const gchar *file_content,
                            gsize file_length,
                            const gchar *filename,
-                           char type,
                            int x1,
                            int y1,
                            int x2,
@@ -297,7 +294,7 @@ lepton_picture_object_new (const gchar *file_content,
   LeptonPicture *picture;
 
   /* create the object */
-  new_node = lepton_object_new (type, "picture");
+  new_node = lepton_object_new (OBJ_PICTURE, "picture");
 
   picture = lepton_picture_new ();
   new_node->picture = picture;
