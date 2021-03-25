@@ -716,11 +716,11 @@ lepton_arc_object_get_position (const LeptonObject *object,
   g_return_val_if_fail (object->arc != NULL, FALSE);
 
   if (x != NULL) {
-    *x = object->arc->x;
+    *x = lepton_arc_object_get_center_x (object);
   }
 
   if (y != NULL) {
-    *y = object->arc->y;
+    *y = lepton_arc_object_get_center_y (object);
   }
 
   return TRUE;
