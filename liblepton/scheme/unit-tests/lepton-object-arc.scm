@@ -53,3 +53,123 @@
 (test-assert-thrown 'wrong-type-arg (arc-end-angle 'a))
 
 (test-end "arc-wrong-argument")
+
+
+;;; Common functions for transformations.
+;;; Make the same arc every time.
+(define (new-arc)
+  (make-arc '(100 . 100) 200 30 50))
+;;; Arc info without unrelated colors.
+(define (stripped-info arc)
+  (define (strip-color info)
+    (reverse (cdr (reverse info))))
+  (strip-color (arc-info arc)))
+
+
+(test-begin "arc-translation")
+
+(test-equal (stripped-info (car (translate-objects! '(500 . 500) (new-arc))))
+  '((600 . 600) 200 30 50))
+(test-equal (stripped-info (car (translate-objects! '(-500 . 500) (new-arc))))
+  '((-400 . 600) 200 30 50))
+(test-equal (stripped-info (car (translate-objects! '(500 . -500) (new-arc))))
+  '((600 . -400) 200 30 50))
+(test-equal (stripped-info (car (translate-objects! '(-500 . -500) (new-arc))))
+  '((-400 . -400) 200 30 50))
+
+(test-end "arc-translation")
+
+
+(test-begin "arc-mirror")
+
+(test-equal (stripped-info (car (mirror-objects! 0 (new-arc))))
+  '((-100 . 100) 200 150 -50))
+(test-equal (stripped-info (car (mirror-objects! 500 (new-arc))))
+  '((900 . 100) 200 150 -50))
+(test-equal (stripped-info (car (mirror-objects! -500 (new-arc))))
+  '((-1100 . 100) 200 150 -50))
+;;; Double mirror around the same point returns initial result.
+(test-equal (stripped-info
+             (car (mirror-objects! 500
+                                   (car (mirror-objects! 500 (new-arc))))))
+  '((100 . 100) 200 30 50))
+
+(test-end "arc-mirror")
+
+
+(test-begin "arc-rotation")
+
+(define degree-ls
+  '(-900 -360 -270 -180 -90 0 90 180 270 360 900))
+
+(define (rotate-at+500+500 angle)
+  (stripped-info (car (rotate-objects! '(500 . 500) angle (new-arc)))))
+(define (rotate-at-500+500 angle)
+  (stripped-info (car (rotate-objects! '(-500 . 500) angle (new-arc)))))
+(define (rotate-at+500-500 angle)
+  (stripped-info (car (rotate-objects! '(500 . -500) angle (new-arc)))))
+(define (rotate-at-500-500 angle)
+  (stripped-info (car (rotate-objects! '(-500 . -500) angle (new-arc)))))
+
+;;; The output format is
+;;; '((center-x . center-y) radius start-angle sweep-angle)
+;;; Radius and sweep angle should never change.
+(test-equal (map rotate-at+500+500 degree-ls)
+  '(((900 . 900) 200 210 50)
+    ((100 . 100) 200 30 50)
+    ((900 . 100) 200 120 50)
+    ((900 . 900) 200 210 50)
+    ((100 . 900) 200 300 50)
+    ((100 . 100) 200 30 50)
+    ((900 . 100) 200 120 50)
+    ((900 . 900) 200 210 50)
+    ((100 . 900) 200 300 50)
+    ((100 . 100) 200 30 50)
+    ((900 . 900) 200 210 50)))
+
+(test-equal (map rotate-at-500+500 degree-ls)
+  '(((-1100 . 900) 200 210 50)
+    ((100 . 100) 200 30 50)
+    ((-100 . 1100) 200 120 50)
+    ((-1100 . 900) 200 210 50)
+    ((-900 . -100) 200 300 50)
+    ((100 . 100) 200 30 50)
+    ((-100 . 1100) 200 120 50)
+    ((-1100 . 900) 200 210 50)
+    ((-900 . -100) 200 300 50)
+    ((100 . 100) 200 30 50)
+    ((-1100 . 900) 200 210 50)))
+
+(test-equal (map rotate-at+500-500 degree-ls)
+  '(((900 . -1100) 200 210 50)
+    ((100 . 100) 200 30 50)
+    ((-100 . -900) 200 120 50)
+    ((900 . -1100) 200 210 50)
+    ((1100 . -100) 200 300 50)
+    ((100 . 100) 200 30 50)
+    ((-100 . -900) 200 120 50)
+    ((900 . -1100) 200 210 50)
+    ((1100 . -100) 200 300 50)
+    ((100 . 100) 200 30 50)
+    ((900 . -1100) 200 210 50)))
+
+(test-equal (map rotate-at-500-500 degree-ls)
+  '(((-1100 . -1100) 200 210 50)
+    ((100 . 100) 200 30 50)
+    ((-1100 . 100) 200 120 50)
+    ((-1100 . -1100) 200 210 50)
+    ((100 . -1100) 200 300 50)
+    ((100 . 100) 200 30 50)
+    ((-1100 . 100) 200 120 50)
+    ((-1100 . -1100) 200 210 50)
+    ((100 . -1100) 200 300 50)
+    ((100 . 100) 200 30 50)
+    ((-1100 . -1100) 200 210 50)))
+
+;;; Invalid rotation angles, not multiple of 90 degree.
+(test-assert-thrown 'misc-error (rotate-at+500+500 100))
+(test-assert-thrown 'misc-error (rotate-at+500+500 -100))
+(test-assert-thrown 'misc-error (rotate-at+500+500 3000))
+(test-assert-thrown 'misc-error (rotate-at+500+500 -3000))
+
+(test-end "arc-rotation")
