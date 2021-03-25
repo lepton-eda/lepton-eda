@@ -59,10 +59,15 @@
             lepton_object_translate
 
             lepton_arc_object_get_center_x
+            lepton_arc_object_set_center_x
             lepton_arc_object_get_center_y
+            lepton_arc_object_set_center_y
             lepton_arc_object_get_radius
+            lepton_arc_object_set_radius
             lepton_arc_object_get_start_angle
+            lepton_arc_object_set_start_angle
             lepton_arc_object_get_sweep_angle
+            lepton_arc_object_set_sweep_angle
             lepton_arc_object_new
 
             lepton_component_object_get_embedded
@@ -164,10 +169,15 @@
 (define-lff lepton_object_page_set_changed void '(*))
 
 (define-lff lepton_arc_object_get_center_x int '(*))
+(define-lff lepton_arc_object_set_center_x void (list '* int))
 (define-lff lepton_arc_object_get_center_y int '(*))
+(define-lff lepton_arc_object_set_center_y void (list '* int))
 (define-lff lepton_arc_object_get_radius int '(*))
+(define-lff lepton_arc_object_set_radius void (list '* int))
 (define-lff lepton_arc_object_get_start_angle int '(*))
+(define-lff lepton_arc_object_set_start_angle void (list '* int))
 (define-lff lepton_arc_object_get_sweep_angle int '(*))
+(define-lff lepton_arc_object_set_sweep_angle void (list '* int))
 (define-lff lepton_arc_object_new '* (list int int int int int int))
 
 (define-lff lepton_component_object_get_embedded int '(*))

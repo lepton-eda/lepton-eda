@@ -981,52 +981,6 @@ SCM_DEFINE (circle_info, "%circle-info", 1, 0, 0,
                      SCM_UNDEFINED);
 }
 
-/*! \brief Set arc parameters.
- * \par Function Description
- * Modifies a arc object by setting its parameters to new values.
- *
- * \note Scheme API: Implements the %set-arc! procedure in the
- * (lepton core object) module.
- *
- * \param arc_s         the arc object to modify.
- * \param x_s           the new x-coordinate of the center of the arc.
- * \param y_s           the new y-coordinate of the center of the arc.
- * \param r_s           the new radius of the arc.
- * \param start_angle_s the start angle of the arc.
- * \param end_angle_s   the start angle of the arc.
- * \param color_s       the colormap index of the color to be used for
- *                      drawing the arc.
- *
- * \return the modified arc object.
- */
-SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
-            (SCM arc_s, SCM x_s, SCM y_s, SCM r_s, SCM start_angle_s,
-             SCM end_angle_s, SCM color_s),
-            "Set arc parameters")
-{
-  SCM_ASSERT (edascm_is_object_type (arc_s, OBJ_ARC), arc_s,
-              SCM_ARG1, s_set_arc_x);
-  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_arc_x);
-  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_arc_x);
-  SCM_ASSERT (scm_is_integer (r_s),     r_s,     SCM_ARG4, s_set_arc_x);
-  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG7, s_set_arc_x);
-  SCM_ASSERT (scm_is_integer (start_angle_s),
-                                  start_angle_s, SCM_ARG5, s_set_arc_x);
-  SCM_ASSERT (scm_is_integer (end_angle_s),
-                                  end_angle_s, SCM_ARG6, s_set_arc_x);
-
-  LeptonObject *obj = edascm_to_object (arc_s);
-  lepton_arc_object_set_center_x (obj, scm_to_int(x_s));
-  lepton_arc_object_set_center_y (obj, scm_to_int(y_s));
-  lepton_arc_object_set_radius (obj, scm_to_int(r_s));
-  lepton_arc_object_set_start_angle (obj, scm_to_int(start_angle_s));
-  lepton_arc_object_set_sweep_angle (obj, scm_to_int(end_angle_s));
-  lepton_object_set_color (obj, scm_to_int (color_s));
-
-  lepton_object_page_set_changed (obj);
-
-  return arc_s;
-}
 
 /*! \brief Create a new text item.
  * \par Function Description
@@ -1823,7 +1777,6 @@ init_module_lepton_core_object (void *unused)
                 s_make_circle,
                 s_set_circle_x,
                 s_circle_info,
-                s_set_arc_x,
                 s_make_text,
                 s_set_text_x,
                 s_text_info,
