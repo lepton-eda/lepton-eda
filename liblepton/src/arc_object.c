@@ -594,17 +594,26 @@ lepton_arc_object_mirror (int world_centerx,
                           int world_centery,
                           LeptonObject *object)
 {
+  int start_angle, sweep_angle;
+
   g_return_if_fail (lepton_object_is_arc (object));
   g_return_if_fail (object->arc != NULL);
 
   lepton_arc_object_set_center_x (object, (2 * world_centerx -
                                            lepton_arc_object_get_center_x (object)));
 
+  start_angle = lepton_arc_object_get_start_angle (object);
+  sweep_angle = lepton_arc_object_get_sweep_angle (object);
+
   /* apply mirror to angles (vertical mirror) */
-  object->arc->start_angle = (180 - object->arc->start_angle) % 360;
+  start_angle = (180 - start_angle) % 360;
   /* start_angle *MUST* be positive */
-  if(object->arc->start_angle < 0) object->arc->start_angle += 360;
-  object->arc->sweep_angle = -object->arc->sweep_angle;
+  if (start_angle < 0) start_angle += 360;
+  /* Reverse sweep direction. */
+  sweep_angle = -sweep_angle;
+
+  lepton_arc_object_set_start_angle (object, start_angle);
+  lepton_arc_object_set_sweep_angle (object, sweep_angle);
 }
 
 
