@@ -747,6 +747,7 @@ lepton_arc_object_shortest_distance (LeptonObject *object,
   double shortest_distance;
   double radius;
 
+  g_return_val_if_fail (lepton_object_is_arc (object), G_MAXDOUBLE);
   g_return_val_if_fail (object->arc != NULL, G_MAXDOUBLE);
 
   radius = (double)object->arc->radius;
