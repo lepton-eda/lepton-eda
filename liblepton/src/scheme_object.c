@@ -1045,10 +1045,11 @@ SCM_DEFINE (set_arc_x, "%set-arc!", 7, 0, 0,
                                   end_angle_s, SCM_ARG6, s_set_arc_x);
 
   LeptonObject *obj = edascm_to_object (arc_s);
-  lepton_arc_object_modify (obj, scm_to_int(x_s), scm_to_int(y_s), ARC_CENTER);
-  lepton_arc_object_modify (obj, scm_to_int(r_s), 0, ARC_RADIUS);
-  lepton_arc_object_modify (obj, scm_to_int(start_angle_s), 0, ARC_START_ANGLE);
-  lepton_arc_object_modify (obj, scm_to_int(end_angle_s), 0, ARC_SWEEP_ANGLE);
+  lepton_arc_object_set_center_x (obj, scm_to_int(x_s));
+  lepton_arc_object_set_center_y (obj, scm_to_int(y_s));
+  lepton_arc_object_set_radius (obj, scm_to_int(r_s));
+  lepton_arc_object_set_start_angle (obj, scm_to_int(start_angle_s));
+  lepton_arc_object_set_sweep_angle (obj, scm_to_int(end_angle_s));
   lepton_object_set_color (obj, scm_to_int (color_s));
 
   lepton_object_page_set_changed (obj);
