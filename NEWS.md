@@ -7,6 +7,10 @@ more information, please consult `git log` history.
 
 Notable changes in Lepton EDA 1.9.14 (upcoming)
 -----------------------------------------------
+### Changes when building from source:
+
+- Fixed building of *doxygen* documentation.
+
 ### Changes in `liblepton`:
 
 - The module `(lepton core smob)` written in C does no longer
