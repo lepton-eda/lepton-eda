@@ -737,10 +737,10 @@ value which sets whether the picture object should be mirrored."
     (error "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees."
            angle))
 
-  (let ((left-x (car top-left))
-        (top-y (cdr top-left))
-        (right-x (car bottom-right))
-        (bottom-y (cdr bottom-right))
+  (let ((x1 (car top-left))
+        (y1 (cdr top-left))
+        (x2 (car bottom-right))
+        (y2 (cdr bottom-right))
         (angle angle)
         (mirror (if mirror 1 0)))
 
@@ -748,7 +748,12 @@ value which sets whether the picture object should be mirrored."
 
     (lepton_picture_object_set_angle pointer angle)
     (lepton_picture_object_set_mirrored pointer mirror)
-    (lepton_picture_object_modify_all pointer left-x top-y right-x bottom-y)
+
+    ;; Normalise the requested rectangle.
+    (lepton_picture_object_set_lower_x pointer (max x1 x2))
+    (lepton_picture_object_set_lower_y pointer (min y1 y2))
+    (lepton_picture_object_set_upper_x pointer (min x1 x2))
+    (lepton_picture_object_set_upper_y pointer (max y1 y2))
 
     (lepton_object_page_set_changed pointer)
     (lepton_object_emit_change_notify pointer)
