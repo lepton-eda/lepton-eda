@@ -56,18 +56,25 @@
   ;; Wrong object.
   (test-assert-thrown 'wrong-type-arg (set-arc! 'a '(1 . 2) 3 45 90 3))
   ;; Wrong coord.
+  (test-assert-thrown 'wrong-type-arg (make-arc 'c 3 45 90 3))
   (test-assert-thrown 'wrong-type-arg (set-arc! a 'c 3 45 90 3))
   ;; Wrong x.
+  (test-assert-thrown 'wrong-type-arg (make-arc '(x . 2) 3 45 90 3))
   (test-assert-thrown 'wrong-type-arg (set-arc! a '(x . 2) 3 45 90 3))
   ;; Wrong y.
+  (test-assert-thrown 'wrong-type-arg (make-arc '(1 . y) 3 45 90 3))
   (test-assert-thrown 'wrong-type-arg (set-arc! a '(1 . y) 3 45 90 3))
   ;; Wrong radius.
+  (test-assert-thrown 'wrong-type-arg (make-arc '(1 . 2) 'r 45 90 3))
   (test-assert-thrown 'wrong-type-arg (set-arc! a '(1 . 2) 'r 45 90 3))
   ;; Wrong start angle.
+  (test-assert-thrown 'wrong-type-arg (make-arc '(1 . 2) 3 'start 90 3))
   (test-assert-thrown 'wrong-type-arg (set-arc! a '(1 . 2) 3 'start 90 3))
   ;; Wrong sweep angle.
+  (test-assert-thrown 'wrong-type-arg (make-arc '(1 . 2) 3 45 'sweep 3))
   (test-assert-thrown 'wrong-type-arg (set-arc! a '(1 . 2) 3 45 'sweep 3))
   ;; Wrong color.
+  (test-assert-thrown 'wrong-type-arg (make-arc '(1 . 2) 3 45 90 'color))
   (test-assert-thrown 'wrong-type-arg (set-arc! a '(1 . 2) 3 45 90 'color)))
 
 (test-end "arc-wrong-argument")
