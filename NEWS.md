@@ -13,6 +13,45 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   exist.  Its exported functions have been reimplemented using
   Scheme FFI.
 
+- Foreign functions in Scheme code have been renamed accordingly
+  to their C counterparts.
+
+- The files which names started with `geda_` have been renamed and
+  this prefix has been dropped.
+
+- The types which names were prefixed with `Geda` have been
+  renamed and now have the prefix `Lepton`.  Their sibling types,
+  e.g. `OBJECT` for `LeptonObject` have been removed.
+
+- The functions which names were prefixed with `geda_` have been
+  renamed so that their name are now start with `lepton_`.
+
+- The `component_embedded` field of the `LeptonObject` structure
+  has been renamed to `embedded` and moved to `LeptonComponent`.
+  Accessors for this field have been added to not use it directly.
+
+- Many new checks for object type have been added in functions
+  dealing with objects.
+
+- Accessors for the `CHANGED` field of the renamed structure
+  `LeptonPage` have been added to facilitate using it in Scheme.
+
+- The following redundant types have been eliminated: `BOX`,
+  `OBJECT_END`, `OBJECT_FILLING`, `OBJECT_TYPE`, `PATH`,
+  `PICTURE`, `SELECTION`, `TEXT`, `TOPLEVEL`, `UNDO`, `sPOINT`.
+
+- Many functions related to objects have been renamed so that
+  their names have the prefix `lepton_`.
+
+- Several accessors for `LeptonObject` structure members have been
+  added.
+
+### Changes in `libleptongui`:
+
+- Scheme module `(schematic core builtins)` defined in C code has
+  been removed.  Its functions are now defined in the module
+  `(gschem deprecated)`.
+
 ### Changes in `lepton-netlist`:
 
 - Fixed exporting of necessary modules in several Scheme files.
