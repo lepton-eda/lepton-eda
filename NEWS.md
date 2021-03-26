@@ -13,6 +13,11 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   exist.  Its exported functions have been reimplemented using
   Scheme FFI.
 
+### Changes in `lepton-netlist`:
+
+- Fixed exporting of necessary modules in several Scheme files.
+
+
 Notable changes in Lepton EDA 1.9.13 (20201211)
 -----------------------------------------------
 
