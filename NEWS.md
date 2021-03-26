@@ -91,6 +91,39 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 - Several superfluous and erroneous `gafrc` files have been
   removed from the `examples/` subdirectory.
 
+### Changes in `lepton-attrib`:
+
+- The program used to use colors to designate the visibility of
+  affected attributes in schematic editor.  A status bar with a
+  color legend has been added prompting the user of the meaning of
+  the colors used.
+
+- The current file name is now displayed in the title of the
+  program window.  If several files are open, "Multiple files" is
+  shown in the caption instead.  If there were changes in any of
+  the opened files, this is marked by an asterisk prepended to the
+  title caption.
+
+- Slot numbers are now explicitly displayed in parentheses with
+  the word "slot" after reference designators, e.g. **U1 (slot
+  3)** instead of **U1.3** as it was previously.  This is to
+  prevent confusion if the user actually wants to use dot
+  separators in refdeses.
+
+- Only those components that really have the `slot=` attribute are
+  now shown as slotted.
+
+- The overwrite confirmation dialog will now displayed on *File* →
+  *Export CSV* if an already existing file is selected for output.
+
+- Default response in the *Delete Attribute* dialog has been
+  changed to "No".
+
+- The *About* dialog has been improved and now it looks like one
+  in `lepton-schematic`.
+
+- Modification status update on saving has been fixed.
+
 
 Notable changes in Lepton EDA 1.9.13 (20201211)
 -----------------------------------------------
