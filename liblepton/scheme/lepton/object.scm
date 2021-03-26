@@ -628,8 +628,10 @@ Returns OBJECT."
   "Check whether OBJECT is embedded."
   (define pointer (geda-object->pointer* object 1))
 
-  (or (true? (lepton_component_object_get_embedded pointer))
-      (true? (lepton_picture_object_get_embedded pointer))))
+  (or (and (component? object)
+           (true? (lepton_component_object_get_embedded pointer)))
+      (and (picture? object)
+           (true? (lepton_picture_object_get_embedded pointer)))))
 
 
 (define (set-object-embedded! object embed?)
