@@ -88,6 +88,8 @@
             make-bus-pin
             make-net-pin
 
+            set-picture!
+
             text-info
             text-align
             text-anchor
@@ -718,12 +720,11 @@ of the arc."
 ;;;; Pictures
 
 
-(define (%set-picture! object x1 y1 x2 y2 angle mirror)
-  "Sets the parameters of picture OBJECT.  X1 and Y1 are the new x
-and y coordinates of the top lefot of the picture.  X2 and Y2 are
-the new x and y coordinates of the bottom right of the picture.
-ANGLE is the new rotation angle.  MIRROR is the boolean value
-which sets whether the picture object should be mirrored."
+(define (set-picture! object top-left bottom-right angle mirror)
+  "Sets the parameters of picture OBJECT.  TOP-LEFT and
+BOTTOM-RIGHT are the new coordinates of the picture in the form
+'(x . y).  ANGLE is the new rotation angle.  MIRROR is the boolean
+value which sets whether the picture object should be mirrored."
   (define pointer (geda-object->pointer* object 1 picture? 'picture))
 
   ;; Angle
@@ -736,25 +737,24 @@ which sets whether the picture object should be mirrored."
     (error "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees."
            angle))
 
-  (lepton_object_emit_pre_change_notify pointer)
+  (let ((left-x (car top-left))
+        (top-y (cdr top-left))
+        (right-x (car bottom-right))
+        (bottom-y (cdr bottom-right))
+        (angle angle)
+        (mirror (if mirror 1 0)))
 
-  (lepton_picture_object_set_angle pointer angle)
-  (lepton_picture_object_set_mirrored pointer mirror)
-  (lepton_picture_object_modify_all pointer x1 y1 x2 y2)
+    (lepton_object_emit_pre_change_notify pointer)
 
-  (lepton_object_page_set_changed pointer)
-  (lepton_object_emit_change_notify pointer)
+    (lepton_picture_object_set_angle pointer angle)
+    (lepton_picture_object_set_mirrored pointer mirror)
+    (lepton_picture_object_modify_all pointer left-x top-y right-x bottom-y)
 
-  object)
+    (lepton_object_page_set_changed pointer)
+    (lepton_object_emit_change_notify pointer)
 
-(define-public (set-picture! p top-left bottom-right angle mirror)
-  (%set-picture! p
-                 (car top-left)
-                 (cdr top-left)
-                 (car bottom-right)
-                 (cdr bottom-right)
-                 angle
-                 (if mirror 1 0)))
+    object))
+
 
 (define (make-picture)
   "Creates and returns a new, empty picture object with no
