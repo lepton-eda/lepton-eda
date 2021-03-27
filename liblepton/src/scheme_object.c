@@ -137,46 +137,6 @@ edascm_is_object_type (SCM smob, int type)
 }
 
 
-/*! \brief Set circle parameters.
- * \par Function Description
- * Modifies a circle object by setting its parameters to new values.
- *
- * \note Scheme API: Implements the %set-circle! procedure in the
- * (lepton core object) module.
- *
- * \param circle_s the circle object to modify.
- * \param x_s    the new x-coordinate of the center of the circle.
- * \param y_s    the new y-coordinate of the center of the circle.
- * \param r_s    the new radius of the circle.
- * \param color  the colormap index of the color to be used for
- *               drawing the circle.
- *
- * \return the modified circle object.
- */
-SCM_DEFINE (set_circle_x, "%set-circle!", 5, 0, 0,
-            (SCM circle_s, SCM x_s, SCM y_s, SCM r_s, SCM color_s),
-            "Set circle parameters")
-{
-  SCM_ASSERT (edascm_is_object_type (circle_s, OBJ_CIRCLE), circle_s,
-              SCM_ARG1, s_set_circle_x);
-  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_circle_x);
-  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_circle_x);
-  SCM_ASSERT (scm_is_integer (r_s),     r_s,     SCM_ARG4, s_set_circle_x);
-  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG5, s_set_circle_x);
-
-  LeptonObject *obj = edascm_to_object (circle_s);
-  lepton_circle_object_modify (obj, scm_to_int(x_s), scm_to_int(y_s),
-                               CIRCLE_CENTER);
-  lepton_circle_object_modify (obj, scm_to_int(r_s), 0, CIRCLE_RADIUS);
-  lepton_object_set_color (obj, scm_to_int (color_s));
-
-  lepton_object_page_set_changed (obj);
-
-  return circle_s;
-}
-
-
-
 /*! \brief Create a new text item.
  * \par Function Description
  * Creates a new text object, with all its parameters set to default
@@ -958,8 +918,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_set_circle_x,
-                s_make_text,
+  scm_c_export (s_make_text,
                 s_set_text_x,
                 s_text_info,
                 s_object_connections,

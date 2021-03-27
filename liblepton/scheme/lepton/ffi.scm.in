@@ -111,8 +111,11 @@
             lepton_bus_object_new
 
             lepton_circle_object_get_center_x
+            lepton_circle_object_set_center_x
             lepton_circle_object_get_center_y
+            lepton_circle_object_set_center_y
             lepton_circle_object_get_radius
+            lepton_circle_object_set_radius
             lepton_circle_object_new
 
             lepton_component_object_get_embedded
@@ -293,8 +296,11 @@
 (define-lff lepton_bus_object_new '* (list int int int int int int))
 
 (define-lff lepton_circle_object_get_center_x int '(*))
+(define-lff lepton_circle_object_set_center_x void (list '* int))
 (define-lff lepton_circle_object_get_center_y int '(*))
+(define-lff lepton_circle_object_set_center_y void (list '* int))
 (define-lff lepton_circle_object_get_radius int '(*))
+(define-lff lepton_circle_object_set_radius void (list '* int))
 (define-lff lepton_circle_object_new '* (list int int int int))
 
 (define-lff lepton_component_object_get_embedded int '(*))
