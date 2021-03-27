@@ -17,8 +17,8 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   EDA Scheme manual: `config?()`, `user-cache-dir()`,
   `cache-config-context()`, and `anyfile-config-context()`.
 
-- Lepton EDA reference manual has been updated with info on `lepton-cli`
-  usage.
+- Lepton EDA reference manual has been updated with info on
+  `lepton-cli` usage.
 
 - Fixed a link in Lepton EDA reference manual to the Lepton EDA
   Scheme API manual in HTML format.
