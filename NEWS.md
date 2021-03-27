@@ -124,6 +124,18 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 
 - Modification status update on saving has been fixed.
 
+### Changes in `lepton-schematic`:
+
+- Text in several dialog titles has been improved, fixed, or
+  added.  In particular, the title of the close confirmation
+  dialog now shows the name of the program instead of "unknown".
+
+- Default response in the overwrite confirmation dialog is now
+  "No" to avoid accidental overwriting of files.
+
+- Color scheme error dialog was not shown previously. This has
+  been fixed.
+
 
 Notable changes in Lepton EDA 1.9.13 (20201211)
 -----------------------------------------------
