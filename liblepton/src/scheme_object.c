@@ -791,46 +791,6 @@ SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
   return result;
 }
 
-/*! \brief Set box parameters.
- * \par Function Description
- * Modifies a box object by setting its parameters to new values.
- *
- * \note Scheme API: Implements the %set-box! procedure in the
- * (lepton core object) module.
- *
- * \param box_s  the box object to modify.
- * \param x1_s   the new x-coordinate of the top left of the box.
- * \param y1_s   the new y-coordinate of the top left of the box.
- * \param x2_s   the new x-coordinate of the bottom right of the box.
- * \param y2_s   the new y-coordinate of the bottom right of the box.
- * \param color  the colormap index of the color to be used for
- *               drawing the box.
- *
- * \return the modified box object.
- */
-SCM_DEFINE (set_box_x, "%set-box!", 6, 0, 0,
-            (SCM box_s, SCM x1_s, SCM y1_s, SCM x2_s, SCM y2_s, SCM color_s),
-            "Set box parameters.")
-{
-  SCM_ASSERT (edascm_is_object_type (box_s, OBJ_BOX), box_s,
-              SCM_ARG1, s_set_box_x);
-  SCM_ASSERT (scm_is_integer (x1_s),    x1_s,    SCM_ARG2, s_set_box_x);
-  SCM_ASSERT (scm_is_integer (y1_s),    y1_s,    SCM_ARG3, s_set_box_x);
-  SCM_ASSERT (scm_is_integer (x2_s),    x2_s,    SCM_ARG4, s_set_box_x);
-  SCM_ASSERT (scm_is_integer (y2_s),    y2_s,    SCM_ARG5, s_set_box_x);
-  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_box_x);
-
-  LeptonObject *obj = edascm_to_object (box_s);
-  lepton_box_object_modify_all (obj,
-                                scm_to_int (x1_s), scm_to_int (y1_s),
-                                scm_to_int (x2_s), scm_to_int (y2_s));
-  lepton_object_set_color (obj, scm_to_int (color_s));
-
-  lepton_object_page_set_changed (obj);
-
-  return box_s;
-}
-
 /*! \brief Create a new circle.
  * \par Function Description
 
@@ -1716,7 +1676,6 @@ init_module_lepton_core_object (void *unused)
                 s_pin_type,
                 s_set_line_x,
                 s_line_info,
-                s_set_box_x,
                 s_make_circle,
                 s_set_circle_x,
                 s_circle_info,
