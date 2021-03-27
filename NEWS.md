@@ -11,6 +11,12 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 
 - Fixed building of *doxygen* documentation.
 
+### Changes in `docs`:
+
+- Relatively new Scheme functions are now documented in the Lepton
+  EDA Scheme manual: `config?()`, `user-cache-dir()`,
+  `cache-config-context()`, and `anyfile-config-context()`.
+
 ### Changes in `liblepton`:
 
 - The module `(lepton core smob)` written in C does no longer
