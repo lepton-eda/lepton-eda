@@ -17,6 +17,9 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   EDA Scheme manual: `config?()`, `user-cache-dir()`,
   `cache-config-context()`, and `anyfile-config-context()`.
 
+- Lepton EDA reference manual has been updated with info on `lepton-cli`
+  usage.
+
 ### Changes in `liblepton`:
 
 - The module `(lepton core smob)` written in C does no longer
