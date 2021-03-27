@@ -28,7 +28,6 @@
 #include "liblepton_priv.h"
 #include "libleptonguile_priv.h"
 
-SCM_SYMBOL (wrong_type_arg_sym , "wrong-type-arg");
 SCM_SYMBOL (net_sym , "net");
 SCM_SYMBOL (bus_sym , "bus");
 
