@@ -136,6 +136,9 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 - Color scheme error dialog was not shown previously. This has
   been fixed.
 
+- The bus drawing tool supposed to behave the same way as the net
+  tool.  A click with the right mouse button cancels the net
+  action.  This did not work with bus actions, which is now fixed.
 
 Notable changes in Lepton EDA 1.9.13 (20201211)
 -----------------------------------------------
