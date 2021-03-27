@@ -780,7 +780,8 @@ Returns modified OBJECT."
              dash-length))
     (check-integer dash-length 6))
 
-  (let ((cap-type (lepton_stroke_cap_type_from_string
+  (let ((old-object-stroke (object-stroke object))
+        (cap-type (lepton_stroke_cap_type_from_string
                    (string->pointer (symbol->string cap-type))))
         (dash-type (lepton_stroke_type_from_string
                     (string->pointer (symbol->string dash-type)))))
@@ -794,7 +795,10 @@ Returns modified OBJECT."
     (when with-dashes?
       (lepton_object_set_stroke_dash_length pointer dash-length))
 
-    (lepton_object_page_set_changed pointer)
+    ;; Check if stroke info has been changed and update object's
+    ;; page.
+    (unless (equal? old-object-stroke (object-stroke object))
+      (lepton_object_page_set_changed pointer))
     ;; Return the modified object.
     object))
 
