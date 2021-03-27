@@ -67,7 +67,8 @@
             box-info
             box-bottom-right
             box-top-left
-            make-box))
+            make-box
+            set-box!))
 
 (define (object? object)
   "Returns #t if OBJECT is a #<geda-object> instance, otherwise
@@ -223,13 +224,30 @@ If OBJECT is not part of a component, returns #f."
   "Returns #t if OBJECT is a box object, otherwise returns #f."
   (true? (lepton_object_is_box (geda-object->pointer object))))
 
-(define*-public (set-box! b top-left bottom-right #:optional color)
-  (%set-box! b
-             (car top-left) (cdr top-left)
-             (car bottom-right) (cdr bottom-right)
-             (if (not color)
-                 (object-color b)
-                 color)))
+(define* (set-box! object top-left bottom-right #:optional color)
+  "Modifies box OBJECT by setting its parameters to new values.
+TOP-LEFT is the new coordinate of the top-left corner and
+BOTTOM-RIGHT is the new coordinate of the bottom-right corner.  If
+optional COLOR is specified, it shoud be the integer color map
+index of the color to be used for drawing the box.  If COLOR is
+not specified, the default box color is used.  Returns the
+modified box object."
+  (define pointer (geda-object->pointer* object 1))
+
+  (let ((info (box-info object))
+        (x1 (car top-left))
+        (y1 (cdr top-left))
+        (x2 (car bottom-right))
+        (y2 (cdr bottom-right))
+        (color (or color
+                   (lepton_object_get_color pointer))))
+    (lepton_box_object_modify_all pointer x1 y1 x2 y2)
+    (lepton_object_set_color pointer color)
+
+    (unless (equal? info (box-info object))
+      (lepton_object_page_set_changed pointer))
+
+    object))
 
 (define* (make-box top-left bottom-right #:optional color)
   "Creates and returns a new box object with given parameters.
