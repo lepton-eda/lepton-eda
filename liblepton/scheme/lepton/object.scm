@@ -73,6 +73,7 @@
             circle-info
             circle-radius
             make-circle
+            set-circle!
 
             make-bus
 
@@ -486,13 +487,33 @@ OBJECT. The return value is a list of the parameters in the form:
 
 ;;;; Circles
 
-(define*-public (set-circle! c center radius #:optional color)
-  (%set-circle! c
-                (car center) (cdr center)
-                radius
-                (if (not color)
-                    (object-color c)
-                    color)))
+(define* (set-circle! object center radius #:optional color)
+  "Modifies circle OBJECT by setting its parameters to new values.
+CENTER is the new coordinate of the circle center in the form '(x
+. y).  RADIUS is the new radius of the circle.  COLOR is the new
+colormap index of the color to be used for drawing the circle.
+Returns the modified circle object."
+  (define pointer (geda-object->pointer* object 1 circle? 'circle))
+
+  (check-coord center 2)
+  (check-integer radius 3)
+  (and color (check-integer color 4))
+
+  (let ((info (circle-info object))
+        (x (car center))
+        (y (cdr center))
+        (radius radius)
+        (color (or color
+                   (lepton_object_get_color pointer))))
+    (lepton_circle_object_set_center_x pointer x)
+    (lepton_circle_object_set_center_y pointer y)
+    (lepton_circle_object_set_radius pointer radius)
+    (lepton_object_set_color pointer color)
+
+    (unless (equal? info (circle-info object))
+      (lepton_object_page_set_changed pointer))
+
+    object))
 
 (define* (make-circle center radius #:optional color)
   "Creates and returns a new circle object, with all its
