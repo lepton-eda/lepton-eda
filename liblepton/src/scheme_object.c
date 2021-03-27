@@ -46,16 +46,7 @@ SCM_SYMBOL (name_sym , "name");
 SCM_SYMBOL (value_sym , "value");
 SCM_SYMBOL (both_sym , "both");
 
-SCM_SYMBOL (none_sym, "none");
-SCM_SYMBOL (square_sym , "square");
-SCM_SYMBOL (round_sym , "round");
-
 SCM_SYMBOL (solid_sym , "solid");
-SCM_SYMBOL (dotted_sym , "dotted");
-SCM_SYMBOL (dashed_sym , "dashed");
-SCM_SYMBOL (center_sym , "center");
-SCM_SYMBOL (phantom_sym , "phantom");
-
 SCM_SYMBOL (hollow_sym , "hollow");
 SCM_SYMBOL (mesh_sym , "mesh");
 SCM_SYMBOL (hatch_sym , "hatch");
