@@ -45,11 +45,6 @@ SCM_SYMBOL (name_sym , "name");
 SCM_SYMBOL (value_sym , "value");
 SCM_SYMBOL (both_sym , "both");
 
-SCM_SYMBOL (solid_sym , "solid");
-SCM_SYMBOL (hollow_sym , "hollow");
-SCM_SYMBOL (mesh_sym , "mesh");
-SCM_SYMBOL (hatch_sym , "hatch");
-
 SCM_SYMBOL (moveto_sym , "moveto");
 SCM_SYMBOL (lineto_sym , "lineto");
 SCM_SYMBOL (curveto_sym , "curveto");
