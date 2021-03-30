@@ -38,6 +38,7 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
     - `lepton-upcfg`
   - `m4` files used by `autoconf` have been renamed.
   - Empty `ChangeLog` files have been removed from `po/` directories.
+  - `.gitignore` files have been cleaned up.
   - Several other documentation files have been moved from
     `utils/` to `contrib/` or `docs/`, or removed.
   - The contents of the `symbols/` directory has been reorganized
