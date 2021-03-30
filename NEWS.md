@@ -186,6 +186,11 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   unfolded, which allows to see more attributes at once.  This
   state is preserved during the program run.
 
+### Changes in `lepton-renum`:
+
+- Build date and time are no longer hard-coded in the sources to
+  aid reproducible builds.
+
 Notable changes in Lepton EDA 1.9.13 (20201211)
 -----------------------------------------------
 
