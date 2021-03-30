@@ -37,6 +37,9 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
     - `lepton-tragesym`
     - `lepton-upcfg`
   - `m4` files used by `autoconf` have been renamed.
+  - `ChangeLog` files for Lepton tools are no longer generated.  A
+    toplevel `ChangeLog` file has been added with description of
+    where and how to get the information on changes.
   - Empty `ChangeLog` files have been removed from `po/` directories.
   - `.gitignore` files have been cleaned up.
   - Several other documentation files have been moved from
