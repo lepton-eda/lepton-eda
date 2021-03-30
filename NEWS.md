@@ -55,6 +55,8 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 - Several accessors for `LeptonObject` structure members have been
   added.
 
+- Accessors for all fields of picture objects have been added.
+
 - The ad hoc object type `OBJ_PLACEHOLDER` has been eliminated.
 
 - Previously, some of the functions for new object creation had
