@@ -126,6 +126,9 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 
 ### Changes in `lepton-schematic`:
 
+- The long command line option `--command` has been introduced as
+  an analog of the short option `-c`.
+
 - Text in several dialog titles has been improved, fixed, or
   added.  In particular, the title of the close confirmation
   dialog now shows the name of the program instead of "unknown".
