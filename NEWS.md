@@ -191,6 +191,21 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 - Build date and time are no longer hard-coded in the sources to
   aid reproducible builds.
 
+### Changes in `lepton-pcb_backannotate`:
+
+- Previously, the script code searched for the "Id" string in
+  itself and, being unable to find it, exited with the error
+  message "Could not determine version".  Now the script prints
+  Lepton version and copyright instead.
+
+- Refdes renaming has been fixed by exchanging parameters of the
+  `%cmd_rename` hash.
+
+- Deprecated `defined` construct that raised a fatal error since
+  Perl version 5.22 has been removed.
+
+- Man page of the script has been improved.
+
 Notable changes in Lepton EDA 1.9.13 (20201211)
 -----------------------------------------------
 
