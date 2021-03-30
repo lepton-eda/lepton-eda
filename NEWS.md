@@ -40,6 +40,14 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   - Empty `ChangeLog` files have been removed from `po/` directories.
   - Several other documentation files have been moved from
     `utils/` to `contrib/` or `docs/`, or removed.
+  - The contents of the `symbols/` directory has been reorganized
+    as well:
+    - Most of symbols have been moved to `symbols/sym`.
+    - Added the subdirectory `docs/` for documentation.
+    - Added the subdirectory `scheme/` for Scheme files.
+    - Directories with symbols that have names conflicting with
+      those living in the `sym/` subdirectory have been renamed
+      and are now prefixed with `sym-`.
 
 ### Changes when building from source:
 
