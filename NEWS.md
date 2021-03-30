@@ -17,6 +17,9 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 
 - Fixed exporting of necessary modules in several Scheme files.
 
+- Several superfluous and erroneous `gafrc` files have been
+  removed from the `examples/` subdirectory.
+
 
 Notable changes in Lepton EDA 1.9.13 (20201211)
 -----------------------------------------------
