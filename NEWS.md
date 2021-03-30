@@ -20,6 +20,9 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 - Lepton EDA reference manual has been updated with info on `lepton-cli`
   usage.
 
+- Fixed a link in Lepton EDA reference manual to the Lepton EDA
+  Scheme API manual in HTML format.
+
 ### Changes in `liblepton`:
 
 - The module `(lepton core smob)` written in C does no longer
