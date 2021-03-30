@@ -154,6 +154,14 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   tool.  A click with the right mouse button cancels the net
   action.  This did not work with bus actions, which is now fixed.
 
+- Modified schematic pages used to be shown as marked with an
+  asterisk in tabbed view.  Now, "Save" buttons are shown instead,
+  which allows the user to quickly save files with the mouse if
+  toolbars are turned off.
+
+- The tab buttons, "Save" and "Close" have now tool-tips
+  describing their functions.
+
 Notable changes in Lepton EDA 1.9.13 (20201211)
 -----------------------------------------------
 
