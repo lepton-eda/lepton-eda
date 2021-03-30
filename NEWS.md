@@ -37,6 +37,10 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 - Many new checks for object type have been added in functions
   dealing with objects.
 
+- Object types are no longer queried explicitly in the code.  Type
+  accessors have been added which are used both in C and Scheme
+  FFI code.
+
 - Accessors for the `CHANGED` field of the renamed structure
   `LeptonPage` have been added to facilitate using it in Scheme.
 
