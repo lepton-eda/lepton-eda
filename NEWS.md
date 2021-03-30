@@ -44,6 +44,11 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   `OBJECT_END`, `OBJECT_FILLING`, `OBJECT_TYPE`, `PATH`,
   `PICTURE`, `SELECTION`, `TEXT`, `TOPLEVEL`, `UNDO`, `sPOINT`.
 
+- The type `LeptonStroke` has been factored out of `LeptonObject`.
+  Its inherited fields have been renamed to match to corresponding
+  Scheme functions.  C accessors for each member of the new
+  structure have been added as well.
+
 - Many functions related to objects have been renamed so that
   their names have the prefix `lepton_`.
 
