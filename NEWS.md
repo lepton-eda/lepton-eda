@@ -16,6 +16,29 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   copyright information.  The options have been added to the
   programs that missed them.
 
+- Several changes have been made in the directory layout of the
+  repository:
+  - Directory with examples for `gmk_sym` has been moved to
+    `contrib/` in where the script actually resides.
+  - The program `lepton-renum` has been moved to `contrib/`.
+  - The following scripts have been moved with tests, examples and
+    documentation to dedicated directories under `utils/`:
+    - `lepton-archive`
+    - `lepton-attrib`
+    - `lepton-cli`
+    - `lepton-embed`
+    - `lepton-netlist`
+    - `lepton-pcb_backannotate`
+    - `lepton-refdes_renum`
+    - `lepton-sch2pcb`
+    - `lepton-schdiff`
+    - `lepton-symcheck`
+    - `lepton-symfix`
+    - `lepton-tragesym`
+    - `lepton-upcfg`
+  - `m4` files used by `autoconf` have been renamed.
+  - Empty `ChangeLog` files have been removed from `po/` directories.
+
 ### Changes when building from source:
 
 - Fixed building of *doxygen* documentation.
