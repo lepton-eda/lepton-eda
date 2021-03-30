@@ -136,6 +136,10 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 - Fixed crashes when the command line contains the text as
   follows: `-c '(quit)'`.
 
+- The behaviour of the combobox for choosing the way of symbol
+  insertion in the component selection dialog was broken in the
+  previous version and now has been fixed.
+
 - Text in several dialog titles has been improved, fixed, or
   added.  In particular, the title of the close confirmation
   dialog now shows the name of the program instead of "unknown".
