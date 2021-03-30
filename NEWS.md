@@ -162,6 +162,11 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 - The tab buttons, "Save" and "Close" have now tool-tips
   describing their functions.
 
+- The edit attribute dialog has been improved: now its section
+  "Add attribute" is collapsible, that is, it may get folded or
+  unfolded, which allows to see more attributes at once.  This
+  state is preserved during the program run.
+
 Notable changes in Lepton EDA 1.9.13 (20201211)
 -----------------------------------------------
 
