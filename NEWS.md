@@ -46,6 +46,8 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 - Several accessors for `LeptonObject` structure members have been
   added.
 
+- The ad hoc object type `OBJ_PLACEHOLDER` has been eliminated.
+
 - Four unit tests that previously worked well with Guile 3.0.4
   started to fail with Guile 3.0.5 on Debian.  The tests have been
   fixed so they pass with either of the versions.
