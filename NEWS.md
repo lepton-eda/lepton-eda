@@ -99,6 +99,10 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   been removed.  Its functions are now defined in the module
   `(gschem deprecated)`.
 
+- Gettext domain for the library has been renamed from
+  **lepton-schematic** to **libleptongui** to be consistent with
+  other tools.
+
 ### Changes in `lepton-netlist`:
 
 - Fixed exporting of necessary modules in several Scheme files.
