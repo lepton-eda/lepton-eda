@@ -23,6 +23,9 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 - Fixed a link in Lepton EDA reference manual to the Lepton EDA
   Scheme API manual in HTML format.
 
+- The contents of the file `nc.doc` about no-connection symbols
+  has been moved to the Lepton EDA reference manual.
+
 ### Changes in `liblepton`:
 
 - The module `(lepton core smob)` written in C does no longer
