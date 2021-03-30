@@ -129,6 +129,13 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
 - The long command line option `--command` has been introduced as
   an analog of the short option `-c`.
 
+- The program used to output backtraces on wrong command line
+  options.  Now backtraces are avoided.  Instead, a short error
+  message and a useful prompt are shown.
+
+- Fixed crashes when the command line contains the text as
+  follows: `-c '(quit)'`.
+
 - Text in several dialog titles has been improved, fixed, or
   added.  In particular, the title of the close confirmation
   dialog now shows the name of the program instead of "unknown".
