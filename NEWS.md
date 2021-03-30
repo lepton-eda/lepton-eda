@@ -56,6 +56,9 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   the `type` argument.  The argument has been removed as
   superfluous since it is always known which object is created.
 
+- Embedding code for pictures and components has been splitted up,
+  moved to appropriate places, and reduced.
+
 - Four unit tests that previously worked well with Guile 3.0.4
   started to fail with Guile 3.0.5 on Debian.  The tests have been
   fixed so they pass with either of the versions.
