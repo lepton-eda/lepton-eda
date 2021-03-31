@@ -93,7 +93,9 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   e.g. `OBJECT` for `LeptonObject` have been removed.
 
 - The functions which names were prefixed with `geda_` have been
-  renamed so that their name are now start with `lepton_`.
+  renamed so that their name are now start with `lepton_`.  Many
+  other functions related to objects have been renamed in similar
+  way as well.
 
 - The `component_embedded` field of the `LeptonObject` structure
   has been renamed to `embedded` and moved to `LeptonComponent`.
@@ -117,9 +119,6 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   Its inherited fields have been renamed to match to corresponding
   Scheme functions.  C accessors for each member of the new
   structure have been added as well.
-
-- Many functions related to objects have been renamed so that
-  their names have the prefix `lepton_`.
 
 - Several accessors for `LeptonObject` structure members have been
   added.
