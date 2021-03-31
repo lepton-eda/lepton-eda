@@ -7,6 +7,15 @@ more information, please consult `git log` history.
 
 Notable changes in Lepton EDA 1.9.14 (upcoming)
 -----------------------------------------------
+
+### General changes:
+
+- The output of `--help` and `--version` command line options for
+  all utils has been unified and simplified: reduced long lines,
+  added links to Lepton's issue tracker and home page as well as
+  copyright information.  The options have been added to the
+  programs that missed them.
+
 ### Changes when building from source:
 
 - Fixed building of *doxygen* documentation.
