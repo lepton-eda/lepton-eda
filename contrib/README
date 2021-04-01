@@ -137,3 +137,11 @@ Lepton EDA utilities (in contrib/)
 
     Please see the pads_backannotate.[dvi|html|ps|pdf] documentation for more
     details.
+
+
+* lepton-renum (grenum)
+    Written by: Levente Kovacs
+
+    An advanced refdes renumber utility.
+    Please see the readme files in the renum/docs/ directory
+    and lepton-renum man page.
