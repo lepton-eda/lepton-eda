@@ -398,6 +398,9 @@ out the contents of the canvas.
 to show all the available coordinate space.
 
 @item Dark Color Scheme
+@clicksequence{View @click{} Dark Color Scheme} (@kbd{V D}) loads
+a predefined color scheme with black background.
+
 @item Light Color Scheme
 @item BW Color Scheme
 @item Color Scheme Editor...
