@@ -619,6 +619,11 @@ attach to it.  Attached attributes change their color to the
 until you detach them.
 
 @item Detach
+@clicksequence{Attributes @click{} Detach} (@kbd{T D}) detaches a text
+attribute from the object it was attached to.  After detaching
+attributes change their color to the ``Detached attribute'' color.
+The action does nothing for not attached attributes.
+
 @item Show Value
 @item Show Name
 @item Show Both
