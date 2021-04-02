@@ -558,6 +558,16 @@ angles of the arc.  Press the @samp{OK} button in the dialog to apply
 changes or use @samp{Cancel} to cancel the operation.
 
 @item Pin
+@clicksequence{Add @click{} Pin} (@kbd{A P}) starts the pin insertion
+mode.  The first point of a pin will be its connectible point.  If the
+mouse cursor over the canvas, the point under the mouse cursor will
+become its first point.  Otherwise you have to define it by
+left-clicking on the canvas.  Use another left-click to define its
+length.  You may notice that originally the angle of the pin is the
+multiple of 90 degrees.  This can be changed later by editing it.
+Don't forget to edit its attributes which are added and attached to it
+automatically.
+
 @item Picture...
 @end table
 
