@@ -394,6 +394,9 @@ of the canvas.
 out the contents of the canvas.
 
 @item Zoom Full
+@clicksequence{View @click{} Zoom Full} (@kbd{V F}) zooms the canvas
+to show all the available coordinate space.
+
 @item Dark Color Scheme
 @item Light Color Scheme
 @item BW Color Scheme
