@@ -733,6 +733,13 @@ helps just in such situations: it allows you to move the objects or
 their points so they again snap to the current grid.
 
 @item Grips: On/Off
+@clicksequence{Options @click{} Grips: On/Off} (@kbd{O I}) toggles the
+visibility of grips on selected objects.  Various objects have
+different grip position on them.  However, all them can be edited only
+if you drag their points where grips should be.  While grips may
+clutter your schematics when many objects are selected, it is often
+easier to edit them when grips are on, so this is the default setting.
+
 @item Feedback Mode: Outline/Box
 @item Net: Rubberband On/Off
 @item Net: Magnetic On/Off
