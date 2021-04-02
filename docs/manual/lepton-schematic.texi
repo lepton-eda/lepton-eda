@@ -384,6 +384,10 @@ view will be scaled so the box region wholly fits in the canvas.
 visible canvas area to the extents of all visible objects.
 
 @item Zoom In
+@clicksequence{View @click{} Zoom In} (@kbd{=}, @kbd{Ctrl-=}, @kbd{Z},
+@kbd{V I}, or @kbd{+} on the additional keypad) zooms in the contents
+of the canvas.
+
 @item Zoom Out
 @item Zoom Full
 @item Dark Color Scheme
