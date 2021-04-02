@@ -517,6 +517,17 @@ point.  Use the left mouse button click to finish the insertion or the
 right mouse click to cancel it.
 
 @item Path
+@clicksequence{Add @click{} Path} (@kbd{A H}) switches on path
+inserting mode.  You have to left-click on the canvas to insert the
+first point of the path.  Then move the mouse to the second point
+defining the first part of the path.  If you depress the left mouse
+button and continue dragging, a bezier curve will be formed instead of
+a straight line.  Another couple of left-clicks will be necessary then
+to define the form and the last point of the curve.  You can insert
+several path segments in such a way.  Double left-click defines the
+end point of the path.  Hit @kbd{Esc} if you want to cancel making up
+a path.
+
 @item Box
 @item Circle
 @item Arc
