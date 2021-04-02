@@ -422,6 +422,10 @@ schematics on the canvas.
 
 @table @emph
 @item Manager...
+@clicksequence{Page @click{} Manager...} (@kbd{P M}) opens the page
+manager window where you can interactively walk through the open
+schematic pages.
+
 @item Previous
 @item Next
 @item Close
