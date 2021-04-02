@@ -410,6 +410,9 @@ a predefined color scheme with light background.
 a predefined black-and-white color scheme.
 
 @item Color Scheme Editor...
+@clicksequence{View @click{} Color Scheme Editor...} opens the dialog
+which lets you edit and save the color map used to display schematic
+objects and canvas.
 @end table
 
 @node Menu Page, Menu Add, Menu View, lepton-schematic window
