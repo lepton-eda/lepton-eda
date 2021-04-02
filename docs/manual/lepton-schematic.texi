@@ -318,7 +318,10 @@ Shift-B}) unembeds an embedded component or a picture from schematic.
 @xref{Editing schematics}.
 
 @item Update Component
-@clicksequence{Edit @click{} Update Component} (@kbd{E U})
+@clicksequence{Edit @click{} Update Component} (@kbd{E U}) updates
+selected components if you edited their symbols before.  Currently,
+@schematic{} does not support automatic updating of components so you
+have to do it manually.
 
 @item Symbol Translate...
 @clicksequence{Edit @click{} Symbol Translate...} (@kbd{E T})
