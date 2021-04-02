@@ -538,6 +538,14 @@ point of the second box corner.  Hit @kbd{Esc} if you want to cancel
 making up a box.
 
 @item Circle
+@clicksequence{Add @click{} Circle} (@kbd{A I}) starts the circle
+insertion mode.  The circle is defined by two points on the canvas.
+If the mouse cursor is over the canvas, the first point of a new
+circle corresponds to the point under cursor.  Otherwise you have to
+left-click to define the point.  Use another left-click to define the
+circle radius.  Hit @kbd{Esc} if you want to cancel making up a
+circle.
+
 @item Arc
 @item Pin
 @item Picture...
