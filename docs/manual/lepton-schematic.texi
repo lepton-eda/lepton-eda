@@ -367,6 +367,10 @@ rendering glitches on the canvas, or the file has been changed by some
 external program such as, for example, @command{lepton-refdes_renum}.
 
 @item Pan
+@clicksequence{View @click{} Pan} (@kbd{X} or @kbd{V P}) pans the
+page, that is, makes it appear so the current mouse cursor position in
+world coordinates becomes the center of the view.
+
 @item Zoom Box
 @item Zoom Extents
 @item Zoom In
