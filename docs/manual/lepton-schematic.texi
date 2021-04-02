@@ -509,6 +509,13 @@ it using the left mouse click.  Hitting @kbd{Esc} cancels the
 insertion.  Close the dialog by hitting the @samp{Close} button.
 
 @item Line
+@clicksequence{Add @click{} Line} (@kbd{L} or @kbd{A L}) starts line
+inserting mode.  If the mouse cursor is over the canvas, the insertion
+starts immediately and the first point of the line is the point under
+the cursor.  Otherwise you have to left-click to define the first
+point.  Use the left mouse button click to finish the insertion or the
+right mouse click to cancel it.
+
 @item Path
 @item Box
 @item Circle
