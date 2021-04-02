@@ -741,6 +741,13 @@ clutter your schematics when many objects are selected, it is often
 easier to edit them when grips are on, so this is the default setting.
 
 @item Feedback Mode: Outline/Box
+@clicksequence{Options @click{} Feedback Mode: Outline/Box} (@kbd{O
+A}) toggles the type of component displaying when the user moves them.
+When (default) @samp{outline} is selected, the user will see the usual
+appearance of components.  Otherwise, when @samp{box} is selected,
+only the bounding boxes of objects will be shown when moving them.
+This may facilitate working on schematics on old slow hardware.
+
 @item Net: Rubberband On/Off
 @item Net: Magnetic On/Off
 @item Coord Window
