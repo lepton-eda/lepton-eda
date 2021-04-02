@@ -2,5 +2,5 @@
 *.x
 .deps
 .libs
-lepton-cli
-lepton-cli.exe
+lepton-export
+lepton-export.exe

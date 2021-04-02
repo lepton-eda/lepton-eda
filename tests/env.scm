@@ -118,5 +118,14 @@
   (build-filename *abs-top-builddir*
                   "utils"
                   "cli"
-                  "src"
+                  "scheme"
                   "lepton-cli"))
+
+(define lepton-export
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "cli"
+                  "src"
+                  "lepton-export"))
+
+(putenv (string-append "LEPTON_EXPORT" "=" lepton-export))
