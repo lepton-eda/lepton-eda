@@ -427,6 +427,10 @@ manager window where you can interactively walk through the open
 schematic pages.
 
 @item Previous
+@clicksequence{Page @click{} Previous} (@kbd{<}, @kbd{PgUp}, or @kbd{P
+P}) comes to the page in the list of opened pages previous to what is
+currently shown in the page view.
+
 @item Next
 @item Close
 @item Revert...
