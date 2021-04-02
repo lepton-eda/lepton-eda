@@ -704,6 +704,10 @@ Options dialog box where you can interactively select the below
 options related to snapping and net drawing mode.
 
 @item Font...
+@clicksequence{Options @click{} Font...} (@kbd{O F}) opens the font
+chooser dialog where you can select your favorite font name and its
+style and then save it to your configuration.
+
 @item Grid +
 @item Grid -
 @item Grid Style: Cycle Dots/Mesh/Off
