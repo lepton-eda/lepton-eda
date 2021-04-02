@@ -637,6 +637,10 @@ those which values were historically not very well chosen, for
 instance, @attr{graphical=1}.
 
 @item Show Both
+@clicksequence{Attributes @click{} Show Both} (@kbd{T B}) toggles the
+visibility of a text attribute so it is shown in the form
+@attr{name=value}.
+
 @item Toggle Visibility
 @item Hide Specific Text...
 @item Show Specific Text...
