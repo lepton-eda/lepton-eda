@@ -713,6 +713,9 @@ style and then save it to your configuration.
 of the snapping grid twice.
 
 @item Grid -
+@clicksequence{Options @click{} Grid -} (@kbd{[}) decreases the size
+of the snapping grid twice.
+
 @item Grid Style: Cycle Dots/Mesh/Off
 @item Grid Snap: Cycle Grid/Resnap/Off
 @item Grips: On/Off
