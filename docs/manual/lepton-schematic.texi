@@ -757,6 +757,11 @@ Otherwise, the connections will silently break leaving the connected
 objects unconnected.
 
 @item Net: Magnetic On/Off
+@clicksequence{Options @click{} Net: Magnetic On/Off} (@kbd{O M})
+toggles magnetic snapping of newly created nets.  If the switch is on,
+you will see a little circle at the point new net would join.
+Otherwise, no feedback is provided.  The mode is ON by default.
+
 @item Coord Window
 @item Log Window
 @end table
