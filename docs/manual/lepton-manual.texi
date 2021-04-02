@@ -201,6 +201,7 @@ Main lepton-schematic window
 * Menu Options::
 * Menu Netlist::
 * Menu Help::
+* Non-menu actions::
 
 Dialog boxes and widgets
 

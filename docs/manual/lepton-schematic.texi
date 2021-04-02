@@ -107,6 +107,7 @@ The window of @schematic{} consists of the following widgets:
 * Menu Options::
 * Menu Netlist::
 * Menu Help::
+* Non-menu actions::
 @end menu
 
 @node Menubar, Menu File, lepton-schematic window, lepton-schematic window
@@ -509,7 +510,7 @@ Produce Allegro netlist.  The output will go to the file
 backend} for more.
 @end table
 
-@node Menu Help,  , Menu Netlist, lepton-schematic window
+@node Menu Help, Non-menu actions, Menu Netlist, lepton-schematic window
 @subsection Menu Help
 @cindex menu Help
 
@@ -543,6 +544,38 @@ dialog with all action menu names and their corresponding hotkeys.
 @clicksequence{Help @click{} About} (@kbd{H A}) opens the standard GTK
 About dialog with some useful information on @schematic.
 
+@end table
+
+@node Non-menu actions,  , Menu Help, lepton-schematic window
+@subsection Non-menu actions
+@cindex non-menu actions
+
+@table @emph
+@item Cancel
+@kbd{Esc} cancels any specific mode and switches on @samp{Select
+mode}.  It also cancels in-process editing operations.
+
+@item Pan left
+@kbd{Left} pans the visible area to the left.
+
+@item Pan right
+@kbd{Right} pans the visible area to the right.
+
+@item Pan up
+@kbd{Up} pans up the visible area.
+
+@item Pan down
+@kbd{Down} pans down the visible area.
+
+@item Repeat
+@kbd{.} (period) repeats the last action done.  If there were no
+action done, it emits a message about this to the log.  If an invalid
+action is requested, it issues a warning which also goes to the log.
+
+@item Page print
+@kbd{P Shift-P} triggers an obsolete debugging action which prints the
+contents of the current page in the terminal @schematic{} was launched
+in in a special debug format.
 @end table
 
 
