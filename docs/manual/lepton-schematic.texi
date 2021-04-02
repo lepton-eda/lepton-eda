@@ -501,6 +501,13 @@ attribute insertion corresponds to the point of the mouse cursor at
 which it was at the moment of the shortcut hitting.
 
 @item Text...
+@clicksequence{Add @click{} Text...} (@kbd{A T}) opens the Add Text
+dialog where the user can type the text contents and choose its
+properties: color, size, alignment, and rotation angle.  Hitting the
+@samp{Apply} button brings the text to the canvas and allows inserting
+it using the left mouse click.  Hitting @kbd{Esc} cancels the
+insertion.  Close the dialog by hitting the @samp{Close} button.
+
 @item Line
 @item Path
 @item Box
