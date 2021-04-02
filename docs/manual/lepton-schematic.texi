@@ -709,6 +709,9 @@ chooser dialog where you can select your favorite font name and its
 style and then save it to your configuration.
 
 @item Grid +
+@clicksequence{Options @click{} Grid +} (@kbd{]}) increases the size
+of the snapping grid twice.
+
 @item Grid -
 @item Grid Style: Cycle Dots/Mesh/Off
 @item Grid Snap: Cycle Grid/Resnap/Off
