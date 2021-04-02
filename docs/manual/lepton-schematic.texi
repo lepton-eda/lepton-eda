@@ -284,7 +284,18 @@ dialog where you can see and change the properties of primitive
 objects.  @xref{Editing schematics}.
 
 @item Edit...
-@clicksequence{Edit @click{} Edit...} (@kbd{E E})
+@clicksequence{Edit @click{} Edit...} (@kbd{E E}) opens the Edit
+Attribute dialog for connectible objects which include components,
+pins, nets, and buses.  For non-connectible graphical primitives such
+as lines, boxes, etc. it does nothing.  Use @clicksequence{Edit
+@click{} Object Properties...} if you want to edit their properties
+instead.
+
+For attributes, the command opens the Edit Attribute dialog where you
+can select attribute names, values, and visibility.  For plain text
+objects, the command opens the Edit Text dialog the same way as if you
+would use @clicksequence{Edit @click{} Edit Text...}.  See the next
+menu item description.
 
 @item Edit Text...
 @clicksequence{Edit @click{} Edit Text...} (@kbd{E X})
