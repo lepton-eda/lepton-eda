@@ -568,6 +568,12 @@ later by editing it.  Don't forget to edit the attributes of the new
 pin which are added and attached to it automatically.
 
 @item Picture...
+@clicksequence{Add @click{} Picture...} (@kbd{A G}) opens the Add
+Picture dialog box where you may choose a picture for insertion into
+your schematic.  Select the picture you want in the dialog and click
+on the @samp{Open} button.  Two left-clicks on the canvas will define
+its size.  If you don't want to insert the picture, click the
+@samp{Close} button in the dialog.
 @end table
 
 @node Menu Hierarchy, Menu Attributes, Menu Add, lepton-schematic window
