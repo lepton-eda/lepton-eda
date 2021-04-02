@@ -699,6 +699,10 @@ autonumbering or @samp{Close} to cancel it.
 
 @table @emph
 @item Options...
+@clicksequence{Options @click{} Options...} (@kbd{O O}) opens the
+Options dialog box where you can interactively select the below
+options related to snapping and net drawing mode.
+
 @item Font...
 @item Grid +
 @item Grid -
