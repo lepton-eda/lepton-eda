@@ -432,6 +432,10 @@ P}) comes to the page in the list of opened pages previous to what is
 currently shown in the page view.
 
 @item Next
+@clicksequence{Page @click{} Next} (@kbd{>}, @kbd{PgDown}, or @kbd{P
+N}) comes to the page in the list of opened pages next to what is
+currently shown in the page view.
+
 @item Close
 @item Revert...
 @item Next Tab
