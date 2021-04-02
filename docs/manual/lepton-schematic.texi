@@ -595,6 +595,9 @@ opens the subcircuit schematic for a selected component, of course, if
 it has one.
 
 @item Down Symbol
+@clicksequence{Hierarchy @click{} Down Symbol} (@kbd{Shift-H S}) opens
+a selected symbol for editing its contents.  Unlike the previous menu
+item, it goes into the symbol file, not into its subcircuit schematic.
 @end table
 
 @node Menu Attributes, Menu Options, Menu Hierarchy, lepton-schematic window
