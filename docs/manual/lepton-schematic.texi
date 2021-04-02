@@ -437,6 +437,11 @@ N}) comes to the page in the list of opened pages next to what is
 currently shown in the page view.
 
 @item Close
+@clicksequence{Page @click{} Close} (@kbd{P C}, or @kbd{F E}) closes
+the page currently shown in the page view.  If the page has any
+non-saved changes, the confirmation dialog will be shown where you can
+select saving or dropping changes, or cancel the operation.
+
 @item Revert...
 @item Next Tab
 @item Previous Tab
