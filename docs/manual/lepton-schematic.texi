@@ -666,6 +666,15 @@ having the specified text prefix.  The same rules apply as for
 @clicksequence{Attributes @click{} Hide Specific Text...}.
 
 @item Show/Hide Hidden Text
+@clicksequence{Attributes @click{} Show/Hide Hidden Text} (@kbd{T I}
+or @kbd{E N}) toggles displaying of hidden text objects.  Sometimes,
+it is convenient to not always show some information, e.g. attributes,
+or it should not be present on the printed paper.  You can make some
+text objects invisible with the @clicksequence{Attributes @click{}
+Toggle Visibility} action described above and toggle their visibility
+by using this action.  Hidden text objects will have little markers at
+their anchor points like the letter ``I'' (which means ``invisible'').
+
 @item Find Text/Check Symbol
 @item Autonumber Text...
 @end table
