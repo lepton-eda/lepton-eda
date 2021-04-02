@@ -590,6 +590,10 @@ return to the toplevel schematic of the subcircuit you're working in
 if you went to it using the next menu item.
 
 @item Down Schematic
+@clicksequence{Hierarchy @click{} Down Schematic} (@kbd{Shift-H D})
+opens the subcircuit schematic for a selected component, of course, if
+it has one.
+
 @item Down Symbol
 @end table
 
