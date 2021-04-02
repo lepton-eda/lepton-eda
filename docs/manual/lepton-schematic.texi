@@ -361,6 +361,10 @@ dock.  Otherwise, a separate dialog window is open.  @xref{Searching
 for text}.
 
 @item Redraw
+@clicksequence{View @click{} Redraw} (@kbd{R} or @kbd{V R}) allows you
+to trigger the redrawing of the current page if, for example, you see
+some rendering glitches on the canvas.
+
 @item Pan
 @item Zoom Box
 @item Zoom Extents
