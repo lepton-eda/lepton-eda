@@ -494,6 +494,12 @@ default configuration, the right mouse button click cancels the bus
 addition but does not cancel the mode.
 
 @item Attribute...
+@clicksequence{Add @click{} Attribute...} (@kbd{A A}) opens the Add
+Attribute dialog where you can interactively choose the name and value
+of a new attribute as well as its visibility.  The position of the
+attribute insertion corresponds to the point of the mouse cursor at
+which it was at the moment of the shortcut hitting.
+
 @item Text...
 @item Line
 @item Path
