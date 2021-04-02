@@ -443,6 +443,11 @@ non-saved changes, the confirmation dialog will be shown where you can
 select saving or dropping changes, or cancel the operation.
 
 @item Revert...
+@clicksequence{Page @click{} Revert...} (@kbd{P R} or @kbd{F R})
+reverts all changes in the current schematic page since the last
+saving.  Since the operation is dangerous, the confirmation dialog
+will be opened in order to prevent unwanted loss of data.
+
 @item Next Tab
 @item Previous Tab
 @end table
