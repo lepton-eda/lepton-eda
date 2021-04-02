@@ -290,7 +290,14 @@ editing dialogs, @emph{Edit Attributes}, @emph{Edit Attribute}, or
 @xref{Editing schematics}.
 
 @item Edit Text...
-@clicksequence{Edit @click{} Edit Text...} (@kbd{E X})
+@clicksequence{Edit @click{} Edit Text...} (@kbd{E X}) opens the Edit
+Text dialog box for plain text objects.  It displays attributes the
+same way as the ``name=value'' strings.  For more convenient editing
+of attributes use the @clicksequence{Edit @click{} Edit...} menu
+described above.
+
+If docks are enabled, the Edit Text widget will be shown as the second
+tab in the right dock.
 
 @item Slot...
 @clicksequence{Edit @click{} Slot...} (@kbd{E Shift-S})
