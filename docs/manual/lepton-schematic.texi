@@ -485,6 +485,14 @@ default configuration, the right mouse button click cancels the net
 adding operation but does not cancel the mode.
 
 @item Bus
+@clicksequence{Add @click{} Bus} (@kbd{Shift-B} or @kbd{A U}) switches
+on bus adding mode.  If the mouse cursor is over the canvas, the
+insertion starts immediately and the first point of a new bus is the
+point under the cursor. Otherwise you have to left-click on the canvas
+to start a bus.  Use another left click to finish drawing it.  In
+default configuration, the right mouse button click cancels the bus
+addition but does not cancel the mode.
+
 @item Attribute...
 @item Text...
 @item Line
