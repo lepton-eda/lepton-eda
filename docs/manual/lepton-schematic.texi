@@ -372,6 +372,12 @@ page, that is, makes it appear so the current mouse cursor position in
 world coordinates becomes the center of the view.
 
 @item Zoom Box
+@clicksequence{View @click{} Zoom Box} (@kbd{W} or @kbd{V B}) zooms
+the view to coordinates defined by a box you draw on the canvas.  The
+first coordinate of the box is the current mouse position.  Move the
+mouse to another point and click to set the second coordinate.  The
+view will be scaled so the box region wholly fits in the canvas.
+
 @item Zoom Extents
 @item Zoom In
 @item Zoom Out
