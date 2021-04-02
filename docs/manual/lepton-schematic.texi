@@ -652,6 +652,13 @@ order to be able to select any hidden attribute and then toggle their
 visibility.  Please see below for more information on that.
 
 @item Hide Specific Text...
+@clicksequence{Attributes @click{} Hide Specific Text...} (@kbd{T H})
+allows to quickly hide a set of text objects having the specified text
+prefix.  For attributes you have to specify their full text, that is,
+the name of attribute as well (e.g. @attr{refdes=U}), no matter which
+style of visibility (@samp{name}, @samp{value}, or @samp{both}) each
+particular attribute has.
+
 @item Show Specific Text...
 @item Show/Hide Hidden Text
 @item Find Text/Check Symbol
