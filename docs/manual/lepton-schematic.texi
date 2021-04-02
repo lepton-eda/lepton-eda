@@ -676,6 +676,15 @@ by using this action.  Hidden text objects will have little markers at
 their anchor points like the letter ``I'' (which means ``invisible'').
 
 @item Find Text/Check Symbol
+@clicksequence{Attributes @click{} Find Text/Check Symbol} (@kbd{T F})
+opens a bottom widget where you can select one of operations:
+searching for specific text, searching for text by a pattern,
+searching for text by a regular expression, or checking the symbol if
+you're in the symbol editing mode.  The last operation is special and
+allows you to interactively run the same checks @symcheck{} does, with
+feedback in the form of dialog windows where you can select the issue
+items and go to the place the objects in question reside in.
+
 @item Autonumber Text...
 @end table
 
