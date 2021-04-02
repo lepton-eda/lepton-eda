@@ -324,6 +324,13 @@ schematics}.
 
 @item Symbol Translate...
 @clicksequence{Edit @click{} Symbol Translate...} (@kbd{E T})
+translates a symbol you edit to origin, that is, to the world
+coordinate (0, 0) of the page.  This coordinate defines the anchor of
+a symbol.  When you insert the symbol from the component library, this
+point in the symbol corresponds to the position of the mouse cursor,
+so the visible contents of your component will be positioned around
+the mouse cursor at the same distance the contents of the
+corresponding symbol is positioned around the origin within it.
 
 @end table
 
