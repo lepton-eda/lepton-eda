@@ -529,6 +529,14 @@ end point of the path.  Hit @kbd{Esc} if you want to cancel making up
 a path.
 
 @item Box
+@clicksequence{Add @click{} Box} (@kbd{B} or @kbd{A B}) starts the box
+insertion mode.  The box is defined by two points on the canvas.  If
+the mouse cursor is over the canvas, the first point of a new box
+corresponds to the point under the cursor.  Otherwise you have to
+left-click to define the point.  Use another left-click to define the
+point of the second box corner.  Hit @kbd{Esc} if you want to cancel
+making up a box.
+
 @item Circle
 @item Arc
 @item Pin
