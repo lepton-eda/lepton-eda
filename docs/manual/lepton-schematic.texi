@@ -763,6 +763,10 @@ you will see a little circle at the point new net would join.
 Otherwise, no feedback is provided.  The mode is ON by default.
 
 @item Coord Window
+@clicksequence{Options @click{} Coord Window} (@kbd{O C}) opens a
+dialog window where you can watch the current position of your mouse
+cursor on the page in screen and world coordinates.
+
 @item Log Window
 @end table
 
