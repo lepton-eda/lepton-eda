@@ -334,6 +334,23 @@ schematics}.
 @cindex menu View
 
 @table @emph
+@item Side Dock
+@clicksequence{View @click{} Side Dock} (@kbd{V A}) opens the side
+dock widget with three tabs: ``Object'', ``Text'', and ``Options''.
+You can select the tabs with left mouse click, or by choosing one of
+the actions @clicksequence{Edit @click{} Edit...} (@kbd{E E}),
+@clicksequence{Edit @click{} Edit Text...} (@kbd{E X}), or
+@clicksequence{Options @click{} Options...} (@kbd{E X})
+correspondingly.  See the description of corresponding menu items for
+more information on that.  The action is available if displaying dock
+widgets is enabled in @ref{use-docks, configuration}.
+
+@item Bottom Dock
+@clicksequence{View @click{} Bottom Dock} (@kbd{V S}) opens the bottom
+dock widget with two tabs: ``Find Text'' and ``Log''.  The action is
+available if showing dock widgets is enabled in @ref{use-docks,
+configuration}.
+
 @item Find Text Results
 @item Redraw
 @item Pan
