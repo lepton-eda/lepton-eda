@@ -585,6 +585,10 @@ schematics.
 
 @table @emph
 @item Up
+@clicksequence{Hierarchy @click{} Up} (@kbd{Shift-H U}) allows you to
+return to the toplevel schematic of the subcircuit you're working in
+if you went to it using the next menu item.
+
 @item Down Schematic
 @item Down Symbol
 @end table
