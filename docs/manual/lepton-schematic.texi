@@ -406,6 +406,9 @@ a predefined color scheme with black background.
 a predefined color scheme with light background.
 
 @item BW Color Scheme
+@clicksequence{View @click{} BW Color Scheme} (@kbd{V W}) loads
+a predefined black-and-white color scheme.
+
 @item Color Scheme Editor...
 @end table
 
