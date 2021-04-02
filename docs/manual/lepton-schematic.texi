@@ -295,7 +295,12 @@ Text dialog box for editing plain text objects.  @xref{Editing
 schematics}.
 
 @item Slot...
-@clicksequence{Edit @click{} Slot...} (@kbd{E Shift-S})
+@clicksequence{Edit @click{} Slot...} (@kbd{E Shift-S}) is used to
+change slot number of a slotted component.  It is useless for
+graphical primitives, text, and pictures, and is only meaningful for
+slotted components.  While you can use it for non-slotted components
+as well, it won't add much to your schematics unless you change the
+component symbol to support slots.
 
 @item Lock
 @clicksequence{Edit @click{} Lock} (@kbd{E L})
