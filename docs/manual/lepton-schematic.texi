@@ -749,6 +749,13 @@ only the bounding boxes of objects will be shown when moving them.
 This may facilitate working on schematics on old slow hardware.
 
 @item Net: Rubberband On/Off
+@clicksequence{Options @click{} Net: Rubberband On/Off} (@kbd{O R})
+toggles the rubberband mode for nets.  If the mode is ON (default
+setting), the nets connected to an object you're moving will change
+their size so they stay connected to the same points on the object.
+Otherwise, the connections will silently break leaving the connected
+objects unconnected.
+
 @item Net: Magnetic On/Off
 @item Coord Window
 @item Log Window
