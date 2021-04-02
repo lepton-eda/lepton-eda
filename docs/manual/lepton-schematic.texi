@@ -470,6 +470,11 @@ by hitting @kbd{Esc}.
 
 @table @emph
 @item Component...
+@clicksequence{Add @click{} Component...} (@kbd{I} or @kbd{A C}) opens
+the Add component dialog where you can choose a symbol to insert,
+choose the method of insertion, filter the symbols by names, or choose
+updating the symbols in your schematic.
+
 @item Net
 @item Bus
 @item Attribute...
