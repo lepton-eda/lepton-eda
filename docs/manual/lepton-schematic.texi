@@ -402,6 +402,9 @@ to show all the available coordinate space.
 a predefined color scheme with black background.
 
 @item Light Color Scheme
+@clicksequence{View @click{} Light Color Scheme} (@kbd{V L}) loads
+a predefined color scheme with light background.
+
 @item BW Color Scheme
 @item Color Scheme Editor...
 @end table
