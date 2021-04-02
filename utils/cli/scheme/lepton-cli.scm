@@ -118,10 +118,16 @@ Lepton EDA homepage: <~A>
          (run-help-prompt))
        (lambda (op seeds)
          (check-command op)
-         (let ((prog-name (or (getenv "LEPTON_EXPORT")
-                              (string-append "@bindir@"
-                                             file-name-separator-string
-                                             "lepton-export"))))
+         (let ((prog-name
+                (if (string= op "shell")
+                    (or (getenv "LEPTON_SHELL")
+                        (string-append "@bindir@"
+                                       file-name-separator-string
+                                       "lepton-shell"))
+                    (or (getenv "LEPTON_EXPORT")
+                        (string-append "@bindir@"
+                                       file-name-separator-string
+                                       "lepton-export")))))
            (apply execle
                   prog-name
                   (environ)

@@ -55,7 +55,6 @@ struct internal_command {
 
 static struct internal_command commands[] =
   {
-    {"shell", cmd_shell},
     {"config", cmd_config},
     {"export", cmd_export},
     {NULL, NULL},
