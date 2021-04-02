@@ -464,6 +464,7 @@ widgets (@cfgval{true}).
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{use-tabs}
 Whether to use tabbed GUI: display each schematic in its own tab
 within GtkNotebook widget.
 

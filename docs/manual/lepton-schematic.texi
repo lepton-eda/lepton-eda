@@ -450,7 +450,14 @@ useful though in cases when the page file has been changed by some
 external program such as, for example, @command{lepton-refdes_renum}.
 
 @item Next Tab
+@clicksequence{Page @click{} Next Tab} goes to the next tab.  It is
+equivalent to @clicksequence{Page @click{} Next} if tabbed view is
+enabled in @ref{use-tabs, configuration}.
+
 @item Previous Tab
+@clicksequence{Page @click{} Previous Tab} goes to the previous tab.
+It is equivalent to @clicksequence{Page @click{} Previous} if tabbed
+view is enabled in @ref{use-tabs, configuration}.
 @end table
 
 @node Menu Add, Menu Hierarchy, Menu Page, lepton-schematic window
