@@ -608,6 +608,16 @@ item, it goes into the symbol file, not into its subcircuit schematic.
 
 @table @emph
 @item Attach
+@clicksequence{Attributes @click{} Attach} (@kbd{T A}) attaches a text
+attribute to an object.  You can select attributes and other objects
+in any order and then hit the shortcut.  However, all attributes will
+be attached to only one of the objects selected and it is not easy to
+understand which one will be chosen for that.  Therefore, it is
+recommended to select only one object and any number of attributes to
+attach to it.  Attached attributes change their color to the
+``Attribute'' color and you cannot re-attach them to any other object
+until you detach them.
+
 @item Detach
 @item Show Value
 @item Show Name
