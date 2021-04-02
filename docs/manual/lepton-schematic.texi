@@ -625,6 +625,10 @@ attributes change their color to the ``Detached attribute'' color.
 The action does nothing for not attached attributes.
 
 @item Show Value
+@clicksequence{Attributes @click{} Show Value} (@kbd{T V}) toggles the
+visibility of a text attribute so only its value is shown on schematic
+page.
+
 @item Show Name
 @item Show Both
 @item Toggle Visibility
