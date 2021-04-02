@@ -642,6 +642,15 @@ visibility of a text attribute so it is shown in the form
 @attr{name=value}.
 
 @item Toggle Visibility
+@clicksequence{Attributes @click{} Toggle Visibility} (@kbd{T T})
+switches off or on the total visibility of selected attributes.  After
+switching off the visibility of an attribute, you won't be able to
+simple select it to make it visible again.  Either just undo the
+operation if you did this mistakenly, or use the
+@clicksequence{Attributes @click{} Show/Hide Hidden Text} action in
+order to be able to select any hidden attribute and then toggle their
+visibility.  Please see below for more information on that.
+
 @item Hide Specific Text...
 @item Show Specific Text...
 @item Show/Hide Hidden Text
