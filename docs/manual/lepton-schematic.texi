@@ -321,7 +321,13 @@ limitation of the current file format. @xref{gEDA file format} for
 more information.
 
 @item Unembed Component/Picture
-@clicksequence{Edit @click{} Unembed Component/Picture} (@kbd{E Shift-B})
+@clicksequence{Edit @click{} Unembed Component/Picture} (@kbd{E
+Shift-B}) unembeds a component or picture embedded by the above menu
+item action.  Note that the command will be ignored if you don't have
+the symbol or image corresponding to your unembeddable object in one
+of the libraries available for your schematic.  Remember to open the
+log window and see what could went wrong if the schematic page did not
+change after this command.
 
 @item Update Component
 @clicksequence{Edit @click{} Update Component} (@kbd{E U})
