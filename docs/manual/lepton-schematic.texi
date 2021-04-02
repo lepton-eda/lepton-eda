@@ -309,6 +309,16 @@ selected locked objects.  @xref{Editing schematics}.
 
 @item Embed Component/Picture
 @clicksequence{Edit @click{} Embed Component/Picture} (@kbd{E B})
+makes sense only for component and picture objects that may be stored
+in your project separately from your schematic.  Supposed that you
+want them to be distributed within your schematic, that is, not as
+separate symbol and picture files, you may embed them by using this
+menu item command.  Currently, each symbol or picture instance should
+be embedded if you have several of them in your schematic.  Otherwise,
+not embedded objects won't be present in the schematic if you don't
+include libraries with appropriate symbols into your project.  This is
+limitation of the current file format. @xref{gEDA file format} for
+more information.
 
 @item Unembed Component/Picture
 @clicksequence{Edit @click{} Unembed Component/Picture} (@kbd{E Shift-B})
