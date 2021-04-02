@@ -686,6 +686,11 @@ feedback in the form of dialog windows where you can select the issue
 items and go to the place the objects in question reside in.
 
 @item Autonumber Text...
+@clicksequence{Attributes @click{} Autonumber Text...} (@kbd{T U})
+opens an interactive autonumber dialog window in which you can select
+the scope of autonumbering and several options.  Hit the @samp{Apply}
+button after choosing the wanted settings to actually run the
+autonumbering or @samp{Close} to cancel it.
 @end table
 
 @node Menu Options, Menu Netlist, Menu Attributes, lepton-schematic window
