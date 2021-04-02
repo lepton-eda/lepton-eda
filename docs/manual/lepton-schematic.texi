@@ -299,10 +299,15 @@ schematics}.
 change slot number of a slotted component.  @xref{Editing schematics}.
 
 @item Lock
-@clicksequence{Edit @click{} Lock} (@kbd{E L})
+@clicksequence{Edit @click{} Lock} (@kbd{E L}) locks objects to
+prevent selecting them by a left mouse click on them.  This is
+primarily used for title-blocks, though you can select and lock any
+object you don't want to be modified by accident. @xref{Title block
+symbol} for more information.
 
 @item Unlock
-@clicksequence{Edit @click{} Unlock} (@kbd{E Shift-L})
+@clicksequence{Edit @click{} Unlock} (@kbd{E Shift-L}) unlocks symbols
+locked by the above menu item command.
 
 @item Embed Component/Picture
 @clicksequence{Edit @click{} Embed Component/Picture} (@kbd{E B})
