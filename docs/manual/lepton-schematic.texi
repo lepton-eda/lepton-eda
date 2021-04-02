@@ -660,6 +660,11 @@ style of visibility (@samp{name}, @samp{value}, or @samp{both}) each
 particular attribute has.
 
 @item Show Specific Text...
+@clicksequence{Attributes @click{} Show Specific Text...} (@kbd{T
+Shift-H}) allows to quickly make visible a set of hidden text objects
+having the specified text prefix.  The same rules apply as for
+@clicksequence{Attributes @click{} Hide Specific Text...}.
+
 @item Show/Hide Hidden Text
 @item Find Text/Check Symbol
 @item Autonumber Text...
