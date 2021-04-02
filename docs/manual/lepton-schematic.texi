@@ -722,6 +722,16 @@ of the snapping grid twice.
 switches the grid off.  The default is the @samp{mesh} style.
 
 @item Grid Snap: Cycle Grid/Resnap/Off
+@clicksequence{Options @click{} Grid Snap: Cycle Grid/Resnap/Off}
+(@kbd{O S}) toggles grid snapping modes.  The default and mostly
+useful is the @samp{grid} mode.  If it is selected, all objects on the
+page are snapped to the grid when you edit them.  Switching the grid
+off may be useful for some artistic work with graphical primitives but
+is not recommended for connectible objects which may stop connecting
+if their connectible ends are not on the grid.  The @samp{resnap} mode
+helps just in such situations: it allows you to move the objects or
+their points so they again snap to the current grid.
+
 @item Grips: On/Off
 @item Feedback Mode: Outline/Box
 @item Net: Rubberband On/Off
