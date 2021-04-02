@@ -379,6 +379,10 @@ mouse to another point and click to set the second coordinate.  The
 view will be scaled so the box region wholly fits in the canvas.
 
 @item Zoom Extents
+@clicksequence{View @click{} Zoom Extents} (@kbd{0}, @kbd{Ctrl-0},
+@kbd{V E}, or @kbd{*} on the additional keypad) zooms the size of the
+visible canvas area to the extents of all visible objects.
+
 @item Zoom In
 @item Zoom Out
 @item Zoom Full
