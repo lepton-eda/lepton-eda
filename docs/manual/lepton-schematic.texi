@@ -630,6 +630,12 @@ visibility of a text attribute so only its value is shown on schematic
 page.
 
 @item Show Name
+@clicksequence{Attributes @click{} Show Name} (@kbd{T N}) toggles the
+visibility of a text attribute so only its name is shown on schematic
+page.  Not very helpful for most of attributes but may be useful for
+those which values were historically not very well chosen, for
+instance, @attr{graphical=1}.
+
 @item Show Both
 @item Toggle Visibility
 @item Hide Specific Text...
