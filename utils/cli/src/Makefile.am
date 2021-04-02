@@ -1,14 +1,11 @@
 bin_PROGRAMS = lepton-export
 
-BUILT_SOURCES = shell.x
-
 lepton_export_SOURCES = \
 	builtins.h \
 	gettext.h \
 	lepton-export.c \
 	config.c \
-	export.c \
-	shell.c
+	export.c
 
 lepton_export_CPPFLAGS = \
 	-I$(top_srcdir) -I$(top_srcdir)/liblepton/include -I$(includedir)
@@ -23,14 +20,3 @@ lepton_export_LDADD = \
 
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
-
-# This is used to generate boilerplate for defining Scheme functions
-# in C.
-snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(lepton_export_CPPFLAGS) $(AM_CFLAGS) $(lepton_export_CFLAGS)
-.c.x:
-	$(AM_V_GEN) CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
-
-SUFFIXES = .x
-
-CLEANFILES = $(BUILT_SOURCES)

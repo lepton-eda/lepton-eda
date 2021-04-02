@@ -3,6 +3,16 @@
 (load-from-path "env.scm")
 
 
+(define lepton-shell
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "cli"
+                  "scheme"
+                  "lepton-shell"))
+
+(putenv (string-append "LEPTON_SHELL" "=" lepton-shell))
+
+
 (define cwd (getcwd))
 (define *testdir* (build-filename (getcwd) "cli-tmp"))
 

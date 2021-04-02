@@ -128,4 +128,12 @@
                   "src"
                   "lepton-export"))
 
+(define lepton-shell
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "cli"
+                  "scheme"
+                  "lepton-shell"))
+
 (putenv (string-append "LEPTON_EXPORT" "=" lepton-export))
+(putenv (string-append "LEPTON_SHELL" "=" lepton-shell))
