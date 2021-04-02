@@ -279,7 +279,9 @@ selected objects by 90 degrees counter-clockwise each time.
 mirror objects around the X axis.  @xref{Editing schematics}.
 
 @item Object Properties...
-@clicksequence{Edit @click{} Object Properties...} (@kbd{E O})
+@clicksequence{Edit @click{} Object Properties...} (@kbd{E O}) opens a
+dialog where you can see and change the properties of primitive
+objects.  @xref{Editing schematics}.
 
 @item Edit...
 @clicksequence{Edit @click{} Edit...} (@kbd{E E})
@@ -559,6 +561,16 @@ workaround to get the look you want.
 
 You can also rotate or mirror objects while moving them, using one of
 the ways described above, or when inserting a component.
+
+@clicksequence{Edit @click{} Object Properties...} (@kbd{E O}) opens a
+dialog where you can see and change the properties of primitives such
+as lines, boxes, pins, text and so on.  The editable properties
+include color, stroke and filling styles, and the type of pins.
+Changing of a property affects all objects selected if they support
+it.
+
+If docks are enabled in your configuration, the properties widget will
+be shown as the first tab in the right dock.
 
 
 @node Working with windows, Quitting the program, Editing schematics, lepton-schematic
