@@ -389,6 +389,10 @@ visible canvas area to the extents of all visible objects.
 of the canvas.
 
 @item Zoom Out
+@clicksequence{View @click{} Zoom Out} (@kbd{-}, @kbd{Ctrl-minus},
+@kbd{Shift-Z}, @kbd{V O}, or @kbd{-} on the additional keypad) zooms
+out the contents of the canvas.
+
 @item Zoom Full
 @item Dark Color Scheme
 @item Light Color Scheme
