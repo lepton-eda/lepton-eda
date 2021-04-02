@@ -768,6 +768,10 @@ dialog window where you can watch the current position of your mouse
 cursor on the page in screen and world coordinates.
 
 @item Log Window
+@clicksequence{Options @click{} Log Window} (@kbd{O L}) opens the log
+window where you can see messages the program reports.  Sometimes the
+messages are important, sometimes not.  Anyways, look there if you
+think something went wrong.
 @end table
 
 @node Menu Netlist, Menu Help, Menu Options, lepton-schematic window
