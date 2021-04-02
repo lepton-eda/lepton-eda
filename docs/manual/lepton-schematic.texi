@@ -717,6 +717,10 @@ of the snapping grid twice.
 of the snapping grid twice.
 
 @item Grid Style: Cycle Dots/Mesh/Off
+@clicksequence{Options @click{} Grid Style: Cycle Dots/Mesh/Off}
+(@kbd{O G}) toggles one of two available styles of grid displaying or
+switches the grid off.  The default is the @samp{mesh} style.
+
 @item Grid Snap: Cycle Grid/Resnap/Off
 @item Grips: On/Off
 @item Feedback Mode: Outline/Box
