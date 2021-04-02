@@ -352,6 +352,11 @@ available if showing dock widgets is enabled in @ref{use-docks,
 configuration}.
 
 @item Find Text Results
+@clicksequence{View @click{} Find Text Results} opens a widget with
+results of last text searching.  If the docks are enabled in
+@ref{configuration, use-docks}, the widget is displayed in the bottom
+dock.  Otherwise, a separate dialog window is open.
+
 @item Redraw
 @item Pan
 @item Zoom Box
