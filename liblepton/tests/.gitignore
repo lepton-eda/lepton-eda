@@ -6,6 +6,7 @@ liblepton.la
 *.x
 *.log
 *.trs
+*.exe
 test_angle
 test_arc
 test_arc_object
