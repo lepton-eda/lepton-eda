@@ -1,6 +1,8 @@
 #!/bin/sh
 
 # Copyright (C) 2007-2008 Dan McMahill
+# Copyright (C) 2007-2011 gEDA Contributors
+# Copyright (C) 2018-2021 Lepton EDA Contributors
 
 # This file is part of lepton-refdes_renum.
 
