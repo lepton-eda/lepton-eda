@@ -60,5 +60,13 @@ Dan McMahill <danmcmahill@netbsd.org>
 .SH SEE ALSO
 lepton-netlist(1), lepton-schematic(1), pcb(1)
 
-
-
+.SH COPYRIGHT
+.nf
+Copyright \(co 2003, 2006, 2010 Dan McMahill.
+Copyright \(co 2003-2014 gEDA Contributors.
+Copyright \(co 2018-@YEAR@ Lepton EDA Contributors.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
