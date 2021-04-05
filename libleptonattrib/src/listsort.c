@@ -90,18 +90,18 @@ int cmp(STRING_LIST *al, STRING_LIST *bl) {
   while (*a && *b)
     {
       if (isdigit ((int) *a) && isdigit ((int) *b))
-	{
-	  int ia = atoi (a);
-	  int ib = atoi (b);
-	  if (ia != ib)
-	    return ia - ib;
-	  while (isdigit ((int) *a))
-	    a++;
-	  while (isdigit ((int) *b))
-	    b++;
-	}
+        {
+          int ia = atoi (a);
+          int ib = atoi (b);
+          if (ia != ib)
+            return ia - ib;
+          while (isdigit ((int) *a))
+            a++;
+          while (isdigit ((int) *b))
+            b++;
+        }
       else if (tolower ((int) *a) != tolower ((int) *b))
-	return tolower ((int) *a) - tolower ((int) *b);
+        return tolower ((int) *a) - tolower ((int) *b);
       a++;
       b++;
     }
@@ -141,13 +141,13 @@ STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double) {
      * NULL immediately.
      */
     if (!list)
-	return NULL;
+        return NULL;
 
     insize = 1;
 
     while (1) {
         p = list;
-	oldhead = list;		       /* only used for circular linkage */
+        oldhead = list;                /* only used for circular linkage */
         list = NULL;
         tail = NULL;
 
@@ -160,10 +160,10 @@ STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double) {
             psize = 0;
             for (i = 0; i < insize; i++) {
                 psize++;
-		if (is_circular)
-		    q = (q->next == oldhead ? NULL : q->next);
-		else
-		    q = q->next;
+                if (is_circular)
+                    q = (q->next == oldhead ? NULL : q->next);
+                else
+                    q = q->next;
                 if (!q) break;
             }
 
@@ -175,46 +175,46 @@ STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double) {
 
                 /* decide whether next element of merge comes from p or q */
                 if (psize == 0) {
-		    /* p is empty; e must come from q. */
-		    e = q; q = q->next; qsize--;
-		    if (is_circular && q == oldhead) q = NULL;
-		} else if (qsize == 0 || !q) {
-		    /* q is empty; e must come from p. */
-		    e = p; p = p->next; psize--;
-		    if (is_circular && p == oldhead) p = NULL;
-		} else if (cmp(p,q) <= 0) {
-		    /* First element of p is lower (or same);
-		     * e must come from p. */
-		    e = p; p = p->next; psize--;
-		    if (is_circular && p == oldhead) p = NULL;
-		} else {
-		    /* First element of q is lower; e must come from q. */
-		    e = q; q = q->next; qsize--;
-		    if (is_circular && q == oldhead) q = NULL;
-		}
+                    /* p is empty; e must come from q. */
+                    e = q; q = q->next; qsize--;
+                    if (is_circular && q == oldhead) q = NULL;
+                } else if (qsize == 0 || !q) {
+                    /* q is empty; e must come from p. */
+                    e = p; p = p->next; psize--;
+                    if (is_circular && p == oldhead) p = NULL;
+                } else if (cmp(p,q) <= 0) {
+                    /* First element of p is lower (or same);
+                     * e must come from p. */
+                    e = p; p = p->next; psize--;
+                    if (is_circular && p == oldhead) p = NULL;
+                } else {
+                    /* First element of q is lower; e must come from q. */
+                    e = q; q = q->next; qsize--;
+                    if (is_circular && q == oldhead) q = NULL;
+                }
 
                 /* add the next element to the merged list */
-		if (tail) {
-		    tail->next = e;
-		} else {
-		    list = e;
-		}
-		if (is_double) {
-		    /* Maintain reverse pointers in a doubly linked list. */
-		    e->prev = tail;
-		}
-		tail = e;
+                if (tail) {
+                    tail->next = e;
+                } else {
+                    list = e;
+                }
+                if (is_double) {
+                    /* Maintain reverse pointers in a doubly linked list. */
+                    e->prev = tail;
+                }
+                tail = e;
             }
 
             /* now p has stepped `insize' places along, and q has too */
             p = q;
         }
-	if (is_circular) {
-	    tail->next = list;
-	    if (is_double)
-		list->prev = tail;
-	} else
-	    tail->next = NULL;
+        if (is_circular) {
+            tail->next = list;
+            if (is_double)
+                list->prev = tail;
+        } else
+            tail->next = NULL;
 
         /* If we have done only one merge, we're finished. */
         if (nmerges <= 1)   /* allow for nmerges==0, the empty list case */
@@ -224,4 +224,3 @@ STRING_LIST *listsort(STRING_LIST *list, int is_circular, int is_double) {
         insize *= 2;
     }
 }
-
