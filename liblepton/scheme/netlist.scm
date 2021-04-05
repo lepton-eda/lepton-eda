@@ -263,15 +263,15 @@ REFDES. As a result, slots may be repeated in the returned list."
   (if (> wrap-length (string-length string-to-wrap))
       string-to-wrap ; Last snippet of string
       (let ((pos (string-rindex string-to-wrap #\space 0 wrap-length)))
-	(cond ((not pos)
+        (cond ((not pos)
                (display (G_ "Couldn't wrap string  at requested position\n"))
-	       " Wrap error!")
-	      (else
-	       (string-append
-		(substring string-to-wrap 0 pos)
-		wrap-char
-		"\n "
-		(gnetlist:wrap (substring string-to-wrap (+ pos 1)) wrap-length wrap-char)))))))
+               " Wrap error!")
+              (else
+               (string-append
+                (substring string-to-wrap 0 pos)
+                wrap-char
+                "\n "
+                (gnetlist:wrap (substring string-to-wrap (+ pos 1)) wrap-length wrap-char)))))))
 
 ;; example use
 ; (define (run-test test-string wrap-len)
@@ -1074,4 +1074,3 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
 
 ) ; let
 ) ; main()
-
