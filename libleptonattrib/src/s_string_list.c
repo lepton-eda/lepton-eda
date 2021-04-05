@@ -211,20 +211,20 @@ void s_string_list_delete_item(STRING_LIST **list, int *count, gchar *item) {
 
       /* Check position in list */
       if (next_item == NULL && prev_item == NULL) {
-	/* pathological case of one item list. */
-	(*list) = NULL;
+        /* pathological case of one item list. */
+        (*list) = NULL;
       } else if (next_item == NULL && prev_item != NULL) {
-	/* at list's end */
-	prev_item->next = NULL;
+        /* at list's end */
+        prev_item->next = NULL;
       } else if (next_item != NULL && prev_item == NULL) {
-	/* at list's beginning */
-	next_item->prev = NULL;
-	(*list) = next_item;         /* also need to fix pointer to list head */
-	/*  g_free(list);  */
+        /* at list's beginning */
+        next_item->prev = NULL;
+        (*list) = next_item;         /* also need to fix pointer to list head */
+        /*  g_free(list);  */
       } else {
-	/* normal case of element in middle of list */
-	prev_item->next = next_item;
-	next_item->prev = prev_item;
+        /* normal case of element in middle of list */
+        prev_item->next = next_item;
+        next_item->prev = prev_item;
       }
 
       g_debug ("s_string_list_delete_item: "
@@ -599,4 +599,3 @@ void s_string_list_sort_master_pin_attrib_list() {
 
   return;
 }
-
