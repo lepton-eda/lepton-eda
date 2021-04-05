@@ -108,14 +108,14 @@ void s_visibility_set_invisible() {
     col_end = sheet->range.coli;
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
-	/* first set cell in SHEET_DATA to invisible */
-	s_visibility_set_cell(cur_page, i, j,
-			      INVISIBLE,
-			      LEAVE_NAME_VALUE_ALONE);
-	/* Now set cell in gtksheet to desired color */
-	/* Color names are defined
-	 * in liblepton/include/colors.h */
-	x_gtksheet_set_cell_text_color(sheet, i, j, GREY);
+        /* first set cell in SHEET_DATA to invisible */
+        s_visibility_set_cell(cur_page, i, j,
+                              INVISIBLE,
+                              LEAVE_NAME_VALUE_ALONE);
+        /* Now set cell in gtksheet to desired color */
+        /* Color names are defined
+         * in liblepton/include/colors.h */
+        x_gtksheet_set_cell_text_color(sheet, i, j, GREY);
 
       }
     }
@@ -126,15 +126,15 @@ void s_visibility_set_invisible() {
   case GTK_SHEET_NORMAL:
     g_debug ("s_visibility_set_invisible: Normal selection.\n");
     s_visibility_set_cell(cur_page,
-			  sheet->active_cell.row,
-			  sheet->active_cell.col,
-			  INVISIBLE,
-			  LEAVE_NAME_VALUE_ALONE);
+                          sheet->active_cell.row,
+                          sheet->active_cell.col,
+                          INVISIBLE,
+                          LEAVE_NAME_VALUE_ALONE);
 
     x_gtksheet_set_cell_text_color(sheet,
-				   sheet->active_cell.row,
-				   sheet->active_cell.col,
-				   GREY);
+                                   sheet->active_cell.row,
+                                   sheet->active_cell.col,
+                                   GREY);
 
     break;
 
@@ -175,10 +175,10 @@ void s_visibility_set_name_only() {
     col_end = sheet->range.coli;
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
-	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_NAME);
-	/* Color names are defined
-	 * in liblepton/include/colors.h */
-	x_gtksheet_set_cell_text_color(sheet, i, j, RED);
+        s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_NAME);
+        /* Color names are defined
+         * in liblepton/include/colors.h */
+        x_gtksheet_set_cell_text_color(sheet, i, j, RED);
 
       }
     }
@@ -189,13 +189,13 @@ void s_visibility_set_name_only() {
 
   case GTK_SHEET_NORMAL:
     s_visibility_set_cell(cur_page,
-			  sheet->active_cell.row,
-			  sheet->active_cell.col,
-			  VISIBLE, SHOW_NAME);
+                          sheet->active_cell.row,
+                          sheet->active_cell.col,
+                          VISIBLE, SHOW_NAME);
     x_gtksheet_set_cell_text_color(sheet,
-				   sheet->active_cell.row,
-				   sheet->active_cell.col,
-				   RED);
+                                   sheet->active_cell.row,
+                                   sheet->active_cell.col,
+                                   RED);
 
     break;
 
@@ -234,10 +234,10 @@ void s_visibility_set_value_only() {
     col_end = sheet->range.coli;
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
-	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_VALUE);
-	/* Color names are defined
-	 * in liblepton/include/colors.h */
-	x_gtksheet_set_cell_text_color(sheet, i, j, BLACK);
+        s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_VALUE);
+        /* Color names are defined
+         * in liblepton/include/colors.h */
+        x_gtksheet_set_cell_text_color(sheet, i, j, BLACK);
 
       }
     }
@@ -249,13 +249,13 @@ void s_visibility_set_value_only() {
   case GTK_SHEET_NORMAL:
     g_debug ("s_visibility_set_value_only: Sheet normal selected.\n");
     s_visibility_set_cell(cur_page,
-			  sheet->active_cell.row,
-			  sheet->active_cell.col,
-			  VISIBLE, SHOW_VALUE);
+                          sheet->active_cell.row,
+                          sheet->active_cell.col,
+                          VISIBLE, SHOW_VALUE);
     x_gtksheet_set_cell_text_color(sheet,
-				   sheet->active_cell.row,
-				   sheet->active_cell.col,
-				   BLACK);
+                                   sheet->active_cell.row,
+                                   sheet->active_cell.col,
+                                   BLACK);
     break;
 
   }
@@ -294,10 +294,10 @@ void s_visibility_set_name_and_value() {
     col_end = sheet->range.coli;
     for (i=row_start; i<=row_end; i++) {
       for (j=col_start; j<=col_end; j++) {
-	s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_NAME_VALUE);
-	/* Color names are defined
-	 * in liblepton/include/colors.h */
-	x_gtksheet_set_cell_text_color(sheet, i, j, BLUE);
+        s_visibility_set_cell(cur_page, i, j, VISIBLE, SHOW_NAME_VALUE);
+        /* Color names are defined
+         * in liblepton/include/colors.h */
+        x_gtksheet_set_cell_text_color(sheet, i, j, BLUE);
 
       }
     }
@@ -308,14 +308,14 @@ void s_visibility_set_name_and_value() {
 
   case GTK_SHEET_NORMAL:
     s_visibility_set_cell(cur_page,
-			  sheet->active_cell.row,
-			  sheet->active_cell.col,
-			  VISIBLE,
-			  SHOW_NAME_VALUE);
+                          sheet->active_cell.row,
+                          sheet->active_cell.col,
+                          VISIBLE,
+                          SHOW_NAME_VALUE);
     x_gtksheet_set_cell_text_color(sheet,
-				   sheet->active_cell.row,
-				   sheet->active_cell.col,
-				   BLUE);
+                                   sheet->active_cell.row,
+                                   sheet->active_cell.col,
+                                   BLUE);
 
     break;
 
@@ -337,12 +337,12 @@ void s_visibility_set_name_and_value() {
  * \param show_name_value Name, Value visibility flag
  */
 void s_visibility_set_cell(gint cur_page, gint row, gint col,
-			   gint visibility,
-			   gint show_name_value) {
+                           gint visibility,
+                           gint show_name_value) {
   TABLE **local_table = NULL;
 
   g_debug ("s_visibility_set_cell: Setting row = %d, col = %d.\n",
-	   row, col);
+           row, col);
 
   switch (cur_page) {
 
@@ -370,4 +370,3 @@ void s_visibility_set_cell(gint cur_page, gint row, gint col,
     s_sheet_data_set_changed (sheet_head, TRUE);
   }
 }
-
