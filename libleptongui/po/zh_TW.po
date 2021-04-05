@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:03+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2012-01-27 14:22+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -39,8 +39,11 @@ msgid ""
 "%s"
 msgstr "無法儲存備份檔 [%s]\n"
 
+msgid "Failed to save file"
+msgstr ""
+
 #, fuzzy
-msgid "Save Color Scheme As..."
+msgid "Save Color Scheme"
 msgstr "白色背景"
 
 #, c-format
@@ -107,7 +110,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2020 Lepton Developers.\n"
+"Copyright © 2017-2021 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -264,6 +267,10 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "開新視窗"
 
+#, fuzzy
+msgid "Clear Log"
+msgstr "開新視窗"
+
 msgid "_Wrap Long Lines"
 msgstr ""
 
@@ -400,8 +407,9 @@ msgstr ""
 msgid "Hide text starting with:"
 msgstr ""
 
-msgid "Edit slot number"
-msgstr ""
+#, fuzzy
+msgid "Edit Slot"
+msgstr "編輯文字"
 
 msgid "Number of Slots:"
 msgstr ""
@@ -612,10 +620,6 @@ msgid "Symbol is not a real file. Symbol cannot be loaded."
 msgstr ""
 
 msgid "Cannot find any schematics above the current one!"
-msgstr ""
-
-#, c-format
-msgid "Sorry but this is a non-functioning menu option\n"
 msgstr ""
 
 msgid "Action feedback mode set to OUTLINE"
@@ -851,7 +855,7 @@ msgstr ""
 msgid "File order"
 msgstr ""
 
-msgid "Autonumber text"
+msgid "Autonumber Text"
 msgstr ""
 
 msgid "<b>Scope</b>"
@@ -1184,6 +1188,9 @@ msgstr "名稱："
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "<b>Add Attribute</b>"
+msgstr "<b>增加屬性</b>"
+
 #, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
@@ -1273,6 +1280,13 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
+#, fuzzy
+msgid "Close"
+msgstr "關閉視窗"
+
+msgid "Save"
+msgstr "儲存"
+
 #, c-format
 msgid "Hierarchy up: %s"
 msgstr ""
@@ -1338,9 +1352,6 @@ msgstr "無法儲存備份檔 [%s]\n"
 msgid "Error while trying to save"
 msgstr "儲存檔案時發生錯誤"
 
-msgid "Failed to save file"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Saved as [%1$s]"
 msgstr "另存為 [%s]\n"
@@ -1369,9 +1380,6 @@ msgstr ""
 #, fuzzy
 msgid "Open file"
 msgstr "開啟檔案"
-
-msgid "Save"
-msgstr "儲存"
 
 msgid "Save file"
 msgstr "儲存檔案"
@@ -2057,9 +2065,6 @@ msgstr ""
 msgid "Show Specific Text"
 msgstr ""
 
-msgid "Autonumber Text"
-msgstr ""
-
 #, fuzzy
 msgid "Show Hotkeys"
 msgstr "熱鍵"
@@ -2146,7 +2151,6 @@ msgstr ""
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"\n"
 "Interactively edit Lepton EDA schematics or symbols.\n"
 "If one or more FILEs are specified, open them for\n"
 "editing; otherwise, create a new, empty schematic.\n"
@@ -2155,7 +2159,7 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
@@ -2210,9 +2214,6 @@ msgstr ""
 
 #~ msgid "<b>Edit Attribute</b>"
 #~ msgstr "<b>編輯屬性</b>"
-
-#~ msgid "<b>Add Attribute</b>"
-#~ msgstr "<b>增加屬性</b>"
 
 #~ msgid "Save as..."
 #~ msgstr "另存為..."

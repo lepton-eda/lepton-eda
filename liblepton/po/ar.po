@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:02+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2012-01-31 12:11+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -99,126 +99,6 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#, fuzzy, c-format
-msgid "Failed to stat [%1$s]: %2$s"
-msgstr "فشل إلى الحالة  [%s]: %s"
-
-#, fuzzy, c-format
-msgid ""
-"\n"
-"WARNING: Found an autosave backup file:\n"
-"  %1$s.\n"
-"\n"
-msgstr ""
-"\n"
-"﻿\n"
-"تحذير: العثور على ملف نسخ احتياطي:\n"
-"  %s.\n"
-"\n"
-
-msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr "لم أستطع تخمين ما إذا كان أحدث، لذلك عليك أن تفعل ذلك يدويا.\n"
-
-msgid ""
-"The backup copy is newer than the schematic, so it seems you should load it "
-"instead of the original file.\n"
-msgstr ""
-"النسخة الاحتياطية أحدث من المخطّط، لذلك على ما يبدو يجب عليك تحميله بدلا من "
-"الملف الأصلي.\n"
-
-#, fuzzy
-msgid ""
-"lepton-schematic usually makes backup copies automatically, and this "
-"situation happens when it crashed or it was forced to exit abruptly.\n"
-msgstr ""
-"عادة ما يعمل gschem نسخا احتياطية تلقائيا، وهذا الوضع يحدث عندما يتحطم أو "
-"يجبر على الخروج بشكل مفاجئ.\n"
-
-#, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "يتعذّر العثور على الملف ‪%s‬: %s"
-
-#, fuzzy
-msgid ""
-"\n"
-"Run lepton-schematic and correct the situation.\n"
-"\n"
-msgstr ""
-"\n"
-"شغل gschem و صحح الوضع.\n"
-"\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s: %2$s"
-msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
-
-#, fuzzy, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write."
-msgstr "تعذّر وضع الملف الاحتياطي السابق [‎%s‬] للقراءة والكتابة\n"
-
-#, fuzzy, c-format
-msgid "Can't save backup file: %1$s."
-msgstr "يتعذّر حفظ الملف الاحتياطي: %s."
-
-#, fuzzy, c-format
-msgid "Could NOT set backup file [%1$s] readonly."
-msgstr "تعذّر وضع الملف الاحتياطي [‎%s‬] للقراءة فقط\n"
-
-#, fuzzy, c-format
-msgid "Failed to restore permissions on '%1$s': %2$s\n"
-msgstr "فشل في فتح الدليل [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to restore ownership on '%1$s': %2$s\n"
-msgstr "فشل في فتح الدليل [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save file: %1$s"
-msgstr "تعذّر حفظ [‎%s‬]\n"
-
-msgid ""
-"\n"
-"Backtrace:\n"
-msgstr ""
-
-msgid "RC file already loaded"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Failed to load config from '%1$s': %2$s\n"
-msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
-
-#, fuzzy, c-format
-msgid "Loaded RC file [%1$s]"
-msgstr "فشل أمر المكتبة [%s]\n"
-
-#, fuzzy, c-format
-msgid "Failed to load RC file [%1$s]: "
-msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
-
-msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr ""
-
-#, c-format
-msgid "ERROR: %1$s"
-msgstr ""
-
-#, c-format
-msgid "ERROR: %1$s\n"
-msgstr ""
-
-#, c-format
-msgid "ERROR: The %1$s log may contain more information.\n"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
-
-#, fuzzy, c-format
-msgid "Unable to delete backup file %1$s."
-msgstr "‏s_page_delete: غير قادرة على حذف الملف الاحتياطي %s."
-
 msgid "Failed to parse arc object"
 msgstr ""
 
@@ -233,23 +113,6 @@ msgstr "عثر على لون غير صالح [ %s ]\n"
 #, fuzzy
 msgid "Setting color to default color."
 msgstr "تغيير لون إلى اللون الإفتراضي\n"
-
-#, c-format
-msgid "Attribute [%1$s] already attached\n"
-msgstr ""
-
-msgid "Attempt to attach non text item as an attribute!\n"
-msgstr "محاولة إرفاق عنصر غير نصي كسمة!\n"
-
-#, fuzzy, c-format
-msgid "Attempt to attach attribute [%1$s] to more than one object\n"
-msgstr "محاولة إرفاق السمة [%s] لأكثر من كائن واحد\n"
-
-msgid "Tried to attach a non-text item as an attribute"
-msgstr ""
-
-msgid "Unexpected end-of-file in attribute list"
-msgstr ""
 
 msgid "Failed to parse box object"
 msgstr ""
@@ -283,81 +146,6 @@ msgstr "عثر على قوس صفر الشعاع [ %c %d, %d, %d, %d, %d, %d ]\n
 #, fuzzy
 msgid "Setting radius to 0."
 msgstr "تعيين 'زاوية' إلى 0\n"
-
-msgid "Background"
-msgstr ""
-
-msgid "Pin"
-msgstr ""
-
-msgid "Net endpoint"
-msgstr ""
-
-msgid "Graphic"
-msgstr ""
-
-msgid "Net"
-msgstr ""
-
-msgid "Attribute"
-msgstr ""
-
-msgid "Logic bubble"
-msgstr ""
-
-msgid "Grid point"
-msgstr ""
-
-msgid "Detached attribute"
-msgstr ""
-
-msgid "Text"
-msgstr ""
-
-msgid "Bus"
-msgstr ""
-
-msgid "Selection"
-msgstr ""
-
-msgid "Bounding box"
-msgstr ""
-
-msgid "Zoom box"
-msgstr ""
-
-msgid "Stroke"
-msgstr ""
-
-msgid "Lock"
-msgstr ""
-
-msgid "Output background"
-msgstr ""
-
-msgid "Freestyle 1"
-msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-msgid "Net junction"
-msgstr ""
-
-msgid "Mesh grid major"
-msgstr ""
-
-msgid "Mesh grid minor"
-msgstr ""
-
-msgid "Unknown"
-msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -542,10 +330,6 @@ msgstr "تم تضمين الصورة [‪%s‬]\n"
 msgid "Picture [%1$s] has been unembedded."
 msgstr "تم إلغاء تضمين الصورة [‪%s‬]\n"
 
-#, fuzzy
-msgid "Failed to load fallback image.\n"
-msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
-
 msgid "Failed to parse pin object"
 msgstr ""
 
@@ -591,6 +375,218 @@ msgstr "تعيين المحاذاة إلى LOWER_LEFT (اليسار-السفلي
 
 #, c-format
 msgid "Unexpected end-of-file after %1$d lines"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to stat [%1$s]: %2$s"
+msgstr "فشل إلى الحالة  [%s]: %s"
+
+#, fuzzy, c-format
+msgid ""
+"\n"
+"WARNING: Found an autosave backup file:\n"
+"  %1$s.\n"
+"\n"
+msgstr ""
+"\n"
+"﻿\n"
+"تحذير: العثور على ملف نسخ احتياطي:\n"
+"  %s.\n"
+"\n"
+
+msgid "I could not guess if it is newer, so you have to do it manually.\n"
+msgstr "لم أستطع تخمين ما إذا كان أحدث، لذلك عليك أن تفعل ذلك يدويا.\n"
+
+msgid ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
+msgstr ""
+"النسخة الاحتياطية أحدث من المخطّط، لذلك على ما يبدو يجب عليك تحميله بدلا من "
+"الملف الأصلي.\n"
+
+#, fuzzy
+msgid ""
+"lepton-schematic usually makes backup copies automatically, and this "
+"situation happens when it crashed or it was forced to exit abruptly.\n"
+msgstr ""
+"عادة ما يعمل gschem نسخا احتياطية تلقائيا، وهذا الوضع يحدث عندما يتحطم أو "
+"يجبر على الخروج بشكل مفاجئ.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "يتعذّر العثور على الملف ‪%s‬: %s"
+
+#, fuzzy
+msgid ""
+"\n"
+"Run lepton-schematic and correct the situation.\n"
+"\n"
+msgstr ""
+"\n"
+"شغل gschem و صحح الوضع.\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s: %2$s"
+msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
+
+#, fuzzy, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write."
+msgstr "تعذّر وضع الملف الاحتياطي السابق [‎%s‬] للقراءة والكتابة\n"
+
+#, fuzzy, c-format
+msgid "Can't save backup file: %1$s."
+msgstr "يتعذّر حفظ الملف الاحتياطي: %s."
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly."
+msgstr "تعذّر وضع الملف الاحتياطي [‎%s‬] للقراءة فقط\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore permissions on '%1$s': %2$s\n"
+msgstr "فشل في فتح الدليل [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore ownership on '%1$s': %2$s\n"
+msgstr "فشل في فتح الدليل [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save file: %1$s"
+msgstr "تعذّر حفظ [‎%s‬]\n"
+
+msgid ""
+"\n"
+"Backtrace:\n"
+msgstr ""
+
+msgid "RC file already loaded"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to load config from '%1$s': %2$s\n"
+msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
+
+#, fuzzy, c-format
+msgid "Loaded RC file [%1$s]"
+msgstr "فشل أمر المكتبة [%s]\n"
+
+#, fuzzy, c-format
+msgid "Failed to load RC file [%1$s]: "
+msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
+
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr ""
+
+#, c-format
+msgid "ERROR: %1$s"
+msgstr ""
+
+#, c-format
+msgid "ERROR: %1$s\n"
+msgstr ""
+
+#, c-format
+msgid "ERROR: The %1$s log may contain more information.\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr "‏s_page_delete : يتعذر الحصول على الاسم الحقيقي للملف %s.‏"
+
+#, fuzzy, c-format
+msgid "Unable to delete backup file %1$s."
+msgstr "‏s_page_delete: غير قادرة على حذف الملف الاحتياطي %s."
+
+#, c-format
+msgid "Attribute [%1$s] already attached\n"
+msgstr ""
+
+msgid "Attempt to attach non text item as an attribute!\n"
+msgstr "محاولة إرفاق عنصر غير نصي كسمة!\n"
+
+#, fuzzy, c-format
+msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+msgstr "محاولة إرفاق السمة [%s] لأكثر من كائن واحد\n"
+
+msgid "Tried to attach a non-text item as an attribute"
+msgstr ""
+
+msgid "Unexpected end-of-file in attribute list"
+msgstr ""
+
+msgid "Background"
+msgstr ""
+
+msgid "Pin"
+msgstr ""
+
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+msgid "Attribute"
+msgstr ""
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+msgid "Detached attribute"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
 msgstr ""
 
 #, fuzzy, c-format
@@ -711,9 +707,6 @@ msgid "Object ~A is attached as an attribute"
 msgstr ""
 
 msgid "Object ~A has attributes"
-msgstr ""
-
-msgid "Object ~A has bad type '~A'"
 msgstr ""
 
 msgid "Object ~A has invalid stroke cap style ~A"
@@ -1286,6 +1279,10 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Failed to load fallback image.\n"
+#~ msgstr "‏تعذر تحميل الصورة من الملف ‬‪[%s]‬:‪ %s‮\n"
 
 #~ msgid "Color map entry must be a two-element list"
 #~ msgstr "يجب أن يكون إدخال خارطة اللون قائمة عنصرين"

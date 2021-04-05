@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:03+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2012-01-31 12:07+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -39,8 +39,11 @@ msgid ""
 "%s"
 msgstr "初期化scmファイルの読み込みに失敗。[%s]\n"
 
+msgid "Failed to save file"
+msgstr ""
+
 #, fuzzy
-msgid "Save Color Scheme As..."
+msgid "Save Color Scheme"
 msgstr "明るい配色(_L)"
 
 #, c-format
@@ -107,7 +110,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2020 Lepton Developers.\n"
+"Copyright © 2017-2021 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -271,6 +274,10 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "ウィンドウを閉じています。\n"
 
+#, fuzzy
+msgid "Clear Log"
+msgstr "新規ウィンドウ"
+
 msgid "_Wrap Long Lines"
 msgstr ""
 
@@ -404,8 +411,9 @@ msgstr ""
 msgid "Hide text starting with:"
 msgstr "隠しテキスト"
 
-msgid "Edit slot number"
-msgstr "スロット番号編集"
+#, fuzzy
+msgid "Edit Slot"
+msgstr "色"
 
 msgid "Number of Slots:"
 msgstr ""
@@ -623,10 +631,6 @@ msgstr ""
 
 msgid "Cannot find any schematics above the current one!"
 msgstr ""
-
-#, c-format
-msgid "Sorry but this is a non-functioning menu option\n"
-msgstr "機能しないメニューオプションです。\n"
 
 msgid "Action feedback mode set to OUTLINE"
 msgstr ""
@@ -873,7 +877,8 @@ msgstr ""
 msgid "File order"
 msgstr ""
 
-msgid "Autonumber text"
+#, fuzzy
+msgid "Autonumber Text"
 msgstr "オートナンバーテキスト"
 
 msgid "<b>Scope</b>"
@@ -1206,6 +1211,10 @@ msgstr "名前:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+#, fuzzy
+msgid "<b>Add Attribute</b>"
+msgstr "アトリビュート(_A)"
+
 #, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
@@ -1295,6 +1304,13 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
+#, fuzzy
+msgid "Close"
+msgstr "閉じる(_C)"
+
+msgid "Save"
+msgstr "保存"
+
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "階層"
@@ -1360,9 +1376,6 @@ msgstr ""
 msgid "Error while trying to save"
 msgstr "保存中にエラー発生"
 
-msgid "Failed to save file"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Saved as [%1$s]"
 msgstr "保存しました。[%s]\n"
@@ -1391,9 +1404,6 @@ msgstr "新規ファイル"
 #, fuzzy
 msgid "Open file"
 msgstr "ファイルを開く..."
-
-msgid "Save"
-msgstr "保存"
 
 msgid "Save file"
 msgstr "ファイルを保存"
@@ -2096,10 +2106,6 @@ msgid "Show Specific Text"
 msgstr ""
 
 #, fuzzy
-msgid "Autonumber Text"
-msgstr "オートナンバーテキスト"
-
-#, fuzzy
 msgid "Show Hotkeys"
 msgstr "隠しテキスト表示"
 
@@ -2183,7 +2189,6 @@ msgstr ""
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"\n"
 "Interactively edit Lepton EDA schematics or symbols.\n"
 "If one or more FILEs are specified, open them for\n"
 "editing; otherwise, create a new, empty schematic.\n"
@@ -2192,7 +2197,7 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
@@ -2207,6 +2212,16 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "Edit slot number"
+#~ msgstr "スロット番号編集"
+
+#, c-format
+#~ msgid "Sorry but this is a non-functioning menu option\n"
+#~ msgstr "機能しないメニューオプションです。\n"
+
+#~ msgid "Autonumber text"
+#~ msgstr "オートナンバーテキスト"
 
 #, fuzzy
 #~ msgid "lepton-schematic FAQ"
@@ -2438,10 +2453,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "Text Size..."
 #~ msgstr "テキストサイズ"
-
-#, fuzzy
-#~ msgid "Edit Color"
-#~ msgstr "色"
 
 #~ msgid "Edit Line Width & Type"
 #~ msgstr "線種と幅編集"

@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:02+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2020-03-20 09:14+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -111,134 +111,6 @@ msgstr ""
 ">>\n"
 "%2$s<<\n"
 
-#, c-format
-msgid "Failed to stat [%1$s]: %2$s"
-msgstr "Ошибка чтения статуса (stat) «%1$s»: %2$s"
-
-#, c-format
-msgid ""
-"\n"
-"WARNING: Found an autosave backup file:\n"
-"  %1$s.\n"
-"\n"
-msgstr ""
-"\n"
-"ВНИМАНИЕ: обнаружен файл автоматической резервной копии:\n"
-"  %1$s.\n"
-"\n"
-
-msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr "Не удалось определить новее ли он, решите это сами.\n"
-
-msgid ""
-"The backup copy is newer than the schematic, so it seems you should load it "
-"instead of the original file.\n"
-msgstr ""
-"Резервная копия новее схемы, поэтому, видимо, следует загрузить её вместо "
-"оригинального файла.\n"
-
-msgid ""
-"lepton-schematic usually makes backup copies automatically, and this "
-"situation happens when it crashed or it was forced to exit abruptly.\n"
-msgstr ""
-"Обычно lepton-schematic автоматически создаёт резервные копии, и такая "
-"ситуация может быть результатом фатального сбоя или неожиданного "
-"принудительного завершения программы.\n"
-
-#, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "Файл «%1$s» не найден: %2$s"
-
-msgid ""
-"\n"
-"Run lepton-schematic and correct the situation.\n"
-"\n"
-msgstr ""
-"\n"
-"Запустите lepton-schematic и устраните проблему.\n"
-"\n"
-
-# Эта функция пытается найти для указанного имени реальный файл (не являющийся
-# ссылкой).
-#, c-format
-msgid "Can't get the real filename of %1$s: %2$s"
-msgstr "Не удалось определить имя реального файла для %1$s: %2$s"
-
-#, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write."
-msgstr ""
-"Не удалось установить режим чтения-записи для файла предыдущей резервной  "
-"копии «%1$s»."
-
-#, c-format
-msgid "Can't save backup file: %1$s."
-msgstr "Не удалось сохранить файл резервной копии: %1$s."
-
-#, c-format
-msgid "Could NOT set backup file [%1$s] readonly."
-msgstr ""
-"Не удалось установить режим доступа только на чтение для резервной копии "
-"файла «%1$s»."
-
-#, c-format
-msgid "Failed to restore permissions on '%1$s': %2$s\n"
-msgstr "Не удалось восстановить права для «%1$s»: %2$s\n"
-
-#, c-format
-msgid "Failed to restore ownership on '%1$s': %2$s\n"
-msgstr "Не удалось восстановить владельца для «%1$s»: %2$s\n"
-
-#, c-format
-msgid "Could NOT save file: %1$s"
-msgstr "Не удалось сохранить файл: %1$s"
-
-msgid ""
-"\n"
-"Backtrace:\n"
-msgstr ""
-"\n"
-"Последовательность вызовов подпрограмм:\n"
-
-msgid "RC file already loaded"
-msgstr "Файл настроек уже загружен"
-
-#, c-format
-msgid "Failed to load config from '%1$s': %2$s\n"
-msgstr "Не удалось загрузить настройки из файла «%1$s»: %2$s\n"
-
-#, c-format
-msgid "Loaded RC file [%1$s]"
-msgstr "Загружен RC-файл «%1$s»"
-
-#, c-format
-msgid "Failed to load RC file [%1$s]: "
-msgstr "Не удалось загрузить RC-файл «%1$s»: "
-
-msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr "ОШИБКА: неизвестная ошибка при анализе файлов настроек"
-
-#, c-format
-msgid "ERROR: %1$s"
-msgstr "ОШИБКА: %1$s"
-
-#, c-format
-msgid "ERROR: %1$s\n"
-msgstr "ОШИБКА: %1$s\n"
-
-#, c-format
-msgid "ERROR: The %1$s log may contain more information.\n"
-msgstr "ОШИБКА: В файле журнала «%1$s» может быть больше информации.\n"
-
-# Эта функция пытается найти для указанного имени реальный файл (не являющийся
-# ссылкой).
-#, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr "Не удалось определить имя реального файла для %1$s."
-
-#, c-format
-msgid "Unable to delete backup file %1$s."
-msgstr "Не удалось удалить файл резервной копии %1$s."
-
 msgid "Failed to parse arc object"
 msgstr "Ошибка в определении дуги"
 
@@ -252,23 +124,6 @@ msgstr "Недопустимое значение цветового индек�
 
 msgid "Setting color to default color."
 msgstr "Установка цвета по умолчанию."
-
-#, c-format
-msgid "Attribute [%1$s] already attached\n"
-msgstr "Атрибут «%1$s» уже прикреплён\n"
-
-msgid "Attempt to attach non text item as an attribute!\n"
-msgstr "Попытка прикрепить нетекстовый элемент как атрибут!\n"
-
-#, c-format
-msgid "Attempt to attach attribute [%1$s] to more than one object\n"
-msgstr "Попытка прикрепить атрибут «%1$s» к более чем одному объекту\n"
-
-msgid "Tried to attach a non-text item as an attribute"
-msgstr "Попытка прикрепить нетекстовый элемент как атрибут!"
-
-msgid "Unexpected end-of-file in attribute list"
-msgstr "Неожиданный конец файла при обработке списка атрибутов"
 
 msgid "Failed to parse box object"
 msgstr "Ошибка в определении прямоугольника"
@@ -304,83 +159,6 @@ msgstr ""
 
 msgid "Setting radius to 0."
 msgstr "Установка радиуса в 0."
-
-msgid "Background"
-msgstr ""
-
-msgid "Pin"
-msgstr ""
-
-msgid "Net endpoint"
-msgstr ""
-
-msgid "Graphic"
-msgstr ""
-
-msgid "Net"
-msgstr ""
-
-#, fuzzy
-msgid "Attribute"
-msgstr "Найден атрибут ~A=~A"
-
-msgid "Logic bubble"
-msgstr ""
-
-msgid "Grid point"
-msgstr ""
-
-#, fuzzy
-msgid "Detached attribute"
-msgstr "Неправильно прикреплённый атрибут: ~A"
-
-msgid "Text"
-msgstr ""
-
-msgid "Bus"
-msgstr ""
-
-msgid "Selection"
-msgstr ""
-
-msgid "Bounding box"
-msgstr ""
-
-msgid "Zoom box"
-msgstr ""
-
-msgid "Stroke"
-msgstr ""
-
-msgid "Lock"
-msgstr ""
-
-msgid "Output background"
-msgstr ""
-
-msgid "Freestyle 1"
-msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-msgid "Net junction"
-msgstr ""
-
-msgid "Mesh grid major"
-msgstr ""
-
-msgid "Mesh grid minor"
-msgstr ""
-
-msgid "Unknown"
-msgstr ""
 
 #, c-format
 msgid ""
@@ -566,9 +344,6 @@ msgstr "Изображение всё ещё внедрено."
 msgid "Picture [%1$s] has been unembedded."
 msgstr "Изображение «%1$s» исключено."
 
-msgid "Failed to load fallback image.\n"
-msgstr "Не удалось загрузить встроенное аварийное изображение.\n"
-
 msgid "Failed to parse pin object"
 msgstr "Ошибка в определении вывода"
 
@@ -614,6 +389,228 @@ msgstr "Установка выравнивания по левому нижне
 #, c-format
 msgid "Unexpected end-of-file after %1$d lines"
 msgstr "Неожиданный конец файла после %1$d строк"
+
+#, c-format
+msgid "Failed to stat [%1$s]: %2$s"
+msgstr "Ошибка чтения статуса (stat) «%1$s»: %2$s"
+
+#, c-format
+msgid ""
+"\n"
+"WARNING: Found an autosave backup file:\n"
+"  %1$s.\n"
+"\n"
+msgstr ""
+"\n"
+"ВНИМАНИЕ: обнаружен файл автоматической резервной копии:\n"
+"  %1$s.\n"
+"\n"
+
+msgid "I could not guess if it is newer, so you have to do it manually.\n"
+msgstr "Не удалось определить новее ли он, решите это сами.\n"
+
+msgid ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
+msgstr ""
+"Резервная копия новее схемы, поэтому, видимо, следует загрузить её вместо "
+"оригинального файла.\n"
+
+msgid ""
+"lepton-schematic usually makes backup copies automatically, and this "
+"situation happens when it crashed or it was forced to exit abruptly.\n"
+msgstr ""
+"Обычно lepton-schematic автоматически создаёт резервные копии, и такая "
+"ситуация может быть результатом фатального сбоя или неожиданного "
+"принудительного завершения программы.\n"
+
+#, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Файл «%1$s» не найден: %2$s"
+
+msgid ""
+"\n"
+"Run lepton-schematic and correct the situation.\n"
+"\n"
+msgstr ""
+"\n"
+"Запустите lepton-schematic и устраните проблему.\n"
+"\n"
+
+# Эта функция пытается найти для указанного имени реальный файл (не являющийся
+# ссылкой).
+#, c-format
+msgid "Can't get the real filename of %1$s: %2$s"
+msgstr "Не удалось определить имя реального файла для %1$s: %2$s"
+
+#, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write."
+msgstr ""
+"Не удалось установить режим чтения-записи для файла предыдущей резервной  "
+"копии «%1$s»."
+
+#, c-format
+msgid "Can't save backup file: %1$s."
+msgstr "Не удалось сохранить файл резервной копии: %1$s."
+
+#, c-format
+msgid "Could NOT set backup file [%1$s] readonly."
+msgstr ""
+"Не удалось установить режим доступа только на чтение для резервной копии "
+"файла «%1$s»."
+
+#, c-format
+msgid "Failed to restore permissions on '%1$s': %2$s\n"
+msgstr "Не удалось восстановить права для «%1$s»: %2$s\n"
+
+#, c-format
+msgid "Failed to restore ownership on '%1$s': %2$s\n"
+msgstr "Не удалось восстановить владельца для «%1$s»: %2$s\n"
+
+#, c-format
+msgid "Could NOT save file: %1$s"
+msgstr "Не удалось сохранить файл: %1$s"
+
+msgid ""
+"\n"
+"Backtrace:\n"
+msgstr ""
+"\n"
+"Последовательность вызовов подпрограмм:\n"
+
+msgid "RC file already loaded"
+msgstr "Файл настроек уже загружен"
+
+#, c-format
+msgid "Failed to load config from '%1$s': %2$s\n"
+msgstr "Не удалось загрузить настройки из файла «%1$s»: %2$s\n"
+
+#, c-format
+msgid "Loaded RC file [%1$s]"
+msgstr "Загружен RC-файл «%1$s»"
+
+#, c-format
+msgid "Failed to load RC file [%1$s]: "
+msgstr "Не удалось загрузить RC-файл «%1$s»: "
+
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr "ОШИБКА: неизвестная ошибка при анализе файлов настроек"
+
+#, c-format
+msgid "ERROR: %1$s"
+msgstr "ОШИБКА: %1$s"
+
+#, c-format
+msgid "ERROR: %1$s\n"
+msgstr "ОШИБКА: %1$s\n"
+
+#, c-format
+msgid "ERROR: The %1$s log may contain more information.\n"
+msgstr "ОШИБКА: В файле журнала «%1$s» может быть больше информации.\n"
+
+# Эта функция пытается найти для указанного имени реальный файл (не являющийся
+# ссылкой).
+#, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr "Не удалось определить имя реального файла для %1$s."
+
+#, c-format
+msgid "Unable to delete backup file %1$s."
+msgstr "Не удалось удалить файл резервной копии %1$s."
+
+#, c-format
+msgid "Attribute [%1$s] already attached\n"
+msgstr "Атрибут «%1$s» уже прикреплён\n"
+
+msgid "Attempt to attach non text item as an attribute!\n"
+msgstr "Попытка прикрепить нетекстовый элемент как атрибут!\n"
+
+#, c-format
+msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+msgstr "Попытка прикрепить атрибут «%1$s» к более чем одному объекту\n"
+
+msgid "Tried to attach a non-text item as an attribute"
+msgstr "Попытка прикрепить нетекстовый элемент как атрибут!"
+
+msgid "Unexpected end-of-file in attribute list"
+msgstr "Неожиданный конец файла при обработке списка атрибутов"
+
+msgid "Background"
+msgstr ""
+
+msgid "Pin"
+msgstr ""
+
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+#, fuzzy
+msgid "Attribute"
+msgstr "Найден атрибут ~A=~A"
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+#, fuzzy
+msgid "Detached attribute"
+msgstr "Неправильно прикреплённый атрибут: ~A"
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
 
 #, c-format
 msgid "Library command failed [%1$s]: %2$s"
@@ -741,9 +738,6 @@ msgstr "Объект ~A прикреплён как атрибут"
 
 msgid "Object ~A has attributes"
 msgstr "К объекту ~A прикреплены атрибуты"
-
-msgid "Object ~A has bad type '~A'"
-msgstr "Недопустимый тип объекта ~A: «~A»"
 
 msgid "Object ~A has invalid stroke cap style ~A"
 msgstr "Недопустимый стиль концов линий объекта ~A: ~A"
@@ -1409,6 +1403,12 @@ msgstr "Количество ошибок: ~A"
 
 msgid "(use -v to view details)"
 msgstr "(используйте опцию -v для вывода подробностей)"
+
+#~ msgid "Failed to load fallback image.\n"
+#~ msgstr "Не удалось загрузить встроенное аварийное изображение.\n"
+
+#~ msgid "Object ~A has bad type '~A'"
+#~ msgstr "Недопустимый тип объекта ~A: «~A»"
 
 #~ msgid "Color map entry must be a two-element list"
 #~ msgstr "Запись в таблице цветов должна быть двухэлементным списком"

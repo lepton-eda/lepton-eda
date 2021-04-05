@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:02+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2010-02-06 22:11+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -96,112 +96,6 @@ msgstr ""
 "<<\n"
 "%s<<\n"
 
-#, fuzzy, c-format
-msgid "Failed to stat [%1$s]: %2$s"
-msgstr "Nem látom [%s]: %s"
-
-#, c-format
-msgid ""
-"\n"
-"WARNING: Found an autosave backup file:\n"
-"  %1$s.\n"
-"\n"
-msgstr ""
-
-msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr "Nem tudtam eldönteni, hogy ez újabb, ezért neked kell megcsinálnod \n"
-
-msgid ""
-"The backup copy is newer than the schematic, so it seems you should load it "
-"instead of the original file.\n"
-msgstr ""
-
-msgid ""
-"lepton-schematic usually makes backup copies automatically, and this "
-"situation happens when it crashed or it was forced to exit abruptly.\n"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "Nem találom a file-t %s: %s"
-
-msgid ""
-"\n"
-"Run lepton-schematic and correct the situation.\n"
-"\n"
-msgstr ""
-
-#, c-format
-msgid "Can't get the real filename of %1$s: %2$s"
-msgstr ""
-
-#, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write."
-msgstr ""
-
-#, c-format
-msgid "Can't save backup file: %1$s."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Could NOT set backup file [%1$s] readonly."
-msgstr "Nem tudtam elmenteni a file-t: %s"
-
-#, fuzzy, c-format
-msgid "Failed to restore permissions on '%1$s': %2$s\n"
-msgstr "Nem látom [%s]: %s"
-
-#, fuzzy, c-format
-msgid "Failed to restore ownership on '%1$s': %2$s\n"
-msgstr "Nem látom [%s]: %s"
-
-#, fuzzy, c-format
-msgid "Could NOT save file: %1$s"
-msgstr "Nem tudtam elmenteni a file-t: %s"
-
-msgid ""
-"\n"
-"Backtrace:\n"
-msgstr ""
-
-msgid "RC file already loaded"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Failed to load config from '%1$s': %2$s\n"
-msgstr "Nem látom [%s]: %s"
-
-#, fuzzy, c-format
-msgid "Loaded RC file [%1$s]"
-msgstr "Nem látom [%s]: %s"
-
-#, fuzzy, c-format
-msgid "Failed to load RC file [%1$s]: "
-msgstr "Nem látom [%s]: %s"
-
-msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "ERROR: %1$s"
-msgstr "HIBA: %s\n"
-
-#, fuzzy, c-format
-msgid "ERROR: %1$s\n"
-msgstr "HIBA: %s\n"
-
-#, c-format
-msgid "ERROR: The %1$s log may contain more information.\n"
-msgstr ""
-
-#, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Unable to delete backup file %1$s."
-msgstr "Nem tudtam elmenteni a file-t: %s"
-
 msgid "Failed to parse arc object"
 msgstr ""
 
@@ -214,23 +108,6 @@ msgid "Found an invalid color [ %1$s ]"
 msgstr ""
 
 msgid "Setting color to default color."
-msgstr ""
-
-#, c-format
-msgid "Attribute [%1$s] already attached\n"
-msgstr ""
-
-msgid "Attempt to attach non text item as an attribute!\n"
-msgstr ""
-
-#, c-format
-msgid "Attempt to attach attribute [%1$s] to more than one object\n"
-msgstr ""
-
-msgid "Tried to attach a non-text item as an attribute"
-msgstr ""
-
-msgid "Unexpected end-of-file in attribute list"
 msgstr ""
 
 msgid "Failed to parse box object"
@@ -262,81 +139,6 @@ msgid "Found a zero or negative radius circle [ %1$c %2$d %3$d %4$d %5$d ]"
 msgstr ""
 
 msgid "Setting radius to 0."
-msgstr ""
-
-msgid "Background"
-msgstr ""
-
-msgid "Pin"
-msgstr ""
-
-msgid "Net endpoint"
-msgstr ""
-
-msgid "Graphic"
-msgstr ""
-
-msgid "Net"
-msgstr ""
-
-msgid "Attribute"
-msgstr ""
-
-msgid "Logic bubble"
-msgstr ""
-
-msgid "Grid point"
-msgstr ""
-
-msgid "Detached attribute"
-msgstr ""
-
-msgid "Text"
-msgstr ""
-
-msgid "Bus"
-msgstr ""
-
-msgid "Selection"
-msgstr ""
-
-msgid "Bounding box"
-msgstr ""
-
-msgid "Zoom box"
-msgstr ""
-
-msgid "Stroke"
-msgstr ""
-
-msgid "Lock"
-msgstr ""
-
-msgid "Output background"
-msgstr ""
-
-msgid "Freestyle 1"
-msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-msgid "Net junction"
-msgstr ""
-
-msgid "Mesh grid major"
-msgstr ""
-
-msgid "Mesh grid minor"
-msgstr ""
-
-msgid "Unknown"
 msgstr ""
 
 #, c-format
@@ -505,10 +307,6 @@ msgstr ""
 msgid "Picture [%1$s] has been unembedded."
 msgstr ""
 
-#, fuzzy
-msgid "Failed to load fallback image.\n"
-msgstr "Nem látom [%s]: %s"
-
 msgid "Failed to parse pin object"
 msgstr ""
 
@@ -549,6 +347,204 @@ msgstr ""
 
 #, c-format
 msgid "Unexpected end-of-file after %1$d lines"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to stat [%1$s]: %2$s"
+msgstr "Nem látom [%s]: %s"
+
+#, c-format
+msgid ""
+"\n"
+"WARNING: Found an autosave backup file:\n"
+"  %1$s.\n"
+"\n"
+msgstr ""
+
+msgid "I could not guess if it is newer, so you have to do it manually.\n"
+msgstr "Nem tudtam eldönteni, hogy ez újabb, ezért neked kell megcsinálnod \n"
+
+msgid ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
+msgstr ""
+
+msgid ""
+"lepton-schematic usually makes backup copies automatically, and this "
+"situation happens when it crashed or it was forced to exit abruptly.\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Nem találom a file-t %s: %s"
+
+msgid ""
+"\n"
+"Run lepton-schematic and correct the situation.\n"
+"\n"
+msgstr ""
+
+#, c-format
+msgid "Can't get the real filename of %1$s: %2$s"
+msgstr ""
+
+#, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write."
+msgstr ""
+
+#, c-format
+msgid "Can't save backup file: %1$s."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly."
+msgstr "Nem tudtam elmenteni a file-t: %s"
+
+#, fuzzy, c-format
+msgid "Failed to restore permissions on '%1$s': %2$s\n"
+msgstr "Nem látom [%s]: %s"
+
+#, fuzzy, c-format
+msgid "Failed to restore ownership on '%1$s': %2$s\n"
+msgstr "Nem látom [%s]: %s"
+
+#, fuzzy, c-format
+msgid "Could NOT save file: %1$s"
+msgstr "Nem tudtam elmenteni a file-t: %s"
+
+msgid ""
+"\n"
+"Backtrace:\n"
+msgstr ""
+
+msgid "RC file already loaded"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Failed to load config from '%1$s': %2$s\n"
+msgstr "Nem látom [%s]: %s"
+
+#, fuzzy, c-format
+msgid "Loaded RC file [%1$s]"
+msgstr "Nem látom [%s]: %s"
+
+#, fuzzy, c-format
+msgid "Failed to load RC file [%1$s]: "
+msgstr "Nem látom [%s]: %s"
+
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s"
+msgstr "HIBA: %s\n"
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s\n"
+msgstr "HIBA: %s\n"
+
+#, c-format
+msgid "ERROR: The %1$s log may contain more information.\n"
+msgstr ""
+
+#, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Unable to delete backup file %1$s."
+msgstr "Nem tudtam elmenteni a file-t: %s"
+
+#, c-format
+msgid "Attribute [%1$s] already attached\n"
+msgstr ""
+
+msgid "Attempt to attach non text item as an attribute!\n"
+msgstr ""
+
+#, c-format
+msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+msgstr ""
+
+msgid "Tried to attach a non-text item as an attribute"
+msgstr ""
+
+msgid "Unexpected end-of-file in attribute list"
+msgstr ""
+
+msgid "Background"
+msgstr ""
+
+msgid "Pin"
+msgstr ""
+
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+msgid "Attribute"
+msgstr ""
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+msgid "Detached attribute"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
 msgstr ""
 
 #, c-format
@@ -664,9 +660,6 @@ msgid "Object ~A is attached as an attribute"
 msgstr ""
 
 msgid "Object ~A has attributes"
-msgstr ""
-
-msgid "Object ~A has bad type '~A'"
 msgstr ""
 
 msgid "Object ~A has invalid stroke cap style ~A"
@@ -1239,6 +1232,10 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Failed to load fallback image.\n"
+#~ msgstr "Nem látom [%s]: %s"
 
 #, fuzzy
 #~ msgid "Could NOT save [%1$s]"

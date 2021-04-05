@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:03+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2012-01-27 14:23+0000\n"
 "Last-Translator: kop <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -39,8 +39,11 @@ msgid ""
 "%s"
 msgstr "A [%s] rajz mentése nem sikerült.\n"
 
+msgid "Failed to save file"
+msgstr ""
+
 #, fuzzy
-msgid "Save Color Scheme As..."
+msgid "Save Color Scheme"
 msgstr "Világos színséma"
 
 #, fuzzy, c-format
@@ -110,7 +113,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2020 Lepton Developers.\n"
+"Copyright © 2017-2021 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -280,6 +283,10 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "Ablak bezárása\n"
 
+#, fuzzy
+msgid "Clear Log"
+msgstr "Új ablak"
+
 msgid "_Wrap Long Lines"
 msgstr ""
 
@@ -423,8 +430,9 @@ msgstr "Szöveg elrejtése"
 msgid "Hide text starting with:"
 msgstr "A következővel kezdődő szöveg elrejtése:"
 
-msgid "Edit slot number"
-msgstr ""
+#, fuzzy
+msgid "Edit Slot"
+msgstr "Szín"
 
 msgid "Number of Slots:"
 msgstr ""
@@ -644,10 +652,6 @@ msgstr ""
 
 msgid "Cannot find any schematics above the current one!"
 msgstr ""
-
-#, c-format
-msgid "Sorry but this is a non-functioning menu option\n"
-msgstr "Elnézést, ez egy nem működő menüpont.\n"
 
 msgid "Action feedback mode set to OUTLINE"
 msgstr ""
@@ -888,7 +892,8 @@ msgstr "Jobbról balra"
 msgid "File order"
 msgstr "Fáljsorrend"
 
-msgid "Autonumber text"
+#, fuzzy
+msgid "Autonumber Text"
 msgstr "Automatikus számozás"
 
 msgid "<b>Scope</b>"
@@ -1238,6 +1243,9 @@ msgstr "Név:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "<b>Add Attribute</b>"
+msgstr "<b>Attribútum hozzáadása</b>"
+
 #, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
@@ -1327,6 +1335,13 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
+#, fuzzy
+msgid "Close"
+msgstr "_Bezárás"
+
+msgid "Save"
+msgstr "Mentés"
+
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "Hie_rarchia"
@@ -1393,9 +1408,6 @@ msgstr "A [%s] rajz mentése nem sikerült.\n"
 msgid "Error while trying to save"
 msgstr "Hiba mentés közben"
 
-msgid "Failed to save file"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Saved as [%1$s]"
 msgstr "[%s]-ként elmentve.\n"
@@ -1424,9 +1436,6 @@ msgstr "Új fájl"
 #, fuzzy
 msgid "Open file"
 msgstr "Fájl megnyitása…"
-
-msgid "Save"
-msgstr "Mentés"
 
 msgid "Save file"
 msgstr "Fájl mentése"
@@ -2144,10 +2153,6 @@ msgid "Show Specific Text"
 msgstr "Szöveg mutatása"
 
 #, fuzzy
-msgid "Autonumber Text"
-msgstr "Automatikus számozás"
-
-#, fuzzy
 msgid "Show Hotkeys"
 msgstr "Gyorsbillentyűk"
 
@@ -2237,7 +2242,6 @@ msgstr ""
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"\n"
 "Interactively edit Lepton EDA schematics or symbols.\n"
 "If one or more FILEs are specified, open them for\n"
 "editing; otherwise, create a new, empty schematic.\n"
@@ -2246,7 +2250,7 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
@@ -2261,6 +2265,13 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, c-format
+#~ msgid "Sorry but this is a non-functioning menu option\n"
+#~ msgstr "Elnézést, ez egy nem működő menüpont.\n"
+
+#~ msgid "Autonumber text"
+#~ msgstr "Automatikus számozás"
 
 #, fuzzy
 #~ msgid "User _Guide"
@@ -2326,9 +2337,6 @@ msgstr ""
 
 #~ msgid "<b>Edit Attribute</b>"
 #~ msgstr "<b>Attribútum szerkesztése</b>"
-
-#~ msgid "<b>Add Attribute</b>"
-#~ msgstr "<b>Attribútum hozzáadása</b>"
 
 #~ msgid "Select Component..."
 #~ msgstr "Alkatrész kiválasztása..."
@@ -2565,10 +2573,6 @@ msgstr ""
 
 #~ msgid "Component D_ocumentation..."
 #~ msgstr "Alkatrész dokumentáció"
-
-#, fuzzy
-#~ msgid "Edit Color"
-#~ msgstr "Szín"
 
 #~ msgid "Edit Line Width & Type"
 #~ msgstr "Vonalvastagság és típus szerkesztése"

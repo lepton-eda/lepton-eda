@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:02+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2012-09-01 18:46+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -90,128 +90,6 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#, fuzzy, c-format
-msgid "Failed to stat [%1$s]: %2$s"
-msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid ""
-"\n"
-"WARNING: Found an autosave backup file:\n"
-"  %1$s.\n"
-"\n"
-msgstr ""
-"\n"
-"ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Βρέθηκε ένα αντίγραφο ασφαλείας αυτόματης αποθήκευσης:\n"
-"  %s.\n"
-"\n"
-
-msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr ""
-"Δεν μπόρεσα να καταλάβω αν είναι νεότερο, οπότε πρέπει να το κάνετε με το "
-"χέρι.\n"
-
-msgid ""
-"The backup copy is newer than the schematic, so it seems you should load it "
-"instead of the original file.\n"
-msgstr ""
-"Το αντίγραφο ασφαλείας είναι νεότερο από το σχεδιάγραμμα, άρα μάλλον πρέπει "
-"να φορτώσετε αυτό αντί για το αρχικό αρχείο.\n"
-
-#, fuzzy
-msgid ""
-"lepton-schematic usually makes backup copies automatically, and this "
-"situation happens when it crashed or it was forced to exit abruptly.\n"
-msgstr ""
-"Το gschem συνήθως δημιουργεί αντίγραφα ασφαλείας αυτόματα, και αυτή η "
-"περίπτωση συμβαίνει όταν κατέρρευσε ή έγινε βίαιη έξοδος.\n"
-
-#, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "Αδυναμία εύρεσης του αρχείου %s: %s"
-
-#, fuzzy
-msgid ""
-"\n"
-"Run lepton-schematic and correct the situation.\n"
-"\n"
-msgstr ""
-"\n"
-"Εκτελέστε το gschem και διορθώστε την κατάσταση.\n"
-"\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s: %2$s"
-msgstr "Αδυναμία λήψης του πραγματικού ονόματος αρχείου του %s: %s"
-
-#, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Can't save backup file: %1$s."
-msgstr "Αδυναμία αποθήκευσης αντιγράφου ασφαλείας: %s."
-
-#, fuzzy, c-format
-msgid "Could NOT set backup file [%1$s] readonly."
-msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση του αρχείου: %s"
-
-#, fuzzy, c-format
-msgid "Failed to restore permissions on '%1$s': %2$s\n"
-msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to restore ownership on '%1$s': %2$s\n"
-msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save file: %1$s"
-msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση του αρχείου: %s"
-
-msgid ""
-"\n"
-"Backtrace:\n"
-msgstr ""
-
-#, fuzzy
-msgid "RC file already loaded"
-msgstr "Το αρχείο ρυθμίσεων έχει ήδη φορτωθεί"
-
-#, fuzzy, c-format
-msgid "Failed to load config from '%1$s': %2$s\n"
-msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Loaded RC file [%1$s]"
-msgstr "Η εντολή της βιβλιοθήκης απέτυχε [%s]\n"
-
-#, fuzzy, c-format
-msgid "Failed to load RC file [%1$s]: "
-msgstr "Αποτυχία φορτώματος του συμβόλου από το αρχείο [%s]: %s\n"
-
-msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr ""
-
-#, fuzzy, c-format
-msgid "ERROR: %1$s"
-msgstr "ΣΦΑΛΜΑ: %s\n"
-
-#, fuzzy, c-format
-msgid "ERROR: %1$s\n"
-msgstr "ΣΦΑΛΜΑ: %s\n"
-
-#, fuzzy, c-format
-msgid "ERROR: The %1$s log may contain more information.\n"
-msgstr "ΣΦΑΛΜΑ: Η καταγραφή %s μπορεί να περιέχει περισσότερες πληροφορίες.\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr "Αδυναμία λήψης του πραγματικού ονόματος αρχείου του %s: %s"
-
-#, fuzzy, c-format
-msgid "Unable to delete backup file %1$s."
-msgstr "s_page_delete: Αδυναμία διαγραφής αντιγράφου ασφαλείας %s."
-
 msgid "Failed to parse arc object"
 msgstr ""
 
@@ -226,24 +104,6 @@ msgstr "Βρέθηκε ένα μη έγκυρο χρώμα [ %s ]\n"
 #, fuzzy
 msgid "Setting color to default color."
 msgstr "Ρύθμιση χρώματος στο προκαθορισμένο\n"
-
-#, c-format
-msgid "Attribute [%1$s] already attached\n"
-msgstr ""
-
-msgid "Attempt to attach non text item as an attribute!\n"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Attempt to attach attribute [%1$s] to more than one object\n"
-msgstr ""
-"Προσπάθεια προσθήκης γνωρίσματος [%s] σε περισσότερα από ένα αντικείμενα\n"
-
-msgid "Tried to attach a non-text item as an attribute"
-msgstr ""
-
-msgid "Unexpected end-of-file in attribute list"
-msgstr "Απροσδόκητο τέλος αρχείου στη λίστα γνωρισμάτων"
 
 msgid "Failed to parse box object"
 msgstr ""
@@ -277,82 +137,6 @@ msgstr "Βρέθηκε εικόνα με μηδενικό πλάτος/ύψος 
 #, fuzzy
 msgid "Setting radius to 0."
 msgstr "Ρύθμιση γωνίας σε 0\n"
-
-msgid "Background"
-msgstr ""
-
-msgid "Pin"
-msgstr ""
-
-msgid "Net endpoint"
-msgstr ""
-
-msgid "Graphic"
-msgstr ""
-
-msgid "Net"
-msgstr ""
-
-msgid "Attribute"
-msgstr ""
-
-msgid "Logic bubble"
-msgstr ""
-
-msgid "Grid point"
-msgstr ""
-
-#, fuzzy
-msgid "Detached attribute"
-msgstr "Το αντικείμενο ~A έχει γνωρίσματα"
-
-msgid "Text"
-msgstr ""
-
-msgid "Bus"
-msgstr ""
-
-msgid "Selection"
-msgstr ""
-
-msgid "Bounding box"
-msgstr ""
-
-msgid "Zoom box"
-msgstr ""
-
-msgid "Stroke"
-msgstr ""
-
-msgid "Lock"
-msgstr ""
-
-msgid "Output background"
-msgstr ""
-
-msgid "Freestyle 1"
-msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-msgid "Net junction"
-msgstr ""
-
-msgid "Mesh grid major"
-msgstr ""
-
-msgid "Mesh grid minor"
-msgstr ""
-
-msgid "Unknown"
-msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -532,10 +316,6 @@ msgstr ""
 msgid "Picture [%1$s] has been unembedded."
 msgstr "Το στοιχείο [%s] ενσωματώθηκε\n"
 
-#, fuzzy
-msgid "Failed to load fallback image.\n"
-msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
-
 msgid "Failed to parse pin object"
 msgstr ""
 
@@ -578,6 +358,222 @@ msgstr "Ρύθμιση στοίχισης σε LOWER_LEFT\n"
 #, fuzzy, c-format
 msgid "Unexpected end-of-file after %1$d lines"
 msgstr "Απροσδόκητο τέλος αρχείου στη λίστα γνωρισμάτων"
+
+#, fuzzy, c-format
+msgid "Failed to stat [%1$s]: %2$s"
+msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid ""
+"\n"
+"WARNING: Found an autosave backup file:\n"
+"  %1$s.\n"
+"\n"
+msgstr ""
+"\n"
+"ΠΡΟΕΙΔΟΠΟΙΗΣΗ: Βρέθηκε ένα αντίγραφο ασφαλείας αυτόματης αποθήκευσης:\n"
+"  %s.\n"
+"\n"
+
+msgid "I could not guess if it is newer, so you have to do it manually.\n"
+msgstr ""
+"Δεν μπόρεσα να καταλάβω αν είναι νεότερο, οπότε πρέπει να το κάνετε με το "
+"χέρι.\n"
+
+msgid ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
+msgstr ""
+"Το αντίγραφο ασφαλείας είναι νεότερο από το σχεδιάγραμμα, άρα μάλλον πρέπει "
+"να φορτώσετε αυτό αντί για το αρχικό αρχείο.\n"
+
+#, fuzzy
+msgid ""
+"lepton-schematic usually makes backup copies automatically, and this "
+"situation happens when it crashed or it was forced to exit abruptly.\n"
+msgstr ""
+"Το gschem συνήθως δημιουργεί αντίγραφα ασφαλείας αυτόματα, και αυτή η "
+"περίπτωση συμβαίνει όταν κατέρρευσε ή έγινε βίαιη έξοδος.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Αδυναμία εύρεσης του αρχείου %s: %s"
+
+#, fuzzy
+msgid ""
+"\n"
+"Run lepton-schematic and correct the situation.\n"
+"\n"
+msgstr ""
+"\n"
+"Εκτελέστε το gschem και διορθώστε την κατάσταση.\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s: %2$s"
+msgstr "Αδυναμία λήψης του πραγματικού ονόματος αρχείου του %s: %s"
+
+#, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Can't save backup file: %1$s."
+msgstr "Αδυναμία αποθήκευσης αντιγράφου ασφαλείας: %s."
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly."
+msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση του αρχείου: %s"
+
+#, fuzzy, c-format
+msgid "Failed to restore permissions on '%1$s': %2$s\n"
+msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore ownership on '%1$s': %2$s\n"
+msgstr "Αδυναμία ανοίγματος καταλόγου [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save file: %1$s"
+msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση του αρχείου: %s"
+
+msgid ""
+"\n"
+"Backtrace:\n"
+msgstr ""
+
+#, fuzzy
+msgid "RC file already loaded"
+msgstr "Το αρχείο ρυθμίσεων έχει ήδη φορτωθεί"
+
+#, fuzzy, c-format
+msgid "Failed to load config from '%1$s': %2$s\n"
+msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Loaded RC file [%1$s]"
+msgstr "Η εντολή της βιβλιοθήκης απέτυχε [%s]\n"
+
+#, fuzzy, c-format
+msgid "Failed to load RC file [%1$s]: "
+msgstr "Αποτυχία φορτώματος του συμβόλου από το αρχείο [%s]: %s\n"
+
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr ""
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s"
+msgstr "ΣΦΑΛΜΑ: %s\n"
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s\n"
+msgstr "ΣΦΑΛΜΑ: %s\n"
+
+#, fuzzy, c-format
+msgid "ERROR: The %1$s log may contain more information.\n"
+msgstr "ΣΦΑΛΜΑ: Η καταγραφή %s μπορεί να περιέχει περισσότερες πληροφορίες.\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr "Αδυναμία λήψης του πραγματικού ονόματος αρχείου του %s: %s"
+
+#, fuzzy, c-format
+msgid "Unable to delete backup file %1$s."
+msgstr "s_page_delete: Αδυναμία διαγραφής αντιγράφου ασφαλείας %s."
+
+#, c-format
+msgid "Attribute [%1$s] already attached\n"
+msgstr ""
+
+msgid "Attempt to attach non text item as an attribute!\n"
+msgstr ""
+
+#, fuzzy, c-format
+msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+msgstr ""
+"Προσπάθεια προσθήκης γνωρίσματος [%s] σε περισσότερα από ένα αντικείμενα\n"
+
+msgid "Tried to attach a non-text item as an attribute"
+msgstr ""
+
+msgid "Unexpected end-of-file in attribute list"
+msgstr "Απροσδόκητο τέλος αρχείου στη λίστα γνωρισμάτων"
+
+msgid "Background"
+msgstr ""
+
+msgid "Pin"
+msgstr ""
+
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+msgid "Attribute"
+msgstr ""
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+#, fuzzy
+msgid "Detached attribute"
+msgstr "Το αντικείμενο ~A έχει γνωρίσματα"
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Library command failed [%1$s]: %2$s"
@@ -708,9 +704,6 @@ msgstr "Το αντικείμενο ~A είναι συνδεδεμένο ως γ
 
 msgid "Object ~A has attributes"
 msgstr "Το αντικείμενο ~A έχει γνωρίσματα"
-
-msgid "Object ~A has bad type '~A'"
-msgstr ""
 
 msgid "Object ~A has invalid stroke cap style ~A"
 msgstr ""
@@ -1284,6 +1277,10 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Failed to load fallback image.\n"
+#~ msgstr "Αδυναμία φορτώματος εικόνας από [%s]: %s\n"
 
 #, fuzzy
 #~ msgid "Saved [%1$s]"

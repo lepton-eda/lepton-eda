@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:03+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2010-02-14 01:03+0000\n"
 "Last-Translator: Bernd Jendrissek <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -39,7 +39,11 @@ msgid ""
 msgstr "Kon nie lêer %s oopmaak nie\n"
 
 #, fuzzy
-msgid "Save Color Scheme As..."
+msgid "Failed to save file"
+msgstr "Misluk om lêer te laai"
+
+#, fuzzy
+msgid "Save Color Scheme"
 msgstr "Kleurbewerking"
 
 #, c-format
@@ -107,7 +111,7 @@ msgstr "gEDA: GPL Elektroniese Ontwerp Outomatisering"
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2020 Lepton Developers.\n"
+"Copyright © 2017-2021 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -278,6 +282,10 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "Sluit Venster\n"
 
+#, fuzzy
+msgid "Clear Log"
+msgstr "Maak Skoon"
+
 msgid "_Wrap Long Lines"
 msgstr ""
 
@@ -424,8 +432,9 @@ msgstr "Verskuil Teks"
 msgid "Hide text starting with:"
 msgstr "Verskuil teks beginnende met:"
 
-msgid "Edit slot number"
-msgstr "Bewerk gleufnommer"
+#, fuzzy
+msgid "Edit Slot"
+msgstr "Kleur"
 
 msgid "Number of Slots:"
 msgstr ""
@@ -640,10 +649,6 @@ msgstr ""
 
 msgid "Cannot find any schematics above the current one!"
 msgstr ""
-
-#, c-format
-msgid "Sorry but this is a non-functioning menu option\n"
-msgstr "Jammer, maar hierdie opsie werk nie\n"
 
 #, fuzzy
 msgid "Action feedback mode set to OUTLINE"
@@ -894,7 +899,7 @@ msgstr "Regs tot links"
 msgid "File order"
 msgstr "Lêerorde"
 
-msgid "Autonumber text"
+msgid "Autonumber Text"
 msgstr ""
 
 msgid "<b>Scope</b>"
@@ -1248,6 +1253,9 @@ msgstr "Naam:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "<b>Add Attribute</b>"
+msgstr "<b>Voeg Eienskap By</b>"
+
 #, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
@@ -1337,6 +1345,13 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
+#, fuzzy
+msgid "Close"
+msgstr "Sluit Bladsy"
+
+msgid "Save"
+msgstr "Bewaar"
+
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "Hierargie"
@@ -1402,10 +1417,6 @@ msgstr "Kon nie bladsy [%s] bewaar nie\n"
 msgid "Error while trying to save"
 msgstr "Fout gedurende poging om te bewaar"
 
-#, fuzzy
-msgid "Failed to save file"
-msgstr "Misluk om lêer te laai"
-
 #, fuzzy, c-format
 msgid "Saved as [%1$s]"
 msgstr "Bewaar as [%s]\n"
@@ -1434,9 +1445,6 @@ msgstr "Nuwe lêer"
 #, fuzzy
 msgid "Open file"
 msgstr "Maak lêer oop..."
-
-msgid "Save"
-msgstr "Bewaar"
 
 msgid "Save file"
 msgstr "Bewaar lêer"
@@ -2141,9 +2149,6 @@ msgstr "Verskuil Teks"
 msgid "Show Specific Text"
 msgstr "Toon Teks"
 
-msgid "Autonumber Text"
-msgstr ""
-
 #, fuzzy
 msgid "Show Hotkeys"
 msgstr "Toon Verskuilde"
@@ -2231,7 +2236,6 @@ msgstr ""
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"\n"
 "Interactively edit Lepton EDA schematics or symbols.\n"
 "If one or more FILEs are specified, open them for\n"
 "editing; otherwise, create a new, empty schematic.\n"
@@ -2240,7 +2244,7 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
@@ -2255,6 +2259,13 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "Edit slot number"
+#~ msgstr "Bewerk gleufnommer"
+
+#, c-format
+#~ msgid "Sorry but this is a non-functioning menu option\n"
+#~ msgstr "Jammer, maar hierdie opsie werk nie\n"
 
 #, fuzzy
 #~ msgid "lepton-schematic FAQ"
@@ -2301,9 +2312,6 @@ msgstr ""
 
 #~ msgid "<b>Edit Attribute</b>"
 #~ msgstr "<b>Bewerk Eienskap</b>"
-
-#~ msgid "<b>Add Attribute</b>"
-#~ msgstr "<b>Voeg Eienskap By</b>"
 
 #~ msgid "Select Component..."
 #~ msgstr "Kies Komponent..."
@@ -2540,10 +2548,6 @@ msgstr ""
 #~ msgid "Text Size..."
 #~ msgstr "Teksgrootte"
 
-#, fuzzy
-#~ msgid "Edit Color"
-#~ msgstr "Kleur"
-
 #~ msgid "Edit Line Width & Type"
 #~ msgstr "Bewerk Lynwyddte & -styl"
 
@@ -2757,9 +2761,6 @@ msgstr ""
 
 #~ msgid "MakeVisible"
 #~ msgstr "MaakSigbaar"
-
-#~ msgid "Clear"
-#~ msgstr "Maak Skoon"
 
 #~ msgid "Make Inv Text Vis"
 #~ msgstr "Maak Onsigbare Teks Sigbaar"

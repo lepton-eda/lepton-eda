@@ -6,15 +6,15 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.13\n"
+"Project-Id-Version: lepton-eda 1.9.14\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:02+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libleptonattrib/data/lepton-attrib.desktop.in:3
@@ -25,10 +25,10 @@ msgstr ""
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr ""
 
-#: libleptonattrib/lepton-attrib.scm:87
+#: utils/attrib/lepton-attrib.scm:87
 #, scheme-format
 msgid ""
-"Usage: ~A [OPTIONS] filename1 ... filenameN\n"
+"Usage: ~A [OPTIONS] FILE ...\n"
 "\n"
 "lepton-attrib: Lepton EDA attribute editor.\n"
 "Presents schematic attributes in easy-to-edit spreadsheet format.\n"
@@ -37,25 +37,6 @@ msgid ""
 "  -v, --verbose          Verbose mode on\n"
 "  -V, --version          Show version information\n"
 "  -h, --help             This help menu\n"
-"\n"
-"FAQ:\n"
-"  *  What do the colors of the cell text mean?\n"
-"     The cell colors indicate the visibility of the attribute.\n"
-"     Black = Visible attribute, value displayed only.\n"
-"     Grey  = Invisible attribute.\n"
-"     Red   = Visible attribute, name displayed only.\n"
-"     Blue  = Visible attribute, both name and value displayed.\n"
-"\n"
-"  *  What does the period (\".\") at the end of some component refdeses "
-"mean?\n"
-"     The period is placed after the refdeses of slotted components.\n"
-"     If slots are present on the component, then the different slots appear\n"
-"     in different rows with the slot number after the period.  Example:  "
-"C101.2.\n"
-"\n"
-"Copyright (C) 2003-2006 Stuart D. Brorson.\n"
-"Copyright (C) 2007-2016 gEDA Contributors.\n"
-"Copyright (C) 2017-2020 Lepton EDA Contributors.\n"
 "\n"
 "Report bugs at ~S\n"
 "Lepton EDA homepage: ~S\n"
@@ -76,6 +57,11 @@ msgstr ""
 msgid "Found uref=%1$s, uref= is deprecated, please use refdes=\n"
 msgstr ""
 
+#: libleptonattrib/src/s_attrib.c:130
+#, c-format
+msgid "%s (slot %s)"
+msgstr ""
+
 #: libleptonattrib/src/s_misc.c:87
 #, c-format
 msgid ""
@@ -88,37 +74,37 @@ msgstr ""
 msgid " DONE\n"
 msgstr ""
 
-#: libleptonattrib/src/s_object.c:220 libleptonattrib/src/s_object.c:279
+#: libleptonattrib/src/s_object.c:222 libleptonattrib/src/s_object.c:281
 #, c-format
 msgid "Failed to find the attrib %1$s on the component.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_object.c:330
+#: libleptonattrib/src/s_object.c:332
 #, c-format
 msgid "Trying to add attrib to non-component or non-net!\n"
 msgstr ""
 
-#: libleptonattrib/src/s_sheet_data.c:115
+#: libleptonattrib/src/s_sheet_data.c:136
 #, c-format
 msgid "Start master component list creation.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_sheet_data.c:176
+#: libleptonattrib/src/s_sheet_data.c:197
 #, c-format
 msgid "Start master component attrib list creation.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_sheet_data.c:284
+#: libleptonattrib/src/s_sheet_data.c:305
 #, c-format
 msgid "Start master pin list creation.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_sheet_data.c:318
+#: libleptonattrib/src/s_sheet_data.c:341
 #, c-format
 msgid "Found component pin with no pinnumber: refdes = %1$s\n"
 msgstr ""
 
-#: libleptonattrib/src/s_sheet_data.c:369
+#: libleptonattrib/src/s_sheet_data.c:392
 #, c-format
 msgid "Start master pin attrib list creation.\n"
 msgstr ""
@@ -148,7 +134,7 @@ msgstr ""
 msgid "Start internal component TABLE creation\n"
 msgstr ""
 
-#: libleptonattrib/src/s_table.c:433 libleptonattrib/src/s_table.c:630
+#: libleptonattrib/src/s_table.c:433 libleptonattrib/src/s_table.c:631
 #, c-format
 msgid "We didn't find either row or col in the lists!\n"
 msgstr ""
@@ -158,36 +144,36 @@ msgstr ""
 msgid "Start internal pin TABLE creation\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:145
+#: libleptonattrib/src/s_toplevel.c:147
 #, c-format
 msgid "Saved [%1$s]"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:151
+#: libleptonattrib/src/s_toplevel.c:153
 #, c-format
 msgid "Could NOT save [%1$s]"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:226
+#: libleptonattrib/src/s_toplevel.c:228
 msgid "_cancel"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:350
+#: libleptonattrib/src/s_toplevel.c:352
 #, c-format
 msgid "Can't get attrib name\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:583
+#: libleptonattrib/src/s_toplevel.c:590
 #, c-format
 msgid "We didn't find the refdes in the master list.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:910
+#: libleptonattrib/src/s_toplevel.c:917
 #, c-format
 msgid "Either refdes or pinnumber of object missing.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:919
+#: libleptonattrib/src/s_toplevel.c:926
 #, c-format
 msgid "We didn't find the refdes:pin in the master list.\n"
 msgstr ""
@@ -208,7 +194,7 @@ msgstr ""
 msgid "Delete attribute"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:177
+#: libleptonattrib/src/x_dialog.c:179
 msgid ""
 "One or more components have been found with missing symbol files!\n"
 "\n"
@@ -219,31 +205,31 @@ msgid ""
 "\"Forward\" to continue working with lepton-attrib.\n"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:195
+#: libleptonattrib/src/x_dialog.c:197
 msgid "Missing symbol file found for component!"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:222
+#: libleptonattrib/src/x_dialog.c:224
 msgid "Save the changes before closing?"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:223
+#: libleptonattrib/src/x_dialog.c:225
 msgid "<big><b>"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:223
+#: libleptonattrib/src/x_dialog.c:225
 msgid "</b></big>"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:225
+#: libleptonattrib/src/x_dialog.c:227
 msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:235
+#: libleptonattrib/src/x_dialog.c:237
 msgid "Close without saving"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:280
+#: libleptonattrib/src/x_dialog.c:282
 msgid ""
 "Sorry -- you have chosen a feature which has not been\n"
 "implemented yet.\n"
@@ -257,31 +243,53 @@ msgid ""
 "Otherwise, just hang tight -- I'll implement this feature soon!\n"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:288
+#: libleptonattrib/src/x_dialog.c:290
 msgid "Unimplemented feature!"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:315
+#: libleptonattrib/src/x_dialog.c:317
 msgid "Fatal error"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:329
-#, c-format
+#: libleptonattrib/src/x_dialog.c:335
 msgid ""
 "Lepton Electronic Design Automation\n"
 "\n"
-"lepton-attrib - Lepton EDA attribute editor\n"
-"\n"
-"lepton-attrib version: %1$s%2$s.%3$s\n"
-"\n"
-"lepton-attrib is Lepton's successor of gEDA gattrib\n"
+"lepton-attrib is Lepton's successor of gEDA gattrib"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:342
-msgid "About..."
+#: libleptonattrib/src/x_dialog.c:338
+#, c-format
+msgid "%s (git: %.7s)"
 msgstr ""
 
-#: libleptonattrib/src/x_dialog.c:358
+#: libleptonattrib/src/x_dialog.c:344
+msgid ""
+"Copyright © 2003-2006 Stuart D. Brorson\n"
+"Copyright © 2003-2016 gEDA Contributors\n"
+"Copyright © 2017-2021 Lepton EDA Contributors"
+msgstr ""
+
+#: libleptonattrib/src/x_dialog.c:349
+msgid ""
+"Lepton EDA is freely distributable under the\n"
+"GNU Public License (GPL) version 2.0 or (at your option) any later version.\n"
+"See the COPYING file for the full text of the license."
+msgstr ""
+
+#: libleptonattrib/src/x_dialog.c:380
+#, c-format
+msgid ""
+"The selected file `%1$s' already exists.\n"
+"\n"
+"Would you like to overwrite it?"
+msgstr ""
+
+#: libleptonattrib/src/x_dialog.c:384
+msgid "Overwrite file?"
+msgstr ""
+
+#: libleptonattrib/src/x_dialog.c:405
 msgid "Export CSV"
 msgstr ""
 
@@ -305,56 +313,76 @@ msgstr ""
 msgid "Open..."
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:104 libleptonattrib/src/x_gtksheet.c:112
+#: libleptonattrib/src/x_gtksheet.c:126 libleptonattrib/src/x_gtksheet.c:134
 msgid "Components"
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:105 libleptonattrib/src/x_gtksheet.c:121
-#: libleptonattrib/src/x_gtksheet.c:124
+#: libleptonattrib/src/x_gtksheet.c:127 libleptonattrib/src/x_gtksheet.c:143
+#: libleptonattrib/src/x_gtksheet.c:146
 msgid "Nets"
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:106 libleptonattrib/src/x_gtksheet.c:137
-#: libleptonattrib/src/x_gtksheet.c:140
+#: libleptonattrib/src/x_gtksheet.c:128 libleptonattrib/src/x_gtksheet.c:159
+#: libleptonattrib/src/x_gtksheet.c:162
 msgid "Pins"
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:114
+#: libleptonattrib/src/x_gtksheet.c:136
 msgid ""
 "No components found in design.  Please check your schematic and try again!\n"
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:125 libleptonattrib/src/x_gtksheet.c:127
+#: libleptonattrib/src/x_gtksheet.c:147 libleptonattrib/src/x_gtksheet.c:149
 msgid "TBD"
 msgstr ""
 
-#: libleptonattrib/src/x_gtksheet.c:399
+#: libleptonattrib/src/x_gtksheet.c:421
 msgid "couldn't allocate color"
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:106
-msgid "lepton-attrib - Lepton EDA attribute editor"
+#: libleptonattrib/src/x_window.c:140
+msgid "   Color Legend:  "
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:312
+#: libleptonattrib/src/x_window.c:142
+msgid " Invisible "
+msgstr ""
+
+#: libleptonattrib/src/x_window.c:143
+msgid " Show value "
+msgstr ""
+
+#: libleptonattrib/src/x_window.c:144
+msgid " Show name "
+msgstr ""
+
+#: libleptonattrib/src/x_window.c:145
+msgid " Show name and value "
+msgstr ""
+
+#: libleptonattrib/src/x_window.c:357
 #, c-format
 msgid "Error loading menu: %1$s\n"
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:348
+#: libleptonattrib/src/x_window.c:393
 msgid ""
 "No components found in entire design!\n"
 "Do you have refdeses on your components?"
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:354
+#: libleptonattrib/src/x_window.c:399
 msgid ""
 "No configurable component attributes found in entire design!\n"
 "Please attach at least some attributes before running lepton-attrib."
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:360
+#: libleptonattrib/src/x_window.c:405
 msgid ""
 "No pins found on any components!\n"
 "Please check your design."
+msgstr ""
+
+#: libleptonattrib/src/x_window.c:537
+msgid "Multiple files"
 msgstr ""

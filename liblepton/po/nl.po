@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:02+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2014-08-31 23:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -105,131 +105,6 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#, fuzzy, c-format
-msgid "Failed to stat [%1$s]: %2$s"
-msgstr "Status niet gelukt [%s]: %s"
-
-#, fuzzy, c-format
-msgid ""
-"\n"
-"WARNING: Found an autosave backup file:\n"
-"  %1$s.\n"
-"\n"
-msgstr ""
-"\n"
-"WAARSCHUWING: een autosave reserve bestand gevonden:\n"
-" %s.\n"
-"\n"
-
-msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr "Ik kan niet raden of het nieuwer is, je moet het dus handmatig doen.\n"
-
-msgid ""
-"The backup copy is newer than the schematic, so it seems you should load it "
-"instead of the original file.\n"
-msgstr ""
-"De reservekopie is nieuwer dan het schema, het lijkt erop dat je deze zou "
-"moeten laden in plaats van het orginele bestand.\n"
-
-#, fuzzy
-msgid ""
-"lepton-schematic usually makes backup copies automatically, and this "
-"situation happens when it crashed or it was forced to exit abruptly.\n"
-msgstr ""
-"Gschem maakt gewoonlijk automatisch reservekopieen, en deze situatie komt "
-"voor wanneer er een crash is of wanneer er een abrupte gedwongen beeindiging "
-"was.\n"
-
-#, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "Kan bestand %s niet vinden: %s"
-
-#, fuzzy
-msgid ""
-"\n"
-"Run lepton-schematic and correct the situation.\n"
-"\n"
-msgstr ""
-"\n"
-"Voer gschem uit en corrigeer de situatie.\n"
-"\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s: %2$s"
-msgstr "Kan de werkelijke bestandsnaam van %s: %s niet krijgen"
-
-#, fuzzy, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write."
-msgstr "Kan vorige reservekopie [%s] NIET op lezen-schrijven instellen\n"
-
-#, fuzzy, c-format
-msgid "Can't save backup file: %1$s."
-msgstr "Kan reservekopie niet opslaan: %s."
-
-#, fuzzy, c-format
-msgid "Could NOT set backup file [%1$s] readonly."
-msgstr "Kan reservekopie [%s] NIET op alleen-lezen instellen\n"
-
-#, fuzzy, c-format
-msgid "Failed to restore permissions on '%1$s': %2$s\n"
-msgstr "Faalde om permissies te herstellen op '%s: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to restore ownership on '%1$s': %2$s\n"
-msgstr "Faalde om eigenaarschap te herstellen op '%s: %s\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save file: %1$s"
-msgstr "Kan bestand: %s NIET opslaan"
-
-msgid ""
-"\n"
-"Backtrace:\n"
-msgstr ""
-"\n"
-"Traceren:\n"
-
-# We hebben deze al ingelezen.
-msgid "RC file already loaded"
-msgstr "RC bestand is reeds geladen"
-
-#, fuzzy, c-format
-msgid "Failed to load config from '%1$s': %2$s\n"
-msgstr "Laden van config uit [%s] faalde: %s\n"
-
-#, fuzzy, c-format
-msgid "Loaded RC file [%1$s]"
-msgstr "RC bestand geladen [%s]\n"
-
-#, fuzzy, c-format
-msgid "Failed to load RC file [%1$s]: "
-msgstr "Laden van RC bestand faalde [%s]: "
-
-msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr ""
-"FOUT: Een onbekende fout trad op tijdens het doorlopen van configuratie "
-"bestanden."
-
-#, fuzzy, c-format
-msgid "ERROR: %1$s"
-msgstr "FOUT: %s\n"
-
-#, fuzzy, c-format
-msgid "ERROR: %1$s\n"
-msgstr "FOUT: %s\n"
-
-#, fuzzy, c-format
-msgid "ERROR: The %1$s log may contain more information.\n"
-msgstr "FOUT: De %s log kan meer informatie bevatten.\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr "Kan de werkelijke bestandsnaam van %s: %s niet krijgen"
-
-#, fuzzy, c-format
-msgid "Unable to delete backup file %1$s."
-msgstr "s_page_delete: Niet mogelijk om reservekopie %s te verwijderen."
-
 msgid "Failed to parse arc object"
 msgstr "Faalde bij het ontleden van een boog object"
 
@@ -244,23 +119,6 @@ msgstr "Ongeldige kleur [ %s ] gevonden\n"
 #, fuzzy
 msgid "Setting color to default color."
 msgstr "Stel de kleur in op standaard kleur\n"
-
-#, fuzzy, c-format
-msgid "Attribute [%1$s] already attached\n"
-msgstr "Attribuut [%s] is al bevestigd\n"
-
-msgid "Attempt to attach non text item as an attribute!\n"
-msgstr "Probeerde een niet text item toe te voegen als een attribuut!\n"
-
-#, fuzzy, c-format
-msgid "Attempt to attach attribute [%1$s] to more than one object\n"
-msgstr "Probeerde attribuut [%s] aan meer dan een object toe te voegen\n"
-
-msgid "Tried to attach a non-text item as an attribute"
-msgstr "Probeerde een niet tekst item toe te voegen als een attribuut"
-
-msgid "Unexpected end-of-file in attribute list"
-msgstr "Onverwacht einde-bestand in attribuutlijst"
 
 msgid "Failed to parse box object"
 msgstr "Faalde bij het ontleden van een rechthoek object"
@@ -295,83 +153,6 @@ msgstr "Een cirkel met een radius van nul gevonden [ %c %d %d %d %d ]\n"
 #, fuzzy
 msgid "Setting radius to 0."
 msgstr "Radius op 0 ingesteld\n"
-
-msgid "Background"
-msgstr ""
-
-msgid "Pin"
-msgstr ""
-
-msgid "Net endpoint"
-msgstr ""
-
-msgid "Graphic"
-msgstr ""
-
-msgid "Net"
-msgstr ""
-
-#, fuzzy
-msgid "Attribute"
-msgstr "%s attribuut gevonden\n"
-
-msgid "Logic bubble"
-msgstr ""
-
-msgid "Grid point"
-msgstr ""
-
-#, fuzzy
-msgid "Detached attribute"
-msgstr "Verkeerd bevestigd attribuut: [%s=%s] gevonden\n"
-
-msgid "Text"
-msgstr ""
-
-msgid "Bus"
-msgstr ""
-
-msgid "Selection"
-msgstr ""
-
-msgid "Bounding box"
-msgstr ""
-
-msgid "Zoom box"
-msgstr ""
-
-msgid "Stroke"
-msgstr ""
-
-msgid "Lock"
-msgstr ""
-
-msgid "Output background"
-msgstr ""
-
-msgid "Freestyle 1"
-msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-msgid "Net junction"
-msgstr ""
-
-msgid "Mesh grid major"
-msgstr ""
-
-msgid "Mesh grid minor"
-msgstr ""
-
-msgid "Unknown"
-msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -564,10 +345,6 @@ msgstr "Afbeelding is nog steeds ingevoegd.\n"
 msgid "Picture [%1$s] has been unembedded."
 msgstr "Afbeelding [%s] is uitgevoegd\n"
 
-#, fuzzy
-msgid "Failed to load fallback image.\n"
-msgstr "Laden van afbeelding uit bestand %s faalde: %s.\n"
-
 msgid "Failed to parse pin object"
 msgstr "Faalde bij het ontleden van een pin object"
 
@@ -613,6 +390,225 @@ msgstr "Uitlijning op LINKS_ONDER ingesteld\n"
 #, fuzzy, c-format
 msgid "Unexpected end-of-file after %1$d lines"
 msgstr "Onverwacht einde-bestand na %d lijnen"
+
+#, fuzzy, c-format
+msgid "Failed to stat [%1$s]: %2$s"
+msgstr "Status niet gelukt [%s]: %s"
+
+#, fuzzy, c-format
+msgid ""
+"\n"
+"WARNING: Found an autosave backup file:\n"
+"  %1$s.\n"
+"\n"
+msgstr ""
+"\n"
+"WAARSCHUWING: een autosave reserve bestand gevonden:\n"
+" %s.\n"
+"\n"
+
+msgid "I could not guess if it is newer, so you have to do it manually.\n"
+msgstr "Ik kan niet raden of het nieuwer is, je moet het dus handmatig doen.\n"
+
+msgid ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
+msgstr ""
+"De reservekopie is nieuwer dan het schema, het lijkt erop dat je deze zou "
+"moeten laden in plaats van het orginele bestand.\n"
+
+#, fuzzy
+msgid ""
+"lepton-schematic usually makes backup copies automatically, and this "
+"situation happens when it crashed or it was forced to exit abruptly.\n"
+msgstr ""
+"Gschem maakt gewoonlijk automatisch reservekopieen, en deze situatie komt "
+"voor wanneer er een crash is of wanneer er een abrupte gedwongen beeindiging "
+"was.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Kan bestand %s niet vinden: %s"
+
+#, fuzzy
+msgid ""
+"\n"
+"Run lepton-schematic and correct the situation.\n"
+"\n"
+msgstr ""
+"\n"
+"Voer gschem uit en corrigeer de situatie.\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s: %2$s"
+msgstr "Kan de werkelijke bestandsnaam van %s: %s niet krijgen"
+
+#, fuzzy, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write."
+msgstr "Kan vorige reservekopie [%s] NIET op lezen-schrijven instellen\n"
+
+#, fuzzy, c-format
+msgid "Can't save backup file: %1$s."
+msgstr "Kan reservekopie niet opslaan: %s."
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly."
+msgstr "Kan reservekopie [%s] NIET op alleen-lezen instellen\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore permissions on '%1$s': %2$s\n"
+msgstr "Faalde om permissies te herstellen op '%s: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore ownership on '%1$s': %2$s\n"
+msgstr "Faalde om eigenaarschap te herstellen op '%s: %s\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save file: %1$s"
+msgstr "Kan bestand: %s NIET opslaan"
+
+msgid ""
+"\n"
+"Backtrace:\n"
+msgstr ""
+"\n"
+"Traceren:\n"
+
+# We hebben deze al ingelezen.
+msgid "RC file already loaded"
+msgstr "RC bestand is reeds geladen"
+
+#, fuzzy, c-format
+msgid "Failed to load config from '%1$s': %2$s\n"
+msgstr "Laden van config uit [%s] faalde: %s\n"
+
+#, fuzzy, c-format
+msgid "Loaded RC file [%1$s]"
+msgstr "RC bestand geladen [%s]\n"
+
+#, fuzzy, c-format
+msgid "Failed to load RC file [%1$s]: "
+msgstr "Laden van RC bestand faalde [%s]: "
+
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr ""
+"FOUT: Een onbekende fout trad op tijdens het doorlopen van configuratie "
+"bestanden."
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s"
+msgstr "FOUT: %s\n"
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s\n"
+msgstr "FOUT: %s\n"
+
+#, fuzzy, c-format
+msgid "ERROR: The %1$s log may contain more information.\n"
+msgstr "FOUT: De %s log kan meer informatie bevatten.\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr "Kan de werkelijke bestandsnaam van %s: %s niet krijgen"
+
+#, fuzzy, c-format
+msgid "Unable to delete backup file %1$s."
+msgstr "s_page_delete: Niet mogelijk om reservekopie %s te verwijderen."
+
+#, fuzzy, c-format
+msgid "Attribute [%1$s] already attached\n"
+msgstr "Attribuut [%s] is al bevestigd\n"
+
+msgid "Attempt to attach non text item as an attribute!\n"
+msgstr "Probeerde een niet text item toe te voegen als een attribuut!\n"
+
+#, fuzzy, c-format
+msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+msgstr "Probeerde attribuut [%s] aan meer dan een object toe te voegen\n"
+
+msgid "Tried to attach a non-text item as an attribute"
+msgstr "Probeerde een niet tekst item toe te voegen als een attribuut"
+
+msgid "Unexpected end-of-file in attribute list"
+msgstr "Onverwacht einde-bestand in attribuutlijst"
+
+msgid "Background"
+msgstr ""
+
+msgid "Pin"
+msgstr ""
+
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+#, fuzzy
+msgid "Attribute"
+msgstr "%s attribuut gevonden\n"
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+#, fuzzy
+msgid "Detached attribute"
+msgstr "Verkeerd bevestigd attribuut: [%s=%s] gevonden\n"
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Library command failed [%1$s]: %2$s"
@@ -748,9 +744,6 @@ msgstr "Object ~A is bevestigd als een attribuut"
 
 msgid "Object ~A has attributes"
 msgstr "Object ~A heeft attributen"
-
-msgid "Object ~A has bad type '~A'"
-msgstr "Object ~A heeft een slecht type '~A'"
 
 msgid "Object ~A has invalid stroke cap style ~A"
 msgstr "Object ~A heeft een ongeldige slag cap stijl ~A"
@@ -1362,6 +1355,13 @@ msgstr "1 FOUT gevonden "
 #, fuzzy
 msgid "(use -v to view details)"
 msgstr "(gebruik -v om details te zien)\n"
+
+#, fuzzy
+#~ msgid "Failed to load fallback image.\n"
+#~ msgstr "Laden van afbeelding uit bestand %s faalde: %s.\n"
+
+#~ msgid "Object ~A has bad type '~A'"
+#~ msgstr "Object ~A heeft een slecht type '~A'"
 
 #~ msgid "Color map entry must be a two-element list"
 #~ msgstr "Kleuren map invoer moet een twee-element lijst zijn"

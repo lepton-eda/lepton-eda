@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:03+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2014-08-31 22:35+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -39,8 +39,11 @@ msgid ""
 "%s"
 msgstr "Pagina [%s] kan NIET opgeslagen worden\n"
 
+msgid "Failed to save file"
+msgstr "Fout bij het opslaan van bestand"
+
 #, fuzzy
-msgid "Save Color Scheme As..."
+msgid "Save Color Scheme"
 msgstr "Licht Kleuren Schema"
 
 #, fuzzy, c-format
@@ -114,7 +117,7 @@ msgstr "gEDA: GPL Elektronische Ontwerp Automatisering"
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2020 Lepton Developers.\n"
+"Copyright © 2017-2021 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Copyright © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -288,6 +291,10 @@ msgstr "** Ongeldige UTF-8 in logboek bericht. Zie stderr of gschem.log.\n"
 msgid "Clear log window?"
 msgstr "Sluit Venster\n"
 
+#, fuzzy
+msgid "Clear Log"
+msgstr "Toon Logboek Venster"
+
 msgid "_Wrap Long Lines"
 msgstr ""
 
@@ -437,8 +444,9 @@ msgstr "Verberg tekst"
 msgid "Hide text starting with:"
 msgstr "Verberg tekst beginnend met:"
 
-msgid "Edit slot number"
-msgstr "Bewerk slot nummer"
+#, fuzzy
+msgid "Edit Slot"
+msgstr "Bewerk Kleur"
 
 msgid "Number of Slots:"
 msgstr ""
@@ -662,10 +670,6 @@ msgstr "Symbool is geen werkelijk bestand. Symbool kan niet geladen worden.\n"
 #, fuzzy
 msgid "Cannot find any schematics above the current one!"
 msgstr "Kan geen schema's vinden boven het huidige schema!\n"
-
-#, c-format
-msgid "Sorry but this is a non-functioning menu option\n"
-msgstr "Sorry, maar dit is een niet werkende menu optie\n"
 
 #, fuzzy
 msgid "Action feedback mode set to OUTLINE"
@@ -930,8 +934,8 @@ msgstr "Van rechts naar links"
 msgid "File order"
 msgstr "Bestand volgorde"
 
-msgid "Autonumber text"
-msgstr "Automatisch tekst nummeren"
+msgid "Autonumber Text"
+msgstr "Automatisch Tekst Nummeren"
 
 msgid "<b>Scope</b>"
 msgstr "<b>Omvang</b>"
@@ -1295,6 +1299,9 @@ msgstr "Naam:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "<b>Add Attribute</b>"
+msgstr "<b>Plaats Attribuut</b>"
+
 #, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
@@ -1396,6 +1403,13 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr "Kan geen gschem configuratie laden."
 
+#, fuzzy
+msgid "Close"
+msgstr "S_luit"
+
+msgid "Save"
+msgstr "Opslaan"
+
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "Hie_rarchie"
@@ -1462,9 +1476,6 @@ msgstr "Pagina [%s] kan NIET opgeslagen worden\n"
 msgid "Error while trying to save"
 msgstr "Fout tijdens het opslaan"
 
-msgid "Failed to save file"
-msgstr "Fout bij het opslaan van bestand"
-
 #, fuzzy, c-format
 msgid "Saved as [%1$s]"
 msgstr "Opgeslagen Als [%s]\n"
@@ -1493,9 +1504,6 @@ msgstr "Nieuw bestand"
 #, fuzzy
 msgid "Open file"
 msgstr "Open Bestand"
-
-msgid "Save"
-msgstr "Opslaan"
 
 msgid "Save file"
 msgstr "Opslaan bestand"
@@ -2178,9 +2186,6 @@ msgstr "Verberg Specifieke Tekst"
 msgid "Show Specific Text"
 msgstr "Toon Specifieke Tekst"
 
-msgid "Autonumber Text"
-msgstr "Automatisch Tekst Nummeren"
-
 msgid "Show Hotkeys"
 msgstr "Toon Sneltoets"
 
@@ -2269,7 +2274,6 @@ msgstr "Ongeldige tekst uitlijning ~A."
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"\n"
 "Interactively edit Lepton EDA schematics or symbols.\n"
 "If one or more FILEs are specified, open them for\n"
 "editing; otherwise, create a new, empty schematic.\n"
@@ -2278,7 +2282,7 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
@@ -2316,6 +2320,16 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "Edit slot number"
+#~ msgstr "Bewerk slot nummer"
+
+#, c-format
+#~ msgid "Sorry but this is a non-functioning menu option\n"
+#~ msgstr "Sorry, maar dit is een niet werkende menu optie\n"
+
+#~ msgid "Autonumber text"
+#~ msgstr "Automatisch tekst nummeren"
 
 #, fuzzy
 #~ msgid "User _Guide"
@@ -2444,9 +2458,6 @@ msgstr ""
 
 #~ msgid "<b>Edit Attribute</b>"
 #~ msgstr "<b>Bewerk Attribuut</b>"
-
-#~ msgid "<b>Add Attribute</b>"
-#~ msgstr "<b>Plaats Attribuut</b>"
 
 #~ msgid "Select Component..."
 #~ msgstr "Selecteer Component..."
@@ -2785,9 +2796,6 @@ msgstr ""
 
 #~ msgid "Component D_ocumentation..."
 #~ msgstr "Component D_ocumentatie..."
-
-#~ msgid "Edit Color"
-#~ msgstr "Bewerk Kleur"
 
 #~ msgid "Edit Line Width & Type"
 #~ msgstr "Bewerk Lijn Dikte & Type"

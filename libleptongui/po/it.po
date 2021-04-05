@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:03+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2014-12-29 20:06+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -43,8 +43,11 @@ msgid ""
 "%s"
 msgstr "Non è possibile salvare la pagina [%s]\n"
 
+msgid "Failed to save file"
+msgstr "Fallito il salvataggio file"
+
 #, fuzzy
-msgid "Save Color Scheme As..."
+msgid "Save Color Scheme"
 msgstr "Schema colori chiari"
 
 #, fuzzy, c-format
@@ -117,7 +120,7 @@ msgstr "gEDA: GPL Electronic Design Automation"
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2020 Lepton Developers.\n"
+"Copyright © 2017-2021 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Copyright © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -296,6 +299,10 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "Chiusura Finestra\n"
 
+#, fuzzy
+msgid "Clear Log"
+msgstr "Mostra la finestra di log"
+
 msgid "_Wrap Long Lines"
 msgstr ""
 
@@ -438,8 +445,9 @@ msgstr "Nascondi testo"
 msgid "Hide text starting with:"
 msgstr "Nascondi il testo iniziando con:"
 
-msgid "Edit slot number"
-msgstr "Modifica numero slot"
+#, fuzzy
+msgid "Edit Slot"
+msgstr "Modifica colore"
 
 msgid "Number of Slots:"
 msgstr ""
@@ -666,10 +674,6 @@ msgstr "Il simolo non è un file reale, impossibile caricarlo.\n"
 #, fuzzy
 msgid "Cannot find any schematics above the current one!"
 msgstr "Impossibile trovare uno schema a livello più alto di questo!\n"
-
-#, c-format
-msgid "Sorry but this is a non-functioning menu option\n"
-msgstr "Spiacente, ma questa non è una funzione del menù opzioni\n"
 
 #, fuzzy
 msgid "Action feedback mode set to OUTLINE"
@@ -937,7 +941,7 @@ msgstr "Da destra a sinistra"
 msgid "File order"
 msgstr "Sequenza dei file"
 
-msgid "Autonumber text"
+msgid "Autonumber Text"
 msgstr "Testo di autonumerazione"
 
 msgid "<b>Scope</b>"
@@ -1304,6 +1308,9 @@ msgstr "Nome:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "<b>Add Attribute</b>"
+msgstr "<b>Aggiungi Caratteristiche</b>"
+
 #, fuzzy, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
@@ -1406,6 +1413,13 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr "Impossibile caricare la configurazione di gschem."
 
+#, fuzzy
+msgid "Close"
+msgstr "_Chiudi"
+
+msgid "Save"
+msgstr "Salva"
+
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "Ge_rarchia"
@@ -1472,9 +1486,6 @@ msgstr "Non è possibile salvare la pagina [%s]\n"
 msgid "Error while trying to save"
 msgstr "Errore durante il salvataggio"
 
-msgid "Failed to save file"
-msgstr "Fallito il salvataggio file"
-
 #, fuzzy, c-format
 msgid "Saved as [%1$s]"
 msgstr "Salvato con il nome [%s]\n"
@@ -1503,9 +1514,6 @@ msgstr "Nuovo file"
 #, fuzzy
 msgid "Open file"
 msgstr "Apri file"
-
-msgid "Save"
-msgstr "Salva"
 
 msgid "Save file"
 msgstr "Salva file"
@@ -2192,9 +2200,6 @@ msgstr "Nascondi testo specifico"
 msgid "Show Specific Text"
 msgstr "Mostra testo specifico"
 
-msgid "Autonumber Text"
-msgstr "Testo di autonumerazione"
-
 msgid "Show Hotkeys"
 msgstr "Mostra i tasti scelta rapida"
 
@@ -2284,7 +2289,6 @@ msgstr "Allineamento testo non valido ~A."
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"\n"
 "Interactively edit Lepton EDA schematics or symbols.\n"
 "If one or more FILEs are specified, open them for\n"
 "editing; otherwise, create a new, empty schematic.\n"
@@ -2293,7 +2297,7 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
@@ -2330,6 +2334,16 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "Edit slot number"
+#~ msgstr "Modifica numero slot"
+
+#, c-format
+#~ msgid "Sorry but this is a non-functioning menu option\n"
+#~ msgstr "Spiacente, ma questa non è una funzione del menù opzioni\n"
+
+#~ msgid "Autonumber text"
+#~ msgstr "Testo di autonumerazione"
 
 #, fuzzy
 #~ msgid "User _Guide"
@@ -2440,9 +2454,6 @@ msgstr ""
 
 #~ msgid "<b>Edit Attribute</b>"
 #~ msgstr "<b>Modifica Caratteristiche</b>"
-
-#~ msgid "<b>Add Attribute</b>"
-#~ msgstr "<b>Aggiungi Caratteristiche</b>"
 
 #~ msgid "Select Component..."
 #~ msgstr "Seleziona Componente..."
@@ -2778,9 +2789,6 @@ msgstr ""
 
 #~ msgid "Component D_ocumentation..."
 #~ msgstr "D_ocumentazione Componente..."
-
-#~ msgid "Edit Color"
-#~ msgstr "Modifica colore"
 
 #~ msgid "Edit Line Width & Type"
 #~ msgstr "Modifica Larghezza & Tipo di Linea"

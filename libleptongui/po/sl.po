@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:03+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2012-01-27 14:18+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: Slovenian <sl@li.org>\n"
@@ -38,7 +38,10 @@ msgid ""
 "%s"
 msgstr ""
 
-msgid "Save Color Scheme As..."
+msgid "Failed to save file"
+msgstr ""
+
+msgid "Save Color Scheme"
 msgstr ""
 
 #, c-format
@@ -105,7 +108,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2020 Lepton Developers.\n"
+"Copyright © 2017-2021 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -261,6 +264,10 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "Novo okno"
 
+#, fuzzy
+msgid "Clear Log"
+msgstr "Novo okno"
+
 msgid "_Wrap Long Lines"
 msgstr ""
 
@@ -383,7 +390,7 @@ msgstr ""
 msgid "Hide text starting with:"
 msgstr ""
 
-msgid "Edit slot number"
+msgid "Edit Slot"
 msgstr ""
 
 msgid "Number of Slots:"
@@ -587,10 +594,6 @@ msgid "Symbol is not a real file. Symbol cannot be loaded."
 msgstr ""
 
 msgid "Cannot find any schematics above the current one!"
-msgstr ""
-
-#, c-format
-msgid "Sorry but this is a non-functioning menu option\n"
 msgstr ""
 
 msgid "Action feedback mode set to OUTLINE"
@@ -816,7 +819,7 @@ msgstr ""
 msgid "File order"
 msgstr ""
 
-msgid "Autonumber text"
+msgid "Autonumber Text"
 msgstr ""
 
 msgid "<b>Scope</b>"
@@ -1135,6 +1138,9 @@ msgstr ""
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "<b>Add Attribute</b>"
+msgstr ""
+
 #, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
@@ -1223,6 +1229,13 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
+#, fuzzy
+msgid "Close"
+msgstr "_Zapri"
+
+msgid "Save"
+msgstr ""
+
 #, c-format
 msgid "Hierarchy up: %s"
 msgstr ""
@@ -1283,9 +1296,6 @@ msgstr ""
 msgid "Error while trying to save"
 msgstr ""
 
-msgid "Failed to save file"
-msgstr ""
-
 #, fuzzy, c-format
 msgid "Saved as [%1$s]"
 msgstr "Shrani vse"
@@ -1312,9 +1322,6 @@ msgid "New file"
 msgstr ""
 
 msgid "Open file"
-msgstr ""
-
-msgid "Save"
 msgstr ""
 
 msgid "Save file"
@@ -1961,9 +1968,6 @@ msgstr ""
 msgid "Show Specific Text"
 msgstr ""
 
-msgid "Autonumber Text"
-msgstr ""
-
 msgid "Show Hotkeys"
 msgstr ""
 
@@ -2044,7 +2048,6 @@ msgstr ""
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"\n"
 "Interactively edit Lepton EDA schematics or symbols.\n"
 "If one or more FILEs are specified, open them for\n"
 "editing; otherwise, create a new, empty schematic.\n"
@@ -2053,7 +2056,7 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"

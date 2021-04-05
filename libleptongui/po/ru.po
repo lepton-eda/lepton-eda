@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:03+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2020-03-20 15:30+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -50,7 +50,11 @@ msgstr ""
 "Не удалось сохранить страницу «%s»:\n"
 "%s"
 
-msgid "Save Color Scheme As..."
+msgid "Failed to save file"
+msgstr "Не удалось сохранить файл"
+
+#, fuzzy
+msgid "Save Color Scheme"
 msgstr "Сохранить цветовую схему как..."
 
 #, c-format
@@ -128,9 +132,10 @@ msgstr ""
 msgid "Lepton Electronic Design Automation"
 msgstr "Lepton Electronic Design Automation"
 
+#, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2020 Lepton Developers.\n"
+"Copyright © 2017-2021 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Copyright © 1998-2017 Ales Hvezda и другие авторы исходного кода.\n"
@@ -295,6 +300,10 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "Очистить окно журнала?"
 
+#, fuzzy
+msgid "Clear Log"
+msgstr "_Очистить окно журнала"
+
 msgid "_Wrap Long Lines"
 msgstr "_Разбивать длинные строки"
 
@@ -415,8 +424,9 @@ msgstr "Скрыть"
 msgid "Hide text starting with:"
 msgstr "Скрыть текст, начинающийся с:"
 
-msgid "Edit slot number"
-msgstr "Правка номера секции"
+#, fuzzy
+msgid "Edit Slot"
+msgstr "Правка текста"
 
 msgid "Number of Slots:"
 msgstr "Количество секций:"
@@ -638,10 +648,6 @@ msgstr "Нет реального файла для символа. Символ
 
 msgid "Cannot find any schematics above the current one!"
 msgstr "Для текущей схемы не удалось найти схему, вышестоящую по иерархии!"
-
-#, c-format
-msgid "Sorry but this is a non-functioning menu option\n"
-msgstr "Извините, но это этот пункт меню не работает\n"
 
 msgid "Action feedback mode set to OUTLINE"
 msgstr "При выполнении действий объекты будут отрисовываться полностью"
@@ -894,7 +900,7 @@ msgstr "Справа налево"
 msgid "File order"
 msgstr "По порядку в файле"
 
-msgid "Autonumber text"
+msgid "Autonumber Text"
 msgstr "Автонумерация"
 
 msgid "<b>Scope</b>"
@@ -1243,6 +1249,11 @@ msgstr "_Имя:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr "Ctrl+Enter для ввода новой строки; Ctrl+Tab для ввода символа Tab"
 
+# См. выше. Но тут слово "атрибут" необходимо. Иначе получается "добавить ... имя" или
+# "значение", а не "атрибут".
+msgid "<b>Add Attribute</b>"
+msgstr "<b>Добавить атрибут</b>"
+
 #, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
@@ -1344,6 +1355,13 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr "Не удалось загрузить настройки lepton-schematic."
 
+#, fuzzy
+msgid "Close"
+msgstr "_Закрыть"
+
+msgid "Save"
+msgstr "Сохранить"
+
 #, c-format
 msgid "Hierarchy up: %s"
 msgstr "Вверх по иерархии: %s"
@@ -1405,9 +1423,6 @@ msgstr "Не удалось сохранить страницу «%1$s»\n"
 msgid "Error while trying to save"
 msgstr "Ошибка при попытке сохранения"
 
-msgid "Failed to save file"
-msgstr "Не удалось сохранить файл"
-
 #, c-format
 msgid "Saved as [%1$s]"
 msgstr "Файл сохранён под именем «%1$s»"
@@ -1436,9 +1451,6 @@ msgstr "Новый файл"
 
 msgid "Open file"
 msgstr "Открыть файл"
-
-msgid "Save"
-msgstr "Сохранить"
 
 msgid "Save file"
 msgstr "Сохранить файл"
@@ -2108,9 +2120,6 @@ msgstr "Скрыть текст"
 msgid "Show Specific Text"
 msgstr "Показать текст"
 
-msgid "Autonumber Text"
-msgstr "Автонумерация"
-
 msgid "Show Hotkeys"
 msgstr "Показать горячие клавиши"
 
@@ -2192,7 +2201,6 @@ msgstr "Недопустимое выравнивание текста ~A."
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"\n"
 "Interactively edit Lepton EDA schematics or symbols.\n"
 "If one or more FILEs are specified, open them for\n"
 "editing; otherwise, create a new, empty schematic.\n"
@@ -2201,7 +2209,7 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
@@ -2235,6 +2243,16 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "Edit slot number"
+#~ msgstr "Правка номера секции"
+
+#, c-format
+#~ msgid "Sorry but this is a non-functioning menu option\n"
+#~ msgstr "Извините, но это этот пункт меню не работает\n"
+
+#~ msgid "Autonumber text"
+#~ msgstr "Автонумерация"
 
 #~ msgid "User _Guide"
 #~ msgstr "_Руководство пользователя"
@@ -2373,11 +2391,6 @@ msgstr ""
 # (из заголовка окна), что меняется атрибут.
 #~ msgid "<b>Edit Attribute</b>"
 #~ msgstr "<b>Изменить</b>"
-
-# См. выше. Но тут слово "атрибут" необходимо. Иначе получается "добавить ... имя" или
-# "значение", а не "атрибут".
-#~ msgid "<b>Add Attribute</b>"
-#~ msgstr "<b>Добавить атрибут</b>"
 
 #~ msgid "Select Component..."
 #~ msgstr "Выбор компонента"

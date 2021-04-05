@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:02+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2010-02-08 18:58+0000\n"
 "Last-Translator: عبدالله شلي (Abdellah Chelli) <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -27,7 +27,7 @@ msgstr "عالج سمات المكوّن ب‍ gattrib"
 
 #, scheme-format
 msgid ""
-"Usage: ~A [OPTIONS] filename1 ... filenameN\n"
+"Usage: ~A [OPTIONS] FILE ...\n"
 "\n"
 "lepton-attrib: Lepton EDA attribute editor.\n"
 "Presents schematic attributes in easy-to-edit spreadsheet format.\n"
@@ -36,25 +36,6 @@ msgid ""
 "  -v, --verbose          Verbose mode on\n"
 "  -V, --version          Show version information\n"
 "  -h, --help             This help menu\n"
-"\n"
-"FAQ:\n"
-"  *  What do the colors of the cell text mean?\n"
-"     The cell colors indicate the visibility of the attribute.\n"
-"     Black = Visible attribute, value displayed only.\n"
-"     Grey  = Invisible attribute.\n"
-"     Red   = Visible attribute, name displayed only.\n"
-"     Blue  = Visible attribute, both name and value displayed.\n"
-"\n"
-"  *  What does the period (\".\") at the end of some component refdeses "
-"mean?\n"
-"     The period is placed after the refdeses of slotted components.\n"
-"     If slots are present on the component, then the different slots appear\n"
-"     in different rows with the slot number after the period.  Example:  "
-"C101.2.\n"
-"\n"
-"Copyright (C) 2003-2006 Stuart D. Brorson.\n"
-"Copyright (C) 2007-2016 gEDA Contributors.\n"
-"Copyright (C) 2017-2020 Lepton EDA Contributors.\n"
 "\n"
 "Report bugs at ~S\n"
 "Lepton EDA homepage: ~S\n"
@@ -70,6 +51,10 @@ msgstr ""
 
 #, c-format
 msgid "Found uref=%1$s, uref= is deprecated, please use refdes=\n"
+msgstr ""
+
+#, c-format
+msgid "%s (slot %s)"
 msgstr ""
 
 #, c-format
@@ -224,18 +209,36 @@ msgstr ""
 msgid "Fatal error"
 msgstr ""
 
-#, c-format
 msgid ""
 "Lepton Electronic Design Automation\n"
 "\n"
-"lepton-attrib - Lepton EDA attribute editor\n"
-"\n"
-"lepton-attrib version: %1$s%2$s.%3$s\n"
-"\n"
-"lepton-attrib is Lepton's successor of gEDA gattrib\n"
+"lepton-attrib is Lepton's successor of gEDA gattrib"
 msgstr ""
 
-msgid "About..."
+#, c-format
+msgid "%s (git: %.7s)"
+msgstr ""
+
+msgid ""
+"Copyright © 2003-2006 Stuart D. Brorson\n"
+"Copyright © 2003-2016 gEDA Contributors\n"
+"Copyright © 2017-2021 Lepton EDA Contributors"
+msgstr ""
+
+msgid ""
+"Lepton EDA is freely distributable under the\n"
+"GNU Public License (GPL) version 2.0 or (at your option) any later version.\n"
+"See the COPYING file for the full text of the license."
+msgstr ""
+
+#, c-format
+msgid ""
+"The selected file `%1$s' already exists.\n"
+"\n"
+"Would you like to overwrite it?"
+msgstr ""
+
+msgid "Overwrite file?"
 msgstr ""
 
 msgid "Export CSV"
@@ -275,9 +278,20 @@ msgstr ""
 msgid "couldn't allocate color"
 msgstr ""
 
-#, fuzzy
-msgid "lepton-attrib - Lepton EDA attribute editor"
-msgstr "محرّر السّمة ل‍ gEDA"
+msgid "   Color Legend:  "
+msgstr ""
+
+msgid " Invisible "
+msgstr ""
+
+msgid " Show value "
+msgstr ""
+
+msgid " Show name "
+msgstr ""
+
+msgid " Show name and value "
+msgstr ""
 
 #, c-format
 msgid "Error loading menu: %1$s\n"
@@ -297,3 +311,10 @@ msgid ""
 "No pins found on any components!\n"
 "Please check your design."
 msgstr ""
+
+msgid "Multiple files"
+msgstr ""
+
+#, fuzzy
+#~ msgid "lepton-attrib - Lepton EDA attribute editor"
+#~ msgstr "محرّر السّمة ل‍ gEDA"

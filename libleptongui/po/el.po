@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:03+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2012-09-01 20:41+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -38,8 +38,11 @@ msgid ""
 "%s"
 msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση της σελίδας [%s]\n"
 
+msgid "Failed to save file"
+msgstr "Αποτυχία αποθήκευσης αρχείου"
+
 #, fuzzy
-msgid "Save Color Scheme As..."
+msgid "Save Color Scheme"
 msgstr "Σχήμα _φωτεινών χρωμάτων"
 
 #, fuzzy, c-format
@@ -113,7 +116,7 @@ msgstr "gEDA: Ηλεκτρονικός Αυτοματισμός Σχεδίαση
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2020 Lepton Developers.\n"
+"Copyright © 2017-2021 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Πνευματικά δικαιώματα © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -290,6 +293,10 @@ msgstr ""
 msgid "Clear log window?"
 msgstr "Κλείσιμο παραθύρου\n"
 
+#, fuzzy
+msgid "Clear Log"
+msgstr "Εμφάνιση παραθύρου καταγραφής..."
+
 msgid "_Wrap Long Lines"
 msgstr ""
 
@@ -434,8 +441,9 @@ msgstr "Απόκρυψη κειμένου"
 msgid "Hide text starting with:"
 msgstr "Απόκρυψη κειμένου που ξεκινάει με:"
 
-msgid "Edit slot number"
-msgstr "Επεξεργασία αριθμού υποδοχής"
+#, fuzzy
+msgid "Edit Slot"
+msgstr "Χρώμα"
 
 msgid "Number of Slots:"
 msgstr ""
@@ -657,10 +665,6 @@ msgstr ""
 #, fuzzy
 msgid "Cannot find any schematics above the current one!"
 msgstr "Δεν μπορούν να βρεθούν σχεδιαγράμματα πάνω από το τρέχον!\n"
-
-#, c-format
-msgid "Sorry but this is a non-functioning menu option\n"
-msgstr "Λυπούμαστε αλλά αυτή είναι μία μη λειτουργική επιλογή μενού\n"
 
 msgid "Action feedback mode set to OUTLINE"
 msgstr ""
@@ -911,7 +915,7 @@ msgstr "Δεξιά προς αριστερά"
 msgid "File order"
 msgstr "Σειρά αρχείων"
 
-msgid "Autonumber text"
+msgid "Autonumber Text"
 msgstr ""
 
 msgid "<b>Scope</b>"
@@ -1271,6 +1275,9 @@ msgstr "Όνομα:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "<b>Add Attribute</b>"
+msgstr "<b>Προσθήκη γνωρίσματος</b>"
+
 #, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
@@ -1369,6 +1376,13 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr "Δεν είναι δυνατό το φόρτωμα των ρυθμίσεων του gschem."
 
+#, fuzzy
+msgid "Close"
+msgstr "_Κλείσιμο"
+
+msgid "Save"
+msgstr "Αποθήκευση"
+
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "_Ιεραρχία"
@@ -1435,9 +1449,6 @@ msgstr "ΔΕΝ ήταν δυνατή η αποθήκευση της σελίδα
 msgid "Error while trying to save"
 msgstr "Σφάλμα κατά την προσπάθεια αποθήκευσης"
 
-msgid "Failed to save file"
-msgstr "Αποτυχία αποθήκευσης αρχείου"
-
 #, fuzzy, c-format
 msgid "Saved as [%1$s]"
 msgstr "Αποθηκεύτηκε ως [%s]\n"
@@ -1466,9 +1477,6 @@ msgstr "Νέο αρχείο"
 #, fuzzy
 msgid "Open file"
 msgstr "Άνοιγμα αρχείου..."
-
-msgid "Save"
-msgstr "Αποθήκευση"
 
 msgid "Save file"
 msgstr "Αποθήκευση αρχείου"
@@ -2187,9 +2195,6 @@ msgstr "_Απόκρυψη συγκεκριμένου κειμένου..."
 msgid "Show Specific Text"
 msgstr "_Εμφάνιση συγκεκριμένου κειμένου..."
 
-msgid "Autonumber Text"
-msgstr ""
-
 #, fuzzy
 msgid "Show Hotkeys"
 msgstr "Γρήγορα Πλήκτρα"
@@ -2281,7 +2286,6 @@ msgstr "Μη έγκυρη στοίχιση κειμένου ~A."
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"\n"
 "Interactively edit Lepton EDA schematics or symbols.\n"
 "If one or more FILEs are specified, open them for\n"
 "editing; otherwise, create a new, empty schematic.\n"
@@ -2290,7 +2294,7 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
@@ -2305,6 +2309,13 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "Edit slot number"
+#~ msgstr "Επεξεργασία αριθμού υποδοχής"
+
+#, c-format
+#~ msgid "Sorry but this is a non-functioning menu option\n"
+#~ msgstr "Λυπούμαστε αλλά αυτή είναι μία μη λειτουργική επιλογή μενού\n"
 
 #, fuzzy
 #~ msgid "User _Guide"
@@ -2397,9 +2408,6 @@ msgstr ""
 
 #~ msgid "<b>Edit Attribute</b>"
 #~ msgstr "<b>Επεξεργασία γνωρίσματος</b>"
-
-#~ msgid "<b>Add Attribute</b>"
-#~ msgstr "<b>Προσθήκη γνωρίσματος</b>"
 
 #~ msgid "Select Component..."
 #~ msgstr "Επιλογή στοιχείου..."
@@ -2702,10 +2710,6 @@ msgstr ""
 
 #~ msgid "Component D_ocumentation..."
 #~ msgstr "Τεκμηρίωση _στοιχείων"
-
-#, fuzzy
-#~ msgid "Edit Color"
-#~ msgstr "Χρώμα"
 
 #~ msgid "Edit Line Width & Type"
 #~ msgstr "Επεξεργασία πλάτους & τύπου γραμμής"

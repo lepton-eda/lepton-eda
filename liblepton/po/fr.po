@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:02+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2012-10-22 13:10+0000\n"
 "Last-Translator: Patrick Fiquet <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -99,134 +99,6 @@ msgstr ""
 ">>\n"
 "%s<<\n"
 
-#, fuzzy, c-format
-msgid "Failed to stat [%1$s]: %2$s"
-msgstr "Impossible d'évaluer [%s]: %s"
-
-#, fuzzy, c-format
-msgid ""
-"\n"
-"WARNING: Found an autosave backup file:\n"
-"  %1$s.\n"
-"\n"
-msgstr ""
-"\n"
-"ATTENTION: Trouvé un fichier de sauvegarde automatique:\n"
-"  %s.\n"
-"\n"
-
-msgid "I could not guess if it is newer, so you have to do it manually.\n"
-msgstr ""
-"Je n'arrive pas à deviner s'il est plus récent, vous devez le faire "
-"manuellement.\n"
-
-msgid ""
-"The backup copy is newer than the schematic, so it seems you should load it "
-"instead of the original file.\n"
-msgstr ""
-"La copie de sauvegarde est plus récente que le schéma, vous devriez la "
-"charge à la place du fichier originel.\n"
-
-#, fuzzy
-msgid ""
-"lepton-schematic usually makes backup copies automatically, and this "
-"situation happens when it crashed or it was forced to exit abruptly.\n"
-msgstr ""
-"Gschem effectue habituellement des sauvegardes automatiques et cette "
-"situation se produit lorsqu'il a crashé ou qu'il a été obligé de s'arrêter "
-"brutalement.\n"
-
-#, fuzzy, c-format
-msgid "Cannot find file %1$s: %2$s"
-msgstr "Impossible de trouver le fichier %s: %s"
-
-#, fuzzy
-msgid ""
-"\n"
-"Run lepton-schematic and correct the situation.\n"
-"\n"
-msgstr ""
-"\n"
-"Lancez gschem et corrigez le problème.\n"
-"\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s: %2$s"
-msgstr "Impossible d'obtenir le nom réel de %s : %s"
-
-#, fuzzy, c-format
-msgid "Could NOT set previous backup file [%1$s] read-write."
-msgstr ""
-"Impossible de passer le fichier copie de sauvegarde [%s] en lecture/"
-"écriture\n"
-
-#, fuzzy, c-format
-msgid "Can't save backup file: %1$s."
-msgstr "Impossible de sauvegarder le fichier de sauvegarde: %s."
-
-#, fuzzy, c-format
-msgid "Could NOT set backup file [%1$s] readonly."
-msgstr ""
-"Impossible de passer le fichier copie de sauvegarde [%s] en lecture seule\n"
-
-#, fuzzy, c-format
-msgid "Failed to restore permissions on '%1$s': %2$s\n"
-msgstr "Échec de l'ouverture du répertoire [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Failed to restore ownership on '%1$s': %2$s\n"
-msgstr "Échec de l'ouverture du répertoire [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Could NOT save file: %1$s"
-msgstr "Impossible de sauvegarder le fichier : %s"
-
-msgid ""
-"\n"
-"Backtrace:\n"
-msgstr ""
-
-#, fuzzy
-msgid "RC file already loaded"
-msgstr "Fichier de configuration déjà chargé"
-
-#, fuzzy, c-format
-msgid "Failed to load config from '%1$s': %2$s\n"
-msgstr "Échec du chargement de l'image depuis le fichier [%s]: %s\n"
-
-#, fuzzy, c-format
-msgid "Loaded RC file [%1$s]"
-msgstr "Échec de la commande de bibliothèque [%s]\n"
-
-#, fuzzy, c-format
-msgid "Failed to load RC file [%1$s]: "
-msgstr "Échec du chargement de l'image depuis le fichier [%s]: %s\n"
-
-msgid "ERROR: An unknown error occurred while parsing configuration files."
-msgstr ""
-"ERREUR : Une erreur inconnue s'est produite lors de l'interprétation des "
-"fichiers de configuration."
-
-#, fuzzy, c-format
-msgid "ERROR: %1$s"
-msgstr "ERREUR : %s\n"
-
-#, fuzzy, c-format
-msgid "ERROR: %1$s\n"
-msgstr "ERREUR : %s\n"
-
-#, fuzzy, c-format
-msgid "ERROR: The %1$s log may contain more information.\n"
-msgstr "ERREUR : Le fichier journal %s contient plus d'information.\n"
-
-#, fuzzy, c-format
-msgid "Can't get the real filename of %1$s."
-msgstr "Impossible d'obtenir le nom réel de %s : %s"
-
-#, fuzzy, c-format
-msgid "Unable to delete backup file %1$s."
-msgstr "s_page_delete: Impossible d'effacer le fichier de sauvegarde %s."
-
 msgid "Failed to parse arc object"
 msgstr ""
 
@@ -241,23 +113,6 @@ msgstr "Trouvé une couleur invalide [ %s ]\n"
 #, fuzzy
 msgid "Setting color to default color."
 msgstr "Initialiser à la couleur par défaut\n"
-
-#, c-format
-msgid "Attribute [%1$s] already attached\n"
-msgstr ""
-
-msgid "Attempt to attach non text item as an attribute!\n"
-msgstr "Tentative d'attachement d'un objet non textuel comme attribut!\n"
-
-#, fuzzy, c-format
-msgid "Attempt to attach attribute [%1$s] to more than one object\n"
-msgstr "Tentative d'attachement d'un attribut [%s] à plus d'un objet\n"
-
-msgid "Tried to attach a non-text item as an attribute"
-msgstr ""
-
-msgid "Unexpected end-of-file in attribute list"
-msgstr "Fin de fichier inattendue dans la liste des attributs"
 
 msgid "Failed to parse box object"
 msgstr "Erreur lors de l'interprétation d'un objet boîte"
@@ -292,81 +147,6 @@ msgstr "Trouvé  un cercle de rayon à zéro ou négatif [ %c %d %d %d %d ]\n"
 #, fuzzy
 msgid "Setting radius to 0."
 msgstr "Initialisé l'angle à 0\n"
-
-msgid "Background"
-msgstr ""
-
-msgid "Pin"
-msgstr ""
-
-msgid "Net endpoint"
-msgstr ""
-
-msgid "Graphic"
-msgstr ""
-
-msgid "Net"
-msgstr ""
-
-msgid "Attribute"
-msgstr ""
-
-msgid "Logic bubble"
-msgstr ""
-
-msgid "Grid point"
-msgstr ""
-
-msgid "Detached attribute"
-msgstr ""
-
-msgid "Text"
-msgstr ""
-
-msgid "Bus"
-msgstr ""
-
-msgid "Selection"
-msgstr ""
-
-msgid "Bounding box"
-msgstr ""
-
-msgid "Zoom box"
-msgstr ""
-
-msgid "Stroke"
-msgstr ""
-
-msgid "Lock"
-msgstr ""
-
-msgid "Output background"
-msgstr ""
-
-msgid "Freestyle 1"
-msgstr ""
-
-msgid "Freestyle 2"
-msgstr ""
-
-msgid "Freestyle 3"
-msgstr ""
-
-msgid "Freestyle 4"
-msgstr ""
-
-msgid "Net junction"
-msgstr ""
-
-msgid "Mesh grid major"
-msgstr ""
-
-msgid "Mesh grid minor"
-msgstr ""
-
-msgid "Unknown"
-msgstr ""
 
 #, fuzzy, c-format
 msgid ""
@@ -557,10 +337,6 @@ msgstr "L'image [%s] a été embarquée\n"
 msgid "Picture [%1$s] has been unembedded."
 msgstr "L'image [%s] a été débarquée\n"
 
-#, fuzzy
-msgid "Failed to load fallback image.\n"
-msgstr "Échec du chargement de l'image depuis le fichier [%s]: %s\n"
-
 msgid "Failed to parse pin object"
 msgstr ""
 
@@ -603,6 +379,226 @@ msgstr "Alignement positionné à LOWER_LEFT\n"
 #, fuzzy, c-format
 msgid "Unexpected end-of-file after %1$d lines"
 msgstr "Fin de fichier inattendue dans la liste des attributs"
+
+#, fuzzy, c-format
+msgid "Failed to stat [%1$s]: %2$s"
+msgstr "Impossible d'évaluer [%s]: %s"
+
+#, fuzzy, c-format
+msgid ""
+"\n"
+"WARNING: Found an autosave backup file:\n"
+"  %1$s.\n"
+"\n"
+msgstr ""
+"\n"
+"ATTENTION: Trouvé un fichier de sauvegarde automatique:\n"
+"  %s.\n"
+"\n"
+
+msgid "I could not guess if it is newer, so you have to do it manually.\n"
+msgstr ""
+"Je n'arrive pas à deviner s'il est plus récent, vous devez le faire "
+"manuellement.\n"
+
+msgid ""
+"The backup copy is newer than the schematic, so it seems you should load it "
+"instead of the original file.\n"
+msgstr ""
+"La copie de sauvegarde est plus récente que le schéma, vous devriez la "
+"charge à la place du fichier originel.\n"
+
+#, fuzzy
+msgid ""
+"lepton-schematic usually makes backup copies automatically, and this "
+"situation happens when it crashed or it was forced to exit abruptly.\n"
+msgstr ""
+"Gschem effectue habituellement des sauvegardes automatiques et cette "
+"situation se produit lorsqu'il a crashé ou qu'il a été obligé de s'arrêter "
+"brutalement.\n"
+
+#, fuzzy, c-format
+msgid "Cannot find file %1$s: %2$s"
+msgstr "Impossible de trouver le fichier %s: %s"
+
+#, fuzzy
+msgid ""
+"\n"
+"Run lepton-schematic and correct the situation.\n"
+"\n"
+msgstr ""
+"\n"
+"Lancez gschem et corrigez le problème.\n"
+"\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s: %2$s"
+msgstr "Impossible d'obtenir le nom réel de %s : %s"
+
+#, fuzzy, c-format
+msgid "Could NOT set previous backup file [%1$s] read-write."
+msgstr ""
+"Impossible de passer le fichier copie de sauvegarde [%s] en lecture/"
+"écriture\n"
+
+#, fuzzy, c-format
+msgid "Can't save backup file: %1$s."
+msgstr "Impossible de sauvegarder le fichier de sauvegarde: %s."
+
+#, fuzzy, c-format
+msgid "Could NOT set backup file [%1$s] readonly."
+msgstr ""
+"Impossible de passer le fichier copie de sauvegarde [%s] en lecture seule\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore permissions on '%1$s': %2$s\n"
+msgstr "Échec de l'ouverture du répertoire [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Failed to restore ownership on '%1$s': %2$s\n"
+msgstr "Échec de l'ouverture du répertoire [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Could NOT save file: %1$s"
+msgstr "Impossible de sauvegarder le fichier : %s"
+
+msgid ""
+"\n"
+"Backtrace:\n"
+msgstr ""
+
+#, fuzzy
+msgid "RC file already loaded"
+msgstr "Fichier de configuration déjà chargé"
+
+#, fuzzy, c-format
+msgid "Failed to load config from '%1$s': %2$s\n"
+msgstr "Échec du chargement de l'image depuis le fichier [%s]: %s\n"
+
+#, fuzzy, c-format
+msgid "Loaded RC file [%1$s]"
+msgstr "Échec de la commande de bibliothèque [%s]\n"
+
+#, fuzzy, c-format
+msgid "Failed to load RC file [%1$s]: "
+msgstr "Échec du chargement de l'image depuis le fichier [%s]: %s\n"
+
+msgid "ERROR: An unknown error occurred while parsing configuration files."
+msgstr ""
+"ERREUR : Une erreur inconnue s'est produite lors de l'interprétation des "
+"fichiers de configuration."
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s"
+msgstr "ERREUR : %s\n"
+
+#, fuzzy, c-format
+msgid "ERROR: %1$s\n"
+msgstr "ERREUR : %s\n"
+
+#, fuzzy, c-format
+msgid "ERROR: The %1$s log may contain more information.\n"
+msgstr "ERREUR : Le fichier journal %s contient plus d'information.\n"
+
+#, fuzzy, c-format
+msgid "Can't get the real filename of %1$s."
+msgstr "Impossible d'obtenir le nom réel de %s : %s"
+
+#, fuzzy, c-format
+msgid "Unable to delete backup file %1$s."
+msgstr "s_page_delete: Impossible d'effacer le fichier de sauvegarde %s."
+
+#, c-format
+msgid "Attribute [%1$s] already attached\n"
+msgstr ""
+
+msgid "Attempt to attach non text item as an attribute!\n"
+msgstr "Tentative d'attachement d'un objet non textuel comme attribut!\n"
+
+#, fuzzy, c-format
+msgid "Attempt to attach attribute [%1$s] to more than one object\n"
+msgstr "Tentative d'attachement d'un attribut [%s] à plus d'un objet\n"
+
+msgid "Tried to attach a non-text item as an attribute"
+msgstr ""
+
+msgid "Unexpected end-of-file in attribute list"
+msgstr "Fin de fichier inattendue dans la liste des attributs"
+
+msgid "Background"
+msgstr ""
+
+msgid "Pin"
+msgstr ""
+
+msgid "Net endpoint"
+msgstr ""
+
+msgid "Graphic"
+msgstr ""
+
+msgid "Net"
+msgstr ""
+
+msgid "Attribute"
+msgstr ""
+
+msgid "Logic bubble"
+msgstr ""
+
+msgid "Grid point"
+msgstr ""
+
+msgid "Detached attribute"
+msgstr ""
+
+msgid "Text"
+msgstr ""
+
+msgid "Bus"
+msgstr ""
+
+msgid "Selection"
+msgstr ""
+
+msgid "Bounding box"
+msgstr ""
+
+msgid "Zoom box"
+msgstr ""
+
+msgid "Stroke"
+msgstr ""
+
+msgid "Lock"
+msgstr ""
+
+msgid "Output background"
+msgstr ""
+
+msgid "Freestyle 1"
+msgstr ""
+
+msgid "Freestyle 2"
+msgstr ""
+
+msgid "Freestyle 3"
+msgstr ""
+
+msgid "Freestyle 4"
+msgstr ""
+
+msgid "Net junction"
+msgstr ""
+
+msgid "Mesh grid major"
+msgstr ""
+
+msgid "Mesh grid minor"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
 
 #, fuzzy, c-format
 msgid "Library command failed [%1$s]: %2$s"
@@ -732,9 +728,6 @@ msgid "Object ~A is attached as an attribute"
 msgstr ""
 
 msgid "Object ~A has attributes"
-msgstr ""
-
-msgid "Object ~A has bad type '~A'"
 msgstr ""
 
 msgid "Object ~A has invalid stroke cap style ~A"
@@ -1308,6 +1301,10 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Failed to load fallback image.\n"
+#~ msgstr "Échec du chargement de l'image depuis le fichier [%s]: %s\n"
 
 #~ msgid "Color map entry must be a two-element list"
 #~ msgstr "L'entrée de la carte de couleurs doit être une liste à deux entrées"

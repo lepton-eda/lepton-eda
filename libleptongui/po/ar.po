@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2020-12-11 02:03+0300\n"
+"POT-Creation-Date: 2021-04-05 20:24+0300\n"
 "PO-Revision-Date: 2010-02-14 06:08+0000\n"
 "Last-Translator: عبدالله شلي (Abdellah Chelli) <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -41,7 +41,11 @@ msgid ""
 msgstr "تعذر فتح الملف %s\n"
 
 #, fuzzy
-msgid "Save Color Scheme As..."
+msgid "Failed to save file"
+msgstr "فشل تحميل الملف"
+
+#, fuzzy
+msgid "Save Color Scheme"
 msgstr "مخطط ألوان _فاتحة"
 
 #, fuzzy, c-format
@@ -112,7 +116,7 @@ msgstr "gEDA: GPL Electronic Design Automation (أتمتة التصميم الإ
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2020 Lepton Developers.\n"
+"Copyright © 2017-2021 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -284,6 +288,10 @@ msgstr "‏﻿** UTF-8 غير صالح في رسالة سجل. راجع stderr �
 msgid "Clear log window?"
 msgstr "إغلاق النافذة\n"
 
+#, fuzzy
+msgid "Clear Log"
+msgstr "امسح"
+
 msgid "_Wrap Long Lines"
 msgstr ""
 
@@ -431,8 +439,9 @@ msgstr "أخف النص"
 msgid "Hide text starting with:"
 msgstr "أخف النص البادئ بـ:"
 
-msgid "Edit slot number"
-msgstr "﻿حرّر عدد الشقّ"
+#, fuzzy
+msgid "Edit Slot"
+msgstr "لون"
 
 msgid "Number of Slots:"
 msgstr ""
@@ -655,10 +664,6 @@ msgstr "الرمز ليس ملفا حقيقيا. يتعذر تحميل الرم�
 #, fuzzy
 msgid "Cannot find any schematics above the current one!"
 msgstr "يتعذر إيجاد أي مخطط فوق الحالي!\n"
-
-#, c-format
-msgid "Sorry but this is a non-functioning menu option\n"
-msgstr "عذرا خيار القائمة هذا غير فعّال\n"
 
 #, fuzzy
 msgid "Action feedback mode set to OUTLINE"
@@ -917,7 +922,8 @@ msgstr "من اليمين لليسار"
 msgid "File order"
 msgstr "ترتيب الملف"
 
-msgid "Autonumber text"
+#, fuzzy
+msgid "Autonumber Text"
 msgstr "نص تعداد آلي"
 
 msgid "<b>Scope</b>"
@@ -1271,6 +1277,9 @@ msgstr "الاسم:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "<b>Add Attribute</b>"
+msgstr "<b>أضف سمة</b>"
+
 #, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
@@ -1360,6 +1369,13 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
+#, fuzzy
+msgid "Close"
+msgstr "أ_غلق"
+
+msgid "Save"
+msgstr "احفظ"
+
 #, fuzzy, c-format
 msgid "Hierarchy up: %s"
 msgstr "تسلسل​_هرمي"
@@ -1425,10 +1441,6 @@ msgstr "تعذّر حفظ الصفحة [‎%s‬]\n"
 msgid "Error while trying to save"
 msgstr "خطا عند محاولة الحفظ"
 
-#, fuzzy
-msgid "Failed to save file"
-msgstr "فشل تحميل الملف"
-
 #, fuzzy, c-format
 msgid "Saved as [%1$s]"
 msgstr "حُفظ كـ [‎%s‬]\n"
@@ -1457,9 +1469,6 @@ msgstr "ملف جديد"
 #, fuzzy
 msgid "Open file"
 msgstr "افتح ملفا..."
-
-msgid "Save"
-msgstr "احفظ"
 
 msgid "Save file"
 msgstr "احفظ الملف"
@@ -2185,10 +2194,6 @@ msgid "Show Specific Text"
 msgstr "أ_ظهر نصا معينا..."
 
 #, fuzzy
-msgid "Autonumber Text"
-msgstr "نص تعداد آلي"
-
-#, fuzzy
 msgid "Show Hotkeys"
 msgstr "مفاتيح ساخنة"
 
@@ -2283,7 +2288,6 @@ msgstr ""
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
 "\n"
-"\n"
 "Interactively edit Lepton EDA schematics or symbols.\n"
 "If one or more FILEs are specified, open them for\n"
 "editing; otherwise, create a new, empty schematic.\n"
@@ -2292,7 +2296,7 @@ msgid ""
 "  -q, --quiet              Quiet mode.\n"
 "  -v, --verbose            Verbose mode.\n"
 "  -L DIR                   Add DIR to Scheme search path.\n"
-"  -c EXPR                  Scheme expression to run at startup.\n"
+"  -c EXPR, --command=EXPR  Scheme expression to run at startup.\n"
 "  -s FILE                  Scheme script to run at startup.\n"
 "  -V, --version            Show version information.\n"
 "  -h, --help               Help; this message.\n"
@@ -2307,6 +2311,16 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "Edit slot number"
+#~ msgstr "﻿حرّر عدد الشقّ"
+
+#, c-format
+#~ msgid "Sorry but this is a non-functioning menu option\n"
+#~ msgstr "عذرا خيار القائمة هذا غير فعّال\n"
+
+#~ msgid "Autonumber text"
+#~ msgstr "نص تعداد آلي"
 
 #, fuzzy
 #~ msgid "User _Guide"
@@ -2406,9 +2420,6 @@ msgstr ""
 
 #~ msgid "<b>Edit Attribute</b>"
 #~ msgstr "<b>حرّر السّمة</b>"
-
-#~ msgid "<b>Add Attribute</b>"
-#~ msgstr "<b>أضف سمة</b>"
 
 #~ msgid "Select Component..."
 #~ msgstr "انتق مكونا..."
@@ -2716,10 +2727,6 @@ msgstr ""
 
 #~ msgid "Component D_ocumentation..."
 #~ msgstr "توثيق الم_كونات"
-
-#, fuzzy
-#~ msgid "Edit Color"
-#~ msgstr "لون"
 
 #~ msgid "Edit Line Width & Type"
 #~ msgstr "حرّر عرض و نوع الخط"
@@ -3039,9 +3046,6 @@ msgstr ""
 #~ "  -t            Print stroke information\n"
 #~ "  -h            Help; this message\n"
 #~ "\n"
-
-#~ msgid "Clear"
-#~ msgstr "امسح"
 
 #~ msgid "Make Inv Text Vis"
 #~ msgstr "إجعل النص الخفي ظاهرا"
