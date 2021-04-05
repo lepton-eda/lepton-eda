@@ -7,7 +7,7 @@
  *
  *  Copyright (C) 1999-2010 Mike Jarabek
  *  Copyright (C) 1999-2016 gEDA Contributors
- *  Copyright (C) 2017-2019 Lepton EDA Contributors
+ *  Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  *     CHANGE HISTORY:
  *
