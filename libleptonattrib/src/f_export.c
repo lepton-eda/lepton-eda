@@ -94,13 +94,13 @@ void f_export_components(gchar *filename)
   /*  Print out optional attrib names  */
   for (j = 0; j < num_cols-1; j++) {
     text = g_strdup( s_string_list_get_data_at_index(
-		       sheet_head->master_comp_attrib_list_head, j) );
+                       sheet_head->master_comp_attrib_list_head, j) );
     fprintf(fp, "%s, ", text);
     g_free(text);
   }
   /*  Print out last attrib name with no comma and with \n.  */
   text = g_strdup( s_string_list_get_data_at_index(
-		     sheet_head->master_comp_attrib_list_head, j) );
+                     sheet_head->master_comp_attrib_list_head, j) );
   fprintf(fp, "%s\n", text);
   g_free(text);
 
@@ -110,7 +110,7 @@ void f_export_components(gchar *filename)
 
     /*  First output the component refdes  */
     text = g_strdup( s_string_list_get_data_at_index(
-		       sheet_head->master_comp_list_head, i) );
+                       sheet_head->master_comp_list_head, i) );
     g_debug ("f_export_components: "
              "Getting refdes: row number = %d, output component refdes = %s.\n",
              i, text);
@@ -131,11 +131,11 @@ void f_export_components(gchar *filename)
         if(havecomma) fprintf(fp, "\"");
         fprintf(fp, ", ");
 
-	g_free(text);
+        g_free(text);
       } else {                                                  /* no attrib string */
 
         g_debug ("f_export_components: Output blank attrib space.\n");
-	fprintf(fp, ", ");
+        fprintf(fp, ", ");
       }
     }  /* end of for over cols  */
     /* Now export attrib value for last col (with no "," and with "\n" */
