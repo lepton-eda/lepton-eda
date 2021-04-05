@@ -9,7 +9,7 @@ lepton-refdes_renum \- Lepton EDA refdes renumbering utility
 .I file1
 .B ...
 .PP
-.B lepton-refdes_renum 
+.B lepton-refdes_renum
 .BR \-\-help | \-h
 .PP
 .B lepton-refdes_renum \-\-version
