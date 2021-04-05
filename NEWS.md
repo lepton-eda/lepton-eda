@@ -78,7 +78,7 @@ Notable changes in Lepton EDA 1.9.14 (upcoming)
   exist.  Its exported functions have been reimplemented using
   Scheme FFI.
 
-- Most of the basic Scheme functions in the `(lepton core object)`
+- Many of the basic Scheme functions in the `(lepton core object)`
   module defined in the C code have been rewritten using plain
   Scheme FFI.
 
