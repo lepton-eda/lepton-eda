@@ -1,28 +1,7 @@
-
-/*----------------------------------------------------------------*/
-/*! \file
- * Linked list sorting code taken from
- * http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html
- * and hacked to serve in gattrib by SDB.
- *
- */
-
-/*
- * Demonstration code for sorting a linked list.
- *
- * The algorithm used is Mergesort, because that works really well
- * on linked lists, without requiring the O(N) extra space it needs
- * when you do it on arrays.
- *
- * This code can handle singly and doubly linked lists, and
- * circular and linear lists too. For any serious application,
- * you'll probably want to remove the conditionals on `is_circular'
- * and `is_double' to adapt the code to your own purpose.
- *
- */
-
-/*
- * This file is copyright 2001 Simon Tatham.
+/* Lepton EDA attribute editor
+ * Copyright 2001 Simon Tatham.
+ * Copyright 2004-2013 gEDA Contributors
+ * Copyright 2017-2021 Lepton EDA Contributors
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -44,6 +23,27 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
+ */
+
+/*----------------------------------------------------------------*/
+/*! \file
+ * Linked list sorting code taken from
+ * http://www.chiark.greenend.org.uk/~sgtatham/algorithms/listsort.html
+ * and hacked to serve in gattrib by SDB.
+ *
+ */
+
+/*
+ * Demonstration code for sorting a linked list.
+ *
+ * The algorithm used is Mergesort, because that works really well
+ * on linked lists, without requiring the O(N) extra space it needs
+ * when you do it on arrays.
+ *
+ * This code can handle singly and doubly linked lists, and
+ * circular and linear lists too. For any serious application,
+ * you'll probably want to remove the conditionals on `is_circular'
+ * and `is_double' to adapt the code to your own purpose.
  */
 
 /* ---  We don't need these 'cause they are already defined elsewhere ---
