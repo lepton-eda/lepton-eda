@@ -3,7 +3,6 @@ SUBDIRS = vams
 EXTRA_DIST = \
 	$(html_man_files) \
 	lepton-netlist.1.in \
-	mk_verilog_syms.1.in \
 	BUGS
 
 docsreadmedir = $(docdir)/readmes
@@ -12,7 +11,6 @@ dist_docsreadme_DATA = \
 	README.vhdl README.sysc README.eagle
 
 dist_man_MANS = lepton-netlist.1
-noinst_MANS = mk_verilog_syms.1
 
 .1.in.1:
 	d=`$(GUILE) -c '(setlocale LC_ALL "C") \
