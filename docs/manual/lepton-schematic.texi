@@ -8,7 +8,6 @@
 * Running lepton-schematic::
 * Dialog boxes::
 * Selecting objects::
-* Schematic symbols::
 * lepton-schematic command line options::
 * Component libraries::
 @end menu
@@ -81,7 +80,7 @@ to get the brief description of all the options supported.
 @cindex add component widget
 @cindex add component dialog box
 
-@node Selecting objects, Schematic symbols, Dialog boxes, lepton-schematic
+@node Selecting objects, lepton-schematic command line options, Dialog boxes, lepton-schematic
 @section Selecting objects
 @cindex selecting objects
 @cindex object selection
@@ -98,60 +97,8 @@ to get the brief description of all the options supported.
 @node Box selection,  , Simple object selection, Selecting objects
 @subsection Box selection
 
-@node Schematic symbols, lepton-schematic command line options, Selecting objects, lepton-schematic
-@section Symbols
-@cindex schematic symbols
-@cindex symbols
 
-@menu
-* Title block symbol::
-@end menu
-
-@node Title block symbol,  , Schematic symbols, Schematic symbols
-@subsection Title block symbol
-@cindex title block symbol
-@cindex title block
-@cindex title-block symbol
-@cindex title-block
-
-The drawing area of @schematic{} is large enough and the users should
-have representation of logical extents of the schematics they are
-working on.  Title block symbol just aims to graphically define the
-bounds of a created schematic page.
-
-Title boxes are usually locked in order to prevent the user from
-selecting it accidentally and deleting along with other objects.
-Moreover, an unlocked title block would be confusingly selected
-instead of other objects within it every now and then.  A title block
-symbol is inserted any time the user creates a new schematic.  Since
-it is not needed in symbols, you may want to delete it just after new
-page creation.  How to achieve that if you cannot select it?  Just use
-@emph{box selection} (@pxref{Box selection}), left-click and drag the
-selection box to enclose the title block.  Then use the usual deletion
-procedure: hit @kbd{Delete} or @kbd{D}.
-
-What to do if you want to change it after adding some contents to your
-schematic page?  Well, there are some tricks.  First, you can just
-select all page contents excluding locked objects and move it to
-another place, then delete the title block as above.  Another way, if
-the @ref{gEDA file format} is used, is just deleting title block
-definition in the schematic file itself.  It is usually second and
-third lines of the file (the first one is the version specification).
-
-For historical reasons, the default title block symbol is
-@file{title-B.sym}.  In order to set up another symbol as default
-title block, change the @ref{default-titleblock} configuration key.
-Choose the symbol you think will be used most often, and fix your
-@ref{user-configuration, , user configuration}.  You may want to do
-so for some project if only it needs other title blocks.  Amend your
-@ref{project-configuration, , project configuration} in such a case.
-
-There are several predefined title block symbols in @schematic.  Open
-the Add Component dialog box (@pxref{Add Component widget}) and enter
-@kbd{title} in the filter entry to find them.
-
-
-@node lepton-schematic command line options, Component libraries, Schematic symbols, lepton-schematic
+@node lepton-schematic command line options, Component libraries, Selecting objects, lepton-schematic
 @section lepton-schematic command line options
 @cindex lepton-schematic command line options
 @cindex lepton-schematic, command-line

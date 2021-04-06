@@ -18,7 +18,8 @@ lepton_manual_TEXINFOS = \
 	lepton-schematic.texi \
 	no-connect-symbol.texi \
 	overview.texi \
-	symbols.texi
+	symbols.texi \
+	title-block-symbol.texi
 
 AM_MAKEINFOHTMLFLAGS = --css-ref=lepton-manual.css
 

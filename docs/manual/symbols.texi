@@ -5,6 +5,8 @@
 
 @menu
 * No-connect symbols::
+* Title block symbol::
 @end menu
 
 @include no-connect-symbol.texi
+@include title-block-symbol.texi

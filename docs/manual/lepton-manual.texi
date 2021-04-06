@@ -143,17 +143,28 @@ Resources
 * Utilities::
 * Other resources::
 
+Symbols
+
+* No-connect symbols::
+* Title block symbol::
+
 Schematic capture
 
 * Introduction to lepton-schematic::
 * Running lepton-schematic::
-* Schematic symbols::
+* Dialog boxes::
+* Selecting objects::
 * lepton-schematic command line options::
 * Component libraries::
 
-Symbols
+Dialog boxes
 
-* Title block symbol::
+* Add Component widget::
+
+Selecting objects
+
+* Simple object selection::
+* Box selection::
 
 Component libraries
 
