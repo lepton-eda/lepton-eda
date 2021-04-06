@@ -6,6 +6,8 @@
 @menu
 * Introduction to lepton-schematic::
 * Running lepton-schematic::
+* Dialog boxes::
+* Selecting objects::
 * Schematic symbols::
 * lepton-schematic command line options::
 * Component libraries::
@@ -30,7 +32,7 @@ After creation, schematics may be printed, converted to several image
 formats, including PDF, or exported to several netlist formats for
 processing by other tools.
 
-@node Running lepton-schematic, Schematic symbols, Introduction to lepton-schematic, lepton-schematic
+@node Running lepton-schematic, Dialog boxes, Introduction to lepton-schematic, lepton-schematic
 @section Running lepton-schematic
 @cindex Running lepton-schematic
 @cindex lepton-schematic, running
@@ -65,9 +67,38 @@ lepton-schematic --help
 
 to get the brief description of all the options supported.
 
+@node Dialog boxes, Selecting objects, Running lepton-schematic, lepton-schematic
+@section Dialog boxes
+@cindex dialog boxes
+@cindex dialog box
 
+@menu
+* Add Component widget::
+@end menu
 
-@node Schematic symbols, lepton-schematic command line options, Running lepton-schematic, lepton-schematic
+@node Add Component widget,  , Dialog boxes, Dialog boxes
+@subsection Add Component widget
+@cindex add component widget
+@cindex add component dialog box
+
+@node Selecting objects, Schematic symbols, Dialog boxes, lepton-schematic
+@section Selecting objects
+@cindex selecting objects
+@cindex object selection
+
+@menu
+* Simple object selection::
+* Box selection::
+@end menu
+
+@node Simple object selection, Box selection, Selecting objects, Selecting objects
+@subsection Simple object selection
+@cindex simple object selection
+
+@node Box selection,  , Simple object selection, Selecting objects
+@subsection Box selection
+
+@node Schematic symbols, lepton-schematic command line options, Selecting objects, lepton-schematic
 @section Symbols
 @cindex schematic symbols
 @cindex symbols
@@ -95,9 +126,9 @@ instead of other objects within it every now and then.  A title block
 symbol is inserted any time the user creates a new schematic.  Since
 it is not needed in symbols, you may want to delete it just after new
 page creation.  How to achieve that if you cannot select it?  Just use
-@emph{box selection}, left-click and drag the selection box to enclose
-the title block.  Then use the usual deletion procedure: hit
-@kbd{Delete} or @kbd{D}.
+@emph{box selection} (@pxref{Box selection}), left-click and drag the
+selection box to enclose the title block.  Then use the usual deletion
+procedure: hit @kbd{Delete} or @kbd{D}.
 
 What to do if you want to change it after adding some contents to your
 schematic page?  Well, there are some tricks.  First, you can just
@@ -116,8 +147,8 @@ so for some project if only it needs other title blocks.  Amend your
 @ref{project-configuration, , project configuration} in such a case.
 
 There are several predefined title block symbols in @schematic.  Open
-the Insert symbol window and enter @kbd{title} in the filter entry
-to find them.
+the Add Component dialog box (@pxref{Add Component widget}) and enter
+@kbd{title} in the filter entry to find them.
 
 
 @node lepton-schematic command line options, Component libraries, Schematic symbols, lepton-schematic
