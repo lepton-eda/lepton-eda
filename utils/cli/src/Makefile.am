@@ -4,7 +4,6 @@ lepton_export_SOURCES = \
 	builtins.h \
 	gettext.h \
 	lepton-export.c \
-	config.c \
 	export.c
 
 lepton_export_CPPFLAGS = \

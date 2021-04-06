@@ -124,10 +124,15 @@ Lepton EDA homepage: <~A>
                         (string-append "@bindir@"
                                        file-name-separator-string
                                        "lepton-shell"))
-                    (or (getenv "LEPTON_EXPORT")
-                        (string-append "@bindir@"
-                                       file-name-separator-string
-                                       "lepton-export")))))
+                    (if (string= op "config")
+                        (or (getenv "LEPTON_CONFIG")
+                            (string-append "@bindir@"
+                                           file-name-separator-string
+                                           "lepton-config"))
+                        (or (getenv "LEPTON_EXPORT")
+                            (string-append "@bindir@"
+                                           file-name-separator-string
+                                           "lepton-export"))))))
            (apply execle
                   prog-name
                   (environ)
