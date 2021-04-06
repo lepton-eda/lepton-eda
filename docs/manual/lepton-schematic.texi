@@ -580,6 +580,9 @@ its size.  If you don't want to insert the picture, click the
 @subsection Menu Hierarchy
 @cindex menu Hierarchy
 
+This menu facilitates working on subcircuits in hierarchical
+schematics.
+
 @table @emph
 @item Up
 @item Down Schematic
