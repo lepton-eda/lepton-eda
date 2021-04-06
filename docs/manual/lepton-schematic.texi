@@ -464,6 +464,10 @@ view is enabled in @ref{use-tabs, configuration}.
 @subsection Menu Add
 @cindex menu Add
 
+The menu provides several modes for inserting symbols.  All the modes
+are active until you switch to another mode or cancel it, for example,
+by hitting @kbd{Esc}.
+
 @table @emph
 @item Component...
 @item Net
