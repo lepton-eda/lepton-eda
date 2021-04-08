@@ -168,6 +168,17 @@ the @cli{} command (@pxref{lepton-cli export}).
 @end quotation
 
 @item Write Image...
+
+@clicksequence{File @click{} Write Image...} (@kbd{F I}) exports
+images. In the export dialog you can choose one of several image
+format options, including PDF, as well as one of predefined size of
+the image, and whether the image should be colored or black-and-white.
+The sizes are not relevant for PDF files, those will be sized to fit
+the visible contents of your schematic or symbol page.  The @cli{}
+utility allows more accurate control of the image properties so if you
+want to set some custom options, please use it (@pxref{lepton-cli
+export}).
+
 @item Invoke macro...
 @item Execute Script...
 @item REPL...
