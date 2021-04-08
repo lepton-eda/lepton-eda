@@ -161,6 +161,14 @@ to export schematic and symbol pages as images.  @xref{Printing and
 exporting}.
 
 @item Invoke macro...
+
+@clicksequence{File @click{} Invoke macro...} (@kbd{:}, colon, or
+@kbd{E Shift-:}) allows you to execute some small excerpts of Scheme
+code interactively.  It opens the macro widget entry where you have to
+enter one or more commands in Scheme and hit @kbd{Enter} (don't forget
+parentheses).  You can watch the result of evaluating of your
+expression in the Log window.
+
 @item Execute Script...
 @item REPL...
 @item New Window
