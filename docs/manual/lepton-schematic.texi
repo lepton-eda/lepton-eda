@@ -138,8 +138,7 @@ in your schematic page on disk.  @xref{Saving schematic pages}.
 @item Save As...
 
 @clicksequence{File @click{} Save As...} (@kbd{F A}) allows you to
-save the page you edit under another name.  Anything specified above
-about the Save dialog matters here as well.
+save the page you edit under another name.
 
 @item Save all
 @item Print...
@@ -380,9 +379,19 @@ Use @clicksequence{File @click{} Save} or the @kbd{F S} keyboard
 shortcut to save your modified schematic page.  Do it frequently to
 not lose your design.  Unsaved pages are marked with an asterisk
 before their names in window titles and with little @samp{Save}
-buttons on tabs they are open in.  If you save an untitled page, the
+buttons on tabs they are open in.
+
+Use @clicksequence{File @click{} Save As...} or the @kbd{F A} if you
+want to save your file under another name.  In such a case, the
 @emph{Save As} dialog box will be opened prompting you to input the
-file name you want. @xref{Save As dialog box}.
+file name you want.  The same dialog will be opened automatically if
+you save a newly added and not yet saved untitled page.  @xref{Save As
+dialog box}.
+
+Like in the @emph{File Open} dialog, you can use the filter entry
+below and choose the file type you need: schematics, symbols,
+schematic and symbols, or any files.  Two first options change the
+saved file extension as well.
 
 @node Selecting objects, lepton-schematic command line options, Dialog boxes, lepton-schematic
 @section Selecting objects
