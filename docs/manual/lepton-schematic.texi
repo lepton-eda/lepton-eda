@@ -181,6 +181,13 @@ terminal where you started @schematic.  @xref{Interactive work with
 Scheme code}.
 
 @item New Window
+
+@clicksequence{File @click{} New Window} (@kbd{F W}) allows you to
+open a new @emph{window} of @schematic{} (not a @emph{page}).  In that
+window you can work with different pages and different configuration
+settings.  The schematic data may be exchanged between @schematic{}
+windows using system clipboard.
+
 @item Close Window
 @item Quit
 @end table
