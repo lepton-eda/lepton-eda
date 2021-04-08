@@ -189,6 +189,12 @@ settings.  The schematic data may be exchanged between @schematic{}
 windows using system clipboard.
 
 @item Close Window
+
+@clicksequence{File @click{} Close Window} (@kbd{F C}) closes the
+current @schematic{} window (the window where you use this shortcut)
+with all its pages.  The Save File dialog will be open for every
+unsaved page.
+
 @item Quit
 @end table
 
