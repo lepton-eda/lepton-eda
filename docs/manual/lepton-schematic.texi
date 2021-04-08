@@ -148,6 +148,25 @@ matters here as well.  You should only note that the Save As dialog is
 opened for each of untitled pages.
 
 @item Print...
+
+@clicksequence{File @click{} Print...} (@kbd{F P} or @kbd{Ctrl+P})
+opens a standard GTK printing dialog.  Choose your print destination,
+a file to print to or a printer, change printing settings if needed
+and go ahead.  If you print to a file, you can choose the file format,
+e.g. PDF or PostScript.  The button @samp{Print Preview} lets you see
+the preview of your page when it is printed.
+
+@quotation Note
+GTK2 and GTK3 standard printing dialogs may support different output
+formats.
+@end quotation
+
+@quotation Note
+You can also output PDF with the @clicksequence{File @click{} Write
+Image...} menu (see below) or export your schematics and symbols with
+the @cli{} command (@pxref{lepton-cli export}).
+@end quotation
+
 @item Write Image...
 @item Invoke macro...
 @item Execute Script...
