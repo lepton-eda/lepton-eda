@@ -130,6 +130,14 @@ one of the recently opened files without the need of searching it in
 the file system.
 
 @item Save
+
+@clicksequence{File @click{} Save} (@kbd{F S}) is used to save changes
+in your schematic page on disk.  Do it frequently to not lose your
+design.  Unsaved pages are marked with an asterisk before their names
+in window titles and with little @samp{Save} buttons on tabs they are
+open in.  If you save an untitled page, the Save As dialog box will be
+opened prompting you to input the file name you want. @xref{Save As
+dialog box}.
 @item Save As...
 @item Save all
 @item Print...
@@ -299,6 +307,7 @@ the file system.
 @cindex dialog box
 
 @menu
+* Save As dialog box::
 * Add Component widget::
 @end menu
 
@@ -306,6 +315,12 @@ the file system.
 @subsection Add Component widget
 @cindex add component widget
 @cindex add component dialog box
+
+@node Save As dialog box,  , Dialog boxes, Dialog boxes
+@subsection Save As dialog box
+@cindex save as
+@cindex save as dialog box
+@cindex dialog boxes, save as
 
 @node Creating and opening schematics
 @section Creating new and opening existing schematic files
