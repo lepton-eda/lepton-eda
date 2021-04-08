@@ -136,6 +136,11 @@ the file system.
 in your schematic page on disk.  @xref{Saving schematic pages}.
 
 @item Save As...
+
+@clicksequence{File @click{} Save As...} (@kbd{F A}) allows you to
+save the page you edit under another name.  Anything specified above
+about the Save dialog matters here as well.
+
 @item Save all
 @item Print...
 @item Write Image...
