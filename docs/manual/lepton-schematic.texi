@@ -141,6 +141,12 @@ in your schematic page on disk.  @xref{Saving schematic pages}.
 save the page you edit under another name.
 
 @item Save all
+
+@clicksequence{File @click{} Save all} (@kbd{F L}) saves all
+unsaved pages.  Anything specified above about the Save diallog
+matters here as well.  You should only note that the Save As dialog is
+opened for each of untitled pages.
+
 @item Print...
 @item Write Image...
 @item Invoke macro...
