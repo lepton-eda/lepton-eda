@@ -170,6 +170,14 @@ parentheses).  You can watch the result of evaluating of your
 expression in the Log window.
 
 @item Execute Script...
+
+@clicksequence{File @click{} Execute Script...} (@kbd{F T}) allows you
+to execute a Scheme script stored in some file.  You can filter the
+files like in the Open File dialog, though you can choose only amongst
+showing only Scheme or any files.  This way it is more convenient to
+check the extensions written in Scheme when their code gets large
+enough.
+
 @item REPL...
 @item New Window
 @item Close Window
