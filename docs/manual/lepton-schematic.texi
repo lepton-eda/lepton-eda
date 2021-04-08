@@ -196,6 +196,14 @@ with all its pages.  The Save File dialog will be open for every
 unsaved page.
 
 @item Quit
+
+@clicksequence{File @click{} Quit} (@kbd{F Q} or @kbd{Alt+Q})
+closes all open windows of @schematic{} stemming from the same root
+window with all their pages.  It won't close those windows you've
+launched in a different instance (from a terminal, from your window
+manager menu, etc.).  The Save File dialog will be opened for every
+unsaved page.
+
 @end table
 
 @node Menu Edit, Menu View, Menu File, lepton-schematic window
