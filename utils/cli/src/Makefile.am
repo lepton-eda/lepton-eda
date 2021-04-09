@@ -3,8 +3,7 @@ bin_PROGRAMS = lepton-export
 lepton_export_SOURCES = \
 	builtins.h \
 	gettext.h \
-	lepton-export.c \
-	export.c
+	lepton-export.c
 
 lepton_export_CPPFLAGS = \
 	-I$(top_srcdir) -I$(top_srcdir)/liblepton/include -I$(includedir)

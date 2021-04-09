@@ -28,7 +28,7 @@
 #include <errno.h>
 
 /* Gettext translation */
-#include "gettext.h"
+#include "gettext_priv.h"
 
 #include <liblepton/liblepton.h>
 #include <liblepton/libleptonguile.h>

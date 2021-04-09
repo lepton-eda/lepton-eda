@@ -3,4 +3,3 @@ utils/cli/scheme/lepton-cli.scm
 utils/cli/scheme/lepton-config.scm
 utils/cli/scheme/lepton-shell.scm
 utils/cli/src/lepton-export.c
-utils/cli/src/export.c

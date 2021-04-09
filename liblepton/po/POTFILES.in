@@ -26,6 +26,7 @@ liblepton/src/s_clib.c
 liblepton/src/s_slot.c
 liblepton/src/edaconfig.c
 liblepton/src/edascmhookproxy.c
+liblepton/src/export.c
 
 liblepton/scheme/lepton/attrib.scm
 liblepton/scheme/lepton/library.scm
