@@ -21,4 +21,43 @@ G_BEGIN_DECLS
 int
 cmd_export (int argc, char **argv);
 
+void
+export_config (void);
+
+void
+export_png ();
+
+void
+export_ps  ();
+
+void
+export_eps ();
+
+void
+export_pdf ();
+
+void
+export_svg ();
+
+gboolean
+export_parse_align (const gchar *scale);
+
+gboolean
+export_parse_scale (const gchar *scale);
+
+gboolean
+export_parse_layout (const gchar *layout);
+
+gboolean
+export_parse_margins (const gchar *margins);
+
+gboolean
+export_parse_paper (const gchar *paper);
+
+gboolean
+export_parse_size (const gchar *size);
+
+void
+export_list_paper_size_names();
+
 G_END_DECLS

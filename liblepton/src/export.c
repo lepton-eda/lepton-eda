@@ -49,21 +49,9 @@ static void export_layout_page (LeptonPage *page,
 static void export_draw_page (LeptonPage *page,
                               EdaRenderer *renderer);
 
-static void export_png (void);
 static void export_postscript (gboolean is_eps);
-static void export_ps  (void);
-static void export_eps (void);
-static void export_pdf (void);
-static void export_svg (void);
 
 static gdouble export_parse_dist (const gchar *dist);
-static gboolean export_parse_scale (const gchar *scale);
-static gboolean export_parse_layout (const gchar *layout);
-static gboolean export_parse_margins (const gchar *margins);
-static gboolean export_parse_paper (const gchar *paper);
-static gboolean export_parse_size (const gchar *size);
-static void export_config (void);
-static void export_usage (void);
 static void export_command_line (int argc, char * const *argv);
 
 /* Default pixels-per-inch for raster outputs */
@@ -482,7 +470,7 @@ export_draw_page (LeptonPage *page,
     eda_renderer_draw_cues (renderer, (LeptonObject *) iter->data);
 }
 
-static void
+void
 export_png (void)
 {
   cairo_surface_t *surface;
@@ -605,19 +593,19 @@ export_postscript (gboolean is_eps)
   g_object_unref (G_OBJECT (renderer));
 }
 
-static void
+void
 export_ps (void)
 {
   export_postscript (FALSE);
 }
 
-static void
+void
 export_eps (void)
 {
   export_postscript (TRUE);
 }
 
-static void
+void
 export_pdf (void)
 {
   cairo_surface_t *surface;
@@ -656,7 +644,7 @@ export_pdf (void)
   g_object_unref (G_OBJECT (renderer));
 }
 
-static void
+void
 export_svg ()
 {
   cairo_surface_t *surface;
@@ -735,7 +723,7 @@ export_parse_dist (const gchar *dist)
 }
 
 /* Parse the --align command line option. */
-static gboolean
+gboolean
 export_parse_align (const gchar *align)
 {
   int n;
@@ -761,7 +749,7 @@ export_parse_align (const gchar *align)
 
 /* Parse the --layout command line option and the export.layout config
  * file setting. */
-static gboolean
+gboolean
 export_parse_layout (const gchar *layout)
 {
   if (g_strcmp0 (layout, "landscape") == 0) {
@@ -783,7 +771,7 @@ export_parse_layout (const gchar *layout)
  * or compiled-in defaults. Otherwise, expects a list of 1-4 distance
  * specs; see export_parse_dist().  Rules if <4 distances are
  * specified are as for 'margin' property in CSS. */
-static gboolean
+gboolean
 export_parse_margins (const gchar *margins)
 {
   gint n;
@@ -826,7 +814,7 @@ export_parse_margins (const gchar *margins)
 }
 
 /* Parse the --paper option.  Clears any size setting. */
-static gboolean
+gboolean
 export_parse_paper (const gchar *paper)
 {
   GtkPaperSize *paper_size = gtk_paper_size_new (paper);
@@ -842,7 +830,7 @@ export_parse_paper (const gchar *paper)
 
 /* Parse the --size option, which must either be "auto" (i.e. obtain
  * size from drawing) or a list of two distances (width/height). */
-static gboolean
+gboolean
 export_parse_size (const gchar *size)
 {
   gint n;
@@ -869,7 +857,7 @@ export_parse_size (const gchar *size)
 /* Parse the --scale option. The value should be a distance
  * corresponding to 100 points in lepton-schematic (1 default grid
  * spacing). */
-static gboolean
+gboolean
 export_parse_scale (const gchar *scale)
 {
   gdouble d = export_parse_dist (scale);
@@ -879,7 +867,7 @@ export_parse_scale (const gchar *scale)
 }
 
 /* Initialise settings from config store. */
-static void
+void
 export_config (void)
 {
   EdaConfig *cfg = eda_config_get_context_for_path (".");
@@ -977,7 +965,7 @@ static struct option export_long_options[] = {
   {NULL, 0, NULL, 0},
 };
 
-static void
+void
 export_usage (void)
 {
   printf (_("Usage: lepton-cli export [OPTION ...] -o OUTPUT [--] FILE ...\n"
@@ -1007,7 +995,7 @@ export_usage (void)
   exit (0);
 }
 
-static void
+void
 export_list_paper_size_names()
 {
   GList* names = gtk_paper_size_get_paper_sizes (TRUE);
