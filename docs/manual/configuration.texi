@@ -491,6 +491,7 @@ text' and 'Edit text' dialogs instead of the default ones (set in
 @tab @cfgtype{integer}
 @tab @cfgval{10}
 @tab
+@anchor{max-recent-files}
 Maximum number of recent files to show in `File->Open Recent` menu.
 
 @item @cfgkey{title-show-path}

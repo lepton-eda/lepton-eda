@@ -342,6 +342,11 @@ change view to see schematics or symbols only, both schematics and
 symbols, or any files in case you want to look at some other stuff in
 the selected directory.
 
+If you want to open a file you worked on recently, click the menu item
+@clicksequence{File @click{} Open Recent}.  The submenu contains
+several file names.  You can configure how many files should be shown
+there using the configuration key @ref{max-recent-files}.
+
 @node Selecting objects, lepton-schematic command line options, Dialog boxes, lepton-schematic
 @section Selecting objects
 @cindex selecting objects
