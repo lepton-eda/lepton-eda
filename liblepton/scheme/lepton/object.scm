@@ -65,6 +65,8 @@
             set-arc!
 
             box-info
+            box-bottom-right
+            box-top-left
             make-box))
 
 (define (object? object)
@@ -256,23 +258,25 @@ box.  If COLOR is not specified, the default box color is used."
   "Retrieves and returns the coordinates and color of a box
 OBJECT. The return value is a list of the parameters in the form:
 '((upper_x . upper_y) (lower_x . lower_y) color)"
+  (list (box-top-left object)
+        (box-bottom-right object)
+        (object-color object)))
+
+(define (box-top-left object)
+  "Returns the top left corner coordinate of box OBJECT."
   (define pointer (geda-object->pointer* object 1))
 
-  (and (box? object)
-       (let ((upper-x (lepton_box_object_get_upper_x pointer))
-             (upper-y (lepton_box_object_get_upper_y pointer))
-             (lower-x (lepton_box_object_get_lower_x pointer))
-             (lower-y (lepton_box_object_get_lower_y pointer))
-             (color (lepton_object_get_color pointer)))
-         (list (cons upper-x upper-y)
-               (cons lower-x lower-y)
-               color))))
+  (cons (lepton_box_object_get_upper_x pointer)
+        (lepton_box_object_get_upper_y pointer)))
 
-(define-public (box-top-left l)
-  (list-ref (box-info l) 0))
 
-(define-public (box-bottom-right l)
-  (list-ref (box-info l) 1))
+(define (box-bottom-right object)
+  "Returns the bottom right corner coordinate of box OBJECT."
+  (define pointer (geda-object->pointer* object 1))
+
+  (cons (lepton_box_object_get_lower_x pointer)
+        (lepton_box_object_get_lower_y pointer)))
+
 
 ;;;; Circles
 
