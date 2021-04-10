@@ -9,6 +9,7 @@
 * lepton-schematic window::
 * Dialog boxes::
 * Creating and opening schematics::
+* Saving schematic pages::
 * Selecting objects::
 * lepton-schematic command line options::
 * Component libraries::
@@ -132,12 +133,8 @@ the file system.
 @item Save
 
 @clicksequence{File @click{} Save} (@kbd{F S}) is used to save changes
-in your schematic page on disk.  Do it frequently to not lose your
-design.  Unsaved pages are marked with an asterisk before their names
-in window titles and with little @samp{Save} buttons on tabs they are
-open in.  If you save an untitled page, the Save As dialog box will be
-opened prompting you to input the file name you want. @xref{Save As
-dialog box}.
+in your schematic page on disk.  @xref{Saving schematic pages}.
+
 @item Save As...
 @item Save all
 @item Print...
@@ -361,6 +358,26 @@ If you want to open a file you worked on recently, click the menu item
 @clicksequence{File @click{} Open Recent}.  The submenu contains
 several file names.  You can configure how many files should be shown
 there using the configuration key @ref{max-recent-files}.
+
+@node Saving schematic pages, lepton-schematic command line options, Dialog boxes, lepton-schematic
+@section Saving schematic pages
+@cindex save
+@cindex save pages
+@cindex save schematic pages
+@cindex save schematics
+@cindex saving
+@cindex saving pages
+@cindex saving schematic pages
+@cindex saving schematics
+@cindex schematic, save
+
+Use @clicksequence{File @click{} Save} or the @kbd{F S} keyboard
+shortcut to save your modified schematic page.  Do it frequently to
+not lose your design.  Unsaved pages are marked with an asterisk
+before their names in window titles and with little @samp{Save}
+buttons on tabs they are open in.  If you save an untitled page, the
+@emph{Save As} dialog box will be opened prompting you to input the
+file name you want. @xref{Save As dialog box}.
 
 @node Selecting objects, lepton-schematic command line options, Dialog boxes, lepton-schematic
 @section Selecting objects
