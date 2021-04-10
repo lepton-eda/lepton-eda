@@ -28,6 +28,11 @@
 
 #include "liblepton_priv.h"
 
+/*! \brief Get the upper x coordinate of a box object.
+ *
+ *  \param [in] object The box object.
+ *  \return The x coordinate of the upper corner of the box.
+ */
 int
 lepton_box_object_get_upper_x (const LeptonObject *object)
 {
@@ -37,6 +42,11 @@ lepton_box_object_get_upper_x (const LeptonObject *object)
   return object->box->upper_x;
 }
 
+/*! \brief Get the upper y coordinate of a box object.
+ *
+ *  \param [in] object The box object.
+ *  \return The y coordinate of the upper corner of the box.
+ */
 int
 lepton_box_object_get_upper_y (const LeptonObject *object)
 {
@@ -46,6 +56,11 @@ lepton_box_object_get_upper_y (const LeptonObject *object)
   return object->box->upper_y;
 }
 
+/*! \brief Get the lower x coordinate of a box object.
+ *
+ *  \param [in] object The box object.
+ *  \return The x coordinate of the lower corner of the box.
+ */
 int
 lepton_box_object_get_lower_x (const LeptonObject *object)
 {
@@ -55,6 +70,11 @@ lepton_box_object_get_lower_x (const LeptonObject *object)
   return object->box->lower_x;
 }
 
+/*! \brief Get the lower y coordinate of a box object.
+ *
+ *  \param [in] object The box object.
+ *  \return The y coordinate of the lower corner of the box.
+ */
 int
 lepton_box_object_get_lower_y (const LeptonObject *object)
 {
@@ -65,6 +85,11 @@ lepton_box_object_get_lower_y (const LeptonObject *object)
 }
 
 
+/*! \brief Set the value of the upper x coordinate of a box object.
+ *
+ *  \param [in,out] object The box object.
+ *  \param [in] x The new upper x coordinate of the box.
+ */
 void
 lepton_box_object_set_upper_x (LeptonObject *object, int val)
 {
@@ -74,6 +99,11 @@ lepton_box_object_set_upper_x (LeptonObject *object, int val)
   object->box->upper_x = val;
 }
 
+/*! \brief Set the value of the upper y coordinate of a box object.
+ *
+ *  \param [in,out] object The box object.
+ *  \param [in] y The new upper y coordinate of the box.
+ */
 void
 lepton_box_object_set_upper_y (LeptonObject *object, int val)
 {
@@ -83,6 +113,11 @@ lepton_box_object_set_upper_y (LeptonObject *object, int val)
   object->box->upper_y = val;
 }
 
+/*! \brief Set the value of the lower x coordinate of a box object.
+ *
+ *  \param [in,out] object The box object.
+ *  \param [in] x The new lower x coordinate of the box.
+ */
 void
 lepton_box_object_set_lower_x (LeptonObject *object, int val)
 {
@@ -92,6 +127,11 @@ lepton_box_object_set_lower_x (LeptonObject *object, int val)
   object->box->lower_x = val;
 }
 
+/*! \brief Set the value of the lower y coordinate of a box object.
+ *
+ *  \param [in,out] object The box object.
+ *  \param [in] y The new lower y coordinate of the box.
+ */
 void
 lepton_box_object_set_lower_y (LeptonObject *object, int val)
 {
