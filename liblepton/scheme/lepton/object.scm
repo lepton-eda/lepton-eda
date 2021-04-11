@@ -359,7 +359,8 @@ center of the arc in the form '(x . y). RADIUS, START-ANGLE, and
 SWEEP-ANGLE correspondingly represent its radius, start and sweep
 angle.  If optional COLOR is specified, it should be the integer
 color map index of the color with which to draw the arc.  If COLOR
-is not specified, the default arc color is used."
+is not specified, the default arc color is used.  Returns the
+modified arc object."
   (define pointer (geda-object->pointer* object 1))
 
   (let ((info (arc-info object))
