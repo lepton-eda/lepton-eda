@@ -234,6 +234,10 @@ not specified, the default box color is used.  Returns the
 modified box object."
   (define pointer (geda-object->pointer* object 1 box? 'box))
 
+  (check-coord top-left 2)
+  (check-coord bottom-right 3)
+  (and color (check-integer color 4))
+
   (let ((info (box-info object))
         (x1 (car top-left))
         (y1 (cdr top-left))
