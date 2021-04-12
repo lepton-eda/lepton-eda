@@ -64,7 +64,7 @@
                                        (list l b c a t C)))
 
       (geda:assert-dirties P (apply set-line! l (line-info l)))
-      (geda:assert-dirties P (apply set-box! b (box-info b)))
+      (geda:assert-not-dirties P (apply set-box! b (box-info b)))
       (geda:assert-dirties P (apply set-circle! c (circle-info c)))
       (geda:assert-not-dirties P (apply set-arc! a (arc-info a)))
       (geda:assert-dirties P (apply set-text! t (text-info t)))
@@ -84,7 +84,7 @@
 
       ;; Modify primitives within component
       (geda:assert-dirties P (apply set-line! l (line-info l)))
-      (geda:assert-dirties P (apply set-box! b (box-info b)))
+      (geda:assert-not-dirties P (apply set-box! b (box-info b)))
       (geda:assert-dirties P (apply set-circle! c (circle-info c)))
       (geda:assert-not-dirties P (apply set-arc! a (arc-info a)))
       (geda:assert-dirties P (apply set-text! t (text-info t)))
