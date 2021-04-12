@@ -115,3 +115,81 @@
   '((100 . 400) (300 . 100)))
 
 (test-end "box-mirror")
+
+
+(test-begin "box-rotation")
+
+(define degree-ls
+  '(-900 -360 -270 -180 -90 0 90 180 270 360 900))
+
+(define (rotate-at+500+500 angle)
+  (stripped-info (car (rotate-objects! '(500 . 500) angle (new-box)))))
+(define (rotate-at-500+500 angle)
+  (stripped-info (car (rotate-objects! '(-500 . 500) angle (new-box)))))
+(define (rotate-at+500-500 angle)
+  (stripped-info (car (rotate-objects! '(500 . -500) angle (new-box)))))
+(define (rotate-at-500-500 angle)
+  (stripped-info (car (rotate-objects! '(-500 . -500) angle (new-box)))))
+
+;;; The output format is
+;;; '((center-x . center-y) radius start-angle sweep-angle)
+;;; Radius and sweep angle should never change.
+(test-equal (map rotate-at+500+500 degree-ls)
+  '(((700 . 900) (900 . 600))
+    ((100 . 400) (300 . 100))
+    ((600 . 300) (900 . 100))
+    ((700 . 900) (900 . 600))
+    ((100 . 900) (400 . 700))
+    ((100 . 400) (300 . 100))
+    ((600 . 300) (900 . 100))
+    ((700 . 900) (900 . 600))
+    ((100 . 900) (400 . 700))
+    ((100 . 400) (300 . 100))
+    ((700 . 900) (900 . 600))))
+
+(test-equal (map rotate-at-500+500 degree-ls)
+  '(((-1300 . 900) (-1100 . 600))
+    ((100 . 400) (300 . 100))
+    ((-400 . 1300) (-100 . 1100))
+    ((-1300 . 900) (-1100 . 600))
+    ((-900 . -100) (-600 . -300))
+    ((100 . 400) (300 . 100))
+    ((-400 . 1300) (-100 . 1100))
+    ((-1300 . 900) (-1100 . 600))
+    ((-900 . -100) (-600 . -300))
+    ((100 . 400) (300 . 100))
+    ((-1300 . 900) (-1100 . 600))))
+
+(test-equal (map rotate-at+500-500 degree-ls)
+  '(((700 . -1100) (900 . -1400))
+    ((100 . 400) (300 . 100))
+    ((-400 . -700) (-100 . -900))
+    ((700 . -1100) (900 . -1400))
+    ((1100 . -100) (1400 . -300))
+    ((100 . 400) (300 . 100))
+    ((-400 . -700) (-100 . -900))
+    ((700 . -1100) (900 . -1400))
+    ((1100 . -100) (1400 . -300))
+    ((100 . 400) (300 . 100))
+    ((700 . -1100) (900 . -1400))))
+
+(test-equal (map rotate-at-500-500 degree-ls)
+  '(((-1300 . -1100) (-1100 . -1400))
+    ((100 . 400) (300 . 100))
+    ((-1400 . 300) (-1100 . 100))
+    ((-1300 . -1100) (-1100 . -1400))
+    ((100 . -1100) (400 . -1300))
+    ((100 . 400) (300 . 100))
+    ((-1400 . 300) (-1100 . 100))
+    ((-1300 . -1100) (-1100 . -1400))
+    ((100 . -1100) (400 . -1300))
+    ((100 . 400) (300 . 100))
+    ((-1300 . -1100) (-1100 . -1400))))
+
+;;; Invalid rotation angles, not multiple of 90 degree.
+(test-assert-thrown 'misc-error (rotate-at+500+500 100))
+(test-assert-thrown 'misc-error (rotate-at+500+500 -100))
+(test-assert-thrown 'misc-error (rotate-at+500+500 3000))
+(test-assert-thrown 'misc-error (rotate-at+500+500 -3000))
+
+(test-end "box-rotation")
