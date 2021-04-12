@@ -97,3 +97,21 @@
   '((-400 . -100) (-200 . -400)))
 
 (test-end "box-translation")
+
+
+(test-begin "box-mirror")
+
+(test-equal (stripped-info (car (mirror-objects! 0 (new-box))))
+  '((-300 . 400) (-100 . 100)))
+(test-equal (stripped-info (car (mirror-objects! 500 (new-box))))
+  '((700 . 400) (900 . 100)))
+(test-equal (stripped-info (car (mirror-objects! -500 (new-box))))
+  '((-1300 . 400) (-1100 . 100)))
+;;; Double mirror around the same point returns almost initial
+;;; result (coords returned for another pair of corners).
+(test-equal (stripped-info
+             (car (mirror-objects! 500
+                                   (car (mirror-objects! 500 (new-box))))))
+  '((100 . 400) (300 . 100)))
+
+(test-end "box-mirror")
