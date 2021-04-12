@@ -259,36 +259,6 @@ lepton_box_object_copy (LeptonObject *o_current)
 }
 
 /*! \brief Modify a box LeptonObject's coordinates.
- * \par Function Description
- * Modifies the coordinates of all four corners of \a box, by setting
- * the box to the rectangle enclosed by the points (\a x1, \a y1) and
- * (\a x2, \a y2).
- *
- * \param [in,out] object   box #LeptonObject to be modified.
- * \param [in]     x1       x coordinate of first corner of box.
- * \param [in]     y1       y coordinate of first corner of box.
- * \param [in]     x2       x coordinate of second corner of box.
- * \param [in]     y2       y coordinate of second corner of box,
- */
-void
-lepton_box_object_modify_all (LeptonObject *object,
-                              int x1,
-                              int y1,
-                              int x2,
-                              int y2)
-{
-  lepton_object_emit_pre_change_notify (object);
-
-  lepton_box_object_set_lower_x (object, (x1 > x2) ? x1 : x2);
-  lepton_box_object_set_lower_y (object, (y1 > y2) ? y2 : y1);
-
-  lepton_box_object_set_upper_x (object, (x1 > x2) ? x2 : x1);
-  lepton_box_object_set_upper_y (object, (y1 > y2) ? y1 : y2);
-
-  lepton_object_emit_change_notify (object);
-}
-
-/*! \brief Modify a box LeptonObject's coordinates.
  *  \par Function Description
  *  This function modifies the coordinates of one of the four corner of
  *  the box. The new coordinates of the corner identified by <B>whichone</B>

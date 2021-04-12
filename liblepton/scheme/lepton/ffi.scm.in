@@ -73,10 +73,13 @@
             lepton_arc_object_new
 
             lepton_box_object_get_upper_x
+            lepton_box_object_set_upper_x
             lepton_box_object_get_upper_y
+            lepton_box_object_set_upper_y
             lepton_box_object_get_lower_x
+            lepton_box_object_set_lower_x
             lepton_box_object_get_lower_y
-            lepton_box_object_modify_all
+            lepton_box_object_set_lower_y
             lepton_box_object_new
 
             lepton_component_object_get_embedded
@@ -190,10 +193,13 @@
 (define-lff lepton_arc_object_new '* (list int int int int int int))
 
 (define-lff lepton_box_object_get_upper_x int '(*))
+(define-lff lepton_box_object_set_upper_x void (list '* int))
 (define-lff lepton_box_object_get_upper_y int '(*))
+(define-lff lepton_box_object_set_upper_y void (list '* int))
 (define-lff lepton_box_object_get_lower_x int '(*))
+(define-lff lepton_box_object_set_lower_x void (list '* int))
 (define-lff lepton_box_object_get_lower_y int '(*))
-(define-lff lepton_box_object_modify_all void (list '* int int int int))
+(define-lff lepton_box_object_set_lower_y void (list '* int))
 (define-lff lepton_box_object_new '* (list int int int int int))
 
 (define-lff lepton_component_object_get_embedded int '(*))
