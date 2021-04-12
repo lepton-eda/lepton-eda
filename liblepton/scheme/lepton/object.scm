@@ -361,7 +361,13 @@ angle.  If optional COLOR is specified, it should be the integer
 color map index of the color with which to draw the arc.  If COLOR
 is not specified, the default arc color is used.  Returns the
 modified arc object."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (geda-object->pointer* object 1 arc? 'arc))
+
+  (check-coord center 2)
+  (check-integer radius 3)
+  (check-integer start-angle 4)
+  (check-integer sweep-angle 5)
+  (and color (check-integer color 6))
 
   (let ((info (arc-info object))
         (center-x (car center))
@@ -388,6 +394,11 @@ SWEEP-ANGLE is the number of degrees between the start and end
 angles.  If optional COLOR is specified, it should be the integer
 color map index of the color with which to draw the arc.  If COLOR
 is not specified, the default arc color is used."
+  (check-coord center 1)
+  (check-integer radius 2)
+  (check-integer start-angle 3)
+  (check-integer sweep-angle 4)
+  (and color (check-integer color 5))
 
   (let* ((init-color (default_color_id))
          (init-center-x 0)
@@ -422,25 +433,25 @@ coordinate, radius, start and sweep angles, and color in the form:
 (define (arc-center object)
   "Returns the position of the center of arc OBJECT as a pair of
 two integers in the form '(x . y)."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (geda-object->pointer* object 1 arc? 'arc))
   (cons (lepton_arc_object_get_center_x pointer)
         (lepton_arc_object_get_center_y pointer)))
 
 (define (arc-radius object)
   "Returns the radius of arc OBJECT as an integer."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (geda-object->pointer* object 1 arc? 'arc))
   (lepton_arc_object_get_radius pointer))
 
 (define (arc-start-angle object)
   "Returns the start angle of arc OBJECT as an integer number of
 degrees."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (geda-object->pointer* object 1 arc? 'arc))
   (lepton_arc_object_get_start_angle pointer))
 
 (define (arc-sweep-angle object)
   "Returns the sweep angle of arc OBJECT as an integer number of
 degrees."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (geda-object->pointer* object 1 arc? 'arc))
   (lepton_arc_object_get_sweep_angle pointer))
 
 (define (arc-end-angle object)
