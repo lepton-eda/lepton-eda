@@ -458,7 +458,9 @@ degrees."
   "Returns the end angle of arc OBJECT as an integer number of
 degrees.  The end angle is the sum of the start and sweep angles
 of the arc."
-  (+ (arc-start-angle object) (arc-sweep-angle object)))
+  (define pointer (geda-object->pointer* object 1 arc? 'arc))
+  (+ (lepton_arc_object_get_start_angle pointer)
+     (lepton_arc_object_get_sweep_angle pointer)))
 
 ;;;; Paths
 
