@@ -72,3 +72,28 @@
   (test-assert-thrown 'wrong-type-arg (set-box! b '(1 . 2) '(3 . 4) 'color)))
 
 (test-end "box-wrong-argument")
+
+
+;;; Common functions for transformations.
+;;; Make the same box every time.
+(define (new-box)
+  (make-box '(100 . 100) '(300 . 400)))
+;;; Arc info without unrelated colors.
+(define (stripped-info box)
+  (define (strip-color info)
+    (reverse (cdr (reverse info))))
+  (strip-color (box-info box)))
+
+
+(test-begin "box-translation")
+
+(test-equal (stripped-info (car (translate-objects! '(500 . 500) (new-box))))
+  '((600 . 900) (800 . 600)))
+(test-equal (stripped-info (car (translate-objects! '(-500 . 500) (new-box))))
+  '((-400 . 900) (-200 . 600)))
+(test-equal (stripped-info (car (translate-objects! '(500 . -500) (new-box))))
+  '((600 . -100) (800 . -400)))
+(test-equal (stripped-info (car (translate-objects! '(-500 . -500) (new-box))))
+  '((-400 . -100) (-200 . -400)))
+
+(test-end "box-translation")
