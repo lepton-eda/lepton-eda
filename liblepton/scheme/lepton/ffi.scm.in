@@ -222,17 +222,41 @@
 ;;;   (define (myfunc object)
 ;;;     (define pointer (geda-object->pointer* object 1))
 ;;;     (function-body))
-(define-syntax-rule (geda-object->pointer* object pos)
-  (let ((pointer (geda-object->pointer object)))
-    (if (null-pointer? pointer)
-        (let ((proc-name
-               ;; Provision agains Guile-2.0 that does not have the procedure.
-               (if (defined? 'frame-procedure-name)
-                   (frame-procedure-name (stack-ref (make-stack #t) 1))
-                   '??)))
-          (scm-error 'wrong-type-arg
-                     proc-name
-                     "Wrong type argument in position ~A: ~A"
-                     (list pos object)
-                     #f))
-        pointer)))
+(define-syntax geda-object->pointer*
+  (syntax-rules ()
+    ((_ object pos)
+     (let ((pointer (geda-object->pointer object)))
+       (if (null-pointer? pointer)
+           (let ((proc-name
+                  ;; Provision against Guile-2.0 that does not
+                  ;; have the procedure.
+                  (if (defined? 'frame-procedure-name)
+                      (frame-procedure-name (stack-ref (make-stack #t) 1))
+                      '??)))
+             (scm-error 'wrong-type-arg
+                        proc-name
+                        "Wrong type argument in position ~A: ~A"
+                        (list pos object)
+                        #f))
+           pointer)))
+    ((_ object pos object-check-func type)
+     (let ((pointer (geda-object->pointer object)))
+       (if (null-pointer? pointer)
+           (let ((proc-name
+                  ;; Provision against Guile-2.0 that does not
+                  ;; have the procedure.
+                  (if (defined? 'frame-procedure-name)
+                      (frame-procedure-name (stack-ref (make-stack #t) 1))
+                      '??)))
+             (scm-error 'wrong-type-arg
+                        proc-name
+                        "Wrong type argument in position ~A: ~A"
+                        (list pos object)
+                        #f))
+           (if (object-check-func object)
+               pointer
+               (scm-error 'wrong-type-arg
+                          proc-name
+                          "Wrong type argument in position ~A (expecting ~A object): ~A"
+                          (list pos type object)
+                          #f)))))))
