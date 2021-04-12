@@ -24,6 +24,8 @@
             geda-object->pointer
             geda-object->pointer*
             pointer->geda-object
+            check-coord
+            check-integer
 
             ;; Foreign functions.
             edascm_is_config
@@ -260,3 +262,29 @@
                           "Wrong type argument in position ~A (expecting ~A object): ~A"
                           (list pos type object)
                           #f)))))))
+
+
+
+(define-syntax-rule (check-integer val pos)
+  (unless (integer? val)
+    (scm-error 'wrong-type-arg
+               ;; Provision against Guile-2.0 that does not have the procedure.
+               (if (defined? 'frame-procedure-name)
+                   (frame-procedure-name (stack-ref (make-stack #t) 1))
+                   '??)
+               "Wrong type argument in position ~A (expecting integer): ~A"
+               (list pos val)
+               #f)))
+
+(define-syntax-rule (check-coord val pos)
+  (unless (and (pair? val)
+               (integer? (car val))
+               (integer? (cdr val)))
+    (scm-error 'wrong-type-arg
+               ;; Provision against Guile-2.0 that does not have the procedure.
+               (if (defined? 'frame-procedure-name)
+                   (frame-procedure-name (stack-ref (make-stack #t) 1))
+                   '??)
+               "Wrong type argument in position ~A (expecting a pair of integers): ~A"
+               (list pos val)
+               #f)))
