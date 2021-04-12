@@ -38,3 +38,37 @@
   )
 
 (test-end "boxes")
+
+
+(test-begin "box-wrong-argument")
+
+(test-assert-thrown 'wrong-type-arg (box-info 'b))
+(test-assert-thrown 'wrong-type-arg (box-top-left 'b))
+(test-assert-thrown 'wrong-type-arg (box-bottom-right 'b))
+
+(let ((b (make-box '(1 . 2) '(3 . 4) 3)))
+  ;; Wrong object.
+  (test-assert-thrown 'wrong-type-arg (set-box! 'b '(1 . 2) '(3 . 4) 3))
+  ;; Wrong first coord.
+  (test-assert-thrown 'wrong-type-arg (make-box 'c '(3 . 4) 3))
+  (test-assert-thrown 'wrong-type-arg (set-box! b 'c '(3 . 4) 3))
+  ;; Wrong first x.
+  (test-assert-thrown 'wrong-type-arg (make-box '(x . 2) '(3 . 4) 3))
+  (test-assert-thrown 'wrong-type-arg (set-box! b '(x . 2) '(3 . 4) 3))
+  ;; Wrong first y.
+  (test-assert-thrown 'wrong-type-arg (make-box '(1 . y) '(3 . 4) 3))
+  (test-assert-thrown 'wrong-type-arg (set-box! b '(1 . y) '(3 . 4) 3))
+  ;; Wrong second coord.
+  (test-assert-thrown 'wrong-type-arg (make-box '(1 . 2) 'c 3))
+  (test-assert-thrown 'wrong-type-arg (set-box! b '(1 . 2) 'c 3))
+  ;; Wrong second x.
+  (test-assert-thrown 'wrong-type-arg (make-box '(1 . 2) '(x . 4) 3))
+  (test-assert-thrown 'wrong-type-arg (set-box! b '(1 . 2) '(x . 4) 3))
+  ;; Wrong second y.
+  (test-assert-thrown 'wrong-type-arg (make-box '(1 . 2) '(3 . y) 3))
+  (test-assert-thrown 'wrong-type-arg (set-box! b '(1 . 2) '(3 . y) 3))
+  ;; Wrong color.
+  (test-assert-thrown 'wrong-type-arg (make-box '(1 . 2) '(3 . 4) 'color))
+  (test-assert-thrown 'wrong-type-arg (set-box! b '(1 . 2) '(3 . 4) 'color)))
+
+(test-end "box-wrong-argument")
