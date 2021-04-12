@@ -270,6 +270,10 @@ form '(x . y), and BOTTOM-RIGHT is the position of the bottom
 right of the box.  If optional COLOR is specified, it should be
 the integer color map index of the color with which to draw the
 box.  If COLOR is not specified, the default box color is used."
+  (check-coord top-left 1)
+  (check-coord bottom-right 2)
+  (and color (check-integer color 3))
+
   (let* ((init-color (default_color_id))
          (init-left-x 0)
          (init-upper-y 0)
@@ -296,7 +300,7 @@ OBJECT. The return value is a list of the parameters in the form:
 
 (define (box-top-left object)
   "Returns the top left corner coordinate of box OBJECT."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (geda-object->pointer* object 1 box? 'box))
 
   (cons (lepton_box_object_get_upper_x pointer)
         (lepton_box_object_get_upper_y pointer)))
@@ -304,7 +308,7 @@ OBJECT. The return value is a list of the parameters in the form:
 
 (define (box-bottom-right object)
   "Returns the bottom right corner coordinate of box OBJECT."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (geda-object->pointer* object 1 box? 'box))
 
   (cons (lepton_box_object_get_lower_x pointer)
         (lepton_box_object_get_lower_y pointer)))
