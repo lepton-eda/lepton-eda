@@ -232,7 +232,7 @@ optional COLOR is specified, it shoud be the integer color map
 index of the color to be used for drawing the box.  If COLOR is
 not specified, the default box color is used.  Returns the
 modified box object."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (geda-object->pointer* object 1 box? 'box))
 
   (let ((info (box-info object))
         (x1 (car top-left))
