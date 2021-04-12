@@ -245,7 +245,17 @@ modified box object."
         (y2 (cdr bottom-right))
         (color (or color
                    (lepton_object_get_color pointer))))
-    (lepton_box_object_modify_all pointer x1 y1 x2 y2)
+
+    (lepton_object_emit_pre_change_notify pointer)
+
+    (lepton_box_object_set_lower_x pointer (max x1 x2))
+    (lepton_box_object_set_lower_y pointer (min y1 y2))
+
+    (lepton_box_object_set_upper_x pointer (min x1 x2))
+    (lepton_box_object_set_upper_y pointer (max y1 y2))
+
+    (lepton_object_emit_change_notify pointer)
+
     (lepton_object_set_color pointer color)
 
     (unless (equal? info (box-info object))
