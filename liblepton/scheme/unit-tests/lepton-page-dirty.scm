@@ -82,6 +82,18 @@
       ;; Box.
       ;; The same parameters do not modify the page.
       (assert-not-dirties P (apply set-box! b (box-info b)))
+      ;; Set color explicitly to facilitate next tests.
+      (set-box! b '(1 . 2) '(3 . 4) 3)
+      ;; Change x of the first corner.
+      (assert-dirties P (apply set-box! b '((2 . 2) (3 . 4) 3)))
+      ;; Change y of the first corner.
+      (assert-dirties P (apply set-box! b '((2 . 3) (3 . 4) 3)))
+      ;; Change x of the second corner.
+      (assert-dirties P (apply set-box! b '((2 . 3) (4 . 4) 3)))
+      ;; Change y of the second corner.
+      (assert-dirties P (apply set-box! b '((2 . 3) (4 . 5) 3)))
+      ;; Change color.
+      (assert-dirties P (apply set-box! b '((2 . 3) (4 . 5) 4)))
 
       (assert-dirties P (apply set-line! l (line-info l)))
       (assert-dirties P (apply set-circle! c (circle-info c)))
@@ -123,6 +135,18 @@
       ;; Box.
       ;; The same parameters do not modify the page.
       (assert-not-dirties P (apply set-box! b (box-info b)))
+      ;; Set color explicitly to facilitate next tests.
+      (set-box! b '(1 . 2) '(3 . 4) 3)
+      ;; Change x of the first corner.
+      (assert-dirties P (apply set-box! b '((2 . 2) (3 . 4) 3)))
+      ;; Change y of the first corner.
+      (assert-dirties P (apply set-box! b '((2 . 3) (3 . 4) 3)))
+      ;; Change x of the second corner.
+      (assert-dirties P (apply set-box! b '((2 . 3) (4 . 4) 3)))
+      ;; Change y of the second corner.
+      (assert-dirties P (apply set-box! b '((2 . 3) (4 . 5) 3)))
+      ;; Change color.
+      (assert-dirties P (apply set-box! b '((2 . 3) (4 . 5) 4)))
 
       (assert-dirties P (apply set-line! l (line-info l)))
       (assert-dirties P (apply set-circle! c (circle-info c)))
