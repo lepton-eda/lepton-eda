@@ -219,50 +219,6 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   return line_s;
 }
 
-/*! \brief Create a new pin.
- * \par Function description
- * Creates a new pin object, with all parameters set to default
- * values.  type_s is a Scheme symbol indicating whether the pin
- * should be a "net" pin or a "bus" pin.
- *
- * \note Scheme API: Implements the %make-pin procedure in the
- * (lepton core object) module.
- *
- * \return a newly-created pin object.
- */
-SCM_DEFINE (make_pin, "%make-pin", 1, 0, 0,
-            (SCM type_s), "Create a new pin object.")
-{
-  SCM_ASSERT (scm_is_symbol (type_s),
-              type_s, SCM_ARG1, s_make_pin);
-
-  int type;
-  if (scm_is_eq (type_s, net_sym)) {
-    type = PIN_TYPE_NET;
-  } else if (scm_is_eq (type_s, bus_sym)) {
-    type = PIN_TYPE_BUS;
-  } else {
-    scm_misc_error (s_make_pin,
-                    _("Invalid pin type ~A, must be 'net or 'bus"),
-                    scm_list_1 (type_s));
-  }
-
-  LeptonObject *obj = lepton_pin_object_new (PIN_COLOR,
-                                             0,
-                                             0,
-                                             0,
-                                             0,
-                                             type,
-                                             0);
-  SCM result = edascm_from_object (obj);
-
-  /* At the moment, the only pointer to the object is owned by the
-   * smob. */
-  edascm_c_set_gc (result, 1);
-
-  return result;
-}
-
 /*! \brief Get the type of a pin object.
  * \par Function Description
  * Returns a symbol describing the pin type of the pin object \a
@@ -1175,8 +1131,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_make_pin,
-                s_pin_type,
+  scm_c_export (s_pin_type,
                 s_set_line_x,
                 s_make_circle,
                 s_set_circle_x,
