@@ -72,6 +72,7 @@
             make-bus
 
             make-line
+            set-line!
 
             make-net
 
@@ -148,13 +149,62 @@ If OBJECT is not part of a component, returns #f."
 
 ;;;; Lines
 
-(define*-public (set-line! l start end #:optional color)
-  (%set-line! l
-              (car start) (cdr start)
-              (car end) (cdr end)
-              (if (not color)
-                  (object-color l)
-                  color)))
+(define* (set-line! object start end #:optional color)
+  "Sets the parameters of line OBJECT (which may be a line, net,
+bus or pin object). START is the position of the start of the new
+line in the form '(x . y) and END is the position of the end of
+the line.  For pins,the start is the connectable point on the
+pin.  If COLOR is specified, it should be the integer color map
+index of the color with which to draw the line.  If COLOR is not
+specified, the default line color is used.  Returns OBJECT."
+
+  (define (line-object? object)
+    (or (line? object)
+        (net? object)
+        (bus? object)
+        (pin? object)))
+
+  (define pointer (geda-object->pointer* object 1 line-object? 'line))
+  (check-coord start 2)
+  (check-coord end 3)
+  (and color (check-integer color 4))
+
+  ;; We may need to update connectivity.
+  (s_conn_remove_object_connections pointer)
+
+  (let ((x1 (car start))
+        (y1 (cdr start))
+        (x2 (car end))
+        (y2 (cdr end))
+        (whichend (true? (lepton_object_get_whichend pointer)))
+        (color (or color (object-color object))))
+    (cond
+     ((line? object)
+      (lepton_line_object_modify pointer x1 y1 0)
+      (lepton_line_object_modify pointer x2 y2 1))
+     ((net? object)
+      (lepton_net_object_modify pointer x1 y1 0)
+      (lepton_net_object_modify pointer x2 y2 1))
+     ((bus? object)
+      (lepton_bus_object_modify pointer x1 y1 0)
+      (lepton_bus_object_modify pointer x2 y2 1))
+     ((pin? object)
+      ;; Swap ends according to pin's whichend flag.
+      (lepton_pin_object_modify pointer x1 y1 (if whichend 1 0))
+      (lepton_pin_object_modify pointer x2 y2 (if whichend 0 1)))
+     ;; Should never be reached.
+     (else #f))
+
+    (lepton_object_set_color pointer color)
+
+    ;; We may need to update connectivity.
+    (let ((page (lepton_object_get_page pointer)))
+      (unless (null-pointer? page)
+        (s_conn_update_object page pointer)
+
+        (lepton_object_page_set_changed pointer))
+
+      object)))
 
 (define* (make-line start end #:optional color)
   "Make and return a new line object with given START and END

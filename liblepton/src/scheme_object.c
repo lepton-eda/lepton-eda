@@ -137,85 +137,6 @@ edascm_is_object_type (SCM smob, int type)
 }
 
 
-/*! \brief Set line parameters.
- * \par Function Description
- * Modifies a line object by setting its parameters to new values.
- *
- * \note Scheme API: Implements the %set-line! procedure in the
- * (lepton core object) module.
- *
- * This function also works on net, bus and pin objects.  For pins,
- * the start is the connectable point on the pin.
- *
- * \param line_s the line object to modify.
- * \param x1_s   the new x-coordinate of the start of the line.
- * \param y1_s   the new y-coordinate of the start of the line.
- * \param x2_s   the new x-coordinate of the end of the line.
- * \param y2_s   the new y-coordinate of the end of the line.
- * \param color  the colormap index of the color to be used for
- *               drawing the line.
- *
- * \return the modified line object.
- */
-SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
-            (SCM line_s, SCM x1_s, SCM y1_s, SCM x2_s, SCM y2_s, SCM color_s),
-            "Set line parameters.")
-{
-  SCM_ASSERT ((edascm_is_object_type (line_s, OBJ_LINE)
-               || edascm_is_object_type (line_s, OBJ_NET)
-               || edascm_is_object_type (line_s, OBJ_BUS)
-               || edascm_is_object_type (line_s, OBJ_PIN)),
-              line_s, SCM_ARG1, s_set_line_x);
-
-  SCM_ASSERT (scm_is_integer (x1_s),    x1_s,    SCM_ARG2, s_set_line_x);
-  SCM_ASSERT (scm_is_integer (y1_s),    y1_s,    SCM_ARG3, s_set_line_x);
-  SCM_ASSERT (scm_is_integer (x2_s),    x2_s,    SCM_ARG4, s_set_line_x);
-  SCM_ASSERT (scm_is_integer (y2_s),    y2_s,    SCM_ARG5, s_set_line_x);
-  SCM_ASSERT (scm_is_integer (color_s), color_s, SCM_ARG6, s_set_line_x);
-
-  LeptonObject *obj = edascm_to_object (line_s);
-  int x1 = scm_to_int (x1_s);
-  int y1 = scm_to_int (y1_s);
-  int x2 = scm_to_int (x2_s);
-  int y2 = scm_to_int (y2_s);
-
-  /* We may need to update connectivity. */
-  s_conn_remove_object_connections (obj);
-
-  switch (lepton_object_get_type (obj)) {
-  case OBJ_LINE:
-    lepton_line_object_modify (obj, x1, y1, LINE_END1);
-    lepton_line_object_modify (obj, x2, y2, LINE_END2);
-    break;
-  case OBJ_NET:
-    lepton_net_object_modify (obj, x1, y1, 0);
-    lepton_net_object_modify (obj, x2, y2, 1);
-    break;
-  case OBJ_BUS:
-    lepton_bus_object_modify (obj, x1, y1, 0);
-    lepton_bus_object_modify (obj, x2, y2, 1);
-    break;
-  case OBJ_PIN:
-    /* Swap ends according to pin's whichend flag. */
-    lepton_pin_object_modify (obj, x1, y1, obj->whichend ? 1 : 0);
-    lepton_pin_object_modify (obj, x2, y2, obj->whichend ? 0 : 1);
-    break;
-  default:
-    return line_s;
-  }
-  lepton_object_set_color (obj, scm_to_int (color_s));
-
-  /* We may need to update connectivity. */
-  LeptonPage *page = lepton_object_get_page (obj);
-  if (page != NULL) {
-    s_conn_update_object (page, obj);
-  }
-
-  lepton_object_page_set_changed (obj);
-
-  return line_s;
-}
-
 /*! \brief Create a new circle.
  * \par Function Description
 
@@ -1093,8 +1014,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_set_line_x,
-                s_make_circle,
+  scm_c_export (s_make_circle,
                 s_set_circle_x,
                 s_circle_info,
                 s_make_text,
