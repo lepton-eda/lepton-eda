@@ -51,6 +51,13 @@ lepton_pin_object_new_bus_pin (int color,
 LeptonObject*
 lepton_pin_object_copy (LeptonObject *o_current);
 
+/* Helpers. */
+gboolean
+lepton_pin_object_is_bus_pin (const LeptonObject *object);
+
+gboolean
+lepton_pin_object_is_net_pin (const LeptonObject *object);
+
 /* methods */
 
 void

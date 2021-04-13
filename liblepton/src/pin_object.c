@@ -24,6 +24,35 @@
 
 #include "liblepton_priv.h"
 
+
+/*! \brief Test if object is a bus pin object.
+ *
+ *  \param [in] object The object to test.
+ *  \return TRUE, if the object is bus pin, otherwise FALSE.
+ */
+gboolean
+lepton_pin_object_is_bus_pin (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_pin (object), FALSE);
+
+  return (object->pin_type == PIN_TYPE_BUS);
+}
+
+
+/*! \brief Test if object is a net pin object.
+ *
+ *  \param [in] object The object to test.
+ *  \return TRUE, if the object is net pin, otherwise FALSE.
+ */
+gboolean
+lepton_pin_object_is_net_pin (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_pin (object), FALSE);
+
+  return (object->pin_type == PIN_TYPE_NET);
+}
+
+
 /*! \file pin_object.c
  *  \brief functions for the pin object
  */
