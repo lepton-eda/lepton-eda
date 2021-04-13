@@ -88,6 +88,8 @@
                path?
                picture?
                pin?
+               bus-pin?
+               net-pin?
                text?
 
                object?
@@ -248,12 +250,6 @@ values."
 
 
 ;;;; Pins
-
-(define-public (net-pin? l)
-  (and (pin? l) (equal? (%pin-type l) 'net)))
-
-(define-public (bus-pin? l)
-  (and (pin? l) (equal? (%pin-type l) 'bus)))
 
 (define* (make-net-pin start end #:optional color)
   "Creates and returns a new net pin object with given parameters.

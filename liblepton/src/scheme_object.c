@@ -28,9 +28,6 @@
 #include "liblepton_priv.h"
 #include "libleptonguile_priv.h"
 
-SCM_SYMBOL (net_sym , "net");
-SCM_SYMBOL (bus_sym , "bus");
-
 SCM_SYMBOL (lower_left_sym , "lower-left");
 SCM_SYMBOL (middle_left_sym , "middle-left");
 SCM_SYMBOL (upper_left_sym , "upper-left");
@@ -217,41 +214,6 @@ SCM_DEFINE (set_line_x, "%set-line!", 6, 0, 0,
   lepton_object_page_set_changed (obj);
 
   return line_s;
-}
-
-/*! \brief Get the type of a pin object.
- * \par Function Description
- * Returns a symbol describing the pin type of the pin object \a
- * pin_s.
- *
- * \note Scheme API: Implements the %make-pin procedure in the
- * (lepton core object) module.
- *
- * \return the symbol 'pin or 'bus.
- */
-SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
-            (SCM pin_s), "Get the type of a pin object.")
-{
-  SCM_ASSERT (edascm_is_object_type (pin_s, OBJ_PIN), pin_s,
-              SCM_ARG1, s_pin_type);
-
-  LeptonObject *obj = edascm_to_object (pin_s);
-  SCM result;
-
-  switch (obj->pin_type) {
-  case PIN_TYPE_NET:
-    result = net_sym;
-    break;
-  case PIN_TYPE_BUS:
-    result = bus_sym;
-    break;
-  default:
-    scm_misc_error (s_pin_type,
-                    _("Object ~A has invalid pin type."),
-                    scm_list_1 (pin_s));
-  }
-
-  return result;
 }
 
 /*! \brief Create a new circle.
@@ -1131,8 +1093,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_pin_type,
-                s_set_line_x,
+  scm_c_export (s_set_line_x,
                 s_make_circle,
                 s_set_circle_x,
                 s_circle_info,

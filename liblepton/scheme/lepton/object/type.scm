@@ -36,6 +36,8 @@
             path?
             picture?
             pin?
+            net-pin?
+            bus-pin?
             text?
 
             object?
@@ -148,6 +150,21 @@ returns #f."
 (define (pin? object)
   "Returns #t if OBJECT is a pin object, otherwise returns #f."
   (true? (lepton_object_is_pin (geda-object->pointer object))))
+
+(define (net-pin? object)
+  "Returns #t if OBJECT is a net pin object, otherwise returns
+#f."
+  (and (pin? object)
+       (true? (lepton_pin_object_is_net_pin
+               (geda-object->pointer object)))))
+
+(define (bus-pin? object)
+  "Returns #t if OBJECT is a bus pin object, otherwise returns
+#f."
+  (and (pin? object)
+       (true? (lepton_pin_object_is_bus_pin
+               (geda-object->pointer object)))))
+
 
 (define (text? object)
   "Returns #t if OBJECT is a text object, otherwise returns #f."
