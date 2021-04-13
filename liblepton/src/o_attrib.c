@@ -268,7 +268,7 @@ o_read_attribs (LeptonPage *page,
         break;
 
       case(OBJ_PIN):
-        if ((new_obj = o_pin_read (line, release_ver, fileformat_ver, err)) == NULL)
+        if ((new_obj = lepton_pin_object_read (line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;

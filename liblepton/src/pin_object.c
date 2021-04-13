@@ -319,10 +319,10 @@ lepton_pin_object_new (int color,
  *  \return The object list, or NULL on error.
  */
 LeptonObject*
-o_pin_read (const char buf[],
-            unsigned int release_ver,
-            unsigned int fileformat_ver,
-            GError **err)
+lepton_pin_object_read (const char buf[],
+                        unsigned int release_ver,
+                        unsigned int fileformat_ver,
+                        GError **err)
 {
   LeptonObject *new_obj;
   char type;

@@ -101,9 +101,9 @@ void
 lepton_pin_object_update_whichend (GList *object_list,
                                    int num_pins);
 LeptonObject*
-o_pin_read (const char buf[],
-            unsigned int release_ver,
-            unsigned int fileformat_ver,
-            GError **err);
+lepton_pin_object_read (const char buf[],
+                        unsigned int release_ver,
+                        unsigned int fileformat_ver,
+                        GError **err);
 
 G_END_DECLS
