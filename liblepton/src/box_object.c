@@ -360,10 +360,10 @@ lepton_box_object_modify (LeptonObject *object,
  *  \return The box LeptonObject that was created, or NULL on error.
  */
 LeptonObject*
-o_box_read (const char buf[],
-            unsigned int release_ver,
-            unsigned int fileformat_ver,
-            GError **err)
+lepton_box_object_read (const char buf[],
+                        unsigned int release_ver,
+                        unsigned int fileformat_ver,
+                        GError **err)
 {
   LeptonObject *new_obj;
   char type;
