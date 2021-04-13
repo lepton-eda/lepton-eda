@@ -73,7 +73,10 @@
 
             make-line
 
-            make-net)
+            make-net
+
+            make-bus-pin
+            make-net-pin)
 
   #:re-export (arc?
                box?
@@ -252,13 +255,64 @@ values."
 (define-public (bus-pin? l)
   (and (pin? l) (equal? (%pin-type l) 'bus)))
 
-(define*-public (make-net-pin start end #:optional color)
-  (let ((l (%make-pin 'net)))
-    (set-line! l start end color)))
+(define* (make-net-pin start end #:optional color)
+  "Creates and returns a new net pin object with given parameters.
+START is the position of the start of the new pin (its connectible
+end) in the form '(x . y) and END is the position of the end of
+the pin.  If COLOR is specified, it should be the integer color
+map index of the color with which to draw the pin.  If COLOR is
+not specified, the default pin color is used."
+  (check-coord start 1)
+  (check-coord end 2)
+  (and color (check-integer color 3))
 
-(define*-public (make-bus-pin start end #:optional color)
-  (let ((l (%make-pin 'bus)))
-    (set-line! l start end color)))
+  (let* ((init-color (color-map-name-to-index 'pin))
+         (init-start-x 0)
+         (init-start-y 0)
+         (init-end-x 0)
+         (init-end-y 0)
+         (init-whichend 0)
+         (object (pointer->geda-object
+                  (lepton_pin_object_new_net_pin init-color
+                                                 init-start-x
+                                                 init-start-y
+                                                 init-end-x
+                                                 init-end-y
+                                                 init-whichend))))
+    (set-line! object
+               start
+               end
+               (or color init-color))))
+
+(define* (make-bus-pin start end #:optional color)
+  "Creates and returns a new bus pin object with given parameters.
+START is the position of the start of the new pin (its connectible
+end) in the form '(x . y) and END is the position of the end of
+the pin.  If COLOR is specified, it should be the integer color
+map index of the color with which to draw the pin.  If COLOR is
+not specified, the default pin color is used."
+  (check-coord start 1)
+  (check-coord end 2)
+  (and color (check-integer color 3))
+
+  (let* ((init-color (color-map-name-to-index 'pin))
+         (init-start-x 0)
+         (init-start-y 0)
+         (init-end-x 0)
+         (init-end-y 0)
+         (init-whichend 0)
+         (object (pointer->geda-object
+                  (lepton_pin_object_new_bus_pin init-color
+                                                 init-start-x
+                                                 init-start-y
+                                                 init-end-x
+                                                 init-end-y
+                                                 init-whichend))))
+    (set-line! object
+               start
+               end
+               (or color init-color))))
+
 
 
 ;;;; Boxes
