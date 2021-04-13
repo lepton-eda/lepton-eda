@@ -290,7 +290,7 @@ SCM_DEFINE (pin_type, "%pin-type", 1, 0, 0,
     result = bus_sym;
     break;
   default:
-    scm_misc_error (s_make_pin,
+    scm_misc_error (s_pin_type,
                     _("Object ~A has invalid pin type."),
                     scm_list_1 (pin_s));
   }
