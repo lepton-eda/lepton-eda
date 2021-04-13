@@ -98,6 +98,16 @@
       ;; Circle.
       ;; The same parameters do not modify the page.
       (assert-not-dirties P (apply set-circle! c (circle-info c)))
+      ;; Set color explicitly to facilitate next tests.
+      (set-circle! c '(1 . 2) 10 3)
+      ;; Change center x.
+      (assert-dirties P (apply set-circle! c '((2 . 2) 10 3)))
+      ;; Change center y.
+      (assert-dirties P (apply set-circle! c '((2 . 3) 10 3)))
+      ;; Change radius.
+      (assert-dirties P (apply set-circle! c '((2 . 3) 11 3)))
+      ;; Change color.
+      (assert-dirties P (apply set-circle! c '((2 . 3) 11 4)))
 
       ;; Line.
       ;; The same parameters do not modify the page.
@@ -187,6 +197,16 @@
       ;; Circle.
       ;; The same parameters do not modify the page.
       (assert-not-dirties P (apply set-circle! c (circle-info c)))
+      ;; Set color explicitly to facilitate next tests.
+      (set-circle! c '(1 . 2) 10 3)
+      ;; Change center x.
+      (assert-dirties P (apply set-circle! c '((2 . 2) 10 3)))
+      ;; Change center y.
+      (assert-dirties P (apply set-circle! c '((2 . 3) 10 3)))
+      ;; Change radius.
+      (assert-dirties P (apply set-circle! c '((2 . 3) 11 3)))
+      ;; Change color.
+      (assert-dirties P (apply set-circle! c '((2 . 3) 11 4)))
 
       ;; Line.
       ;; The same parameters do not modify the page.
