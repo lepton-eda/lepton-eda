@@ -35,6 +35,20 @@ lepton_pin_object_new (int color,
                        int pin_type,
                        int whichend);
 LeptonObject*
+lepton_pin_object_new_net_pin (int color,
+                               int x1,
+                               int y1,
+                               int x2,
+                               int y2,
+                               int whichend);
+LeptonObject*
+lepton_pin_object_new_bus_pin (int color,
+                               int x1,
+                               int y1,
+                               int x2,
+                               int y2,
+                               int whichend);
+LeptonObject*
 lepton_pin_object_copy (LeptonObject *o_current);
 
 /* methods */

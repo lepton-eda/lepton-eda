@@ -307,6 +307,53 @@ lepton_pin_object_new (int color,
   return new_node;
 }
 
+/*! \brief Create a new net pin object.
+ *  \par Function Description
+ *  This function creates and returns a new net pin object.
+ *
+ *  \param [in] color    The color of the pin.
+ *  \param [in] x1       X-coord of the first point.
+ *  \param [in] y1       Y-coord of the first point.
+ *  \param [in] x2       X-coord of the second point.
+ *  \param [in] y2       Y-coord of the second point.
+ *  \param [in] whichend The connectible end of the pin.
+ *  \return A new pin LeptonObject
+ */
+LeptonObject*
+lepton_pin_object_new_net_pin (int color,
+                               int x1,
+                               int y1,
+                               int x2,
+                               int y2,
+                               int whichend)
+{
+  return lepton_pin_object_new (color, x1, y1, x2, y2, PIN_TYPE_NET, whichend);
+}
+
+
+/*! \brief Create a new bus pin object.
+ *  \par Function Description
+ *  This function creates and returns a new bus pin object.
+ *
+ *  \param [in] color    The color of the pin.
+ *  \param [in] x1       X-coord of the first point.
+ *  \param [in] y1       Y-coord of the first point.
+ *  \param [in] x2       X-coord of the second point.
+ *  \param [in] y2       Y-coord of the second point.
+ *  \param [in] whichend The connectible end of the pin.
+ *  \return A new pin LeptonObject
+ */
+LeptonObject*
+lepton_pin_object_new_bus_pin (int color,
+                               int x1,
+                               int y1,
+                               int x2,
+                               int y2,
+                               int whichend)
+{
+  return lepton_pin_object_new (color, x1, y1, x2, y2, PIN_TYPE_BUS, whichend);
+}
+
 /*! \brief read a pin object from a char buffer
  *  \par Function Description
  *  This function reads a pin object from the buffer \a buf.
