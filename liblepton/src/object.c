@@ -1871,3 +1871,31 @@ lepton_object_new (int type,
 
   return(new_node);
 }
+
+
+const char*
+lepton_object_visibility_to_string (gint visibility)
+{
+  const char *result = NULL;
+
+  switch (visibility)
+  {
+  case VISIBLE: result = "visible"; break;
+  case INVISIBLE: result = "invisible"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+gint
+lepton_object_visibility_from_string (char *s)
+{
+  gint result = VISIBLE;
+
+  if      (strcmp (s, "visible") == 0) { result = VISIBLE; }
+  else if (strcmp (s, "invisible") == 0) { result = INVISIBLE; }
+
+  return result;
+}
