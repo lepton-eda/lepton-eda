@@ -518,11 +518,16 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), FALSE);
     }
 
-    if (attrib->show_name_value == SHOW_VALUE) {
+    if (lepton_text_object_get_show_name_value (attrib) == SHOW_VALUE)
+    {
       gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 0);
-    } else if (attrib->show_name_value == SHOW_NAME) {
+    }
+    else if (lepton_text_object_get_show_name_value (attrib) == SHOW_NAME)
+    {
       gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 1);
-    } else {
+    }
+    else
+    {
       gtk_combo_box_set_active (GTK_COMBO_BOX (show_options), 2);
     }
   } else {

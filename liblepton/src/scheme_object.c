@@ -1100,14 +1100,16 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
                     scm_list_2 (text_s, scm_from_int (obj->visibility)));
   }
 
-  switch (obj->show_name_value) {
+  switch (lepton_text_object_get_show_name_value (obj))
+  {
   case SHOW_NAME:       show_s = name_sym;  break;
   case SHOW_VALUE:      show_s = value_sym; break;
   case SHOW_NAME_VALUE: show_s = both_sym;  break;
   default:
     scm_misc_error (s_text_info,
                     _("Text object ~A has invalid text attribute visibility ~A"),
-                    scm_list_2 (text_s, scm_from_int (obj->show_name_value)));
+                    scm_list_2 (text_s,
+                                scm_from_int (lepton_text_object_get_show_name_value (obj))));
   }
 
   return scm_list_n (scm_from_int (obj->text->x),

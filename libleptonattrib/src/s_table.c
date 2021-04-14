@@ -415,7 +415,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
             attrib_value = s_misc_remaining_string(attrib_text, '=', 1);
             old_visibility = lepton_object_is_visible (a_current)
               ? VISIBLE : INVISIBLE;
-            old_show_name_value = a_current->show_name_value;
+            old_show_name_value = lepton_text_object_get_show_name_value (a_current);
 
             /* Don't include "refdes" or "slot" because they form the row name. */
             /* Also don't include "net" per bug found by Steve W.  4.3.2007 -- SDB */

@@ -383,7 +383,8 @@ update_disp_string (LeptonObject *object)
   g_free (text->disp_string);
 
   if (o_attrib_get_name_value (object, &name, &value)) {
-    switch (object->show_name_value) {
+    switch (lepton_text_object_get_show_name_value (object))
+    {
       case (SHOW_NAME_VALUE):
         text->disp_string = g_strdup (text->string);
         break;
@@ -664,7 +665,7 @@ lepton_text_object_to_buffer (const LeptonObject *object)
                           lepton_object_get_color (object),
                           lepton_text_object_get_size (object),
                           lepton_object_get_visibility (object),
-                          object->show_name_value,
+                          lepton_text_object_get_show_name_value (object),
                           lepton_text_object_get_angle (object),
                           lepton_text_object_get_alignment (object),
                           o_text_num_lines (string),
@@ -729,7 +730,7 @@ lepton_text_object_copy (const LeptonObject *object)
                                     object->text->string,
                                     object->text->size,
                                     lepton_object_get_visibility (object),
-                                    object->show_name_value);
+                                    lepton_text_object_get_show_name_value (object));
 
   return new_obj;
 }
