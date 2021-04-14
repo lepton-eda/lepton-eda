@@ -124,7 +124,7 @@ check_accessors ()
     lepton_text_object_set_size (object0, size);
     lepton_object_set_color (object0, color);
     lepton_object_set_visibility (object0, visible);
-    o_text_set_string (object0, string);
+    lepton_text_object_set_string (object0, string);
 
     g_assert_cmpint (x, ==, lepton_text_object_get_x (object0));
     g_assert_cmpint (y, ==, lepton_text_object_get_y (object0));

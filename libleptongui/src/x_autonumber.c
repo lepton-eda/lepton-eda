@@ -571,7 +571,7 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, LeptonObject *o_curren
 
   /* replace old text */
   str = g_strdup_printf("%s?", autotext->current_searchtext);
-  o_text_set_string (o_current, str);
+  lepton_text_object_set_string (o_current, str);
   g_free (str);
 
   /* remove the slot attribute if slotting is active */
@@ -613,7 +613,7 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, LeptonObject *o_curre
 
   /* replace old text */
   str = g_strdup_printf("%s%d", autotext->current_searchtext, number);
-  o_text_set_string (o_current, str);
+  lepton_text_object_set_string (o_current, str);
   g_free (str);
 
   gschem_toplevel_page_content_changed (autotext->w_current,

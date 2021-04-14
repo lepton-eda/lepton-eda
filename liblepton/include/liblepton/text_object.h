@@ -117,8 +117,8 @@ void
 lepton_text_object_recreate (LeptonObject *o_current);
 
 void
-o_text_set_string (LeptonObject *obj,
-                   const gchar *new_string);
+lepton_text_object_set_string (LeptonObject *obj,
+                               const gchar *new_string);
 LeptonObject*
 lepton_text_object_read (const char *first_line,
                          TextBuffer *tb,

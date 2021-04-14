@@ -107,7 +107,7 @@ void o_text_change(GschemToplevel *w_current, LeptonObject *object, char *string
     return;
   }
 
-  o_text_set_string (object, string);
+  lepton_text_object_set_string (object, string);
 
   lepton_object_set_visibility (object, visibility);
   object->show_name_value = show;

@@ -1032,7 +1032,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   lepton_object_emit_change_notify (obj);
 
   char *tmp = scm_to_utf8_string (string_s);
-  o_text_set_string (obj, tmp);
+  lepton_text_object_set_string (obj, tmp);
   free (tmp);
 
   lepton_text_object_recreate (obj);

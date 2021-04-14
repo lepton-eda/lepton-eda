@@ -1911,7 +1911,7 @@ gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const
 
     if (lepton_object_is_text (object))
     {
-      o_text_set_string (object, string);
+      lepton_text_object_set_string (object, string);
 
       /* handle slot= attribute, it's a special case */
       if (object->attached_to != NULL && g_ascii_strncasecmp (string, "slot=", 5) == 0) {

@@ -113,7 +113,7 @@ void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *str
   g_free (slot_value);
 
   if (o_slot != NULL && !o_attrib_is_inherited (o_slot)) {
-    o_text_set_string (o_slot, string);
+    lepton_text_object_set_string (o_slot, string);
   } else {
     /* here you need to do the add the slot
        attribute since it doesn't exist */

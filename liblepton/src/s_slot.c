@@ -199,8 +199,8 @@ s_slot_update_object (LeptonObject *object)
       g_list_free (attributes);
 
       if (o_pinnum_attrib != NULL) {
-        o_text_set_string (o_pinnum_attrib,
-                           g_strdup_printf ("pinnumber=%s", current_pin));
+        lepton_text_object_set_string (o_pinnum_attrib,
+                                       g_strdup_printf ("pinnumber=%s", current_pin));
       }
 
       pin_counter++;

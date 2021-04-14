@@ -889,8 +889,8 @@ lepton_text_object_shortest_distance (LeptonObject *object,
  *  \param [in]  new_string            The new value.
  */
 void
-o_text_set_string (LeptonObject *obj,
-                   const gchar *new_string)
+lepton_text_object_set_string (LeptonObject *obj,
+                               const gchar *new_string)
 {
   g_return_if_fail (lepton_object_is_text (obj));
   g_return_if_fail (obj->text != NULL);

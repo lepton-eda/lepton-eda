@@ -197,7 +197,7 @@ s_object_replace_attrib_in_object(LeptonObject *o_current,
       if (strcmp(old_attrib_name, new_attrib_name) == 0) {
         /* create attrib=value text string */
         new_attrib_text = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-        o_text_set_string (a_current, new_attrib_text);
+        lepton_text_object_set_string (a_current, new_attrib_text);
         if (visibility != LEAVE_VISIBILITY_ALONE)
           lepton_object_set_visibility (a_current, visibility);
         if (show_name_value != LEAVE_NAME_VALUE_ALONE)
