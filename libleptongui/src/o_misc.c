@@ -326,7 +326,7 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
     {
 
       /* don't toggle the visibility flag */
-      o_text_recreate (o_current);
+      lepton_text_object_recreate (o_current);
     }
 
     if (lepton_object_is_component (o_current))
@@ -388,7 +388,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
       if (!strncmp (stext, str, strlen (stext))) {
         if (lepton_object_is_visible (o_current)) {
           lepton_object_set_visibility (o_current, INVISIBLE);
-          o_text_recreate (o_current);
+          lepton_text_object_recreate (o_current);
 
           gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
         }
@@ -423,7 +423,7 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
       if (!strncmp (stext, str, strlen (stext))) {
         if (!lepton_object_is_visible (o_current)) {
           lepton_object_set_visibility (o_current, VISIBLE);
-          o_text_recreate (o_current);
+          lepton_text_object_recreate (o_current);
 
           gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
         }

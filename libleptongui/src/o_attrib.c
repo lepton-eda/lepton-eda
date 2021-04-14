@@ -194,7 +194,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
     }
 
     lepton_object_set_visibility (object, VISIBLE);
-    o_text_recreate (object);
+    lepton_text_object_recreate (object);
   }
 
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
@@ -219,7 +219,7 @@ void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
 
   o_invalidate (w_current, object);
   object->show_name_value = show_name_value;
-  o_text_recreate (object);
+  lepton_text_object_recreate (object);
 
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
 }

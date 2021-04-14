@@ -114,7 +114,7 @@ lepton_text_object_translate (LeptonObject *object,
 /* older methods, need renaming */
 
 void
-o_text_recreate (LeptonObject *o_current);
+lepton_text_object_recreate (LeptonObject *o_current);
 
 void
 o_text_set_string (LeptonObject *obj,

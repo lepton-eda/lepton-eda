@@ -1771,7 +1771,7 @@ gschem_selection_adapter_set_text_alignment (GschemSelectionAdapter *adapter, in
     if (lepton_object_is_text (object))
     {
       lepton_text_object_set_alignment (object, alignment);
-      o_text_recreate (object);
+      lepton_text_object_recreate (object);
     }
 
     iter = g_list_next (iter);
@@ -1840,7 +1840,7 @@ gschem_selection_adapter_set_text_rotation (GschemSelectionAdapter *adapter, int
     if (lepton_object_is_text (object))
     {
       lepton_text_object_set_angle (object, angle);
-      o_text_recreate (object);
+      lepton_text_object_recreate (object);
     }
 
     iter = g_list_next (iter);
@@ -1875,7 +1875,7 @@ gschem_selection_adapter_set_text_size (GschemSelectionAdapter *adapter, int siz
     if (lepton_object_is_text (object))
     {
       lepton_text_object_set_size (object, size);
-      o_text_recreate (object);
+      lepton_text_object_recreate (object);
     }
 
     iter = g_list_next (iter);
@@ -1918,7 +1918,7 @@ gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const
         o_slot_end (w_current, object->attached_to, string);
       }
 
-      o_text_recreate (object);
+      lepton_text_object_recreate (object);
     }
 
     iter = g_list_next (iter);

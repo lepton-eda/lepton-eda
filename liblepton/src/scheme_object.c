@@ -1035,7 +1035,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   o_text_set_string (obj, tmp);
   free (tmp);
 
-  o_text_recreate (obj);
+  lepton_text_object_recreate (obj);
 
   /* Color */
   lepton_object_set_color (obj, scm_to_int (color_s));

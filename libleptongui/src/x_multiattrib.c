@@ -1153,7 +1153,7 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
     /* actually modifies the attribute */
     o_invalidate (w_current, o_attrib);
     lepton_object_set_visibility (o_attrib, new_visibility ? VISIBLE : INVISIBLE);
-    o_text_recreate (o_attrib);
+    lepton_text_object_recreate (o_attrib);
   }
 
   g_object_unref (attr_list);
@@ -1217,7 +1217,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
 
     /* actually modifies the attribute */
     o_attrib->show_name_value = new_snv;
-    o_text_recreate (o_attrib);
+    lepton_text_object_recreate (o_attrib);
   }
 
   g_object_unref (attr_list);
@@ -1281,7 +1281,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
 
     /* actually modifies the attribute */
     o_attrib->show_name_value = new_snv;
-    o_text_recreate (o_attrib);
+    lepton_text_object_recreate (o_attrib);
   }
 
   g_object_unref (attr_list);
