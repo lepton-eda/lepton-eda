@@ -340,4 +340,10 @@ lepton_object_emit_change_notify (LeptonObject *object);
 int
 lepton_object_get_whichend (LeptonObject *object);
 
+const char*
+lepton_object_visibility_to_string (gint visible);
+
+gint
+lepton_object_visibility_from_string (char *s);
+
 G_END_DECLS
