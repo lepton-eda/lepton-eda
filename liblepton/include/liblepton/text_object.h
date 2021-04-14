@@ -119,12 +119,11 @@ o_text_recreate (LeptonObject *o_current);
 void
 o_text_set_string (LeptonObject *obj,
                    const gchar *new_string);
-
 LeptonObject*
-o_text_read (const char *first_line,
-             TextBuffer *tb,
-             unsigned int release_ver,
-             unsigned int fileformat_ver,
-             GError **err);
+lepton_text_object_read (const char *first_line,
+                         TextBuffer *tb,
+                         unsigned int release_ver,
+                         unsigned int fileformat_ver,
+                         GError **err);
 
 G_END_DECLS

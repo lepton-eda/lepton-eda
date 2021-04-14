@@ -189,11 +189,11 @@ check_serialization ()
                                        "test_text_object.c::check_serialization()");
     const gchar *line = s_textbuffer_next_line (tb);
 
-    LeptonObject *object1 = o_text_read (line,
-                                       tb,
-                                       version,
-                                       FILEFORMAT_VERSION,
-                                       NULL);
+    LeptonObject *object1 = lepton_text_object_read (line,
+                                                     tb,
+                                                     version,
+                                                     FILEFORMAT_VERSION,
+                                                     NULL);
 
     g_assert (object1 != NULL);
     s_textbuffer_free (tb);

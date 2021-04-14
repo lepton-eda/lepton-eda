@@ -464,11 +464,11 @@ lepton_text_object_new (gint color,
  *  \return The object list, or NULL on error.
  */
 LeptonObject*
-o_text_read (const char *first_line,
-             TextBuffer *tb,
-             unsigned int release_ver,
-             unsigned int fileformat_ver,
-             GError **err)
+lepton_text_object_read (const char *first_line,
+                         TextBuffer *tb,
+                         unsigned int release_ver,
+                         unsigned int fileformat_ver,
+                         GError **err)
 {
   LeptonObject *new_obj;
   char type;

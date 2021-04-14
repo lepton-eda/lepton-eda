@@ -193,7 +193,7 @@ GList
         break;
 
       case(OBJ_TEXT):
-        new_obj = o_text_read (line, tb, release_ver, fileformat_ver, err);
+        new_obj = lepton_text_object_read (line, tb, release_ver, fileformat_ver, err);
         if (new_obj == NULL)
           goto error;
         new_object_list = g_list_prepend (new_object_list, new_obj);
