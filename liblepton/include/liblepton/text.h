@@ -20,9 +20,9 @@
 /*! \file text.h
  */
 
-typedef struct st_text LeptonText;
+typedef struct _LeptonText LeptonText;
 
-struct st_text
+struct _LeptonText
 {
   int x, y;             /* world origin */
 
@@ -32,7 +32,7 @@ struct st_text
   int size;
   int alignment;
   int angle;
-  const gchar *name;    /* not owned by st_text */
+  const gchar *name;    /* not owned by _LeptonText */
 
   /* Attribute stuff. */
   int show;
