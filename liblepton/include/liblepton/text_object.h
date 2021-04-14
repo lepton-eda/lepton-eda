@@ -146,4 +146,10 @@ lepton_text_object_alignment_to_string (gint alignment);
 gint
 lepton_text_object_alignment_from_string (char *s);
 
+const char*
+lepton_text_object_show_to_string (gint show);
+
+gint
+lepton_text_object_show_from_string (char *s);
+
 G_END_DECLS
