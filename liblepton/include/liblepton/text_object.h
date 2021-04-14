@@ -74,7 +74,7 @@ gint
 lepton_text_object_get_y (const LeptonObject *object);
 
 gint
-lepton_text_object_get_show_name_value (const LeptonObject *object);
+lepton_text_object_get_show (const LeptonObject *object);
 
 void
 lepton_text_object_mirror (int world_centerx,
@@ -101,8 +101,8 @@ void
 lepton_text_object_set_y (LeptonObject *object,
                           gint y);
 void
-lepton_text_object_set_show_name_value (LeptonObject *object,
-                                        gint show);
+lepton_text_object_set_show (LeptonObject *object,
+                             gint show);
 double
 lepton_text_object_shortest_distance (LeptonObject *object,
                                       int x,

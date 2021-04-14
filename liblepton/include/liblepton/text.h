@@ -35,5 +35,5 @@ struct st_text
   const gchar *name;    /* not owned by st_text */
 
   /* Attribute stuff. */
-  int show_name_value;
+  int show;
 };

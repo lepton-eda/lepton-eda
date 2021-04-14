@@ -244,18 +244,18 @@ lepton_text_object_get_y (const LeptonObject *object)
   return object->text->y;
 }
 
-/*! \brief Get the \a show_name_value field of a text object.
+/*! \brief Get the \a show field of a text object.
  *
  *  \param [in] object The text object.
- *  \return The value of the field \a show_name_value.
+ *  \return The value of the field \a show.
  */
 gint
-lepton_text_object_get_show_name_value (const LeptonObject *object)
+lepton_text_object_get_show (const LeptonObject *object)
 {
   g_return_val_if_fail (lepton_object_is_text (object), VISIBLE);
   g_return_val_if_fail (object->text != NULL, VISIBLE);
 
-  return object->text->show_name_value;
+  return object->text->show;
 }
 
 /*! \brief Set the text alignment
@@ -349,19 +349,19 @@ lepton_text_object_set_y (LeptonObject *object,
 }
 
 
-/*! \brief Set \a show_name_value field of a text object.
+/*! \brief Set \a show field of a text object.
  *
  *  \param object The #LeptonObject structure to be modified.
- *  \param show The new value of the field \a show_name_value.
+ *  \param show The new value of the field \a show.
  */
 void
-lepton_text_object_set_show_name_value (LeptonObject *object,
-                                        gint show)
+lepton_text_object_set_show (LeptonObject *object,
+                             gint show)
 {
   g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
 
-  object->text->show_name_value = show;
+  object->text->show = show;
 }
 
 /*! \brief update the visible part of a string
@@ -369,7 +369,7 @@ lepton_text_object_set_show_name_value (LeptonObject *object,
  *  If a string is an attribute, then it is possible to hide
  *  the name or the value part of the attribute string.
  *  This functions updates the text->disp_string according
- *  to the object->show_name_value settings
+ *  to the object->text->show settings
  *
  *  \param [in] object  The LeptonObject to update
  */
@@ -383,7 +383,7 @@ update_disp_string (LeptonObject *object)
   g_free (text->disp_string);
 
   if (o_attrib_get_name_value (object, &name, &value)) {
-    switch (lepton_text_object_get_show_name_value (object))
+    switch (lepton_text_object_get_show (object))
     {
       case (SHOW_NAME_VALUE):
         text->disp_string = g_strdup (text->string);
@@ -474,7 +474,7 @@ lepton_text_object_new (gint color,
 
   lepton_object_set_color (new_node, color);
   lepton_object_set_visibility (new_node, visibility);
-  lepton_text_object_set_show_name_value (new_node, show_name_value);
+  lepton_text_object_set_show (new_node, show_name_value);
 
   update_disp_string (new_node);
 
@@ -665,7 +665,7 @@ lepton_text_object_to_buffer (const LeptonObject *object)
                           lepton_object_get_color (object),
                           lepton_text_object_get_size (object),
                           lepton_object_get_visibility (object),
-                          lepton_text_object_get_show_name_value (object),
+                          lepton_text_object_get_show (object),
                           lepton_text_object_get_angle (object),
                           lepton_text_object_get_alignment (object),
                           o_text_num_lines (string),
@@ -730,7 +730,7 @@ lepton_text_object_copy (const LeptonObject *object)
                                     object->text->string,
                                     object->text->size,
                                     lepton_object_get_visibility (object),
-                                    lepton_text_object_get_show_name_value (object));
+                                    lepton_text_object_get_show (object));
 
   return new_obj;
 }

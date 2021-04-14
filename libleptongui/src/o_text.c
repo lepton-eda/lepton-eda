@@ -110,7 +110,7 @@ void o_text_change(GschemToplevel *w_current, LeptonObject *object, char *string
   lepton_text_object_set_string (object, string);
 
   lepton_object_set_visibility (object, visibility);
-  lepton_text_object_set_show_name_value (object, show);
+  lepton_text_object_set_show (object, show);
   lepton_text_object_recreate (object);
 
   /* handle slot= attribute, it's a special case */

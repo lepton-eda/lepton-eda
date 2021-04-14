@@ -201,7 +201,7 @@ s_object_replace_attrib_in_object(LeptonObject *o_current,
         if (visibility != LEAVE_VISIBILITY_ALONE)
           lepton_object_set_visibility (a_current, visibility);
         if (show_name_value != LEAVE_NAME_VALUE_ALONE)
-          lepton_text_object_set_show_name_value (a_current, show_name_value);
+          lepton_text_object_set_show (a_current, show_name_value);
         g_free(new_attrib_text);
         g_free(old_attrib_text);
         g_free(old_attrib_name);

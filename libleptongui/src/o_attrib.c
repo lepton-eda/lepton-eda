@@ -218,7 +218,7 @@ void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
   g_return_if_fail (lepton_object_is_text (object));
 
   o_invalidate (w_current, object);
-  lepton_text_object_set_show_name_value (object, show_name_value);
+  lepton_text_object_set_show (object, show_name_value);
   lepton_text_object_recreate (object);
 
   gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
