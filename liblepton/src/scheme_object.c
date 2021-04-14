@@ -1026,7 +1026,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   lepton_text_object_set_angle (obj, angle);
 
   lepton_text_object_set_size (obj, scm_to_int (size_s));
-  obj->visibility = visibility;
+  lepton_object_set_visibility (obj, visibility);
   lepton_text_object_set_show (obj, show);
 
   lepton_object_emit_change_notify (obj);
@@ -1091,13 +1091,14 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
                     scm_list_2 (text_s, scm_from_int (lepton_text_object_get_alignment (obj))));
   }
 
-  switch (obj->visibility) {
+  switch (lepton_object_get_visibility (obj))
+  {
   case VISIBLE:   visible_s = SCM_BOOL_T; break;
   case INVISIBLE: visible_s = SCM_BOOL_F; break;
   default:
     scm_misc_error (s_text_info,
                     _("Text object ~A has invalid visibility ~A"),
-                    scm_list_2 (text_s, scm_from_int (obj->visibility)));
+                    scm_list_2 (text_s, scm_from_int (lepton_object_get_visibility (obj))));
   }
 
   switch (lepton_text_object_get_show (obj))
