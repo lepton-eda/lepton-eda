@@ -84,6 +84,7 @@
             lepton_object_mirror
             lepton_object_rotate
             lepton_object_translate
+            lepton_object_visibility_from_string
 
             lepton_arc_object_get_center_x
             lepton_arc_object_set_center_x
@@ -141,6 +142,10 @@
             lepton_pin_object_new_bus_pin
             lepton_pin_object_new_net_pin
             lepton_pin_object_modify
+
+            lepton_text_object_alignment_from_string
+            lepton_text_object_new
+            lepton_text_object_show_from_string
 
             lepton_fill_type_from_string
             lepton_fill_type_to_string
@@ -267,6 +272,7 @@
 (define-lff lepton_object_mirror void (list int int '*))
 (define-lff lepton_object_rotate void (list int int int '*))
 (define-lff lepton_object_translate void (list '* int int))
+(define-lff lepton_object_visibility_from_string int '(*))
 
 (define-lff lepton_object_page_set_changed void '(*))
 
@@ -326,6 +332,10 @@
 (define-lff lepton_pin_object_new_bus_pin '* (list int int int int int int))
 (define-lff lepton_pin_object_new_net_pin '* (list int int int int int int))
 (define-lff lepton_pin_object_modify void (list '* int int int))
+
+(define-lff lepton_text_object_alignment_from_string int '(*))
+(define-lff lepton_text_object_show_from_string int '(*))
+(define-lff lepton_text_object_new '* (list int int int int int '* int int int))
 
 (define-lff lepton_fill_type_from_string int '(*))
 (define-lff lepton_fill_type_to_string '* (list int))
