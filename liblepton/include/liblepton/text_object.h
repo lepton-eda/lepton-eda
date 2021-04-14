@@ -140,4 +140,10 @@ lepton_text_object_set_visibility (LeptonObject *object,
 gint
 lepton_text_object_get_visibility (const LeptonObject *object);
 
+const char*
+lepton_text_object_alignment_to_string (gint alignment);
+
+gint
+lepton_text_object_alignment_from_string (char *s);
+
 G_END_DECLS

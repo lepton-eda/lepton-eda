@@ -1003,3 +1003,45 @@ lepton_text_object_set_visibility (LeptonObject *object,
 
   object->text->visibility = visibility;
 }
+
+
+const char*
+lepton_text_object_alignment_to_string (gint alignment)
+{
+  const char *result = NULL;
+
+  switch (alignment)
+  {
+  case LOWER_LEFT: result = "lower-left"; break;
+  case MIDDLE_LEFT: result = "middle-left"; break;
+  case UPPER_LEFT: result = "upper-left"; break;
+  case LOWER_MIDDLE: result = "lower-center"; break;
+  case MIDDLE_MIDDLE: result = "middle-center"; break;
+  case UPPER_MIDDLE: result = "upper-center"; break;
+  case LOWER_RIGHT: result = "lower-right"; break;
+  case MIDDLE_RIGHT: result = "middle-right"; break;
+  case UPPER_RIGHT: result = "upper-right"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+gint
+lepton_text_object_alignment_from_string (char *s)
+{
+  gint result = LOWER_LEFT;
+
+  if      (strcmp (s, "lower-left") == 0) { result = LOWER_LEFT; }
+  else if (strcmp (s, "middle-left") == 0) { result = MIDDLE_LEFT; }
+  else if (strcmp (s, "upper-left") == 0) { result = UPPER_LEFT; }
+  else if (strcmp (s, "lower-center") == 0) { result = LOWER_MIDDLE; }
+  else if (strcmp (s, "middle-center") == 0) { result = MIDDLE_MIDDLE; }
+  else if (strcmp (s, "upper-center") == 0) { result = UPPER_MIDDLE; }
+  else if (strcmp (s, "lower-right") == 0) { result = LOWER_RIGHT; }
+  else if (strcmp (s, "middle-right") == 0) { result = MIDDLE_RIGHT; }
+  else if (strcmp (s, "upper-right") == 0) { result = UPPER_RIGHT; }
+
+  return result;
+}
