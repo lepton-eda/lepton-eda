@@ -401,7 +401,10 @@ void o_select_box_search(GschemToplevel *w_current)
   while (iter != NULL) {
     o_current = (LeptonObject*) iter->data;
     /* only select visible objects */
-    if (lepton_text_object_is_visible (o_current) || show_hidden_text) {
+    if (!lepton_object_is_text (o_current) ||
+        lepton_text_object_is_visible (o_current) ||
+        show_hidden_text)
+    {
       int cleft, ctop, cright, cbottom;
 
       if (lepton_object_calculate_visible_bounds (o_current,
