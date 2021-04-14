@@ -244,6 +244,20 @@ lepton_text_object_get_y (const LeptonObject *object)
   return object->text->y;
 }
 
+/*! \brief Get the \a show_name_value field of a text object.
+ *
+ *  \param [in] object The text object.
+ *  \return The value of the field \a show_name_value.
+ */
+gint
+lepton_text_object_get_show_name_value (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_text (object), VISIBLE);
+  g_return_val_if_fail (object->text != NULL, VISIBLE);
+
+  return object->show_name_value;
+}
+
 /*! \brief Set the text alignment
  *
  *  In case of an invalid text alignment, the property remains unchanged.
@@ -332,6 +346,22 @@ lepton_text_object_set_y (LeptonObject *object,
   g_return_if_fail (object->text != NULL);
 
   object->text->y = y;
+}
+
+
+/*! \brief Set \a show_name_value field of a text object.
+ *
+ *  \param object The #LeptonObject structure to be modified.
+ *  \param show The new value of the field \a show_name_value.
+ */
+void
+lepton_text_object_set_show_name_value (LeptonObject *object,
+                                        gint show)
+{
+  g_return_if_fail (lepton_object_is_text (object));
+  g_return_if_fail (object->text != NULL);
+
+  object->show_name_value = show;
 }
 
 /*! \brief update the visible part of a string
