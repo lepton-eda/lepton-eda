@@ -1045,3 +1045,33 @@ lepton_text_object_alignment_from_string (char *s)
 
   return result;
 }
+
+
+const char*
+lepton_text_object_show_to_string (gint show)
+{
+  const char *result = NULL;
+
+  switch (show)
+  {
+  case SHOW_NAME: result = "name"; break;
+  case SHOW_VALUE: result = "value"; break;
+  case SHOW_NAME_VALUE: result = "both"; break;
+  default: break;
+  }
+
+  return result;
+}
+
+
+gint
+lepton_text_object_show_from_string (char *s)
+{
+  gint result = SHOW_NAME;
+
+  if      (strcmp (s, "name") == 0) { result = SHOW_NAME; }
+  else if (strcmp (s, "value") == 0) { result = SHOW_VALUE; }
+  else if (strcmp (s, "both") == 0) { result = SHOW_NAME_VALUE; }
+
+  return result;
+}
