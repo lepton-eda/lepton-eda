@@ -944,7 +944,9 @@ lepton_text_object_set_string (LeptonObject *obj,
 gboolean
 lepton_text_object_is_visible (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, FALSE);
+  g_return_val_if_fail (lepton_object_is_text (object), FALSE);
+  g_return_val_if_fail (object->text != NULL, FALSE);
+
   return object->text->visibility == VISIBLE;
 }
 
@@ -956,7 +958,8 @@ lepton_text_object_is_visible (const LeptonObject *object)
 gint
 lepton_text_object_get_visibility (const LeptonObject *object)
 {
-  g_return_val_if_fail (object != NULL, VISIBLE);
+  g_return_val_if_fail (lepton_object_is_text (object), VISIBLE);
+  g_return_val_if_fail (object->text != NULL, VISIBLE);
 
   return object->text->visibility;
 }
@@ -970,6 +973,8 @@ void
 lepton_text_object_set_visibility (LeptonObject *object,
                                    int visibility)
 {
-  g_return_if_fail (object != NULL);
+  g_return_if_fail (lepton_object_is_text (object));
+  g_return_if_fail (object->text != NULL);
+
   object->text->visibility = visibility;
 }
