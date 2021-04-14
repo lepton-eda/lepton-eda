@@ -1678,7 +1678,6 @@ lepton_object_new (int type,
   new_node->attribs = NULL;
   new_node->attached_to = NULL;
   new_node->copied_to = NULL;
-  new_node->show_name_value = SHOW_NAME_VALUE;
   new_node->visibility = VISIBLE;
 
   new_node->pin_type = PIN_TYPE_NET;

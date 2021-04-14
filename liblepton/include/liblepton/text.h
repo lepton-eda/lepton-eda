@@ -33,4 +33,7 @@ struct st_text
   int alignment;
   int angle;
   const gchar *name;    /* not owned by st_text */
+
+  /* Attribute stuff. */
+  int show_name_value;
 };

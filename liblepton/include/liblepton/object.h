@@ -70,7 +70,6 @@ struct st_object
   int pin_type;    /* for pins only, either NET or BUS */
 
   GList *attribs;       /* attribute stuff */
-  int show_name_value;
   int visibility;
   LeptonObject *attached_to;  /* when object is an attribute */
   LeptonObject *copied_to;    /* used when copying attributes */

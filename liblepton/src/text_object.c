@@ -255,7 +255,7 @@ lepton_text_object_get_show_name_value (const LeptonObject *object)
   g_return_val_if_fail (lepton_object_is_text (object), VISIBLE);
   g_return_val_if_fail (object->text != NULL, VISIBLE);
 
-  return object->show_name_value;
+  return object->text->show_name_value;
 }
 
 /*! \brief Set the text alignment
@@ -361,7 +361,7 @@ lepton_text_object_set_show_name_value (LeptonObject *object,
   g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
 
-  object->show_name_value = show;
+  object->text->show_name_value = show;
 }
 
 /*! \brief update the visible part of a string
