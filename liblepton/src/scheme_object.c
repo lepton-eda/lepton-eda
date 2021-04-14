@@ -1027,7 +1027,7 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
 
   lepton_text_object_set_size (obj, scm_to_int (size_s));
   obj->visibility = visibility;
-  obj->show_name_value = show;
+  lepton_text_object_set_show_name_value (obj, show);
 
   lepton_object_emit_change_notify (obj);
 

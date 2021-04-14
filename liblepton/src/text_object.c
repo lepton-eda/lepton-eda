@@ -474,7 +474,7 @@ lepton_text_object_new (gint color,
 
   lepton_object_set_color (new_node, color);
   lepton_object_set_visibility (new_node, visibility);
-  new_node->show_name_value = show_name_value;
+  lepton_text_object_set_show_name_value (new_node, show_name_value);
 
   update_disp_string (new_node);
 

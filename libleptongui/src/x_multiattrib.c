@@ -1222,7 +1222,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
     o_invalidate (w_current, o_attrib);
 
     /* actually modifies the attribute */
-    o_attrib->show_name_value = new_snv;
+    lepton_text_object_set_show_name_value (o_attrib, new_snv);
     lepton_text_object_recreate (o_attrib);
   }
 
@@ -1286,7 +1286,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
     o_invalidate (w_current, o_attrib);
 
     /* actually modifies the attribute */
-    o_attrib->show_name_value = new_snv;
+    lepton_text_object_set_show_name_value (o_attrib, new_snv);
     lepton_text_object_recreate (o_attrib);
   }
 
