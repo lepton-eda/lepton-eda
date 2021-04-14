@@ -86,7 +86,9 @@
             make-net
 
             make-bus-pin
-            make-net-pin)
+            make-net-pin
+
+            make-text)
 
   #:re-export (arc?
                box?
@@ -747,9 +749,67 @@ of the arc."
   (%set-text! t (car anchor) (cdr anchor) align angle string size visible show
               (if (not color) (object-color t) color)))
 
-(define*-public (make-text . args)
-  (let ((t (%make-text)))
-    (apply set-text! t args)))
+(define* (make-text anchor align angle string size visible show
+                    #:optional color)
+  "Creates and returns a new text object.  ANCHOR is the position
+of the anchor of the new text in the form '(x . y), and ALIGN is a
+symbol determining how the text should be aligned relative to the
+anchor.  ALIGN must be one of the following symbols:
+  - 'lower-left
+  - 'middle-left
+  - 'upper-left
+  - 'lower-center
+  - 'middle-center
+  - 'upper-center
+  - 'lower-right
+  - 'middle-right
+  - 'upper-right
+For example, if ALIGN is 'upper-center, the anchor will be located
+at the top center of the rendered text block.
+
+ANGLE should be an integer multiple of 90 degrees, determining the
+angle which the text should be displayed at.  STRING is the string
+contents for the text object.  SIZE is the font size to use.  If
+VISIBLE is #f, the text will be invisible; otherwise, it will be
+visible.
+
+When the STRING is in an attribute format, the SHOW argument
+determines which parts of the STRING will be displayed.  It must
+be one of the following symbols:
+  - 'name
+  - 'value
+  - 'both
+If COLOR is specified, it should be the integer color map index of
+the color with which to draw the text.  If COLOR is not specified,
+the default text color is used."
+  (let* ((init-color (default_color_id))
+         (init-anchor-x 0)
+         (init-anchor-y 0)
+         (init-alignment
+          (lepton_text_object_alignment_from_string
+           (string->pointer "lower-left")))
+         (init-angle 0)
+         (init-string (string->pointer ""))
+         (init-size 10)
+         (init-visibility
+          (lepton_object_visibility_from_string
+           (string->pointer "visible")))
+         (init-show
+          (lepton_text_object_show_from_string
+           (string->pointer "both")))
+         (object
+          (pointer->geda-object
+           (lepton_text_object_new init-color
+                                   init-anchor-x
+                                   init-anchor-y
+                                   init-alignment
+                                   init-angle
+                                   init-string
+                                   init-size
+                                   init-visibility
+                                   init-show))))
+    (set-text! object anchor align angle string size visible show
+               (or color init-color))))
 
 (define-public (text-info t)
   (let* ((params (%text-info t))

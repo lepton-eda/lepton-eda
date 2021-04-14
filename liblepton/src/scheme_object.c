@@ -136,39 +136,6 @@ edascm_is_object_type (SCM smob, int type)
   return (lepton_object_get_type (obj) == type);
 }
 
-
-/*! \brief Create a new text item.
- * \par Function Description
- * Creates a new text object, with all its parameters set to default
- * values.
- *
- * \note Scheme API: Implements the %make-text procedure in the
- * (lepton core object) module.
- *
- * \return a newly-created text object.
- */
-SCM_DEFINE (make_text, "%make-text", 0, 0, 0,
-            (), "Create a new text object.")
-{
-  LeptonObject *obj = lepton_text_object_new (default_color_id(),
-                                              0,
-                                              0,
-                                              LOWER_LEFT,
-                                              0,
-                                              "",
-                                              10,
-                                              VISIBLE,
-                                              SHOW_NAME_VALUE);
-
-  SCM result = edascm_from_object (obj);
-
-  /* At the moment, the only pointer to the object is owned by the
-   * smob. */
-  edascm_c_set_gc (result, 1);
-
-  return result;
-}
-
 /*! \brief Set text parameters.
  * \par Function Description
  * Modifies a text object by setting its parameters to new values.
@@ -918,8 +885,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_make_text,
-                s_set_text_x,
+  scm_c_export (s_set_text_x,
                 s_text_info,
                 s_object_connections,
                 s_make_path,
