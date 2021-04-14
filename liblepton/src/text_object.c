@@ -89,7 +89,7 @@ lepton_text_object_calculate_bounds (const LeptonObject *object,
                                      gboolean include_hidden,
                                      LeptonBounds *bounds)
 {
-  if (! (lepton_object_is_visible (object) || include_hidden))
+  if (! (lepton_text_object_is_visible (object) || include_hidden))
     return FALSE;
 
   lepton_bounds_init (bounds);
@@ -473,7 +473,7 @@ lepton_text_object_new (gint color,
   new_node->text = text;
 
   lepton_object_set_color (new_node, color);
-  lepton_object_set_visibility (new_node, visibility);
+  lepton_text_object_set_visibility (new_node, visibility);
   lepton_text_object_set_show (new_node, show_name_value);
 
   update_disp_string (new_node);
@@ -664,7 +664,7 @@ lepton_text_object_to_buffer (const LeptonObject *object)
                           lepton_text_object_get_y (object),
                           lepton_object_get_color (object),
                           lepton_text_object_get_size (object),
-                          lepton_object_get_visibility (object),
+                          lepton_text_object_get_visibility (object),
                           lepton_text_object_get_show (object),
                           lepton_text_object_get_angle (object),
                           lepton_text_object_get_alignment (object),
@@ -729,7 +729,7 @@ lepton_text_object_copy (const LeptonObject *object)
                                     object->text->angle,
                                     object->text->string,
                                     object->text->size,
-                                    lepton_object_get_visibility (object),
+                                    lepton_text_object_get_visibility (object),
                                     lepton_text_object_get_show (object));
 
   return new_obj;
@@ -931,4 +931,45 @@ lepton_text_object_set_string (LeptonObject *obj,
   obj->text->string = g_strdup (new_string);
 
   lepton_text_object_recreate (obj);
+}
+
+
+/*! \brief Query visibility of a text object.
+ *  \par Function Description
+ *  Attribute getter for the visible field within the object.
+ *
+ *  \param object The text #LeptonObject structure to be queried.
+ *  \return TRUE when VISIBLE, FALSE otherwise.
+ */
+gboolean
+lepton_text_object_is_visible (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, FALSE);
+  return object->text->visibility == VISIBLE;
+}
+
+/*! \brief Get the visibility of a text object.
+ *
+ *  \param [in] object The text #LeptonObject structure to be queried.
+ *  \return VISIBLE or INVISIBLE
+ */
+gint
+lepton_text_object_get_visibility (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, VISIBLE);
+
+  return object->text->visibility;
+}
+
+/*! \brief Set visibility of a text object.
+ *
+ *  \param object     The text #LeptonObject structure to be modified.
+ *  \param visibility If the object should be visible.
+ */
+void
+lepton_text_object_set_visibility (LeptonObject *object,
+                                   int visibility)
+{
+  g_return_if_fail (object != NULL);
+  object->text->visibility = visibility;
 }

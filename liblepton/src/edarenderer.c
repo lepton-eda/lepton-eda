@@ -793,7 +793,7 @@ eda_renderer_draw_text (EdaRenderer *renderer, LeptonObject *object)
   double dummy = 0, small_dist = TEXT_MARKER_SIZE;
 
   /* First check if this is hidden text. */
-  if (!lepton_object_is_visible (object)
+  if (!lepton_text_object_is_visible (object)
       && !EDA_RENDERER_CHECK_FLAG (renderer, FLAG_TEXT_HIDDEN)) {
     return;
   }
@@ -827,7 +827,7 @@ eda_renderer_draw_text (EdaRenderer *renderer, LeptonObject *object)
 
   /* If the text is flagged invisible, and we're showing hidden text,
    * draw a little "I". */
-  if (lepton_object_is_visible (object))
+  if (lepton_text_object_is_visible (object))
     return;
 
   /* Check that color is enabled */
@@ -1300,7 +1300,7 @@ eda_renderer_draw_text_grips (EdaRenderer *renderer, LeptonObject *object)
   int y = object->text->y;
 
   /* First check if this is hidden text. */
-  if (!lepton_object_is_visible (object)
+  if (!lepton_text_object_is_visible (object)
       && !EDA_RENDERER_CHECK_FLAG (renderer, FLAG_TEXT_HIDDEN)) {
     return;
   }
@@ -1550,7 +1550,7 @@ eda_renderer_get_text_user_bounds (const LeptonObject *object,
   gboolean result = FALSE;
 
   /* First check if this is hidden text. */
-  if (!lepton_object_is_visible (object) && !enable_hidden) {
+  if (!lepton_text_object_is_visible (object) && !enable_hidden) {
     return FALSE;
   }
 

@@ -70,7 +70,6 @@ struct st_object
   int pin_type;    /* for pins only, either NET or BUS */
 
   GList *attribs;       /* attribute stuff */
-  int visibility;
   LeptonObject *attached_to;  /* when object is an attribute */
   LeptonObject *copied_to;    /* used when copying attributes */
 
@@ -160,9 +159,6 @@ lepton_object_get_position (const LeptonObject *object,
 gboolean
 lepton_object_get_selectable (const LeptonObject *object);
 
-gint
-lepton_object_get_visibility (const LeptonObject *object);
-
 void
 lepton_object_rotate (int world_centerx,
                       int world_centery,
@@ -247,9 +243,6 @@ lepton_object_page_set_changed (LeptonObject *object);
 LeptonObject*
 lepton_object_get_parent (LeptonObject *object);
 
-gboolean
-lepton_object_is_visible (const LeptonObject *object);
-
 void
 lepton_object_set_color (LeptonObject *object,
                          int color);
@@ -269,9 +262,6 @@ lepton_object_set_line_options (LeptonObject *o_current,
                                 int width,
                                 int length,
                                 int space);
-void
-lepton_object_set_visibility (LeptonObject *object,
-                              int visibility);
 void
 lepton_object_add_change_notify (LeptonToplevel *toplevel,
                                  ChangeNotifyFunc pre_change_func,

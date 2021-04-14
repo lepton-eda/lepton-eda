@@ -1428,46 +1428,6 @@ lepton_object_emit_change_notify (LeptonObject *object)
   }
 }
 
-/*! \brief Query visibility of the object.
- *  \par Function Description
- *  Attribute getter for the visible field within the object.
- *
- *  \param object   The LeptonObject structure to be queried
- *  \return TRUE when VISIBLE, FALSE otherwise
- */
-gboolean
-lepton_object_is_visible (const LeptonObject *object)
-{
-  g_return_val_if_fail (object != NULL, FALSE);
-  return object->visibility == VISIBLE;
-}
-
-/*! \brief Get the visibility of an object
- *
- *  \param [in] object The LeptonObject structure to be queried
- *  \return VISIBLE or INVISIBLE
- */
-gint
-lepton_object_get_visibility (const LeptonObject *object)
-{
-  g_return_val_if_fail (object != NULL, VISIBLE);
-
-  return object->visibility;
-}
-
-/*! \brief Set visibility of the object.
- *
- *  \param object     The #LeptonObject structure to be modified
- *  \param visibility If the object should be visible
- */
-void
-lepton_object_set_visibility (LeptonObject *object,
-                              int visibility)
-{
-  g_return_if_fail (object != NULL);
-  object->visibility = visibility;
-}
-
 /*! \brief Return the bounds of the given object.
  *  \par Given an object, calculate the bounds coordinates.
  *
@@ -1497,7 +1457,7 @@ lepton_object_calculate_visible_bounds (LeptonObject *o_current,
   /* only do bounding boxes for visible or doing show_hidden_text*/
   /* you might lose some attrs though */
   if (lepton_object_is_text (o_current) &&
-      ! (lepton_object_is_visible (o_current) || include_hidden)) {
+      ! (lepton_text_object_is_visible (o_current) || include_hidden)) {
     return 0;
   }
 
@@ -1678,7 +1638,6 @@ lepton_object_new (int type,
   new_node->attribs = NULL;
   new_node->attached_to = NULL;
   new_node->copied_to = NULL;
-  lepton_object_set_visibility (new_node, VISIBLE);
 
   new_node->pin_type = PIN_TYPE_NET;
   new_node->whichend = -1;

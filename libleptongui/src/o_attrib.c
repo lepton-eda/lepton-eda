@@ -112,7 +112,7 @@ o_attrib_deselect_invisible (GschemToplevel *w_current,
        a_iter = g_list_next (a_iter)) {
     a_current = (LeptonObject*) a_iter->data;
 
-    if (a_current->selected && !lepton_object_is_visible (a_current)) {
+    if (a_current->selected && !lepton_text_object_is_visible (a_current)) {
       o_selection_remove (selection, a_current);
     }
   }
@@ -149,7 +149,7 @@ o_attrib_select_invisible (GschemToplevel *w_current,
        a_iter = g_list_next (a_iter)) {
     a_current = (LeptonObject*) a_iter->data;
 
-    if (!a_current->selected && !lepton_object_is_visible (a_current)) {
+    if (!a_current->selected && !lepton_text_object_is_visible (a_current)) {
       o_selection_add (selection, a_current);
     }
   }
@@ -173,13 +173,13 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
 
-  if (lepton_object_is_visible (object)) {
+  if (lepton_text_object_is_visible (object)) {
     /* only erase if we are not showing hidden text */
     if (!show_hidden_text) {
       o_invalidate (w_current, object);
     }
 
-    lepton_object_set_visibility (object, INVISIBLE);
+    lepton_text_object_set_visibility (object, INVISIBLE);
 
     if (show_hidden_text) {
       /* draw text so that little I is drawn */
@@ -193,7 +193,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
       o_invalidate (w_current, object);
     }
 
-    lepton_object_set_visibility (object, VISIBLE);
+    lepton_text_object_set_visibility (object, VISIBLE);
     lepton_text_object_recreate (object);
   }
 

@@ -512,7 +512,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
   if (attr_obj) {
     o_attrib_get_name_value (attr_obj, &name, &val);
     attrib = attr_obj;
-    if (lepton_object_is_visible (attrib)) {
+    if (lepton_text_object_is_visible (attrib)) {
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), TRUE);
     } else {
       gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(visbutton), FALSE);

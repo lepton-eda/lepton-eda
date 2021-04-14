@@ -36,4 +36,5 @@ struct st_text
 
   /* Attribute stuff. */
   int show;
+  int visibility;
 };

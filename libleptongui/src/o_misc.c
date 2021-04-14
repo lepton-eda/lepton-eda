@@ -322,7 +322,7 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
   while (iter != NULL) {
     o_current = (LeptonObject *)iter->data;
     if (lepton_object_is_text (o_current) &&
-        !lepton_object_is_visible (o_current))
+        !lepton_text_object_is_visible (o_current))
     {
 
       /* don't toggle the visibility flag */
@@ -386,8 +386,8 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
     {
       const gchar *str = lepton_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
-        if (lepton_object_is_visible (o_current)) {
-          lepton_object_set_visibility (o_current, INVISIBLE);
+        if (lepton_text_object_is_visible (o_current)) {
+          lepton_text_object_set_visibility (o_current, INVISIBLE);
           lepton_text_object_recreate (o_current);
 
           gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
@@ -421,8 +421,8 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
     {
       const gchar *str = lepton_text_object_get_string (o_current);
       if (!strncmp (stext, str, strlen (stext))) {
-        if (!lepton_object_is_visible (o_current)) {
-          lepton_object_set_visibility (o_current, VISIBLE);
+        if (!lepton_text_object_is_visible (o_current)) {
+          lepton_text_object_set_visibility (o_current, VISIBLE);
           lepton_text_object_recreate (o_current);
 
           gschem_toplevel_page_content_changed (w_current, toplevel->page_current);

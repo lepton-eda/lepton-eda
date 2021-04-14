@@ -640,7 +640,7 @@ multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
     /* create a new attribute and link it */
     o_attrib_add_attrib (w_current,
                          lepton_text_object_get_string (o_attrib),
-                         lepton_object_is_visible (o_attrib),
+                         lepton_text_object_is_visible (o_attrib),
                          lepton_text_object_get_show (o_attrib),
                          o_attrib->attached_to);
   }
@@ -668,7 +668,7 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
        iter = g_list_next (iter)) {
     LeptonObject *o_attrib = (LeptonObject *)iter->data;
 
-    if (lepton_object_is_visible (o_attrib)) {
+    if (lepton_text_object_is_visible (o_attrib)) {
       /* If the attribute we're promoting is visible, don't clone its location */
       o_attrib_add_attrib (w_current,
                            lepton_text_object_get_string (o_attrib),
@@ -747,7 +747,7 @@ multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
       /* Pick the first instance to copy from */
       LeptonObject *attrib_to_copy = (LeptonObject*) attr_list->data;
 
-      int visibility = lepton_object_is_visible (attrib_to_copy)
+      int visibility = lepton_text_object_is_visible (attrib_to_copy)
           ? VISIBLE : INVISIBLE;
 
       /* create a new attribute and link it */
@@ -1003,7 +1003,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
        a_iter = g_list_next (a_iter)) {
     o_attrib = (LeptonObject*) a_iter->data;
 
-    visibility = lepton_object_is_visible (o_attrib)
+    visibility = lepton_text_object_is_visible (o_attrib)
         ? VISIBLE : INVISIBLE;
 
     /* actually modifies the attribute */
@@ -1093,7 +1093,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
        a_iter = g_list_next (a_iter)) {
     o_attrib = (LeptonObject *)a_iter->data;
 
-    visibility = lepton_object_is_visible (o_attrib)
+    visibility = lepton_text_object_is_visible (o_attrib)
         ? VISIBLE : INVISIBLE;
 
     /* actually modifies the attribute */
@@ -1158,7 +1158,7 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
 
     /* actually modifies the attribute */
     o_invalidate (w_current, o_attrib);
-    lepton_object_set_visibility (o_attrib, new_visibility ? VISIBLE : INVISIBLE);
+    lepton_text_object_set_visibility (o_attrib, new_visibility ? VISIBLE : INVISIBLE);
     lepton_text_object_recreate (o_attrib);
   }
 
@@ -2537,7 +2537,7 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, LeptonObject *object)
 
     m_row->inherited = o_attrib_is_inherited (a_current);
     o_attrib_get_name_value (a_current, &m_row->name, &m_row->value);
-    m_row->visibility = lepton_object_is_visible (a_current);
+    m_row->visibility = lepton_text_object_is_visible (a_current);
     m_row->show_name_value = lepton_text_object_get_show (a_current);
     m_row->nth_with_name = 0; /* Provisional value until we check below */
 
@@ -2609,7 +2609,7 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
     m_row = g_new0 (MODEL_ROW, 1);
     m_row->inherited = o_attrib_is_inherited (object);
     o_attrib_get_name_value (object, &m_row->name, &m_row->value);
-    m_row->visibility = lepton_object_is_visible (object);
+    m_row->visibility = lepton_text_object_is_visible (object);
     m_row->show_name_value = lepton_text_object_get_show (object);
     m_row->nth_with_name = 0; /* All selected attributes are treated individually */
 

@@ -51,7 +51,7 @@ check_construction ()
     g_assert_cmpint (angle, ==, lepton_text_object_get_angle (object0));
     g_assert_cmpint (size, ==, lepton_text_object_get_size (object0));
     g_assert_cmpint (color, ==, lepton_object_get_color (object0));
-    g_assert_cmpint (visible, ==, lepton_object_get_visibility (object0));
+    g_assert_cmpint (visible, ==, lepton_text_object_get_visibility (object0));
     g_assert_cmpstr (string, ==, lepton_text_object_get_string (object0));
 
     LeptonObject *object1 = lepton_text_object_copy (object0);
@@ -68,7 +68,7 @@ check_construction ()
     g_assert_cmpint (angle, ==, lepton_text_object_get_angle (object1));
     g_assert_cmpint (size, ==, lepton_text_object_get_size (object1));
     g_assert_cmpint (color, ==, lepton_object_get_color (object1));
-    g_assert_cmpint (visible, ==, lepton_object_get_visibility (object1));
+    g_assert_cmpint (visible, ==, lepton_text_object_get_visibility (object1));
     g_assert_cmpstr (string, ==, lepton_text_object_get_string (object1));
 
     lepton_object_delete (object1);
@@ -123,7 +123,7 @@ check_accessors ()
     lepton_text_object_set_angle (object0, angle);
     lepton_text_object_set_size (object0, size);
     lepton_object_set_color (object0, color);
-    lepton_object_set_visibility (object0, visible);
+    lepton_text_object_set_visibility (object0, visible);
     lepton_text_object_set_string (object0, string);
 
     g_assert_cmpint (x, ==, lepton_text_object_get_x (object0));
@@ -132,7 +132,7 @@ check_accessors ()
     g_assert_cmpint (angle, ==, lepton_text_object_get_angle (object0));
     g_assert_cmpint (size, ==, lepton_text_object_get_size (object0));
     g_assert_cmpint (color, ==, lepton_object_get_color (object0));
-    g_assert_cmpint (visible, ==, lepton_object_get_visibility (object0));
+    g_assert_cmpint (visible, ==, lepton_text_object_get_visibility (object0));
     g_assert_cmpstr (string, ==, lepton_text_object_get_string (object0));
 
     gint temp_x;
@@ -204,7 +204,7 @@ check_serialization ()
     g_assert_cmpint (angle, ==, lepton_text_object_get_angle (object1));
     g_assert_cmpint (size, ==, lepton_text_object_get_size (object1));
     g_assert_cmpint (color, ==, lepton_object_get_color (object1));
-    g_assert_cmpint (visible, ==, lepton_object_get_visibility (object1));
+    g_assert_cmpint (visible, ==, lepton_text_object_get_visibility (object1));
     g_assert_cmpstr (string, ==, lepton_text_object_get_string (object1));
 
     gchar *buffer1 = lepton_text_object_to_buffer (object1);

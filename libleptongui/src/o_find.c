@@ -56,7 +56,7 @@ is_object_hit (GschemToplevel *w_current, LeptonObject *object,
 
   /* We can't hit invisible (text) objects unless show_hidden_text is active.
    */
-  if (!lepton_object_is_visible (object) &&
+  if (!lepton_text_object_is_visible (object) &&
       !show_hidden_text)
     return FALSE;
 

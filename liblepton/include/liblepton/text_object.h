@@ -131,5 +131,13 @@ lepton_text_object_read (const char *first_line,
                          unsigned int release_ver,
                          unsigned int fileformat_ver,
                          GError **err);
+gboolean
+lepton_text_object_is_visible (const LeptonObject *object);
+
+void
+lepton_text_object_set_visibility (LeptonObject *object,
+                                   int visibility);
+gint
+lepton_text_object_get_visibility (const LeptonObject *object);
 
 G_END_DECLS
