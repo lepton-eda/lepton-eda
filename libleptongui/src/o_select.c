@@ -614,8 +614,10 @@ o_select_visible_unlocked (GschemToplevel *w_current)
        iter = g_list_next (iter)) {
     LeptonObject *obj = (LeptonObject *) iter->data;
 
-    /* Skip invisible objects. */
-    if (!lepton_text_object_is_visible (obj) && !show_hidden_text)
+    /* Skip invisible text objects. */
+    if (lepton_object_is_text (obj) &&
+        !lepton_text_object_is_visible (obj) &&
+        !show_hidden_text)
       continue;
 
     /* Skip locked objects. */
