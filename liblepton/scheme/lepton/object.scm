@@ -91,6 +91,7 @@
             text-align
             text-anchor
             text-angle
+            text-attribute-mode
             text-size
             text-string
             text-visible?
@@ -981,8 +982,19 @@ the default text color is used."
     (list-set! i 5 (not (not visible)))
     (apply set-text! t i)))
 
-(define-public (text-attribute-mode t)
-  (list-ref (text-info t) 6))
+(define (text-attribute-mode object)
+  (define (check-show-symbol sym)
+    (match sym
+      ((or 'name 'value 'both) sym)
+      (_ (error "Text object ~A has invalid text attribute visibility ~A" object sym))))
+
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+
+  (let* ((show (lepton_text_object_get_show pointer))
+         (string-pointer (lepton_text_object_show_to_string show))
+         (sym (and (not (null-pointer? string-pointer))
+                   (string->symbol (pointer->string string-pointer)))))
+    (check-show-symbol sym)))
 
 
 ;;;; Component objects
