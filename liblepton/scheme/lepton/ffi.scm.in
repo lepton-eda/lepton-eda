@@ -161,6 +161,7 @@
             lepton_text_object_set_y
             lepton_text_object_alignment_from_string
             lepton_text_object_alignment_to_string
+            lepton_text_object_is_visible
             lepton_text_object_new
             lepton_text_object_recreate
             lepton_text_object_show_from_string
@@ -367,6 +368,7 @@
 (define-lff lepton_text_object_set_y void (list '* int))
 (define-lff lepton_text_object_alignment_from_string int '(*))
 (define-lff lepton_text_object_alignment_to_string '* (list int))
+(define-lff lepton_text_object_is_visible int '(*))
 (define-lff lepton_text_object_show_from_string int '(*))
 (define-lff lepton_text_object_recreate void '(*))
 (define-lff lepton_text_object_new '* (list int int int int int '* int int int))
