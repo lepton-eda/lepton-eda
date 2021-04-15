@@ -730,7 +730,7 @@ lepton_text_object_copy (const LeptonObject *object)
                                     object->text->y,
                                     object->text->alignment,
                                     object->text->angle,
-                                    object->text->string,
+                                    lepton_text_object_get_string (object),
                                     object->text->size,
                                     lepton_text_object_get_visibility (object),
                                     lepton_text_object_get_show (object));
