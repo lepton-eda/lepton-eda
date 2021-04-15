@@ -89,13 +89,13 @@ lepton_text_object_calculate_bounds (const LeptonObject *object,
                                      gboolean include_hidden,
                                      LeptonBounds *bounds)
 {
+  g_return_val_if_fail (lepton_object_is_text (object), FALSE);
+  g_return_val_if_fail (object->text != NULL, FALSE);
+
   if (! (lepton_text_object_is_visible (object) || include_hidden))
     return FALSE;
 
   lepton_bounds_init (bounds);
-
-  g_return_val_if_fail (lepton_object_is_text (object), FALSE);
-  g_return_val_if_fail (object->text != NULL, FALSE);
 
   double t, l, r, b;
   gboolean result = eda_renderer_get_text_user_bounds (object,
