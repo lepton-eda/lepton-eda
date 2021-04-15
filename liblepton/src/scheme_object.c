@@ -136,132 +136,6 @@ edascm_is_object_type (SCM smob, int type)
   return (lepton_object_get_type (obj) == type);
 }
 
-/*! \brief Set text parameters.
- * \par Function Description
- * Modifies a text object by setting its parameters to new values.
- *
- * The alignment \a align_s should be a symbol of the form "x-y" where
- * x can be one of "lower", "middle", or "upper", and y can be one of
- * "left", "center" or "right". \a show_s determines which parts of an
- * attribute-formatted string should be shown, and should be one of
- * the symbols "name", "value" or "both".
- *
- * \note Scheme API: Implements the %set-text! procedure in the
- * (lepton core object) module.
- *
- * \param text_s    the text object to modify.
- * \param x_s       the new x-coordinate of the anchor of the text.
- * \param y_s       the new y-coordinate of the anchor of the text.
- * \param align_s   the new alignment of the text on the anchor.
- * \param angle_s   the angle the text in degrees (0, 90, 180 or 270).
- * \param string_s  the new string to display.
- * \param size_s    the new text size.
- * \param visible_s the new text visibility (SCM_BOOL_T or SCM_BOOL_F).
- * \param show_s    the new attribute part visibility setting.
- * \param color_s   the colormap index of the color to be used for
- *                  drawing the text.
- *
- * \return the modified text object.
- */
-SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
-            (SCM text_s, SCM x_s, SCM y_s, SCM align_s, SCM angle_s,
-             SCM string_s, SCM size_s, SCM visible_s, SCM show_s, SCM color_s),
-            "Set text parameters")
-{
-  SCM_ASSERT (edascm_is_object_type (text_s, OBJ_TEXT), text_s,
-              SCM_ARG1, s_set_text_x);
-  SCM_ASSERT (scm_is_integer (x_s),     x_s,      SCM_ARG2, s_set_text_x);
-  SCM_ASSERT (scm_is_integer (y_s),     y_s,      SCM_ARG3, s_set_text_x);
-  SCM_ASSERT (scm_is_symbol (align_s),  align_s,  SCM_ARG4, s_set_text_x);
-  SCM_ASSERT (scm_is_integer (angle_s), angle_s,  SCM_ARG5, s_set_text_x);
-  SCM_ASSERT (scm_is_string (string_s), string_s, SCM_ARG6, s_set_text_x);
-  SCM_ASSERT (scm_is_integer (size_s),  size_s,   SCM_ARG7, s_set_text_x);
-
-  SCM_ASSERT (scm_is_symbol (show_s),    show_s,     9, s_set_text_x);
-  SCM_ASSERT (scm_is_integer (color_s),  color_s,   10, s_set_text_x);
-
-  LeptonObject *obj = edascm_to_object (text_s);
-
-  /* Alignment. Sadly we can't switch on pointers. :-( */
-  int align;
-  if      (scm_is_eq (align_s, lower_left_sym))    { align = LOWER_LEFT;    }
-  else if (scm_is_eq (align_s, middle_left_sym))   { align = MIDDLE_LEFT;   }
-  else if (scm_is_eq (align_s, upper_left_sym))    { align = UPPER_LEFT;    }
-  else if (scm_is_eq (align_s, lower_center_sym))  { align = LOWER_MIDDLE;  }
-  else if (scm_is_eq (align_s, middle_center_sym)) { align = MIDDLE_MIDDLE; }
-  else if (scm_is_eq (align_s, upper_center_sym))  { align = UPPER_MIDDLE;  }
-  else if (scm_is_eq (align_s, lower_right_sym))   { align = LOWER_RIGHT;   }
-  else if (scm_is_eq (align_s, middle_right_sym))  { align = MIDDLE_RIGHT;  }
-  else if (scm_is_eq (align_s, upper_right_sym))   { align = UPPER_RIGHT;   }
-  else {
-    scm_misc_error (s_set_text_x,
-                    _("Invalid text alignment ~A."),
-                    scm_list_1 (align_s));
-  }
-
-  /* Angle */
-  int angle = scm_to_int (angle_s);
-  switch (angle) {
-  case 0:
-  case 90:
-  case 180:
-  case 270:
-    /* These are all fine. */
-    break;
-  default:
-    /* Otherwise, not fine. */
-    scm_misc_error (s_set_text_x,
-                    _("Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"),
-                    scm_list_1 (angle_s));
-  }
-
-  /* Visibility */
-  int visibility;
-  if (scm_is_false (visible_s)) {
-    visibility = INVISIBLE;
-  } else {
-    visibility = VISIBLE;
-  }
-
-  /* Name/value visibility */
-  int show;
-  if      (scm_is_eq (show_s, name_sym))  { show = SHOW_NAME;       }
-  else if (scm_is_eq (show_s, value_sym)) { show = SHOW_VALUE;      }
-  else if (scm_is_eq (show_s, both_sym))  { show = SHOW_NAME_VALUE; }
-  else {
-    scm_misc_error (s_set_text_x,
-                    _("Invalid text name/value visibility ~A."),
-                    scm_list_1 (show_s));
-  }
-
-  /* Actually make changes */
-  lepton_object_emit_pre_change_notify (obj);
-
-  lepton_text_object_set_x (obj, scm_to_int (x_s));
-  lepton_text_object_set_y (obj, scm_to_int (y_s));
-  lepton_text_object_set_alignment (obj, align);
-  lepton_text_object_set_angle (obj, angle);
-
-  lepton_text_object_set_size (obj, scm_to_int (size_s));
-  lepton_text_object_set_visibility (obj, visibility);
-  lepton_text_object_set_show (obj, show);
-
-  lepton_object_emit_change_notify (obj);
-
-  char *tmp = scm_to_utf8_string (string_s);
-  lepton_text_object_set_string (obj, tmp);
-  free (tmp);
-
-  lepton_text_object_recreate (obj);
-
-  /* Color */
-  lepton_object_set_color (obj, scm_to_int (color_s));
-
-  lepton_object_page_set_changed (obj);
-
-  return text_s;
-}
-
 /*! \brief Get text parameters.
  * \par Function Description
  * Retrieves the parameters of a text object. The return value is a
@@ -885,8 +759,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_set_text_x,
-                s_text_info,
+  scm_c_export (s_text_info,
                 s_object_connections,
                 s_make_path,
                 s_path_length,
