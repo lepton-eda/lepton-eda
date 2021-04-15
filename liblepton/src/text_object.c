@@ -682,6 +682,9 @@ lepton_text_object_to_buffer (const LeptonObject *object)
 void
 lepton_text_object_recreate (LeptonObject *o_current)
 {
+  g_return_if_fail (lepton_object_is_text (o_current));
+  g_return_if_fail (o_current->text != NULL);
+
   lepton_object_emit_pre_change_notify (o_current);
   update_disp_string (o_current);
   lepton_object_emit_change_notify (o_current);
@@ -893,6 +896,7 @@ lepton_text_object_shortest_distance (LeptonObject *object,
   int left, top, right, bottom;
   double dx, dy;
 
+  g_return_val_if_fail (lepton_object_is_text (object), G_MAXDOUBLE);
   g_return_val_if_fail (object->text != NULL, G_MAXDOUBLE);
 
   if (!lepton_object_calculate_visible_bounds (object,
