@@ -729,7 +729,7 @@ lepton_text_object_copy (const LeptonObject *object)
                                     lepton_text_object_get_x (object),
                                     lepton_text_object_get_y (object),
                                     lepton_text_object_get_alignment (object),
-                                    object->text->angle,
+                                    lepton_text_object_get_angle (object),
                                     lepton_text_object_get_string (object),
                                     object->text->size,
                                     lepton_text_object_get_visibility (object),
@@ -757,12 +757,16 @@ lepton_text_object_rotate (int world_centerx,
 {
   int x, y;
   int newx, newy;
+  int current_angle;
 
   g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
   g_return_if_fail (lepton_angle_is_ortho (angle));
 
-  object->text->angle = lepton_angle_normalize (object->text->angle + angle);
+  current_angle = lepton_text_object_get_angle (object);
+
+  lepton_text_object_set_angle (object,
+                                lepton_angle_normalize (current_angle + angle));
 
   x = lepton_text_object_get_x (object) + (-world_centerx);
   y = lepton_text_object_get_y (object) + (-world_centery);
@@ -806,7 +810,7 @@ lepton_text_object_mirror (int world_centerx,
   x = origx + (-world_centerx);
   y = origy + (-world_centery);
 
-  if ((object->text->angle%180)==0) {
+  if ((lepton_text_object_get_angle (object) % 180) == 0) {
     switch (lepton_text_object_get_alignment (object)) {
       case(LOWER_LEFT):
         lepton_text_object_set_alignment (object, LOWER_RIGHT);
