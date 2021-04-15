@@ -863,8 +863,8 @@ eda_renderer_draw_text (EdaRenderer *renderer, LeptonObject *object)
 
   /* Centre of marker is just below and to the right of the text
    * object's origin. */
-  x = object->text->x + 2 * TEXT_MARKER_SIZE;
-  y = object->text->y - 2 * TEXT_MARKER_SIZE;
+  x = lepton_text_object_get_x (object) + 2 * TEXT_MARKER_SIZE;
+  y = lepton_text_object_get_y (object) - 2 * TEXT_MARKER_SIZE;
 
   eda_cairo_line (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                   END_NONE, 0,  /* Top */
@@ -931,7 +931,9 @@ eda_renderer_prepare_text (EdaRenderer *renderer, const LeptonObject *object)
   /* Calculate text position. */
   eda_renderer_calc_text_position (renderer, object, &dx, &dy);
 
-  cairo_translate (renderer->priv->cr, object->text->x, object->text->y);
+  cairo_translate (renderer->priv->cr,
+                   lepton_text_object_get_x (object),
+                   lepton_text_object_get_y (object));
 
   /* Special case turns upside-down text back upright */
   angle = lepton_text_object_get_angle (object);
@@ -1318,8 +1320,8 @@ eda_renderer_draw_text_grips (EdaRenderer *renderer, LeptonObject *object)
   g_return_if_fail (object->text != NULL);
 
   double dummy = 0, small_dist = TEXT_MARKER_SIZE;
-  int x = object->text->x;
-  int y = object->text->y;
+  int x = lepton_text_object_get_x (object);
+  int y = lepton_text_object_get_y (object);
 
   /* First check if this is hidden text. */
   if (!lepton_text_object_is_visible (object)

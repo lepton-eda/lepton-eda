@@ -338,8 +338,8 @@ LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current,
         break;
 
       case(OBJ_TEXT):
-        world_x = o_current->text->x;
-        world_y = o_current->text->y;
+        world_x = lepton_text_object_get_x (o_current);
+        world_y = lepton_text_object_get_y (o_current);
         color = DETACHED_ATTRIBUTE_COLOR;
         align = LOWER_LEFT;
         angle = 0;

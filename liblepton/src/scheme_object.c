@@ -270,8 +270,8 @@ SCM_DEFINE (set_text_x, "%set-text!", 10, 0, 0,
   /* Actually make changes */
   lepton_object_emit_pre_change_notify (obj);
 
-  obj->text->x = scm_to_int (x_s);
-  obj->text->y = scm_to_int (y_s);
+  lepton_text_object_set_x (obj, scm_to_int (x_s));
+  lepton_text_object_set_y (obj, scm_to_int (y_s));
   lepton_text_object_set_alignment (obj, align);
   lepton_text_object_set_angle (obj, angle);
 
@@ -363,8 +363,8 @@ SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
                                 scm_from_int (lepton_text_object_get_show (obj))));
   }
 
-  return scm_list_n (scm_from_int (obj->text->x),
-                     scm_from_int (obj->text->y),
+  return scm_list_n (scm_from_int (lepton_text_object_get_x (obj)),
+                     scm_from_int (lepton_text_object_get_y (obj)),
                      align_s,
                      scm_from_int (lepton_text_object_get_angle (obj)),
                      scm_from_utf8_string (lepton_text_object_get_string (obj)),
