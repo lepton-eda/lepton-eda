@@ -28,45 +28,6 @@
 #include "liblepton_priv.h"
 #include "libleptonguile_priv.h"
 
-/*! \brief Convert a Scheme object list to a GList.
- * \par Function Description
- * Takes a Scheme list of #LeptonObject smobs, and returns a GList
- * containing the objects. If \a objs is not a list of #LeptonObject smobs,
- * throws a Scheme error.
- *
- * \warning If the #LeptonObject structures in the GList are to be stored by
- * C code and later free()'d directly, the smobs must be marked as
- * unsafe for garbage collection (by calling edascm_c_set_gc()).
- *
- * \param [in] objs a Scheme list of #LeptonObject smobs.
- * \param [in] subr the name of the Scheme subroutine (used for error
- *                  messages).
- * \return a #GList of #LeptonObject.
- */
-GList *
-edascm_to_object_glist (SCM objs, const char *subr)
-{
-  GList *result = NULL;
-  SCM lst;
-
-  SCM_ASSERT (scm_is_true (scm_list_p (objs)), objs, SCM_ARGn, subr);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  scm_dynwind_unwind_handler ((void (*)(void *)) g_list_free,
-                              result,
-                              (scm_t_wind_flags) 0);
-
-  for (lst = objs; !scm_is_null (lst); lst = SCM_CDR (lst)) {
-    SCM smob = SCM_CAR (lst);
-    result = g_list_prepend (result, (gpointer) edascm_to_object (smob));
-  }
-
-  scm_remember_upto_here_1 (lst);
-
-  scm_dynwind_end ();
-
-  return g_list_reverse (result);
-}
 
 /*! \brief Convert a GList of objects into a Scheme list.
  * \par Function Description
