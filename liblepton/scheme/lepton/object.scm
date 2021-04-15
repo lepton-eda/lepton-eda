@@ -88,6 +88,7 @@
             make-bus-pin
             make-net-pin
 
+            text-align
             text-anchor
             make-text
             set-text!)
@@ -933,8 +934,22 @@ the default text color is used."
   (cons (lepton_text_object_get_x pointer)
         (lepton_text_object_get_y pointer)))
 
-(define-public (text-align t)
-  (list-ref (text-info t) 1))
+(define (text-align object)
+  (define (check-alignment-symbol sym)
+    (match sym
+      ((or 'upper-left 'upper-center 'upper-right
+           'middle-left 'middle-center 'middle-right
+           'lower-left 'lower-center 'lower-right)
+       sym)
+      (_ (error "Text object ~A has invalid text alignment ~A" object sym))))
+
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+
+  (let* ((align (lepton_text_object_get_alignment pointer))
+         (string-pointer (lepton_text_object_alignment_to_string align))
+         (sym (and (not (null-pointer? string-pointer))
+                   (string->symbol (pointer->string string-pointer)))))
+    (check-alignment-symbol sym)))
 
 (define-public (text-angle t)
   (list-ref (text-info t) 2))

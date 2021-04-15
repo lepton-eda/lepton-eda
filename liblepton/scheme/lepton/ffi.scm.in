@@ -145,6 +145,7 @@
             lepton_pin_object_new_net_pin
             lepton_pin_object_modify
 
+            lepton_text_object_get_alignment
             lepton_text_object_set_alignment
             lepton_text_object_set_angle
             lepton_text_object_set_show
@@ -156,6 +157,7 @@
             lepton_text_object_get_y
             lepton_text_object_set_y
             lepton_text_object_alignment_from_string
+            lepton_text_object_alignment_to_string
             lepton_text_object_new
             lepton_text_object_recreate
             lepton_text_object_show_from_string
@@ -346,6 +348,7 @@
 (define-lff lepton_pin_object_new_net_pin '* (list int int int int int int))
 (define-lff lepton_pin_object_modify void (list '* int int int))
 
+(define-lff lepton_text_object_get_alignment int '(*))
 (define-lff lepton_text_object_set_alignment void (list '* int))
 (define-lff lepton_text_object_set_angle void (list '* int))
 (define-lff lepton_text_object_set_show void (list '* int))
@@ -357,6 +360,7 @@
 (define-lff lepton_text_object_get_y int '(*))
 (define-lff lepton_text_object_set_y void (list '* int))
 (define-lff lepton_text_object_alignment_from_string int '(*))
+(define-lff lepton_text_object_alignment_to_string '* (list int))
 (define-lff lepton_text_object_show_from_string int '(*))
 (define-lff lepton_text_object_recreate void '(*))
 (define-lff lepton_text_object_new '* (list int int int int int '* int int int))
