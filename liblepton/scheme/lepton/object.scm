@@ -88,7 +88,8 @@
             make-bus-pin
             make-net-pin
 
-            make-text)
+            make-text
+            set-text!)
 
   #:re-export (arc?
                box?
@@ -744,10 +745,118 @@ of the arc."
 
 ;;;; Text
 
-(define*-public (set-text! t anchor align angle string size visible show
-                           #:optional color)
-  (%set-text! t (car anchor) (cdr anchor) align angle string size visible show
-              (if (not color) (object-color t) color)))
+(define* (set-text! object anchor align angle string size visible show
+                    #:optional color)
+  "Sets the parameters of text OBJECT.  Returns the modified
+OBJECT.  ANCHOR is the position of the anchor of the new text in
+the form '(x . y), and ALIGN is a symbol determining how the text
+should be aligned relative to the anchor.  ALIGN must be one of
+the following symbols:
+  - 'lower-left
+  - 'middle-left
+  - 'upper-left
+  - 'lower-center
+  - 'middle-center
+  - 'upper-center
+  - 'lower-right
+  - 'middle-right
+  - 'upper-right
+For example, if ALIGN is 'upper-center, the anchor will be located
+at the top center of the rendered text block.
+
+ANGLE should be an integer multiple of 90 degrees, determining the
+angle which the text should be displayed at.  STRING is the string
+contents for the text object.  SIZE is the font size to use.  If
+VISIBLE is #f, the text will be invisible; otherwise, it will be
+visible.
+
+When the STRING is in an attribute format, the SHOW argument
+determines which parts of the STRING will be displayed.  It must
+be one of the following symbols:
+  - 'name
+  - 'value
+  - 'both
+If COLOR is specified, it should be the integer color map index of
+the color with which to draw the text.  If COLOR is not specified,
+the default text color is used."
+
+  (define (check-alignment-symbol sym)
+    (match sym
+      ((or 'upper-left 'upper-center 'upper-right
+           'middle-left 'middle-center 'middle-right
+           'lower-left 'lower-center 'lower-right)
+       sym)
+      (_ (error "Invalid text alignment: ~A." sym))))
+
+  (define (check-text-alignment align pos)
+    (check-symbol align pos)
+    (check-alignment-symbol align))
+
+  (define (check-show-symbol sym)
+    (match sym
+      ((or 'name 'value 'both) sym)
+      (_ (error "Invalid text name/value visibility: ~A." sym))))
+
+  (define (check-text-show show pos)
+    (check-symbol show pos)
+    (check-show-symbol show))
+
+  (define (check-angle-value angle)
+    (match angle
+      ((or 0 90 180 270) angle)
+      (_ (error "Invalid text angle: ~A. Must be 0, 90, 180, or 270 degrees." angle))))
+
+  (define (check-text-angle angle pos)
+    (check-integer angle pos)
+    (check-angle-value angle))
+
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+
+  (check-coord anchor 2)
+  (check-text-alignment align 3)
+  (check-text-angle angle 4)
+  (check-string string 5)
+  (check-integer size 6)
+  (check-boolean visible 7)
+  (check-text-show show 8)
+  (and color (check-integer color 9))
+
+  (let ((x (car anchor))
+        (y (cdr anchor))
+        (align
+         (lepton_text_object_alignment_from_string
+          (string->pointer (symbol->string align))))
+        (visibility (if visible 1 0))
+        (show (lepton_text_object_show_from_string
+               (string->pointer (symbol->string show))))
+        (string (string->pointer string))
+        (color (or color (object-color object))))
+
+    ;; Actually make changes
+    (lepton_object_emit_pre_change_notify pointer)
+
+    (lepton_text_object_set_x pointer x)
+    (lepton_text_object_set_y pointer y)
+    (lepton_text_object_set_alignment pointer align)
+    (lepton_text_object_set_angle pointer angle)
+    (lepton_text_object_set_size pointer size)
+    (lepton_text_object_set_visibility pointer visibility)
+    (lepton_text_object_set_show pointer show)
+
+    (lepton_object_emit_change_notify pointer)
+
+    (lepton_text_object_set_string pointer string)
+
+    (lepton_text_object_recreate pointer)
+
+    ;; Color
+    (lepton_object_set_color pointer color)
+
+    (lepton_object_page_set_changed pointer)
+
+    ;; Return the same object.
+    object))
+
 
 (define* (make-text anchor align angle string size visible show
                     #:optional color)

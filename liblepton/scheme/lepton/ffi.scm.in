@@ -21,8 +21,10 @@
   #:export (liblepton
             ;; Helpers.
             true?
+            check-boolean
             check-coord
             check-integer
+            check-string
             check-symbol
 
             ;; Foreign functions.
@@ -143,8 +145,17 @@
             lepton_pin_object_new_net_pin
             lepton_pin_object_modify
 
+            lepton_text_object_set_alignment
+            lepton_text_object_set_angle
+            lepton_text_object_set_show
+            lepton_text_object_set_size
+            lepton_text_object_set_string
+            lepton_text_object_set_visibility
+            lepton_text_object_set_x
+            lepton_text_object_set_y
             lepton_text_object_alignment_from_string
             lepton_text_object_new
+            lepton_text_object_recreate
             lepton_text_object_show_from_string
 
             lepton_fill_type_from_string
@@ -333,8 +344,17 @@
 (define-lff lepton_pin_object_new_net_pin '* (list int int int int int int))
 (define-lff lepton_pin_object_modify void (list '* int int int))
 
+(define-lff lepton_text_object_set_alignment void (list '* int))
+(define-lff lepton_text_object_set_angle void (list '* int))
+(define-lff lepton_text_object_set_show void (list '* int))
+(define-lff lepton_text_object_set_size void (list '* int))
+(define-lff lepton_text_object_set_string void '(* *))
+(define-lff lepton_text_object_set_visibility void (list '* int))
+(define-lff lepton_text_object_set_x void (list '* int))
+(define-lff lepton_text_object_set_y void (list '* int))
 (define-lff lepton_text_object_alignment_from_string int '(*))
 (define-lff lepton_text_object_show_from_string int '(*))
+(define-lff lepton_text_object_recreate void '(*))
 (define-lff lepton_text_object_new '* (list int int int int int '* int int int))
 
 (define-lff lepton_fill_type_from_string int '(*))
@@ -348,6 +368,15 @@
 ;; s_conn.c
 (define-lff s_conn_remove_object_connections void '(*))
 (define-lff s_conn_update_object void '(* *))
+
+(define (check-boolean val pos)
+  ;; This function is defined just for consistency.  Someone may
+  ;; get confused if we miss some argument checks. Since any value
+  ;; in Scheme is a boolean in a sense, that is, it is considered
+  ;; to be true if not #f, there is no point to check for real
+  ;; boolean values, #t and #f, using Scheme boolean? function.
+  ;; So we just return #t here.
+  #t)
 
 (define-syntax-rule (check-integer val pos)
   (unless (integer? val)
@@ -370,6 +399,17 @@
                    (frame-procedure-name (stack-ref (make-stack #t) 1))
                    '??)
                "Wrong type argument in position ~A (expecting a pair of integers): ~A"
+               (list pos val)
+               #f)))
+
+(define-syntax-rule (check-string val pos)
+  (unless (string? val)
+    (scm-error 'wrong-type-arg
+               ;; Provision against Guile-2.0 that does not have the procedure.
+               (if (defined? 'frame-procedure-name)
+                   (frame-procedure-name (stack-ref (make-stack #t) 1))
+                   '??)
+               "Wrong type argument in position ~A (expecting string): ~A"
                (list pos val)
                #f)))
 
