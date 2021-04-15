@@ -91,6 +91,7 @@
             text-align
             text-anchor
             text-angle
+            text-string
             make-text
             set-text!)
 
@@ -956,8 +957,9 @@ the default text color is used."
   (define pointer (geda-object->pointer* object 1 text? 'text))
   (lepton_text_object_get_angle pointer))
 
-(define-public (text-string t)
-  (list-ref (text-info t) 3))
+(define (text-string object)
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (pointer->string (lepton_text_object_get_string pointer)))
 
 (define-public (set-text-string! t str)
   (let ((i (text-info t)))
