@@ -16,6 +16,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (lepton ffi)
+  #:use-module (ice-9 match)
   #:use-module (system foreign)
   #:use-module (srfi srfi-1)
 
@@ -31,8 +32,13 @@
             check-vector
 
             ;; glib, gobject.
+            g_list_free
             g_log
             g_object_unref
+            ;; Mock glib functions.
+            glist-data
+            glist-next
+            glist-prev
 
             ;; Foreign functions.
             edascm_is_config
@@ -266,8 +272,33 @@
                            args))))
          (force proc))))))
 
+(define-lff g_list_free void '(*) libglib)
 (define-lff g_log void (list '* int '* '*) libglib)
 (define-lff g_object_unref void '(*) libgobject)
+
+;;; Glist struct is {data*, next*, prev*}.  We could use libglib
+;;; functions to get data, but it's easier to parse the struct
+;;; directly.
+(define (parse-glist gls)
+  (parse-c-struct gls '(* * *)))
+
+(define (glist-next gls)
+  (let ((pointer-ls (parse-glist gls)))
+    (match pointer-ls
+      ((data next prev) next)
+      (_ (error "Wrong Glist in glist-next()")))))
+
+(define (glist-prev gls)
+  (let ((pointer-ls (parse-glist gls)))
+    (match pointer-ls
+      ((data next prev) prev)
+      (_ (error "Wrong Glist in glist-prev()")))))
+
+(define (glist-data gls)
+  (let ((pointer-ls (parse-glist gls)))
+    (match pointer-ls
+      ((data next prev) data)
+      (_ (error "Wrong Glist in glist-data()")))))
 
 ;;; Basic lepton initialisation function.
 (define-lff liblepton_init void '())

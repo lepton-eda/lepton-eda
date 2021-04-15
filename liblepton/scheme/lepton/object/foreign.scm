@@ -22,8 +22,8 @@
   #:use-module (lepton ffi)
 
   #:export (geda-object->pointer
-            pointer->geda-object))
-
+            pointer->geda-object
+            glist->object-list))
 
 ;;; Helper transformers between #<geda-object> smobs and C object
 ;;; pointers.
@@ -35,3 +35,13 @@
 (define (pointer->geda-object pointer)
   ;; Return #f if the pointer is wrong.
   (false-if-exception (pointer->scm (edascm_from_object pointer))))
+
+(define (glist->object-list gls)
+  "Convert a GList of objects GLS into a Scheme list.  Returns the
+Scheme list."
+  (let loop ((gls gls)
+             (ls '()))
+    (if (null-pointer? gls)
+        (reverse ls)
+        (loop (glist-next gls)
+              (cons (pointer->geda-object (glist-data gls)) ls)))))
