@@ -91,6 +91,7 @@
             text-align
             text-anchor
             text-angle
+            text-size
             text-string
             make-text
             set-text!)
@@ -966,8 +967,9 @@ the default text color is used."
     (list-set! i 3 str)
     (apply set-text! t i)))
 
-(define-public (text-size t)
-  (list-ref (text-info t) 4))
+(define (text-size object)
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (lepton_text_object_get_size pointer))
 
 (define-public (text-visible? t)
   (list-ref (text-info t) 5))
