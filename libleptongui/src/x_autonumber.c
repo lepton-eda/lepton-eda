@@ -139,14 +139,14 @@ gint autonumber_sort_numbers(gconstpointer a, gconstpointer b) {
 gint autonumber_sort_xy(gconstpointer a, gconstpointer b) {
   LeptonObject *aa, *bb;
   aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
-  if (aa->text->x < bb->text->x)
+  if (lepton_text_object_get_x (aa) < lepton_text_object_get_x (bb))
     return -1;
-  if (aa->text->x > bb->text->x)
+  if (lepton_text_object_get_x (aa) > lepton_text_object_get_x (bb))
     return 1;
   /* x == x */
-  if (aa->text->y > bb->text->y)
+  if (lepton_text_object_get_y (aa) > lepton_text_object_get_y (bb))
     return -1;
-  if (aa->text->y < bb->text->y)
+  if (lepton_text_object_get_y (aa) < lepton_text_object_get_y (bb))
     return 1;
   return 0;
 }
@@ -162,14 +162,14 @@ gint autonumber_sort_xy(gconstpointer a, gconstpointer b) {
 gint autonumber_sort_xy_rev(gconstpointer a, gconstpointer b) {
   LeptonObject *aa, *bb;
   aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
-  if (aa->text->x < bb->text->x)
+  if (lepton_text_object_get_x (aa) < lepton_text_object_get_x (bb))
     return 1;
-  if (aa->text->x > bb->text->x)
+  if (lepton_text_object_get_x (aa) > lepton_text_object_get_x (bb))
     return -1;
   /* x == x */
-  if (aa->text->y < bb->text->y)
+  if (lepton_text_object_get_y (aa) < lepton_text_object_get_y (bb))
     return 1;
-  if (aa->text->y > bb->text->y)
+  if (lepton_text_object_get_y (aa) > lepton_text_object_get_y (bb))
     return -1;
   return 0;
 }
@@ -184,14 +184,14 @@ gint autonumber_sort_xy_rev(gconstpointer a, gconstpointer b) {
 int autonumber_sort_yx(gconstpointer a, gconstpointer b) {
   LeptonObject *aa, *bb;
   aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
-  if (aa->text->y > bb->text->y)
+  if (lepton_text_object_get_y (aa) > lepton_text_object_get_y (bb))
     return -1;
-  if (aa->text->y < bb->text->y)
+  if (lepton_text_object_get_y (aa) < lepton_text_object_get_y (bb))
     return 1;
   /* y == y */
-  if (aa->text->x < bb->text->x)
+  if (lepton_text_object_get_x (aa) < lepton_text_object_get_x (bb))
     return -1;
-  if (aa->text->x > bb->text->x)
+  if (lepton_text_object_get_x (aa) > lepton_text_object_get_x (bb))
     return 1;
   return 0;
 }
@@ -207,14 +207,14 @@ int autonumber_sort_yx(gconstpointer a, gconstpointer b) {
 int autonumber_sort_yx_rev(gconstpointer a, gconstpointer b) {
   LeptonObject *aa, *bb;
   aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
-  if (aa->text->y > bb->text->y)
+  if (lepton_text_object_get_y (aa) > lepton_text_object_get_y (bb))
     return 1;
-  if (aa->text->y < bb->text->y)
+  if (lepton_text_object_get_y (aa) < lepton_text_object_get_y (bb))
     return -1;
   /* y == y */
-  if (aa->text->x > bb->text->x)
+  if (lepton_text_object_get_x (aa) > lepton_text_object_get_x (bb))
     return 1;
-  if (aa->text->x < bb->text->x)
+  if (lepton_text_object_get_x (aa) < lepton_text_object_get_x (bb))
     return -1;
   return 0;
 }
@@ -229,9 +229,11 @@ int autonumber_sort_yx_rev(gconstpointer a, gconstpointer b) {
 int autonumber_sort_diagonal(gconstpointer a, gconstpointer b) {
   LeptonObject *aa, *bb;
   aa=(LeptonObject *) a;  bb=(LeptonObject *) b;
-  if (aa->text->x - aa->text->y < bb->text->x - bb->text->y)
+  if (lepton_text_object_get_x (aa) - lepton_text_object_get_y (aa) <
+      lepton_text_object_get_x (bb) - lepton_text_object_get_y (bb))
     return -1;
-  if (aa->text->x - aa->text->y > bb->text->x - bb->text->y)
+  if (lepton_text_object_get_x (aa) - lepton_text_object_get_y (aa) >
+      lepton_text_object_get_x (bb) - lepton_text_object_get_y (bb))
     return 1;
   return 0;
 }

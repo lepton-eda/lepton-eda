@@ -706,8 +706,8 @@ lepton_text_object_translate (LeptonObject *object,
   g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
 
-  object->text->x = object->text->x + dx;
-  object->text->y = object->text->y + dy;
+  lepton_text_object_set_x (object, lepton_text_object_get_x (object) + dx);
+  lepton_text_object_set_y (object, lepton_text_object_get_y (object) + dy);
 }
 
 /*! \brief create a copy of a text object
@@ -726,8 +726,8 @@ lepton_text_object_copy (const LeptonObject *object)
   g_return_val_if_fail (object->text != NULL, NULL);
 
   new_obj = lepton_text_object_new (lepton_object_get_color (object),
-                                    object->text->x,
-                                    object->text->y,
+                                    lepton_text_object_get_x (object),
+                                    lepton_text_object_get_y (object),
                                     object->text->alignment,
                                     object->text->angle,
                                     lepton_text_object_get_string (object),
@@ -764,15 +764,17 @@ lepton_text_object_rotate (int world_centerx,
 
   object->text->angle = lepton_angle_normalize (object->text->angle + angle);
 
-  x = object->text->x + (-world_centerx);
-  y = object->text->y + (-world_centery);
+  x = lepton_text_object_get_x (object) + (-world_centerx);
+  y = lepton_text_object_get_y (object) + (-world_centery);
 
   lepton_point_rotate_90 (x, y, angle, &newx, &newy);
 
   x = newx + (world_centerx);
   y = newy + (world_centery);
 
-  lepton_text_object_translate (object, x-object->text->x, y-object->text->y);
+  lepton_text_object_translate (object,
+                                x - lepton_text_object_get_x (object),
+                                y - lepton_text_object_get_y (object));
 
   lepton_text_object_recreate (object);
 }
@@ -798,8 +800,8 @@ lepton_text_object_mirror (int world_centerx,
   g_return_if_fail (lepton_object_is_text (object));
   g_return_if_fail (object->text != NULL);
 
-  origx = object->text->x;
-  origy = object->text->y;
+  origx = lepton_text_object_get_x (object);
+  origy = lepton_text_object_get_y (object);
 
   x = origx + (-world_centerx);
   y = origy + (-world_centery);
@@ -864,8 +866,8 @@ lepton_text_object_mirror (int world_centerx,
     }
   }
 
-  object->text->x = -x + (world_centerx);
-  object->text->y =  y + (world_centery);
+  lepton_text_object_set_x (object, -x + (world_centerx));
+  lepton_text_object_set_y (object,  y + (world_centery));
 
   lepton_text_object_recreate (object);
 }

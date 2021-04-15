@@ -220,8 +220,8 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
       if (invocation_flag == FROM_HOTKEY
           && wx != -1 && wy != -1) {
         o_invalidate (w_current, new_object);
-        new_object->text->x = wx;
-        new_object->text->y = wy;
+        lepton_text_object_set_x (new_object, wx);
+        lepton_text_object_set_y (new_object, wy);
         lepton_text_object_recreate (new_object);
     gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
         o_undo_savestate_old(w_current, UNDO_ALL);
