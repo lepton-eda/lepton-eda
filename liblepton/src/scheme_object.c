@@ -136,86 +136,6 @@ edascm_is_object_type (SCM smob, int type)
   return (lepton_object_get_type (obj) == type);
 }
 
-/*! \brief Get text parameters.
- * \par Function Description
- * Retrieves the parameters of a text object. The return value is a
- * list of parameters:
- *
- * -# X-coordinate of anchor of text
- * -# Y-coordinate of anchor of text
- * -# Alignment of text
- * -# Angle of text
- * -# The string contained in the text object
- * -# Size of text
- * -# Text visibility
- * -# Which part(s) of an text attribute are shown
- * -# Colormap index of color to be used for drawing the text
- *
- * \note Scheme API: Implements the %text-info procedure in the
- * (lepton core object) module.
- *
- * \param text_s the text object to inspect.
- * \return a list of text parameters.
- */
-SCM_DEFINE (text_info, "%text-info", 1, 0, 0,
-            (SCM text_s), "Get text parameters.")
-{
-  SCM_ASSERT (edascm_is_object_type (text_s, OBJ_TEXT),
-              text_s, SCM_ARG1, s_text_info);
-
-  LeptonObject *obj = edascm_to_object (text_s);
-  SCM align_s, visible_s, show_s;
-
-  switch (lepton_text_object_get_alignment (obj)) {
-  case LOWER_LEFT:    align_s = lower_left_sym;    break;
-  case MIDDLE_LEFT:   align_s = middle_left_sym;   break;
-  case UPPER_LEFT:    align_s = upper_left_sym;    break;
-  case LOWER_MIDDLE:  align_s = lower_center_sym;  break;
-  case MIDDLE_MIDDLE: align_s = middle_center_sym; break;
-  case UPPER_MIDDLE:  align_s = upper_center_sym;  break;
-  case LOWER_RIGHT:   align_s = lower_right_sym;   break;
-  case MIDDLE_RIGHT:  align_s = middle_right_sym;  break;
-  case UPPER_RIGHT:   align_s = upper_right_sym;   break;
-  default:
-    scm_misc_error (s_text_info,
-                    _("Text object ~A has invalid text alignment ~A"),
-                    scm_list_2 (text_s, scm_from_int (lepton_text_object_get_alignment (obj))));
-  }
-
-  switch (lepton_text_object_get_visibility (obj))
-  {
-  case VISIBLE:   visible_s = SCM_BOOL_T; break;
-  case INVISIBLE: visible_s = SCM_BOOL_F; break;
-  default:
-    scm_misc_error (s_text_info,
-                    _("Text object ~A has invalid visibility ~A"),
-                    scm_list_2 (text_s, scm_from_int (lepton_text_object_get_visibility (obj))));
-  }
-
-  switch (lepton_text_object_get_show (obj))
-  {
-  case SHOW_NAME:       show_s = name_sym;  break;
-  case SHOW_VALUE:      show_s = value_sym; break;
-  case SHOW_NAME_VALUE: show_s = both_sym;  break;
-  default:
-    scm_misc_error (s_text_info,
-                    _("Text object ~A has invalid text attribute visibility ~A"),
-                    scm_list_2 (text_s,
-                                scm_from_int (lepton_text_object_get_show (obj))));
-  }
-
-  return scm_list_n (scm_from_int (lepton_text_object_get_x (obj)),
-                     scm_from_int (lepton_text_object_get_y (obj)),
-                     align_s,
-                     scm_from_int (lepton_text_object_get_angle (obj)),
-                     scm_from_utf8_string (lepton_text_object_get_string (obj)),
-                     scm_from_int (lepton_text_object_get_size (obj)),
-                     visible_s,
-                     show_s,
-                     scm_from_int (lepton_object_get_color (obj)),
-                     SCM_UNDEFINED);
-}
-
 /*! \brief Get objects that are connected to an object.
  * \par Function Description
  * Returns a list of all objects directly connected to \a obj_s.  If
@@ -759,8 +679,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_text_info,
-                s_object_connections,
+  scm_c_export (s_object_connections,
                 s_make_path,
                 s_path_length,
                 s_path_ref,
