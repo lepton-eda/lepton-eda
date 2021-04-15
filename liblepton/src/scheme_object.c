@@ -28,20 +28,6 @@
 #include "liblepton_priv.h"
 #include "libleptonguile_priv.h"
 
-SCM_SYMBOL (lower_left_sym , "lower-left");
-SCM_SYMBOL (middle_left_sym , "middle-left");
-SCM_SYMBOL (upper_left_sym , "upper-left");
-SCM_SYMBOL (lower_center_sym , "lower-center");
-SCM_SYMBOL (middle_center_sym , "middle-center");
-SCM_SYMBOL (upper_center_sym , "upper-center");
-SCM_SYMBOL (lower_right_sym , "lower-right");
-SCM_SYMBOL (middle_right_sym , "middle-right");
-SCM_SYMBOL (upper_right_sym , "upper-right");
-
-SCM_SYMBOL (name_sym , "name");
-SCM_SYMBOL (value_sym , "value");
-SCM_SYMBOL (both_sym , "both");
-
 SCM_SYMBOL (moveto_sym , "moveto");
 SCM_SYMBOL (lineto_sym , "lineto");
 SCM_SYMBOL (curveto_sym , "curveto");
