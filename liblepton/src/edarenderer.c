@@ -792,6 +792,9 @@ eda_renderer_draw_text (EdaRenderer *renderer, LeptonObject *object)
   double x, y;
   double dummy = 0, small_dist = TEXT_MARKER_SIZE;
 
+  g_return_if_fail (lepton_object_is_text (object));
+  g_return_if_fail (object->text != NULL);
+
   /* First check if this is hidden text. */
   if (!lepton_text_object_is_visible (object)
       && !EDA_RENDERER_CHECK_FLAG (renderer, FLAG_TEXT_HIDDEN)) {
@@ -1295,6 +1298,9 @@ eda_renderer_draw_path_grips (EdaRenderer *renderer, LeptonObject *object)
 static void
 eda_renderer_draw_text_grips (EdaRenderer *renderer, LeptonObject *object)
 {
+  g_return_if_fail (lepton_object_is_text (object));
+  g_return_if_fail (object->text != NULL);
+
   double dummy = 0, small_dist = TEXT_MARKER_SIZE;
   int x = object->text->x;
   int y = object->text->y;
@@ -1546,6 +1552,9 @@ eda_renderer_get_text_user_bounds (const LeptonObject *object,
                                    double *right,
                                    double *bottom)
 {
+  g_return_val_if_fail (lepton_object_is_text (object), FALSE);
+  g_return_val_if_fail (object->text != NULL, FALSE);
+
   PangoRectangle inked_rect, logical_rect;
   gboolean result = FALSE;
 
