@@ -147,6 +147,7 @@
 
             lepton_text_object_get_alignment
             lepton_text_object_set_alignment
+            lepton_text_object_get_angle
             lepton_text_object_set_angle
             lepton_text_object_set_show
             lepton_text_object_set_size
@@ -350,6 +351,7 @@
 
 (define-lff lepton_text_object_get_alignment int '(*))
 (define-lff lepton_text_object_set_alignment void (list '* int))
+(define-lff lepton_text_object_get_angle int '(*))
 (define-lff lepton_text_object_set_angle void (list '* int))
 (define-lff lepton_text_object_set_show void (list '* int))
 (define-lff lepton_text_object_set_size void (list '* int))

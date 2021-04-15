@@ -90,6 +90,7 @@
 
             text-align
             text-anchor
+            text-angle
             make-text
             set-text!)
 
@@ -951,8 +952,9 @@ the default text color is used."
                    (string->symbol (pointer->string string-pointer)))))
     (check-alignment-symbol sym)))
 
-(define-public (text-angle t)
-  (list-ref (text-info t) 2))
+(define (text-angle object)
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (lepton_text_object_get_angle pointer))
 
 (define-public (text-string t)
   (list-ref (text-info t) 3))
