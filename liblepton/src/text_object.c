@@ -728,7 +728,7 @@ lepton_text_object_copy (const LeptonObject *object)
   new_obj = lepton_text_object_new (lepton_object_get_color (object),
                                     lepton_text_object_get_x (object),
                                     lepton_text_object_get_y (object),
-                                    object->text->alignment,
+                                    lepton_text_object_get_alignment (object),
                                     object->text->angle,
                                     lepton_text_object_get_string (object),
                                     object->text->size,
@@ -807,58 +807,58 @@ lepton_text_object_mirror (int world_centerx,
   y = origy + (-world_centery);
 
   if ((object->text->angle%180)==0) {
-    switch(object->text->alignment) {
+    switch (lepton_text_object_get_alignment (object)) {
       case(LOWER_LEFT):
-        object->text->alignment=LOWER_RIGHT;
+        lepton_text_object_set_alignment (object, LOWER_RIGHT);
         break;
 
       case(MIDDLE_LEFT):
-        object->text->alignment=MIDDLE_RIGHT;
+        lepton_text_object_set_alignment (object, MIDDLE_RIGHT);
         break;
 
       case(UPPER_LEFT):
-        object->text->alignment=UPPER_RIGHT;
+        lepton_text_object_set_alignment (object, UPPER_RIGHT);
         break;
 
       case(LOWER_RIGHT):
-        object->text->alignment=LOWER_LEFT;
+        lepton_text_object_set_alignment (object, LOWER_LEFT);
         break;
 
       case(MIDDLE_RIGHT):
-        object->text->alignment=MIDDLE_LEFT;
+        lepton_text_object_set_alignment (object, MIDDLE_LEFT);
         break;
 
       case(UPPER_RIGHT):
-        object->text->alignment=UPPER_LEFT;
+        lepton_text_object_set_alignment (object, UPPER_LEFT);
         break;
 
       default:
         break;
     }
   } else {
-    switch(object->text->alignment) {
+    switch(lepton_text_object_get_alignment (object)) {
       case(LOWER_LEFT):
-      object->text->alignment=UPPER_LEFT;
+      lepton_text_object_set_alignment (object, UPPER_LEFT);
       break;
 
       case(UPPER_LEFT):
-      object->text->alignment=LOWER_LEFT;
+      lepton_text_object_set_alignment (object, LOWER_LEFT);
       break;
 
       case(LOWER_RIGHT):
-      object->text->alignment=UPPER_RIGHT;
+      lepton_text_object_set_alignment (object, UPPER_RIGHT);
       break;
 
       case(UPPER_RIGHT):
-      object->text->alignment=LOWER_RIGHT;
+      lepton_text_object_set_alignment (object, LOWER_RIGHT);
       break;
 
       case(LOWER_MIDDLE):
-      object->text->alignment=UPPER_MIDDLE;
+      lepton_text_object_set_alignment (object, UPPER_MIDDLE);
       break;
 
       case(UPPER_MIDDLE):
-      object->text->alignment=LOWER_MIDDLE;
+      lepton_text_object_set_alignment (object, LOWER_MIDDLE);
       break;
 
       default:
