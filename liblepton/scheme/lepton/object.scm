@@ -88,6 +88,7 @@
             make-bus-pin
             make-net-pin
 
+            text-info
             text-align
             text-anchor
             text-angle
@@ -927,12 +928,18 @@ the default text color is used."
     (set-text! object anchor align angle string size visible show
                (or color init-color))))
 
-(define-public (text-info t)
-  (let* ((params (%text-info t))
-         (tail (cddr params)))
-    (cons (cons (list-ref params 0)
-                (list-ref params 1))
-          tail)))
+(define (text-info object)
+  "Returns the parameters of text OBJECT as a list in the form:
+  '(anchor align angle string size visible show color)
+where anchor is a pair of integers in the form '(x . y)."
+  (list (text-anchor object)
+        (text-align object)
+        (text-angle object)
+        (text-string object)
+        (text-size object)
+        (text-visible? object)
+        (text-attribute-mode object)
+        (object-color object)))
 
 (define (text-anchor object)
   (define pointer (geda-object->pointer* object 1 text? 'text))
