@@ -88,6 +88,7 @@
             make-bus-pin
             make-net-pin
 
+            text-anchor
             make-text
             set-text!)
 
@@ -927,8 +928,10 @@ the default text color is used."
                 (list-ref params 1))
           tail)))
 
-(define-public (text-anchor t)
-  (list-ref (text-info t) 0))
+(define (text-anchor object)
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (cons (lepton_text_object_get_x pointer)
+        (lepton_text_object_get_y pointer)))
 
 (define-public (text-align t)
   (list-ref (text-info t) 1))
