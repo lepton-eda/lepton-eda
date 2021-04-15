@@ -93,6 +93,7 @@
             text-angle
             text-size
             text-string
+            text-visible?
             make-text
             set-text!)
 
@@ -971,8 +972,9 @@ the default text color is used."
   (define pointer (geda-object->pointer* object 1 text? 'text))
   (lepton_text_object_get_size pointer))
 
-(define-public (text-visible? t)
-  (list-ref (text-info t) 5))
+(define (text-visible? object)
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (true? (lepton_text_object_is_visible pointer)))
 
 (define-public (set-text-visibility! t visible)
   (let ((i (text-info t)))
