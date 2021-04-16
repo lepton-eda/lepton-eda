@@ -89,6 +89,7 @@
             make-bus-pin
             make-net-pin
 
+            make-path
             path-info
 
             make-picture/vector
@@ -686,10 +687,14 @@ of the arc."
 
 ;;;; Paths
 
-(define*-public (make-path #:optional color)
-  (let ((p (%make-path)))
-    (and color (set-object-color! p color))
-    p))
+(define* (make-path #:optional color)
+  "Creates and returns a new, empty path object with default
+stroke and fill options.  If COLOR is specified, it should be the
+integer color map index of the color with which to draw the path.
+If COLOR is not specified, the default path color is used."
+  (pointer->geda-object
+   (lepton_path_object_new (or color (default_color_id))
+                           (string->pointer ""))))
 
 (define-public path-length %path-length)
 

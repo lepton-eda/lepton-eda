@@ -141,6 +141,8 @@
             lepton_net_object_modify
             lepton_net_object_new
 
+            lepton_path_object_new
+
             lepton_picture_get_fallback_pixbuf
 
             lepton_picture_object_get_angle
@@ -381,6 +383,8 @@
 
 (define-lff lepton_net_object_modify void (list '* int int int))
 (define-lff lepton_net_object_new '* (list int int int int int))
+
+(define-lff lepton_path_object_new '* (list int '*))
 
 (define-lff lepton_picture_get_fallback_pixbuf '* '())
 

@@ -156,30 +156,6 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
   return result;
 }
 
-/*! \brief Make a new, empty path object.
- * \par Function Description
- * Creates a new, empty path object with default color, stroke and
- * fill options.
- *
- * \note Scheme API: Implements the %make-path procedure in the
- * (lepton core object) module.
- *
- * \return a newly-created path object.
- */
-SCM_DEFINE (make_path, "%make-path", 0, 0, 0,
-            (), "Create a new path object")
-{
-  LeptonObject *obj = lepton_path_object_new (default_color_id(), "");
-
-  SCM result = edascm_from_object (obj);
-
-  /* At the moment, the only pointer to the object is owned by the
-   * smob. */
-  edascm_c_set_gc (result, TRUE);
-
-  return result;
-}
-
 /*! \brief Get the number of elements in a path.
  * \par Function Description
  * Retrieves the number of path elements in the path object \a obj_s.
@@ -425,7 +401,6 @@ init_module_lepton_core_object (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_object_connections,
-                s_make_path,
                 s_path_length,
                 s_path_ref,
                 s_path_remove_x,
