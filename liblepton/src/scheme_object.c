@@ -156,27 +156,6 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
   return result;
 }
 
-/*! \brief Get the number of elements in a path.
- * \par Function Description
- * Retrieves the number of path elements in the path object \a obj_s.
- *
- * \note Scheme API: Implements the %path-length procedure in the
- * (lepton core object) module.
- *
- * \param obj_s #LeptonObject smob for path object to inspect.
- * \return The number of path elements in \a obj_s.
- */
-SCM_DEFINE (path_length, "%path-length", 1, 0, 0,
-            (SCM obj_s), "Get number of elements in a path object.")
-{
-  /* Ensure that the argument is a path object */
-  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PATH), obj_s,
-              SCM_ARG1, s_path_length);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  return scm_from_int (lepton_path_object_get_num_sections (obj));
-}
-
 /*! \brief Get one of the elements from a path.
  * \par Function Description
  * Retrieves a path element at index \a index_s from the path object
@@ -401,7 +380,6 @@ init_module_lepton_core_object (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_object_connections,
-                s_path_length,
                 s_path_ref,
                 s_path_remove_x,
                 s_path_insert_x,

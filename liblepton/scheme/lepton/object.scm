@@ -91,6 +91,7 @@
 
             make-path
             path-info
+            path-length
 
             make-picture/vector
             picture-angle
@@ -696,7 +697,11 @@ If COLOR is not specified, the default path color is used."
    (lepton_path_object_new (or color (default_color_id))
                            (string->pointer ""))))
 
-(define-public path-length %path-length)
+(define (path-length object)
+  "Returns the number of path elements in path OBJECT."
+  (define pointer (geda-object->pointer* object 1 path? 'path))
+
+  (lepton_path_object_get_num_sections pointer))
 
 (define-public (path-ref p idx)
 
