@@ -73,5 +73,7 @@ gboolean
 lepton_path_object_get_position (const LeptonObject *object,
                                  gint *x,
                                  gint *y);
+int
+lepton_path_object_get_num_sections (const LeptonObject *path);
 
 G_END_DECLS

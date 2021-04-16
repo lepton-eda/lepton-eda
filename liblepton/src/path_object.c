@@ -629,3 +629,12 @@ lepton_path_object_shortest_distance (LeptonObject *object,
 
   return s_path_shortest_distance (object->path, x, y, solid);
 }
+
+int
+lepton_path_object_get_num_sections (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_path (object), 0);
+  g_return_val_if_fail (object->path != NULL, 0);
+
+  return object->path->num_sections;
+}
