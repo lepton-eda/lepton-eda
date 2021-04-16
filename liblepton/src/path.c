@@ -92,6 +92,47 @@ lepton_path_free (LeptonPath * path)
   }
 }
 
+PATH_CODE
+lepton_path_section_get_code (LeptonPathSection *section)
+{
+  return section->code;
+}
+
+int
+lepton_path_section_get_x1 (LeptonPathSection *section)
+{
+  return section->x1;
+}
+
+int
+lepton_path_section_get_y1 (LeptonPathSection *section)
+{
+  return section->y1;
+}
+
+int
+lepton_path_section_get_x2 (LeptonPathSection *section)
+{
+  return section->x2;
+}
+
+int
+lepton_path_section_get_y2 (LeptonPathSection *section)
+{
+  return section->y2;
+}
+
+int
+lepton_path_section_get_x3 (LeptonPathSection *section)
+{
+  return section->x3;
+}
+
+int
+lepton_path_section_get_y3 (LeptonPathSection *section)
+{
+  return section->y3;
+}
 
 void
 s_path_moveto (LeptonPath *path,

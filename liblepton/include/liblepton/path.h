@@ -56,6 +56,28 @@ struct st_path
 void
 lepton_path_free (LeptonPath *path);
 
+
+PATH_CODE
+lepton_path_section_get_code (LeptonPathSection *section);
+
+int
+lepton_path_section_get_x1 (LeptonPathSection *section);
+
+int
+lepton_path_section_get_y1 (LeptonPathSection *section);
+
+int
+lepton_path_section_get_x2 (LeptonPathSection *section);
+
+int
+lepton_path_section_get_y2 (LeptonPathSection *section);
+
+int
+lepton_path_section_get_x3 (LeptonPathSection *section);
+
+int
+lepton_path_section_get_y3 (LeptonPathSection *section);
+
 LeptonPath*
 s_path_parse (const char *path_str);
 
