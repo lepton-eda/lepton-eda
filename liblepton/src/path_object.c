@@ -653,7 +653,7 @@ lepton_path_object_shortest_distance (LeptonObject *object,
 
 LeptonObject*
 lepton_path_object_insert_section (LeptonObject *object,
-                                   LeptonPathSection section,
+                                   LeptonPathSection *section,
                                    int i)
 {
   LeptonPath *path = object->path;
@@ -678,7 +678,7 @@ lepton_path_object_insert_section (LeptonObject *object,
   }
 
   path->num_sections++;
-  path->sections[i] = section;
+  path->sections[i] = *section;
 
   lepton_object_emit_change_notify (object);
 

@@ -84,7 +84,7 @@ lepton_path_object_get_section (const LeptonObject *object,
                                 int i);
 LeptonObject*
 lepton_path_object_insert_section (LeptonObject *object,
-                                   LeptonPathSection section,
+                                   LeptonPathSection *section,
                                    int i);
 LeptonObject*
 lepton_path_object_remove_section (LeptonObject *object,

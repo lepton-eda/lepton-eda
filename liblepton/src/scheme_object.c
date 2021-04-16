@@ -404,7 +404,7 @@ SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
     break;
   }
 
-  lepton_path_object_insert_section (obj, section, idx);
+  lepton_path_object_insert_section (obj, &section, idx);
 
   lepton_object_page_set_changed (obj);
 
