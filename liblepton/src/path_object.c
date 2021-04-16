@@ -664,20 +664,17 @@ lepton_path_object_remove_section (LeptonObject *object,
 
   lepton_object_emit_pre_change_notify (object);
 
-  if (i + 1 == num_sections)
+  /* If section is not last in path, remove section at index by
+   * moving all sections above index one location down. */
+  if (i + 1 != num_sections)
   {
-    /* Section is last in path */
-    lepton_path_object_set_num_sections (object, num_sections - 1);
-  }
-  else
-  {
-    /* Remove section at index by moving all sections above index one
-     * location down. */
     memmove (&object->path->sections[i],
              &object->path->sections[i+1],
              sizeof (LeptonPathSection) * (num_sections - i - 1));
-    lepton_path_object_set_num_sections (object, num_sections - 1);
   }
+
+  /* Decrement the number of sections. */
+  lepton_path_object_set_num_sections (object, num_sections - 1);
 
   lepton_object_emit_change_notify (object);
 
