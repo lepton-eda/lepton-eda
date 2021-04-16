@@ -92,6 +92,7 @@
             make-path
             path-info
             path-length
+            path-ref
 
             make-picture/vector
             picture-angle
@@ -703,22 +704,61 @@ If COLOR is not specified, the default path color is used."
 
   (lepton_path_object_get_num_sections pointer))
 
-(define-public (path-ref p idx)
+(define (path-ref object index)
+  "Retrieves and returns a path element at INDEX from path OBJECT
+.  If INDEX is not a valid index, raises a Scheme
+'out-of-range error.
 
-  ;; This recursive function transforms the list of coordinates thus:
-  ;;
-  ;; (x y ...) --> ((x . y) ...)
-  (define (transform-points lst acc)
-    (if (null? lst)
-        acc
-        (transform-points
-         (cddr lst)
-         (append! acc
-                  (list (cons (car lst) (cadr lst)))))))
+The return value is a list.  The first element in the list is a
+symbol indicating the type of path element ('moveto, 'lineto,
+'curveto or 'closepath), and the remainder of the list contains
+zero or more control point coordinates, depending on the type of
+path element.  Each element is evaluated relative to the current
+path position.
+- moveto: x and y coordinates of position to step to.
+- lineto: x and y coordinates of straight line endpoint.
+- curveto: coordinates of first Bezier control point; coordinates
+  of second control point; and coordinates of curve endpoint.
+- closepath: No coordinate parameters.
 
-  (let ((element (%path-ref p idx)))
-    (cons (car element)
-          (transform-points (cdr element) '()))))
+All coordinates are absolute."
+
+  (define pointer (geda-object->pointer* object 1 path? 'path))
+
+  (check-integer index 2)
+
+  ;; Check index is not valid for path.
+  (when (or (< index 0)
+            (>= index (lepton_path_object_get_num_sections pointer)))
+    (scm-error 'out-of-range
+               'path-ref
+               "Argument ~A out of range: ~A"
+               (list 2 index)
+               (list index)))
+
+  (let* ((section (lepton_path_object_get_section pointer index))
+         (code-string-pointer
+          (lepton_path_section_code_to_string
+           (lepton_path_section_get_code section)))
+         (code (and (not (null-pointer? code-string-pointer))
+                    (string->symbol (pointer->string code-string-pointer))))
+         (x1 (lepton_path_section_get_x1 section))
+         (y1 (lepton_path_section_get_y1 section))
+         (x2 (lepton_path_section_get_x2 section))
+         (y2 (lepton_path_section_get_y2 section))
+         (x3 (lepton_path_section_get_x3 section))
+         (y3 (lepton_path_section_get_y3 section)))
+    (match code
+      ('moveto
+       (list 'moveto (cons x3 y3)))
+      ('lineto
+       (list 'lineto (cons x3 y3)))
+      ('curveto
+       (list 'curveto (cons x1 y1) (cons x2 y2) (cons x3 y3)))
+      ('closepath
+       (list 'closepath))
+      (_ (error "Path object ~A has invalid element type ~A at index ~A."
+                object code index)))))
 
 (define-public path-remove! %path-remove!)
 

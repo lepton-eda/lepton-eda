@@ -156,83 +156,6 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
   return result;
 }
 
-/*! \brief Get one of the elements from a path.
- * \par Function Description
- * Retrieves a path element at index \a index_s from the path object
- * \a obj_s.  If \a index_s is not a valid index, raises a Scheme
- * "out-of-range" error.
- *
- * The return value is a list.  The first element in the list is a
- * symbol indicating the type of path element ("moveto", "lineto",
- * "curveto" or "closepath"), and the remainder of the list contains
- * zero or more control point coordinates, depending on the type of
- * path element.  Each element is evaluated relative to the current
- * path position.
- *
- * - moveto: x and y coordinates of position to step to.
- * - lineto: x and y coordinates of straight line endpoint.
- * - curveto: coordinates of first Bezier control point; coordinates
- *   of second control point; and coordinates of curve endpoint.
- * - closepath: No coordinate parameters.
- *
- * All coordinates are absolute.
- *
- * \note Scheme API: Implements the %path-ref procedure in the
- * (lepton core object) module.
- *
- * \param obj_s   #LeptonObject smob of path object to get element from.
- * \param index_s Index of element to retrieve from \a obj_s
- * \return A list containing the requested path element data.
- */
-SCM_DEFINE (path_ref, "%path-ref", 2, 0, 0,
-            (SCM obj_s, SCM index_s),
-            "Get a path element from a path object.")
-{
-  /* Ensure that the arguments are a path object and integer */
-  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PATH), obj_s,
-              SCM_ARG1, s_path_ref);
-  SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_ref);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  int idx = scm_to_int (index_s);
-
-  /* Check index is valid for path */
-  if ((idx < 0) || (idx >= lepton_path_object_get_num_sections (obj)))
-  {
-    scm_out_of_range (s_path_ref, index_s);
-  }
-
-  LeptonPathSection *section = &obj->path->sections[idx];
-
-  switch (section->code) {
-  case PATH_MOVETO:
-  case PATH_MOVETO_OPEN:
-    return scm_list_3 (moveto_sym,
-                       scm_from_int (section->x3),
-                       scm_from_int (section->y3));
-  case PATH_LINETO:
-    return scm_list_3 (lineto_sym,
-                       scm_from_int (section->x3),
-                       scm_from_int (section->y3));
-  case PATH_CURVETO:
-    return scm_list_n (curveto_sym,
-                       scm_from_int (section->x1),
-                       scm_from_int (section->y1),
-                       scm_from_int (section->x2),
-                       scm_from_int (section->y2),
-                       scm_from_int (section->x3),
-                       scm_from_int (section->y3),
-                       SCM_UNDEFINED);
-  case PATH_END:
-    return scm_list_1 (closepath_sym);
-  default:
-    scm_misc_error (s_path_ref,
-                    _("Path object ~A has invalid element type ~A at index ~A"),
-                    scm_list_3 (obj_s, scm_from_int (section->code), index_s));
-  }
-
-}
-
 /*! \brief Remove an element from a path.
  * \par Function Description
  * Removes the path element at index \a index_s from the path object
@@ -380,7 +303,6 @@ init_module_lepton_core_object (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_object_connections,
-                s_path_ref,
                 s_path_remove_x,
                 s_path_insert_x,
                 NULL);

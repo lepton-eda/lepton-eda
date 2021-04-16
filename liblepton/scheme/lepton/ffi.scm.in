@@ -142,7 +142,17 @@
             lepton_net_object_new
 
             lepton_path_object_get_num_sections
+            lepton_path_object_get_section
             lepton_path_object_new
+
+            lepton_path_section_code_to_string
+            lepton_path_section_get_code
+            lepton_path_section_get_x1
+            lepton_path_section_get_y1
+            lepton_path_section_get_x2
+            lepton_path_section_get_y2
+            lepton_path_section_get_x3
+            lepton_path_section_get_y3
 
             lepton_picture_get_fallback_pixbuf
 
@@ -386,7 +396,16 @@
 (define-lff lepton_net_object_new '* (list int int int int int))
 
 (define-lff lepton_path_object_get_num_sections int '(*))
+(define-lff lepton_path_object_get_section '* (list '* int))
 (define-lff lepton_path_object_new '* (list int '*))
+(define-lff lepton_path_section_code_to_string '* (list int))
+(define-lff lepton_path_section_get_code int '(*))
+(define-lff lepton_path_section_get_x1 int '(*))
+(define-lff lepton_path_section_get_y1 int '(*))
+(define-lff lepton_path_section_get_x2 int '(*))
+(define-lff lepton_path_section_get_y2 int '(*))
+(define-lff lepton_path_section_get_x3 int '(*))
+(define-lff lepton_path_section_get_y3 int '(*))
 
 (define-lff lepton_picture_get_fallback_pixbuf '* '())
 
