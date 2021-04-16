@@ -78,6 +78,9 @@ lepton_path_section_get_x3 (LeptonPathSection *section);
 int
 lepton_path_section_get_y3 (LeptonPathSection *section);
 
+const char*
+lepton_path_section_code_to_string (int code);
+
 LeptonPath*
 s_path_parse (const char *path_str);
 

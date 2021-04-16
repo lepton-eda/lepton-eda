@@ -134,6 +134,24 @@ lepton_path_section_get_y3 (LeptonPathSection *section)
   return section->y3;
 }
 
+const char*
+lepton_path_section_code_to_string (int code)
+{
+  const char *result = NULL;
+
+  switch (code)
+  {
+  case PATH_MOVETO:
+  case PATH_MOVETO_OPEN: result = "moveto"; break;
+  case PATH_LINETO: result = "lineto"; break;
+  case PATH_CURVETO: result = "curveto"; break;
+  case PATH_END: result = "closepath"; break;
+  default: break;
+  }
+
+  return result;
+}
+
 void
 s_path_moveto (LeptonPath *path,
                double x,
