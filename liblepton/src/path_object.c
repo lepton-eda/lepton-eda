@@ -29,6 +29,20 @@
  *  \brief functions for the path object
  */
 
+LeptonPathSection*
+lepton_path_object_get_section (const LeptonObject *object,
+                                int i)
+{
+  g_return_val_if_fail (lepton_object_is_path (object), NULL);
+  g_return_val_if_fail (object->path != NULL, NULL);
+
+  g_return_val_if_fail ((i >= 0) &&
+                        (i < lepton_path_object_get_num_sections (object)),
+                        NULL);
+
+  return &object->path->sections[i];
+}
+
 
 /*! \brief Create a new path object.
  *  \par Function Description

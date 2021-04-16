@@ -79,5 +79,8 @@ lepton_path_object_get_num_sections (const LeptonObject *path);
 void
 lepton_path_object_set_num_sections (LeptonObject *object,
                                      int num);
+LeptonPathSection*
+lepton_path_object_get_section (const LeptonObject *object,
+                                int i);
 
 G_END_DECLS
