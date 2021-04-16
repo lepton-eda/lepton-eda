@@ -347,7 +347,7 @@ LeptonObject *o_grips_search_path_world(GschemToplevel *w_current, LeptonObject 
 
   for (i = 0; i < lepton_path_object_get_num_sections (o_current); i++)
   {
-    section = &o_current->path->sections[i];
+    section = lepton_path_object_get_section (o_current, i);
 
     switch (section->code) {
     case PATH_CURVETO:
@@ -685,7 +685,7 @@ static void o_grips_start_path(GschemToplevel *w_current, LeptonObject *o_curren
 
   for (i = 0; i < lepton_path_object_get_num_sections (o_current); i++)
   {
-    section = &o_current->path->sections[i];
+    section = lepton_path_object_get_section (o_current, i);
 
     switch (section->code) {
     case PATH_CURVETO:
