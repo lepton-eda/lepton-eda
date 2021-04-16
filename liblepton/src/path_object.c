@@ -619,6 +619,9 @@ lepton_path_object_shortest_distance (LeptonObject *object,
                                       int force_solid,
                                       gboolean include_hidden)
 {
+  g_return_val_if_fail (lepton_object_is_path (object), G_MAXDOUBLE);
+  g_return_val_if_fail (object->path != NULL, G_MAXDOUBLE);
+
   int solid;
 
   solid = force_solid ||
