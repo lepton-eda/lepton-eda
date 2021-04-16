@@ -654,8 +654,9 @@ LeptonObject*
 lepton_path_object_remove_section (LeptonObject *object,
                                    int i)
 {
-  if ((i < 0) ||
-      (i >= lepton_path_object_get_num_sections (object)))
+  int num_sections = lepton_path_object_get_num_sections (object);
+
+  if ((i < 0) || (i >= num_sections))
   {
     /* Index is invalid for path.  Return the object unchanged. */
     return object;
@@ -663,11 +664,10 @@ lepton_path_object_remove_section (LeptonObject *object,
 
   lepton_object_emit_pre_change_notify (object);
 
-  if (i + 1 == lepton_path_object_get_num_sections (object))
+  if (i + 1 == num_sections)
   {
     /* Section is last in path */
-    lepton_path_object_set_num_sections (object,
-                                         lepton_path_object_get_num_sections (object) - 1);
+    lepton_path_object_set_num_sections (object, num_sections - 1);
   }
   else
   {
@@ -675,9 +675,8 @@ lepton_path_object_remove_section (LeptonObject *object,
      * location down. */
     memmove (&object->path->sections[i],
              &object->path->sections[i+1],
-             sizeof (LeptonPathSection) * (lepton_path_object_get_num_sections (object) - i - 1));
-    lepton_path_object_set_num_sections (object,
-                                         lepton_path_object_get_num_sections (object) - 1);
+             sizeof (LeptonPathSection) * (num_sections - i - 1));
+    lepton_path_object_set_num_sections (object, num_sections - 1);
   }
 
   lepton_object_emit_change_notify (object);
