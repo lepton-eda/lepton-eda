@@ -21,7 +21,6 @@
 (define-module (lepton object)
   ;; Optional arguments
   #:use-module (ice-9 match)
-  #:use-module (ice-9 optargs)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-4 gnu)
   #:use-module (system foreign)
