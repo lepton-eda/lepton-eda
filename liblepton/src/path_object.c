@@ -650,6 +650,42 @@ lepton_path_object_shortest_distance (LeptonObject *object,
   return s_path_shortest_distance (object->path, x, y, solid);
 }
 
+
+LeptonObject*
+lepton_path_object_insert_section (LeptonObject *object,
+                                   LeptonPathSection section,
+                                   int i)
+{
+  LeptonPath *path = object->path;
+
+  /* Start making changes. */
+  lepton_object_emit_pre_change_notify (object);
+
+  /* Make sure there's enough space for the new element. */
+  if (path->num_sections == path->num_sections_max) {
+    path->sections =
+      (LeptonPathSection*) g_realloc (path->sections,
+                                      (path->num_sections_max <<= 1) *
+                                      sizeof (LeptonPathSection));
+  }
+
+  /* Move path contents to make a gap in the right place. */
+  if ((i < 0) || (i > path->num_sections)) {
+    i = path->num_sections;
+  } else {
+    memmove (&path->sections[i+1], &path->sections[i],
+             sizeof (LeptonPathSection) * (path->num_sections - i));
+  }
+
+  path->num_sections++;
+  path->sections[i] = section;
+
+  lepton_object_emit_change_notify (object);
+
+  return object;
+}
+
+
 LeptonObject*
 lepton_path_object_remove_section (LeptonObject *object,
                                    int i)
