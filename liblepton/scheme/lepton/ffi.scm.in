@@ -144,6 +144,7 @@
             lepton_path_object_get_num_sections
             lepton_path_object_get_section
             lepton_path_object_new
+            lepton_path_object_remove_section
 
             lepton_path_section_code_to_string
             lepton_path_section_get_code
@@ -398,6 +399,7 @@
 (define-lff lepton_path_object_get_num_sections int '(*))
 (define-lff lepton_path_object_get_section '* (list '* int))
 (define-lff lepton_path_object_new '* (list int '*))
+(define-lff lepton_path_object_remove_section '* (list '* int))
 (define-lff lepton_path_section_code_to_string '* (list int))
 (define-lff lepton_path_section_get_code int '(*))
 (define-lff lepton_path_section_get_x1 int '(*))

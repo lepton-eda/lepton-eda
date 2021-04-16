@@ -93,6 +93,7 @@
             path-info
             path-length
             path-ref
+            path-remove!
 
             make-picture/vector
             picture-angle
@@ -760,7 +761,28 @@ All coordinates are absolute."
       (_ (error "Path object ~A has invalid element type ~A at index ~A."
                 object code index)))))
 
-(define-public path-remove! %path-remove!)
+(define (path-remove! object index)
+  "Removes the path element at INDEX from path OBJECT. If INDEX is
+not a valid index, raises a Scheme 'out-of-range error.  Returns
+modified OBJECT."
+  (define pointer (geda-object->pointer* object 1 path? 'path))
+
+  (check-integer index 2)
+
+  ;; Check index is not valid for path.
+  (when (or (< index 0)
+            (>= index (lepton_path_object_get_num_sections pointer)))
+    (scm-error 'out-of-range
+               'path-ref
+               "Argument ~A out of range: ~A"
+               (list 2 index)
+               (list index)))
+
+  (lepton_path_object_remove_section pointer index)
+
+  (lepton_object_page_set_changed pointer)
+
+  object)
 
 (define-public (path-insert! p idx type . points)
 

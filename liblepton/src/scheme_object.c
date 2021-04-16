@@ -156,46 +156,6 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
   return result;
 }
 
-/*! \brief Remove an element from a path.
- * \par Function Description
- * Removes the path element at index \a index_s from the path object
- * \a obj_s. If \a index_s is not a valid index, raises a Scheme
- * "out-of-range" error.
- *
- * \note Scheme API: Implements the %path-remove! procedure in the
- * (lepton core object) module.
- *
- * \param obj_s   #LeptonObject smob of path object to remove element from.
- * \param index_s Index of element to remove from \a obj_s.
- * \return \a obj_s.
- */
-SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
-            (SCM obj_s, SCM index_s),
-            "Remove a path element from a path object.")
-{
-  /* Ensure that the arguments are a path object and integer */
-  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PATH), obj_s,
-              SCM_ARG1, s_path_remove_x);
-  SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_remove_x);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  int idx = scm_to_int (index_s);
-
-  if ((idx < 0) || (idx >= lepton_path_object_get_num_sections (obj)))
-  {
-    /* Index is valid for path */
-    scm_out_of_range (s_path_remove_x, index_s);
-  }
-
-  /* This is the same object pointer.  Just avoid warnings on
-   * unused function result by using the assignment. */
-  obj = lepton_path_object_remove_section (obj, idx);
-
-  lepton_object_page_set_changed (obj);
-
-  return obj_s;
-}
-
 /*! \brief Insert an element into a path.
  * \par Function Description
  * Inserts a path element into the path object \a obj_s at index \a
@@ -303,7 +263,6 @@ init_module_lepton_core_object (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_object_connections,
-                s_path_remove_x,
                 s_path_insert_x,
                 NULL);
 }
