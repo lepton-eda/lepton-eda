@@ -297,8 +297,8 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
 {
   /* Ensure that the arguments are a path object and integer */
   SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PATH), obj_s,
-              SCM_ARG1, s_path_ref);
-  SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_ref);
+              SCM_ARG1, s_path_remove_x);
+  SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_remove_x);
 
   LeptonObject *obj = edascm_to_object (obj_s);
   int idx = scm_to_int (index_s);
@@ -306,7 +306,7 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
   if ((idx < 0) || (idx >= lepton_path_object_get_num_sections (obj)))
   {
     /* Index is valid for path */
-    scm_out_of_range (s_path_ref, index_s);
+    scm_out_of_range (s_path_remove_x, index_s);
 
   }
 
