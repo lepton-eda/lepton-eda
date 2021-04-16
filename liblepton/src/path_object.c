@@ -638,3 +638,13 @@ lepton_path_object_get_num_sections (const LeptonObject *object)
 
   return object->path->num_sections;
 }
+
+void
+lepton_path_object_set_num_sections (LeptonObject *object,
+                                     int num)
+{
+  g_return_if_fail (lepton_object_is_path (object));
+  g_return_if_fail (object->path != NULL);
+
+  object->path->num_sections = num;
+}
