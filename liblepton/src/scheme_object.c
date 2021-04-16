@@ -198,7 +198,7 @@ SCM_DEFINE (path_length, "%path-length", 1, 0, 0,
               SCM_ARG1, s_path_length);
 
   LeptonObject *obj = edascm_to_object (obj_s);
-  return scm_from_int (obj->path->num_sections);
+  return scm_from_int (lepton_path_object_get_num_sections (obj));
 }
 
 /*! \brief Get one of the elements from a path.
@@ -242,7 +242,8 @@ SCM_DEFINE (path_ref, "%path-ref", 2, 0, 0,
   int idx = scm_to_int (index_s);
 
   /* Check index is valid for path */
-  if ((idx < 0) || (idx >= obj->path->num_sections)) {
+  if ((idx < 0) || (idx >= lepton_path_object_get_num_sections (obj)))
+  {
     scm_out_of_range (s_path_ref, index_s);
   }
 
@@ -302,7 +303,8 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
   LeptonObject *obj = edascm_to_object (obj_s);
   int idx = scm_to_int (index_s);
 
-  if ((idx < 0) || (idx >= obj->path->num_sections)) {
+  if ((idx < 0) || (idx >= lepton_path_object_get_num_sections (obj)))
+  {
     /* Index is valid for path */
     scm_out_of_range (s_path_ref, index_s);
 
@@ -310,17 +312,20 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
 
   lepton_object_emit_pre_change_notify (obj);
 
-  if (idx + 1 == obj->path->num_sections) {
+  if (idx + 1 == lepton_path_object_get_num_sections (obj))
+  {
     /* Section is last in path */
-    obj->path->num_sections--;
+    lepton_path_object_set_num_sections (obj,
+                                         lepton_path_object_get_num_sections (obj) - 1);
 
   } else {
     /* Remove section at index by moving all sections above index one
      * location down. */
     memmove (&obj->path->sections[idx],
              &obj->path->sections[idx+1],
-             sizeof (LeptonPathSection) * (obj->path->num_sections - idx - 1));
-    obj->path->num_sections--;
+             sizeof (LeptonPathSection) * (lepton_path_object_get_num_sections (obj) - idx - 1));
+    lepton_path_object_set_num_sections (obj,
+                                         lepton_path_object_get_num_sections (obj) - 1);
   }
 
   lepton_object_emit_change_notify (obj);

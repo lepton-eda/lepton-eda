@@ -789,7 +789,7 @@ eda_renderer_draw_path (EdaRenderer *renderer, LeptonObject *object)
   /* Draw outline of path */
   eda_cairo_path (renderer->priv->cr, EDA_RENDERER_CAIRO_FLAGS (renderer),
                   lepton_object_get_stroke_width (object),
-                  object->path->num_sections,
+                  lepton_path_object_get_num_sections (object),
                   object->path->sections);
 
   if (fill_solid) cairo_fill_preserve (renderer->priv->cr);
@@ -1273,7 +1273,8 @@ static void
 eda_renderer_draw_path_grips (EdaRenderer *renderer, LeptonObject *object)
 {
   int i, last_x = 0, last_y = 0, next_x, next_y;
-  for (i = 0; i < object->path->num_sections; i++) {
+  for (i = 0; i < lepton_path_object_get_num_sections (object); i++)
+  {
     LeptonPathSection *section = object->path->sections + i;
 
     if (section->code != PATH_END) {

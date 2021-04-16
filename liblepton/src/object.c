@@ -1725,7 +1725,8 @@ lepton_object_calculate_visible_bounds (LeptonObject *o_current,
 
   case(OBJ_PATH):
     g_return_val_if_fail (o_current->path != NULL, 0);
-    if (o_current->path->num_sections <= 0) {
+    if (lepton_path_object_get_num_sections (o_current) <= 0)
+    {
       return 0;
     }
     lepton_path_object_calculate_bounds (o_current, &bounds);

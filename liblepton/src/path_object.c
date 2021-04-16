@@ -340,7 +340,8 @@ lepton_path_object_modify (LeptonObject *object,
 
   lepton_object_emit_pre_change_notify (object);
 
-  for (i = 0; i <  object->path->num_sections; i++) {
+  for (i = 0; i < lepton_path_object_get_num_sections (object); i++)
+  {
     section = &object->path->sections[i];
 
     switch (section->code) {
@@ -393,7 +394,8 @@ lepton_path_object_translate (LeptonObject *object,
   g_return_if_fail (lepton_object_is_path (object));
   g_return_if_fail (object->path != NULL);
 
-  for (i = 0; i < object->path->num_sections; i++) {
+  for (i = 0; i < lepton_path_object_get_num_sections (object); i++)
+  {
     section = &object->path->sections[i];
 
     switch (section->code) {
@@ -440,7 +442,8 @@ lepton_path_object_rotate (int world_centerx,
   g_return_if_fail (lepton_object_is_path (object));
   g_return_if_fail (object->path != NULL);
 
-  for (i = 0; i < object->path->num_sections; i++) {
+  for (i = 0; i < lepton_path_object_get_num_sections (object); i++)
+  {
     section = &object->path->sections[i];
 
     switch (section->code) {
@@ -492,7 +495,8 @@ lepton_path_object_mirror (int world_centerx,
   g_return_if_fail (lepton_object_is_path (object));
   g_return_if_fail (object->path != NULL);
 
-  for (i = 0; i < object->path->num_sections; i++) {
+  for (i = 0; i < lepton_path_object_get_num_sections (object); i++)
+  {
     section = &object->path->sections[i];
 
     switch (section->code) {
@@ -534,7 +538,8 @@ lepton_path_object_calculate_bounds (const LeptonObject *object,
   g_return_if_fail (object->path != NULL);
 
   /* Find the bounds of the path region */
-  for (i = 0; i < object->path->num_sections; i++) {
+  for (i = 0; i < lepton_path_object_get_num_sections (object); i++)
+  {
     LeptonPathSection *section = &object->path->sections[i];
 
     switch (section->code) {
@@ -586,7 +591,8 @@ lepton_path_object_get_position (const LeptonObject *object,
   g_return_val_if_fail (lepton_object_is_path (object), FALSE);
   g_return_val_if_fail (object->path != NULL, FALSE);
 
-  if (object->path->num_sections == 0) {
+  if (lepton_path_object_get_num_sections (object) == 0)
+  {
     return FALSE;
   }
 
