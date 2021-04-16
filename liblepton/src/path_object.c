@@ -650,6 +650,41 @@ lepton_path_object_shortest_distance (LeptonObject *object,
   return s_path_shortest_distance (object->path, x, y, solid);
 }
 
+LeptonObject*
+lepton_path_object_remove_section (LeptonObject *object,
+                                   int i)
+{
+  if ((i < 0) ||
+      (i >= lepton_path_object_get_num_sections (object)))
+  {
+    /* Index is invalid for path.  Return the object unchanged. */
+    return object;
+  }
+
+  lepton_object_emit_pre_change_notify (object);
+
+  if (i + 1 == lepton_path_object_get_num_sections (object))
+  {
+    /* Section is last in path */
+    lepton_path_object_set_num_sections (object,
+                                         lepton_path_object_get_num_sections (object) - 1);
+  }
+  else
+  {
+    /* Remove section at index by moving all sections above index one
+     * location down. */
+    memmove (&object->path->sections[i],
+             &object->path->sections[i+1],
+             sizeof (LeptonPathSection) * (lepton_path_object_get_num_sections (object) - i - 1));
+    lepton_path_object_set_num_sections (object,
+                                         lepton_path_object_get_num_sections (object) - 1);
+  }
+
+  lepton_object_emit_change_notify (object);
+
+  return object;
+}
+
 int
 lepton_path_object_get_num_sections (const LeptonObject *object)
 {

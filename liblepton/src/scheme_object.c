@@ -307,28 +307,12 @@ SCM_DEFINE (path_remove_x, "%path-remove!", 2, 0, 0,
   {
     /* Index is valid for path */
     scm_out_of_range (s_path_remove_x, index_s);
-
   }
 
-  lepton_object_emit_pre_change_notify (obj);
+  /* This is the same object pointer.  Just avoid warnings on
+   * unused function result by using the assignment. */
+  obj = lepton_path_object_remove_section (obj, idx);
 
-  if (idx + 1 == lepton_path_object_get_num_sections (obj))
-  {
-    /* Section is last in path */
-    lepton_path_object_set_num_sections (obj,
-                                         lepton_path_object_get_num_sections (obj) - 1);
-
-  } else {
-    /* Remove section at index by moving all sections above index one
-     * location down. */
-    memmove (&obj->path->sections[idx],
-             &obj->path->sections[idx+1],
-             sizeof (LeptonPathSection) * (lepton_path_object_get_num_sections (obj) - idx - 1));
-    lepton_path_object_set_num_sections (obj,
-                                         lepton_path_object_get_num_sections (obj) - 1);
-  }
-
-  lepton_object_emit_change_notify (obj);
   lepton_object_page_set_changed (obj);
 
   return obj_s;
