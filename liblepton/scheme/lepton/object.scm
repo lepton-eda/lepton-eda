@@ -91,6 +91,7 @@
 
             make-path
             path-info
+            path-insert!
             path-length
             path-ref
             path-remove!
@@ -784,19 +785,70 @@ modified OBJECT."
 
   object)
 
-(define-public (path-insert! p idx type . points)
+(define* (path-insert! object index type #:optional c1 c2 c3)
+  "Inserts a path element into the path OBJECT at INDEX.  The type
+of element to be inserted is specified by TYPE which must be a
+symbol, and the remaining optional arguments C1, C2, and C3
+provide as many absolute coordinate pairs in the form '(x . y) as
+are required by that element type:
+- 'closepath elements require no coordinate arguments;
+- 'moveto and 'lineto elements require one coordinate pair, for
+  the endpoint;
+- 'curveto elements require the coordinates of the first control
+  point, coordinates of the second control point, and coordinates
+  of the endpoint.
+If INDEX is negative, or is greater than or equal to the number
+of elements currently in the path, the new element will be appended
+to the path. Returns modified OBJECT."
+  ;; For convenience.
+  (define c0 '(0 . 0))
 
-  ;; This recursive function transforms the list of coordinates thus:
-  ;;
-  ;; ((x . y) ...) --> (x y ...)
-  (define (transform-points lst acc)
-    (if (null? lst)
-        acc
-        (transform-points
-         (cdr lst)
-         (append acc (list (caar lst) (cdar lst))))))
+  (define (make-c-section code c1 c2 c3)
+    (let ((x1 (car c1))
+          (y1 (cdr c1))
+          (x2 (car c2))
+          (y2 (cdr c2))
+          (x3 (car c3))
+          (y3 (cdr c3)))
+      (make-c-struct (list int int int int int int int)
+                     (list code x1 y1 x2 y2 x3 y3))))
 
-  (apply %path-insert p idx type (transform-points points '())))
+  (define (error-invalid-path-element)
+    (error "Invalid path element type ~A." type))
+
+  (define pointer (geda-object->pointer* object 1 path? 'path))
+
+  (check-integer index 2)
+  (check-symbol type 3)
+
+  ;; Check & extract path element type.
+  ;; Check the right number of coordinates have been provided.
+  (let* ((code
+          (lepton_path_section_code_from_string
+           (string->pointer (symbol->string type))))
+         (section
+          (match type
+            ('curveto
+             (unless (and c1 c2 c3)
+               (error-invalid-path-element))
+             (check-coord c1 4)
+             (check-coord c2 5)
+             (check-coord c3 6)
+             (make-c-section code c1 c2 c3))
+            ((or 'lineto 'moveto)
+             (unless c1
+               (error-invalid-path-element))
+             (check-coord c1 4)
+             (make-c-section code c0 c0 c1))
+            ('closepath
+             (make-c-section code c0 c0 c0))
+            (_ (error-invalid-path-element)))))
+
+    (lepton_path_object_insert_section pointer section index)
+
+    (lepton_object_page_set_changed pointer)
+
+    object))
 
 (define (path-info object)
   "Returns info on all elements of path OBJECT."

@@ -156,99 +156,6 @@ SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
   return result;
 }
 
-/*! \brief Insert an element into a path.
- * \par Function Description
- * Inserts a path element into the path object \a obj_s at index \a
- * index_s.  The type of element to be inserted is specified by the
- * symbol \a type_s, and the remaining optional integer arguments
- * provide as many absolute coordinate pairs as are required by that
- * element type:
- *
- * - "closepath" elements require no coordinate arguments;
- * - "moveto" and "lineto" elements require one coordinate pair, for
- *   the endpoint;
- * - "curveto" elements require the coordinates of the first control
- *   point, coordinates of the second control point, and coordinates
- *   of the endpoint.
- *
- * If the index is negative, or is greater than or equal to the number
- * of elements currently in the path, the new element will be appended
- * to the path.
- *
- * \note Scheme API: Implements the %path-insert! procedure of the
- * (lepton core object) module.
- *
- * \param obj_s   #LeptonObject smob for the path object to modify.
- * \param index_s Index at which to insert new element.
- * \param type_s  Symbol indicating what type of element to insert.
- * \param x1_s    X-coordinate of first coordinate pair.
- * \param y1_s    Y-coordinate of first coordinate pair.
- * \param x2_s    X-coordinate of second coordinate pair.
- * \param y2_s    Y-coordinate of second coordinate pair.
- * \param x3_s    X-coordinate of third coordinate pair.
- * \param y3_s    Y-coordinate of third coordinate pair.
- * \return \a obj_s.
- */
-SCM_DEFINE (path_insert_x, "%path-insert", 3, 6, 0,
-            (SCM obj_s, SCM index_s, SCM type_s,
-             SCM x1_s, SCM y1_s, SCM x2_s, SCM y2_s, SCM x3_s, SCM y3_s),
-            "Insert a path element into a path object.")
-{
-  SCM_ASSERT (edascm_is_object_type (obj_s, OBJ_PATH), obj_s,
-              SCM_ARG1, s_path_insert_x);
-  SCM_ASSERT (scm_is_integer (index_s), index_s, SCM_ARG2, s_path_insert_x);
-  SCM_ASSERT (scm_is_symbol (type_s), type_s, SCM_ARG3, s_path_insert_x);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  LeptonPathSection section = {(PATH_CODE) 0, 0, 0, 0, 0, 0, 0};
-  int idx = scm_to_int (index_s);
-
-  /* Check & extract path element type. */
-  if      (scm_is_eq (type_s, closepath_sym)) { section.code = PATH_END;     }
-  else if (scm_is_eq (type_s, moveto_sym))    { section.code = PATH_MOVETO;  }
-  else if (scm_is_eq (type_s, lineto_sym))    { section.code = PATH_LINETO;  }
-  else if (scm_is_eq (type_s, curveto_sym))   { section.code = PATH_CURVETO; }
-  else {
-    scm_misc_error (s_path_insert_x,
-                    _("Invalid path element type ~A."),
-                    scm_list_1 (type_s));
-  }
-
-  /* Check the right number of coordinates have been provided. */
-  switch (section.code) {
-  case PATH_CURVETO:
-    SCM_ASSERT (scm_is_integer (x1_s), x1_s, SCM_ARG4, s_path_insert_x);
-    section.x1 = scm_to_int (x1_s);
-    SCM_ASSERT (scm_is_integer (y1_s), y1_s, SCM_ARG5, s_path_insert_x);
-    section.y1 = scm_to_int (y1_s);
-    SCM_ASSERT (scm_is_integer (x2_s), x2_s, SCM_ARG6, s_path_insert_x);
-    section.x2 = scm_to_int (x2_s);
-    SCM_ASSERT (scm_is_integer (y2_s), y2_s, SCM_ARG7, s_path_insert_x);
-    section.y2 = scm_to_int (y2_s);
-    SCM_ASSERT (scm_is_integer (x3_s), x3_s, 8, s_path_insert_x);
-    section.x3 = scm_to_int (x3_s);
-    SCM_ASSERT (scm_is_integer (y3_s), y3_s, 9, s_path_insert_x);
-    section.y3 = scm_to_int (y3_s);
-    break;
-  case PATH_MOVETO:
-  case PATH_MOVETO_OPEN:
-  case PATH_LINETO:
-    SCM_ASSERT (scm_is_integer (x1_s), x1_s, SCM_ARG4, s_path_insert_x);
-    section.x3 = scm_to_int (x1_s);
-    SCM_ASSERT (scm_is_integer (y1_s), y1_s, SCM_ARG5, s_path_insert_x);
-    section.y3 = scm_to_int (y1_s);
-    break;
-  case PATH_END:
-    break;
-  }
-
-  lepton_path_object_insert_section (obj, &section, idx);
-
-  lepton_object_page_set_changed (obj);
-
-  return obj_s;
-}
-
 /*!
  * \brief Create the (lepton core object) Scheme module.
  * \par Function Description
@@ -263,7 +170,6 @@ init_module_lepton_core_object (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_object_connections,
-                s_path_insert_x,
                 NULL);
 }
 
