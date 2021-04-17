@@ -77,35 +77,3 @@ edascm_is_object_type (SCM smob, int type)
   LeptonObject *obj = edascm_to_object (smob);
   return (lepton_object_get_type (obj) == type);
 }
-
-
-/*!
- * \brief Create the (lepton core object) Scheme module.
- * \par Function Description
- * Defines procedures in the (lepton core object) module. The module can
- * be accessed using (use-modules (lepton core object)).
- */
-static void
-init_module_lepton_core_object (void *unused)
-{
-  /* Register the functions and symbols */
-  #include "scheme_object.x"
-
-  /* Add them to the module's public definitions. */
-  scm_c_export (NULL);
-}
-
-/*!
- * \brief Initialise the basic Lepton EDA object manipulation procedures.
- * \par Function Description
- * Registers some Scheme procedures for working with #LeptonObject
- * smobs. Should only be called by edascm_init().
- */
-void
-edascm_init_object ()
-{
-  /* Define the (lepton core object) module */
-  scm_c_define_module ("lepton core object",
-                       (void (*) (void*)) init_module_lepton_core_object,
-                       NULL);
-}

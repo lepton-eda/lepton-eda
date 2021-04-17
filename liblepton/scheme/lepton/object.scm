@@ -28,7 +28,6 @@
 
   ;; Import C procedures
   #:use-module (lepton core component)
-  #:use-module (lepton core object)
 
   #:use-module (lepton color-map)
   #:use-module (lepton ffi)

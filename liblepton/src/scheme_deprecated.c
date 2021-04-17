@@ -29,8 +29,8 @@
 /*! \brief Get the width of line used to draw an object
  * \par Function Description
  * Returns the line width used to draw an object. Deprecated because
- * it doesn't respect type restrictions, unlike the %object-stroke
- * function in (lepton core object).
+ * it doesn't respect type restrictions, unlike the object-stroke
+ * function in (lepton object).
  *
  * \param obj_s the object to get line width for.
  * \return the line width.
