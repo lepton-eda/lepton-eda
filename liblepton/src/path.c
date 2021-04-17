@@ -134,6 +134,19 @@ lepton_path_section_get_y3 (LeptonPathSection *section)
   return section->y3;
 }
 
+int
+lepton_path_section_code_from_string (char *s)
+{
+  int result = PATH_END;
+
+  if      (strcmp (s, "moveto") == 0) { result = PATH_MOVETO; }
+  else if (strcmp (s, "lineto") == 0) { result = PATH_LINETO; }
+  else if (strcmp (s, "curveto") == 0) {result = PATH_CURVETO; }
+  else if (strcmp (s, "closepath") == 0) {result = PATH_END; }
+
+  return result;
+}
+
 const char*
 lepton_path_section_code_to_string (int code)
 {
