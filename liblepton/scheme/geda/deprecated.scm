@@ -22,19 +22,21 @@
 ;; be used in new code.
 
 (define-module (geda deprecated)
+ #:use-module (rnrs bytevectors)
+ #:use-module (system foreign)
+
  ;; Import C procedures
  #:use-module (lepton core deprecated)
  #:use-module (lepton core gettext)
  #:use-module (lepton core rc)
 
  #:use-module (lepton attrib)
+ #:use-module (lepton ffi)
  #:use-module (lepton log)
  #:use-module (lepton object)
  #:use-module (lepton page)
  #:use-module (lepton rc)
 
- #:re-export (OBJ_LINE OBJ_PATH OBJ_BOX OBJ_PICTURE OBJ_CIRCLE OBJ_NET
-              OBJ_BUS OBJ_COMPLEX OBJ_TEXT OBJ_PIN OBJ_ARC)
  ;; Re-export procedures and variables from (lepton rc).
  #:re-export (build-path
               geda-data-path
@@ -54,6 +56,29 @@
                   (G_ "\n  It has been replaced by the ~A module.")
                   new-modname)
           "")))
+
+(define (lepton-var->char var-name)
+  (integer->char
+   (bytevector-uint-ref (pointer->bytevector (dynamic-pointer var-name
+                                                              liblepton)
+                                             (sizeof uint8))
+                        0
+                        (native-endianness)
+                        (sizeof uint8))))
+
+(define-public OBJ_LINE (lepton-var->char "_OBJ_LINE"))
+(define-public OBJ_PATH (lepton-var->char "_OBJ_PATH"))
+(define-public OBJ_BOX (lepton-var->char "_OBJ_BOX"))
+(define-public OBJ_PICTURE (lepton-var->char "_OBJ_PICTURE"))
+(define-public OBJ_CIRCLE (lepton-var->char "_OBJ_CIRCLE"))
+(define-public OBJ_NET (lepton-var->char "_OBJ_NET"))
+(define-public OBJ_BUS (lepton-var->char "_OBJ_BUS"))
+(define-public OBJ_COMPLEX (lepton-var->char "_OBJ_COMPONENT"))
+(define-public OBJ_TEXT (lepton-var->char "_OBJ_TEXT"))
+(define-public OBJ_PIN (lepton-var->char "_OBJ_PIN"))
+(define-public OBJ_ARC (lepton-var->char "_OBJ_ARC"))
+(define-public OBJ_PLACEHOLDER (lepton-var->char "_OBJ_PLACEHOLDER"))
+
 
 (define-public get-line-width %get-line-width)
 

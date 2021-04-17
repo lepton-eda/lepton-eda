@@ -57,6 +57,21 @@
 /*! this is modified here and in o_list.c */
 int global_sid=0;
 
+/* Deprecated variables for Scheme code. */
+char _OBJ_LINE = OBJ_LINE;
+char _OBJ_PATH = OBJ_PATH;
+char _OBJ_BOX = OBJ_BOX;
+char _OBJ_PICTURE = OBJ_PICTURE;
+char _OBJ_CIRCLE = OBJ_CIRCLE;
+char _OBJ_NET = OBJ_NET;
+char _OBJ_BUS = OBJ_BUS;
+char _OBJ_COMPONENT = OBJ_COMPONENT;
+char _OBJ_TEXT = OBJ_TEXT;
+char _OBJ_PIN = OBJ_PIN;
+char _OBJ_ARC = OBJ_ARC;
+char _OBJ_PLACEHOLDER = OBJ_PLACEHOLDER;
+
+
 
 /*! \brief Get object's unique id
  *

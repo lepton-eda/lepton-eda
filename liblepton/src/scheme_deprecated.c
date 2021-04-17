@@ -58,24 +58,8 @@ init_module_lepton_core_deprecated (void *unused)
   /* Register the functions */
   #include "scheme_deprecated.x"
 
-  /* Some other deprecated definitions */
-  scm_c_define("OBJ_LINE",    SCM_MAKE_CHAR((unsigned char) OBJ_LINE));
-  scm_c_define("OBJ_BOX",     SCM_MAKE_CHAR((unsigned char) OBJ_BOX));
-  scm_c_define("OBJ_PICTURE", SCM_MAKE_CHAR((unsigned char) OBJ_PICTURE));
-  scm_c_define("OBJ_CIRCLE",  SCM_MAKE_CHAR((unsigned char) OBJ_CIRCLE));
-  scm_c_define("OBJ_NET",     SCM_MAKE_CHAR((unsigned char) OBJ_NET));
-  scm_c_define("OBJ_BUS",     SCM_MAKE_CHAR((unsigned char) OBJ_BUS));
-  scm_c_define("OBJ_COMPLEX", SCM_MAKE_CHAR((unsigned char) OBJ_COMPONENT));
-  scm_c_define("OBJ_TEXT",    SCM_MAKE_CHAR((unsigned char) OBJ_TEXT));
-  scm_c_define("OBJ_PIN",     SCM_MAKE_CHAR((unsigned char) OBJ_PIN));
-  scm_c_define("OBJ_ARC",     SCM_MAKE_CHAR((unsigned char) OBJ_ARC));
-  scm_c_define("OBJ_PLACEHOLDER", SCM_MAKE_CHAR((unsigned char) OBJ_PLACEHOLDER));
-  scm_c_define("OBJ_PATH",    SCM_MAKE_CHAR((unsigned char) OBJ_PATH));
-
   /* Add them to the module's public definitions. */
-  scm_c_export (s_get_line_width, "OBJ_LINE", "OBJ_BOX", "OBJ_PICTURE",
-                "OBJ_CIRCLE", "OBJ_NET", "OBJ_BUS", "OBJ_COMPLEX", "OBJ_TEXT",
-                "OBJ_PIN", "OBJ_ARC", "OBJ_PATH", "OBJ_PLACEHOLDER", NULL);
+  scm_c_export (s_get_line_width, NULL);
 }
 
 /*!
