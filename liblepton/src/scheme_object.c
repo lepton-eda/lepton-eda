@@ -28,11 +28,6 @@
 #include "liblepton_priv.h"
 #include "libleptonguile_priv.h"
 
-SCM_SYMBOL (moveto_sym , "moveto");
-SCM_SYMBOL (lineto_sym , "lineto");
-SCM_SYMBOL (curveto_sym , "curveto");
-SCM_SYMBOL (closepath_sym , "closepath");
-
 /*! \brief Convert a Scheme object list to a GList.
  * \par Function Description
  * Takes a Scheme list of #LeptonObject smobs, and returns a GList
