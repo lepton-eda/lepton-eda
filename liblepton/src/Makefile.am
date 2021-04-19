@@ -9,7 +9,6 @@ BUILT_SOURCES = \
 	scheme_attrib.x \
 	scheme_config.x \
 	scheme_closure.x \
-	scheme_deprecated.x \
 	g_rc.x
 
 scheme_api_sources = \
@@ -22,7 +21,6 @@ scheme_api_sources = \
 	scheme_attrib.c \
 	scheme_config.c \
 	scheme_closure.c \
-	scheme_deprecated.c \
 	edascmhookproxy.c \
 	edascmvaluetypes.c \
 	g_rc.c

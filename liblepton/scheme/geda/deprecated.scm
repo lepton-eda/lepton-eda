@@ -26,7 +26,6 @@
  #:use-module (system foreign)
 
  ;; Import C procedures
- #:use-module (lepton core deprecated)
  #:use-module (lepton core gettext)
  #:use-module (lepton core rc)
 
