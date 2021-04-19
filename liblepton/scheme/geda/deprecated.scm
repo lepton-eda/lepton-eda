@@ -34,6 +34,7 @@
  #:use-module (lepton ffi)
  #:use-module (lepton log)
  #:use-module (lepton object)
+ #:use-module (lepton object type)
  #:use-module (lepton page)
  #:use-module (lepton rc)
 
@@ -80,7 +81,13 @@
 (define-public OBJ_PLACEHOLDER (lepton-var->char "_OBJ_PLACEHOLDER"))
 
 
-(define-public get-line-width %get-line-width)
+(define-public (get-line-width object)
+  "Returns the line width used to draw OBJECT. Deprecated because it
+doesn't respect type restrictions, unlike the object-stroke
+function in (lepton object)."
+  (define pointer (geda-object->pointer* object 1))
+
+  (lepton_object_get_stroke_width pointer))
 
 (define-public get-attribute-name-value parse-attrib)
 

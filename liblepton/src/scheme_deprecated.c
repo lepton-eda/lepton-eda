@@ -26,26 +26,6 @@
 #include "liblepton_priv.h"
 #include "libleptonguile_priv.h"
 
-/*! \brief Get the width of line used to draw an object
- * \par Function Description
- * Returns the line width used to draw an object. Deprecated because
- * it doesn't respect type restrictions, unlike the object-stroke
- * function in (lepton object).
- *
- * \param obj_s the object to get line width for.
- * \return the line width.
- */
-SCM_DEFINE (get_line_width, "%get-line-width", 1, 0, 0,
-            (SCM obj_s), "Get the width of line used to draw an object")
-{
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_get_line_width);
-
-  LeptonObject *object = edascm_to_object (obj_s);
-
-  return scm_from_int (lepton_object_get_stroke_width (object));
-}
-
 /*!
  * \brief Create the (lepton core deprecated) Scheme module.
  * \par Function Description
@@ -59,7 +39,7 @@ init_module_lepton_core_deprecated (void *unused)
   #include "scheme_deprecated.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_get_line_width, NULL);
+  scm_c_export (NULL);
 }
 
 /*!
