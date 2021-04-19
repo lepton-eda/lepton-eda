@@ -1,6 +1,6 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
-;;; Copyright (C) 2019-2020 Lepton EDA Contributors
+;;; Copyright (C) 2019-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -18,8 +18,12 @@
 
 
 (define-module (lepton os)
-  #:use-module (srfi srfi-1)
   #:use-module (ice-9 regex)
+  #:use-module (srfi srfi-1)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi)
+
   ;; Import C procedures and variables
   #:use-module (lepton core os))
 
@@ -42,7 +46,21 @@
 
 (define-public separator-char? file-name-separator?)
 
-(define-public sys-data-dirs %sys-data-dirs)
+(define-public (sys-data-dirs)
+  "Returns a list of search directories for system data."
+  (let ((pointer (eda_get_system_data_dirs)))
+    (let loop ((num 0)
+               (ls '()))
+      (let ((string-pointer
+             (dereference-pointer
+              (make-pointer (+ (pointer-address pointer)
+                               (* num (sizeof '*)))))))
+        (if (null-pointer? string-pointer)
+            (reverse ls)
+            (loop (1+ num)
+                  (cons (pointer->string string-pointer)
+                        ls)))))))
+
 (define-public sys-config-dirs %sys-config-dirs)
 (define-public user-data-dir %user-data-dir)
 (define-public user-config-dir %user-config-dir)

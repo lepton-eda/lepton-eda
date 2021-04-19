@@ -33,6 +33,8 @@
             edascm_is_object
             edascm_is_page
 
+            eda_get_system_data_dirs
+
             lepton_object_get_color
             lepton_object_set_color
             lepton_object_get_id
@@ -157,6 +159,9 @@
 ;;; s_attrib.c
 (define-lff s_attrib_uniq int (list '*))
 (define-lff s_attrib_add_entry int (list '*))
+
+;;; edapaths.c
+(define-lff eda_get_system_data_dirs '* '())
 
 ;;; scheme_smob.c
 (define-lff edascm_is_config int '(*))

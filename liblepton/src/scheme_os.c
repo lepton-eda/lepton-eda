@@ -71,30 +71,6 @@ SCM_DEFINE (platform, "%platform", 0, 0, 0, (),
   return result;
 }
 
-/*! \brief Get system data directory directories.
- * \par Function Description
- * Returns a list of directories to be searched for system data.
- *
- * \note Scheme API: Implements the %sys-data-dirs procedure in the
- * (lepton core os) module.
- *
- * \return a Scheme list of strings.
- */
-SCM_DEFINE (sys_data_dirs, "%sys-data-dirs", 0, 0, 0, (),
-            "Return a list of search directories for system data.")
-{
-  const gchar * const * dirs = eda_get_system_data_dirs();
-  SCM lst_s = SCM_EOL;
-
-  /* dirs contains raw environment strings, so assume it's in the
-   * current locale's encoding. */
-  for (gint i = 0; dirs[i]; ++i)
-  {
-    lst_s = scm_cons(scm_from_locale_string(dirs[i]), lst_s);
-  }
-  return scm_reverse_x(lst_s, SCM_EOL);
-}
-
 /*! \brief Get system config directory directories.
  * \par Function Description
  * Returns a list of directories to be searched for system
@@ -189,7 +165,6 @@ init_module_lepton_core_os (void *unused)
   /* Add them to the module's public definitions. */
   scm_c_export (s_platform,
                 s_sys_config_dirs,
-                s_sys_data_dirs,
                 s_user_cache_dir,
                 s_user_config_dir,
                 s_user_data_dir,
