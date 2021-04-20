@@ -34,6 +34,7 @@
 
             eda_get_system_config_dirs
             eda_get_system_data_dirs
+            eda_get_user_config_dir
             eda_get_user_data_dir
 
             lepton_object_get_color
@@ -149,6 +150,7 @@
 ;;; edapaths.c
 (define-lff eda_get_system_config_dirs '* '())
 (define-lff eda_get_system_data_dirs '* '())
+(define-lff eda_get_user_config_dir '* '())
 (define-lff eda_get_user_data_dir '* '())
 
 ;;; scheme_smob.c
