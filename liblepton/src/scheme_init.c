@@ -49,7 +49,6 @@ edascm_init_impl (void *data)
   edascm_init_component ();
   edascm_init_page ();
   edascm_init_attrib ();
-  edascm_init_os ();
   edascm_init_config ();
   edascm_init_closure ();
   edascm_init_deprecated ();

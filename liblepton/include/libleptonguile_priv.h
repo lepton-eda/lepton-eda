@@ -93,7 +93,6 @@ void edascm_init_object ();
 void edascm_init_component ();
 void edascm_init_page ();
 void edascm_init_attrib ();
-void edascm_init_os ();
 void edascm_init_config ();
 void edascm_init_closure (void);
 void edascm_init_deprecated ();
