@@ -29,6 +29,7 @@
 
   #:export (sys-data-dirs
             sys-config-dirs
+            user-config-dir
             user-data-dir))
 
 (define-public platform %platform)
@@ -77,7 +78,11 @@
   "Returns the directory where per-user data are stored."
   (pointer->string (eda_get_user_data_dir)))
 
-(define-public user-config-dir %user-config-dir)
+(define (user-config-dir)
+  "Returns the directory where per-user configuration information
+is stored."
+  (pointer->string (eda_get_user_config_dir)))
+
 (define-public user-cache-dir %user-cache-dir)
 
 (define-public expand-env-variables
