@@ -2,10 +2,11 @@
 
 (use-modules (lepton object))
 
+(define (new-line) (make-line '(1 . 2) '(3 . 4)))
 
 (test-begin "stroke" 24)
 
-(let ((a (make-line '(1 . 2) '(3 . 4))))
+(let ((a (new-line)))
 
   (test-equal a (set-object-stroke! a 1 'none 'solid 'foo 'bar))
   (test-equal 1 (object-stroke-width a))
@@ -30,27 +31,34 @@
   (set-object-stroke! a 1 'round 'phantom 7 8)
   (test-equal '(phantom 7 8) (object-stroke-dash a))
   (test-equal a (apply set-object-stroke! a (object-stroke a)))
-
-  ;; Invalid symbol arguments
-  (test-assert-thrown 'misc-error
-                 (set-object-stroke! a 1 'BAD-VALUE 'solid))
-  (test-assert-thrown 'misc-error
-                 (set-object-stroke! a 1 'none 'BAD-VALUE))
-  ;; Missing dash length/space arguments
-  (test-assert-thrown 'misc-error
-                 (set-object-stroke! a 1 'none 'dashed 5))
-  (test-assert-thrown 'misc-error
-                 (set-object-stroke! a 1 'none 'dashed))
-  (test-assert-thrown 'misc-error
-                 (set-object-stroke! a 1 'none 'center 5))
-  (test-assert-thrown 'misc-error
-                 (set-object-stroke! a 1 'none 'center))
-  (test-assert-thrown 'misc-error
-                 (set-object-stroke! a 1 'none 'phantom 5))
-  (test-assert-thrown 'misc-error
-                 (set-object-stroke! a 1 'none 'phantom))
-  (test-assert-thrown 'misc-error
-                 (set-object-stroke! a 1 'none 'dotted))
   )
 
 (test-end "stroke")
+
+
+(test-begin "set-object-stroke-wrong-arguments")
+
+(let ((a (new-line)))
+  ;; Invalid symbol arguments.
+  (test-assert-thrown 'misc-error
+                      (set-object-stroke! a 1 'BAD-VALUE 'solid))
+  (test-assert-thrown 'misc-error
+                      (set-object-stroke! a 1 'none 'BAD-VALUE))
+  ;; Missing dash length/space arguments
+  (test-assert-thrown 'misc-error
+                      (set-object-stroke! a 1 'none 'dashed 5))
+  (test-assert-thrown 'misc-error
+                      (set-object-stroke! a 1 'none 'dashed))
+  (test-assert-thrown 'misc-error
+                      (set-object-stroke! a 1 'none 'center 5))
+  (test-assert-thrown 'misc-error
+                      (set-object-stroke! a 1 'none 'center))
+  (test-assert-thrown 'misc-error
+                      (set-object-stroke! a 1 'none 'phantom 5))
+  (test-assert-thrown 'misc-error
+                      (set-object-stroke! a 1 'none 'phantom))
+  (test-assert-thrown 'misc-error
+                      (set-object-stroke! a 1 'none 'dotted))
+  )
+
+(test-end "set-object-stroke-wrong-arguments")
