@@ -27,7 +27,8 @@
   ;; Import C procedures and variables
   #:use-module (lepton core os)
 
-  #:export (sys-data-dirs))
+  #:export (sys-data-dirs
+            sys-config-dirs))
 
 (define-public platform %platform)
 
@@ -67,7 +68,10 @@
   "Returns a list of search directories for system data."
   (c-string-array->list (eda_get_system_data_dirs)))
 
-(define-public sys-config-dirs %sys-config-dirs)
+(define (sys-config-dirs)
+  "Returns a list of search directories for system configuration."
+  (c-string-array->list (eda_get_system_config_dirs)))
+
 (define-public user-data-dir %user-data-dir)
 (define-public user-config-dir %user-config-dir)
 (define-public user-cache-dir %user-cache-dir)
