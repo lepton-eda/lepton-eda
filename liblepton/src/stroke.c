@@ -192,6 +192,14 @@ lepton_stroke_set_space_length (LeptonStroke *stroke,
 }
 
 
+/*! \brief Return a string holding the representation of a stroke cap type.
+ * \par Function Description
+ * Given a #LeptonStrokeCapType value, returns its external
+ * representation as a string.  This is mainly intended to be used
+ * in Scheme FFI functions.
+ *
+ *  \param [in] cap_type The cap type of a stroke.
+ */
 const char*
 lepton_stroke_cap_type_to_string (LeptonStrokeCapType cap_type)
 {
@@ -209,6 +217,14 @@ lepton_stroke_cap_type_to_string (LeptonStrokeCapType cap_type)
 }
 
 
+/*! \brief Return a stroke cap type from a string.
+ * \par Function Description
+ * Given a string \a s, returns the #LeptonStrokeCapType enum
+ * value corresponding to it.  This is mainly intended to be used
+ * for value conversion in Scheme FFI functions.
+ *
+ *  \param [in] s The string.
+ */
 LeptonStrokeCapType
 lepton_stroke_cap_type_from_string (char *s)
 {
@@ -222,6 +238,14 @@ lepton_stroke_cap_type_from_string (char *s)
 }
 
 
+/*! \brief Return a string holding the representation of a stroke type.
+ * \par Function Description
+ * Given a #LeptonStrokeType value, returns its external
+ * representation as a string.  This is mainly intended to be used
+ * in Scheme FFI functions.
+ *
+ *  \param [in] stroke_type The type of a stroke.
+ */
 const char*
 lepton_stroke_type_to_string (LeptonStrokeType stroke_type)
 {
@@ -241,6 +265,14 @@ lepton_stroke_type_to_string (LeptonStrokeType stroke_type)
 }
 
 
+/*! \brief Return a stroke type from a string.
+ * \par Function Description
+ * Given a string \a s, returns the #LeptonStrokeType enum value
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ *  \param [in] s The string.
+ */
 LeptonStrokeType
 lepton_stroke_type_from_string (char *s)
 {
