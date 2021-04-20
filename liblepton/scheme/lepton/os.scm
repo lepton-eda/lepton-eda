@@ -25,7 +25,9 @@
   #:use-module (lepton ffi)
 
   ;; Import C procedures and variables
-  #:use-module (lepton core os))
+  #:use-module (lepton core os)
+
+  #:export (sys-data-dirs))
 
 (define-public platform %platform)
 
@@ -46,7 +48,7 @@
 
 (define-public separator-char? file-name-separator?)
 
-(define-public (sys-data-dirs)
+(define (c-string-array->list pointer)
   "Returns a list of search directories for system data."
   (let ((pointer (eda_get_system_data_dirs)))
     (let loop ((num 0)
@@ -60,6 +62,10 @@
             (loop (1+ num)
                   (cons (pointer->string string-pointer)
                         ls)))))))
+
+(define (sys-data-dirs)
+  "Returns a list of search directories for system data."
+  (c-string-array->list (eda_get_system_data_dirs)))
 
 (define-public sys-config-dirs %sys-config-dirs)
 (define-public user-data-dir %user-data-dir)
