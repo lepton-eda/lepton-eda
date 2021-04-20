@@ -29,6 +29,7 @@
 
   #:export (sys-data-dirs
             sys-config-dirs
+            user-cache-dir
             user-config-dir
             user-data-dir))
 
@@ -83,7 +84,9 @@
 is stored."
   (pointer->string (eda_get_user_config_dir)))
 
-(define-public user-cache-dir %user-cache-dir)
+(define (user-cache-dir)
+  "Returns the directory where per-user cache data are stored."
+  (pointer->string (eda_get_user_cache_dir)))
 
 (define-public expand-env-variables
   ;; Only compile regular expression once

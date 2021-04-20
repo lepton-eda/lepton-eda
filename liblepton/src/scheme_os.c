@@ -71,25 +71,6 @@ SCM_DEFINE (platform, "%platform", 0, 0, 0, (),
   return result;
 }
 
-/*! \brief Get user cache directory.
- * \par Function Description
- * Returns the directory where per-user cache data should be
- * stored
- *
- * \note Scheme API: Implements the %user-cache-dir procedure is the
- * (lepton core os) module.
- *
- * \return a string.
- */
-SCM_DEFINE (user_cache_dir, "%user-cache-dir", 0, 0, 0, (),
-            "Return the directory for user cache data.")
-{
-  /* eda_get_user_cache_dir() returns a raw environment string, so assume
-   * it's in the current locale's encoding. */
-  return scm_from_locale_string (eda_get_user_cache_dir ());
-}
-
-
 /*!
  * \brief Create the (lepton core os) Scheme module.
  * \par Function Description
@@ -104,7 +85,6 @@ init_module_lepton_core_os (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_platform,
-                s_user_cache_dir,
                 NULL);
 }
 
