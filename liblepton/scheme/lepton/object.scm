@@ -748,14 +748,26 @@ the dash style."
 
 (define-public set-object-stroke! %set-object-stroke!)
 
-(define-public (object-stroke-width obj)
-  (list-ref (object-stroke obj) 0))
+(define-public (object-stroke-width object)
+  "Returns the integer stroke width of OBJECT, which must be a
+line, box, circle, arc, or path object."
+  (list-ref (object-stroke object) 0))
 
-(define-public (object-stroke-cap obj)
-  (list-ref (object-stroke obj) 1))
+(define-public (object-stroke-cap object)
+  "Returns the stroke cap style of OBJECT, which must be a line,
+box, circle, arc, or path object.  The returned value is one of the
+symbols 'none, 'square or 'round."
+  (list-ref (object-stroke object) 1))
 
-(define-public (object-stroke-dash obj)
-  (list-tail (object-stroke obj) 2))
+(define-public (object-stroke-dash object)
+  "Returns the dash style of OBJECT, which must be a line, box,
+circle, arc, or path object.  The return value is a list of between
+one and three parameters:
+  - dash style, one of the symbols 'solid, 'dotted,
+    'dashed, 'center or 'phantom.
+  - for styles other than 'solid, dot/dash spacing;
+  - for 'dashed, 'center and 'phantom, dash length."
+  (list-tail (object-stroke object) 2))
 
 (define-public object-fill %object-fill)
 (define-public set-object-fill! %set-object-fill!)
