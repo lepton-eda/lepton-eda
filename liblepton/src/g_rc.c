@@ -498,7 +498,7 @@ init_module_lepton_core_rc (void *unused)
 void
 edascm_init_rc ()
 {
-  /* Define the (lepton core os) module */
+  /* Define the (lepton core rc) module */
   scm_c_define_module ("lepton core rc",
                        (void (*)(void*)) init_module_lepton_core_rc,
                        NULL);
