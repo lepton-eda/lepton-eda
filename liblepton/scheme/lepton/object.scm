@@ -739,7 +739,7 @@ the dash style."
          (cap-type->symbol (lepton_object_get_stroke_cap_type pointer)))
         (line-type
          (stroke-type->symbol (lepton_object_get_stroke_type pointer)))
-        (width (lepton_object_get_stroke_width pointer))
+        (width (object-stroke-width object))
         (dash-length (lepton_object_get_stroke_dash_length pointer))
         (space-length (lepton_object_get_stroke_space_length pointer)))
     (case line-type
@@ -754,7 +754,10 @@ the dash style."
 (define (object-stroke-width object)
   "Returns the integer stroke width of OBJECT, which must be a
 line, box, circle, arc, or path object."
-  (list-ref (object-stroke object) 0))
+  (define pointer
+    (geda-object->pointer* object 1 strokable? 'strokable))
+
+  (lepton_object_get_stroke_width pointer))
 
 (define (object-stroke-cap object)
   "Returns the stroke cap style of OBJECT, which must be a line,
