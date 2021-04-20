@@ -696,34 +696,13 @@ return value is a list of parameters:
     - For other styles, dot/dash spacing and dash length.
 The dash parameters are ignored in case they are not supported for
 the dash style."
-
-  ;; Check if STROKE-TYPE is a valid stroke type symbol.
-  (define (check-stroke-type-symbol stroke-type)
-    (if (or (eq? stroke-type 'solid)
-            (eq? stroke-type 'dotted)
-            (eq? stroke-type 'dashed)
-            (eq? stroke-type 'center)
-            (eq? stroke-type 'phantom))
-        stroke-type
-        (error "Unsupported line type for object ~A: ~A." object stroke-type)))
-
-  ;; Transforms stroke type integer value obtained from C code
-  ;; into a symbol.  Reports an error if the value is invalid.
-  (define (stroke-type->symbol stroke-type)
-    (let ((c-string-pointer (lepton_stroke_type_to_string stroke-type)))
-      (if (null-pointer? c-string-pointer)
-          (error "Invalid stroke line type for object ~A." object)
-          (check-stroke-type-symbol
-           (string->symbol (pointer->string c-string-pointer))))))
-
   (define pointer (geda-object->pointer* object 1 strokable? 'strokable))
 
   (let ((cap-type (object-stroke-cap object))
-        (line-type
-         (stroke-type->symbol (lepton_object_get_stroke_type pointer)))
+        (line-type (object-stroke-line-type object))
         (width (object-stroke-width object))
-        (dash-length (lepton_object_get_stroke_dash_length pointer))
-        (space-length (lepton_object_get_stroke_space_length pointer)))
+        (dash-length (object-stroke-dash-length object))
+        (space-length (object-stroke-dash-space object)))
     (case line-type
       ((solid) (list width cap-type line-type))
       ((dotted) (list width cap-type line-type space-length))
@@ -767,6 +746,41 @@ symbols 'none, 'square or 'round."
 
   (cap-type->symbol (lepton_object_get_stroke_cap_type pointer)))
 
+(define (object-stroke-line-type object)
+  ;; Check if STROKE-TYPE is a valid stroke type symbol.
+  (define (check-stroke-type-symbol stroke-type)
+    (if (or (eq? stroke-type 'solid)
+            (eq? stroke-type 'dotted)
+            (eq? stroke-type 'dashed)
+            (eq? stroke-type 'center)
+            (eq? stroke-type 'phantom))
+        stroke-type
+        (error "Unsupported line type for object ~A: ~A." object stroke-type)))
+
+  ;; Transforms stroke type integer value obtained from C code
+  ;; into a symbol.  Reports an error if the value is invalid.
+  (define (stroke-type->symbol stroke-type)
+    (let ((c-string-pointer (lepton_stroke_type_to_string stroke-type)))
+      (if (null-pointer? c-string-pointer)
+          (error "Invalid stroke line type for object ~A." object)
+          (check-stroke-type-symbol
+           (string->symbol (pointer->string c-string-pointer))))))
+
+  (define pointer
+    (geda-object->pointer* object 1 strokable? 'strokable))
+
+  (stroke-type->symbol (lepton_object_get_stroke_type pointer)))
+
+(define (object-stroke-dash-length object)
+  (define pointer
+    (geda-object->pointer* object 1 strokable? 'strokable))
+  (lepton_object_get_stroke_dash_length pointer))
+
+(define (object-stroke-dash-space object)
+  (define pointer
+    (geda-object->pointer* object 1 strokable? 'strokable))
+  (lepton_object_get_stroke_space_length pointer))
+
 (define (object-stroke-dash object)
   "Returns the dash style of OBJECT, which must be a line, box,
 circle, arc, or path object.  The return value is a list of between
@@ -775,7 +789,14 @@ one and three parameters:
     'dashed, 'center or 'phantom.
   - for styles other than 'solid, dot/dash spacing;
   - for 'dashed, 'center and 'phantom, dash length."
-  (list-tail (object-stroke object) 2))
+  (let ((line-type (object-stroke-line-type object))
+        (dash-length (object-stroke-dash-length object))
+        (space-length (object-stroke-dash-space object)))
+    (case line-type
+      ((solid) (list line-type))
+      ((dotted) (list line-type space-length))
+      ;; dashed, center, and phantom.
+      (else  (list line-type space-length dash-length)))))
 
 (define-public object-fill %object-fill)
 (define-public set-object-fill! %set-object-fill!)
