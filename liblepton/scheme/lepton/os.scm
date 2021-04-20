@@ -28,7 +28,8 @@
   #:use-module (lepton core os)
 
   #:export (sys-data-dirs
-            sys-config-dirs))
+            sys-config-dirs
+            user-data-dir))
 
 (define-public platform %platform)
 
@@ -72,7 +73,10 @@
   "Returns a list of search directories for system configuration."
   (c-string-array->list (eda_get_system_config_dirs)))
 
-(define-public user-data-dir %user-data-dir)
+(define (user-data-dir)
+  "Returns the directory where per-user data are stored."
+  (pointer->string (eda_get_user_data_dir)))
+
 (define-public user-config-dir %user-config-dir)
 (define-public user-cache-dir %user-cache-dir)
 
