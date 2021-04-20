@@ -23,17 +23,15 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
-
-  ;; Import C procedures and variables
-  #:use-module (lepton core os)
+  #:use-module (lepton os platform)
 
   #:export (sys-data-dirs
             sys-config-dirs
             user-cache-dir
             user-config-dir
-            user-data-dir))
+            user-data-dir)
 
-(define-public platform %platform)
+  #:re-export (platform))
 
 (define-public (platform? x)
   (member x (platform)))
