@@ -2,7 +2,6 @@
 
 (use-modules (lepton object))
 
-(use-modules ((geda object) #:renamer (symbol-prefix-proc 'geda:)))
 
 (test-begin "stroke" 24)
 
