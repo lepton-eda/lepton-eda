@@ -97,6 +97,14 @@
                       (set-object-stroke! a 1 'BAD-VALUE 'solid))
   (test-assert-thrown 'misc-error
                       (set-object-stroke! a 1 'none 'BAD-VALUE))
+  ;; Invalid argument type.
+  (test-assert-thrown 'wrong-type-arg
+                      (set-object-stroke! (new-line) 1 'none 'dotted 'a))
+  (test-assert-thrown 'wrong-type-arg
+                      (set-object-stroke! (new-line) 1 'none 'dashed 'a 10))
+  (test-assert-thrown 'wrong-type-arg
+                      (set-object-stroke! (new-line) 1 'none 'dashed 10 'a))
+
   ;; Missing dash length/space arguments
   (test-assert-thrown 'misc-error
                       (set-object-stroke! a 1 'none 'dashed 5))
@@ -112,6 +120,10 @@
                       (set-object-stroke! a 1 'none 'phantom))
   (test-assert-thrown 'misc-error
                       (set-object-stroke! a 1 'none 'dotted))
+
+  ;; Invalid number of arguments.
+  (test-assert-thrown 'wrong-number-of-args
+                      (set-object-stroke! a 1 'none 'phantom 15 20 30))
   )
 
 (test-end "set-object-stroke-wrong-arguments")
