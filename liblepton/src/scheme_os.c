@@ -71,23 +71,6 @@ SCM_DEFINE (platform, "%platform", 0, 0, 0, (),
   return result;
 }
 
-/*! \brief Get user data directory.
- * \par Function Description
- * Returns the directory where per-user data should be stored
- *
- * \note Scheme API: Implements the %user-data-dir procedure is the
- * (lepton core os) module.
- *
- * \return a string.
- */
-SCM_DEFINE (user_data_dir, "%user-data-dir", 0, 0, 0, (),
-            "Return the directory for user data.")
-{
-  /* eda_get_user_data_dir() returns a raw environment string, so assume
-   * it's in the current locale's encoding. */
-  return scm_from_locale_string(eda_get_user_data_dir());
-}
-
 /*! \brief Get user config directory.
  * \par Function Description
  * Returns the directory where per-user configuration information
@@ -141,7 +124,6 @@ init_module_lepton_core_os (void *unused)
   scm_c_export (s_platform,
                 s_user_cache_dir,
                 s_user_config_dir,
-                s_user_data_dir,
                 NULL);
 }
 
