@@ -697,14 +697,6 @@ return value is a list of parameters:
 The dash parameters are ignored in case they are not supported for
 the dash style."
 
-  ;; Check if CAP is a valid cap type symbol.
-  (define (check-cap-type-symbol cap)
-    (if (or (eq? cap 'none)
-            (eq? cap 'square)
-            (eq? cap 'round))
-        cap
-        (error "Unsupported cap style for object ~A: ~A." object cap)))
-
   ;; Check if STROKE-TYPE is a valid stroke type symbol.
   (define (check-stroke-type-symbol stroke-type)
     (if (or (eq? stroke-type 'solid)
@@ -714,15 +706,6 @@ the dash style."
             (eq? stroke-type 'phantom))
         stroke-type
         (error "Unsupported line type for object ~A: ~A." object stroke-type)))
-
-  ;; Transforms cap type integer value obtained from C code into a
-  ;; symbol.  Reports an error if the value is invalid.
-  (define (cap-type->symbol cap-type)
-    (let ((c-string-pointer (lepton_stroke_cap_type_to_string cap-type)))
-      (if (null-pointer? c-string-pointer)
-          (error "Invalid stroke cap style for object ~A." object)
-          (check-cap-type-symbol
-           (string->symbol (pointer->string c-string-pointer))))))
 
   ;; Transforms stroke type integer value obtained from C code
   ;; into a symbol.  Reports an error if the value is invalid.
@@ -735,8 +718,7 @@ the dash style."
 
   (define pointer (geda-object->pointer* object 1 strokable? 'strokable))
 
-  (let ((cap-type
-         (cap-type->symbol (lepton_object_get_stroke_cap_type pointer)))
+  (let ((cap-type (object-stroke-cap object))
         (line-type
          (stroke-type->symbol (lepton_object_get_stroke_type pointer)))
         (width (object-stroke-width object))
@@ -763,7 +745,27 @@ line, box, circle, arc, or path object."
   "Returns the stroke cap style of OBJECT, which must be a line,
 box, circle, arc, or path object.  The returned value is one of the
 symbols 'none, 'square or 'round."
-  (list-ref (object-stroke object) 1))
+  ;; Check if CAP is a valid cap type symbol.
+  (define (check-cap-type-symbol cap)
+    (if (or (eq? cap 'none)
+            (eq? cap 'square)
+            (eq? cap 'round))
+        cap
+        (error "Unsupported cap style for object ~A: ~A." object cap)))
+
+  ;; Transforms cap type integer value obtained from C code into a
+  ;; symbol.  Reports an error if the value is invalid.
+  (define (cap-type->symbol cap-type)
+    (let ((c-string-pointer (lepton_stroke_cap_type_to_string cap-type)))
+      (if (null-pointer? c-string-pointer)
+          (error "Invalid stroke cap style for object ~A." object)
+          (check-cap-type-symbol
+           (string->symbol (pointer->string c-string-pointer))))))
+
+  (define pointer
+    (geda-object->pointer* object 1 strokable? 'strokable))
+
+  (cap-type->symbol (lepton_object_get_stroke_cap_type pointer)))
 
 (define (object-stroke-dash object)
   "Returns the dash style of OBJECT, which must be a line, box,
