@@ -3,6 +3,10 @@
 (use-modules (lepton object))
 
 (define (new-line) (make-line '(1 . 2) '(3 . 4)))
+(define (new-box) (make-box '(1 . 2) '(3 . 4)))
+(define (new-circle) (make-circle '(1 . 2) 100))
+(define (new-arc) (make-arc '(1 . 2) 100 0 90))
+(define new-path make-path)
 
 (test-begin "stroke" 24)
 
@@ -35,6 +39,55 @@
 
 (test-end "stroke")
 
+
+(test-begin "object-stroke")
+
+;;; Test allowable objects.
+(test-equal (object-stroke (new-box))
+  '(10 square solid))
+(test-equal (object-stroke (new-circle))
+  '(10 square solid))
+(test-equal (object-stroke (new-arc))
+  '(10 square solid))
+(test-equal (object-stroke (new-path))
+  '(10 square solid))
+(test-equal (object-stroke (new-line))
+  '(10 square solid))
+
+;;; Test combinations of stroke parameters.
+(test-equal (object-stroke (set-object-stroke! (new-line) 10 'square 'solid))
+  '(10 square solid))
+(test-equal (object-stroke (set-object-stroke! (new-line) 15 'square 'solid))
+  '(15 square solid))
+(test-equal (object-stroke (set-object-stroke! (new-line) 15 'round 'solid))
+  '(15 round solid))
+(test-equal (object-stroke (set-object-stroke! (new-line) 15 'none 'solid))
+  '(15 none solid))
+(test-equal (object-stroke (set-object-stroke! (new-line) 15 'none 'dotted 10))
+  '(15 none dotted 10))
+(test-equal (object-stroke (set-object-stroke! (new-line) 15 'none 'dotted 15))
+  '(15 none dotted 15))
+(test-equal (object-stroke (set-object-stroke! (new-line) 15 'none 'dotted 15 20))
+  '(15 none dotted 15))
+(test-equal (object-stroke (set-object-stroke! (new-line) 15 'none 'dashed 15 20))
+  '(15 none dashed 15 20))
+(test-equal (object-stroke (set-object-stroke! (new-line) 15 'none 'dashed 10 20))
+  '(15 none dashed 10 20))
+(test-equal (object-stroke (set-object-stroke! (new-line) 15 'none 'center 10 20))
+  '(15 none center 10 20))
+(test-equal (object-stroke (set-object-stroke! (new-line) 15 'none 'phantom 10 20))
+  '(15 none phantom 10 20))
+
+(test-end "object-stroke")
+
+(test-begin "object-stroke-wrong-arguments")
+
+(test-assert-thrown 'wrong-type-arg (object-stroke 'a))
+(test-assert-thrown 'wrong-type-arg (object-stroke 1))
+(test-assert-thrown 'wrong-number-of-args (object-stroke))
+(test-assert-thrown 'wrong-number-of-args (object-stroke (new-line) 1))
+
+(test-end "object-stroke-wrong-arguments")
 
 (test-begin "set-object-stroke-wrong-arguments")
 
