@@ -56,6 +56,9 @@
             set-object-selectable!
 
             object-stroke
+            object-stroke-cap
+            object-stroke-dash
+            object-stroke-width
 
             arc-info
             arc-center
@@ -748,18 +751,18 @@ the dash style."
 
 (define-public set-object-stroke! %set-object-stroke!)
 
-(define-public (object-stroke-width object)
+(define (object-stroke-width object)
   "Returns the integer stroke width of OBJECT, which must be a
 line, box, circle, arc, or path object."
   (list-ref (object-stroke object) 0))
 
-(define-public (object-stroke-cap object)
+(define (object-stroke-cap object)
   "Returns the stroke cap style of OBJECT, which must be a line,
 box, circle, arc, or path object.  The returned value is one of the
 symbols 'none, 'square or 'round."
   (list-ref (object-stroke object) 1))
 
-(define-public (object-stroke-dash object)
+(define (object-stroke-dash object)
   "Returns the dash style of OBJECT, which must be a line, box,
 circle, arc, or path object.  The return value is a list of between
 one and three parameters:
