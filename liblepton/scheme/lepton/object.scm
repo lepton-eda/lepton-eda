@@ -689,6 +689,11 @@ of the arc."
     ((or 'none 'square 'round) cap)
     (_ #f)))
 
+(define (stroke-dash-type? dash)
+  (match dash
+    ((or 'solid 'dotted 'dashed 'center 'phantom) dash)
+    (_ #f)))
+
 (define (object-stroke object)
   "Returns the stroke properties of OBJECT.  If OBJECT is not a
 line, box, circle, arc, or path, throws a Scheme error.  The
@@ -738,13 +743,6 @@ optional.  The following parameters are used:
   - DASH-LENGTH is an integer dash length for dash styles other
     than 'solid or 'dotted.
 Returns modified OBJECT."
-  (define valid-dash-type?
-    (or (eq? dash-type 'solid)
-        (eq? dash-type 'dotted)
-        (eq? dash-type 'dashed)
-        (eq? dash-type 'center)
-        (eq? dash-type 'phantom)))
-
   (define with-dashes?
     (or (eq? dash-type 'dashed)
         (eq? dash-type 'center)
@@ -764,7 +762,7 @@ Returns modified OBJECT."
            cap-type))
 
   (check-symbol dash-type 4)
-  (unless valid-dash-type?
+  (unless (stroke-dash-type? dash-type)
     (error "Invalid stroke dash style ~A."
            dash-type))
 
@@ -837,11 +835,7 @@ symbols 'none, 'square or 'round."
 (define (object-stroke-line-type object)
   ;; Check if STROKE-TYPE is a valid stroke type symbol.
   (define (check-stroke-type-symbol stroke-type)
-    (if (or (eq? stroke-type 'solid)
-            (eq? stroke-type 'dotted)
-            (eq? stroke-type 'dashed)
-            (eq? stroke-type 'center)
-            (eq? stroke-type 'phantom))
+    (if (stroke-dash-type? stroke-type)
         stroke-type
         (error "Unsupported line type for object ~A: ~A." object stroke-type)))
 
