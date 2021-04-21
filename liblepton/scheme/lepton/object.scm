@@ -834,7 +834,7 @@ symbols 'none, 'square or 'round."
 
 (define (object-stroke-line-type object)
   ;; Check if STROKE-TYPE is a valid stroke type symbol.
-  (define (check-stroke-type-symbol stroke-type)
+  (define (check-stroke-dash-type stroke-type)
     (if (stroke-dash-type? stroke-type)
         stroke-type
         (error "Unsupported line type for object ~A: ~A." object stroke-type)))
@@ -845,7 +845,7 @@ symbols 'none, 'square or 'round."
     (let ((c-string-pointer (lepton_stroke_type_to_string stroke-type)))
       (if (null-pointer? c-string-pointer)
           (error "Invalid stroke line type for object ~A." object)
-          (check-stroke-type-symbol
+          (check-stroke-dash-type
            (string->symbol (pointer->string c-string-pointer))))))
 
   (define pointer
