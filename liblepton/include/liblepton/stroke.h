@@ -23,6 +23,8 @@
  *  \brief Line stroke style of objects such as arcs, boxes, circles, and lines.
  */
 
+G_BEGIN_DECLS
+
 enum _LeptonStrokeCapType
 {
   END_NONE,
@@ -104,3 +106,5 @@ lepton_stroke_type_to_string (LeptonStrokeType cap_type);
 
 LeptonStrokeType
 lepton_stroke_type_from_string (char *s);
+
+G_END_DECLS
