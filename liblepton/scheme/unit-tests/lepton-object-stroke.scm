@@ -127,3 +127,12 @@
   )
 
 (test-end "set-object-stroke-wrong-arguments")
+
+
+(test-begin "object-stroke-param-wrong-arguments")
+
+(test-assert-thrown 'wrong-type-arg (object-stroke-width 'a))
+(test-assert-thrown 'wrong-type-arg (object-stroke-cap 'a))
+(test-assert-thrown 'wrong-type-arg (object-stroke-dash 'a))
+
+(test-end "object-stroke-param-wrong-arguments")
