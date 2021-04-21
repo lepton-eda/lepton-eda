@@ -815,7 +815,7 @@ line, box, circle, arc, or path object."
 box, circle, arc, or path object.  The returned value is one of the
 symbols 'none, 'square or 'round."
   ;; Check if CAP is a valid cap type symbol.
-  (define (check-cap-type-symbol cap)
+  (define (check-stroke-cap-type cap)
     (if (stroke-cap-type? cap)
         cap
         (error "Unsupported cap style for object ~A: ~A." object cap)))
@@ -826,7 +826,7 @@ symbols 'none, 'square or 'round."
     (let ((c-string-pointer (lepton_stroke_cap_type_to_string cap-type)))
       (if (null-pointer? c-string-pointer)
           (error "Invalid stroke cap style for object ~A." object)
-          (check-cap-type-symbol
+          (check-stroke-cap-type
            (string->symbol (pointer->string c-string-pointer))))))
 
   (define pointer
