@@ -20,6 +20,7 @@
 
 (define-module (lepton object)
   ;; Optional arguments
+  #:use-module (ice-9 match)
   #:use-module (ice-9 optargs)
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
@@ -683,6 +684,11 @@ of the arc."
       (arc? object)
       (path? object)))
 
+(define (stroke-cap-type? cap)
+  (match cap
+    ((or 'none 'square 'round) cap)
+    (_ #f)))
+
 (define (object-stroke object)
   "Returns the stroke properties of OBJECT.  If OBJECT is not a
 line, box, circle, arc, or path, throws a Scheme error.  The
@@ -732,12 +738,6 @@ optional.  The following parameters are used:
   - DASH-LENGTH is an integer dash length for dash styles other
     than 'solid or 'dotted.
 Returns modified OBJECT."
-
-  (define valid-cap-type?
-    (or (eq? cap-type 'none)
-        (eq? cap-type 'square)
-        (eq? cap-type 'round)))
-
   (define valid-dash-type?
     (or (eq? dash-type 'solid)
         (eq? dash-type 'dotted)
@@ -759,7 +759,7 @@ Returns modified OBJECT."
   (define pointer (geda-object->pointer* object 1 strokable? 'strokable))
 
   (check-symbol cap-type 3)
-  (unless valid-cap-type?
+  (unless (stroke-cap-type? cap-type)
     (error "Invalid stroke cap style ~A."
            cap-type))
 
@@ -816,9 +816,7 @@ box, circle, arc, or path object.  The returned value is one of the
 symbols 'none, 'square or 'round."
   ;; Check if CAP is a valid cap type symbol.
   (define (check-cap-type-symbol cap)
-    (if (or (eq? cap 'none)
-            (eq? cap 'square)
-            (eq? cap 'round))
+    (if (stroke-cap-type? cap)
         cap
         (error "Unsupported cap style for object ~A: ~A." object cap)))
 
