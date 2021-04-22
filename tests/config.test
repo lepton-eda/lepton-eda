@@ -517,3 +517,39 @@
   (test-teardown))
 
 (test-end "config: unreadable file")
+
+(test-begin "config: unreadable directory")
+(test-group-with-cleanup "group: config: unreadable directory"
+  (test-setup)
+  (mkdir "path-unreadable")
+  ;; Create lepton.conf in path-unreadable/.
+  (test-run-success lepton-cli "config" "--project=path-unreadable/" "group" "key" "value")
+
+  (test-assert (file-exists? (build-filename (getcwd)
+                                             "path-unreadable"
+                                             "lepton.conf")))
+
+  (chmod "path-unreadable/" #o000)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path-unreadable/")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout>
+                                  (build-filename "path-unreadable" "lepton.conf"))))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path-unreadable/" "group" "key")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "WARNING: Could not load"))
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have group 'group'.")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path-unreadable/" "group" "key" "value")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "WARNING: Could not load"))
+    (test-assert (string-contains <stderr> "path-unreadable")))
+
+  (chmod "path-unreadable/" #o777)
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "config: unreadable directory")
