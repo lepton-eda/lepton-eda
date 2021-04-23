@@ -27,13 +27,13 @@ dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 #
 # On all Windows platforms, pass -no-undefined to libtool.
 # This allows shared libraries (DLLs) to be built.
-#  
+#
 # On MinGW, use the -mms-bitfields compiler flag.
 # This increases compatibility with the MSVC compiler.
 #
 # On MinGW, pass -mwindows when linking GUI-only applications.
 # This avoids opening a text console when running from a shortcut.
-  
+
 AC_DEFUN([AX_WINDOWS_FLAGS],
 [
   AC_PREREQ([2.60])dnl
