@@ -23,15 +23,30 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
-  #:use-module (lepton os platform)
 
-  #:export (sys-data-dirs
+  #:export (platform
+            sys-data-dirs
             sys-config-dirs
             user-cache-dir
             user-config-dir
-            user-data-dir)
+            user-data-dir))
 
-  #:re-export (platform))
+
+(define %platform
+  (cond
+   ((string-contains %host-type "cygwin") '(cygwin win32))
+   ((string-contains %host-type "linux") '(linux))
+   ((string-contains %host-type "mingw") '(win32 win32-native))
+   (else '(unknown))))
+
+(define (platform)
+  "Return a list of symbols describing the host operating system.
+The symbols may include:
+- 'win32 -- Windows
+- 'win32-native -- Windows, not via Cygwin
+- 'cygwin -- Cygwin
+- 'linux -- Linux"
+  %platform)
 
 (define-public (platform? x)
   (member x (platform)))
