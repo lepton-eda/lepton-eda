@@ -31,6 +31,7 @@
 (test-assert (every string? (sys-data-dirs)))
 (test-assert (every string? (sys-config-dirs)))
 (test-assert (string? (user-data-dir)))
+(test-assert (string? (user-cache-dir)))
 (test-assert (string? (user-config-dir)))
 
 (test-end "directories")
