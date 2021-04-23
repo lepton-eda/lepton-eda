@@ -23,8 +23,7 @@
 
 ;;; The values here are defined in m4 files.
 (define platform-list
-  '((carbon . "@OS_CARBON@")
-    (cygwin . "@OS_CYGWIN@")
+  '((cygwin . "@OS_CYGWIN@")
     (linux . "@OS_LINUX@")
     (win32 . "@OS_WIN32@")
     (win32-native . "@OS_WIN32_NATIVE@")))
@@ -35,7 +34,6 @@ The symbols may include:
 - 'win32 -- Windows
 - 'win32-native -- Windows, not via Cygwin
 - 'cygwin -- Cygwin
-- 'carbon -- Mac OS X Carbon
 - 'linux -- Linux"
   (define platform-name car)
   (define m4-value cdr)
