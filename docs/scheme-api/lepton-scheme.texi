@@ -2203,7 +2203,23 @@ symbols may include:
 @samp{win32}
 @item
 @samp{win32-native}
+@item
+@samp{unknown}
 @end itemize
+
+@quotation Note
+Previously, the function defined platform on Mac OS as @samp{carbon}.
+Since the Carbon framework has been discontinued by Apple, the symbol
+is no longer used, and the platform will be determined as
+@samp{unknown}.  The Guile variable @var{%host-type} can be used
+instead to define the platform in this case.  For example:
+@lisp
+(string-contains %host-type "apple")
+@end lisp
+Please let us know if you have a better suggestion of how to name the
+platform in the function.
+@end quotation
+
 @end defun
 
 @defun platform? type
