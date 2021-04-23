@@ -5,6 +5,18 @@ This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
 
+Notable changes in Lepton EDA 1.9.15 (upcoming)
+-----------------------------------------------
+
+### Changes in `liblepton`:
+
+- The module `(lepton core os)` written in C has been removed.
+  Its functions have been reimplemented using Scheme FFI.
+
+- The Scheme function `platform()` no longer outputs `'(carbon)`.
+  There is no reasonable replacement yet, so the function outputs
+  `'(unknown)` on those Mac machines on which it usually did so.
+
 Notable changes in Lepton EDA 1.9.14 (20210407)
 -----------------------------------------------
 
