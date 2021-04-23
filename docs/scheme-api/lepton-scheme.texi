@@ -2196,8 +2196,6 @@ symbols may include:
 
 @itemize
 @item
-@samp{carbon}
-@item
 @samp{cygwin}
 @item
 @samp{linux}

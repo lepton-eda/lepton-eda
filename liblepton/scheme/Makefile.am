@@ -212,7 +212,6 @@ lepton/log.scm: $(srcdir)/lepton/log.scm.in
 
 lepton/os/platform.scm: $(srcdir)/lepton/os/platform.scm.in
 	$(MKDIR_P) lepton/os; \
-	sed -e 's,[@]OS_CARBON[@],$(OS_CARBON),g' < $(srcdir)/$@.in > $@; \
 	sed -e 's,[@]OS_CYGWIN[@],$(OS_CYGWIN),g' < $(srcdir)/$@.in > $@; \
 	sed -e 's,[@]OS_LINUX[@],$(OS_LINUX),g' < $(srcdir)/$@.in > $@; \
 	sed -e 's,[@]OS_WIN32[@],$(OS_WIN32),g' < $(srcdir)/$@.in > $@; \
