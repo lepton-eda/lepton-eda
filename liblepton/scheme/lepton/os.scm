@@ -24,12 +24,20 @@
 
   #:use-module (lepton ffi)
 
-  #:export (platform
-            sys-data-dirs
+  #:export (expand-env-variables
             sys-config-dirs
+            sys-data-dirs
             user-cache-dir
             user-config-dir
-            user-data-dir))
+            user-data-dir
+            ;; Deprecated functions.
+            path-separator
+            path-separator-char
+            platform
+            platform?
+            separator
+            separator-char
+            separator-char?))
 
 
 (define %platform
@@ -48,22 +56,22 @@ The symbols may include:
 - 'linux -- Linux"
   %platform)
 
-(define-public (platform? x)
+(define (platform? x)
   (member x (platform)))
 
 ; Deprecated and must be removed after version 1.10.
-(define-public separator-char
+(define separator-char
   (car (char-set->list (string->char-set file-name-separator-string))))
 
 ; Deprecated and must be removed after version 1.10.
-(define-public separator file-name-separator-string)
+(define separator file-name-separator-string)
 
-(define-public path-separator-char
+(define path-separator-char
   (if (platform? 'win32-native) #\; #\:))
 
-(define-public path-separator (string path-separator-char))
+(define path-separator (string path-separator-char))
 
-(define-public separator-char? file-name-separator?)
+(define separator-char? file-name-separator?)
 
 (define (c-string-array->list pointer)
   "Returns a list of search directories for system data."
@@ -101,7 +109,7 @@ is stored."
   "Returns the directory where per-user cache data are stored."
   (pointer->string (eda_get_user_cache_dir)))
 
-(define-public expand-env-variables
+(define expand-env-variables
   ;; Only compile regular expression once
   (let ((rx (make-regexp "\\$\\{(\\w*)\\}")))
     ;; This is the actual expand-env-variables function -- it's a
