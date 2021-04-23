@@ -3,6 +3,7 @@
 
 dnl Check Windows-specific flags
 dnl Copyright (C) 2009  Cesar Strauss <cestrauss@gmail.com>
+dnl Copyright (C) 2021 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -38,11 +39,11 @@ AC_DEFUN([AX_WINDOWS_FLAGS],
   AC_PREREQ([2.60])dnl
   AC_REQUIRE([AX_HOST])dnl
 
-  if test "$PLATFORM_WIN32" = "yes"; then
+  if test "$OS_WIN32" = "yes"; then
     WINDOWS_LIBTOOL_FLAGS=-no-undefined
   fi
 
-  if test "$PLATFORM_WIN32_NATIVE" = "yes"; then
+  if test "$OS_WIN32_NATIVE" = "yes"; then
     MINGW_GUI_LDFLAGS=-mwindows
     MINGW_CFLAGS="-mms-bitfields"
   fi
