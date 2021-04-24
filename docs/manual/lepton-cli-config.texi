@@ -55,6 +55,36 @@ Lepton config files.  Naming and location of those files, file format,
 as well as configuration settings available, are described in the
 chapter @ref{Configuration, , Configuration system}.
 
+You can easily find out the location of the configuration files in
+your system.  For example, if you want to know where your user
+configuration is stored, just type:
+
+@example
+lepton-cli config -u
+@print{} /home/user/.config/lepton-eda/lepton-user.conf
+@end example
+
+Supposed you're a system administrator and want to look where
+Lepton's default system settings are stored, do:
+
+@example
+lepton-cli config -s
+@print{} /usr/local/share/lepton-eda/lepton-system.conf
+@end example
+
+Editing the system configuration file will probably require superuser
+permissions.  If you want to look up and edit just one of the
+settings, you could do, for instance:
+
+@example
+lepton-cli config -s export font
+@print{} Sans
+sudo lepton-cli config -s export font Arial
+@end example
+
+The first of the above commands simply reads the file, so it doesn't
+require additional permissions.
+
 @quotation Note
 Apart from using @cli{} for modifying the files, you can just edit them
 manually in your favorite text editor.
