@@ -891,6 +891,12 @@ one and three parameters:
       (circle? object)
       (path? object)))
 
+(define (fill-type? type)
+  (or (eq? type 'hollow)
+      (eq? type 'solid)
+      (eq? type 'hatch)
+      (eq? type 'mesh)))
+
 (define (object-fill object)
   "Returns the fill properties of OBJECT.  If OBJECT is
 not a box, circle, or path, throws a Scheme error.  The return
@@ -906,10 +912,7 @@ value is a list of parameters:
       (if (null-pointer? c_string)
           (error ("Invalid fill type for object ~A.") object)
           (let ((fill-type (string->symbol (pointer->string c_string))))
-            (if (or (eq? fill-type 'hollow)
-                    (eq? fill-type 'solid)
-                    (eq? fill-type 'mesh)
-                    (eq? fill-type 'hatch))
+            (if (fill-type? fill-type)
                 fill-type
                 (error ("Unsupported fill type for object ~A: ~A." object fill-type)))))))
 
@@ -923,10 +926,7 @@ value is a list of parameters:
         (pitch2 (lepton_object_get_fill_pitch2 pointer))
         (angle2 (lepton_object_get_fill_angle2 pointer)))
 
-    (unless (or (eq? fill-type 'hollow)
-                (eq? fill-type 'solid)
-                (eq? fill-type 'mesh)
-                (eq? fill-type 'hatch))
+    (unless (fill-type? fill-type)
       (error "Object ~A has invalid fill style ~A"
              object fill-type))
 
@@ -952,12 +952,6 @@ used. WIDTH defines the width of the strokes, ANGLE1 and SPACE1
 define the angle and pitch of the first hatch lines, ANGLE2 and
 SPACE2 define the angle and pitch of the second hatch lines.  The
 second hatch is used for the 'mesh type only.  Returns OBJECT."
-  (define valid-filling-type?
-    (or (eq? type 'hollow)
-        (eq? type 'solid)
-        (eq? type 'hatch)
-        (eq? type 'mesh)))
-
   (define with-first-hatch?
     (or (eq? type 'mesh)
         (eq? type 'hatch)))
@@ -967,7 +961,7 @@ second hatch is used for the 'mesh type only.  Returns OBJECT."
 
   (define pointer (geda-object->pointer* object 1 fillable? 'fillable))
 
-  (unless valid-filling-type?
+  (unless (fill-type? type)
     (error "Invalid fill style ~A." type))
 
   (when with-first-hatch?
