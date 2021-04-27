@@ -892,10 +892,9 @@ one and three parameters:
       (path? object)))
 
 (define (fill-type? type)
-  (or (eq? type 'hollow)
-      (eq? type 'solid)
-      (eq? type 'hatch)
-      (eq? type 'mesh)))
+  (match type
+    ((or 'hollow 'solid 'hatch 'mesh) type)
+    (_ #f)))
 
 (define (object-fill object)
   "Returns the fill properties of OBJECT.  If OBJECT is
