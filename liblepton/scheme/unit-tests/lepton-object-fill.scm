@@ -2,8 +2,6 @@
 
 (use-modules (lepton object))
 
-(use-modules ((geda object) #:renamer (symbol-prefix-proc 'geda:)))
-
 (test-begin "fill" 21)
 
 (let ((a (make-box '(1 . 2) '(3 . 4))))
