@@ -140,6 +140,7 @@ TESTS = \
 	unit-tests/lepton-object-selectable.scm \
 	unit-tests/lepton-object-stroke.scm \
 	unit-tests/lepton-object-text.scm \
+	unit-tests/lepton-object-type.scm \
 	unit-tests/lepton-object-transform.scm \
 	unit-tests/lepton-object-wrong.scm \
 	unit-tests/lepton-os-basic.scm \
