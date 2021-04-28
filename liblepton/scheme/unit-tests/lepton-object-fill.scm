@@ -42,6 +42,21 @@
                       (set-object-fill! a 'mesh 1 2 3))
   (test-assert-thrown 'misc-error
                       (set-object-fill! a 'mesh 1 2 3 4))
+
+  ;; Invalid argument type.
+  (test-assert-thrown 'wrong-type-arg
+                      (set-object-fill! a 'mesh 'a 100 30 50 120))
+  (test-assert-thrown 'wrong-type-arg
+                      (set-object-fill! a 'mesh 10 'a 30 50 120))
+  (test-assert-thrown 'wrong-type-arg
+                      (set-object-fill! a 'mesh 10 100 'a 50 120))
+  (test-assert-thrown 'wrong-type-arg
+                      (set-object-fill! a 'mesh 10 100 30 'a 120))
+  (test-assert-thrown 'wrong-type-arg
+                      (set-object-fill! a 'mesh 10 100 30 50 'a))
+  ;; Invalid number of arguments.
+  (test-assert-thrown 'wrong-number-of-args
+                      (set-object-fill! a 'mesh 2 3 4 5 6 7))
   )
 
 (test-end "fill")
