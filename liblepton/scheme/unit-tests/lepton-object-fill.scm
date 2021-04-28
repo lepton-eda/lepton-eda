@@ -45,3 +45,13 @@
   )
 
 (test-end "fill")
+
+
+(test-begin "object-fill")
+
+;;; Test allowable objects.
+(test-equal (object-fill (make-box '(1 . 2) '(3 . 4))) '(hollow))
+(test-equal (object-fill (make-circle '(1 . 2) 100)) '(hollow))
+(test-equal (object-fill (make-path)) '(hollow))
+
+(test-end "object-fill")
