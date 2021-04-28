@@ -55,3 +55,13 @@
 (test-equal (object-fill (make-path)) '(hollow))
 
 (test-end "object-fill")
+
+
+(test-begin "object-fill-wrong-arguments")
+
+(test-assert-thrown 'wrong-type-arg (object-fill 'a))
+(test-assert-thrown 'wrong-type-arg (object-fill 1))
+(test-assert-thrown 'wrong-number-of-args (object-fill))
+(test-assert-thrown 'wrong-number-of-args (object-fill (make-path) 1))
+
+(test-end "object-fill-wrong-arguments")
