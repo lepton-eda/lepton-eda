@@ -24,24 +24,24 @@
 
   ;; Invalid symbol arguments
   (test-assert-thrown 'misc-error
-                 (set-object-fill! a 'BAD-VALUE))
+                      (set-object-fill! a 'BAD-VALUE))
   ;; Missing fill width/angle/space arguments
   (test-assert-thrown 'misc-error
-                 (set-object-fill! a 'hatch))
+                      (set-object-fill! a 'hatch))
   (test-assert-thrown 'misc-error
-                 (set-object-fill! a 'hatch 1))
+                      (set-object-fill! a 'hatch 1))
   (test-assert-thrown 'misc-error
-                 (set-object-fill! a 'hatch 1 2))
+                      (set-object-fill! a 'hatch 1 2))
   (test-assert-thrown 'misc-error
-                 (set-object-fill! a 'mesh))
+                      (set-object-fill! a 'mesh))
   (test-assert-thrown 'misc-error
-                 (set-object-fill! a 'mesh 1))
+                      (set-object-fill! a 'mesh 1))
   (test-assert-thrown 'misc-error
-                 (set-object-fill! a 'mesh 1 2))
+                      (set-object-fill! a 'mesh 1 2))
   (test-assert-thrown 'misc-error
-                 (set-object-fill! a 'mesh 1 2 3))
+                      (set-object-fill! a 'mesh 1 2 3))
   (test-assert-thrown 'misc-error
-                 (set-object-fill! a 'mesh 1 2 3 4))
+                      (set-object-fill! a 'mesh 1 2 3 4))
   )
 
 (test-end "fill")
