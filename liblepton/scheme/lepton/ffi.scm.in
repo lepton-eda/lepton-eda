@@ -21,9 +21,6 @@
   #:export (liblepton
             ;; Helpers.
             true?
-            geda-object->pointer
-            geda-object->pointer*
-            pointer->geda-object
             check-coord
             check-integer
             check-symbol
@@ -32,6 +29,8 @@
             edascm_is_config
             edascm_is_object
             edascm_is_page
+            edascm_from_object
+            edascm_to_object
 
             eda_get_system_config_dirs
             eda_get_system_data_dirs
@@ -273,66 +272,6 @@
 (define-lff lepton_stroke_cap_type_to_string '* (list int))
 (define-lff lepton_stroke_type_from_string int '(*))
 (define-lff lepton_stroke_type_to_string '* (list int))
-
-;;; Helper transformers between #<geda-object> smobs and C object
-;;; pointers.
-(define (geda-object->pointer smob)
-  (or (false-if-exception (edascm_to_object (scm->pointer smob)))
-      ;; Return NULL if the SMOB is not the #<geda-object> smob.
-      %null-pointer))
-
-(define (pointer->geda-object pointer)
-  ;; Return #f if the pointer is wrong.
-  (false-if-exception (pointer->scm (edascm_from_object pointer))))
-
-;;; This syntax rule is intended for use in toplevel 'define' or
-;;; 'let' forms in the functions where the check for wrong type of
-;;; OBJECT is necessary.  The rule checks the object and, if it is
-;;; not #<geda-object>, throws an error with the 'wrong-type-arg
-;;; key reporting the function name and position POS of the
-;;; OBJECT argument.  In short, the usage is as follows:
-;;;   (define (myfunc object)
-;;;     (define pointer (geda-object->pointer* object 1))
-;;;     (function-body))
-(define-syntax geda-object->pointer*
-  (syntax-rules ()
-    ((_ object pos)
-     (let ((pointer (geda-object->pointer object)))
-       (if (null-pointer? pointer)
-           (let ((proc-name
-                  ;; Provision against Guile-2.0 that does not
-                  ;; have the procedure.
-                  (if (defined? 'frame-procedure-name)
-                      (frame-procedure-name (stack-ref (make-stack #t) 1))
-                      '??)))
-             (scm-error 'wrong-type-arg
-                        proc-name
-                        "Wrong type argument in position ~A: ~A"
-                        (list pos object)
-                        #f))
-           pointer)))
-    ((_ object pos object-check-func type)
-     (let ((pointer (geda-object->pointer object))
-           (proc-name
-            ;; Provision against Guile-2.0 that does not
-            ;; have the procedure.
-            (if (defined? 'frame-procedure-name)
-                (frame-procedure-name (stack-ref (make-stack #t) 1))
-                '??)))
-       (if (null-pointer? pointer)
-           (scm-error 'wrong-type-arg
-                      proc-name
-                      "Wrong type argument in position ~A: ~A"
-                      (list pos object)
-                      #f)
-           (if (object-check-func object)
-               pointer
-               (scm-error 'wrong-type-arg
-                          proc-name
-                          "Wrong type argument in position ~A (expecting ~A object): ~A"
-                          (list pos type object)
-                          #f)))))))
-
 
 
 (define-syntax-rule (check-integer val pos)
