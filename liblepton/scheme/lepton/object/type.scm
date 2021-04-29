@@ -174,6 +174,10 @@ returns #f."
                 object
                 (integer->char (lepton_object_get_type pointer))))))
 
-(define (object-type? x type)
-  (and (object? x)
-       (eq? (object-type x) type)))
+(define (object-type? object type)
+  "Returns #t if OBJECT is a Lepton primitive object and its type
+is TYPE which should be one of the symbols: 'arc, 'box, 'bus,
+'circle, 'complex, 'line, 'net, 'path, 'picture, 'pin, or 'text.
+Otherwise returns #f."
+  (and (object? object)
+       (eq? (object-type object) type)))
