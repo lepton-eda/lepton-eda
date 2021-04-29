@@ -88,7 +88,9 @@ returns #f."
 
 (define (object-id object)
   "Returns an internal id number of the OBJECT."
-  (let ((id (lepton_object_get_id (geda-object->pointer object))))
+  (define pointer (geda-object->pointer* object 1))
+
+  (let ((id (lepton_object_get_id pointer)))
     (and (not (= id -1))
          id)))
 
