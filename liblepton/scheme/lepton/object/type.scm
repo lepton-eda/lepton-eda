@@ -155,7 +155,9 @@ returns #f."
 
 
 (define (object-type object)
-  "Returns a Scheme symbol representing the type of OBJECT."
+  "Returns a Scheme symbol representing the type of OBJECT.  The
+type may be one of the symbols: 'arc, 'box, 'bus, 'circle,
+'complex, 'line, 'net, 'path, 'picture, 'pin, or 'text."
   (define pointer (geda-object->pointer* object 1))
 
   (cond
