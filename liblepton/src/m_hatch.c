@@ -57,6 +57,10 @@ static gint calculate_initial_sweep(gint pitch, gint min_y, gint max_y)
 {
   gint delta = max_y - min_y;
 
+  /* Return the vertical center of the extents if pitch is zero.
+   * This should never happen. */
+  g_return_val_if_fail (pitch != 0, delta / 2);
+
   return min_y + ((delta - ((delta - pitch) / pitch * pitch)) / 2);
 }
 
