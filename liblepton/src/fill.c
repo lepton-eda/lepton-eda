@@ -139,6 +139,7 @@ lepton_fill_set_pitch1 (LeptonFill *fill,
                         int pitch)
 {
   g_return_if_fail (fill != NULL);
+  g_return_if_fail (pitch != 0);
 
   fill->pitch1 = pitch;
 }
@@ -194,6 +195,7 @@ lepton_fill_set_pitch2 (LeptonFill *fill,
                         int pitch)
 {
   g_return_if_fail (fill != NULL);
+  g_return_if_fail (pitch != 0);
 
   fill->pitch2 = pitch;
 }
