@@ -346,6 +346,22 @@ lepton_object_get_stroke (const LeptonObject *object)
 }
 
 
+/*! \brief Set the stroke of an object.
+ *
+ *  \param [in] object The object.
+ *  \param [in] stroke The #LeptonStroke pointer.
+ */
+void
+lepton_object_set_stroke (LeptonObject *object,
+                          LeptonStroke *stroke)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (stroke != NULL);
+
+  object->stroke = stroke;
+}
+
+
 /*! \brief Get the line stroke type of an object.
  *
  *  \param [in] object The object.
@@ -517,6 +533,22 @@ lepton_object_get_fill (const LeptonObject *object)
   g_return_val_if_fail (object != NULL, NULL);
 
   return object->fill;
+}
+
+
+/*! \brief Set the fill of an object.
+ *
+ *  \param [in] object The object.
+ *  \param [in] fill The #LeptonFill pointer.
+ */
+void
+lepton_object_set_fill (LeptonObject *object,
+                        LeptonFill *fill)
+{
+  g_return_if_fail (object != NULL);
+  g_return_if_fail (fill != NULL);
+
+  object->fill = fill;
 }
 
 
