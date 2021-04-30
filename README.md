@@ -284,8 +284,12 @@ and the rest of the gEDA tools:
   irc.oftc.net#lepton-eda. Sometimes you can catch Lepton users or
   developers there.
 
-- [Lepton EDA wiki](https://github.com/lepton-eda/lepton-eda/wiki)
+- [Lepton documentation page](https://lepton-eda.github.io)
   is the first place to search for Lepton specific information.
+
+- [Lepton EDA wiki](https://github.com/lepton-eda/lepton-eda/wiki)
+  is a resource containing additional information that did not get
+  into the main documentation.
 
 - The gEDA website <http://www.geda-project.org> has more extensive
   information on the gEDA tools, and links to some successful
