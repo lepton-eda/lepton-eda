@@ -26,6 +26,12 @@
  * \brief Functions for working with object filling.
  */
 
+#define DEFAULT_FILL_WIDTH 10
+#define DEFAULT_FILL_PITCH1 100
+#define DEFAULT_FILL_ANGLE1 45
+#define DEFAULT_FILL_PITCH2 100
+#define DEFAULT_FILL_ANGLE2 135
+
 
 /*! \brief Init a new #LeptonFill.
  */
@@ -36,11 +42,11 @@ lepton_fill_new ()
 
   fill = g_new (LeptonFill, 1);
   fill->type = FILLING_HOLLOW;
-  fill->width = 0;
-  fill->pitch1 = 0;
-  fill->angle1 = 0;
-  fill->pitch2 = 0;
-  fill->angle2 = 0;
+  fill->width = DEFAULT_FILL_WIDTH;
+  fill->pitch1 = DEFAULT_FILL_PITCH1;
+  fill->angle1 = DEFAULT_FILL_ANGLE1;
+  fill->pitch2 = DEFAULT_FILL_PITCH2;
+  fill->angle2 = DEFAULT_FILL_ANGLE2;
 
   return fill;
 }
@@ -90,7 +96,7 @@ lepton_fill_set_type (LeptonFill *fill,
 int
 lepton_fill_get_width (const LeptonFill *fill)
 {
-  g_return_val_if_fail (fill != NULL, FILLING_HOLLOW);
+  g_return_val_if_fail (fill != NULL, DEFAULT_FILL_WIDTH);
 
   return fill->width;
 }
@@ -118,7 +124,7 @@ lepton_fill_set_width (LeptonFill *fill,
 int
 lepton_fill_get_pitch1 (const LeptonFill *fill)
 {
-  g_return_val_if_fail (fill != NULL, FILLING_HOLLOW);
+  g_return_val_if_fail (fill != NULL, DEFAULT_FILL_PITCH1);
 
   return fill->pitch1;
 }
@@ -145,7 +151,7 @@ lepton_fill_set_pitch1 (LeptonFill *fill,
 int
 lepton_fill_get_angle1 (const LeptonFill *fill)
 {
-  g_return_val_if_fail (fill != NULL, 0);
+  g_return_val_if_fail (fill != NULL, DEFAULT_FILL_ANGLE1);
 
   return fill->angle1;
 }
@@ -173,7 +179,7 @@ lepton_fill_set_angle1 (LeptonFill *fill,
 int
 lepton_fill_get_pitch2 (const LeptonFill *fill)
 {
-  g_return_val_if_fail (fill != NULL, FILLING_HOLLOW);
+  g_return_val_if_fail (fill != NULL, DEFAULT_FILL_PITCH2);
 
   return fill->pitch2;
 }
@@ -201,7 +207,7 @@ lepton_fill_set_pitch2 (LeptonFill *fill,
 int
 lepton_fill_get_angle2 (const LeptonFill *fill)
 {
-  g_return_val_if_fail (fill != NULL, 0);
+  g_return_val_if_fail (fill != NULL, DEFAULT_FILL_ANGLE2);
 
   return fill->angle2;
 }
