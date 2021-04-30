@@ -561,8 +561,12 @@ o_path_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
 
   /* Setup a fake object to pass the drawing routine */
   memset (&object, 0, sizeof (LeptonObject));
+  LeptonStroke *stroke = lepton_stroke_new ();
+  LeptonFill *fill = lepton_fill_new ();
   lepton_object_set_type (&object, OBJ_PATH);
   lepton_object_set_color (&object, SELECT_COLOR);
+  lepton_object_set_stroke (&object, stroke);
+  lepton_object_set_fill (&object, fill);
   lepton_object_set_stroke_width (&object, 0); /* clamped to 1 pixel in circle_path */
   object.path = w_current->temp_path;
 

@@ -174,7 +174,7 @@ lepton_object_get_stroke (const LeptonObject *object);
 
 void
 lepton_object_set_stroke (LeptonObject *object,
-                          LeptonStroke *stroke)
+                          LeptonStroke *stroke);
 LeptonStrokeType
 lepton_object_get_stroke_type (const LeptonObject *object);
 
