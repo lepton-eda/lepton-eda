@@ -172,6 +172,9 @@ lepton_object_set_selectable (LeptonObject *object,
 LeptonStroke*
 lepton_object_get_stroke (const LeptonObject *object);
 
+void
+lepton_object_set_stroke (LeptonObject *object,
+                          LeptonStroke *stroke)
 LeptonStrokeType
 lepton_object_get_stroke_type (const LeptonObject *object);
 
@@ -205,6 +208,9 @@ lepton_object_get_stroke_space_length (const LeptonObject *object);
 LeptonFill*
 lepton_object_get_fill (const LeptonObject *object);
 
+void
+lepton_object_set_fill (LeptonObject *object,
+                        LeptonFill *fill);
 LeptonFillType
 lepton_object_get_fill_type (const LeptonObject *object);
 
