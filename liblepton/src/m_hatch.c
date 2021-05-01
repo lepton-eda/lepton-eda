@@ -61,6 +61,28 @@ static gint calculate_initial_sweep(gint pitch, gint min_y, gint max_y)
    * This should never happen. */
   g_return_val_if_fail (pitch != 0, delta / 2);
 
+  /*  The algorithm is as follows:
+   *
+   * Calculate the maximum distance that needs to be hatched:
+   *    md = (delta - pitch)
+   *
+   * Calculate the actual distance that needs to be hatched, the
+   * perpendicular distance between the farthest hatch
+   * lines. Dividing by the pitch and then multiplying by the
+   * pitch makes the result an even multiple of the pitch by
+   * integer truncation:
+   *    ad = md / pitch * pitch
+   *
+   * Calculate the leftover distance on each side:
+   *    l2 = delta - ad
+   *
+   * Calculates the leftover distance on one side:
+   *    l = l2 / 2
+   *
+   * Calculate the coordinate of the first pitch line:
+   *    min_y + l
+   */
+
   return min_y + ((delta - ((delta - pitch) / pitch * pitch)) / 2);
 }
 
