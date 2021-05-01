@@ -199,6 +199,7 @@ m_hatch_circle (LeptonCircle *circle,
 
   g_return_if_fail(circle!=NULL);
   g_return_if_fail(lines!=NULL);
+  g_return_if_fail (pitch > 0);
 
   lepton_transform_init(&transform);
   lepton_transform_rotate(&transform, angle);
