@@ -154,6 +154,9 @@ Schematic capture
 * Running lepton-schematic::
 * lepton-schematic window::
 * Dialog boxes::
+* Creating and opening schematics::
+* Saving schematic pages::
+* Printing and exporting::
 * Selecting objects::
 * lepton-schematic command line options::
 * Component libraries::
@@ -175,6 +178,7 @@ Main lepton-schematic window
 Dialog boxes
 
 * Add Component widget::
+* Save As dialog box::
 
 Selecting objects
 

@@ -10,6 +10,7 @@
 * Dialog boxes::
 * Creating and opening schematics::
 * Saving schematic pages::
+* Printing and exporting::
 * Selecting objects::
 * lepton-schematic command line options::
 * Component libraries::
@@ -150,34 +151,14 @@ opened for each of untitled pages.
 @item Print...
 
 @clicksequence{File @click{} Print...} (@kbd{F P} or @kbd{Ctrl+P})
-opens a standard GTK printing dialog.  Choose your print destination,
-a file to print to or a printer, change printing settings if needed
-and go ahead.  If you print to a file, you can choose the file format,
-e.g. PDF or PostScript.  The button @samp{Print Preview} lets you see
-the preview of your page when it is printed.
-
-@quotation Note
-GTK2 and GTK3 standard printing dialogs may support different output
-formats.
-@end quotation
-
-@quotation Note
-You can also output PDF with the @clicksequence{File @click{} Write
-Image...} menu (see below) or export your schematics and symbols with
-the @cli{} command (@pxref{lepton-cli export}).
-@end quotation
+opens a standard GTK printing dialog in which you can preview and
+print schematics.  @xref{Printing and exporting}.
 
 @item Write Image...
 
-@clicksequence{File @click{} Write Image...} (@kbd{F I}) exports
-images. In the export dialog you can choose one of several image
-format options, including PDF, as well as one of predefined size of
-the image, and whether the image should be colored or black-and-white.
-The sizes are not relevant for PDF files, those will be sized to fit
-the visible contents of your schematic or symbol page.  The @cli{}
-utility allows more accurate control of the image properties so if you
-want to set some custom options, please use it (@pxref{lepton-cli
-export}).
+@clicksequence{File @click{} Write Image...} (@kbd{F I}) can be used
+to export schematic and symbol pages as images.  @xref{Printing and
+exporting}.
 
 @item Invoke macro...
 @item Execute Script...
@@ -338,28 +319,28 @@ export}).
 @end table
 
 
-@node Dialog boxes, Selecting objects, lepton-schematic window, lepton-schematic
+@node Dialog boxes, Creating and opening schematics, lepton-schematic window, lepton-schematic
 @section Dialog boxes
 @cindex dialog boxes
 @cindex dialog box
 
 @menu
-* Save As dialog box::
 * Add Component widget::
+* Save As dialog box::
 @end menu
 
-@node Add Component widget,  , Dialog boxes, Dialog boxes
+@node Add Component widget, Save As dialog box, Dialog boxes, Dialog boxes
 @subsection Add Component widget
 @cindex add component widget
 @cindex add component dialog box
 
-@node Save As dialog box,  , Dialog boxes, Dialog boxes
+@node Save As dialog box,  , Add Component widget, Dialog boxes
 @subsection Save As dialog box
 @cindex save as
 @cindex save as dialog box
 @cindex dialog boxes, save as
 
-@node Creating and opening schematics
+@node Creating and opening schematics, Saving schematic pages, Dialog boxes, lepton-schematic
 @section Creating new and opening existing schematic files
 @cindex creating schematics
 @cindex create schematics
@@ -399,7 +380,7 @@ If you want to open a file you worked on recently, click the menu item
 several file names.  You can configure how many files should be shown
 there using the configuration key @ref{max-recent-files}.
 
-@node Saving schematic pages, lepton-schematic command line options, Dialog boxes, lepton-schematic
+@node Saving schematic pages, Printing and exporting, Creating and opening schematics, lepton-schematic
 @section Saving schematic pages
 @cindex save
 @cindex save pages
@@ -429,7 +410,41 @@ below and choose the file type you need: schematics, symbols,
 schematic and symbols, or any files.  Two first options change the
 saved file extension as well.
 
-@node Selecting objects, lepton-schematic command line options, Dialog boxes, lepton-schematic
+@node Printing and exporting, Selecting objects, Saving schematic pages, lepton-schematic
+@section Printing and exporting schematics
+@cindex printing schematics
+@cindex exporting schematics
+
+@clicksequence{File @click{} Print...} (@kbd{F P} or @kbd{Ctrl+P})
+will open a standard GTK printing dialog.  Choose your print
+destination, a file to print to, or a printer, change printing
+settings if needed and go ahead.  If you print to a file, you can
+choose the file format, e.g. PDF or PostScript.  The button
+@samp{Print Preview} lets you see the preview of your page when it is
+printed.
+
+@quotation Note
+GTK2 and GTK3 standard printing dialogs may support different output
+formats.
+@end quotation
+
+@quotation Note
+You can also output PDF with the @clicksequence{File @click{} Write
+Image...} menu (see below) or export your schematics and symbols with
+the @cli{} command (@pxref{lepton-cli export}).
+@end quotation
+
+@clicksequence{File @click{} Write Image...} (@kbd{F I}) is used for
+exporting schematic and symbol pages as images.  In the export dialog
+box you can choose one of several supported image format options,
+including PDF, as well as one of predefined size of the image, and
+whether the image should be colored or black-and-white.  The sizes are
+not relevant for PDF files, those will be sized to fit the visible
+contents of your schematic or symbol page.  The @cli{} utility allows
+more accurate control of the image properties so if you want to set
+some custom options, please use it (@pxref{lepton-cli export}).
+
+@node Selecting objects, lepton-schematic command line options, Printing and exporting, lepton-schematic
 @section Selecting objects
 @cindex selecting objects
 @cindex object selection
