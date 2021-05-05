@@ -17,6 +17,8 @@
 
 (define help-string "Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]")
 
+(define run-help-string "Run `lepton-cli --help' for more information.")
+
 
 ;;; Test lepton-cli without args.
 (test-begin "lepton-cli")
@@ -25,7 +27,7 @@
     (command-values lepton-cli)
   (test-eq EXIT_FAILURE <status>)
   (test-assert (string-contains <stderr> "ERROR: You must specify a command to run."))
-  (test-assert (string-contains <stderr> "Run `lepton-cli --help' for more information.")))
+  (test-assert (string-contains <stderr> run-help-string)))
 
 (test-end "lepton-cli")
 
@@ -37,7 +39,7 @@
     (command-values lepton-cli "--no-rcfiles")
   (test-eq EXIT_FAILURE <status>)
   (test-assert (string-contains <stderr> "ERROR: You must specify a command to run."))
-  (test-assert (string-contains <stderr> "Run `lepton-cli --help' for more information.")))
+  (test-assert (string-contains <stderr> run-help-string)))
 
 (test-end "lepton-cli --no-rcfiles")
 
@@ -92,6 +94,6 @@
     (command-values lepton-cli "wrong" "command")
   (test-eq EXIT_FAILURE <status>)
   (test-assert (string-contains <stderr> "Unrecognised command"))
-  (test-assert (string-contains <stderr> "Run `lepton-cli --help' for more information.")))
+  (test-assert (string-contains <stderr> run-help-string)))
 
 (test-end "lepton-cli wrong command")
