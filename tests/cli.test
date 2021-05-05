@@ -38,3 +38,13 @@
   (test-assert (string-contains <stdout> help-string)))
 
 (test-end "lepton-cli -h")
+
+
+(test-begin "lepton-cli --help")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "--help")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> help-string)))
+
+(test-end "lepton-cli --help")
