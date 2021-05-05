@@ -84,3 +84,14 @@
   (test-assert (string-contains <stdout> "There is NO WARRANTY")))
 
 (test-end "lepton-cli --version")
+
+
+(test-begin "lepton-cli wrong command")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "wrong" "command")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "Unrecognised command"))
+  (test-assert (string-contains <stderr> "Run `lepton-cli --help' for more information.")))
+
+(test-end "lepton-cli wrong command")
