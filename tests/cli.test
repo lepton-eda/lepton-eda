@@ -30,6 +30,18 @@
 (test-end "lepton-cli")
 
 
+;;; Test it with --no-rcfiles but without any command.
+(test-begin "lepton-cli --no-rcfiles")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "--no-rcfiles")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You must specify a command to run."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli --help' for more information.")))
+
+(test-end "lepton-cli --no-rcfiles")
+
+
 (test-begin "lepton-cli -h")
 
 (receive (<status> <stdout> <stderr>)
