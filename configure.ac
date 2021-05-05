@@ -247,7 +247,6 @@ AC_CONFIG_FILES([Makefile
 
                  utils/cli/Makefile
                  utils/cli/scheme/Makefile
-                 utils/cli/src/Makefile
                  utils/cli/docs/Makefile
                  utils/cli/po/Makefile.in
                  utils/cli/tests/Makefile

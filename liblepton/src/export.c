@@ -52,19 +52,11 @@ static void export_draw_page (LeptonPage *page,
 static void export_postscript (gboolean is_eps);
 
 static gdouble export_parse_dist (const gchar *dist);
-static void export_command_line (int argc, char * const *argv);
 
 /* Default pixels-per-inch for raster outputs */
 #define DEFAULT_DPI 96
 /* Default margin width in points */
 #define DEFAULT_MARGIN 18
-
-struct ExportFormat {
-  const gchar *name; /* UTF-8 */
-  const gchar *alias; /* UTF-8 */
-  gboolean multipage;
-  void (*func)(void);
-};
 
 enum ExportOrientation {
   ORIENTATION_AUTO,
@@ -74,9 +66,7 @@ enum ExportOrientation {
 
 struct ExportSettings {
   /* Input & output */
-  int infilec;
-  char * const *infilev; /* Filename encoding */
-  char *outfile; /* Filename encoding */
+  gchar *outfile; /* Filename encoding */
   gchar *format; /* UTF-8 */
 
   enum ExportOrientation layout;
@@ -92,20 +82,9 @@ struct ExportSettings {
   gchar *font; /* UTF-8 */
 };
 
-static struct ExportFormat formats[] =
-  {
-    {"Portable Network Graphics (PNG)", "png", FALSE, export_png},
-    {"Postscript (PS)", "ps", TRUE, export_ps},
-    {"Encapsulated Postscript (EPS)", "eps", FALSE, export_eps},
-    {"Portable Document Format (PDF)", "pdf", TRUE, export_pdf},
-    {"Scalable Vector Graphics (SVG)", "svg", FALSE, export_svg},
-    {NULL, NULL, 0, NULL},
-  };
 
 static struct ExportSettings settings = {
   0,
-  NULL,
-  NULL,
   NULL,
 
   ORIENTATION_AUTO,
@@ -212,9 +191,6 @@ lepton_export_settings_reset_paper_size ()
 }
 
 
-#define bad_arg_msg _("ERROR: Bad argument '%1$s' to %2$s option.\n")
-#define see_help_msg _("\nRun `lepton-cli export --help' for more information.\n")
-
 static void
 lepton_export_set_renderer_font (EdaRenderer *renderer,
                                  const char *font_name)
@@ -262,116 +238,6 @@ lepton_export_set_renderer_color_map (EdaRenderer *renderer,
   eda_renderer_set_color_map (renderer, render_color_map);
 }
 
-
-static void
-cmd_export_impl (void *data, int argc, char **argv)
-{
-  size_t i;
-  GError *err = NULL;
-  gchar *tmp;
-  const gchar *out_suffix;
-  struct ExportFormat *exporter = NULL;
-
-  set_guile_compiled_path();
-
-  gchar *original_cwd = g_get_current_dir ();
-
-  liblepton_init ();
-
-  /* Enable rendering of placeholders. Otherwise the user won't
-     see what's wrong. */
-  set_render_placeholders ();
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  LeptonToplevel *toplevel = s_toplevel_new ();
-  edascm_dynwind_toplevel (toplevel);
-
-  /* Now load rc files, if necessary */
-  if (getenv ("LEPTON_INHIBIT_RC_FILES") == NULL) {
-    g_rc_parse ("lepton-cli export", NULL, NULL);
-  }
-
-  /* Parse configuration files */
-  export_config ();
-
-  /* Parse command-line arguments */
-  export_command_line (argc, argv);
-
-  /* If no format was specified, try and guess from output
-   * filename. */
-  if (settings.format == NULL) {
-    out_suffix = strrchr (settings.outfile, '.');
-    if (out_suffix != NULL) {
-      out_suffix++; /* Skip '.' */
-    } else {
-      fprintf (stderr,
-               _("ERROR: Cannot infer output format from filename '%1$s'.\n"),
-               settings.outfile);
-      exit (1);
-    }
-  }
-
-  /* Try and find an exporter function */
-  tmp = g_utf8_strdown ((settings.format == NULL) ? out_suffix : settings.format, -1);
-  for (i = 0; formats[i].name != NULL; i++) {
-    if (strcmp (tmp, formats[i].alias) == 0) {
-      exporter = &formats[i];
-      break;
-    }
-  }
-  if (exporter == NULL) {
-    if (settings.format == NULL) {
-      fprintf (stderr,
-               _("ERROR: Cannot find supported format for filename '%1$s'.\n"),
-               settings.outfile);
-      exit (1);
-    } else {
-      fprintf (stderr,
-               _("ERROR: Unsupported output format '%1$s'.\n"),
-               settings.format);
-      fprintf (stderr, see_help_msg);
-      exit (1);
-    }
-  }
-  g_free (tmp);
-
-  /* If more than one schematic/symbol file was specified, check that
-   * exporter supports multipage output. */
-  if ((settings.infilec > 1) && !exporter->multipage)
-  {
-    fprintf (stderr,
-             _("ERROR: Selected output format does not support multipage output\n"));
-    exit (1);
-  }
-
-  /* Load schematic files */
-  while (optind < argc) {
-    LeptonPage *page;
-    tmp = argv[optind++];
-
-    page = lepton_page_new (toplevel, tmp);
-    if (!f_open (toplevel, page, tmp, &err)) {
-      fprintf (stderr,
-               /* TRANSLATORS: The first string is the filename, the second
-                * is the detailed error message */
-               _("ERROR: Failed to load '%1$s': %2$s\n"), tmp,
-               err->message);
-      exit (1);
-    }
-    if (g_chdir (original_cwd) != 0) {
-      fprintf (stderr,
-               _("ERROR: Failed to change directory to '%1$s': %2$s\n"),
-               original_cwd, g_strerror (errno));
-      exit (1);
-    }
-  }
-
-  /* Render */
-  exporter->func ();
-
-  scm_dynwind_end ();
-  exit (0);
-}
 
 /* Prints a message and quits with error status if a cairo status
  * value is not "success". */
@@ -1042,56 +908,6 @@ export_config (void)
   }
 }
 
-#define export_short_options "a:cd:f:F:hl:m:o:p:Ps:k:"
-
-static struct option export_long_options[] = {
-  {"no-color", 0, NULL, 2},
-  {"align", 1, NULL, 'a'},
-  {"color", 0, NULL, 'c'},
-  {"dpi", 1, NULL, 'd'},
-  {"format", 1, NULL, 'f'},
-  {"font", 1, NULL, 'F'},
-  {"help", 0, NULL, 'h'},
-  {"layout", 1, NULL, 'l'},
-  {"margins", 1, NULL, 'm'},
-  {"output", 1, NULL, 'o'},
-  {"paper", 1, NULL, 'p'},
-  {"paper-names", 0, NULL, 'P'},
-  {"size", 1, NULL, 's'},
-  {"scale", 1, NULL, 'k'},
-  {NULL, 0, NULL, 0},
-};
-
-void
-export_usage (void)
-{
-  printf (_("Usage: lepton-cli export [OPTION ...] -o OUTPUT [--] FILE ...\n"
-"\n"
-"Export Lepton EDA files in various image formats.\n"
-"\n"
-"  -f, --format=TYPE                    output format (normally autodetected)\n"
-"  -o, --output=OUTPUT                  output filename\n"
-"  -p, --paper=NAME                     select paper size by name\n"
-"  -P, --paper-names                    list paper size names and exit\n"
-"  -s, --size=WIDTH;HEIGHT              specify exact paper size\n"
-"  -k, --scale=FACTOR                   specify output scale factor\n"
-"  -l, --layout=ORIENT                  page orientation\n"
-"  -m, --margins=TOP;LEFT;BOTTOM;RIGHT  set page margins\n"
-"  -a, --align=HALIGN;VALIGN            set alignment of drawing within page\n"
-"  -d, --dpi=DPI                        pixels-per-inch for raster outputs\n"
-"  -c, --color                          enable color output\n"
-"  --no-color                           disable color output\n"
-"  -F, --font=NAME                      set font family for printing text\n"
-"  -h, --help                           display usage information and exit\n"
-"\n"
-"Report bugs at <%1$s>\n"
-"Lepton EDA homepage: <%2$s>\n"),
-    PACKAGE_BUGREPORT,
-    PACKAGE_URL);
-
-  exit (0);
-}
-
 void
 export_list_paper_size_names()
 {
@@ -1105,185 +921,4 @@ export_list_paper_size_names()
 
   g_list_free (names);
   exit (0);
-}
-
-/* Helper function for checking that a command-line option value can
- * be successfully converted to UTF-8. */
-static inline gchar *
-export_command_line__utf8_check (gchar *str, const gchar *arg)
-{
-  GError *err = NULL;
-  gchar *result;
-
-  g_assert (str != NULL);
-  g_assert (arg != NULL);
-  result = g_locale_to_utf8 (str, -1, NULL, NULL, &err);
-  if (result == NULL) {
-    fprintf (stderr, bad_arg_msg, optarg, arg);
-    fprintf (stderr, see_help_msg);
-    exit (1);
-  }
-  return result;
-}
-
-static void
-export_command_line (int argc, char * const *argv)
-{
-  int c;
-  gchar *str;
-
-  /* Parse command-line arguments */
-  while ((c = getopt_long (argc, argv, export_short_options,
-                           export_long_options, NULL)) != -1) {
-    switch (c) {
-    case 0:
-      /* This is a long-form-only flag option, and has already been
-       * dealt with by getopt_long(). */
-      break;
-
-    case 2: /* --no-color */
-      settings.color = FALSE;
-      break;
-
-    case 'a':
-      str = export_command_line__utf8_check (optarg, "-a,--align");
-      if (!export_parse_align (str)) {
-        fprintf (stderr, bad_arg_msg, optarg, "-a,--align");
-        fprintf (stderr, see_help_msg);
-        exit (1);
-      }
-      g_free (str);
-      break;
-
-    case 'c':
-      settings.color = TRUE;
-      break;
-
-    case 'd':
-      settings.dpi = strtod (optarg, NULL);
-      if (settings.dpi <= 0) {
-        fprintf (stderr, bad_arg_msg, optarg, "-d,--dpi");
-        fprintf (stderr, see_help_msg);
-        exit (1);
-      }
-      break;
-
-    case 'f':
-      g_free (settings.format);
-      settings.format = export_command_line__utf8_check (optarg, "-f,--format");
-      break;
-
-    case 'F':
-      str = export_command_line__utf8_check (optarg, "-F,--font");
-      g_free (settings.font);
-      settings.font = str;
-      break;
-
-    case 'h':
-      export_usage ();
-      break;
-
-    case 'k':
-      str = export_command_line__utf8_check (optarg, "-k,--scale");
-      if (!export_parse_scale (str)) {
-        fprintf (stderr, bad_arg_msg, optarg, "-k,--scale");
-        fprintf (stderr, see_help_msg);
-        exit (1);
-      }
-      g_free (str);
-      /* Since a specific scale was provided, ditch the paper size
-       * setting */
-      if (settings.paper != NULL) {
-        gtk_paper_size_free (settings.paper);
-        settings.paper = NULL;
-      }
-      break;
-
-    case 'l':
-      if (!export_parse_layout (optarg)) {
-        fprintf (stderr, bad_arg_msg,
-                 optarg, "-l,--layout");
-        fprintf (stderr, see_help_msg);
-        exit (1);
-      }
-      break;
-
-    case 'm':
-      str = export_command_line__utf8_check (optarg, "-m,--margins");
-      if (!export_parse_margins (str)) {
-        fprintf (stderr, bad_arg_msg, optarg, "-m,--margins");
-        fprintf (stderr, see_help_msg);
-        exit (1);
-      }
-      g_free (str);
-      break;
-
-    case 'o':
-      settings.outfile = optarg;
-      break;
-
-    case 'p':
-      str = export_command_line__utf8_check (optarg, "-p,--paper");
-      if (!export_parse_paper (str)) {
-        fprintf (stderr, bad_arg_msg, optarg, "-p,--paper");
-        fprintf (stderr, see_help_msg);
-        exit (1);
-      }
-      g_free (str);
-      break;
-
-    case 'P':
-      export_list_paper_size_names();
-      break;
-
-    case 's':
-      str = export_command_line__utf8_check (optarg, "-s,--size");
-      if (!export_parse_size (str)) {
-        fprintf (stderr, bad_arg_msg, optarg, "-s,--size");
-        fprintf (stderr, see_help_msg);
-        exit (1);
-      }
-      g_free (str);
-      /* Since a specific size was provided, ditch the paper size
-       * setting */
-      if (settings.paper != NULL) {
-        gtk_paper_size_free (settings.paper);
-        settings.paper = NULL;
-      }
-      break;
-
-    case '?':
-      /* getopt_long already printed an error message */
-      fprintf (stderr, see_help_msg);
-      exit (1);
-      break;
-    default:
-      g_assert_not_reached ();
-    }
-  }
-
-  /* Check that some schematic files to print were provided */
-  if (argc <= optind) {
-    fprintf (stderr,
-             _("ERROR: You must specify at least one input filename.\n"));
-    fprintf (stderr, see_help_msg);
-    exit (1);
-  }
-  settings.infilec = argc - optind;
-  settings.infilev = &argv[optind];
-
-  if (settings.outfile == NULL) {
-    fprintf (stderr,
-             _("ERROR: You must specify an output filename.\n"));
-    fprintf (stderr, see_help_msg);
-    exit (1);
-  }
-}
-
-/* Main function for `lepton-cli export' */
-int
-cmd_export (int argc, char **argv)
-{
-  scm_boot_guile (argc, argv, cmd_export_impl, NULL); /* Doesn't return */
-  return 0;
 }

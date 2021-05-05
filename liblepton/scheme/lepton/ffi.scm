@@ -25,6 +25,7 @@
                liblepton)
 
   #:export (liblepton_init
+            set_guile_compiled_path
             ;; Helpers.
             true?
             TRUE
@@ -65,6 +66,29 @@
             eda_get_user_cache_dir
             eda_get_user_config_dir
             eda_get_user_data_dir
+
+            eda_renderer_new
+            eda_renderer_set_color_map
+
+            export_config
+            export_eps
+            export_pdf
+            export_png
+            export_ps
+            export_svg
+            export_list_paper_size_names
+            export_parse_align
+            export_parse_layout
+            export_parse_margins
+            export_parse_paper
+            export_parse_scale
+            export_parse_size
+            lepton_export_settings_reset_paper_size
+            lepton_export_settings_set_color
+            lepton_export_settings_set_dpi
+            lepton_export_settings_set_font
+            lepton_export_settings_set_format
+            lepton_export_settings_set_outfile
 
             lepton_object_get_attached_to
             lepton_object_set_attached_to
@@ -362,6 +386,7 @@
 
 ;;; Basic lepton initialisation function.
 (define-lff liblepton_init void '())
+(define-lff set_guile_compiled_path void '())
 
 (define-lff set_render_placeholders void '())
 (define-lff colors_count size_t '())
@@ -392,6 +417,10 @@
 (define-lff eda_get_user_cache_dir '* '())
 (define-lff eda_get_user_config_dir '* '())
 (define-lff eda_get_user_data_dir '* '())
+
+;;; edarenderer.c
+(define-lff eda_renderer_new '* '(* *))
+(define-lff eda_renderer_set_color_map void '(* *))
 
 ;;; scheme_smob.c
 (define-lff edascm_c_current_toplevel '* '())
@@ -626,6 +655,28 @@
 
 ;;; a_basic.c
 (define-lff o_read_buffer '* (list '* '* '* int '* '*))
+
+;;; export.c
+(define-lff export_config void '())
+(define-lff export_eps void '())
+(define-lff export_pdf void '())
+(define-lff export_png void '())
+(define-lff export_ps void '())
+(define-lff export_svg void '())
+(define-lff export_list_paper_size_names void '())
+(define-lff export_parse_align int '(*))
+(define-lff export_parse_layout int '(*))
+(define-lff export_parse_margins int '(*))
+(define-lff export_parse_paper int '(*))
+(define-lff export_parse_scale int '(*))
+(define-lff export_parse_size int '(*))
+(define-lff lepton_export_settings_reset_paper_size void '())
+(define-lff lepton_export_settings_set_color void (list int))
+(define-lff lepton_export_settings_set_dpi void (list double))
+
+(define-lff lepton_export_settings_set_font void '(*))
+(define-lff lepton_export_settings_set_format void '(*))
+(define-lff lepton_export_settings_set_outfile void '(*))
 
 (define (check-boolean val pos)
   ;; This function is defined just for consistency.  Someone may

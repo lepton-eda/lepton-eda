@@ -112,7 +112,7 @@
     (test-assert (file-exists? cli-png))
     (file-size-about? cli-png 360000)
 
-    (test-run-success lepton-export "export" "-o" export-png schematic)
+    (test-run-success lepton-export "-o" export-png schematic)
     (test-assert (file-exists? export-png))
     (file-size-about? export-png 360000)
 

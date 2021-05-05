@@ -18,9 +18,6 @@
 
 G_BEGIN_DECLS
 
-int
-cmd_export (int argc, char **argv);
-
 void
 export_config (void);
 

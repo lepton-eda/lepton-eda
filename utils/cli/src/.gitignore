@@ -1,6 +1,0 @@
-*.o
-*.x
-.deps
-.libs
-lepton-export
-lepton-export.exe

@@ -1,1 +1,1 @@
-SUBDIRS = po scheme src docs tests
+SUBDIRS = po scheme docs tests

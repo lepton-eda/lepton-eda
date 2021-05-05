@@ -132,7 +132,7 @@
   (build-filename *abs-top-builddir*
                   "utils"
                   "cli"
-                  "src"
+                  "scheme"
                   "lepton-export"))
 
 (define lepton-shell
