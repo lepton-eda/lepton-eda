@@ -15,6 +15,9 @@
 (putenv "LANG=C")
 
 
+(define help-string "Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]")
+
+
 ;;; Test lepton-cli without args.
 (test-begin "lepton-cli")
 
@@ -25,3 +28,13 @@
   (test-assert (string-contains <stderr> "Run `lepton-cli --help' for more information.")))
 
 (test-end "lepton-cli")
+
+
+(test-begin "lepton-cli -h")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "-h")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> help-string)))
+
+(test-end "lepton-cli -h")
