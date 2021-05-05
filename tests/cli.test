@@ -60,3 +60,15 @@
   (test-assert (string-contains <stdout> "There is NO WARRANTY")))
 
 (test-end "lepton-cli -V")
+
+
+(test-begin "lepton-cli --version")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "--version")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Lepton EDA"))
+  (test-assert (string-contains <stdout> "Copyright"))
+  (test-assert (string-contains <stdout> "There is NO WARRANTY")))
+
+(test-end "lepton-cli --version")
