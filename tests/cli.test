@@ -48,3 +48,15 @@
   (test-assert (string-contains <stdout> help-string)))
 
 (test-end "lepton-cli --help")
+
+
+(test-begin "lepton-cli -V")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "-V")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Lepton EDA"))
+  (test-assert (string-contains <stdout> "Copyright"))
+  (test-assert (string-contains <stdout> "There is NO WARRANTY")))
+
+(test-end "lepton-cli -V")
