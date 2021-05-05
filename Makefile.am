@@ -43,6 +43,7 @@ AM_TESTS_ENVIRONMENT = env \
 	LEPTON_INHIBIT_RC_FILES='yes'
 
 TESTS = \
+	tests/cli.test \
 	tests/netlist.test \
 	tests/update.test
 
