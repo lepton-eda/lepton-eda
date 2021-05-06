@@ -132,3 +132,16 @@
   (test-assert (string-contains <stderr> "Run `lepton-cli shell --help' for more information.")))
 
 (test-end "lepton-cli shell -c")
+
+
+(test-begin "lepton-cli shell -s")
+
+(let ((filename (tmpnam)))
+  (with-output-to-file filename
+    (lambda () (display "(exit 4)")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "shell" "-s" filename)
+    (test-eq 4 <status>))
+  (delete-file filename))
+
+(test-end "lepton-cli shell -s")
