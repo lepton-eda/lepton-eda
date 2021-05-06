@@ -151,8 +151,13 @@
   (test-assert (string-contains <stderr> "shell: option requires an argument -- 's'"))
   (test-assert (string-contains <stderr> "Run `lepton-cli shell --help' for more information.")))
 
-;;; -s and -c are of the same priority so the first one option in
-;;; the command line will define the result.
+(test-end "lepton-cli shell -s")
+
+
+(test-begin "lepton-cli shell -c -l -s")
+
+;;; -c, -l, and -s are of the same priority so the first one
+;;; option in the command line will define the result.
 (let ((l-filename (tmpnam))
       (s-filename (tmpnam)))
   (with-output-to-file l-filename
@@ -174,4 +179,4 @@
   (delete-file l-filename)
   (delete-file s-filename))
 
-(test-end "lepton-cli shell -s")
+(test-end "lepton-cli shell -c -l -s")
