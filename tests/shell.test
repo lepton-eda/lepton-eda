@@ -90,3 +90,15 @@
   (test-assert (string-null? <stderr>)))
 
 (test-end "lepton-cli shell --help")
+
+
+(test-begin "lepton-cli shell --version")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "--version")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-null? <stdout>))
+  (test-assert (string-contains <stderr> "unrecognized option"))
+  (test-assert (string-contains <stderr> "--help' for more information.")))
+
+(test-end "lepton-cli shell --version")
