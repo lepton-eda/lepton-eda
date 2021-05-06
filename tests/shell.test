@@ -102,3 +102,16 @@
   (test-assert (string-contains <stderr> "--help' for more information.")))
 
 (test-end "lepton-cli shell --version")
+
+
+(test-begin "lepton-cli shell -c")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c" "(display 'x)")
+  (test-eq EXIT_SUCCESS <status>))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c" "(exit 3)")
+  (test-eq 3 <status>))
+
+(test-end "lepton-cli shell -c")
