@@ -79,6 +79,28 @@
   (test-eq EXIT_SUCCESS <status>)
   (test-assert (string-contains <stdout> "SOMEDIR")))
 
+(let* ((loaddir (tmpnam))
+       (moduledir "lepton")
+       (moduledir* (string-append loaddir
+                                  file-name-separator-string
+                                  moduledir))
+       (loadfile "filename")
+       (loadfile* (string-append moduledir*
+                                 file-name-separator-string
+                                 loadfile)))
+  (mkdir loaddir)
+  (mkdir moduledir*)
+  (with-output-to-file loadfile*
+    (lambda () (display "(define-module (lepton filename))
+(define-public (myproc) (exit 7))")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "shell" "-L" loaddir "-c" "(use-modules (lepton filename)) (myproc)" )
+    (test-eq 7 <status>)
+    (test-assert (string-null? <stdout>)))
+  (delete-file loadfile*)
+  (rmdir moduledir*)
+  (rmdir loaddir))
+
 (test-end "lepton-cli shell -L")
 
 
