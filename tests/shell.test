@@ -114,4 +114,11 @@
     (command-values lepton-cli "shell" "-c" "(exit 3)")
   (test-eq 3 <status>))
 
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c")
+  (test-assert EXIT_FAILURE <status>)
+  (test-assert (string-null? <stdout>))
+  (test-assert (string-contains <stderr> "shell: option requires an argument -- 'c'"))
+  (test-assert (string-contains <stderr> "Run `lepton-cli shell --help' for more information.")))
+
 (test-end "lepton-cli shell -c")
