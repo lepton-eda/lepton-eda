@@ -114,6 +114,16 @@
     (command-values lepton-cli "shell" "-c" "(exit 3)")
   (test-eq 3 <status>))
 
+;;; -h and --help take priority over -c, so the value returned in
+;;; two cases below is 0 (success).
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c" "(exit 3)" "-h")
+  (test-eq EXIT_SUCCESS <status>))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c" "(exit 3)" "--help")
+  (test-eq EXIT_SUCCESS <status>))
+
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-cli "shell" "-c")
   (test-assert EXIT_FAILURE <status>)
