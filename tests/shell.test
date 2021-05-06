@@ -69,6 +69,19 @@
 (test-end "lepton-cli shell")
 
 
+;;; Test that directory specified by the -L option is added to
+;;; Guile %load-path.
+(test-begin "lepton-cli shell -L")
+
+(receive (<status> <stdout> <stderr>)
+    (shell-values '("-L" "SOMEDIR")
+                  "(display (car %load-path)) (exit)")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "SOMEDIR")))
+
+(test-end "lepton-cli shell -L")
+
+
 (test-begin "lepton-cli shell -h")
 
 (receive (<status> <stdout> <stderr>)
