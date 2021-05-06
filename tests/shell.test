@@ -67,3 +67,26 @@
     (test-assert (string-contains <stdout> "LEPTON SHELL"))))
 
 (test-end "lepton-cli shell")
+
+
+(test-begin "lepton-cli shell -h")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-h")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Usage:"))
+  (test-assert (string-contains <stdout> "Shell for interactive processing of Lepton EDA data using Scheme.")))
+
+(test-end "lepton-cli shell -h")
+
+
+(test-begin "lepton-cli shell --help")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "--help")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Usage:"))
+  (test-assert (string-contains <stdout> "Shell for interactive processing of Lepton EDA data using Scheme."))
+  (test-assert (string-null? <stderr>)))
+
+(test-end "lepton-cli shell --help")
