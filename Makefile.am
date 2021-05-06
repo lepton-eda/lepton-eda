@@ -46,6 +46,7 @@ TESTS = \
 	tests/cli.test \
 	tests/config.test \
 	tests/netlist.test \
+	tests/shell.test \
 	tests/update.test
 
 EXTRA_DIST = \

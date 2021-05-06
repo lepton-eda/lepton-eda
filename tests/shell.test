@@ -1,0 +1,69 @@
+(use-modules (ice-9 receive))
+
+(load-from-path "env.scm")
+
+(define lepton-cli
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "cli"
+                  "src"
+                  "lepton-cli"))
+
+;;; Adjust LANG to avoid issues with localised output.  putenv is
+;;; necessary for FreeBSD if the environment variable was not yet
+;;; defined.
+(putenv "LANG=C")
+
+(define (shell-values args . shell-input)
+  (let* ((stdout-pipe (pipe))
+         (stdout-pipe-inport (car stdout-pipe))
+         (stdout-pipe-outport (cdr stdout-pipe))
+         (stderr-pipe (pipe))
+         (stderr-pipe-inport (car stderr-pipe))
+         (stderr-pipe-outport (cdr stderr-pipe))
+         (stdin-pipe (pipe))
+         (stdin-pipe-inport (car stdin-pipe))
+         (stdin-pipe-outport (cdr stdin-pipe))
+         (command (cons lepton-cli (cons "shell" args))))
+    (format (current-error-port)
+            "Test: ~A\nInput: ~A\n  "
+            (string-join command)
+            (string-join shell-input "\n  "'suffix))
+    (for-each (lambda (x) (display x stdin-pipe-outport)) shell-input)
+    (close-port stdin-pipe-outport)
+    (let ((exit-status
+           (status:exit-val
+            (with-output-to-port stdout-pipe-outport
+              (lambda ()
+                (with-error-to-port stderr-pipe-outport
+                  (lambda ()
+                    (with-input-from-port stdin-pipe-inport
+                      (lambda ()
+                        (apply system* command))))))))))
+      (close-port stdout-pipe-outport)
+      (close-port stderr-pipe-outport)
+      (let ((out-string (get-string-all stdout-pipe-inport))
+            (err-string (get-string-all stderr-pipe-inport)))
+        ;; I don't want to close input ports since the pipes
+        ;; should be garbage collected after use.
+        (format (current-error-port)
+                "Status: ~A\nStdout:\n~A\n\nStderr:\n~A\n\n"
+                exit-status
+                out-string
+                err-string)
+        (values exit-status out-string err-string)))))
+
+;;; Launch 'lepton-cli shell' without arguments.  The command
+;;; takes a 'display' command from its <stdin>, executes it, and
+;;; exits.  We test that <stdout> contains the displayed string,
+;;; and the command exits with success, i.e. its exit status is
+;;; zero.
+(test-begin "lepton-cli shell")
+
+(let* ((scheme-code "(display \"LEPTON SHELL\") (exit)"))
+  (receive (<status> <stdout> <stderr>)
+      (shell-values '() scheme-code)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "LEPTON SHELL"))))
+
+(test-end "lepton-cli shell")
