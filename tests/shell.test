@@ -144,4 +144,11 @@
     (test-eq 4 <status>))
   (delete-file filename))
 
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-s")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-null? <stdout>))
+  (test-assert (string-contains <stderr> "shell: option requires an argument -- 's'"))
+  (test-assert (string-contains <stderr> "Run `lepton-cli shell --help' for more information.")))
+
 (test-end "lepton-cli shell -s")
