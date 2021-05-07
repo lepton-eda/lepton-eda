@@ -225,12 +225,29 @@
 
 (test-begin "lepton-cli-shell-toplevel")
 
-(let ((scheme-code "(use-modules (lepton core toplevel)) (display (%current-toplevel)) (exit)"))
+(let ((scheme-filename (tmpnam))
+      (scheme-code "(use-modules (lepton core toplevel)) (display (%current-toplevel)) (exit)"))
   (receive (<status> <stdout> <stderr>)
       (shell-values '() scheme-code)
     (test-assert (string-contains <stdout> "geda-toplevel")))
   (receive (<status> <stdout> <stderr>)
       (shell-values '("-L" "\"non-existing-dir\"") scheme-code)
-    (test-assert (string-contains <stdout> "geda-toplevel"))))
+    (test-assert (string-contains <stdout> "geda-toplevel")))
+
+  (with-output-to-file scheme-filename
+    (lambda ()
+      (display scheme-code)))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "shell" "-l" scheme-filename)
+    (test-assert (string-contains <stdout> "geda-toplevel")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "shell" "-s" scheme-filename)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "geda-toplevel")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "shell" "-c" "(use-modules (lepton core toplevel)) (display (%current-toplevel))")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "geda-toplevel")))
+  (delete-file scheme-filename))
 
 (test-end "lepton-cli-shell-toplevel")
