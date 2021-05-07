@@ -251,3 +251,12 @@
   (delete-file scheme-filename))
 
 (test-end "lepton-cli-shell-toplevel")
+
+
+(test-begin "lepton-cli shell -c command")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c" "(write (command-line))")
+  (test-equal <stdout> "(\"shell\")"))
+
+(test-end "lepton-cli shell -c command")
