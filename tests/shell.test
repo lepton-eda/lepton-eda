@@ -221,3 +221,16 @@
   (delete-file s-filename))
 
 (test-end "lepton-cli shell -c -l -s")
+
+
+(test-begin "lepton-cli-shell-toplevel")
+
+(let ((scheme-code "(use-modules (lepton core toplevel)) (display (%current-toplevel)) (exit)"))
+  (receive (<status> <stdout> <stderr>)
+      (shell-values '() scheme-code)
+    (test-assert (string-contains <stdout> "geda-toplevel")))
+  (receive (<status> <stdout> <stderr>)
+      (shell-values '("-L" "\"non-existing-dir\"") scheme-code)
+    (test-assert (string-contains <stdout> "geda-toplevel"))))
+
+(test-end "lepton-cli-shell-toplevel")
