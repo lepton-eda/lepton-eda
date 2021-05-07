@@ -259,4 +259,10 @@
     (command-values lepton-cli "shell" "-c" "(write (command-line))")
   (test-equal <stdout> "(\"shell\")"))
 
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c" "(write (command-line))"
+                    "a" "-l" "b" "--" "c" "d")
+  (test-equal <stdout>
+    "(\"shell\" \"a\" \"-l\" \"b\" \"--\" \"c\" \"d\")"))
+
 (test-end "lepton-cli shell -c command")
