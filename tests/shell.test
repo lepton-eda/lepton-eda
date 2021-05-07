@@ -343,3 +343,16 @@
   (delete-file scheme-filename))
 
 (test-end "lepton-cli shell -- -s filename")
+
+
+(test-begin "lepton-cli shell -c args")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c" "(write (command-line))" "arg1" "arg2" "arg3")
+  (test-equal <stdout> "(\"shell\" \"arg1\" \"arg2\" \"arg3\")"))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c" "(write (command-line))" "arg1" "arg2" "arg3" "-l" "/tmp/x")
+  (test-equal <stdout> "(\"shell\" \"arg1\" \"arg2\" \"arg3\" \"-l\" \"/tmp/x\")"))
+
+(test-end "lepton-cli shell -c args")
