@@ -281,12 +281,10 @@
 
 (test-begin "lepton-cli shell -s filename")
 
-(let* ((scheme-filename (tmpnam))
-       (scheme-code "(write (command-line)) (exit 20)"))
-
+(let ((scheme-filename (tmpnam)))
   (with-output-to-file scheme-filename
     (lambda ()
-      (display scheme-code)))
+      (display "(write (command-line)) (exit 20)")))
 
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-cli "shell" "-s" scheme-filename)
