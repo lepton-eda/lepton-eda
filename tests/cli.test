@@ -33,6 +33,9 @@
 (define run-help-string "Run `lepton-cli --help' for more information.")
 
 
+(define help-string "Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]")
+
+
 ;;; Test lepton-cli without args.
 (test-begin "lepton-cli")
 
