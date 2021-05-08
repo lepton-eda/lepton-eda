@@ -369,3 +369,20 @@
   (test-assert (string-contains <stdout> "(\"shell\" \"x\" \"y\" \"z\")")))
 
 (test-end "lepton-cli shell --")
+
+
+(test-begin "lepton-cli shell -c --help")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-h" "-c" "(display 'anything)")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Usage:")))
+
+;;; Unlike guile, "lepton-cli shell" outputs help here, too,
+;;; because the '-h' option has priority over other options.
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c" "(display 'anything)" "--help")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Usage:")))
+
+(test-end "lepton-cli shell -c --help")
