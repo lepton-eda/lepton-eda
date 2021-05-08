@@ -386,3 +386,16 @@
   (test-assert (string-contains <stdout> "Usage:")))
 
 (test-end "lepton-cli shell -c --help")
+
+
+(test-begin "lepton-cli shell -c command -- a b c")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c" "(write (command-line))" "--" "a" "b" "c")
+  (test-equal <stdout> "(\"shell\" \"--\" \"a\" \"b\" \"c\")"))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c" "(write (command-line))" "-s" "foo.scm" "--" "a" "b" "c")
+  (test-equal <stdout> "(\"shell\" \"-s\" \"foo.scm\" \"--\" \"a\" \"b\" \"c\")"))
+
+(test-end "lepton-cli shell -c command -- a b c")
