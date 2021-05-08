@@ -354,3 +354,18 @@
   (test-equal <stdout> "(\"shell\" \"arg1\" \"arg2\" \"arg3\" \"-l\" \"/tmp/x\")"))
 
 (test-end "lepton-cli shell -c args")
+
+
+(test-begin "lepton-cli shell --")
+
+(receive (<status> <stdout> <stderr>)
+    (shell-values '("--")
+                  "(write (command-line)) (exit)")
+  (test-assert (string-contains <stdout> "(\"shell\")")))
+
+(receive (<status> <stdout> <stderr>)
+    (shell-values '("--" "x" "y" "z")
+                  "(write (command-line)) (exit)")
+  (test-assert (string-contains <stdout> "(\"shell\" \"x\" \"y\" \"z\")")))
+
+(test-end "lepton-cli shell --")
