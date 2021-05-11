@@ -166,7 +166,8 @@
     (command-values lepton-cli "shell" "-c")
   (test-assert EXIT_FAILURE <status>)
   (test-equal "" <stdout>)
-  (test-assert (string-contains <stderr> "shell: option requires an argument -- 'c'"))
+  (test-assert (string-contains <stderr> "require"))
+  (test-assert (string-contains <stderr> "argument"))
   (test-assert (string-contains <stderr> "Run `lepton-cli shell --help' for more information.")))
 
 (test-end "lepton-cli shell -c")
@@ -190,7 +191,8 @@
     (command-values lepton-cli "shell" "-s")
   (test-eq EXIT_FAILURE <status>)
   (test-equal "" <stdout>)
-  (test-assert (string-contains <stderr> "shell: option requires an argument -- 's'"))
+  (test-assert (string-contains <stderr> "require"))
+  (test-assert (string-contains <stderr> "argument"))
   (test-assert (string-contains <stderr> "Run `lepton-cli shell --help' for more information.")))
 
 (test-end "lepton-cli shell -s")
@@ -425,7 +427,8 @@
     (command-values lepton-cli "shell" "-c")
   (test-eq EXIT_FAILURE <status>)
   (test-equal "" <stdout>)
-  (test-assert (string-contains <stderr> "option requires an argument -- 'c'"))
+  (test-assert (string-contains <stderr> "require"))
+  (test-assert (string-contains <stderr> "argument"))
   (test-assert (string-contains <stderr> "Run `lepton-cli shell --help' for more information.")))
 
 (test-end "lepton-cli shell -c with no argument")
