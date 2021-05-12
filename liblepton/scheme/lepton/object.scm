@@ -236,24 +236,20 @@ coordinate of the end of the line, and colormap index of color to
 be used for drawing the line.  This function works on line, net,
 bus, and pin objects.  For pins, the start is the connectible
 point on the pin."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (geda-object->pointer* object 1 linear-object? 'line))
 
-  (and (or (line? object)
-           (net? object)
-           (bus? object)
-           (pin? object))
-       (let ((x0 (lepton_line_object_get_x0 pointer))
-             (y0 (lepton_line_object_get_y0 pointer))
-             (x1 (lepton_line_object_get_x1 pointer))
-             (y1 (lepton_line_object_get_y1 pointer))
-             (color (lepton_object_get_color pointer))
-             (whichend (true? (lepton_object_get_whichend pointer))))
+  (let ((x0 (lepton_line_object_get_x0 pointer))
+        (y0 (lepton_line_object_get_y0 pointer))
+        (x1 (lepton_line_object_get_x1 pointer))
+        (y1 (lepton_line_object_get_y1 pointer))
+        (color (lepton_object_get_color pointer))
+        (whichend (true? (lepton_object_get_whichend pointer))))
 
-         (if (and (pin? object)
-                  whichend)
-             ;; Swap ends according to pin's whichend flag.
-             (list (cons x1 y1) (cons x0 y0) color)
-             (list (cons x0 y0) (cons x1 y1) color)))))
+    (if (and (pin? object)
+             whichend)
+        ;; Swap ends according to pin's whichend flag.
+        (list (cons x1 y1) (cons x0 y0) color)
+        (list (cons x0 y0) (cons x1 y1) color))))
 
 (define (line-start l)
   (list-ref (line-info l) 0))
