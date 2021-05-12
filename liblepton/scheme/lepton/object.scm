@@ -250,6 +250,10 @@ values."
 
 
 (define (line-start object)
+  "Returns the coordinate of the start of linear OBJECT (which may
+be a line, net, bus, or pin object) as a pair '(x . y).  For pin
+objects, this is the position of the connectable point on the
+pin."
   (define pointer (geda-object->pointer* object 1 linear-object? 'line))
 
   (define swap-coords? (pin-swap-whichend? object))
@@ -261,6 +265,10 @@ values."
 
 
 (define (line-end object)
+  "Returns the coordinate of the end of linear OBJECT (which may
+be a line, net, bus, or pin object) as a pair '(x . y).  For pin
+objects, this is the position of the non-connectable point on the
+pin."
   (define pointer (geda-object->pointer* object 1 linear-object? 'line))
 
   (define swap-coords? (pin-swap-whichend? object))
