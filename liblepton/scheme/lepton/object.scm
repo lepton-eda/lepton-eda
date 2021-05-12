@@ -71,7 +71,9 @@
 
             make-bus
 
+            line-end
             line-info
+            line-start
             make-line
             set-line!
 
@@ -252,10 +254,10 @@ point on the pin."
              (list (cons x1 y1) (cons x0 y0) color)
              (list (cons x0 y0) (cons x1 y1) color)))))
 
-(define-public (line-start l)
+(define (line-start l)
   (list-ref (line-info l) 0))
 
-(define-public (line-end l)
+(define (line-end l)
   (list-ref (line-info l) 1))
 
 
