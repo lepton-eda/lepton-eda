@@ -294,6 +294,8 @@
   (test-assert (net-pin? a))
   (test-assert (not (bus-pin? a)))
 
+  (test-assert (not (net-pin? 'x)))
+
   (test-equal '(1 . 2) (line-start a))
   (test-equal '(3 . 4) (line-end a))
   (test-equal (line-start a) (line-start b))
@@ -327,6 +329,8 @@
   (test-assert (pin? a))
   (test-assert (bus-pin? a))
   (test-assert (not (net-pin? a)))
+
+  (test-assert (not (bus-pin? 'x)))
 
   (test-equal '(1 . 2) (line-start a))
   (test-equal '(3 . 4) (line-end a))

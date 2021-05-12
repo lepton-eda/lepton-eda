@@ -79,7 +79,9 @@ static char * test_image_xpm[] = {
     (,net . ,net?)
     (,picture . ,picture?)
     (,bus-pin . ,pin?)
+    (,bus-pin . ,bus-pin?)
     (,net-pin . ,pin?)
+    (,net-pin . ,net-pin?)
     (,path . ,path?)
     (,text . ,text?)))
 
@@ -105,7 +107,15 @@ static char * test_image_xpm[] = {
      ;; Test other objects, e.g. (arc? box).
      (for-each
       (lambda (func)
-        (test-assert (not (func object))))
+        (unless (or (and (equal? func pin?)
+                         (equal? check-func bus-pin?))
+                    (and (equal? func pin?)
+                         (equal? check-func net-pin?))
+                    (and (equal? func bus-pin?)
+                         (equal? check-func pin?))
+                    (and (equal? func net-pin?)
+                         (equal? check-func pin?)))
+          (test-assert (not (func object)))))
       other-funcs)
      ;; Test wrong objects.
      (for-each (lambda (x) (not (check-func x))) '(1 anything #t #f))))
@@ -142,8 +152,16 @@ static char * test_image_xpm[] = {
      ;; For example, (geda-object->pointer arc 1 box? 'anything).
      (for-each
       (lambda (func)
-        (test-assert-thrown 'wrong-type-arg
-                            (geda-object->pointer* object 1 func 'anything)))
+        (unless (or (and (equal? func pin?)
+                         (equal? check-func bus-pin?))
+                    (and (equal? func pin?)
+                         (equal? check-func net-pin?))
+                    (and (equal? func bus-pin?)
+                         (equal? check-func pin?))
+                    (and (equal? func net-pin?)
+                         (equal? check-func pin?)))
+          (test-assert-thrown 'wrong-type-arg
+                              (geda-object->pointer* object 1 func 'anything))))
       other-funcs)
 
      ;; Test pointer->geda-object().
