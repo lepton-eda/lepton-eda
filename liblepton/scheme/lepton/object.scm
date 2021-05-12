@@ -152,6 +152,13 @@ If OBJECT is not part of a component, returns #f."
 
 ;;;; Lines
 
+;;; Checks if OBJECT consist of a line segment.
+(define (linear-object? object)
+  (or (line? object)
+      (net? object)
+      (bus? object)
+      (pin? object)))
+
 (define* (set-line! object start end #:optional color)
   "Sets the parameters of line OBJECT (which may be a line, net,
 bus or pin object). START is the position of the start of the new
@@ -160,14 +167,8 @@ the line.  For pins,the start is the connectable point on the
 pin.  If COLOR is specified, it should be the integer color map
 index of the color with which to draw the line.  If COLOR is not
 specified, the default line color is used.  Returns OBJECT."
+  (define pointer (geda-object->pointer* object 1 linear-object? 'line))
 
-  (define (line-object? object)
-    (or (line? object)
-        (net? object)
-        (bus? object)
-        (pin? object)))
-
-  (define pointer (geda-object->pointer* object 1 line-object? 'line))
   (check-coord start 2)
   (check-coord end 3)
   (and color (check-integer color 4))
