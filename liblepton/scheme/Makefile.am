@@ -154,6 +154,7 @@ TESTS = \
 	unit-tests/lepton-page-parse-ordering.scm \
 	unit-tests/lepton-page-parse-unterminated-attrib.scm \
 	unit-tests/lepton-page-string.scm \
+	unit-tests/lepton-pin-whichend.scm \
 	unit-tests/lepton-promotable-attribs.scm \
 	unit-tests/lepton-rc-build-path.scm \
 	unit-tests/lepton-version.scm \
