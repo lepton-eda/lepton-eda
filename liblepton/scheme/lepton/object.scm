@@ -71,6 +71,7 @@
 
             make-bus
 
+            line-info
             make-line
             set-line!
 
@@ -224,7 +225,7 @@ values."
      (lepton_line_object_new color x1 y1 x2 y2))))
 
 
-(define-public (line-info object)
+(define (line-info object)
   "Retrieves and returns parameters of line OBJECT as a list of
 the form '((X0 . Y0) (X1 . Y1) COLOR). The return list includes
 parameters as follows: coordinate of the start of the line,
