@@ -227,6 +227,49 @@ values."
     (pointer->geda-object
      (lepton_line_object_new color x1 y1 x2 y2))))
 
+;;; Helpers for linear two point objects.
+(define (line-pointer-first-coord pointer)
+  (cons (lepton_line_object_get_x0 pointer)
+        (lepton_line_object_get_y0 pointer)))
+
+(define (line-pointer-second-coord pointer)
+  (cons (lepton_line_object_get_x1 pointer)
+        (lepton_line_object_get_y1 pointer)))
+
+;;; Helper for pin-swap-whichend?().
+(define (object-whichend object)
+  (define pointer (geda-object->pointer* object 1))
+  (true? (lepton_object_get_whichend pointer)))
+
+;;; The function checks if OBJECT is a pin and its ends,
+;;; connectible and not connectible, should be swapped, according
+;;; to the pin's whichend flag.
+(define (pin-swap-whichend? object)
+  (and (pin? object)
+       (object-whichend object)))
+
+
+(define (line-start object)
+  (define pointer (geda-object->pointer* object 1 linear-object? 'line))
+
+  (define swap-coords? (pin-swap-whichend? object))
+
+  (define get-coord-func
+    (if swap-coords? line-pointer-second-coord line-pointer-first-coord))
+
+  (get-coord-func pointer))
+
+
+(define (line-end object)
+  (define pointer (geda-object->pointer* object 1 linear-object? 'line))
+
+  (define swap-coords? (pin-swap-whichend? object))
+
+  (define get-coord-func
+    (if swap-coords? line-pointer-first-coord line-pointer-second-coord))
+
+  (get-coord-func pointer))
+
 
 (define (line-info object)
   "Retrieves and returns parameters of line OBJECT as a list of
@@ -236,26 +279,9 @@ coordinate of the end of the line, and colormap index of color to
 be used for drawing the line.  This function works on line, net,
 bus, and pin objects.  For pins, the start is the connectible
 point on the pin."
-  (define pointer (geda-object->pointer* object 1 linear-object? 'line))
-
-  (let ((x0 (lepton_line_object_get_x0 pointer))
-        (y0 (lepton_line_object_get_y0 pointer))
-        (x1 (lepton_line_object_get_x1 pointer))
-        (y1 (lepton_line_object_get_y1 pointer))
-        (color (lepton_object_get_color pointer))
-        (whichend (true? (lepton_object_get_whichend pointer))))
-
-    (if (and (pin? object)
-             whichend)
-        ;; Swap ends according to pin's whichend flag.
-        (list (cons x1 y1) (cons x0 y0) color)
-        (list (cons x0 y0) (cons x1 y1) color))))
-
-(define (line-start l)
-  (list-ref (line-info l) 0))
-
-(define (line-end l)
-  (list-ref (line-info l) 1))
+  (list (line-start object)
+        (line-end object)
+        (object-color object)))
 
 
 ;;;; Nets
