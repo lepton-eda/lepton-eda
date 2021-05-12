@@ -176,7 +176,8 @@ specified, the default line color is used.  Returns OBJECT."
   ;; We may need to update connectivity.
   (s_conn_remove_object_connections pointer)
 
-  (let ((x1 (car start))
+  (let ((info (line-info object))
+        (x1 (car start))
         (y1 (cdr start))
         (x2 (car end))
         (y2 (cdr end))
@@ -206,7 +207,8 @@ specified, the default line color is used.  Returns OBJECT."
       (unless (null-pointer? page)
         (s_conn_update_object page pointer)
 
-        (lepton_object_page_set_changed pointer))
+        (unless (equal? info (line-info object))
+          (lepton_object_page_set_changed pointer)))
 
       object)))
 
