@@ -96,7 +96,7 @@
 (define (object? object)
   "Returns #t if OBJECT is a #<geda-object> instance, otherwise
 returns #f."
-  (true? (edascm_is_object (scm->pointer object))))
+  (geda-object-pointer? (scm->pointer object)))
 
 
 (define (arc? object)
