@@ -552,31 +552,24 @@ SWEEP-ANGLE is the number of degrees between the start and end
 angles.  If optional COLOR is specified, it should be the integer
 color map index of the color with which to draw the arc.  If COLOR
 is not specified, the default arc color is used."
+  (define default-arc-color (default_color_id))
+
   (check-coord center 1)
   (check-integer radius 2)
   (check-integer start-angle 3)
   (check-integer sweep-angle 4)
   (and color (check-integer color 5))
 
-  (let* ((init-color (default_color_id))
-         (init-center-x 0)
-         (init-center-y 0)
-         (init-radius 1)
-         (init-start-angle 0)
-         (init-sweep-angle 0)
-         (object (pointer->geda-object
-                  (lepton_arc_object_new init-color
-                                         init-center-x
-                                         init-center-y
-                                         init-radius
-                                         init-start-angle
-                                         init-sweep-angle))))
-    (set-arc! object
-              center
-              radius
-              start-angle
-              sweep-angle
-              (or color init-color))))
+  (pointer->geda-object
+   (lepton_arc_object_new (or color
+                              default-arc-color)
+                          ;; Center X.
+                          (car center)
+                          ;; Center Y.
+                          (cdr center)
+                          radius
+                          start-angle
+                          sweep-angle)))
 
 (define-public (arc-info object)
   "Returns the parameters of arc OBJECT as a list of its center
