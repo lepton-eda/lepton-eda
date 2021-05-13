@@ -30,7 +30,7 @@ static char * test_image_xpm[] = {
                                      0
                                      #f))
 (define bus-pin (make-bus-pin '(1 . 2) '(3 . 4)))
-(define net-pin (make-bus-pin '(1 . 2) '(3 . 4)))
+(define net-pin (make-net-pin '(1 . 2) '(3 . 4)))
 (define text (make-text '(1 . 2) 'lower-left 0 "text" 10 #t 'both))
 
 
