@@ -149,7 +149,7 @@ static char * test_image_xpm[] = {
      ;; Test that pointer is not %null-pointer.
      (test-assert (not-null-pointer? pointer))
      ;; Test geda-object->pointer*() with wrong object function.
-     ;; For example, (geda-object->pointer arc 1 box? 'anything).
+     ;; For example, (geda-object->pointer* arc 1 box? 'anything).
      (for-each
       (lambda (func)
         (unless (or (and (equal? func pin?)
