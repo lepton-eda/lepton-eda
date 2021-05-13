@@ -69,7 +69,9 @@
             make-box
             set-box!
 
+            circle-center
             circle-info
+            circle-radius
             make-circle
 
             make-bus
@@ -516,25 +518,26 @@ parameters set to default values."
                              (cdr center)
                              radius)))
 
+(define (circle-center object)
+  (define pointer (geda-object->pointer* object 1 circle? 'circle))
+
+  (cons (lepton_circle_object_get_center_x pointer)
+        (lepton_circle_object_get_center_y pointer)))
+
+(define (circle-radius object)
+  (define pointer (geda-object->pointer* object 1 circle? 'circle))
+
+  (lepton_circle_object_get_radius pointer))
+
 (define (circle-info object)
   "Retrieves and returns the parameters of a circle OBJECT. The
 return value is a list of parameters in the form: '(CENTER RADIUS
 COLOR).  CENTER is the coordinate of the circle which is a pair of
 integers, RADIUS is integer, and COLOR is the colormap index of
 color to be used for drawing the circle."
-  (define pointer (geda-object->pointer* object 1 circle? 'circle))
-
-  (list (cons (lepton_circle_object_get_center_x pointer)
-              (lepton_circle_object_get_center_y pointer))
-        (lepton_circle_object_get_radius pointer)
-        (lepton_object_get_color pointer)))
-
-(define-public (circle-center c)
-  (list-ref (circle-info c) 0))
-
-(define-public (circle-radius c)
-  (list-ref (circle-info c) 1))
-
+  (list (circle-center object)
+        (circle-radius object)
+        (object-color object)))
 
 ;;;; Arcs
 
