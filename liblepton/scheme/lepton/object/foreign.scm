@@ -37,8 +37,8 @@
   (false-if-exception (pointer->scm (edascm_from_object pointer))))
 
 (define (glist->object-list gls)
-  "Convert a GList of objects GLS into a Scheme list.  Returns the
-Scheme list."
+  "Converts a GList of foreign object pointers GLS into a Scheme
+list.  Returns the Scheme list of objects."
   (let loop ((gls gls)
              (ls '()))
     (if (null-pointer? gls)
