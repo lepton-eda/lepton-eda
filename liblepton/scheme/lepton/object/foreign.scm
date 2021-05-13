@@ -21,7 +21,8 @@
 
   #:use-module (lepton ffi)
 
-  #:export (geda-object->pointer
+  #:export (geda-object-pointer?
+            geda-object->pointer
             pointer->geda-object
             glist->object-list))
 
@@ -35,6 +36,9 @@
 (define (pointer->geda-object pointer)
   ;; Return #f if the pointer is wrong.
   (false-if-exception (pointer->scm (edascm_from_object pointer))))
+
+(define (geda-object-pointer? pointer)
+  (true? (edascm_is_object pointer)))
 
 (define (glist->object-list gls)
   "Converts a GList of foreign object pointers GLS into a Scheme
