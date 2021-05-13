@@ -18,6 +18,7 @@ nobase_dist_scmdata_DATA = \
 	lepton/file-system.scm \
 	lepton/library.scm \
 	lepton/library/component.scm \
+	lepton/log.scm \
 	lepton/log-rotate.scm \
 	lepton/object.scm \
 	lepton/object/type.scm \
@@ -87,7 +88,7 @@ nobase_dist_scmdata_DATA = \
 nobase_scmdata_DATA = \
 	lepton/core/gettext.scm \
 	lepton/ffi.scm \
-	lepton/log.scm
+	lepton/ffi/glib.scm
 
 TESTS = \
 	unit-tests/backend-spice-noqsi.scm \
@@ -183,7 +184,7 @@ dist_noinst_DATA = \
 	unit-test.scm \
 	$(TESTS) \
 	lepton/ffi.scm.in \
-	lepton/log.scm.in
+	lepton/ffi/glib.scm.in
 
 if CYGWIN
 LIBLEPTON=cyglepton-7
@@ -207,8 +208,8 @@ lepton/ffi.scm: $(srcdir)/lepton/ffi.scm.in
 	$(MKDIR_P) lepton/; \
 	sed -e 's,[@]LIBLEPTON[@],$(LIBLEPTON),g' < $(srcdir)/$@.in > $@
 
-lepton/log.scm: $(srcdir)/lepton/log.scm.in
-	$(MKDIR_P) lepton/; \
+lepton/ffi/glib.scm: $(srcdir)/lepton/ffi/glib.scm.in
+	$(MKDIR_P) lepton/ffi/; \
 	sed -e 's,[@]LIBGLIB[@],$(LIBGLIB),g' < $(srcdir)/$@.in > $@
 
 CLEANFILES = \
@@ -216,4 +217,4 @@ CLEANFILES = \
 	unit-tests/dummy.sym \
 	unit-tests/dummy.xpm \
 	lepton/ffi.scm \
-	lepton/log.scm
+	lepton/ffi/glib.scm
