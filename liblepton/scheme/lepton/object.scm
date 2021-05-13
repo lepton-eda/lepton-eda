@@ -342,6 +342,22 @@ values."
 
 (define default-pin-color (color-map-name-to-index 'pin))
 
+;;; Creates a new pin object of given CONNECTION-TYPE with
+;;; coordinates START and END and optional COLOR.  If the
+;;; connection type is 'bus, a bus pin will be created, otherwise
+;;; a net pin.
+(define* (make-pin connection-type start end #:optional color)
+  (let ((make-func (if (eq? connection-type 'bus)
+                       lepton_pin_object_new_bus_pin
+                       lepton_pin_object_new_net_pin)))
+    (pointer->geda-object (make-func (or color
+                                         default-pin-color)
+                                     (car start)
+                                     (cdr start)
+                                     (car end)
+                                     (cdr end)
+                                     default-pin-whichend))))
+
 (define* (make-net-pin start end #:optional color)
   "Creates and returns a new net pin object with given parameters.
 START is the position of the start of the new pin (its connectible
@@ -353,14 +369,7 @@ not specified, the default pin color is used."
   (check-coord end 2)
   (and color (check-integer color 3))
 
-  (pointer->geda-object
-   (lepton_pin_object_new_net_pin (or color
-                                      default-pin-color)
-                                  (car start)
-                                  (cdr start)
-                                  (car end)
-                                  (cdr end)
-                                  default-pin-whichend)))
+  (make-pin 'net start end color))
 
 (define* (make-bus-pin start end #:optional color)
   "Creates and returns a new bus pin object with given parameters.
@@ -373,15 +382,7 @@ not specified, the default pin color is used."
   (check-coord end 2)
   (and color (check-integer color 3))
 
-  (pointer->geda-object
-   (lepton_pin_object_new_bus_pin (or color
-                                      default-pin-color)
-                                  (car start)
-                                  (cdr start)
-                                  (car end)
-                                  (cdr end)
-                                  default-pin-whichend)))
-
+  (make-pin 'bus start end color))
 
 
 ;;;; Boxes
