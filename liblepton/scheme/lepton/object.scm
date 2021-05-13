@@ -433,25 +433,27 @@ form '(x . y), and BOTTOM-RIGHT is the position of the bottom
 right of the box.  If optional COLOR is specified, it should be
 the integer color map index of the color with which to draw the
 box.  If COLOR is not specified, the default box color is used."
+  (define default-box-color (default_color_id))
+
   (check-coord top-left 1)
   (check-coord bottom-right 2)
   (and color (check-integer color 3))
 
-  (let* ((init-color (default_color_id))
-         (init-left-x 0)
-         (init-upper-y 0)
-         (init-right-x 0)
-         (init-bottom-y 0)
-         (object (pointer->geda-object
-                  (lepton_box_object_new init-color
-                                         init-left-x
-                                         init-upper-y
-                                         init-right-x
-                                         init-bottom-y))))
-    (set-box! object
-              top-left
-              bottom-right
-              (or color init-color))))
+  (let* ((x0 (car top-left))
+         (y0 (cdr top-left))
+         (x1 (car bottom-right))
+         (y1 (cdr bottom-right))
+         (left-x (min x0 x1))
+         (right-x (max x0 x1))
+         (bottom-y (min y0 y1))
+         (top-y (max y0 y1))
+         (color (or color default-box-color)))
+    (pointer->geda-object
+     (lepton_box_object_new color
+                            left-x
+                            top-y
+                            right-x
+                            bottom-y))))
 
 (define (box-info object)
   "Retrieves and returns the coordinates and color of a box
