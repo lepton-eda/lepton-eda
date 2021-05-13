@@ -3,6 +3,7 @@
 (use-modules (srfi srfi-1)
              (srfi srfi-26)
              (system foreign)
+             (lepton object foreign)
              (lepton object type)
              (lepton object))
 

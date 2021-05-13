@@ -22,9 +22,9 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
+  #:use-module (lepton object foreign)
 
   #:export (geda-object->pointer*
-            pointer->geda-object
 
             arc?
             box?
@@ -43,18 +43,6 @@
             object?
             object-type
             object-type?))
-
-
-;;; Helper transformers between #<geda-object> smobs and C object
-;;; pointers.
-(define (geda-object->pointer smob)
-  (or (false-if-exception (edascm_to_object (scm->pointer smob)))
-      ;; Return NULL if the SMOB is not the #<geda-object> smob.
-      %null-pointer))
-
-(define (pointer->geda-object pointer)
-  ;; Return #f if the pointer is wrong.
-  (false-if-exception (pointer->scm (edascm_from_object pointer))))
 
 ;;; This syntax rule is intended for use in toplevel 'define' or
 ;;; 'let' forms in the functions where the check for wrong type of
