@@ -337,6 +337,11 @@ values."
 
 ;;;; Pins
 
+;;; This is always 0 in recent file format versions.
+(define default-pin-whichend 0)
+
+(define default-pin-color (color-map-name-to-index 'pin))
+
 (define* (make-net-pin start end #:optional color)
   "Creates and returns a new net pin object with given parameters.
 START is the position of the start of the new pin (its connectible
@@ -348,23 +353,14 @@ not specified, the default pin color is used."
   (check-coord end 2)
   (and color (check-integer color 3))
 
-  (let* ((init-color (color-map-name-to-index 'pin))
-         (init-start-x 0)
-         (init-start-y 0)
-         (init-end-x 0)
-         (init-end-y 0)
-         (init-whichend 0)
-         (object (pointer->geda-object
-                  (lepton_pin_object_new_net_pin init-color
-                                                 init-start-x
-                                                 init-start-y
-                                                 init-end-x
-                                                 init-end-y
-                                                 init-whichend))))
-    (set-line! object
-               start
-               end
-               (or color init-color))))
+  (pointer->geda-object
+   (lepton_pin_object_new_net_pin (or color
+                                      default-pin-color)
+                                  (car start)
+                                  (cdr start)
+                                  (car end)
+                                  (cdr end)
+                                  default-pin-whichend)))
 
 (define* (make-bus-pin start end #:optional color)
   "Creates and returns a new bus pin object with given parameters.
