@@ -519,12 +519,15 @@ parameters set to default values."
                              radius)))
 
 (define (circle-center object)
+  "Returns the coordinate of the center of circle OBJECT as a pair
+of integers in the form '(x . y)."
   (define pointer (geda-object->pointer* object 1 circle? 'circle))
 
   (cons (lepton_circle_object_get_center_x pointer)
         (lepton_circle_object_get_center_y pointer)))
 
 (define (circle-radius object)
+  "Returns the radius of circle OBJECT as an integer."
   (define pointer (geda-object->pointer* object 1 circle? 'circle))
 
   (lepton_circle_object_get_radius pointer))
