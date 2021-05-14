@@ -14,6 +14,7 @@
 * Selecting objects::
 * lepton-schematic command line options::
 * Component libraries::
+* Interactive work with Scheme code::
 @end menu
 
 @node Introduction to lepton-schematic, Running lepton-schematic, lepton-schematic, lepton-schematic
@@ -164,26 +165,20 @@ exporting}.
 
 @clicksequence{File @click{} Invoke macro...} (@kbd{:}, colon, or
 @kbd{E Shift-:}) allows you to execute some small excerpts of Scheme
-code interactively.  It opens the macro widget entry where you have to
-enter one or more commands in Scheme and hit @kbd{Enter} (don't forget
-parentheses).  You can watch the result of evaluating of your
-expression in the Log window.
+code interactively in GUI.  @xref{Interactive work with Scheme code}.
 
 @item Execute Script...
 
 @clicksequence{File @click{} Execute Script...} (@kbd{F T}) allows you
-to execute a Scheme script stored in some file.  You can filter the
-files like in the Open File dialog, though you can choose only amongst
-showing only Scheme or any files.  This way it is more convenient to
-check the extensions written in Scheme when their code gets large
-enough.
+to execute a Scheme script file stored in your file system.
+@xref{Interactive work with Scheme code}.
 
 @item REPL...
 
 @clicksequence{File @click{} REPL...} (@kbd{F Shift+R}) lets you hack
-your Scheme extensions interactively, using the REPL in the terminal
-where you started @schematic.  If you didn't use a terminal for
-launching the program, the feature is not available.
+your Scheme extensions interactively, using the REPL in the background
+terminal where you started @schematic.  @xref{Interactive work with
+Scheme code}.
 
 @item New Window
 @item Close Window
@@ -491,7 +486,7 @@ some custom options, please use it (@pxref{lepton-cli export}).
 @cindex command line options, lepton-schematic
 
 
-@node Component libraries,  , lepton-schematic command line options, lepton-schematic
+@node Component libraries, Interactive work with Scheme code, lepton-schematic command line options, lepton-schematic
 @section Component libraries
 @cindex component libraries
 
@@ -740,3 +735,81 @@ However, you can also disable default libraries completely by writing
 such lines in @file{gafrc} in the directory with your user's settings.
 @xref{Legacy configuration} for more information on configuration
 paths.
+
+@node Interactive work with Scheme code,  , Component libraries, lepton-schematic
+@section Interactive work with Scheme code
+@cindex using Scheme in GUI
+
+You can extend the functionality of @schematic{}, automate some work
+on schematic or symbol creation, and learn how things are internally
+made up playing with Scheme without even exiting the program.  There
+are several ways to get things done and they are described below.
+
+@quotation Note
+You can also work with Scheme using interactive mode of several
+non-GUI Lepton utilities, namely, @netlist{}, @cli, and @symcheck{}.
+Please read their manual pages on how to run them interactively.
+@end quotation
+
+Sometimes it is very convenient to invoke a one-line script to try
+some idea.  Use @clicksequence{File @click{} Invoke macro...}
+(@kbd{:}, colon, or @kbd{E Shift-:}) to open a macro widget which will
+allow you to execute some small excerpts of Scheme code interactively.
+In the macro widget entry you may enter one line consisting of one or
+more commands in Scheme (don't forget parentheses).  Hit @kbd{Enter}
+to make them evaluate and watch the result of your expression in the
+@emph{Log window}.  If the script includes some interactive functions,
+you'll immediately see the result in GUI.
+
+Another, more powerful possibility is executing a Scheme script stored
+in some file in your file system.  It allows you evaluate the code of
+any length, so it is much more convenient if you work on some complex
+code. Use @clicksequence{File @click{} Execute Script...} (@kbd{F T})
+and select a Scheme script to execute.  You can filter the files like
+in the @emph{File Open} dialog (@pxref{Creating and opening
+schematics}), though you can choose solely amongst showing only Scheme
+or any files.  Switch between @schematic{} and your text editor, edit
+your code and try again.
+
+The most powerful and convenient way of working with Scheme is using
+REPL.  There are two ways to start it:
+
+@itemize
+
+@item
+Use @clicksequence{File @click{} REPL...} (@kbd{F Shift+R}) to start
+REPL in the background terminal where you started @schematic{}, move
+to the terminal and hack your Scheme code interactively.  If you
+didn't use a terminal for launching the program, the feature is not
+available.
+
+@item
+Launch the following code in the macro widget described above, in the
+command line using the @option{-c} option (@pxref{lepton-schematic
+command line options}), or in one of RC files available for your
+project (@pxref{gschemrc}):
+
+@lisp
+(use-modules (system repl server)) (spawn-server)
+@end lisp
+
+The command will make available a Scheme socket on the port
+@emph{37146} for your program.  You can connect to it, for example,
+using @command{netcat} or shiny @command{geiser} environment for
+@command{Emacs}, and enjoy working with REPL using the program chosen.
+
+@end itemize
+
+In the REPL, you'll immediately see the results of your expressions or
+errors, be able to list, edit and use expressions evaluated before,
+utilize their results again, load files, and more.  So this option
+embraces all the advantages of the former two and adds more.  However,
+be careful:
+
+@quotation Caution
+Trying some code pieces may be dangerous and crash your running
+@schematic{} process while working in the REPL!  The reason is the
+lack of proper multi-threading support in GTK while Scheme supports it
+pretty well.  If in doubt, save your designs before trying something
+out.
+@end quotation

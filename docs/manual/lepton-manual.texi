@@ -52,6 +52,9 @@ Documentation License.''
 @macro cli
 @command{lepton-cli}
 @end macro
+@macro symcheck
+@command{lepton-symcheck}
+@end macro
 @c This won't work: @macro attrib
 @macro lattrib
 @command{lepton-attrib}
@@ -160,6 +163,7 @@ Schematic capture
 * Selecting objects::
 * lepton-schematic command line options::
 * Component libraries::
+* Interactive work with Scheme code::
 
 Main lepton-schematic window
 
