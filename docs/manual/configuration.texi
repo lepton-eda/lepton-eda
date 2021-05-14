@@ -1549,9 +1549,9 @@ lepton-upcfg man page}
 Configuration system specification}
 
 @item
-@url{https://graahnul-grom.github.io/ref-scheme-api/index.html, Lepton
+@url{../lepton-scheme.html/index.html, Lepton
 EDA Scheme reference manual}, especially
-@url{https://graahnul-grom.github.io/ref-scheme-api/Configuration-functions.html,
+@url{../lepton-scheme.html/Configuration-functions.html,
 configuration functions}
 @end itemize
 
