@@ -864,14 +864,7 @@ lepton_object_delete (LeptonObject *o_current)
     lepton_picture_free (o_current->picture);
     o_current->picture = NULL;
 
-    if (o_current->text) {
-      /*printf("sdeleting text->string\n");*/
-      g_free(o_current->text->string);
-      o_current->text->string = NULL;
-      g_free(o_current->text->disp_string);
-      /* printf("sdeleting text\n");*/
-      g_free(o_current->text);
-    }
+    lepton_text_free (o_current->text);
     o_current->text = NULL;
 
     /* printf("sdeleting name\n");*/

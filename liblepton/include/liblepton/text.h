@@ -38,3 +38,6 @@ struct _LeptonText
   int show;
   int visibility;
 };
+
+void
+lepton_text_free (LeptonText *text);
