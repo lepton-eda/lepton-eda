@@ -72,6 +72,21 @@
 int tab_in_chars = 8;
 
 
+/*! \brief Free memory associated with the text
+ *
+ *  \param [in] text The text to be freed.
+ */
+void
+lepton_text_free (LeptonText *text)
+{
+  if (text != NULL) {
+    g_free (text->string);
+    g_free (text->disp_string);
+    g_free (text);
+  }
+}
+
+
 /*! \brief calculate and return the boundaries of a text object
  *
  *  The responsibility of calculating the bounds of any object should probably
