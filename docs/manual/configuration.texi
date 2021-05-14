@@ -66,7 +66,7 @@ Legacy names for @file{*.conf} configuration files are no longer used:
 instead of @file{geda.conf}, @file{geda-user.conf}, and
 @file{geda-system.conf}, configuration files are named @file{lepton.conf},
 @file{lepton-user.conf} and @file{lepton-system.conf}, respectively.  The
-@url{https://graahnul-grom.github.io/ref-man/lepton-upcfg.html, lepton-upcfg(1)}
+@url{../man/lepton-upcfg.html, lepton-upcfg(1)}
 utility can upgrade your settings stored in @file{geda*.conf} files.
 @item
 The directory for user configuration files is
@@ -1535,15 +1535,13 @@ overrides the @code{paper} key (see the previous entry).
 @node Documentation, Web pages, Resources, Resources
 @subsection Documentation
 
-@c FIXME: These links should point to local documents.
-
 @itemize
 @item
-@url{https://graahnul-grom.github.io/ref-man/lepton-cli.html,
+@url{../man/lepton-cli.html,
 lepton-cli man page}
 
 @item
-@url{https://graahnul-grom.github.io/ref-man/lepton-upcfg.html,
+@url{../man/lepton-upcfg.html,
 lepton-upcfg man page}
 
 @item
