@@ -94,3 +94,67 @@
   (test-equal (text-info a) (text-info b)))
 
 (test-end "set-text-string!")
+
+
+;;; Make the same text every time.
+(define (new-text)
+  (make-text '(1 . 2) 'lower-left 0 "test text" 10 #t 'both 21))
+
+(test-begin "text-wrong-argument")
+
+(test-assert-thrown 'wrong-type-arg (text-info 't))
+(test-assert-thrown 'wrong-type-arg (text-anchor 't))
+(test-assert-thrown 'wrong-type-arg (text-align 't))
+(test-assert-thrown 'wrong-type-arg (text-angle 't))
+(test-assert-thrown 'wrong-type-arg (text-string 't))
+(test-assert-thrown 'wrong-type-arg (text-size 't))
+(test-assert-thrown 'wrong-type-arg (text-visible? 't))
+(test-assert-thrown 'wrong-type-arg (text-attribute-mode 't))
+(test-assert-thrown 'wrong-type-arg (set-text-string! 't "string"))
+(test-assert-thrown 'wrong-type-arg (set-text-string! (new-text) 't))
+(test-assert-thrown 'wrong-type-arg (set-text-visibility! 't #t))
+;;; Wrong visibility.
+;;; We cannot test it.  In Scheme all values are boolean: all
+;;; values but #f are considered to return #t in boolean
+;;; expressions.  So the following won't work:
+;;; (test-assert-thrown 'wrong-type-arg (set-text-visibility! (new-text) 't))
+
+(let ((t (new-text)))
+  ;; Wrong object.
+  (test-assert-thrown 'wrong-type-arg (set-text! 't '(1 . 2) 'lower-left 0 "text" 10 #t 'both 21))
+  ;; Wrong anchor.
+  (test-assert-thrown 'wrong-type-arg (make-text 'anchor 'lower-left 0 "text" 10 #t 'both 21))
+  (test-assert-thrown 'wrong-type-arg (set-text! t 'anchor 'lower-left 0 "text" 10 #t 'both 21))
+  ;; Wrong x.
+  (test-assert-thrown 'wrong-type-arg (make-text '(x . 2) 'lower-left 0 "text" 10 #t 'both 21))
+  (test-assert-thrown 'wrong-type-arg (set-text! t '(x . 2) 'lower-left 0 "text" 10 #t 'both 21))
+  ;; Wrong y.
+  (test-assert-thrown 'wrong-type-arg (make-text '(1 . y) 'lower-left 0 "text" 10 #t 'both 21))
+  (test-assert-thrown 'wrong-type-arg (set-text! t '(1 . y) 'lower-left 0 "text" 10 #t 'both 21))
+  ;; Wrong align.
+  (test-assert-thrown 'misc-error (make-text '(1 . 2) 'lower 0 "text" 10 #t 'both 21))
+  (test-assert-thrown 'misc-error (set-text! t '(1 . 2) 'lower 0 "text" 10 #t 'both 21))
+  (test-assert-thrown 'wrong-type-arg (make-text '(1 . 2) #t 0 "text" 10 #t 'both 21))
+  (test-assert-thrown 'wrong-type-arg (set-text! t '(1 . 2) #t 0 "text" 10 #t 'both 21))
+  ;; Wrong angle.
+  (test-assert-thrown 'wrong-type-arg (make-text '(1 . 2) 'lower-left 'angle "text" 10 #t 'both 21))
+  (test-assert-thrown 'wrong-type-arg (set-text! t '(1 . 2) 'lower-left 'angle "text" 10 #t 'both 21))
+  ;; Wrong string.
+  (test-assert-thrown 'wrong-type-arg (make-text '(1 . 2) 'lower-left 0 'text 10 #t 'both 21))
+  (test-assert-thrown 'wrong-type-arg (set-text! t '(1 . 2) 'lower-left 0 'text 10 #t 'both 21))
+  ;; Wrong size.
+  (test-assert-thrown 'wrong-type-arg (make-text '(1 . 2) 'lower-left 0 "text" 's #t 'both 21))
+  (test-assert-thrown 'wrong-type-arg (set-text! t '(1 . 2) 'lower-left 0 "text" 's #t 'both 21))
+  ;; Wrong visibility.  We cannot test it.  See comment for
+  ;; set-text-visibility! above.
+
+  ;; Wrong attribute mode.
+  (test-assert-thrown 'misc-error (make-text '(1 . 2) 'lower-left 0 "text" 10 #t 'mode 21))
+  (test-assert-thrown 'misc-error (set-text! t '(1 . 2) 'lower-left 0 "text" 10 #t 'mode 21))
+  (test-assert-thrown 'wrong-type-arg (make-text '(1 . 2) 'lower-left 0 "text" 10 #t #t 21))
+  (test-assert-thrown 'wrong-type-arg (set-text! t '(1 . 2) 'lower-left 0 "text" 10 #t #t 21))
+  ;; Wrong color.
+  (test-assert-thrown 'wrong-type-arg (make-text '(1 . 2) 'lower-left 0 "text" 10 #t 'both 'color))
+  (test-assert-thrown 'wrong-type-arg (set-text! t '(1 . 2) 'lower-left 0 "text" 10 #t 'both 'color)))
+
+(test-end "text-wrong-argument")
