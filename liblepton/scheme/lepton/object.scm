@@ -805,7 +805,7 @@ of the arc."
    (string->pointer (symbol->string sym))))
 
 
-(define* (set-text! object anchor align angle string size visible show
+(define* (set-text! object anchor align angle string size visible? show
                     #:optional color)
   "Sets the parameters of text OBJECT.  Returns the modified
 OBJECT.  ANCHOR is the position of the anchor of the new text in
@@ -846,7 +846,7 @@ the default text color is used."
   (check-text-angle angle 4)
   (check-string string 5)
   (check-integer size 6)
-  (check-boolean visible 7)
+  (check-boolean visible? 7)
   (check-text-show show 8)
   (and color (check-integer color 9))
 
@@ -854,7 +854,7 @@ the default text color is used."
         (y (cdr anchor))
         (align (symbol->text-alignment align))
         (string (string->pointer string))
-        (visibility (text-visibility->integer visible))
+        (visibility (text-visibility->integer visible?))
         (show (symbol->text-attribute-show-mode show))
         (color (or color (object-color object))))
 
@@ -884,7 +884,7 @@ the default text color is used."
     object))
 
 
-(define* (make-text anchor align angle string size visible show
+(define* (make-text anchor align angle string size visible? show
                     #:optional color)
   "Creates and returns a new text object.  ANCHOR is the position
 of the anchor of the new text in the form '(x . y), and ALIGN is a
@@ -922,7 +922,7 @@ the default text color is used."
   (check-text-angle angle 3)
   (check-string string 4)
   (check-integer size 5)
-  (check-boolean visible 6)
+  (check-boolean visible? 6)
   (check-text-show show 7)
   (and color (check-integer color 8))
 
@@ -930,7 +930,7 @@ the default text color is used."
         (y (cdr anchor))
         (align (symbol->text-alignment align))
         (string (string->pointer string))
-        (visibility (text-visibility->integer visible))
+        (visibility (text-visibility->integer visible?))
         (show (symbol->text-attribute-show-mode show)))
     (pointer->geda-object
      (lepton_text_object_new (or color
