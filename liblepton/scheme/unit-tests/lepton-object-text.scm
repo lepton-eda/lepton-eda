@@ -395,3 +395,81 @@
       ((-100 . 400) lower-center 270 "text" 20 #t value))))
 
 (test-end "text-mirror")
+
+
+(test-begin "text-rotation")
+
+(define degree-ls
+  '(-900 -360 -270 -180 -90 0 90 180 270 360 900))
+
+(define (rotate-at+500+500 angle)
+  (stripped-info (car (rotate-objects! '(500 . 500) angle (new-text)))))
+(define (rotate-at-500+500 angle)
+  (stripped-info (car (rotate-objects! '(-500 . 500) angle (new-text)))))
+(define (rotate-at+500-500 angle)
+  (stripped-info (car (rotate-objects! '(500 . -500) angle (new-text)))))
+(define (rotate-at-500-500 angle)
+  (stripped-info (car (rotate-objects! '(-500 . -500) angle (new-text)))))
+
+;;; The output format is
+;;; '((anchor-x . anchor-y) size angle sweep-)
+;;; Radius and sweep angle should never change.
+(test-equal (map rotate-at+500+500 degree-ls)
+  '(((900 . 900) lower-left 180 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((900 . 100) lower-left 90 "text" 10 #t both)
+    ((900 . 900) lower-left 180 "text" 10 #t both)
+    ((100 . 900) lower-left 270 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((900 . 100) lower-left 90 "text" 10 #t both)
+    ((900 . 900) lower-left 180 "text" 10 #t both)
+    ((100 . 900) lower-left 270 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((900 . 900) lower-left 180 "text" 10 #t both)))
+
+(test-equal (map rotate-at-500+500 degree-ls)
+  '(((-1100 . 900) lower-left 180 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((-100 . 1100) lower-left 90 "text" 10 #t both)
+    ((-1100 . 900) lower-left 180 "text" 10 #t both)
+    ((-900 . -100) lower-left 270 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((-100 . 1100) lower-left 90 "text" 10 #t both)
+    ((-1100 . 900) lower-left 180 "text" 10 #t both)
+    ((-900 . -100) lower-left 270 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((-1100 . 900) lower-left 180 "text" 10 #t both)))
+
+(test-equal (map rotate-at+500-500 degree-ls)
+  '(((900 . -1100) lower-left 180 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((-100 . -900) lower-left 90 "text" 10 #t both)
+    ((900 . -1100) lower-left 180 "text" 10 #t both)
+    ((1100 . -100) lower-left 270 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((-100 . -900) lower-left 90 "text" 10 #t both)
+    ((900 . -1100) lower-left 180 "text" 10 #t both)
+    ((1100 . -100) lower-left 270 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((900 . -1100) lower-left 180 "text" 10 #t both)))
+
+(test-equal (map rotate-at-500-500 degree-ls)
+  '(((-1100 . -1100) lower-left 180 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((-1100 . 100) lower-left 90 "text" 10 #t both)
+    ((-1100 . -1100) lower-left 180 "text" 10 #t both)
+    ((100 . -1100) lower-left 270 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((-1100 . 100) lower-left 90 "text" 10 #t both)
+    ((-1100 . -1100) lower-left 180 "text" 10 #t both)
+    ((100 . -1100) lower-left 270 "text" 10 #t both)
+    ((100 . 100) lower-left 0 "text" 10 #t both)
+    ((-1100 . -1100) lower-left 180 "text" 10 #t both)))
+
+;;; Invalid rotation angles, not multiple of 90 degree.
+(test-assert-thrown 'misc-error (rotate-at+500+500 100))
+(test-assert-thrown 'misc-error (rotate-at+500+500 -100))
+(test-assert-thrown 'misc-error (rotate-at+500+500 3000))
+(test-assert-thrown 'misc-error (rotate-at+500+500 -3000))
+
+(test-end "text-rotation")
