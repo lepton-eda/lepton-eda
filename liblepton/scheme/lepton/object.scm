@@ -1007,6 +1007,9 @@ integer."
   (unless (string= str (text-string object))
     (lepton_text_object_set_string pointer
                                    (string->pointer str))
+    ;; Update internals of text object to properly display the new
+    ;; string.
+    (lepton_text_object_recreate pointer)
     (lepton_object_page_set_changed pointer))
 
   object)
