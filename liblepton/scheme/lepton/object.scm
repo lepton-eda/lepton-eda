@@ -949,6 +949,17 @@ where anchor is a pair of integers in the form '(x . y)."
         (lepton_text_object_get_y pointer)))
 
 (define (text-align object)
+  "Returns the alignment of text OBJECT as one of the following
+symbols:
+  - lower-left
+  - middle-left
+  - upper-left
+  - lower-center
+  - middle-center
+  - upper-center
+  - lower-right
+  - middle-right
+  - upper-right"
   (define (check-alignment-symbol sym)
     (match sym
       ((or 'upper-left 'upper-center 'upper-right
