@@ -1005,12 +1005,16 @@ integer."
   (check-string str 2)
 
   (unless (string= str (text-string object))
+    (lepton_object_emit_pre_change_notify pointer)
+
     (lepton_text_object_set_string pointer
                                    (string->pointer str))
     ;; Update internals of text object to properly display the new
     ;; string.
     (lepton_text_object_recreate pointer)
-    (lepton_object_page_set_changed pointer))
+    (lepton_object_page_set_changed pointer)
+
+    (lepton_object_emit_change_notify pointer))
 
   object)
 
@@ -1033,10 +1037,14 @@ otherwise, sets it to be visible."
   (check-boolean visible? 2)
 
   (unless (eq? visible? (text-visible? object))
+    (lepton_object_emit_pre_change_notify pointer)
+
     (lepton_text_object_set_visibility
      pointer
      (text-visibility->integer visible?))
-    (lepton_object_page_set_changed pointer))
+    (lepton_object_page_set_changed pointer)
+
+    (lepton_object_emit_change_notify pointer))
 
   object)
 
