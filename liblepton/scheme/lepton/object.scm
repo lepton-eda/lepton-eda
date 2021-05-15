@@ -97,7 +97,8 @@
             text-string
             text-visible?
             make-text
-            set-text!)
+            set-text!
+            set-text-string!)
 
   #:re-export (arc?
                box?
@@ -987,7 +988,7 @@ integer."
   (define pointer (geda-object->pointer* object 1 text? 'text))
   (pointer->string (lepton_text_object_get_string pointer)))
 
-(define-public (set-text-string! object str)
+(define (set-text-string! object str)
   "Set the string content of text OBJECT to STR."
   (let ((i (text-info object)))
     (list-set! i 3 str)
