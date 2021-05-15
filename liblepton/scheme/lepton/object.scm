@@ -793,6 +793,18 @@ of the arc."
   (check-angle-value angle))
 
 
+(define (symbol->text-alignment sym)
+  (lepton_text_object_alignment_from_string
+   (string->pointer (symbol->string sym))))
+
+(define (text-visibility->integer visible?)
+  (if visible? 1 0))
+
+(define (symbol->text-attribute-show-mode sym)
+  (lepton_text_object_show_from_string
+   (string->pointer (symbol->string sym))))
+
+
 (define* (set-text! object anchor align angle string size visible show
                     #:optional color)
   "Sets the parameters of text OBJECT.  Returns the modified
@@ -840,13 +852,10 @@ the default text color is used."
 
   (let ((x (car anchor))
         (y (cdr anchor))
-        (align
-         (lepton_text_object_alignment_from_string
-          (string->pointer (symbol->string align))))
-        (visibility (if visible 1 0))
-        (show (lepton_text_object_show_from_string
-               (string->pointer (symbol->string show))))
+        (align (symbol->text-alignment align))
         (string (string->pointer string))
+        (visibility (text-visibility->integer visible))
+        (show (symbol->text-attribute-show-mode show))
         (color (or color (object-color object))))
 
     ;; Actually make changes
@@ -919,12 +928,10 @@ the default text color is used."
 
   (let ((x (car anchor))
         (y (cdr anchor))
-        (align (lepton_text_object_alignment_from_string
-                (string->pointer (symbol->string align))))
+        (align (symbol->text-alignment align))
         (string (string->pointer string))
-        (visibility (if visible 1 0))
-        (show (lepton_text_object_show_from_string
-               (string->pointer (symbol->string show)))))
+        (visibility (text-visibility->integer visible))
+        (show (symbol->text-attribute-show-mode show)))
     (pointer->geda-object
      (lepton_text_object_new (or color
                                  (default_color_id))
