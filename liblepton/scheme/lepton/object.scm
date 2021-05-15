@@ -983,6 +983,7 @@ integer."
   (lepton_text_object_get_angle pointer))
 
 (define (text-string object)
+  "Returns the string content of text OBJECT."
   (define pointer (geda-object->pointer* object 1 text? 'text))
   (pointer->string (lepton_text_object_get_string pointer)))
 
