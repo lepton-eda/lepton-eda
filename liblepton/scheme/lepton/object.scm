@@ -772,6 +772,26 @@ of the arc."
     ((or 'name 'value 'both) sym)
     (_ #f)))
 
+(define (check-text-alignment align pos)
+  (check-symbol align pos)
+  (unless (check-text-alignment-symbol align)
+    (error "Invalid text alignment: ~A." align)))
+
+(define (check-text-show show pos)
+  (check-symbol show pos)
+  (unless (check-text-attribute-show-mode show)
+    (error "Invalid text name/value visibility: ~A." show)))
+
+(define (check-text-angle angle pos)
+  (define (check-angle-value angle)
+    (match angle
+      ((or 0 90 180 270) angle)
+      (_ (error "Invalid text angle: ~A. Must be 0, 90, 180, or 270 degrees."
+                angle))))
+
+  (check-integer angle pos)
+  (check-angle-value angle))
+
 
 (define* (set-text! object anchor align angle string size visible show
                     #:optional color)
@@ -807,25 +827,6 @@ be one of the following symbols:
 If COLOR is specified, it should be the integer color map index of
 the color with which to draw the text.  If COLOR is not specified,
 the default text color is used."
-  (define (check-text-alignment align pos)
-    (check-symbol align pos)
-    (unless (check-text-alignment-symbol align)
-      (error "Invalid text alignment: ~A." align)))
-
-  (define (check-text-show show pos)
-    (check-symbol show pos)
-    (unless (check-text-attribute-show-mode show)
-      (error "Invalid text name/value visibility: ~A." show)))
-
-  (define (check-angle-value angle)
-    (match angle
-      ((or 0 90 180 270) angle)
-      (_ (error "Invalid text angle: ~A. Must be 0, 90, 180, or 270 degrees." angle))))
-
-  (define (check-text-angle angle pos)
-    (check-integer angle pos)
-    (check-angle-value angle))
-
   (define pointer (geda-object->pointer* object 1 text? 'text))
 
   (check-coord anchor 2)
@@ -907,34 +908,34 @@ be one of the following symbols:
 If COLOR is specified, it should be the integer color map index of
 the color with which to draw the text.  If COLOR is not specified,
 the default text color is used."
-  (let* ((init-color (default_color_id))
-         (init-anchor-x 0)
-         (init-anchor-y 0)
-         (init-alignment
-          (lepton_text_object_alignment_from_string
-           (string->pointer "lower-left")))
-         (init-angle 0)
-         (init-string (string->pointer ""))
-         (init-size 10)
-         (init-visibility
-          (lepton_object_visibility_from_string
-           (string->pointer "visible")))
-         (init-show
-          (lepton_text_object_show_from_string
-           (string->pointer "both")))
-         (object
-          (pointer->geda-object
-           (lepton_text_object_new init-color
-                                   init-anchor-x
-                                   init-anchor-y
-                                   init-alignment
-                                   init-angle
-                                   init-string
-                                   init-size
-                                   init-visibility
-                                   init-show))))
-    (set-text! object anchor align angle string size visible show
-               (or color init-color))))
+  (check-coord anchor 1)
+  (check-text-alignment align 2)
+  (check-text-angle angle 3)
+  (check-string string 4)
+  (check-integer size 5)
+  (check-boolean visible 6)
+  (check-text-show show 7)
+  (and color (check-integer color 8))
+
+  (let ((x (car anchor))
+        (y (cdr anchor))
+        (align (lepton_text_object_alignment_from_string
+                (string->pointer (symbol->string align))))
+        (string (string->pointer string))
+        (visibility (if visible 1 0))
+        (show (lepton_text_object_show_from_string
+               (string->pointer (symbol->string show)))))
+    (pointer->geda-object
+     (lepton_text_object_new (or color
+                                 (default_color_id))
+                             x
+                             y
+                             align
+                             angle
+                             string
+                             size
+                             visibility
+                             show))))
 
 (define (text-info object)
   "Returns the parameters of text OBJECT as a list in the form:
