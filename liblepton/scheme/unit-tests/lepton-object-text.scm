@@ -67,6 +67,13 @@
   (test-equal 'upper-right
     (text-align (make-text '(10 . 20) 'upper-right 0 "text" 10 #t 'name)))
 
+  (test-equal 'name
+    (text-attribute-mode (make-text '(10 . 20) 'upper-right 0 "text" 10 #t 'name)))
+  (test-equal 'value
+    (text-attribute-mode (make-text '(10 . 20) 'upper-right 0 "text" 10 #t 'value)))
+  (test-equal 'both
+    (text-attribute-mode (make-text '(10 . 20) 'upper-right 0 "text" 10 #t 'both)))
+
   (set-text! a '(3 . 4) 'upper-right 180 "more text" 20 #f 'name 22)
   (test-equal 22 (object-color a))
 
