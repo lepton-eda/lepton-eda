@@ -755,6 +755,17 @@ of the arc."
 
 ;;;; Text
 
+;;; Returns text alignment symbol SYM if it is valid.  Otherwise
+;;; returns #f.
+(define (check-text-alignment-symbol sym)
+  (match sym
+    ((or 'upper-left 'upper-center 'upper-right
+         'middle-left 'middle-center 'middle-right
+         'lower-left 'lower-center 'lower-right)
+     sym)
+    (_ #f)))
+
+
 (define* (set-text! object anchor align angle string size visible show
                     #:optional color)
   "Sets the parameters of text OBJECT.  Returns the modified
@@ -789,18 +800,10 @@ be one of the following symbols:
 If COLOR is specified, it should be the integer color map index of
 the color with which to draw the text.  If COLOR is not specified,
 the default text color is used."
-
-  (define (check-alignment-symbol sym)
-    (match sym
-      ((or 'upper-left 'upper-center 'upper-right
-           'middle-left 'middle-center 'middle-right
-           'lower-left 'lower-center 'lower-right)
-       sym)
-      (_ (error "Invalid text alignment: ~A." sym))))
-
   (define (check-text-alignment align pos)
     (check-symbol align pos)
-    (check-alignment-symbol align))
+    (unless (check-text-alignment-symbol align)
+      (error "Invalid text alignment: ~A." align)))
 
   (define (check-show-symbol sym)
     (match sym
@@ -962,21 +965,14 @@ symbols:
   - lower-right
   - middle-right
   - upper-right"
-  (define (check-alignment-symbol sym)
-    (match sym
-      ((or 'upper-left 'upper-center 'upper-right
-           'middle-left 'middle-center 'middle-right
-           'lower-left 'lower-center 'lower-right)
-       sym)
-      (_ (error "Text object ~A has invalid text alignment ~A" object sym))))
-
   (define pointer (geda-object->pointer* object 1 text? 'text))
 
   (let* ((align (lepton_text_object_get_alignment pointer))
          (string-pointer (lepton_text_object_alignment_to_string align))
          (sym (and (not (null-pointer? string-pointer))
                    (string->symbol (pointer->string string-pointer)))))
-    (check-alignment-symbol sym)))
+    (or (check-text-alignment-symbol sym)
+        (error "Text object ~A has invalid text alignment ~A" object sym))))
 
 (define (text-angle object)
   "Returns the angle that text OBJECT is displayed at as an
