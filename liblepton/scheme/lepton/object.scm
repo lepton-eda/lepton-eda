@@ -977,6 +977,8 @@ symbols:
     (check-alignment-symbol sym)))
 
 (define (text-angle object)
+  "Returns the angle that text OBJECT is displayed at as an
+integer."
   (define pointer (geda-object->pointer* object 1 text? 'text))
   (lepton_text_object_get_angle pointer))
 
