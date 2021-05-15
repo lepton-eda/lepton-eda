@@ -1000,6 +1000,8 @@ integer."
   (lepton_text_object_get_size pointer))
 
 (define (text-visible? object)
+  "Returns #t if text OBJECT is set to be visible.  Otherwise
+returns #f."
   (define pointer (geda-object->pointer* object 1 text? 'text))
   (true? (lepton_text_object_is_visible pointer)))
 
