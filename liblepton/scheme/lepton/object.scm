@@ -1005,10 +1005,10 @@ returns #f."
   (define pointer (geda-object->pointer* object 1 text? 'text))
   (true? (lepton_text_object_is_visible pointer)))
 
-(define-public (set-text-visibility! t visible)
-  (let ((i (text-info t)))
-    (list-set! i 5 (not (not visible)))
-    (apply set-text! t i)))
+(define-public (set-text-visibility! object visible?)
+  (let ((i (text-info object)))
+    (list-set! i 5 (not (not visible?)))
+    (apply set-text! object i)))
 
 (define (text-attribute-mode object)
   (define (check-show-symbol sym)
