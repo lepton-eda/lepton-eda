@@ -139,6 +139,8 @@
   (test-assert-thrown 'wrong-type-arg (make-text '(1 . 2) #t 0 "text" 10 #t 'both 21))
   (test-assert-thrown 'wrong-type-arg (set-text! t '(1 . 2) #t 0 "text" 10 #t 'both 21))
   ;; Wrong angle.
+  (test-assert-thrown 'misc-error (make-text '(1 . 2) 'lower-left 360 "text" 10 #t 'both 21))
+  (test-assert-thrown 'misc-error (set-text! t '(1 . 2) 'lower-left 360 "text" 10 #t 'both 21))
   (test-assert-thrown 'wrong-type-arg (make-text '(1 . 2) 'lower-left 'angle "text" 10 #t 'both 21))
   (test-assert-thrown 'wrong-type-arg (set-text! t '(1 . 2) 'lower-left 'angle "text" 10 #t 'both 21))
   ;; Wrong string.
