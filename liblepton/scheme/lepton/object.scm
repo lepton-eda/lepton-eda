@@ -987,10 +987,10 @@ integer."
   (define pointer (geda-object->pointer* object 1 text? 'text))
   (pointer->string (lepton_text_object_get_string pointer)))
 
-(define-public (set-text-string! t str)
-  (let ((i (text-info t)))
+(define-public (set-text-string! object str)
+  (let ((i (text-info object)))
     (list-set! i 3 str)
-    (apply set-text! t i)))
+    (apply set-text! object i)))
 
 (define (text-size object)
   (define pointer (geda-object->pointer* object 1 text? 'text))
