@@ -158,3 +158,26 @@
   (test-assert-thrown 'wrong-type-arg (set-text! t '(1 . 2) 'lower-left 0 "text" 10 #t 'both 'color)))
 
 (test-end "text-wrong-argument")
+
+;;; Redefine the function with other coordinates.
+(define (new-text)
+  (make-text '(100 . 100) 'lower-left 0 "text" 10 #t 'both))
+
+;;; Text info without unrelated colors.
+(define (stripped-info text)
+  (define (strip-color info)
+    (reverse (cdr (reverse info))))
+  (strip-color (text-info text)))
+
+(test-begin "text-translation")
+
+(test-equal (stripped-info (car (translate-objects! '(500 . 500) (new-text))))
+  '((600 . 600) lower-left 0 "text" 10 #t both))
+(test-equal (stripped-info (car (translate-objects! '(-500 . 500) (new-text))))
+  '((-400 . 600) lower-left 0 "text" 10 #t both))
+(test-equal (stripped-info (car (translate-objects! '(500 . -500) (new-text))))
+  '((600 . -400) lower-left 0 "text" 10 #t both))
+(test-equal (stripped-info (car (translate-objects! '(-500 . -500) (new-text))))
+  '((-400 . -400) lower-left 0 "text" 10 #t both))
+
+(test-end "text-translation")
