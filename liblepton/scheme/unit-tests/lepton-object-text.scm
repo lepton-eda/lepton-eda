@@ -1,6 +1,8 @@
 ;;; Test Scheme procedures related to text objects.
 
-(use-modules (lepton object))
+(use-modules (srfi srfi-1)
+             (srfi srfi-26)
+             (lepton object))
 
 (test-begin "text" 31)
 
@@ -181,3 +183,215 @@
   '((-400 . -400) lower-left 0 "text" 10 #t both))
 
 (test-end "text-translation")
+
+
+(test-begin "text-mirror")
+
+;;; Mirrorring changes text alignment.  Let's test all variants.
+(let* ((x-ls '(-400 -300 -200 -100 0 100 200 300 400))
+       (y-ls '(100 200 300 400 -400 -300 -200 -100 0))
+       (anchors (map cons x-ls y-ls))
+       (aligns '(lower-left
+                 middle-left
+                 upper-left
+                 lower-center
+                 middle-center
+                 upper-center
+                 lower-right
+                 middle-right
+                 upper-right))
+       (angles '(0 90 180 270 360))
+       (attribute-modes '(name value both value both name both name value))
+       (str "text")
+       (sizes '(5 10 15 20 25 30 35 40 45))
+       (combination-func (cut list <> <> <> str <> #t <>))
+       (angles '(0 90 180 270))
+       (info-ls (append-map (cut map
+                                 combination-func
+                                 anchors
+                                 aligns
+                                 <>
+                                 sizes
+                                 attribute-modes)
+                            (make-list 9 angles)))
+       ;; Mirror around these coordinates.
+       (x-point-1 0)
+       (x-point-2 -500)
+       (x-point-3 500))
+
+  (test-equal
+      (map
+       (lambda (elem)
+         (stripped-info (car (mirror-objects! x-point-1 (apply make-text elem)))))
+       info-ls)
+
+    '(((400 . 100) lower-right 0 "text" 5 #t name)
+      ((300 . 200) middle-left 90 "text" 10 #t value)
+      ((200 . 300) upper-right 180 "text" 15 #t both)
+      ((100 . 400) upper-center 270 "text" 20 #t value)
+      ((400 . 100) lower-right 0 "text" 5 #t name)
+      ((300 . 200) middle-left 90 "text" 10 #t value)
+      ((200 . 300) upper-right 180 "text" 15 #t both)
+      ((100 . 400) upper-center 270 "text" 20 #t value)
+      ((400 . 100) lower-right 0 "text" 5 #t name)
+      ((300 . 200) middle-left 90 "text" 10 #t value)
+      ((200 . 300) upper-right 180 "text" 15 #t both)
+      ((100 . 400) upper-center 270 "text" 20 #t value)
+      ((400 . 100) lower-right 0 "text" 5 #t name)
+      ((300 . 200) middle-left 90 "text" 10 #t value)
+      ((200 . 300) upper-right 180 "text" 15 #t both)
+      ((100 . 400) upper-center 270 "text" 20 #t value)
+      ((400 . 100) lower-right 0 "text" 5 #t name)
+      ((300 . 200) middle-left 90 "text" 10 #t value)
+      ((200 . 300) upper-right 180 "text" 15 #t both)
+      ((100 . 400) upper-center 270 "text" 20 #t value)
+      ((400 . 100) lower-right 0 "text" 5 #t name)
+      ((300 . 200) middle-left 90 "text" 10 #t value)
+      ((200 . 300) upper-right 180 "text" 15 #t both)
+      ((100 . 400) upper-center 270 "text" 20 #t value)
+      ((400 . 100) lower-right 0 "text" 5 #t name)
+      ((300 . 200) middle-left 90 "text" 10 #t value)
+      ((200 . 300) upper-right 180 "text" 15 #t both)
+      ((100 . 400) upper-center 270 "text" 20 #t value)
+      ((400 . 100) lower-right 0 "text" 5 #t name)
+      ((300 . 200) middle-left 90 "text" 10 #t value)
+      ((200 . 300) upper-right 180 "text" 15 #t both)
+      ((100 . 400) upper-center 270 "text" 20 #t value)
+      ((400 . 100) lower-right 0 "text" 5 #t name)
+      ((300 . 200) middle-left 90 "text" 10 #t value)
+      ((200 . 300) upper-right 180 "text" 15 #t both)
+      ((100 . 400) upper-center 270 "text" 20 #t value)))
+
+  (test-equal
+      (map
+       (lambda (elem)
+         (stripped-info (car (mirror-objects! x-point-2 (apply make-text elem)))))
+       info-ls)
+    '(((-600 . 100) lower-right 0 "text" 5 #t name)
+      ((-700 . 200) middle-left 90 "text" 10 #t value)
+      ((-800 . 300) upper-right 180 "text" 15 #t both)
+      ((-900 . 400) upper-center 270 "text" 20 #t value)
+      ((-600 . 100) lower-right 0 "text" 5 #t name)
+      ((-700 . 200) middle-left 90 "text" 10 #t value)
+      ((-800 . 300) upper-right 180 "text" 15 #t both)
+      ((-900 . 400) upper-center 270 "text" 20 #t value)
+      ((-600 . 100) lower-right 0 "text" 5 #t name)
+      ((-700 . 200) middle-left 90 "text" 10 #t value)
+      ((-800 . 300) upper-right 180 "text" 15 #t both)
+      ((-900 . 400) upper-center 270 "text" 20 #t value)
+      ((-600 . 100) lower-right 0 "text" 5 #t name)
+      ((-700 . 200) middle-left 90 "text" 10 #t value)
+      ((-800 . 300) upper-right 180 "text" 15 #t both)
+      ((-900 . 400) upper-center 270 "text" 20 #t value)
+      ((-600 . 100) lower-right 0 "text" 5 #t name)
+      ((-700 . 200) middle-left 90 "text" 10 #t value)
+      ((-800 . 300) upper-right 180 "text" 15 #t both)
+      ((-900 . 400) upper-center 270 "text" 20 #t value)
+      ((-600 . 100) lower-right 0 "text" 5 #t name)
+      ((-700 . 200) middle-left 90 "text" 10 #t value)
+      ((-800 . 300) upper-right 180 "text" 15 #t both)
+      ((-900 . 400) upper-center 270 "text" 20 #t value)
+      ((-600 . 100) lower-right 0 "text" 5 #t name)
+      ((-700 . 200) middle-left 90 "text" 10 #t value)
+      ((-800 . 300) upper-right 180 "text" 15 #t both)
+      ((-900 . 400) upper-center 270 "text" 20 #t value)
+      ((-600 . 100) lower-right 0 "text" 5 #t name)
+      ((-700 . 200) middle-left 90 "text" 10 #t value)
+      ((-800 . 300) upper-right 180 "text" 15 #t both)
+      ((-900 . 400) upper-center 270 "text" 20 #t value)
+      ((-600 . 100) lower-right 0 "text" 5 #t name)
+      ((-700 . 200) middle-left 90 "text" 10 #t value)
+      ((-800 . 300) upper-right 180 "text" 15 #t both)
+      ((-900 . 400) upper-center 270 "text" 20 #t value)))
+
+  (test-equal
+      (map
+       (lambda (elem)
+         (stripped-info (car (mirror-objects! x-point-3 (apply make-text elem)))))
+       info-ls)
+
+    '(((1400 . 100) lower-right 0 "text" 5 #t name)
+      ((1300 . 200) middle-left 90 "text" 10 #t value)
+      ((1200 . 300) upper-right 180 "text" 15 #t both)
+      ((1100 . 400) upper-center 270 "text" 20 #t value)
+      ((1400 . 100) lower-right 0 "text" 5 #t name)
+      ((1300 . 200) middle-left 90 "text" 10 #t value)
+      ((1200 . 300) upper-right 180 "text" 15 #t both)
+      ((1100 . 400) upper-center 270 "text" 20 #t value)
+      ((1400 . 100) lower-right 0 "text" 5 #t name)
+      ((1300 . 200) middle-left 90 "text" 10 #t value)
+      ((1200 . 300) upper-right 180 "text" 15 #t both)
+      ((1100 . 400) upper-center 270 "text" 20 #t value)
+      ((1400 . 100) lower-right 0 "text" 5 #t name)
+      ((1300 . 200) middle-left 90 "text" 10 #t value)
+      ((1200 . 300) upper-right 180 "text" 15 #t both)
+      ((1100 . 400) upper-center 270 "text" 20 #t value)
+      ((1400 . 100) lower-right 0 "text" 5 #t name)
+      ((1300 . 200) middle-left 90 "text" 10 #t value)
+      ((1200 . 300) upper-right 180 "text" 15 #t both)
+      ((1100 . 400) upper-center 270 "text" 20 #t value)
+      ((1400 . 100) lower-right 0 "text" 5 #t name)
+      ((1300 . 200) middle-left 90 "text" 10 #t value)
+      ((1200 . 300) upper-right 180 "text" 15 #t both)
+      ((1100 . 400) upper-center 270 "text" 20 #t value)
+      ((1400 . 100) lower-right 0 "text" 5 #t name)
+      ((1300 . 200) middle-left 90 "text" 10 #t value)
+      ((1200 . 300) upper-right 180 "text" 15 #t both)
+      ((1100 . 400) upper-center 270 "text" 20 #t value)
+      ((1400 . 100) lower-right 0 "text" 5 #t name)
+      ((1300 . 200) middle-left 90 "text" 10 #t value)
+      ((1200 . 300) upper-right 180 "text" 15 #t both)
+      ((1100 . 400) upper-center 270 "text" 20 #t value)
+      ((1400 . 100) lower-right 0 "text" 5 #t name)
+      ((1300 . 200) middle-left 90 "text" 10 #t value)
+      ((1200 . 300) upper-right 180 "text" 15 #t both)
+      ((1100 . 400) upper-center 270 "text" 20 #t value)))
+
+  ;; Double mirror around the same point returns initial result.
+  (test-equal
+      (map
+       (lambda (elem)
+         (stripped-info
+          (car (mirror-objects! 500
+                                (car (mirror-objects! 500
+                                                      (apply make-text elem)))))))
+       info-ls)
+
+    '(((-400 . 100) lower-left 0 "text" 5 #t name)
+      ((-300 . 200) middle-left 90 "text" 10 #t value)
+      ((-200 . 300) upper-left 180 "text" 15 #t both)
+      ((-100 . 400) lower-center 270 "text" 20 #t value)
+      ((-400 . 100) lower-left 0 "text" 5 #t name)
+      ((-300 . 200) middle-left 90 "text" 10 #t value)
+      ((-200 . 300) upper-left 180 "text" 15 #t both)
+      ((-100 . 400) lower-center 270 "text" 20 #t value)
+      ((-400 . 100) lower-left 0 "text" 5 #t name)
+      ((-300 . 200) middle-left 90 "text" 10 #t value)
+      ((-200 . 300) upper-left 180 "text" 15 #t both)
+      ((-100 . 400) lower-center 270 "text" 20 #t value)
+      ((-400 . 100) lower-left 0 "text" 5 #t name)
+      ((-300 . 200) middle-left 90 "text" 10 #t value)
+      ((-200 . 300) upper-left 180 "text" 15 #t both)
+      ((-100 . 400) lower-center 270 "text" 20 #t value)
+      ((-400 . 100) lower-left 0 "text" 5 #t name)
+      ((-300 . 200) middle-left 90 "text" 10 #t value)
+      ((-200 . 300) upper-left 180 "text" 15 #t both)
+      ((-100 . 400) lower-center 270 "text" 20 #t value)
+      ((-400 . 100) lower-left 0 "text" 5 #t name)
+      ((-300 . 200) middle-left 90 "text" 10 #t value)
+      ((-200 . 300) upper-left 180 "text" 15 #t both)
+      ((-100 . 400) lower-center 270 "text" 20 #t value)
+      ((-400 . 100) lower-left 0 "text" 5 #t name)
+      ((-300 . 200) middle-left 90 "text" 10 #t value)
+      ((-200 . 300) upper-left 180 "text" 15 #t both)
+      ((-100 . 400) lower-center 270 "text" 20 #t value)
+      ((-400 . 100) lower-left 0 "text" 5 #t name)
+      ((-300 . 200) middle-left 90 "text" 10 #t value)
+      ((-200 . 300) upper-left 180 "text" 15 #t both)
+      ((-100 . 400) lower-center 270 "text" 20 #t value)
+      ((-400 . 100) lower-left 0 "text" 5 #t name)
+      ((-300 . 200) middle-left 90 "text" 10 #t value)
+      ((-200 . 300) upper-left 180 "text" 15 #t both)
+      ((-100 . 400) lower-center 270 "text" 20 #t value))))
+
+(test-end "text-mirror")
