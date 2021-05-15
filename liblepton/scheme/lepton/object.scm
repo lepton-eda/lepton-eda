@@ -995,6 +995,7 @@ integer."
     (apply set-text! object i)))
 
 (define (text-size object)
+  "Return the font size of text OBJECT as an integer."
   (define pointer (geda-object->pointer* object 1 text? 'text))
   (lepton_text_object_get_size pointer))
 
