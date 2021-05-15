@@ -1023,9 +1023,17 @@ returns #f."
 (define (set-text-visibility! object visible?)
   "If VISIBLE? is #f, sets text OBJECT to be invisible;
 otherwise, sets it to be visible."
-  (let ((i (text-info object)))
-    (list-set! i 5 (not (not visible?)))
-    (apply set-text! object i)))
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+
+  (check-boolean visible? 2)
+
+  (unless (eq? visible? (text-visible? object))
+    (lepton_text_object_set_visibility
+     pointer
+     (text-visibility->integer visible?))
+    (lepton_object_page_set_changed pointer))
+
+  object)
 
 (define (text-attribute-mode object)
   "Returns a symbol indicating which parts of TEXT will be
