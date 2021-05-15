@@ -1006,6 +1006,8 @@ returns #f."
   (true? (lepton_text_object_is_visible pointer)))
 
 (define-public (set-text-visibility! object visible?)
+  "If VISIBLE? is #f, sets text OBJECT to be invisible;
+otherwise, sets it to be visible."
   (let ((i (text-info object)))
     (list-set! i 5 (not (not visible?)))
     (apply set-text! object i)))
