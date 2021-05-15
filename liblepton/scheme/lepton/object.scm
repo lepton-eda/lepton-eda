@@ -765,6 +765,13 @@ of the arc."
      sym)
     (_ #f)))
 
+;;; Returns text attribute show mode symbol SYM if it is valid.
+;;; Otherwise returns #f.
+(define (check-text-attribute-show-mode sym)
+  (match sym
+    ((or 'name 'value 'both) sym)
+    (_ #f)))
+
 
 (define* (set-text! object anchor align angle string size visible show
                     #:optional color)
@@ -805,14 +812,10 @@ the default text color is used."
     (unless (check-text-alignment-symbol align)
       (error "Invalid text alignment: ~A." align)))
 
-  (define (check-show-symbol sym)
-    (match sym
-      ((or 'name 'value 'both) sym)
-      (_ (error "Invalid text name/value visibility: ~A." sym))))
-
   (define (check-text-show show pos)
     (check-symbol show pos)
-    (check-show-symbol show))
+    (unless (check-text-attribute-show-mode show)
+      (error "Invalid text name/value visibility: ~A." show)))
 
   (define (check-angle-value angle)
     (match angle
@@ -1016,18 +1019,14 @@ value will be one of the following symbols:
   - name
   - value
   - both"
-  (define (check-show-symbol sym)
-    (match sym
-      ((or 'name 'value 'both) sym)
-      (_ (error "Text object ~A has invalid text attribute visibility ~A" object sym))))
-
   (define pointer (geda-object->pointer* object 1 text? 'text))
 
   (let* ((show (lepton_text_object_get_show pointer))
          (string-pointer (lepton_text_object_show_to_string show))
          (sym (and (not (null-pointer? string-pointer))
                    (string->symbol (pointer->string string-pointer)))))
-    (check-show-symbol sym)))
+    (or (check-text-attribute-show-mode sym)
+        (error "Text object ~A has invalid text attribute visibility ~A" object sym))))
 
 
 ;;;; Component objects
