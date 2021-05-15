@@ -850,38 +850,43 @@ the default text color is used."
   (check-text-show show 8)
   (and color (check-integer color 9))
 
-  (let ((x (car anchor))
-        (y (cdr anchor))
-        (align (symbol->text-alignment align))
-        (string (string->pointer string))
-        (visibility (text-visibility->integer visible?))
-        (show (symbol->text-attribute-show-mode show))
-        (color (or color (object-color object))))
+  (let ((color (or color (object-color object)))
+        (new-info (list anchor align angle string size visible? show color)))
 
-    ;; Actually make changes
-    (lepton_object_emit_pre_change_notify pointer)
+    ;; Compare current and new parameters. Do nothing if nothing
+    ;; changes.
+    (unless (equal? (text-info object) new-info)
+      (let ((x (car anchor))
+            (y (cdr anchor))
+            (align (symbol->text-alignment align))
+            (string (string->pointer string))
+            (visibility (text-visibility->integer visible?))
+            (show (symbol->text-attribute-show-mode show)))
 
-    (lepton_text_object_set_x pointer x)
-    (lepton_text_object_set_y pointer y)
-    (lepton_text_object_set_alignment pointer align)
-    (lepton_text_object_set_angle pointer angle)
-    (lepton_text_object_set_size pointer size)
-    (lepton_text_object_set_visibility pointer visibility)
-    (lepton_text_object_set_show pointer show)
+        ;; Actually make changes
+        (lepton_object_emit_pre_change_notify pointer)
 
-    (lepton_object_emit_change_notify pointer)
+        (lepton_text_object_set_x pointer x)
+        (lepton_text_object_set_y pointer y)
+        (lepton_text_object_set_alignment pointer align)
+        (lepton_text_object_set_angle pointer angle)
+        (lepton_text_object_set_size pointer size)
+        (lepton_text_object_set_visibility pointer visibility)
+        (lepton_text_object_set_show pointer show)
 
-    (lepton_text_object_set_string pointer string)
+        (lepton_object_emit_change_notify pointer)
 
-    (lepton_text_object_recreate pointer)
+        (lepton_text_object_set_string pointer string)
 
-    ;; Color
-    (lepton_object_set_color pointer color)
+        (lepton_text_object_recreate pointer)
 
-    (lepton_object_page_set_changed pointer)
+        ;; Color
+        (lepton_object_set_color pointer color)
 
-    ;; Return the same object.
-    object))
+        (lepton_object_page_set_changed pointer))))
+
+  ;; Return the same object.
+  object)
 
 
 (define* (make-text anchor align angle string size visible? show
