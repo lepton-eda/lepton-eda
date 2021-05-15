@@ -148,6 +148,11 @@
       (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #f name 21)))
       ;; Change color.
       (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #f name 3)))
+      ;; Text setters.
+      (assert-not-dirties P (set-text-string! t (text-string t)))
+      (assert-dirties P (set-text-string! t "other-string"))
+      (assert-not-dirties P (set-text-visibility! t (text-visible? t)))
+      (assert-dirties P (set-text-visibility! t (not (text-visible? t))))
 
 
       (assert-dirties P (apply set-component! C
@@ -271,6 +276,11 @@
       (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #f name 21)))
       ;; Change color.
       (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #f name 3)))
+      ;; Text setters.
+      (assert-not-dirties P (set-text-string! t (text-string t)))
+      (assert-dirties P (set-text-string! t "other-string"))
+      (assert-not-dirties P (set-text-visibility! t (text-visible? t)))
+      (assert-dirties P (set-text-visibility! t (not (text-visible? t))))
 
       ;; The same stroke parameters do not modify the page.
       (assert-not-dirties P (apply set-object-stroke! l (object-stroke l)))
