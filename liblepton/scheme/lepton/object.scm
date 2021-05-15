@@ -98,7 +98,8 @@
             text-visible?
             make-text
             set-text!
-            set-text-string!)
+            set-text-string!
+            set-text-visibility!)
 
   #:re-export (arc?
                box?
@@ -1005,7 +1006,7 @@ returns #f."
   (define pointer (geda-object->pointer* object 1 text? 'text))
   (true? (lepton_text_object_is_visible pointer)))
 
-(define-public (set-text-visibility! object visible?)
+(define (set-text-visibility! object visible?)
   "If VISIBLE? is #f, sets text OBJECT to be invisible;
 otherwise, sets it to be visible."
   (let ((i (text-info object)))
