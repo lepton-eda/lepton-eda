@@ -998,9 +998,16 @@ integer."
 
 (define (set-text-string! object str)
   "Set the string content of text OBJECT to STR."
-  (let ((i (text-info object)))
-    (list-set! i 3 str)
-    (apply set-text! object i)))
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+
+  (check-string str 2)
+
+  (unless (string= str (text-string object))
+    (lepton_text_object_set_string pointer
+                                   (string->pointer str))
+    (lepton_object_page_set_changed pointer))
+
+  object)
 
 (define (text-size object)
   "Return the font size of text OBJECT as an integer."
