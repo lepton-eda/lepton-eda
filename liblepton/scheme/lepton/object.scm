@@ -873,17 +873,14 @@ the default text color is used."
         (lepton_text_object_set_size pointer size)
         (lepton_text_object_set_visibility pointer visibility)
         (lepton_text_object_set_show pointer show)
-
-        (lepton_object_emit_change_notify pointer)
-
-        (lepton_text_object_set_string pointer string)
-
-        (lepton_text_object_recreate pointer)
-
-        ;; Color
         (lepton_object_set_color pointer color)
 
-        (lepton_object_page_set_changed pointer))))
+        (lepton_text_object_set_string pointer string)
+        (lepton_text_object_recreate pointer)
+
+        (lepton_object_page_set_changed pointer)
+
+        (lepton_object_emit_change_notify pointer))))
 
   ;; Return the same object.
   object)
