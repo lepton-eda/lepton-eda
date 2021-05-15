@@ -48,6 +48,25 @@
   (test-equal 'name (text-attribute-mode a))
   (test-equal 21 (object-color a))
 
+  (test-equal 'lower-left
+    (text-align (make-text '(10 . 20) 'lower-left 0 "text" 10 #t 'name)))
+  (test-equal 'middle-left
+    (text-align (make-text '(10 . 20) 'middle-left 0 "text" 10 #t 'name)))
+  (test-equal 'upper-left
+    (text-align (make-text '(10 . 20) 'upper-left 0 "text" 10 #t 'name)))
+  (test-equal 'lower-center
+    (text-align (make-text '(10 . 20) 'lower-center 0 "text" 10 #t 'name)))
+  (test-equal 'middle-center
+    (text-align (make-text '(10 . 20) 'middle-center 0 "text" 10 #t 'name)))
+  (test-equal 'upper-center
+    (text-align (make-text '(10 . 20) 'upper-center 0 "text" 10 #t 'name)))
+  (test-equal 'lower-right
+    (text-align (make-text '(10 . 20) 'lower-right 0 "text" 10 #t 'name)))
+  (test-equal 'middle-right
+    (text-align (make-text '(10 . 20) 'middle-right 0 "text" 10 #t 'name)))
+  (test-equal 'upper-right
+    (text-align (make-text '(10 . 20) 'upper-right 0 "text" 10 #t 'name)))
+
   (set-text! a '(3 . 4) 'upper-right 180 "more text" 20 #f 'name 22)
   (test-equal 22 (object-color a))
 
