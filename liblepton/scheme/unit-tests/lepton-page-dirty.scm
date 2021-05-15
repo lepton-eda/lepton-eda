@@ -125,7 +125,31 @@
       ;; Change color.
       (assert-dirties P (apply set-line! l '((2 . 3) (4 . 5) 4)))
 
-      (assert-dirties P (apply set-text! t (text-info t)))
+      ;; Text.
+      ;; The same parameters do not modify the page.
+      (assert-not-dirties P (apply set-text! t (text-info t)))
+      ;; Set color explicitly to facilitate next tests.
+      (set-text! t '(1 . 2) 'lower-left 0 "name=value" 10 #t 'both 21)
+      ;; Change anchor x.
+      (assert-dirties P (apply set-text! t '((2 . 2) lower-left 0 "name=value" 10 #t both 21)))
+      ;; Change anchor y.
+      (assert-dirties P (apply set-text! t '((2 . 3) lower-left 0 "name=value" 10 #t both 21)))
+      ;; Change alignment.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 0 "name=value" 10 #t both 21)))
+      ;; Change angle.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "name=value" 10 #t both 21)))
+      ;; Change string.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 10 #t both 21)))
+      ;; Change size.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #t both 21)))
+      ;; Change visibility.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #f both 21)))
+      ;; Change show attribute mode.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #f name 21)))
+      ;; Change color.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #f name 3)))
+
+
       (assert-dirties P (apply set-component! C
                                (list-tail (component-info C) 1)))
 
@@ -224,7 +248,29 @@
       ;; Change color.
       (assert-dirties P (apply set-line! l '((2 . 3) (4 . 5) 4)))
 
-      (assert-dirties P (apply set-text! t (text-info t)))
+      ;; Text.
+      ;; The same parameters do not modify the page.
+      (assert-not-dirties P (apply set-text! t (text-info t)))
+      ;; Set color explicitly to facilitate next tests.
+      (set-text! t '(1 . 2) 'lower-left 0 "name=value" 10 #t 'both 21)
+      ;; Change anchor x.
+      (assert-dirties P (apply set-text! t '((2 . 2) lower-left 0 "name=value" 10 #t both 21)))
+      ;; Change anchor y.
+      (assert-dirties P (apply set-text! t '((2 . 3) lower-left 0 "name=value" 10 #t both 21)))
+      ;; Change alignment.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 0 "name=value" 10 #t both 21)))
+      ;; Change angle.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "name=value" 10 #t both 21)))
+      ;; Change string.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 10 #t both 21)))
+      ;; Change size.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #t both 21)))
+      ;; Change visibility.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #f both 21)))
+      ;; Change show attribute mode.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #f name 21)))
+      ;; Change color.
+      (assert-dirties P (apply set-text! t '((2 . 3) upper-right 90 "value=name" 20 #f name 3)))
 
       ;; The same stroke parameters do not modify the page.
       (assert-not-dirties P (apply set-object-stroke! l (object-stroke l)))
