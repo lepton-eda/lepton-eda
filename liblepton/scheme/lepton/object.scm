@@ -1014,6 +1014,12 @@ otherwise, sets it to be visible."
     (apply set-text! object i)))
 
 (define (text-attribute-mode object)
+  "Returns a symbol indicating which parts of TEXT will be
+displayed when text OBJECT is a valid attribute.  The returned
+value will be one of the following symbols:
+  - name
+  - value
+  - both"
   (define (check-show-symbol sym)
     (match sym
       ((or 'name 'value 'both) sym)
