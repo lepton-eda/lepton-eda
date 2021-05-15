@@ -942,6 +942,8 @@ where anchor is a pair of integers in the form '(x . y)."
         (object-color object)))
 
 (define (text-anchor object)
+  "Returns the position of the anchor of text OBJECT in the form
+'(x . y)."
   (define pointer (geda-object->pointer* object 1 text? 'text))
   (cons (lepton_text_object_get_x pointer)
         (lepton_text_object_get_y pointer)))
