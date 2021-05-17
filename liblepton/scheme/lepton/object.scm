@@ -41,6 +41,7 @@
             object-color
             set-object-color!
             object-component
+            object-connections
             object-embedded?
             set-object-embedded!
             object-id
@@ -174,7 +175,26 @@ Returns OBJECT."
   object)
 
 
-(define-public object-connections %object-connections)
+(define (object-connections object)
+  "Returns a list of other objects that are directly connected to
+OBJECT.  If OBJECT is not included in a page, raises an
+'object-state error.  The connections reported are independent of
+inclusion in components and includes only primitive objects such
+as pins, nets, or buses."
+  (define pointer (geda-object->pointer* object 1))
+
+  (when (null-pointer? (lepton_object_get_page pointer))
+    (scm-error 'object-state
+               'object-connections
+               "Object ~A is not included in a page."
+               (list object)
+               '()))
+
+  (let* ((gls (s_conn_return_others %null-pointer pointer))
+         (ls (glist->object-list gls)))
+
+    (g_list_free gls)
+    ls))
 
 
 (define (object-component object)

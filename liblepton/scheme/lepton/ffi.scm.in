@@ -240,6 +240,7 @@
             s_clib_init
 
             s_conn_remove_object_connections
+            s_conn_return_others
             s_conn_update_object
 
             s_toplevel_page_current))
@@ -509,6 +510,7 @@
 
 ;; s_conn.c
 (define-lff s_conn_remove_object_connections void '(*))
+(define-lff s_conn_return_others '* '(* *))
 (define-lff s_conn_update_object void '(* *))
 
 (define (check-boolean val pos)

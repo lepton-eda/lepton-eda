@@ -117,39 +117,6 @@ edascm_is_object_type (SCM smob, int type)
   return (lepton_object_get_type (obj) == type);
 }
 
-/*! \brief Get objects that are connected to an object.
- * \par Function Description
- * Returns a list of all objects directly connected to \a obj_s.  If
- * \a obj_s is not included in a page, throws a Scheme error.  If \a
- * obj_s is not a pin, net, bus, or component object, returns the empty
- * list.
- *
- * \note Scheme API: Implements the %object-connections procedure of
- * the (lepton core object) module.
- *
- * \param obj_s #LeptonObject smob for object to get connections for.
- * \return a list of #LeptonObject smobs.
- */
-SCM_DEFINE (object_connections, "%object-connections", 1, 0, 0,
-            (SCM obj_s), "Get objects that are connected to an object.")
-{
-  /* Ensure that the argument is an object smob */
-  SCM_ASSERT (edascm_is_object (obj_s), obj_s,
-              SCM_ARG1, s_object_connections);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  if (lepton_object_get_page (obj) == NULL) {
-    scm_error (edascm_object_state_sym,
-               s_object_connections,
-               _("Object ~A is not included in a page."),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-
-  GList *lst = s_conn_return_others (NULL, obj);
-  SCM result = edascm_from_object_glist (lst);
-  g_list_free (lst);
-  return result;
-}
 
 /*!
  * \brief Create the (lepton core object) Scheme module.
@@ -164,8 +131,7 @@ init_module_lepton_core_object (void *unused)
   #include "scheme_object.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_object_connections,
-                NULL);
+  scm_c_export (NULL);
 }
 
 /*!
