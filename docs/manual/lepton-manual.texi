@@ -158,6 +158,8 @@ Schematic capture
 * lepton-schematic window::
 * Dialog boxes::
 * Creating and opening schematics::
+* Working with windows::
+* Quitting the program::
 * Saving schematic pages::
 * Printing and exporting::
 * Selecting objects::

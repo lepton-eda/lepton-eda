@@ -9,6 +9,8 @@
 * lepton-schematic window::
 * Dialog boxes::
 * Creating and opening schematics::
+* Working with windows::
+* Quitting the program::
 * Saving schematic pages::
 * Printing and exporting::
 * Selecting objects::
@@ -183,26 +185,17 @@ Scheme code}.
 @item New Window
 
 @clicksequence{File @click{} New Window} (@kbd{F W}) allows you to
-open a new @emph{window} of @schematic{} (not a @emph{page}).  In that
-window you can work with different pages and different configuration
-settings.  The schematic data may be exchanged between @schematic{}
-windows using system clipboard.
+open a new @emph{window} of @schematic{}.  @xref{Working with windows}.
 
 @item Close Window
 
 @clicksequence{File @click{} Close Window} (@kbd{F C}) closes the
-current @schematic{} window (the window where you use this shortcut)
-with all its pages.  The Save File dialog will be open for every
-unsaved page.
+current @schematic{} window.  @xref{Working with windows}.
 
 @item Quit
 
-@clicksequence{File @click{} Quit} (@kbd{F Q} or @kbd{Alt+Q})
-closes all open windows of @schematic{} stemming from the same root
-window with all their pages.  It won't close those windows you've
-launched in a different instance (from a terminal, from your window
-manager menu, etc.).  The Save File dialog will be opened for every
-unsaved page.
+@clicksequence{File @click{} Quit} (@kbd{F Q} or @kbd{Alt-Q}) closes
+all open windows of @schematic{}.  @xref{Quitting the program}.
 
 @end table
 
@@ -378,7 +371,7 @@ unsaved page.
 @cindex save as dialog box
 @cindex dialog boxes, save as
 
-@node Creating and opening schematics, Saving schematic pages, Dialog boxes, lepton-schematic
+@node Creating and opening schematics, Working with windows, Dialog boxes, lepton-schematic
 @section Creating new and opening existing schematic files
 @cindex creating schematics
 @cindex create schematics
@@ -418,7 +411,42 @@ If you want to open a file you worked on recently, click the menu item
 several file names.  You can configure how many files should be shown
 there using the configuration key @ref{max-recent-files}.
 
-@node Saving schematic pages, Printing and exporting, Creating and opening schematics, lepton-schematic
+@node Working with windows, Quitting the program, Creating and opening schematics, lepton-schematic
+@section Working with windows
+@cindex lepton-schematic windows
+@cindex working with windows
+@cindex open new window
+@cindex close window
+
+You can open new and close existing @schematic{} windows.  Schematic
+data may be exchanged between the windows using system clipboard.
+
+@clicksequence{File @click{} New Window} (@kbd{F W}) allows you to
+open a new @emph{window} of @schematic{} (not a @emph{page}).  In that
+window you can work with different pages and different configuration
+settings.
+
+@clicksequence{File @click{} Close Window} (@kbd{F C}) closes the
+currently active @schematic{} window (the window where you use this
+shortcut) with all its pages.  The @emph{Save File} dialog box will be
+open for every unsaved page. @xref{Saving schematic pages}.
+
+@node Quitting the program, Saving schematic pages, Working with windows, lepton-schematic
+@section Quitting the program
+@cindex exit lepton-schematic
+@cindex lepton-schematic, exit
+@cindex quit lepton-schematic
+@cindex lepton-schematic, quit
+@cindex quitting lepton-schematic
+
+@clicksequence{File @click{} Quit} (@kbd{F Q} or @kbd{Alt-Q}) closes
+all open windows of @schematic{} stemming from the same root window
+with all their pages.  It won't close those windows you've launched in
+a different instance (from a terminal, from your window manager menu,
+etc.).  The @emph{Save File} dialog will be opened for every unsaved
+page. @xref{Saving schematic pages}.
+
+@node Saving schematic pages, Printing and exporting, Quitting the program, lepton-schematic
 @section Saving schematic pages
 @cindex save
 @cindex save pages
