@@ -105,3 +105,10 @@
     (close-page! Q)))
 
 (test-end "object-connection-functions")
+
+
+(test-begin "object-connections-wrong-argument")
+
+(test-assert-thrown 'wrong-type-arg (object-connections 'x))
+
+(test-end "object-connections-wrong-argument")
