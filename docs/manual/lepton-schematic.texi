@@ -253,10 +253,21 @@ non-locked objects on a page.  @xref{Selecting objects}.
 all selected objects, if any.  @xref{Selecting objects}.
 
 @item Copy Mode
+
 @clicksequence{Edit @click{} Copy Mode} (@kbd{C} or @kbd{E C})
+duplicates selected objects and allows to insert the copies somewhere
+else.  During this process, selection does not change.
 
 @item Multiple Copy Mode
+
 @clicksequence{Edit @click{} Multiple Copy Mode} (@kbd{E Y})
+duplicates selected objects and allows to insert the copies somewhere
+else on the current page.  Unlike @clicksequence{Edit @click{} Copy
+Mode}, the copies can be done several times.  During this process,
+selection does not change.  The copying process can be stopped by
+switching to some other mode, for example, by hitting @kbd{Esc} to
+choose the select mode, or by clicking at the net mode button in the
+toolbar.
 
 @item Move Mode
 @clicksequence{Edit @click{} Move Mode} (@kbd{M} or @kbd{E M})
