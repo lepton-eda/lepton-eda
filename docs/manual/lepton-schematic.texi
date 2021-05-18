@@ -614,6 +614,11 @@ some custom options, please use it (@pxref{lepton-cli export}).
 @cindex selecting objects
 @cindex object selection
 
+Selecting objects is necessary to make any action on them, for
+instance, moving, copying, or changing their size.  Selected objects
+are highlighted so you can visually distinguish them from unselected
+ones.
+
 @menu
 * Simple object selection::
 * Box selection::
