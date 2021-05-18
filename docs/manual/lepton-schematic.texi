@@ -220,24 +220,23 @@ all open windows of @schematic{}.  @xref{Quitting the program}.
 @item Cut
 
 @clicksequence{Edit @click{} Cut} (@kbd{Ctrl-X}) cuts currently
-selected objects to clipboard.
+selected objects to clipboard.  @xref{Editing schematics}.
 
 @item Copy
 
 @clicksequence{Edit @click{} Copy} (@kbd{Ctrl-C} or @kbd{E C}) copies
-currently selected objects to clipboard.
+currently selected objects to clipboard.  @xref{Editing schematics}.
 
 @item Paste
 
 @clicksequence{Edit @click{} Paste} (@kbd{Ctrl-V}) allows to paste the
-current clipboard contents to the drawing area.
+current clipboard contents to the drawing area.  @xref{Editing
+schematics}.
 
 @item Delete
 
 @clicksequence{Edit @click{} Delete} (@kbd{Delete}, @kbd{D}, or @kbd{E
-D}) deletes currently selected objects.  If some of the objects are
-locked, the dialog prompting for deletion of all objects or only
-unlocked ones will appear.  There you can also cancel the deletion.
+D}) deletes currently selected objects.  @xref{Editing schematics}.
 
 @item Select Mode
 @clicksequence{Edit @click{} Select Mode} (@kbd{S} or @kbd{E S})
@@ -506,6 +505,17 @@ Shift-R}).  The latter restores the results of the last editing action
 undone with @clicksequence{Edit @click{} Undo}.  The number of
 possible actions for undo/redo is limited in the configuration setting
 @ref{undo-levels}.
+
+The object on canvas can be copied or cut to clipboard, and pasted
+from it using @clicksequence{Edit @click{} Copy} (@kbd{Ctrl-C} or
+@kbd{E C}), @clicksequence{Edit @click{} Cut} (@kbd{Ctrl-X}),
+@clicksequence{Edit @click{} Paste} (@kbd{Ctrl-V}) correspondingly.
+To delete all currently selected objects use @clicksequence{Edit
+@click{} Delete} (@kbd{Delete}, @kbd{D}, or @kbd{E D}).  If some of the
+objects are locked, the dialog prompting for deletion of all selected
+objects or only unlocked ones will appear, in which you can also
+cancel the deletion.  @xref{Selecting object} on how to select
+anything you want.
 
 
 @node Working with windows, Quitting the program, Creating and opening schematics, lepton-schematic
