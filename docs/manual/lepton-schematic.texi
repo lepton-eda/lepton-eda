@@ -216,13 +216,19 @@ all open windows of @schematic{}.  @xref{Quitting the program}.
 editing action undone with @clicksequence{Edit @click{} Undo}.
 
 @item Cut
-@clicksequence{Edit @click{} Cut} (@kbd{Ctrl-X})
+
+@clicksequence{Edit @click{} Cut} (@kbd{Ctrl-X}) cuts currently
+selected objects to clipboard.
 
 @item Copy
-@clicksequence{Edit @click{} Copy} (@kbd{Ctrl-C})
+
+@clicksequence{Edit @click{} Copy} (@kbd{Ctrl-C} or @kbd{E C}) copies
+currently selected objects to clipboard.
 
 @item Paste
-@clicksequence{Edit @click{} Paste} (@kbd{Ctrl-V})
+
+@clicksequence{Edit @click{} Paste} (@kbd{Ctrl-V}) allows to paste the
+current clipboard contents to the drawing area.
 
 @item Delete
 
