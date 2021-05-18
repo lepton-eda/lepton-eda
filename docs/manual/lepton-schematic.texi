@@ -245,12 +245,12 @@ switches on the selection mode.  @xref{Selecting objects}.
 @item Select All
 
 @clicksequence{Edit @click{} Select All} (@kbd{Ctrl-A}) selects all
-non-locked objects on a page.
+non-locked objects on a page.  @xref{Selecting objects}.
 
 @item Deselect
 
 @clicksequence{Edit @click{} Deselect} (@kbd{Shift-Ctrl-A}) deselects
-all selected objects, if any.
+all selected objects, if any.  @xref{Selecting objects}.
 
 @item Copy Mode
 @clicksequence{Edit @click{} Copy Mode} (@kbd{C} or @kbd{E C})
