@@ -9,6 +9,7 @@
 * lepton-schematic window::
 * Dialog boxes::
 * Creating and opening schematics::
+* Editing schematics::
 * Working with windows::
 * Quitting the program::
 * Saving schematic pages::
@@ -208,12 +209,13 @@ all open windows of @schematic{}.  @xref{Quitting the program}.
 
 @clicksequence{Edit @click{} Undo} (@kbd{Ctrl-Z}, @kbd{U},
 @kbd{Shift-U}, or @kbd{E Shift-U}) undoes the last editing action.
+@xref{Editing schematics}.
 
 @item Redo
 
 @clicksequence{Edit @click{} Redo} (@kbd{Shift-Ctrl-Z}, @kbd{Ctrl-Y},
-@kbd{Shift-R}, or @kbd{E Shift-R}) restores the results of the last
-editing action undone with @clicksequence{Edit @click{} Undo}.
+@kbd{Shift-R}, or @kbd{E Shift-R}) repeats recently undone actions.
+@xref{Editing schematics}.
 
 @item Cut
 
@@ -488,6 +490,23 @@ If you want to open a file you worked on recently, click the menu item
 @clicksequence{File @click{} Open Recent}.  The submenu contains
 several file names.  You can configure how many files should be shown
 there using the configuration key @ref{max-recent-files}.
+
+@node Editing schematics
+@section Editing schematics
+@cindex editing schematics
+@cindex edit schematics
+@cindex schematic, edit
+@cindex schematic, editing
+
+When editing schematics, you can undo and redo several last actions
+using @clicksequence{Edit @click{} Undo} (@kbd{Ctrl-Z}, @kbd{U},
+@kbd{Shift-U}, or @kbd{E Shift-U}) and @clicksequence{Edit @click{}
+Redo} (@kbd{Shift-Ctrl-Z}, @kbd{Ctrl-Y}, @kbd{Shift-R}, or @kbd{E
+Shift-R}).  The latter restores the results of the last editing action
+undone with @clicksequence{Edit @click{} Undo}.  The number of
+possible actions for undo/redo is limited in the configuration setting
+@ref{undo-levels}.
+
 
 @node Working with windows, Quitting the program, Creating and opening schematics, lepton-schematic
 @section Working with windows

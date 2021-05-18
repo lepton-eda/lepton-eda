@@ -974,6 +974,7 @@ a crash.  @since{1.9.10}
 @tab @cfgtype{int}
 @tab @cfgval{20}
 @tab
+@anchor{undo-levels}
 Determines the number of levels of undo.  @since{1.9.10}
 
 @item @cfgkey{undo-panzoom}
