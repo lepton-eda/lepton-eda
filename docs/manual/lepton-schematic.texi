@@ -622,6 +622,7 @@ ones.
 @menu
 * Simple object selection::
 * Box selection::
+* Selecting and deselecting all objects::
 @end menu
 
 @node Simple object selection, Box selection, Selecting objects, Selecting objects
@@ -643,6 +644,8 @@ always add objects to the selection.
 
 @node Box selection,  , Simple object selection, Selecting objects
 @subsection Box selection
+@cindex box selection
+@cindex selection box
 
 As it is stated in the previous section, sometimes you cannot (or it
 is not easy to) select some object.  That is what box selection is
@@ -653,6 +656,17 @@ the mouse with the left button depressed so you will see a box that
 starts with the point you clicked first and increases or decreases
 while you drag the mouse.  Drag the mouse so the objects you want are
 within the selection box and release the mouse button.
+
+@node Selecting and deselecting all objects
+@subsection Selecting and deselecting all objects
+@cindex select all
+@cindex deselect all
+
+@clicksequence{Edit @click{} Select All} (@kbd{Ctrl-A}) selects all
+non-locked objects on a page while @clicksequence{Edit @click{}
+Deselect} (@kbd{Shift-Ctrl-A}) deselects all selected objects, if any.
+The latter can be achieved by just left mouse click at some free
+space of schematic.
 
 
 @node lepton-schematic command line options, Component libraries, Selecting objects, lepton-schematic
