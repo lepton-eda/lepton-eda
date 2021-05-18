@@ -240,17 +240,7 @@ D}) deletes currently selected objects.  @xref{Editing schematics}.
 
 @item Select Mode
 @clicksequence{Edit @click{} Select Mode} (@kbd{S} or @kbd{E S})
-switches on the selection mode.  All unfinished actions are rejected,
-and all unfinished object changes are rejected.  If you just started a
-primitive object creation, it will be rejected as well.  In the mode
-you may select object by clicking at them, or by selection box.
-Selected object are always rendered in the selection color so you can
-easily distinguish them from all other objects.  You cannot select
-locked objects this way.  They can only be selected by selection box.
-Hitting @key{Ctrl} will toggle the selection state of the objects you
-are clicking at or selecting by selection box, while hitting
-@key{Shift} in the same situation will always add objects to
-the selection.
+switches on the selection mode.  @xref{Selecting objects}.
 
 @item Select All
 
@@ -497,6 +487,9 @@ there using the configuration key @ref{max-recent-files}.
 @cindex schematic, edit
 @cindex schematic, editing
 
+In order to do any action on some object, you have to select it first.
+@xref{Selecting objects} if you don't know how to do it.
+
 When editing schematics, you can undo and redo several last actions
 using @clicksequence{Edit @click{} Undo} (@kbd{Ctrl-Z}, @kbd{U},
 @kbd{Shift-U}, or @kbd{E Shift-U}) and @clicksequence{Edit @click{}
@@ -514,8 +507,7 @@ To delete all currently selected objects use @clicksequence{Edit
 @click{} Delete} (@kbd{Delete}, @kbd{D}, or @kbd{E D}).  If some of the
 objects are locked, the dialog prompting for deletion of all selected
 objects or only unlocked ones will appear, in which you can also
-cancel the deletion.  @xref{Selecting object} on how to select
-anything you want.
+cancel the deletion.
 
 
 @node Working with windows, Quitting the program, Creating and opening schematics, lepton-schematic
@@ -631,8 +623,31 @@ some custom options, please use it (@pxref{lepton-cli export}).
 @subsection Simple object selection
 @cindex simple object selection
 
+@clicksequence{Edit @click{} Select Mode} (@kbd{S} or @kbd{E S})
+switches on the selection mode.  All unfinished actions are rejected
+as well as all unfinished object changes.  If you just started a
+primitive object creation, it will be rejected as well.  In the mode
+you may select object by clicking at them using the left mouse button,
+or by selection box.  Selected objects are always rendered in the
+selection color so you can easily distinguish them from all other
+objects.  You cannot select locked objects this way.  They can only be
+selected by selection box.  Hitting @key{Ctrl} will toggle the
+selection state of the objects you are clicking at or selecting by
+selection box, while hitting @key{Shift} in the same situation will
+always add objects to the selection.
+
 @node Box selection,  , Simple object selection, Selecting objects
 @subsection Box selection
+
+As it is stated in the previous section, sometimes you cannot (or it
+is not easy to) select some object.  That is what box selection is
+convenient for.  Deselect first all selected objects if there are
+any: left-click at some empty place on the canvas.  Zoom your page in
+our out so you see any object you want to select.  Left-click and drag
+the mouse with the left button depressed so you will see a box that
+starts with the point you clicked first and increases or decreases
+while you drag the mouse.  Drag the mouse so the objects you want are
+within the selection box and release the mouse button.
 
 
 @node lepton-schematic command line options, Component libraries, Selecting objects, lepton-schematic
