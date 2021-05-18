@@ -225,7 +225,11 @@ editing action undone with @clicksequence{Edit @click{} Undo}.
 @clicksequence{Edit @click{} Paste} (@kbd{Ctrl-V})
 
 @item Delete
-@clicksequence{Edit @click{} Delete} (@kbd{Delete}, @kbd{D}, or @kbd{E D})
+
+@clicksequence{Edit @click{} Delete} (@kbd{Delete}, @kbd{D}, or @kbd{E
+D}) deletes currently selected objects.  If some of the objects are
+locked, the dialog prompting for deletion of all objects or only
+unlocked ones will appear.  There you can also cancel the deletion.
 
 @item Select Mode
 @clicksequence{Edit @click{} Select Mode} (@kbd{S} or @kbd{E S})
