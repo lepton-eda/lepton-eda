@@ -440,7 +440,7 @@ all selected objects, if any.  @xref{Selecting objects}.
 @cindex save as dialog box
 @cindex dialog boxes, save as
 
-@node Creating and opening schematics, Working with windows, Dialog boxes, lepton-schematic
+@node Creating and opening schematics, Editing schematics, Dialog boxes, lepton-schematic
 @section Creating new and opening existing schematic files
 @cindex creating schematics
 @cindex create schematics
@@ -480,7 +480,7 @@ If you want to open a file you worked on recently, click the menu item
 several file names.  You can configure how many files should be shown
 there using the configuration key @ref{max-recent-files}.
 
-@node Editing schematics
+@node Editing schematics, Working with windows, Creating and opening schematics, lepton-schematic
 @section Editing schematics
 @cindex editing schematics
 @cindex edit schematics
@@ -510,7 +510,7 @@ objects or only unlocked ones will appear, in which you can also
 cancel the deletion.
 
 
-@node Working with windows, Quitting the program, Creating and opening schematics, lepton-schematic
+@node Working with windows, Quitting the program, Editing schematics, lepton-schematic
 @section Working with windows
 @cindex lepton-schematic windows
 @cindex working with windows
@@ -642,7 +642,7 @@ selection state of the objects you are clicking at or selecting by
 selection box, while hitting @key{Shift} in the same situation will
 always add objects to the selection.
 
-@node Box selection,  , Simple object selection, Selecting objects
+@node Box selection, Selecting and deselecting all objects, Simple object selection, Selecting objects
 @subsection Box selection
 @cindex box selection
 @cindex selection box
@@ -657,7 +657,7 @@ starts with the point you clicked first and increases or decreases
 while you drag the mouse.  Drag the mouse so the objects you want are
 within the selection box and release the mouse button.
 
-@node Selecting and deselecting all objects
+@node Selecting and deselecting all objects,  , Box selection, Selecting objects
 @subsection Selecting and deselecting all objects
 @cindex select all
 @cindex deselect all
