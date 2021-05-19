@@ -254,20 +254,13 @@ all selected objects, if any.  @xref{Selecting objects}.
 
 @item Copy Mode
 
-@clicksequence{Edit @click{} Copy Mode} (@kbd{C} or @kbd{E C})
-duplicates selected objects and allows to insert the copies somewhere
-else.  During this process, selection does not change.
+@clicksequence{Edit @click{} Copy Mode} (@kbd{C} or @kbd{E C}) allows
+one-time copy of selected objects.
 
 @item Multiple Copy Mode
 
 @clicksequence{Edit @click{} Multiple Copy Mode} (@kbd{E Y})
-duplicates selected objects and allows to insert the copies somewhere
-else on the current page.  Unlike @clicksequence{Edit @click{} Copy
-Mode}, the copies can be done several times.  During this process,
-selection does not change.  The copying process can be stopped by
-switching to some other mode, for example, by hitting @kbd{Esc} to
-choose the select mode, or by clicking at the net mode button in the
-toolbar.
+allows to make several copies of the same objects.
 
 @item Move Mode
 @clicksequence{Edit @click{} Move Mode} (@kbd{M} or @kbd{E M})
@@ -510,9 +503,24 @@ undone with @clicksequence{Edit @click{} Undo}.  The number of
 possible actions for undo/redo is limited in the configuration setting
 @ref{undo-levels}.
 
-The object on canvas can be copied or cut to clipboard, and pasted
-from it using @clicksequence{Edit @click{} Copy} (@kbd{Ctrl-C} or
-@kbd{E C}), @clicksequence{Edit @click{} Cut} (@kbd{Ctrl-X}),
+If you need to copy some objects, select them and do
+@clicksequence{Edit @click{} Copy Mode} (@kbd{C} or @kbd{E C}).  The
+objects will be visually duplicated and you will be able to put the
+copies where you need to by left-clicking on the canvas.  This allows
+one-time copy of the objects.  Another option is copying objects
+multiple times.  Select @clicksequence{Edit @click{} Multiple Copy
+Mode} or hit @kbd{E Y} to switch on the mode.  Use left-click to
+insert the objects.  Unlike the former case, copying won't stop after
+first insertion.  Click once again, and a new copy will be made.  The
+copying process can be stopped by switching to some other mode, for
+example, by hitting @kbd{Esc} to choose the select mode, or by
+clicking at the net mode button in the toolbar.  In both cases (one or
+multiple copies), the current selection does not change during the
+process.
+
+The objects on canvas can also be copied or cut to clipboard, and
+pasted from it using @clicksequence{Edit @click{} Copy}
+(@kbd{Ctrl-C}), @clicksequence{Edit @click{} Cut} (@kbd{Ctrl-X}),
 @clicksequence{Edit @click{} Paste} (@kbd{Ctrl-V}) correspondingly.
 To delete all currently selected objects use @clicksequence{Edit
 @click{} Delete} (@kbd{Delete}, @kbd{D}, or @kbd{E D}).  If some of the
