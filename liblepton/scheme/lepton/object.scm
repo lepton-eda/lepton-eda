@@ -90,6 +90,7 @@
             make-bus-pin
             make-net-pin
 
+            make-picture/vector
             picture-info
             set-picture!
 
@@ -763,38 +764,6 @@ value which sets whether the picture object should be mirrored."
 
     object))
 
-
-(define (make-picture)
-  "Creates and returns a new, empty picture object with no
-filename, no image data and all other parameters set to default
-values.  It is initially set to be embedded."
-  ;; C boolean values.
-  (define TRUE 1)
-  (define FALSE 0)
-
-  ;; Assign default values.
-  (let ((file-content %null-pointer)
-        (file-length 0)
-        (filename %null-pointer)
-        (x1 0)
-        (y1 0)
-        (x2 0)
-        (y2 0)
-        (angle 0)
-        (mirrored FALSE)
-        (embedded TRUE))
-    (pointer->geda-object
-     (lepton_picture_object_new file-content
-                                file-length
-                                filename
-                                x1
-                                y1
-                                x2
-                                y2
-                                angle
-                                mirrored
-                                embedded))))
-
 ;;; Sets the image data for the picture object PICTURE from
 ;;; VECTOR-DATA, and set its FILENAME.  If the contents of
 ;;; VECTOR-DATA could not be successfully loaded as an image,
@@ -838,10 +807,47 @@ values.  It is initially set to be embedded."
     ;; Return picture object.
     object))
 
-(define-public (make-picture/vector vec filename . args)
-  (let ((p (make-picture)))
-    (%set-picture-data/vector! p vec filename)
-    (apply set-picture! p args)))
+(define (make-picture/vector vector filename . args)
+  "Creates and returns a new picture object for FILENAME, by
+reading image data from VECTOR (which should be in a standard
+image file format).  If VECTOR could not be loaded, an error is
+raised. TOP-LEFT, BOTTOM-RIGHT, ANGLE and MIRROR specify the
+picture transformation. The points TOP-LEFT and BOTTOM-RIGHT
+should be specified in the form '(x . y).  ANGLE should be an
+integer value one of 0, 90, 180, or 270 degrees.  MIRROR is a
+boolean flag which specifies if the picture should be mirrored."
+  ;; C boolean values.
+  (define TRUE 1)
+  (define FALSE 0)
+
+  (apply set-picture!
+         (%set-picture-data/vector!
+
+          ;; Assign default values.
+          (let ((file-content %null-pointer)
+                (file-length 0)
+                (filename %null-pointer)
+                (x1 0)
+                (y1 0)
+                (x2 0)
+                (y2 0)
+                (angle 0)
+                (mirrored FALSE)
+                (embedded TRUE))
+            (pointer->geda-object
+             (lepton_picture_object_new file-content
+                                        file-length
+                                        filename
+                                        x1
+                                        y1
+                                        x2
+                                        y2
+                                        angle
+                                        mirrored
+                                        embedded)))
+          vector
+          filename)
+         args))
 
 (define (picture-info object)
   "Retrieves the parameters of PICTURE.  Returns the list
