@@ -838,37 +838,31 @@ boolean flag which specifies if the picture should be mirrored."
   (check-picture-angle angle 5)
   (check-boolean mirror 6)
 
-  (set-picture!
-   (%set-picture-data/vector!
+  (%set-picture-data/vector!
 
-    ;; Assign default values.
-    (let ((file-content %null-pointer)
-          (file-length 0)
-          (filename %null-pointer)
-          (x1 0)
-          (y1 0)
-          (x2 0)
-          (y2 0)
-          (angle 0)
-          (mirrored FALSE)
-          (embedded TRUE))
-      (pointer->geda-object
-       (lepton_picture_object_new file-content
-                                  file-length
-                                  filename
-                                  x1
-                                  y1
-                                  x2
-                                  y2
-                                  angle
-                                  mirrored
-                                  embedded)))
-    vector
-    filename)
-   top-left
-   bottom-right
-   angle
-   mirror))
+   ;; Assign default values.
+   (let ((file-content %null-pointer)
+         (file-length 0)
+         (filename %null-pointer)
+         (x1 (min (car top-left) (car bottom-right)))
+         (y1 (max (cdr top-left) (cdr bottom-right)))
+         (x2 (max (car top-left) (car bottom-right)))
+         (y2 (min (cdr top-left) (cdr bottom-right)))
+         (mirrored (if mirror TRUE FALSE))
+         (embedded TRUE))
+     (pointer->geda-object
+      (lepton_picture_object_new file-content
+                                 file-length
+                                 filename
+                                 x1
+                                 y1
+                                 x2
+                                 y2
+                                 angle
+                                 mirrored
+                                 embedded)))
+   vector
+   filename))
 
 (define (picture-info object)
   "Retrieves the parameters of PICTURE.  Returns the list
