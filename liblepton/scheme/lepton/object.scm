@@ -807,7 +807,12 @@ value which sets whether the picture object should be mirrored."
     ;; Return picture object.
     object))
 
-(define (make-picture/vector vector filename . args)
+(define (make-picture/vector vector
+                             filename
+                             top-left
+                             bottom-right
+                             angle
+                             mirror)
   "Creates and returns a new picture object for FILENAME, by
 reading image data from VECTOR (which should be in a standard
 image file format).  If VECTOR could not be loaded, an error is
@@ -820,34 +825,37 @@ boolean flag which specifies if the picture should be mirrored."
   (define TRUE 1)
   (define FALSE 0)
 
-  (apply set-picture!
-         (%set-picture-data/vector!
+  (set-picture!
+   (%set-picture-data/vector!
 
-          ;; Assign default values.
-          (let ((file-content %null-pointer)
-                (file-length 0)
-                (filename %null-pointer)
-                (x1 0)
-                (y1 0)
-                (x2 0)
-                (y2 0)
-                (angle 0)
-                (mirrored FALSE)
-                (embedded TRUE))
-            (pointer->geda-object
-             (lepton_picture_object_new file-content
-                                        file-length
-                                        filename
-                                        x1
-                                        y1
-                                        x2
-                                        y2
-                                        angle
-                                        mirrored
-                                        embedded)))
-          vector
-          filename)
-         args))
+    ;; Assign default values.
+    (let ((file-content %null-pointer)
+          (file-length 0)
+          (filename %null-pointer)
+          (x1 0)
+          (y1 0)
+          (x2 0)
+          (y2 0)
+          (angle 0)
+          (mirrored FALSE)
+          (embedded TRUE))
+      (pointer->geda-object
+       (lepton_picture_object_new file-content
+                                  file-length
+                                  filename
+                                  x1
+                                  y1
+                                  x2
+                                  y2
+                                  angle
+                                  mirrored
+                                  embedded)))
+    vector
+    filename)
+   top-left
+   bottom-right
+   angle
+   mirror))
 
 (define (picture-info object)
   "Retrieves the parameters of PICTURE.  Returns the list
