@@ -224,7 +224,7 @@ selected objects to clipboard.  @xref{Editing schematics}.
 
 @item Copy
 
-@clicksequence{Edit @click{} Copy} (@kbd{Ctrl-C} or @kbd{E C}) copies
+@clicksequence{Edit @click{} Copy} (@kbd{Ctrl-C}) copies
 currently selected objects to clipboard.  @xref{Editing schematics}.
 
 @item Paste
