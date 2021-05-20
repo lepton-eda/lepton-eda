@@ -801,9 +801,8 @@ value which sets whether the picture object should be mirrored."
       (unless (null-pointer? *err)
         (let ((message (gerror-message *err)))
           (g_clear_error *error)
-          (error (format #f
-                         "Failed to set picture image data from vector: ~S"
-                         message))))))
+          (error "Failed to set picture image data from vector: ~S"
+                 message)))))
 
   (define pointer (geda-object->pointer* object 1 picture? 'picture))
 
