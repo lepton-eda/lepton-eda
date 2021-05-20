@@ -790,8 +790,11 @@ value which sets whether the picture object should be mirrored."
     ;; gchar* (char*) message
     (parse-c-struct *err (list uint32 int '*)))
 
-  (define (gerror->message *err)
-    (pointer->string (third (gerror-list *err))))
+  (define (gerror-message *err)
+    (match (gerror-list *err)
+      ((domain code message)
+       (pointer->string message))
+      (_ #f)))
 
   (define pointer (geda-object->pointer* object 1 picture? 'picture))
 
@@ -809,7 +812,7 @@ value which sets whether the picture object should be mirrored."
     (when (zero? status)
       (let ((*err (dereference-pointer *error)))
         (unless (null-pointer? *err)
-          (let ((message (gerror->message *err)))
+          (let ((message (gerror-message *err)))
             (g_clear_error *error)
             (error (format #f
                            "Failed to set picture image data from vector: ~S"
