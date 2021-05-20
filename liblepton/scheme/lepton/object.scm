@@ -795,27 +795,6 @@ boolean flag which specifies if the picture should be mirrored."
   (define TRUE 1)
   (define FALSE 0)
 
-  (define (gerror-list *err)
-    ;; GError struct consists of:
-    ;; GQuark (uint32) domain
-    ;; gint (int) code
-    ;; gchar* (char*) message
-    (parse-c-struct *err (list uint32 int '*)))
-
-  (define (gerror-message *err)
-    (match (gerror-list *err)
-      ((domain code message)
-       (pointer->string message))
-      (_ #f)))
-
-  (define (gerror-error *error)
-    (let ((*err (dereference-pointer *error)))
-      (unless (null-pointer? *err)
-        (let ((message (gerror-message *err)))
-          (g_clear_error *error)
-          (error "Failed to set picture image data from vector: ~S"
-                 message)))))
-
   (define (pixbuf-missing? pointer)
     (let* ((pixbuf-pointer (lepton_picture_object_get_pixbuf pointer))
            (null-pixbuf-pointer? (null-pointer? pixbuf-pointer))
@@ -847,7 +826,6 @@ boolean flag which specifies if the picture should be mirrored."
          (y2 (min (cdr top-left) (cdr bottom-right)))
          (mirrored (if mirror TRUE FALSE))
          (embedded TRUE)
-         (*error (bytevector->pointer (make-bytevector (sizeof '*))))
          (pointer (lepton_picture_object_new file-content
                                              file-length
                                              filename-pointer
