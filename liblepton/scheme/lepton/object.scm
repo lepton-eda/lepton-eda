@@ -91,7 +91,12 @@
             make-net-pin
 
             make-picture/vector
+            picture-angle
+            picture-bottom-right
+            picture-filename
             picture-info
+            picture-mirror?
+            picture-top-left
             set-picture!
 
             text-info
@@ -893,26 +898,26 @@ where:
           (not (zero? (lepton_picture_object_get_mirrored pointer))))))
 
 
-(define-public (picture-filename object)
+(define (picture-filename object)
   "Returns the filename associated with picture OBJECT."
   (list-ref (picture-info object) 0))
 
-(define-public (picture-top-left object)
+(define (picture-top-left object)
   "Returns the top left corner coordinate of picture OBJECT as a
 pair in the form '(x . y)."
   (list-ref (picture-info object) 1))
 
-(define-public (picture-bottom-right object)
+(define (picture-bottom-right object)
   "Returns the bottom right corner coordinate of picture OBJECT as
 a pair in the form '(x . y)."
   (list-ref (picture-info object) 2))
 
-(define-public (picture-angle object)
+(define (picture-angle object)
   "Returns the rotation angle of picture OBJECT as an integer
 number of degrees."
   (list-ref (picture-info object) 3))
 
-(define-public (picture-mirror? object)
+(define (picture-mirror? object)
   "Returns #t if picture OBJECT is mirrored.  Otherwise returns
 #f."
   (list-ref (picture-info object) 4))
