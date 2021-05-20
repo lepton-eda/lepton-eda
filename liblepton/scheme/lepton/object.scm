@@ -796,6 +796,15 @@ value which sets whether the picture object should be mirrored."
        (pointer->string message))
       (_ #f)))
 
+  (define (gerror-error *error)
+    (let ((*err (dereference-pointer *error)))
+      (unless (null-pointer? *err)
+        (let ((message (gerror-message *err)))
+          (g_clear_error *error)
+          (error (format #f
+                         "Failed to set picture image data from vector: ~S"
+                         message))))))
+
   (define pointer (geda-object->pointer* object 1 picture? 'picture))
 
   (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*))))
@@ -810,13 +819,7 @@ value which sets whether the picture object should be mirrored."
 
     ;; Parse error output if something went wrong.
     (when (zero? status)
-      (let ((*err (dereference-pointer *error)))
-        (unless (null-pointer? *err)
-          (let ((message (gerror-message *err)))
-            (g_clear_error *error)
-            (error (format #f
-                           "Failed to set picture image data from vector: ~S"
-                           message))))))
+      (gerror-error *error))
     (lepton_object_page_set_changed pointer)
     ;; Return picture object.
     object))
