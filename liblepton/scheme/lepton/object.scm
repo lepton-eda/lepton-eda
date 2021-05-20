@@ -823,8 +823,10 @@ boolean flag which specifies if the picture should be mirrored."
   (check-boolean mirror 6)
 
   ;; First assign default values.
-  (let* ((file-content %null-pointer)
-         (file-length 0)
+  (let* ((file-content (string->pointer
+                        (list->string
+                         (map integer->char vector))))
+         (file-length (s8vector-length (any->s8vector vector)))
          (filename-pointer (string->pointer filename))
          (x1 (min (car top-left) (car bottom-right)))
          (y1 (max (cdr top-left) (cdr bottom-right)))
@@ -842,19 +844,7 @@ boolean flag which specifies if the picture should be mirrored."
                                              y2
                                              angle
                                              mirrored
-                                             embedded))
-         (status
-          (lepton_picture_object_set_from_buffer pointer
-                                                 filename-pointer
-                                                 (string->pointer
-                                                  (list->string
-                                                   (map integer->char vector)))
-                                                 (s8vector-length (any->s8vector vector))
-                                                 *error)))
-
-    ;; Parse error output if something went wrong.
-    (when (zero? status)
-      (gerror-error *error))
+                                             embedded)))
     ;; Return picture object.
     (pointer->geda-object pointer)))
 
