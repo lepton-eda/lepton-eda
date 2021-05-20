@@ -723,6 +723,17 @@ of the arc."
 
 ;;;; Pictures
 
+;;; Check arguments.
+(define (check-picture-angle angle pos)
+  (define (check-angle-value angle)
+    (match angle
+      ((or 0 90 180 270) angle)
+      (_ (error "Invalid picture angle: ~A. Must be 0, 90, 180, or 270 degrees."
+                angle))))
+
+  (check-integer angle pos)
+  (check-angle-value angle))
+
 
 (define (set-picture! object top-left bottom-right angle mirror)
   "Sets the parameters of picture OBJECT.  TOP-LEFT and
@@ -731,15 +742,10 @@ BOTTOM-RIGHT are the new coordinates of the picture in the form
 value which sets whether the picture object should be mirrored."
   (define pointer (geda-object->pointer* object 1 picture? 'picture))
 
-  ;; Angle
-  ;; These are all fine.
-  (unless (or (= angle 0)
-              (= angle 90)
-              (= angle 180)
-              (= angle 270))
-    ;; Otherwise not fine.
-    (error "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees."
-           angle))
+  (check-coord top-left 2)
+  (check-coord bottom-right 3)
+  (check-picture-angle angle 4)
+  (check-boolean mirror 5)
 
   (let ((x1 (car top-left))
         (y1 (cdr top-left))
