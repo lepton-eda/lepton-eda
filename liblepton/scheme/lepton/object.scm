@@ -893,20 +893,20 @@ where:
           (not (zero? (lepton_picture_object_get_mirrored pointer))))))
 
 
-(define-public (picture-filename p)
-  (list-ref (picture-info p) 0))
+(define-public (picture-filename object)
+  (list-ref (picture-info object) 0))
 
-(define-public (picture-top-left p)
-  (list-ref (picture-info p) 1))
+(define-public (picture-top-left object)
+  (list-ref (picture-info object) 1))
 
-(define-public (picture-bottom-right p)
-  (list-ref (picture-info p) 2))
+(define-public (picture-bottom-right object)
+  (list-ref (picture-info object) 2))
 
-(define-public (picture-angle p)
-  (list-ref (picture-info p) 3))
+(define-public (picture-angle object)
+  (list-ref (picture-info object) 3))
 
-(define-public (picture-mirror? p)
-  (list-ref (picture-info p) 4))
+(define-public (picture-mirror? object)
+  (list-ref (picture-info object) 4))
 
 
 ;;;; Text
