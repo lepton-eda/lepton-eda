@@ -855,7 +855,6 @@ boolean flag which specifies if the picture should be mirrored."
     ;; Parse error output if something went wrong.
     (when (zero? status)
       (gerror-error *error))
-    (lepton_object_page_set_changed pointer)
     ;; Return picture object.
     (pointer->geda-object pointer)))
 
