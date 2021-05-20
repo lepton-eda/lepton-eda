@@ -33,6 +33,7 @@
 
   #:use-module (lepton color-map)
   #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
   #:use-module (lepton object type)
 
@@ -815,6 +816,18 @@ boolean flag which specifies if the picture should be mirrored."
           (error "Failed to set picture image data from vector: ~S"
                  message)))))
 
+  (define (pixbuf-missing? pointer)
+    (let* ((pixbuf-pointer (lepton_picture_object_get_pixbuf pointer))
+           (null-pixbuf-pointer? (null-pointer? pixbuf-pointer))
+           (fallback-pointer? (equal? pixbuf-pointer
+                                      (lepton_picture_get_fallback_pixbuf))))
+      ;; Ensure the object will properly finalized.  See comments
+      ;; in the C function
+      ;; lepton_picture_object_get_pixbuf_pointer().
+      (g_object_unref pixbuf-pointer)
+      (or null-pixbuf-pointer?
+          fallback-pointer?)))
+
   (check-vector vector 1)
   (check-string filename 2)
   (check-coord top-left 3)
@@ -845,8 +858,10 @@ boolean flag which specifies if the picture should be mirrored."
                                              angle
                                              mirrored
                                              embedded)))
-    ;; Return picture object.
-    (pointer->geda-object pointer)))
+    (if (pixbuf-missing? pointer)
+        (error "Failed to set picture image data from vector.")
+        ;; Return picture object.
+        (pointer->geda-object pointer))))
 
 (define (picture-filename object)
   "Returns the filename associated with picture OBJECT."

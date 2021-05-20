@@ -20,6 +20,8 @@
 /*! \file picture.h
  */
 
+G_BEGIN_DECLS
+
 typedef struct st_picture LeptonPicture;
 
 struct st_picture
@@ -47,3 +49,5 @@ lepton_picture_free (LeptonPicture *picture);
 
 GdkPixbuf*
 lepton_picture_get_fallback_pixbuf () G_GNUC_WARN_UNUSED_RESULT;
+
+G_END_DECLS

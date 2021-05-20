@@ -137,12 +137,15 @@
             lepton_net_object_modify
             lepton_net_object_new
 
+            lepton_picture_get_fallback_pixbuf
+
             lepton_picture_object_get_angle
             lepton_picture_object_set_angle
             lepton_picture_object_get_embedded
             lepton_picture_object_get_filename
             lepton_picture_object_get_mirrored
             lepton_picture_object_set_mirrored
+            lepton_picture_object_get_pixbuf
             lepton_picture_object_get_lower_x
             lepton_picture_object_set_lower_x
             lepton_picture_object_get_lower_y
@@ -361,12 +364,15 @@
 (define-lff lepton_net_object_modify void (list '* int int int))
 (define-lff lepton_net_object_new '* (list int int int int int))
 
+(define-lff lepton_picture_get_fallback_pixbuf '* '())
+
 (define-lff lepton_picture_object_get_angle int '(*))
 (define-lff lepton_picture_object_set_angle void (list '* int))
 (define-lff lepton_picture_object_get_embedded int '(*))
 (define-lff lepton_picture_object_get_filename '* '(*))
 (define-lff lepton_picture_object_get_mirrored int '(*))
 (define-lff lepton_picture_object_set_mirrored void (list '* int))
+(define-lff lepton_picture_object_get_pixbuf '* '(*))
 (define-lff lepton_picture_object_get_lower_x int '(*))
 (define-lff lepton_picture_object_set_lower_x void (list '* int))
 (define-lff lepton_picture_object_get_lower_y int '(*))

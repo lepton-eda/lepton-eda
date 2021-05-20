@@ -88,7 +88,8 @@ nobase_dist_scmdata_DATA = \
 nobase_scmdata_DATA = \
 	lepton/core/gettext.scm \
 	lepton/ffi.scm \
-	lepton/ffi/glib.scm
+	lepton/ffi/glib.scm \
+	lepton/ffi/gobject.scm
 
 TESTS = \
 	unit-tests/backend-spice-noqsi.scm \
@@ -184,14 +185,17 @@ dist_noinst_DATA = \
 	unit-test.scm \
 	$(TESTS) \
 	lepton/ffi.scm.in \
-	lepton/ffi/glib.scm.in
+	lepton/ffi/glib.scm.in \
+	lepton/ffi/gobject.scm.in
 
 if CYGWIN
 LIBLEPTON=cyglepton-7
 LIBGLIB=cygglib-2.0-0
+LIBGOBJECT=cyggobject-2.0-0
 else
 LIBLEPTON=liblepton
 LIBGLIB=libglib-2.0
+LIBGOBJECT=libgobject-2.0
 endif
 
 lepton/core/gettext.scm: $(srcdir)/lepton/core/gettext.scm.in Makefile
@@ -212,9 +216,14 @@ lepton/ffi/glib.scm: $(srcdir)/lepton/ffi/glib.scm.in
 	$(MKDIR_P) lepton/ffi/; \
 	sed -e 's,[@]LIBGLIB[@],$(LIBGLIB),g' < $(srcdir)/$@.in > $@
 
+lepton/ffi/gobject.scm: $(srcdir)/lepton/ffi/gobject.scm.in
+	$(MKDIR_P) lepton/ffi/; \
+	sed -e 's,[@]LIBGOBJECT[@],$(LIBGOBJECT),g' < $(srcdir)/$@.in > $@
+
 CLEANFILES = \
 	lepton/core/gettext.scm \
 	unit-tests/dummy.sym \
 	unit-tests/dummy.xpm \
 	lepton/ffi.scm \
-	lepton/ffi/glib.scm
+	lepton/ffi/glib.scm \
+	lepton/ffi/gobject.scm
