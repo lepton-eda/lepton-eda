@@ -874,6 +874,45 @@ boolean flag which specifies if the picture should be mirrored."
    vector
    filename))
 
+(define (picture-filename object)
+  "Returns the filename associated with picture OBJECT."
+  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+
+  (let ((filename-pointer (lepton_picture_object_get_filename pointer)))
+    (and (not (null-pointer? filename-pointer))
+         (pointer->string filename-pointer))))
+
+(define (picture-top-left object)
+  "Returns the top left corner coordinate of picture OBJECT as a
+pair in the form '(x . y)."
+  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+
+  (cons (lepton_picture_object_get_upper_x pointer)
+        (lepton_picture_object_get_upper_y pointer)))
+
+(define (picture-bottom-right object)
+  "Returns the bottom right corner coordinate of picture OBJECT as
+a pair in the form '(x . y)."
+  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+
+  (cons (lepton_picture_object_get_lower_x pointer)
+        (lepton_picture_object_get_lower_y pointer)))
+
+(define (picture-angle object)
+  "Returns the rotation angle of picture OBJECT as an integer
+number of degrees."
+  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+
+  (lepton_picture_object_get_angle pointer))
+
+(define (picture-mirror? object)
+  "Returns #t if picture OBJECT is mirrored.  Otherwise returns
+#f."
+  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+
+  (true? (lepton_picture_object_get_mirrored pointer)))
+
+
 (define (picture-info object)
   "Retrieves the parameters of PICTURE.  Returns the list
 of parameters in the form:
@@ -888,44 +927,11 @@ where:
   mirrored - whether PICTURE object is mirrored."
   (define pointer (geda-object->pointer* object 1 picture? 'picture))
 
-  (let* ((filename* (lepton_picture_object_get_filename pointer))
-         (filename (and (not (null-pointer? filename*))
-                        (pointer->string filename*))))
-
-    (list filename
-          (cons
-           (lepton_picture_object_get_upper_x pointer)
-           (lepton_picture_object_get_upper_y pointer))
-          (cons
-           (lepton_picture_object_get_lower_x pointer)
-           (lepton_picture_object_get_lower_y pointer))
-          (lepton_picture_object_get_angle pointer)
-          (not (zero? (lepton_picture_object_get_mirrored pointer))))))
-
-
-(define (picture-filename object)
-  "Returns the filename associated with picture OBJECT."
-  (list-ref (picture-info object) 0))
-
-(define (picture-top-left object)
-  "Returns the top left corner coordinate of picture OBJECT as a
-pair in the form '(x . y)."
-  (list-ref (picture-info object) 1))
-
-(define (picture-bottom-right object)
-  "Returns the bottom right corner coordinate of picture OBJECT as
-a pair in the form '(x . y)."
-  (list-ref (picture-info object) 2))
-
-(define (picture-angle object)
-  "Returns the rotation angle of picture OBJECT as an integer
-number of degrees."
-  (list-ref (picture-info object) 3))
-
-(define (picture-mirror? object)
-  "Returns #t if picture OBJECT is mirrored.  Otherwise returns
-#f."
-  (list-ref (picture-info object) 4))
+  (list (picture-filename object)
+        (picture-top-left object)
+        (picture-bottom-right object)
+        (picture-angle object)
+        (picture-mirror? object)))
 
 
 ;;;; Text
