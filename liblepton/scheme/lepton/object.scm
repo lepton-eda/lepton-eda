@@ -894,18 +894,27 @@ where:
 
 
 (define-public (picture-filename object)
+  "Returns the filename associated with picture OBJECT."
   (list-ref (picture-info object) 0))
 
 (define-public (picture-top-left object)
+  "Returns the top left corner coordinate of picture OBJECT as a
+pair in the form '(x . y)."
   (list-ref (picture-info object) 1))
 
 (define-public (picture-bottom-right object)
+  "Returns the bottom right corner coordinate of picture OBJECT as
+a pair in the form '(x . y)."
   (list-ref (picture-info object) 2))
 
 (define-public (picture-angle object)
+  "Returns the rotation angle of picture OBJECT as an integer
+number of degrees."
   (list-ref (picture-info object) 3))
 
 (define-public (picture-mirror? object)
+  "Returns #t if picture OBJECT is mirrored.  Otherwise returns
+#f."
   (list-ref (picture-info object) 4))
 
 
