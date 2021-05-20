@@ -20,8 +20,7 @@
 (define-module (lepton ffi glib)
   #:use-module (system foreign)
 
-  #:export (g_clear_error
-            g_log))
+  #:export (g_log))
 
 (define libglib (dynamic-link "@LIBGLIB@"))
 
@@ -30,11 +29,4 @@
                       void
                       (dynamic-func "g_log" libglib)
                       (list '* int '* '*)))))
-    (force proc)))
-
-(define g_clear_error
-  (let ((proc (delay (pointer->procedure
-                      void
-                      (dynamic-func "g_clear_error" libglib)
-                      '(*)))))
     (force proc)))
