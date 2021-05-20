@@ -775,14 +775,25 @@ value which sets whether the picture object should be mirrored."
 
     object))
 
-;;; Sets the image data for the picture object PICTURE from
-;;; VECTOR-DATA, and set its FILENAME.  If the contents of
-;;; VECTOR-DATA could not be successfully loaded as an image,
-;;; raises an error.  The contents of VECTOR-DATA should be image
-;;; data encoded in on-disk format.  Returns the modified object
-;;; PICTURE.
-(define (%set-picture-data/vector! object vector-data filename)
-  "Set a picture object's data from a vector."
+
+(define (make-picture/vector vector
+                             filename
+                             top-left
+                             bottom-right
+                             angle
+                             mirror)
+  "Creates and returns a new picture object for FILENAME, by
+reading image data from VECTOR (which should be in a standard
+image file format).  If VECTOR could not be loaded, an error is
+raised. TOP-LEFT, BOTTOM-RIGHT, ANGLE and MIRROR specify the
+picture transformation. The points TOP-LEFT and BOTTOM-RIGHT
+should be specified in the form '(x . y).  ANGLE should be an
+integer value one of 0, 90, 180, or 270 degrees.  MIRROR is a
+boolean flag which specifies if the picture should be mirrored."
+  ;; C boolean values.
+  (define TRUE 1)
+  (define FALSE 0)
+
   (define (gerror-list *err)
     ;; GError struct consists of:
     ;; GQuark (uint32) domain
@@ -804,43 +815,6 @@ value which sets whether the picture object should be mirrored."
           (error "Failed to set picture image data from vector: ~S"
                  message)))))
 
-  (define pointer (geda-object->pointer* object 1 picture? 'picture))
-
-  (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*))))
-         (status
-          (lepton_picture_object_set_from_buffer pointer
-                                                 (string->pointer filename)
-                                                 (string->pointer
-                                                  (list->string
-                                                   (map integer->char vector-data)))
-                                                 (s8vector-length (any->s8vector vector-data))
-                                                 *error)))
-
-    ;; Parse error output if something went wrong.
-    (when (zero? status)
-      (gerror-error *error))
-    (lepton_object_page_set_changed pointer)
-    ;; Return picture object.
-    object))
-
-(define (make-picture/vector vector
-                             filename
-                             top-left
-                             bottom-right
-                             angle
-                             mirror)
-  "Creates and returns a new picture object for FILENAME, by
-reading image data from VECTOR (which should be in a standard
-image file format).  If VECTOR could not be loaded, an error is
-raised. TOP-LEFT, BOTTOM-RIGHT, ANGLE and MIRROR specify the
-picture transformation. The points TOP-LEFT and BOTTOM-RIGHT
-should be specified in the form '(x . y).  ANGLE should be an
-integer value one of 0, 90, 180, or 270 degrees.  MIRROR is a
-boolean flag which specifies if the picture should be mirrored."
-  ;; C boolean values.
-  (define TRUE 1)
-  (define FALSE 0)
-
   (check-vector vector 1)
   (check-string filename 2)
   (check-coord top-left 3)
@@ -848,31 +822,42 @@ boolean flag which specifies if the picture should be mirrored."
   (check-picture-angle angle 5)
   (check-boolean mirror 6)
 
-  (%set-picture-data/vector!
-
-   ;; Assign default values.
-   (let ((file-content %null-pointer)
+  ;; First assign default values.
+  (let* ((file-content %null-pointer)
          (file-length 0)
-         (filename %null-pointer)
+         (filename-pointer (string->pointer filename))
          (x1 (min (car top-left) (car bottom-right)))
          (y1 (max (cdr top-left) (cdr bottom-right)))
          (x2 (max (car top-left) (car bottom-right)))
          (y2 (min (cdr top-left) (cdr bottom-right)))
          (mirrored (if mirror TRUE FALSE))
-         (embedded TRUE))
-     (pointer->geda-object
-      (lepton_picture_object_new file-content
-                                 file-length
-                                 filename
-                                 x1
-                                 y1
-                                 x2
-                                 y2
-                                 angle
-                                 mirrored
-                                 embedded)))
-   vector
-   filename))
+         (embedded TRUE)
+         (*error (bytevector->pointer (make-bytevector (sizeof '*))))
+         (pointer (lepton_picture_object_new file-content
+                                             file-length
+                                             filename-pointer
+                                             x1
+                                             y1
+                                             x2
+                                             y2
+                                             angle
+                                             mirrored
+                                             embedded))
+         (status
+          (lepton_picture_object_set_from_buffer pointer
+                                                 filename-pointer
+                                                 (string->pointer
+                                                  (list->string
+                                                   (map integer->char vector)))
+                                                 (s8vector-length (any->s8vector vector))
+                                                 *error)))
+
+    ;; Parse error output if something went wrong.
+    (when (zero? status)
+      (gerror-error *error))
+    (lepton_object_page_set_changed pointer)
+    ;; Return picture object.
+    (pointer->geda-object pointer)))
 
 (define (picture-filename object)
   "Returns the filename associated with picture OBJECT."
