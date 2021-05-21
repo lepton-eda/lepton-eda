@@ -107,6 +107,8 @@ static char * test_image_xpm[] = {
   (test-assert-thrown 'wrong-type-arg (make-picture/vector test-image "test_image.xpm" '(1 . 2) '(3 . y) 0 #f))
   (test-assert-thrown 'wrong-type-arg (set-picture! pic '(1 . 2) '(3 . y) 0 #f))
   ;; Wrong angle.
+  (test-assert-thrown 'misc-error (make-picture/vector test-image "test_image.xpm" '(1 . 2) '(3 . 4) 360 #f))
+  (test-assert-thrown 'misc-error (set-picture! pic '(1 . 2) '(3 . 4) 360 #f))
   (test-assert-thrown 'wrong-type-arg (make-picture/vector test-image "test_image.xpm" '(1 . 2) '(3 . 4) 'angle #f))
   (test-assert-thrown 'wrong-type-arg (set-picture! pic '(1 . 2) '(3 . 4) 'angle #f))
   ;; Mirror flag cannot be wrong, so there is no test for it.
