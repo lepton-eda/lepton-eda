@@ -753,28 +753,37 @@ value which sets whether the picture object should be mirrored."
   (check-picture-angle angle 4)
   (check-boolean mirror 5)
 
-  (let ((x1 (car top-left))
-        (y1 (cdr top-left))
-        (x2 (car bottom-right))
-        (y2 (cdr bottom-right))
-        (angle angle)
-        (mirror (if mirror 1 0)))
+  (if (equal? (picture-info object)
+              (list (picture-filename object)
+                    top-left
+                    bottom-right
+                    angle
+                    mirror))
+      ;; If nothing changed, return the object as is.
+      object
+      ;; Otherwise apply new arguments.
+      (let ((x1 (car top-left))
+            (y1 (cdr top-left))
+            (x2 (car bottom-right))
+            (y2 (cdr bottom-right))
+            (angle angle)
+            (mirror (if mirror 1 0)))
 
-    (lepton_object_emit_pre_change_notify pointer)
+        (lepton_object_emit_pre_change_notify pointer)
 
-    (lepton_picture_object_set_angle pointer angle)
-    (lepton_picture_object_set_mirrored pointer mirror)
+        (lepton_picture_object_set_angle pointer angle)
+        (lepton_picture_object_set_mirrored pointer mirror)
 
-    ;; Normalise the requested rectangle.
-    (lepton_picture_object_set_lower_x pointer (max x1 x2))
-    (lepton_picture_object_set_lower_y pointer (min y1 y2))
-    (lepton_picture_object_set_upper_x pointer (min x1 x2))
-    (lepton_picture_object_set_upper_y pointer (max y1 y2))
+        ;; Normalise the requested rectangle.
+        (lepton_picture_object_set_lower_x pointer (max x1 x2))
+        (lepton_picture_object_set_lower_y pointer (min y1 y2))
+        (lepton_picture_object_set_upper_x pointer (min x1 x2))
+        (lepton_picture_object_set_upper_y pointer (max y1 y2))
 
-    (lepton_object_page_set_changed pointer)
-    (lepton_object_emit_change_notify pointer)
+        (lepton_object_page_set_changed pointer)
+        (lepton_object_emit_change_notify pointer)
 
-    object))
+        object)))
 
 
 (define (make-picture/vector vector
