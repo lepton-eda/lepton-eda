@@ -742,6 +742,7 @@ which sets whether the picture object should be mirrored."
   (lepton_picture_object_set_mirrored pointer mirror)
   (lepton_picture_object_modify_all pointer x1 y1 x2 y2)
 
+  (lepton_object_page_set_changed pointer)
   (lepton_object_emit_change_notify pointer)
 
   object)
