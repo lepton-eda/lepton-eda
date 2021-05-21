@@ -43,6 +43,15 @@
 (test-end "page-dirty")
 
 
+(define image
+  (map char->integer (string->list
+"/* XPM */
+static char * image_xpm[] = {
+\"2 1 1 1\",
+\"      c None\",
+\"  \"};
+")))
+
 (test-begin "page-dirty-objects")
 
 (let ((P (make-page "/test/page/A"))
@@ -51,6 +60,7 @@
       (c (make-circle '(1 . 2) 3))
       (a (make-arc '(1 . 2) 3 45 90))
       (t (make-text '(1 . 2) 'lower-left 0 "test text" 10 #t 'both))
+      (pic (make-picture/vector image "image.xpm" '(1 . 2) '(5 . 4) 0 #f))
       (C (make-component "test component" '(1 . 2) 0 #t #f)))
 
   ;; Make sure pages are cleaned up
@@ -60,7 +70,7 @@
 
       ;; Add everything to the page
       (assert-dirties P (for-each (lambda (x) (page-append! P x))
-                                  (list l b c a t C)))
+                                  (list l b c a t pic C)))
       ;; Arc.
       ;; The same parameters do not modify the page.
       (assert-not-dirties P (apply set-arc! a (arc-info a)))
@@ -181,11 +191,11 @@
 
       ;; Remove primitives from page
       (assert-dirties P (for-each (lambda (x) (page-remove! P x))
-                                  (list l b c a t)))
+                                  (list l b c a t pic)))
 
       ;; Add primitives to component
       (for-each (lambda (x) (assert-dirties P (component-append! C x)))
-                (list l b c a t))
+                (list l b c a t pic))
 
       ;; Modify primitives within component
 
@@ -305,7 +315,7 @@
 
       ;; Remove primitives from component
       (for-each (lambda (x) (assert-dirties P (component-remove! C x)))
-                (list l b c a t)))
+                (list l b c a t pic)))
 
     (lambda ()
       (for-each (lambda (x) (page-remove! P x)) (page-contents P))
