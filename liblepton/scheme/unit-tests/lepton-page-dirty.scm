@@ -165,6 +165,7 @@ static char * image_xpm[] = {
       (assert-dirties P (set-text-visibility! t (not (text-visible? t))))
 
 
+      (assert-dirties P (apply set-picture! pic (cdr (picture-info pic))))
       (assert-dirties P (apply set-component! C
                                (list-tail (component-info C) 1)))
 
@@ -291,6 +292,8 @@ static char * image_xpm[] = {
       (assert-dirties P (set-text-string! t "other-string"))
       (assert-not-dirties P (set-text-visibility! t (text-visible? t)))
       (assert-dirties P (set-text-visibility! t (not (text-visible? t))))
+
+      (assert-dirties P (apply set-picture! pic (cdr (picture-info pic))))
 
       ;; The same stroke parameters do not modify the page.
       (assert-not-dirties P (apply set-object-stroke! l (object-stroke l)))
