@@ -17,6 +17,7 @@
 
 (define-module (lepton ffi)
   #:use-module (system foreign)
+  #:use-module (srfi srfi-1)
 
   #:export (liblepton
             ;; Helpers.
@@ -26,6 +27,7 @@
             check-integer
             check-string
             check-symbol
+            check-vector
 
             ;; Foreign functions.
             edascm_is_config
@@ -471,5 +473,17 @@
                    (frame-procedure-name (stack-ref (make-stack #t) 1))
                    '??)
                "Wrong type argument in position ~A (expecting symbol): ~A"
+               (list pos val)
+               #f)))
+
+(define-syntax-rule (check-vector val pos)
+  (unless (and (list? val)
+               (every integer? val))
+    (scm-error 'wrong-type-arg
+               ;; Provision against Guile-2.0 that does not have the procedure.
+               (if (defined? 'frame-procedure-name)
+                   (frame-procedure-name (stack-ref (make-stack #t) 1))
+                   '??)
+               "Wrong type argument in position ~A (expecting list of integers): ~A"
                (list pos val)
                #f)))
