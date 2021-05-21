@@ -115,3 +115,26 @@ static char * test_image_xpm[] = {
 )
 
 (test-end "picture-wrong-argument")
+
+
+;;; Common functions for transformations.
+;;; Make the same picture every time.
+(define (new-picture)
+  (make-picture/vector test-image "test_image.xpm" '(100 . 400) '(300 . 200) 0 #f))
+(define (stripped-info picture)
+  ;; Don't take filename into account.
+  (cdr (picture-info picture)))
+
+
+(test-begin "picture-translation")
+
+(test-equal (stripped-info (car (translate-objects! '(500 . 500) (new-picture))))
+  '((600 . 900) (800 . 700) 0 #f))
+(test-equal (stripped-info (car (translate-objects! '(-500 . 500) (new-picture))))
+  '((-400 . 900) (-200 . 700) 0 #f))
+(test-equal (stripped-info (car (translate-objects! '(500 . -500) (new-picture))))
+  '((600 . -100) (800 . -300) 0 #f))
+(test-equal (stripped-info (car (translate-objects! '(-500 . -500) (new-picture))))
+  '((-400 . -100) (-200 . -300) 0 #f))
+
+(test-end "picture-translation")
