@@ -70,3 +70,15 @@ static char * test_image_xpm[] = {
   )
 
 (test-end "pictures")
+
+
+(test-begin "picture-wrong-argument")
+
+(test-assert-thrown 'wrong-type-arg (picture-info 'pic))
+(test-assert-thrown 'wrong-type-arg (picture-filename 'pic))
+(test-assert-thrown 'wrong-type-arg (picture-top-left 'pic))
+(test-assert-thrown 'wrong-type-arg (picture-bottom-right 'pic))
+(test-assert-thrown 'wrong-type-arg (picture-angle 'pic))
+(test-assert-thrown 'wrong-type-arg (picture-mirror? 'pic))
+
+(test-end "picture-wrong-argument")
