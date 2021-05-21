@@ -156,3 +156,81 @@ static char * test_image_xpm[] = {
   '((100 . 400) (300 . 200) 0 #f))
 
 (test-end "picture-mirror")
+
+
+(test-begin "picture-rotation")
+
+(define degree-ls
+  '(-900 -360 -270 -180 -90 0 90 180 270 360 900))
+
+(define (rotate-at+500+500 angle)
+  (stripped-info (car (rotate-objects! '(500 . 500) angle (new-picture)))))
+(define (rotate-at-500+500 angle)
+  (stripped-info (car (rotate-objects! '(-500 . 500) angle (new-picture)))))
+(define (rotate-at+500-500 angle)
+  (stripped-info (car (rotate-objects! '(500 . -500) angle (new-picture)))))
+(define (rotate-at-500-500 angle)
+  (stripped-info (car (rotate-objects! '(-500 . -500) angle (new-picture)))))
+
+;;; The output format is
+;;; '((center-x . center-y) radius start-angle sweep-angle)
+;;; Radius and sweep angle should never change.
+(test-equal (map rotate-at+500+500 degree-ls)
+  '(((700 . 800) (900 . 600) 180 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((600 . 300) (800 . 100) 90 #f)
+    ((700 . 800) (900 . 600) 180 #f)
+    ((200 . 900) (400 . 700) 270 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((600 . 300) (800 . 100) 90 #f)
+    ((700 . 800) (900 . 600) 180 #f)
+    ((200 . 900) (400 . 700) 270 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((700 . 800) (900 . 600) 180 #f)))
+
+(test-equal (map rotate-at-500+500 degree-ls)
+  '(((-1300 . 800) (-1100 . 600) 180 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((-400 . 1300) (-200 . 1100) 90 #f)
+    ((-1300 . 800) (-1100 . 600) 180 #f)
+    ((-800 . -100) (-600 . -300) 270 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((-400 . 1300) (-200 . 1100) 90 #f)
+    ((-1300 . 800) (-1100 . 600) 180 #f)
+    ((-800 . -100) (-600 . -300) 270 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((-1300 . 800) (-1100 . 600) 180 #f)))
+
+(test-equal (map rotate-at+500-500 degree-ls)
+  '(((700 . -1200) (900 . -1400) 180 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((-400 . -700) (-200 . -900) 90 #f)
+    ((700 . -1200) (900 . -1400) 180 #f)
+    ((1200 . -100) (1400 . -300) 270 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((-400 . -700) (-200 . -900) 90 #f)
+    ((700 . -1200) (900 . -1400) 180 #f)
+    ((1200 . -100) (1400 . -300) 270 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((700 . -1200) (900 . -1400) 180 #f)))
+
+(test-equal (map rotate-at-500-500 degree-ls)
+  '(((-1300 . -1200) (-1100 . -1400) 180 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((-1400 . 300) (-1200 . 100) 90 #f)
+    ((-1300 . -1200) (-1100 . -1400) 180 #f)
+    ((200 . -1100) (400 . -1300) 270 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((-1400 . 300) (-1200 . 100) 90 #f)
+    ((-1300 . -1200) (-1100 . -1400) 180 #f)
+    ((200 . -1100) (400 . -1300) 270 #f)
+    ((100 . 400) (300 . 200) 0 #f)
+    ((-1300 . -1200) (-1100 . -1400) 180 #f)))
+
+;;; Invalid rotation angles, not multiple of 90 degree.
+(test-assert-thrown 'misc-error (rotate-at+500+500 100))
+(test-assert-thrown 'misc-error (rotate-at+500+500 -100))
+(test-assert-thrown 'misc-error (rotate-at+500+500 3000))
+(test-assert-thrown 'misc-error (rotate-at+500+500 -3000))
+
+(test-end "picture-rotation")
