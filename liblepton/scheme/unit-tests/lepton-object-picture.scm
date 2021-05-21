@@ -81,4 +81,35 @@ static char * test_image_xpm[] = {
 (test-assert-thrown 'wrong-type-arg (picture-angle 'pic))
 (test-assert-thrown 'wrong-type-arg (picture-mirror? 'pic))
 
+(let ((pic (make-picture/vector test-image "test_image.xpm" '(1 . 2) '(3 . 4) 0 #f)))
+  ;; Wrong object.
+  (test-assert-thrown 'wrong-type-arg (set-picture! 'pic '(1 . 2) '(3 . 4) 0 #f))
+  ;; Wrong image.
+  (test-assert-thrown 'wrong-type-arg (make-picture/vector 'test-image "test_image.xpm" 'c '(3 . 4) 0 #f))
+  ;; Wrong filename.
+  (test-assert-thrown 'wrong-type-arg (make-picture/vector test-image 'test_image.xpm 'c '(3 . 4) 0 #f))
+  ;; Wrong first coord.
+  (test-assert-thrown 'wrong-type-arg (make-picture/vector test-image "test_image.xpm" 'c '(3 . 4) 0 #f))
+  (test-assert-thrown 'wrong-type-arg (set-picture! pic 'c '(3 . 4) 0 #f))
+  ;; Wrong first x.
+  (test-assert-thrown 'wrong-type-arg (make-picture/vector test-image "test_image.xpm" '(x . 2) '(3 . 4) 0 #f))
+  (test-assert-thrown 'wrong-type-arg (set-picture! pic '(x . 2) '(3 . 4) 0 #f))
+  ;; Wrong first y.
+  (test-assert-thrown 'wrong-type-arg (make-picture/vector test-image "test_image.xpm" '(1 . y) '(3 . 4) 0 #f))
+  (test-assert-thrown 'wrong-type-arg (set-picture! pic '(1 . y) '(3 . 4) 0 #f))
+  ;; Wrong second coord.
+  (test-assert-thrown 'wrong-type-arg (make-picture/vector test-image "test_image.xpm" '(1 . 2) 'c 0 #f))
+  (test-assert-thrown 'wrong-type-arg (set-picture! pic '(1 . 2) 'c 0 #f))
+  ;; Wrong second x.
+  (test-assert-thrown 'wrong-type-arg (make-picture/vector test-image "test_image.xpm" '(1 . 2) '(x . 4) 0 #f))
+  (test-assert-thrown 'wrong-type-arg (set-picture! pic '(1 . 2) '(x . 4) 0 #f))
+  ;; Wrong second y.
+  (test-assert-thrown 'wrong-type-arg (make-picture/vector test-image "test_image.xpm" '(1 . 2) '(3 . y) 0 #f))
+  (test-assert-thrown 'wrong-type-arg (set-picture! pic '(1 . 2) '(3 . y) 0 #f))
+  ;; Wrong angle.
+  (test-assert-thrown 'wrong-type-arg (make-picture/vector test-image "test_image.xpm" '(1 . 2) '(3 . 4) 'angle #f))
+  (test-assert-thrown 'wrong-type-arg (set-picture! pic '(1 . 2) '(3 . 4) 'angle #f))
+  ;; Mirror flag cannot be wrong, so there is no test for it.
+)
+
 (test-end "picture-wrong-argument")
