@@ -76,6 +76,8 @@ static char * image_xpm[] = {
       (assert-not-dirties P (apply set-arc! a (arc-info a)))
       ;; Set color explicitly to facilitate next tests.
       (set-arc! a '(1 . 2) 3 45 90 3)
+      ;; Reset dirty flag if it was set.
+      (set-page-dirty! P #f)
       ;; Change center-x.
       (assert-dirties P (apply set-arc! a '((2 . 2) 3 45 90 3)))
       ;; Change center-y.
@@ -94,6 +96,8 @@ static char * image_xpm[] = {
       (assert-not-dirties P (apply set-box! b (box-info b)))
       ;; Set color explicitly to facilitate next tests.
       (set-box! b '(1 . 2) '(3 . 4) 3)
+      ;; Reset dirty flag if it was set.
+      (set-page-dirty! P #f)
       ;; Change x of the first corner.
       (assert-dirties P (apply set-box! b '((2 . 2) (3 . 4) 3)))
       ;; Change y of the first corner.
@@ -124,6 +128,8 @@ static char * image_xpm[] = {
       (assert-not-dirties P (apply set-line! l (line-info l)))
       ;; Set color explicitly to facilitate next tests.
       (set-line! l '(1 . 2) '(3 . 4) 3)
+      ;; Reset dirty flag if it was set.
+      (set-page-dirty! P #f)
       ;; Change x of the first corner.
       (assert-dirties P (apply set-line! l '((2 . 2) (3 . 4) 3)))
       ;; Change y of the first corner.
@@ -224,6 +230,8 @@ static char * image_xpm[] = {
       (assert-not-dirties P (apply set-arc! a (arc-info a)))
       ;; Set color explicitly to facilitate next tests.
       (set-arc! a '(1 . 2) 3 45 90 3)
+      ;; Reset dirty flag if it was set.
+      (set-page-dirty! P #f)
       ;; Change center-x.
       (assert-dirties P (apply set-arc! a '((2 . 2) 3 45 90 3)))
       ;; Change center-y.
@@ -242,6 +250,8 @@ static char * image_xpm[] = {
       (assert-not-dirties P (apply set-box! b (box-info b)))
       ;; Set color explicitly to facilitate next tests.
       (set-box! b '(1 . 2) '(3 . 4) 3)
+      ;; Reset dirty flag if it was set.
+      (set-page-dirty! P #f)
       ;; Change x of the first corner.
       (assert-dirties P (apply set-box! b '((2 . 2) (3 . 4) 3)))
       ;; Change y of the first corner.
@@ -258,6 +268,8 @@ static char * image_xpm[] = {
       (assert-not-dirties P (apply set-circle! c (circle-info c)))
       ;; Set color explicitly to facilitate next tests.
       (set-circle! c '(1 . 2) 10 3)
+      ;; Reset dirty flag if it was set.
+      (set-page-dirty! P #f)
       ;; Change center x.
       (assert-dirties P (apply set-circle! c '((2 . 2) 10 3)))
       ;; Change center y.
@@ -272,6 +284,8 @@ static char * image_xpm[] = {
       (assert-not-dirties P (apply set-line! l (line-info l)))
       ;; Set color explicitly to facilitate next tests.
       (set-line! l '(1 . 2) '(3 . 4) 3)
+      ;; Reset dirty flag if it was set.
+      (set-page-dirty! P #f)
       ;; Change x of the first corner.
       (assert-dirties P (apply set-line! l '((2 . 2) (3 . 4) 3)))
       ;; Change y of the first corner.
