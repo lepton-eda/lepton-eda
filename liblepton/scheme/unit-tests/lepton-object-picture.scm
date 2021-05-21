@@ -138,3 +138,21 @@ static char * test_image_xpm[] = {
   '((-400 . -100) (-200 . -300) 0 #f))
 
 (test-end "picture-translation")
+
+
+(test-begin "picture-mirror")
+
+(test-equal (stripped-info (car (mirror-objects! 0 (new-picture))))
+  '((-300 . 400) (-100 . 200) 0 #t))
+(test-equal (stripped-info (car (mirror-objects! 500 (new-picture))))
+  '((700 . 400) (900 . 200) 0 #t))
+(test-equal (stripped-info (car (mirror-objects! -500 (new-picture))))
+  '((-1300 . 400) (-1100 . 200) 0 #t))
+;;; Double mirror around the same point returns almost initial
+;;; result (coords returned for another pair of corners).
+(test-equal (stripped-info
+             (car (mirror-objects! 500
+                                   (car (mirror-objects! 500 (new-picture))))))
+  '((100 . 400) (300 . 200) 0 #f))
+
+(test-end "picture-mirror")
