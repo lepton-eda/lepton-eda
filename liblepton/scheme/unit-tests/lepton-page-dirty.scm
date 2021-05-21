@@ -167,7 +167,7 @@ static char * image_xpm[] = {
 
       ;; Picture.
       ;; The same parameters do not modify the page.
-      (assert-dirties P (apply set-picture! pic (cdr (picture-info pic))))
+      (assert-not-dirties P (apply set-picture! pic (cdr (picture-info pic))))
       ;; Set initial values to amend later.
       (set-picture! pic '(0 . 10) '(10 . 0) 0 #f)
       ;; Reset dirty flag if it was set.
@@ -315,7 +315,7 @@ static char * image_xpm[] = {
 
       ;; Picture.
       ;; The same parameters do not modify the page.
-      (assert-dirties P (apply set-picture! pic (cdr (picture-info pic))))
+      (assert-not-dirties P (apply set-picture! pic (cdr (picture-info pic))))
       ;; Set initial values to amend later.
       (set-picture! pic '(0 . 10) '(10 . 0) 0 #f)
       ;; Reset dirty flag if it was set.
