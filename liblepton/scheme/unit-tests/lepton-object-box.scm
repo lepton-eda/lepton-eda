@@ -78,7 +78,7 @@
 ;;; Make the same box every time.
 (define (new-box)
   (make-box '(100 . 100) '(300 . 400)))
-;;; Arc info without unrelated colors.
+;;; Box info without unrelated colors.
 (define (stripped-info box)
   (define (strip-color info)
     (reverse (cdr (reverse info))))
