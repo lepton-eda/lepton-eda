@@ -831,6 +831,13 @@ boolean flag which specifies if the picture should be mirrored."
   (define TRUE 1)
   (define FALSE 0)
 
+  (check-vector vector 1)
+  (check-string filename 2)
+  (check-coord top-left 3)
+  (check-coord bottom-right 4)
+  (check-picture-angle angle 5)
+  (check-boolean mirror 6)
+
   (set-picture!
    (%set-picture-data/vector!
 
