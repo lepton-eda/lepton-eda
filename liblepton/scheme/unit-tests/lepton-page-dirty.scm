@@ -165,7 +165,26 @@ static char * image_xpm[] = {
       (assert-dirties P (set-text-visibility! t (not (text-visible? t))))
 
 
+      ;; Picture.
+      ;; The same parameters do not modify the page.
       (assert-dirties P (apply set-picture! pic (cdr (picture-info pic))))
+      ;; Set initial values to amend later.
+      (set-picture! pic '(0 . 10) '(10 . 0) 0 #f)
+      ;; Reset dirty flag if it was set.
+      (set-page-dirty! P #f)
+      ;; Change x of the first corner.
+      (assert-dirties P (apply set-picture! pic '((1 . 10) (10 . 0) 0 #f)))
+      ;; Change y of the first corner.
+      (assert-dirties P (apply set-picture! pic '((1 . 11) (10 . 0) 0 #f)))
+      ;; Change x of the second corner.
+      (assert-dirties P (apply set-picture! pic '((1 . 11) (11 . 0) 0 #f)))
+      ;; Change y of the second corner.
+      (assert-dirties P (apply set-picture! pic '((1 . 11) (11 . 1) 0 #f)))
+      ;; Change angle.
+      (assert-dirties P (apply set-picture! pic '((1 . 11) (11 . 1) 90 #f)))
+      ;; Change mirror flag.
+      (assert-dirties P (apply set-picture! pic '((1 . 11) (11 . 1) 90 #t)))
+
       (assert-dirties P (apply set-component! C
                                (list-tail (component-info C) 1)))
 
@@ -293,7 +312,26 @@ static char * image_xpm[] = {
       (assert-not-dirties P (set-text-visibility! t (text-visible? t)))
       (assert-dirties P (set-text-visibility! t (not (text-visible? t))))
 
+
+      ;; Picture.
+      ;; The same parameters do not modify the page.
       (assert-dirties P (apply set-picture! pic (cdr (picture-info pic))))
+      ;; Set initial values to amend later.
+      (set-picture! pic '(0 . 10) '(10 . 0) 0 #f)
+      ;; Reset dirty flag if it was set.
+      (set-page-dirty! P #f)
+      ;; Change x of the first corner.
+      (assert-dirties P (apply set-picture! pic '((1 . 10) (10 . 0) 0 #f)))
+      ;; Change y of the first corner.
+      (assert-dirties P (apply set-picture! pic '((1 . 11) (10 . 0) 0 #f)))
+      ;; Change x of the second corner.
+      (assert-dirties P (apply set-picture! pic '((1 . 11) (11 . 0) 0 #f)))
+      ;; Change y of the second corner.
+      (assert-dirties P (apply set-picture! pic '((1 . 11) (11 . 1) 0 #f)))
+      ;; Change angle.
+      (assert-dirties P (apply set-picture! pic '((1 . 11) (11 . 1) 90 #f)))
+      ;; Change mirror flag.
+      (assert-dirties P (apply set-picture! pic '((1 . 11) (11 . 1) 90 #t)))
 
       ;; The same stroke parameters do not modify the page.
       (assert-not-dirties P (apply set-object-stroke! l (object-stroke l)))
