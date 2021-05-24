@@ -275,12 +275,8 @@ selected objects by 90 degrees counter-clockwise each time.
 @xref{Editing schematics}.
 
 @item Mirror Mode
-@clicksequence{Edit @click{} Mirror mode} (@kbd{E I}) can be used to
-mirror objects such as components and pictures around the X axis.
-Mirroring of other, simple objects is supported as well, though it's
-rarely useful.  Mirroring around the Y axis is not yet supported.
-However, you can use a sequence of mirrorings and rotations as a
-workaround to get the look you want.
+@clicksequence{Edit @click{} Mirror mode} (@kbd{E I}) is used to
+mirror objects around the X axis.  @xref{Editing schematics}.
 
 @item Object Properties...
 @clicksequence{Edit @click{} Object Properties...} (@kbd{E O})
@@ -553,6 +549,13 @@ to place them on the canvas.
 @clicksequence{Edit @click{} Rotate 90 Mode} (@kbd{E R}) rotates
 selected objects by 90 degrees counter-clockwise each time.  The
 objects are rotated around the mouse cursor.
+
+@clicksequence{Edit @click{} Mirror mode} (@kbd{E I}) can be used to
+mirror objects such as components and pictures around the X axis.
+Mirroring of other, simple objects is supported as well, though it's
+rarely useful.  Mirroring around the Y axis is not yet supported.
+However, you can use a sequence of mirrorings and rotations as a
+workaround to get the look you want.
 
 You can also rotate or mirror objects while moving them, using one of
 the ways described above, or when inserting a component.
