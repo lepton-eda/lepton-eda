@@ -22,7 +22,6 @@
   #:use-module (ice-9 format)
   #:use-module (system foreign)
 
-  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
 
   #:export (init-log
