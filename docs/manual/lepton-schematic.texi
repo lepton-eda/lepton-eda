@@ -271,10 +271,8 @@ you to move selected objects without depressing the left mouse button.
 @item Rotate 90 Mode
 
 @clicksequence{Edit @click{} Rotate 90 Mode} (@kbd{E R}) rotates
-selected objects by 90 degrees counter-clockwise each time.  The
-object are rotated around the mouse cursor.  You may also quickly
-rotate new components chosen in the Insert component dialog during
-their adding.
+selected objects by 90 degrees counter-clockwise each time.
+@xref{Editing schematics}.
 
 @item Mirror Mode
 @clicksequence{Edit @click{} Mirror mode} (@kbd{E I})
@@ -546,6 +544,13 @@ move objects without depressing the mouse button.  Select
 @clicksequence{Edit @click{} Move Mode} (@kbd{M} or @kbd{E M}) and
 move the selected objects where you want to, then use left click once
 to place them on the canvas.
+
+@clicksequence{Edit @click{} Rotate 90 Mode} (@kbd{E R}) rotates
+selected objects by 90 degrees counter-clockwise each time.  The
+objects are rotated around the mouse cursor.
+
+You can also rotate or mirror objects while moving them, using one of
+the ways described above, or when inserting a component.
 
 
 @node Working with windows, Quitting the program, Editing schematics, lepton-schematic
