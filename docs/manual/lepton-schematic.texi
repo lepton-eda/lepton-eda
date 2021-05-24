@@ -572,6 +572,13 @@ it.
 If @ref{use-docks, , docks} are enabled in your configuration, the
 properties widget will be shown as the first tab in the right dock.
 
+@clicksequence{Edit @click{} Rotate 90 Mode} (@kbd{E R}) rotates
+selected objects by 90 degrees counter-clockwise each time.  The
+objects are rotated around the mouse cursor.
+
+You can also rotate or mirror objects while moving them, using one of
+the ways described above, or when inserting a component.
+
 
 @node Working with windows, Quitting the program, Editing schematics, lepton-schematic
 @section Working with windows
