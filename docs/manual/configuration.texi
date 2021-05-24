@@ -461,6 +461,7 @@ lepton-cli config --project "schematic.gui" "font" "Monospace Regular"
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{use-docks}
 How to display widgets: as dialogs (@cfgval{false}) or inside the dock
 widgets (@cfgval{true}).
 

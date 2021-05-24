@@ -569,8 +569,8 @@ include color, stroke and filling styles, and the type of pins.
 Changing of a property affects all objects selected if they support
 it.
 
-If docks are enabled in your configuration, the properties widget will
-be shown as the first tab in the right dock.
+If @ref{use-docks, , docks} are enabled in your configuration, the
+properties widget will be shown as the first tab in the right dock.
 
 
 @node Working with windows, Quitting the program, Editing schematics, lepton-schematic
