@@ -266,7 +266,7 @@ make several copies of the same objects.  @xref{Editing schematics}.
 
 @clicksequence{Edit @click{} Move Mode} (@kbd{M} or @kbd{E M}) allows
 you to move selected objects without depressing the left mouse button.
-Hitting the button once will place them on the canvas.
+@xref{Editing schematics}.
 
 @item Rotate 90 Mode
 
@@ -535,6 +535,17 @@ To delete all currently selected objects use @clicksequence{Edit
 objects are locked, the dialog prompting for deletion of all selected
 objects or only unlocked ones will appear, in which you can also
 cancel the deletion.
+
+You can move objects on the canvas using the left mouse button: click
+on the object you want to move, keep the button depressed, drag the
+object where you need to and release the button to place the object.
+The object gets selected after the operation.  If you select several
+objects beforehand, the same operation allows you to move and place
+them all.  Sometimes it is more convenient to switch on move mode to
+move objects without depressing the mouse button.  Select
+@clicksequence{Edit @click{} Move Mode} (@kbd{M} or @kbd{E M}) and
+move the selected objects where you want to, then use left click once
+to place them on the canvas.
 
 
 @node Working with windows, Quitting the program, Editing schematics, lepton-schematic
