@@ -29,6 +29,10 @@
             check-symbol
             check-vector
 
+            ;; glib, gobject.
+            g_log
+            g_object_unref
+
             ;; Foreign functions.
             edascm_is_config
             edascm_is_object
@@ -223,6 +227,10 @@
 (define liblepton
   (dynamic-link (or (getenv "LIBLEPTON") "@LIBLEPTON@")))
 
+(define libglib (dynamic-link "@LIBGLIB@"))
+(define libgobject (dynamic-link "@LIBGOBJECT@"))
+
+
 ;;; Brief syntax macro for defining lazy foreign functions.
 (define-syntax define-lff
   (syntax-rules ()
@@ -232,7 +240,17 @@
                            type
                            (dynamic-func (symbol->string (quote name)) liblepton)
                            args))))
+         (force proc))))
+    ((_ name type args lib)
+     (define name
+       (let ((proc (delay (pointer->procedure
+                           type
+                           (dynamic-func (symbol->string (quote name)) lib)
+                           args))))
          (force proc))))))
+
+(define-lff g_log void (list '* int '* '*) libglib)
+(define-lff g_object_unref void '(*) libgobject)
 
 (define-lff set_render_placeholders void '())
 (define-lff colors_count size_t '())

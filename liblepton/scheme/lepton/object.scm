@@ -32,8 +32,6 @@
   #:use-module (lepton core object)
 
   #:use-module (lepton color-map)
-  #:use-module (lepton ffi glib)
-  #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
   #:use-module (lepton object type)
 
