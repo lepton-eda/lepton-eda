@@ -255,12 +255,12 @@ all selected objects, if any.  @xref{Selecting objects}.
 @item Copy Mode
 
 @clicksequence{Edit @click{} Copy Mode} (@kbd{C} or @kbd{E C}) allows
-one-time copy of selected objects.
+one-time copy of selected objects.  @xref{Editing schematics}.
 
 @item Multiple Copy Mode
 
-@clicksequence{Edit @click{} Multiple Copy Mode} (@kbd{E Y})
-allows to make several copies of the same objects.
+@clicksequence{Edit @click{} Multiple Copy Mode} (@kbd{E Y}) allows to
+make several copies of the same objects.  @xref{Editing schematics}.
 
 @item Move Mode
 
