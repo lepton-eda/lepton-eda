@@ -54,7 +54,7 @@ cat > "${rundir}/gafrc" << EOF
 (component-library "${abs_top_srcdir}/symbols/sym-verilog")
 
 ;; Rather than checking what m4 and pcb's m4 files do with
-;; the output we produce, just see what output gnetlist produces.
+;; the output we produce, just see what output netlister produces.
 (define gsch2pcb:pcb-m4-command-line "cat - >>")
 EOF
 
@@ -264,7 +264,7 @@ postload)
     ;;
 esac
 
-# run gnetlist
+# run lepton-netlist
 echo "${NETLISTER} -c ${cmd} -g ${backend} ${args} ${schematic}"
 (cd "${rundir}" && "${NETLISTER}" -c "${cmd}" \
                                   -g "${backend}" \
@@ -325,13 +325,13 @@ if test "X${REGEN}" = "X1" ; then
     echo "Regenerated ${ref}"
     status=0
 elif test ${rc1} -ne 0 ; then
-    echo "FAILED:  gnetlist -g ${backend} returned ${rc1}"
+    echo "FAILED:  lepton-netlist -g ${backend} returned ${rc1}"
     status=1
 elif test ${rc2} -ne 0 ; then
-    echo "FAILED:  gnetlist -g ${backend} -o - returned ${rc2}"
+    echo "FAILED:  lepton-netlist -g ${backend} -o - returned ${rc2}"
     status=1
 elif test ${rc3} -ne 0 ; then
-    echo "FAILED:  gnetlist -g ${backend} -v returned ${rc3}"
+    echo "FAILED:  lepton-netlist -g ${backend} -v returned ${rc3}"
     status=1
 else
     sed '/lepton-netlist -[gcL]/d' "${ref}" > "${out}.tmp1"
