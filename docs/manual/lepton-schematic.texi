@@ -296,11 +296,7 @@ schematics}.
 
 @item Slot...
 @clicksequence{Edit @click{} Slot...} (@kbd{E Shift-S}) is used to
-change slot number of a slotted component.  It is useless for
-graphical primitives, text, and pictures, and is only meaningful for
-slotted components.  While you can use it for non-slotted components
-as well, it won't add much to your schematics unless you change the
-component symbol to support slots.
+change slot number of a slotted component.  @xref{Editing schematics}.
 
 @item Lock
 @clicksequence{Edit @click{} Lock} (@kbd{E L})
@@ -617,6 +613,23 @@ dialog displays attributes as strings in the form ``name=value''.
 If @ref{use-docks, , docks} are enabled in your configuration, the
 @emph{Edit Text} widget will be shown as the second tab in the right
 dock.
+
+Sometimes a symbol may represent components with different pin numbers
+without changing it in any other aspect.  For example, quad-opamp has
+four same opamps in one package for which only pin numbers differ on
+schematic page.  Such components are called @emph{slotted} and there
+is a special action in @schematic{} to change the slot number quickly.
+Use @clicksequence{Edit @click{} Slot...} (@kbd{E Shift-S}) and enter
+the slot number you want.  It should be greater than zero but not
+greater than the value stored in the ``numslot'' attribute of the
+symbol.  While you can attach the ``slot'' attribute to any object on
+the page, slots are useless for graphical primitives, text, and
+pictures, and are only meaningful for such slotted components.  While
+you can use the attribute for non-slotted components, it won't add
+much to your schematics unless you change the component symbol to
+support slots by adding both ``numslots'' attribute and ``slotdef''
+attributes which determine how many slots will be used at all and what
+pin numbers will be used for each particular slot.
 
 @node Working with windows, Quitting the program, Editing schematics, lepton-schematic
 @section Working with windows
