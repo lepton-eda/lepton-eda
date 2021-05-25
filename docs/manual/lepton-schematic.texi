@@ -291,13 +291,8 @@ editing dialogs, @emph{Edit Attributes}, @emph{Edit Attribute}, or
 
 @item Edit Text...
 @clicksequence{Edit @click{} Edit Text...} (@kbd{E X}) opens the Edit
-Text dialog box for plain text objects.  It displays attributes the
-same way as the ``name=value'' strings.  For more convenient editing
-of attributes use the @clicksequence{Edit @click{} Edit...} menu
-described above.
-
-If docks are enabled, the Edit Text widget will be shown as the second
-tab in the right dock.
+Text dialog box for editing plain text objects.  @xref{Editing
+schematics}.
 
 @item Slot...
 @clicksequence{Edit @click{} Slot...} (@kbd{E Shift-S})
@@ -608,6 +603,15 @@ include a mixed set of plain text objects, attributes, and connectible
 objects, the program opens the dialog appropriate for the objects
 selected first so you may end up with not what you really wanted.  In
 such a case, deselect objects, select wanted ones, and try again.
+
+The action @clicksequence{Edit @click{} Edit Text...} (@kbd{E X}) and
+the @emph{Edit Text} dialog box it invokes is intended for editing
+plain text objects.  Thus, unlike the attribute editing dialogs, this
+dialog displays attributes as strings in the form ``name=value''.
+
+If @ref{use-docks, , docks} are enabled in your configuration, the
+@emph{Edit Text} widget will be shown as the second tab in the right
+dock.
 
 @node Working with windows, Quitting the program, Editing schematics, lepton-schematic
 @section Working with windows
