@@ -25,7 +25,6 @@
                liblepton)
 
   #:export (liblepton_init
-            set_guile_compiled_path
             ;; Helpers.
             true?
             TRUE
@@ -386,7 +385,6 @@
 
 ;;; Basic lepton initialisation function.
 (define-lff liblepton_init void '())
-(define-lff set_guile_compiled_path void '())
 
 (define-lff set_render_placeholders void '())
 (define-lff colors_count size_t '())

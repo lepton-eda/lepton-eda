@@ -83,7 +83,6 @@ g_rc_parse_handler (LeptonToplevel *toplevel,
 
 /* liblepton.c */
 void liblepton_init(void);
-void set_guile_compiled_path();
 
 /* m_hatch.c */
 void
