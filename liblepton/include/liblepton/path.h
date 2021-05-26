@@ -20,6 +20,8 @@
 /*! \file path.h
  */
 
+G_BEGIN_DECLS
+
 typedef struct st_path_section LeptonPathSection;
 
 typedef struct st_path LeptonPath;
@@ -68,3 +70,5 @@ s_path_string_from_path (const LeptonPath *path);
 int
 s_path_to_polygon (LeptonPath *path,
                    GArray *points);
+
+G_END_DECLS
