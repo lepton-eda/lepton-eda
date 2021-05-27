@@ -60,4 +60,39 @@ export_parse_size (const gchar *size);
 void
 export_list_paper_size_names();
 
+void
+lepton_export_settings_set_outfile (const char *outfile);
+
+void
+lepton_export_settings_set_format (const char* format);
+
+void
+lepton_export_settings_set_layout (const char* layout);
+
+void
+lepton_export_settings_set_scale (gdouble scale);
+
+void
+lepton_export_settings_set_size (gdouble width,
+                                 gdouble height);
+void
+lepton_export_settings_set_margins (gdouble top,
+                                    gdouble right,
+                                    gdouble bottom,
+                                    gdouble left);
+void
+lepton_export_settings_set_align (gdouble halign,
+                                  gdouble valign);
+void
+lepton_export_settings_set_dpi (gdouble dpi);
+
+void
+lepton_export_settings_set_color (gboolean color);
+
+void
+lepton_export_settings_set_font (const char *font);
+
+void
+lepton_export_settings_reset_paper_size ();
+
 G_END_DECLS

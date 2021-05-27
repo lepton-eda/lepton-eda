@@ -76,7 +76,7 @@ struct ExportSettings {
   /* Input & output */
   int infilec;
   char * const *infilev; /* Filename encoding */
-  const char *outfile; /* Filename encoding */
+  char *outfile; /* Filename encoding */
   gchar *format; /* UTF-8 */
 
   enum ExportOrientation layout;
@@ -122,6 +122,97 @@ static struct ExportSettings settings = {
   FALSE,
   NULL,
 };
+
+void
+lepton_export_settings_set_outfile (const char *outfile)
+{
+  g_free (settings.outfile);
+  settings.outfile = g_strdup (outfile);
+}
+
+void
+lepton_export_settings_set_format (const char* format)
+{
+  g_free (settings.format);
+  settings.format = g_strdup (format);
+}
+
+void
+lepton_export_settings_set_layout (const char* layout)
+{
+  enum ExportOrientation result = ORIENTATION_AUTO;
+
+  if      (strcmp (layout, "auto") == 0) { result = ORIENTATION_AUTO; }
+  else if (strcmp (layout, "landscape") == 0) { result = ORIENTATION_LANDSCAPE; }
+  else if (strcmp (layout, "portrait") == 0) { result = ORIENTATION_PORTRAIT; }
+
+  settings.layout = result;
+}
+
+void
+lepton_export_settings_set_scale (gdouble scale)
+{
+  settings.scale = scale;
+}
+
+void
+lepton_export_settings_set_size (gdouble width,
+                                 gdouble height)
+{
+  settings.size[0] = width;
+  settings.size[1] = height;
+}
+
+/* Points. Top, right, bottom, left. */
+void
+lepton_export_settings_set_margins (gdouble top,
+                                    gdouble right,
+                                    gdouble bottom,
+                                    gdouble left)
+{
+  settings.margins[0] = top;
+  settings.margins[1] = right;
+  settings.margins[2] = bottom;
+  settings.margins[3] = left;
+}
+
+void
+lepton_export_settings_set_align (gdouble halign,
+                                  gdouble valign)
+{
+  settings.align[0] = halign;
+  settings.align[1] = valign;
+}
+
+void
+lepton_export_settings_set_dpi (gdouble dpi)
+{
+  settings.dpi = dpi;
+}
+
+void
+lepton_export_settings_set_color (gboolean color)
+{
+  settings.color = color;
+}
+
+void
+lepton_export_settings_set_font (const char *font)
+{
+  g_free (settings.font);
+  settings.font = g_strdup (font);
+}
+
+void
+lepton_export_settings_reset_paper_size ()
+{
+  if (settings.paper != NULL)
+  {
+    gtk_paper_size_free (settings.paper);
+    settings.paper = NULL;
+  }
+}
+
 
 #define bad_arg_msg _("ERROR: Bad argument '%1$s' to %2$s option.\n")
 #define see_help_msg _("\nRun `lepton-cli export --help' for more information.\n")
