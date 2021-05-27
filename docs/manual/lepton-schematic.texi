@@ -299,15 +299,13 @@ schematics}.
 change slot number of a slotted component.  @xref{Editing schematics}.
 
 @item Lock
-@clicksequence{Edit @click{} Lock} (@kbd{E L}) locks objects to
-prevent selecting them by a left mouse click on them.  This is
-primarily used for title-blocks, though you can select and lock any
-object you don't want to be modified by accident. @xref{Title block
-symbol} for more information.
+@clicksequence{Edit @click{} Lock} (@kbd{E L}) locks selected objects,
+that is, makes them not selectable by just clicking on them.
+@xref{Editing schematics}.
 
 @item Unlock
-@clicksequence{Edit @click{} Unlock} (@kbd{E Shift-L}) unlocks symbols
-locked by the above menu item command.
+@clicksequence{Edit @click{} Unlock} (@kbd{E Shift-L}) unlocks
+selected locked objects.  @xref{Editing schematics}.
 
 @item Embed Component/Picture
 @clicksequence{Edit @click{} Embed Component/Picture} (@kbd{E B})
@@ -635,6 +633,39 @@ much to your schematics unless you change the component symbol to
 support slots by adding both ``numslots'' attribute and ``slotdef''
 attributes which determine how many slots will be used at all and what
 pin numbers will be used for each particular slot.
+
+Sometimes you want some objects on the page to not get in your way
+while editing schematics.  It is particularly true for big symbols
+like title blocks (@pxref{Title block symbol}).  Such symbols are
+intentionally put to background and other symbols are placed over
+them.  The issue here is the selection mechanism of @schematic{}.
+When you click on an object to select it, and there are several
+selectable objects under the mouse cursor, the program will select
+each of them one by one to let you choose the wanted one.  Locked
+symbols are to be excluded from such a sequence since it would be
+annoying to, say, every time select the title block symbol when you
+merely want to select any other object within it.  Select symbols you
+want to be locked and use @clicksequence{Edit @click{} Lock} (@kbd{E
+L}) to lock them.  (By the way, you rarely need this for title blocks
+as they usually are added as already locked when a new schematic is
+created.  @xref{Title block symbol} for more information.)  In order
+to unlock a symbol, select it using box selection (@pxref{Box
+selection}) and use @clicksequence{Edit @click{} Unlock} (@kbd{E
+Shift-L}).
+
+@quotation Note
+Locking and unlocking actions affect not only components but also all
+the attributes attached to them.  You don't have to select each one of
+them individually, it is sufficient to select just the component they
+are attached to.
+@end quotation
+
+@quotation Note
+Primitive objects (not components) cannot be locked or unlocked, it is
+not supported in the current file format (@pxref{gEDA file format}).
+However, a Scheme extension may be used in Lepton to achieve that.
+@end quotation
+
 
 @node Working with windows, Quitting the program, Editing schematics, lepton-schematic
 @section Working with windows
