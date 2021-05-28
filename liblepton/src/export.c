@@ -139,6 +139,17 @@ static struct ExportSettings settings = {
 #define see_help_msg _("\nRun `lepton-cli export --help' for more information.\n")
 
 static void
+lepton_export_set_renderer_font (EdaRenderer *renderer,
+                                 const char *font_name)
+{
+  g_object_set (G_OBJECT(renderer),
+                "font-name",
+                font_name,
+                NULL);
+}
+
+
+static void
 cmd_export_impl (void *data, int argc, char **argv)
 {
   size_t i;
