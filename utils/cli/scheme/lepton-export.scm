@@ -47,7 +47,7 @@ exec @GUILE@ -s "$0" "$@"
   `((png "Portable Network Graphics (PNG)" #f ,lepton_export_png)
     (ps "Postscript (PS)" multipage ,lepton_export_ps)
     (eps "Encapsulated Postscript (EPS)" #f ,lepton_export_eps)
-    (pdf "Portable Document Format (PDF)" multipage ,export_pdf)
+    (pdf "Portable Document Format (PDF)" multipage ,lepton_export_pdf)
     (svg "Scalable Vector Graphics (SVG)" #f ,export_svg)))
 
 (define %settings-outfile #f)

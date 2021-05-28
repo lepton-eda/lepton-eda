@@ -72,7 +72,7 @@
 
             export_config
             lepton_export_eps
-            export_pdf
+            lepton_export_pdf
             lepton_export_png
             lepton_export_ps
             export_svg
@@ -659,7 +659,7 @@
 ;;; export.c
 (define-lff export_config void '())
 (define-lff lepton_export_eps void '())
-(define-lff export_pdf void '())
+(define-lff lepton_export_pdf void '())
 (define-lff lepton_export_png void '())
 (define-lff lepton_export_ps void '())
 (define-lff export_svg void '())

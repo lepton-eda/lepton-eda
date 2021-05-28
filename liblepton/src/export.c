@@ -567,7 +567,7 @@ lepton_export_eps (void)
 }
 
 void
-export_pdf (void)
+lepton_export_pdf (void)
 {
   cairo_surface_t *surface;
   cairo_rectangle_t extents;
