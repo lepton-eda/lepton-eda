@@ -228,7 +228,7 @@ Lepton EDA homepage: ~A
               seeds))
     (option '(#\s "size") #t #f
             (lambda (opt name arg seeds)
-              (if (export_parse_size (string->pointer arg))
+              (if (lepton_export_parse_size (string->pointer arg))
                   ;; Since a specific size was provided, ditch the paper size setting
                   (ditch-paper-size)
                   (begin

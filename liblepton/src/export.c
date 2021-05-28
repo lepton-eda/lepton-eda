@@ -794,7 +794,7 @@ export_parse_paper (const gchar *paper)
 /* Parse the --size option, which must either be "auto" (i.e. obtain
  * size from drawing) or a list of two distances (width/height). */
 gboolean
-export_parse_size (const gchar *size)
+lepton_export_parse_size (const gchar *size)
 {
   gint n;
   gchar **dists;

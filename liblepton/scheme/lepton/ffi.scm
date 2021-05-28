@@ -82,7 +82,7 @@
             export_parse_margins
             export_parse_paper
             export_parse_scale
-            export_parse_size
+            lepton_export_parse_size
             lepton_export_settings_reset_paper_size
             lepton_export_settings_set_color
             lepton_export_settings_set_dpi
@@ -669,7 +669,7 @@
 (define-lff export_parse_margins int '(*))
 (define-lff export_parse_paper int '(*))
 (define-lff export_parse_scale int '(*))
-(define-lff export_parse_size int '(*))
+(define-lff lepton_export_parse_size int '(*))
 (define-lff lepton_export_settings_reset_paper_size void '())
 (define-lff lepton_export_settings_set_color void (list int))
 (define-lff lepton_export_settings_set_dpi void (list double))

@@ -52,7 +52,7 @@ gboolean
 export_parse_paper (const gchar *paper);
 
 gboolean
-export_parse_size (const gchar *size);
+lepton_export_parse_size (const gchar *size);
 
 void
 lepton_export_list_paper_size_names ();
