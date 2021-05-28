@@ -71,7 +71,7 @@
             eda_renderer_set_color_map
 
             export_config
-            export_eps
+            lepton_export_eps
             export_pdf
             lepton_export_png
             lepton_export_ps
@@ -658,7 +658,7 @@
 
 ;;; export.c
 (define-lff export_config void '())
-(define-lff export_eps void '())
+(define-lff lepton_export_eps void '())
 (define-lff export_pdf void '())
 (define-lff lepton_export_png void '())
 (define-lff lepton_export_ps void '())

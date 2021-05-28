@@ -28,7 +28,7 @@ void
 lepton_export_ps  ();
 
 void
-export_eps ();
+lepton_export_eps ();
 
 void
 export_pdf ();

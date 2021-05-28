@@ -561,7 +561,7 @@ lepton_export_ps (void)
 }
 
 void
-export_eps (void)
+lepton_export_eps (void)
 {
   export_postscript (TRUE);
 }
