@@ -150,6 +150,43 @@ lepton_export_set_renderer_font (EdaRenderer *renderer,
 
 
 static void
+lepton_export_set_renderer_color_map (EdaRenderer *renderer,
+                                      gboolean color)
+{
+  size_t i;
+  GArray *render_color_map = NULL;
+
+  /* Create color map */
+  render_color_map =
+    g_array_sized_new (FALSE, FALSE, sizeof(LeptonColor), colors_count());
+  LeptonColor* print_colors = print_colors_array();
+  render_color_map =
+    g_array_append_vals (render_color_map, print_colors, colors_count());
+  if (!color) {
+    /* Create a black and white color map.  All non-background colors
+     * are black. */
+    LeptonColor white = {255, 255, 255, 255, TRUE};
+    LeptonColor black = {0, 0, 0, 255, TRUE};
+    for (i = 0; i < colors_count(); i++) {
+      LeptonColor *c = &g_array_index (render_color_map, LeptonColor, i);
+      if (!c->enabled) continue;
+
+      if (c->a == 0) {
+        c->enabled = FALSE;
+        continue;
+      }
+      if (i == OUTPUT_BACKGROUND_COLOR) {
+        *c = white;
+      } else {
+        *c = black;
+      }
+    }
+  }
+  eda_renderer_set_color_map (renderer, render_color_map);
+}
+
+
+static void
 cmd_export_impl (void *data, int argc, char **argv)
 {
   size_t i;
