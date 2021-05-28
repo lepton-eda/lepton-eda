@@ -489,7 +489,7 @@ lepton_export_png (void)
   g_object_unref (G_OBJECT (renderer));
 }
 
-/* Worker function used by both export_ps and export_eps */
+/* Worker function used by both lepton_export_ps and export_eps */
 static void
 export_postscript (gboolean is_eps)
 {
@@ -555,7 +555,7 @@ export_postscript (gboolean is_eps)
 }
 
 void
-export_ps (void)
+lepton_export_ps (void)
 {
   export_postscript (FALSE);
 }

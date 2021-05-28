@@ -25,7 +25,7 @@ void
 lepton_export_png ();
 
 void
-export_ps  ();
+lepton_export_ps  ();
 
 void
 export_eps ();

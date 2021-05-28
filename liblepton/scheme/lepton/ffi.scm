@@ -74,7 +74,7 @@
             export_eps
             export_pdf
             lepton_export_png
-            export_ps
+            lepton_export_ps
             export_svg
             lepton_export_list_paper_size_names
             export_parse_align
@@ -661,7 +661,7 @@
 (define-lff export_eps void '())
 (define-lff export_pdf void '())
 (define-lff lepton_export_png void '())
-(define-lff export_ps void '())
+(define-lff lepton_export_ps void '())
 (define-lff export_svg void '())
 (define-lff lepton_export_list_paper_size_names void '())
 (define-lff export_parse_align int '(*))

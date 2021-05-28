@@ -45,7 +45,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; name is not used.
 (define output-formats
   `((png "Portable Network Graphics (PNG)" #f ,lepton_export_png)
-    (ps "Postscript (PS)" multipage ,export_ps)
+    (ps "Postscript (PS)" multipage ,lepton_export_ps)
     (eps "Encapsulated Postscript (EPS)" #f ,export_eps)
     (pdf "Portable Document Format (PDF)" multipage ,export_pdf)
     (svg "Scalable Vector Graphics (SVG)" #f ,export_svg)))
