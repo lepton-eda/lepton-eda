@@ -909,7 +909,7 @@ export_config (void)
 }
 
 void
-export_list_paper_size_names()
+lepton_export_list_paper_size_names ()
 {
   GList* names = gtk_paper_size_get_paper_sizes (TRUE);
 

@@ -76,7 +76,7 @@
             export_png
             export_ps
             export_svg
-            export_list_paper_size_names
+            lepton_export_list_paper_size_names
             export_parse_align
             export_parse_layout
             export_parse_margins
@@ -663,7 +663,7 @@
 (define-lff export_png void '())
 (define-lff export_ps void '())
 (define-lff export_svg void '())
-(define-lff export_list_paper_size_names void '())
+(define-lff lepton_export_list_paper_size_names void '())
 (define-lff export_parse_align int '(*))
 (define-lff export_parse_layout int '(*))
 (define-lff export_parse_margins int '(*))

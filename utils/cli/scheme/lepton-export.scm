@@ -224,7 +224,7 @@ Lepton EDA homepage: ~A
               seeds))
     (option '(#\P "paper-names") #f #f
             (lambda (opt name arg seeds)
-              (export_list_paper_size_names)
+              (lepton_export_list_paper_size_names)
               seeds))
     (option '(#\s "size") #t #f
             (lambda (opt name arg seeds)
