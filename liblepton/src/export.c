@@ -102,8 +102,6 @@ static struct ExportFormat formats[] =
     {NULL, NULL, 0, NULL},
   };
 
-static LeptonToplevel *toplevel = NULL;
-
 static struct ExportSettings settings = {
   0,
   NULL,
@@ -285,7 +283,7 @@ cmd_export_impl (void *data, int argc, char **argv)
   set_render_placeholders ();
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  toplevel = s_toplevel_new ();
+  LeptonToplevel *toplevel = s_toplevel_new ();
   edascm_dynwind_toplevel (toplevel);
 
   /* Now load rc files, if necessary */
@@ -404,6 +402,8 @@ export_layout_page (LeptonPage *page,
   gdouble m[4]; /* Calculated margins */
   gdouble s; /* Calculated scale */
   gdouble slack[2]; /* Calculated alignment slack */
+
+  LeptonToplevel *toplevel = edascm_c_current_toplevel();
 
   if (page == NULL) {
     const GList *pages = lepton_list_get_glist (toplevel->pages);
@@ -540,6 +540,8 @@ export_draw_page (LeptonPage *page,
   GList *iter;
   cairo_t *cr;
 
+  LeptonToplevel *toplevel = edascm_c_current_toplevel();
+
   cr = eda_renderer_get_cairo_context (renderer);
 
   if (page == NULL) {
@@ -631,6 +633,8 @@ export_postscript (gboolean is_eps)
   cairo_t *cr;
   GList *iter;
 
+  LeptonToplevel *toplevel = edascm_c_current_toplevel();
+
   /* Create renderer */
   EdaRenderer *renderer = eda_renderer_new (NULL, NULL);
   if (settings.font != NULL) {
@@ -704,6 +708,8 @@ export_pdf (void)
   cairo_matrix_t mtx;
   cairo_t *cr;
   GList *iter;
+
+  LeptonToplevel *toplevel = edascm_c_current_toplevel();
 
   /* Create renderer */
   EdaRenderer *renderer = eda_renderer_new (NULL, NULL);
