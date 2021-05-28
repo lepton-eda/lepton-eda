@@ -430,7 +430,7 @@ export_draw_page (LeptonPage *page,
 }
 
 void
-export_png (void)
+lepton_export_png (void)
 {
   cairo_surface_t *surface;
   cairo_t *cr;

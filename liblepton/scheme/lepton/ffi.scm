@@ -73,7 +73,7 @@
             export_config
             export_eps
             export_pdf
-            export_png
+            lepton_export_png
             export_ps
             export_svg
             lepton_export_list_paper_size_names
@@ -660,7 +660,7 @@
 (define-lff export_config void '())
 (define-lff export_eps void '())
 (define-lff export_pdf void '())
-(define-lff export_png void '())
+(define-lff lepton_export_png void '())
 (define-lff export_ps void '())
 (define-lff export_svg void '())
 (define-lff lepton_export_list_paper_size_names void '())

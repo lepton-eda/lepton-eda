@@ -22,7 +22,7 @@ void
 export_config (void);
 
 void
-export_png ();
+lepton_export_png ();
 
 void
 export_ps  ();
