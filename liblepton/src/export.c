@@ -608,7 +608,7 @@ lepton_export_pdf (void)
 }
 
 void
-export_svg ()
+lepton_export_svg ()
 {
   cairo_surface_t *surface;
   cairo_rectangle_t extents;
