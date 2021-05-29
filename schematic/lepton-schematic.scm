@@ -1,6 +1,5 @@
 #!/usr/bin/env sh
 export GUILE_LOAD_COMPILED_PATH="@ccachedir@:${GUILE_LOAD_COMPILED_PATH}"
-export GUILE_LOAD_PATH="@LEPTON_SCHEME_MODULE_DIRECTORY@:${GUILE_LOAD_PATH}"
 exec @GUILE@ -s "$0" "$@"
 !#
 
@@ -22,20 +21,20 @@ exec @GUILE@ -s "$0" "$@"
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
+(add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")
 
 (use-modules (ice-9 match)
              (srfi srfi-1)
              (lepton srfi-37)
-             (system foreign))
+             (system foreign)
+             (lepton ffi))
 
-;;; Load and initialize liblepton library.
-(load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
-                "liblepton_init")
+;;; Initialize liblepton library.
+(liblepton_init)
 
 (primitive-eval '(use-modules (lepton color-map)
                               (lepton config)
                               (lepton eval)
-                              (lepton ffi)
                               (lepton file-system)
                               (lepton log)
                               (lepton os)

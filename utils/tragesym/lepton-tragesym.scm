@@ -36,16 +36,8 @@ exec @GUILE@ -s "$0" "$@"
 ;;;   defined by the greater number of pins at the top or at the
 ;;;   bottom of the symbol, and the width requested.
 
-;;; Load and initialize liblepton library.
-(load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
-                "liblepton_init")
-
-(primitive-eval '(use-modules (lepton core toplevel)
-                              (lepton attrib)
-                              (lepton object)
-                              (lepton page)
-                              (lepton version)
-                              (netlist attrib compare)))
+(unless (getenv "LIBLEPTON")
+  (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@"))
 
 (use-modules (ice-9 getopt-long)
              (ice-9 match)
@@ -53,7 +45,18 @@ exec @GUILE@ -s "$0" "$@"
              (ice-9 textual-ports)
              (srfi srfi-1)
              (srfi srfi-9)
-             (sxml match))
+             (sxml match)
+             (lepton ffi))
+
+;;; Initialize liblepton library.
+(liblepton_init)
+
+(primitive-eval '(use-modules (lepton core toplevel)
+                              (lepton attrib)
+                              (lepton object)
+                              (lepton page)
+                              (lepton version)
+                              (netlist attrib compare)))
 
 (define %option-spec
   '((help    (single-char #\h) (value #f))

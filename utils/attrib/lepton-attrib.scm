@@ -22,15 +22,17 @@ exec @GUILE@ -s "$0" "$@"
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
+(unless (getenv "LIBLEPTON")
+  (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@"))
 
 (use-modules (ice-9 getopt-long)
              (ice-9 receive)
              (srfi srfi-1)
-             (system foreign))
+             (system foreign)
+             (lepton ffi))
 
-;;; Load and initialize liblepton library.
-(load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
-                "liblepton_init")
+;;; Initialize liblepton library.
+(liblepton_init)
 
 (define libgtk (dynamic-link "@LIBGTK@"))
 (define libleptonattrib (dynamic-link "@LIBLEPTONATTRIB@"))

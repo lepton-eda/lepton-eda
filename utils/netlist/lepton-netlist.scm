@@ -4,7 +4,7 @@ exec @GUILE@ -s "$0" "$@"
 !#
 ;;; Lepton EDA netlister
 ;;; Scheme API
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,9 +20,15 @@ exec @GUILE@ -s "$0" "$@"
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-;;; Load and initialize liblepton library.
-(load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
-                "liblepton_init")
+(unless (getenv "LIBLEPTON")
+  (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@"))
+
+(use-modules (ice-9 getopt-long)
+             (srfi srfi-26)
+             (lepton ffi))
+
+;;; Initialize liblepton library.
+(liblepton_init)
 
 ;;; Localization.
 (define %textdomain "lepton-netlist")
@@ -31,9 +37,6 @@ exec @GUILE@ -s "$0" "$@"
 (bind-textdomain-codeset %textdomain "UTF-8")
 
 ;;; Process lepton-netlist options.
-
-(use-modules (ice-9 getopt-long)
-             (srfi srfi-26))
 
 ;;; Specification.
 (define %option-spec
