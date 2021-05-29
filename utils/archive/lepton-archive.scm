@@ -61,10 +61,8 @@ exec @GUILE@ -s "$0" "$@"
 ;;;   Before each move, make sure that no overwrite of existing
 ;;;   files will occur.
 
-
-;;; Load and initialize liblepton library.
-(load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
-                "liblepton_init")
+(unless (getenv "LIBLEPTON")
+  (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@"))
 
 (use-modules (ice-9 ftw)
              (ice-9 getopt-long)
@@ -74,7 +72,11 @@ exec @GUILE@ -s "$0" "$@"
              (ice-9 streams)
              (ice-9 rdelim)
              (srfi srfi-1)
-             (srfi srfi-26))
+             (srfi srfi-26)
+             (lepton ffi))
+
+;;; Initialize liblepton library.
+(liblepton_init)
 
 (primitive-eval
  '(use-modules (lepton core toplevel)

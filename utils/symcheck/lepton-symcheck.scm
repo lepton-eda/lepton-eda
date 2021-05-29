@@ -4,7 +4,7 @@ exec @GUILE@ -s "$0" "$@"
 !#
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -20,8 +20,13 @@ exec @GUILE@ -s "$0" "$@"
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-(load-extension (or (getenv "LIBLEPTON") "@libdir@/liblepton")
-                "liblepton_init")
+(unless (getenv "LIBLEPTON")
+  (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@"))
+
+(use-modules (lepton ffi))
+
+;;; Initialize liblepton library.
+(liblepton_init)
 
 ;;; Localization.
 (define %textdomain "lepton-symcheck")

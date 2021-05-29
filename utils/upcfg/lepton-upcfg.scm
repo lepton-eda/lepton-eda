@@ -11,16 +11,21 @@ exec @GUILE@ "$0" "$@"
 ;; License: GPLv2+. See the COPYING file
 ;;
 
-( load-extension ( or (getenv "LIBLEPTON") "@libdir@/liblepton" )
-                 "liblepton_init" )
+(unless (getenv "LIBLEPTON")
+  (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@"))
+
+(use-modules (ice-9 format)
+             (ice-9 rdelim) ; read-line()
+             (ice-9 getopt-long)
+             (lepton ffi))
+
+;; Initialize liblepton library.
+(liblepton_init)
 
 ; Avoid Scheme compile-time errors using a clever trick
 ; from netlist/scheme/lepton-netlist.scm (see comments there):
 ;
-( primitive-eval '(use-modules (ice-9 format)) )
-( primitive-eval '(use-modules (ice-9 rdelim)) ) ; read-line()
 ( primitive-eval '(use-modules (lepton legacy-config)) )
-( primitive-eval '(use-modules (ice-9 getopt-long)) )
 ( primitive-eval '(use-modules (lepton version)) )
 ( primitive-eval '(use-modules (lepton log)) )
 
@@ -240,4 +245,3 @@ Lepton EDA homepage: <~a>
 ; top-level code:
 ;
 ( main )
-

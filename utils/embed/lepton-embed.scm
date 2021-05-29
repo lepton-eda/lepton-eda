@@ -11,13 +11,15 @@ exec @GUILE@ "$0" "$@"
 ;; License: GPLv2+. See the COPYING file
 ;;
 
-( load-extension
-  ( or (getenv "LIBLEPTON") "@libdir@/liblepton" )
-  "liblepton_init"
-)
+(unless (getenv "LIBLEPTON")
+  (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@"))
 
-( use-modules ( ice-9 getopt-long ) )
-( use-modules ( ice-9 format ) )
+(use-modules (ice-9 format)
+             (ice-9 getopt-long)
+             (lepton ffi))
+
+;; Initialize liblepton library.
+(liblepton_init)
 
 ( primitive-eval '(use-modules (lepton core toplevel)) )
 ( primitive-eval '(use-modules (lepton object)) )
@@ -273,4 +275,3 @@ Lepton EDA homepage: <~a>
     ( main )
   )
 )
-
