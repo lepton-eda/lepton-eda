@@ -15,7 +15,7 @@ exec @GUILE@ "$0" "$@"
                  "liblepton_init" )
 
 ; Avoid Scheme compile-time errors using a clever trick
-; from netlist/scheme/lepton-netlist.in (see comments there):
+; from netlist/scheme/lepton-netlist.scm (see comments there):
 ;
 ( primitive-eval '(use-modules (ice-9 format)) )
 ( primitive-eval '(use-modules (ice-9 rdelim)) ) ; read-line()
