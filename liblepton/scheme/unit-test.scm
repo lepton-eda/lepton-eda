@@ -1,6 +1,6 @@
 ;;; Autotools compatible SRFI-64 Scheme unit-test framework
 ;;; Copyright (C) 2016 gEDA Contributors
-;;; Copyright (C) 2018-2020 Lepton EDA Contributors
+;;; Copyright (C) 2018-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -54,19 +54,21 @@
 ;;;   Must be present once if several tests are done in one
 ;;;   script. It should output some summary.
 
+
+;;; Initialize liblepton variables and functions.
+(setenv "LIBLEPTON" "../src/liblepton")
+
 (use-modules (srfi srfi-64)
              (srfi srfi-26)
              (ice-9 getopt-long)
-             (ice-9 pretty-print))
+             (ice-9 pretty-print)
+             (lepton ffi))
 
 ;;; In order to facilitate debugging, you can increase the pile of
 ;;; info reported on errors by setting the COLUMNS environment
 ;;; variable to a bigger value. Example:
 ;; (setenv "COLUMNS" "1000")
 
-
-;;; Initialize liblepton variables and functions.
-(setenv "LIBLEPTON" "../src/liblepton")
 (setenv "LEPTON_INHIBIT_RC_FILES" "yes")
 ;;; The load path should not be changed after loading the
 ;;; liblepton library.  This is tested in the unit test
@@ -74,10 +76,9 @@
 (setenv "INITIAL_GUILE_LOAD_PATH"
         (with-output-to-string (lambda () (write %load-path))))
 
+;;; Initialize liblepton library.
+(liblepton_init)
 
-(load-extension (string-append (getenv "abs_top_builddir")
-                               "/liblepton/src/liblepton")
-                "liblepton_init")
 (define with-toplevel (@@ (lepton core toplevel) %with-toplevel))
 (define make-toplevel (@@ (lepton core toplevel) %make-toplevel))
 
