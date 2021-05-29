@@ -55,8 +55,10 @@
 ;;;   script. It should output some summary.
 
 
-;;; Initialize liblepton variables and functions.
-(setenv "LIBLEPTON" "../src/liblepton")
+;;; Set location of liblepton library.
+(setenv "LIBLEPTON"
+        (string-join '(".." "src" "liblepton")
+                     file-name-separator-string))
 
 (use-modules (srfi srfi-64)
              (srfi srfi-26)
