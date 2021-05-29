@@ -20,6 +20,7 @@
   #:use-module (srfi srfi-1)
 
   #:export (liblepton
+            liblepton_init
             ;; Helpers.
             true?
             check-boolean
@@ -251,6 +252,9 @@
 
 (define-lff g_log void (list '* int '* '*) libglib)
 (define-lff g_object_unref void '(*) libgobject)
+
+;;; Basic lepton initialisation function.
+(define-lff liblepton_init void '())
 
 (define-lff set_render_placeholders void '())
 (define-lff colors_count size_t '())
