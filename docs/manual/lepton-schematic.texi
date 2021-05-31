@@ -309,25 +309,13 @@ selected locked objects.  @xref{Editing schematics}.
 
 @item Embed Component/Picture
 @clicksequence{Edit @click{} Embed Component/Picture} (@kbd{E B})
-makes sense only for component and picture objects that may be stored
-in your project separately from your schematic.  Supposed that you
-want them to be distributed within your schematic, that is, not as
-separate symbol and picture files, you may embed them by using this
-menu item command.  Currently, each symbol or picture instance should
-be embedded if you have several of them in your schematic.  Otherwise,
-not embedded objects won't be present in the schematic if you don't
-include libraries with appropriate symbols into your project.  This is
-limitation of the current file format. @xref{gEDA file format} for
-more information.
+embeds a component or a picture into schematic.  @xref{Editing
+schematics}.
 
 @item Unembed Component/Picture
 @clicksequence{Edit @click{} Unembed Component/Picture} (@kbd{E
-Shift-B}) unembeds a component or picture embedded by the above menu
-item action.  Note that the command will be ignored if you don't have
-the symbol or image corresponding to your unembeddable object in one
-of the libraries available for your schematic.  Remember to open the
-log window and see what could went wrong if the schematic page did not
-change after this command.
+Shift-B}) unembeds an embedded component or a picture from schematic.
+@xref{Editing schematics}.
 
 @item Update Component
 @clicksequence{Edit @click{} Update Component} (@kbd{E U})
@@ -681,6 +669,30 @@ Primitive objects (not components) cannot be locked or unlocked, it is
 not supported in the current file format (@pxref{gEDA file format}).
 However, a Scheme extension may be used in Lepton to achieve that.
 @end quotation
+
+There are two special actions that allow you to save data of a
+component or a picture within schematic or undo such a change.
+@clicksequence{Edit @click{} Embed Component/Picture} (@kbd{E B})
+embeds the data of selected component or picture into schematic.  This
+may make sense in case you want to distribute your schematic as one
+file and/or prevent data loss or corruption due to different set of
+symbols available at the target and destination locations.  Currently,
+you have to embed each component or picture instance if you have
+several of them in your schematic.  Otherwise, not embedded objects
+won't be present in the schematic if you don't include libraries with
+appropriate symbols into your project.  This is limitation of the
+current file format.  @xref{gEDA file format} for more information.
+Embedding objects makes thus the file size bigger (sometimes, much
+bigger), and after you made sure anything is OK, and necessary symbols
+or pictures are in place, you may want to unembed the objects.  The
+action @clicksequence{Edit @click{} Unembed Component/Picture} (@kbd{E
+Shift-B}) does just that.  It unembeds a component or picture embedded
+by the menu item action described above.  Note that the command will
+be ignored if you don't have the symbol or image corresponding to your
+unembeddable object in one of the libraries available for your
+schematic.  Remember to open the log window and see what could went
+wrong if your schematic file did not change after this action and
+saving it.
 
 
 @node Working with windows, Quitting the program, Editing schematics, lepton-schematic
