@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,5 +40,11 @@ void x_basic_warp_cursor (GtkWidget* widget, gint x, gint y)
   screen = gtk_widget_get_screen (widget);
   display = gdk_screen_get_display (screen);
 
+#ifdef ENABLE_GTK3
+  GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
+  GdkDevice *pointer = gdk_device_manager_get_client_pointer (device_manager);
+  gdk_device_warp (pointer, screen, window_x + x, window_y + y);
+#else
   gdk_display_warp_pointer (display, screen, window_x + x, window_y + y);
+#endif
 }
