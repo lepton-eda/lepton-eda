@@ -260,17 +260,25 @@ render (GtkCellRenderer      *cell,
   GschemFillSwatchCellRenderer *swatch = GSCHEM_FILL_SWATCH_CELL_RENDERER (cell);
 
   if (swatch->enabled) {
-    GdkColor color;
     double offset = SWATCH_BORDER_WIDTH / 2.0;
     gboolean success;
-#ifndef ENABLE_GTK3
+#ifdef ENABLE_GTK3
+    GdkRGBA color;
+
+    /* Paint the swatch using the text color to match the user's desktop theme.
+     */
+
+    success = gtk_style_context_lookup_color (gtk_widget_get_style_context (widget),
+                                              "text_color",
+                                              &color);
+#else /* GTK2 */
+    GdkColor color;
     cairo_t *cr = gdk_cairo_create (window);
 
     if (expose_area) {
       gdk_cairo_rectangle (cr, expose_area);
       cairo_clip (cr);
     }
-#endif
 
     /* Paint the swatch using the text color to match the user's desktop theme.
      */
@@ -278,12 +286,21 @@ render (GtkCellRenderer      *cell,
     success = gtk_style_lookup_color (gtk_widget_get_style (widget),
                                       "text_color",
                                       &color);
+#endif
 
     if (success) {
+#ifdef ENABLE_GTK3
+      cairo_set_source_rgba (cr,
+                             color.red,
+                             color.green,
+                             color.blue,
+                             color.alpha);
+#else
       cairo_set_source_rgb (cr,
                             color.red   / 65535.0,
                             color.green / 65535.0,
                             color.blue  / 65535.0);
+#endif
     }
 
     cairo_move_to (cr,
