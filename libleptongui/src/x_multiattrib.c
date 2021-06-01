@@ -2069,7 +2069,11 @@ multiattrib_init (Multiattrib *multiattrib)
   GtkCellRenderer *renderer;
   GtkTreeViewColumn *column;
   GtkTreeSelection *selection;
+#ifdef ENABLE_GTK3
+  GtkStyleContext *stylectx;
+#else
   GtkStyle *style;
+#endif
 
   /* dialog initialization */
   g_object_set (G_OBJECT (multiattrib),
@@ -2346,6 +2350,27 @@ multiattrib_init (Multiattrib *multiattrib)
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), textview);
 
+#ifdef ENABLE_GTK3
+  /* Save the GTK_STATE_FLAG_NORMAL color so we can work around
+   * GtkTextView's stubborn refusal to draw with
+   * GTK_STATE_FLAG_INSENSITIVE later on */
+  stylectx = gtk_widget_get_style_context (textview);
+  gtk_style_context_get_color (stylectx,
+                               GTK_STATE_FLAG_NORMAL,
+                               &multiattrib->value_normal_text_color);
+  /* Save this one so we can pick it as a sensible colour to show the
+   * inherited attributes dimmed.
+   */
+  stylectx = gtk_widget_get_style_context (treeview);
+  gtk_style_context_get_color (stylectx,
+                               GTK_STATE_FLAG_INSENSITIVE,
+                               &multiattrib->insensitive_text_color);
+
+  gdk_rgba_parse (&multiattrib->not_identical_value_text_color, "grey");
+  gdk_rgba_parse (&multiattrib->not_present_in_all_text_color, "red");
+
+#else /* GTK2 */
+
   /* Save the GTK_STATE_NORMAL color so we can work around GtkTextView's
    * stubborn refusal to draw with GTK_STATE_INSENSITIVE later on */
   style = gtk_widget_get_style (textview);
@@ -2359,6 +2384,7 @@ multiattrib_init (Multiattrib *multiattrib)
 
   gdk_color_parse ("grey", &multiattrib->not_identical_value_text_color);
   gdk_color_parse ("red",  &multiattrib->not_present_in_all_text_color);
+#endif
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), textview);
   multiattrib->textview_value = GTK_TEXT_VIEW (textview);
@@ -2765,7 +2791,6 @@ static void
 multiattrib_update (Multiattrib *multiattrib)
 {
   GList *o_iter;
-  GtkStyle *style;
   gboolean show_inherited;
   gboolean list_sensitive;
   gboolean add_sensitive;
@@ -2906,9 +2931,17 @@ multiattrib_update (Multiattrib *multiattrib)
 
   /* Work around GtkTextView's stubborn indifference
    * to GTK_STATE_INSENSITIVE when rendering its text. */
-  style = gtk_widget_get_style (GTK_WIDGET (multiattrib->textview_value));
+#ifdef ENABLE_GTK3
+  gtk_widget_override_color (GTK_WIDGET (multiattrib->textview_value),
+                             GTK_STATE_FLAG_NORMAL,
+                             add_sensitive ?
+                             &multiattrib->value_normal_text_color :
+                             &multiattrib->insensitive_text_color);
+#else
+  GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (multiattrib->textview_value));
   gtk_widget_modify_text (GTK_WIDGET (multiattrib->textview_value),
                           GTK_STATE_NORMAL,
                           add_sensitive ? &multiattrib->value_normal_text_color
                                         : &style->text[GTK_STATE_INSENSITIVE]);
+#endif
 }
