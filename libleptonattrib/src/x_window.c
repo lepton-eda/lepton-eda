@@ -158,6 +158,20 @@ x_window_init ()
 
   gtk_box_pack_start (GTK_BOX (marea), label_name_val, FALSE, TRUE, 0);
 
+#ifdef ENABLE_GTK3
+  GdkRGBA color;
+  gdk_rgba_parse (&color, "grey");
+  gtk_widget_override_color (label_inv, GTK_STATE_FLAG_NORMAL, &color);
+
+  gdk_rgba_parse (&color, "black");
+  gtk_widget_override_color (label_val, GTK_STATE_FLAG_NORMAL, &color);
+
+  gdk_rgba_parse (&color, "red");
+  gtk_widget_override_color (label_name, GTK_STATE_FLAG_NORMAL, &color);
+
+  gdk_rgba_parse (&color, "blue");
+  gtk_widget_override_color (label_name_val, GTK_STATE_FLAG_NORMAL, &color);
+#else
   GdkColor color;
   gdk_color_parse ("grey", &color);
   gtk_widget_modify_fg (label_inv, GTK_STATE_NORMAL, &color);
@@ -170,6 +184,7 @@ x_window_init ()
 
   gdk_color_parse ("blue", &color);
   gtk_widget_modify_fg (label_name_val, GTK_STATE_NORMAL, &color);
+#endif
 
 
   /* -----  Now malloc -- but don't fill out -- space for sheets  ----- */
