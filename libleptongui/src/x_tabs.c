@@ -660,6 +660,7 @@ x_tabs_nbook_create (GschemToplevel* w_current, GtkWidget* work_box)
   *
   */
 
+#ifndef ENABLE_GTK3
   /* wider horizontal space:
   */
   gtk_rc_parse_string
@@ -671,6 +672,7 @@ x_tabs_nbook_create (GschemToplevel* w_current, GtkWidget* work_box)
     "\n"
     "widget \"*.lepton-nbook\" style \"lepton-nbook-style\""
   );
+#endif
 
   gtk_widget_set_name (nbook, "lepton-nbook");
 
@@ -820,6 +822,7 @@ x_tabs_hdr_create (TabInfo* nfo)
     lab_txt = g_strdup (bname);
 
   GtkWidget* lab = gtk_label_new (NULL);
+  gtk_widget_set_name (lab, "lepton-tab-label" );
   gtk_label_set_markup (GTK_LABEL (lab), lab_txt);
   gtk_box_pack_start (GTK_BOX (box_lab), lab, TRUE, TRUE, 0);
 
@@ -836,7 +839,36 @@ x_tabs_hdr_create (TabInfo* nfo)
     gtk_widget_set_tooltip_text (box_hdr, fname);
   }
 
+  /* "close" btn:
+  */
+  GtkWidget* btn_close = gtk_button_new();
+  gtk_widget_set_name (btn_close, "lepton-tab-btn" );
+  gtk_button_set_relief (GTK_BUTTON (btn_close), GTK_RELIEF_NONE);
+  gtk_button_set_focus_on_click (GTK_BUTTON (btn_close), FALSE);
 
+
+#ifdef ENABLE_GTK3
+  GtkStyleContext *context;
+  GtkCssProvider *provider;
+
+  const char* style_string =
+    "#lepton-tab-label {\n"
+    "  padding-right: 5px;\n"
+    "}\n";
+
+  context = gtk_widget_get_style_context (lab);
+  provider = gtk_css_provider_new ();
+
+  gtk_css_provider_load_from_data (GTK_CSS_PROVIDER (provider),
+                                   style_string,
+                                   -1,
+                                   NULL);
+  gtk_style_context_add_provider (context,
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  g_object_unref (provider);
+
+#else
   /* make tab btns smaller => smaller tabs:
   */
   gtk_rc_parse_string
@@ -851,14 +883,7 @@ x_tabs_hdr_create (TabInfo* nfo)
     "\n"
     "widget \"*.lepton-tab-btn\" style \"lepton-tab-btn-style\""
   );
-
-
-  /* "close" btn:
-  */
-  GtkWidget* btn_close = gtk_button_new();
-  gtk_widget_set_name (btn_close, "lepton-tab-btn" );
-  gtk_button_set_relief (GTK_BUTTON (btn_close), GTK_RELIEF_NONE);
-  gtk_button_set_focus_on_click (GTK_BUTTON (btn_close), FALSE);
+#endif
 
   GtkWidget* img_close = gtk_image_new_from_stock (GTK_STOCK_CLOSE,
                                                    GTK_ICON_SIZE_MENU);
