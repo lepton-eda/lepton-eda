@@ -63,10 +63,17 @@ struct _Multiattrib {
   GtkWidget       *list_frame;
   GtkWidget       *add_frame;
 
+#ifdef ENABLE_GTK3
+  GdkRGBA value_normal_text_color;
+  GdkRGBA insensitive_text_color;
+  GdkRGBA not_identical_value_text_color;
+  GdkRGBA not_present_in_all_text_color;
+#else
   GdkColor       value_normal_text_color;   /* Workaround for lameness in GtkTextView */
   GdkColor       insensitive_text_color;
   GdkColor       not_identical_value_text_color;
   GdkColor       not_present_in_all_text_color;
+#endif
 
   gulong object_list_changed_id;
 
