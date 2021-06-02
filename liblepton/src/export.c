@@ -220,8 +220,8 @@ lepton_export_make_color_map (gboolean color,
   if (!color) {
     /* Create a black and white color map.  All non-background colors
      * are black. */
-    LeptonColor white = {255, 255, 255, 255};
-    LeptonColor black = {0, 0, 0, 255};
+    LeptonColor white = {1.0, 1.0, 1.0, 1.0};
+    LeptonColor black = {0.0, 0.0, 0.0, 1.0};
     for (i = 0; i < colors_count(); i++) {
       LeptonColor *c = &g_array_index (render_color_map, LeptonColor, i);
       /* Skip disabled (fully-transparent) colors. */

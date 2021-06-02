@@ -51,9 +51,9 @@ x_color_lookup_gdk (size_t color_id)
   /* Extrapolate 8-bpp color into 16-bpp GDK color:
   */
   GdkColor color_gdk;
-  color_gdk.red   = color->r + (color->r << 8);
-  color_gdk.green = color->g + (color->g << 8);
-  color_gdk.blue  = color->b + (color->b << 8);
+  color_gdk.red   = (guint16) (color->red   * 65535);
+  color_gdk.green = (guint16) (color->green * 65535);
+  color_gdk.blue  = (guint16) (color->blue  * 65535);
 
   return gdk_color_copy (&color_gdk);
 }
@@ -89,9 +89,10 @@ x_color_display_enabled (size_t color_id)
 void
 x_color_set_display (size_t color_id, GdkColor* color)
 {
-  display_colors[ color_id ].r = color->red   >> 8;
-  display_colors[ color_id ].g = color->green >> 8;
-  display_colors[ color_id ].b = color->blue  >> 8;
+  display_colors[color_id].red   = (gdouble) color->red   / 65535.0;
+  display_colors[color_id].green = (gdouble) color->green / 65535.0;
+  display_colors[color_id].blue  = (gdouble) color->blue  / 65535.0;
+  display_colors[color_id].alpha = 1.0;
 }
 
 
@@ -101,9 +102,10 @@ x_color_set_display (size_t color_id, GdkColor* color)
 void
 x_color_set_outline (size_t color_id, GdkColor* color)
 {
-  display_outline_colors[ color_id ].r = color->red   >> 8;
-  display_outline_colors[ color_id ].g = color->green >> 8;
-  display_outline_colors[ color_id ].b = color->blue  >> 8;
+  display_outline_colors[color_id].red   = (gdouble) color->red   / 65535.0;
+  display_outline_colors[color_id].green = (gdouble) color->green / 65535.0;
+  display_outline_colors[color_id].blue  = (gdouble) color->blue  / 65535.0;
+  display_outline_colors[color_id].alpha = 1.0;
 }
 
 
@@ -128,9 +130,9 @@ x_color_map2str (LeptonColorMap cmap)
 
     if (lepton_color_enabled (&color))
     {
-      guint8 r = color.r;
-      guint8 g = color.g;
-      guint8 b = color.b;
+      guint8 r = (guint8) (color.red * 255);
+      guint8 g = (guint8) (color.green * 255);
+      guint8 b = (guint8) (color.blue * 255);
 
       /* the line will look like:
        * (background "#AABBCC")

@@ -35,9 +35,9 @@ LeptonColorMap display_colors;
 LeptonColorMap display_outline_colors;
 
 
-#define WHITE   {0xff, 0xff, 0xff, 0xff}
-#define GRAY    {0x88, 0x88, 0x88, 0xff}
-#define BLACK   {0x00, 0x00, 0x00, 0xff}
+#define WHITE   {1.0, 1.0, 1.0, 1.0}
+#define GRAY    {0.5, 0.5, 0.5, 1.0}
+#define BLACK   {0.0, 0.0, 0.0, 1.0}
 
 static LeptonColor default_colors[] =
 {
@@ -104,27 +104,27 @@ void
 lepton_colormap_disable_color (LeptonColor *color_map,
                                size_t id)
 {
-  color_map[id].a = 0;
+  color_map[id].alpha = 0.0;
 }
 
 gboolean
 lepton_color_enabled (const LeptonColor *color)
 {
-  return (color->a != 0);
+  return (color->alpha != 0.0);
 }
 
 void
 lepton_colormap_set_color (LeptonColor *color_map,
                            size_t id,
-                           guint8 r,
-                           guint8 g,
-                           guint8 b,
-                           guint8 a)
+                           guint8 red,
+                           guint8 green,
+                           guint8 blue,
+                           guint8 alpha)
 {
-  color_map[id].r = r;
-  color_map[id].g = g;
-  color_map[id].b = b;
-  color_map[id].a = a;
+  color_map[id].red = (gdouble) (red / 255.0);
+  color_map[id].green = (gdouble) (green / 255.0);
+  color_map[id].blue = (gdouble) (blue / 255.0);
+  color_map[id].alpha = (gdouble) (alpha / 255.0);
 }
 
 
@@ -140,7 +140,7 @@ lepton_color_get_blue_double (const LeptonColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
-  return color->b / 255.0;
+  return color->blue;
 }
 
 /*! \brief Get the color green value as a double
@@ -155,7 +155,7 @@ lepton_color_get_green_double (const LeptonColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
-  return color->g / 255.0;
+  return color->green;
 }
 
 /*! \brief Get the color red value as a double
@@ -170,7 +170,7 @@ lepton_color_get_red_double (const LeptonColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
-  return color->r / 255.0;
+  return color->red;
 }
 
 /*! \brief Get the color alpha value as a double
@@ -185,7 +185,7 @@ lepton_color_get_alpha_double (const LeptonColor *color)
 {
   g_return_val_if_fail (color != NULL, 1.0);
 
-  return color->a / 255.0;
+  return color->alpha;
 }
 
 

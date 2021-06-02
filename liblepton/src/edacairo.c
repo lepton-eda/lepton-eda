@@ -65,10 +65,10 @@ eda_cairo_set_source_color (cairo_t *cr, int color, GArray *map)
 
   c = g_array_index (map, LeptonColor, color);
 
-  cairo_set_source_rgba (cr, (double)c.r / 255.0,
-                             (double)c.g / 255.0,
-                             (double)c.b / 255.0,
-                             (double)c.a / 255.0);
+  cairo_set_source_rgba (cr, c.red,
+                             c.green,
+                             c.blue,
+                             c.alpha);
 }
 
 void

@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 struct st_color
 {
-  guint8 r, g, b, a;
+  gdouble red, green, blue, alpha;
 };
 
 typedef struct st_color LeptonColor;
