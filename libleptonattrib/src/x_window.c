@@ -85,6 +85,16 @@ x_window_get_toplevel ()
   return window_toplevel;
 }
 
+static GtkWidget*
+separator_new ()
+{
+#ifdef ENABLE_GTK3
+  return gtk_separator_new (GTK_ORIENTATION_VERTICAL);
+#else
+  return gtk_vseparator_new ();
+#endif
+}
+
 /*! \brief Initialises the toplevel gtksheet
  *
  * This function initializes the toplevel gtksheet stuff.
@@ -145,16 +155,16 @@ x_window_init ()
   GtkWidget* label_name_val = gtk_label_new (_(" Show name and value "));
 
   gtk_box_pack_start (GTK_BOX (marea), label_1, FALSE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (marea), gtk_vseparator_new() , FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (marea), separator_new() , FALSE, TRUE, 0);
 
   gtk_box_pack_start (GTK_BOX (marea), label_inv, FALSE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (marea), gtk_vseparator_new() , FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (marea), separator_new() , FALSE, TRUE, 0);
 
   gtk_box_pack_start (GTK_BOX (marea), label_val, FALSE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (marea), gtk_vseparator_new() , FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (marea), separator_new() , FALSE, TRUE, 0);
 
   gtk_box_pack_start (GTK_BOX (marea), label_name, FALSE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (marea), gtk_vseparator_new() , FALSE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (marea), separator_new() , FALSE, TRUE, 0);
 
   gtk_box_pack_start (GTK_BOX (marea), label_name_val, FALSE, TRUE, 0);
 
