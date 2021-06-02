@@ -660,7 +660,34 @@ x_tabs_nbook_create (GschemToplevel* w_current, GtkWidget* work_box)
   *
   */
 
-#ifndef ENABLE_GTK3
+  gtk_widget_set_name (nbook, "lepton-nbook");
+
+#ifdef ENABLE_GTK3
+  GtkStyleContext *context;
+  GtkCssProvider *provider;
+
+  const char* style_string =
+    "#lepton-nbook tab {\n"
+    "  min-width: 0;\n"
+    "  border-color: #777777;\n"
+    "  border-top-left-radius: 10px;\n"
+    "  border-top-right-radius: 10px;\n"
+    "  border-style: outset;\n"
+    "}\n";
+
+  context = gtk_widget_get_style_context (nbook);
+  provider = gtk_css_provider_new ();
+
+  gtk_css_provider_load_from_data (GTK_CSS_PROVIDER (provider),
+                                   style_string,
+                                   -1,
+                                   NULL);
+  gtk_style_context_add_provider (context,
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+  g_object_unref (provider);
+
+#else
   /* wider horizontal space:
   */
   gtk_rc_parse_string
@@ -673,9 +700,6 @@ x_tabs_nbook_create (GschemToplevel* w_current, GtkWidget* work_box)
     "widget \"*.lepton-nbook\" style \"lepton-nbook-style\""
   );
 #endif
-
-  gtk_widget_set_name (nbook, "lepton-nbook");
-
 
   g_signal_connect (nbook, "switch-page",
                     G_CALLBACK (&x_tabs_page_on_sel), w_current);
