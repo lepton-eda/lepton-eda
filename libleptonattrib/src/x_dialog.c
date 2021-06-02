@@ -239,12 +239,14 @@ void x_dialog_unsaved_data()
                           _("_Save"),            GTK_RESPONSE_YES,
                           NULL);
 
+#ifndef ENABLE_GTK3
   /* Set the alternative button order (ok, cancel, help) for other systems */
   gtk_dialog_set_alternative_button_order(GTK_DIALOG(dialog),
                                           GTK_RESPONSE_YES,
                                           GTK_RESPONSE_NO,
                                           GTK_RESPONSE_CANCEL,
                                           -1);
+#endif
 
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
 
