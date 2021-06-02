@@ -73,10 +73,10 @@ void x_dialog_newattrib()
 
   /* Create the dialog */
   dialog = gtk_dialog_new_with_buttons(_("Add new attribute"), NULL,
-				       GTK_DIALOG_MODAL,
-				       GTK_STOCK_OK, GTK_RESPONSE_OK,
-				       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-				       NULL);
+                                       GTK_DIALOG_MODAL,
+                                       _("_OK"), GTK_RESPONSE_OK,
+                                       _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                       NULL);
 
   gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_OK);
 
@@ -190,9 +190,9 @@ void x_dialog_missing_sym()
                                   "%s", string);
 
   gtk_dialog_add_buttons(GTK_DIALOG(dialog),
-                  GTK_STOCK_QUIT, GTK_RESPONSE_REJECT,
-                  GTK_STOCK_GO_FORWARD, GTK_RESPONSE_ACCEPT,
-                  NULL);
+                         _("_Quit"), GTK_RESPONSE_REJECT,
+                         _("_Forward"), GTK_RESPONSE_ACCEPT,
+                         NULL);
 
   gtk_window_set_title(GTK_WINDOW(dialog), _("Missing symbol file found for component!"));
   gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_REJECT);
@@ -235,8 +235,8 @@ void x_dialog_unsaved_data()
   gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog), str);
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
                           _("Close without saving"), GTK_RESPONSE_NO,
-                          GTK_STOCK_CANCEL,          GTK_RESPONSE_CANCEL,
-                          GTK_STOCK_SAVE,            GTK_RESPONSE_YES,
+                          _("_Cancel"),          GTK_RESPONSE_CANCEL,
+                          _("_Save"),            GTK_RESPONSE_YES,
                           NULL);
 
   /* Set the alternative button order (ok, cancel, help) for other systems */
@@ -403,10 +403,10 @@ void x_dialog_export_file()
   GtkWidget *dialog;
 
   dialog = gtk_file_chooser_dialog_new(_("Export CSV"), NULL,
-      GTK_FILE_CHOOSER_ACTION_SAVE,
-      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-      GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
-      NULL);
+                                       GTK_FILE_CHOOSER_ACTION_SAVE,
+                                       _("_Cancel"), GTK_RESPONSE_CANCEL,
+                                       _("_Save"), GTK_RESPONSE_ACCEPT,
+                                       NULL);
 
   gtk_dialog_set_default_response(GTK_DIALOG(dialog), GTK_RESPONSE_ACCEPT);
 
@@ -430,4 +430,3 @@ void x_dialog_export_file()
 
   gtk_widget_destroy(dialog);
 }
-
