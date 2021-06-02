@@ -936,7 +936,7 @@ x_tabs_hdr_create (TabInfo* nfo)
   gtk_button_set_relief (GTK_BUTTON (btn_save), GTK_RELIEF_NONE);
   gtk_button_set_focus_on_click (GTK_BUTTON (btn_save), FALSE);
 
-  GtkWidget* img_save = gtk_image_new_from_stock (GTK_STOCK_SAVE,
+  GtkWidget* img_save = gtk_image_new_from_stock ("document-save",
                                                   GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (btn_save), img_save);
   gtk_widget_set_tooltip_text (btn_save, _("Save"));
