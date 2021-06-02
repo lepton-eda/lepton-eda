@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,11 +100,18 @@ get_property (GObject    *object,
 
   switch (param_id) {
     case PROP_COLOR: {
+#ifdef ENABLE_GTK3
+        GdkRGBA color;
+#else
         GdkColor color;
+#endif
 
         color.red = swatch->color.red;
         color.green = swatch->color.green;
         color.blue = swatch->color.blue;
+#ifdef ENABLE_GTK3
+        color.alpha = swatch->color.alpha;
+#endif
 
         g_value_set_boxed (value, &color);
       }
@@ -141,7 +148,11 @@ swatchcr_class_init (GschemSwatchColumnRendererClass *klass)
                                    g_param_spec_boxed ("color",
                                                        "Swatch Color",
                                                        "Swatch Color",
+#ifdef ENABLE_GTK3
+                                                       GDK_TYPE_RGBA,
+#else
                                                        GDK_TYPE_COLOR,
+#endif
                                                        G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
                                    PROP_ENABLED,
@@ -161,9 +172,16 @@ swatchcr_class_init (GschemSwatchColumnRendererClass *klass)
 static void
 swatchcr_init (GschemSwatchColumnRenderer *swatch)
 {
+#ifdef ENABLE_GTK3
+  swatch->color.red = 0.0;
+  swatch->color.green = 0.0;
+  swatch->color.blue = 0.0;
+  swatch->color.alpha = 1.0;
+#else
   swatch->color.red = 0;
   swatch->color.green = 0;
   swatch->color.blue = 0;
+#endif
 
   swatch->enabled = TRUE;
 
@@ -233,14 +251,26 @@ render (GtkCellRenderer      *cell,
 
     cairo_set_line_width (cr, SWATCH_BORDER_WIDTH);
 
+#ifdef ENABLE_GTK3
+    cairo_set_source_rgba (cr,
+                           swatch->color.red,
+                           swatch->color.green,
+                           swatch->color.blue,
+                           swatch->color.alpha);
+#else
     cairo_set_source_rgb (cr,
                           swatch->color.red   / 65535.0,
                           swatch->color.green / 65535.0,
                           swatch->color.blue  / 65535.0);
+#endif
 
     cairo_fill_preserve (cr);
 
+#ifdef ENABLE_GTK3
+    cairo_set_source_rgba (cr, 0.0, 0.0, 0.0, 1.0);
+#else
     cairo_set_source_rgb (cr, 0.0, 0.0, 0.0);
+#endif
 
     cairo_stroke (cr);
 #ifndef ENABLE_GTK3
@@ -258,12 +288,19 @@ render (GtkCellRenderer      *cell,
  *  \param [in]     color  The color of the swatch
  */
 static void
+#ifdef ENABLE_GTK3
+set_color (GschemSwatchColumnRenderer *swatch, const GdkRGBA *color)
+#else
 set_color (GschemSwatchColumnRenderer *swatch, const GdkColor *color)
+#endif
 {
   if (color) {
     swatch->color.red = color->red;
     swatch->color.green = color->green;
     swatch->color.blue = color->blue;
+#ifdef ENABLE_GTK3
+    swatch->color.alpha = color->alpha;
+#endif
   }
 }
 
@@ -287,7 +324,11 @@ set_property (GObject      *object,
 
   switch (param_id) {
     case PROP_COLOR:
+#ifdef ENABLE_GTK3
+      set_color (swatch, (const GdkRGBA*) g_value_get_boxed (value));
+#else
       set_color (swatch, (const GdkColor*) g_value_get_boxed (value));
+#endif
       break;
 
     case PROP_ENABLED:
