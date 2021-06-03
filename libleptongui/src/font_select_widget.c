@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2020 Lepton EDA Contributors
+ * Copyright (C) 2018-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -210,7 +210,13 @@ font_select_widget_create (FontSelectWidget* widget)
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (widget->font_sel_), TRUE, TRUE, 0);
 
   /* separator */
+#ifdef ENABLE_GTK3
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_separator_new (GTK_ORIENTATION_HORIZONTAL),
+                      FALSE, FALSE, 5);
+#else
   gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), FALSE, FALSE, 5);
+#endif
 
   /* horizontal container */
 #ifdef ENABLE_GTK3
@@ -243,7 +249,13 @@ font_select_widget_create (FontSelectWidget* widget)
   gtk_box_pack_start (GTK_BOX (hbox_lab), widget->font_label_, FALSE, FALSE, 3);
 
   /* separator */
+#ifdef ENABLE_GTK3
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_separator_new (GTK_ORIENTATION_HORIZONTAL),
+                      FALSE, FALSE, 5);
+#else
   gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), FALSE, FALSE, 5);
+#endif
 
   /* informational label: */
   const gchar* msg =
@@ -533,7 +545,15 @@ save_settings_dlg (FontSelectWidget* widget)
   GtkWidget* vbox = gtk_vbox_new (FALSE, 0);
 #endif
   gtk_box_pack_start (GTK_BOX (vbox), label_font, TRUE, TRUE, 0);
+
+#ifdef ENABLE_GTK3
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_separator_new (GTK_ORIENTATION_HORIZONTAL),
+                      TRUE, TRUE, 10);
+#else
   gtk_box_pack_start (GTK_BOX (vbox), gtk_hseparator_new(), TRUE, TRUE, 10);
+#endif
+
   gtk_box_pack_start (GTK_BOX (vbox), btn1, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), btn2, TRUE, TRUE, 0);
 
