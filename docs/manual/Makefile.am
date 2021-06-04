@@ -19,6 +19,7 @@ lepton_manual_TEXINFOS = \
 	logging.texi \
 	no-connect-symbol.texi \
 	overview.texi \
+	placeholder.texi \
 	symbols.texi \
 	title-block-symbol.texi
 

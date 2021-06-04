@@ -151,6 +151,7 @@ Symbols
 
 * No-connect symbols::
 * Title block symbol::
+* Missing symbols::
 
 Schematic capture
 

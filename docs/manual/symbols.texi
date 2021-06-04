@@ -6,7 +6,9 @@
 @menu
 * No-connect symbols::
 * Title block symbol::
+* Missing symbols::
 @end menu
 
 @include no-connect-symbol.texi
 @include title-block-symbol.texi
+@include placeholder.texi

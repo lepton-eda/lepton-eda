@@ -1,0 +1,91 @@
+@node Missing symbols
+@section Missing symbols
+@cindex missing symbols
+@cindex symbol, missing
+@cindex placeholder
+@cindex placeholder symbol
+
+Sometimes you may see on your screen such strange symbols instead of
+components you would expect in your schematic:
+
+@c FIXME: add placeholder images here
+
+That means here should be a symbol that has not been found in any of
+the libraries added in your project.  The symbols above are
+placeholder symbols, that is, some symbols intended just for such
+cases.
+
+If title block symbol is missing in your libraries, the visible effect
+will be a bit other.  You'll see just an empty page.  The actions
+described below will however help you in such a case as well.
+
+Some symbols may be missing for several reasons:
+
+@itemize
+@item
+You distributed your design without some necessary symbol.  For
+example, you sent your schematic by email without symbols and the
+receiver does not have those symbols.
+@item
+You did not add a necessary library in your project.  For example, you
+created a project, then disabled system libraries using
+@code{reset-component-library}, though did not add some required
+symbol into the local library of your project.
+@item
+You misspelled the title block name in your configuration file.
+@xref{Title block symbol}.
+@item
+The name of the title block symbol in your local configuration is
+spelled right, but it is missing in the libraries of your project
+after disabling some of them as above.
+@item
+You edited your symbol file contents manually in your text editor or
+by a script and misspelled the names of some symbols.
+@end itemize
+
+In order to figure out what's wrong you may do as follows:
+
+@itemize
+@item
+Open @schematic{}, hit @kbd{I} to see the enabled libraries and look
+at what libraries are really present.
+@item
+If you are working with one of the utilites that supports interactive
+mode (e.g. @netlist{}), enter the mode and type the following in the
+REPL:
+@lisp
+(use-modules (lepton library component))
+(component-libraries)
+@end lisp
+
+@item
+In @schematic{}, you can do the same, thought the results will be
+displayed in the Log window.  @xref{Log window} for more.
+@end itemize
+
+The two last options will show you what libraries are enabled and what
+are their names and full paths to them.
+
+Check in the log window (@ref{Log window}) or in the log file
+(@ref{Logging}) what RC files have been loaded.  Check also what
+configuration files have been loaded.  If you don't know what
+configuration files have been used, you can enter the REPL in
+@schematic{} or in one of the utilities supporting interactive mode
+(like @netlist{}) and look for system and user configuration
+directorires.  @xref{lepton-cli shell} for recipes on how
+to do that.  The local project configuration directory is most often
+the directory where its schematics reside, though the directory with
+schematics may be one in the subdirectory tree of your project.  If in
+doubt, try in the directory with schematics:
+@lisp
+(config-filename (path-config-context (getcwd)))
+@end lisp
+or use the full path in the form @file{"/path/to/my/project"}
+instead of @code{(getcwd)} in this command.
+
+After having discovered what and where (in which config file) is
+enabled, search for a library with the symbol required and add it
+(@xref{Component library setup}) or add required symbol(s) to the
+local library directory of your project.
+
+If you misspelled the name of a symbol, just fix it.
