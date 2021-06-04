@@ -771,6 +771,39 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
     pan_yaxis = FALSE;
   }
 
+#ifdef ENABLE_GTK3
+  static guint last_scroll_event_time = GDK_CURRENT_TIME;
+  /* check for duplicate legacy scroll event, see GNOME bug 726878 */
+  if (event->direction != GDK_SCROLL_SMOOTH &&
+      last_scroll_event_time == event->time) {
+    g_debug ("[%d] duplicate legacy scroll event %d\n",
+             event->time,
+             event->direction);
+    return FALSE;
+  }
+
+  switch (event->direction) {
+  case GDK_SCROLL_SMOOTH:
+    /* As of GTK 3.4, all directional scroll events are provided by */
+    /* the GDK_SCROLL_SMOOTH direction on XInput2 and Wayland devices. */
+    last_scroll_event_time = event->time;
+
+    /* event->delta_x seems to be unused on not touch devices. */
+    pan_direction = event->delta_y;
+    zoom_direction = (event->delta_y > 0) ? ZOOM_OUT : ZOOM_IN;
+    break;
+  case GDK_SCROLL_UP:
+  case GDK_SCROLL_LEFT:
+    pan_direction = -1;
+    zoom_direction = ZOOM_IN;
+    break;
+  case GDK_SCROLL_DOWN:
+  case GDK_SCROLL_RIGHT:
+    pan_direction =  1;
+    zoom_direction = ZOOM_OUT;
+    break;
+  }
+#else
   switch (event->direction) {
     case GDK_SCROLL_UP:
     case GDK_SCROLL_LEFT:
@@ -783,6 +816,7 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
       zoom_direction = ZOOM_OUT;
       break;
   }
+#endif
 
   if (zoom) {
     /*! \todo Change "HOTKEY" TO new "MOUSE" specifier? */
