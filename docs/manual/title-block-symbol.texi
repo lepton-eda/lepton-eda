@@ -37,6 +37,17 @@ Choose the symbol you think will be used most often, and fix your
 so for some project if only it needs other title blocks.  Amend your
 @ref{project-configuration, , project configuration} in such a case.
 
+@quotation Note
+If you misspelled title block symbol name in your configuration
+setting, or if the libraries linked in your project miss the symbol
+with the name, or there is no symbol with specified system default
+name when you did not changed the name in your local project
+configuration, new untitled pages will be created empty, without any
+title block.  See the log if in doubt (@ref{Logging}).
+@xref{Missing symbols} for how to check that symbol has not been
+found.
+@end quotation
+
 There are several predefined title block symbols in @schematic.  Open
 the Add Component dialog box (@pxref{Add Component widget}) and enter
 @kbd{title} in the filter entry to find them.
