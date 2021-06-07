@@ -21,5 +21,9 @@ list}: discuss anything about Lepton and gEDA
 
 @end itemize
 
+Do not hesitate to get in touch the current maintainers privately.  We
+very appreciate any contribution and would be glad to help you if you
+have any trouble with Lepton.
+
 We are interested in having new developers join and stay with our
 project.  Get involved!
