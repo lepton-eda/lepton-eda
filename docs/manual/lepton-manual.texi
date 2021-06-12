@@ -64,6 +64,7 @@ Documentation License.''
 * Overview::                    Overview of program components.
 * Installation::                Installation of the tool suite.
 * Configuration::               Configuration system.
+* Logging::                     Search for important information.
 * Symbols::
 * lepton-schematic::            Lepton EDA schematic capture program.
 * lepton-netlist::              Lepton EDA netlister.
@@ -267,6 +268,7 @@ Object types
 @include overview.texi
 @include installation.texi
 @include configuration.texi
+@include logging.texi
 @include symbols.texi
 @include lepton-schematic.texi
 @include lepton-netlist.texi

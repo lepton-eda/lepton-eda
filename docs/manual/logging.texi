@@ -1,0 +1,22 @@
+@node Logging, Symbols, Configuration, Top
+@section Logging
+@cindex logging
+@cindex log files
+
+Most of Lepton GUI applications and TUI utilities use the same logging
+mechanism.  All important info gets into log files.  The log files
+of the tools are usually located in the cache directory of the
+suite which is usually @file{~/.cache/lepton-eda/logs}.  We store
+several last logs for each utility and rotate them, that is, remove
+old ones after adding new.
+
+The log files are named as follows: @samp{toolname-date-number.log}.
+For example, @samp{lepton-archive-20201113-4.log}.
+
+If you suspect some utility did something wrong, or it failed and
+crashed, consult the logs in the first place.  The same matters for
+GUI utilites as well.  Open the mostly recent file and look in there.
+For user convenience, the log files have the date in their names and,
+besides, the files of the same date are subsequently numbered.  Among
+several files with same date, the file having the greater number as
+the suffix of its basename is the last stored log.

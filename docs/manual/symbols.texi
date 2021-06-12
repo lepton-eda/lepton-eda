@@ -1,4 +1,4 @@
-@node Symbols, lepton-schematic, Configuration, Top
+@node Symbols, lepton-schematic, Logging, Top
 @chapter Symbols
 @cindex symbols
 @cindex schematic symbols

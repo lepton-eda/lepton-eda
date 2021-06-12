@@ -16,6 +16,7 @@ lepton_manual_TEXINFOS = \
 	lepton-netlist-allegro.texi \
 	lepton-netlist-bom.texi \
 	lepton-schematic.texi \
+	logging.texi \
 	no-connect-symbol.texi \
 	overview.texi \
 	symbols.texi \
