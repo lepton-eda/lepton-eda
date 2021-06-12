@@ -324,13 +324,8 @@ schematics}.
 
 @item Symbol Translate...
 @clicksequence{Edit @click{} Symbol Translate...} (@kbd{E T})
-translates a symbol you edit to origin, that is, to the world
-coordinate (0, 0) of the page.  This coordinate defines the anchor of
-a symbol.  When you insert the symbol from the component library, this
-point in the symbol corresponds to the position of the mouse cursor,
-so the visible contents of your component will be positioned around
-the mouse cursor at the same distance the contents of the
-corresponding symbol is positioned around the origin within it.
+translates a symbol being edited to origin.  @xref{Editing
+schematics}.
 
 @end table
 
@@ -703,11 +698,33 @@ schematic.  Remember to open the log window and see what could went
 wrong if your schematic file did not change after this action and
 saving it.
 
-If you edit a symbol and save it, schematics containing it do not
-update automatically.  You have to update component instances
+If you edit a symbol and save it, schematics containing it are not
+updated automatically.  You have to update component instances
 manually.  Select the components you want to update and use
 @clicksequence{Edit @click{} Update Component} (@kbd{E U}) to actually
 do it.
+
+Another useful action is translation of the page contents to origin,
+that is, to the coordinate (0, 0) of the page.  It is usually
+necessary when you create or edit a symbol.  The origin defines the
+anchor of the symbol.  When you insert the symbol from the component
+library, this point in the symbol corresponds to the position of the
+mouse cursor, so the visible contents of your component will be
+positioned around the mouse cursor at the same distance the contents
+of the corresponding symbol is positioned around the origin within it.
+Usually, it is the left-bottom point of a symbol.  However you can
+define it anywhere. If you want, for example, the anchor to be located
+at the center of your symbol, move the symbol contents to lay around
+the origin.  Use @clicksequence{Edit @click{} Symbol Translate...}
+(@kbd{E T}) to translate the symbol you edit to origin and then place
+its contents the way you wish.
+
+@quotation Note
+If the contents of your symbol is too far from origin, you may even
+not see the symbol when inserting.  Zoom out to see if this is the
+case then.
+@end quotation
+
 
 @node Working with windows, Quitting the program, Editing schematics, lepton-schematic
 @section Working with windows
