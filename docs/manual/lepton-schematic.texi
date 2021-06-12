@@ -319,9 +319,8 @@ Shift-B}) unembeds an embedded component or a picture from schematic.
 
 @item Update Component
 @clicksequence{Edit @click{} Update Component} (@kbd{E U}) updates
-selected components if you edited their symbols before.  Currently,
-@schematic{} does not support automatic updating of components so you
-have to do it manually.
+selected components if they changed before.  @xref{Editing
+schematics}.
 
 @item Symbol Translate...
 @clicksequence{Edit @click{} Symbol Translate...} (@kbd{E T})
@@ -697,6 +696,11 @@ schematic.  Remember to open the log window and see what could went
 wrong if your schematic file did not change after this action and
 saving it.
 
+If you edit a symbol and save it, schematics containing it do not
+update automatically.  You have to update component instances
+manually.  Select the components you want to update and use
+@clicksequence{Edit @click{} Update Component} (@kbd{E U}) to actually
+do it.
 
 @node Working with windows, Quitting the program, Editing schematics, lepton-schematic
 @section Working with windows
