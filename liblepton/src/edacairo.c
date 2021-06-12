@@ -297,7 +297,7 @@ eda_cairo_arc (cairo_t *cr, int flags,
   cairo_device_to_user_distance (cr, &offset, &dummy);
   cairo_device_to_user_distance (cr, &s_radius, &dummy);
 
-  do_arc (cr, s_x + offset, s_y + offset,
+  do_arc (cr, s_x + offset, s_y - offset,
           s_radius, start_angle, sweep_angle);
 }
 
