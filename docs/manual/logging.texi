@@ -20,3 +20,7 @@ For user convenience, the log files have the date in their names and,
 besides, the files of the same date are subsequently numbered.  Among
 several files with same date, the file having the greater number as
 the suffix of its basename is the last stored log.
+
+In @schematic{}, you can watch the log messages without the need to
+open any files, of course if you do not seek to learn the reason why
+the program crashed just now.  @xref{Log window}.
