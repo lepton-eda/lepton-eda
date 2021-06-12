@@ -55,3 +55,13 @@
   )
 
 (test-end "paths")
+
+(define (new-path)
+  (let ((p (make-path)))
+    (path-insert! p -1 'moveto '(-200 . -200))
+    (path-insert! p -1 'lineto '(-200 . 400))
+    (path-insert! p -1 'lineto '(200 . 400))
+    (path-insert! p -1 'curveto '(200 . 400) '(500 . 400) '(500 . 100))
+    (path-insert! p -1 'curveto '(500 . -200) '(200 . -200) '(200 . -200))
+    (path-insert! p -1 'closepath)
+    p))
