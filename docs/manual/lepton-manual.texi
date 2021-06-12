@@ -159,7 +159,6 @@ Schematic capture
 * lepton-schematic window::
 * Dialog boxes and widgets::
 * Creating and opening schematics::
-* Log window::
 * Editing schematics::
 * Working with windows::
 * Quitting the program::
@@ -188,6 +187,7 @@ Dialog boxes and widgets
 
 * Add Component widget::
 * Save As dialog box::
+* Log window::
 * Macro widget::
 
 Selecting objects
