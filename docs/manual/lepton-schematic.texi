@@ -7,8 +7,9 @@
 * Introduction to lepton-schematic::
 * Running lepton-schematic::
 * lepton-schematic window::
-* Dialog boxes::
+* Dialog boxes and widgets::
 * Creating and opening schematics::
+* Log window::
 * Editing schematics::
 * Working with windows::
 * Quitting the program::
@@ -74,7 +75,7 @@ lepton-schematic --help
 
 to get the brief description of all the options supported.
 
-@node lepton-schematic window, Dialog boxes, Running lepton-schematic, lepton-schematic
+@node lepton-schematic window, Dialog boxes and widgets, Running lepton-schematic, lepton-schematic
 @section Main lepton-schematic window
 @cindex lepton-schematic window
 @cindex main lepton-schematic window
@@ -449,28 +450,33 @@ schematics}.
 @end table
 
 
-@node Dialog boxes, Creating and opening schematics, lepton-schematic window, lepton-schematic
-@section Dialog boxes
+@node Dialog boxes and widgets, Creating and opening schematics, lepton-schematic window, lepton-schematic
+@section Dialog boxes and widgets
 @cindex dialog boxes
 @cindex dialog box
 
 @menu
 * Add Component widget::
 * Save As dialog box::
+* Macro widget::
 @end menu
 
-@node Add Component widget, Save As dialog box, Dialog boxes, Dialog boxes
+@node Add Component widget, Save As dialog box, Dialog boxes and widgets, Dialog boxes and widgets
 @subsection Add Component widget
 @cindex add component widget
 @cindex add component dialog box
 
-@node Save As dialog box,  , Add Component widget, Dialog boxes
+@node Save As dialog box, Macro widget, Add Component widget, Dialog boxes and widgets
 @subsection Save As dialog box
 @cindex save as
 @cindex save as dialog box
 @cindex dialog boxes, save as
 
-@node Creating and opening schematics, Editing schematics, Dialog boxes, lepton-schematic
+@node Macro widget,  , Save As dialog box, Dialog boxes and widgets
+@subsection Macro widget
+@cindex macro widget
+
+@node Creating and opening schematics, Log window, Dialog boxes and widgets, lepton-schematic
 @section Creating new and opening existing schematic files
 @cindex creating schematics
 @cindex create schematics
@@ -510,7 +516,38 @@ If you want to open a file you worked on recently, click the menu item
 several file names.  You can configure how many files should be shown
 there using the configuration key @ref{max-recent-files}.
 
-@node Editing schematics, Working with windows, Creating and opening schematics, lepton-schematic
+
+@node Log window, Editing schematics, Creating and opening schematics, lepton-schematic
+@section Log window
+@cindex log window
+
+In the log window you'll find important, and sometimes not, messages
+about the work and errors of @schematic{}.  At least, the developers
+tried hard to output anything useful and interesting.  Please report
+if you think we need to output anything other there.
+@xref{Communication} on how to get in touch with us.
+
+First when you run the program, the log window contains information
+about the program version, about what RC files have been loaded, and
+what schematic files have been opened.  You can configure the opening
+of log window at start-up of the program, though by default it won't
+be open to not make the users nervous.  There are other related
+configuration settings that you may count useful.
+@xref{Configuration} for more.  Then, when you start working, the log
+window contains other useful info related to your work.  Open the
+window if it seems something to work wrong, maybe you'll find a hint
+there.  In the log window you can also watch the output of macro
+commands you entered in the macro widget.  @xref{Macro widget} for
+more info on this.  There can be also another information about some
+long running procedures.  For example, about netlist creation or about
+the work of third-party utilities you launched via a Scheme extension.
+
+If your program crashed and, oddly, the log window is for some reason
+missing after that, you will still be able to look into the log files.
+@xref{Logging} for more info on the files.
+
+
+@node Editing schematics, Working with windows, Log window, lepton-schematic
 @section Editing schematics
 @cindex editing schematics
 @cindex edit schematics
