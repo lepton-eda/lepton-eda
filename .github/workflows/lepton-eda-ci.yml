@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+  # Allows you to run this workflow manually from the Actions tab:
+  workflow_dispatch:
+
+jobs:
+  # This workflow contains a single job called "job-1":
+  job-1:
+    # "ubuntu-latest" == ubuntu-20.04 ('focal'):
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out repository under $GITHUB_WORKSPACE:
+      - uses: actions/checkout@v2
+
+      - name: apt-get update
+        run: sudo apt-get update
+
+      - name: apt-get install
+        run: sudo apt-get install -y
+             guile-2.0-dev
+             libgtk2.0-dev
+             libgtkextra-dev
+             libstroke0-dev
+             libgettextpo-dev
+             autopoint
+             flex
+             bison
+             groff
+             texinfo
+             texlive-base
+             texlive-plain-generic
+             texlive-latex-base
+             texlive-fonts-recommended
+
+      - name: configure
+        run: |
+          ./autogen.sh
+          ./configure --disable-update-xdg-database CFLAGS='-DSCM_DEBUG_TYPING_STRICTNESS=2'
+
+      - name: make distcheck
+        run:  make -sj4 distcheck
