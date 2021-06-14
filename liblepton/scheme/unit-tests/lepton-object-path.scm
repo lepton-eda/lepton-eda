@@ -92,6 +92,11 @@
   (test-assert-thrown 'wrong-type-arg (path-insert! 'p -1 'moveto '(-200 . -200)))
   (test-assert-thrown 'wrong-type-arg (path-insert! 'p -1 'lineto '(200 . 400)))
   (test-assert-thrown 'wrong-type-arg (path-insert! 'p -1 'curveto '(200 . 400) '(500 . 400) '(500 . 100)))
-  (test-assert-thrown 'wrong-type-arg (path-insert! 'p -1 'closepath)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! 'p -1 'closepath))
+  ;; Wrong index.
+  (test-assert-thrown 'wrong-type-arg (path-insert! p 'id 'moveto '(-200 . -200)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p 'id 'lineto '(200 . 400)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p 'id 'curveto '(200 . 400) '(500 . 400) '(500 . 100)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p 'id 'closepath)))
 
 (test-end "path-wrong-argument")
