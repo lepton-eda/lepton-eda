@@ -75,4 +75,8 @@
 ;;; path-length
 (test-assert-thrown 'wrong-type-arg (path-length 'p))
 
+;;; path-ref
+(test-assert-thrown 'wrong-type-arg (path-ref 'p 0))
+(test-assert-thrown 'wrong-type-arg (path-ref (new-path) 'x))
+
 (test-end "path-wrong-argument")
