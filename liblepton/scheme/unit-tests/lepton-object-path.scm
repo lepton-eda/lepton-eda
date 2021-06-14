@@ -65,3 +65,11 @@
     (path-insert! p -1 'curveto '(500 . -200) '(200 . -200) '(200 . -200))
     (path-insert! p -1 'closepath)
     p))
+
+
+(test-begin "path-wrong-argument")
+
+;;; path-info
+(test-assert-thrown 'wrong-type-arg (path-info 'p))
+
+(test-end "path-wrong-argument")
