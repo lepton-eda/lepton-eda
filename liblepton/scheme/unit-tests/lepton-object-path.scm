@@ -72,4 +72,7 @@
 ;;; path-info
 (test-assert-thrown 'wrong-type-arg (path-info 'p))
 
+;;; path-length
+(test-assert-thrown 'wrong-type-arg (path-length 'p))
+
 (test-end "path-wrong-argument")
