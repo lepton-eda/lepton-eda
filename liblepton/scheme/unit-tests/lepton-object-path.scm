@@ -86,4 +86,12 @@
 (test-assert-thrown 'wrong-type-arg (path-remove! 'p 0))
 (test-assert-thrown 'wrong-type-arg (path-remove! (new-path) 'x))
 
+;;; path-insert!
+(let ((p (new-path)))
+  ;; Wrong object.
+  (test-assert-thrown 'wrong-type-arg (path-insert! 'p -1 'moveto '(-200 . -200)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! 'p -1 'lineto '(200 . 400)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! 'p -1 'curveto '(200 . 400) '(500 . 400) '(500 . 100)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! 'p -1 'closepath)))
+
 (test-end "path-wrong-argument")
