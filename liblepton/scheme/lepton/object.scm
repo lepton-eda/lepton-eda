@@ -726,13 +726,13 @@ of the arc."
 
   (apply %path-insert p idx type (transform-points points '())))
 
-(define (path-info path)
-  "Returns info on all elements of PATH."
-  (let ((len (path-length path)))
+(define (path-info object)
+  "Returns info on all elements of path OBJECT."
+  (let ((len (path-length object)))
     (let loop ((i 0)
                (info '()))
       (if (< i len)
-          (loop (1+ i) (cons (path-ref path i) info))
+          (loop (1+ i) (cons (path-ref object i) info))
           (reverse info)))))
 
 
