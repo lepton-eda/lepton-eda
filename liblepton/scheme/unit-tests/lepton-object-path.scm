@@ -161,3 +161,40 @@
     (closepath)))
 
 (test-end "path-translation")
+
+
+(test-begin "path-mirror")
+
+(test-equal (path-info (car (mirror-objects! 0 (new-path))))
+  '((moveto (200 . -200))
+    (lineto (200 . 400))
+    (lineto (-200 . 400))
+    (curveto (-200 . 400) (-500 . 400) (-500 . 100))
+    (curveto (-500 . -200) (-200 . -200) (-200 . -200))
+    (closepath)))
+(test-equal (path-info (car (mirror-objects! 500 (new-path))))
+  '((moveto (1200 . -200))
+    (lineto (1200 . 400))
+    (lineto (800 . 400))
+    (curveto (800 . 400) (500 . 400) (500 . 100))
+    (curveto (500 . -200) (800 . -200) (800 . -200))
+    (closepath)))
+(test-equal (path-info (car (mirror-objects! -500 (new-path))))
+  '((moveto (-800 . -200))
+    (lineto (-800 . 400))
+    (lineto (-1200 . 400))
+    (curveto (-1200 . 400) (-1500 . 400) (-1500 . 100))
+    (curveto (-1500 . -200) (-1200 . -200) (-1200 . -200))
+    (closepath)))
+;;; Double mirror around the same point returns initial result.
+(test-equal (path-info
+             (car (mirror-objects! 500
+                                   (car (mirror-objects! 500 (new-path))))))
+  '((moveto (-200 . -200))
+    (lineto (-200 . 400))
+    (lineto (200 . 400))
+    (curveto (200 . 400) (500 . 400) (500 . 100))
+    (curveto (500 . -200) (200 . -200) (200 . -200))
+    (closepath)))
+
+(test-end "path-mirror")
