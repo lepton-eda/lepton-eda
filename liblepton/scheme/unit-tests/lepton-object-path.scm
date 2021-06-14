@@ -594,4 +594,10 @@
       (-1200 . -800))
      (closepath))))
 
+;;; Invalid rotation angles, not multiple of 90 degree.
+(test-assert-thrown 'misc-error (rotate-at+500+500 100))
+(test-assert-thrown 'misc-error (rotate-at+500+500 -100))
+(test-assert-thrown 'misc-error (rotate-at+500+500 3000))
+(test-assert-thrown 'misc-error (rotate-at+500+500 -3000))
+
 (test-end "path-rotation")
