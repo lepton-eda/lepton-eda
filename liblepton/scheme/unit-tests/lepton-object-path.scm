@@ -79,4 +79,8 @@
 (test-assert-thrown 'wrong-type-arg (path-ref 'p 0))
 (test-assert-thrown 'wrong-type-arg (path-ref (new-path) 'x))
 
+;;; path-remove!
+(test-assert-thrown 'wrong-type-arg (path-remove! 'p 0))
+(test-assert-thrown 'wrong-type-arg (path-remove! (new-path) 'x))
+
 (test-end "path-wrong-argument")
