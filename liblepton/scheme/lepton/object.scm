@@ -89,6 +89,8 @@
             make-bus-pin
             make-net-pin
 
+            path-info
+
             make-picture/vector
             picture-angle
             picture-bottom-right
@@ -723,6 +725,15 @@ of the arc."
          (append acc (list (caar lst) (cdar lst))))))
 
   (apply %path-insert p idx type (transform-points points '())))
+
+(define (path-info path)
+  "Returns info on all elements of PATH."
+  (let ((len (path-length path)))
+    (let loop ((i 0)
+               (info '()))
+      (if (< i len)
+          (loop (1+ i) (cons (path-ref path i) info))
+          (reverse info)))))
 
 
 ;;;; Pictures

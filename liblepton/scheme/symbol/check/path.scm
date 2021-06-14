@@ -1,6 +1,6 @@
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -24,18 +24,7 @@
   #:use-module (lepton object)
   #:use-module (symbol blame)
 
-  #:export (path-info
-            check-path))
-
-(define (path-info path)
-  "Returns info on all elements of PATH."
-  (let ((len (path-length path)))
-    (let loop ((i 0)
-               (info '()))
-      (if (< i len)
-          (loop (1+ i) (cons (path-ref path i) info))
-          (reverse info)))))
-
+  #:export (check-path))
 
 (define (check-path object)
   "Checks path OBJECT.
