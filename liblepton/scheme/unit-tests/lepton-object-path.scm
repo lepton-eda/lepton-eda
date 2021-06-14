@@ -69,6 +69,9 @@
 
 (test-begin "path-wrong-argument")
 
+;;; Wrong color in make-path.
+(test-assert-thrown 'wrong-type-arg (make-path 'color))
+
 ;;; path-info
 (test-assert-thrown 'wrong-type-arg (path-info 'p))
 
