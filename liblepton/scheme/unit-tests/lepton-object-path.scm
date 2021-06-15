@@ -97,6 +97,15 @@
   (test-assert-thrown 'wrong-type-arg (path-insert! p 'id 'moveto '(-200 . -200)))
   (test-assert-thrown 'wrong-type-arg (path-insert! p 'id 'lineto '(200 . 400)))
   (test-assert-thrown 'wrong-type-arg (path-insert! p 'id 'curveto '(200 . 400) '(500 . 400) '(500 . 100)))
-  (test-assert-thrown 'wrong-type-arg (path-insert! p 'id 'closepath)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p 'id 'closepath))
+  ;; Wrong section name.
+  (test-assert-thrown 'misc-error (path-insert! p -1 'move '(-200 . -200)))
+  (test-assert-thrown 'misc-error (path-insert! p -1 'line '(200 . 400)))
+  (test-assert-thrown 'misc-error (path-insert! p -1 'curve '(200 . 400) '(500 . 400) '(500 . 100)))
+  (test-assert-thrown 'misc-error (path-insert! p -1 'close))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 100 '(-200 . -200)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 100 '(200 . 400)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 100 '(200 . 400) '(500 . 400) '(500 . 100)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 100)))
 
 (test-end "path-wrong-argument")
