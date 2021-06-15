@@ -500,7 +500,9 @@ static void s_path_arc (RSVGParsePathCtx * ctx,
 
 /* supply defaults for missing parameters, assuming relative coordinates
    are to be interpreted as x,y */
-static void s_path_parse_default_xy (RSVGParsePathCtx * ctx, int n_params)
+static void
+lepton_path_parse_default_xy (RSVGParsePathCtx * ctx,
+                              int n_params)
 {
   int i;
 
@@ -530,7 +532,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
   case 'm':
     /* moveto */
     if (ctx->param == 2 || final) {
-      s_path_parse_default_xy (ctx, 2);
+      lepton_path_parse_default_xy (ctx, 2);
       lepton_path_moveto (ctx->path, ctx->params[0], ctx->params[1]);
       ctx->mpx = ctx->cpx = ctx->rpx = ctx->params[0];
       ctx->mpy = ctx->cpy = ctx->rpy = ctx->params[1];
@@ -541,7 +543,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
   case 'l':
     /* lineto */
     if (ctx->param == 2 || final) {
-      s_path_parse_default_xy (ctx, 2);
+      lepton_path_parse_default_xy (ctx, 2);
       lepton_path_lineto (ctx->path, ctx->params[0], ctx->params[1]);
       ctx->cpx = ctx->rpx = ctx->params[0];
       ctx->cpy = ctx->rpy = ctx->params[1];
@@ -551,7 +553,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
   case 'c':
     /* curveto */
     if (ctx->param == 6 || final) {
-      s_path_parse_default_xy (ctx, 6);
+      lepton_path_parse_default_xy (ctx, 6);
       x1 = ctx->params[0];
       y1 = ctx->params[1];
       x2 = ctx->params[2];
@@ -569,7 +571,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
   case 's':
     /* smooth curveto */
     if (ctx->param == 4 || final) {
-      s_path_parse_default_xy (ctx, 4);
+      lepton_path_parse_default_xy (ctx, 4);
       x1 = 2 * ctx->cpx - ctx->rpx;
       y1 = 2 * ctx->cpy - ctx->rpy;
       x2 = ctx->params[0];
@@ -607,7 +609,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
        http://www.icce.rug.nl/erikjan/bluefuzz/beziers/beziers/beziers.html
      */
     if (ctx->param == 4 || final) {
-      s_path_parse_default_xy (ctx, 4);
+      lepton_path_parse_default_xy (ctx, 4);
       /* raise quadratic bezier to cubic */
       x1 = (ctx->cpx + 2 * ctx->params[0]) * (1.0 / 3.0);
       y1 = (ctx->cpy + 2 * ctx->params[1]) * (1.0 / 3.0);
@@ -645,7 +647,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
       ctx->param = 0;
     } else if (final) {
       if (ctx->param > 2) {
-        s_path_parse_default_xy (ctx, 4);
+        lepton_path_parse_default_xy (ctx, 4);
         /* raise quadratic bezier to cubic */
         x1 = (ctx->cpx + 2 * ctx->params[0]) * (1.0 / 3.0);
         y1 = (ctx->cpy + 2 * ctx->params[1]) * (1.0 / 3.0);
@@ -659,7 +661,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
         ctx->cpx = x3;
         ctx->cpy = y3;
       } else {
-        s_path_parse_default_xy (ctx, 2);
+        lepton_path_parse_default_xy (ctx, 2);
         lepton_path_lineto (ctx->path, ctx->params[0], ctx->params[1]);
         ctx->cpx = ctx->rpx = ctx->params[0];
         ctx->cpy = ctx->rpy = ctx->params[1];
