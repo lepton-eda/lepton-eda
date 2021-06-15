@@ -114,36 +114,90 @@ lepton_path_section_get_code (LeptonPathSection *section)
   return section->code;
 }
 
+/*! \brief Get X coordinate of the first point of path section.
+ *  \par Function Description
+ *  Given a #LeptonPathSection variable, this getter returns the X
+ *  coordinate of its first point.
+ *
+ *  \param [in] section The #LeptonPathSection variable.
+ *  \return The X coordinate value of the first point of the path
+ *  section.
+ */
 int
 lepton_path_section_get_x1 (LeptonPathSection *section)
 {
   return section->x1;
 }
 
+/*! \brief Get Y coordinate of the first point of path section.
+ *  \par Function Description
+ *  Given a #LeptonPathSection variable, this getter returns the Y
+ *  coordinate of its first point.
+ *
+ *  \param [in] section The #LeptonPathSection variable.
+ *  \return The Y coordinate value of the first point of the path
+ *  section.
+ */
 int
 lepton_path_section_get_y1 (LeptonPathSection *section)
 {
   return section->y1;
 }
 
+/*! \brief Get X coordinate of the second point of path section.
+ *  \par Function Description
+ *  Given a #LeptonPathSection variable, this getter returns the X
+ *  coordinate of its second point.
+ *
+ *  \param [in] section The #LeptonPathSection variable.
+ *  \return The X coordinate value of the second point of the path
+ *  section.
+ */
 int
 lepton_path_section_get_x2 (LeptonPathSection *section)
 {
   return section->x2;
 }
 
+/*! \brief Get Y coordinate of the second point of path section.
+ *  \par Function Description
+ *  Given a #LeptonPathSection variable, this getter returns the Y
+ *  coordinate of its second point.
+ *
+ *  \param [in] section The #LeptonPathSection variable.
+ *  \return The Y coordinate value of the second point of the path
+ *  section.
+ */
 int
 lepton_path_section_get_y2 (LeptonPathSection *section)
 {
   return section->y2;
 }
 
+/*! \brief Get X coordinate of the third point of path section.
+ *  \par Function Description
+ *  Given a #LeptonPathSection variable, this getter returns the X
+ *  coordinate of its third point.
+ *
+ *  \param [in] section The #LeptonPathSection variable.
+ *  \return The X coordinate value of the third point of the path
+ *  section.
+ */
 int
 lepton_path_section_get_x3 (LeptonPathSection *section)
 {
   return section->x3;
 }
 
+/*! \brief Get Y coordinate of the third point of path section.
+ *  \par Function Description
+ *  Given a #LeptonPathSection variable, this getter returns the Y
+ *  coordinate of its third point.
+ *
+ *  \param [in] section The #LeptonPathSection variable.
+ *  \return The Y coordinate value of the third point of the path
+ *  section.
+ */
 int
 lepton_path_section_get_y3 (LeptonPathSection *section)
 {
