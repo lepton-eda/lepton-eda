@@ -106,6 +106,12 @@
   (test-assert-thrown 'wrong-type-arg (path-insert! p -1 100 '(-200 . -200)))
   (test-assert-thrown 'wrong-type-arg (path-insert! p -1 100 '(200 . 400)))
   (test-assert-thrown 'wrong-type-arg (path-insert! p -1 100 '(200 . 400) '(500 . 400) '(500 . 100)))
-  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 100)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 100))
+  ;; Wrong coord.
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'moveto 'c))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'lineto 'c))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto 'c '(500 . 400) '(500 . 100)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto '(200 . 400) 'c '(500 . 100)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto '(200 . 400) '(500 . 400) 'c)))
 
 (test-end "path-wrong-argument")
