@@ -112,6 +112,18 @@
   (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'lineto 'c))
   (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto 'c '(500 . 400) '(500 . 100)))
   (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto '(200 . 400) 'c '(500 . 100)))
-  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto '(200 . 400) '(500 . 400) 'c)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto '(200 . 400) '(500 . 400) 'c))
+  ;; Wrong x.
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'moveto '(x . -200)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'lineto '(x . 400)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto '(x . 400) '(500 . 400) '(500 . 100)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto '(200 . 400) '(x . 400) '(500 . 100)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto '(200 . 400) '(500 . 400) '(x . 100)))
+  ;; Wrong y.
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'moveto '(-200 . y)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'lineto '(200 . y)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto '(200 . y) '(500 . 400) '(500 . 100)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto '(200 . 400) '(500 . y) '(500 . 100)))
+  (test-assert-thrown 'wrong-type-arg (path-insert! p -1 'curveto '(200 . 400) '(500 . 400) '(500 . y))))
 
 (test-end "path-wrong-argument")
