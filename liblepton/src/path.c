@@ -339,7 +339,7 @@ lepton_path_curveto (LeptonPath *path,
 
 
 void
-s_path_art_finish (LeptonPath * path)
+lepton_path_art_finish (LeptonPath * path)
 {
   int num_sections;
 
@@ -797,7 +797,7 @@ static void s_path_parse_data (RSVGParsePathCtx * ctx, const char *data)
         s_path_parse_do_cmd (ctx, TRUE);
       /* s_path_closepath (ctx->path); */
       /* lepton_path_lineto (ctx->path, ctx->mpx, ctx->mpy); */
-      s_path_art_finish (ctx->path);
+      lepton_path_art_finish (ctx->path);
 
       ctx->cpx = ctx->rpx = ctx->path->sections[ctx->path->num_sections - 1].x3;
       ctx->cpy = ctx->rpy = ctx->path->sections[ctx->path->num_sections - 1].y3;
