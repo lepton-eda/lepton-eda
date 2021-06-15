@@ -524,7 +524,9 @@ lepton_path_parse_default_xy (RSVGParsePathCtx * ctx,
 }
 
 
-static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
+static void
+lepton_path_parse_do_cmd (RSVGParsePathCtx *ctx,
+                          gboolean final)
 {
   double x1, y1, x2, y2, x3, y3;
 
@@ -785,7 +787,7 @@ static void s_path_parse_data (RSVGParsePathCtx * ctx, const char *data)
         }
       }
       ctx->params[ctx->param++] = val;
-      s_path_parse_do_cmd (ctx, FALSE);
+      lepton_path_parse_do_cmd (ctx, FALSE);
 
       in_num = FALSE;
     }
@@ -803,7 +805,7 @@ static void s_path_parse_data (RSVGParsePathCtx * ctx, const char *data)
       exp_wait_sign = FALSE;
     } else if (c == 'z' || c == 'Z') {
       if (ctx->param)
-        s_path_parse_do_cmd (ctx, TRUE);
+        lepton_path_parse_do_cmd (ctx, TRUE);
       /* s_path_closepath (ctx->path); */
       /* lepton_path_lineto (ctx->path, ctx->mpx, ctx->mpy); */
       lepton_path_art_finish (ctx->path);
@@ -812,12 +814,12 @@ static void s_path_parse_data (RSVGParsePathCtx * ctx, const char *data)
       ctx->cpy = ctx->rpy = ctx->path->sections[ctx->path->num_sections - 1].y3;
     } else if (c >= 'A' && c <= 'Z' && c != 'E') {
       if (ctx->param)
-        s_path_parse_do_cmd (ctx, TRUE);
+        lepton_path_parse_do_cmd (ctx, TRUE);
       ctx->cmd = c + 'a' - 'A';
       ctx->rel = FALSE;
     } else if (c >= 'a' && c <= 'z' && c != 'e') {
       if (ctx->param)
-        s_path_parse_do_cmd (ctx, TRUE);
+        lepton_path_parse_do_cmd (ctx, TRUE);
       ctx->cmd = c;
       ctx->rel = TRUE;
     }
@@ -842,7 +844,7 @@ s_path_parse (const char *path_str)
   s_path_parse_data (&ctx, path_str);
 
   if (ctx.param)
-    s_path_parse_do_cmd (&ctx, TRUE);
+    lepton_path_parse_do_cmd (&ctx, TRUE);
 
   return ctx.path;
 }
