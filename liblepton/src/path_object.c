@@ -29,6 +29,15 @@
  *  \brief functions for the path object
  */
 
+/*! \brief Return path object section with given number.
+ *  \par Function Description
+ *  Returns the #LeptonPathSection object pointer with the number
+ *  \a i for #LeptonObject.
+ *
+ *  \param [in] object The #LeptonObject.
+ *  \param [in] i The id number of wanted section.
+ *  \return The pointer to the requested #LeptonPathSection.
+ */
 LeptonPathSection*
 lepton_path_object_get_section (const LeptonObject *object,
                                 int i)
