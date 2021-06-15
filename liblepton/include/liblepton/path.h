@@ -85,7 +85,7 @@ const char*
 lepton_path_section_code_to_string (int code);
 
 LeptonPath*
-s_path_parse (const char *path_str);
+lepton_path_parse (const char *path_str);
 
 double
 lepton_path_shortest_distance (LeptonPath *path,

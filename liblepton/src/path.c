@@ -831,7 +831,7 @@ lepton_path_parse_data (RSVGParsePathCtx *ctx,
 
 
 LeptonPath*
-s_path_parse (const char *path_str)
+lepton_path_parse (const char *path_str)
 {
   RSVGParsePathCtx ctx;
 

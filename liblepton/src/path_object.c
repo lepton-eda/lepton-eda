@@ -76,7 +76,7 @@ lepton_path_object_new (int color,
                         const char *path_string)
 {
   return lepton_path_object_new_take_path (color,
-                                           s_path_parse (path_string));
+                                           lepton_path_parse (path_string));
 }
 
 
