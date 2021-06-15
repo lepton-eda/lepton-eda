@@ -685,7 +685,9 @@ lepton_path_parse_do_cmd (RSVGParsePathCtx *ctx,
 }
 
 
-static void s_path_parse_data (RSVGParsePathCtx * ctx, const char *data)
+static void
+lepton_path_parse_data (RSVGParsePathCtx *ctx,
+                        const char *data)
 {
   int i = 0;
   double val = 0;
@@ -841,7 +843,7 @@ s_path_parse (const char *path_str)
   ctx.cmd = 0;
   ctx.param = 0;
 
-  s_path_parse_data (&ctx, path_str);
+  lepton_path_parse_data (&ctx, path_str);
 
   if (ctx.param)
     lepton_path_parse_do_cmd (&ctx, TRUE);
