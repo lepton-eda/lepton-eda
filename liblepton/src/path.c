@@ -202,6 +202,14 @@ lepton_path_section_code_from_string (char *s)
   return result;
 }
 
+/*! \brief Return a string holding the representation of #PATH_CODE value.
+ * \par Function Description
+ * Given a #PATH_CODE value, returns its external representation
+ * as a string.  This is mainly intended to be used in Scheme FFI
+ * functions.
+ *
+ *  \param [in] code The #PATH_CODE value.
+ */
 const char*
 lepton_path_section_code_to_string (int code)
 {
