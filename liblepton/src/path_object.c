@@ -708,6 +708,16 @@ lepton_path_object_insert_section (LeptonObject *object,
 }
 
 
+/*! \brief Remove a path section from path object.
+ *  \par Function description
+ *  Given the object #LeptonObject, and the section number \a i,
+ *  removes the section with the specified number from the path
+ *  object and returns the modified object.
+ *
+ *  \param [in] object  The path #LeptonObject to remove section from.
+ *  \param [in] i       The id number of the section to remove.
+ *  \return The modified #LeptonObject.
+ */
 LeptonObject*
 lepton_path_object_remove_section (LeptonObject *object,
                                    int i)
