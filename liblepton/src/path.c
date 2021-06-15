@@ -338,6 +338,13 @@ lepton_path_curveto (LeptonPath *path,
 }
 
 
+/*! \brief Finish #LeptonPath object creation.
+ *  \par Function Description
+ *  Finishes #LeptonPath object creation by adding a last ending
+ *  section.
+ *
+ *  \param [in,out] path The #LeptonPath object.
+ */
 void
 lepton_path_art_finish (LeptonPath * path)
 {
