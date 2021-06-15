@@ -88,6 +88,9 @@
 ;;; path-remove!
 (test-assert-thrown 'wrong-type-arg (path-remove! 'p 0))
 (test-assert-thrown 'wrong-type-arg (path-remove! (new-path) 'x))
+;;; path-remove! out of range index.
+(test-assert-thrown 'out-of-range (path-remove! (new-path) -1))
+(test-assert-thrown 'out-of-range (path-remove! (new-path) 100))
 
 ;;; path-insert!
 (let ((p (new-path)))
