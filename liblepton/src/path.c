@@ -64,29 +64,6 @@ lepton_path_new ()
 }
 
 
-LeptonPath*
-s_path_new_from (LeptonPathSection *sections)
-{
-  LeptonPath *path;
-  int i;
-
-  g_return_val_if_fail (sections != NULL, NULL);
-
-  for (i = 0; sections[i].code != PATH_END; i++);
-  if (i <= 0)
-    return lepton_path_new ();
-
-  path = g_new (LeptonPath, 1);
-
-  path->num_sections = i;
-  path->num_sections_max = i;
-  path->sections = g_new (LeptonPathSection, i);
-
-  memcpy (path->sections, sections, i * sizeof (LeptonPathSection));
-  return path;
-}
-
-
 /*! \brief Free memory associated with the LeptonPath object.
  *
  *  \param [in] LeptonPath object to be freed.
