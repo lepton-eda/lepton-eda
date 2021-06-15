@@ -100,6 +100,14 @@ lepton_path_free (LeptonPath * path)
   }
 }
 
+/*! \brief Get the code type of path section.
+ *  \par Function Description
+ *  This function returns the PATH_CODE name of a
+ *  #LeptonPathSection object.
+ *
+ *  \param [in] section The #LeptonPathSection object.
+ *  \return PATH_CODE enum value of the path section object.
+ */
 PATH_CODE
 lepton_path_section_get_code (LeptonPathSection *section)
 {
