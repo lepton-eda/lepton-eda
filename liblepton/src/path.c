@@ -87,6 +87,10 @@ s_path_new_from (LeptonPathSection *sections)
 }
 
 
+/*! \brief Free memory associated with the LeptonPath object.
+ *
+ *  \param [in] LeptonPath object to be freed.
+ */
 void
 lepton_path_free (LeptonPath * path)
 {
