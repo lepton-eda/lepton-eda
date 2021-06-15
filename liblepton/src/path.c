@@ -866,6 +866,15 @@ lepton_path_parse_data (RSVGParsePathCtx *ctx,
 }
 
 
+/*! \brief Return #LeptonPath pointer object from path string.
+ *  \par Function Description
+ *  Given a path string representation in gEDA file format creates
+ *  a #LeptonPath object corresponding to it and returns the
+ *  pointer to the object.
+ *
+ *  \param path_str [in] The representation of path as a string.
+ *  \return The #LeptonPath object pointer.
+ */
 LeptonPath*
 lepton_path_parse (const char *path_str)
 {
