@@ -96,7 +96,7 @@ char*
 s_path_string_from_path (const LeptonPath *path);
 
 int
-s_path_to_polygon (LeptonPath *path,
-                   GArray *points);
+lepton_path_to_polygon (LeptonPath *path,
+                        GArray *points);
 
 G_END_DECLS

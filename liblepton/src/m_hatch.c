@@ -252,7 +252,7 @@ m_hatch_path (LeptonPath *path,
 
   points = g_array_new (FALSE, FALSE, sizeof (LeptonPoint));
 
-  s_path_to_polygon (path, points);
+  lepton_path_to_polygon (path, points);
   m_hatch_polygon (points, angle, pitch, lines);
 
   g_array_free (points, TRUE);

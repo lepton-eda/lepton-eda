@@ -898,8 +898,8 @@ s_path_string_from_path (const LeptonPath *path)
  *  \return TRUE if the path is closed, FALSE if it is open.
  */
 int
-s_path_to_polygon (LeptonPath *path,
-                   GArray *points)
+lepton_path_to_polygon (LeptonPath *path,
+                        GArray *points)
 {
   int closed = FALSE;
   int i;
@@ -971,7 +971,7 @@ lepton_path_shortest_distance (LeptonPath *path,
 
   points = g_array_new (FALSE, FALSE, sizeof (LeptonPoint));
 
-  closed = s_path_to_polygon (path, points);
+  closed = lepton_path_to_polygon (path, points);
 
   if (!solid) {
     shortest_distance = m_polygon_shortest_distance (points, x, y, closed);
