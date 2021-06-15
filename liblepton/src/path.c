@@ -853,7 +853,7 @@ lepton_path_parse (const char *path_str)
 
 
 char*
-s_path_string_from_path (const LeptonPath *path)
+lepton_path_string_from_path (const LeptonPath *path)
 {
   LeptonPathSection *section;
   GString *path_string;

@@ -140,7 +140,7 @@ lepton_path_object_copy (LeptonObject *o_current)
   LeptonObject *new_obj;
   char *path_string;
 
-  path_string = s_path_string_from_path (o_current->path);
+  path_string = lepton_path_string_from_path (o_current->path);
   new_obj = lepton_path_object_new (lepton_object_get_color (o_current),
                                     path_string);
   g_free (path_string);
@@ -313,7 +313,7 @@ lepton_path_object_to_buffer (const LeptonObject *object)
   angle2       = lepton_object_get_fill_angle2 (object);
   pitch2       = lepton_object_get_fill_pitch2 (object);
 
-  path_string = s_path_string_from_path (object->path);
+  path_string = lepton_path_string_from_path (object->path);
   num_lines = o_text_num_lines (path_string);
   buf = g_strdup_printf ("%c %d %d %d %d %d %d %d %d %d %d %d %d %d\n%s",
                          lepton_object_get_type (object),

@@ -93,7 +93,7 @@ lepton_path_shortest_distance (LeptonPath *path,
                                int y,
                                int solid);
 char*
-s_path_string_from_path (const LeptonPath *path);
+lepton_path_string_from_path (const LeptonPath *path);
 
 int
 lepton_path_to_polygon (LeptonPath *path,
