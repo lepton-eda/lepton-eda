@@ -47,7 +47,7 @@
 
 
 LeptonPath*
-s_path_new (void)
+lepton_path_new ()
 {
   LeptonPath *path;
 
@@ -70,7 +70,7 @@ s_path_new_from (LeptonPathSection *sections)
 
   for (i = 0; sections[i].code != PATH_END; i++);
   if (i <= 0)
-    return s_path_new ();
+    return lepton_path_new ();
 
   path = g_new (LeptonPath, 1);
 
@@ -741,7 +741,7 @@ s_path_parse (const char *path_str)
 {
   RSVGParsePathCtx ctx;
 
-  ctx.path = s_path_new ();
+  ctx.path = lepton_path_new ();
   ctx.cpx = 0.0;
   ctx.cpy = 0.0;
   ctx.mpx = 0.0;
