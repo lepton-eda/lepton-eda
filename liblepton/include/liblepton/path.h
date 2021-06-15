@@ -88,10 +88,10 @@ LeptonPath*
 s_path_parse (const char *path_str);
 
 double
-s_path_shortest_distance (LeptonPath *path,
-                          int x,
-                          int y,
-                          int solid);
+lepton_path_shortest_distance (LeptonPath *path,
+                               int x,
+                               int y,
+                               int solid);
 char*
 s_path_string_from_path (const LeptonPath *path);
 

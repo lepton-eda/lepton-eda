@@ -942,10 +942,10 @@ s_path_to_polygon (LeptonPath *path,
  *  an invalid parameter, this function returns G_MAXDOUBLE.
  */
 double
-s_path_shortest_distance (LeptonPath *path,
-                          int x,
-                          int y,
-                          int solid)
+lepton_path_shortest_distance (LeptonPath *path,
+                               int x,
+                               int y,
+                               int solid)
 {
   double shortest_distance = G_MAXDOUBLE;
   int closed;

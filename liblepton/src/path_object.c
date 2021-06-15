@@ -647,7 +647,7 @@ lepton_path_object_shortest_distance (LeptonObject *object,
   solid = force_solid ||
     lepton_object_get_fill_type (object) != FILLING_HOLLOW;
 
-  return s_path_shortest_distance (object->path, x, y, solid);
+  return lepton_path_shortest_distance (object->path, x, y, solid);
 }
 
 
