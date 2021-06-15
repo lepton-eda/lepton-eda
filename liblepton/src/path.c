@@ -212,6 +212,17 @@ lepton_path_section_code_to_string (int code)
   return result;
 }
 
+/*! \brief Create a new "moveto" section in #LeptonPath object.
+ *  \par Function Description
+ *  The function modifies #LeptonPath object by adding a new
+ *  "moveto" section with given coordinates x and y.  If the last
+ *  section of the path is already a "moveto" one, amend it
+ *  instead of adding a new section.
+ *
+ *  \param [in,out] path The #LeptonPath object.
+ *  \param [in] x The X coordinate of the "moveto" point.
+ *  \param [in] y The Y coordinate of the "moveto" point.
+ */
 void
 lepton_path_moveto (LeptonPath *path,
                     double x,
