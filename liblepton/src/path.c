@@ -260,9 +260,9 @@ lepton_path_moveto (LeptonPath *path,
 
 
 void
-s_path_lineto (LeptonPath *path,
-               double x,
-               double y)
+lepton_path_lineto (LeptonPath *path,
+                    double x,
+                    double y)
 {
   LeptonPathSection *sections;
   int num_sections;
@@ -512,7 +512,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
     /* lineto */
     if (ctx->param == 2 || final) {
       s_path_parse_default_xy (ctx, 2);
-      s_path_lineto (ctx->path, ctx->params[0], ctx->params[1]);
+      lepton_path_lineto (ctx->path, ctx->params[0], ctx->params[1]);
       ctx->cpx = ctx->rpx = ctx->params[0];
       ctx->cpy = ctx->rpy = ctx->params[1];
       ctx->param = 0;
@@ -557,7 +557,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
   case 'h':
     /* horizontal lineto */
     if (ctx->param == 1) {
-      s_path_lineto (ctx->path, ctx->params[0], ctx->cpy);
+      lepton_path_lineto (ctx->path, ctx->params[0], ctx->cpy);
       ctx->cpx = ctx->rpx = ctx->params[0];
       ctx->param = 0;
     }
@@ -565,7 +565,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
   case 'v':
     /* vertical lineto */
     if (ctx->param == 1) {
-      s_path_lineto (ctx->path, ctx->cpx, ctx->params[0]);
+      lepton_path_lineto (ctx->path, ctx->cpx, ctx->params[0]);
       ctx->cpy = ctx->rpy = ctx->params[0];
       ctx->param = 0;
     }
@@ -630,7 +630,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
         ctx->cpy = y3;
       } else {
         s_path_parse_default_xy (ctx, 2);
-        s_path_lineto (ctx->path, ctx->params[0], ctx->params[1]);
+        lepton_path_lineto (ctx->path, ctx->params[0], ctx->params[1]);
         ctx->cpx = ctx->rpx = ctx->params[0];
         ctx->cpy = ctx->rpy = ctx->params[1];
       }
@@ -773,7 +773,7 @@ static void s_path_parse_data (RSVGParsePathCtx * ctx, const char *data)
       if (ctx->param)
         s_path_parse_do_cmd (ctx, TRUE);
       /* s_path_closepath (ctx->path); */
-      /* s_path_lineto (ctx->path, ctx->mpx, ctx->mpy); */
+      /* lepton_path_lineto (ctx->path, ctx->mpx, ctx->mpy); */
       s_path_art_finish (ctx->path);
 
       ctx->cpx = ctx->rpx = ctx->path->sections[ctx->path->num_sections - 1].x3;
