@@ -749,6 +749,11 @@ lepton_path_object_remove_section (LeptonObject *object,
   return object;
 }
 
+/*! \brief Get the number of sections of path object.
+ *
+ *  \param [in] object The path #LeptonObject.
+ *  \return The number of sections.
+ */
 int
 lepton_path_object_get_num_sections (const LeptonObject *object)
 {
@@ -758,6 +763,11 @@ lepton_path_object_get_num_sections (const LeptonObject *object)
   return object->path->num_sections;
 }
 
+/*! \brief Set the number of sections of path object.
+ *
+ *  \param [in] object The path #LeptonObject.
+ *  \param [in] num The new number of sections.
+ */
 void
 lepton_path_object_set_num_sections (LeptonObject *object,
                                      int num)
