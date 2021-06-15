@@ -897,6 +897,14 @@ lepton_path_parse (const char *path_str)
 }
 
 
+/*! \brief Return string representation of #LeptonPath object.
+ *  \par Function Description
+ *  Given a #LeptonPath object pointer, returns its representation
+ *  as a string in gEDA file format.
+ *
+ *  \param path [in] The #LeptonPath object pointer.
+ *  \return The string representing the object.
+ */
 char*
 lepton_path_string_from_path (const LeptonPath *path)
 {
