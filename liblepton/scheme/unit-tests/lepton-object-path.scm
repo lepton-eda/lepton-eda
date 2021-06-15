@@ -81,6 +81,9 @@
 ;;; path-ref
 (test-assert-thrown 'wrong-type-arg (path-ref 'p 0))
 (test-assert-thrown 'wrong-type-arg (path-ref (new-path) 'x))
+;;; path-ref out of range index.
+(test-assert-thrown 'out-of-range (path-ref (new-path) -1))
+(test-assert-thrown 'out-of-range (path-ref (new-path) 100))
 
 ;;; path-remove!
 (test-assert-thrown 'wrong-type-arg (path-remove! 'p 0))
