@@ -292,6 +292,20 @@ lepton_path_lineto (LeptonPath *path,
 }
 
 
+/*! \brief Create a new "curveto" section in #LeptonPath object.
+ *  \par Function Description
+ *  The function modifies #LeptonPath object by adding a new
+ *  "curveto" section with given coordinates of three control
+ *  points.
+ *
+ *  \param [in,out] path The #LeptonPath object.
+ *  \param [in] x1 The X coordinate of the first control point.
+ *  \param [in] y1 The Y coordinate of the first control point.
+ *  \param [in] x2 The X coordinate of the second control point.
+ *  \param [in] y2 The Y coordinate of the second control point.
+ *  \param [in] x3 The X coordinate of the third control point.
+ *  \param [in] y3 The Y coordinate of the third control point.
+ */
 void
 lepton_path_curveto (LeptonPath *path,
                      double x1,
