@@ -259,6 +259,15 @@ lepton_path_moveto (LeptonPath *path,
 }
 
 
+/*! \brief Create a new "lineto" section in #LeptonPath object.
+ *  \par Function Description
+ *  The function modifies #LeptonPath object by adding a new
+ *  "lineto" section with given coordinates x and y.
+ *
+ *  \param [in,out] path The #LeptonPath object.
+ *  \param [in] x The X coordinate of the "lineto" point.
+ *  \param [in] y The Y coordinate of the "lineto" point.
+ */
 void
 lepton_path_lineto (LeptonPath *path,
                     double x,
