@@ -181,6 +181,14 @@ lepton_path_section_get_y3 (LeptonPathSection *section)
   return section->y3;
 }
 
+/*! \brief Return a path section code enum value from a string.
+ * \par Function Description
+ * Given a string \a s, returns the #PATH_CODE enum value
+ * corresponding to it.  This is mainly intended to be used for
+ * value conversion in Scheme FFI functions.
+ *
+ * \param [in] s The string.
+ */
 int
 lepton_path_section_code_from_string (char *s)
 {
