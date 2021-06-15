@@ -293,13 +293,13 @@ lepton_path_lineto (LeptonPath *path,
 
 
 void
-s_path_curveto (LeptonPath *path,
-                double x1,
-                double y1,
-                double x2,
-                double y2,
-                double x3,
-                double y3)
+lepton_path_curveto (LeptonPath *path,
+                     double x1,
+                     double y1,
+                     double x2,
+                     double y2,
+                     double x3,
+                     double y3)
 {
   LeptonPathSection *sections;
   int num_sections;
@@ -391,10 +391,10 @@ static void s_path_arc_segment (RSVGParsePathCtx * ctx,
   y3 = yc + sin (th1);
   x2 = x3 + t * sin (th1);
   y2 = y3 - t * cos (th1);
-  s_path_curveto (ctx->path,
-              a00 * x1 + a01 * y1, a10 * x1 + a11 * y1,
-              a00 * x2 + a01 * y2, a10 * x2 + a11 * y2,
-              a00 * x3 + a01 * y3, a10 * x3 + a11 * y3);
+  lepton_path_curveto (ctx->path,
+                       a00 * x1 + a01 * y1, a10 * x1 + a11 * y1,
+                       a00 * x2 + a01 * y2, a10 * x2 + a11 * y2,
+                       a00 * x3 + a01 * y3, a10 * x3 + a11 * y3);
 }
 
 
@@ -537,7 +537,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
       y2 = ctx->params[3];
       x3 = ctx->params[4];
       y3 = ctx->params[5];
-      s_path_curveto (ctx->path, x1, y1, x2, y2, x3, y3);
+      lepton_path_curveto (ctx->path, x1, y1, x2, y2, x3, y3);
       ctx->rpx = x2;
       ctx->rpy = y2;
       ctx->cpx = x3;
@@ -555,7 +555,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
       y2 = ctx->params[1];
       x3 = ctx->params[2];
       y3 = ctx->params[3];
-      s_path_curveto (ctx->path, x1, y1, x2, y2, x3, y3);
+      lepton_path_curveto (ctx->path, x1, y1, x2, y2, x3, y3);
       ctx->rpx = x2;
       ctx->rpy = y2;
       ctx->cpx = x3;
@@ -594,7 +594,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
       y3 = ctx->params[3];
       x2 = (x3 + 2 * ctx->params[0]) * (1.0 / 3.0);
       y2 = (y3 + 2 * ctx->params[1]) * (1.0 / 3.0);
-      s_path_curveto (ctx->path, x1, y1, x2, y2, x3, y3);
+      lepton_path_curveto (ctx->path, x1, y1, x2, y2, x3, y3);
       ctx->rpx = ctx->params[0];
       ctx->rpy = ctx->params[1];
       ctx->cpx = x3;
@@ -616,7 +616,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
       y3 = ctx->params[1];
       x2 = (x3 + 2 * xc) * (1.0 / 3.0);
       y2 = (y3 + 2 * yc) * (1.0 / 3.0);
-      s_path_curveto (ctx->path, x1, y1, x2, y2, x3, y3);
+      lepton_path_curveto (ctx->path, x1, y1, x2, y2, x3, y3);
       ctx->rpx = xc;
       ctx->rpy = yc;
       ctx->cpx = x3;
@@ -632,7 +632,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
         y3 = ctx->params[3];
         x2 = (x3 + 2 * ctx->params[0]) * (1.0 / 3.0);
         y2 = (y3 + 2 * ctx->params[1]) * (1.0 / 3.0);
-        s_path_curveto (ctx->path, x1, y1, x2, y2, x3, y3);
+        lepton_path_curveto (ctx->path, x1, y1, x2, y2, x3, y3);
         ctx->rpx = ctx->params[0];
         ctx->rpy = ctx->params[1];
         ctx->cpx = x3;
