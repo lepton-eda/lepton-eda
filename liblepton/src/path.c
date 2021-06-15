@@ -386,9 +386,15 @@ struct _RSVGParsePathCtx {
 };
 
 
-static void s_path_arc_segment (RSVGParsePathCtx * ctx,
-                                double xc, double yc, double th0, double th1,
-                                double rx, double ry, double x_axis_rotation)
+static void
+lepton_path_arc_segment (RSVGParsePathCtx * ctx,
+                         double xc,
+                         double yc,
+                         double th0,
+                         double th1,
+                         double rx,
+                         double ry,
+                         double x_axis_rotation)
 {
   double sin_th, cos_th;
   double a00, a01, a10, a11;
@@ -489,9 +495,12 @@ static void s_path_arc (RSVGParsePathCtx * ctx,
   n_segs = ceil (fabs (th_arc / (M_PI * 0.5 + 0.001)));
 
   for (i = 0; i < n_segs; i++)
-    s_path_arc_segment (ctx, xc, yc,
-                 th0 + i * th_arc / n_segs,
-                 th0 + (i + 1) * th_arc / n_segs, rx, ry, x_axis_rotation);
+    lepton_path_arc_segment (ctx,
+                             xc, yc,
+                             th0 + i * th_arc / n_segs,
+                             th0 + (i + 1) * th_arc / n_segs,
+                             rx, ry,
+                             x_axis_rotation);
 
   ctx->cpx = x;
   ctx->cpy = y;
