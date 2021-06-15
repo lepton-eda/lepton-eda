@@ -404,7 +404,7 @@ lepton_path_arc_segment (RSVGParsePathCtx * ctx,
 
   sin_th = sin (x_axis_rotation * (M_PI / 180.0));
   cos_th = cos (x_axis_rotation * (M_PI / 180.0));
-  /* inverse transform compared with s_path_arc */
+  /* inverse transform compared with lepton_path_arc */
   a00 = cos_th * rx;
   a01 = -sin_th * ry;
   a10 = sin_th * rx;
@@ -426,7 +426,7 @@ lepton_path_arc_segment (RSVGParsePathCtx * ctx,
 
 
 /*
- * s_path_arc: Add an arc to the path context.
+ * lepton_path_arc: Add an arc to the path context.
  * @ctx: Path context.
  * @rx: Radius in x direction (before rotation).
  * @ry: Radius in y direction (before rotation).
@@ -437,9 +437,15 @@ lepton_path_arc_segment (RSVGParsePathCtx * ctx,
  * @y: New y coordinate.
  *
  */
-static void s_path_arc (RSVGParsePathCtx * ctx,
-                        double rx, double ry, double x_axis_rotation,
-                        int large_arc_flag, int sweep_flag, double x, double y)
+static void
+lepton_path_arc (RSVGParsePathCtx * ctx,
+                 double rx,
+                 double ry,
+                 double x_axis_rotation,
+                 int large_arc_flag,
+                 int sweep_flag,
+                 double x,
+                 double y)
 {
   double sin_th, cos_th;
   double a00, a01, a10, a11;
@@ -682,9 +688,14 @@ lepton_path_parse_do_cmd (RSVGParsePathCtx *ctx,
     break;
   case 'a':
     if (ctx->param == 7 || final) {
-      s_path_arc (ctx,
-               ctx->params[0], ctx->params[1], ctx->params[2],
-               ctx->params[3], ctx->params[4], ctx->params[5], ctx->params[6]);
+      lepton_path_arc (ctx,
+                       ctx->params[0],
+                       ctx->params[1],
+                       ctx->params[2],
+                       ctx->params[3],
+                       ctx->params[4],
+                       ctx->params[5],
+                       ctx->params[6]);
       ctx->param = 0;
     }
     break;
