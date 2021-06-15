@@ -660,6 +660,19 @@ lepton_path_object_shortest_distance (LeptonObject *object,
 }
 
 
+/*! \brief Insert a new path section into path object.
+ *  \par Function description
+ *  Given the object #LeptonObject, section #LeptonPathSection,
+ *  and position id \a i, inserts the section into the object in
+ *  specified position.  If the position number is less than zero
+ *  or greater than the number of path object sections, appends
+ *  the section to the end of the path.
+ *
+ *  \param [in] object  The path #LeptonObject to insert section into.
+ *  \param [in] section The #LeptonPathSection to insert.
+ *  \param [in] i       The position id of the new section in the path.
+ *  \return The modified #LeptonObject.
+ */
 LeptonObject*
 lepton_path_object_insert_section (LeptonObject *object,
                                    LeptonPathSection *section,
