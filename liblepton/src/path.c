@@ -213,9 +213,9 @@ lepton_path_section_code_to_string (int code)
 }
 
 void
-s_path_moveto (LeptonPath *path,
-               double x,
-               double y)
+lepton_path_moveto (LeptonPath *path,
+                    double x,
+                    double y)
 {
   LeptonPathSection *sections;
   int num_sections;
@@ -490,7 +490,7 @@ static void s_path_parse_do_cmd (RSVGParsePathCtx * ctx, gboolean final)
     /* moveto */
     if (ctx->param == 2 || final) {
       s_path_parse_default_xy (ctx, 2);
-      s_path_moveto (ctx->path, ctx->params[0], ctx->params[1]);
+      lepton_path_moveto (ctx->path, ctx->params[0], ctx->params[1]);
       ctx->mpx = ctx->cpx = ctx->rpx = ctx->params[0];
       ctx->mpy = ctx->cpy = ctx->rpy = ctx->params[1];
       ctx->param = 0;
