@@ -46,6 +46,10 @@
 #define NUM_BEZIER_SEGMENTS 100
 
 
+/*! \brief Create a new LeptonPath structure.
+ *
+ *  \return The newly created LeptonPath structure.
+ */
 LeptonPath*
 lepton_path_new ()
 {
