@@ -21,6 +21,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (srfi srfi-9 gnu)
+  #:use-module (srfi srfi-11)
   #:use-module (srfi srfi-26)
   #:use-module (lepton attrib)
   #:use-module (lepton object)
@@ -100,8 +101,12 @@ Example usage:
                  (_ #\?)))
              args)))))
 
+;;; This is a helper object property to get object connections
+;;; once.
+(define object-conns (make-object-property))
+
 (define (connected-to? object1 object2)
-  (not (not (memv object1 (object-connections object2)))))
+  (not (not (memv object1 (object-conns object2)))))
 
 (define (connected-to-ls? object1 ls)
   (and (not (null? ls))
@@ -181,7 +186,8 @@ Example usage:
                (nets '())
                (components '()))
       (if (null? ls)
-          (append nets
+          (values nets
+                  ;; pins
                   (append-map component-pins components))
           (let ((object (car ls)))
             (loop (cdr ls)
@@ -192,9 +198,16 @@ Example usage:
                       (cons object components)
                       components))))))
 
-  (map (cut get-schematic-connection page <>)
-       (connections->netname-groups
-        (group-connections (page-connectable-objects page)))))
+  (define (populate-object-connections object)
+    (set! (object-conns object)
+          (object-connections object)))
+
+  (let-values (((nets pins) (page-connectable-objects page)))
+    (for-each populate-object-connections nets)
+    (for-each populate-object-connections pins)
+    (map (cut get-schematic-connection page <>)
+         (connections->netname-groups
+          (group-connections (append nets pins))))))
 
 
 (define (schematic-connection-add-pin! connection pin)
