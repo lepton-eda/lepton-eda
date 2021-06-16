@@ -1,5 +1,5 @@
 ;;; Lepton EDA netlister
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -160,23 +160,41 @@ Example usage:
                                objects
                                '())))
 
+;;; Return the list of COMPONENT pins.
+(define (component-pins component)
+  (let loop ((ls (component-contents component))
+             (pins '()))
+    (if (null? ls)
+        pins
+        (let ((object (car ls))
+              (rest (cdr ls)))
+          (loop rest
+                (if (net-pin? object)
+                    (cons object pins)
+                    pins))))))
+
 (define (make-page-schematic-connections page)
   "Create <schematic-connection> records from PAGE primitives."
-  (define (connection-object->list x)
-    (match x
-      ;; Return a net as one element list.
-      ((? net? x) `(,x))
-      ;; Replace components with the lists of their pins.
-      ((? component? x) (filter net-pin? (component-contents x)))
-      ;; Return empty list for non-connection objects.
-      (_ '())))
 
-  (define (page-connections page)
-    (apply append
-           (map connection-object->list (page-contents page))))
+  (define (page-connectable-objects page)
+    (let loop ((ls (page-contents page))
+               (nets '())
+               (components '()))
+      (if (null? ls)
+          (append nets
+                  (append-map component-pins components))
+          (let ((object (car ls)))
+            (loop (cdr ls)
+                  (if (net? object)
+                      (cons object nets)
+                      nets)
+                  (if (component? object)
+                      (cons object components)
+                      components))))))
 
   (map (cut get-schematic-connection page <>)
-       (connections->netname-groups (group-connections (page-connections page)))))
+       (connections->netname-groups
+        (group-connections (page-connectable-objects page)))))
 
 
 (define (schematic-connection-add-pin! connection pin)
