@@ -97,7 +97,7 @@ SCM_DEFINE (attrib_name, "%attrib-name", 1, 0, 0,
   const gchar *name = o_attrib_get_name (text);
 
   if (!name) {
-    scm_error (attribute_format_sym, s_parse_attrib,
+    scm_error (attribute_format_sym, s_attrib_name,
                _("~A is not a valid attribute: invalid string '~A'."),
                scm_list_2 (text_s,
                            scm_from_utf8_string (lepton_text_object_get_string (text))),
