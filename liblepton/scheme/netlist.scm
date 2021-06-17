@@ -493,12 +493,37 @@ connection pairs in the form (\"pin-number\" . \"net-name\")."
 (define (gnetlist:get-backend-arguments)
   (netlist-option-ref 'backend-option))
 
+
+;; Returns the least joint coordinate of CONNECTION.  A simple
+;; method of coordinate comparison is used for objects of the
+;; connection.  The coordinate is considered less if it has lesser
+;; X value or, if the X values are equal, its Y value is less.
+(define (connection-least-coord connection)
+  (define (min-coord a b)
+    (let ((x1 (car a))
+          (y1 (cdr a))
+          (x2 (car b))
+          (y2 (cdr b)))
+      (if (or (< x1 x2)
+              (and (= x1 x2) (< y1 y2)))
+          a
+          b)))
+
+  (define (coords object)
+    (if (pin? object)
+        (list (line-start object))
+        ;; net
+        (list (line-start object) (line-end object))))
+
+  (reduce min-coord
+          #f
+          (append-map coords (schematic-connection-objects connection))))
+
 (define (gnetlist:get-renamed-nets level)
   "Return the sorted list of net renames in toplevel schematic.
 The argument LEVEL is dummy."
   (define (make-special-netname connection hname)
-    (let* ((object (car (schematic-connection-objects connection)))
-           (coord (line-start object)))
+    (let ((coord (connection-least-coord connection)))
       (create-net-name
        (format #f "unnamed_net_at_~Ax~A" (car coord) (cdr coord))
        hname

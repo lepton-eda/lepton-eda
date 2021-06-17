@@ -24,15 +24,15 @@ middleA/Utop -> U1_2_to_B
 middleA/Uunder -> U1_2_to_B
 rockA/Umiddle/Utop -> U1_2_to_B
 rockA/Umiddle/Uunder -> U1_2_to_B
-unnamed_net_at_18600x38200/Urock/Umiddle/Utop -> U1_2_to_B
-unnamed_net_at_18600x38200/Urock/Umiddle/Uunder -> U1_2_to_B
+unnamed_net_at_5900x4500/Urock/Umiddle/Utop -> U1_2_to_B
+unnamed_net_at_5900x4500/Urock/Umiddle/Uunder -> U1_2_to_B
 U2_1_to_E -> U2_1_to_E-net
 middleB/Utop -> U2_1_to_E-net
 middleB/Uunder -> U2_1_to_E-net
 rockB/Umiddle/Utop -> U2_1_to_E-net
 rockB/Umiddle/Uunder -> U2_1_to_E-net
-unnamed_net_at_22100x37700/Urock/Umiddle/Utop -> U2_1_to_E-net
-unnamed_net_at_22100x37700/Urock/Umiddle/Uunder -> U2_1_to_E-net
+unnamed_net_at_8300x4500/Urock/Umiddle/Utop -> U2_1_to_E-net
+unnamed_net_at_8300x4500/Urock/Umiddle/Uunder -> U2_1_to_E-net
 
 END renamed-nets
 
