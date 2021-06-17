@@ -34,6 +34,7 @@
             check-vector
 
             ;; glib, gobject.
+            g_free
             g_list_append
             g_list_free
             g_list_remove_all
@@ -57,6 +58,8 @@
             eda_get_user_cache_dir
             eda_get_user_config_dir
             eda_get_user_data_dir
+
+            o_attrib_get_name_value
 
             lepton_object_get_attached_to
             lepton_object_get_attribs
@@ -298,6 +301,7 @@
                            args))))
          (force proc))))))
 
+(define-lff g_free void '(*) libglib)
 (define-lff g_list_append '* '(* *) libglib)
 (define-lff g_list_free void '(*) libglib)
 (define-lff g_list_remove_all '* '(* *) libglib)
@@ -367,6 +371,9 @@
 (define-lff edascm_is_page int '(*))
 (define-lff edascm_to_object '* '(*))
 (define-lff edascm_from_object '* '(*))
+
+;;; o_attrib.c
+(define-lff o_attrib_get_name_value int '(* * *))
 
 ;;; object.c
 (define-lff lepton_object_get_attached_to '* '(*))

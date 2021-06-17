@@ -2,7 +2,7 @@
 ;; libgeda - gEDA's library - Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2000-2011 gEDA Contributors
-;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;; Copyright (C) 2017-2021 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,15 +20,43 @@
 ;;
 
 (define-module (lepton attrib)
+  #:use-module (rnrs bytevectors)
+  #:use-module (system foreign)
 
   ; Import C procedures
   #:use-module (lepton core attrib)
   #:use-module (lepton core gettext)
 
+  #:use-module (lepton ffi)
   #:use-module (lepton object)
-  #:use-module (lepton page))
+  #:use-module (lepton object type)
+  #:use-module (lepton page)
 
-(define-public parse-attrib %parse-attrib)
+  #:export (parse-attrib))
+
+(define (parse-attrib object)
+  "Parses attribute text OBJECT into name and value strings.  If
+successful, returns a pair in the form (name . value).  Otherwise,
+raises an 'attribute-format error."
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+
+  (let* ((name-ptr-ptr (bytevector->pointer (make-bytevector (sizeof '*))))
+         (value-ptr-ptr (bytevector->pointer (make-bytevector (sizeof '*)))))
+    (if (true? (o_attrib_get_name_value pointer name-ptr-ptr value-ptr-ptr))
+        (let* ((name-ptr (dereference-pointer name-ptr-ptr))
+               (value-ptr (dereference-pointer value-ptr-ptr))
+               (name (pointer->string name-ptr))
+               (value (pointer->string value-ptr)))
+          (g_free name-ptr)
+          (g_free value-ptr)
+          ;; Return the pair of name and value.
+          (cons name value))
+        (scm-error 'attribute-format
+                   'parse-attrib
+                   "~A is not a valid attribute: invalid string '~A'."
+                   (list object (text-string object))
+                   '()))))
+
 (define-public attrib-name %attrib-name)
 (define-public object-attribs %object-attribs)
 (define-public attrib-attachment %attrib-attachment)
