@@ -22,7 +22,7 @@ START renamed-nets
 Z2/A -> GND
 Z2/B -> GND
 Z1/B -> Z1/A
-unnamed_net_at_1400x2000 -> Z1/A
+unnamed_net_at_1100x2000 -> Z1/A
 Z3/A -> Z3/A
 Z3/B -> Z3/A
 
