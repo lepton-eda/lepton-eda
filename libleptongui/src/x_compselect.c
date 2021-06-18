@@ -485,7 +485,8 @@ update_attributes_model (Compselect *compselect,
     o_attrlist = g_list_sort (o_attrlist, (GCompareFunc) sort_object_text);
     for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
       o_current = (LeptonObject*) o_iter->data;
-      o_attrib_get_name_value (o_current, &name, &value);
+      name = g_strdup (lepton_text_object_get_name (o_current));
+      value = g_strdup (lepton_text_object_get_value (o_current));
       gtk_list_store_append (model, &iter);
       gtk_list_store_set (model, &iter, 0, name, 1, value, -1);
       g_free (name);
@@ -496,7 +497,10 @@ update_attributes_model (Compselect *compselect,
     for (i = 0; i < n; i++) {
       for (o_iter = o_attrlist; o_iter != NULL; o_iter = g_list_next (o_iter)) {
         o_current = (LeptonObject*) o_iter->data;
-        if (o_attrib_get_name_value (o_current, &name, &value)) {
+        name = g_strdup (lepton_text_object_get_name (o_current));
+        if (name)
+        {
+          value = g_strdup (lepton_text_object_get_value (o_current));
           if (strcmp (name, filter_list[i]) == 0) {
             gtk_list_store_append (model, &iter);
             gtk_list_store_set (model, &iter, 0, name, 1, value, -1);

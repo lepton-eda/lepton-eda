@@ -60,7 +60,7 @@ char *s_slot_search_slot (LeptonObject *object, LeptonObject **return_found)
   g_list_free (attributes);
 
   if (attrib != NULL)
-    o_attrib_get_name_value (attrib, NULL, &value);
+    value = g_strdup (lepton_text_object_get_value (attrib));
 
   if (return_found)
     *return_found = attrib;

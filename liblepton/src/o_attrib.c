@@ -370,28 +370,6 @@ o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **v
   return TRUE;
 }
 
-
-/*! \brief Get name and value from an attribute LeptonObject
- *
- *  \par Function Description
- *  See o_attrib_string_get_name_value() for more details
- *
- *  \param [in]  attrib     The attribute LeptonObject whose name/value to return.
- *  \param [out] name_ptr   The return location for the name, or NULL.
- *  \param [out] value_ptr  The return location for the value, or NULL.
- *  \return TRUE on success, FALSE otherwise.
- */
-gboolean
-o_attrib_get_name_value (const LeptonObject *attrib,
-                         gchar **name_ptr,
-                         gchar **value_ptr)
-{
-  g_return_val_if_fail (lepton_object_is_text (attrib), FALSE);
-
-  return o_attrib_string_get_name_value (lepton_text_object_get_string (attrib),
-                                         name_ptr, value_ptr);
-}
-
 /*! \brief Find all floating attributes in the given object list.
  *
  *  \param [in] list  GList of LeptonObjects to search for floating attributes.
@@ -479,7 +457,7 @@ static char *o_attrib_search_attrib_list_by_name (const GList *list,
   attrib = o_attrib_find_attrib_by_name (list, name, counter);
 
   if (attrib != NULL)
-    o_attrib_get_name_value (attrib, NULL, &value);
+    value = g_strdup (lepton_text_object_get_value (attrib));
 
   return value;
 }

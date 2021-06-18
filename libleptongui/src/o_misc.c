@@ -508,7 +508,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
 
     g_assert (lepton_object_is_text (attr_new));
 
-    o_attrib_get_name_value (attr_new, &name, NULL);
+    name = g_strdup (lepton_text_object_get_name (attr_new));
 
     value = o_attrib_search_attached_attribs_by_name (o_current, name, 0);
     if (value != NULL) {

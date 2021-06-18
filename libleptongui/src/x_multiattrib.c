@@ -2562,7 +2562,8 @@ object_attributes_to_model_rows (Multiattrib *multiattrib, LeptonObject *object)
     GList *m_iter;
 
     m_row->inherited = o_attrib_is_inherited (a_current);
-    o_attrib_get_name_value (a_current, &m_row->name, &m_row->value);
+    m_row->name  = g_strdup (lepton_text_object_get_name (a_current));
+    m_row->value = g_strdup (lepton_text_object_get_value (a_current));
     m_row->visibility = lepton_text_object_is_visible (a_current);
     m_row->show_name_value = lepton_text_object_get_show (a_current);
     m_row->nth_with_name = 0; /* Provisional value until we check below */
@@ -2634,7 +2635,8 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
 
     m_row = g_new0 (MODEL_ROW, 1);
     m_row->inherited = o_attrib_is_inherited (object);
-    o_attrib_get_name_value (object, &m_row->name, &m_row->value);
+    m_row->name = g_strdup (lepton_text_object_get_name (object));
+    m_row->value = g_strdup (lepton_text_object_get_value (object));
     m_row->visibility = lepton_text_object_is_visible (object);
     m_row->show_name_value = lepton_text_object_get_show (object);
     m_row->nth_with_name = 0; /* All selected attributes are treated individually */

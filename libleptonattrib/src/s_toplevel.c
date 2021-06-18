@@ -708,8 +708,9 @@ s_toplevel_update_component_attribs_in_toplevel (LeptonToplevel *toplevel,
 #else
       /* might now compile now, but this #if'd out branch isn't being built */
       gint status;
-      status = o_attrib_get_name_value (a_current, &old_attrib_name, &old_attrib_value);
-      if (status == 0) {
+      old_attrib_name = g_strdup (lepton_text_object_get_name (a_current));
+      if (old_attrib_name != NULL)
+      {
         /* Don't put "refdes" or "slot" into list.  Don't put old name=value pair into list if a new
          * one is already in there. */
         if ( (strcmp(old_attrib_name, "refdes") != 0) &&
@@ -719,7 +720,6 @@ s_toplevel_update_component_attribs_in_toplevel (LeptonToplevel *toplevel,
           s_string_list_add_item(complete_comp_attrib_list, &count, old_name_value_pair);
         }
         g_free (old_attrib_name);
-        g_free (old_attrib_value);
       }
  #endif
      g_free(old_name_value_pair);
