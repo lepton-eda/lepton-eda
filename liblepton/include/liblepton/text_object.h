@@ -141,6 +141,9 @@ gint
 lepton_text_object_get_visibility (const LeptonObject *object);
 
 const char*
+lepton_text_object_visible_string (const LeptonObject *object);
+
+const char*
 lepton_text_object_alignment_to_string (gint alignment);
 
 gint

@@ -27,14 +27,14 @@ struct _LeptonText
   int x, y;             /* world origin */
 
   char *string;         /* text stuff */
-  char *disp_string;
   int length;
   int size;
   int alignment;
   int angle;
-  const gchar *name;    /* not owned by _LeptonText */
 
   /* Attribute stuff. */
+  const gchar *name;    /* not owned by _LeptonText */
+  char *value;
   int show;
   int visibility;
 };

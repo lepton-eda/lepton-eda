@@ -31,8 +31,7 @@
  *
  *  If the string is an attribute with an equal sign as delimiter between
  *  an attribute name and an attribute value, then it is possible to
- *  hide some parts of the text. The still visible part of an attribute
- *  is stored in <b>LeptonObject->text->disp_string</b>.
+ *  hide either its name or value together with the equal sign.
  *
  *  \image html o_text_text_overview.png
  *  \image latex o_text_text_overview.pdf "text overview" width=14cm
@@ -81,7 +80,7 @@ lepton_text_free (LeptonText *text)
 {
   if (text != NULL) {
     g_free (text->string);
-    g_free (text->disp_string);
+    g_free (text->value);
     g_free (text);
   }
 }
@@ -379,63 +378,6 @@ lepton_text_object_set_show (LeptonObject *object,
   object->text->show = show;
 }
 
-/*! \brief update the visible part of a string
- *  \par Function Description
- *  If a string is an attribute, then it is possible to hide
- *  the name or the value part of the attribute string.
- *  This functions updates the text->disp_string according
- *  to the object->text->show settings
- *
- *  \param [in] object  The LeptonObject to update
- */
-static void
-update_disp_string (LeptonObject *object)
-{
-  char *name = NULL;
-  char *value = NULL;
-  LeptonText *text = object->text;
-
-  g_free (text->disp_string);
-
-  if (o_attrib_get_name_value (object, &name, &value)) {
-    switch (lepton_text_object_get_show (object))
-    {
-      case (SHOW_NAME_VALUE):
-        text->disp_string = g_strdup (text->string);
-        break;
-
-      case (SHOW_NAME):
-        if (name[0] != '\0') {
-          text->disp_string = g_strdup (name);
-        } else {
-          g_critical ("Got an improper attribute: %1$s\n",
-                      text->string);
-          text->disp_string = g_strdup ("invalid");
-        }
-        break;
-
-      case (SHOW_VALUE):
-        if (value[0] != '\0') {
-          text->disp_string = g_strdup(value);
-        } else {
-          g_critical ("Got an improper attribute: %1$s\n",
-                      text->string);
-          text->disp_string = g_strdup ("invalid");
-        }
-        break;
-    }
-
-    text->name = g_intern_string (name);
-
-    /* free the strings allocated by o_attrib_get_name_value */
-    g_free(name);
-    g_free(value);
-  } else {
-    text->disp_string = g_strdup (text->string);
-    text->name = NULL;
-  }
-}
-
 /*! \brief Creates a text LeptonObject and the graphical objects representing it
  *  \par Function Description
  *  Create an LeptonObject of type OBJ_TEXT.
@@ -468,6 +410,8 @@ lepton_text_object_new (gint color,
 {
   LeptonObject *new_node=NULL;
   LeptonText *text;
+  char *name = NULL;
+  char *value = NULL;
 
   g_return_val_if_fail (string != NULL, NULL);
 
@@ -476,14 +420,12 @@ lepton_text_object_new (gint color,
   text = (LeptonText *) g_new0 (LeptonText, 1);
 
   text->string = g_strdup (string);
-  text->disp_string = NULL; /* We'll fix this up later */
   text->length = strlen(string);
   text->size = size;
   text->alignment = alignment;
   text->x = x;
   text->y = y;
   text->angle = angle;
-  text->name = NULL;
 
   new_node->text = text;
 
@@ -491,7 +433,20 @@ lepton_text_object_new (gint color,
   lepton_text_object_set_visibility (new_node, visibility);
   lepton_text_object_set_show (new_node, show_name_value);
 
-  update_disp_string (new_node);
+  if (o_attrib_string_get_name_value (string, &name, &value))
+  {
+    text->name = g_intern_string (name);
+    text->value = g_strdup (value);
+    /* Free the strings allocated by
+     * o_attrib_string_get_name_value(). */
+    g_free (name);
+    g_free (value);
+  }
+  else
+  {
+    text->name = NULL;
+    text->value = NULL;
+  }
 
   return new_node;
 }
@@ -701,7 +656,6 @@ lepton_text_object_recreate (LeptonObject *o_current)
   g_return_if_fail (o_current->text != NULL);
 
   lepton_object_emit_pre_change_notify (o_current);
-  update_disp_string (o_current);
   lepton_object_emit_change_notify (o_current);
 }
 
@@ -1002,6 +956,39 @@ lepton_text_object_set_visibility (LeptonObject *object,
   g_return_if_fail (object->text != NULL);
 
   object->text->visibility = visibility;
+}
+
+
+/*! \brief Get the visible part of text object string.
+ *  \par Function Description
+ *  If a string is an attribute, then it is possible to hide the
+ *  name or the value part of the attribute string.  This function
+ *  chooses the part of text to be shown depending on the value of
+ *  its 'show' setting.
+ *
+ *  \param [in] object  The #LeptonObject to get text from.
+ */
+const char*
+lepton_text_object_visible_string (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_text (object), NULL);
+  g_return_val_if_fail (object->text != NULL, NULL);
+
+  switch (lepton_text_object_get_show (object))
+  {
+  case (SHOW_NAME_VALUE):
+    return object->text->string;
+    break;
+  case (SHOW_NAME):
+    return object->text->name;
+    break;
+  case (SHOW_VALUE):
+    return object->text->value;
+    break;
+  default:
+    g_assert_not_reached ();
+    return NULL;
+  }
 }
 
 

@@ -818,7 +818,7 @@ eda_renderer_draw_text (EdaRenderer *renderer, LeptonObject *object)
   }
 
   /* Also, check that we actually need to display a string */
-  if (object->text->disp_string == NULL)
+  if (lepton_text_object_visible_string (object) == NULL)
     return;
 
   /* If text outline mode is selected, draw an outline */
@@ -919,8 +919,11 @@ eda_renderer_prepare_text (EdaRenderer *renderer, const LeptonObject *object)
 
   /* Extract text to display and Pango text attributes, and then set
    * up layout. */
-  if (!eda_pango_parse_overbars (object->text->disp_string, -1,
-                                 &attrs, &draw_string)) {
+  if (!eda_pango_parse_overbars (lepton_text_object_visible_string (object),
+                                 -1,
+                                 &attrs,
+                                 &draw_string))
+  {
     return FALSE;
   }
   pango_layout_set_text (renderer->priv->pl, draw_string, -1);
@@ -1583,7 +1586,7 @@ eda_renderer_get_text_user_bounds (const LeptonObject *object,
   }
 
   /* Also, check that we actually need to display a string */
-  if (object->text->disp_string == NULL)
+  if (lepton_text_object_visible_string (object) == NULL)
     return FALSE;
 
   /* Use dummy zero-sized surface */
