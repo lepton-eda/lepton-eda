@@ -87,6 +87,10 @@ raises an 'attribute-format error."
 (define-public promotable-attribs %promotable-attribs)
 
 (define (attrib-value object)
+  "Obtain the value of attribute text OBJECT.  If successful,
+returns the value as a string.  Otherwise, raises an
+'attribute-format error.  If OBJECT is not a text object, raises
+'wrong-type-arg error."
   (let-values (((name-pointer value-pointer)
                 (geda-object->attrib-pointers object 1)))
     (if (null-pointer? value-pointer)
