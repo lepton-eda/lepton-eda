@@ -90,6 +90,7 @@
             lepton_object_get_whichend
 
             lepton_object_is_arc
+            lepton_object_is_attrib
             lepton_object_is_box
             lepton_object_is_bus
             lepton_object_is_circle
@@ -404,6 +405,7 @@
 (define-lff lepton_object_get_whichend int '(*))
 
 (define-lff lepton_object_is_arc int '(*))
+(define-lff lepton_object_is_attrib int '(*))
 (define-lff lepton_object_is_box int '(*))
 (define-lff lepton_object_is_bus int '(*))
 (define-lff lepton_object_is_circle int '(*))

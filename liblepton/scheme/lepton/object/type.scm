@@ -27,6 +27,7 @@
   #:export (geda-object->pointer*
 
             arc?
+            attribute?
             box?
             bus?
             circle?
@@ -158,6 +159,10 @@ returns #f."
   "Returns #t if OBJECT is a text object, otherwise returns #f."
   (true? (lepton_object_is_text (geda-object->pointer object))))
 
+(define (attribute? object)
+  "Returns #t if OBJECT is an attribute text object, otherwise
+returns #f."
+  (true? (lepton_object_is_attrib (geda-object->pointer object))))
 
 (define (object-type object)
   "Returns a Scheme symbol representing the type of OBJECT.  The

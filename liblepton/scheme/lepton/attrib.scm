@@ -33,10 +33,11 @@
   #:use-module (lepton object type)
   #:use-module (lepton page)
 
-  #:export (attribute?
-            attrib-name
+  #:export (attrib-name
             attrib-value
-            parse-attrib))
+            parse-attrib)
+
+  #:re-export (attribute?))
 
 (define-syntax geda-object->attrib-pointers
   (syntax-rules ()
@@ -56,11 +57,6 @@
                         (list <object> (text-string <object>))
                         '())
              (values name-pointer value-pointer)))))))
-
-(define (attribute? object)
-  "Returns #t if OBJECT is an attribute text object, otherwise
-returns #f."
-  (false-if-exception (and (geda-object->attrib-pointers object 1) #t)))
 
 (define (attrib-name object)
   "Obtain the name of attribute text OBJECT.  If successful,
