@@ -20,7 +20,7 @@
 ;;
 
 (define-module (lepton attrib)
-  #:use-module (rnrs bytevectors)
+  #:use-module (srfi srfi-11)
   #:use-module (system foreign)
 
   ; Import C procedures
@@ -35,6 +35,7 @@
 
   #:export (attribute?
             attrib-name
+            attrib-value
             parse-attrib))
 
 (define-syntax geda-object->attrib-pointers
@@ -59,56 +60,37 @@
 (define (attribute? object)
   "Returns #t if OBJECT is an attribute text object, otherwise
 returns #f."
-  (and (text? object)
-       (not (null-pointer?
-             (lepton_text_object_get_name
-              (geda-object->pointer object))))))
+  (false-if-exception (and (geda-object->attrib-pointers object 1) #t)))
 
 (define (attrib-name object)
   "Obtain the name of attribute text OBJECT.  If successful,
 returns the name as a string.  Otherwise, raises an
 'attribute-format error."
-  (define pointer (geda-object->pointer* object 1 text? 'text))
-
-  (let ((name-pointer (lepton_text_object_get_name pointer)))
-    (if (null-pointer? name-pointer)
-        (scm-error 'attribute-format
-                   'attrib-name
-                   "~A is not a valid attribute: invalid string '~A'."
-                   (list object (text-string object))
-                   '())
-        (pointer->string name-pointer))))
+  (let-values (((name-pointer value-pointer)
+                (geda-object->attrib-pointers object 1)))
+    (pointer->string name-pointer)))
 
 (define (parse-attrib object)
   "Parses attribute text OBJECT into name and value strings.  If
 successful, returns a pair in the form (name . value).  Otherwise,
 raises an 'attribute-format error."
-  (define pointer (geda-object->pointer* object 1 text? 'text))
-
-  (let* ((name-ptr-ptr (bytevector->pointer (make-bytevector (sizeof '*))))
-         (value-ptr-ptr (bytevector->pointer (make-bytevector (sizeof '*)))))
-    (if (true? (o_attrib_get_name_value pointer name-ptr-ptr value-ptr-ptr))
-        (let* ((name-ptr (dereference-pointer name-ptr-ptr))
-               (value-ptr (dereference-pointer value-ptr-ptr))
-               (name (pointer->string name-ptr))
-               (value (pointer->string value-ptr)))
-          (g_free name-ptr)
-          (g_free value-ptr)
-          ;; Return the pair of name and value.
-          (cons name value))
-        (scm-error 'attribute-format
-                   'parse-attrib
-                   "~A is not a valid attribute: invalid string '~A'."
-                   (list object (text-string object))
-                   '()))))
+  (let-values (((name-pointer value-pointer)
+                (geda-object->attrib-pointers object 1)))
+    (cons (pointer->string name-pointer)
+          (if (null-pointer? value-pointer)
+              ""
+              (pointer->string value-pointer)))))
 
 (define-public object-attribs %object-attribs)
 (define-public attrib-attachment %attrib-attachment)
 (define-public promotable-attribs %promotable-attribs)
 
-(define-public (attrib-value a)
-  (let ((v (parse-attrib a)))
-    (if v (cdr v) v)))
+(define (attrib-value object)
+  (let-values (((name-pointer value-pointer)
+                (geda-object->attrib-pointers object 1)))
+    (if (null-pointer? value-pointer)
+        ""
+        (pointer->string value-pointer))))
 
 (define-public (set-attrib-value! a val)
   (let ((name (attrib-name a)))

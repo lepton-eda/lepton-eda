@@ -59,8 +59,6 @@
             eda_get_user_config_dir
             eda_get_user_data_dir
 
-            o_attrib_get_name_value
-
             lepton_object_get_attached_to
             lepton_object_get_attribs
             lepton_object_get_color
@@ -373,9 +371,6 @@
 (define-lff edascm_is_page int '(*))
 (define-lff edascm_to_object '* '(*))
 (define-lff edascm_from_object '* '(*))
-
-;;; o_attrib.c
-(define-lff o_attrib_get_name_value int '(* * *))
 
 ;;; object.c
 (define-lff lepton_object_get_attached_to '* '(*))
