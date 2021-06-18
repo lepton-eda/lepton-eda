@@ -392,25 +392,6 @@ o_attrib_get_name_value (const LeptonObject *attrib,
                                          name_ptr, value_ptr);
 }
 
-/*! \brief Get the name from an attribute
- *
- * \par Function Description
- * Get an interned string for the attribute name of the attribute text
- * object \a attrib.  If \a attrib is an invalid attribute, returns
- * NULL.
- *
- * \param attrib   An attribute #LeptonObject
- * \return The interned attribute name, or NULL.
- */
-const gchar *
-o_attrib_get_name (const LeptonObject *attrib)
-{
-  g_return_val_if_fail (attrib, 0);
-  g_return_val_if_fail (lepton_object_is_text (attrib), 0);
-
-  return lepton_text_object_get_name (attrib);
-}
-
 /*! \brief Find all floating attributes in the given object list.
  *
  *  \param [in] list  GList of LeptonObjects to search for floating attributes.
@@ -466,7 +447,7 @@ LeptonObject *o_attrib_find_attrib_by_name (const GList *list,
     LeptonObject *attrib = (LeptonObject*) iter->data;
     g_return_val_if_fail (lepton_object_is_text (attrib), NULL);
 
-    if ((needle == o_attrib_get_name (attrib)) &&
+    if ((needle == lepton_text_object_get_name (attrib)) &&
         (num_found++ == count)) {
       return attrib;
     }
@@ -687,5 +668,5 @@ gboolean
 o_attrib_is_attrib (const LeptonObject *obj)
 {
   return (lepton_object_is_text (obj) &&
-          o_attrib_get_name (obj));
+          (lepton_text_object_get_name (obj) != NULL));
 }

@@ -461,11 +461,11 @@ o_component_is_eligible_attribute (LeptonObject *object)
 
   GPtrArray *attributes = always_promote_attributes ();
 
-  const gchar *name = o_attrib_get_name (object);
+  const gchar *name = lepton_text_object_get_name (object);
   if (!name) return FALSE;
 
   /* always promote symversion= attribute, even if it is invisible */
-  if (strncmp(o_attrib_get_name(object), "symversion", 10) == 0)
+  if (strncmp (lepton_text_object_get_name (object), "symversion", 10) == 0)
     return TRUE;
 
   /* check list against attributes which can be promoted */
