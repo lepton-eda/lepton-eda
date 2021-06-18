@@ -32,7 +32,23 @@
   #:use-module (lepton object type)
   #:use-module (lepton page)
 
-  #:export (parse-attrib))
+  #:export (attrib-name
+            parse-attrib))
+
+(define (attrib-name object)
+  "Obtain the name of attribute text OBJECT.  If successful,
+returns the name as a string.  Otherwise, raises an
+'attribute-format error."
+  (define pointer (geda-object->pointer* object 1 text? 'text))
+
+  (let ((name-pointer (lepton_text_object_get_name pointer)))
+    (if (null-pointer? name-pointer)
+        (scm-error 'attribute-format
+                   'attrib-name
+                   "~A is not a valid attribute: invalid string '~A'."
+                   (list object (text-string object))
+                   '())
+        (pointer->string name-pointer))))
 
 (define (parse-attrib object)
   "Parses attribute text OBJECT into name and value strings.  If
@@ -57,7 +73,6 @@ raises an 'attribute-format error."
                    (list object (text-string object))
                    '()))))
 
-(define-public attrib-name %attrib-name)
 (define-public object-attribs %object-attribs)
 (define-public attrib-attachment %attrib-attachment)
 (define-public promotable-attribs %promotable-attribs)
