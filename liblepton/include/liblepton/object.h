@@ -124,6 +124,9 @@ lepton_object_is_pin (const LeptonObject *object);
 gboolean
 lepton_object_is_text (const LeptonObject *object);
 
+gboolean
+lepton_object_is_attrib (const LeptonObject *attrib);
+
 /* construction, destruction */
 
 LeptonObject*

@@ -2625,7 +2625,7 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
 
     /* Consider a selected text object might be an attribute */
     if (!lepton_object_is_text (object) ||
-        !o_attrib_is_attrib (object))
+        !lepton_object_is_attrib (object))
       continue;
 
     /* We have an OBJ_TEXT which libgeda can parse as an attribute */

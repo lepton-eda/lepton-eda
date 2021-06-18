@@ -454,7 +454,7 @@ static int
 o_component_is_eligible_attribute (LeptonObject *object)
 {
   gboolean promote_invisible;
-  g_return_val_if_fail (o_attrib_is_attrib (object), FALSE);
+  g_return_val_if_fail (lepton_object_is_attrib (object), FALSE);
 
   cfg_read_bool ("schematic.attrib", "promote-invisible",
                  default_promote_invisible, &promote_invisible);

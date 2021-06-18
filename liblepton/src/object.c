@@ -272,6 +272,18 @@ lepton_object_is_text (const LeptonObject *object)
 }
 
 
+/*! \brief Query whether an object is an attribute.
+ *
+ *  \return  TRUE if \a obj is an attribute, FALSE otherwise.
+ */
+gboolean
+lepton_object_is_attrib (const LeptonObject *obj)
+{
+  return (lepton_object_is_text (obj) &&
+          (lepton_text_object_get_name (obj) != NULL));
+}
+
+
 /*! \brief Get the color index of the object
  *
  *  If this function fails, it returns the default color ID.

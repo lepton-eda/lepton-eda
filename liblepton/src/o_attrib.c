@@ -411,7 +411,7 @@ GList *o_attrib_find_floating_attribs (const GList *list)
     /* Skip non text objects, attached attributes and text which doesn't
      * constitute a valid attributes (e.g. general text placed on the page)
      */
-    if (o_attrib_is_attrib (o_current) &&
+    if (lepton_object_is_attrib (o_current) &&
         o_current->attached_to == NULL) {
 
       floating_attributes = g_list_prepend (floating_attributes, o_current);
@@ -624,7 +624,7 @@ GList * o_attrib_return_attribs (LeptonObject *object)
       continue;
 
     /* Don't add invalid attributes to the list */
-    if (!o_attrib_is_attrib (a_current))
+    if (!lepton_object_is_attrib (a_current))
       continue;
 
     attribs = g_list_prepend (attribs, a_current);
@@ -658,15 +658,4 @@ int o_attrib_is_inherited (const LeptonObject *attrib)
 {
   return (attrib->attached_to == NULL &&
           attrib->parent != NULL);
-}
-
-/*! \brief Query whether an object is an attribute.
- *
- *  \return  TRUE if \a obj is an attribute, FALSE otherwise.
- */
-gboolean
-o_attrib_is_attrib (const LeptonObject *obj)
-{
-  return (lepton_object_is_text (obj) &&
-          (lepton_text_object_get_name (obj) != NULL));
 }
