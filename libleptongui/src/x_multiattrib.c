@@ -2625,8 +2625,7 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
     MODEL_ROW *m_row;
 
     /* Consider a selected text object might be an attribute */
-    if (!lepton_object_is_text (object) ||
-        !lepton_object_is_attrib (object))
+    if (!lepton_object_is_attrib (object))
       continue;
 
     /* We have an attribute object. */
