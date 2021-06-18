@@ -26,8 +26,8 @@
  *
  *  The text is stored and printed in several different representations.
  *
- *  In the gEDA files the text is just a string. It is stored unmodified
- *  in <b>LeptonObject->text->string</b>.
+ *  In the gEDA files the text is just a string. You can get it using
+ *  <b>lepton_text_object_get_string (object) (</b>.
  *
  *  If the string is an attribute with an equal sign as delimiter between
  *  an attribute name and an attribute value, then it is possible to
@@ -474,8 +474,6 @@ lepton_text_object_new (gint color,
 {
   LeptonObject *new_node=NULL;
   LeptonText *text;
-  char *name = NULL;
-  char *value = NULL;
 
   g_return_val_if_fail (string != NULL, NULL);
 
@@ -483,7 +481,6 @@ lepton_text_object_new (gint color,
 
   text = (LeptonText *) g_new0 (LeptonText, 1);
 
-  text->string = g_strdup (string);
   text->length = strlen(string);
   text->size = size;
   text->alignment = alignment;
@@ -496,21 +493,7 @@ lepton_text_object_new (gint color,
   lepton_object_set_color (new_node, color);
   lepton_text_object_set_visibility (new_node, visibility);
   lepton_text_object_set_show (new_node, show_name_value);
-
-  if (o_attrib_string_get_name_value (string, &name, &value))
-  {
-    text->name = g_intern_string (name);
-    text->value = g_strdup (value);
-    /* Free the strings allocated by
-     * o_attrib_string_get_name_value(). */
-    g_free (name);
-    g_free (value);
-  }
-  else
-  {
-    text->name = NULL;
-    text->value = NULL;
-  }
+  lepton_text_object_set_string (new_node, string);
 
   return new_node;
 }
@@ -966,12 +949,30 @@ void
 lepton_text_object_set_string (LeptonObject *obj,
                                const gchar *new_string)
 {
+  char *name = NULL;
+  char *value = NULL;
+
   g_return_if_fail (lepton_object_is_text (obj));
   g_return_if_fail (obj->text != NULL);
   g_return_if_fail (new_string != NULL);
 
   g_free (obj->text->string);
   obj->text->string = g_strdup (new_string);
+
+  if (o_attrib_string_get_name_value (new_string, &name, &value))
+  {
+    lepton_text_object_set_name (obj, name);
+    lepton_text_object_set_value (obj, value);
+    /* Free the strings allocated by
+     * o_attrib_string_get_name_value(). */
+    g_free (name);
+    g_free (value);
+  }
+  else
+  {
+    lepton_text_object_set_name (obj, NULL);
+    lepton_text_object_set_value (obj, NULL);
+  }
 
   lepton_text_object_recreate (obj);
 }
@@ -1041,13 +1042,13 @@ lepton_text_object_visible_string (const LeptonObject *object)
   switch (lepton_text_object_get_show (object))
   {
   case (SHOW_NAME_VALUE):
-    return object->text->string;
+    return lepton_text_object_get_string (object);
     break;
   case (SHOW_NAME):
-    return object->text->name;
+    return lepton_text_object_get_name (object);
     break;
   case (SHOW_VALUE):
-    return object->text->value;
+    return lepton_text_object_get_value (object);
     break;
   default:
     g_assert_not_reached ();

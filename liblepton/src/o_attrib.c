@@ -408,7 +408,7 @@ o_attrib_get_name (const LeptonObject *attrib)
   g_return_val_if_fail (attrib, 0);
   g_return_val_if_fail (lepton_object_is_text (attrib), 0);
 
-  return attrib->text->name;
+  return lepton_text_object_get_name (attrib);
 }
 
 /*! \brief Find all floating attributes in the given object list.
