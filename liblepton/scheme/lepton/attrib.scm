@@ -37,6 +37,25 @@
             attrib-name
             parse-attrib))
 
+(define-syntax geda-object->attrib-pointers
+  (syntax-rules ()
+    ((_ <object> <pos>)
+     ;; Check if object is text and error with 'wrong-type-arg if
+     ;; not.
+     (let ((pointer (geda-object->pointer* <object> <pos> text? 'text)))
+       ;; Now check if it is attribute and, if yes, return name
+       ;; and value.  Otherwise raise an error with the key
+       ;; 'attribute-format.
+       (let ((name-pointer (lepton_text_object_get_name pointer))
+             (value-pointer (lepton_text_object_get_value pointer)))
+         (if (null-pointer? name-pointer)
+             (scm-error 'attribute-format
+                        'attrib-name
+                        "~A is not a valid attribute: invalid string '~A'."
+                        (list <object> (text-string <object>))
+                        '())
+             (values name-pointer value-pointer)))))))
+
 (define (attribute? object)
   "Returns #t if OBJECT is an attribute text object, otherwise
 returns #f."

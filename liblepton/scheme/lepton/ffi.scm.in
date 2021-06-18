@@ -225,6 +225,7 @@
             lepton_text_object_set_size
             lepton_text_object_get_string
             lepton_text_object_set_string
+            lepton_text_object_get_value
             lepton_text_object_set_visibility
             lepton_text_object_get_x
             lepton_text_object_set_x
@@ -542,6 +543,7 @@
 (define-lff lepton_text_object_set_size void (list '* int))
 (define-lff lepton_text_object_get_string '* '(*))
 (define-lff lepton_text_object_set_string void '(* *))
+(define-lff lepton_text_object_get_value '* '(*))
 (define-lff lepton_text_object_set_visibility void (list '* int))
 (define-lff lepton_text_object_get_x int '(*))
 (define-lff lepton_text_object_set_x void (list '* int))
