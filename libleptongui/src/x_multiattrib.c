@@ -2629,7 +2629,7 @@ lone_attributes_to_model_rows (Multiattrib *multiattrib)
         !lepton_object_is_attrib (object))
       continue;
 
-    /* We have an OBJ_TEXT which libgeda can parse as an attribute */
+    /* We have an attribute object. */
 
     multiattrib->num_lone_attribs_in_list ++;
 
