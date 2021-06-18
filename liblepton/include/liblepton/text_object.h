@@ -65,6 +65,18 @@ gdouble
 lepton_text_object_get_size_in_points (const LeptonObject *object);
 
 const gchar*
+lepton_text_object_get_name (const LeptonObject *object);
+
+void
+lepton_text_object_set_name (const LeptonObject *object,
+                             const char *name);
+const gchar*
+lepton_text_object_get_value (const LeptonObject *object);
+
+void
+lepton_text_object_set_value (LeptonObject *object,
+                              const char *value);
+const gchar*
 lepton_text_object_get_string (const LeptonObject *object);
 
 gint

@@ -214,6 +214,70 @@ lepton_text_object_get_size_in_points (const LeptonObject *object)
   return GEDA_FONT_FACTOR * lepton_text_object_get_size (object);
 }
 
+
+/*! \brief Get the attribute name field of object text string.
+ *
+ *  \param [in] object The #LeptonObject to get the string of.
+ *  \return The name field of the object.
+ */
+const gchar*
+lepton_text_object_get_name (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_text (object), NULL);
+  g_return_val_if_fail (object->text != NULL, NULL);
+
+  return object->text->name;
+}
+
+
+/*! \brief Set the attribute name field of text object.
+ *
+ *  \param [in] object The #LeptonObject to set the string of.
+ *  \param [in] name The new value of the name field of the object.
+ */
+void
+lepton_text_object_set_name (const LeptonObject *object,
+                             const char *name)
+{
+  g_return_if_fail (lepton_object_is_text (object));
+  g_return_if_fail (object->text != NULL);
+
+  object->text->name = g_intern_string (name);
+}
+
+
+/*! \brief Get the attribute value field of object text string.
+ *
+ *  \param [in] object The #LeptonObject to get the string of.
+ *  \return The value field of the object.
+ */
+const gchar*
+lepton_text_object_get_value (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_text (object), NULL);
+  g_return_val_if_fail (object->text != NULL, NULL);
+
+  return object->text->value;
+}
+
+
+/*! \brief Set the attribute value field of text object.
+ *
+ *  \param [in] object The #LeptonObject to set the string of.
+ *  \param [in] value The new value of the value field of the object.
+ */
+void
+lepton_text_object_set_value (LeptonObject *object,
+                              const char *value)
+{
+  g_return_if_fail (lepton_object_is_text (object));
+  g_return_if_fail (object->text != NULL);
+
+  g_free (object->text->value);
+  object->text->value = g_strdup (value);
+}
+
+
 /*! \brief Get the text string
  *
  *  \param [in] object The text object
