@@ -29,11 +29,21 @@
 
   #:use-module (lepton ffi)
   #:use-module (lepton object)
+  #:use-module (lepton object foreign)
   #:use-module (lepton object type)
   #:use-module (lepton page)
 
-  #:export (attrib-name
+  #:export (attribute?
+            attrib-name
             parse-attrib))
+
+(define (attribute? object)
+  "Returns #t if OBJECT is an attribute text object, otherwise
+returns #f."
+  (and (text? object)
+       (not (null-pointer?
+             (lepton_text_object_get_name
+              (geda-object->pointer object))))))
 
 (define (attrib-name object)
   "Obtain the name of attribute text OBJECT.  If successful,
@@ -76,9 +86,6 @@ raises an 'attribute-format error."
 (define-public object-attribs %object-attribs)
 (define-public attrib-attachment %attrib-attachment)
 (define-public promotable-attribs %promotable-attribs)
-
-(define-public (attribute? a)
-  (false-if-exception (and (attrib-name a) #t)))
 
 (define-public (attrib-value a)
   (let ((v (parse-attrib a)))
