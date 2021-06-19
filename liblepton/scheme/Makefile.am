@@ -185,7 +185,7 @@ dist_noinst_DATA = \
 	lepton/ffi.scm.in
 
 if CYGWIN
-LIBLEPTON=cyglepton-7
+LIBLEPTON=cyglepton-8
 LIBGLIB=cygglib-2.0-0
 LIBGOBJECT=cyggobject-2.0-0
 else
