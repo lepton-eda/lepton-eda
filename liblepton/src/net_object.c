@@ -561,11 +561,13 @@ static void o_net_consolidate_lowlevel (LeptonObject *object,
       a_iter = g_list_next (a_iter);
     }
 
-    object->attribs = g_list_concat (lepton_object_get_attribs (object),
-                                     lepton_object_get_attribs (del_object));
+    GList *all_attribs = g_list_concat (lepton_object_get_attribs (object),
+                                        lepton_object_get_attribs (del_object));
+    lepton_object_set_attribs (object, all_attribs);
 
-    /* Don't free del_object->attribs as it's relinked into object's list */
-    del_object->attribs = NULL;
+    /* Don't free del_object's attribute list as it's relinked
+     * into object's list. */
+    lepton_object_set_attribs (del_object, NULL);
   }
 }
 
