@@ -1,7 +1,7 @@
 bin_SCRIPTS = lepton-attrib
 
 if CYGWIN
-LIBLEPTONATTRIB=cygleptonattrib-2
+LIBLEPTONATTRIB=cygleptonattrib-3
 if ENABLE_GTK3
 LIBGTK = cyggtk-3-0
 else
