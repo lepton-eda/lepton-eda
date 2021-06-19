@@ -85,7 +85,8 @@ o_attrib_attach (LeptonObject *attrib,
   g_return_if_fail (object != NULL);
 
   /* is the object already part of the list ? */
-  if (g_list_find (object->attribs, attrib)) {
+  if (g_list_find (lepton_object_get_attribs (object), attrib))
+  {
     g_warning (_("Attribute [%1$s] already attached\n"),
                lepton_text_object_get_string (attrib));
     return;
