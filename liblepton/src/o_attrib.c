@@ -60,9 +60,13 @@
 void
 o_attrib_add (LeptonObject *object, LeptonObject *item)
 {
+  GList *new_attrib_list;
+
   /* Add link from item to attrib listing */
   item->attached_to = object;
-  object->attribs = g_list_append (object->attribs, item);
+  new_attrib_list = g_list_append (lepton_object_get_attribs (object), item);
+
+  lepton_object_set_attribs (object, new_attrib_list);
 }
 
 
