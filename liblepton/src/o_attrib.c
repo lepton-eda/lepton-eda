@@ -143,7 +143,8 @@ o_attrib_detach_all (LeptonObject *object)
   LeptonObject *a_current;
   GList *a_iter;
 
-  for (a_iter = object->attribs; a_iter != NULL;
+  for (a_iter = lepton_object_get_attribs (object);
+       a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
     a_current = (LeptonObject*) a_iter->data;
 
@@ -151,8 +152,8 @@ o_attrib_detach_all (LeptonObject *object)
     lepton_object_set_color (a_current, DETACHED_ATTRIBUTE_COLOR);
   }
 
-  g_list_free (object->attribs);
-  object->attribs = NULL;
+  g_list_free (lepton_object_get_attribs (object));
+  lepton_object_set_attribs (object, NULL);
 }
 
 /*! \brief Print all attributes to a Postscript document.
