@@ -518,7 +518,8 @@ char *o_attrib_search_attached_attribs_by_name (LeptonObject *object,
                                                 const char *name,
                                                 int counter)
 {
-  return o_attrib_search_attrib_list_by_name (object->attribs, name, counter);
+  GList *attribs = lepton_object_get_attribs (object);
+  return o_attrib_search_attrib_list_by_name (attribs, name, counter);
 }
 
 
