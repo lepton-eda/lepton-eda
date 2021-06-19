@@ -93,6 +93,13 @@
     (test-equal a (geda:config-load! a))
     (test-assert (geda:config-loaded? a))
     (chmod *testdir-geda-Aconf* #o000) ;; Make conf unreadable
+
+    ; the next test will fail under root account, skip it:
+    ;
+    ( if ( eq? (getuid) 0 )
+      ( test-skip 1 )
+    )
+
     (test-assert-thrown 'system-error (geda:config-load! a #:force-load #t)))
 
   (test-assert-thrown 'system-error (geda:config-load! (geda:default-config-context) #:force-load #t))
