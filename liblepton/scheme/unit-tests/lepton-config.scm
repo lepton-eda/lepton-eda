@@ -93,6 +93,13 @@
     (test-equal a (config-load! a))
     (test-assert (config-loaded? a))
     (chmod *testdirAconf* #o000) ;; Make conf unreadable
+
+    ; the next test will fail under root account, skip it:
+    ;
+    ( if ( eq? (getuid) 0 )
+      ( test-skip 1 )
+    )
+
     (test-assert-thrown 'system-error (config-load! a #:force-load #t)))
 
   (test-assert-thrown 'system-error (config-load! (default-config-context) #:force-load #t))
