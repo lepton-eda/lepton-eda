@@ -1,4 +1,9 @@
+if ENABLE_ATTRIB
+ATTRIB_SCRIPT_DIR=attrib
+endif
+
 SUBDIRS = \
+	${ATTRIB_SCRIPT_DIR} \
 	sch2pcb \
 	tragesym \
 	symfix \
@@ -10,5 +15,4 @@ SUBDIRS = \
 	upcfg \
 	symcheck \
 	cli \
-	netlist \
-	attrib
+	netlist
