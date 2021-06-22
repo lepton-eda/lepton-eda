@@ -495,6 +495,11 @@ gschem_bottom_widget_get_type ()
 
 
 
+/*! \brief Set grid_snap_widget text
+ *
+ *  \param  widget  This GschemBottomWidget
+ *  \param  str     Text to set. Newly-allocated string. Will be g_free()'d
+ */
 static void
 set_snap_info_widget_text (GschemBottomWidget* widget,
                            gchar* str)
@@ -507,6 +512,11 @@ set_snap_info_widget_text (GschemBottomWidget* widget,
 
 
 
+/*! \brief Set grid_snap_widget color
+ *
+ *  \param  widget      This GschemBottomWidget
+ *  \param  color_name  Color name, e.g. "red", "blue"
+ */
 static void
 set_snap_info_widget_color (GschemBottomWidget* widget,
                             const gchar* color_name)
@@ -522,6 +532,12 @@ set_snap_info_widget_color (GschemBottomWidget* widget,
 
 
 
+/*! \brief Set grid_snap_widget text and color
+ *
+ *  \param  widget      This GschemBottomWidget
+ *  \param  str         Text to set. Newly-allocated string. Will be g_free()'d
+ *  \param  color_name  Color name, e.g. "red", "blue"
+ */
 static void
 set_snap_info_widget (GschemBottomWidget* widget,
                       gchar* str,
@@ -535,6 +551,13 @@ set_snap_info_widget (GschemBottomWidget* widget,
 
 
 
+/*! \brief Reset grid_snap_widget visual state
+ *
+ *  \par Function Description
+ *  Remove any text decorations, reset text color to black
+ *
+ *  \param  widget  This GschemBottomWidget
+ */
 static void
 reset_snap_info_widget (GschemBottomWidget* widget)
 {
@@ -546,6 +569,10 @@ reset_snap_info_widget (GschemBottomWidget* widget)
 
 
 
+/*! \brief Update info in the grid_snap_widget depending on current snap settings
+ *
+ *  \param  widget  This GschemBottomWidget
+ */
 static void
 update_snap_info_widget (GschemBottomWidget* widget)
 {
@@ -637,6 +664,10 @@ update_snap_info_widget (GschemBottomWidget* widget)
 
 
 
+/*! \brief Create grid_snap_widget
+ *
+ *  \param  widget  This GschemBottomWidget
+ */
 static void
 create_snap_info_widget (GschemBottomWidget* widget)
 {
@@ -655,6 +686,10 @@ create_snap_info_widget (GschemBottomWidget* widget)
 
 
 
+/*! \brief Update info in the grid_size_widget depending on current grid settings
+ *
+ *  \param  widget  This GschemBottomWidget
+ */
 static void
 update_grid_size_widget (GschemBottomWidget* widget)
 {
@@ -684,6 +719,10 @@ update_grid_size_widget (GschemBottomWidget* widget)
 
 
 
+/*! \brief Create grid_size_widget
+ *
+ *  \param  widget  This GschemBottomWidget
+ */
 static void
 create_grid_size_widget (GschemBottomWidget* widget)
 {
