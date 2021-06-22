@@ -603,7 +603,7 @@ update_snap_info_widget (GschemBottomWidget* widget)
   }
   else
   {
-    g_critical ("%s: update_grid_label(): widget->snap_mode out of range: %d\n",
+    g_critical ("%s: update_snap_info_widget(): widget->snap_mode out of range: %d\n",
                 __FILE__,
                 widget->snap_mode);
   }
