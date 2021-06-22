@@ -93,7 +93,10 @@ static void
 update_magnetic_net_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointer unused);
 
 
-static GObjectClass *gschem_bottom_widget_parent_class = NULL;
+
+/* convenience macro - gobject type implementation:
+*/
+G_DEFINE_TYPE (GschemBottomWidget, gschem_bottom_widget, GTK_TYPE_HBOX);
 
 
 
@@ -104,8 +107,10 @@ dispose (GObject *object)
 {
   /* lastly, chain up to the parent dispose */
 
-  g_return_if_fail (gschem_bottom_widget_parent_class != NULL);
-  gschem_bottom_widget_parent_class->dispose (object);
+  GschemBottomWidgetClass* cls = GSCHEM_BOTTOM_WIDGET_GET_CLASS (object);
+  GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
+
+  parent_cls->dispose (object);
 }
 
 
@@ -117,8 +122,10 @@ finalize (GObject *object)
 {
   /* lastly, chain up to the parent finalize */
 
-  g_return_if_fail (gschem_bottom_widget_parent_class != NULL);
-  gschem_bottom_widget_parent_class->finalize (object);
+  GschemBottomWidgetClass* cls = GSCHEM_BOTTOM_WIDGET_GET_CLASS (object);
+  GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
+
+  parent_cls->finalize (object);
 }
 
 
@@ -190,8 +197,6 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 static void
 gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
 {
-  gschem_bottom_widget_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
-
   G_OBJECT_CLASS (klass)->dispose  = dispose;
   G_OBJECT_CLASS (klass)->finalize = finalize;
 
@@ -455,42 +460,6 @@ gschem_bottom_widget_get_magnetic_net_mode (GschemBottomWidget *widget)
   g_return_val_if_fail (widget != NULL, 0);
 
   return widget->magnetic_net_mode;
-}
-
-
-
-/*! \brief Get/register GschemBottomWidget type.
- */
-GType
-gschem_bottom_widget_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemBottomWidgetClass),
-      NULL,                                                    /* base_init */
-      NULL,                                                    /* base_finalize */
-      (GClassInitFunc) gschem_bottom_widget_class_init,
-      NULL,                                                    /* class_finalize */
-      NULL,                                                    /* class_data */
-      sizeof(GschemBottomWidget),
-      0,                                                       /* n_preallocs */
-      (GInstanceInitFunc) gschem_bottom_widget_init,
-    };
-
-    type = g_type_register_static (
-#ifdef ENABLE_GTK3
-                                   GTK_TYPE_BOX,
-#else
-                                   GTK_TYPE_HBOX,
-#endif
-                                   "GschemBottomWidget",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
 }
 
 
