@@ -643,8 +643,10 @@ create_snap_info_widget (GschemBottomWidget* widget)
   g_return_if_fail (widget != NULL);
 
   widget->grid_snap_widget = gtk_label_new (NULL);
-  gtk_label_set_markup (GTK_LABEL(widget->grid_snap_widget),
-                        "Snap: <b>100</b>");
+
+  gchar* str = g_strdup_printf ("Snap: <b>%d</b>", widget->snap_size);
+  gtk_label_set_markup (GTK_LABEL(widget->grid_snap_widget), str);
+  g_free (str);
 
   gtk_misc_set_padding (GTK_MISC (widget->grid_snap_widget),
                         LABEL_XPAD,
