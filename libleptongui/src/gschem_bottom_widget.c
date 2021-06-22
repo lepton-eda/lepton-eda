@@ -590,10 +590,6 @@ update_snap_info_widget (GschemBottomWidget* widget)
       txt = g_strdup_printf (_("Snap: <b>%d</b>"), widget->snap_size);
       set_snap_info_widget (widget, txt, "red");
     }
-    else
-    {
-      reset_snap_info_widget (widget);
-    }
   }
   else
   if (widget->snap_mode == SNAP_RESNAP)
@@ -601,8 +597,7 @@ update_snap_info_widget (GschemBottomWidget* widget)
     if (widget->snap_size != default_snap_size)
     {
       txt = g_strdup_printf (_("<u>Re</u>snap: <b>%d</b>"), widget->snap_size);
-      set_snap_info_widget_text(widget, txt);
-      set_snap_info_widget_color(widget, "red");
+      set_snap_info_widget(widget, txt, "red");
     }
     else
     {
