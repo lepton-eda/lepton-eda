@@ -555,7 +555,7 @@ update_snap_info_widget (GschemBottomWidget* widget)
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
   g_free (cwd);
 
-  gint default_snap_size = 100;
+  gint default_snap_size = DEFAULT_SNAP_SIZE;
 
   if (cfg != NULL)
   {
