@@ -8,6 +8,19 @@ more information, please consult `git log` history.
 Notable changes in Lepton EDA 1.9.15 (upcoming)
 -----------------------------------------------
 
+### General changes:
+
+- The test suite has been fixed and now `make distcheck` can
+  be run under the `root` user account without errors.
+
+### Changes when building from source:
+
+- Fixed building with `--disable-attrib`: the `bin/lepton-attrib`
+  script is no longer installed.
+
+- Versions of `Cygwin` libraries have been updated to match actual
+  versions of `liblepton`, `libleptongui` and `libleptonattrib`.
+
 ### Changes in `liblepton`:
 
 - The module `(lepton core os)` written in C has been removed.
@@ -16,6 +29,14 @@ Notable changes in Lepton EDA 1.9.15 (upcoming)
 - The Scheme function `platform()` no longer outputs `'(carbon)`.
   There is no reasonable replacement yet, so the function outputs
   `'(unknown)` on those Mac machines on which it usually did so.
+
+### Changes in `lepton-schematic`:
+
+- Snap size and grid size indicators now have separate labels
+  in the status bar. The snap size label changes its text color
+  and decoration to draw user's attention when snap size currently
+  set differs from the value in configuration. It helps avoiding
+  mistakes when constructing new symbols.
 
 Notable changes in Lepton EDA 1.9.14 (20210407)
 -----------------------------------------------
