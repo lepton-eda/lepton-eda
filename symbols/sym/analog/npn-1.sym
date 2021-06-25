@@ -1,4 +1,4 @@
-v 20080706 2
+v 20210407 2
 L 200 800 200 200 3 0 0 0 -1 -1
 T 600 500 5 10 0 0 0 0 1
 device=NPN_TRANSISTOR
@@ -45,3 +45,7 @@ pintype=pas
 }
 T 600 500 8 10 1 1 0 0 1
 refdes=Q?
+T 600 295 8 10 1 1 0 0 1
+value=BC547
+T 600 100 8 10 1 1 0 0 1
+footprint=TO92.fp
