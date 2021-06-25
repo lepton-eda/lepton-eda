@@ -492,11 +492,19 @@ set_snap_info_widget_color (GschemBottomWidget* widget,
 {
   g_return_if_fail (widget != NULL);
 
+#ifdef ENABLE_GTK3
+  GdkRGBA color;
+  gdk_rgba_parse (&color, color_name);
+  gtk_widget_override_color (GTK_WIDGET (widget->grid_snap_widget),
+                             GTK_STATE_FLAG_NORMAL,
+                             &color);
+#else
   GdkColor color;
   gdk_color_parse (color_name, &color);
   gtk_widget_modify_fg (GTK_WIDGET (widget->grid_snap_widget),
                         GTK_STATE_NORMAL,
                         &color);
+#endif
 }
 
 
