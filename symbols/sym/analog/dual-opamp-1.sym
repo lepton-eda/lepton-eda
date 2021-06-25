@@ -1,4 +1,4 @@
-v 20050820 1
+v 20210407 2
 L 200 800 200 0 3 0 0 0 -1 -1
 L 200 800 800 400 3 0 0 0 -1 -1
 T 200 2300 5 10 0 0 0 0 1
@@ -82,3 +82,7 @@ T 200 2700 5 10 0 0 0 0 1
 documentation=http://www.onsemi.com/pub/Collateral/LM358-D.PDF
 T 200 2900 5 10 0 0 0 0 1
 description=dual opamp
+T 700 -100 8 10 1 1 0 0 1
+value=LM358
+T 700 600 8 10 1 1 0 0 1
+footprint=DIP8.fp
