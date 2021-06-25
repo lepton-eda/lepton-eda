@@ -54,11 +54,11 @@ pinlabel=E
 T 1300 100 5 10 0 1 90 0 1
 pintype=pas
 }
-T 1400 700 5 10 0 0 0 0 1
-footprint=TO92.fp
 T 500 195 5 10 1 1 0 0 1
 refdes=T?
-T 1400 500 5 10 0 0 0 0 1
+T 1400 700 5 10 0 0 0 0 1
 numslots=0
 T 300 1495 5 10 1 1 0 0 1
 value=KSP13TA
+T 400 0 5 10 1 1 0 0 1
+footprint=TO92.fp
