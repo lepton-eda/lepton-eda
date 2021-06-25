@@ -65,14 +65,12 @@ L 250 300 350 300 3 0 0 0 -1 -1
 T 700 200 8 10 1 1 0 0 1
 refdes=U?
 T 1100 900 5 10 0 0 0 0 1
-footprint=DIP8
-T 1100 1100 5 10 0 0 0 0 1
 description=single opamp
 T 1100 700 5 10 0 0 0 0 1
 numslots=0
 T 1100 500 5 10 0 0 0 0 1
 symversion=0.1
-T 1100 1300 5 10 0 0 0 0 1
+T 1100 1100 5 10 0 0 0 0 1
 comment=NC-PINS:1,5,8
 T 250 450 9 8 1 0 0 0 1
 AOP
