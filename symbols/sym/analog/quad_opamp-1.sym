@@ -1,4 +1,4 @@
-v 20050820 1
+v 20210407 2
 L 200 800 200 0 3 0 0 0 -1 -1
 L 200 800 800 400 3 0 0 0 -1 -1
 T 600 600 5 10 0 0 0 0 1
@@ -76,11 +76,11 @@ T 200 1900 5 10 0 0 0 0 1
 slotdef=3:10,9,4,11,8
 T 200 2100 5 10 0 0 0 0 1
 slotdef=4:12,13,4,11,14
-T 2400 2300 5 10 0 0 0 0 1
-footprint=SO14
-T 2400 2100 5 10 0 0 0 0 1
-footprint2=DIP14
 T 200 2500 5 10 0 0 0 0 1
 symversion=1.0
 T 200 2700 5 10 0 0 0 0 1
 documentation=http://www.onsemi.com/pub/Collateral/LM324-D.PDF
+T 700 700 8 10 1 1 0 0 1
+footprint=DIP14.fp
+T 700 900 8 10 1 1 0 0 1
+value=LM324
