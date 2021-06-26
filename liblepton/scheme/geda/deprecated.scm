@@ -1,7 +1,7 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2010 Peter Brett
 ;;; Copyright (C) 2010-2014 gEDA Contributors
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2021 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
