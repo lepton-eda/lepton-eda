@@ -13,6 +13,11 @@ Notable changes in Lepton EDA 1.9.15 (upcoming)
 - The test suite has been fixed and now `make distcheck` can
   be run under the `root` user account without errors.
 
+- Lepton now fully supports GTK 3.0.0:
+  - Several warnings on functions deprecated in GTK/GDK 3.0.0 have
+    been fixed.
+  - See also changes in `lepton-schematic` below.
+
 ### Changes when building from source:
 
 - Fixed building with `--disable-attrib`: the `bin/lepton-attrib`
@@ -52,6 +57,15 @@ Notable changes in Lepton EDA 1.9.15 (upcoming)
   and decoration to draw user's attention when snap size currently
   set differs from the value in configuration. It helps avoiding
   mistakes when constructing new symbols.
+
+- Lepton now fully supports GTK 3.0.0.  Apart from fixes mentioned
+  above the following changes have been made:
+  - A bug of not showing text of hidden attributes in the
+    **Multiattrib** dialog of `lepton-schematic` has been fixed.
+  - Displaying of tabs has been improved.
+  - Displaying of the **Object properties** dialog in the docked
+    view of the program has been fixed so all widgets are shown
+    properly now.
 
 Notable changes in Lepton EDA 1.9.14 (20210407)
 -----------------------------------------------
