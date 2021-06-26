@@ -58,3 +58,5 @@ T 700 195 8 10 1 1 0 0 1
 value=IRLML9301
 T 700 0 8 10 1 1 0 0 1
 footprint=SOT23.fp
+T 1200 500 8 10 0 0 0 0 1
+symversion=0.1

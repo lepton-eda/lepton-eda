@@ -1,4 +1,4 @@
-v 20041228 1
+v 20210407 2
 T 0 2000 8 10 1 1 0 0 1
 refdes=T?
 A 500 1800 98 270 180 3 0 0 0 -1 -1
@@ -111,3 +111,5 @@ T 1500 900 8 10 0 0 0 0 1
 numslots=0
 T 300 3200 8 10 0 1 0 0 1
 comment=The footprint is omitted intentionally because depends on the PCB designer's taste heavily.
+T 300 3000 8 10 0 0 0 0 1
+symversion=0.1

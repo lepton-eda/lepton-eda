@@ -50,3 +50,5 @@ T 700 295 8 10 1 1 0 0 1
 value=IRF520
 T 700 100 8 10 1 1 0 0 1
 footprint=TO220.fp
+T 700 700 8 10 0 0 0 0 1
+symversion=0.1

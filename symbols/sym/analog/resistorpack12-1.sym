@@ -226,3 +226,5 @@ pintype=pas
 }
 T 400 1200 8 10 1 1 0 0 1
 value=10k
+T 3300 900 8 10 0 0 0 0 1
+symversion=0.1

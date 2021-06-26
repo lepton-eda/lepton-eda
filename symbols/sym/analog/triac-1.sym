@@ -49,3 +49,5 @@ T 0 1000 8 10 1 1 0 0 1
 footprint=TO92.fp
 T 0 800 8 10 1 1 0 0 1
 value=bt131-600
+T 0 1200 8 10 0 0 0 0 1
+symversion=0.1
