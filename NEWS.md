@@ -21,6 +21,8 @@ Notable changes in Lepton EDA 1.9.15 (upcoming)
 - A bug with visual representation of arcs in raster images and on
   canvas of `lepton-schematic` has been fixed.
 
+- Cygwin versions of all libraries in the project have been fixed.
+
 ### Changes when building from source:
 
 - Fixed building with `--disable-attrib`: the `bin/lepton-attrib`
