@@ -33,7 +33,7 @@ description=incuctor
 T 200 800 5 10 0 0 0 0 1
 numslots=0
 T 200 600 5 10 0 0 0 0 1
-symversion=0.1
+symversion=0.2
 T 600 200 8 10 1 1 0 0 1
 value=100u
 T 200 400 8 10 1 1 0 0 1

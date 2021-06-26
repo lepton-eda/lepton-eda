@@ -33,7 +33,7 @@ description=crystal
 T 200 900 5 10 0 0 0 0 1
 numslots=0
 T 200 700 5 10 0 0 0 0 1
-symversion=0.1
+symversion=0.2
 T 300 300 8 10 1 1 0 0 1
 value=1.000MHz
 T 0 500 8 10 1 1 0 0 1
