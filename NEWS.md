@@ -23,8 +23,20 @@ Notable changes in Lepton EDA 1.9.15 (upcoming)
 
 ### Changes in `liblepton`:
 
-- The module `(lepton core os)` written in C has been removed.
-  Its functions have been reimplemented using Scheme FFI.
+- The following core Scheme modules written in C have been removed
+  and their functions have been reimplemented using Scheme FFI:
+  - `(lepton core deprecated)`
+  - `(lepton core object)`
+  - `(lepton core os)`
+
+- A new module, `(lepton object type)`, has been introduced.  It
+  now contains functions from `(lepton object)`, and exported in
+  that module as well, that query the type of primitive Lepton's
+  objects.
+
+- Definitions of foreign functions are now residing in a new
+  module, `(lepton ffi)`.  The module contains definitions of
+  Scheme counterparts of C functions in the `liblepton` library.
 
 - The Scheme function `platform()` no longer outputs `'(carbon)`.
   There is no reasonable replacement yet, so the function outputs
