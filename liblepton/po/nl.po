@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2014-08-31 23:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -745,81 +745,6 @@ msgstr "Object ~A is bevestigd als een attribuut"
 msgid "Object ~A has attributes"
 msgstr "Object ~A heeft attributen"
 
-msgid "Object ~A has invalid stroke cap style ~A"
-msgstr "Object ~A heeft een ongeldige slag cap stijl ~A"
-
-msgid "Object ~A has invalid stroke dash style ~A"
-msgstr "Object ~A heeft een ongeldige slag streep stijl ~A"
-
-msgid "Invalid stroke cap style ~A."
-msgstr "Ongeldige slag cap stijl ~A."
-
-msgid "Invalid stroke dash style ~A."
-msgstr "Ongeldige slag streep stijl ~A."
-
-msgid "Missing dash length parameter for dash style ~A."
-msgstr "Ontbrekende streeplengte parameter voor streep sijl ~A."
-
-msgid "Missing dot/dash space parameter for dash style ~A."
-msgstr "Ontbrekende punt/streep ruimte parameter voor streep stijl ~A."
-
-msgid "Object ~A has invalid fill style ~A"
-msgstr "Object ~A heeft een ongeldige opvul stijl ~A"
-
-msgid "Invalid fill style ~A."
-msgstr "Ongeldige opvul stijl ~A."
-
-msgid "Missing second space parameter for fill style ~A."
-msgstr "Ontbrekende tweede ruimte parameter voor opvul stijl ~A."
-
-msgid "Missing second angle parameter for fill style ~A."
-msgstr "Ontbrekende tweede hoek parameter voor opvul stijl ~A."
-
-msgid "Missing stroke width parameter for fill style ~A."
-msgstr "Ontbrekende slag breedte parameter voor opvul stijl ~A."
-
-msgid "Missing space parameter for fill style ~A."
-msgstr "Ontbrekende ruimte parameter voor opvul stijl ~A."
-
-msgid "Missing angle parameter for fill style ~A."
-msgstr "Ontbrekende hoek parameter voor opvul stijl ~A."
-
-msgid "Invalid pin type ~A, must be 'net or 'bus"
-msgstr "Ongeldig pen type ~A, moet een 'net of 'bus zijn"
-
-msgid "Object ~A has invalid pin type."
-msgstr "Object ~A heeft een ongeldig pen type."
-
-msgid "Invalid text alignment ~A."
-msgstr "Ongeldige tekst uitlijning ~A."
-
-msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr "Ongeldige tekst hoek ~A. moet 0, 90, 180, of 270 graden zijn"
-
-msgid "Invalid text name/value visibility ~A."
-msgstr "Ongeldige tekst naam/waarde zichtbaarheid ~A."
-
-msgid "Text object ~A has invalid text alignment ~A"
-msgstr "Tekst object ~A heeft een ongeldige tekst uitlijning ~A"
-
-msgid "Text object ~A has invalid visibility ~A"
-msgstr "Tekst object ~A heeft een ongeldige zichtbaarheid ~A"
-
-msgid "Text object ~A has invalid text attribute visibility ~A"
-msgstr "Tekst object ~A heeft een ongeldige tekst attribuut zichtbaarheid ~A"
-
-msgid "Object ~A is not included in a page."
-msgstr "Object ~A is niet opgenomen in een pagina."
-
-msgid "Path object ~A has invalid element type ~A at index ~A"
-msgstr "Pad object ~A heeft een ongeldige element type ~A bij index ~A"
-
-msgid "Invalid path element type ~A."
-msgstr "Ongeldig pad element type ~A."
-
-msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr "Ongeldige afbeelding hoek ~A. Moet 0, 90, 180, of 270 graden zijn"
-
 #, fuzzy
 msgid "Object ~A is attached to a component or different page"
 msgstr "Object ~A is bevestigd aan een complex of een andere pagina"
@@ -1355,6 +1280,82 @@ msgstr "1 FOUT gevonden "
 #, fuzzy
 msgid "(use -v to view details)"
 msgstr "(gebruik -v om details te zien)\n"
+
+#~ msgid "Object ~A has invalid stroke cap style ~A"
+#~ msgstr "Object ~A heeft een ongeldige slag cap stijl ~A"
+
+#~ msgid "Object ~A has invalid stroke dash style ~A"
+#~ msgstr "Object ~A heeft een ongeldige slag streep stijl ~A"
+
+#~ msgid "Invalid stroke cap style ~A."
+#~ msgstr "Ongeldige slag cap stijl ~A."
+
+#~ msgid "Invalid stroke dash style ~A."
+#~ msgstr "Ongeldige slag streep stijl ~A."
+
+#~ msgid "Missing dash length parameter for dash style ~A."
+#~ msgstr "Ontbrekende streeplengte parameter voor streep sijl ~A."
+
+#~ msgid "Missing dot/dash space parameter for dash style ~A."
+#~ msgstr "Ontbrekende punt/streep ruimte parameter voor streep stijl ~A."
+
+#~ msgid "Object ~A has invalid fill style ~A"
+#~ msgstr "Object ~A heeft een ongeldige opvul stijl ~A"
+
+#~ msgid "Invalid fill style ~A."
+#~ msgstr "Ongeldige opvul stijl ~A."
+
+#~ msgid "Missing second space parameter for fill style ~A."
+#~ msgstr "Ontbrekende tweede ruimte parameter voor opvul stijl ~A."
+
+#~ msgid "Missing second angle parameter for fill style ~A."
+#~ msgstr "Ontbrekende tweede hoek parameter voor opvul stijl ~A."
+
+#~ msgid "Missing stroke width parameter for fill style ~A."
+#~ msgstr "Ontbrekende slag breedte parameter voor opvul stijl ~A."
+
+#~ msgid "Missing space parameter for fill style ~A."
+#~ msgstr "Ontbrekende ruimte parameter voor opvul stijl ~A."
+
+#~ msgid "Missing angle parameter for fill style ~A."
+#~ msgstr "Ontbrekende hoek parameter voor opvul stijl ~A."
+
+#~ msgid "Invalid pin type ~A, must be 'net or 'bus"
+#~ msgstr "Ongeldig pen type ~A, moet een 'net of 'bus zijn"
+
+#~ msgid "Object ~A has invalid pin type."
+#~ msgstr "Object ~A heeft een ongeldig pen type."
+
+#~ msgid "Invalid text alignment ~A."
+#~ msgstr "Ongeldige tekst uitlijning ~A."
+
+#~ msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr "Ongeldige tekst hoek ~A. moet 0, 90, 180, of 270 graden zijn"
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr "Ongeldige tekst naam/waarde zichtbaarheid ~A."
+
+#~ msgid "Text object ~A has invalid text alignment ~A"
+#~ msgstr "Tekst object ~A heeft een ongeldige tekst uitlijning ~A"
+
+#~ msgid "Text object ~A has invalid visibility ~A"
+#~ msgstr "Tekst object ~A heeft een ongeldige zichtbaarheid ~A"
+
+#~ msgid "Text object ~A has invalid text attribute visibility ~A"
+#~ msgstr ""
+#~ "Tekst object ~A heeft een ongeldige tekst attribuut zichtbaarheid ~A"
+
+#~ msgid "Object ~A is not included in a page."
+#~ msgstr "Object ~A is niet opgenomen in een pagina."
+
+#~ msgid "Path object ~A has invalid element type ~A at index ~A"
+#~ msgstr "Pad object ~A heeft een ongeldige element type ~A bij index ~A"
+
+#~ msgid "Invalid path element type ~A."
+#~ msgstr "Ongeldig pad element type ~A."
+
+#~ msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr "Ongeldige afbeelding hoek ~A. Moet 0, 90, 180, of 270 graden zijn"
 
 #, fuzzy
 #~ msgid "Failed to load fallback image.\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2012-01-31 12:15+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -722,81 +722,6 @@ msgstr "Object ~A is attached as an attribute"
 msgid "Object ~A has attributes"
 msgstr "Object ~A has attributes"
 
-msgid "Object ~A has invalid stroke cap style ~A"
-msgstr "Object ~A has invalid stroke cap style ~A"
-
-msgid "Object ~A has invalid stroke dash style ~A"
-msgstr "Object ~A has invalid stroke dash style ~A"
-
-msgid "Invalid stroke cap style ~A."
-msgstr "Invalid stroke cap style ~A."
-
-msgid "Invalid stroke dash style ~A."
-msgstr "Invalid stroke dash style ~A."
-
-msgid "Missing dash length parameter for dash style ~A."
-msgstr "Missing dash length parameter for dash style ~A."
-
-msgid "Missing dot/dash space parameter for dash style ~A."
-msgstr "Missing dot/dash space parameter for dash style ~A."
-
-msgid "Object ~A has invalid fill style ~A"
-msgstr "Object ~A has invalid fill style ~A"
-
-msgid "Invalid fill style ~A."
-msgstr "Invalid fill style ~A."
-
-msgid "Missing second space parameter for fill style ~A."
-msgstr "Missing second space parameter for fill style ~A."
-
-msgid "Missing second angle parameter for fill style ~A."
-msgstr "Missing second angle parameter for fill style ~A."
-
-msgid "Missing stroke width parameter for fill style ~A."
-msgstr "Missing stroke width parameter for fill style ~A."
-
-msgid "Missing space parameter for fill style ~A."
-msgstr "Missing space parameter for fill style ~A."
-
-msgid "Missing angle parameter for fill style ~A."
-msgstr "Missing angle parameter for fill style ~A."
-
-msgid "Invalid pin type ~A, must be 'net or 'bus"
-msgstr "Invalid pin type ~A, must be 'net or 'bus"
-
-msgid "Object ~A has invalid pin type."
-msgstr "Object ~A has invalid pin type."
-
-msgid "Invalid text alignment ~A."
-msgstr "Invalid text alignment ~A."
-
-msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
-
-msgid "Invalid text name/value visibility ~A."
-msgstr "Invalid text name/value visibility ~A."
-
-msgid "Text object ~A has invalid text alignment ~A"
-msgstr "Text object ~A has invalid text alignment ~A"
-
-msgid "Text object ~A has invalid visibility ~A"
-msgstr "Text object ~A has invalid visibility ~A"
-
-msgid "Text object ~A has invalid text attribute visibility ~A"
-msgstr "Text object ~A has invalid text attribute visibility ~A"
-
-msgid "Object ~A is not included in a page."
-msgstr "Object ~A is not included in a page."
-
-msgid "Path object ~A has invalid element type ~A at index ~A"
-msgstr "Path object ~A has invalid element type ~A at index ~A"
-
-msgid "Invalid path element type ~A."
-msgstr "Invalid path element type ~A."
-
-msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
-
 #, fuzzy
 msgid "Object ~A is attached to a component or different page"
 msgstr "Object ~A is attached to a complex or different page"
@@ -1293,6 +1218,81 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#~ msgid "Object ~A has invalid stroke cap style ~A"
+#~ msgstr "Object ~A has invalid stroke cap style ~A"
+
+#~ msgid "Object ~A has invalid stroke dash style ~A"
+#~ msgstr "Object ~A has invalid stroke dash style ~A"
+
+#~ msgid "Invalid stroke cap style ~A."
+#~ msgstr "Invalid stroke cap style ~A."
+
+#~ msgid "Invalid stroke dash style ~A."
+#~ msgstr "Invalid stroke dash style ~A."
+
+#~ msgid "Missing dash length parameter for dash style ~A."
+#~ msgstr "Missing dash length parameter for dash style ~A."
+
+#~ msgid "Missing dot/dash space parameter for dash style ~A."
+#~ msgstr "Missing dot/dash space parameter for dash style ~A."
+
+#~ msgid "Object ~A has invalid fill style ~A"
+#~ msgstr "Object ~A has invalid fill style ~A"
+
+#~ msgid "Invalid fill style ~A."
+#~ msgstr "Invalid fill style ~A."
+
+#~ msgid "Missing second space parameter for fill style ~A."
+#~ msgstr "Missing second space parameter for fill style ~A."
+
+#~ msgid "Missing second angle parameter for fill style ~A."
+#~ msgstr "Missing second angle parameter for fill style ~A."
+
+#~ msgid "Missing stroke width parameter for fill style ~A."
+#~ msgstr "Missing stroke width parameter for fill style ~A."
+
+#~ msgid "Missing space parameter for fill style ~A."
+#~ msgstr "Missing space parameter for fill style ~A."
+
+#~ msgid "Missing angle parameter for fill style ~A."
+#~ msgstr "Missing angle parameter for fill style ~A."
+
+#~ msgid "Invalid pin type ~A, must be 'net or 'bus"
+#~ msgstr "Invalid pin type ~A, must be 'net or 'bus"
+
+#~ msgid "Object ~A has invalid pin type."
+#~ msgstr "Object ~A has invalid pin type."
+
+#~ msgid "Invalid text alignment ~A."
+#~ msgstr "Invalid text alignment ~A."
+
+#~ msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr "Invalid text name/value visibility ~A."
+
+#~ msgid "Text object ~A has invalid text alignment ~A"
+#~ msgstr "Text object ~A has invalid text alignment ~A"
+
+#~ msgid "Text object ~A has invalid visibility ~A"
+#~ msgstr "Text object ~A has invalid visibility ~A"
+
+#~ msgid "Text object ~A has invalid text attribute visibility ~A"
+#~ msgstr "Text object ~A has invalid text attribute visibility ~A"
+
+#~ msgid "Object ~A is not included in a page."
+#~ msgstr "Object ~A is not included in a page."
+
+#~ msgid "Path object ~A has invalid element type ~A at index ~A"
+#~ msgstr "Path object ~A has invalid element type ~A at index ~A"
+
+#~ msgid "Invalid path element type ~A."
+#~ msgstr "Invalid path element type ~A."
+
+#~ msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 
 #, fuzzy
 #~ msgid "Failed to load fallback image.\n"

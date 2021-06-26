@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2020-03-20 09:14+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -739,86 +739,6 @@ msgstr "Объект ~A прикреплён как атрибут"
 msgid "Object ~A has attributes"
 msgstr "К объекту ~A прикреплены атрибуты"
 
-msgid "Object ~A has invalid stroke cap style ~A"
-msgstr "Недопустимый стиль концов линий объекта ~A: ~A"
-
-# 'stroke' в данном случае означает линию, а не жест
-msgid "Object ~A has invalid stroke dash style ~A"
-msgstr "Недопустимый тип линий для объекта ~A: ~A"
-
-msgid "Invalid stroke cap style ~A."
-msgstr "Недопустимое значение поля «capstyle» (стиль концов линии): ~A."
-
-msgid "Invalid stroke dash style ~A."
-msgstr "Недопустимое значение поля «dashstyle» (тип линии): ~A."
-
-msgid "Missing dash length parameter for dash style ~A."
-msgstr "Отсутствует поле «dashlength» (длина штриха): ~A."
-
-msgid "Missing dot/dash space parameter for dash style ~A."
-msgstr "Отсутствует поле «dashspace» (тип линии): ~A."
-
-msgid "Object ~A has invalid fill style ~A"
-msgstr "Недопустимый тип заполнения объекта ~A: ~A"
-
-msgid "Invalid fill style ~A."
-msgstr "Недопустимый тип заполнения ~A."
-
-msgid "Missing second space parameter for fill style ~A."
-msgstr "Отсутствует параметр типа заполнения «pitch2»: ~A."
-
-msgid "Missing second angle parameter for fill style ~A."
-msgstr "Отсутствует параметр типа заполнения «angle2»: ~A."
-
-msgid "Missing stroke width parameter for fill style ~A."
-msgstr "Отсутствует параметр типа заполнения «fillwidth»: ~A."
-
-msgid "Missing space parameter for fill style ~A."
-msgstr "Отсутствует параметр типа заполнения «pitch1»: ~A."
-
-msgid "Missing angle parameter for fill style ~A."
-msgstr "Отсутствует параметр типа заполнения «angle1»: ~A."
-
-msgid "Invalid pin type ~A, must be 'net or 'bus"
-msgstr "Недопустимый тип вывода ~A, должен быть «'net» или «'bus»"
-
-msgid "Object ~A has invalid pin type."
-msgstr "Недопустимый тип вывода объекта ~A."
-
-msgid "Invalid text alignment ~A."
-msgstr "Недопустимое значение поля «alignment» текстового объекта: ~A."
-
-msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr ""
-"Недопустимое значение угла поворота текстового объекта ~A. Угол должен быть "
-"равен  0, 90, 180 или 270 градусов"
-
-msgid "Invalid text name/value visibility ~A."
-msgstr "Недопустимое значение поля «show_name_value» текстового объекта: ~A."
-
-msgid "Text object ~A has invalid text alignment ~A"
-msgstr "Недопустимое значение поля «alignment» текстового объекта ~A: ~A"
-
-msgid "Text object ~A has invalid visibility ~A"
-msgstr "Недопустимое значение поля «visibility» текстового объекта ~A: ~A"
-
-msgid "Text object ~A has invalid text attribute visibility ~A"
-msgstr "Недопустимое значение поля «show_name_value» текстового объекта ~A: ~A"
-
-msgid "Object ~A is not included in a page."
-msgstr "Объекта ~A нет на странице."
-
-msgid "Path object ~A has invalid element type ~A at index ~A"
-msgstr "Контур ~A имеет недопустимое значение типа элемента ~A с индексом ~A"
-
-msgid "Invalid path element type ~A."
-msgstr "Недопустимое значение типа элемента контура: ~A."
-
-msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr ""
-"Недопустимое значение угла поворота изображения ~A. Угол должен быть равен  "
-"0, 90, 180 или 270 градусов"
-
 msgid "Object ~A is attached to a component or different page"
 msgstr "Объект ~A прикреплён к компоненту или к другой странице"
 
@@ -1403,6 +1323,89 @@ msgstr "Количество ошибок: ~A"
 
 msgid "(use -v to view details)"
 msgstr "(используйте опцию -v для вывода подробностей)"
+
+#~ msgid "Object ~A has invalid stroke cap style ~A"
+#~ msgstr "Недопустимый стиль концов линий объекта ~A: ~A"
+
+# 'stroke' в данном случае означает линию, а не жест
+#~ msgid "Object ~A has invalid stroke dash style ~A"
+#~ msgstr "Недопустимый тип линий для объекта ~A: ~A"
+
+#~ msgid "Invalid stroke cap style ~A."
+#~ msgstr "Недопустимое значение поля «capstyle» (стиль концов линии): ~A."
+
+#~ msgid "Invalid stroke dash style ~A."
+#~ msgstr "Недопустимое значение поля «dashstyle» (тип линии): ~A."
+
+#~ msgid "Missing dash length parameter for dash style ~A."
+#~ msgstr "Отсутствует поле «dashlength» (длина штриха): ~A."
+
+#~ msgid "Missing dot/dash space parameter for dash style ~A."
+#~ msgstr "Отсутствует поле «dashspace» (тип линии): ~A."
+
+#~ msgid "Object ~A has invalid fill style ~A"
+#~ msgstr "Недопустимый тип заполнения объекта ~A: ~A"
+
+#~ msgid "Invalid fill style ~A."
+#~ msgstr "Недопустимый тип заполнения ~A."
+
+#~ msgid "Missing second space parameter for fill style ~A."
+#~ msgstr "Отсутствует параметр типа заполнения «pitch2»: ~A."
+
+#~ msgid "Missing second angle parameter for fill style ~A."
+#~ msgstr "Отсутствует параметр типа заполнения «angle2»: ~A."
+
+#~ msgid "Missing stroke width parameter for fill style ~A."
+#~ msgstr "Отсутствует параметр типа заполнения «fillwidth»: ~A."
+
+#~ msgid "Missing space parameter for fill style ~A."
+#~ msgstr "Отсутствует параметр типа заполнения «pitch1»: ~A."
+
+#~ msgid "Missing angle parameter for fill style ~A."
+#~ msgstr "Отсутствует параметр типа заполнения «angle1»: ~A."
+
+#~ msgid "Invalid pin type ~A, must be 'net or 'bus"
+#~ msgstr "Недопустимый тип вывода ~A, должен быть «'net» или «'bus»"
+
+#~ msgid "Object ~A has invalid pin type."
+#~ msgstr "Недопустимый тип вывода объекта ~A."
+
+#~ msgid "Invalid text alignment ~A."
+#~ msgstr "Недопустимое значение поля «alignment» текстового объекта: ~A."
+
+#~ msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr ""
+#~ "Недопустимое значение угла поворота текстового объекта ~A. Угол должен "
+#~ "быть равен  0, 90, 180 или 270 градусов"
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr ""
+#~ "Недопустимое значение поля «show_name_value» текстового объекта: ~A."
+
+#~ msgid "Text object ~A has invalid text alignment ~A"
+#~ msgstr "Недопустимое значение поля «alignment» текстового объекта ~A: ~A"
+
+#~ msgid "Text object ~A has invalid visibility ~A"
+#~ msgstr "Недопустимое значение поля «visibility» текстового объекта ~A: ~A"
+
+#~ msgid "Text object ~A has invalid text attribute visibility ~A"
+#~ msgstr ""
+#~ "Недопустимое значение поля «show_name_value» текстового объекта ~A: ~A"
+
+#~ msgid "Object ~A is not included in a page."
+#~ msgstr "Объекта ~A нет на странице."
+
+#~ msgid "Path object ~A has invalid element type ~A at index ~A"
+#~ msgstr ""
+#~ "Контур ~A имеет недопустимое значение типа элемента ~A с индексом ~A"
+
+#~ msgid "Invalid path element type ~A."
+#~ msgstr "Недопустимое значение типа элемента контура: ~A."
+
+#~ msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr ""
+#~ "Недопустимое значение угла поворота изображения ~A. Угол должен быть "
+#~ "равен  0, 90, 180 или 270 градусов"
 
 #~ msgid "Failed to load fallback image.\n"
 #~ msgstr "Не удалось загрузить встроенное аварийное изображение.\n"

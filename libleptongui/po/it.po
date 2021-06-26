@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2014-12-29 20:06+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -171,6 +171,45 @@ msgstr "Angolo di Attacco:"
 msgid "_Degrees of Sweep:"
 msgstr "Gradi di sviluppo dell'arco:"
 
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>Opzioni</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "Dimensione Snap"
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "Griglia NON ATTIVA\n"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "Griglia NON ATTIVA\n"
+
+#, fuzzy
+msgid "Grid size"
+msgstr "Griglia NON ATTIVA\n"
+
 msgid "Left mouse button"
 msgstr ""
 
@@ -184,9 +223,6 @@ msgstr ""
 "Tasto destro del mouse per\n"
 "cancellare il collegamento"
 
-msgid "(Snap size, Grid size)"
-msgstr ""
-
 #, fuzzy
 msgid "Net rubber band mode"
 msgstr "Commuta net elastiche"
@@ -198,16 +234,6 @@ msgstr "Modo Net Magnetiche"
 #, fuzzy
 msgid "Current action mode"
 msgstr "Pagina corrente"
-
-msgid "OFF"
-msgstr ""
-
-msgid "NONE"
-msgstr ""
-
-#, c-format
-msgid "Grid(%1$s, %2$s)"
-msgstr ""
 
 msgid "S_elect the schematics you want to save:"
 msgstr "S_eleziona lo schema che vuoi salvare:"

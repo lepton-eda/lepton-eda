@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2010-02-14 06:08+0000\n"
 "Last-Translator: عبدالله شلي (Abdellah Chelli) <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -163,6 +163,45 @@ msgstr "زاوية البدأ:"
 msgid "_Degrees of Sweep:"
 msgstr "درجات الاجتياح:"
 
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>الخيارات</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "حجم الجذب"
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "شبيكة موقفة\n"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "شبيكة موقفة\n"
+
+#, fuzzy
+msgid "Grid size"
+msgstr "شبيكة موقفة\n"
+
 msgid "Left mouse button"
 msgstr ""
 
@@ -176,9 +215,6 @@ msgstr ""
 "وضع إضافة شبكات\n"
 "الزر الأيمن للفارة للإلغاء"
 
-msgid "(Snap size, Grid size)"
-msgstr ""
-
 #, fuzzy
 msgid "Net rubber band mode"
 msgstr "بدّل الشريط الم_طاطي للشبكة"
@@ -190,16 +226,6 @@ msgstr "وضع الشبكة المغناطيسية"
 #, fuzzy
 msgid "Current action mode"
 msgstr "النافذة الحالية"
-
-msgid "OFF"
-msgstr "إيقاف"
-
-msgid "NONE"
-msgstr "لا شيئ"
-
-#, fuzzy, c-format
-msgid "Grid(%1$s, %2$s)"
-msgstr "شبيكة(%s, %s)"
 
 msgid "S_elect the schematics you want to save:"
 msgstr "انتق المخططات التي تريد حفظها:"
@@ -2311,6 +2337,16 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "OFF"
+#~ msgstr "إيقاف"
+
+#~ msgid "NONE"
+#~ msgstr "لا شيئ"
+
+#, fuzzy, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "شبيكة(%s, %s)"
 
 #~ msgid "Edit slot number"
 #~ msgstr "﻿حرّر عدد الشقّ"

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2020-03-20 15:30+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -181,6 +181,45 @@ msgstr "_Начальный угол:"
 msgid "_Degrees of Sweep:"
 msgstr "_Угол разворота:"
 
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>Привязка</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "_Шаг привязки:"
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "Сетка отключена"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "Сетка отключена"
+
+#, fuzzy
+msgid "Grid size"
+msgstr "Сетка +"
+
 msgid "Left mouse button"
 msgstr "Левая кнопка мыши"
 
@@ -190,9 +229,6 @@ msgstr "Средняя кнопка мыши"
 msgid "Right mouse button"
 msgstr "Правая кнопка мыши"
 
-msgid "(Snap size, Grid size)"
-msgstr "(Размер привязки, Размер сетки)"
-
 msgid "Net rubber band mode"
 msgstr "Режим резиновых соединений"
 
@@ -201,16 +237,6 @@ msgstr "Режим магнитных соединений"
 
 msgid "Current action mode"
 msgstr "Текущее действие/режим"
-
-msgid "OFF"
-msgstr "Откл"
-
-msgid "NONE"
-msgstr "НЕТ"
-
-#, c-format
-msgid "Grid(%1$s, %2$s)"
-msgstr "Сетка(%1$s, %2$s)"
 
 msgid "S_elect the schematics you want to save:"
 msgstr "_Выберите сохраняемые схемы:"
@@ -2243,6 +2269,19 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "(Snap size, Grid size)"
+#~ msgstr "(Размер привязки, Размер сетки)"
+
+#~ msgid "OFF"
+#~ msgstr "Откл"
+
+#~ msgid "NONE"
+#~ msgstr "НЕТ"
+
+#, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "Сетка(%1$s, %2$s)"
 
 #~ msgid "Edit slot number"
 #~ msgstr "Правка номера секции"

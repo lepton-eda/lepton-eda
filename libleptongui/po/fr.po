@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2012-10-28 15:46+0000\n"
 "Last-Translator: Penegal <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -169,6 +169,45 @@ msgstr "Angle de départ :"
 msgid "_Degrees of Sweep:"
 msgstr "Balayage :"
 
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>Options</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "Grille de snap"
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "Grille OFF\n"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "Grille OFF\n"
+
+#, fuzzy
+msgid "Grid size"
+msgstr "Grille OFF\n"
+
 msgid "Left mouse button"
 msgstr ""
 
@@ -182,9 +221,6 @@ msgstr ""
 "Mode ajout de piste\n"
 "Clic droit pour annuler"
 
-msgid "(Snap size, Grid size)"
-msgstr ""
-
 #, fuzzy
 msgid "Net rubber band mode"
 msgstr "Piste é_lastique On/Off"
@@ -196,16 +232,6 @@ msgstr "Mode Piste Magnétique"
 #, fuzzy
 msgid "Current action mode"
 msgstr "Vue en cours"
-
-msgid "OFF"
-msgstr "OFF"
-
-msgid "NONE"
-msgstr "AUCUN"
-
-#, fuzzy, c-format
-msgid "Grid(%1$s, %2$s)"
-msgstr "Grille(%s,%s)"
 
 msgid "S_elect the schematics you want to save:"
 msgstr "_Sélectionnez les schémas que vous souhaitez enregistrer :"
@@ -2389,6 +2415,16 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "OFF"
+#~ msgstr "OFF"
+
+#~ msgid "NONE"
+#~ msgstr "AUCUN"
+
+#, fuzzy, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "Grille(%s,%s)"
 
 #~ msgid "Edit slot number"
 #~ msgstr "Numéro de slot"

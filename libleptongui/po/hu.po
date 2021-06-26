@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2012-01-27 14:23+0000\n"
 "Last-Translator: kop <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -159,6 +159,45 @@ msgstr "Kezdőszög:"
 msgid "_Degrees of Sweep:"
 msgstr "Ív szöge:"
 
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>Opciók</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "Méret:"
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "Háló ki\n"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "Háló ki\n"
+
+#, fuzzy
+msgid "Grid size"
+msgstr "Háló ki\n"
+
 msgid "Left mouse button"
 msgstr ""
 
@@ -170,9 +209,6 @@ msgstr "Bal közép"
 msgid "Right mouse button"
 msgstr "Összeköttetések hozzáadása mód"
 
-msgid "(Snap size, Grid size)"
-msgstr ""
-
 msgid "Net rubber band mode"
 msgstr ""
 
@@ -183,16 +219,6 @@ msgstr "Összeköttetés üzemmód"
 #, fuzzy
 msgid "Current action mode"
 msgstr "Jelenlegi oldal"
-
-msgid "OFF"
-msgstr "Ki"
-
-msgid "NONE"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Grid(%1$s, %2$s)"
-msgstr "Háló (%s, %s)"
 
 msgid "S_elect the schematics you want to save:"
 msgstr "Válaszd ki a menteni kívánt rajzot:"
@@ -2265,6 +2291,13 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "OFF"
+#~ msgstr "Ki"
+
+#, fuzzy, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "Háló (%s, %s)"
 
 #, c-format
 #~ msgid "Sorry but this is a non-functioning menu option\n"

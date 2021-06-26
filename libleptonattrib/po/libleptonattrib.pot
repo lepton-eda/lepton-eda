@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.14\n"
+"Project-Id-Version: lepton-eda 1.9.15\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr ""
 
-#: utils/attrib/lepton-attrib.scm:87
+#: utils/attrib/lepton-attrib.scm:89
 #, scheme-format
 msgid ""
 "Usage: ~A [OPTIONS] FILE ...\n"
@@ -360,29 +360,29 @@ msgstr ""
 msgid " Show name and value "
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:357
+#: libleptonattrib/src/x_window.c:372
 #, c-format
 msgid "Error loading menu: %1$s\n"
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:393
+#: libleptonattrib/src/x_window.c:408
 msgid ""
 "No components found in entire design!\n"
 "Do you have refdeses on your components?"
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:399
+#: libleptonattrib/src/x_window.c:414
 msgid ""
 "No configurable component attributes found in entire design!\n"
 "Please attach at least some attributes before running lepton-attrib."
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:405
+#: libleptonattrib/src/x_window.c:420
 msgid ""
 "No pins found on any components!\n"
 "Please check your design."
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:537
+#: libleptonattrib/src/x_window.c:552
 msgid "Multiple files"
 msgstr ""

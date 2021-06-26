@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2012-01-27 14:22+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -152,6 +152,41 @@ msgstr ""
 msgid "_Degrees of Sweep:"
 msgstr ""
 
+msgid "<b>Snap: OFF</b>"
+msgstr ""
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "Kopyalama Kipi"
+
+msgid "Grid: OFF"
+msgstr ""
+
+msgid "Grid: NONE"
+msgstr ""
+
+msgid "Grid size"
+msgstr ""
+
 msgid "Left mouse button"
 msgstr ""
 
@@ -161,9 +196,6 @@ msgstr ""
 msgid "Right mouse button"
 msgstr ""
 
-msgid "(Snap size, Grid size)"
-msgstr ""
-
 msgid "Net rubber band mode"
 msgstr ""
 
@@ -171,16 +203,6 @@ msgid "Magnetic net mode"
 msgstr ""
 
 msgid "Current action mode"
-msgstr ""
-
-msgid "OFF"
-msgstr "KAPALI"
-
-msgid "NONE"
-msgstr ""
-
-#, c-format
-msgid "Grid(%1$s, %2$s)"
 msgstr ""
 
 msgid "S_elect the schematics you want to save:"
@@ -2133,6 +2155,9 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "OFF"
+#~ msgstr "KAPALI"
 
 #, fuzzy
 #~ msgid "lepton-schematic FAQ"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2012-02-20 00:09+0000\n"
 "Last-Translator: Carlos Nieves <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -759,96 +759,6 @@ msgstr "Objeto ~A est'a adjunto como un atributo"
 msgid "Object ~A has attributes"
 msgstr "Objeto ~A tiene atributos"
 
-msgid "Object ~A has invalid stroke cap style ~A"
-msgstr "El objeto ~A tiene un estilo de trazado de extremo no válido ~A."
-
-msgid "Object ~A has invalid stroke dash style ~A"
-msgstr "El objeto ~A tiene un estilo de trazado discontinuo no válido ~A."
-
-msgid "Invalid stroke cap style ~A."
-msgstr "Estilo de trazado de extremo no válido ~A."
-
-msgid "Invalid stroke dash style ~A."
-msgstr "Estilo de trazado discontinuo no válido ~A."
-
-msgid "Missing dash length parameter for dash style ~A."
-msgstr ""
-"No se ha especificado la longitud de espaciado para el estilo de "
-"interlineado ~A."
-
-msgid "Missing dot/dash space parameter for dash style ~A."
-msgstr ""
-"No se ha especificado el parámetro de espaciado entre punto/línea para el "
-"estilo discontinuo ~A."
-
-msgid "Object ~A has invalid fill style ~A"
-msgstr "El objeto ~A tiene un estilo de relleno no válido ~A"
-
-msgid "Invalid fill style ~A."
-msgstr "Estilo de relleno no válido ~A."
-
-msgid "Missing second space parameter for fill style ~A."
-msgstr ""
-"No se encuentra el parámetro de espaciado secundario para el estilo de "
-"relleno ~A."
-
-msgid "Missing second angle parameter for fill style ~A."
-msgstr ""
-"No se encuentra el parámetro de ángulo secundario para el estilo de relleno "
-"~A."
-
-msgid "Missing stroke width parameter for fill style ~A."
-msgstr ""
-"No se ha especificado el parámetro de grosor de trazado para el estilo de "
-"relleno ~A."
-
-msgid "Missing space parameter for fill style ~A."
-msgstr ""
-"No se encuentra el parámetro de espaciado para el estilo de relleno ~A."
-
-msgid "Missing angle parameter for fill style ~A."
-msgstr "No se encuentra el parámetro de ángulo para el estilo de relleno ~A."
-
-msgid "Invalid pin type ~A, must be 'net or 'bus"
-msgstr "Tipo de pata ~A no válido, debe ser 'conexión o 'bus"
-
-msgid "Object ~A has invalid pin type."
-msgstr "El objeto ~A tiene un tipo de pata no válido."
-
-msgid "Invalid text alignment ~A."
-msgstr "Alineación de texto inválida ~A"
-
-msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr "Ángulo de texto ~A no válido. Debe ser 0, 90, 180 ó 270 grados"
-
-msgid "Invalid text name/value visibility ~A."
-msgstr "Visibilidad de nombre/valor de texto inválida ~A"
-
-msgid "Text object ~A has invalid text alignment ~A"
-msgstr "El objeto de texto ~A tiene una alineación de texto inválida ~A"
-
-msgid "Text object ~A has invalid visibility ~A"
-msgstr "El objeto de texto ~A tiene una visibilidad ~A no válida"
-
-msgid "Text object ~A has invalid text attribute visibility ~A"
-msgstr ""
-"El objeto de texto ~A tiene una visibilidad de propiedad de texto ~A no "
-"válida"
-
-msgid "Object ~A is not included in a page."
-msgstr "El objeto ~A no está incluido en una página."
-
-msgid "Path object ~A has invalid element type ~A at index ~A"
-msgstr ""
-"El objeto de trazado ~A tiene un tipo de elemento ~A no válido en el índice "
-"~A"
-
-msgid "Invalid path element type ~A."
-msgstr "Tipo de elemento de trazado ~A no válido."
-
-msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr "Ángulo de imagen ~A no válido. Debe ser 0, 90, 180 o 270 grados"
-
 #, fuzzy
 msgid "Object ~A is attached to a component or different page"
 msgstr "El objeto ~A está asociado a un objeto complejo o página diferente"
@@ -1345,6 +1255,97 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#~ msgid "Object ~A has invalid stroke cap style ~A"
+#~ msgstr "El objeto ~A tiene un estilo de trazado de extremo no válido ~A."
+
+#~ msgid "Object ~A has invalid stroke dash style ~A"
+#~ msgstr "El objeto ~A tiene un estilo de trazado discontinuo no válido ~A."
+
+#~ msgid "Invalid stroke cap style ~A."
+#~ msgstr "Estilo de trazado de extremo no válido ~A."
+
+#~ msgid "Invalid stroke dash style ~A."
+#~ msgstr "Estilo de trazado discontinuo no válido ~A."
+
+#~ msgid "Missing dash length parameter for dash style ~A."
+#~ msgstr ""
+#~ "No se ha especificado la longitud de espaciado para el estilo de "
+#~ "interlineado ~A."
+
+#~ msgid "Missing dot/dash space parameter for dash style ~A."
+#~ msgstr ""
+#~ "No se ha especificado el parámetro de espaciado entre punto/línea para el "
+#~ "estilo discontinuo ~A."
+
+#~ msgid "Object ~A has invalid fill style ~A"
+#~ msgstr "El objeto ~A tiene un estilo de relleno no válido ~A"
+
+#~ msgid "Invalid fill style ~A."
+#~ msgstr "Estilo de relleno no válido ~A."
+
+#~ msgid "Missing second space parameter for fill style ~A."
+#~ msgstr ""
+#~ "No se encuentra el parámetro de espaciado secundario para el estilo de "
+#~ "relleno ~A."
+
+#~ msgid "Missing second angle parameter for fill style ~A."
+#~ msgstr ""
+#~ "No se encuentra el parámetro de ángulo secundario para el estilo de "
+#~ "relleno ~A."
+
+#~ msgid "Missing stroke width parameter for fill style ~A."
+#~ msgstr ""
+#~ "No se ha especificado el parámetro de grosor de trazado para el estilo de "
+#~ "relleno ~A."
+
+#~ msgid "Missing space parameter for fill style ~A."
+#~ msgstr ""
+#~ "No se encuentra el parámetro de espaciado para el estilo de relleno ~A."
+
+#~ msgid "Missing angle parameter for fill style ~A."
+#~ msgstr ""
+#~ "No se encuentra el parámetro de ángulo para el estilo de relleno ~A."
+
+#~ msgid "Invalid pin type ~A, must be 'net or 'bus"
+#~ msgstr "Tipo de pata ~A no válido, debe ser 'conexión o 'bus"
+
+#~ msgid "Object ~A has invalid pin type."
+#~ msgstr "El objeto ~A tiene un tipo de pata no válido."
+
+#~ msgid "Invalid text alignment ~A."
+#~ msgstr "Alineación de texto inválida ~A"
+
+#~ msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr "Ángulo de texto ~A no válido. Debe ser 0, 90, 180 ó 270 grados"
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr "Visibilidad de nombre/valor de texto inválida ~A"
+
+#~ msgid "Text object ~A has invalid text alignment ~A"
+#~ msgstr "El objeto de texto ~A tiene una alineación de texto inválida ~A"
+
+#~ msgid "Text object ~A has invalid visibility ~A"
+#~ msgstr "El objeto de texto ~A tiene una visibilidad ~A no válida"
+
+#~ msgid "Text object ~A has invalid text attribute visibility ~A"
+#~ msgstr ""
+#~ "El objeto de texto ~A tiene una visibilidad de propiedad de texto ~A no "
+#~ "válida"
+
+#~ msgid "Object ~A is not included in a page."
+#~ msgstr "El objeto ~A no está incluido en una página."
+
+#~ msgid "Path object ~A has invalid element type ~A at index ~A"
+#~ msgstr ""
+#~ "El objeto de trazado ~A tiene un tipo de elemento ~A no válido en el "
+#~ "índice ~A"
+
+#~ msgid "Invalid path element type ~A."
+#~ msgstr "Tipo de elemento de trazado ~A no válido."
+
+#~ msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr "Ángulo de imagen ~A no válido. Debe ser 0, 90, 180 o 270 grados"
 
 #, fuzzy
 #~ msgid "Failed to load fallback image.\n"

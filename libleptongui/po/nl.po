@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2014-08-31 22:35+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -166,6 +166,45 @@ msgstr "Start Hoek:"
 msgid "_Degrees of Sweep:"
 msgstr "Doorlopen Hoek:"
 
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>Opties</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "Snap Grootte"
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "Raster UIT\n"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "Raster UIT\n"
+
+#, fuzzy
+msgid "Grid size"
+msgstr "Raster UIT\n"
+
 msgid "Left mouse button"
 msgstr ""
 
@@ -179,9 +218,6 @@ msgstr ""
 "Plaats draden modus\n"
 "Rechter muisknop om af te breken"
 
-msgid "(Snap size, Grid size)"
-msgstr ""
-
 #, fuzzy
 msgid "Net rubber band mode"
 msgstr "Schakel Draad Elastiekband"
@@ -193,16 +229,6 @@ msgstr "Magnetische Draad Mode"
 #, fuzzy
 msgid "Current action mode"
 msgstr "Huidige Venster"
-
-msgid "OFF"
-msgstr "UIT"
-
-msgid "NONE"
-msgstr "GEEN"
-
-#, fuzzy, c-format
-msgid "Grid(%1$s, %2$s)"
-msgstr "Raster(%s, %s)"
 
 msgid "S_elect the schematics you want to save:"
 msgstr "S_electeer de schema's die je op wil slaan:"
@@ -2320,6 +2346,16 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "OFF"
+#~ msgstr "UIT"
+
+#~ msgid "NONE"
+#~ msgstr "GEEN"
+
+#, fuzzy, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "Raster(%s, %s)"
 
 #~ msgid "Edit slot number"
 #~ msgstr "Bewerk slot nummer"

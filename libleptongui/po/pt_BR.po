@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2012-01-31 12:08+0000\n"
 "Last-Translator: Antonio Augusto Todo Bom Neto <atodobom@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -166,6 +166,45 @@ msgstr "Ângulo Inicial:"
 msgid "_Degrees of Sweep:"
 msgstr "Graud da varredura:"
 
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>Opções</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "Tamanho do Ajuste"
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "Grade DESLIGADA\n"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "Grade DESLIGADA\n"
+
+#, fuzzy
+msgid "Grid size"
+msgstr "Grade DESLIGADA\n"
+
 msgid "Left mouse button"
 msgstr ""
 
@@ -179,9 +218,6 @@ msgstr ""
 "Modo de conexões\n"
 "Botão Direito para cancelar"
 
-msgid "(Snap size, Grid size)"
-msgstr ""
-
 #, fuzzy
 msgid "Net rubber band mode"
 msgstr "Alterna_r conexão elástica"
@@ -193,16 +229,6 @@ msgstr "Modo de Conexão magnético"
 #, fuzzy
 msgid "Current action mode"
 msgstr "Página Atual"
-
-msgid "OFF"
-msgstr "DESLIGADO"
-
-msgid "NONE"
-msgstr "NENHUM"
-
-#, fuzzy, c-format
-msgid "Grid(%1$s, %2$s)"
-msgstr "Grade(%s, %s)"
 
 msgid "S_elect the schematics you want to save:"
 msgstr "S_elecione os diagramas que a salvar:"
@@ -2368,6 +2394,16 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "OFF"
+#~ msgstr "DESLIGADO"
+
+#~ msgid "NONE"
+#~ msgstr "NENHUM"
+
+#, fuzzy, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "Grade(%s, %s)"
 
 #~ msgid "Edit slot number"
 #~ msgstr "Editar número de SLOT"

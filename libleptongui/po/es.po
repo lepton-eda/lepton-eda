@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2012-03-23 03:04+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -169,6 +169,45 @@ msgstr "Ángulo de comienzo:"
 msgid "_Degrees of Sweep:"
 msgstr "Grados de barrido:"
 
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>Opciones</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "Tamaño de la rejilla"
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "Rejilla DESACTIVADA\n"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "Rejilla DESACTIVADA\n"
+
+#, fuzzy
+msgid "Grid size"
+msgstr "Rejilla DESACTIVADA\n"
+
 msgid "Left mouse button"
 msgstr ""
 
@@ -182,9 +221,6 @@ msgstr ""
 "Añadir conexión\n"
 "Botón derecho del ratón para cancelar"
 
-msgid "(Snap size, Grid size)"
-msgstr ""
-
 #, fuzzy
 msgid "Net rubber band mode"
 msgstr "Act/Desact conserva_r conexiones"
@@ -196,16 +232,6 @@ msgstr "Modo Ayuda a la conexión"
 #, fuzzy
 msgid "Current action mode"
 msgstr "Ventana actual"
-
-msgid "OFF"
-msgstr "○"
-
-msgid "NONE"
-msgstr "NINGUNO"
-
-#, fuzzy, c-format
-msgid "Grid(%1$s, %2$s)"
-msgstr "Rejilla(%s, %s)"
 
 msgid "S_elect the schematics you want to save:"
 msgstr "S_eleccione los esquemas que quiere guardar:"
@@ -2385,6 +2411,16 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "OFF"
+#~ msgstr "○"
+
+#~ msgid "NONE"
+#~ msgstr "NINGUNO"
+
+#, fuzzy, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "Rejilla(%s, %s)"
 
 #~ msgid "Edit slot number"
 #~ msgstr "Editar número de elemento"

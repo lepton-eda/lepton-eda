@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2012-04-12 22:09+0000\n"
 "Last-Translator: Dennis Baudys <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -167,6 +167,45 @@ msgstr "Start Winkel:"
 msgid "_Degrees of Sweep:"
 msgstr "Öffnungswinkel:"
 
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>Optionen</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "Rasterabstand"
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "Raster AUS\n"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "Raster AUS\n"
+
+#, fuzzy
+msgid "Grid size"
+msgstr "Raster AUS\n"
+
 msgid "Left mouse button"
 msgstr ""
 
@@ -180,9 +219,6 @@ msgstr ""
 "Netz einfügen\n"
 "mit rechter Maustaste abbrechen"
 
-msgid "(Snap size, Grid size)"
-msgstr ""
-
 #, fuzzy
 msgid "Net rubber band mode"
 msgstr "_Netzgummifäden umschalten"
@@ -194,16 +230,6 @@ msgstr "Magnetischer Netzmodus"
 #, fuzzy
 msgid "Current action mode"
 msgstr "Aktuelles Fenster"
-
-msgid "OFF"
-msgstr "AUS"
-
-msgid "NONE"
-msgstr "NICHTS"
-
-#, fuzzy, c-format
-msgid "Grid(%1$s, %2$s)"
-msgstr "Raster (%s, %s)"
 
 msgid "S_elect the schematics you want to save:"
 msgstr "_Wählen Sie die zu speichernden Seiten:"
@@ -2356,6 +2382,16 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "OFF"
+#~ msgstr "AUS"
+
+#~ msgid "NONE"
+#~ msgstr "NICHTS"
+
+#, fuzzy, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "Raster (%s, %s)"
 
 #~ msgid "Edit slot number"
 #~ msgstr "Slot-Nummer bearbeiten"

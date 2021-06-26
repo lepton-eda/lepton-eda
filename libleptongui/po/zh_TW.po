@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2012-01-27 14:22+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -153,6 +153,45 @@ msgstr ""
 msgid "_Degrees of Sweep:"
 msgstr ""
 
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>選項</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "複製模式"
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "關閉網格\n"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "關閉網格\n"
+
+#, fuzzy
+msgid "Grid size"
+msgstr "關閉網格\n"
+
 msgid "Left mouse button"
 msgstr ""
 
@@ -160,9 +199,6 @@ msgid "Middle mouse button"
 msgstr ""
 
 msgid "Right mouse button"
-msgstr ""
-
-msgid "(Snap size, Grid size)"
 msgstr ""
 
 msgid "Net rubber band mode"
@@ -173,16 +209,6 @@ msgstr ""
 
 msgid "Current action mode"
 msgstr ""
-
-msgid "OFF"
-msgstr ""
-
-msgid "NONE"
-msgstr ""
-
-#, fuzzy, c-format
-msgid "Grid(%1$s, %2$s)"
-msgstr "網格(%s, %s)"
 
 msgid "S_elect the schematics you want to save:"
 msgstr ""
@@ -2174,6 +2200,10 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy, c-format
+#~ msgid "Grid(%1$s, %2$s)"
+#~ msgstr "網格(%s, %s)"
 
 #, fuzzy
 #~ msgid "lepton-schematic FAQ"

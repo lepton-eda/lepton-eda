@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2012-09-01 20:41+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -165,6 +165,45 @@ msgstr "Γωνία εκκίνησης:"
 msgid "_Degrees of Sweep:"
 msgstr ""
 
+#, fuzzy
+msgid "<b>Snap: OFF</b>"
+msgstr "<b>Επιλογές</b>"
+
+#, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#, c-format
+msgid "<u>Re</u>snap: %d"
+msgstr ""
+
+#, c-format
+msgid ""
+"Snap size.\n"
+"Attention: current snap size (%d) differs\n"
+"from the value set in configuration: %d."
+msgstr ""
+
+#, fuzzy
+msgid "Snap size"
+msgstr "Μέγεθος:"
+
+#, fuzzy
+msgid "Grid: OFF"
+msgstr "Λειτουργία τόξου"
+
+#, fuzzy
+msgid "Grid: NONE"
+msgstr "Λειτουργία τόξου"
+
+#, fuzzy
+msgid "Grid size"
+msgstr "Λειτουργία τόξου"
+
 msgid "Left mouse button"
 msgstr ""
 
@@ -178,9 +217,6 @@ msgstr ""
 "Λειτουργία προσθήκης δικτύου\n"
 "Δεξί κλικ για ακύρωση"
 
-msgid "(Snap size, Grid size)"
-msgstr ""
-
 msgid "Net rubber band mode"
 msgstr ""
 
@@ -191,16 +227,6 @@ msgstr "Λειτουργία μαγνητικού δικτύου"
 #, fuzzy
 msgid "Current action mode"
 msgstr "Τρέχον παράθυρο"
-
-msgid "OFF"
-msgstr ""
-
-msgid "NONE"
-msgstr "ΚΑΝΕΝΑ"
-
-#, c-format
-msgid "Grid(%1$s, %2$s)"
-msgstr ""
 
 msgid "S_elect the schematics you want to save:"
 msgstr "_Επιλέξετε τα σχεδιαγράμματα που θέλετε να αποθηκεύσετε:"
@@ -2309,6 +2335,9 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "NONE"
+#~ msgstr "ΚΑΝΕΝΑ"
 
 #~ msgid "Edit slot number"
 #~ msgstr "Επεξεργασία αριθμού υποδοχής"

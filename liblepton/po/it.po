@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-04-05 20:24+0300\n"
+"POT-Creation-Date: 2021-06-26 17:33+0300\n"
 "PO-Revision-Date: 2015-01-12 10:15+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -703,81 +703,6 @@ msgid "Object ~A is attached as an attribute"
 msgstr ""
 
 msgid "Object ~A has attributes"
-msgstr ""
-
-msgid "Object ~A has invalid stroke cap style ~A"
-msgstr ""
-
-msgid "Object ~A has invalid stroke dash style ~A"
-msgstr ""
-
-msgid "Invalid stroke cap style ~A."
-msgstr ""
-
-msgid "Invalid stroke dash style ~A."
-msgstr ""
-
-msgid "Missing dash length parameter for dash style ~A."
-msgstr ""
-
-msgid "Missing dot/dash space parameter for dash style ~A."
-msgstr ""
-
-msgid "Object ~A has invalid fill style ~A"
-msgstr ""
-
-msgid "Invalid fill style ~A."
-msgstr ""
-
-msgid "Missing second space parameter for fill style ~A."
-msgstr ""
-
-msgid "Missing second angle parameter for fill style ~A."
-msgstr ""
-
-msgid "Missing stroke width parameter for fill style ~A."
-msgstr ""
-
-msgid "Missing space parameter for fill style ~A."
-msgstr ""
-
-msgid "Missing angle parameter for fill style ~A."
-msgstr ""
-
-msgid "Invalid pin type ~A, must be 'net or 'bus"
-msgstr ""
-
-msgid "Object ~A has invalid pin type."
-msgstr ""
-
-msgid "Invalid text alignment ~A."
-msgstr ""
-
-msgid "Invalid text angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr ""
-
-msgid "Invalid text name/value visibility ~A."
-msgstr ""
-
-msgid "Text object ~A has invalid text alignment ~A"
-msgstr ""
-
-msgid "Text object ~A has invalid visibility ~A"
-msgstr ""
-
-msgid "Text object ~A has invalid text attribute visibility ~A"
-msgstr ""
-
-msgid "Object ~A is not included in a page."
-msgstr ""
-
-msgid "Path object ~A has invalid element type ~A at index ~A"
-msgstr ""
-
-msgid "Invalid path element type ~A."
-msgstr ""
-
-msgid "Invalid picture angle ~A. Must be 0, 90, 180, or 270 degrees"
 msgstr ""
 
 msgid "Object ~A is attached to a component or different page"
