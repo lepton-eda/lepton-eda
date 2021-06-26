@@ -1,40 +1,44 @@
 v 20210407 2
-T 100 1000 9 10 0 0 0 0 1
+T 100 1200 9 10 0 0 0 0 1
 Copyright Mark Salyzyn
-T 100 800 5 10 0 0 0 0 1
+T 100 1000 5 10 0 0 0 0 1
 device=MOV
-T 100 1400 5 10 0 0 0 0 1
-description=Metal Oxide Varistor
-T 100 1800 5 10 0 0 0 0 1
-numslots=0
-T 100 1200 5 10 0 0 0 0 1
-footprint=MOV
-P 0 200 152 200 1 0 0
-{
-T 100 250 5 8 0 1 0 0 1
-pinnumber=1
-T 100 250 5 8 0 0 0 0 1
-pinseq=1
-T 100 250 5 8 0 0 0 0 1
-pinlabel=1
-T 100 250 5 8 0 0 0 0 1
-pintype=in
-}
-P 900 200 750 200 1 0 0
-{
-T 800 250 5 8 0 1 0 0 1
-pinnumber=2
-T 800 250 5 8 0 0 0 0 1
-pinseq=2
-T 100 250 5 8 0 0 0 0 1
-pinlabel=2
-T 100 250 5 8 0 0 0 0 1
-pintype=in
-}
-B 150 100 600 200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
 T 100 1600 5 10 0 0 0 0 1
+description=Metal Oxide Varistor
+T 100 2000 5 10 0 0 0 0 1
+numslots=0
+T 100 1400 5 10 0 0 0 0 1
+footprint=MOV
+P 0 400 152 400 1 0 0
+{
+T 100 450 5 8 0 1 0 0 1
+pinnumber=1
+T 100 450 5 8 0 0 0 0 1
+pinseq=1
+T 100 450 5 8 0 0 0 0 1
+pinlabel=1
+T 100 450 5 8 0 0 0 0 1
+pintype=in
+}
+P 900 400 750 400 1 0 0
+{
+T 800 450 5 8 0 1 0 0 1
+pinnumber=2
+T 800 450 5 8 0 0 0 0 1
+pinseq=2
+T 100 450 5 8 0 0 0 0 1
+pinlabel=2
+T 100 450 5 8 0 0 0 0 1
+pintype=in
+}
+B 150 300 600 200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
+T 100 1800 5 10 0 0 0 0 1
 device=VARISTOR
-T 200 400 8 10 1 1 0 0 1
+T 200 600 8 10 1 1 0 0 1
 refdes=V?
-L 150 0 250 0 3 0 0 0 -1 -1
-L 250 0 650 400 3 0 0 0 -1 -1
+L 150 200 250 200 3 0 0 0 -1 -1
+L 250 200 650 600 3 0 0 0 -1 -1
+T 200 800 8 10 1 1 0 0 1
+value=S07K275
+T 200 0 8 10 1 1 0 0 1
+footprint=RCY100.fp
