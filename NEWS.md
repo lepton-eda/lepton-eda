@@ -23,6 +23,9 @@ Notable changes in Lepton EDA 1.9.15 (upcoming)
 
 ### Changes in `liblepton`:
 
+- Several core C structs in the library have been amended to
+  contain only relevant information about primitive objects.
+
 - The following core Scheme modules written in C have been removed
   and their functions have been reimplemented using Scheme FFI:
   - `(lepton core deprecated)`
