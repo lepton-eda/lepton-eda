@@ -49,3 +49,5 @@ T 600 295 8 10 1 1 0 0 1
 value=BC557
 T 600 100 8 10 1 1 0 0 1
 footprint=TO92.fp
+T 600 700 8 10 0 0 0 0 1
+symversion=0.1

@@ -54,3 +54,5 @@ T 700 0 8 10 1 1 0 0 1
 footprint=TO92.fp
 T 700 195 8 10 1 1 0 0 1
 value=2N7000
+T 700 900 8 10 0 0 0 0 1
+symversion=0.1

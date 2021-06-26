@@ -40,3 +40,5 @@ T 500 300 8 10 1 1 0 0 1
 value=1k
 T 200 500 8 10 1 1 0 0 1
 footprint=ACY500.fp
+T 200 700 8 10 0 0 0 0 1
+symversion=0.1

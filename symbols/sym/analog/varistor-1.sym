@@ -42,3 +42,5 @@ T 200 600 8 10 1 1 0 0 1
 value=S07K275
 T 200 800 8 10 1 1 0 0 1
 footprint=RCY100.fp
+T 300 1800 8 10 0 0 0 0 1
+symversion=0.1

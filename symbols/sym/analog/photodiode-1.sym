@@ -48,3 +48,5 @@ T 800 395 8 10 1 1 0 0 1
 value=SFH203
 T 800 200 8 10 1 1 0 0 1
 footprint=RCY100.fp
+T 700 900 8 10 0 0 0 0 1
+symversion=0.1
