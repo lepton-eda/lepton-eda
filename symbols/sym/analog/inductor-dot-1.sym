@@ -40,7 +40,7 @@ description=inductor
 T 200 800 5 10 0 0 0 0 1
 numslots=0
 T 200 600 5 10 0 0 0 0 1
-symversion=0.1
+symversion=0.2
 T 200 400 8 10 1 1 0 0 1
 footprint=ACY500.fp
 T 500 200 8 10 1 1 0 0 1

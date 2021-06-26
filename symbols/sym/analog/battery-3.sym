@@ -38,6 +38,6 @@ description=battery stack
 T 300 1150 5 10 0 0 0 0 1
 numslots=0
 T 300 950 5 10 0 0 0 0 1
-symversion=0.1
+symversion=0.2
 T 600 500 8 10 1 1 0 0 1
 value=9V

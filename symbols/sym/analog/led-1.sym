@@ -43,7 +43,7 @@ description=LED
 T 800 1000 5 10 0 0 0 0 1
 numslots=0
 T 800 800 5 10 0 0 0 0 1
-symversion=0.1
+symversion=0.2
 T 0 400 8 10 1 1 0 0 1
 value=red
 T 0 600 8 10 1 1 0 0 1

@@ -31,7 +31,7 @@ description=pieco beeper
 T 300 1300 5 10 0 0 0 0 1
 numslots=0
 T 300 1100 5 10 0 0 0 0 1
-symversion=0.1
+symversion=0.2
 T 277 255 9 8 1 0 0 0 1
 Beeper
 T 500 700 8 10 1 1 0 0 1

@@ -71,7 +71,7 @@ description=single opamp
 T 1050 550 5 10 0 0 0 0 1
 numslots=0
 T 1050 350 5 10 0 0 0 0 1
-symversion=0.1
+symversion=0.2
 T 1050 1150 5 10 0 0 0 0 1
 comment=NC-PINS:1,5,8
 T 250 350 9 8 1 0 0 0 1
