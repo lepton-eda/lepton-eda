@@ -1,13 +1,13 @@
-v 20041228 1
+v 20210407 2
 T 100 1000 9 10 0 0 0 0 1
 Copyright Mark Salyzyn
 T 100 800 5 10 0 0 0 0 1
 device=MOV
-T 300 1400 5 10 0 0 0 0 1
+T 100 1400 5 10 0 0 0 0 1
 description=Metal Oxide Varistor
-T 600 2000 5 10 0 0 0 0 1
+T 100 1800 5 10 0 0 0 0 1
 numslots=0
-T 300 1200 5 10 0 0 0 0 1
+T 100 1200 5 10 0 0 0 0 1
 footprint=MOV
 P 0 200 152 200 1 0 0
 {
@@ -32,7 +32,7 @@ T 100 250 5 8 0 0 0 0 1
 pintype=in
 }
 B 150 100 600 200 3 0 0 0 -1 -1 0 -1 -1 -1 -1 -1
-T 300 1650 5 10 0 0 0 0 1
+T 100 1600 5 10 0 0 0 0 1
 device=VARISTOR
 T 200 400 8 10 1 1 0 0 1
 refdes=V?
