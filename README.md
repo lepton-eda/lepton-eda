@@ -222,12 +222,10 @@ Noticeable configure options
 
 ### --with-gtk3
 
-You can build Lepton with experimental GTK3 GUI support if you
-enable it on the configure stage:
+You can build Lepton with GTK3 GUI support if you enable it on the
+configure stage:
 
     ./configure --with-gtk3
-
-So far, it was not enough tested, so cross your fingers.
 
 Please note that GTK2 and GTK3 version of *lepton-attrib* require
 different additional libraries.  `libgtkextra` is required for the
