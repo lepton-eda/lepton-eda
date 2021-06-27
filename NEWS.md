@@ -21,8 +21,6 @@ Notable changes in Lepton EDA 1.9.15 (20210626)
 - A bug with visual representation of arcs in raster images and on
   canvas of `lepton-schematic` has been fixed.
 
-- Cygwin versions of all libraries in the project have been fixed.
-
 - All Lepton utilities, even the GUI ones, no longer use
   `liblepton` as a Scheme extension.  Now the libraries are
   properly dynamically loaded by Scheme as any other libs.
