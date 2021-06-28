@@ -1,0 +1,10 @@
+(use-modules (srfi srfi-64))
+
+(load-from-path "env.scm")
+
+
+(test-begin "netlister")
+
+(test-assert (file-exists? *netlister*))
+
+(test-end "netlister")

@@ -32,6 +32,18 @@ DISTCHECK_CONFIGURE_FLAGS = \
 
 BUILT_SOURCES = version.h
 
+TEST_LOG_DRIVER = $(GUILE) $(top_srcdir)/build-tools/test-driver.scm
+AM_TESTS_ENVIRONMENT = env \
+	LANG=C \
+	abs_top_builddir='$(abs_top_builddir)' \
+	abs_top_srcdir='$(abs_top_srcdir)' \
+	GUILE_AUTO_COMPILE='0' \
+	GUILE_LOAD_PATH='$(abs_top_srcdir)/tests' \
+	GUILE_LOAD_COMPILED_PATH='' \
+	LEPTON_INHIBIT_RC_FILES='yes'
+
+TESTS = tests/netlist.test
+
 EXTRA_DIST = \
 	autogen.sh \
 	version.h \
@@ -42,7 +54,9 @@ EXTRA_DIST = \
 	COPYING.LGPL \
 	NEWS.md \
 	README.md \
-	ChangeLog
+	ChangeLog \
+	tests/env.scm \
+	$(TESTS)
 
 # Generate version.h. This works by looking at any git repository that
 # is present in the source directory (detected at configure time). If
