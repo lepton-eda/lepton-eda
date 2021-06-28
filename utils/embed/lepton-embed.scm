@@ -11,8 +11,9 @@ exec @GUILE@ "$0" "$@"
 ;; License: GPLv2+. See the COPYING file
 ;;
 
-(unless (getenv "LIBLEPTON")
-  (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@"))
+(eval-when (expand load eval)
+  (unless (getenv "LIBLEPTON")
+    (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")))
 
 (use-modules (ice-9 format)
              (ice-9 getopt-long)

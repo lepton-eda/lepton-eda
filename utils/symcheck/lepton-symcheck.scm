@@ -20,8 +20,9 @@ exec @GUILE@ -s "$0" "$@"
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-(unless (getenv "LIBLEPTON")
-  (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@"))
+(eval-when (expand load eval)
+  (unless (getenv "LIBLEPTON")
+    (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")))
 
 (use-modules (lepton ffi))
 

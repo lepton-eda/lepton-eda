@@ -61,8 +61,9 @@ exec @GUILE@ -s "$0" "$@"
 ;;;   Before each move, make sure that no overwrite of existing
 ;;;   files will occur.
 
-(unless (getenv "LIBLEPTON")
-  (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@"))
+(eval-when (expand load eval)
+  (unless (getenv "LIBLEPTON")
+    (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")))
 
 (use-modules (ice-9 ftw)
              (ice-9 getopt-long)
