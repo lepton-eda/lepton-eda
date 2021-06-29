@@ -44,14 +44,9 @@ cat > "${rundir}/gafrc" << EOF
 (scheme-directory "${abs_top_srcdir}/liblepton/scheme")
 (scheme-directory "${abs_top_builddir}/liblepton/scheme")
 
-;; We want to use the symbols that haven't been installed yet
-(map (lambda (x)
-       (component-library
-        (string-join (list "${abs_top_srcdir}/symbols/sym/" x) "")))
-     '("io" "74" "analog" "power" "misc" "diode" "linear" "connector" "switch"
-       "asic" "spice" "cascade" "titleblock" "memory"))
 
-(component-library "${abs_top_srcdir}/symbols/sym-verilog")
+(component-library "${abs_top_srcdir}/utils/netlist/tests/symcache")
+
 
 ;; Rather than checking what m4 and pcb's m4 files do with
 ;; the output we produce, just see what output netlister produces.
