@@ -50,7 +50,7 @@ nobase_scmdata_DATA = \
 	schematic/ffi.scm
 
 if CYGWIN
-LIBLEPTONGUI=cygleptongui-2
+LIBLEPTONGUI=cygleptongui-$(LIBLEPTONGUI_MAJOR)
 LIBGOBJECT=cyggobject-2.0-0
 if ENABLE_GTK3
 LIBGTK = cyggtk-3-0

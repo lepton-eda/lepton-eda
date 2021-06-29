@@ -29,6 +29,9 @@ AC_DEFUN([AX_LIBLEPTON],
   AC_MSG_RESULT($1)
   AC_SUBST([LIBLEPTON_SHLIB_VERSION], $1)
 
+  VER_MAJOR=`echo ${LIBLEPTON_SHLIB_VERSION} | sed 's;:.*;;g'`
+  AC_SUBST([LIBLEPTON_MAJOR], $VER_MAJOR)
+
   # Work out the gettext domain to use
   AC_MSG_CHECKING([liblepton gettext domain])
   LIBLEPTON_GETTEXT_DOMAIN="liblepton"
