@@ -1,3 +1,5 @@
+SUBDIRS = symcache
+
 TEST_EXTENSIONS = .out
 
 AM_TESTS_ENVIRONMENT = \

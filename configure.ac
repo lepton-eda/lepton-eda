@@ -270,6 +270,7 @@ AC_CONFIG_FILES([Makefile
                  utils/netlist/scheme/Makefile
                  utils/netlist/examples/Makefile
                  utils/netlist/tests/Makefile
+                 utils/netlist/tests/symcache/Makefile
                  utils/netlist/docs/Makefile
                  utils/netlist/docs/vams/Makefile
                  utils/netlist/examples/spice-noqsi/Makefile
