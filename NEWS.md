@@ -5,6 +5,15 @@ This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
 
+Notable changes in Lepton EDA 1.9.16 (upcoming)
+-----------------------------------------------
+
+### General changes:
+
+- Compilation warnings on running Lepton utilities written in
+  Scheme, which shown up in the previous release, have been fixed.
+
+
 Notable changes in Lepton EDA 1.9.15 (20210626)
 -----------------------------------------------
 
