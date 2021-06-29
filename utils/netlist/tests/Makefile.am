@@ -11,7 +11,7 @@ AM_TESTS_ENVIRONMENT = \
 OUT_LOG_COMPILER = $(srcdir)/run-test
 
 dist_check_SCRIPTS = run-test
-EXTRA_DIST = $(input_files) $(TESTS) README gafrc common/gafrc
+EXTRA_DIST = $(input_files) $(output_files) $(TESTS) README gafrc common/gafrc
 # dist_check_DATA would be more appropriate for $(input_files) and $(TESTS)
 # but triggers a lot of "Nothing to be done for '...'" messages.
 
@@ -142,7 +142,6 @@ TESTS = stack_1-geda.out \
 	hierarchy5-tEDAx.out \
 	hierarchy5-pcbpins.out \
 	hierarchy5-PCB.out \
-	stack-torture-geda.out \
 	missing-source-geda.out \
 	drc2/connected-noconnects-drc2.out \
 	drc2/connected-noconnects-geda.out \
@@ -510,3 +509,6 @@ TESTS = stack_1-geda.out \
 	common/singlenet-vhdl.out \
 	common/singlenet-vipec.out \
 	verilog_rip_test-verilog.out
+
+output_files = \
+	stack-torture-geda.out
