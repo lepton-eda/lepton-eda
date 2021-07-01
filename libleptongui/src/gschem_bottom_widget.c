@@ -119,6 +119,24 @@ on_click_rubber_band (GtkWidget* ebox, GdkEvent* e, gpointer data)
 
 
 
+static gboolean
+on_click_magnetic_net (GtkWidget* ebox, GdkEvent* e, gpointer data)
+{
+  GschemBottomWidget* widget = (GschemBottomWidget*) data;
+  g_return_val_if_fail (widget != NULL, FALSE);
+
+  GdkEventButton* ebtn = (GdkEventButton*) e;
+  if (ebtn->type == GDK_BUTTON_PRESS && ebtn->button == 1)
+  {
+    gschem_options_cycle_magnetic_net_mode (widget->toplevel->options);
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+
 /*! \brief Dispose of the object
  */
 static void
@@ -895,8 +913,17 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   gtk_misc_set_padding (GTK_MISC (widget->magnetic_net_label), LABEL_XPAD, LABEL_YPAD);
   if (show_magnetic_net_indicator)
   {
-    gtk_box_pack_start (GTK_BOX (widget), widget->magnetic_net_label, FALSE, FALSE, 0);
+    GtkWidget* ebox_magnetic_net = gtk_event_box_new();
+    gtk_container_add (GTK_CONTAINER (ebox_magnetic_net), widget->magnetic_net_label);
+    gtk_widget_show_all (ebox_magnetic_net);
+    gtk_box_pack_start (GTK_BOX (widget), ebox_magnetic_net, FALSE, FALSE, 0);
+
+    g_signal_connect (G_OBJECT (ebox_magnetic_net),
+                      "button-press-event",
+                      G_CALLBACK (&on_click_magnetic_net),
+                      widget);
   }
+
 
   widget->status_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->status_label, _("Current action mode"));
