@@ -64,6 +64,8 @@ struct _GschemBottomWidget
   GdkColor  status_active_color;
 #endif
   gboolean  status_bold_font;
+
+  GschemToplevel* toplevel;
 };
 
 

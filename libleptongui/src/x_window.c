@@ -1332,6 +1332,8 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
                                        text_right_button_cancel);
 
   gpointer obj = g_object_new (GSCHEM_TYPE_BOTTOM_WIDGET,
+                               "toplevel",
+                               w_current,
                                "grid-mode",
                                gschem_options_get_grid_mode (w_current->options),
                                "grid-size",

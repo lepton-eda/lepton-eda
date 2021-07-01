@@ -60,7 +60,8 @@ enum
   PROP_STATUS_TEXT,
   PROP_STATUS_TEXT_COLOR,
   PROP_RUBBER_BAND_MODE,
-  PROP_MAGNETIC_NET_MODE
+  PROP_MAGNETIC_NET_MODE,
+  PROP_TOPLEVEL
 };
 
 
@@ -143,6 +144,10 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
   GschemBottomWidget *widget = GSCHEM_BOTTOM_WIDGET (object);
 
   switch (param_id) {
+    case PROP_TOPLEVEL:
+          g_value_set_pointer (value, widget->toplevel);
+          break;
+
     case PROP_GRID_MODE:
       g_value_set_int (value, gschem_bottom_widget_get_grid_mode (widget));
       break;
@@ -202,6 +207,10 @@ gschem_bottom_widget_class_init (GschemBottomWidgetClass *klass)
 
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
+
+  GParamFlags flags = (GParamFlags) (G_PARAM_CONSTRUCT_ONLY | G_PARAM_READWRITE);
+  GParamSpec* spec  = g_param_spec_pointer ("toplevel", "", "", flags);
+  g_object_class_install_property (G_OBJECT_CLASS (klass), PROP_TOPLEVEL, spec);
 
   g_object_class_install_property (G_OBJECT_CLASS (klass),
                                    PROP_GRID_MODE,
@@ -1122,6 +1131,10 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
   GschemBottomWidget *widget = GSCHEM_BOTTOM_WIDGET (object);
 
   switch (param_id) {
+    case PROP_TOPLEVEL:
+          widget->toplevel = GSCHEM_TOPLEVEL (g_value_get_pointer (value));
+          break;
+
     case PROP_GRID_MODE:
       gschem_bottom_widget_set_grid_mode (widget, g_value_get_int (value));
       break;
