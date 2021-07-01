@@ -850,16 +850,22 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
   separator = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
 
+
   widget->rubber_band_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->rubber_band_label, _("Net rubber band mode"));
   gtk_misc_set_padding (GTK_MISC (widget->rubber_band_label), LABEL_XPAD, LABEL_YPAD);
   if (show_rubber_band_indicator)
   {
-    gtk_box_pack_start (GTK_BOX (widget), widget->rubber_band_label, FALSE, FALSE, 0);
+    GtkWidget* ebox_rubber_band = gtk_event_box_new();
+    gtk_container_add (GTK_CONTAINER (ebox_rubber_band), widget->rubber_band_label);
+    gtk_widget_show_all (ebox_rubber_band);
+    gtk_box_pack_start (GTK_BOX (widget), ebox_rubber_band, FALSE, FALSE, 0);
   }
+
 
   separator = gtk_vseparator_new ();
   gtk_box_pack_start (GTK_BOX (widget), separator, FALSE, FALSE, 0);
+
 
   widget->magnetic_net_label = gtk_label_new (NULL);
   gtk_widget_set_tooltip_text (widget->magnetic_net_label, _("Magnetic net mode"));
