@@ -155,6 +155,24 @@ on_click_grid_size (GtkWidget* ebox, GdkEvent* e, gpointer data)
 
 
 
+static gboolean
+on_click_snap_info (GtkWidget* ebox, GdkEvent* e, gpointer data)
+{
+  GschemBottomWidget* widget = (GschemBottomWidget*) data;
+  g_return_val_if_fail (widget != NULL, FALSE);
+
+  GdkEventButton* ebtn = (GdkEventButton*) e;
+  if (ebtn->type == GDK_BUTTON_PRESS && ebtn->button == 1)
+  {
+    gschem_options_cycle_snap_mode (widget->toplevel->options);
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+
 /*! \brief Dispose of the object
  */
 static void
@@ -715,6 +733,10 @@ create_snap_info_widget (GschemBottomWidget* widget)
 
   widget->grid_snap_widget = gtk_label_new (NULL);
 
+  GtkWidget* ebox = gtk_event_box_new();
+  gtk_container_add (GTK_CONTAINER (ebox), widget->grid_snap_widget);
+  gtk_widget_show_all (ebox);
+
   gchar* str = g_strdup_printf ("Snap: <b>%d</b>", widget->snap_size);
   gtk_label_set_markup (GTK_LABEL(widget->grid_snap_widget), str);
   g_free (str);
@@ -722,8 +744,14 @@ create_snap_info_widget (GschemBottomWidget* widget)
   gtk_misc_set_padding (GTK_MISC (widget->grid_snap_widget),
                         LABEL_XPAD,
                         LABEL_YPAD);
-  gtk_box_pack_start (GTK_BOX (widget), widget->grid_snap_widget, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (widget), ebox, FALSE, FALSE, 0);
+
   gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+
+  g_signal_connect (G_OBJECT (ebox),
+                    "button-press-event",
+                    G_CALLBACK (&on_click_snap_info),
+                    widget);
 }
 
 
