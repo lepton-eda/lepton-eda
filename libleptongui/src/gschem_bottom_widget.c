@@ -101,6 +101,24 @@ G_DEFINE_TYPE (GschemBottomWidget, gschem_bottom_widget, GTK_TYPE_HBOX);
 
 
 
+static gboolean
+on_click_rubber_band (GtkWidget* ebox, GdkEvent* e, gpointer data)
+{
+  GschemBottomWidget* widget = (GschemBottomWidget*) data;
+  g_return_val_if_fail (widget != NULL, FALSE);
+
+  GdkEventButton* ebtn = (GdkEventButton*) e;
+  if (ebtn->type == GDK_BUTTON_PRESS && ebtn->button == 1)
+  {
+    gschem_options_cycle_net_rubber_band_mode (widget->toplevel->options);
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+
+
 /*! \brief Dispose of the object
  */
 static void
@@ -860,6 +878,11 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
     gtk_container_add (GTK_CONTAINER (ebox_rubber_band), widget->rubber_band_label);
     gtk_widget_show_all (ebox_rubber_band);
     gtk_box_pack_start (GTK_BOX (widget), ebox_rubber_band, FALSE, FALSE, 0);
+
+    g_signal_connect (G_OBJECT (ebox_rubber_band),
+                      "button-press-event",
+                      G_CALLBACK (&on_click_rubber_band),
+                      widget);
   }
 
 
