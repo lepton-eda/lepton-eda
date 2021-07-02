@@ -20,6 +20,8 @@ lepton_manual_TEXINFOS = \
 	no-connect-symbol.texi \
 	overview.texi \
 	placeholder.texi \
+	symbol-editing.texi \
+	symbol-version-attribute.texi \
 	symbols.texi \
 	title-block-symbol.texi
 

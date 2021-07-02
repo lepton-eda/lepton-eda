@@ -1,0 +1,39 @@
+@node Editing symversion attribute
+@section Editing symbol version attribute
+@cindex edit symversion
+@cindex symversion, edit
+
+Symbol version is defined using the @samp{symversion} attribute.  The
+attribute value should contain two components in order tools to
+process it correctly: major and minor.  So it looks like
+@code{major.minor}, for example, @code{1.2}.  It is important to
+follow to several simple rules when you are about to edit a symbol and
+its version.  Otherwise, the tools won't be able to warn you on
+significant changes.  You should remember that @emph{major} changes
+are those that may break existing schematics and/or netlists:
+
+@itemize
+@item
+Addition or removal of pins.
+@item
+Changing position of connectable ends of pins.
+@item
+Changes in position of graphics or attributes that lead to moving pins
+to other position after translation.
+@item
+Change of pin attributes that may affect netlist creation.
+@end itemize
+
+If you did any of the above changes, please increment the major
+version number, especially, if your symbol is shared with other users.
+
+The minor symbol changes are any other that do not break anything.
+Those are any changes in graphical stuff such as attribute placement,
+new lines in the body rectangle, colors etc. which do not affect the
+points mentioned above.  Changing of any internal symbol attribute
+won't break your existing schematic, so it is considered minor as
+well.  On such changes, please increment the minor symbol version.
+
+If the symbol you edit does not have the @samp{symversion} attribute,
+please add it.  Otherwise, Lepton tools won't be able to warn you
+about any changes, even breaking.

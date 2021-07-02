@@ -149,6 +149,8 @@ Resources
 
 Symbols
 
+* Editing symbols::
+* Editing symversion attribute::
 * No-connect symbols::
 * Title block symbol::
 * Missing symbols::

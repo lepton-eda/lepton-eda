@@ -1,0 +1,20 @@
+@node Editing symbols
+@section Editing symbols
+@cindex edit symbol
+@cindex edit symbols
+@cindex symbol editing
+
+When you edit a symbol, it is worth to follow the following rules:
+@itemize
+@item
+Connectable ends of its pins have to be snapped to points, coordinates
+of which are multiples of 100.  Otherwise, Lepton tools won't be able
+to correctly connect them to any connectable object.
+@item
+You have to adjust the @samp{symversion} attribute in order the tools
+would be aware that the symbol in the library is newer than its
+instances in your schematic and could warn you if something may break.
+@xref{Editing symversion attribute} on what provisions should be made
+when you are editing a symbol.
+
+@end itemize

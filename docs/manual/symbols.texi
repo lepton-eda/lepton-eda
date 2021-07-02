@@ -4,11 +4,15 @@
 @cindex schematic symbols
 
 @menu
+* Editing symbols::
+* Editing symversion attribute::
 * No-connect symbols::
 * Title block symbol::
 * Missing symbols::
 @end menu
 
+@include symbol-editing.texi
+@include symbol-version-attribute.texi
 @include no-connect-symbol.texi
 @include title-block-symbol.texi
 @include placeholder.texi
