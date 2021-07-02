@@ -703,19 +703,21 @@ update_snap_info_widget (GschemBottomWidget* widget)
   {
     gchar* tooltip = g_strdup_printf(
       _("Snap size.\n"
+        "Click to change the snapping mode.\n"
         "Attention: current snap size (%d) differs\n"
         "from the value set in configuration: %d."),
         widget->snap_size,
         default_snap_size);
 
     gtk_widget_set_tooltip_text (widget->grid_snap_widget,
-                                   tooltip);
+                                 tooltip);
     g_free (tooltip);
   }
   else
   {
     gtk_widget_set_tooltip_text (widget->grid_snap_widget,
-                                 _("Snap size"));
+                                 _("Snap size.\n"
+                                   "Click to change the snapping mode."));
   }
 
 } /* update_snap_info_widget() */
@@ -783,7 +785,8 @@ update_grid_size_widget (GschemBottomWidget* widget)
 
   gtk_label_set_label (GTK_LABEL(widget->grid_size_widget), str);
   gtk_widget_set_tooltip_text (widget->grid_size_widget,
-                               _("Grid size"));
+                               _("Grid size.\n"
+                                 "Click to change the grid style."));
   g_free (str);
 }
 
@@ -944,7 +947,9 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
 
 
   widget->rubber_band_label = gtk_label_new (NULL);
-  gtk_widget_set_tooltip_text (widget->rubber_band_label, _("Net rubber band mode"));
+  gtk_widget_set_tooltip_text (widget->rubber_band_label,
+                               _("Net rubber band mode.\n"
+                                 "Click to toggle ON/OFF."));
   gtk_misc_set_padding (GTK_MISC (widget->rubber_band_label), LABEL_XPAD, LABEL_YPAD);
   if (show_rubber_band_indicator)
   {
@@ -965,7 +970,9 @@ gschem_bottom_widget_init (GschemBottomWidget *widget)
 
 
   widget->magnetic_net_label = gtk_label_new (NULL);
-  gtk_widget_set_tooltip_text (widget->magnetic_net_label, _("Magnetic net mode"));
+  gtk_widget_set_tooltip_text (widget->magnetic_net_label,
+                               _("Magnetic net mode.\n"
+                                 "Click to toggle ON/OFF."));
   gtk_misc_set_padding (GTK_MISC (widget->magnetic_net_label), LABEL_XPAD, LABEL_YPAD);
   if (show_magnetic_net_indicator)
   {
