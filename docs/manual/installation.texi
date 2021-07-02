@@ -201,7 +201,7 @@ of them that may be of special interest for the user.
 
 @table @option
 @item --with-gtk3
-turns on experimental support for GTK3 library. @xref{Installation of
+turns on support for GTK3 library. @xref{Installation of
 lepton-attrib} for more information on what additional libraries are
 needed to install @command{lepton-attrib}.
 
