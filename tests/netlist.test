@@ -6,6 +6,8 @@
 (test-begin "netlister")
 
 (test-assert (file-exists? *netlister*))
+(test-eq EXIT_SUCCESS
+  (status:exit-val (system* *netlister* "--help")))
 
 (test-end "netlister")
 
