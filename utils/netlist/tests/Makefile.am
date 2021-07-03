@@ -100,7 +100,7 @@ XFAIL_TESTS = \
 	common/SlottedOpamps-futurenet2.out \
 	common/SlottedOpamps-switcap.out
 
-TESTS = stack_1-geda.out \
+TESTS = \
 	hierarchy-postload.out \
 	hierarchy-config_refdes_attribute_order_true.out \
 	hierarchy-config_refdes_attribute_order_false.out \
@@ -511,4 +511,5 @@ TESTS = stack_1-geda.out \
 	verilog_rip_test-verilog.out
 
 output_files = \
-	stack-torture-geda.out
+	stack-torture-geda.out \
+	stack_1-geda.out
