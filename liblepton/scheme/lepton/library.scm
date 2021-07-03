@@ -1,6 +1,6 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2016 gEDA Contributors
-;;; Copyright (C) 2019-2020 Lepton EDA Contributors
+;;; Copyright (C) 2019-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -131,7 +131,7 @@ set-library-contents! instead."
 source library. This procedure is legacy and should be avoided in
 new code. Use set-library-contents! instead."
   (map (lambda (x) (source-library
-               (string-append path file-name-separator-string x)))
+               (string-append (dirname path) file-name-separator-string x)))
        (get-tree (file-system-tree path))))
 
 
