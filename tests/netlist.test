@@ -2,6 +2,37 @@
 
 (load-from-path "env.scm")
 
+(define-syntax test-name
+  (lambda (x)
+    (syntax-case x ()
+      ((_ <schematic> <backend>)
+       #'(string-append <schematic> "-" <backend>)))))
+
+(define-syntax-rule (test-schematic <sch> <backend>)
+  (begin
+    (test-begin (test-name <sch> <backend>))
+
+    (let* ((schematic (build-test-file-name <sch>))
+           (base (string-drop-right <sch> 4))
+           (golden-out (build-test-file-name (string-append base "-" <backend> ".out")))
+           (test-out (tmpnam)))
+      (test-assert (file-exists? schematic))
+      (test-assert (file-exists? golden-out))
+
+      (test-eq EXIT_SUCCESS
+        (status:exit-val (system* *netlister*
+                                  "-L" *backend-directory*
+                                  "-c" *component-library-command*
+                                  "-g" <backend>
+                                  "-o" test-out
+                                  schematic)))
+      (test-eq EXIT_SUCCESS
+        (status:exit-val (system* "diff" test-out golden-out)))
+
+      (when (file-exists? test-out) (delete-file test-out)))
+
+    (test-end (test-name <sch> <backend>))))
+
 
 (test-begin "netlister")
 
