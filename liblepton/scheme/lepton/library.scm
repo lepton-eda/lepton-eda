@@ -130,9 +130,12 @@ set-library-contents! instead."
   "Recursively prepends the contents of given path to the default
 source library. This procedure is legacy and should be avoided in
 new code. Use set-library-contents! instead."
-  (map (lambda (x) (source-library
-               (string-append (dirname path) file-name-separator-string x)))
-       (get-tree (file-system-tree path))))
+  (define (add-source-library sl)
+    (source-library (string-append (dirname path)
+                                   file-name-separator-string
+                                   sl)))
+
+  (for-each add-source-library (get-tree (file-system-tree path))))
 
 
 ;;; This is a temporary procedure for hierarchy traversing support
