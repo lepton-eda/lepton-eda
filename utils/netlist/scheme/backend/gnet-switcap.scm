@@ -376,7 +376,7 @@
     (let ((fname (switcap:write-attrib package "file")))
       (display "\" */\n")
       (if (file-exists? fname)
-        (switcap:cat-file (open-input-file fname))
+        (switcap:cat-file (open-input-file fname) (current-output-port))
         (netlist-error 1 "ERROR: Analysis file ~S not found.\n" fname)))))
 
 (define switcap:cat-file
