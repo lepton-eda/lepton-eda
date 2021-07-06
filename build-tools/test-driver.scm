@@ -121,7 +121,7 @@ current output port is supposed to be redirected to a '.log' file."
                              (number->string (result 'source-line))))
       (test-display "source" (result 'source-form) #:pretty? #t)))
 
-  (define (test-on-test-end-gnu runner)
+  (define (test-on-test-end-gnu runner group-name group-count)
     ;; Procedure called at the end of an individual test case, when the result
     ;; of the test is available.
     (let* ((results (test-result-alist runner))
@@ -129,9 +129,9 @@ current output port is supposed to be redirected to a '.log' file."
            (result  (cut assq-ref results <>)))
       (unless brief?
         ;; Display the result of each test case on the console.
-        (format out-port "~A: ~A - ~A~%"
+        (format out-port "~A: ~A - ~A [~A]~%"
                 (result->string (test-result-kind runner) #:colorize? color?)
-                test-name (test-runner-test-name runner)))
+                test-name group-name group-count))
       (when (result? 'expected-value)
         (test-display "expected-value" (result 'expected-value)))
       (when (result? 'expected-error)
@@ -167,9 +167,20 @@ current output port is supposed to be redirected to a '.log' file."
                 test-name))
       #f))
 
-  (let ((runner (test-runner-null)))
-    (test-runner-on-test-begin! runner test-on-test-begin-gnu)
-    (test-runner-on-test-end! runner test-on-test-end-gnu)
+  (let ((runner (test-runner-null))
+        (group-name #f)
+        (group-count 0))
+    (test-runner-on-test-begin! runner
+      (lambda (runner)
+        (set! group-count (1+ group-count))
+        (test-on-test-begin-gnu runner)))
+    (test-runner-on-test-end! runner
+      (lambda (runner)
+        (test-on-test-end-gnu runner group-name group-count)))
+    (test-runner-on-group-begin! runner
+      (lambda (runner suite-name count)
+        (set! group-name suite-name)
+        (set! group-count 0)))
     (test-runner-on-group-end! runner test-on-group-end-gnu)
     (test-runner-on-bad-end-name! runner test-on-bad-end-name-simple)
     runner))
