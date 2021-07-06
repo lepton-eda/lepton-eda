@@ -126,7 +126,7 @@ TESTS = \
 	unit-tests/lepton-config.scm \
 	unit-tests/lepton-file-system.scm \
 	unit-tests/lepton-library-component.scm \
-	unit-tests/lepton-library-source-library-contents.scm \
+	unit-tests/lepton-library-source-library.scm \
 	unit-tests/lepton-object-arc.scm \
 	unit-tests/lepton-object-bounds.scm \
 	unit-tests/lepton-object-box.scm \
