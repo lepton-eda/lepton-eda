@@ -38,6 +38,12 @@
 (define *testdir*/b/b/c (make-filename *testdir*/b/b "c"))
 (define *testdir*/d (make-filename *testdir* "d"))
 
+(define *testdir*/toplevel.cir (make-filename *testdir* "toplevel.cir"))
+(define *testdir*/a/a.cir (make-filename *testdir*/a "a.cir"))
+(define *testdir*/b/b.cir (make-filename *testdir*/b "b.cir"))
+(define *testdir*/b/b/bb.cir (make-filename *testdir*/b/b "bb.cir"))
+(define *testdir*/b/b/c/bbc.cir (make-filename *testdir*/b/b/c "bbc.cir"))
+
 
 (test-begin "source-library")
 
@@ -50,11 +56,11 @@
     (mkdir *testdir*/b/b/c)
     (mkdir *testdir*/d)
     ;; Make files.
-    (touch (make-filename *testdir* "toplevel.cir"))
-    (touch (make-filename *testdir*/a "a.cir"))
-    (touch (make-filename *testdir*/b "b.cir"))
-    (touch (make-filename *testdir*/b/b "bb.cir"))
-    (touch (make-filename *testdir*/b/b/c "bbc.cir")))
+    (touch *testdir*/toplevel.cir)
+    (touch *testdir*/a/a.cir)
+    (touch *testdir*/b/b.cir)
+    (touch *testdir*/b/b/bb.cir)
+    (touch *testdir*/b/b/c/bbc.cir))
 
   (lambda ()
     ;; First, reset the source library to ensure it is empty.
@@ -96,9 +102,9 @@
 
       ;; Test get-source-library-file().
       (test-equal (get-source-library-file "a.cir")
-        (make-filename *testdir*/a "a.cir"))
+        *testdir*/a/a.cir)
       (test-equal (get-source-library-file "b.cir")
-        (make-filename *testdir*/b "b.cir"))
+        *testdir*/b/b.cir)
       ;; The toplevel directory is not included.
       (test-assert (not (get-source-library-file "toplevel.cir")))
       ;; These two also fail since the directories are not added
@@ -109,7 +115,7 @@
       ;; Test for non-readable file.
       (when (zero? (getuid)) (test-skip 1))
       ;; Make the file unreadable for non-root users.
-      (chmod (make-filename *testdir*/a "a.cir") #o000)
+      (chmod *testdir*/a/a.cir #o000)
       (test-assert (not (get-source-library-file "a.cir")))))
 
   ;; Get rid of the test directory.
@@ -130,11 +136,11 @@
     (mkdir *testdir*/b/b/c)
     (mkdir *testdir*/d)
     ;; Make files.
-    (touch (make-filename *testdir* "toplevel.cir"))
-    (touch (make-filename *testdir*/a "a.cir"))
-    (touch (make-filename *testdir*/b "b.cir"))
-    (touch (make-filename *testdir*/b/b "bb.cir"))
-    (touch (make-filename *testdir*/b/b/c "bbc.cir")))
+    (touch *testdir*/toplevel.cir)
+    (touch *testdir*/a/a.cir)
+    (touch *testdir*/b/b.cir)
+    (touch *testdir*/b/b/bb.cir)
+    (touch *testdir*/b/b/c/bbc.cir))
 
   (lambda ()
     ;; First, reset the source library to ensure it is empty.
@@ -192,20 +198,20 @@
 
       ;; Test get-source-library-file().
       (test-equal (get-source-library-file "toplevel.cir")
-        (make-filename *testdir* "toplevel.cir"))
+        *testdir*/toplevel.cir)
       (test-equal (get-source-library-file "a.cir")
-        (make-filename *testdir*/a "a.cir"))
+        *testdir*/a/a.cir)
       (test-equal (get-source-library-file "b.cir")
-        (make-filename *testdir*/b "b.cir"))
+        *testdir*/b/b.cir)
       (test-equal (get-source-library-file "bb.cir")
-        (make-filename *testdir*/b/b "bb.cir"))
+        *testdir*/b/b/bb.cir)
       (test-equal (get-source-library-file "bbc.cir")
-        (make-filename *testdir*/b/b/c "bbc.cir"))
+        *testdir*/b/b/c/bbc.cir)
 
       ;; Test for non-readable file.
       (when (zero? (getuid)) (test-skip 1))
       ;; Make the file unreadable for non-root users.
-      (chmod (make-filename *testdir*/a "a.cir") #o000)
+      (chmod *testdir*/a/a.cir #o000)
       (test-assert (not (get-source-library-file "a.cir")))))
 
   ;; Get rid of the test directory.
