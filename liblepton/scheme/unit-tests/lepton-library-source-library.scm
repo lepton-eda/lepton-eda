@@ -2,7 +2,9 @@
 
 (use-modules (lepton library))
 
-(define *testdir*      (string-append (getcwd)   file-name-separator-string "t0500-tmp"))
+(define *testdir*
+  (string-append (getcwd) file-name-separator-string "test-source-library"))
+
 
 
 (test-begin "source-library-contents")
