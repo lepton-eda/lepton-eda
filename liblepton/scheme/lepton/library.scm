@@ -151,13 +151,10 @@ new code. Use set-library-contents! instead."
 
   (let ((tree (file-system-tree path)))
     (if tree
-        (begin
-          (for-each add-source-library (get-tree tree))
-          ;; Return value.
-          %default-source-library)
-        (begin
-          (log! 'critical (G_ "Invalid path ~S or source not readable.\n") path)
-          #f))))
+        (for-each add-source-library (get-tree tree))
+        (log! 'critical (G_ "Invalid path ~S or source not readable.\n") path))
+    ;; Return value.
+    %default-source-library))
 
 
 ;;; This is a temporary procedure for hierarchy traversing support
