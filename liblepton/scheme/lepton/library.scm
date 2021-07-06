@@ -135,6 +135,13 @@ new code. Use set-library-contents! instead."
                                    file-name-separator-string
                                    sl)))
 
+  (unless (string? path)
+    (scm-error 'wrong-type-arg
+               "source-library-search"
+               "Wrong type argument in position 1 (expecting string): ~A"
+               (list path)
+               #f))
+
   (let ((tree (file-system-tree path)))
     (if tree
         (begin
