@@ -44,29 +44,4 @@
 
 
 (test-schematic "stack-torture.sch" "geda")
-
-
-(test-begin "stack_1 geda")
-
-(let* ((name "stack_1.sch")
-       (schematic (build-test-file-name name))
-       (backend "geda")
-       (base (string-drop-right name 4))
-       (golden-out (build-test-file-name (string-append base "-" backend ".out")))
-       (test-out (tmpnam)))
-  (test-assert (file-exists? schematic))
-  (test-assert (file-exists? golden-out))
-
-  (test-eq EXIT_SUCCESS
-    (status:exit-val (system* *netlister*
-                              "-L" *backend-directory*
-                              "-c" *component-library-command*
-                              "-g" backend
-                              "-o" test-out
-                              schematic)))
-  (test-eq EXIT_SUCCESS
-    (status:exit-val (system* "diff" test-out golden-out)))
-
-  (when (file-exists? test-out) (delete-file test-out)))
-
-(test-end "stack_1 geda")
+(test-schematic "stack_1.sch" "geda")
