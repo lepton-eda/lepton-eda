@@ -135,7 +135,15 @@ new code. Use set-library-contents! instead."
                                    file-name-separator-string
                                    sl)))
 
-  (for-each add-source-library (get-tree (file-system-tree path))))
+  (let ((tree (file-system-tree path)))
+    (if tree
+        (begin
+          (for-each add-source-library (get-tree tree))
+          ;; Return value.
+          %default-source-library)
+        (begin
+          (log! 'critical (G_ "Invalid path ~S or source not readable.\n") path)
+          #f))))
 
 
 ;;; This is a temporary procedure for hierarchy traversing support
