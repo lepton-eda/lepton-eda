@@ -74,8 +74,9 @@
 
 ;;; Prepends PATH to the contents of the source library LIB.
 (define (source-library-prepend! lib path)
-  (set-library-contents! lib
-                         (cons path (library-contents lib))))
+  (unless (member path (library-contents lib))
+    (set-library-contents! lib
+                           (cons path (library-contents lib)))))
 
 #|
 ;;; Appends PATH to the contents of the source library LIB.
