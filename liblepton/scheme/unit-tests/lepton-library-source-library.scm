@@ -188,7 +188,25 @@
       (reset-source-library)
       (test-eq (source-library-search *testdir*) lib)
       (test-equal (source-library-contents lib)
-        (list *testdir*/a *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*))))
+        (list *testdir*/a *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*))
+
+      ;; Test get-source-library-file().
+      (test-equal (get-source-library-file "toplevel.cir")
+        (make-filename *testdir* "toplevel.cir"))
+      (test-equal (get-source-library-file "a.cir")
+        (make-filename *testdir*/a "a.cir"))
+      (test-equal (get-source-library-file "b.cir")
+        (make-filename *testdir*/b "b.cir"))
+      (test-equal (get-source-library-file "bb.cir")
+        (make-filename *testdir*/b/b "bb.cir"))
+      (test-equal (get-source-library-file "bbc.cir")
+        (make-filename *testdir*/b/b/c "bbc.cir"))
+
+      ;; Test for non-readable file.
+      (when (zero? (getuid)) (test-skip 1))
+      ;; Make the file unreadable for non-root users.
+      (chmod (make-filename *testdir*/a "a.cir") #o000)
+      (test-assert (not (get-source-library-file "a.cir")))))
 
   ;; Get rid of the test directory.
   (lambda ()
