@@ -193,8 +193,10 @@
       ;; list of directories should change.
       (reset-source-library)
       (test-eq (source-library-search *testdir*) lib)
-      (test-equal (source-library-contents lib)
-        (list *testdir*/a *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*))
+      ;; This test returns different sort order on different
+      ;; systems for some reason.  So just sort the lists.
+      (test-equal (sort (source-library-contents lib) string<)
+        (sort (list *testdir*/a *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*) string<))
 
       ;; Test get-source-library-file().
       (test-equal (get-source-library-file "toplevel.cir")
