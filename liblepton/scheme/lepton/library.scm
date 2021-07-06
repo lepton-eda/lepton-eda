@@ -105,9 +105,8 @@ code. Use set-library-contents! instead."
                                      (string-append (getcwd)
                                                     file-name-separator-string
                                                     expanded-path)))
-        (and
-         (log! 'critical (G_ "Invalid path ~S or source not readable.\n") path)
-         #f))))
+        (log! 'critical (G_ "Invalid path ~S or source not readable.\n") path))
+    %default-source-library))
 
 
 (define (reset-source-library)
