@@ -42,6 +42,7 @@
             source-library-search
             reset-source-library
             ;; new
+            source-library?
             source-library-contents
             set-source-library-contents!
             ;; temporary
