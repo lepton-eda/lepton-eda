@@ -92,7 +92,25 @@
       ;; Test for duplicate input.
       (test-eq (source-library *testdir*/a) lib)
       ;; Test the contents did not change.
-      (test-equal (source-library-contents lib) (list *testdir*/b *testdir*/a))))
+      (test-equal (source-library-contents lib) (list *testdir*/b *testdir*/a))
+
+      ;; Test get-source-library-file().
+      (test-equal (get-source-library-file "a.cir")
+        (make-filename *testdir*/a "a.cir"))
+      (test-equal (get-source-library-file "b.cir")
+        (make-filename *testdir*/b "b.cir"))
+      ;; The toplevel directory is not included.
+      (test-assert (not (get-source-library-file "toplevel.cir")))
+      ;; These two also fail since the directories are not added
+      ;; recursively.
+      (test-assert (not (get-source-library-file "bb.cir")))
+      (test-assert (not (get-source-library-file "bbc.cir")))
+
+      ;; Test for non-readable file.
+      (when (zero? (getuid)) (test-skip 1))
+      ;; Make the file unreadable for non-root users.
+      (chmod (make-filename *testdir*/a "a.cir") #o000)
+      (test-assert (not (get-source-library-file "a.cir")))))
 
   ;; Get rid of the test directory.
   (lambda ()
