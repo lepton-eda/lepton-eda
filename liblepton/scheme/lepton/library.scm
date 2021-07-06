@@ -178,6 +178,13 @@ been found."
     (match-lambda ((name stat children ...)
                    (filter-map get-files children))))
 
+  (unless (string? base-name)
+    (scm-error 'wrong-type-arg
+               "get-source-library-file"
+               "Wrong type argument in position 1 (expecting string): ~A"
+               (list base-name)
+               #f))
+
   (let loop ((paths (source-library-contents
                      %default-source-library)))
     (and (not (null? paths))

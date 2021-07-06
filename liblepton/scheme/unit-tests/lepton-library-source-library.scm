@@ -221,3 +221,12 @@
     (system* "rm" "-rf" *testdir*)))
 
 (test-end "source-library-search")
+
+
+(test-begin "get-source-library-file")
+
+;;; The function is thoroughly tested above, so there is only one
+;;; test here.
+(test-assert-thrown 'wrong-type-arg (get-source-library-file 'a))
+
+(test-end "get-source-library-file")
