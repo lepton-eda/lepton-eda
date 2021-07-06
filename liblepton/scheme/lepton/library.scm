@@ -89,20 +89,25 @@
   "Prepends the contents of given path to the default source
 library. This procedure is legacy and should be avoided in new
 code. Use set-library-contents! instead."
-  (if (string? path)
-      ;; take care of any shell variables
-      (let ((expanded-path (expand-env-variables path)))
-        (if (file-readable? expanded-path)
-            (source-library-prepend! %default-source-library
-                                     (if (absolute-file-name? expanded-path)
-                                         expanded-path
-                                         (string-append (getcwd)
-                                                        file-name-separator-string
-                                                        expanded-path)))
-            (and
-             (log! 'critical (G_ "Invalid path ~S or source not readable.\n") path)
-             #f)))
-      (and (log! 'critical (G_ "Source library path must be a string.\n")) #f)))
+  (unless (string? path)
+    (scm-error 'wrong-type-arg
+               "source-library"
+               "Wrong type argument in position 1 (expecting string): ~A"
+               (list path)
+               #f))
+
+  ;; Take care of any shell variables.
+  (let ((expanded-path (expand-env-variables path)))
+    (if (file-readable? expanded-path)
+        (source-library-prepend! %default-source-library
+                                 (if (absolute-file-name? expanded-path)
+                                     expanded-path
+                                     (string-append (getcwd)
+                                                    file-name-separator-string
+                                                    expanded-path)))
+        (and
+         (log! 'critical (G_ "Invalid path ~S or source not readable.\n") path)
+         #f))))
 
 
 (define (reset-source-library)
