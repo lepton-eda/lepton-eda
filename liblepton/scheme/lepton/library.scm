@@ -88,8 +88,10 @@
 
 (define (source-library path)
   "Prepends the contents of given path to the default source
-library. This procedure is legacy and should be avoided in new
-code. Use set-library-contents! instead."
+library. Returns %default-source-library.
+
+This procedure is legacy and should be avoided in new code. Use
+set-library-contents! instead."
   (unless (string? path)
     (scm-error 'wrong-type-arg
                "source-library"
@@ -111,8 +113,10 @@ code. Use set-library-contents! instead."
 
 
 (define (reset-source-library)
-  "Resets source library, that is, sets its contents to '(). This
-procedure is legacy and should be avoided in new code. Use
+  "Resets source library, that is, sets its contents to '().
+Returns %default-source-library.
+
+This procedure is legacy and should be avoided in new code. Use
 set-library-contents! instead."
   (set-library-contents! %default-source-library '())
   %default-source-library)
@@ -135,8 +139,10 @@ set-library-contents! instead."
 
 (define (source-library-search path)
   "Recursively prepends the contents of given path to the default
-source library. This procedure is legacy and should be avoided in
-new code. Use set-library-contents! instead."
+source library.  Returns %default-source-library.
+
+This procedure is legacy and should be avoided in new code. Use
+set-library-contents! instead."
   (define (add-source-library sl)
     (source-library (string-append (dirname path)
                                    file-name-separator-string
