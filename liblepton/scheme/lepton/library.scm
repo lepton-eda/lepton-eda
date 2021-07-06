@@ -109,7 +109,8 @@ code. Use set-library-contents! instead."
   "Resets source library, that is, sets its contents to '(). This
 procedure is legacy and should be avoided in new code. Use
 set-library-contents! instead."
-  (set-library-contents! %default-source-library '()))
+  (set-library-contents! %default-source-library '())
+  %default-source-library)
 
 
 ;;; Transforms the tree of directories into a plain list of paths,
