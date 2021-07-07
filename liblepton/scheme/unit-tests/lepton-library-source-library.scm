@@ -123,6 +123,10 @@
     (chmod *testdir*/a/a.cir #o000)
     (test-assert (not (get-source-library-file "a.cir"))))
 
+  ;; Restore permissions of the directory.  This is required on
+  ;; some systems to avoid breaking the test.
+  (chmod *testdir*/d #o775)
+
   ;; Get rid of the test directory.
   (source-library-test-teardown))
 
@@ -205,6 +209,10 @@
     ;; Make the file unreadable for non-root users.
     (chmod *testdir*/a/a.cir #o000)
     (test-assert (not (get-source-library-file "a.cir"))))
+
+  ;; Restore permissions of the directory.  This is required on
+  ;; some systems to avoid breaking the test.
+  (chmod *testdir*/d #o775)
 
   ;; Get rid of the test directory.
   (source-library-test-teardown))
