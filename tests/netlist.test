@@ -8,31 +8,36 @@
       ((_ <schematic> <backend>)
        #'(string-append <schematic> "-" <backend>)))))
 
-(define-syntax-rule (test-schematic <sch> <backend>)
-  (begin
-    (test-begin (test-name <sch> <backend>))
 
-    (let* ((schematic (build-test-file-name <sch>))
-           (base (string-drop-right <sch> 4))
-           (golden-out (build-test-file-name (string-append base "-" <backend> ".out")))
-           (test-out (tmpnam)))
-      (test-assert (file-exists? schematic))
-      (test-assert (file-exists? golden-out))
+(define (test-netlist schematic backend)
+  (let* ((schematic-filename (build-test-file-name schematic))
+         (base (string-drop-right schematic 4))
+         (golden-out (build-test-file-name (string-append base "-" backend ".out")))
+         (test-out (tmpnam)))
+    (test-assert (file-exists? schematic-filename))
+    (test-assert (file-exists? golden-out))
 
-      (test-eq EXIT_SUCCESS
-        (status:exit-val (system* *netlister*
-                                  "-L" *backend-directory*
-                                  "-c" *component-library-command*
-                                  "-g" <backend>
-                                  "-o" test-out
-                                  schematic)))
-      (test-eq EXIT_SUCCESS
-        (status:exit-val (system* "diff" test-out golden-out)))
+    (test-eq EXIT_SUCCESS
+      (status:exit-val (system* *netlister*
+                                "-L" *backend-directory*
+                                "-c" *component-library-command*
+                                "-g" backend
+                                "-o" test-out
+                                schematic-filename)))
+    (test-eq EXIT_SUCCESS
+      (status:exit-val (system* "diff" test-out golden-out)))
 
-      (when (file-exists? test-out) (delete-file test-out)))
+    (when (file-exists? test-out) (delete-file test-out))))
 
-    (test-end (test-name <sch> <backend>))))
 
+(define-syntax test-schematic
+  (lambda (stx)
+    (syntax-case stx ()
+      ((_ <schematic> <backend> <args> ...)
+       #'(begin
+           (test-begin (test-name <schematic> <backend>))
+           (test-netlist <schematic> <backend> <args> ...)
+           (test-end (test-name <schematic> <backend>)))))))
 
 (test-begin "netlister")
 
