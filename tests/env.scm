@@ -33,9 +33,6 @@
 (putenv (string-append "GUILE_LOAD_PATH" "="
                        (string-append %src-scheme-dir% ":" %build-scheme-dir%)))
 
-(define (build-test-file-name name)
-  (build-filename *abs-top-srcdir* "utils" "netlist" "tests" name))
-
 (define *backend-directory*
   (build-filename *abs-top-srcdir* "utils" "netlist" "scheme" "backend"))
 

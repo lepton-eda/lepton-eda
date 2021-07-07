@@ -1,4 +1,5 @@
-(use-modules (srfi srfi-64))
+(use-modules (srfi srfi-64)
+             (srfi srfi-26))
 
 (load-from-path "env.scm")
 
@@ -8,22 +9,42 @@
       ((_ <schematic> <backend>)
        #'(string-append <schematic> "-" <backend>)))))
 
+(define default-test-directory
+  (build-filename *abs-top-srcdir* "utils" "netlist" "tests"))
 
-(define (test-netlist schematic backend)
-  (let* ((schematic-filename (build-test-file-name schematic))
+
+(define* (test-netlist schematic
+                       backend
+                       #:key
+                       (schematics #f)
+                       (testdir #f)
+                       (golden #f))
+  (let* ((testdir (or testdir default-test-directory))
+         (schematic-filename (build-filename testdir schematic))
          (base (string-drop-right schematic 4))
-         (golden-out (build-test-file-name (string-append base "-" backend ".out")))
+         (golden (or golden (string-append base "-" backend ".out")))
+         (golden-out (build-filename testdir golden))
          (test-out (tmpnam)))
+    (when schematics (test-skip 1))
     (test-assert (file-exists? schematic-filename))
     (test-assert (file-exists? golden-out))
 
     (test-eq EXIT_SUCCESS
-      (status:exit-val (system* *netlister*
-                                "-L" *backend-directory*
-                                "-c" *component-library-command*
-                                "-g" backend
-                                "-o" test-out
-                                schematic-filename)))
+      (status:exit-val
+       (if schematics
+           (apply system*
+                  *netlister*
+                  "-L" *backend-directory*
+                  "-c" *component-library-command*
+                  "-g" backend
+                  "-o" test-out
+                  (map (cut build-filename testdir <>) schematics))
+           (system* *netlister*
+                    "-L" *backend-directory*
+                    "-c" *component-library-command*
+                    "-g" backend
+                    "-o" test-out
+                    schematic-filename))))
     (test-eq EXIT_SUCCESS
       (status:exit-val (system* "diff" test-out golden-out)))
 
@@ -50,3 +71,9 @@
 
 (test-schematic "stack-torture.sch" "geda")
 (test-schematic "stack_1.sch" "geda")
+(test-schematic "switcap.sch"
+                "switcap"
+                #:schematics '("ckt.sch" "clocks.sch" "analysis.sch")
+                #:testdir (build-filename *abs-top-srcdir*
+                                          "utils" "netlist" "examples" "switcap")
+                #:golden "example.scn")
