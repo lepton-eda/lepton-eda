@@ -12,7 +12,7 @@
 
 ;;; Create library files.
 (define (touch file)
-  (with-output-to-file file (lambda () (display ""))))
+  (with-output-to-file file newline))
 
 
 (test-begin "source-library-contents")
@@ -45,180 +45,169 @@
 (define *testdir*/b/b/c/bbc.cir (make-filename *testdir*/b/b/c "bbc.cir"))
 
 
+(define (source-library-test-setup)
+  (mkdir *testdir*)
+  (mkdir *testdir*/a)
+  (mkdir *testdir*/b)
+  (mkdir *testdir*/b/b)
+  (mkdir *testdir*/b/b/c)
+  (mkdir *testdir*/d)
+  ;; Make files.
+  (touch *testdir*/toplevel.cir)
+  (touch *testdir*/a/a.cir)
+  (touch *testdir*/b/b.cir)
+  (touch *testdir*/b/b/bb.cir)
+  (touch *testdir*/b/b/c/bbc.cir))
+
+(define (source-library-test-teardown)
+  (system* "rm" "-rf" *testdir*))
+
+
 (test-begin "source-library")
 
-(dynamic-wind
-  (lambda ()
-    (mkdir *testdir*)
-    (mkdir *testdir*/a)
-    (mkdir *testdir*/b)
-    (mkdir *testdir*/b/b)
-    (mkdir *testdir*/b/b/c)
-    (mkdir *testdir*/d)
-    ;; Make files.
-    (touch *testdir*/toplevel.cir)
-    (touch *testdir*/a/a.cir)
-    (touch *testdir*/b/b.cir)
-    (touch *testdir*/b/b/bb.cir)
-    (touch *testdir*/b/b/c/bbc.cir))
+(test-group-with-cleanup "source-library-group"
+  (source-library-test-setup)
 
-  (lambda ()
-    ;; First, reset the source library to ensure it is empty.
-    (let ((lib (reset-source-library)))
-      ;; Test if lib is <source-library>.
-      (test-assert (source-library? lib))
-      ;; Test it is the default library.
-      (test-eq lib %default-source-library)
-      ;; Test library contents.
-      (test-eq (source-library-contents lib) '())
-      ;; Test for wrong argument.
-      (test-assert-thrown 'wrong-type-arg (source-library 'a))
+  ;; First, reset the source library to ensure it is empty.
+  (let ((lib (reset-source-library)))
+    ;; Test if lib is <source-library>.
+    (test-assert (source-library? lib))
+    ;; Test it is the default library.
+    (test-eq lib %default-source-library)
+    ;; Test library contents.
+    (test-eq (source-library-contents lib) '())
+    ;; Test for wrong argument.
+    (test-assert-thrown 'wrong-type-arg (source-library 'a))
 
-      ;; Test it is still the same library after adding a
-      ;; resource.
-      (test-eq (source-library *testdir*/a) lib)
-      ;; Test library contents.
-      (test-equal (source-library-contents lib) (list *testdir*/a))
-      ;; Test expansion of environment variables.
-      (putenv (string-append "MYDIR=" *testdir*/b))
-      (test-eq (source-library *testdir*/b) lib)
-      (test-equal (source-library-contents lib) (list *testdir*/b *testdir*/a))
-      ;; Test for non-existing directory.
-      (test-eq (source-library *testdir*/a/non-existing-dir) lib)
-      ;; Test the contents did not change.
-      (test-equal (source-library-contents lib) (list *testdir*/b *testdir*/a))
-      ;; Test for non-readable directory.
-      (when (zero? (getuid)) (test-skip 1))
-      ;; Make the directory unreadable for non-root users.
-      (chmod *testdir*/d #o000)
-      ;; Try to add it to the library.
-      (test-eq (source-library *testdir*/d) lib)
-      ;; Test the contents did not change.
-      (test-equal (source-library-contents lib) (list *testdir*/b *testdir*/a))
-      ;; Test for duplicate input.
-      (test-eq (source-library *testdir*/a) lib)
-      ;; Test the contents did not change.
-      (test-equal (source-library-contents lib) (list *testdir*/b *testdir*/a))
+    ;; Test it is still the same library after adding a
+    ;; resource.
+    (test-eq (source-library *testdir*/a) lib)
+    ;; Test library contents.
+    (test-equal (source-library-contents lib) (list *testdir*/a))
+    ;; Test expansion of environment variables.
+    (putenv (string-append "MYDIR=" *testdir*/b))
+    (test-eq (source-library *testdir*/b) lib)
+    (test-equal (source-library-contents lib) (list *testdir*/b *testdir*/a))
+    ;; Test for non-existing directory.
+    (test-eq (source-library *testdir*/a/non-existing-dir) lib)
+    ;; Test the contents did not change.
+    (test-equal (source-library-contents lib) (list *testdir*/b *testdir*/a))
+    ;; Test for non-readable directory.
+    (when (zero? (getuid)) (test-skip 1))
+    ;; Make the directory unreadable for non-root users.
+    (chmod *testdir*/d #o000)
+    ;; Try to add it to the library.
+    (test-eq (source-library *testdir*/d) lib)
+    ;; Test the contents did not change.
+    (test-equal (source-library-contents lib) (list *testdir*/b *testdir*/a))
+    ;; Test for duplicate input.
+    (test-eq (source-library *testdir*/a) lib)
+    ;; Test the contents did not change.
+    (test-equal (source-library-contents lib) (list *testdir*/b *testdir*/a))
 
-      ;; Test get-source-library-file().
-      (test-equal (get-source-library-file "a.cir")
-        *testdir*/a/a.cir)
-      (test-equal (get-source-library-file "b.cir")
-        *testdir*/b/b.cir)
-      ;; The toplevel directory is not included.
-      (test-assert (not (get-source-library-file "toplevel.cir")))
-      ;; These two also fail since the directories are not added
-      ;; recursively.
-      (test-assert (not (get-source-library-file "bb.cir")))
-      (test-assert (not (get-source-library-file "bbc.cir")))
+    ;; Test get-source-library-file().
+    (test-equal (get-source-library-file "a.cir")
+      *testdir*/a/a.cir)
+    (test-equal (get-source-library-file "b.cir")
+      *testdir*/b/b.cir)
+    ;; The toplevel directory is not included.
+    (test-assert (not (get-source-library-file "toplevel.cir")))
+    ;; These two also fail since the directories are not added
+    ;; recursively.
+    (test-assert (not (get-source-library-file "bb.cir")))
+    (test-assert (not (get-source-library-file "bbc.cir")))
 
-      ;; Test for non-readable file.
-      (when (zero? (getuid)) (test-skip 1))
-      ;; Make the file unreadable for non-root users.
-      (chmod *testdir*/a/a.cir #o000)
-      (test-assert (not (get-source-library-file "a.cir")))))
+    ;; Test for non-readable file.
+    (when (zero? (getuid)) (test-skip 1))
+    ;; Make the file unreadable for non-root users.
+    (chmod *testdir*/a/a.cir #o000)
+    (test-assert (not (get-source-library-file "a.cir"))))
 
   ;; Get rid of the test directory.
-  (lambda ()
-    (system* "rm" "-rf" *testdir*)))
+  (source-library-test-teardown))
 
 (test-end "source-library")
 
 
 (test-begin "source-library-search")
 
-(dynamic-wind
-  (lambda ()
-    (mkdir *testdir*)
-    (mkdir *testdir*/a)
-    (mkdir *testdir*/b)
-    (mkdir *testdir*/b/b)
-    (mkdir *testdir*/b/b/c)
-    (mkdir *testdir*/d)
-    ;; Make files.
-    (touch *testdir*/toplevel.cir)
-    (touch *testdir*/a/a.cir)
-    (touch *testdir*/b/b.cir)
-    (touch *testdir*/b/b/bb.cir)
-    (touch *testdir*/b/b/c/bbc.cir))
+(test-group-with-cleanup "source-library-search-group"
+  (source-library-test-setup)
+  ;; First, reset the source library to ensure it is empty.
+  (let ((lib (reset-source-library)))
+    ;; Test if lib is <source-library>.
+    (test-assert (source-library? lib))
+    ;; Test it is the default library.
+    (test-eq lib %default-source-library)
+    ;; Test library contents.
+    (test-eq (source-library-contents lib) '())
+    ;; Test for wrong argument.
+    (test-assert-thrown 'wrong-type-arg (source-library-search 'a))
 
-  (lambda ()
-    ;; First, reset the source library to ensure it is empty.
-    (let ((lib (reset-source-library)))
-      ;; Test if lib is <source-library>.
-      (test-assert (source-library? lib))
-      ;; Test it is the default library.
-      (test-eq lib %default-source-library)
-      ;; Test library contents.
-      (test-eq (source-library-contents lib) '())
-      ;; Test for wrong argument.
-      (test-assert-thrown 'wrong-type-arg (source-library-search 'a))
+    ;; Test it is still the same library after adding a
+    ;; resource.
+    (test-eq (source-library-search *testdir*/a) lib)
+    ;; Test library contents.
+    (test-equal (source-library-contents lib) (list *testdir*/a))
+    ;; Test expansion of environment variables.
+    (putenv (string-append "MYDIR=" *testdir*/b))
+    (test-eq (source-library-search *testdir*/b) lib)
+    (test-equal (source-library-contents lib)
+      (list *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*/a))
+    ;; Test for non-existing directory.
+    (test-eq (source-library-search *testdir*/a/non-existing-dir) lib)
+    ;; Test the contents did not change.
+    (test-equal (source-library-contents lib)
+      (list *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*/a))
+    ;; Test for non-readable directory.
+    (when (zero? (getuid)) (test-skip 1))
+    ;; Make the directory unreadable for non-root users.
+    (chmod *testdir*/d #o000)
+    ;; Try to add it to the library.
+    (test-eq (source-library-search *testdir*/d) lib)
+    ;; Test the contents did not change.
+    (test-equal (source-library-contents lib)
+      (list *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*/a))
+    ;; Test for duplicate input.
+    (test-eq (source-library-search *testdir*/a) lib)
+    ;; Test the contents did not change.
+    (test-equal (source-library-contents lib)
+      (list *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*/a))
+    ;; Test adding the whole toplevel directory.
+    (test-eq (source-library-search *testdir*) lib)
+    ;; Test the library now contains only non-duplicate
+    ;; directories with files.
+    (test-equal (source-library-contents lib)
+      (list *testdir* *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*/a))
+    ;; Reset the library and populate it from scratch.  The
+    ;; list of directories should change.
+    (reset-source-library)
+    (test-eq (source-library-search *testdir*) lib)
+    ;; This test returns different sort order on different
+    ;; systems for some reason.  So just sort the lists.
+    (test-equal (sort (source-library-contents lib) string<)
+      (sort (list *testdir*/a *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*) string<))
 
-      ;; Test it is still the same library after adding a
-      ;; resource.
-      (test-eq (source-library-search *testdir*/a) lib)
-      ;; Test library contents.
-      (test-equal (source-library-contents lib) (list *testdir*/a))
-      ;; Test expansion of environment variables.
-      (putenv (string-append "MYDIR=" *testdir*/b))
-      (test-eq (source-library-search *testdir*/b) lib)
-      (test-equal (source-library-contents lib)
-        (list *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*/a))
-      ;; Test for non-existing directory.
-      (test-eq (source-library-search *testdir*/a/non-existing-dir) lib)
-      ;; Test the contents did not change.
-      (test-equal (source-library-contents lib)
-        (list *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*/a))
-      ;; Test for non-readable directory.
-      (when (zero? (getuid)) (test-skip 1))
-      ;; Make the directory unreadable for non-root users.
-      (chmod *testdir*/d #o000)
-      ;; Try to add it to the library.
-      (test-eq (source-library-search *testdir*/d) lib)
-      ;; Test the contents did not change.
-      (test-equal (source-library-contents lib)
-        (list *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*/a))
-      ;; Test for duplicate input.
-      (test-eq (source-library-search *testdir*/a) lib)
-      ;; Test the contents did not change.
-      (test-equal (source-library-contents lib)
-        (list *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*/a))
-      ;; Test adding the whole toplevel directory.
-      (test-eq (source-library-search *testdir*) lib)
-      ;; Test the library now contains only non-duplicate
-      ;; directories with files.
-      (test-equal (source-library-contents lib)
-        (list *testdir* *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*/a))
-      ;; Reset the library and populate it from scratch.  The
-      ;; list of directories should change.
-      (reset-source-library)
-      (test-eq (source-library-search *testdir*) lib)
-      ;; This test returns different sort order on different
-      ;; systems for some reason.  So just sort the lists.
-      (test-equal (sort (source-library-contents lib) string<)
-        (sort (list *testdir*/a *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*) string<))
+    ;; Test get-source-library-file().
+    (test-equal (get-source-library-file "toplevel.cir")
+      *testdir*/toplevel.cir)
+    (test-equal (get-source-library-file "a.cir")
+      *testdir*/a/a.cir)
+    (test-equal (get-source-library-file "b.cir")
+      *testdir*/b/b.cir)
+    (test-equal (get-source-library-file "bb.cir")
+      *testdir*/b/b/bb.cir)
+    (test-equal (get-source-library-file "bbc.cir")
+      *testdir*/b/b/c/bbc.cir)
 
-      ;; Test get-source-library-file().
-      (test-equal (get-source-library-file "toplevel.cir")
-        *testdir*/toplevel.cir)
-      (test-equal (get-source-library-file "a.cir")
-        *testdir*/a/a.cir)
-      (test-equal (get-source-library-file "b.cir")
-        *testdir*/b/b.cir)
-      (test-equal (get-source-library-file "bb.cir")
-        *testdir*/b/b/bb.cir)
-      (test-equal (get-source-library-file "bbc.cir")
-        *testdir*/b/b/c/bbc.cir)
-
-      ;; Test for non-readable file.
-      (when (zero? (getuid)) (test-skip 1))
-      ;; Make the file unreadable for non-root users.
-      (chmod *testdir*/a/a.cir #o000)
-      (test-assert (not (get-source-library-file "a.cir")))))
+    ;; Test for non-readable file.
+    (when (zero? (getuid)) (test-skip 1))
+    ;; Make the file unreadable for non-root users.
+    (chmod *testdir*/a/a.cir #o000)
+    (test-assert (not (get-source-library-file "a.cir"))))
 
   ;; Get rid of the test directory.
-  (lambda ()
-    (system* "rm" "-rf" *testdir*)))
+  (source-library-test-teardown))
 
 (test-end "source-library-search")
 
