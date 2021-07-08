@@ -20,31 +20,30 @@
                        (testdir #f)
                        (golden #f))
   (let* ((testdir (or testdir default-test-directory))
-         (schematic-filename (build-filename testdir schematic))
+         (schematic-filenames (map (cut build-filename testdir <>)
+                                   (or schematics
+                                       (list schematic))))
          (base (string-drop-right schematic 4))
          (golden (or golden (string-append base "-" backend ".out")))
          (golden-out (build-filename testdir golden))
          (test-out (tmpnam)))
-    (when schematics (test-skip 1))
-    (test-assert (file-exists? schematic-filename))
+
+    (for-each
+     (lambda (sch)
+       (test-assert (file-exists? sch)))
+     schematic-filenames)
+
     (test-assert (file-exists? golden-out))
 
     (test-eq EXIT_SUCCESS
       (status:exit-val
-       (if schematics
-           (apply system*
-                  *netlister*
-                  "-L" *backend-directory*
-                  "-c" *component-library-command*
-                  "-g" backend
-                  "-o" test-out
-                  (map (cut build-filename testdir <>) schematics))
-           (system* *netlister*
-                    "-L" *backend-directory*
-                    "-c" *component-library-command*
-                    "-g" backend
-                    "-o" test-out
-                    schematic-filename))))
+       (apply system*
+              *netlister*
+              "-L" *backend-directory*
+              "-c" *component-library-command*
+              "-g" backend
+              "-o" test-out
+              schematic-filenames)))
     (test-eq EXIT_SUCCESS
       (status:exit-val (system* "diff" test-out golden-out)))
 
