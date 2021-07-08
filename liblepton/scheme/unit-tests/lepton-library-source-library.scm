@@ -86,7 +86,8 @@
     (test-equal (source-library-contents lib) (list *testdir*/a))
     ;; Test expansion of environment variables.
     (putenv (string-append "MYDIR=" *testdir*/b))
-    (test-eq (source-library *testdir*/b) lib)
+    (test-assert (getenv "MYDIR"))
+    (test-eq (source-library "${MYDIR}") lib)
     (test-equal (source-library-contents lib) (list *testdir*/b *testdir*/a))
     ;; Test for non-existing directory.
     (test-eq (source-library *testdir*/a/non-existing-dir) lib)
@@ -155,7 +156,8 @@
     (test-equal (source-library-contents lib) (list *testdir*/a))
     ;; Test expansion of environment variables.
     (putenv (string-append "MYDIR=" *testdir*/b))
-    (test-eq (source-library-search *testdir*/b) lib)
+    (test-assert (getenv "MYDIR"))
+    (test-eq (source-library-search "${MYDIR}") lib)
     (test-equal (source-library-contents lib)
       (list *testdir*/b/b/c *testdir*/b/b *testdir*/b *testdir*/a))
     ;; Test for non-existing directory.
