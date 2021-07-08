@@ -134,7 +134,7 @@ set-library-contents! instead."
             (if (null? contents)
                 (list name)
                 (cons name
-                 (map (lambda (x) (string-append name file-name-separator-string x))
+                      (map (lambda (x) (string-append name file-name-separator-string x))
                       (append-map identity contents)))))))))
 
 (define (source-library-search path)
@@ -143,10 +143,15 @@ source library.  Returns %default-source-library.
 
 This procedure is legacy and should be avoided in new code. Use
 set-library-contents! instead."
+  (define (trim-trailing-/ s)
+    (define sep-len (string-length file-name-separator-string))
+    (let loop ((s s))
+      (if (string-suffix? file-name-separator-string s)
+          (loop (string-drop-right s sep-len))
+          s)))
+
   (define (add-source-library sl)
-    (source-library (string-append (dirname path)
-                                   file-name-separator-string
-                                   sl)))
+    (source-library sl))
 
   (unless (string? path)
     (scm-error 'wrong-type-arg
@@ -155,9 +160,12 @@ set-library-contents! instead."
                (list path)
                #f))
 
-  (let ((tree (file-system-tree path)))
+  (let* ((expanded-path (trim-trailing-/ (expand-env-variables path)))
+         (tree (file-system-tree expanded-path)))
     (if tree
-        (for-each add-source-library (get-tree tree))
+        (for-each add-source-library (map (lambda (x) (string-append (dirname expanded-path)
+                                                                file-name-separator-string
+                                                                x)) (get-tree tree)))
         (log! 'critical (G_ "Invalid path ~S or source not readable.\n") path))
     ;; Return value.
     %default-source-library))
