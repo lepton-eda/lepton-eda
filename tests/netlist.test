@@ -19,13 +19,14 @@
                        (schematics #f)
                        (testdir #f)
                        (golden #f))
-  (let* ((testdir (or testdir default-test-directory))
-         (schematic-filenames (map (cut build-filename testdir <>)
+  (let* ((test-directory (or testdir default-test-directory))
+         (cwd (getcwd))
+         (schematic-filenames (map (cut build-filename test-directory <>)
                                    (or schematics
                                        (list schematic))))
          (base (string-drop-right schematic 4))
          (golden (or golden (string-append base "-" backend ".out")))
-         (golden-out (build-filename testdir golden))
+         (golden-out (build-filename test-directory golden))
          (test-out (tmpnam)))
 
     (for-each
@@ -34,6 +35,8 @@
      schematic-filenames)
 
     (test-assert (file-exists? golden-out))
+
+    (when testdir (chdir testdir))
 
     (test-eq EXIT_SUCCESS
       (status:exit-val
@@ -44,6 +47,9 @@
               "-g" backend
               "-o" test-out
               schematic-filenames)))
+
+    (when testdir (chdir cwd))
+
     (test-eq EXIT_SUCCESS
       (status:exit-val (system* "diff" test-out golden-out)))
 
