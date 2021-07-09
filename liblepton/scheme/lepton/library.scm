@@ -108,7 +108,9 @@ set-library-contents! instead."
                                      (string-append (getcwd)
                                                     file-name-separator-string
                                                     expanded-path)))
-        (log! 'critical (G_ "Invalid path ~S or source not readable.\n") path))
+        (log! 'critical
+              (G_ "Invalid path ~S or source not readable.\n")
+              expanded-path))
     %default-source-library))
 
 
@@ -165,8 +167,11 @@ set-library-contents! instead."
     (if tree
         (for-each add-source-library (map (lambda (x) (string-append (dirname expanded-path)
                                                                 file-name-separator-string
-                                                                x)) (get-tree tree)))
-        (log! 'critical (G_ "Invalid path ~S or source not readable.\n") path))
+                                                                x))
+                                          (get-tree tree)))
+        (log! 'critical
+              (G_ "Invalid path ~S or source not readable.\n")
+              expanded-path))
     ;; Return value.
     %default-source-library))
 
