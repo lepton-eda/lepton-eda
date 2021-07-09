@@ -100,17 +100,17 @@ set-library-contents! instead."
                #f))
 
   ;; Take care of any shell variables.
-  (let ((expanded-path (expand-env-variables path)))
-    (if (file-readable? expanded-path)
+  (let ((path (expand-env-variables path)))
+    (if (file-readable? path)
         (source-library-prepend! %default-source-library
-                                 (if (absolute-file-name? expanded-path)
-                                     expanded-path
+                                 (if (absolute-file-name? path)
+                                     path
                                      (string-append (getcwd)
                                                     file-name-separator-string
-                                                    expanded-path)))
+                                                    path)))
         (log! 'critical
               (G_ "Invalid path ~S or source not readable.\n")
-              expanded-path))
+              path))
     %default-source-library))
 
 
@@ -130,16 +130,6 @@ source library.  Returns %default-source-library.
 
 This procedure is legacy and should be avoided in new code. Use
 set-library-contents! instead."
-  (define (build-filename dir file)
-    (string-append dir file-name-separator-string file))
-
-  (define (trim-trailing-/ s)
-    (define sep-len (string-length file-name-separator-string))
-    (let loop ((s s))
-      (if (string-suffix? file-name-separator-string s)
-          (loop (string-drop-right s sep-len))
-          s)))
-
   (define (vcs-name? name)
     (member name '(".git" ".svn" "CVS")))
 
@@ -156,6 +146,9 @@ set-library-contents! instead."
             ;; Process other dirs recursively.
             (cons name (filter-map filter-tree children))))))
 
+  (define (build-filename dir file)
+    (string-append dir file-name-separator-string file))
+
   (define (directory-tree->list name children)
     (cons name
           (append-map
@@ -166,6 +159,30 @@ set-library-contents! instead."
                                        (cdr child))))
            children)))
 
+  (define (path->directory-list path)
+    (let ((tree (file-system-tree path)))
+      ;; If the tree has been created successfully, replace its
+      ;; first element with expanded path, and make the plain
+      ;; directory list.
+      (if tree
+          (directory-tree->list path (cdr (filter-tree tree)))
+          (begin
+            (log! 'critical
+                  (G_ "Invalid path ~S or source not readable.\n")
+                  path)
+            ;; Return empty list in this case.
+            '()))))
+
+  (define (trim-trailing-/ s)
+    (define sep-len (string-length file-name-separator-string))
+    (let loop ((s s))
+      (if (string-suffix? file-name-separator-string s)
+          (loop (string-drop-right s sep-len))
+          s)))
+
+  (define (normalize-path path)
+    (trim-trailing-/ (expand-env-variables path)))
+
   (unless (string? path)
     (scm-error 'wrong-type-arg
                "source-library-search"
@@ -173,16 +190,10 @@ set-library-contents! instead."
                (list path)
                #f))
 
-  (let* ((expanded-path (trim-trailing-/ (expand-env-variables path)))
-         (tree (file-system-tree expanded-path)))
-    (if tree
-        (for-each source-library
-                  (directory-tree->list expanded-path (cdr (filter-tree tree))))
-        (log! 'critical
-              (G_ "Invalid path ~S or source not readable.\n")
-              expanded-path))
-    ;; Return value.
-    %default-source-library))
+  (for-each source-library
+            (path->directory-list (normalize-path path)))
+  ;; Return value.
+  %default-source-library)
 
 
 ;;; This is a temporary procedure for hierarchy traversing support
