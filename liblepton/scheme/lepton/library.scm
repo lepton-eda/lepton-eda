@@ -137,7 +137,7 @@ set-library-contents! instead."
   ;; filtering out plain files and some VCS related directories.
   (define filter-tree
     (match-lambda
-      ;; Flat files. Skip them.
+      ;; Flat files and empty directories. Skip them.
       ((name stat) #f)
       ;; Directories.
       ((name stat children ...)
