@@ -137,7 +137,7 @@ set-library-contents! instead."
                 (list name)
                 (cons name
                       (map (lambda (x) (string-append name file-name-separator-string x))
-                      (append-map identity contents)))))))))
+                      (apply append contents)))))))))
 
 (define (source-library-search path)
   "Recursively prepends the contents of given path to the default
