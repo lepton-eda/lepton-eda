@@ -145,18 +145,26 @@ set-library-contents! instead."
 
   ;; Transforms the tree of directories into a plain list of paths,
   ;; filtering out plain files and some VCS related directories.
-  (define get-tree
+  (define filter-tree
     (match-lambda
-      ((name stat)                      ; flat file
-       #f)
-      ((name stat children ...)         ; directory
+      ;; Flat files. Skip them.
+      ((name stat) #f)
+      ;; Directories.
+      ((name stat children ...)
+       ;; Skip VCS dirs.
        (and (not (vcs-name? name))
-            (let ((contents (filter-map get-tree children)))
-              (if (null? contents)
-                  (list name)
-                  (cons name
-                        (map (lambda (x) (build-filename name x))
-                             (apply append contents)))))))))
+            ;; Process other dirs recursively.
+            (cons name (filter-map filter-tree children))))))
+
+  (define (directory-tree->list name children)
+    (cons name
+          (append-map
+           (lambda (child)
+             (if (null? child)
+                 '()
+                 (directory-tree->list (build-filename name (car child))
+                                       (cdr child))))
+           children)))
 
   (unless (string? path)
     (scm-error 'wrong-type-arg
@@ -169,8 +177,7 @@ set-library-contents! instead."
          (tree (file-system-tree expanded-path)))
     (if tree
         (for-each source-library
-                  (map (lambda (x) (build-filename (dirname expanded-path) x))
-                       (get-tree tree)))
+                  (directory-tree->list expanded-path (cdr (filter-tree tree))))
         (log! 'critical
               (G_ "Invalid path ~S or source not readable.\n")
               expanded-path))
