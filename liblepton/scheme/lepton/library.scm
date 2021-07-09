@@ -130,12 +130,18 @@ source library.  Returns %default-source-library.
 
 This procedure is legacy and should be avoided in new code. Use
 set-library-contents! instead."
+  (define (build-filename dir file)
+    (string-append dir file-name-separator-string file))
+
   (define (trim-trailing-/ s)
     (define sep-len (string-length file-name-separator-string))
     (let loop ((s s))
       (if (string-suffix? file-name-separator-string s)
           (loop (string-drop-right s sep-len))
           s)))
+
+  (define (vcs-name? name)
+    (member name '(".git" ".svn" "CVS")))
 
   ;; Transforms the tree of directories into a plain list of paths,
   ;; filtering out plain files and some VCS related directories.
@@ -144,16 +150,13 @@ set-library-contents! instead."
       ((name stat)                      ; flat file
        #f)
       ((name stat children ...)         ; directory
-       (and (not (member name '(".git" ".svn" "CVS")))
+       (and (not (vcs-name? name))
             (let ((contents (filter-map get-tree children)))
               (if (null? contents)
                   (list name)
                   (cons name
-                        (map (lambda (x) (string-append name file-name-separator-string x))
+                        (map (lambda (x) (build-filename name x))
                              (apply append contents)))))))))
-
-  (define (add-source-library sl)
-    (source-library sl))
 
   (unless (string? path)
     (scm-error 'wrong-type-arg
@@ -165,10 +168,9 @@ set-library-contents! instead."
   (let* ((expanded-path (trim-trailing-/ (expand-env-variables path)))
          (tree (file-system-tree expanded-path)))
     (if tree
-        (for-each add-source-library (map (lambda (x) (string-append (dirname expanded-path)
-                                                                file-name-separator-string
-                                                                x))
-                                          (get-tree tree)))
+        (for-each source-library
+                  (map (lambda (x) (build-filename (dirname expanded-path) x))
+                       (get-tree tree)))
         (log! 'critical
               (G_ "Invalid path ~S or source not readable.\n")
               expanded-path))
