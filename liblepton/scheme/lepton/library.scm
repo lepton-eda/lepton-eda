@@ -124,21 +124,6 @@ set-library-contents! instead."
   %default-source-library)
 
 
-;;; Transforms the tree of directories into a plain list of paths,
-;;; filtering out plain files and some VCS related directories.
-(define get-tree
-  (match-lambda
-    ((name stat)                        ; flat file
-     #f)
-    ((name stat children ...)           ; directory
-     (and (not (member name '(".git" ".svn" "CVS")))
-          (let ((contents (filter-map get-tree children)))
-            (if (null? contents)
-                (list name)
-                (cons name
-                      (map (lambda (x) (string-append name file-name-separator-string x))
-                      (apply append contents)))))))))
-
 (define (source-library-search path)
   "Recursively prepends the contents of given path to the default
 source library.  Returns %default-source-library.
@@ -151,6 +136,21 @@ set-library-contents! instead."
       (if (string-suffix? file-name-separator-string s)
           (loop (string-drop-right s sep-len))
           s)))
+
+  ;; Transforms the tree of directories into a plain list of paths,
+  ;; filtering out plain files and some VCS related directories.
+  (define get-tree
+    (match-lambda
+      ((name stat)                      ; flat file
+       #f)
+      ((name stat children ...)         ; directory
+       (and (not (member name '(".git" ".svn" "CVS")))
+            (let ((contents (filter-map get-tree children)))
+              (if (null? contents)
+                  (list name)
+                  (cons name
+                        (map (lambda (x) (string-append name file-name-separator-string x))
+                             (apply append contents)))))))))
 
   (define (add-source-library sl)
     (source-library sl))
