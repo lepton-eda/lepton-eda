@@ -18,7 +18,8 @@
                        #:key
                        (schematics #f)
                        (testdir #f)
-                       (golden #f))
+                       (golden #f)
+                       (symlib-command #f))
   (let* ((test-directory (or testdir default-test-directory))
          (cwd (getcwd))
          (schematic-filenames (map (cut build-filename test-directory <>)
@@ -43,7 +44,7 @@
        (apply system*
               *netlister*
               "-L" *backend-directory*
-              "-c" *component-library-command*
+              "-c" (or symlib-command *component-library-command*)
               "-g" backend
               "-o" test-out
               schematic-filenames)))
@@ -81,4 +82,12 @@
                 #:schematics '("ckt.sch" "clocks.sch" "analysis.sch")
                 #:testdir (build-filename *abs-top-srcdir*
                                           "utils" "netlist" "examples" "switcap")
-                #:golden "example.scn")
+                #:golden "example.scn"
+                #:symlib-command (string-append "(component-library \""
+                                                (build-filename *abs-top-srcdir*
+                                                                "utils"
+                                                                "netlist"
+                                                                "examples"
+                                                                "switcap"
+                                                                "cache")
+                                                "\")"))
