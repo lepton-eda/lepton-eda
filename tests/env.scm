@@ -32,12 +32,3 @@
 ;;; Now set up %load-path to include local scheme directory.
 (putenv (string-append "GUILE_LOAD_PATH" "="
                        (string-append %src-scheme-dir% ":" %build-scheme-dir%)))
-
-(define *backend-directory*
-  (build-filename *abs-top-srcdir* "utils" "netlist" "scheme" "backend"))
-
-(define *symbol-directory*
-  (build-filename *abs-top-srcdir* "utils" "netlist" "tests" "symcache"))
-
-(define *component-library-command*
-  (string-append "(component-library \"" *symbol-directory* "\")"))

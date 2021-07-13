@@ -12,6 +12,11 @@
 (define default-test-directory
   (build-filename *abs-top-srcdir* "utils" "netlist" "tests"))
 
+(define backend-directory
+  (build-filename *abs-top-srcdir* "utils" "netlist" "scheme" "backend"))
+
+(define default-symbol-directory
+  (build-filename default-test-directory "symcache"))
 
 (define* (test-netlist schematic
                        backend
@@ -19,7 +24,7 @@
                        (schematics #f)
                        (testdir #f)
                        (golden #f)
-                       (symlib-command #f))
+                       (complib #f))
   (let* ((test-directory (or testdir default-test-directory))
          (cwd (getcwd))
          (schematic-filenames (map (cut build-filename test-directory <>)
@@ -43,8 +48,10 @@
       (status:exit-val
        (apply system*
               *netlister*
-              "-L" *backend-directory*
-              "-c" (or symlib-command *component-library-command*)
+              "-L" backend-directory
+              "-c" (string-append "(component-library \""
+                                  (or complib default-symbol-directory)
+                                  "\")")
               "-g" backend
               "-o" test-out
               schematic-filenames)))
@@ -77,17 +84,20 @@
 
 (test-schematic "stack-torture.sch" "geda")
 (test-schematic "stack_1.sch" "geda")
+
+(define switcap-example-dir
+  (build-filename *abs-top-srcdir*
+                  "utils"
+                  "netlist"
+                  "examples"
+                  "switcap"))
+
+(define switcap-example-symbol-dir
+  (build-filename switcap-example-dir "cache"))
+
 (test-schematic "switcap.sch"
                 "switcap"
                 #:schematics '("ckt.sch" "clocks.sch" "analysis.sch")
-                #:testdir (build-filename *abs-top-srcdir*
-                                          "utils" "netlist" "examples" "switcap")
+                #:testdir switcap-example-dir
                 #:golden "example.scn"
-                #:symlib-command (string-append "(component-library \""
-                                                (build-filename *abs-top-srcdir*
-                                                                "utils"
-                                                                "netlist"
-                                                                "examples"
-                                                                "switcap"
-                                                                "cache")
-                                                "\")"))
+                #:complib switcap-example-symbol-dir)
