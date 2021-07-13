@@ -280,6 +280,7 @@ AC_CONFIG_FILES([Makefile
                  utils/netlist/examples/vams/vhdl/basic-vhdl/Makefile
                  utils/netlist/examples/vams/vhdl/new-vhdl/Makefile
                  utils/netlist/examples/switcap/Makefile
+                 utils/netlist/examples/switcap/cache/Makefile
                  utils/netlist/examples/verilog/Makefile
                  utils/netlist/examples/verilog/T_FF_example/Makefile
                  utils/netlist/examples/verilog/T_FF_example/verilog_modules/Makefile
