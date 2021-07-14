@@ -1388,6 +1388,31 @@ value will be one of the following symbols:
     (car position)
     (cdr position))))
 
+
+(define (%make-component basename)
+  "Creates and returns a new, empty component object, with given
+BASENAME and with all other parameters set to default values.  It
+is initially set to be embedded."
+  (define TRUE 1)
+  (define FALSE 0)
+
+  (check-string basename 1)
+
+  (let ((color (default_color_id))
+        (x 0)
+        (y 0)
+        (angle 0)
+        (mirror FALSE)
+        (selectable? TRUE))
+    (pointer->geda-object
+     (lepton_component_new_embedded color
+                                    x
+                                    y
+                                    angle
+                                    mirror
+                                    (string->pointer basename)
+                                    selectable?))))
+
 (define-public (make-component basename . args)
   (let ((c (%make-component basename)))
     (apply set-component! c args)))

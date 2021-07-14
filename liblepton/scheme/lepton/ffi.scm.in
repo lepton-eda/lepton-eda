@@ -134,6 +134,7 @@
             lepton_circle_object_set_radius
             lepton_circle_object_new
 
+            lepton_component_new_embedded
             lepton_component_object_get_embedded
             lepton_component_object_embed
             lepton_component_object_unembed
@@ -420,6 +421,7 @@
 (define-lff lepton_circle_object_set_radius void (list '* int))
 (define-lff lepton_circle_object_new '* (list int int int int))
 
+(define-lff lepton_component_new_embedded '* (list int int int int int '* int))
 (define-lff lepton_component_object_get_embedded int '(*))
 (define-lff lepton_component_object_embed void '(*))
 (define-lff lepton_component_object_unembed void '(*))

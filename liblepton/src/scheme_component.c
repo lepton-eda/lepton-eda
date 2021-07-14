@@ -28,36 +28,6 @@
 #include "liblepton_priv.h"
 #include "libleptonguile_priv.h"
 
-/*! \brief Create a new component object.
- * \par Function Description
- * Creates a new, empty component object, with the given \a basename and
- * with all other parameters set to default values.  It is initially set
- * to be embedded.
- *
- * \note Scheme API: Implements the %make-component procedure in the
- * (lepton core component) module.
- *
- * \return a newly-created component object.
- */
-SCM_DEFINE (make_component, "%make-component", 1, 0, 0,
-            (SCM basename_s), "Create a new component object.")
-{
-  SCM_ASSERT (scm_is_string (basename_s), basename_s, SCM_ARG1, s_make_component);
-
-  char *tmp = scm_to_utf8_string (basename_s);
-  LeptonObject *obj = lepton_component_new_embedded (default_color_id (),
-                                                     0, 0, 0, FALSE, tmp, TRUE);
-  free (tmp);
-
-  SCM result = edascm_from_object (obj);
-
-  /* At the moment, the only pointer to the object is owned by the
-   * smob. */
-  edascm_c_set_gc (result, TRUE);
-
-  return result;
-}
-
 /*! \brief Instantiate a component object from the component library.
  * \par Function Description
 
@@ -427,8 +397,7 @@ init_module_lepton_core_component (void *unused)
   #include "scheme_component.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_make_component,
-                s_make_component_library,
+  scm_c_export (s_make_component_library,
                 s_set_component_x,
                 s_component_info,
                 s_component_contents,
