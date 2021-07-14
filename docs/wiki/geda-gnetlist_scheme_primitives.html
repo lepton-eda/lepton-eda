@@ -66,13 +66,13 @@ Originally written by <em>John Doty</em>
 	<tr class="row13">
 		<td class="col0" colspan="2"> Yields a list of the form <code>(netname connection1 connection2 …)</code> where the <em>netname</em> is a name of the net connected to the <em>pin</em> of the component with the given <em>refdes</em>, and each connection is itself a two element list of the form <code>(refdes pinnumber)</code> representing the pin with the <em>pinnumber</em> of the component with the <em>refdes</em>.  All arguments must be strings.  <br/>
 <strong>Usage:</strong>  <code>(gnetlist:get-nets &quot;R1&quot; &quot;1&quot;)</code> <br/>
-<em>BUG:</em> This function does not reliably list all of the connections, if a <a href="geda-na_howto.html" class="wikilink1" title="geda-na_howto.html">net=</a> connection is specified. All existing back ends that use this (excluding the <strong>cascade</strong> back end) use only the netname. </td>
-	</tr>
-	<tr class="row14">
-		<th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-pins-nets</strong> <em>refdes</em> </td>
-	</tr>
-	<tr class="row15">
-		<td class="col0" colspan="2"> Yields a list of <code>(pinnumber . netname)</code> pairs detailing all pin connections for the given refdes. <br/>
+<em>BUG:</em> This function does not reliably list all of the connections, if a net= connection is specified. All existing back ends that use this (excluding the <strong>cascade</strong> back end) use only the netname. </td>
+        </tr>
+        <tr class="row14">
+                <th class="col0 leftalign"> <strong>Procedure</strong>        </th><td class="col1"> <strong>gnetlist:get-pins-nets</strong> <em>refdes</em> </td>
+        </tr>
+        <tr class="row15">
+                <td class="col0" colspan="2"> Yields a list of <code>(pinnumber . netname)</code> pairs detailing all pin connections for the given refdes. <br/>
 <strong>Usage:</strong>  <code>(gnetlist:get-pins-nets &quot;R1&quot;)</code> </td>
 	</tr>
 	<tr class="row16">
