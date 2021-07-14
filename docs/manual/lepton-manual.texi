@@ -64,6 +64,10 @@ Documentation License.''
 @macro attrib
 @command{lepton-attrib}
 @end macro
+@macro schpcb
+@command{lepton-sch2pcb}
+@end macro
+
 
 @menu
 * Overview::                    Overview of program components.
