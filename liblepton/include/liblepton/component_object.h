@@ -42,7 +42,6 @@ o_component_promote_attribs (LeptonObject *object);
 
 LeptonObject*
 lepton_component_new (LeptonPage *page,
-                      char type,
                       int color,
                       int x,
                       int y,

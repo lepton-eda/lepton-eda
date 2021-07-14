@@ -88,7 +88,6 @@ o_component_prepare_place (GschemToplevel *w_current,
     LeptonObject *new_object;
 
     new_object = lepton_component_new (toplevel->page_current,
-                                       OBJ_COMPONENT,
                                        default_color_id(),
                                        0,
                                        0,

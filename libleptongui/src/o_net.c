@@ -1068,7 +1068,6 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
 
         if (rippersym != NULL) {
           new_obj = lepton_component_new (page,
-                                          OBJ_COMPONENT,
                                           default_color_id(),
                                           rippers[i].x[0],
                                           rippers[i].y[0],

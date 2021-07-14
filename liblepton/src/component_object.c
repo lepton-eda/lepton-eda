@@ -720,7 +720,6 @@ create_placeholder (LeptonObject* node, int x, int y)
  */
 LeptonObject*
 lepton_component_new (LeptonPage *page,
-                      char type,
                       int color,
                       int x,
                       int y,
@@ -734,7 +733,7 @@ lepton_component_new (LeptonPage *page,
   GList *iter;
   gchar *buffer = NULL;
 
-  new_node = lepton_object_new (type, "complex");
+  new_node = lepton_object_new (OBJ_COMPONENT, "complex");
 
   if (clib != NULL) {
     new_node->component_basename = g_strdup (s_clib_symbol_get_name (clib));
@@ -928,7 +927,6 @@ LeptonObject *o_component_read (LeptonPage *page,
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
 
     new_obj = lepton_component_new (page,
-                                    type,
                                     default_color_id(),
                                     x1,
                                     y1,
