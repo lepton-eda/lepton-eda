@@ -814,14 +814,14 @@ o_component_new (LeptonPage *page,
  *  \return a new component object
  */
 LeptonObject*
-o_component_new_embedded (char type,
-                          int color,
-                          int x,
-                          int y,
-                          int angle,
-                          int mirror,
-                          const gchar *basename,
-                          int selectable)
+lepton_component_new_embedded (char type,
+                               int color,
+                               int x,
+                               int y,
+                               int angle,
+                               int mirror,
+                               const gchar *basename,
+                               int selectable)
 {
   LeptonObject *new_node=NULL;
 
@@ -918,14 +918,14 @@ LeptonObject *o_component_read (LeptonPage *page,
   }
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
 
-    new_obj = o_component_new_embedded (type,
-                                        default_color_id(),
-                                        x1,
-                                        y1,
-                                        angle,
-                                        mirror,
-                                        basename + 8,
-                                        selectable);
+    new_obj = lepton_component_new_embedded (type,
+                                             default_color_id(),
+                                             x1,
+                                             y1,
+                                             angle,
+                                             mirror,
+                                             basename + 8,
+                                             selectable);
   } else {
 
     const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);

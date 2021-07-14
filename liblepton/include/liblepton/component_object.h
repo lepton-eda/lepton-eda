@@ -53,14 +53,14 @@ o_component_new (LeptonPage *page,
                  int selectable);
 
 LeptonObject*
-o_component_new_embedded (char type,
-                          int color,
-                          int x,
-                          int y,
-                          int angle,
-                          int mirror,
-                          const gchar *basename,
-                          int selectable);
+lepton_component_new_embedded (char type,
+                               int color,
+                               int x,
+                               int y,
+                               int angle,
+                               int mirror,
+                               const gchar *basename,
+                               int selectable);
 
 void
 lepton_component_object_calculate_bounds (const LeptonObject *object,
