@@ -3,12 +3,6 @@
 @cindex config
 @cindex configuration
 
-@c Some aliases and macros.
-@alias attrib=var
-@alias cfgkey=code
-@alias cfgtype=samp
-@alias cfgval=samp
-
 @macro since{version}
 Since @emph{\version\}.
 @end macro

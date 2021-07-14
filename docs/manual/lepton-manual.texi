@@ -42,6 +42,12 @@ Documentation License.''
 @top Lepton EDA Reference Manual
 @end ifnottex
 
+@c Some aliases.
+@alias attrib=var
+@alias cfgkey=code
+@alias cfgtype=samp
+@alias cfgval=samp
+
 @c Some useful macros
 @macro schematic
 @command{lepton-schematic}
