@@ -45,8 +45,7 @@ SCM_DEFINE (make_component, "%make-component", 1, 0, 0,
   SCM_ASSERT (scm_is_string (basename_s), basename_s, SCM_ARG1, s_make_component);
 
   char *tmp = scm_to_utf8_string (basename_s);
-  LeptonObject *obj = lepton_component_new_embedded (OBJ_COMPONENT,
-                                                     default_color_id (),
+  LeptonObject *obj = lepton_component_new_embedded (default_color_id (),
                                                      0, 0, 0, FALSE, tmp, TRUE);
   free (tmp);
 

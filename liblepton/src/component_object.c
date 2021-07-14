@@ -803,7 +803,6 @@ o_component_new (LeptonPage *page,
  *  \par Function Description
  *  This function creates a new embedded object.
  *
- *  \param [in]  type      The type of the object (usually OBJ_COMPONENT)
  *  \param [in]  color     The color of the object
  *  \param [in]  x         The x location of the component object
  *  \param [in]  y         The y location of the component object
@@ -814,8 +813,7 @@ o_component_new (LeptonPage *page,
  *  \return a new component object
  */
 LeptonObject*
-lepton_component_new_embedded (char type,
-                               int color,
+lepton_component_new_embedded (int color,
                                int x,
                                int y,
                                int angle,
@@ -825,7 +823,7 @@ lepton_component_new_embedded (char type,
 {
   LeptonObject *new_node=NULL;
 
-  new_node = lepton_object_new (type, "complex");
+  new_node = lepton_object_new (OBJ_COMPONENT, "complex");
 
   new_node->component = (LeptonComponent *) g_malloc (sizeof (LeptonComponent));
   new_node->component->x = x;
@@ -918,8 +916,7 @@ LeptonObject *o_component_read (LeptonPage *page,
   }
   if (strncmp(basename, "EMBEDDED", 8) == 0) {
 
-    new_obj = lepton_component_new_embedded (type,
-                                             default_color_id(),
+    new_obj = lepton_component_new_embedded (default_color_id(),
                                              x1,
                                              y1,
                                              angle,

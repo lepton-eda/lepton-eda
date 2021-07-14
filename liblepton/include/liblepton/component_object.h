@@ -53,8 +53,7 @@ o_component_new (LeptonPage *page,
                  int selectable);
 
 LeptonObject*
-lepton_component_new_embedded (char type,
-                               int color,
+lepton_component_new_embedded (int color,
                                int x,
                                int y,
                                int angle,
