@@ -479,16 +479,16 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   o_selection_remove (page->selection_list, o_current);
 
   /* Create new object and set embedded */
-  o_new = o_component_new (toplevel->page_current,
-                           OBJ_COMPONENT,
-                           default_color_id(),
-                           o_current->component->x,
-                           o_current->component->y,
-                           o_current->component->angle,
-                           o_current->component->mirror,
-                           clib,
-                           o_current->component_basename,
-                           1);
+  o_new = lepton_component_new (toplevel->page_current,
+                                OBJ_COMPONENT,
+                                default_color_id(),
+                                o_current->component->x,
+                                o_current->component->y,
+                                o_current->component->angle,
+                                o_current->component->mirror,
+                                clib,
+                                o_current->component_basename,
+                                1);
   /* Embed new object if the old one is embedded. */
   if (lepton_component_object_get_embedded (o_current)) {
     lepton_component_object_embed (o_new);

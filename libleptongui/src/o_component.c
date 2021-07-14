@@ -87,8 +87,16 @@ o_component_prepare_place (GschemToplevel *w_current,
   } else { /* if (w_current->include_component) {..} else { */
     LeptonObject *new_object;
 
-    new_object = o_component_new (toplevel->page_current, OBJ_COMPONENT, default_color_id(),
-                                  0, 0, 0, 0, sym, sym_name, 1);
+    new_object = lepton_component_new (toplevel->page_current,
+                                       OBJ_COMPONENT,
+                                       default_color_id(),
+                                       0,
+                                       0,
+                                       0,
+                                       0,
+                                       sym,
+                                       sym_name,
+                                       1);
 
     if (lepton_component_object_get_missing (new_object)) {
       /* If created object is missing, the loading failed and we

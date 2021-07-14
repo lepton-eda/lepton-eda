@@ -41,16 +41,16 @@ GList*
 o_component_promote_attribs (LeptonObject *object);
 
 LeptonObject*
-o_component_new (LeptonPage *page,
-                 char type,
-                 int color,
-                 int x,
-                 int y,
-                 int angle,
-                 int mirror,
-                 const CLibSymbol *clib_sym,
-                 const gchar *basename,
-                 int selectable);
+lepton_component_new (LeptonPage *page,
+                      char type,
+                      int color,
+                      int x,
+                      int y,
+                      int angle,
+                      int mirror,
+                      const CLibSymbol *clib_sym,
+                      const gchar *basename,
+                      int selectable);
 
 LeptonObject*
 lepton_component_new_embedded (int color,
