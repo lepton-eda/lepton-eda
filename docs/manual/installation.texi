@@ -203,10 +203,10 @@ of them that may be of special interest for the user.
 @item --with-gtk3
 turns on support for GTK3 library. @xref{Installation of
 lepton-attrib} for more information on what additional libraries are
-needed to install @command{lepton-attrib}.
+needed to install @attrib.
 
 @item --disable-attrib
-turns off building and installing @command{lepton-attrib}.
+turns off building and installing @attrib.
 
 @item --enable-contrib
 Build and installation of several contributed tools are disabled by
