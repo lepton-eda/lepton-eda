@@ -617,7 +617,7 @@ the above rules.  This symbol is of a 7400 (NAND gate).
 
 This example produces the following (using @schematic{}):
 
-@c @image{7400-1}
+@image{7400-1}
 
 This is the same symbol with all the hidden text visible (via
 @clicksequence{Edit @click{} Show/Hide Inv Text}):
