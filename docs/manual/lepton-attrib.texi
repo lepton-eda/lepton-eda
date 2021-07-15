@@ -5,7 +5,7 @@
 
 @section Introduction to lepton-attrib
 
-@command{lepton-attrib} is Lepton's attribute editor.  It reads a set
+@attrib{} is Lepton's attribute editor.  It reads a set
 of schematic files (@file{.sch}), and creates a spreadsheet showing
 all components in rows, with the associated component attributes
 listed in the columns.  It allows the user to add, modify, or delete
@@ -13,7 +13,7 @@ component attributes outside of @command{lepton-schematic}, and then
 save the @file{.sch} files back out.  When it is completed, it will
 allow the user to edit attributes attached to components.
 
-@command{lepton-attrib} is useful in situations where you need to
+@attrib{} is useful in situations where you need to
 view, add, modify, or delete a number of attributes all at once.  It
 saves you the pain of clicking on each component and repeatedly using
 @command{lepton-schematic}'s attribute editor to modify component
@@ -21,12 +21,12 @@ attributes.  For example, if you create a large design with generic
 components, and then later want to attach @code{footprint} attributes
 to your components, it is a real hassle to do so using
 @command{lepton-schematic}.  In this situation, you can run
-@command{lepton-attrib} on your design files to attach the
+@attrib{} on your design files to attach the
 @code{footprint} attributes all at once using an easy-to-use
 spreadsheet.
 
 @quotation Warning
-While @command{lepton-attrib} has been tested on many designs, it is
+While @attrib{} has been tested on many designs, it is
 not guaranteed to work properly in all cases.  It may even trash your
 design!  Therefore, always keep a back-up copy of your design files.
 Note that this is good advice when using any software on critical
@@ -43,7 +43,7 @@ files.
 @node Usage of lepton-attrib, lepton-attrib menus, lepton-attrib, lepton-attrib
 @section Usage of lepton-attrib
 
-You can invoke @command{lepton-attrib} on your design from the command
+You can invoke @attrib{} on your design from the command
 line in the following way:
 
 @example
@@ -58,10 +58,10 @@ lepton-attrib my_design_*.sch
 
 (This assumes you have a multi-page design with file names
 @file{my_design_1.sch}, @file{my_design_2.sch}, etc.)
-@command{lepton-attrib} will then read in your design, and present you
+@attrib{} will then read in your design, and present you
 with a spreadsheet showing all components and associated attributes.
 
-You can also just run @command{lepton-attrib}, and select the input
+You can also just run @attrib{}, and select the input
 files in the ``Open'' dialog box.
 
 To edit your attributes, just edit the cells in the spreadsheet.
@@ -94,7 +94,7 @@ management.
 
 @item @clicksequence{File @click{} Quit}
 
-Quits @command{lepton-attrib}.
+Quits @attrib.
 
 @quotation Note
 Currently no checks that you have saved your design are done when you
@@ -156,10 +156,10 @@ Opens the ``About'' dialog box.
 @node Installation of lepton-attrib, Credits and history of lepton-attrib, lepton-attrib menus, lepton-attrib
 @section Installation of lepton-attrib
 
-To install @command{lepton-attrib} from sources, just install Lepton
+To install @attrib{} from sources, just install Lepton
 EDA.  @xref{Installation}.
 
-Installation of @command{lepton-attrib} can be disabled with the
+Installation of @attrib{} can be disabled with the
 option @option{--disable-attrib} on the @code{configure} stage:
 
 @example
@@ -167,7 +167,7 @@ autoreconf -ivf && ./configure --disable-attrib && make
 sudo make install
 @end example
 
-Currently, @command{lepton-attrib} depends on the third-party library
+Currently, @attrib{} depends on the third-party library
 @code{gtkextra} which has to be installed on your system.  On some
 systems you also need to install @emph{development packages}
 containing C header files necessary for compilation.  For example, on
@@ -199,7 +199,7 @@ export LD_LIBRARY_PATH=/home/user/lepton/lib:$LD_LIBRARY_PATH
 @node Credits and history of lepton-attrib,  , Installation of lepton-attrib, lepton-attrib
 @section Credits and history of lepton-attrib
 
-The original code of @command{lepton-attrib} under name
+The original code of @attrib{} under name
 @command{gattrib} has been written by Stuart Brorson
 (@email{sdb@@cloud9.net}) for the gEDA project.  @command{gattrib} was
 cobbled together in December 2003 from parts culled from GtkSheet
