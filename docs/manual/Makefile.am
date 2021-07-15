@@ -32,6 +32,7 @@ AM_MAKEINFOHTMLFLAGS = --css-ref=lepton-manual.css
 
 schematics = \
 	coordinate-space.sch \
+	net-attribute.sch \
 	path-example.sch \
 	text-layout.sch
 
@@ -62,11 +63,10 @@ infoimages_DATA = $(schematics_png) $(symbols_png)
 # lepton-cli export -m 0,1cm -o text-layout.pdf text-layout.sch && pdftops -eps text-layout.pdf text-layout.eps
 # lepton-cli export -k 1cm -o path-example.png path-example.sch
 # lepton-cli export -o path-example.pdf path-example.sch && pdftops -eps path-example.pdf path-example.eps
-noinst_DATA = $(PICTURES) net-attribute.sch
+noinst_DATA = $(PICTURES)
 
 EXTRA_DIST = \
 	$(PICTURES) \
-	net-attribute.sch \
 	lepton-manual.css \
 	scm-component.scm \
 	cmd-component.sh

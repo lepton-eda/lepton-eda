@@ -164,7 +164,7 @@ for more info on this). The output is pulled up with a pull up
 resistor which has power specified using the +5V symbol.
 
 
-@c @image{net-attribute}
+@image{net-attribute}
 
 @smallformat
 @verbatiminclude net-attribute.sch
