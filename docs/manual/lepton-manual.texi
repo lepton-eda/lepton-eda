@@ -61,8 +61,7 @@ Documentation License.''
 @macro symcheck
 @command{lepton-symcheck}
 @end macro
-@c This won't work: @macro attrib
-@macro lattrib
+@macro attrib
 @command{lepton-attrib}
 @end macro
 
