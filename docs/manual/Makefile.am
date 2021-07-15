@@ -39,7 +39,8 @@ schematics_eps = ${schematics:.sch=.eps}
 schematics_png = ${schematics:.sch=.png}
 
 symbols = \
-	7400-1.sym
+	7400-1.sym \
+	7400-1-hidden.sym
 
 symbols_eps = ${symbols:.sym=.eps}
 symbols_png = ${symbols:.sym=.png}

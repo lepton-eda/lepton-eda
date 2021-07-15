@@ -622,4 +622,4 @@ This example produces the following (using @schematic{}):
 This is the same symbol with all the hidden text visible (via
 @clicksequence{Edit @click{} Show/Hide Inv Text}):
 
-@c @image{7400-1-hidden}
+@image{7400-1-hidden}
