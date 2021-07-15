@@ -38,7 +38,14 @@ schematics = \
 schematics_eps = ${schematics:.sch=.eps}
 schematics_png = ${schematics:.sch=.png}
 
-PICTURES = $(schematics) $(schematics_eps) $(schematics_png)
+symbols = \
+	7400-1.sym
+
+PICTURES = \
+	$(schematics) \
+	$(schematics_eps) \
+	$(schematics_png) \
+	$(symbols)
 
 infoimagesdir = $(infodir)
 infoimages_DATA = $(schematics_png)
