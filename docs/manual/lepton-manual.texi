@@ -43,7 +43,7 @@ Documentation License.''
 @end ifnottex
 
 @c Some aliases.
-@alias attrib=var
+@alias attr=var
 @alias cfgkey=code
 @alias cfgtype=samp
 @alias cfgval=samp

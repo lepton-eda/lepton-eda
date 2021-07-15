@@ -113,7 +113,7 @@ tools (configuration for current directory). Expressions in
 Component and source libraries. @dfn{Component libraries} is a list of
 directories where Lepton will search for symbol files (@file{*.sym}).
 @dfn{Source libraries} is a list of directories where Lepton will
-search for @dfn{source files} (defined by the @attrib{source=}
+search for @dfn{source files} (defined by the @attr{source=}
 attribute) used in hierarchical schematics.
 
 @itemize @minus
@@ -1329,7 +1329,7 @@ Before 1.9.10 it was @code{gnetlist} group.
 @tab @cfgval{"unnamed_net"}
 @tab
 Default name used for nets for which the user has set no explicit name
-via the @attrib{netname=} or @attrib{net=} attributes.
+via the @attr{netname=} or @attr{net=} attributes.
 
 @item @cfgkey{default-bus-name}
 @tab @cfgtype{string}
@@ -1343,7 +1343,7 @@ name.  Buses are still not used in @netlist.
 @tab @cfgval{net-attribute}
 @tab
 Possible values: @cfgval{net-attribute}, @cfgval{netname-attribute}.
-Specify which attribute, @attrib{net} or @attrib{netname}, has
+Specify which attribute, @attr{net} or @attr{netname}, has
 priority if a net is found with two names. Any netname conflict will
 be resolved using the chosen attribute.
 
@@ -1368,46 +1368,46 @@ Turn on/off hierarchy processing.
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
-Whether to mangle sub-schematic's @attrib{refdes} attributes.
+Whether to mangle sub-schematic's @attr{refdes} attributes.
 
 @item @cfgkey{refdes-attribute-order}
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
-While mangling @attrib{refdes} attributes, whether to append
+While mangling @attr{refdes} attributes, whether to append
 (@cfgval{false}) or prepend (@cfgval{true}) sub-schematic's ones.
 
 @item @cfgkey{refdes-attribute-separator}
 @tab @cfgtype{string}
 @tab @cfgval{"/"}
 @tab
-Separator string used to form mangled @attrib{refdes} attribute names.
+Separator string used to form mangled @attr{refdes} attribute names.
 
 @item @cfgkey{mangle-netname-attribute}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
-Whether to mangle sub-schematic's @attrib{netname} attributes.
+Whether to mangle sub-schematic's @attr{netname} attributes.
 
 @item @cfgkey{netname-attribute-order}
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
-While mangling @attrib{netname} attributes, whether to append
+While mangling @attr{netname} attributes, whether to append
 (@cfgval{false}) or prepend (@cfgval{true}) sub-schematic's ones.
 
 @item @cfgkey{netname-attribute-separator}
 @tab @cfgtype{string}
 @tab @cfgval{"/"}
 @tab
-Separator string used to form mangled @attrib{netname} attribute
+Separator string used to form mangled @attr{netname} attribute
 names.
 
 @item @cfgkey{mangle-net-attribute}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
-Whether to mangle sub-schematic's @attrib{net} attributes.
+Whether to mangle sub-schematic's @attr{net} attributes.
 
 @item @cfgkey{net-attribute-order}
 @tab @cfgtype{boolean}
@@ -1420,7 +1420,7 @@ While mangling @samp{net} attributes, whether to append
 @tab @cfgtype{string}
 @tab @cfgval{"/"}
 @tab
-Separator string used to form mangled @attrib{net} attribute names.
+Separator string used to form mangled @attr{net} attribute names.
 
 @end multitable
 
