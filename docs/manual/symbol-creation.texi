@@ -153,8 +153,7 @@ Autonumber Text...}.
 
 Possible @attr{pintype} values are: @attr{in}, @attr{out}, @attr{io},
 @attr{oc}, @attr{oe}, @attr{pas}, @attr{tp}, @attr{tri}, @attr{clk},
-@attr{pwr}.
-@c @xref{pintype attribute} for more info.
+@attr{pwr}.  @xref{pintype attribute} for more info.
 
 
 @node Adding attributes to your symbol
@@ -310,8 +309,8 @@ schematic.
 All pins should have @attr{pintype} attribute attached to them.  This
 attribute describes the kind of a pin.  Possible values are:
 @attr{in}, @attr{out}, @attr{io}, @attr{oc}, @attr{oe}, @attr{pas},
-@attr{tp}, @attr{tri}, @attr{clk}, @attr{pwr}.
-@c @xref{pintype attribute} for more info.
+@attr{tp}, @attr{tri}, @attr{clk}, @attr{pwr}.  @xref{pintype
+attribute} for more info.
 
 @end enumerate
 
@@ -319,9 +318,8 @@ attribute describes the kind of a pin.  Possible values are:
 @node Add attributes
 @subsubsection Add attributes
 
-@c For more information on the attributes presented here, please see the
-@c @ref{gEDA/gaf Master Attribute Document, Master Attributes List}.
-
+For more information on the attributes presented here, please see the
+@ref{gEDA/gaf Master Attribute Document, Master Attributes List}.
 @enumerate
 @item
 A @attr{device=DEVICENAME} attribute should be placed somewhere in the
@@ -458,9 +456,8 @@ just have to exist in the symbol file as @attr{name=value}.
 
 @item
 There is a symbol content versioning system in libgeda which is based
-on the @attr{symversion=} attribute.
-@c @xref{symversion attribute} for more information on using this
-@c versioning scheme.
+on the @attr{symversion=} attribute.  Please see the @ref{symversion
+attribute} for more information on using this versioning scheme.
 
 @end itemize
 
@@ -548,9 +545,7 @@ across).
 @itemize
 @item
 Do not draw power and ground pins.  That information will be conveyed
-using attributes
-@c (@pxref{net= attribute mini-HOWTO})
-.
+using attributes (see the @ref{net= attribute mini-HOWTO}).
 
 @item
 The above rule can be broken if necessary, but keep in mind most of
