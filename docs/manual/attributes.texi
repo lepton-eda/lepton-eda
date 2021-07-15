@@ -557,7 +557,7 @@ nets.  When this attribute is inside a symbol, it is used to create
 nets.  When this attribute is attached to an instantiated component
 (in a schematic), then the @attr{net=} can also be used to create new
 nets and can used to override existing nets.
-@c @xref{net= attribute mini-HOWTO} for more info.
+@xref{net= attribute mini-HOWTO} for more info.
 
 
 @node value attribute, symversion attribute, net attribute, Symbol and Schematic Attributes
