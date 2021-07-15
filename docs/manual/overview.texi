@@ -37,8 +37,6 @@ lepton-archive---project archivation utility
 @item
 lepton-tragesym---symbol generator
 @item
-lepton-sch2pcb
-@item
 lepton-cli
 @item
 lepton-embed
