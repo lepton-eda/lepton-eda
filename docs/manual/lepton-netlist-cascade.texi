@@ -216,10 +216,14 @@ Figure 1 shows the schematic of a simple receiver signal chain.
 
 @c @image{rf_cascade_figure1}
 
-Figure 2 shows the contents of the example.cas file.
+@ref{fig:cascade2} shows the contents of the @file{example.cas} file.
 
-@c @image{rf_cascade_figure2}
-
+@float Figure,fig:cascade2
+@smallformat
+@verbatiminclude example.cas
+@end smallformat
+@caption{Example RF Cascade input file, @file{example.cas}}
+@end float
 
 @subsubsection Netlist the Design
 

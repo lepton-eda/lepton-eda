@@ -73,6 +73,7 @@ noinst_DATA = $(PICTURES)
 
 EXTRA_DIST = \
 	$(PICTURES) \
+	example.cas \
 	lepton-manual.css \
 	scm-component.scm \
 	cmd-component.sh
