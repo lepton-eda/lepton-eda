@@ -379,6 +379,8 @@ sending us the picture with simulation results for documentation.
 gwave example.out.TRAN.1.asc
 @end example
 
+Drag the output waveform onto the waveform panel.  @ref{fig:switcap6}
+shows the output.
 
 @float Figure,fig:switcap6
 FIXME: If you have access to the SWITCAP program, please consider
