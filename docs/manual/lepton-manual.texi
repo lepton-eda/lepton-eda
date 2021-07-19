@@ -76,7 +76,7 @@ Documentation License.''
 * Symbols::
 * lepton-schematic::            Lepton EDA schematic capture program.
 * lepton-netlist::              Lepton EDA netlister.
-* lepton-cli::
+* lepton-cli::                  Lepton EDA command line interface.
 * lepton-attrib::               Lepton EDA spreadsheet attribute editor.
 * Communication::               Places for discussions and chatting.
 * Development::                 Useful information for developers.
