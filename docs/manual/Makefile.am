@@ -36,6 +36,7 @@ AM_MAKEINFOHTMLFLAGS = --css-ref=lepton-manual.css
 dvi: #do nothing for 'make dvi'
 
 schematics = \
+	ckt.sch \
 	coordinate-space.sch \
 	net-attribute.sch \
 	path-example.sch \

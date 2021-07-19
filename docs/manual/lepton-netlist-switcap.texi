@@ -278,7 +278,11 @@ This appendix provides a simple example of the entire process of
 generating a schematic, producing a SWITCAP netlist, running a
 simulation, and plotting the results.
 
-@image{switcap_figure1.jpg}
+@float Figure,fig:switcap1
+@image{ckt}
+@caption{Simple switched capacitor circuit}
+@end float
+
 @image{switcap_figure2.jpg}
 @image{switcap_figure3.jpg}
 @image{switcap_figure4.jpg}
@@ -288,7 +292,7 @@ Figure 5/6: Simulation Results - Transient MISSING
 
 @subsubsection Example Schematics
 
-@emph{Figure 1} shows the schematic of a simple switched capacitor
+@ref{fig:switcap1} shows the schematic of a simple switched capacitor
 circuit.  Note that some switches, @attr{S1} and @attr{S3} for
 example, are controlled by @attr{CLK1} while others, @attr{S2} and
 @attr{S4} for example, are controlled by the complement of @attr{CLK1}
