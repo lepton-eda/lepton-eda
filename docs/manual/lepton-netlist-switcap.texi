@@ -283,7 +283,11 @@ simulation, and plotting the results.
 @caption{Simple switched capacitor circuit}
 @end float
 
-@image{switcap_figure2.jpg}
+@float Figure,fig:switcap2
+@image{clocks}
+@caption{SWITCAP clock definition schematic}
+@end float
+
 @image{switcap_figure3.jpg}
 @image{switcap_figure4.jpg}
 
@@ -298,7 +302,7 @@ example, are controlled by @attr{CLK1} while others, @attr{S2} and
 @attr{S4} for example, are controlled by the complement of @attr{CLK1}
 (@attr{#CLK1}).
 
-@emph{Figure 2} shows the definition of a clock and the master clock.
+@ref{fig:switcap2} shows the definition of a clock and the master clock.
 Here we define a master clock period (@emph{mcp}) of 1.0 μs in the
 timing block.  In the clock definition symbol, we define a clock
 called @attr{CLK1} that has a period equal to 1 master clock period
