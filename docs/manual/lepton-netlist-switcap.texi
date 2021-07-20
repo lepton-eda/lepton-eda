@@ -8,6 +8,10 @@ This document is released under
 
 April 13th, 2003
 
+The original document can be found at
+@smallformat
+@url{http://web.mit.edu/~geda/arch/i386_rhel3/versions/current/share/doc/geda-doc/switcap/switcap.html}
+@end smallformat
 
 @subsection Overview
 
