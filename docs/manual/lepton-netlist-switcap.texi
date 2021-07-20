@@ -300,8 +300,6 @@ simulation, and plotting the results.
 @caption{SWITCAP analysis file, @file{test.ana}}
 @end float
 
-Figure 5/6: Simulation Results - Transient MISSING
-
 
 @subsubsection Example Schematics
 
@@ -367,13 +365,26 @@ gwave example.out.SSS.1.asc
 @end example
 
 Drag the two waveforms onto the two waveform panels and change the
-x-axis to a log scale.  @emph{Figure 5} shows the output.  Start up
+x-axis to a log scale.  @ref{fig:switcap5} shows the output.  Start up
 the @command{gwave} program and load the transient result by running:
+
+
+@float Figure,fig:switcap5
+FIXME: If you have access to the SWITCAP program, please consider
+sending us the picture with simulation results for documentation.
+@caption{Simulation Results - Sinusoidal steady state}
+@end float
 
 @example
 gwave example.out.TRAN.1.asc
 @end example
 
+
+@float Figure,fig:switcap6
+FIXME: If you have access to the SWITCAP program, please consider
+sending us the picture with simulation results for documentation.
+@caption{Simulation Results - Transient}
+@end float
 
 @subsection Document Revision History
 @table @emph
