@@ -13,6 +13,14 @@ The original document can be found at
 @url{http://web.mit.edu/~geda/arch/i386_rhel3/versions/current/share/doc/geda-doc/switcap/switcap.html}
 @end smallformat
 
+The main SWITCAP page is at
+@url{http://www.cisl.columbia.edu/projects/switcap/}
+
+There you can find the full reference manual of the program.
+
+Some probably useful tips can be found at
+@url{https://web.engr.oregonstate.edu/~moon/kaj/swtips.html#manual}
+
 @subsection Overview
 
 This document describes the symbol library and @netlist{} backend
