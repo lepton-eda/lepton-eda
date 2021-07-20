@@ -38,6 +38,7 @@ schematics = \
 	coordinate-space.sch \
 	net-attribute.sch \
 	path-example.sch \
+	rf_cascade.sch \
 	text-layout.sch
 
 schematics_pdf = ${schematics:.sch=.pdf}
@@ -69,6 +70,8 @@ infoimages_DATA = $(schematics_png) $(symbols_png)
 # lepton-cli export -o path-example.pdf path-example.sch
 # lepton-cli export -m 0 -F Sans -o 7400-1-hidden.pdf 7400-1-hidden.sym
 # lepton-cli export -m 0 -F Sans -o 7400-1.pdf 7400-1.sym
+# lepton-cli export -m 0 -F Sans -k 2mm -o rf_cascade.png rf_cascade.sch
+# lepton-cli export -m 0 -F Sans -p iso_a6 -o rf_cascade.pdf rf_cascade.sch
 noinst_DATA = $(PICTURES)
 
 EXTRA_DIST = \

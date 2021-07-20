@@ -212,9 +212,13 @@ analysis and looking at the result.
 
 @subsubsection Example Schematics
 
-Figure 1 shows the schematic of a simple receiver signal chain.
+@ref{fig:cascade1} shows the schematic of a simple receiver signal
+chain.
 
-@c @image{rf_cascade_figure1}
+@float Figure,fig:cascade1
+@image{rf_cascade}
+@caption{Simple receiver signal chain block diagram}
+@end float
 
 @ref{fig:cascade2} shows the contents of the @file{example.cas} file.
 
