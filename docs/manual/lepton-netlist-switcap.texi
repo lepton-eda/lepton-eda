@@ -73,7 +73,7 @@ easy to use, includes cursors, and has zoom/pan features.  See
 @url{http://gwave.sourceforge.net/}.
 @item
 Scilab.  Similar to matlab.  Powerful, but no cursors or panning.  See
-@url{http://www-rocq.inria.fr/scilab}.
+@url{https://www.scilab.org}.
 @item
 Octave.  Similar to matlab.  See @url{http://www.octave.org/}.
 @item
