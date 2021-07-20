@@ -288,7 +288,11 @@ simulation, and plotting the results.
 @caption{SWITCAP clock definition schematic}
 @end float
 
-@image{switcap_figure3.jpg}
+@float Figure,fig:switcap3
+@image{analysis}
+@caption{SWITCAP analysis definition schematic}
+@end float
+
 @image{switcap_figure4.jpg}
 
 Figure 5/6: Simulation Results - Transient MISSING
@@ -311,9 +315,9 @@ the phase of @attr{CLK1} turning off switches is 3/8 mcp.  Additional
 clock phases can be defined by creating more instances of the clock
 definition symbol.
 
-@emph{Figure 3} shows an instantiation of the title block symbol which
+@ref{fig:switcap3} shows an instantiation of the title block symbol which
 will cause ``my title'' to be used in the @code{TITLE} line in the
-SWITCAP netlist.  @emph{Figure 3} also shows an instantiation of an
+SWITCAP netlist.  @ref{fig:switcap3} also shows an instantiation of an
 analysis block which directs the netlister to include the contents of
 the file @file{test.ana} in the output netlist.
 
