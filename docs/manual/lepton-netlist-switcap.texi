@@ -293,7 +293,12 @@ simulation, and plotting the results.
 @caption{SWITCAP analysis definition schematic}
 @end float
 
-@image{switcap_figure4.jpg}
+@float Figure,fig:switcap4
+@smallformat
+@verbatiminclude test.ana
+@end smallformat
+@caption{SWITCAP analysis file, @file{test.ana}}
+@end float
 
 Figure 5/6: Simulation Results - Transient MISSING
 
@@ -321,7 +326,7 @@ SWITCAP netlist.  @ref{fig:switcap3} also shows an instantiation of an
 analysis block which directs the netlister to include the contents of
 the file @file{test.ana} in the output netlist.
 
-@emph{Figure 4} shows the contents of the @file{test.ana} file.
+@ref{fig:switcap4} shows the contents of the @file{test.ana} file.
 
 
 @subsubsection Netlist the Design
