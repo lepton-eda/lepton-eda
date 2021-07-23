@@ -101,6 +101,7 @@ Related tools
 
 Installation
 
+* Supported operating systems::
 * Dependencies::
 * Troubleshooting dependencies::
 * Installation from source::

@@ -33,6 +33,7 @@ sudo ldconfig
 @end itemize
 
 @menu
+* Supported operating systems::
 * Dependencies::
 * Troubleshooting dependencies::
 * Installation from source::
@@ -40,7 +41,70 @@ sudo ldconfig
 * Configure options::
 @end menu
 
-@node Dependencies, Troubleshooting dependencies, Installation, Installation
+
+@node Supported operating systems, Dependencies, Installation, Installation
+@section Supported operating systems
+@cindex lepton-eda packages
+@cindex lepton-eda ports
+@cindex lepton-eda, supported distributions
+@cindex lepton-eda, supported operating systems
+
+Lepton can be built and run on many @emph{Linux} and @emph{*nix}
+systems as well as on @emph{MS Win} under @emph{Cygwin} and on
+@emph{Mac}.  As of now,
+@url{https://github.com/lepton-eda/lepton-eda/wiki/OSX, there are some
+troubles} with building it on the latter though you can install a
+virtual machine with some Linux OS, e.g., @emph{Ubuntu}, and install
+it there.
+
+The @url{https://github.com/lepton-eda/lepton-eda/wiki/Portability,
+Lepton EDA Portability} wiki page contains an incomplete list of
+systems on which you can install Lepton either from scratch, or using
+the system's package manager, as well as some recipes on how to do it.
+
+Here is probably an incomplete list of links to packages existing for
+various operating systems:
+
+@table @emph
+
+@item Debian and derivatives (Ubuntu, Kubuntu, Devuan, ...)
+@url{https://packages.debian.org/source/buster/lepton-eda, lepton-eda
+package} maintained by Bdale Garbee
+
+@item FreeBSD and derivatives (DragonFly BSD and Ghost Bsd)
+@url{https://www.freshports.org/cad/lepton-eda, lepton-eda port} by
+dmn
+
+@item OpenBSD
+@url{https://github.com/graahnul-grom/openbsd-lepton-eda, lepton-eda
+port} by dmn
+
+@item Slackware
+@url{https://slackbuilds.org/repository/14.2/development/lepton-eda/,
+lepton-eda build} by dmn
+
+@item Gentoo
+@url{https://github.com/domichel/GenCool/tree/master/sci-electronics/lepton-eda,
+lepton-eda ebuild} by Dominique Michel
+
+@item Fedora
+@url{https://github.com/graahnul-grom/fedora-lepton-eda, lepton-eda
+spec} by dmn
+
+@item Arch
+@url{https://aur.archlinux.org/packages/lepton-eda-git, lepton-eda}
+and @url{https://aur.archlinux.org/packages/lepton-eda-gtk3-git,
+lepton-eda with gtk3 support} by Ian Glen
+
+@item Cygwin
+Please see @url{https://github.com/lepton-eda/lepton-eda/wiki/Cygwin,
+this article} initially contributed by Mario Giovinazzo on how to
+install Lepton on @emph{Cygwin}.
+
+@end table
+
+
+@node Dependencies, Troubleshooting dependencies, Supported operating systems, Installation
 @section Dependencies
 
 In order to compile Lepton from the distributed source archives, you
