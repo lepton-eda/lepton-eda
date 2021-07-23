@@ -1,5 +1,5 @@
 # libleptonattrib.m4                                     -*-Autoconf-*-
-# serial 1
+# serial 2
 
 dnl libleptonattrib-specific setup
 dnl Copyright (C) 2020-2021 Lepton EDA Contributors

@@ -1,5 +1,5 @@
 # liblepton.m4                                       -*-Autoconf-*-
-# serial 1.0
+# serial 2
 
 dnl liblepton-specific setup
 dnl Copyright (C) 2009  Peter Brett <peter@peter-b.co.uk>
