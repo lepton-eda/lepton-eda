@@ -23,6 +23,12 @@ Notable changes in Lepton EDA 1.9.16 (upcoming)
 
 - Versions of `Cygwin` libraries are now updated automatically.
 
+### Changes in `lepton-schematic`:
+
+- Several status bar indicators have been made interactive.  Now,
+  the user can change the *rubber band* and *magnetic net* modes
+  and sizes of grid and snap simply by clicking on the indicators.
+
 
 Notable changes in Lepton EDA 1.9.15 (20210626)
 -----------------------------------------------
