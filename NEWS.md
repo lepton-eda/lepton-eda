@@ -13,6 +13,12 @@ Notable changes in Lepton EDA 1.9.16 (upcoming)
 - Compilation warnings on running Lepton utilities written in
   Scheme, which shown up in the previous release, have been fixed.
 
+- Several symbols in the `sym/analog` have been fixed by adding
+  missing `footprint`, `value`, and `symversion` attributes.
+
+- Test schematics for netlister have been made self-sufficient by
+  adding symbols they depend on.
+
 
 Notable changes in Lepton EDA 1.9.15 (20210626)
 -----------------------------------------------
