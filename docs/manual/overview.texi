@@ -83,7 +83,7 @@ pads_backannotate---process PADS PowerPCB .eco files to backannotate
 changes to schematics in @ref{gEDA file format}.
 @item
 sw2asc---converts a SWITCAP2 output file into ASCII data files that
-other tools can read.
+other tools can read.  @xref{Switcap backend} for more information.
 @item
 sch2eaglepos.sh---read a schematic in @ref{gEDA file format} and
 attempt to extract the relative positions of the components in order
