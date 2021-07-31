@@ -1,5 +1,9 @@
 @node Switcap backend
 @section gEDA/gaf Switcap Symbols and Netlister
+@cindex switcap
+@cindex switcap backend
+@cindex backend, switcap
+@cindex sw2asc
 
 by: Dan McMahill
 
