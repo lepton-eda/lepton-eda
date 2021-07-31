@@ -213,7 +213,7 @@ AX_LIBLEPTON([9:0:0])
 # Set up libleptonattrib with the correct ld version number
 AX_LIBLEPTONATTRIB([3:0:0])
 # Set up libleptongui with the correct ld version number.
-AX_LIBLEPTONGUI([3:0:0])
+AX_LIBLEPTONGUI([3:1:0])
 
 #####################################################################
 # Generate output
