@@ -19,6 +19,9 @@ Notable changes in Lepton EDA 1.9.16 (upcoming)
 - Test schematics for netlister have been made self-sufficient by
   adding symbols they depend on.
 
+- A new integration test suite written in Scheme has been added to
+  unify testing of all Lepton utilities in future.
+
 ### Changes when building from source:
 
 - Versions of `Cygwin` libraries are now updated automatically.
