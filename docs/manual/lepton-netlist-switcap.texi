@@ -60,10 +60,12 @@ You will need the following programs to be installed:
 @item
 A version of Lepton EDA.
 @item
-SWITCAP.  The executable is usually called @command{sw}.  If you do
-not have SWITCAP available on your system, you will need to contact
-Columbia University to obtain a copy.  The Lepton SWITCAP support was
-tested with SWITCAP Version A.5R Release 21-Sep-87.
+@url{http://innovation.columbia.edu/technologies/Proxy30_optimal-simulator-for-mixed/,
+SWITCAP}.  The executable is usually called @command{sw}.  If you do
+not have SWITCAP available on your system, you will need to
+@url{http://innovation.columbia.edu/technologies/Proxy30_optimal-simulator-for-mixed/licensing,
+contact Columbia University} to obtain a copy.  The Lepton SWITCAP
+support was tested with SWITCAP Version A.5R Release 21-Sep-87.
 @item
 Although it is optional, you may wish to install a tool which can be
 used for plotting the output data.  SWITCAP produces both ASCII data
