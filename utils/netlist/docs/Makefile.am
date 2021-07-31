@@ -7,7 +7,7 @@ EXTRA_DIST = \
 
 docsreadmedir = $(docdir)/readmes
 dist_docsreadme_DATA = \
-	README.bom README.pcb README.switcap README.verilog \
+	README.bom README.pcb README.verilog \
 	README.vhdl README.sysc README.eagle
 
 dist_man_MANS = lepton-netlist.1
