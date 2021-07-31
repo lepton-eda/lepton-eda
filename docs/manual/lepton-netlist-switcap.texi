@@ -81,6 +81,11 @@ Grace.  See @url{http://plasma-gate.weizmann.ac.il/Grace/}.
 @end enumerate
 @end enumerate
 
+The utility @command{sw2asc}(1) mentioned above can be used to convert
+a SWITCAP2 output file into ASCII data files that the above GUI tools
+can read.  It is not installed by default, you can find it in the
+@file{contrib/} directory of the Lepton repository or tarball.
+
 
 @subsection Creating Schematics
 
