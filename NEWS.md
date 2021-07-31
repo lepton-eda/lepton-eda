@@ -23,6 +23,19 @@ Notable changes in Lepton EDA 1.9.16 (upcoming)
 
 - Versions of `Cygwin` libraries are now updated automatically.
 
+### Changes in `liblepton`:
+
+- Several Scheme functions related to source libraries have been
+  fixed or improved as follows:
+  - The function `source-library-search()` no longer adds wrong
+    directories with duplicated root name.
+  - The functions `source-library()`, `source-library-search()`,
+    `reset-source-library()` now return the value of the default
+    source library record.
+  - The functions now check the type of their arguments and raise
+    `'wrong-type-arg` exception if it is wrong.
+
+
 ### Changes in `lepton-schematic`:
 
 - Several status bar indicators have been made interactive.  Now,
