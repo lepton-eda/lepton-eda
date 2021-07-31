@@ -37,11 +37,7 @@ lepton-archive---project archivation utility
 @item
 lepton-tragesym---symbol generator
 @item
-lepton-cli
-@item
 lepton-embed
-@item
-lepton-netlist
 @item
 lepton-pcb_backannotate
 @item
@@ -53,13 +49,9 @@ lepton-sch2pcb
 @item
 lepton-schdiff
 @item
-lepton-schematic
-@item
 lepton-symcheck
 @item
 lepton-symfix
-@item
-lepton-tragesym
 @item
 lepton-upcfg
 @end itemize
