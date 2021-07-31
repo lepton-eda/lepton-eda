@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:51+0300\n"
 "PO-Revision-Date: 2012-09-01 20:41+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -184,13 +184,15 @@ msgstr ""
 #, c-format
 msgid ""
 "Snap size.\n"
+"Click to change the snapping mode.\n"
 "Attention: current snap size (%d) differs\n"
 "from the value set in configuration: %d."
 msgstr ""
 
-#, fuzzy
-msgid "Snap size"
-msgstr "Μέγεθος:"
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode."
+msgstr ""
 
 #, fuzzy
 msgid "Grid: OFF"
@@ -200,9 +202,10 @@ msgstr "Λειτουργία τόξου"
 msgid "Grid: NONE"
 msgstr "Λειτουργία τόξου"
 
-#, fuzzy
-msgid "Grid size"
-msgstr "Λειτουργία τόξου"
+msgid ""
+"Grid size.\n"
+"Click to change the grid style."
+msgstr ""
 
 msgid "Left mouse button"
 msgstr ""
@@ -217,11 +220,15 @@ msgstr ""
 "Λειτουργία προσθήκης δικτύου\n"
 "Δεξί κλικ για ακύρωση"
 
-msgid "Net rubber band mode"
+msgid ""
+"Net rubber band mode.\n"
+"Click to toggle ON/OFF."
 msgstr ""
 
 #, fuzzy
-msgid "Magnetic net mode"
+msgid ""
+"Magnetic net mode.\n"
+"Click to toggle ON/OFF."
 msgstr "Λειτουργία μαγνητικού δικτύου"
 
 #, fuzzy
@@ -2335,6 +2342,18 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Snap size"
+#~ msgstr "Μέγεθος:"
+
+#, fuzzy
+#~ msgid "Grid size"
+#~ msgstr "Λειτουργία τόξου"
+
+#, fuzzy
+#~ msgid "Magnetic net mode"
+#~ msgstr "Λειτουργία μαγνητικού δικτύου"
 
 #~ msgid "NONE"
 #~ msgstr "ΚΑΝΕΝΑ"

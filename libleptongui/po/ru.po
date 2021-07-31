@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:51+0300\n"
 "PO-Revision-Date: 2020-03-20 15:30+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -200,13 +200,15 @@ msgstr ""
 #, c-format
 msgid ""
 "Snap size.\n"
+"Click to change the snapping mode.\n"
 "Attention: current snap size (%d) differs\n"
 "from the value set in configuration: %d."
 msgstr ""
 
-#, fuzzy
-msgid "Snap size"
-msgstr "_Шаг привязки:"
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode."
+msgstr ""
 
 #, fuzzy
 msgid "Grid: OFF"
@@ -216,9 +218,10 @@ msgstr "Сетка отключена"
 msgid "Grid: NONE"
 msgstr "Сетка отключена"
 
-#, fuzzy
-msgid "Grid size"
-msgstr "Сетка +"
+msgid ""
+"Grid size.\n"
+"Click to change the grid style."
+msgstr ""
 
 msgid "Left mouse button"
 msgstr "Левая кнопка мыши"
@@ -229,11 +232,17 @@ msgstr "Средняя кнопка мыши"
 msgid "Right mouse button"
 msgstr "Правая кнопка мыши"
 
-msgid "Net rubber band mode"
+#, fuzzy
+msgid ""
+"Net rubber band mode.\n"
+"Click to toggle ON/OFF."
 msgstr "Режим резиновых соединений"
 
-msgid "Magnetic net mode"
-msgstr "Режим магнитных соединений"
+#, fuzzy
+msgid ""
+"Magnetic net mode.\n"
+"Click to toggle ON/OFF."
+msgstr "Режим «магнитных» соединений отключён"
 
 msgid "Current action mode"
 msgstr "Текущее действие/режим"
@@ -2269,6 +2278,17 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Snap size"
+#~ msgstr "_Шаг привязки:"
+
+#, fuzzy
+#~ msgid "Grid size"
+#~ msgstr "Сетка +"
+
+#~ msgid "Magnetic net mode"
+#~ msgstr "Режим магнитных соединений"
 
 #~ msgid "(Snap size, Grid size)"
 #~ msgstr "(Размер привязки, Размер сетки)"

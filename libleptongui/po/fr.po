@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr_FR\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:51+0300\n"
 "PO-Revision-Date: 2012-10-28 15:46+0000\n"
 "Last-Translator: Penegal <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -188,13 +188,15 @@ msgstr ""
 #, c-format
 msgid ""
 "Snap size.\n"
+"Click to change the snapping mode.\n"
 "Attention: current snap size (%d) differs\n"
 "from the value set in configuration: %d."
 msgstr ""
 
-#, fuzzy
-msgid "Snap size"
-msgstr "Grille de snap"
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode."
+msgstr ""
 
 #, fuzzy
 msgid "Grid: OFF"
@@ -204,9 +206,10 @@ msgstr "Grille OFF\n"
 msgid "Grid: NONE"
 msgstr "Grille OFF\n"
 
-#, fuzzy
-msgid "Grid size"
-msgstr "Grille OFF\n"
+msgid ""
+"Grid size.\n"
+"Click to change the grid style."
+msgstr ""
 
 msgid "Left mouse button"
 msgstr ""
@@ -222,12 +225,16 @@ msgstr ""
 "Clic droit pour annuler"
 
 #, fuzzy
-msgid "Net rubber band mode"
+msgid ""
+"Net rubber band mode.\n"
+"Click to toggle ON/OFF."
 msgstr "Piste é_lastique On/Off"
 
 #, fuzzy
-msgid "Magnetic net mode"
-msgstr "Mode Piste Magnétique"
+msgid ""
+"Magnetic net mode.\n"
+"Click to toggle ON/OFF."
+msgstr "Mode Piste Magnétique : OFF\n"
 
 #, fuzzy
 msgid "Current action mode"
@@ -2415,6 +2422,18 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Snap size"
+#~ msgstr "Grille de snap"
+
+#, fuzzy
+#~ msgid "Grid size"
+#~ msgstr "Grille OFF\n"
+
+#, fuzzy
+#~ msgid "Magnetic net mode"
+#~ msgstr "Mode Piste Magnétique"
 
 #~ msgid "OFF"
 #~ msgstr "OFF"

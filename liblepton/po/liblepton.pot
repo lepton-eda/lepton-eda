@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.15\n"
+"Project-Id-Version: lepton-eda 1.9.16\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -840,16 +840,13 @@ msgstr ""
 msgid "Object ~A is not part of a page"
 msgstr ""
 
-#: liblepton/scheme/lepton/library.scm:102
+#: liblepton/scheme/lepton/library.scm:112
+#: liblepton/scheme/lepton/library.scm:171
 #, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr ""
 
-#: liblepton/scheme/lepton/library.scm:104
-msgid "Source library path must be a string.\n"
-msgstr ""
-
-#: liblepton/scheme/lepton/library.scm:163
+#: liblepton/scheme/lepton/library.scm:231
 #, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr ""

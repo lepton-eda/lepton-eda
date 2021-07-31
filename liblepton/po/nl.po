@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:52+0300\n"
 "PO-Revision-Date: 2014-08-31 23:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -765,9 +765,6 @@ msgstr "Object ~A is geen deel van een pagina"
 #, fuzzy, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
 msgstr "Ongeldig pad [%s] overgedragen aan source-library\n"
-
-msgid "Source library path must be a string.\n"
-msgstr ""
 
 #, fuzzy, scheme-format
 msgid "File ~S is not readable.\n"

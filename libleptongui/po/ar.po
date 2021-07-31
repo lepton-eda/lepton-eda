@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:51+0300\n"
 "PO-Revision-Date: 2010-02-14 06:08+0000\n"
 "Last-Translator: عبدالله شلي (Abdellah Chelli) <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -182,13 +182,15 @@ msgstr ""
 #, c-format
 msgid ""
 "Snap size.\n"
+"Click to change the snapping mode.\n"
 "Attention: current snap size (%d) differs\n"
 "from the value set in configuration: %d."
 msgstr ""
 
-#, fuzzy
-msgid "Snap size"
-msgstr "حجم الجذب"
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode."
+msgstr ""
 
 #, fuzzy
 msgid "Grid: OFF"
@@ -198,9 +200,10 @@ msgstr "شبيكة موقفة\n"
 msgid "Grid: NONE"
 msgstr "شبيكة موقفة\n"
 
-#, fuzzy
-msgid "Grid size"
-msgstr "شبيكة موقفة\n"
+msgid ""
+"Grid size.\n"
+"Click to change the grid style."
+msgstr ""
 
 msgid "Left mouse button"
 msgstr ""
@@ -216,12 +219,16 @@ msgstr ""
 "الزر الأيمن للفارة للإلغاء"
 
 #, fuzzy
-msgid "Net rubber band mode"
+msgid ""
+"Net rubber band mode.\n"
+"Click to toggle ON/OFF."
 msgstr "بدّل الشريط الم_طاطي للشبكة"
 
 #, fuzzy
-msgid "Magnetic net mode"
-msgstr "وضع الشبكة المغناطيسية"
+msgid ""
+"Magnetic net mode.\n"
+"Click to toggle ON/OFF."
+msgstr "وضع الشبكة المغناطيسية: موقف\n"
 
 #, fuzzy
 msgid "Current action mode"
@@ -2337,6 +2344,18 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Snap size"
+#~ msgstr "حجم الجذب"
+
+#, fuzzy
+#~ msgid "Grid size"
+#~ msgstr "شبيكة موقفة\n"
+
+#, fuzzy
+#~ msgid "Magnetic net mode"
+#~ msgstr "وضع الشبكة المغناطيسية"
 
 #~ msgid "OFF"
 #~ msgstr "إيقاف"

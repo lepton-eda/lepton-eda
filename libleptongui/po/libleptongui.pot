@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.15\n"
+"Project-Id-Version: lepton-eda 1.9.16\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:51+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -188,70 +188,79 @@ msgstr ""
 msgid "_Degrees of Sweep:"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:586
+#: libleptongui/src/gschem_bottom_widget.c:667
 msgid "<b>Snap: OFF</b>"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:594
+#: libleptongui/src/gschem_bottom_widget.c:675
 #, c-format
 msgid "Snap: <b>%d</b>"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:603
+#: libleptongui/src/gschem_bottom_widget.c:684
 #, c-format
 msgid "<u>Re</u>snap: <b>%d</b>"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:608
+#: libleptongui/src/gschem_bottom_widget.c:689
 #, c-format
 msgid "<u>Re</u>snap: %d"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:624
+#: libleptongui/src/gschem_bottom_widget.c:705
 #, c-format
 msgid ""
 "Snap size.\n"
+"Click to change the snapping mode.\n"
 "Attention: current snap size (%d) differs\n"
 "from the value set in configuration: %d."
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:637
-msgid "Snap size"
+#: libleptongui/src/gschem_bottom_widget.c:719
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode."
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:681
+#: libleptongui/src/gschem_bottom_widget.c:774
 msgid "Grid: OFF"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:686
+#: libleptongui/src/gschem_bottom_widget.c:779
 msgid "Grid: NONE"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:695
-msgid "Grid size"
+#: libleptongui/src/gschem_bottom_widget.c:788
+msgid ""
+"Grid size.\n"
+"Click to change the grid style."
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:738
+#: libleptongui/src/gschem_bottom_widget.c:842
 msgid "Left mouse button"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:742
+#: libleptongui/src/gschem_bottom_widget.c:846
 msgid "Middle mouse button"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:746
+#: libleptongui/src/gschem_bottom_widget.c:850
 msgid "Right mouse button"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:845
-msgid "Net rubber band mode"
+#: libleptongui/src/gschem_bottom_widget.c:951
+msgid ""
+"Net rubber band mode.\n"
+"Click to toggle ON/OFF."
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:856
-msgid "Magnetic net mode"
+#: libleptongui/src/gschem_bottom_widget.c:974
+msgid ""
+"Magnetic net mode.\n"
+"Click to toggle ON/OFF."
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:864
+#: libleptongui/src/gschem_bottom_widget.c:992
 msgid "Current action mode"
 msgstr ""
 
@@ -306,7 +315,7 @@ msgid "Filename"
 msgstr ""
 
 #: libleptongui/src/gschem_find_text_state.c:784
-#: libleptongui/src/x_window.c:1173 libleptongui/src/x_window.c:1420
+#: libleptongui/src/x_window.c:1173 libleptongui/src/x_window.c:1422
 msgid "Text"
 msgstr ""
 
@@ -579,7 +588,7 @@ msgstr ""
 msgid "Translate"
 msgstr ""
 
-#: libleptongui/src/i_basic.c:65 libleptongui/src/x_window.c:1351
+#: libleptongui/src/i_basic.c:65 libleptongui/src/x_window.c:1353
 #: libleptongui/scheme/conf/schematic/menu.scm:61
 #: libleptongui/scheme/schematic/builtins.scm:129
 msgid "Select Mode"
@@ -1687,7 +1696,7 @@ msgstr ""
 msgid "_Close"
 msgstr ""
 
-#: libleptongui/src/x_widgets.c:170 libleptongui/src/x_window.c:1424
+#: libleptongui/src/x_widgets.c:170 libleptongui/src/x_window.c:1426
 msgid "Options"
 msgstr ""
 
@@ -1700,11 +1709,11 @@ msgstr ""
 msgid "Object Properties"
 msgstr ""
 
-#: libleptongui/src/x_widgets.c:236 libleptongui/src/x_window.c:1450
+#: libleptongui/src/x_widgets.c:236 libleptongui/src/x_window.c:1452
 msgid "Log"
 msgstr ""
 
-#: libleptongui/src/x_widgets.c:257 libleptongui/src/x_window.c:1446
+#: libleptongui/src/x_widgets.c:257 libleptongui/src/x_window.c:1448
 msgid "Find Text"
 msgstr ""
 
@@ -1867,20 +1876,20 @@ msgstr ""
 msgid "/Cancel"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1341
+#: libleptongui/src/x_window.c:1343
 msgid "Pick"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1416
+#: libleptongui/src/x_window.c:1418
 msgid "Object"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1562
+#: libleptongui/src/x_window.c:1564
 #, c-format
 msgid "New file [%s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1592
+#: libleptongui/src/x_window.c:1594
 #, c-format
 msgid ""
 "<b>An error occurred while loading the requested file.</b>\n"
@@ -1894,11 +1903,11 @@ msgid ""
 "monitor program's output in terminal window."
 msgstr ""
 
-#: libleptongui/src/x_window.c:1611
+#: libleptongui/src/x_window.c:1613
 msgid "Failed to load file"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1710
+#: libleptongui/src/x_window.c:1712
 #, c-format
 msgid "Skipping existing file [%s]"
 msgstr ""

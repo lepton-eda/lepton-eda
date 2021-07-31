@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:51+0300\n"
 "PO-Revision-Date: 2014-08-31 22:35+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -185,13 +185,15 @@ msgstr ""
 #, c-format
 msgid ""
 "Snap size.\n"
+"Click to change the snapping mode.\n"
 "Attention: current snap size (%d) differs\n"
 "from the value set in configuration: %d."
 msgstr ""
 
-#, fuzzy
-msgid "Snap size"
-msgstr "Snap Grootte"
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode."
+msgstr ""
 
 #, fuzzy
 msgid "Grid: OFF"
@@ -201,9 +203,10 @@ msgstr "Raster UIT\n"
 msgid "Grid: NONE"
 msgstr "Raster UIT\n"
 
-#, fuzzy
-msgid "Grid size"
-msgstr "Raster UIT\n"
+msgid ""
+"Grid size.\n"
+"Click to change the grid style."
+msgstr ""
 
 msgid "Left mouse button"
 msgstr ""
@@ -219,12 +222,16 @@ msgstr ""
 "Rechter muisknop om af te breken"
 
 #, fuzzy
-msgid "Net rubber band mode"
+msgid ""
+"Net rubber band mode.\n"
+"Click to toggle ON/OFF."
 msgstr "Schakel Draad Elastiekband"
 
 #, fuzzy
-msgid "Magnetic net mode"
-msgstr "Magnetische Draad Mode"
+msgid ""
+"Magnetic net mode.\n"
+"Click to toggle ON/OFF."
+msgstr "magnetische draad mode: UIT\n"
 
 #, fuzzy
 msgid "Current action mode"
@@ -2346,6 +2353,18 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Snap size"
+#~ msgstr "Snap Grootte"
+
+#, fuzzy
+#~ msgid "Grid size"
+#~ msgstr "Raster UIT\n"
+
+#, fuzzy
+#~ msgid "Magnetic net mode"
+#~ msgstr "Magnetische Draad Mode"
 
 #~ msgid "OFF"
 #~ msgstr "UIT"

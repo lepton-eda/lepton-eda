@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:51+0300\n"
 "PO-Revision-Date: 2012-01-31 12:07+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -172,13 +172,15 @@ msgstr ""
 #, c-format
 msgid ""
 "Snap size.\n"
+"Click to change the snapping mode.\n"
 "Attention: current snap size (%d) differs\n"
 "from the value set in configuration: %d."
 msgstr ""
 
-#, fuzzy
-msgid "Snap size"
-msgstr "パンモード"
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode."
+msgstr ""
 
 #, fuzzy
 msgid "Grid: OFF"
@@ -188,9 +190,10 @@ msgstr "グリッド・オフ\n"
 msgid "Grid: NONE"
 msgstr "グリッド・オフ\n"
 
-#, fuzzy
-msgid "Grid size"
-msgstr "グリッド・オフ\n"
+msgid ""
+"Grid size.\n"
+"Click to change the grid style."
+msgstr ""
 
 msgid "Left mouse button"
 msgstr ""
@@ -206,11 +209,15 @@ msgstr ""
 "右ボタンでキャンセル"
 
 #, fuzzy
-msgid "Net rubber band mode"
+msgid ""
+"Net rubber band mode.\n"
+"Click to toggle ON/OFF."
 msgstr "ラバーバンド・オン\n"
 
 #, fuzzy
-msgid "Magnetic net mode"
+msgid ""
+"Magnetic net mode.\n"
+"Click to toggle ON/OFF."
 msgstr "ネットモード"
 
 msgid "Current action mode"
@@ -2237,6 +2244,18 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Snap size"
+#~ msgstr "パンモード"
+
+#, fuzzy
+#~ msgid "Grid size"
+#~ msgstr "グリッド・オフ\n"
+
+#, fuzzy
+#~ msgid "Magnetic net mode"
+#~ msgstr "ネットモード"
 
 #~ msgid "Edit slot number"
 #~ msgstr "スロット番号編集"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gschem VERSION\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:51+0300\n"
 "PO-Revision-Date: 2012-03-23 03:04+0000\n"
 "Last-Translator: Adolfo Jayme Barrientos <fitoschido@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -188,13 +188,15 @@ msgstr ""
 #, c-format
 msgid ""
 "Snap size.\n"
+"Click to change the snapping mode.\n"
 "Attention: current snap size (%d) differs\n"
 "from the value set in configuration: %d."
 msgstr ""
 
-#, fuzzy
-msgid "Snap size"
-msgstr "Tamaño de la rejilla"
+msgid ""
+"Snap size.\n"
+"Click to change the snapping mode."
+msgstr ""
 
 #, fuzzy
 msgid "Grid: OFF"
@@ -204,9 +206,10 @@ msgstr "Rejilla DESACTIVADA\n"
 msgid "Grid: NONE"
 msgstr "Rejilla DESACTIVADA\n"
 
-#, fuzzy
-msgid "Grid size"
-msgstr "Rejilla DESACTIVADA\n"
+msgid ""
+"Grid size.\n"
+"Click to change the grid style."
+msgstr ""
 
 msgid "Left mouse button"
 msgstr ""
@@ -222,12 +225,16 @@ msgstr ""
 "Botón derecho del ratón para cancelar"
 
 #, fuzzy
-msgid "Net rubber band mode"
+msgid ""
+"Net rubber band mode.\n"
+"Click to toggle ON/OFF."
 msgstr "Act/Desact conserva_r conexiones"
 
 #, fuzzy
-msgid "Magnetic net mode"
-msgstr "Modo Ayuda a la conexión"
+msgid ""
+"Magnetic net mode.\n"
+"Click to toggle ON/OFF."
+msgstr "Modo de Ayuda a la conexión: DESACTIVADO\n"
 
 #, fuzzy
 msgid "Current action mode"
@@ -2411,6 +2418,18 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Snap size"
+#~ msgstr "Tamaño de la rejilla"
+
+#, fuzzy
+#~ msgid "Grid size"
+#~ msgstr "Rejilla DESACTIVADA\n"
+
+#, fuzzy
+#~ msgid "Magnetic net mode"
+#~ msgstr "Modo Ayuda a la conexión"
 
 #~ msgid "OFF"
 #~ msgstr "○"

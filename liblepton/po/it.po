@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:52+0300\n"
 "PO-Revision-Date: 2015-01-12 10:15+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: Italian <it@li.org>\n"
@@ -723,9 +723,6 @@ msgstr ""
 
 #, scheme-format
 msgid "Invalid path ~S or source not readable.\n"
-msgstr ""
-
-msgid "Source library path must be a string.\n"
 msgstr ""
 
 #, fuzzy, scheme-format

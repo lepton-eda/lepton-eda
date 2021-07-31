@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-06-26 17:33+0300\n"
+"POT-Creation-Date: 2021-07-31 11:52+0300\n"
 "PO-Revision-Date: 2020-03-20 09:14+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -759,9 +759,6 @@ msgstr "Объект ~A не является частью схемы"
 msgid "Invalid path ~S or source not readable.\n"
 msgstr "Недопустимый путь ~S или нет доступа на чтение к источнику.\n"
 
-msgid "Source library path must be a string.\n"
-msgstr "Путь к библиотеке исходных данных должен быть строкой.\n"
-
 #, scheme-format
 msgid "File ~S is not readable.\n"
 msgstr "Нет доступа на чтение к файлу ~S.\n"
@@ -1323,6 +1320,9 @@ msgstr "Количество ошибок: ~A"
 
 msgid "(use -v to view details)"
 msgstr "(используйте опцию -v для вывода подробностей)"
+
+#~ msgid "Source library path must be a string.\n"
+#~ msgstr "Путь к библиотеке исходных данных должен быть строкой.\n"
 
 #~ msgid "Object ~A has invalid stroke cap style ~A"
 #~ msgstr "Недопустимый стиль концов линий объекта ~A: ~A"
