@@ -29,6 +29,11 @@ Notable changes in Lepton EDA 1.9.16 (upcoming)
   the user can change the *rubber band* and *magnetic net* modes
   and sizes of grid and snap simply by clicking on the indicators.
 
+### Changes in `lepton-netlist`:
+
+- The output of the `switcap` netlister backend which was broken
+  for several years is now fixed according to its documentation.
+
 
 Notable changes in Lepton EDA 1.9.15 (20210626)
 -----------------------------------------------
