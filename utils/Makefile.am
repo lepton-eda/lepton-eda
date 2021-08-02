@@ -13,6 +13,7 @@ SUBDIRS = \
 	refdes_renum \
 	schdiff \
 	upcfg \
+	update \
 	symcheck \
 	cli \
 	netlist
