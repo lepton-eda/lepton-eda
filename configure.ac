@@ -316,6 +316,7 @@ AC_CONFIG_FILES([Makefile
                  utils/upcfg/docs/Makefile
 
                  utils/update/Makefile
+                 utils/update/tests/Makefile
 
                  utils/sch2pcb/Makefile
                  utils/sch2pcb/src/Makefile

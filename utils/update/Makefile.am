@@ -1,3 +1,5 @@
+SUBDIRS = tests
+
 bin_SCRIPTS = lepton-update
 
 EXTRA_DIST = lepton-update.scm
