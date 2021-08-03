@@ -54,6 +54,8 @@ lepton-symcheck
 lepton-symfix
 @item
 lepton-upcfg
+@item
+lepton-update
 @end itemize
 
 The following contributed tools are not covered in this manual.
@@ -91,19 +93,6 @@ to generate corresponding MOVE instructions for Eagle.
 @item
 sarlacc_sym---convert OrCAD text libraries to components in @ref{gEDA file
 format}.
-@end itemize
-
-The following contributed scripts are not covered in this manual
-either.  They are pretty obsolete, non-documented, and usually do
-trivial things:
-
-@itemize
-@item
-gschupdate---update some deprecated attributes in old schematics (with
-version 20020527 or earlier).
-@item
-gsymupdate---update some deprecated attributes in old symbols (with
-version 20020527 or earlier).
 @end itemize
 
 @node Compatibility with geda-gaf, Related tools, List of programs, Overview

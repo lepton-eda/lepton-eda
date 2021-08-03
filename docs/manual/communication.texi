@@ -1,4 +1,4 @@
-@node Communication, Development, lepton-attrib, Top
+@node Communication, Development, lepton-update, Top
 @chapter Communication
 @cindex communication
 @cindex communication channels
