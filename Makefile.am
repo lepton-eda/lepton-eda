@@ -42,7 +42,9 @@ AM_TESTS_ENVIRONMENT = env \
 	GUILE_LOAD_COMPILED_PATH='' \
 	LEPTON_INHIBIT_RC_FILES='yes'
 
-TESTS = tests/netlist.test
+TESTS = \
+	tests/netlist.test \
+	tests/update.test
 
 EXTRA_DIST = \
 	autogen.sh \

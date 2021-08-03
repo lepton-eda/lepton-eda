@@ -1,0 +1,83 @@
+(use-modules (srfi srfi-1)
+             (srfi srfi-26)
+             (srfi srfi-64))
+
+(load-from-path "env.scm")
+
+(define default-test-directory
+  (build-filename *abs-top-srcdir* "utils" "update" "tests"))
+
+(define *update*
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "update"
+                  "lepton-update"))
+
+
+(test-begin "update-utility")
+
+(test-assert (file-exists? *update*))
+
+(test-eq EXIT_SUCCESS
+  (status:exit-val (system* *update*)))
+
+(test-end "update-utility")
+
+
+(define (build-test-filename name)
+  (build-filename *abs-top-srcdir* "utils" "update" "tests" name))
+
+(define testdir (build-filename (getcwd) "run.update.test"))
+
+;;; Setup/teardown of directories / files needed by tests
+(define (config-test-setup)
+  (mkdir testdir))
+
+(define (config-test-teardown)
+  (system* "rm" "-rf" testdir))
+
+(test-begin "update-files")
+(test-group-with-cleanup "update-files"
+  ;; Set up.
+  (config-test-setup)
+
+  ;; Test body.
+  (let* ((test-basenames '("net-attribute.sch" "oldslot.sym" "old_symbol.sym"))
+         (test-files (map (cut build-test-filename <>) test-basenames))
+         (test-copies (map (cut build-filename testdir <>) test-basenames))
+         (golden-files (map (cut string-append <> ".upd") test-files))
+         (golden-copies (map (cut string-append <> ".upd") test-copies)))
+
+    (for-each (cut copy-file <> <>) test-files test-copies)
+    (for-each (cut copy-file <> <>) golden-files golden-copies)
+
+    (test-assert (every file-exists? (append test-copies golden-copies)))
+
+    (test-eq EXIT_SUCCESS
+      (status:exit-val
+       (apply system* *update* test-copies)))
+
+    (for-each
+     ;; Process each pair separately.
+     (lambda (test-copy golden-copy)
+       ;; After the update command, test and golden files should
+       ;; not differ excluding, maybe, the version line.
+
+       ;; Remove the first line in both test and golden files.
+       (system* "sed" "-i" "1d" test-copy)
+       (system* "sed" "-i" "1d" golden-copy)
+       ;; For debugging purposes, output the command we run.
+       (format (current-error-port)
+               "Test: diff ~A ~A\n" test-copy golden-copy)
+       ;; Diff the result.
+       (test-eq EXIT_SUCCESS
+         (status:exit-val
+          (system* "diff" test-copy golden-copy))))
+
+     ;; File lists to process.
+     test-copies golden-copies))
+
+  ;; Clean up.
+  (config-test-teardown))
+
+(test-end "update-files")
