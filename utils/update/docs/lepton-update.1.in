@@ -1,0 +1,25 @@
+.TH lepton-update 1 "@DATE@" "Lepton EDA" @VERSION@
+.SH NAME
+lepton-update - update Lepton EDA symbols and schematics
+.SH SYNOPSIS
+.B lepton-update \fIFILE\fR ...
+
+.SH DESCRIPTION
+.PP
+
+\fBlepton-update\fR is a tool for updating old schematic and symbols.
+
+.SH AUTHORS
+Vladimir Zhbanov
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 2021 Lepton Developers.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+.SH SEE ALSO
+\fBlepton-schematic\fR(1), \fBlepton-symcheck\fR(1)
