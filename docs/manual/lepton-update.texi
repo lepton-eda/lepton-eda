@@ -1,0 +1,7 @@
+@node lepton-update, Communication, lepton-attrib, Top
+@chapter lepton-update
+
+This is a utility for schematics and symbols for support of old
+gEDA/gaf schematic file formats.  It updates attributes in schematics
+and symbols of version 20020527 or earlier to use them in modern
+@schematic.

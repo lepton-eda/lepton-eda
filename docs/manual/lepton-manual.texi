@@ -78,6 +78,7 @@ Documentation License.''
 * lepton-netlist::              Lepton EDA netlister.
 * lepton-cli::                  Lepton EDA command line interface.
 * lepton-attrib::               Lepton EDA spreadsheet attribute editor.
+* lepton-update::
 * Communication::               Places for discussions and chatting.
 * Development::                 Useful information for developers.
 * gEDA file format::            File format currently in use.
@@ -350,6 +351,7 @@ Obsolete Attributes
 @include lepton-netlist.texi
 @include lepton-cli.texi
 @include lepton-attrib.texi
+@include lepton-update.texi
 @include communication.texi
 @include development.texi
 @include geda-file-format-spec.texi

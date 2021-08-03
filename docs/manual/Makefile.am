@@ -21,6 +21,7 @@ lepton_manual_TEXINFOS = \
 	lepton-netlist-pads.texi \
 	lepton-netlist-switcap.texi \
 	lepton-schematic.texi \
+	lepton-update.texi \
 	logging.texi \
 	no-connect-symbol.texi \
 	overview.texi \
