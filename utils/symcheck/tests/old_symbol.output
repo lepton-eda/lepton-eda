@@ -1,3 +1,4 @@
+ERROR: Missing slotdef=4:... (there should be 4 slotdef= attributes)
 ERROR: Missing slotdef=3:... (there should be 4 slotdef= attributes)
 ERROR: Missing slotdef=2:... (there should be 4 slotdef= attributes)
 ERROR: Missing slotdef=1:... (there should be 4 slotdef= attributes)
@@ -28,4 +29,4 @@ ERROR: Obsolete pin#=# attribute: pin1=1
 ERROR: Invalid pin attribute value: pintype=123just a type
 Warning: Obsolete attribute: uref=U?
 12 warnings found
-17 ERRORS found
+18 ERRORS found
