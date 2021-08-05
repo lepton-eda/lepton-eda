@@ -7,7 +7,37 @@ lepton-update - update Lepton EDA symbols and schematics
 .SH DESCRIPTION
 .PP
 
-\fBlepton-update\fR is a tool for updating old schematic and symbols.
+\fBlepton-update\fR is a tool for updating old schematic and
+symbols.
+
+.PP
+The program takes a schematic or symbol filenames on the command
+line and updates them after making backups.  It is intended for
+running against schematics which are either version 20030921 or
+earlier.
+
+.PP
+For both symbols and schematics, the program fixes obsolete text
+and pin format lines and sets the current format version.
+
+.PP
+For schematics, it replaces the \fIlabel=\fR attribute on nets with
+\fInetname=\fR, and \fIuref=\fR with \fIrefdes=\fR.
+
+For symbols, it changes them as follows:
+
+.IP \[bu] 2
+Converts all \fIpin#=#\fR attributes into \fIpinseq=\fR and
+\fIpinnumber=\fR attributes.
+.IP \[bu]
+Converts all \fIslot#=#\fR attributes into \fIslotdef=\fR
+attributes.
+.IP \[bu]
+Replaces pin attributes \fItype=\fR with \fIpintype=\fR.
+.IP \[bu]
+Replaces pin attributes \fIlabel=\fR with \fIpinlabel=\fR.
+.IP \[bu]
+Replaces symbol attribute \fIuref=\fR with \fIrefdes=\fR.
 
 .SH AUTHORS
 Vladimir Zhbanov
