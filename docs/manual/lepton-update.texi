@@ -1,7 +1,45 @@
 @node lepton-update, Communication, lepton-attrib, Top
 @chapter lepton-update
 
-This is a utility for schematics and symbols for support of old
-gEDA/gaf schematic file formats.  It updates attributes in schematics
-and symbols of version 20020527 or earlier to use them in modern
-@schematic.
+This is a utility for schematics and symbols for updating schematics
+and symbols in old gEDA/gaf file formats.  It updates attribute and
+pin objects in files of version @code{20030921} or earlier up to the
+current version of Lepton.
+
+The usage is as follows:
+
+@example
+lepton-update FILE ...
+@end example
+
+The program takes a number of schematic or symbol filenames on the
+command line, makes a backup for each one, and then updates the files.
+
+For both symbols and schematics, the program fixes obsolete text and
+pin format lines and sets the current format version.
+
+For schematics, it replaces the @attr{label} attribute on nets with
+@attr{netname}, and @attr{uref} with @attr{refdes}.
+
+For symbols, it changes them as follows:
+
+@itemize
+@item
+Converts all @attr{pin#=#} attributes (e.g. @attr{pin1=1},
+@attr{pin2=2}, and so on) into @attr{pinnumber} and @attr{pinseq}
+attributes.
+
+@item
+Converts all @attr{slot#=#} attributes (e.g. @attr{slot1=1,2,3}) into
+@attr{slotdef} attributes.
+
+@item
+Replaces symbol pin attributes @attr{type} with @attr{pintype}.
+
+@item
+Replaces symbol pin attributes @attr{label} with @attr{pinlabel}.
+
+@item
+Replaces symbol attribute @attr{uref} with @attr{refdes}.
+
+@end itemize
