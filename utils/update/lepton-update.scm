@@ -30,7 +30,8 @@ exec @GUILE@ -s "$0" "$@"
              (ice-9 rdelim)
              (ice-9 regex)
              (srfi srfi-11)
-             (lepton ffi))
+             (lepton ffi)
+             (lepton srfi-37))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
@@ -38,7 +39,8 @@ exec @GUILE@ -s "$0" "$@"
 (primitive-eval '(use-modules (lepton attrib)
                               (lepton file-system)
                               (lepton object)
-                              (lepton page)))
+                              (lepton page)
+                              (lepton version)))
 
 (define (usage)
   (define program-name (basename (car (program-arguments))))
@@ -169,7 +171,38 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Main program.
 (when (= (length (program-arguments)) 1) (usage))
 
+;;; Parse lepton-schematic command-line options, displaying usage
+;;; message or version information as required.
+(define (parse-commandline)
+  "Parse command line options.  Return the list of non-option
+arguments which should represent the list of schematic and symbol
+files to process."
+  (reverse
+   (args-fold
+    (cdr (program-arguments))
+    (list
+     (option '(#\h #\? "help") #f #f
+             (lambda (opt name arg seeds)
+               (usage)))
+     (option '(#\V "version") #f #f
+             (lambda (opt name arg seeds)
+               (display-lepton-version #:print-name #t #:copyright #t)
+               (exit 0))))
+    (lambda (opt name arg seeds)
+      (format #t
+              (G_ "ERROR: Unknown option ~A.
+Run `~A --help' for more information.\n")
+              (if (char? name)
+                  (string-append "-" (char-set->string (char-set name)))
+                  (string-append "--" name))
+              (basename (car (program-arguments))))
+      (exit 1))
+    (lambda (op seeds) (cons op seeds))
+    '())))
+
 
 (with-toplevel
  (make-toplevel)
- (lambda () (for-each update (cdr (command-line)))))
+ (lambda ()
+   (let ((files (parse-commandline)))
+     (for-each update files))))
