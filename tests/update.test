@@ -21,6 +21,26 @@
 (test-eq EXIT_SUCCESS
   (status:exit-val (system* *update*)))
 
+;;; Command line options.
+
+(test-eq EXIT_SUCCESS
+  (status:exit-val (system* *update* "--help")))
+
+(test-eq EXIT_SUCCESS
+  (status:exit-val (system* *update* "-h")))
+
+(test-eq EXIT_SUCCESS
+  (status:exit-val (system* *update* "-h" "any-non-existing-file")))
+
+(test-eq EXIT_SUCCESS
+  (status:exit-val (system* *update* "--version")))
+
+(test-eq EXIT_SUCCESS
+  (status:exit-val (system* *update* "-V")))
+
+(test-eq EXIT_SUCCESS
+  (status:exit-val (system* *update* "-V" "any-non-existing-file")))
+
 (test-end "update-utility")
 
 
