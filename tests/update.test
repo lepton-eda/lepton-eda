@@ -4,6 +4,13 @@
 
 (load-from-path "env.scm")
 
+(define-syntax test-run-success
+  (lambda (x)
+    (syntax-case x ()
+      ((_ <prog> <arg> ...)
+       #'(test-eq EXIT_SUCCESS
+           (status:exit-val (system* <prog> <arg> ...)))))))
+
 (define default-test-directory
   (build-filename *abs-top-srcdir* "utils" "update" "tests"))
 
@@ -18,37 +25,23 @@
 
 (test-assert (file-exists? *update*))
 
-(test-eq EXIT_SUCCESS
-  (status:exit-val (system* *update*)))
-
-;;; Command line options.
-
-(test-eq EXIT_SUCCESS
-  (status:exit-val (system* *update* "--help")))
+;;; Test command-line options.
+(test-run-success *update*)
+(test-run-success *update* "--help")
+(test-run-success *update* "-h")
+(test-run-success *update* "-h" "any-non-existing-file")
 
 (test-eq EXIT_SUCCESS
   (status:exit-val (system (string-append *update* " --help | grep \"Usage\""))))
 
-(test-eq EXIT_SUCCESS
-  (status:exit-val (system* *update* "-h")))
-
-(test-eq EXIT_SUCCESS
-  (status:exit-val (system* *update* "-h" "any-non-existing-file")))
-
-(test-eq EXIT_SUCCESS
-  (status:exit-val (system* *update* "--version")))
+(test-run-success *update* "--version")
+(test-run-success *update* "-V")
+(test-run-success *update* "-V" "any-non-existing-file")
 
 (test-eq EXIT_SUCCESS
   (status:exit-val (system (string-append *update*
                                           " --version | grep "
                                           (basename *update*)))))
-
-(test-eq EXIT_SUCCESS
-  (status:exit-val (system* *update* "-V")))
-
-(test-eq EXIT_SUCCESS
-  (status:exit-val (system* *update* "-V" "any-non-existing-file")))
-
 (test-end "update-utility")
 
 
@@ -105,9 +98,7 @@
        (format (current-error-port)
                "Test: diff ~A ~A\n" test-copy golden-copy)
        ;; Diff the result.
-       (test-eq EXIT_SUCCESS
-         (status:exit-val
-          (system* "diff" test-copy golden-copy))))
+       (test-run-success "diff" test-copy golden-copy))
 
      ;; File lists to process.
      test-copies golden-copies)
@@ -117,15 +108,12 @@
     ;; Test that the backups are identical to the initial files.
     (for-each
      (lambda (backup test-file)
-       (test-eq EXIT_SUCCESS
-         (status:exit-val
-          (system* "diff" backup test-file))))
+       (test-run-success "diff" backup test-file))
      backups test-files)
 
     ;; Check that the utility does not fail on files having
     ;; backups and prompts the user they are skipped.
-    (test-eq EXIT_SUCCESS
-      (status:exit-val (system* *update* (car test-copies))))
+    (test-run-success *update* (car test-copies))
 
     (test-eq EXIT_SUCCESS
       (status:exit-val (system (string-append *update*
@@ -137,9 +125,8 @@
     (let ((tmp (build-filename testdir (basename (tmpnam)))))
       (with-error-to-file tmp
         (lambda ()
-          (let ((status (system* *update* (car test-copies))))
-            (test-eq EXIT_SUCCESS (status:exit-val status))
-            (test-eq EXIT_SUCCESS (system* "grep" "Skipping" tmp))))))
+          (test-run-success *update* (car test-copies))
+          (test-run-success "grep" "Skipping" tmp))))
 
     (let ((dir-name (build-filename testdir "dir.sch")))
       (mkdir dir-name)
