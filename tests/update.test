@@ -64,6 +64,8 @@
 (define (config-test-teardown)
   (system* "rm" "-rf" testdir))
 
+(define file-does-not-exist? (negate file-exists?))
+
 (test-begin "update-files")
 (test-group-with-cleanup "update-files"
   ;; Set up.
@@ -74,12 +76,15 @@
          (test-files (map (cut build-test-filename <>) test-basenames))
          (test-copies (map (cut build-filename testdir <>) test-basenames))
          (golden-files (map (cut string-append <> ".upd") test-files))
-         (golden-copies (map (cut string-append <> ".upd") test-copies)))
+         (golden-copies (map (cut string-append <> ".upd") test-copies))
+         (backups (map (cut string-append <> ".bak") test-copies)))
 
     (for-each (cut copy-file <> <>) test-files test-copies)
     (for-each (cut copy-file <> <>) golden-files golden-copies)
 
     (test-assert (every file-exists? (append test-copies golden-copies)))
+    ;; There should not be backups yet.
+    (test-assert (every file-does-not-exist? backups))
 
     (test-eq EXIT_SUCCESS
       (status:exit-val
@@ -103,7 +108,17 @@
           (system* "diff" test-copy golden-copy))))
 
      ;; File lists to process.
-     test-copies golden-copies))
+     test-copies golden-copies)
+
+    ;; Test that backups have been created.
+    (test-assert (every file-exists? backups))
+    ;; Test that the backups are identical to the initial files.
+    (for-each
+     (lambda (backup test-file)
+       (test-eq EXIT_SUCCESS
+         (status:exit-val
+          (system* "diff" backup test-file))))
+     backups test-files))
 
   ;; Clean up.
   (config-test-teardown))
