@@ -39,6 +39,11 @@
   (status:exit-val (system* *update* "--version")))
 
 (test-eq EXIT_SUCCESS
+  (status:exit-val (system (string-append *update*
+                                          " --version | grep "
+                                          (basename *update*)))))
+
+(test-eq EXIT_SUCCESS
   (status:exit-val (system* *update* "-V")))
 
 (test-eq EXIT_SUCCESS
