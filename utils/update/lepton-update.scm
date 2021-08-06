@@ -45,7 +45,14 @@ exec @GUILE@ -s "$0" "$@"
 (define (usage)
   (define program-name (basename (car (program-arguments))))
 
-  (format #t "Usage: ~A [OPTION ...] FILE ...\n"
+  (format #t "Usage: ~A [OPTION ...] FILE ...
+
+Update files in gEDA/gaf format up to the current version.
+
+Command line switches:
+  -h,--help             -- Print usage information.
+  -V,--version          -- Print version information.
+"
           program-name
           program-name)
   (exit 0))
