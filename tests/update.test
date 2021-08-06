@@ -27,6 +27,9 @@
   (status:exit-val (system* *update* "--help")))
 
 (test-eq EXIT_SUCCESS
+  (status:exit-val (system (string-append *update* " --help | grep \"Usage\""))))
+
+(test-eq EXIT_SUCCESS
   (status:exit-val (system* *update* "-h")))
 
 (test-eq EXIT_SUCCESS
