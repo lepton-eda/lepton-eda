@@ -137,7 +137,15 @@
         (lambda ()
           (let ((status (system* *update* (car test-copies))))
             (test-eq EXIT_SUCCESS (status:exit-val status))
-            (test-eq EXIT_SUCCESS (system* "grep" "Skipping" tmp)))))))
+            (test-eq EXIT_SUCCESS (system* "grep" "Skipping" tmp))))))
+
+    (let ((dir-name (build-filename testdir "dir.sch")))
+      (mkdir dir-name)
+      (test-eq EXIT_SUCCESS
+        (status:exit-val (system (string-append *update*
+                                                " "
+                                                dir-name
+                                                " 2>&1 >/dev/null | grep \"Skipping\""))))))
 
   ;; Clean up.
   (config-test-teardown))
