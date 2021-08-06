@@ -13,7 +13,7 @@ lepton-update FILE ...
 @end example
 
 The program takes a number of schematic or symbol filenames on the
-command line, makes a backup for each one, and then updates the files.
+command-line, makes a backup for each one, and then updates the files.
 
 For both symbols and schematics, the program fixes obsolete text and
 pin format lines and sets the current format version.
@@ -43,3 +43,26 @@ Replaces symbol pin attributes @attr{label} with @attr{pinlabel}.
 Replaces symbol attribute @attr{uref} with @attr{refdes}.
 
 @end itemize
+
+@section lepton-update command-line options
+@cindex lepton-update command-line options
+@cindex lepton-update, command-line arguments
+@cindex lepton-update, command-line
+@cindex command-line options, lepton-update
+@cindex command-line arguments, lepton-update
+@cindex arguments, command-line (lepton-update)
+@cindex options, command-line (lepton-update)
+@cindex switches, command-line (lepton-update)
+@cindex startup (lepton-update)
+@cindex invocation (lepton-update)
+
+
+@table @code
+
+@item -h@r{, }--help
+Display help on invoking @command{lepton-update}, and then exit.
+
+@item -V@r{, }--version
+Display the current version of @command{lepton-update}, and then exit.
+
+@end table
