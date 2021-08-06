@@ -118,7 +118,26 @@
        (test-eq EXIT_SUCCESS
          (status:exit-val
           (system* "diff" backup test-file))))
-     backups test-files))
+     backups test-files)
+
+    ;; Check that the utility does not fail on files having
+    ;; backups and prompts the user they are skipped.
+    (test-eq EXIT_SUCCESS
+      (status:exit-val (system* *update* (car test-copies))))
+
+    (test-eq EXIT_SUCCESS
+      (status:exit-val (system (string-append *update*
+                                              " "
+                                              (car test-copies)
+                                              " 2>&1 >/dev/null | grep \"Skipping\""))))
+
+    ;; Another way to do the same thing.
+    (let ((tmp (build-filename testdir (basename (tmpnam)))))
+      (with-error-to-file tmp
+        (lambda ()
+          (let ((status (system* *update* (car test-copies))))
+            (test-eq EXIT_SUCCESS (status:exit-val status))
+            (test-eq EXIT_SUCCESS (system* "grep" "Skipping" tmp)))))))
 
   ;; Clean up.
   (config-test-teardown))
