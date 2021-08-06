@@ -2,7 +2,15 @@
 .SH NAME
 lepton-update - update Lepton EDA symbols and schematics
 .SH SYNOPSIS
-.B lepton-update \fIFILE\fR ...
+.B lepton-update [\fIOPTION\fR ...] \fIFILE\fR ...
+
+.SH OPTIONS
+.TP 8
+\fB-h\fR, \fB--help\fR
+Print a help message.
+.TP 8
+\fB-V\fR, \fB--version\fR
+Print version information.
 
 .SH DESCRIPTION
 .PP
