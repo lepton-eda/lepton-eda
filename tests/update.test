@@ -152,6 +152,12 @@
                                                 file-name
                                                 " 2>&1 >/dev/null | grep \"Skipping\"")))))
 
+    (test-eq EXIT_SUCCESS
+      (status:exit-val (system (string-append *update*
+                                              " "
+                                              "some-non-existing-schematic-file.sch"
+                                              " 2>&1 >/dev/null | grep \"Skipping\""))))
+
     ;; File without a proper extension.
     (let ((file-name (build-filename testdir (basename (tmpnam))))
           (tmp (build-filename testdir (basename (tmpnam)))))
