@@ -128,8 +128,9 @@ exec @GUILE@ -s "$0" "$@"
 (define (files-ok? filename backup)
   (let ((msg
          (cond
-          ((not (file-exists? filename))
-           (format #f "File ~A does not exist.  Skipping.\n" filename))
+          ((or (not (file-exists? filename))
+               (not (file-readable? filename)))
+           (format #f "File ~A does not exist or is not readable.  Skipping.\n" filename))
           ((directory? filename)
            (format #f "~A is a directory, not a file.  Skipping.\n" filename))
           ((file-exists? backup)
