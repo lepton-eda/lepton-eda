@@ -11,6 +11,13 @@
        #'(test-eq EXIT_SUCCESS
            (status:exit-val (system* <prog> <arg> ...)))))))
 
+(define-syntax test-run-failure
+  (lambda (x)
+    (syntax-case x ()
+      ((_ <prog> <arg> ...)
+       #'(test-eq EXIT_FAILURE
+           (status:exit-val (system* <prog> <arg> ...)))))))
+
 (define default-test-directory
   (build-filename *abs-top-srcdir* "utils" "update" "tests"))
 
@@ -143,7 +150,16 @@
         (status:exit-val (system (string-append *update*
                                                 " "
                                                 file-name
-                                                " 2>&1 >/dev/null | grep \"Skipping\""))))))
+                                                " 2>&1 >/dev/null | grep \"Skipping\"")))))
+
+    ;; File without a proper extension.
+    (let ((file-name (build-filename testdir (basename (tmpnam))))
+          (tmp (build-filename testdir (basename (tmpnam)))))
+      (with-error-to-file tmp
+        (lambda ()
+          (test-run-failure *update* file-name)
+          (test-run-success "grep" "type of file" tmp)))))
+
   ;; Clean up.
   (config-test-teardown))
 
