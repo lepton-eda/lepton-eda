@@ -40,7 +40,8 @@ exec @GUILE@ -s "$0" "$@"
                               (lepton file-system)
                               (lepton object)
                               (lepton page)
-                              (lepton version)))
+                              (lepton version)
+                              (symbol check obsolete)))
 
 (define (usage)
   (define program-name (basename (car (program-arguments))))
@@ -92,12 +93,12 @@ Command line switches:
        (let ((name (attrib-name object))
              (value (attrib-value object)))
          (cond
-          ((string-match "slot[0-9]+$" name)
+          ((obsolete-slot#-attrib? object)
            ;; It is a slot#=# attribute.
            (let ((num (string-drop name 4)))
              (set-attrib-name! object "slotdef")
              (set-attrib-value! object (string-append num ":" value))))
-          ((string-match "pin[0-9]+$" name)
+          ((obsolete-pin#-attrib? object)
            ;; Numbers in name and value of pin#=# attributes are
            ;; always the same, e.g. pin10=10.  So we just change
            ;; attribute name here.
