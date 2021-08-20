@@ -5,6 +5,20 @@ This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
 
+Notable changes in Lepton EDA 1.9.17 (upcoming)
+-----------------------------------------------
+
+### Changes in `contrib`:
+
+- Utilities `gsymupdate` and `gschupdate` have been replaced with
+  a new utility, `lepton-update`, written in Scheme.  The old
+  utilities parsed schematic and symbol files directly, which
+  sometimes could lead to wrong results, and were broken since
+  introducing `lepton-embed`.  The new tool, as many others in the
+  suite, uses `liblepton` and does better job when updating
+  obsolete files.  Please see *lepton-update(1)* for more.
+
+
 Notable changes in Lepton EDA 1.9.16 (20210731)
 -----------------------------------------------
 
