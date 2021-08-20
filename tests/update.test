@@ -149,13 +149,6 @@
 
     (test-grep-stderr "Skipping" lepton-update (car test-copies))
 
-    ;; Another way to do the same thing.
-    (let ((tmp (build-filename testdir (basename (tmpnam)))))
-      (with-error-to-file tmp
-        (lambda ()
-          (test-run-success lepton-update (car test-copies))
-          (test-run-success "grep" "Skipping" tmp))))
-
     (let ((dir-name (build-filename testdir "dir.sch")))
       (mkdir dir-name)
       (test-grep-stderr "Skipping" lepton-update dir-name))
