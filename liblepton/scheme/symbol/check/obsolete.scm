@@ -23,7 +23,9 @@
   #:use-module (symbol blame)
 
   #:export (check-obsolete-pin-attrib
-            check-obsolete-floating-attrib))
+            check-obsolete-floating-attrib
+            obsolete-pin#-attrib?
+            obsolete-slot#-attrib?))
 
 (define-syntax blame-error
   (syntax-rules ()
@@ -33,11 +35,23 @@
 (define regex-old-pin (make-regexp "^pin[0-9]+$"))
 (define regex-old-slot (make-regexp "^slot[0-9]+$"))
 
+(define (obsolete-pin#-attrib? object)
+  "Predicate that returns #t if OBJECT is an obsolete pin#=
+attribute.  Otherwise returns #f."
+  (and (attribute? object)
+       (not (not (regexp-exec regex-old-pin (attrib-name object))))))
+
+(define (obsolete-slot#-attrib? object)
+  "Predicate that returns #t if OBJECT is an obsolete slot#=
+attribute.  Otherwise returns #f."
+  (and (attribute? object)
+       (regexp-exec regex-old-slot (attrib-name object))))
+
 (define (check-obsolete-pin-attrib object)
   "Checks if OBJECT is an obsolete pin attribute. Returns OBJECT."
   (let ((name (attrib-name object))
         (value (attrib-value object)))
-    (when (regexp-exec regex-old-pin name)
+    (when (obsolete-pin#-attrib? object)
       (blame-error object (G_ "Obsolete pin#=# attribute: ~A=~A") name value))
     object))
 
@@ -45,6 +59,6 @@
   "Checks if OBJECT is an obsolete floating attribute. Returns OBJECT."
   (let ((name (attrib-name object))
         (value (attrib-value object)))
-    (when (regexp-exec regex-old-slot name)
+    (when (obsolete-slot#-attrib? object)
       (blame-error object (G_ "Obsolete slot#=# attribute: ~A=~A") name value))
     object))
