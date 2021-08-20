@@ -22,13 +22,14 @@
   (lambda (x)
     (syntax-case x ()
       ((_ <str> <command> <option> ...)
-       #'(test-eq EXIT_SUCCESS
-           (status:exit-val
-            (system (string-join (list <command>
-                                       <option> ...
-                                       "|"
-                                       "grep"
-                                       (format #f "~S" <str>))))))))))
+       #'(let ((command (string-join (list <command>
+                                           <option> ...
+                                           "|"
+                                           "grep"
+                                           (format #f "~S" <str>)))))
+           (format (current-error-port) "Test command: ~A\n" command)
+           (test-eq EXIT_SUCCESS
+             (status:exit-val (system command))))))))
 
 (define default-test-directory
   (build-filename *abs-top-srcdir* "utils" "update" "tests"))
