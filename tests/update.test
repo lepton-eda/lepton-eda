@@ -49,7 +49,7 @@
 (define default-test-directory
   (build-filename *abs-top-srcdir* "utils" "update" "tests"))
 
-(define *update*
+(define lepton-update
   (build-filename *abs-top-builddir*
                   "utils"
                   "update"
@@ -58,21 +58,21 @@
 
 (test-begin "update-utility")
 
-(test-assert (file-exists? *update*))
+(test-assert (file-exists? lepton-update))
 
 ;;; Test command-line options.
-(test-run-success *update*)
-(test-run-success *update* "--help")
-(test-run-success *update* "-h")
-(test-run-success *update* "-h" "any-non-existing-file")
+(test-run-success lepton-update)
+(test-run-success lepton-update "--help")
+(test-run-success lepton-update "-h")
+(test-run-success lepton-update "-h" "any-non-existing-file")
 
-(test-grep-stdout "Usage" *update* "--help")
+(test-grep-stdout "Usage" lepton-update "--help")
 
-(test-run-success *update* "--version")
-(test-run-success *update* "-V")
-(test-run-success *update* "-V" "any-non-existing-file")
+(test-run-success lepton-update "--version")
+(test-run-success lepton-update "-V")
+(test-run-success lepton-update "-V" "any-non-existing-file")
 
-(test-grep-stdout "lepton-update" *update* "--version")
+(test-grep-stdout "lepton-update" lepton-update "--version")
 
 (test-end "update-utility")
 
@@ -115,7 +115,7 @@
 
     (test-eq EXIT_SUCCESS
       (status:exit-val
-       (apply system* *update* test-copies)))
+       (apply system* lepton-update test-copies)))
 
     (for-each
      ;; Process each pair separately.
@@ -145,34 +145,34 @@
 
     ;; Check that the utility does not fail on files having
     ;; backups and prompts the user they are skipped.
-    (test-run-success *update* (car test-copies))
+    (test-run-success lepton-update (car test-copies))
 
-    (test-grep-stderr "Skipping" *update* (car test-copies))
+    (test-grep-stderr "Skipping" lepton-update (car test-copies))
 
     ;; Another way to do the same thing.
     (let ((tmp (build-filename testdir (basename (tmpnam)))))
       (with-error-to-file tmp
         (lambda ()
-          (test-run-success *update* (car test-copies))
+          (test-run-success lepton-update (car test-copies))
           (test-run-success "grep" "Skipping" tmp))))
 
     (let ((dir-name (build-filename testdir "dir.sch")))
       (mkdir dir-name)
-      (test-grep-stderr "Skipping" *update* dir-name))
+      (test-grep-stderr "Skipping" lepton-update dir-name))
 
     (let ((file-name (build-filename testdir (string-append (basename (tmpnam)) ".sym"))))
       (touch file-name)
       (chmod file-name #o000)
-      (test-grep-stderr "Skipping" *update* file-name))
+      (test-grep-stderr "Skipping" lepton-update file-name))
 
-    (test-grep-stderr "Skipping" *update* "some-non-existing-schematic-file.sch")
+    (test-grep-stderr "Skipping" lepton-update "some-non-existing-schematic-file.sch")
 
     ;; File without a proper extension.
     (let ((file-name (build-filename testdir (basename (tmpnam))))
           (tmp (build-filename testdir (basename (tmpnam)))))
       (with-error-to-file tmp
         (lambda ()
-          (test-run-failure *update* file-name)
+          (test-run-failure lepton-update file-name)
           (test-run-success "grep" "type of file" tmp)))))
 
   ;; Clean up.
