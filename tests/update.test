@@ -31,6 +31,21 @@
            (test-eq EXIT_SUCCESS
              (status:exit-val (system command))))))))
 
+(define-syntax test-grep-stderr
+  (lambda (x)
+    (syntax-case x ()
+      ((_ <str> <command> <option> ...)
+       #'(let ((command (string-join (list <command>
+                                           <option> ...
+                                           "2>&1"
+                                           ">/dev/null"
+                                           "|"
+                                           "grep"
+                                           (format #f "~S" <str>)))))
+           (format (current-error-port) "Test command: ~A\n" command)
+           (test-eq EXIT_SUCCESS
+             (status:exit-val (system command))))))))
+
 (define default-test-directory
   (build-filename *abs-top-srcdir* "utils" "update" "tests"))
 
@@ -132,11 +147,7 @@
     ;; backups and prompts the user they are skipped.
     (test-run-success *update* (car test-copies))
 
-    (test-eq EXIT_SUCCESS
-      (status:exit-val (system (string-append *update*
-                                              " "
-                                              (car test-copies)
-                                              " 2>&1 >/dev/null | grep \"Skipping\""))))
+    (test-grep-stderr "Skipping" *update* (car test-copies))
 
     ;; Another way to do the same thing.
     (let ((tmp (build-filename testdir (basename (tmpnam)))))
@@ -147,26 +158,14 @@
 
     (let ((dir-name (build-filename testdir "dir.sch")))
       (mkdir dir-name)
-      (test-eq EXIT_SUCCESS
-        (status:exit-val (system (string-append *update*
-                                                " "
-                                                dir-name
-                                                " 2>&1 >/dev/null | grep \"Skipping\"")))))
+      (test-grep-stderr "Skipping" *update* dir-name))
 
     (let ((file-name (build-filename testdir (string-append (basename (tmpnam)) ".sym"))))
       (touch file-name)
       (chmod file-name #o000)
-      (test-eq EXIT_SUCCESS
-        (status:exit-val (system (string-append *update*
-                                                " "
-                                                file-name
-                                                " 2>&1 >/dev/null | grep \"Skipping\"")))))
+      (test-grep-stderr "Skipping" *update* file-name))
 
-    (test-eq EXIT_SUCCESS
-      (status:exit-val (system (string-append *update*
-                                              " "
-                                              "some-non-existing-schematic-file.sch"
-                                              " 2>&1 >/dev/null | grep \"Skipping\""))))
+    (test-grep-stderr "Skipping" *update* "some-non-existing-schematic-file.sch")
 
     ;; File without a proper extension.
     (let ((file-name (build-filename testdir (basename (tmpnam))))
