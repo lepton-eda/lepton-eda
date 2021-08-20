@@ -1,5 +1,49 @@
 ;;; Common definitions for integration tests.
 
+(use-modules (srfi srfi-64))
+
+(define-syntax test-run-success
+  (lambda (x)
+    (syntax-case x ()
+      ((_ <prog> <arg> ...)
+       #'(test-eq EXIT_SUCCESS
+           (status:exit-val (system* <prog> <arg> ...)))))))
+
+(define-syntax test-run-failure
+  (lambda (x)
+    (syntax-case x ()
+      ((_ <prog> <arg> ...)
+       #'(test-eq EXIT_FAILURE
+           (status:exit-val (system* <prog> <arg> ...)))))))
+
+(define-syntax test-grep-stdout
+  (lambda (x)
+    (syntax-case x ()
+      ((_ <str> <command> <option> ...)
+       #'(let ((command (string-join (list <command>
+                                           <option> ...
+                                           "|"
+                                           "grep"
+                                           (format #f "~S" <str>)))))
+           (format (current-error-port) "Test command: ~A\n" command)
+           (test-eq EXIT_SUCCESS
+             (status:exit-val (system command))))))))
+
+(define-syntax test-grep-stderr
+  (lambda (x)
+    (syntax-case x ()
+      ((_ <str> <command> <option> ...)
+       #'(let ((command (string-join (list <command>
+                                           <option> ...
+                                           "2>&1"
+                                           ">/dev/null"
+                                           "|"
+                                           "grep"
+                                           (format #f "~S" <str>)))))
+           (format (current-error-port) "Test command: ~A\n" command)
+           (test-eq EXIT_SUCCESS
+             (status:exit-val (system command))))))))
+
 (define (build-filename . ls)
   (string-join ls file-name-separator-string))
 
