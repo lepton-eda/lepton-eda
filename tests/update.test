@@ -56,10 +56,8 @@
 (test-run-success *update* "-V")
 (test-run-success *update* "-V" "any-non-existing-file")
 
-(test-eq EXIT_SUCCESS
-  (status:exit-val (system (string-append *update*
-                                          " --version | grep "
-                                          (basename *update*)))))
+(test-grep-stdout "lepton-update" *update* "--version")
+
 (test-end "update-utility")
 
 
