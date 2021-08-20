@@ -88,49 +88,42 @@ Command line switches:
   (set-text-string! attrib
                     (string-append name "=" (attrib-value attrib))))
 
-(define (fix-symbol-attrib object)
+(define (attrib-name= object name)
   (and (attribute? object)
-       (let ((name (attrib-name object))
-             (value (attrib-value object)))
-         (cond
-          ((obsolete-slot#-attrib? object)
-           ;; It is a slot#=# attribute.
-           (let ((num (string-drop name 4)))
-             (set-attrib-name! object "slotdef")
-             (set-attrib-value! object (string-append num ":" value))))
-          ((obsolete-pin#-attrib? object)
-           ;; Numbers in name and value of pin#=# attributes are
-           ;; always the same, e.g. pin10=10.  So we just change
-           ;; attribute name here.
-           (set-attrib-name! object "pinnumber")
-           ;; Make 'pinseq' attribute.
-           (let ((pinseq (copy-attrib! object #:show 'both #:visible? #f))
-                 (pin (attrib-attachment object)))
-             (set-attrib-name! pinseq "pinseq")
-             (attach-attribs! pin pinseq)))
-          ((string= name "uref")
-           ;; 'uref' => 'refdes'
-           (set-attrib-name! object "refdes"))
-          ((string= name "type")
-           ;; 'type' => 'pintype'
-           (set-attrib-name! object "pintype"))
-          ((string= name "label")
-           ;; 'label' => 'pinlabel'
-           (set-attrib-name! object "pinlabel"))
-          (else #f)))))
+       (string= (attrib-name object) name)))
+
+(define (fix-symbol-attrib object)
+  (define (fix-slot#-attrib! object)
+    ;; Fix slot#=# attribute.
+    (let ((num (string-drop (attrib-name object) 4)))
+      (set-attrib-name! object "slotdef")
+      (set-attrib-value! object
+                         (string-append num ":" (attrib-value object)))))
+
+  (define (fix-pin#-attrib! object)
+    ;; Numbers in name and value of pin#=# attributes are
+    ;; always the same, e.g. pin10=10.  So we just change
+    ;; attribute name here.
+    (set-attrib-name! object "pinnumber")
+    ;; Make 'pinseq' attribute.
+    (let ((pinseq (copy-attrib! object #:show 'both #:visible? #f))
+          (pin (attrib-attachment object)))
+      (set-attrib-name! pinseq "pinseq")
+      (attach-attribs! pin pinseq)))
+
+  (cond
+   ((obsolete-slot#-attrib? object) (fix-slot#-attrib! object))
+   ((obsolete-pin#-attrib? object) (fix-pin#-attrib! object))
+   ((attrib-name= object "uref") (set-attrib-name! object "refdes"))
+   ((attrib-name= object "type") (set-attrib-name! object "pintype"))
+   ((attrib-name= object "label") (set-attrib-name! object "pinlabel"))
+   (else #f)))
 
 (define (fix-schematic-attrib object)
-  (and (attribute? object)
-       (let ((name (attrib-name object))
-             (value (attrib-value object)))
-         (cond
-          ((string= name "label")
-           ;; 'label' => 'netname'
-           (set-attrib-name! object "netname"))
-          ((string= name "uref")
-           ;; 'uref' => 'refdes'
-           (set-attrib-name! object "refdes"))
-          (else #f)))))
+  (cond
+   ((attrib-name= object "label") (set-attrib-name! object "netname"))
+   ((attrib-name= object "uref") (set-attrib-name! object "refdes"))
+   (else #f)))
 
 
 (define (files-ok? filename backup)
