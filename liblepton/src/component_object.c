@@ -662,6 +662,7 @@ static void
 o_component_remove_promotable_attribs (LeptonObject *object)
 {
   GList *promotable, *iter;
+  GList *primitives = NULL;
   gboolean keep_invisible;
 
   promotable = lepton_component_object_get_promotable (object, FALSE);
@@ -677,8 +678,9 @@ o_component_remove_promotable_attribs (LeptonObject *object)
     if (keep_invisible == TRUE) {   /* Hide promotable attributes */
       lepton_text_object_set_visibility (a_object, INVISIBLE);
     } else {                                /* Delete promotable attributes */
-      object->component->prim_objs =
-        g_list_remove (object->component->prim_objs, a_object);
+      primitives = lepton_component_object_get_contents (object);
+      lepton_component_object_set_contents (object,
+                                            g_list_remove (primitives, a_object));
       lepton_object_delete (a_object);
     }
   }
