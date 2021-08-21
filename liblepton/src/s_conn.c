@@ -513,6 +513,7 @@ void
 s_conn_update_object (LeptonPage* page,
                       LeptonObject *object)
 {
+  GList *primitives = NULL;
 
   /* Add object to the list of connectible objects */
   s_conn_add_object (page, object);
@@ -525,7 +526,8 @@ s_conn_update_object (LeptonPage* page,
       break;
 
     case OBJ_COMPONENT:
-      s_conn_update_glist (page, object->component->prim_objs);
+      primitives = lepton_component_object_get_contents (object);
+      s_conn_update_glist (page, primitives);
       break;
   }
 }
