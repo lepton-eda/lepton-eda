@@ -1233,13 +1233,16 @@ lepton_component_object_to_buffer (const LeptonObject *object)
 void
 lepton_component_object_translate (LeptonObject *object, int dx, int dy)
 {
+  GList *primitives = NULL;
+
   g_return_if_fail (lepton_object_is_component (object));
   g_return_if_fail (object->component != NULL);
 
   object->component->x = object->component->x + dx;
   object->component->y = object->component->y + dy;
 
-  lepton_object_list_translate (object->component->prim_objs, dx, dy);
+  primitives = lepton_component_object_get_contents (object);
+  lepton_object_list_translate (primitives, dx, dy);
 }
 
 /*! \brief Create a copy of a component object
