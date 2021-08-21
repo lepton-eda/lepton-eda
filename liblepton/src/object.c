@@ -1539,12 +1539,17 @@ void
 lepton_object_set_color (LeptonObject *object,
                          int color)
 {
+  GList *primitives = NULL;
+
   g_return_if_fail (object != NULL);
 
   object->color = color;
 
   if (lepton_object_is_component (object) && object->component != NULL)
-    lepton_object_list_set_color (object->component->prim_objs, color);
+  {
+    primitives = lepton_component_object_get_contents (object);
+    lepton_object_list_set_color (primitives, color);
+  }
 }
 
 
