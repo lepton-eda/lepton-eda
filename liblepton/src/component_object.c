@@ -1398,7 +1398,8 @@ o_component_find_pin_by_attribute (LeptonObject *object,
   g_return_val_if_fail (lepton_object_is_component (object), NULL);
   g_return_val_if_fail (object->component != NULL, NULL);
 
-  for (iter = object->component->prim_objs; iter != NULL;
+  for (iter = lepton_component_object_get_contents (object);
+       iter != NULL;
        iter = g_list_next (iter)) {
     o_current = (LeptonObject*) iter->data;
 
