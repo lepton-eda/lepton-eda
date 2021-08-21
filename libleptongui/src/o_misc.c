@@ -331,7 +331,8 @@ void o_edit_show_hidden_lowlevel (GschemToplevel *w_current,
 
     if (lepton_object_is_component (o_current))
     {
-      o_edit_show_hidden_lowlevel(w_current, o_current->component->prim_objs);
+      GList *primitives = lepton_component_object_get_contents (o_current);
+      o_edit_show_hidden_lowlevel (w_current, primitives);
     }
 
     iter = g_list_next (iter);
