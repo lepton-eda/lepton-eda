@@ -591,6 +591,7 @@ GList * o_attrib_return_attribs (LeptonObject *object)
   GList *inherited_attribs;
   LeptonObject *a_current;
   GList *a_iter;
+  GList *primitives = NULL;
 
   g_return_val_if_fail (object != NULL, NULL);
 
@@ -614,8 +615,8 @@ GList * o_attrib_return_attribs (LeptonObject *object)
   /* Inherited attributes (inside component objects) */
   if (lepton_object_is_component (object))
   {
-    inherited_attribs =
-      o_attrib_find_floating_attribs (object->component->prim_objs);
+    primitives = lepton_component_object_get_contents (object);
+    inherited_attribs = o_attrib_find_floating_attribs (primitives);
 
     attribs = g_list_concat (attribs, inherited_attribs);
   }
