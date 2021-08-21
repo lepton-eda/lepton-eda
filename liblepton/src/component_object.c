@@ -548,6 +548,7 @@ lepton_component_object_get_promotable (LeptonObject *object,
   GList *promoted = NULL;
   GList *attribs;
   GList *iter;
+  GList *primitives = NULL;
   LeptonObject *tmp;
   gboolean attribute_promotion;
 
@@ -560,7 +561,8 @@ lepton_component_object_get_promotable (LeptonObject *object,
   if (!attribute_promotion)
     return NULL;
 
-  attribs = o_attrib_find_floating_attribs (object->component->prim_objs);
+  primitives = lepton_component_object_get_contents (object);
+  attribs = o_attrib_find_floating_attribs (primitives);
 
   for (iter = attribs; iter != NULL; iter = g_list_next (iter)) {
     tmp = (LeptonObject*) iter->data;
@@ -571,8 +573,8 @@ lepton_component_object_get_promotable (LeptonObject *object,
 
     if (detach) {
       tmp->parent = NULL;
-      object->component->prim_objs =
-        g_list_remove (object->component->prim_objs, tmp);
+      lepton_component_object_set_contents (object,
+                                            g_list_remove (primitives, tmp));
     }
 
     promoted = g_list_prepend (promoted, tmp);
