@@ -763,7 +763,7 @@ lepton_picture_object_copy (LeptonObject *object)
   new_node->picture = picture;
 
   lepton_object_set_color (new_node, lepton_object_get_color (object));
-  new_node->selectable = lepton_object_get_selectable (object);
+  lepton_object_set_selectable (new_node, lepton_object_get_selectable (object));
 
   /* describe the picture with its upper left and lower right corner */
   lepton_picture_object_set_upper_x (new_node, lepton_picture_object_get_upper_x (object));

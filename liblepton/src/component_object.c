@@ -977,8 +977,6 @@ lepton_component_new (LeptonPage *page,
 
   new_node = lepton_object_new (OBJ_COMPONENT, "complex");
 
-  new_node->selectable = selectable;
-
   new_node->component = g_new0 (LeptonComponent, 1);
 
   if (clib != NULL) {
@@ -987,6 +985,8 @@ lepton_component_new (LeptonPage *page,
   } else {
     lepton_component_object_set_basename (new_node, basename);
   }
+
+  lepton_object_set_selectable (new_node, selectable);
 
   lepton_component_object_set_contents (new_node, NULL);
   lepton_component_object_set_angle (new_node, angle);
@@ -1086,8 +1086,7 @@ lepton_component_new_embedded (int color,
 
   lepton_component_object_set_basename (new_node, basename);
 
-  new_node->selectable = selectable;
-
+  lepton_object_set_selectable (new_node, selectable);
   lepton_component_object_set_contents (new_node, NULL);
 
   lepton_object_set_color (new_node, color);
@@ -1282,11 +1281,11 @@ lepton_component_copy (LeptonObject *o_current)
   g_return_val_if_fail (o_current->component != NULL, NULL);
 
   o_new = lepton_object_new (lepton_object_get_type (o_current), "complex");
-  o_new->selectable = o_current->selectable;
 
   o_new->component = (LeptonComponent*) g_malloc0 (sizeof (LeptonComponent));
   lepton_component_object_set_basename (o_new,
                                         lepton_component_object_get_basename (o_current));
+  lepton_object_set_selectable (o_new, lepton_object_get_selectable (o_current));
   lepton_component_object_set_x (o_new, lepton_component_object_get_x (o_current));
   lepton_component_object_set_y (o_new, lepton_component_object_get_y (o_current));
   lepton_component_object_set_angle (o_new, lepton_component_object_get_angle (o_current));

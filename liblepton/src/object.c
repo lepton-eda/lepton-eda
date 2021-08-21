@@ -318,7 +318,7 @@ lepton_object_get_drawing_color (const LeptonObject *object)
 
   g_return_val_if_fail (object != NULL, default_color_id());
 
-  color = object->selectable ? lepton_object_get_color (object) : LOCK_COLOR;
+  color = lepton_object_get_selectable (object) ? lepton_object_get_color (object) : LOCK_COLOR;
 
   g_return_val_if_fail (color_id_valid (color), default_color_id());
 
@@ -1978,7 +1978,7 @@ lepton_object_new (int type,
   /* Setup the color */
   lepton_object_set_color (new_node, default_color_id());
   new_node->dont_redraw = FALSE;
-  new_node->selectable = TRUE;
+  lepton_object_set_selectable (new_node, TRUE);
   new_node->selected = FALSE;
 
   new_node->bus_ripper_direction = 0;

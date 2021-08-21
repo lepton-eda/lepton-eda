@@ -104,7 +104,7 @@ o_attrib_attach (LeptonObject *attrib,
 
   /* attribute inherit its selectable status from the object:
   */
-  attrib->selectable = object->selectable;
+  lepton_object_set_selectable (attrib, lepton_object_get_selectable (object));
 
   o_attrib_add (object, attrib);
 
