@@ -81,13 +81,13 @@ SCM_DEFINE (add_attrib_x, "%add-attrib!", 5, 0, 0,
   SCM_ASSERT (scm_is_symbol (show_s), show_s, SCM_ARG5, s_add_attrib_x);
 
   GschemToplevel *w_current = g_current_window ();
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   /* Check target object, if present */
   LeptonObject *obj = NULL;
   if (edascm_is_object (target_s)) {
     obj = edascm_to_object (target_s);
-    if (lepton_object_get_page (obj) != toplevel->page_current) {
+    if (lepton_object_get_page (obj) != schematic_window_get_active_page (w_current))
+    {
       scm_error (object_state_sym,
                  s_add_attrib_x,
                  _("Object ~A is not included in the current lepton-schematic page."),
