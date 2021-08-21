@@ -146,6 +146,7 @@ void o_move_end(GschemToplevel *w_current)
   LeptonObject *object;
   int diff_x, diff_y;
   GList *s_iter;
+  GList *primitives = NULL;
   GList *rubbernet_objects = NULL;
   gboolean net_rubber_band_mode;
 
@@ -203,8 +204,11 @@ void o_move_end(GschemToplevel *w_current)
         object->component->x = object->component->x + diff_x;
         object->component->y = object->component->y + diff_y;
 
-        o_move_end_lowlevel_glist (w_current, object->component->prim_objs,
-                                   diff_x, diff_y);
+        primitives = lepton_component_object_get_contents (object);
+        o_move_end_lowlevel_glist (w_current,
+                                   primitives,
+                                   diff_x,
+                                   diff_y);
         break;
 
       default:
