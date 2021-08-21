@@ -1353,6 +1353,7 @@ lepton_component_object_mirror (int world_centerx,
                                 LeptonObject *object)
 {
   int x, y;
+  GList *primitives = NULL;
 
   g_return_if_fail (lepton_object_is_component (object));
   g_return_if_fail (object->component != NULL);
@@ -1362,7 +1363,8 @@ lepton_component_object_mirror (int world_centerx,
 
   lepton_component_object_translate (object, -object->component->x, -object->component->y);
 
-  lepton_object_list_mirror (object->component->prim_objs, 0, 0);
+  primitives = lepton_component_object_get_contents (object);
+  lepton_object_list_mirror (primitives, 0, 0);
 
   switch(object->component->angle) {
     case(90):
