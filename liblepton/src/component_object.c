@@ -988,7 +988,7 @@ lepton_component_new (LeptonPage *page,
   new_node->component = (LeptonComponent *) g_malloc (sizeof (LeptonComponent));
   lepton_component_object_set_contents (new_node, NULL);
   lepton_component_object_set_angle (new_node, angle);
-  new_node->component->mirror = mirror;
+  lepton_component_object_set_mirror (new_node, mirror);
   lepton_component_object_set_x (new_node, x);
   lepton_component_object_set_y (new_node, y);
   /* Do setting color after initialization of prim_objs as the
@@ -1080,7 +1080,7 @@ lepton_component_new_embedded (int color,
   lepton_component_object_set_y (new_node, y);
 
   lepton_component_object_set_angle (new_node, angle);
-  new_node->component->mirror = mirror;
+  lepton_component_object_set_mirror (new_node, mirror);
 
   new_node->component_basename = g_strdup(basename);
 
@@ -1229,7 +1229,7 @@ lepton_component_object_to_buffer (const LeptonObject *object)
                             lepton_component_object_get_y (object),
                             lepton_object_get_selectable (object),
                             lepton_component_object_get_angle (object),
-                            object->component->mirror,
+                            lepton_component_object_get_mirror (object),
                             basename);
 
   g_free (basename);
@@ -1286,7 +1286,7 @@ o_component_copy (LeptonObject *o_current)
   lepton_component_object_set_x (o_new, lepton_component_object_get_x (o_current));
   lepton_component_object_set_y (o_new, lepton_component_object_get_y (o_current));
   lepton_component_object_set_angle (o_new, lepton_component_object_get_angle (o_current));
-  o_new->component->mirror = o_current->component->mirror;
+  lepton_component_object_set_mirror (o_new, lepton_component_object_get_mirror (o_current));
 
   /* Set prim_objs temporarily to NULL to prevent crashes on color
      initialization. */
@@ -1411,7 +1411,7 @@ lepton_component_object_mirror (int world_centerx,
 
   }
 
-  object->component->mirror = !object->component->mirror;
+  lepton_component_object_set_mirror (object, !lepton_component_object_get_mirror (object));
 
   lepton_component_object_translate (object, x, y);
 }
