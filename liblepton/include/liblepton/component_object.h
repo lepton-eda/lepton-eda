@@ -49,6 +49,18 @@ lepton_component_object_get_contents (const LeptonObject *object);
 void
 lepton_component_object_set_contents (LeptonObject *object,
                                       GList *primitives);
+gint
+lepton_component_object_get_x (const LeptonObject *object);
+
+void
+lepton_component_object_set_x (LeptonObject *object,
+                               gint x);
+gint
+lepton_component_object_get_y (const LeptonObject *object);
+
+void
+lepton_component_object_set_y (LeptonObject *object,
+                               gint y);
 GList*
 o_component_promote_attribs (LeptonObject *object);
 

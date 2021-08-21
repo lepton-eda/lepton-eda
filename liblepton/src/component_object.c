@@ -81,6 +81,78 @@ lepton_component_object_set_basename (LeptonObject *object,
 }
 
 
+/*! \brief Get the X coordinate of the component base point.
+ *  \par Function Description
+ *  Returns the X coordinate of the base point of a component
+ *  object.
+ *
+ *  \param [in] object The component object.
+ *  \return The X coordinate of the component object.
+ */
+gint
+lepton_component_object_get_x (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_component (object), G_MAXINT);
+  g_return_val_if_fail (object->component != NULL, G_MAXINT);
+
+  return object->component->x;
+}
+
+
+/*! \brief Set the X coordinate of the component base point.
+ *  \par Function Description
+ *  Sets the X coordinate of the base point of a component object.
+ *
+ *  \param [in] object The component object.
+ *  \param [in] x The new X coordinate of the component object.
+ */
+void
+lepton_component_object_set_x (LeptonObject *object,
+                               gint x)
+{
+  g_return_if_fail (lepton_object_is_component (object));
+  g_return_if_fail (object->component != NULL);
+
+  object->component->x = x;
+}
+
+
+/*! \brief Get the Y coordinate of the component base point.
+ *  \par Function Description
+ *  Returns the Y coordinate of the base point of a component
+ *  object.
+ *
+ *  \param [in] object The component object.
+ *  \return The Y coordinate of the component object.
+ */
+gint
+lepton_component_object_get_y (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_component (object), G_MAXINT);
+  g_return_val_if_fail (object->component != NULL, G_MAXINT);
+
+  return object->component->y;
+}
+
+
+/*! \brief Set the Y coordinate of the component base point.
+ *  \par Function Description
+ *  Sets the Y coordinate of the base point of a component object.
+ *
+ *  \param [in] object The component object.
+ *  \param [in] y The new Y coordinate of the component object.
+ */
+void
+lepton_component_object_set_y (LeptonObject *object,
+                               gint y)
+{
+  g_return_if_fail (lepton_object_is_component (object));
+  g_return_if_fail (object->component != NULL);
+
+  object->component->y = y;
+}
+
+
 /*! \brief Get the primitive objects of a component.
  *  \par Function Description
  *  This function returns the pointer to the primitive objects of
