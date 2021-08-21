@@ -322,14 +322,14 @@ s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
   /* get coordinates of where to place the text object */
   switch (lepton_object_get_type (o_current)) {
   case (OBJ_COMPONENT):
-    world_x = o_current->component->x;
-    world_y = o_current->component->y;
+    world_x = lepton_component_object_get_x (o_current);
+    world_y = lepton_component_object_get_y (o_current);
     color = ATTRIBUTE_COLOR;
     break;
 
   case (OBJ_NET):
-    world_x = o_current->component->x;
-    world_y = o_current->component->y;
+    world_x = lepton_component_object_get_x (o_current);
+    world_y = lepton_component_object_get_y (o_current);
     color = ATTRIBUTE_COLOR;
     break;
 
