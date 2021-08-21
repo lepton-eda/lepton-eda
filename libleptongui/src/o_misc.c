@@ -487,7 +487,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
                                 lepton_component_object_get_x (o_current),
                                 lepton_component_object_get_y (o_current),
                                 lepton_component_object_get_angle (o_current),
-                                o_current->component->mirror,
+                                lepton_component_object_get_mirror (o_current),
                                 clib,
                                 o_current->component_basename,
                                 1);
