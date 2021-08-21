@@ -1317,6 +1317,7 @@ lepton_component_object_rotate (int centerx,
 {
   int x, y;
   int newx, newy;
+  GList *primitives = NULL;
 
   g_return_if_fail (lepton_object_is_component (object));
   g_return_if_fail (object->component != NULL);
@@ -1331,7 +1332,8 @@ lepton_component_object_rotate (int centerx,
 
   lepton_component_object_translate (object, -object->component->x, -object->component->y);
 
-  lepton_object_list_rotate (object->component->prim_objs, 0, 0, angle);
+  primitives = lepton_component_object_get_contents (object);
+  lepton_object_list_rotate (primitives, 0, 0, angle);
 
   object->component->x = 0;
   object->component->y = 0;
