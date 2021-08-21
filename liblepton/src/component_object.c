@@ -601,6 +601,7 @@ o_component_promote_attribs (LeptonObject *object)
   GList *promoted = NULL;
   GList *promotable = NULL;
   GList *iter = NULL;
+  GList *primitives = NULL;
   gboolean keep_invisible;
 
   g_return_val_if_fail (lepton_object_is_component (object), NULL);
@@ -627,8 +628,9 @@ o_component_promote_attribs (LeptonObject *object)
     for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
       LeptonObject *o_removed = (LeptonObject *) iter->data;
       o_removed->parent = NULL;
-      object->component->prim_objs =
-        g_list_remove (object->component->prim_objs, o_removed);
+      primitives = lepton_component_object_get_contents (object);
+      lepton_component_object_set_contents (object,
+                                            g_list_remove (primitives, o_removed));
     }
     promoted = promotable;
   }
