@@ -968,6 +968,7 @@ lepton_component_new (LeptonPage *page,
   LeptonObject *new_node=NULL;
   GList *iter;
   gchar *buffer = NULL;
+  GList *primitives = NULL;
 
   new_node = lepton_object_new (OBJ_COMPONENT, "complex");
 
@@ -980,7 +981,7 @@ lepton_component_new (LeptonPage *page,
   new_node->selectable = selectable;
 
   new_node->component = (LeptonComponent *) g_malloc (sizeof (LeptonComponent));
-  new_node->component->prim_objs = NULL;
+  lepton_component_object_set_contents (new_node, NULL);
   new_node->component->angle = angle;
   new_node->component->mirror = mirror;
   new_node->component->x = x;
@@ -1005,20 +1006,26 @@ lepton_component_new (LeptonPage *page,
     GError * err = NULL;
 
     /* add connections till translated */
-    new_node->component->prim_objs =
-      o_read_buffer (page, NULL, buffer, -1, new_node->component_basename, &err);
+    lepton_component_object_set_contents (new_node,
+                                          o_read_buffer (page,
+                                                         NULL,
+                                                         buffer,
+                                                         -1,
+                                                         new_node->component_basename,
+                                                         &err));
     if (err) {
       g_error_free(err);
       /* If reading fails, replace with placeholder object */
       create_placeholder (new_node, x, y);
     }
     else {
+      primitives = lepton_component_object_get_contents (new_node);
       if (mirror) {
-        lepton_object_list_mirror (new_node->component->prim_objs, 0, 0);
+        lepton_object_list_mirror (primitives, 0, 0);
       }
 
-      lepton_object_list_rotate (new_node->component->prim_objs, 0, 0, angle);
-      lepton_object_list_translate (new_node->component->prim_objs, x, y);
+      lepton_object_list_rotate (primitives, 0, 0, angle);
+      lepton_object_list_translate (primitives, x, y);
     }
 
     g_free (buffer);
@@ -1026,7 +1033,10 @@ lepton_component_new (LeptonPage *page,
   }
 
   /* set the parent field now */
-  for (iter = new_node->component->prim_objs; iter != NULL; iter = g_list_next (iter)) {
+  for (iter = lepton_component_object_get_contents (new_node);
+       iter != NULL;
+       iter = g_list_next (iter))
+  {
     LeptonObject *tmp = (LeptonObject*) iter->data;
     tmp->parent = new_node;
   }
