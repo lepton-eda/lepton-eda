@@ -399,12 +399,16 @@ lepton_component_object_calculate_bounds (const LeptonObject *object,
                                           gboolean include_hidden,
                                           LeptonBounds *bounds)
 {
+  GList *primitives = NULL;
+
   lepton_bounds_init (bounds);
 
   g_return_if_fail (lepton_object_is_component (object));
   g_return_if_fail (object->component != NULL);
 
-  world_get_object_glist_bounds (object->component->prim_objs,
+  primitives = lepton_component_object_get_contents (object);
+
+  world_get_object_glist_bounds (primitives,
                                  include_hidden,
                                  &(bounds->min_x),
                                  &(bounds->min_y),
