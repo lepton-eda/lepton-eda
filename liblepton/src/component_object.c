@@ -1071,7 +1071,7 @@ lepton_component_new_embedded (int color,
 
   new_node->selectable = selectable;
 
-  new_node->component->prim_objs = NULL;
+  lepton_component_object_set_contents (new_node, NULL);
 
   lepton_object_set_color (new_node, color);
   /* Consider embedded components always exist since they are read
