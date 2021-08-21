@@ -1255,6 +1255,7 @@ o_component_copy (LeptonObject *o_current)
 {
   LeptonObject *o_new;
   GList *iter;
+  GList *primitives = NULL;
 
   g_return_val_if_fail (lepton_object_is_component (o_current), NULL);
   g_return_val_if_fail (o_current->component != NULL, NULL);
@@ -1271,7 +1272,7 @@ o_component_copy (LeptonObject *o_current)
 
   /* Set prim_objs temporarily to NULL to prevent crashes on color
      initialization. */
-  o_new->component->prim_objs = NULL;
+  lepton_component_object_set_contents (o_new, NULL);
   lepton_object_set_color (o_new, lepton_object_get_color (o_current));
   lepton_component_object_set_missing (o_new,
                                        lepton_component_object_get_missing (o_current));
@@ -1279,11 +1280,11 @@ o_component_copy (LeptonObject *o_current)
                                         lepton_component_object_get_embedded (o_current));
 
   /* Copy contents and set the parent pointers on the copied objects. */
-  o_new->component->prim_objs =
-    o_glist_copy_all (o_current->component->prim_objs,
-                      NULL);
+  primitives = lepton_component_object_get_contents (o_current);
+  lepton_component_object_set_contents (o_new,
+                                        o_glist_copy_all (primitives, NULL));
 
-  for (iter = o_new->component->prim_objs;
+  for (iter = lepton_component_object_get_contents (o_new);
        iter != NULL;
        iter = g_list_next (iter)) {
     ((LeptonObject*) iter->data)->parent = o_new;
