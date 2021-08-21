@@ -796,3 +796,20 @@ gschem_toplevel_get_show_hidden_text (GschemToplevel *w_current)
      return FALSE in such cases. */
   return (view == NULL) ? FALSE : gschem_page_view_get_show_hidden_text (view);
 }
+
+
+/*! \brief Get the active page for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The currently active page.
+ */
+LeptonPage*
+schematic_window_get_active_page (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_val_if_fail (toplevel != NULL, NULL);
+
+  return toplevel->page_current;
+}
