@@ -68,7 +68,7 @@ void o_delete_selected (GschemToplevel *w_current)
 
   for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
     obj = (LeptonObject *) iter->data;
-    if (obj->selectable == FALSE)
+    if (lepton_object_get_selectable (obj) == FALSE)
       locked_num++;
   }
 
@@ -101,7 +101,7 @@ void o_delete_selected (GschemToplevel *w_current)
     case GTK_RESPONSE_NO:   /* Remove non locked */
       for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
         obj = (LeptonObject *) iter->data;
-        if (obj->selectable == TRUE)
+        if (lepton_object_get_selectable (obj) == TRUE)
           non_locked = g_list_append (non_locked, iter->data);
       }
       g_list_free (to_remove);

@@ -625,7 +625,7 @@ o_select_visible_unlocked (GschemToplevel *w_current)
       continue;
 
     /* Skip locked objects. */
-    if (!obj->selectable) continue;
+    if (!lepton_object_get_selectable(obj)) continue;
 
     /* Add object to selection. */
     /*! \bug We can't call o_select_object() because it
