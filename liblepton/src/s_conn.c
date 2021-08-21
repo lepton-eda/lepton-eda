@@ -642,6 +642,7 @@ GList *s_conn_return_others(GList *input_list, LeptonObject *object)
 {
   GList *c_iter;
   GList *return_list;
+  GList *primitives;
 
   return_list = input_list;
 
@@ -660,8 +661,8 @@ GList *s_conn_return_others(GList *input_list, LeptonObject *object)
       break;
 
     case OBJ_COMPONENT:
-      return_list = s_conn_return_glist_others (return_list,
-                                                object->component->prim_objs);
+      primitives = lepton_component_object_get_contents (object);
+      return_list = s_conn_return_glist_others (return_list, primitives);
       break;
   }
 
