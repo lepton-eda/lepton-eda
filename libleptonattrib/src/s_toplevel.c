@@ -522,7 +522,7 @@ s_toplevel_sheetdata_to_toplevel (LeptonToplevel *toplevel,
     {
       /*  Upon finding a component, here's what to do:
        *  0.  Get refdes of component.
-       *  1.  Loop over prim_objects, looking for pins.
+       *  1.  Loop over primitive objects, looking for pins.
        *  2.  When a pin is found, create refdes:pinnumber pair
        *      used in searching TABLE.
        *  3.  Search TABLE using refdes:pinnumber as key, and get list of
@@ -530,9 +530,11 @@ s_toplevel_sheetdata_to_toplevel (LeptonToplevel *toplevel,
        *  4.  Stick the attribs into the LeptonToplevel data structure.
        */
       temp_uref =  s_attrib_get_refdes(o_current);
-      if ( (temp_uref != NULL) && (o_current->component->prim_objs) ) {    /* make sure object component has a refdes  */
-
-        for (prim_iter = o_current->component->prim_objs;
+      /* Make sure object component has a refdes. */
+      if ((temp_uref != NULL) &&
+          (lepton_component_object_get_contents (o_current) != NULL))
+      {
+        for (prim_iter = lepton_component_object_get_contents (o_current);
              prim_iter != NULL;
              prim_iter = g_list_next (prim_iter)) {
           LeptonObject *comp_prim_obj = (LeptonObject*) prim_iter->data;
