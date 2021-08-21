@@ -435,11 +435,11 @@ lepton_component_object_get_position (const LeptonObject *object,
   g_return_val_if_fail (object->component != NULL, FALSE);
 
   if (x != NULL) {
-    *x = object->component->x;
+    *x = lepton_component_object_get_x (object);
   }
 
   if (y != NULL) {
-    *y = object->component->y;
+    *y = lepton_component_object_get_y (object);
   }
 
   return TRUE;
@@ -989,8 +989,8 @@ lepton_component_new (LeptonPage *page,
   lepton_component_object_set_contents (new_node, NULL);
   new_node->component->angle = angle;
   new_node->component->mirror = mirror;
-  new_node->component->x = x;
-  new_node->component->y = y;
+  lepton_component_object_set_x (new_node, x);
+  lepton_component_object_set_y (new_node, y);
   /* Do setting color after initialization of prim_objs as the
      function sets color of prim_objs as well. */
   lepton_object_set_color (new_node, color);
@@ -1076,8 +1076,8 @@ lepton_component_new_embedded (int color,
   new_node = lepton_object_new (OBJ_COMPONENT, "complex");
 
   new_node->component = (LeptonComponent *) g_malloc (sizeof (LeptonComponent));
-  new_node->component->x = x;
-  new_node->component->y = y;
+  lepton_component_object_set_x (new_node, x);
+  lepton_component_object_set_y (new_node, y);
 
   new_node->component->angle = angle;
   new_node->component->mirror = mirror;
@@ -1225,8 +1225,8 @@ lepton_component_object_to_buffer (const LeptonObject *object)
    */
   buffer = g_strdup_printf ("%c %d %d %d %d %d %s",
                             lepton_object_get_type (object),
-                            object->component->x,
-                            object->component->y,
+                            lepton_component_object_get_x (object),
+                            lepton_component_object_get_y (object),
                             lepton_object_get_selectable (object),
                             object->component->angle,
                             object->component->mirror,
@@ -1253,8 +1253,8 @@ lepton_component_object_translate (LeptonObject *object, int dx, int dy)
   g_return_if_fail (lepton_object_is_component (object));
   g_return_if_fail (object->component != NULL);
 
-  object->component->x = object->component->x + dx;
-  object->component->y = object->component->y + dy;
+  lepton_component_object_set_x (object, lepton_component_object_get_x (object) + dx);
+  lepton_component_object_set_y (object, lepton_component_object_get_y (object) + dy);
 
   primitives = lepton_component_object_get_contents (object);
   lepton_object_list_translate (primitives, dx, dy);
@@ -1283,8 +1283,8 @@ o_component_copy (LeptonObject *o_current)
   o_new->component_basename = g_strdup(o_current->component_basename);
 
   o_new->component = (LeptonComponent*) g_malloc0 (sizeof (LeptonComponent));
-  o_new->component->x = o_current->component->x;
-  o_new->component->y = o_current->component->y;
+  lepton_component_object_set_x (o_new, lepton_component_object_get_x (o_current));
+  lepton_component_object_set_y (o_new, lepton_component_object_get_y (o_current));
   o_new->component->angle = o_current->component->angle;
   o_new->component->mirror = o_current->component->mirror;
 
@@ -1349,21 +1349,23 @@ lepton_component_object_rotate (int centerx,
   g_return_if_fail (lepton_object_is_component (object));
   g_return_if_fail (object->component != NULL);
 
-  x = object->component->x + (-centerx);
-  y = object->component->y + (-centery);
+  x = lepton_component_object_get_x (object) + (-centerx);
+  y = lepton_component_object_get_y (object) + (-centery);
 
   lepton_point_rotate_90 (x, y, angle, &newx, &newy);
 
   x = newx + (centerx);
   y = newy + (centery);
 
-  lepton_component_object_translate (object, -object->component->x, -object->component->y);
+  lepton_component_object_translate (object,
+                                     -(lepton_component_object_get_x (object)),
+                                     -(lepton_component_object_get_y (object)));
 
   primitives = lepton_component_object_get_contents (object);
   lepton_object_list_rotate (primitives, 0, 0, angle);
 
-  object->component->x = 0;
-  object->component->y = 0;
+  lepton_component_object_set_x (object, 0);
+  lepton_component_object_set_y (object, 0);
 
   lepton_component_object_translate (object, x, y);
 
@@ -1387,10 +1389,12 @@ lepton_component_object_mirror (int world_centerx,
   g_return_if_fail (lepton_object_is_component (object));
   g_return_if_fail (object->component != NULL);
 
-  x = 2 * world_centerx - object->component->x;
-  y = object->component->y;
+  x = 2 * world_centerx - lepton_component_object_get_x (object);
+  y = lepton_component_object_get_y (object);
 
-  lepton_component_object_translate (object, -object->component->x, -object->component->y);
+  lepton_component_object_translate (object,
+                                     -(lepton_component_object_get_x (object)),
+                                     -(lepton_component_object_get_y (object)));
 
   primitives = lepton_component_object_get_contents (object);
   lepton_object_list_mirror (primitives, 0, 0);
