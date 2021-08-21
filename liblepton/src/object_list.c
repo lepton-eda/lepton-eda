@@ -191,7 +191,8 @@ lepton_object_list_print (GList *objects)
 
     if (lepton_object_is_component (o_current))
     {
-      lepton_object_list_print (o_current->component->prim_objs);
+      GList *primitives = lepton_component_object_get_contents (o_current);
+      lepton_object_list_print (primitives);
     }
 
     o_attrib_print (o_current->attribs);
@@ -412,7 +413,8 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
           if (lepton_component_object_get_embedded (o_current)) {
             g_string_append(acc, "[\n");
 
-            out = o_save_objects(o_current->component->prim_objs, FALSE);
+            GList *primitives = lepton_component_object_get_contents (o_current);
+            out = o_save_objects (primitives, FALSE);
             g_string_append (acc, out);
             g_free(out);
 
