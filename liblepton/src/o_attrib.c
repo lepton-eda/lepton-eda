@@ -537,7 +537,8 @@ char *o_attrib_search_inherited_attribs_by_name (LeptonObject *object,
 {
   g_return_val_if_fail (lepton_object_is_component (object), NULL);
 
-  return o_attrib_search_floating_attribs_by_name (object->component->prim_objs, name, counter);
+  GList *primitives = lepton_component_object_get_contents (object);
+  return o_attrib_search_floating_attribs_by_name (primitives, name, counter);
 }
 
 
