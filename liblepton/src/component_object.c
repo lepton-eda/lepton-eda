@@ -779,10 +779,13 @@ create_placeholder_small (LeptonObject* node, int x, int y)
     line4
   };
 
+  GList *primitives = NULL;
+
   for ( size_t i = 0; i < sizeof(objs) / sizeof(objs[0]); ++i )
   {
-    node->component->prim_objs =
-      g_list_append (node->component->prim_objs, objs[i]);
+    primitives = lepton_component_object_get_contents (node);
+    lepton_component_object_set_contents (node,
+                                          g_list_append (primitives, objs[i]));
   }
 
 } /* create_placeholder_small() */
