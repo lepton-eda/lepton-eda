@@ -531,8 +531,7 @@ s_toplevel_sheetdata_to_toplevel (LeptonToplevel *toplevel,
        */
       temp_uref =  s_attrib_get_refdes(o_current);
       /* Make sure object component has a refdes. */
-      if ((temp_uref != NULL) &&
-          (lepton_component_object_get_contents (o_current) != NULL))
+      if (temp_uref != NULL)
       {
         for (prim_iter = lepton_component_object_get_contents (o_current);
              prim_iter != NULL;
