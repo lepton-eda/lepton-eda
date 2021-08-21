@@ -1383,6 +1383,8 @@ eda_renderer_draw_cues (EdaRenderer *renderer, LeptonObject *object)
 static void
 eda_renderer_default_draw_cues (EdaRenderer *renderer, LeptonObject *object)
 {
+  GList *primitives = NULL;
+
   g_return_if_fail (object != NULL);
   g_return_if_fail (renderer->priv->cr != NULL);
 
@@ -1396,8 +1398,9 @@ eda_renderer_default_draw_cues (EdaRenderer *renderer, LeptonObject *object)
   case OBJ_PICTURE:
     break;
   case OBJ_COMPONENT:
+    primitives = lepton_component_object_get_contents (object);
     /* Recurse */
-    eda_renderer_draw_cues_list (renderer, object->component->prim_objs);
+    eda_renderer_draw_cues_list (renderer, primitives);
     break;
   case OBJ_NET:
   case OBJ_BUS:
