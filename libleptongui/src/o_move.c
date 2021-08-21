@@ -647,7 +647,7 @@ void o_move_prep_rubberband(GschemToplevel *w_current)
         break;
 
       case (OBJ_COMPONENT):
-        for (iter = object->component->prim_objs;
+        for (iter = lepton_component_object_get_contents (object);
              iter != NULL; iter = g_list_next (iter)) {
           o_current = (LeptonObject*) iter->data;
 
