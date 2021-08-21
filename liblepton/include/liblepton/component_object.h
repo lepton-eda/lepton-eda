@@ -67,6 +67,12 @@ lepton_component_object_get_angle (const LeptonObject *object);
 void
 lepton_component_object_set_angle (LeptonObject *object,
                                    gint angle);
+gboolean
+lepton_component_object_get_mirror (const LeptonObject *object);
+
+void
+lepton_component_object_set_mirror (LeptonObject *object,
+                                    gboolean mirror);
 GList*
 o_component_promote_attribs (LeptonObject *object);
 

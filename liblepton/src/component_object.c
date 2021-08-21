@@ -191,6 +191,38 @@ lepton_component_object_set_angle (LeptonObject *object,
   object->component->angle = lepton_angle_normalize (angle);
 }
 
+
+/*! \brief Test component object's 'mirror' flag.
+ *
+ *  \param [in] object The component object to test.
+ *  \return The value of the 'mirror' flag.
+ */
+gboolean
+lepton_component_object_get_mirror (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_component (object), TRUE);
+  g_return_val_if_fail (object->component != NULL, TRUE);
+
+  return object->component->mirror;
+}
+
+
+/*! \brief Set component object's 'mirror' flag.
+ *
+ *  \param [in] object The component object to amend.
+ *  \param [in] mirror The new value of the 'mirror' flag.
+ */
+void
+lepton_component_object_set_mirror (LeptonObject *object,
+                                    gboolean mirror)
+{
+  g_return_if_fail (lepton_object_is_component (object));
+  g_return_if_fail (object->component != NULL);
+
+  object->component->mirror = mirror;
+}
+
+
 /*! \brief Get the primitive objects of a component.
  *  \par Function Description
  *  This function returns the pointer to the primitive objects of
