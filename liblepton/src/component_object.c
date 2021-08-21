@@ -820,19 +820,20 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
   LeptonObject *new_prim_obj;
   char *not_found_text = NULL;
   int x_offset, y_offset;
+  GList *primitives = NULL;
 
   g_return_if_fail (lepton_object_is_component (new_node));
   g_return_if_fail (new_node->component != NULL);
 
+  primitives = lepton_component_object_get_contents (new_node);
+
   /* Mark the origin of the missing component */
   new_prim_obj = lepton_line_object_new (DETACHED_ATTRIBUTE_COLOR,
                                          x - 50, y, x + 50, y);
-  lepton_component_object_set_contents (new_node,
-                                        g_list_prepend (lepton_component_object_get_contents (new_node), new_prim_obj));
+  primitives = g_list_prepend (primitives, new_prim_obj);
   new_prim_obj = lepton_line_object_new (DETACHED_ATTRIBUTE_COLOR,
                                          x, y + 50, x, y - 50);
-  lepton_component_object_set_contents (new_node,
-                                        g_list_prepend (lepton_component_object_get_contents (new_node), new_prim_obj));
+  primitives = g_list_prepend (primitives, new_prim_obj);
 
   /* Add some useful text */
   not_found_text =
@@ -846,8 +847,8 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
                                          not_found_text,
                                          8,
                                          VISIBLE, SHOW_NAME_VALUE);
-  lepton_component_object_set_contents (new_node,
-                                        g_list_prepend (lepton_component_object_get_contents (new_node), new_prim_obj));
+  primitives = g_list_prepend (primitives, new_prim_obj);
+
   g_free(not_found_text);
 
   /* figure out where to put the hazard triangle */
@@ -869,8 +870,7 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
                                   50,
                                   -1,
                                   -1);
-  lepton_component_object_set_contents (new_node,
-                                        g_list_prepend (lepton_component_object_get_contents (new_node), new_prim_obj));
+  primitives = g_list_prepend (primitives, new_prim_obj);
   new_prim_obj = lepton_line_object_new (DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X + x_offset,
                                          y + NOT_FOUND_TEXT_Y + y_offset,
@@ -882,8 +882,7 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
                                   50,
                                   -1,
                                   -1);
-  lepton_component_object_set_contents (new_node,
-                                        g_list_prepend (lepton_component_object_get_contents (new_node), new_prim_obj));
+  primitives = g_list_prepend (primitives, new_prim_obj);
   new_prim_obj = lepton_line_object_new (DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X + x_offset + 300,
                                          y + NOT_FOUND_TEXT_Y + y_offset + 500,
@@ -895,8 +894,7 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
                                   50,
                                   -1,
                                   -1);
-  lepton_component_object_set_contents (new_node,
-                                        g_list_prepend (lepton_component_object_get_contents (new_node), new_prim_obj));
+  primitives = g_list_prepend (primitives, new_prim_obj);
   new_prim_obj = lepton_text_object_new (DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X + x_offset + 270,
                                          y + NOT_FOUND_TEXT_Y + y_offset + 90,
@@ -906,10 +904,9 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
                                          18,
                                          VISIBLE,
                                          SHOW_NAME_VALUE);
-  lepton_component_object_set_contents (new_node,
-                                        g_list_prepend (lepton_component_object_get_contents (new_node), new_prim_obj));
-  lepton_component_object_set_contents (new_node,
-                                        g_list_reverse (lepton_component_object_get_contents (new_node)));
+  primitives = g_list_prepend (primitives, new_prim_obj);
+  primitives = g_list_reverse (primitives);
+  lepton_component_object_set_contents (new_node, primitives);
 
 } /* create_placeholder_classic() */
 
