@@ -646,8 +646,9 @@ eda_renderer_draw_hatch (EdaRenderer *renderer, LeptonObject *object)
 static void
 eda_renderer_draw_component (EdaRenderer *renderer, LeptonObject *object)
 {
+  GList *primitives = lepton_component_object_get_contents (object);
   /* Recurse */
-  eda_renderer_draw_list (renderer, object->component->prim_objs);
+  eda_renderer_draw_list (renderer, primitives);
 }
 
 static void
