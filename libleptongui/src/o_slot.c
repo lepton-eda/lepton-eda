@@ -118,8 +118,8 @@ void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *str
     /* here you need to do the add the slot
        attribute since it doesn't exist */
     new_obj = lepton_text_object_new (ATTRIBUTE_COLOR,
-                                      object->component->x,
-                                      object->component->y,
+                                      lepton_component_object_get_x (object),
+                                      lepton_component_object_get_y (object),
                                       LOWER_LEFT,
                                       0, /* zero is angle */
                                       string,

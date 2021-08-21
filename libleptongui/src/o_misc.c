@@ -484,8 +484,8 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   /* Create new object and set embedded */
   o_new = lepton_component_new (toplevel->page_current,
                                 default_color_id(),
-                                o_current->component->x,
-                                o_current->component->y,
+                                lepton_component_object_get_x (o_current),
+                                lepton_component_object_get_y (o_current),
                                 o_current->component->angle,
                                 o_current->component->mirror,
                                 clib,

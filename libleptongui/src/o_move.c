@@ -201,8 +201,8 @@ void o_move_end(GschemToplevel *w_current)
 
         /* TODO: Fix so we can just pass the component to o_move_end_lowlevel,
          * IE.. by falling through the bottom of this case statement. */
-        object->component->x = object->component->x + diff_x;
-        object->component->y = object->component->y + diff_y;
+        lepton_component_object_set_x (object, lepton_component_object_get_x (object) + diff_x);
+        lepton_component_object_set_y (object, lepton_component_object_get_y (object) + diff_y);
 
         primitives = lepton_component_object_get_contents (object);
         o_move_end_lowlevel_glist (w_current,
