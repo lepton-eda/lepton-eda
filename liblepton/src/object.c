@@ -925,6 +925,8 @@ lepton_object_copy (LeptonObject *object)
 void
 lepton_object_delete (LeptonObject *o_current)
 {
+  GList *primitives = NULL;
+
   if (o_current != NULL) {
     /* If currently attached to a page, remove it from the page */
     if (o_current->page != NULL) {
@@ -979,10 +981,12 @@ lepton_object_delete (LeptonObject *o_current)
 
     if (o_current->component) {
 
-      if (o_current->component->prim_objs) {
+      primitives = lepton_component_object_get_contents (o_current);
+      if (primitives != NULL)
+      {
         /* printf("sdeleting component's primitive objects\n");*/
-        lepton_object_list_delete (o_current->component->prim_objs);
-        o_current->component->prim_objs = NULL;
+        lepton_object_list_delete (primitives);
+        lepton_component_object_set_contents (o_current, NULL);
       }
 
       g_free(o_current->component);
