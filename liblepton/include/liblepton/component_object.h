@@ -61,6 +61,12 @@ lepton_component_object_get_y (const LeptonObject *object);
 void
 lepton_component_object_set_y (LeptonObject *object,
                                gint y);
+gint
+lepton_component_object_get_angle (const LeptonObject *object);
+
+void
+lepton_component_object_set_angle (LeptonObject *object,
+                                   gint angle);
 GList*
 o_component_promote_attribs (LeptonObject *object);
 

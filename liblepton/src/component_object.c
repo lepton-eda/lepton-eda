@@ -153,6 +153,44 @@ lepton_component_object_set_y (LeptonObject *object,
 }
 
 
+/*! \brief Get the component angle.
+ *
+ *  \param [in] object The component object.
+ *  \return The component angle.
+ */
+gint
+lepton_component_object_get_angle (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_component (object), 0);
+  g_return_val_if_fail (object->component != NULL, 0);
+
+  return object->component->angle;
+}
+
+
+/*! \brief Set the component angle.
+ *
+ * The component angle must be orthogonal to an axis, i.e., the
+ * component angle must be a multiple of 90 degrees.  In case of
+ * an invalid component angle, the property remains unchanged.
+ *
+ * If the component angle is not normal [0 .. 360], then the angle
+ * will be normalized.
+ *
+ * \param [in,out] object The component object
+ * \param [in] angle The component angle in degrees.
+ */
+void
+lepton_component_object_set_angle (LeptonObject *object,
+                                   gint angle)
+{
+  g_return_if_fail (lepton_object_is_component (object));
+  g_return_if_fail (object->component != NULL);
+  g_return_if_fail (lepton_angle_is_ortho (angle));
+
+  object->component->angle = lepton_angle_normalize (angle);
+}
+
 /*! \brief Get the primitive objects of a component.
  *  \par Function Description
  *  This function returns the pointer to the primitive objects of
