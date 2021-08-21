@@ -139,7 +139,7 @@ x_window_setup (GschemToplevel *w_current)
  */
 void x_window_create_drawing(GtkWidget *scrolled, GschemToplevel *w_current)
 {
-  LeptonPage* page = w_current->toplevel->page_current;
+  LeptonPage* page = schematic_window_get_active_page (w_current);
   GschemPageView* view = gschem_page_view_new_with_page (page);
 
 #ifdef ENABLE_GTK3
@@ -355,12 +355,14 @@ x_window_find_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
 static void
 x_window_hide_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
 {
+  LeptonPage *page = NULL;
+
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->toplevel != NULL);
 
   if (response == GTK_RESPONSE_OK) {
+    page = schematic_window_get_active_page (w_current);
     o_edit_hide_specific_text (w_current,
-                               lepton_page_objects (w_current->toplevel->page_current),
+                               lepton_page_objects (page),
                                gschem_show_hide_text_widget_get_text_string (GSCHEM_SHOW_HIDE_TEXT_WIDGET (widget)));
   }
 
@@ -372,12 +374,14 @@ x_window_hide_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
 static void
 x_window_show_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
 {
+  LeptonPage *page = NULL;
+
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->toplevel != NULL);
 
   if (response == GTK_RESPONSE_OK) {
+    page = schematic_window_get_active_page (w_current);
     o_edit_show_specific_text (w_current,
-                               lepton_page_objects (w_current->toplevel->page_current),
+                               lepton_page_objects (page),
                                gschem_show_hide_text_widget_get_text_string (GSCHEM_SHOW_HIDE_TEXT_WIDGET (widget)));
   }
 
