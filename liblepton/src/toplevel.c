@@ -117,7 +117,7 @@ lepton_toplevel_get_page_current (LeptonToplevel *toplevel)
  *  \param [in]     page     The new current page
  */
 void
-s_toplevel_set_page_current (LeptonToplevel *toplevel,
+lepton_toplevel_set_page_current (LeptonToplevel *toplevel,
                              LeptonPage *page)
 {
   g_return_if_fail (toplevel != NULL);

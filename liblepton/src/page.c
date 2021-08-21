@@ -297,7 +297,7 @@ s_page_delete (LeptonToplevel *toplevel,
     s_page_goto (toplevel, tmp);
   } else {
     /* page was page_current */
-    s_toplevel_set_page_current (toplevel, NULL);
+    lepton_toplevel_set_page_current (toplevel, NULL);
     /* page_current must be updated by calling function */
   }
 
@@ -329,7 +329,7 @@ s_page_delete_list(LeptonToplevel *toplevel)
   g_list_free (list_copy);
 
   /* reset toplevel fields */
-  s_toplevel_set_page_current (toplevel, NULL);
+  lepton_toplevel_set_page_current (toplevel, NULL);
 }
 
 /*! \brief Add a weak reference watcher to an LeptonPage.
@@ -424,7 +424,7 @@ s_page_goto (LeptonToplevel *toplevel,
 {
   gchar *dirname;
 
-  s_toplevel_set_page_current (toplevel, p_new);
+  lepton_toplevel_set_page_current (toplevel, p_new);
 
   dirname = g_path_get_dirname (s_page_get_filename(p_new));
   if (chdir (dirname)) {

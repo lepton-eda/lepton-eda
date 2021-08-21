@@ -616,7 +616,7 @@ lepton_attrib_window ()
        iter = g_list_next (iter)) {
 
     p_local = (LeptonPage*) iter->data;
-    s_toplevel_set_page_current (toplevel, p_local);
+    lepton_toplevel_set_page_current (toplevel, p_local);
 
     /* Now add all items found to the master lists */
     s_sheet_data_add_master_comp_list_items (s_page_objects (p_local));
