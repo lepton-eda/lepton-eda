@@ -198,8 +198,10 @@ SCM_DEFINE (component_contents, "%component-contents", 1, 0, 0,
 
   LeptonObject *obj = edascm_to_object (component_s);
 
-  if (edascm_is_object_type (component_s, OBJ_COMPONENT)) {
-    return edascm_from_object_glist (obj->component->prim_objs);
+  if (edascm_is_object_type (component_s, OBJ_COMPONENT))
+  {
+    GList *primitives = lepton_component_object_get_contents (obj);
+    return edascm_from_object_glist (primitives);
   } else {
     return SCM_EOL;
   }
