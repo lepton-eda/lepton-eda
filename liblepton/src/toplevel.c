@@ -103,7 +103,7 @@ s_toplevel_delete (LeptonToplevel *toplevel)
  *  \return The \a page_current field of the \a toplevel.
  */
 LeptonPage*
-s_toplevel_page_current (LeptonToplevel *toplevel)
+lepton_toplevel_get_page_current (LeptonToplevel *toplevel)
 {
   g_return_val_if_fail (toplevel != NULL, NULL);
 

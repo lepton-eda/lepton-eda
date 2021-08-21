@@ -55,7 +55,7 @@ void
 s_toplevel_remove_weak_ptr (LeptonToplevel *toplevel,
                             void *weak_pointer_loc);
 LeptonPage*
-s_toplevel_page_current (LeptonToplevel *toplevel);
+lepton_toplevel_get_page_current (LeptonToplevel *toplevel);
 
 void
 s_toplevel_set_page_current (LeptonToplevel *toplevel,
