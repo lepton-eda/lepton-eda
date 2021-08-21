@@ -1867,7 +1867,7 @@ lepton_object_calculate_visible_bounds (LeptonObject *o_current,
     break;
 
   case(OBJ_COMPONENT):
-    if (o_current->component->prim_objs == NULL)
+    if (lepton_component_object_get_contents (o_current) == NULL)
       return 0;
 
     lepton_component_object_calculate_bounds (o_current,
