@@ -51,7 +51,7 @@ s_toplevel_new ()
   toplevel->RC_list = NULL;
 
   toplevel->pages = lepton_list_new();
-  toplevel->page_current = NULL;
+  lepton_toplevel_set_page_current (toplevel, NULL);
 
   toplevel->change_notify_funcs = NULL;
 
