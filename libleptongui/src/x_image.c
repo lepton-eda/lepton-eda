@@ -289,7 +289,6 @@ x_image_get_type_from_description (const char *description)
 static void
 x_image_update_dialog_filename (GtkComboBoxText *combo,
                                 GschemToplevel *w_current) {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   char* image_type_descr = NULL;
   gchar *image_type = NULL;
   const char *old_image_filename = NULL;
@@ -310,7 +309,8 @@ x_image_update_dialog_filename (GtkComboBoxText *combo,
   /* Get the previous file name. If none, revert to the page filename */
   old_image_filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(file_chooser));
   if (!old_image_filename) {
-    old_image_filename = lepton_page_get_filename (toplevel->page_current);
+    LeptonPage *active_page = schematic_window_get_active_page (w_current);
+    old_image_filename = lepton_page_get_filename (active_page);
   }
 
   /* Get the file name, without extension */
