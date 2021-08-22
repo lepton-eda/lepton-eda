@@ -323,11 +323,11 @@ f_open_flags (LeptonToplevel *toplevel,
 
   if (!load_backup_file) {
     /* If it's not the backup file */
-    page->CHANGED=0; /* added 4/7/98 */
+    lepton_page_set_changed (page, 0);
   } else {
     /* We are loading the backup file, so lepton should ask
        the user if save it or not when closing the page. */
-    page->CHANGED=1;
+    lepton_page_set_changed (page, 1);
   }
 
   g_free(full_filename);
