@@ -36,19 +36,20 @@ void
 o_component_prepare_place (GschemToplevel *w_current,
                            const CLibSymbol *sym)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *temp_list;
   LeptonObject *o_current;
   char *buffer;
   const gchar *sym_name = s_clib_symbol_get_name (sym);
   GError *err = NULL;
 
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
   i_set_state (w_current, COMPMODE);
   i_action_start (w_current);
 
   /* remove the old place list if it exists */
-  lepton_object_list_delete (toplevel->page_current->place_list);
-  toplevel->page_current->place_list = NULL;
+  lepton_object_list_delete (active_page->place_list);
+  active_page->place_list = NULL;
 
   /* Insert the new object into the buffer at world coordinates (0,0).
    * It will be translated to the mouse coordinates during placement. */
@@ -61,7 +62,7 @@ o_component_prepare_place (GschemToplevel *w_current,
     temp_list = NULL;
 
     buffer = s_clib_symbol_get_data (sym);
-    temp_list = o_read_buffer (toplevel->page_current,
+    temp_list = o_read_buffer (active_page,
                                temp_list,
                                buffer, -1,
                                sym_name,
@@ -81,13 +82,13 @@ o_component_prepare_place (GschemToplevel *w_current,
     }
 
     /* Take the added objects */
-    toplevel->page_current->place_list =
-      g_list_concat (toplevel->page_current->place_list, temp_list);
+    active_page->place_list =
+      g_list_concat (active_page->place_list, temp_list);
 
   } else { /* if (w_current->include_component) {..} else { */
     LeptonObject *new_object;
 
-    new_object = lepton_component_new (toplevel->page_current,
+    new_object = lepton_component_new (active_page,
                                        default_color_id(),
                                        0,
                                        0,
@@ -107,14 +108,14 @@ o_component_prepare_place (GschemToplevel *w_current,
     }
     else {
 
-      toplevel->page_current->place_list =
-          g_list_concat (toplevel->page_current->place_list,
+      active_page->place_list =
+          g_list_concat (active_page->place_list,
                          lepton_component_promote_attribs (new_object));
-      toplevel->page_current->place_list =
-          g_list_append (toplevel->page_current->place_list, new_object);
+      active_page->place_list =
+          g_list_append (active_page->place_list, new_object);
 
       /* Flag the symbol as embedded if necessary */
-      o_current = (LeptonObject*) (g_list_last (toplevel->page_current->place_list))->data;
+      o_current = (LeptonObject*) (g_list_last (active_page->place_list))->data;
       if (w_current->embed_component) {
         lepton_component_object_set_embedded (o_current, TRUE);
       }
