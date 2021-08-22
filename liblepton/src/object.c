@@ -1594,7 +1594,7 @@ void
 lepton_object_page_set_changed (LeptonObject *object)
 {
   LeptonPage *page = lepton_object_get_page (object);
-  if (page != NULL) page->CHANGED = TRUE;
+  if (page != NULL) lepton_page_set_changed (page, 1);
 }
 
 
