@@ -1441,7 +1441,7 @@ i_callback_page_close (GtkWidget *widget, gpointer data)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
 
-  LeptonPage *page = gschem_toplevel_get_toplevel (w_current)->page_current;
+  LeptonPage *page = schematic_window_get_active_page (w_current);
 
   if (page == NULL) {
     return;
