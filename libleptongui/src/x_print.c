@@ -55,7 +55,6 @@
  * be LANDSCAPE, PORTRAIT or AUTOLAYOUT.  If \a AUTOLAYOUT is chosen,
  * the page orientation that best fits the page contents is chosen.
  *
- * \param toplevel A #LeptonToplevel structure.
  * \param page     The #LeptonPage to generate a page setup for.
  * \param paper_size_name   The name of the paper size to use.
  * \param orientation       The paper orientation to use.
@@ -63,8 +62,7 @@
  * \returns A newly-created page setup.
  */
 static GtkPageSetup *
-x_print_default_page_setup (LeptonToplevel *toplevel,
-                            LeptonPage *page)
+x_print_default_page_setup (LeptonPage *page)
 {
   GtkPageSetup *setup = gtk_page_setup_new ();
   GtkPaperSize *papersize;
@@ -299,7 +297,7 @@ x_print_export_pdf_page (GschemToplevel *w_current,
 
   page = schematic_window_get_active_page (w_current);
 
-  setup = x_print_default_page_setup (w_current->toplevel, page );
+  setup = x_print_default_page_setup (page);
   width = gtk_page_setup_get_paper_width (setup, GTK_UNIT_POINTS);
   height = gtk_page_setup_get_paper_height (setup, GTK_UNIT_POINTS);
 
@@ -424,7 +422,7 @@ x_print (GschemToplevel *w_current)
                                              "unit", GTK_UNIT_POINTS,
                                              NULL));
 
-  setup = x_print_default_page_setup (w_current->toplevel, active_page);
+  setup = x_print_default_page_setup (active_page);
   gtk_print_operation_set_default_page_setup (print, setup);
 
   g_signal_connect (print, "draw_page", G_CALLBACK (draw_page__print_operation),
