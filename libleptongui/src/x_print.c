@@ -251,7 +251,7 @@ draw_page__print_operation (GtkPrintOperation *print,
 
   /* Find the page data */
   g_return_if_fail (page_nr != 1);
-  page = w_current->toplevel->page_current;
+  page = schematic_window_get_active_page (w_current);
   g_return_if_fail (page != NULL);
 
   /* Get cairo & pango contexts */
@@ -297,7 +297,7 @@ x_print_export_pdf_page (GschemToplevel *w_current,
   EdaConfig *cfg;
   gboolean is_color;
 
-  page = w_current->toplevel->page_current;
+  page = schematic_window_get_active_page (w_current);
 
   setup = x_print_default_page_setup (w_current->toplevel, page );
   width = gtk_page_setup_get_paper_width (setup, GTK_UNIT_POINTS);
@@ -358,10 +358,12 @@ x_print_export_pdf (GschemToplevel *w_current,
   int status, wx_min, wy_min, wx_max, wy_max;
   double width, height;
 
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
   /* First, calculate a transformation matrix for the cairo
    * context. We want to center the extents of the page in the
    * available page area. */
-  status = world_get_object_glist_bounds (lepton_page_objects (w_current->toplevel->page_current),
+  status = world_get_object_glist_bounds (lepton_page_objects (active_page),
                                           /* Don't include hidden objects. */
                                           FALSE,
                                           &wx_min, &wy_min, &wx_max, &wy_max);
@@ -376,7 +378,8 @@ x_print_export_pdf (GschemToplevel *w_current,
   surface = cairo_pdf_surface_create (filename, width, height);
   cr = cairo_create (surface);
 
-  x_print_draw_page (w_current->toplevel, w_current->toplevel->page_current,
+  x_print_draw_page (w_current->toplevel,
+                     active_page,
                      cr, NULL, width, height,
                      is_color, FALSE);
 
@@ -412,6 +415,8 @@ x_print (GschemToplevel *w_current)
   GError *err = NULL;
   const int num_pages = 1;
 
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
   /* Create the print operation and set it up */
   print = GTK_PRINT_OPERATION (g_object_new (GTK_TYPE_PRINT_OPERATION,
                                              "n-pages", num_pages,
@@ -419,8 +424,7 @@ x_print (GschemToplevel *w_current)
                                              "unit", GTK_UNIT_POINTS,
                                              NULL));
 
-  setup = x_print_default_page_setup (w_current->toplevel,
-                                      w_current->toplevel->page_current);
+  setup = x_print_default_page_setup (w_current->toplevel, active_page);
   gtk_print_operation_set_default_page_setup (print, setup);
 
   g_signal_connect (print, "draw_page", G_CALLBACK (draw_page__print_operation),
@@ -443,10 +447,9 @@ x_print (GschemToplevel *w_current)
 
   /* derive output file name from the file name of the current page:
   */
-  LeptonPage* page = w_current->toplevel->page_current;
-  if (page != NULL)
+  if (active_page != NULL)
   {
-    const gchar* path = lepton_page_get_filename (page);
+    const gchar* path = lepton_page_get_filename (active_page);
     gchar* uri = g_strdup_printf ("file://%s.pdf", path);
 
     gtk_print_settings_set (settings, "output-uri", uri);
