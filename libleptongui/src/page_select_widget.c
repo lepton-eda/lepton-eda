@@ -641,7 +641,7 @@ add_page (GtkTreeModel *model,
                       &iter,
                       COLUMN_PAGE, page,
                       COLUMN_NAME, display_filename,
-                      COLUMN_CHANGED, page->CHANGED,
+                      COLUMN_CHANGED, lepton_page_get_changed (page),
                       -1);
 
   g_free (display_filename);
