@@ -55,6 +55,12 @@
  *------------------------------------------------------------------*/
 #define DEFAULT_TEXT_SIZE 10
 
+static LeptonObject*
+s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
+                                      char *text_string,
+                                      gint visibility,
+                                      gint show_name_value,
+                                      LeptonObject * object);
 
 /* ===================  Public Functions  ====================== */
 
@@ -299,7 +305,7 @@ s_object_remove_attrib_in_object (LeptonToplevel *toplevel,
  * \returns pointer to the object
  * \todo Does it need to return LeptonObject?
  */
-LeptonObject *
+static LeptonObject *
 s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
                                       char *text_string,
                                       int visibility,

@@ -136,12 +136,6 @@ void
 s_object_remove_attrib_in_object (LeptonToplevel *toplevel,
                                   LeptonObject *o_current,
                                   char *new_attrib_name);
-LeptonObject *
-s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
-                                      char *text_string,
-                                      gint visibility,
-                                      gint show_name_value,
-                                      LeptonObject * object);
 void
 s_object_delete_text_object_in_object (LeptonToplevel *toplevel,
                                        LeptonObject *test_object);
