@@ -934,7 +934,8 @@ x_window_close_page_impl (GschemToplevel *w_current,
     i_callback_cancel (NULL, w_current);
   }
 
-  if (page == toplevel->page_current) {
+  if (page == lepton_toplevel_get_page_current (toplevel))
+  {
     /* as it will delete current page, select new current page */
     /* first look up in page hierarchy */
     new_current = lepton_toplevel_search_page_by_id (toplevel->pages, page->up);
@@ -963,7 +964,7 @@ x_window_close_page_impl (GschemToplevel *w_current,
   gschem_toplevel_page_changed (w_current);
 
   /* Switch to a different page if we just removed the current */
-  if (toplevel->page_current == NULL)
+  if (lepton_toplevel_get_page_current (toplevel) == NULL)
   {
 
     /* Create a new page if there wasn't another to switch to */
