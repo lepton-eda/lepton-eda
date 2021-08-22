@@ -881,7 +881,7 @@ x_window_save_page (GschemToplevel *w_current,
     state_msg = _("Saved");
 
     /* reset page CHANGED flag */
-    page->CHANGED = 0;
+    lepton_page_set_changed (page, 0);
 
     /* add to recent file list */
     recent_manager_add (w_current, filename);
