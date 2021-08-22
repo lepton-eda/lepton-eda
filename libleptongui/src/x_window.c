@@ -955,7 +955,7 @@ x_window_close_page_impl (GschemToplevel *w_current,
     /* new_current will be the new current page at the end of the function */
   }
 
-  g_message (page->CHANGED ?
+  g_message (lepton_page_get_changed (page) ?
              _("Discarding page [%1$s]") : _("Closing [%1$s]"),
              lepton_page_get_filename (page));
   /* remove page from toplevel list of page and free */
