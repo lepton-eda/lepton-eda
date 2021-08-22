@@ -116,7 +116,6 @@ x_print_default_page_setup (LeptonPage *page)
  * is_raster should be set if drawing to a raster surface such as an
  * image.
  *
- * \param toplevel A #LeptonToplevel structure.
  * \param page     The #LeptonPage to be rendered.
  * \param cr       The Cairo context to render to.
  * \param pc       A Pango context for text rendering, or NULL.
@@ -126,8 +125,7 @@ x_print_default_page_setup (LeptonPage *page)
  * \param is_raster TRUE if drawing to a raster image surface; FALSE otherwise.
  */
 static void
-x_print_draw_page (LeptonToplevel *toplevel,
-                   LeptonPage *page,
+x_print_draw_page (LeptonPage *page,
                    cairo_t *cr,
                    PangoContext *pc,
                    double cr_width,
@@ -264,7 +262,7 @@ draw_page__print_operation (GtkPrintOperation *print,
   is_color = !eda_config_get_boolean (cfg, CFG_GROUP_PRINTING,
                                       CFG_KEY_PRINTING_MONOCHROME, NULL);
 
-  x_print_draw_page (w_current->toplevel, page, cr, pc,
+  x_print_draw_page (page, cr, pc,
                      width, height, is_color, FALSE);
 
   /* Clean up */
@@ -314,8 +312,7 @@ x_print_export_pdf_page (GschemToplevel *w_current,
   is_color = !eda_config_get_boolean (cfg, CFG_GROUP_PRINTING,
                                       CFG_KEY_PRINTING_MONOCHROME, NULL);
 
-  x_print_draw_page (w_current->toplevel, page,
-                     cr, NULL, width, height, is_color, FALSE);
+  x_print_draw_page (page, cr, NULL, width, height, is_color, FALSE);
 
   cairo_destroy (cr);
   cairo_surface_finish (surface);
@@ -376,8 +373,7 @@ x_print_export_pdf (GschemToplevel *w_current,
   surface = cairo_pdf_surface_create (filename, width, height);
   cr = cairo_create (surface);
 
-  x_print_draw_page (w_current->toplevel,
-                     active_page,
+  x_print_draw_page (active_page,
                      cr, NULL, width, height,
                      is_color, FALSE);
 
