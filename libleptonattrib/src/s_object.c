@@ -315,6 +315,7 @@ s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
   int world_x = -1, world_y = -1;
   int color;
   LeptonObject *new_obj;
+  LeptonPage *active_page;
 
   g_return_val_if_fail ((o_current != NULL), NULL);
 
@@ -357,18 +358,18 @@ s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
                                     DEFAULT_TEXT_SIZE,
                                     visibility,
                                     show_name_value);
-  lepton_page_append (toplevel->page_current, new_obj);
+  active_page = lepton_toplevel_get_page_current (toplevel);
+  lepton_page_append (active_page, new_obj);
 
-  /* now toplevel->page_current->object_tail contains new text item */
+  /* Now the current active page contains the new text item. */
 
   /* now attach the attribute to the object */
   /* remember that o_current contains the object to get the attribute */
   o_attrib_attach (new_obj, o_current, FALSE);
 
-  o_selection_add (toplevel->page_current->selection_list, new_obj);
+  o_selection_add (active_page->selection_list, new_obj);
 
-
-  toplevel->page_current->CHANGED = 1;
+  active_page->CHANGED = 1;
 
   return new_obj;
 }
