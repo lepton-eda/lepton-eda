@@ -205,21 +205,23 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
  *  \note
  *  The page \a current_page must be in the list \a page_list.
  *
- *  \param [in] page_list    The list of pages in which to search.
  *  \param [in] current_page The reference page for the search.
  *  \returns A pointer on the page found or NULL if not found.
  */
 LeptonPage *
-s_hierarchy_find_up_page (LeptonPageList *page_list,
-                          LeptonPage *current_page)
+s_hierarchy_find_up_page (LeptonPage *current_page)
 {
   g_return_val_if_fail (current_page != NULL, NULL);
+
+  LeptonToplevel *toplevel = current_page->toplevel;
+  g_return_val_if_fail (toplevel != NULL, NULL);
+
   if (current_page->up < 0) {
     g_debug(_("There are no schematics above the current one!"));
     return NULL;
   }
 
-  return lepton_toplevel_search_page_by_id (page_list, current_page->up);
+  return lepton_toplevel_search_page_by_id (toplevel->pages, current_page->up);
 }
 
 

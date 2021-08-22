@@ -2283,13 +2283,13 @@ i_callback_hierarchy_up (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  page = gschem_toplevel_get_toplevel (w_current)->page_current;
+  page = schematic_window_get_active_page (w_current);
 
   if (page == NULL) {
     return;
   }
 
-  up_page = s_hierarchy_find_up_page (gschem_toplevel_get_toplevel (w_current)->pages, page);
+  up_page = s_hierarchy_find_up_page (page);
   if (up_page == NULL) {
     g_message (_("Cannot find any schematics above the current one!"));
   } else {
