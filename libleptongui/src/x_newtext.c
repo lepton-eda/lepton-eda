@@ -142,9 +142,6 @@ dialog_response_apply (NewText *dialog)
                         rotate,
                         size);
 
-  //gschem_toplevel_page_content_changed (dialog->parent.w_current,
-  //                                      dialog->parent.w_current->toplevel->page_current);
-
   g_free (string);
   g_free (tmp);
 }
