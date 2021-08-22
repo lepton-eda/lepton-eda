@@ -139,13 +139,14 @@ o_component_prepare_place (GschemToplevel *w_current,
 void
 o_component_place_changed_run_hook (GschemToplevel *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *ptr = NULL;
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   /* Run the component place list changed hook */
   if (scm_is_false (scm_hook_empty_p (complex_place_list_changed_hook)) &&
-      toplevel->page_current->place_list != NULL) {
-    ptr = toplevel->page_current->place_list;
+      active_page->place_list != NULL)
+  {
+    ptr = active_page->place_list;
 
     scm_dynwind_begin ((scm_t_dynwind_flags) 0);
     g_dynwind_window (w_current);
