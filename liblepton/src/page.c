@@ -180,7 +180,7 @@ lepton_page_new (LeptonToplevel *toplevel,
 
   page->pid = global_pid++;
 
-  page->CHANGED = 0;
+  lepton_page_set_changed (page, 0);
 
   /* big assumption here that page_filename isn't null */
   lepton_page_set_filename (page, filename);
