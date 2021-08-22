@@ -205,7 +205,7 @@ pagesel_callback_selection_changed (GtkTreeSelection* selection,
   /* Since setting the current page may call page_select_widget_update(), which
    * might change the current page selection, make sure we do nothing
    * if the newly-selected page is already the current page. */
-  if (page == w_current->toplevel->page_current)
+  if (page == schematic_window_get_active_page (w_current))
   {
     return;
   }
