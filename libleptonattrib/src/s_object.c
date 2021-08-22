@@ -56,7 +56,7 @@
 #define DEFAULT_TEXT_SIZE 10
 
 static LeptonObject*
-s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
+s_object_attrib_add_attrib_in_object (LeptonPage *active_page,
                                       char *text_string,
                                       gint visibility,
                                       gint show_name_value,
@@ -90,13 +90,16 @@ s_object_add_comp_attrib_to_object (LeptonToplevel *toplevel,
                                     gint visibility,
                                     gint show_name_value)
 {
+  LeptonPage *active_page = NULL;
   char *name_value_pair;
   g_return_if_fail (o_current != NULL);
+
+  active_page = lepton_toplevel_get_page_current (toplevel);
 
   /* One last sanity check, then add attrib */
   if (strlen(new_attrib_value) != 0) {
     name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-    s_object_attrib_add_attrib_in_object (toplevel,
+    s_object_attrib_add_attrib_in_object (active_page,
                                           name_value_pair,
                                           visibility,
                                           show_name_value,
@@ -147,13 +150,16 @@ s_object_add_pin_attrib_to_object (LeptonToplevel *toplevel,
                                    char *new_attrib_name,
                                    char *new_attrib_value)
 {
+  LeptonPage *active_page = NULL;
   char *name_value_pair;
   g_return_if_fail (o_current != NULL);
+
+  active_page = lepton_toplevel_get_page_current (toplevel);
 
   /* One last sanity check */
   if (strlen(new_attrib_value) != 0) {
     name_value_pair = g_strconcat(new_attrib_name, "=", new_attrib_value, NULL);
-    s_object_attrib_add_attrib_in_object (toplevel,
+    s_object_attrib_add_attrib_in_object (active_page,
                                           name_value_pair,
                                           INVISIBLE,
                                           SHOW_NAME_VALUE,
@@ -306,7 +312,7 @@ s_object_remove_attrib_in_object (LeptonToplevel *toplevel,
  * \todo Does it need to return LeptonObject?
  */
 static LeptonObject *
-s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
+s_object_attrib_add_attrib_in_object (LeptonPage *active_page,
                                       char *text_string,
                                       int visibility,
                                       int show_name_value,
@@ -315,7 +321,6 @@ s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
   int world_x = -1, world_y = -1;
   int color;
   LeptonObject *new_obj;
-  LeptonPage *active_page;
 
   g_return_val_if_fail ((o_current != NULL), NULL);
 
@@ -358,7 +363,6 @@ s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
                                     DEFAULT_TEXT_SIZE,
                                     visibility,
                                     show_name_value);
-  active_page = lepton_toplevel_get_page_current (toplevel);
   lepton_page_append (active_page, new_obj);
 
   /* Now the current active page contains the new text item. */
