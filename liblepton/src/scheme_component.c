@@ -56,11 +56,12 @@ SCM_DEFINE (make_component_library, "%make-component/library", 1, 0, 0,
   scm_dynwind_unwind_handler (free, basename, SCM_F_WIND_EXPLICITLY);
 
   LeptonToplevel *toplevel = edascm_c_current_toplevel ();
+  LeptonPage *active_page = lepton_toplevel_get_page_current (toplevel);
 
   SCM result = SCM_BOOL_F;
   const CLibSymbol *clib = s_clib_get_symbol_by_name (basename);
   if (clib != NULL) {
-    LeptonObject *obj = lepton_component_new (toplevel->page_current,
+    LeptonObject *obj = lepton_component_new (active_page,
                                               default_color_id(),
                                               0,
                                               0,
