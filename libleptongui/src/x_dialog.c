@@ -220,7 +220,7 @@ major_changed_dialog (GschemToplevel* w_current)
   GtkTreeViewColumn *column;
   char* tmp;
   GList *curr;
-  LeptonPage* page = w_current->toplevel->page_current;
+  LeptonPage* page = schematic_window_get_active_page (w_current);
 
   g_return_if_fail (page != NULL);
 
