@@ -842,7 +842,7 @@ x_tabs_hdr_create (TabInfo* nfo)
   gchar* bname = g_path_get_basename (fname);
   gchar* lab_txt = NULL;
 
-  if (nfo->page_->CHANGED)
+  if (lepton_page_get_changed (nfo->page_))
     lab_txt = g_strdup_printf ("<b>%s</b>", bname);
   else
     lab_txt = g_strdup (bname);
@@ -951,7 +951,7 @@ x_tabs_hdr_create (TabInfo* nfo)
 
   /* setup "save" btn:
   */
-  if (nfo->page_->CHANGED)
+  if (lepton_page_get_changed (nfo->page_))
   {
     gtk_box_pack_end (GTK_BOX (box_btns_left), btn_save, FALSE, FALSE, 0);
 
@@ -1073,7 +1073,7 @@ x_tabs_hdr_on_btn_close (GtkToolButton* btn, gpointer p)
   {
     x_tabs_page_set_cur (nfo->tl_, nfo->page_);
 
-    if (nfo->page_->CHANGED)
+    if (lepton_page_get_changed (nfo->page_))
     {
       if (!x_dialog_close_changed_page (nfo->tl_, nfo->page_))
       {
