@@ -148,7 +148,7 @@ lepton_toplevel_get_page_current (LeptonToplevel *toplevel)
  */
 void
 lepton_toplevel_set_page_current (LeptonToplevel *toplevel,
-                             LeptonPage *page)
+                                  LeptonPage *page)
 {
   g_return_if_fail (toplevel != NULL);
 
