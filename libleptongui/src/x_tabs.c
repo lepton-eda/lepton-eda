@@ -1206,7 +1206,7 @@ x_tabs_hier_up (GschemToplevel* w_current)
     return;
   }
 
-  if (page->CHANGED)
+  if (lepton_page_get_changed (page))
   {
     if (!x_dialog_close_changed_page (w_current, page))
     {
