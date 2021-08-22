@@ -750,7 +750,7 @@ x_window_open_page_impl (GschemToplevel *w_current,
   page = lepton_page_new (toplevel, filename);
 
   /* Switch to a new page: */
-  lepton_toplevel_goto_page (toplevel, page); /* NOTE: sets toplevel->page_current */
+  lepton_toplevel_goto_page (toplevel, page); /* NOTE: sets current active page of toplevel */
   gschem_toplevel_page_changed (w_current);
 
   if (!quiet_mode)
