@@ -411,10 +411,7 @@ void i_update_menus (GschemToplevel* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
-  g_return_if_fail (toplevel != NULL);
-
-  LeptonPage* page = toplevel->page_current;
+  LeptonPage* page = schematic_window_get_active_page (w_current);
   g_return_if_fail (page != NULL);
 
   /* update Edit->Paste sensitivity in clipboard_usable_cb():
@@ -428,7 +425,7 @@ void i_update_menus (GschemToplevel* w_current)
   gboolean comp_selected = selected && obj_selected (page, OBJ_COMPONENT);
   gboolean pic_selected  = selected && obj_selected (page, OBJ_PICTURE);
   gboolean embeddable    = comp_selected || pic_selected;
-  gboolean has_parent    = s_hierarchy_find_up_page (toplevel->pages, page) != NULL;
+  gboolean has_parent    = s_hierarchy_find_up_page (page) != NULL;
   gboolean parent        = comp_selected && parent_comp_selected (page);
 
   GtkWidget* mmenu = w_current->menubar;

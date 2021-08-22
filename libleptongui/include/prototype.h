@@ -677,8 +677,7 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
                          const CLibSymbol *symbol,
                          LeptonPage *parent);
 LeptonPage*
-s_hierarchy_find_up_page (LeptonPageList *page_list,
-                          LeptonPage *current_page);
+s_hierarchy_find_up_page (LeptonPage *current_page);
 LeptonPage*
 s_hierarchy_load_subpage (GschemToplevel *w_current,
                           LeptonPage *page,

@@ -964,8 +964,7 @@ x_tabs_hdr_create (TabInfo* nfo)
 
   /* setup "up" btn:
   */
-  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (nfo->tl_);
-  LeptonPage* parent = s_hierarchy_find_up_page (toplevel->pages, nfo->page_);
+  LeptonPage* parent = s_hierarchy_find_up_page (nfo->page_);
 
   if (x_tabs_show_up_button() && parent != NULL)
   {
@@ -1190,7 +1189,6 @@ x_tabs_cancel_all (GschemToplevel* w_current)
 static void
 x_tabs_hier_up (GschemToplevel* w_current)
 {
-  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonPage* page = schematic_window_get_active_page (w_current);
 
   if (page == NULL)
@@ -1198,7 +1196,7 @@ x_tabs_hier_up (GschemToplevel* w_current)
     return;
   }
 
-  LeptonPage* parent = s_hierarchy_find_up_page (toplevel->pages, page);
+  LeptonPage* parent = s_hierarchy_find_up_page (page);
 
   if (parent == NULL)
   {
