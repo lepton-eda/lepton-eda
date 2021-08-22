@@ -576,7 +576,7 @@ x_tabs_info_find_by_wtab (GList* nfos, GtkWidget* wtab)
 static LeptonPage*
 x_tabs_tl_page_cur (GschemToplevel* w_current)
 {
-  return w_current->toplevel->page_current;
+  return schematic_window_get_active_page (w_current);
 }
 
 
@@ -1161,11 +1161,11 @@ x_tabs_cancel_all (GschemToplevel* w_current)
     o_grips_cancel (w_current);
   }
 
-  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
-  if (toplevel->page_current != NULL)
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+  if (active_page != NULL)
   {
-    lepton_object_list_delete (toplevel->page_current->place_list);
-    toplevel->page_current->place_list = NULL;
+    lepton_object_list_delete (active_page->place_list);
+    active_page->place_list = NULL;
   }
 
   i_set_state (w_current, SELECT);
@@ -1191,7 +1191,7 @@ static void
 x_tabs_hier_up (GschemToplevel* w_current)
 {
   LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
-  LeptonPage* page = toplevel->page_current;
+  LeptonPage* page = schematic_window_get_active_page (w_current);
 
   if (page == NULL)
   {
