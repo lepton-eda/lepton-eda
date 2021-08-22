@@ -1454,7 +1454,7 @@ i_callback_page_close (GtkWidget *widget, gpointer data)
     return;
   }
 
-  if (page->CHANGED
+  if (lepton_page_get_changed (page)
       && !x_dialog_close_changed_page (w_current, page)) {
     return;
   }
