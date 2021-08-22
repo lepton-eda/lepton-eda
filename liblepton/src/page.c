@@ -245,10 +245,13 @@ lepton_page_delete (LeptonToplevel *toplevel,
    */
 
   /* save page_current and switch to page */
-  if (page == toplevel->page_current) {
+  if (page == lepton_toplevel_get_page_current (toplevel))
+  {
     tmp = NULL;
-  } else {
-    tmp = toplevel->page_current;
+  }
+  else
+  {
+    tmp = lepton_toplevel_get_page_current (toplevel);
     lepton_toplevel_goto_page (toplevel, page);
   }
 
