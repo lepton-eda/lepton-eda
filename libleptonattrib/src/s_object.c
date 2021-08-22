@@ -373,7 +373,7 @@ s_object_attrib_add_attrib_in_object (LeptonPage *active_page,
 
   o_selection_add (active_page->selection_list, new_obj);
 
-  active_page->CHANGED = 1;
+  lepton_page_set_changed (active_page, 1);
 
   return new_obj;
 }
@@ -396,7 +396,7 @@ s_object_delete_text_object_in_object (LeptonToplevel *toplevel,
 {
   LeptonPage *active_page = lepton_toplevel_get_page_current (toplevel);
   lepton_object_delete (text_object);
-  active_page->CHANGED = 1;
+  lepton_page_set_changed (active_page, 1);
 }
 
 
