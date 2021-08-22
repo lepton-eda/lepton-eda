@@ -395,7 +395,6 @@ s_object_delete_text_object_in_object (LeptonToplevel *toplevel,
                                        LeptonObject * text_object)
 {
   LeptonPage *active_page = lepton_toplevel_get_page_current (toplevel);
-  lepton_page_remove (active_page, text_object);
   lepton_object_delete (text_object);
   active_page->CHANGED = 1;
 }
