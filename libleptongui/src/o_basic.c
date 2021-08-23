@@ -51,7 +51,6 @@ void o_redraw_rect (GschemToplevel *w_current,
                     GdkRectangle *rectangle)
 #endif
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   gboolean draw_selected;
   int grip_half_size;
   double cue_half_size;
@@ -69,8 +68,6 @@ void o_redraw_rect (GschemToplevel *w_current,
 #endif
 
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (toplevel != NULL);
-  g_return_if_fail (w_current->toplevel == toplevel);
   g_return_if_fail (page != NULL);
   g_return_if_fail (geometry != NULL);
 #ifndef ENABLE_GTK3
@@ -124,8 +121,7 @@ void o_redraw_rect (GschemToplevel *w_current,
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
 
-  obj_list = lepton_page_objects_in_regions (toplevel,
-                                             page,
+  obj_list = lepton_page_objects_in_regions (page,
                                              world_rect,
                                              1,
                                              show_hidden_text);

@@ -565,7 +565,6 @@ lepton_page_objects (LeptonPage *page)
  *  Finds the objects which are inside, or intersect
  *  the passed box shaped region.
  *
- *  \param [in] toplevel  The LeptonToplevel object.
  *  \param [in] page      The LeptonPage to find objects on.
  *  \param [in] rects     The LeptonBox regions to check.
  *  \param [in] n_rects   The number of regions.
@@ -573,8 +572,7 @@ lepton_page_objects (LeptonPage *page)
  *  \return The GList of LeptonObjects in the region.
  */
 GList*
-lepton_page_objects_in_regions (LeptonToplevel *toplevel,
-                                LeptonPage *page,
+lepton_page_objects_in_regions (LeptonPage *page,
                                 LeptonBox *rects,
                                 int n_rects,
                                 gboolean include_hidden)

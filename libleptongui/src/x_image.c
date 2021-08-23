@@ -774,8 +774,7 @@ GdkPixbuf
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
 
-  obj_list = lepton_page_objects_in_regions (NULL, /* unused 'toplevel' parameter */
-                                             page,
+  obj_list = lepton_page_objects_in_regions (page,
                                              world_rect,
                                              1,
                                              show_hidden_text);
