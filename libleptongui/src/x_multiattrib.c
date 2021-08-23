@@ -136,9 +136,12 @@ x_multiattrib_close (GschemToplevel *w_current)
 void
 x_multiattrib_update (GschemToplevel *w_current)
 {
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
   if (w_current->mawindow != NULL) {
-    g_object_set (G_OBJECT (w_current->mawindow), "object_list",
-                  w_current->toplevel->page_current->selection_list, NULL);
+    g_object_set (G_OBJECT (w_current->mawindow),
+                  "object_list", active_page->selection_list,
+                  NULL);
   }
 }
 
