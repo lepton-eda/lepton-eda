@@ -662,22 +662,18 @@ i_callback_edit_mirror (GtkWidget *widget, gpointer data)
   gint wx, wy;
   GList *object_list;
   GschemToplevel *w_current = NULL;
-  GschemPageView *view = NULL;
-  LeptonPage* page = NULL;
+  LeptonPage* active_page = NULL;
 
   w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
 
-  view = (gschem_toplevel_get_current_page_view (w_current));
-  g_return_if_fail (view != NULL);
+  active_page = schematic_window_get_active_page (w_current);
 
-  page = (gschem_page_view_get_page (view));
-
-  if (page == NULL) {
+  if (active_page == NULL) {
     return;
   }
 
-  if (w_current->inside_action && (page->place_list != NULL)) {
+  if (w_current->inside_action && (active_page->place_list != NULL)) {
     o_place_mirror (w_current);
     return;
   }
@@ -689,7 +685,7 @@ i_callback_edit_mirror (GtkWidget *widget, gpointer data)
 
   o_redraw_cleanstates(w_current);
 
-  object_list = lepton_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list );
+  object_list = lepton_list_get_glist (active_page->selection_list );
 
   if (object_list) {
     o_mirror_world_update(w_current, wx, wy, object_list);
