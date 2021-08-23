@@ -102,11 +102,11 @@ void o_edit(GschemToplevel *w_current, GList *list)
 void o_lock(GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->toplevel != NULL);
-  g_return_if_fail (w_current->toplevel->page_current != NULL);
 
-  LeptonPage*  page = w_current->toplevel->page_current;
-  GList* objs = lepton_list_get_glist (page->selection_list);
+  LeptonPage* active_page = schematic_window_get_active_page (w_current);
+  g_return_if_fail (active_page != NULL);
+
+  GList* objs = lepton_list_get_glist (active_page->selection_list);
 
   /* lock selected objects:
   */
@@ -125,7 +125,7 @@ void o_lock(GschemToplevel *w_current)
     }
   }
 
-  gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, active_page);
 
   if (!w_current->SHIFTKEY)
     o_select_unselect_all(w_current);
