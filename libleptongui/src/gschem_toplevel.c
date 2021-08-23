@@ -445,7 +445,6 @@ GschemSelectionAdapter*
 gschem_toplevel_get_selection_adapter (GschemToplevel *w_current)
 {
   g_return_val_if_fail (w_current != NULL, NULL);
-  g_return_val_if_fail (w_current->toplevel != NULL, NULL);
 
   if (w_current->selection_adapter == NULL) {
     w_current->selection_adapter = gschem_selection_adapter_new ();
@@ -458,9 +457,10 @@ gschem_toplevel_get_selection_adapter (GschemToplevel *w_current)
 
     gschem_selection_adapter_set_toplevel (w_current->selection_adapter, w_current->toplevel);
 
-    if (w_current->toplevel->page_current != NULL) {
+    LeptonPage *active_page = schematic_window_get_active_page (w_current);
+    if (active_page != NULL) {
       gschem_selection_adapter_set_selection (w_current->selection_adapter,
-                                              w_current->toplevel->page_current->selection_list);
+                                              active_page->selection_list);
     } else {
       gschem_selection_adapter_set_selection (w_current->selection_adapter,
                                               NULL);
