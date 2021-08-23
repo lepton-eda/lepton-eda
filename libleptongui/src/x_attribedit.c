@@ -187,7 +187,8 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
                   if (!strncmp (str, newtext, strchr (newtext, '=') - newtext)) {
                     o_text_change(w_current, a_current, newtext, vis, show);
                     replaced = TRUE;
-                    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+                    gschem_toplevel_page_content_changed (w_current,
+                                                          schematic_window_get_active_page (w_current));
                   }
                 }
                 a_iter = g_list_next (a_iter);
@@ -224,13 +225,15 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
         lepton_text_object_set_x (new_object, wx);
         lepton_text_object_set_y (new_object, wy);
         lepton_text_object_recreate (new_object);
-        gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+        gschem_toplevel_page_content_changed (w_current,
+                                              schematic_window_get_active_page (w_current));
         o_undo_savestate_old(w_current, UNDO_ALL);
       }
     }
   } else {
     o_text_change(w_current, attribptr, newtext, vis, show);
-    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+    gschem_toplevel_page_content_changed (w_current,
+                                          schematic_window_get_active_page (w_current));
     o_undo_savestate_old(w_current, UNDO_ALL);
   }
   gtk_grab_remove(w_current->aewindow);
