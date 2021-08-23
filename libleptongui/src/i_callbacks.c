@@ -870,7 +870,6 @@ void
 i_callback_edit_update (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *selection;
   GList *selected_components = NULL;
   GList *iter;
@@ -883,7 +882,8 @@ i_callback_edit_update (GtkWidget *widget, gpointer data)
      * create a new list of only the LeptonObjects we want to
      * update from the current selection, then iterate over that
      * new list to perform the update. */
-    selection = lepton_list_get_glist (toplevel->page_current->selection_list);
+    LeptonPage *active_page = schematic_window_get_active_page (w_current);
+    selection = lepton_list_get_glist (active_page->selection_list);
     for (iter = selection; iter != NULL; iter = g_list_next (iter)) {
       LeptonObject *o_current = (LeptonObject *) iter->data;
       if (lepton_object_is_component (o_current)) {
