@@ -789,9 +789,8 @@ i_callback_edit_embed (GtkWidget *widget, gpointer data)
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     /* yes, embed each selected component */
-    LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
-    LeptonPage* page      = toplevel->page_current;
-    GList*      s_current = lepton_list_get_glist (page->selection_list);
+    LeptonPage* active_page = schematic_window_get_active_page (w_current);
+    GList* s_current = lepton_list_get_glist (active_page->selection_list);
 
     while (s_current != NULL) {
       o_current = (LeptonObject *) s_current->data;
