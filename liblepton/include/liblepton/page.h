@@ -125,8 +125,7 @@ const GList*
 lepton_page_objects (LeptonPage *page);
 
 GList*
-lepton_page_objects_in_regions (LeptonToplevel *toplevel,
-                                LeptonPage *page,
+lepton_page_objects_in_regions (LeptonPage *page,
                                 LeptonBox *rects,
                                 int n_rects,
                                 gboolean include_hidden);
