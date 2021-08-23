@@ -1497,7 +1497,7 @@ i_callback_page_revert (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  page_current = gschem_toplevel_get_toplevel (w_current)->page_current;
+  page_current = schematic_window_get_active_page (w_current);
 
   /* do not revert untitled pages:
   */
