@@ -82,12 +82,13 @@ void o_picture_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *new_obj;
   int picture_width, picture_height;
   int picture_left, picture_top;
 
   g_assert( w_current->inside_action != 0 );
+
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   /* erase the temporary picture */
   /* o_picture_draw_rubber(w_current); */
@@ -112,12 +113,12 @@ void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
                                          0,
                                          FALSE,
                                          FALSE);
-    lepton_page_append (toplevel->page_current, new_obj);
+    lepton_page_append (active_page, new_obj);
 
     /* Run %add-objects-hook */
     g_run_hook_object (w_current, "%add-objects-hook", new_obj);
 
-    gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+    gschem_toplevel_page_content_changed (w_current, active_page);
     o_undo_savestate_old(w_current, UNDO_ALL);
   }
   i_action_stop (w_current);
