@@ -696,6 +696,23 @@ gschem_toplevel_page_content_changed (GschemToplevel *w_current,
 }
 
 
+/*! \brief Temp function to notify of active page content change.
+ *
+ *  This function is temporary until library functions can emit
+ *  signals.
+ *
+ *  \param [in] w_current The current schematic window.
+ */
+void
+schematic_window_active_page_changed (GschemToplevel *w_current)
+{
+  g_return_if_fail (w_current != NULL);
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  gschem_toplevel_page_content_changed (w_current, active_page);
+}
+
+
 /*! \brief Set the libgeda toplevel for this gschem toplevel
  *
  *  \param [in] w_current This gschem toplevel
