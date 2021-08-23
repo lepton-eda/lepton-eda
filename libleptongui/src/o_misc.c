@@ -409,7 +409,6 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
                                 const GList *o_list,
                                 const char *stext)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *o_current;
   const GList *iter;
 
@@ -425,7 +424,8 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
           lepton_text_object_set_visibility (o_current, VISIBLE);
           lepton_text_object_recreate (o_current);
 
-          gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+          gschem_toplevel_page_content_changed (w_current,
+                                                schematic_window_get_active_page (w_current));
         }
       }
     }
