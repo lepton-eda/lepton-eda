@@ -64,7 +64,6 @@ void o_slot_start (GschemToplevel *w_current, LeptonObject *object)
  */
 void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *string)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *new_obj;
   char *slot_value;
   char *numslots_value;
@@ -75,6 +74,8 @@ void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *str
   int status;
 
   g_return_if_fail (object != NULL);
+
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   status = o_attrib_string_get_name_value (string, NULL, &value);
   if (!status) {
@@ -126,7 +127,7 @@ void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *str
                                       10,
                                       INVISIBLE,
                                       SHOW_NAME_VALUE);
-    lepton_page_append (toplevel->page_current, new_obj);
+    lepton_page_append (active_page, new_obj);
 
     /* manually attach attribute */
     o_attrib_attach (new_obj, object, FALSE);
@@ -137,6 +138,6 @@ void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *str
 
   s_slot_update_object (object);
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, active_page);
   g_free (value);
 }
