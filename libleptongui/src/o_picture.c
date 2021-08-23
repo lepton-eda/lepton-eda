@@ -379,7 +379,6 @@ o_picture_exchange (GschemToplevel *w_current,
  */
 void picture_change_filename_dialog (GschemToplevel *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   gchar *filename;
   gboolean result;
   GError *error = NULL;
@@ -425,7 +424,8 @@ void picture_change_filename_dialog (GschemToplevel *w_current)
       g_error_free (error);
       gtk_widget_destroy(dialog);
     } else {
-      gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+      gschem_toplevel_page_content_changed (w_current,
+                                            schematic_window_get_active_page (w_current));
     }
     g_free (filename);
   }
