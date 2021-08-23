@@ -115,7 +115,7 @@ save_toplevel_pages (LeptonToplevel *toplevel)
       g_message (_("Saved [%1$s]"),
                  lepton_page_get_filename (p_current));
       /* reset the CHANGED flag of p_current */
-      p_current->CHANGED = 0;
+      lepton_page_set_changed (p_current, 0);
 
     } else {
       g_message (_("Could NOT save [%1$s]"),
