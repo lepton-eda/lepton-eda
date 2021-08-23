@@ -2378,7 +2378,6 @@ void
 i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
   g_return_if_fail (w_current != NULL);
 
@@ -2389,7 +2388,8 @@ i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
   }
 
   if (o_select_selected (w_current)) {
-    LeptonSelection *selection = toplevel->page_current->selection_list;
+    LeptonPage *active_page = schematic_window_get_active_page (w_current);
+    LeptonSelection *selection = active_page->selection_list;
     GList *s_current;
 
     for (s_current = lepton_list_get_glist (selection);
