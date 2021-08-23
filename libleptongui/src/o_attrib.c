@@ -169,8 +169,6 @@ o_attrib_select_invisible (GschemToplevel *w_current,
  */
 void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-
   g_return_if_fail (lepton_object_is_text (object));
 
   gboolean show_hidden_text =
@@ -200,7 +198,8 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
     lepton_text_object_recreate (object);
   }
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current,
+                                        schematic_window_get_active_page (w_current));
 }
 
 /*! \brief Set what part of an attribute is shown.
@@ -216,15 +215,14 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
 void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
                                      LeptonObject *object, int show_name_value)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-
   g_return_if_fail (lepton_object_is_text (object));
 
   o_invalidate (w_current, object);
   lepton_text_object_set_show (object, show_name_value);
   lepton_text_object_recreate (object);
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current,
+                                        schematic_window_get_active_page (w_current));
 }
 
 
