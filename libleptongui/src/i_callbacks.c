@@ -2506,8 +2506,9 @@ i_callback_options_afeedback (GtkWidget *widget, gpointer data)
     w_current->actionfeedback_mode = BOUNDINGBOX;
     g_message (_("Action feedback mode set to BOUNDINGBOX"));
   }
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
   if (w_current->inside_action &&
-      gschem_toplevel_get_toplevel (w_current)->page_current->place_list != NULL)
+      active_page->place_list != NULL)
     o_place_invalidate_rubber (w_current, FALSE);
 }
 
