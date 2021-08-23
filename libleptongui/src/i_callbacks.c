@@ -251,8 +251,7 @@ i_callback_file_save_as (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
-  LeptonPage* page = toplevel->page_current;
+  LeptonPage* page = schematic_window_get_active_page (w_current);
 
   x_fileselect_save (w_current, page, NULL);
 }
