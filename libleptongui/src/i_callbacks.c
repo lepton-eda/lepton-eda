@@ -553,7 +553,9 @@ i_callback_edit_edit (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  o_edit(w_current, lepton_list_get_glist( gschem_toplevel_get_toplevel (w_current)->page_current->selection_list ) );
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  o_edit(w_current, lepton_list_get_glist (active_page->selection_list));
 }
 
 /*! \todo Finish function documentation!!!
