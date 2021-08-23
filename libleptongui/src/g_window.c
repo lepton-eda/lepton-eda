@@ -115,8 +115,9 @@ SCM_DEFINE (active_page, "%active-page", 0, 0, 0,
             (), "Get the active page.")
 {
   LeptonToplevel *toplevel = edascm_c_current_toplevel ();
-  if (toplevel->page_current != NULL) {
-    return edascm_from_page (toplevel->page_current);
+  LeptonPage *page = lepton_toplevel_get_page_current (toplevel);
+  if (page != NULL) {
+    return edascm_from_page (page);
   } else {
     return SCM_BOOL_F;
   }
