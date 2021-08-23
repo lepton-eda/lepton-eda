@@ -214,12 +214,12 @@ GList *
 x_clipboard_get (GschemToplevel *w_current)
 {
   GtkClipboard *cb = gtk_clipboard_get (GDK_SELECTION_CLIPBOARD);
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GdkAtom type = gdk_atom_intern (MIME_TYPE_SCHEMATIC, FALSE);
   GtkSelectionData *selection_data;
   GList *object_list = NULL;
   const guchar *buf;
   GError * err = NULL;
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   /* Try to get the contents of the clipboard */
   selection_data = gtk_clipboard_wait_for_contents (cb, type);
@@ -232,7 +232,8 @@ x_clipboard_get (GschemToplevel *w_current)
   buf = selection_data->data;
 #endif
 
-  object_list = o_read_buffer (toplevel->page_current, object_list,
+  active_page = schematic_window_get_active_page (w_current);
+  object_list = o_read_buffer (active_page, object_list,
                                (gchar *) buf, -1, "Clipboard", &err);
 
   if (err) {
