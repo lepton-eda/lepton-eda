@@ -343,10 +343,10 @@ gboolean
 o_picture_exchange (GschemToplevel *w_current,
                     const gchar *filename, GError **error)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *iter;
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
-  for (iter = lepton_list_get_glist (toplevel->page_current->selection_list);
+  for (iter = lepton_list_get_glist (active_page->selection_list);
        iter != NULL;
        iter = g_list_next (iter)) {
 
