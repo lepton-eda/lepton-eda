@@ -50,39 +50,6 @@
 
 /* ===================  Public Functions  ====================== */
 
-
-/*! \brief Read a schematic page
- *
- * Reads in a schematic page & calls f_open, which fills out the
- * toplevel structure.
- *
- *  \param toplevel LeptonToplevel structure
- *  \param filename file to be opened
- *  \returns 1 on success, 0 on failure
- */
-int
-s_toplevel_read_page (LeptonToplevel *toplevel,
-                      char *filename)
-{
-  int file_return_code;
-  GError *err = NULL;
-
-  /* Set the new filename */
-  s_page_set_filename (toplevel->page_current, filename);
-
-  /* read in and fill out toplevel using f_open and its callees */
-  file_return_code = f_open (toplevel, toplevel->page_current, filename, &err);
-
-  /* If an error occurred, print message */
-  if (err != NULL) {
-    g_warning ("%s", err->message);
-    g_error_free (err);
-  }
-
-  return file_return_code;
-}
-
-
 /*! \brief Verify the entire design
  *
  * This function loops through all objects in the design looking

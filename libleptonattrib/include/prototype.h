@@ -75,9 +75,6 @@ void s_table_gtksheet_to_table(GtkSheet *local_gtk_sheet,
                                TABLE **local_table, int num_rows, int num_cols);
 
 /* ------------- s_toplevel.c ------------- */
-int
-s_toplevel_read_page (LeptonToplevel *toplevel,
-                      char *filename);
 void
 s_toplevel_verify_design (LeptonToplevel *toplevel);
 
