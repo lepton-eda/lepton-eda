@@ -55,8 +55,8 @@ void o_delete (GschemToplevel *w_current, LeptonObject *object)
  */
 void o_delete_selected (GschemToplevel *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  LeptonSelection *selection = toplevel->page_current->selection_list;
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+  LeptonSelection *selection = active_page->selection_list;
   GList *to_remove;
   GList *iter;
   LeptonObject *obj;
@@ -116,7 +116,7 @@ void o_delete_selected (GschemToplevel *w_current)
   for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
     obj = (LeptonObject *) iter->data;
     o_selection_remove (selection, obj);
-    lepton_page_remove (toplevel->page_current, obj);
+    lepton_page_remove (active_page, obj);
   }
 
   g_run_hook_object_list (w_current, "%remove-objects-hook", to_remove);
@@ -138,7 +138,7 @@ void o_delete_selected (GschemToplevel *w_current)
 
   g_list_free (to_remove);
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, active_page);
   o_undo_savestate_old (w_current, UNDO_ALL);
   i_update_menus (w_current);
 }
