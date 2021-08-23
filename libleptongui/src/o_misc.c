@@ -152,11 +152,11 @@ void o_lock(GschemToplevel *w_current)
 void o_unlock(GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->toplevel != NULL);
-  g_return_if_fail (w_current->toplevel->page_current != NULL);
 
-  LeptonPage*  page = w_current->toplevel->page_current;
-  GList* objs = lepton_list_get_glist (page->selection_list);
+  LeptonPage* active_page = schematic_window_get_active_page (w_current);
+  g_return_if_fail (active_page != NULL);
+
+  GList* objs = lepton_list_get_glist (active_page->selection_list);
 
   /* unlock selected objects:
   */
@@ -175,7 +175,7 @@ void o_unlock(GschemToplevel *w_current)
     }
   }
 
-  gschem_toplevel_page_content_changed (w_current, page);
+  gschem_toplevel_page_content_changed (w_current, active_page);
   o_undo_savestate_old(w_current, UNDO_ALL);
 
   /* refresh view to properly restore attributes' colors:
