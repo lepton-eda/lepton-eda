@@ -659,9 +659,9 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
                                        GList *attr_list)
 {
   GschemToplevel *w_current = GSCHEM_DIALOG (multiattrib)->w_current;
-  LeptonToplevel *toplevel = w_current->toplevel;
   LeptonObject *o_new;
   GList *iter;
+  LeptonPage *active_page = NULL;
 
   for (iter = attr_list;
        iter != NULL;
@@ -676,9 +676,10 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
                            lepton_text_object_get_show (o_attrib),
                            lepton_object_get_parent (o_attrib));
     } else {
+        active_page = schematic_window_get_active_page (w_current);
         /* make a copy of the attribute object */
         o_new = lepton_object_copy (o_attrib);
-        lepton_page_append (toplevel->page_current, o_new);
+        lepton_page_append (active_page, o_new);
         /* add the attribute its parent */
         o_attrib_attach (o_new, lepton_object_get_parent (o_attrib), TRUE);
         /* note: this object is unselected (not added to selection). */
