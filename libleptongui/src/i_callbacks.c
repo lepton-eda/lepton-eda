@@ -2653,8 +2653,8 @@ void
 i_callback_cancel (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GValue value = { 0, };
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   g_return_if_fail (w_current != NULL);
 
@@ -2690,9 +2690,10 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
   /* Free the place list and its contents. If we were in a move
    * action, the list (refering to objects on the page) would
    * already have been cleared in o_move_cancel(), so this is OK. */
-  if (toplevel->page_current != NULL) {
-    lepton_object_list_delete (toplevel->page_current->place_list);
-    toplevel->page_current->place_list = NULL;
+  if (active_page != NULL)
+  {
+    lepton_object_list_delete (active_page->place_list);
+    active_page->place_list = NULL;
   }
 
   /* leave this on for now... but it might have to change */
