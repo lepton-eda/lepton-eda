@@ -690,7 +690,7 @@ gschem_toplevel_page_content_changed (GschemToplevel *w_current,
   g_return_if_fail (page != NULL);
   g_return_if_fail (w_current != NULL);
 
-  page->CHANGED = 1;
+  lepton_page_set_changed (page, 1);
 
   page_select_widget_update (w_current);
 }
