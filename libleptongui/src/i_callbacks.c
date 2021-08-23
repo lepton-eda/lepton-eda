@@ -135,7 +135,7 @@ i_callback_file_script (GtkWidget *widget, gpointer data)
     gchar* filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
     g_message (_("Executing Guile script [%s]"), filename);
-    g_read_file (w_current->toplevel, filename, NULL);
+    g_read_file (gschem_toplevel_get_toplevel (w_current), filename, NULL);
 
     g_free (filename);
   }
