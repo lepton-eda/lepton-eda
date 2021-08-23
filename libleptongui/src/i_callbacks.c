@@ -2565,7 +2565,7 @@ i_callback_options_snap (GtkWidget *widget, gpointer data)
     g_message (_("Snap back to the grid (CAUTION!)"));
     break;
   default:
-    g_critical("options_snap: toplevel->snap out of range: %1$d\n",
+    g_critical("options_snap: Invalid snap_mode: %1$d\n",
                snap_mode);
   }
 
