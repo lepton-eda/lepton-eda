@@ -203,7 +203,6 @@ void o_unlock(GschemToplevel *w_current)
 void o_rotate_world_update(GschemToplevel *w_current,
                            int centerx, int centery, int angle, GList *list)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *o_current;
   GList *o_iter;
 
@@ -245,7 +244,8 @@ void o_rotate_world_update(GschemToplevel *w_current,
 
   /* Don't save the undo state if we are inside an action */
   /* This is useful when rotating the selection while moving, for example */
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current,
+                                        schematic_window_get_active_page (w_current));
   if (!w_current->inside_action) {
     o_undo_savestate_old(w_current, UNDO_ALL);
   }
