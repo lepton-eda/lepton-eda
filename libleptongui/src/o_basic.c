@@ -362,7 +362,7 @@ int o_invalidate_rubber (GschemToplevel *w_current)
  */
 int o_redraw_cleanstates(GschemToplevel *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
   /* returns FALSE if the function was'nt nessecary */
   if (w_current->inside_action == 0) {
     return FALSE;
@@ -408,8 +408,8 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
       /* Free the place list and its contents. If we were in a move
        * action, the list (refering to objects on the page) would
        * already have been cleared in o_move_cancel(), so this is OK. */
-      lepton_object_list_delete (toplevel->page_current->place_list);
-      toplevel->page_current->place_list = NULL;
+      lepton_object_list_delete (active_page->place_list);
+      active_page->place_list = NULL;
 
       i_action_stop (w_current);
 
