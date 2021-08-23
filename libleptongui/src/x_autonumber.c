@@ -393,7 +393,9 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
   char *numslot_str, *slot_str;
   const GList *iter;
 
-  for (iter = lepton_page_objects (w_current->toplevel->page_current);
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  for (iter = lepton_page_objects (active_page);
        iter != NULL;
        iter = g_list_next (iter)) {
     o_current = (LeptonObject*) iter->data;
