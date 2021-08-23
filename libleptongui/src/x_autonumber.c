@@ -648,8 +648,10 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   size_t i;
   GList *o_list = NULL;
   const GList *iter;
+  LeptonPage *active_page = NULL;
 
   w_current = autotext->w_current;
+  active_page = schematic_window_get_active_page (w_current);
   autotext->current_searchtext = NULL;
   autotext->root_page = 1;
   autotext->used_numbers = NULL;
@@ -660,7 +662,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 
   /* Step1: get all pages of the hierarchy */
   pages = s_hierarchy_traversepages (w_current,
-                                     w_current->toplevel->page_current,
+                                     active_page,
                                      HIERARCHY_NODUPS);
 
   /*  g_list_foreach(pages, (GFunc) s_hierarchy_print_page, NULL); */
@@ -692,7 +694,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
       lepton_toplevel_goto_page (w_current->toplevel, (LeptonPage*) page_item->data);
       gschem_toplevel_page_changed (w_current);
       /* iterate over all objects an look for matching searchtext's */
-      for (iter = lepton_page_objects (w_current->toplevel->page_current);
+      for (iter = lepton_page_objects (active_page);
            iter != NULL;
            iter = g_list_next (iter)) {
         o_current = (LeptonObject*) iter->data;
@@ -766,7 +768,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 
       /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
       /* 1. get objects to renumber */
-      for (iter = lepton_page_objects (w_current->toplevel->page_current);
+      for (iter = lepton_page_objects (active_page);
            iter != NULL;
            iter = g_list_next (iter)) {
         o_current = (LeptonObject*) iter->data;
