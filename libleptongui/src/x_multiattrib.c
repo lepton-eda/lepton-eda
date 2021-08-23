@@ -81,10 +81,12 @@ multiattrib_callback_response (GtkDialog *dialog,
 void
 x_multiattrib_open (GschemToplevel *w_current)
 {
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
   if ( w_current->mawindow == NULL ) {
     w_current->mawindow =
       GTK_WIDGET (g_object_new (TYPE_MULTIATTRIB,
-                                "object_list", w_current->toplevel->page_current->selection_list,
+                                "object_list", active_page->selection_list,
                                 /* GschemDialog */
                                 "settings-name", "multiattrib",
                                 "gschem-toplevel", w_current,
