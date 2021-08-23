@@ -917,8 +917,9 @@ i_callback_edit_show_hidden (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  o_edit_show_hidden (w_current,
-                      lepton_page_objects (gschem_toplevel_get_toplevel (w_current)->page_current));
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  o_edit_show_hidden (w_current, lepton_page_objects (active_page));
 }
 
 /*! \todo Finish function documentation!!!
