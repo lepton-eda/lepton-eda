@@ -42,8 +42,6 @@
  *  \par Function Description
  *  This function is used to determine if the (<B>x</B>,<B>y</B>) point is
  *  inside a grip of one of the selected object on the current sheet.
- *  The selected object are in a list starting at
- *  <B>w_current->toplevel->page_current->selection2_head</B>.
  *  The <B>x</B> and <B>y</B> parameters are in world units.
  *  If the point is inside one grip, a pointer on the object it belongs to is
  *  returned and <B>*whichone</B> is set according to the position of the grip
@@ -71,9 +69,7 @@ LeptonObject *o_grips_search_world(GschemToplevel *w_current, int x, int y, int 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_val_if_fail (page_view != NULL, NULL);
 
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  g_return_val_if_fail (toplevel != NULL, NULL);
-
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   if (!whichone) {
     return(NULL);
@@ -83,7 +79,7 @@ LeptonObject *o_grips_search_world(GschemToplevel *w_current, int x, int y, int 
   size = GRIP_SIZE / 2;
   w_size = gschem_page_view_WORLDabs (page_view, size);
 
-  s_current = lepton_list_get_glist( toplevel->page_current->selection_list );
+  s_current = lepton_list_get_glist (active_page->selection_list );
   while (s_current != NULL) {
     object = (LeptonObject *) s_current->data;
     if (object) {
