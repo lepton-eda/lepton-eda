@@ -736,14 +736,10 @@ gschem_toplevel_set_toplevel (GschemToplevel *w_current,
 static void
 handle_undo (GschemToplevel *w_current)
 {
-  LeptonToplevel *toplevel;
-
   g_return_if_fail (w_current != NULL);
 
-  toplevel = gschem_toplevel_get_toplevel (w_current);
-  g_return_if_fail (toplevel != NULL);
-
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current,
+                                        schematic_window_get_active_page (w_current));
   o_undo_savestate_old (w_current, UNDO_ALL);
 }
 
