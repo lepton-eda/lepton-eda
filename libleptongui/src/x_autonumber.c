@@ -594,7 +594,7 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, LeptonObject *o_curren
   }
 
   gschem_toplevel_page_content_changed (autotext->w_current,
-                                        autotext->w_current->toplevel->page_current);
+                                        schematic_window_get_active_page (autotext->w_current));
 }
 
 /*! \brief Changes the number <B>LeptonObject</B> element. Changes the slot attribute.
@@ -623,7 +623,7 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, LeptonObject *o_curre
   g_free (str);
 
   gschem_toplevel_page_content_changed (autotext->w_current,
-                                        autotext->w_current->toplevel->page_current);
+                                        schematic_window_get_active_page (autotext->w_current));
 }
 
 
