@@ -1049,6 +1049,25 @@ schematic_window_get_place_list (GschemToplevel *w_current)
 }
 
 
+/*! \brief Set the list of objects to place for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] place_list The new list of objects to place.
+ */
+void
+schematic_window_set_place_list (GschemToplevel *w_current,
+                                 GList *place_list)
+{
+  g_return_if_fail (w_current != NULL);
+
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  g_return_if_fail (active_page != NULL);
+
+  lepton_page_set_place_list (active_page, place_list);
+}
+
+
 /*! \brief Get Page select widget for this schematic window.
  *
  * \param [in] w_current The #GschemToplevel instance.
