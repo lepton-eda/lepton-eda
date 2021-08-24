@@ -617,7 +617,7 @@ o_select_visible_unlocked (GschemToplevel *w_current)
     gschem_toplevel_get_show_hidden_text (w_current);
 
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
-  LeptonSelection *selection = active_page->selection_list;
+  LeptonSelection *selection = lepton_page_get_selection_list (active_page);
 
   o_select_unselect_all (w_current);
   for (iter = lepton_page_objects (active_page);
