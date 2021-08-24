@@ -3268,3 +3268,49 @@ schematic_window_set_select_slack_pixels (SchematicWindow *w_current,
 
   w_current->select_slack_pixels = pixels;
 }
+
+
+/*! \brief Get the last found object.
+ *
+ *  \par Function Description
+ *  Returns the last found \c LeptonObject instance set for the
+ *  active page of the schematic window in some previous selection
+ *  operation.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The last found object.
+ */
+LeptonObject*
+schematic_window_get_object_lastplace (SchematicWindow *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  g_return_val_if_fail (active_page != NULL, NULL);
+
+  return lepton_page_get_object_lastplace (active_page);
+}
+
+
+/*! \brief Set the last found object.
+ *
+ *  \par Function Description
+ *  Stores the value of the last found \c LeptonObject instance in
+ *  the active page of the schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] object_lastplace The object instance to store.
+ */
+void
+schematic_window_set_object_lastplace (SchematicWindow *w_current,
+                                       LeptonObject *object_lastplace)
+{
+  g_return_if_fail (w_current != NULL);
+
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  g_return_if_fail (active_page != NULL);
+
+  lepton_page_set_object_lastplace (active_page, object_lastplace);
+}

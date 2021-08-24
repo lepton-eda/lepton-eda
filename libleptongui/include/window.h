@@ -368,6 +368,12 @@ schematic_window_get_selection_list (SchematicWindow *w_current);
 void
 schematic_window_set_selection_list (SchematicWindow *w_current,
                                      LeptonSelection *place_list);
+LeptonObject*
+schematic_window_get_object_lastplace (SchematicWindow *w_current);
+
+void
+schematic_window_set_object_lastplace (SchematicWindow *w_current,
+                                       LeptonObject *object_lastplace);
 GtkWidget*
 schematic_window_get_macro_widget (SchematicWindow *w_current);
 
