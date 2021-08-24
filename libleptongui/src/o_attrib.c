@@ -232,9 +232,12 @@ void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
  */
 /* This function no longer returns NULL, but will always return the new */
 /* text item */
-LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current,
-                            const char *text_string, int visibility,
-                            int show_name_value, LeptonObject *object)
+LeptonObject*
+o_attrib_add_attrib (GschemToplevel *w_current,
+                     const char *text_string,
+                     int visibility,
+                     int show_name_value,
+                     LeptonObject *object)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *new_obj;
