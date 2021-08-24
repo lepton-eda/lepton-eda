@@ -126,6 +126,35 @@ lepton_toplevel_set_page_current (LeptonToplevel *toplevel,
 }
 
 
+/*\ brief Get the list of current toplevel pages.
+ *
+ *  \param [in] toplevel This toplevel.
+ *  \return The \a pages field of the \a toplevel.
+ */
+LeptonPageList*
+lepton_toplevel_get_pages (LeptonToplevel *toplevel)
+{
+  g_return_val_if_fail (toplevel != NULL, NULL);
+
+  return toplevel->pages;
+}
+
+
+/*\ brief Set the list of current toplevel pages.
+ *
+ *  \param [in,out] toplevel This toplevel.
+ *  \param [in] pages The new list of pages.
+ */
+void
+lepton_toplevel_set_pages (LeptonToplevel *toplevel,
+                           LeptonPageList *pages)
+{
+  g_return_if_fail (toplevel != NULL);
+
+  toplevel->pages = pages;
+}
+
+
 /*! \brief Add a weak reference watcher to an LeptonToplevel.
  * \par Function Description
  * Adds the weak reference callback \a notify_func to \a toplevel.  When
