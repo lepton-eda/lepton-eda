@@ -837,6 +837,23 @@ schematic_window_get_gdk_display (GschemToplevel *w_current)
 }
 
 
+/*! \brief Get the list of open pages for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The currently opened pages.
+ */
+LeptonPageList*
+schematic_window_get_pages (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
+  g_return_val_if_fail (toplevel != NULL, NULL);
+
+  return lepton_toplevel_get_pages (toplevel);
+}
+
+
 /*! \brief Get the options for this schematic window.
  *
  *  \param [in] w_current The schematic window.
