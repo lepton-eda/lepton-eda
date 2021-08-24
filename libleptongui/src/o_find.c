@@ -117,9 +117,7 @@ schematic_selection_find_single_object (SchematicWindow *w_current,
   else
     o_select_object (w_current, object, SINGLE, 0); /* 0 is count */
 
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
-  LeptonPage *active_page = toplevel->page_current;
-  lepton_page_set_object_lastplace (active_page, object);
+  schematic_window_set_object_lastplace (w_current, object);
   i_update_menus (w_current);
   return TRUE;
 }
