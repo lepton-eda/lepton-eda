@@ -58,15 +58,14 @@ clipboard_to_buffer(GschemToplevel *w_current, int buf_num)
 static void
 selection_to_buffer(GschemToplevel *w_current, int buf_num)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *s_current = NULL;
 
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (toplevel != NULL);
   g_return_if_fail (buf_num >= 0);
   g_return_if_fail (buf_num < MAX_BUFFERS);
 
-  s_current = lepton_list_get_glist (toplevel->page_current->selection_list);
+  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
+  s_current = lepton_list_get_glist (selection);
 
   if (object_buffer[buf_num] != NULL) {
     lepton_object_list_delete (object_buffer[buf_num]);
