@@ -86,7 +86,7 @@ i_callback_page_revert (GschemToplevel *w_current)
   if (!schematic_page_revert_dialog (w_current, filename))
     return;
 
-  GList* pages = lepton_list_get_glist (w_current->toplevel->pages);
+  GList* pages = lepton_list_get_glist (schematic_window_get_pages (w_current));
   LeptonPage* page_dummy = NULL;
   if (g_list_length (pages) == 1)
   {
