@@ -451,7 +451,6 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
 LeptonObject *
 o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *o_new;
   LeptonPage *page;
   GList *new_attribs;
@@ -464,6 +463,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   gchar *basename = lepton_component_object_get_basename (o_current);
   g_return_val_if_fail (basename != NULL, NULL);
 
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
   page = lepton_object_get_page (o_current);
 
   /* Force symbol data to be reloaded from source */
@@ -480,7 +480,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   o_selection_remove (page->selection_list, o_current);
 
   /* Create new object and set embedded */
-  o_new = lepton_component_new (toplevel->page_current,
+  o_new = lepton_component_new (active_page,
                                 default_color_id(),
                                 lepton_component_object_get_x (o_current),
                                 lepton_component_object_get_y (o_current),
@@ -543,7 +543,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   o_selection_add (page->selection_list, o_new);
 
   /* mark the page as modified */
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, active_page);
   o_undo_savestate_old (w_current, UNDO_ALL);
 
   return o_new;
