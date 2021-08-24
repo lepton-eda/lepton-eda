@@ -755,7 +755,7 @@ x_dialog_close_changed_page (GschemToplevel *w_current, LeptonPage *page)
   LeptonPage *keep_page;
   gboolean result = FALSE;
 
-  g_return_val_if_fail (page != NULL && page->CHANGED, TRUE);
+  g_return_val_if_fail (page != NULL && lepton_page_get_changed (page), TRUE);
 
   keep_page = w_current->toplevel->page_current;
 
