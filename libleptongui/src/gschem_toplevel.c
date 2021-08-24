@@ -1071,3 +1071,22 @@ schematic_window_set_actionfeedback_mode (GschemToplevel *w_current,
 
   w_current->actionfeedback_mode = actionfeedback_mode;
 }
+
+
+
+/*! \brief Get the list of objects to place for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The list of objects.
+ */
+GList*
+schematic_window_get_place_list (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  g_return_val_if_fail (active_page != NULL, NULL);
+
+  return lepton_page_get_place_list (active_page);
+}

@@ -335,4 +335,7 @@ schematic_window_get_actionfeedback_mode (GschemToplevel *w_current);
 void
 schematic_window_set_actionfeedback_mode (GschemToplevel *w_current,
                                           int actionfeedback_mode);
+GList*
+schematic_window_get_place_list (GschemToplevel *w_current);
+
 G_END_DECLS
