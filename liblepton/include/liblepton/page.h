@@ -73,6 +73,12 @@ lepton_page_get_changed (LeptonPage *page);
 void
 lepton_page_set_changed (LeptonPage *page,
                          int changed);
+GList*
+lepton_page_get_place_list (LeptonPage *page);
+
+void
+lepton_page_set_place_list (LeptonPage *page,
+                            GList *place_list);
 LeptonSelection*
 lepton_page_get_selection_list (LeptonPage *page);
 

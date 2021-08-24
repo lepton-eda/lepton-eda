@@ -83,6 +83,34 @@ lepton_page_set_changed (LeptonPage *page,
 }
 
 
+/*! \brief Get page's \a place_list field value.
+ *
+ *  \param [in] page The page to obtain the field of.
+ *  \return The value of the \a place_list field.
+ */
+GList*
+lepton_page_get_place_list (LeptonPage *page)
+{
+  g_return_val_if_fail (page != NULL, NULL);
+
+  return page->place_list;
+}
+
+/*! \brief Set page's \a place_list field value.
+ *
+ *  \param [in] page The page.
+ *  \param [in] place_list The new \a place_list value.
+ */
+void
+lepton_page_set_place_list (LeptonPage *page,
+                            GList *place_list)
+{
+  g_return_if_fail (page != NULL);
+
+  page->place_list = place_list;
+}
+
+
 /*! \brief Get page's \a selection_list field value.
  *
  *  \param [in] page The page to obtain the field of.
