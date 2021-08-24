@@ -133,6 +133,12 @@ lepton_page_set_toplevel (LeptonPage *page,
 LeptonPage*
 lepton_page_new (LeptonToplevel *toplevel,
                  const gchar *filename);
+LeptonObject*
+lepton_page_get_object_lastplace (LeptonPage *page);
+
+void
+lepton_page_set_object_lastplace (LeptonPage *page,
+                                  LeptonObject *object_lastplace);
 void
 lepton_page_delete (LeptonToplevel *toplevel,
                     LeptonPage *page);

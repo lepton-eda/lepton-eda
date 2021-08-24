@@ -350,6 +350,35 @@ lepton_page_set_toplevel (LeptonPage *page,
 }
 
 
+/*! \brief Get page's \a object_lastplace field value.
+ *
+ *  \param [in] page The page to obtain the field of.
+ *  \return The value of the \a object_lastplace field.
+ */
+LeptonObject*
+lepton_page_get_object_lastplace (LeptonPage *page)
+{
+  g_return_val_if_fail (page != NULL, NULL);
+
+  return page->object_lastplace;
+}
+
+
+/*! \brief Set page's \a object_lastplace field value.
+ *
+ *  \param [in] page The page.
+ *  \param [in] object_lastplace The new \a object_lastplace value.
+ */
+void
+lepton_page_set_object_lastplace (LeptonPage *page,
+                                  LeptonObject *object_lastplace)
+{
+  g_return_if_fail (page != NULL);
+
+  page->object_lastplace = object_lastplace;
+}
+
+
 /* Called just before removing an LeptonObject from a LeptonPage
  * or after appending an LeptonObject to a LeptonPage. */
 static void
