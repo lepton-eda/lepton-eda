@@ -43,7 +43,6 @@ void
 attrib_edit_dialog_ok (GtkWidget * w,
                        SchematicWindow *w_current)
 {
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   const char *value, *label;
   char *newtext;
   GtkEntry *value_entry, *name_entry;
@@ -116,7 +115,7 @@ attrib_edit_dialog_ok (GtkWidget * w,
     (LeptonObject*) g_object_get_data (G_OBJECT (aewindow), "attrib");
   if (!attribptr)
   {
-    s_current = lepton_list_get_glist( toplevel->page_current->selection_list );
+    s_current = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
     while (s_current != NULL) {
       object = (LeptonObject *)s_current->data;
       if (object == NULL) {
@@ -129,7 +128,7 @@ attrib_edit_dialog_ok (GtkWidget * w,
       }
       s_current = g_list_next(s_current);
     }
-    s_current = lepton_list_get_glist( toplevel->page_current->selection_list );
+    s_current = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
     if (nsel > 1) {
 
       addtoallbutton =
