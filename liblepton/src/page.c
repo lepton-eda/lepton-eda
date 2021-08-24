@@ -83,6 +83,34 @@ lepton_page_set_changed (LeptonPage *page,
 }
 
 
+/*! \brief Get page's \a selection_list field value.
+ *
+ *  \param [in] page The page to obtain the field of.
+ *  \return The value of the \a selection_list field.
+ */
+LeptonSelection*
+lepton_page_get_selection_list (LeptonPage *page)
+{
+  g_return_val_if_fail (page != NULL, NULL);
+
+  return page->selection_list;
+}
+
+/*! \brief Set page's \a selection_list field value.
+ *
+ *  \param [in] page The page.
+ *  \param [in] selection_list The new \a selection_list value.
+ */
+void
+lepton_page_set_selection_list (LeptonPage *page,
+                                LeptonSelection *selection_list)
+{
+  g_return_if_fail (page != NULL);
+
+  page->selection_list = selection_list;
+}
+
+
 /* Called just before removing an LeptonObject from a LeptonPage
  * or after appending an LeptonObject to a LeptonPage. */
 static void

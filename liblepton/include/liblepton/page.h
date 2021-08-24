@@ -73,6 +73,12 @@ lepton_page_get_changed (LeptonPage *page);
 void
 lepton_page_set_changed (LeptonPage *page,
                          int changed);
+LeptonSelection*
+lepton_page_get_selection_list (LeptonPage *page);
+
+void
+lepton_page_set_selection_list (LeptonPage *page,
+                                LeptonSelection *selection_list);
 LeptonPage*
 s_page_new (LeptonToplevel *toplevel,
             const gchar *filename);
