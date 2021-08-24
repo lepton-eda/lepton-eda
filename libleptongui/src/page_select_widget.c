@@ -169,7 +169,7 @@ page_select_widget_update (GschemToplevel* w_current)
 
   i_set_filename (w_current,
                   lepton_page_get_filename (page),
-                  page->CHANGED);
+                  lepton_page_get_changed (page));
 
   if (x_tabs_enabled())
   {
