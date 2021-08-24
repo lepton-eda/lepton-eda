@@ -59,7 +59,7 @@ lepton_toplevel_get_page_current (LeptonToplevel *toplevel);
 
 void
 lepton_toplevel_set_page_current (LeptonToplevel *toplevel,
-                             LeptonPage *page);
+                                  LeptonPage *page);
 void
 s_toplevel_weak_ref (LeptonToplevel *toplevel,
                      void (*notify_func)(void *, void *),
