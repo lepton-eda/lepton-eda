@@ -344,4 +344,10 @@ schematic_window_get_page_select_widget (GschemToplevel *w_current);
 void
 schematic_window_set_page_select_widget (GschemToplevel *w_current,
                                          GtkWidget* widget);
+LeptonSelection*
+schematic_window_get_selection_list (GschemToplevel *w_current);
+
+void
+schematic_window_set_selection_list (GschemToplevel *w_current,
+                                     LeptonSelection *place_list);
 G_END_DECLS
