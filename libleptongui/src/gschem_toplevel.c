@@ -1119,3 +1119,40 @@ schematic_window_set_page_select_widget (GschemToplevel *w_current,
 
   w_current->page_select_widget = widget;
 }
+
+
+/*! \brief Get the list of selected objects for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The list of objects.
+ */
+LeptonSelection*
+schematic_window_get_selection_list (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  g_return_val_if_fail (active_page != NULL, NULL);
+
+  return lepton_page_get_selection_list (active_page);
+}
+
+
+/*! \brief Set the list of selected objects for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] selection_list The new list of objects to select.
+ */
+void
+schematic_window_set_selection_list (GschemToplevel *w_current,
+                                     LeptonSelection *selection_list)
+{
+  g_return_if_fail (w_current != NULL);
+
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  g_return_if_fail (active_page != NULL);
+
+  lepton_page_set_selection_list (active_page, selection_list);
+}
