@@ -783,7 +783,8 @@ x_dialog_close_changed_page (GschemToplevel *w_current, LeptonPage *page)
         gschem_toplevel_page_changed (w_current);
         i_callback_file_save (NULL, w_current);
         /* has the page been really saved? */
-        if (!page->CHANGED) {
+        if (!lepton_page_get_changed (page))
+        {
           result = TRUE;
         }
         /* no, user has cancelled the save and page has changes */
