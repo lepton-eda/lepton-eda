@@ -109,10 +109,7 @@ o_buffer_copy(GschemToplevel *w_current, int buf_num)
 void
 o_buffer_cut(GschemToplevel *w_current, int buf_num)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-
   g_return_if_fail (w_current != NULL);
-  g_return_if_fail (toplevel != NULL);
   g_return_if_fail (buf_num >= 0);
   g_return_if_fail (buf_num < MAX_BUFFERS);
 
