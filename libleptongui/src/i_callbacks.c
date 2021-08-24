@@ -70,23 +70,27 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 void
 i_callback_page_prev (GtkWidget *widget, gpointer data)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  LeptonPage *p_current = schematic_window_get_active_page (w_current);
   LeptonPage *p_new;
   GList *iter;
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
 
-  iter = g_list_find( lepton_list_get_glist( toplevel->pages ), p_current );
+  LeptonPage *p_current = schematic_window_get_active_page (w_current);
+  LeptonPageList *pages = schematic_window_get_pages (w_current);
+
+  iter = g_list_find (lepton_list_get_glist (pages), p_current);
   iter = g_list_previous( iter );
 
   if ( iter == NULL  )
     return;
 
-  if (w_current->enforce_hierarchy) {
-    p_new = s_hierarchy_find_prev_page(toplevel->pages, p_current);
-  } else {
+  if (w_current->enforce_hierarchy)
+  {
+    p_new = s_hierarchy_find_prev_page (pages, p_current);
+  }
+  else
+  {
     p_new = (LeptonPage *)iter->data;
   }
 
