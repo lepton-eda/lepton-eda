@@ -2240,12 +2240,15 @@ i_callback_hierarchy_down_symbol (GtkWidget *widget, gpointer data)
   g_free (fname);
 
 
-  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
-  s_hierarchy_down_symbol (w_current, sym, toplevel->page_current);
+  s_hierarchy_down_symbol (w_current, sym, active_page);
   gschem_toplevel_page_changed (w_current);
 
-  x_window_set_current_page (w_current, toplevel->page_current);
+  /* Get active page once again, it should now be the symbol
+   * page. */
+  active_page = schematic_window_get_active_page (w_current);
+  x_window_set_current_page (w_current, active_page);
 
   /* s_hierarchy_down_symbol() will not zoom the loaded page.
    * Tabbed GUI: zoom is set in x_tabs_page_set_cur().
