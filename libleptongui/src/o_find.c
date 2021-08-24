@@ -222,13 +222,12 @@ o_find_selected_object (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
 
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
-  g_return_val_if_fail (toplevel != NULL, FALSE);
-
   int w_slack = schematic_canvas_WORLDabs (page_view, w_current->select_slack_pixels);
   GList *s_current;
 
-  for (s_current = lepton_list_get_glist (toplevel->page_current->selection_list);
+  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
+
+  for (s_current = lepton_list_get_glist (selection);
        s_current != NULL; s_current = g_list_next (s_current)) {
     LeptonObject *o_current = (LeptonObject*) s_current->data;
 
