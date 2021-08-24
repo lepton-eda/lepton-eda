@@ -99,12 +99,10 @@ schematic_buffer_from_selection (GschemToplevel *w_current,
 int
 o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   int rleft, rtop, rbottom, rright;
   int x, y;
 
   g_return_val_if_fail (w_current != NULL, TRUE);
-  g_return_val_if_fail (toplevel != NULL, TRUE);
   g_return_val_if_fail (buf_num >= 0, TRUE);
   g_return_val_if_fail (buf_num < MAX_BUFFERS, TRUE);
 
