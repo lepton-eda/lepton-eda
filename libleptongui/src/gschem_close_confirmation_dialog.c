@@ -845,7 +845,8 @@ x_dialog_close_window (GschemToplevel *w_current)
 
     p_current = (LeptonPage*)iter->data;
 
-    if (p_current->CHANGED) {
+    if (lepton_page_get_changed (p_current))
+    {
       unsaved_pages = g_list_append (unsaved_pages, (gpointer)p_current);
     }
   }
