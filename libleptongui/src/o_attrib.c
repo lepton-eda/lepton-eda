@@ -238,7 +238,6 @@ o_attrib_add_attrib (GschemToplevel *w_current,
                      int show_name_value,
                      LeptonObject *object)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *new_obj;
   int world_x = - 1, world_y = -1;
   int align = LOWER_LEFT;
@@ -246,6 +245,7 @@ o_attrib_add_attrib (GschemToplevel *w_current,
   int color;
   int left, right, top, bottom;
   LeptonObject *o_current;
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   color = DETACHED_ATTRIBUTE_COLOR;
 
@@ -349,7 +349,7 @@ o_attrib_add_attrib (GschemToplevel *w_current,
         break;
     }
   } else {
-    world_get_object_glist_bounds (lepton_page_objects (toplevel->page_current),
+    world_get_object_glist_bounds (lepton_page_objects (active_page),
                                    /* Don't include hidden objects. */
                                    FALSE,
                                    &left,
@@ -377,7 +377,7 @@ o_attrib_add_attrib (GschemToplevel *w_current,
                                     w_current->text_size, /* current text size */
                                     visibility,
                                     show_name_value);
-  lepton_page_append (toplevel->page_current, new_obj);
+  lepton_page_append (active_page, new_obj);
 
   /* now attach the attribute to the object (if o_current is not NULL) */
   /* remember that o_current contains the object to get the attribute */
@@ -385,7 +385,7 @@ o_attrib_add_attrib (GschemToplevel *w_current,
     o_attrib_attach (new_obj, o_current, FALSE);
   }
 
-  o_selection_add (toplevel->page_current->selection_list, new_obj);
+  o_selection_add (active_page->selection_list, new_obj);
 
   /* handle slot= attribute, it's a special case */
   if (o_current != NULL &&
@@ -397,7 +397,7 @@ o_attrib_add_attrib (GschemToplevel *w_current,
   g_run_hook_object (w_current, "%add-objects-hook", new_obj);
   g_run_hook_object (w_current, "%select-objects-hook", new_obj);
 
-  gschem_toplevel_page_content_changed (w_current, toplevel->page_current);
+  gschem_toplevel_page_content_changed (w_current, active_page);
 
   return new_obj;
 }
