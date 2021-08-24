@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -763,17 +763,20 @@ pagesel_update (PageSelectWidget* pagesel)
 #else
   gtk_tree_store_clear (GTK_TREE_STORE (model));
 #endif
+
+  LeptonPageList *pages = lepton_toplevel_get_pages (toplevel);
+
   /* now rebuild */
-  for ( iter = lepton_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist (pages);
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
     p_current = (LeptonPage *)iter->data;
     /* find every page that is not a hierarchy-down of another page */
     if (p_current->up < 0 ||
-        lepton_toplevel_search_page_by_id (toplevel->pages,
+        lepton_toplevel_search_page_by_id (pages,
                                            p_current->up) == NULL) {
-      add_page (model, NULL, toplevel->pages, p_current, pagesel);
+      add_page (model, NULL, pages, p_current, pagesel);
     }
   }
 
