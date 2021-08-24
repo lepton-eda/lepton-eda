@@ -2079,7 +2079,7 @@ i_callback_hierarchy_down_schematic (GtkWidget *widget, gpointer data)
   if (!lepton_object_is_component (object))
     return;
 
-  parent = gschem_toplevel_get_toplevel (w_current)->page_current;
+  parent = schematic_window_get_active_page (w_current);
   attrib = o_attrib_search_attached_attribs_by_name (object, "source", count);
 
   /* if above is null, then look inside symbol */
