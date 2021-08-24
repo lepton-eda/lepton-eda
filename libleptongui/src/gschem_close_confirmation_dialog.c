@@ -886,7 +886,7 @@ x_dialog_close_window (GschemToplevel *w_current)
 
           i_callback_file_save (NULL, w_current);
           /* if user cancelled previous, do not close window */
-          ret &= !p_current->CHANGED;
+          ret &= !lepton_page_get_changed (p_current);
         }
         g_list_free (unsaved_pages);
         break;
