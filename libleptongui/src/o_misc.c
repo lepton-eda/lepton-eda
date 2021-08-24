@@ -308,8 +308,9 @@ void o_autosave_backups(GschemToplevel *w_current)
 
   /* save current page */
   p_save = schematic_window_get_active_page (w_current);
+  LeptonPageList *pages = schematic_window_get_pages (w_current);
 
-  for ( iter = lepton_list_get_glist( toplevel->pages );
+  for ( iter = lepton_list_get_glist (pages);
         iter != NULL;
         iter = g_list_next( iter ) ) {
 
