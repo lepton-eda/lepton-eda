@@ -1806,7 +1806,7 @@ lepton_component_object_embed (LeptonObject *object)
   lepton_component_object_set_embedded (object, TRUE);
 
   g_message (_("Component [%1$s] has been embedded."),
-             object->component_basename);
+             lepton_component_object_get_basename (object));
   /* Page content has been modified. */
   if (page != NULL)
   {
