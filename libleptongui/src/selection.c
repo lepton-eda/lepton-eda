@@ -77,7 +77,6 @@ o_select_object (SchematicWindow *w_current,
                  int type,
                  int count)
 {
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
   int SHIFTKEY;
   int CONTROLKEY;
   int removing_obj = 0;
@@ -115,7 +114,7 @@ o_select_object (SchematicWindow *w_current,
 
       /* object not select, add it to the selection list */
       o_select_run_hooks( w_current, o_current, 1 );
-      o_selection_add (toplevel->page_current->selection_list, o_current);
+      o_selection_add (schematic_window_get_selection_list (w_current), o_current);
 
       break;
 
@@ -130,7 +129,7 @@ o_select_object (SchematicWindow *w_current,
           /* result: remove object from selection */
           if (type != MULTIPLE) {
             o_select_run_hooks( w_current, o_current, 0 );
-            o_selection_remove (toplevel->page_current->selection_list,
+            o_selection_remove (schematic_window_get_selection_list (w_current),
                                 o_current);
             removing_obj = 1;
           }
@@ -148,7 +147,7 @@ o_select_object (SchematicWindow *w_current,
             o_select_unselect_all (w_current);
 
             o_select_run_hooks( w_current, o_current, 1 );
-            o_selection_add (toplevel->page_current->selection_list, o_current);
+            o_selection_add (schematic_window_get_selection_list (w_current), o_current);
           }
 
           /* condition: doing single object add */
@@ -159,13 +158,13 @@ o_select_object (SchematicWindow *w_current,
             o_select_unselect_all (w_current);
 
             o_select_run_hooks (w_current, o_current, 1);
-            o_selection_add (toplevel->page_current->selection_list,
+            o_selection_add (schematic_window_get_selection_list (w_current),
                              o_current);
           }
 
           if (CONTROLKEY) {
             o_select_run_hooks(w_current, o_current, 0);
-            o_selection_remove (toplevel->page_current->selection_list,
+            o_selection_remove (schematic_window_get_selection_list (w_current),
                                 o_current);
             removing_obj = 1;
           }
@@ -181,7 +180,7 @@ o_select_object (SchematicWindow *w_current,
      * so they don't remain selected without the user knowing.
      */
     o_attrib_deselect_invisible (w_current,
-                                 toplevel->page_current->selection_list,
+                                 schematic_window_get_selection_list (w_current),
                                  o_current);
   } else {
     /* If the type is MULTIPLE (meaning a select box was/is being used), only
@@ -191,11 +190,11 @@ o_select_object (SchematicWindow *w_current,
      */
     if( type == MULTIPLE) {
       o_attrib_select_invisible (w_current,
-                                 toplevel->page_current->selection_list,
+                                 schematic_window_get_selection_list (w_current),
                                  o_current);
     } else {
       /* Select all attributes of the object for a single click select */
-      o_attrib_add_selected (w_current, toplevel->page_current->selection_list,
+      o_attrib_add_selected (w_current, schematic_window_get_selection_list (w_current),
                              o_current);
     }
   }
