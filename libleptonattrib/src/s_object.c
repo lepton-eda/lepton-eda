@@ -406,7 +406,7 @@ int s_object_has_sym_file(LeptonObject *object)
 {
   char *filename;
 
-  filename = object->component_basename;
+  filename = lepton_component_object_get_basename (object);
   if (filename != NULL) {
     g_debug ("s_object_has_sym_file: Object has sym file = %s.\n", filename);
     return 0;
