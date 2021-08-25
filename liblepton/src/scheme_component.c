@@ -171,7 +171,7 @@ SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
 
   LeptonObject *obj = edascm_to_object (component_s);
 
-  return scm_list_n (scm_from_utf8_string (obj->component_basename),
+  return scm_list_n (scm_from_utf8_string (lepton_component_object_get_basename (obj)),
                      scm_from_int (obj->component->x),
                      scm_from_int (obj->component->y),
                      scm_from_int (obj->component->angle),
