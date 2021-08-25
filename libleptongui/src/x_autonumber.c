@@ -545,7 +545,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, LeptonObject *o_curre
         *slot = 1;
         for (i=2; i <=numslots; i++) {
           freeslot = g_new(AUTONUMBER_SLOT,1);
-          freeslot->symbolname = o_parent->component_basename;
+          freeslot->symbolname = lepton_component_object_get_basename (o_parent);
           freeslot->number = new_number;
           freeslot->slotnr = i;
           autotext->free_slots = g_list_insert_sorted(autotext->free_slots,
