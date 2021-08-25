@@ -1837,14 +1837,14 @@ lepton_component_object_unembed (LeptonObject *object)
     return;
 
   /* Search for the symbol in the component library. */
-  sym = s_clib_get_symbol_by_name (object->component_basename);
+  sym = s_clib_get_symbol_by_name (lepton_component_object_get_basename (object));
 
   if (sym == NULL)
   {
     /* Symbol not found in the symbol library: signal an error. */
     g_message (_("Could not find component [%1$s], while trying to "
                  "unembed. Component is still embedded."),
-               object->component_basename);
+               lepton_component_object_get_basename (object));
   }
   else
   {
@@ -1852,7 +1852,7 @@ lepton_component_object_unembed (LeptonObject *object)
     lepton_component_object_set_embedded (object, FALSE);
 
     g_message (_("Component [%1$s] has been successfully unembedded."),
-               object->component_basename);
+               lepton_component_object_get_basename (object));
 
     /* Page content has been modified. */
     if (page != NULL)
