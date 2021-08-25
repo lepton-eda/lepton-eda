@@ -838,7 +838,7 @@ create_placeholder_classic (LeptonObject *new_node, int x, int y)
   /* Add some useful text */
   not_found_text =
     g_strdup_printf (_("Component not found:\n %1$s"),
-                     new_node->component_basename);
+                     lepton_component_object_get_basename (new_node));
   new_prim_obj = lepton_text_object_new (DETACHED_ATTRIBUTE_COLOR,
                                          x + NOT_FOUND_TEXT_X,
                                          y + NOT_FOUND_TEXT_Y,
