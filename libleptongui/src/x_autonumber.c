@@ -419,7 +419,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
               slot = g_new(AUTONUMBER_SLOT,1);
               slot->number = number;
               slot->slotnr = slotnr;
-              slot->symbolname = o_parent->component_basename;
+              slot->symbolname = lepton_component_object_get_basename (o_parent);
 
 
               slot_item = g_list_find_custom(autotext->used_slots,
