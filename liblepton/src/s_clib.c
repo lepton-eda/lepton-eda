@@ -1450,13 +1450,15 @@ s_toplevel_get_symbols (const LeptonToplevel *toplevel)
          o_iter = g_list_next (o_iter)) {
       o = (LeptonObject *)o_iter->data;
       if (!lepton_object_is_component (o)) continue;
-      if (o->component_basename == NULL)  continue;
+
+      gchar *basename = lepton_component_object_get_basename (o);
+      if (basename == NULL)  continue;
 
       /* Since we're not looking at embedded symbols, the first
        * component with the given name will be the one we need.
        * N.b. we don't use s_clib_get_symbol_by_name() because it's
        * spammeh. */
-      symlist = s_clib_search (o->component_basename, CLIB_EXACT);
+      symlist = s_clib_search (basename, CLIB_EXACT);
       if (symlist == NULL) continue;
       sym = (CLibSymbol *) symlist->data;
       g_list_free (symlist);
