@@ -106,7 +106,7 @@ char *s_attrib_get_refdes(LeptonObject *object)
     } else {        /* didn't find refdes.  Report error to log. */
       g_debug ("s_attrib_get_refdes: "
                "Found non-graphical component with no refdes: component_basename = %s\n",
-               object->component_basename);
+               lepton_component_object_get_basename (object));
       return NULL;
     }
   }
