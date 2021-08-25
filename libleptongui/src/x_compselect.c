@@ -437,7 +437,7 @@ enum {
  *  \param [in] compselect       The dialog compselect
  *  \param [in] preview_toplevel The toplevel of the preview widget
  */
-void
+static void
 update_attributes_model (Compselect *compselect,
                          LeptonToplevel *preview_toplevel)
 {
