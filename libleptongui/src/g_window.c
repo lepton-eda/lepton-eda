@@ -165,21 +165,22 @@ SCM_DEFINE (override_close_page_x, "%close-page!", 1, 0, 0,
               SCM_ARG1, s_override_close_page_x);
 
   GschemToplevel *w_current = g_current_window ();
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonPage *page = edascm_to_page (page_s);
 
-  /* If page is not the current page, switch pages, then switch back
-   * after closing page. */
-  LeptonPage *curr_page = toplevel->page_current;
-  int reset_page = (page != curr_page);
-  if (reset_page)
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  if (page != active_page)
+    /* If page is not the current page, switch pages, then switch
+     * back after closing page. */
+  {
     x_window_set_current_page (w_current, page);
-
-  x_window_close_page (w_current, w_current->toplevel->page_current);
-
-  if (reset_page)
-    x_window_set_current_page (w_current, curr_page);
-
+    x_window_close_page (w_current, schematic_window_get_active_page (w_current));
+    x_window_set_current_page (w_current, active_page);
+  }
+  else
+  {
+    x_window_close_page (w_current, page);
+  }
   return SCM_UNDEFINED;
 }
 
