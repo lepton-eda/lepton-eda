@@ -2230,9 +2230,10 @@ i_callback_hierarchy_down_symbol (GtkWidget *widget, gpointer data)
   if (!lepton_object_is_component (object))
     return;
 
-  g_message (_("Searching for symbol [%1$s]"), object->component_basename);
+  gchar *basename = lepton_component_object_get_basename (object);
+  g_message (_("Searching for symbol [%1$s]"), basename);
 
-  const CLibSymbol* sym = s_clib_get_symbol_by_name (object->component_basename);
+  const CLibSymbol* sym = s_clib_get_symbol_by_name (basename);
   if (sym == NULL)
     return;
 
