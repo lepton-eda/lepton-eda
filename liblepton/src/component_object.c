@@ -982,9 +982,10 @@ lepton_component_new (LeptonPage *page,
   new_node->component = g_new0 (LeptonComponent, 1);
 
   if (clib != NULL) {
-    new_node->component->basename = g_strdup (s_clib_symbol_get_name (clib));
+    lepton_component_object_set_basename (new_node,
+                                          s_clib_symbol_get_name (clib));
   } else {
-    new_node->component->basename = g_strdup (basename);
+    lepton_component_object_set_basename (new_node, basename);
   }
 
   lepton_component_object_set_contents (new_node, NULL);
