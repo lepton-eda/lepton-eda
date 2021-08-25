@@ -2859,8 +2859,9 @@ multiattrib_update (Multiattrib *multiattrib)
       multiattrib->num_comp_in_list++;
 
       if (component_title_name == NULL)
-        component_title_name = object->component_basename;
-      else if (strcmp (component_title_name, object->component_basename) != 0)
+        component_title_name = lepton_component_object_get_basename (object);
+      else if (strcmp (component_title_name,
+                       lepton_component_object_get_basename (object)) != 0)
         component_title_name = _("<various>");
     }
 
