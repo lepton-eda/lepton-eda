@@ -1082,7 +1082,7 @@ lepton_component_new_embedded (int color,
   lepton_component_object_set_angle (new_node, angle);
   lepton_component_object_set_mirror (new_node, mirror);
 
-  new_node->component_basename = g_strdup(basename);
+  lepton_component_object_set_basename (new_node, basename);
 
   new_node->selectable = selectable;
 
