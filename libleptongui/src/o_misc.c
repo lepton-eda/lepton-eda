@@ -464,17 +464,19 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   const CLibSymbol *clib;
 
   g_return_val_if_fail (lepton_object_is_component (o_current), NULL);
-  g_return_val_if_fail (o_current->component_basename != NULL, NULL);
+
+  gchar *basename = lepton_component_object_get_basename (o_current);
+  g_return_val_if_fail (basename != NULL, NULL);
 
   page = lepton_object_get_page (o_current);
 
   /* Force symbol data to be reloaded from source */
-  clib = s_clib_get_symbol_by_name (o_current->component_basename);
+  clib = s_clib_get_symbol_by_name (basename);
   s_clib_symbol_invalidate_data (clib);
 
   if (clib == NULL) {
     g_message (_("Could not find symbol [%1$s] in library. Update failed."),
-                   o_current->component_basename);
+               basename);
     return NULL;
   }
 
@@ -489,7 +491,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
                                 lepton_component_object_get_angle (o_current),
                                 lepton_component_object_get_mirror (o_current),
                                 clib,
-                                o_current->component_basename,
+                                basename,
                                 1);
   /* Embed new object if the old one is embedded. */
   if (lepton_component_object_get_embedded (o_current)) {
