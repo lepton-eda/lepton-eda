@@ -1218,7 +1218,7 @@ lepton_component_object_to_buffer (const LeptonObject *object)
 
   basename = g_strdup_printf ("%s%s",
                               lepton_component_object_get_embedded (object) ? "EMBEDDED" : "",
-                              object->component_basename);
+                              lepton_component_object_get_basename (object));
 
   /* We force the object type to be output as OBJ_COMPONENT for both these object
    * types.
