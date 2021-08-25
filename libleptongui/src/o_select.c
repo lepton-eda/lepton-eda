@@ -382,7 +382,6 @@ void o_select_box_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
  */
 void o_select_box_search(GschemToplevel *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonObject *o_current=NULL;
   int count = 0; /* object count */
   int SHIFTKEY = w_current->SHIFTKEY;
@@ -397,7 +396,9 @@ void o_select_box_search(GschemToplevel *w_current)
   top = MIN(w_current->first_wy, w_current->second_wy);
   bottom = MAX(w_current->first_wy, w_current->second_wy);
 
-  iter = lepton_page_objects (toplevel->page_current);
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  iter = lepton_page_objects (active_page);
   while (iter != NULL) {
     o_current = (LeptonObject*) iter->data;
     /* only select visible objects */
