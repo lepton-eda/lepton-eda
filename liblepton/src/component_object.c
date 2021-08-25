@@ -1489,10 +1489,11 @@ o_component_check_symversion (LeptonPage* page,
   g_return_if_fail (lepton_object_is_component (object));
   g_return_if_fail (object->component != NULL);
 
+  gchar *basename = lepton_component_object_get_basename (object);
 
   /* No need to check symversion if symbol is not found in libraries:
   */
-  GList* symlist = s_clib_search (object->component_basename, CLIB_EXACT);
+  GList* symlist = s_clib_search (basename, CLIB_EXACT);
   if (symlist == NULL)
   {
     return;
@@ -1522,13 +1523,13 @@ o_component_check_symversion (LeptonPage* page,
       {
         g_message (_("WARNING: %s (%s): could not parse "
                      "symversion (%s) in symbol file"),
-                   object->component_basename,
+                   basename,
                    refdes,
                    inside);
       } else {
         g_message (_("WARNING: %s (%s): could not parse "
                      "symversion in symbol file"),
-                   object->component_basename,
+                   basename,
                    refdes);
       }
       goto done;
@@ -1545,7 +1546,7 @@ o_component_check_symversion (LeptonPage* page,
     {
       g_message (_("WARNING: %s (%s): could not parse "
                    "attached symversion (%s)"),
-                 object->component_basename,
+                 basename,
                  refdes,
                  outside);
       goto done;
@@ -1572,7 +1573,7 @@ o_component_check_symversion (LeptonPage* page,
   {
     g_message (_("WARNING: %s (%s): symversion attached, "
                  "but absent inside symbol file"),
-               object->component_basename,
+               basename,
                refdes);
     goto done;
   }
@@ -1610,7 +1611,7 @@ o_component_check_symversion (LeptonPage* page,
 
       g_message (_("WARNING: %s (%s): MAJOR symversion change "
                    "(attached: %.3f < library: %.3f)"),
-                 object->component_basename,
+                 basename,
                  refdes,
                  outside_value,
                  inside_value);
@@ -1624,7 +1625,7 @@ o_component_check_symversion (LeptonPage* page,
         refdes_copy = g_strconcat ("refdes: ",
                                    refdes,
                                    " (",
-                                   object->component_basename,
+                                   basename,
                                    ")",
                                    NULL);
 
@@ -1646,7 +1647,7 @@ o_component_check_symversion (LeptonPage* page,
     {
       g_message (_("WARNING: %s (%s): minor symversion change "
                    "(attached: %.3f < library: %.3f)"),
-                 object->component_basename,
+                 basename,
                  refdes,
                  outside_value,
                  inside_value);
@@ -1660,7 +1661,7 @@ o_component_check_symversion (LeptonPage* page,
   {
     g_message (_("WARNING: %s (%s): symbol is newer "
                  "than symbol in library (%.3f > %.3f)"),
-               object->component_basename,
+               basename,
                refdes,
                outside_value,
                inside_value);
