@@ -1280,9 +1280,10 @@ o_component_copy (LeptonObject *o_current)
 
   o_new = lepton_object_new (lepton_object_get_type (o_current), "complex");
   o_new->selectable = o_current->selectable;
-  o_new->component_basename = g_strdup(o_current->component_basename);
 
   o_new->component = (LeptonComponent*) g_malloc0 (sizeof (LeptonComponent));
+  lepton_component_object_set_basename (o_new,
+                                        lepton_component_object_get_basename (o_current));
   lepton_component_object_set_x (o_new, lepton_component_object_get_x (o_current));
   lepton_component_object_set_y (o_new, lepton_component_object_get_y (o_current));
   lepton_component_object_set_angle (o_new, lepton_component_object_get_angle (o_current));
