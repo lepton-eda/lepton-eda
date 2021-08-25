@@ -439,7 +439,7 @@ enum {
  */
 static void
 update_attributes_model (Compselect *compselect,
-                         LeptonToplevel *preview_toplevel)
+                         GschemToplevel *preview_toplevel)
 {
   GtkListStore *model;
   GtkTreeIter iter;
@@ -469,13 +469,15 @@ update_attributes_model (Compselect *compselect,
                                      ATTRIBUTE_COLUMN_VALUE);
   gtk_tree_view_column_queue_resize (column);
 
-  if (preview_toplevel->page_current == NULL) {
+  LeptonPage *active_page = schematic_window_get_active_page (preview_toplevel);
+
+  if (active_page == NULL) {
     return;
   }
 
-  o_attrlist = o_attrib_find_floating_attribs (lepton_page_objects (preview_toplevel->page_current));
+  o_attrlist = o_attrib_find_floating_attribs (lepton_page_objects (active_page));
 
-  cfg = eda_config_get_context_for_path (lepton_page_get_filename (preview_toplevel->page_current));
+  cfg = eda_config_get_context_for_path (lepton_page_get_filename (active_page));
   filter_list = eda_config_get_string_list (cfg, "schematic.library",
                                             "component-attributes", &n, NULL);
 
@@ -566,7 +568,7 @@ compselect_callback_tree_selection_changed (GtkTreeSelection *selection,
 
   /* update the attributes with the toplevel of the preview widget*/
   update_attributes_model (compselect,
-                           compselect->preview->preview_w_current->toplevel);
+                           compselect->preview->preview_w_current);
 
   /* signal a component has been selected to parent of dialog */
   g_signal_emit_by_name (compselect,
