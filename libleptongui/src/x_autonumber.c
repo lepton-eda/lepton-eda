@@ -495,7 +495,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, LeptonObject *o_curre
   o_parent = lepton_object_get_attached_to (o_current);
   if (autotext->slotting && o_parent != NULL) {
     freeslot = g_new(AUTONUMBER_SLOT,1);
-    freeslot->symbolname = o_parent->component_basename;
+    freeslot->symbolname = lepton_component_object_get_basename (o_parent);
     freeslot->number = 0;
     freeslot->slotnr = 0;
     freeslot_item = g_list_find_custom(autotext->free_slots,
