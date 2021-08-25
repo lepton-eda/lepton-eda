@@ -38,6 +38,23 @@
 #include "liblepton_priv.h"
 
 
+/*! \brief Get the basename of a component object.
+ *  \par Function Description
+ *  Returns the basename string of a component object.
+ *
+ *  \param [in] object The component object.
+ *  \return The basename of the component object.
+ */
+gchar*
+lepton_component_object_get_basename (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_component (object), NULL);
+  g_return_val_if_fail (object->component != NULL, NULL);
+
+  return object->component_basename;
+}
+
+
 /*! \brief Return the array of attributes to always promote. */
 static GPtrArray*
 always_promote_attributes ()
