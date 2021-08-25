@@ -55,6 +55,32 @@ lepton_component_object_get_basename (const LeptonObject *object)
 }
 
 
+/*! \brief Set the basename of a component object.
+ *  \par Function Description
+ *  Sets the given basename for a component object.
+ *
+ *  \param [in] object The component object.
+ *  \param [in] basename The new basename of the component object.
+ */
+void
+lepton_component_object_set_basename (LeptonObject *object,
+                                      const gchar *basename)
+{
+  g_return_if_fail (lepton_object_is_component (object));
+  g_return_if_fail (object->component != NULL);
+
+  g_free (object->component_basename);
+  if (basename == NULL)
+  {
+    object->component_basename = NULL;
+  }
+  else
+  {
+    object->component_basename = g_strdup (basename);
+  }
+}
+
+
 /*! \brief Return the array of attributes to always promote. */
 static GPtrArray*
 always_promote_attributes ()
