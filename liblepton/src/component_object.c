@@ -1016,7 +1016,7 @@ lepton_component_new (LeptonPage *page,
                                                          NULL,
                                                          buffer,
                                                          -1,
-                                                         new_node->component_basename,
+                                                         lepton_component_object_get_basename (new_node),
                                                          &err));
     if (err) {
       g_error_free(err);
