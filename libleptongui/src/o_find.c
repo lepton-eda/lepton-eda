@@ -148,9 +148,6 @@ o_find_object (SchematicWindow *w_current,
   SchematicCanvas *page_view = schematic_window_get_current_canvas (w_current);
   g_return_val_if_fail (page_view != NULL, FALSE);
 
-  LeptonToplevel *toplevel = schematic_window_get_toplevel (w_current);
-  g_return_val_if_fail (toplevel != NULL, FALSE);
-
   int w_slack;
   const GList *iter = NULL;
 
