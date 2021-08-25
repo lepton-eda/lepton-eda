@@ -446,7 +446,6 @@ void o_select_box_search(GschemToplevel *w_current)
  */
 void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   const GList *o_iter;
   GList *iter1;
   LeptonObject *o_current;
@@ -509,8 +508,10 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
     if (netnameiter == g_list_last(netnamestack))
       break; /* no new netnames in the stack --> finished */
 
+    LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
     /* get all the nets of the stacked netnames */
-    for (o_iter = lepton_page_objects (toplevel->page_current);
+    for (o_iter = lepton_page_objects (active_page);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
       o_current = (LeptonObject*) o_iter->data;
