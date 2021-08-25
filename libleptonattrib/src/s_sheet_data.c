@@ -150,8 +150,8 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
     {
 
         g_debug ("s_sheet_data_add_master_comp_list_items: "
-                 "Found component on page: component_basename = %s\n",
-                 o_current->component_basename);
+                 "Found component on page: component basename = %s\n",
+                 lepton_component_object_get_basename (o_current));
         verbose_print(" C");
 
         temp_uref = s_attrib_get_refdes(o_current);
@@ -349,8 +349,8 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
 
       } else {          /* didn't find refdes.  Report error to log. */
         g_debug ("s_sheet_data_add_master_pin_list_items: "
-                 "Found component with no refdes: component_basename = %s\n",
-                 o_current->component_basename);
+                 "Found component with no refdes: component basename = %s\n",
+                 lepton_component_object_get_basename (o_current));
       }
       g_free (temp_uref);
 
