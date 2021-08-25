@@ -288,7 +288,7 @@ GList
           for (iter = lepton_component_object_get_contents (new_obj);
                iter != NULL; iter = g_list_next (iter)) {
             LeptonObject *tmp = (LeptonObject*) iter->data;
-            tmp->parent = new_obj;
+            lepton_object_set_parent (tmp, new_obj);
           }
 
           embedded_level--;
