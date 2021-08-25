@@ -989,8 +989,9 @@ lepton_object_delete (LeptonObject *o_current)
         lepton_component_object_set_contents (o_current, NULL);
       }
 
-      g_free (o_current->component->basename);
-      o_current->component->basename = NULL;
+      /* The setter below frees the basename of the object if the
+       * given value is NULL. */
+      lepton_component_object_set_basename (o_current, NULL);
 
       g_free(o_current->component);
       o_current->component = NULL;
