@@ -750,7 +750,7 @@ create_placeholder_small (LeptonObject* node, int x, int y)
                                               x + 100, y + 100,
                                               LOWER_LEFT,
                                               0,
-                                              node->component_basename,
+                                              lepton_component_object_get_basename (node),
                                               text_size,
                                               VISIBLE,
                                               SHOW_NAME_VALUE);
