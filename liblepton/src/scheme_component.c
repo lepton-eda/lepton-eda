@@ -371,7 +371,7 @@ SCM_DEFINE (component_filename, "%component-filename", 1, 0, 0,
               s_component_filename);
 
   LeptonObject* obj = edascm_to_object (component_s);
-  const CLibSymbol* sym = s_clib_get_symbol_by_name (obj->component_basename);
+  const CLibSymbol* sym = s_clib_get_symbol_by_name (lepton_component_object_get_basename (obj));
 
   SCM result = SCM_BOOL_F;
 
