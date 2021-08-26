@@ -103,10 +103,9 @@ void o_lock(GschemToplevel *w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  LeptonPage* active_page = schematic_window_get_active_page (w_current);
-  g_return_if_fail (active_page != NULL);
+  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
 
-  GList* objs = lepton_list_get_glist (active_page->selection_list);
+  GList* objs = lepton_list_get_glist (selection);
 
   /* lock selected objects:
   */
