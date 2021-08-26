@@ -32,7 +32,6 @@
             generic_msg_dialog
 
             i_callback_attributes_show_both
-            i_callback_attributes_show_value
             i_callback_attributes_visibility_toggle
             i_callback_cancel
             i_callback_clipboard_copy
@@ -511,7 +510,6 @@
 (define-lff generic_msg_dialog void '(*))
 ;;; i_callbacks.c
 (define-lff i_callback_attributes_show_both void '(* *))
-(define-lff i_callback_attributes_show_value void '(* *))
 (define-lff i_callback_attributes_visibility_toggle void '(* *))
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_clipboard_copy void '(* *))

@@ -993,7 +993,8 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&attributes-show-value #:label (G_ "Show Attribute Value") #:icon "attribute-show-value")
-  (run-callback i_callback_attributes_show_value "&attributes-show-value"))
+  (unless (true? (schematic_window_get_inside_action (*current-window)))
+    (set-selected-attribs-show-mode! 'value)))
 
 
 (define-action-public (&attributes-show-name #:label (G_ "Show Attribute Name") #:icon "attribute-show-name")
