@@ -128,9 +128,9 @@ i_callback_edit_edit (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
 
-  o_edit(w_current, lepton_list_get_glist (active_page->selection_list));
+  o_edit (w_current, lepton_list_get_glist (selection));
 }
 
 
