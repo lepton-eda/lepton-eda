@@ -983,42 +983,6 @@ i_callback_hierarchy_up (GtkWidget *widget, gpointer data)
  *
  */
 void
-i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  /* This is a new addition 3/15 to prevent this from executing
-   * inside an action */
-  if (schematic_window_get_inside_action (w_current))
-  {
-    return;
-  }
-
-  if (o_select_selected (w_current)) {
-    LeptonPage *active_page = schematic_window_get_active_page (w_current);
-    LeptonSelection *selection = active_page->selection_list;
-    GList *s_current;
-
-    for (s_current = lepton_list_get_glist (selection);
-         s_current != NULL;
-         s_current = g_list_next (s_current)) {
-      LeptonObject *object = (LeptonObject*)s_current->data;
-      if (lepton_object_is_text (object))
-        o_attrib_toggle_show_name_value (w_current, object, SHOW_NAME_VALUE);
-    }
-
-    o_undo_savestate_old (w_current, UNDO_ALL);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
 i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);

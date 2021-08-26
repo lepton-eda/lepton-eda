@@ -1003,7 +1003,9 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&attributes-show-both #:label (G_ "Show Name & Value") #:icon "attribute-show-both")
-  (run-callback i_callback_attributes_show_both "&attributes-show-both"))
+  (unless (true? (schematic_window_get_inside_action (*current-window)))
+    (set-selected-attribs-show-mode! 'both)))
+
 
 (define-action-public (&attributes-visibility-toggle #:label (G_ "Toggle Text Visibility"))
   (run-callback i_callback_attributes_visibility_toggle "&attributes-visibility-toggle"))
