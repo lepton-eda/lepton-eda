@@ -572,7 +572,7 @@ lepton_component_object_get_promotable (LeptonObject *object,
       continue;
 
     if (detach) {
-      tmp->parent = NULL;
+      lepton_object_set_parent (tmp, NULL);
       lepton_component_object_set_contents (object,
                                             g_list_remove (primitives, tmp));
     }
