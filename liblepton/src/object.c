@@ -1976,7 +1976,7 @@ lepton_object_new (int type,
   new_node->fill = lepton_fill_new ();
 
   new_node->component_basename = NULL;
-  new_node->parent = NULL;
+  lepton_object_set_parent (new_node, NULL);
 
   /* Setup the color */
   lepton_object_set_color (new_node, default_color_id());
