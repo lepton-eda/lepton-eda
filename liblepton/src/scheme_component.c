@@ -233,19 +233,21 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
 
   LeptonObject *parent = edascm_to_object (component_s);
   LeptonObject *child = edascm_to_object (obj_s);
+  LeptonObject *child_parent = lepton_object_get_parent (child);
 
   LeptonPage* page = lepton_object_get_page (child);
   /* Check that object is not already attached to a page or a
      different component. */
-  if ((page != NULL)
-      || ((child->parent != NULL) && (child->parent != parent))) {
+  if ((page != NULL) ||
+      ((child_parent != NULL) && (child_parent != parent)))
+  {
     scm_error (edascm_object_state_sym,
                s_component_append_x,
                _("Object ~A is already attached to something"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
-  if (child->parent == parent) return obj_s;
+  if (child_parent == parent) return obj_s;
 
   /* Object cleanup now managed by C code. */
   edascm_c_set_gc (obj_s, 0);
@@ -257,7 +259,7 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
   GList *primitives = lepton_component_object_get_contents (parent);
   lepton_component_object_set_contents (parent,
                                         g_list_append (primitives, child));
-  child->parent = parent;
+  lepton_object_set_parent (child, parent);
 
   LeptonPage* parent_page = lepton_object_get_page (parent);
   /* We may need to update connections */
