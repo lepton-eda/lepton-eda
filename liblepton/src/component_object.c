@@ -620,14 +620,14 @@ o_component_promote_attribs (LeptonObject *object)
       LeptonObject *o_kept = (LeptonObject *) iter->data;
       LeptonObject *o_copy = lepton_object_copy (o_kept);
       lepton_text_object_set_visibility (o_kept, INVISIBLE);
-      o_copy->parent = NULL;
+      lepton_object_set_parent (o_copy, NULL);
       promoted = g_list_prepend (promoted, o_copy);
     }
     promoted = g_list_reverse (promoted);
   } else {
     for (iter = promotable; iter != NULL; iter = g_list_next (iter)) {
       LeptonObject *o_removed = (LeptonObject *) iter->data;
-      o_removed->parent = NULL;
+      lepton_object_set_parent (o_removed, NULL);
       primitives = lepton_component_object_get_contents (object);
       lepton_component_object_set_contents (object,
                                             g_list_remove (primitives, o_removed));
