@@ -72,7 +72,9 @@ SCM_DEFINE (select_object_x, "%select-object!", 1, 0, 0,
 
   LeptonObject *obj = edascm_to_object (obj_s);
   LeptonPage *page = lepton_object_get_page (obj);
-  if ((page == NULL) || (obj->parent != NULL)) {
+  if ((page == NULL) ||
+      (lepton_object_get_parent (obj) != NULL))
+  {
     scm_error (object_state_sym,
                s_select_object_x,
                _("Object ~A is not directly included in a page."),
