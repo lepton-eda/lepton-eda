@@ -1515,7 +1515,7 @@ lepton_object_page_set_changed (LeptonObject *object)
  * \return The component LeptonObject which owns \a object, or NULL.
  */
 LeptonObject *
-lepton_object_get_parent (LeptonObject *object)
+lepton_object_get_parent (const LeptonObject *object)
 {
   g_return_val_if_fail ((object != NULL), NULL);
 

@@ -284,7 +284,7 @@ void
 lepton_object_page_set_changed (LeptonObject *object);
 
 LeptonObject*
-lepton_object_get_parent (LeptonObject *object);
+lepton_object_get_parent (const LeptonObject *object);
 
 void
 lepton_object_set_color (LeptonObject *object,
