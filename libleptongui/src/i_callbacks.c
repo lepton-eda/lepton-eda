@@ -153,7 +153,7 @@ i_callback_edit_mirror (GtkWidget *widget, gpointer data)
 
   o_redraw_cleanstates(w_current);
 
-  object_list = lepton_list_get_glist (active_page->selection_list );
+  object_list = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
 
   if (object_list) {
     o_mirror_world_update(w_current, wx, wy, object_list);
