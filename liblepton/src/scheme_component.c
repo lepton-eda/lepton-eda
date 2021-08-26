@@ -297,16 +297,19 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
   LeptonObject *parent = edascm_to_object (component_s);
   LeptonObject *child = edascm_to_object (obj_s);
   LeptonPage *child_page = lepton_object_get_page (child);
+  LeptonObject *child_parent = lepton_object_get_parent (child);
 
   /* Check that object is not attached to a different component. */
-  if ((child->parent != NULL) && (child->parent != parent)) {
+  if ((child_parent != NULL) && (child_parent != parent))
+  {
     scm_error (edascm_object_state_sym, s_component_remove_x,
                _("Object ~A is attached to a different component"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
   /* Check that object is not attached to a page. */
-  if ((child->parent == NULL) && (child_page != NULL)) {
+  if ((child_parent == NULL) && (child_page != NULL))
+  {
     scm_error (edascm_object_state_sym, s_component_remove_x,
                _("Object ~A is attached to a page"),
                scm_list_1 (obj_s), SCM_EOL);
@@ -326,7 +329,7 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
                scm_list_1 (obj_s), SCM_EOL);
   }
 
-  if (child->parent == NULL) return obj_s;
+  if (child_parent == NULL) return obj_s;
 
   /* Don't need to emit change notifications for the child because
    * only the parent will remain in the page. */
@@ -335,7 +338,7 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
   GList *primitives = lepton_component_object_get_contents (parent);
   lepton_component_object_set_contents (parent,
                                         g_list_remove_all (primitives, child));
-  child->parent = NULL;
+  lepton_object_set_parent (child, NULL);
 
   /* We may need to update connections */
   s_conn_remove_object (child_page, child);
