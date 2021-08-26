@@ -1304,8 +1304,9 @@ o_component_copy (LeptonObject *o_current)
 
   for (iter = lepton_component_object_get_contents (o_new);
        iter != NULL;
-       iter = g_list_next (iter)) {
-    ((LeptonObject*) iter->data)->parent = o_new;
+       iter = g_list_next (iter))
+  {
+    lepton_object_set_parent ((LeptonObject*) iter->data, o_new);
   }
 
   /* Delete or hide attributes eligible for promotion inside the
