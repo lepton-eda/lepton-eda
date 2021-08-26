@@ -371,8 +371,6 @@ s_object_attrib_add_attrib_in_object (LeptonPage *active_page,
   /* remember that o_current contains the object to get the attribute */
   o_attrib_attach (new_obj, o_current, FALSE);
 
-  o_selection_add (active_page->selection_list, new_obj);
-
   lepton_page_set_changed (active_page, 1);
 
   return new_obj;
