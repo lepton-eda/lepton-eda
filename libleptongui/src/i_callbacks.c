@@ -179,8 +179,8 @@ i_callback_edit_unembed (GtkWidget *widget, gpointer data)
   /* anything selected ? */
   if (o_select_selected(w_current)) {
     /* yes, unembed each selected component */
-    LeptonPage* active_page = schematic_window_get_active_page (w_current);
-    GList* s_current = lepton_list_get_glist (active_page->selection_list);
+    LeptonSelection *selection = schematic_window_get_selection_list (w_current);
+    GList* s_current = lepton_list_get_glist (selection);
 
     while (s_current != NULL) {
       o_current = (LeptonObject *) s_current->data;
