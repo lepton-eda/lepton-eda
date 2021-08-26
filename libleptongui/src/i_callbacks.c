@@ -155,7 +155,9 @@ i_callback_edit_rotate_90 (GtkWidget *widget, gpointer data)
 
   o_redraw_cleanstates(w_current);
 
-  object_list = lepton_list_get_glist (active_page->selection_list);
+  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
+
+  object_list = lepton_list_get_glist (selection);
 
   if (object_list) {
     /* Allow o_rotate_world_update to redraw the objects */
