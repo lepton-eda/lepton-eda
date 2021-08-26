@@ -1043,7 +1043,7 @@ lepton_component_new (LeptonPage *page,
        iter = g_list_next (iter))
   {
     LeptonObject *tmp = (LeptonObject*) iter->data;
-    tmp->parent = new_node;
+    lepton_object_set_parent (tmp, new_node);
   }
 
   return new_node;
