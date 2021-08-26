@@ -107,8 +107,9 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
 
   /* Check that the object is not attached to something else. */
   LeptonPage *curr_page = lepton_object_get_page (obj);
-  if ((curr_page != NULL && curr_page != page)
-      || (obj->parent != NULL)) {
+  if ((curr_page != NULL && curr_page != page) ||
+      (lepton_object_get_parent (obj) != NULL))
+  {
     scm_error (edascm_object_state_sym, s_page_remove_x,
                _("Object ~A is attached to a component or different page"),
                scm_list_1 (obj_s), SCM_EOL);
