@@ -1574,8 +1574,9 @@ lepton_object_set_color (LeptonObject *object,
 LeptonPage *
 lepton_object_get_page (LeptonObject *object)
 {
-  if (object->parent != NULL) {
-    return lepton_object_get_page (object->parent);
+  LeptonObject *parent = lepton_object_get_parent (object);
+  if (parent != NULL) {
+    return lepton_object_get_page (parent);
   }
   return object->page;
 }
