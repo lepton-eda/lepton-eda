@@ -105,8 +105,9 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
 
   /* Check that the object isn't already attached to something. */
   LeptonPage *curr_page = lepton_object_get_page (obj);
-  if (((curr_page != NULL) && (curr_page != page))
-      || (obj->parent != NULL)) {
+  if (((curr_page != NULL) && (curr_page != page)) ||
+      (lepton_object_get_parent (obj) != NULL))
+  {
     scm_error (edascm_object_state_sym, s_page_append_x,
                _("Object ~A is already attached to something"),
                scm_list_1 (obj_s), SCM_EOL);
