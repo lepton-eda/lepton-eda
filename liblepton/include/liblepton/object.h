@@ -287,6 +287,9 @@ LeptonObject*
 lepton_object_get_parent (const LeptonObject *object);
 
 void
+lepton_object_set_parent (LeptonObject *object,
+                          LeptonObject *parent);
+void
 lepton_object_set_color (LeptonObject *object,
                          int color);
 

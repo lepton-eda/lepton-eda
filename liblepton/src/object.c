@@ -1522,6 +1522,21 @@ lepton_object_get_parent (const LeptonObject *object)
   return object->parent;
 }
 
+/*! \brief Set a parent object for an object.
+ *
+ * \param [in] object  The object.
+ * \param [in] object  The parent object.
+ */
+void
+lepton_object_set_parent (LeptonObject *object,
+                          LeptonObject *parent)
+{
+  g_return_if_fail (object != NULL);
+
+  object->parent = parent;
+}
+
+
 /* Structure for each entry in a LeptonToplevel's list of
  * registered change notification handlers */
 struct change_notify_entry {
