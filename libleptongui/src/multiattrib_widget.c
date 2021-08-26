@@ -73,7 +73,7 @@ multiattrib_callback_response (GtkDialog *dialog,
 void
 schematic_multiattrib_widget_open (SchematicWindow *w_current)
 {
-  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
 
   GtkWidget *multiattrib_widget =
     schematic_window_get_multiattrib_widget (w_current);
@@ -82,7 +82,7 @@ schematic_multiattrib_widget_open (SchematicWindow *w_current)
   {
     multiattrib_widget =
       GTK_WIDGET (g_object_new (SCHEMATIC_TYPE_MULTIATTRIB_WIDGET,
-                                "object_list", active_page->selection_list,
+                                "object_list", selection,
                                 /* SchematicDialog */
                                 "settings-name", "multiattrib",
                                 "schematic-window", w_current,
