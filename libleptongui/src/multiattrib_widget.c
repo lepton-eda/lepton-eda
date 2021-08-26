@@ -140,7 +140,7 @@ schematic_multiattrib_widget_close (SchematicWindow *w_current)
 void
 schematic_multiattrib_widget_update (SchematicWindow *w_current)
 {
-  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
 
   GtkWidget *multiattrib_widget =
     schematic_window_get_multiattrib_widget (w_current);
@@ -148,7 +148,7 @@ schematic_multiattrib_widget_update (SchematicWindow *w_current)
   if (multiattrib_widget != NULL)
   {
     g_object_set (G_OBJECT (multiattrib_widget),
-                  "object_list", active_page->selection_list,
+                  "object_list", selection,
                   NULL);
   }
 }
