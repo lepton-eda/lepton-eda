@@ -674,13 +674,13 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
                            lepton_text_object_get_string (o_attrib),
                            VISIBLE,
                            lepton_text_object_get_show (o_attrib),
-                           o_attrib->parent);
+                           lepton_object_get_parent (o_attrib));
     } else {
         /* make a copy of the attribute object */
         o_new = lepton_object_copy (o_attrib);
         s_page_append (toplevel->page_current, o_new);
         /* add the attribute its parent */
-        o_attrib_attach (o_new, o_attrib->parent, TRUE);
+        o_attrib_attach (o_new, lepton_object_get_parent (o_attrib), TRUE);
         /* note: this object is unselected (not added to selection). */
 
         /* Call add-objects-hook */
