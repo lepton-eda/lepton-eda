@@ -84,7 +84,7 @@ SCM_DEFINE (select_object_x, "%select-object!", 1, 0, 0,
 
   if (!lepton_object_get_selected (obj))
   {
-    o_selection_add (page->selection_list, obj);
+    o_selection_add (lepton_page_get_selection_list (page), obj);
   }
 
   return obj_s;
