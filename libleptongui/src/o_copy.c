@@ -49,7 +49,7 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
   if (!o_select_selected (w_current))
     return;
 
-  s_current = lepton_list_get_glist (page->selection_list);
+  s_current = lepton_list_get_glist (lepton_page_get_selection_list (page));
 
   if (page->place_list != NULL) {
     lepton_object_list_delete (page->place_list);
