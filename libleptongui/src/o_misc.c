@@ -383,8 +383,9 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
     return NULL;
   }
 
+  LeptonSelection *selection = lepton_page_get_selection_list (page);
   /* Unselect the old object. */
-  o_selection_remove (page->selection_list, o_current);
+  o_selection_remove (selection, o_current);
 
   /* Create new object and set embedded */
   o_new = lepton_component_new (page,
@@ -447,7 +448,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   lepton_object_delete (o_current);
 
   /* Select new LeptonObject */
-  o_selection_add (page->selection_list, o_new);
+  o_selection_add (selection, o_new);
 
   /* mark the page as modified */
   gschem_toplevel_page_content_changed (w_current, page);
