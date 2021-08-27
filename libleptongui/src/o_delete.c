@@ -56,7 +56,7 @@ void o_delete (GschemToplevel *w_current, LeptonObject *object)
 void o_delete_selected (GschemToplevel *w_current)
 {
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
-  LeptonSelection *selection = active_page->selection_list;
+  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
   GList *to_remove;
   GList *iter;
   LeptonObject *obj;
