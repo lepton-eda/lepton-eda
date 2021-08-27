@@ -141,7 +141,7 @@ i_callback_edit_rotate_90 (GtkWidget *widget, gpointer data)
   }
 
   if (schematic_window_get_inside_action (w_current) &&
-      (active_page->place_list != NULL))
+      schematic_window_get_place_list (w_current) != NULL)
   {
     o_place_rotate (w_current);
     return;
