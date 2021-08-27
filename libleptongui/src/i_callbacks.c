@@ -139,7 +139,7 @@ i_callback_edit_mirror (GtkWidget *widget, gpointer data)
   }
 
   if (schematic_window_get_inside_action (w_current) &&
-      (active_page->place_list != NULL))
+      schematic_window_get_place_list (w_current) != NULL)
   {
     o_place_mirror (w_current);
     return;
