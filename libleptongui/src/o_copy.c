@@ -51,17 +51,19 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
 
   s_current = lepton_list_get_glist (lepton_page_get_selection_list (page));
 
-  if (page->place_list != NULL) {
-    lepton_object_list_delete (page->place_list);
-    page->place_list = NULL;
+  if (lepton_page_get_place_list (page) != NULL)
+  {
+    lepton_object_list_delete (lepton_page_get_place_list (page));
+    lepton_page_set_place_list (page, NULL);
   }
 
-  page->place_list = o_glist_copy_all (s_current,
-                                       page->place_list);
+  lepton_page_set_place_list (page,
+                              o_glist_copy_all (s_current,
+                                                lepton_page_get_place_list (page)));
 
   g_run_hook_object_list (w_current,
                           "copy-objects-hook",
-                          page->place_list);
+                          lepton_page_get_place_list (page));
 
   o_place_start (w_current, w_x, w_y);
 }
