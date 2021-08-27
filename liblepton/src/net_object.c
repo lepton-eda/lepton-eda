@@ -662,14 +662,17 @@ o_net_consolidate_segments (LeptonObject *object)
           o_net_consolidate_lowlevel(object, other_object, other_orient);
 
           changed++;
-          if (other_object->selected == TRUE ) {
-            o_selection_remove (page->selection_list, other_object);
+          if (other_object->selected == TRUE)
+          {
+            LeptonSelection *selection = lepton_page_get_selection_list (page);
+            o_selection_remove (selection, other_object);
 
             /* If we're consolidating with a selected object,
              * ensure we select the resulting object.
              */
-            if (object->selected == FALSE) {
-              o_selection_add (page->selection_list, object);
+            if (object->selected == FALSE)
+            {
+              o_selection_add (selection, object);
             }
           }
 
