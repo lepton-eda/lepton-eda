@@ -117,8 +117,8 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
    * already have been cleared in o_move_cancel(), so this is OK. */
   if (active_page != NULL)
   {
-    lepton_object_list_delete (active_page->place_list);
-    active_page->place_list = NULL;
+    lepton_object_list_delete (lepton_page_get_place_list (active_page));
+    lepton_page_set_place_list (active_page, NULL);
   }
 
   /* leave this on for now... but it might have to change */
