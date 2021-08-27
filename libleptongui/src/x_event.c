@@ -157,13 +157,14 @@ x_event_button_pressed (GschemPageView *page_view,
 
   SchematicActionMode action_mode =
     schematic_window_get_action_mode (w_current);
+  LeptonSelection *selection = lepton_page_get_selection_list (page);
 
 #if DEBUG
   printf("pressed button %d! \n", event->button);
   printf("event state: %d \n", event->state);
   printf("w_current action mode: %d \n", action_mode);
   printf("Selection is:\n");
-  o_selection_print_all(&(page->selection_list));
+  o_selection_print_all (&selection);
   printf("\n");
 #endif
 
@@ -185,7 +186,7 @@ x_event_button_pressed (GschemPageView *page_view,
      * allow resetting of the inside_action flag so we do it
      * manually here before processing the double-click event. */
     i_action_stop (w_current);
-    o_edit(w_current, lepton_list_get_glist( page->selection_list ));
+    o_edit(w_current, lepton_list_get_glist (selection));
     scm_dynwind_end ();
     return(0);
   }
@@ -253,9 +254,9 @@ x_event_button_pressed (GschemPageView *page_view,
     switch (action_mode)
     {
       case(ROTATEMODE):   o_rotate_world_update(w_current, w_x, w_y, 90,
-                            lepton_list_get_glist(page->selection_list)); break;
+                                                lepton_list_get_glist (selection)); break;
       case(MIRRORMODE):   o_mirror_world_update(w_current, w_x, w_y,
-                            lepton_list_get_glist(page->selection_list)); break;
+                                                lepton_list_get_glist (selection)); break;
 
       case(PAN):
         gschem_page_view_pan (page_view, w_x, w_y);
