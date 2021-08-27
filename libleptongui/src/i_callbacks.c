@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -119,8 +119,8 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
    * already have been cleared in o_move_cancel(), so this is OK. */
   if (active_page != NULL)
   {
-    lepton_object_list_delete (lepton_page_get_place_list (active_page));
-    lepton_page_set_place_list (active_page, NULL);
+    lepton_object_list_delete (schematic_window_get_place_list (w_current));
+    schematic_window_set_place_list (w_current, NULL);
   }
 
   /* leave this on for now... but it might have to change */
