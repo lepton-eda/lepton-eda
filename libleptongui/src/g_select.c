@@ -123,7 +123,7 @@ SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
 
   if (lepton_object_get_selected (obj))
   {
-    o_selection_remove (page->selection_list, obj);
+    o_selection_remove (lepton_page_get_selection_list (page), obj);
   }
 
   return obj_s;
