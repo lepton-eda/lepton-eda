@@ -195,7 +195,7 @@ lepton_page_new (LeptonToplevel *toplevel,
   page->_object_list = NULL;
 
   /* new selection mechanism */
-  page->selection_list = o_selection_new();
+  lepton_page_set_selection_list (page, o_selection_new());
 
   page->place_list = NULL;
 
