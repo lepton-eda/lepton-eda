@@ -469,8 +469,7 @@ o_undo_callback (GschemToplevel *w_current,
     lepton_page_delete_objects (page);
 
     /* Free the objects in the place list. */
-    lepton_object_list_delete (page->place_list);
-    page->place_list = NULL;
+    schematic_window_delete_place_list (w_current);
 
     schematic_window_active_page_changed (w_current);
   }
