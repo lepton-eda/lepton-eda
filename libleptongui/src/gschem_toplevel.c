@@ -1068,6 +1068,21 @@ schematic_window_set_place_list (GschemToplevel *w_current,
 }
 
 
+/*! \brief Delete the current object list to place for this window.
+ *
+ *  \param [in] w_current The schematic window.
+ */
+void
+schematic_window_delete_place_list (GschemToplevel *w_current)
+{
+  g_return_if_fail (w_current != NULL);
+
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
+  return lepton_page_delete_place_list (active_page);
+}
+
+
 /*! \brief Get Page select widget for this schematic window.
  *
  * \param [in] w_current The #GschemToplevel instance.
