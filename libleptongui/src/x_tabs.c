@@ -962,12 +962,7 @@ x_tabs_cancel_all (SchematicWindow* w_current)
     o_grips_cancel (w_current);
   }
 
-  LeptonPage *active_page = schematic_window_get_active_page (w_current);
-  if (active_page != NULL)
-  {
-    lepton_object_list_delete (active_page->place_list);
-    active_page->place_list = NULL;
-  }
+  schematic_window_delete_place_list (w_current);
 
   i_set_state (w_current, SELECT);
 
