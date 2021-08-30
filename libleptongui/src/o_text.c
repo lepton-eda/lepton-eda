@@ -59,23 +59,22 @@ o_text_prepare_place (SchematicWindow *w_current,
   w_current->first_wy = 0;
 
   /* remove the old place list if it exists */
-  lepton_object_list_delete (lepton_page_get_place_list (page));
-  lepton_page_set_place_list (page, NULL);
+  schematic_window_delete_place_list (w_current);
 
   /* here you need to add OBJ_TEXT when it's done */
-  lepton_page_set_place_list (page,
-                              g_list_append (lepton_page_get_place_list (page),
-                                             lepton_text_object_new (color,
-                                                                     0,
-                                                                     0,
-                                                                     align,
-                                                                     rotate, /* zero is angle */
-                                                                     text,
-                                                                     size,
-                                                                     /* has to be visible so you can place it */
-                                                                     /* visibility is set when you create the object */
-                                                                     VISIBLE,
-                                                                     SHOW_NAME_VALUE)));
+  schematic_window_set_place_list (w_current,
+                                   g_list_append (schematic_window_get_place_list (w_current),
+                                                  lepton_text_object_new (color,
+                                                                          0,
+                                                                          0,
+                                                                          align,
+                                                                          rotate, /* zero is angle */
+                                                                          text,
+                                                                          size,
+                                                                          /* has to be visible so you can place it */
+                                                                          /* visibility is set when you create the object */
+                                                                          VISIBLE,
+                                                                          SHOW_NAME_VALUE)));
 
   i_action_start (w_current);
   i_set_state (w_current, TEXTMODE);
