@@ -121,5 +121,5 @@ void o_text_change(GschemToplevel *w_current, LeptonObject *object, char *string
     o_slot_end (w_current, attachment, string);
   }
 
-  gschem_toplevel_page_content_changed (w_current, page);
+  schematic_window_active_page_changed (w_current);
 }
