@@ -195,6 +195,21 @@ lepton_page_set_place_list (LeptonPage *page,
 }
 
 
+/*! \brief Delete page's \a place_list.
+ *
+ *  \param [in] page The page.
+ */
+void
+lepton_page_delete_place_list (LeptonPage *page)
+{
+  if (page != NULL)
+  {
+    lepton_object_list_delete (page->place_list);
+    page->place_list = NULL;
+  }
+}
+
+
 /*! \brief Get page's \a selection_list field value.
  *
  *  \param [in] page The page to obtain the field of.

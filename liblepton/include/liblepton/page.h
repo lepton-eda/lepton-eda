@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2017 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2023 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,6 +97,9 @@ lepton_page_get_place_list (LeptonPage *page);
 void
 lepton_page_set_place_list (LeptonPage *page,
                             GList *place_list);
+void
+lepton_page_delete_place_list (LeptonPage *page);
+
 LeptonSelection*
 lepton_page_get_selection_list (LeptonPage *page);
 
