@@ -454,7 +454,7 @@ o_undo_callback (GschemToplevel *w_current,
     lepton_object_list_delete (page->place_list);
     page->place_list = NULL;
 
-    gschem_toplevel_page_content_changed (w_current, page);
+    schematic_window_active_page_changed (w_current);
   }
 
   /* temporarily disable logging */
