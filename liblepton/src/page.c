@@ -225,7 +225,7 @@ lepton_page_new (LeptonToplevel *toplevel,
   /* new selection mechanism */
   lepton_page_set_selection_list (page, o_selection_new());
 
-  page->place_list = NULL;
+  lepton_page_set_place_list (page, NULL);
 
   /* init undo struct pointers */
   s_undo_init(page);
