@@ -34,12 +34,6 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
 {
   GList *s_current;
 
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  g_return_if_fail (page_view != NULL);
-
-  LeptonPage *page = gschem_page_view_get_page (page_view);
-  g_return_if_fail (page != NULL);
-
   /* Copy the objects into the buffer at their current position,
    * with future motion relative to the mouse origin, (w_x, w_y). */
 
@@ -49,21 +43,17 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
   if (!o_select_selected (w_current))
     return;
 
-  s_current = lepton_list_get_glist (lepton_page_get_selection_list (page));
+  s_current = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
 
-  if (lepton_page_get_place_list (page) != NULL)
-  {
-    lepton_object_list_delete (lepton_page_get_place_list (page));
-    lepton_page_set_place_list (page, NULL);
-  }
+  schematic_window_delete_place_list (w_current);
 
-  lepton_page_set_place_list (page,
-                              o_glist_copy_all (s_current,
-                                                lepton_page_get_place_list (page)));
+  schematic_window_set_place_list (w_current,
+                                   o_glist_copy_all (s_current,
+                                                     schematic_window_get_place_list (w_current)));
 
   g_run_hook_object_list (w_current,
                           "copy-objects-hook",
-                          lepton_page_get_place_list (page));
+                          schematic_window_get_place_list (w_current));
 
   o_place_start (w_current, w_x, w_y);
 }
