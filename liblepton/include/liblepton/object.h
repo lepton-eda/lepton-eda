@@ -343,6 +343,12 @@ lepton_object_emit_change_notify (LeptonObject *object);
 int
 lepton_object_get_whichend (LeptonObject *object);
 
+LeptonObject*
+lepton_object_get_attached_to (const LeptonObject *object);
+
+void
+lepton_object_set_attached_to (LeptonObject *object,
+                               LeptonObject *attached_to);
 const char*
 lepton_object_visibility_to_string (gint visible);
 

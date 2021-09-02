@@ -755,6 +755,42 @@ lepton_object_get_whichend (LeptonObject *object)
 }
 
 
+/*! \brief Get object's 'attached_to' field.
+ *
+ *  \par Function Description
+ *  Obtains the 'attached_to' field of the #LeptonObject
+ *  structure.  It defines to what another object the object in
+ *  question is attached to.  \a object is usually an attribute
+ *  while the other object may be component, net, bus, etc.
+ *  \param [in] object The object to obtain the 'attached_to' of.
+ *  \return The value of the 'attached_to' field of the object.
+ */
+LeptonObject*
+lepton_object_get_attached_to (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, NULL);
+  return object->attached_to;
+}
+
+/*! \brief Set object's 'attached_to' field.
+ *
+ *  \par Function Description
+ *  Set's the 'attached_to' field of the #LeptonObject structure.
+ *  It defines another object to what the object should be
+ *  attached to.  \a object is usually an attribute while the
+ *  other object may be component, net, bus, etc.
+ *  \param [in] object The object to attach.
+ *  \param [in] attached_to The other object.
+ */
+void
+lepton_object_set_attached_to (LeptonObject *object,
+                               LeptonObject *attached_to)
+{
+  g_return_if_fail (object != NULL);
+  object->attached_to = attached_to;
+}
+
+
 /*! \brief Make and return a copy of an object.
  *
  *  \par Function Description
