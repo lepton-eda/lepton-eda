@@ -935,7 +935,9 @@ lepton_object_delete (LeptonObject *o_current)
 
     s_conn_remove_object_connections (o_current);
 
-    if (o_current->attached_to != NULL) {
+    LeptonObject *attachment = lepton_object_get_attached_to (o_current);
+    if (attachment != NULL)
+    {
       /* do the actual remove */
       o_attrib_remove (&o_current->attached_to->attribs, o_current);
     }
