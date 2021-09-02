@@ -384,7 +384,8 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   if (event->button == 1) {
 
     if (w_current->inside_action) {
-      if (page->place_list != NULL) {
+      if (schematic_window_get_place_list (w_current) != NULL)
+      {
         switch (action_mode)
         {
           case (COPYMODE)  :
@@ -442,7 +443,9 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 
     switch(w_current->middle_button) {
       case(MOUSEBTN_DO_ACTION):
-        if (w_current->inside_action && (page->place_list != NULL)) {
+        if (w_current->inside_action &&
+            (schematic_window_get_place_list (w_current) != NULL))
+        {
           switch (action_mode)
           {
             case (COPYMODE): o_copy_end(w_current); break;
