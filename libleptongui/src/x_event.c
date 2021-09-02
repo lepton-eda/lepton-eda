@@ -157,7 +157,7 @@ x_event_button_pressed (GschemPageView *page_view,
 
   SchematicActionMode action_mode =
     schematic_window_get_action_mode (w_current);
-  LeptonSelection *selection = lepton_page_get_selection_list (page);
+  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
 
 #if DEBUG
   printf("pressed button %d! \n", event->button);
@@ -202,7 +202,8 @@ x_event_button_pressed (GschemPageView *page_view,
   if (event->button == 1) {
     if (w_current->inside_action) {
       /* End action */
-      if (page->place_list != NULL) {
+      if (schematic_window_get_place_list (w_current) != NULL)
+      {
         switch (action_mode)
         {
           case (COMPMODE)   : o_place_end(w_current, w_x, w_y, w_current->continue_component_place,
