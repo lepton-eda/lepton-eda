@@ -349,6 +349,12 @@ lepton_object_get_attached_to (const LeptonObject *object);
 void
 lepton_object_set_attached_to (LeptonObject *object,
                                LeptonObject *attached_to);
+GList*
+lepton_object_get_attribs (const LeptonObject *object);
+
+void
+lepton_object_set_attribs (LeptonObject *object,
+                           GList *attribs);
 const char*
 lepton_object_visibility_to_string (gint visible);
 

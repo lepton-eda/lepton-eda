@@ -791,6 +791,39 @@ lepton_object_set_attached_to (LeptonObject *object,
 }
 
 
+/*! \brief Get the list of object's attributes.
+ *
+ *  \par Function Description
+ *  Obtains the list of object's attributes as a GList value.
+ *
+ *  \param [in] object The object to obtain the attribs of.
+ *  \return The GList of attribs of the object.
+ */
+GList*
+lepton_object_get_attribs (const LeptonObject *object)
+{
+  g_return_val_if_fail (object != NULL, NULL);
+  return object->attribs;
+}
+
+
+/*! \brief Set the list of object's attributes.
+ *
+ *  \par Function Description
+ *  Sets the list of object's attributes to the specified GList value.
+ *
+ *  \param [in] object The object to set the attribs for.
+ *  \param [in] attribs The new attrib GList value.
+ */
+void
+lepton_object_set_attribs (LeptonObject *object,
+                           GList *attribs)
+{
+  g_return_if_fail (object != NULL);
+  object->attribs = attribs;
+}
+
+
 /*! \brief Make and return a copy of an object.
  *
  *  \par Function Description
