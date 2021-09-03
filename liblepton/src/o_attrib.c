@@ -192,7 +192,7 @@ o_attrib_remove (GList **list,
 {
   g_return_if_fail (remove != NULL);
 
-  remove->attached_to = NULL;
+  lepton_object_set_attached_to (remove, NULL);
 
   *list = g_list_remove (*list, remove);
 }
