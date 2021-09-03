@@ -44,6 +44,12 @@ void
 lepton_component_object_set_embedded (LeptonObject *o_current,
                                       gboolean embedded);
 GList*
+lepton_component_object_get_contents (const LeptonObject *object);
+
+void
+lepton_component_object_set_contents (LeptonObject *object,
+                                      GList *primitives);
+GList*
 o_component_promote_attribs (LeptonObject *object);
 
 LeptonObject*

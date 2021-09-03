@@ -81,6 +81,44 @@ lepton_component_object_set_basename (LeptonObject *object,
 }
 
 
+/*! \brief Get the primitive objects of a component.
+ *  \par Function Description
+ *  This function returns the pointer to the primitive objects of
+ *  a component object.
+ *
+ *  \param [in] object  The object to get the primitives.
+ *  \return The pointer to GList of the primitives.
+ */
+GList*
+lepton_component_object_get_contents (const LeptonObject *object)
+{
+  g_return_val_if_fail (lepton_object_is_component (object), NULL);
+  g_return_val_if_fail (object->component != NULL, NULL);
+
+  return object->component->prim_objs;
+}
+
+
+/*! \brief Set the GList of primitive objects of a component.
+ *  \par Function Description
+ *  Sets the pointer to the primitive objects of a component
+ *  object to a given value.  The function does not change the
+ *  previously set GList in any way.
+ *
+ *  \param [in] object  The component object to set primitives of.
+ *  \param [in] primitives The pointer to GList of the new primitives.
+ */
+void
+lepton_component_object_set_contents (LeptonObject *object,
+                                      GList *primitives)
+{
+  g_return_if_fail (lepton_object_is_component (object));
+  g_return_if_fail (object->component != NULL);
+
+  object->component->prim_objs = primitives;
+}
+
+
 /*! \brief Return the array of attributes to always promote. */
 static GPtrArray*
 always_promote_attributes ()
