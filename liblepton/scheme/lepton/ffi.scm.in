@@ -135,6 +135,7 @@
             lepton_circle_object_new
 
             lepton_component_new_embedded
+            lepton_component_object_get_basename
             lepton_component_object_get_embedded
             lepton_component_object_embed
             lepton_component_object_unembed
@@ -238,7 +239,9 @@
             s_clib_add_command
             s_clib_add_directory
             s_clib_add_scm
+            s_clib_get_symbol_by_name
             s_clib_init
+            s_clib_symbol_get_filename
 
             s_conn_remove_object_connections
             s_conn_return_others
@@ -312,10 +315,13 @@
 (define-lff lepton_colormap_disable_color void (list '* size_t))
 (define-lff lepton_colormap_set_color void (list '* size_t uint8 uint8 uint8 uint8))
 (define-lff print_colors_array '* '())
+;;; s_clib.c
 (define-lff s_clib_add_command '* '(* * *))
 (define-lff s_clib_add_directory '* '(* *))
 (define-lff s_clib_add_scm '* '(* * *))
+(define-lff s_clib_get_symbol_by_name '* '(*))
 (define-lff s_clib_init void '())
+(define-lff s_clib_symbol_get_filename '* '(*))
 (define-lff s_toplevel_page_current '* (list '*))
 ;;; g_rc.c
 (define-lff g_rc_parse void '(* * *))
@@ -422,6 +428,7 @@
 (define-lff lepton_circle_object_new '* (list int int int int))
 
 (define-lff lepton_component_new_embedded '* (list int int int int int '* int))
+(define-lff lepton_component_object_get_basename '* '(*))
 (define-lff lepton_component_object_get_embedded int '(*))
 (define-lff lepton_component_object_embed void '(*))
 (define-lff lepton_component_object_unembed void '(*))

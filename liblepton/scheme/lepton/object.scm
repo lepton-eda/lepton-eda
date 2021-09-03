@@ -70,6 +70,8 @@
             make-box
             set-box!
 
+            component-filename
+
             circle-center
             circle-info
             circle-radius
@@ -1433,8 +1435,18 @@ is initially set to be embedded."
 (define-public (component-basename c)
   (list-ref (component-info c) 0))
 
-(define-public (component-filename c)
-  (%component-filename c))
+(define (component-filename object)
+  "Returns symbol's full file name for component OBJECT, if the
+component has a symbol file associated with it.  Otherwise returns
+#f."
+  (define pointer (geda-object->pointer* object 1 component? 'component))
+
+  (let ((sym (s_clib_get_symbol_by_name
+              (lepton_component_object_get_basename pointer))))
+    (and (not (null-pointer? sym))
+         (let ((fname (s_clib_symbol_get_filename sym)))
+            (and (not (null-pointer? fname))
+                 (pointer->string fname))))))
 
 (define-public (component-position c)
   (list-ref (component-info c) 1))
