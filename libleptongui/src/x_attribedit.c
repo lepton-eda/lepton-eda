@@ -177,7 +177,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
           }
           replaced = FALSE;
           if (addmask & addto) {
-            a_iter = object->attribs;
+            a_iter = lepton_object_get_attribs (object);
             if (replace) {
               while (a_iter != NULL) {
                 a_current = (LeptonObject*) a_iter->data;
