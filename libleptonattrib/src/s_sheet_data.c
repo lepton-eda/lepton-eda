@@ -416,7 +416,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
             if (lepton_object_is_pin (o_lower_current))
             {
               /* -----  Found a pin.  Now get attrib head and loop on attribs.  ----- */
-              a_iter = o_lower_current->attribs;
+              a_iter = lepton_object_get_attribs (o_lower_current);
               while (a_iter != NULL) {
                 pin_attrib = (LeptonObject*) a_iter->data;
                 if (lepton_object_is_text (pin_attrib)
