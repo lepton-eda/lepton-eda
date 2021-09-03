@@ -642,7 +642,7 @@ multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
                          lepton_text_object_get_string (o_attrib),
                          lepton_text_object_is_visible (o_attrib),
                          lepton_text_object_get_show (o_attrib),
-                         o_attrib->attached_to);
+                         lepton_object_get_attached_to (o_attrib));
   }
 
   gschem_toplevel_page_content_changed (w_current, w_current->toplevel->page_current);
