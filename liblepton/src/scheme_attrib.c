@@ -56,12 +56,14 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
   LeptonObject *attrib = edascm_to_object (attrib_s);
 
   /* If attrib isn't attached, do nothing */
-  if (attrib->attached_to == NULL) {
+  if (lepton_object_get_attached_to (attrib) == NULL)
+  {
     return obj_s;
   }
 
   /* Check that attrib isn't attached elsewhere */
-  if (attrib->attached_to != obj) {
+  if (lepton_object_get_attached_to (attrib) != obj)
+  {
     scm_error (edascm_object_state_sym, s_detach_attrib_x,
                _("Object ~A is attribute of wrong object"),
                scm_list_1 (attrib_s), SCM_EOL);
@@ -69,7 +71,8 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
 
   /* Detach object */
   lepton_object_emit_pre_change_notify (attrib);
-  o_attrib_remove (&obj->attribs, attrib);
+  GList *attribs = lepton_object_get_attribs (obj);
+  o_attrib_remove (&attribs, attrib);
   lepton_object_set_color (attrib, DETACHED_ATTRIBUTE_COLOR);
   lepton_object_emit_change_notify (attrib);
 
