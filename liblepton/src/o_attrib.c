@@ -139,8 +139,9 @@ o_attrib_detach_all (LeptonObject *object)
 {
   LeptonObject *a_current;
   GList *a_iter;
+  GList *attribs = lepton_object_get_attribs (object);
 
-  for (a_iter = lepton_object_get_attribs (object);
+  for (a_iter = attribs;
        a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
     a_current = (LeptonObject*) a_iter->data;
@@ -149,7 +150,7 @@ o_attrib_detach_all (LeptonObject *object)
     lepton_object_set_color (a_current, DETACHED_ATTRIBUTE_COLOR);
   }
 
-  g_list_free (lepton_object_get_attribs (object));
+  g_list_free (attribs);
   lepton_object_set_attribs (object, NULL);
 }
 
