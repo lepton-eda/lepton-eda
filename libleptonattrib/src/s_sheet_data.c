@@ -280,10 +280,10 @@ void s_sheet_data_add_master_net_attrib_list_items (const GList *obj_start) {
  * list of pin names.  It writes the
  * label refdes:pinnumber into the global master pin list.
  * Algorithm:
- * -# Loop on o_current looking for OBJ_COMPONENT
+ * -# Loop on objects looking for components.
  * -# When we find a component, save the refdes.
- * -# Dive down to o_lower_current = o_current->component->prim_objs
- * -# Loop on o_lower_current looking for OBJ_PIN
+ * -# Dive down to primitives of the component.
+ * -# Loop on the primitives looking for pins.
  * -# When we find a pin, find the pinnumber by calling
  *    o_attrib_search_object_attribs_by_name(o_lower_current, "pinnumber", 0)
  * -# Create the pin list label as "refdes=XXX", and stick it into
