@@ -500,7 +500,7 @@ void s_table_add_toplevel_net_items_to_net_table(LeptonObject *start_obj) {
       verbose_print(" N");
 
       /* Having found a net, we stick it into the table. */
-      a_current = o_current->attribs;
+      a_current = lepton_object_get_attribs (o_current);
       while (a_current != NULL) {
         if (lepton_object_is_text (a_current->object)
             && a_current->object->text != NULL) {  /* found an attribute */
