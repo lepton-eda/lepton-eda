@@ -345,8 +345,8 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
 
       LeptonObject *candidate = (LeptonObject *) s_current->data;
 
-      if (NULL == candidate->attached_to) {
-
+      if (NULL == lepton_object_get_attached_to (candidate))
+      {
         /* If the object is *not* attached as an attribute, then check
          * whether we previously found an independent object.  If we
          * did, we can't do snapping, so give up. */
@@ -362,9 +362,12 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
          * it's attached as an attribute of the same object as
          * everything else is.  If not, we can't do snapping, so give
          * up. */
-        if (NULL == attached) {
-          attached = candidate->attached_to;
-        } else if (attached != candidate->attached_to) {
+        if (NULL == attached)
+        {
+          attached = lepton_object_get_attached_to (candidate);
+        }
+        else if (attached != lepton_object_get_attached_to (candidate))
+        {
           break; /* Give up */
         }
       }
