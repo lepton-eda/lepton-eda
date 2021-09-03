@@ -549,12 +549,12 @@ static void o_net_consolidate_lowlevel (LeptonObject *object,
          object->line->x[1], object->line->y[1]);
 #endif
 
+  GList * del_object_attribs = lepton_object_get_attribs (del_object);
   /* Move any attributes from the deleted object*/
-  if (changed &&
-      lepton_object_get_attribs (del_object) != NULL)
+  if (changed && del_object_attribs != NULL)
   {
     /* Reassign the attached_to pointer on attributes from the del object */
-    a_iter = lepton_object_get_attribs (del_object);
+    a_iter = del_object_attribs;
     while (a_iter != NULL) {
       a_current = (LeptonObject*) a_iter->data;
       a_current->attached_to = object;
@@ -562,7 +562,7 @@ static void o_net_consolidate_lowlevel (LeptonObject *object,
     }
 
     GList *all_attribs = g_list_concat (lepton_object_get_attribs (object),
-                                        lepton_object_get_attribs (del_object));
+                                        del_object_attribs);
     lepton_object_set_attribs (object, all_attribs);
 
     /* Don't free del_object's attribute list as it's relinked
