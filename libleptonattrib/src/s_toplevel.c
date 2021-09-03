@@ -689,7 +689,7 @@ s_toplevel_update_component_attribs_in_toplevel (LeptonToplevel *toplevel,
 
   /* Now create a complete list of unique attribute names.  This will be used in
   *  the loop below when updating attributes.  */
-  a_iter = o_current->attribs;
+  a_iter = lepton_object_get_attribs (o_current);
   while (a_iter != NULL) {
     a_current = (LeptonObject*) a_iter->data;
     if (lepton_object_is_text (a_current)
