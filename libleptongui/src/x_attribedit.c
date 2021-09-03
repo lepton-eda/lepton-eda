@@ -119,7 +119,8 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
         fprintf (stderr, "attrib_edit_dialog_ok: ERROR: Got an unexpected NULL\n");
         exit(-1);
       }
-      if (!object->attached_to) {
+      if (!lepton_object_get_attached_to (object))
+      {
         nsel++;
       }
       s_current = g_list_next(s_current);
@@ -164,7 +165,7 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
 
         object = (LeptonObject *) s_current->data;
         if (object &&
-            !object->attached_to &&
+            !lepton_object_get_attached_to (object) &&
             !lepton_object_is_text (object))
         {
           addmask = 4;
