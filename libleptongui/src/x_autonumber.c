@@ -579,7 +579,7 @@ void autonumber_remove_number(AUTONUMBER_TEXT * autotext, LeptonObject *o_curren
   /* remove the slot attribute if slotting is active */
   if (autotext->slotting) {
     /* get the slot attribute */
-    o_parent = o_current->attached_to;
+    o_parent = lepton_object_get_attached_to (o_current);
     if (o_parent != NULL) {
       slot_str = s_slot_search_slot (o_parent, &o_slot);
       g_free (slot_str);
