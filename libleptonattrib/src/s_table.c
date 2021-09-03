@@ -591,7 +591,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
       if (temp_uref) {
 
         /* -----  Now iterate through lower level objects looking for pins.  ----- */
-        for (o_lower_iter = o_current->component->prim_objs;
+        for (o_lower_iter = lepton_component_object_get_contents (o_current);
              o_lower_iter != NULL;
              o_lower_iter = g_list_next (o_lower_iter)) {
           LeptonObject *o_lower_current = (LeptonObject*) o_lower_iter->data;
