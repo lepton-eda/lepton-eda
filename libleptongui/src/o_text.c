@@ -114,9 +114,11 @@ void o_text_change(GschemToplevel *w_current, LeptonObject *object, char *string
   lepton_text_object_recreate (object);
 
   /* handle slot= attribute, it's a special case */
-  if (object->attached_to != NULL &&
-      g_ascii_strncasecmp (string, "slot=", 5) == 0) {
-    o_slot_end (w_current, object->attached_to, string);
+  LeptonObject *attachment = lepton_object_get_attached_to (object);
+  if (attachment != NULL &&
+      g_ascii_strncasecmp (string, "slot=", 5) == 0)
+  {
+    o_slot_end (w_current, attachment, string);
   }
 
   gschem_toplevel_page_content_changed (w_current, page);
