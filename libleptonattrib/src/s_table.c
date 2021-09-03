@@ -390,7 +390,8 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
 
     /* -----  Now process objects found on page  ----- */
     if (lepton_object_is_component (o_current) &&
-        o_current->attribs != NULL) {
+        lepton_object_get_attribs (o_current) != NULL)
+    {
 
       /* ---- Don't process part if it lacks a refdes ----- */
       temp_uref = g_strdup(s_attrib_get_refdes(o_current));
@@ -404,7 +405,7 @@ void s_table_add_toplevel_comp_items_to_comp_table (const GList *obj_list) {
         /* Having found a component, we loop over all attribs in this
          * component, and stick them
          * into cells in the table. */
-        a_iter = o_current->attribs;
+        a_iter = lepton_object_get_attribs (o_current);
         while (a_iter != NULL) {
           a_current = (LeptonObject*) a_iter->data;
           if (lepton_object_is_text (a_current)
