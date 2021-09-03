@@ -406,7 +406,7 @@ void s_sheet_data_add_master_pin_attrib_list_items (const GList *obj_list) {
         if (temp_uref != NULL) {      /* make sure object component has a refdes  */
 
           /* -----  Now iterate through lower level objects looking for pins.  ----- */
-          for (o_lower_iter = o_current->component->prim_objs;
+          for (o_lower_iter = lepton_component_object_get_contents (o_current);
                o_lower_iter != NULL;
                o_lower_iter = g_list_next (o_lower_iter)) {
             LeptonObject *o_lower_current = (LeptonObject*) o_lower_iter->data;
