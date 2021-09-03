@@ -736,7 +736,8 @@ multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
        iter = g_list_next (iter)) {
     LeptonObject *o_attrib = (LeptonObject *)iter->data;
 
-    objects_needing_add = g_list_remove (objects_needing_add, o_attrib->attached_to);
+    objects_needing_add = g_list_remove (objects_needing_add,
+                                         lepton_object_get_attached_to (o_attrib));
   }
 
   for (iter = objects_needing_add; iter != NULL; iter = g_list_next (iter)) {
