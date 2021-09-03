@@ -113,15 +113,17 @@ o_glist_copy_all (const GList *src_list,
       lepton_object_set_id (dst_object, global_sid++);
       dest = g_list_prepend (dest, dst_object);
 
-      if (src_object->attached_to != NULL &&
-          src_object->attached_to->copied_to != NULL) {
+      LeptonObject *attachment = lepton_object_get_attached_to (src_object);
+      if (attachment != NULL &&
+          attachment->copied_to != NULL)
+      {
         o_attrib_attach (dst_object,
-                         src_object->attached_to->copied_to,
+                         attachment->copied_to,
                          FALSE);
         /* handle slot= attribute, it's a special case */
         if (g_ascii_strncasecmp (lepton_text_object_get_string (dst_object),
                                  "slot=", 5) == 0)
-          s_slot_update_object (src_object->attached_to->copied_to);
+          s_slot_update_object (attachment->copied_to);
       }
     }
 
