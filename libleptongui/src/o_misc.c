@@ -514,8 +514,10 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
     name = g_strdup (lepton_text_object_get_name (attr_new));
 
     value = o_attrib_search_attached_attribs_by_name (o_current, name, 0);
+
+    GList *attribs = lepton_object_get_attribs (o_new);
     if (value != NULL) {
-      o_attrib_remove (&o_new->attribs, attr_new);
+      o_attrib_remove (&attribs, attr_new);
       lepton_object_delete (attr_new);
       iter->data = NULL;
     }
@@ -526,7 +528,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   new_attribs = g_list_remove_all (new_attribs, NULL);
 
   /* Detach attributes from old LeptonObject and attach to new LeptonObject */
-  old_attribs = g_list_copy (o_current->attribs);
+  old_attribs = g_list_copy (lepton_object_get_attribs (o_current));
   o_attrib_detach_all (o_current);
   o_attrib_attach_list (old_attribs, o_new, 1);
   g_list_free (old_attribs);
