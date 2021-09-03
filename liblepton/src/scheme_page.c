@@ -116,14 +116,16 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
   }
 
   /* Check that object is not attached as an attribute. */
-  if (obj->attached_to != NULL) {
+  if (lepton_object_get_attached_to (obj) != NULL)
+  {
     scm_error (edascm_object_state_sym, s_page_remove_x,
                _("Object ~A is attached as an attribute"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
   /* Check that object doesn't have attributes. */
-  if (obj->attribs != NULL) {
+  if (lepton_object_get_attribs (obj) != NULL)
+  {
     scm_error (edascm_object_state_sym, s_page_remove_x,
                _("Object ~A has attributes"),
                scm_list_1 (obj_s), SCM_EOL);
