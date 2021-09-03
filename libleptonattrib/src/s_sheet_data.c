@@ -367,12 +367,12 @@ void s_sheet_data_add_master_pin_list_items (const GList *obj_list) {
  * list of pin attributes.  It writes
  * each attrib name into the master pin attrib list.
  * Algorithm:
- * -# Loop on o_current looking for OBJ_COMPONENT
+ * -# Loop on objects, looking for components.
  * -# When we find a component, save the refdes.
- * -# Dive down to o_lower_current = o_current->component->prim_objs
- * -# Loop on o_lower_current looking for OBJ_PIN
- * -# When we find a pin, get pin_attribs = o_lower_current->attribs
- * -# Loop on attribs looking for non-NULL text.
+ * -# Dive down to primitives of the component.
+ * -# Loop on the primitives looking for pins.
+ * -# When we find a pin, get its attribs.
+ * -# Loop on the attribs looking for non-NULL text.
  * -# When we find a non-NULL text attrib, extract the attrib name
  *    and stick it in the master pin attrib list.
  * \param obj_list pointer to list of pin attributes to be added.
