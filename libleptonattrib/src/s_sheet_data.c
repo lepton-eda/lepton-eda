@@ -146,7 +146,8 @@ void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
 
       /*-----  only process if this is a component with attributes ----*/
     if (lepton_object_is_component (o_current) &&
-          o_current->attribs != NULL) {
+        lepton_object_get_attribs (o_current) != NULL)
+    {
 
         g_debug ("s_sheet_data_add_master_comp_list_items: "
                  "Found component on page: component_basename = %s\n",
@@ -205,12 +206,13 @@ void s_sheet_data_add_master_comp_attrib_list_items (const GList *obj_list) {
 
       /*-----  only process if this is a component with attributes ----*/
     if (lepton_object_is_component (o_current) &&
-          o_current->attribs != NULL) {
+        lepton_object_get_attribs (o_current) != NULL)
+    {
 
         verbose_print(" C");
 
         /*------ Iterate through all attribs found on component -----*/
-        a_iter = o_current->attribs; /* This has a side effect.  Why? */
+        a_iter = lepton_object_get_attribs (o_current); /* This has a side effect.  Why? */
         while (a_iter != NULL) {
           a_current = (LeptonObject*) a_iter->data;
           if (lepton_object_is_text (a_current)
