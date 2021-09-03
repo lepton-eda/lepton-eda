@@ -395,7 +395,8 @@ GList *o_attrib_find_floating_attribs (const GList *list)
      * constitute a valid attributes (e.g. general text placed on the page)
      */
     if (lepton_object_is_attrib (o_current) &&
-        o_current->attached_to == NULL) {
+        lepton_object_get_attached_to (o_current) == NULL)
+    {
 
       floating_attributes = g_list_prepend (floating_attributes, o_current);
     }
