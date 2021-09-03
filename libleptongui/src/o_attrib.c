@@ -109,7 +109,8 @@ o_attrib_deselect_invisible (GschemToplevel *w_current,
     return;
   }
 
-  for (a_iter = selected->attribs; a_iter != NULL;
+  for (a_iter = lepton_object_get_attribs (selected);
+       a_iter != NULL;
        a_iter = g_list_next (a_iter)) {
     a_current = (LeptonObject*) a_iter->data;
 
