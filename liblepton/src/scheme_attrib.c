@@ -49,11 +49,12 @@ SCM_DEFINE (attrib_attachment, "%attrib-attachment", 1, 0, 0,
               SCM_ARG1, s_attrib_attachment);
 
   LeptonObject *obj = edascm_to_object (attrib_s);
+  LeptonObject *attachment = lepton_object_get_attached_to (obj);
 
-  if (obj->attached_to == NULL) {
+  if (attachment == NULL) {
     return SCM_BOOL_F;
   } else {
-    return edascm_from_object (obj->attached_to);
+    return edascm_from_object (attachment);
   }
 }
 
