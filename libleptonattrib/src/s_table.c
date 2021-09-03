@@ -585,8 +585,8 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
 
     /* -----  Now process objects found on page  ----- */
     if (lepton_object_is_component (o_current) &&
-        o_current->attribs != NULL) {
-
+        lepton_object_get_attribs (o_current) != NULL)
+    {
       /* ---- Don't process part if it lacks a refdes ----- */
       temp_uref = s_attrib_get_refdes(o_current);
       if (temp_uref) {
@@ -607,7 +607,7 @@ void s_table_add_toplevel_pin_items_to_pin_table (const GList *obj_list) {
                      "Examining pin %s\n",
                      row_label);
 
-            a_iter = o_lower_current->attribs;
+            a_iter = lepton_object_get_attribs (o_lower_current);
             while (a_iter != NULL) {
               pin_attrib = (LeptonObject*) a_iter->data;
               if (lepton_object_is_text (pin_attrib)
