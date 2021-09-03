@@ -399,7 +399,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
     o_current = (LeptonObject*) iter->data;
     if (autonumber_match(autotext, o_current, &number) == AUTONUMBER_RESPECT) {
       /* check slot and maybe add it to the lists */
-      o_parent = o_current->attached_to;
+      o_parent = lepton_object_get_attached_to (o_current);
       if (autotext->slotting && o_parent != NULL) {
         /* check for slotted symbol */
         numslot_str =
