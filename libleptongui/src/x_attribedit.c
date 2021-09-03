@@ -303,7 +303,8 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
   for (s_current = lepton_list_get_glist( toplevel->page_current->selection_list );
        s_current != NULL;
        s_current = g_list_next(s_current)) {
-    if (!((LeptonObject *) s_current->data)->attached_to) {
+    if (!lepton_object_get_attached_to ((LeptonObject *) s_current->data))
+    {
       nsel++;
     }
   }
