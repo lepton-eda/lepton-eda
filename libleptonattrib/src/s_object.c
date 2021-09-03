@@ -184,7 +184,7 @@ s_object_replace_attrib_in_object(LeptonObject *o_current,
   char *new_attrib_text;
 
 
-  a_iter = o_current->attribs;
+  a_iter = lepton_object_get_attribs (o_current);
   while (a_iter != NULL) {
     a_current = (LeptonObject*) a_iter->data;
     if (lepton_object_is_text (a_current)
