@@ -513,13 +513,17 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
       o_current = (LeptonObject*) o_iter->data;
+      LeptonObject *attachment = lepton_object_get_attached_to (o_current);
+
       if (lepton_object_is_text (o_current)
-          && o_current->attached_to != NULL) {
-        if (lepton_object_is_net (o_current->attached_to)) {
-          netname = o_attrib_search_object_attribs_by_name (o_current->attached_to, "netname", 0);
+          && attachment != NULL)
+      {
+        if (lepton_object_is_net (attachment))
+        {
+          netname = o_attrib_search_object_attribs_by_name (attachment, "netname", 0);
           if (netname != NULL) {
             if (g_list_find_custom(netnamestack, netname, (GCompareFunc) strcmp) != NULL) {
-              netstack = g_list_prepend(netstack, o_current->attached_to);
+              netstack = g_list_prepend (netstack, attachment);
             }
             g_free(netname);
           }
