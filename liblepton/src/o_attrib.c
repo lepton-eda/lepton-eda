@@ -95,7 +95,8 @@ o_attrib_attach (LeptonObject *attrib,
     return;
   }
 
-  if (attrib->attached_to != NULL) {
+  if (lepton_object_get_attached_to (attrib) != NULL)
+  {
     g_warning (_("Attempt to attach attribute [%1$s] to more than one object\n"),
                lepton_text_object_get_string (attrib));
     return;
