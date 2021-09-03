@@ -168,9 +168,10 @@ void o_unlock(GschemToplevel *w_current)
 
     /* for objects with attributes, also unlock them:
     */
-    if (obj->attribs != NULL)
+    GList *attribs = lepton_object_get_attribs (obj);
+    if (attribs != NULL)
     {
-      lepton_object_list_set_selectable (obj->attribs, TRUE);
+      lepton_object_list_set_selectable (attribs, TRUE);
     }
   }
 
