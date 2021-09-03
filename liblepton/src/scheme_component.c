@@ -316,14 +316,16 @@ SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
   }
 
   /* Check that object is not attached as an attribute. */
-  if (child->attached_to != NULL) {
+  if (lepton_object_get_attached_to (child) != NULL)
+  {
     scm_error (edascm_object_state_sym, s_component_remove_x,
                _("Object ~A is attached as an attribute"),
                scm_list_1 (obj_s), SCM_EOL);
   }
 
   /* Check that object doesn't have attributes. */
-  if (child->attribs != NULL) {
+  if (lepton_object_get_attribs (child) != NULL)
+  {
     scm_error (edascm_object_state_sym, s_component_remove_x,
                _("Object ~A has attributes"),
                scm_list_1 (obj_s), SCM_EOL);
