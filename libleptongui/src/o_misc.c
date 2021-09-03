@@ -118,9 +118,10 @@ void o_lock(GschemToplevel *w_current)
 
     /* for objects with attributes, also lock them:
     */
-    if (obj->attribs != NULL)
+    GList *attribs = lepton_object_get_attribs (obj);
+    if (attribs != NULL)
     {
-      lepton_object_list_set_selectable (obj->attribs, FALSE);
+      lepton_object_list_set_selectable (attribs, FALSE);
     }
   }
 
