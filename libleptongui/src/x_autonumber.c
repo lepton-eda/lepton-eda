@@ -609,7 +609,9 @@ void autonumber_apply_new_text(AUTONUMBER_TEXT * autotext, LeptonObject *o_curre
   if (slot != 0) {
     /* update the slot on the owning object */
     str = g_strdup_printf ("slot=%d", slot);
-    o_slot_end (autotext->w_current, o_current->attached_to, str);
+    o_slot_end (autotext->w_current,
+                lepton_object_get_attached_to (o_current),
+                str);
     g_free (str);
   }
 
