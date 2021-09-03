@@ -1914,8 +1914,11 @@ gschem_selection_adapter_set_text_string (GschemSelectionAdapter *adapter, const
       lepton_text_object_set_string (object, string);
 
       /* handle slot= attribute, it's a special case */
-      if (object->attached_to != NULL && g_ascii_strncasecmp (string, "slot=", 5) == 0) {
-        o_slot_end (w_current, object->attached_to, string);
+      LeptonObject *attachment = lepton_object_get_attached_to (object);
+      if (attachment != NULL &&
+          g_ascii_strncasecmp (string, "slot=", 5) == 0)
+      {
+        o_slot_end (w_current, attachment, string);
       }
 
       lepton_text_object_recreate (object);
