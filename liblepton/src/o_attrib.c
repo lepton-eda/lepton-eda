@@ -644,6 +644,6 @@ GList * o_attrib_return_attribs (LeptonObject *object)
  */
 int o_attrib_is_inherited (const LeptonObject *attrib)
 {
-  return (attrib->attached_to == NULL &&
+  return (lepton_object_get_attached_to (attrib) == NULL &&
           attrib->parent != NULL);
 }
