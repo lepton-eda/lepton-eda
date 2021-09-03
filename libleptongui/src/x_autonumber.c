@@ -492,7 +492,7 @@ void autonumber_get_new_numbers(AUTONUMBER_TEXT *autotext, LeptonObject *o_curre
 
   /* Check for slots first */
   /* 1. are there any unused slots in the database? */
-  o_parent = o_current->attached_to;
+  o_parent = lepton_object_get_attached_to (o_current);
   if (autotext->slotting && o_parent != NULL) {
     freeslot = g_new(AUTONUMBER_SLOT,1);
     freeslot->symbolname = o_parent->component_basename;
