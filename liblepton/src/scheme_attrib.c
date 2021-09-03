@@ -67,7 +67,7 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
   LeptonObject *attrib = edascm_to_object (attrib_s);
 
   /* Check that attachment doesn't already exist */
-  if (attrib->attached_to == obj) return obj_s;
+  if (lepton_object_get_attached_to (attrib) == obj) return obj_s;
 
   LeptonObject *parent = lepton_object_get_parent (obj);
   /* Check that both are in the same page and/or component object */
@@ -80,12 +80,14 @@ SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
   }
 
   /* Check that neither is already an attached attribute */
-  if (obj->attached_to != NULL) {
+  if (lepton_object_get_attached_to (obj) != NULL)
+  {
     scm_error (edascm_object_state_sym, s_attach_attrib_x,
                _("Object ~A is already attached as an attribute"),
                scm_list_1 (obj_s), SCM_EOL);
   }
-  if (attrib->attached_to != NULL) {
+  if (lepton_object_get_attached_to (attrib) != NULL)
+  {
     scm_error (edascm_object_state_sym, s_attach_attrib_x,
                _("Object ~A is already attached as an attribute"),
                scm_list_1 (attrib_s), SCM_EOL);
