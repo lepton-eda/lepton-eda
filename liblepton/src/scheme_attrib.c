@@ -50,7 +50,7 @@ SCM_DEFINE (object_attribs, "%object-attribs", 1, 0, 0,
 
   LeptonObject *obj = edascm_to_object (obj_s);
 
-  return edascm_from_object_glist (obj->attribs);
+  return edascm_from_object_glist (lepton_object_get_attribs (obj));
 }
 
 /*! \brief Get the object that an attribute is attached to.
