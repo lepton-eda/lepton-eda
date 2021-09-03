@@ -122,9 +122,8 @@ SHEET_DATA *s_sheet_data_new()
  *
  * Add to the master list of components refdeses by running through
  * the components and recording the comp refdeses it discovers. Then
- * it sorts them into alphabetical order.  Data struct being searched
- * is: LeptonObject->attribs(->next. . .)->object->text->string
- * \param obj_list pointer to the component list to be added.
+ * it sorts them into alphabetical order.
+ * \param[in] obj_list pointer to the component list to be added.
  */
 void s_sheet_data_add_master_comp_list_items (const GList *obj_list) {
   char *temp_uref;
