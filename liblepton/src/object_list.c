@@ -463,10 +463,12 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
       }
 
       /* save any attributes */
-      if (o_current->attribs != NULL) {
+      GList *attribs = lepton_object_get_attribs (o_current);
+      if (attribs != NULL)
+      {
         g_string_append (acc, "{\n");
 
-        out = o_save_objects (o_current->attribs, TRUE);
+        out = o_save_objects (attribs, TRUE);
         g_string_append (acc, out);
         g_free(out);
 
