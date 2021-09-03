@@ -261,7 +261,7 @@ GList
         if (lepton_object_is_component (new_obj))
         {
           object_list_save = new_object_list;
-          new_object_list = new_obj->component->prim_objs;
+          new_object_list = lepton_component_object_get_contents (new_obj);
 
           embedded_level++;
         } else {
@@ -281,11 +281,11 @@ GList
           new_object_list = g_list_reverse (new_object_list);
 
           new_obj = (LeptonObject*) object_list_save->data;
-          new_obj->component->prim_objs = new_object_list;
+          lepton_component_object_set_contents (new_obj, new_object_list);
           new_object_list = object_list_save;
 
           /* set the parent field now */
-          for (iter = new_obj->component->prim_objs;
+          for (iter = lepton_component_object_get_contents (new_obj);
                iter != NULL; iter = g_list_next (iter)) {
             LeptonObject *tmp = (LeptonObject*) iter->data;
             tmp->parent = new_obj;
