@@ -195,7 +195,7 @@ lepton_object_list_print (GList *objects)
       lepton_object_list_print (primitives);
     }
 
-    o_attrib_print (o_current->attribs);
+    o_attrib_print (lepton_object_get_attribs (o_current));
 
     printf("----\n");
     iter = g_list_next (iter);
