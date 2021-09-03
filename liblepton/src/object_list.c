@@ -380,7 +380,9 @@ o_save_objects (const GList *object_list, gboolean save_attribs)
   while ( iter != NULL ) {
     o_current = (LeptonObject *)iter->data;
 
-    if (save_attribs || o_current->attached_to == NULL) {
+    if (save_attribs ||
+        lepton_object_get_attached_to (o_current) == NULL)
+    {
 
       switch (lepton_object_get_type (o_current)) {
 
