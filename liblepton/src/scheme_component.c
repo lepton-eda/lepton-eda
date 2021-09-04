@@ -254,8 +254,9 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
    * it's guaranteed not to be present in a page at this point. */
   lepton_object_emit_pre_change_notify (parent);
 
-  parent->component->prim_objs =
-    g_list_append (parent->component->prim_objs, child);
+  GList *primitives = lepton_component_object_get_contents (parent);
+  lepton_component_object_set_contents (parent,
+                                        g_list_append (primitives, child));
   child->parent = parent;
 
   LeptonPage* parent_page = lepton_object_get_page (parent);
