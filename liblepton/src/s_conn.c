@@ -203,7 +203,10 @@ s_conn_remove_object_connections (LeptonObject *to_remove)
       break;
 
     case OBJ_COMPONENT:
-      for (iter = to_remove->component->prim_objs; iter != NULL; iter = g_list_next (iter)) {
+      for (iter = lepton_component_object_get_contents (to_remove);
+           iter != NULL;
+           iter = g_list_next (iter))
+      {
         o_current = (LeptonObject*) iter->data;
         s_conn_remove_object_connections (o_current);
       }
