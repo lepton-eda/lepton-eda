@@ -1665,7 +1665,7 @@ lepton_component_object_shortest_distance (LeptonObject *object,
   g_return_val_if_fail (lepton_object_is_component (object), G_MAXDOUBLE);
   g_return_val_if_fail (object->component != NULL, G_MAXDOUBLE);
 
-  for (iter = object->component->prim_objs;
+  for (iter = lepton_component_object_get_contents (object);
        iter != NULL; iter= g_list_next (iter)) {
     LeptonObject *obj = (LeptonObject*) iter->data;
     int left, top, right, bottom;
