@@ -1466,6 +1466,80 @@ component has a symbol file associated with it.  Otherwise returns
   (for-each (lambda (x) (%component-append! component x)) objects)
   component)
 
+(define (%component-remove! component object)
+  "Removes primitive OBJECT from COMPONENT and return COMPONENT.
+Raises an 'object-state error if OBJECT is included in a page or a
+component other than COMPONENT.  If OBJECT is not included
+anywhere, it does nothing."
+  (define component-pointer
+    (geda-object->pointer* component 1 component? 'component))
+
+  (define object-pointer
+    (geda-object->pointer* object 2))
+
+  (let ((object-page (lepton_object_get_page object-pointer))
+        (object-parent (lepton_object_get_parent object-pointer)))
+
+    ;; Check that object is not included in a different component.
+    (when (and (not (null-pointer? object-parent))
+               (not (equal? object-parent component-pointer)))
+      (scm-error 'object-state
+                 'component-remove!
+                 "Object ~A is attached to a different component"
+                 (list object)
+                 '()))
+
+    ;; Check that object is not included in a page.
+    (when (and (null-pointer? object-parent)
+               (not (null-pointer? object-page)))
+      (scm-error 'object-state
+                 'component-remove!
+                 "Object ~A is attached to a page"
+                 (list object)
+                 '()))
+
+    ;; Check that object is not attached as an attribute.
+    (unless (null-pointer? (lepton_object_get_attached_to object-pointer))
+      (scm-error 'object-state
+                 'component-remove!
+                 "Object ~A is attached as an attribute"
+                 (list object)
+                 '()))
+
+    ;; Check that object doesn't have attributes.
+    (unless (null-pointer? (lepton_object_get_attribs object-pointer))
+      (scm-error 'object-state
+                 'component-remove!
+                 "Object ~A has attributes"
+                 (list object)
+                 '()))
+
+    (if (null-pointer? object-parent)
+        component
+
+        (let ((primitives
+               (lepton_component_object_get_contents component-pointer)))
+          ;; Don't need to emit change notifications for the
+          ;; object-pointer because only the component-pointer
+          ;; will remain in the page.
+          (lepton_object_emit_pre_change_notify component-pointer)
+
+          (lepton_component_object_set_contents
+           component-pointer
+           (g_list_remove_all primitives object-pointer))
+          (lepton_object_set_parent object-pointer %null-pointer)
+
+          ;; We may need to update connections.
+          (s_conn_remove_object object-page object-pointer)
+          (s_conn_remove_object_connections object-pointer)
+
+          (lepton_object_emit_change_notify component-pointer)
+
+          (lepton_object_page_set_changed component-pointer)
+
+          component))))
+
+
 (define-public (component-remove! component . objects)
   (for-each (lambda (x) (%component-remove! component x)) objects)
   component)

@@ -33,6 +33,7 @@
 
             ;; glib, gobject.
             g_list_free
+            g_list_remove_all
             g_log
             g_object_unref
             ;; Mock glib functions.
@@ -53,6 +54,8 @@
             eda_get_user_config_dir
             eda_get_user_data_dir
 
+            lepton_object_get_attached_to
+            lepton_object_get_attribs
             lepton_object_get_color
             lepton_object_set_color
             lepton_object_get_fill_angle1
@@ -65,6 +68,7 @@
             lepton_object_get_id
             lepton_object_get_page
             lepton_object_get_parent
+            lepton_object_set_parent
             lepton_object_get_selectable
             lepton_object_set_selectable
             lepton_object_get_stroke_cap_type
@@ -136,6 +140,8 @@
 
             lepton_component_new_embedded
             lepton_component_object_get_basename
+            lepton_component_object_get_contents
+            lepton_component_object_set_contents
             lepton_component_object_get_embedded
             lepton_component_object_embed
             lepton_component_object_unembed
@@ -243,6 +249,7 @@
             s_clib_init
             s_clib_symbol_get_filename
 
+            s_conn_remove_object
             s_conn_remove_object_connections
             s_conn_return_others
             s_conn_update_object
@@ -278,6 +285,7 @@
          (force proc))))))
 
 (define-lff g_list_free void '(*) libglib)
+(define-lff g_list_remove_all '* '(* *) libglib)
 (define-lff g_log void (list '* int '* '*) libglib)
 (define-lff g_object_unref void '(*) libgobject)
 
@@ -344,6 +352,8 @@
 (define-lff edascm_from_object '* '(*))
 
 ;;; object.c
+(define-lff lepton_object_get_attached_to '* '(*))
+(define-lff lepton_object_get_attribs '* '(*))
 (define-lff lepton_object_get_color int '(*))
 (define-lff lepton_object_set_color void (list '* int))
 (define-lff lepton_object_get_fill_angle1 int '(*))
@@ -356,6 +366,7 @@
 (define-lff lepton_object_get_id int '(*))
 (define-lff lepton_object_get_page '* '(*))
 (define-lff lepton_object_get_parent '* '(*))
+(define-lff lepton_object_set_parent void '(* *))
 (define-lff lepton_object_get_selectable int '(*))
 (define-lff lepton_object_set_selectable void (list '* int))
 (define-lff lepton_object_get_stroke_cap_type int '(*))
@@ -429,6 +440,8 @@
 
 (define-lff lepton_component_new_embedded '* (list int int int int int '* int))
 (define-lff lepton_component_object_get_basename '* '(*))
+(define-lff lepton_component_object_get_contents '* '(*))
+(define-lff lepton_component_object_set_contents void '(* *))
 (define-lff lepton_component_object_get_embedded int '(*))
 (define-lff lepton_component_object_embed void '(*))
 (define-lff lepton_component_object_unembed void '(*))
@@ -518,6 +531,7 @@
 (define-lff lepton_stroke_type_to_string '* (list int))
 
 ;; s_conn.c
+(define-lff s_conn_remove_object void '(* *))
 (define-lff s_conn_remove_object_connections void '(*))
 (define-lff s_conn_return_others '* '(* *))
 (define-lff s_conn_update_object void '(* *))

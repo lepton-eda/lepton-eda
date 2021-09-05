@@ -271,90 +271,6 @@ SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
   return component_s;
 }
 
-/*! \brief Remove a primitive object from a component object.
- * \par Function Description
- * Removes \a obj_s from \a component_s.  If \a obj_s is attached
- * to a #LeptonPage or to a component object other than \a
- * component_s, throws a Scheme error.  If \a obj_s is unattached,
- * does nothing.
- *
- * \note Scheme API: Implements the %component-remove! procedure of the
- * (lepton core component) module.
- *
- * \param component_s component object to modify.
- * \param obj_s       primitive object to remove.
- * \return \a obj_s.
- */
-SCM_DEFINE (component_remove_x, "%component-remove!", 2, 0, 0,
-            (SCM component_s, SCM obj_s),
-            "Remove a primitive object from a component object")
-{
-  /* Ensure that the arguments have the correct types. */
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
-              SCM_ARG1, s_component_remove_x);
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s, SCM_ARG2, s_component_remove_x);
-
-  LeptonObject *parent = edascm_to_object (component_s);
-  LeptonObject *child = edascm_to_object (obj_s);
-  LeptonPage *child_page = lepton_object_get_page (child);
-  LeptonObject *child_parent = lepton_object_get_parent (child);
-
-  /* Check that object is not attached to a different component. */
-  if ((child_parent != NULL) && (child_parent != parent))
-  {
-    scm_error (edascm_object_state_sym, s_component_remove_x,
-               _("Object ~A is attached to a different component"),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-
-  /* Check that object is not attached to a page. */
-  if ((child_parent == NULL) && (child_page != NULL))
-  {
-    scm_error (edascm_object_state_sym, s_component_remove_x,
-               _("Object ~A is attached to a page"),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-
-  /* Check that object is not attached as an attribute. */
-  if (lepton_object_get_attached_to (child) != NULL)
-  {
-    scm_error (edascm_object_state_sym, s_component_remove_x,
-               _("Object ~A is attached as an attribute"),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-
-  /* Check that object doesn't have attributes. */
-  if (lepton_object_get_attribs (child) != NULL)
-  {
-    scm_error (edascm_object_state_sym, s_component_remove_x,
-               _("Object ~A has attributes"),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-
-  if (child_parent == NULL) return obj_s;
-
-  /* Don't need to emit change notifications for the child because
-   * only the parent will remain in the page. */
-  lepton_object_emit_pre_change_notify (parent);
-
-  GList *primitives = lepton_component_object_get_contents (parent);
-  lepton_component_object_set_contents (parent,
-                                        g_list_remove_all (primitives, child));
-  lepton_object_set_parent (child, NULL);
-
-  /* We may need to update connections */
-  s_conn_remove_object (child_page, child);
-  s_conn_remove_object_connections (child);
-
-  lepton_object_emit_change_notify (parent);
-
-  lepton_object_page_set_changed (parent);
-
-  /* Object cleanup now managed by Guile. */
-  edascm_c_set_gc (obj_s, 1);
-  return component_s;
-}
-
 
 /*!
  * \brief Create the (lepton core component) Scheme module.
@@ -374,7 +290,6 @@ init_module_lepton_core_component (void *unused)
                 s_component_info,
                 s_component_contents,
                 s_component_append_x,
-                s_component_remove_x,
                 NULL);
 }
 
