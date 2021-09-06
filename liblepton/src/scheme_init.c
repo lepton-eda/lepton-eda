@@ -45,7 +45,6 @@ edascm_init_impl (void *data)
                  SCM_UNDEFINED);
   edascm_init_smob ();
   edascm_init_toplevel ();
-  edascm_init_component ();
   edascm_init_page ();
   edascm_init_attrib ();
   edascm_init_config ();

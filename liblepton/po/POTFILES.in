@@ -26,7 +26,6 @@ liblepton/src/s_clib.c
 liblepton/src/s_slot.c
 liblepton/src/edaconfig.c
 liblepton/src/scheme_attrib.c
-liblepton/src/scheme_component.c
 liblepton/src/scheme_object.c
 liblepton/src/scheme_page.c
 liblepton/src/edascmhookproxy.c

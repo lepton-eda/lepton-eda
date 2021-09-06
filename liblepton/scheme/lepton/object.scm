@@ -26,9 +26,6 @@
   #:use-module (system foreign)
   #:use-module (rnrs bytevectors)
 
-  ;; Import C procedures
-  #:use-module (lepton core component)
-
   #:use-module (lepton color-map)
   #:use-module (lepton ffi)
   #:use-module (lepton object foreign)

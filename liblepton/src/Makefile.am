@@ -4,7 +4,6 @@ lib_LTLIBRARIES = liblepton.la
 BUILT_SOURCES = \
 	scheme_init.x \
 	scheme_toplevel.x \
-	scheme_component.x \
 	scheme_page.x \
 	scheme_attrib.x \
 	scheme_config.x \
@@ -16,7 +15,6 @@ scheme_api_sources = \
 	scheme_smob.c \
 	scheme_toplevel.c \
 	scheme_object.c \
-	scheme_component.c \
 	scheme_page.c \
 	scheme_attrib.c \
 	scheme_config.c \
