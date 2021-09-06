@@ -43,9 +43,6 @@ void s_conn_print(GList *conn_list);
 void
 s_conn_add_object (LeptonPage *page,
                    LeptonObject *object);
-void
-s_conn_remove_object (LeptonPage *page,
-                      LeptonObject *object);
 
 /* s_encoding.c */
 gchar* s_encoding_base64_encode (gchar* src, guint srclen, guint* dstlenp, gboolean strict);

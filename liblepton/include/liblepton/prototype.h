@@ -197,6 +197,10 @@ GList*
 s_toplevel_get_symbols (const LeptonToplevel *toplevel);
 
 /* s_conn.c */
+void
+s_conn_remove_object (LeptonPage *page,
+                      LeptonObject *object);
+
 void s_conn_remove_object_connections (LeptonObject *to_remove);
 void
 s_conn_update_object (LeptonPage* page,
