@@ -43,6 +43,7 @@
             glist-prev
 
             ;; Foreign functions.
+            edascm_c_current_toplevel
             edascm_is_config
             edascm_is_object
             edascm_is_page
@@ -139,6 +140,7 @@
             lepton_circle_object_set_radius
             lepton_circle_object_new
 
+            lepton_component_new
             lepton_component_new_embedded
             lepton_component_object_get_angle
             lepton_component_object_set_angle
@@ -354,6 +356,7 @@
 (define-lff eda_get_user_data_dir '* '())
 
 ;;; scheme_smob.c
+(define-lff edascm_c_current_toplevel '* '())
 (define-lff edascm_is_config int '(*))
 (define-lff edascm_is_object int '(*))
 (define-lff edascm_is_page int '(*))
@@ -449,6 +452,7 @@
 
 (define-lff lepton_component_object_get_angle int '(*))
 (define-lff lepton_component_object_set_angle void (list '* int))
+(define-lff lepton_component_new '* (list '* int int int int int '* '* int))
 (define-lff lepton_component_new_embedded '* (list int int int int int '* int))
 (define-lff lepton_component_object_get_basename '* '(*))
 (define-lff lepton_component_object_get_contents '* '(*))

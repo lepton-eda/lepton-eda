@@ -1467,6 +1467,31 @@ is initially set to be embedded."
   (let ((c (%make-component basename)))
     (apply set-component! c args)))
 
+(define (%make-component/library basename)
+  "Searches the component library for a component with given
+BASENAME.  If found, creates a new component object by
+instantiating that library component.  It is initially set to be
+unembedded.  If no match is found for basename in the library,
+returns #f."
+  (define TRUE 1)
+  (define FALSE 0)
+
+  (check-string basename 1)
+
+  (let* ((basename-pointer (string->pointer basename))
+         (clib (s_clib_get_symbol_by_name basename-pointer))
+         (active-page (lepton_toplevel_get_page_current (edascm_c_current_toplevel))))
+    (and (not (null-pointer? clib))
+         (pointer->geda-object (lepton_component_new active-page
+                                                     (default_color_id)
+                                                     0
+                                                     0
+                                                     0
+                                                     FALSE
+                                                     clib
+                                                     basename-pointer
+                                                     TRUE)))))
+
 (define-public (make-component/library basename . args)
   (let ((c (%make-component/library basename)))
     (if c (apply set-component! c args) #f)))
