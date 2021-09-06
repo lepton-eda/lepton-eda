@@ -205,75 +205,6 @@ SCM_DEFINE (component_contents, "%component-contents", 1, 0, 0,
   }
 }
 
-/*! \brief Add a primitive object to a component object.
- * \par Function Description
- * Adds \a obj_s to \a component_s.  If \a obj_s is already
- * attached to another component object or to a #LeptonPage, or if
- * \a obj_s is itself a component object, throws a Scheme error.
- * If \a obj_s is already attached to \a component_s, does
- * nothing.
- *
- * \note Scheme API: Implements the %component-append! procedure
- * of the (lepton core component) module.
- *
- * \param component_s component object to modify.
- * \param obj_s     primitive object to add.
- * \return \a obj_s.
- */
-SCM_DEFINE (component_append_x, "%component-append!", 2, 0, 0,
-            (SCM component_s, SCM obj_s),
-            "Add a primitive object to a component object")
-{
-  /* Ensure that the arguments have the correct types. */
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
-              SCM_ARG1, s_component_append_x);
-  SCM_ASSERT ((EDASCM_OBJECTP (obj_s)
-               && !edascm_is_object_type (obj_s, OBJ_COMPONENT)),
-              obj_s, SCM_ARG2, s_component_append_x);
-
-  LeptonObject *parent = edascm_to_object (component_s);
-  LeptonObject *child = edascm_to_object (obj_s);
-  LeptonObject *child_parent = lepton_object_get_parent (child);
-
-  LeptonPage* page = lepton_object_get_page (child);
-  /* Check that object is not already attached to a page or a
-     different component. */
-  if ((page != NULL) ||
-      ((child_parent != NULL) && (child_parent != parent)))
-  {
-    scm_error (edascm_object_state_sym,
-               s_component_append_x,
-               _("Object ~A is already attached to something"),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-
-  if (child_parent == parent) return obj_s;
-
-  /* Object cleanup now managed by C code. */
-  edascm_c_set_gc (obj_s, 0);
-
-  /* Don't need to emit change notifications for the child because
-   * it's guaranteed not to be present in a page at this point. */
-  lepton_object_emit_pre_change_notify (parent);
-
-  GList *primitives = lepton_component_object_get_contents (parent);
-  lepton_component_object_set_contents (parent,
-                                        g_list_append (primitives, child));
-  lepton_object_set_parent (child, parent);
-
-  LeptonPage* parent_page = lepton_object_get_page (parent);
-  /* We may need to update connections */
-  if (parent_page != NULL) {
-    s_conn_update_object (parent_page, child);
-  }
-
-  lepton_object_emit_change_notify (parent);
-
-  lepton_object_page_set_changed (parent);
-
-  return component_s;
-}
-
 
 /*!
  * \brief Create the (lepton core component) Scheme module.
@@ -292,7 +223,6 @@ init_module_lepton_core_component (void *unused)
                 s_set_component_x,
                 s_component_info,
                 s_component_contents,
-                s_component_append_x,
                 NULL);
 }
 

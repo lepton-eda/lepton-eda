@@ -32,6 +32,7 @@
             check-vector
 
             ;; glib, gobject.
+            g_list_append
             g_list_free
             g_list_remove_all
             g_log
@@ -284,6 +285,7 @@
                            args))))
          (force proc))))))
 
+(define-lff g_list_append '* '(* *) libglib)
 (define-lff g_list_free void '(*) libglib)
 (define-lff g_list_remove_all '* '(* *) libglib)
 (define-lff g_log void (list '* int '* '*) libglib)

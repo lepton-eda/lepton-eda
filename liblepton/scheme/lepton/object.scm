@@ -1462,6 +1462,57 @@ component has a symbol file associated with it.  Otherwise returns
 
 (define-public component-contents %component-contents)
 
+(define (%component-append! component object)
+  "Modifies COMPONENT by adding primitive OBJECT to it. If OBJECT
+is already included in another component object or in a
+object-page, or if the object is itself a component object, raises
+an 'object-state error. If OBJECT is already included in
+COMPONENT, does nothing.  Returns COMPONENT."
+  (define component-pointer
+    (geda-object->pointer* component 1 component? 'component))
+
+  (define object-pointer
+    (geda-object->pointer* object 2))
+
+  (let ((object-parent (lepton_object_get_parent object-pointer))
+        (object-page (lepton_object_get_page object-pointer)))
+
+    ;; Check that object is not already attached to a page or a
+    ;; different component.
+    (when (or (not (null-pointer? object-page))
+              (and (not (null-pointer? object-parent))
+                   (not (equal? object-parent component-pointer))))
+      (scm-error 'object-state
+                 'component-append!
+                 "Object ~A is already included in something."
+                 (list object)
+                 '()))
+
+    (if (equal? object-parent component-pointer)
+        component
+
+        (let ((primitives
+               (lepton_component_object_get_contents component-pointer)))
+          ;; Don't need to emit change notifications for the
+          ;; object-pointer because it's guaranteed not to be
+          ;; present in a page at this point.
+          (lepton_object_emit_pre_change_notify component-pointer)
+          (lepton_component_object_set_contents
+           component-pointer
+           (g_list_append primitives object-pointer))
+          (lepton_object_set_parent object-pointer component-pointer)
+
+          (let ((parent-page (lepton_object_get_page component-pointer)))
+            ;; We may need to update connections.
+            (unless (null-pointer? parent-page)
+              (s_conn_update_object parent-page object-pointer))
+
+            (lepton_object_emit_change_notify component-pointer)
+
+            (lepton_object_page_set_changed component-pointer)
+
+            component)))))
+
 (define-public (component-append! component . objects)
   (for-each (lambda (x) (%component-append! component x)) objects)
   component)
