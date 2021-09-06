@@ -81,71 +81,6 @@ SCM_DEFINE (make_component_library, "%make-component/library", 1, 0, 0,
   return result;
 }
 
-/*! \brief Set component object parameters.
- * \par Function Description
- * Modifies the component object \a component_s by setting its parameters
- * to new values.
- *
- * \note Scheme API: Implements the %set-component! procedure in the
- * (lepton core component) module.
- *
- * \param component_s the component object to modify.
- * \param x_s       the new x-coordinate of the component object.
- * \param y_s       the new y-coordinate of the component object.
- * \param angle_s   the new rotation angle.
- * \param mirror_s  whether the component object should be mirrored.
- * \param locked_s  whether the component object should be locked.
- *
- * \return the modified \a component_s.
- */
-SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
-            (SCM component_s, SCM x_s, SCM y_s, SCM angle_s, SCM mirror_s,
-             SCM locked_s), "Set component object parameters")
-{
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
-              SCM_ARG1, s_set_component_x);
-  SCM_ASSERT (scm_is_integer (x_s),     x_s,     SCM_ARG2, s_set_component_x);
-  SCM_ASSERT (scm_is_integer (y_s),     y_s,     SCM_ARG3, s_set_component_x);
-  SCM_ASSERT (scm_is_integer (angle_s), angle_s, SCM_ARG4, s_set_component_x);
-  SCM_ASSERT (scm_is_bool (mirror_s), mirror_s,  SCM_ARG5, s_set_component_x);
-  SCM_ASSERT (scm_is_bool (locked_s), locked_s,  SCM_ARG6, s_set_component_x);
-
-  LeptonObject *obj = edascm_to_object (component_s);
-
-  /* Angle */
-  int angle = scm_to_int (angle_s);
-  switch (angle) {
-  case 0:
-  case 90:
-  case 180:
-  case 270:
-    /* These are all fine. */
-    break;
-  default:
-    /* Otherwise, not fine. */
-    scm_misc_error (s_set_component_x,
-                    _("Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"),
-                    scm_list_1 (angle_s));
-  }
-
-  lepton_object_emit_pre_change_notify (obj);
-
-  int x = scm_to_int (x_s);
-  int y = scm_to_int (y_s);
-  lepton_object_translate (obj,
-                           x - lepton_component_object_get_x (obj),
-                           y - lepton_component_object_get_y (obj));
-  lepton_component_object_set_angle (obj, angle);
-  lepton_component_object_set_mirror (obj, scm_is_true (mirror_s));
-  lepton_object_set_selectable (obj, scm_is_false (locked_s));
-
-  lepton_object_emit_change_notify (obj);
-
-  lepton_object_page_set_changed (obj);
-
-  return component_s;
-}
-
 
 /*!
  * \brief Create the (lepton core component) Scheme module.
@@ -161,7 +96,6 @@ init_module_lepton_core_component (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_make_component_library,
-                s_set_component_x,
                 NULL);
 }
 

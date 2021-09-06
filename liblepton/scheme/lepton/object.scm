@@ -1378,6 +1378,53 @@ value will be one of the following symbols:
 
 
 ;;;; Component objects
+(define (check-component-angle angle pos)
+  (define (check-angle-value angle)
+    (match angle
+      ((or 0 90 180 270) angle)
+      (_ (error "Invalid component angle: ~A. Must be 0, 90, 180, or 270 degrees."
+                angle))))
+
+  (check-integer angle pos)
+  (check-angle-value angle))
+
+(define (%set-component! component x y angle mirror locked)
+  "Modifies COMPONENT by setting its parameters
+to new values.  The following arguments are used:
+  - component the component object to modify.
+  - x         the new x-coordinate.
+  - y         the new y-coordinate.
+  - angle     the new rotation angle.
+  - mirror    whether the component object should be mirrored.
+  - locked    whether the component object should be locked.
+
+Returns the modified COMPONENT."
+
+  (define TRUE 1)
+  (define FALSE 0)
+
+  (define pointer (geda-object->pointer* component 1 component? 'component))
+
+  (check-integer x 2)
+  (check-integer y 3)
+  (check-component-angle angle 4)
+  (check-boolean mirror 5)
+  (check-boolean locked 6)
+
+  (lepton_object_emit_pre_change_notify pointer)
+
+  (lepton_object_translate pointer
+                           (- x (lepton_component_object_get_x pointer))
+                           (- y (lepton_component_object_get_y pointer)))
+  (lepton_component_object_set_angle pointer angle)
+  (lepton_component_object_set_mirror pointer (if mirror TRUE FALSE))
+  (lepton_object_set_selectable pointer (if locked FALSE TRUE))
+
+  (lepton_object_emit_change_notify pointer)
+
+  (lepton_object_page_set_changed pointer)
+
+  component)
 
 (define-public (set-component! c position angle mirror locked)
   (%set-component! c (car position) (cdr position) angle mirror locked))

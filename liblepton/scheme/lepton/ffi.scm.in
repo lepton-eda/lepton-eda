@@ -141,6 +141,7 @@
 
             lepton_component_new_embedded
             lepton_component_object_get_angle
+            lepton_component_object_set_angle
             lepton_component_object_get_basename
             lepton_component_object_get_contents
             lepton_component_object_set_contents
@@ -148,6 +149,7 @@
             lepton_component_object_embed
             lepton_component_object_unembed
             lepton_component_object_get_mirror
+            lepton_component_object_set_mirror
             lepton_component_object_get_x
             lepton_component_object_get_y
 
@@ -445,6 +447,7 @@
 (define-lff lepton_circle_object_new '* (list int int int int))
 
 (define-lff lepton_component_object_get_angle int '(*))
+(define-lff lepton_component_object_set_angle void (list '* int))
 (define-lff lepton_component_new_embedded '* (list int int int int int '* int))
 (define-lff lepton_component_object_get_basename '* '(*))
 (define-lff lepton_component_object_get_contents '* '(*))
@@ -453,6 +456,7 @@
 (define-lff lepton_component_object_embed void '(*))
 (define-lff lepton_component_object_unembed void '(*))
 (define-lff lepton_component_object_get_mirror int '(*))
+(define-lff lepton_component_object_set_mirror void (list '* int))
 (define-lff lepton_component_object_get_x int '(*))
 (define-lff lepton_component_object_get_y int '(*))
 
