@@ -176,7 +176,7 @@ SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
                      scm_from_int (lepton_component_object_get_y (obj)),
                      scm_from_int (lepton_component_object_get_angle (obj)),
                      lepton_component_object_get_mirror (obj) ? SCM_BOOL_T : SCM_BOOL_F,
-                     obj->selectable ? SCM_BOOL_F : SCM_BOOL_T,
+                     lepton_object_get_selectable (obj) ? SCM_BOOL_F : SCM_BOOL_T,
                      SCM_UNDEFINED);
 }
 
