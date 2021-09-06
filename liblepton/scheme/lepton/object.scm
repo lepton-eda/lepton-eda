@@ -70,6 +70,7 @@
             make-box
             set-box!
 
+            component-contents
             component-filename
 
             circle-center
@@ -1460,7 +1461,16 @@ component has a symbol file associated with it.  Otherwise returns
 (define-public (component-locked? c)
   (list-ref (component-info c) 4))
 
-(define-public component-contents %component-contents)
+
+(define (component-contents component)
+  "Returns a list of the primitive objects that make up
+COMPONENT."
+  (define component-pointer
+    (geda-object->pointer* component 1 component? 'component))
+
+  (glist->object-list
+   (lepton_component_object_get_contents component-pointer)))
+
 
 (define (%component-append! component object)
   "Modifies COMPONENT by adding primitive OBJECT to it. If OBJECT

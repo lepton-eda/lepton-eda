@@ -180,33 +180,6 @@ SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
                      SCM_UNDEFINED);
 }
 
-/*! \brief Get the contents of a component object.
- * \par Function Description
- * Retrieves a list of the primitive objects that make up a component object.
- *
- * \note Scheme API: Implements the %component-contents procedure in the
- * (lepton core component) module.
- *
- * \param component_s a component object.
- * \return a list of primitive objects.
- */
-SCM_DEFINE (component_contents, "%component-contents", 1, 0, 0,
-            (SCM component_s), "Get component object contents.")
-{
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT),
-              component_s, SCM_ARG1, s_component_contents);
-
-  LeptonObject *obj = edascm_to_object (component_s);
-
-  if (edascm_is_object_type (component_s, OBJ_COMPONENT))
-  {
-    GList *primitives = lepton_component_object_get_contents (obj);
-    return edascm_from_object_glist (primitives);
-  } else {
-    return SCM_EOL;
-  }
-}
-
 
 /*!
  * \brief Create the (lepton core component) Scheme module.
@@ -224,7 +197,6 @@ init_module_lepton_core_component (void *unused)
   scm_c_export (s_make_component_library,
                 s_set_component_x,
                 s_component_info,
-                s_component_contents,
                 NULL);
 }
 
