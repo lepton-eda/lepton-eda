@@ -132,7 +132,9 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
 
   int x = scm_to_int (x_s);
   int y = scm_to_int (y_s);
-  lepton_object_translate (obj, x - obj->component->x, y - obj->component->y);
+  lepton_object_translate (obj,
+                           x - lepton_component_object_get_x (obj),
+                           y - lepton_component_object_get_y (obj));
   obj->component->angle = angle;
   obj->component->mirror = scm_is_true (mirror_s);
   obj->selectable = scm_is_false (locked_s);
