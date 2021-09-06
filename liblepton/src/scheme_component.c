@@ -144,42 +144,6 @@ SCM_DEFINE (set_component_x, "%set-component!", 6, 0, 0,
   return component_s;
 }
 
-/*! \brief Get component object parameters.
- * \par Function Description
- * Retrieves the parameters of a component object. The return value is a
- * list of parameters:
- *
- * -# Basename
- * -# Base x-coordinate.
- * -# Base y-coordinate.
- * -# Rotation angle.
- * -# Whether object is mirrored.
- * -# Whether object is locked.
- *
- * \note Scheme API: Implements the %component-info procedure in the
- * (lepton core component) module.
- *
- * \param component_s the component object to inspect.
- * \return a list of component object parameters.
- */
-SCM_DEFINE (component_info, "%component-info", 1, 0, 0,
-            (SCM component_s), "Get component object parameters.")
-{
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT),
-              component_s,
-              SCM_ARG1, s_component_info);
-
-  LeptonObject *obj = edascm_to_object (component_s);
-
-  return scm_list_n (scm_from_utf8_string (lepton_component_object_get_basename (obj)),
-                     scm_from_int (lepton_component_object_get_x (obj)),
-                     scm_from_int (lepton_component_object_get_y (obj)),
-                     scm_from_int (lepton_component_object_get_angle (obj)),
-                     lepton_component_object_get_mirror (obj) ? SCM_BOOL_T : SCM_BOOL_F,
-                     lepton_object_get_selectable (obj) ? SCM_BOOL_F : SCM_BOOL_T,
-                     SCM_UNDEFINED);
-}
-
 
 /*!
  * \brief Create the (lepton core component) Scheme module.
@@ -196,7 +160,6 @@ init_module_lepton_core_component (void *unused)
   /* Add them to the module's public definitions. */
   scm_c_export (s_make_component_library,
                 s_set_component_x,
-                s_component_info,
                 NULL);
 }
 

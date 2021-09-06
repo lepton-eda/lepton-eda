@@ -1424,6 +1424,25 @@ is initially set to be embedded."
   (let ((c (%make-component/library basename)))
     (if c (apply set-component! c args) #f)))
 
+
+(define (%component-info component)
+  "Return the parameters of COMPONENT as a list of values:
+  - Basename.
+  - Base x-coordinate.
+  - Base y-coordinate.
+  - Rotation angle.
+  - Whether object is mirrored.
+  - Whether object is locked."
+  (define pointer (geda-object->pointer* component 1 component? 'component))
+
+  (list (pointer->string (lepton_component_object_get_basename pointer))
+        (lepton_component_object_get_x pointer)
+        (lepton_component_object_get_y pointer)
+        (lepton_component_object_get_angle pointer)
+        (true? (lepton_component_object_get_mirror pointer))
+        (not (true? (lepton_object_get_selectable pointer)))))
+
+
 (define-public (component-info c)
   (let* ((params (%component-info c))
          (tail (list-tail params 3))
