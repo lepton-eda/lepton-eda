@@ -27,6 +27,7 @@
   #:use-module (lepton core attrib)
   #:use-module (lepton core gettext)
 
+  #:use-module (lepton color-map)
   #:use-module (lepton ffi)
   #:use-module (lepton object)
   #:use-module (lepton object foreign)
@@ -218,6 +219,47 @@ successfully."
 (define-public (attach-attribs! obj . attribs)
   (for-each (lambda (x) (%attach-attrib! obj x)) attribs)
   obj)
+
+
+(define (%detach-attrib! object attrib)
+  "Detaches ATTRIB from OBJECT.  If ATTRIB is not attached as an
+attribute, does nothing silently.  If ATTRIB is attached as an
+attribute of an object other than OBJECT, raises an 'object-state
+error.  Returns OBJECT."
+
+  (define object-pointer (geda-object->pointer* object 1))
+  (define attrib-pointer
+    (geda-object->pointer* attrib 2 attribute? 'attribute))
+
+  ;; If attrib isn't attached do nothing.
+  (if (null-pointer? (lepton_object_get_attached_to attrib-pointer))
+      object
+
+      (begin
+        ;; Check that attrib isn't attached elsewhere.
+        (unless (equal? (lepton_object_get_attached_to attrib-pointer)
+                        object-pointer)
+          (scm-error 'object-state
+                     'detach-attrib!
+                     "Object ~A is attribute of wrong object"
+                     (list attrib)
+                     '()))
+
+        (let ((attribs (lepton_object_get_attribs object-pointer)))
+          ;; Detach object.
+          (lepton_object_emit_pre_change_notify attrib-pointer)
+
+          (lepton_object_set_attribs object-pointer
+                                     (g_list_remove attribs attrib-pointer))
+          (lepton_object_set_attached_to attrib-pointer %null-pointer)
+
+          (lepton_object_set_color attrib-pointer
+                                   (color-map-name-to-index 'detached-attribute))
+          (lepton_object_emit_change_notify attrib-pointer)
+
+          (lepton_object_page_set_changed object-pointer)
+
+          object))))
 
 (define-public (detach-attribs! obj . attribs)
   (for-each (lambda (x) (%detach-attrib! obj x)) attribs)

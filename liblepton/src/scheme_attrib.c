@@ -30,61 +30,6 @@
 
 SCM_SYMBOL (attribute_format_sym, "attribute-format");
 
-/*! \brief Detach an attribute from an object.
- * \par Function Description
- * Detach \a attrib_s from \a obj_s.  If \a attrib_s is not attached
- * as an attribute, does nothing silently.  If \a attrib_s is attached
- * as an attribute of an object other than \a obj_s, throws a Scheme
- * error.
- *
- * \note Scheme API: Implements the %detach-attrib! procedure of
- * the (lepton core attrib) module.
- *
- * \param obj_s the object from which to detach an attribute.
- * \param attrib_s the attribute to detach.
- * \return \a attrib_s.
- */
-SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
-            (SCM obj_s, SCM attrib_s), "Detach an attribute to an object.")
-{
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_detach_attrib_x);
-  SCM_ASSERT (edascm_is_object_type (attrib_s, OBJ_TEXT), attrib_s,
-              SCM_ARG2, s_detach_attrib_x);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  LeptonObject *attrib = edascm_to_object (attrib_s);
-
-  /* If attrib isn't attached, do nothing */
-  if (lepton_object_get_attached_to (attrib) == NULL)
-  {
-    return obj_s;
-  }
-
-  /* Check that attrib isn't attached elsewhere */
-  if (lepton_object_get_attached_to (attrib) != obj)
-  {
-    scm_error (edascm_object_state_sym, s_detach_attrib_x,
-               _("Object ~A is attribute of wrong object"),
-               scm_list_1 (attrib_s), SCM_EOL);
-  }
-
-  /* Detach object */
-  lepton_object_emit_pre_change_notify (attrib);
-  GList *attribs = lepton_object_get_attribs (obj);
-  /* o_attrib_remove (attribs, attrib); */
-  lepton_object_set_attribs (obj, g_list_remove (attribs, attrib));
-  lepton_object_set_attached_to (attrib, NULL);
-
-  lepton_object_set_color (attrib, DETACHED_ATTRIBUTE_COLOR);
-  lepton_object_emit_change_notify (attrib);
-
-  lepton_object_page_set_changed (obj);
-
-  scm_remember_upto_here_1 (attrib_s);
-  return obj_s;
-}
-
 
 /*!
  * \brief Create the (lepton core attrib) Scheme module.
@@ -99,8 +44,7 @@ init_module_lepton_core_attrib (void *unused)
   #include "scheme_attrib.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_detach_attrib_x,
-                NULL);
+  scm_c_export (NULL);
 }
 
 /*!

@@ -37,6 +37,7 @@
             g_free
             g_list_append
             g_list_free
+            g_list_remove
             g_list_remove_all
             g_log
             g_object_unref
@@ -60,7 +61,9 @@
             eda_get_user_data_dir
 
             lepton_object_get_attached_to
+            lepton_object_set_attached_to
             lepton_object_get_attribs
+            lepton_object_set_attribs
             lepton_object_get_color
             lepton_object_set_color
             lepton_object_get_fill_angle1
@@ -308,6 +311,7 @@
 (define-lff g_free void '(*) libglib)
 (define-lff g_list_append '* '(* *) libglib)
 (define-lff g_list_free void '(*) libglib)
+(define-lff g_list_remove '* '(* *) libglib)
 (define-lff g_list_remove_all '* '(* *) libglib)
 (define-lff g_log void (list '* int '* '*) libglib)
 (define-lff g_object_unref void '(*) libgobject)
@@ -378,7 +382,9 @@
 
 ;;; object.c
 (define-lff lepton_object_get_attached_to '* '(*))
+(define-lff lepton_object_set_attached_to void '(* *))
 (define-lff lepton_object_get_attribs '* '(*))
+(define-lff lepton_object_set_attribs void '(* *))
 (define-lff lepton_object_get_color int '(*))
 (define-lff lepton_object_set_color void (list '* int))
 (define-lff lepton_object_get_fill_angle1 int '(*))
