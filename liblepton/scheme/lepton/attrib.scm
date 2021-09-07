@@ -35,6 +35,7 @@
 
   #:export (attrib-name
             attrib-value
+            object-attribs
             parse-attrib
             promotable-attribs)
 
@@ -79,7 +80,13 @@ raises an 'attribute-format error."
               ""
               (pointer->string value-pointer)))))
 
-(define-public object-attribs %object-attribs)
+(define (object-attribs object)
+  "Returns the attribute list of OBJECT."
+  (define pointer (geda-object->pointer* object 1))
+
+  (glist->object-list (lepton_object_get_attribs pointer)))
+
+
 (define-public attrib-attachment %attrib-attachment)
 
 

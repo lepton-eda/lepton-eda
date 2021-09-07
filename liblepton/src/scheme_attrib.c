@@ -30,29 +30,6 @@
 
 SCM_SYMBOL (attribute_format_sym, "attribute-format");
 
-/*! \brief Get a list of an object's attributes.
- * \par Function Description
- * Retrieves the attributes of the smob \a obj_s as a Scheme list of
- * #LeptonObject smobs.
- *
- * \note Scheme API: Implements the %object-attribs procedure of the
- * (lepton core attrib) module.
- *
- * \param obj_s object to get attributes for.
- * \return a list of #LeptonObject smobs.
- */
-SCM_DEFINE (object_attribs, "%object-attribs", 1, 0, 0,
-            (SCM obj_s), "Get an object's attributes.")
-{
-  /* Ensure that the argument is an object */
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_object_attribs);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-
-  return edascm_from_object_glist (lepton_object_get_attribs (obj));
-}
-
 /*! \brief Get the object that an attribute is attached to.
  * \par Function Description
  * Returns the #LeptonObject smob that \a attrib_s is attached to.  If \a
@@ -214,7 +191,7 @@ init_module_lepton_core_attrib (void *unused)
   #include "scheme_attrib.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_object_attribs, s_attrib_attachment,
+  scm_c_export (s_attrib_attachment,
                 s_attach_attrib_x, s_detach_attrib_x,
                 NULL);
 }
