@@ -151,6 +151,70 @@ returns the value as a string.  Otherwise, raises an
   (not (or (attrib-attachment attrib)
            (not (object-component attrib)))))
 
+(define (%attach-attrib! object attrib)
+  "Attaches ATTRIB to OBJECT.  The following conditions must be
+satisfied:
+
+- Neither OBJECT nor ATTRIB may be already attached as an
+  attribute.
+- Both OBJECT and ATTRIB must be part of the same page
+  and/or component object. (They can't be \"loose\" objects).
+- ATTRIB must be a text object.
+
+These restrictions are intentionally harsher than those of the C
+API, and are required in order to ensure that the Scheme API is
+safe.
+
+If attrib is already attached to object, does nothing
+successfully."
+  (define object-pointer (geda-object->pointer* object 1))
+  (define attrib-pointer
+    (geda-object->pointer* attrib 2 attribute? 'attribute))
+
+  ;; Check that attachment doesn't already exist.
+  (if (equal? (lepton_object_get_attached_to attrib-pointer)
+              object-pointer)
+      object
+
+      (let ((parent (lepton_object_get_parent object-pointer)))
+
+        ;; Check that both are in the same page and/or component
+        ;; object.
+        (when (or (not (equal? parent
+                               (lepton_object_get_parent attrib-pointer)))
+                  (not (equal? (lepton_object_get_page object-pointer)
+                               (lepton_object_get_page attrib-pointer)))
+                  (and (null-pointer? parent)
+                       (null-pointer? (lepton_object_get_page object-pointer))))
+          (scm-error 'object-state
+                     'attach-attribs!
+                     "Objects ~A and ~A are not part of the same page and/or component object"
+                     (list object attrib)
+                     '()))
+
+        ;; Check that neither is already an attached attribute.
+        (unless (null-pointer? (lepton_object_get_attached_to object-pointer))
+          (scm-error 'object-state
+                     'attach-attribs!
+                     "Object ~A is already attached as an attribute"
+                     (list object)
+                     '()))
+        (unless (null-pointer? (lepton_object_get_attached_to attrib-pointer))
+          (scm-error 'object-state
+                     'attach-attribs!
+                     "Object ~A is already attached as an attribute"
+                     (list attrib)
+                     '()))
+
+        ;; Carry out the attachment.
+        (lepton_object_emit_pre_change_notify attrib-pointer)
+        (o_attrib_attach attrib-pointer object-pointer TRUE)
+        (lepton_object_emit_change_notify attrib-pointer)
+
+        (lepton_object_page_set_changed object-pointer)
+
+        object)))
+
 (define-public (attach-attribs! obj . attribs)
   (for-each (lambda (x) (%attach-attrib! obj x)) attribs)
   obj)

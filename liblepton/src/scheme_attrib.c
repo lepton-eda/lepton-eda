@@ -30,80 +30,6 @@
 
 SCM_SYMBOL (attribute_format_sym, "attribute-format");
 
-/*! \brief Attach an attribute to an object.
- * \par Function Description
- * Attach \a attrib_s to \a obj_s.  The following conditions must be
- * satisfied:
- *
- * - Neither \a obj_s nor \a attrib_s may be already attached as an
- *   attribute.
- * - Both \a obj_s and \a attrib_s must be part of the same page
- *   and/or component object. (They can't be "loose" objects).
- * - \a attrib_s must be a text object.
- *
- * These restrictions are intentionally harsher than those of the C
- * API, and are required in order to ensure that the Scheme API is
- * safe.
- *
- * If \a attrib_s is already attached to \a obj_s, does nothing
- * successfully.
- *
- * \note Scheme API: Implements the %attach-attrib! procedure of
- * the (lepton core attrib) module.
- *
- * \param obj_s the object to which to attach an attribute.
- * \param attrib_s the attribute to attach.
- * \return \a obj_s.
- */
-SCM_DEFINE (attach_attrib_x, "%attach-attrib!", 2, 0, 0,
-            (SCM obj_s, SCM attrib_s), "Attach an attribute to an object.")
-{
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_attach_attrib_x);
-  SCM_ASSERT (edascm_is_object_type (attrib_s, OBJ_TEXT), attrib_s,
-              SCM_ARG2, s_attach_attrib_x);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  LeptonObject *attrib = edascm_to_object (attrib_s);
-
-  /* Check that attachment doesn't already exist */
-  if (lepton_object_get_attached_to (attrib) == obj) return obj_s;
-
-  LeptonObject *parent = lepton_object_get_parent (obj);
-  /* Check that both are in the same page and/or component object */
-  if ((parent != lepton_object_get_parent (attrib))
-      || (lepton_object_get_page (obj) != lepton_object_get_page (attrib))
-      || ((parent == NULL) && (lepton_object_get_page (obj) == NULL))) {
-    scm_error (edascm_object_state_sym, s_attach_attrib_x,
-               _("Objects ~A and ~A are not part of the same page and/or component object"),
-               scm_list_2 (obj_s, attrib_s), SCM_EOL);
-  }
-
-  /* Check that neither is already an attached attribute */
-  if (lepton_object_get_attached_to (obj) != NULL)
-  {
-    scm_error (edascm_object_state_sym, s_attach_attrib_x,
-               _("Object ~A is already attached as an attribute"),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-  if (lepton_object_get_attached_to (attrib) != NULL)
-  {
-    scm_error (edascm_object_state_sym, s_attach_attrib_x,
-               _("Object ~A is already attached as an attribute"),
-               scm_list_1 (attrib_s), SCM_EOL);
-  }
-
-  /* Carry out the attachment */
-  lepton_object_emit_pre_change_notify (attrib);
-  o_attrib_attach (attrib, obj, TRUE);
-  lepton_object_emit_change_notify (attrib);
-
-  lepton_object_page_set_changed (obj);
-
-  scm_remember_upto_here_1 (attrib_s);
-  return obj_s;
-}
-
 /*! \brief Detach an attribute from an object.
  * \par Function Description
  * Detach \a attrib_s from \a obj_s.  If \a attrib_s is not attached
@@ -167,7 +93,7 @@ init_module_lepton_core_attrib (void *unused)
   #include "scheme_attrib.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_attach_attrib_x, s_detach_attrib_x,
+  scm_c_export (s_detach_attrib_x,
                 NULL);
 }
 
