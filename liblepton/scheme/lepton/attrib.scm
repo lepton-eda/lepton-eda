@@ -35,7 +35,8 @@
 
   #:export (attrib-name
             attrib-value
-            parse-attrib)
+            parse-attrib
+            promotable-attribs)
 
   #:re-export (attribute?))
 
@@ -80,7 +81,16 @@ raises an 'attribute-format error."
 
 (define-public object-attribs %object-attribs)
 (define-public attrib-attachment %attrib-attachment)
-(define-public promotable-attribs %promotable-attribs)
+
+
+(define (promotable-attribs object)
+  "Returns the promotable attributes of component OBJECT,
+according to the current configuration."
+  (define pointer (geda-object->pointer* object 1 component? 'component))
+
+  (glist->object-list
+   (lepton_component_object_get_promotable pointer FALSE)))
+
 
 (define (attrib-value object)
   "Obtain the value of attribute text OBJECT.  If successful,

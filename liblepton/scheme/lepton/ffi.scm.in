@@ -158,6 +158,7 @@
             lepton_component_object_set_mirror
             lepton_component_object_get_x
             lepton_component_object_get_y
+            lepton_component_object_get_promotable
 
             lepton_line_object_get_x0
             lepton_line_object_get_y0
@@ -475,6 +476,7 @@
 (define-lff lepton_component_object_set_mirror void (list '* int))
 (define-lff lepton_component_object_get_x int '(*))
 (define-lff lepton_component_object_get_y int '(*))
+(define-lff lepton_component_object_get_promotable '* (list '* int))
 
 (define-lff lepton_line_object_get_x0 int '(*))
 (define-lff lepton_line_object_get_y0 int '(*))

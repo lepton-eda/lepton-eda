@@ -200,28 +200,6 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
   return obj_s;
 }
 
-/*! \brief Get a component object's promotable attribs.
- * \par Function Description
- * Returns the promotable attributes of \a component_s, according to the
- * current gEDA configuration.
- *
- * \param component_s the component object for which to get promotable
- *                    attributes.
- * \return a list of promotable attributes.
- */
-SCM_DEFINE (promotable_attribs, "%promotable-attribs", 1, 0, 0,
-            (SCM component_s), "Get a component's promotable attributes")
-{
-  SCM_ASSERT (edascm_is_object_type (component_s, OBJ_COMPONENT), component_s,
-              SCM_ARG1, s_promotable_attribs);
-
-  LeptonObject *obj = edascm_to_object (component_s);
-
-  GList *lst = lepton_component_object_get_promotable (obj, FALSE);
-
-  return edascm_from_object_glist (lst);
-}
-
 
 /*!
  * \brief Create the (lepton core attrib) Scheme module.
@@ -238,7 +216,6 @@ init_module_lepton_core_attrib (void *unused)
   /* Add them to the module's public definitions. */
   scm_c_export (s_object_attribs, s_attrib_attachment,
                 s_attach_attrib_x, s_detach_attrib_x,
-                s_promotable_attribs,
                 NULL);
 }
 
