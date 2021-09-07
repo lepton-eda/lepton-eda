@@ -72,7 +72,10 @@ SCM_DEFINE (detach_attrib_x, "%detach-attrib!", 2, 0, 0,
   /* Detach object */
   lepton_object_emit_pre_change_notify (attrib);
   GList *attribs = lepton_object_get_attribs (obj);
-  o_attrib_remove (&attribs, attrib);
+  /* o_attrib_remove (attribs, attrib); */
+  lepton_object_set_attribs (obj, g_list_remove (attribs, attrib));
+  lepton_object_set_attached_to (attrib, NULL);
+
   lepton_object_set_color (attrib, DETACHED_ATTRIBUTE_COLOR);
   lepton_object_emit_change_notify (attrib);
 
