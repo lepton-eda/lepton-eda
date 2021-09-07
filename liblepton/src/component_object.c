@@ -538,8 +538,8 @@ lepton_component_object_set_embedded (LeptonObject *o_current,
  *  \returns              A linked list of LeptonObjects to promote.
  */
 GList*
-o_component_get_promotable (LeptonObject *object,
-                            int detach)
+lepton_component_object_get_promotable (LeptonObject *object,
+                                        int detach)
 {
   GList *promoted = NULL;
   GList *attribs;
@@ -603,7 +603,7 @@ o_component_promote_attribs (LeptonObject *object)
   cfg_read_bool ("schematic.attrib", "keep-invisible",
                  default_keep_invisible, &keep_invisible);
 
-  promotable = o_component_get_promotable (object, FALSE);
+  promotable = lepton_component_object_get_promotable (object, FALSE);
 
   /* Run through the attributes deciding if we want to keep them (in
    * which case we copy them and make them invisible) or if we want to
@@ -656,7 +656,7 @@ o_component_remove_promotable_attribs (LeptonObject *object)
   GList *promotable, *iter;
   gboolean keep_invisible;
 
-  promotable = o_component_get_promotable (object, FALSE);
+  promotable = lepton_component_object_get_promotable (object, FALSE);
 
   if (promotable == NULL)
     return;

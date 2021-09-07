@@ -151,8 +151,8 @@ lepton_component_object_get_position (const LeptonObject *object,
                                       gint *x,
                                       gint *y);
 GList*
-o_component_get_promotable (LeptonObject *object,
-                            int detach);
+lepton_component_object_get_promotable (LeptonObject *object,
+                                        int detach);
 
 void
 set_render_placeholders();
