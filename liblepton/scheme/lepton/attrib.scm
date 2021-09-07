@@ -33,7 +33,8 @@
   #:use-module (lepton object type)
   #:use-module (lepton page)
 
-  #:export (attrib-name
+  #:export (attrib-attachment
+            attrib-name
             attrib-value
             object-attribs
             parse-attrib
@@ -87,7 +88,14 @@ raises an 'attribute-format error."
   (glist->object-list (lepton_object_get_attribs pointer)))
 
 
-(define-public attrib-attachment %attrib-attachment)
+(define (attrib-attachment object)
+  "Returns the object that attribute OBJECT is attached to.  If
+OBJECT is not attached as an attribute, returns #f."
+  (define pointer (geda-object->pointer* object 1 attribute? 'attribute))
+
+  (let ((attachment (lepton_object_get_attached_to pointer)))
+    (and (not (null-pointer? attachment))
+         (pointer->geda-object attachment))))
 
 
 (define (promotable-attribs object)

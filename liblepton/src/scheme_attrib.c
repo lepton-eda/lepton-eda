@@ -30,34 +30,6 @@
 
 SCM_SYMBOL (attribute_format_sym, "attribute-format");
 
-/*! \brief Get the object that an attribute is attached to.
- * \par Function Description
- * Returns the #LeptonObject smob that \a attrib_s is attached to.  If \a
- * attrib_s is not attached as an attribute, returns SCM_BOOL_F.
- *
- * \note Scheme API: Implements the %attrib-attachment procedure of
- * the (lepton core attrib) module.
- *
- * \param attrib_s the object to get attribute attachment for.
- * \return the object to which \a attrib_s is attached, or SCM_BOOL_F.
- */
-SCM_DEFINE (attrib_attachment, "%attrib-attachment", 1, 0, 0,
-            (SCM attrib_s), "Get the object that an attribute is attached to.")
-{
-  /* Ensure that the argument is an object */
-  SCM_ASSERT (EDASCM_OBJECTP (attrib_s), attrib_s,
-              SCM_ARG1, s_attrib_attachment);
-
-  LeptonObject *obj = edascm_to_object (attrib_s);
-  LeptonObject *attachment = lepton_object_get_attached_to (obj);
-
-  if (attachment == NULL) {
-    return SCM_BOOL_F;
-  } else {
-    return edascm_from_object (attachment);
-  }
-}
-
 /*! \brief Attach an attribute to an object.
  * \par Function Description
  * Attach \a attrib_s to \a obj_s.  The following conditions must be
@@ -192,8 +164,7 @@ init_module_lepton_core_attrib (void *unused)
   #include "scheme_attrib.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_attrib_attachment,
-                s_attach_attrib_x, s_detach_attrib_x,
+  scm_c_export (s_attach_attrib_x, s_detach_attrib_x,
                 NULL);
 }
 
