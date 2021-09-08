@@ -36,7 +36,8 @@
   #:export (close-page!
             file->page
             make-page
-            page?))
+            page?
+            page-filename))
 
 (define (page? page)
   "Returns #t if PAGE is a #<geda-page> instance, otherwise
@@ -66,7 +67,13 @@ PAGE after calling this function will cause an error."
                  pointer))
 
 
-(define-public page-filename %page-filename)
+(define (page-filename page)
+  "Returns the filename associated with PAGE as a string."
+  (define pointer (geda-page->pointer* page 1))
+
+  (pointer->string (s_page_get_filename pointer)))
+
+
 (define-public set-page-filename! %set-page-filename!)
 (define-public page-contents %page-contents)
 (define-public page-dirty? %page-dirty?)

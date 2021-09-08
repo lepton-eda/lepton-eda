@@ -57,29 +57,6 @@ SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
   return rlst;
 }
 
-/*! \brief Get the filename associated with a page.
- * \par Function Description
- * Retrieves the filename associated with the #LeptonPage smob \a page_s.
- *
- * \note Scheme API: Implements the %page-filename procedure of the
- * (lepton core page) module.
- *
- * \return a Scheme string containing the page filename.
- */
-SCM_DEFINE (page_filename, "%page-filename", 1, 0, 0,
-            (SCM page_s), "Get a page's associated filename")
-{
-  LeptonPage *page;
-
-  /* Ensure that the argument is a page smob */
-  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_page_filename);
-
-
-  page = edascm_to_page (page_s);
-  return scm_from_utf8_string (s_page_get_filename(page));
-}
-
 /*! \brief Change the filename associated with a page.
  * \par Function Description
  * Sets the filename associated with the #LeptonPage smob \a page_s.
@@ -401,7 +378,7 @@ init_module_lepton_core_page (void *unused)
   /* Add them to the module's public definitions. */
 
   scm_c_export (s_active_pages,
-                s_page_filename, s_set_page_filename_x, s_page_contents,
+                s_set_page_filename_x, s_page_contents,
                 s_object_page, s_page_append_x, s_page_remove_x, s_page_dirty,
                 s_set_page_dirty_x, s_page_to_string, s_string_to_page, NULL);
 }
