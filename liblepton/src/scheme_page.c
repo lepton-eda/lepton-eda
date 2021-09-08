@@ -206,7 +206,7 @@ SCM_DEFINE (set_page_dirty_x, "%set-page-dirty!", 2, 0, 0,
               SCM_ARG1, s_set_page_dirty_x);
 
   LeptonPage *page = edascm_to_page (page_s);
-  page->CHANGED = scm_is_true (flag_s);
+  lepton_page_set_changed (page, scm_is_true (flag_s));
   return page_s;
 }
 
