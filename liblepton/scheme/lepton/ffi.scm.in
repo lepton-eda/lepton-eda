@@ -280,6 +280,7 @@
             lepton_toplevel_get_page_current
 
             lepton_page_get_changed
+            lepton_page_set_changed
             s_page_delete
             s_page_get_filename
             s_page_set_filename
@@ -593,6 +594,7 @@
 
 ;;; page.c
 (define-lff lepton_page_get_changed int '(*))
+(define-lff lepton_page_set_changed void (list '* int))
 (define-lff s_page_delete void '(* *))
 (define-lff s_page_get_filename '* '(*))
 (define-lff s_page_set_filename void '(* *))

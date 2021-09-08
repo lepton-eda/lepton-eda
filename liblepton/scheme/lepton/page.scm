@@ -41,6 +41,7 @@
             object-page
             page?
             page-dirty?
+            set-page-dirty!
             page-filename
             set-page-filename!))
 
@@ -108,6 +109,16 @@ otherwise returns #f."
   (true? (lepton_page_get_changed pointer)))
 
 
+(define* (set-page-dirty! page #:optional (state #t))
+  "Clears the flag of changed state of PAGE if dirty STATE is #f.
+Otherwise, flags PAGE as having been modified.  Returns PAGE."
+  (define pointer (geda-page->pointer* page 1))
+  (check-boolean state 2)
+
+  (lepton_page_set_changed pointer (if state TRUE FALSE))
+  page)
+
+
 (define-public page->string %page->string)
 (define-public string->page %string->page)
 
@@ -118,10 +129,6 @@ otherwise returns #f."
 (define-public (page-remove! P . objects)
   (for-each (lambda (x) (%page-remove! P x)) objects)
   P)
-
-(define*-public (set-page-dirty! page #:optional (state #t))
-  (%set-page-dirty! page state))
-
 
 ;;; Reads file FILENAME and outputs a page with the same name.
 (define (file-contents->page filename)
