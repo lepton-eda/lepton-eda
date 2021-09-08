@@ -281,6 +281,7 @@
 
             s_page_delete
             s_page_get_filename
+            s_page_set_filename
             s_page_new))
 
 ;;; Helper to check if result of C function is TRUE (non-zero).
@@ -592,6 +593,7 @@
 ;;; page.c
 (define-lff s_page_delete void '(* *))
 (define-lff s_page_get_filename '* '(*))
+(define-lff s_page_set_filename void '(* *))
 (define-lff s_page_new '* '(* *))
 
 

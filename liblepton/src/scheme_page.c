@@ -57,33 +57,6 @@ SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
   return rlst;
 }
 
-/*! \brief Change the filename associated with a page.
- * \par Function Description
- * Sets the filename associated with the #LeptonPage smob \a page_s.
- *
- * \note Scheme API: Implements the %set-page-filename! procedure of
- * the (lepton core page) module.
- *
- * \param page_s page to set filename for.
- * \param filename_s new filename for \a page.
- * \return \a page.
- */
-SCM_DEFINE (set_page_filename_x, "%set-page-filename!", 2, 0, 0,
-            (SCM page_s, SCM filename_s), "Set a page's associated filename")
-{
-  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_set_page_filename_x);
-  SCM_ASSERT (scm_is_string (filename_s), filename_s,
-              SCM_ARG2, s_set_page_filename_x);
-
-  LeptonPage *page = edascm_to_page (page_s);
-  char *new_fn = scm_to_utf8_string (filename_s);
-  s_page_set_filename (page, new_fn);
-  free (new_fn);
-
-  return page_s;
-}
-
 /*! \brief Get a list of objects in a page.
  * \par Function Description
  * Retrieves the contents of a the #LeptonPage smob \a page_s as a Scheme
@@ -378,7 +351,7 @@ init_module_lepton_core_page (void *unused)
   /* Add them to the module's public definitions. */
 
   scm_c_export (s_active_pages,
-                s_set_page_filename_x, s_page_contents,
+                s_page_contents,
                 s_object_page, s_page_append_x, s_page_remove_x, s_page_dirty,
                 s_set_page_dirty_x, s_page_to_string, s_string_to_page, NULL);
 }
