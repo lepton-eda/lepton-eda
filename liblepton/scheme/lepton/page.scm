@@ -19,10 +19,12 @@
 
 
 (define-module (lepton page)
+  #:use-module (ice-9 match)
   #:use-module (ice-9 optargs)
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
                 #:prefix rdelim:)
+  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   ;; Import C procedures
@@ -47,7 +49,8 @@
             set-page-dirty!
             page-filename
             set-page-filename!
-            page->string))
+            page->string
+            string->page))
 
 (define (page? page)
   "Returns #t if PAGE is a #<geda-page> instance, otherwise
@@ -138,7 +141,52 @@ Otherwise, flags PAGE as having been modified.  Returns PAGE."
    (lepton_object_list_to_buffer (s_page_objects pointer))))
 
 
-(define-public string->page %string->page)
+(define (string->page filename str)
+  "Creates a new page from a string representation. Returns the
+page with filename FILENAME created by parsing STR.  Raises a
+'string-format error if STR contains invalid gEDA file format
+syntax."
+  (define (gerror-list *err)
+    ;; GError struct consists of:
+    ;; GQuark (uint32) domain
+    ;; gint (int) code
+    ;; gchar* (char*) message
+    (parse-c-struct *err (list uint32 int '*)))
+
+  (define (gerror-message *err)
+    (match (gerror-list *err)
+      ((domain code message)
+       (pointer->string message))
+      (_ #f)))
+
+  (define (gerror-error *error)
+    (let ((*err (dereference-pointer *error)))
+      (unless (null-pointer? *err)
+        (let ((message (gerror-message *err)))
+          (g_clear_error *error)
+          (scm-error 'string-format
+                     'string-page
+                     "Parse error: ~s"
+                     (list message)
+                     '())))))
+
+  (check-string filename 1)
+  (check-string str 2)
+
+  (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+         (pointer (s_page_new (edascm_c_current_toplevel)
+                              (string->pointer filename)))
+         (objects (o_read_buffer pointer
+                                 %null-pointer
+                                 (string->pointer str)
+                                 (string-length str)
+                                 (s_page_get_filename pointer)
+                                 *error)))
+    (gerror-error *error)
+
+    (s_page_append_list pointer objects)
+
+    (pointer->geda-page pointer)))
 
 
 (define (%page-append! page object)

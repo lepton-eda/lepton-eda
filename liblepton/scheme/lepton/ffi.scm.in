@@ -34,6 +34,7 @@
             check-vector
 
             ;; glib, gobject.
+            g_clear_error
             g_free
             g_list_append
             g_list_free
@@ -286,6 +287,7 @@
             lepton_page_set_changed
             lepton_page_get_selection_list
             s_page_append
+            s_page_append_list
             s_page_delete
             s_page_get_filename
             s_page_set_filename
@@ -294,7 +296,9 @@
             s_page_remove
             lepton_page_list_get_glist
 
-            o_selection_remove))
+            o_selection_remove
+
+            o_read_buffer))
 
 ;;; Helper to check if result of C function is TRUE (non-zero).
 (define true? (negate zero?))
@@ -327,6 +331,7 @@
                            args))))
          (force proc))))))
 
+(define-lff g_clear_error void '(*) libglib)
 (define-lff g_free void '(*) libglib)
 (define-lff g_list_append '* '(* *) libglib)
 (define-lff g_list_free void '(*) libglib)
@@ -611,6 +616,7 @@
 (define-lff lepton_page_set_changed void (list '* int))
 (define-lff lepton_page_get_selection_list '* '(*))
 (define-lff s_page_append void '(* *))
+(define-lff s_page_append_list void '(* *))
 (define-lff s_page_delete void '(* *))
 (define-lff s_page_get_filename '* '(*))
 (define-lff s_page_set_filename void '(* *))
@@ -621,6 +627,9 @@
 
 ;;; o_selection.c
 (define-lff o_selection_remove void '(* *))
+
+;;; a_basic.c
+(define-lff o_read_buffer '* (list '* '* '* int '* '*))
 
 (define (check-boolean val pos)
   ;; This function is defined just for consistency.  Someone may

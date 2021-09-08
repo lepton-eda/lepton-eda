@@ -28,56 +28,6 @@
 #include "liblepton_priv.h"
 #include "libleptonguile_priv.h"
 
-SCM_SYMBOL (edascm_string_format_sym , "string-format");
-
-/*! \brief Create a page from a string representation.
- * \par Function Description
- * Returns a page with filename \a filename_s created by parsing \a
- * str_s. Throws an error if \a str_s contains invalid gEDA file
- * format syntax.
- *
- * \note Scheme API: Implements the %string->page procedure of the
- * (lepton core page) module.
- *
- * \param filename_s Filename for new page.
- * \param str_s      String to parse to create page.
- * \return a new page created by parsing \a str_s.
- */
-SCM_DEFINE (string_to_page, "%string->page", 2, 0, 0,
-            (SCM filename_s, SCM str_s),
-            "Create a new page from a string.")
-{
-  /* Ensure that the arguments are strings */
-  SCM_ASSERT (scm_is_string (filename_s), filename_s,
-              SCM_ARG1, s_string_to_page);
-  SCM_ASSERT (scm_is_string (str_s), str_s,
-              SCM_ARG2, s_string_to_page);
-
-  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
-  char *filename = scm_to_utf8_string (filename_s);
-  LeptonPage *page = s_page_new (toplevel, filename);
-  free (filename);
-
-  size_t len;
-  GError * err = NULL;
-  char *str = scm_to_utf8_stringn (str_s, &len);
-  GList *objects = o_read_buffer (page, NULL, str, len,
-                                  s_page_get_filename(page), &err);
-  free (str);
-
-  if (err) {
-      SCM error_message = scm_from_utf8_string (err->message);
-
-      g_error_free(err);
-      scm_error (edascm_string_format_sym, s_string_to_page,
-                 _("Parse error: ~s"), scm_list_1 (error_message), SCM_EOL);
-  }
-
-  s_page_append_list (page, objects);
-
-  return edascm_from_page (page);
-}
-
 /*!
  * \brief Create the (lepton core page) Scheme module.
  * \par Function Description
@@ -92,7 +42,7 @@ init_module_lepton_core_page (void *unused)
 
   /* Add them to the module's public definitions. */
 
-  scm_c_export (s_string_to_page, NULL);
+  scm_c_export (NULL);
 }
 
 /*!
