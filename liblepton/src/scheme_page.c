@@ -185,28 +185,6 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
   return page_s;
 }
 
-/*! \brief Check whether a page has been flagged as changed.
- * \par Function Description
- * Returns SCM_BOOL_T if \a page_s has been flagged as having been
- * modified.
- *
- * \note Scheme API: Implements the %page-dirty? procedure of the
- * (lepton core page) module.
- *
- * \param page_s page to inspect.
- * \return SCM_BOOL_T if page is dirtied, otherwise SCM_BOOL_F.
- */
-SCM_DEFINE (page_dirty, "%page-dirty?", 1, 0, 0,
-            (SCM page_s), "Check whether a page has been flagged as changed.")
-{
-  /* Ensure that the argument is a page smob */
-  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_page_dirty);
-
-  LeptonPage *page = edascm_to_page (page_s);
-  return lepton_page_get_changed (page) ? SCM_BOOL_T : SCM_BOOL_F;
-}
-
 /*! \brief Set a page's changed flag.
  * \par Function Description
  * If \a flag_s is true, flag \a page_s as having been modified.
@@ -324,7 +302,7 @@ init_module_lepton_core_page (void *unused)
 
   scm_c_export (s_active_pages,
                 s_page_contents,
-                s_page_append_x, s_page_remove_x, s_page_dirty,
+                s_page_append_x, s_page_remove_x,
                 s_set_page_dirty_x, s_page_to_string, s_string_to_page, NULL);
 }
 

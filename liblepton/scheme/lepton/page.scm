@@ -40,6 +40,7 @@
             make-page
             object-page
             page?
+            page-dirty?
             page-filename
             set-page-filename!))
 
@@ -97,7 +98,16 @@ PAGE after calling this function will cause an error."
 
 
 (define-public page-contents %page-contents)
-(define-public page-dirty? %page-dirty?)
+
+
+(define (page-dirty? page)
+  "Returns #t if PAGE has been flagged as having been modified,
+otherwise returns #f."
+  (define pointer (geda-page->pointer* page 1))
+
+  (true? (lepton_page_get_changed pointer)))
+
+
 (define-public page->string %page->string)
 (define-public string->page %string->page)
 
