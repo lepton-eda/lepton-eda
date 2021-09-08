@@ -57,36 +57,6 @@ SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
   return rlst;
 }
 
-/*! \brief Create a new page.
- * \par Function Description
- * Creates and initialises a new #LeptonPage structure associated
- * with the filename \a filename_s. Note that this does not check
- * that a file exists with that name, or attempt to load any data
- * from it.
- *
- * \note Scheme API: Implements the %new-page procedure of the
- * (lepton core page) module.
- *
- * \return a newly-created #LeptonPage smob.
- */
-SCM_DEFINE (new_page, "%new-page", 1, 0, 0,
-            (SCM filename_s), "Create a new page")
-{
-  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
-  char *filename;
-  LeptonPage *page;
-
-  /* Ensure that the argument is a string */
-  SCM_ASSERT (scm_is_string (filename_s), filename_s,
-              SCM_ARG1, s_new_page);
-
-  filename = scm_to_utf8_string (filename_s);
-  page = s_page_new (toplevel, filename);
-  g_free (filename);
-
-  return edascm_from_page (page);
-}
-
 /*! \brief Close a page
  * \par Function Description
  * Destroys the #LeptonPage structure \a page_s, freeing all of
@@ -457,7 +427,7 @@ init_module_lepton_core_page (void *unused)
 
   /* Add them to the module's public definitions. */
 
-  scm_c_export (s_active_pages, s_new_page, s_close_page_x,
+  scm_c_export (s_active_pages, s_close_page_x,
                 s_page_filename, s_set_page_filename_x, s_page_contents,
                 s_object_page, s_page_append_x, s_page_remove_x, s_page_dirty,
                 s_set_page_dirty_x, s_page_to_string, s_string_to_page, NULL);

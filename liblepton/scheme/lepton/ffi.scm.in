@@ -277,7 +277,9 @@
             s_conn_return_others
             s_conn_update_object
 
-            lepton_toplevel_get_page_current))
+            lepton_toplevel_get_page_current
+
+            s_page_new))
 
 ;;; Helper to check if result of C function is TRUE (non-zero).
 (define true? (negate zero?))
@@ -584,6 +586,10 @@
 (define-lff s_conn_remove_object_connections void '(*))
 (define-lff s_conn_return_others '* '(* *))
 (define-lff s_conn_update_object void '(* *))
+
+;;; page.c
+(define-lff s_page_new '* '(* *))
+
 
 (define (check-boolean val pos)
   ;; This function is defined just for consistency.  Someone may

@@ -29,10 +29,12 @@
   #:use-module (lepton core gettext)
   #:use-module (lepton core page)
   #:use-module (lepton ffi)
+  #:use-module (lepton page foreign)
 
   #:use-module (lepton os)
 
   #:export (file->page
+            make-page
             page?))
 
 (define (page? page)
@@ -43,7 +45,17 @@ returns #f."
 (define-public object-page %object-page)
 
 (define-public active-pages %active-pages)
-(define-public make-page %new-page)
+
+
+(define (make-page filename)
+  "Creates and returns a new page associated with FILENAME.  Note
+that this does not check that a file exists with that name, or
+attempt to load any data from it."
+  (check-string filename 1)
+  (pointer->geda-page (s_page_new (edascm_c_current_toplevel)
+                                  (string->pointer filename))))
+
+
 (define-public close-page! %close-page!)
 (define-public page-filename %page-filename)
 (define-public set-page-filename! %set-page-filename!)
