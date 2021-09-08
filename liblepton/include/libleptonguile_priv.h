@@ -195,8 +195,4 @@ SCM edascm_from_toplevel (LeptonToplevel *toplevel);
 
 /* ---------------------------------------- */
 
-int edascm_is_object_type (SCM smob, int type);
-
-
-/* ---------------------------------------- */
 SCM edascm_from_closure (SCM (*func)(SCM, gpointer), gpointer user_data);

@@ -13,7 +13,6 @@ scheme_api_sources = \
 	scheme_init.c \
 	scheme_smob.c \
 	scheme_toplevel.c \
-	scheme_object.c \
 	scheme_page.c \
 	scheme_config.c \
 	scheme_closure.c \
