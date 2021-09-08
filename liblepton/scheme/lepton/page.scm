@@ -129,6 +129,36 @@ Otherwise, flags PAGE as having been modified.  Returns PAGE."
 
 (define-public string->page %string->page)
 
+
+(define (%page-append! page object)
+  "Adds OBJECT to PAGE.  If OBJECT is already attached to a page
+or to a component object, raises an 'object-state error.  Returns
+modified PAGE."
+  (define page-pointer (geda-page->pointer* page 1))
+  (define object-pointer (geda-object->pointer* object 2))
+
+  ;; Check that the object isn't already attached to something.
+  (let ((object-page-pointer (lepton_object_get_page object-pointer)))
+    (when (or (and (not (null-pointer? object-page-pointer))
+                   (not (equal? object-page-pointer page-pointer)))
+              (not (null-pointer? (lepton_object_get_parent object-pointer))))
+      (scm-error 'object-state
+                 'page-append!
+                 "Object ~A is already attached to something."
+                 (list object)
+                 '()))
+
+    (if (equal? object-page-pointer page-pointer)
+        page
+
+        (begin
+          (lepton_object_emit_pre_change_notify object-pointer)
+          (s_page_append page-pointer object-pointer)
+          (lepton_object_emit_change_notify object-pointer)
+          (lepton_page_set_changed page-pointer 1)
+
+          page))))
+
 (define-public (page-append! P . objects)
   (for-each (lambda (x) (%page-append! P x)) objects)
   P)

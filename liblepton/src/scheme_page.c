@@ -81,50 +81,6 @@ SCM_DEFINE (page_contents, "%page-contents", 1, 0, 0,
   return edascm_from_object_glist (s_page_objects (page));
 }
 
-/*! \brief Add an object to a page.
- * \par Function Description
- * Adds \a obj_s to \a page_s.  If \a obj_s is already attached to a
- * #LeptonPage or to a component #LeptonObject, throws a Scheme error.
- *
- * \note Scheme API: Implements the %page-append! procedure of the
- * (lepton core page) module.
- *
- * \return \a page_s.
- */
-SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
-            (SCM page_s, SCM obj_s), "Add an object to a page.")
-{
-  /* Ensure that the arguments have the correct types. */
-  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_page_append_x);
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG2, s_page_append_x);
-
-  LeptonPage *page = edascm_to_page (page_s);
-  LeptonObject *obj = edascm_to_object (obj_s);
-
-  /* Check that the object isn't already attached to something. */
-  LeptonPage *curr_page = lepton_object_get_page (obj);
-  if (((curr_page != NULL) && (curr_page != page)) ||
-      (lepton_object_get_parent (obj) != NULL))
-  {
-    scm_error (edascm_object_state_sym, s_page_append_x,
-               _("Object ~A is already attached to something"),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-
-  if (curr_page == page) return obj_s;
-
-  /* Object cleanup now managed by C code. */
-  edascm_c_set_gc (obj_s, 0);
-  lepton_object_emit_pre_change_notify (obj);
-  s_page_append (page, obj);
-  lepton_object_emit_change_notify (obj);
-  lepton_page_set_changed (page, 1); /* Ugh. */
-
-  return page_s;
-}
-
 /*! \brief Remove an object from a page.
  * \par Function Description
  * Removes \a obj_s from \a page_s.  If \a obj_s is attached to a
@@ -250,7 +206,7 @@ init_module_lepton_core_page (void *unused)
 
   scm_c_export (s_active_pages,
                 s_page_contents,
-                s_page_append_x, s_page_remove_x,
+                s_page_remove_x,
                 s_string_to_page, NULL);
 }
 
