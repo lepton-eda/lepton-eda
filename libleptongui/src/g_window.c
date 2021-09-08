@@ -151,8 +151,7 @@ SCM_DEFINE (set_active_page_x, "%set-active-page!", 1, 0, 0,
  * Closes the page \a page_s.
  *
  * \note Scheme API: Implements the %close-page! procedure in the
- * (schematic core window) module.  Overrides the %close-page! procedure
- * in the (lepton core page) module.
+ * (schematic core window) module.
  *
  * \param page_s Page to close.
  * \return SCM_UNDEFINED
@@ -262,14 +261,6 @@ init_module_schematic_core_window (void *unused)
   scm_c_export (s_current_window, s_active_page, s_set_active_page_x,
                 s_override_close_page_x, s_pointer_position,
                 s_snap_point, NULL);
-
-  /* Override procedures in the (lepton core page) module */
-  {
-    SCM lepton_page_module = scm_c_resolve_module ("lepton core page");
-    SCM close_page_proc =
-      scm_variable_ref (scm_c_lookup (s_override_close_page_x));
-    scm_c_module_define (lepton_page_module, "%close-page!", close_page_proc);
-  }
 }
 
 /*!

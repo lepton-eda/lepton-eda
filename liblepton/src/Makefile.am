@@ -4,7 +4,6 @@ lib_LTLIBRARIES = liblepton.la
 BUILT_SOURCES = \
 	scheme_init.x \
 	scheme_toplevel.x \
-	scheme_page.x \
 	scheme_config.x \
 	scheme_closure.x \
 	g_rc.x
@@ -13,7 +12,6 @@ scheme_api_sources = \
 	scheme_init.c \
 	scheme_smob.c \
 	scheme_toplevel.c \
-	scheme_page.c \
 	scheme_config.c \
 	scheme_closure.c \
 	edascmhookproxy.c \
