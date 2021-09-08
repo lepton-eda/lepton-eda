@@ -195,7 +195,6 @@ SCM edascm_from_toplevel (LeptonToplevel *toplevel);
 
 /* ---------------------------------------- */
 
-SCM edascm_from_object_glist (const GList *objs);
 int edascm_is_object_type (SCM smob, int type);
 
 

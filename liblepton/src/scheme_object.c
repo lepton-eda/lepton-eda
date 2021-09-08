@@ -29,36 +29,6 @@
 #include "libleptonguile_priv.h"
 
 
-/*! \brief Convert a GList of objects into a Scheme list.
- * \par Function Description
- * Takes a GList of #LeptonObject and returns a Scheme list of corresponding
- * object smobs.
- *
- * \warning If the #LeptonObject structures are to be subsequently managed
- * only by Scheme, the smobs in the returned list must be marked as
- * safe for garbage collection (by calling edascm_c_set_gc()).
- *
- * \param [in] objs a #GList of #LeptonObject instances.
- * \return a Scheme list of smobs corresponding to each #LeptonObject.
- */
-SCM
-edascm_from_object_glist (const GList *objs)
-{
-  SCM lst = SCM_EOL;
-  SCM rlst;
-  GList *iter = (GList *) objs;
-
-  while (iter != NULL) {
-    lst = scm_cons (edascm_from_object ((LeptonObject*) iter->data), lst);
-    iter = g_list_next (iter);
-  }
-
-  rlst = scm_reverse (lst);
-
-  scm_remember_upto_here_1 (lst);
-  return rlst;
-}
-
 /*! \brief Test if an object smob is of a particular type.
  * \par Function Description
  * Checks if \a smob contains an #LeptonObject of the given \a type. This is
