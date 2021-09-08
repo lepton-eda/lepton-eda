@@ -23,8 +23,6 @@
   #:use-module (srfi srfi-11)
   #:use-module (system foreign)
 
-  ; Import C procedures
-  #:use-module (lepton core attrib)
   #:use-module (lepton core gettext)
 
   #:use-module (lepton color-map)
