@@ -50,9 +50,11 @@
             edascm_c_current_toplevel
             edascm_is_config
             edascm_is_object
-            edascm_is_page
             edascm_from_object
             edascm_to_object
+            edascm_is_page
+            edascm_from_page
+            edascm_to_page
 
             eda_get_system_config_dirs
             eda_get_system_data_dirs
@@ -377,8 +379,10 @@
 (define-lff edascm_is_config int '(*))
 (define-lff edascm_is_object int '(*))
 (define-lff edascm_is_page int '(*))
-(define-lff edascm_to_object '* '(*))
 (define-lff edascm_from_object '* '(*))
+(define-lff edascm_to_object '* '(*))
+(define-lff edascm_from_page '* '(*))
+(define-lff edascm_to_page '* '(*))
 
 ;;; object.c
 (define-lff lepton_object_get_attached_to '* '(*))

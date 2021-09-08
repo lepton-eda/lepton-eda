@@ -26,6 +26,7 @@ nobase_dist_scmdata_DATA = \
 	lepton/option.scm \
 	lepton/os.scm \
 	lepton/page.scm \
+	lepton/page/foreign.scm \
 	lepton/rc.scm \
 	lepton/repl.scm \
 	lepton/srfi-37.scm \
