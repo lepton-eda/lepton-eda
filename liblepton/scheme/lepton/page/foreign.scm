@@ -23,6 +23,7 @@
 
   #:export (geda-page-pointer?
             geda-page->pointer
+            geda-page->pointer*
             pointer->geda-page
             glist->page-list))
 
@@ -49,3 +50,21 @@ list.  Returns the Scheme list of pages."
         (reverse ls)
         (loop (glist-next gls)
               (cons (pointer->geda-page (glist-data gls)) ls)))))
+
+(define-syntax geda-page->pointer*
+  (syntax-rules ()
+    ((_ page pos)
+     (let ((pointer (geda-page->pointer page)))
+       (if (null-pointer? pointer)
+           (let ((proc-name
+                  ;; Provision against Guile-2.0 that does not
+                  ;; have the procedure.
+                  (if (defined? 'frame-procedure-name)
+                      (frame-procedure-name (stack-ref (make-stack #t) 1))
+                      '??)))
+             (scm-error 'wrong-type-arg
+                        proc-name
+                        "Wrong type argument in position ~A: ~A"
+                        (list pos page)
+                        #f))
+           pointer)))))
