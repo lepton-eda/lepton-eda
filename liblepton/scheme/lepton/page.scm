@@ -163,6 +163,56 @@ modified PAGE."
   (for-each (lambda (x) (%page-append! P x)) objects)
   P)
 
+
+(define (%page-remove! page object)
+  "Removes OBJECT from PAGE.  If OBJECT is attached to a page
+other than PAGE, or to a component object, raises an 'object-state
+error.  If OBJECT is not attached to a page, does nothing.
+Returns PAGE."
+  (define page-pointer (geda-page->pointer* page 1))
+  (define object-pointer (geda-object->pointer* object 2))
+
+  ;; Check that the object is not attached to something else.
+  (let ((object-page-pointer (lepton_object_get_page object-pointer)))
+    (when (or (and (not (null-pointer? object-page-pointer))
+                   (not (equal? object-page-pointer page-pointer)))
+              (not (null-pointer? (lepton_object_get_parent object-pointer))))
+      (scm-error 'object-state
+                 'page-remove!
+                 "Object ~A is attached to a component or different page."
+                 (list object)
+                 '()))
+
+    ;; Check that object is not attached as an attribute.
+    (unless (null-pointer? (lepton_object_get_attached_to object-pointer))
+      (scm-error 'object-state
+                 'page-remove!
+                 "Object ~A is attached as an attribute."
+                 (list object)
+                 '()))
+
+    ;; Check that object doesn't have attributes.
+    (unless (null-pointer? (lepton_object_get_attribs object-pointer))
+      (scm-error 'object-state
+                 'page-remove!
+                 "Object ~A has attributes."
+                 (list object)
+                 '()))
+
+    (if (null-pointer? object-page-pointer)
+        page
+
+        (begin
+          (lepton_object_emit_pre_change_notify object-pointer)
+          (s_page_remove page-pointer object-pointer)
+          (lepton_page_set_changed page-pointer 1)
+          ;; If the object is currently selected unselect it.
+          (o_selection_remove (lepton_page_get_selection_list page-pointer)
+                              object-pointer)
+          (lepton_object_emit_change_notify object-pointer)
+          page))))
+
+
 (define-public (page-remove! P . objects)
   (for-each (lambda (x) (%page-remove! P x)) objects)
   P)

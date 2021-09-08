@@ -283,12 +283,16 @@
 
             lepton_page_get_changed
             lepton_page_set_changed
+            lepton_page_get_selection_list
             s_page_append
             s_page_delete
             s_page_get_filename
             s_page_set_filename
             s_page_new
-            s_page_objects))
+            s_page_objects
+            s_page_remove
+
+            o_selection_remove))
 
 ;;; Helper to check if result of C function is TRUE (non-zero).
 (define true? (negate zero?))
@@ -602,13 +606,17 @@
 ;;; page.c
 (define-lff lepton_page_get_changed int '(*))
 (define-lff lepton_page_set_changed void (list '* int))
+(define-lff lepton_page_get_selection_list '* '(*))
 (define-lff s_page_append void '(* *))
 (define-lff s_page_delete void '(* *))
 (define-lff s_page_get_filename '* '(*))
 (define-lff s_page_set_filename void '(* *))
 (define-lff s_page_new '* '(* *))
 (define-lff s_page_objects '* '(*))
+(define-lff s_page_remove void '(* *))
 
+;;; o_selection.c
+(define-lff o_selection_remove void '(* *))
 
 (define (check-boolean val pos)
   ;; This function is defined just for consistency.  Someone may

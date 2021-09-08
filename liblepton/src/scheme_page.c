@@ -81,70 +81,6 @@ SCM_DEFINE (page_contents, "%page-contents", 1, 0, 0,
   return edascm_from_object_glist (s_page_objects (page));
 }
 
-/*! \brief Remove an object from a page.
- * \par Function Description
- * Removes \a obj_s from \a page_s.  If \a obj_s is attached to a
- * #LeptonPage other than \a page_s, or to a component
- * #LeptonObject, throws a Scheme error. If \a obj_s is not
- * attached to a page, does nothing.
- *
- * \note Scheme API: Implements the %page-remove! procedure of the
- * (lepton core page) module.
- *
- * \return \a page_s.
- */
-SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
-            (SCM page_s, SCM obj_s), "Remove an object from a page.")
-{
-  /* Ensure that the arguments have the correct types. */
-  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_page_remove_x);
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG2, s_page_remove_x);
-
-  LeptonPage *page = edascm_to_page (page_s);
-  LeptonObject *obj = edascm_to_object (obj_s);
-
-  /* Check that the object is not attached to something else. */
-  LeptonPage *curr_page = lepton_object_get_page (obj);
-  if ((curr_page != NULL && curr_page != page) ||
-      (lepton_object_get_parent (obj) != NULL))
-  {
-    scm_error (edascm_object_state_sym, s_page_remove_x,
-               _("Object ~A is attached to a component or different page"),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-
-  /* Check that object is not attached as an attribute. */
-  if (lepton_object_get_attached_to (obj) != NULL)
-  {
-    scm_error (edascm_object_state_sym, s_page_remove_x,
-               _("Object ~A is attached as an attribute"),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-
-  /* Check that object doesn't have attributes. */
-  if (lepton_object_get_attribs (obj) != NULL)
-  {
-    scm_error (edascm_object_state_sym, s_page_remove_x,
-               _("Object ~A has attributes"),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-
-  if (curr_page == NULL) return obj_s;
-
-  lepton_object_emit_pre_change_notify (obj);
-  s_page_remove (page, obj);
-  lepton_page_set_changed (page, 1); /* Ugh. */
-  /* If the object is currently selected, unselect it. */
-  o_selection_remove (lepton_page_get_selection_list (page), obj);
-  lepton_object_emit_change_notify (obj);
-
-  /* Object cleanup now managed by Guile. */
-  edascm_c_set_gc (obj_s, 1);
-  return page_s;
-}
-
 /*! \brief Create a page from a string representation.
  * \par Function Description
  * Returns a page with filename \a filename_s created by parsing \a
@@ -209,7 +145,6 @@ init_module_lepton_core_page (void *unused)
 
   scm_c_export (s_active_pages,
                 s_page_contents,
-                s_page_remove_x,
                 s_string_to_page, NULL);
 }
 
