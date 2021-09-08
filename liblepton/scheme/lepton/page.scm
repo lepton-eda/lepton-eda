@@ -36,7 +36,8 @@
 
   #:use-module (lepton os)
 
-  #:export (close-page!
+  #:export (active-pages
+            close-page!
             file->page
             make-page
             object-page
@@ -64,7 +65,11 @@ belong to a page, returns #f."
          (pointer->geda-page page-pointer))))
 
 
-(define-public active-pages %active-pages)
+(define (active-pages)
+  "Returns a list of currently-opened pages."
+  (glist->page-list
+   (lepton_page_list_get_glist
+    (lepton_toplevel_get_pages (edascm_c_current_toplevel)))))
 
 
 (define (make-page filename)

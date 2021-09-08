@@ -278,6 +278,7 @@
             s_conn_update_object
 
             lepton_toplevel_get_page_current
+            lepton_toplevel_get_pages
 
             lepton_object_list_to_buffer
 
@@ -291,6 +292,7 @@
             s_page_new
             s_page_objects
             s_page_remove
+            lepton_page_list_get_glist
 
             o_selection_remove))
 
@@ -376,6 +378,7 @@
 (define-lff s_clib_symbol_get_filename '* '(*))
 ;;; toplevel.c
 (define-lff lepton_toplevel_get_page_current '* '(*))
+(define-lff lepton_toplevel_get_pages '* '(*))
 ;;; g_rc.c
 (define-lff g_rc_parse void '(* * *))
 ;;; s_attrib.c
@@ -614,6 +617,7 @@
 (define-lff s_page_new '* '(* *))
 (define-lff s_page_objects '* '(*))
 (define-lff s_page_remove void '(* *))
+(define-lff lepton_page_list_get_glist '* '(*))
 
 ;;; o_selection.c
 (define-lff o_selection_remove void '(* *))

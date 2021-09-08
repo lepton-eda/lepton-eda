@@ -30,33 +30,6 @@
 
 SCM_SYMBOL (edascm_string_format_sym , "string-format");
 
-/*! \brief Get a list of open pages.
- * \par Function Description
- * Retrieves a Scheme list of currently-opened pages.
- *
- * \note Scheme API: Implements the %active-pages procedure of the
- * (lepton core page) module.
- *
- * \return a Scheme list of #LeptonPage smobs.
- */
-SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
-            (), "Retrieve a list of currently-opened pages")
-{
-  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
-  SCM lst = SCM_EOL;
-  SCM rlst;
-  GList *page_list = lepton_list_get_glist (lepton_toplevel_get_pages (toplevel));
-
-  while (page_list != NULL) {
-    lst = scm_cons (edascm_from_page ((LeptonPage*) page_list->data), lst);
-    page_list = g_list_next (page_list);
-  }
-
-  rlst = scm_reverse (lst);
-  scm_remember_upto_here_1 (lst);
-  return rlst;
-}
-
 /*! \brief Create a page from a string representation.
  * \par Function Description
  * Returns a page with filename \a filename_s created by parsing \a
@@ -119,8 +92,7 @@ init_module_lepton_core_page (void *unused)
 
   /* Add them to the module's public definitions. */
 
-  scm_c_export (s_active_pages,
-                s_string_to_page, NULL);
+  scm_c_export (s_string_to_page, NULL);
 }
 
 /*!
