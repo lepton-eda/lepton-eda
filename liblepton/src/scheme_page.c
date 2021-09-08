@@ -57,33 +57,6 @@ SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
   return rlst;
 }
 
-/*! \brief Close a page
- * \par Function Description
- * Destroys the #LeptonPage structure \a page_s, freeing all of
- * its resources.  Attempting to use \a page_s after calling this
- * function will cause an error.
- *
- * \note Scheme API: Implements the %close-page procedure of the
- * (lepton core page) module.
- *
- * \param page_s The page to close.
- * \return SCM_UNDEFINED.
- */
-SCM_DEFINE (close_page_x, "%close-page!", 1, 0, 0,
-            (SCM page_s), "Close a page.")
-{
-  /* Ensure that the argument is a page smob */
-  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_close_page_x);
-
-  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
-  LeptonPage *page = edascm_to_page (page_s);
-
-  s_page_delete (toplevel, page);
-
-  return SCM_UNDEFINED;
-}
-
 /*! \brief Get the filename associated with a page.
  * \par Function Description
  * Retrieves the filename associated with the #LeptonPage smob \a page_s.
@@ -427,7 +400,7 @@ init_module_lepton_core_page (void *unused)
 
   /* Add them to the module's public definitions. */
 
-  scm_c_export (s_active_pages, s_close_page_x,
+  scm_c_export (s_active_pages,
                 s_page_filename, s_set_page_filename_x, s_page_contents,
                 s_object_page, s_page_append_x, s_page_remove_x, s_page_dirty,
                 s_set_page_dirty_x, s_page_to_string, s_string_to_page, NULL);

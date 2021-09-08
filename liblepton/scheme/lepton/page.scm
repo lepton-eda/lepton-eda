@@ -33,7 +33,8 @@
 
   #:use-module (lepton os)
 
-  #:export (file->page
+  #:export (close-page!
+            file->page
             make-page
             page?))
 
@@ -56,7 +57,15 @@ attempt to load any data from it."
                                   (string->pointer filename))))
 
 
-(define-public close-page! %close-page!)
+(define (close-page! page)
+  "Destroys PAGE, freeing all of its resources.  Attempting to use
+PAGE after calling this function will cause an error."
+  (define pointer (geda-page->pointer* page 1))
+
+  (s_page_delete (edascm_c_current_toplevel)
+                 pointer))
+
+
 (define-public page-filename %page-filename)
 (define-public set-page-filename! %set-page-filename!)
 (define-public page-contents %page-contents)
