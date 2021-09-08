@@ -43,7 +43,8 @@
             page-dirty?
             set-page-dirty!
             page-filename
-            set-page-filename!))
+            set-page-filename!
+            page->string))
 
 (define (page? page)
   "Returns #t if PAGE is a #<geda-page> instance, otherwise
@@ -119,7 +120,13 @@ Otherwise, flags PAGE as having been modified.  Returns PAGE."
   page)
 
 
-(define-public page->string %page->string)
+(define (page->string page)
+  "Returns a string representation of the contents of PAGE."
+  (define pointer (geda-page->pointer* page 1))
+  (pointer->string
+   (lepton_object_list_to_buffer (s_page_objects pointer))))
+
+
 (define-public string->page %string->page)
 
 (define-public (page-append! P . objects)

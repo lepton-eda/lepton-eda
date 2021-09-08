@@ -279,12 +279,15 @@
 
             lepton_toplevel_get_page_current
 
+            lepton_object_list_to_buffer
+
             lepton_page_get_changed
             lepton_page_set_changed
             s_page_delete
             s_page_get_filename
             s_page_set_filename
-            s_page_new))
+            s_page_new
+            s_page_objects))
 
 ;;; Helper to check if result of C function is TRUE (non-zero).
 (define true? (negate zero?))
@@ -592,6 +595,9 @@
 (define-lff s_conn_return_others '* '(* *))
 (define-lff s_conn_update_object void '(* *))
 
+;;; object_list.c
+(define-lff lepton_object_list_to_buffer '* '(*))
+
 ;;; page.c
 (define-lff lepton_page_get_changed int '(*))
 (define-lff lepton_page_set_changed void (list '* int))
@@ -599,6 +605,7 @@
 (define-lff s_page_get_filename '* '(*))
 (define-lff s_page_set_filename void '(* *))
 (define-lff s_page_new '* '(* *))
+(define-lff s_page_objects '* '(*))
 
 
 (define (check-boolean val pos)
