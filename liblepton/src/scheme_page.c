@@ -135,7 +135,7 @@ SCM_DEFINE (page_remove_x, "%page-remove!", 2, 0, 0,
 
   lepton_object_emit_pre_change_notify (obj);
   s_page_remove (page, obj);
-  page->CHANGED = 1; /* Ugh. */
+  lepton_page_set_changed (page, 1); /* Ugh. */
   /* If the object is currently selected, unselect it. */
   o_selection_remove (lepton_page_get_selection_list (page), obj);
   lepton_object_emit_change_notify (obj);
