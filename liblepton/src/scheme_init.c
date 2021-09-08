@@ -30,8 +30,6 @@
 /*! Non-zero if the Scheme API has been initialised. */
 static gsize init_called = 0;
 
-SCM_GLOBAL_SYMBOL (edascm_object_state_sym, "object-state");
-
 /*! \brief Scheme API initialisation worker function.
  * \par Function Description
  * Called by edascm_init() with current thread in Guile mode.

@@ -199,9 +199,4 @@ int edascm_is_object_type (SCM smob, int type);
 
 
 /* ---------------------------------------- */
-
-extern SCM edascm_object_state_sym;
-
-/* ---------------------------------------- */
-
 SCM edascm_from_closure (SCM (*func)(SCM, gpointer), gpointer user_data);
