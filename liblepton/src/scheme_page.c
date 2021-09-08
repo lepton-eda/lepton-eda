@@ -57,30 +57,6 @@ SCM_DEFINE (active_pages, "%active-pages", 0, 0, 0,
   return rlst;
 }
 
-/*! \brief Get a list of objects in a page.
- * \par Function Description
- * Retrieves the contents of a the #LeptonPage smob \a page_s as a Scheme
- * list of #LeptonObject smobs.
- *
- * \note Scheme API: Implements the %page-contents procedure of the
- * (lepton core page) module.
- *
- * \return a list of #LeptonObject smobs.
- */
-SCM_DEFINE (page_contents, "%page-contents", 1, 0, 0,
-            (SCM page_s), "Get a page's contents.")
-{
-  LeptonPage *page;
-
-  /* Ensure that the argument is a page smob */
-  SCM_ASSERT (EDASCM_PAGEP (page_s), page_s,
-              SCM_ARG1, s_page_contents);
-
-  page = edascm_to_page (page_s);
-
-  return edascm_from_object_glist (s_page_objects (page));
-}
-
 /*! \brief Create a page from a string representation.
  * \par Function Description
  * Returns a page with filename \a filename_s created by parsing \a
@@ -144,7 +120,6 @@ init_module_lepton_core_page (void *unused)
   /* Add them to the module's public definitions. */
 
   scm_c_export (s_active_pages,
-                s_page_contents,
                 s_string_to_page, NULL);
 }
 

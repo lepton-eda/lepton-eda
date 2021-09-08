@@ -32,6 +32,7 @@
   #:use-module (lepton page foreign)
 
   #:use-module (lepton object type)
+  #:use-module (lepton object foreign)
 
   #:use-module (lepton os)
 
@@ -40,6 +41,7 @@
             make-page
             object-page
             page?
+            page-contents
             page-dirty?
             set-page-dirty!
             page-filename
@@ -99,7 +101,11 @@ PAGE after calling this function will cause an error."
   page)
 
 
-(define-public page-contents %page-contents)
+(define (page-contents page)
+  "Returns the contents of PAGE as a list of objects."
+  (define pointer (geda-page->pointer* page 1))
+
+  (glist->object-list (s_page_objects pointer)))
 
 
 (define (page-dirty? page)
