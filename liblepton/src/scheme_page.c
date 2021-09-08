@@ -204,7 +204,7 @@ SCM_DEFINE (page_dirty, "%page-dirty?", 1, 0, 0,
               SCM_ARG1, s_page_dirty);
 
   LeptonPage *page = edascm_to_page (page_s);
-  return page->CHANGED ? SCM_BOOL_T : SCM_BOOL_F;
+  return lepton_page_get_changed (page) ? SCM_BOOL_T : SCM_BOOL_F;
 }
 
 /*! \brief Set a page's changed flag.
