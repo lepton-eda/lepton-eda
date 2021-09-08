@@ -119,7 +119,7 @@ SCM_DEFINE (page_append_x, "%page-append!", 2, 0, 0,
   lepton_object_emit_pre_change_notify (obj);
   s_page_append (page, obj);
   lepton_object_emit_change_notify (obj);
-  page->CHANGED = 1; /* Ugh. */
+  lepton_page_set_changed (page, 1); /* Ugh. */
 
   return page_s;
 }
