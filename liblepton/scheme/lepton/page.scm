@@ -31,11 +31,14 @@
   #:use-module (lepton ffi)
   #:use-module (lepton page foreign)
 
+  #:use-module (lepton object type)
+
   #:use-module (lepton os)
 
   #:export (close-page!
             file->page
             make-page
+            object-page
             page?
             page-filename
             set-page-filename!))
@@ -45,7 +48,16 @@
 returns #f."
   (true? (edascm_is_page (scm->pointer page))))
 
-(define-public object-page %object-page)
+
+(define (object-page object)
+  "Returns a page that OBJECT belongs to.  If OBJECT does not
+belong to a page, returns #f."
+  (define object-pointer (geda-object->pointer* object 1))
+
+  (let ((page-pointer (lepton_object_get_page object-pointer)))
+    (and (not (null-pointer? page-pointer))
+         (pointer->geda-page page-pointer))))
+
 
 (define-public active-pages %active-pages)
 

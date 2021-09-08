@@ -81,34 +81,6 @@ SCM_DEFINE (page_contents, "%page-contents", 1, 0, 0,
   return edascm_from_object_glist (s_page_objects (page));
 }
 
-/*! \brief Get the page an object belongs to.
- * \par Function Description
- * Returns a smob for the #LeptonPage that \a obj_s belongs to.
- * If \a obj_s does not belong to a #LeptonPage, returns
- * SCM_BOOL_F.
- *
- * \note Scheme API: Implements the %object-page procedure in the
- * (lepton core page) module.
- *
- * \param [in] obj_s an #LeptonObject smob.
- * \return a #LeptonPage smob or SCM_BOOL_F.
- */
-SCM_DEFINE (object_page, "%object-page", 1, 0, 0,
-            (SCM obj_s), "Get the page that an object smob belongs to")
-{
-  SCM_ASSERT (EDASCM_OBJECTP (obj_s), obj_s,
-              SCM_ARG1, s_object_page);
-
-  LeptonPage *page = lepton_object_get_page (edascm_to_object (obj_s));
-
-  if (page != NULL) {
-    return edascm_from_page (page);
-  } else {
-    return SCM_BOOL_F;
-  }
-}
-
-
 /*! \brief Add an object to a page.
  * \par Function Description
  * Adds \a obj_s to \a page_s.  If \a obj_s is already attached to a
@@ -352,7 +324,7 @@ init_module_lepton_core_page (void *unused)
 
   scm_c_export (s_active_pages,
                 s_page_contents,
-                s_object_page, s_page_append_x, s_page_remove_x, s_page_dirty,
+                s_page_append_x, s_page_remove_x, s_page_dirty,
                 s_set_page_dirty_x, s_page_to_string, s_string_to_page, NULL);
 }
 
