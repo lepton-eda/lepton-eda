@@ -913,3 +913,17 @@ s_page_set_filename (LeptonPage *page,
   g_free (page->_filename);
   page->_filename = absolute;
 }
+
+
+/*! \brief Get GList of pages from a #LeptonPageList list.
+ *
+ *  \param [in] page_list The #LeptonPageList object.
+ *  \return The pointer to GList of pages.
+ */
+GList*
+lepton_page_list_get_glist (LeptonPageList *page_list)
+{
+  g_return_val_if_fail (page_list != NULL, NULL);
+
+  return lepton_list_get_glist (page_list);
+}
