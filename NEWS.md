@@ -8,6 +8,12 @@ more information, please consult `git log` history.
 Notable changes in Lepton EDA 1.9.17 (upcoming)
 -----------------------------------------------
 
+### Changes in `liblepton`:
+
+- The following core Scheme modules written in C have been removed
+  and their functions have been reimplemented using Scheme FFI:
+  - `(lepton core component)`
+
 ### Changes in `contrib`:
 
 - Utilities `gsymupdate` and `gschupdate` have been replaced with
