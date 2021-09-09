@@ -24,6 +24,8 @@
             liblepton_init
             ;; Helpers.
             true?
+            TRUE
+            FALSE
             check-boolean
             check-coord
             check-integer
@@ -267,6 +269,9 @@
 
 ;;; Helper to check if result of C function is TRUE (non-zero).
 (define true? (negate zero?))
+;;; Helpers to set results of boolean functions.
+(define TRUE 1)
+(define FALSE 0)
 
 (define liblepton
   (dynamic-link (or (getenv "LIBLEPTON") "@LIBLEPTON@")))
