@@ -191,11 +191,30 @@
 (component-library (string-join (list (getenv "srcdir") "../../symbols/sym/analog") "/")
                    "Basic devices")
 
+(define object-type-func-alist
+  `((arc . ,arc-info)
+    (box . ,box-info)
+    (bus . ,line-info)
+    (net . ,line-info)
+    (line . ,line-info)
+    (pin . ,line-info)
+    (circle . ,circle-info)
+    (complex . ,component-info)
+    (path . ,path-info)
+    (picture . ,picture-info)
+    (text . ,text-info)))
+
+(define (object-info object)
+  (let* ((type (object-type object))
+         (info-func (assq-ref object-type-func-alist type)))
+    (cons type (info-func object))))
+
 (test-begin "component/library")
 
-(let ((A (make-component/library "resistor-1.sym" '(1 . 2) 0 #t #f)))
+(let* ((A (make-component/library "resistor-1.sym" '(1 . 2) 0 #t #f))
+       (B (copy-object A)))
 
-  (test-assert A)
+  (test-assert (component? A))
   (test-equal '(1 . 2) (component-position A))
   (test-equal 0 (component-angle A))
   (test-assert (component-mirror? A))
@@ -203,7 +222,19 @@
 
   (test-equal "resistor-1.sym" (component-basename A))
 
-  (test-assert (not (null? (component-contents A)))))
+  (test-assert (not (null? (component-contents A))))
+
+  ;; Test the copy.
+  (test-assert (component? B))
+  (test-equal (component-info A) (component-info B))
+  (test-equal (component-angle A) (component-angle B))
+  (test-equal (component-basename A) (component-basename B))
+  (test-equal (component-filename A) (component-filename B))
+  (test-equal (component-locked? A) (component-locked? B))
+  (test-equal (component-mirror? A) (component-mirror? B))
+  (test-equal (component-position A) (component-position B))
+  (test-equal (map object-info (component-contents A))
+    (map object-info (component-contents B))))
 
 (test-end "component/library")
 
