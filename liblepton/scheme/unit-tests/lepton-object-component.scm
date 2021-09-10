@@ -64,12 +64,16 @@
   (test-equal A (component-append! A x))
   (test-equal (list x) (component-contents A))
 
+  ;; Try it once again with the same object.  Nothing should
+  ;; change.
   (component-append! A x)
   (test-equal (list x) (component-contents A))
 
   (component-append! A y)
   (test-equal (list x y) (component-contents A))
 
+  ;; Object is already included in a component.  Cannot append it
+  ;; to another component.
   (test-assert-thrown 'object-state
                       (component-append! B x)))
 
@@ -101,6 +105,8 @@
   (component-remove! A x)
   (test-equal (list y) (component-contents A))
 
+  ;; Cannot remove object from a component which is not its
+  ;; parent.
   (test-assert-thrown 'object-state
                       (component-remove! B y)))
 
@@ -117,10 +123,14 @@
     (lambda () #t)
     (lambda ()
       (page-append! P x)
+      ;; Object already included in page, cannot append it to a
+      ;; component.
       (test-assert-thrown 'object-state
                           (component-append! A x))
 
       (page-append! P A)
+      ;; Object already included in page, cannot append it to a
+      ;; component even if they both have the same parent page.
       (test-assert-thrown 'object-state
                           (component-append! A x))
 
