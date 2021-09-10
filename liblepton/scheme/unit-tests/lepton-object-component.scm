@@ -87,8 +87,9 @@
   (component-append! A x)
   (test-equal A (component-remove! A x))
   (test-equal '() (component-contents A))
-  (component-remove! A x)
-  (component-remove! B x)
+  ;; The object has no parent.  It's OK.
+  (test-assert (component-remove! A x))
+  (test-assert (component-remove! B x))
 
   (component-append! A x y)
   ;; Make sure component contents changed.
