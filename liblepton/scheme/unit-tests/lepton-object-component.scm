@@ -460,7 +460,9 @@
   (test-assert-thrown 'misc-error (make-component/library "line.sym" '(1 . 2) 360 #f #f))
   (test-assert-thrown 'misc-error (make-component "line.sym" '(1 . 2) 360 #f #f))
   (test-assert-thrown 'misc-error (set-component! c '(1 . 2) 360 #f #t))
-  (test-assert-thrown 'misc-error (set-component-with-transform! c '(1 . 2) 360 #f #t))
+  ;; 360 degrees is OK for the following function, so use another
+  ;; wrong angle.
+  (test-assert-thrown 'misc-error (set-component-with-transform! c '(1 . 2) 10 #f #t))
   (test-assert-thrown 'wrong-type-arg (make-component/library "line.sym" '(1 . 2) 'angle #f #f))
   (test-assert-thrown 'wrong-type-arg (make-component "line.sym" '(1 . 2) 'angle #f #f))
   (test-assert-thrown 'wrong-type-arg (set-component! c '(1 . 2) 'angle #f #t))
