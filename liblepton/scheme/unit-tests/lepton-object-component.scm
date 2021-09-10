@@ -407,3 +407,17 @@
 (test-assert-thrown 'wrong-type-arg (object-component 'a))
 
 (test-end "object-component-wrong-argument")
+
+
+(test-begin "component-wrong-argument")
+
+(test-assert-thrown 'wrong-type-arg (component-info 'c))
+(test-assert-thrown 'wrong-type-arg (component-angle 'c))
+(test-assert-thrown 'wrong-type-arg (component-basename 'c))
+(test-assert-thrown 'wrong-type-arg (component-filename 'c))
+(test-assert-thrown 'wrong-type-arg (component-locked? 'c))
+(test-assert-thrown 'wrong-type-arg (component-mirror? 'c))
+(test-assert-thrown 'wrong-type-arg (component-position 'c))
+(test-assert-thrown 'wrong-type-arg (component-contents 'c))
+
+(test-end "component-wrong-argument")
