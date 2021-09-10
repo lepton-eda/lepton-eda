@@ -272,25 +272,28 @@
 (test-end "object-component")
 
 
-;; New symbol library with one component containing only one
-;; line primitive
-(component-library-funcs
-  (lambda ()       ; list-symbol-names function
-    '("line.sym"))
-  (lambda (name)   ; get-symbol-by-name function
-    (let ((page (make-page "/test/page/line")))
-      (page-append! page (make-line '(1 . 2) '(3 . 4)))
-      (let ((s (page->string page)))
-        (close-page! page)
-        s)))
-  "Test symbols"   ; Library name
-  )
+;;; Define a new symbol library with one component containing only
+;;; one line primitive.
+(define (make-test-component-library)
+  (component-library-funcs
+   (lambda ()       ; list-symbol-names function
+     '("line.sym"))
+   (lambda (name)   ; get-symbol-by-name function
+     (let ((page (make-page "/test/page/line")))
+       (page-append! page (make-line '(1 . 2) '(3 . 4)))
+       (let ((s (page->string page)))
+         (close-page! page)
+         s)))
+   "Test symbols"   ; Library name
+   ))
 
 ;; Test the 'set-component-with-transform!' procedure. This test
 ;; includes testing of mirroring and rotation of a component's
 ;; primitives.
 
 (test-begin "set-component-with-transform" 2)
+
+(make-test-component-library)
 
 (let ((P (make-page "/test/page/A"))
       (C (make-component/library "line.sym" '(0 . 0) 90 #f #f)))
@@ -419,5 +422,51 @@
 (test-assert-thrown 'wrong-type-arg (component-mirror? 'c))
 (test-assert-thrown 'wrong-type-arg (component-position 'c))
 (test-assert-thrown 'wrong-type-arg (component-contents 'c))
+
+(make-test-component-library)
+
+(let ((c (make-component/library "line.sym" '(1 . 2) 90 #f #f))
+      (x (make-line '(0 . 0) '(2 . 0)))
+      (y (make-line '(0 . 0) '(0 . 2))))
+  ;; Wrong object.
+  (test-assert-thrown 'wrong-type-arg (set-component! 'c '(1 . 2) 90 #f #t))
+  (test-assert-thrown 'wrong-type-arg (set-component-with-transform! 'c '(1 . 2) 90 #f #t))
+  (test-assert-thrown 'wrong-type-arg (component-append! 'c x))
+  ;; Wrong objects appended.
+  (test-assert-thrown 'wrong-type-arg (component-append! c 'x))
+  ;; Wrong objects removed.
+  ;; First, make sure at least one object has been added.
+  (test-assert (component-append! c x))
+  (test-assert-thrown 'wrong-type-arg (component-remove! c 'x))
+  ;; Wrong basename.
+  (test-assert-thrown 'wrong-type-arg (make-component/library 'line.sym '(1 . 2) 90 #f #f))
+  (test-assert-thrown 'wrong-type-arg (make-component 'line.sym '(1 . 2) 90 #f #f))
+  ;; Wrong first coord.
+  (test-assert-thrown 'wrong-type-arg (make-component/library "line.sym" 'coord 90 #f #f))
+  (test-assert-thrown 'wrong-type-arg (make-component "line.sym" 'coord 90 #f #f))
+  (test-assert-thrown 'wrong-type-arg (set-component! c 'coord 90 #f #t))
+  (test-assert-thrown 'wrong-type-arg (set-component-with-transform! c 'coord 90 #f #t))
+  ;; Wrong x.
+  (test-assert-thrown 'wrong-type-arg (make-component/library "line.sym" '(x . 2) 90 #f #f))
+  (test-assert-thrown 'wrong-type-arg (make-component "line.sym" '(x . 2) 90 #f #f))
+  (test-assert-thrown 'wrong-type-arg (set-component! c '(x . 2) 90 #f #t))
+  (test-assert-thrown 'wrong-type-arg (set-component-with-transform! c '(x . 2) 90 #f #t))
+  ;; Wrong y.
+  (test-assert-thrown 'wrong-type-arg (make-component/library "line.sym" '(1 . y) 90 #f #f))
+  (test-assert-thrown 'wrong-type-arg (make-component "line.sym" '(1 . y) 90 #f #f))
+  (test-assert-thrown 'wrong-type-arg (set-component! c '(1 . y) 90 #f #t))
+  (test-assert-thrown 'wrong-type-arg (set-component-with-transform! c '(1 . y) 90 #f #t))
+  ;; Wrong angle.
+  (test-assert-thrown 'misc-error (make-component/library "line.sym" '(1 . 2) 360 #f #f))
+  (test-assert-thrown 'misc-error (make-component "line.sym" '(1 . 2) 360 #f #f))
+  (test-assert-thrown 'misc-error (set-component! c '(1 . 2) 360 #f #t))
+  (test-assert-thrown 'misc-error (set-component-with-transform! c '(1 . 2) 360 #f #t))
+  (test-assert-thrown 'wrong-type-arg (make-component/library "line.sym" '(1 . 2) 'angle #f #f))
+  (test-assert-thrown 'wrong-type-arg (make-component "line.sym" '(1 . 2) 'angle #f #f))
+  (test-assert-thrown 'wrong-type-arg (set-component! c '(1 . 2) 'angle #f #t))
+  (test-assert-thrown 'wrong-type-arg (set-component-with-transform! c '(1 . 2) 'angle #f #t))
+  ;; Mirror and selectable/locked flags cannot be wrong, so there
+  ;; are no tests for them.
+  )
 
 (test-end "component-wrong-argument")
