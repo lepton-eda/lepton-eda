@@ -179,10 +179,9 @@
 (component-library (string-join (list (getenv "srcdir") "../../symbols/sym/analog") "/")
                    "Basic devices")
 
-(test-begin "component/library" 8)
+(test-begin "component/library")
 
-(let ((A (make-component/library "resistor-1.sym" '(1 . 2) 0 #t #f))
-      (B (make-component/library "invalid-component-name" '(1 . 2) 0 #t #f)))
+(let ((A (make-component/library "resistor-1.sym" '(1 . 2) 0 #t #f)))
 
   (test-assert A)
   (test-equal '(1 . 2) (component-position A))
@@ -192,11 +191,18 @@
 
   (test-equal "resistor-1.sym" (component-basename A))
 
-  (test-assert (not (null? (component-contents A))))
-
-  (test-assert (not B)))
+  (test-assert (not (null? (component-contents A)))))
 
 (test-end "component/library")
+
+
+(test-begin "component/library-invalid")
+
+(let ((C (make-component/library "invalid-component-name" '(1 . 2) 0 #t #f)))
+  (test-assert (not C)))
+
+(test-end "component/library-invalid")
+
 
 ;; Clear component library again
 (reset-component-library)
