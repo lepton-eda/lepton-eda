@@ -8,7 +8,8 @@
 
 (test-begin "component" 13)
 
-(let ((a (make-component "test component" '(1 . 2) 0 #t #f)))
+(let* ((a (make-component "test component" '(1 . 2) 0 #t #f))
+       (b (copy-object a)))
 
   (test-equal 'complex (object-type a))
   (test-assert (object-type? a 'complex))
@@ -26,6 +27,17 @@
                     (component-angle a) (component-mirror? a)
                     (component-locked? a))
     (component-info a))
+
+  ;; Test the copy.
+  (test-assert (component? b))
+  (test-equal (component-info a) (component-info b))
+  (test-equal (component-angle a) (component-angle b))
+  (test-equal (component-basename a) (component-basename b))
+  (test-equal (component-filename a) (component-filename b))
+  (test-equal (component-locked? a) (component-locked? b))
+  (test-equal (component-mirror? a) (component-mirror? b))
+  (test-equal (component-position a) (component-position b))
+  (test-equal (component-contents a) (component-contents b))
 
   (set-component! a '(3 . 4) 90 #f #t)
 
