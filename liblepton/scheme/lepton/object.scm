@@ -67,8 +67,20 @@
             make-box
             set-box!
 
-            component-contents
+            component-info
+            component-angle
+            component-basename
             component-filename
+            component-locked?
+            component-mirror?
+            component-position
+            make-component
+            make-component/library
+            set-component!
+            set-component-with-transform!
+            component-contents
+            component-append!
+            component-remove!
 
             circle-center
             circle-info
@@ -1423,10 +1435,10 @@ Returns the modified COMPONENT."
 
   component)
 
-(define-public (set-component! c position angle mirror locked)
+(define (set-component! c position angle mirror locked)
   (%set-component! c (car position) (cdr position) angle mirror locked))
 
-(define-public (set-component-with-transform! c position angle mirror locked)
+(define (set-component-with-transform! c position angle mirror locked)
   (let ((obj (%set-component! c 0 0 0 #f locked)))
     (translate-object!
       (rotate-object!
@@ -1460,7 +1472,7 @@ is initially set to be embedded."
                                     (string->pointer basename)
                                     selectable?))))
 
-(define-public (make-component basename . args)
+(define (make-component basename . args)
   (let ((c (%make-component basename)))
     (apply set-component! c args)))
 
@@ -1489,7 +1501,7 @@ returns #f."
                                                      basename-pointer
                                                      TRUE)))))
 
-(define-public (make-component/library basename . args)
+(define (make-component/library basename . args)
   (let ((c (%make-component/library basename)))
     (if c (apply set-component! c args) #f)))
 
@@ -1512,7 +1524,7 @@ returns #f."
         (not (true? (lepton_object_get_selectable pointer)))))
 
 
-(define-public (component-info c)
+(define (component-info c)
   (let* ((params (%component-info c))
          (tail (list-tail params 3))
          (position (list-tail params 1)))
@@ -1521,7 +1533,7 @@ returns #f."
     (set-cdr! position tail)
     params))
 
-(define-public (component-basename c)
+(define (component-basename c)
   (list-ref (component-info c) 0))
 
 (define (component-filename object)
@@ -1537,16 +1549,16 @@ component has a symbol file associated with it.  Otherwise returns
             (and (not (null-pointer? fname))
                  (pointer->string fname))))))
 
-(define-public (component-position c)
+(define (component-position c)
   (list-ref (component-info c) 1))
 
-(define-public (component-angle c)
+(define (component-angle c)
   (list-ref (component-info c) 2))
 
-(define-public (component-mirror? c)
+(define (component-mirror? c)
   (list-ref (component-info c) 3))
 
-(define-public (component-locked? c)
+(define (component-locked? c)
   (list-ref (component-info c) 4))
 
 
@@ -1611,7 +1623,7 @@ COMPONENT, does nothing.  Returns COMPONENT."
 
             component)))))
 
-(define-public (component-append! component . objects)
+(define (component-append! component . objects)
   (for-each (lambda (x) (%component-append! component x)) objects)
   component)
 
@@ -1689,7 +1701,7 @@ anywhere, it does nothing."
           component))))
 
 
-(define-public (component-remove! component . objects)
+(define (component-remove! component . objects)
   (for-each (lambda (x) (%component-remove! component x)) objects)
   component)
 
