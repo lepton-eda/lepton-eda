@@ -33,6 +33,7 @@
 
   #:export (copy-object
             object-bounds
+            fold-bounds
             object-color
             set-object-color!
             object-component
@@ -128,7 +129,11 @@
             make-text
             set-text!
             set-text-string!
-            set-text-visibility!)
+            set-text-visibility!
+
+            mirror-objects!
+            rotate-objects!
+            translate-objects!)
 
   #:re-export (arc?
                box?
@@ -2063,7 +2068,7 @@ second hatch is used for the 'mesh type only.  Returns OBJECT."
                      (bytevector-sint-ref ymin 0 (native-endianness) (sizeof int)))))))
 
 
-(define-public (fold-bounds . bounds)
+(define (fold-bounds . bounds)
   (fold
    (lambda (a b)
      (if (and a b)
@@ -2092,19 +2097,19 @@ actual bounds of the objects, not the visible bounds."
 
 ;;;; Object transformations
 
-(define-public (translate-objects! vector . objects)
+(define (translate-objects! vector . objects)
   (for-each
    (lambda (x) (translate-object! x (car vector) (cdr vector)))
    objects)
   objects)
 
-(define-public (rotate-objects! center angle . objects)
+(define (rotate-objects! center angle . objects)
   (for-each
    (lambda (x) (rotate-object! x (car center) (cdr center) angle))
    objects)
   objects)
 
-(define-public (mirror-objects! x . objects)
+(define (mirror-objects! x . objects)
   (for-each
    (lambda (obj) (mirror-object! obj x))
    objects)
