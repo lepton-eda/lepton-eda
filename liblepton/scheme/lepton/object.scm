@@ -678,7 +678,7 @@ is not specified, the default arc color is used."
                           start-angle
                           sweep-angle)))
 
-(define-public (arc-info object)
+(define (arc-info object)
   "Returns the parameters of arc OBJECT as a list of its center
 coordinate, radius, start and sweep angles, and color in the form:
 '((center-x . center-y) radius start-angle sweep-angle color)"
