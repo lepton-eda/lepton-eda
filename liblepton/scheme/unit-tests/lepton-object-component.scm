@@ -91,6 +91,8 @@
   (component-remove! B x)
 
   (component-append! A x y)
+  ;; Make sure component contents changed.
+  (test-equal (list x y) (component-contents A))
   (component-remove! A x y)
   (test-equal '() (component-contents A))
 
