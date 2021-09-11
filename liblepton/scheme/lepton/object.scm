@@ -969,10 +969,6 @@ picture transformation. The points TOP-LEFT and BOTTOM-RIGHT
 should be specified in the form '(x . y).  ANGLE should be an
 integer value one of 0, 90, 180, or 270 degrees.  MIRROR is a
 boolean flag which specifies if the picture should be mirrored."
-  ;; C boolean values.
-  (define TRUE 1)
-  (define FALSE 0)
-
   (define (pixbuf-missing? pointer)
     (let* ((pixbuf-pointer (lepton_picture_object_get_pixbuf pointer))
            (null-pixbuf-pointer? (null-pointer? pixbuf-pointer))
@@ -1413,10 +1409,6 @@ to new values.  The following arguments are used:
   - locked    whether the component object should be locked.
 
 Returns the modified COMPONENT."
-
-  (define TRUE 1)
-  (define FALSE 0)
-
   (define pointer (geda-object->pointer* component 1 component? 'component))
 
   (check-integer x 2)
@@ -1457,9 +1449,6 @@ Returns the modified COMPONENT."
   "Creates and returns a new, empty component object, with given
 BASENAME and with all other parameters set to default values.  It
 is initially set to be embedded."
-  (define TRUE 1)
-  (define FALSE 0)
-
   (check-string basename 1)
 
   (let ((color (default_color_id))
@@ -1487,9 +1476,6 @@ BASENAME.  If found, creates a new component object by
 instantiating that library component.  It is initially set to be
 unembedded.  If no match is found for basename in the library,
 returns #f."
-  (define TRUE 1)
-  (define FALSE 0)
-
   (check-string basename 1)
 
   (let* ((basename-pointer (string->pointer basename))
