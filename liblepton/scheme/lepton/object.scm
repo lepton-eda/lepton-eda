@@ -1434,8 +1434,8 @@ Returns the modified COMPONENT."
     object))
 
 
-(define (set-component-with-transform! c position angle mirror locked)
-  (let ((obj (set-component! c '(0 . 0) 0 #f locked)))
+(define (set-component-with-transform! object position angle mirror locked)
+  (let ((obj (set-component! object '(0 . 0) 0 #f locked)))
     (translate-object!
       (rotate-object!
         (if mirror (mirror-object! obj 0) obj)
