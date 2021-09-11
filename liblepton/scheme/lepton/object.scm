@@ -1522,9 +1522,10 @@ returns #f."
                              (list-ref position 1)))
     (set-cdr! position tail)
     params))
+(define (component-basename object)
+  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (pointer->string (lepton_component_object_get_basename pointer)))
 
-(define (component-basename c)
-  (list-ref (component-info c) 0))
 
 (define (component-filename object)
   "Returns symbol's full file name for component OBJECT, if the
@@ -1539,17 +1540,26 @@ component has a symbol file associated with it.  Otherwise returns
             (and (not (null-pointer? fname))
                  (pointer->string fname))))))
 
-(define (component-position c)
-  (list-ref (component-info c) 1))
 
-(define (component-angle c)
-  (list-ref (component-info c) 2))
+(define (component-position object)
+  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (cons (lepton_component_object_get_x pointer)
+        (lepton_component_object_get_y pointer)))
 
-(define (component-mirror? c)
-  (list-ref (component-info c) 3))
 
-(define (component-locked? c)
-  (list-ref (component-info c) 4))
+(define (component-angle object)
+  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (lepton_component_object_get_angle pointer))
+
+
+(define (component-mirror? object)
+  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (true? (lepton_component_object_get_mirror pointer)))
+
+
+(define (component-locked? object)
+  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (not (true? (lepton_object_get_selectable pointer))))
 
 
 (define (component-contents component)
