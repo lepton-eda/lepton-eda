@@ -1399,16 +1399,16 @@ value will be one of the following symbols:
   (check-angle-value angle))
 
 (define (set-component! object position angle mirror locked)
-  "Modifies COMPONENT by setting its parameters
-to new values.  The following arguments are used:
-  - component the component object to modify.
-  - x         the new x-coordinate.
-  - y         the new y-coordinate.
-  - angle     the new rotation angle.
-  - mirror    whether the component object should be mirrored.
-  - locked    whether the component object should be locked.
-
-Returns the modified COMPONENT."
+  "Modifies component OBJECT by setting its parameters to new
+values.  Returns the modified OBJECT.  The following arguments are
+used:
+  - OBJECT    the component object to modify.
+  - POSITION  the new coordinate.
+  - ANGLE     the new rotation angle.
+  - MIRROR    whether the component object should be mirrored.
+  - LOCKED    whether the component object should be locked.
+Note that modifying the transformation parameters of OBJECT does
+not update its contents."
   (define pointer (geda-object->pointer* object 1 component? 'component))
 
   (check-coord position 2)
@@ -1435,6 +1435,16 @@ Returns the modified COMPONENT."
 
 
 (define (set-component-with-transform! object position angle mirror locked)
+  "Modifies component OBJECT by setting its parameters to new
+values.  Returns the modified OBJECT.  The following arguments are
+used:
+  - OBJECT    the component object to modify.
+  - POSITION  the new coordinate.
+  - ANGLE     the new rotation angle.
+  - MIRROR    whether the component object should be mirrored.
+  - LOCKED    whether the component object should be locked.
+Note that unlike set-component! all transformations are applied
+immediately."
   (let ((obj (set-component! object '(0 . 0) 0 #f locked)))
     (translate-object!
       (rotate-object!
@@ -1446,8 +1456,9 @@ Returns the modified COMPONENT."
 
 (define (make-component basename position angle mirror locked)
   "Creates and returns a new, empty component object, with given
-BASENAME and with all other parameters set to default values.  It
-is initially set to be embedded."
+parameters: BASENAME, POSITION in the form '(x . y), ANGLE,
+MIRROR, and LOCKED.  The component is initially set to be
+embedded."
   (check-string basename 1)
   (check-coord position 2)
   (check-component-angle angle 3)
@@ -1497,6 +1508,7 @@ returns #f."
 
 
 (define (component-basename object)
+  "Returns the basename of component OBJECT."
   (define pointer (geda-object->pointer* object 1 component? 'component))
   (pointer->string (lepton_component_object_get_basename pointer)))
 
@@ -1516,42 +1528,46 @@ component has a symbol file associated with it.  Otherwise returns
 
 
 (define (component-position object)
+  "Returns position of component OBJECT in the form '(x . y)."
   (define pointer (geda-object->pointer* object 1 component? 'component))
   (cons (lepton_component_object_get_x pointer)
         (lepton_component_object_get_y pointer)))
 
 
 (define (component-angle object)
+  "Returns rotation angle of component OBJECT."
   (define pointer (geda-object->pointer* object 1 component? 'component))
   (lepton_component_object_get_angle pointer))
 
 
 (define (component-mirror? object)
+  "Returns #t if component OBJECT is mirrored, otherwise returns
+#f."
   (define pointer (geda-object->pointer* object 1 component? 'component))
   (true? (lepton_component_object_get_mirror pointer)))
 
 
 (define (component-locked? object)
+  "Returns #t if OBJECT is locked, otherwise returns #t."
   (define pointer (geda-object->pointer* object 1 component? 'component))
   (not (true? (lepton_object_get_selectable pointer))))
 
 
 (define (component-contents object)
   "Returns a list of the primitive objects that make up
-COMPONENT."
+component OBJECT."
   (define pointer (geda-object->pointer* object 1 component? 'component))
   (glist->object-list
    (lepton_component_object_get_contents pointer)))
 
 
 (define (component-info object)
-  "Return the parameters of COMPONENT as a list of values:
+  "Return the parameters of component OBJECT as a list of values:
   - Basename.
-  - Base x-coordinate.
-  - Base y-coordinate.
+  - Base coordinate in the form '(x . y).
   - Rotation angle.
-  - Whether object is mirrored.
-  - Whether object is locked."
+  - Whether OBJECT is mirrored.
+  - Whether OBJECT is locked."
   (define pointer (geda-object->pointer* object 1 component? 'component))
 
   (list (component-basename object)
@@ -1562,11 +1578,6 @@ COMPONENT."
 
 
 (define (%component-append! component object)
-  "Modifies COMPONENT by adding primitive OBJECT to it. If OBJECT
-is already included in another component object or in a
-object-page, or if the object is itself a component object, raises
-an 'object-state error. If OBJECT is already included in
-COMPONENT, does nothing.  Returns COMPONENT."
   (define component-pointer
     (geda-object->pointer* component 1 component? 'component))
 
@@ -1613,14 +1624,15 @@ COMPONENT, does nothing.  Returns COMPONENT."
             component)))))
 
 (define (component-append! component . objects)
+  "Modifies COMPONENT by appending primitive OBJECTS to its
+contents. If any OBJECT is already included in another component
+object or in a page, or if the object is itself a component
+object, raises an 'object-state error.  Objects already included
+in COMPONENT are left alone.  Returns COMPONENT."
   (for-each (lambda (x) (%component-append! component x)) objects)
   component)
 
 (define (%component-remove! component object)
-  "Removes primitive OBJECT from COMPONENT and return COMPONENT.
-Raises an 'object-state error if OBJECT is included in a page or a
-component other than COMPONENT.  If OBJECT is not included
-anywhere, it does nothing."
   (define component-pointer
     (geda-object->pointer* component 1 component? 'component))
 
@@ -1691,6 +1703,10 @@ anywhere, it does nothing."
 
 
 (define (component-remove! component . objects)
+  "Removes primitive OBJECTS from COMPONENT and returns COMPONENT.
+Raises an 'object-state error if any of OBJECTS is included in a
+page or a component other than COMPONENT.  Does nothing for
+objects not included anywhere."
   (for-each (lambda (x) (%component-remove! component x)) objects)
   component)
 
