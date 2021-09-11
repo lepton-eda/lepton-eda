@@ -1562,14 +1562,12 @@ component has a symbol file associated with it.  Otherwise returns
   (not (true? (lepton_object_get_selectable pointer))))
 
 
-(define (component-contents component)
+(define (component-contents object)
   "Returns a list of the primitive objects that make up
 COMPONENT."
-  (define component-pointer
-    (geda-object->pointer* component 1 component? 'component))
-
+  (define pointer (geda-object->pointer* object 1 component? 'component))
   (glist->object-list
-   (lepton_component_object_get_contents component-pointer)))
+   (lepton_component_object_get_contents pointer)))
 
 
 (define (%component-append! component object)
