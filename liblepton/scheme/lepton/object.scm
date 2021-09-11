@@ -1444,30 +1444,30 @@ Returns the modified COMPONENT."
     (cdr position))))
 
 
-(define (%make-component basename)
+(define (make-component basename position angle mirror locked)
   "Creates and returns a new, empty component object, with given
 BASENAME and with all other parameters set to default values.  It
 is initially set to be embedded."
   (check-string basename 1)
+  (check-coord position 2)
+  (check-component-angle angle 3)
+  (check-boolean mirror 4)
+  (check-boolean locked 5)
 
   (let ((color (default_color_id))
-        (x 0)
-        (y 0)
-        (angle 0)
-        (mirror FALSE)
-        (selectable? TRUE))
+        (x (car position))
+        (y (cdr position))
+        (mirror? (if mirror TRUE FALSE))
+        (selectable? (if locked FALSE TRUE)))
     (pointer->geda-object
      (lepton_component_new_embedded color
                                     x
                                     y
                                     angle
-                                    mirror
+                                    mirror?
                                     (string->pointer basename)
                                     selectable?))))
 
-(define (make-component basename . args)
-  (let ((c (%make-component basename)))
-    (apply set-component! c args)))
 
 (define (%make-component/library basename)
   "Searches the component library for a component with given
