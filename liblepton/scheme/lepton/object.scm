@@ -1398,7 +1398,7 @@ value will be one of the following symbols:
   (check-integer angle pos)
   (check-angle-value angle))
 
-(define (%set-component! component x y angle mirror locked)
+(define (set-component! component position angle mirror locked)
   "Modifies COMPONENT by setting its parameters
 to new values.  The following arguments are used:
   - component the component object to modify.
@@ -1411,32 +1411,31 @@ to new values.  The following arguments are used:
 Returns the modified COMPONENT."
   (define pointer (geda-object->pointer* component 1 component? 'component))
 
-  (check-integer x 2)
-  (check-integer y 3)
-  (check-component-angle angle 4)
-  (check-boolean mirror 5)
-  (check-boolean locked 6)
+  (check-coord position 2)
+  (check-component-angle angle 3)
+  (check-boolean mirror 4)
+  (check-boolean locked 5)
 
-  (lepton_object_emit_pre_change_notify pointer)
+  (let ((x (car position))
+        (y (cdr position)))
+    (lepton_object_emit_pre_change_notify pointer)
 
-  (lepton_object_translate pointer
-                           (- x (lepton_component_object_get_x pointer))
-                           (- y (lepton_component_object_get_y pointer)))
-  (lepton_component_object_set_angle pointer angle)
-  (lepton_component_object_set_mirror pointer (if mirror TRUE FALSE))
-  (lepton_object_set_selectable pointer (if locked FALSE TRUE))
+    (lepton_object_translate pointer
+                             (- x (lepton_component_object_get_x pointer))
+                             (- y (lepton_component_object_get_y pointer)))
+    (lepton_component_object_set_angle pointer angle)
+    (lepton_component_object_set_mirror pointer (if mirror TRUE FALSE))
+    (lepton_object_set_selectable pointer (if locked FALSE TRUE))
 
-  (lepton_object_emit_change_notify pointer)
+    (lepton_object_emit_change_notify pointer)
 
-  (lepton_object_page_set_changed pointer)
+    (lepton_object_page_set_changed pointer)
 
-  component)
+    component))
 
-(define (set-component! c position angle mirror locked)
-  (%set-component! c (car position) (cdr position) angle mirror locked))
 
 (define (set-component-with-transform! c position angle mirror locked)
-  (let ((obj (%set-component! c 0 0 0 #f locked)))
+  (let ((obj (set-component! c '(0 . 0) 0 #f locked)))
     (translate-object!
       (rotate-object!
         (if mirror (mirror-object! obj 0) obj)
