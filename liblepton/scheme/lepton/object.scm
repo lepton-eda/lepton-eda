@@ -1398,7 +1398,7 @@ value will be one of the following symbols:
   (check-integer angle pos)
   (check-angle-value angle))
 
-(define (set-component! component position angle mirror locked)
+(define (set-component! object position angle mirror locked)
   "Modifies COMPONENT by setting its parameters
 to new values.  The following arguments are used:
   - component the component object to modify.
@@ -1409,7 +1409,7 @@ to new values.  The following arguments are used:
   - locked    whether the component object should be locked.
 
 Returns the modified COMPONENT."
-  (define pointer (geda-object->pointer* component 1 component? 'component))
+  (define pointer (geda-object->pointer* object 1 component? 'component))
 
   (check-coord position 2)
   (check-component-angle angle 3)
@@ -1431,7 +1431,7 @@ Returns the modified COMPONENT."
 
     (lepton_object_page_set_changed pointer)
 
-    component))
+    object))
 
 
 (define (set-component-with-transform! c position angle mirror locked)
