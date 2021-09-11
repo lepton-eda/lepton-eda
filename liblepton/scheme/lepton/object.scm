@@ -1496,32 +1496,6 @@ returns #f."
     (if c (apply set-component! c args) #f)))
 
 
-(define (%component-info component)
-  "Return the parameters of COMPONENT as a list of values:
-  - Basename.
-  - Base x-coordinate.
-  - Base y-coordinate.
-  - Rotation angle.
-  - Whether object is mirrored.
-  - Whether object is locked."
-  (define pointer (geda-object->pointer* component 1 component? 'component))
-
-  (list (pointer->string (lepton_component_object_get_basename pointer))
-        (lepton_component_object_get_x pointer)
-        (lepton_component_object_get_y pointer)
-        (lepton_component_object_get_angle pointer)
-        (true? (lepton_component_object_get_mirror pointer))
-        (not (true? (lepton_object_get_selectable pointer)))))
-
-
-(define (component-info c)
-  (let* ((params (%component-info c))
-         (tail (list-tail params 3))
-         (position (list-tail params 1)))
-    (set-car! position (cons (list-ref position 0)
-                             (list-ref position 1)))
-    (set-cdr! position tail)
-    params))
 (define (component-basename object)
   (define pointer (geda-object->pointer* object 1 component? 'component))
   (pointer->string (lepton_component_object_get_basename pointer)))
@@ -1568,6 +1542,23 @@ COMPONENT."
   (define pointer (geda-object->pointer* object 1 component? 'component))
   (glist->object-list
    (lepton_component_object_get_contents pointer)))
+
+
+(define (component-info object)
+  "Return the parameters of COMPONENT as a list of values:
+  - Basename.
+  - Base x-coordinate.
+  - Base y-coordinate.
+  - Rotation angle.
+  - Whether object is mirrored.
+  - Whether object is locked."
+  (define pointer (geda-object->pointer* object 1 component? 'component))
+
+  (list (component-basename object)
+        (component-position object)
+        (component-angle object)
+        (component-mirror? object)
+        (component-locked? object)))
 
 
 (define (%component-append! component object)
