@@ -81,8 +81,10 @@
        ;; not differ excluding, maybe, the version line.
 
        ;; Remove the first line in both test and golden files.
-       (system* "sed" "-i" "1d" test-copy)
-       (system* "sed" "-i" "1d" golden-copy)
+       ;; Please note, "-ibak -e" is required by non-GNU sed.  GNU
+       ;; sed works well with just "-i".
+       (system* "sed" "-ibak" "-e" "1d" test-copy)
+       (system* "sed" "-ibak" "-e" "1d" golden-copy)
        ;; For debugging purposes, output the command we run.
        (format (current-error-port)
                "Test: diff ~A ~A\n" test-copy golden-copy)
