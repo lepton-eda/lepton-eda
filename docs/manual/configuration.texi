@@ -18,7 +18,8 @@ This chapter describes configuration system of the Lepton EDA suite.
 * Legacy configuration::        Legacy configuration files still in use.
 * New configuration system::    Overview of the new configuration system.
 * Configuration of Lepton tools::  Configuration settings for particular Lepton tools.
-* Deprecated settings::         Configuration settings no longer used.
+* Deprecated settings::         Configuration settings having replacements.
+* Obsolete settings::           Configuration settings no longer used.
 * Resources::                   Other useful resources.
 @end menu
 
@@ -505,6 +506,7 @@ Whether to restore main window's size and position on startup.
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{draw-grips}
 Controls if the editing grips are drawn when selecting objects.
 @since{1.9.10}
 
@@ -512,18 +514,21 @@ Controls if the editing grips are drawn when selecting objects.
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{toolbars}
 Controls if the toolbars are visible or not.  @since{1.9.10}
 
 @item @cfgkey{scrollbars}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{scrollbars}
 Controls if the scrollbars are visible or not.  @since{1.9.10}
 
 @item @cfgkey{handleboxes}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{handleboxes}
 Controls if the handleboxes for the menu and toolbars are visible or
 not.  @since{1.9.10}
 
@@ -531,6 +536,7 @@ not.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{zoom-with-pan}
 Sets the zoom functions to pan the display and then zoom.
 @since{1.9.10}
 
@@ -538,6 +544,7 @@ Sets the zoom functions to pan the display and then zoom.
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{fast-mousepan}
 Controls if text is drawn properly or if a simplified version (a text
 string bounding box) is drawn during mouse pan. Drawing a simple box
 speeds up mousepan a lot for big schematics.  @since{1.9.10}
@@ -546,6 +553,7 @@ speeds up mousepan a lot for big schematics.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{continue-component-place}
 Controls the behavior of the "Select Component..." dialog. Allows to
 place multiple instances of a component without having to press the
 "Apply" button each time.  @since{1.9.10}
@@ -554,6 +562,7 @@ place multiple instances of a component without having to press the
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{file-preview}
 Controls if the preview area in the File Open/Save As dialog boxes is
 enabled.  @since{1.9.10}
 
@@ -561,6 +570,7 @@ enabled.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{enforce-hierarchy}
 Controls if the movement between hierarchy levels of the same
 underlying schematics is allowed or not. If this is enabled, then the
 user cannot (without using the page manager) move between hierarchy
@@ -571,6 +581,7 @@ flat.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{third-button-cancel}
 Controls if the third mouse button cancels draw actions such as
 placing of a component or drawing of a primitive.  @since{1.9.10}
 
@@ -578,6 +589,7 @@ placing of a component or drawing of a primitive.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{warp-cursor}
 Controls if the cursor is warped (moved) when you zoom in and out.
 @since{1.9.10}
 
@@ -585,6 +597,7 @@ Controls if the cursor is warped (moved) when you zoom in and out.
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{force-boundingbox}
 Controls if the entire bounding box of a symbol is used when figuring
 out which end of the pin is considered the active port.  This option
 is for backward compatibility with old schematic file format.
@@ -594,6 +607,7 @@ is for backward compatibility with old schematic file format.
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{net-direction-mode}
 Guess the best continuation direction of an L-shape net when adding a
 net.  @since{1.9.10}
 
@@ -601,6 +615,7 @@ net.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{embed-components}
 Determines if the newly placed components are embedded in the
 schematic.  @since{1.9.10}
 
@@ -608,6 +623,7 @@ schematic.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{netconn-rubberband}
 Maintain net connections when you move a connected component or net.
 @since{1.9.10}
 
@@ -615,6 +631,7 @@ Maintain net connections when you move a connected component or net.
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{magnetic-net-mode}
 Whether to mark a possible connection that is close to the current
 cursor position when drawing a net.  @since{1.9.10}
 
@@ -622,6 +639,7 @@ cursor position when drawing a net.  @since{1.9.10}
 @tab @cfgtype{int}
 @tab @cfgval{20}
 @tab
+@anchor{zoom-gain}
 The percentage size increase/decrease when zooming in/out with the
 mouse wheel. Negative values reverses the direction.  @since{1.9.10}
 
@@ -629,6 +647,7 @@ mouse wheel. Negative values reverses the direction.  @since{1.9.10}
 @tab @cfgtype{int}
 @tab @cfgval{1}
 @tab
+@anchor{mousepan-gain}
 Controls how much the display pans when using mouse. A larger value
 provides greater pan distance when moving the mouse.  @since{1.9.10}
 
@@ -636,6 +655,7 @@ provides greater pan distance when moving the mouse.  @since{1.9.10}
 @tab @cfgtype{int}
 @tab @cfgval{20}
 @tab
+@anchor{keyboardpan-gain}
 Controls how much the display pans when using the keyboard keys.  A
 larger value provides greater pan distance.  @since{1.9.10}
 
@@ -643,6 +663,7 @@ larger value provides greater pan distance.  @since{1.9.10}
 @tab @cfgtype{int}
 @tab @cfgval{10}
 @tab
+@anchor{select-slack-pixels}
 Controls how many pixels around an object can still be clicked as part
 of that object. A larger value gives greater ease in selecting small,
 or narrow objects.  @since{1.9.10}
@@ -651,18 +672,21 @@ or narrow objects.  @since{1.9.10}
 @tab @cfgtype{int}
 @tab @cfgval{10}
 @tab
+@anchor{text-size}
 Sets the default text size.  @since{1.9.10}
 
 @item @cfgkey{snap-size}
 @tab @cfgtype{int}
 @tab @cfgval{10}
 @tab
+@anchor{snap-size}
 Sets the default grid spacing.  @since{1.9.10}
 
 @item @cfgkey{scrollpan-steps}
 @tab @cfgtype{int}
 @tab @cfgval{8}
 @tab
+@anchor{scrollpan-steps}
 Controls the number of scroll pan events required to traverse the
 viewed schematic area.  Larger numbers mean more scroll steps are
 required to pan across the viewed area and giving finer control over
@@ -672,6 +696,7 @@ positioning.  @since{1.9.10}
 @tab @cfgtype{int}
 @tab @cfgval{1}
 @tab
+@anchor{dots-grid-dot-size}
 Controls the size of the grid dots (in pixels) in the dots grid
 display.  @since{1.9.10}
 
@@ -679,6 +704,7 @@ display.  @since{1.9.10}
 @tab @cfgtype{int}
 @tab @cfgval{10}
 @tab
+@anchor{dots-grid-fixed-threshold}
 Specifies the minimum number of pixels for the grid to be displayed.
 Controls the density of the displayed grid (smaller numbers will cause
 the grid to be drawn denser).  This option is only effective when the
@@ -688,6 +714,7 @@ dots-grid-mode is set to "fixed".  @since{1.9.10}
 @tab @cfgtype{int}
 @tab @cfgval{3}
 @tab
+@anchor{mesh-grid-display-threshold}
 Specifies the minimum line pitch for the grid to be displayed.
 Controls the maximum density of the displayed grid before the minor,
 then the major grid lines are switched off.  @since{1.9.10}
@@ -696,6 +723,7 @@ then the major grid lines are switched off.  @since{1.9.10}
 @tab @cfgtype{string}
 @tab @cfgval{outline}
 @tab
+@anchor{action-feedback-mode}
 Possible values: @cfgval{outline}, @cfgval{boundingbox}.  Sets the
 default action feedback mode for copy, move, and component place
 operations.  When set to @cfgval{boundingbox}, just a box surrounding
@@ -706,6 +734,7 @@ hardware.  @since{1.9.10}
 @tab @cfgtype{string}
 @tab @cfgval{both}
 @tab
+@anchor{text-caps-style}
 Possible values: @cfgval{both}, @cfgval{lower}, @cfgval{upper}.  Sets the
 default caps style used for the input of text.  @since{1.9.10}
 
@@ -713,6 +742,7 @@ default caps style used for the input of text.  @since{1.9.10}
 @tab @cfgtype{string}
 @tab @cfgval{mousepan}
 @tab
+@anchor{middle-button}
 Possible values: @cfgval{mousepan}, @cfgval{popup}, @cfgval{action},
 @cfgval{stroke}, @cfgval{repeat}.  Controls what the middle mouse
 button does:
@@ -734,6 +764,7 @@ button does:
 @tab @cfgtype{string}
 @tab @cfgval{popup}
 @tab
+@anchor{third-button}
 Possible values: @cfgval{popup}, @cfgval{mousepan}.  Controls what the
 third mouse button does:
 @itemize
@@ -748,6 +779,7 @@ third mouse button does:
 @tab @cfgtype{string}
 @tab @code{classic}
 @tab
+@anchor{scroll-wheel}
 Possible values: @cfgval{classic}, @cfgval{gtk}.
 Controls the binding of the mouse scroll wheel:
 @itemize
@@ -764,6 +796,7 @@ with @key{CTRL} -- zoom in/out
 @tab @cfgtype{string}
 @tab @cfgval{mesh}
 @tab
+@anchor{grid-mode}
 Possible values: @cfgval{mesh}, @cfgval{dots}, @cfgval{none}.  Sets
 the type of the grid.  @since{1.9.10}
 
@@ -771,6 +804,7 @@ the type of the grid.  @since{1.9.10}
 @tab @cfgtype{string}
 @tab @cfgval{variable}
 @tab
+@anchor{dots-grid-mode}
 Possible values: @cfgval{variable}, @cfgval{fixed}.  Controls the mode
 of the dotted grid.  In the @cfgval{variable} mode, the grid spacing
 changes depending on the zoom factor.  In the @cfgval{fixed} mode, the
@@ -782,6 +816,7 @@ snap-spacing. You can control the density of the grid using the
 @tab @cfgtype{string}
 @tab @cfgval{enabled_net}
 @tab
+@anchor{net-selection-mode}
 Possible values: @cfgval{enabled_net}, @cfgval{enabled_all},
 @cfgval{disabled}.  Controls how many net segments are selected when
 you click at a net:
@@ -953,12 +988,14 @@ Allow undo/redo operations to change pan and zoom.
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{undo-control}
 Controls if the undo is enabled or not.  @since{1.9.10}
 
 @item @cfgkey{undo-type}
 @tab @cfgtype{string}
 @tab @cfgval{disk}
 @tab
+@anchor{undo-type}
 Possible values: @cfgval{disk}, @cfgval{memory}.  Controls what kind
 of medium is used for storing undo data.  The @cfgval{disk} mechanism
 is nice because you get undo-level number of backups of the schematic
@@ -976,6 +1013,7 @@ Determines the number of levels of undo.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{undo-panzoom}
 Controls if pan or zoom commands are saved in the undo list. If this
 is enabled, then a pan or zoom will be considered a command and can be
 undone.  @since{1.9.10}
@@ -1049,12 +1087,14 @@ number.
 @tab @cfgtype{int}
 @tab @cfgval{200}
 @tab
+@anchor{bus-ripper-size}
 Sets the size of the auto bus rippers.  @since{1.9.10}
 
 @item @cfgkey{bus-ripper-type}
 @tab @cfgtype{string}
 @tab @cfgval{component}
 @tab
+@anchor{bus-ripper-type}
 Possible values: @cfgval{component}, @cfgval{net}.  Sets the bus
 ripper type, either a symbol (@cfgval{component}) or plain net.
 @since{1.9.10}
@@ -1063,6 +1103,7 @@ ripper type, either a symbol (@cfgval{component}) or plain net.
 @tab @cfgtype{string}
 @tab @cfgval{busripper-1.sym}
 @tab
+@anchor{bus-ripper-symname}
 The default bus ripper symbol, used when the
 @cfgkey{schematic::bus-ripper-type} configuration key is set to
 @cfgval{"component"}.  The symbol must exist in a component library.
@@ -1072,6 +1113,7 @@ The default bus ripper symbol, used when the
 @tab @cfgtype{string}
 @tab @cfgval{non-symmetric}
 @tab
+@anchor{bus-ripper-rotation}
 Possible values: @cfgval{non-symmetric}, @cfgval{symmetric}.  This
 deals with how the bus ripper symbol is rotated when it is auto added
 to a schematic.  @since{1.9.10}
@@ -1080,6 +1122,7 @@ to a schematic.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{net-consolidate}
 Controls if the net consolidation code is used when schematics are
 read in, written to disk, and when nets are being drawn (does not
 consolidate when things are being copied or moved yet).  Net
@@ -1090,12 +1133,14 @@ one.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{logging}
 Determines if the logging mechanism is enabled.  @since{1.9.10}
 
 @item @cfgkey{log-window}
 @tab @cfgtype{string}
 @tab @cfgval{later}
 @tab
+@anchor{log-window}
 Possible values: @cfgval{later}, @cfgval{startup} Controls if the log
 window is shown when lepton-schematic is started up
 (@cfgval{startup}), or not (@cfgval{later}).  @since{1.9.10}
@@ -1105,6 +1150,7 @@ window is shown when lepton-schematic is started up
 @tab @cfgtype{int}
 @tab @cfgval{120}
 @tab
+@anchor{auto-save-interval}
 Controls how often a backup copy is made, in seconds.  The backup copy
 is made when you make some change to the schematic, and there were
 more than "interval" seconds from the last autosave.  Autosaving will
@@ -1127,6 +1173,7 @@ Before 1.9.10 it was @code{gschem.library} group.
 @tab @cfgtype{string list}
 @tab @cfgval{*}
 @tab
+@anchor{component-attributes}
 List of attribute names (semicolon-separated) that are displayed in
 the component select dialog.  An empty list will disable the attribute
 view.  If the first list element is an asterisk (@samp{*}), all
@@ -1136,6 +1183,7 @@ attributes will be displayed in the alphabetical order.
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{sort}
 If @cfgval{true}, the component libraries are sorted alphabetically.
 Otherwise they are sorted in the order opposite to what they were
 added in.
@@ -1157,6 +1205,7 @@ Before 1.9.10 it was @code{gschem.printing} group.
 @tab @cfgtype{string}
 @tab @cfgval{auto}
 @tab
+@anchor{layout}
 Possible values: @cfgval{auto}, @cfgval{portrait}, @cfgval{landscape}.
 When using a paper size, set the orientation of the output.  If
 @cfgval{auto} layout is used, the orientation that best fits the
@@ -1166,12 +1215,14 @@ drawing will be used.
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{monochrome}
 Toggle monochrome (@cfgval{true}) or color (@cfgval{false}) output.
 
 @item @cfgkey{paper}
 @tab @cfgtype{string}
 @tab @cfgval{"iso_a4"}
 @tab
+@anchor{paper}
 Size the output for a particular paper size.  The default value
 depends on the current locale.  Described in the PWG 5101.1 standard
 (Printer Working Group @url{http://www.pwg.org/standards.html#s5101,
@@ -1194,6 +1245,7 @@ depends on the current locale.  Described in the PWG 5101.1 standard
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{create-files}
 Enable the creation of backup files (@file{NAME.sch~}) when saving a
 schematic.  @since{1.9.10}
 
@@ -1217,6 +1269,7 @@ to be set in @file{gafrc} files.
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{promote}
 Former @file{gafrc} option: @cfgkey{attribute-promotion}.  Set if
 attribute promotion occurs when you instantiate a component.
 Attribute promotion means that any floating (unattached) attribute
@@ -1227,6 +1280,7 @@ when it is instantiated.  @since{1.9.10}
 @tab @cfgtype{string list}
 @tab @cfgval{footprint;device;value;model-name}
 @tab
+@anchor{always-promote}
 Former @file{gafrc} option: @cfgkey{always-promote-attributes}.  The
 list of attributes that are always promoted regardless of their
 visibility.  @since{1.9.10}
@@ -1235,6 +1289,7 @@ visibility.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{promote-invisible}
 Former @file{gafrc} option: @cfgkey{promote-invisible}.  Set if
 invisible floating attributes are promoted when a component is
 instantiated.  @since{1.9.10}
@@ -1244,6 +1299,7 @@ instantiated.  @since{1.9.10}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{keep-invisible}
 Former @file{gafrc} option: @cfgkey{keep-invisible}.  Do not change
 this option. Here's the original description from the
 @file{system-gafrc} file:
@@ -1328,6 +1384,7 @@ Before 1.9.10 it was @code{gnetlist} group.
 @tab @cfgtype{string}
 @tab @cfgval{"unnamed_net"}
 @tab
+@anchor{default-net-name}
 Default name used for nets for which the user has set no explicit name
 via the @attr{netname=} or @attr{net=} attributes.
 
@@ -1335,6 +1392,7 @@ via the @attr{netname=} or @attr{net=} attributes.
 @tab @cfgtype{string}
 @tab @cfgval{"unnamed_bus"}
 @tab
+@anchor{default-bus-name}
 Default name used for buses for which the user has set no explicit
 name.  Buses are still not used in @netlist.
 
@@ -1342,6 +1400,7 @@ name.  Buses are still not used in @netlist.
 @tab @cfgtype{string}
 @tab @cfgval{net-attribute}
 @tab
+@anchor{net-naming-priority}
 Possible values: @cfgval{net-attribute}, @cfgval{netname-attribute}.
 Specify which attribute, @attr{net} or @attr{netname}, has
 priority if a net is found with two names. Any netname conflict will
@@ -1362,18 +1421,21 @@ Before 1.9.10 it was @code{gnetlist.hierarchy} group.
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{traverse-hierarchy}
 Turn on/off hierarchy processing.
 
 @item @cfgkey{mangle-refdes-attribute}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{mangle-refdes-attribute}
 Whether to mangle sub-schematic's @attr{refdes} attributes.
 
 @item @cfgkey{refdes-attribute-order}
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{refdes-attribute-order}
 While mangling @attr{refdes} attributes, whether to append
 (@cfgval{false}) or prepend (@cfgval{true}) sub-schematic's ones.
 
@@ -1381,18 +1443,21 @@ While mangling @attr{refdes} attributes, whether to append
 @tab @cfgtype{string}
 @tab @cfgval{"/"}
 @tab
+@anchor{refdes-attribute-separator}
 Separator string used to form mangled @attr{refdes} attribute names.
 
 @item @cfgkey{mangle-netname-attribute}
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{mangle-netname-attribute}
 Whether to mangle sub-schematic's @attr{netname} attributes.
 
 @item @cfgkey{netname-attribute-order}
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{netname-attribute-order}
 While mangling @attr{netname} attributes, whether to append
 (@cfgval{false}) or prepend (@cfgval{true}) sub-schematic's ones.
 
@@ -1400,6 +1465,7 @@ While mangling @attr{netname} attributes, whether to append
 @tab @cfgtype{string}
 @tab @cfgval{"/"}
 @tab
+@anchor{netname-attribute-separator}
 Separator string used to form mangled @attr{netname} attribute
 names.
 
@@ -1407,12 +1473,14 @@ names.
 @tab @cfgtype{boolean}
 @tab @cfgval{true}
 @tab
+@anchor{mangle-net-attribute}
 Whether to mangle sub-schematic's @attr{net} attributes.
 
 @item @cfgkey{net-attribute-order}
 @tab @cfgtype{boolean}
 @tab @cfgval{false}
 @tab
+@anchor{net-attribute-order}
 While mangling @samp{net} attributes, whether to append
 (@cfgval{false}) or prepend (@cfgval{true}) sub-schematic's ones.
 
@@ -1420,6 +1488,7 @@ While mangling @samp{net} attributes, whether to append
 @tab @cfgtype{string}
 @tab @cfgval{"/"}
 @tab
+@anchor{net-attribute-separator}
 Separator string used to form mangled @attr{net} attribute names.
 
 @end multitable
@@ -1514,11 +1583,294 @@ overrides the @code{paper} key (see the previous entry).
 @end multitable
 
 
-@node Deprecated settings, Resources, Configuration of Lepton tools, Configuration
+@node Deprecated settings, Obsolete settings, Configuration of Lepton tools, Configuration
 @section Deprecated settings
 @cindex deprecated settings
 
-@node Resources,  , Deprecated settings, Configuration
+When running tools from the Lepton EDA suite, you sometimes may see
+a warning like this:
+
+@smallexample
+WARNING: The RC file function 'hierarchy-uref-separator' is deprecated.
+RC configuration functions will be removed in an upcoming Lepton EDA
+release. Please use .conf configuration files instead:
+https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
+
+Put the following lines into the lepton.conf file (in current directory)
+or lepton-user.conf (in user's configuration directory, typically
+$HOME/.config/lepton-eda/), replacing MYVALUE with the desired
+option's value:
+
+[netlist.hierarchy]
+refdes-attribute-separator=MYVALUE
+@end smallexample
+
+It means that the option you are trying to set in the @emph{old-style}
+configuration file (e.g. @file{gafrc}, @file{gschemrc}) has been
+replaced with a new one that should be defined in one of the
+@file{*.conf} configuration files, as described in the @ref{New
+configuration system, Overview section}.  Old settings are still
+valid, but they will be removed in future releases, hence the warning.
+
+@quotation Note
+If some option is present in both (new and old) configuration files,
+then the value from the old configuration file will take precedence.
+@end quotation
+
+Deprecated settings are listed in the tables below (the new settings
+in the right column are shown in the form
+@code{[group_name]::key_name}).  Also, they can be found in the
+@url{https://github.com/lepton-eda/lepton-eda/blob/master/liblepton/scheme/geda-deprecated-config.scm,
+geda-deprecated-config.scm} file (look for
+@code{define-rc-deprecated-config} entries there).
+
+@subsection Deprecated gafrc settings
+
+The following @file{gafrc} options are deprecated starting with Lepton
+EDA release 1.9.10:
+
+@multitable @columnfractions .5 .5
+
+@headitem Old @file{gafrc} file options @tab New options
+
+@item attribute-promotion
+@tab [schematic.attrib]::@:@ref{promote}
+@item always-promote-attributes
+@tab [schematic.attrib]::@ref{always-promote}
+@item promote-invisible
+@tab [schematic.attrib]::@ref{promote-invisible}
+@item keep-invisible
+@tab [schematic.attrib]::@ref{keep-invisible}
+@item bus-ripper-symname
+@tab [schematic]::@ref{bus-ripper-symname}
+@item make-backup-files
+@tab [schematic.backup]::@ref{create-files}
+
+@end multitable
+
+@subsection Deprecated gnetlistrc settings
+
+The following @file{gnetlistrc} options are deprecated:
+
+@multitable @columnfractions .5 .5
+
+@headitem Old @file{gnetlistrc} file options @tab New options
+
+@item hierarchy-netattrib-mangle
+@tab [netlist.hierarchy]::@ref{mangle-net-attribute}
+@item hierarchy-netattrib-order
+@tab [netlist.hierarchy]::@ref{net-attribute-order}
+@item hierarchy-netattrib-separator
+@tab [netlist.hierarchy]::@ref{net-attribute-separator}
+@item hierarchy-netname-mangle
+@tab [netlist.hierarchy]::@ref{mangle-netname-attribute}
+@item hierarchy-netname-order
+@tab [netlist.hierarchy]::@ref{netname-attribute-order}
+@item hierarchy-netname-separator
+@tab [netlist.hierarchy]::@ref{netname-attribute-separator}
+@item hierarchy-traversal
+@tab [netlist.hierarchy]::@ref{traverse-hierarchy}
+@item hierarchy-uref-mangle
+@tab [netlist.hierarchy]::@ref{mangle-refdes-attribute}
+@item hierarchy-uref-order
+@tab [netlist.hierarchy]::@ref{refdes-attribute-order}
+@item hierarchy-uref-separator
+@tab [netlist.hierarchy]::@ref{refdes-attribute-separator}
+@item net-naming-priority
+@tab [netlist]::@ref{net-naming-priority}
+@item unnamed-busname
+@tab [netlist]::@ref{default-bus-name}
+@item unnamed-netname
+@tab [netlist]::@ref{default-net-name}
+
+@end multitable
+
+@subsection Deprecated gschemrc settings
+
+The following @file{gschemrc} options are deprecated:
+
+@multitable @columnfractions .5 .5
+
+@headitem Old @file{gschemrc} file options @tab New options
+
+@item component-dialog-attributes
+@tab [schematic.library]::@ref{component-attributes}
+@item print-color
+@tab [schematic.printing]::@ref{monochrome}
+@item print-orientation
+@tab [schematic.printing]::@ref{layout}
+@item print-paper
+@tab [schematic.printing]::@ref{paper}
+@item sort-component-library
+@tab [schematic.library]::@ref{sort}
+@item untitled-name
+@tab [schematic]::@ref{default-filename}
+
+@end multitable
+
+The following @file{gschemrc} options are deprecated starting with
+Lepton EDA release 1.9.10:
+
+@multitable @columnfractions .5 .5
+
+@headitem Old @file{gschemrc} file options @tab New options
+
+@item action-feedback-mode
+@tab [schematic.gui]::@ref{action-feedback-mode}
+@item auto-save-interval
+@tab [schematic]::@ref{auto-save-interval}
+@item bus-ripper-rotation
+@tab [schematic]::@ref{bus-ripper-rotation}
+@item bus-ripper-size
+@tab [schematic]::@ref{bus-ripper-size}
+@item bus-ripper-type
+@tab [schematic]::@ref{bus-ripper-type}
+@item continue-component-place
+@tab [schematic.gui]::@ref{continue-component-place}
+@item default-titleblock
+@tab [schematic.gui]::@ref{default-titleblock}
+@item dots-grid-dot-size
+@tab [schematic.gui]::@ref{dots-grid-dot-size}
+@item dots-grid-fixed-threshold
+@tab [schematic.gui]::@ref{dots-grid-fixed-threshold}
+@item dots-grid-mode
+@tab [schematic.gui]::@ref{dots-grid-mode}
+@item draw-grips
+@tab [schematic.gui]::@ref{draw-grips}
+@item embed-components
+@tab [schematic.gui]::@ref{embed-components}
+@item enforce-hierarchy
+@tab [schematic.gui]::@ref{enforce-hierarchy}
+@item fast-mousepan
+@tab [schematic.gui]::@ref{fast-mousepan}
+@item file-preview
+@tab [schematic.gui]::@ref{file-preview}
+@item force-boundingbox
+@tab [schematic.gui]::@ref{force-boundingbox}
+@item grid-mode
+@tab [schematic.gui]::@ref{grid-mode}
+@item handleboxes
+@tab [schematic.gui]::@ref{handleboxes}
+@item keyboardpan-gain
+@tab [schematic.gui]::@ref{keyboardpan-gain}
+@item log-window
+@tab [schematic]::@ref{log-window}
+@item logging
+@tab [schematic]::@ref{logging}
+@item magnetic-net-mode
+@tab [schematic.gui]::@ref{magnetic-net-mode}
+@item mesh-grid-display-threshold
+@tab [schematic.gui]::@ref{mesh-grid-display-threshold}
+@item middle-button
+@tab [schematic.gui]::@ref{middle-button}
+@item mousepan-gain
+@tab [schematic.gui]::@ref{mousepan-gain}
+@item net-consolidate
+@tab [schematic]::@ref{net-consolidate}
+@item net-direction-mode
+@tab [schematic.gui]::@ref{net-direction-mode}
+@item net-selection-mode
+@tab [schematic.gui]::@ref{net-selection-mode}
+@item netconn-rubberband
+@tab [schematic.gui]::@ref{netconn-rubberband}
+@item scroll-wheel
+@tab [schematic.gui]::@ref{scroll-wheel}
+@item scrollbars
+@tab [schematic.gui]::@ref{scrollbars}
+@item scrollpan-steps
+@tab [schematic.gui]::@ref{scrollpan-steps}
+@item select-slack-pixels
+@tab [schematic.gui]::@ref{select-slack-pixels}
+@item snap-size
+@tab [schematic.gui]::@ref{snap-size}
+@item text-caps-style
+@tab [schematic.gui]::@ref{text-caps-style}
+@item text-size
+@tab [schematic.gui]::@ref{text-size}
+@item third-button
+@tab [schematic.gui]::@ref{third-button}
+@item third-button-cancel
+@tab [schematic.gui]::@ref{third-button-cancel}
+@item toolbars
+@tab [schematic.gui]::@ref{toolbars}
+@item undo-control
+@tab [schematic.undo]::@ref{undo-control}
+@item undo-levels
+@tab [schematic.undo]::@ref{undo-levels}
+@item undo-panzoom
+@tab [schematic.undo]::@ref{undo-panzoom}
+@item undo-type
+@tab [schematic.undo]::@ref{undo-type}
+@item warp-cursor
+@tab [schematic.gui]::@ref{warp-cursor}
+@item zoom-gain
+@tab [schematic.gui]::@ref{zoom-gain}
+@item zoom-with-pan
+@tab [schematic.gui]::@ref{zoom-with-pan}
+
+@end multitable
+
+@node Obsolete settings, Resources, Deprecated settings, Configuration
+@section Obsolete settings
+@cindex obsolete settings
+@cindex obsolete configuration settings
+
+The following @emph{old-style} configuration settings are no longer
+used.  An attempt to use them will produce a warning like this:
+
+@smallexample
+WARNING: The RC file function 'window-size' is deprecated
+and does nothing.
+RC configuration functions will be removed in an upcoming Lepton EDA
+release. Please use .conf configuration files instead:
+https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
+@end smallexample
+
+@subsection Obsolete @file{gafrc} file options
+@table @samp
+@item bitmap-directory
+@item postscript-prolog
+@item world-size
+@end table
+
+@subsection Obsolete @file{gnetlistrc} file options
+@table @samp
+@item gnetlist-version
+@end table
+
+@subsection Obsolete @file{gschemrc} file options
+@table @samp
+@item add-attribute-offset
+@item bus-style
+@item image-color
+@item image-size
+@item line-style
+@item log-window-type
+@item logging-destination
+@item net-endpoint-mode
+@item net-midpoint-mode
+@item net-style
+@item object-clipping
+@item output-capstyle
+@item output-color
+@item output-orientation
+@item output-type
+@item paper-size
+@item paper-sizes
+@item pin-style
+@item print-command
+@item raise-dialog-boxes-on-expose
+@item scrollbar-update
+@item setpagedevice-orientation
+@item setpagedevice-pagesize
+@item text-display-zoomfactor
+@item text-feedback
+@item text-origin-marker
+@item window-size
+@end table
+
+
+@node Resources,  , Obsolete settings, Configuration
 @section Resources
 
 @menu

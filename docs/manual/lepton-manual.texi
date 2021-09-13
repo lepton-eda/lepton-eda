@@ -115,7 +115,8 @@ Configuration system
 * Legacy configuration::        Legacy configuration files still in use.
 * New configuration system::    Overview of the new configuration system.
 * Configuration of Lepton tools::  Configuration settings for particular Lepton tools.
-* Deprecated settings::         Configuration settings no longer used.
+* Deprecated settings::         Configuration settings having replacements.
+* Obsolete settings::           Configuration settings no longer used.
 * Resources::                   Other useful resources.
 
 Legacy configuration files still in use
