@@ -103,9 +103,9 @@
   (let* ((moduledir (build-filename *testdir* "lepton"))
          (loadfile (build-filename moduledir "filename")))
     (mkdir moduledir)
-    (with-output-to-file loadfile
-      (lambda () (display "(define-module (lepton filename))
-(define-public (myproc) (exit 7))")))
+    (string->file "(define-module (lepton filename))
+                   (define-public (myproc) (exit 7))"
+                  loadfile)
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-cli "shell"
                         "-L" *testdir*
