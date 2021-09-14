@@ -189,9 +189,8 @@
 (test-group-with-cleanup "group: lepton-cli shell -s"
   (test-setup)
 
-  (let ((filename (build-filename *testdir* "anyfile.scm")))
-    (with-output-to-file filename
-      (lambda () (display "(exit 4)")))
+  (let ((filename (string->file "(exit 4)"
+                                (build-filename *testdir* "anyfile.scm"))))
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-cli "shell" "-s" filename)
       (test-eq 4 <status>)))
