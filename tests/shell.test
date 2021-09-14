@@ -303,30 +303,33 @@
 
 (test-begin "lepton-cli shell -s filename")
 
-(let ((scheme-filename (tmpnam)))
-  (with-output-to-file scheme-filename
-    (lambda ()
-      (display "(write (command-line)) (exit 20)")))
+(test-group-with-cleanup "group: lepton-cli shell -s filename"
+  (test-setup)
 
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-cli "shell" "-s" scheme-filename)
-    (test-equal 20 <status>)
-    (test-equal <stdout> (format #f "(~S)" scheme-filename)))
+  (let ((scheme-filename (string->file "(write (command-line)) (exit 20)"
+                                       (build-filename *testdir*
+                                                       "filename.scm"))))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "shell" "-s" scheme-filename)
+      (test-equal 20 <status>)
+      (test-equal <stdout> (format #f "(~S)" scheme-filename)))
 
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-cli "shell" "-s" scheme-filename
-                      "a" "-l" "b" "--" "c" "d")
-    (test-equal 20 <status>)
-    (test-equal <stdout>
-      (format #f "(~S \"a\" \"-l\" \"b\" \"--\" \"c\" \"d\")" scheme-filename)))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "shell" "-s" scheme-filename
+                        "a" "-l" "b" "--" "c" "d")
+      (test-equal 20 <status>)
+      (test-equal <stdout>
+        (format #f "(~S \"a\" \"-l\" \"b\" \"--\" \"c\" \"d\")" scheme-filename)))
 
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-cli "shell" "-L" "dir" "-s" scheme-filename
-                      "a" "-s" "b")
-    (test-equal 20 <status>)
-    (test-equal <stdout>
-      (format #f "(~S \"a\" \"-s\" \"b\")" scheme-filename)))
-  (delete-file scheme-filename))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "shell" "-L" "dir" "-s" scheme-filename
+                        "a" "-s" "b")
+      (test-equal 20 <status>)
+      (test-equal <stdout>
+        (format #f "(~S \"a\" \"-s\" \"b\")" scheme-filename))))
+
+  ;; Clean up.
+  (test-teardown))
 
 (test-end "lepton-cli shell -s filename")
 
