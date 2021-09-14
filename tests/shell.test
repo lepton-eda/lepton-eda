@@ -336,34 +336,40 @@
 
 (test-begin "lepton-cli shell -- -s filename")
 
-(let* ((contents "(write (command-line)) (exit 21)")
-       (scheme-filename (string->file contents (tmpnam)))
-       (shell-command-output (format #f "(\"shell\" \"-s\" ~S)" scheme-filename)))
+(test-group-with-cleanup "lepton-cli shell -- -s filename"
+  (test-setup)
 
-  (receive (<status> <stdout> <stderr>)
-      (shell-values (list "--" "-s" scheme-filename) contents)
-    (test-eq 21 <status>)
-    (test-assert (string-contains <stdout> shell-command-output)))
+  (let* ((contents "(write (command-line)) (exit 21)")
+         (scheme-filename (string->file contents
+                                        (build-filename *testdir*
+                                                        "filename.scm")))
+         (shell-command-output (format #f "(\"shell\" \"-s\" ~S)" scheme-filename)))
 
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-cli "--" "shell" "-s" scheme-filename)
-    (test-eq 21 <status>)
-    (test-equal <stdout> (format #f "(~S)" scheme-filename)))
+    (receive (<status> <stdout> <stderr>)
+        (shell-values (list "--" "-s" scheme-filename) contents)
+      (test-eq 21 <status>)
+      (test-assert (string-contains <stdout> shell-command-output)))
 
-  ;; This works differently if I use 'guile' instead of
-  ;; 'lepton-cli'.  Guile correctly interprets anything after "--"
-  ;; as file names and, since file "-s" is missing, enters shell.
-  ;; Cli does not, since the first argument must be command
-  ;; (e.g. "shell") which is missing in this case, and toplevel
-  ;; 'lepton-cli' code is interpreted which does not know the
-  ;; command '-s'.
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-cli "--" "-s" scheme-filename)
-    (test-eq EXIT_FAILURE <status>)
-    (test-assert (string-contains <stderr> "Unrecognised command `-s'"))
-    (test-assert (string-contains <stderr> "--help' for more information.")))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "--" "shell" "-s" scheme-filename)
+      (test-eq 21 <status>)
+      (test-equal <stdout> (format #f "(~S)" scheme-filename)))
 
-  (delete-file scheme-filename))
+    ;; This works differently if I use 'guile' instead of
+    ;; 'lepton-cli'.  Guile correctly interprets anything after "--"
+    ;; as file names and, since file "-s" is missing, enters shell.
+    ;; Cli does not, since the first argument must be command
+    ;; (e.g. "shell") which is missing in this case, and toplevel
+    ;; 'lepton-cli' code is interpreted which does not know the
+    ;; command '-s'.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "--" "-s" scheme-filename)
+      (test-eq EXIT_FAILURE <status>)
+      (test-assert (string-contains <stderr> "Unrecognised command `-s'"))
+      (test-assert (string-contains <stderr> "--help' for more information."))))
+
+  ;; Clean up.
+  (test-teardown))
 
 (test-end "lepton-cli shell -- -s filename")
 
