@@ -211,34 +211,37 @@
 
 (test-begin "lepton-cli shell -c -l -s")
 
-;;; -c, -l, and -s are of the same priority so the first one
-;;; option in the command line will define the result.
-(let ((l-filename (tmpnam))
-      (s-filename (tmpnam)))
-  (with-output-to-file l-filename
-    (lambda () (display "(exit 2)")))
-  (with-output-to-file s-filename
-    (lambda () (display "(exit 4)")))
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-cli "shell" "-s" s-filename "-c" "(exit 3)")
-    (test-eq 4 <status>))
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-cli "shell" "-s" s-filename "-l" l-filename)
-    (test-eq 4 <status>))
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-cli "shell" "-l" l-filename "-c" "(exit 3)")
-    (test-eq 2 <status>))
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-cli "shell" "-l" l-filename "-s" s-filename)
-    (test-eq 2 <status>))
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-cli "shell" "-c" "(exit 3)" "-s" s-filename)
-    (test-eq 3 <status>))
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-cli "shell" "-c" "(exit 3)" "-l" l-filename)
-    (test-eq 3 <status>))
-  (delete-file l-filename)
-  (delete-file s-filename))
+(test-group-with-cleanup "group: lepton-cli shell -c -l -s"
+  (test-setup)
+  ;; -c, -l, and -s are of the same priority so the first one
+  ;; option in the command line will define the result.
+  (let ((l-filename "l.scm")
+        (s-filename "s.scm"))
+    (with-output-to-file l-filename
+      (lambda () (display "(exit 2)")))
+    (with-output-to-file s-filename
+      (lambda () (display "(exit 4)")))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "shell" "-s" s-filename "-c" "(exit 3)")
+      (test-eq 4 <status>))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "shell" "-s" s-filename "-l" l-filename)
+      (test-eq 4 <status>))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "shell" "-l" l-filename "-c" "(exit 3)")
+      (test-eq 2 <status>))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "shell" "-l" l-filename "-s" s-filename)
+      (test-eq 2 <status>))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "shell" "-c" "(exit 3)" "-s" s-filename)
+      (test-eq 3 <status>))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "shell" "-c" "(exit 3)" "-l" l-filename)
+      (test-eq 3 <status>)))
+
+  ;; Clean up.
+  (test-teardown))
 
 (test-end "lepton-cli shell -c -l -s")
 
