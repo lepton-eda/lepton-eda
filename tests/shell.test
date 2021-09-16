@@ -343,8 +343,8 @@
 
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-cli "--" "shell" "-s" scheme-filename)
-      (test-eq 21 <status>)
-      (test-equal <stdout> (format #f "(~S)" scheme-filename)))
+      (test-eq EXIT_FAILURE <status>)
+      (test-assert (string-contains <stderr> "ERROR: You must specify a command to run.")))
 
     ;; This works differently if I use 'guile' instead of
     ;; 'lepton-cli'.  Guile correctly interprets anything after "--"
@@ -356,8 +356,7 @@
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-cli "--" "-s" scheme-filename)
       (test-eq EXIT_FAILURE <status>)
-      (test-assert (string-contains <stderr> "Unrecognised command `-s'"))
-      (test-assert (string-contains <stderr> "--help' for more information."))))
+      (test-assert (string-contains <stderr> "ERROR: You must specify a command to run."))))
 
   ;; Clean up.
   (test-teardown))
