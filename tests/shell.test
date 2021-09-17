@@ -547,7 +547,8 @@
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" "-l" y x)
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S)(~S)" x x) <stdout>))
+          (test-equal <stdout>
+            (format #f "(~S ~S ~S ~S)(~S ~S ~S ~S)" lepton-shell "-l" y x lepton-shell "-l" y x)))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-L" z)
           (test-eq 100 <status>)
