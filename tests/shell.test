@@ -271,19 +271,22 @@
 
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-cli "shell" "-c" "(write (command-line))")
-  (test-equal <stdout> "(\"shell\")"))
+  (test-equal <stdout>
+    (format #f "(~S ~S ~S)" lepton-shell "-c" "(write (command-line))")))
 
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-cli "shell" "-c" "(write (command-line))"
                     "a" "-l" "b" "--" "c" "d")
   (test-equal <stdout>
-    "(\"shell\" \"a\" \"-l\" \"b\" \"--\" \"c\" \"d\")"))
+    (format #f "(~S ~S ~S ~S ~S ~S ~S ~S ~S)"
+            lepton-shell "-c" "(write (command-line))" "a" "-l" "b" "--" "c" "d")))
 
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-cli "shell" "-L" "dir" "-c" "(write (command-line))"
                     "a" "-s" "b")
   (test-equal <stdout>
-    "(\"shell\" \"a\" \"-s\" \"b\")"))
+    (format #f "(~S ~S ~S ~S ~S ~S ~S ~S)"
+            lepton-shell "-L" "dir" "-c" "(write (command-line))" "a" "-s" "b")))
 
 (test-end "lepton-cli shell -c command")
 
@@ -299,21 +302,24 @@
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-cli "shell" "-s" scheme-filename)
       (test-equal 20 <status>)
-      (test-equal <stdout> (format #f "(~S)" scheme-filename)))
+      (test-equal <stdout>
+        (format #f "(~S ~S ~S)" lepton-shell "-s" scheme-filename)))
 
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-cli "shell" "-s" scheme-filename
                         "a" "-l" "b" "--" "c" "d")
       (test-equal 20 <status>)
       (test-equal <stdout>
-        (format #f "(~S \"a\" \"-l\" \"b\" \"--\" \"c\" \"d\")" scheme-filename)))
+        (format #f "(~S ~S ~S ~S ~S ~S ~S ~S ~S)"
+                lepton-shell "-s" scheme-filename "a" "-l" "b" "--" "c" "d")))
 
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-cli "shell" "-L" "dir" "-s" scheme-filename
                         "a" "-s" "b")
       (test-equal 20 <status>)
       (test-equal <stdout>
-        (format #f "(~S \"a\" \"-s\" \"b\")" scheme-filename))))
+        (format #f "(~S ~S ~S ~S ~S ~S ~S ~S)"
+                lepton-shell "-L" "dir" "-s" scheme-filename "a" "-s" "b"))))
 
   ;; Clean up.
   (test-teardown))
@@ -364,11 +370,15 @@
 
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-cli "shell" "-c" "(write (command-line))" "arg1" "arg2" "arg3")
-  (test-equal <stdout> "(\"shell\" \"arg1\" \"arg2\" \"arg3\")"))
+  (test-equal <stdout>
+    (format #f "(~S ~S ~S ~S ~S ~S)"
+            lepton-shell "-c" "(write (command-line))" "arg1" "arg2" "arg3")))
 
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-cli "shell" "-c" "(write (command-line))" "arg1" "arg2" "arg3" "-l" "/tmp/x")
-  (test-equal <stdout> "(\"shell\" \"arg1\" \"arg2\" \"arg3\" \"-l\" \"/tmp/x\")"))
+  (test-equal <stdout>
+    (format #f "(~S ~S ~S ~S ~S ~S ~S ~S)"
+            lepton-shell "-c" "(write (command-line))" "arg1" "arg2" "arg3" "-l" "/tmp/x")))
 
 (test-end "lepton-cli shell -c args")
 
@@ -411,11 +421,15 @@
 
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-cli "shell" "-c" "(write (command-line))" "--" "a" "b" "c")
-  (test-equal <stdout> "(\"shell\" \"--\" \"a\" \"b\" \"c\")"))
+  (test-equal <stdout>
+    (format #f "(~S ~S ~S ~S ~S ~S ~S)"
+            lepton-shell "-c" "(write (command-line))" "--" "a" "b" "c")))
 
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-cli "shell" "-c" "(write (command-line))" "-s" "foo.scm" "--" "a" "b" "c")
-  (test-equal <stdout> "(\"shell\" \"-s\" \"foo.scm\" \"--\" \"a\" \"b\" \"c\")"))
+  (test-equal <stdout>
+    (format #f "(~S ~S ~S ~S ~S ~S ~S ~S ~S)"
+            lepton-shell "-c" "(write (command-line))" "-s" "foo.scm" "--" "a" "b" "c")))
 
 (test-end "lepton-cli shell -c command -- a b c")
 
@@ -500,7 +514,7 @@
       (receive (<status> <stdout> <stderr>)
           (command-values lepton-cli "shell" "-l" y x)
         (test-eq EXIT_FAILURE <status>)
-        (test-equal (format #f "(~S)" x) <stdout>)
+        (test-equal <stdout> (format #f "(~S ~S ~S ~S)" lepton-shell "-l" y x))
         (test-assert (string-contains <stderr> "No such file or directory"))
         (test-assert (string-contains <stderr> x)))
       (receive (<status> <stdout> <stderr>)
@@ -521,15 +535,15 @@
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x y)
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S ~S)" x y) <stdout>))
+          (test-equal <stdout> (format #f "(~S ~S ~S)" lepton-shell x y)))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-s" y)
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S \"-s\" ~S)" x y) <stdout>))
+          (test-equal <stdout> (format #f "(~S ~S ~S ~S)" lepton-shell x "-s" y)))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-l" y)
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S \"-l\" ~S)" x y) <stdout>))
+          (test-equal <stdout> (format #f "(~S ~S ~S ~S)" lepton-shell x "-l" y)))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" "-l" y x)
           (test-eq 100 <status>)
@@ -537,11 +551,11 @@
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-L" z)
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S \"-L\" ~S)" x z) <stdout>))
+          (test-equal <stdout> (format #f "(~S ~S ~S ~S)" lepton-shell x "-L" z)))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" "-L" z x)
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S)" x) <stdout>))
+          (test-equal <stdout> (format #f "(~S ~S ~S ~S)" lepton-shell "-L" z x)))
 
         (delete-file y)
         (rmdir z)
@@ -550,15 +564,15 @@
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x y)
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S ~S)" x y) <stdout>))
+          (test-equal <stdout> (format #f "(~S ~S ~S)" lepton-shell x y)))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-s" y)
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S \"-s\" ~S)" x y) <stdout>))
+          (test-equal <stdout> (format #f "(~S ~S ~S ~S)" lepton-shell x "-s" y)))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-l" y)
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S \"-l\" ~S)" x y) <stdout>))
+          (test-equal <stdout> (format #f "(~S ~S ~S ~S)" lepton-shell x "-l" y)))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" "-l" y x)
           (test-eq EXIT_FAILURE <status>)
@@ -568,16 +582,16 @@
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-L" z)
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S \"-L\" ~S)" x z) <stdout>))
+          (test-equal <stdout> (format #f "(~S ~S ~S ~S)" lepton-shell x "-L" z)))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" "-L" z x)
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S)" x) <stdout>))
+          (test-equal <stdout> (format #f "(~S ~S ~S ~S)" lepton-shell "-L" z x)))
 
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-c" "(exit 100)")
           (test-eq 100 <status>)
-          (test-equal (format #f "(~S \"-c\" \"(exit 100)\")" x) <stdout>))
+          (test-equal <stdout> (format #f "(~S ~S ~S ~S)" lepton-shell x "-c" "(exit 100)")))
         )))
 
   ;; Clean up.
