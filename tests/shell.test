@@ -335,13 +335,14 @@
   (let* ((contents "(write (command-line)) (exit 21)")
          (scheme-filename (string->file contents
                                         (build-filename *testdir*
-                                                        "filename.scm")))
-         (shell-command-output (format #f "(\"shell\" \"-s\" ~S)" scheme-filename)))
+                                                        "filename.scm"))))
 
     (receive (<status> <stdout> <stderr>)
         (shell-values (list "--" "-s" scheme-filename) contents)
-      (test-eq 21 <status>)
-      (test-assert (string-contains <stdout> shell-command-output)))
+      ;; '-s' after '--' is considered a filename, thus the error here.
+      (test-eq EXIT_FAILURE <status>)
+      (test-assert (string-contains <stderr> "ERROR: Could not load file"))
+      (test-assert (string-contains <stderr> "\"-s\"")))
 
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-cli "--" "shell" "-s" scheme-filename)
@@ -389,13 +390,18 @@
     (shell-values '("--")
                   "(write (command-line))"
                   "(exit)")
-  (test-assert (string-contains <stdout> "(\"shell\")")))
+  (test-assert (string-contains <stdout> lepton-shell))
+  (test-assert (string-contains <stdout> "\"--\"")))
 
 (receive (<status> <stdout> <stderr>)
     (shell-values '("--" "x" "y" "z")
                   "(write (command-line))"
                   "(exit)")
-  (test-assert (string-contains <stdout> "(\"shell\" \"x\" \"y\" \"z\")")))
+  ;; As there is no files mentioned on command line, lepton-shell
+  ;; exits with error.
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: Could not load file"))
+  (test-assert (string-contains <stderr> "\"x\"")))
 
 (test-end "lepton-cli shell --")
 
