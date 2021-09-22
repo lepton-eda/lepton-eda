@@ -1,0 +1,26 @@
+(load-from-path "env.scm")
+
+;;; Adjust LANG to avoid issues with localised output. putenv is
+;;; necessary for FreeBSD if the environment variable was not yet
+;;; defined.
+(putenv "LANG=C")
+
+(define lepton-cli
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "cli"
+                  "src"
+                  "lepton-cli"))
+
+
+(define cwd (getcwd))
+(define *testdir* (build-filename (getcwd) "config-tmp"))
+
+;;; Setup/teardown directories/files needed by tests.
+(define (test-setup)
+  (mkdir *testdir*)
+  (chdir *testdir*))
+
+(define (test-teardown)
+  (chdir cwd)
+  (system* "rm" "-rf" *testdir*))

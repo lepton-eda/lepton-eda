@@ -44,6 +44,7 @@ AM_TESTS_ENVIRONMENT = env \
 
 TESTS = \
 	tests/cli.test \
+	tests/config.test \
 	tests/netlist.test \
 	tests/update.test
 
