@@ -1,6 +1,7 @@
 ;;; Common definitions for integration tests.
 
-(use-modules (srfi srfi-64))
+(use-modules (ice-9 textual-ports)
+             (srfi srfi-64))
 
 (define-syntax test-run-success
   (lambda (x)
@@ -43,6 +44,37 @@
            (format (current-error-port) "Test command: ~A\n" command)
            (test-eq EXIT_SUCCESS
              (status:exit-val (system command))))))))
+
+;;; Get the exit status of COMMAND, its stdout and stderr output,
+;;; and return the three values.
+(define (command-values . command)
+  (let* ((stdout-pipe (pipe))
+         (stdout-pipe-inport (car stdout-pipe))
+         (stdout-pipe-outport (cdr stdout-pipe))
+         (stderr-pipe (pipe))
+         (stderr-pipe-inport (car stderr-pipe))
+         (stderr-pipe-outport (cdr stderr-pipe)))
+    (format (current-error-port)
+            "Test: ~A\n" (string-join command))
+    (let ((exit-status
+           (status:exit-val
+            (with-output-to-port stdout-pipe-outport
+              (lambda ()
+                (with-error-to-port stderr-pipe-outport
+                  (lambda () (apply system* command))))))))
+      (close-port stdout-pipe-outport)
+      (close-port stderr-pipe-outport)
+      (let ((out-string (get-string-all stdout-pipe-inport))
+            (err-string (get-string-all stderr-pipe-inport)))
+        ;; I don't want to close input ports since the pipes
+        ;; should be garbage collected after use.
+        (format (current-error-port)
+                "Status: ~A\nStdout:\n~A\n\nStderr:\n~A\n\n"
+                exit-status
+                out-string
+                err-string)
+        (values exit-status out-string err-string)))))
+
 
 (define (build-filename . ls)
   (string-join ls file-name-separator-string))
