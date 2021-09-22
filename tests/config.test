@@ -49,3 +49,33 @@
   (test-teardown))
 
 (test-end "lepton-cli config")
+
+
+(test-begin "config -h")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-h")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Usage: lepton-cli config")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-h" "redundant")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Usage: lepton-cli config")))
+
+(test-end "config -h")
+
+
+(test-begin "config --help")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "--help")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Usage: lepton-cli config")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "--help" "redundant")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Usage: lepton-cli config")))
+
+(test-end "config --help")
