@@ -335,3 +335,60 @@
   (test-teardown))
 
 (test-end "config --project=path1/path2/path3")
+
+
+(test-begin "config -p")
+
+(test-group-with-cleanup "config -p"
+  (test-setup)
+
+  ;; '-p' without arguments.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-p")
+    (test-eq EXIT_SUCCESS <status>)
+    (let ((output (string-trim-right <stdout> #\newline)))
+      (test-equal (basename output) "lepton.conf")
+      (test-equal (canonicalize-path (dirname output))
+        (canonicalize-path (getcwd)))))
+
+  ;; Now, check a key without value in a new directory.
+  (mkdir "path")
+
+  (test-assert (not (file-exists? "lepton.conf")))
+
+  ;; "path" is used as a config group here :-)
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-p" "path" "group")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have group 'path'.")))
+
+  ;; Let's try with a definite value for a key.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-p" "path" "group" "key")
+    ;; Well, once again.  There was no key "somekey" since here it
+    ;; is considered to be a value :-)
+    (test-expect-fail 1)
+    (test-eq EXIT_FAILURE <status>))
+
+  ;; Config file with wrong values has been created in the current
+  ;; directory.
+  (test-expect-fail 1)
+  (test-assert (not (file-exists? "lepton.conf")))
+
+  ;; Let's try to set key=value and check what it gives.
+  (test-run-success lepton-cli "config" "-p" "path" "group" "key" "value")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-p" "path" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    ;; This won't work since "path" is considered to be a group,
+    ;; and "group" to be a value :-)
+    (test-expect-fail 1)
+    (test-equal <stdout> "value\n"))
+
+  ;; Redundant arguments are ignored.
+  (test-run-success lepton-cli "config" "-p" "path" "group" "key" "value" "redundant")
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "config -p")
