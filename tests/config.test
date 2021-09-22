@@ -1,3 +1,6 @@
+(use-modules (ice-9 receive))
+
+
 (load-from-path "env.scm")
 
 ;;; Adjust LANG to avoid issues with localised output. putenv is
@@ -24,3 +27,25 @@
 (define (test-teardown)
   (chdir cwd)
   (system* "rm" "-rf" *testdir*))
+
+
+;;; 'lepton-cli config' without arguments returns the name of the
+;;; project config file in the current working directory.  The
+;;; function canonicalize-path() is used to make sure the path is
+;;; correct even if it contains symlinks.
+(test-begin "lepton-cli config")
+
+(test-group-with-cleanup "lepton-cli config"
+  (test-setup)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "lepton.conf"))
+    (test-assert (string-contains
+                  (canonicalize-path (dirname (string-trim-right <stdout>
+                                                                 #\newline)))
+                  (canonicalize-path (getcwd)))))
+  (test-teardown))
+
+(test-end "lepton-cli config")
