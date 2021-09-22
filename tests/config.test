@@ -79,3 +79,115 @@
   (test-assert (string-contains <stdout> "Usage: lepton-cli config")))
 
 (test-end "config --help")
+
+
+(test-begin "config --project")
+
+;;; '--project' without arguments.
+(test-group-with-cleanup "config --project"
+  (test-setup)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project")
+    (test-eq EXIT_SUCCESS <status>)
+    (let ((output (string-trim-right <stdout> #\newline)))
+      (test-equal (basename output) "lepton.conf")
+      (test-equal (canonicalize-path (dirname output))
+        (canonicalize-path (getcwd)))))
+
+  ;; Clean up.
+  (test-teardown))
+
+;;; '--project' with non-existing directory.
+(test-group-with-cleanup "config --project=non-existing-dir"
+  (test-setup)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=non-existing-dir")
+    (test-eq EXIT_SUCCESS <status>)
+    (let ((output (string-trim-right <stdout> #\newline)))
+      (test-equal (basename output) "lepton.conf")
+      (test-equal (canonicalize-path (dirname output))
+        (canonicalize-path (getcwd)))))
+
+  ;; Clean up.
+  (test-teardown))
+
+;;; '--project' with existing directory.
+(test-group-with-cleanup "config --project=existing-dir"
+  (test-setup)
+  (mkdir "existing-dir")
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=existing-dir")
+    (test-eq EXIT_SUCCESS <status>)
+
+    (let ((output (string-trim-right <stdout> #\newline)))
+      (test-equal (basename output) "lepton.conf")
+      (test-equal (canonicalize-path (dirname output))
+        (canonicalize-path "existing-dir"))))
+
+  ;; Clean up.
+  (test-teardown))
+
+;;; Check a key without value in a new directory.
+(test-group-with-cleanup "config --project=path group [key]"
+  (test-setup)
+  (mkdir "path")
+
+  ;; Make sure lepton.conf is missing.
+  (test-assert (not (file-exists? "path/lepton.conf")))
+  ;; First, do not provide a key.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path/" "group")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: You must specify both configuration group and key."))
+    (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+  ;; Make sure lepton.conf is still missing.
+  (test-assert (not (file-exists? "path/lepton.conf")))
+  ;; Now, check that specified group does not exist in config.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path/" "group" "key")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have group 'group'.")))
+
+  ;; Let's create the config file.
+  (test-run-success lepton-cli "config" "--project=path/" "somegroup" "somekey" "somevalue")
+  ;; Make sure lepton.conf exists now.
+  (test-assert (file-exists? "path/lepton.conf"))
+  ;; The necessary group "group" is still missing.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path/" "group" "key")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have group 'group'.")))
+
+  ;; Let's create the necessary group with some other key.
+  ;; First check, that the key "somekey" is missing.
+  (test-run-failure lepton-cli "config" "--project=path/" "group" "somekey")
+  ;; Now, create the key "somekey".
+  (test-run-success lepton-cli "config" "--project=path/" "group" "somekey" "somevalue")
+  ;; The program still errors as we're looking for "key".
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path/" "group" "key")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'key'.")))
+
+  ;; Let's eventually set it.
+  (test-run-success lepton-cli "config" "--project=path/" "group" "key" "value")
+  ;; All should go smoothly.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "value\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path/" "somegroup" "somekey")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "somevalue\n"))
+
+  ;; lepton-cli simply ignores redundant args.
+  (test-run-success lepton-cli "config" "--project=path/" "group" "key" "value" "redundant")
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "config --project")
