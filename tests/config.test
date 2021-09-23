@@ -907,3 +907,121 @@
   (test-teardown))
 
 (test-end "config -u")
+
+
+(test-begin "config --user")
+
+(test-group-with-cleanup "config --user (1)"
+  (test-setup)
+
+  ;; Save environment variables to restore them later.
+  (let ((HOME (getenv "HOME"))
+        (homedir (build-filename *testdir* "home" "user")))
+    (system* "mkdir" "-p" homedir)
+    ;; Set $HOME to another directory.
+    (putenv (string-append "HOME=" homedir))
+    ;; Unset $XDG_CONFIG_HOME.
+    (putenv "XDG_CONFIG_HOME")
+
+    ;; Check location of user config file.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal (string-trim-right <stdout> #\newline)
+        (build-filename homedir ".config/lepton-eda/lepton-user.conf")))
+
+    ;; Check for some unexisting key.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user" "group" "key")
+      (test-eq EXIT_FAILURE <status>)
+      (test-equal <stderr> "ERROR: Configuration does not have group 'group'.\n"))
+    ;; Now set the key to a value.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user" "group" "key" "value")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> ""))
+    ;; Check if the key is now set.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user" "group" "key")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> "value\n"))
+    ;; Change the value.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user" "group" "key" "other-value")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> ""))
+    ;; Check if the key is now set to another value.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user" "group" "key")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> "other-value\n"))
+
+    ;; Restore environment variables.
+    (if HOME
+        (putenv (string-append "HOME=" HOME))
+        (putenv "HOME")))
+
+  ;; Clean up.
+  (test-teardown))
+
+;;; The same tests though for XDG_CONFIG_HOME.
+(test-group-with-cleanup "config --user (2)"
+  (test-setup)
+
+  ;; Save environment variables to restore them later.
+  (let ((HOME (getenv "HOME"))
+        (XDG_CONFIG_HOME (getenv "XDG_CONFIG_HOME"))
+        (homedir (build-filename *testdir* "home" "user"))
+        (xdgconfigdir (build-filename *testdir* "xdghome" "user")))
+    (system* "mkdir" "-p" homedir)
+    (system* "mkdir" "-p" xdgconfigdir)
+    ;; Set $HOME to another directory.
+    (putenv (string-append "HOME=" homedir))
+    ;; Set $XDG_CONFIG_HOME to another directory.
+    (putenv (string-append "XDG_CONFIG_HOME=" xdgconfigdir))
+
+    ;; Check location of user config file.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal (string-trim-right <stdout> #\newline)
+        (build-filename xdgconfigdir "lepton-eda" "lepton-user.conf")))
+
+    ;; Check for some unexisting key.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user" "group" "key")
+      (test-eq EXIT_FAILURE <status>)
+      (test-equal <stderr> "ERROR: Configuration does not have group 'group'.\n"))
+    ;; Now set the key to a value.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user" "group" "key" "value")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> ""))
+    ;; Check if the key is now set.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user" "group" "key")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> "value\n"))
+    ;; Change the value.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user" "group" "key" "other-value")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> ""))
+    ;; Check if the key is now set to another value.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--user" "group" "key")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> "other-value\n"))
+
+    ;; Restore environment variables.
+    (if XDG_CONFIG_HOME
+        (putenv (string-append "XDG_CONFIG_HOME=" XDG_CONFIG_HOME))
+        (putenv "XDG_CONFIG_HOME"))
+    (if HOME
+        (putenv (string-append "HOME=" HOME))
+        (putenv "HOME")))
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "config --user")
