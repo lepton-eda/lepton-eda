@@ -15,6 +15,8 @@
 * Saving schematic pages::
 * Printing and exporting::
 * Selecting objects::
+* Searching for text::
+* Check symbols::
 * lepton-schematic command line options::
 * Component libraries::
 * Interactive work with Scheme code::
@@ -354,8 +356,9 @@ configuration}.
 @item Find Text Results
 @clicksequence{View @click{} Find Text Results} opens a widget with
 results of last text searching.  If the docks are enabled in
-@ref{configuration, use-docks}, the widget is displayed in the bottom
-dock.  Otherwise, a separate dialog window is open.
+@ref{use-docks, configuration}, the widget is displayed in the bottom
+dock.  Otherwise, a separate dialog window is open.  @xref{Searching
+for text}.
 
 @item Redraw
 @item Pan
@@ -919,7 +922,7 @@ contents of your schematic or symbol page.  The @cli{} utility allows
 more accurate control of the image properties so if you want to set
 some custom options, please use it (@pxref{lepton-cli export}).
 
-@node Selecting objects, lepton-schematic command line options, Printing and exporting, lepton-schematic
+@node Selecting objects, Searching for text, Printing and exporting, lepton-schematic
 @section Selecting objects
 @cindex selecting objects
 @cindex object selection
@@ -979,7 +982,77 @@ The latter can be achieved by just left mouse click at some free
 space of schematic.
 
 
-@node lepton-schematic command line options, Component libraries, Selecting objects, lepton-schematic
+@node Searching for text, Check symbols, Selecting objects, lepton-schematic
+@section Searching for specific text
+@cindex search text
+@cindex searching for text
+@cindex search attributes
+@cindex searching for attributes
+
+Sometimes you would like to find some objects having specific
+attributes attached to them, or just want to find and amend some text
+object on a large page.
+
+Click on the menu item @clicksequence{Attributes @click{} Find
+Text/Check Symbol...} or just use the shortcut @kbd{T F} to open the
+text search widget at the bottom of the window.
+
+At the left hand side of the widget, there is a select button with
+which you can select one of the different strategies for searching.
+The following options are available:
+
+@itemize
+@item Find Text:
+With this option, you can look up for text by specifying a substring
+which will be searched for as is.
+@item Find Pattern:
+This is a bit more sophisticated way to search for text.  Strings are
+matched against a pattern containing @samp{*} and @samp{?} wildcards:
+@samp{*} matches an arbitrary, possibly empty, string, and @samp{?}
+matches an arbitrary character.  Note that the wildcards @samp{*} and
+@samp{?} can not be escaped to include them literally in a pattern.
+@item Find Regex:
+This is the most powerful way of searching for text as all regular
+expressions are available for searching.
+@item Check Symbol:
+This option is unlike others as it aims to search for all wrong
+objects on a symbol page including, but not limited by, text objects.
+For this reason, it is described in a dedicated section.  @xref{Check
+symbols}.
+@end itemize
+
+Enter the text in the text entry and click the button @samp{Find} to
+start searching or @samp{Cancel} to dismiss it.  If the @samp{descend
+into hierarchy} checkbox is activated, the search will be done in all
+the schematic hierarchy.
+
+The results of the last search are stored in memory and you may
+quickly return to them by using @clicksequence{View @click{} Find Text
+Results}.
+
+
+@node Check symbols, lepton-schematic command line options, Searching for text, lepton-schematic
+@section Interactive checking of symbol contents
+@cindex check symbol
+@cindex interactive symbol checking
+
+As described in @ref{Searching for text}, you can use
+@clicksequence{Attributes @click{} Find Text/Check Symbol...} to look
+up for specific text.  It opens the text search widget at the bottom
+of the window.  If you click on the option button at the left hand
+side of the widget and select the option @samp{Check Symbol:}, you'll
+be able to check the symbol page you work with almost the same way as
+you would do it with @symcheck{} though in the interactive mode.
+Choosing the option hides widget's text entry and only two buttons,
+@samp{Find} and @samp{Cancel}, are available then.  Clicking on
+@samp{Cancel} closes the widget.  Hit the @samp{Find} button and
+@schematic{} will check your page and open a dialog window with
+results of the check.  After looking at the issues found and hitting
+@samp{OK}, a new window will be opened where your can select and zoom
+on any problematic object on the page.
+
+
+@node lepton-schematic command line options, Component libraries, Check symbols, lepton-schematic
 @section lepton-schematic command line options
 @cindex lepton-schematic command line options
 @cindex lepton-schematic, command-line
