@@ -1177,3 +1177,86 @@
   (test-teardown))
 
 (test-end "config --system")
+
+
+(test-begin "config multiple stores")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-p" "-s")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-p" "-u")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-s" "-p")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-s" "-u")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-u" "-p")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-u" "-s")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-p" "-s" "-u")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-p" "-u" "-s")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-s" "-p" "-u")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-s" "-u" "-p")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-u" "-p" "-s")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "-u" "-s" "-p")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "config" "--project=./a" "--project=./b")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+(test-end "config multiple stores")
