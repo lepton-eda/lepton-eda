@@ -1119,3 +1119,61 @@
   (test-teardown))
 
 (test-end "config -s")
+
+
+;;; The same tests as for '-s'.
+(test-begin "config --system")
+
+(test-group-with-cleanup "config --system (sudo)"
+  (test-setup)
+  (backup-sys-configs)
+
+  (let ((system-config
+         (receive (<status> <stdout> <stderr>)
+             (command-values lepton-cli "config" "--system")
+           (test-eq EXIT_SUCCESS <status>)
+           (test-assert (string-contains <stdout> (build-filename "lepton-eda" "lepton-system.conf")))
+           ;; Name of the system config file.
+           (string-trim-right <stdout> #\newline)))
+        (backup (build-filename *testdir* "lepton-system.conf")))
+
+    ;; Back up current system config file.
+    (when (file-exists? system-config)
+      (system* "sudo" "mv" system-config backup))
+
+    ;; Check for some unexisting key.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--system" "group" "key")
+      (test-eq EXIT_FAILURE <status>)
+      (test-equal <stderr> "ERROR: Configuration does not have group 'group'.\n"))
+    ;; Now set the key to a value.
+    (receive (<status> <stdout> <stderr>)
+        (command-values "sudo" lepton-cli "config" "--system" "group" "key" "value")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> ""))
+    ;; Check if the key is now set.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--system" "group" "key")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> "value\n"))
+    ;; Change the value.
+    (receive (<status> <stdout> <stderr>)
+        (command-values "sudo" lepton-cli "config" "--system" "group" "key" "other-value")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> ""))
+    ;; Check if the key is now set to another value.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--system" "group" "key")
+      (test-eq EXIT_SUCCESS <status>)
+      (test-equal <stdout> "other-value\n"))
+
+    ;; Restore system config file, if any.
+    (system* "sudo" "rm" system-config)
+    (when (file-exists? backup)
+      (system* "sudo" "mv" backup system-config)))
+
+  ;; Clean up.
+  (restore-sys-configs)
+  (test-teardown))
+
+(test-end "config --system")
