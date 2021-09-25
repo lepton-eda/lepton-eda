@@ -202,3 +202,37 @@
   (test-teardown))
 
 (test-end "config --project")
+
+
+(test-begin "config --project=path1/path2/path3")
+
+;;; Test that subdirectories inherit config file settings from
+;;; their parent directories.
+(test-group-with-cleanup "config --project=path1/path2/path3"
+  (test-setup)
+  (system*  "mkdir" "-p" "path1/path2/path3")
+
+  (test-run-success lepton-cli "config" "--project=path1/" "group" "key" "value")
+  (test-assert (not (file-exists? "lepton.conf")))
+  (test-assert (file-exists? "path1/lepton.conf"))
+  (test-assert (not (file-exists? "path1/path2/lepton.conf")))
+  (test-assert (not (file-exists? "path1/path2/path3/lepton.conf")))
+
+  ;; We should get the same key value set in all three directories.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path1/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "value\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path1/path2/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "value\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path1/path2/path3/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "value\n"))
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "config --project=path1/path2/path3")
