@@ -1025,3 +1025,38 @@
   (test-teardown))
 
 (test-end "config --user")
+
+
+;;; Backup stuff.
+(define (backup-file name)
+  (define (replace/ c)
+    (if (eq? c #\/) #\_ c))
+  (string-map replace/ name))
+
+(define sys-config-files
+  (begin
+    (test-setup)
+    (system (string-append lepton-cli
+                           " shell -c '(use-modules (lepton os)) (write (sys-config-dirs))' > sys-config-dirs"))
+    (let ((dirs (with-input-from-file "sys-config-dirs" read)))
+      (test-teardown)
+      (map (lambda (dir) (build-filename dir "lepton-system.conf")) dirs))))
+
+(define (backup-sys-configs)
+  (define (backup-config conf)
+    (when (file-exists? conf)
+      (format (current-error-port)
+              "sudo mv ~A ~A\n" conf (backup-file conf))
+      (system* "sudo" "mv" conf (backup-file conf))))
+  (for-each backup-config sys-config-files))
+
+(define (restore-sys-configs)
+  (define (restore-config conf)
+    (when (file-exists? conf)
+      (format (current-error-port) "sudo rm ~A\n" conf)
+      (system* "sudo" "rm" conf))
+    (when (file-exists? (backup-file conf))
+      (format (current-error-port)
+              "sudo mv ~A ~A\n" (backup-file conf) conf)
+      (system* "sudo" "mv" (backup-file conf) conf)))
+  (for-each restore-config sys-config-files))
