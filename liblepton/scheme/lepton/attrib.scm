@@ -34,6 +34,7 @@
 
   #:export (attrib-attachment
             attach-attribs!
+            detach-attribs!
             attrib-name
             attrib-value
             set-attrib-value!
@@ -264,6 +265,6 @@ error.  Returns OBJECT."
 
           object))))
 
-(define-public (detach-attribs! obj . attribs)
+(define (detach-attribs! obj . attribs)
   (for-each (lambda (x) (%detach-attrib! obj x)) attribs)
   obj)
