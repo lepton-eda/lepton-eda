@@ -123,9 +123,9 @@ returns the value as a string.  Otherwise, raises an
         ""
         (pointer->string value-pointer))))
 
-(define (set-attrib-value! a val)
-  (let ((name (attrib-name a)))
-    (set-text-string! a (string-join (list name val) "="))))
+(define (set-attrib-value! object val)
+  (let ((name (attrib-name object)))
+    (set-text-string! object (string-join (list name val) "="))))
 
 (define (inherited-attribs object)
   "Returns the inherited attributes of OBJECT, if object is a
