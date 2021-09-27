@@ -287,5 +287,9 @@ error.  Returns OBJECT."
           object))))
 
 (define (detach-attribs! obj . attribs)
+  "Detach ATTRIBS from OBJECT.  Any of the ATTRIBS that are not
+attached as attributes are ignored.  If any of the ATTRIBS are
+attached to objects other than OBJECT, an 'object-state error is
+raised.  Returns OBJECT."
   (for-each (lambda (x) (%detach-attrib! obj x)) attribs)
   obj)
