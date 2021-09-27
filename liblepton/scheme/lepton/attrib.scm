@@ -39,7 +39,8 @@
             object-attribs
             inherited-attribs
             parse-attrib
-            promotable-attribs)
+            promotable-attribs
+            promote-attribs!)
 
   #:re-export (attribute?))
 
@@ -129,7 +130,7 @@ returns the value as a string.  Otherwise, raises an
                (component-contents object))
       '()))
 
-(define-public (promote-attribs! object)
+(define (promote-attribs! object)
   (let ((p (or (object-page object)
                (scm-error 'object-state #f
                           (G_ "Object ~A is not part of a page")
