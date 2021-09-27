@@ -37,6 +37,7 @@
             attrib-value
             set-attrib-value!
             object-attribs
+            inherited-attribs
             parse-attrib
             promotable-attribs)
 
@@ -122,7 +123,7 @@ returns the value as a string.  Otherwise, raises an
   (let ((name (attrib-name a)))
     (set-text-string! a (string-join (list name val) "="))))
 
-(define-public (inherited-attribs object)
+(define (inherited-attribs object)
   (if (component? object)
       (filter! (lambda (x) (and (attribute? x) (not (attrib-attachment x))))
                (component-contents object))
