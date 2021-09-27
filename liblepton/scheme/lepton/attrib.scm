@@ -33,6 +33,7 @@
   #:use-module (lepton page)
 
   #:export (attrib-attachment
+            attach-attribs!
             attrib-name
             attrib-value
             set-attrib-value!
@@ -218,7 +219,7 @@ successfully."
 
         object)))
 
-(define-public (attach-attribs! obj . attribs)
+(define (attach-attribs! obj . attribs)
   (for-each (lambda (x) (%attach-attrib! obj x)) attribs)
   obj)
 
