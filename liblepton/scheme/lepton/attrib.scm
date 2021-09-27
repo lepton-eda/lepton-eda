@@ -128,6 +128,8 @@ returns the value as a string.  Otherwise, raises an
     (set-text-string! a (string-join (list name val) "="))))
 
 (define (inherited-attribs object)
+  "Returns the inherited attributes of OBJECT, if object is a
+component. If OBJECT is not a component, returns the empty list."
   (if (component? object)
       (filter! (lambda (x) (and (attribute? x) (not (attrib-attachment x))))
                (component-contents object))
