@@ -94,6 +94,8 @@
   (test-assert-thrown 'wrong-type-arg (attrib-attachment 'x))
   (test-assert-thrown 'wrong-type-arg
                       (attrib-attachment (make-text '(1 . 2) 'lower-left 0 "name value" 10 #t 'both)))
+
+  (test-assert-thrown 'wrong-type-arg (object-attribs 'x))
   )
 
 (test-end "attach-attrib")
