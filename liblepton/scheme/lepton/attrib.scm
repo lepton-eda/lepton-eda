@@ -35,6 +35,7 @@
   #:export (attrib-attachment
             attrib-name
             attrib-value
+            set-attrib-value!
             object-attribs
             parse-attrib
             promotable-attribs)
@@ -117,7 +118,7 @@ returns the value as a string.  Otherwise, raises an
         ""
         (pointer->string value-pointer))))
 
-(define-public (set-attrib-value! a val)
+(define (set-attrib-value! a val)
   (let ((name (attrib-name a)))
     (set-text-string! a (string-join (list name val) "="))))
 
