@@ -168,22 +168,17 @@ returns #f."
   (not (or (attrib-attachment object)
            (not (object-component object)))))
 
+
+;;; Attaches ATTRIB to OBJECT.  The following conditions must be
+;;; satisfied:
+;;; - Neither OBJECT nor ATTRIB may be already attached as an
+;;;   attribute.
+;;; - Both OBJECT and ATTRIB must be part of the same page
+;;;   and/or component object. (They can't be \"loose\" objects).
+;;; - ATTRIB must be a text object.
+;;; If attrib is already attached to object, does nothing
+;;; successfully.
 (define (%attach-attrib! object attrib)
-  "Attaches ATTRIB to OBJECT.  The following conditions must be
-satisfied:
-
-- Neither OBJECT nor ATTRIB may be already attached as an
-  attribute.
-- Both OBJECT and ATTRIB must be part of the same page
-  and/or component object. (They can't be \"loose\" objects).
-- ATTRIB must be a text object.
-
-These restrictions are intentionally harsher than those of the C
-API, and are required in order to ensure that the Scheme API is
-safe.
-
-If attrib is already attached to object, does nothing
-successfully."
   (define object-pointer (geda-object->pointer* object 1))
   (define attrib-pointer
     (geda-object->pointer* attrib 2 attribute? 'attribute))
@@ -246,12 +241,11 @@ ignored. Returns OBJECT."
   obj)
 
 
+;;; Detaches ATTRIB from OBJECT.  If ATTRIB is not attached as an
+;;; attribute, does nothing silently.  If ATTRIB is attached as an
+;;; attribute of an object other than OBJECT, raises an
+;;; 'object-state error.  Returns OBJECT.
 (define (%detach-attrib! object attrib)
-  "Detaches ATTRIB from OBJECT.  If ATTRIB is not attached as an
-attribute, does nothing silently.  If ATTRIB is attached as an
-attribute of an object other than OBJECT, raises an 'object-state
-error.  Returns OBJECT."
-
   (define object-pointer (geda-object->pointer* object 1))
   (define attrib-pointer
     (geda-object->pointer* attrib 2 attribute? 'attribute))
