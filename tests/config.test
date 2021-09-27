@@ -268,6 +268,69 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-equal <stdout> "val3\n"))
 
+  ;; Now other way around, we use the same group but different
+  ;; keys and different values in subdirs.
+  (system*  "mkdir" "-p" "dir1/dir2/dir3")
+
+  ;; First, set up lepton.conf files in the three directories.
+  (test-run-success lepton-cli "config" "--project=dir1/dir2/dir3" "group" "foo" "a")
+  (test-assert (file-exists? "dir1/dir2/dir3/lepton.conf"))
+  (test-assert (not (file-exists? "dir1/dir2/lepton.conf")))
+  (test-assert (not (file-exists? "dir1/lepton.conf")))
+  (test-assert (not (file-exists? "lepton.conf")))
+  (test-run-success lepton-cli "config" "--project=dir1/dir2/" "group" "bar" "b")
+  (test-assert (file-exists? "dir1/dir2/lepton.conf"))
+  (test-assert (not (file-exists? "dir1/lepton.conf")))
+  (test-assert (not (file-exists? "lepton.conf")))
+  (test-run-success lepton-cli "config" "--project=dir1/" "group" "baz" "c")
+  (test-assert (file-exists? "dir1/lepton.conf"))
+  (test-assert (not (file-exists? "lepton.conf")))
+
+  ;; Now check what is set.  It seems, if there are config files
+  ;; in subdirs, parent config is not inherited.
+
+  ;; Only "foo" key exists in dir1/dir2/dir3/.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=dir1/dir2/dir3/" "group" "foo")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "a\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=dir1/dir2/dir3/" "group" "bar")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'bar'.")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=dir1/dir2/dir3/" "group" "baz")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'baz'.")))
+
+  ;; Only "bar" key exists in dir1/dir2/.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=dir1/dir2/" "group" "foo")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'foo'.")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=dir1/dir2/" "group" "bar")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "b\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=dir1/dir2/" "group" "baz")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'baz'.")))
+
+  ;; Only "baz" key exists in dir1/.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=dir1/" "group" "foo")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'foo'.")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=dir1/" "group" "bar")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'bar'.")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=dir1/" "group" "baz")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "c\n"))
+
   ;; Clean up.
   (test-teardown))
 
