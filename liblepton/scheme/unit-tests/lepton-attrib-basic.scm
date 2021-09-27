@@ -85,6 +85,11 @@
   (test-equal p (attach-attribs! p y))
   (test-equal (list x y) (object-attribs p))
   (test-equal p (attrib-attachment y))
+
+  ;; Wrong type argument.
+  (test-assert-thrown 'wrong-type-arg (attrib-attachment 'x))
+  (test-assert-thrown 'wrong-type-arg
+                      (attrib-attachment (make-text '(1 . 2) 'lower-left 0 "name value" 10 #t 'both)))
   )
 
 (test-end "attach-attrib")
