@@ -21,6 +21,8 @@
   (test-eq 2 (length (page-contents P)))
   (close-page! P))
 
+(test-assert-thrown 'wrong-type-arg (promotable-attribs 'x))
+
 (test-end "promotable-attributes")
 
 
