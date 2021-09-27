@@ -162,9 +162,9 @@ object, the function does nothing and returns the empty list."
                (promotable-attribs object))
         '())))
 
-(define (attrib-inherited? attrib)
-  (not (or (attrib-attachment attrib)
-           (not (object-component attrib)))))
+(define (attrib-inherited? object)
+  (not (or (attrib-attachment object)
+           (not (object-component object)))))
 
 (define (%attach-attrib! object attrib)
   "Attaches ATTRIB to OBJECT.  The following conditions must be
