@@ -137,6 +137,13 @@ component. If OBJECT is not a component, returns the empty list."
       '()))
 
 (define (promote-attribs! object)
+  "Promotes all promotable attributes from component OBJECT into
+the page that contains the component.  If component is not in a
+page, an 'object-state error is raised.  All promotable attributes
+are copied, and made invisible. The copies are added to the page,
+and attached as attributes of component.  The list of promoted
+attributes is returned.  If OBJECT is not in fact a component
+object, the function does nothing and returns the empty list."
   (let ((p (or (object-page object)
                (scm-error 'object-state #f
                           (G_ "Object ~A is not part of a page")
