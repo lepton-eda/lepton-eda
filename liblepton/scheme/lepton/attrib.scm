@@ -233,6 +233,15 @@ successfully."
         object)))
 
 (define (attach-attribs! obj . attribs)
+  "Attaches ATTRIBS to OBJECT.  The following conditions must be
+satisfied, or an 'object-state error will be raised:
+- All the ATTRIBS must be text objects.
+- Neither OBJECT nor any of ATTRIBS may be already attached as an
+  attribute.
+- Both OBJECT and all ATTRIBS must be part of the same page
+  and/or component object.
+Any of the ATTRIBS that are already attached to OBJECT are
+ignored. Returns OBJECT."
   (for-each (lambda (x) (%attach-attrib! obj x)) attribs)
   obj)
 
