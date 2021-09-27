@@ -492,3 +492,28 @@
   (test-teardown))
 
 (test-end "config -p path1/path2/path3")
+
+
+(test-begin "config: unreadable file")
+
+(test-group-with-cleanup "group: config: unreadable file"
+  (test-setup)
+
+  (mkdir "path")
+  (test-assert (file-exists? "path"))
+  ;; Create lepton.conf in path/.
+  (test-run-success lepton-cli "config" "--project=path/" "group" "key" "value")
+  (test-assert (file-exists? "path/lepton.conf"))
+
+  ;; Make it unreadable.
+  (when (file-exists? "path/lepton.conf")
+    (chmod "path/lepton.conf" #o000)
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-cli "config" "--project=path/" "group" "key")
+      (test-eq EXIT_FAILURE <status>)
+      (test-assert (string-contains <stderr> "WARNING: Could not load"))
+      (test-assert (string-contains <stderr> "lepton.conf"))))
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "config: unreadable file")
