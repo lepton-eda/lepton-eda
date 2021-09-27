@@ -18,8 +18,6 @@
 <h1 class="sectionedit1"><a name="pcb_footprint_guides" id="pcb_footprint_guides">PCB Footprint Guides</a></h1>
 <div class="level1">
 <ul>
-<li class="level1"><div class="li"> Stuart Brorson&#039;s footprint <a href="http://www.brorson.com/gEDA/land_patterns_20070818.pdf" class="urlextern" title="http://www.brorson.com/gEDA/land_patterns_20070818.pdf"  rel="nofollow">footprint guide</a></div>
-</li>
 <li class="level1"><div class="li"> <a href="http://pcb.geda-project.org/pcb-cvs/pcb.html" class="urlextern" title="http://pcb.geda-project.org/pcb-cvs/pcb.html"  rel="nofollow">PCB manual</a></div>
 </li>
 <li class="level1"><div class="li"> The PCB <acronym title="Frequently Asked Questions">FAQ</acronym>: <a href="geda-pcb_tips.html" class="wikilink1" title="geda-pcb_tips.html">pcb_tips</a>.</div>
@@ -40,8 +38,6 @@
 <li class="level1"><div class="li"> The best tools for creating footprints are PCB (wysiwyg), TEXT EDITOR (fast, accurate), SCRIPTING (powerful).</div>
 </li>
 <li class="level1"><div class="li"> <strong>For drawing footprints in PCB</strong>, refer to the <a href="http://pcb.geda-project.org/pcb-cvs/pcb.html#Library-Creation" class="urlextern" title="http://pcb.geda-project.org/pcb-cvs/pcb.html#Library-Creation"  rel="nofollow">section about library creation in the PCB manual</a>, look at the part “Creating Newlib Footprints” in the “New Style Libraries” subsection.</div>
-</li>
-<li class="level1"><div class="li"> <strong>For writing footprints in text</strong>, refer to <a href="http://www.brorson.com/gEDA/land_patterns_20070818.pdf" class="urlextern" title="http://www.brorson.com/gEDA/land_patterns_20070818.pdf"  rel="nofollow">Footprint Creation for the Open-Source Layout Program &quot;PCB&quot;</a> written and maintained by Stuart Brorson.</div>
 </li>
 <li class="level1"><div class="li"> <strong>For Scripting footprints</strong> see the <a href="pcb-footprint_generators.html" class="wikilink1" title="pcb-footprint_generators.html">footprint generators</a> page.</div>
 </li>
@@ -112,7 +108,7 @@ PCB supports two entirely separate footprint library mechanisms:
 <p>
 Therefore, during layout, you can use footprints which are distributed with
 PCB, you can find footprints via a web search, or you can create your own, and
-put them in a dedicated directory. <a href="http://pcb.geda-project.org/pcb-cvs/pcb.html" class="urlextern" title="http://pcb.geda-project.org/pcb-cvs/pcb.html"  rel="nofollow">The pcb manual</a> has complete and up to date documentation for the element file format.  <a href="http://gedasymbols.org/" class="urlextern" title="http://gedasymbols.org"  rel="nofollow">Gedasymbols.org</a> has a number of user contributed footprints.  A somewhat incomplete but useful tutorial is available on the web at: <a href="http://www.brorson.com/gEDA/" class="urlextern" title="http://www.brorson.com/gEDA/"  rel="nofollow">http://www.brorson.com/gEDA/</a> (search for the term “newlib”).
+put them in a dedicated directory. <a href="http://pcb.geda-project.org/pcb-cvs/pcb.html" class="urlextern" title="http://pcb.geda-project.org/pcb-cvs/pcb.html"  rel="nofollow">The pcb manual</a> has complete and up to date documentation for the element file format.  <a href="http://gedasymbols.org/" class="urlextern" title="http://gedasymbols.org"  rel="nofollow">Gedasymbols.org</a> has a number of user contributed footprints.
 </p>
 
 </div>
@@ -231,13 +227,9 @@ As far as managing the footprint choices (and indeed the large number of compone
 Everybody does this a little differently. Some people draw the footprint entirely using PCB. Some people first draw a preliminary footprint in PCB, and then finish it off by hand editing it (e.g. using emacs). Some people write <acronym title="Practical Extraction and Report Language">Perl</acronym> or Python scripts to autogenerate footprints.
 </p>
 <ul>
-<li class="level1"><div class="li"> use a text editor. See <a href="http://www.brorson.com/gEDA/land_patterns_20070818.pdf" class="urlextern" title="http://www.brorson.com/gEDA/land_patterns_20070818.pdf"  rel="nofollow"> the manual on footprint creation</a> by Stuart Brorson for the details.</div>
-</li>
 <li class="level1"><div class="li"> draw the part in PCB and save as a footprint. See the <a href="http://ronja.twibright.com/guidelines/footprints.php" class="urlextern" title="http://ronja.twibright.com/guidelines/footprints.php"  rel="nofollow">howto by Karel Kulhavy</a></div>
 </li>
 <li class="level1"><div class="li"> or use a <a href="http://dlharmon.com/geda/footgen.html" class="urlextern" title="http://dlharmon.com/geda/footgen.html"  rel="nofollow"> python script</a> by Darrel Harmon for “two pad”, “SOxx”, “tabbed” and QFP” style</div>
-</li>
-<li class="level1"><div class="li"> or use a <a href="http://www.brorson.com/gEDA" class="urlextern" title="http://www.brorson.com/gEDA"  rel="nofollow"> perl script</a> by Stuart Brorson for two pad SMT components</div>
 </li>
 <li class="level1"><div class="li"> or use a <a href="http://www.luciani.org/geda/pcb/pcb-perl-library.html" class="urlextern" title="http://www.luciani.org/geda/pcb/pcb-perl-library.html"  rel="nofollow">perl script</a> from John Luciani – can be adapted to DIL, SOxx-Style, QFP, or even circular arrangement of pads.</div>
 </li>
