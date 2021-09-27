@@ -19,7 +19,11 @@
 
   (test-assert-thrown 'attribute-format (parse-attrib bad))
   (test-assert-thrown 'attribute-format (attrib-name bad))
-  (test-assert-thrown 'attribute-format (attrib-value bad)) )
+  (test-assert-thrown 'attribute-format (attrib-value bad))
+
+  (test-assert-thrown 'wrong-type-arg (parse-attrib 'x))
+  (test-assert-thrown 'wrong-type-arg (attrib-name 'x))
+  (test-assert-thrown 'wrong-type-arg (attrib-value 'x)) )
 
 (test-end "parse-attrib")
 
