@@ -124,6 +124,7 @@ returns the value as a string.  Otherwise, raises an
         (pointer->string value-pointer))))
 
 (define (set-attrib-value! object val)
+  "Sets the value part of attribute OBJECT to VAL."
   (let ((name (attrib-name object)))
     (set-text-string! object (string-join (list name val) "="))))
 
