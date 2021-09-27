@@ -163,6 +163,8 @@ object, the function does nothing and returns the empty list."
         '())))
 
 (define (attrib-inherited? object)
+  "Returns #t if OBJECT is an inherited attribute.  Otherwise
+returns #f."
   (not (or (attrib-attachment object)
            (not (object-component object)))))
 
