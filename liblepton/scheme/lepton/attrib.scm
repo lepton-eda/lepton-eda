@@ -37,6 +37,7 @@
             attrib-value
             set-attrib-value!
             object-attribs
+            attrib-inherited?
             inherited-attribs
             parse-attrib
             promotable-attribs
@@ -149,7 +150,7 @@ returns the value as a string.  Otherwise, raises an
                (promotable-attribs object))
         '())))
 
-(define-public (attrib-inherited? attrib)
+(define (attrib-inherited? attrib)
   (not (or (attrib-attachment attrib)
            (not (object-component attrib)))))
 
