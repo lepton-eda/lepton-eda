@@ -1,0 +1,26 @@
+(use-modules (ice-9 receive))
+
+(load-from-path "env.scm")
+
+(define lepton-cli
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "cli"
+                  "src"
+                  "lepton-cli"))
+
+;;; Adjust LANG to avoid issues with localised output.  putenv is
+;;; necessary for FreeBSD if the environment variable was not yet
+;;; defined.
+(putenv "LANG=C")
+
+
+(test-begin "lepton-cli export")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "export")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert (string-contains <stderr> "ERROR: You must specify at least one input filename."))
+  (test-assert (string-contains <stderr> "Run `lepton-cli export --help' for more information.")))
+
+(test-end "lepton-cli export")
