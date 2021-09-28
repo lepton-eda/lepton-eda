@@ -185,6 +185,17 @@
     (test-eq EXIT_SUCCESS <status>)
     (test-equal <stdout> "somevalue\n"))
 
+  ;; Let's change the value now.  I also use "./path" here to just
+  ;; make sure such a form works OK.
+  (test-run-success lepton-cli "config" "--project=./path/" "group" "key" "other-value")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "other-value\n"))
+
+  ;; Now make sure there is no config file in CWD, just in case :-)
+  (test-assert (not (file-exists? "lepton.conf")))
+
   ;; lepton-cli simply ignores redundant args.
   (test-run-success lepton-cli "config" "--project=path/" "group" "key" "value" "redundant")
   ;; Clean up.
