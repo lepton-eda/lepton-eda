@@ -392,3 +392,59 @@
   (test-teardown))
 
 (test-end "config -p")
+
+
+;;; Test '-p' (with space before argument) with config files in
+;;; subdirectories.
+(test-begin "config -p path1/path2/path3")
+
+(test-group-with-cleanup "config -p path1/path2/path3"
+  (test-setup)
+  (system*  "mkdir" "-p" "path1/path2/path3")
+
+  ;; Test '-p' with lepton.conf in path1/ only.
+  (system* lepton-cli "config" "-p" "path1/" "group" "key" "value")
+  (test-expect-fail 2)
+  (test-assert (file-exists? "path1/lepton.conf"))
+  (test-assert (not (file-exists? "./lepton.conf")))
+
+  (test-equal "[path1/]\ngroup=key\n"
+    (with-input-from-file (build-filename (getcwd) "lepton.conf")
+      (lambda () (get-string-all (current-input-port)))))
+
+  ;; The newly created config file may get in our way, remove it.
+  (delete-file "lepton.conf")
+
+  ;; Any other tests for "-p path" make no sense since with this
+  ;; option lepton-cli interprets other arguments in a wrong way.
+  ;; So let's use --project to set up initial config files.
+
+  (test-run-success lepton-cli "config" "--project=path1/path2/path3/" "group" "key" "val3")
+  (test-assert (file-exists? "path1/path2/path3/lepton.conf"))
+  (test-run-success lepton-cli "config" "--project=path1/path2/" "group" "key" "val2")
+  (test-assert (file-exists? "path1/path2/lepton.conf"))
+  (test-run-success lepton-cli "config" "--project=path1/" "group" "key" "val1")
+  (test-assert (file-exists? "path1/lepton.conf"))
+  (test-assert (not (file-exists? "lepton.conf")))
+
+  ;; '-p path' does not work.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-p" "path1/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-expect-fail 1)
+    (test-equal <stdout> "val1"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-p" "path1/path2/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-expect-fail 1)
+    (test-equal <stdout> "val2"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-p" "path1/path2/path3/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-expect-fail 1)
+    (test-equal <stdout> "val3"))
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "config -p path1/path2/path3")
