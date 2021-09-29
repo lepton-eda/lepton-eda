@@ -1063,8 +1063,15 @@
 
 
 ;;; Tests for system config usually require superuser permissions,
-;;; so most of them are disabled by default.
+;;; so most of them are disabled by default.  Set the environment
+;;; variable LEPTON_SUDO_TESTS to enable them.
+;;; Warning: this is dangerous!
 (test-begin "config -s")
+
+;;; Skip the next group of tests if the environment variable
+;;; LEPTON_SUDO_TESTS is not set.
+(unless (getenv "LEPTON_SUDO_TESTS")
+  (test-skip "config -s (sudo)"))
 
 (test-group-with-cleanup "config -s (sudo)"
   (test-setup)
@@ -1122,7 +1129,16 @@
 
 
 ;;; The same tests as for '-s'.
+;;; Tests for system config usually require superuser permissions,
+;;; so most of them are disabled by default.  Set the environment
+;;; variable LEPTON_SUDO_TESTS to enable them.
+;;; Warning: this is dangerous!
 (test-begin "config --system")
+
+;;; Skip the next group of tests if the environment variable
+;;; LEPTON_SUDO_TESTS is not set.
+(unless (getenv "LEPTON_SUDO_TESTS")
+  (test-skip "config --system (sudo)"))
 
 (test-group-with-cleanup "config --system (sudo)"
   (test-setup)
