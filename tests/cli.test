@@ -15,6 +15,19 @@
 (putenv "LANG=C")
 
 
+(define cwd (getcwd))
+(define *testdir* (build-filename (getcwd) "cli-tmp"))
+
+;;; Setup/teardown directories/files needed by tests.
+(define (test-setup)
+  (mkdir *testdir*)
+  (chdir *testdir*))
+
+(define (test-teardown)
+  (chdir cwd)
+  (system* "rm" "-rf" *testdir*))
+
+
 (define help-string "Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]")
 
 (define run-help-string "Run `lepton-cli --help' for more information.")
@@ -40,6 +53,69 @@
   (test-eq EXIT_FAILURE <status>)
   (test-assert (string-contains <stderr> "ERROR: You must specify a command to run."))
   (test-assert (string-contains <stderr> run-help-string)))
+
+(test-group-with-cleanup "lepton-cli --no-rcfiles export"
+  (test-setup)
+
+  ;; That environment variable is set in Makefile.  Unset it
+  ;; temporarily to facilitate testing.  Warning: it may create
+  ;; unintended consequences if there's something weird in the
+  ;; user or system gafrc.
+  (unsetenv "LEPTON_INHIBIT_RC_FILES")
+
+  ;; Create gafrc file with known contents.
+  (with-output-to-file "gafrc"
+    (lambda () (display "(display \"gafrc is loaded\")\n")))
+
+  ;; First, check if the command in gafrc works.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "export")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stdout> "gafrc is loaded")))
+
+  ;; Now, disable loading of RC files.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "--no-rcfiles" "export")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (not (string-contains <stdout> "gafrc is loaded"))))
+
+  ;; Restore the environment variable to not break other tests.
+  (putenv "LEPTON_INHIBIT_RC_FILES=yes")
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-group-with-cleanup "lepton-cli --no-rcfiles shell"
+  (test-setup)
+
+  ;; That environment variable is set in Makefile.  Unset it
+  ;; temporarily to facilitate testing.  Warning: it may create
+  ;; unintended consequences if there's something weird in the
+  ;; user or system gafrc.  The tests can also break if your
+  ;; installation is broken because system-gafrc depends on it.
+  (unsetenv "LEPTON_INHIBIT_RC_FILES")
+
+  ;; Create gafrc file with known contents.
+  (with-output-to-file "gafrc"
+    (lambda () (display "(display \"gafrc is loaded\")\n")))
+
+  ;; First, check if the command in gafrc works.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "shell" "-c" "(exit 10)")
+    (test-eq 10 <status>)
+    (test-assert (string-contains <stdout> "gafrc is loaded")))
+
+  ;; Now, disable loading of RC files.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "--no-rcfiles" "shell" "-c" "(exit 10)")
+    (test-eq 10 <status>)
+    (test-assert (not (string-contains <stdout> "gafrc is loaded"))))
+
+  ;; Restore the environment variable to not break other tests.
+  (putenv "LEPTON_INHIBIT_RC_FILES=yes")
+
+  ;; Clean up.
+  (test-teardown))
 
 (test-end "lepton-cli --no-rcfiles")
 
