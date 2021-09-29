@@ -444,6 +444,50 @@
     (test-expect-fail 1)
     (test-equal <stdout> "val3"))
 
+  ;; Now another way, we'll use different keys.
+  (system*  "mkdir" "-p" "dir1/dir2/dir3")
+
+  ;; We should be confident there is no config file in the current
+  ;; directory.  Otherwise lepton-cli even with the option
+  ;; --project will use it for storing settings.
+  (test-expect-fail 1)
+  (test-assert (not (file-exists? "lepton.conf")))
+  (delete-file "lepton.conf")
+
+  ;; First, set up lepton.conf files in the three directories.
+  (test-run-success lepton-cli "config" "--project=dir1/dir2/dir3" "group" "foo" "a")
+  (test-assert (file-exists? "dir1/dir2/dir3/lepton.conf"))
+  (test-assert (not (file-exists? "dir1/dir2/lepton.conf")))
+  (test-assert (not (file-exists? "dir1/lepton.conf")))
+  (test-assert (not (file-exists? "lepton.conf")))
+  (test-run-success lepton-cli "config" "--project=dir1/dir2/" "group" "bar" "b")
+  (test-assert (file-exists? "dir1/dir2/lepton.conf"))
+  (test-assert (not (file-exists? "dir1/lepton.conf")))
+  (test-assert (not (file-exists? "lepton.conf")))
+  (test-run-success lepton-cli "config" "--project=dir1/" "group" "baz" "c")
+  (test-assert (file-exists? "dir1/lepton.conf"))
+  (test-assert (not (file-exists? "lepton.conf")))
+
+  ;; Check if there is no config file in the current directory.
+  (test-assert (not (file-exists? "lepton.conf")))
+
+  ;; Now test output with the option '-p dir' where the option
+  ;; and its argument are separated with space.
+
+  ;; Those three don't work as '-p dir' is not supported by lepton-cli.
+  (test-run-success lepton-cli "config" "-p" "dir1/dir2/dir3" "group" "foo")
+
+  ;; As it stands, it creates a config file in the current working
+  ;; directory.
+  (test-expect-fail 1)
+  (test-assert (not (file-exists? "lepton.conf")))
+
+  ;; And its contents is strange :-)
+  (test-equal "[dir1/dir2/dir3]\ngroup=foo\n"
+    (with-input-from-file (build-filename (getcwd) "lepton.conf")
+      (lambda () (get-string-all (current-input-port)))))
+  ;; Thus, tests with other dirs and keys make no sense here.
+
   ;; Clean up.
   (test-teardown))
 
