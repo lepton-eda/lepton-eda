@@ -1276,3 +1276,44 @@
   (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
 
 (test-end "config multiple stores")
+
+
+(test-begin "config --project in subdir")
+(test-group-with-cleanup "config --project in subdir"
+  (test-setup)
+
+  ;; Make lepton.conf in test directory.
+  (test-run-success lepton-cli "config" "group" "key" "value")
+  (test-assert (file-exists? "lepton.conf"))
+
+  (system* "mkdir" "path")
+  (chdir "path")
+
+  ;; Try to make lepton.conf in subdirectory.
+  (test-assert (not (file-exists? "lepton.conf")))
+  (test-run-success lepton-cli "config" "a" "b" "c")
+  ;; The config file does not exist, anyway.
+  (test-assert (not (file-exists? "lepton.conf")))
+  ;; Check if the new config setting has been still saved.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "a" "b")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "c\n"))
+  ;; Check where the new config setting is stored.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-p")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal (canonicalize-path (string-trim-right <stdout> #\newline))
+      (canonicalize-path (build-filename *testdir* "lepton.conf"))))
+  ;; Copy the config file from the parent directory to the
+  ;; subdirectory and check what config will be now processed.
+  (copy-file "../lepton.conf" "./lepton.conf")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-p")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal (canonicalize-path (string-trim-right <stdout> #\newline))
+      (canonicalize-path (build-filename (getcwd) "lepton.conf"))))
+
+  ;; Clean up.
+  (test-teardown))
+(test-end "config --project in subdir")
