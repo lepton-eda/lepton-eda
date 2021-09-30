@@ -81,6 +81,262 @@
 (test-end "config --help")
 
 
+(test-begin "config -ppath")
+
+;;; '-p' without arguments.
+(test-group-with-cleanup "config -ppath"
+  (test-setup)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-p")
+    (test-eq EXIT_SUCCESS <status>)
+    (let ((output (string-trim-right <stdout> #\newline)))
+      (test-equal (basename output) "lepton.conf")
+      (test-equal (canonicalize-path (dirname output))
+        (canonicalize-path (getcwd)))))
+
+  ;; Clean up.
+  (test-teardown))
+
+;;; '-p' with non-existing directory.
+(test-group-with-cleanup "config -pnon-existing-dir"
+  (test-setup)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-pnon-existing-dir")
+    (test-eq EXIT_SUCCESS <status>)
+    (let ((output (string-trim-right <stdout> #\newline)))
+      (test-equal (basename output) "lepton.conf")
+      (test-equal (canonicalize-path (dirname output))
+        (canonicalize-path (getcwd)))))
+
+  ;; Clean up.
+  (test-teardown))
+
+;;; '-p' with existing directory.
+(test-group-with-cleanup "config -pexisting-dir"
+  (test-setup)
+  (mkdir "existing-dir")
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-pexisting-dir")
+    (test-eq EXIT_SUCCESS <status>)
+
+    (let ((output (string-trim-right <stdout> #\newline)))
+      (test-equal (basename output) "lepton.conf")
+      (test-equal (canonicalize-path (dirname output))
+        (canonicalize-path "existing-dir"))))
+
+  ;; Clean up.
+  (test-teardown))
+
+;;; Check a key without value in a new directory.
+(test-group-with-cleanup "config -ppath group [key]"
+  (test-setup)
+  (mkdir "path")
+
+  ;; Make sure lepton.conf is missing.
+  (test-assert (not (file-exists? "path/lepton.conf")))
+  ;; First, do not provide a key.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath/" "group")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: You must specify both configuration group and key."))
+    (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+  ;; Make sure lepton.conf is still missing.
+  (test-assert (not (file-exists? "path/lepton.conf")))
+  ;; Now, check that specified group does not exist in config.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath/" "group" "key")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have group 'group'.")))
+
+  ;; Let's create the config file.
+  (test-run-success lepton-cli "config" "-ppath/" "somegroup" "somekey" "somevalue")
+  ;; Make sure lepton.conf exists now.
+  (test-assert (file-exists? "path/lepton.conf"))
+  ;; The necessary group "group" is still missing.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath/" "group" "key")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have group 'group'.")))
+
+  ;; Let's create the necessary group with some other key.
+  ;; First check, that the key "somekey" is missing.
+  (test-run-failure lepton-cli "config" "-ppath/" "group" "somekey")
+  ;; Now, create the key "somekey".
+  (test-run-success lepton-cli "config" "-ppath/" "group" "somekey" "somevalue")
+  ;; The program still errors as we're looking for "key".
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath/" "group" "key")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'key'.")))
+
+  ;; Let's eventually set it.
+  (test-run-success lepton-cli "config" "-ppath/" "group" "key" "value")
+  ;; All should go smoothly.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "value\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath/" "somegroup" "somekey")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "somevalue\n"))
+
+  ;; Let's change the value now.  I also use "./path" here to just
+  ;; make sure such a form works OK.
+  (test-run-success lepton-cli "config" "-p./path/" "group" "key" "other-value")
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "other-value\n"))
+
+  ;; Now make sure there is no config file in CWD, just in case :-)
+  (test-assert (not (file-exists? "lepton.conf")))
+
+  ;; lepton-cli simply ignores redundant args.
+  (test-run-success lepton-cli "config" "-ppath/" "group" "key" "value" "redundant")
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "config -ppath")
+
+
+(test-begin "config -ppath1/path2/path3")
+
+;;; Test that subdirectories inherit config file settings from
+;;; their parent directories.
+(test-group-with-cleanup "config -ppath1/path2/path3"
+  (test-setup)
+  (system*  "mkdir" "-p" "path1/path2/path3")
+
+  (test-run-success lepton-cli "config" "-ppath1/" "group" "key" "value")
+  (test-assert (not (file-exists? "lepton.conf")))
+  (test-assert (file-exists? "path1/lepton.conf"))
+  (test-assert (not (file-exists? "path1/path2/lepton.conf")))
+  (test-assert (not (file-exists? "path1/path2/path3/lepton.conf")))
+
+  ;; We should get the same key value set in all three directories.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath1/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "value\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath1/path2/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "value\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath1/path2/path3/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "value\n"))
+
+  ;; Now, set up different keys in different directories.
+  (test-assert (not (file-exists? "lepton.conf")))
+  (test-run-success lepton-cli "config" "-ppath1/" "group" "key" "val1")
+  (test-assert (file-exists? "path1/lepton.conf"))
+  (test-run-success lepton-cli "config" "-ppath1/path2/" "group" "key" "val2")
+  (test-expect-fail 1)
+  (test-assert (file-exists? "path1/path2/lepton.conf"))
+  (test-run-success lepton-cli "config" "-ppath1/path2/path3/" "group" "key" "val3")
+  (test-expect-fail 1)
+  (test-assert (file-exists? "path1/path2/path3/lepton.conf"))
+  ;; This doesn't work this way.  If some parent path contains
+  ;; config file, a new config file for subdirectory is not
+  ;; created.  So let's remove lepton.conf in path1/, and then
+  ;; create configs starting from path3/, that is, vice versa.
+  (delete-file "path1/lepton.conf")
+  (test-run-success lepton-cli "config" "-ppath1/path2/path3/" "group" "key" "val3")
+  (test-assert (file-exists? "path1/path2/path3/lepton.conf"))
+  (test-run-success lepton-cli "config" "-ppath1/path2/" "group" "key" "val2")
+  (test-assert (file-exists? "path1/path2/lepton.conf"))
+  (test-run-success lepton-cli "config" "-ppath1/" "group" "key" "val1")
+  (test-assert (file-exists? "path1/lepton.conf"))
+
+  ;; These commands are now working as expected.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath1/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "val1\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath1/path2/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "val2\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath1/path2/path3/" "group" "key")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "val3\n"))
+
+  ;; Now other way around, we use the same group but different
+  ;; keys and different values in subdirs.
+  (system*  "mkdir" "-p" "dir1/dir2/dir3")
+
+  ;; First, set up lepton.conf files in the three directories.
+  (test-run-success lepton-cli "config" "-pdir1/dir2/dir3" "group" "foo" "a")
+  (test-assert (file-exists? "dir1/dir2/dir3/lepton.conf"))
+  (test-assert (not (file-exists? "dir1/dir2/lepton.conf")))
+  (test-assert (not (file-exists? "dir1/lepton.conf")))
+  (test-assert (not (file-exists? "lepton.conf")))
+  (test-run-success lepton-cli "config" "-pdir1/dir2/" "group" "bar" "b")
+  (test-assert (file-exists? "dir1/dir2/lepton.conf"))
+  (test-assert (not (file-exists? "dir1/lepton.conf")))
+  (test-assert (not (file-exists? "lepton.conf")))
+  (test-run-success lepton-cli "config" "-pdir1/" "group" "baz" "c")
+  (test-assert (file-exists? "dir1/lepton.conf"))
+  (test-assert (not (file-exists? "lepton.conf")))
+
+  ;; Now check what is set.  It seems, if there are config files
+  ;; in subdirs, parent config is not inherited.
+
+  ;; Only "foo" key exists in dir1/dir2/dir3/.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-pdir1/dir2/dir3/" "group" "foo")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "a\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-pdir1/dir2/dir3/" "group" "bar")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'bar'.")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-pdir1/dir2/dir3/" "group" "baz")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'baz'.")))
+
+  ;; Only "bar" key exists in dir1/dir2/.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-pdir1/dir2/" "group" "foo")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'foo'.")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-pdir1/dir2/" "group" "bar")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "b\n"))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-pdir1/dir2/" "group" "baz")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'baz'.")))
+
+  ;; Only "baz" key exists in dir1/.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-pdir1/" "group" "foo")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'foo'.")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-pdir1/" "group" "bar")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have key 'bar'.")))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-pdir1/" "group" "baz")
+    (test-eq EXIT_SUCCESS <status>)
+    (test-equal <stdout> "c\n"))
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "config -ppath1/path2/path3")
+
+
 (test-begin "config --project")
 
 ;;; '--project' without arguments.
