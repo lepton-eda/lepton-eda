@@ -113,3 +113,10 @@
 ;;; necessary for FreeBSD if the environment variable was not yet
 ;;; defined.
 (putenv "LANG=C")
+
+(define lepton-cli
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "cli"
+                  "src"
+                  "lepton-cli"))

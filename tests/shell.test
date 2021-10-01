@@ -2,12 +2,6 @@
 
 (load-from-path "env.scm")
 
-(define lepton-cli
-  (build-filename *abs-top-builddir*
-                  "utils"
-                  "cli"
-                  "src"
-                  "lepton-cli"))
 
 (define cwd (getcwd))
 (define *testdir* (build-filename (getcwd) "shell-tmp"))
