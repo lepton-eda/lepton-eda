@@ -9,11 +9,6 @@
                   "src"
                   "lepton-cli"))
 
-;;; Adjust LANG to avoid issues with localised output.  putenv is
-;;; necessary for FreeBSD if the environment variable was not yet
-;;; defined.
-(putenv "LANG=C")
-
 (define cwd (getcwd))
 (define *testdir* (build-filename (getcwd) "shell-tmp"))
 

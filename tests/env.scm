@@ -108,3 +108,8 @@
 ;;; Now set up %load-path to include local scheme directory.
 (putenv (string-append "GUILE_LOAD_PATH" "="
                        (string-append %src-scheme-dir% ":" %build-scheme-dir%)))
+
+;;; Adjust LANG to avoid issues with localised output.  putenv is
+;;; necessary for FreeBSD if the environment variable was not yet
+;;; defined.
+(putenv "LANG=C")
