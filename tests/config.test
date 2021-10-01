@@ -1339,27 +1339,27 @@
 
     ;; Check for some unexisting key.
     (receive (<status> <stdout> <stderr>)
-        (command-values lepton-cli "config" "-s" "group" "key")
+        (command-values lepton-export "config" "-s" "group" "key")
       (test-eq EXIT_FAILURE <status>)
       (test-equal <stderr> "ERROR: Configuration does not have group 'group'.\n"))
     ;; Now set the key to a value.
     (receive (<status> <stdout> <stderr>)
-        (command-values "sudo" lepton-cli "config" "-s" "group" "key" "value")
+        (command-values "sudo" lepton-export "config" "-s" "group" "key" "value")
       (test-eq EXIT_SUCCESS <status>)
       (test-equal <stdout> ""))
     ;; Check if the key is now set.
     (receive (<status> <stdout> <stderr>)
-        (command-values lepton-cli "config" "-s" "group" "key")
+        (command-values lepton-export "config" "-s" "group" "key")
       (test-eq EXIT_SUCCESS <status>)
       (test-equal <stdout> "value\n"))
     ;; Change the value.
     (receive (<status> <stdout> <stderr>)
-        (command-values "sudo" lepton-cli "config" "-s" "group" "key" "other-value")
+        (command-values "sudo" lepton-export "config" "-s" "group" "key" "other-value")
       (test-eq EXIT_SUCCESS <status>)
       (test-equal <stdout> ""))
     ;; Check if the key is now set to another value.
     (receive (<status> <stdout> <stderr>)
-        (command-values lepton-cli "config" "-s" "group" "key")
+        (command-values lepton-export "config" "-s" "group" "key")
       (test-eq EXIT_SUCCESS <status>)
       (test-equal <stdout> "other-value\n"))
 
@@ -1406,27 +1406,27 @@
 
     ;; Check for some unexisting key.
     (receive (<status> <stdout> <stderr>)
-        (command-values lepton-cli "config" "--system" "group" "key")
+        (command-values lepton-export "config" "--system" "group" "key")
       (test-eq EXIT_FAILURE <status>)
       (test-equal <stderr> "ERROR: Configuration does not have group 'group'.\n"))
     ;; Now set the key to a value.
     (receive (<status> <stdout> <stderr>)
-        (command-values "sudo" lepton-cli "config" "--system" "group" "key" "value")
+        (command-values "sudo" lepton-export "config" "--system" "group" "key" "value")
       (test-eq EXIT_SUCCESS <status>)
       (test-equal <stdout> ""))
     ;; Check if the key is now set.
     (receive (<status> <stdout> <stderr>)
-        (command-values lepton-cli "config" "--system" "group" "key")
+        (command-values lepton-export "config" "--system" "group" "key")
       (test-eq EXIT_SUCCESS <status>)
       (test-equal <stdout> "value\n"))
     ;; Change the value.
     (receive (<status> <stdout> <stderr>)
-        (command-values "sudo" lepton-cli "config" "--system" "group" "key" "other-value")
+        (command-values "sudo" lepton-export "config" "--system" "group" "key" "other-value")
       (test-eq EXIT_SUCCESS <status>)
       (test-equal <stdout> ""))
     ;; Check if the key is now set to another value.
     (receive (<status> <stdout> <stderr>)
-        (command-values lepton-cli "config" "--system" "group" "key")
+        (command-values lepton-export "config" "--system" "group" "key")
       (test-eq EXIT_SUCCESS <status>)
       (test-equal <stdout> "other-value\n"))
 
