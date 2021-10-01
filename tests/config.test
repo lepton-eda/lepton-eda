@@ -28,6 +28,13 @@
   (chdir cwd)
   (system* "rm" "-rf" *testdir*))
 
+(define (delete-file* filename)
+  (if (file-exists? filename)
+      (delete-file filename)
+      (begin (format (current-error-port)
+                     "File ~S does not exist.\n"
+                     filename)
+             #f)))
 
 ;;; 'lepton-cli config' without arguments returns the name of the
 ;;; project config file in the current working directory.  The
@@ -246,7 +253,7 @@
   ;; config file, a new config file for subdirectory is not
   ;; created.  So let's remove lepton.conf in path1/, and then
   ;; create configs starting from path3/, that is, vice versa.
-  (delete-file "path1/lepton.conf")
+  (delete-file* "path1/lepton.conf")
   (test-run-success lepton-cli "config" "-ppath1/path2/path3/" "group" "key" "val3")
   (test-assert (file-exists? "path1/path2/path3/lepton.conf"))
   (test-run-success lepton-cli "config" "-ppath1/path2/" "group" "key" "val2")
@@ -502,7 +509,7 @@
   ;; config file, a new config file for subdirectory is not
   ;; created.  So let's remove lepton.conf in path1/, and then
   ;; create configs starting from path3/, that is, vice versa.
-  (delete-file "path1/lepton.conf")
+  (delete-file* "path1/lepton.conf")
   (test-run-success lepton-cli "config" "--project=path1/path2/path3/" "group" "key" "val3")
   (test-assert (file-exists? "path1/path2/path3/lepton.conf"))
   (test-run-success lepton-cli "config" "--project=path1/path2/" "group" "key" "val2")
@@ -669,7 +676,7 @@
       (lambda () (get-string-all (current-input-port)))))
 
   ;; The newly created config file may get in our way, remove it.
-  (delete-file "lepton.conf")
+  (delete-file* "lepton.conf")
 
   ;; Any other tests for "-p path" make no sense since with this
   ;; option lepton-cli interprets other arguments in a wrong way.
@@ -708,7 +715,7 @@
   ;; --project will use it for storing settings.
   (test-expect-fail 1)
   (test-assert (not (file-exists? "lepton.conf")))
-  (delete-file "lepton.conf")
+  (delete-file* "lepton.conf")
 
   ;; First, set up lepton.conf files in the three directories.
   (test-run-success lepton-cli "config" "--project=dir1/dir2/dir3" "group" "foo" "a")
