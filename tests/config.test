@@ -609,19 +609,15 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-cli "config" "-p" "path" "group")
     (test-eq EXIT_FAILURE <status>)
-    (test-assert (string-contains <stderr> "ERROR: Configuration does not have group 'path'.")))
+    (test-assert (string-contains <stderr> "ERROR: You must specify both configuration group and key.")))
 
   ;; Let's try with a definite value for a key.
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-cli "config" "-p" "path" "group" "key")
-    ;; Well, once again.  There was no key "somekey" since here it
-    ;; is considered to be a value :-)
-    (test-expect-fail 1)
-    (test-eq EXIT_FAILURE <status>))
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Configuration does not have group 'group'.")))
 
-  ;; Config file with wrong values has been created in the current
-  ;; directory.
-  (test-expect-fail 1)
+  ;; Config file has not been created in the current directory.
   (test-assert (not (file-exists? "lepton.conf")))
 
   ;; Let's try to set key=value and check what it gives.
@@ -629,9 +625,6 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-cli "config" "-p" "path" "group" "key")
     (test-eq EXIT_SUCCESS <status>)
-    ;; This won't work since "path" is considered to be a group,
-    ;; and "group" to be a value :-)
-    (test-expect-fail 1)
     (test-equal <stdout> "value\n"))
 
   ;; Redundant arguments are no longer ignored.
@@ -656,7 +649,6 @@
 
   ;; Test '-p' with lepton.conf in path1/ only.
   (system* lepton-cli "config" "-p" "path1/" "group" "key" "value")
-  (test-expect-fail 2)
   (test-assert (file-exists? "path1/lepton.conf"))
   (test-assert (not (file-exists? "./lepton.conf")))
 
@@ -683,17 +675,14 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-cli "config" "-p" "path1/" "group" "key")
     (test-eq EXIT_SUCCESS <status>)
-    (test-expect-fail 1)
     (test-equal <stdout> "val1\n"))
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-cli "config" "-p" "path1/path2/" "group" "key")
     (test-eq EXIT_SUCCESS <status>)
-    (test-expect-fail 1)
     (test-equal <stdout> "val2\n"))
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-cli "config" "-p" "path1/path2/path3/" "group" "key")
     (test-eq EXIT_SUCCESS <status>)
-    (test-expect-fail 1)
     (test-equal <stdout> "val3\n"))
 
   ;; Now another way, we'll use different keys.
@@ -702,9 +691,7 @@
   ;; We should be confident there is no config file in the current
   ;; directory.  Otherwise lepton-cli even with the option
   ;; --project will use it for storing settings.
-  (test-expect-fail 1)
   (test-assert (not (file-exists? "lepton.conf")))
-  (delete-file* "lepton.conf")
 
   ;; First, set up lepton.conf files in the three directories.
   (test-run-success lepton-cli "config" "--project=dir1/dir2/dir3" "group" "foo" "a")
@@ -728,10 +715,6 @@
 
   ;; Those three don't work as '-p dir' is not supported by lepton-cli.
   (test-run-success lepton-cli "config" "-p" "dir1/dir2/dir3" "group" "foo")
-
-  ;; As it stands, it creates a config file in the current working
-  ;; directory.
-  (test-expect-fail 1)
   (test-assert (not (file-exists? "lepton.conf")))
 
   ;; And its contents is strange :-)
