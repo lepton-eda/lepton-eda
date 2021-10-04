@@ -717,12 +717,6 @@
   (test-run-success lepton-cli "config" "-p" "dir1/dir2/dir3" "group" "foo")
   (test-assert (not (file-exists? "lepton.conf")))
 
-  ;; And its contents is strange :-)
-  (test-equal "[dir1/dir2/dir3]\ngroup=foo\n"
-    (with-input-from-file (build-filename (getcwd) "lepton.conf")
-      (lambda () (get-string-all (current-input-port)))))
-  ;; Thus, tests with other dirs and keys make no sense here.
-
   ;; Clean up.
   (test-teardown))
 
