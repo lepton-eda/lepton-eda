@@ -99,12 +99,10 @@
 
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-cli "config" "-pnon-existing-dir")
-    (test-eq EXIT_SUCCESS <status>)
-    (let ((output (string-trim-right <stdout> #\newline)))
-      (test-equal (basename output) "lepton.conf")
-      (test-equal (canonicalize-path (dirname output))
-        (canonicalize-path (getcwd)))))
-
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert
+        (string-contains <stderr>
+                         "ERROR: Directory \"non-existing-dir\" does not exist.")))
   ;; Clean up.
   (test-teardown))
 
@@ -353,12 +351,10 @@
 
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-cli "config" "--project=non-existing-dir")
-    (test-eq EXIT_SUCCESS <status>)
-    (let ((output (string-trim-right <stdout> #\newline)))
-      (test-equal (basename output) "lepton.conf")
-      (test-equal (canonicalize-path (dirname output))
-        (canonicalize-path (getcwd)))))
-
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert
+        (string-contains <stderr>
+                         "ERROR: Directory \"non-existing-dir\" does not exist.")))
   ;; Clean up.
   (test-teardown))
 
