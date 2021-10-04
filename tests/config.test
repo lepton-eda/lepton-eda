@@ -1328,7 +1328,7 @@
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-config "-s" "group" "key")
       (test-eq EXIT_FAILURE <status>)
-      (test-equal <stderr> "ERROR: Configuration does not have group 'group'.\n"))
+      (test-assert (string-contains <stderr> "ERROR: Configuration does not have group 'group'.\n")))
     ;; Now set the key to a value.
     (receive (<status> <stdout> <stderr>)
         (command-values "sudo" --preserve-env lepton-config "-s" "group" "key" "value")
@@ -1395,7 +1395,7 @@
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-config "--system" "group" "key")
       (test-eq EXIT_FAILURE <status>)
-      (test-equal <stderr> "ERROR: Configuration does not have group 'group'.\n"))
+      (test-assert (string-contains <stderr> "ERROR: Configuration does not have group 'group'.\n")))
     ;; Now set the key to a value.
     (receive (<status> <stdout> <stderr>)
         (command-values "sudo" --preserve-env lepton-config "--system" "group" "key" "value")
