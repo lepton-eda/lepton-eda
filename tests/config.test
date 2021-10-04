@@ -1503,11 +1503,19 @@
   (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
   (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
 
-(receive (<status> <stdout> <stderr>)
-    (command-values lepton-cli "config" "--project=./a" "--project=./b")
-  (test-eq EXIT_FAILURE <status>)
-  (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
-  (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+(test-group-with-cleanup "config --project=./a --project=./b"
+  (test-setup)
+  (mkdir "./a")
+  (mkdir "./b")
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=./a" "--project=./b")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: You may only specify a single configuration store."))
+    (test-assert (string-contains <stderr> "Run `lepton-cli config --help' for more information.")))
+
+  ;; Clean up.
+  (test-teardown))
 
 (test-end "config multiple stores")
 
