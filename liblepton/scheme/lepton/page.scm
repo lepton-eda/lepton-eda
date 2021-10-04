@@ -218,9 +218,9 @@ modified PAGE."
 
           page))))
 
-(define (page-append! P . objects)
-  (for-each (lambda (x) (%page-append! P x)) objects)
-  P)
+(define (page-append! page . objects)
+  (for-each (lambda (x) (%page-append! page x)) objects)
+  page)
 
 
 (define (%page-remove! page object)
