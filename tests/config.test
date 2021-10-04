@@ -189,8 +189,11 @@
   ;; Now make sure there is no config file in CWD, just in case :-)
   (test-assert (not (file-exists? "lepton.conf")))
 
-  ;; lepton-cli simply ignores redundant args.
-  (test-run-success lepton-cli "config" "-ppath/" "group" "key" "value" "redundant")
+  ;; Redundant arguments are no longer ignored.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-ppath/" "group" "key" "value" "redundant")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Wrong number of command-line arguments.")))
   ;; Clean up.
   (test-teardown))
 
@@ -441,8 +444,11 @@
   ;; Now make sure there is no config file in CWD, just in case :-)
   (test-assert (not (file-exists? "lepton.conf")))
 
-  ;; lepton-cli simply ignores redundant args.
-  (test-run-success lepton-cli "config" "--project=path/" "group" "key" "value" "redundant")
+  ;; Redundant arguments are no longer ignored.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "--project=path/" "group" "key" "value" "redundant")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Wrong number of command-line arguments.")))
   ;; Clean up.
   (test-teardown))
 
@@ -628,8 +634,11 @@
     (test-expect-fail 1)
     (test-equal <stdout> "value\n"))
 
-  ;; Redundant arguments are ignored.
-  (test-run-success lepton-cli "config" "-p" "path" "group" "key" "value" "redundant")
+  ;; Redundant arguments are no longer ignored.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "config" "-p" "path" "group" "key" "value" "redundant")
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stderr> "ERROR: Wrong number of command-line arguments.")))
 
   ;; Clean up.
   (test-teardown))
