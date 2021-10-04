@@ -42,6 +42,8 @@
             make-page
             object-page
             page?
+            page-append!
+            page-remove!
             page-contents
             page-dirty?
             set-page-dirty!
@@ -216,7 +218,7 @@ modified PAGE."
 
           page))))
 
-(define-public (page-append! P . objects)
+(define (page-append! P . objects)
   (for-each (lambda (x) (%page-append! P x)) objects)
   P)
 
@@ -270,7 +272,7 @@ Returns PAGE."
           page))))
 
 
-(define-public (page-remove! P . objects)
+(define (page-remove! P . objects)
   (for-each (lambda (x) (%page-remove! P x)) objects)
   P)
 
