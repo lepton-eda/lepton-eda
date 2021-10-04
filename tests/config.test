@@ -232,11 +232,9 @@
   (test-run-success lepton-cli "config" "-ppath1/" "group" "key" "val1")
   (test-assert (file-exists? "path1/lepton.conf"))
   (test-run-success lepton-cli "config" "-ppath1/path2/" "group" "key" "val2")
-  (test-expect-fail 1)
-  (test-assert (file-exists? "path1/path2/lepton.conf"))
+  (test-assert (not (file-exists? "path1/path2/lepton.conf")))
   (test-run-success lepton-cli "config" "-ppath1/path2/path3/" "group" "key" "val3")
-  (test-expect-fail 1)
-  (test-assert (file-exists? "path1/path2/path3/lepton.conf"))
+  (test-assert (not (file-exists? "path1/path2/path3/lepton.conf")))
   ;; This doesn't work this way.  If some parent path contains
   ;; config file, a new config file for subdirectory is not
   ;; created.  So let's remove lepton.conf in path1/, and then
@@ -488,11 +486,9 @@
   (test-run-success lepton-cli "config" "--project=path1/" "group" "key" "val1")
   (test-assert (file-exists? "path1/lepton.conf"))
   (test-run-success lepton-cli "config" "--project=path1/path2/" "group" "key" "val2")
-  (test-expect-fail 1)
-  (test-assert (file-exists? "path1/path2/lepton.conf"))
+  (test-assert (not (file-exists? "path1/path2/lepton.conf")))
   (test-run-success lepton-cli "config" "--project=path1/path2/path3/" "group" "key" "val3")
-  (test-expect-fail 1)
-  (test-assert (file-exists? "path1/path2/path3/lepton.conf"))
+  (test-assert (not (file-exists? "path1/path2/path3/lepton.conf")))
   ;; This doesn't work this way.  If some parent path contains
   ;; config file, a new config file for subdirectory is not
   ;; created.  So let's remove lepton.conf in path1/, and then
