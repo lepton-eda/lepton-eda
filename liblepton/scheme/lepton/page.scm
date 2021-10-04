@@ -189,10 +189,10 @@ syntax."
     (pointer->geda-page pointer)))
 
 
+;;; Adds OBJECT to PAGE.  If OBJECT is already attached to a page
+;;; or to a component object, raises an 'object-state error.
+;;; Returns modified PAGE.
 (define (%page-append! page object)
-  "Adds OBJECT to PAGE.  If OBJECT is already attached to a page
-or to a component object, raises an 'object-state error.  Returns
-modified PAGE."
   (define page-pointer (geda-page->pointer* page 1))
   (define object-pointer (geda-object->pointer* object 2))
 
@@ -228,11 +228,11 @@ PAGE are ignored.  Returns PAGE."
   page)
 
 
+;;; Removes OBJECT from PAGE.  If OBJECT is attached to a page
+;;; other than PAGE, or to a component object, raises an
+;;; 'object-state error.  If OBJECT is not attached to a page,
+;;; does nothing.  Returns PAGE.
 (define (%page-remove! page object)
-  "Removes OBJECT from PAGE.  If OBJECT is attached to a page
-other than PAGE, or to a component object, raises an 'object-state
-error.  If OBJECT is not attached to a page, does nothing.
-Returns PAGE."
   (define page-pointer (geda-page->pointer* page 1))
   (define object-pointer (geda-object->pointer* object 2))
 
