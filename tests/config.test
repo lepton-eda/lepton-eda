@@ -652,12 +652,12 @@
   (test-assert (file-exists? "path1/lepton.conf"))
   (test-assert (not (file-exists? "./lepton.conf")))
 
-  (test-equal "[path1/]\ngroup=key\n"
-    (with-input-from-file (build-filename (getcwd) "lepton.conf")
+  (test-equal "[group]\nkey=value\n"
+    (with-input-from-file (build-filename (getcwd) "path1" "lepton.conf")
       (lambda () (get-string-all (current-input-port)))))
 
   ;; The newly created config file may get in our way, remove it.
-  (delete-file* "lepton.conf")
+  (delete-file* "path1/lepton.conf")
 
   ;; Any other tests for "-p path" make no sense since with this
   ;; option lepton-cli interprets other arguments in a wrong way.
