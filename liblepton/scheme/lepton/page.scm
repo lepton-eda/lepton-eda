@@ -272,9 +272,9 @@ Returns PAGE."
           page))))
 
 
-(define (page-remove! P . objects)
-  (for-each (lambda (x) (%page-remove! P x)) objects)
-  P)
+(define (page-remove! page . objects)
+  (for-each (lambda (x) (%page-remove! page x)) objects)
+  page)
 
 ;;; Reads file FILENAME and outputs a page with the same name.
 (define (file-contents->page filename)
