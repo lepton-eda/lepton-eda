@@ -219,6 +219,11 @@ modified PAGE."
           page))))
 
 (define (page-append! page . objects)
+  " Appends zero or more OBJECTS to the contents of PAGE in the
+order given.  If any of the OBJECTS is already part of a page
+other than PAGE, or is part of a component object, raises an
+'object-state error.  Any of the OBJECTS that are already in the
+PAGE are ignored.  Returns PAGE."
   (for-each (lambda (x) (%page-append! page x)) objects)
   page)
 
