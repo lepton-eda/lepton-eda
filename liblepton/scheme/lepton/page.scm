@@ -278,6 +278,15 @@ Returns PAGE."
 
 
 (define (page-remove! page . objects)
+  "Removes zero or more OBJECTS from the contents of PAGE.  Any
+OBJECTS that are not part of a page or component object are
+ignored.  An 'object-state error will be thrown if any of the
+OBJECTS satisfies any of the following conditions:
+- part of a page other than PAGE;
+- part of component object;
+- has attached attributes;
+- is attached as an attribute.
+Returns PAGE."
   (for-each (lambda (x) (%page-remove! page x)) objects)
   page)
 
