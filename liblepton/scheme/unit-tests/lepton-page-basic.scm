@@ -91,3 +91,33 @@
       (close-page! B))))
 
 (test-end "page-remove")
+
+
+(test-begin "page wrong-type-arg")
+
+(test-assert (not (page? 'x)))
+
+(test-assert-thrown 'wrong-type-arg (object-page 'x))
+(test-assert-thrown 'wrong-type-arg (make-page 'x))
+(test-assert-thrown 'wrong-type-arg (close-page! 'x))
+(test-assert-thrown 'wrong-type-arg (page-filename 'x))
+(test-assert-thrown 'wrong-type-arg (set-page-filename! 'x "filename"))
+(test-assert-thrown 'wrong-type-arg
+                    (set-page-filename! (make-page "filename") 'x))
+(test-assert-thrown 'wrong-type-arg (page-contents 'x))
+(test-assert-thrown 'wrong-type-arg (page-dirty? 'x))
+(test-assert-thrown 'wrong-type-arg (set-page-dirty! 'x))
+(test-assert-thrown 'wrong-type-arg (page->string 'x))
+(test-assert-thrown 'wrong-type-arg (string->page "filename" 'x))
+(test-assert-thrown 'wrong-type-arg (string->page 'x "string"))
+(test-assert-thrown 'wrong-type-arg (file->page 'x))
+(test-assert-thrown 'wrong-type-arg
+                    (page-append! 'x (make-line '(0 . 0) '(1 . 1))))
+(test-assert-thrown 'wrong-type-arg
+                    (page-append! (make-page "filename") 'x))
+(test-assert-thrown 'wrong-type-arg
+                    (page-remove! 'x (make-line '(0 . 0) '(1 . 1))))
+(test-assert-thrown 'wrong-type-arg
+                    (page-remove! (make-page "filename") 'x))
+
+(test-end "page wrong-type-arg")
