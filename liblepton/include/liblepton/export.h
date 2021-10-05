@@ -1,6 +1,5 @@
-/*
- * Lepton EDA command-line utility
- * Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
+/* Lepton EDA library
+ * Copyright (C) 2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,6 +16,9 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-int cmd_shell (int argc, char **argv);
-int cmd_config (int argc, char **argv);
-int cmd_export (int argc, char **argv);
+G_BEGIN_DECLS
+
+int
+cmd_export (int argc, char **argv);
+
+G_END_DECLS

@@ -77,6 +77,8 @@ G_BEGIN_DECLS
 #include <liblepton/funcs.h>
 #include <liblepton/prototype.h>
 
+#include <liblepton/export.h>
+
 G_END_DECLS
 
 #include <liblepton/edaconfig.h>

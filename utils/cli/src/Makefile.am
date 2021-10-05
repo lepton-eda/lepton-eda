@@ -1,8 +1,6 @@
 bin_PROGRAMS = lepton-export
 
 lepton_export_SOURCES = \
-	builtins.h \
-	gettext.h \
 	lepton-export.c
 
 lepton_export_CPPFLAGS = \

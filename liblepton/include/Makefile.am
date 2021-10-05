@@ -14,6 +14,7 @@ libleptoninclude_HEADERS = \
 	liblepton/edapaths.h \
 	liblepton/edascmhookproxy.h \
 	liblepton/edascmvaluetypes.h \
+	liblepton/export.h \
 	liblepton/funcs.h \
 	liblepton/bezier.h \
 	liblepton/box.h \
