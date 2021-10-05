@@ -70,14 +70,10 @@ static void export_command_line (int argc, char * const *argv);
 /* Default margin width in points */
 #define DEFAULT_MARGIN 18
 
-enum ExportFormatFlags {
-  OUTPUT_MULTIPAGE = 1
-};
-
 struct ExportFormat {
   const gchar *name; /* UTF-8 */
   const gchar *alias; /* UTF-8 */
-  gint flags;
+  gboolean multipage;
   void (*func)(void);
 };
 
@@ -109,11 +105,11 @@ struct ExportSettings {
 
 static struct ExportFormat formats[] =
   {
-    {"Portable Network Graphics (PNG)", "png", 0, export_png},
-    {"Postscript (PS)", "ps", OUTPUT_MULTIPAGE, export_ps},
-    {"Encapsulated Postscript (EPS)", "eps", 0, export_eps},
-    {"Portable Document Format (PDF)", "pdf", OUTPUT_MULTIPAGE, export_pdf},
-    {"Scalable Vector Graphics (SVG)", "svg", 0, export_svg},
+    {"Portable Network Graphics (PNG)", "png", FALSE, export_png},
+    {"Postscript (PS)", "ps", TRUE, export_ps},
+    {"Encapsulated Postscript (EPS)", "eps", FALSE, export_eps},
+    {"Portable Document Format (PDF)", "pdf", TRUE, export_pdf},
+    {"Scalable Vector Graphics (SVG)", "svg", FALSE, export_svg},
     {NULL, NULL, 0, NULL},
   };
 
@@ -216,7 +212,8 @@ cmd_export_impl (void *data, int argc, char **argv)
 
   /* If more than one schematic/symbol file was specified, check that
    * exporter supports multipage output. */
-  if ((settings.infilec > 1) && !(exporter->flags & OUTPUT_MULTIPAGE)) {
+  if ((settings.infilec > 1) && !exporter->multipage)
+  {
     fprintf (stderr,
              _("ERROR: Selected output format does not support multipage output\n"));
     exit (1);
