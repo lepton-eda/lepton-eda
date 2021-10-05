@@ -71,9 +71,7 @@ static void export_command_line (int argc, char * const *argv);
 #define DEFAULT_MARGIN 18
 
 enum ExportFormatFlags {
-  OUTPUT_MULTIPAGE = 1,
-  OUTPUT_POINTS = 2,
-  OUTPUT_PIXELS = 4,
+  OUTPUT_MULTIPAGE = 1
 };
 
 struct ExportFormat {
@@ -111,11 +109,11 @@ struct ExportSettings {
 
 static struct ExportFormat formats[] =
   {
-    {"Portable Network Graphics (PNG)", "png", OUTPUT_PIXELS, export_png},
-    {"Postscript (PS)", "ps", OUTPUT_POINTS | OUTPUT_MULTIPAGE, export_ps},
-    {"Encapsulated Postscript (EPS)", "eps", OUTPUT_POINTS, export_eps},
-    {"Portable Document Format (PDF)", "pdf", OUTPUT_POINTS | OUTPUT_MULTIPAGE, export_pdf},
-    {"Scalable Vector Graphics (SVG)", "svg", OUTPUT_POINTS, export_svg},
+    {"Portable Network Graphics (PNG)", "png", 0, export_png},
+    {"Postscript (PS)", "ps", OUTPUT_MULTIPAGE, export_ps},
+    {"Encapsulated Postscript (EPS)", "eps", 0, export_eps},
+    {"Portable Document Format (PDF)", "pdf", OUTPUT_MULTIPAGE, export_pdf},
+    {"Scalable Vector Graphics (SVG)", "svg", 0, export_svg},
     {NULL, NULL, 0, NULL},
   };
 
