@@ -340,8 +340,6 @@ Lepton EDA homepage: ~A
 
       (exit 0))))
 
-(set_guile_compiled_path)
-
 ;;; Main function for `lepton-cli export'
 (%with-toplevel
  (%make-toplevel)
