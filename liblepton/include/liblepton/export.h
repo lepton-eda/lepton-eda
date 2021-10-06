@@ -43,7 +43,7 @@ gboolean
 export_parse_scale (const gchar *scale);
 
 gboolean
-export_parse_layout (const gchar *layout);
+lepton_export_parse_layout (const gchar *layout);
 
 gboolean
 export_parse_margins (const gchar *margins);

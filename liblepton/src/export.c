@@ -713,7 +713,7 @@ lepton_export_parse_align (const gchar *align)
 /* Parse the --layout command line option and the export.layout config
  * file setting. */
 gboolean
-export_parse_layout (const gchar *layout)
+lepton_export_parse_layout (const gchar *layout)
 {
   if (g_strcmp0 (layout, "landscape") == 0) {
     settings.layout = ORIENTATION_LANDSCAPE;
@@ -843,7 +843,7 @@ export_config (void)
 
   /* Parse orientation */
   str = eda_config_get_string (cfg, "export", "layout", NULL);
-  export_parse_layout (str); /* Don't care if it works */
+  lepton_export_parse_layout (str); /* Don't care if it works */
   g_free (str);
 
   /* Parse paper size */

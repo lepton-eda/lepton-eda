@@ -202,7 +202,7 @@ Lepton EDA homepage: ~A
               seeds))
     (option '(#\l "layout") #t #f
             (lambda (opt name arg seeds)
-              (unless (export_parse_layout (string->pointer arg))
+              (unless (lepton_export_parse_layout (string->pointer arg))
                 (bad-argument-message arg "-l,--layout")
                 (help-message))
               seeds))
