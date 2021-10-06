@@ -164,7 +164,7 @@ Lepton EDA homepage: ~A
               seeds))
     (option '(#\a "align") #t #f
             (lambda (opt name arg seeds)
-              (unless (export_parse_align (string->pointer arg))
+              (unless (lepton_export_parse_align (string->pointer arg))
                 (bad-argument-message arg "-a,--align")
                 (help-message))
               seeds))

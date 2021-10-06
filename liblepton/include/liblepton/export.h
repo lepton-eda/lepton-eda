@@ -37,7 +37,7 @@ void
 lepton_export_svg ();
 
 gboolean
-export_parse_align (const gchar *scale);
+lepton_export_parse_align (const gchar *scale);
 
 gboolean
 export_parse_scale (const gchar *scale);

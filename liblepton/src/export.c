@@ -687,7 +687,7 @@ export_parse_dist (const gchar *dist)
 
 /* Parse the --align command line option. */
 gboolean
-export_parse_align (const gchar *align)
+lepton_export_parse_align (const gchar *align)
 {
   int n;
   gchar **args;
