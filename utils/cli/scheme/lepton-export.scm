@@ -208,7 +208,7 @@ Lepton EDA homepage: ~A
               seeds))
     (option '(#\m "margins") #t #f
             (lambda (opt name arg seeds)
-              (unless (export_parse_margins (string->pointer arg))
+              (unless (lepton_export_parse_margins (string->pointer arg))
                 (bad-argument-message arg "-m,--margins")
                 (help-message))
               seeds))

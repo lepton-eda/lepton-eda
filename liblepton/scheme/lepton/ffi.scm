@@ -79,7 +79,7 @@
             lepton_export_list_paper_size_names
             lepton_export_parse_align
             lepton_export_parse_layout
-            export_parse_margins
+            lepton_export_parse_margins
             lepton_export_parse_paper
             export_parse_scale
             lepton_export_parse_size
@@ -666,7 +666,7 @@
 (define-lff lepton_export_list_paper_size_names void '())
 (define-lff lepton_export_parse_align int '(*))
 (define-lff lepton_export_parse_layout int '(*))
-(define-lff export_parse_margins int '(*))
+(define-lff lepton_export_parse_margins int '(*))
 (define-lff lepton_export_parse_paper int '(*))
 (define-lff export_parse_scale int '(*))
 (define-lff lepton_export_parse_size int '(*))

@@ -46,7 +46,7 @@ gboolean
 lepton_export_parse_layout (const gchar *layout);
 
 gboolean
-export_parse_margins (const gchar *margins);
+lepton_export_parse_margins (const gchar *margins);
 
 gboolean
 lepton_export_parse_paper (const gchar *paper);

@@ -735,7 +735,7 @@ lepton_export_parse_layout (const gchar *layout)
  * specs; see export_parse_dist().  Rules if <4 distances are
  * specified are as for 'margin' property in CSS. */
 gboolean
-export_parse_margins (const gchar *margins)
+lepton_export_parse_margins (const gchar *margins)
 {
   gint n;
   gchar **dists;
