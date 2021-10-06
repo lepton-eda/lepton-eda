@@ -778,7 +778,7 @@ export_parse_margins (const gchar *margins)
 
 /* Parse the --paper option.  Clears any size setting. */
 gboolean
-export_parse_paper (const gchar *paper)
+lepton_export_parse_paper (const gchar *paper)
 {
   GtkPaperSize *paper_size = gtk_paper_size_new (paper);
   if (paper_size == NULL) return FALSE;
@@ -848,7 +848,7 @@ export_config (void)
 
   /* Parse paper size */
   str = eda_config_get_string (cfg, "export", "paper", NULL);
-  export_parse_paper (str);
+  lepton_export_parse_paper (str);
   g_free (str);
 
   /* Parse specific size setting -- always in points */

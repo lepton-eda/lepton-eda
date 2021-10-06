@@ -218,7 +218,7 @@ Lepton EDA homepage: ~A
               seeds))
     (option '(#\p "paper") #t #f
             (lambda (opt name arg seeds)
-              (unless (export_parse_paper (string->pointer arg))
+              (unless (lepton_export_parse_paper (string->pointer arg))
                 (bad-argument-message arg "-p,--paper")
                 (help-message))
               seeds))
