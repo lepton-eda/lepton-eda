@@ -147,6 +147,9 @@ cmd_export_impl (void *data, int argc, char **argv)
   const gchar *out_suffix;
   struct ExportFormat *exporter = NULL;
   GArray *render_color_map = NULL;
+
+  set_guile_compiled_path();
+
   gchar *original_cwd = g_get_current_dir ();
 
   gtk_init_check (&argc, &argv);
@@ -1147,8 +1150,6 @@ export_command_line (int argc, char * const *argv)
 int
 cmd_export (int argc, char **argv)
 {
-  set_guile_compiled_path();
-
   scm_boot_guile (argc, argv, cmd_export_impl, NULL); /* Doesn't return */
   return 0;
 }
