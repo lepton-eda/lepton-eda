@@ -34,3 +34,25 @@
   (test-assert (string-contains <stdout> help-string)))
 
 (test-end "export --help")
+
+
+(test-begin "export -P")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "export" "-P")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "iso_a4"))
+  (test-assert (string-contains <stdout> "na_letter")))
+
+(test-end "export -P")
+
+
+(test-begin "export --paper-names")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "export" "--paper-names")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "iso_a4"))
+  (test-assert (string-contains <stdout> "na_letter")))
+
+(test-end "export --paper-names")
