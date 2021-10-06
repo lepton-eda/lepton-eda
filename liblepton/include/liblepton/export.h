@@ -40,7 +40,7 @@ gboolean
 lepton_export_parse_align (const gchar *scale);
 
 gboolean
-export_parse_scale (const gchar *scale);
+lepton_export_parse_scale (const gchar *scale);
 
 gboolean
 lepton_export_parse_layout (const gchar *layout);

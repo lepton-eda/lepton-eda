@@ -192,7 +192,7 @@ Lepton EDA homepage: ~A
               seeds))
     (option '(#\k "scale") #t #f
             (lambda (opt name arg seeds)
-              (if (export_parse_scale (string->pointer arg))
+              (if (lepton_export_parse_scale (string->pointer arg))
                   ;; Since a specific scale was provided, ditch
                   ;; the paper size setting.
                   (ditch-paper-size)

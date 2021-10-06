@@ -821,7 +821,7 @@ lepton_export_parse_size (const gchar *size)
  * corresponding to 100 points in lepton-schematic (1 default grid
  * spacing). */
 gboolean
-export_parse_scale (const gchar *scale)
+lepton_export_parse_scale (const gchar *scale)
 {
   gdouble d = export_parse_dist (scale);
   if (d <= 0) return FALSE;
