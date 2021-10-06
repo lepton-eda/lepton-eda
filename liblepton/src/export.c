@@ -152,7 +152,6 @@ cmd_export_impl (void *data, int argc, char **argv)
 
   gchar *original_cwd = g_get_current_dir ();
 
-  gtk_init_check (&argc, &argv);
   liblepton_init ();
 
   /* Enable rendering of placeholders. Otherwise the user won't
