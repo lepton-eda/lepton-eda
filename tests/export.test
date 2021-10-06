@@ -12,3 +12,25 @@
   (test-assert (string-contains <stderr> "Run `lepton-cli export --help' for more information.")))
 
 (test-end "lepton-cli export")
+
+(define help-string
+  "Export Lepton EDA files in various image formats.")
+
+(test-begin "export -h")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "export" "-h")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> help-string)))
+
+(test-end "export -h")
+
+
+(test-begin "export --help")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "export" "--help")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> help-string)))
+
+(test-end "export --help")
