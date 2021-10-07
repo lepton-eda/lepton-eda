@@ -3,6 +3,19 @@
 (load-from-path "env.scm")
 
 
+(define cwd (getcwd))
+(define *testdir* (build-filename (getcwd) "export-tmp"))
+
+;;; Setup/teardown directories/files needed by tests.
+(define (test-setup)
+  (mkdir *testdir*)
+  (chdir *testdir*))
+
+(define (test-teardown)
+  (chdir cwd)
+  (system* "rm" "-rf" *testdir*))
+
+
 (test-begin "lepton-cli export")
 
 (receive (<status> <stdout> <stderr>)
@@ -56,3 +69,42 @@
   (test-assert (string-contains <stdout> "na_letter")))
 
 (test-end "export --paper-names")
+
+
+(define schematic
+  (build-filename *abs-top-srcdir*
+                  "libleptongui"
+                  "tests"
+                  "embedded_1.sch"))
+
+(define (file-size-about? filename size)
+  (define delta .2)
+  (false-if-exception
+   (< (* size (- 1 delta))
+      (stat:size (stat filename))
+      (* size (+ 1 delta)))))
+
+
+(test-begin "export schematic")
+
+(test-group-with-cleanup "export schematic"
+  (test-setup)
+
+  (let ((cli-png (basename (string-append schematic ".cli.png")))
+        (export-png (basename (string-append schematic ".export.png"))))
+    ;; Test 'lepton-cli export'.
+
+    ;; This command hangs up due to weird things when running
+    ;; lepton-cli using pipes defined in command-values().
+    ;;   (receive (<status> <stdout> <stderr>)
+    ;;       (command-values lepton-cli "export" "-o" cli-png schematic)
+    ;;     (test-eq EXIT_SUCCESS <status>))
+
+    (test-run-success lepton-cli "export" "-o" cli-png schematic)
+    (test-assert (file-exists? cli-png))
+    (file-size-about? cli-png 360000))
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "export schematic")
