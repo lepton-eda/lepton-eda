@@ -46,7 +46,8 @@ static void export_layout_page (LeptonPage *page,
                                 cairo_rectangle_t *extents,
                                 cairo_matrix_t *mtx,
                                 gboolean postscript);
-static void export_draw_page (LeptonPage *page);
+static void export_draw_page (LeptonPage *page,
+                              EdaRenderer *renderer);
 
 static void export_png (void);
 static void export_postscript (gboolean is_eps);
@@ -113,7 +114,6 @@ static struct ExportFormat formats[] =
     {NULL, NULL, 0, NULL},
   };
 
-static EdaRenderer *renderer = NULL;
 static LeptonToplevel *toplevel = NULL;
 
 static struct ExportSettings settings = {
@@ -266,14 +266,6 @@ cmd_export_impl (void *data, int argc, char **argv)
              _("ERROR: Selected output format does not support multipage output\n"));
     exit (1);
   }
-
-  /* Create renderer */
-  renderer = eda_renderer_new (NULL, NULL);
-  if (settings.font != NULL) {
-    lepton_export_set_renderer_font (renderer, settings.font);
-  }
-
-  lepton_export_set_renderer_color_map (renderer, settings.color);
 
   /* Load schematic files */
   while (optind < argc) {
@@ -462,7 +454,8 @@ export_layout_page (LeptonPage *page,
 
 /* Actually draws a page.  If page is NULL, uses the first open page. */
 static void
-export_draw_page (LeptonPage *page)
+export_draw_page (LeptonPage *page,
+                  EdaRenderer *renderer)
 {
   const GList *contents;
   GList *iter;
@@ -499,6 +492,14 @@ export_png (void)
   cairo_status_t status;
   double scale;
 
+  /* Create renderer */
+  EdaRenderer *renderer = eda_renderer_new (NULL, NULL);
+  if (settings.font != NULL) {
+    lepton_export_set_renderer_font (renderer, settings.font);
+  }
+
+  lepton_export_set_renderer_color_map (renderer, settings.color);
+
   /* Create a dummy context to permit calculating extents taking text
    * into account. */
   surface = cairo_image_surface_create (CAIRO_FORMAT_ARGB32, 0, 0);
@@ -531,12 +532,14 @@ export_png (void)
   g_object_set (renderer, "cairo-context", cr, NULL);
 
   /* Draw */
-  export_draw_page (NULL);
+  export_draw_page (NULL, renderer);
   export_cairo_check_error (cairo_surface_status (surface));
 
   /* Save to file */
   status = cairo_surface_write_to_png (surface, settings.outfile);
   export_cairo_check_error (status);
+
+  g_object_unref (G_OBJECT (renderer));
 }
 
 /* Worker function used by both export_ps and export_eps */
@@ -548,6 +551,14 @@ export_postscript (gboolean is_eps)
   cairo_matrix_t mtx;
   cairo_t *cr;
   GList *iter;
+
+  /* Create renderer */
+  EdaRenderer *renderer = eda_renderer_new (NULL, NULL);
+  if (settings.font != NULL) {
+    lepton_export_set_renderer_font (renderer, settings.font);
+  }
+
+  lepton_export_set_renderer_color_map (renderer, settings.color);
 
   /* Create a surface. To begin with, we don't know the size. */
   surface = cairo_ps_surface_create (settings.outfile, 1, 1);
@@ -585,12 +596,13 @@ export_postscript (gboolean is_eps)
     }
 
     cairo_set_matrix (cr, &mtx);
-    export_draw_page (page);
+    export_draw_page (page, renderer);
     cairo_show_page (cr);
   }
 
   cairo_surface_finish (surface);
   export_cairo_check_error (cairo_surface_status (surface));
+  g_object_unref (G_OBJECT (renderer));
 }
 
 static void
@@ -614,6 +626,14 @@ export_pdf (void)
   cairo_t *cr;
   GList *iter;
 
+  /* Create renderer */
+  EdaRenderer *renderer = eda_renderer_new (NULL, NULL);
+  if (settings.font != NULL) {
+    lepton_export_set_renderer_font (renderer, settings.font);
+  }
+
+  lepton_export_set_renderer_color_map (renderer, settings.color);
+
   /* Create a surface. To begin with, we don't know the size. */
   surface = cairo_pdf_surface_create (settings.outfile, 1, 1);
   cr = cairo_create (surface);
@@ -627,12 +647,13 @@ export_pdf (void)
     export_layout_page (page, &extents, &mtx, FALSE);
     cairo_pdf_surface_set_size (surface, extents.width, extents.height);
     cairo_set_matrix (cr, &mtx);
-    export_draw_page (page);
+    export_draw_page (page, renderer);
     cairo_show_page (cr);
   }
 
   cairo_surface_finish (surface);
   export_cairo_check_error (cairo_surface_status (surface));
+  g_object_unref (G_OBJECT (renderer));
 }
 
 static void
@@ -642,6 +663,14 @@ export_svg ()
   cairo_rectangle_t extents;
   cairo_matrix_t mtx;
   cairo_t *cr;
+
+  /* Create renderer */
+  EdaRenderer *renderer = eda_renderer_new (NULL, NULL);
+  if (settings.font != NULL) {
+    lepton_export_set_renderer_font (renderer, settings.font);
+  }
+
+  lepton_export_set_renderer_color_map (renderer, settings.color);
 
   /* Create a surface and run export_layout_page() to figure out
    * the picture extents and set up the cairo transformation
@@ -661,11 +690,13 @@ export_svg ()
   g_object_set (renderer, "cairo-context", cr, NULL);
 
   cairo_set_matrix (cr, &mtx);
-  export_draw_page (NULL);
+  export_draw_page (NULL, renderer);
 
   cairo_show_page (cr);
   cairo_surface_finish (surface);
   export_cairo_check_error (cairo_surface_status (surface));
+
+  g_object_unref (G_OBJECT (renderer));
 }
 
 /* Parse a distance specification. A distance specification consists
