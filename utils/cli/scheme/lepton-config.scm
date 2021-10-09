@@ -39,14 +39,8 @@ exec @GUILE@ -s "$0" "$@"
                               (lepton file-system)
                               (lepton version)))
 
-(define cmd
-  (let ((name (basename (car (program-arguments))))
-        (args (cdr (program-arguments))))
-    (if (null? args)
-        name
-        (if (string= "config" (car args))
-            "lepton-cli config"
-            name))))
+(define cmd (basename (car (program-arguments))))
+(define cmd-args (cdr (program-arguments)))
 
 (define (config-usage)
   (format #t (G_ "Usage: ~A [OPTION] [GROUP KEY [VALUE]]
@@ -149,16 +143,7 @@ Lepton EDA homepage: ~S
 (define (parse-commandline*)
   ;; Parse command-line arguments
   (args-fold
-   ;; If the utility has been run from lepton-cli, the first
-   ;; argument is equal to "config".  Therefore we just drop it
-   ;; and process the rest args.
-   (let ((args (cdr (program-arguments))))
-     (if (and (not (null? args))
-              (string= (car args) "config"))
-         (begin (set-program-arguments (cons (car (program-arguments))
-                                             (cdr args)))
-                (cdr args))
-         args))
+   cmd-args
    (list
     (option '(#\p "project") #f #t
             (lambda (opt name arg seeds)

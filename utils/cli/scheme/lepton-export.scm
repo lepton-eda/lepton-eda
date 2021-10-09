@@ -92,14 +92,8 @@ exec @GUILE@ -s "$0" "$@"
                      filename
                      (apply simple-format #f message args)))))
 
-(define cmd
-  (let ((name (basename (car (program-arguments))))
-        (args (cdr (program-arguments))))
-    (if (null? args)
-        name
-        (if (string= "export" (car args))
-            "lepton-cli export"
-            name))))
+(define cmd (basename (car (program-arguments))))
+(define cmd-args (cdr (program-arguments)))
 
 (define (export-usage)
   (format #t (G_ "Usage: ~A [OPTION ...] -o OUTPUT [--] FILE ...
@@ -147,16 +141,7 @@ Lepton EDA homepage: ~A
 
   ;; Parse command-line arguments.
   (args-fold
-   ;; If the utility has been run from lepton-cli, the first
-   ;; argument is equal to "export".  Therefore we just drop it
-   ;; and process the rest args.
-   (let ((args (cdr (program-arguments))))
-     (if (and (not (null? args))
-              (string= (car args) "export"))
-         (begin (set-program-arguments (cons (car (program-arguments))
-                                             (cdr args)))
-                (cdr args))
-         args))
+   cmd-args
    (list
     (option '("no-color") #f #f
             (lambda (opt name arg seeds)

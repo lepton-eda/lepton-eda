@@ -40,14 +40,8 @@ exec @GUILE@ -e main -s "$0" "$@"
                               (lepton repl)
                               (lepton version)))
 
-(define cmd
-  (let ((name (basename (car (program-arguments))))
-        (args (cdr (program-arguments))))
-    (if (null? args)
-        name
-        (if (string= "shell" (car args))
-            "lepton-cli shell"
-            name))))
+(define cmd (basename (car (program-arguments))))
+(define cmd-args (cdr (program-arguments)))
 
 (define (shell-usage)
   (format #t (G_ "Usage: ~A [OPTION ...]
@@ -97,13 +91,7 @@ Lepton EDA homepage: ~S
   (catch 'misc-error
     (lambda ()
       (args-fold
-       (let ((args (cdr (program-arguments))))
-         (if (and (not (null? args))
-                  (string= (car args) "shell"))
-             (begin (set-program-arguments (cons (car (program-arguments))
-                                                 (cdr args)))
-                    (cdr args))
-             args))
+       cmd-args
        (list
         (option '(#\h "help") #f #f
                 (lambda (opt name arg seeds)

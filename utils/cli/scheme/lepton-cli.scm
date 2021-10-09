@@ -138,7 +138,7 @@ Lepton EDA homepage: <~A>
                   (environ)
                   ;; Conventionally, the first arg for execl*
                   ;; functions is the same as program name.
-                  (cons prog-name %rest-args))))
+                  (cons prog-name (cdr %rest-args)))))
        '())))
 
 (define %cli-gettext-domain "lepton-cli")

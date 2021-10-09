@@ -168,7 +168,7 @@
   (test-equal "" <stdout>)
   (test-assert (string-contains <stderr> "require"))
   (test-assert (string-contains <stderr> "argument"))
-  (test-assert (string-contains <stderr> "Run `lepton-cli shell --help' for more information.")))
+  (test-assert (string-contains <stderr> "Run `lepton-shell --help' for more information.")))
 
 (test-end "lepton-cli shell -c")
 
@@ -193,7 +193,7 @@
   (test-equal "" <stdout>)
   (test-assert (string-contains <stderr> "require"))
   (test-assert (string-contains <stderr> "argument"))
-  (test-assert (string-contains <stderr> "Run `lepton-cli shell --help' for more information.")))
+  (test-assert (string-contains <stderr> "Run `lepton-shell --help' for more information.")))
 
 (test-end "lepton-cli shell -s")
 
