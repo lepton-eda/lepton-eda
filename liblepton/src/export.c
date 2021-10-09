@@ -20,10 +20,8 @@
  */
 #include <config.h>
 
-#include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include <getopt.h>
 #include <math.h>
 #include <errno.h>
 
@@ -36,7 +34,6 @@
 #include <liblepton/edacairo.h>
 
 #include <gtk/gtk.h>
-#include <glib/gstdio.h>
 #include <cairo.h>
 #include <cairo-svg.h>
 #include <cairo-pdf.h>
