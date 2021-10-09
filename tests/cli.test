@@ -65,8 +65,7 @@
   (unsetenv "LEPTON_INHIBIT_RC_FILES")
 
   ;; Create gafrc file with known contents.
-  (with-output-to-file "gafrc"
-    (lambda () (display "(display \"gafrc is loaded\")\n")))
+  (string->file "(display \"gafrc is loaded\")\n" "gafrc")
 
   ;; First, check if the command in gafrc works.
   (receive (<status> <stdout> <stderr>)
@@ -97,8 +96,7 @@
   (unsetenv "LEPTON_INHIBIT_RC_FILES")
 
   ;; Create gafrc file with known contents.
-  (with-output-to-file "gafrc"
-    (lambda () (display "(display \"gafrc is loaded\")\n")))
+  (string->file "(display \"gafrc is loaded\")\n" "gafrc")
 
   ;; First, check if the command in gafrc works.
   (receive (<status> <stdout> <stderr>)

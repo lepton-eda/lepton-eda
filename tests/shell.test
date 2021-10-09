@@ -16,11 +16,6 @@
   (system* "rm" "-rf" *testdir*))
 
 
-(define (string->file contents filename)
-  (with-output-to-file filename
-    (lambda () (display contents)))
-  filename)
-
 (define (shell-values args . shell-input)
   (let* ((stdout-pipe (pipe))
          (stdout-pipe-inport (car stdout-pipe))

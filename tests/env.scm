@@ -79,6 +79,11 @@
 (define (build-filename . ls)
   (string-join ls file-name-separator-string))
 
+(define (string->file str filename)
+  (with-output-to-file filename
+    (lambda () (display str)))
+  filename)
+
 (define *abs-top-builddir* (getenv "abs_top_builddir"))
 (define *abs-top-srcdir* (getenv "abs_top_srcdir"))
 
