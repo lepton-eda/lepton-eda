@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-export GUILE_LOAD_COMPILED_PATH="@ccachedir@:${GUILE_LOAD_COMPILED_PATH}"
 exec @GUILE@ -s "$0" "$@"
 !#
 
@@ -21,7 +20,10 @@ exec @GUILE@ -s "$0" "$@"
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
-(add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")
+(eval-when (expand load eval)
+  (unless (getenv "LIBLEPTON")
+    (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")
+    (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (ice-9 match)
              (srfi srfi-1)

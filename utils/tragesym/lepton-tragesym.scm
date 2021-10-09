@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-export GUILE_LOAD_COMPILED_PATH="@ccachedir@:${GUILE_LOAD_COMPILED_PATH}"
 exec @GUILE@ -s "$0" "$@"
 !#
 ;;; Copyright (C) 2019-2021 Lepton EDA Contributors
@@ -38,7 +37,8 @@ exec @GUILE@ -s "$0" "$@"
 
 (eval-when (expand load eval)
   (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")))
+    (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")
+    (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (ice-9 getopt-long)
              (ice-9 match)
