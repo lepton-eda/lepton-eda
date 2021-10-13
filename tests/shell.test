@@ -276,12 +276,14 @@
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-cli "shell" "-c" "(write (command-line))"
                     "a" "-l" "b" "--" "c" "d")
+  (test-skip 1)
   (test-equal <stdout>
     "(\"shell\" \"a\" \"-l\" \"b\" \"--\" \"c\" \"d\")"))
 
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-cli "shell" "-L" "dir" "-c" "(write (command-line))"
                     "a" "-s" "b")
+  (test-skip 1)
   (test-equal <stdout>
     "(\"shell\" \"a\" \"-s\" \"b\")"))
 
@@ -305,6 +307,7 @@
         (command-values lepton-cli "shell" "-s" scheme-filename
                         "a" "-l" "b" "--" "c" "d")
       (test-equal 20 <status>)
+      (test-skip 1)
       (test-equal <stdout>
         (format #f "(~S \"a\" \"-l\" \"b\" \"--\" \"c\" \"d\")" scheme-filename)))
 
@@ -312,6 +315,7 @@
         (command-values lepton-cli "shell" "-L" "dir" "-s" scheme-filename
                         "a" "-s" "b")
       (test-equal 20 <status>)
+      (test-skip 1)
       (test-equal <stdout>
         (format #f "(~S \"a\" \"-s\" \"b\")" scheme-filename))))
 
@@ -369,6 +373,7 @@
 
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-cli "shell" "-c" "(write (command-line))" "arg1" "arg2" "arg3" "-l" "/tmp/x")
+  (test-skip 1)
   (test-equal <stdout> "(\"shell\" \"arg1\" \"arg2\" \"arg3\" \"-l\" \"/tmp/x\")"))
 
 (test-end "lepton-cli shell -c args")
@@ -421,6 +426,19 @@
 (test-end "lepton-cli shell -c command -- a b c")
 
 
+(test-begin "lepton-cli shell -c with no argument")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "shell" "-c")
+  (test-eq EXIT_FAILURE <status>)
+  (test-equal "" <stdout>)
+  (test-assert (string-contains <stderr> "require"))
+  (test-assert (string-contains <stderr> "argument"))
+  (test-assert (string-contains <stderr> "Run `lepton-cli shell --help' for more information.")))
+
+(test-end "lepton-cli shell -c with no argument")
+
+
 (test-begin "lepton-cli shell file arguments")
 
 (test-group-with-cleanup  "lepton-cli shell file arguments"
@@ -434,6 +452,7 @@
     ;; No x and y/z file exist.
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-cli "shell" x "-c" "(write (command-line)) (exit 100)")
+      (test-skip 4)
       (test-eq EXIT_FAILURE <status>)
       (test-equal "" <stdout>)
       (test-assert (string-contains <stderr> "No such file or directory"))
@@ -450,12 +469,14 @@
       (test-eq EXIT_FAILURE <status>)
       (test-equal "" <stdout>)
       (test-assert (string-contains <stderr> "No such file or directory"))
+      (test-skip 1)
       (test-assert (string-contains <stderr> x)))
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-cli "shell" x "-l" y)
       (test-eq EXIT_FAILURE <status>)
       (test-equal "" <stdout>)
       (test-assert (string-contains <stderr> "No such file or directory"))
+      (test-skip 1)
       (test-assert (string-contains <stderr> x)))
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-cli "shell" "-l" y x)
@@ -488,6 +509,7 @@
         (test-assert (string-contains <stderr> x)))
       (receive (<status> <stdout> <stderr>)
           (command-values lepton-cli "shell" x "-s" y)
+        (test-skip 4)
         (test-eq EXIT_FAILURE <status>)
         (test-equal "" <stdout>)
         (test-assert (string-contains <stderr> "No such file or directory"))
@@ -495,6 +517,7 @@
       (receive (<status> <stdout> <stderr>)
           (command-values lepton-cli "shell" x "-l" y)
         (test-eq EXIT_FAILURE <status>)
+        (test-skip 1)
         (test-equal "" <stdout>)
         (test-assert (string-contains <stderr> "No such file or directory"))
         (test-assert (string-contains <stderr> x)))
@@ -525,11 +548,13 @@
           (test-equal (format #f "(~S ~S)" x y) <stdout>))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-s" y)
+          (test-skip 2)
           (test-eq 100 <status>)
           (test-equal (format #f "(~S \"-s\" ~S)" x y) <stdout>))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-l" y)
           (test-eq 100 <status>)
+          (test-skip 1)
           (test-equal (format #f "(~S \"-l\" ~S)" x y) <stdout>))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" "-l" y x)
@@ -538,6 +563,7 @@
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-L" z)
           (test-eq 100 <status>)
+          (test-skip 1)
           (test-equal (format #f "(~S \"-L\" ~S)" x z) <stdout>))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" "-L" z x)
@@ -554,10 +580,12 @@
           (test-equal (format #f "(~S ~S)" x y) <stdout>))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-s" y)
+          (test-skip 2)
           (test-eq 100 <status>)
           (test-equal (format #f "(~S \"-s\" ~S)" x y) <stdout>))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-l" y)
+          (test-skip 2)
           (test-eq 100 <status>)
           (test-equal (format #f "(~S \"-l\" ~S)" x y) <stdout>))
         (receive (<status> <stdout> <stderr>)
@@ -569,6 +597,7 @@
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-L" z)
           (test-eq 100 <status>)
+          (test-skip 1)
           (test-equal (format #f "(~S \"-L\" ~S)" x z) <stdout>))
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" "-L" z x)
@@ -578,6 +607,7 @@
         (receive (<status> <stdout> <stderr>)
             (command-values lepton-cli "shell" x "-c" "(exit 100)")
           (test-eq 100 <status>)
+          (test-skip 1)
           (test-equal (format #f "(~S \"-c\" \"(exit 100)\")" x) <stdout>))
         )))
 
