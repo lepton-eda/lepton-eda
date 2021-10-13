@@ -421,19 +421,6 @@
 (test-end "lepton-cli shell -c command -- a b c")
 
 
-(test-begin "lepton-cli shell -c with no argument")
-
-(receive (<status> <stdout> <stderr>)
-    (command-values lepton-cli "shell" "-c")
-  (test-eq EXIT_FAILURE <status>)
-  (test-equal "" <stdout>)
-  (test-assert (string-contains <stderr> "require"))
-  (test-assert (string-contains <stderr> "argument"))
-  (test-assert (string-contains <stderr> "Run `lepton-cli shell --help' for more information.")))
-
-(test-end "lepton-cli shell -c with no argument")
-
-
 (test-begin "lepton-cli shell file arguments")
 
 (test-group-with-cleanup  "lepton-cli shell file arguments"
