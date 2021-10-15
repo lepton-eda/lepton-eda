@@ -49,7 +49,6 @@ liblepton_la_SOURCES = \
 	toplevel.c \
 	transform.c \
 	undo.c \
-	g_register.c \
 	i_vars.c \
 	liblepton.c \
 	line_object.c \
