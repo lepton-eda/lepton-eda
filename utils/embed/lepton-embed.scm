@@ -22,7 +22,7 @@ exec @GUILE@ "$0" "$@"
 ;; Initialize liblepton library.
 (liblepton_init)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (g_register_libgeda_dirs))
+  (register-data-dirs))
 (edascm_init)
 
 ( primitive-eval '(use-modules (lepton core toplevel)) )

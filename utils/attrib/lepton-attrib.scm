@@ -36,7 +36,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Initialize liblepton library.
 (liblepton_init)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
-  (g_register_libgeda_dirs))
+  (register-data-dirs))
 (edascm_init)
 
 (define libleptonattrib (dynamic-link %libleptonattrib))

@@ -25,7 +25,8 @@
                liblepton)
 
   #:export (liblepton_init
-            g_register_libgeda_dirs
+            c-string-array->list
+            register-data-dirs
             edascm_init
 
             ;; Helpers.
@@ -388,7 +389,6 @@
 
 ;;; Basic lepton initialisation function.
 (define-lff liblepton_init void '())
-(define-lff g_register_libgeda_dirs void '())
 (define-lff edascm_init void '())
 
 (define-lff set_render_placeholders void '())
@@ -680,6 +680,33 @@
 (define-lff lepton_export_settings_set_font void '(*))
 (define-lff lepton_export_settings_set_format void '(*))
 (define-lff lepton_export_settings_set_outfile void '(*))
+
+(define (c-string-array->list pointer)
+  "Returns a list of search directories for system data."
+  (let loop ((num 0)
+             (ls '()))
+    (let ((string-pointer
+           (dereference-pointer
+            (make-pointer (+ (pointer-address pointer)
+                             (* num (sizeof '*)))))))
+      (if (null-pointer? string-pointer)
+          (reverse ls)
+          (loop (1+ num)
+                (cons (pointer->string string-pointer)
+                      ls))))))
+
+
+;;; Register liblepton directories with Scheme.
+(define (register-data-dirs)
+  ;; Enable scheme loading from a shared data directory.
+  (define (register-data-dir dir)
+    (add-to-load-path (string-append dir
+                                     file-name-separator-string
+                                     "scheme")))
+
+  (let ((sys-dirs (c-string-array->list (eda_get_system_data_dirs))))
+    (for-each register-data-dir sys-dirs)
+    (register-data-dir (pointer->string (eda_get_user_data_dir)))))
 
 (define (check-boolean val pos)
   ;; This function is defined just for consistency.  Someone may

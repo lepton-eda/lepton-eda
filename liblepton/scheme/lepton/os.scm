@@ -73,19 +73,6 @@ The symbols may include:
 
 (define separator-char? file-name-separator?)
 
-(define (c-string-array->list pointer)
-  "Returns a list of search directories for system data."
-  (let loop ((num 0)
-             (ls '()))
-    (let ((string-pointer
-           (dereference-pointer
-            (make-pointer (+ (pointer-address pointer)
-                             (* num (sizeof '*)))))))
-      (if (null-pointer? string-pointer)
-          (reverse ls)
-          (loop (1+ num)
-                (cons (pointer->string string-pointer)
-                      ls))))))
 
 (define (sys-data-dirs)
   "Returns a list of search directories for system data."

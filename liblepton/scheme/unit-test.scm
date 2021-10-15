@@ -83,7 +83,7 @@
 ;;; Skip initialisation of RC paths here.  It's what the
 ;;; environment variable LEPTON_INHIBIT_RC_FILES is actually for.
 ;;;   (unless (getenv "LEPTON_INHIBIT_RC_FILES")
-;;;     (g_register_libgeda_dirs))
+;;;     (register-data-dirs))
 (edascm_init)
 
 (define with-toplevel (@@ (lepton core toplevel) %with-toplevel))
