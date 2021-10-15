@@ -25,6 +25,9 @@
                liblepton)
 
   #:export (liblepton_init
+            g_register_libgeda_dirs
+            edascm_init
+
             ;; Helpers.
             true?
             TRUE
@@ -385,6 +388,8 @@
 
 ;;; Basic lepton initialisation function.
 (define-lff liblepton_init void '())
+(define-lff g_register_libgeda_dirs void '())
+(define-lff edascm_init void '())
 
 (define-lff set_render_placeholders void '())
 (define-lff colors_count size_t '())

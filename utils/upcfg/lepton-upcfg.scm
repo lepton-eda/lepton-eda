@@ -22,6 +22,9 @@ exec @GUILE@ "$0" "$@"
 
 ;; Initialize liblepton library.
 (liblepton_init)
+(unless (getenv "LEPTON_INHIBIT_RC_FILES")
+  (g_register_libgeda_dirs))
+(edascm_init)
 
 ; Avoid Scheme compile-time errors using a clever trick
 ; from netlist/scheme/lepton-netlist.scm (see comments there):

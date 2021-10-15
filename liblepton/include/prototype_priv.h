@@ -1,9 +1,6 @@
 /* g_rc.c */
 SCM scheme_directory(SCM s_path);
 
-/* g_register.c */
-void g_register_libgeda_dirs (void);
-
 /* m_hatch.c */
 void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines);
 
