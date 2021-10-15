@@ -33,6 +33,9 @@ exec @GUILE@ -e main -s "$0" "$@"
 
 ;;; Initialize liblepton library.
 (liblepton_init)
+(unless (getenv "LEPTON_INHIBIT_RC_FILES")
+  (g_register_libgeda_dirs))
+(edascm_init)
 
 (primitive-eval '(use-modules (lepton core gettext)
                               (lepton core toplevel)

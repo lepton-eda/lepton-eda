@@ -80,6 +80,11 @@
 
 ;;; Initialize liblepton library.
 (liblepton_init)
+;;; Skip initialisation of RC paths here.  It's what the
+;;; environment variable LEPTON_INHIBIT_RC_FILES is actually for.
+;;;   (unless (getenv "LEPTON_INHIBIT_RC_FILES")
+;;;     (g_register_libgeda_dirs))
+(edascm_init)
 
 (define with-toplevel (@@ (lepton core toplevel) %with-toplevel))
 (define make-toplevel (@@ (lepton core toplevel) %make-toplevel))

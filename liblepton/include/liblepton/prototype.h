@@ -83,6 +83,8 @@ g_rc_parse_handler (LeptonToplevel *toplevel,
 
 /* liblepton.c */
 void liblepton_init(void);
+/* g_register.c */
+void g_register_libgeda_dirs ();
 
 /* m_hatch.c */
 void
