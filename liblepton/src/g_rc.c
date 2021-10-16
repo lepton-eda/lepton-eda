@@ -400,43 +400,6 @@ g_rc_parse_handler (LeptonToplevel *toplevel,
 }
 
 
-/*! \brief Add a directory to the Guile load path.
- * \par Function Description
- * Prepends \a s_path to the Guile system '%load-path', after
- * expanding environment variables.
- *
- *  \param [in] s_path  Path to be added.
- *  \return SCM_BOOL_T.
- */
-SCM_DEFINE (scheme_directory,"%scheme-directory", 1, 0, 0,
-            (SCM s_path),"Add a directory to the Guile load path.")
-{
-  char *temp;
-  gchar *expanded;
-  SCM s_load_path_var;
-  SCM s_load_path;
-
-  SCM_ASSERT (scm_is_string (s_path), s_path,
-              SCM_ARG1, s_scheme_directory);
-
-  /* take care of any shell variables */
-  temp = scm_to_utf8_string (s_path);
-  expanded = s_expand_env_variables (temp);
-  s_path = scm_from_utf8_string (expanded);
-  free (temp);
-  g_free (expanded);
-
-  s_load_path_var = scm_c_lookup ("%load-path");
-  s_load_path = scm_variable_ref (s_load_path_var);
-  scm_variable_set_x (s_load_path_var, scm_cons (s_path, s_load_path));
-
-  scm_remember_upto_here_2 (s_load_path_var, s_load_path);
-  scm_remember_upto_here_1 (s_path);
-
-  return SCM_BOOL_T;
-}
-
-
 /*! \brief Load cache configuration data.
  *
  * \param toplevel  The current #LeptonToplevel structure.
@@ -484,8 +447,7 @@ init_module_lepton_core_rc (void *unused)
   #include "g_rc.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_scheme_directory,
-                NULL);
+  scm_c_export (NULL);
 }
 
 /*!

@@ -1,6 +1,3 @@
-/* g_rc.c */
-SCM scheme_directory(SCM s_path);
-
 /* m_hatch.c */
 void m_hatch_polygon(GArray *points, gint angle, gint pitch, GArray *lines);
 

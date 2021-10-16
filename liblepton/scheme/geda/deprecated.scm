@@ -34,6 +34,7 @@
  #:use-module (lepton log)
  #:use-module (lepton object)
  #:use-module (lepton object type)
+ #:use-module (lepton os)
  #:use-module (lepton page)
  #:use-module (lepton rc)
 
@@ -170,7 +171,8 @@ function in (lepton object)."
       (set-cdr! (cdr bounds) top)
       bounds)))
 
-(define scheme-directory %scheme-directory)
+(define (scheme-directory dir)
+  (add-to-load-path (expand-env-variables dir)))
 
 (define (enabled? x)
   (string= "enabled" x))
