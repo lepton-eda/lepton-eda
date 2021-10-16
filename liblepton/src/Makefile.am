@@ -5,8 +5,7 @@ BUILT_SOURCES = \
 	scheme_init.x \
 	scheme_toplevel.x \
 	scheme_config.x \
-	scheme_closure.x \
-	g_rc.x
+	scheme_closure.x
 
 scheme_api_sources = \
 	scheme_init.c \
