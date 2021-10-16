@@ -652,8 +652,11 @@ schematic_file_open (GschemToplevel *w_current,
     g_free (backup_filename);
   }
 
-  return f_open_flags (gschem_toplevel_get_toplevel (w_current),
-                       page, filename, flags, err);
+  return f_open (gschem_toplevel_get_toplevel (w_current),
+                 page,
+                 filename,
+                 flags,
+                 err);
 }
 
 
