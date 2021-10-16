@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -144,30 +144,6 @@ gboolean f_has_active_autosave (const gchar *filename, GError **err)
   g_free (auto_filename);
   return result;
 }
-
-/*! \brief Opens the schematic file.
- *  \par Function Description
- *  Opens the schematic file by calling f_open_flags() with the
- *  F_OPEN_RC and F_OPEN_CHECK_BACKUP flags.
- *
- *  \param [in,out] toplevel  The LeptonToplevel object to load the schematic into.
- *  \param [in]      filename  A character string containing the file name
- *                             to open.
- *  \param [in,out] err  #GError structure for error reporting, or
- *                       NULL to disable error reporting
- *
- *  \return 0 on failure, 1 on success.
- */
-int
-f_open (LeptonToplevel *toplevel,
-        LeptonPage *page,
-        const gchar *filename,
-        GError **err)
-{
-  return f_open_flags (toplevel, page, filename,
-                       F_OPEN_RC | F_OPEN_CHECK_BACKUP, err);
-}
-
 
 GString*
 f_backup_message (gchar *backup_filename,
