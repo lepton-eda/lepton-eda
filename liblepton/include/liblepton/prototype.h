@@ -157,9 +157,6 @@ void s_attrib_free(void);
 void s_attrib_init(void);
 char *s_attrib_get(int counter);
 
-/* s_basic.c */
-gchar *s_expand_env_variables (const gchar *string);
-
 /* s_clib.c */
 void s_clib_init (void);
 void s_clib_free (void);

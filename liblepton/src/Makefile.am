@@ -64,7 +64,6 @@ liblepton_la_SOURCES = \
 	pin_object.c \
 	point.c \
 	s_attrib.c \
-	s_basic.c \
 	s_clib.c \
 	s_conn.c \
 	s_encoding.c \
