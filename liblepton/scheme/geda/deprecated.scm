@@ -27,7 +27,6 @@
 
  ;; Import C procedures
  #:use-module (lepton core gettext)
- #:use-module (lepton core rc)
 
  #:use-module (lepton attrib)
  #:use-module (lepton ffi)

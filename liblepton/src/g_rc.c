@@ -430,38 +430,3 @@ g_rc_load_cache_config (LeptonToplevel* toplevel,
 
   return status;
 }
-
-
-
-/*!
- * \brief Create the (lepton core rc) Scheme module.
- * \par Function Description
- * Defines procedures in the (lepton core rc) module. The module can
- * be accessed using (use-modules (lepton core rc)).
- */
-static void
-init_module_lepton_core_rc (void *unused)
-{
-  /* Register the functions and symbols */
-  /* #include "scheme_rc.x" */
-  #include "g_rc.x"
-
-  /* Add them to the module's public definitions. */
-  scm_c_export (NULL);
-}
-
-/*!
- * \brief Initialise the host platform support procedures.
- * \par Function Description
-
- * Registers some Scheme procedures that provide cross-platform
- * support. Should only be called by edascm_init().
- */
-void
-edascm_init_rc ()
-{
-  /* Define the (lepton core rc) module */
-  scm_c_define_module ("lepton core rc",
-                       (void (*)(void*)) init_module_lepton_core_rc,
-                       NULL);
-}
