@@ -40,7 +40,7 @@ typedef struct _CLibSymbol CLibSymbol;
 /* Component library search modes */
 typedef enum { CLIB_EXACT=0, CLIB_GLOB } CLibSearchMode;
 
-/* f_open behaviour flags.  See documentation for f_open_flags() in
+/* f_open behaviour flags.  See documentation for f_open() in
    f_basic.c. */
 typedef enum { F_OPEN_RC           = 1,
                F_OPEN_CHECK_BACKUP = 2,

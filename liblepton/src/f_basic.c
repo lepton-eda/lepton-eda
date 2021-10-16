@@ -191,11 +191,11 @@ f_backup_message (gchar *backup_filename,
  *  \return 0 on failure, 1 on success.
  */
 int
-f_open_flags (LeptonToplevel *toplevel,
-              LeptonPage *page,
-              const gchar *filename,
-              const gint flags,
-              GError **err)
+f_open (LeptonToplevel *toplevel,
+        LeptonPage *page,
+        const gchar *filename,
+        const gint flags,
+        GError **err)
 {
   int opened=FALSE;
   char *full_filename = NULL;
