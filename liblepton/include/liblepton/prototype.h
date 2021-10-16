@@ -21,11 +21,6 @@ o_read (LeptonPage *page,
 gchar *f_get_autosave_filename (const gchar *filename);
 gboolean f_has_active_autosave (const gchar *filename, GError **err);
 int
-f_open (LeptonToplevel *toplevel,
-        LeptonPage *page,
-        const gchar *filename,
-        GError **err);
-int
 f_open_flags (LeptonToplevel *toplevel,
               LeptonPage *page,
               const gchar *filename,
