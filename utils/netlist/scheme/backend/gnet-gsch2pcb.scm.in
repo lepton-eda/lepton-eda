@@ -138,9 +138,6 @@
 (define-undefined gsch2pcb:pcb-m4-dir "@pcbm4dir@")
 (define-undefined gsch2pcb:m4-files "")
 
-;;; Use different port mode names for guile-2.0 and guile-2.2.
-(define setvbuf-mode @mode@)
-
 ;; Let the user override the m4 search path
 (define-undefined gsch2pcb:pcb-m4-path '("$HOME/.pcb" "."))
 
@@ -185,11 +182,10 @@
          (p2c (pipe))) ; parent to child
 
     ; setvbuf( port, mode ) function:
-    ; Guile 2.0: [mode] is an integer (either _IONBF, _IOLBF or _IOFBF)
-    ; Guile 2.2: [mode] is a  symbol  (either 'none,  'line  or 'block)
+    ; [mode] is a  symbol  (either 'none,  'line  or 'block)
     ;
-    (setvbuf (cdr c2p) setvbuf-mode)
-    (setvbuf (cdr p2c) setvbuf-mode)
+    (setvbuf (cdr c2p) 'none)
+    (setvbuf (cdr p2c) 'none)
 
     (let ((pid (primitive-fork)))
       (if (= pid 0)

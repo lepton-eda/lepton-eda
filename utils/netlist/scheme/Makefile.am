@@ -61,8 +61,6 @@ SCM_SRCS=	backend/gnet-gsch2pcb.scm.in
 
 BUILT_SCM=	backend/gnet-gsch2pcb.scm
 
-SETVBUF_MODE = `$(GUILE) -c '(display (if (and (string= (major-version) "2") (string= (minor-version) "0")) "_IONBF" (quote (quote none))))'`
-
 backend/gnet-gsch2pcb.scm: $(srcdir)/backend/gnet-gsch2pcb.scm.in
 	if test "$(srcdir)" != "@builddir@" ; then \
 		echo "creating directories" ; \
@@ -73,7 +71,6 @@ backend/gnet-gsch2pcb.scm: $(srcdir)/backend/gnet-gsch2pcb.scm.in
 	sed \
 		-e 's;@m4@;${M4};g' \
 		-e 's;@pcbm4dir@;${PCBM4DIR};g' \
-		-e "s;@mode@;${SETVBUF_MODE};g" \
 		$(srcdir)/backend/gnet-gsch2pcb.scm.in > $@
 
 CLEANFILES = backend/gnet-gsch2pcb.scm config-netlist.scm
