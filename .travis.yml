@@ -16,7 +16,7 @@ env:
 before_install:
   - sudo apt-get update
   - sudo apt-get install -y libgtk2.0-dev autopoint libgettextpo-dev
-    libstroke0-dev guile-2.0-dev flex bison groff texinfo texlive-base
+    libstroke0-dev guile-2.2-dev flex bison groff texinfo texlive-base
     texlive-generic-recommended texlive-latex-base texlive-fonts-recommended
     libgtkextra-dev
 

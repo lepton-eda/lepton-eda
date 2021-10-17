@@ -51,13 +51,6 @@ AC_DEFUN([AX_CHECK_GUILE],
   fi
 
   if test "${_found_pkg_config_guile}" = "no" ; then
-    PKG_CHECK_MODULES(GUILE, [guile-2.0 >= $GUILE_MIN_VER],
-                             [_found_pkg_config_guile=yes
-                              GUILE_PKG_NAME=guile-2.0],
-                             [_found_pkg_config_guile=no])
-  fi
-
-  if test "${_found_pkg_config_guile}" = "no" ; then
     AC_MSG_ERROR([you need at least version ${GUILE_MIN_VER} of guile])
   fi
 
@@ -66,7 +59,7 @@ AC_DEFUN([AX_CHECK_GUILE],
 
   GUILE_FLAGS
   GUILE_PROGS
-  GUILE_PKG([3.0 2.2 2.0])
+  GUILE_PKG([3.0 2.2])
 
 
   # Check for the `guile-snarf' build tool

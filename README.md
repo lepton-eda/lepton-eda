@@ -91,7 +91,7 @@ installed:
   <http://pkgconfig.freedesktop.org/>
 
 - Guile ("GNU's Ubiquitous Intelligent Language for Extensions"),
-  version 2.0.0 or later.  <http://www.gnu.org/software/guile/>
+  version 2.2.0 or later.  <http://www.gnu.org/software/guile/>
 
 - GTK+ (the Gimp Toolkit), version 2.24.0 or later.
   <http://www.gtk.org/>
@@ -159,7 +159,7 @@ necessary `dev` or `devel` packages installed.
 
 Specify right `guile` binary on the `configure` stage, e.g.:
 
-    ./configure GUILE=/usr/bin/guile-2.0
+    ./configure GUILE=/usr/bin/guile-2.2
 
 Installation from a source archive
 ----------------------------------

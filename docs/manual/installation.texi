@@ -120,7 +120,7 @@ are recommended, though you may use @command{clang} instead).
 managing shared libraries.
 @item
 @url{http://www.gnu.org/software/guile, Guile} ("GNU's Ubiquitous
-Intelligent Language for Extensions"), version 2.0.13 or later.
+Intelligent Language for Extensions"), version 2.2.0 or later.
 @item
 @url{http://www.gtk.org, GTK+} (the Gimp Toolkit), version 2.24.0 or
 later.
