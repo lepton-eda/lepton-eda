@@ -688,10 +688,7 @@
 (define-syntax-rule (check-integer val pos)
   (unless (integer? val)
     (scm-error 'wrong-type-arg
-               ;; Provision against Guile-2.0 that does not have the procedure.
-               (if (defined? 'frame-procedure-name)
-                   (frame-procedure-name (stack-ref (make-stack #t) 1))
-                   '??)
+               (frame-procedure-name (stack-ref (make-stack #t) 1))
                "Wrong type argument in position ~A (expecting integer): ~A"
                (list pos val)
                #f)))
@@ -701,10 +698,7 @@
                (integer? (car val))
                (integer? (cdr val)))
     (scm-error 'wrong-type-arg
-               ;; Provision against Guile-2.0 that does not have the procedure.
-               (if (defined? 'frame-procedure-name)
-                   (frame-procedure-name (stack-ref (make-stack #t) 1))
-                   '??)
+               (frame-procedure-name (stack-ref (make-stack #t) 1))
                "Wrong type argument in position ~A (expecting a pair of integers): ~A"
                (list pos val)
                #f)))
@@ -712,10 +706,7 @@
 (define-syntax-rule (check-string val pos)
   (unless (string? val)
     (scm-error 'wrong-type-arg
-               ;; Provision against Guile-2.0 that does not have the procedure.
-               (if (defined? 'frame-procedure-name)
-                   (frame-procedure-name (stack-ref (make-stack #t) 1))
-                   '??)
+               (frame-procedure-name (stack-ref (make-stack #t) 1))
                "Wrong type argument in position ~A (expecting string): ~A"
                (list pos val)
                #f)))
@@ -723,10 +714,7 @@
 (define-syntax-rule (check-symbol val pos)
   (unless (symbol? val)
     (scm-error 'wrong-type-arg
-               ;; Provision against Guile-2.0 that does not have the procedure.
-               (if (defined? 'frame-procedure-name)
-                   (frame-procedure-name (stack-ref (make-stack #t) 1))
-                   '??)
+               (frame-procedure-name (stack-ref (make-stack #t) 1))
                "Wrong type argument in position ~A (expecting symbol): ~A"
                (list pos val)
                #f)))
@@ -735,10 +723,7 @@
   (unless (and (list? val)
                (every integer? val))
     (scm-error 'wrong-type-arg
-               ;; Provision against Guile-2.0 that does not have the procedure.
-               (if (defined? 'frame-procedure-name)
-                   (frame-procedure-name (stack-ref (make-stack #t) 1))
-                   '??)
+               (frame-procedure-name (stack-ref (make-stack #t) 1))
                "Wrong type argument in position ~A (expecting list of integers): ~A"
                (list pos val)
                #f)))

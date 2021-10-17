@@ -60,11 +60,7 @@
      (let ((pointer (geda-object->pointer object)))
        (if (null-pointer? pointer)
            (let ((proc-name
-                  ;; Provision against Guile-2.0 that does not
-                  ;; have the procedure.
-                  (if (defined? 'frame-procedure-name)
-                      (frame-procedure-name (stack-ref (make-stack #t) 1))
-                      '??)))
+                  (frame-procedure-name (stack-ref (make-stack #t) 1))))
              (scm-error 'wrong-type-arg
                         proc-name
                         "Wrong type argument in position ~A: ~A"
@@ -73,12 +69,7 @@
            pointer)))
     ((_ object pos object-check-func type)
      (let ((pointer (geda-object->pointer object))
-           (proc-name
-            ;; Provision against Guile-2.0 that does not
-            ;; have the procedure.
-            (if (defined? 'frame-procedure-name)
-                (frame-procedure-name (stack-ref (make-stack #t) 1))
-                '??)))
+           (proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
        (if (null-pointer? pointer)
            (scm-error 'wrong-type-arg
                       proc-name
