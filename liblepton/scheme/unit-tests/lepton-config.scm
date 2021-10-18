@@ -85,6 +85,38 @@
 (test-end "path-config-context")
 
 
+(define (touch file)
+  (with-output-to-file file (lambda () (display ""))))
+
+(test-begin "anyfile-config-context")
+(test-group-with-cleanup "anyfile-config-context"
+  (config-test-setup)
+
+  (let ((file-a (string-append *testdirA* file-name-separator-string "a"))
+        (file-b (string-append *testdirB* file-name-separator-string "b"))
+        (file-c (string-append *testdir* file-name-separator-string "c")))
+    (touch file-a)
+    (touch file-b)
+
+    (let ((a (anyfile-config-context file-a)))
+      (test-assert (config? a))
+      (let ((b (anyfile-config-context file-b #:parent a #:trusted #t)))
+        (test-assert (config? b))
+        (test-assert (not (config-trusted? a)))
+        (test-assert (config-trusted? b))
+        (test-assert (not (config-parent a)))
+        (test-equal (config-parent b) a)))
+
+    ;; Test for wrong arguments.
+    (test-assert-thrown 'wrong-type-arg
+                        (anyfile-config-context 'x))
+    (test-assert-thrown 'wrong-type-arg
+                        (anyfile-config-context file-c #:parent 'x)))
+  ;; Clean up.
+  (config-test-teardown))
+(test-end "anyfile-config-context")
+
+
 (test-begin "config-load")
 (test-group-with-cleanup "config-load-grp"
   (config-test-setup)
