@@ -38,6 +38,7 @@
             config-loaded?
             config-save!
             config-changed?
+            config-parent
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -176,7 +177,16 @@ loading or saving it.  Returns #t if CONFIG has unsaved changes,
   (true? (eda_config_is_changed *cfg)))
 
 
-(define-public config-parent %config-parent)
+(define (config-parent config)
+  "Return the parent context of the configuration context CONFIG,
+if it has one, or #f otherwise."
+  (define *cfg (geda-config->pointer* config 1))
+
+  (let ((*parent (eda_config_get_parent *cfg)))
+    (and (not (null-pointer? *parent))
+         (pointer->geda-config *parent))))
+
+
 (define-public set-config-parent! %set-config-parent!)
 (define-public config-trusted? %config-trusted?)
 (define-public set-config-trusted! %set-config-trusted!)
