@@ -57,6 +57,8 @@
             ;; Foreign functions.
             edascm_c_current_toplevel
             edascm_is_config
+            edascm_from_config
+            edascm_to_config
             edascm_is_object
             edascm_from_object
             edascm_to_object
@@ -428,6 +430,8 @@
 ;;; scheme_smob.c
 (define-lff edascm_c_current_toplevel '* '())
 (define-lff edascm_is_config int '(*))
+(define-lff edascm_from_config '* '(*))
+(define-lff edascm_to_config '* '(*))
 (define-lff edascm_is_object int '(*))
 (define-lff edascm_is_page int '(*))
 (define-lff edascm_from_object '* '(*))
