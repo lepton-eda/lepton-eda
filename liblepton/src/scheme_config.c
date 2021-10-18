@@ -121,33 +121,6 @@ error_from_gerror (const gchar *subr, GError **error)
 
 
 
-/*! \brief Get a configuration context's filename.
- * \par Function Description
- * Returns the underlying filename for the configuration context \a
- * cfg, or #f if it has no filename associated with it.
- *
- * \see eda_config_get_filename().
- *
- * \note Scheme API: Implements the \%config-filename procedure in the
- * (lepton core config) module.
- *
- * \param cfg_s  #EdaConfig smob for configuration context.
- * \return string containing configuration filename.
- */
-SCM_DEFINE (config_filename, "%config-filename", 1, 0, 0,
-            (SCM cfg_s), "Get configuration filename.")
-{
-  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
-              s_config_filename);
-
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-
-  const gchar* path = eda_config_get_filename (cfg);
-  SCM result = (path == NULL) ? SCM_BOOL_F : scm_from_utf8_string (path);
-
-  return result;
-}
-
 /*! \brief Load configuration parameters from file.
  * \par Function Description
  * Attempt to load configuration parameters for \a cfg_s from file.
@@ -1066,8 +1039,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_config_filename,
-                s_config_load_x,
+  scm_c_export (s_config_load_x,
                 s_config_loaded_p,
                 s_config_save_x,
                 s_config_changed_p,
