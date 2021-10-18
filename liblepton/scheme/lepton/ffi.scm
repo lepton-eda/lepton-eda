@@ -83,6 +83,7 @@
             eda_config_is_changed
             eda_config_is_loaded
             eda_config_is_trusted
+            eda_config_set_trusted
             eda_config_save
             eda_config_remove_group
             eda_config_remove_key
@@ -455,6 +456,7 @@
 (define-lff eda_config_set_parent void '(* *))
 (define-lff eda_config_is_loaded int '(*))
 (define-lff eda_config_is_trusted int '(*))
+(define-lff eda_config_set_trusted void (list '* int))
 (define-lff eda_config_save int '(* *))
 (define-lff eda_config_remove_group int '(* * *))
 (define-lff eda_config_remove_key int '(* * * *))
