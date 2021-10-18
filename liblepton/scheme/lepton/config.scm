@@ -18,7 +18,9 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (lepton config)
+  #:use-module (ice-9 match)
   #:use-module (ice-9 optargs) ; for define*-public
+  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   ; Import C procedures
@@ -27,6 +29,7 @@
   #:use-module (lepton config foreign)
 
   #:export (config?
+            config-remove-group!
             config-legacy-mode?
             config-set-legacy-mode!
             anyfile-config-context))
@@ -142,7 +145,22 @@ set.  If TRUSTED is not #f the context is marked as trusted."
 (define-public remove-config-event! %remove-config-event!)
 
 (define-public config-remove-key! %config-remove-key!)
-(define-public config-remove-group! %config-remove-group!)
+
+
+(define (config-remove-group! config group)
+  "Remove configuration GROUP and all its parameters from
+configuration context CONFIG.  Returns boolean value indicating
+success or failure."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-string group 2)
+
+  (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+         (result (true? (eda_config_remove_group *cfg
+                                                 (string->pointer group)
+                                                 *error))))
+    (unless result
+      (gerror-error *error 'config-remove-group!))
+    result))
 
 
 (define (config-legacy-mode?)

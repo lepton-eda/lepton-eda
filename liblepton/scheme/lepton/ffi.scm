@@ -66,9 +66,13 @@
             edascm_from_page
             edascm_to_page
 
+            config_error_type
+            config_error_code
+            config_error_message
             config_get_legacy_mode
             config_set_legacy_mode
             eda_config_get_anyfile_context
+            eda_config_remove_group
 
             eda_get_system_config_dirs
             eda_get_system_data_dirs
@@ -421,9 +425,13 @@
 (define-lff s_attrib_add_entry int (list '*))
 
 ;;; edaconfig.c
+(define-lff config_error_type '* '(*))
+(define-lff config_error_code '* '(*))
+(define-lff config_error_message '* '(*))
 (define-lff config_get_legacy_mode int '())
 (define-lff config_set_legacy_mode void (list int))
 (define-lff eda_config_get_anyfile_context '* (list '* '* int))
+(define-lff eda_config_remove_group int '(* * *))
 
 ;;; edapaths.c
 (define-lff eda_get_system_config_dirs '* '())
