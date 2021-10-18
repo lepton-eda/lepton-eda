@@ -1243,37 +1243,6 @@ SCM_DEFINE (config_remove_group, "%config-remove-group!", 2, 0, 0,
 
 
 
-/*! \brief Sets whether to use legacy configuration file names.
- *
- * \par Function Description
- * This function is added to assist in config migration and
- * not intended for the end user.
- * It will be removed.
- *
- * \see config_set_legacy_mode().
- *
- * \note Scheme API: Implements the \%config-set-legacy-mode!
- * procedure in the (lepton core config) module.
- *
- * \param legacy_s  Boolean: set legacy mode or not.
- *
- * \return  Previously set config mode: SCM_BOOL_T - legacy, SCM_BOOL_F otherwise.
- */
-SCM_DEFINE (config_set_legacy_mode_x, "%config-set-legacy-mode!", 1, 0, 0,
-            (SCM  legacy_s),
-            "Sets whether to use legacy configuration file names.")
-{
-  SCM_ASSERT (scm_is_bool (legacy_s), legacy_s, SCM_ARG1, s_config_set_legacy_mode_x);
-
-  gboolean result = config_get_legacy_mode();
-
-  config_set_legacy_mode (scm_to_bool (legacy_s));
-
-  return result ? SCM_BOOL_T : SCM_BOOL_F;
-}
-
-
-
 /*!
  * \brief Create the (lepton core config) Scheme module.
  * \par Function Description
@@ -1318,7 +1287,6 @@ init_module_lepton_core_config (void *unused)
                 s_remove_config_event_x,
                 s_config_remove_key,
                 s_config_remove_group,
-                s_config_set_legacy_mode_x,
                 NULL);
 }
 

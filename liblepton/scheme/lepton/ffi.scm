@@ -67,6 +67,7 @@
             edascm_to_page
 
             config_get_legacy_mode
+            config_set_legacy_mode
             eda_config_get_anyfile_context
 
             eda_get_system_config_dirs
@@ -421,6 +422,7 @@
 
 ;;; edaconfig.c
 (define-lff config_get_legacy_mode int '())
+(define-lff config_set_legacy_mode void (list int))
 (define-lff eda_config_get_anyfile_context '* (list '* '* int))
 
 ;;; edapaths.c
