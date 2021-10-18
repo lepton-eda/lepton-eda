@@ -119,23 +119,6 @@ error_from_gerror (const gchar *subr, GError **error)
   g_warn_if_reached ();
 }
 
-/*! \brief Get the user configuration context.
- * \par Function Description
- * Returns the configuration context for user settings.
- *
- * \see eda_config_get_user_context().
- *
- * \note Scheme API: Implements the \%user-config-context procedure
- * in the (lepton core config) module.
- *
- * \return an #EdaConfig smob for the user context.
- */
-SCM_DEFINE (user_config_context, "%user-config-context", 0, 0, 0,
-            (), "Get user configuration context.")
-{
-  return edascm_from_config (eda_config_get_user_context ());
-}
-
 /*! \brief Get the configuration context for a path.
  * \par Function Description
  * Looks for a configuration file named "geda.conf" in \a path or a
@@ -1131,8 +1114,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_user_config_context,
-                s_path_config_context,
+  scm_c_export (s_path_config_context,
                 s_cache_config_context,
                 s_config_filename,
                 s_config_load_x,
