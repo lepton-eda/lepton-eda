@@ -203,58 +203,6 @@ SCM_DEFINE (path_config_context, "%path-config-context", 1, 0, 0,
 
 
 
-/*! \brief Get configuration context for a given configuration file.
- *
- * \note Scheme API: Implements the \%anyfile-config-context procedure
- * in the (lepton core config) module.
- *
- * \param cfg_file_path_s  Configuration file path.
- * \param parent_s         Context to be used as a parent or #f.
- * \param trusted_s        Whether to mark the context as trusted.
- *
- * \return                 #EdaConfig smob.
- */
-SCM_DEFINE (anyfile_config_context,
-            "%anyfile-config-context",
-            3, 0, 0,
-            (SCM cfg_file_path_s, SCM parent_s, SCM trusted_s),
-            "Get configuration context for a given configuration file.")
-{
-  SCM_ASSERT (scm_is_string (cfg_file_path_s),
-              cfg_file_path_s,
-              SCM_ARG1,
-              s_anyfile_config_context);
-  SCM_ASSERT (scm_is_bool (parent_s) || EDASCM_CONFIGP (parent_s),
-              parent_s,
-              SCM_ARG2,
-              s_anyfile_config_context);
-  SCM_ASSERT (scm_is_bool (trusted_s),
-              trusted_s,
-              SCM_ARG3,
-              s_anyfile_config_context);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-
-  char* cfg_file_path = scm_to_utf8_string (cfg_file_path_s);
-  scm_dynwind_free (cfg_file_path);
-
-  EdaConfig* parent_cfg = scm_is_bool (parent_s)
-                          ? NULL
-                          : edascm_to_config (parent_s);
-  gboolean trusted = scm_to_bool (trusted_s);
-
-  EdaConfig* cfg = eda_config_get_anyfile_context (cfg_file_path,
-                                                   parent_cfg,
-                                                   trusted);
-  SCM result = edascm_from_config (cfg);
-
-  scm_dynwind_end();
-  return result;
-
-} /* anyfile_config_context() */
-
-
-
 /*! \brief Get the cache configuration context.
  * \par Function Description
  * Returns the configuration context for program-specific settings.
@@ -1396,7 +1344,6 @@ init_module_lepton_core_config (void *unused)
                 s_config_remove_group,
                 s_config_set_legacy_mode_x,
                 s_config_legacy_mode_p,
-                s_anyfile_config_context,
                 NULL);
 }
 
