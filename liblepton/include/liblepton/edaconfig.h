@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 2011-2013 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -151,6 +151,15 @@ gboolean config_get_legacy_mode();
 
 EdaConfig*
 eda_config_get_anyfile_context (const gchar* path, EdaConfig* parent, gboolean trusted);
+
+const char*
+config_error_type (GError **error);
+
+const char*
+config_error_code (GError **error);
+
+char*
+config_error_message (GError **error);
 
 G_END_DECLS
 

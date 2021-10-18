@@ -2069,3 +2069,105 @@ propagate_key_file_error (GError *src, GError **dest)
   (*dest)->domain = EDA_CONFIG_ERROR;
   (*dest)->code = code;
 }
+
+
+/*! \brief Get domain of a GError error as a string.
+ *
+ * The \a error will be converted to a string according to the
+ * following rules:
+ * - If \a error is NULL, "misc-error" is returned.
+ * - If \a error is a GFileError, "system-error" is returned.
+ * - If \a error is an EdaConfigError, "config-error" is returned.
+ * - Otherwise, "misc-error" is returned.
+ *
+ * \param error The GError error.
+ * \return The error type string.
+ */
+const char*
+config_error_type (GError **error)
+{
+  if (error == NULL || *error == NULL)
+  {
+    return "misc-error";
+  }
+
+  GError *err = *error;
+
+  if (err->domain == G_IO_ERROR)
+  {
+    return "system-error";
+  }
+
+  if (err->domain == EDA_CONFIG_ERROR)
+  {
+    return "config-error";
+  }
+
+  /* All other errors. */
+  return "misc-error";
+}
+
+
+/*! \brief Return the config error code of a GError as a string.
+ *
+ * The \a code string returned depends on what error domain is
+ * set.  If the domain is not EDA_CONFIG_ERROR, the function
+ * returns "unknown".  Otherwise it returns the string value
+ * according to the error code, or "unknown" if the error code is
+ * unknown.
+ *
+ * \param error The GError value.
+ * \return The string representing error code for Scheme.
+ */
+const char*
+config_error_code (GError **error)
+{
+  if (error == NULL || *error == NULL)
+  {
+    return "unknown";
+  }
+
+  GError *err = *error;
+
+  if (err->domain == EDA_CONFIG_ERROR)
+  {
+    /* Configuration context-related errors. */
+    switch (err->code)
+    {
+    case EDA_CONFIG_ERROR_UNKNOWN_ENCODING:
+      return "unknown-encoding";
+    case EDA_CONFIG_ERROR_PARSE:
+      return "parse";
+    case EDA_CONFIG_ERROR_KEY_NOT_FOUND:
+      return "key-not-found";
+    case EDA_CONFIG_ERROR_GROUP_NOT_FOUND:
+      return "group-not-found";
+    case EDA_CONFIG_ERROR_INVALID_VALUE:
+      return "invalid-value";
+    default:
+      return "unknown";
+    }
+  }
+
+  /* All other errors. */
+  return "unknown";
+}
+
+
+/*! \brief Return error message of a GError.
+ *
+ * \param error The GError value.
+ * \return The error message.
+ */
+char*
+config_error_message (GError **error)
+{
+  if (error == NULL || *error == NULL)
+  {
+    return NULL;
+  }
+
+  GError *err = *error;
+
+  return err->message;
+}

@@ -1199,50 +1199,6 @@ SCM_DEFINE (config_remove_key, "%config-remove-key!", 3, 0, 0,
 
 
 
-/*! \brief Remove a configuration group and all its parameters.
- *
- * \par Function Description
- * Remove the configuration group specified by \a group_s
- * and all its parameters in the configuration context \a cfg_s.
- *
- * \see eda_config_remove_group().
- *
- * \note Scheme API: Implements the \%config-remove-group!
- * procedure in the (lepton core config) module.
- *
- * \param cfg_s    #EdaConfig smob of configuration context.
- * \param group_s  Group name as a string.
- *
- * \return         Boolean value indicating success or failure.
- */
-SCM_DEFINE (config_remove_group, "%config-remove-group!", 2, 0, 0,
-            (SCM  cfg_s, SCM group_s),
-            "Remove a configuration group and all its parameters.")
-{
-  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1, s_config_remove_group);
-  SCM_ASSERT (scm_is_string (group_s), group_s, SCM_ARG2, s_config_remove_group);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-
-  EdaConfig* cfg = edascm_to_config (cfg_s);
-
-  char* group = scm_to_utf8_string (group_s);
-  scm_dynwind_free (group);
-
-  GError* error = NULL;
-  gboolean result = eda_config_remove_group (cfg, group, &error);
-
-  if (!result)
-  {
-    error_from_gerror (s_config_remove_group, &error);
-  }
-
-  scm_dynwind_end ();
-  return result ? SCM_BOOL_T : SCM_BOOL_F;
-}
-
-
-
 /*!
  * \brief Create the (lepton core config) Scheme module.
  * \par Function Description
@@ -1286,7 +1242,6 @@ init_module_lepton_core_config (void *unused)
                 s_add_config_event_x,
                 s_remove_config_event_x,
                 s_config_remove_key,
-                s_config_remove_group,
                 NULL);
 }
 
