@@ -163,30 +163,6 @@ SCM_DEFINE (config_load_x, "%config-load!", 2, 0, 0,
   return cfg_s;
 }
 
-/*! \brief Get a configuration context's parent context.
- * \par Function Description
- * Return the parent context of the configuration context \a cfg, if
- * it has one, or #f otherwise.
- *
- * \see eda_config_get_parent().
- *
- * \note Scheme API: Implements the \%config-parent procedure in the
- * (lepton core config) module.
- *
- * \param cfg_s #EdaConfig smob of configuration context.
- * \return parent context of \a cfg_s, or #f.
- */
-SCM_DEFINE (config_parent, "%config-parent", 1, 0, 0,
-            (SCM cfg_s), "Get a configuration context's parent context.")
-{
-  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
-              s_config_parent);
-
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  EdaConfig *parent = eda_config_get_parent (cfg);
-  return (parent == NULL) ? SCM_BOOL_F : edascm_from_config (parent);
-}
-
 /*! \brief Set a configuration context's parent context.
  * \par Function Description
  * Set the parent context of the configuration context \a cfg to \a
@@ -965,7 +941,6 @@ init_module_lepton_core_config (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_config_load_x,
-                s_config_parent,
                 s_set_config_parent_x,
                 s_config_trusted_p,
                 s_set_config_trusted_x,
