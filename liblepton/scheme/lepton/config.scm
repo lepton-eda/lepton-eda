@@ -34,6 +34,7 @@
             user-config-context
             path-config-context
             cache-config-context
+            config-filename
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -127,7 +128,16 @@ set.  If TRUSTED is not #f the context is marked as trusted."
   "Returns the cache configuration context."
   (pointer->geda-config (eda_config_get_cache_context)))
 
-(define-public config-filename %config-filename)
+
+(define (config-filename config)
+  "Returns the underlying filename for the configuration context
+CONFIG, or #f if it has no filename associated with it."
+  (define *cfg (geda-config->pointer* config 1))
+
+  (let ((*path (eda_config_get_filename *cfg)))
+    (and (not (null-pointer? *path))
+         (pointer->string *path))))
+
 
 ( define*-public ( config-load! cfg #:key (force-load #f) )
   ( %config-load! cfg force-load )
