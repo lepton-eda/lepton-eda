@@ -1274,30 +1274,6 @@ SCM_DEFINE (config_set_legacy_mode_x, "%config-set-legacy-mode!", 1, 0, 0,
 
 
 
-/*! \brief Test whether legacy configuration mode is currently in use.
- *
- * \par Function Description
- * This function is added to assist in config migration and
- * not intended for the end user.
- * It will be removed.
- *
- * \see config_get_legacy_mode().
- *
- * \note Scheme API: Implements the \%config-legacy-mode?
- * procedure in the (lepton core config) module.
- *
- * \return  SCM_BOOL_T or SCM_BOOL_F.
- */
-SCM_DEFINE (config_legacy_mode_p, "%config-legacy-mode?", 0, 0, 0,
-            (), "Whether legacy configuration mode is used.")
-{
-  gboolean result = config_get_legacy_mode();
-
-  return result ? SCM_BOOL_T : SCM_BOOL_F;
-}
-
-
-
 /*!
  * \brief Create the (lepton core config) Scheme module.
  * \par Function Description
@@ -1343,7 +1319,6 @@ init_module_lepton_core_config (void *unused)
                 s_config_remove_key,
                 s_config_remove_group,
                 s_config_set_legacy_mode_x,
-                s_config_legacy_mode_p,
                 NULL);
 }
 
