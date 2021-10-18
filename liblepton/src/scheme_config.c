@@ -163,33 +163,6 @@ SCM_DEFINE (config_load_x, "%config-load!", 2, 0, 0,
   return cfg_s;
 }
 
-/*! \brief Save changes to a configuration context.
- * \par Function Description
- * Attempt to save configuration parameters for the context \a cfg_s
- * to its ssociated file. Raises a system-error on failure.
- *
- * \see eda_config_save().
- *
- * \note Scheme API: Implements the \%config-save! procedure in the
- * (lepton core config) module.
- *
- * \param cfg_s #EdaConfig smob of configuration context.
- * \return \a cfg_s.
- */
-SCM_DEFINE (config_save_x, "%config-save!", 1, 0, 0,
-            (SCM cfg_s), "Save changes to a configuration context")
-{
-  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
-              s_config_save_x);
-
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  GError *error = NULL;
-  if (!eda_config_save (cfg, &error)) {
-    error_from_gerror (s_config_save_x, &error);
-  }
-  return cfg_s;
-}
-
 /*! \brief Test whether a configuration context was changed since last save/load.
  * \par Function Description
  * Determine whether the configuration context \a cfg has been altered
@@ -1017,7 +990,6 @@ init_module_lepton_core_config (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_config_load_x,
-                s_config_save_x,
                 s_config_changed_p,
                 s_config_parent,
                 s_set_config_parent_x,
