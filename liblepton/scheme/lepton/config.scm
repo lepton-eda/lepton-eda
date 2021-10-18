@@ -29,6 +29,7 @@
   #:use-module (lepton config foreign)
 
   #:export (config?
+            default-config-context
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -74,7 +75,11 @@
 returns #f."
   (true? (edascm_is_config (scm->pointer config))))
 
-(define-public default-config-context %default-config-context)
+(define (default-config-context)
+  "Returns the default configuration context."
+  (pointer->geda-config (eda_config_get_default_context)))
+
+
 (define-public system-config-context %system-config-context)
 (define-public user-config-context %user-config-context)
 (define-public path-config-context %path-config-context)
