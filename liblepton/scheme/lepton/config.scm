@@ -31,6 +31,7 @@
   #:export (config?
             default-config-context
             system-config-context
+            user-config-context
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -86,7 +87,11 @@ returns #f."
   (pointer->geda-config (eda_config_get_system_context)))
 
 
-(define-public user-config-context %user-config-context)
+(define (user-config-context)
+  "Returns the user configuration context."
+  (pointer->geda-config (eda_config_get_user_context)))
+
+
 (define-public path-config-context %path-config-context)
 
 
