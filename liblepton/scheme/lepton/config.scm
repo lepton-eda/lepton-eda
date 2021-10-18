@@ -35,6 +35,7 @@
             path-config-context
             cache-config-context
             config-filename
+            config-loaded?
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -143,7 +144,15 @@ CONFIG, or #f if it has no filename associated with it."
   ( %config-load! cfg force-load )
 )
 
-(define-public config-loaded? %config-loaded?)
+
+(define (config-loaded? config)
+  "Returns #t if CONFIG has been loaded from file at some point,
+and #f otherwise."
+  (define *cfg (geda-config->pointer* config 1))
+
+  (true? (eda_config_is_loaded *cfg)))
+
+
 (define-public config-save! %config-save!)
 (define-public config-changed? %config-changed?)
 (define-public config-parent %config-parent)
