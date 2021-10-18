@@ -36,6 +36,7 @@
             cache-config-context
             config-filename
             config-loaded?
+            config-save!
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -153,7 +154,17 @@ and #f otherwise."
   (true? (eda_config_is_loaded *cfg)))
 
 
-(define-public config-save! %config-save!)
+(define (config-save! config)
+  "Attempts to save configuration parameters for the context
+CONFIG to its ssociated file.  Raises a system-error on failure."
+  (define *cfg (geda-config->pointer* config 1))
+
+  (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
+    (unless (true? (eda_config_save *cfg *error))
+      (gerror-error *error 'config-save!))
+    config))
+
+
 (define-public config-changed? %config-changed?)
 (define-public config-parent %config-parent)
 (define-public set-config-parent! %set-config-parent!)
