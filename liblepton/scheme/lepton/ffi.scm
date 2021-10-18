@@ -73,6 +73,7 @@
             config_set_legacy_mode
             eda_config_get_anyfile_context
             eda_config_remove_group
+            eda_config_remove_key
 
             eda_get_system_config_dirs
             eda_get_system_data_dirs
@@ -432,6 +433,7 @@
 (define-lff config_set_legacy_mode void (list int))
 (define-lff eda_config_get_anyfile_context '* (list '* '* int))
 (define-lff eda_config_remove_group int '(* * *))
+(define-lff eda_config_remove_key int '(* * * *))
 
 ;;; edapaths.c
 (define-lff eda_get_system_config_dirs '* '())
