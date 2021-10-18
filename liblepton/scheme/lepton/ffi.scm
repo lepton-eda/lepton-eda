@@ -66,6 +66,8 @@
             edascm_from_page
             edascm_to_page
 
+            eda_config_get_anyfile_context
+
             eda_get_system_config_dirs
             eda_get_system_data_dirs
             eda_get_user_cache_dir
@@ -415,6 +417,9 @@
 ;;; s_attrib.c
 (define-lff s_attrib_uniq int (list '*))
 (define-lff s_attrib_add_entry int (list '*))
+
+;;; edaconfig.c
+(define-lff eda_config_get_anyfile_context '* (list '* '* int))
 
 ;;; edapaths.c
 (define-lff eda_get_system_config_dirs '* '())

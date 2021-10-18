@@ -24,8 +24,10 @@
   ; Import C procedures
   #:use-module (lepton core config)
   #:use-module (lepton ffi)
+  #:use-module (lepton config foreign)
 
-  #:export (config?))
+  #:export (config?
+            anyfile-config-context))
 
 (define (config? config)
   "Returns #t if PAGE is a #<geda-config> instance, otherwise
@@ -37,9 +39,25 @@ returns #f."
 (define-public user-config-context %user-config-context)
 (define-public path-config-context %path-config-context)
 
-( define*-public ( anyfile-config-context path #:key (parent #f) (trusted #f) )
-  ( %anyfile-config-context path parent trusted )
-)
+
+(define* (anyfile-config-context path #:key (parent #f) (trusted #f))
+  "Returns configuration context for a given configuration file
+specified as PATH.  PARENT is used as its parent context if it is
+set.  If TRUSTED is not #f the context is marked as trusted."
+  (define path-pointer (if path
+                           (and (check-string path 1)
+                                (string->pointer path))
+                           %null-pointer))
+  (define parent-pointer (if parent
+                             (geda-config->pointer* parent 2)
+                             %null-pointer))
+  (check-boolean trusted 3)
+
+  (pointer->geda-config
+   (eda_config_get_anyfile_context path-pointer
+                                   parent-pointer
+                                   (if trusted TRUE FALSE))))
+
 
 (define-public cache-config-context %cache-config-context)
 (define-public config-filename %config-filename)
