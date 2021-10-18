@@ -73,6 +73,7 @@
             config_set_legacy_mode
             eda_config_get_anyfile_context
             eda_config_get_default_context
+            eda_config_get_system_context
             eda_config_remove_group
             eda_config_remove_key
 
@@ -434,6 +435,7 @@
 (define-lff config_set_legacy_mode void (list int))
 (define-lff eda_config_get_anyfile_context '* (list '* '* int))
 (define-lff eda_config_get_default_context '* '())
+(define-lff eda_config_get_system_context '* '())
 (define-lff eda_config_remove_group int '(* * *))
 (define-lff eda_config_remove_key int '(* * * *))
 
