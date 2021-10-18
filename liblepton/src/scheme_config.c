@@ -119,23 +119,6 @@ error_from_gerror (const gchar *subr, GError **error)
   g_warn_if_reached ();
 }
 
-/*! \brief Get the system configuration context.
- * \par Function Description
- * Returns the configuration context for system settings.
- *
- * \see eda_config_get_system_context().
- *
- * \note Scheme API: Implements the \%system-config-context procedure
- * in the (lepton core config) module.
- *
- * \return an #EdaConfig smob for the system context.
- */
-SCM_DEFINE (system_config_context, "%system-config-context", 0, 0, 0,
-            (), "Get system configuration context.")
-{
-  return edascm_from_config (eda_config_get_system_context ());
-}
-
 /*! \brief Get the user configuration context.
  * \par Function Description
  * Returns the configuration context for user settings.
@@ -1148,8 +1131,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_system_config_context,
-                s_user_config_context,
+  scm_c_export (s_user_config_context,
                 s_path_config_context,
                 s_cache_config_context,
                 s_config_filename,
