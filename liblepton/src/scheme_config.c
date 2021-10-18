@@ -163,31 +163,6 @@ SCM_DEFINE (config_load_x, "%config-load!", 2, 0, 0,
   return cfg_s;
 }
 
-/*! \brief Test whether a configuration context was changed since last save/load.
- * \par Function Description
- * Determine whether the configuration context \a cfg has been altered
- * since it was last synchronised with the on-disk version by loading
- * or saving it.
- *
- * \see eda_config_is_changed().
- *
- * \note Scheme API: Implements the \%config-changed? procedure in the
- * (lepton core config) module.
- *
- * \param cfg_s #EdaConfig smob of configuration context.
- * \return #t if \a cfg_s has unsaved changes, #f otherwise.
- */
-SCM_DEFINE (config_changed_p, "%config-changed?", 1, 0, 0,
-            (SCM cfg_s),
-            "Test whether a configuration context was changed since last save/load.")
-{
-  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
-              s_config_changed_p);
-
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  return eda_config_is_changed (cfg) ? SCM_BOOL_T : SCM_BOOL_F;
-}
-
 /*! \brief Get a configuration context's parent context.
  * \par Function Description
  * Return the parent context of the configuration context \a cfg, if
@@ -990,7 +965,6 @@ init_module_lepton_core_config (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_config_load_x,
-                s_config_changed_p,
                 s_config_parent,
                 s_set_config_parent_x,
                 s_config_trusted_p,

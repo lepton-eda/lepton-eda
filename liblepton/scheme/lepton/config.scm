@@ -37,6 +37,7 @@
             config-filename
             config-loaded?
             config-save!
+            config-changed?
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -165,7 +166,16 @@ CONFIG to its ssociated file.  Raises a system-error on failure."
     config))
 
 
-(define-public config-changed? %config-changed?)
+(define (config-changed? config)
+  "Determine whether the configuration context CONFIG has been
+altered since it was last synchronised with the on-disk version by
+loading or saving it.  Returns #t if CONFIG has unsaved changes,
+#f otherwise."
+  (define *cfg (geda-config->pointer* config 1))
+
+  (true? (eda_config_is_changed *cfg)))
+
+
 (define-public config-parent %config-parent)
 (define-public set-config-parent! %set-config-parent!)
 (define-public config-trusted? %config-trusted?)
