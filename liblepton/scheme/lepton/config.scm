@@ -41,6 +41,7 @@
             config-parent
             set-config-parent!
             config-trusted?
+            set-config-trusted!
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -212,7 +213,16 @@ otherwise."
   (true? (eda_config_is_trusted *cfg)))
 
 
-(define-public set-config-trusted! %set-config-trusted!)
+(define (set-config-trusted! config trusted?)
+  "Set whether the configuration context CONFIG is trusted as a
+source for risky configuration parameters depending on the boolean
+value of TRUSTED?.  Returns CONFIG."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-boolean trusted? 2)
+
+  (eda_config_set_trusted *cfg (if trusted? TRUE FALSE))
+  config)
+
 
 (define-public (config-trusted-context cfg)
   (cond
