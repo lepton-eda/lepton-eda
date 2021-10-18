@@ -201,37 +201,6 @@ SCM_DEFINE (config_groups, "%config-groups", 1, 0, 0,
   return scm_reverse_x (lst_s, SCM_EOL);
 }
 
-/*! \brief Test whether a configuration context has a particular group.
- * \par Function Description
- * Tests whether the configuration context \a cfg_s, or any of its
- * parent contexts, contains the \a group_s.
- *
- * \see eda_config_has_group().
- *
- * \note Scheme API: Implements the \%config-has-group? procedure in
- * the (lepton core config) module.
- *
- * \param cfg_s #EdaConfig smob of configuration context.
- * \param group_s Group name as a string.
- * \return #t if \a cfg_s or any ancestor contains \a group, #f
- * otherwise.
- */
-SCM_DEFINE (config_has_group_p, "%config-has-group?", 2, 0, 0,
-            (SCM cfg_s, SCM group_s),
-            "Test whether a configuration context has a particular group.")
-{
-  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
-              s_config_has_group_p);
-  SCM_ASSERT (scm_is_string (group_s), group_s, SCM_ARG2,
-              s_config_has_group_p);
-
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  char *group = scm_to_utf8_string (group_s);
-  gboolean result = eda_config_has_group (cfg, group);
-  free (group);
-  return result ? SCM_BOOL_T : SCM_BOOL_F;
-}
-
 /*! \brief Get a list of available configuration keys.
  * \par Function Description.
  * Returns a list of the all keys available in \a cfg_s and \a
@@ -864,7 +833,6 @@ init_module_lepton_core_config (void *unused)
   /* Add them to the module's public definitions. */
   scm_c_export (s_config_load_x,
                 s_config_groups,
-                s_config_has_group_p,
                 s_config_keys,
                 s_config_source,
                 s_config_string,

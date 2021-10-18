@@ -42,6 +42,7 @@
             set-config-parent!
             config-trusted?
             set-config-trusted!
+            config-has-group?
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -231,7 +232,18 @@ value of TRUSTED?.  Returns CONFIG."
    (else (config-trusted-context (config-parent cfg)))))
 
 (define-public config-groups %config-groups)
-(define-public config-has-group? %config-has-group?)
+
+
+(define (config-has-group? config group)
+  "Tests whether the configuration context CONFIG, or any of its
+parent contexts, contains the GROUP.  Returns #t if CONFIG or any
+ancestor contains GROUP, #f otherwise."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-string group 2)
+
+  (true? (eda_config_has_group *cfg (string->pointer group))))
+
+
 (define-public config-keys %config-keys)
 
 (define-public (config-has-key? cfg group key)
