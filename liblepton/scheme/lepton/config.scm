@@ -29,6 +29,7 @@
   #:use-module (lepton config foreign)
 
   #:export (config?
+            config-remove-key!
             config-remove-group!
             config-legacy-mode?
             config-set-legacy-mode!
@@ -144,7 +145,23 @@ set.  If TRUSTED is not #f the context is marked as trusted."
 (define-public add-config-event! %add-config-event!)
 (define-public remove-config-event! %remove-config-event!)
 
-(define-public config-remove-key! %config-remove-key!)
+
+(define (config-remove-key! config group key)
+  "Removes the configuration parameter specified by GROUP and KEY
+in the configuration context CONFIG.  Returns boolean value
+indicating success or failure."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-string group 2)
+  (check-string key 3)
+
+  (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+         (result (true? (eda_config_remove_key *cfg
+                                               (string->pointer group)
+                                               (string->pointer key)
+                                               *error))))
+    (unless result
+      (gerror-error *error 'config-remove-key!))
+    result))
 
 
 (define (config-remove-group! config group)
