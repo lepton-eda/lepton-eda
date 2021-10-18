@@ -32,6 +32,7 @@
             default-config-context
             system-config-context
             user-config-context
+            path-config-context
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -92,7 +93,13 @@ returns #f."
   (pointer->geda-config (eda_config_get_user_context)))
 
 
-(define-public path-config-context %path-config-context)
+(define (path-config-context path)
+  "Returns configuration context for PATH."
+  (check-string path 1)
+
+  (pointer->geda-config
+   (eda_config_get_context_for_path (string->pointer path))))
+
 
 
 (define* (anyfile-config-context path #:key (parent #f) (trusted #f))
