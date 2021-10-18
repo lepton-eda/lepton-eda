@@ -163,35 +163,6 @@ SCM_DEFINE (config_load_x, "%config-load!", 2, 0, 0,
   return cfg_s;
 }
 
-/*! \brief Set a configuration context's parent context.
- * \par Function Description
- * Set the parent context of the configuration context \a cfg to \a
- * parent.  If \a parent is #f, sets \a cfg as having no parent
- * context.
- *
- * \see eda_config_set_parent().
- *
- * \note Scheme API: Implements the \%set-config-parent! procedure in
- * the (lepton core config) module.
- *
- * \param cfg_s #EdaConfig smob of configuration context.
- * \param parent_s #EdaConfig smob of new parent context, or #f.
- * \return cfg_s.
- */
-SCM_DEFINE (set_config_parent_x, "%set-config-parent!", 2, 0, 0,
-            (SCM cfg_s, SCM parent_s), "Set a configuration context's parent context.")
-{
-  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
-              s_set_config_parent_x);
-  SCM_ASSERT (scm_is_false (parent_s) || EDASCM_CONFIGP (parent_s), cfg_s,
-              SCM_ARG2, s_set_config_parent_x);
-
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  EdaConfig *parent = EDASCM_CONFIGP (parent_s) ? edascm_to_config (parent_s) : NULL;
-  eda_config_set_parent (cfg, parent);
-  return cfg_s;
-}
-
 /*! \brief Test if a configuration context is trusted.
  * \par Function Description
  * Tests if \a cfg_s is a "trusted" configuration context
@@ -941,7 +912,6 @@ init_module_lepton_core_config (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_config_load_x,
-                s_set_config_parent_x,
                 s_config_trusted_p,
                 s_set_config_trusted_x,
                 s_config_groups,

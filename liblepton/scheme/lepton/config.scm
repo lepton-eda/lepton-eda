@@ -39,6 +39,7 @@
             config-save!
             config-changed?
             config-parent
+            set-config-parent!
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -187,7 +188,19 @@ if it has one, or #f otherwise."
          (pointer->geda-config *parent))))
 
 
-(define-public set-config-parent! %set-config-parent!)
+(define (set-config-parent! config parent)
+  "Set the parent context of the configuration context CONFIG to
+PARENT.  If PARENT is #f, sets CONFIG as having no parent context.
+Returns CONFIG."
+  (define *cfg (geda-config->pointer* config 1))
+  (define *parent (if parent
+                      (geda-config->pointer* parent 2)
+                      %null-pointer))
+
+  (eda_config_set_parent *cfg *parent)
+  config)
+
+
 (define-public config-trusted? %config-trusted?)
 (define-public set-config-trusted! %set-config-trusted!)
 
