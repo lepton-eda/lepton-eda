@@ -33,6 +33,7 @@
             system-config-context
             user-config-context
             path-config-context
+            cache-config-context
             config-remove-key!
             config-remove-group!
             config-legacy-mode?
@@ -121,7 +122,11 @@ set.  If TRUSTED is not #f the context is marked as trusted."
                                    (if trusted TRUE FALSE))))
 
 
-(define-public cache-config-context %cache-config-context)
+
+(define (cache-config-context)
+  "Returns the cache configuration context."
+  (pointer->geda-config (eda_config_get_cache_context)))
+
 (define-public config-filename %config-filename)
 
 ( define*-public ( config-load! cfg #:key (force-load #f) )

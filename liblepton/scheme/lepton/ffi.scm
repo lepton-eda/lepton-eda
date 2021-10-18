@@ -76,6 +76,7 @@
             eda_config_get_system_context
             eda_config_get_user_context
             eda_config_get_context_for_path
+            eda_config_get_cache_context
             eda_config_remove_group
             eda_config_remove_key
 
@@ -440,6 +441,7 @@
 (define-lff eda_config_get_system_context '* '())
 (define-lff eda_config_get_user_context '* '())
 (define-lff eda_config_get_context_for_path '* '(*))
+(define-lff eda_config_get_cache_context '* '())
 (define-lff eda_config_remove_group int '(* * *))
 (define-lff eda_config_remove_key int '(* * * *))
 

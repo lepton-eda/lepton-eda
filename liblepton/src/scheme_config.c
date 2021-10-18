@@ -121,23 +121,6 @@ error_from_gerror (const gchar *subr, GError **error)
 
 
 
-/*! \brief Get the cache configuration context.
- * \par Function Description
- * Returns the configuration context for program-specific settings.
- *
- * \see eda_config_get_cache_context().
- *
- * \note Scheme API: Implements the \%cache-config-context procedure
- * in the (lepton core config) module.
- *
- * \return an #EdaConfig smob for the cache context.
- */
-SCM_DEFINE (cache_config_context, "%cache-config-context", 0, 0, 0,
-            (), "Get cache configuration context.")
-{
-  return edascm_from_config (eda_config_get_cache_context());
-}
-
 /*! \brief Get a configuration context's filename.
  * \par Function Description
  * Returns the underlying filename for the configuration context \a
@@ -1083,8 +1066,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_cache_config_context,
-                s_config_filename,
+  scm_c_export (s_config_filename,
                 s_config_load_x,
                 s_config_loaded_p,
                 s_config_save_x,
