@@ -119,37 +119,6 @@ error_from_gerror (const gchar *subr, GError **error)
   g_warn_if_reached ();
 }
 
-/*! \brief Get the configuration context for a path.
- * \par Function Description
- * Looks for a configuration file named "geda.conf" in \a path or a
- * parent directory.
- *
- * \see eda_config_get_context_for_path().
- *
- * \note Scheme API: Implements the \%path-config-context procedure in
- * the (lepton core config) module.
- *
- * \param [in] path_s Path to get context for, as a string.
- * \return an #EdaConfig smob for \a path.
- */
-SCM_DEFINE (path_config_context, "%path-config-context", 1, 0, 0,
-            (SCM path_s), "Get configuration context for a path.")
-{
-  SCM_ASSERT (scm_is_string (path_s), path_s, SCM_ARG1,
-              s_path_config_context);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-
-  char *path = scm_to_utf8_string (path_s);
-  scm_dynwind_free (path);
-
-  EdaConfig *cfg = eda_config_get_context_for_path (path);
-  SCM result = edascm_from_config (cfg);
-
-  scm_dynwind_end ();
-  return result;
-}
-
 
 
 /*! \brief Get the cache configuration context.
@@ -1114,8 +1083,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_path_config_context,
-                s_cache_config_context,
+  scm_c_export (s_cache_config_context,
                 s_config_filename,
                 s_config_load_x,
                 s_config_loaded_p,
