@@ -163,29 +163,6 @@ SCM_DEFINE (config_load_x, "%config-load!", 2, 0, 0,
   return cfg_s;
 }
 
-/*! \brief Test if a configuration context is trusted.
- * \par Function Description
- * Tests if \a cfg_s is a "trusted" configuration context
- * (i.e. if it is permitted as a source for risky configuration
- * parameters such as system commands).
- *
- * \see eda_config_is_trusted().
- *
- * \note Scheme API: Implements the \%config-trusted? procedure in
- * the (lepton core config) module.
- *
- * \param cfg_s #EdaConfig smob of configuration context.
- * \return #t if \a cfg_s is trusted, #f otherwise.
- */
-SCM_DEFINE (config_trusted_p, "%config-trusted?", 1, 0, 0,
-            (SCM cfg_s), "Test if a configuration context is trusted.")
-{
-  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
-              s_config_trusted_p);
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  return eda_config_is_trusted (cfg) ? SCM_BOOL_T : SCM_BOOL_F;
-}
-
 /*! \brief Set whether a configuration context is trusted.
  * \par Function Description
  * Set whether the configuration context \a cfg_s is trusted as a
@@ -912,7 +889,6 @@ init_module_lepton_core_config (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_config_load_x,
-                s_config_trusted_p,
                 s_set_config_trusted_x,
                 s_config_groups,
                 s_config_has_group_p,
