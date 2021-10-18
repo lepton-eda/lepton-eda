@@ -28,6 +28,7 @@
 
   #:export (config?
             config-legacy-mode?
+            config-set-legacy-mode!
             anyfile-config-context))
 
 (define (config? config)
@@ -109,11 +110,21 @@ set.  If TRUSTED is not #f the context is marked as trusted."
 (define-public config-remove-key! %config-remove-key!)
 (define-public config-remove-group! %config-remove-group!)
 
-(define-public config-set-legacy-mode! %config-set-legacy-mode!)
-
 
 (define (config-legacy-mode?)
   "Return #t if legacy configuration mode is currently in use,
 otherwise return #f. This function was added to assist in config
 migration and not intended for the end user.  It will be removed."
   (true? (config_get_legacy_mode)))
+
+
+(define (config-set-legacy-mode! legacy?)
+  "If LEGACY? is #t, enables using of legacy configuration file
+names, otherwise disables it.  This function is added to assist in
+config migration and not intended for the end user.  It will be
+removed.  Returns the config mode previously set: #t if legacy,
+otherwise #f."
+  (check-boolean legacy? 1)
+  (let ((result (config-legacy-mode?)))
+    (config_set_legacy_mode (if legacy? TRUE FALSE))
+    result))
