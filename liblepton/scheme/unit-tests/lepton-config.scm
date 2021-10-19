@@ -198,6 +198,9 @@
 
     (test-equal a (set-config-trusted! a #f))
     (test-equal #f (config-trusted? a)))
+
+  (test-assert-thrown 'wrong-type-arg (config-trusted? 'x))
+  (test-assert-thrown 'wrong-type-arg (set-config-trusted! 'x #f))
   ;; Clean up.
   (config-test-teardown))
 (test-end "config-trust")
