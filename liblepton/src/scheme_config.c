@@ -121,44 +121,6 @@ error_from_gerror (const gchar *subr, GError **error)
 
 
 
-/*! \brief Get a configuration parameter's value as a string.
- * \par Function Description
- * Get the value of the configuration parameter specified by \a
- * group_s and \a key_s in the configuration context \a cfg_s, as a
- * string.
- *
- * \see eda_config_get_string().
- *
- * \note Scheme API: Implements the \%config-string procedure in the
- * (lepton core config) module.
- *
- * \param cfg_s    #EdaConfig smob of configuration context.
- * \param group_s  Group name as a string.
- * \param key_s    Key name as a string.
- * \return configuration value as a string.
- */
-SCM_DEFINE (config_string, "%config-string", 3, 0, 0,
-            (SCM  cfg_s, SCM group_s, SCM key_s),
-            "Get a configuration parameter's value as a string.")
-{
-  ASSERT_CFG_GROUP_KEY (s_config_string);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  char *group = scm_to_utf8_string (group_s);
-  scm_dynwind_free (group);
-  char *key = scm_to_utf8_string (key_s);
-  scm_dynwind_free (key);
-  GError *error = NULL;
-  gchar *value = eda_config_get_string (cfg, group, key, &error);
-  if (value == NULL) error_from_gerror  (s_config_string, &error);
-  scm_dynwind_unwind_handler ((void (*)(void *)) g_free, value,
-                              SCM_F_WIND_EXPLICITLY);
-  SCM value_s = scm_from_utf8_string (value);
-  scm_dynwind_end ();
-  return value_s;
-}
-
 /*! \brief Get a configuration parameter's value as a boolean.
  * \par Function Description
  * Get the value of the configuration parameter specified by \a
@@ -668,8 +630,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_config_string,
-                s_config_boolean,
+  scm_c_export (s_config_boolean,
                 s_config_int,
                 s_config_real,
                 s_config_string_list,

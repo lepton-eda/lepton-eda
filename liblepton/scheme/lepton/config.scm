@@ -48,6 +48,7 @@
             config-groups
             config-keys
             config-source
+            config-string
             config-legacy-mode?
             config-set-legacy-mode!
             anyfile-config-context))
@@ -313,7 +314,25 @@ the group or key cannot be found, raises a 'config-error error."
         (pointer->geda-config *src))))
 
 
-(define-public config-string %config-string)
+(define (config-string config group key)
+  "Returns the value of the configuration parameter specified by
+GROUP and KEY in the configuration context CONFIG, as a string.
+If the group or key cannot be found, raises a 'config-error
+error."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-string group 2)
+  (check-string key 3)
+
+  (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+         (*value (eda_config_get_string *cfg
+                                        (string->pointer group)
+                                        (string->pointer key)
+                                        *error)))
+    (if (null-pointer? *value)
+        (gerror-error *error 'config-string)
+        (pointer->string *value))))
+
+
 (define-public config-boolean %config-boolean)
 (define-public config-int %config-int)
 (define-public config-real %config-real)
