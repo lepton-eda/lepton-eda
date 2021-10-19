@@ -2171,3 +2171,14 @@ config_error_message (GError **error)
 
   return err->message;
 }
+
+/*! \brief Test if GError error is about missing file.
+ *
+ * \param error The GError value.
+ * \return TRUE if GError matches G_IO_ERROR_NOT_FOUND, otherwise FALSE.
+ */
+gboolean
+config_error_file_not_found (GError *error)
+{
+  return g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND);
+}
