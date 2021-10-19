@@ -503,6 +503,8 @@
   ; add group::key, set it to "value":
   ;
   ( set-config! cfg "group" "key" "value" )
+  ;; Try removing a group not existing in the config file.
+  (test-assert-thrown 'config-error (config-remove-group! cfg "missing-group"))
 
   ; setup config event handler for cfg:
   ;
@@ -524,7 +526,16 @@
   ; exception should be thrown if group is not found:
   ;
   ( test-assert-thrown 'config-error (config-remove-group! cfg "group") )
+  (test-assert-thrown 'wrong-type-arg (config-remove-group! 'cfg "group"))
+  (test-assert-thrown 'wrong-type-arg (config-remove-group! cfg 'group))
 
+  ;; Test for wrong config file content.  A parse error must be
+  ;; raised.
+  (let ((config-file (config-filename cfg)))
+    (when (file-exists? config-file)
+      (delete-file config-file))
+    (with-output-to-file config-file (lambda () (display "wrong config")))
+    (test-assert-thrown 'config-error (config-remove-group! cfg group)))
 ) ; let
   ;; Clean up.
   (config-test-teardown)
