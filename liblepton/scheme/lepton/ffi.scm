@@ -81,6 +81,7 @@
             eda_config_get_filename
             eda_config_get_parent
             eda_config_set_parent
+            eda_config_get_groups
             eda_config_has_group
             eda_config_is_changed
             eda_config_is_loaded
@@ -455,6 +456,7 @@
 (define-lff eda_config_get_context_for_path '* '(*))
 (define-lff eda_config_get_cache_context '* '())
 (define-lff eda_config_get_filename '* '(*))
+(define-lff eda_config_get_groups '* '(* *))
 (define-lff eda_config_has_group int '(* *))
 (define-lff eda_config_is_changed int '(*))
 (define-lff eda_config_get_parent '* '(*))

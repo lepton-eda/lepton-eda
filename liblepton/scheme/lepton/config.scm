@@ -45,6 +45,7 @@
             config-has-group?
             config-remove-key!
             config-remove-group!
+            config-groups
             config-legacy-mode?
             config-set-legacy-mode!
             anyfile-config-context))
@@ -245,7 +246,14 @@ value of TRUSTED?.  Returns CONFIG."
    ((config-trusted? cfg) cfg)
    (else (config-trusted-context (config-parent cfg)))))
 
-(define-public config-groups %config-groups)
+
+(define (config-groups config)
+  "Returns a list of the all group names available in CONFIG and
+its parent contexts."
+  (define *cfg (geda-config->pointer* config 1))
+
+  (let ((*len (bytevector->pointer (make-bytevector (sizeof int) 0))))
+    (c-string-array->list (eda_config_get_groups *cfg *len))))
 
 
 (define (config-has-group? config group)

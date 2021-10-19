@@ -121,44 +121,6 @@ error_from_gerror (const gchar *subr, GError **error)
 
 
 
-/*! \brief Get a list of available configuration groups.
- * \par Function Description.
- * Returns a list of the all groups available in \a cfg_s and its parent
- * contexts.
- *
- * \see eda_config_get_groups().
- *
- * \note Scheme API: Implements the \%config-groups procedure in
- * the (lepton core config) module.
- *
- * \param cfg_s #EdaConfig smob of configuration context.
- * \return a list of available group names as strings.
- */
-SCM_DEFINE (config_groups, "%config-groups", 1, 0, 0,
-            (SCM cfg_s),
-            "Get a list of available configuration groups.")
-{
-  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
-              s_config_groups);
-
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  gsize i, len;
-  gchar **groups = eda_config_get_groups (cfg, &len);
-  SCM lst_s = SCM_EOL;
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  scm_dynwind_unwind_handler ((void (*)(void *)) g_strfreev,
-                              groups, SCM_F_WIND_EXPLICITLY);
-
-  for (i = 0; i < len; i++) {
-    lst_s = scm_cons (scm_from_utf8_string (groups[i]), lst_s);
-  }
-
-  scm_dynwind_end ();
-
-  return scm_reverse_x (lst_s, SCM_EOL);
-}
-
 /*! \brief Get a list of available configuration keys.
  * \par Function Description.
  * Returns a list of the all keys available in \a cfg_s and \a
@@ -789,8 +751,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_config_groups,
-                s_config_keys,
+  scm_c_export (s_config_keys,
                 s_config_source,
                 s_config_string,
                 s_config_boolean,
