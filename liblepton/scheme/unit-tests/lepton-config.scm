@@ -254,7 +254,10 @@
         (test-equal '("foo") (config-groups a))
         (test-assert (lset= string= '("fizz" "foo") (config-groups b)))
         (test-equal #f (config-has-group? a "fizz"))
-        (test-assert (config-has-group? b "fizz")) )
+        (test-assert (config-has-group? b "fizz"))
+
+        (test-assert-thrown 'wrong-type-arg (config-has-group? 'x "foo"))
+        (test-assert-thrown 'wrong-type-arg (config-has-group? a 'foo)))
       (lambda () (set-config-parent! b (user-config-context)))))
   ;; Clean up.
   (config-test-teardown))
