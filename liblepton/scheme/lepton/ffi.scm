@@ -69,6 +69,7 @@
             config_error_type
             config_error_code
             config_error_message
+            config_error_file_not_found
             config_get_legacy_mode
             config_set_legacy_mode
             eda_config_get_anyfile_context
@@ -83,6 +84,7 @@
             eda_config_has_group
             eda_config_is_changed
             eda_config_is_loaded
+            eda_config_load
             eda_config_is_trusted
             eda_config_set_trusted
             eda_config_save
@@ -443,6 +445,7 @@
 (define-lff config_error_type '* '(*))
 (define-lff config_error_code '* '(*))
 (define-lff config_error_message '* '(*))
+(define-lff config_error_file_not_found int '(*))
 (define-lff config_get_legacy_mode int '())
 (define-lff config_set_legacy_mode void (list int))
 (define-lff eda_config_get_anyfile_context '* (list '* '* int))
@@ -457,6 +460,7 @@
 (define-lff eda_config_get_parent '* '(*))
 (define-lff eda_config_set_parent void '(* *))
 (define-lff eda_config_is_loaded int '(*))
+(define-lff eda_config_load int '(* *))
 (define-lff eda_config_is_trusted int '(*))
 (define-lff eda_config_set_trusted void (list '* int))
 (define-lff eda_config_save int '(* *))

@@ -121,48 +121,6 @@ error_from_gerror (const gchar *subr, GError **error)
 
 
 
-/*! \brief Load configuration parameters from file.
- * \par Function Description
- * Attempt to load configuration parameters for \a cfg_s from file.
- * Raises a system-error on failure.
- *
- * \see eda_config_load().
- *
- * \note Scheme API: Implements the \%config-load! procedure in the
- * (lepton core config) module.
- *
- * \param cfg_s    #EdaConfig smob for configuration context to load.
- * \param force_s  Force configuration loading even if it has been already loaded.
- * \return \a cfg_s.
- */
-SCM_DEFINE (config_load_x, "%config-load!", 2, 0, 0,
-            (SCM cfg_s, SCM force_s), "Load configuration parameters from file.")
-{
-  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
-              s_config_load_x);
-  SCM_ASSERT (scm_is_bool (force_s), force_s, SCM_ARG2,
-              s_config_load_x);
-
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  gboolean force_load = scm_to_bool (force_s);
-  GError *error = NULL;
-
-  if (!eda_config_is_loaded (cfg) || force_load)
-  {
-    if (!eda_config_load (cfg, &error))
-    {
-      /* Missing configuration file is not an error:
-      */
-      if (!g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND))
-      {
-        error_from_gerror (s_config_load_x, &error);
-      }
-    }
-  }
-
-  return cfg_s;
-}
-
 /*! \brief Get a list of available configuration groups.
  * \par Function Description.
  * Returns a list of the all groups available in \a cfg_s and its parent
@@ -831,8 +789,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_config_load_x,
-                s_config_groups,
+  scm_c_export (s_config_groups,
                 s_config_keys,
                 s_config_source,
                 s_config_string,

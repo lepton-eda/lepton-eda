@@ -161,6 +161,9 @@ config_error_code (GError **error);
 char*
 config_error_message (GError **error);
 
+gboolean
+config_error_file_not_found (GError *error);
+
 G_END_DECLS
 
 #endif /* !__EDA_CONFIG_H__ */

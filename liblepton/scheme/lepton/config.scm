@@ -19,7 +19,6 @@
 
 (define-module (lepton config)
   #:use-module (ice-9 match)
-  #:use-module (ice-9 optargs) ; for define*-public
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
@@ -35,6 +34,7 @@
             path-config-context
             cache-config-context
             config-filename
+            config-load!
             config-loaded?
             config-save!
             config-changed?
@@ -147,9 +147,23 @@ CONFIG, or #f if it has no filename associated with it."
          (pointer->string *path))))
 
 
-( define*-public ( config-load! cfg #:key (force-load #f) )
-  ( %config-load! cfg force-load )
-)
+(define* (config-load! config #:key (force-load #f))
+  "Attempts to load configuration parameters for CONFIG from the
+file associated with it.  Raises 'system-error on failure.  If
+FORCE-LOAD is not #f, forces configuration loading even if it has
+been already loaded.  Returns CONFIG."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-boolean force-load 2)
+
+  (when (or (not (true? (eda_config_is_loaded *cfg)))
+            force-load)
+    (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
+      (unless (true? (eda_config_load *cfg *error))
+        (if (true? (config_error_file_not_found (dereference-pointer *error)))
+            ;; Missing configuration file is not an error.
+            (g_clear_error *error)
+            (gerror-error *error 'config-load!)))))
+  config)
 
 
 (define (config-loaded? config)
