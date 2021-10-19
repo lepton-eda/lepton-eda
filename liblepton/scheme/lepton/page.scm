@@ -165,7 +165,7 @@ syntax."
         (let ((message (gerror-message *err)))
           (g_clear_error *error)
           (scm-error 'string-format
-                     'string-page
+                     'string->page
                      "Parse error: ~s"
                      (list message)
                      '())))))
