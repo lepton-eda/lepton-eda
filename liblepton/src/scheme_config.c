@@ -121,41 +121,6 @@ error_from_gerror (const gchar *subr, GError **error)
 
 
 
-/*! \brief Get a configuration parameter's value as an integer.
- * \par Function Description
- * Get the value of the configuration parameter specified by \a
- * group_s and \a key_s in the configuration context \a cfg_s, as a
- * integer.
- *
- * \see eda_config_get_int().
- *
- * \note Scheme API: Implements the \%config-int procedure in the
- * (lepton core config) module.
- *
- * \param cfg_s    #EdaConfig smob of configuration context.
- * \param group_s  Group name as a string.
- * \param key_s    Key name as a string.
- * \return configuration value as an integer.
- */
-SCM_DEFINE (config_int, "%config-int", 3, 0, 0,
-            (SCM  cfg_s, SCM group_s, SCM key_s),
-            "Get a configuration parameter's value as an integer.")
-{
-  ASSERT_CFG_GROUP_KEY (s_config_int);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  char *group = scm_to_utf8_string (group_s);
-  scm_dynwind_free (group);
-  char *key = scm_to_utf8_string (key_s);
-  scm_dynwind_free (key);
-  GError *error = NULL;
-  gint value = eda_config_get_int (cfg, group, key, &error);
-  if (error != NULL) error_from_gerror  (s_config_int, &error);
-  scm_dynwind_end ();
-  return scm_from_int (value);
-}
-
 /*! \brief Get a configuration parameter's value as a real.
  * \par Function Description
  * Get the value of the configuration parameter specified by \a
@@ -595,8 +560,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_config_int,
-                s_config_real,
+  scm_c_export (s_config_real,
                 s_config_string_list,
                 s_config_boolean_list,
                 s_config_int_list,
