@@ -121,42 +121,6 @@ error_from_gerror (const gchar *subr, GError **error)
 
 
 
-/*! \brief Get the originating context for a configuration parameter.
- * \par Function Description
- * Returns the configuration context (either \a cfg_s or one of its
- * parent contexts) in which the configuration parameter with the
- * given \a group_s and \a key_s has a value specified.  If the group
- * or key cannot be found, raises a 'config-error'.
- *
- * \see eda_config_get_source().
- *
- * \note Scheme API: Implements the \%config-source procedure in the
- * (lepton core config module).
- *
- * \param cfg_s #EdaConfig smob of configuration context.
- * \param group_s Group name as a string.
- * \param key_s Key name as a string.
- * \return #EdaConfig smob of originating context of parameter.
- */
-SCM_DEFINE (config_source, "%config-source", 3, 0, 0,
-            (SCM  cfg_s, SCM group_s, SCM key_s),
-            "Get the originating context for a configuration parameter")
-{
-  ASSERT_CFG_GROUP_KEY (s_config_source);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  char *group = scm_to_utf8_string (group_s);
-  scm_dynwind_free (group);
-  char *key = scm_to_utf8_string (key_s);
-  scm_dynwind_free (key);
-  GError *error = NULL;
-  EdaConfig *src = eda_config_get_source (cfg, group, key, &error);
-  if (src == NULL) error_from_gerror (s_config_source, &error);
-  scm_dynwind_end ();
-  return edascm_from_config (src);
-}
-
 /*! \brief Get a configuration parameter's value as a string.
  * \par Function Description
  * Get the value of the configuration parameter specified by \a
@@ -704,8 +668,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_config_source,
-                s_config_string,
+  scm_c_export (s_config_string,
                 s_config_boolean,
                 s_config_int,
                 s_config_real,
