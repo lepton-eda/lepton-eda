@@ -121,53 +121,6 @@ error_from_gerror (const gchar *subr, GError **error)
 
 
 
-/*! \brief Get a list of available configuration keys.
- * \par Function Description.
- * Returns a list of the all keys available in \a cfg_s and \a
- * group_s.  If the \a group_s cannot be found, raises a
- * 'config-error'.
- *
- * \see eda_config_get_keys().
- *
- * \note Scheme API: Implements the \%config-keys procedure in
- * the (lepton core config) module.
- *
- * \param cfg_s #EdaConfig smob of configuration context.
- * \param group_s Group name as a string.
- * \return a list of available key names as strings.
- */
-SCM_DEFINE (config_keys, "%config-keys", 2, 0, 0,
-            (SCM cfg_s, SCM group_s),
-            "Get a list of available configuration keys.")
-{
-  SCM_ASSERT (EDASCM_CONFIGP (cfg_s), cfg_s, SCM_ARG1,
-              s_config_keys);
-  SCM_ASSERT (scm_is_string (group_s), group_s, SCM_ARG2,
-              s_config_keys);
-
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  char *group = scm_to_utf8_string (group_s);
-  gsize i, len;
-  GError *error = NULL;
-  gchar **keys = eda_config_get_keys (cfg, group, &len, &error);
-  SCM lst_s = SCM_EOL;
-
-  free (group);
-  if (keys == NULL) error_from_gerror (s_config_keys, &error);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  scm_dynwind_unwind_handler ((void (*)(void *)) g_strfreev,
-                              keys, SCM_F_WIND_EXPLICITLY);
-
-  for (i = 0; i < len; i++) {
-    lst_s = scm_cons (scm_from_utf8_string (keys[i]), lst_s);
-  }
-
-  scm_dynwind_end ();
-
-  return scm_reverse_x (lst_s, SCM_EOL);
-}
-
 /*! \brief Get the originating context for a configuration parameter.
  * \par Function Description
  * Returns the configuration context (either \a cfg_s or one of its
@@ -751,8 +704,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_config_keys,
-                s_config_source,
+  scm_c_export (s_config_source,
                 s_config_string,
                 s_config_boolean,
                 s_config_int,

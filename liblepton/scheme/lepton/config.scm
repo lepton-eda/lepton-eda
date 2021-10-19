@@ -46,6 +46,7 @@
             config-remove-key!
             config-remove-group!
             config-groups
+            config-keys
             config-legacy-mode?
             config-set-legacy-mode!
             anyfile-config-context))
@@ -266,7 +267,22 @@ ancestor contains GROUP, #f otherwise."
   (true? (eda_config_has_group *cfg (string->pointer group))))
 
 
-(define-public config-keys %config-keys)
+(define (config-keys config group)
+  "Returns a list of the all keys available in CONFIG and GROUP.
+If the GROUP cannot be found, raises a 'config-error error."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-string group 2)
+
+  (let* ((*len (bytevector->pointer (make-bytevector (sizeof int) 0)))
+         (*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+         (*keys (eda_config_get_keys *cfg
+                                     (string->pointer group)
+                                     *len
+                                     *error)))
+    (if (null-pointer? *keys)
+        (gerror-error *error 'config-keys)
+        (c-string-array->list *keys))))
+
 
 (define-public (config-has-key? cfg group key)
   (false-if-exception
