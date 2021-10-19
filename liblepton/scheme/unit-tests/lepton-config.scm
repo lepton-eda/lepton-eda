@@ -217,6 +217,7 @@
     (test-assert (config-changed? a))
     (config-load! a #:force-load #t)
     (test-equal #f (config-changed? a)))
+  (test-assert-thrown 'wrong-type-arg (config-changed? 'x))
   ;; Clean up.
   (config-test-teardown))
 (test-end "config-changed")
