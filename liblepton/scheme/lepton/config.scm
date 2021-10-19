@@ -47,6 +47,7 @@
             config-remove-group!
             config-groups
             config-keys
+            config-source
             config-legacy-mode?
             config-set-legacy-mode!
             anyfile-config-context))
@@ -292,7 +293,26 @@ If the GROUP cannot be found, raises a 'config-error error."
 (define-public (config-inherited? cfg group key)
   (not (equal? cfg (config-source cfg group key))))
 
-(define-public config-source %config-source)
+
+(define (config-source config group key)
+  "Returns the configuration context for CONFIG (either CONFIG
+itself or one of its parent contexts) in which the configuration
+parameter with the given GROUP and KEY has a value specified.  If
+the group or key cannot be found, raises a 'config-error error."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-string group 2)
+  (check-string key 3)
+
+  (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+         (*src (eda_config_get_source *cfg
+                                      (string->pointer group)
+                                      (string->pointer key)
+                                      *error)))
+    (if (null-pointer? *src)
+        (gerror-error *error 'config-source)
+        (pointer->geda-config *src))))
+
+
 (define-public config-string %config-string)
 (define-public config-boolean %config-boolean)
 (define-public config-int %config-int)
