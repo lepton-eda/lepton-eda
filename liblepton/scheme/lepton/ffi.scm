@@ -86,6 +86,7 @@
             eda_config_get_keys
             eda_config_get_source
             eda_config_get_string
+            eda_config_get_boolean
             eda_config_is_changed
             eda_config_is_loaded
             eda_config_load
@@ -464,6 +465,7 @@
 (define-lff eda_config_get_keys '* '(* * * *))
 (define-lff eda_config_get_source '* '(* * * *))
 (define-lff eda_config_get_string '* '(* * * *))
+(define-lff eda_config_get_boolean int '(* * * *))
 (define-lff eda_config_is_changed int '(*))
 (define-lff eda_config_get_parent '* '(*))
 (define-lff eda_config_set_parent void '(* *))

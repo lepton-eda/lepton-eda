@@ -49,6 +49,7 @@
             config-keys
             config-source
             config-string
+            config-boolean
             config-legacy-mode?
             config-set-legacy-mode!
             anyfile-config-context))
@@ -333,7 +334,25 @@ error."
         (pointer->string *value))))
 
 
-(define-public config-boolean %config-boolean)
+(define (config-boolean config group key)
+  "Returns the value of the configuration parameter specified by
+GROUP and KEY in the configuration context CONFIG, as a boolean.
+If the group or key cannot be found, raises a 'config-error
+error."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-string group 2)
+  (check-string key 3)
+
+  (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+         (value (eda_config_get_boolean *cfg
+                                        (string->pointer group)
+                                        (string->pointer key)
+                                        *error)))
+    (unless (null-pointer? *error)
+      (gerror-error *error 'config-boolean))
+    (true? value)))
+
+
 (define-public config-int %config-int)
 (define-public config-real %config-real)
 (define-public config-string-list %config-string-list)
