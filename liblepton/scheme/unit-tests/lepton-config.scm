@@ -449,6 +449,8 @@
   ; add group::key, set it to "value":
   ;
   ( set-config! cfg "group" "key" "value" )
+  (test-assert-thrown 'config-error (config-remove-key! cfg "missing-group" "key"))
+  (test-assert-thrown 'config-error (config-remove-key! cfg "group" "missing-key"))
 
   ; setup config event handler for cfg:
   ;
@@ -470,7 +472,17 @@
   ; exception should be thrown if group::key is not found:
   ;
   ( test-assert-thrown 'config-error (config-remove-key! cfg "group" "key") )
+  (test-assert-thrown 'wrong-type-arg (config-remove-key! 'cfg "group" "key"))
+  (test-assert-thrown 'wrong-type-arg (config-remove-key! cfg 'group "key"))
+  (test-assert-thrown 'wrong-type-arg (config-remove-key! cfg "group" 'key))
 
+  ;; Test for wrong config file content.  A parse error must be
+  ;; raised.
+  (let ((config-file (config-filename cfg)))
+    (when (file-exists? config-file)
+      (delete-file config-file))
+    (with-output-to-file config-file (lambda () (display "wrong config")))
+    (test-assert-thrown 'config-error (config-remove-key! cfg "group" "key")))
   ) ; let
   ;; Clean up.
   (config-test-teardown)
