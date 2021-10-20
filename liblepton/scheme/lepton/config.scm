@@ -53,6 +53,7 @@
             config-int
             config-real
             config-string-list
+            config-boolean-list
             config-legacy-mode?
             config-set-legacy-mode!
             anyfile-config-context))
@@ -415,7 +416,64 @@ strings.  If the group or key cannot be found, raises a
         (c-string-array->list *value))))
 
 
-(define-public config-boolean-list %config-boolean-list)
+(define (c-int-array->list pointer len)
+  "Returns a list of values of TYPE from array POINTER.  The
+length of the array is specified by LEN."
+  (let loop ((num 0)
+             (ls '()))
+    (let ((next-pointer
+           (make-pointer (+ (pointer-address pointer)
+                            (* num (sizeof int))))))
+      (if (= num len)
+          (reverse ls)
+          (loop (1+ num)
+                (cons (bytevector-uint-ref (pointer->bytevector next-pointer (sizeof int))
+                                           0
+                                           (native-endianness)
+                                           (sizeof int))
+                      ls))))))
+
+
+(define (c-int-array->list pointer len)
+  "Returns a list of values of TYPE from array POINTER.  The
+length of the array is specified by LEN."
+  (let loop ((num 0)
+             (ls '()))
+    (let ((next-pointer
+           (make-pointer (+ (pointer-address pointer)
+                            (* num (sizeof double))))))
+      (if (= num len)
+          (reverse ls)
+          (loop (1+ num)
+                (cons (bytevector-ieee-double-native-ref (pointer->bytevector next-pointer (sizeof double)) 0)
+                      ls))))))
+
+
+(define (config-boolean-list config group key)
+  "Returns the value of the configuration parameter specified by
+GROUP and KEY in the configuration context CONFIG, as a list of
+booleans.  If the group or key cannot be found, raises a
+'config-error error."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-string group 2)
+  (check-string key 3)
+
+  (let* ((len-bv (make-bytevector (sizeof int) 0))
+         (*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+         (*value (eda_config_get_boolean_list *cfg
+                                              (string->pointer group)
+                                              (string->pointer key)
+                                              (bytevector->pointer len-bv)
+                                              *error))
+         (len (bytevector-uint-ref len-bv
+                                   0
+                                   (native-endianness)
+                                   (sizeof int))))
+    (if (null-pointer? *value)
+        (gerror-error *error 'config-boolean-list)
+        (map true? (c-int-array->list *value len)))))
+
+
 (define-public config-int-list %config-int-list)
 (define-public config-real-list %config-real-list)
 (define-public set-config! %set-config!)
