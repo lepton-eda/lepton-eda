@@ -54,6 +54,7 @@
             config-real
             config-string-list
             config-boolean-list
+            config-int-list
             config-legacy-mode?
             config-set-legacy-mode!
             anyfile-config-context))
@@ -474,7 +475,31 @@ booleans.  If the group or key cannot be found, raises a
         (map true? (c-int-array->list *value len)))))
 
 
-(define-public config-int-list %config-int-list)
+(define (config-int-list config group key)
+  "Returns the value of the configuration parameter specified by
+GROUP and KEY in the configuration context CONFIG, as a list of
+integers.  If the group or key cannot be found, raises a
+'config-error error."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-string group 2)
+  (check-string key 3)
+
+  (let* ((len-bv (make-bytevector (sizeof int) 0))
+         (*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+         (*value (eda_config_get_int_list *cfg
+                                          (string->pointer group)
+                                          (string->pointer key)
+                                          (bytevector->pointer len-bv)
+                                          *error))
+         (len (bytevector-uint-ref len-bv
+                                   0
+                                   (native-endianness)
+                                   (sizeof int))))
+    (if (null-pointer? *value)
+        (gerror-error *error 'config-int-list)
+        (c-int-array->list *value len))))
+
+
 (define-public config-real-list %config-real-list)
 (define-public set-config! %set-config!)
 (define-public add-config-event! %add-config-event!)
