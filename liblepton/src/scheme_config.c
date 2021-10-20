@@ -121,49 +121,6 @@ error_from_gerror (const gchar *subr, GError **error)
 
 
 
-/*! \brief Get a configuration parameter's value as a list of reals.
- * \par Function Description
- * Get the value of the configuration parameter specified by \a
- * group_s and \a key_s in the configuration context \a cfg_s, as a
- * list of inexact real numbers.
- *
- * \see eda_config_get_double_list().
- *
- * \note Scheme API: Implements the \%config-real-list procedure in
- * the (lepton core config) module.
- *
- * \param cfg_s    #EdaConfig smob of configuration context.
- * \param group_s  Group name as a string.
- * \param key_s    Key name as a string.
- * \return configuration value as a list of inexact real numbers.
- */
-SCM_DEFINE (config_real_list, "%config-real-list", 3, 0, 0,
-            (SCM  cfg_s, SCM group_s, SCM key_s),
-            "Get a configuration parameter's value as a list of reals.")
-{
-  ASSERT_CFG_GROUP_KEY (s_config_real_list);
-
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  EdaConfig *cfg = edascm_to_config (cfg_s);
-  char *group = scm_to_utf8_string (group_s);
-  scm_dynwind_free (group);
-  char *key = scm_to_utf8_string (key_s);
-  scm_dynwind_free (key);
-  gsize length, i;
-  GError *error = NULL;
-  gdouble *value = eda_config_get_double_list (cfg, group, key,
-                                               &length, &error);
-  if (value == NULL) error_from_gerror  (s_config_real_list, &error);
-  scm_dynwind_unwind_handler (g_free, value,
-                              SCM_F_WIND_EXPLICITLY);
-  SCM value_s = SCM_EOL;
-  for (i = 0; i < length; i++) {
-    value_s = scm_cons (scm_from_double (value[i]), value_s);
-  }
-  scm_dynwind_end ();
-  return scm_reverse_x (value_s, SCM_EOL);
-}
-
 /*! \brief Set a configuration parameter's value.
  * \par Function Description
  * Set the value of the configuration parameter specified by \a
@@ -396,8 +353,7 @@ init_module_lepton_core_config (void *unused)
   #include "scheme_config.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_config_real_list,
-                s_set_config_x,
+  scm_c_export (s_set_config_x,
                 s_add_config_event_x,
                 s_remove_config_event_x,
                 NULL);
