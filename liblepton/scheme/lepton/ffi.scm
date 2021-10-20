@@ -808,7 +808,8 @@
 (define-lff lepton_coord_snap int (list int int))
 
 (define (c-string-array->list pointer)
-  "Returns a list of search directories for system data."
+  "Returns a list of strings from the array of C strings pointed to
+by POINTER."
   (let loop ((num 0)
              (ls '()))
     (let ((string-pointer
