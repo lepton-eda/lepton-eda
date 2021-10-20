@@ -86,13 +86,21 @@
             eda_config_get_keys
             eda_config_get_source
             eda_config_get_string
+            eda_config_set_string
             eda_config_get_boolean
+            eda_config_set_boolean
             eda_config_get_int
+            eda_config_set_int
             eda_config_get_double
+            eda_config_set_double
             eda_config_get_string_list
+            eda_config_set_string_list
             eda_config_get_boolean_list
+            eda_config_set_boolean_list
             eda_config_get_int_list
+            eda_config_set_int_list
             eda_config_get_double_list
+            eda_config_set_double_list
             eda_config_is_changed
             eda_config_is_loaded
             eda_config_load
@@ -471,13 +479,21 @@
 (define-lff eda_config_get_keys '* '(* * * *))
 (define-lff eda_config_get_source '* '(* * * *))
 (define-lff eda_config_get_string '* '(* * * *))
+(define-lff eda_config_set_string void '(* * * *))
 (define-lff eda_config_get_boolean int '(* * * *))
+(define-lff eda_config_set_boolean void (list '* '* '* int))
 (define-lff eda_config_get_int int '(* * * *))
+(define-lff eda_config_set_int void (list '* '* '* int))
 (define-lff eda_config_get_double double '(* * * *))
+(define-lff eda_config_set_double void (list '* '* '* double))
 (define-lff eda_config_get_string_list '* '(* * * * *))
+(define-lff eda_config_set_string_list void (list '* '* '* '* unsigned-int))
 (define-lff eda_config_get_boolean_list '* '(* * * * *))
+(define-lff eda_config_set_boolean_list void (list '* '* '* '* unsigned-int))
 (define-lff eda_config_get_int_list '* '(* * * * *))
+(define-lff eda_config_set_int_list void (list '* '* '* '* unsigned-int))
 (define-lff eda_config_get_double_list '* '(* * * * *))
+(define-lff eda_config_set_double_list void (list '* '* '* '* unsigned-int))
 (define-lff eda_config_is_changed int '(*))
 (define-lff eda_config_get_parent '* '(*))
 (define-lff eda_config_set_parent void '(* *))

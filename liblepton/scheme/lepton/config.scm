@@ -58,7 +58,8 @@
             config-real-list
             config-legacy-mode?
             config-set-legacy-mode!
-            anyfile-config-context))
+            anyfile-config-context
+            set-config!))
 
 ;;; Convert a GError to a Scheme error.
 ;;; Raise a 'config-error Scheme exception for the given error,
@@ -523,7 +524,106 @@ integers.  If the group or key cannot be found, raises a
         (c-double-array->list *value len))))
 
 
-(define-public set-config! %set-config!)
+(define (string-list->bv-pointer ls)
+  (bytevector->pointer
+   (uint-list->bytevector
+    (map pointer-address
+         (append (map string->pointer ls)
+                 ;; NULL-terminate the list of strings to be
+                 ;; passed to g_strfreev().
+                 (list %null-pointer)))
+    (native-endianness)
+    (sizeof '*))))
+
+(define (boolean-list->bv-pointer ls)
+  (bytevector->pointer
+   (sint-list->bytevector
+    (map (lambda (x) (if x TRUE FALSE)) ls)
+    (native-endianness)
+    (sizeof int))))
+
+(define (int-list->bv-pointer ls)
+  (bytevector->pointer
+   (sint-list->bytevector ls
+                          (native-endianness)
+                          (sizeof int))))
+
+(define (real-list->bv-pointer ls)
+  (let ((bv (make-bytevector (* (sizeof double) (length ls)) 0)))
+    (for-each
+     (lambda (id val)
+       (bytevector-ieee-double-native-set! bv (* id (sizeof double)) val))
+     (iota (length ls)) ls)
+    (bytevector->pointer bv)))
+
+(define (set-config! config group key value)
+  "Sets the value of the configuration parameter specified by
+GROUP and KEY in the configuration context CONFIG to VALUE.  The
+supported types for value_s are strings, integers,real numbers,
+and booleans, along with homogenous lists of strings,integers,
+real numbers or booleans.  Returns CONFIG."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-string group 2)
+  (check-string key 3)
+
+  ;; Figure out what value is.
+  (let ((*group (string->pointer group))
+        (*key (string->pointer key)))
+    (match value
+      ((? string? value)
+       (eda_config_set_string *cfg *group *key (string->pointer value)))
+      ((? boolean? value)
+       (eda_config_set_boolean *cfg *group *key (if value TRUE FALSE)))
+      ((? exact-integer? value)
+       (eda_config_set_int *cfg *group *key value))
+      ((? real? value)
+       (eda_config_set_double *cfg *group *key value))
+      ((? list? value)
+       (let ((first (car value))
+             (len (length value)))
+         ;; Find out what sort of list it is, then process it accordingly.
+         (if (string? first)
+             (eda_config_set_string_list *cfg
+                                         *group
+                                         *key
+                                         (string-list->bv-pointer value)
+                                         len)
+             ;; else
+             (if (boolean? first)
+                 (eda_config_set_boolean_list *cfg
+                                              *group
+                                              *key
+                                              (boolean-list->bv-pointer value)
+                                              len)
+                 ;; else
+                 (if (exact-integer? first)
+                     (eda_config_set_int_list *cfg
+                                              *group
+                                              *key
+                                              (int-list->bv-pointer value)
+                                              len)
+                     ;; else
+                     (if (real? first)
+                         (eda_config_set_double_list *cfg
+                                                     *group
+                                                     *key
+                                                     (real-list->bv-pointer value)
+                                                     len)
+                         ;; else it is some weird list
+                         (scm-error 'wrong-type-arg
+                                    'set-config!
+                                    "Unsupported value: ~A"
+                                    '()
+                                    value)))))))
+      (_ (scm-error 'wrong-type-arg
+                    'set-config!
+                    "Unsupported value: ~A"
+                    '()
+                    value))))
+
+  config)
+
+
 (define-public add-config-event! %add-config-event!)
 (define-public remove-config-event! %remove-config-event!)
 
