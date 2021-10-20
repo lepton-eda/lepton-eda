@@ -55,6 +55,7 @@
             config-string-list
             config-boolean-list
             config-int-list
+            config-real-list
             config-legacy-mode?
             config-set-legacy-mode!
             anyfile-config-context))
@@ -435,7 +436,7 @@ length of the array is specified by LEN."
                       ls))))))
 
 
-(define (c-int-array->list pointer len)
+(define (c-double-array->list pointer len)
   "Returns a list of values of TYPE from array POINTER.  The
 length of the array is specified by LEN."
   (let loop ((num 0)
@@ -500,7 +501,28 @@ integers.  If the group or key cannot be found, raises a
         (c-int-array->list *value len))))
 
 
-(define-public config-real-list %config-real-list)
+(define (config-real-list config group key)
+"Returns the value of the configuration parameter specified by GROUP and KEY in the configuration context CONFIG, as a list of inexact real numbers.  If the group or key cannot be found, raises a 'config-error error."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-string group 2)
+  (check-string key 3)
+
+  (let* ((len-bv (make-bytevector (sizeof int) 0))
+         (*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+         (*value (eda_config_get_double_list *cfg
+                                             (string->pointer group)
+                                             (string->pointer key)
+                                             (bytevector->pointer len-bv)
+                                             *error))
+         (len (bytevector-uint-ref len-bv
+                                   0
+                                   (native-endianness)
+                                   (sizeof int))))
+    (if (null-pointer? *value)
+        (gerror-error *error 'config-real-list)
+        (c-double-array->list *value len))))
+
+
 (define-public set-config! %set-config!)
 (define-public add-config-event! %add-config-event!)
 (define-public remove-config-event! %remove-config-event!)

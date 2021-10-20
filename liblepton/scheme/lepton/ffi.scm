@@ -92,6 +92,7 @@
             eda_config_get_string_list
             eda_config_get_boolean_list
             eda_config_get_int_list
+            eda_config_get_double_list
             eda_config_is_changed
             eda_config_is_loaded
             eda_config_load
@@ -476,6 +477,7 @@
 (define-lff eda_config_get_string_list '* '(* * * * *))
 (define-lff eda_config_get_boolean_list '* '(* * * * *))
 (define-lff eda_config_get_int_list '* '(* * * * *))
+(define-lff eda_config_get_double_list '* '(* * * * *))
 (define-lff eda_config_is_changed int '(*))
 (define-lff eda_config_get_parent '* '(*))
 (define-lff eda_config_set_parent void '(* *))
