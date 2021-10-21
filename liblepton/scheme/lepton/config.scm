@@ -31,6 +31,40 @@
             config-set-legacy-mode!
             anyfile-config-context))
 
+;;; Convert a GError to a Scheme error.
+;;; Raise a 'config-error Scheme exception for the given error,
+;;; with the procedure name subr. The error will be freed with
+;;; g_clear_error().  The error will be converted to a Scheme
+;;; error according to the following rules:
+(define (gerror-error *error proc-name)
+  (define (gerror-list *err)
+    ;; GError struct consists of:
+    ;; GQuark (uint32) domain
+    ;; gint (int) code
+    ;; gchar* (char*) message
+    (parse-c-struct *err (list uint32 int '*)))
+
+  (define (gerror-message *err)
+    (match (gerror-list *err)
+      ((domain code message)
+       (pointer->string message))
+      (_ #f)))
+
+  (unless (null-pointer? *error)
+    (let ((*err (dereference-pointer *error)))
+      (unless (null-pointer? *err)
+        (let ((type (string->symbol (pointer->string (config_error_type *error))))
+              (code (string->symbol (pointer->string (config_error_code *error))))
+              (message (gerror-message *err)))
+          (g_clear_error *error)
+          (scm-error type
+                     proc-name
+                     message
+                     '()
+                     (if (eq? code 'unknown)
+                         #f
+                         (list code))))))))
+
 (define (config? config)
   "Returns #t if PAGE is a #<geda-config> instance, otherwise
 returns #f."
