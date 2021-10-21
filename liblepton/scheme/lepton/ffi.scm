@@ -39,6 +39,7 @@
             check-string
             check-symbol
             check-vector
+            check-procedure
 
             ;; glib, gobject.
             g_clear_error
@@ -70,6 +71,8 @@
             config_error_code
             config_error_message
             config_error_file_not_found
+            config_add_event
+            config_remove_event
             config_get_legacy_mode
             config_set_legacy_mode
             eda_config_get_anyfile_context
@@ -465,6 +468,8 @@
 (define-lff config_error_code '* '(*))
 (define-lff config_error_message '* '(*))
 (define-lff config_error_file_not_found int '(*))
+(define-lff config_add_event int '(* * *))
+(define-lff config_remove_event int '(* * *))
 (define-lff config_get_legacy_mode int '())
 (define-lff config_set_legacy_mode void (list int))
 (define-lff eda_config_get_anyfile_context '* (list '* '* int))
@@ -850,5 +855,13 @@
     (scm-error 'wrong-type-arg
                (frame-procedure-name (stack-ref (make-stack #t) 1))
                "Wrong type argument in position ~A (expecting list of integers): ~A"
+               (list pos val)
+               #f)))
+
+(define-syntax-rule (check-procedure val pos)
+  (unless (procedure? val)
+    (scm-error 'wrong-type-arg
+               (frame-procedure-name (stack-ref (make-stack #t) 1))
+               "Wrong type argument in position ~A (expecting procedure): ~A"
                (list pos val)
                #f)))

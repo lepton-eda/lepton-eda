@@ -164,6 +164,14 @@ config_error_message (GError **error);
 gboolean
 config_error_file_not_found (GError *error);
 
+gboolean
+config_add_event (EdaConfig *cfg,
+                  gpointer handler,
+                  gpointer proc);
+gboolean
+config_remove_event (EdaConfig *cfg,
+                     gpointer handler,
+                     gpointer proc);
 G_END_DECLS
 
 #endif /* !__EDA_CONFIG_H__ */

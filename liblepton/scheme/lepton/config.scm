@@ -59,7 +59,30 @@
             config-legacy-mode?
             config-set-legacy-mode!
             anyfile-config-context
-            set-config!))
+            set-config!
+            add-config-event!
+            remove-config-event!))
+
+
+(define add-config-callback! #f)
+(define remove-config-callback! #f)
+(let ((callbacks '()))
+  (set! add-config-callback!
+        (lambda (callback)
+          (and (not (assq-ref callbacks callback))
+               (let* ((pointer (procedure->pointer
+                                void
+                                (lambda (cfg group key)
+                                  (callback (pointer->geda-config cfg)
+                                            (pointer->string group)
+                                            (pointer->string key)))
+                                '(* * *)))
+                      (proc-id pointer))
+                 (set! callbacks (acons callback (cons pointer proc-id) callbacks))
+                 (cons pointer proc-id)))))
+  (set! remove-config-callback!
+        (lambda (callback)
+          (assq-ref callbacks callback))))
 
 ;;; Convert a GError to a Scheme error.
 ;;; Raise a 'config-error Scheme exception for the given error,
@@ -624,10 +647,6 @@ real numbers or booleans.  Returns CONFIG."
   config)
 
 
-(define-public add-config-event! %add-config-event!)
-(define-public remove-config-event! %remove-config-event!)
-
-
 (define (config-remove-key! config group key)
   "Removes the configuration parameter specified by GROUP and KEY
 in the configuration context CONFIG.  Returns boolean value
@@ -679,3 +698,34 @@ otherwise #f."
   (let ((result (config-legacy-mode?)))
     (config_set_legacy_mode (if legacy? TRUE FALSE))
     result))
+
+
+(define (add-config-event! config proc)
+  "Add PROC as a configuration change event handler.  The function
+is to be called when configuration is modified in the context
+CONFIG.  PROC will be called with the following prototype:
+  (proc CFG GROUP KEY)
+If PROC causes a Scheme error to be raised, the error will be
+caught and logged.  Returns CONFIG."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-procedure proc 2)
+
+  (let* ((data (add-config-callback! proc))
+         (pointer (and=> data car))
+         (proc-id (and=> data cdr)))
+    (and data (config_add_event *cfg pointer proc-id)))
+  config)
+
+
+(define (remove-config-event! config proc)
+  "Remove configuration change handler procedure PROC from being
+called when configuration is modified in the context CONFIG.
+Returns CONFIG."
+  (define *cfg (geda-config->pointer* config 1))
+  (check-procedure proc 2)
+
+  (let* ((data (remove-config-callback! proc))
+         (pointer (and=> data car))
+         (proc-id (and=> data cdr)))
+    (and data (config_remove_event *cfg pointer proc-id)))
+  config)
