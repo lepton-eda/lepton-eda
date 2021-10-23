@@ -1982,7 +1982,7 @@ lepton_object_new (int type,
   new_node->bus_ripper_direction = 0;
 
   lepton_object_set_attribs (new_node, NULL);
-  new_node->attached_to = NULL;
+  lepton_object_set_attached_to (new_node, NULL);
   new_node->copied_to = NULL;
 
   new_node->pin_type = PIN_TYPE_NET;
