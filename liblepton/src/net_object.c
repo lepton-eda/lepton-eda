@@ -557,7 +557,7 @@ static void o_net_consolidate_lowlevel (LeptonObject *object,
     a_iter = del_object_attribs;
     while (a_iter != NULL) {
       a_current = (LeptonObject*) a_iter->data;
-      a_current->attached_to = object;
+      lepton_object_set_attached_to (a_current, object);
       a_iter = g_list_next (a_iter);
     }
 
