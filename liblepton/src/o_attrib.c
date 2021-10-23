@@ -62,7 +62,7 @@ o_attrib_add (LeptonObject *object, LeptonObject *item)
 {
   GList *attribs = lepton_object_get_attribs (object);
   GList *new_attribs = g_list_append (attribs, item);
-  item->attached_to = object;
+  lepton_object_set_attached_to (item, object);
   lepton_object_set_attribs (object, new_attribs);
 }
 
