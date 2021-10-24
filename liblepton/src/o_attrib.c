@@ -177,26 +177,6 @@ void o_attrib_print(GList *attributes)
   }
 }
 
-/*! \todo Finish function.
- *  \brief Remove an attribute item from an attribute list.
- *  \par Function Description
- *  This function removes the given attribute from an attribute list.
- *  This function should be used when detaching an attribute.
- *
- *  \param [in] list      The attribute list to remove attribute from.
- *  \param [in] remove    The LeptonObject to remove from list.
- */
-void
-o_attrib_remove (GList **list,
-                 LeptonObject *remove)
-{
-  g_return_if_fail (remove != NULL);
-
-  lepton_object_set_attached_to (remove, NULL);
-
-  *list = g_list_remove (*list, remove);
-}
-
 /*! \brief Read attributes from a TextBuffer.
  *
  *  \param [in]  page                   The LeptonPage object.

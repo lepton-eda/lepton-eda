@@ -938,8 +938,10 @@ lepton_object_delete (LeptonObject *o_current)
     LeptonObject *attachment = lepton_object_get_attached_to (o_current);
     if (attachment != NULL)
     {
+      GList *attribs = lepton_object_get_attribs (attachment);
       /* do the actual remove */
-      o_attrib_remove (&o_current->attached_to->attribs, o_current);
+      lepton_object_set_attached_to (o_current, NULL);
+      lepton_object_set_attribs (attachment, g_list_remove (attribs, o_current));
     }
 
     /* printf("sdeleting line\n"); */

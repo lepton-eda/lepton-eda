@@ -517,7 +517,6 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
 
     GList *attribs = lepton_object_get_attribs (o_new);
     if (value != NULL) {
-      o_attrib_remove (&attribs, attr_new);
       lepton_object_delete (attr_new);
       iter->data = NULL;
     }

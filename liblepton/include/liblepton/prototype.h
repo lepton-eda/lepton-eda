@@ -128,10 +128,6 @@ o_attrib_detach_all (LeptonObject *object);
 
 void o_attrib_print(GList *attributes);
 
-void
-o_attrib_remove (GList **list,
-                 LeptonObject *remove);
-
 gboolean o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **value_ptr);
 GList *o_attrib_find_floating_attribs (const GList *list);
 char *o_attrib_search_floating_attribs_by_name (const GList *list, const char *name, int counter);
