@@ -98,7 +98,9 @@
 
 (define (make-schematic-window app)
   (define new-window
-    (x_window_setup (x_window_new (lepton_toplevel_new))))
+    (let ((*toplevel (lepton_toplevel_new)))
+      (x_rc_parse_gschem *toplevel)
+      (x_window_setup (x_window_new *toplevel))))
 
   (x_window_open_page
    (x_window_create_main app

@@ -1007,9 +1007,6 @@ x_window_close_page_impl (GschemToplevel *w_current,
  */
 GschemToplevel* x_window_new (LeptonToplevel *toplevel)
 {
-  /* Load old (*rc files) and new (*.conf) configuration: */
-  x_rc_parse_gschem (toplevel);
-
   GschemToplevel *w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (w_current, toplevel);
 

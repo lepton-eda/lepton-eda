@@ -137,6 +137,7 @@
             set_verbose_mode
             x_color_init
             x_menu_attach_recent_files_submenu
+            x_rc_parse_gschem
             x_show_uri
             x_stroke_init
             x_widgets_show_log
@@ -228,6 +229,9 @@
 (define-lff x_menu_attach_recent_files_submenu void '(* *))
 (define-lff lepton_action_create_menu_item '* '(* * *))
 (define-lff lepton_menu_set_action_data void '(* * * *))
+
+;;; x_rc.c
+(define-lff x_rc_parse_gschem void '(*))
 
 ;;; x_window.c
 (define-lff x_window_new '* '(*))
