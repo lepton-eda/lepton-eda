@@ -97,8 +97,8 @@
   (run-callback i_callback_file_script "&file-script"))
 
 (define (make-schematic-window app)
-  (define new-window (x_window_setup (x_window_new)))
-
+  (define new-window
+    (x_window_setup (x_window_new (lepton_toplevel_new))))
 
   (x_window_open_page
    (x_window_create_main app

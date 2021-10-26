@@ -678,7 +678,9 @@ x_window_close_page (GschemToplevel *w_current,
 LeptonPage*
 x_window_close_page_impl (GschemToplevel *w_current,
                           LeptonPage *page);
-GschemToplevel* x_window_new ();
+GschemToplevel*
+x_window_new (LeptonToplevel *toplevel);
+
 void x_window_select_object (GschemFindTextState *state, LeptonObject *object, GschemToplevel *w_current);
 void x_window_setup_scrolling (GschemToplevel *w_current, GtkWidget *scrolled);
 gboolean

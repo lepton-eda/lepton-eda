@@ -238,7 +238,8 @@ Run `~A --help' for more information.\n")
 
 ;;; Creates a new window in lepton-schematic.
 (define (make-schematic-window app)
-  (define new-window (x_window_setup (x_window_new)))
+  (define new-window
+    (x_window_setup (x_window_new (lepton_toplevel_new))))
 
   (x_window_create_main app
                         new-window

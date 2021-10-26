@@ -230,7 +230,7 @@
 (define-lff lepton_menu_set_action_data void '(* * * *))
 
 ;;; x_window.c
-(define-lff x_window_new '* '())
+(define-lff x_window_new '* '(*))
 (define-lff x_window_open_page '* '(* *))
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup '* '(*))
