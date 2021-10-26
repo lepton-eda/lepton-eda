@@ -21,6 +21,7 @@
   #:use-module (srfi srfi-9)
 
   #:use-module (lepton ffi lib)
+  #:use-module (lepton ffi)
 
   #:export (lepton_schematic_run
             lepton_schematic_app
@@ -137,7 +138,6 @@
             set_verbose_mode
             x_color_init
             x_menu_attach_recent_files_submenu
-            x_rc_parse_gschem
             x_show_uri
             x_stroke_init
             x_widgets_show_log
@@ -171,6 +171,8 @@
 
             x_event_get_pointer_position
             x_event_key
+
+            parse-gschemrc
             ))
 
 (define libleptongui
@@ -366,3 +368,13 @@
     (and (force func)
          (let ((proc (delay (pointer->procedure void (force func) '()))))
            ((force proc))))))
+
+
+(define (parse-gschemrc)
+  "Loads old (system, user, etc.) \"gschemrc\" files and new
+configuration \".conf\" files in a newly created toplevel
+environment.  Saves the values in a new foreign LeptonToplevel
+structure and returns it."
+  (let ((*toplevel (lepton_toplevel_new)))
+    (x_rc_parse_gschem *toplevel)
+    *toplevel))
