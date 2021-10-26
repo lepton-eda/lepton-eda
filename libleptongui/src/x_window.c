@@ -1010,7 +1010,7 @@ GschemToplevel* x_window_new ()
   LeptonToplevel *toplevel = lepton_toplevel_new ();
 
   /* Load old (*rc files) and new (*.conf) configuration: */
-  x_rc_parse_gschem (toplevel, NULL);
+  x_rc_parse_gschem (toplevel);
 
   GschemToplevel *w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (w_current, toplevel);

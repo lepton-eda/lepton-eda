@@ -630,8 +630,8 @@ gboolean x_print_export_pdf (GschemToplevel *w_current, const gchar *filename, g
 void x_print (GschemToplevel *w_current);
 /* x_rc.c */
 void
-x_rc_parse_gschem (LeptonToplevel *toplevel,
-                   const gchar *rcfile);
+x_rc_parse_gschem (LeptonToplevel *toplevel);
+
 /* x_rotatecb.c */
 GtkWidget* gschem_rotation_combo_new ();
 int gschem_rotation_combo_get_angle (GtkWidget *widget);
