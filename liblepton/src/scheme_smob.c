@@ -275,8 +275,6 @@ smob_free (SCM smob)
                               smob_weakref2_notify,
                               unpack_as_pointer (smob));
     break;
-  case GEDA_SMOB_CLOSURE:
-    break;
   default:
     /* This should REALLY definitely never be run */
     g_critical ("%s: received bad smob flags.", __FUNCTION__);
@@ -300,8 +298,6 @@ smob_free (SCM smob)
       break;
     case GEDA_SMOB_OBJECT:
       lepton_object_delete ((LeptonObject *) data);
-      break;
-    case GEDA_SMOB_CLOSURE:
       break;
     default:
       /* This should REALLY definitely never be run */
@@ -335,9 +331,6 @@ smob_print (SCM smob, SCM port, scm_print_state *pstate)
     break;
   case GEDA_SMOB_OBJECT:
     scm_puts ("object", port);
-    break;
-  case GEDA_SMOB_CLOSURE:
-    scm_puts ("closure", port);
     break;
   default:
     g_critical ("%s: received bad smob flags.", __FUNCTION__);
