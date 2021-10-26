@@ -10,7 +10,6 @@ scheme_api_sources = \
 	scheme_init.c \
 	scheme_smob.c \
 	scheme_toplevel.c \
-	scheme_config.c \
 	scheme_closure.c \
 	edascmhookproxy.c \
 	edascmvaluetypes.c \

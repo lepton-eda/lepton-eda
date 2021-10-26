@@ -2182,3 +2182,77 @@ config_error_file_not_found (GError *error)
 {
   return g_error_matches (error, G_IO_ERROR, G_IO_ERROR_NOT_FOUND);
 }
+
+
+/*! \brief Add a configuration change event handler.
+ * \par Function Description
+ * Add \a proc as a function to be called when configuration is
+ * modified in the context \a cfg.  \a proc will be called with the
+ * following prototype:
+ *
+ * \code
+ * (proc CFG GROUP KEY)
+ * \endcode
+ *
+ * \param cfg The configuration context.
+ * \param proc  Procedure to add as configuration change handler.
+ * \return TRUE if the procedure has been added, FALSE if it had
+ *         been already added previously.
+ */
+gboolean
+config_add_event (EdaConfig *cfg,
+                  gpointer handler,
+                  gpointer proc)
+{
+  /* Test if proc was already connected. */
+  guint signal_id = g_signal_lookup ("config-changed", EDA_TYPE_CONFIG);
+  gulong handler_id =
+    g_signal_handler_find (cfg,
+                           (GSignalMatchType) (G_SIGNAL_MATCH_FUNC
+                                               | G_SIGNAL_MATCH_DATA
+                                               | G_SIGNAL_MATCH_ID),
+                           signal_id,
+                           0,
+                           NULL,
+                           (gpointer) handler,
+                           (gpointer) proc);
+  if (handler_id) {
+    return FALSE;
+  }
+
+  g_signal_connect (cfg,
+                    "config-changed",
+                    G_CALLBACK (handler),
+                    (gpointer) proc);
+  return TRUE;
+}
+
+/*! \brief Remove a configuration change event handler.
+ * \par Function Description
+ * Stop \a proc from being called when configuration is modified in
+ * the context \a cfg.
+ *
+ * \param cfg The configuration context.
+ * \param proc  Procedure to remove as configuration change handler.
+ * \return TRUE if \a proc has been successfully removed, otherwise FALSE.
+ */
+gboolean
+config_remove_event (EdaConfig *cfg,
+                     gpointer handler,
+                     gpointer proc)
+{
+  guint signal_id = g_signal_lookup ("config-changed", EDA_TYPE_CONFIG);
+  guint found =
+    g_signal_handlers_disconnect_matched (cfg,
+                                          (GSignalMatchType) (G_SIGNAL_MATCH_FUNC
+                                                              | G_SIGNAL_MATCH_DATA
+                                                              | G_SIGNAL_MATCH_ID),
+                                          signal_id,
+                                          0,
+                                          NULL,
+                                          (gpointer) handler,
+                                          (gpointer) proc);
+  g_warn_if_fail (found < 2);
+
+  return found;
+}
