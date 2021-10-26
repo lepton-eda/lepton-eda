@@ -1005,10 +1005,8 @@ x_window_close_page_impl (GschemToplevel *w_current,
  *
  * \return Pointer to the new GschemToplevel object.
  */
-GschemToplevel* x_window_new ()
+GschemToplevel* x_window_new (LeptonToplevel *toplevel)
 {
-  LeptonToplevel *toplevel = lepton_toplevel_new ();
-
   /* Load old (*rc files) and new (*.conf) configuration: */
   x_rc_parse_gschem (toplevel);
 
