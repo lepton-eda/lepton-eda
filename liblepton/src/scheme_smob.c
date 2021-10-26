@@ -529,26 +529,6 @@ edascm_to_object (SCM smob)
   return (LeptonObject *) SCM_SMOB_DATA (smob);
 }
 
-/*! \brief Get a smob for a C closure.
- * \par Function Description
- * Create a new smob representing a C closure.
- *
- * \warning Do not call this function from user code; use
- * edascm_c_make_closure() instead.
- *
- * \param func C function to make closure around.
- * \param user_data User data for function.
- * \return a C closure smob.
- */
-SCM
-edascm_from_closure (SCM (*func)(SCM, gpointer), gpointer user_data)
-{
-  SCM smob;
-  SCM_NEWSMOB2 (smob, geda_smob_tag, func, user_data);
-  SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_CLOSURE);
-  return smob;
-}
-
 /*! \brief Set whether a Lepton EDA object may be garbage collected.
  * \ingroup guile_c_iface
  * \par Function Description

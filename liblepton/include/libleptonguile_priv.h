@@ -186,5 +186,3 @@ SCM edascm_from_toplevel (LeptonToplevel *toplevel);
                             : (SCM_SMOB_FLAGS (x) & ~GEDA_SMOB_GC_FLAG))
 
 /* ---------------------------------------- */
-
-SCM edascm_from_closure (SCM (*func)(SCM, gpointer), gpointer user_data);
