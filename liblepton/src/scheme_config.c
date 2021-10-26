@@ -25,7 +25,6 @@
 #include <config.h>
 
 #include "liblepton_priv.h"
-#include "libleptonguile_priv.h"
 
 /*! \brief Add a configuration change event handler.
  * \par Function Description
@@ -98,37 +97,4 @@ config_remove_event (EdaConfig *cfg,
   g_warn_if_fail (found < 2);
 
   return found;
-}
-
-
-
-/*!
- * \brief Create the (lepton core config) Scheme module.
- * \par Function Description
- * Defines procedures in the (lepton core config) module. The module can
- * be accessed using (use-modules (lepton core config)).
- */
-static void
-init_module_lepton_core_config (void *unused)
-{
-  /* Register the functions and symbols */
-  #include "scheme_config.x"
-
-  /* Add them to the module's public definitions. */
-  scm_c_export (NULL);
-}
-
-/*!
- * \brief Initialise the basic Lepton EDA configuration manipulation procedures.
- * \par Function Description
- * Registers some Scheme procedures for working with #EdaConfig
- * smobs. Should only be called by edascm_init().
- */
-void
-edascm_init_config ()
-{
-  /* Define the (lepton core config) module */
-  scm_c_define_module ("lepton core config",
-                       (void (*)(void*)) init_module_lepton_core_config,
-                       NULL);
 }

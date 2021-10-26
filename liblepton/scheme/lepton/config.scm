@@ -22,8 +22,6 @@
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
-  ; Import C procedures
-  #:use-module (lepton core config)
   #:use-module (lepton ffi)
   #:use-module (lepton config foreign)
 
