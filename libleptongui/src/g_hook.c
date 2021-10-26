@@ -160,20 +160,6 @@ g_run_hook_action_mode (GschemToplevel *w_current,
   scm_remember_upto_here_1 (expr);
 }
 
-/*! \brief Creates an EdascmHookProxy for a named hook.
- * Return a newly-created hook proxy object for the hook called \a
- * name.
- *
- * \param name  name of the hook for which to create a proxy.
- * \return      newly-created EdascmHookProxy instance.
- */
-EdascmHookProxy *
-g_hook_new_proxy_by_name (const char *name)
-{
-  SCM hook = g_get_hook_by_name (name);
-  return edascm_hook_proxy_new_with_hook (hook);
-}
-
 /*! \brief Create the (schematic core hook) Scheme module.
  * \par Function Description
  * Defines some hooks in the (schematic core hook) module.  These hooks

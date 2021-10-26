@@ -25,7 +25,7 @@ g_run_hook_page (GschemToplevel *w_current,
                  const char *name,
                  LeptonPage *page);
 void g_run_hook_action_mode (GschemToplevel *w_current, const char *name, const gchar *action_mode);
-EdascmHookProxy *g_hook_new_proxy_by_name (const char *name);
+
 /* g_keys.c */
 void g_keys_reset (GschemToplevel *w_current);
 int g_keys_execute(GschemToplevel *w_current, GdkEventKey *event);

@@ -11,8 +11,6 @@ scheme_api_sources = \
 	scheme_smob.c \
 	scheme_toplevel.c \
 	scheme_closure.c \
-	edascmhookproxy.c \
-	edascmvaluetypes.c \
 	g_rc.c
 
 liblepton_la_SOURCES = \
