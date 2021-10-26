@@ -72,7 +72,6 @@ void i_update_grid_info_callback (GschemPageView *view, GschemToplevel *w_curren
 void i_update_net_options_status (GschemToplevel* w_current);
 /* i_callbacks.c */
 void i_callback_file_new (GtkWidget *widget, gpointer data);
-void i_callback_file_new_window(GtkWidget *widget, gpointer data);
 void i_callback_file_open (GtkWidget *widget, gpointer data);
 void i_callback_file_script (GtkWidget *widget, gpointer data);
 void i_callback_file_save (GtkWidget *widget, gpointer data);

@@ -77,7 +77,6 @@
             i_callback_edit_update
             i_callback_file_close
             i_callback_file_new
-            i_callback_file_new_window
             i_callback_file_open
             i_callback_file_print
             i_callback_file_quit
@@ -292,7 +291,6 @@
 (define-lff i_callback_edit_update void '(* *))
 (define-lff i_callback_file_close void '(* *))
 (define-lff i_callback_file_new void '(* *))
-(define-lff i_callback_file_new_window void '(* *))
 (define-lff i_callback_file_open void '(* *))
 (define-lff i_callback_file_print void '(* *))
 (define-lff i_callback_file_quit void '(* *))

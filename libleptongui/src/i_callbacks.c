@@ -50,29 +50,6 @@ i_callback_file_new (GtkWidget *widget, gpointer data)
   g_message (_("New page created [%1$s]"), lepton_page_get_filename (page));
 }
 
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_file_new_window (GtkWidget* widget, gpointer data)
-{
-  GschemToplevel *w_current = NULL;
-  LeptonPage *page = NULL;
-
-  w_current = x_window_new ();
-  g_return_if_fail (w_current != NULL);
-
-  page = x_window_open_page (w_current, NULL);
-  g_return_if_fail (page != NULL);
-
-  x_window_set_current_page (w_current, page);
-
-  g_message (_("New Window created [%1$s]"), lepton_page_get_filename (page));
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
