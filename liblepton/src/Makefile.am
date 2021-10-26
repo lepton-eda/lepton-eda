@@ -3,14 +3,12 @@ lib_LTLIBRARIES = liblepton.la
 
 BUILT_SOURCES = \
 	scheme_init.x \
-	scheme_toplevel.x \
-	scheme_closure.x
+	scheme_toplevel.x
 
 scheme_api_sources = \
 	scheme_init.c \
 	scheme_smob.c \
 	scheme_toplevel.c \
-	scheme_closure.c \
 	g_rc.c
 
 liblepton_la_SOURCES = \

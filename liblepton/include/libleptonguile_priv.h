@@ -89,7 +89,6 @@
 
 void edascm_init_smob ();
 void edascm_init_toplevel ();
-void edascm_init_closure (void);
 
 /* ---------------------------------------- */
 
