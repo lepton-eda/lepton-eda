@@ -275,9 +275,6 @@ smob_free (SCM smob)
                               smob_weakref2_notify,
                               unpack_as_pointer (smob));
     break;
-  case GEDA_SMOB_CONFIG:
-    g_object_unref (G_OBJECT (data));
-    break;
   case GEDA_SMOB_CLOSURE:
     break;
   default:
@@ -303,10 +300,6 @@ smob_free (SCM smob)
       break;
     case GEDA_SMOB_OBJECT:
       lepton_object_delete ((LeptonObject *) data);
-      break;
-    case GEDA_SMOB_CONFIG:
-      /* These are reference counted, so the structure will have
-       * already been destroyed above if appropriate. */
       break;
     case GEDA_SMOB_CLOSURE:
       break;
@@ -342,9 +335,6 @@ smob_print (SCM smob, SCM port, scm_print_state *pstate)
     break;
   case GEDA_SMOB_OBJECT:
     scm_puts ("object", port);
-    break;
-  case GEDA_SMOB_CONFIG:
-    scm_puts ("config", port);
     break;
   case GEDA_SMOB_CLOSURE:
     scm_puts ("closure", port);
@@ -539,49 +529,6 @@ edascm_to_object (SCM smob)
   return (LeptonObject *) SCM_SMOB_DATA (smob);
 }
 
-/*! \brief Get a smob for a configuration context.
- * \ingroup guile_c_iface
- * \par Function Description
- * Create a new smob representing \a cfg.
- *
- * \param cfg Configuration context to create a smob for.
- * \return a smob representing \a cfg.
- */
-SCM
-edascm_from_config (EdaConfig *cfg)
-{
-  SCM smob = smob_cache_lookup (cfg);
-
-  if (EDASCM_CONFIGP (smob)) {
-    return smob;
-  }
-
-  SCM_NEWSMOB (smob, geda_smob_tag, g_object_ref (cfg));
-  SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_CONFIG);
-  return smob;
-}
-
-/*! \brief Get a configuration context from a smob.
- * \ingroup guile_c_iface
- * \par Function Description
- * Return the #EdaConfig represented by \a smob.
- *
- * \param [in] smob Guile value to retrieve #EdaConfig from.
- * \return the #EdaConfig represented by \a smob.
- */
-EdaConfig *
-edascm_to_config (SCM smob)
-{
-  g_debug ("edascm_to_config()\n");
-#ifndef NDEBUG
-  SCM_ASSERT (EDASCM_CONFIGP (smob), smob,
-              SCM_ARG1, "edascm_to_object");
-#endif
-  EDASCM_ASSERT_SMOB_VALID (smob);
-
-  return EDA_CONFIG (SCM_SMOB_DATA (smob));
-}
-
 /*! \brief Get a smob for a C closure.
  * \par Function Description
  * Create a new smob representing a C closure.
@@ -660,21 +607,6 @@ int
 edascm_is_page (SCM smob)
 {
   return EDASCM_PAGEP (smob);
-}
-
-/*! \brief Test whether a smob is an #EdaConfig instance.
- * \ingroup guile_c_iface
- * \par Function Description
- * If \a smob is a configuration context, returns non-zero. Otherwise,
- * returns zero.
- *
- * \param [in] smob Guile value to test.
- * \return non-zero iff \a smob is an #EdaConfig instance.
- */
-int
-edascm_is_config (SCM smob)
-{
-  return EDASCM_CONFIGP (smob);
 }
 
 /*!
