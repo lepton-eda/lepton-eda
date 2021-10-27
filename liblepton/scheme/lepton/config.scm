@@ -23,7 +23,6 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
-  #:use-module (lepton config foreign)
 
   #:export (config?
             default-config-context
@@ -61,6 +60,28 @@
             add-config-event!
             remove-config-event!))
 
+;;; Define a wrapped pointer type.
+(define-wrapped-pointer-type <config>
+  config?
+  wrap-config
+  unwrap-config
+  ;; Printer.
+  (lambda (cfg port)
+    (format port "#<config-0x~x>"
+            (pointer-address (unwrap-config cfg)))))
+
+(define-syntax check-config
+  (syntax-rules ()
+    ((_ config pos)
+     (let ((pointer (unwrap-config config)))
+       (if (null-pointer? pointer)
+           (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
+             (scm-error 'wrong-type-arg
+                        proc-name
+                        "Wrong type argument in position ~A: ~A"
+                        (list pos config)
+                        #f))
+           pointer)))))
 
 (define add-config-callback! #f)
 (define remove-config-callback! #f)
@@ -71,7 +92,7 @@
                (let* ((pointer (procedure->pointer
                                 void
                                 (lambda (cfg group key)
-                                  (callback (pointer->geda-config cfg)
+                                  (callback (wrap-config cfg)
                                             (pointer->string group)
                                             (pointer->string key)))
                                 '(* * *)))
@@ -116,31 +137,27 @@
                          #f
                          (list code))))))))
 
-(define (config? config)
-  "Returns #t if PAGE is a #<geda-config> instance, otherwise
-returns #f."
-  (true? (edascm_is_config (scm->pointer config))))
 
 (define (default-config-context)
   "Returns the default configuration context."
-  (pointer->geda-config (eda_config_get_default_context)))
+  (wrap-config (eda_config_get_default_context)))
 
 
 (define (system-config-context)
   "Returns the system configuration context."
-  (pointer->geda-config (eda_config_get_system_context)))
+  (wrap-config (eda_config_get_system_context)))
 
 
 (define (user-config-context)
   "Returns the user configuration context."
-  (pointer->geda-config (eda_config_get_user_context)))
+  (wrap-config (eda_config_get_user_context)))
 
 
 (define (path-config-context path)
   "Returns configuration context for PATH."
   (check-string path 1)
 
-  (pointer->geda-config
+  (wrap-config
    (eda_config_get_context_for_path (string->pointer path))))
 
 
@@ -154,26 +171,25 @@ set.  If TRUSTED is not #f the context is marked as trusted."
                                 (string->pointer path))
                            %null-pointer))
   (define parent-pointer (if parent
-                             (geda-config->pointer* parent 2)
+                             (check-config parent 2)
                              %null-pointer))
   (check-boolean trusted 3)
 
-  (pointer->geda-config
+  (wrap-config
    (eda_config_get_anyfile_context path-pointer
                                    parent-pointer
                                    (if trusted TRUE FALSE))))
 
 
-
 (define (cache-config-context)
   "Returns the cache configuration context."
-  (pointer->geda-config (eda_config_get_cache_context)))
+  (wrap-config (eda_config_get_cache_context)))
 
 
 (define (config-filename config)
   "Returns the underlying filename for the configuration context
 CONFIG, or #f if it has no filename associated with it."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
 
   (let ((*path (eda_config_get_filename *cfg)))
     (and (not (null-pointer? *path))
@@ -185,7 +201,7 @@ CONFIG, or #f if it has no filename associated with it."
 file associated with it.  Raises 'system-error on failure.  If
 FORCE-LOAD is not #f, forces configuration loading even if it has
 been already loaded.  Returns CONFIG."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-boolean force-load 2)
 
   (when (or (not (true? (eda_config_is_loaded *cfg)))
@@ -202,7 +218,7 @@ been already loaded.  Returns CONFIG."
 (define (config-loaded? config)
   "Returns #t if CONFIG has been loaded from file at some point,
 and #f otherwise."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
 
   (true? (eda_config_is_loaded *cfg)))
 
@@ -210,7 +226,7 @@ and #f otherwise."
 (define (config-save! config)
   "Attempts to save configuration parameters for the context
 CONFIG to its ssociated file.  Raises a system-error on failure."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
 
   (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
     (unless (true? (eda_config_save *cfg *error))
@@ -223,7 +239,7 @@ CONFIG to its ssociated file.  Raises a system-error on failure."
 altered since it was last synchronised with the on-disk version by
 loading or saving it.  Returns #t if CONFIG has unsaved changes,
 #f otherwise."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
 
   (true? (eda_config_is_changed *cfg)))
 
@@ -231,20 +247,20 @@ loading or saving it.  Returns #t if CONFIG has unsaved changes,
 (define (config-parent config)
   "Return the parent context of the configuration context CONFIG,
 if it has one, or #f otherwise."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
 
   (let ((*parent (eda_config_get_parent *cfg)))
     (and (not (null-pointer? *parent))
-         (pointer->geda-config *parent))))
+         (wrap-config *parent))))
 
 
 (define (set-config-parent! config parent)
   "Set the parent context of the configuration context CONFIG to
 PARENT.  If PARENT is #f, sets CONFIG as having no parent context.
 Returns CONFIG."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (define *parent (if parent
-                      (geda-config->pointer* parent 2)
+                      (check-config parent 2)
                       %null-pointer))
 
   (eda_config_set_parent *cfg *parent)
@@ -256,7 +272,7 @@ Returns CONFIG."
 it is permitted as a source for risky configuration parameters
 such as system commands).  Returns #t if CONFIG is trusted, #f
 otherwise."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
 
   (true? (eda_config_is_trusted *cfg)))
 
@@ -265,7 +281,7 @@ otherwise."
   "Set whether the configuration context CONFIG is trusted as a
 source for risky configuration parameters depending on the boolean
 value of TRUSTED?.  Returns CONFIG."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-boolean trusted? 2)
 
   (eda_config_set_trusted *cfg (if trusted? TRUE FALSE))
@@ -282,7 +298,7 @@ value of TRUSTED?.  Returns CONFIG."
 (define (config-groups config)
   "Returns a list of the all group names available in CONFIG and
 its parent contexts."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
 
   (let ((*len (bytevector->pointer (make-bytevector (sizeof int) 0))))
     (c-string-array->list (eda_config_get_groups *cfg *len))))
@@ -292,7 +308,7 @@ its parent contexts."
   "Tests whether the configuration context CONFIG, or any of its
 parent contexts, contains the GROUP.  Returns #t if CONFIG or any
 ancestor contains GROUP, #f otherwise."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
 
   (true? (eda_config_has_group *cfg (string->pointer group))))
@@ -301,7 +317,7 @@ ancestor contains GROUP, #f otherwise."
 (define (config-keys config group)
   "Returns a list of the all keys available in CONFIG and GROUP.
 If the GROUP cannot be found, raises a 'config-error error."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
 
   (let* ((*len (bytevector->pointer (make-bytevector (sizeof int) 0)))
@@ -329,7 +345,7 @@ If the GROUP cannot be found, raises a 'config-error error."
 itself or one of its parent contexts) in which the configuration
 parameter with the given GROUP and KEY has a value specified.  If
 the group or key cannot be found, raises a 'config-error error."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
   (check-string key 3)
 
@@ -340,7 +356,7 @@ the group or key cannot be found, raises a 'config-error error."
                                       *error)))
     (if (null-pointer? *src)
         (gerror-error *error 'config-source)
-        (pointer->geda-config *src))))
+        (wrap-config *src))))
 
 
 (define (config-string config group key)
@@ -348,7 +364,7 @@ the group or key cannot be found, raises a 'config-error error."
 GROUP and KEY in the configuration context CONFIG, as a string.
 If the group or key cannot be found, raises a 'config-error
 error."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
   (check-string key 3)
 
@@ -367,7 +383,7 @@ error."
 GROUP and KEY in the configuration context CONFIG, as a boolean.
 If the group or key cannot be found, raises a 'config-error
 error."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
   (check-string key 3)
 
@@ -386,7 +402,7 @@ error."
 GROUP and KEY in the configuration context CONFIG, as a integer.
 If the group or key cannot be found, raises a 'config-error
 error."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
   (check-string key 3)
 
@@ -405,7 +421,7 @@ error."
 GROUP and KEY in the configuration context CONFIG, as an inexact
 real number.  If the group or key cannot be found, raises a
 'config-error error."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
   (check-string key 3)
 
@@ -424,7 +440,7 @@ real number.  If the group or key cannot be found, raises a
 GROUP and KEY in the configuration context CONFIG, as a list of
 strings.  If the group or key cannot be found, raises a
 'config-error error."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
   (check-string key 3)
 
@@ -478,7 +494,7 @@ length of the array is specified by LEN."
 GROUP and KEY in the configuration context CONFIG, as a list of
 booleans.  If the group or key cannot be found, raises a
 'config-error error."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
   (check-string key 3)
 
@@ -503,7 +519,7 @@ booleans.  If the group or key cannot be found, raises a
 GROUP and KEY in the configuration context CONFIG, as a list of
 integers.  If the group or key cannot be found, raises a
 'config-error error."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
   (check-string key 3)
 
@@ -525,7 +541,7 @@ integers.  If the group or key cannot be found, raises a
 
 (define (config-real-list config group key)
 "Returns the value of the configuration parameter specified by GROUP and KEY in the configuration context CONFIG, as a list of inexact real numbers.  If the group or key cannot be found, raises a 'config-error error."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
   (check-string key 3)
 
@@ -583,7 +599,7 @@ GROUP and KEY in the configuration context CONFIG to VALUE.  The
 supported types for value_s are strings, integers,real numbers,
 and booleans, along with homogenous lists of strings,integers,
 real numbers or booleans.  Returns CONFIG."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
   (check-string key 3)
 
@@ -649,7 +665,7 @@ real numbers or booleans.  Returns CONFIG."
   "Removes the configuration parameter specified by GROUP and KEY
 in the configuration context CONFIG.  Returns boolean value
 indicating success or failure."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
   (check-string key 3)
 
@@ -667,7 +683,7 @@ indicating success or failure."
   "Remove configuration GROUP and all its parameters from
 configuration context CONFIG.  Returns boolean value indicating
 success or failure."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-string group 2)
 
   (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
@@ -705,7 +721,7 @@ CONFIG.  PROC will be called with the following prototype:
   (proc CFG GROUP KEY)
 If PROC causes a Scheme error to be raised, the error will be
 caught and logged.  Returns CONFIG."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-procedure proc 2)
 
   (let* ((data (add-config-callback! proc))
@@ -719,7 +735,7 @@ caught and logged.  Returns CONFIG."
   "Remove configuration change handler procedure PROC from being
 called when configuration is modified in the context CONFIG.
 Returns CONFIG."
-  (define *cfg (geda-config->pointer* config 1))
+  (define *cfg (check-config config 1))
   (check-procedure proc 2)
 
   (let* ((data (remove-config-callback! proc))

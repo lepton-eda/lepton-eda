@@ -82,8 +82,6 @@ g_rc_try_mark_read (LeptonToplevel *toplevel,
   return TRUE;
 }
 
-SCM scheme_rc_config_fluid = SCM_UNDEFINED;
-
 /*! \brief Load an RC file.
  * \par Function Description
  * Load and run the Scheme initialisation file \a rcfile, reporting
@@ -124,11 +122,6 @@ g_rc_parse_file (LeptonToplevel *toplevel,
     g_clear_error (&tmp_err);
   }
 
-  /* If the fluid for storing the relevant configuration context for
-   * RC file reading hasn't been created yet, create it. */
-  if (scm_is_eq (scheme_rc_config_fluid, SCM_UNDEFINED))
-    scheme_rc_config_fluid = scm_permanent_object (scm_make_fluid ());
-
   /* Normalise filename */
   name_norm = f_normalize_filename (rcfile, err);
   if (name_norm == NULL) return FALSE;
@@ -136,11 +129,8 @@ g_rc_parse_file (LeptonToplevel *toplevel,
   /* Attempt to load the RC file, if it hasn't been loaded already.
    * If g_rc_try_mark_read() succeeds, it stores name_norm in
    * toplevel, so we *don't* free it. */
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  scm_dynwind_fluid (scheme_rc_config_fluid, edascm_from_config (cfg));
   status = (g_rc_try_mark_read (toplevel, name_norm, &tmp_err)
             && g_read_file (toplevel, name_norm, &tmp_err));
-  scm_dynwind_end ();
 
   if (status) {
     g_message (_("Loaded RC file [%1$s]"), name_norm);
