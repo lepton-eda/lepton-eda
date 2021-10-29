@@ -329,7 +329,6 @@ f_open (LeptonToplevel *toplevel,
 
 /*! \brief Save the schematic file
  *  \par Function Description
- *  This function saves the current schematic file in the toplevel object.
  *
  *  \bug g_access introduces a race condition in certain cases, but
  *  solves bug #698565 in the normal use-case
