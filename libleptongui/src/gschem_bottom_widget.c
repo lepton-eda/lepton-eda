@@ -97,8 +97,11 @@ update_magnetic_net_label (GschemBottomWidget *widget, GParamSpec *pspec, gpoint
 
 /* convenience macro - gobject type implementation:
 */
+#ifdef ENABLE_GTK3
+G_DEFINE_TYPE (GschemBottomWidget, gschem_bottom_widget, GTK_TYPE_BOX);
+#else
 G_DEFINE_TYPE (GschemBottomWidget, gschem_bottom_widget, GTK_TYPE_HBOX);
-
+#endif
 
 
 static gboolean
