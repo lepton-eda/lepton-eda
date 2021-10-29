@@ -173,7 +173,7 @@ returns #f."
 ;;; - Neither OBJECT nor ATTRIB may be already attached as an
 ;;;   attribute.
 ;;; - Both OBJECT and ATTRIB must be part of the same page
-;;;   and/or component object. (They can't be \"loose\" objects).
+;;;   and/or component object. (They can't be "loose" objects).
 ;;; - ATTRIB must be a text object.
 ;;; If attrib is already attached to object, does nothing
 ;;; successfully.
