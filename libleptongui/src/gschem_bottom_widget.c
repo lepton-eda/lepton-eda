@@ -759,7 +759,7 @@ create_snap_info_widget (GschemBottomWidget* widget)
                         LABEL_YPAD);
   gtk_box_pack_start (GTK_BOX (widget), ebox, FALSE, FALSE, 0);
 
-  gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (widget), separator_new(), FALSE, FALSE, 0);
 
   g_signal_connect (G_OBJECT (ebox),
                     "button-press-event",
@@ -828,7 +828,7 @@ create_grid_size_widget (GschemBottomWidget* widget)
                         LABEL_YPAD);
   gtk_box_pack_start (GTK_BOX (widget), ebox, FALSE, FALSE, 0);
 
-  gtk_box_pack_start (GTK_BOX (widget), gtk_vseparator_new(), FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (widget), separator_new(), FALSE, FALSE, 0);
 
   g_signal_connect (G_OBJECT (ebox),
                     "button-press-event",
