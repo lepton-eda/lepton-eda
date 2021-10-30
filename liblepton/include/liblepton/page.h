@@ -97,8 +97,8 @@ void
 lepton_page_add_weak_ptr (LeptonPage *page,
                           void *weak_pointer_loc);
 void
-s_page_remove_weak_ptr (LeptonPage *page,
-                        void *weak_pointer_loc);
+lepton_page_remove_weak_ptr (LeptonPage *page,
+                             void *weak_pointer_loc);
 void
 s_page_goto (LeptonToplevel *toplevel,
              LeptonPage *p_new);

@@ -174,7 +174,7 @@ dispose (GObject *object)
   g_return_if_fail (view != NULL);
 
   if (view->_page) {
-    s_page_remove_weak_ptr (view->_page, &view->_page);
+    lepton_page_remove_weak_ptr (view->_page, &view->_page);
     view->_page = NULL;
   }
 
@@ -1045,7 +1045,7 @@ gschem_page_view_set_page (GschemPageView *view,
   if (page != view->_page) {
 
     if (view->_page) {
-      s_page_remove_weak_ptr (view->_page, &view->_page);
+      lepton_page_remove_weak_ptr (view->_page, &view->_page);
       view->_page = NULL;
     }
 

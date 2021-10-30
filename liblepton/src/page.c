@@ -377,7 +377,7 @@ lepton_page_weak_unref (LeptonPage *page,
  * value of \a weak_pointer_loc will be set to NULL when \a page is
  * destroyed.
  *
- * \sa s_page_remove_weak_ptr
+ * \sa lepton_page_remove_weak_ptr
  *
  * \param [in,out] page          Page to weak-reference.
  * \param [in] weak_pointer_loc  Memory address of a pointer.
@@ -401,8 +401,8 @@ lepton_page_add_weak_ptr (LeptonPage *page,
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
 void
-s_page_remove_weak_ptr (LeptonPage *page,
-                        void *weak_pointer_loc)
+lepton_page_remove_weak_ptr (LeptonPage *page,
+                             void *weak_pointer_loc)
 {
   g_return_if_fail (page != NULL);
   page->weak_refs = s_weakref_remove_ptr (page->weak_refs,
