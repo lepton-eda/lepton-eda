@@ -86,9 +86,6 @@ void
 lepton_page_delete (LeptonToplevel *toplevel,
                     LeptonPage *page);
 void
-s_page_delete_list(LeptonToplevel *toplevel);
-
-void
 s_page_weak_ref (LeptonPage *page,
                  void (*notify_func)(void *, void *),
                  void *user_data);

@@ -63,6 +63,36 @@ s_toplevel_new ()
   return toplevel;
 }
 
+
+/*! \brief Deletes the list of pages of <B>toplevel</B>.
+ *  \par Function Description
+ *  Deletes the list of pages of <B>toplevel</B>.
+ *  This function should only be called when you are finishing up.
+ *
+ *  \param toplevel  The LeptonToplevel object.
+ */
+static void
+lepton_toplevel_delete_pages (LeptonToplevel *toplevel)
+{
+  GList *list_copy, *iter;
+  LeptonPage *page;
+
+  /* lepton_page_delete removes items from the page list, so make a copy */
+  list_copy = g_list_copy (lepton_list_get_glist (toplevel->pages));
+
+  for (iter = list_copy; iter != NULL; iter = g_list_next (iter)) {
+    page = (LeptonPage *)iter->data;
+
+    lepton_page_delete (toplevel, page);
+  }
+
+  g_list_free (list_copy);
+
+  /* reset toplevel fields */
+  lepton_toplevel_set_page_current (toplevel, NULL);
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -79,7 +109,7 @@ s_toplevel_delete (LeptonToplevel *toplevel)
   }
 
   /* delete all pages */
-  s_page_delete_list (toplevel);
+  lepton_toplevel_delete_pages (toplevel);
 
   /* Delete the page list */
   g_object_unref(toplevel->pages);

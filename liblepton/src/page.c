@@ -224,8 +224,6 @@ lepton_page_new (LeptonToplevel *toplevel,
  *  \par Function Description
  *  Deletes a single page <B>page</B> from <B>toplevel</B>'s list of pages.
  *
- *  See #s_page_delete_list() to delete all pages of a <B>toplevel</B>
- *
  *  If the current page of toplevel is given as parameter <B>page</B>,
  *  the function sets the field <B>page_current</B> of the LeptonToplevel
  *  struct to NULL.
@@ -331,34 +329,6 @@ lepton_page_delete (LeptonToplevel *toplevel,
 
 }
 
-
-/*! \brief Deletes the list of pages of <B>toplevel</B>.
- *  \par Function Description
- *  Deletes the list of pages of <B>toplevel</B>.
- *  This function should only be called when you are finishing up.
- *
- *  \param toplevel  The LeptonToplevel object.
- */
-void
-s_page_delete_list(LeptonToplevel *toplevel)
-{
-  GList *list_copy, *iter;
-  LeptonPage *page;
-
-  /* lepton_page_delete removes items from the page list, so make a copy */
-  list_copy = g_list_copy (lepton_list_get_glist (toplevel->pages));
-
-  for (iter = list_copy; iter != NULL; iter = g_list_next (iter)) {
-    page = (LeptonPage *)iter->data;
-
-    lepton_page_delete (toplevel, page);
-  }
-
-  g_list_free (list_copy);
-
-  /* reset toplevel fields */
-  lepton_toplevel_set_page_current (toplevel, NULL);
-}
 
 /*! \brief Add a weak reference watcher to an LeptonPage.
  * \par Function Description
