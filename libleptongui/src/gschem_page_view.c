@@ -1051,7 +1051,7 @@ gschem_page_view_set_page (GschemPageView *view,
 
     if (page) {
       view->_page = page;
-      s_page_add_weak_ptr (view->_page, &view->_page);
+      lepton_page_add_weak_ptr (view->_page, &view->_page);
 
       g_return_if_fail (page->toplevel != NULL);
       s_page_goto (page->toplevel, page);

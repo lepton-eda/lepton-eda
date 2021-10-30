@@ -383,8 +383,8 @@ lepton_page_weak_unref (LeptonPage *page,
  * \param [in] weak_pointer_loc  Memory address of a pointer.
  */
 void
-s_page_add_weak_ptr (LeptonPage *page,
-                     void *weak_pointer_loc)
+lepton_page_add_weak_ptr (LeptonPage *page,
+                          void *weak_pointer_loc)
 {
   g_return_if_fail (page != NULL);
   page->weak_refs = s_weakref_add_ptr (page->weak_refs,
@@ -395,7 +395,7 @@ s_page_add_weak_ptr (LeptonPage *page,
  * \par Function Description
  * Removes the weak pointer at \a weak_pointer_loc from \a page.
  *
- * \sa s_page_add_weak_ptr()
+ * \sa lepton_page_add_weak_ptr()
  *
  * \param [in,out] page          Page to weak-reference.
  * \param [in] weak_pointer_loc  Memory address of a pointer.

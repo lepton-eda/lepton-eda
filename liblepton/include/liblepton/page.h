@@ -94,8 +94,8 @@ lepton_page_weak_unref (LeptonPage *page,
                         void (*notify_func)(void *, void *),
                         void *user_data);
 void
-s_page_add_weak_ptr (LeptonPage *page,
-                     void *weak_pointer_loc);
+lepton_page_add_weak_ptr (LeptonPage *page,
+                          void *weak_pointer_loc);
 void
 s_page_remove_weak_ptr (LeptonPage *page,
                         void *weak_pointer_loc);
