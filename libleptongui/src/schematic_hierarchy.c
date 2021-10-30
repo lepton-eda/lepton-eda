@@ -113,14 +113,20 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
 
       found = s_page_new (toplevel, string);
 
-      schematic_file_open (w_current, found, s_page_get_filename (found), NULL);
+      schematic_file_open (w_current,
+                           found,
+                           lepton_page_get_filename (found),
+                           NULL);
     }
     break;
 
   case HIERARCHY_FORCE_LOAD:
     {
       found = s_page_new (toplevel, string);
-      schematic_file_open (w_current, found, s_page_get_filename (found), NULL);
+      schematic_file_open (w_current,
+                           found,
+                           lepton_page_get_filename (found),
+                           NULL);
     }
     break;
 
@@ -178,7 +184,10 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
 
   s_page_goto (toplevel, page);
 
-  schematic_file_open (w_current, page, s_page_get_filename (page), NULL);
+  schematic_file_open (w_current,
+                       page,
+                       lepton_page_get_filename (page),
+                       NULL);
 
   page->up = parent->pid;
   page_control_counter++;
@@ -260,7 +269,10 @@ s_hierarchy_load_subpage (GschemToplevel *w_current,
       int success;
 
       subpage = s_page_new (page->toplevel, string);
-      success = schematic_file_open (w_current, subpage, s_page_get_filename (subpage), error);
+      success = schematic_file_open (w_current,
+                                     subpage,
+                                     lepton_page_get_filename (subpage),
+                                     error);
 
       if (success) {
         subpage->page_control = ++page_control_counter;
@@ -385,7 +397,7 @@ s_hierarchy_print_page (LeptonPage *p_current,
                         void * data)
 {
   printf("pagefilename: %s pageid: %d\n",
-         s_page_get_filename (p_current), p_current->pid);
+         lepton_page_get_filename (p_current), p_current->pid);
   return 0;
 }
 

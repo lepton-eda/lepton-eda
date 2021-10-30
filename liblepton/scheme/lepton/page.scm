@@ -97,7 +97,7 @@ PAGE after calling this function will cause an error."
   "Returns the filename associated with PAGE as a string."
   (define pointer (geda-page->pointer* page 1))
 
-  (pointer->string (s_page_get_filename pointer)))
+  (pointer->string (lepton_page_get_filename pointer)))
 
 
 (define (set-page-filename! page filename)
@@ -180,7 +180,7 @@ syntax."
                                  %null-pointer
                                  (string->pointer str)
                                  (string-length str)
-                                 (s_page_get_filename pointer)
+                                 (lepton_page_get_filename pointer)
                                  *error)))
     (gerror-error *error)
 

@@ -35,7 +35,7 @@ struct st_page
 
   /* The page filename. You must access this field only via the
    * accessor functions s_page_set_filename() and
-   * s_page_get_filename() */
+   * lepton_page_get_filename() */
   char *_filename;
 
   int CHANGED;                  /* changed flag */
@@ -156,7 +156,7 @@ s_page_objects_in_regions (LeptonToplevel *toplevel,
                            int n_rects,
                            gboolean include_hidden);
 const gchar*
-s_page_get_filename (const LeptonPage *page);
+lepton_page_get_filename (const LeptonPage *page);
 
 void
 s_page_set_filename (LeptonPage *page,

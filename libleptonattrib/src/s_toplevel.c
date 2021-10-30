@@ -143,15 +143,16 @@ s_page_save_all (LeptonToplevel *toplevel)
 
     p_current = (LeptonPage *)iter->data;
 
-    if (f_save (p_current, s_page_get_filename (p_current), NULL)) {
+    if (f_save (p_current, lepton_page_get_filename (p_current), NULL))
+    {
       g_message (_("Saved [%1$s]"),
-                 s_page_get_filename (p_current));
+                 lepton_page_get_filename (p_current));
       /* reset the CHANGED flag of p_current */
       p_current->CHANGED = 0;
 
     } else {
       g_message (_("Could NOT save [%1$s]"),
-                 s_page_get_filename (p_current));
+                 lepton_page_get_filename (p_current));
       /* increase the error counter */
       status++;
     }

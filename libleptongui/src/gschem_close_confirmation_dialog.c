@@ -216,8 +216,8 @@ get_page_name (GtkTreeModel *model, GtkTreeIter *piter, gboolean full_path)
                       -1);
   g_assert (page != NULL);
 
-  return full_path ? g_strdup (s_page_get_filename (page))
-                   : g_path_get_basename (s_page_get_filename (page));
+  return full_path ? g_strdup (lepton_page_get_filename (page))
+                   : g_path_get_basename (lepton_page_get_filename (page));
 }
 
 /*! \brief Sets the contents of the name cell in the treeview of dialog.

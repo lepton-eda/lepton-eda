@@ -549,7 +549,7 @@ x_window_set_title (GList* plist)
 
   if (g_list_length (plist) == 1)
   {
-    const gchar* fpath = s_page_get_filename ((LeptonPage *) plist->data);
+    const gchar* fpath = lepton_page_get_filename ((LeptonPage *) plist->data);
     gchar* fname = g_path_get_basename (fpath);
 
     title = g_strdup_printf ("%s - %s", fname, prog_name);

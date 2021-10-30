@@ -446,7 +446,7 @@ x_fileselect_save (GschemToplevel *w_current,
   /* add file filters to dialog:
   */
   setup_filters (GTK_FILE_CHOOSER (dialog));
-  const gchar* fname = s_page_get_filename (page);
+  const gchar* fname = lepton_page_get_filename (page);
 
   if (filename_sch (fname))
   {

@@ -255,12 +255,12 @@ s_page_delete (LeptonToplevel *toplevel,
   }
 
   /* Get the real filename and file permissions */
-  real_filename = follow_symlinks (s_page_get_filename(page), NULL);
+  real_filename = follow_symlinks (lepton_page_get_filename(page), NULL);
 
   if (real_filename == NULL) {
     g_message ("s_page_delete:");
     g_message (_("Can't get the real filename of %1$s."),
-               s_page_get_filename (page));
+               lepton_page_get_filename (page));
   }
   else {
     backup_filename = f_get_autosave_filename (real_filename);
@@ -454,7 +454,7 @@ s_page_goto (LeptonToplevel *toplevel,
 
   lepton_toplevel_set_page_current (toplevel, p_new);
 
-  dirname = g_path_get_dirname (s_page_get_filename(p_new));
+  dirname = g_path_get_dirname (lepton_page_get_filename (p_new));
   if (chdir (dirname)) {
     /* An error occured with chdir */
     /* FIXME[2017-02-21] Libraries should not be changing the
@@ -490,7 +490,7 @@ s_page_search (LeptonToplevel *toplevel,
     page = (LeptonPage *)iter->data;
     /* FIXME this may not be correct on platforms with
      * case-insensitive filesystems. */
-    if ( strcmp( s_page_get_filename (page), filename ) == 0 )
+    if (strcmp (lepton_page_get_filename (page), filename) == 0)
       return page;
   }
   return NULL;
@@ -520,7 +520,7 @@ s_page_search_by_basename (LeptonToplevel *toplevel,
   {
     page = (LeptonPage*) iter->data;
 
-    const gchar* fname = s_page_get_filename (page);
+    const gchar* fname = lepton_page_get_filename (page);
     gchar* bname = g_path_get_basename (fname);
 
     /* FIXME this may not be correct on platforms with
@@ -585,7 +585,7 @@ s_page_print_all (LeptonToplevel *toplevel)
         iter = g_list_next( iter ) ) {
 
     page = (LeptonPage *) iter->data;
-    printf ("FILENAME: %1$s\n", s_page_get_filename (page));
+    printf ("FILENAME: %1$s\n", lepton_page_get_filename (page));
     lepton_object_list_print (page->_object_list);
   }
 }
@@ -880,7 +880,7 @@ s_page_objects_in_regions (LeptonToplevel *toplevel,
  * \return the full path to the underlying file of the \a page
  */
 const gchar *
-s_page_get_filename (const LeptonPage *page)
+lepton_page_get_filename (const LeptonPage *page)
 {
   g_return_val_if_fail (page, "");
   g_return_val_if_fail (page->_filename, "");

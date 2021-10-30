@@ -591,12 +591,12 @@ void o_autosave_backups(GschemToplevel *w_current)
       gschem_toplevel_page_changed (w_current);
 
       /* Get the real filename and file permissions */
-      real_filename = follow_symlinks (s_page_get_filename (p_current), NULL);
+      real_filename = follow_symlinks (lepton_page_get_filename (p_current), NULL);
 
       if (real_filename == NULL) {
         g_message ("o_autosave_backups: ");
         g_message (_("Can't get the real filename of %1$s."),
-                   s_page_get_filename (p_current));
+                   lepton_page_get_filename (p_current));
       } else {
         /* Get the directory in which the real filename lives */
         dirname = g_path_get_dirname (real_filename);

@@ -310,7 +310,7 @@ x_image_update_dialog_filename (GtkComboBoxText *combo,
   /* Get the previous file name. If none, revert to the page filename */
   old_image_filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(file_chooser));
   if (!old_image_filename) {
-    old_image_filename = s_page_get_filename (toplevel->page_current);
+    old_image_filename = lepton_page_get_filename (toplevel->page_current);
   }
 
   /* Get the file name, without extension */

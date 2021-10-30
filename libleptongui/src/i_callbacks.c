@@ -47,7 +47,7 @@ i_callback_file_new (GtkWidget *widget, gpointer data)
   g_return_if_fail (page != NULL);
 
   x_window_set_current_page (w_current, page);
-  g_message (_("New page created [%1$s]"), s_page_get_filename (page));
+  g_message (_("New page created [%1$s]"), lepton_page_get_filename (page));
 }
 
 
@@ -70,7 +70,7 @@ i_callback_file_new_window (GtkWidget* widget, gpointer data)
 
   x_window_set_current_page (w_current, page);
 
-  g_message (_("New Window created [%1$s]"), s_page_get_filename (page));
+  g_message (_("New Window created [%1$s]"), lepton_page_get_filename (page));
 }
 
 /*! \todo Finish function documentation!!!
@@ -176,7 +176,7 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
   else
   {
     /* save page: */
-    const gchar* fname = s_page_get_filename (page);
+    const gchar* fname = lepton_page_get_filename (page);
     x_window_save_page (w_current, page, fname);
   }
 
@@ -212,7 +212,7 @@ i_callback_file_save_all (GtkWidget *widget, gpointer data)
     else
     {
       /* save page: */
-      const gchar* fname = s_page_get_filename (page);
+      const gchar* fname = lepton_page_get_filename (page);
       res = x_window_save_page (w_current, page, fname);
       result = result && res;
     }
@@ -1513,7 +1513,7 @@ i_callback_page_revert (GtkWidget *widget, gpointer data)
     return;
   }
 
-  filename = g_strdup (s_page_get_filename (page_current));
+  filename = g_strdup (lepton_page_get_filename (page_current));
 
   const gchar* msg =
     _("<b>Revert page:</b>"

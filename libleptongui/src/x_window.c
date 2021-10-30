@@ -870,7 +870,8 @@ x_window_save_page (GschemToplevel *w_current,
   } else {
     /* successful save of page to file, update page... */
     /* change page name if necessary and prepare log message */
-    if (g_ascii_strcasecmp (s_page_get_filename (page), filename) != 0) {
+    if (g_ascii_strcasecmp (lepton_page_get_filename (page), filename) != 0)
+    {
       s_page_set_filename (page, filename);
 
       log_msg = _("Saved as [%1$s]");
@@ -956,7 +957,7 @@ x_window_close_page_impl (GschemToplevel *w_current,
 
   g_message (page->CHANGED ?
              _("Discarding page [%1$s]") : _("Closing [%1$s]"),
-             s_page_get_filename (page));
+             lepton_page_get_filename (page));
   /* remove page from toplevel list of page and free */
   s_page_delete (toplevel, page);
   gschem_toplevel_page_changed (w_current);
@@ -1754,7 +1755,7 @@ x_window_untitled_page (LeptonPage* page)
 {
   g_return_val_if_fail (page != NULL, TRUE);
 
-  const gchar* fname = s_page_get_filename (page);
+  const gchar* fname = lepton_page_get_filename (page);
   gchar* uname = NULL;
 
   EdaConfig* cfg = eda_config_get_context_for_path (fname);

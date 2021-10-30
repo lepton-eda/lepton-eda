@@ -420,7 +420,8 @@ x_tabs_dbg_pages_dump_simple (GschemToplevel* w_current)
         node = g_list_next( node ) )
   {
     LeptonPage* p = node->data;
-    printf( "    p: [%s]\n", g_path_get_basename( s_page_get_filename(p) ) );
+    printf ("    p: [%s]\n",
+            g_path_get_basename (lepton_page_get_filename (p)));
   }
 
   printf( "\n" );
@@ -834,7 +835,7 @@ x_tabs_hdr_create (TabInfo* nfo)
 
   /* label:
   */
-  const gchar* fname = s_page_get_filename (nfo->page_);
+  const gchar* fname = lepton_page_get_filename (nfo->page_);
   g_return_val_if_fail (fname != NULL, NULL);
 
   gchar* bname = g_path_get_basename (fname);
@@ -967,7 +968,7 @@ x_tabs_hdr_create (TabInfo* nfo)
 
   if (x_tabs_show_up_button() && parent != NULL)
   {
-    const gchar* parent_fname = s_page_get_filename (parent);
+    const gchar* parent_fname = lepton_page_get_filename (parent);
     gchar*       parent_bname = NULL;
     gchar*       ttip_btn_up  = NULL;
 
@@ -1704,8 +1705,8 @@ x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
   }
 
 #ifdef DEBUG
-  printf( "p: [%s]\n",   g_path_get_basename( s_page_get_filename(nfo->page_) ) );
-  printf( "C: [%s]\n\n", g_path_get_basename( s_page_get_filename(nfocur->page_) ) );
+  printf ("p: [%s]\n",   g_path_get_basename (lepton_page_get_filename(nfo->page_)));
+  printf ("C: [%s]\n\n", g_path_get_basename (lepton_page_get_filename(nfocur->page_)));
 #endif
 
   GdkEventButton* ebtn = (GdkEventButton*) e;

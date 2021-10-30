@@ -433,7 +433,7 @@ o_undo_callback (GschemToplevel *w_current,
   }
 
   /* save filename */
-  save_filename = g_strdup (s_page_get_filename (page));
+  save_filename = g_strdup (lepton_page_get_filename (page));
 
   /* save structure so it's not nuked */
   save_bottom = page->undo_bottom;

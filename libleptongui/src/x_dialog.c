@@ -316,7 +316,7 @@ major_changed_dialog (GschemToplevel* w_current)
 
   /* label with page basename:
   */
-  const gchar* fname = s_page_get_filename (page);
+  const gchar* fname = lepton_page_get_filename (page);
   gchar* bname = g_path_get_basename (fname);
   gchar* text = g_strdup_printf(_("Schematic: %s"), bname);
   g_free (bname);

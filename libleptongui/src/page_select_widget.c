@@ -167,7 +167,9 @@ page_select_widget_update (GschemToplevel* w_current)
     return;
   }
 
-  i_set_filename (w_current, s_page_get_filename (page), page->CHANGED);
+  i_set_filename (w_current,
+                  lepton_page_get_filename (page),
+                  page->CHANGED);
 
   if (x_tabs_enabled())
   {
@@ -630,7 +632,7 @@ add_page (GtkTreeModel *model,
                          &iter,
                          parent);
 
-  const gchar* page_filename = s_page_get_filename (page);
+  const gchar* page_filename = lepton_page_get_filename (page);
   gchar* display_filename = pagesel->show_paths_
                             ? g_strdup (page_filename)
                             : g_path_get_basename (page_filename);

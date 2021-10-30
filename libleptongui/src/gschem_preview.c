@@ -79,7 +79,7 @@ preview_get_filename (GschemPreview *preview)
 
   g_return_val_if_fail (page != NULL, "");
 
-  return s_page_get_filename (page);
+  return lepton_page_get_filename (page);
 }
 
 
