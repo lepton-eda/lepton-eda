@@ -502,7 +502,7 @@ o_undo_callback (GschemToplevel *w_current,
   do_logging = save_logging;
 
   /* set filename right */
-  s_page_set_filename (page, save_filename);
+  lepton_page_set_filename (page, save_filename);
   g_free(save_filename);
 
   /* final redraw */

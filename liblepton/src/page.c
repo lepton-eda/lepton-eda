@@ -183,7 +183,7 @@ s_page_new (LeptonToplevel *toplevel,
   page->CHANGED = 0;
 
   /* big assumption here that page_filename isn't null */
-  s_page_set_filename (page, filename);
+  lepton_page_set_filename (page, filename);
 
   page->up = -2;
   page->page_control = 0;
@@ -898,8 +898,8 @@ lepton_page_get_filename (const LeptonPage *page)
  * \param filename  The new file path for \a page
  */
 void
-s_page_set_filename (LeptonPage *page,
-                     const char *filename)
+lepton_page_set_filename (LeptonPage *page,
+                          const char *filename)
 {
   g_return_if_fail (page);
   g_return_if_fail (filename);

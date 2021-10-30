@@ -34,7 +34,7 @@ struct st_page
   GList *connectible_list;  /* connectible page objects */
 
   /* The page filename. You must access this field only via the
-   * accessor functions s_page_set_filename() and
+   * accessor functions lepton_page_set_filename() and
    * lepton_page_get_filename() */
   char *_filename;
 
@@ -159,8 +159,8 @@ const gchar*
 lepton_page_get_filename (const LeptonPage *page);
 
 void
-s_page_set_filename (LeptonPage *page,
-                     const char *filename);
+lepton_page_set_filename (LeptonPage *page,
+                          const char *filename);
 GList*
 lepton_page_list_get_glist (LeptonPageList *page_list);
 

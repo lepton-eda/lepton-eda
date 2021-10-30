@@ -105,7 +105,7 @@ PAGE after calling this function will cause an error."
   (define pointer (geda-page->pointer* page 1))
   (check-string filename 2)
 
-  (s_page_set_filename pointer (string->pointer filename))
+  (lepton_page_set_filename pointer (string->pointer filename))
   page)
 
 

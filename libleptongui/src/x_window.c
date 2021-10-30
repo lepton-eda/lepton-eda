@@ -872,7 +872,7 @@ x_window_save_page (GschemToplevel *w_current,
     /* change page name if necessary and prepare log message */
     if (g_ascii_strcasecmp (lepton_page_get_filename (page), filename) != 0)
     {
-      s_page_set_filename (page, filename);
+      lepton_page_set_filename (page, filename);
 
       log_msg = _("Saved as [%1$s]");
     } else {
