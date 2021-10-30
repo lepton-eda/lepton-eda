@@ -80,8 +80,8 @@ void
 lepton_page_set_selection_list (LeptonPage *page,
                                 LeptonSelection *selection_list);
 LeptonPage*
-s_page_new (LeptonToplevel *toplevel,
-            const gchar *filename);
+lepton_page_new (LeptonToplevel *toplevel,
+                 const gchar *filename);
 void
 s_page_delete (LeptonToplevel *toplevel,
                LeptonPage *page);

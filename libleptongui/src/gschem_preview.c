@@ -326,8 +326,8 @@ gschem_preview_init (GschemPreview *preview)
   preview->buffer   = NULL;
 
   gschem_page_view_set_page (GSCHEM_PAGE_VIEW (preview),
-                             s_page_new (preview->preview_w_current->toplevel,
-                                         "preview"));
+                             lepton_page_new (preview->preview_w_current->toplevel,
+                                              "preview"));
 
   gtk_widget_set_events (GTK_WIDGET (preview),
                          GDK_EXPOSURE_MASK |

@@ -80,8 +80,8 @@ belong to a page, returns #f."
 that this does not check that a file exists with that name, or
 attempt to load any data from it."
   (check-string filename 1)
-  (pointer->geda-page (s_page_new (edascm_c_current_toplevel)
-                                  (string->pointer filename))))
+  (pointer->geda-page (lepton_page_new (edascm_c_current_toplevel)
+                                       (string->pointer filename))))
 
 
 (define (close-page! page)
@@ -174,8 +174,8 @@ syntax."
   (check-string str 2)
 
   (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-         (pointer (s_page_new (edascm_c_current_toplevel)
-                              (string->pointer filename)))
+         (pointer (lepton_page_new (edascm_c_current_toplevel)
+                                   (string->pointer filename)))
          (objects (o_read_buffer pointer
                                  %null-pointer
                                  (string->pointer str)

@@ -747,7 +747,7 @@ x_window_open_page_impl (GschemToplevel *w_current,
 
 
   /* Create a new page: */
-  page = s_page_new (toplevel, filename);
+  page = lepton_page_new (toplevel, filename);
 
   /* Switch to a new page: */
   s_page_goto (toplevel, page); /* NOTE: sets toplevel->page_current */
@@ -1563,7 +1563,7 @@ x_window_new_page (GschemToplevel* w_current)
   gchar* filename = untitled_filename (w_current, TRUE);
 
   /* Create a new page: */
-  LeptonPage* page = s_page_new (toplevel, filename);
+  LeptonPage* page = lepton_page_new (toplevel, filename);
 
   /* Switch to a new page: */
   s_page_goto (toplevel, page);

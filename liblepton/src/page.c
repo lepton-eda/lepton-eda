@@ -167,8 +167,8 @@ pre_object_removed (LeptonPage *page,
  *  current page is not changed by this function.
  */
 LeptonPage*
-s_page_new (LeptonToplevel *toplevel,
-            const gchar *filename)
+lepton_page_new (LeptonToplevel *toplevel,
+                 const gchar *filename)
 {
   g_return_val_if_fail (toplevel, NULL);
   g_return_val_if_fail (filename, NULL);

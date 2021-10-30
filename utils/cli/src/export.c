@@ -264,7 +264,7 @@ cmd_export_impl (void *data, int argc, char **argv)
     LeptonPage *page;
     tmp = argv[optind++];
 
-    page = s_page_new (toplevel, tmp);
+    page = lepton_page_new (toplevel, tmp);
     if (!f_open (toplevel, page, tmp, &err)) {
       fprintf (stderr,
                /* TRANSLATORS: The first string is the filename, the second

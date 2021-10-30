@@ -291,7 +291,7 @@
             s_page_delete
             lepton_page_get_filename
             lepton_page_set_filename
-            s_page_new
+            lepton_page_new
             s_page_objects
             s_page_remove
             lepton_page_list_get_glist
@@ -620,7 +620,7 @@
 (define-lff s_page_delete void '(* *))
 (define-lff lepton_page_get_filename '* '(*))
 (define-lff lepton_page_set_filename void '(* *))
-(define-lff s_page_new '* '(* *))
+(define-lff lepton_page_new '* '(* *))
 (define-lff s_page_objects '* '(*))
 (define-lff s_page_remove void '(* *))
 (define-lff lepton_page_list_get_glist '* '(*))
