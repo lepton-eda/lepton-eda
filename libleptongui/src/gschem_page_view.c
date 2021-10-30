@@ -1655,7 +1655,7 @@ geometry_cache_insert (GschemPageView *view,
   g_return_if_fail (geometry);
   g_return_if_fail (!g_hash_table_contains (view->_geometry_cache, page));
 
-  s_page_weak_ref (page, geometry_cache_page_weak_ref_notify, view);
+  lepton_page_weak_ref (page, geometry_cache_page_weak_ref_notify, view);
   g_hash_table_insert (view->_geometry_cache, page, geometry);
 }
 

@@ -343,9 +343,9 @@ lepton_page_delete (LeptonToplevel *toplevel,
  * \param [in] user_data      Data to be passed to \a notify_func.
  */
 void
-s_page_weak_ref (LeptonPage *page,
-                 void (*notify_func)(void *, void *),
-                 void *user_data)
+lepton_page_weak_ref (LeptonPage *page,
+                      void (*notify_func)(void *, void *),
+                      void *user_data)
 {
   g_return_if_fail (page != NULL);
   page->weak_refs = s_weakref_add (page->weak_refs, notify_func, user_data);
@@ -355,7 +355,7 @@ s_page_weak_ref (LeptonPage *page,
  * \par Function Description
  * Removes the weak reference callback \a notify_func from \a page.
  *
- * \sa s_page_weak_ref()
+ * \sa lepton_page_weak_ref()
  *
  * \param [in,out] page       Page to weak-reference.
  * \param [in] notify_func    Notify function to search for.

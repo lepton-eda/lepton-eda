@@ -440,8 +440,9 @@ edascm_from_page (LeptonPage *page)
   SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_PAGE);
 
   /* Set weak reference */
-  s_page_weak_ref (page, smob_weakref_notify,
-                   unpack_as_pointer (smob));
+  lepton_page_weak_ref (page,
+                        smob_weakref_notify,
+                        unpack_as_pointer (smob));
 
   smob_cache_add (page, smob);
 
