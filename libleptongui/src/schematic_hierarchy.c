@@ -277,7 +277,7 @@ s_hierarchy_load_subpage (GschemToplevel *w_current,
       if (success) {
         subpage->page_control = ++page_control_counter;
       } else {
-        s_page_delete (page->toplevel, subpage);
+        lepton_page_delete (page->toplevel, subpage);
         subpage = NULL;
       }
     }

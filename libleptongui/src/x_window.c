@@ -766,7 +766,7 @@ x_window_open_page_impl (GschemToplevel *w_current,
     g_clear_error (&err);
 
     /* Loading failed: delete page and open a blank one: */
-    s_page_delete (toplevel, page);
+    lepton_page_delete (toplevel, page);
     return x_window_new_page (w_current);
   }
 
@@ -959,7 +959,7 @@ x_window_close_page_impl (GschemToplevel *w_current,
              _("Discarding page [%1$s]") : _("Closing [%1$s]"),
              lepton_page_get_filename (page));
   /* remove page from toplevel list of page and free */
-  s_page_delete (toplevel, page);
+  lepton_page_delete (toplevel, page);
   gschem_toplevel_page_changed (w_current);
 
   /* Switch to a different page if we just removed the current */

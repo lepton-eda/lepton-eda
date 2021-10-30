@@ -83,8 +83,8 @@ LeptonPage*
 lepton_page_new (LeptonToplevel *toplevel,
                  const gchar *filename);
 void
-s_page_delete (LeptonToplevel *toplevel,
-               LeptonPage *page);
+lepton_page_delete (LeptonToplevel *toplevel,
+                    LeptonPage *page);
 void
 s_page_delete_list(LeptonToplevel *toplevel);
 

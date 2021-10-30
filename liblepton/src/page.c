@@ -231,8 +231,8 @@ lepton_page_new (LeptonToplevel *toplevel,
  *  struct to NULL.
  */
 void
-s_page_delete (LeptonToplevel *toplevel,
-               LeptonPage *page)
+lepton_page_delete (LeptonToplevel *toplevel,
+                    LeptonPage *page)
 {
   LeptonPage *tmp;
   gchar *backup_filename;
@@ -258,7 +258,7 @@ s_page_delete (LeptonToplevel *toplevel,
   real_filename = follow_symlinks (lepton_page_get_filename(page), NULL);
 
   if (real_filename == NULL) {
-    g_message ("s_page_delete:");
+    g_message ("lepton_page_delete:");
     g_message (_("Can't get the real filename of %1$s."),
                lepton_page_get_filename (page));
   }
@@ -270,7 +270,7 @@ s_page_delete (LeptonToplevel *toplevel,
          (!g_file_test(backup_filename, G_FILE_TEST_IS_DIR)) )
     {
       if (unlink(backup_filename) != 0) {
-        g_message ("s_page_delete:");
+        g_message ("lepton_page_delete:");
         g_message (_("Unable to delete backup file %1$s."),
                    backup_filename);
       }
@@ -345,13 +345,13 @@ s_page_delete_list(LeptonToplevel *toplevel)
   GList *list_copy, *iter;
   LeptonPage *page;
 
-  /* s_page_delete removes items from the page list, so make a copy */
+  /* lepton_page_delete removes items from the page list, so make a copy */
   list_copy = g_list_copy (lepton_list_get_glist (toplevel->pages));
 
   for (iter = list_copy; iter != NULL; iter = g_list_next (iter)) {
     page = (LeptonPage *)iter->data;
 
-    s_page_delete (toplevel, page);
+    lepton_page_delete (toplevel, page);
   }
 
   g_list_free (list_copy);

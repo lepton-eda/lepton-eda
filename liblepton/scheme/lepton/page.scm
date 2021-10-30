@@ -89,8 +89,8 @@ attempt to load any data from it."
 PAGE after calling this function will cause an error."
   (define pointer (geda-page->pointer* page 1))
 
-  (s_page_delete (edascm_c_current_toplevel)
-                 pointer))
+  (lepton_page_delete (edascm_c_current_toplevel)
+                      pointer))
 
 
 (define (page-filename page)
