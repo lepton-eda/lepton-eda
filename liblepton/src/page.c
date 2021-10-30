@@ -336,7 +336,7 @@ lepton_page_delete (LeptonToplevel *toplevel,
  * \a page is destroyed, \a notify_func will be called with two
  * arguments: the \a page, and the \a user_data.
  *
- * \sa s_page_weak_unref
+ * \sa lepton_page_weak_unref
  *
  * \param [in,out] page       Page to weak-reference.
  * \param [in] notify_func    Weak reference notify function.
@@ -362,9 +362,9 @@ lepton_page_weak_ref (LeptonPage *page,
  * \param [in] user_data      Data to to search for.
  */
 void
-s_page_weak_unref (LeptonPage *page,
-                   void (*notify_func)(void *, void *),
-                   void *user_data)
+lepton_page_weak_unref (LeptonPage *page,
+                        void (*notify_func)(void *, void *),
+                        void *user_data)
 {
   g_return_if_fail (page != NULL);
   page->weak_refs = s_weakref_remove (page->weak_refs,

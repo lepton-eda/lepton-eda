@@ -264,8 +264,9 @@ smob_free (SCM smob)
                            unpack_as_pointer (smob));
     break;
   case GEDA_SMOB_PAGE:
-    s_page_weak_unref ((LeptonPage *) data, smob_weakref_notify,
-                       unpack_as_pointer (smob));
+    lepton_page_weak_unref ((LeptonPage *) data,
+                            smob_weakref_notify,
+                            unpack_as_pointer (smob));
     break;
   case GEDA_SMOB_OBJECT:
     /* See edascm_from_object() for an explanation of why LeptonObject

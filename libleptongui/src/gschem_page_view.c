@@ -1664,7 +1664,9 @@ geometry_cache_dispose_func (gpointer key,
                              gpointer value,
                              gpointer user_data)
 {
-  s_page_weak_unref ((LeptonPage*) key, geometry_cache_page_weak_ref_notify, user_data);
+  lepton_page_weak_unref ((LeptonPage*) key,
+                          geometry_cache_page_weak_ref_notify,
+                          user_data);
   gschem_page_geometry_free ((GschemPageGeometry*) value);
   return TRUE;
 }
