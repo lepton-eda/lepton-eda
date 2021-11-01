@@ -128,7 +128,7 @@ void
 lepton_page_delete_objects (LeptonPage *page);
 
 const GList*
-s_page_objects (LeptonPage *page);
+lepton_page_objects (LeptonPage *page);
 
 GList*
 lepton_page_objects_in_regions (LeptonToplevel *toplevel,

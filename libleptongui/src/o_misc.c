@@ -646,7 +646,7 @@ void o_autosave_backups(GschemToplevel *w_current)
           umask(saved_umask);
         }
 
-        if (o_save (s_page_objects (toplevel->page_current),
+        if (o_save (lepton_page_objects (toplevel->page_current),
                     backup_filename, NULL)) {
 
           p_current->ops_since_last_backup = 0;

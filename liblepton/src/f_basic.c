@@ -467,8 +467,8 @@ f_save (LeptonPage *page,
   g_free (dirname);
   g_free (only_filename);
 
-  if (o_save (s_page_objects (page), real_filename, &tmp_err)) {
-
+  if (o_save (lepton_page_objects (page), real_filename, &tmp_err))
+  {
     page->saved_since_first_loaded = 1;
 
     /* Reset the last saved timer */

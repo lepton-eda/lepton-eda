@@ -353,7 +353,7 @@ o_attrib_add_attrib (GschemToplevel *w_current,
         break;
     }
   } else {
-    world_get_object_glist_bounds (s_page_objects (toplevel->page_current),
+    world_get_object_glist_bounds (lepton_page_objects (toplevel->page_current),
                                    /* Don't include hidden objects. */
                                    FALSE,
                                    &left,

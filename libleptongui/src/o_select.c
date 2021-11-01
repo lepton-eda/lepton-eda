@@ -397,7 +397,7 @@ void o_select_box_search(GschemToplevel *w_current)
   top = MIN(w_current->first_wy, w_current->second_wy);
   bottom = MAX(w_current->first_wy, w_current->second_wy);
 
-  iter = s_page_objects (toplevel->page_current);
+  iter = lepton_page_objects (toplevel->page_current);
   while (iter != NULL) {
     o_current = (LeptonObject*) iter->data;
     /* only select visible objects */
@@ -509,7 +509,7 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
       break; /* no new netnames in the stack --> finished */
 
     /* get all the nets of the stacked netnames */
-    for (o_iter = s_page_objects (toplevel->page_current);
+    for (o_iter = lepton_page_objects (toplevel->page_current);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
       o_current = (LeptonObject*) o_iter->data;
@@ -613,7 +613,7 @@ o_select_visible_unlocked (GschemToplevel *w_current)
     gschem_toplevel_get_show_hidden_text (w_current);
 
   o_select_unselect_all (w_current);
-  for (iter = s_page_objects (toplevel->page_current);
+  for (iter = lepton_page_objects (toplevel->page_current);
        iter != NULL;
        iter = g_list_next (iter)) {
     LeptonObject *obj = (LeptonObject *) iter->data;

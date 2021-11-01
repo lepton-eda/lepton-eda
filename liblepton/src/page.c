@@ -636,7 +636,8 @@ lepton_page_delete_objects (LeptonPage *page)
  *  \param [in] page      The LeptonPage to get objects on.
  *  \returns a const pointer to the LeptonPage's GList of objects
  */
-const GList *s_page_objects (LeptonPage *page)
+const GList*
+lepton_page_objects (LeptonPage *page)
 {
   return page->_object_list;
 }

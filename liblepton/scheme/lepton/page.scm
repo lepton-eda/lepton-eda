@@ -113,7 +113,7 @@ PAGE after calling this function will cause an error."
   "Returns the contents of PAGE as a list of objects."
   (define pointer (geda-page->pointer* page 1))
 
-  (glist->object-list (s_page_objects pointer)))
+  (glist->object-list (lepton_page_objects pointer)))
 
 
 (define (page-dirty? page)
@@ -138,7 +138,7 @@ Otherwise, flags PAGE as having been modified.  Returns PAGE."
   "Returns a string representation of the contents of PAGE."
   (define pointer (geda-page->pointer* page 1))
   (pointer->string
-   (lepton_object_list_to_buffer (s_page_objects pointer))))
+   (lepton_object_list_to_buffer (lepton_page_objects pointer))))
 
 
 (define (string->page filename str)

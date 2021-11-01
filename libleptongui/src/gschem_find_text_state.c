@@ -357,7 +357,7 @@ find_objects_using_pattern (GSList *pages,
       continue;
     }
 
-    object_iter = s_page_objects (page);
+    object_iter = lepton_page_objects (page);
 
     while (object_iter != NULL) {
       LeptonObject *object = (LeptonObject*) object_iter->data;
@@ -437,7 +437,7 @@ find_objects_using_regex (GSList *pages,
       continue;
     }
 
-    object_iter = s_page_objects (page);
+    object_iter = lepton_page_objects (page);
 
     while (object_iter != NULL) {
       LeptonObject *object = (LeptonObject*) object_iter->data;
@@ -506,7 +506,7 @@ find_objects_using_substring (GSList *pages,
       continue;
     }
 
-    object_iter = s_page_objects (page);
+    object_iter = lepton_page_objects (page);
 
     while (object_iter != NULL) {
       LeptonObject *object = (LeptonObject*) object_iter->data;
@@ -679,7 +679,7 @@ get_subpages (GschemToplevel *w_current,
 
   g_return_val_if_fail (page != NULL, NULL);
 
-  object_iter = s_page_objects (page);
+  object_iter = lepton_page_objects (page);
 
   while (object_iter != NULL) {
     char *attrib;

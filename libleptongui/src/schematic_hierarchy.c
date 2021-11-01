@@ -334,7 +334,7 @@ s_hierarchy_traversepages (GschemToplevel *w_current,
   }
 
   /* walk throught the page objects and search for underlaying schematics */
-  for (iter = s_page_objects (p_current);
+  for (iter = lepton_page_objects (p_current);
        iter != NULL ;
        iter = g_list_next (iter)) {
     o_current = (LeptonObject *)iter->data;

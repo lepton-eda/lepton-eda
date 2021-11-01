@@ -629,8 +629,8 @@ lepton_attrib_window ()
     lepton_toplevel_set_page_current (toplevel, p_local);
 
     /* Now add all items found to the master lists */
-    s_sheet_data_add_master_comp_list_items (s_page_objects (p_local));
-    s_sheet_data_add_master_comp_attrib_list_items (s_page_objects (p_local));
+    s_sheet_data_add_master_comp_list_items (lepton_page_objects (p_local));
+    s_sheet_data_add_master_comp_attrib_list_items (lepton_page_objects (p_local));
 #if 0
     /* Note that this must be changed.  We need to input the entire project
      * before doing anything with the nets because we need to first
@@ -639,8 +639,8 @@ lepton_attrib_window ()
     s_sheet_data_add_master_net_attrib_list_items (p_local->object_list);
 #endif
 
-    s_sheet_data_add_master_pin_list_items (s_page_objects (p_local));
-    s_sheet_data_add_master_pin_attrib_list_items (s_page_objects (p_local));
+    s_sheet_data_add_master_pin_list_items (lepton_page_objects (p_local));
+    s_sheet_data_add_master_pin_attrib_list_items (lepton_page_objects (p_local));
   }     /* end of loop over files     */
 
   /* ---------- Sort the master lists  ---------- */
@@ -672,7 +672,7 @@ lepton_attrib_window ()
     /* only traverse pages which are toplevel */
     if (p_local->page_control == 0) {
       /* adds all components from page to comp_table */
-      s_table_add_toplevel_comp_items_to_comp_table (s_page_objects (p_local));
+      s_table_add_toplevel_comp_items_to_comp_table (lepton_page_objects (p_local));
 #if 0
       /* Note that this must be changed.  We need to input the entire project
        * before doing anything with the nets because we need to first
@@ -683,7 +683,7 @@ lepton_attrib_window ()
 #endif
 
       /* adds all pins from page to pin_table */
-      s_table_add_toplevel_pin_items_to_pin_table (s_page_objects (p_local));
+      s_table_add_toplevel_pin_items_to_pin_table (lepton_page_objects (p_local));
     }
   } /* for loop over pages */
 

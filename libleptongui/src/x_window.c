@@ -360,7 +360,7 @@ x_window_hide_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
 
   if (response == GTK_RESPONSE_OK) {
     o_edit_hide_specific_text (w_current,
-                               s_page_objects (w_current->toplevel->page_current),
+                               lepton_page_objects (w_current->toplevel->page_current),
                                gschem_show_hide_text_widget_get_text_string (GSCHEM_SHOW_HIDE_TEXT_WIDGET (widget)));
   }
 
@@ -377,7 +377,7 @@ x_window_show_text (GtkWidget *widget, gint response, GschemToplevel *w_current)
 
   if (response == GTK_RESPONSE_OK) {
     o_edit_show_specific_text (w_current,
-                               s_page_objects (w_current->toplevel->page_current),
+                               lepton_page_objects (w_current->toplevel->page_current),
                                gschem_show_hide_text_widget_get_text_string (GSCHEM_SHOW_HIDE_TEXT_WIDGET (widget)));
   }
 

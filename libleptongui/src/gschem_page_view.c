@@ -529,7 +529,7 @@ gschem_page_view_get_page_geometry (GschemPageView *view)
     geometry_cache_insert (view, page, geometry);
 
     gschem_page_geometry_zoom_extents (geometry,
-                                       s_page_objects (page),
+                                       lepton_page_objects (page),
                                        view->show_hidden_text);
   }
   else {
@@ -1488,7 +1488,7 @@ gschem_page_view_zoom_extents (GschemPageView *view, const GList *objects)
   g_return_if_fail (geometry != NULL);
 
   if (temp == NULL) {
-    temp = s_page_objects (gschem_page_view_get_page (view));
+    temp = lepton_page_objects (gschem_page_view_get_page (view));
   }
 
   gschem_page_geometry_zoom_extents (geometry, temp, view->show_hidden_text);

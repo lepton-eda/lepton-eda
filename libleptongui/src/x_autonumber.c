@@ -393,7 +393,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
   char *numslot_str, *slot_str;
   const GList *iter;
 
-  for (iter = s_page_objects (w_current->toplevel->page_current);
+  for (iter = lepton_page_objects (w_current->toplevel->page_current);
        iter != NULL;
        iter = g_list_next (iter)) {
     o_current = (LeptonObject*) iter->data;
@@ -692,7 +692,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
       lepton_toplevel_goto_page (w_current->toplevel, (LeptonPage*) page_item->data);
       gschem_toplevel_page_changed (w_current);
       /* iterate over all objects an look for matching searchtext's */
-      for (iter = s_page_objects (w_current->toplevel->page_current);
+      for (iter = lepton_page_objects (w_current->toplevel->page_current);
            iter != NULL;
            iter = g_list_next (iter)) {
         o_current = (LeptonObject*) iter->data;
@@ -766,7 +766,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 
       /* RENUMBER CODE FOR ONE PAGE AND ONE SEARCHTEXT*/
       /* 1. get objects to renumber */
-      for (iter = s_page_objects (w_current->toplevel->page_current);
+      for (iter = lepton_page_objects (w_current->toplevel->page_current);
            iter != NULL;
            iter = g_list_next (iter)) {
         o_current = (LeptonObject*) iter->data;

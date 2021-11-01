@@ -710,7 +710,7 @@ lepton_net_object_consolidate (LeptonPage *page)
   if (!net_consolidate)
     return;
 
-  iter = s_page_objects (page);
+  iter = lepton_page_objects (page);
 
   while (iter != NULL) {
     o_current = (LeptonObject *)iter->data;
@@ -721,7 +721,7 @@ lepton_net_object_consolidate (LeptonPage *page)
     }
 
     if (status == -1) {
-      iter = s_page_objects (page);
+      iter = lepton_page_objects (page);
       status = 0;
     } else {
       iter = g_list_next (iter);

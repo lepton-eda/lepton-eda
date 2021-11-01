@@ -1445,7 +1445,7 @@ s_toplevel_get_symbols (const LeptonToplevel *toplevel)
         p_iter != NULL;
         p_iter = g_list_next( p_iter )) {
     page = (LeptonPage *) p_iter->data;
-    for (o_iter = s_page_objects (page);
+    for (o_iter = lepton_page_objects (page);
          o_iter != NULL;
          o_iter = g_list_next (o_iter)) {
       o = (LeptonObject *)o_iter->data;

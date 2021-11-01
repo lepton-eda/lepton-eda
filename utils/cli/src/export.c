@@ -343,7 +343,7 @@ export_layout_page (LeptonPage *page,
 
   /* Now calculate extents of objects within page. Hidden text is
      not taken into account. */
-  world_get_object_glist_bounds (s_page_objects (page),
+  world_get_object_glist_bounds (lepton_page_objects (page),
                                  FALSE,
                                  &wx_min,
                                  &wy_min,
@@ -466,7 +466,7 @@ export_draw_page (LeptonPage *page)
   cairo_paint (cr);
 
   /* Draw objects & cues */
-  contents = s_page_objects (page);
+  contents = lepton_page_objects (page);
   for (iter = (GList *) contents; iter != NULL; iter = g_list_next (iter))
     eda_renderer_draw (renderer, (LeptonObject *) iter->data);
   for (iter = (GList *) contents; iter != NULL; iter = g_list_next (iter))

@@ -185,7 +185,7 @@ o_component_translate_all (GschemToplevel *w_current, int offset)
   gschem_page_view_zoom_extents (view, NULL);
   gschem_page_view_invalidate_all (view);
 
-  world_get_object_glist_bounds (s_page_objects (toplevel->page_current),
+  world_get_object_glist_bounds (lepton_page_objects (toplevel->page_current),
                                  show_hidden_text,
                                  &w_rleft,  &w_rtop,
                                  &w_rright, &w_rbottom);
@@ -198,7 +198,7 @@ o_component_translate_all (GschemToplevel *w_current, int offset)
    * the correct sense) were in use . */
   y = snap_grid (w_current, w_rtop);
 
-  for (iter = s_page_objects (toplevel->page_current);
+  for (iter = lepton_page_objects (toplevel->page_current);
        iter != NULL; iter = g_list_next (iter)) {
     o_current = (LeptonObject*) iter->data;
     s_conn_remove_object_connections (o_current);
@@ -206,14 +206,14 @@ o_component_translate_all (GschemToplevel *w_current, int offset)
 
   if (offset == 0) {
     g_message (_("Translating schematic [%1$d %2$d]"), -x, -y);
-    lepton_object_list_translate (s_page_objects (toplevel->page_current), -x, -y);
+    lepton_object_list_translate (lepton_page_objects (toplevel->page_current), -x, -y);
   } else {
     g_message (_("Translating schematic [%1$d %2$d]"),
                offset, offset);
-    lepton_object_list_translate (s_page_objects (toplevel->page_current), offset, offset);
+    lepton_object_list_translate (lepton_page_objects (toplevel->page_current), offset, offset);
   }
 
-  for (iter = s_page_objects (toplevel->page_current);
+  for (iter = lepton_page_objects (toplevel->page_current);
        iter != NULL;  iter = g_list_next (iter)) {
     o_current = (LeptonObject*) iter->data;
     s_conn_update_object (toplevel->page_current, o_current);

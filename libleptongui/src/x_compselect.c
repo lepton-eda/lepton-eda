@@ -473,8 +473,7 @@ update_attributes_model (Compselect *compselect,
     return;
   }
 
-  o_attrlist = o_attrib_find_floating_attribs (
-                              s_page_objects (preview_toplevel->page_current));
+  o_attrlist = o_attrib_find_floating_attribs (lepton_page_objects (preview_toplevel->page_current));
 
   cfg = eda_config_get_context_for_path (lepton_page_get_filename (preview_toplevel->page_current));
   filter_list = eda_config_get_string_list (cfg, "schematic.library",

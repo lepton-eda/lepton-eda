@@ -215,7 +215,7 @@ preview_update (GschemPreview *preview)
     }
   }
 
-  if (world_get_object_glist_bounds (s_page_objects (preview_page),
+  if (world_get_object_glist_bounds (lepton_page_objects (preview_page),
                                      /* Do not include hidden text. */
                                      FALSE,
                                      &left, &top,

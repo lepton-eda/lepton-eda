@@ -92,7 +92,7 @@ x_print_default_page_setup (LeptonToplevel *toplevel,
   } else if (orientation == NULL
              || g_strcmp0 (orientation, "auto") == 0) {
     /* Automatically choose the orientation that fits best */
-    status = world_get_object_glist_bounds (s_page_objects (page),
+    status = world_get_object_glist_bounds (lepton_page_objects (page),
                                             /* Don't include hidden objects */
                                             FALSE,
                                             &wx_min, &wy_min, &wx_max, &wy_max);
@@ -147,7 +147,7 @@ x_print_draw_page (LeptonToplevel *toplevel,
   /* First, calculate a transformation matrix for the cairo
    * context. We want to center the extents of the page in the
    * available page area. */
-  status = world_get_object_glist_bounds (s_page_objects (page),
+  status = world_get_object_glist_bounds (lepton_page_objects (page),
                                           /* Don't include hidden objects. */
                                           FALSE,
                                           &wx_min,
@@ -217,12 +217,12 @@ x_print_draw_page (LeptonToplevel *toplevel,
   cairo_paint (cr);
 
   /* Draw all objects and cues */
-  for (iter = (GList *) s_page_objects (page);
+  for (iter = (GList *) lepton_page_objects (page);
        iter != NULL;
        iter = g_list_next (iter)) {
     eda_renderer_draw (renderer, (LeptonObject *) iter->data);
   }
-  for (iter = (GList *) s_page_objects (page);
+  for (iter = (GList *) lepton_page_objects (page);
        iter != NULL;
        iter = g_list_next (iter)) {
     eda_renderer_draw_cues (renderer, (LeptonObject *) iter->data);
@@ -361,7 +361,7 @@ x_print_export_pdf (GschemToplevel *w_current,
   /* First, calculate a transformation matrix for the cairo
    * context. We want to center the extents of the page in the
    * available page area. */
-  status = world_get_object_glist_bounds (s_page_objects (w_current->toplevel->page_current),
+  status = world_get_object_glist_bounds (lepton_page_objects (w_current->toplevel->page_current),
                                           /* Don't include hidden objects. */
                                           FALSE,
                                           &wx_min, &wy_min, &wx_max, &wy_max);

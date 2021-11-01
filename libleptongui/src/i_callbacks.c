@@ -926,7 +926,7 @@ i_callback_edit_show_hidden (GtkWidget *widget, gpointer data)
   g_return_if_fail (w_current != NULL);
 
   o_edit_show_hidden (w_current,
-                      s_page_objects (gschem_toplevel_get_toplevel (w_current)->page_current));
+                      lepton_page_objects (gschem_toplevel_get_toplevel (w_current)->page_current));
 }
 
 /*! \todo Finish function documentation!!!
