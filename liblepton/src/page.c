@@ -434,34 +434,6 @@ s_page_print_all (LeptonToplevel *toplevel)
 }
 
 
-/*! \brief Check if CHANGED flag is set for any page in list.
- *  \par Function Description
- *  This function checks the CHANGED flag for all pages in the <B>list</B>
- *  object.
- *
- *  \param [in] list  LeptonPageList to check CHANGED flag in.
- *  \return 1 if any page has the CHANGED flag set, 0 otherwise.
- */
-gboolean
-s_page_check_changed (LeptonPageList *list)
-{
-  const GList *iter;
-  LeptonPage *p_current;
-
-  for ( iter = lepton_list_get_glist( list );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (LeptonPage *)iter->data;
-    if (p_current->CHANGED) {
-      return TRUE;
-    }
-  }
-
-  return FALSE;
-}
-
-
 /*! \brief Autosave initialization function.
  *  \par Function Description
  *  This function sets up the autosave callback function.

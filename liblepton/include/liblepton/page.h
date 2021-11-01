@@ -102,9 +102,6 @@ lepton_page_remove_weak_ptr (LeptonPage *page,
 void
 s_page_print_all (LeptonToplevel *toplevel);
 
-gboolean
-s_page_check_changed (LeptonPageList *list);
-
 void
 s_page_autosave_init (LeptonToplevel *toplevel);
 
