@@ -410,36 +410,6 @@ lepton_page_remove_weak_ptr (LeptonPage *page,
 }
 
 
-/*! \brief Search for pages by filename.
- *  \par Function Description
- *  Searches in \a toplevel's list of pages for a page with a filename
- *  equal to \a filename.
- *
- *  \param toplevel  The LeptonToplevel object
- *  \param filename  The filename string to search for
- *
- *  \return LeptonPage pointer to a matching page, NULL otherwise.
- */
-LeptonPage*
-s_page_search (LeptonToplevel *toplevel,
-               const gchar *filename)
-{
-  const GList *iter;
-  LeptonPage *page;
-
-  for ( iter = lepton_list_get_glist( toplevel->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    page = (LeptonPage *)iter->data;
-    /* FIXME this may not be correct on platforms with
-     * case-insensitive filesystems. */
-    if (strcmp (lepton_page_get_filename (page), filename) == 0)
-      return page;
-  }
-  return NULL;
-}
-
 /*! \brief Search for page by its filename's basename.
  *  \par Function Description
  *  Searches in \a toplevel's list of pages for a page with

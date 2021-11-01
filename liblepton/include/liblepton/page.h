@@ -100,9 +100,6 @@ void
 lepton_page_remove_weak_ptr (LeptonPage *page,
                              void *weak_pointer_loc);
 LeptonPage*
-s_page_search (LeptonToplevel *toplevel,
-               const gchar *filename);
-LeptonPage*
 s_page_search_by_basename (LeptonToplevel *toplevel,
                            const gchar *filename);
 LeptonPage*

@@ -1380,7 +1380,7 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
 
   LeptonPage* page = NULL;
   if (filename != NULL)
-    page = s_page_search (w_current->toplevel, filename);
+    page = lepton_toplevel_search_page (w_current->toplevel, filename);
 
 
   /* XXX: 2: [!pview] [!page] - either:

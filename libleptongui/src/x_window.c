@@ -741,7 +741,7 @@ x_window_open_page_impl (GschemToplevel *w_current,
 
 
   /* Return existing page if it is already loaded: */
-  LeptonPage* page = s_page_search (toplevel, filename);
+  LeptonPage* page = lepton_toplevel_search_page (toplevel, filename);
   if (page != NULL)
     return page;
 

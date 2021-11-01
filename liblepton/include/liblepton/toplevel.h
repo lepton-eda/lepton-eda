@@ -77,4 +77,7 @@ s_toplevel_weak_unref (LeptonToplevel *toplevel,
 void
 lepton_toplevel_goto_page (LeptonToplevel *toplevel,
                            LeptonPage *p_new);
+LeptonPage*
+lepton_toplevel_search_page (LeptonToplevel *toplevel,
+                             const gchar *filename);
 G_END_DECLS

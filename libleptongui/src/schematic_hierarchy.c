@@ -87,7 +87,7 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
   case HIERARCHY_NORMAL_LOAD:
     {
       gchar *filename = f_normalize_filename (string, NULL);
-      found = s_page_search (toplevel, filename);
+      found = lepton_toplevel_search_page (toplevel, filename);
       g_free (filename);
 
       if (found) {
@@ -168,7 +168,7 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
 
   filename = s_clib_symbol_get_filename (symbol);
 
-  page = s_page_search (toplevel, filename);
+  page = lepton_toplevel_search_page (toplevel, filename);
   if (page) {
     /* change link to parent page since we
      * can come here from any parent and must
@@ -263,7 +263,7 @@ s_hierarchy_load_subpage (GschemToplevel *w_current,
     string = scm_to_utf8_string (string_s);
     gchar *normalized = f_normalize_filename (string, error);
 
-    subpage = s_page_search (page->toplevel, normalized);
+    subpage = lepton_toplevel_search_page (page->toplevel, normalized);
 
     if (subpage == NULL) {
       int success;
