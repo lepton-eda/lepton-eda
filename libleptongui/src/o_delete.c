@@ -39,7 +39,7 @@ void o_delete (GschemToplevel *w_current, LeptonObject *object)
   g_return_if_fail (page != NULL);
 
   o_selection_remove (page->selection_list, object);
-  s_page_remove (page, object);
+  lepton_page_remove (page, object);
   g_run_hook_object (w_current, "%remove-objects-hook", object);
   lepton_object_delete (object);
 
@@ -116,7 +116,7 @@ void o_delete_selected (GschemToplevel *w_current)
   for (iter = to_remove; iter != NULL; iter = g_list_next (iter)) {
     obj = (LeptonObject *) iter->data;
     o_selection_remove (selection, obj);
-    s_page_remove (toplevel->page_current, obj);
+    lepton_page_remove (toplevel->page_current, obj);
   }
 
   g_run_hook_object_list (w_current, "%remove-objects-hook", to_remove);

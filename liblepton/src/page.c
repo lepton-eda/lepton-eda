@@ -572,8 +572,8 @@ lepton_page_append_list (LeptonPage *page,
  *  \param [in] object    The LeptonObject being removed from the page.
  */
 void
-s_page_remove (LeptonPage *page,
-               LeptonObject *object)
+lepton_page_remove (LeptonPage *page,
+                    LeptonObject *object)
 {
   pre_object_removed (page, object);
   page->_object_list = g_list_remove (page->_object_list, object);

@@ -293,7 +293,7 @@
             lepton_page_set_filename
             lepton_page_new
             s_page_objects
-            s_page_remove
+            lepton_page_remove
             lepton_page_list_get_glist
 
             o_selection_remove
@@ -622,7 +622,7 @@
 (define-lff lepton_page_set_filename void '(* *))
 (define-lff lepton_page_new '* '(* *))
 (define-lff s_page_objects '* '(*))
-(define-lff s_page_remove void '(* *))
+(define-lff lepton_page_remove void '(* *))
 (define-lff lepton_page_list_get_glist '* '(*))
 
 ;;; o_selection.c

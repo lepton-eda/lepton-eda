@@ -118,8 +118,8 @@ void
 lepton_page_append_list (LeptonPage *page,
                          GList *obj_list);
 void
-s_page_remove (LeptonPage *page,
-               LeptonObject *object);
+lepton_page_remove (LeptonPage *page,
+                    LeptonObject *object);
 void
 s_page_replace (LeptonPage *page,
                 LeptonObject *object1,

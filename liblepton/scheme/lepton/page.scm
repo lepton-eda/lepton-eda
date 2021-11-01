@@ -268,7 +268,7 @@ PAGE are ignored.  Returns PAGE."
 
         (begin
           (lepton_object_emit_pre_change_notify object-pointer)
-          (s_page_remove page-pointer object-pointer)
+          (lepton_page_remove page-pointer object-pointer)
           (lepton_page_set_changed page-pointer 1)
           ;; If the object is currently selected unselect it.
           (o_selection_remove (lepton_page_get_selection_list page-pointer)

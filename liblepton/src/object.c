@@ -930,7 +930,7 @@ lepton_object_delete (LeptonObject *o_current)
   if (o_current != NULL) {
     /* If currently attached to a page, remove it from the page */
     if (o_current->page != NULL) {
-      s_page_remove (o_current->page, o_current);
+      lepton_page_remove (o_current->page, o_current);
     }
 
     s_conn_remove_object_connections (o_current);

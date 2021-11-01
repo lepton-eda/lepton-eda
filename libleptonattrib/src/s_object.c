@@ -389,7 +389,7 @@ void
 s_object_delete_text_object_in_object (LeptonToplevel *toplevel,
                                        LeptonObject * text_object)
 {
-  s_page_remove (toplevel->page_current, text_object);
+  lepton_page_remove (toplevel->page_current, text_object);
   lepton_object_delete (text_object);
   toplevel->page_current->CHANGED = 1;
 }
