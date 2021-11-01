@@ -396,3 +396,27 @@ s_toplevel_remove_weak_ptr (LeptonToplevel *toplevel,
   toplevel->weak_refs = s_weakref_remove_ptr (toplevel->weak_refs,
                                               (void**) weak_pointer_loc);
 }
+
+
+/*! \brief Print full LeptonToplevel structure.
+ *  \par Function Description
+ *  This function prints the internal structure of <B>toplevel</B>'s
+ *  list of pages.
+ *
+ *  \param [in] toplevel  The LeptonToplevel object to print.
+ */
+void
+lepton_toplevel_print_all (LeptonToplevel *toplevel)
+{
+  const GList *iter;
+  LeptonPage *page;
+
+  for ( iter = lepton_list_get_glist( toplevel->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
+
+    page = (LeptonPage *) iter->data;
+    printf ("FILENAME: %1$s\n", lepton_page_get_filename (page));
+    lepton_object_list_print (page->_object_list);
+  }
+}

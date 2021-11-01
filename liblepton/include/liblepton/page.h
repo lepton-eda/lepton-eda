@@ -100,9 +100,6 @@ void
 lepton_page_remove_weak_ptr (LeptonPage *page,
                              void *weak_pointer_loc);
 void
-s_page_print_all (LeptonToplevel *toplevel);
-
-void
 s_page_autosave_init (LeptonToplevel *toplevel);
 
 gint
