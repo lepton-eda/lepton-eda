@@ -100,9 +100,6 @@ s_toplevel_update_pin_attribs_in_toplevel (LeptonToplevel *toplevel,
                                            char *refdes,
                                            LeptonObject *pin,
                                            STRING_LIST *new_pin_attrib_list);
-gint
-s_page_save_all (LeptonToplevel *toplevel);
-
 
 /* ------------- s_object.c ------------- */
 void

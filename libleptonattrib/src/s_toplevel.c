@@ -97,8 +97,8 @@ void s_toplevel_verify_design (LeptonToplevel *toplevel)
  *  \param [in] toplevel  The LeptonToplevel to save pages from.
  *  \return The number of failed tries to save a page.
  */
-gint
-s_page_save_all (LeptonToplevel *toplevel)
+static gint
+save_toplevel_pages (LeptonToplevel *toplevel)
 {
   const GList *iter;
   LeptonPage *p_current;
@@ -169,7 +169,7 @@ s_toplevel_save_sheet ()
            "Done writing SHEEET_DATA text back into pr_currnet.\n");
 
   /* Save all pages in design. */
-  s_page_save_all (toplevel);
+  save_toplevel_pages (toplevel);
   s_sheet_data_set_changed (sheet_head, FALSE);
 
   return;
