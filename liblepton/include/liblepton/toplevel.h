@@ -89,4 +89,10 @@ lepton_toplevel_search_page_by_id (LeptonPageList *list,
 void
 lepton_toplevel_print_all (LeptonToplevel *toplevel);
 
+void
+lepton_toplevel_init_autosave (LeptonToplevel *toplevel);
+
+gint
+lepton_toplevel_autosave (LeptonToplevel *toplevel);
+
 G_END_DECLS

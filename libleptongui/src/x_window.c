@@ -121,7 +121,7 @@ x_window_setup (GschemToplevel *w_current)
   i_vars_set(w_current);
 
   /* Initialize the autosave callback */
-  s_page_autosave_init(toplevel);
+  lepton_toplevel_init_autosave (toplevel);
 
   /* Initialize the clipboard callback */
   x_clipboard_init (w_current);

@@ -420,3 +420,68 @@ lepton_toplevel_print_all (LeptonToplevel *toplevel)
     lepton_object_list_print (page->_object_list);
   }
 }
+
+
+/*! \brief Autosave callback function.
+ *  \par Function Description
+ *  This function is a callback of the glib g_timeout functions.
+ *  It is called every "interval" milliseconds and it sets a flag to save
+ *  a backup copy of the opened pages.
+ *
+ *  \param [in] toplevel  The LeptonToplevel object.
+ *  \return The length in milliseconds to set for next interval.
+ */
+gint
+lepton_toplevel_autosave (LeptonToplevel *toplevel)
+{
+  const GList *iter;
+  LeptonPage *p_current;
+
+  if (toplevel == NULL) {
+    return 0;
+  }
+
+  /* Do nothing if the interval is 0 */
+  if (toplevel->auto_save_interval == 0) {
+    return toplevel->auto_save_interval;
+  }
+
+  /* Should we just disable the autosave timeout returning 0 or
+     just wait for more pages to be added? */
+  if ( toplevel->pages == NULL)
+    return toplevel->auto_save_interval;
+
+  for ( iter = lepton_list_get_glist( toplevel->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) ) {
+
+    p_current = (LeptonPage *) iter->data;
+
+    if (p_current->ops_since_last_backup != 0) {
+      /* Real autosave is done in o_undo_savestate */
+      p_current->do_autosave_backup = 1;
+    }
+  }
+
+  return toplevel->auto_save_interval;
+}
+
+
+/*! \brief Autosave initialization function.
+ *  \par Function Description
+ *  This function sets up the autosave callback function.
+ *
+ *  \param [in] toplevel  The LeptonToplevel object.
+ */
+void
+lepton_toplevel_init_autosave (LeptonToplevel *toplevel)
+{
+  if (toplevel->auto_save_interval != 0) {
+
+    /* 1000 converts seconds into milliseconds */
+    toplevel->auto_save_timeout =
+      g_timeout_add(toplevel->auto_save_interval*1000,
+                    (GSourceFunc) lepton_toplevel_autosave,
+                    toplevel);
+  }
+}
