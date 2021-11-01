@@ -41,7 +41,7 @@ struct st_toplevel
 };
 
 void
-s_toplevel_delete (LeptonToplevel *toplevel);
+lepton_toplevel_delete (LeptonToplevel *toplevel);
 
 LeptonToplevel*
 lepton_toplevel_new (void);

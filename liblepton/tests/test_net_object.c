@@ -46,7 +46,7 @@ check_construction ()
     lepton_object_delete (object1);
   }
 
-  s_toplevel_delete (toplevel);
+  lepton_toplevel_delete (toplevel);
 }
 
 void
@@ -92,7 +92,7 @@ check_accessors ()
     lepton_object_delete (object0);
   }
 
-  s_toplevel_delete (toplevel);
+  lepton_toplevel_delete (toplevel);
 }
 
 void
@@ -147,7 +147,7 @@ check_serialization ()
     g_free (buffer1);
   }
 
-  s_toplevel_delete (toplevel);
+  lepton_toplevel_delete (toplevel);
 }
 
 int
