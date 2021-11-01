@@ -244,6 +244,50 @@ lepton_toplevel_search_page (LeptonToplevel *toplevel,
 }
 
 
+/*! \brief Search for page by its filename's basename.
+ *  \par Function Description
+ *  Searches in \a toplevel's list of pages for a page with
+ *  basename( filename ) equal to \a filename.
+ *
+ *  \param toplevel  The LeptonToplevel object
+ *  \param filename  The filename string to search for
+ *
+ *  \return LeptonPage pointer to a matching page, NULL otherwise.
+ */
+LeptonPage*
+lepton_toplevel_search_page_by_basename (LeptonToplevel *toplevel,
+                                         const gchar *filename)
+{
+  const GList* iter   = NULL;
+  LeptonPage*  page   = NULL;
+  LeptonPage*  result = NULL;
+
+  for ( iter = lepton_list_get_glist( toplevel->pages );
+        iter != NULL;
+        iter = g_list_next( iter ) )
+  {
+    page = (LeptonPage*) iter->data;
+
+    const gchar* fname = lepton_page_get_filename (page);
+    gchar* bname = g_path_get_basename (fname);
+
+    /* FIXME this may not be correct on platforms with
+     * case-insensitive filesystems. */
+
+    if ( strcmp( bname, filename ) == 0 )
+    {
+      result = page;
+      g_free (bname);
+      break;
+    }
+
+    g_free (bname);
+  }
+
+  return result;
+}
+
+
 /*! \brief Add a weak reference watcher to an LeptonToplevel.
  * \par Function Description
  * Adds the weak reference callback \a notify_func to \a toplevel.  When

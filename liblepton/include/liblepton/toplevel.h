@@ -80,4 +80,7 @@ lepton_toplevel_goto_page (LeptonToplevel *toplevel,
 LeptonPage*
 lepton_toplevel_search_page (LeptonToplevel *toplevel,
                              const gchar *filename);
+LeptonPage*
+lepton_toplevel_search_page_by_basename (LeptonToplevel *toplevel,
+                                         const gchar *filename);
 G_END_DECLS

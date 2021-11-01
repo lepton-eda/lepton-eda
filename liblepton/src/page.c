@@ -410,49 +410,6 @@ lepton_page_remove_weak_ptr (LeptonPage *page,
 }
 
 
-/*! \brief Search for page by its filename's basename.
- *  \par Function Description
- *  Searches in \a toplevel's list of pages for a page with
- *  basename( filename ) equal to \a filename.
- *
- *  \param toplevel  The LeptonToplevel object
- *  \param filename  The filename string to search for
- *
- *  \return LeptonPage pointer to a matching page, NULL otherwise.
- */
-LeptonPage*
-s_page_search_by_basename (LeptonToplevel *toplevel,
-                           const gchar *filename)
-{
-  const GList* iter   = NULL;
-  LeptonPage*  page   = NULL;
-  LeptonPage*  result = NULL;
-
-  for ( iter = lepton_list_get_glist( toplevel->pages );
-        iter != NULL;
-        iter = g_list_next( iter ) )
-  {
-    page = (LeptonPage*) iter->data;
-
-    const gchar* fname = lepton_page_get_filename (page);
-    gchar* bname = g_path_get_basename (fname);
-
-    /* FIXME this may not be correct on platforms with
-     * case-insensitive filesystems. */
-
-    if ( strcmp( bname, filename ) == 0 )
-    {
-      result = page;
-      g_free (bname);
-      break;
-    }
-
-    g_free (bname);
-  }
-
-  return result;
-}
-
 /*! \brief Search for a page given its page id in a page list.
  *  \par Function Description
  *  This functions returns the page that have the page id \a pid in

@@ -1713,7 +1713,7 @@ untitled_filename (GschemToplevel* w_current, gboolean log_skipped)
     /* Avoid reusing names of already opened files:
     *  Avoid reusing names of existing files in current directory:
     */
-    if ( s_page_search_by_basename (toplevel, fname) ||
+    if ( lepton_toplevel_search_page_by_basename (toplevel, fname) ||
          g_file_test (fpath, G_FILE_TEST_EXISTS) )
     {
       if (log_skipped)
