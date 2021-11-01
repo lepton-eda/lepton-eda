@@ -281,7 +281,7 @@ lepton_page_delete (LeptonToplevel *toplevel,
   g_object_unref( page->selection_list );
 
   /* then delete objects of page */
-  s_page_delete_objects (page);
+  lepton_page_delete_objects (page);
 
   /* Free the objects in the place list. */
   lepton_object_list_delete (page->place_list);
@@ -613,7 +613,7 @@ lepton_page_replace (LeptonPage *page,
  *  \param [in] page      The LeptonPage being cleared.
  */
 void
-s_page_delete_objects (LeptonPage *page)
+lepton_page_delete_objects (LeptonPage *page)
 {
   GList *objects = page->_object_list;
   GList *iter;

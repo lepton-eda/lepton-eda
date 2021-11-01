@@ -448,7 +448,7 @@ o_undo_callback (GschemToplevel *w_current,
   if ((w_current->undo_type == UNDO_DISK && u_current->filename) ||
       (w_current->undo_type == UNDO_MEMORY && u_current->object_list)) {
     /* delete objects of page */
-    s_page_delete_objects (page);
+    lepton_page_delete_objects (page);
 
     /* Free the objects in the place list. */
     lepton_object_list_delete (page->place_list);

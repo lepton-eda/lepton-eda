@@ -125,7 +125,7 @@ lepton_page_replace (LeptonPage *page,
                      LeptonObject *object1,
                      LeptonObject *object2);
 void
-s_page_delete_objects (LeptonPage *page);
+lepton_page_delete_objects (LeptonPage *page);
 
 const GList*
 s_page_objects (LeptonPage *page);

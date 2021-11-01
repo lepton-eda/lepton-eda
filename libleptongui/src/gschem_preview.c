@@ -178,7 +178,7 @@ preview_update (GschemPreview *preview)
   LeptonToplevel *preview_toplevel = preview_page->toplevel;
 
   /* delete old preview */
-  s_page_delete_objects (preview_page);
+  lepton_page_delete_objects (preview_page);
 
   if (preview->active) {
     g_assert ((preview->filename == NULL) || (preview->buffer == NULL));
