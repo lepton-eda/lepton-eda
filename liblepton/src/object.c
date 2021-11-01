@@ -1568,8 +1568,6 @@ lepton_object_set_color (LeptonObject *object,
  * \param [in] object The LeptonObject for which to retrieve the
  *                    parent LeptonPage.
  * \return The LeptonPage which owns \a object or NULL.
- *
- * \sa s_page_append_object() s_page_append() s_page_remove()
  */
 LeptonPage *
 lepton_object_get_page (LeptonObject *object)
