@@ -99,10 +99,6 @@ lepton_page_add_weak_ptr (LeptonPage *page,
 void
 lepton_page_remove_weak_ptr (LeptonPage *page,
                              void *weak_pointer_loc);
-LeptonPage*
-s_page_search_by_page_id (LeptonPageList *list,
-                          int pid);
-
 void
 s_page_print_all (LeptonToplevel *toplevel);
 

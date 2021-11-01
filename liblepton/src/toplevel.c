@@ -288,6 +288,35 @@ lepton_toplevel_search_page_by_basename (LeptonToplevel *toplevel,
 }
 
 
+/*! \brief Search for a page given its page id in a page list.
+ *  \par Function Description
+ *  This functions returns the page that have the page id \a pid in
+ *  the list of pages starting at \a page_list, or NULL if there is no
+ *  such page.
+ *
+ *  \param [in] list      The list of page to search the page in.
+ *  \param [in] pid       The ID of the page to find.
+ *  \returns A pointer on the page found or NULL if not found.
+ */
+LeptonPage*
+lepton_toplevel_search_page_by_id (LeptonPageList *list,
+                                   int pid)
+{
+  const GList *iter;
+
+  for ( iter = lepton_list_get_glist (list);
+        iter != NULL;
+        iter = g_list_next (iter) ) {
+    LeptonPage *page = (LeptonPage *)iter->data;
+    if (page->pid == pid) {
+      return page;
+    }
+  }
+
+  return NULL;
+}
+
+
 /*! \brief Add a weak reference watcher to an LeptonToplevel.
  * \par Function Description
  * Adds the weak reference callback \a notify_func to \a toplevel.  When

@@ -410,34 +410,6 @@ lepton_page_remove_weak_ptr (LeptonPage *page,
 }
 
 
-/*! \brief Search for a page given its page id in a page list.
- *  \par Function Description
- *  This functions returns the page that have the page id \a pid in
- *  the list of pages starting at \a page_list, or NULL if there is no
- *  such page.
- *
- *  \param [in] list      The list of page to search the page in.
- *  \param [in] pid       The ID of the page to find.
- *  \returns A pointer on the page found or NULL if not found.
- */
-LeptonPage*
-s_page_search_by_page_id (LeptonPageList *list,
-                          int pid)
-{
-  const GList *iter;
-
-  for ( iter = lepton_list_get_glist (list);
-        iter != NULL;
-        iter = g_list_next (iter) ) {
-    LeptonPage *page = (LeptonPage *)iter->data;
-    if (page->pid == pid) {
-      return page;
-    }
-  }
-
-  return NULL;
-}
-
 /*! \brief Print full LeptonToplevel structure.
  *  \par Function Description
  *  This function prints the internal structure of <B>toplevel</B>'s

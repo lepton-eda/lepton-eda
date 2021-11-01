@@ -83,4 +83,7 @@ lepton_toplevel_search_page (LeptonToplevel *toplevel,
 LeptonPage*
 lepton_toplevel_search_page_by_basename (LeptonToplevel *toplevel,
                                          const gchar *filename);
+LeptonPage*
+lepton_toplevel_search_page_by_id (LeptonPageList *list,
+                                   int pid);
 G_END_DECLS

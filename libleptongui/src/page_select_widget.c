@@ -742,8 +742,8 @@ pagesel_update (PageSelectWidget* pagesel)
     p_current = (LeptonPage *)iter->data;
     /* find every page that is not a hierarchy-down of another page */
     if (p_current->up < 0 ||
-        s_page_search_by_page_id (toplevel->pages,
-                                  p_current->up) == NULL) {
+        lepton_toplevel_search_page_by_id (toplevel->pages,
+                                           p_current->up) == NULL) {
       add_page (model, NULL, toplevel->pages, p_current, pagesel);
     }
   }

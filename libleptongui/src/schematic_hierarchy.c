@@ -94,7 +94,7 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
         /* check whether this page is in the parents list */
         for (forbear = parent;
              forbear != NULL && found->pid != forbear->pid && forbear->up >= 0;
-             forbear = s_page_search_by_page_id (toplevel->pages, forbear->up))
+             forbear = lepton_toplevel_search_page_by_id (toplevel->pages, forbear->up))
           ; /* void */
 
         if (forbear != NULL && found->pid == forbear->pid) {
@@ -219,7 +219,7 @@ s_hierarchy_find_up_page (LeptonPageList *page_list,
     return NULL;
   }
 
-  return s_page_search_by_page_id (page_list, current_page->up);
+  return lepton_toplevel_search_page_by_id (page_list, current_page->up);
 }
 
 
