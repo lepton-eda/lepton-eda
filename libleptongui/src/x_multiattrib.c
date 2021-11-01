@@ -678,7 +678,7 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
     } else {
         /* make a copy of the attribute object */
         o_new = lepton_object_copy (o_attrib);
-        s_page_append (toplevel->page_current, o_new);
+        lepton_page_append (toplevel->page_current, o_new);
         /* add the attribute its parent */
         o_attrib_attach (o_new, lepton_object_get_parent (o_attrib), TRUE);
         /* note: this object is unselected (not added to selection). */

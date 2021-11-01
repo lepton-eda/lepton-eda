@@ -126,7 +126,7 @@ void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *str
                                       10,
                                       INVISIBLE,
                                       SHOW_NAME_VALUE);
-    s_page_append (toplevel->page_current, new_obj);
+    lepton_page_append (toplevel->page_current, new_obj);
 
     /* manually attach attribute */
     o_attrib_attach (new_obj, object, FALSE);

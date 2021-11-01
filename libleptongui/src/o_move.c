@@ -586,7 +586,7 @@ void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
                                        c_current->y,
                                        c_current->x,
                                        c_current->y);
-      s_page_append (page, new_net);
+      lepton_page_append (page, new_net);
       /* This new net object is only picked up for stretching later,
        * somewhat of a kludge. If the move operation is cancelled, these
        * new 0 length nets are removed by the "undo" operation invoked.

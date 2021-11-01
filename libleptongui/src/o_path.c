@@ -508,7 +508,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
     w_current->third_wx = -1;
     w_current->third_wy = -1;
 
-    s_page_append (page, obj);
+    lepton_page_append (page, obj);
     g_run_hook_object (w_current, "%add-objects-hook", obj);
     gschem_toplevel_page_content_changed (w_current, page);
     o_undo_savestate (w_current, page, UNDO_ALL);

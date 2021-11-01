@@ -381,7 +381,7 @@ o_attrib_add_attrib (GschemToplevel *w_current,
                                     w_current->text_size, /* current text size */
                                     visibility,
                                     show_name_value);
-  s_page_append (toplevel->page_current, new_obj);
+  lepton_page_append (toplevel->page_current, new_obj);
 
   /* now attach the attribute to the object (if o_current is not NULL) */
   /* remember that o_current contains the object to get the attribute */

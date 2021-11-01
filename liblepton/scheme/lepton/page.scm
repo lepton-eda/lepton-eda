@@ -212,7 +212,7 @@ syntax."
 
         (begin
           (lepton_object_emit_pre_change_notify object-pointer)
-          (s_page_append page-pointer object-pointer)
+          (lepton_page_append page-pointer object-pointer)
           (lepton_object_emit_change_notify object-pointer)
           (lepton_page_set_changed page-pointer 1)
 

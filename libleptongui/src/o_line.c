@@ -110,7 +110,7 @@ void o_line_end(GschemToplevel *w_current, int w_x, int w_y)
                                       w_current->second_wx,
                                       w_current->second_wy);
 
-    s_page_append (page, new_obj);
+    lepton_page_append (page, new_obj);
 
     /* Call add-objects-hook */
     g_run_hook_object (w_current, "%add-objects-hook", new_obj);

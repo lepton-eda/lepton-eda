@@ -522,7 +522,7 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
                                      w_current->first_wy,
                                      w_current->second_wx,
                                      w_current->second_wy);
-      s_page_append (page, new_net);
+    lepton_page_append (page, new_net);
 
       added_objects = g_list_prepend (added_objects, new_net);
 
@@ -559,7 +559,7 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
                                      w_current->second_wy,
                                      w_current->third_wx,
                                      w_current->third_wy);
-      s_page_append (page, new_net);
+    lepton_page_append (page, new_net);
 
       added_objects = g_list_prepend (added_objects, new_net);
 
@@ -1063,7 +1063,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
                                          rippers[i].y[0],
                                          rippers[i].x[1],
                                          rippers[i].y[1]);
-        s_page_append (page, new_obj);
+        lepton_page_append (page, new_obj);
       } else {
 
         if (rippersym != NULL) {
@@ -1078,7 +1078,7 @@ int o_net_add_busrippers(GschemToplevel *w_current, LeptonObject *net_obj,
                                           1);
           s_page_append_list (page,
                               lepton_component_promote_attribs (new_obj));
-          s_page_append (page, new_obj);
+          lepton_page_append (page, new_obj);
         } else {
           g_message (_("Bus ripper symbol [%1$s] was not found in any component library"),
                      w_current->bus_ripper_symname);

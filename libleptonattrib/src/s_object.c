@@ -357,7 +357,7 @@ s_object_attrib_add_attrib_in_object (LeptonToplevel *toplevel,
                                     DEFAULT_TEXT_SIZE,
                                     visibility,
                                     show_name_value);
-  s_page_append (toplevel->page_current, new_obj);
+  lepton_page_append (toplevel->page_current, new_obj);
 
   /* now toplevel->page_current->object_tail contains new text item */
 

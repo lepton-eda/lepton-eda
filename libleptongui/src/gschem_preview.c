@@ -200,16 +200,16 @@ preview_update (GschemPreview *preview)
         s_page_append_list (preview_page, objects);
       }
       else {
-        s_page_append (preview_page,
-                       lepton_text_object_new (2,
-                                               100,
-                                               100,
-                                               LOWER_MIDDLE,
-                                               0,
-                                               err->message,
-                                               10,
-                                               VISIBLE,
-                                               SHOW_NAME_VALUE));
+        lepton_page_append (preview_page,
+                            lepton_text_object_new (2,
+                                                    100,
+                                                    100,
+                                                    LOWER_MIDDLE,
+                                                    0,
+                                                    err->message,
+                                                    10,
+                                                    VISIBLE,
+                                                    SHOW_NAME_VALUE));
         g_error_free(err);
       }
     }

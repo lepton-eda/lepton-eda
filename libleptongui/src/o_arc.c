@@ -147,7 +147,7 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
                                    start_angle,
                                    sweep_angle);
 
-  s_page_append (page, new_obj);
+  lepton_page_append (page, new_obj);
 
   w_current->first_wx  = -1;
   w_current->first_wy  = -1;

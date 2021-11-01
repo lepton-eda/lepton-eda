@@ -535,8 +535,8 @@ s_page_autosave (LeptonToplevel *toplevel)
  *  \param [in] object    The LeptonObject being added to the page.
  */
 void
-s_page_append (LeptonPage *page,
-               LeptonObject *object)
+lepton_page_append (LeptonPage *page,
+                    LeptonObject *object)
 {
   page->_object_list = g_list_append (page->_object_list, object);
   object_added (page, object);
@@ -599,7 +599,7 @@ s_page_replace (LeptonPage *page,
 
   /* If object1 not found, append object2 */
   if (iter == NULL) {
-    s_page_append (page, object2);
+    lepton_page_append (page, object2);
     return;
   }
 

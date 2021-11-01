@@ -112,7 +112,7 @@ void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
                                          0,
                                          FALSE,
                                          FALSE);
-    s_page_append (toplevel->page_current, new_obj);
+    lepton_page_append (toplevel->page_current, new_obj);
 
     /* Run %add-objects-hook */
     g_run_hook_object (w_current, "%add-objects-hook", new_obj);

@@ -112,8 +112,8 @@ gint
 s_page_autosave (LeptonToplevel *toplevel);
 
 void
-s_page_append (LeptonPage *page,
-               LeptonObject *object);
+lepton_page_append (LeptonPage *page,
+                    LeptonObject *object);
 void
 s_page_append_list (LeptonPage *page,
                     GList *obj_list);

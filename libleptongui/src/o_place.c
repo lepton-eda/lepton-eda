@@ -110,7 +110,7 @@ void o_place_end (GschemToplevel *w_current,
   for (iter = temp_dest_list; iter != NULL; iter = g_list_next (iter)) {
     o_current = (LeptonObject*) iter->data;
 
-    s_page_append (page, o_current);
+    lepton_page_append (page, o_current);
 
     /* Update object connectivity */
     s_conn_update_object (page, o_current);
