@@ -552,8 +552,8 @@ lepton_page_append (LeptonPage *page,
  *  \param [in] obj_list  The LeptonObject list being added to the page.
  */
 void
-s_page_append_list (LeptonPage *page,
-                    GList *obj_list)
+lepton_page_append_list (LeptonPage *page,
+                         GList *obj_list)
 {
   GList *iter;
   page->_object_list = g_list_concat (page->_object_list, obj_list);

@@ -471,9 +471,9 @@ o_undo_callback (GschemToplevel *w_current,
 
   } else if (w_current->undo_type == UNDO_MEMORY && u_current->object_list) {
 
-    s_page_append_list (page,
-                        o_glist_copy_all (u_current->object_list,
-                                          NULL));
+    lepton_page_append_list (page,
+                             o_glist_copy_all (u_current->object_list,
+                                               NULL));
   }
 
   page->page_control = u_current->page_control;

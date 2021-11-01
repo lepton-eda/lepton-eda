@@ -534,7 +534,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   g_list_free (old_attribs);
 
   /* Add new attributes to page */
-  s_page_append_list (page, new_attribs);
+  lepton_page_append_list (page, new_attribs);
 
   /* Update pinnumbers for current slot */
   s_slot_update_object (o_new);

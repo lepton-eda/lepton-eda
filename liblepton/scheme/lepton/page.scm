@@ -184,7 +184,7 @@ syntax."
                                  *error)))
     (gerror-error *error)
 
-    (s_page_append_list pointer objects)
+    (lepton_page_append_list pointer objects)
 
     (pointer->geda-page pointer)))
 

@@ -405,7 +405,7 @@ o_read (LeptonPage *page,
   objects = o_read_buffer (page, NULL, buffer, size, filename, err);
   g_free (buffer);
 
-  s_page_append_list (page, objects);
+  lepton_page_append_list (page, objects);
 
   return page;
 }

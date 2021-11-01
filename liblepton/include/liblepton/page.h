@@ -115,8 +115,8 @@ void
 lepton_page_append (LeptonPage *page,
                     LeptonObject *object);
 void
-s_page_append_list (LeptonPage *page,
-                    GList *obj_list);
+lepton_page_append_list (LeptonPage *page,
+                         GList *obj_list);
 void
 s_page_remove (LeptonPage *page,
                LeptonObject *object);

@@ -197,7 +197,7 @@ preview_update (GschemPreview *preview)
                                        _("Preview Buffer"), &err);
 
       if (err == NULL) {
-        s_page_append_list (preview_page, objects);
+        lepton_page_append_list (preview_page, objects);
       }
       else {
         lepton_page_append (preview_page,
