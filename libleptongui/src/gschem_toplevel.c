@@ -365,7 +365,7 @@ void
 gschem_toplevel_free (GschemToplevel *w_current)
 {
   if (w_current->toplevel != NULL) {
-    s_toplevel_delete (w_current->toplevel);
+    lepton_toplevel_delete (w_current->toplevel);
     w_current->toplevel = NULL;
   }
 

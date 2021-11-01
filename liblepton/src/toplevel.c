@@ -98,7 +98,7 @@ lepton_toplevel_delete_pages (LeptonToplevel *toplevel)
  *
  */
 void
-s_toplevel_delete (LeptonToplevel *toplevel)
+lepton_toplevel_delete (LeptonToplevel *toplevel)
 {
   GList *iter;
 
