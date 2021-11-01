@@ -2122,12 +2122,12 @@ i_callback_hierarchy_down_schematic (GtkWidget *widget, gpointer data)
       */
       if (child != NULL && !x_tabs_enabled())
       {
-        s_page_goto (gschem_toplevel_get_toplevel (w_current), child);
+        lepton_toplevel_goto_page (gschem_toplevel_get_toplevel (w_current), child);
         gschem_toplevel_page_changed (w_current);
         gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view (w_current),
                                        NULL);
         o_undo_savestate_old(w_current, UNDO_ALL);
-        s_page_goto (gschem_toplevel_get_toplevel (w_current), parent);
+        lepton_toplevel_goto_page (gschem_toplevel_get_toplevel (w_current), parent);
         gschem_toplevel_page_changed (w_current);
       }
 

@@ -587,7 +587,7 @@ void o_autosave_backups(GschemToplevel *w_current)
     }
     if (p_current->ops_since_last_backup != 0) {
       /* make p_current the current page of toplevel */
-      s_page_goto (toplevel, p_current);
+      lepton_toplevel_goto_page (toplevel, p_current);
       gschem_toplevel_page_changed (w_current);
 
       /* Get the real filename and file permissions */
@@ -672,6 +672,6 @@ void o_autosave_backups(GschemToplevel *w_current)
     }
   }
   /* restore current page */
-  s_page_goto (toplevel, p_save);
+  lepton_toplevel_goto_page (toplevel, p_save);
   gschem_toplevel_page_changed (w_current);
 }

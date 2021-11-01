@@ -585,9 +585,10 @@ static void
 x_tabs_tl_page_cur_set (GschemToplevel* w_current,
                         LeptonPage* page)
 {
-  s_page_goto (w_current->toplevel, page);
+  lepton_toplevel_goto_page (w_current->toplevel, page);
 
-  /* NOTE: gschem_toplevel_page_changed() after s_page_goto():
+  /* NOTE: gschem_toplevel_page_changed() after
+   * lepton_toplevel_goto_page():
   */
   gschem_toplevel_page_changed (w_current);
 }

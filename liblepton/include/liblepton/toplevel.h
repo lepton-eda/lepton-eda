@@ -74,5 +74,7 @@ void
 s_toplevel_weak_unref (LeptonToplevel *toplevel,
                        void (*notify_func)(void *, void *),
                        void *user_data);
-
+void
+lepton_toplevel_goto_page (LeptonToplevel *toplevel,
+                           LeptonPage *p_new);
 G_END_DECLS

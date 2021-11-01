@@ -689,7 +689,7 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
     searchtext = g_strndup(scope_text, strlen(scope_text)-1);
     /* collect all the possible searchtexts in all pages of the hierarchy */
     for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
-      s_page_goto (w_current->toplevel, (LeptonPage*) page_item->data);
+      lepton_toplevel_goto_page (w_current->toplevel, (LeptonPage*) page_item->data);
       gschem_toplevel_page_changed (w_current);
       /* iterate over all objects an look for matching searchtext's */
       for (iter = s_page_objects (w_current->toplevel->page_current);
@@ -745,7 +745,8 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
             && autotext->scope_overwrite)) {
         for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
           autotext->root_page = (pages->data == page_item->data);
-          s_page_goto(w_current->toplevel, (LeptonPage*) page_item->data);
+          lepton_toplevel_goto_page (w_current->toplevel,
+                                     (LeptonPage*) page_item->data);
           gschem_toplevel_page_changed (w_current);
           autonumber_get_used(w_current, autotext);
         }
@@ -754,7 +755,8 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
 
     /* renumber the elements */
     for (page_item = pages; page_item != NULL; page_item = g_list_next(page_item)) {
-      s_page_goto(w_current->toplevel, (LeptonPage*) page_item->data);
+      lepton_toplevel_goto_page (w_current->toplevel,
+                                 (LeptonPage*) page_item->data);
       gschem_toplevel_page_changed (w_current);
       autotext->root_page = (pages->data == page_item->data);
       /* build a page database if we're numbering pagebypage or selection only*/
@@ -825,7 +827,8 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
   /* cleanup and redraw all*/
   g_list_foreach(searchtext_list, (GFunc) g_free, NULL);
   g_list_free(searchtext_list);
-  s_page_goto(w_current->toplevel, (LeptonPage*) pages->data); /* go back to the root page */
+  lepton_toplevel_goto_page (w_current->toplevel,
+                             (LeptonPage*) pages->data); /* go back to the root page */
   gschem_toplevel_page_changed (w_current);
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
   g_list_free(pages);

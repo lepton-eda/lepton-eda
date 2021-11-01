@@ -185,6 +185,34 @@ lepton_toplevel_set_pages (LeptonToplevel *toplevel,
 }
 
 
+/*! \brief changes the current page in toplevel
+ *  \par Function Description
+ *  Changes the current page in \a toplevel to the page \a p_new.
+ *
+ *  \param toplevel  The LeptonToplevel object
+ *  \param p_new     The LeptonPage to go to
+ */
+void
+lepton_toplevel_goto_page (LeptonToplevel *toplevel,
+                           LeptonPage *p_new)
+{
+  gchar *dirname;
+
+  lepton_toplevel_set_page_current (toplevel, p_new);
+
+  dirname = g_path_get_dirname (lepton_page_get_filename (p_new));
+  if (chdir (dirname)) {
+    /* An error occured with chdir */
+    /* FIXME[2017-02-21] Libraries should not be changing the
+     * current working directory.  If it is not possible to avoid a
+     * chdir() call, then the error needs to be handled and/or
+     * reported. */
+  }
+  g_free (dirname);
+
+}
+
+
 /*! \brief Add a weak reference watcher to an LeptonToplevel.
  * \par Function Description
  * Adds the weak reference callback \a notify_func to \a toplevel.  When

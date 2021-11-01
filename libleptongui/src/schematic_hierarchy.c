@@ -102,7 +102,7 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
                        _("Hierarchy contains a circular dependency."));
           return NULL;  /* error signal */
         }
-        s_page_goto (toplevel, found);
+        lepton_toplevel_goto_page (toplevel, found);
         if (page_control != 0) {
           found->page_control = page_control;
         }
@@ -174,7 +174,7 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
      * can come here from any parent and must
      * come back to the same page */
     page->up = parent->pid;
-    s_page_goto (toplevel, page);
+    lepton_toplevel_goto_page (toplevel, page);
     g_free (filename);
     return;
   }
@@ -182,7 +182,7 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
   page = lepton_page_new (toplevel, filename);
   g_free(filename);
 
-  s_page_goto (toplevel, page);
+  lepton_toplevel_goto_page (toplevel, page);
 
   schematic_file_open (w_current,
                        page,

@@ -779,7 +779,7 @@ x_dialog_close_changed_page (GschemToplevel *w_current, LeptonPage *page)
 
       case GTK_RESPONSE_YES:
         /* action selected: save */
-        s_page_goto (w_current->toplevel, page);
+        lepton_toplevel_goto_page (w_current->toplevel, page);
         gschem_toplevel_page_changed (w_current);
         i_callback_file_save (NULL, w_current);
         /* has the page been really saved? */
@@ -804,7 +804,7 @@ x_dialog_close_changed_page (GschemToplevel *w_current, LeptonPage *page)
   /* Switch back to the page we were on if it wasn't the one being closed */
   g_return_val_if_fail (keep_page != NULL, result);
   if (keep_page != page) {
-    s_page_goto (w_current->toplevel, keep_page);
+    lepton_toplevel_goto_page (w_current->toplevel, keep_page);
     gschem_toplevel_page_changed (w_current);
   }
   return result;
@@ -880,7 +880,7 @@ x_dialog_close_window (GschemToplevel *w_current)
              p_unsaved = g_list_next (p_unsaved)) {
           p_current = (LeptonPage*) p_unsaved->data;
 
-          s_page_goto (toplevel, p_current);
+          lepton_toplevel_goto_page (toplevel, p_current);
           gschem_toplevel_page_changed (w_current);
 
           i_callback_file_save (NULL, w_current);
@@ -903,7 +903,7 @@ x_dialog_close_window (GschemToplevel *w_current)
 
   /* Switch back to the page we were on */
   g_return_val_if_fail (keep_page != NULL, ret);
-  s_page_goto (toplevel, keep_page);
+  lepton_toplevel_goto_page (toplevel, keep_page);
   gschem_toplevel_page_changed (w_current);
 
   return ret;
