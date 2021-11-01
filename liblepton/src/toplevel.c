@@ -431,7 +431,7 @@ lepton_toplevel_print_all (LeptonToplevel *toplevel)
  *  \param [in] toplevel  The LeptonToplevel object.
  *  \return The length in milliseconds to set for next interval.
  */
-gint
+static gint
 lepton_toplevel_autosave (LeptonToplevel *toplevel)
 {
   const GList *iter;
