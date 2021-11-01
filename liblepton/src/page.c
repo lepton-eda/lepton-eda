@@ -591,9 +591,9 @@ lepton_page_remove (LeptonPage *page,
  * \param [in] object2   The LeptonObject being added to the page.
  */
 void
-s_page_replace (LeptonPage *page,
-                LeptonObject *object1,
-                LeptonObject *object2)
+lepton_page_replace (LeptonPage *page,
+                     LeptonObject *object1,
+                     LeptonObject *object2)
 {
   GList *iter = g_list_find (page->_object_list, object1);
 

@@ -121,9 +121,9 @@ void
 lepton_page_remove (LeptonPage *page,
                     LeptonObject *object);
 void
-s_page_replace (LeptonPage *page,
-                LeptonObject *object1,
-                LeptonObject *object2);
+lepton_page_replace (LeptonPage *page,
+                     LeptonObject *object1,
+                     LeptonObject *object2);
 void
 s_page_delete_objects (LeptonPage *page);
 

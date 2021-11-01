@@ -540,7 +540,7 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   s_slot_update_object (o_new);
 
   /* Replace old LeptonObject with new LeptonObject */
-  s_page_replace (page, o_current, o_new);
+  lepton_page_replace (page, o_current, o_new);
   lepton_object_delete (o_current);
 
   /* Select new LeptonObject */
