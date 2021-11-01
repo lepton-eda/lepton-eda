@@ -131,11 +131,11 @@ const GList*
 s_page_objects (LeptonPage *page);
 
 GList*
-s_page_objects_in_regions (LeptonToplevel *toplevel,
-                           LeptonPage *page,
-                           LeptonBox *rects,
-                           int n_rects,
-                           gboolean include_hidden);
+lepton_page_objects_in_regions (LeptonToplevel *toplevel,
+                                LeptonPage *page,
+                                LeptonBox *rects,
+                                int n_rects,
+                                gboolean include_hidden);
 const gchar*
 lepton_page_get_filename (const LeptonPage *page);
 

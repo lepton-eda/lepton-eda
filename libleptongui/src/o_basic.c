@@ -124,11 +124,11 @@ void o_redraw_rect (GschemToplevel *w_current,
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
 
-  obj_list = s_page_objects_in_regions (toplevel,
-                                        page,
-                                        world_rect,
-                                        1,
-                                        show_hidden_text);
+  obj_list = lepton_page_objects_in_regions (toplevel,
+                                             page,
+                                             world_rect,
+                                             1,
+                                             show_hidden_text);
 
   g_free (world_rect);
 

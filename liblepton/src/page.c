@@ -656,11 +656,11 @@ const GList *s_page_objects (LeptonPage *page)
  *  \return The GList of LeptonObjects in the region.
  */
 GList*
-s_page_objects_in_regions (LeptonToplevel *toplevel,
-                           LeptonPage *page,
-                           LeptonBox *rects,
-                           int n_rects,
-                           gboolean include_hidden)
+lepton_page_objects_in_regions (LeptonToplevel *toplevel,
+                                LeptonPage *page,
+                                LeptonBox *rects,
+                                int n_rects,
+                                gboolean include_hidden)
 {
   GList *iter;
   GList *list = NULL;
