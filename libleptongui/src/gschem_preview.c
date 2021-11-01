@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -304,7 +304,7 @@ gschem_preview_init (GschemPreview *preview)
 
   GschemToplevel *preview_w_current;
   preview_w_current = gschem_toplevel_new ();
-  gschem_toplevel_set_toplevel (preview_w_current, s_toplevel_new ());
+  gschem_toplevel_set_toplevel (preview_w_current, lepton_toplevel_new ());
 
   i_vars_set (preview_w_current);
 

@@ -28,4 +28,4 @@
 
 (define (%make-toplevel)
   "Make new toplevel."
-  (pointer->geda-toplevel (s_toplevel_new)))
+  (pointer->geda-toplevel (lepton_toplevel_new)))

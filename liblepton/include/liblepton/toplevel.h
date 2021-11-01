@@ -2,7 +2,7 @@
  * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ void
 s_toplevel_delete (LeptonToplevel *toplevel);
 
 LeptonToplevel*
-s_toplevel_new (void);
+lepton_toplevel_new (void);
 
 void
 s_toplevel_remove_weak_ptr (LeptonToplevel *toplevel,

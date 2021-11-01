@@ -355,7 +355,7 @@
             s_conn_return_others
             s_conn_update_object
 
-            s_toplevel_new
+            lepton_toplevel_new
             lepton_toplevel_get_page_current
             lepton_toplevel_get_pages
 
@@ -454,7 +454,7 @@
 (define-lff s_clib_init void '())
 (define-lff s_clib_symbol_get_filename '* '(*))
 ;;; toplevel.c
-(define-lff s_toplevel_new '* '())
+(define-lff lepton_toplevel_new '* '())
 (define-lff lepton_toplevel_get_page_current '* '(*))
 (define-lff lepton_toplevel_get_pages '* '(*))
 ;;; g_rc.c

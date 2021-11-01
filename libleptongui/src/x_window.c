@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1002,7 +1002,7 @@ x_window_close_page_impl (GschemToplevel *w_current,
  */
 GschemToplevel* x_window_new ()
 {
-  LeptonToplevel *toplevel = s_toplevel_new ();
+  LeptonToplevel *toplevel = lepton_toplevel_new ();
 
   /* Load old (*rc files) and new (*.conf) configuration: */
   x_rc_parse_gschem (toplevel, NULL);
