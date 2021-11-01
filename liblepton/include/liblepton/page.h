@@ -106,9 +106,6 @@ gboolean
 s_page_check_changed (LeptonPageList *list);
 
 void
-s_page_clear_changed (LeptonPageList *list);
-
-void
 s_page_autosave_init (LeptonToplevel *toplevel);
 
 gint

@@ -461,26 +461,6 @@ s_page_check_changed (LeptonPageList *list)
   return FALSE;
 }
 
-/*! \brief Reset the CHANGED flag of all pages.
- *  \par Function Description
- *  This function resets the CHANGED flag of each page following \a head.
- *
- *  \param [in,out] list  LeptonPage list to set CHANGED flags in.
- */
-void
-s_page_clear_changed (LeptonPageList *list)
-{
-  const GList *iter;
-  LeptonPage *p_current;
-
-  for ( iter = lepton_list_get_glist( list );
-        iter != NULL;
-        iter = g_list_next( iter ) ) {
-
-    p_current = (LeptonPage *) iter->data;
-    p_current->CHANGED = 0;
-  }
-}
 
 /*! \brief Autosave initialization function.
  *  \par Function Description
