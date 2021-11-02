@@ -74,7 +74,7 @@ void
 lepton_component_object_set_mirror (LeptonObject *object,
                                     gboolean mirror);
 GList*
-o_component_promote_attribs (LeptonObject *object);
+lepton_component_promote_attribs (LeptonObject *object);
 
 LeptonObject*
 lepton_component_new (LeptonPage *page,

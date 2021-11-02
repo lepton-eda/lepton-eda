@@ -596,7 +596,7 @@ lepton_component_object_get_promotable (LeptonObject *object,
  *  \return A #GList of promoted attributes.
  */
 GList*
-o_component_promote_attribs (LeptonObject *object)
+lepton_component_promote_attribs (LeptonObject *object)
 {
   GList *promoted = NULL;
   GList *promotable = NULL;
