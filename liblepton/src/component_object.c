@@ -659,7 +659,7 @@ lepton_component_promote_attribs (LeptonObject *object)
  *  \param [in]  object   The component object being altered.
  */
 static void
-o_component_remove_promotable_attribs (LeptonObject *object)
+remove_promotable_attribs (LeptonObject *object)
 {
   GList *promotable, *iter;
   GList *primitives = NULL;
@@ -1189,7 +1189,7 @@ LeptonObject *o_component_read (LeptonPage *page,
     /* Delete or hide attributes eligible for promotion inside the
        component. */
     if (new_obj)
-      o_component_remove_promotable_attribs (new_obj);
+      remove_promotable_attribs (new_obj);
   }
 
   g_free (basename);
@@ -1311,7 +1311,7 @@ o_component_copy (LeptonObject *o_current)
 
   /* Delete or hide attributes eligible for promotion inside the
      component. */
-  o_component_remove_promotable_attribs (o_new);
+  remove_promotable_attribs (o_new);
 
   s_slot_update_object (o_new);
 
