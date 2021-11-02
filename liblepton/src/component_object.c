@@ -304,7 +304,7 @@ always_promote_attributes ()
         printf( " >> always_promote_attributes += [%s]\n", attr );
 #endif
         /* important: use g_intern_string() here, because attr strings are
-         * compared like pointers in o_component_is_eligible_attribute():
+         * compared like pointers in is_eligible_attribute():
          */
         g_ptr_array_add (attributes,
                          (gpointer) g_intern_string (attr));
@@ -455,7 +455,7 @@ lepton_component_object_get_position (const LeptonObject *object,
  *  \return TRUE if the object is a eligible attribute, FALSE otherwise
  */
 static int
-o_component_is_eligible_attribute (LeptonObject *object)
+is_eligible_attribute (LeptonObject *object)
 {
   gboolean promote_invisible;
   g_return_val_if_fail (lepton_object_is_attrib (object), FALSE);
@@ -568,7 +568,7 @@ lepton_component_object_get_promotable (LeptonObject *object,
     tmp = (LeptonObject*) iter->data;
 
     /* Is it an attribute we want to promote? */
-    if (!o_component_is_eligible_attribute (tmp))
+    if (!is_eligible_attribute (tmp))
       continue;
 
     if (detach) {
