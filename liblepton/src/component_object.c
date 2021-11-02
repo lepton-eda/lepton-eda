@@ -1468,8 +1468,8 @@ lepton_component_find_pin_by_attribute (LeptonObject *object,
  *  \param object    The component LeptonObject
  */
 void
-o_component_check_symversion (LeptonPage* page,
-                              LeptonObject* object)
+lepton_component_check_symversion (LeptonPage* page,
+                                   LeptonObject* object)
 {
   char *inside = NULL;
   char *outside = NULL;

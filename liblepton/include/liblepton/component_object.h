@@ -128,8 +128,8 @@ lepton_component_find_pin_by_attribute (LeptonObject *object,
                                         char *wanted_value);
 
 void
-o_component_check_symversion (LeptonPage* page,
-                              LeptonObject* object);
+lepton_component_check_symversion (LeptonPage* page,
+                                   LeptonObject* object);
 
 LeptonObject*
 lepton_component_read (LeptonPage *page,
