@@ -50,7 +50,6 @@ struct st_object
   /* Visible appearance of filling of graphical primitives. */
   LeptonFill *fill;
 
-  gchar *component_basename;            /* Component Library Symbol name */
   LeptonObject *parent;                 /* Parent object pointer */
 
   int color;                            /* Which color */

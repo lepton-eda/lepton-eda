@@ -979,10 +979,6 @@ lepton_object_delete (LeptonObject *o_current)
     lepton_fill_free (o_current->fill);
     o_current->fill = NULL;
 
-    /* printf("sdeleting component_basename\n");*/
-    g_free(o_current->component_basename);
-    o_current->component_basename = NULL;
-
     if (o_current->component) {
 
       primitives = lepton_component_object_get_contents (o_current);
@@ -992,6 +988,9 @@ lepton_object_delete (LeptonObject *o_current)
         lepton_object_list_delete (primitives);
         lepton_component_object_set_contents (o_current, NULL);
       }
+
+      g_free (o_current->component->basename);
+      o_current->component->basename = NULL;
 
       g_free(o_current->component);
       o_current->component = NULL;
@@ -1975,7 +1974,6 @@ lepton_object_new (int type,
   new_node->stroke = lepton_stroke_new ();
   new_node->fill = lepton_fill_new ();
 
-  new_node->component_basename = NULL;
   lepton_object_set_parent (new_node, NULL);
 
   /* Setup the color */

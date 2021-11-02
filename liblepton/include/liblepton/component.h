@@ -37,4 +37,5 @@ struct st_component
 
   GList *prim_objs;    /* Primitive objects objects which make up */
                        /* the component */
+  gchar *basename;     /* Component Library Symbol name */
 };

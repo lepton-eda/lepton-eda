@@ -51,7 +51,7 @@ lepton_component_object_get_basename (const LeptonObject *object)
   g_return_val_if_fail (lepton_object_is_component (object), NULL);
   g_return_val_if_fail (object->component != NULL, NULL);
 
-  return object->component_basename;
+  return object->component->basename;
 }
 
 
@@ -69,14 +69,14 @@ lepton_component_object_set_basename (LeptonObject *object,
   g_return_if_fail (lepton_object_is_component (object));
   g_return_if_fail (object->component != NULL);
 
-  g_free (object->component_basename);
+  g_free (object->component->basename);
   if (basename == NULL)
   {
-    object->component_basename = NULL;
+    object->component->basename = NULL;
   }
   else
   {
-    object->component_basename = g_strdup (basename);
+    object->component->basename = g_strdup (basename);
   }
 }
 
@@ -977,15 +977,16 @@ lepton_component_new (LeptonPage *page,
 
   new_node = lepton_object_new (OBJ_COMPONENT, "complex");
 
-  if (clib != NULL) {
-    new_node->component_basename = g_strdup (s_clib_symbol_get_name (clib));
-  } else {
-    new_node->component_basename = g_strdup (basename);
-  }
-
   new_node->selectable = selectable;
 
   new_node->component = g_new0 (LeptonComponent, 1);
+
+  if (clib != NULL) {
+    new_node->component->basename = g_strdup (s_clib_symbol_get_name (clib));
+  } else {
+    new_node->component->basename = g_strdup (basename);
+  }
+
   lepton_component_object_set_contents (new_node, NULL);
   lepton_component_object_set_angle (new_node, angle);
   lepton_component_object_set_mirror (new_node, mirror);
