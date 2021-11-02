@@ -188,7 +188,7 @@ s_slot_update_object (LeptonObject *object)
   while (current_pin != NULL) {
     /* get pin on this component with pinseq == pin_counter */
     pinseq = g_strdup_printf ("%d", pin_counter);
-    o_pin_object = o_component_find_pin_by_attribute (object, "pinseq", pinseq);
+    o_pin_object = lepton_component_find_pin_by_attribute (object, "pinseq", pinseq);
     g_free (pinseq);
 
     if (o_pin_object != NULL) {

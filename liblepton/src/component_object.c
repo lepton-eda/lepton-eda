@@ -1424,9 +1424,9 @@ lepton_component_object_mirror (int world_centerx,
  *  \return The pin LeptonObject with the given attribute, NULL otherwise.
  */
 LeptonObject*
-o_component_find_pin_by_attribute (LeptonObject *object,
-                                   const char *name,
-                                   char *wanted_value)
+lepton_component_find_pin_by_attribute (LeptonObject *object,
+                                        const char *name,
+                                        char *wanted_value)
 {
   GList *iter;
   LeptonObject *o_current;
