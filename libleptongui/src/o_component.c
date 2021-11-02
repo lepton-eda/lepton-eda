@@ -109,7 +109,7 @@ o_component_prepare_place (GschemToplevel *w_current,
 
       toplevel->page_current->place_list =
           g_list_concat (toplevel->page_current->place_list,
-                         o_component_promote_attribs (new_object));
+                         lepton_component_promote_attribs (new_object));
       toplevel->page_current->place_list =
           g_list_append (toplevel->page_current->place_list, new_object);
 
