@@ -985,7 +985,7 @@ lepton_component_new (LeptonPage *page,
 
   new_node->selectable = selectable;
 
-  new_node->component = (LeptonComponent *) g_malloc (sizeof (LeptonComponent));
+  new_node->component = g_new0 (LeptonComponent, 1);
   lepton_component_object_set_contents (new_node, NULL);
   lepton_component_object_set_angle (new_node, angle);
   lepton_component_object_set_mirror (new_node, mirror);
@@ -1075,7 +1075,7 @@ lepton_component_new_embedded (int color,
 
   new_node = lepton_object_new (OBJ_COMPONENT, "complex");
 
-  new_node->component = (LeptonComponent *) g_malloc (sizeof (LeptonComponent));
+  new_node->component = g_new0 (LeptonComponent, 1);
   lepton_component_object_set_x (new_node, x);
   lepton_component_object_set_y (new_node, y);
 
