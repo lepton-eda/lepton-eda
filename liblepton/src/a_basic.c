@@ -139,8 +139,8 @@ GList
     {
         /* yes */
         /* verify symbol version (not file format but rather contents) */
-        o_component_check_symversion (page, last_component);
-        last_component = NULL;  /* no longer need to check */
+      lepton_component_check_symversion (page, last_component);
+      last_component = NULL;  /* no longer need to check */
     }
 
     switch (objtype) {
@@ -234,7 +234,7 @@ GList
           {
             /* yes */
             /* verify symbol version (not file format but rather contents) */
-            o_component_check_symversion (page, last_component);
+            lepton_component_check_symversion (page, last_component);
             last_component = NULL;
           }
 
@@ -346,7 +346,7 @@ GList
   /* and had no attached attributes */
   if (last_component)
   {
-    o_component_check_symversion (page, last_component);
+    lepton_component_check_symversion (page, last_component);
     last_component = NULL;  /* no longer need to check */
   }
 
