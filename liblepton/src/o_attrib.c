@@ -240,7 +240,7 @@ o_read_attribs (LeptonPage *page,
         break;
 
       case(OBJ_COMPONENT):
-        if ((new_obj = o_component_read (page, line, release_ver, fileformat_ver, err)) == NULL)
+        if ((new_obj = lepton_component_read (page, line, release_ver, fileformat_ver, err)) == NULL)
           goto error;
         object_list = g_list_prepend (object_list, new_obj);
         break;

@@ -132,11 +132,11 @@ o_component_check_symversion (LeptonPage* page,
                               LeptonObject* object);
 
 LeptonObject*
-o_component_read (LeptonPage *page,
-                  const char buf[],
-                  unsigned int release_ver,
-                  unsigned int fileformat_ver,
-                  GError **err);
+lepton_component_read (LeptonPage *page,
+                       const char buf[],
+                       unsigned int release_ver,
+                       unsigned int fileformat_ver,
+                       GError **err);
 gchar*
 lepton_component_object_to_buffer (const LeptonObject *object);
 

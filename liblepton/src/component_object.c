@@ -1113,11 +1113,12 @@ lepton_component_new_embedded (int color,
  *  \param [in] fileformat_ver a integer value of the file format
  *  \return The object list, or NULL on error.
  */
-LeptonObject *o_component_read (LeptonPage *page,
-                                const char buf[],
-                                unsigned int release_ver,
-                                unsigned int fileformat_ver,
-                                GError **err)
+LeptonObject*
+lepton_component_read (LeptonPage *page,
+                       const char buf[],
+                       unsigned int release_ver,
+                       unsigned int fileformat_ver,
+                       GError **err)
 {
   LeptonObject *new_obj;
   char type;
