@@ -105,7 +105,7 @@ lepton_component_object_translate (LeptonObject *object,
                                    int dx,
                                    int dy);
 LeptonObject *
-o_component_copy (LeptonObject *o_current);
+lepton_component_copy (LeptonObject *o_current);
 
 void
 lepton_component_object_rotate (int world_centerx,

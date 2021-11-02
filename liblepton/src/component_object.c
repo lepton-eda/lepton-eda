@@ -1270,7 +1270,7 @@ lepton_component_object_translate (LeptonObject *object, int dx, int dy)
  *  \return a new component object
  */
 LeptonObject*
-o_component_copy (LeptonObject *o_current)
+lepton_component_copy (LeptonObject *o_current)
 {
   LeptonObject *o_new;
   GList *iter;

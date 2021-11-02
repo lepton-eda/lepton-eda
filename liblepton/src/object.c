@@ -880,7 +880,7 @@ lepton_object_copy (LeptonObject *object)
       break;
 
     case(OBJ_COMPONENT):
-      new_object = o_component_copy (object);
+      new_object = lepton_component_copy (object);
       break;
 
     case(OBJ_TEXT):
