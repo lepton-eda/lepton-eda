@@ -454,7 +454,7 @@ lepton_component_object_get_position (const LeptonObject *object,
  *  \param [in] object    The attribute object to check
  *  \return TRUE if the object is a eligible attribute, FALSE otherwise
  */
-static int
+static gboolean
 is_eligible_attribute (LeptonObject *object)
 {
   gboolean promote_invisible;
