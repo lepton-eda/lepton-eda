@@ -123,9 +123,9 @@ void
 lepton_component_object_set_missing (const LeptonObject *object,
                                      gboolean missing);
 LeptonObject *
-o_component_find_pin_by_attribute (LeptonObject *object,
-                                   const char *name,
-                                   char *wanted_value);
+lepton_component_find_pin_by_attribute (LeptonObject *object,
+                                        const char *name,
+                                        char *wanted_value);
 
 void
 o_component_check_symversion (LeptonPage* page,
