@@ -859,7 +859,7 @@ x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint 
   GdkSeat *seat = gdk_display_get_default_seat (display);
   GdkDevice *pointer = gdk_seat_get_pointer (seat);
 
-  gdk_device_get_position (pointer, NULL, &sx, &sy);
+  gdk_window_get_device_position (window, pointer, &sx, &sy, NULL);
 #else
   gtk_widget_get_pointer(GTK_WIDGET (page_view), &sx, &sy);
 #endif
@@ -909,7 +909,7 @@ x_event_faked_motion (GschemPageView *view, GdkEventKey *event) {
   GdkSeat *seat = gdk_display_get_default_seat (display);
   GdkDevice *pointer = gdk_seat_get_pointer (seat);
 
-  gdk_device_get_position (pointer, NULL, &x, &y);
+  gdk_window_get_device_position (window, pointer, &x, &y, NULL);
 #else
   gtk_widget_get_pointer (GTK_WIDGET (view), &x, &y);
 #endif
