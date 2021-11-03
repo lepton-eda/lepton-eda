@@ -855,7 +855,7 @@ x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint 
   height = gdk_window_get_height (window);
 
 #ifdef ENABLE_GTK3
-  GdkDisplay *display = gdk_display_get_default ();
+  GdkDisplay *display = gdk_window_get_display (window);
   GdkSeat *seat = gdk_display_get_default_seat (display);
   GdkDevice *pointer = gdk_seat_get_pointer (seat);
 
@@ -902,7 +902,10 @@ x_event_faked_motion (GschemPageView *view, GdkEventKey *event) {
   GdkEventMotion *newevent;
 
 #ifdef ENABLE_GTK3
-  GdkDisplay *display = gdk_display_get_default ();
+  GdkWindow *window = gtk_widget_get_window (GTK_WIDGET (view));
+  g_return_val_if_fail (window != NULL, FALSE);
+
+  GdkDisplay *display = gdk_window_get_display (window);
   GdkSeat *seat = gdk_display_get_default_seat (display);
   GdkDevice *pointer = gdk_seat_get_pointer (seat);
 
