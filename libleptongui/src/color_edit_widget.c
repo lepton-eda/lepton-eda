@@ -499,6 +499,7 @@ on_btn_apply (GtkWidget* btn, gpointer p)
 
   int color_index = x_colorcb_get_index (GTK_WIDGET (widget->color_cb_));
   x_color_set_display_color (color_index, &color);
+  gtk_widget_queue_draw (GTK_WIDGET (gschem_toplevel_get_current_page_view (widget->toplevel_)));
 }
 #endif
 
