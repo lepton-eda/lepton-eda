@@ -62,9 +62,9 @@
 
   (test-equal (list "y" "x") (get-attrib-value-by-attrib-name p "name"))
 
-  ;; make an invalid atribute
+  ;; Attributes with empty value are no longer invalid.
   (set-text! y '(0 . 0) 'lower-left 0 "name=" 10 #t 'both)
-  (test-equal (list "x") (get-attrib-value-by-attrib-name p "name")))
+  (test-equal (list "" "x") (get-attrib-value-by-attrib-name p "name")))
 
 (test-end "get-attrib-value-by-attrib-name")
 

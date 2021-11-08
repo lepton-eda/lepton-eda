@@ -340,7 +340,8 @@ o_attrib_string_get_name_value (const gchar *string, gchar **name_ptr, gchar **v
   prev_char = g_utf8_find_prev_char (string, ptr);
   next_char = g_utf8_find_next_char (ptr, NULL);
   if (prev_char == NULL || *prev_char == ' ' ||
-      next_char == NULL || *next_char == ' ' || *next_char == '\0' ) {
+      next_char == NULL || *next_char == ' ')
+  {
     return FALSE;
   }
 
