@@ -125,7 +125,7 @@ void o_lock(GschemToplevel *w_current)
     }
   }
 
-  gschem_toplevel_page_content_changed (w_current, active_page);
+  schematic_window_active_page_changed (w_current);
 
   if (!w_current->SHIFTKEY)
     o_select_unselect_all(w_current);
