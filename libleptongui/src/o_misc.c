@@ -299,8 +299,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
   /* Run mirror-objects-hook */
   g_run_hook_object_list (w_current, "%mirror-objects-hook", list);
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old(w_current, UNDO_ALL);
 
   if (w_current->event_state == MIRRORMODE) {
