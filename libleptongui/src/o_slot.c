@@ -138,6 +138,6 @@ void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *str
 
   s_slot_update_object (object);
 
-  gschem_toplevel_page_content_changed (w_current, active_page);
+  schematic_window_active_page_changed (w_current);
   g_free (value);
 }
