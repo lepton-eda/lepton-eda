@@ -440,7 +440,7 @@ void o_edit_show_specific_text (GschemToplevel *w_current,
  * Updates \a o_current to the latest version of the symbol available
  * in the symbol library, while preserving any attributes set in the
  * current schematic. On success, returns the new LeptonObject which
- * replaces \a o_current on the page; \a o_current is deleted. On
+ * replaces \a o_current on its page; \a o_current is deleted. On
  * failure, returns NULL, and \a o_current is left unchanged.
  *
  * \param [in]     w_current The GschemToplevel object.
