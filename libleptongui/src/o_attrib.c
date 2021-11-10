@@ -220,8 +220,7 @@ void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
   lepton_text_object_set_show (object, show_name_value);
   lepton_text_object_recreate (object);
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
 }
 
 
