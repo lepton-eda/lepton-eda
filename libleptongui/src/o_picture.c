@@ -118,7 +118,7 @@ void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
     /* Run %add-objects-hook */
     g_run_hook_object (w_current, "%add-objects-hook", new_obj);
 
-    gschem_toplevel_page_content_changed (w_current, active_page);
+    schematic_window_active_page_changed (w_current);
     o_undo_savestate_old(w_current, UNDO_ALL);
   }
   i_action_stop (w_current);
