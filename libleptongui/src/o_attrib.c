@@ -198,8 +198,7 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
     lepton_text_object_recreate (object);
   }
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
 }
 
 /*! \brief Set what part of an attribute is shown.
