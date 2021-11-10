@@ -1418,8 +1418,7 @@ void o_grips_end(GschemToplevel *w_current)
 
   w_current->rubber_visible = 0;
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old(w_current, UNDO_ALL);
 
   i_set_state(w_current, SELECT);
