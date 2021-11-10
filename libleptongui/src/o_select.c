@@ -657,15 +657,16 @@ o_select_visible_unlocked (GschemToplevel *w_current)
 void
 o_select_move_to_place_list(GschemToplevel *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   GList *selection;
   GList *selection_copy;
 
-  /* remove the old place list if it exists */
-  lepton_object_list_delete (toplevel->page_current->place_list);
-  toplevel->page_current->place_list = NULL;
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
-  selection = lepton_list_get_glist( toplevel->page_current->selection_list );
+  /* remove the old place list if it exists */
+  lepton_object_list_delete (active_page->place_list);
+  active_page->place_list = NULL;
+
+  selection = lepton_list_get_glist( active_page->selection_list );
   selection_copy = g_list_copy( selection );
-  toplevel->page_current->place_list = selection_copy;
+  active_page->place_list = selection_copy;
 }
