@@ -620,8 +620,7 @@ multiattrib_action_add_attribute (Multiattrib *multiattrib,
     }
   }
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
 
   g_free (newtext);
@@ -652,8 +651,7 @@ multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
                          lepton_object_get_attached_to (o_attrib));
   }
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
 }
 
@@ -697,8 +695,7 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
     }
   }
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
 }
 
@@ -721,8 +718,7 @@ multiattrib_action_delete_attributes (Multiattrib *multiattrib,
     o_delete (w_current, o_attrib);
   }
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
 }
 
@@ -771,8 +767,7 @@ multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
     }
   }
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
 }
 
@@ -1031,8 +1026,7 @@ multiattrib_callback_edited_name (GtkCellRendererText *cellrenderertext,
   g_free (value);
   g_free (newtext);
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
 
   /* NB: We don't fix up the model to reflect the edit, we're about to nuke it below... */
@@ -1123,8 +1117,7 @@ multiattrib_callback_edited_value (GtkCellRendererText *cell_renderer,
   g_free (name);
   g_free (newtext);
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
 
   /* Fixup the model to reflect the edit */
@@ -1179,8 +1172,7 @@ multiattrib_callback_toggled_visible (GtkCellRendererToggle *cell_renderer,
 
   g_object_unref (attr_list);
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
 
   /* Fixup the model to reflect the edit */
@@ -1244,8 +1236,7 @@ multiattrib_callback_toggled_show_name (GtkCellRendererToggle *cell_renderer,
 
   g_object_unref (attr_list);
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
 
   /* NB: We don't fix up the model to reflect the edit, we're about to nuke it below... */
@@ -1309,8 +1300,7 @@ multiattrib_callback_toggled_show_value (GtkCellRendererToggle *cell_renderer,
 
   g_object_unref (attr_list);
 
-  gschem_toplevel_page_content_changed (w_current,
-                                        schematic_window_get_active_page (w_current));
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
 
   /* NB: We don't fix up the model to reflect the edit, we're about to nuke it below... */
