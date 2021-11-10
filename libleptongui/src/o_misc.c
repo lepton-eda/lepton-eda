@@ -645,7 +645,7 @@ void o_autosave_backups(GschemToplevel *w_current)
                     backup_filename, NULL)) {
 
           p_current->ops_since_last_backup = 0;
-                p_current->do_autosave_backup = 0;
+          p_current->do_autosave_backup = 0;
 
           /* Make the backup file readonly so a 'rm *' command will ask
              the user before deleting it */
