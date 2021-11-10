@@ -569,7 +569,7 @@ void o_autosave_backups(GschemToplevel *w_current)
   struct stat st;
 
   /* save current page */
-  p_save = toplevel->page_current;
+  p_save = schematic_window_get_active_page (w_current);
 
   for ( iter = lepton_list_get_glist( toplevel->pages );
         iter != NULL;
@@ -641,7 +641,7 @@ void o_autosave_backups(GschemToplevel *w_current)
           umask(saved_umask);
         }
 
-        if (o_save (lepton_page_objects (toplevel->page_current),
+        if (o_save (lepton_page_objects (schematic_window_get_active_page (w_current)),
                     backup_filename, NULL)) {
 
           p_current->ops_since_last_backup = 0;
