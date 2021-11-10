@@ -466,6 +466,10 @@ o_update_component (GschemToplevel *w_current, LeptonObject *o_current)
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
   page = lepton_object_get_page (o_current);
 
+  /* We really update objects on the active page, let's check that
+   * it's true. */
+  g_return_val_if_fail (page == active_page, NULL);
+
   /* Force symbol data to be reloaded from source */
   clib = s_clib_get_symbol_by_name (basename);
   s_clib_symbol_invalidate_data (clib);
