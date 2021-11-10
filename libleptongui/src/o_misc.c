@@ -390,8 +390,7 @@ void o_edit_hide_specific_text (GschemToplevel *w_current,
           lepton_text_object_set_visibility (o_current, INVISIBLE);
           lepton_text_object_recreate (o_current);
 
-          gschem_toplevel_page_content_changed (w_current,
-                                                schematic_window_get_active_page (w_current));
+          schematic_window_active_page_changed (w_current);
         }
       }
     }
