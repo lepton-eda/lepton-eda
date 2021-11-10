@@ -138,7 +138,7 @@ void o_delete_selected (GschemToplevel *w_current)
 
   g_list_free (to_remove);
 
-  gschem_toplevel_page_content_changed (w_current, active_page);
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old (w_current, UNDO_ALL);
   i_update_menus (w_current);
 }
