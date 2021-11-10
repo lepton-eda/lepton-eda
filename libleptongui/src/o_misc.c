@@ -175,7 +175,7 @@ void o_unlock(GschemToplevel *w_current)
     }
   }
 
-  gschem_toplevel_page_content_changed (w_current, active_page);
+  schematic_window_active_page_changed (w_current);
   o_undo_savestate_old(w_current, UNDO_ALL);
 
   /* refresh view to properly restore attributes' colors:
