@@ -230,8 +230,7 @@ void picture_selection_dialog (GschemToplevel *w_current)
 
       o_picture_set_pixbuf(w_current, pixbuf, filename);
 
-      gschem_toplevel_page_content_changed (w_current,
-                                            schematic_window_get_active_page (w_current));
+      schematic_window_active_page_changed (w_current);
       i_set_state(w_current, PICTUREMODE);
     }
     g_free (filename);
