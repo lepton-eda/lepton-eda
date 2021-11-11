@@ -1369,7 +1369,7 @@ i_callback_page_next (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  LeptonPage *p_current = toplevel->page_current;
+  LeptonPage *p_current = schematic_window_get_active_page (w_current);
   LeptonPage *p_new;
   GList *iter;
 
