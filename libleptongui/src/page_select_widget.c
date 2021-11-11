@@ -751,6 +751,8 @@ pagesel_update (PageSelectWidget* pagesel)
   }
 
   /* select the current page in the treeview */
-  select_page (pagesel->treeview_, NULL, toplevel->page_current);
+  select_page (pagesel->treeview_,
+               NULL,
+               schematic_window_get_active_page (w_current));
 
 } /* pagesel_update() */
