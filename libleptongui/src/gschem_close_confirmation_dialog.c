@@ -837,7 +837,7 @@ x_dialog_close_window (GschemToplevel *w_current)
   GList *unsaved_pages, *p_unsaved;
   gboolean ret = FALSE;
 
-  keep_page = toplevel->page_current;
+  keep_page = schematic_window_get_active_page (w_current);
 
   for ( iter = lepton_list_get_glist( toplevel->pages ), unsaved_pages = NULL;
         iter != NULL;
