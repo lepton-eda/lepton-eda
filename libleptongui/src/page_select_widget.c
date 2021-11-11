@@ -718,9 +718,11 @@ pagesel_update (PageSelectWidget* pagesel)
   GList *iter;
 
   g_assert (IS_PAGE_SELECT_WIDGET (pagesel));
-  g_return_if_fail (pagesel->toplevel_ != NULL);
 
-  toplevel = gschem_toplevel_get_toplevel (pagesel->toplevel_);
+  GschemToplevel *w_current = pagesel->toplevel_;
+  g_return_if_fail (w_current != NULL);
+
+  toplevel = gschem_toplevel_get_toplevel (w_current);
   model    = gtk_tree_view_get_model (pagesel->treeview_);
 
   /* wipe out every thing in the store */
