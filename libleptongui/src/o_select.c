@@ -615,6 +615,8 @@ o_select_move_to_place_list(GschemToplevel *w_current)
   GList *selection;
   GList *selection_copy;
 
+  g_return_if_fail (w_current != NULL);
+
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   /* remove the old place list if it exists */
