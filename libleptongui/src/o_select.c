@@ -607,15 +607,16 @@ void o_select_unselect_all(GschemToplevel *w_current)
 void
 o_select_visible_unlocked (GschemToplevel *w_current)
 {
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  LeptonSelection *selection = toplevel->page_current->selection_list;
   const GList *iter;
   GList *added;
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
 
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+  LeptonSelection *selection = active_page->selection_list;
+
   o_select_unselect_all (w_current);
-  for (iter = lepton_page_objects (toplevel->page_current);
+  for (iter = lepton_page_objects (active_page);
        iter != NULL;
        iter = g_list_next (iter)) {
     LeptonObject *obj = (LeptonObject *) iter->data;
