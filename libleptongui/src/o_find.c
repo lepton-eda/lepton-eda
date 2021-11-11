@@ -151,15 +151,17 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
 
   w_slack = gschem_page_view_WORLDabs (page_view, w_current->select_slack_pixels);
 
+  LeptonPage *active_page = schematic_window_get_active_page (w_current);
+
   /* Decide whether to iterate over all object or start at the last
      found object. If there is more than one object below the
      (w_x/w_y) position, this will select the next object below the
      position point. You can change the selected object by clicking
      at the same place multiple times. */
-  if (toplevel->page_current->object_lastplace != NULL) {
+  if (active_page->object_lastplace != NULL) {
     /* NB: g_list_find doesn't declare its input const, so we cast */
-    iter = g_list_find ((GList *) lepton_page_objects (toplevel->page_current),
-                        toplevel->page_current->object_lastplace);
+    iter = g_list_find ((GList *)lepton_page_objects (active_page),
+                        active_page->object_lastplace);
     iter = g_list_next (iter);
   }
 
@@ -174,7 +176,7 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
   }
 
   /* now search from the beginning up until the object_lastplace */
-  for (iter = lepton_page_objects (toplevel->page_current);
+  for (iter = lepton_page_objects (active_page);
        iter != NULL; iter = g_list_next (iter)) {
     LeptonObject *o_current = (LeptonObject*) iter->data;
     if (find_single_object (w_current, o_current,
@@ -182,12 +184,12 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
       return TRUE;
     }
     /* break once we've inspected up to where we started the first loop */
-    if (o_current == toplevel->page_current->object_lastplace)
+    if (o_current == active_page->object_lastplace)
       break;
   }
 
   /* didn't find anything.... reset lastplace */
-  toplevel->page_current->object_lastplace = NULL;
+  active_page->object_lastplace = NULL;
 
   /* deselect everything only if shift key isn't pressed and
      the caller allows it */
