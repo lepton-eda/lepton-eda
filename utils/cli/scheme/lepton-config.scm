@@ -53,7 +53,8 @@ exec @GUILE@ -s "$0" "$@"
 
 View and modify Lepton EDA configuration.
 
-  -p, --project[=PATH]  select project configuration [PATH=.]
+  -p [PATH], --project[=PATH]
+                 select project configuration
   -u, --user     select user configuration
   -s, --system   select system configuration
   -c, --cache    select cache configuration
@@ -63,8 +64,10 @@ If GROUP and KEY are specified, retrieves the value of that
 configuration parameter.  If a VALUE was specified, sets the value of
 the parameter.  The -p, -u and -s options can be used to select the
 configuration store affected (by default, the project configuration
-store for the current directory). If no GROUP and KEY were provided,
-outputs the filename of the selected configuration store.
+store for the current directory).  Any argument following to the
+option -p is considered to be a path, not a configuration group.
+If no GROUP and KEY were provided, outputs the filename of the
+selected configuration store.
 
 Report bugs at ~S
 Lepton EDA homepage: ~S
