@@ -31,6 +31,13 @@ Select the project configuration store of the project located in
 @var{PATH}.  If no @var{PATH} is provided, selects the project in the
 current working directory.
 
+@quotation Note
+Unlike @option{--project}, for which an optional argument must be
+specified using @samp{=}, any argument after @option{-p} is considered
+to be a path, not a configuration group.  It may be specified as
+@samp{-pPATH} or @samp{-p PATH}.  Please see examples below.
+@end quotation
+
 @item -u
 @item --user
 Select the user configuration store.
@@ -155,6 +162,62 @@ lepton-cli export -a 0,0:1.0 -o file.pdf file.sch
 @end example
 
 @subsection lepton-cli config examples
+
+@subsubsection Difference between -p and --project
+Please note the difference between specifying the options @option{-p}
+and @option{--project}.  Supposed that your @file{lepton.conf} in the
+current working directory has the contents as follows:
+
+@example
+[export]
+dpi=144
+@end example
+
+the following commands work as expected:
+
+@example
+lepton-cli config --project=. export dpi
+@print{} 144
+lepton-cli config --project export dpi
+@print{} 144
+lepton-cli config -p . export dpi
+@print{} 144
+lepton-cli config -p. export dpi
+@print{} 144
+@end example
+
+while the following ones are wrong and output errors:
+
+@example
+lepton-cli config -p export dpi
+@print{} ERROR: Directory "export" does not exist.
+lepton-cli config -p=export dpi
+@print{} ERROR: Directory "=export" does not exist.
+@end example
+
+This is because @emph{any} argument after @option{-p}, be it specified
+with space or without it between the option and the argument, is
+considered to be a path, not a configuration group, and the equal sign
+cannot be used as a separator like for @option{--project}.  Conversely,
+the following command:
+
+@example
+lepton-cli config --project . export dpi
+@end example
+
+will silently exit and result in the following content in
+@file{./lepton.conf}:
+
+@example
+[.]
+export=dpi
+@end example
+
+which is not you would expect here, right?  This is because an
+optional argument for the option @option{--project} @strong{must} be
+used with @samp{=} as separator, not space.  Therefore in the above
+command, @samp{.} was interpreted as a configuration group, and
+@samp{export} and @samp{dpi} as a key and its value within it.
 
 @subsubsection Set up exporting
 Use the ``landscape'' layout by default for a local project:
