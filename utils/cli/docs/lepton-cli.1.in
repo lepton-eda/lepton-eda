@@ -143,10 +143,13 @@ the filename of the selected configuration store.
 
 .PP
 .TP 8
-\fB-p\fR, \fB--project\fR[=\fIPATH\fR]
+\fB-p \fR[\fIPATH\fR], \fB--project\fR[=\fIPATH\fR]
 Select the project configuration store of the project located in
-\fIPATH\fR.  If no \fIPATH\fR is provided, selects the project in the
-current working directory.
+\fIPATH\fR.  If no \fIPATH\fR is provided, selects the project in
+the current working directory.  Unlike \fB--project\fR, for which
+an optional argument must be specified using \fB=\fR, any argument
+after \fB-p\fR is considered to be a path, not a configuration
+group.  It may be specified as \fB-pPATH\fR or \fB-p PATH\fR.
 .TP 8
 \fB-u\fR, \fB--user\fR
 Select the user configuration store.
