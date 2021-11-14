@@ -5,6 +5,12 @@ The prototype of this document, originally written
 by @emph{Ales Hvezda} for gEDA/gaf, you can find at
 @url{http://wiki.geda-project.org/geda:master_attributes_list}
 
+Attributes in Lepton EDA is the way to provide specific information
+about schematics as well as components and nets used in it.  The
+information is then processed by Lepton tools to make it available for
+using in various workflows such as, e.g., SPICE simulation or PCB
+creation.
+
 @menu
 * What are Attributes?::
 * Symbol only Attributes::
