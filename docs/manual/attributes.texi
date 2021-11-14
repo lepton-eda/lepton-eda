@@ -1,5 +1,5 @@
-@node gEDA/gaf Master Attribute Document, net= attribute mini-HOWTO, gEDA file format, Top
-@chapter gEDA/gaf Master Attribute Document
+@node Master attribute list, net= attribute mini-HOWTO, gEDA file format, Top
+@chapter Master attribute list
 
 The prototype of this document, originally written
 by @emph{Ales Hvezda} for gEDA/gaf, you can find at
@@ -19,7 +19,7 @@ creation.
 * Obsolete Attributes::         Attributes no longer processed by the tools.
 @end menu
 
-@node What are Attributes?, Symbol only Attributes, gEDA/gaf Master Attribute Document, gEDA/gaf Master Attribute Document
+@node What are Attributes?, Symbol only Attributes, Master attribute list, Master attribute list
 @section What are Attributes?
 
 Attributes in the gEDA/gaf system are nothing more than text items
@@ -37,7 +37,7 @@ attributes just exist in the symbol file as text items which take on
 the form @attr{name=value}.
 
 
-@node Symbol only Attributes, Schematic only Attributes, What are Attributes?, gEDA/gaf Master Attribute Document
+@node Symbol only Attributes, Schematic only Attributes, What are Attributes?, Master attribute list
 @section Symbol only Attributes
 
 
@@ -350,7 +350,7 @@ documentation=sn74ls00.pdf
 documentation=http://www-s.ti.com/sc/ds/sn74ls00.pdf
 @end example
 
-@node Schematic only Attributes, Symbol and Schematic Attributes, Symbol only Attributes, gEDA/gaf Master Attribute Document
+@node Schematic only Attributes, Symbol and Schematic Attributes, Symbol only Attributes, Master attribute list
 @section Schematic only Attributes
 
 
@@ -396,7 +396,7 @@ source=memory.sch
 @end example
 
 
-@node Symbol and Schematic Attributes, Obsolete Attributes, Schematic only Attributes, gEDA/gaf Master Attribute Document
+@node Symbol and Schematic Attributes, Obsolete Attributes, Schematic only Attributes, Master attribute list
 @section Symbol and Schematic Attributes
 
 
@@ -638,7 +638,7 @@ only, not for sale, etc.
 FIXME put a better list of examples here.
 
 
-@node Obsolete Attributes,  , Symbol and Schematic Attributes, gEDA/gaf Master Attribute Document
+@node Obsolete Attributes,  , Symbol and Schematic Attributes, Master attribute list
 @section Obsolete Attributes
 
 

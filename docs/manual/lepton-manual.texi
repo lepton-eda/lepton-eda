@@ -82,7 +82,7 @@ Documentation License.''
 * Communication::               Places for discussions and chatting.
 * Development::                 Useful information for developers.
 * gEDA file format::            File format currently in use.
-* gEDA/gaf Master Attribute Document::
+* Master attribute list::
 * net= attribute mini-HOWTO::
 * Lepton EDA fonts::
 * Topic Index::
@@ -286,7 +286,7 @@ Object types
 * path::
 * font::
 
-gEDA/gaf Master Attribute Document
+Master attribute list
 
 * What are Attributes?::        What are attributes in a nutshell?
 * Symbol only Attributes::      Attributes meaningful only for symbols.

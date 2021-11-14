@@ -1,4 +1,4 @@
-@node net= attribute mini-HOWTO, Lepton EDA fonts, gEDA/gaf Master Attribute Document, Top
+@node net= attribute mini-HOWTO, Lepton EDA fonts, Master attribute list, Top
 @chapter net= attribute mini-HOWTO
 
 by: Ales Hvezda

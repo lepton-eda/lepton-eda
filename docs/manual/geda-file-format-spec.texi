@@ -1,4 +1,4 @@
-@node gEDA file format, gEDA/gaf Master Attribute Document, Development, Top
+@node gEDA file format, Master attribute list, Development, Top
 @chapter gEDA/gaf File Format Document
 @cindex gEDA file format
 

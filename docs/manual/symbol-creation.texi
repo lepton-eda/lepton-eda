@@ -319,7 +319,7 @@ attribute} for more info.
 @subsubsection Add attributes
 
 For more information on the attributes presented here, please see the
-@ref{gEDA/gaf Master Attribute Document, Master Attributes List}.
+@ref{Master attribute list}.
 @enumerate
 @item
 A @attr{device=DEVICENAME} attribute should be placed somewhere in the
