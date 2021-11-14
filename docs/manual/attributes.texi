@@ -16,7 +16,6 @@ July 10th, 2007
 * Schematic only Attributes::
 * Symbol and Schematic Attributes::
 * Obsolete Attributes::
-* Master Attribute Document Revision History::
 @end menu
 
 @node Master Attribute Document Overview, What are Attributes?, gEDA/gaf Master Attribute Document, gEDA/gaf Master Attribute Document
@@ -716,38 +715,3 @@ is @ref{pintype attribute}.
 
 The information in this attribute has been merged with @ref{author
 attribute}.
-
-
-@node Master Attribute Document Revision History,  , Obsolete Attributes, gEDA/gaf Master Attribute Document
-@section Master Attribute Document Revision History
-
-@table @emph
-
-@item July 14th, 2002
-Created attributes.tex from attributes.txt.
-
-@item July 14th, 2002
-Updated doc to be in sync with post-20020527.
-
-@item August 25th, 2002
-Added obsolete type= attribute.
-
-@item September 14, 2002
-Added description= attribute.  Minor fixes
-
-@item October 7, 2002
-Added doc= attribute; Egil Kvaleberg.
-
-@item February 11, 2003
-Added reference to footprint conventions.
-
-@item February 23, 2003
-Added author=, email=, and comment= attributes.
-
-@item July 6th, 2004
-Added symversion= attribute.
-
-@item July 10th, 2007
-Added dist-license= and use-license= attributes.
-
-@end table

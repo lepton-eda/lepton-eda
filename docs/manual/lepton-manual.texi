@@ -294,7 +294,6 @@ gEDA/gaf Master Attribute Document
 * Schematic only Attributes::
 * Symbol and Schematic Attributes::
 * Obsolete Attributes::
-* Master Attribute Document Revision History::
 
 Symbol only Attributes
 
