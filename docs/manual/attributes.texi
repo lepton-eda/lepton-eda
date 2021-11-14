@@ -17,6 +17,7 @@ creation.
 * Schematic only Attributes::   Attributes meaningful only for schematics.
 * Symbol and Schematic Attributes::  Attributes used ubiquitously.
 * Obsolete Attributes::         Attributes no longer processed by the tools.
+* Attribute compatibility::     Notable changes in Lepton compared to geda-gaf
 @end menu
 
 @node What are Attributes?, Symbol only Attributes, Master attribute list, Master attribute list
@@ -638,7 +639,7 @@ only, not for sale, etc.
 FIXME put a better list of examples here.
 
 
-@node Obsolete Attributes,  , Symbol and Schematic Attributes, Master attribute list
+@node Obsolete Attributes, Attribute compatibility, Symbol and Schematic Attributes, Master attribute list
 @section Obsolete Attributes
 
 
@@ -706,3 +707,51 @@ is @ref{pintype attribute}.
 
 The information in this attribute has been merged with @ref{author
 attribute}.
+
+@node Attribute compatibility,  , Obsolete Attributes, Master attribute list
+@section Attribute compatibility
+
+Since the fork, several new attributes have been introduced in Lepton.
+They may not be supported in the legacy code of geda-gaf.\
+
+@subsection symbol attribute
+
+The attribute @attr{symbol=} changes meaning of symbols in schematic,
+that is, the way how @netlist{} treats them. Such symbols will be
+processed in a special way, not as ordinary components.
+
+The reason is that @attr{graphical=1} attribute is overloaded and the
+netlister has to use various tricks (e.g. in DRC) to make things done.
+
+@subsubsection symbol=nc
+@attr{symbol=nc} means that the symbol will be treated as a
+@emph{no-connect} symbol.  The netlister won't output its connection
+in the full list of schematic connections.  DRC will suppress errors
+on connections having only one pin connected to such a symbol. The
+attribute is equivalent to the legacy set of attributes as follows:
+
+@example
+graphical=1
+device=DRC_Directive
+value=NoConnection
+@end example
+
+
+Other possible future uses of the @attr{symbol=} attribute are given
+below.
+
+@subsubsection symbol=power
+@emph{Not implemented yet.}
+
+The attribute could be used to filter out power symbols from schematic
+components.
+
+It could replace the @attr{net=} and @attr{graphical=} attributes, as
+well as some DRC attributes, to make the DRC logic more strict, and
+solve some net renaming issues.
+
+@subsubsection symbol=schematic-port
+@emph{Not implemented yet.}
+
+The attribute could be used to mark ports in hierarchical schematics
+in order to simplify the netlister logic.

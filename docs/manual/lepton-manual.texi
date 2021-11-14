@@ -293,6 +293,7 @@ Master attribute list
 * Schematic only Attributes::   Attributes meaningful only for schematics.
 * Symbol and Schematic Attributes::  Attributes used ubiquitously.
 * Obsolete Attributes::         Attributes no longer processed by the tools.
+* Attribute compatibility::     Notable changes in Lepton compared to geda-gaf
 
 Symbol only Attributes
 
