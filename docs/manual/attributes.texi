@@ -1,16 +1,11 @@
 @node gEDA/gaf Master Attribute Document, net= attribute mini-HOWTO, gEDA file format, Top
 @chapter gEDA/gaf Master Attribute Document
 
-by: Ales Hvezda, @email{ahvezda@@geda.seul.org}
-
-This document is released under
-@url{http://www.gnu.org/copyleft/fdl.html, GFDL}
-
-July 10th, 2007
-
+The prototype of this document, originally written
+by @emph{Ales Hvezda} for gEDA/gaf, you can find at
+@url{http://wiki.geda-project.org/geda:master_attributes_list}
 
 @menu
-* Master Attribute Document Overview::
 * What are Attributes?::
 * Symbol only Attributes::
 * Schematic only Attributes::
@@ -18,17 +13,7 @@ July 10th, 2007
 * Obsolete Attributes::
 @end menu
 
-@node Master Attribute Document Overview, What are Attributes?, gEDA/gaf Master Attribute Document, gEDA/gaf Master Attribute Document
-@section Master Attribute Document Overview
-
-This document describes all the attributes used in in gEDA/gaf (GPL'd
-Electronic Design Automation / Gschem And Friends).  This document is
-broken down into several section: this overview, symbol only
-attributes, schematic only attributes, attributes which can appear in
-both symbols and schematics, and attributes which are obsolete or
-deprecated.
-
-@node What are Attributes?, Symbol only Attributes, Master Attribute Document Overview, gEDA/gaf Master Attribute Document
+@node What are Attributes?, Symbol only Attributes, gEDA/gaf Master Attribute Document, gEDA/gaf Master Attribute Document
 @section What are Attributes?
 
 Attributes in the gEDA/gaf system are nothing more than text items
@@ -647,7 +632,7 @@ only, not for sale, etc.
 FIXME put a better list of examples here.
 
 
-@node Obsolete Attributes, Master Attribute Document Revision History, Symbol and Schematic Attributes, gEDA/gaf Master Attribute Document
+@node Obsolete Attributes,  , Symbol and Schematic Attributes, gEDA/gaf Master Attribute Document
 @section Obsolete Attributes
 
 

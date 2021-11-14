@@ -288,7 +288,6 @@ Object types
 
 gEDA/gaf Master Attribute Document
 
-* Master Attribute Document Overview::
 * What are Attributes?::
 * Symbol only Attributes::
 * Schematic only Attributes::
