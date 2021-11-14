@@ -288,11 +288,11 @@ Object types
 
 gEDA/gaf Master Attribute Document
 
-* What are Attributes?::
-* Symbol only Attributes::
-* Schematic only Attributes::
-* Symbol and Schematic Attributes::
-* Obsolete Attributes::
+* What are Attributes?::        What are attributes in a nutshell?
+* Symbol only Attributes::      Attributes meaningful only for symbols.
+* Schematic only Attributes::   Attributes meaningful only for schematics.
+* Symbol and Schematic Attributes::  Attributes used ubiquitously.
+* Obsolete Attributes::         Attributes no longer processed by the tools.
 
 Symbol only Attributes
 
