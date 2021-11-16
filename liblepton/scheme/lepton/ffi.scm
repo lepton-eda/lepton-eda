@@ -19,6 +19,7 @@
   #:use-module (ice-9 match)
   #:use-module (system foreign)
   #:use-module (srfi srfi-1)
+  #:use-module (lepton m4)
 
   #:export (liblepton
             liblepton_init
@@ -307,10 +308,10 @@
 (define FALSE 0)
 
 (define liblepton
-  (dynamic-link (or (getenv "LIBLEPTON") "@LIBLEPTON@")))
+  (dynamic-link (or (getenv "LIBLEPTON") LIBLEPTON)))
 
-(define libglib (dynamic-link "@LIBGLIB@"))
-(define libgobject (dynamic-link "@LIBGOBJECT@"))
+(define libglib (dynamic-link LIBGLIB))
+(define libgobject (dynamic-link LIBGOBJECT))
 
 
 ;;; Brief syntax macro for defining lazy foreign functions.

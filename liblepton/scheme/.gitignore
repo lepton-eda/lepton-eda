@@ -1,4 +1,4 @@
 test-suite.log
 lepton/core/gettext.scm
-lepton/ffi.scm
+lepton/m4.scm
 lepton/log.scm

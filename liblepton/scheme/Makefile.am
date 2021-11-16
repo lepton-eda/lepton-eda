@@ -15,6 +15,7 @@ nobase_dist_scmdata_DATA = \
 	lepton/color-map.scm \
 	lepton/config.scm \
 	lepton/eval.scm \
+	lepton/ffi.scm \
 	lepton/file-system.scm \
 	lepton/library.scm \
 	lepton/library/component.scm \
@@ -89,7 +90,7 @@ nobase_dist_scmdata_DATA = \
 
 nobase_scmdata_DATA = \
 	lepton/core/gettext.scm \
-	lepton/ffi.scm
+	lepton/m4.scm
 
 TESTS = \
 	unit-tests/backend-spice-noqsi.scm \
@@ -183,8 +184,7 @@ SCM_LOG_DRIVER = \
 dist_noinst_DATA = \
 	lepton/core/gettext.scm.in \
 	unit-test.scm \
-	$(TESTS) \
-	lepton/ffi.scm.in
+	$(TESTS)
 
 if CYGWIN
 LIBLEPTON=cyglepton-$(LIBLEPTON_MAJOR)
@@ -206,14 +206,20 @@ lepton/core/gettext.scm: $(srcdir)/lepton/core/gettext.scm.in Makefile
 	  echo "Recreating $@"; mv $@.new $@; \
 	fi
 
-lepton/ffi.scm: $(srcdir)/lepton/ffi.scm.in
+lepton/m4.scm: Makefile
 	$(MKDIR_P) lepton/; \
-	sed -e 's,[@]LIBLEPTON[@],$(LIBLEPTON),g' \
-	-e 's,[@]LIBGLIB[@],$(LIBGLIB),g' \
-	-e 's,[@]LIBGOBJECT[@],$(LIBGOBJECT),g' < $(srcdir)/$@.in > $@
+	echo '(define-module (lepton m4))' > $@.new && \
+	echo '(define-public LIBLEPTON "$(LIBLEPTON)")' >> $@.new && \
+	echo '(define-public LIBGLIB "$(LIBGLIB)")' >> $@.new && \
+	echo '(define-public LIBGOBJECT "$(LIBGOBJECT)")' >> $@.new; \
+	if cmp $@ $@.new > /dev/null 2>&1; then \
+	  rm $@.new; echo "$@ is unchanged"; \
+	else \
+	  echo "Recreating $@"; mv $@.new $@; \
+	fi
 
 CLEANFILES = \
 	lepton/core/gettext.scm \
 	unit-tests/dummy.sym \
 	unit-tests/dummy.xpm \
-	lepton/ffi.scm
+	lepton/m4.scm
