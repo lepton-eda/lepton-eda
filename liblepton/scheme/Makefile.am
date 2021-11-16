@@ -14,6 +14,7 @@ nobase_dist_scmdata_DATA = \
 	lepton/attrib.scm \
 	lepton/color-map.scm \
 	lepton/config.scm \
+	lepton/core/gettext.scm \
 	lepton/eval.scm \
 	lepton/ffi.scm \
 	lepton/file-system.scm \
@@ -88,9 +89,7 @@ nobase_dist_scmdata_DATA = \
 	symcheck/option.scm \
 	symcheck/report.scm
 
-nobase_scmdata_DATA = \
-	lepton/core/gettext.scm \
-	lepton/m4.scm
+nobase_scmdata_DATA = lepton/m4.scm
 
 TESTS = \
 	unit-tests/backend-spice-noqsi.scm \
@@ -182,7 +181,6 @@ SCM_LOG_DRIVER = \
 	--no-auto-compile -e main/with-toplevel -s $(abs_top_srcdir)/liblepton/scheme/unit-test.scm
 
 dist_noinst_DATA = \
-	lepton/core/gettext.scm.in \
 	unit-test.scm \
 	$(TESTS)
 
@@ -196,19 +194,10 @@ LIBGLIB=libglib-2.0
 LIBGOBJECT=libgobject-2.0
 endif
 
-lepton/core/gettext.scm: $(srcdir)/lepton/core/gettext.scm.in Makefile
-	@domain=$(LIBLEPTON_GETTEXT_DOMAIN); \
-	$(MKDIR_P) lepton/core; \
-	sed -e"s:[@]LIBLEPTON_GETTEXT_DOMAIN@:$$domain:" < $(srcdir)/$@.in > $@.new; \
-	if cmp $@ $@.new > /dev/null 2>&1; then \
-	  rm $@.new; echo "$@ is unchanged"; \
-	else \
-	  echo "Recreating $@"; mv $@.new $@; \
-	fi
-
 lepton/m4.scm: Makefile
 	$(MKDIR_P) lepton/; \
 	echo '(define-module (lepton m4))' > $@.new && \
+	echo '(define-public LIBLEPTON_GETTEXT_DOMAIN "$(LIBLEPTON_GETTEXT_DOMAIN)")' >> $@.new && \
 	echo '(define-public LIBLEPTON "$(LIBLEPTON)")' >> $@.new && \
 	echo '(define-public LIBGLIB "$(LIBGLIB)")' >> $@.new && \
 	echo '(define-public LIBGOBJECT "$(LIBGOBJECT)")' >> $@.new; \
@@ -219,7 +208,6 @@ lepton/m4.scm: Makefile
 	fi
 
 CLEANFILES = \
-	lepton/core/gettext.scm \
 	unit-tests/dummy.sym \
 	unit-tests/dummy.xpm \
 	lepton/m4.scm
