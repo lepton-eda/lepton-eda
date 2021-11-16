@@ -301,6 +301,18 @@
 
             o_read_buffer))
 
+(define LIBLEPTON
+  (if CYGWIN
+      (string-append "cyglepton-" (number->string LIBLEPTON_MAJOR))
+      "liblepton"))
+
+(define LIBGLIB
+  (if CYGWIN "cygglib-2.0-0" "libglib-2.0"))
+
+(define LIBGOBJECT
+  (if CYGWIN "cyggobject-2.0-0" "libgobject-2.0"))
+
+
 ;;; Helper to check if result of C function is TRUE (non-zero).
 (define true? (negate zero?))
 ;;; Helpers to set results of boolean functions.

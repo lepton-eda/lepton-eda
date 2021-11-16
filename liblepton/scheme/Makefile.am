@@ -184,19 +184,11 @@ dist_noinst_DATA = \
 	unit-test.scm \
 	$(TESTS)
 
-if CYGWIN
-LIBLEPTON=cyglepton-$(LIBLEPTON_MAJOR)
-LIBGLIB=cygglib-2.0-0
-LIBGOBJECT=cyggobject-2.0-0
-else
-LIBLEPTON=liblepton
-LIBGLIB=libglib-2.0
-LIBGOBJECT=libgobject-2.0
-endif
-
 lepton/m4.scm: Makefile
 	$(MKDIR_P) lepton/; \
 	echo '(define-module (lepton m4))' > $@.new && \
+	echo '(define-public CYGWIN (not (string-null? "$(CYGWIN)")))' >> $@.new && \
+	echo '(define-public LIBLEPTON_MAJOR $(LIBLEPTON_MAJOR))' >> $@.new && \
 	echo '(define-public LIBLEPTON_GETTEXT_DOMAIN "$(LIBLEPTON_GETTEXT_DOMAIN)")' >> $@.new && \
 	echo '(define-public LIBLEPTON "$(LIBLEPTON)")' >> $@.new && \
 	echo '(define-public LIBGLIB "$(LIBGLIB)")' >> $@.new && \
