@@ -35,8 +35,6 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Initialize liblepton library.
 (liblepton_init)
 
-(define libgtk (dynamic-link "@LIBGTK@"))
-
 (define gtk-init
   (pointer->procedure
    void

@@ -20,7 +20,8 @@
   #:use-module (system foreign)
   #:use-module (lepton m4)
 
-  #:export (libglib
+  #:export (libgtk
+            libglib
             libgobject
             liblepton
             libleptonattrib))
@@ -42,6 +43,11 @@
 (define LIBGOBJECT
   (if CYGWIN "cyggobject-2.0-0" "libgobject-2.0"))
 
+(define LIBGTK
+  (if CYGWIN
+      (if ENABLE_GTK3 "cyggtk-3-0" "cyggtk-x11-2.0-0")
+      (if ENABLE_GTK3 "libgtk-3" "libgtk-x11-2.0")))
+
 (define libglib (dynamic-link LIBGLIB))
 
 (define libgobject (dynamic-link LIBGOBJECT))
@@ -50,3 +56,5 @@
   (dynamic-link (or (getenv "LIBLEPTON") LIBLEPTON)))
 
 (define libleptonattrib (dynamic-link LIBLEPTONATTRIB))
+
+(define libgtk (dynamic-link LIBGTK))

@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2020 Lepton EDA Contributors
+;;; Copyright (C) 2020-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 (define-module (schematic ffi gtk)
   #:use-module (system foreign)
+  #:use-module (lepton ffi)
 
   #:export (gtk_init
             gtk_main
@@ -33,8 +34,6 @@
             gtk_action_create_menu_item
             gtk_menu_item_set_submenu
             gtk_menu_shell_append))
-
-(define libgtk (dynamic-link "@LIBGTK@"))
 
 (define-syntax define-lff
   (syntax-rules ()

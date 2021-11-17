@@ -52,19 +52,9 @@ nobase_scmdata_DATA = \
 if CYGWIN
 LIBLEPTONGUI=cygleptongui-$(LIBLEPTONGUI_MAJOR)
 LIBGOBJECT=cyggobject-2.0-0
-if ENABLE_GTK3
-LIBGTK = cyggtk-3-0
-else
-LIBGTK = cyggtk-x11-2.0-0
-endif
 else
 LIBLEPTONGUI=libleptongui
 LIBGOBJECT=libgobject-2.0
-if ENABLE_GTK3
-LIBGTK = libgtk-3
-else
-LIBGTK = libgtk-x11-2.0
-endif
 endif
 
 schematic/gschemdoc.scm: schematic/gschemdoc.scm.in

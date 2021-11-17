@@ -21,7 +21,8 @@
   #:use-module (srfi srfi-1)
   #:use-module (lepton ffi lib)
 
-  #:re-export (liblepton
+  #:re-export (libgtk
+               liblepton
                libleptonattrib)
 
   #:export (liblepton_init
