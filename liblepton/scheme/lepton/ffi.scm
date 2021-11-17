@@ -22,6 +22,7 @@
   #:use-module (lepton m4)
 
   #:export (liblepton
+            libleptonattrib
             liblepton_init
             ;; Helpers.
             true?
@@ -306,6 +307,12 @@
       (string-append "cyglepton-" (number->string LIBLEPTON_MAJOR))
       "liblepton"))
 
+(define LIBLEPTONATTRIB
+  (if CYGWIN
+      (string-append "cygleptonattrib-"
+                     (number->string LIBLEPTONATTRIB_MAJOR))
+      "libleptonattrib"))
+
 (define LIBGLIB
   (if CYGWIN "cygglib-2.0-0" "libglib-2.0"))
 
@@ -321,6 +328,8 @@
 
 (define liblepton
   (dynamic-link (or (getenv "LIBLEPTON") LIBLEPTON)))
+
+(define libleptonattrib (dynamic-link LIBLEPTONATTRIB))
 
 (define libglib (dynamic-link LIBGLIB))
 (define libgobject (dynamic-link LIBGOBJECT))
