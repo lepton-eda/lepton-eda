@@ -1,5 +1,4 @@
 gschemdoc.scm
 precompile-config.scm
-ffi/gtk.scm
 ffi/gobject.scm
 ffi.scm
