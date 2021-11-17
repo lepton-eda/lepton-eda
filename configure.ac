@@ -131,6 +131,10 @@ PKG_CHECK_MODULES(PANGOCAIRO, [pangocairo >= 0.26], ,
 PKG_CHECK_MODULES(PANGO, [pango >= 1.23.0], ,
   AC_MSG_ERROR([PANGO 1.23.0 or later is required.]))
 
+dnl Use ldconfig to get shared library names in a case -dev files
+dnl are not installed on the system.
+AC_ARG_VAR(USE_LDCONFIG, [Use ldconfig to get shared library names])
+
 #####################################################################
 # Header files & particular functions
 #####################################################################

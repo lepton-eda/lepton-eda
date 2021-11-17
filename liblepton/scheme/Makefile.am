@@ -197,6 +197,12 @@ else
 USE_GTK3=f
 endif !ENABLE_GTK3
 
+# Work-around for Debian and its derivatives.
+LIBGLIB := $(shell $(USE_LDCONFIG) -p | awk '/libglib-2.0.so\./ {print $$1; exit}')
+LIBGOBJECT := $(shell $(USE_LDCONFIG) -p | awk '/libgobject-2.0.so\./ {print $$1; exit}')
+LIBGTK2 := $(shell $(USE_LDCONFIG) -p | awk '/libgtk-x11-2.0.so\./ {print $$1; exit}')
+LIBGTK3 := $(shell $(USE_LDCONFIG) -p | awk '/libgtk-3.so\./ {print $$1; exit}')
+
 lepton/m4.scm: Makefile
 	$(MKDIR_P) lepton/; \
 	echo '(define-module (lepton m4))' > $@.new && \
@@ -206,6 +212,10 @@ lepton/m4.scm: Makefile
 	echo '(define-public %m4-libleptonattrib-major $(LIBLEPTONATTRIB_MAJOR))' >> $@.new && \
 	echo '(define-public %m4-libleptongui-major $(LIBLEPTONGUI_MAJOR))' >> $@.new && \
 	echo '(define-public %m4-liblepton-gettext-domain "$(LIBLEPTON_GETTEXT_DOMAIN)")' >> $@.new && \
+	echo '(define-public %ldconfig-libglib "$(LIBGLIB)")' >> $@.new && \
+	echo '(define-public %ldconfig-libgobject "$(LIBGOBJECT)")' >> $@.new && \
+	echo '(define-public %ldconfig-libgtk2 "$(LIBGTK2)")' >> $@.new && \
+	echo '(define-public %ldconfig-libgtk3 "$(LIBGTK3)")' >> $@.new && \
 	if cmp $@ $@.new > /dev/null 2>&1; then \
 	  rm $@.new; echo "$@ is unchanged"; \
 	else \

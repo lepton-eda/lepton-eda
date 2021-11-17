@@ -47,15 +47,23 @@
 
 
 (define LIBGLIB
-  (if %m4-use-cygwin "cygglib-2.0-0" "libglib-2.0"))
+  (if (string-null? %ldconfig-libglib)
+      (if %m4-use-cygwin "cygglib-2.0-0" "libglib-2.0")
+      %ldconfig-libglib))
 
 (define LIBGOBJECT
-  (if %m4-use-cygwin "cyggobject-2.0-0" "libgobject-2.0"))
+  (if (string-null? %ldconfig-libgobject)
+      (if %m4-use-cygwin "cyggobject-2.0-0" "libgobject-2.0")
+      %ldconfig-libgobject))
 
 (define LIBGTK
-  (if %m4-use-cygwin
-      (if %m4-use-gtk3 "cyggtk-3-0" "cyggtk-x11-2.0-0")
-      (if %m4-use-gtk3 "libgtk-3" "libgtk-x11-2.0")))
+  (if %m4-use-gtk3
+      (if (string-null? %ldconfig-libgtk3)
+          (if %m4-use-cygwin "cyggtk-3-0" "libgtk-3")
+          %ldconfig-libgtk3)
+      (if (string-null? %ldconfig-libgtk2)
+          (if %m4-use-cygwin "cyggtk-x11-2.0-0" "libgtk-x11-2.0")
+          %ldconfig-libgtk2)))
 
 (define libglib (dynamic-link LIBGLIB))
 
