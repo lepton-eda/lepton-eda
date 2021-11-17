@@ -190,9 +190,6 @@ lepton/m4.scm: Makefile
 	echo '(define-public CYGWIN (not (string-null? "$(CYGWIN)")))' >> $@.new && \
 	echo '(define-public LIBLEPTON_MAJOR $(LIBLEPTON_MAJOR))' >> $@.new && \
 	echo '(define-public LIBLEPTON_GETTEXT_DOMAIN "$(LIBLEPTON_GETTEXT_DOMAIN)")' >> $@.new && \
-	echo '(define-public LIBLEPTON "$(LIBLEPTON)")' >> $@.new && \
-	echo '(define-public LIBGLIB "$(LIBGLIB)")' >> $@.new && \
-	echo '(define-public LIBGOBJECT "$(LIBGOBJECT)")' >> $@.new; \
 	if cmp $@ $@.new > /dev/null 2>&1; then \
 	  rm $@.new; echo "$@ is unchanged"; \
 	else \
