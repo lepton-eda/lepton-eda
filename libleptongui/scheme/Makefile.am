@@ -70,5 +70,4 @@ EXTRA_DIST = \
 
 CLEANFILES = \
 	schematic/gschemdoc.scm \
-	schematic/precompile-config.scm \
 	schematic/ffi.scm
