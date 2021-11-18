@@ -19,11 +19,12 @@
   #:use-module (ice-9 match)
   #:use-module (system foreign)
   #:use-module (srfi srfi-1)
-  #:use-module (lepton m4)
+  #:use-module (lepton ffi lib)
 
-  #:export (liblepton
-            libleptonattrib
-            liblepton_init
+  #:re-export (liblepton
+               libleptonattrib)
+
+  #:export (liblepton_init
             ;; Helpers.
             true?
             TRUE
@@ -302,38 +303,11 @@
 
             o_read_buffer))
 
-(define LIBLEPTON
-  (if CYGWIN
-      (string-append "cyglepton-" (number->string LIBLEPTON_MAJOR))
-      "liblepton"))
-
-(define LIBLEPTONATTRIB
-  (if CYGWIN
-      (string-append "cygleptonattrib-"
-                     (number->string LIBLEPTONATTRIB_MAJOR))
-      "libleptonattrib"))
-
-(define LIBGLIB
-  (if CYGWIN "cygglib-2.0-0" "libglib-2.0"))
-
-(define LIBGOBJECT
-  (if CYGWIN "cyggobject-2.0-0" "libgobject-2.0"))
-
-
 ;;; Helper to check if result of C function is TRUE (non-zero).
 (define true? (negate zero?))
 ;;; Helpers to set results of boolean functions.
 (define TRUE 1)
 (define FALSE 0)
-
-(define liblepton
-  (dynamic-link (or (getenv "LIBLEPTON") LIBLEPTON)))
-
-(define libleptonattrib (dynamic-link LIBLEPTONATTRIB))
-
-(define libglib (dynamic-link LIBGLIB))
-(define libgobject (dynamic-link LIBGOBJECT))
-
 
 ;;; Brief syntax macro for defining lazy foreign functions.
 (define-syntax define-lff
