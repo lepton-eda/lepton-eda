@@ -24,6 +24,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/builtins.scm \
 	schematic/core/gettext.scm \
 	schematic/dialog.scm \
+	schematic/ffi.scm \
 	schematic/ffi/gobject.scm \
 	schematic/ffi/gtk.scm \
 	schematic/gui/keymap.scm \
@@ -46,22 +47,14 @@ nobase_dist_scmdata_DATA = \
 	conf/schematic/stroke.scm
 
 nobase_scmdata_DATA = \
-	schematic/gschemdoc.scm \
-	schematic/ffi.scm
+	schematic/gschemdoc.scm
 
 schematic/gschemdoc.scm: schematic/gschemdoc.scm.in
 	$(MKDIR_P) schematic/; \
 	sed -e 's,[@]docdir[@],$(docdir),g' < $(srcdir)/$@.in > $@
 
-schematic/ffi.scm: schematic/ffi.scm.in
-	$(MKDIR_P) schematic/; \
-	sed -e 's,[@]LIBLEPTONGUI[@],$(LIBLEPTONGUI),g' < $(srcdir)/$@.in > $@
-
-
 EXTRA_DIST = \
-	schematic/gschemdoc.scm.in \
-	schematic/ffi.scm.in
+	schematic/gschemdoc.scm.in
 
 CLEANFILES = \
-	schematic/gschemdoc.scm \
-	schematic/ffi.scm
+	schematic/gschemdoc.scm
