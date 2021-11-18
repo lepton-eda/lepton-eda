@@ -49,12 +49,6 @@ nobase_scmdata_DATA = \
 	schematic/gschemdoc.scm \
 	schematic/ffi.scm
 
-if CYGWIN
-LIBLEPTONGUI=cygleptongui-$(LIBLEPTONGUI_MAJOR)
-else
-LIBLEPTONGUI=libleptongui
-endif
-
 schematic/gschemdoc.scm: schematic/gschemdoc.scm.in
 	$(MKDIR_P) schematic/; \
 	sed -e 's,[@]docdir[@],$(docdir),g' < $(srcdir)/$@.in > $@

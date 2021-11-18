@@ -204,6 +204,7 @@ lepton/m4.scm: Makefile
 	echo '(define-public ENABLE_GTK3 #$(USE_GTK3))' >> $@.new && \
 	echo '(define-public LIBLEPTON_MAJOR $(LIBLEPTON_MAJOR))' >> $@.new && \
 	echo '(define-public LIBLEPTONATTRIB_MAJOR $(LIBLEPTONATTRIB_MAJOR))' >> $@.new && \
+	echo '(define-public LIBLEPTONGUI_MAJOR $(LIBLEPTONGUI_MAJOR))' >> $@.new && \
 	echo '(define-public LIBLEPTON_GETTEXT_DOMAIN "$(LIBLEPTON_GETTEXT_DOMAIN)")' >> $@.new && \
 	if cmp $@ $@.new > /dev/null 2>&1; then \
 	  rm $@.new; echo "$@ is unchanged"; \

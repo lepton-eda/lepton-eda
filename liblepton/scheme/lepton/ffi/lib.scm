@@ -24,7 +24,8 @@
             libglib
             libgobject
             liblepton
-            libleptonattrib))
+            libleptonattrib
+            libleptongui))
 
 (define LIBLEPTON
   (if CYGWIN
@@ -36,6 +37,13 @@
       (string-append "cygleptonattrib-"
                      (number->string LIBLEPTONATTRIB_MAJOR))
       "libleptonattrib"))
+
+(define LIBLEPTONGUI
+  (if CYGWIN
+      (string-append "cygleptongui-"
+                     (number->string LIBLEPTONGUI_MAJOR))
+      "libleptongui"))
+
 
 (define LIBGLIB
   (if CYGWIN "cygglib-2.0-0" "libglib-2.0"))
@@ -58,3 +66,6 @@
 (define libleptonattrib (dynamic-link LIBLEPTONATTRIB))
 
 (define libgtk (dynamic-link LIBGTK))
+
+(define libleptongui
+  (dynamic-link (or (getenv "LIBLEPTONGUI") LIBLEPTONGUI)))
