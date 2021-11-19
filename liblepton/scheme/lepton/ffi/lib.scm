@@ -69,12 +69,12 @@
 
 (define libgobject (dynamic-link %libgobject))
 
+(define libgtk (dynamic-link %libgtk))
+
 (define liblepton
   (dynamic-link (or (getenv "LIBLEPTON") %liblepton)))
 
 (define libleptonattrib (dynamic-link %libleptonattrib))
-
-(define libgtk (dynamic-link %libgtk))
 
 (define libleptongui
   (dynamic-link (or (getenv "LIBLEPTONGUI") %libleptongui)))
