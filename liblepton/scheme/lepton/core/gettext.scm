@@ -24,6 +24,6 @@
 (define-module (lepton core gettext)
   #:use-module (lepton m4))
 
-(define-public (G_ msg) (gettext msg LIBLEPTON_GETTEXT_DOMAIN))
+(define-public (G_ msg) (gettext msg %m4-liblepton-gettext-domain))
 (define-public (N_ msgid msgid-plural n)
-  (ngettext msgid msgid-plural n LIBLEPTON_GETTEXT_DOMAIN))
+  (ngettext msgid msgid-plural n %m4-liblepton-gettext-domain))

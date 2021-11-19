@@ -200,12 +200,12 @@ endif !ENABLE_GTK3
 lepton/m4.scm: Makefile
 	$(MKDIR_P) lepton/; \
 	echo '(define-module (lepton m4))' > $@.new && \
-	echo '(define-public CYGWIN #$(USE_CYGWIN))' >> $@.new && \
-	echo '(define-public ENABLE_GTK3 #$(USE_GTK3))' >> $@.new && \
-	echo '(define-public LIBLEPTON_MAJOR $(LIBLEPTON_MAJOR))' >> $@.new && \
-	echo '(define-public LIBLEPTONATTRIB_MAJOR $(LIBLEPTONATTRIB_MAJOR))' >> $@.new && \
-	echo '(define-public LIBLEPTONGUI_MAJOR $(LIBLEPTONGUI_MAJOR))' >> $@.new && \
-	echo '(define-public LIBLEPTON_GETTEXT_DOMAIN "$(LIBLEPTON_GETTEXT_DOMAIN)")' >> $@.new && \
+	echo '(define-public %m4-use-cygwin #$(USE_CYGWIN))' >> $@.new && \
+	echo '(define-public %m4-use-gtk3 #$(USE_GTK3))' >> $@.new && \
+	echo '(define-public %m4-liblepton-major $(LIBLEPTON_MAJOR))' >> $@.new && \
+	echo '(define-public %m4-libleptonattrib-major $(LIBLEPTONATTRIB_MAJOR))' >> $@.new && \
+	echo '(define-public %m4-libleptongui-major $(LIBLEPTONGUI_MAJOR))' >> $@.new && \
+	echo '(define-public %m4-liblepton-gettext-domain "$(LIBLEPTON_GETTEXT_DOMAIN)")' >> $@.new && \
 	if cmp $@ $@.new > /dev/null 2>&1; then \
 	  rm $@.new; echo "$@ is unchanged"; \
 	else \

@@ -28,33 +28,34 @@
             libleptongui))
 
 (define LIBLEPTON
-  (if CYGWIN
-      (string-append "cyglepton-" (number->string LIBLEPTON_MAJOR))
+  (if %m4-use-cygwin
+      (string-append "cyglepton-"
+                     (number->string %m4-liblepton-major))
       "liblepton"))
 
 (define LIBLEPTONATTRIB
-  (if CYGWIN
+  (if %m4-use-cygwin
       (string-append "cygleptonattrib-"
-                     (number->string LIBLEPTONATTRIB_MAJOR))
+                     (number->string %m4-libleptonattrib-major))
       "libleptonattrib"))
 
 (define LIBLEPTONGUI
-  (if CYGWIN
+  (if %m4-use-cygwin
       (string-append "cygleptongui-"
-                     (number->string LIBLEPTONGUI_MAJOR))
+                     (number->string %m4-libleptongui-major))
       "libleptongui"))
 
 
 (define LIBGLIB
-  (if CYGWIN "cygglib-2.0-0" "libglib-2.0"))
+  (if %m4-use-cygwin "cygglib-2.0-0" "libglib-2.0"))
 
 (define LIBGOBJECT
-  (if CYGWIN "cyggobject-2.0-0" "libgobject-2.0"))
+  (if %m4-use-cygwin "cyggobject-2.0-0" "libgobject-2.0"))
 
 (define LIBGTK
-  (if CYGWIN
-      (if ENABLE_GTK3 "cyggtk-3-0" "cyggtk-x11-2.0-0")
-      (if ENABLE_GTK3 "libgtk-3" "libgtk-x11-2.0")))
+  (if %m4-use-cygwin
+      (if %m4-use-gtk3 "cyggtk-3-0" "cyggtk-x11-2.0-0")
+      (if %m4-use-gtk3 "libgtk-3" "libgtk-x11-2.0")))
 
 (define libglib (dynamic-link LIBGLIB))
 
