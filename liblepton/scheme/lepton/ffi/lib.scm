@@ -27,6 +27,11 @@
             libleptonattrib
             libleptongui))
 
+(define (ldconfig-check-libname libname)
+  (and (string= (major-version) "3")
+       (not (string-null? libname))
+       libname))
+
 (define %liblepton
   (if %m4-use-cygwin
       (string-append "cyglepton-"
@@ -47,23 +52,19 @@
 
 
 (define %libglib
-  (if (string-null? %ldconfig-libglib)
-      (if %m4-use-cygwin "cygglib-2.0-0" "libglib-2.0")
-      %ldconfig-libglib))
+  (or (ldconfig-check-libname %ldconfig-libglib)
+      (if %m4-use-cygwin "cygglib-2.0-0" "libglib-2.0")))
 
 (define %libgobject
-  (if (string-null? %ldconfig-libgobject)
-      (if %m4-use-cygwin "cyggobject-2.0-0" "libgobject-2.0")
-      %ldconfig-libgobject))
+  (or (ldconfig-check-libname %ldconfig-libgobject)
+      (if %m4-use-cygwin "cyggobject-2.0-0" "libgobject-2.0")))
 
 (define %libgtk
   (if %m4-use-gtk3
-      (if (string-null? %ldconfig-libgtk3)
-          (if %m4-use-cygwin "cyggtk-3-0" "libgtk-3")
-          %ldconfig-libgtk3)
-      (if (string-null? %ldconfig-libgtk2)
-          (if %m4-use-cygwin "cyggtk-x11-2.0-0" "libgtk-x11-2.0")
-          %ldconfig-libgtk2)))
+      (or (ldconfig-check-libname %ldconfig-libgtk3)
+          (if %m4-use-cygwin "cyggtk-3-0" "libgtk-3"))
+      (or (ldconfig-check-libname %ldconfig-libgtk2)
+          (if %m4-use-cygwin "cyggtk-x11-2.0-0" "libgtk-x11-2.0"))))
 
 (define libglib (dynamic-link %libglib))
 
