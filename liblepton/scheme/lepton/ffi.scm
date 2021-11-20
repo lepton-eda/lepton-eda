@@ -22,8 +22,7 @@
   #:use-module (lepton ffi lib)
 
   #:re-export (libgtk
-               liblepton
-               libleptonattrib)
+               liblepton)
 
   #:export (liblepton_init
             ;; Helpers.

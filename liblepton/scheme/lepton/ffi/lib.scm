@@ -24,8 +24,8 @@
             libglib
             libgobject
             liblepton
-            libleptonattrib
-            libleptongui))
+            %libleptonattrib
+            %libleptongui))
 
 (define (ldconfig-check-libname libname)
   (and (string= (major-version) "3")
@@ -74,8 +74,3 @@
 
 (define liblepton
   (dynamic-link (or (getenv "LIBLEPTON") %liblepton)))
-
-(define libleptonattrib (dynamic-link %libleptonattrib))
-
-(define libleptongui
-  (dynamic-link (or (getenv "LIBLEPTONGUI") %libleptongui)))

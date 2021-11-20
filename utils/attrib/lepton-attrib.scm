@@ -30,10 +30,13 @@ exec @GUILE@ -s "$0" "$@"
              (ice-9 receive)
              (srfi srfi-1)
              (system foreign)
-             (lepton ffi))
+             (lepton ffi)
+             (lepton ffi lib))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
+
+(define libleptonattrib (dynamic-link %libleptonattrib))
 
 (define gtk-init
   (pointer->procedure

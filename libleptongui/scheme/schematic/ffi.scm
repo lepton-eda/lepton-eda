@@ -151,6 +151,10 @@
             x_window_setup
             ))
 
+
+(define libleptongui
+  (dynamic-link (or (getenv "LIBLEPTONGUI") %libleptongui)))
+
 ;;; Brief syntax macro for defining lazy foreign functions.
 (define-syntax define-lff
   (syntax-rules ()
