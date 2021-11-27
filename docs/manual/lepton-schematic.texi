@@ -572,10 +572,12 @@ mode}.  It also cancels in-process editing operations.
 action done, it emits a message about this to the log.  If an invalid
 action is requested, it issues a warning which also goes to the log.
 
-@item Page print
-@kbd{P Shift-P} triggers an obsolete debugging action which prints the
-contents of the current page in the terminal @schematic{} was launched
-in in a special debug format.
+@c This obsolete action was used for debugging only.  Don't expose it.
+@c @item Page print
+@c @kbd{P Shift-P} triggers an obsolete debugging action which prints the
+@c contents of the current page in the terminal @schematic{} was launched
+@c in in a special debug format.
+
 @end table
 
 
