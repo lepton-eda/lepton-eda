@@ -362,8 +362,9 @@ for text}.
 
 @item Redraw
 @clicksequence{View @click{} Redraw} (@kbd{R} or @kbd{V R}) allows you
-to trigger the redrawing of the current page if, for example, you see
-some rendering glitches on the canvas.
+to trigger redrawing of the current page if, for example, you see some
+rendering glitches on the canvas, or the file has been changed by some
+external program such as, for example, @command{lepton-refdes_renum}.
 
 @item Pan
 @item Zoom Box
