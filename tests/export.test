@@ -116,3 +116,58 @@
   (test-teardown))
 
 (test-end "export schematic")
+
+
+(define (make-test-filename name)
+  (build-filename *abs-top-srcdir*
+                  "utils"
+                  "cli"
+                  "tests"
+                  name))
+
+
+
+(when (or skip-compare-tests
+          skip-identify-tests)
+  (test-skip "export -c"))
+
+(test-begin "export -c")
+
+(test-group-with-cleanup "export -c"
+  (test-setup)
+
+  (let ((input (make-test-filename "box.sch"))
+        (output "box.png")
+        (colored-output "box-colored.png"))
+
+    (test-run-success lepton-cli "export"
+                      "-k" "100px"
+                      "-m" "10px"
+                      "-o" output
+                      input)
+    (test-assert (file-exists? output))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "130x130")))
+    (test-run-success lepton-cli "export"
+                      "-c"
+                      "-k" "100px"
+                      "-m" "10px"
+                      "-o" colored-output
+                      input)
+    (test-assert (file-exists? colored-output))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify colored-output)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "130x130")))
+    ;; Compare files.  It is enough to test that they are
+    ;; different for now.
+    (test-run-failure compare "-metric" "MAE" output colored-output "diff.png"))
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "export -c")
