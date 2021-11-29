@@ -364,8 +364,7 @@ for text}.
 @item Redraw
 @clicksequence{View @click{} Redraw} (@kbd{R} or @kbd{V R}) allows you
 to trigger redrawing of the current page if, for example, you see some
-rendering glitches on the canvas, or the file has been changed by some
-external program such as, for example, @command{lepton-refdes_renum}.
+rendering glitches on the canvas.
 
 @item Pan
 @clicksequence{View @click{} Pan} (@kbd{X} or @kbd{V P}) pans the
@@ -446,7 +445,9 @@ select saving or dropping changes, or cancel the operation.
 @clicksequence{Page @click{} Revert...} (@kbd{P R} or @kbd{F R})
 reverts all changes in the current schematic page since the last
 saving.  Since the operation is dangerous, the confirmation dialog
-will be opened in order to prevent unwanted loss of data.
+will be opened in order to prevent unwanted loss of data.  It may be
+useful though in cases when the page file has been changed by some
+external program such as, for example, @command{lepton-refdes_renum}.
 
 @item Next Tab
 @item Previous Tab
