@@ -542,9 +542,9 @@ making up a box.
 insertion mode.  The circle is defined by two points on the canvas.
 If the mouse cursor is over the canvas, the first point of a new
 circle corresponds to the point under cursor.  Otherwise you have to
-left-click to define the point.  Use another left-click to define the
-circle radius.  Hit @kbd{Esc} if you want to cancel making up a
-circle.
+left-click to define the point.  This point will be the center of a
+new circle.  Use another left-click to define its radius.  Hit
+@kbd{Esc} if you want to cancel making up a circle.
 
 @item Arc
 @item Pin
