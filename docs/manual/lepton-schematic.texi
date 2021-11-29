@@ -550,12 +550,12 @@ new circle.  Use another left-click to define its radius.  Hit
 @clicksequence{Add @click{} Arc} (@kbd{A R}) starts the arc insertion
 mode.  An arc is defined by its center, radius, and its start and
 sweep angles.  If the mouse cursor is over the canvas, the center
-point of a new arc corresponds to the point under cursor.  Otherwise
-you have to left-click to define the center point.  Use another
-left-click to define its radius.  Thereafter, the Arc Params dialog
-box will be shown where you can change its radius and angles.  Press
-the @samp{OK} button in the dialog to apply changes or use
-@samp{Cancel} to cancel the operation.
+point of a new arc corresponds to the point under the cursor.
+Otherwise you have to left-click to define the center point.  Use
+another left-click to define its radius.  Thereafter, the Arc Params
+dialog box will be shown.  Whithin it, you can change the radius and
+angles of the arc.  Press the @samp{OK} button in the dialog to apply
+changes or use @samp{Cancel} to cancel the operation.
 
 @item Pin
 @item Picture...
