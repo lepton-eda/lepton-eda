@@ -247,3 +247,47 @@
   (test-teardown))
 
 (test-end "export format")
+
+(when skip-identify-tests
+  (test-skip "export -p"))
+
+(test-begin "export -p")
+(test-group-with-cleanup "export -p"
+  (test-setup)
+
+  (let ((input-box (make-test-filename "box.sch"))
+        (input-horiz (make-test-filename "box-horiz.sch"))
+        (input-vert (make-test-filename "box-vert.sch"))
+        (output-box "box.png")
+        (output-horiz "box-horiz.png")
+        (output-vert "box-vert.png"))
+
+    (test-run-success lepton-cli "export" "-o" output-box "-p" "iso_a4" input-box)
+    (test-assert (file-exists? output-box))
+    (test-run-success lepton-cli "export" "-o" output-horiz "-p" "iso_a4" input-horiz)
+    (test-assert (file-exists? output-horiz))
+    (test-run-success lepton-cli "export" "-o" output-vert "-p" "iso_a4" input-vert)
+    (test-assert (file-exists? output-vert))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-box)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "794x1123")))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-horiz)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "1123x794")))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-vert)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "794x1123"))))
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "export -p")
