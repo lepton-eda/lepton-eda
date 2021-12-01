@@ -200,7 +200,12 @@
     (test-run-success lepton-cli "export" "-f" "eps" "-o" output input)
     (test-grep-stdout "PostScript" file output)
     (test-grep-stdout "EPS" file output)
-    )
+
+    (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "export" "-f" "x" "-o" output input)
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert
+        (string-contains <stderr> "ERROR: Unsupported output format"))))
 
   ;; Clean up.
   (test-teardown))
