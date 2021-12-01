@@ -236,7 +236,12 @@
     (test-run-success lepton-cli "export" "-o" "output.eps" input)
     (test-grep-stdout "PostScript" file "output.eps")
     (test-grep-stdout "EPS" file "output.eps")
-    )
+
+    (receive (<status> <stdout> <stderr>)
+      (command-values lepton-cli "export" "-o" "output.x" input)
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert
+        (string-contains <stderr> "ERROR: Cannot find supported format for filename"))))
 
   ;; Clean up.
   (test-teardown))
