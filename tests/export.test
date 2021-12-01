@@ -369,3 +369,37 @@
   (test-teardown))
 
 (test-end "export -s")
+
+
+(when skip-identify-tests
+  (test-skip "export -k"))
+
+(test-begin "export -k")
+(test-group-with-cleanup "export -k"
+  (test-setup)
+
+  (let ((input (make-test-filename "box.sch"))
+        (output "box.png"))
+
+    ;; Export without margins.
+    (test-run-success lepton-cli "export" "-m" "0" "-k" "5mm" "-o" output input)
+    (test-assert (file-exists? output))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "21x21")))
+
+    (test-run-success lepton-cli "export" "-m" "0" "-k" "1cm" "-o" output input)
+    (test-assert (file-exists? output))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "42x42")))
+    )
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "export -k")
