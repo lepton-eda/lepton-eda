@@ -173,3 +173,36 @@
   (test-teardown))
 
 (test-end "export -c")
+
+
+(when skip-file-tests
+  (test-skip "export -f"))
+
+(test-begin "export -f")
+(test-group-with-cleanup "export -f"
+  (test-setup)
+
+  (let ((input (make-test-filename "box.sch"))
+        (output "box.x"))
+
+    (test-run-success lepton-cli "export" "-f" "png" "-o" output input)
+    (test-grep-stdout "PNG" file output)
+
+    (test-run-success lepton-cli "export" "-f" "svg" "-o" output input)
+    (test-grep-stdout "SVG" file output)
+
+    (test-run-success lepton-cli "export" "-f" "pdf" "-o" output input)
+    (test-grep-stdout "PDF" file output)
+
+    (test-run-success lepton-cli "export" "-f" "ps" "-o" output input)
+    (test-grep-stdout "PostScript" file output)
+
+    (test-run-success lepton-cli "export" "-f" "eps" "-o" output input)
+    (test-grep-stdout "PostScript" file output)
+    (test-grep-stdout "EPS" file output)
+    )
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "export -f")
