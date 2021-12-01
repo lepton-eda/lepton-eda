@@ -291,3 +291,81 @@
   (test-teardown))
 
 (test-end "export -p")
+
+
+(when skip-identify-tests
+  (test-skip "export -s"))
+
+;;; Some tests here output glitches as white 1px lines on two
+;;; edges of boxes.  This should be addressed some day.
+
+(test-begin "export -s")
+(test-group-with-cleanup "export -s"
+  (test-setup)
+
+  (let ((input (make-test-filename "box.sch"))
+        (output "box.png"))
+
+    ;; Export without margins.
+    ;; Default unit is 'pt' so '100:100' means '100pt:100pt'.
+    (test-run-success lepton-cli "export" "-m" "0" "-s" "100:100" "-o" output input)
+    (test-assert (file-exists? output))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "134x134")))
+
+    (test-run-success lepton-cli "export" "-m" "0" "-s" "100pt:100pt" "-o" output input)
+    (test-assert (file-exists? output))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "134x134")))
+
+    (test-run-success lepton-cli "export" "-m" "0" "-s" "100px:100px" "-o" output input)
+    (test-assert (file-exists? output))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "100x100")))
+
+    (test-run-success lepton-cli "export" "-m" "0" "-s" "1cm:1cm" "-o" output input)
+    (test-assert (file-exists? output))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "38x38")))
+
+    (test-run-success lepton-cli "export" "-m" "0" "-s" "10mm:10mm" "-o" output input)
+    (test-assert (file-exists? output))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "38x38")))
+
+    (test-run-success lepton-cli "export" "-m" "0" "-s" "1in:1in" "-o" output input)
+    (test-assert (file-exists? output))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "96x96")))
+
+    (test-run-success lepton-cli "export" "-m" "0" "-s" "10pc:10pc" "-o" output input)
+    (test-assert (file-exists? output))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "160x160")))
+    )
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "export -s")
