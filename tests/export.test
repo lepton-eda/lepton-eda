@@ -448,3 +448,38 @@
       (string-contains <stderr> "ERROR: You must specify an output filename.")))
 
 (test-end "export --")
+
+
+(test-begin "export -F")
+(test-group-with-cleanup "export -F"
+  (test-setup)
+
+  (let ((input (make-test-filename "text.sch"))
+        (output-sans "text-sans.ps")
+        (output-serif "text-serif.ps"))
+
+    ;; Export to PostScript using different fonts and check that
+    ;; output files differ.
+    (test-run-success lepton-cli "export" "-F" "Sans" "-o" output-sans input)
+    (test-assert (file-exists? output-sans))
+    (test-run-success lepton-cli "export" "-F" "Serif" "-o" output-serif input)
+    (test-assert (file-exists? output-serif))
+
+    (let ((font-sans #f)
+          (font-serif #f))
+      (receive (<status> <stdout> <stderr>)
+          (command-values "grep" "FontName" output-sans)
+        (test-eq EXIT_SUCCESS <status>)
+        (set! font-sans <stdout>))
+
+      (receive (<status> <stdout> <stderr>)
+          (command-values "grep" "FontName" output-serif)
+        (test-eq EXIT_SUCCESS <status>)
+        (set! font-serif <stdout>))
+
+      (test-assert (not (string= font-sans font-serif)))))
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "export -F")
