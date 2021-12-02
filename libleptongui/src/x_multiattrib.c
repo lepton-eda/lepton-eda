@@ -73,7 +73,8 @@ multiattrib_callback_response (GtkDialog *dialog,
 
 /*! \brief Open multiple attribute editor dialog.
  *  \par Function Description
- *  Opens the multiple attribute editor dialog for objects in this <B>toplevel</B>.
+ *  Opens the multiple attribute editor dialog for objects in this
+ *  <B>GschemToplevel</B>.
  *
  *  \param [in] w_current  The GschemToplevel object.
  */
