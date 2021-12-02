@@ -437,3 +437,14 @@
   (test-teardown))
 
 (test-end "export -d")
+
+
+(test-begin "export --")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-cli "export" "--" "-o" "x.png" "x.sch")
+  (test-eq EXIT_FAILURE <status>)
+  (test-assert
+      (string-contains <stderr> "ERROR: You must specify an output filename.")))
+
+(test-end "export --")
