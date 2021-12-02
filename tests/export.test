@@ -483,3 +483,91 @@
   (test-teardown))
 
 (test-end "export -F")
+
+
+(when skip-identify-tests
+  (test-skip "export -l"))
+
+(test-begin "export -l")
+
+(test-group-with-cleanup "export -l"
+  (test-setup)
+
+  (let ((input-horiz (make-test-filename "box-horiz.sch"))
+        (input-vert (make-test-filename "box-vert.sch"))
+        (output-plain "plain.png")
+        (output-auto "auto.png")
+        (output-portrait "portrait.png")
+        (output-landscape "landscape.png"))
+
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "-o" output-plain input-horiz)
+    (test-assert (file-exists? output-plain))
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "-l" "auto" "-o" output-auto input-horiz)
+    (test-assert (file-exists? output-auto))
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "-l" "portrait" "-o" output-portrait input-horiz)
+    (test-assert (file-exists? output-portrait))
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "-l" "landscape" "-o" output-landscape input-horiz)
+    (test-assert (file-exists? output-landscape))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-plain)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "1123x794")))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-auto)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "1123x794")))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-portrait)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "794x1123")))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-landscape)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "1123x794")))
+
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "-o" output-plain input-vert)
+    (test-assert (file-exists? output-plain))
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "-l" "auto" "-o" output-auto input-vert)
+    (test-assert (file-exists? output-auto))
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "-l" "portrait" "-o" output-portrait input-vert)
+    (test-assert (file-exists? output-portrait))
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "-l" "landscape" "-o" output-landscape input-vert)
+    (test-assert (file-exists? output-landscape))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-plain)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "794x1123")))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-auto)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "794x1123")))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-portrait)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "794x1123")))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-landscape)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "1123x794")))
+    )
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "export -l")
