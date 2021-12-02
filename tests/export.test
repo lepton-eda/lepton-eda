@@ -573,3 +573,68 @@
   (test-teardown))
 
 (test-end "export -l")
+
+
+(when (or skip-compare-tests
+          skip-convert-tests
+          skip-identify-tests)
+  (test-skip "export -m"))
+
+(test-begin "export -m")
+(test-group-with-cleanup "export -m"
+  (test-setup)
+
+  (let ((input (make-test-filename "box.sch"))
+        (output-no-margins "box-no-margins.png")
+        (output-margins "box-with-margins.png")
+        (output-crop "box-with-margins-crop.png"))
+
+    ;; Create first file without margins.
+    (test-run-success lepton-cli "export"
+                      "-k" "100px"
+                      "-m" "0"
+                      "-o" output-no-margins
+                      input)
+    (test-assert (file-exists? output-no-margins))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-no-margins)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "110x110")))
+
+    ;; Create second file with margins.
+    (test-run-success lepton-cli "export"
+                      "-k" "100px"
+                      "-m" "10px:20px:30px:40px"
+                      "-o" output-margins
+                      input)
+    (test-assert (file-exists? output-margins))
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-margins)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "170x150")))
+
+    ;; Now use ImageMagic tools to crop margins and compare the
+    ;; result with the first file.
+    (test-run-success convert output-margins
+                      "-gravity" "North" "-chop" "0x10"
+                      "-gravity" "West" "-chop" "20x0"
+                      "-gravity" "South" "-chop" "0x30"
+                      "-gravity" "East" "-chop" "40x0"
+                      output-crop)
+    (test-assert (file-exists? output-crop))
+    ;; Check size of cropped file.
+    (receive (<status> <stdout> <stderr>)
+        (command-values identify output-crop)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert
+          (string-contains <stdout> "110x110")))
+
+    ;; Compare files.
+    (test-run-success compare "-metric" "MAE" output-no-margins output-crop "diff.png"))
+
+  ;; Clean up.
+  (test-teardown))
+
+(test-end "export -m")
