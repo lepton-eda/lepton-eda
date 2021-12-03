@@ -368,7 +368,8 @@
       (test-assert
           (string-contains <stdout> "96x96")))
 
-    (test-run-success lepton-cli "export" "-m" "0" "-s" "10pc:10pc" "-o" output input)
+    ;; Test long option version.
+    (test-run-success lepton-cli "export" "-m" "0" "--size=10pc:10pc" "-o" output input)
     (test-assert (file-exists? output))
     (receive (<status> <stdout> <stderr>)
         (command-values identify output)
