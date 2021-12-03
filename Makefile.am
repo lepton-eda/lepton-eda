@@ -40,7 +40,8 @@ AM_TESTS_ENVIRONMENT = env \
 	GUILE_AUTO_COMPILE='0' \
 	GUILE_LOAD_PATH='$(abs_top_srcdir)/tests' \
 	GUILE_LOAD_COMPILED_PATH='' \
-	LEPTON_INHIBIT_RC_FILES='yes'
+	LEPTON_INHIBIT_RC_FILES='yes' \
+	COMPARE='$(IM_COMPARE)'
 
 TESTS = \
 	tests/cli.test \
