@@ -242,6 +242,7 @@ AC_CONFIG_FILES([Makefile
                  utils/cli/src/Makefile
                  utils/cli/docs/Makefile
                  utils/cli/po/Makefile.in
+                 utils/cli/tests/Makefile
 
                  libleptongui/Makefile
                  libleptongui/libleptongui.pc
