@@ -571,13 +571,14 @@
       (test-assert
           (string-contains <stdout> "1123x794")))
 
+    ;; Test long option version.
     (test-run-success lepton-cli "export" "-p" "iso_a4" "-o" output-plain input-vert)
     (test-assert (file-exists? output-plain))
-    (test-run-success lepton-cli "export" "-p" "iso_a4" "-l" "auto" "-o" output-auto input-vert)
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "--layout=auto" "-o" output-auto input-vert)
     (test-assert (file-exists? output-auto))
-    (test-run-success lepton-cli "export" "-p" "iso_a4" "-l" "portrait" "-o" output-portrait input-vert)
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "--layout=portrait" "-o" output-portrait input-vert)
     (test-assert (file-exists? output-portrait))
-    (test-run-success lepton-cli "export" "-p" "iso_a4" "-l" "landscape" "-o" output-landscape input-vert)
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "--layout=landscape" "-o" output-landscape input-vert)
     (test-assert (file-exists? output-landscape))
 
     (receive (<status> <stdout> <stderr>)
