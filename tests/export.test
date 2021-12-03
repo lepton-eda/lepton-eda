@@ -277,7 +277,8 @@
     (test-assert (file-exists? output-box))
     (test-run-success lepton-cli "export" "-o" output-horiz "-p" "iso_a4" input-horiz)
     (test-assert (file-exists? output-horiz))
-    (test-run-success lepton-cli "export" "-o" output-vert "-p" "iso_a4" input-vert)
+    ;; Test long option version.
+    (test-run-success lepton-cli "export" "-o" output-vert "--paper=iso_a4" input-vert)
     (test-assert (file-exists? output-vert))
 
     (receive (<status> <stdout> <stderr>)
