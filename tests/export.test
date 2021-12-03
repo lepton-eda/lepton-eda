@@ -499,7 +499,8 @@
     ;; output files differ.
     (test-run-success lepton-cli "export" "-F" "Sans" "-o" output-sans input)
     (test-assert (file-exists? output-sans))
-    (test-run-success lepton-cli "export" "-F" "Serif" "-o" output-serif input)
+    ;; Test long option version.
+    (test-run-success lepton-cli "export" "--font=Serif" "-o" output-serif input)
     (test-assert (file-exists? output-serif))
 
     (let ((font-sans #f)
