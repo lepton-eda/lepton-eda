@@ -766,11 +766,13 @@
     ;; Compare files.
     (test-run-success compare "-metric" "MAE" golden-output cropped-output "diff.png")
 
+    ;; Test long option version below.
+
     ;; Vertical auto alignment.
     (test-run-success lepton-cli "export"
                       "-s" "50px:100px"
                       "-m" "0"
-                      "-a" "auto"
+                      "--align=auto"
                       "-o" output
                       input)
     (test-assert (file-exists? output))
@@ -792,7 +794,7 @@
     (test-run-success lepton-cli "export"
                       "-s" "50px:100px"
                       "-m" "0"
-                      "-a" "0:0"
+                      "--align=0:0"
                       "-o" output
                       input)
     (test-assert (file-exists? output))
@@ -812,7 +814,7 @@
     (test-run-success lepton-cli "export"
                       "-s" "50px:100px"
                       "-m" "0"
-                      "-a" "1:1"
+                      "--align=1:1"
                       "-o" output
                       input)
     (test-assert (file-exists? output))
