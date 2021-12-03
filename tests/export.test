@@ -403,7 +403,8 @@
       (test-assert
           (string-contains <stdout> "21x21")))
 
-    (test-run-success lepton-cli "export" "-m" "0" "-k" "1cm" "-o" output input)
+    ;; Test long option version.
+    (test-run-success lepton-cli "export" "-m" "0" "--scale=1cm" "-o" output input)
     (test-assert (file-exists? output))
     (receive (<status> <stdout> <stderr>)
         (command-values identify output)
