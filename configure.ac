@@ -139,6 +139,9 @@ dnl ImageMagick tools for tests.
 AC_PATH_PROG(IM_COMPARE, compare)
 AC_PATH_PROG(IM_IDENTIFY, identify)
 
+dnl 'file' tool for tests.
+AC_PATH_PROG(FILE, file)
+
 #####################################################################
 # Header files & particular functions
 #####################################################################

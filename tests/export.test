@@ -2,6 +2,8 @@
 
 (load-from-path "env.scm")
 
+(define file (getenv "FILE"))
+(define skip-file-tests (string-null? file))
 (define compare (getenv "COMPARE"))
 (define skip-compare-tests (string-null? compare))
 (define identify (getenv "IDENTIFY"))
