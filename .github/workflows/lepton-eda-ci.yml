@@ -38,6 +38,7 @@ jobs:
              texlive-plain-generic
              texlive-latex-base
              texlive-fonts-recommended
+             imagemagick
 
       - name: configure
         run: |
