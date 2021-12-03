@@ -237,7 +237,7 @@ void o_edit_show_hidden_lowlevel(GschemToplevel *w_current, const GList *o_list)
 void o_edit_show_hidden(GschemToplevel *w_current, const GList *o_list);
 void o_edit_hide_specific_text(GschemToplevel *w_current, const GList *o_list, const char *stext);
 void o_edit_show_specific_text(GschemToplevel *w_current, const GList *o_list, const char *stext);
-void o_autosave_backups(GschemToplevel *w_current);
+
 /* o_move.c */
 void o_move_start(GschemToplevel *w_current, int x, int y);
 void o_move_end_lowlevel(GschemToplevel *w_current, LeptonObject *object, int diff_x, int diff_y);
