@@ -438,7 +438,8 @@
       (test-assert
           (string-contains <stdout> "827x1170")))
 
-    (test-run-success lepton-cli "export" "-p" "iso_a4" "-m" "0" "-d" "200" "-o" output input)
+    ;; Test long option version.
+    (test-run-success lepton-cli "export" "-p" "iso_a4" "-m" "0" "--dpi=200" "-o" output input)
     (test-assert (file-exists? output))
     (receive (<status> <stdout> <stderr>)
         (command-values identify output)
