@@ -151,7 +151,8 @@
   (let ((input (make-test-filename "box.sch"))
         (output "box.png")
         (output-c "box-c.png")
-        (output-color "box-color.png"))
+        (output-color "box-color.png")
+        (output-no-color "box-no-color.png"))
 
     (test-run-success lepton-cli "export"
                       "-k" "100px"
@@ -189,6 +190,16 @@
                       input)
     ;; Colored files should not differ.
     (test-run-success compare "-metric" "MAE" output-c output-color "diff.png")
+
+    ;; Test --no-color.
+    (test-run-success lepton-cli "export"
+                      "--no-color"
+                      "-k" "100px"
+                      "-m" "10px"
+                      "-o" output-no-color
+                      input)
+    ;; Colored files should not differ.
+    (test-run-success compare "-metric" "MAE" output output-no-color "diff.png")
     )
   ;; Clean up.
   (test-teardown))
