@@ -418,8 +418,9 @@ pre_object_removed (LeptonPage *page,
   object->page = NULL;
 
   /* Clear page's object_lastplace pointer if set */
-  if (page->object_lastplace == object) {
-    page->object_lastplace = NULL;
+  if (lepton_page_get_object_lastplace (page) == object)
+  {
+    lepton_page_set_object_lastplace (page, NULL);
   }
 
   /* Remove object from connection system */
@@ -470,7 +471,7 @@ lepton_page_new (LeptonToplevel *toplevel,
   /* init undo struct pointers */
   lepton_undo_init (page);
 
-  page->object_lastplace = NULL;
+  lepton_page_set_object_lastplace (page, NULL);
 
   page->weak_refs = NULL;
 
