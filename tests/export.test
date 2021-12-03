@@ -4,6 +4,8 @@
 
 (define compare (getenv "COMPARE"))
 (define skip-compare-tests (string-null? compare))
+(define identify (getenv "IDENTIFY"))
+(define skip-identify-tests (string-null? identify))
 
 (define cwd (getcwd))
 (define *testdir* (build-filename (getcwd) "export-tmp"))

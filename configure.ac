@@ -137,6 +137,7 @@ AC_ARG_VAR(USE_LDCONFIG, [Use ldconfig to get shared library names])
 
 dnl ImageMagick tools for tests.
 AC_PATH_PROG(IM_COMPARE, compare)
+AC_PATH_PROG(IM_IDENTIFY, identify)
 
 #####################################################################
 # Header files & particular functions
