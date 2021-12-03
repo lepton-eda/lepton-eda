@@ -640,9 +640,10 @@
           (string-contains <stdout> "110x110")))
 
     ;; Create second file with margins.
+    ;; Test long option version.
     (test-run-success lepton-cli "export"
                       "-k" "100px"
-                      "-m" "10px:20px:30px:40px"
+                      "--margins=10px:20px:30px:40px"
                       "-o" output-margins
                       input)
     (test-assert (file-exists? output-margins))
