@@ -114,7 +114,15 @@
 
     (test-run-success lepton-export "export" "-o" export-png schematic)
     (test-assert (file-exists? export-png))
-    (file-size-about? export-png 360000))
+    (file-size-about? export-png 360000)
+
+    ;; Test long option version.
+    (test-run-success lepton-cli "export" "--output=cli.pdf" schematic)
+    (test-assert (file-exists? "cli.pdf"))
+
+    (test-run-success lepton-export "export" "--output=export.pdf" schematic)
+    (test-assert (file-exists? "export.pdf"))
+    )
 
   ;; Clean up.
   (test-teardown))
