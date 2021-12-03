@@ -93,9 +93,9 @@
       (* size (+ 1 delta)))))
 
 
-(test-begin "export schematic")
+(test-begin "export -o")
 
-(test-group-with-cleanup "export schematic"
+(test-group-with-cleanup "export -o"
   (test-setup)
 
   (let ((cli-png (basename (string-append schematic ".cli.png")))
@@ -119,7 +119,7 @@
   ;; Clean up.
   (test-teardown))
 
-(test-end "export schematic")
+(test-end "export -o")
 
 
 (define (make-test-filename name)
