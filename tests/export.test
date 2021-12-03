@@ -2,6 +2,8 @@
 
 (load-from-path "env.scm")
 
+(define compare (getenv "COMPARE"))
+(define skip-compare-tests (string-null? compare))
 
 (define cwd (getcwd))
 (define *testdir* (build-filename (getcwd) "export-tmp"))

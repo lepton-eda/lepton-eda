@@ -135,6 +135,9 @@ dnl Use ldconfig to get shared library names in a case -dev files
 dnl are not installed on the system.
 AC_ARG_VAR(USE_LDCONFIG, [Use ldconfig to get shared library names])
 
+dnl ImageMagick tools for tests.
+AC_PATH_PROG(IM_COMPARE, compare)
+
 #####################################################################
 # Header files & particular functions
 #####################################################################
