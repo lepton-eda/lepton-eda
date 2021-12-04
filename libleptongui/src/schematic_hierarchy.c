@@ -131,12 +131,9 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
 /*! \brief Search for the parent page of a page in hierarchy.
  *  \par Function Description
  *  This function searches the parent page of page \a page in the
- *  hierarchy. It checks all the pages in the list \a page_list.
+ *  hierarchy.
  *
  *  It returns a pointer on the page if found, NULL otherwise.
- *
- *  \note
- *  The page \a current_page must be in the list \a page_list.
  *
  *  \param [in] current_page The reference page for the search.
  *  \returns A pointer on the page found or NULL if not found.
