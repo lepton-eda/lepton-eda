@@ -14,6 +14,7 @@ Notable changes in Lepton EDA 1.9.17 (upcoming)
   and their functions have been reimplemented using Scheme FFI:
   - `(lepton core attrib)`
   - `(lepton core component)`
+  - `(lepton core page)`
 
 ### Changes in `contrib`:
 
