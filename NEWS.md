@@ -12,6 +12,7 @@ Notable changes in Lepton EDA 1.9.17 (upcoming)
 
 - The following core Scheme modules written in C have been removed
   and their functions have been reimplemented using Scheme FFI:
+  - `(lepton core attrib)`
   - `(lepton core component)`
 
 ### Changes in `contrib`:
