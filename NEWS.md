@@ -21,6 +21,56 @@ Notable changes in Lepton EDA 1.9.17 (upcoming)
   - `(lepton core component)`
   - `(lepton core page)`
 
+### Changes in `lepton-cli`:
+
+- The program has been rewritten in Scheme and splitted up into
+  four separate utilities that provide different functionality
+  which was previously built-in in one binary of the tool:
+  - `lepton-config` provides facilities for working with Lepton
+    configuration system,
+  - `lepton-export` deals with exporting of schematics and symbols
+    into various image formats,
+  - `lepton-shell` provides the interactive Scheme REPL and,
+  - `lepton-cli` is a tool that can launch all the above utilities
+    using corresponding commands `config`, `export`, and `shell`,
+    as before.
+
+- The new Scheme `lepton-cli` utility, unlike the previous code,
+  does not allow for merely skipping `--` just after command name
+  in the command line and behaves the same way like Guile does,
+  that is, interprets all options after `--` as file names.
+
+- `lepton-cli config` now does check if the specified directory
+  exists and reports if it does not, returning non-zero exit
+  status.
+
+- Redundant arguments on the `lepton-cli config` invocation are no
+  longer ignored.  Instead, the command prompts the user of what's
+  happening and exits with non-zero exit status.
+
+- More consistent processing of the option `-p` has been
+  implemented in `lepton-cli config`.  `-p` can be now used in two
+  forms, `-pPATH` or `-p PATH`, that is, it is processed the same
+  way with or without space.  On the contrary, its long version,
+  `--project`, can only be given as `--project=PATH`.  Ambiguous
+  form `-p=PATH` which may suggest that a project directory name
+  is equal to `=PATH`, is now disallowed as an extension not
+  conforming to POSIX and GNU standards.  On the other hand, the
+  ambiguity of the expression `-p path` has been eliminated: if
+  the option `-p` is not the last command line argument, the next
+  argument is considered to be belonging to it and means a project
+  directory path, *not* a configuration group name.
+
+- `lepton-cli config` now warns the user if the directories given
+  in the command-line are missing.  Previously, it could output
+  misleading messages about other errors, e.g., that the user may
+  specify only one configuration store.
+
+- In `lepton-cli config`, an argument is now required by the
+  options `-s` and `-u`, so using any combination of them in
+  series without a file name argument leads to errors about wrong
+  file names.
+
 ### Changes in `contrib`:
 
 - Utilities `gsymupdate` and `gschupdate` have been replaced with
