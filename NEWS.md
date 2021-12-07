@@ -8,6 +8,11 @@ more information, please consult `git log` history.
 Notable changes in Lepton EDA 1.9.17 (upcoming)
 -----------------------------------------------
 
+### Changes when building from source:
+
+- Lepton now requires GTK 3.2.0 or later versions for build with
+  GTK3 support.
+
 ### Changes in `liblepton`:
 
 - The following core Scheme modules written in C have been removed
