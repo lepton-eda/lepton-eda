@@ -8,6 +8,10 @@ more information, please consult `git log` history.
 Notable changes in Lepton EDA 1.9.17 (upcoming)
 -----------------------------------------------
 
+### General changes:
+
+- All Lepton tools now support attributes with empty values.
+
 ### Changes when building from source:
 
 - Lepton now requires GTK 3.2.0 or later versions for build with
