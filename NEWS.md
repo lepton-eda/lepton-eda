@@ -19,6 +19,23 @@ Notable changes in Lepton EDA 1.9.17 (upcoming)
 
 ### Changes in `liblepton`:
 
+- Support for dlopening foreign libraries used in Lepton by Scheme
+  code has been improved so that Lepton could find the necessary
+  libraries even if there is no development files for them
+  installed on user's system.  This fixes the issue of finding
+  libraries by Guile on systems like Debian and its derivatives.
+  Guile requires library names to end up with standard exstensions
+  like `.la` or `.so`.  On Debian, for example, library names may
+  have some version numbers appended to them and symlinks with
+  canonical names are distributed in separate development
+  packages.  One portable solution of the issue is using
+  `ldconfig` for obtaining the names of the existing library
+  files.  The tool can be now used on the `./configure` stage of
+  Lepton compilation to hardcode the names in Scheme.  A new
+  environment variable, `USE_LDCONFIG`, has been introduced to
+  make use of this approach.  To trigger retrieving the names,
+  just do: `./configure USE_LDCONFIG=/sbin/ldconfig ...`
+
 - The following core Scheme modules written in C have been removed
   and their functions have been reimplemented using Scheme FFI:
   - `(lepton core attrib)`
