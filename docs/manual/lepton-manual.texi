@@ -107,6 +107,7 @@ Installation
 * Troubleshooting dependencies::
 * Installation from source::
 * Installation from git::
+* Out-of-source build::
 * Configure options::
 
 Configuration system

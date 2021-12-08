@@ -38,6 +38,7 @@ sudo ldconfig
 * Troubleshooting dependencies::
 * Installation from source::
 * Installation from git::
+* Out-of-source build::
 * Configure options::
 @end menu
 
@@ -205,7 +206,7 @@ And install it (if you used a @option{--prefix} outside your
 make install
 @end example
 
-@node Installation from git, Configure options, Installation from source, Installation
+@node Installation from git, Out-of-source build, Installation from source, Installation
 @section Installation from the git repository
 
 Lepton uses the @command{git} version control system.  If you wish to
@@ -247,7 +248,32 @@ autoreconf -ivf
 
 You can then proceed to configure and build Lepton as described above.
 
-@node Configure options,  , Installation from git, Installation
+@node Out-of-source build, Configure options, Installation from git, Installation
+@section Out-of-source build
+@cindex out-of-source build
+@cindex VPATH build
+
+@emph{Out-of-source} or @emph{VPATH} build lets you keep your Lepton
+source directory clean and get any built files in a separate
+directory.  Otherwise it's no different from other kinds of
+compilation.  To build in a separate directory, just make it, go to
+it, and run the build commands described in the previous sections.
+For example, supposed the current working directory is the root
+directory of your Lepton repository, you can do:
+
+@example
+mkdir ./build/
+cd ./build/
+autoreconf -ivf .. && ../configure && make && sudo make install
+@end example
+
+Please note @code{..} in the above commands, it ensures
+@emph{autotools} tools will work in the parent directory of
+@file{build/}, that is, in the source directory, and run
+@command{configure} from that directory as well.
+
+
+@node Configure options,  , Out-of-source build, Installation
 @section Configure options
 @cindex configure options
 @cindex --with-gtk3
