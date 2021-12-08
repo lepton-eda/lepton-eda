@@ -109,6 +109,7 @@ Installation
 * Installation from git::
 * Out-of-source build::
 * Configure options::
+* Hardcode library names for Guile::
 
 Configuration system
 

@@ -40,6 +40,7 @@ sudo ldconfig
 * Installation from git::
 * Out-of-source build::
 * Configure options::
+* Hardcode library names for Guile::
 @end menu
 
 
@@ -273,7 +274,7 @@ Please note @code{..} in the above commands, it ensures
 @command{configure} from that directory as well.
 
 
-@node Configure options,  , Out-of-source build, Installation
+@node Configure options, Hardcode library names for Guile, Out-of-source build, Installation
 @section Configure options
 @cindex configure options
 @cindex --with-gtk3
@@ -303,3 +304,44 @@ Build and installation of several contributed tools are disabled by
 default.  @xref{Overview} for info on what tools can be additionally
 installed.
 @end table
+
+@node Hardcode library names for Guile,  , Configure options, Installation
+@section Hardcode library names for Guile
+@cindex hardcode library names
+@cindex USE_LDCONFIG
+@cindex use ldconfig
+
+On some systems you would want to hardcode file names of libraries
+required by Lepton when compiling the code.  It is true, for example,
+on Debian and its derivatives.  The issue you may encounter on Debian
+and several other systems is partitioning of header files and binaries
+of a library and putting them into different files and, to make them
+harder for using in Guile, extending file name extensions of library
+binaries and their symlinks by adding some info at the end.  So, for
+instance, a binary library name may look like
+@file{libglib-2.0.so.0.7000.1} and its symlink name like
+@file{libglib-2.0.so.0}.  Guile, on the other hand, cannot find such
+libraries because it uses @emph{canonical} file extensions for looking
+up for them, which is @file{.so} on Linux, and thus would look for
+@file{libglib-2.0.so} in this example.  It could never use all the
+convoluted and complex algorithms @command{libtool} and other C
+compiler tools use, otherwise it would itself turn into
+@emph{autotools} along with @command{gcc} or @command{cmake}.
+Symlinks with canonical names are available on Debian in
+@emph{development} packages.  It's OK to install them when the user
+wants to build Lepton from sources as they are also required for
+compiling C code.  However, a mere mortal who installs Debian package
+of Lepton usually doesn't want to have them installed so the package
+should be prepared for it.  Or, she would like to clean up her system
+and remove the development packages.  In both cases, hardcoding
+existing library file names in Scheme code is sufficient for Lepton
+tools to work correctly, and Lepton supports it by using the
+environment variable @var{USE_LDCONFIG}.  It should be set to the
+absolute filename of @command{ldconfig}, the utility that may fetch
+and report names of all libraries installed on the system.  When
+building Lepton, it may be used on the @command{configure} stage as
+follows:
+
+@example
+./configure USE_LDCONFIG=/sbin/ldconfig
+@end example
