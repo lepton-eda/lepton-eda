@@ -21,6 +21,11 @@ Notable changes in Lepton EDA 1.9.17 (upcoming)
   - `(lepton core component)`
   - `(lepton core page)`
 
+### Changes in `lepton-schematic`:
+
+- Support for GTK3 *smooth* scrolling events has been added in the
+  GTK3 version of the program.
+
 ### Changes in `lepton-cli`:
 
 - The program has been rewritten in Scheme and splitted up into
