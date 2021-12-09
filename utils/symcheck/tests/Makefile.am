@@ -25,6 +25,7 @@ inputs = \
 	missing_device.sym \
 	missing_footprint.sym \
 	missing_numslots.sym \
+	missing_picture.sym \
 	missing_pinlabel.sym \
 	missing_pinnumber.sym \
 	missing_pinseq.sym \

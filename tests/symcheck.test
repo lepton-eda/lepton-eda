@@ -37,7 +37,7 @@
 
 
 (test-begin "symcheck inputs")
-(test-eq 57 (length inputs))
+(test-eq 58 (length inputs))
 (test-end "symcheck inputs")
 
 

@@ -1,0 +1,6 @@
+Warning: Missing required attribute: device
+Warning: Missing required attribute: footprint
+Warning: Missing required attribute: refdes
+ERROR: Picture file "missing_picture.png" does not exist or is not readable.
+3 warnings found
+1 ERROR found
