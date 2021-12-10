@@ -179,7 +179,7 @@ syntax."
          (objects (o_read_buffer pointer
                                  %null-pointer
                                  (string->pointer str)
-                                 (string-length str)
+                                 -1
                                  (lepton_page_get_filename pointer)
                                  *error)))
     (gerror-error *error)
