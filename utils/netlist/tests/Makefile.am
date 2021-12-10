@@ -91,6 +91,7 @@ input_files = \
 	common/powersupply.sch \
 	common/singlenet.sch \
 	missing-source.sch \
+	utf8.sch \
 	verilog_rip_test.sch \
 	verilog_rip_test-symbols/D_FF.sym
 
@@ -512,4 +513,5 @@ TESTS = \
 
 output_files = \
 	stack-torture-geda.out \
-	stack_1-geda.out
+	stack_1-geda.out \
+	utf8-geda.out

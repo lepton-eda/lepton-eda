@@ -101,3 +101,5 @@
                 #:testdir switcap-example-dir
                 #:golden "example.scn"
                 #:complib switcap-example-symbol-dir)
+
+(test-schematic "utf8.sch" "geda")
