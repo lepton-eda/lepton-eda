@@ -1,0 +1,41 @@
+START header
+
+gEDA's netlist format
+(Initially created for testing of gnetlist)
+
+END header
+
+START graphical symbols
+
+Component without refdes: simcmd_op_on_dmn.sym at (18600 . 25700)
+
+END graphical symbols
+
+START components
+
+R1 device=R_DMN
+R2 device=R_DMN
+R3 device=R_DMN
+R4 device=R_DMN
+V1 device=SIMVDC_DMN
+V2 device=SIMVDC_DMN
+
+END components
+
+No "no-connect" nets found
+
+START renamed-nets
+
+
+END renamed-nets
+
+START nets
+
+GND : R2 2, R4 2, V1 2, V2 2
+ref1 : R1 2, R2 1
+ref2 : R3 2, R4 1
+unnamed_net1 : R1 1, V1 1
+unnamed_net2 : R3 1, V2 1
+
+END nets
+
