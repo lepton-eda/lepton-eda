@@ -25,6 +25,18 @@
 #include "liblepton_priv.h"
 #include "liblepton/libleptonguile.h"
 
+/*! \brief Initialize liblepton gettext domain. */
+void
+liblepton_init_gettext ()
+{
+#ifdef ENABLE_NLS
+  /* Initialise gettext */
+  bindtextdomain (LIBLEPTON_GETTEXT_DOMAIN, LOCALEDIR);
+  bind_textdomain_codeset(LIBLEPTON_GETTEXT_DOMAIN, "UTF-8");
+#endif
+}
+
+
 /*! \brief Perform runtime initialization of liblepton library.
  *
  *  \par Function Description
@@ -34,9 +46,4 @@
  */
 void liblepton_init(void)
 {
-#ifdef ENABLE_NLS
-  /* Initialise gettext */
-  bindtextdomain (LIBLEPTON_GETTEXT_DOMAIN, LOCALEDIR);
-  bind_textdomain_codeset(LIBLEPTON_GETTEXT_DOMAIN, "UTF-8");
-#endif
 }

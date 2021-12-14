@@ -26,7 +26,7 @@
 function is responsible for making sure that any runtime
 initialization is done for all the liblepton routines. It should
 be called before any other liblepton functions are called."
-  (liblepton_init)
+  (liblepton_init_gettext)
   (eda_paths_init)
   (s_clib_init)
   (s_attrib_init)

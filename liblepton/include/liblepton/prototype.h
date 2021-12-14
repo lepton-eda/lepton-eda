@@ -78,6 +78,9 @@ g_rc_parse_handler (LeptonToplevel *toplevel,
                     void *user_data);
 
 /* liblepton.c */
+void
+liblepton_init_gettext ();
+
 void liblepton_init(void);
 
 /* m_hatch.c */
