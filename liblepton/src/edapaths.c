@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -203,7 +203,7 @@ eda_get_user_cache_dir()
 void
 eda_paths_init()
 {
-  /* These function stores their data in static local variables.
+  /* These functions store their data in static local variables.
    * Calling them here forces data initialization:
   */
   eda_get_system_data_dirs();
