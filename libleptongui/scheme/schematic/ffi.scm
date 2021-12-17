@@ -370,11 +370,10 @@
            ((force proc))))))
 
 
-(define (parse-gschemrc)
+(define (parse-gschemrc toplevel)
   "Loads old (system, user, etc.) \"gschemrc\" files and new
 configuration \".conf\" files in a newly created toplevel
-environment.  Saves the values in a new foreign LeptonToplevel
-structure and returns it."
-  (let ((*toplevel (lepton_toplevel_new)))
-    (x_rc_parse_gschem *toplevel)
-    *toplevel))
+environment.  Saves the values in the foreign LeptonToplevel
+structure TOPLEVEL and returns it."
+  (x_rc_parse_gschem toplevel)
+  toplevel)
