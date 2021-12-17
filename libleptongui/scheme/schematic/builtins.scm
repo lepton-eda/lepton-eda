@@ -96,9 +96,9 @@
 (define-action-public (&file-script #:label (G_ "Run Script") #:icon "gtk-execute")
   (run-callback i_callback_file_script "&file-script"))
 
-(define (make-schematic-window app)
+(define (make-schematic-window app toplevel)
   (define new-window
-    (x_window_setup (x_window_new (parse-gschemrc))))
+    (x_window_setup (x_window_new (parse-gschemrc toplevel))))
 
   (x_window_open_page
    (x_window_create_main app
@@ -108,7 +108,8 @@
    %null-pointer))
 
 (define-action-public (&file-new-window #:label (G_ "New Window") #:icon "window-new")
-  (make-schematic-window (lepton_schematic_app)))
+  (make-schematic-window (lepton_schematic_app)
+                         (lepton_toplevel_new)))
 
 (define-action-public (&file-close-window #:label (G_ "Close Window") #:icon "gtk-close")
   (run-callback i_callback_file_close "&file-close-window"))
