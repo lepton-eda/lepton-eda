@@ -1,5 +1,5 @@
 # lepton-guile.m4                                           -*-Autoconf-*-
-# serial 3
+# serial 4
 
 dnl Check for guile
 dnl Copyright (C) 2009  Dan McMahill <dan@mcmahill.net>
