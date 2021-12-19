@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-07-31 11:52+0300\n"
+"POT-Creation-Date: 2021-12-19 13:13+0300\n"
 "PO-Revision-Date: 2012-01-31 12:11+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -643,46 +643,8 @@ msgstr ""
 msgid "Configuration does not have key '%s'"
 msgstr ""
 
-msgid "~A is not a valid attribute: invalid string '~A'."
-msgstr ""
-
-msgid "Objects ~A and ~A are not part of the same page and/or component object"
-msgstr ""
-
-msgid "Object ~A is already attached as an attribute"
-msgstr ""
-
-msgid "Object ~A is attribute of wrong object"
-msgstr ""
-
-msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr ""
-
-msgid "Object ~A is already attached to something"
-msgstr ""
-
-msgid "Object ~A is attached to a different component"
-msgstr ""
-
-msgid "Object ~A is attached to a page"
-msgstr ""
-
-msgid "Object ~A is attached as an attribute"
-msgstr ""
-
-msgid "Object ~A has attributes"
-msgstr ""
-
-msgid "Object ~A is attached to a component or different page"
-msgstr ""
-
-msgid "Parse error: ~s"
-msgstr ""
-
-msgid "Scheme hook"
-msgstr ""
-
-msgid "The Scheme-level hook to proxy"
+#, c-format
+msgid "ERROR: %s.\n"
 msgstr ""
 
 #, scheme-format

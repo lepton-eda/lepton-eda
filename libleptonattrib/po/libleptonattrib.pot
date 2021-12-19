@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.16\n"
+"Project-Id-Version: lepton-eda 1.9.17\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-07-31 11:51+0300\n"
+"POT-Creation-Date: 2021-12-19 13:10+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,7 +25,7 @@ msgstr ""
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr ""
 
-#: utils/attrib/lepton-attrib.scm:90
+#: utils/attrib/lepton-attrib.scm:93
 #, scheme-format
 msgid ""
 "Usage: ~A [OPTIONS] FILE ...\n"
@@ -74,17 +74,17 @@ msgstr ""
 msgid " DONE\n"
 msgstr ""
 
-#: libleptonattrib/src/s_object.c:222 libleptonattrib/src/s_object.c:281
+#: libleptonattrib/src/s_object.c:234 libleptonattrib/src/s_object.c:293
 #, c-format
 msgid "Failed to find the attrib %1$s on the component.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_object.c:332
+#: libleptonattrib/src/s_object.c:344
 #, c-format
 msgid "Trying to add attrib to non-component or non-net!\n"
 msgstr ""
 
-#: libleptonattrib/src/s_sheet_data.c:136
+#: libleptonattrib/src/s_sheet_data.c:135
 #, c-format
 msgid "Start master component list creation.\n"
 msgstr ""
@@ -94,17 +94,17 @@ msgstr ""
 msgid "Start master component attrib list creation.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_sheet_data.c:305
+#: libleptonattrib/src/s_sheet_data.c:306
 #, c-format
 msgid "Start master pin list creation.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_sheet_data.c:341
+#: libleptonattrib/src/s_sheet_data.c:342
 #, c-format
 msgid "Found component pin with no pinnumber: refdes = %1$s\n"
 msgstr ""
 
-#: libleptonattrib/src/s_sheet_data.c:392
+#: libleptonattrib/src/s_sheet_data.c:393
 #, c-format
 msgid "Start master pin attrib list creation.\n"
 msgstr ""
@@ -134,46 +134,46 @@ msgstr ""
 msgid "Start internal component TABLE creation\n"
 msgstr ""
 
-#: libleptonattrib/src/s_table.c:433 libleptonattrib/src/s_table.c:631
+#: libleptonattrib/src/s_table.c:434 libleptonattrib/src/s_table.c:632
 #, c-format
 msgid "We didn't find either row or col in the lists!\n"
 msgstr ""
 
-#: libleptonattrib/src/s_table.c:572
+#: libleptonattrib/src/s_table.c:573
 #, c-format
 msgid "Start internal pin TABLE creation\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:147
+#: libleptonattrib/src/s_toplevel.c:115
 #, c-format
 msgid "Saved [%1$s]"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:153
+#: libleptonattrib/src/s_toplevel.c:121
 #, c-format
 msgid "Could NOT save [%1$s]"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:228
+#: libleptonattrib/src/s_toplevel.c:196
 msgid "_cancel"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:352
+#: libleptonattrib/src/s_toplevel.c:320
 #, c-format
 msgid "Can't get attrib name\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:590
+#: libleptonattrib/src/s_toplevel.c:559
 #, c-format
 msgid "We didn't find the refdes in the master list.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:917
+#: libleptonattrib/src/s_toplevel.c:886
 #, c-format
 msgid "Either refdes or pinnumber of object missing.\n"
 msgstr ""
 
-#: libleptonattrib/src/s_toplevel.c:926
+#: libleptonattrib/src/s_toplevel.c:895
 #, c-format
 msgid "We didn't find the refdes:pin in the master list.\n"
 msgstr ""
@@ -340,49 +340,49 @@ msgstr ""
 msgid "couldn't allocate color"
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:140
+#: libleptonattrib/src/x_window.c:150
 msgid "   Color Legend:  "
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:142
+#: libleptonattrib/src/x_window.c:152
 msgid " Invisible "
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:143
+#: libleptonattrib/src/x_window.c:153
 msgid " Show value "
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:144
+#: libleptonattrib/src/x_window.c:154
 msgid " Show name "
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:145
+#: libleptonattrib/src/x_window.c:155
 msgid " Show name and value "
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:372
+#: libleptonattrib/src/x_window.c:382
 #, c-format
 msgid "Error loading menu: %1$s\n"
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:408
+#: libleptonattrib/src/x_window.c:418
 msgid ""
 "No components found in entire design!\n"
 "Do you have refdeses on your components?"
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:414
+#: libleptonattrib/src/x_window.c:424
 msgid ""
 "No configurable component attributes found in entire design!\n"
 "Please attach at least some attributes before running lepton-attrib."
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:420
+#: libleptonattrib/src/x_window.c:430
 msgid ""
 "No pins found on any components!\n"
 "Please check your design."
 msgstr ""
 
-#: libleptonattrib/src/x_window.c:552
+#: libleptonattrib/src/x_window.c:562
 msgid "Multiple files"
 msgstr ""

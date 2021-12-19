@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-07-31 11:52+0300\n"
+"POT-Creation-Date: 2021-12-19 13:13+0300\n"
 "PO-Revision-Date: 2014-08-31 23:03+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA Developers\n"
@@ -710,53 +710,9 @@ msgstr "Configuratie heeft geen groep '%s'"
 msgid "Configuration does not have key '%s'"
 msgstr "Configuratie heeft geen toets '%s'"
 
-msgid "~A is not a valid attribute: invalid string '~A'."
-msgstr "~A is een ongeldige attribuut: ongeldige rij '~A'."
-
-#, fuzzy
-msgid "Objects ~A and ~A are not part of the same page and/or component object"
-msgstr ""
-"Objecten ~A en ~A zijn geen onderdeel van dezelfde pagina en/of complex "
-"object"
-
-msgid "Object ~A is already attached as an attribute"
-msgstr "Object ~A is reeds bevestigd als een attribuut"
-
-msgid "Object ~A is attribute of wrong object"
-msgstr "Object ~A is attribuut van een fout object"
-
-#, fuzzy
-msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr "Ongeldige complex hoek ~A. Moet 0, 90, 180, of 270 graden zijn"
-
-msgid "Object ~A is already attached to something"
-msgstr "Object ~A is reeds bevestigd aan iets"
-
-#, fuzzy
-msgid "Object ~A is attached to a different component"
-msgstr "Object ~A is bevestigd aan een andere complex"
-
-msgid "Object ~A is attached to a page"
-msgstr "Object ~A is bevestigd aan een pagina"
-
-msgid "Object ~A is attached as an attribute"
-msgstr "Object ~A is bevestigd als een attribuut"
-
-msgid "Object ~A has attributes"
-msgstr "Object ~A heeft attributen"
-
-#, fuzzy
-msgid "Object ~A is attached to a component or different page"
-msgstr "Object ~A is bevestigd aan een complex of een andere pagina"
-
-msgid "Parse error: ~s"
-msgstr "Ontleedfout: ~s"
-
-msgid "Scheme hook"
-msgstr "Scheme haak"
-
-msgid "The Scheme-level hook to proxy"
-msgstr "De Scheme-level haak naar proxy"
+#, fuzzy, c-format
+msgid "ERROR: %s.\n"
+msgstr "FOUT: %s\n"
 
 #, scheme-format
 msgid "Object ~A is not part of a page"
@@ -1277,6 +1233,55 @@ msgstr "1 FOUT gevonden "
 #, fuzzy
 msgid "(use -v to view details)"
 msgstr "(gebruik -v om details te zien)\n"
+
+#~ msgid "~A is not a valid attribute: invalid string '~A'."
+#~ msgstr "~A is een ongeldige attribuut: ongeldige rij '~A'."
+
+#, fuzzy
+#~ msgid ""
+#~ "Objects ~A and ~A are not part of the same page and/or component object"
+#~ msgstr ""
+#~ "Objecten ~A en ~A zijn geen onderdeel van dezelfde pagina en/of complex "
+#~ "object"
+
+#~ msgid "Object ~A is already attached as an attribute"
+#~ msgstr "Object ~A is reeds bevestigd als een attribuut"
+
+#~ msgid "Object ~A is attribute of wrong object"
+#~ msgstr "Object ~A is attribuut van een fout object"
+
+#, fuzzy
+#~ msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr "Ongeldige complex hoek ~A. Moet 0, 90, 180, of 270 graden zijn"
+
+#~ msgid "Object ~A is already attached to something"
+#~ msgstr "Object ~A is reeds bevestigd aan iets"
+
+#, fuzzy
+#~ msgid "Object ~A is attached to a different component"
+#~ msgstr "Object ~A is bevestigd aan een andere complex"
+
+#~ msgid "Object ~A is attached to a page"
+#~ msgstr "Object ~A is bevestigd aan een pagina"
+
+#~ msgid "Object ~A is attached as an attribute"
+#~ msgstr "Object ~A is bevestigd als een attribuut"
+
+#~ msgid "Object ~A has attributes"
+#~ msgstr "Object ~A heeft attributen"
+
+#, fuzzy
+#~ msgid "Object ~A is attached to a component or different page"
+#~ msgstr "Object ~A is bevestigd aan een complex of een andere pagina"
+
+#~ msgid "Parse error: ~s"
+#~ msgstr "Ontleedfout: ~s"
+
+#~ msgid "Scheme hook"
+#~ msgstr "Scheme haak"
+
+#~ msgid "The Scheme-level hook to proxy"
+#~ msgstr "De Scheme-level haak naar proxy"
 
 #~ msgid "Object ~A has invalid stroke cap style ~A"
 #~ msgstr "Object ~A heeft een ongeldige slag cap stijl ~A"

@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.16\n"
+"Project-Id-Version: lepton-eda 1.9.17\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-07-31 11:51+0300\n"
+"POT-Creation-Date: 2021-12-19 13:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,11 +22,11 @@ msgstr ""
 msgid "Zoom too small!  Cannot zoom further."
 msgstr ""
 
-#: libleptongui/src/color_edit_widget.c:208
+#: libleptongui/src/color_edit_widget.c:217
 msgid "Save As.._."
 msgstr ""
 
-#: libleptongui/src/color_edit_widget.c:238
+#: libleptongui/src/color_edit_widget.c:247
 msgid ""
 "Save your color scheme to a file by clicking on the \"Save As...\"\n"
 "button. It can be loaded on startup with the following expression\n"
@@ -34,22 +34,22 @@ msgid ""
 "( primitive-load \"/path/to/saved-color-scheme-file\" )"
 msgstr ""
 
-#: libleptongui/src/color_edit_widget.c:430
+#: libleptongui/src/color_edit_widget.c:439
 #, c-format
 msgid ""
 "Could not save file [%s]:\n"
 "%s"
 msgstr ""
 
-#: libleptongui/src/color_edit_widget.c:434 libleptongui/src/x_window.c:858
+#: libleptongui/src/color_edit_widget.c:443 libleptongui/src/x_window.c:870
 msgid "Failed to save file"
 msgstr ""
 
-#: libleptongui/src/color_edit_widget.c:469
+#: libleptongui/src/color_edit_widget.c:478
 msgid "Save Color Scheme"
 msgstr ""
 
-#: libleptongui/src/color_edit_widget.c:517 libleptongui/src/x_fileselect.c:516
+#: libleptongui/src/color_edit_widget.c:526 libleptongui/src/x_fileselect.c:516
 #, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -57,38 +57,38 @@ msgid ""
 "Would you like to overwrite it?"
 msgstr ""
 
-#: libleptongui/src/color_edit_widget.c:521 libleptongui/src/x_fileselect.c:520
+#: libleptongui/src/color_edit_widget.c:530 libleptongui/src/x_fileselect.c:520
 msgid "Overwrite file?"
 msgstr ""
 
-#: libleptongui/src/font_select_widget.c:225
+#: libleptongui/src/font_select_widget.c:252
 msgid "_Apply"
 msgstr ""
 
-#: libleptongui/src/font_select_widget.c:229
+#: libleptongui/src/font_select_widget.c:256
 msgid "Sa_ve..."
 msgstr ""
 
-#: libleptongui/src/font_select_widget.c:250
+#: libleptongui/src/font_select_widget.c:283
 msgid ""
 "After you're done choosing the font, it's recommended\n"
 "to reopen schematics or restart the application."
 msgstr ""
 
-#: libleptongui/src/font_select_widget.c:305
+#: libleptongui/src/font_select_widget.c:342
 #, c-format
 msgid "<b>Current:</b> %s"
 msgstr ""
 
-#: libleptongui/src/font_select_widget.c:492
+#: libleptongui/src/font_select_widget.c:585
 msgid "Save configuration"
 msgstr ""
 
-#: libleptongui/src/font_select_widget.c:505
+#: libleptongui/src/font_select_widget.c:598
 msgid "Local configuration file:"
 msgstr ""
 
-#: libleptongui/src/font_select_widget.c:511
+#: libleptongui/src/font_select_widget.c:604
 msgid "User configuration file:"
 msgstr ""
 
@@ -100,8 +100,8 @@ msgstr ""
 msgid "Invalid text name/value visibility ~A."
 msgstr ""
 
-#: libleptongui/src/g_select.c:78 libleptongui/src/g_select.c:114
-#: libleptongui/src/g_select.c:149
+#: libleptongui/src/g_select.c:80 libleptongui/src/g_select.c:118
+#: libleptongui/src/g_select.c:155
 msgid "Object ~A is not directly included in a page."
 msgstr ""
 
@@ -188,26 +188,26 @@ msgstr ""
 msgid "_Degrees of Sweep:"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:667
+#: libleptongui/src/gschem_bottom_widget.c:681
 msgid "<b>Snap: OFF</b>"
-msgstr ""
-
-#: libleptongui/src/gschem_bottom_widget.c:675
-#, c-format
-msgid "Snap: <b>%d</b>"
-msgstr ""
-
-#: libleptongui/src/gschem_bottom_widget.c:684
-#, c-format
-msgid "<u>Re</u>snap: <b>%d</b>"
 msgstr ""
 
 #: libleptongui/src/gschem_bottom_widget.c:689
 #, c-format
+msgid "Snap: <b>%d</b>"
+msgstr ""
+
+#: libleptongui/src/gschem_bottom_widget.c:698
+#, c-format
+msgid "<u>Re</u>snap: <b>%d</b>"
+msgstr ""
+
+#: libleptongui/src/gschem_bottom_widget.c:703
+#, c-format
 msgid "<u>Re</u>snap: %d"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:705
+#: libleptongui/src/gschem_bottom_widget.c:719
 #, c-format
 msgid ""
 "Snap size.\n"
@@ -216,51 +216,51 @@ msgid ""
 "from the value set in configuration: %d."
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:719
+#: libleptongui/src/gschem_bottom_widget.c:733
 msgid ""
 "Snap size.\n"
 "Click to change the snapping mode."
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:774
+#: libleptongui/src/gschem_bottom_widget.c:788
 msgid "Grid: OFF"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:779
+#: libleptongui/src/gschem_bottom_widget.c:793
 msgid "Grid: NONE"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:788
+#: libleptongui/src/gschem_bottom_widget.c:802
 msgid ""
 "Grid size.\n"
 "Click to change the grid style."
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:842
+#: libleptongui/src/gschem_bottom_widget.c:856
 msgid "Left mouse button"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:846
+#: libleptongui/src/gschem_bottom_widget.c:860
 msgid "Middle mouse button"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:850
+#: libleptongui/src/gschem_bottom_widget.c:864
 msgid "Right mouse button"
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:951
+#: libleptongui/src/gschem_bottom_widget.c:965
 msgid ""
 "Net rubber band mode.\n"
 "Click to toggle ON/OFF."
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:974
+#: libleptongui/src/gschem_bottom_widget.c:988
 msgid ""
 "Magnetic net mode.\n"
 "Click to toggle ON/OFF."
 msgstr ""
 
-#: libleptongui/src/gschem_bottom_widget.c:992
+#: libleptongui/src/gschem_bottom_widget.c:1006
 msgid "Current action mode"
 msgstr ""
 
@@ -269,12 +269,12 @@ msgid "S_elect the schematics you want to save:"
 msgstr ""
 
 #: libleptongui/src/gschem_close_confirmation_dialog.c:386
-#: libleptongui/src/x_compselect.c:1264 libleptongui/src/x_multiattrib.c:2169
+#: libleptongui/src/x_compselect.c:1269 libleptongui/src/x_multiattrib.c:2177
 msgid "Name"
 msgstr ""
 
 #: libleptongui/src/gschem_close_confirmation_dialog.c:406
-#: libleptongui/src/page_select_widget.c:586
+#: libleptongui/src/page_select_widget.c:588
 msgid "Show _full paths"
 msgstr ""
 
@@ -310,12 +310,12 @@ msgid "World"
 msgstr ""
 
 #: libleptongui/src/gschem_find_text_state.c:772
-#: libleptongui/src/page_select_widget.c:513
+#: libleptongui/src/page_select_widget.c:515
 msgid "Filename"
 msgstr ""
 
 #: libleptongui/src/gschem_find_text_state.c:784
-#: libleptongui/src/x_window.c:1173 libleptongui/src/x_window.c:1422
+#: libleptongui/src/x_window.c:1187 libleptongui/src/x_window.c:1436
 msgid "Text"
 msgstr ""
 
@@ -323,23 +323,23 @@ msgstr ""
 msgid "descend into hierarchy"
 msgstr ""
 
-#: libleptongui/src/gschem_find_text_widget.c:437
+#: libleptongui/src/gschem_find_text_widget.c:441
 msgid "Find"
 msgstr ""
 
-#: libleptongui/src/gschem_find_text_widget.c:559
+#: libleptongui/src/gschem_find_text_widget.c:563
 msgid "Find Text:"
 msgstr ""
 
-#: libleptongui/src/gschem_find_text_widget.c:566
+#: libleptongui/src/gschem_find_text_widget.c:570
 msgid "Find Pattern:"
 msgstr ""
 
-#: libleptongui/src/gschem_find_text_widget.c:573
+#: libleptongui/src/gschem_find_text_widget.c:577
 msgid "Find Regex:"
 msgstr ""
 
-#: libleptongui/src/gschem_find_text_widget.c:580
+#: libleptongui/src/gschem_find_text_widget.c:584
 msgid "Check symbol:"
 msgstr ""
 
@@ -354,11 +354,11 @@ msgid ""
 msgstr ""
 
 #: libleptongui/src/gschem_hotkey_dialog.c:220
-#: libleptongui/src/x_compselect.c:1152
+#: libleptongui/src/x_compselect.c:1157
 msgid "_Filter:"
 msgstr ""
 
-#: libleptongui/src/gschem_hotkey_dialog.c:250 libleptongui/src/x_window.c:1291
+#: libleptongui/src/gschem_hotkey_dialog.c:250 libleptongui/src/x_window.c:1305
 msgid "Action"
 msgstr ""
 
@@ -390,7 +390,7 @@ msgstr ""
 msgid "Macro:"
 msgstr ""
 
-#: libleptongui/src/gschem_macro_widget.c:397
+#: libleptongui/src/gschem_macro_widget.c:401
 msgid "Evaluate"
 msgstr ""
 
@@ -423,8 +423,8 @@ msgid "<b>Fill Properties</b>"
 msgstr ""
 
 #: libleptongui/src/gschem_object_properties_widget.c:255
-#: libleptongui/src/gschem_text_properties_widget.c:267
-#: libleptongui/src/x_newtext.c:271
+#: libleptongui/src/gschem_text_properties_widget.c:268
+#: libleptongui/src/x_newtext.c:282
 msgid "Colo_r:"
 msgstr ""
 
@@ -534,12 +534,12 @@ msgid "Preview Buffer"
 msgstr ""
 
 #: libleptongui/src/gschem_show_hide_text_widget.c:151
-#: libleptongui/src/x_window.c:1215
+#: libleptongui/src/x_window.c:1229
 msgid "Hide"
 msgstr ""
 
 #: libleptongui/src/gschem_show_hide_text_widget.c:160
-#: libleptongui/src/x_window.c:1216
+#: libleptongui/src/x_window.c:1230
 msgid "Hide text starting with:"
 msgstr ""
 
@@ -555,40 +555,40 @@ msgstr ""
 msgid "Slot Number:"
 msgstr ""
 
-#: libleptongui/src/gschem_text_properties_widget.c:249
-#: libleptongui/src/x_newtext.c:265
+#: libleptongui/src/gschem_text_properties_widget.c:250
+#: libleptongui/src/x_newtext.c:276
 msgid "<b>Text Content</b>"
-msgstr ""
-
-#: libleptongui/src/gschem_text_properties_widget.c:268
-#: libleptongui/src/x_newtext.c:291
-msgid "_Size:"
 msgstr ""
 
 #: libleptongui/src/gschem_text_properties_widget.c:269
 #: libleptongui/src/x_newtext.c:310
-msgid "Ali_gnment:"
+msgid "_Size:"
 msgstr ""
 
 #: libleptongui/src/gschem_text_properties_widget.c:270
-#: libleptongui/src/x_newtext.c:330
+#: libleptongui/src/x_newtext.c:337
+msgid "Ali_gnment:"
+msgstr ""
+
+#: libleptongui/src/gschem_text_properties_widget.c:271
+#: libleptongui/src/x_newtext.c:365
 msgid "Ro_tation:"
 msgstr ""
 
-#: libleptongui/src/gschem_text_properties_widget.c:303
-#: libleptongui/src/x_newtext.c:253
+#: libleptongui/src/gschem_text_properties_widget.c:304
+#: libleptongui/src/x_newtext.c:260
 msgid "<b>Text Properties</b>"
 msgstr ""
 
-#: libleptongui/src/gschem_translate_widget.c:238
+#: libleptongui/src/gschem_translate_widget.c:239
 msgid "Coordinate:"
 msgstr ""
 
-#: libleptongui/src/gschem_translate_widget.c:405
+#: libleptongui/src/gschem_translate_widget.c:410
 msgid "Translate"
 msgstr ""
 
-#: libleptongui/src/i_basic.c:65 libleptongui/src/x_window.c:1353
+#: libleptongui/src/i_basic.c:65 libleptongui/src/x_window.c:1367
 #: libleptongui/scheme/conf/schematic/menu.scm:61
 #: libleptongui/scheme/schematic/builtins.scm:129
 msgid "Select Mode"
@@ -717,7 +717,7 @@ msgstr ""
 msgid "Scheme files (*.scm)"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:123 libleptongui/src/o_picture.c:164
+#: libleptongui/src/i_callbacks.c:123 libleptongui/src/o_picture.c:165
 #: libleptongui/src/x_fileselect.c:120
 msgid "All files"
 msgstr ""
@@ -727,42 +727,42 @@ msgstr ""
 msgid "Executing Guile script [%s]"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:228
+#: libleptongui/src/i_callbacks.c:227
 msgid "Saved All"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:232
+#: libleptongui/src/i_callbacks.c:231
 msgid "Failed to Save All"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:305
+#: libleptongui/src/i_callbacks.c:303
 msgid "Closing Window"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:471 libleptongui/src/i_callbacks.c:495
-#: libleptongui/src/i_callbacks.c:519
+#: libleptongui/src/i_callbacks.c:469 libleptongui/src/i_callbacks.c:493
+#: libleptongui/src/i_callbacks.c:517
 msgid "Select objs first"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:752
+#: libleptongui/src/i_callbacks.c:746
 msgid "WARNING: Do not translate with snap off!"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:753
+#: libleptongui/src/i_callbacks.c:747
 msgid "WARNING: Turning snap on and continuing with translate."
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:760
+#: libleptongui/src/i_callbacks.c:754
 msgid "WARNING: Snap grid size is not equal to 100!"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:762
+#: libleptongui/src/i_callbacks.c:756
 msgid ""
 "WARNING: If you are translating a symbol to the origin, the snap grid size "
 "should be set to 100"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:1519
+#: libleptongui/src/i_callbacks.c:1512
 #, c-format
 msgid ""
 "<b>Revert page:</b>\n"
@@ -774,24 +774,24 @@ msgid ""
 "This action will also reload all component libraries."
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:1538
+#: libleptongui/src/i_callbacks.c:1531
 msgid "Revert"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:1673
+#: libleptongui/src/i_callbacks.c:1666
 msgid "Empty clipboard"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:1739
+#: libleptongui/src/i_callbacks.c:1732
 msgid "Empty buffer"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2111
+#: libleptongui/src/i_callbacks.c:2104
 #, c-format
 msgid "Searching for source [%1$s]"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2143
+#: libleptongui/src/i_callbacks.c:2136
 #, c-format
 msgid ""
 "Failed to descend hierarchy into '%1$s': %2$s\n"
@@ -799,81 +799,81 @@ msgid ""
 "The lepton-schematic log may contain more information."
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2147
+#: libleptongui/src/i_callbacks.c:2140
 #, c-format
 msgid "Failed to descend into '%1$s': %2$s"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2154
+#: libleptongui/src/i_callbacks.c:2147
 msgid "Failed to descend hierarchy."
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2233
+#: libleptongui/src/i_callbacks.c:2227
 #, c-format
 msgid "Searching for symbol [%1$s]"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2242
+#: libleptongui/src/i_callbacks.c:2236
 msgid "Symbol is not a real file. Symbol cannot be loaded."
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2293 libleptongui/src/x_tabs.c:1203
+#: libleptongui/src/i_callbacks.c:2290 libleptongui/src/x_tabs.c:1203
 msgid "Cannot find any schematics above the current one!"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2503
+#: libleptongui/src/i_callbacks.c:2504
 msgid "Action feedback mode set to OUTLINE"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2506
+#: libleptongui/src/i_callbacks.c:2507
 msgid "Action feedback mode set to BOUNDINGBOX"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2531
+#: libleptongui/src/i_callbacks.c:2533
 msgid "Grid OFF"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2532
+#: libleptongui/src/i_callbacks.c:2534
 msgid "Dot grid selected"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2533
+#: libleptongui/src/i_callbacks.c:2535
 msgid "Mesh grid selected"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2534
+#: libleptongui/src/i_callbacks.c:2536
 msgid "Invalid grid mode"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2557
+#: libleptongui/src/i_callbacks.c:2559
 msgid "Snap OFF (CAUTION!)"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2560
+#: libleptongui/src/i_callbacks.c:2562
 msgid "Snap ON"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2563
+#: libleptongui/src/i_callbacks.c:2565
 msgid "Snap back to the grid (CAUTION!)"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2593
+#: libleptongui/src/i_callbacks.c:2595
 msgid "Rubber band ON"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2595
+#: libleptongui/src/i_callbacks.c:2597
 msgid "Rubber band OFF"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2615
+#: libleptongui/src/i_callbacks.c:2617
 msgid "magnetic net mode: ON"
 msgstr ""
 
-#: libleptongui/src/i_callbacks.c:2618
+#: libleptongui/src/i_callbacks.c:2620
 msgid "magnetic net mode: OFF"
 msgstr ""
 
-#: libleptongui/src/o_component.c:201 libleptongui/src/o_component.c:204
+#: libleptongui/src/o_component.c:211 libleptongui/src/o_component.c:214
 #, c-format
 msgid "Translating schematic [%1$d %2$d]"
 msgstr ""
@@ -892,16 +892,16 @@ msgstr ""
 msgid "All, _except locked"
 msgstr ""
 
-#: libleptongui/src/o_delete.c:93 libleptongui/src/x_multiattrib.c:1717
+#: libleptongui/src/o_delete.c:93 libleptongui/src/x_multiattrib.c:1725
 #: libleptongui/scheme/schematic/builtins.scm:138
 msgid "Delete"
 msgstr ""
 
-#: libleptongui/src/o_misc.c:362
+#: libleptongui/src/o_misc.c:363
 msgid "Hidden text is now visible"
 msgstr ""
 
-#: libleptongui/src/o_misc.c:364
+#: libleptongui/src/o_misc.c:365
 msgid "Hidden text is now invisible"
 msgstr ""
 
@@ -910,27 +910,27 @@ msgstr ""
 msgid "Could not find symbol [%1$s] in library. Update failed."
 msgstr ""
 
-#: libleptongui/src/o_misc.c:594
+#: libleptongui/src/o_misc.c:593
 #, c-format
 msgid "Can't get the real filename of %1$s."
 msgstr ""
 
-#: libleptongui/src/o_misc.c:639
+#: libleptongui/src/o_misc.c:638
 #, c-format
 msgid "Could NOT set previous backup file [%1$s] read-write"
 msgstr ""
 
-#: libleptongui/src/o_misc.c:658
+#: libleptongui/src/o_misc.c:657
 #, c-format
 msgid "Could NOT set backup file [%1$s] readonly"
 msgstr ""
 
-#: libleptongui/src/o_misc.c:663
+#: libleptongui/src/o_misc.c:662
 #, c-format
 msgid "Could NOT save backup file [%1$s]"
 msgstr ""
 
-#: libleptongui/src/o_move.c:516
+#: libleptongui/src/o_move.c:523
 #, c-format
 msgid "DOH! tried to find the whichone, but didn't find it!\n"
 msgstr ""
@@ -949,12 +949,12 @@ msgstr ""
 msgid "Tried to add more than two bus rippers. Internal gschem error.\n"
 msgstr ""
 
-#: libleptongui/src/o_net.c:1079
+#: libleptongui/src/o_net.c:1083
 #, c-format
 msgid "Bus ripper symbol [%1$s] was not found in any component library"
 msgstr ""
 
-#: libleptongui/src/o_picture.c:141
+#: libleptongui/src/o_picture.c:142
 msgid "All supported formats"
 msgstr ""
 
@@ -968,28 +968,28 @@ msgstr ""
 msgid "Failed to load picture: %1$s"
 msgstr ""
 
-#: libleptongui/src/o_picture.c:387
+#: libleptongui/src/o_picture.c:386
 msgid "Select Picture"
 msgstr ""
 
-#: libleptongui/src/o_picture.c:420
+#: libleptongui/src/o_picture.c:419
 #, c-format
 msgid "Failed to replace pictures: %s"
 msgstr ""
 
-#: libleptongui/src/o_slot.c:81
+#: libleptongui/src/o_slot.c:82
 msgid "Slot attribute malformed"
 msgstr ""
 
-#: libleptongui/src/o_slot.c:89
+#: libleptongui/src/o_slot.c:90
 msgid "numslots attribute missing"
 msgstr ""
 
-#: libleptongui/src/o_slot.c:90
+#: libleptongui/src/o_slot.c:91
 msgid "Slotting not allowed for this component"
 msgstr ""
 
-#: libleptongui/src/o_slot.c:105
+#: libleptongui/src/o_slot.c:106
 msgid "New slot number out of range"
 msgstr ""
 
@@ -998,7 +998,7 @@ msgid "Undo/Redo is disabled in configuration"
 msgstr ""
 
 #: libleptongui/src/schematic_hierarchy.c:80
-#: libleptongui/src/schematic_hierarchy.c:252
+#: libleptongui/src/schematic_hierarchy.c:263
 msgid "Schematic not found in source library."
 msgstr ""
 
@@ -1006,11 +1006,11 @@ msgstr ""
 msgid "Hierarchy contains a circular dependency."
 msgstr ""
 
-#: libleptongui/src/schematic_hierarchy.c:209
+#: libleptongui/src/schematic_hierarchy.c:220
 msgid "There are no schematics above the current one!"
 msgstr ""
 
-#: libleptongui/src/schematic_hierarchy.c:354
+#: libleptongui/src/schematic_hierarchy.c:368
 #, c-format
 msgid "Failed to descend hierarchy into '%1$s': %2$s"
 msgstr ""
@@ -1020,163 +1020,163 @@ msgstr ""
 msgid "Got invalid show option; defaulting to show both\n"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:341
+#: libleptongui/src/x_attribedit.c:343
 msgid "Edit Attribute"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:345
+#: libleptongui/src/x_attribedit.c:347
 #: libleptongui/scheme/schematic/builtins.scm:294
 msgid "Add Attribute"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:359
+#: libleptongui/src/x_attribedit.c:368
 msgid "N_ame:"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:380 libleptongui/src/x_multiattrib.c:2322
+#: libleptongui/src/x_attribedit.c:397 libleptongui/src/x_multiattrib.c:2338
 msgid "_Value:"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:399 libleptongui/src/x_multiattrib.c:2403
+#: libleptongui/src/x_attribedit.c:424 libleptongui/src/x_multiattrib.c:2424
 msgid "Vi_sible"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:422
+#: libleptongui/src/x_attribedit.c:455
 msgid "Show Value Only"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:424
+#: libleptongui/src/x_attribedit.c:457
 msgid "Show Name Only"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:426 libleptongui/src/x_multiattrib.c:1683
+#: libleptongui/src/x_attribedit.c:459 libleptongui/src/x_multiattrib.c:1691
 #: libleptongui/scheme/schematic/builtins.scm:470
 msgid "Show Name & Value"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:431
+#: libleptongui/src/x_attribedit.c:464
 msgid "<b>Attach Options</b>"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:446
+#: libleptongui/src/x_attribedit.c:486
 msgid "All"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:462 libleptongui/src/x_compselect.c:995
-#: libleptongui/src/x_compselect.c:1123
+#: libleptongui/src/x_attribedit.c:506 libleptongui/src/x_compselect.c:1000
+#: libleptongui/src/x_compselect.c:1128
 msgid "Components"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:478 libleptongui/src/x_window.c:1161
+#: libleptongui/src/x_attribedit.c:526 libleptongui/src/x_window.c:1175
 msgid "Nets"
 msgstr ""
 
-#: libleptongui/src/x_attribedit.c:494
+#: libleptongui/src/x_attribedit.c:546
 msgid "Replace existing attributes"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:414
+#: libleptongui/src/x_autonumber.c:416
 msgid ""
 "slotted object without slot attribute may cause problems when autonumbering "
 "slots"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:429
+#: libleptongui/src/x_autonumber.c:431
 #, c-format
 msgid ""
 "duplicate slot may cause problems: [symbolname=%1$s, number=%2$d, slot=%3$d]"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:677
+#: libleptongui/src/x_autonumber.c:681
 msgid "No search string given in autonumber text."
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:731
+#: libleptongui/src/x_autonumber.c:735
 msgid "No '*' or '?' given at the end of the autonumber text."
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:876
+#: libleptongui/src/x_autonumber.c:883
 msgid "Diagonal"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:877
+#: libleptongui/src/x_autonumber.c:884
 msgid "Top to bottom"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:878
+#: libleptongui/src/x_autonumber.c:885
 msgid "Bottom to top"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:879
+#: libleptongui/src/x_autonumber.c:886
 msgid "Left to right"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:880
+#: libleptongui/src/x_autonumber.c:887
 msgid "Right to left"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:881
+#: libleptongui/src/x_autonumber.c:888
 msgid "File order"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1219
+#: libleptongui/src/x_autonumber.c:1224
 #: libleptongui/scheme/schematic/builtins.scm:485
 msgid "Autonumber Text"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1242
+#: libleptongui/src/x_autonumber.c:1247
 msgid "<b>Scope</b>"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1268
+#: libleptongui/src/x_autonumber.c:1281
 msgid "Search for:"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1282
+#: libleptongui/src/x_autonumber.c:1303
 msgid "Autonumber text in:"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1289
+#: libleptongui/src/x_autonumber.c:1314
 msgid "Skip numbers found in:"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1301 libleptongui/src/x_autonumber.c:1310
+#: libleptongui/src/x_autonumber.c:1334 libleptongui/src/x_autonumber.c:1347
 msgid "Selected objects"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1302 libleptongui/src/x_autonumber.c:1311
+#: libleptongui/src/x_autonumber.c:1335 libleptongui/src/x_autonumber.c:1348
 msgid "Current page"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1303 libleptongui/src/x_autonumber.c:1312
+#: libleptongui/src/x_autonumber.c:1336 libleptongui/src/x_autonumber.c:1349
 msgid "Whole hierarchy"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1314
+#: libleptongui/src/x_autonumber.c:1351
 msgid "Overwrite existing numbers"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1319
+#: libleptongui/src/x_autonumber.c:1356
 msgid "<b>Options</b>"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1345
+#: libleptongui/src/x_autonumber.c:1390
 msgid "Starting number:"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1352
+#: libleptongui/src/x_autonumber.c:1401
 msgid "Sort order:"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1384
+#: libleptongui/src/x_autonumber.c:1445
 msgid "Remove numbers"
 msgstr ""
 
-#: libleptongui/src/x_autonumber.c:1388
+#: libleptongui/src/x_autonumber.c:1449
 msgid "Automatic slotting"
 msgstr ""
 
-#: libleptongui/src/x_clipboard.c:244
+#: libleptongui/src/x_clipboard.c:245
 #, c-format
 msgid ""
 "<b>Invalid schematic on clipboard.</b>\n"
@@ -1184,7 +1184,7 @@ msgid ""
 "An error occurred while inserting clipboard data: %s."
 msgstr ""
 
-#: libleptongui/src/x_clipboard.c:246
+#: libleptongui/src/x_clipboard.c:247
 msgid "Clipboard insertion failed"
 msgstr ""
 
@@ -1193,48 +1193,48 @@ msgstr ""
 msgid "%s [ disabled ]"
 msgstr ""
 
-#: libleptongui/src/x_compselect.c:1197
+#: libleptongui/src/x_compselect.c:1202
 msgid "Reset filter"
 msgstr ""
 
-#: libleptongui/src/x_compselect.c:1220
+#: libleptongui/src/x_compselect.c:1225
 msgid "Reload all libraries"
 msgstr ""
 
-#: libleptongui/src/x_compselect.c:1273 libleptongui/src/x_multiattrib.c:2193
+#: libleptongui/src/x_compselect.c:1278 libleptongui/src/x_multiattrib.c:2201
 msgid "Value"
 msgstr ""
 
-#: libleptongui/src/x_compselect.c:1312
+#: libleptongui/src/x_compselect.c:1317
 msgid "Default behavior - reference component"
 msgstr ""
 
-#: libleptongui/src/x_compselect.c:1315
+#: libleptongui/src/x_compselect.c:1320
 msgid "Embed component in schematic"
 msgstr ""
 
-#: libleptongui/src/x_compselect.c:1318
+#: libleptongui/src/x_compselect.c:1323
 msgid "Include component as individual objects"
 msgstr ""
 
-#: libleptongui/src/x_compselect.c:1476
+#: libleptongui/src/x_compselect.c:1481
 #: libleptongui/scheme/schematic/builtins.scm:291
 msgid "Add Component"
 msgstr ""
 
-#: libleptongui/src/x_compselect.c:1499
+#: libleptongui/src/x_compselect.c:1513
 msgid "In Us_e"
 msgstr ""
 
-#: libleptongui/src/x_compselect.c:1503
+#: libleptongui/src/x_compselect.c:1517
 msgid "Lib_raries"
 msgstr ""
 
-#: libleptongui/src/x_compselect.c:1512 libleptongui/src/x_fileselect.c:279
+#: libleptongui/src/x_compselect.c:1526 libleptongui/src/x_fileselect.c:279
 msgid "Preview"
 msgstr ""
 
-#: libleptongui/src/x_compselect.c:1538
+#: libleptongui/src/x_compselect.c:1552
 msgid "Attributes"
 msgstr ""
 
@@ -1289,7 +1289,7 @@ msgstr ""
 msgid "Schematics and symbols (*.sch *.sym)"
 msgstr ""
 
-#: libleptongui/src/x_fileselect.c:329 libleptongui/src/x_window.c:1126
+#: libleptongui/src/x_fileselect.c:329 libleptongui/src/x_window.c:1140
 msgid "Open"
 msgstr ""
 
@@ -1479,142 +1479,142 @@ msgstr ""
 msgid "The operating system is out of memory or resources."
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:836 libleptongui/src/x_multiattrib.c:2832
+#: libleptongui/src/x_multiattrib.c:844 libleptongui/src/x_multiattrib.c:2872
 msgid "<various>"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:981
+#: libleptongui/src/x_multiattrib.c:989
 msgid "Attributes with empty name are not allowed. Please set a name."
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:1685
+#: libleptongui/src/x_multiattrib.c:1693
 msgid "Show Value only"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:1687
+#: libleptongui/src/x_multiattrib.c:1695
 msgid "Show Name only"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:1712
+#: libleptongui/src/x_multiattrib.c:1720
 msgid "Promote"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:1716
+#: libleptongui/src/x_multiattrib.c:1724
 msgid "Duplicate"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:1718
+#: libleptongui/src/x_multiattrib.c:1726
 msgid "Copy to all"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:2083 libleptongui/src/x_multiattrib.c:2731
+#: libleptongui/src/x_multiattrib.c:2091 libleptongui/src/x_multiattrib.c:2770
 msgid "Edit Attributes"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:2213
+#: libleptongui/src/x_multiattrib.c:2221
 msgid "Vis?"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:2231
+#: libleptongui/src/x_multiattrib.c:2239
 msgid "N"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:2249
+#: libleptongui/src/x_multiattrib.c:2257
 msgid "V"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:2275
+#: libleptongui/src/x_multiattrib.c:2283
 msgid "Sho_w inherited attributes"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:2299
+#: libleptongui/src/x_multiattrib.c:2310
 msgid "_Name:"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:2341
+#: libleptongui/src/x_multiattrib.c:2357
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:2439
+#: libleptongui/src/x_multiattrib.c:2465 libleptongui/src/x_multiattrib.c:2476
 msgid "<b>Add Attribute</b>"
 msgstr ""
 
-#: libleptongui/src/x_multiattrib.c:2747
+#: libleptongui/src/x_multiattrib.c:2786
 #, c-format
 msgid "%2$i symbol (%1$s)"
 msgid_plural "%2$i symbols (%1$s)"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libleptongui/src/x_multiattrib.c:2753
+#: libleptongui/src/x_multiattrib.c:2792
 #, c-format
 msgid "%1$i pin"
 msgid_plural "%1$i pins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libleptongui/src/x_multiattrib.c:2759
+#: libleptongui/src/x_multiattrib.c:2798
 #, c-format
 msgid "%1$i net"
 msgid_plural "%1$i nets"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libleptongui/src/x_multiattrib.c:2765
+#: libleptongui/src/x_multiattrib.c:2804
 #, c-format
 msgid "%1$i bus"
 msgid_plural "%1$i buses"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libleptongui/src/x_multiattrib.c:2771
+#: libleptongui/src/x_multiattrib.c:2810
 #, c-format
 msgid "%1$i attribute"
 msgid_plural "%1$i attributes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: libleptongui/src/x_newtext.c:433
+#: libleptongui/src/x_newtext.c:475
 #: libleptongui/scheme/schematic/builtins.scm:303
 msgid "Add Text"
 msgstr ""
 
-#: libleptongui/src/page_select_widget.c:393
+#: libleptongui/src/page_select_widget.c:395
 msgid "Refresh"
 msgstr ""
 
-#: libleptongui/src/page_select_widget.c:395
+#: libleptongui/src/page_select_widget.c:397
 msgid "New Page"
 msgstr ""
 
-#: libleptongui/src/page_select_widget.c:396
+#: libleptongui/src/page_select_widget.c:398
 msgid "Open Page..."
 msgstr ""
 
-#: libleptongui/src/page_select_widget.c:398
+#: libleptongui/src/page_select_widget.c:400
 msgid "Save Page"
 msgstr ""
 
-#: libleptongui/src/page_select_widget.c:399
+#: libleptongui/src/page_select_widget.c:401
 #: libleptongui/scheme/schematic/builtins.scm:276
 msgid "Close Page"
 msgstr ""
 
-#: libleptongui/src/page_select_widget.c:529
+#: libleptongui/src/page_select_widget.c:531
 msgid "Changed"
 msgstr ""
 
-#: libleptongui/src/x_print.c:327
+#: libleptongui/src/x_print.c:322
 #, c-format
 msgid "Failed to write PDF to '%s': %s\n"
 msgstr ""
 
-#: libleptongui/src/x_print.c:388
+#: libleptongui/src/x_print.c:385
 #, c-format
 msgid "Failed to write PDF to '%1$s': %2$s\n"
 msgstr ""
 
-#: libleptongui/src/x_print.c:477
+#: libleptongui/src/x_print.c:474
 #, c-format
 msgid ""
 "Error printing file:\n"
@@ -1649,21 +1649,21 @@ msgstr ""
 msgid "Cannot load lepton-schematic configuration."
 msgstr ""
 
-#: libleptongui/src/x_tabs.c:915
+#: libleptongui/src/x_tabs.c:917
 msgid "Close"
 msgstr ""
 
-#: libleptongui/src/x_tabs.c:940 libleptongui/src/x_window.c:1130
+#: libleptongui/src/x_tabs.c:942 libleptongui/src/x_window.c:1144
 #: libleptongui/scheme/schematic/builtins.scm:80
 msgid "Save"
 msgstr ""
 
-#: libleptongui/src/x_tabs.c:978
+#: libleptongui/src/x_tabs.c:979
 #, c-format
 msgid "Hierarchy up: %s"
 msgstr ""
 
-#: libleptongui/src/x_tabs.c:981
+#: libleptongui/src/x_tabs.c:982
 msgid "Hierarchy up"
 msgstr ""
 
@@ -1696,7 +1696,7 @@ msgstr ""
 msgid "_Close"
 msgstr ""
 
-#: libleptongui/src/x_widgets.c:170 libleptongui/src/x_window.c:1426
+#: libleptongui/src/x_widgets.c:170 libleptongui/src/x_window.c:1440
 msgid "Options"
 msgstr ""
 
@@ -1709,11 +1709,11 @@ msgstr ""
 msgid "Object Properties"
 msgstr ""
 
-#: libleptongui/src/x_widgets.c:236 libleptongui/src/x_window.c:1452
+#: libleptongui/src/x_widgets.c:236 libleptongui/src/x_window.c:1466
 msgid "Log"
 msgstr ""
 
-#: libleptongui/src/x_widgets.c:257 libleptongui/src/x_window.c:1448
+#: libleptongui/src/x_widgets.c:257 libleptongui/src/x_window.c:1462
 msgid "Find Text"
 msgstr ""
 
@@ -1731,79 +1731,79 @@ msgstr ""
 msgid "Page Manager"
 msgstr ""
 
-#: libleptongui/src/x_window.c:749
+#: libleptongui/src/x_window.c:761
 #, c-format
 msgid "Loading schematic [%1$s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:847
+#: libleptongui/src/x_window.c:859
 #, c-format
 msgid "Could NOT save page [%1$s]\n"
 msgstr ""
 
-#: libleptongui/src/x_window.c:848
+#: libleptongui/src/x_window.c:860
 msgid "Error while trying to save"
 msgstr ""
 
-#: libleptongui/src/x_window.c:868
+#: libleptongui/src/x_window.c:881
 #, c-format
 msgid "Saved as [%1$s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:870
+#: libleptongui/src/x_window.c:883
 #, c-format
 msgid "Saved [%1$s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:872
+#: libleptongui/src/x_window.c:885
 msgid "Saved"
 msgstr ""
 
-#: libleptongui/src/x_window.c:950
+#: libleptongui/src/x_window.c:964
 #, c-format
 msgid "Discarding page [%1$s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:950
+#: libleptongui/src/x_window.c:964
 #, c-format
 msgid "Closing [%1$s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1122
+#: libleptongui/src/x_window.c:1136
 msgid "New"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1122
+#: libleptongui/src/x_window.c:1136
 msgid "New file"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1126
+#: libleptongui/src/x_window.c:1140
 msgid "Open file"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1130
+#: libleptongui/src/x_window.c:1144
 msgid "Save file"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1136
+#: libleptongui/src/x_window.c:1150
 #: libleptongui/scheme/schematic/builtins.scm:123
 msgid "Undo"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1136
+#: libleptongui/src/x_window.c:1150
 msgid "Undo last operation"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1140
+#: libleptongui/src/x_window.c:1154
 #: libleptongui/scheme/schematic/builtins.scm:126
 msgid "Redo"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1140
+#: libleptongui/src/x_window.c:1154
 msgid "Redo last undo"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1145
+#: libleptongui/src/x_window.c:1159
 msgid ""
 "Add component...\n"
 "Select library and component from list, move the mouse into main window, "
@@ -1811,85 +1811,85 @@ msgid ""
 "Right mouse button to cancel"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1150
+#: libleptongui/src/x_window.c:1164
 msgid "Component"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1156
+#: libleptongui/src/x_window.c:1170
 msgid ""
 "Add nets mode\n"
 "Right mouse button to cancel"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1164
+#: libleptongui/src/x_window.c:1178
 msgid ""
 "Add buses mode\n"
 "Right mouse button to cancel"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1169
+#: libleptongui/src/x_window.c:1183
 msgid "Bus"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1173
+#: libleptongui/src/x_window.c:1187
 msgid "Add Text..."
 msgstr ""
 
-#: libleptongui/src/x_window.c:1180
+#: libleptongui/src/x_window.c:1194
 msgid "Select"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1180
+#: libleptongui/src/x_window.c:1194
 msgid "Select mode"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1235
+#: libleptongui/src/x_window.c:1249
 msgid "Show"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1236
+#: libleptongui/src/x_window.c:1250
 msgid "Show text starting with:"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1283 libleptongui/src/x_window.c:1318
+#: libleptongui/src/x_window.c:1297 libleptongui/src/x_window.c:1332
 msgid "none"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1287
+#: libleptongui/src/x_window.c:1301
 msgid "Stroke"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1294
+#: libleptongui/src/x_window.c:1308
 msgid "Repeat"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1297 libleptongui/src/x_window.c:1314
+#: libleptongui/src/x_window.c:1311 libleptongui/src/x_window.c:1328
 #: libleptongui/scheme/schematic/builtins.scm:219
 msgid "Pan"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1300 libleptongui/src/x_window.c:1309
+#: libleptongui/src/x_window.c:1314 libleptongui/src/x_window.c:1323
 msgid "Menu"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1323
+#: libleptongui/src/x_window.c:1337
 msgid "/Cancel"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1343
+#: libleptongui/src/x_window.c:1357
 msgid "Pick"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1418
+#: libleptongui/src/x_window.c:1432
 msgid "Object"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1564
+#: libleptongui/src/x_window.c:1578
 #, c-format
 msgid "New file [%s]"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1594
+#: libleptongui/src/x_window.c:1608
 #, c-format
 msgid ""
 "<b>An error occurred while loading the requested file.</b>\n"
@@ -1903,11 +1903,11 @@ msgid ""
 "monitor program's output in terminal window."
 msgstr ""
 
-#: libleptongui/src/x_window.c:1613
+#: libleptongui/src/x_window.c:1627
 msgid "Failed to load file"
 msgstr ""
 
-#: libleptongui/src/x_window.c:1712
+#: libleptongui/src/x_window.c:1726
 #, c-format
 msgid "Skipping existing file [%s]"
 msgstr ""
@@ -2734,7 +2734,7 @@ msgstr ""
 msgid "Invalid text alignment ~A."
 msgstr ""
 
-#: schematic/lepton-schematic.scm:110
+#: schematic/lepton-schematic.scm:115
 #, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
@@ -2757,7 +2757,7 @@ msgid ""
 "Lepton EDA homepage: ~S\n"
 msgstr ""
 
-#: schematic/lepton-schematic.scm:172
+#: schematic/lepton-schematic.scm:177
 #, scheme-format
 msgid ""
 "ERROR: Unknown option ~A.\n"

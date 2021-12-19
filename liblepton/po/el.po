@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-07-31 11:52+0300\n"
+"POT-Creation-Date: 2021-12-19 13:13+0300\n"
 "PO-Revision-Date: 2012-09-01 18:46+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -670,53 +670,9 @@ msgstr ""
 msgid "Configuration does not have key '%s'"
 msgstr ""
 
-msgid "~A is not a valid attribute: invalid string '~A'."
-msgstr "Το ~A δεν είναι έγκυρο γνώρισμα: μη έγκυρη συμβολοσειρά '~A'."
-
-#, fuzzy
-msgid "Objects ~A and ~A are not part of the same page and/or component object"
-msgstr ""
-"Τα αντικείμενα ~A και ~A δεν είναι μέρη της ίδια σελίδας ή/και πολύπλοκου "
-"αντικειμένου"
-
-msgid "Object ~A is already attached as an attribute"
-msgstr "Το αντικείμενο Object ~A είναι ήδη συνδεδεμένο με ένα γνώρισμα"
-
-msgid "Object ~A is attribute of wrong object"
-msgstr "Το αντικείμενο ~A είναι γνώρισμα του λάθος αντικειμένου"
-
-#, fuzzy
-msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr "Μη έγκυρη γωνία κειμένου ~A. Πρέπει να είναι 0, 90, 180, ή 270 μοίρες"
-
-msgid "Object ~A is already attached to something"
-msgstr "Το αντικείμενο ~A είναι ήδη συνδεδεμένο με κάτι"
-
-#, fuzzy
-msgid "Object ~A is attached to a different component"
-msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
-
-msgid "Object ~A is attached to a page"
-msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
-
-msgid "Object ~A is attached as an attribute"
-msgstr "Το αντικείμενο ~A είναι συνδεδεμένο ως γνώρισμα"
-
-msgid "Object ~A has attributes"
-msgstr "Το αντικείμενο ~A έχει γνωρίσματα"
-
-#, fuzzy
-msgid "Object ~A is attached to a component or different page"
-msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
-
-msgid "Parse error: ~s"
-msgstr ""
-
-msgid "Scheme hook"
-msgstr ""
-
-msgid "The Scheme-level hook to proxy"
-msgstr ""
+#, fuzzy, c-format
+msgid "ERROR: %s.\n"
+msgstr "ΣΦΑΛΜΑ: %s\n"
 
 #, scheme-format
 msgid "Object ~A is not part of a page"
@@ -1198,6 +1154,47 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#~ msgid "~A is not a valid attribute: invalid string '~A'."
+#~ msgstr "Το ~A δεν είναι έγκυρο γνώρισμα: μη έγκυρη συμβολοσειρά '~A'."
+
+#, fuzzy
+#~ msgid ""
+#~ "Objects ~A and ~A are not part of the same page and/or component object"
+#~ msgstr ""
+#~ "Τα αντικείμενα ~A και ~A δεν είναι μέρη της ίδια σελίδας ή/και πολύπλοκου "
+#~ "αντικειμένου"
+
+#~ msgid "Object ~A is already attached as an attribute"
+#~ msgstr "Το αντικείμενο Object ~A είναι ήδη συνδεδεμένο με ένα γνώρισμα"
+
+#~ msgid "Object ~A is attribute of wrong object"
+#~ msgstr "Το αντικείμενο ~A είναι γνώρισμα του λάθος αντικειμένου"
+
+#, fuzzy
+#~ msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr ""
+#~ "Μη έγκυρη γωνία κειμένου ~A. Πρέπει να είναι 0, 90, 180, ή 270 μοίρες"
+
+#~ msgid "Object ~A is already attached to something"
+#~ msgstr "Το αντικείμενο ~A είναι ήδη συνδεδεμένο με κάτι"
+
+#, fuzzy
+#~ msgid "Object ~A is attached to a different component"
+#~ msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
+
+#~ msgid "Object ~A is attached to a page"
+#~ msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
+
+#~ msgid "Object ~A is attached as an attribute"
+#~ msgstr "Το αντικείμενο ~A είναι συνδεδεμένο ως γνώρισμα"
+
+#~ msgid "Object ~A has attributes"
+#~ msgstr "Το αντικείμενο ~A έχει γνωρίσματα"
+
+#, fuzzy
+#~ msgid "Object ~A is attached to a component or different page"
+#~ msgstr "Το αντικείμενο ~A είναι συνδεδεμένο με μια σελίδα"
 
 #~ msgid "Object ~A has invalid pin type."
 #~ msgstr "Το αντικείμενο ~A έχει μη έγκυρο τύπο ακροδεκτών."

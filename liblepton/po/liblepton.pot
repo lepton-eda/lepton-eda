@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.16\n"
+"Project-Id-Version: lepton-eda 1.9.17\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-07-31 11:52+0300\n"
+"POT-Creation-Date: 2021-12-19 13:13+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -103,7 +103,7 @@ msgstr ""
 #: liblepton/src/bus_object.c:351 liblepton/src/circle_object.c:364
 #: liblepton/src/line_object.c:411 liblepton/src/net_object.c:304
 #: liblepton/src/path_object.c:233 liblepton/src/pin_object.c:436
-#: liblepton/src/text_object.c:599
+#: liblepton/src/text_object.c:601
 #, c-format
 msgid "Found an invalid color [ %1$s ]"
 msgstr ""
@@ -112,7 +112,7 @@ msgstr ""
 #: liblepton/src/bus_object.c:352 liblepton/src/circle_object.c:365
 #: liblepton/src/line_object.c:412 liblepton/src/net_object.c:305
 #: liblepton/src/path_object.c:234 liblepton/src/pin_object.c:437
-#: liblepton/src/text_object.c:601
+#: liblepton/src/text_object.c:603
 msgid "Setting color to default color."
 msgstr ""
 
@@ -156,89 +156,89 @@ msgstr ""
 msgid "Setting radius to 0."
 msgstr ""
 
-#: liblepton/src/component_object.c:601
+#: liblepton/src/component_object.c:840
 #, c-format
 msgid ""
 "Component not found:\n"
 " %1$s"
 msgstr ""
 
-#: liblepton/src/component_object.c:884
+#: liblepton/src/component_object.c:1134
 msgid "Failed to parse component object"
 msgstr ""
 
-#: liblepton/src/component_object.c:898
+#: liblepton/src/component_object.c:1148
 #, c-format
 msgid ""
 "Found a component with an invalid rotation [ %1$c %2$d %3$d %4$d %5$d %6$d "
 "%7$s ]"
 msgstr ""
 
-#: liblepton/src/component_object.c:901 liblepton/src/picture_object.c:106
+#: liblepton/src/component_object.c:1151 liblepton/src/picture_object.c:106
 msgid "Setting angle to 0."
 msgstr ""
 
-#: liblepton/src/component_object.c:913
+#: liblepton/src/component_object.c:1163
 #, c-format
 msgid ""
 "Found a component with an invalid mirror flag [ %1$c %2$d %3$d %4$d %5$d "
 "%6$d %7$s ]"
 msgstr ""
 
-#: liblepton/src/component_object.c:916
+#: liblepton/src/component_object.c:1166
 msgid "Setting mirror to 0."
 msgstr ""
 
-#: liblepton/src/component_object.c:1257
+#: liblepton/src/component_object.c:1527
 #, c-format
 msgid "WARNING: %s (%s): could not parse symversion (%s) in symbol file"
 msgstr ""
 
-#: liblepton/src/component_object.c:1263
+#: liblepton/src/component_object.c:1533
 #, c-format
 msgid "WARNING: %s (%s): could not parse symversion in symbol file"
 msgstr ""
 
-#: liblepton/src/component_object.c:1280
+#: liblepton/src/component_object.c:1550
 #, c-format
 msgid "WARNING: %s (%s): could not parse attached symversion (%s)"
 msgstr ""
 
-#: liblepton/src/component_object.c:1307
+#: liblepton/src/component_object.c:1577
 #, c-format
 msgid "WARNING: %s (%s): symversion attached, but absent inside symbol file"
 msgstr ""
 
-#: liblepton/src/component_object.c:1345
+#: liblepton/src/component_object.c:1615
 #, c-format
 msgid ""
 "WARNING: %s (%s): MAJOR symversion change (attached: %.3f < library: %.3f)"
 msgstr ""
 
-#: liblepton/src/component_object.c:1381
+#: liblepton/src/component_object.c:1651
 #, c-format
 msgid ""
 "WARNING: %s (%s): minor symversion change (attached: %.3f < library: %.3f)"
 msgstr ""
 
-#: liblepton/src/component_object.c:1395
+#: liblepton/src/component_object.c:1665
 #, c-format
 msgid "WARNING: %s (%s): symbol is newer than symbol in library (%.3f > %.3f)"
 msgstr ""
 
-#: liblepton/src/component_object.c:1542
+#: liblepton/src/component_object.c:1812
 #, c-format
 msgid "Component [%1$s] has been embedded."
 msgstr ""
 
-#: liblepton/src/component_object.c:1579
+#: liblepton/src/component_object.c:1849
 #, c-format
 msgid ""
 "Could not find component [%1$s], while trying to unembed. Component is still "
 "embedded."
 msgstr ""
 
-#: liblepton/src/component_object.c:1588
+#: liblepton/src/component_object.c:1858
 #, c-format
 msgid "Component [%1$s] has been successfully unembedded."
 msgstr ""
@@ -380,41 +380,41 @@ msgstr ""
 msgid "Found an invalid whichend on a pin (reseting to zero): %d"
 msgstr ""
 
-#: liblepton/src/text_object.c:538 liblepton/src/text_object.c:548
-#: liblepton/src/text_object.c:558
+#: liblepton/src/text_object.c:540 liblepton/src/text_object.c:550
+#: liblepton/src/text_object.c:560
 msgid "Failed to parse text object"
-msgstr ""
-
-#: liblepton/src/text_object.c:565
-#, c-format
-msgid "Found an invalid text size [ %1$s ]"
 msgstr ""
 
 #: liblepton/src/text_object.c:567
 #, c-format
-msgid "Setting text size to %1$d."
+msgid "Found an invalid text size [ %1$s ]"
 msgstr ""
 
-#: liblepton/src/text_object.c:572
+#: liblepton/src/text_object.c:569
 #, c-format
-msgid "Found an unsupported text angle [ %1$s ]"
+msgid "Setting text size to %1$d."
 msgstr ""
 
 #: liblepton/src/text_object.c:574
 #, c-format
+msgid "Found an unsupported text angle [ %1$s ]"
+msgstr ""
+
+#: liblepton/src/text_object.c:576
+#, c-format
 msgid "Setting angle to %1$d."
 msgstr ""
 
-#: liblepton/src/text_object.c:591
+#: liblepton/src/text_object.c:593
 #, c-format
 msgid "Found an unsupported text alignment [ %1$s ]"
 msgstr ""
 
-#: liblepton/src/text_object.c:594
+#: liblepton/src/text_object.c:596
 msgid "Setting alignment to LOWER_LEFT."
 msgstr ""
 
-#: liblepton/src/text_object.c:614
+#: liblepton/src/text_object.c:616
 #, c-format
 msgid "Unexpected end-of-file after %1$d lines"
 msgstr ""
@@ -506,69 +506,69 @@ msgstr ""
 msgid "RC file already loaded"
 msgstr ""
 
-#: liblepton/src/g_rc.c:122
+#: liblepton/src/g_rc.c:120
 #, c-format
 msgid "Failed to load config from '%1$s': %2$s\n"
 msgstr ""
 
-#: liblepton/src/g_rc.c:146
+#: liblepton/src/g_rc.c:136
 #, c-format
 msgid "Loaded RC file [%1$s]"
 msgstr ""
 
-#: liblepton/src/g_rc.c:150
+#: liblepton/src/g_rc.c:140
 #, c-format
 msgid "Failed to load RC file [%1$s]: "
 msgstr ""
 
-#: liblepton/src/g_rc.c:288
+#: liblepton/src/g_rc.c:278
 msgid "ERROR: An unknown error occurred while parsing configuration files."
 msgstr ""
 
-#: liblepton/src/g_rc.c:300
+#: liblepton/src/g_rc.c:290
 #, c-format
 msgid "ERROR: %1$s"
 msgstr ""
 
-#: liblepton/src/g_rc.c:301
+#: liblepton/src/g_rc.c:291
 #, c-format
 msgid "ERROR: %1$s\n"
 msgstr ""
 
-#: liblepton/src/g_rc.c:307
+#: liblepton/src/g_rc.c:297
 #, c-format
 msgid "ERROR: The %1$s log may contain more information.\n"
 msgstr ""
 
-#: liblepton/src/page.c:234
+#: liblepton/src/page.c:291
 #, c-format
 msgid "Can't get the real filename of %1$s."
 msgstr ""
 
-#: liblepton/src/page.c:246
+#: liblepton/src/page.c:303
 #, c-format
 msgid "Unable to delete backup file %1$s."
 msgstr ""
 
-#: liblepton/src/o_attrib.c:85
+#: liblepton/src/o_attrib.c:87
 #, c-format
 msgid "Attribute [%1$s] already attached\n"
 msgstr ""
 
-#: liblepton/src/o_attrib.c:92
+#: liblepton/src/o_attrib.c:94
 msgid "Attempt to attach non text item as an attribute!\n"
 msgstr ""
 
-#: liblepton/src/o_attrib.c:97
+#: liblepton/src/o_attrib.c:100
 #, c-format
 msgid "Attempt to attach attribute [%1$s] to more than one object\n"
 msgstr ""
 
-#: liblepton/src/o_attrib.c:300
+#: liblepton/src/o_attrib.c:285
 msgid "Tried to attach a non-text item as an attribute"
 msgstr ""
 
-#: liblepton/src/o_attrib.c:307
+#: liblepton/src/o_attrib.c:292
 msgid "Unexpected end-of-file in attribute list"
 msgstr ""
 
@@ -779,63 +779,12 @@ msgstr ""
 msgid "Configuration does not have key '%s'"
 msgstr ""
 
-#: liblepton/src/scheme_attrib.c:67 liblepton/src/scheme_attrib.c:101
-msgid "~A is not a valid attribute: invalid string '~A'."
+#: liblepton/src/export.c:245
+#, c-format
+msgid "ERROR: %s.\n"
 msgstr ""
 
-#: liblepton/src/scheme_attrib.c:204
-msgid "Objects ~A and ~A are not part of the same page and/or component object"
-msgstr ""
-
-#: liblepton/src/scheme_attrib.c:211 liblepton/src/scheme_attrib.c:216
-msgid "Object ~A is already attached as an attribute"
-msgstr ""
-
-#: liblepton/src/scheme_attrib.c:264
-msgid "Object ~A is attribute of wrong object"
-msgstr ""
-
-#: liblepton/src/scheme_component.c:151
-msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr ""
-
-#: liblepton/src/scheme_component.c:268 liblepton/src/scheme_page.c:246
-msgid "Object ~A is already attached to something"
-msgstr ""
-
-#: liblepton/src/scheme_component.c:328
-msgid "Object ~A is attached to a different component"
-msgstr ""
-
-#: liblepton/src/scheme_component.c:335
-msgid "Object ~A is attached to a page"
-msgstr ""
-
-#: liblepton/src/scheme_component.c:342 liblepton/src/scheme_page.c:298
-msgid "Object ~A is attached as an attribute"
-msgstr ""
-
-#: liblepton/src/scheme_component.c:349 liblepton/src/scheme_page.c:305
-msgid "Object ~A has attributes"
-msgstr ""
-
-#: liblepton/src/scheme_page.c:291
-msgid "Object ~A is attached to a component or different page"
-msgstr ""
-
-#: liblepton/src/scheme_page.c:438
-msgid "Parse error: ~s"
-msgstr ""
-
-#: liblepton/src/edascmhookproxy.c:82
-msgid "Scheme hook"
-msgstr ""
-
-#: liblepton/src/edascmhookproxy.c:83
-msgid "The Scheme-level hook to proxy"
-msgstr ""
-
-#: liblepton/scheme/lepton/attrib.scm:57
+#: liblepton/scheme/lepton/attrib.scm:149
 #, scheme-format
 msgid "Object ~A is not part of a page"
 msgstr ""
@@ -1198,12 +1147,12 @@ msgstr ""
 msgid "Duplicate pin number ~A: ~A"
 msgstr ""
 
-#: liblepton/scheme/symbol/check/obsolete.scm:41
+#: liblepton/scheme/symbol/check/obsolete.scm:55
 #, scheme-format
 msgid "Obsolete pin#=# attribute: ~A=~A"
 msgstr ""
 
-#: liblepton/scheme/symbol/check/obsolete.scm:49
+#: liblepton/scheme/symbol/check/obsolete.scm:63
 #, scheme-format
 msgid "Obsolete slot#=# attribute: ~A=~A"
 msgstr ""

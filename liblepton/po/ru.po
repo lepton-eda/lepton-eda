@@ -27,7 +27,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-07-31 11:52+0300\n"
+"POT-Creation-Date: 2021-12-19 13:13+0300\n"
 "PO-Revision-Date: 2020-03-20 09:14+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -706,50 +706,9 @@ msgstr "В настройках не обнаружено группы «%s»"
 msgid "Configuration does not have key '%s'"
 msgstr "В настройках не обнаружено ключа «%s»"
 
-msgid "~A is not a valid attribute: invalid string '~A'."
-msgstr "~A не является допустимым атрибутом: недопустимая строка «~A»."
-
-msgid "Objects ~A and ~A are not part of the same page and/or component object"
-msgstr ""
-"Объекты ~A и ~A не являются частями одной схемы и (или) одного компонента"
-
-msgid "Object ~A is already attached as an attribute"
-msgstr "Объект ~A уже прикреплён как атрибут"
-
-msgid "Object ~A is attribute of wrong object"
-msgstr "Объект ~A является атрибутом другого объекта"
-
-msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr ""
-"Недопустимый угол поворота компонента ~A. Должен быть 0, 90, 180 или 270 "
-"градусов"
-
-msgid "Object ~A is already attached to something"
-msgstr "Объект ~A уже к чему-то прикреплён"
-
-msgid "Object ~A is attached to a different component"
-msgstr "Объект ~A прикреплён к другому компоненту"
-
-msgid "Object ~A is attached to a page"
-msgstr "Объект ~A прикреплён к странице"
-
-msgid "Object ~A is attached as an attribute"
-msgstr "Объект ~A прикреплён как атрибут"
-
-msgid "Object ~A has attributes"
-msgstr "К объекту ~A прикреплены атрибуты"
-
-msgid "Object ~A is attached to a component or different page"
-msgstr "Объект ~A прикреплён к компоненту или к другой странице"
-
-msgid "Parse error: ~s"
-msgstr "Ошибка грамматического разбора: ~s"
-
-msgid "Scheme hook"
-msgstr "Функция перехвата Scheme"
-
-msgid "The Scheme-level hook to proxy"
-msgstr "Перехват функций Scheme для EdascmHookProxy"
+#, fuzzy, c-format
+msgid "ERROR: %s.\n"
+msgstr "ОШИБКА: %1$s\n"
 
 #, scheme-format
 msgid "Object ~A is not part of a page"
@@ -1320,6 +1279,52 @@ msgstr "Количество ошибок: ~A"
 
 msgid "(use -v to view details)"
 msgstr "(используйте опцию -v для вывода подробностей)"
+
+#~ msgid "~A is not a valid attribute: invalid string '~A'."
+#~ msgstr "~A не является допустимым атрибутом: недопустимая строка «~A»."
+
+#~ msgid ""
+#~ "Objects ~A and ~A are not part of the same page and/or component object"
+#~ msgstr ""
+#~ "Объекты ~A и ~A не являются частями одной схемы и (или) одного компонента"
+
+#~ msgid "Object ~A is already attached as an attribute"
+#~ msgstr "Объект ~A уже прикреплён как атрибут"
+
+#~ msgid "Object ~A is attribute of wrong object"
+#~ msgstr "Объект ~A является атрибутом другого объекта"
+
+#~ msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr ""
+#~ "Недопустимый угол поворота компонента ~A. Должен быть 0, 90, 180 или 270 "
+#~ "градусов"
+
+#~ msgid "Object ~A is already attached to something"
+#~ msgstr "Объект ~A уже к чему-то прикреплён"
+
+#~ msgid "Object ~A is attached to a different component"
+#~ msgstr "Объект ~A прикреплён к другому компоненту"
+
+#~ msgid "Object ~A is attached to a page"
+#~ msgstr "Объект ~A прикреплён к странице"
+
+#~ msgid "Object ~A is attached as an attribute"
+#~ msgstr "Объект ~A прикреплён как атрибут"
+
+#~ msgid "Object ~A has attributes"
+#~ msgstr "К объекту ~A прикреплены атрибуты"
+
+#~ msgid "Object ~A is attached to a component or different page"
+#~ msgstr "Объект ~A прикреплён к компоненту или к другой странице"
+
+#~ msgid "Parse error: ~s"
+#~ msgstr "Ошибка грамматического разбора: ~s"
+
+#~ msgid "Scheme hook"
+#~ msgstr "Функция перехвата Scheme"
+
+#~ msgid "The Scheme-level hook to proxy"
+#~ msgstr "Перехват функций Scheme для EdascmHookProxy"
 
 #~ msgid "Source library path must be a string.\n"
 #~ msgstr "Путь к библиотеке исходных данных должен быть строкой.\n"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-07-31 11:52+0300\n"
+"POT-Creation-Date: 2021-12-19 13:13+0300\n"
 "PO-Revision-Date: 2012-02-20 00:09+0000\n"
 "Last-Translator: Carlos Nieves <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -725,52 +725,9 @@ msgstr ""
 msgid "Configuration does not have key '%s'"
 msgstr ""
 
-msgid "~A is not a valid attribute: invalid string '~A'."
-msgstr "~A no es un atributo válido: cadena de caracteres inválida '~A'."
-
-#, fuzzy
-msgid "Objects ~A and ~A are not part of the same page and/or component object"
-msgstr "Objetos ~A y ~A no son parte de la misma página y/o objeto complejo"
-
-msgid "Object ~A is already attached as an attribute"
-msgstr "Objeto ~A ya está adjunto como atributo"
-
-msgid "Object ~A is attribute of wrong object"
-msgstr "Objeto ~A es atributo del objeto equivocado"
-
-#, fuzzy
-msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
-msgstr ""
-"Angulo complejo inv'alido ~A. Debe ser 0, 90, 180 ó 270 grados sexagesimales."
-
-msgid "Object ~A is already attached to something"
-msgstr "Objeto ~A ya está adjunto a algo"
-
-#, fuzzy
-msgid "Object ~A is attached to a different component"
-msgstr "Objeto ~A está adjunto a un complejo diferente"
-
-msgid "Object ~A is attached to a page"
-msgstr "Objeto ~A está ajunto a la página"
-
-msgid "Object ~A is attached as an attribute"
-msgstr "Objeto ~A est'a adjunto como un atributo"
-
-msgid "Object ~A has attributes"
-msgstr "Objeto ~A tiene atributos"
-
-#, fuzzy
-msgid "Object ~A is attached to a component or different page"
-msgstr "El objeto ~A está asociado a un objeto complejo o página diferente"
-
-msgid "Parse error: ~s"
-msgstr "Error de procesado: %s"
-
-msgid "Scheme hook"
-msgstr ""
-
-msgid "The Scheme-level hook to proxy"
-msgstr ""
+#, fuzzy, c-format
+msgid "ERROR: %s.\n"
+msgstr "ERROR: %s\n"
 
 #, scheme-format
 msgid "Object ~A is not part of a page"
@@ -1252,6 +1209,49 @@ msgstr ""
 
 msgid "(use -v to view details)"
 msgstr ""
+
+#~ msgid "~A is not a valid attribute: invalid string '~A'."
+#~ msgstr "~A no es un atributo válido: cadena de caracteres inválida '~A'."
+
+#, fuzzy
+#~ msgid ""
+#~ "Objects ~A and ~A are not part of the same page and/or component object"
+#~ msgstr "Objetos ~A y ~A no son parte de la misma página y/o objeto complejo"
+
+#~ msgid "Object ~A is already attached as an attribute"
+#~ msgstr "Objeto ~A ya está adjunto como atributo"
+
+#~ msgid "Object ~A is attribute of wrong object"
+#~ msgstr "Objeto ~A es atributo del objeto equivocado"
+
+#, fuzzy
+#~ msgid "Invalid component angle ~A. Must be 0, 90, 180, or 270 degrees"
+#~ msgstr ""
+#~ "Angulo complejo inv'alido ~A. Debe ser 0, 90, 180 ó 270 grados "
+#~ "sexagesimales."
+
+#~ msgid "Object ~A is already attached to something"
+#~ msgstr "Objeto ~A ya está adjunto a algo"
+
+#, fuzzy
+#~ msgid "Object ~A is attached to a different component"
+#~ msgstr "Objeto ~A está adjunto a un complejo diferente"
+
+#~ msgid "Object ~A is attached to a page"
+#~ msgstr "Objeto ~A está ajunto a la página"
+
+#~ msgid "Object ~A is attached as an attribute"
+#~ msgstr "Objeto ~A est'a adjunto como un atributo"
+
+#~ msgid "Object ~A has attributes"
+#~ msgstr "Objeto ~A tiene atributos"
+
+#, fuzzy
+#~ msgid "Object ~A is attached to a component or different page"
+#~ msgstr "El objeto ~A está asociado a un objeto complejo o página diferente"
+
+#~ msgid "Parse error: ~s"
+#~ msgstr "Error de procesado: %s"
 
 #~ msgid "Object ~A has invalid stroke cap style ~A"
 #~ msgstr "El objeto ~A tiene un estilo de trazado de extremo no válido ~A."
