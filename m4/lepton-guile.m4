@@ -5,7 +5,7 @@ dnl Check for guile
 dnl Copyright (C) 2009  Dan McMahill <dan@mcmahill.net>
 dnl Copyright (C) 2010-2011  Peter Brett <peter@peter-b.co.uk>
 dnl Copyright (C) 2009-2016 gEDA Contributors
-dnl Copyright (C) 2017-2020 Lepton EDA Contributors
+dnl Copyright (C) 2017-2021 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
