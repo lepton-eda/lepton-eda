@@ -14,6 +14,8 @@ Notable changes in Lepton EDA 1.9.17 (upcoming)
 
 ### Changes when building from source:
 
+- Support for Guile 2.0 has been dropped.
+
 - Lepton now requires GTK 3.2.0 or later versions for build with
   GTK3 support.
 
