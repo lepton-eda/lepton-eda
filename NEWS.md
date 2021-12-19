@@ -5,7 +5,7 @@ This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
 
-Notable changes in Lepton EDA 1.9.17 (upcoming)
+Notable changes in Lepton EDA 1.9.17 (20211219)
 -----------------------------------------------
 
 ### General changes:
