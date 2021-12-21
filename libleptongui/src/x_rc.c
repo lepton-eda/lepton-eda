@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2024 Lepton EDA Contributors
+ * Copyright (C) 2017-2025 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,10 @@
 #include <locale.h>
 #endif
 
-/* Error handler function used by x_rc_parse_gschem(). */
-static void
-x_rc_parse_gschem_error (GError **err)
+/* RC parse error handler function for lepton-schematic. */
+void
+x_rc_parse_gschem_error (GError **err,
+                         const gchar *pname)
 {
   char *msg2; /* Secondary text */
   GtkWidget *dialog;
@@ -70,28 +71,4 @@ x_rc_parse_gschem_error (GError **err)
   gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
   g_free (msg2);
-}
-
-/*! \brief Load gschem configuration files and display error dialogs.
- * \par Function Description
- * Loads configuration files in a similar manner to g_rc_parse().
- * Instead of exiting on error, display error dialogs with explanatory
- * messages.
- *
- * \param toplevel The current \c LeptonToplevel structure.
- */
-void
-x_rc_parse_gschem (LeptonToplevel *toplevel)
-{
-  static gsize initialized = 0;
-
-  if (g_once_init_enter (&initialized)) {
-  g_rc_parse_handler (toplevel,
-                      "gschemrc",
-                      NULL,
-                      (ConfigParseErrorFunc) x_rc_parse_gschem_error,
-                      (void *) toplevel);
-
-  g_once_init_leave (&initialized, 1);
-  }
 }
