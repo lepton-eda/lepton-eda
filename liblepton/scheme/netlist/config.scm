@@ -80,7 +80,7 @@
   ;; attributes 'net' for nets in sub-schematics.
   (set-config! cfg "netlist.hierarchy" "net-attribute-separator" "/"))
 
-(define %gnetlist-config-table
+(define %netlist-config-table
   `((traverse-hierarchy    ,config-boolean "netlist.hierarchy" "traverse-hierarchy")
     (reverse-refdes-order  ,config-boolean "netlist.hierarchy" "refdes-attribute-order")
     (refdes-separator      ,config-string  "netlist.hierarchy" "refdes-attribute-separator")
@@ -116,7 +116,7 @@
             (list sym (proc config group key)
                   (config-source config group key)))))
 
-  (set! %netlist-config (map process %gnetlist-config-table)))
+  (set! %netlist-config (map process %netlist-config-table)))
 
 (define (netlist-config-ref key)
   "Returns value of lepton-netlist configuration KEY."
