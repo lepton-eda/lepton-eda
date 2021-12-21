@@ -305,6 +305,7 @@
             lepton_color_get_color_count
             lepton_color_default_id
             g_rc_parse
+            g_rc_parse_handler
             lepton_colormap_color_by_id
             lepton_colormap_disable_color
             lepton_colormap_set_color
@@ -425,6 +426,7 @@
 
 ;;; g_rc.c
 (define-lff g_rc_parse void '(* * * *))
+(define-lff g_rc_parse_handler void '(* * * * *))
 
 ;;; s_attrib.c
 (define-lff s_attrib_init void '())
