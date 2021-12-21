@@ -1,6 +1,6 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 2016-2017 gEDA Contributors
-;;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
   #:export (netlist-config-ref
             print-netlist-config))
 
-(define %gnetlist-config #f)
+(define %netlist-config #f)
 
 ;;; Init default values
 (let ((cfg (default-config-context)))
@@ -116,11 +116,11 @@
             (list sym (proc config group key)
                   (config-source config group key)))))
 
-  (set! %gnetlist-config (map process %gnetlist-config-table)))
+  (set! %netlist-config (map process %gnetlist-config-table)))
 
 (define (netlist-config-ref key)
   "Returns value of lepton-netlist configuration KEY."
-  (car (assq-ref %gnetlist-config key)))
+  (car (assq-ref %netlist-config key)))
 
 (define (print-netlist-config)
   "Displays lepton-netlist configuration settings."
@@ -134,10 +134,10 @@
      (match x
             ((sym value cfg)
              (format #t "~A: ~S ~A\n" sym value (source-string cfg)))))
-   %gnetlist-config))
+   %netlist-config))
 
 ;;; Init config once
-(when (not %gnetlist-config)
+(when (not %netlist-config)
       (let ((config (path-config-context (getcwd))))
         (for-each try-load-config
                   (list (system-config-context) (user-config-context) config))
