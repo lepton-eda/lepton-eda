@@ -55,6 +55,7 @@
   #:use-module (schematic gui keymap)
   #:use-module (schematic hook)
   #:use-module (schematic menu)
+  #:use-module (schematic rc)
   #:use-module (schematic repl)
   #:use-module (schematic selection)
   #:use-module (schematic undo)

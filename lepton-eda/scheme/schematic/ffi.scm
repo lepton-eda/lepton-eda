@@ -576,7 +576,6 @@
 
             g_action_eval_by_name
 
-            parse-gschemrc
             x_rc_parse_gschem_error
             ))
 
@@ -1273,21 +1272,3 @@
     (and (force func)
          (let ((proc (delay (pointer->procedure void (force func) (list '* int int)))))
            ((force proc) *window x y)))))
-
-
-(define toplevel-initialized? #f)
-
-(define (parse-gschemrc toplevel)
-  "Loads old (system, user, etc.) \"gschemrc\" files and new
-configuration \".conf\" files.  Saves the values in the foreign
-LeptonToplevel structure TOPLEVEL and returns it.  Instead of
-exiting on error as CLI tools do, displays error dialogs with
-explanatory messages."
-  (unless toplevel-initialized?
-    (g_rc_parse_handler toplevel
-                        (string->pointer "gschemrc")
-                        %null-pointer
-                        (procedure->pointer void x_rc_parse_gschem_error '(* *))
-                        toplevel)
-    (set! toplevel-initialized? #t))
-  toplevel)

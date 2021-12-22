@@ -166,6 +166,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/pcb.scm \
 	schematic/precompile.scm \
 	schematic/preview-widget.scm \
+	schematic/rc.scm \
 	schematic/refdes.scm \
 	schematic/repl.scm \
 	schematic/selection.scm \
