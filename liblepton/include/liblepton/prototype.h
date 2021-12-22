@@ -71,12 +71,6 @@ gboolean
 g_rc_load_cache_config (LeptonToplevel* toplevel,
                         GError** err);
 void
-g_rc_parse_handler (LeptonToplevel *toplevel,
-                    const gchar *rcname,
-                    const gchar *rcfile,
-                    ConfigParseErrorFunc handler,
-                    void *user_data);
-void
 g_rc_parse__process_error (GError **err,
                            const gchar *pname);
 

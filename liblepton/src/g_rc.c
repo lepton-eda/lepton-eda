@@ -303,65 +303,6 @@ g_rc_parse__process_error (GError **err,
 }
 
 
-/*! \brief General RC file parsing function.
- * \par Function Description
- * Attempt to load and run system, user and local (current working directory)
- * Scheme initialisation files, first with the default "gafrc"
- * basename and then with the basename \a rcname, if \a rcname is not
- * NULL.  Additionally, attempt to load and run \a rcfile
- * if \a rcfile is not NULL.
- *
- * If an error occurs, calls \a handler with the provided \a user_data
- * and a GError.
- *
- * \param toplevel  The current #LeptonToplevel structure.
- * \param rcname    RC file basename, or NULL.
- * \param rcfile    Specific RC file path, or NULL.
- * \param handler   Handler function for RC errors.
- * \param user_data Data to be passed to \a handler.
- */
-void
-g_rc_parse_handler (LeptonToplevel *toplevel,
-                    const gchar *rcname,
-                    const gchar *rcfile,
-                    ConfigParseErrorFunc handler,
-                    void *user_data)
-{
-  GError *err = NULL;
-
-#ifdef HANDLER_DISPATCH
-#  error HANDLER_DISPATCH already defined
-#endif
-#define HANDLER_DISPATCH \
-  do { if (err == NULL) break;  handler (&err, user_data);        \
-       g_clear_error (&err); } while (0)
-
-  /* Load cache configuration: */
-  g_rc_load_cache_config (toplevel, &err); HANDLER_DISPATCH;
-
-  /* Load RC files in order. */
-  /* First gafrc files. */
-  g_rc_parse_system (toplevel, NULL, &err); HANDLER_DISPATCH;
-  g_rc_parse_user (toplevel, NULL, &err); HANDLER_DISPATCH;
-  g_rc_parse_local (toplevel, NULL, NULL, &err); HANDLER_DISPATCH;
-  /* Next application-specific rcname. */
-  if (rcname != NULL) {
-    g_rc_parse_system (toplevel, rcname, &err); HANDLER_DISPATCH;
-    g_rc_parse_user (toplevel, rcname, &err); HANDLER_DISPATCH;
-    g_rc_parse_local (toplevel, rcname, NULL, &err); HANDLER_DISPATCH;
-  }
-  /* Finally, optional additional RC file.  Specifically use the
-   * current working directory's configuration context here, no matter
-   * where the rc file is located on disk. */
-  if (rcfile != NULL) {
-    EdaConfig *cwd_cfg = eda_config_get_context_for_path (".");
-    g_rc_parse_file (toplevel, rcfile, cwd_cfg, &err); HANDLER_DISPATCH;
-  }
-
-#undef HANDLER_DISPATCH
-}
-
-
 /*! \brief Load cache configuration data.
  *
  * \param toplevel  The current #LeptonToplevel structure.

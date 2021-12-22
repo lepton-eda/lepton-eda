@@ -20,9 +20,11 @@
 
 (define-module (lepton rc)
   #:use-module (srfi srfi-1)
+  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   #:use-module (lepton eval)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton file-system)
   #:use-module (lepton gettext)
@@ -87,8 +89,43 @@ path (rather than the regular Scheme load path)."
 ;;;
 ;;; If an error occurs, the function calls HANDLER with the
 ;;; provided *USER_DATA and a GError.
-(define (parse-rc-handler *rcname *rcfile handler *user-data *toplevel)
-  (g_rc_parse_handler *toplevel *rcname *rcfile handler *user-data))
+(define (parse-rc-handler *rcname *rcfile *handler *user-data *toplevel)
+  (define handler (pointer->procedure void *handler '(* *)))
+  (define (handler-dispatch *error)
+    (unless (or (null-pointer? *error)
+                (null-pointer? (dereference-pointer *error)))
+      (handler *error *user-data)
+      (g_clear_error *error)))
+
+  (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
+
+    ;; Load cache configuration:
+    (g_rc_load_cache_config *toplevel *error)
+    (handler-dispatch *error)
+
+    ;; Load RC files in order.
+    ;; First gafrc files.
+    (g_rc_parse_system *toplevel %null-pointer *error)
+    (handler-dispatch *error)
+    (g_rc_parse_user *toplevel %null-pointer *error)
+    (handler-dispatch *error)
+    (g_rc_parse_local *toplevel %null-pointer %null-pointer *error)
+    (handler-dispatch *error)
+    ;; Next application-specific rcname.
+    (unless (null-pointer? *rcname)
+      (g_rc_parse_system *toplevel *rcname *error)
+      (handler-dispatch *error)
+      (g_rc_parse_user *toplevel *rcname *error)
+      (handler-dispatch *error)
+      (g_rc_parse_local *toplevel *rcname %null-pointer *error)
+      (handler-dispatch *error))
+    ;; Finally, optional additional RC file.  Specifically use the
+    ;; current working directory's configuration context here, no
+    ;; matter where the rc file is located on disk.
+    (unless (null-pointer? *rcfile)
+      (let ((*cwd-cfg (eda_config_get_context_for_path (string->pointer "."))))
+        (g_rc_parse_file *toplevel *rcfile *cwd-cfg *error)
+        (handler-dispatch *error)))))
 
 
 ;;; General RC file parsing function.
