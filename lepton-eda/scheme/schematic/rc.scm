@@ -35,9 +35,9 @@ LeptonToplevel structure *TOPLEVEL and returns it.  Instead of
 exiting on error as CLI tools do, displays error dialogs with
 explanatory messages."
   (unless toplevel-initialized?
-    (parse-rc-handler (string->pointer "gschemrc")
-                      (procedure->pointer void x_rc_parse_gschem_error '(* *))
-                      (string->pointer "lepton-schematic")
-                      *toplevel)
+    (parse-rc "lepton-schematic"
+              "gschemrc"
+              #:handler x_rc_parse_gschem_error
+              #:*toplevel *toplevel)
     (set! toplevel-initialized? #t))
   *toplevel)

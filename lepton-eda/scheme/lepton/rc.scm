@@ -40,7 +40,6 @@
             load-scheme-dir
             load-rc-from-sys-config-dirs
             parse-rc
-            parse-rc-handler
             process-gafrc))
 
 (define path-sep file-name-separator-string)
@@ -84,13 +83,32 @@ path (rather than the regular Scheme load path)."
 ;;; Attempt to load and run system, user and local (current
 ;;; working directory) Scheme initialisation files in *TOPLEVEL,
 ;;; first with the default "gafrc" basename and then with the
-;;; basename *RCNAME, if it is NULL.  Additionally, attempt to
-;;; load and run *RCFILE if it is not NULL.
+;;; basename RCNAME.
 ;;;
 ;;; If an error occurs, the function calls HANDLER with the
-;;; provided *USER_DATA and a GError.
-(define (parse-rc-handler *rcname *handler *user-data *toplevel)
-  (define handler (pointer->procedure void *handler '(* *)))
+;;; provided PROGRAM-NAME and a GError.
+;;;
+;;; The default error handler is currently the function
+;;; g_rc_parse__process_error().  If any error other than ENOENT
+;;; occurs while loading or running a Scheme initialisation file,
+;;; it prints an informative message and calls exit(1).
+;;;
+;;; Bug: liblepton shouldn't call exit() - the function
+;;;      g_rc_parse__process_error() does.
+;;;
+;;; Warning: Since this function may not return, it should only be
+;;; used on application startup or when there is no chance of data
+;;; loss from an unexpected exit().
+(define* (parse-rc program-name
+                   rc-name
+                   #:key
+                   (handler g_rc_parse__process_error)
+                   (*toplevel (toplevel->pointer (current-toplevel))))
+  "Parses RC file RC-NAME in the namespace of PROGRAM-NAME.
+RC-NAME should be a basename of RC file, such as, for example,
+\"gafrc\"."
+  (define *rcname (string->pointer rc-name))
+  (define *user-data (string->pointer program-name))
   (define (handler-dispatch *error)
     (unless (or (null-pointer? *error)
                 (null-pointer? (dereference-pointer *error)))
@@ -119,27 +137,6 @@ path (rather than the regular Scheme load path)."
       (handler-dispatch *error)
       (g_rc_parse_local *toplevel *rcname %null-pointer *error)
       (handler-dispatch *error))))
-
-;;; General RC file parsing function.
-;;;
-;;; Calls the default error handler. If any error other than
-;;; ENOENT occurs while loading or running a Scheme initialisation
-;;; file, prints an informative message and calls exit(1).
-;;;
-;;; \bug liblepton shouldn't call exit() - this function calls
-;;;      g_rc_parse__process_error(), which does.
-;;;
-;;; \warning Since this function may not return, it should only be
-;;; used on application startup or when there is no chance of data
-;;; loss from an unexpected exit().
-(define (parse-rc program-name rc-name)
-  "Parses RC file RC-NAME in the namespace of PROGRAM-NAME.
-RC-NAME should be a basename of RC file, such as, for example,
-\"gafrc\"."
-  (parse-rc-handler (string->pointer rc-name)
-                    (procedure->pointer void g_rc_parse__process_error '(* *))
-                    (string->pointer program-name)
-                    (toplevel->pointer (current-toplevel))))
 
 
 ;;; List of processed rc directories.
