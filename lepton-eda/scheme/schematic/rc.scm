@@ -38,7 +38,7 @@ explanatory messages."
     (parse-rc-handler (string->pointer "gschemrc")
                       %null-pointer
                       (procedure->pointer void x_rc_parse_gschem_error '(* *))
-                      *toplevel
+                      (string->pointer "lepton-schematic")
                       *toplevel)
     (set! toplevel-initialized? #t))
   *toplevel)
