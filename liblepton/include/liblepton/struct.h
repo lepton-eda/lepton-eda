@@ -77,12 +77,6 @@ typedef int(*ChangeNotifyFunc)(void *, LeptonObject *);
 /*! \brief Type of callback function for querying loading of backups */
 typedef gboolean(*LoadBackupQueryFunc)(void *, GString *);
 
-/* used by the rc loading mechanisms */
-typedef struct {
-  int   m_val;
-  const char *m_str;
-} vstbl_entry;
-
 /* Used by g_rc_parse_handler() */
 typedef void (*ConfigParseErrorFunc)(GError **, void *);
 
