@@ -118,15 +118,7 @@ path (rather than the regular Scheme load path)."
       (g_rc_parse_user *toplevel *rcname *error)
       (handler-dispatch *error)
       (g_rc_parse_local *toplevel *rcname %null-pointer *error)
-      (handler-dispatch *error))
-    ;; Finally, optional additional RC file.  Specifically use the
-    ;; current working directory's configuration context here, no
-    ;; matter where the rc file is located on disk.
-    (unless (null-pointer? *rcfile)
-      (let ((*cwd-cfg (eda_config_get_context_for_path (string->pointer "."))))
-        (g_rc_parse_file *toplevel *rcfile *cwd-cfg *error)
-        (handler-dispatch *error)))))
-
+      (handler-dispatch *error))))
 
 ;;; General RC file parsing function.
 ;;;
