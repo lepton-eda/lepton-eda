@@ -308,7 +308,6 @@
             g_rc_parse__process_error
             g_rc_parse_file
             g_rc_parse_local
-            g_rc_parse_system
             g_rc_parse_user
             lepton_colormap_color_by_id
             lepton_colormap_disable_color
@@ -431,7 +430,6 @@
 ;;; g_rc.c
 (define-lff g_rc_parse__process_error void '(* *))
 (define-lff g_rc_load_cache_config int '(* *))
-(define-lff g_rc_parse_system int '(* * *))
 (define-lff g_rc_parse_user int '(* * *))
 (define-lff g_rc_parse_file int '(* * * *))
 (define-lff g_rc_parse_local int '(* * * *))

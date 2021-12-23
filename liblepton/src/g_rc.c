@@ -145,52 +145,6 @@ g_rc_parse_file (LeptonToplevel *toplevel,
   return status;
 }
 
-/*! \brief Load a system RC file.
- * \par Function Description
- * Attempts to load and run the system Scheme initialisation file with
- * basename \a rcname.  The string "system-" is prefixed to \a rcname.
- * If \a rcname is NULL, the default value of "gafrc" is used.
- *
- * \param toplevel  The current #LeptonToplevel structure.
- * \param rcname    The basename of the RC file to load, or NULL.
- * \param err       Return location for errors, or NULL.
- * \return TRUE on success, FALSE on failure.
- */
-gboolean
-g_rc_parse_system (LeptonToplevel *toplevel,
-                   const gchar *rcname,
-                   GError **err)
-{
-  gchar *sysname = NULL;
-  gchar *rcfile = NULL;
-  gboolean status = TRUE;
-  const gchar * const * sys_dirs = eda_get_system_config_dirs();
-  EdaConfig *cfg = eda_config_get_system_context();
-
-  /* Default to gafrc */
-  rcname = (rcname != NULL) ? rcname : "gafrc";
-
-  sysname = g_strdup_printf ("system-%s", rcname);
-  for (gint i = 0; sys_dirs[i]; ++i)
-  {
-    rcfile = g_build_filename (sys_dirs[i], sysname, NULL);
-    if (g_file_test(rcfile, G_FILE_TEST_IS_REGULAR))
-    {
-      break;
-    }
-    g_free(rcfile);
-    rcfile = NULL;
-  }
-
-  if (rcfile)
-  {
-    status = g_rc_parse_file (toplevel, rcfile, cfg, err);
-  }
-
-  g_free (rcfile);
-  g_free (sysname);
-  return status;
-}
 
 /*! \brief Load a user RC file.
  * \par Function Description

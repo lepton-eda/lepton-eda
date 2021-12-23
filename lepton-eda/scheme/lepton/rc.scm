@@ -24,6 +24,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton eval)
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton file-system)
@@ -69,6 +70,35 @@ system file name separator string."
                 )))
         (closedir dir))
       #f))
+
+
+(define (build-filename dir name)
+  (string-append dir file-name-separator-string name))
+
+
+;;; Attempts to load and run the system Scheme initialisation file
+;;; with basename *RCNAME in *TOPLEVEL, reporting errors via
+;;; **ERR.  The string "system-" is prefixed to *RCNAME.  If
+;;; *RCNAME is NULL, the default value of "gafrc" is used.
+;;; Returns TRUE on success, FALSE on failure.
+(define (parse-system-rc *toplevel *rcname **err)
+  (define sysname (string-append "system-"
+                                 (if (null-pointer? *rcname)
+                                     "gafrc"
+                                     (pointer->string *rcname))))
+
+  (let loop ((dirs (sys-config-dirs)))
+    (if (null? dirs)
+        TRUE
+        (let ((rcfile (build-filename (car dirs) sysname)))
+          (if (and (file-exists? rcfile)
+                   (regular-file? rcfile))
+              (g_rc_parse_file *toplevel
+                               (string->pointer rcfile)
+                               (eda_config_get_system_context)
+                               **err)
+              (loop (cdr dirs)))))))
+
 
 (define (load-rc-from-sys-config-dirs basename)
   "Load rc file BASENAME from the system configuration
@@ -123,7 +153,7 @@ RC-NAME should be a basename of RC file, such as, for example,
 
     ;; Load RC files in order.
     ;; First gafrc files.
-    (g_rc_parse_system *toplevel %null-pointer *error)
+    (parse-system-rc *toplevel %null-pointer *error)
     (handler-dispatch *error)
     (g_rc_parse_user *toplevel %null-pointer *error)
     (handler-dispatch *error)
@@ -131,7 +161,7 @@ RC-NAME should be a basename of RC file, such as, for example,
     (handler-dispatch *error)
     ;; Next application-specific rcname.
     (unless (null-pointer? *rcname)
-      (g_rc_parse_system *toplevel *rcname *error)
+      (parse-system-rc *toplevel *rcname *error)
       (handler-dispatch *error)
       (g_rc_parse_user *toplevel *rcname *error)
       (handler-dispatch *error)

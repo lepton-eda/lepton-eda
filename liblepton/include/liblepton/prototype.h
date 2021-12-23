@@ -55,10 +55,6 @@ g_rc_parse_file (LeptonToplevel *toplevel,
                  gpointer conf,
                  GError **err);
 gboolean
-g_rc_parse_system (LeptonToplevel *toplevel,
-                   const gchar *rcname,
-                   GError **err);
-gboolean
 g_rc_parse_user (LeptonToplevel *toplevel,
                  const gchar *rcname,
                  GError **err);
