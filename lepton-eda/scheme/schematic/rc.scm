@@ -36,7 +36,6 @@ exiting on error as CLI tools do, displays error dialogs with
 explanatory messages."
   (unless toplevel-initialized?
     (parse-rc-handler (string->pointer "gschemrc")
-                      %null-pointer
                       (procedure->pointer void x_rc_parse_gschem_error '(* *))
                       (string->pointer "lepton-schematic")
                       *toplevel)
