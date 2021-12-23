@@ -89,7 +89,7 @@ path (rather than the regular Scheme load path)."
 ;;;
 ;;; If an error occurs, the function calls HANDLER with the
 ;;; provided *USER_DATA and a GError.
-(define (parse-rc-handler *rcname *rcfile *handler *user-data *toplevel)
+(define (parse-rc-handler *rcname *handler *user-data *toplevel)
   (define handler (pointer->procedure void *handler '(* *)))
   (define (handler-dispatch *error)
     (unless (or (null-pointer? *error)
@@ -137,7 +137,6 @@ path (rather than the regular Scheme load path)."
 RC-NAME should be a basename of RC file, such as, for example,
 \"gafrc\"."
   (parse-rc-handler (string->pointer rc-name)
-                    %null-pointer       ; rc-file
                     (procedure->pointer void g_rc_parse__process_error '(* *))
                     (string->pointer program-name)
                     (toplevel->pointer (current-toplevel))))
