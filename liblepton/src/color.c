@@ -107,6 +107,12 @@ lepton_colormap_disable_color (LeptonColor *color_map,
   color_map[id].enabled = FALSE;
 }
 
+gboolean
+lepton_color_enabled (const LeptonColor *color)
+{
+  return color->enabled;
+}
+
 void
 lepton_colormap_set_color (LeptonColor *color_map,
                            size_t id,

@@ -172,7 +172,7 @@ x_print_draw_page (LeptonPage *page,
   if (!is_color) {
     for (size_t i = 0; i < colors_count(); i++) {
       LeptonColor *c = &g_array_index (color_map, LeptonColor, i);
-      if (!c->enabled) continue;
+      if (!lepton_color_enabled (c)) continue;
 
       /* Disable background color & fully-transparent colors */
       if (c->a == 0 || i == BACKGROUND_COLOR) {

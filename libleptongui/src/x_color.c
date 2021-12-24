@@ -79,7 +79,7 @@ x_color_lookup (size_t color_id)
 gboolean
 x_color_display_enabled (size_t color_id)
 {
-  return display_colors[ color_id ].enabled;
+  return lepton_color_enabled (&display_colors [color_id]);
 }
 
 
@@ -126,7 +126,7 @@ x_color_map2str (LeptonColorMap cmap)
 
     const gchar* scm_str = color_get_name (color_index);
 
-    if (color.enabled)
+    if (lepton_color_enabled (&color))
     {
       guint8 r = color.r;
       guint8 g = color.g;

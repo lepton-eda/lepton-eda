@@ -93,6 +93,9 @@ lepton_colormap_color_by_id (const LeptonColor *color_map,
 void
 lepton_colormap_disable_color (LeptonColor *color_map,
                                size_t id);
+gboolean
+lepton_color_enabled (const LeptonColor *color);
+
 void
 lepton_colormap_set_color (LeptonColor *color_map,
                            size_t id,

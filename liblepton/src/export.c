@@ -219,7 +219,7 @@ lepton_export_set_renderer_color_map (EdaRenderer *renderer,
     LeptonColor black = {0, 0, 0, 255, TRUE};
     for (i = 0; i < colors_count(); i++) {
       LeptonColor *c = &g_array_index (render_color_map, LeptonColor, i);
-      if (!c->enabled) continue;
+      if (!lepton_color_enabled (c)) continue;
 
       if (c->a == 0) {
         c->enabled = FALSE;
