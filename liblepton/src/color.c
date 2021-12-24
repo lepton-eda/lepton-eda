@@ -35,9 +35,9 @@ LeptonColorMap display_colors;
 LeptonColorMap display_outline_colors;
 
 
-#define WHITE   {0xff, 0xff, 0xff, 0xff, TRUE}
-#define GRAY    {0x88, 0x88, 0x88, 0xff, TRUE}
-#define BLACK   {0x00, 0x00, 0x00, 0xff, TRUE}
+#define WHITE   {0xff, 0xff, 0xff, 0xff}
+#define GRAY    {0x88, 0x88, 0x88, 0xff}
+#define BLACK   {0x00, 0x00, 0x00, 0xff}
 
 static LeptonColor default_colors[] =
 {
@@ -104,13 +104,13 @@ void
 lepton_colormap_disable_color (LeptonColor *color_map,
                                size_t id)
 {
-  color_map[id].enabled = FALSE;
+  color_map[id].a = 0;
 }
 
 gboolean
 lepton_color_enabled (const LeptonColor *color)
 {
-  return color->enabled;
+  return (color->a != 0);
 }
 
 void
@@ -121,7 +121,6 @@ lepton_colormap_set_color (LeptonColor *color_map,
                            guint8 b,
                            guint8 a)
 {
-  color_map[id].enabled = TRUE;
   color_map[id].r = r;
   color_map[id].g = g;
   color_map[id].b = b;

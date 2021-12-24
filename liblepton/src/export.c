@@ -215,16 +215,13 @@ lepton_export_set_renderer_color_map (EdaRenderer *renderer,
   if (!color) {
     /* Create a black and white color map.  All non-background colors
      * are black. */
-    LeptonColor white = {255, 255, 255, 255, TRUE};
-    LeptonColor black = {0, 0, 0, 255, TRUE};
+    LeptonColor white = {255, 255, 255, 255};
+    LeptonColor black = {0, 0, 0, 255};
     for (i = 0; i < colors_count(); i++) {
       LeptonColor *c = &g_array_index (render_color_map, LeptonColor, i);
+      /* Skip disabled (fully-transparent) colors. */
       if (!lepton_color_enabled (c)) continue;
 
-      if (c->a == 0) {
-        c->enabled = FALSE;
-        continue;
-      }
       if (i == OUTPUT_BACKGROUND_COLOR) {
         *c = white;
       } else {

@@ -1,6 +1,6 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 1998-2016 gEDA Contributors
-;;; Copyright (C) 2020 Lepton EDA Contributors
+;;; Copyright (C) 2020-2021 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -84,17 +84,17 @@ Returns #f (false) if wrong index is specified."
 ;;; Transforms COLOR-MAP into a list of elements '(id color) where
 ;;; each color is a string representing the color in a hexadecimal
 ;;; "#RRGGBB" or "#RRGGBBAA" code. The shorter form is used when
-;;; the alpha component is 0xff.
+;;; the alpha component is 0xff (opaque).
 (define (color-map->scm color-map)
 
   (define (id->color id)
     (let ((color (parse-c-struct (lepton_colormap_color_by_id color-map id)
-                                 ;; '(r g b a enabled)
-                                 (list uint8 uint8 uint8 uint8 int))))
+                                 ;; '(r g b a)
+                                 (list uint8 uint8 uint8 uint8))))
       (match color
-        ((r g b a enabled)
+        ((r g b a)
          (list (color-map-name-from-index id)
-               (and (not (zero? enabled))
+               (and (not (zero? a))
                     (if (= a #xff)
                         (format #f "#~2,'0x~2,'0x~2,'0x" r g b)
                         (format #f "#~2,'0x~2,'0x~2,'0x~2,'0x" r g b a)))))
@@ -162,7 +162,7 @@ Returns #f (false) if wrong index is specified."
               (if (string? color)
                   (let ((result (color-rgba-decode color)))
                     (if result
-                        (cons id (cons #t result))
+                        (cons id result)
                         (throw 'wrong-type-arg
                                (G_ "Invalid color map value: ~S\n")
                                color)))
@@ -171,17 +171,17 @@ Returns #f (false) if wrong index is specified."
                          (G_ "Value in color map entry must be #f or a string: ~S\n")
                          color))
               ;; If color value is #f, disable the color.
-              (list id #f #x00 #x00 #x00 #xff))
+              (list id #x00 #x00 #x00 #x00))
           (throw 'out-of-range
                  (G_ "Color map index out of bounds: ~A\n")
                  id))))
 
   (define (process-entry entry)
     (match (parse-entry entry)
-      ((id enabled r g b a)
-       (if enabled
-           (lepton_colormap_set_color color-map id r g b a)
-           (lepton_colormap_disable_color color-map id)))
+      ((id r g b a)
+       (if (zero? a)
+           (lepton_colormap_disable_color color-map id)
+           (lepton_colormap_set_color color-map id r g b a)))
       (_ #f)))
 
   (for-each process-entry ls))
