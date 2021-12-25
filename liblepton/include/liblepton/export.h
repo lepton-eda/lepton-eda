@@ -92,4 +92,7 @@ lepton_export_settings_set_font (const char *font);
 void
 lepton_export_settings_reset_paper_size ();
 
+GArray*
+lepton_export_make_color_map (gboolean color,
+                              size_t background_color);
 G_END_DECLS

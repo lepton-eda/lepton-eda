@@ -200,8 +200,8 @@ lepton_export_set_renderer_font (EdaRenderer *renderer,
 
 
 GArray*
-lepton_export_make_color_map (EdaRenderer *renderer,
-                              gboolean color)
+lepton_export_make_color_map (gboolean color,
+                              size_t background_color)
 {
   size_t i;
   GArray *render_color_map = NULL;
@@ -212,6 +212,11 @@ lepton_export_make_color_map (EdaRenderer *renderer,
   LeptonColor* print_colors = print_colors_array();
   render_color_map =
     g_array_append_vals (render_color_map, print_colors, colors_count());
+
+  /* If no color exporting is desired, transform the color map
+   * into a black-and-white color map by making the background
+   * color white and replacing all other enabled colors with solid
+   * black. */
   if (!color) {
     /* Create a black and white color map.  All non-background colors
      * are black. */
@@ -222,7 +227,8 @@ lepton_export_make_color_map (EdaRenderer *renderer,
       /* Skip disabled (fully-transparent) colors. */
       if (!lepton_color_enabled (c)) continue;
 
-      if (i == OUTPUT_BACKGROUND_COLOR) {
+      if (i == background_color)
+      {
         *c = white;
       } else {
         *c = black;
@@ -439,7 +445,8 @@ lepton_export_png (void)
     lepton_export_set_renderer_font (renderer, settings.font);
   }
 
-  GArray *color_map = lepton_export_make_color_map (renderer, settings.color);
+  GArray *color_map = lepton_export_make_color_map (settings.color,
+                                                    OUTPUT_BACKGROUND_COLOR);
   eda_renderer_set_color_map (renderer, color_map);
 
   /* Create a dummy context to permit calculating extents taking text
@@ -502,7 +509,8 @@ export_postscript (gboolean is_eps)
     lepton_export_set_renderer_font (renderer, settings.font);
   }
 
-  GArray *color_map = lepton_export_make_color_map (renderer, settings.color);
+  GArray *color_map = lepton_export_make_color_map (settings.color,
+                                                    OUTPUT_BACKGROUND_COLOR);
   eda_renderer_set_color_map (renderer, color_map);
 
   /* Create a surface. To begin with, we don't know the size. */
@@ -579,7 +587,8 @@ lepton_export_pdf (void)
     lepton_export_set_renderer_font (renderer, settings.font);
   }
 
-  GArray *color_map = lepton_export_make_color_map (renderer, settings.color);
+  GArray *color_map = lepton_export_make_color_map (settings.color,
+                                                    OUTPUT_BACKGROUND_COLOR);
   eda_renderer_set_color_map (renderer, color_map);
 
   /* Create a surface. To begin with, we don't know the size. */
@@ -618,7 +627,8 @@ lepton_export_svg ()
     lepton_export_set_renderer_font (renderer, settings.font);
   }
 
-  GArray *color_map = lepton_export_make_color_map (renderer, settings.color);
+  GArray *color_map = lepton_export_make_color_map (settings.color,
+                                                    OUTPUT_BACKGROUND_COLOR);
   eda_renderer_set_color_map (renderer, color_map);
 
   /* Create a surface and run export_layout_page() to figure out

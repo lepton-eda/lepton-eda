@@ -162,30 +162,10 @@ x_print_draw_page (LeptonPage *page,
                      - (wx_min + 0.5*w_width) * scale + 0.5*cr_width,
                      (wy_min + 0.5*w_height) * scale + 0.5*cr_height);
 
-  /* Second, build the color map.  If no color printing is desired,
-   * transform the print color map into a black-and-white color map by
-   * making the background color transparent and replacing all other
-   * enabled colors with solid black. */
-  color_map = g_array_sized_new (FALSE, FALSE, sizeof(LeptonColor), colors_count());
-  LeptonColor *print_colors = print_colors_array ();
-  color_map = g_array_append_vals (color_map, print_colors, colors_count());
-  if (!is_color) {
-    for (size_t i = 0; i < colors_count(); i++) {
-      LeptonColor *c = &g_array_index (color_map, LeptonColor, i);
-
-      /* Skip background color & fully-transparent colors. */
-      if (!lepton_color_enabled (c) || i == BACKGROUND_COLOR)
-        continue;
-
-      /* Set any remaining colors solid black */
-      c->r = 0;
-      c->g = 0;
-      c->b = 0;
-      c->a = ~0;
-    }
-  }
-
-  /* Thirdly, create and initialise a renderer */
+  /* Build color map. */
+  color_map = lepton_export_make_color_map (is_color,
+                                            BACKGROUND_COLOR);
+  /* Create and initialise a renderer. */
   renderer = EDA_RENDERER (g_object_new (EDA_TYPE_RENDERER,
                                          "cairo-context", cr,
                                          "pango-context", pc,
