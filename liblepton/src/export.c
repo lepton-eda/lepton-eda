@@ -199,9 +199,9 @@ lepton_export_set_renderer_font (EdaRenderer *renderer,
 }
 
 
-static void
-lepton_export_set_renderer_color_map (EdaRenderer *renderer,
-                                      gboolean color)
+GArray*
+lepton_export_make_color_map (EdaRenderer *renderer,
+                              gboolean color)
 {
   size_t i;
   GArray *render_color_map = NULL;
@@ -229,7 +229,7 @@ lepton_export_set_renderer_color_map (EdaRenderer *renderer,
       }
     }
   }
-  eda_renderer_set_color_map (renderer, render_color_map);
+  return render_color_map;
 }
 
 
@@ -439,7 +439,8 @@ lepton_export_png (void)
     lepton_export_set_renderer_font (renderer, settings.font);
   }
 
-  lepton_export_set_renderer_color_map (renderer, settings.color);
+  GArray *color_map = lepton_export_make_color_map (renderer, settings.color);
+  eda_renderer_set_color_map (renderer, color_map);
 
   /* Create a dummy context to permit calculating extents taking text
    * into account. */
@@ -501,7 +502,8 @@ export_postscript (gboolean is_eps)
     lepton_export_set_renderer_font (renderer, settings.font);
   }
 
-  lepton_export_set_renderer_color_map (renderer, settings.color);
+  GArray *color_map = lepton_export_make_color_map (renderer, settings.color);
+  eda_renderer_set_color_map (renderer, color_map);
 
   /* Create a surface. To begin with, we don't know the size. */
   surface = cairo_ps_surface_create (settings.outfile, 1, 1);
@@ -577,7 +579,8 @@ lepton_export_pdf (void)
     lepton_export_set_renderer_font (renderer, settings.font);
   }
 
-  lepton_export_set_renderer_color_map (renderer, settings.color);
+  GArray *color_map = lepton_export_make_color_map (renderer, settings.color);
+  eda_renderer_set_color_map (renderer, color_map);
 
   /* Create a surface. To begin with, we don't know the size. */
   surface = cairo_pdf_surface_create (settings.outfile, 1, 1);
@@ -615,7 +618,8 @@ lepton_export_svg ()
     lepton_export_set_renderer_font (renderer, settings.font);
   }
 
-  lepton_export_set_renderer_color_map (renderer, settings.color);
+  GArray *color_map = lepton_export_make_color_map (renderer, settings.color);
+  eda_renderer_set_color_map (renderer, color_map);
 
   /* Create a surface and run export_layout_page() to figure out
    * the picture extents and set up the cairo transformation
