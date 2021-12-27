@@ -800,6 +800,14 @@ GdkPixbuf
                 "color-map", render_color_map,
                 NULL);
 
+  EdaConfig *cfg = eda_config_get_context_for_path (".");
+  gchar *fontstr = eda_config_get_string (cfg, "schematic.gui", "font", NULL);
+
+  if (fontstr != NULL) {
+    g_object_set (renderer, "font-name", fontstr, NULL);
+    g_free (fontstr);
+  }
+
   /* Paint background */
   LeptonColor *color = x_color_lookup (BACKGROUND_COLOR);
 
