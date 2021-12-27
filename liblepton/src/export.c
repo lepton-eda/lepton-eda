@@ -489,6 +489,7 @@ lepton_export_png (void)
   export_cairo_check_error (status);
 
   g_object_unref (G_OBJECT (renderer));
+  g_array_free (color_map, TRUE);
 }
 
 /* Worker function used by both lepton_export_ps and export_eps */
@@ -556,6 +557,7 @@ export_postscript (gboolean is_eps)
   cairo_surface_finish (surface);
   export_cairo_check_error (cairo_surface_status (surface));
   g_object_unref (G_OBJECT (renderer));
+  g_array_free (color_map, TRUE);
 }
 
 void
@@ -611,6 +613,7 @@ lepton_export_pdf (void)
   cairo_surface_finish (surface);
   export_cairo_check_error (cairo_surface_status (surface));
   g_object_unref (G_OBJECT (renderer));
+  g_array_free (color_map, TRUE);
 }
 
 void
@@ -656,6 +659,7 @@ lepton_export_svg ()
   export_cairo_check_error (cairo_surface_status (surface));
 
   g_object_unref (G_OBJECT (renderer));
+  g_array_free (color_map, TRUE);
 }
 
 /* Parse a distance specification. A distance specification consists
