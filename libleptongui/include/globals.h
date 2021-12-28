@@ -25,10 +25,6 @@
 /* window list */
 extern GList *global_window_list;
 
-/* colors */
-extern GdkColor white;
-extern GdkColor black;
-
 extern int do_logging;
 
 
