@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -58,7 +58,11 @@ create_color_list_store ()
   GtkTreeIter iter;
   GtkListStore *store;
 
+#ifdef ENABLE_GTK3
+  store = gtk_list_store_new (COLUMN_COUNT, G_TYPE_STRING, G_TYPE_INT, GDK_TYPE_RGBA);
+#else
   store = gtk_list_store_new (COLUMN_COUNT, G_TYPE_STRING, G_TYPE_INT, GDK_TYPE_COLOR);
+#endif
 
   for (size_t color_index = 0; color_index < colors_count(); color_index++)
   {
@@ -69,7 +73,11 @@ create_color_list_store ()
                  ? g_strdup (name)
                  : g_strdup_printf (_("%s [ disabled ]"), name);
 
+#ifdef ENABLE_GTK3
+    GdkRGBA *color = x_color_lookup_gdk_rgba (color_index);
+#else
     GdkColor* color = x_color_lookup_gdk (color_index);
+#endif
 
     gtk_list_store_set (store, &iter,
       COLUMN_NAME,  str,
@@ -77,7 +85,11 @@ create_color_list_store ()
       COLUMN_COLOR, color,
       -1);
 
+#ifdef ENABLE_GTK3
+    gdk_rgba_free (color);
+#else
     gdk_color_free (color);
+#endif
     g_free (str);
   }
 
@@ -124,9 +136,15 @@ x_colorcb_update_colors()
       color_index = default_color_id();
     }
 
+#ifdef ENABLE_GTK3
+    GdkRGBA* color = x_color_lookup_gdk_rgba (color_index);
+    x_colorcb_set_rgba_color (&iter, color);
+    gdk_rgba_free (color);
+#else
     GdkColor* color = x_color_lookup_gdk (color_index);
     x_colorcb_set_color (&iter, color);
     gdk_color_free (color);
+#endif
 
     res = gtk_tree_model_iter_next (model, &iter);
   }
@@ -138,10 +156,15 @@ x_colorcb_update_colors()
 /*! \brief Set color for combo box entry
  *
  *  \param  iter  Iterator pointing to combo box entry to be modified
- *  \param  color A pointer to GdkColor struture
+ *  \param color  A pointer to GdkColor (GTK2) or GdkRGBA (GTK3)
+ *                struture.
  */
 void
+#ifdef ENABLE_GTK3
+x_colorcb_set_rgba_color (GtkTreeIter* iter, GdkRGBA* color)
+#else
 x_colorcb_set_color (GtkTreeIter* iter, GdkColor* color)
+#endif
 {
   gtk_list_store_set (color_list_store, iter, COLUMN_COLOR, color, -1);
 }

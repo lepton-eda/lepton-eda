@@ -1,5 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
+ * Copyright (C) 2018-2021 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +49,11 @@ struct _ColorEditWidget
   GschemToplevel* toplevel_;
 
   GtkWidget* color_cb_;
+#ifdef ENABLE_GTK3
+  GtkWidget* color_chooser;
+#else
   GtkWidget* color_sel_;
+#endif
   GtkWidget* btn_save_;
 };
 
@@ -64,4 +69,3 @@ color_edit_widget_get_type();
 
 
 #endif /* LEPTON_COLOR_EDIT_WIDGET_H_ */
-

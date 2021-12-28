@@ -443,11 +443,22 @@ gboolean x_clipboard_set (GschemToplevel *w_current, const GList *object_list);
 GList *x_clipboard_get (GschemToplevel *w_current);
 /* x_color.c */
 void x_color_init();
+#ifdef ENABLE_GTK3
+GdkRGBA *x_color_lookup_gdk_rgba (size_t color_id);
+#else
 GdkColor *x_color_lookup_gdk(size_t color_id);
+#endif
 LeptonColor *x_color_lookup(size_t color_id);
 gboolean x_color_display_enabled (size_t color_id);
+#ifdef ENABLE_GTK3
+void x_color_set_display_color (size_t color_id,
+                                GdkRGBA* color);
+void x_color_set_outline_color (size_t color_id,
+                                GdkRGBA* color);
+#else
 void x_color_set_display (size_t color_id, GdkColor* color);
 void x_color_set_outline (size_t color_id, GdkColor* color);
+#endif
 GString* x_color_map2str_display();
 GString* x_color_map2str_outline();
 
@@ -456,7 +467,11 @@ GtkWidget* x_colorcb_new ();
 int x_colorcb_get_index (GtkWidget *widget);
 void x_colorcb_set_index (GtkWidget *widget, int color_index);
 void x_colorcb_update_colors();
+#ifdef ENABLE_GTK3
+void x_colorcb_set_rgba_color (GtkTreeIter* iter, GdkRGBA* color);
+#else
 void x_colorcb_set_color (GtkTreeIter* iter, GdkColor* color);
+#endif
 
 /* x_dialog.c */
 int text_view_calculate_real_tab_width(GtkTextView *textview, int tab_size);

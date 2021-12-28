@@ -67,8 +67,13 @@ color_sel_update (ColorEditWidget* widget);
 static void
 on_color_cb_changed (GtkWidget* cb, gpointer p);
 
+#ifdef ENABLE_GTK3
+static void
+on_color_activated (GtkColorChooser* csel, GdkRGBA *color, gpointer p);
+#else
 static void
 on_color_sel_changed (GtkColorSelection* csel, gpointer p);
+#endif
 
 static void
 on_btn_save(GtkWidget* btn, gpointer p);
@@ -231,12 +236,18 @@ color_edit_widget_create (ColorEditWidget* widget)
   */
 
 
+#ifdef ENABLE_GTK3
+  /* standard color chooser widget: */
+  widget->color_chooser = gtk_color_chooser_widget_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), widget->color_chooser, TRUE, TRUE, 0);
+#else
   /* standard color selection widget: */
   widget->color_sel_ = gtk_color_selection_new();
   gtk_color_selection_set_has_opacity_control(
     GTK_COLOR_SELECTION (widget->color_sel_),
     FALSE); /* do not support opacity yet */
   gtk_box_pack_start (GTK_BOX (vbox), widget->color_sel_, TRUE, TRUE, 0);
+#endif
 
   /* separator: */
   gtk_box_pack_start (GTK_BOX (vbox), separator_new(), FALSE, FALSE, 5);
@@ -259,10 +270,17 @@ color_edit_widget_create (ColorEditWidget* widget)
                     G_CALLBACK (&on_color_cb_changed),
                     widget);
 
+#ifdef ENABLE_GTK3
+  g_signal_connect (G_OBJECT (widget->color_chooser),
+                    "color-activated",
+                    G_CALLBACK (&on_color_activated),
+                    (gpointer) widget);
+#else
   g_signal_connect (G_OBJECT (widget->color_sel_),
                     "color-changed",
                     G_CALLBACK (&on_color_sel_changed),
                     widget);
+#endif
 
   g_signal_connect (G_OBJECT (widget->btn_save_),
                     "clicked",
@@ -278,6 +296,33 @@ color_edit_widget_create (ColorEditWidget* widget)
 } /* color_edit_widget_create() */
 
 
+
+#ifdef ENABLE_GTK3
+/*! \brief: Update color chooser widget to match the color chosen
+ *  in the color combo box.
+ */
+static void
+color_sel_update (ColorEditWidget* widget)
+{
+  g_return_if_fail (widget != NULL);
+
+  int ndx = x_colorcb_get_index (widget->color_cb_);
+  GdkRGBA* color = x_color_lookup_gdk_rgba (ndx);
+  GtkColorChooser* chooser = GTK_COLOR_CHOOSER (widget->color_chooser);
+
+  g_signal_handlers_block_by_func (G_OBJECT (chooser),
+                                   (gpointer) &on_color_activated,
+                                   widget);
+
+  gtk_color_chooser_set_rgba (chooser, color);
+  gdk_rgba_free (color);
+
+  g_signal_handlers_unblock_by_func (G_OBJECT (chooser),
+                                     (gpointer) &on_color_activated,
+                                     widget);
+}
+
+#else /* GTK2 */
 
 /*! \brief: Update color selection widget to match color in a combo box
  */
@@ -302,6 +347,7 @@ color_sel_update (ColorEditWidget* widget)
                                      (gpointer) &on_color_sel_changed,
                                      widget);
 } /* color_sel_update() */
+#endif
 
 
 
@@ -343,6 +389,45 @@ on_color_cb_changed (GtkWidget* color_cb, gpointer p)
 
 
 
+#ifdef ENABLE_GTK3
+
+/*! \brief GtkColorChooser "color-activated" signal handler.
+ */
+static void
+on_color_activated (GtkColorChooser* csel,
+                    GdkRGBA *color,
+                    gpointer p)
+{
+  ColorEditWidget* widget = (ColorEditWidget*) p;
+  g_return_if_fail (widget != NULL);
+  g_return_if_fail (widget->toplevel_ != NULL);
+
+  int color_index = x_colorcb_get_index (GTK_WIDGET (widget->color_cb_));
+  g_return_if_fail (color_index >= 0);
+
+  /* Adjust the color in display and outline color maps. */
+  x_color_set_display_color (color_index, color);
+  x_color_set_outline_color (color_index, color);
+
+  /* Update current combo box color. */
+  GtkComboBox* combo = GTK_COMBO_BOX (widget->color_cb_);
+  GtkTreeIter iter;
+  if (gtk_combo_box_get_active_iter (combo, &iter))
+  {
+    x_colorcb_set_rgba_color (&iter, color);
+  }
+
+  /* Refresh page view. */
+  GschemPageView* pview =
+    gschem_toplevel_get_current_page_view (widget->toplevel_);
+  gschem_page_view_invalidate_all (pview);
+
+}
+
+
+#else /* GTK2 */
+
+
 /*! \brief GtkColorSelection "color-changed" signal handler
  */
 static void
@@ -378,6 +463,7 @@ on_color_sel_changed (GtkColorSelection* csel, gpointer p)
 
 } /* on_color_sel_changed() */
 
+#endif
 
 
 /*! \brief "Save As" button "clicked" signal handler

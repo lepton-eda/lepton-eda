@@ -39,6 +39,30 @@ x_color_init()
 
 
 
+#ifdef ENABLE_GTK3
+/*! \brief Get a display color map color for specified \a color_id
+ *  as GdkRGBA.
+ *
+ *  \note Caller must gdk_rgba_free() the returned value.
+ */
+GdkRGBA*
+x_color_lookup_gdk_rgba (size_t color_id)
+{
+  LeptonColor *color = x_color_lookup (color_id);
+
+  /* Extrapolate 8-bpp color into GDK color:
+  */
+  GdkRGBA color_gdk;
+  color_gdk.red   = color->red;
+  color_gdk.green = color->green;
+  color_gdk.blue  = color->blue;
+  color_gdk.alpha = color->alpha;
+
+  return gdk_rgba_copy (&color_gdk);
+}
+
+#else /* GTK2 */
+
 /*! \brief Get a display color map color for specified \a color_id as GdkColor.
  *
  *  \note Caller must gdk_color_free() the returned value.
@@ -57,6 +81,7 @@ x_color_lookup_gdk (size_t color_id)
 
   return gdk_color_copy (&color_gdk);
 }
+#endif
 
 
 
@@ -82,7 +107,35 @@ x_color_display_enabled (size_t color_id)
   return lepton_color_enabled (&display_colors [color_id]);
 }
 
+#ifdef ENABLE_GTK3
+/*! \brief: Set new color value for a color with given index in
+ *  the display color map.
+ */
+void
+x_color_set_display_color (size_t color_id,
+                           GdkRGBA* color)
+{
+  display_colors[color_id].red = color->red;
+  display_colors[color_id].green = color->green;
+  display_colors[color_id].blue = color->blue;
+  display_colors[color_id].alpha = color->alpha;
+}
 
+
+/*! \brief: Set new color value for a color with given index in
+ *  the display color map.
+ */
+void
+x_color_set_outline_color (size_t color_id,
+                           GdkRGBA* color)
+{
+  display_outline_colors[color_id].red = color->red;
+  display_outline_colors[color_id].green = color->green;
+  display_outline_colors[color_id].blue = color->blue;
+  display_outline_colors[color_id].alpha = color->alpha;
+}
+
+#else /* GTK2 */
 
 /*! \brief: Change a color in the display color map
  */
@@ -107,6 +160,7 @@ x_color_set_outline (size_t color_id, GdkColor* color)
   display_outline_colors[color_id].blue  = (gdouble) color->blue  / 65535.0;
   display_outline_colors[color_id].alpha = 1.0;
 }
+#endif
 
 
 
