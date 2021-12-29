@@ -80,6 +80,11 @@ static void
 on_btn_apply (GtkWidget* btn, gpointer p);
 #endif
 
+#ifdef ENABLE_GTK3
+static void
+on_btn_back (GtkWidget* btn, gpointer p);
+#endif
+
 static void
 on_btn_save(GtkWidget* btn, gpointer p);
 
@@ -219,6 +224,12 @@ color_edit_widget_create (ColorEditWidget* widget)
 #endif
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
 
+#ifdef ENABLE_GTK3
+  /* "Back" button: */
+  widget->btn_back = gtk_button_new_with_mnemonic (_("_Back"));
+  gtk_box_pack_start (GTK_BOX (hbox), widget->btn_back, FALSE, FALSE, 0);
+#endif
+
   /* color selection combo box: */
   widget->color_cb_ = x_colorcb_new();
   gtk_box_pack_start (GTK_BOX (hbox), widget->color_cb_, TRUE, TRUE, 0);
@@ -302,6 +313,10 @@ color_edit_widget_create (ColorEditWidget* widget)
   g_signal_connect (G_OBJECT (widget->btn_apply),
                     "clicked",
                     G_CALLBACK (&on_btn_apply),
+                    widget);
+  g_signal_connect (G_OBJECT (widget->btn_back),
+                    "clicked",
+                    G_CALLBACK (&on_btn_back),
                     widget);
 #endif
 
@@ -500,6 +515,21 @@ on_btn_apply (GtkWidget* btn, gpointer p)
   int color_index = x_colorcb_get_index (GTK_WIDGET (widget->color_cb_));
   x_color_set_display_color (color_index, &color);
   gtk_widget_queue_draw (GTK_WIDGET (gschem_toplevel_get_current_page_view (widget->toplevel_)));
+}
+
+/*! \brief "Back" button "clicked" signal handler. */
+static void
+on_btn_back (GtkWidget* btn, gpointer p)
+{
+  ColorEditWidget* widget = (ColorEditWidget*) p;
+
+  g_return_if_fail (widget != NULL);
+
+  GtkColorChooser* chooser = GTK_COLOR_CHOOSER (widget->color_chooser);
+
+  gboolean show_editor;
+  g_object_get (chooser, "show_editor", &show_editor, NULL);
+  g_object_set (chooser, "show-editor", !show_editor, NULL);
 }
 #endif
 
