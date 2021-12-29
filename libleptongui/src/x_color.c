@@ -187,17 +187,24 @@ x_color_map2str (LeptonColorMap cmap)
       guint8 r = (guint8) (color.red * 255);
       guint8 g = (guint8) (color.green * 255);
       guint8 b = (guint8) (color.blue * 255);
+      guint8 a = (guint8) (color.alpha * 255);
 
       /* the line will look like:
-       * (background "#AABBCC")
+       * (background "#RRGGBBAA")
+       * or
+       * (background "#RRGGBB")
       */
-      g_string_append_printf (str, "  (%-20s \"#%.2x%.2x%.2x\")",
-                             scm_str,
-                             r, g, b);
-    }
-    else
-    {
-      g_string_append_printf (str, "  (%-20s #f)", scm_str);
+      if (color.alpha != 1.0) {
+        g_string_append_printf (str, "  (%-20s \"#%.2x%.2x%.2x%.2x\")",
+                                scm_str,
+                                r, g, b, a);
+      }
+      else
+      {
+        g_string_append_printf (str, "  (%-20s \"#%.2x%.2x%.2x\")",
+                                scm_str,
+                                r, g, b);
+      }
     }
 
     g_string_append (str, "\n");
