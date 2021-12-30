@@ -70,19 +70,17 @@ on_color_cb_changed (GtkWidget* cb, gpointer p);
 #ifdef ENABLE_GTK3
 static void
 on_color_activated (GtkColorChooser* csel, GdkRGBA *color, gpointer p);
-#else
-static void
-on_color_sel_changed (GtkColorSelection* csel, gpointer p);
-#endif
 
-#ifdef ENABLE_GTK3
 static void
 on_btn_apply (GtkWidget* btn, gpointer p);
-#endif
 
-#ifdef ENABLE_GTK3
 static void
 on_btn_back (GtkWidget* btn, gpointer p);
+
+#else /* GTK2 */
+
+static void
+on_color_sel_changed (GtkColorSelection* csel, gpointer p);
 #endif
 
 static void
