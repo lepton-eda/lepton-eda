@@ -514,6 +514,15 @@ on_btn_apply (GtkWidget* btn, gpointer p)
 
   int color_index = x_colorcb_get_index (GTK_WIDGET (widget->color_cb_));
   x_color_set_display_color (color_index, &color);
+
+  /* Update current combo box color. */
+  GtkComboBox* combo = GTK_COMBO_BOX (widget->color_cb_);
+  GtkTreeIter iter;
+  if (gtk_combo_box_get_active_iter (combo, &iter))
+  {
+    x_colorcb_set_rgba_color (&iter, &color);
+  }
+
   gtk_widget_queue_draw (GTK_WIDGET (gschem_toplevel_get_current_page_view (widget->toplevel_)));
 }
 
