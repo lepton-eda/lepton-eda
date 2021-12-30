@@ -50,15 +50,7 @@ x_color_lookup_gdk_rgba (size_t color_id)
 {
   LeptonColor *color = x_color_lookup (color_id);
 
-  /* Extrapolate 8-bpp color into GDK color:
-  */
-  GdkRGBA color_gdk;
-  color_gdk.red   = color->red;
-  color_gdk.green = color->green;
-  color_gdk.blue  = color->blue;
-  color_gdk.alpha = color->alpha;
-
-  return gdk_rgba_copy (&color_gdk);
+  return gdk_rgba_copy ((GdkRGBA *) color);
 }
 
 #else /* GTK2 */
