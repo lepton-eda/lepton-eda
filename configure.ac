@@ -101,9 +101,9 @@ fi
 AS_CASE(["$with_gtk3"],
 dnl Use GTK3.
   [yes],
-    [PKG_CHECK_MODULES(GTK, [gtk+-3.0 >= 3.2.0],
+    [PKG_CHECK_MODULES(GTK, [gtk+-3.0 >= 3.4.0],
       [WITH_GTK3=1],
-      AC_MSG_ERROR([GTK+ 3.2.0 or later is required.]))],
+      AC_MSG_ERROR([GTK+ 3.4.0 or later is required.]))],
 dnl Default case: use GTK2.
   [PKG_CHECK_MODULES(GTK, [gtk+-2.0 >= 2.24.0],
     [WITH_GTK3=0],
@@ -114,8 +114,8 @@ AM_CONDITIONAL([ENABLE_GTK3], [test "x$WITH_GTK3" = x1])
 AS_CASE(["$with_gtk3"],
 dnl Use GDK3.
   [yes],
-    [PKG_CHECK_MODULES(GDK, [gdk-3.0 >= 3.2.0], ,
-      AC_MSG_ERROR([GDK 3.2.0 or later is required.]))],
+    [PKG_CHECK_MODULES(GDK, [gdk-3.0 >= 3.4.0], ,
+      AC_MSG_ERROR([GDK 3.4.0 or later is required.]))],
 dnl Default case: use GDK2.
   [PKG_CHECK_MODULES(GDK, [gdk-2.0 >= 2.24.0], ,
     AC_MSG_ERROR([GDK+ 2.24.0 or later is required.]))])
