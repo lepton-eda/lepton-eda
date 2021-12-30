@@ -188,6 +188,30 @@ swatchcr_init (GschemSwatchColumnRenderer *swatch)
 }
 
 
+#ifdef ENABLE_GTK3
+static cairo_pattern_t*
+create_checkered_pattern (void)
+{
+  /* Need to respect pixman's stride being a multiple of 4. */
+  static unsigned char data[8] = { 0xFF, 0x00, 0x00, 0x00,
+                                   0x00, 0xFF, 0x00, 0x00 };
+  static cairo_surface_t *checkered = NULL;
+  cairo_pattern_t *pattern;
+
+  if (checkered == NULL)
+  {
+    checkered =
+      cairo_image_surface_create_for_data (data, CAIRO_FORMAT_A8, 2, 2, 4);
+  }
+
+  pattern = cairo_pattern_create_for_surface (checkered);
+  cairo_pattern_set_extend (pattern, CAIRO_EXTEND_REPEAT);
+  cairo_pattern_set_filter (pattern, CAIRO_FILTER_NEAREST);
+
+  return pattern;
+}
+#endif
+
 
 /*! \brief Render the swatch into the cell
  *
@@ -252,6 +276,19 @@ render (GtkCellRenderer      *cell,
     cairo_set_line_width (cr, SWATCH_BORDER_WIDTH);
 
 #ifdef ENABLE_GTK3
+    cairo_pattern_t *pattern;
+    cairo_matrix_t matrix;
+    cairo_save (cr);
+    cairo_clip_preserve (cr);
+    cairo_set_source_rgb (cr, 0.33, 0.33, 0.33);
+    cairo_fill_preserve (cr);
+    pattern = create_checkered_pattern ();
+    cairo_matrix_init_scale (&matrix, 0.125, 0.125);
+    cairo_pattern_set_matrix (pattern, &matrix);
+    cairo_set_source_rgb (cr, 0.66, 0.66, 0.66);
+    cairo_mask (cr, pattern);
+    cairo_pattern_destroy (pattern);
+    cairo_restore (cr);
     cairo_set_source_rgba (cr,
                            swatch->color.red,
                            swatch->color.green,
