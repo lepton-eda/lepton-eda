@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2021 Lepton EDA Contributors
+ * Copyright (C) 2018-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ struct _ColorEditWidget
 #ifdef ENABLE_GTK3
   GtkWidget* color_chooser;
   GtkWidget* btn_apply;
-  GtkWidget* btn_back;
+  GtkWidget* btn_toggle;
 #else
   GtkWidget* color_sel_;
 #endif

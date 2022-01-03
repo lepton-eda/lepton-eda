@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018-2020 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2021 Lepton EDA Contributors
+ * Copyright (C) 2018-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,7 +75,7 @@ static void
 on_btn_apply (GtkWidget* btn, gpointer p);
 
 static void
-on_btn_back (GtkWidget* btn, gpointer p);
+on_btn_toggle (GtkWidget* btn, gpointer p);
 
 #else /* GTK2 */
 
@@ -224,8 +224,8 @@ color_edit_widget_create (ColorEditWidget* widget)
 
 #ifdef ENABLE_GTK3
   /* "Back" button: */
-  widget->btn_back = gtk_button_new_with_mnemonic (_("_Back"));
-  gtk_box_pack_start (GTK_BOX (hbox), widget->btn_back, FALSE, FALSE, 0);
+  widget->btn_toggle = gtk_button_new_with_mnemonic (_("Toggle _Editor"));
+  gtk_box_pack_start (GTK_BOX (hbox), widget->btn_toggle, FALSE, FALSE, 0);
 #endif
 
   /* color selection combo box: */
@@ -312,9 +312,9 @@ color_edit_widget_create (ColorEditWidget* widget)
                     "clicked",
                     G_CALLBACK (&on_btn_apply),
                     widget);
-  g_signal_connect (G_OBJECT (widget->btn_back),
+  g_signal_connect (G_OBJECT (widget->btn_toggle),
                     "clicked",
-                    G_CALLBACK (&on_btn_back),
+                    G_CALLBACK (&on_btn_toggle),
                     widget);
 #endif
 
@@ -525,9 +525,9 @@ on_btn_apply (GtkWidget* btn, gpointer p)
   gtk_widget_queue_draw (GTK_WIDGET (gschem_toplevel_get_current_page_view (widget->toplevel_)));
 }
 
-/*! \brief "Back" button "clicked" signal handler. */
+/*! \brief "Toggle Editor" button "clicked" signal handler. */
 static void
-on_btn_back (GtkWidget* btn, gpointer p)
+on_btn_toggle (GtkWidget* btn, gpointer p)
 {
   ColorEditWidget* widget = (ColorEditWidget*) p;
 
