@@ -512,6 +512,7 @@ on_btn_apply (GtkWidget* btn, gpointer p)
 
   int color_index = x_colorcb_get_index (GTK_WIDGET (widget->color_cb_));
   x_color_set_display_color (color_index, &color);
+  x_color_set_outline_color (color_index, &color);
 
   /* Update current combo box color. */
   GtkComboBox* combo = GTK_COMBO_BOX (widget->color_cb_);
