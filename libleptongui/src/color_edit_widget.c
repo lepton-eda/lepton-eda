@@ -536,7 +536,7 @@ on_btn_toggle (GtkWidget* btn, gpointer p)
   GtkColorChooser* chooser = GTK_COLOR_CHOOSER (widget->color_chooser);
 
   gboolean show_editor;
-  g_object_get (chooser, "show_editor", &show_editor, NULL);
+  g_object_get (chooser, "show-editor", &show_editor, NULL);
   g_object_set (chooser, "show-editor", !show_editor, NULL);
 }
 #endif
