@@ -1,6 +1,6 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -68,7 +68,7 @@ lepton_version_copyright ()
 {
   const char* msg =
     _("Copyright (C) 1998-2016 gEDA developers\n"
-      "Copyright (C) 2017-2021 Lepton EDA developers\n"
+      "Copyright (C) 2017-2022 Lepton EDA developers\n"
       "This is free software, and you are welcome to redistribute it\n"
       "under certain conditions. For details, see the file `COPYING',\n"
       "which is included in the Lepton EDA distribution.\n"

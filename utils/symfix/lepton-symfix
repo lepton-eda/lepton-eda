@@ -231,7 +231,7 @@ sub version {
 
   print "Copyright (C) 2004      Mike Skerritt\n";
   print "Copyright (C) 2004-2016 gEDA Contributors\n";
-  print "Copyright (C) 2017-2021 Lepton EDA Contributors\n";
+  print "Copyright (C) 2017-2022 Lepton EDA Contributors\n";
 
   exit(0);
 }
