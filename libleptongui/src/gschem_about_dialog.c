@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -85,7 +85,7 @@ void about_dialog (GschemToplevel *w_current)
 
   gtk_about_dialog_set_copyright (adlg,
     _("Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-      "Copyright © 2017-2021 Lepton Developers.\n"
+      "Copyright © 2017-2022 Lepton Developers.\n"
       "See AUTHORS, ChangeLog files and consult 'git log' history for details."));
 
   gtk_about_dialog_set_license (adlg,

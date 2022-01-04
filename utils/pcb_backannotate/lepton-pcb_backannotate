@@ -2,7 +2,7 @@
 #
 # Copyright (C) 2003, 2006, 2010 Dan McMahill
 # Copyright (C) 2003-2014 gEDA Contributors
-# Copyright (C) 2018-2021 Lepton EDA Contributors
+# Copyright (C) 2018-2022 Lepton EDA Contributors
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -318,7 +318,7 @@ sub version {
 
   print "Copyright (C) 2006-2011 Dan McMahill\n";
   print "Copyright (C) 2006-2016 gEDA Contributors\n";
-  print "Copyright (C) 2017-2021 Lepton EDA Contributors\n";
+  print "Copyright (C) 2017-2022 Lepton EDA Contributors\n";
 
   exit(0);
 }

@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2014 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -343,7 +343,7 @@ void x_dialog_about_dialog()
   gtk_about_dialog_set_copyright (adlg,
     _("Copyright © 2003-2006 Stuart D. Brorson\n"
       "Copyright © 2003-2016 gEDA Contributors\n"
-      "Copyright © 2017-2021 Lepton EDA Contributors"));
+      "Copyright © 2017-2022 Lepton EDA Contributors"));
 
   gtk_about_dialog_set_license (adlg,
     _("Lepton EDA is freely distributable under the\n"

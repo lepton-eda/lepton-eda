@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 #
 # Copyright (C) 2003 Dan McMahill
-# Copyright (C) 2021 Lepton EDA Contributors
+# Copyright (C) 2021-2022 Lepton EDA Contributors
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -353,7 +353,7 @@ sub version {
 
   print "Copyright (C) 2003-2007 Dan McMahill\n";
   print "Copyright (C) 2003-2016 gEDA Contributors\n";
-  print "Copyright (C) 2017-2021 Lepton EDA Contributors\n";
+  print "Copyright (C) 2017-2022 Lepton EDA Contributors\n";
 
   exit(0);
 }
