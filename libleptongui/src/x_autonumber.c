@@ -1247,10 +1247,10 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   label1 = gtk_label_new (_("<b>Scope</b>"));
   gtk_label_set_use_markup (GTK_LABEL (label1), TRUE);
 #ifdef ENABLE_GTK3
-  gtk_misc_set_alignment (GTK_MISC(label1), 0, 0);
-#else
   gtk_label_set_xalign (GTK_LABEL (label1), 0.0);
   gtk_label_set_yalign (GTK_LABEL (label1), 0.0);
+#else
+  gtk_misc_set_alignment (GTK_MISC(label1), 0, 0);
 #endif
   gtk_box_pack_start (GTK_BOX(vbox1), label1, TRUE, TRUE, 0);
   gtk_widget_show (label1);
@@ -1311,9 +1311,9 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_widget_show (label8);
 #ifdef ENABLE_GTK3
   gtk_grid_attach (GTK_GRID (grid1), label8, 0, 1, 1, 1);
-#else
   gtk_label_set_xalign (GTK_LABEL (label8), 0.0);
   gtk_label_set_yalign (GTK_LABEL (label8), 0.5);
+#else
   gtk_table_attach (GTK_TABLE (table1), label8, 0, 1, 1, 2,
                     (GtkAttachOptions) (GTK_FILL),
                     (GtkAttachOptions) (0), 0, 0);
@@ -1367,10 +1367,10 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   label3 = gtk_label_new (_("<b>Options</b>"));
   gtk_label_set_use_markup (GTK_LABEL (label3), TRUE);
 #ifdef ENABLE_GTK3
-  gtk_misc_set_alignment(GTK_MISC(label3), 0, 0);
-#else
   gtk_label_set_xalign (GTK_LABEL (label3), 0.0);
   gtk_label_set_yalign (GTK_LABEL (label3), 0.0);
+#else
+  gtk_misc_set_alignment(GTK_MISC(label3), 0, 0);
 #endif
   gtk_widget_show (label3);
   gtk_box_pack_start(GTK_BOX(vbox1), label3, TRUE, TRUE, 0);
