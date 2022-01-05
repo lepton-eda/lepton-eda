@@ -220,7 +220,7 @@ create_text_content_section (GschemTextPropertiesWidget *widget)
 
   gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_END);
 
-  widget->apply_button = gtk_button_new_from_stock (GTK_STOCK_APPLY);
+  widget->apply_button = gtk_button_new_with_label (_("Apply"));
 
   g_signal_connect_swapped (G_OBJECT (widget->apply_button),
                             "clicked",
