@@ -285,6 +285,11 @@ void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
 static GtkWidget *x_window_stock_pixmap(const char *stock, GschemToplevel *w_current)
 {
   GtkWidget *wpixmap = NULL;
+#ifdef ENABLE_GTK3
+  /* Look up the icon in the icon theme. */
+  wpixmap = gtk_image_new_from_icon_name (stock,
+                                          GTK_ICON_SIZE_LARGE_TOOLBAR);
+#else
   GtkStockItem item;
 
   gchar *stockid=g_strconcat("gtk-", stock, NULL);
@@ -300,6 +305,7 @@ static GtkWidget *x_window_stock_pixmap(const char *stock, GschemToplevel *w_cur
   }
 
   g_free(stockid);
+#endif
 
   return wpixmap;
 }
