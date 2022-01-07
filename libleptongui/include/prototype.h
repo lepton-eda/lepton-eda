@@ -456,8 +456,8 @@ void x_color_set_display_color (size_t color_id,
 void x_color_set_outline_color (size_t color_id,
                                 GdkRGBA* color);
 #else
-void x_color_set_display (size_t color_id, GdkColor* color);
-void x_color_set_outline (size_t color_id, GdkColor* color);
+void x_color_set_display (size_t color_id, GdkColor* color, guint16 alpha);
+void x_color_set_outline (size_t color_id, GdkColor* color, guint16 alpha);
 #endif
 GString* x_color_map2str_display();
 GString* x_color_map2str_outline();

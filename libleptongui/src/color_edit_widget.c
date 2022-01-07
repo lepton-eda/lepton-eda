@@ -456,9 +456,10 @@ on_color_sel_changed (GtkColorSelection* csel, gpointer p)
   gtk_color_selection_get_current_color (csel, &color);
 
   /* adjust a color in display and outline color maps: */
-  x_color_set_display (color_index, &color);
-  x_color_set_outline (color_index, &color);
+  guint16 alpha = gtk_color_selection_get_current_alpha (csel);
 
+  x_color_set_display (color_index, &color, alpha);
+  x_color_set_outline (color_index, &color, alpha);
 
   /* update current combo box color: */
   GtkComboBox* combo = GTK_COMBO_BOX (widget->color_cb_);
