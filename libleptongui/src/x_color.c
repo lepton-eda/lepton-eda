@@ -132,12 +132,12 @@ x_color_set_outline_color (size_t color_id,
 /*! \brief: Change a color in the display color map
  */
 void
-x_color_set_display (size_t color_id, GdkColor* color)
+x_color_set_display (size_t color_id, GdkColor* color, guint16 alpha)
 {
   display_colors[color_id].red   = (gdouble) color->red   / 65535.0;
   display_colors[color_id].green = (gdouble) color->green / 65535.0;
   display_colors[color_id].blue  = (gdouble) color->blue  / 65535.0;
-  display_colors[color_id].alpha = 1.0;
+  display_colors[color_id].alpha = (gdouble) alpha        / 65535.0;
 }
 
 
@@ -145,12 +145,12 @@ x_color_set_display (size_t color_id, GdkColor* color)
 /*! \brief: Change a color in the outline color map
  */
 void
-x_color_set_outline (size_t color_id, GdkColor* color)
+x_color_set_outline (size_t color_id, GdkColor* color, guint16 alpha)
 {
   display_outline_colors[color_id].red   = (gdouble) color->red   / 65535.0;
   display_outline_colors[color_id].green = (gdouble) color->green / 65535.0;
   display_outline_colors[color_id].blue  = (gdouble) color->blue  / 65535.0;
-  display_outline_colors[color_id].alpha = 1.0;
+  display_outline_colors[color_id].alpha = (gdouble) alpha        / 65535.0;
 }
 #endif
 
