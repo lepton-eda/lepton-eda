@@ -247,7 +247,7 @@ color_edit_widget_create (ColorEditWidget* widget)
   widget->color_sel_ = gtk_color_selection_new();
   gtk_color_selection_set_has_opacity_control(
     GTK_COLOR_SELECTION (widget->color_sel_),
-    FALSE); /* do not support opacity yet */
+    TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), widget->color_sel_, TRUE, TRUE, 0);
 #endif
 
