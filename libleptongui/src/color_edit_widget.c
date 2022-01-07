@@ -355,6 +355,10 @@ color_sel_update (ColorEditWidget* widget)
   gtk_color_selection_set_current_color (csel, color);
   gdk_color_free (color);
 
+  LeptonColor* lc = x_color_lookup (ndx);
+  gtk_color_selection_set_current_alpha (csel,
+                                         (guint16) (lc->alpha * 65535.0));
+
   g_signal_handlers_unblock_by_func (G_OBJECT (csel),
                                      (gpointer) &on_color_sel_changed,
                                      widget);
