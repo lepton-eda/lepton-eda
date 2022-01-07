@@ -2462,7 +2462,7 @@ multiattrib_init (Multiattrib *multiattrib)
 #endif
 
   /* create the add button */
-  button = gtk_button_new_with_label (_("_Add"));
+  button = gtk_button_new_with_mnemonic (_("_Add"));
   g_signal_connect (button,
                     "clicked",
                     G_CALLBACK (multiattrib_callback_button_add),
