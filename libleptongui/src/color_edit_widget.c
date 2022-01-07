@@ -54,13 +54,6 @@ typedef enum
 static void
 color_edit_widget_create (ColorEditWidget* widget);
 
-/* \todo Currently unused; see todo in commented out function implementation
- *
-static void
-mk_opacity_box (GtkWidget* vbox);
- *
- */
-
 static void
 color_sel_update (ColorEditWidget* widget);
 
@@ -244,17 +237,6 @@ color_edit_widget_create (ColorEditWidget* widget)
 
   /* separator: */
   gtk_box_pack_start (GTK_BOX (vbox), separator_new(), FALSE, FALSE, 5);
-
-
-  /* \todo opacity control:
-  *
-  * An idea here is to make outline color scheme the same
-  * as display one, but allow it to be slightly more transparent
-  *
-  mk_opacity_box (vbox);
-  *
-  */
-
 
 #ifdef ENABLE_GTK3
   /* standard color chooser widget: */
@@ -698,39 +680,3 @@ dlg_confirm_overwrite (GtkWidget* parent, const gchar* fname)
   return res == GTK_RESPONSE_YES;
 
 } /* dlg_confirm_overwrite() */
-
-
-
-/*! \brief Create GUI for transparency control
- *  \note  Currently unused
- *  \todo  Implement transparency for outline color map
- *
- *  \param vbox Parent widget
- *
-
-static void
-mk_opacity_box (GtkWidget* vbox)
-{
-#ifdef ENABLE_GTK3
-  GtkWidget* hbox2 = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
-#else
-  GtkWidget* hbox2 = gtk_hbox_new (FALSE, 0);
-#endif
-  gtk_box_pack_start (GTK_BOX (vbox), hbox2, TRUE, TRUE, 0);
-
-  GtkWidget* label = gtk_label_new (_("Opacity for outline color scheme:"));
-
-  GtkObject* adj = gtk_adjustment_new (255, 0, 255, 1, 10, 0);
-  GtkWidget* scale = gtk_hscale_new (GTK_ADJUSTMENT (adj));
-
-  gtk_scale_set_digits (GTK_SCALE (scale), 0);
-  gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_LEFT);
-
-  gtk_box_pack_start (GTK_BOX (hbox2), label, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox2), scale, TRUE, TRUE, 0);
-
-  gtk_box_pack_start (GTK_BOX (vbox), separator_new(), FALSE, FALSE, 5);
-
-}
-
-*/
