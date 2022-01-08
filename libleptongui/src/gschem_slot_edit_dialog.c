@@ -124,21 +124,21 @@ void slot_edit_dialog (GschemToplevel *w_current, const char *count, const char 
     widget[0] = gtk_entry_new();
     gtk_entry_set_max_length(GTK_ENTRY(widget[0]), 80);
     gtk_editable_set_editable (GTK_EDITABLE(widget[0]), FALSE);
-	gtk_widget_set_sensitive (GTK_WIDGET(widget[0]), FALSE);
+    gtk_widget_set_sensitive (GTK_WIDGET(widget[0]), FALSE);
 
-	widget[1] = gtk_entry_new();
+    widget[1] = gtk_entry_new();
     gtk_entry_set_max_length(GTK_ENTRY(widget[1]), 80);
     gtk_entry_set_activates_default (GTK_ENTRY(widget[1]),TRUE);
 
     table = gschem_dialog_misc_create_property_table(label, widget, 2);
 
-	gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
+    gtk_box_pack_start (GTK_BOX (vbox),                          /* box     */
                         table,                                   /* child   */
                         FALSE,                                   /* expand  */
                         FALSE,                                   /* fill    */
                         0);                                      /* padding */
 
-	GLADE_HOOKUP_OBJECT(w_current->sewindow, widget[0], "countentry");
+    GLADE_HOOKUP_OBJECT(w_current->sewindow, widget[0], "countentry");
     GLADE_HOOKUP_OBJECT(w_current->sewindow, widget[1], "textentry");
     gtk_widget_show_all (w_current->sewindow);
   }
