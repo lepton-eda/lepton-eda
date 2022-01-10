@@ -301,6 +301,7 @@ static void newtext_init(NewText *dialog)
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), dialog->colorcb);
 
 #ifdef ENABLE_GTK3
+  gtk_widget_set_hexpand (GTK_WIDGET (dialog->colorcb), TRUE);
   gtk_grid_attach (GTK_GRID (grid), dialog->colorcb, 1, 0, 1, 1);
 #else
   gtk_table_attach_defaults(GTK_TABLE(table), dialog->colorcb, 1,2,0,1);
