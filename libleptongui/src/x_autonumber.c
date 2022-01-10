@@ -1303,6 +1303,7 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_entry_set_activates_default(GTK_ENTRY(gtk_bin_get_child(GTK_BIN(scope_text))), TRUE);
   gtk_widget_show (scope_text);
 #ifdef ENABLE_GTK3
+  gtk_widget_set_hexpand (GTK_WIDGET (scope_text), TRUE);
   gtk_grid_attach (GTK_GRID (grid1), scope_text, 1, 0, 1, 1);
 #else
   gtk_table_attach (GTK_TABLE (table1), scope_text, 1, 2, 0, 1,
@@ -1453,6 +1454,7 @@ GtkWidget* autonumber_create_dialog(GschemToplevel *w_current)
   gtk_entry_set_activates_default(GTK_ENTRY(opt_startnum), TRUE);
   gtk_widget_show (opt_startnum);
 #ifdef ENABLE_GTK3
+  gtk_widget_set_hexpand (GTK_WIDGET (opt_startnum), TRUE);
   gtk_grid_attach (GTK_GRID (grid3), opt_startnum, 1, 0, 1, 1);
 #else
   gtk_table_attach (GTK_TABLE (table3), opt_startnum, 1, 2, 0, 1,
