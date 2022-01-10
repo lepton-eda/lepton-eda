@@ -383,6 +383,7 @@ void attrib_edit_dialog (GschemToplevel *w_current, LeptonObject *attr_obj, int 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), attrib_combo_box_entry);
 
 #ifdef ENABLE_GTK3
+  gtk_widget_set_hexpand (GTK_WIDGET (attrib_combo_box_entry), TRUE);
   gtk_grid_attach (GTK_GRID (grid), attrib_combo_box_entry, 1, 0, 1, 1);
 #else
   gtk_table_attach (GTK_TABLE (table), attrib_combo_box_entry, 1, 2, 0, 1,
