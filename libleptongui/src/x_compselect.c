@@ -1545,6 +1545,7 @@ compselect_constructor (GType type,
   preview = gschem_preview_new ();
 
 #ifdef ENABLE_GTK3
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 5);
   gtk_container_add (GTK_CONTAINER (frame), preview);
 #else
   gtk_container_add (GTK_CONTAINER (alignment), preview);
