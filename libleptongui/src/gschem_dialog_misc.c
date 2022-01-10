@@ -93,6 +93,8 @@ gschem_dialog_misc_create_property_table (GtkWidget *label[], GtkWidget *widget[
                      1,
                      1);
 
+    gtk_widget_set_hexpand (GTK_WIDGET (widget[index]), TRUE);
+
     gtk_grid_attach (GTK_GRID (grid),
                      widget[index],
                      1,
