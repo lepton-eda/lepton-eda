@@ -2,7 +2,7 @@
  * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2017 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -399,4 +399,41 @@ lepton_toplevel_init_autosave (LeptonToplevel *toplevel)
                     (GSourceFunc) lepton_toplevel_autosave,
                     toplevel);
   }
+}
+
+
+/*! \brief Return toplevel's list of loaded RC files.
+ *
+ * \param toplevel  The #LeptonToplevel structure.
+ * \return The list of RC files read as GList.
+ */
+GList*
+lepton_toplevel_get_rc_list (LeptonToplevel *toplevel)
+{
+  g_return_val_if_fail ((toplevel != NULL), FALSE);
+
+  return toplevel->RC_list;
+}
+
+
+/*! \brief Set the field \a RC_list of #LeptonToplevel
+ *
+ *  \par Function Description
+ *
+ *  This function sets the \a RC_list field of the given \a
+ *  toplevel object to the list of the configuration file names
+ *  that should have been loaded for it so far.  Mainly, it is
+ *  intended to just initialize the lists for new #LeptonToplevel
+ *  objects.
+ *
+ * \param [in] toplevel  The #LeptonToplevel instance.
+ * \param [in] val The new \c GList of file names.
+ */
+void
+lepton_toplevel_set_rc_list (LeptonToplevel *toplevel,
+                             GList *val)
+{
+  g_return_if_fail (toplevel != NULL);
+
+  toplevel->RC_list = val;
 }

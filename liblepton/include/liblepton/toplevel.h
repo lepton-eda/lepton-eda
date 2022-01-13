@@ -2,7 +2,7 @@
  * Copyright (C) 1998, 1999, 2000 Kazu Hirata / Ales Hvezda
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -75,5 +75,12 @@ lepton_toplevel_print_all (LeptonToplevel *toplevel);
 
 void
 lepton_toplevel_init_autosave (LeptonToplevel *toplevel);
+
+GList*
+lepton_toplevel_get_rc_list (LeptonToplevel *toplevel);
+
+void
+lepton_toplevel_set_rc_list (LeptonToplevel *toplevel,
+                             GList *val);
 
 G_END_DECLS
