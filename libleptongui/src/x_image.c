@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -296,6 +296,7 @@ x_image_update_dialog_filename (GtkComboBoxText *combo,
   char *file_name = NULL ;
   char *new_image_filename = NULL;
   GtkWidget *file_chooser;
+  gchar *file_chooser_filename = NULL;
 
   /* Get the current image type */
   image_type_descr =
@@ -307,10 +308,16 @@ x_image_update_dialog_filename (GtkComboBoxText *combo,
       GTK_TYPE_FILE_CHOOSER);
 
   /* Get the previous file name. If none, revert to the page filename */
-  old_image_filename = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(file_chooser));
-  if (!old_image_filename) {
+
+  file_chooser_filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (file_chooser));
+  if (!file_chooser_filename) {
     LeptonPage *active_page = schematic_window_get_active_page (w_current);
     old_image_filename = lepton_page_get_filename (active_page);
+  }
+  else
+  {
+    old_image_filename = g_strdup (file_chooser_filename);
+    g_free (file_chooser_filename);
   }
 
   /* Get the file name, without extension */
