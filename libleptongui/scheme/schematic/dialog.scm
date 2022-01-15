@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2020 Lepton EDA Contributors
+;;; Copyright (C) 2020-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -21,6 +21,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi)
   #:use-module (lepton log)
   #:use-module (schematic ffi)
 
@@ -65,4 +66,6 @@ of selected file, or #f if nothing has been selected."
                                               (string->pointer template)
                                               bit-flags)))
     (and (not (null-pointer? str-pointer))
-         (pointer->string str-pointer))))
+         (let ((filename (pointer->string str-pointer)))
+           (g_free str-pointer)
+           filename))))
