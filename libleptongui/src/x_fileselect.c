@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -205,6 +205,8 @@ on_filter_changed (GtkFileChooserDialog* dialog, gpointer data)
   {
     bname = basename_switch_suffix (fname, "sym");
   }
+
+  g_free (fname);
 
   if (bname != NULL)
   {
