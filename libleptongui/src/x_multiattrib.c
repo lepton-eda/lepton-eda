@@ -2328,6 +2328,7 @@ multiattrib_init (Multiattrib *multiattrib)
                                  GTK_WIDGET (multiattrib->combo_name));
 
 #ifdef ENABLE_GTK3
+  gtk_widget_set_hexpand (GTK_WIDGET (combo), TRUE);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
   gtk_grid_attach (GTK_GRID (grid), combo, 1, 0, 1, 1);
 #else
