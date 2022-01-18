@@ -1,7 +1,7 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2013 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,8 +37,6 @@ static gsize init_called = 0;
 static void *
 edascm_init_impl (void *data)
 {
-  #include "scheme_init.x"
-
   scm_setlocale (scm_variable_ref (scm_c_lookup ("LC_ALL")),
                  SCM_UNDEFINED);
   edascm_init_smob ();
