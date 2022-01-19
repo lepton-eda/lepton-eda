@@ -5,7 +5,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Lepton EDA command-line utility
 ;;; Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
 ;;; Copyright (C) 2015 gEDA Contributors
-;;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -29,7 +29,11 @@ exec @GUILE@ -s "$0" "$@"
 (use-modules (ice-9 match)
              (srfi srfi-1)
              (srfi srfi-37)
-             (lepton ffi))
+             (lepton config)
+             (lepton core gettext)
+             (lepton ffi)
+             (lepton file-system)
+             (lepton version))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
@@ -37,10 +41,6 @@ exec @GUILE@ -s "$0" "$@"
   (register-data-dirs))
 (edascm_init)
 
-(primitive-eval '(use-modules (lepton core gettext)
-                              (lepton config)
-                              (lepton file-system)
-                              (lepton version)))
 
 (define cmd (basename (car (program-arguments))))
 (define cmd-args (cdr (program-arguments)))
