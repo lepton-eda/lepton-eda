@@ -29,8 +29,12 @@ exec @GUILE@ -e main -s "$0" "$@"
 (use-modules (srfi srfi-37)
              (ice-9 eval-string)
              (ice-9 readline)
+             (lepton core gettext)
              (lepton ffi)
-             (lepton toplevel))
+             (lepton rc)
+             (lepton repl)
+             (lepton toplevel)
+             (lepton version))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
@@ -38,10 +42,6 @@ exec @GUILE@ -e main -s "$0" "$@"
   (register-data-dirs))
 (edascm_init)
 
-(primitive-eval '(use-modules (lepton core gettext)
-                              (lepton rc)
-                              (lepton repl)
-                              (lepton version)))
 
 (define cmd (basename (car (program-arguments))))
 (define cmd-args (cdr (program-arguments)))
