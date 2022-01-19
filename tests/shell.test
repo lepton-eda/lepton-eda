@@ -233,7 +233,7 @@
 (test-group-with-cleanup "group: lepton-cli shell toplevel"
   (test-setup)
 
-  (let* ((scheme-code "(use-modules (lepton core toplevel)) (display (%current-toplevel))")
+  (let* ((scheme-code "(use-modules (lepton toplevel)) (display (%current-toplevel))")
          (scheme-code-w-exit (string-append scheme-code "(exit)"))
          (scheme-filename (string->file scheme-code-w-exit
                                         (build-filename *testdir* "file.scm"))))

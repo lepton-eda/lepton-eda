@@ -53,9 +53,8 @@ edascm_dynwind_toplevel (LeptonToplevel *toplevel)
  * Return the value of the #LeptonToplevel fluid in the current dynamic
  * context.
  */
-SCM_DEFINE (edascm_current_toplevel, "%current-toplevel", 0, 0, 0,
-            (),
-            "Get the LeptonToplevel for the current dynamic context.")
+SCM
+edascm_current_toplevel ()
 {
   return scm_fluid_ref (scheme_toplevel_fluid);
 }
@@ -106,7 +105,6 @@ init_module_lepton_core_toplevel (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_edascm_with_toplevel,
-                s_edascm_current_toplevel,
                 NULL);
 }
 

@@ -56,6 +56,7 @@
             glist-prev
 
             ;; Foreign functions.
+            edascm_current_toplevel
             edascm_c_current_toplevel
             edascm_from_toplevel
             edascm_is_object
@@ -522,6 +523,7 @@
 (define-lff eda_renderer_set_color_map void '(* *))
 
 ;;; scheme_smob.c
+(define-lff edascm_current_toplevel '* '())
 (define-lff edascm_c_current_toplevel '* '())
 (define-lff edascm_from_toplevel '* '(*))
 (define-lff edascm_is_object int '(*))

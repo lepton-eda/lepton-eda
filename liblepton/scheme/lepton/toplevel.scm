@@ -20,7 +20,8 @@
   #:use-module (system foreign)
   #:use-module (lepton ffi)
 
-  #:export (%make-toplevel))
+  #:export (%current-toplevel
+            %make-toplevel))
 
 (define (pointer->geda-toplevel pointer)
   ;; Return #f if the pointer is wrong.
@@ -29,3 +30,7 @@
 (define (%make-toplevel)
   "Make new toplevel."
   (pointer->geda-toplevel (lepton_toplevel_new)))
+
+(define (%current-toplevel)
+  "Get toplevel for the current dynamic context."
+  (false-if-exception (pointer->scm (edascm_current_toplevel))))

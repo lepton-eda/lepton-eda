@@ -31,6 +31,10 @@ G_BEGIN_DECLS
 void edascm_init ();
 
 /* Get the value of the #LeptonToplevel fluid. */
+SCM
+edascm_current_toplevel ();
+
+/* Get the value of the #LeptonToplevel fluid in C. */
 LeptonToplevel *edascm_c_current_toplevel ();
 
 /* Create a Guile value from #LeptonToplevel structure. */
