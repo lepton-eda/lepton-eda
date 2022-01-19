@@ -1,115 +1,62 @@
-EXTRA_DIST = \
-	buses.output \
+inputs = \
 	buses.sym \
-	component.output \
 	component.sym \
-	connections1.output \
 	connections1.sym \
-	connections2.output \
 	connections2.sym \
-	connections3.output \
 	connections3.sym \
-	correct.output \
 	correct.sym \
-	duplicate_net.output \
 	duplicate_net.sym \
-	duplicate_pinnumber.output \
 	duplicate_pinnumber.sym \
-	duplicate_pinnumber_no_slots.output \
 	duplicate_pinnumber_no_slots.sym \
-	duplicate_pinseq.output \
 	duplicate_pinseq.sym \
-	graphical_correct.output \
 	graphical_correct.sym \
-	graphical_incorrect.output \
 	graphical_incorrect.sym \
-	graphical_incorrect1.output \
 	graphical_incorrect1.sym \
-	graphical_incorrect2.output \
 	graphical_incorrect2.sym \
-	invalid_slotdef1.output \
 	invalid_slotdef1.sym \
-	invalid_slotdef2.output \
 	invalid_slotdef2.sym \
-	invalid_slotdef3.output \
 	invalid_slotdef3.sym \
-	invalid_slotdef4.output \
 	invalid_slotdef4.sym \
-	invalid_slotdef5.output \
 	invalid_slotdef5.sym \
-	labelinside.output \
 	labelinside.sym \
-	lots_of_errors.output \
 	lots_of_errors.sym \
-	many_slotdefs.output \
 	many_slotdefs.sym \
-	misplaced_attributes.output \
 	misplaced_attributes.sym \
-	missing_device.output \
 	missing_device.sym \
-	missing_footprint.output \
 	missing_footprint.sym \
-	missing_numslots.output \
 	missing_numslots.sym \
-	missing_pinlabel.output \
 	missing_pinlabel.sym \
-	missing_pinnumber.output \
 	missing_pinnumber.sym \
-	missing_pinseq.output \
 	missing_pinseq.sym \
-	missing_slotdef.output \
 	missing_slotdef.sym \
-	multiple_footprint.output \
 	multiple_footprint.sym \
-	multiple_pinlabel.output \
 	multiple_pinlabel.sym \
-	multiple_pinnumber.output \
 	multiple_pinnumber.sym \
-	multiple_pinseq.output \
 	multiple_pinseq.sym \
-	multiple_pintype.output \
 	multiple_pintype.sym \
-	multiple_refdes.output \
 	multiple_refdes.sym \
-	nameinside.output \
 	nameinside.sym \
-	nets.output \
 	nets.sym \
-	noslots.output \
 	noslots.sym \
-	old_symbol.output \
 	old_symbol.sym \
-	oldpins.output \
 	oldpins.sym \
-	oldslot.output \
 	oldslot.sym \
-	pin_offgrid.output \
 	pin_offgrid.sym \
-	pintypes.output \
 	pintypes.sym \
-	text_errors.output \
 	text_errors.sym \
-	typeinside.output \
 	typeinside.sym \
-	urefinside.output \
 	urefinside.sym \
-	zero_arc.output \
 	zero_arc.sym \
-	zero_boxes.output \
 	zero_boxes.sym \
-	zero_circle.output \
 	zero_circle.sym \
-	zero_line.output \
 	zero_line.sym \
-	zero_path.output \
 	zero_path.sym \
-	zero_picture.output \
 	zero_picture.sym \
-	zero_pinnumber.output \
 	zero_pinnumber.sym \
-	zero_pinseq.output \
 	zero_pinseq.sym \
-	zero_slotnum.output \
 	zero_slotnum.sym \
-	zero_slots.output \
 	zero_slots.sym
+
+outputs = $(inputs:.sym=.output)
+
+EXTRA_DIST = $(inputs) $(outputs)
