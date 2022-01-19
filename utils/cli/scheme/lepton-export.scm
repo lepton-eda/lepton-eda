@@ -29,8 +29,12 @@ exec @GUILE@ -s "$0" "$@"
 (use-modules (srfi srfi-1)
              (srfi srfi-37)
              (system foreign)
+             (lepton core gettext)
              (lepton ffi)
-             (lepton toplevel))
+             (lepton page)
+             (lepton rc)
+             (lepton toplevel)
+             (lepton version))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
@@ -38,10 +42,6 @@ exec @GUILE@ -s "$0" "$@"
   (register-data-dirs))
 (edascm_init)
 
-(primitive-eval '(use-modules (lepton core gettext)
-                              (lepton page)
-                              (lepton rc)
-                              (lepton version)))
 
 ;;; Each export format is a list of the form:
 ;;;   '(alias name multipage func)
