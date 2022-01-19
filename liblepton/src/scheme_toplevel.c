@@ -1,6 +1,6 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2012 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,20 +28,6 @@
 #include "libleptonguile_priv.h"
 
 SCM scheme_toplevel_fluid = SCM_UNDEFINED;
-
-/*!
- * \brief Creates new toplevel.
- * \par Function Description
- * Creates and returns new toplevel variable.
- */
-SCM_DEFINE (edascm_make_toplevel, "%make-toplevel", 0, 0, 0,
-            (),
-            "Make new LeptonToplevel.")
-{
-  LeptonToplevel* toplevel = s_toplevel_new();
-  return edascm_from_toplevel (toplevel);
-}
-
 
 /*!
  * \brief Set the #LeptonToplevel fluid in the current dynamic context.
@@ -119,8 +105,7 @@ init_module_lepton_core_toplevel (void *unused)
   #include "scheme_toplevel.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_edascm_make_toplevel,
-                s_edascm_with_toplevel,
+  scm_c_export (s_edascm_with_toplevel,
                 s_edascm_current_toplevel,
                 NULL);
 }

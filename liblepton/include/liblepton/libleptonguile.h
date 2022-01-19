@@ -1,6 +1,6 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2014 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,6 +32,10 @@ void edascm_init ();
 
 /* Get the value of the #LeptonToplevel fluid. */
 LeptonToplevel *edascm_c_current_toplevel ();
+
+/* Create a Guile value from #LeptonToplevel structure. */
+SCM
+edascm_from_toplevel (LeptonToplevel *toplevel);
 
 /* Set the #LeptonToplevel fluid in the current dynamic context. */
 void edascm_dynwind_toplevel (LeptonToplevel *toplevel);

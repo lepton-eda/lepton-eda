@@ -5,7 +5,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Lepton EDA attribute editor
 ;;; Copyright (C) 2003-2010 Stuart D. Brorson.
 ;;; Copyright (C) 2005-2016 gEDA Contributors
-;;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -31,7 +31,8 @@ exec @GUILE@ -s "$0" "$@"
              (srfi srfi-1)
              (system foreign)
              (lepton ffi)
-             (lepton ffi lib))
+             (lepton ffi lib)
+             (lepton toplevel))
 
 ;;; Initialize liblepton library.
 (liblepton_init)

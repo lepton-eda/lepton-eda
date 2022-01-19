@@ -1,6 +1,6 @@
 ;;; Autotools compatible SRFI-64 Scheme unit-test framework
 ;;; Copyright (C) 2016 gEDA Contributors
-;;; Copyright (C) 2018-2021 Lepton EDA Contributors
+;;; Copyright (C) 2018-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -64,7 +64,8 @@
              (srfi srfi-26)
              (ice-9 getopt-long)
              (ice-9 pretty-print)
-             (lepton ffi))
+             (lepton ffi)
+             (lepton toplevel))
 
 ;;; In order to facilitate debugging, you can increase the pile of
 ;;; info reported on errors by setting the COLUMNS environment
@@ -87,8 +88,6 @@
 (edascm_init)
 
 (define with-toplevel (@@ (lepton core toplevel) %with-toplevel))
-(define make-toplevel (@@ (lepton core toplevel) %make-toplevel))
-
 
 ;;; Syntax and procedure that check exception type and probably
 ;;; have no analogs in SRFI-64.
@@ -239,5 +238,5 @@ Actual error:
 ;;; Wrapper for the main() function allowing using of liblepton
 ;;; variables, procedures, and modules.
 (define (main/with-toplevel args)
-  (with-toplevel (make-toplevel)
+  (with-toplevel (%make-toplevel)
    (lambda () (main args))))

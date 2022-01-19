@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2020-2021 Lepton EDA Contributors
+;;; Copyright (C) 2020-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -57,6 +57,7 @@
 
             ;; Foreign functions.
             edascm_c_current_toplevel
+            edascm_from_toplevel
             edascm_is_object
             edascm_from_object
             edascm_to_object
@@ -354,6 +355,7 @@
             s_conn_return_others
             s_conn_update_object
 
+            s_toplevel_new
             lepton_toplevel_get_page_current
             lepton_toplevel_get_pages
 
@@ -452,6 +454,7 @@
 (define-lff s_clib_init void '())
 (define-lff s_clib_symbol_get_filename '* '(*))
 ;;; toplevel.c
+(define-lff s_toplevel_new '* '())
 (define-lff lepton_toplevel_get_page_current '* '(*))
 (define-lff lepton_toplevel_get_pages '* '(*))
 ;;; g_rc.c
@@ -520,6 +523,7 @@
 
 ;;; scheme_smob.c
 (define-lff edascm_c_current_toplevel '* '())
+(define-lff edascm_from_toplevel '* '(*))
 (define-lff edascm_is_object int '(*))
 (define-lff edascm_is_page int '(*))
 (define-lff edascm_from_object '* '(*))

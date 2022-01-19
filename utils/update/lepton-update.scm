@@ -5,7 +5,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; lepton-update - Update schematics and symbols in the gEDA/gaf
 ;;; file format.
 ;;;
-;;; Copyright (C) 2021 Lepton EDA Contributors.
+;;; Copyright (C) 2021-2022 Lepton EDA Contributors.
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -31,7 +31,8 @@ exec @GUILE@ -s "$0" "$@"
              (ice-9 regex)
              (srfi srfi-11)
              (lepton ffi)
-             (lepton srfi-37))
+             (lepton srfi-37)
+             (lepton toplevel))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
@@ -170,8 +171,6 @@ Command line switches:
 
 
 (define with-toplevel (@@ (lepton core toplevel) %with-toplevel))
-(define make-toplevel (@@ (lepton core toplevel) %make-toplevel))
-
 
 ;;; Main program.
 (when (= (length (program-arguments)) 1) (usage))
@@ -207,7 +206,7 @@ Run `~A --help' for more information.\n")
 
 
 (with-toplevel
- (make-toplevel)
+ (%make-toplevel)
  (lambda ()
    (let ((files (parse-commandline)))
      (for-each update files))))

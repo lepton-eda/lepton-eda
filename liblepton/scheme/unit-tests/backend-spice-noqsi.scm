@@ -1,6 +1,7 @@
 (use-modules (ice-9 rdelim)
              (lepton core toplevel)
              (lepton library)
+             (lepton toplevel)
              (netlist))
 
 ;;; Helper functions.

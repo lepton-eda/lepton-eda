@@ -3,7 +3,7 @@ exec @GUILE@ -s "$0" "$@"
 !#
 ;;; Lepton EDA netlister
 ;;; Scheme API
-;;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -26,7 +26,8 @@ exec @GUILE@ -s "$0" "$@"
 
 (use-modules (ice-9 getopt-long)
              (srfi srfi-26)
-             (lepton ffi))
+             (lepton ffi)
+             (lepton toplevel))
 
 ;;; Initialize liblepton library.
 (liblepton_init)

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 exec @GUILE@ -s "$0" "$@"
 !#
-;;; Copyright (C) 2019-2021 Lepton EDA Contributors
+;;; Copyright (C) 2019-2022 Lepton EDA Contributors
 ;;;
 ;;; Based on Python script by Werner Hoch
 ;;; Copyright (C) 2001,2002,2003,2004,2006,2007,2008 Werner Hoch <werner.ho@gmx.de>
@@ -47,7 +47,8 @@ exec @GUILE@ -s "$0" "$@"
              (srfi srfi-1)
              (srfi srfi-9)
              (sxml match)
-             (lepton ffi))
+             (lepton ffi)
+             (lepton toplevel))
 
 ;;; Initialize liblepton library.
 (liblepton_init)

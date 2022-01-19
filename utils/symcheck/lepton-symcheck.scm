@@ -3,7 +3,7 @@ exec @GUILE@ -s "$0" "$@"
 !#
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -24,7 +24,8 @@ exec @GUILE@ -s "$0" "$@"
     (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")
     (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
-(use-modules (lepton ffi))
+(use-modules (lepton ffi)
+             (lepton toplevel))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
@@ -42,8 +43,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; modules, since it compiles the code before loading the above
 ;;; extension. Let's make it quiet here.
 (define with-toplevel (@@ (lepton core toplevel) %with-toplevel))
-(define make-toplevel (@@ (lepton core toplevel) %make-toplevel))
 
 (primitive-eval '(use-modules (symcheck check)))
 
-(with-toplevel (make-toplevel) check-all-symbols)
+(with-toplevel (%make-toplevel) check-all-symbols)

@@ -6,7 +6,7 @@ exec @GUILE@ "$0" "$@"
 ;; Lepton EDA
 ;; lepton-embed - schematic components and pictures embedding utility
 ;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
-;; Copyright (C) 2019-2021 Lepton EDA Contributors
+;; Copyright (C) 2019-2022 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
 
@@ -17,7 +17,8 @@ exec @GUILE@ "$0" "$@"
 
 (use-modules (ice-9 format)
              (ice-9 getopt-long)
-             (lepton ffi))
+             (lepton ffi)
+             (lepton toplevel))
 
 ;; Initialize liblepton library.
 (liblepton_init)

@@ -33,6 +33,7 @@ nobase_dist_scmdata_DATA = \
 	lepton/rc.scm \
 	lepton/repl.scm \
 	lepton/srfi-37.scm \
+	lepton/toplevel.scm \
 	lepton/version.scm \
 	lepton/legacy-config/keylist.scm \
 	lepton/legacy-config.scm \

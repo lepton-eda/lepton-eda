@@ -1,7 +1,8 @@
 (use-modules (lepton core toplevel)
              (lepton object)
              (lepton attrib)
-             (lepton page))
+             (lepton page)
+             (lepton toplevel))
 
 (define (make-attribs)
   (list
