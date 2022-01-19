@@ -47,20 +47,19 @@ exec @GUILE@ -s "$0" "$@"
              (srfi srfi-1)
              (srfi srfi-9)
              (sxml match)
+             (lepton attrib)
              (lepton ffi)
-             (lepton toplevel))
+             (lepton object)
+             (lepton page)
+             (lepton toplevel)
+             (lepton version)
+             (netlist attrib compare))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 (edascm_init)
-
-(primitive-eval '(use-modules (lepton attrib)
-                              (lepton object)
-                              (lepton page)
-                              (lepton version)
-                              (netlist attrib compare)))
 
 (define %option-spec
   '((help    (single-char #\h) (value #f))
