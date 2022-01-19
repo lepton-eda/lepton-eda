@@ -25,7 +25,8 @@ exec @GUILE@ -s "$0" "$@"
     (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (lepton ffi)
-             (lepton toplevel))
+             (lepton toplevel)
+             (symcheck check))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
@@ -38,11 +39,5 @@ exec @GUILE@ -s "$0" "$@"
 (textdomain %textdomain)
 (bindtextdomain %textdomain "@localedir@")
 (bind-textdomain-codeset %textdomain "UTF-8")
-
-;;; At compile time of this program guile won't be aware of these
-;;; modules, since it compiles the code before loading the above
-;;; extension. Let's make it quiet here.
-
-(primitive-eval '(use-modules (symcheck check)))
 
 (%with-toplevel (%make-toplevel) check-all-symbols)
