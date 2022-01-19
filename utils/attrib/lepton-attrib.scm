@@ -30,9 +30,14 @@ exec @GUILE@ -s "$0" "$@"
              (ice-9 receive)
              (srfi srfi-1)
              (system foreign)
-             (lepton ffi)
              (lepton ffi lib)
-             (lepton toplevel))
+             (lepton ffi)
+             (lepton file-system)
+             (lepton log)
+             (lepton page)
+             (lepton rc)
+             (lepton toplevel)
+             (lepton version))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
@@ -81,12 +86,6 @@ exec @GUILE@ -s "$0" "$@"
 (setlocale LC_NUMERIC "C")
 
 (define (G_ msg) (gettext msg %textdomain))
-
-(primitive-eval '(use-modules (lepton file-system)
-                              (lepton log)
-                              (lepton page)
-                              (lepton rc)
-                              (lepton version)))
 
 (define (usage)
   (format #t
