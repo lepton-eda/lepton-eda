@@ -30,9 +30,15 @@ exec @GUILE@ -s "$0" "$@"
              (ice-9 rdelim)
              (ice-9 regex)
              (srfi srfi-11)
+             (lepton attrib)
              (lepton ffi)
+             (lepton file-system)
+             (lepton object)
+             (lepton page)
              (lepton srfi-37)
-             (lepton toplevel))
+             (lepton toplevel)
+             (lepton version)
+             (symbol check obsolete))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
@@ -40,12 +46,6 @@ exec @GUILE@ -s "$0" "$@"
   (register-data-dirs))
 (edascm_init)
 
-(primitive-eval '(use-modules (lepton attrib)
-                              (lepton file-system)
-                              (lepton object)
-                              (lepton page)
-                              (lepton version)
-                              (symbol check obsolete)))
 
 (define (usage)
   (define program-name (basename (car (program-arguments))))
