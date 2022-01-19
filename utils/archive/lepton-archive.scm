@@ -75,26 +75,24 @@ exec @GUILE@ -s "$0" "$@"
              (srfi srfi-1)
              (srfi srfi-26)
              (lepton ffi)
-             (lepton toplevel))
+             (lepton file-system)
+             (lepton library component)
+             (lepton library)
+             (lepton log)
+             (lepton object)
+             (lepton os)
+             (lepton page)
+             (lepton rc)
+             (lepton toplevel)
+             (lepton version)
+             (netlist schematic)
+             (netlist schematic-component))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 (edascm_init)
-
-(primitive-eval
- '(use-modules (lepton log)
-               (lepton file-system)
-               (lepton library)
-               (lepton library component)
-               (lepton object)
-               (lepton os)
-               (lepton page)
-               (lepton rc)
-               (lepton version)
-               (netlist schematic)
-               (netlist schematic-component)))
 
 
 ;;; Helper functions and data structures.
