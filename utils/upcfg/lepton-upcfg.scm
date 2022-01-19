@@ -6,7 +6,7 @@ exec @GUILE@ "$0" "$@"
 ;; Lepton EDA
 ;; lepton-upcfg - gEDA => Lepton EDA configuration upgrade utility
 ;; Copyright (C) 2019 dmn <graahnul.grom@gmail.com>
-;; Copyright (C) 2019-2021 Lepton EDA Contributors
+;; Copyright (C) 2019-2022 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
 
@@ -18,21 +18,16 @@ exec @GUILE@ "$0" "$@"
 (use-modules (ice-9 format)
              (ice-9 rdelim) ; read-line()
              (ice-9 getopt-long)
-             (lepton ffi))
+             (lepton ffi)
+             (lepton legacy-config)
+             (lepton log)
+             (lepton version))
 
 ;; Initialize liblepton library.
 (liblepton_init)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 (edascm_init)
-
-; Avoid Scheme compile-time errors using a clever trick
-; from netlist/scheme/lepton-netlist.scm (see comments there):
-;
-( primitive-eval '(use-modules (lepton legacy-config)) )
-( primitive-eval '(use-modules (lepton version)) )
-( primitive-eval '(use-modules (lepton log)) )
-
 
 
 ; command line options:
