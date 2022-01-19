@@ -18,19 +18,17 @@ exec @GUILE@ "$0" "$@"
 (use-modules (ice-9 format)
              (ice-9 getopt-long)
              (lepton ffi)
-             (lepton toplevel))
+             (lepton object)
+             (lepton page)
+             (lepton rc)
+             (lepton toplevel)
+             (lepton version))
 
 ;; Initialize liblepton library.
 (liblepton_init)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 (edascm_init)
-
-( primitive-eval '(use-modules (lepton object)) )
-( primitive-eval '(use-modules (lepton page)) )
-( primitive-eval '(use-modules (lepton rc)) )
-( primitive-eval '(use-modules (lepton version)) )
-
 
 
 ; command line options:
