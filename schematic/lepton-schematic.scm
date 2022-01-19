@@ -4,7 +4,7 @@ exec @GUILE@ -s "$0" "$@"
 
 ;;; Lepton EDA attribute editor
 ;;; Copyright (C) 1998-2016 gEDA Contributors
-;;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -27,27 +27,26 @@ exec @GUILE@ -s "$0" "$@"
 
 (use-modules (ice-9 match)
              (srfi srfi-1)
-             (lepton srfi-37)
              (system foreign)
-             (lepton ffi))
+             (lepton color-map)
+             (lepton config)
+             (lepton eval)
+             (lepton ffi)
+             (lepton file-system)
+             (lepton log)
+             (lepton os)
+             (lepton srfi-37)
+             (lepton version)
+             (schematic core gettext)
+             (schematic ffi)
+             (schematic ffi gtk)
+             (schematic menu))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
 (edascm_init)
-
-(primitive-eval '(use-modules (lepton color-map)
-                              (lepton config)
-                              (lepton eval)
-                              (lepton file-system)
-                              (lepton log)
-                              (lepton os)
-                              (lepton version)
-                              (schematic core gettext)
-                              (schematic ffi)
-                              (schematic ffi gtk)
-                              (schematic menu)))
 
 
 ;;; Localization.
