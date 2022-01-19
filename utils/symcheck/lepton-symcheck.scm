@@ -42,8 +42,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; At compile time of this program guile won't be aware of these
 ;;; modules, since it compiles the code before loading the above
 ;;; extension. Let's make it quiet here.
-(define with-toplevel (@@ (lepton core toplevel) %with-toplevel))
 
 (primitive-eval '(use-modules (symcheck check)))
 
-(with-toplevel (%make-toplevel) check-all-symbols)
+(%with-toplevel (%make-toplevel) check-all-symbols)

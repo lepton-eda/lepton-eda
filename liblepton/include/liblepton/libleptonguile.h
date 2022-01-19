@@ -44,6 +44,10 @@ edascm_from_toplevel (LeptonToplevel *toplevel);
 /* Set the #LeptonToplevel fluid in the current dynamic context. */
 void edascm_dynwind_toplevel (LeptonToplevel *toplevel);
 
+/* Get the value of the #LeptonToplevel fluid. */
+SCM
+edascm_with_toplevel (SCM toplevel, SCM thunk);
+
 /* Create a Guile value from a page structure. */
 SCM edascm_from_page (LeptonPage *page);
 

@@ -84,9 +84,8 @@ edascm_c_current_toplevel ()
  * \par Function Description
  * Set the #LeptonToplevel fluid to \a toplevel and call \a thunk.
  */
-SCM_DEFINE (edascm_with_toplevel, "%with-toplevel", 2, 0, 0,
-            (SCM toplevel, SCM thunk),
-            "Call `thunk', setting the LeptonToplevel fluid to `toplevel'.")
+SCM
+edascm_with_toplevel (SCM toplevel, SCM thunk)
 {
   return scm_with_fluid (scheme_toplevel_fluid, toplevel, thunk);
 }
@@ -104,8 +103,7 @@ init_module_lepton_core_toplevel (void *unused)
   #include "scheme_toplevel.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_edascm_with_toplevel,
-                NULL);
+  scm_c_export (NULL);
 }
 
 /*!

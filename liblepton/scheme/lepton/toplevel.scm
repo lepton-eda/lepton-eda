@@ -21,7 +21,8 @@
   #:use-module (lepton ffi)
 
   #:export (%current-toplevel
-            %make-toplevel))
+            %make-toplevel
+            %with-toplevel))
 
 (define (pointer->geda-toplevel pointer)
   ;; Return #f if the pointer is wrong.
@@ -34,3 +35,8 @@
 (define (%current-toplevel)
   "Get toplevel for the current dynamic context."
   (false-if-exception (pointer->scm (edascm_current_toplevel))))
+
+(define (%with-toplevel toplevel thunk)
+  "Call THUNK, setting the toplevel fluid to TOPLEVEL."
+  (pointer->scm (edascm_with_toplevel (scm->pointer toplevel)
+                                      (scm->pointer thunk))))

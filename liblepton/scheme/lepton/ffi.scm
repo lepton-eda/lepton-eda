@@ -59,6 +59,7 @@
             edascm_current_toplevel
             edascm_c_current_toplevel
             edascm_from_toplevel
+            edascm_with_toplevel
             edascm_is_object
             edascm_from_object
             edascm_to_object
@@ -526,6 +527,7 @@
 (define-lff edascm_current_toplevel '* '())
 (define-lff edascm_c_current_toplevel '* '())
 (define-lff edascm_from_toplevel '* '(*))
+(define-lff edascm_with_toplevel '* '(* *))
 (define-lff edascm_is_object int '(*))
 (define-lff edascm_is_page int '(*))
 (define-lff edascm_from_object '* '(*))

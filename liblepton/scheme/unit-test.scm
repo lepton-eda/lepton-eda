@@ -87,8 +87,6 @@
 ;;;     (register-data-dirs))
 (edascm_init)
 
-(define with-toplevel (@@ (lepton core toplevel) %with-toplevel))
-
 ;;; Syntax and procedure that check exception type and probably
 ;;; have no analogs in SRFI-64.
 (define (%assert-thrown key thunk)
@@ -238,5 +236,5 @@ Actual error:
 ;;; Wrapper for the main() function allowing using of liblepton
 ;;; variables, procedures, and modules.
 (define (main/with-toplevel args)
-  (with-toplevel (%make-toplevel)
+  (%with-toplevel (%make-toplevel)
    (lambda () (main args))))

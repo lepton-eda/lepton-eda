@@ -170,8 +170,6 @@ Command line switches:
         (page->file page filename)))))
 
 
-(define with-toplevel (@@ (lepton core toplevel) %with-toplevel))
-
 ;;; Main program.
 (when (= (length (program-arguments)) 1) (usage))
 
@@ -205,7 +203,7 @@ Run `~A --help' for more information.\n")
     '())))
 
 
-(with-toplevel
+(%with-toplevel
  (%make-toplevel)
  (lambda ()
    (let ((files (parse-commandline)))
