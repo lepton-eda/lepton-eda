@@ -29,7 +29,6 @@ EXTRA_DIST = buses.sym \
 	     zero_line.sym \
 	     zero_path.sym \
 	     zero_picture.sym \
-	     runtest.sh \
 	     buses.output \
 	     component.output \
 	     connections1.output connections2.output \
@@ -64,37 +63,3 @@ EXTRA_DIST = buses.sym \
 	     zero_path.output \
 	     zero_picture.output \
 	     pintypes.output misplaced_attributes.output text_errors.output
-
-check_SCRIPTS = tests
-
-tests:
-
-# Cleanup
-	rm -f $(builddir)/new_*
-
-	abs_builddir='$(abs_builddir)'; export abs_builddir; \
-	abs_top_builddir='$(abs_top_builddir)'; export abs_top_builddir; \
-	LIBLEPTON='$(abs_top_builddir)/liblepton/src/liblepton'; export LIBLEPTON; \
-	export LEPTON_INHIBIT_RC_FILES="inhibit"; \
-	abs_srcdir='$(abs_srcdir)'; export abs_srcdir; \
-	abs_top_srcdir='$(abs_top_srcdir)'; export abs_top_srcdir; \
-	fail=0 ; \
-	pass=0 ; \
-	ERRORLOG=${abs_builddir}/error.log; export ERRORLOG; \
-	[ -e $$ERRORLOG ] && rm $$ERRORLOG; \
-	for file in $(abs_srcdir)/*.sym; do \
-	  base=`basename $$file`; \
-	  $(SHELL) $(srcdir)/runtest.sh $$file; \
-	  if [ $$? -ne 0 ]; then \
-	     echo "FAIL: $$base"; \
-	     fail=`expr $$fail + 1`; \
-	   else \
-	     echo "PASS: $$base"; \
-	     pass=`expr $$pass + 1`; \
-	   fi; \
-	done ; \
-	echo "passed: $$pass" ; \
-	echo "failed: $$fail" ; \
-	exit $$fail
-
-CLEANFILES = *.log

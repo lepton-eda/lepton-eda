@@ -52,6 +52,7 @@ TESTS = \
 	tests/export.test \
 	tests/netlist.test \
 	tests/shell.test \
+	tests/symcheck.test \
 	tests/update.test
 
 EXTRA_DIST = \

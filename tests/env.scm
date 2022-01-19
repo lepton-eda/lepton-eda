@@ -147,6 +147,12 @@
                   "scheme"
                   "lepton-shell"))
 
+(define lepton-symcheck
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "symcheck"
+                  "lepton-symcheck"))
+
 (putenv (string-append "LEPTON_CONFIG" "=" lepton-config))
 (putenv (string-append "LEPTON_EXPORT" "=" lepton-export))
 (putenv (string-append "LEPTON_SHELL" "=" lepton-shell))

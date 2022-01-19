@@ -1,0 +1,95 @@
+(use-modules (ice-9 ftw)
+             (ice-9 match)
+             (ice-9 receive)
+             (srfi srfi-1))
+
+(load-from-path "env.scm")
+
+(define cwd (getcwd))
+(define *testdir* (build-filename (getcwd) "symcheck-tmp"))
+
+;;; Setup/teardown directories/files needed by tests.
+(define (test-setup)
+  (mkdir *testdir*)
+  (chdir *testdir*))
+
+(define (test-teardown)
+  (chdir cwd)
+  (system* "rm" "-rf" *testdir*))
+
+(define (symbol-file info)
+  (match info
+    ;; Only flat files are relevant.
+    ((name stat)
+     (and (string-suffix? ".sym" name) name))
+    (_ #f)))
+
+(define input-directory
+  (build-filename *abs-top-srcdir*
+                  "utils"
+                  "symcheck"
+                  "tests"))
+
+(define inputs
+  (sort
+   (filter-map symbol-file (file-system-tree input-directory))
+   string<))
+
+
+(test-begin "symcheck inputs")
+(test-eq 57 (length inputs))
+(test-end "symcheck inputs")
+
+
+(define (remove-2-first-lines s)
+  (define (remove-first-line s)
+    (let ((n (string-index s #\newline)))
+      (if n (substring s (1+ n)) s)))
+  (remove-first-line (remove-first-line s)))
+
+(define-syntax-rule (test-symcheck filename)
+  (let ((test-name (string-append "symcheck " filename)))
+    (test-begin test-name)
+    (test-group-with-cleanup test-name
+      (test-setup)
+      (let* ((input (build-filename input-directory filename))
+             (output (string-append (string-drop-right input 3)
+                                    "output"))
+             (new-output (build-filename *testdir*
+                                         (basename output))))
+
+        (receive (<status> <stdout> <stderr>)
+            (command-values lepton-symcheck "-vv" input)
+          ;; We don't check <status> here as it may be different
+          ;; depending on the input file.
+
+          ;; Move stdout to file removing 2 first lines.
+          (with-output-to-file new-output
+            (lambda () (display (remove-2-first-lines <stdout>))))
+
+          ;; For debugging purposes, output the command we run.
+          (format (current-error-port)
+                  "Test: diff ~A ~A\n" output new-output)
+          ;; Diff the result.
+          (test-run-success "diff" output new-output)))
+
+      ;; Clean up.
+      (test-teardown))
+
+    (test-end test-name)))
+
+
+(define-syntax expand-tests
+  (lambda (x)
+    (syntax-case x ()
+      ((_ name (e ...))
+       #'(begin (name e) ...)))))
+
+(define-syntax run-tests
+  (lambda (x)
+    (syntax-case x ()
+      ((_)
+       #`(expand-tests test-symcheck #,inputs)))))
+
+;;; Actually run the tests.
+(run-tests)
