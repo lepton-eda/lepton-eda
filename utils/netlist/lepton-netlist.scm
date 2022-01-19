@@ -84,8 +84,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Using of primitive-eval() here avoids Scheme errors when this
 ;;; program is compiled by Guile. The following modules are
 ;;; necessary to actually run the code below.
-(primitive-eval '(use-modules (lepton core toplevel)
-                              (geda deprecated)
+(primitive-eval '(use-modules (geda deprecated)
                               (lepton library)
                               (lepton log)
                               (lepton version)

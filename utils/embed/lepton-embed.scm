@@ -26,7 +26,6 @@ exec @GUILE@ "$0" "$@"
   (register-data-dirs))
 (edascm_init)
 
-( primitive-eval '(use-modules (lepton core toplevel)) )
 ( primitive-eval '(use-modules (lepton object)) )
 ( primitive-eval '(use-modules (lepton page)) )
 ( primitive-eval '(use-modules (lepton rc)) )

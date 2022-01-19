@@ -1,9 +1,6 @@
 # Build a libtool library for installation in libdir.
 lib_LTLIBRARIES = liblepton.la
 
-BUILT_SOURCES = \
-	scheme_toplevel.x
-
 scheme_api_sources = \
 	scheme_init.c \
 	scheme_smob.c \
@@ -89,8 +86,6 @@ snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(liblepton_la_CPPFLAGS) $(AM_CFLAGS) $(liblepton_la_CFLAGS)
 .c.x:
 	$(AM_V_GEN) CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
-
-CLEANFILES = $(BUILT_SOURCES)
 
 # Unfortunately, in order to test libtool thoroughly, we need access
 # to its private directory.

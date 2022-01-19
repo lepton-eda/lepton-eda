@@ -90,21 +90,6 @@ edascm_with_toplevel (SCM toplevel, SCM thunk)
   return scm_with_fluid (scheme_toplevel_fluid, toplevel, thunk);
 }
 
-/*!
- * \brief Create the (lepton core toplevel) Scheme module
- * \par Function Description
- * Defines procedures in the (lepton core toplevel) module. The module
- * can be accessed using (use-modules (lepton core toplevel)).
- */
-static void
-init_module_lepton_core_toplevel (void *unused)
-{
-  /* Register the functions */
-  #include "scheme_toplevel.x"
-
-  /* Add them to the module's public definitions. */
-  scm_c_export (NULL);
-}
 
 /*!
  * \brief Initialise the LeptonToplevel manipulation procedures.
@@ -117,9 +102,4 @@ void
 edascm_init_toplevel ()
 {
   scheme_toplevel_fluid = scm_permanent_object (scm_make_fluid ());
-
-  /* Define the (lepton core toplevel) module */
-  scm_c_define_module ("lepton core toplevel",
-                       (void (*)(void*)) init_module_lepton_core_toplevel,
-                       NULL);
 }

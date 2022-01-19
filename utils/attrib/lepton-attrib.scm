@@ -82,8 +82,7 @@ exec @GUILE@ -s "$0" "$@"
 
 (define (G_ msg) (gettext msg %textdomain))
 
-(primitive-eval '(use-modules (lepton core toplevel)
-                              (lepton file-system)
+(primitive-eval '(use-modules (lepton file-system)
                               (lepton log)
                               (lepton page)
                               (lepton rc)

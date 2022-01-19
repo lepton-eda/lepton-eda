@@ -84,8 +84,7 @@ exec @GUILE@ -s "$0" "$@"
 (edascm_init)
 
 (primitive-eval
- '(use-modules (lepton core toplevel)
-               (lepton log)
+ '(use-modules (lepton log)
                (lepton file-system)
                (lepton library)
                (lepton library component)

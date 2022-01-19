@@ -1,6 +1,5 @@
-(use-modules (lepton core toplevel)
+(use-modules (lepton attrib)
              (lepton object)
-             (lepton attrib)
              (lepton page)
              (lepton toplevel))
 

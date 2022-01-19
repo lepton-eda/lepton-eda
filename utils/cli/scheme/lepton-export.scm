@@ -39,7 +39,6 @@ exec @GUILE@ -s "$0" "$@"
 (edascm_init)
 
 (primitive-eval '(use-modules (lepton core gettext)
-                              (lepton core toplevel)
                               (lepton page)
                               (lepton rc)
                               (lepton version)))
