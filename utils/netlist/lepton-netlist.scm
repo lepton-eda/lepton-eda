@@ -26,8 +26,14 @@ exec @GUILE@ -s "$0" "$@"
 
 (use-modules (ice-9 getopt-long)
              (srfi srfi-26)
+             (geda deprecated)
              (lepton ffi)
-             (lepton toplevel))
+             (lepton library)
+             (lepton log)
+             (lepton toplevel)
+             (lepton version)
+             (netlist option)
+             (netlist))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
@@ -65,30 +71,12 @@ exec @GUILE@ -s "$0" "$@"
   (getopt-long (program-arguments) %option-spec))
 
 ;;; Initialize netlister options.
-
-;;; Using of primitive-eval() here avoids Scheme errors when this
-;;; program is compiled by Guile.
-(primitive-eval '(use-modules (netlist option)))
-
-;;; Actual initialization.
 (init-netlist-options! %options)
 
 ;;; Evaluate Scheme expressions that need to be run before rc
 ;;; files are loaded.
 (for-each (cut add-to-load-path <>)
           (netlist-option-ref/toplevel %options 'load-path '()))
-
-
-;;; Run netlister.
-
-;;; Using of primitive-eval() here avoids Scheme errors when this
-;;; program is compiled by Guile. The following modules are
-;;; necessary to actually run the code below.
-(primitive-eval '(use-modules (geda deprecated)
-                              (lepton library)
-                              (lepton log)
-                              (lepton version)
-                              (netlist)))
 
 ;;; Run netlister in new toplevel environment.
 (%with-toplevel (%make-toplevel)
