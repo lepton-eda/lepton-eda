@@ -26,13 +26,13 @@ exec @GUILE@ -e main -s "$0" "$@"
     (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")
     (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
-(use-modules (srfi srfi-37)
-             (ice-9 eval-string)
+(use-modules (ice-9 eval-string)
              (ice-9 readline)
              (lepton core gettext)
              (lepton ffi)
              (lepton rc)
              (lepton repl)
+             (lepton srfi-37)
              (lepton toplevel)
              (lepton version))
 
