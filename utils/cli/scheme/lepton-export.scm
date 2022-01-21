@@ -27,12 +27,12 @@ exec @GUILE@ -s "$0" "$@"
     (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (srfi srfi-1)
-             (srfi srfi-37)
              (system foreign)
              (lepton core gettext)
              (lepton ffi)
              (lepton page)
              (lepton rc)
+             (lepton srfi-37)
              (lepton toplevel)
              (lepton version))
 
