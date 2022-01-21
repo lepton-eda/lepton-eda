@@ -28,11 +28,11 @@ exec @GUILE@ -s "$0" "$@"
 
 (use-modules (ice-9 match)
              (srfi srfi-1)
-             (srfi srfi-37)
              (lepton config)
              (lepton core gettext)
              (lepton ffi)
              (lepton file-system)
+             (lepton srfi-37)
              (lepton version))
 
 ;;; Initialize liblepton library.
