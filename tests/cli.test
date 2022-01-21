@@ -2,14 +2,6 @@
 
 (load-from-path "env.scm")
 
-
-(define lepton-shell
-  (build-filename *abs-top-builddir*
-                  "utils"
-                  "cli"
-                  "scheme"
-                  "lepton-shell"))
-
 (putenv (string-append "LEPTON_SHELL" "=" lepton-shell))
 
 
@@ -29,9 +21,6 @@
 (define help-string "Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]")
 
 (define run-help-string "Run `lepton-cli --help' for more information.")
-
-
-(define help-string "Usage: lepton-cli [OPTION...] COMMAND [ARGS ...]")
 
 
 ;;; Test lepton-cli without args.
