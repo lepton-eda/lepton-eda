@@ -26,9 +26,9 @@ exec @GUILE@ -s "$0" "$@"
     (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")
     (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
-(use-modules (srfi srfi-37)
-             (lepton core gettext)
+(use-modules (lepton core gettext)
              (lepton ffi)
+             (lepton srfi-37)
              (lepton version))
 
 ;;; Initialize liblepton library.
