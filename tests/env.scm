@@ -119,6 +119,12 @@
 ;;; defined.
 (putenv "LANG=C")
 
+(define lepton-archive
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "archive"
+                  "lepton-archive"))
+
 (define lepton-cli
   (build-filename *abs-top-builddir*
                   "utils"

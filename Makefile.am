@@ -47,6 +47,7 @@ AM_TESTS_ENVIRONMENT = env \
 	FILE='$(FILE)'
 
 TESTS = \
+	tests/archive.test \
 	tests/cli.test \
 	tests/config.test \
 	tests/export.test \
