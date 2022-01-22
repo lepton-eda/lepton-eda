@@ -50,6 +50,7 @@ TESTS = \
 	tests/archive.test \
 	tests/cli.test \
 	tests/config.test \
+	tests/embed.test \
 	tests/export.test \
 	tests/netlist.test \
 	tests/shell.test \

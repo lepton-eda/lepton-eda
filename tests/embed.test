@@ -1,0 +1,49 @@
+(use-modules (ice-9 receive))
+
+(load-from-path "env.scm")
+
+(define help-string "Usage: lepton-embed -e | -u [OPTIONS] FILE ...")
+
+
+(test-begin "lepton-embed -h")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-embed "-h")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> help-string)))
+
+(test-end "lepton-embed -h")
+
+
+(test-begin "lepton-embed --help")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-embed "--help")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> help-string)))
+
+(test-end "lepton-embed --help")
+
+
+(test-begin "lepton-embed -V")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-embed "-V")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Lepton EDA"))
+  (test-assert (string-contains <stdout> "Copyright"))
+  (test-assert (string-contains <stdout> "There is NO WARRANTY")))
+
+(test-end "lepton-embed -V")
+
+
+(test-begin "lepton-embed --version")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-embed "--version")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Lepton EDA"))
+  (test-assert (string-contains <stdout> "Copyright"))
+  (test-assert (string-contains <stdout> "There is NO WARRANTY")))
+
+(test-end "lepton-embed --version")

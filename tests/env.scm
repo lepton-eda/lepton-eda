@@ -139,6 +139,12 @@
                   "scheme"
                   "lepton-config"))
 
+(define lepton-embed
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "embed"
+                  "lepton-embed"))
+
 (define lepton-export
   (build-filename *abs-top-builddir*
                   "utils"
