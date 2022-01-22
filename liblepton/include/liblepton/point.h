@@ -28,6 +28,8 @@ struct st_point
   gint y;
 };
 
+G_BEGIN_DECLS
+
 void
 lepton_point_rotate (int x,
                      int y,
@@ -40,3 +42,5 @@ lepton_point_rotate_90 (int x,
                         int angle,
                         int *newx,
                         int *newy);
+
+G_END_DECLS
