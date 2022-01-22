@@ -171,6 +171,12 @@
                   "tragesym"
                   "lepton-tragesym"))
 
+(define lepton-upcfg
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "upcfg"
+                  "lepton-upcfg"))
+
 (putenv (string-append "LEPTON_CONFIG" "=" lepton-config))
 (putenv (string-append "LEPTON_EXPORT" "=" lepton-export))
 (putenv (string-append "LEPTON_SHELL" "=" lepton-shell))

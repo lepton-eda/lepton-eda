@@ -56,6 +56,7 @@ TESTS = \
 	tests/shell.test \
 	tests/symcheck.test \
 	tests/tragesym.test \
+	tests/upcfg.test \
 	tests/update.test
 
 EXTRA_DIST = \

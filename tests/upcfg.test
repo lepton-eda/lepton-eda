@@ -1,0 +1,49 @@
+(use-modules (ice-9 receive))
+
+(load-from-path "env.scm")
+
+(define help-string "Usage: lepton-upcfg [OPTIONS] | FILE")
+
+
+(test-begin "lepton-upcfg -h")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-upcfg "-h")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> help-string)))
+
+(test-end "lepton-upcfg -h")
+
+
+(test-begin "lepton-upcfg --help")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-upcfg "--help")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> help-string)))
+
+(test-end "lepton-upcfg --help")
+
+
+(test-begin "lepton-upcfg -V")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-upcfg "-V")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Lepton EDA"))
+  (test-assert (string-contains <stdout> "Copyright"))
+  (test-assert (string-contains <stdout> "There is NO WARRANTY")))
+
+(test-end "lepton-upcfg -V")
+
+
+(test-begin "lepton-upcfg --version")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-upcfg "--version")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Lepton EDA"))
+  (test-assert (string-contains <stdout> "Copyright"))
+  (test-assert (string-contains <stdout> "There is NO WARRANTY")))
+
+(test-end "lepton-upcfg --version")
