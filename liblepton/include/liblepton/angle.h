@@ -22,6 +22,8 @@
  *  \brief Functions for working with angles
  */
 
+G_BEGIN_DECLS
+
 gboolean
 lepton_angle_is_normal (gint angle);
 
@@ -33,3 +35,5 @@ lepton_angle_make_ortho (gint angle);
 
 gint
 lepton_angle_normalize (gint angle);
+
+G_END_DECLS
