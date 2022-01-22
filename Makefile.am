@@ -55,6 +55,7 @@ TESTS = \
 	tests/netlist.test \
 	tests/shell.test \
 	tests/symcheck.test \
+	tests/tragesym.test \
 	tests/update.test
 
 EXTRA_DIST = \

@@ -1,0 +1,49 @@
+(use-modules (ice-9 receive))
+
+(load-from-path "env.scm")
+
+(define help-string "lepton-tragesym INPUT-FILE OUTPUT-FILE")
+
+
+(test-begin "lepton-tragesym -h")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-tragesym "-h")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> help-string)))
+
+(test-end "lepton-tragesym -h")
+
+
+(test-begin "lepton-tragesym --help")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-tragesym "--help")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> help-string)))
+
+(test-end "lepton-tragesym --help")
+
+
+(test-begin "lepton-tragesym -V")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-tragesym "-V")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Lepton EDA"))
+  (test-assert (string-contains <stdout> "Copyright"))
+  (test-assert (string-contains <stdout> "There is NO WARRANTY")))
+
+(test-end "lepton-tragesym -V")
+
+
+(test-begin "lepton-tragesym --version")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-tragesym "--version")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Lepton EDA"))
+  (test-assert (string-contains <stdout> "Copyright"))
+  (test-assert (string-contains <stdout> "There is NO WARRANTY")))
+
+(test-end "lepton-tragesym --version")

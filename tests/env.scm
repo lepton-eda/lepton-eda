@@ -165,6 +165,12 @@
                   "symcheck"
                   "lepton-symcheck"))
 
+(define lepton-tragesym
+  (build-filename *abs-top-builddir*
+                  "utils"
+                  "tragesym"
+                  "lepton-tragesym"))
+
 (putenv (string-append "LEPTON_CONFIG" "=" lepton-config))
 (putenv (string-append "LEPTON_EXPORT" "=" lepton-export))
 (putenv (string-append "LEPTON_SHELL" "=" lepton-shell))
