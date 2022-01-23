@@ -2,11 +2,11 @@ info_TEXINFOS = lepton-manual.texi
 lepton_manual_TEXINFOS = \
 	attribute-net.texi \
 	attributes.texi \
+	cindex.texi \
 	communication.texi \
 	configuration.texi \
 	development.texi \
 	geda-file-format-spec.texi \
-	index.texi \
 	installation.texi \
 	lepton-attrib.texi \
 	lepton-cli-config.texi \

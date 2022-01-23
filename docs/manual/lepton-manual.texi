@@ -363,6 +363,6 @@ Obsolete Attributes
 @include attributes.texi
 @include attribute-net.texi
 @include lepton-eda-fonts.texi
-@include index.texi
+@include cindex.texi
 
 @bye
