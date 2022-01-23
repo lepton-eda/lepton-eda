@@ -27,35 +27,41 @@ Lepton EDA suite includes tools as follows:
 @item
 lepton-schematic---the main GUI tool for schematic capture
 @item
-lepton-attrib
+lepton-attrib---spreadsheet schematic attribute editor
 @item
 lepton-netlist---a tool for making netlists from command line
 @item
 lepton-cli---a CLI tool providing support of configuration, export, and shell
 @item
+lepton-config---configure your tools
+@item
+lepton-export---export schematics to images and multipage documents
+@item
+lepton-shell---interactive processing of schematic data in Scheme REPL
+@item
 lepton-archive---project archivation utility
 @item
 lepton-tragesym---symbol generator
 @item
-lepton-embed
+lepton-embed---embed symbols and pictures into schematics
 @item
-lepton-pcb_backannotate
+lepton-pcb_backannotate---backannotate changes from PCB to schematic
 @item
-lepton-refdes_renum
+lepton-refdes_renum---renumber reference designators
 @item
-lepton-renum
+lepton-renum---an advanced refdes renumber utility
 @item
-lepton-sch2pcb
+lepton-sch2pcb---generate PCB layout from a set of schematics
 @item
-lepton-schdiff
+lepton-schdiff---view graphical diff of schematics
 @item
-lepton-symcheck
+lepton-symcheck---check symbol files for errors
 @item
-lepton-symfix
+lepton-symfix---fix attributes in symbol files
 @item
-lepton-upcfg
+lepton-upcfg---upgrade gEDA config files to be usable in Lepton
 @item
-lepton-update
+lepton-update---update obsolete schematics to the current version
 @end itemize
 
 The following contributed tools are not covered in this manual.
