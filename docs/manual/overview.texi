@@ -25,13 +25,13 @@ Lepton EDA suite includes tools as follows:
 
 @itemize
 @item
-lepton-schematic---the main GUI tool for schematic capture.
+lepton-schematic---the main GUI tool for schematic capture
 @item
 lepton-attrib
 @item
 lepton-netlist---a tool for making netlists from command line
 @item
-lepton-cli---a CLI tool providing support of configuration, export, and shell.
+lepton-cli---a CLI tool providing support of configuration, export, and shell
 @item
 lepton-archive---project archivation utility
 @item
