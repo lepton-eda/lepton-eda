@@ -1,5 +1,6 @@
 @node lepton-update, Communication, lepton-attrib, Top
 @chapter lepton-update
+@pindex lepton-update
 
 This is a utility for schematics and symbols for updating schematics
 and symbols in old gEDA/gaf file formats.  It updates attribute and

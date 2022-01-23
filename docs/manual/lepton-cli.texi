@@ -1,6 +1,7 @@
 @node lepton-cli, lepton-attrib, lepton-netlist, Top
 @chapter lepton-cli - Lepton command-line utility
-@cindex lepton-cli
+@pindex lepton-cli
+@cindex Lepton command line utility
 
 @cli{} provides a number of small command-line utilities for
 working with Lepton schematic and symbol files, and is designed to be

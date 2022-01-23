@@ -25,6 +25,7 @@ lepton_manual_TEXINFOS = \
 	logging.texi \
 	no-connect-symbol.texi \
 	overview.texi \
+	pindex.texi \
 	placeholder.texi \
 	symbol-creation.texi \
 	symbol-editing.texi \

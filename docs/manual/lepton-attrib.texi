@@ -1,6 +1,6 @@
 @node lepton-attrib, lepton-update, lepton-cli, Top
 @chapter Spreadsheet attribute editor
-@cindex lepton-attrib
+@pindex lepton-attrib
 @cindex spreadsheet attribute editor
 
 @section Introduction to lepton-attrib

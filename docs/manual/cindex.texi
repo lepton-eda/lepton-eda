@@ -1,3 +1,3 @@
-@node Topic Index, , Lepton EDA fonts, Top
+@node Topic Index, Program Index, Lepton EDA fonts, Top
 @unnumbered Topic Index
 @printindex cp

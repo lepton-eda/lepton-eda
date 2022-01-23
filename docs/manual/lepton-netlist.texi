@@ -1,6 +1,6 @@
 @node lepton-netlist, lepton-cli, lepton-schematic, Top
 @chapter Netlister
-@cindex lepton-netlist
+@pindex lepton-netlist
 @cindex netlist
 @cindex netlister
 

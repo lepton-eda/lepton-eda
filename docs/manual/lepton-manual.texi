@@ -86,6 +86,7 @@ Documentation License.''
 * net= attribute mini-HOWTO::
 * Lepton EDA fonts::
 * Topic Index::
+* Program Index::
 
 @detailmenu
  --- The Detailed Node Listing ---
@@ -364,5 +365,6 @@ Obsolete Attributes
 @include attribute-net.texi
 @include lepton-eda-fonts.texi
 @include cindex.texi
+@include pindex.texi
 
 @bye

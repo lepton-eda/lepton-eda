@@ -1,6 +1,6 @@
 @node lepton-schematic, lepton-netlist, Symbols, Top
 @chapter Schematic capture
-@cindex lepton-schematic
+@pindex lepton-schematic
 @cindex schematic capture
 
 @menu
