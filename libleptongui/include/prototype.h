@@ -80,7 +80,6 @@ void i_callback_file_save_as (GtkWidget *widget, gpointer data);
 void i_callback_file_print (GtkWidget *widget, gpointer data);
 void i_callback_file_write_png (GtkWidget *widget, gpointer data);
 void i_callback_file_close (GtkWidget *widget, gpointer data);
-void i_callback_file_quit (GtkWidget *widget, gpointer data);
 void i_callback_edit_undo (GtkWidget *widget, gpointer data);
 void i_callback_edit_redo (GtkWidget *widget, gpointer data);
 void i_callback_edit_select (GtkWidget *widget, gpointer data);

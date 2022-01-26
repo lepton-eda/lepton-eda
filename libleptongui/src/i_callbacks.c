@@ -283,20 +283,6 @@ i_callback_file_close (GtkWidget *widget, gpointer data)
   x_window_close(w_current);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_file_quit (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-  x_window_close_all(w_current);
-}
-
 /*! \section edit-menu Edit Menu Callback Functions */
 /*! \todo Finish function documentation!!!
  *  \brief

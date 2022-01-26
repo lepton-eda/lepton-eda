@@ -80,7 +80,6 @@
             i_callback_file_new
             i_callback_file_open
             i_callback_file_print
-            i_callback_file_quit
             i_callback_file_save
             i_callback_file_save_all
             i_callback_file_save_as
@@ -142,6 +141,7 @@
             x_stroke_init
             x_widgets_show_log
             x_window_create_main
+            x_window_close_all
             x_window_close_page
             x_window_new
             x_window_open_page
@@ -241,6 +241,7 @@
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup '* '(*))
 (define-lff x_window_create_main '* '(* * * *))
+(define-lff x_window_close_all void '(*))
 (define-lff x_window_close_page void '(* *))
 
 ;;; x_dialog.c
@@ -299,7 +300,6 @@
 (define-lff i_callback_file_new void '(* *))
 (define-lff i_callback_file_open void '(* *))
 (define-lff i_callback_file_print void '(* *))
-(define-lff i_callback_file_quit void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lff i_callback_file_save_all void '(* *))
 (define-lff i_callback_file_save_as void '(* *))

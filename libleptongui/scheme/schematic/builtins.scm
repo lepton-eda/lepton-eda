@@ -124,7 +124,7 @@
 
 (define-action-public (&file-quit #:label (G_ "Quit") #:icon "gtk-quit")
   (lepton-repl-save-history)
-  (run-callback i_callback_file_quit "&file-quit"))
+  (x_window_close_all (*current-window)))
 
 (define-action-public (&file-repl #:label (G_ "Terminal REPL") #:icon "gtk-execute")
   (start-repl-in-background-terminal))
