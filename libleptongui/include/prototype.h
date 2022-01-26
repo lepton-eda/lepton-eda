@@ -143,7 +143,7 @@ void i_callback_attributes_show_value (GtkWidget *widget, gpointer data);
 void i_callback_attributes_show_both (GtkWidget *widget, gpointer data);
 void i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data);
 void i_callback_cancel (GtkWidget *widget, gpointer data);
-gboolean i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
+
 /* i_vars.c */
 void i_vars_set(GschemToplevel *w_current);
 void i_vars_atexit_save_cache_config (gpointer user_data);

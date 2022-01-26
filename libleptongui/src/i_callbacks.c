@@ -1197,31 +1197,3 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
 
   i_action_stop (w_current);
 }
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  When invoked (via signal delete_event), closes the current window
- *  if this is the last window, quit gschem
- *  used when you click the close button on the window which sends a DELETE
- *  signal to the app
- */
-gboolean i_callback_close_wm ( GtkWidget *widget, GdkEvent *event,
-                           gpointer data )
-{
-
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  g_return_val_if_fail ((w_current != NULL), TRUE);
-
-  x_window_close(w_current);
-
-  /* stop further propagation of the delete_event signal for window: */
-  /*   - if user has cancelled the close the window should obvioulsy */
-  /*   not be destroyed */
-  /*   - otherwise window has already been destroyed, nothing more to */
-  /*   do */
-  return TRUE;
-}

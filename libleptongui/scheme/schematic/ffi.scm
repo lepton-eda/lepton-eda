@@ -23,6 +23,7 @@
   #:use-module (lepton ffi lff)
   #:use-module (lepton ffi lib)
   #:use-module (lepton ffi)
+  #:use-module (lepton log)
 
   #:export (lepton_schematic_run
             lepton_schematic_app
@@ -39,7 +40,6 @@
             i_callback_clipboard_copy
             i_callback_clipboard_cut
             i_callback_clipboard_paste
-            i_callback_close_wm
             i_callback_file_save
             *i_callback_file_save
             i_callback_file_script
@@ -519,7 +519,6 @@
 (define-lff i_callback_clipboard_copy void '(* *))
 (define-lff i_callback_clipboard_cut void '(* *))
 (define-lff i_callback_clipboard_paste void '(* *))
-(define-lff i_callback_close_wm int '(* * *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
 (define-lff i_callback_file_script void '(* *))

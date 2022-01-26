@@ -37,6 +37,7 @@
             callback-add-component
             callback-add-net
             callback-add-text
+            *callback-close-schematic-window
             callback-file-new
             *callback-file-new
             callback-file-open
@@ -146,3 +147,24 @@
   (i_set_state *window (symbol->action-mode 'select-mode))
 
   (text_input_dialog *window))
+
+
+(define (callback-close-schematic-window *widget *event *window)
+  (if (null-pointer? *window)
+      (error "NULL window.")
+      (x_window_close *window))
+  ;; Stop further propagation of the "delete-event" signal for
+  ;; window:
+  ;;   - if the user has cancelled closing, the window should
+  ;;     obviously not be destroyed
+  ;;   - otherwise the window has already been destroyed, nothing
+  ;;     more to do
+  TRUE)
+
+
+;;; When invoked via signal "delete-event", the function closes
+;;; the current window and, if this is the last window, quits
+;;; lepton-schematic.  The signal is emitted when you click the
+;;; close button on the window.
+(define *callback-close-schematic-window
+  (procedure->pointer int callback-close-schematic-window '(* * *)))

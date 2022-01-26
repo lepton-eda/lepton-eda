@@ -75,7 +75,7 @@ GtkApplication structure of the program (when compiled with
   (let ((*main-window (schematic_window_create_app_window *app)))
     (schematic_signal_connect *main-window
                               (string->pointer "delete-event")
-                              (procedure->pointer int i_callback_close_wm '(* * *))
+                              *callback-close-schematic-window
                               *window)
 
     (let ((*main-box (schematic_window_create_main_box *main-window))
