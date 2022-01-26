@@ -62,7 +62,7 @@ gschem_main_window_init (GschemMainWindow *window)
 
 /*! \brief Create a new instance of the GschemMainWindow
  *
- *  \return A new instanceof the GschemMainWindow
+ *  \return A new instance of the GschemMainWindow
  */
 GschemMainWindow*
 gschem_main_window_new ()
