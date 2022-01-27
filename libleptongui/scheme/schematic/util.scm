@@ -20,9 +20,12 @@
 (define-module (schematic util)
 
   ; Import C procedures
-  #:use-module (schematic core util))
+  #:use-module (schematic core util)
 
-(define-public show-uri %show-uri)
+  #:export (show-file
+            show-uri))
 
-(define-public (show-file filename)
+(define show-uri %show-uri)
+
+(define (show-file filename)
   (show-uri (string-append "file://" filename)))
