@@ -140,6 +140,7 @@
             set_verbose_mode
             x_color_init
             x_menu_attach_recent_files_submenu
+            x_show_uri
             x_stroke_init
             x_widgets_show_log
             x_window_create_main
@@ -295,6 +296,8 @@
 (define-lff i_callback_page_prev_tab void '(* *))
 (define-lff i_callback_page_print void '(* *))
 (define-lff i_callback_page_revert void '(* *))
+;;; x_misc.c
+(define-lff x_show_uri int '(* * *))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.
