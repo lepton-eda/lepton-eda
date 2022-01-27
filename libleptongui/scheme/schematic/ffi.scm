@@ -20,8 +20,7 @@
   #:use-module (system foreign)
   #:use-module (lepton ffi lib)
 
-  #:export (g_init_action
-            g_init_attrib
+  #:export (g_init_attrib
             g_init_keys
             g_init_select
             g_init_util
@@ -165,7 +164,6 @@
          (force proc))))))
 
 
-(define-lff g_init_action void '())
 (define-lff g_init_attrib void '())
 (define-lff g_init_keys void '())
 (define-lff g_init_select void '())

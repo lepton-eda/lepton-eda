@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013, 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,6 @@
 #include <config.h>
 
 #include "gschem.h"
-
-SCM_SYMBOL (quote_sym, "quote");
 
 /*! \brief Evaluate a lepton-schematic action by name.
  * \par Function Description
@@ -59,7 +57,7 @@ g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name)
                                                    "eval-action!"));
   /* Build expression to evaluate */
   s_expr = scm_list_2 (s_eval_action_proc,
-                       scm_list_2 (quote_sym,
+                       scm_list_2 (scm_from_utf8_symbol ("quote"),
                                    scm_from_utf8_symbol (action_name)));
   /* Evaluate and get return value */
   s_result = g_scm_eval_protected (s_expr, SCM_UNDEFINED);
@@ -122,17 +120,4 @@ g_action_get_position (gboolean snap, int *x, int *y)
   }
 
   return TRUE;
-}
-
-/*!
- * \brief Initialise lepton-schematic action support.
- * \par Function Description
-
- * Registers some Scheme support for action handling. Should only be
- * called by main_prog().
- */
-void
-g_init_action ()
-{
-#include "g_action.x"
 }
