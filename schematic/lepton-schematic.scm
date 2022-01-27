@@ -71,7 +71,6 @@ exec @GUILE@ -s "$0" "$@"
 (define (register-guile-funcs)
   (g_init_window)
   (g_init_select)
-  (g_init_action)
   (g_init_attrib)
   (g_init_keys)
   (scheme_init_undo))
