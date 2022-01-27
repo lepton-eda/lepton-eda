@@ -1,7 +1,7 @@
 ;;; Lepton EDA
 ;;; liblepton - Lepton's library - Scheme API
 ;;; Copyright (C) 2011-2012 Peter Brett <peter@peter-b.co.uk>
-;;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
+  #:use-module (lepton gerror)
 
   #:export (config?
             default-config-context
@@ -109,19 +110,6 @@
 ;;; g_clear_error().  The error will be converted to a Scheme
 ;;; error according to the following rules:
 (define (gerror-error *error proc-name)
-  (define (gerror-list *err)
-    ;; GError struct consists of:
-    ;; GQuark (uint32) domain
-    ;; gint (int) code
-    ;; gchar* (char*) message
-    (parse-c-struct *err (list uint32 int '*)))
-
-  (define (gerror-message *err)
-    (match (gerror-list *err)
-      ((domain code message)
-       (pointer->string message))
-      (_ #f)))
-
   (unless (null-pointer? *error)
     (let ((*err (dereference-pointer *error)))
       (unless (null-pointer? *err)
