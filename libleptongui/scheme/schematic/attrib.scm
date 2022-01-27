@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2011 Peter Brett
-;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -61,14 +61,14 @@ the attribute was added successfully, otherwise returns #f."
   (define (warning-already-added)
     (string-append "WARNING: "
                    proc-name
-                   (format #f (G_ "Attribute has been already added: ~S")
-                           name)))
+                   (G_ "Attribute has been already added: ")
+                   (format #f "~S" name)))
 
   (define (warning-failed-to-add)
     (string-append "WARNING: "
                    proc-name
-                   (format #f (G_ "Failed to add attribute: ~S")
-                           name)))
+                   (G_ "Failed to add attribute: ")
+                   (format #f "~S" name)))
 
   (define (error-not-string)
     (string-append "ERROR: "
