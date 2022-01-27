@@ -4,7 +4,6 @@ BUILT_SOURCES = \
 	g_action.x \
 	g_attrib.x \
 	g_keys.x \
-	g_util.x \
 	g_window.x \
 	g_select.x \
 	scheme_undo.x
@@ -16,7 +15,6 @@ libleptongui_la_SOURCES = \
 	g_hook.c \
 	g_keys.c \
 	g_select.c \
-	g_util.c \
 	g_window.c \
 	globals.c \
 	lepton-schematic.c \

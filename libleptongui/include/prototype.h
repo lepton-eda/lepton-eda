@@ -32,8 +32,6 @@ void g_init_keys ();
 
 /* g_select.c */
 void g_init_select ();
-/* g_util.c */
-void g_init_util ();
 
 /* scheme_undo.c */
 void scheme_init_undo();
