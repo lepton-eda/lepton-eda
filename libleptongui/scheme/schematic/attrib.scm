@@ -22,29 +22,71 @@
   #:use-module (system foreign)
 
   #:use-module (lepton config)
-  #:use-module (lepton log)
-  #:use-module (schematic core attrib)
-  #:use-module (schematic core gettext)
   #:use-module (lepton ffi)
+  #:use-module (lepton log)
+  #:use-module (lepton object)
+  #:use-module (lepton object foreign)
+  #:use-module (lepton object text)
+  #:use-module (lepton page)
 
-  #:export (attribute-name
+  #:use-module (schematic core gettext)
+  #:use-module (schematic ffi)
+  #:use-module (schematic window)
+
+  #:export (add-attrib!
+            attribute-name
             init-schematic-attribs!))
 
-;; add-attrib! target name value visible attribute-mode
-;;
-;; Create a new attribute, either attached to a target object in the
-;; current page, or floating in the current page if target is #f.  The
-;; name and value for the attribute must be strings, and if visible is
-;; #f, the attribute will be invisible.  The attribute-mode controls
-;; which parts of the attribute will be visible, and must be one of
-;; the following symbols:
-;;
-;;   name
-;;   value
-;;   both
-;;
-;; See also active-page in the (schematic window) module.
-(define-public add-attrib! %add-attrib!)
+(define-syntax-rule (check-attrib-target val pos)
+  (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
+    (if (object? val)
+        (unless (eq? (object-page val) (active-page))
+          (scm-error 'object-state
+                     proc-name
+                     (G_ "Object ~A is not included in the current lepton-schematic page.")
+                     (list val)
+                     '()))
+        (unless (or (not val)
+                    (page? val))
+          (scm-error 'wrong-type-arg
+                     proc-name
+                     "Wrong type argument in position ~A (expecting page, object, or #f): ~A"
+                     (list pos val)
+                     #f)))))
+
+;;; FIXME: This function does not verify that NAME is actually a
+;;; valid attribute name.
+;;; TODO: It would be nice to support pages other than the current
+;;; active page.
+(define (add-attrib! target name value visible show)
+  "Creates and returns a new attribute object, either attached to
+an object or floating, with given NAME and VALUE which should be
+strings.  If VISIBLE is #f, the new attribute will be invisible;
+otherwise it will be visible.  SHOW determines which parts of an
+attribute-formatted string should be shown, and should be one of
+the symbols 'name, 'value or 'both.  If TARGET is specified and is
+a Lepton object, the new attribute will be attached to it. If the
+object is not in lepton-schematic's active page, an 'object-state
+error will be raised.  If TARGET is #f, the new attribute will be
+floating in lepton-schematic's current active page.  See also
+active-page() in the (schematic window) module."
+  (check-attrib-target target 1)
+  (check-string name 2)
+  (check-string value 3)
+  (check-boolean visible 4)
+  (check-text-show show 5)
+
+  (let ((*object (if (object? target)
+                     (geda-object->pointer target)
+                     %null-pointer))
+        (visibility (text-visibility->integer visible))
+        (show? (symbol->text-attribute-show-mode show))
+        (*str (string->pointer (string-append name "=" value))))
+    (pointer->geda-object (o_attrib_add_attrib (current-window)
+                                               *str
+                                               visibility
+                                               show?
+                                               *object))))
 
 
 (define (attribute-name name)

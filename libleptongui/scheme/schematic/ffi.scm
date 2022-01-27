@@ -131,6 +131,7 @@
             i_callback_view_zoom_out
             make_menu_action
             make_separator_menu_item
+            o_attrib_add_attrib
             o_buffer_init
             o_undo_init
             scheme_init_undo
@@ -169,6 +170,7 @@
 (define-lff g_init_select void '())
 (define-lff g_init_window void '())
 (define-lff gschem_toplevel_get_toplevel '* '(*))
+(define-lff o_attrib_add_attrib '* (list '* '* int int '*))
 (define-lff o_buffer_init void '())
 (define-lff o_undo_init void '())
 (define-lff scheme_init_undo void '())
