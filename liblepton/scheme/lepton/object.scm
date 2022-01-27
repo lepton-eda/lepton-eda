@@ -1,7 +1,7 @@
 ;; Lepton EDA library - Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2012-2016 gEDA Contributors
-;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
   #:use-module (lepton color-map)
   #:use-module (lepton ffi)
   #:use-module (lepton object foreign)
+  #:use-module (lepton object text)
   #:use-module (lepton object type)
 
   #:export (copy-object
@@ -1076,56 +1077,6 @@ where:
 
 
 ;;;; Text
-
-;;; Returns text alignment symbol SYM if it is valid.  Otherwise
-;;; returns #f.
-(define (check-text-alignment-symbol sym)
-  (match sym
-    ((or 'upper-left 'upper-center 'upper-right
-         'middle-left 'middle-center 'middle-right
-         'lower-left 'lower-center 'lower-right)
-     sym)
-    (_ #f)))
-
-;;; Returns text attribute show mode symbol SYM if it is valid.
-;;; Otherwise returns #f.
-(define (check-text-attribute-show-mode sym)
-  (match sym
-    ((or 'name 'value 'both) sym)
-    (_ #f)))
-
-(define (check-text-alignment align pos)
-  (check-symbol align pos)
-  (unless (check-text-alignment-symbol align)
-    (error "Invalid text alignment: ~A." align)))
-
-(define (check-text-show show pos)
-  (check-symbol show pos)
-  (unless (check-text-attribute-show-mode show)
-    (error "Invalid text name/value visibility: ~A." show)))
-
-(define (check-text-angle angle pos)
-  (define (check-angle-value angle)
-    (match angle
-      ((or 0 90 180 270) angle)
-      (_ (error "Invalid text angle: ~A. Must be 0, 90, 180, or 270 degrees."
-                angle))))
-
-  (check-integer angle pos)
-  (check-angle-value angle))
-
-
-(define (symbol->text-alignment sym)
-  (lepton_text_object_alignment_from_string
-   (string->pointer (symbol->string sym))))
-
-(define (text-visibility->integer visible?)
-  (if visible? 1 0))
-
-(define (symbol->text-attribute-show-mode sym)
-  (lepton_text_object_show_from_string
-   (string->pointer (symbol->string sym))))
-
 
 (define* (set-text! object anchor align angle string size visible? show
                     #:optional color)

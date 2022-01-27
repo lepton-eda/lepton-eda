@@ -26,6 +26,7 @@ nobase_dist_scmdata_DATA = \
 	lepton/log-rotate.scm \
 	lepton/object.scm \
 	lepton/object/foreign.scm \
+	lepton/object/text.scm \
 	lepton/object/type.scm \
 	lepton/option.scm \
 	lepton/os.scm \
