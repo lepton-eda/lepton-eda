@@ -1,7 +1,7 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
 ;;; Copyright (C) 2010-2017 gEDA Contributors
-;;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 
 (define-module (lepton page)
-  #:use-module (ice-9 match)
   #:use-module (ice-9 optargs)
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
@@ -29,6 +28,7 @@
 
   #:use-module (lepton core gettext)
   #:use-module (lepton ffi)
+  #:use-module (lepton gerror)
   #:use-module (lepton page foreign)
 
   #:use-module (lepton object type)
@@ -146,19 +146,6 @@ Otherwise, flags PAGE as having been modified.  Returns PAGE."
 page with filename FILENAME created by parsing STR.  Raises a
 'string-format error if STR contains invalid gEDA file format
 syntax."
-  (define (gerror-list *err)
-    ;; GError struct consists of:
-    ;; GQuark (uint32) domain
-    ;; gint (int) code
-    ;; gchar* (char*) message
-    (parse-c-struct *err (list uint32 int '*)))
-
-  (define (gerror-message *err)
-    (match (gerror-list *err)
-      ((domain code message)
-       (pointer->string message))
-      (_ #f)))
-
   (define (gerror-error *error)
     (let ((*err (dereference-pointer *error)))
       (unless (null-pointer? *err)
