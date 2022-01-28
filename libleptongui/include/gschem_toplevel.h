@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -302,5 +302,8 @@ gschem_toplevel_get_show_hidden_text (GschemToplevel *w_current);
 
 LeptonPage*
 schematic_window_get_active_page (GschemToplevel *w_current);
+
+GschemOptions*
+schematic_window_get_options (GschemToplevel *w_current);
 
 G_END_DECLS

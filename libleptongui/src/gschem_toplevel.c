@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -826,4 +826,18 @@ schematic_window_get_active_page (GschemToplevel *w_current)
   g_return_val_if_fail (toplevel != NULL, NULL);
 
   return toplevel->page_current;
+}
+
+
+/*! \brief Get the options for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The options of the schematic window.
+ */
+GschemOptions*
+schematic_window_get_options (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->options;
 }
