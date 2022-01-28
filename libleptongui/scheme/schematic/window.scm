@@ -19,6 +19,7 @@
 ;;
 
 (define-module (schematic window)
+  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
@@ -30,7 +31,8 @@
   #:use-module (schematic ffi)
 
   #:export (active-page
-            set-active-page!)
+            set-active-page!
+            pointer-position)
 
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
@@ -76,7 +78,23 @@ window to PAGE.  Returns PAGE."
   (if #f #f))
 
 
-(define-public pointer-position %pointer-position)
+(define (pointer-position)
+  "Returns the current mouse pointer position, expressed in world
+coordinates in the form (X . Y).  If the pointer is outside the
+schematic drawing area, returns #f."
+  (define x (make-bytevector (sizeof int)))
+  (define y (make-bytevector (sizeof int)))
+
+  (let ((result (true? (x_event_get_pointer_position
+                        (current-window)
+                        FALSE
+                        (bytevector->pointer x)
+                        (bytevector->pointer y)))))
+    (and result
+         (cons (bytevector-sint-ref x 0 (native-endianness) (sizeof int))
+               (bytevector-sint-ref y 0 (native-endianness) (sizeof int))))))
+
+
 (define-public current-window %current-window)
 
 (define-public (snap-point point)

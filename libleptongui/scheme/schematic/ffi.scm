@@ -152,6 +152,8 @@
             schematic_window_get_active_page
 
             o_undo_savestate
+
+            x_event_get_pointer_position
             ))
 
 (define libleptongui
@@ -306,6 +308,8 @@
 (define-lff i_callback_page_revert void '(* *))
 ;;; x_misc.c
 (define-lff x_show_uri int '(* * *))
+;;; x_event.c
+(define-lff x_event_get_pointer_position int (list '* int '* '*))
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())

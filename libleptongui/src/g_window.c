@@ -100,33 +100,6 @@ g_current_window ()
 }
 
 /*!
- * \brief Get the current pointer position
- * \par Function Description
- * Returns the current mouse pointer position, expressed in world
- * coordinates.  If the pointer is outside the schematic drawing area,
- * returns SCM_BOOL_F.
- *
- * The coordinates are returned as a cons:
- *
- * <code>(x . y)</code>
- *
- * \note Scheme API: Implements the %pointer-position procedure in the
- * (schematic core window) module.
- *
- * \return The current pointer position, or SCM_BOOL_F.
- */
-SCM_DEFINE (pointer_position, "%pointer-position", 0, 0, 0,
-            (), "Get the current pointer position.")
-{
-  int x, y;
-  GschemToplevel *w_current = g_current_window ();
-  if (x_event_get_pointer_position (w_current, FALSE, &x, &y)) {
-    return scm_cons (scm_from_int (x), scm_from_int (y));
-  }
-  return SCM_BOOL_F;
-}
-
-/*!
  * \brief Snap a point to the snap grid.
  * \par Function Description
  * Snaps the point (\a x_s, \a y_s) to the snap grid, returning the
@@ -176,7 +149,6 @@ init_module_schematic_core_window (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_current_window,
-                s_pointer_position,
                 s_snap_point, NULL);
 }
 
