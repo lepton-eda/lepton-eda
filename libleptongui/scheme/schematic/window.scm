@@ -36,7 +36,6 @@
   ;; module.
   #:replace (close-page!))
 
-(define close-page! %close-page!)
 
 (define (active-page)
   "Returns the page which is active in the current
@@ -53,6 +52,28 @@ window to PAGE.  Returns PAGE."
   (define *page (geda-page->pointer* page 1))
   (x_window_set_current_page (current-window) *page)
   page)
+
+
+(define (close-page! page)
+  "Closes PAGE."
+  (define *page (geda-page->pointer* page 1))
+  (define *window (current-window))
+  ;; Currently active page.
+  (define *active_page
+    (schematic_window_get_active_page *window))
+
+  (if (eq? page (active-page))
+      (x_window_close_page *window *page)
+      ;; If the page is not active, make it active and close, then
+      ;; switch back to the previously active page.
+      (begin
+        (x_window_set_current_page *window *page)
+        (x_window_close_page *window
+                             (schematic_window_get_active_page *window))
+        (x_window_set_current_page *window *active_page)))
+
+  ;; Return value is unspecified.
+  (if #f #f))
 
 
 (define-public pointer-position %pointer-position)

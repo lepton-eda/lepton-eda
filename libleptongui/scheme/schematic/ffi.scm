@@ -139,6 +139,7 @@
             x_stroke_init
             x_widgets_show_log
             x_window_create_main
+            x_window_close_page
             x_window_new
             x_window_open_page
             x_window_set_current_page
@@ -148,6 +149,7 @@
 
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_toplevel
+            schematic_window_get_active_page
 
             o_undo_savestate
             ))
@@ -182,6 +184,7 @@
 ;;; gschem_toplevel.c
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
+(define-lff schematic_window_get_active_page '* '(*))
 
 ;;; x_menus.c
 (define-lff make_separator_menu_item '* '())
@@ -193,6 +196,8 @@
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup '* '(*))
 (define-lff x_window_create_main '* '(* *))
+(define-lff x_window_close_page void '(* *))
+
 ;;; x_dialog.c
 (define-lff generic_confirm_dialog int '(*))
 (define-lff generic_filesel_dialog '* (list '* '* int))

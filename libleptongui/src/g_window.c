@@ -100,44 +100,6 @@ g_current_window ()
 }
 
 /*!
- * \brief Close a page
- * \par Function Description
- * Closes the page \a page_s.
- *
- * \note Scheme API: Implements the %close-page! procedure in the
- * (schematic core window) module.
- *
- * \param page_s Page to close.
- * \return SCM_UNDEFINED
- */
-SCM_DEFINE (override_close_page_x, "%close-page!", 1, 0, 0,
-            (SCM page_s), "Close a page.")
-{
-  /* Ensure that the argument is a page smob */
-  SCM_ASSERT (edascm_is_page (page_s), page_s,
-              SCM_ARG1, s_override_close_page_x);
-
-  GschemToplevel *w_current = g_current_window ();
-  LeptonPage *page = edascm_to_page (page_s);
-
-  LeptonPage *active_page = schematic_window_get_active_page (w_current);
-
-  if (page != active_page)
-    /* If page is not the current page, switch pages, then switch
-     * back after closing page. */
-  {
-    x_window_set_current_page (w_current, page);
-    x_window_close_page (w_current, schematic_window_get_active_page (w_current));
-    x_window_set_current_page (w_current, active_page);
-  }
-  else
-  {
-    x_window_close_page (w_current, page);
-  }
-  return SCM_UNDEFINED;
-}
-
-/*!
  * \brief Get the current pointer position
  * \par Function Description
  * Returns the current mouse pointer position, expressed in world
@@ -214,7 +176,7 @@ init_module_schematic_core_window (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_current_window,
-                s_override_close_page_x, s_pointer_position,
+                s_pointer_position,
                 s_snap_point, NULL);
 }
 
