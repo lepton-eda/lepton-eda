@@ -1,7 +1,6 @@
 lib_LTLIBRARIES = libleptongui.la
 
 BUILT_SOURCES = \
-	g_attrib.x \
 	g_keys.x \
 	g_window.x \
 	g_select.x \
@@ -10,7 +9,6 @@ BUILT_SOURCES = \
 libleptongui_la_SOURCES = \
 	a_zoom.c \
 	g_action.c \
-	g_attrib.c \
 	g_hook.c \
 	g_keys.c \
 	g_select.c \

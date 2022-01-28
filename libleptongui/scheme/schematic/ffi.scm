@@ -20,8 +20,7 @@
   #:use-module (system foreign)
   #:use-module (lepton ffi lib)
 
-  #:export (g_init_attrib
-            g_init_keys
+  #:export (g_init_keys
             g_init_select
             g_init_window
             generic_confirm_dialog
@@ -165,7 +164,6 @@
          (force proc))))))
 
 
-(define-lff g_init_attrib void '())
 (define-lff g_init_keys void '())
 (define-lff g_init_select void '())
 (define-lff g_init_window void '())
