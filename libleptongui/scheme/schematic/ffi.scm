@@ -25,7 +25,6 @@
             generic_confirm_dialog
             generic_filesel_dialog
             generic_msg_dialog
-            gschem_toplevel_get_toplevel
             i_callback_add_arc
             i_callback_add_attribute
             i_callback_add_box
@@ -148,6 +147,7 @@
             gschem_page_view_get_page
 
             gschem_toplevel_get_current_page_view
+            gschem_toplevel_get_toplevel
 
             o_undo_savestate
             ))
@@ -169,7 +169,6 @@
 
 (define-lff g_init_keys void '())
 (define-lff g_init_window void '())
-(define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff o_attrib_add_attrib '* (list '* '* int int '*))
 (define-lff o_buffer_init void '())
 (define-lff set_quiet_mode void '())
@@ -182,6 +181,7 @@
 
 ;;; gschem_toplevel.c
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
+(define-lff gschem_toplevel_get_toplevel '* '(*))
 
 ;;; x_menus.c
 (define-lff make_separator_menu_item '* '())
