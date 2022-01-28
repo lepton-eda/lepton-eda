@@ -32,7 +32,8 @@
 
   #:export (active-page
             set-active-page!
-            pointer-position)
+            pointer-position
+            snap-point)
 
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
@@ -97,5 +98,18 @@ schematic drawing area, returns #f."
 
 (define-public current-window %current-window)
 
-(define-public (snap-point point)
-  (%snap-point (car point) (cdr point)))
+
+(define (snap-point point)
+  "Snaps POINT in the form (X . Y) to the snap grid, returning the
+snapped point position as a pair in the same form.  This always
+snaps the given point to the grid, disregarding the current user
+snap settings."
+  ;; Mimic snap_grid() when snapping is not off.
+  (define (snap-grid coord)
+    (lepton_coord_snap coord
+                       (gschem_options_get_snap_size
+                        (schematic_window_get_options (current-window)))))
+
+  (check-coord point 1)
+
+  (cons (snap-grid (car point)) (snap-grid (cdr point))))

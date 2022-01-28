@@ -384,7 +384,9 @@
 
             o_selection_remove
 
-            o_read_buffer))
+            o_read_buffer
+
+            lepton_coord_snap))
 
 ;;; Helper to check if result of C function is TRUE (non-zero).
 (define true? (negate zero?))
@@ -802,6 +804,8 @@
 (define-lff lepton_export_settings_set_font void '(*))
 (define-lff lepton_export_settings_set_format void '(*))
 (define-lff lepton_export_settings_set_outfile void '(*))
+
+(define-lff lepton_coord_snap int (list int int))
 
 (define (c-string-array->list pointer)
   "Returns a list of search directories for system data."

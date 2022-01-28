@@ -150,6 +150,9 @@
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_toplevel
             schematic_window_get_active_page
+            schematic_window_get_options
+
+            gschem_options_get_snap_size
 
             o_undo_savestate
 
@@ -187,6 +190,10 @@
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff schematic_window_get_active_page '* '(*))
+(define-lff schematic_window_get_options '* '(*))
+
+;;; gschem_options.c
+(define-lff gschem_options_get_snap_size int '(*))
 
 ;;; x_menus.c
 (define-lff make_separator_menu_item '* '())

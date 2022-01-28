@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2014 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,6 +96,8 @@ struct _GschemOptions {
   int        snap_size;
 };
 
+G_BEGIN_DECLS
+
 void
 gschem_options_cycle_grid_mode (GschemOptions *options);
 
@@ -149,3 +151,5 @@ gschem_options_set_snap_mode (GschemOptions *options, SNAP_STATE snap_mode);
 
 void
 gschem_options_set_snap_size (GschemOptions *options, int snap_size);
+
+G_END_DECLS
