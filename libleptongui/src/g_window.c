@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -97,30 +97,6 @@ g_current_window ()
   }
 
   return w_current;
-}
-
-/*!
- * \brief Get the active page.
- * \par Function Description
- * Returns the page which is active in the current
- * lepton-schematic window.  If there is no active page, returns
- * SCM_BOOL_F.
- *
- * \note Scheme API: Implements the %active-page procedure in the
- * (schematic core window) module.
- *
- * \return the active page.
- */
-SCM_DEFINE (active_page, "%active-page", 0, 0, 0,
-            (), "Get the active page.")
-{
-  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
-  LeptonPage *page = lepton_toplevel_get_page_current (toplevel);
-  if (page != NULL) {
-    return edascm_from_page (page);
-  } else {
-    return SCM_BOOL_F;
-  }
 }
 
 /*!
@@ -260,7 +236,7 @@ init_module_schematic_core_window (void *unused)
   #include "g_window.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_current_window, s_active_page, s_set_active_page_x,
+  scm_c_export (s_current_window, s_set_active_page_x,
                 s_override_close_page_x, s_pointer_position,
                 s_snap_point, NULL);
 }

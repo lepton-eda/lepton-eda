@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -19,18 +19,32 @@
 ;;
 
 (define-module (schematic window)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi)
+  #:use-module (lepton page foreign)
 
   ; Import C procedures
   #:use-module (schematic core window)
 
   #:use-module (schematic ffi)
 
+  #:export (active-page)
+
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
   #:replace (close-page!))
 
 (define close-page! %close-page!)
-(define-public active-page %active-page)
+
+(define (active-page)
+  "Returns the page which is active in the current
+lepton-schematic window.  If there is no active page, returns #f."
+  (let ((*page (lepton_toplevel_get_page_current
+                (edascm_c_current_toplevel))))
+    (and (not (null-pointer? *page))
+         (pointer->geda-page *page))))
+
 (define-public set-active-page! %set-active-page!)
 (define-public pointer-position %pointer-position)
 (define-public current-window %current-window)
