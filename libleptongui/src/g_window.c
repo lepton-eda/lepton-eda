@@ -100,29 +100,6 @@ g_current_window ()
 }
 
 /*!
- * \brief Set the active page.
- * \par Function Description
- * Sets the page which is active in the current lepton-schematic
- * window to \a page_s.
- *
- * \note Scheme API: Implements the %set-active-page! procedure in the
- * (schematic core window) module.
- *
- * \param page_s Page to switch to.
- * \return \a page_s.
- */
-SCM_DEFINE (set_active_page_x, "%set-active-page!", 1, 0, 0,
-            (SCM page_s), "Set the active page.")
-{
-  SCM_ASSERT (edascm_is_page (page_s), page_s, SCM_ARG1, s_set_active_page_x);
-
-  LeptonPage *page = edascm_to_page (page_s);
-  x_window_set_current_page (g_current_window (), page);
-
-  return page_s;
-}
-
-/*!
  * \brief Close a page
  * \par Function Description
  * Closes the page \a page_s.
@@ -236,7 +213,7 @@ init_module_schematic_core_window (void *unused)
   #include "g_window.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_current_window, s_set_active_page_x,
+  scm_c_export (s_current_window,
                 s_override_close_page_x, s_pointer_position,
                 s_snap_point, NULL);
 }

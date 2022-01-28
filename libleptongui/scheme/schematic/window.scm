@@ -29,7 +29,8 @@
 
   #:use-module (schematic ffi)
 
-  #:export (active-page)
+  #:export (active-page
+            set-active-page!)
 
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
@@ -45,7 +46,15 @@ lepton-schematic window.  If there is no active page, returns #f."
     (and (not (null-pointer? *page))
          (pointer->geda-page *page))))
 
-(define-public set-active-page! %set-active-page!)
+
+(define (set-active-page! page)
+  "Sets the page which is active in the current lepton-schematic
+window to PAGE.  Returns PAGE."
+  (define *page (geda-page->pointer* page 1))
+  (x_window_set_current_page (current-window) *page)
+  page)
+
+
 (define-public pointer-position %pointer-position)
 (define-public current-window %current-window)
 
