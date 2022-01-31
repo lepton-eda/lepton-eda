@@ -1,7 +1,7 @@
 ;; Lepton EDA Schematic Capture
 ;; Scheme API
 ;; Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
-;; Copyright (C) 2020 Lepton EDA Contributors
+;; Copyright (C) 2020-2022 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -19,12 +19,33 @@
 ;;
 
 (define-module (schematic selection)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi)
+  #:use-module (lepton object type)
 
   ;; Import C procedures
-  #:use-module (schematic core selection))
+  #:use-module (schematic core selection)
+
+  #:export (object-selected?))
 
 (define-public page-selection %page-selection)
 
 (define-public select-object! %select-object!)
 (define-public deselect-object! %deselect-object!)
-(define-public object-selected? %object-selected?)
+
+(define (object-selected? object)
+  "Returns #t if OBJECT is selected.  Otherwise, returns #f.  If
+OBJECT is not included directly in a page (i.e. not via inclusion
+in a component), raises the 'object-state Scheme error."
+  (define *object (geda-object->pointer* object 1))
+
+  (let ((*page (lepton_object_get_page *object)))
+    (when (or (null-pointer? *page)
+              (not (null-pointer? (lepton_object_get_parent *object))))
+      (scm-error 'object-state
+                 'object-selected?
+                 "Object ~A is not directly included in a page."
+                 (list object)
+                 '()))
+    (true? (lepton_object_get_selected *object))))

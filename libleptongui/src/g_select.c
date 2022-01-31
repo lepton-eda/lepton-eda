@@ -129,38 +129,6 @@ SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
   return obj_s;
 }
 
-/*! \brief Test if an object is selected.
- * \par Function Description
- * If \a obj_s is selected, returns SCM_BOOL_T.  Otherwise, returns
- * SCM_BOOL_F.  If \a obj_s is not included directly in a page
- * (i.e. not via inclusion in a component), throws a Scheme error.
- *
- * \note Scheme API: Implements the %object-selected? procedure in the
- * (schematic core selection) module.
- *
- * \param obj_s #LeptonObject smob to be tested.
- * \return SCM_BOOL_T if \a obj_s is selected, otherwise SCM_BOOL_F.
- */
-SCM_DEFINE (object_selected_p, "%object-selected?", 1, 0, 0,
-            (SCM obj_s), "Test if an object is selected.")
-{
-  /* Ensure that the argument is an object smob */
-  SCM_ASSERT (edascm_is_object (obj_s), obj_s,
-              SCM_ARG1, s_object_selected_p);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  LeptonPage *page = lepton_object_get_page (obj);
-  if ((page == NULL) ||
-      (lepton_object_get_parent (obj) != NULL))
-  {
-    scm_error (object_state_sym,
-               s_object_selected_p,
-               _("Object ~A is not directly included in a page."),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-  return (lepton_object_get_selected (obj) ? SCM_BOOL_T : SCM_BOOL_F);
-}
-
 /*! \brief Create the (schematic core selection) Scheme module
  * \par Function Description
  * Defines procedures in the (schematic core selection) module. The module
@@ -174,7 +142,7 @@ init_module_schematic_core_select (void *unused)
 
   /* Add them to the module's public definitions. */
   scm_c_export (s_page_selection, s_select_object_x, s_deselect_object_x,
-                s_object_selected_p, NULL);
+                NULL);
 }
 
 /*! \brief Initialise the selection manipulation procedures.

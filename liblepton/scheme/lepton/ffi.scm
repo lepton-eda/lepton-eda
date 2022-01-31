@@ -161,6 +161,7 @@
             lepton_object_set_parent
             lepton_object_get_selectable
             lepton_object_set_selectable
+            lepton_object_get_selected
             lepton_object_get_stroke_cap_type
             lepton_object_set_stroke_cap_type
             lepton_object_get_stroke_type
@@ -555,6 +556,7 @@
 (define-lff lepton_object_set_parent void '(* *))
 (define-lff lepton_object_get_selectable int '(*))
 (define-lff lepton_object_set_selectable void (list '* int))
+(define-lff lepton_object_get_selected int '(*))
 (define-lff lepton_object_get_stroke_cap_type int '(*))
 (define-lff lepton_object_set_stroke_cap_type void (list '* int))
 (define-lff lepton_object_get_stroke_type int '(*))
