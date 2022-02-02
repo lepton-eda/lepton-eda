@@ -68,7 +68,8 @@ o_attrib_add_selected (GschemToplevel *w_current,
     a_current = (LeptonObject*) a_iter->data;
 
     /* make sure object isn't selected already */
-    if (!a_current->selected) {
+    if (!lepton_object_get_selected (a_current))
+    {
       o_selection_add (selection, a_current);
       selected_objects = g_list_prepend (selected_objects, a_current);
     }
@@ -114,7 +115,9 @@ o_attrib_deselect_invisible (GschemToplevel *w_current,
        a_iter = g_list_next (a_iter)) {
     a_current = (LeptonObject*) a_iter->data;
 
-    if (a_current->selected && !lepton_text_object_is_visible (a_current)) {
+    if (lepton_object_get_selected (a_current)
+        && !lepton_text_object_is_visible (a_current))
+    {
       o_selection_remove (selection, a_current);
     }
   }
@@ -152,7 +155,9 @@ o_attrib_select_invisible (GschemToplevel *w_current,
        a_iter = g_list_next (a_iter)) {
     a_current = (LeptonObject*) a_iter->data;
 
-    if (!a_current->selected && !lepton_text_object_is_visible (a_current)) {
+    if (!lepton_object_get_selected (a_current)
+        && !lepton_text_object_is_visible (a_current))
+    {
       o_selection_add (selection, a_current);
     }
   }

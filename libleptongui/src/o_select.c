@@ -169,7 +169,8 @@ void o_select_object(GschemToplevel *w_current, LeptonObject *o_current,
   printf("LeptonObject id: %d\n", lepton_object_get_id (o_current));
 #endif
 
-  switch(o_current->selected) {
+  switch (lepton_object_get_selected (o_current))
+  {
 
     case(FALSE): /* object not selected */
 
@@ -467,7 +468,8 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
     return;
   }
 
-  if (!o_net->selected) {
+  if (!lepton_object_get_selected (o_net))
+  {
     w_current->net_selection_state = 1;
   }
 
@@ -482,7 +484,8 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
          iter1 = g_list_previous(iter1), count++) {
       o_current = (LeptonObject*) iter1->data;
       if (lepton_object_is_net (o_current) &&
-          (!o_current->selected || count == 0)) {
+          (!lepton_object_get_selected (o_current) || count == 0))
+      {
         o_select_object (w_current, o_current, SINGLE, count);
         if (w_current->net_selection_state > 1) {
           /* collect nets */
