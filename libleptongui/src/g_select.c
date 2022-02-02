@@ -22,35 +22,6 @@
 
 SCM_SYMBOL (object_state_sym, "object-state");
 
-/*! \brief Get a list of selected objects on a page.
- * \par Function Description
- * Retrieve a list of selected objects on \a page_s.
- *
- * \note Scheme API: Implements the %page-selection procedure in the
- * (schematic core selection) module.
- *
- * \param page_s #LeptonPage smob for the page from which to get the selection.
- * \return a list of #LeptonObject smobs.
- */
-SCM_DEFINE (page_selection, "%page-selection", 1, 0, 0,
-            (SCM page_s), "Get a list of a page's selected objects")
-{
-  /* Ensure that the argument is a page smob */
-  SCM_ASSERT (edascm_is_page (page_s), page_s,
-              SCM_ARG1, s_page_selection);
-
-  LeptonPage *page = edascm_to_page (page_s);
-  LeptonSelection *selection = lepton_page_get_selection_list (page);
-  GList *iter;
-  SCM result = SCM_EOL;
-  for (iter = lepton_list_get_glist (selection);
-       iter != NULL; iter = g_list_next (iter)) {
-    result = scm_cons (edascm_from_object ((LeptonObject *) iter->data), result);
-  }
-
-  return result;
-}
-
 /*! \brief Select an object.
  * \par Function Description
  * Add \a obj_s to its associated page's selection.  If \a obj_s is
@@ -141,7 +112,7 @@ init_module_schematic_core_select (void *unused)
   #include "g_select.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_page_selection, s_select_object_x, s_deselect_object_x,
+  scm_c_export (s_select_object_x, s_deselect_object_x,
                 NULL);
 }
 
