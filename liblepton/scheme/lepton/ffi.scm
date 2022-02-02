@@ -54,6 +54,7 @@
             glist-data
             glist-next
             glist-prev
+            glist->list
 
             ;; Foreign functions.
             edascm_current_toplevel
@@ -141,6 +142,8 @@
             lepton_export_settings_set_font
             lepton_export_settings_set_format
             lepton_export_settings_set_outfile
+
+            lepton_list_get_glist
 
             lepton_object_get_attached_to
             lepton_object_set_attached_to
@@ -438,6 +441,14 @@
       ((data next prev) data)
       (_ (error "Wrong Glist in glist-data()")))))
 
+(define (glist->list gls convert-func)
+  (let loop ((gls gls)
+             (ls '()))
+    (if (null-pointer? gls)
+        (reverse ls)
+        (loop (glist-next gls)
+              (cons (convert-func (glist-data gls)) ls)))))
+
 ;;; Basic lepton initialisation function.
 (define-lff liblepton_init void '())
 (define-lff edascm_init void '())
@@ -535,6 +546,9 @@
 (define-lff edascm_to_object '* '(*))
 (define-lff edascm_from_page '* '(*))
 (define-lff edascm_to_page '* '(*))
+
+;;; list.c
+(define-lff lepton_list_get_glist '* '(*))
 
 ;;; object.c
 (define-lff lepton_object_get_attached_to '* '(*))

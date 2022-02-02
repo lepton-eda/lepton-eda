@@ -22,14 +22,23 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
+  #:use-module (lepton page foreign)
+  #:use-module (lepton object foreign)
   #:use-module (lepton object type)
 
   ;; Import C procedures
   #:use-module (schematic core selection)
 
-  #:export (object-selected?))
+  #:export (object-selected?
+            page-selection))
 
-(define-public page-selection %page-selection)
+(define (page-selection page)
+  "Return a list of selected objects on PAGE."
+  (define *page (geda-page->pointer* page 1))
+
+  (glist->list (lepton_list_get_glist (lepton_page_get_selection_list *page))
+               pointer->geda-object))
+
 
 (define-public select-object! %select-object!)
 (define-public deselect-object! %deselect-object!)
