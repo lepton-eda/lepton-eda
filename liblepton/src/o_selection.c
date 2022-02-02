@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2013 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -49,7 +49,7 @@ void
 o_selection_add (LeptonSelection *selection,
                  LeptonObject *o_selected)
 {
-  if (o_selected->selected == FALSE)
+  if (lepton_object_get_selected (o_selected) == FALSE)
   {
     o_selection_select (o_selected);
     lepton_list_add( (LeptonList *)selection, o_selected );
@@ -114,11 +114,11 @@ o_selection_print_all (const LeptonSelection *selection)
 void
 o_selection_select (LeptonObject *object)
 {
-  if (object->selected == TRUE)
+  if (lepton_object_get_selected (object) == TRUE)
     return;
 
   lepton_object_emit_pre_change_notify (object);
-  object->selected = TRUE;
+  lepton_object_set_selected (object, TRUE);
   lepton_object_emit_change_notify (object);
 }
 
@@ -132,10 +132,10 @@ o_selection_select (LeptonObject *object)
 void
 o_selection_unselect (LeptonObject *object)
 {
-  if (object->selected == FALSE)
+  if (lepton_object_get_selected (object) == FALSE)
     return;
 
   lepton_object_emit_pre_change_notify (object);
-  object->selected = FALSE;
+  lepton_object_set_selected (object, FALSE);
   lepton_object_emit_change_notify (object);
 }

@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -78,7 +78,7 @@ o_glist_copy_all (const GList *src_list,
     src_object = (LeptonObject *) src->data;
 
     /* unselect the object before the copy */
-    selected_save = src_object->selected;
+    selected_save = lepton_object_get_selected (src_object);
     if (selected_save)
       o_selection_unselect (src_object);
 
@@ -103,7 +103,7 @@ o_glist_copy_all (const GList *src_list,
     src_object = (LeptonObject *) src->data;
 
     /* unselect the object before the copy */
-    selected_save = src_object->selected;
+    selected_save = lepton_object_get_selected (src_object);
     if (selected_save)
       o_selection_unselect (src_object);
 
