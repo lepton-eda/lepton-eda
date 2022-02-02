@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -662,7 +662,7 @@ o_net_consolidate_segments (LeptonObject *object)
           o_net_consolidate_lowlevel(object, other_object, other_orient);
 
           changed++;
-          if (other_object->selected == TRUE)
+          if (lepton_object_get_selected (other_object) == TRUE)
           {
             LeptonSelection *selection = lepton_page_get_selection_list (page);
             o_selection_remove (selection, other_object);
@@ -670,7 +670,7 @@ o_net_consolidate_segments (LeptonObject *object)
             /* If we're consolidating with a selected object,
              * ensure we select the resulting object.
              */
-            if (object->selected == FALSE)
+            if (lepton_object_get_selected (object) == FALSE)
             {
               o_selection_add (selection, object);
             }

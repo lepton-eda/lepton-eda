@@ -2008,7 +2008,7 @@ lepton_object_new (int type,
   lepton_object_set_color (new_node, default_color_id());
   new_node->dont_redraw = FALSE;
   lepton_object_set_selectable (new_node, TRUE);
-  new_node->selected = FALSE;
+  lepton_object_set_selected (new_node, FALSE);
 
   new_node->bus_ripper_direction = 0;
 
