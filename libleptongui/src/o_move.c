@@ -558,12 +558,12 @@ void o_move_check_endpoint(GschemToplevel *w_current, LeptonObject * object)
       continue;
 
     /* really make sure that the object is not selected */
-    if (other->selected)
+    if (lepton_object_get_selected (other))
       continue;
 
     LeptonObject *parent = lepton_object_get_parent (other);
     /* Catch pins, whos parent object is selected. */
-    if (parent != NULL && parent->selected)
+    if (parent != NULL && lepton_object_get_selected (parent))
       continue;
 
     if (c_current->type != CONN_ENDPOINT &&

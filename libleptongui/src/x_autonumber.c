@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -360,14 +360,16 @@ gint autonumber_match(AUTONUMBER_TEXT *autotext, LeptonObject *o_current, gint *
 
   /* we have six cases, 3 from focus multiplied by 2 selection cases */
   if ((autotext->root_page || autotext->scope_number == SCOPE_HIERARCHY)
-      && (o_current->selected
+      && (lepton_object_get_selected (o_current)
           || autotext->scope_number == SCOPE_HIERARCHY || autotext->scope_number == SCOPE_PAGE)
       && (!isnumbered || (autotext->scope_overwrite)))
     return AUTONUMBER_RENUMBER;
 
   if (isnumbered
       && !(autotext->scope_skip == SCOPE_SELECTED
-           && !(o_current->selected)  && autotext->root_page)) {
+           && !(lepton_object_get_selected (o_current))
+           && autotext->root_page))
+  {
     sscanf(&(str[len])," %d", number);
     return AUTONUMBER_RESPECT; /* numbered objects which we don't renumber */
   }
@@ -703,7 +705,9 @@ void autonumber_text_autonumber(AUTONUMBER_TEXT *autotext)
         {
           if (autotext->scope_number == SCOPE_HIERARCHY
               || autotext->scope_number == SCOPE_PAGE
-              || ((autotext->scope_number == SCOPE_SELECTED) && (o_current->selected))) {
+              || ((autotext->scope_number == SCOPE_SELECTED)
+                  && (lepton_object_get_selected (o_current))))
+          {
             const gchar *str = lepton_text_object_get_string (o_current);
             if (g_str_has_prefix (str, searchtext)) {
               /* the beginnig of the current text matches with the searchtext now */

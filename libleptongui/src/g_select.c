@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2010 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -81,7 +81,8 @@ SCM_DEFINE (select_object_x, "%select-object!", 1, 0, 0,
                scm_list_1 (obj_s), SCM_EOL);
   }
 
-  if (!obj->selected) {
+  if (!lepton_object_get_selected (obj))
+  {
     o_selection_add (page->selection_list, obj);
   }
 
@@ -119,7 +120,8 @@ SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
                scm_list_1 (obj_s), SCM_EOL);
   }
 
-  if (obj->selected) {
+  if (lepton_object_get_selected (obj))
+  {
     o_selection_remove (page->selection_list, obj);
   }
 
@@ -155,7 +157,7 @@ SCM_DEFINE (object_selected_p, "%object-selected?", 1, 0, 0,
                _("Object ~A is not directly included in a page."),
                scm_list_1 (obj_s), SCM_EOL);
   }
-  return (obj->selected ? SCM_BOOL_T : SCM_BOOL_F);
+  return (lepton_object_get_selected (obj) ? SCM_BOOL_T : SCM_BOOL_F);
 }
 
 /*! \brief Create the (schematic core selection) Scheme module

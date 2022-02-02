@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -195,7 +195,9 @@ void o_redraw_rect (GschemToplevel *w_current,
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
     LeptonObject *o_current = (LeptonObject*) iter->data;
 
-    if (!(o_current->dont_redraw || o_current->selected)) {
+    if (!(o_current->dont_redraw
+          || lepton_object_get_selected (o_current)))
+    {
       eda_renderer_draw (renderer, o_current);
     }
   }
@@ -204,7 +206,9 @@ void o_redraw_rect (GschemToplevel *w_current,
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
     LeptonObject *o_current = (LeptonObject*) iter->data;
 
-    if (!(o_current->dont_redraw || o_current->selected)) {
+    if (!(o_current->dont_redraw
+          || lepton_object_get_selected (o_current)))
+    {
       eda_renderer_draw_cues (renderer, o_current);
     }
   }
