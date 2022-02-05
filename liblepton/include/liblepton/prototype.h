@@ -144,7 +144,7 @@ void
 o_selection_add (LeptonSelection *selection,
                  LeptonObject *o_selected);
 void
-o_selection_print_all (const LeptonSelection *selection);
+o_selection_print_all (LeptonSelection *selection);
 
 void
 o_selection_remove (LeptonSelection *selection,
