@@ -145,8 +145,13 @@
             x_window_open_page
             x_window_set_current_page
             x_window_setup
-            ))
 
+            gschem_page_view_get_page
+
+            gschem_toplevel_get_current_page_view
+
+            o_undo_savestate
+            ))
 
 (define libleptongui
   (dynamic-link (or (getenv "LIBLEPTONGUI") %libleptongui)))
@@ -168,12 +173,18 @@
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff o_attrib_add_attrib '* (list '* '* int int '*))
 (define-lff o_buffer_init void '())
-(define-lff o_undo_init void '())
 (define-lff scheme_init_undo void '())
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())
 (define-lff x_color_init void '())
 (define-lff x_widgets_show_log void (list '*))
+
+;;; gschem_page_view.c
+(define-lff gschem_page_view_get_page '* '(*))
+
+;;; gschem_toplevel.c
+(define-lff gschem_toplevel_get_current_page_view '* '(*))
+
 ;;; x_menus.c
 (define-lff make_separator_menu_item '* '())
 (define-lff make_menu_action '* '(* * * * *))
@@ -292,6 +303,10 @@
 (define-lff i_callback_page_revert void '(* *))
 ;;; x_misc.c
 (define-lff x_show_uri int '(* * *))
+
+;;; o_undo.c
+(define-lff o_undo_init void '())
+(define-lff o_undo_savestate void (list '* '* int))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.

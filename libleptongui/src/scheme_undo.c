@@ -22,35 +22,13 @@
 
 
 
-/*! \brief Saves current state onto the undo stack
- *
- *  \return SCM_BOOL_T on success, SCM_BOOL_F otherwise
- */
-SCM_DEFINE (undo_save_state, "%undo-save-state", 0, 0, 0,
-            (), "Saves current state onto the undo stack")
-{
-  GschemToplevel* w_current = g_current_window();
-
-  GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
-  g_return_val_if_fail (view != NULL, SCM_BOOL_F);
-
-  LeptonPage* page = gschem_page_view_get_page (view);
-  g_return_val_if_fail (page != NULL, SCM_BOOL_F);
-
-  o_undo_savestate (w_current, page, UNDO_ALL);
-
-  return SCM_BOOL_T;
-}
-
-
-
 
 static void
 export_funcs_undo (void* unused)
 {
   #include "scheme_undo.x"
 
-  scm_c_export (s_undo_save_state, NULL);
+  scm_c_export (NULL);
 }
 
 
