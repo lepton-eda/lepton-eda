@@ -30,7 +30,8 @@
   #:use-module (schematic core selection)
 
   #:export (object-selected?
-            page-selection))
+            page-selection
+            select-object!))
 
 (define (page-selection page)
   "Return a list of selected objects on PAGE."
@@ -40,7 +41,27 @@
                pointer->geda-object))
 
 
-(define-public select-object! %select-object!)
+(define (select-object! object)
+  "Adds OBJECT to its associated page's selection.  If OBJECT is
+not included directly in a page (i.e. inclusion in a component is
+not permitted), raises the 'object-state Scheme error.  If OBJECT
+is already selected, does nothing. Returns OBJECT."
+  (define *object (geda-object->pointer* object 1))
+
+  (let ((*page (lepton_object_get_page *object)))
+    (when (or (null-pointer? *page)
+              (not (null-pointer? (lepton_object_get_parent *object))))
+      (scm-error 'object-state
+                 select-object!
+                 "Object ~A is not directly included in a page."
+                 (list object)
+                 '()))
+    (unless (true? (lepton_object_get_selected *object))
+      (o_selection_add (lepton_page_get_selection_list *page)
+                       *object))
+    object))
+
+
 (define-public deselect-object! %deselect-object!)
 
 (define (object-selected? object)

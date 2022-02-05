@@ -361,6 +361,8 @@
             s_conn_return_others
             s_conn_update_object
 
+            o_selection_add
+
             lepton_toplevel_new
             lepton_toplevel_get_page_current
             lepton_toplevel_get_pages
@@ -467,6 +469,10 @@
 (define-lff s_clib_get_symbol_by_name '* '(*))
 (define-lff s_clib_init void '())
 (define-lff s_clib_symbol_get_filename '* '(*))
+
+;;; o_selection.c
+(define-lff o_selection_add void '(* *))
+
 ;;; toplevel.c
 (define-lff lepton_toplevel_new '* '())
 (define-lff lepton_toplevel_get_page_current '* '(*))
