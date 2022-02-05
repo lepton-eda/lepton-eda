@@ -197,9 +197,10 @@ SCM_DEFINE (g_key_to_display_string, "%key->display-string", 1, 0, 0,
               s_g_key_to_display_string);
 
   GschemKey *key = (GschemKey *) SCM_SMOB_DATA (key_s);
-  if (key->disp_str != NULL) return scm_from_utf8_string (key->disp_str);
-
-  key->disp_str = gtk_accelerator_get_label (key->keyval, key->modifiers);
+  if (key->disp_str == NULL)
+  {
+    key->disp_str = gtk_accelerator_get_label (key->keyval, key->modifiers);
+  }
   return scm_from_utf8_string (key->disp_str);
 }
 
