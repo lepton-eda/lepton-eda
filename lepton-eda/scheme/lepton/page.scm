@@ -74,7 +74,7 @@ belong to a page, returns #f."
 (define (active-pages)
   "Returns a list of currently-opened pages."
   (glist->list
-   (lepton_page_list_get_glist
+   (lepton_list_get_glist
     (lepton_toplevel_get_pages (toplevel->pointer (current-toplevel))))
    pointer->page))
 

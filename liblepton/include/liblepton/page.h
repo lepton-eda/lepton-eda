@@ -203,7 +203,5 @@ lepton_page_get_filename (const LeptonPage *page);
 void
 lepton_page_set_filename (LeptonPage *page,
                           const char *filename);
-GList*
-lepton_page_list_get_glist (LeptonPageList *page_list);
 
 G_END_DECLS

@@ -393,7 +393,6 @@
             lepton_page_new
             lepton_page_objects
             lepton_page_remove
-            lepton_page_list_get_glist
 
             lepton_slot_search
 
@@ -773,7 +772,6 @@
 (define-lff lepton_page_new '* '(* *))
 (define-lff lepton_page_objects '* '(*))
 (define-lff lepton_page_remove void '(* *))
-(define-lff lepton_page_list_get_glist '* '(*))
 
 ;;; slot.c
 (define-lff lepton_slot_search '* '(* *))
