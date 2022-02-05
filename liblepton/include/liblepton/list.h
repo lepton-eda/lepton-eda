@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 2007-2010 Peter Clifton
  * Copyright (C) 2011-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -58,10 +58,8 @@ void lepton_list_remove( LeptonList *list, gpointer item );
 void lepton_list_remove_all( LeptonList *list );
 void lepton_list_move_item( LeptonList* list, gpointer item, gint newpos );
 
-
-
-/*const GList *lepton_list_get_glist( LeptonList *list ); */
-#define lepton_list_get_glist(list) (list->glist)
+GList*
+lepton_list_get_glist (LeptonList* list);
 
 G_END_DECLS
 

@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2000 Ales Hvezda
  * Copyright (C) 2007-2010 Peter Clifton
  * Copyright (C) 2011-2013 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -197,4 +197,17 @@ void lepton_list_move_item( LeptonList* list, gpointer item, gint newpos )
 
     g_signal_emit( list, lepton_list_signals[ CHANGED ], 0 );
   }
+}
+
+
+/*! \brief Returns a pointer to \a glist of the #LeptonList
+ *
+ *  \param [in] list Pointer to the #LeptonList
+ */
+GList*
+lepton_list_get_glist (LeptonList* list)
+{
+  g_return_val_if_fail (list != NULL, NULL);
+
+  return list->glist;
 }

@@ -87,7 +87,7 @@ o_selection_remove (LeptonSelection *selection,
  *
  */
 void
-o_selection_print_all (const LeptonSelection *selection)
+o_selection_print_all (LeptonSelection *selection)
 {
   const GList *s_current;
 
