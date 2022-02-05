@@ -3,7 +3,6 @@ lib_LTLIBRARIES = libleptongui.la
 BUILT_SOURCES = \
 	g_keys.x \
 	g_window.x \
-	g_select.x \
 	scheme_undo.x
 
 libleptongui_la_SOURCES = \
@@ -11,7 +10,6 @@ libleptongui_la_SOURCES = \
 	g_action.c \
 	g_hook.c \
 	g_keys.c \
-	g_select.c \
 	g_window.c \
 	globals.c \
 	lepton-schematic.c \

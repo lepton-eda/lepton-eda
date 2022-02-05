@@ -21,7 +21,6 @@
   #:use-module (lepton ffi lib)
 
   #:export (g_init_keys
-            g_init_select
             g_init_window
             generic_confirm_dialog
             generic_filesel_dialog
@@ -165,7 +164,6 @@
 
 
 (define-lff g_init_keys void '())
-(define-lff g_init_select void '())
 (define-lff g_init_window void '())
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff o_attrib_add_attrib '* (list '* '* int int '*))

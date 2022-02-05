@@ -26,9 +26,6 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton object type)
 
-  ;; Import C procedures
-  #:use-module (schematic core selection)
-
   #:export (object-selected?
             page-selection
             select-object!
