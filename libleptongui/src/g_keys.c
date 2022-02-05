@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,6 @@
 
 /*! Contains the smob tag for key smobs */
 static scm_t_bits g_key_smob_tag;
-#define G_SCM_IS_KEY(x) SCM_SMOB_PREDICATE (g_key_smob_tag, (x))
 
 /*! Type for keybindings. Used internally by lepton-schematic key smobs. */
 typedef struct {
@@ -116,7 +115,8 @@ g_make_key (guint keyval, GdkModifierType modifiers)
 SCM_DEFINE (g_keyp, "%key?", 1, 0, 0, (SCM key_s),
             "Test if value is a lepton-schematic key.")
 {
-  if (G_SCM_IS_KEY (key_s)) {
+  if (SCM_SMOB_PREDICATE (g_key_smob_tag, key_s))
+  {
     return SCM_BOOL_T;
   } else {
     return SCM_BOOL_F;
@@ -164,7 +164,10 @@ SCM_DEFINE (g_string_to_key, "%string->key", 1, 0, 0, (SCM str_s),
 SCM_DEFINE (g_key_to_string, "%key->string", 1, 0, 0, (SCM key_s),
             "Create a string from a lepton-schematic key.")
 {
-  SCM_ASSERT (G_SCM_IS_KEY (key_s), key_s, SCM_ARG1, s_g_key_to_string);
+  SCM_ASSERT (SCM_SMOB_PREDICATE (g_key_smob_tag, key_s),
+              key_s,
+              SCM_ARG1,
+              s_g_key_to_string);
 
   GschemKey *key = (GschemKey *) SCM_SMOB_DATA (key_s);
   if (key->str != NULL) return scm_from_utf8_string (key->str);
@@ -188,7 +191,9 @@ SCM_DEFINE (g_key_to_string, "%key->string", 1, 0, 0, (SCM key_s),
 SCM_DEFINE (g_key_to_display_string, "%key->display-string", 1, 0, 0,
             (SCM key_s), "Create a display string from a lepton-schematic key.")
 {
-  SCM_ASSERT (G_SCM_IS_KEY (key_s), key_s, SCM_ARG1,
+  SCM_ASSERT (SCM_SMOB_PREDICATE (g_key_smob_tag, key_s),
+              key_s,
+              SCM_ARG1,
               s_g_key_to_display_string);
 
   GschemKey *key = (GschemKey *) SCM_SMOB_DATA (key_s);
