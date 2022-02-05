@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,6 +67,7 @@ struct _GschemPageView
 };
 
 
+G_BEGIN_DECLS
 
 GtkAdjustment*
 gschem_page_view_get_hadjustment (GschemPageView *view);
@@ -170,3 +171,5 @@ gschem_page_view_set_hscroll_policy (GschemPageView *view, GtkScrollablePolicy s
 void
 gschem_page_view_set_vscroll_policy (GschemPageView *view, GtkScrollablePolicy scroll);
 #endif
+
+G_END_DECLS
