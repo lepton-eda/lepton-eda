@@ -31,7 +31,8 @@
 
   #:export (object-selected?
             page-selection
-            select-object!))
+            select-object!
+            deselect-object!))
 
 (define (page-selection page)
   "Return a list of selected objects on PAGE."
@@ -62,7 +63,26 @@ is already selected, does nothing. Returns OBJECT."
     object))
 
 
-(define-public deselect-object! %deselect-object!)
+(define (deselect-object! object)
+  "Removes OBJECT from its associated page's selection.  If OBJECT
+is not included directly in a page (i.e. not via inclusion in a
+component), raises the 'object-state Scheme error.  If OBJECT is
+not selected,does nothing.  Returns OBJECT."
+  (define *object (geda-object->pointer* object 1))
+
+  (let ((*page (lepton_object_get_page *object)))
+    (when (or (null-pointer? *page)
+              (not (null-pointer? (lepton_object_get_parent *object))))
+      (scm-error 'object-state
+                 select-object!
+                 "Object ~A is not directly included in a page."
+                 (list object)
+                 '()))
+    (when (true? (lepton_object_get_selected *object))
+      (o_selection_remove (lepton_page_get_selection_list *page)
+                          *object))
+    object))
+
 
 (define (object-selected? object)
   "Returns #t if OBJECT is selected.  Otherwise, returns #f.  If

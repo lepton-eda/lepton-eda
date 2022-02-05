@@ -20,47 +20,6 @@
 
 #include "gschem.h"
 
-SCM_SYMBOL (object_state_sym, "object-state");
-
-/*! \brief Deselect an object.
- * \par Function Description
- * Remove \a obj_s from its associated page's selection.  If \a obj_s
- * is not included directly in a page (i.e. not via inclusion in a
- * component), throws a Scheme error.  If \a obj_s is not selected,
- * does nothing.
- *
- * \note Scheme API: Implements the %deselect-object! procedure in the
- * (schematic core selection) module.
- *
- * \param obj_s #LeptonObject smob for object to be deselected.
- * \return obj_s.
- */
-SCM_DEFINE (deselect_object_x, "%deselect-object!", 1, 0, 0,
-            (SCM obj_s), "Deselect an object.")
-{
-  /* Ensure that the argument is an object smob */
-  SCM_ASSERT (edascm_is_object (obj_s), obj_s,
-              SCM_ARG1, s_deselect_object_x);
-
-  LeptonObject *obj = edascm_to_object (obj_s);
-  LeptonPage *page = lepton_object_get_page (obj);
-  if ((page == NULL) ||
-      (lepton_object_get_parent (obj) != NULL))
-  {
-    scm_error (object_state_sym,
-               s_deselect_object_x,
-               _("Object ~A is not directly included in a page."),
-               scm_list_1 (obj_s), SCM_EOL);
-  }
-
-  if (lepton_object_get_selected (obj))
-  {
-    o_selection_remove (lepton_page_get_selection_list (page), obj);
-  }
-
-  return obj_s;
-}
-
 /*! \brief Create the (schematic core selection) Scheme module
  * \par Function Description
  * Defines procedures in the (schematic core selection) module. The module
@@ -73,8 +32,7 @@ init_module_schematic_core_select (void *unused)
   #include "g_select.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_deselect_object_x,
-                NULL);
+  scm_c_export (NULL);
 }
 
 /*! \brief Initialise the selection manipulation procedures.
