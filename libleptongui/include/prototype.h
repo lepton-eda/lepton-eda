@@ -28,9 +28,6 @@ void g_keys_reset (GschemToplevel *w_current);
 int g_keys_execute(GschemToplevel *w_current, GdkEventKey *event);
 void g_init_keys ();
 
-/* scheme_undo.c */
-void scheme_init_undo();
-
 /* g_window.c */
 GschemToplevel *g_current_window ();
 void g_dynwind_window (GschemToplevel *w_current);

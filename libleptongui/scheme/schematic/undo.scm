@@ -24,10 +24,6 @@
   #:use-module (schematic ffi)
   #:use-module (schematic window)
 
-    ; see schematic/src/scheme_undo.c:
-    ;
-    #:use-module ( schematic core undo )
-
     ; public:
     ;
     #:export     ( undo-save-state )

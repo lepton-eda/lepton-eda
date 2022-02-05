@@ -132,7 +132,6 @@
             o_attrib_add_attrib
             o_buffer_init
             o_undo_init
-            scheme_init_undo
             set_quiet_mode
             set_verbose_mode
             x_color_init
@@ -173,7 +172,6 @@
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff o_attrib_add_attrib '* (list '* '* int int '*))
 (define-lff o_buffer_init void '())
-(define-lff scheme_init_undo void '())
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())
 (define-lff x_color_init void '())

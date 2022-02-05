@@ -70,8 +70,7 @@ exec @GUILE@ -s "$0" "$@"
                                   %load-compiled-path)))
 (define (register-guile-funcs)
   (g_init_window)
-  (g_init_keys)
-  (scheme_init_undo))
+  (g_init_keys))
 
 (define (precompile-run)
   (let ((script (getenv "LEPTON_SCM_PRECOMPILE_SCRIPT")))

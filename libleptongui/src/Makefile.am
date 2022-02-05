@@ -2,8 +2,7 @@ lib_LTLIBRARIES = libleptongui.la
 
 BUILT_SOURCES = \
 	g_keys.x \
-	g_window.x \
-	scheme_undo.x
+	g_window.x
 
 libleptongui_la_SOURCES = \
 	a_zoom.c \
@@ -106,7 +105,6 @@ libleptongui_la_SOURCES = \
 	x_stroke.c \
 	x_window.c \
 	x_widgets.c \
-	scheme_undo.c \
 	x_tabs.c \
 	color_edit_widget.c \
 	font_select_widget.c
