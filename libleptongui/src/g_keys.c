@@ -222,10 +222,16 @@ SCM_DEFINE (g_key_to_string, "%key->string", 1, 0, 0, (SCM key_s),
               s_g_key_to_string);
 
   GschemKey *key = (GschemKey *) SCM_SMOB_DATA (key_s);
-  if (key->str != NULL) return scm_from_utf8_string (key->str);
 
-  key->str = gtk_accelerator_name (key->keyval, key->modifiers);
-  return scm_from_utf8_string (key->str);
+  gchar* current_str = schematic_key_get_str (key);
+
+  if (current_str != NULL) return scm_from_utf8_string (current_str);
+
+  gchar* new_str = gtk_accelerator_name (schematic_key_get_keyval (key),
+                                         schematic_key_get_modifiers (key));
+  schematic_key_set_str (key, new_str);
+
+  return scm_from_utf8_string (new_str);
 }
 
 /*! \brief Convert a bindable key object to a displayable string.
