@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2011 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2011-2013 gEDA Contributors
-;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,14 +24,24 @@
   #:use-module (ice-9 optargs)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi)
 
   #:use-module (schematic core gettext)
   #:use-module (schematic core keymap)
-  #:use-module (schematic hook))
+  #:use-module (schematic ffi)
+  #:use-module (schematic hook)
+
+  #:export (key?))
 
 ;; -------------------- Key combinations --------------------
 
-(define-public key? %key?)
+(define (key? key)
+  "Predicate function which tests if KEY is a bindable key object
+in lepton-schematic."
+  (true? (schematic_key_is_key (scm->pointer key))))
+
 
 (define-public key->string %key->string)
 

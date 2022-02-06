@@ -146,6 +146,8 @@
             x_window_set_current_page
             x_window_setup
 
+            schematic_key_is_key
+
             gschem_page_view_get_page
 
             gschem_toplevel_get_current_page_view
@@ -187,6 +189,9 @@
 (define-lff set_verbose_mode void '())
 (define-lff x_color_init void '())
 (define-lff x_widgets_show_log void (list '*))
+
+;;; g_keys.c
+(define-lff schematic_key_is_key int '(*))
 
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
