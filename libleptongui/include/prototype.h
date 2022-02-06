@@ -30,6 +30,18 @@ g_make_key (guint keyval,
 gboolean
 schematic_key_is_key (SCM key_s);
 
+gchar*
+schematic_key_get_str (GschemKey *key);
+
+gchar*
+schematic_key_get_disp_str (GschemKey *key);
+
+guint
+schematic_key_get_keyval (GschemKey *key);
+
+GdkModifierType
+schematic_key_get_modifiers (GschemKey *key);
+
 void g_keys_reset (GschemToplevel *w_current);
 int g_keys_execute(GschemToplevel *w_current, GdkEventKey *event);
 void g_init_keys ();

@@ -113,6 +113,62 @@ schematic_key_is_key (SCM key_s)
   return SCM_SMOB_PREDICATE (g_key_smob_tag, key_s);
 }
 
+
+/*! \brief Return the \a str field value of a #GschemKey object.
+ *
+ * \param key The #GschemKey object.
+ * \return The value of the \a str field.
+ */
+gchar*
+schematic_key_get_str (GschemKey *key)
+{
+  g_return_val_if_fail (key != NULL, NULL);
+
+  return key->str;
+}
+
+
+/*! \brief Return the \a disp_str field value of a #GschemKey object.
+ *
+ * \param key The #GschemKey object.
+ * \return The value of the \a disp_str field.
+ */
+gchar*
+schematic_key_get_disp_str (GschemKey *key)
+{
+  g_return_val_if_fail (key != NULL, NULL);
+
+  return key->disp_str;
+}
+
+
+/*! \brief Return the \a keyval field value of a #GschemKey object.
+ *
+ * \param key The #GschemKey object.
+ * \return The value of the \a keyval field.
+ */
+guint
+schematic_key_get_keyval (GschemKey *key)
+{
+  g_return_val_if_fail (key != NULL, 0);
+
+  return key->keyval;
+}
+
+
+/*! \brief Return the \a modifiers field value of a #GschemKey object.
+ *
+ * \param key The #GschemKey object.
+ * \return The value of the \a modifiers field.
+ */
+GdkModifierType
+schematic_key_get_modifiers (GschemKey *key)
+{
+  g_return_val_if_fail (key != NULL, (GdkModifierType) 0);
+
+  return key->modifiers;
+}
+
 /*! \brief Convert a bindable key object to a string.
  * \par Function Description
  * Returns a string representation of the lepton-schematic key
