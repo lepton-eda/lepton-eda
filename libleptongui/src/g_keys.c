@@ -27,14 +27,6 @@
 /*! Contains the smob tag for key smobs */
 static scm_t_bits g_key_smob_tag;
 
-/*! Type for keybindings. Used internally by lepton-schematic key smobs. */
-typedef struct {
-  guint keyval;
-  GdkModifierType modifiers;
-  gchar *str; /* UTF-8. Free with g_free(). */
-  gchar *disp_str; /* UTF-8. Free with g_free(). */
-} GschemKey;
-
 /*! \brief Test if a key is valid.
  * \par Function Description
  * Test if the key combination defined by \a keyval and \a modifiers
