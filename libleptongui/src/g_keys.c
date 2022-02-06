@@ -101,6 +101,18 @@ g_make_key (guint keyval, GdkModifierType modifiers)
   return result;
 }
 
+
+/*! \brief Test if a Scheme value is a bindable key object.
+ *
+ * \param key_s the value to test
+ * \return TRUE if the value is a key, otherwise FALSE.
+ */
+gboolean
+schematic_key_is_key (SCM key_s)
+{
+  return SCM_SMOB_PREDICATE (g_key_smob_tag, key_s);
+}
+
 /*! \brief Test if a Scheme value is a bindable key object.
  * \par Function Description
  * Returns SCM_BOOL_T if \a key_s is a lepton-schematic key
@@ -115,7 +127,7 @@ g_make_key (guint keyval, GdkModifierType modifiers)
 SCM_DEFINE (g_keyp, "%key?", 1, 0, 0, (SCM key_s),
             "Test if value is a lepton-schematic key.")
 {
-  if (SCM_SMOB_PREDICATE (g_key_smob_tag, key_s))
+  if (schematic_key_is_key (key_s))
   {
     return SCM_BOOL_T;
   } else {
@@ -164,7 +176,7 @@ SCM_DEFINE (g_string_to_key, "%string->key", 1, 0, 0, (SCM str_s),
 SCM_DEFINE (g_key_to_string, "%key->string", 1, 0, 0, (SCM key_s),
             "Create a string from a lepton-schematic key.")
 {
-  SCM_ASSERT (SCM_SMOB_PREDICATE (g_key_smob_tag, key_s),
+  SCM_ASSERT (schematic_key_is_key (key_s),
               key_s,
               SCM_ARG1,
               s_g_key_to_string);
@@ -191,7 +203,7 @@ SCM_DEFINE (g_key_to_string, "%key->string", 1, 0, 0, (SCM key_s),
 SCM_DEFINE (g_key_to_display_string, "%key->display-string", 1, 0, 0,
             (SCM key_s), "Create a display string from a lepton-schematic key.")
 {
-  SCM_ASSERT (SCM_SMOB_PREDICATE (g_key_smob_tag, key_s),
+  SCM_ASSERT (schematic_key_is_key (key_s),
               key_s,
               SCM_ARG1,
               s_g_key_to_display_string);
