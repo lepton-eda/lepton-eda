@@ -22,6 +22,7 @@
 (define-module (schematic keymap)
   #:use-module (ice-9 control)
   #:use-module (ice-9 optargs)
+  #:use-module (rnrs bytevectors)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
   #:use-module (system foreign)
@@ -31,9 +32,11 @@
   #:use-module (schematic core gettext)
   #:use-module (schematic core keymap)
   #:use-module (schematic ffi)
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic hook)
 
-  #:export (key?))
+  #:export (key?
+            string->key))
 
 ;; -------------------- Key combinations --------------------
 
@@ -47,11 +50,38 @@ in lepton-schematic."
 
 (define-public key->display-string %key->display-string)
 
-(define-public (string->key str)
-  (or (%string->key str)
-      (scm-error 'key-format #f
-                 (G_ "~S is not a valid key combination.")
-                 (list str) #f)))
+
+(define (string->key str)
+  "Parse the string key description STR to create and return a new
+lepton-schematic key object.  If STR contains syntax errors, or
+does not represent a valid bindable key combination, raises the
+'key-format Scheme error."
+  (define GdkModifierType uint32)
+
+  (check-string str 1)
+
+  (let ((keyval-bv (make-bytevector (sizeof int) 0))
+        (modifiers-bv (make-bytevector (sizeof GdkModifierType) 0)))
+
+    (gtk_accelerator_parse (string->pointer str)
+                           (bytevector->pointer keyval-bv)
+                           (bytevector->pointer modifiers-bv))
+    (let ((keyval (bytevector-uint-ref keyval-bv
+                                       0
+                                       (native-endianness)
+                                       (sizeof int)))
+          (modifiers (bytevector-u32-ref modifiers-bv
+                                         0
+                                         (native-endianness))))
+      (if (and (zero? keyval)
+               (zero? modifiers))
+          (scm-error 'key-format
+                     #f
+                     "~S is not a valid key combination."
+                     (list str)
+                     #f)
+          (pointer->scm (g_make_key keyval modifiers))))))
+
 
 ;; -------------------- Key sequences --------------------
 

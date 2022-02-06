@@ -88,7 +88,7 @@ g_key_is_valid (guint keyval, GdkModifierType modifiers)
  *
  * \return a new bindable key object, or SCM_BOOL_F.
  */
-static SCM
+SCM
 g_make_key (guint keyval, GdkModifierType modifiers)
 {
   SCM result = SCM_BOOL_F;
@@ -111,32 +111,6 @@ gboolean
 schematic_key_is_key (SCM key_s)
 {
   return SCM_SMOB_PREDICATE (g_key_smob_tag, key_s);
-}
-
-/*! \brief Create a bindable key object from a string.
- * \par Function Description
- * Parse the string key description \a str_s to create and return
- * a new lepton-schematic key object.  If \a str_s contains syntax
- * errors, or does not represent a valid bindable key combination,
- * returns SCM_BOOL_F.
- *
- * \note Scheme API: Implements the %string-key procedure in the
- * (schematic core keymap) module.
- *
- * \param str_s  string to parse.
- * \return a new lepton-schematic key object, or SCM_BOOL_F.
- */
-SCM_DEFINE (g_string_to_key, "%string->key", 1, 0, 0, (SCM str_s),
-            "Create a lepton-schematic key by parsing a string.")
-{
-  SCM_ASSERT (scm_is_string (str_s), str_s, SCM_ARG1, s_g_string_to_key);
-
-  guint keyval;
-  GdkModifierType modifiers;
-  char *str = scm_to_utf8_string (str_s);
-  gtk_accelerator_parse (str, &keyval, &modifiers);
-  if ((keyval == 0) && (modifiers == 0)) return SCM_BOOL_F;
-  return g_make_key (keyval, modifiers);
 }
 
 /*! \brief Convert a bindable key object to a string.
@@ -420,8 +394,7 @@ init_module_schematic_core_keymap (void *unused)
   #include "g_keys.x"
 
   /* Add them to the module's public definitions */
-  scm_c_export (s_g_string_to_key,
-                s_g_key_to_string,
+  scm_c_export (s_g_key_to_string,
                 s_g_key_to_display_string,
                 NULL);
 }
