@@ -113,28 +113,6 @@ schematic_key_is_key (SCM key_s)
   return SCM_SMOB_PREDICATE (g_key_smob_tag, key_s);
 }
 
-/*! \brief Test if a Scheme value is a bindable key object.
- * \par Function Description
- * Returns SCM_BOOL_T if \a key_s is a lepton-schematic key
- * object.  Otherwise, returns SCM_BOOL_F.
- *
- * \note Scheme API: Implements the %key? procedure in the
- * (schematic core keymap) module.
- *
- * \param key_s          value to test
- * \return SCM_BOOL_T iff value is a key, otherwise SCM_BOOL_F.
- */
-SCM_DEFINE (g_keyp, "%key?", 1, 0, 0, (SCM key_s),
-            "Test if value is a lepton-schematic key.")
-{
-  if (schematic_key_is_key (key_s))
-  {
-    return SCM_BOOL_T;
-  } else {
-    return SCM_BOOL_F;
-  }
-}
-
 /*! \brief Create a bindable key object from a string.
  * \par Function Description
  * Parse the string key description \a str_s to create and return
@@ -442,8 +420,10 @@ init_module_schematic_core_keymap (void *unused)
   #include "g_keys.x"
 
   /* Add them to the module's public definitions */
-  scm_c_export (s_g_keyp, s_g_string_to_key, s_g_key_to_string,
-                s_g_key_to_display_string, NULL);
+  scm_c_export (s_g_string_to_key,
+                s_g_key_to_string,
+                s_g_key_to_display_string,
+                NULL);
 }
 
 /*! \brief Initialise the key combination procedures
