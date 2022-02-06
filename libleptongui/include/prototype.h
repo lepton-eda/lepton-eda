@@ -24,6 +24,9 @@ g_run_hook_page (GschemToplevel *w_current,
 void g_run_hook_action_mode (GschemToplevel *w_current, const char *name, const gchar *action_mode);
 
 /* g_keys.c */
+SCM
+g_make_key (guint keyval,
+            GdkModifierType modifiers);
 gboolean
 schematic_key_is_key (SCM key_s);
 

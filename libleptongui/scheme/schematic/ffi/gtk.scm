@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2020-2021 Lepton EDA Contributors
+;;; Copyright (C) 2020-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@
 
   #:export (gtk_init
             gtk_main
+            gtk_accelerator_parse
             gtk_rc_parse
             gtk_icon_theme_get_default
             gtk_icon_theme_append_search_path
@@ -95,6 +96,7 @@
        (list '* '*))))
   ((force proc) icon-theme (string->pointer path)))
 
+(define-lff gtk_accelerator_parse void '(* * *))
 (define-lff gtk_menu_item_new_with_mnemonic '* '(*))
 (define-lff gtk_widget_show void '(*))
 (define-lff gtk_tearoff_menu_item_new '* '())

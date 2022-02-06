@@ -147,6 +147,7 @@
             x_window_setup
 
             schematic_key_is_key
+            g_make_key
 
             gschem_page_view_get_page
 
@@ -192,6 +193,8 @@
 
 ;;; g_keys.c
 (define-lff schematic_key_is_key int '(*))
+(define GdkModifierType uint32)
+(define-lff g_make_key '* (list int GdkModifierType))
 
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
