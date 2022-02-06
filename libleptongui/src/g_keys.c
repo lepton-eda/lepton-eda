@@ -120,6 +120,26 @@ schematic_key_get_str (GschemKey *key)
 }
 
 
+/*! \brief Sets the \a str field value of a #GschemKey object to a
+ *  new value.
+ *
+ * \param key The #GschemKey object.
+ * \param key The string to set.
+ */
+void
+schematic_key_set_str (GschemKey *key, gchar* str)
+{
+  g_return_if_fail (key != NULL);
+
+  if (key->str != NULL)
+  {
+    g_free (key->str);
+  }
+
+  key->str = g_strdup (str);
+}
+
+
 /*! \brief Return the \a disp_str field value of a #GschemKey object.
  *
  * \param key The #GschemKey object.
@@ -131,6 +151,26 @@ schematic_key_get_disp_str (GschemKey *key)
   g_return_val_if_fail (key != NULL, NULL);
 
   return key->disp_str;
+}
+
+
+/*! \brief Sets the \a disp_str field value of a #GschemKey object to a
+ *  new value.
+ *
+ * \param key The #GschemKey object.
+ * \param key The string to set.
+ */
+void
+schematic_key_set_disp_str (GschemKey *key, gchar* disp_str)
+{
+  g_return_if_fail (key != NULL);
+
+  if (key->disp_str != NULL)
+  {
+    g_free (key->disp_str);
+  }
+
+  key->disp_str = g_strdup (disp_str);
 }
 
 

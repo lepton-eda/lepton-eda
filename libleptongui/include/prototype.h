@@ -42,9 +42,15 @@ schematic_key_is_key (SCM key_s);
 gchar*
 schematic_key_get_str (GschemKey *key);
 
+void
+schematic_key_set_str (GschemKey *key,
+                       gchar* str);
 gchar*
 schematic_key_get_disp_str (GschemKey *key);
 
+void
+schematic_key_set_disp_str (GschemKey *key,
+                            gchar* disp_str);
 guint
 schematic_key_get_keyval (GschemKey *key);
 
