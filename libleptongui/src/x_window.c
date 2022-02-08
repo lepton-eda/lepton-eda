@@ -84,8 +84,8 @@ static void
 geometry_save (GschemToplevel* w_current);
 
 static void
-geometry_restore (GschemToplevel* w_current);
-
+geometry_restore (GtkWidget* main_window,
+                  GtkWidget *find_text_state);
 
 static void
 open_page_error_dialog (GschemToplevel* w_current,
@@ -605,7 +605,7 @@ x_window_create_main (gpointer app,
   */
   create_bottom_widget (w_current, main_box);
 
-  geometry_restore (w_current);
+  geometry_restore (main_window, w_current->find_text_state);
 
   /* show all widgets: */
   gtk_widget_show_all (main_window);
@@ -1845,10 +1845,12 @@ geometry_save (GschemToplevel* w_current)
  *  Unless valid configuration values are read, use default width
  *  and height.
  *
- *  \param w_current The toplevel environment.
+ *  \param main_window The main window widget of lepton-schematic.
+ *  \param find_text_state The find text state widget.
  */
 static void
-geometry_restore (GschemToplevel* w_current)
+geometry_restore (GtkWidget* main_window,
+                  GtkWidget *find_text_state)
 {
   gchar* cwd = g_get_current_dir();
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
@@ -1880,7 +1882,7 @@ geometry_restore (GschemToplevel* w_current)
 
     if (x > 0 && y > 0)
     {
-      gtk_window_move (GTK_WINDOW (w_current->main_window), x, y);
+      gtk_window_move (GTK_WINDOW (main_window), x, y);
     }
 
     width  = eda_config_get_int (ccfg, "schematic.window-geometry", "width",  NULL);
@@ -1894,12 +1896,12 @@ geometry_restore (GschemToplevel* w_current)
     height = default_height;
   }
 
-  gtk_window_resize (GTK_WINDOW (w_current->main_window), width, height);
+  gtk_window_resize (GTK_WINDOW (main_window), width, height);
 
 
   if (x_widgets_use_docks())
   {
-    gtk_widget_set_size_request (w_current->find_text_state,
+    gtk_widget_set_size_request (find_text_state,
                                  -1,
                                  height / 4);
   }
