@@ -24,6 +24,7 @@
             gtk_main
             gtk_accelerator_parse
             gtk_accelerator_name
+            gtk_accelerator_get_label
             gtk_rc_parse
             gtk_icon_theme_get_default
             gtk_icon_theme_append_search_path
@@ -100,6 +101,7 @@
 (define-lff gtk_accelerator_parse void '(* * *))
 (define GdkModifierType uint32)
 (define-lff gtk_accelerator_name '* (list int GdkModifierType))
+(define-lff gtk_accelerator_get_label '* (list int GdkModifierType))
 (define-lff gtk_menu_item_new_with_mnemonic '* '(*))
 (define-lff gtk_widget_show void '(*))
 (define-lff gtk_tearoff_menu_item_new '* '())
