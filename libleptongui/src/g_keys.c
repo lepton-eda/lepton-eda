@@ -274,9 +274,6 @@ g_key_free (SCM key) {
   return 0;
 }
 
-SCM_SYMBOL (reset_keys_sym, "reset-keys");
-SCM_SYMBOL (press_key_sym, "press-key");
-SCM_SYMBOL (prefix_sym, "prefix");
 
 /*! \brief Clear the current key accelerator string.
  * \par Function Description
@@ -314,7 +311,7 @@ static gboolean clear_keyaccel_string(gpointer data)
 void
 g_keys_reset (GschemToplevel *w_current)
 {
-  SCM s_expr = scm_list_1 (reset_keys_sym);
+  SCM s_expr = scm_list_1 (scm_from_utf8_symbol ("reset-keys"));
 
   /* Reset the status bar */
   g_free (w_current->keyaccel_string);
@@ -412,7 +409,7 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
   /* Build and evaluate Scheme expression. */
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
-  s_expr = scm_list_2 (press_key_sym, s_key);
+  s_expr = scm_list_2 (scm_from_utf8_symbol ("press-key"), s_key);
   s_retval = g_scm_eval_protected (s_expr, scm_interaction_environment ());
   scm_dynwind_end ();
 
@@ -429,7 +426,8 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
     }
     w_current->keyaccel_string_source_id = 0;
   }
-  if (!scm_is_eq (s_retval, prefix_sym)) {
+  if (!scm_is_eq (s_retval, scm_from_utf8_symbol ("prefix")))
+  {
     w_current->keyaccel_string_source_id =
       g_timeout_add(400, clear_keyaccel_string, w_current);
   }
