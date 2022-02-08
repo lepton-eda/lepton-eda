@@ -27,12 +27,6 @@
 
 #include "gschem.h"
 
-SCM_SYMBOL (at_sym, "@");
-SCM_SYMBOL (schematic_sym, "schematic");
-SCM_SYMBOL (core_sym, "core");
-SCM_SYMBOL (hook_sym, "hook");
-SCM_SYMBOL (run_hook_sym, "run-hook");
-SCM_SYMBOL (list_sym, "list");
 
 /*! \brief Gets a Scheme hook object by name.
  * \par Function Description
@@ -45,8 +39,10 @@ SCM_SYMBOL (list_sym, "list");
 static SCM
 g_get_hook_by_name (const char *name)
 {
-  SCM exp = scm_list_3 (at_sym,
-                        scm_list_3 (schematic_sym, core_sym, hook_sym),
+  SCM exp = scm_list_3 (scm_from_utf8_symbol ("@"),
+                        scm_list_3 (scm_from_utf8_symbol ("schematic"),
+                                    scm_from_utf8_symbol ("core"),
+                                    scm_from_utf8_symbol ("hook")),
                         scm_from_utf8_symbol (name));
   return g_scm_eval_protected (exp, SCM_UNDEFINED);
 }
@@ -74,9 +70,9 @@ g_run_hook_object_list (GschemToplevel *w_current, const char *name,
   for (iter = obj_lst; iter != NULL; iter = g_list_next (iter)) {
     lst = scm_cons (edascm_from_object ((LeptonObject *) iter->data), lst);
   }
-  SCM expr = scm_list_3 (run_hook_sym,
+  SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),
                          g_get_hook_by_name (name),
-                         scm_cons (list_sym,
+                         scm_cons (scm_from_utf8_symbol ("list"),
                                    scm_reverse_x (lst, SCM_EOL)));
 
   g_scm_eval_protected (expr, scm_interaction_environment ());
@@ -100,9 +96,10 @@ g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *ob
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
-  SCM expr = scm_list_3 (run_hook_sym,
+  SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),
                          g_get_hook_by_name (name),
-                         scm_list_2 (list_sym, edascm_from_object (obj)));
+                         scm_list_2 (scm_from_utf8_symbol ("list"),
+                                     edascm_from_object (obj)));
 
   g_scm_eval_protected (expr, scm_interaction_environment ());
   scm_dynwind_end ();
@@ -125,7 +122,7 @@ g_run_hook_page (GschemToplevel *w_current,
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
-  SCM expr = scm_list_3 (run_hook_sym,
+  SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),
                          g_get_hook_by_name (name),
                          edascm_from_page (page));
 
@@ -150,7 +147,7 @@ g_run_hook_action_mode (GschemToplevel *w_current,
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
-  SCM expr = scm_list_3 (run_hook_sym,
+  SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),
                          g_get_hook_by_name (name),
                          scm_list_2 (scm_from_utf8_symbol ("quote"),
                                      scm_from_utf8_symbol (action_mode)));
