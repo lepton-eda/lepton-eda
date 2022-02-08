@@ -248,8 +248,22 @@ SCM_DEFINE (g_key_to_display_string, "%key->display-string", 1, 0, 0,
 static int
 g_key_print (SCM smob, SCM port, scm_print_state *pstate)
 {
+  SCM_ASSERT (schematic_key_is_key (smob),
+              smob,
+              SCM_ARG1,
+              "g_key_print");
+
+  GschemKey *key = schematic_key_unwrap_key (smob);
+
+  if (schematic_key_get_disp_str (key) == NULL)
+  {
+    schematic_key_set_disp_str (key, gtk_accelerator_get_label (schematic_key_get_keyval (key),
+                                                                schematic_key_get_modifiers (key)));
+  }
+  SCM s = scm_from_utf8_string (schematic_key_get_disp_str (key));
+
   scm_puts ("#<gschem-key ", port);
-  scm_write (g_key_to_display_string (smob), port);
+  scm_write (s, port);
   scm_puts (">", port);
 
   /* Non-zero means success */
