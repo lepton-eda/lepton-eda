@@ -458,6 +458,7 @@ x_window_create_main (gpointer app,
                       GtkWidget *menubar,
                       gpointer key_event_callback)
 {
+  GtkWidget *main_window = NULL;
   GtkWidget *main_box = NULL;
   GtkWidget *hpaned = NULL;
   GtkWidget *vpaned = NULL;
@@ -465,13 +466,13 @@ x_window_create_main (gpointer app,
   GtkWidget *scrolled = NULL;
 
 #ifdef ENABLE_GTK3
-  w_current->main_window = gtk_application_window_new (GTK_APPLICATION (app));
+  main_window = gtk_application_window_new (GTK_APPLICATION (app));
 #else
-  w_current->main_window = GTK_WIDGET (gschem_main_window_new ());
+  main_window = GTK_WIDGET (gschem_main_window_new ());
 #endif
 
-  gtk_widget_set_name (w_current->main_window, "lepton-schematic");
-  gtk_window_set_resizable (GTK_WINDOW (w_current->main_window), TRUE);
+  gtk_widget_set_name (main_window, "lepton-schematic");
+  gtk_window_set_resizable (GTK_WINDOW (main_window), TRUE);
 
   /* We want the widgets to flow around the drawing area, so we don't
    * set a size of the main window.  The drawing area's size is fixed,
@@ -479,7 +480,7 @@ x_window_create_main (gpointer app,
    */
 
   /* this should work fine */
-  g_signal_connect (G_OBJECT (w_current->main_window), "delete_event",
+  g_signal_connect (G_OBJECT (main_window), "delete_event",
                     G_CALLBACK (i_callback_close_wm),
                     w_current);
 
@@ -493,7 +494,7 @@ x_window_create_main (gpointer app,
   main_box = gtk_vbox_new (FALSE, 1);
 #endif
   gtk_container_set_border_width (GTK_CONTAINER (main_box), 0);
-  gtk_container_add (GTK_CONTAINER (w_current->main_window), main_box);
+  gtk_container_add (GTK_CONTAINER (main_window), main_box);
 
 
   /*
@@ -547,7 +548,7 @@ x_window_create_main (gpointer app,
 
 
   /* setup callbacks for draw events - main window: */
-  x_window_setup_draw_events_main_wnd (w_current, w_current->main_window);
+  x_window_setup_draw_events_main_wnd (w_current, main_window);
 
 
   /*
@@ -607,7 +608,7 @@ x_window_create_main (gpointer app,
   geometry_restore (w_current);
 
   /* show all widgets: */
-  gtk_widget_show_all (w_current->main_window);
+  gtk_widget_show_all (main_window);
 
 
   if ( !x_widgets_use_docks() )
@@ -619,6 +620,8 @@ x_window_create_main (gpointer app,
 
   /* focus page view: */
   gtk_widget_grab_focus (w_current->drawing_area);
+
+  w_current->main_window = main_window;
 
   return w_current;
 } /* x_window_create_main() */
