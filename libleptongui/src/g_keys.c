@@ -201,37 +201,12 @@ schematic_key_get_modifiers (GschemKey *key)
   return key->modifiers;
 }
 
-/*! \brief Convert a bindable key object to a string.
- * \par Function Description
- * Returns a string representation of the lepton-schematic key
- * object \a key_s, in a format suitable for parsing with
- * %string->key.
- *
- * \note Scheme API: Implements the %key->string procedure in the
- * (schematic core keymap) module.
- *
- * \param key_s  Bindable key object to convert to string.
- * \return a string representation of the key combination.
+/*! \brief Convert a bindable key object SMOB to #GschemKey.
  */
-SCM_DEFINE (g_key_to_string, "%key->string", 1, 0, 0, (SCM key_s),
-            "Create a string from a lepton-schematic key.")
+GschemKey*
+schematic_key_unwrap_key (SCM key_s)
 {
-  SCM_ASSERT (schematic_key_is_key (key_s),
-              key_s,
-              SCM_ARG1,
-              s_g_key_to_string);
-
-  GschemKey *key = (GschemKey *) SCM_SMOB_DATA (key_s);
-
-  gchar* current_str = schematic_key_get_str (key);
-
-  if (current_str != NULL) return scm_from_utf8_string (current_str);
-
-  gchar* new_str = gtk_accelerator_name (schematic_key_get_keyval (key),
-                                         schematic_key_get_modifiers (key));
-  schematic_key_set_str (key, new_str);
-
-  return scm_from_utf8_string (new_str);
+  return (GschemKey *) SCM_SMOB_DATA (key_s);
 }
 
 /*! \brief Convert a bindable key object to a displayable string.
@@ -488,8 +463,7 @@ init_module_schematic_core_keymap (void *unused)
   #include "g_keys.x"
 
   /* Add them to the module's public definitions */
-  scm_c_export (s_g_key_to_string,
-                s_g_key_to_display_string,
+  scm_c_export (s_g_key_to_display_string,
                 NULL);
 }
 

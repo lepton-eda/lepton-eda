@@ -36,6 +36,7 @@
   #:use-module (schematic hook)
 
   #:export (key?
+            key->string
             string->key))
 
 ;; -------------------- Key combinations --------------------
@@ -45,8 +46,38 @@
 in lepton-schematic."
   (true? (schematic_key_is_key (scm->pointer key))))
 
+(define (unwrap-key key)
+  (schematic_key_unwrap_key (scm->pointer key)))
 
-(define-public key->string %key->string)
+(define-syntax check-key
+  (syntax-rules ()
+    ((_ key pos)
+     (let ((pointer (unwrap-key key)))
+       (if (null-pointer? pointer)
+           (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
+             (scm-error 'wrong-type-arg
+                        proc-name
+                        "Wrong type argument in position ~A: ~A"
+                        (list pos key)
+                        #f))
+           pointer)))))
+
+(define (key->string key)
+  "Converts the bindable key object KEY to a string.  Returns a
+string representation of the key combination, in a format suitable
+for parsing with string->key()."
+  (define *key (check-key key 1))
+
+  (let ((*current-str (schematic_key_get_str *key)))
+
+    (if (not (null-pointer? *current-str))
+        (pointer->string *current-str)
+        (let ((*new-str (gtk_accelerator_name (schematic_key_get_keyval *key)
+                                              (schematic_key_get_modifiers *key))))
+          (schematic_key_set_str *key *new-str)
+
+          (pointer->string *new-str)))))
+
 
 (define-public key->display-string %key->display-string)
 

@@ -147,6 +147,11 @@
             x_window_setup
 
             schematic_key_is_key
+            schematic_key_unwrap_key
+            schematic_key_get_keyval
+            schematic_key_get_modifiers
+            schematic_key_get_str
+            schematic_key_set_str
             g_make_key
 
             gschem_page_view_get_page
@@ -192,8 +197,13 @@
 (define-lff x_widgets_show_log void (list '*))
 
 ;;; g_keys.c
-(define-lff schematic_key_is_key int '(*))
 (define GdkModifierType uint32)
+(define-lff schematic_key_is_key int '(*))
+(define-lff schematic_key_unwrap_key '* '(*))
+(define-lff schematic_key_get_keyval int '(*))
+(define-lff schematic_key_get_modifiers GdkModifierType '(*))
+(define-lff schematic_key_get_str '* '(*))
+(define-lff schematic_key_set_str void '(* *))
 (define-lff g_make_key '* (list int GdkModifierType))
 
 ;;; gschem_page_view.c
