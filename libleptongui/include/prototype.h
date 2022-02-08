@@ -39,6 +39,9 @@ g_make_key (guint keyval,
 gboolean
 schematic_key_is_key (SCM key_s);
 
+GschemKey*
+schematic_key_unwrap_key (SCM key_s);
+
 gchar*
 schematic_key_get_str (GschemKey *key);
 
