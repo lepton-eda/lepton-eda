@@ -37,7 +37,8 @@
 
   #:export (key?
             key->string
-            string->key))
+            string->key
+            key->display-string))
 
 ;; -------------------- Key combinations --------------------
 
@@ -79,7 +80,20 @@ for parsing with string->key()."
           (pointer->string *new-str)))))
 
 
-(define-public key->display-string %key->display-string)
+(define (key->display-string key)
+  "Converts the bindable key object KEY to a displayable string.
+Returns a string representation of the key combination in a format
+suitable for display to the user (e.g. as accelerator text in a
+menu)."
+  (define *key (check-key key 1))
+
+  (let ((*str (schematic_key_get_disp_str *key)))
+    (if (null-pointer? *str)
+        (let ((*new-str (gtk_accelerator_get_label (schematic_key_get_keyval *key)
+                                                   (schematic_key_get_modifiers *key))))
+          (schematic_key_set_disp_str *key *new-str)
+          (pointer->string *new-str))
+        (pointer->string *str))))
 
 
 (define (string->key str)

@@ -209,35 +209,6 @@ schematic_key_unwrap_key (SCM key_s)
   return (GschemKey *) SCM_SMOB_DATA (key_s);
 }
 
-/*! \brief Convert a bindable key object to a displayable string.
- * \par Function Description
- * Returns a string representation of the lepton-schematic key
- * object \a key_s, in a format suitable for display to the user
- * (e.g. as accelerator text in a menu).
- *
- * \note Scheme API: Implements the %key->display-string procedure in
- * the (schematic core keymap) module.
- *
- * \param key_s  Bindable key object to convert to string.
- * \return a string representation of the key combination.
- */
-SCM_DEFINE (g_key_to_display_string, "%key->display-string", 1, 0, 0,
-            (SCM key_s), "Create a display string from a lepton-schematic key.")
-{
-  SCM_ASSERT (schematic_key_is_key (key_s),
-              key_s,
-              SCM_ARG1,
-              s_g_key_to_display_string);
-
-  GschemKey *key = schematic_key_unwrap_key (key_s);
-  if (schematic_key_get_disp_str (key) == NULL)
-  {
-    schematic_key_set_disp_str (key, gtk_accelerator_get_label (schematic_key_get_keyval (key),
-                                                                schematic_key_get_modifiers (key)));
-  }
-  return scm_from_utf8_string (schematic_key_get_disp_str (key));
-}
-
 /*! \brief Print a representation of a key smob
  * \par Function Description
  * Outputs a string representing the \a smob to a Scheme output \a
@@ -478,8 +449,7 @@ init_module_schematic_core_keymap (void *unused)
   #include "g_keys.x"
 
   /* Add them to the module's public definitions */
-  scm_c_export (s_g_key_to_display_string,
-                NULL);
+  scm_c_export (NULL);
 }
 
 /*! \brief Initialise the key combination procedures
