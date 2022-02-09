@@ -80,7 +80,7 @@ g_key_is_valid (guint keyval, GdkModifierType modifiers)
  *
  * \return a new bindable key object, or SCM_BOOL_F.
  */
-static GschemKey*
+GschemKey*
 g_make_key_struct (guint keyval,
                    GdkModifierType modifiers)
 {
@@ -96,11 +96,9 @@ g_make_key_struct (guint keyval,
 
 
 SCM
-g_make_key (guint keyval,
-            GdkModifierType modifiers)
+g_make_key (GschemKey *k)
 {
   SCM result = SCM_BOOL_F;
-  GschemKey *k = g_make_key_struct (keyval, (GdkModifierType) modifiers);
   if (k != NULL)
   {
     SCM_NEWSMOB (result, g_key_smob_tag, k);
@@ -454,8 +452,10 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
   /* Update status bar */
   i_show_state(w_current, NULL);
 
+  GschemKey *k = g_make_key_struct (key, (GdkModifierType) mods);
+
   /* Create Scheme key value */
-  s_key = g_make_key (key, (GdkModifierType) mods);
+  s_key = g_make_key (k);
 
   /* Build and evaluate Scheme expression. */
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
