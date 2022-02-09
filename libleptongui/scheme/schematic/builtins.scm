@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2013 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2013-2015 gEDA Contributors
-;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -101,7 +101,8 @@
 
   (x_window_open_page
    (x_window_create_main new-window
-                         (make-main-menu new-window))
+                         (make-main-menu new-window)
+                         *process-key-event)
    %null-pointer))
 
 (define-action-public (&file-new-window #:label (G_ "New Window") #:icon "window-new")

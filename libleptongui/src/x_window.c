@@ -197,6 +197,8 @@ void x_window_setup_draw_events_main_wnd (GschemToplevel* w_current,
 } /* x_window_setup_draw_events_main_wnd() */
 
 
+gpointer _key_event_callback = NULL;
+
 
 /*! \brief Set up callbacks for the drawing area.
  *  \par Function Description
@@ -227,8 +229,8 @@ void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
     { "button_release_event", G_CALLBACK(x_event_button_released)              },
     { "motion_notify_event",  G_CALLBACK(x_event_motion)                       },
     { "configure_event",      G_CALLBACK(x_event_configure)                    },
-    { "key_press_event",      G_CALLBACK(x_event_key)                          },
-    { "key_release_event",    G_CALLBACK(x_event_key)                          },
+    { "key_press_event",      G_CALLBACK(_key_event_callback)                   },
+    { "key_release_event",    G_CALLBACK(_key_event_callback)                   },
     { "scroll_event",         G_CALLBACK(x_event_scroll)                       },
     { "update-grid-info",     G_CALLBACK(i_update_grid_info_callback)          },
     { "notify::page",         G_CALLBACK(gschem_toplevel_notify_page_callback) },
@@ -443,7 +445,9 @@ x_window_translate_response (GschemTranslateWidget *widget, gint response, Gsche
  *
  */
 GschemToplevel*
-x_window_create_main (GschemToplevel *w_current, GtkWidget *menubar)
+x_window_create_main (GschemToplevel *w_current,
+                      GtkWidget *menubar,
+                      gpointer key_event_callback)
 {
   GtkWidget *main_box = NULL;
   GtkWidget *hpaned = NULL;
@@ -506,6 +510,8 @@ x_window_create_main (GschemToplevel *w_current, GtkWidget *menubar)
 #else
   work_box = gtk_vbox_new (FALSE, 0);
 #endif
+
+  _key_event_callback = key_event_callback;
 
   if (x_tabs_enabled())
   {
