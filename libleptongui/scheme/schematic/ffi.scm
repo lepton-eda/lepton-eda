@@ -19,6 +19,7 @@
 (define-module (schematic ffi)
   #:use-module (system foreign)
   #:use-module (lepton ffi lib)
+  #:use-module (lepton ffi)
 
   #:export (g_init_keys
             g_init_window
@@ -154,6 +155,7 @@
             schematic_key_set_str
             schematic_key_get_disp_str
             schematic_key_set_disp_str
+            g_keys_execute
             g_make_key
 
             gschem_page_view_get_page
@@ -210,6 +212,7 @@
 (define-lff schematic_key_set_str void '(* *))
 (define-lff schematic_key_get_disp_str '* '(*))
 (define-lff schematic_key_set_disp_str void '(* *))
+(define-lff g_keys_execute int '(* *))
 (define-lff g_make_key '* (list int GdkModifierType))
 
 ;;; gschem_page_view.c
@@ -348,7 +351,7 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 
 ;;; x_event.c
-(define-lff x_event_key int '(* * *))
+(define-lff x_event_key '* '(* * *))
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
@@ -364,7 +367,10 @@
            ((force proc))))))
 
 (define (process-key-event *view *event *window)
-  (x_event_key *view *event *window))
+  (let ((*event (x_event_key *view *event *window)))
+    (if (null-pointer? *event)
+        FALSE
+        (g_keys_execute *window *event))))
 
 (define *process-key-event
   (procedure->pointer int process-key-event '(* * *)))
