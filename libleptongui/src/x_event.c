@@ -652,10 +652,11 @@ gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event,
  * \param      w_current  the toplevel environment
  * \returns TRUE if the event has been handled.
  */
-gboolean
-x_event_key (GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_current)
+GdkEventKey*
+x_event_key (GschemPageView *page_view,
+             GdkEventKey *event,
+             GschemToplevel *w_current)
 {
-  gboolean retval = FALSE;
   int pressed;
   gboolean special = FALSE;
 
@@ -691,9 +692,6 @@ x_event_key (GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_cu
       break;
   }
 
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  g_dynwind_window (w_current);
-
   /* Special case to update the object being drawn or placed after
    * scrolling when Shift or Control were pressed */
   if (special) {
@@ -701,11 +699,13 @@ x_event_key (GschemPageView *page_view, GdkEventKey *event, GschemToplevel *w_cu
   }
 
   if (pressed)
-    retval = g_keys_execute (w_current, event) ? TRUE : FALSE;
-
-  scm_dynwind_end ();
-
-  return retval;
+  {
+    return event;
+  }
+  else
+  {
+    return NULL;
+  }
 }
 
 
