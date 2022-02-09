@@ -93,7 +93,7 @@ struct st_gschem_toplevel {
 
   gchar *keyaccel_string;               /* visual feedback when pressing
                                            keyboard accelerators */
-  gboolean keyaccel_string_source_id;   /* event source ID used by above */
+  guint keyaccel_string_source_id;      /* event source ID used by above */
 
   /* ------------ */
   /* Dialog boxes */

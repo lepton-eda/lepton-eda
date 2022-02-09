@@ -213,7 +213,7 @@ GschemToplevel *gschem_toplevel_new ()
 
 
   w_current->keyaccel_string = NULL;
-  w_current->keyaccel_string_source_id = FALSE;
+  w_current->keyaccel_string_source_id = 0;
 
   /* ------------ */
   /* Dialog boxes */
