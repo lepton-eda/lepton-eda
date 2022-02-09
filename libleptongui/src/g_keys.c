@@ -80,14 +80,29 @@ g_key_is_valid (guint keyval, GdkModifierType modifiers)
  *
  * \return a new bindable key object, or SCM_BOOL_F.
  */
-SCM
-g_make_key (guint keyval, GdkModifierType modifiers)
+static GschemKey*
+g_make_key_struct (guint keyval,
+                   GdkModifierType modifiers)
 {
-  SCM result = SCM_BOOL_F;
-  if (g_key_is_valid (keyval, modifiers)) {
-    GschemKey *k = g_new0 (GschemKey, 1);
+  GschemKey *k = NULL;
+  if (g_key_is_valid (keyval, modifiers))
+  {
+    k = g_new0 (GschemKey, 1);
     k->keyval = keyval;
     k->modifiers = (GdkModifierType) (modifiers & GDK_MODIFIER_MASK);
+  }
+  return k;
+}
+
+
+SCM
+g_make_key (guint keyval,
+            GdkModifierType modifiers)
+{
+  SCM result = SCM_BOOL_F;
+  GschemKey *k = g_make_key_struct (keyval, (GdkModifierType) modifiers);
+  if (k != NULL)
+  {
     SCM_NEWSMOB (result, g_key_smob_tag, k);
   }
   return result;
