@@ -631,7 +631,11 @@ void x_window_setup_draw_events_main_wnd (GschemToplevel* w_current,
                                           GtkWidget*      main_window);
 void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
                                               GschemPageView* drawing_area);
-GschemToplevel* x_window_create_main (GschemToplevel *w_current, GtkWidget *menubar);
+GschemToplevel*
+x_window_create_main (GschemToplevel *w_current,
+                      GtkWidget *menubar,
+                      gpointer key_event_callback);
+
 void x_window_close(GschemToplevel *w_current);
 void x_window_close_all(GschemToplevel *w_current);
 LeptonPage*

@@ -248,7 +248,8 @@ Run `~A --help' for more information.\n")
   (define new-window (x_window_setup (x_window_new)))
 
   (x_window_create_main new-window
-                        (make-main-menu new-window)))
+                        (make-main-menu new-window)
+                        *process-key-event))
 
 (define (main file-list)
   ;; Create a new window and associated LeptonToplevel object.

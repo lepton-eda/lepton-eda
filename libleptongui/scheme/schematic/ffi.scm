@@ -168,6 +168,8 @@
             o_undo_savestate
 
             x_event_get_pointer_position
+
+            *process-key-event
             ))
 
 (define libleptongui
@@ -231,7 +233,7 @@
 (define-lff x_window_open_page '* '(* *))
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup '* '(*))
-(define-lff x_window_create_main '* '(* *))
+(define-lff x_window_create_main '* '(* * *))
 (define-lff x_window_close_page void '(* *))
 
 ;;; x_dialog.c
@@ -345,6 +347,9 @@
 ;;; x_event.c
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 
+;;; x_event.c
+(define-lff x_event_key int '(* * *))
+
 ;;; o_undo.c
 (define-lff o_undo_init void '())
 (define-lff o_undo_savestate void (list '* '* int))
@@ -357,3 +362,9 @@
     (and (force func)
          (let ((proc (delay (pointer->procedure void (force func) '()))))
            ((force proc))))))
+
+(define (process-key-event *view *event *window)
+  (x_event_key *view *event *window))
+
+(define *process-key-event
+  (procedure->pointer int process-key-event '(* * *)))
