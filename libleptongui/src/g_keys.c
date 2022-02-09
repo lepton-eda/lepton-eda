@@ -301,6 +301,42 @@ static gboolean clear_keyaccel_string(gpointer data)
   return FALSE;
 }
 
+
+/*! \brief Update timer for clearing the current key accelerator string.
+ * \par Function Description
+ * If a timer responsible for clearing key accelerator string in
+ * the status bar has been started, the function stops it.  If \a
+ * start_timer is TRUE, it runs a new timer for this.  It should
+ * be FALSE if the current key sequence is a prefix which should
+ * persist.
+ *
+ * \param [in] w_current The GschemToplevel to update.
+ * \param [in] start_timer If a new timer should be started.
+ */
+void
+schematic_keys_update_keyaccel_timer (GschemToplevel *w_current,
+                                      gboolean start_timer)
+{
+  if (w_current->keyaccel_string_source_id)
+  {
+    /* Cancel any existing timers that haven't fired yet. */
+    GSource *timer =
+      g_main_context_find_source_by_id (NULL,
+                                        w_current->keyaccel_string_source_id);
+    if (timer != NULL)
+    {
+      g_source_destroy (timer);
+    }
+    w_current->keyaccel_string_source_id = 0;
+  }
+  if (start_timer)
+  {
+    w_current->keyaccel_string_source_id =
+      g_timeout_add (400, clear_keyaccel_string, w_current);
+  }
+}
+
+
 /*! \brief Reset the current key sequence.
  * \par Function Description
  * If any prefix keys are stored in the current key sequence, clears
@@ -413,24 +449,10 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
   s_retval = g_scm_eval_protected (s_expr, scm_interaction_environment ());
   scm_dynwind_end ();
 
-  /* If the keystroke was not part of a prefix, start a timer to clear
-   * the status bar display. */
-  if (w_current->keyaccel_string_source_id) {
-    /* Cancel any existing timers that haven't fired yet. */
-    GSource *timer =
-      g_main_context_find_source_by_id (NULL,
-                                        w_current->keyaccel_string_source_id);
-    if (timer != NULL)
-    {
-      g_source_destroy (timer);
-    }
-    w_current->keyaccel_string_source_id = 0;
-  }
-  if (!scm_is_eq (s_retval, scm_from_utf8_symbol ("prefix")))
-  {
-    w_current->keyaccel_string_source_id =
-      g_timeout_add(400, clear_keyaccel_string, w_current);
-  }
+  /* If the keystroke was not part of a prefix, start a timer to
+   * clear the status bar display. */
+  gboolean is_prefix = scm_is_eq (s_retval, scm_from_utf8_symbol ("prefix"));
+  schematic_keys_update_keyaccel_timer (w_current, !is_prefix);
 
   return !scm_is_false (s_retval);
 }
