@@ -434,9 +434,6 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
     return FALSE;
   }
 
-  /* Create Scheme key value */
-  s_key = g_make_key (key, (GdkModifierType) mods);
-
   /* Update key hint string for status bar. */
   gchar *keystr = gtk_accelerator_get_label (key, (GdkModifierType) mods);
 
@@ -456,6 +453,9 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
 
   /* Update status bar */
   i_show_state(w_current, NULL);
+
+  /* Create Scheme key value */
+  s_key = g_make_key (key, (GdkModifierType) mods);
 
   /* Build and evaluate Scheme expression. */
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
