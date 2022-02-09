@@ -33,9 +33,12 @@ typedef struct {
   gchar *disp_str; /* UTF-8. Free with g_free(). */
 } GschemKey;
 
+GschemKey*
+g_make_key_struct (guint keyval,
+                   GdkModifierType modifiers);
 SCM
-g_make_key (guint keyval,
-            GdkModifierType modifiers);
+g_make_key (GschemKey *k);
+
 gboolean
 schematic_key_is_key (SCM key_s);
 

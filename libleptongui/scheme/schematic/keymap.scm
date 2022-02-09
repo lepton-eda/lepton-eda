@@ -125,7 +125,7 @@ does not represent a valid bindable key combination, raises the
                      "~S is not a valid key combination."
                      (list str)
                      #f)
-          (pointer->scm (g_make_key keyval modifiers))))))
+          (pointer->scm (g_make_key (g_make_key_struct keyval modifiers)))))))
 
 
 ;; -------------------- Key sequences --------------------
