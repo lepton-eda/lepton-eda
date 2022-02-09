@@ -383,12 +383,12 @@ g_keys_reset (GschemToplevel *w_current)
  * \param w_current  The active #GschemToplevel context.
  * \param event      A GdkEventKey structure.
  *
- * \return 1 if a binding was found for the keystroke, 0 otherwise.
+ * \return New #GschemKey if a binding was found for the keystroke, NULL otherwise.
  */
-int
-g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
+GschemKey*
+g_keys_execute (GschemToplevel *w_current,
+                GdkEventKey *event)
 {
-  SCM s_retval, s_key, s_expr;
   guint key, mods, upper, lower, caps;
   GdkDisplay *display;
   GdkKeymap *keymap;
@@ -429,7 +429,7 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
 
   /* Validate the key -- there are some keystrokes we mask out. */
   if (!g_key_is_valid (key, (GdkModifierType) mods)) {
-    return FALSE;
+    return NULL;
   }
 
   /* Update key hint string for status bar. */
@@ -454,22 +454,7 @@ g_keys_execute(GschemToplevel *w_current, GdkEventKey *event)
 
   GschemKey *k = g_make_key_struct (key, (GdkModifierType) mods);
 
-  /* Create Scheme key value */
-  s_key = g_make_key (k);
-
-  /* Build and evaluate Scheme expression. */
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  g_dynwind_window (w_current);
-  s_expr = scm_list_2 (scm_from_utf8_symbol ("press-key"), s_key);
-  s_retval = g_scm_eval_protected (s_expr, scm_interaction_environment ());
-  scm_dynwind_end ();
-
-  /* If the keystroke was not part of a prefix, start a timer to
-   * clear the status bar display. */
-  gboolean is_prefix = scm_is_eq (s_retval, scm_from_utf8_symbol ("prefix"));
-  schematic_keys_update_keyaccel_timer (w_current, !is_prefix);
-
-  return !scm_is_false (s_retval);
+  return k;
 }
 
 /*! \brief Create the (schematic core keymap) Scheme module

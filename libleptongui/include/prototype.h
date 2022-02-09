@@ -63,8 +63,16 @@ schematic_key_get_keyval (GschemKey *key);
 GdkModifierType
 schematic_key_get_modifiers (GschemKey *key);
 
+void
+schematic_keys_update_keyaccel_timer (GschemToplevel *w_current,
+                                      gboolean start_timer);
+
 void g_keys_reset (GschemToplevel *w_current);
-int g_keys_execute(GschemToplevel *w_current, GdkEventKey *event);
+
+GschemKey*
+g_keys_execute (GschemToplevel *w_current,
+                GdkEventKey *event);
+
 void g_init_keys ();
 
 /* g_window.c */

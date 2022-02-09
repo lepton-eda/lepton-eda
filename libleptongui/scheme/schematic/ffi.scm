@@ -18,8 +18,10 @@
 
 (define-module (schematic ffi)
   #:use-module (system foreign)
+  #:use-module (lepton eval)
   #:use-module (lepton ffi lib)
   #:use-module (lepton ffi)
+  #:use-module (lepton toplevel)
 
   #:export (g_init_keys
             g_init_window
@@ -158,6 +160,7 @@
             g_keys_execute
             g_make_key
             g_make_key_struct
+            schematic_keys_update_keyaccel_timer
 
             gschem_page_view_get_page
 
@@ -213,9 +216,10 @@
 (define-lff schematic_key_set_str void '(* *))
 (define-lff schematic_key_get_disp_str '* '(*))
 (define-lff schematic_key_set_disp_str void '(* *))
-(define-lff g_keys_execute int '(* *))
+(define-lff g_keys_execute '* '(* *))
 (define-lff g_make_key '* '(*))
 (define-lff g_make_key_struct '* (list int GdkModifierType))
+(define-lff schematic_keys_update_keyaccel_timer void (list '* int))
 
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
@@ -368,11 +372,41 @@
          (let ((proc (delay (pointer->procedure void (force func) '()))))
            ((force proc))))))
 
-(define (process-key-event *view *event *window)
-  (let ((*event (x_event_key *view *event *window)))
-    (if (null-pointer? *event)
-        FALSE
-        (g_keys_execute *window *event))))
+
+(define (process-key-event *page_view *event *window)
+  ;; %lepton-window is defined in C code and is not visible at the
+  ;; moment the module is compiled.  Use last resort to refer to
+  ;; it.
+  (with-fluids (((@@ (guile-user) %lepton-window) *window))
+    ;; We have to dynwind LeptonToplevel as well since there are
+    ;; functions that depend on toplevel only and should know what
+    ;; its current value is.
+    (%with-toplevel
+     (pointer->geda-toplevel (gschem_toplevel_get_toplevel *window))
+     (lambda ()
+       (let ((*event (x_event_key *page_view *event *window)))
+         (if (null-pointer? *event)
+             FALSE
+             ;; Create Scheme key value.
+             (let ((*key (g_keys_execute *window *event)))
+               (if (null-pointer? *key)
+                   FALSE
+                   (let* ((key (pointer->scm (g_make_key *key)))
+                          ;; Build and evaluate Scheme expression.
+                          (expr (list 'press-key key))
+                          (retval (eval-protected expr (interaction-environment)))
+                          ;; If the keystroke was not part of a
+                          ;; prefix, start a timer to clear the
+                          ;; status bar display.
+                          (prefix? (eq? retval 'prefix)))
+
+                     (schematic_keys_update_keyaccel_timer *window
+                                                           (if prefix? FALSE TRUE))
+                     ;; Propagate the event further if press-key()
+                     ;; returned #f.  Thus, you can move from page
+                     ;; view to toolbar by Tab if the key is not
+                     ;; assigned in the global keymap.
+                     (if retval TRUE FALSE))))))))))
 
 (define *process-key-event
   (procedure->pointer int process-key-event '(* * *)))

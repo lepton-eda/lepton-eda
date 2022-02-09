@@ -22,7 +22,8 @@
 
   #:export (%current-toplevel
             %make-toplevel
-            %with-toplevel))
+            %with-toplevel
+            pointer->geda-toplevel))
 
 (define (pointer->geda-toplevel pointer)
   ;; Return #f if the pointer is wrong.
