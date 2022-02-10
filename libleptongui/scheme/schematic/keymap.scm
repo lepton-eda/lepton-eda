@@ -34,49 +34,19 @@
   #:use-module (schematic ffi gtk)
   #:use-module (schematic hook)
 
-  #:export (key?
-            key->string
+  #:export (key->string
             string->key
-            key->display-string))
+            key->display-string)
+
+  #:re-export (key?))
 
 ;; -------------------- Key combinations --------------------
-
-(define (key? key)
-  "Predicate function which tests if KEY is a bindable key object
-in lepton-schematic."
-  (true? (schematic_key_is_key (scm->pointer key))))
-
-(define (unwrap-key key)
-  (schematic_key_unwrap_key (scm->pointer key)))
-
-(define-syntax check-key
-  (syntax-rules ()
-    ((_ key pos)
-     (let ((pointer (unwrap-key key)))
-       (if (null-pointer? pointer)
-           (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
-             (scm-error 'wrong-type-arg
-                        proc-name
-                        "Wrong type argument in position ~A: ~A"
-                        (list pos key)
-                        #f))
-           pointer)))))
 
 (define (key->string key)
   "Converts the bindable key object KEY to a string.  Returns a
 string representation of the key combination, in a format suitable
 for parsing with string->key()."
-  (define *key (check-key key 1))
-
-  (let ((*current-str (schematic_key_get_str *key)))
-
-    (if (not (null-pointer? *current-str))
-        (pointer->string *current-str)
-        (let ((*new-str (gtk_accelerator_name (schematic_key_get_keyval *key)
-                                              (schematic_key_get_modifiers *key))))
-          (schematic_key_set_str *key *new-str)
-
-          (pointer->string *new-str)))))
+  (key-name key))
 
 
 (define (key->display-string key)
@@ -84,15 +54,7 @@ for parsing with string->key()."
 Returns a string representation of the key combination in a format
 suitable for display to the user (e.g. as accelerator text in a
 menu)."
-  (define *key (check-key key 1))
-
-  (let ((*str (schematic_key_get_disp_str *key)))
-    (if (null-pointer? *str)
-        (let ((*new-str (gtk_accelerator_get_label (schematic_key_get_keyval *key)
-                                                   (schematic_key_get_modifiers *key))))
-          (schematic_key_set_disp_str *key *new-str)
-          (pointer->string *new-str))
-        (pointer->string *str))))
+  (key-label key))
 
 
 (define (string->key str)
@@ -124,7 +86,7 @@ does not represent a valid bindable key combination, raises the
                      "~S is not a valid key combination."
                      (list str)
                      #f)
-          (pointer->scm (g_make_key (g_make_key_struct keyval modifiers)))))))
+          (pointer->key (g_make_key_struct keyval modifiers))))))
 
 
 ;; -------------------- Key sequences --------------------

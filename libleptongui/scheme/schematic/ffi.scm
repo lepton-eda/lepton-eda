@@ -18,13 +18,16 @@
 
 (define-module (schematic ffi)
   #:use-module (system foreign)
+  #:use-module (srfi srfi-9)
+
   #:use-module (lepton eval)
   #:use-module (lepton ffi lib)
   #:use-module (lepton ffi)
   #:use-module (lepton toplevel)
 
-  #:export (g_init_keys
-            g_init_window
+  #:use-module (schematic ffi gtk)
+
+  #:export (g_init_window
             g_current_window
             generic_confirm_dialog
             generic_filesel_dialog
@@ -149,8 +152,6 @@
             x_window_set_current_page
             x_window_setup
 
-            schematic_key_is_key
-            schematic_key_unwrap_key
             schematic_key_get_keyval
             schematic_key_get_modifiers
             schematic_key_get_str
@@ -158,7 +159,6 @@
             schematic_key_get_disp_str
             schematic_key_set_disp_str
             g_keys_execute
-            g_make_key
             g_make_key_struct
             schematic_keys_update_keyaccel_timer
 
@@ -175,7 +175,12 @@
 
             x_event_get_pointer_position
 
+            check-key
+            pointer->key
             *process-key-event
+            key?
+            key-label
+            key-name
             ))
 
 (define libleptongui
@@ -193,8 +198,6 @@
          (force proc))))))
 
 
-(define-lff g_init_keys void '())
-
 ;;; g_window.c
 (define-lff g_init_window void '())
 (define-lff g_current_window '* '())
@@ -208,8 +211,6 @@
 
 ;;; g_keys.c
 (define GdkModifierType uint32)
-(define-lff schematic_key_is_key int '(*))
-(define-lff schematic_key_unwrap_key '* '(*))
 (define-lff schematic_key_get_keyval int '(*))
 (define-lff schematic_key_get_modifiers GdkModifierType '(*))
 (define-lff schematic_key_get_str '* '(*))
@@ -217,7 +218,6 @@
 (define-lff schematic_key_get_disp_str '* '(*))
 (define-lff schematic_key_set_disp_str void '(* *))
 (define-lff g_keys_execute '* '(* *))
-(define-lff g_make_key '* '(*))
 (define-lff g_make_key_struct '* (list int GdkModifierType))
 (define-lff schematic_keys_update_keyaccel_timer void (list '* int))
 
@@ -373,6 +373,54 @@
            ((force proc))))))
 
 
+;;; Define a wrapped pointer type.
+(define-wrapped-pointer-type <schematic-key>
+  %key?
+  wrap-key
+  unwrap-key
+  ;; Printer.
+  (lambda (key port)
+    (format port "#<gschem-key ~A>"
+            (let ((*key (unwrap-key key)))
+              (when (null-pointer? (schematic_key_get_disp_str *key))
+                (schematic_key_set_disp_str *key (gtk_accelerator_get_label (schematic_key_get_keyval *key)
+                                                                            (schematic_key_get_modifiers *key))))
+              (pointer->string (schematic_key_get_disp_str *key))))))
+
+(define-syntax check-key
+  (syntax-rules ()
+    ((_ key pos)
+     (let ((pointer (unwrap-key key)))
+       (if (null-pointer? pointer)
+           (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
+             (scm-error 'wrong-type-arg
+                        proc-name
+                        "Wrong type argument in position ~A: ~A"
+                        (list pos key)
+                        #f))
+           pointer)))))
+
+
+(define-record-type <key>
+  (make-key keyval modifiers name label)
+  key?
+  (keyval key-keyval set-key-keyval!)
+  (modifiers key-modifiers set-key-modifiers!)
+  (name key-name set-key-name!)
+  (label key-label set-key-label!))
+
+(define (pointer->key pointer)
+  (define keyval (schematic_key_get_keyval pointer))
+  (define modifiers (schematic_key_get_modifiers pointer))
+
+  (let* ((*name (gtk_accelerator_name keyval modifiers))
+         (name (pointer->string *name))
+         (*label (gtk_accelerator_get_label keyval modifiers))
+         (label (pointer->string *label)))
+    (g_free *name)
+    (g_free *label)
+    (make-key keyval modifiers name label)))
+
 (define (process-key-event *page_view *event *window)
   ;; %lepton-window is defined in C code and is not visible at the
   ;; moment the module is compiled.  Use last resort to refer to
@@ -391,7 +439,7 @@
              (let ((*key (g_keys_execute *window *event)))
                (if (null-pointer? *key)
                    FALSE
-                   (let* ((key (pointer->scm (g_make_key *key)))
+                   (let* ((key (pointer->key *key))
                           ;; Build and evaluate Scheme expression.
                           (expr (list 'press-key key))
                           (retval (eval-protected expr (interaction-environment)))
