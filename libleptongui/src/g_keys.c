@@ -457,20 +457,6 @@ g_keys_execute (GschemToplevel *w_current,
   return k;
 }
 
-/*! \brief Create the (schematic core keymap) Scheme module
- * \par Function Description
- * Defines procedures in the (schematic core keymap) module.  The module
- * can be accessed using (use-modules (schematic core keymap)).
- */
-static void
-init_module_schematic_core_keymap (void *unused)
-{
-  /* Register the functions */
-  #include "g_keys.x"
-
-  /* Add them to the module's public definitions */
-  scm_c_export (NULL);
-}
 
 /*! \brief Initialise the key combination procedures
  * \par Function Description
@@ -485,8 +471,4 @@ g_init_keys ()
   scm_set_smob_print (g_key_smob_tag, g_key_print);
   scm_set_smob_equalp (g_key_smob_tag, g_key_equalp);
   scm_set_smob_free (g_key_smob_tag, g_key_free);
-
-  scm_c_define_module ("schematic core keymap",
-                       (void (*)(void*)) init_module_schematic_core_keymap,
-                       NULL);
 }

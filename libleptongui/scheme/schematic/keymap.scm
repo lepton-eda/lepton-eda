@@ -30,7 +30,6 @@
   #:use-module (lepton ffi)
 
   #:use-module (schematic core gettext)
-  #:use-module (schematic core keymap)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic hook)
