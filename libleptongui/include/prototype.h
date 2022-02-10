@@ -36,15 +36,6 @@ typedef struct {
 GschemKey*
 g_make_key_struct (guint keyval,
                    GdkModifierType modifiers);
-SCM
-g_make_key (GschemKey *k);
-
-gboolean
-schematic_key_is_key (SCM key_s);
-
-GschemKey*
-schematic_key_unwrap_key (SCM key_s);
-
 gchar*
 schematic_key_get_str (GschemKey *key);
 
@@ -72,8 +63,6 @@ void g_keys_reset (GschemToplevel *w_current);
 GschemKey*
 g_keys_execute (GschemToplevel *w_current,
                 GdkEventKey *event);
-
-void g_init_keys ();
 
 /* g_window.c */
 GschemToplevel *g_current_window ();

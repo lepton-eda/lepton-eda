@@ -24,9 +24,6 @@
 #include <gdk/gdkkeysyms.h>
 
 
-/*! Contains the smob tag for key smobs */
-static scm_t_bits g_key_smob_tag;
-
 /*! \brief Test if a key is valid.
  * \par Function Description
  * Test if the key combination defined by \a keyval and \a modifiers
@@ -92,30 +89,6 @@ g_make_key_struct (guint keyval,
     k->modifiers = (GdkModifierType) (modifiers & GDK_MODIFIER_MASK);
   }
   return k;
-}
-
-
-SCM
-g_make_key (GschemKey *k)
-{
-  SCM result = SCM_BOOL_F;
-  if (k != NULL)
-  {
-    SCM_NEWSMOB (result, g_key_smob_tag, k);
-  }
-  return result;
-}
-
-
-/*! \brief Test if a Scheme value is a bindable key object.
- *
- * \param key_s the value to test
- * \return TRUE if the value is a key, otherwise FALSE.
- */
-gboolean
-schematic_key_is_key (SCM key_s)
-{
-  return SCM_SMOB_PREDICATE (g_key_smob_tag, key_s);
 }
 
 
@@ -212,79 +185,6 @@ schematic_key_get_modifiers (GschemKey *key)
   g_return_val_if_fail (key != NULL, (GdkModifierType) 0);
 
   return key->modifiers;
-}
-
-/*! \brief Convert a bindable key object SMOB to #GschemKey.
- */
-GschemKey*
-schematic_key_unwrap_key (SCM key_s)
-{
-  return (GschemKey *) SCM_SMOB_DATA (key_s);
-}
-
-/*! \brief Print a representation of a key smob
- * \par Function Description
- * Outputs a string representing the \a smob to a Scheme output \a
- * port.  The format used is "#<gschem-key \"Ctrl+A\">".
- *
- * Used internally to Guile.
- */
-static int
-g_key_print (SCM smob, SCM port, scm_print_state *pstate)
-{
-  SCM_ASSERT (schematic_key_is_key (smob),
-              smob,
-              SCM_ARG1,
-              "g_key_print");
-
-  GschemKey *key = schematic_key_unwrap_key (smob);
-
-  if (schematic_key_get_disp_str (key) == NULL)
-  {
-    schematic_key_set_disp_str (key, gtk_accelerator_get_label (schematic_key_get_keyval (key),
-                                                                schematic_key_get_modifiers (key)));
-  }
-  SCM s = scm_from_utf8_string (schematic_key_get_disp_str (key));
-
-  scm_puts ("#<gschem-key ", port);
-  scm_write (s, port);
-  scm_puts (">", port);
-
-  /* Non-zero means success */
-  return 1;
-}
-
-/* \brief Test if two key combinations are equivalent.
- * \par Function Description
- * Tests if the two lepton-schematic key objects \a a and \a b
- * represent the same key event.
- *
- * Used internally to Guile.
- */
-static SCM
-g_key_equalp (SCM a, SCM b)
-{
-  GschemKey *akey = (GschemKey *) SCM_SMOB_DATA (a);
-  GschemKey *bkey = (GschemKey *) SCM_SMOB_DATA (b);
-  if (akey->keyval != bkey->keyval) return SCM_BOOL_F;
-  if (akey->modifiers != bkey->modifiers) return SCM_BOOL_F;
-  return SCM_BOOL_T;
-}
-
-/* \brief Destroy a bindable key object
- * \par Function Description
- * Destroys the contents of a lepton-schematic key object on
- * garbage collection.
- *
- * Used internally to Guile.
- */
-static size_t
-g_key_free (SCM key) {
-  GschemKey *k = (GschemKey *) SCM_SMOB_DATA (key);
-  g_free (k->str);
-  g_free (k->disp_str);
-  g_free (k);
-  return 0;
 }
 
 
@@ -456,20 +356,4 @@ g_keys_execute (GschemToplevel *w_current,
   GschemKey *k = g_make_key_struct (key, (GdkModifierType) mods);
 
   return k;
-}
-
-
-/*! \brief Initialise the key combination procedures
- * \par Function Description
- * Registers some Scheme procedures for working with key combinations.
- * Should only be called by main_prog().
- */
-void
-g_init_keys ()
-{
-  /* Register key smob type */
-  g_key_smob_tag = scm_make_smob_type ("gschem-key", 0);
-  scm_set_smob_print (g_key_smob_tag, g_key_print);
-  scm_set_smob_equalp (g_key_smob_tag, g_key_equalp);
-  scm_set_smob_free (g_key_smob_tag, g_key_free);
 }
