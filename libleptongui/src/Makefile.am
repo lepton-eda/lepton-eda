@@ -1,8 +1,5 @@
 lib_LTLIBRARIES = libleptongui.la
 
-BUILT_SOURCES = \
-	g_keys.x
-
 libleptongui_la_SOURCES = \
 	a_zoom.c \
 	g_action.c \
@@ -131,5 +128,3 @@ snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
-
-CLEANFILES = $(BUILT_SOURCES)
