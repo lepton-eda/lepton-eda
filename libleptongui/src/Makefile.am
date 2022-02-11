@@ -3,7 +3,6 @@ lib_LTLIBRARIES = libleptongui.la
 BUILT_SOURCES = \
 	g_action.x \
 	g_attrib.x \
-	g_hook.x \
 	g_keys.x \
 	g_util.x \
 	g_window.x \

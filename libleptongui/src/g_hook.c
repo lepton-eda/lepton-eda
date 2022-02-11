@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,10 +31,10 @@
 /*! \brief Gets a Scheme hook object by name.
  * \par Function Description
  * Returns the contents of variable with the given name in the
- * (schematic core hook).  Used for looking up hook objects.
+ * module (schematic hook).  Used for looking up hook objects.
  *
  * \param name name of hook to lookup.
- * \return value found in the (schematic core hook) module.
+ * \return value found in the (schematic hook) module.
  */
 static SCM
 g_get_hook_by_name (const char *name)
@@ -154,32 +154,4 @@ g_run_hook_action_mode (GschemToplevel *w_current,
   g_scm_eval_protected (expr, scm_interaction_environment ());
   scm_dynwind_end ();
   scm_remember_upto_here_1 (expr);
-}
-
-/*! \brief Create the (schematic core hook) Scheme module.
- * \par Function Description
- * Defines some hooks in the (schematic core hook) module.  These hooks
- * allow Scheme callbacks to be triggered on certain lepton-schematic actions.
- * For a description of the arguments and behaviour of these hooks,
- * please see ../scheme/schematic/hook.scm.
- */
-static void
-init_module_schematic_core_hook (void *unused)
-{
-#include "g_hook.x"
-}
-
-/*!
- * \brief Initialise the lepton-schematic hooks.
- * \par Function Description
- * Registers lepton-schematic's Guile hooks for various
- * events.. Should only be called by main_prog().
- */
-void
-g_init_hook ()
-{
-  /* Define the (schematic core hook) module */
-  scm_c_define_module ("schematic core hook",
-                       (void (*)(void*)) init_module_schematic_core_hook,
-                       NULL);
 }

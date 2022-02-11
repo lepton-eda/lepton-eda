@@ -20,10 +20,6 @@
 ;;
 
 (define-module (schematic hook)
-
-  ;; Import C definitions
-  #:use-module (schematic core hook)
-
   #:export (add-objects-hook
             copy-objects-hook
             remove-objects-hook
