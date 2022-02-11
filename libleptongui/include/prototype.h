@@ -17,7 +17,6 @@ void g_init_action (void);
 /* g_attrib.c */
 void g_init_attrib ();
 /* g_hook.c */
-void g_init_hook ();
 void g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *obj);
 void g_run_hook_object_list (GschemToplevel *w_current, const char *name, GList *obj_lst);
 void

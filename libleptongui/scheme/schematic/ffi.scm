@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2020-2021 Lepton EDA Contributors
+;;; Copyright (C) 2020-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -22,7 +22,6 @@
 
   #:export (g_init_action
             g_init_attrib
-            g_init_hook
             g_init_keys
             g_init_select
             g_init_util
@@ -169,7 +168,6 @@
 
 (define-lff g_init_action void '())
 (define-lff g_init_attrib void '())
-(define-lff g_init_hook void '())
 (define-lff g_init_keys void '())
 (define-lff g_init_select void '())
 (define-lff g_init_util void '())
