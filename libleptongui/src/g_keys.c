@@ -275,6 +275,18 @@ g_keys_reset (GschemToplevel *w_current)
 }
 
 
+/*! \brief Update key accelerator string in status bar.
+ * \par Function Description
+ * Given the key accelerator string previously set in the status
+ * bar, updates it by combining the previous string value with the
+ * new one, or just sets the new value provided.  The behaviour
+ * varies depending on whether the previously set string was a
+ * prefix in a key sequence or not.
+ *
+ * \param [in] w_current The active #GschemToplevel context.
+ * \param [in] key The new key value.
+ * \param [in] mods The key modifiers.
+ */
 static void
 schematic_keys_update_keyaccel_string (GschemToplevel *w_current,
                                        guint key,
