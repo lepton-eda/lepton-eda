@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ o_buffer_copy(GschemToplevel *w_current, int buf_num)
   selection_to_buffer (w_current, buf_num);
 
   g_run_hook_object_list (w_current,
-                          "%copy-objects-hook",
+                          "copy-objects-hook",
                           object_buffer[buf_num]);
 
   if (buf_num == CLIPBOARD_BUFFER) {
@@ -202,7 +202,7 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   /* the next paste operation will be a copy of these objects */
 
   g_run_hook_object_list (w_current,
-                          "%copy-objects-hook",
+                          "copy-objects-hook",
                           object_buffer[buf_num]);
 
   if (buf_num == CLIPBOARD_BUFFER) {

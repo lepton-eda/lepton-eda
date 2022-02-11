@@ -782,7 +782,7 @@ x_window_open_page_impl (GschemToplevel *w_current,
 
 
   /* Run hook: */
-  g_run_hook_page (w_current, "%open-page-hook", page);
+  g_run_hook_page (w_current, "open-page-hook", page);
 
   /* Add page file name to the recent file list: */
   recent_manager_add (w_current, filename);
@@ -1586,7 +1586,7 @@ x_window_new_page (GschemToplevel* w_current)
   g_free (filename);
 
   /* Run hook: */
-  g_run_hook_page (w_current, "%new-page-hook", page);
+  g_run_hook_page (w_current, "new-page-hook", page);
 
   /* Save current state of the page: */
   o_undo_savestate (w_current, page, UNDO_ALL);

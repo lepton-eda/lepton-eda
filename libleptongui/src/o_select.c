@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -135,11 +135,11 @@ void o_select_run_hooks(GschemToplevel *w_current, LeptonObject *o_current, int 
   switch (flag) {
   /* If flag == 0, then we are deselecting something. */
   case 0:
-    g_run_hook_object (w_current, "%deselect-objects-hook", o_current);
+    g_run_hook_object (w_current, "deselect-objects-hook", o_current);
     break;
   /* If flag == 1, then we are selecting something. */
   case 1:
-    g_run_hook_object (w_current, "%select-objects-hook", o_current);
+    g_run_hook_object (w_current, "select-objects-hook", o_current);
     break;
   default:
     g_assert_not_reached ();
@@ -592,7 +592,7 @@ void o_select_unselect_all(GschemToplevel *w_current)
 
   /* Call hooks */
   if (removed != NULL) {
-    g_run_hook_object_list (w_current, "%deselect-objects-hook", removed);
+    g_run_hook_object_list (w_current, "deselect-objects-hook", removed);
   }
 }
 
@@ -645,7 +645,7 @@ o_select_visible_unlocked (GschemToplevel *w_current)
   /* Run hooks for all items selected */
   added = lepton_list_get_glist (selection);
   if (added != NULL) {
-    g_run_hook_object_list (w_current, "%select-objects-hook", added);
+    g_run_hook_object_list (w_current, "select-objects-hook", added);
   }
 }
 

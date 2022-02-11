@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -358,7 +358,7 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
  *
  *  \par Function Description
  *  This function erases the objects in the place list, rotates
- *  them, runs %rotate-objects-hook, and redraws the objects after
+ *  them, runs rotate-objects-hook, and redraws the objects after
  *  rotating.
  *
  *  \param [in] w_current   The GschemToplevel object.
@@ -379,7 +379,7 @@ void o_place_rotate (GschemToplevel *w_current)
                              90);
 
   /* Run rotate-objects-hook */
-  g_run_hook_object_list (w_current, "%rotate-objects-hook", page->place_list);
+  g_run_hook_object_list (w_current, "rotate-objects-hook", page->place_list);
 
   o_place_invalidate_rubber (w_current, TRUE);
 }
@@ -389,7 +389,7 @@ void o_place_rotate (GschemToplevel *w_current)
  *
  *  \par Function Description
  *  This function erases the objects in the place list, mirrors
- *  them, runs %mirror-objects-hook, and redraws the objects after
+ *  them, runs mirror-objects-hook, and redraws the objects after
  *  mirroring.
  *
  *  \param [in] w_current   The GschemToplevel object.
@@ -409,7 +409,7 @@ void o_place_mirror (GschemToplevel *w_current)
                              w_current->first_wy);
 
   /* Run mirror-objects-hook */
-  g_run_hook_object_list (w_current, "%mirror-objects-hook", page->place_list);
+  g_run_hook_object_list (w_current, "mirror-objects-hook", page->place_list);
 
   o_place_invalidate_rubber (w_current, TRUE);
 }

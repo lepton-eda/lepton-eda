@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -154,7 +154,7 @@ void o_arc_end4(GschemToplevel *w_current, int radius,
   w_current->distance = 0;
 
   /* Call add-objects-hook */
-  g_run_hook_object (w_current, "%add-objects-hook", new_obj);
+  g_run_hook_object (w_current, "add-objects-hook", new_obj);
 
   gschem_toplevel_page_content_changed (w_current, page);
   o_undo_savestate(w_current, page, UNDO_ALL);
