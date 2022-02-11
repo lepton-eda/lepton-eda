@@ -2,7 +2,6 @@ libleptongui/src/a_zoom.c
 libleptongui/src/color_edit_widget.c
 libleptongui/src/font_select_widget.c
 libleptongui/src/g_attrib.c
-libleptongui/src/g_hook.c
 libleptongui/src/g_keys.c
 libleptongui/src/g_register.c
 libleptongui/src/g_select.c
