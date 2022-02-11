@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett
 ;; Copyright (C) 2010-2016 gEDA Contributors
-;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -22,7 +22,9 @@
 (define-module (schematic hook)
 
   ;; Import C definitions
-  #:use-module (schematic core hook))
+  #:use-module (schematic core hook)
+
+  #:export (bind-keys-hook))
 
 (define-public add-objects-hook %add-objects-hook)
 
@@ -52,6 +54,6 @@
 
 (define-public action-property-hook %action-property-hook)
 
-(define-public bind-keys-hook %bind-keys-hook)
+(define bind-keys-hook (make-hook 3))
 
 (define-public switch-action-mode-hook %switch-action-mode-hook)
