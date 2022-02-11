@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,7 +60,7 @@ void o_copy_start(GschemToplevel *w_current, int w_x, int w_y)
                                        page->place_list);
 
   g_run_hook_object_list (w_current,
-                          "%copy-objects-hook",
+                          "copy-objects-hook",
                           page->place_list);
 
   o_place_start (w_current, w_x, w_y);
@@ -75,5 +75,5 @@ void o_copy_end(GschemToplevel *w_current)
 {
   o_place_end (w_current, w_current->second_wx, w_current->second_wy,
                (w_current->event_state == MCOPYMODE),
-               "%paste-objects-hook");
+               "paste-objects-hook");
 }

@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -230,7 +230,7 @@ void o_move_end(GschemToplevel *w_current)
   GList *moved_list = g_list_concat (page->place_list, rubbernet_objects);
   page->place_list = NULL;
   rubbernet_objects = NULL;
-  g_run_hook_object_list (w_current, "%move-objects-hook", moved_list);
+  g_run_hook_object_list (w_current, "move-objects-hook", moved_list);
   g_list_free (moved_list);
 
   gschem_toplevel_page_content_changed (w_current, page);

@@ -24,37 +24,51 @@
   ;; Import C definitions
   #:use-module (schematic core hook)
 
-  #:export (action-property-hook
+  #:export (add-objects-hook
+            copy-objects-hook
+            remove-objects-hook
+            move-objects-hook
+            mirror-objects-hook
+            rotate-objects-hook
+            paste-objects-hook
+            attach-attribs-hook
+            detach-attribs-hook
+            select-objects-hook
+            deselect-objects-hook
+            new-page-hook
+            open-page-hook
+            action-property-hook
+            switch-action-mode-hook
             bind-keys-hook))
 
-(define-public add-objects-hook %add-objects-hook)
+(define add-objects-hook (make-hook 1))
 
-(define-public copy-objects-hook %copy-objects-hook)
+(define copy-objects-hook (make-hook 1))
 
-(define-public remove-objects-hook %remove-objects-hook)
+(define remove-objects-hook (make-hook 1))
 
-(define-public move-objects-hook %move-objects-hook)
+(define move-objects-hook (make-hook 1))
 
-(define-public mirror-objects-hook %mirror-objects-hook)
+(define mirror-objects-hook (make-hook 1))
 
-(define-public rotate-objects-hook %rotate-objects-hook)
+(define rotate-objects-hook (make-hook 1))
 
-(define-public paste-objects-hook %paste-objects-hook)
+(define paste-objects-hook (make-hook 1))
 
-(define-public attach-attribs-hook %attach-attribs-hook)
+(define attach-attribs-hook (make-hook 1))
 
-(define-public detach-attribs-hook %detach-attribs-hook)
+(define detach-attribs-hook (make-hook 1))
 
-(define-public select-objects-hook %select-objects-hook)
+(define select-objects-hook (make-hook 1))
 
-(define-public deselect-objects-hook %deselect-objects-hook)
+(define deselect-objects-hook (make-hook 1))
 
-(define-public new-page-hook %new-page-hook)
+(define new-page-hook (make-hook 1))
 
-(define-public open-page-hook %open-page-hook)
+(define open-page-hook (make-hook 1))
 
 (define action-property-hook (make-hook 3))
 
 (define bind-keys-hook (make-hook 3))
 
-(define-public switch-action-mode-hook %switch-action-mode-hook)
+(define switch-action-mode-hook (make-hook 1))

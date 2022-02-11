@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -115,8 +115,8 @@ void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
                                          FALSE);
     lepton_page_append (active_page, new_obj);
 
-    /* Run %add-objects-hook */
-    g_run_hook_object (w_current, "%add-objects-hook", new_obj);
+    /* Run add-objects-hook */
+    g_run_hook_object (w_current, "add-objects-hook", new_obj);
 
     schematic_window_active_page_changed (w_current);
     o_undo_savestate_old(w_current, UNDO_ALL);

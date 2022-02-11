@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ void o_delete (GschemToplevel *w_current, LeptonObject *object)
 
   o_selection_remove (page->selection_list, object);
   lepton_page_remove (page, object);
-  g_run_hook_object (w_current, "%remove-objects-hook", object);
+  g_run_hook_object (w_current, "remove-objects-hook", object);
   lepton_object_delete (object);
 
   gschem_toplevel_page_content_changed (w_current, page);
@@ -119,7 +119,7 @@ void o_delete_selected (GschemToplevel *w_current)
     lepton_page_remove (active_page, obj);
   }
 
-  g_run_hook_object_list (w_current, "%remove-objects-hook", to_remove);
+  g_run_hook_object_list (w_current, "remove-objects-hook", to_remove);
 
   if (w_current->inside_action && w_current->event_state == MOVEMODE) {
     /* In MOVEMODE selection is equal to the place list and we

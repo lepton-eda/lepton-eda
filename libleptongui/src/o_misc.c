@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -240,7 +240,7 @@ void o_rotate_world_update(GschemToplevel *w_current,
   o_invalidate_glist (w_current, list);
 
   /* Run rotate-objects-hook */
-  g_run_hook_object_list (w_current, "%rotate-objects-hook", list);
+  g_run_hook_object_list (w_current, "rotate-objects-hook", list);
 
   /* Don't save the undo state if we are inside an action */
   /* This is useful when rotating the selection while moving, for example */
@@ -297,7 +297,7 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
   o_invalidate_glist (w_current, list);
 
   /* Run mirror-objects-hook */
-  g_run_hook_object_list (w_current, "%mirror-objects-hook", list);
+  g_run_hook_object_list (w_current, "mirror-objects-hook", list);
 
   schematic_window_active_page_changed (w_current);
   o_undo_savestate_old(w_current, UNDO_ALL);

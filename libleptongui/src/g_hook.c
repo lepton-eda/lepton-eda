@@ -40,8 +40,7 @@ static SCM
 g_get_hook_by_name (const char *name)
 {
   SCM exp = scm_list_3 (scm_from_utf8_symbol ("@"),
-                        scm_list_3 (scm_from_utf8_symbol ("schematic"),
-                                    scm_from_utf8_symbol ("core"),
+                        scm_list_2 (scm_from_utf8_symbol ("schematic"),
                                     scm_from_utf8_symbol ("hook")),
                         scm_from_utf8_symbol (name));
   return g_scm_eval_protected (exp, SCM_UNDEFINED);
@@ -167,29 +166,7 @@ g_run_hook_action_mode (GschemToplevel *w_current,
 static void
 init_module_schematic_core_hook (void *unused)
 {
-
 #include "g_hook.x"
-
-#define DEFINE_HOOK(name,arity)                      \
-  do { \
-    scm_c_define (name, scm_make_hook (scm_from_int (arity)));      \
-    scm_c_export (name, NULL); \
-  } while (0)
-
-  DEFINE_HOOK ("%add-objects-hook",1);
-  DEFINE_HOOK ("%copy-objects-hook",1);
-  DEFINE_HOOK ("%remove-objects-hook",1);
-  DEFINE_HOOK ("%move-objects-hook",1);
-  DEFINE_HOOK ("%mirror-objects-hook",1);
-  DEFINE_HOOK ("%rotate-objects-hook",1);
-  DEFINE_HOOK ("%paste-objects-hook",1);
-  DEFINE_HOOK ("%attach-attribs-hook",1);
-  DEFINE_HOOK ("%detach-attribs-hook",1);
-  DEFINE_HOOK ("%select-objects-hook",1);
-  DEFINE_HOOK ("%deselect-objects-hook",1);
-  DEFINE_HOOK ("%new-page-hook",1);
-  DEFINE_HOOK ("%open-page-hook",1);
-  DEFINE_HOOK ("%switch-action-mode-hook",1);
 }
 
 /*!
