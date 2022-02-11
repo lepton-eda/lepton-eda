@@ -412,8 +412,9 @@ g_keys_execute (GschemToplevel *w_current,
 
   key = event->keyval;
   gdk_keyval_convert_case (event->keyval, &lower, &upper);
-  mods = (event->state & gtk_accelerator_get_default_mod_mask ()
-                & ~consumed_modifiers);
+  mods = (event->state
+          & gtk_accelerator_get_default_mod_mask ()
+          & ~consumed_modifiers);
 
   /* Handle Caps Lock. The idea is to obtain the same keybindings
    * whether Caps Lock is enabled or not. */
