@@ -189,7 +189,6 @@ init_module_schematic_core_hook (void *unused)
   DEFINE_HOOK ("%deselect-objects-hook",1);
   DEFINE_HOOK ("%new-page-hook",1);
   DEFINE_HOOK ("%open-page-hook",1);
-  DEFINE_HOOK ("%action-property-hook",3);
   DEFINE_HOOK ("%switch-action-mode-hook",1);
 }
 

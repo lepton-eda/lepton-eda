@@ -24,7 +24,8 @@
   ;; Import C definitions
   #:use-module (schematic core hook)
 
-  #:export (bind-keys-hook))
+  #:export (action-property-hook
+            bind-keys-hook))
 
 (define-public add-objects-hook %add-objects-hook)
 
@@ -52,7 +53,7 @@
 
 (define-public open-page-hook %open-page-hook)
 
-(define-public action-property-hook %action-property-hook)
+(define action-property-hook (make-hook 3))
 
 (define bind-keys-hook (make-hook 3))
 
