@@ -30,7 +30,8 @@
 
   #:use-module (schematic ffi)
 
-  #:export (active-page
+  #:export (current-window
+            active-page
             set-active-page!
             pointer-position
             snap-point)
@@ -38,6 +39,12 @@
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
   #:replace (close-page!))
+
+
+(define (current-window)
+  "Return the value of the toplevel window structure fluid in the
+current dynamic context."
+  (g_current_window))
 
 
 (define (active-page)
@@ -94,9 +101,6 @@ schematic drawing area, returns #f."
     (and result
          (cons (bytevector-sint-ref x 0 (native-endianness) (sizeof int))
                (bytevector-sint-ref y 0 (native-endianness) (sizeof int))))))
-
-
-(define-public current-window %current-window)
 
 
 (define (snap-point point)

@@ -22,6 +22,7 @@
 
   #:export (g_init_keys
             g_init_window
+            g_current_window
             generic_confirm_dialog
             generic_filesel_dialog
             generic_msg_dialog
@@ -175,7 +176,11 @@
 
 
 (define-lff g_init_keys void '())
+
+;;; g_window.c
 (define-lff g_init_window void '())
+(define-lff g_current_window '* '())
+
 (define-lff o_attrib_add_attrib '* (list '* '* int int '*))
 (define-lff o_buffer_init void '())
 (define-lff set_quiet_mode void '())

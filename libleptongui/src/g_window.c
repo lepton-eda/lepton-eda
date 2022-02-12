@@ -65,19 +65,6 @@ g_dynwind_window (GschemToplevel *w_current)
 /*!
  * \brief Get the value of the #GschemToplevel fluid.
  * \par Function Description
- * Return the value of the #GschemToplevel fluid in the current
- * dynamic context.
- */
-SCM_DEFINE (current_window, "%current-window", 0, 0, 0,
-            (),
-            "Get the GschemToplevel for the current dynamic context.")
-{
-  return scm_fluid_ref (scheme_window_fluid);
-}
-
-/*!
- * \brief Get the value of the #GschemToplevel fluid.
- * \par Function Description
  * Return the value of the #GschemToplevel fluid in the current dynamic
  * context.
  * Signals an error if there is no valid window fluid
@@ -87,7 +74,7 @@ SCM_DEFINE (current_window, "%current-window", 0, 0, 0,
 GschemToplevel *
 g_current_window ()
 {
-  SCM window_s = current_window ();
+  SCM window_s = scm_fluid_ref (scheme_window_fluid);
   GschemToplevel *w_current = (GschemToplevel *) scm_to_pointer (window_s);
 
   if (w_current == NULL)
@@ -112,8 +99,7 @@ init_module_schematic_core_window (void *unused)
   #include "g_window.x"
 
   /* Add them to the module's public definitions. */
-  scm_c_export (s_current_window,
-                NULL);
+  scm_c_export (NULL);
 }
 
 /*!
