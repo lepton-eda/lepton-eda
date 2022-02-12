@@ -117,14 +117,5 @@ libleptongui_la_LDFLAGS = -version-info $(LIBLEPTONGUI_SHLIB_VERSION) \
 libleptongui_la_LIBADD = \
 	$(top_builddir)/liblepton/src/liblepton.la
 
-
-# This is used to generate boilerplate for defining Scheme functions
-# in C.
-SUFFIXES = .x
-snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(libleptongui_la_CPPFLAGS) $(AM_CFLAGS) $(libleptongui_la_CFLAGS)
-.c.x:
-	$(AM_V_GEN) CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
-
 localedir = @datadir@/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
