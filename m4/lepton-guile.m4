@@ -1,11 +1,11 @@
 # lepton-guile.m4                                           -*-Autoconf-*-
-# serial 4
+# serial 5
 
 dnl Check for guile
 dnl Copyright (C) 2009  Dan McMahill <dan@mcmahill.net>
 dnl Copyright (C) 2010-2011  Peter Brett <peter@peter-b.co.uk>
 dnl Copyright (C) 2009-2016 gEDA Contributors
-dnl Copyright (C) 2017-2021 Lepton EDA Contributors
+dnl Copyright (C) 2017-2022 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -61,17 +61,6 @@ AC_DEFUN([AX_CHECK_GUILE],
   GUILE_PROGS
   GUILE_PKG([3.0 2.2])
 
-
-  # Check for the `guile-snarf' build tool
-  # --------------------------------------
-  AC_ARG_VAR([GUILE_SNARF], [path to guile-snarf utility])
-
-  AC_CHECK_PROG([GUILE_SNARF], [guile-snarf], [guile-snarf], [no])
-  if test "x$GUILE_SNARF" = xno ; then
-    AC_MSG_ERROR([The `guile-snarf' tool could not be found. Please ensure that the
-Guile development headers and tools are correctly installed, and rerun
-configure.])
-  fi
 
   # Check for behaviour of `scm_display_error'
   # ------------------------------------------
