@@ -79,14 +79,6 @@ liblepton_la_LDFLAGS = -version-info $(LIBLEPTON_SHLIB_VERSION) \
 	$(GTK_LIBS) $(CAIRO_PNG_LIBS) $(CAIRO_PDF_CLAGS) $(CAIRO_PS_LIBS) $(CAIRO_SVG_LIBS)
 LIBTOOL=@LIBTOOL@ --silent
 
-# This is used to generate boilerplate for defining Scheme functions
-# in C.
-SUFFIXES = .x
-snarf_cpp_opts = $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
-	$(liblepton_la_CPPFLAGS) $(AM_CFLAGS) $(liblepton_la_CFLAGS)
-.c.x:
-	$(AM_V_GEN) CPP="$(CPP)" $(GUILE_SNARF) -o $@ $< $(snarf_cpp_opts)
-
 # Unfortunately, in order to test libtool thoroughly, we need access
 # to its private directory.
 objdir = `sed -n -e 's/^objdir=\"\(.*\)\"$$/\1/p' ./libtool`
