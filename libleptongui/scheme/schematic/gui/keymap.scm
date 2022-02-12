@@ -21,7 +21,6 @@
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
-  #:use-module (lepton eval)
   #:use-module (lepton ffi)
   #:use-module (lepton toplevel)
 
@@ -32,7 +31,6 @@
   #:export (%global-keymap
             current-keymap
             global-set-key
-            press-key
             reset-keys
             find-key
             %gschem-hotkey-store/dump-global-keymap
@@ -64,9 +62,7 @@
                      ;; Update the status bar with the current key sequence.
                      (schematic_window_update_keyaccel_string *window keyval mods)
                      (let* ((key (make-key* keyval mods))
-                            ;; Build and evaluate Scheme expression.
-                            (expr (list 'press-key key))
-                            (retval (eval-protected expr (interaction-environment)))
+                            (retval (press-key key))
                             ;; If the keystroke was not part of a
                             ;; prefix, start a timer to clear the
                             ;; status bar display.
