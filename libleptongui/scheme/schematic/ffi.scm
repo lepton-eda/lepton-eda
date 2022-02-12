@@ -26,7 +26,6 @@
             g_init_select
             g_init_util
             g_init_window
-            g_register_funcs
             generic_confirm_dialog
             generic_filesel_dialog
             generic_msg_dialog
@@ -172,7 +171,6 @@
 (define-lff g_init_select void '())
 (define-lff g_init_util void '())
 (define-lff g_init_window void '())
-(define-lff g_register_funcs void '())
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff o_buffer_init void '())
 (define-lff o_undo_init void '())

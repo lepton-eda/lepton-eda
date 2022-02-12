@@ -35,7 +35,8 @@
             open-page-hook
             action-property-hook
             switch-action-mode-hook
-            bind-keys-hook))
+            bind-keys-hook
+            complex-place-list-changed-hook))
 
 (define add-objects-hook (make-hook 1))
 
@@ -68,3 +69,5 @@
 (define bind-keys-hook (make-hook 3))
 
 (define switch-action-mode-hook (make-hook 1))
+
+(define complex-place-list-changed-hook (make-hook 1))
