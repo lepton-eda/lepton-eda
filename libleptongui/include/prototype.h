@@ -30,8 +30,6 @@ void g_keys_reset (GschemToplevel *w_current);
 int g_keys_execute(GschemToplevel *w_current, GdkEventKey *event);
 void g_init_keys ();
 
-/* g_register.c */
-void g_register_funcs(void);
 /* g_select.c */
 void g_init_select ();
 /* g_util.c */

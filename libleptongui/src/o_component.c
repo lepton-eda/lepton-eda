@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,25 +139,14 @@ o_component_prepare_place (GschemToplevel *w_current,
 void
 o_component_place_changed_run_hook (GschemToplevel *w_current)
 {
-  GList *ptr = NULL;
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
   /* Run the component place list changed hook */
-  if (scm_is_false (scm_hook_empty_p (complex_place_list_changed_hook)) &&
-      active_page->place_list != NULL)
+  if (active_page->place_list != NULL)
   {
-    ptr = active_page->place_list;
-
-    scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-    g_dynwind_window (w_current);
-    while (ptr) {
-      SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),
-                             complex_place_list_changed_hook,
-                             edascm_from_object ((LeptonObject *) ptr->data));
-      g_scm_eval_protected (expr, scm_interaction_environment ());
-      ptr = g_list_next(ptr);
-    }
-    scm_dynwind_end ();
+    g_run_hook_object_list (w_current,
+                            "complex-place-list-changed-hook",
+                            active_page->place_list);
   }
 }
 

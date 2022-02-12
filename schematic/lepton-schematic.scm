@@ -69,7 +69,6 @@ exec @GUILE@ -s "$0" "$@"
   (set! %load-compiled-path (cons "@ccachedir@"
                                   %load-compiled-path)))
 (define (register-guile-funcs)
-  (g_register_funcs)
   (g_init_window)
   (g_init_select)
   (g_init_action)

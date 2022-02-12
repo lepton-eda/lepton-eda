@@ -15,7 +15,6 @@ libleptongui_la_SOURCES = \
 	g_attrib.c \
 	g_hook.c \
 	g_keys.c \
-	g_register.c \
 	g_select.c \
 	g_util.c \
 	g_window.c \
