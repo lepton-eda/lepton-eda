@@ -25,9 +25,6 @@
   #:use-module (lepton ffi)
   #:use-module (lepton page foreign)
 
-  ; Import C procedures
-  #:use-module (schematic core window)
-
   #:use-module (schematic ffi)
 
   #:export (current-window

@@ -87,22 +87,6 @@ g_current_window ()
 }
 
 /*!
- * \brief Create the (schematic core window) Scheme module
- * \par Function Description
- * Defines procedures in the (schematic core window) module. The module
- * can be accessed using (use-modules (schematic core window)).
- */
-static void
-init_module_schematic_core_window (void *unused)
-{
-  /* Register the functions */
-  #include "g_window.x"
-
-  /* Add them to the module's public definitions. */
-  scm_c_export (NULL);
-}
-
-/*!
  * \brief Initialise the GschemToplevel manipulation procedures.
  * \par Function Description
 
@@ -116,9 +100,4 @@ g_init_window ()
   /* Create fluid */
   scheme_window_fluid = scm_permanent_object (scm_make_fluid ());
   scm_c_define ("%lepton-window", scheme_window_fluid);
-
-  /* Define the (schematic core window) module */
-  scm_c_define_module ("schematic core window",
-                       (void (*)(void*)) init_module_schematic_core_window,
-                       NULL);
 }

@@ -1,8 +1,7 @@
 lib_LTLIBRARIES = libleptongui.la
 
 BUILT_SOURCES = \
-	g_keys.x \
-	g_window.x
+	g_keys.x
 
 libleptongui_la_SOURCES = \
 	a_zoom.c \
