@@ -199,6 +199,7 @@ USE_GTK3=f
 endif !ENABLE_GTK3
 
 # Work-around for Debian and its derivatives.
+# Example usage: ./configure USE_LDCONFIG=/sbin/ldconfig ...
 LIBGLIB := $(shell test -e "$(USE_LDCONFIG)" && $(USE_LDCONFIG) -p | awk '/libglib-2.0.so\./ {print $$1; exit}')
 LIBGOBJECT := $(shell test -e "$(USE_LDCONFIG)" && $(USE_LDCONFIG) -p | awk '/libgobject-2.0.so\./ {print $$1; exit}')
 LIBGTK2 := $(shell test -e "$(USE_LDCONFIG)" && $(USE_LDCONFIG) -p | awk '/libgtk-x11-2.0.so\./ {print $$1; exit}')
