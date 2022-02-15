@@ -1,6 +1,6 @@
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -27,8 +27,8 @@
 
   #:export (check-report))
 
-(define quiet (symcheck-option-ref 'quiet))
-(define verbose (if quiet -1 (symcheck-option-ref-length 'verbose)))
+(define (quiet) (symcheck-option-ref 'quiet))
+(define (verbose) (if (quiet) -1 (symcheck-option-ref-length 'verbose)))
 
 (define (report-blame object)
   "Reports errors (blames) collected for OBJECT."
@@ -38,15 +38,15 @@
   (define (report blame)
     (match blame
       (('info . msg)
-       (when (or (> verbose 2) (output-to-log?))
+       (when (or (> (verbose) 2) (output-to-log?))
          (check-log! 'info (format #f (G_ "Info: ~A") msg)))
        '(1 0 0 0))
       (('warning . msg)
-       (when (or (> verbose 1) (output-to-log?))
+       (when (or (> (verbose) 1) (output-to-log?))
          (check-log! 'warning (format #f (G_ "Warning: ~A") msg)))
        '(0 1 0 0))
       (('error . msg)
-       (when (or (> verbose 0) (output-to-log?))
+       (when (or (> (verbose) 0) (output-to-log?))
          (check-log! 'critical (format #f (G_ "ERROR: ~A") msg)))
        '(0 0 1 0))
       (_
@@ -73,13 +73,13 @@ list of the form:
                              error-count
                              unrecognized-count)
 
-    (unless quiet
+    (unless (quiet)
       (unless (zero? warning-count)
         (check-log! 'message (N_ "~A warning found"
                                  "~A warnings found"
                                  warning-count)
                     warning-count)
-        (when (< verbose 2)
+        (when (< (verbose) 2)
           (check-log! 'message (G_ "(use -vv to view details)"))))
 
       (if (zero? error-count)
@@ -89,7 +89,7 @@ list of the form:
                                      "~A ERRORS found"
                                      error-count)
                         error-count)
-            (when (< verbose 1)
+            (when (< (verbose) 1)
               (check-log! 'message (G_ "(use -v to view details)"))))))
 
     ;; return code
