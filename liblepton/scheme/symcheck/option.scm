@@ -1,6 +1,6 @@
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -18,7 +18,6 @@
 
 (define-module (symcheck option)
   #:use-module (ice-9 getopt-long)
-  #:use-module ((srfi srfi-1) #:select (filter-map))
   #:use-module (lepton option)
 
   #:export (%default-symcheck-options
