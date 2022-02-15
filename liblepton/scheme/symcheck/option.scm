@@ -18,7 +18,6 @@
 
 (define-module (symcheck option)
   #:use-module (ice-9 getopt-long)
-  #:use-module ((srfi srfi-1) #:select (filter-map))
   #:use-module (lepton option)
 
   #:export (%default-symcheck-options
