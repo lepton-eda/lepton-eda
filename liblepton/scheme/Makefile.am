@@ -1,4 +1,6 @@
 scmdatadir = $(LEPTONDATADIR)/scheme
+godir = $(LEPTONDATADIR)/ccache
+
 nobase_dist_scmdata_DATA = \
 	geda.scm \
 	geda-deprecated-config.scm \
@@ -227,7 +229,33 @@ lepton/m4.scm: Makefile
 	  echo "Recreating $@"; mv $@.new $@; \
 	fi
 
+
+GUILE_WARNINGS = -Wunbound-variable -Warity-mismatch -Wformat
+
+SOURCES = $(nobase_scmdata_DATA) $(nobase_dist_scmdata_DATA)
+GOBJECTS = $(SOURCES:%.scm=%.go)
+
+SUFFIXES = .scm .go
+.scm.go:
+	$(GUILD) compile \
+	-L . \
+	-L $(abs_top_srcdir)/liblepton/scheme \
+	-L $(abs_top_builddir)/liblepton/scheme \
+	$(GUILE_WARNINGS) -o "$@" "$<"
+
 CLEANFILES = \
 	unit-tests/dummy.sym \
 	unit-tests/dummy.xpm \
-	lepton/m4.scm
+	$(nobase_scmdata_DATA) \
+	$(GOBJECTS)
+
+
+nobase_go_DATA = $(GOBJECTS)
+
+# Make sure source files are installed first, so that the mtime of
+# installed compiled files is greater than that of installed source
+# files.  See
+# <http://lists.gnu.org/archive/html/guile-devel/2010-07/msg00125.html>
+# for details.
+guile_install_go_files = install-nobase_goDATA
+$(guile_install_go_files): install-nobase_scmdataDATA install-nobase_dist_scmdataDATA
