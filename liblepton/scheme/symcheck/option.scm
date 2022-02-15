@@ -1,6 +1,6 @@
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -39,7 +39,7 @@
   (option-ref-get-list-keys %default-symcheck-options))
 
 ;;; getopt-long compatible symcheck options.
-(define %symcheck-options
+(define (%symcheck-options)
   (getopt-long (program-arguments)
                ;; option spec
                '((quiet (single-char #\q))
@@ -52,7 +52,7 @@
   "Returns value of symcheck option KEY. Use '() to request schematics."
   (let ((default (assq-ref %default-symcheck-options key))
         (is-list-key? (memq key %list-keys)))
-    ((if is-list-key? list-option-ref option-ref) %symcheck-options key default)))
+    ((if is-list-key? list-option-ref option-ref) (%symcheck-options) key default)))
 
 (define (symcheck-option-ref-length key)
   (length (symcheck-option-ref key)))
