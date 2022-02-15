@@ -80,8 +80,3 @@ liblepton_la_LDFLAGS = -version-info $(LIBLEPTON_SHLIB_VERSION) \
 	$(WINDOWS_LIBTOOL_FLAGS) $(MINGW_LDFLAGS) $(GUILE_LIBS) $(GIO_LIBS) \
 	$(GLIB_LIBS) $(GDK_LIBS) $(GDK_PIXBUF_LIBS) $(CAIRO_LIBS) $(PANGO_LIBS) \
 	$(GTK_LIBS) $(CAIRO_PNG_LIBS) $(CAIRO_PDF_CLAGS) $(CAIRO_PS_LIBS) $(CAIRO_SVG_LIBS)
-LIBTOOL=@LIBTOOL@ --silent
-
-# Unfortunately, in order to test libtool thoroughly, we need access
-# to its private directory.
-objdir = `sed -n -e 's/^objdir=\"\(.*\)\"$$/\1/p' ./libtool`
