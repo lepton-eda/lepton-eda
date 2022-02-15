@@ -200,10 +200,10 @@ USE_GTK3=f
 endif !ENABLE_GTK3
 
 # Work-around for Debian and its derivatives.
-LIBGLIB := $(shell $(USE_LDCONFIG) -p | awk '/libglib-2.0.so\./ {print $$1; exit}')
-LIBGOBJECT := $(shell $(USE_LDCONFIG) -p | awk '/libgobject-2.0.so\./ {print $$1; exit}')
-LIBGTK2 := $(shell $(USE_LDCONFIG) -p | awk '/libgtk-x11-2.0.so\./ {print $$1; exit}')
-LIBGTK3 := $(shell $(USE_LDCONFIG) -p | awk '/libgtk-3.so\./ {print $$1; exit}')
+LIBGLIB := $(shell test -e "$(USE_LDCONFIG)" && $(USE_LDCONFIG) -p | awk '/libglib-2.0.so\./ {print $$1; exit}')
+LIBGOBJECT := $(shell test -e "$(USE_LDCONFIG)" && $(USE_LDCONFIG) -p | awk '/libgobject-2.0.so\./ {print $$1; exit}')
+LIBGTK2 := $(shell test -e "$(USE_LDCONFIG)" && $(USE_LDCONFIG) -p | awk '/libgtk-x11-2.0.so\./ {print $$1; exit}')
+LIBGTK3 := $(shell test -e "$(USE_LDCONFIG)" && $(USE_LDCONFIG) -p | awk '/libgtk-3.so\./ {print $$1; exit}')
 
 lepton/m4.scm: Makefile
 	$(MKDIR_P) lepton/; \
