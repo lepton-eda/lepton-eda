@@ -235,6 +235,12 @@ CLEANFILES = \
 	unit-tests/dummy.xpm \
 	$(nobase_scmdata_DATA)
 
+# To check it all thoroughly, you could add:
+# -Wunused-format -- to test issues with the built-in format()
+#  function.
+# -Wunused-toplevel -- to test for toplevel exported vars.
+# -Wunused-variable -- to test for other unused vars (there are
+#  some in (match ...) and other code).
 
 GUILE_WARNINGS = \
 	-Warity-mismatch \
