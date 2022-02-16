@@ -240,7 +240,6 @@ GUILE_WARNINGS = \
 	-Warity-mismatch \
 	-Wbad-case-datum \
 	-Wduplicate-case-datum \
-	-Wformat \
 	-Wmacro-use-before-definition \
 	-Wshadowed-toplevel \
 	-Wunbound-variable \
