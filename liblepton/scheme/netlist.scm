@@ -1,7 +1,7 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 1998-2010 Ales Hvezda
 ;;; Copyright (C) 1998-2017 gEDA Contributors
-;;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -738,10 +738,6 @@ other limitations imposed by this netlist format.
 ;; the given attribute of all the graphical objects connected to that
 ;; net name
 (define (gnetlist:graphical-objs-in-net-with-attrib-get-attrib netname in-attrib out-attrib-name)
-  (define (found? x)
-    (and x
-         (string=? x netname)))
-
   (define (has-netname? pin)
     (let ((name (package-pin-name pin)))
       (and name
