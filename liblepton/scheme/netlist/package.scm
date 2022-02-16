@@ -1,6 +1,6 @@
 ;;; Lepton EDA netlister
 ;;; Copyright (C) 2016-2017 gEDA Contributors
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -181,7 +181,6 @@ a string."
                            (list ls-or-component)))
            (id (schematic-component-id (car components)))
            (refdes (schematic-component-refdes (car components)))
-           (composite (any schematic-component-sources components))
            (attribs (get-attribs components))
            (pins (merge-component-pins components)))
       (make-package id refdes attribs components pins)))
