@@ -243,8 +243,7 @@ GUILE_WARNINGS = \
 	-Wmacro-use-before-definition \
 	-Wshadowed-toplevel \
 	-Wunbound-variable \
-	-Wunsupported-warning \
-	-Wunused-variable
+	-Wunsupported-warning
 
 SOURCES = $(nobase_dist_scmdata_DATA)
 GOBJECTS = $(SOURCES:%.scm=%.go)
