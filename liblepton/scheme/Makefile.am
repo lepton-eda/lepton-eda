@@ -244,7 +244,6 @@ GUILE_WARNINGS = \
 	-Wshadowed-toplevel \
 	-Wunbound-variable \
 	-Wunsupported-warning \
-	-Wunused-toplevel \
 	-Wunused-variable
 
 SOURCES = $(nobase_dist_scmdata_DATA)
