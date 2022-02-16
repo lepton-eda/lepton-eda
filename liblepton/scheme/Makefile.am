@@ -236,7 +236,17 @@ CLEANFILES = \
 	$(nobase_scmdata_DATA)
 
 
-GUILE_WARNINGS = -Wunbound-variable -Warity-mismatch -Wformat
+GUILE_WARNINGS = \
+	-Warity-mismatch \
+	-Wbad-case-datum \
+	-Wduplicate-case-datum \
+	-Wformat \
+	-Wmacro-use-before-definition \
+	-Wshadowed-toplevel \
+	-Wunbound-variable \
+	-Wunsupported-warning \
+	-Wunused-toplevel \
+	-Wunused-variable
 
 SOURCES = $(nobase_dist_scmdata_DATA)
 GOBJECTS = $(SOURCES:%.scm=%.go)
