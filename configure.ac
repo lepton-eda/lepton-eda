@@ -24,7 +24,8 @@ AC_CONFIG_HEADER([config.h])
 AM_INIT_AUTOMAKE([parallel-tests color-tests foreign])
 AM_SILENT_RULES([yes])
 
-AC_GNU_SOURCE # FIXME for some reason this is needed?
+# Without this macro, some variables like M_PI won't be defined.
+AC_GNU_SOURCE
 
 #####################################################################
 # Do version number magic
