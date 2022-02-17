@@ -62,7 +62,7 @@ exec @GUILE@ -s "$0" "$@"
 
 (eval-when (expand load eval)
   (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_MODULE_DIRECTORY@")
+    (add-to-load-path "@LEPTON_SCHEME_DIR@")
     (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (ice-9 ftw)
