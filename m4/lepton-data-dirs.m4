@@ -43,13 +43,13 @@ Only liblepton should use this - apps should use eda_get_system_data_dirs()])
   AC_MSG_RESULT([$LEPTONDATADIR])
 
 
-  # create #define LEPTON_SCM_PRECOMPILE_DIR in config.h:
+  # create #define LEPTON_CCACHE_DIR in config.h:
   #
-  AC_DEFINE_UNQUOTED([LEPTON_SCM_PRECOMPILE_DIR],
+  AC_DEFINE_UNQUOTED([LEPTON_CCACHE_DIR],
                      ["$LEPTONDATADIR_expand/ccache"],
                      [precompiled scm files dir])
 
-  AC_SUBST([LEPTON_SCM_PRECOMPILE_DIR], ["$LEPTONDATADIR_expand/ccache"])
+  AC_SUBST([LEPTON_CCACHE_DIR], ["$LEPTONDATADIR_expand/ccache"])
 
   AC_DEFINE_UNQUOTED([BITMAP_DIRECTORY],
                      ["$LEPTONDATADIR_expand/bitmap"],

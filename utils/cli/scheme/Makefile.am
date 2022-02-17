@@ -15,7 +15,7 @@ do_subst = sed -e 's,[@]libdir[@],$(libdir),g' \
 	-e 's,[@]localedir[@],$(localedir),g' \
 	-e 's,[@]bindir[@],$(bindir),g' \
 	-e 's,[@]LEPTON_SCHEME_DIR[@],$(LEPTON_SCHEME_DIR),g' \
-	-e 's,[@]ccachedir[@],@LEPTON_SCM_PRECOMPILE_DIR@,g'
+	-e 's,[@]ccachedir[@],@LEPTON_CCACHE_DIR@,g'
 
 lepton-cli: lepton-cli.scm
 	$(do_subst) < $(srcdir)/$@.scm > $@
