@@ -3,7 +3,7 @@
 
 dnl Lepton EDA data and configuration directories
 dnl Copyright (C) 2009, 2016  Peter Brett <peter@peter-b.co.uk>
-dnl Copyright (C) 2018-2021 Lepton EDA Contributors
+dnl Copyright (C) 2018-2022 Lepton EDA Contributors
 dnl
 dnl This program is free software; you can redistribute it and/or modify
 dnl it under the terms of the GNU General Public License as published by
@@ -57,9 +57,9 @@ Only liblepton should use this - apps should use eda_get_system_data_dirs()])
 
   AC_SUBST([BITMAP_DIRECTORY], ["$LEPTONDATADIR_expand/bitmap"])
 
-  AC_DEFINE_UNQUOTED([LEPTON_SCHEME_MODULE_DIRECTORY],
+  AC_DEFINE_UNQUOTED([LEPTON_SCHEME_DIR],
                      ["$LEPTONDATADIR_expand/scheme"],
                      [directory with scheme modules])
 
-  AC_SUBST([LEPTON_SCHEME_MODULE_DIRECTORY], ["$LEPTONDATADIR_expand/scheme"])
+  AC_SUBST([LEPTON_SCHEME_DIR], ["$LEPTONDATADIR_expand/scheme"])
 ])dnl AX_DATA_DIRS
