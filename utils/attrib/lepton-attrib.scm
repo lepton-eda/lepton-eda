@@ -1,7 +1,3 @@
-#!/usr/bin/env sh
-exec @GUILE@ -s "$0" "$@"
-!#
-
 ;;; Lepton EDA attribute editor
 ;;; Copyright (C) 2003-2010 Stuart D. Brorson.
 ;;; Copyright (C) 2005-2016 gEDA Contributors
@@ -20,11 +16,6 @@ exec @GUILE@ -s "$0" "$@"
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-
-(eval-when (expand load eval)
-  (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_DIR@")
-    (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (ice-9 getopt-long)
              (ice-9 receive)
@@ -73,7 +64,7 @@ exec @GUILE@ -s "$0" "$@"
 
 ;;; Localization.
 (define %textdomain "libleptonattrib")
-(bindtextdomain %textdomain "@localedir@")
+(bindtextdomain %textdomain %lepton-localedir)
 (textdomain %textdomain)
 (bind-textdomain-codeset %textdomain "UTF-8")
 (setlocale LC_ALL "")
