@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-exec @GUILE@ -s "$0" "$@"
-!#
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
 ;;; Copyright (C) 2017-2022 Lepton EDA Contributors
@@ -19,11 +16,6 @@ exec @GUILE@ -s "$0" "$@"
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-(eval-when (expand load eval)
-  (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_DIR@")
-    (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
-
 (use-modules (lepton ffi)
              (lepton toplevel)
              (symcheck check))
@@ -37,7 +29,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Localization.
 (define %textdomain "lepton-symcheck")
 (textdomain %textdomain)
-(bindtextdomain %textdomain "@localedir@")
+(bindtextdomain %textdomain %lepton-localedir)
 (bind-textdomain-codeset %textdomain "UTF-8")
 
 (%with-toplevel (%make-toplevel) check-all-symbols)
