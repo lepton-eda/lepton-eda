@@ -1,7 +1,3 @@
-#!/usr/bin/env sh
-exec @GUILE@ -s "$0" "$@"
-!#
-
 ;;; Lepton EDA attribute editor
 ;;; Copyright (C) 1998-2016 gEDA Contributors
 ;;; Copyright (C) 2017-2022 Lepton EDA Contributors
@@ -19,11 +15,6 @@ exec @GUILE@ -s "$0" "$@"
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-
-(eval-when (expand load eval)
-  (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_DIR@")
-    (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (ice-9 match)
              (srfi srfi-1)
@@ -51,7 +42,7 @@ exec @GUILE@ -s "$0" "$@"
 
 
 ;;; Localization.
-(bindtextdomain %schematic-gettext-domain "@localedir@")
+(bindtextdomain %schematic-gettext-domain %lepton-localedir)
 (textdomain %schematic-gettext-domain)
 (bind-textdomain-codeset %schematic-gettext-domain "UTF-8")
 (setlocale LC_ALL "")
@@ -67,7 +58,7 @@ exec @GUILE@ -s "$0" "$@"
 
 ;;; Add Lepton compiled path to Guile compiled paths env var.
 (define (set-guile-compiled-path)
-  (set! %load-compiled-path (cons "@ccachedir@"
+  (set! %load-compiled-path (cons "@LEPTON_CCACHE_DIR@"
                                   %load-compiled-path)))
 (define (register-guile-funcs)
   (g_init_window))
