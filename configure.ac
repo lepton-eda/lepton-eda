@@ -275,6 +275,9 @@ AC_CONFIG_FILES([utils/embed/lepton-embed:script.in:utils/embed/lepton-embed.scm
 AC_CONFIG_FILES([utils/netlist/lepton-netlist:script.in:utils/netlist/lepton-netlist.scm],
                 [chmod +x utils/netlist/lepton-netlist])
 
+AC_CONFIG_FILES([utils/symcheck/lepton-symcheck:script.in:utils/symcheck/lepton-symcheck.scm],
+                [chmod +x utils/symcheck/lepton-symcheck])
+
 AC_CONFIG_FILES([Makefile
 
                  liblepton/Makefile
