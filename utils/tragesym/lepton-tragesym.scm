@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-exec @GUILE@ -s "$0" "$@"
-!#
 ;;; Copyright (C) 2019-2022 Lepton EDA Contributors
 ;;;
 ;;; Based on Python script by Werner Hoch
@@ -34,11 +31,6 @@ exec @GUILE@ -s "$0" "$@"
 ;;; - Symbol width will be automatically increased based on values
 ;;;   defined by the greater number of pins at the top or at the
 ;;;   bottom of the symbol, and the width requested.
-
-(eval-when (expand load eval)
-  (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_DIR@")
-    (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (ice-9 getopt-long)
              (ice-9 match)

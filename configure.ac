@@ -278,6 +278,9 @@ AC_CONFIG_FILES([utils/netlist/lepton-netlist:script.in:utils/netlist/lepton-net
 AC_CONFIG_FILES([utils/symcheck/lepton-symcheck:script.in:utils/symcheck/lepton-symcheck.scm],
                 [chmod +x utils/symcheck/lepton-symcheck])
 
+AC_CONFIG_FILES([utils/tragesym/lepton-tragesym:script.in:utils/tragesym/lepton-tragesym.scm],
+                [chmod +x utils/tragesym/lepton-tragesym])
+
 AC_CONFIG_FILES([Makefile
 
                  liblepton/Makefile
