@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-exec @GUILE@ -s "$0" "$@"
-!#
 ;;; Lepton EDA netlister
 ;;; Scheme API
 ;;; Copyright (C) 2017-2022 Lepton EDA Contributors
@@ -18,11 +15,6 @@ exec @GUILE@ -s "$0" "$@"
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-
-(eval-when (expand load eval)
-  (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_DIR@")
-    (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (ice-9 getopt-long)
              (srfi srfi-26)
@@ -44,7 +36,7 @@ exec @GUILE@ -s "$0" "$@"
 ;;; Localization.
 (define %textdomain "lepton-netlist")
 (textdomain %textdomain)
-(bindtextdomain %textdomain "@localedir@")
+(bindtextdomain %textdomain %lepton-localedir)
 (bind-textdomain-codeset %textdomain "UTF-8")
 
 ;;; Process lepton-netlist options.
