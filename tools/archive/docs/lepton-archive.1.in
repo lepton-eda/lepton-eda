@@ -26,6 +26,7 @@ Archive mode is the default.
 .SH OPTIONS
 .nf
 \-h, \-\-help             Print usage information.
+\-V, \-\-version          Print version information.
 \-v, \-\-verbose          Verbose mode.
 \-f, \-\-files\-from=FILE  Additionally read filenames to archive from FILE.
 \-e, \-\-extract          Extract mode. Mandatory if you want to extract from archive.
