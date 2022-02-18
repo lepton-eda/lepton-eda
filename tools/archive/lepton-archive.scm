@@ -163,7 +163,8 @@ Example usage:
 
 (define (wrong-option-handler)
   "Primitive wrong option handler for getopt-long."
-  (format-error "Use \"~A -h\" for help\n" (car (program-arguments))))
+  (format-error "Use \"~A -h\" for help\n"
+                (basename (car (program-arguments)))))
 
 
 ;;; Options.
