@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+exec @GUILE@ -s "$0" "$@"
+!#
+
+(eval-when (expand load eval)
+  (unless (getenv "LIBLEPTON")
+    (add-to-load-path "@LEPTON_SCHEME_DIR@")
+    (set! %load-compiled-path (cons "@LEPTON_CCACHE_DIR@" %load-compiled-path))))
