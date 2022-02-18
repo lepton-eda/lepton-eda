@@ -11,11 +11,11 @@ lepton-archive \- create and extract Lepton EDA design archives
 
 .SH DESCRIPTION
 .B lepton-archive
-creates and extracts Lepton EDA designs from an archive. The two modes of
-operation are "archive mode" (archive creation) and "extract mode".
-In archive mode it creates a project archive from a bunch of project
-files, and in extract mode it extracts the files from the archive and
-places them in the local directory.
+creates and extracts Lepton EDA designs from an archive. The two
+modes of operation are "archive mode" (archive creation) and
+"extract mode".  In archive mode it creates a project archive from
+a bunch of project files, and in extract mode it extracts the
+files from the archive and places them in the local directory.
 .PP
 In archive mode the program processes schematic files traversing
 their hierarchy, collecting and caching all subschematics, symbols
@@ -28,12 +28,14 @@ Archive mode is the default.
 \-h, \-\-help             Print usage information.
 \-V, \-\-version          Print version information.
 \-v, \-\-verbose          Verbose mode.
-\-f, \-\-files\-from=FILE  Additionally read filenames to archive from FILE.
-\-e, \-\-extract          Extract mode. Mandatory if you want to extract from archive.
+\-f, \-\-files\-from=FILE  Additionally read filenames to archive
+                       from FILE.
+\-e, \-\-extract          Extract mode. Mandatory if you want to
+                       extract from archive.
 \-a, \-\-archive          Archive mode. It is the default mode.
 \-o, \-\-output=FILE      Specify the name of the output archive file
-                       in archive mode. If FILE has no ".tar.gz" suffix it will be
-                       automatically appended.
+                       in archive mode. If FILE has no ".tar.gz"
+                       suffix it will be automatically appended.
                        Default file name is "project-archive.tar.gz".
 
 .SH EXAMPLES
