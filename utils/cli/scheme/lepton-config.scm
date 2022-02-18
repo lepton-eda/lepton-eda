@@ -1,7 +1,3 @@
-#!/usr/bin/env sh
-exec @GUILE@ -s "$0" "$@"
-!#
-
 ;;; Lepton EDA command-line utility
 ;;; Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
 ;;; Copyright (C) 2015 gEDA Contributors
@@ -20,11 +16,6 @@ exec @GUILE@ -s "$0" "$@"
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-
-(eval-when (expand load eval)
-  (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_DIR@")
-    (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (ice-9 match)
              (srfi srfi-1)
