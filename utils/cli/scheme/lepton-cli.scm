@@ -1,7 +1,3 @@
-#!/usr/bin/env sh
-exec @GUILE@ -s "$0" "$@"
-!#
-
 ;;; Lepton EDA command-line utility
 ;;; Copyright (C) 2012-2013 Peter Brett <peter@peter-b.co.uk>
 ;;; Copyright (C) 2012-2014 gEDA Contributors
@@ -20,11 +16,6 @@ exec @GUILE@ -s "$0" "$@"
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
-
-(eval-when (expand load eval)
-  (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_DIR@")
-    (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (lepton core gettext)
              (lepton ffi)
@@ -124,16 +115,16 @@ Lepton EDA homepage: <~A>
          (let ((prog-name
                 (if (string= op "shell")
                     (or (getenv "LEPTON_SHELL")
-                        (string-append "@bindir@"
+                        (string-append %lepton-bindir
                                        file-name-separator-string
                                        "lepton-shell"))
                     (if (string= op "config")
                         (or (getenv "LEPTON_CONFIG")
-                            (string-append "@bindir@"
+                            (string-append %lepton-bindir
                                            file-name-separator-string
                                            "lepton-config"))
                         (or (getenv "LEPTON_EXPORT")
-                            (string-append "@bindir@"
+                            (string-append %lepton-bindir
                                            file-name-separator-string
                                            "lepton-export"))))))
            (apply execle
@@ -147,7 +138,7 @@ Lepton EDA homepage: <~A>
 (define %cli-gettext-domain "lepton-cli")
 
 ;;; Localization.
-(bindtextdomain %cli-gettext-domain "@localedir@")
+(bindtextdomain %cli-gettext-domain %lepton-localedir)
 (textdomain %cli-gettext-domain)
 (bind-textdomain-codeset %cli-gettext-domain "UTF-8")
 (setlocale LC_ALL "")
