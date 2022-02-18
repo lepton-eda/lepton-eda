@@ -213,6 +213,8 @@ lepton/m4.scm: Makefile
 	$(MKDIR_P) lepton/; \
 	echo '(define-module (lepton m4))' > $@.new && \
 	echo '(define-public %lepton-docdir "$(docdir)")' >> $@.new && \
+	echo '(define-public %lepton-localedir "$(localedir)")' >> $@.new && \
+	echo '(define-public %lepton-bindir "$(bindir)")' >> $@.new && \
 	echo '(define-public %m4-use-cygwin #$(USE_CYGWIN))' >> $@.new && \
 	echo '(define-public %m4-use-gtk3 #$(USE_GTK3))' >> $@.new && \
 	echo '(define-public %m4-liblepton-major $(LIBLEPTON_MAJOR))' >> $@.new && \

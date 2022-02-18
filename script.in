@@ -6,3 +6,5 @@ exec @GUILE@ -s "$0" "$@"
   (unless (getenv "LIBLEPTON")
     (add-to-load-path "@LEPTON_SCHEME_DIR@")
     (set! %load-compiled-path (cons "@LEPTON_CCACHE_DIR@" %load-compiled-path))))
+
+(use-modules (lepton m4))
