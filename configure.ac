@@ -248,6 +248,9 @@ AX_LIBLEPTONGUI([4:0:0])
 # Generate output
 #####################################################################
 
+AC_CONFIG_FILES([schematic/lepton-schematic:script.in:schematic/lepton-schematic.scm],
+                [chmod +x schematic/lepton-schematic])
+
 AC_CONFIG_FILES([Makefile
 
                  liblepton/Makefile
