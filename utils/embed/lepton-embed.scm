@@ -1,7 +1,3 @@
-#!/usr/bin/env sh
-exec @GUILE@ "$0" "$@"
-!#
-
 ;;
 ;; Lepton EDA
 ;; lepton-embed - schematic components and pictures embedding utility
@@ -9,11 +5,6 @@ exec @GUILE@ "$0" "$@"
 ;; Copyright (C) 2019-2022 Lepton EDA Contributors
 ;; License: GPLv2+. See the COPYING file
 ;;
-
-(eval-when (expand load eval)
-  (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_DIR@")
-    (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (ice-9 format)
              (ice-9 getopt-long)
