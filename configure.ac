@@ -251,6 +251,9 @@ AX_LIBLEPTONGUI([4:0:0])
 AC_CONFIG_FILES([schematic/lepton-schematic:script.in:schematic/lepton-schematic.scm],
                 [chmod +x schematic/lepton-schematic])
 
+AC_CONFIG_FILES([utils/archive/lepton-archive:script.in:utils/archive/lepton-archive.scm],
+                [chmod +x utils/archive/lepton-archive])
+
 AC_CONFIG_FILES([utils/attrib/lepton-attrib:script.in:utils/attrib/lepton-attrib.scm],
                 [chmod +x utils/attrib/lepton-attrib])
 

@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-exec @GUILE@ -s "$0" "$@"
-!#
 ;;; Copyright (C) 2019-2022 Lepton EDA Contributors
 ;;;
 ;;; Based on Python script by Stuart Brorson:
@@ -59,11 +56,6 @@ exec @GUILE@ -s "$0" "$@"
 ;;; - Move all extracted files recursively into user's directory.
 ;;;   Before each move, make sure that no overwrite of existing
 ;;;   files will occur.
-
-(eval-when (expand load eval)
-  (unless (getenv "LIBLEPTON")
-    (add-to-load-path "@LEPTON_SCHEME_DIR@")
-    (set! %load-compiled-path (cons "@ccachedir@" %load-compiled-path))))
 
 (use-modules (ice-9 ftw)
              (ice-9 getopt-long)
