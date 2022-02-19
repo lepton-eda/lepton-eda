@@ -4,6 +4,18 @@
 
 (define help-string "Usage: lepton-archive [OPTION...] FILES...")
 
+(define cwd (getcwd))
+(define *testdir* (build-filename (getcwd) "archive-tmp"))
+
+;;; Setup/teardown directories/files needed by tests.
+(define (test-setup)
+  (mkdir *testdir*)
+  (chdir *testdir*))
+
+(define (test-teardown)
+  (chdir cwd)
+  (system* "rm" "-rf" *testdir*))
+
 
 (test-begin "lepton-archive -h")
 
@@ -47,3 +59,45 @@
   (test-assert (string-contains <stdout> "There is NO WARRANTY")))
 
 (test-end "lepton-archive --version")
+
+;;; Copy directories recursively.
+(define (cp-r . args)
+  (apply system* "cp" "-r" args))
+
+(test-begin "lepton-archive one-file")
+
+(test-group-with-cleanup "lepton-archive one-file"
+  (test-setup)
+
+  (cp-r (build-filename *abs-top-srcdir* "tools" "archive" "tests" "hierarchy")
+        *testdir*)
+  (chdir (build-filename *testdir* "hierarchy"))
+  (chmod (build-filename *testdir* "hierarchy") #o700)
+  (chmod (build-filename *testdir* "hierarchy" "sym") #o700)
+
+  (let ((tarball "project-archive.tar.gz"))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-archive "sch.sch")
+      (test-eq EXIT_SUCCESS <status>)
+
+      (test-assert (string-contains <stdout> "Project archive"))
+      (test-assert (string-contains <stdout> tarball))
+      (test-assert (string-contains <stdout> "created successfully!"))
+      (test-assert (file-exists? tarball)))
+
+    (receive (<status> <stdout> <stderr>)
+        (command-values "tar" "-t" "-f" tarball)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> "hierarchy/cache/subsub.sch"))
+      (test-assert (string-contains <stdout> "hierarchy/cache/resistor.sym"))
+      (test-assert (string-contains <stdout> "hierarchy/cache/in.sym"))
+      (test-assert (string-contains <stdout> "hierarchy/cache/subsub.sym"))
+      (test-assert (string-contains <stdout> "hierarchy/cache/out.sym"))
+      (test-assert (string-contains <stdout> "hierarchy/cache/sub.sch"))
+      (test-assert (string-contains <stdout> "hierarchy/cache/sub.sym"))
+      (test-assert (string-contains <stdout> "hierarchy/gafrc"))
+      (test-assert (string-contains <stdout> "hierarchy/sch.sch"))))
+
+  (test-teardown))
+
+(test-end "lepton-archive one-file")

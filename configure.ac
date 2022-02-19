@@ -364,6 +364,7 @@ AC_CONFIG_FILES([Makefile
                  tools/symfix/docs/Makefile
 
                  tools/archive/docs/Makefile
+                 tools/archive/tests/Makefile
                  tools/archive/Makefile
 
                  tools/embed/Makefile
