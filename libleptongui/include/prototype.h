@@ -35,7 +35,7 @@ guint
 schematic_keys_verify_keyval (guint keyval);
 
 void
-g_keys_reset (GschemToplevel *w_current);
+schematic_keys_reset (GschemToplevel *w_current);
 
 /* g_window.c */
 GschemToplevel *g_current_window ();

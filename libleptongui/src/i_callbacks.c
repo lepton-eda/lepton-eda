@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -2706,7 +2706,7 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
   i_set_state(w_current, SELECT);
 
   /* clear the key guile command-sequence */
-  g_keys_reset (w_current);
+  schematic_keys_reset (w_current);
 
   gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
 
