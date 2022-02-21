@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2021 Lepton EDA Contributors
+ * Copyright (C) 2018-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1169,7 +1169,7 @@ x_tabs_cancel_all (GschemToplevel* w_current)
 
   i_set_state (w_current, SELECT);
 
-  g_keys_reset (w_current);
+  schematic_keys_reset (w_current);
 
   GschemPageView* pview = gschem_toplevel_get_current_page_view (w_current);
   gschem_page_view_invalidate_all (pview);
