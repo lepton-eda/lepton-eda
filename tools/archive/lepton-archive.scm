@@ -247,7 +247,10 @@ or no directory path can be converted into absolute."
 
 (define* (copy-file* old-filename new-filename #:optional quiet)
   (catch #t
-    (lambda () (copy-file old-filename new-filename))
+    (lambda ()
+      (if (file-exists? new-filename)
+          (debug-format "Skip existing file ~S\n" new-filename)
+          (copy-file old-filename new-filename)))
     (lambda (key . args)
       (unless quiet
         (format #t "Cannot copy file ~S to ~S.\n~S: ~S\n"
