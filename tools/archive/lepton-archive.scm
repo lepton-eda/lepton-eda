@@ -762,10 +762,15 @@ Please use file basenames in your schematics to fix this.\n\n"
           (when (file-exists? project/output.tar.gz)
             ;; Remove old archive if it exists.
             (delete-file* project/output.tar.gz))
-          (rename-file* temp/output.tar.gz project/output.tar.gz)
-          (format #t "Project archive ~S created successfully!\n"
-                  project/output.tar.gz)
-          (remove-temp-dir temp/))
+          (if (rename-file* temp/output.tar.gz project/output.tar.gz)
+              (begin
+                (format #t "Project archive ~S created successfully!\n"
+                        project/output.tar.gz)
+                (remove-temp-dir temp/))
+              (format #t
+                      "Could not rename ~S to ~S\n"
+                      temp/output.tar.gz
+                      project/output.tar.gz)))
         ;; Otherwise, report the place of the new archive.
         (format #t "Preserving existing archive in local directory.
 Your new archive lives in ~S\n" temp/output.tar.gz))))
