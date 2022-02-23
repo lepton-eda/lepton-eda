@@ -63,7 +63,7 @@
              (ice-9 popen)
              (ice-9 rdelim)
              (ice-9 streams)
-             (ice-9 rdelim)
+             (ice-9 textual-ports)
              (srfi srfi-1)
              (srfi srfi-26)
              (lepton ffi)
@@ -594,18 +594,25 @@ component names used."
 (define (update-rc dir)
   "Updates gafrc by resetting component libraries and adding a new
 symbol cache directory."
-  (let ((port (open (make-absolute-filename dir (basename gafrc))
-                    (logior O_WRONLY O_APPEND))))
-    (format port
-            "
+  (define gafrc-file (make-absolute-filename dir (basename gafrc)))
+
+  (let ((gafrc-contents
+         (with-input-from-file gafrc-file
+           (lambda ()
+             (get-string-all (current-input-port))))))
+    (delete-file gafrc-file)
+    (with-output-to-file gafrc-file
+      (lambda ()
+        (display gafrc-contents (current-output-port))
+        (format (current-output-port)
+                "
 (reset-component-library)
 (component-library ~S)
 (reset-source-library)
 (source-library ~S)
 "
-            cache-directory
-            cache-directory)
-    (close port)))
+                cache-directory
+                cache-directory)))))
 
 (define (flatten-tree ls)
   (let loop ((result '())
