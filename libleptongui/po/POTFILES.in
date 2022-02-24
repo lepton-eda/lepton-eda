@@ -100,7 +100,7 @@ libleptongui/scheme/conf/schematic/menu.scm
 
 libleptongui/scheme/schematic/action.scm
 libleptongui/scheme/schematic/builtins.scm
-libleptongui/scheme/schematic/gschemdoc.scm.in
+libleptongui/scheme/schematic/gschemdoc.scm
 libleptongui/scheme/schematic/keymap.scm
 libleptongui/scheme/gschem/deprecated.scm
 
