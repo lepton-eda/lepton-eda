@@ -6,8 +6,8 @@ SUBDIRS = \
 	include \
 	lib \
 	po \
-	scheme \
 	src \
+	scheme \
 	tests
 
 pkgconfigdir   = $(libdir)/pkgconfig

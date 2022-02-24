@@ -1,6 +1,6 @@
-## -*- Makefile -*-
-
 scmdatadir = $(LEPTONDATADIR)/scheme
+godir = $(LEPTONDATADIR)/ccache
+
 nobase_dist_scmdata_DATA = \
 	auto-refdes.scm \
 	auto-uref.scm \
@@ -46,3 +46,53 @@ nobase_dist_scmdata_DATA = \
 	conf/schematic/keys.scm \
 	conf/schematic/menu.scm \
 	conf/schematic/stroke.scm
+
+# To check it all thoroughly, you could add:
+# -Wunused-format -- to test issues with the built-in format()
+#  function.
+# -Wunused-toplevel -- to test for toplevel exported vars.
+# -Wunused-variable -- to test for other unused vars (there are
+#  some in (match ...) and other code).
+
+GUILE_WARNINGS = \
+	-Warity-mismatch \
+	-Wbad-case-datum \
+	-Wduplicate-case-datum \
+	-Wmacro-use-before-definition \
+	-Wshadowed-toplevel \
+	-Wunbound-variable \
+	-Wunsupported-warning
+
+SOURCES = $(nobase_dist_scmdata_DATA)
+
+
+# This part depends on the configure switch --enable-guild.
+if ENABLE_GUILD
+
+GOBJECTS = $(SOURCES:%.scm=%.go)
+
+SUFFIXES = .scm .go
+.scm.go:
+	LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton" \
+	LIBLEPTONGUI="${abs_top_builddir}/libleptongui/src/libleptongui" \
+	$(GUILD) compile \
+	-L . \
+	-L $(abs_top_srcdir)/liblepton/scheme \
+	-L $(abs_top_builddir)/liblepton/scheme \
+	-L $(abs_top_srcdir)/libleptongui/scheme \
+	-L $(abs_top_builddir)/libleptongui/scheme \
+	$(GUILE_WARNINGS) -o "$@" "$<"
+
+nobase_go_DATA = $(GOBJECTS)
+
+# Make sure source files are installed first, so that the mtime of
+# installed compiled files is greater than that of installed source
+# files.  See
+# <http://lists.gnu.org/archive/html/guile-devel/2010-07/msg00125.html>
+# for details.
+guile_install_go_files = install-nobase_goDATA
+$(guile_install_go_files): install-nobase_dist_scmdataDATA
+
+CLEANFILES = $(GOBJECTS)
+
+endif
