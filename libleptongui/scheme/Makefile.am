@@ -27,6 +27,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/ffi.scm \
 	schematic/ffi/gobject.scm \
 	schematic/ffi/gtk.scm \
+	schematic/gschemdoc.scm \
 	schematic/gui/keymap.scm \
 	schematic/gui/stroke.scm \
 	schematic/hook.scm \
@@ -45,16 +46,3 @@ nobase_dist_scmdata_DATA = \
 	conf/schematic/keys.scm \
 	conf/schematic/menu.scm \
 	conf/schematic/stroke.scm
-
-nobase_scmdata_DATA = \
-	schematic/gschemdoc.scm
-
-schematic/gschemdoc.scm: schematic/gschemdoc.scm.in
-	$(MKDIR_P) schematic/; \
-	sed -e 's,[@]docdir[@],$(docdir),g' < $(srcdir)/$@.in > $@
-
-EXTRA_DIST = \
-	schematic/gschemdoc.scm.in
-
-CLEANFILES = \
-	schematic/gschemdoc.scm
