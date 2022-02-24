@@ -1,6 +1,7 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Copyright (C) 1998-2010 Ales Hvezda
-;;; Copyright (C) 1998-2013 gEDA Contributors (see ChangeLog for details)
+;;; Copyright (C) 1998-2013 gEDA Contributors
+;;; Copyright (C) 2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -19,6 +20,9 @@
 ; This function resets all the refdes in a list of objects.
 ;
 ; objects: a list of gschem schematic objects
+
+(use-modules (ice-9 regex)
+             (lepton attrib))
 
 (define (auto-refdes-reset! objects)
 
@@ -76,4 +80,3 @@
     ; iterate through the list of objects and reset all the refdes attributes
 
     (for-each reset-refdes! (filter resetable-refdes? objects))))
-
