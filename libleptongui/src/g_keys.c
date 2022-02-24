@@ -95,6 +95,14 @@ schematic_keys_reset (GschemToplevel *w_current)
 }
 
 
+/*! \brief Obtain key value of a #GdkEventKey event.
+ * \par Function Description
+ * Returns the key value specified by \a event always translated
+ * into lower case.
+ *
+ * \param [in] event The #GdkEventKey structure.
+ * \return The obtained key value.
+ */
 guint
 schematic_keys_get_event_key (GdkEventKey *event)
 {
@@ -109,6 +117,22 @@ schematic_keys_get_event_key (GdkEventKey *event)
 }
 
 
+/*! \brief Obtain key modifiers of a #GdkEventKey event.
+ * \par Function Description
+ * Evaluates the key modifiers specified by \a event using the
+ * current keymap.  The function acts as follows:
+ * - Gets the keyval and modifiers of the event.
+ * - Modifies the modifiers taken into account the current event
+ *   state along with the default modifier mask.
+ * - Based on Caps Lock state and keyval (lower or upper case),
+ *   gets the real state of the Shift modifier and changes the
+ *   modifiers according to the result.
+ * - Finally applies GDK_MODIFIER_MASK to the modifiers to filter
+ *   out unwanted cruft and returns the resulting value.
+ *
+ * \param [in] event      The #GdkEventKey structure.
+ * \return The obtained key modifiers.
+ */
 guint
 schematic_keys_get_event_mods (GdkEventKey *event)
 {
