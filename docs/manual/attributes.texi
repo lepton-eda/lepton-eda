@@ -330,7 +330,7 @@ value of @attr{footprint=} should be set to @code{unknown}.
 @subsection documentation attribute
 
 @attr{documentation=documentation_locator} may exist somewhere in the
-symbol and be made invisible.  This attribute is used by gschemdoc to
+symbol and be made invisible.  This attribute is used by Lepton to
 find relevant documentation for the symbol, or rather, the device or
 component associated with the symbol.
 
@@ -346,7 +346,7 @@ user documentation directories, (usually
 @file{$@{prefix@}/share/doc/lepton-eda} and
 @file{~/.local/share/lepton-eda/doc/lepton-eda}, check the output of
 functions @code{user-doc-dir} and @code{sys-doc-dir} in the
-@code{(schematic gschemdoc)} module to make it sure).
+@code{(schematic doc)} module to make it sure).
 
 @emph{Filename example:}
 @example

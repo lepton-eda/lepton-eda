@@ -32,7 +32,7 @@
   #:use-module (schematic action)
   #:use-module (schematic core gettext)
   #:use-module (schematic ffi)
-  #:use-module (schematic gschemdoc)
+  #:use-module (schematic doc)
   #:use-module (schematic gui keymap)
   #:use-module (schematic hook)
   #:use-module (schematic menu)
