@@ -2,7 +2,6 @@ scmdatadir = $(LEPTONDATADIR)/scheme
 godir = $(LEPTONDATADIR)/ccache
 
 nobase_dist_scmdata_DATA = \
-	pcb.scm \
 	gschem/action.scm \
 	gschem/attrib.scm \
 	gschem/builtins.scm \
@@ -29,6 +28,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/keymap.scm \
 	schematic/menu.scm \
 	schematic/netlist.scm \
+	schematic/pcb.scm \
 	schematic/precompile.scm \
 	schematic/refdes.scm \
 	schematic/repl.scm \
