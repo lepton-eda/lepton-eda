@@ -2,6 +2,8 @@
 ; Start of keymapping related keywords
 ;
 
+(use-modules (schematic gui keymap))
+
 ;;;; Keymapping
 ;;
 ;; Everything is case-sensitive.  Any number of keys may be bound in
