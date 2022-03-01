@@ -52,12 +52,13 @@
 ;; - figure out how to install the hotkeys
 ;;
 
-(use-modules (ice-9 popen)
-             (geda deprecated)
-             (lepton log)
-             (gschem deprecated)
-             (schematic dialog)
-             (schematic menu))
+(define-module (schematic pcb)
+  #:use-module (ice-9 popen)
+  #:use-module (geda deprecated)
+  #:use-module (lepton log)
+  #:use-module (gschem deprecated)
+  #:use-module (schematic dialog)
+  #:use-module (schematic menu))
 
 (log! 'message "Loading the PCB major mode\n")
 ;; (log! 'message "PCB-mode version $Id$\n")
