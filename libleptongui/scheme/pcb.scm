@@ -2,7 +2,7 @@
 ;;
 ;; Copyright (C) 2006-2010 Dan McMahill
 ;; Copyright (C) 2006-2011 gEDA Contributors
-;; Copyright (C) 2019-2020 Lepton EDA Contributors
+;; Copyright (C) 2019-2022 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -53,8 +53,11 @@
 ;;
 
 (use-modules (ice-9 popen)
+             (geda deprecated)
              (lepton log)
-             (schematic dialog))
+             (gschem deprecated)
+             (schematic dialog)
+             (schematic menu))
 
 (log! 'message "Loading the PCB major mode\n")
 ;; (log! 'message "PCB-mode version $Id$\n")
