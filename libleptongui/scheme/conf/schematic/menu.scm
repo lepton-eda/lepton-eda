@@ -12,8 +12,9 @@
 ; The SEPARATOR keyword is case sensitive and puts a separator into the menu.
 ;
 
-( use-modules ( ice-9 format ) )
-( use-modules ( lepton config ) )
+(use-modules (ice-9 format)
+             (lepton config)
+             (schematic menu))
 
 ;; Define a no-op macro for flagging strings as translatable.
 (define-syntax N_
