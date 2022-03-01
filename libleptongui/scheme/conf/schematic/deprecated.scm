@@ -5,6 +5,8 @@
              (lepton legacy-config)
              (lepton object)
              (lepton page)
+             (lepton rc)
+             (gschem deprecated)
              (schematic hook)
              (schematic window))
 
