@@ -2,7 +2,6 @@ scmdatadir = $(LEPTONDATADIR)/scheme
 godir = $(LEPTONDATADIR)/ccache
 
 nobase_dist_scmdata_DATA = \
-	auto-uref.scm \
 	pcb.scm \
 	gschem/action.scm \
 	gschem/attrib.scm \
