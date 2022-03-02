@@ -209,4 +209,4 @@
 ;; and there are known (and easy) ways to crash pcb and/or gschem with this code.
 ;; The short answer is neither program likes a pipe to break.
 ;;
-; (load-from-path "pcb.scm")
+; (use-modules (schematic pcb))
