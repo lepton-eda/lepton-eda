@@ -3,6 +3,9 @@
 ;;; Common init file for gaf
 ;;;
 
+(use-modules (lepton library)
+             (lepton log-rotate))
+
 ; The following global variables are defined by libgeda:
 ;
 ; path-sep       -- system path separator
@@ -15,9 +18,9 @@
 (debug-enable 'backtrace)
 (read-enable 'positions)
 
-; The libgeda Scheme library provides a number of useful functions for
-; writing Scheme code for embedding in gaf.
-(load-from-path "geda.scm")
+; Clean up logfiles:
+;
+(cleanup-old-logs!)
 
 ;; Import deprecated Scheme functions
 (load-from-path "geda-deprecated-config.scm")
