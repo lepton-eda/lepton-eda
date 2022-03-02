@@ -38,7 +38,7 @@
 ;; Comment in this scheme code if you want automatic numbering when
 ;; placing new component and copying components.
 ;
-;(load-from-path "auto-uref.scm")
+;(use-modules (schematic refdes))
 ;(add-hook! add-component-hook auto-uref)
 ;(add-hook! copy-component-hook auto-uref)
 ;
