@@ -1,7 +1,7 @@
 ;; Lepton EDA library - Scheme API
 ;; Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
 ;; Copyright (C) 2016 gEDA Contributors
-;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -31,8 +31,9 @@
 ;; ===================================================================
 
 
-( use-modules ( lepton config ) )
-( use-modules ( lepton legacy-config ) )
+(define-module (geda deprecated-config)
+  #:use-module (lepton config)
+  #:use-module (lepton legacy-config))
 
 
 ;; Returns an RC function closure to replace the legacy configuration
@@ -56,7 +57,7 @@
 (define-syntax define-rc-dead-config
   (syntax-rules ()
     ((_ old-id)
-     (define old-id (rc-dead-config (quote old-id))))))
+     (define-public old-id (rc-dead-config (quote old-id))))))
 
 ;; Returns an RC function closure to replace the legacy configuration
 ;; function OLD-ID. The returned closure takes an arbitrary number of
@@ -94,8 +95,8 @@
 (define-syntax define-rc-deprecated-config
   (syntax-rules ()
     ((_ old-id group key value-transformer)
-     (define old-id (rc-deprecated-config (quote old-id) group key
-                                           value-transformer)))))
+     (define-public old-id
+       (rc-deprecated-config (quote old-id) group key value-transformer)))))
 
 ;; Identity value transformer for define-rc-deprecated-config
 (define (rc-deprecated-string-transformer str) str)

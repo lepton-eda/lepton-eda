@@ -1621,8 +1621,8 @@ then the value from the old configuration file will take precedence.
 Deprecated settings are listed in the tables below (the new settings
 in the right column are shown in the form
 @code{[group_name]::key_name}).  Also, they can be found in the
-@url{https://github.com/lepton-eda/lepton-eda/blob/master/liblepton/scheme/geda-deprecated-config.scm,
-geda-deprecated-config.scm} file (look for
+@url{https://github.com/lepton-eda/lepton-eda/blob/master/liblepton/scheme/geda/deprecated-config.scm,
+deprecated-config.scm} file (look for
 @code{define-rc-deprecated-config} entries there).
 
 @subsection Deprecated gafrc settings
