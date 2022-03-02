@@ -2,12 +2,12 @@ scmdatadir = $(LEPTONDATADIR)/scheme
 godir = $(LEPTONDATADIR)/ccache
 
 nobase_dist_scmdata_DATA = \
-	geda-deprecated-config.scm \
 	color-map.scm \
 	geda/object.scm \
 	geda/page.scm \
 	geda/attrib.scm \
 	geda/deprecated.scm \
+	geda/deprecated-config.scm \
 	geda/os.scm \
 	geda/config.scm \
 	geda/log.scm \

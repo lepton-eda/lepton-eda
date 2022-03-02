@@ -4,7 +4,11 @@
 ;;;
 
 (use-modules (lepton library)
-             (lepton log-rotate))
+             (lepton log-rotate)
+             ;; Import deprecated Scheme functions.
+             (geda deprecated-config)
+             (geda deprecated)
+             (lepton color-map))
 
 ; The following global variables are defined by libgeda:
 ;
@@ -21,11 +25,6 @@
 ; Clean up logfiles:
 ;
 (cleanup-old-logs!)
-
-;; Import deprecated Scheme functions
-(load-from-path "geda-deprecated-config.scm")
-(use-modules (geda deprecated)
-             (lepton color-map))
 
 
 ; Function: scheme-directory( dir )
