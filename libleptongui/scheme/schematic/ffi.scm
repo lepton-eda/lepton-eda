@@ -195,7 +195,7 @@
 (define-lff x_color_init void '())
 (define-lff x_widgets_show_log void (list '*))
 
-;;; g_keys.c
+;;; keys.c
 (define-lff schematic_keys_get_event_key int '(*))
 (define-lff schematic_keys_get_event_mods int '(*))
 (define-lff schematic_keys_verify_keyval int (list int))
