@@ -23,8 +23,7 @@ g_run_hook_page (GschemToplevel *w_current,
                  LeptonPage *page);
 void g_run_hook_action_mode (GschemToplevel *w_current, const char *name, const gchar *action_mode);
 
-/* g_keys.c */
-
+/* keys.c */
 guint
 schematic_keys_get_event_key (GdkEventKey *event);
 

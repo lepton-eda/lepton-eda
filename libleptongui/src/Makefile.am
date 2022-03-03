@@ -4,7 +4,6 @@ libleptongui_la_SOURCES = \
 	a_zoom.c \
 	g_action.c \
 	g_hook.c \
-	g_keys.c \
 	g_window.c \
 	globals.c \
 	lepton-schematic.c \
@@ -48,6 +47,7 @@ libleptongui_la_SOURCES = \
 	i_basic.c \
 	i_callbacks.c \
 	i_vars.c \
+	keys.c \
 	m_basic.c \
 	o_arc.c \
 	o_attrib.c \
