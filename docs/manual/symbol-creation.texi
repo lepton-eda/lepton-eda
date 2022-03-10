@@ -156,7 +156,6 @@ Possible @attr{pintype} values are: @attr{in}, @attr{out}, @attr{io},
 @attr{pwr}.  @xref{pintype attribute} for more info.
 
 
-@node Adding attributes to your symbol
 @subsubsection Adding attributes to your symbol
 @cindex symbol, add attributes
 @cindex add attributes to symbol
@@ -315,7 +314,6 @@ attribute} for more info.
 @end enumerate
 
 
-@node Add attributes
 @subsubsection Add attributes
 
 For more information on the attributes presented here, please see the
