@@ -1630,22 +1630,30 @@ geda-deprecated-config.scm} file (look for
 The following @file{gafrc} options are deprecated starting with Lepton
 EDA release 1.9.10:
 
-@multitable @columnfractions .5 .5
+@multitable @columnfractions .33 .33 .33
 
-@headitem Old @file{gafrc} file options @tab New options
+@headitem Old @file{gafrc} option
+@tab New option
+@tab Config group
 
 @item attribute-promotion
-@tab @ref{promote}@@[schematic.attrib]
+@tab @ref{promote}
+@tab schematic.attrib
 @item always-promote-attributes
-@tab @ref{always-promote}@@[schematic.attrib]
+@tab @ref{always-promote}
+@tab schematic.attrib
 @item promote-invisible
-@tab @ref{promote-invisible}@@[schematic.attrib]
+@tab @ref{promote-invisible}
+@tab schematic.attrib
 @item keep-invisible
-@tab @ref{keep-invisible}@@[schematic.attrib]
+@tab @ref{keep-invisible}
+@tab schematic.attrib
 @item bus-ripper-symname
-@tab @ref{bus-ripper-symname}@@[schematic]
+@tab @ref{bus-ripper-symname}
+@tab schematic
 @item make-backup-files
-@tab @ref{create-files}@@[schematic.backup]
+@tab @ref{create-files}
+@tab schematic.backup
 
 @end multitable
 
@@ -1653,36 +1661,51 @@ EDA release 1.9.10:
 
 The following @file{gnetlistrc} options are deprecated:
 
-@multitable @columnfractions .5 .5
+@multitable @columnfractions .33 .33 .33
 
-@headitem Old @file{gnetlistrc} file options @tab New options
+@headitem Old @file{gnetlistrc} option
+@tab New option
+@tab Config group
 
 @item hierarchy-netattrib-mangle
-@tab @ref{mangle-net-attribute}@@[netlist.hierarchy]
+@tab @ref{mangle-net-attribute}
+@tab netlist.hierarchy
 @item hierarchy-netattrib-order
-@tab @ref{net-attribute-order}@@[netlist.hierarchy]
+@tab @ref{net-attribute-order}
+@tab netlist.hierarchy
 @item hierarchy-netattrib-separator
-@tab @ref{net-attribute-separator}@@[netlist.hierarchy]
+@tab @ref{net-attribute-separator}
+@tab netlist.hierarchy
 @item hierarchy-netname-mangle
-@tab @ref{mangle-netname-attribute}@@[netlist.hierarchy]
+@tab @ref{mangle-netname-attribute}
+@tab netlist.hierarchy
 @item hierarchy-netname-order
-@tab @ref{netname-attribute-order}@@[netlist.hierarchy]
+@tab @ref{netname-attribute-order}
+@tab netlist.hierarchy
 @item hierarchy-netname-separator
-@tab @ref{netname-attribute-separator}@@[netlist.hierarchy]
+@tab @ref{netname-attribute-separator}
+@tab netlist.hierarchy
 @item hierarchy-traversal
-@tab @ref{traverse-hierarchy}@@[netlist.hierarchy]
+@tab @ref{traverse-hierarchy}
+@tab netlist.hierarchy
 @item hierarchy-uref-mangle
-@tab @ref{mangle-refdes-attribute}@@[netlist.hierarchy]
+@tab @ref{mangle-refdes-attribute}
+@tab netlist.hierarchy
 @item hierarchy-uref-order
-@tab @ref{refdes-attribute-order}@@[netlist.hierarchy]
+@tab @ref{refdes-attribute-order}
+@tab netlist.hierarchy
 @item hierarchy-uref-separator
-@tab @ref{refdes-attribute-separator}@@[netlist.hierarchy]
+@tab @ref{refdes-attribute-separator}
+@tab netlist.hierarchy
 @item net-naming-priority
-@tab @ref{net-naming-priority}@@[netlist]
+@tab @ref{net-naming-priority}
+@tab netlist
 @item unnamed-busname
-@tab @ref{default-bus-name}@@[netlist]
+@tab @ref{default-bus-name}
+@tab netlist
 @item unnamed-netname
-@tab @ref{default-net-name}@@[netlist]
+@tab @ref{default-net-name}
+@tab netlist
 
 @end multitable
 
@@ -1690,124 +1713,180 @@ The following @file{gnetlistrc} options are deprecated:
 
 The following @file{gschemrc} options are deprecated:
 
-@multitable @columnfractions .5 .5
+@multitable @columnfractions .33 .33 .33
 
-@headitem Old @file{gschemrc} file options @tab New options
+@headitem Old @file{gschemrc} option
+@tab New option
+@tab Config group
 
 @item component-dialog-attributes
-@tab @ref{component-attributes}@@[schematic.library]
+@tab @ref{component-attributes}
+@tab schematic.library
 @item print-color
-@tab @ref{monochrome}@@[schematic.printing]
+@tab @ref{monochrome}
+@tab schematic.printing
 @item print-orientation
-@tab @ref{layout}@@[schematic.printing]
+@tab @ref{layout}
+@tab schematic.printing
 @item print-paper
-@tab @ref{paper}@@[schematic.printing]
+@tab @ref{paper}
+@tab schematic.printing
 @item sort-component-library
-@tab @ref{sort}@@[schematic.library]
+@tab @ref{sort}
+@tab schematic.library
 @item untitled-name
-@tab @ref{default-filename}@@[schematic]
+@tab @ref{default-filename}
+@tab schematic
 
 @end multitable
 
 The following @file{gschemrc} options are deprecated starting with
 Lepton EDA release 1.9.10:
 
-@multitable @columnfractions .5 .5
+@multitable @columnfractions .33 .33 .33
 
-@headitem Old @file{gschemrc} file options @tab New options
+@headitem Old @file{gschemrc} option
+@tab New option
+@tab Config group
 
 @item action-feedback-mode
-@tab @ref{action-feedback-mode}@@[schematic.gui]
+@tab @ref{action-feedback-mode}
+@tab schematic.gui
 @item auto-save-interval
-@tab @ref{auto-save-interval}@@[schematic]
+@tab @ref{auto-save-interval}
+@tab schematic
 @item bus-ripper-rotation
-@tab @ref{bus-ripper-rotation}@@[schematic]
+@tab @ref{bus-ripper-rotation}
+@tab schematic
 @item bus-ripper-size
-@tab @ref{bus-ripper-size}@@[schematic]
+@tab @ref{bus-ripper-size}
+@tab schematic
 @item bus-ripper-type
-@tab @ref{bus-ripper-type}@@[schematic]
+@tab @ref{bus-ripper-type}
+@tab schematic
 @item continue-component-place
-@tab @ref{continue-component-place}@@[schematic.gui]
+@tab @ref{continue-component-place}
+@tab schematic.gui
 @item default-titleblock
-@tab @ref{default-titleblock}@@[schematic.gui]
+@tab @ref{default-titleblock}
+@tab schematic.gui
 @item dots-grid-dot-size
-@tab @ref{dots-grid-dot-size}@@[schematic.gui]
+@tab @ref{dots-grid-dot-size}
+@tab schematic.gui
 @item dots-grid-fixed-threshold
-@tab @ref{dots-grid-fixed-threshold}@@[schematic.gui]
+@tab @ref{dots-grid-fixed-threshold}
+@tab schematic.gui
 @item dots-grid-mode
-@tab @ref{dots-grid-mode}@@[schematic.gui]
+@tab @ref{dots-grid-mode}
+@tab schematic.gui
 @item draw-grips
-@tab @ref{draw-grips}@@[schematic.gui]
+@tab @ref{draw-grips}
+@tab schematic.gui
 @item embed-components
-@tab @ref{embed-components}@@[schematic.gui]
+@tab @ref{embed-components}
+@tab schematic.gui
 @item enforce-hierarchy
-@tab @ref{enforce-hierarchy}@@[schematic.gui]
+@tab @ref{enforce-hierarchy}
+@tab schematic.gui
 @item fast-mousepan
-@tab @ref{fast-mousepan}@@[schematic.gui]
+@tab @ref{fast-mousepan}
+@tab schematic.gui
 @item file-preview
-@tab @ref{file-preview}@@[schematic.gui]
+@tab @ref{file-preview}
+@tab schematic.gui
 @item force-boundingbox
-@tab @ref{force-boundingbox}@@[schematic.gui]
+@tab @ref{force-boundingbox}
+@tab schematic.gui
 @item grid-mode
-@tab @ref{grid-mode}@@[schematic.gui]
+@tab @ref{grid-mode}
+@tab schematic.gui
 @item handleboxes
-@tab @ref{handleboxes}@@[schematic.gui]
+@tab @ref{handleboxes}
+@tab schematic.gui
 @item keyboardpan-gain
-@tab @ref{keyboardpan-gain}@@[schematic.gui]
+@tab @ref{keyboardpan-gain}
+@tab schematic.gui
 @item log-window
-@tab @ref{log-window}@@[schematic]
+@tab @ref{log-window}
+@tab schematic
 @item logging
-@tab @ref{logging}@@[schematic]
+@tab @ref{logging}
+@tab schematic
 @item magnetic-net-mode
-@tab @ref{magnetic-net-mode}@@[schematic.gui]
+@tab @ref{magnetic-net-mode}
+@tab schematic.gui
 @item mesh-grid-display-threshold
-@tab @ref{mesh-grid-display-threshold}@@[schematic.gui]
+@tab @ref{mesh-grid-display-threshold}
+@tab schematic.gui
 @item middle-button
-@tab @ref{middle-button}@@[schematic.gui]
+@tab @ref{middle-button}
+@tab schematic.gui
 @item mousepan-gain
-@tab @ref{mousepan-gain}@@[schematic.gui]
+@tab @ref{mousepan-gain}
+@tab schematic.gui
 @item net-consolidate
-@tab @ref{net-consolidate}@@[schematic]
+@tab @ref{net-consolidate}
+@tab schematic
 @item net-direction-mode
-@tab @ref{net-direction-mode}@@[schematic.gui]
+@tab @ref{net-direction-mode}
+@tab schematic.gui
 @item net-selection-mode
-@tab @ref{net-selection-mode}@@[schematic.gui]
+@tab @ref{net-selection-mode}
+@tab schematic.gui
 @item netconn-rubberband
-@tab @ref{netconn-rubberband}@@[schematic.gui]
+@tab @ref{netconn-rubberband}
+@tab schematic.gui
 @item scroll-wheel
-@tab @ref{scroll-wheel}@@[schematic.gui]
+@tab @ref{scroll-wheel}
+@tab schematic.gui
 @item scrollbars
-@tab @ref{scrollbars}@@[schematic.gui]
+@tab @ref{scrollbars}
+@tab schematic.gui
 @item scrollpan-steps
-@tab @ref{scrollpan-steps}@@[schematic.gui]
+@tab @ref{scrollpan-steps}
+@tab schematic.gui
 @item select-slack-pixels
-@tab @ref{select-slack-pixels}@@[schematic.gui]
+@tab @ref{select-slack-pixels}
+@tab schematic.gui
 @item snap-size
-@tab @ref{snap-size}@@[schematic.gui]
+@tab @ref{snap-size}
+@tab schematic.gui
 @item text-caps-style
-@tab @ref{text-caps-style}@@[schematic.gui]
+@tab @ref{text-caps-style}
+@tab schematic.gui
 @item text-size
-@tab @ref{text-size}@@[schematic.gui]
+@tab @ref{text-size}
+@tab schematic.gui
 @item third-button
-@tab @ref{third-button}@@[schematic.gui]
+@tab @ref{third-button}
+@tab schematic.gui
 @item third-button-cancel
-@tab @ref{third-button-cancel}@@[schematic.gui]
+@tab @ref{third-button-cancel}
+@tab schematic.gui
 @item toolbars
-@tab @ref{toolbars}@@[schematic.gui]
+@tab @ref{toolbars}
+@tab schematic.gui
 @item undo-control
-@tab @ref{undo-control}@@[schematic.undo]
+@tab @ref{undo-control}
+@tab schematic.undo
 @item undo-levels
-@tab @ref{undo-levels}@@[schematic.undo]
+@tab @ref{undo-levels}
+@tab schematic.undo
 @item undo-panzoom
-@tab @ref{undo-panzoom}@@[schematic.undo]
+@tab @ref{undo-panzoom}
+@tab schematic.undo
 @item undo-type
-@tab @ref{undo-type}@@[schematic.undo]
+@tab @ref{undo-type}
+@tab schematic.undo
 @item warp-cursor
-@tab @ref{warp-cursor}@@[schematic.gui]
+@tab @ref{warp-cursor}
+@tab schematic.gui
 @item zoom-gain
-@tab @ref{zoom-gain}@@[schematic.gui]
+@tab @ref{zoom-gain}
+@tab schematic.gui
 @item zoom-with-pan
-@tab @ref{zoom-with-pan}@@[schematic.gui]
+@tab @ref{zoom-with-pan}
+@tab schematic.gui
 
 @end multitable
 
