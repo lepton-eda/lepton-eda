@@ -1,7 +1,7 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Copyright (C) 1998-2010 Ales Hvezda
-;;; Copyright (C) 1998-2014 gEDA Contributors (see ChangeLog for details)
-;;; Copyright (C) 2020 Lepton EDA Contributors
+;;; Copyright (C) 1998-2014 gEDA Contributors
+;;; Copyright (C) 2020-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -780,16 +780,17 @@
 ; Autoplace the attributes of the given object.
 ; This function gets some info of the object and calls autoplace-text.
 (define (autoplace-object-attributes object)
-  (let* ((pin-list (get-object-pins object))
-         (pin-directions (get-pin-directions pin-list))
-         (connection-sides (if (or (char=? (get-object-type object)
-                                       OBJ_NET)
-                                   (char=? (get-object-type object)
-                                       OBJ_BUS))
-                               (get-net-connection-sides object)
-                               (get-connection-sides pin-directions)))
-         (attribute-list (get-object-attributes object)) )
-    (autoplace-text object connection-sides attribute-list)))
+  (and (component? object)
+       (let* ((pin-list (get-object-pins object))
+              (pin-directions (get-pin-directions pin-list))
+              (connection-sides (if (or (char=? (get-object-type object)
+                                                OBJ_NET)
+                                        (char=? (get-object-type object)
+                                                OBJ_BUS))
+                                    (get-net-connection-sides object)
+                                    (get-connection-sides pin-directions)))
+              (attribute-list (get-object-attributes object)) )
+         (autoplace-text object connection-sides attribute-list))))
 
 
 ;;
