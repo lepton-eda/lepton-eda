@@ -112,8 +112,18 @@
 ;       (autoplace-object-attributes object)) #t)
 ;(add-hook! add-attribute-hook (lambda (object)
 ;       (autoplace-object-attributes object)) #t)
-;(add-hook! complex-place-list-changed-hook (lambda (object)
-;         (autoplace-object-attributes object)) #t)
+
+;;; Change positions of attributes of a component selected for
+;;; insertion into schematic according to some automatic rules
+;;; defined in autoplace-object-attributes().  Please note that
+;;; the hook calls the function for each object in the placement
+;;; list which usually contains a component and its toplevel
+;;; attributes.
+;; (add-hook!
+;;  complex-place-list-changed-hook
+;;  (lambda (ls)
+;;    (for-each autoplace-object-attributes ls))
+;;  #t)
 
 ; Autoplace netname= attribute hook.  This autoplaces netname
 ; attribute at the time that it's added.
