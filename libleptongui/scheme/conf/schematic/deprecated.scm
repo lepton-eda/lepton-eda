@@ -56,9 +56,9 @@
 ;                 elements like "name" or "value", or an empty list.
 (define default-pin-attributes
        '(("pintype"   "unknown" #f ())
-	 ("pinlabel"  "unknown" #t ("value"))
-	 ("pinnumber" "0"       #t ("value"))
-	 ("pinseq"    "0"       #f ())))
+         ("pinlabel"  "unknown" #t ("value"))
+         ("pinnumber" "0"       #t ("value"))
+         ("pinseq"    "0"       #f ())))
 
 ; Convert a character into a string
 (define char2str
@@ -92,11 +92,11 @@
 ; or mirroring an existing one.
 ; The #t at the end means that function is appended to the end of the hook.
 (add-hook! add-pin-hook (lambda (pin)
-	(autoplace-pin-attributes pin )) #t)
+        (autoplace-pin-attributes pin )) #t)
 ;(add-hook! rotate-pin-hook (lambda (pin)
-;	(autoplace-pin-attributes pin )) #t)
+;       (autoplace-pin-attributes pin )) #t)
 ;(add-hook! mirror-pin-hook (lambda (pin)
-;	(autoplace-pin-attributes pin )) #t)
+;       (autoplace-pin-attributes pin )) #t)
 
 ; Autoplace component/net/buses text attributes hook.
 ; Comment in these if you want the component attributes to be
@@ -105,13 +105,13 @@
 ; or mirroring an existing one, adding a new attribute or a new component.
 ; The #t at the end means that function is appended to the end of the hook.
 ;(add-hook! add-component-object-hook (lambda (object)
-;	(autoplace-object-attributes object)) #t)
+;       (autoplace-object-attributes object)) #t)
 ;(add-hook! rotate-component-object-hook (lambda (object)
-;	(autoplace-object-attributes object)) #t)
+;       (autoplace-object-attributes object)) #t)
 ;(add-hook! mirror-component-object-hook (lambda (object)
-;	(autoplace-object-attributes object)) #t)
+;       (autoplace-object-attributes object)) #t)
 ;(add-hook! add-attribute-hook (lambda (object)
-;	(autoplace-object-attributes object)) #t)
+;       (autoplace-object-attributes object)) #t)
 ;(add-hook! complex-place-list-changed-hook (lambda (object)
 ;         (autoplace-object-attributes object)) #t)
 
@@ -211,4 +211,3 @@
 ;; The short answer is neither program likes a pipe to break.
 ;;
 ; (load-from-path "pcb.scm")
-
