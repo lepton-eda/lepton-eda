@@ -286,7 +286,7 @@ WARNING: The RC file function '~A' is deprecated
 and does nothing.
 RC configuration functions will be removed in an upcoming Lepton EDA
 release. Please use .conf configuration files instead:
-https://github.com/lepton-eda/lepton-eda/wiki/Configuration-Settings
+https://lepton-eda.github.io/lepton-manual.html/Configuration.html
 
 "
     old-name
