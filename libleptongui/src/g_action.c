@@ -55,8 +55,8 @@ g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name)
 
   /* Get the eval-action procedure */
   s_eval_action_proc =
-	  scm_variable_ref (scm_c_public_variable ("schematic action",
-	                                           "eval-action!"));
+          scm_variable_ref (scm_c_public_variable ("schematic action",
+                                                   "eval-action!"));
   /* Build expression to evaluate */
   s_expr = scm_list_2 (s_eval_action_proc,
                        scm_list_2 (quote_sym,
@@ -100,8 +100,8 @@ g_action_get_position (gboolean snap, int *x, int *y)
 
   /* Get the action-position procedure */
   s_action_position_proc =
-	  scm_variable_ref (scm_c_public_variable ("schematic action",
-	                                           "action-position"));
+          scm_variable_ref (scm_c_public_variable ("schematic action",
+                                                   "action-position"));
 
   /* Retrieve the action position */
   s_point = scm_call_0 (s_action_position_proc);
