@@ -33,7 +33,7 @@
 #include <gio/gio.h>
 
 #include "liblepton_priv.h"
-
+#include <liblepton/glib_compat.h>
 
 
 /*! \brief Create picture LeptonObject from character string.
@@ -329,7 +329,7 @@ lepton_picture_object_new (const gchar *file_content,
 
       /* Force the data into the object anyway, so as to prevent data
        * loss of embedded images. */
-      picture->file_content = (gchar*) g_memdup (file_content, file_length);
+      picture->file_content = (gchar*) g_memdup2 (file_content, file_length);
       picture->file_length = file_length;
     }
   }
@@ -772,7 +772,7 @@ lepton_picture_object_copy (LeptonObject *object)
   lepton_picture_object_set_lower_y (new_node, lepton_picture_object_get_lower_y (object));
 
   if (object->picture->file_content != NULL) {
-    picture->file_content = (gchar*) g_memdup (object->picture->file_content,
+    picture->file_content = (gchar*) g_memdup2 (object->picture->file_content,
                                                object->picture->file_length);
   } else {
     picture->file_content = NULL;

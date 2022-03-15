@@ -35,6 +35,7 @@
 
 #include <math.h>
 
+#include <liblepton/glib_compat.h>
 #include "gschem.h"
 
 
@@ -52,7 +53,7 @@ update_constants (GschemPageGeometry *geometry);
 GschemPageGeometry*
 gschem_page_geometry_copy (GschemPageGeometry *geometry)
 {
-  return (GschemPageGeometry*) g_memdup (geometry, sizeof (GschemPageGeometry));
+  return (GschemPageGeometry*) g_memdup2 (geometry, sizeof (GschemPageGeometry));
 }
 
 

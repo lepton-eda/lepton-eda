@@ -29,6 +29,7 @@
 #include <string.h>
 #endif
 
+#include <liblepton/glib_compat.h>
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
 
@@ -445,7 +446,7 @@ void autonumber_get_used(GschemToplevel *w_current, AUTONUMBER_TEXT *autotext)
                   /* insert all slots to the list, except of the current one */
                   for (i=1; i <= numslots; i++) {
                     if (i != slotnr) {
-                      slot = (AUTONUMBER_SLOT*) g_memdup (slot, sizeof (AUTONUMBER_SLOT));
+                      slot = (AUTONUMBER_SLOT*) g_memdup2 (slot, sizeof (AUTONUMBER_SLOT));
                       slot->slotnr = i;
                       autotext->free_slots = g_list_insert_sorted(autotext->free_slots,
                                                                   slot,

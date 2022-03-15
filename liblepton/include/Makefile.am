@@ -22,6 +22,7 @@ libleptoninclude_HEADERS = \
 	liblepton/coord.h \
 	liblepton/forward.h \
 	liblepton/fill.h \
+	liblepton/glib_compat.h \
 	liblepton/line.h \
 	liblepton/list.h \
 	liblepton/page.h \
