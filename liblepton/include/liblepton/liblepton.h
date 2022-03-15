@@ -30,6 +30,7 @@
 G_BEGIN_DECLS
 
 #include <liblepton/defines.h>
+#include <liblepton/glib_compat.h>
 
 #include <liblepton/color.h>
 #include <liblepton/fill.h>
