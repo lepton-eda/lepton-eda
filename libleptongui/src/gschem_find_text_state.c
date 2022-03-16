@@ -25,6 +25,7 @@
 
 #include <config.h>
 #include "gschem.h"
+#include <liblepton/glib_compat.h>
 
 
 enum
@@ -386,7 +387,8 @@ find_objects_using_pattern (GSList *pages,
         continue;
       }
 
-      if (g_pattern_match_string (pattern, str)) {
+      if (g_pattern_spec_match_string (pattern, str))
+      {
         object_list = g_slist_prepend (object_list, object);
       }
     }

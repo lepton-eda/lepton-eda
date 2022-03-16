@@ -27,6 +27,12 @@ g_memdup2(gconstpointer mem, gsize byte_size)
 }
 #endif
 
+
+#if !GLIB_CHECK_VERSION (2, 70, 0)
+#define g_pattern_spec_match_string g_pattern_match_string
+#endif
+
+
 G_END_DECLS
 
 #endif /* GLIB_COMPAT_H */

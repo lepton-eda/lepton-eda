@@ -129,6 +129,7 @@
 #include <time.h>
 
 #include "liblepton_priv.h"
+#include <liblepton/glib_compat.h>
 
 /* Constant definitions
  * ===================
@@ -1297,7 +1298,8 @@ GList *s_clib_search (const gchar *pattern, const CLibSearchMode mode)
           }
           break;
         case CLIB_GLOB:
-          if (g_pattern_match_string (globpattern, symbol->name)) {
+          if (g_pattern_spec_match_string (globpattern, symbol->name))
+          {
             result = g_list_prepend (result, symbol);
           }
           break;
