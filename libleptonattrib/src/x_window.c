@@ -152,10 +152,35 @@ x_window_init ()
   GtkWidget* label_1 = gtk_label_new (NULL);
   gtk_label_set_markup (GTK_LABEL (label_1), _("   Color Legend:  "));
 
-  GtkWidget* label_inv      = gtk_label_new (_(" Invisible ") );
-  GtkWidget* label_val      = gtk_label_new (_(" Show value "));
-  GtkWidget* label_name     = gtk_label_new (_(" Show name "));
-  GtkWidget* label_name_val = gtk_label_new (_(" Show name and value "));
+  char *markup;
+
+  GtkWidget* label_inv = gtk_label_new (NULL);
+  const char *format_inv = "<span foreground=\"grey\">\%s</span>";
+  const char *str_inv = _(" Invisible ");
+  markup = g_markup_printf_escaped (format_inv, str_inv);
+  gtk_label_set_markup (GTK_LABEL (label_inv), markup);
+  g_free (markup);
+
+  GtkWidget* label_val = gtk_label_new (NULL);
+  const char *format_val = "<span foreground=\"black\">\%s</span>";
+  const char *str_val = _(" Show value ");
+  markup = g_markup_printf_escaped (format_val, str_val);
+  gtk_label_set_markup (GTK_LABEL (label_val), markup);
+  g_free (markup);
+
+  GtkWidget* label_name = gtk_label_new (NULL);
+  const char *format_name = "<span foreground=\"red\">\%s</span>";
+  const char *str_name = _(" Show name ");
+  markup = g_markup_printf_escaped (format_name, str_name);
+  gtk_label_set_markup (GTK_LABEL (label_name), markup);
+  g_free (markup);
+
+  GtkWidget* label_name_val = gtk_label_new (NULL);
+  const char *format_name_val = "<span foreground=\"blue\">\%s</span>";
+  const char *str_name_val = _(" Show name and value ");
+  markup = g_markup_printf_escaped (format_name_val, str_name_val);
+  gtk_label_set_markup (GTK_LABEL (label_name_val), markup);
+  g_free (markup);
 
   gtk_box_pack_start (GTK_BOX (marea), label_1, FALSE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (marea), separator_new() , FALSE, TRUE, 0);
@@ -170,35 +195,6 @@ x_window_init ()
   gtk_box_pack_start (GTK_BOX (marea), separator_new() , FALSE, TRUE, 0);
 
   gtk_box_pack_start (GTK_BOX (marea), label_name_val, FALSE, TRUE, 0);
-
-#ifdef ENABLE_GTK3
-  GdkRGBA color;
-  gdk_rgba_parse (&color, "grey");
-  gtk_widget_override_color (label_inv, GTK_STATE_FLAG_NORMAL, &color);
-
-  gdk_rgba_parse (&color, "black");
-  gtk_widget_override_color (label_val, GTK_STATE_FLAG_NORMAL, &color);
-
-  gdk_rgba_parse (&color, "red");
-  gtk_widget_override_color (label_name, GTK_STATE_FLAG_NORMAL, &color);
-
-  gdk_rgba_parse (&color, "blue");
-  gtk_widget_override_color (label_name_val, GTK_STATE_FLAG_NORMAL, &color);
-#else
-  GdkColor color;
-  gdk_color_parse ("grey", &color);
-  gtk_widget_modify_fg (label_inv, GTK_STATE_NORMAL, &color);
-
-  gdk_color_parse ("black", &color);
-  gtk_widget_modify_fg (label_val, GTK_STATE_NORMAL, &color);
-
-  gdk_color_parse ("red", &color);
-  gtk_widget_modify_fg (label_name, GTK_STATE_NORMAL, &color);
-
-  gdk_color_parse ("blue", &color);
-  gtk_widget_modify_fg (label_name_val, GTK_STATE_NORMAL, &color);
-#endif
-
 
   /* -----  Now malloc -- but don't fill out -- space for sheets  ----- */
   /* This basically sets up the overhead for the sheets, as I understand
