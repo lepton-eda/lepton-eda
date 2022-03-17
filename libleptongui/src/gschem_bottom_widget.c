@@ -559,33 +559,21 @@ separator_new ()
 }
 
 
-/*! \brief Set grid_snap_widget text
- *
- *  \param  widget  This GschemBottomWidget
- *  \param  str     Text to set. Newly-allocated string. Will be g_free()'d
- */
-static void
-set_snap_info_widget_text (GschemBottomWidget* widget,
-                           gchar* str)
-{
-  g_return_if_fail (widget != NULL);
-
-  gtk_label_set_markup (GTK_LABEL(widget->grid_snap_widget), str);
-  g_free (str);
-}
-
-
-
-/*! \brief Set grid_snap_widget color
+/*! \brief Set grid_snap_widget text and color
  *
  *  \param  widget      This GschemBottomWidget
+ *  \param  str         Text to set. Newly-allocated string. Will be g_free()'d
  *  \param  color_name  Color name, e.g. "red", "blue"
  */
 static void
-set_snap_info_widget_color (GschemBottomWidget* widget,
-                            const gchar* color_name)
+set_snap_info_widget (GschemBottomWidget* widget,
+                      gchar* str,
+                      const gchar* color_name)
 {
   g_return_if_fail (widget != NULL);
+
+  gtk_label_set_markup (GTK_LABEL (widget->grid_snap_widget), str);
+  g_free (str);
 
 #ifdef ENABLE_GTK3
   GdkRGBA color;
@@ -600,25 +588,6 @@ set_snap_info_widget_color (GschemBottomWidget* widget,
                         GTK_STATE_NORMAL,
                         &color);
 #endif
-}
-
-
-
-/*! \brief Set grid_snap_widget text and color
- *
- *  \param  widget      This GschemBottomWidget
- *  \param  str         Text to set. Newly-allocated string. Will be g_free()'d
- *  \param  color_name  Color name, e.g. "red", "blue"
- */
-static void
-set_snap_info_widget (GschemBottomWidget* widget,
-                      gchar* str,
-                      const gchar* color_name)
-{
-  g_return_if_fail (widget != NULL);
-
-  set_snap_info_widget_text (widget, str);
-  set_snap_info_widget_color (widget, color_name);
 }
 
 
@@ -701,7 +670,8 @@ update_snap_info_widget (GschemBottomWidget* widget)
     else
     {
       txt = g_strdup_printf (_("<u>Re</u>snap: %d"), widget->snap_size);
-      set_snap_info_widget_text(widget, txt);
+      gtk_label_set_markup (GTK_LABEL (widget->grid_snap_widget), txt);
+      g_free (txt);
     }
   }
   else
