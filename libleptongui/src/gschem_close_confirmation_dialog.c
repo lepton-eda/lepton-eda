@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -460,12 +460,14 @@ close_confirmation_dialog_constructor (GType type,
                 /* GtkBox */
                 "spacing", 14,
                 NULL);
+#ifndef ENABLE_GTK3
   g_object_set (gtk_dialog_get_action_area (GTK_DIALOG (dialog)),
                 /* GtkBox */
                 "spacing",      6,
                 /* GtkContainer */
                 "border-width", 5,
                 NULL);
+#endif
 
   /* check if there is one or more than one page with changes */
   ret = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (
