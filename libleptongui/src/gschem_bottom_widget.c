@@ -572,23 +572,12 @@ set_snap_info_widget (GschemBottomWidget* widget,
 {
   g_return_if_fail (widget != NULL);
 
-#ifdef ENABLE_GTK3
   char *markup =
     g_strdup_printf ("<span foreground=\"%s\">%s</span>",
                      color_name,
                      str);
   gtk_label_set_markup (GTK_LABEL (widget->grid_snap_widget), markup);
   g_free (markup);
-#else
-  gtk_label_set_markup (GTK_LABEL (widget->grid_snap_widget), str);
-  g_free (str);
-
-  GdkColor color;
-  gdk_color_parse (color_name, &color);
-  gtk_widget_modify_fg (GTK_WIDGET (widget->grid_snap_widget),
-                        GTK_STATE_NORMAL,
-                        &color);
-#endif
 }
 
 
