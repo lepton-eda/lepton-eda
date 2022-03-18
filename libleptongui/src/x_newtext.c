@@ -258,7 +258,10 @@ static void newtext_init(NewText *dialog)
 
   label = gtk_label_new(_("<b>Text Properties</b>"));
   gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
-#ifndef ENABLE_GTK3
+#ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.0);
+#else
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
 #endif
   gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
@@ -276,7 +279,10 @@ static void newtext_init(NewText *dialog)
 
   label = gtk_label_new (_("<b>Text Content</b>"));
   gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
-#ifndef ENABLE_GTK3
+#ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.0);
+#else
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
 #endif
   gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
@@ -284,6 +290,8 @@ static void newtext_init(NewText *dialog)
 
   label = gtk_label_new_with_mnemonic (_("Colo_r:"));
 #ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 0, 1, 1);
 #else
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
@@ -313,6 +321,8 @@ static void newtext_init(NewText *dialog)
 
   label = gtk_label_new_with_mnemonic (_("_Size:"));
 #ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 1, 1, 1);
 #else
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
@@ -340,6 +350,8 @@ static void newtext_init(NewText *dialog)
 
   label = gtk_label_new_with_mnemonic (_("Ali_gnment:"));
 #ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 2, 1, 1);
 #else
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
@@ -368,6 +380,8 @@ static void newtext_init(NewText *dialog)
 
   label = gtk_label_new_with_mnemonic (_("Ro_tation:"));
 #ifdef ENABLE_GTK3
+  gtk_label_set_xalign (GTK_LABEL (label), 0.0);
+  gtk_label_set_yalign (GTK_LABEL (label), 0.5);
   gtk_grid_attach (GTK_GRID (grid), label, 0, 3, 1, 1);
 #else
   gtk_misc_set_alignment(GTK_MISC(label),0,0);
