@@ -757,9 +757,16 @@ create_snap_info_widget (GschemBottomWidget* widget)
   gtk_label_set_markup (GTK_LABEL(widget->grid_snap_widget), str);
   g_free (str);
 
+#ifdef ENABLE_GTK3
+  gtk_widget_set_margin_start (GTK_WIDGET (widget->grid_snap_widget), LABEL_XPAD);
+  gtk_widget_set_margin_end (GTK_WIDGET (widget->grid_snap_widget), LABEL_XPAD);
+  gtk_widget_set_margin_top (GTK_WIDGET (widget->grid_snap_widget), LABEL_YPAD);
+  gtk_widget_set_margin_bottom (GTK_WIDGET (widget->grid_snap_widget), LABEL_YPAD);
+#else
   gtk_misc_set_padding (GTK_MISC (widget->grid_snap_widget),
                         LABEL_XPAD,
                         LABEL_YPAD);
+#endif
   gtk_box_pack_start (GTK_BOX (widget), ebox, FALSE, FALSE, 0);
 
   gtk_box_pack_start (GTK_BOX (widget), separator_new(), FALSE, FALSE, 0);
@@ -826,9 +833,16 @@ create_grid_size_widget (GschemBottomWidget* widget)
                         str);
   g_free (str);
 
+#ifdef ENABLE_GTK3
+  gtk_widget_set_margin_start (GTK_WIDGET (widget->grid_size_widget), LABEL_XPAD);
+  gtk_widget_set_margin_end (GTK_WIDGET (widget->grid_size_widget), LABEL_XPAD);
+  gtk_widget_set_margin_top (GTK_WIDGET (widget->grid_size_widget), LABEL_YPAD);
+  gtk_widget_set_margin_bottom (GTK_WIDGET (widget->grid_size_widget), LABEL_YPAD);
+#else
   gtk_misc_set_padding (GTK_MISC (widget->grid_size_widget),
                         LABEL_XPAD,
                         LABEL_YPAD);
+#endif
   gtk_box_pack_start (GTK_BOX (widget), ebox, FALSE, FALSE, 0);
 
   gtk_box_pack_start (GTK_BOX (widget), separator_new(), FALSE, FALSE, 0);
