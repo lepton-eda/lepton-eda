@@ -132,13 +132,13 @@ gschem_action_connect_proxy (GtkAction *action,
       char *label_string;
       g_object_get (action, "label", &label_string, NULL);
       g_object_new (GSCHEM_TYPE_ACCEL_LABEL,
-		    "use-underline", TRUE,
-		    "xalign", 0.0,
-		    "visible", TRUE,
-		    "parent", proxy,
-		    "label", label_string,
-		    "accel-string", gs_action->multikey_accel,
-		    NULL);
+                    "use-underline", TRUE,
+                    "xalign", 0.0,
+                    "visible", TRUE,
+                    "parent", proxy,
+                    "label", label_string,
+                    "accel-string", gs_action->multikey_accel,
+                    NULL);
       g_free (label_string);
     }
   }
