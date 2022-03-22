@@ -113,9 +113,6 @@ x_window_init ()
   /* Set default icon */
   x_window_set_default_icon();
 
-  /*  window is a global declared in globals.h.  */
-  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-
   g_signal_connect(window, "delete_event",
                    G_CALLBACK (attrib_really_quit), 0);
 
@@ -600,16 +597,25 @@ x_window_set_title_changed (int changed)
 }
 
 
-/*! \brief Open lepton-attrib window.
- *
- * The function populates the spreadsheet data structure and
- * updates GUI.
- */
-int
-lepton_attrib_window ()
+
+static void
+#ifdef ENABLE_GTK3
+activate (GtkApplication* app,
+          gpointer user_data)
+#else
+activate ()
+#endif
 {
   GList *iter;
   LeptonPage *p_local;
+
+
+  /*  window is a global declared in globals.h.  */
+#ifdef ENABLE_GTK3
+  window = gtk_application_window_new (app);
+#else
+  window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+#endif
 
   LeptonToplevel *toplevel = edascm_c_current_toplevel ();
   x_window_set_toplevel (toplevel);
@@ -697,7 +703,32 @@ lepton_attrib_window ()
 
   x_window_set_title (lepton_list_get_glist (toplevel->pages));
 
+  gtk_widget_show_all (window);
+}
+
+
+/*! \brief Open lepton-attrib window.
+ *
+ * The function populates the spreadsheet data structure and
+ * updates GUI.
+ */
+int
+lepton_attrib_window ()
+{
+#ifdef ENABLE_GTK3
+  GtkApplication *app;
+  int status;
+
+  app = gtk_application_new ("org.gtk.lepton-attrib", G_APPLICATION_FLAGS_NONE);
+  g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
+
+  status = g_application_run (G_APPLICATION (app), 0, NULL);
+  g_object_unref (app);
+  return status;
+#else
+  activate ();
   /* Run main GTK loop. */
   gtk_main ();
   return 0;
+#endif
 }
