@@ -259,7 +259,11 @@ void x_dialog_unsaved_data()
         }
       case GTK_RESPONSE_YES:
         {
+#ifdef ENABLE_GTK3
+          s_toplevel_save_sheet (NULL, NULL, NULL);
+#else
           s_toplevel_save_sheet ();
+#endif
           attrib_quit(0);
           break;
         }
@@ -326,7 +330,14 @@ void x_dialog_fatal_error(const gchar *string, gint return_code)
 
 
 /*! \brief The About dialog */
-void x_dialog_about_dialog()
+void
+#ifdef ENABLE_GTK3
+x_dialog_about_dialog (GSimpleAction *action,
+                       GVariant *parameter,
+                       gpointer user_data)
+#else
+x_dialog_about_dialog ()
+#endif
 {
   GtkWidget* dlg = gtk_about_dialog_new();
   GtkAboutDialog* adlg = GTK_ABOUT_DIALOG (dlg);

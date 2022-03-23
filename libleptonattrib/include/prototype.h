@@ -5,7 +5,15 @@
 G_BEGIN_DECLS
 
 /* attrib.c */
+#ifdef ENABLE_GTK3
+void
+attrib_really_quit (GSimpleAction *action,
+                    GVariant *parameter,
+                    gpointer user_data);
+#else
 gboolean attrib_really_quit(void);
+#endif
+
 gint attrib_quit(gint return_code);
 
 /* -------------- listsort.c ----------------- */
@@ -79,7 +87,14 @@ void
 s_toplevel_verify_design (LeptonToplevel *toplevel);
 
 void
+#ifdef ENABLE_GTK3
+s_toplevel_save_sheet (GSimpleAction *action,
+                       GVariant *parameter,
+                       gpointer user_data);
+#else
 s_toplevel_save_sheet ();
+#endif
+
 void s_toplevel_add_new_attrib(gchar *new_attrib_name);
 void s_toplevel_delete_attrib_col();
 void
@@ -143,10 +158,30 @@ void verbose_reset_index(void);
 char *s_misc_remaining_string(char *string, char delimiter, int count);
 
 /* ------------- s_visibility.c ------------- */
+#ifdef ENABLE_GTK3
+void
+s_visibility_set_invisible (GSimpleAction *action,
+                            GVariant *parameter,
+                            gpointer user_data);
+void
+s_visibility_set_name_only (GSimpleAction *action,
+                            GVariant *parameter,
+                            gpointer user_data);
+void
+s_visibility_set_value_only (GSimpleAction *action,
+                             GVariant *parameter,
+                             gpointer user_data);
+void
+s_visibility_set_name_and_value (GSimpleAction *action,
+                                 GVariant *parameter,
+                                 gpointer user_data);
+#else
 void s_visibility_set_invisible();
 void s_visibility_set_name_only();
 void s_visibility_set_value_only();
 void s_visibility_set_name_and_value();
+#endif
+
 void s_visibility_set_cell(gint cur_page, gint row, gint col,
                            gint visibility, gint show_name_value);
 
@@ -157,7 +192,13 @@ void x_dialog_missing_sym();
 void x_dialog_unsaved_data();
 void x_dialog_unimplemented_feature();
 void x_dialog_fatal_error(const gchar *string, gint return_code);
+#ifdef ENABLE_GTK3
+void x_dialog_about_dialog (GSimpleAction *action,
+                            GVariant *parameter,
+                            gpointer user_data);
+#else
 void x_dialog_about_dialog();
+#endif
 void x_dialog_export_file();
 
 /* ------------- x_gtksheet.c ------------- */

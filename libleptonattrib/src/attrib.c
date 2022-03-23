@@ -73,7 +73,14 @@ GtkWidget *label;
  *
  *  \return value 0 to the shell to denote a successful quit.
  */
+#ifdef ENABLE_GTK3
+void
+attrib_really_quit (GSimpleAction *action,
+                    GVariant *parameter,
+                    gpointer user_data)
+#else
 gboolean attrib_really_quit(void)
+#endif
 {
   /* Save main window's geometry:
   */
@@ -113,7 +120,9 @@ gboolean attrib_really_quit(void)
   } else {
     attrib_quit(0);
   }
+#ifndef ENABLE_GTK3
   return TRUE;
+#endif
 }
 
 /*------------------------------------------------------------------*/

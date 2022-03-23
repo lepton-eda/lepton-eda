@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2013 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -82,7 +82,15 @@
  * selected a range of cells which are carried in the global
  * variable "sheet".
  */
-void s_visibility_set_invisible() {
+void
+#ifdef ENABLE_GTK3
+s_visibility_set_invisible (GSimpleAction *action,
+                            GVariant *parameter,
+                            gpointer user_data)
+#else
+s_visibility_set_invisible ()
+#endif
+{
   gint i, j;
   gint row_start, row_end, col_start, col_end;
   GtkSheet *sheet;
@@ -151,7 +159,15 @@ void s_visibility_set_invisible() {
  * selected a range of cells which are carried in the global
  * variable "sheet".
  */
-void s_visibility_set_name_only() {
+void
+#ifdef ENABLE_GTK3
+s_visibility_set_name_only (GSimpleAction *action,
+                            GVariant *parameter,
+                            gpointer user_data)
+#else
+s_visibility_set_name_only ()
+#endif
+{
   gint i, j;
   gint row_start, row_end, col_start, col_end;
   GtkSheet *sheet;
@@ -210,7 +226,15 @@ void s_visibility_set_name_only() {
  * selected a range of cells which are carried in the global
  * variable "sheet".
  */
-void s_visibility_set_value_only() {
+void
+#ifdef ENABLE_GTK3
+s_visibility_set_value_only (GSimpleAction *action,
+                             GVariant *parameter,
+                             gpointer user_data)
+#else
+s_visibility_set_value_only ()
+#endif
+{
   gint i, j;
   gint row_start, row_end, col_start, col_end;
   GtkSheet *sheet;
@@ -271,7 +295,15 @@ void s_visibility_set_value_only() {
  * variable "sheet".
  *
  */
-void s_visibility_set_name_and_value() {
+void
+#ifdef ENABLE_GTK3
+s_visibility_set_name_and_value (GSimpleAction *action,
+                                 GVariant *parameter,
+                                 gpointer user_data)
+#else
+s_visibility_set_name_and_value ()
+#endif
+{
   gint i, j;
   gint row_start, row_end, col_start, col_end;
   GtkSheet *sheet;

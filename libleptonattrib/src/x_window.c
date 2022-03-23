@@ -62,8 +62,10 @@
 static void
 x_window_init ();
 
+#ifndef ENABLE_GTK3
 static void
 x_window_create_menu(GtkWindow *window, GtkWidget **menubar);
+#endif
 
 static void
 x_window_set_default_icon( void );
@@ -127,7 +129,11 @@ x_window_init ()
   gtk_container_add(GTK_CONTAINER(window), GTK_WIDGET(main_vbox) );
 
   /* -----  Now create menu bar  ----- */
+#ifdef ENABLE_GTK3
+  menu_bar = gtk_menu_bar_new ();
+#else /* GTK2 */
   x_window_create_menu(GTK_WINDOW(window), &menu_bar);
+#endif
   gtk_box_pack_start(GTK_BOX (main_vbox), menu_bar, FALSE, TRUE, 0);
 
   /* -----  Now init notebook widget  ----- */
@@ -227,7 +233,13 @@ x_window_init ()
  * Implement the File->Export CSV menu item
  */
 static void
+#ifdef ENABLE_GTK3
+menu_file_export_csv (GSimpleAction *action,
+                      GVariant *parameter,
+                      gpointer user_data)
+#else
 menu_file_export_csv()
+#endif
 {
   gint cur_page;
 
@@ -249,7 +261,13 @@ menu_file_export_csv()
  * Implement the New attrib menu item
  */
 static void
+#ifdef ENABLE_GTK3
+menu_edit_newattrib (GSimpleAction *action,
+                     GVariant *parameter,
+                     gpointer user_data)
+#else
 menu_edit_newattrib()
+#endif
 {
   gint cur_page;
 
@@ -268,7 +286,13 @@ menu_edit_newattrib()
  * Implements the Delete Attribute menu item
  */
 static void
+#ifdef ENABLE_GTK3
+menu_edit_delattrib (GSimpleAction *action,
+                     GVariant *parameter,
+                     gpointer user_data)
+#else
 menu_edit_delattrib()
+#endif
 {
   x_dialog_delattrib();
 }
@@ -277,7 +301,8 @@ menu_edit_delattrib()
 /*!
  * GTK3 main menu structure.
  */
-static const gchar gtk3_menu[] =
+#ifdef ENABLE_GTK3
+static const gchar menu[] =
   "<interface>"
   "  <menu id='appmenu'>"
   "    <section>"
@@ -348,10 +373,8 @@ static const gchar gtk3_menu[] =
   "  </menu>"
   "</interface>";
 
+#else /* GTK2 */
 
-/*!
- * The main menu description
- */
 static const gchar menu[] =
   "<menubar>"
     "<menu action='file'>"
@@ -383,11 +406,30 @@ static const gchar menu[] =
       "<menuitem action='help-about' />"
     "</menu>"
   "</menubar>";
+#endif
 
 
 /*!
  * The Gtk action table
  */
+#ifdef ENABLE_GTK3
+
+static GActionEntry app_entries[] = {
+  { "file-save", s_toplevel_save_sheet, NULL, NULL, NULL },
+  { "file-export-csv", menu_file_export_csv, NULL, NULL, NULL },
+  { "file-quit", attrib_really_quit, NULL, NULL, NULL },
+  { "edit-add-attrib", menu_edit_newattrib, NULL, NULL, NULL },
+  { "edit-delete-attrib", menu_edit_delattrib, NULL, NULL, NULL },
+  { "visibility-invisible", s_visibility_set_invisible, NULL, NULL, NULL },
+  { "visibility-name-only", s_visibility_set_name_only, NULL, NULL, NULL },
+  { "visibility-value-only", s_visibility_set_value_only, NULL, NULL, NULL },
+  { "visibility-name-value", s_visibility_set_name_and_value, NULL, NULL, NULL },
+  { "help-about", x_dialog_about_dialog, NULL, NULL, NULL },
+};
+
+
+#else /* GTK2 */
+
 static const GtkActionEntry actions[] = {
   /* name, stock-id, label, accelerator, tooltip, callback function */
   /* File menu */
@@ -416,8 +458,10 @@ static const GtkActionEntry actions[] = {
   { "help", NULL, "_Help"},
   { "help-about", "help-about", "About", "", "", x_dialog_about_dialog},
 };
+#endif
 
 
+#ifndef ENABLE_GTK3
 /*! \brief Create and attach the menu bar
  *
  * Create the menu bar and attach it to the main window.
@@ -459,6 +503,7 @@ x_window_create_menu(GtkWindow *window, GtkWidget **menubar)
 
   *menubar = gtk_ui_manager_get_widget(ui, "/ui/menubar/");
 }
+#endif
 
 
 /*! \brief Add all items to the top level window
@@ -672,6 +717,27 @@ x_window_set_title_changed (int changed)
 }
 
 
+#ifdef ENABLE_GTK3
+static void
+startup (GApplication *app)
+{
+  GtkBuilder *builder;
+  GMenuModel *appmenu;
+  GMenuModel *menubar;
+
+  builder = gtk_builder_new ();
+  gtk_builder_add_from_string (builder, menu, -1, NULL);
+
+  appmenu = (GMenuModel *) gtk_builder_get_object (builder, "appmenu");
+  menubar = (GMenuModel *) gtk_builder_get_object (builder, "menubar");
+
+  gtk_application_set_app_menu (GTK_APPLICATION (app), appmenu);
+  gtk_application_set_menubar (GTK_APPLICATION (app), menubar);
+
+  g_object_unref (builder);
+}
+#endif
+
 
 static void
 #ifdef ENABLE_GTK3
@@ -795,6 +861,12 @@ lepton_attrib_window ()
   int status;
 
   app = gtk_application_new ("org.gtk.lepton-attrib", G_APPLICATION_FLAGS_NONE);
+
+  g_action_map_add_action_entries (G_ACTION_MAP (app),
+                                   app_entries, G_N_ELEMENTS (app_entries),
+                                   app);
+
+  g_signal_connect (app, "startup", G_CALLBACK (startup), NULL);
   g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
 
   status = g_application_run (G_APPLICATION (app), 0, NULL);

@@ -1,7 +1,7 @@
 /* Lepton EDA attribute editor
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2003-2014 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -138,7 +138,13 @@ save_toplevel_pages (LeptonToplevel *toplevel)
  * loops through all pages and saves them.
  */
 void
+#ifdef ENABLE_GTK3
+s_toplevel_save_sheet (GSimpleAction *action,
+                       GVariant *parameter,
+                       gpointer user_data)
+#else
 s_toplevel_save_sheet ()
+#endif
 {
   GList *iter;
   LeptonPage *p_current;
