@@ -67,7 +67,7 @@ exec @GUILE@ -s "$0" "$@"
 
 (define lepton_attrib_window
   (pointer->procedure
-   void
+   int
    (dynamic-func "lepton_attrib_window" libleptonattrib)
    '()))
 
@@ -165,8 +165,8 @@ Lepton EDA homepage: ~S
                    ;; Open all files.
                    (for-each file->page files)
                    ;; Run attribute editor.
-                   (lepton_attrib_window)
-                   (exit 0))))))
+                   (exit (lepton_attrib_window)))))))
+
         ;; There are non-existing or unreadable files.  Report and
         ;; exit.
         (begin

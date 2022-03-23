@@ -605,7 +605,7 @@ x_window_set_title_changed (int changed)
  * The function populates the spreadsheet data structure and
  * updates GUI.
  */
-void
+int
 lepton_attrib_window ()
 {
   GList *iter;
@@ -699,4 +699,5 @@ lepton_attrib_window ()
 
   /* Run main GTK loop. */
   gtk_main ();
+  return 0;
 }
