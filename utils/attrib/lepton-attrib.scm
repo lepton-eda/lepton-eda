@@ -100,7 +100,7 @@ Lepton EDA homepage: ~S
           (lepton-version-ref 'bugs)
           (lepton-version-ref 'url))
 
-  (primitive-exit 0))
+  (exit 0))
 
 
 (define (report-unreadable filename)
@@ -142,7 +142,7 @@ Lepton EDA homepage: ~S
   ;; Output version to stdout and exit, if requested.
   (when version
     (display-lepton-version #:print-name #t #:copyright #t)
-    (primitive-exit 0))
+    (exit 0))
   (when verbose? (set_verbose_mode))
 
   (receive (readable-files unreadable-files)
@@ -158,7 +158,7 @@ Lepton EDA homepage: ~S
                            (gslist->list (x_fileselect_open))
                            readable-files)))
             (if (null? files)
-                (primitive-exit 0)
+                (exit 0)
                 (%with-toplevel (%make-toplevel)
                  (lambda ()
                    (for-each process-gafrc* files)
@@ -166,9 +166,9 @@ Lepton EDA homepage: ~S
                    (for-each file->page files)
                    ;; Run attribute editor.
                    (lepton_attrib_window)
-                   (primitive-exit 0))))))
+                   (exit 0))))))
         ;; There are non-existing or unreadable files.  Report and
         ;; exit.
         (begin
           (for-each report-unreadable unreadable-files)
-          (primitive-exit 1)))))
+          (exit 1)))))
