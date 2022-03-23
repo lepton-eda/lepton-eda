@@ -47,31 +47,31 @@ exec @GUILE@ -s "$0" "$@"
 
 (define libleptonattrib (dynamic-link %libleptonattrib))
 
-(define gtk-init
+(define gtk_init
   (pointer->procedure
    void
    (dynamic-func "gtk_init" libgtk)
    (list '* '*)))
 
-(define gtk-main
+(define gtk_main
   (pointer->procedure
    void
    (dynamic-func "gtk_main" libgtk)
    '()))
 
-(define set-verbose-mode!
+(define set_verbose_mode
   (pointer->procedure
    void
    (dynamic-func "set_verbose_mode" libleptonattrib)
    '()))
 
-(define fileselect-open
+(define x_fileselect_open
   (pointer->procedure
    '*
    (dynamic-func "x_fileselect_open" libleptonattrib)
    '()))
 
-(define lepton-attrib-window
+(define lepton_attrib_window
   (pointer->procedure
    void
    (dynamic-func "lepton_attrib_window" libleptonattrib)
@@ -149,7 +149,7 @@ Lepton EDA homepage: ~S
   (when version
     (display-lepton-version #:print-name #t #:copyright #t)
     (primitive-exit 0))
-  (when verbose? (set-verbose-mode!))
+  (when verbose? (set_verbose_mode))
 
   (receive (readable-files unreadable-files)
       (partition file-readable? files)
@@ -157,11 +157,11 @@ Lepton EDA homepage: ~S
         ;; Main procedure.
         (begin
           ;; Initialize GTK.
-          (gtk-init %null-pointer %null-pointer)
+          (gtk_init %null-pointer %null-pointer)
           (let ((files (if (null? readable-files)
                            ;; No files specified on the command
                            ;; line, pop up the File open dialog.
-                           (gslist->list (fileselect-open))
+                           (gslist->list (x_fileselect_open))
                            readable-files)))
             (if (null? files)
                 (primitive-exit 0)
@@ -171,9 +171,9 @@ Lepton EDA homepage: ~S
                    ;; Open all files.
                    (for-each file->page files)
                    ;; Run attribute editor.
-                   (lepton-attrib-window)
+                   (lepton_attrib_window)
                    ;; Run main GTK loop.
-                   (gtk-main)
+                   (gtk_main)
                    (primitive-exit 0))))))
         ;; There are non-existing or unreadable files.  Report and
         ;; exit.
