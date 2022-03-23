@@ -2,7 +2,7 @@
  * Copyright (C) 2003-2010 Stuart D. Brorson.
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2003-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -696,4 +696,7 @@ lepton_attrib_window ()
   s_toplevel_verify_design(toplevel);  /* toplevel is a global */
 
   x_window_set_title (lepton_list_get_glist (toplevel->pages));
+
+  /* Run main GTK loop. */
+  gtk_main ();
 }

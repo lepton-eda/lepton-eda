@@ -53,12 +53,6 @@ exec @GUILE@ -s "$0" "$@"
    (dynamic-func "gtk_init" libgtk)
    (list '* '*)))
 
-(define gtk_main
-  (pointer->procedure
-   void
-   (dynamic-func "gtk_main" libgtk)
-   '()))
-
 (define set_verbose_mode
   (pointer->procedure
    void
@@ -172,8 +166,6 @@ Lepton EDA homepage: ~S
                    (for-each file->page files)
                    ;; Run attribute editor.
                    (lepton_attrib_window)
-                   ;; Run main GTK loop.
-                   (gtk_main)
                    (primitive-exit 0))))))
         ;; There are non-existing or unreadable files.  Report and
         ;; exit.
