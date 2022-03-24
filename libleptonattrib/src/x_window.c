@@ -860,7 +860,8 @@ lepton_attrib_window ()
   GtkApplication *app;
   int status;
 
-  app = gtk_application_new ("org.gtk.lepton-attrib", G_APPLICATION_FLAGS_NONE);
+  app = gtk_application_new ("com.github.lepton_eda.lepton_attrib",
+                             G_APPLICATION_FLAGS_NONE);
 
   g_action_map_add_action_entries (G_ACTION_MAP (app),
                                    app_entries, G_N_ELEMENTS (app_entries),
