@@ -328,6 +328,7 @@ static const gchar menu[] =
   "          <attribute name='label'>_Save</attribute>"
   "          <attribute name='action'>app.file-save</attribute>"
   "          <attribute name='accel'>&lt;Primary&gt;s</attribute>"
+  "          <attribute name='icon'>document-save</attribute>"
   "        </item>"
   "        <item>"
   "          <attribute name='label'>_Export CSV</attribute>"
