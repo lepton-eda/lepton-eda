@@ -315,6 +315,20 @@ schematic_keys_update_keyaccel_string (GschemToplevel *w_current,
 
 
 static guint
+schematic_keys_get_event_key (GdkEventKey *event)
+{
+  guint upper, lower;
+
+  g_return_val_if_fail (event != NULL, 0);
+
+  /* Always process key as lower case */
+  gdk_keyval_convert_case (event->keyval, &lower, &upper);
+
+  return lower;
+}
+
+
+static guint
 schematic_keys_get_event_mods (GdkDisplay *display,
                                GdkEventKey *event)
 {
@@ -371,18 +385,15 @@ g_keys_execute (GschemToplevel *w_current,
                 GdkEventKey *event)
 {
   GdkDisplay *display;
-  guint key, mods, upper, lower;
+  guint key, mods;
 
   g_return_val_if_fail (w_current != NULL, 0);
   g_return_val_if_fail (event != NULL, 0);
 
   display = gtk_widget_get_display (w_current->main_window);
 
+  key = schematic_keys_get_event_key (event);
   mods = schematic_keys_get_event_mods (display, event);
-
-  /* Always process key as lower case */
-  gdk_keyval_convert_case (event->keyval, &lower, &upper);
-  key = lower;
 
   /* Validate the key -- there are some keystrokes we mask out. */
   if (!g_key_is_valid (key, (GdkModifierType) mods)) {
