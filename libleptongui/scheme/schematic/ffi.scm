@@ -218,7 +218,7 @@
 (define-lff schematic_key_get_disp_str '* '(*))
 (define-lff schematic_key_set_disp_str void '(* *))
 (define-lff g_keys_execute '* '(* *))
-(define-lff g_make_key_struct '* (list int GdkModifierType))
+(define-lff g_make_key_struct '* (list int int))
 (define-lff schematic_keys_update_keyaccel_timer void (list '* int))
 
 ;;; gschem_page_view.c

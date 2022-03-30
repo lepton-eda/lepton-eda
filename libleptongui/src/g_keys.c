@@ -78,7 +78,7 @@ g_key_is_valid (guint keyval)
  */
 GschemKey*
 g_make_key_struct (guint keyval,
-                   GdkModifierType modifiers)
+                   guint modifiers)
 {
   GschemKey *k = NULL;
   if (g_key_is_valid (keyval))
@@ -402,7 +402,7 @@ g_keys_execute (GschemToplevel *w_current,
 
   schematic_keys_update_keyaccel_string (w_current, key, (GdkModifierType) mods);
 
-  GschemKey *k = g_make_key_struct (key, (GdkModifierType) mods);
+  GschemKey *k = g_make_key_struct (key, mods);
 
   return k;
 }
