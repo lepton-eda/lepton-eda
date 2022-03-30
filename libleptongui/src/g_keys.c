@@ -314,6 +314,47 @@ schematic_keys_update_keyaccel_string (GschemToplevel *w_current,
 }
 
 
+static guint
+schematic_keys_get_event_mods (GdkDisplay *display,
+                               GdkEventKey *event)
+{
+  GdkKeymap *keymap;
+  guint key, mods, caps, upper, lower;
+  GdkModifierType consumed_modifiers;
+
+  g_return_val_if_fail (display != NULL, 0);
+  g_return_val_if_fail (event != NULL, 0);
+
+  keymap = gdk_keymap_get_for_display (display);
+
+  /* Figure out what modifiers went into determining the key symbol */
+  gdk_keymap_translate_keyboard_state (keymap,
+                                       event->hardware_keycode,
+                                       (GdkModifierType) event->state,
+                                       event->group,
+                                       NULL,
+                                       NULL,
+                                       NULL,
+                                       &consumed_modifiers);
+  key = event->keyval;
+  mods = (event->state
+          & gtk_accelerator_get_default_mod_mask ()
+          & ~consumed_modifiers);
+
+  /* Handle Caps Lock. The idea is to obtain the same keybindings
+   * whether Caps Lock is enabled or not. */
+  gdk_keyval_convert_case (key, &lower, &upper);
+  if (upper != lower) {
+    caps = gdk_keymap_get_caps_lock_state (keymap);
+    if ((caps && (key == lower)) || (!caps && (key == upper))) {
+      mods |= GDK_SHIFT_MASK;
+    }
+  }
+
+  return mods;
+}
+
+
 /*! \brief Evaluate a user keystroke.
  * \par Function Description
  * Evaluates the key combination specified by \a event using the
@@ -329,43 +370,18 @@ GschemKey*
 g_keys_execute (GschemToplevel *w_current,
                 GdkEventKey *event)
 {
-  guint key, mods, upper, lower, caps;
   GdkDisplay *display;
-  GdkKeymap *keymap;
-  GdkModifierType consumed_modifiers;
+  guint key, mods, upper, lower;
 
   g_return_val_if_fail (w_current != NULL, 0);
   g_return_val_if_fail (event != NULL, 0);
 
   display = gtk_widget_get_display (w_current->main_window);
-  keymap = gdk_keymap_get_for_display (display);
 
-  /* Figure out what modifiers went into determining the key symbol */
-  gdk_keymap_translate_keyboard_state (keymap,
-                                       event->hardware_keycode,
-                                       (GdkModifierType) event->state,
-                                       event->group,
-                                       NULL,
-                                       NULL,
-                                       NULL,
-                                       &consumed_modifiers);
-
-  key = event->keyval;
-  gdk_keyval_convert_case (event->keyval, &lower, &upper);
-  mods = (event->state
-          & gtk_accelerator_get_default_mod_mask ()
-          & ~consumed_modifiers);
-
-  /* Handle Caps Lock. The idea is to obtain the same keybindings
-   * whether Caps Lock is enabled or not. */
-  if (upper != lower) {
-    caps = gdk_keymap_get_caps_lock_state (keymap);
-    if ((caps && (key == lower)) || (!caps && (key == upper))) {
-      mods |= GDK_SHIFT_MASK;
-    }
-  }
+  mods = schematic_keys_get_event_mods (display, event);
 
   /* Always process key as lower case */
+  gdk_keyval_convert_case (event->keyval, &lower, &upper);
   key = lower;
 
   /* Validate the key -- there are some keystrokes we mask out. */
