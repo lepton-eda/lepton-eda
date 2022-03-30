@@ -289,7 +289,7 @@ g_keys_reset (GschemToplevel *w_current)
 static void
 schematic_keys_update_keyaccel_string (GschemToplevel *w_current,
                                        guint key,
-                                       GdkModifierType mods)
+                                       guint mods)
 {
   /* Update key hint string for status bar. */
   gchar *keystr = gtk_accelerator_get_label (key, (GdkModifierType) mods);
@@ -400,7 +400,7 @@ g_keys_execute (GschemToplevel *w_current,
     return NULL;
   }
 
-  schematic_keys_update_keyaccel_string (w_current, key, (GdkModifierType) mods);
+  schematic_keys_update_keyaccel_string (w_current, key, mods);
 
   GschemKey *k = g_make_key_struct (key, mods);
 
