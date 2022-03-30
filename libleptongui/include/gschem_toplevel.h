@@ -313,4 +313,7 @@ void
 schematic_window_update_keyaccel_string (GschemToplevel *w_current,
                                          guint key,
                                          guint mods);
+void
+schematic_window_update_keyaccel_timer (GschemToplevel *w_current,
+                                        gboolean start_timer);
 G_END_DECLS
