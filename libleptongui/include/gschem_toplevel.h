@@ -309,4 +309,8 @@ schematic_window_get_gdk_display (GschemToplevel *w_current);
 GschemOptions*
 schematic_window_get_options (GschemToplevel *w_current);
 
+void
+schematic_window_update_keyaccel_string (GschemToplevel *w_current,
+                                         guint key,
+                                         guint mods);
 G_END_DECLS
