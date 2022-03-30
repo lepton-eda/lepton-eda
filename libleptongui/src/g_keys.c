@@ -274,6 +274,34 @@ g_keys_reset (GschemToplevel *w_current)
   scm_dynwind_end ();
 }
 
+
+static void
+schematic_keys_update_keyaccel_string (GschemToplevel *w_current,
+                                       guint key,
+                                       GdkModifierType mods)
+{
+  /* Update key hint string for status bar. */
+  gchar *keystr = gtk_accelerator_get_label (key, (GdkModifierType) mods);
+
+  /* If no current hint string, or the hint string is going to be
+   * cleared anyway, use key string directly */
+  if ((w_current->keyaccel_string == NULL) ||
+      w_current->keyaccel_string_source_id) {
+    g_free (w_current->keyaccel_string);
+    w_current->keyaccel_string = keystr;
+
+  } else {
+    gchar *p = w_current->keyaccel_string;
+    w_current->keyaccel_string = g_strconcat (p, " ", keystr, NULL);
+    g_free (p);
+    g_free (keystr);
+  }
+
+  /* Update status bar */
+  i_show_state(w_current, NULL);
+}
+
+
 /*! \brief Evaluate a user keystroke.
  * \par Function Description
  * Evaluates the key combination specified by \a event using the
@@ -333,25 +361,7 @@ g_keys_execute (GschemToplevel *w_current,
     return NULL;
   }
 
-  /* Update key hint string for status bar. */
-  gchar *keystr = gtk_accelerator_get_label (key, (GdkModifierType) mods);
-
-  /* If no current hint string, or the hint string is going to be
-   * cleared anyway, use key string directly */
-  if ((w_current->keyaccel_string == NULL) ||
-      w_current->keyaccel_string_source_id) {
-    g_free (w_current->keyaccel_string);
-    w_current->keyaccel_string = keystr;
-
-  } else {
-    gchar *p = w_current->keyaccel_string;
-    w_current->keyaccel_string = g_strconcat (p, " ", keystr, NULL);
-    g_free (p);
-    g_free (keystr);
-  }
-
-  /* Update status bar */
-  i_show_state(w_current, NULL);
+  schematic_keys_update_keyaccel_string (w_current, key, (GdkModifierType) mods);
 
   GschemKey *k = g_make_key_struct (key, (GdkModifierType) mods);
 
