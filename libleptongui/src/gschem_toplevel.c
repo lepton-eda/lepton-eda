@@ -829,6 +829,20 @@ schematic_window_get_active_page (GschemToplevel *w_current)
 }
 
 
+/*! \brief Get the GdkDisplay for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The GdkDisplay of the window.
+ */
+GdkDisplay*
+schematic_window_get_gdk_display (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return gtk_widget_get_display (w_current->main_window);
+}
+
+
 /*! \brief Get the options for this schematic window.
  *
  *  \param [in] w_current The schematic window.

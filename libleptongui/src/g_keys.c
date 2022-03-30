@@ -390,7 +390,7 @@ g_keys_execute (GschemToplevel *w_current,
   g_return_val_if_fail (w_current != NULL, 0);
   g_return_val_if_fail (event != NULL, 0);
 
-  display = gtk_widget_get_display (w_current->main_window);
+  display = schematic_window_get_gdk_display (w_current);
 
   key = schematic_keys_get_event_key (event);
   mods = schematic_keys_get_event_mods (display, event);

@@ -303,6 +303,9 @@ gschem_toplevel_get_show_hidden_text (GschemToplevel *w_current);
 LeptonPage*
 schematic_window_get_active_page (GschemToplevel *w_current);
 
+GdkDisplay*
+schematic_window_get_gdk_display (GschemToplevel *w_current);
+
 GschemOptions*
 schematic_window_get_options (GschemToplevel *w_current);
 
