@@ -187,68 +187,6 @@ schematic_key_get_modifiers (GschemKey *key)
 }
 
 
-/*! \brief Clear the current key accelerator string.
- * \par Function Description
- * This function clears the current keyboard accelerator string in
- * the status bar of the relevant toplevel.  Called some time after a
- * keystroke is pressed.  If the current key sequence was a prefix,
- * let it persist.
- *
- * \param [in] data a pointer to the GschemToplevel to update.
- * \return FALSE (this is a one-shot timer).
- */
-static gboolean clear_keyaccel_string(gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  /* If the window context has disappeared, do nothing. */
-  if (g_list_find(global_window_list, w_current) == NULL) {
-    return FALSE;
-  }
-
-  g_free(w_current->keyaccel_string);
-  w_current->keyaccel_string = NULL;
-  w_current->keyaccel_string_source_id = 0;
-  i_show_state(w_current, NULL);
-  return FALSE;
-}
-
-
-/*! \brief Update timer for clearing the current key accelerator string.
- * \par Function Description
- * If a timer responsible for clearing key accelerator string in
- * the status bar has been started, the function stops it.  If \a
- * start_timer is TRUE, it runs a new timer for this.  It should
- * be FALSE if the current key sequence is a prefix which should
- * persist.
- *
- * \param [in] w_current The GschemToplevel to update.
- * \param [in] start_timer If a new timer should be started.
- */
-void
-schematic_keys_update_keyaccel_timer (GschemToplevel *w_current,
-                                      gboolean start_timer)
-{
-  if (w_current->keyaccel_string_source_id)
-  {
-    /* Cancel any existing timers that haven't fired yet. */
-    GSource *timer =
-      g_main_context_find_source_by_id (NULL,
-                                        w_current->keyaccel_string_source_id);
-    if (timer != NULL)
-    {
-      g_source_destroy (timer);
-    }
-    w_current->keyaccel_string_source_id = 0;
-  }
-  if (start_timer)
-  {
-    w_current->keyaccel_string_source_id =
-      g_timeout_add (400, clear_keyaccel_string, w_current);
-  }
-}
-
-
 /*! \brief Reset the current key sequence.
  * \par Function Description
  * If any prefix keys are stored in the current key sequence, clears

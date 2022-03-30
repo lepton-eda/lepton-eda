@@ -160,7 +160,6 @@
             schematic_key_set_disp_str
             g_keys_execute
             g_make_key_struct
-            schematic_keys_update_keyaccel_timer
 
             gschem_page_view_get_page
 
@@ -168,6 +167,7 @@
             gschem_toplevel_get_toplevel
             schematic_window_get_active_page
             schematic_window_get_options
+            schematic_window_update_keyaccel_timer
 
             gschem_options_get_snap_size
 
@@ -219,7 +219,6 @@
 (define-lff schematic_key_set_disp_str void '(* *))
 (define-lff g_keys_execute '* '(* *))
 (define-lff g_make_key_struct '* (list int int))
-(define-lff schematic_keys_update_keyaccel_timer void (list '* int))
 
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
@@ -229,6 +228,7 @@
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff schematic_window_get_active_page '* '(*))
 (define-lff schematic_window_get_options '* '(*))
+(define-lff schematic_window_update_keyaccel_timer void (list '* int))
 
 ;;; gschem_options.c
 (define-lff gschem_options_get_snap_size int '(*))
@@ -448,8 +448,8 @@
                           ;; status bar display.
                           (prefix? (eq? retval 'prefix)))
 
-                     (schematic_keys_update_keyaccel_timer *window
-                                                           (if prefix? FALSE TRUE))
+                     (schematic_window_update_keyaccel_timer *window
+                                                             (if prefix? FALSE TRUE))
                      ;; Propagate the event further if press-key()
                      ;; returned #f.  Thus, you can move from page
                      ;; view to toolbar by Tab if the key is not
