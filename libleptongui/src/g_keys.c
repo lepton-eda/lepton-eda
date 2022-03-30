@@ -24,19 +24,18 @@
 #include <gdk/gdkkeysyms.h>
 
 
-/*! \brief Test if a key is valid.
+/*! \brief Test if a key value is valid.
  * \par Function Description
- * Test if the key combination defined by \a keyval and \a modifiers
- * is valid for key binding.  This is a less restrictive version of
- * gtk_accelerator_valid() from GTK 2.
+ * Test if the event key value \a keyval is valid for key binding.
+ * This is a less restrictive version of gtk_accelerator_valid()
+ * from GTK 2.
  *
  * \param keyval     The key that was pressed.
- * \param modifiers  The active modifiers when the key was pressed.
  *
  * \return TRUE if the key combination is valid for keybinding.
  */
 static gboolean
-g_key_is_valid (guint keyval, GdkModifierType modifiers)
+g_key_is_valid (guint keyval)
 {
   static const guint invalid_keyvals[] = {
     GDK_KEY_Shift_L, GDK_KEY_Shift_R, GDK_KEY_Shift_Lock, GDK_KEY_Caps_Lock, GDK_KEY_ISO_Lock,
@@ -82,7 +81,7 @@ g_make_key_struct (guint keyval,
                    GdkModifierType modifiers)
 {
   GschemKey *k = NULL;
-  if (g_key_is_valid (keyval, modifiers))
+  if (g_key_is_valid (keyval))
   {
     k = g_new0 (GschemKey, 1);
     k->keyval = keyval;
@@ -396,7 +395,8 @@ g_keys_execute (GschemToplevel *w_current,
   mods = schematic_keys_get_event_mods (display, event);
 
   /* Validate the key -- there are some keystrokes we mask out. */
-  if (!g_key_is_valid (key, (GdkModifierType) mods)) {
+  if (!g_key_is_valid (key))
+  {
     return NULL;
   }
 
