@@ -35,7 +35,7 @@ typedef struct {
 
 GschemKey*
 g_make_key_struct (guint keyval,
-                   GdkModifierType modifiers);
+                   guint modifiers);
 gchar*
 schematic_key_get_str (GschemKey *key);
 
