@@ -63,10 +63,6 @@ schematic_keys_get_event_mods (GdkDisplay *display,
 void
 g_keys_reset (GschemToplevel *w_current);
 
-GschemKey*
-g_keys_execute (guint key,
-                guint mods);
-
 /* g_window.c */
 GschemToplevel *g_current_window ();
 void g_dynwind_window (GschemToplevel *w_current);
