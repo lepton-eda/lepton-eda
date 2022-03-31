@@ -40,6 +40,7 @@ exec @GUILE@ -s "$0" "$@"
              (schematic core gettext)
              (schematic ffi)
              (schematic ffi gtk)
+             (schematic gui keymap)
              (schematic menu))
 
 ;;; Initialize liblepton library.
