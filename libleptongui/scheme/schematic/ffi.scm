@@ -166,6 +166,7 @@
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_toplevel
             schematic_window_get_active_page
+            schematic_window_get_gdk_display
             schematic_window_get_options
             schematic_window_update_keyaccel_timer
 
@@ -217,7 +218,7 @@
 (define-lff schematic_key_set_str void '(* *))
 (define-lff schematic_key_get_disp_str '* '(*))
 (define-lff schematic_key_set_disp_str void '(* *))
-(define-lff g_keys_execute '* '(* *))
+(define-lff g_keys_execute '* '(* * *))
 (define-lff g_make_key_struct '* (list int int))
 
 ;;; gschem_page_view.c
@@ -227,6 +228,7 @@
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff schematic_window_get_active_page '* '(*))
+(define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_options '* '(*))
 (define-lff schematic_window_update_keyaccel_timer void (list '* int))
 
@@ -436,7 +438,9 @@
          (if (null-pointer? *event)
              FALSE
              ;; Create Scheme key value.
-             (let ((*key (g_keys_execute *window *event)))
+             (let ((*key (g_keys_execute *window
+                                         (schematic_window_get_gdk_display *window)
+                                         *event)))
                (if (null-pointer? *key)
                    FALSE
                    (let* ((key (pointer->key *key))
