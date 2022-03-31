@@ -274,21 +274,20 @@ schematic_keys_get_event_mods (GdkDisplay *display,
  * the current key sequence.
  *
  * \param w_current  The active #GschemToplevel context.
+ * \param display    The GdkDisplay of the window.
  * \param event      A GdkEventKey structure.
  *
  * \return New #GschemKey if a binding was found for the keystroke, NULL otherwise.
  */
 GschemKey*
 g_keys_execute (GschemToplevel *w_current,
+                GdkDisplay *display,
                 GdkEventKey *event)
 {
-  GdkDisplay *display;
   guint key, mods;
 
   g_return_val_if_fail (w_current != NULL, 0);
   g_return_val_if_fail (event != NULL, 0);
-
-  display = schematic_window_get_gdk_display (w_current);
 
   key = schematic_keys_get_event_key (event);
   mods = schematic_keys_get_event_mods (display, event);

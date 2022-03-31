@@ -58,6 +58,7 @@ void g_keys_reset (GschemToplevel *w_current);
 
 GschemKey*
 g_keys_execute (GschemToplevel *w_current,
+                GdkDisplay *display,
                 GdkEventKey *event);
 
 /* g_window.c */
