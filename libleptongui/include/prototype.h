@@ -58,8 +58,8 @@ guint
 schematic_keys_get_event_key (GdkEventKey *event);
 
 guint
-schematic_keys_get_event_mods (GdkDisplay *display,
-                               GdkEventKey *event);
+schematic_keys_get_event_mods (GdkEventKey *event);
+
 void
 g_keys_reset (GschemToplevel *w_current);
 
