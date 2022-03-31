@@ -170,6 +170,7 @@
             schematic_window_get_active_page
             schematic_window_get_gdk_display
             schematic_window_get_options
+            schematic_window_update_keyaccel_string
             schematic_window_update_keyaccel_timer
 
             gschem_options_get_snap_size
@@ -222,7 +223,7 @@
 (define-lff schematic_key_set_disp_str void '(* *))
 (define-lff schematic_keys_get_event_key int '(*))
 (define-lff schematic_keys_get_event_mods int '(* *))
-(define-lff g_keys_execute '* (list '* int int))
+(define-lff g_keys_execute '* (list int int))
 (define-lff g_make_key_struct '* (list int int))
 
 ;;; gschem_page_view.c
@@ -234,6 +235,7 @@
 (define-lff schematic_window_get_active_page '* '(*))
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_options '* '(*))
+(define-lff schematic_window_update_keyaccel_string void (list '* int int))
 (define-lff schematic_window_update_keyaccel_timer void (list '* int))
 
 ;;; gschem_options.c
@@ -442,29 +444,32 @@
          (if (null-pointer? *event)
              FALSE
              ;; Create Scheme key value.
-             (let ((*key (g_keys_execute *window
-                                         (schematic_keys_get_event_key *event)
-                                         (schematic_keys_get_event_mods
-                                          (schematic_window_get_gdk_display *window)
-                                          *event))))
+             (let* ((keyval (schematic_keys_get_event_key *event))
+                    (mods (schematic_keys_get_event_mods
+                           (schematic_window_get_gdk_display *window)
+                           *event))
+                    (*key (g_keys_execute keyval mods)))
                (if (null-pointer? *key)
                    FALSE
-                   (let* ((key (pointer->key *key))
-                          ;; Build and evaluate Scheme expression.
-                          (expr (list 'press-key key))
-                          (retval (eval-protected expr (interaction-environment)))
-                          ;; If the keystroke was not part of a
-                          ;; prefix, start a timer to clear the
-                          ;; status bar display.
-                          (prefix? (eq? retval 'prefix)))
+                   (begin
+                     ;; Update the status bar with the current key sequence.
+                     (schematic_window_update_keyaccel_string *window keyval mods)
+                     (let* ((key (pointer->key *key))
+                            ;; Build and evaluate Scheme expression.
+                            (expr (list 'press-key key))
+                            (retval (eval-protected expr (interaction-environment)))
+                            ;; If the keystroke was not part of a
+                            ;; prefix, start a timer to clear the
+                            ;; status bar display.
+                            (prefix? (eq? retval 'prefix)))
 
-                     (schematic_window_update_keyaccel_timer *window
-                                                             (if prefix? FALSE TRUE))
-                     ;; Propagate the event further if press-key()
-                     ;; returned #f.  Thus, you can move from page
-                     ;; view to toolbar by Tab if the key is not
-                     ;; assigned in the global keymap.
-                     (if retval TRUE FALSE))))))))))
+                       (schematic_window_update_keyaccel_timer *window
+                                                               (if prefix? FALSE TRUE))
+                       ;; Propagate the event further if press-key()
+                       ;; returned #f.  Thus, you can move from page
+                       ;; view to toolbar by Tab if the key is not
+                       ;; assigned in the global keymap.
+                       (if retval TRUE FALSE)))))))))))
 
 (define *process-key-event
   (procedure->pointer int process-key-event '(* * *)))
