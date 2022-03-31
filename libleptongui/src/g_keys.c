@@ -85,7 +85,7 @@ g_make_key_struct (guint keyval,
   {
     k = g_new0 (GschemKey, 1);
     k->keyval = keyval;
-    k->modifiers = (GdkModifierType) (modifiers & GDK_MODIFIER_MASK);
+    k->modifiers = (GdkModifierType) modifiers;
   }
   return k;
 }
@@ -263,5 +263,5 @@ schematic_keys_get_event_mods (GdkEventKey *event)
     }
   }
 
-  return mods;
+  return mods & GDK_MODIFIER_MASK;
 }
