@@ -227,16 +227,16 @@ schematic_keys_get_event_key (GdkEventKey *event)
 
 
 guint
-schematic_keys_get_event_mods (GdkDisplay *display,
-                               GdkEventKey *event)
+schematic_keys_get_event_mods (GdkEventKey *event)
 {
   GdkKeymap *keymap;
+  GdkDisplay *display;
   guint key, mods, caps, upper, lower;
   GdkModifierType consumed_modifiers;
 
-  g_return_val_if_fail (display != NULL, 0);
   g_return_val_if_fail (event != NULL, 0);
 
+  display = gdk_window_get_display (event->window);
   keymap = gdk_keymap_get_for_display (display);
 
   /* Figure out what modifiers went into determining the key symbol */
