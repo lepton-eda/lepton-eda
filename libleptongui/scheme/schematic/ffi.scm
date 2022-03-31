@@ -152,16 +152,9 @@
             x_window_set_current_page
             x_window_setup
 
-            schematic_key_get_keyval
-            schematic_key_get_modifiers
-            schematic_key_get_str
-            schematic_key_set_str
-            schematic_key_get_disp_str
-            schematic_key_set_disp_str
             schematic_keys_get_event_key
             schematic_keys_get_event_mods
             schematic_keys_verify_keyval
-            g_make_key_struct
 
             gschem_page_view_get_page
 
@@ -180,7 +173,7 @@
             x_event_get_pointer_position
 
             check-key
-            pointer->key
+            make-key*
             *process-key-event
             key?
             key-label
@@ -214,17 +207,9 @@
 (define-lff x_widgets_show_log void (list '*))
 
 ;;; g_keys.c
-(define GdkModifierType uint32)
-(define-lff schematic_key_get_keyval int '(*))
-(define-lff schematic_key_get_modifiers GdkModifierType '(*))
-(define-lff schematic_key_get_str '* '(*))
-(define-lff schematic_key_set_str void '(* *))
-(define-lff schematic_key_get_disp_str '* '(*))
-(define-lff schematic_key_set_disp_str void '(* *))
 (define-lff schematic_keys_get_event_key int '(*))
 (define-lff schematic_keys_get_event_mods int '(*))
 (define-lff schematic_keys_verify_keyval int (list int))
-(define-lff g_make_key_struct '* (list int int))
 
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
@@ -381,34 +366,6 @@
            ((force proc))))))
 
 
-;;; Define a wrapped pointer type.
-(define-wrapped-pointer-type <schematic-key>
-  %key?
-  wrap-key
-  unwrap-key
-  ;; Printer.
-  (lambda (key port)
-    (format port "#<gschem-key ~A>"
-            (let ((*key (unwrap-key key)))
-              (when (null-pointer? (schematic_key_get_disp_str *key))
-                (schematic_key_set_disp_str *key (gtk_accelerator_get_label (schematic_key_get_keyval *key)
-                                                                            (schematic_key_get_modifiers *key))))
-              (pointer->string (schematic_key_get_disp_str *key))))))
-
-(define-syntax check-key
-  (syntax-rules ()
-    ((_ key pos)
-     (let ((pointer (unwrap-key key)))
-       (if (null-pointer? pointer)
-           (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
-             (scm-error 'wrong-type-arg
-                        proc-name
-                        "Wrong type argument in position ~A: ~A"
-                        (list pos key)
-                        #f))
-           pointer)))))
-
-
 (define-record-type <key>
   (make-key keyval modifiers name label)
   key?
@@ -417,10 +374,10 @@
   (name key-name set-key-name!)
   (label key-label set-key-label!))
 
-(define (pointer->key pointer)
-  (define keyval (schematic_key_get_keyval pointer))
-  (define modifiers (schematic_key_get_modifiers pointer))
 
+;;; Creates and returns a new <key> object from a KEYVAL and
+;;; MODIFIERS.  If the values are invalid, returns #f.
+(define (make-key* keyval modifiers)
   (let* ((*name (gtk_accelerator_name keyval modifiers))
          (name (pointer->string *name))
          (*label (gtk_accelerator_get_label keyval modifiers))
@@ -447,13 +404,12 @@
              (let* ((keyval (schematic_keys_get_event_key *event))
                     (mods (schematic_keys_get_event_mods *event))
                     ;; Validate key value.
-                    (*key (and (not (zero? (schematic_keys_verify_keyval keyval)))
-                               (g_make_key_struct keyval mods))))
-               (if *key
+                    (valid-key? (and (not (zero? (schematic_keys_verify_keyval keyval))))))
+               (if valid-key?
                    (begin
                      ;; Update the status bar with the current key sequence.
                      (schematic_window_update_keyaccel_string *window keyval mods)
-                     (let* ((key (pointer->key *key))
+                     (let* ((key (make-key* keyval mods))
                             ;; Build and evaluate Scheme expression.
                             (expr (list 'press-key key))
                             (retval (eval-protected expr (interaction-environment)))

@@ -25,35 +25,6 @@ void g_run_hook_action_mode (GschemToplevel *w_current, const char *name, const 
 
 /* g_keys.c */
 
-/*! Type for keybindings. Used internally by lepton-schematic key smobs. */
-typedef struct {
-  guint keyval;
-  GdkModifierType modifiers;
-  gchar *str; /* UTF-8. Free with g_free(). */
-  gchar *disp_str; /* UTF-8. Free with g_free(). */
-} GschemKey;
-
-GschemKey*
-g_make_key_struct (guint keyval,
-                   guint modifiers);
-gchar*
-schematic_key_get_str (GschemKey *key);
-
-void
-schematic_key_set_str (GschemKey *key,
-                       gchar* str);
-gchar*
-schematic_key_get_disp_str (GschemKey *key);
-
-void
-schematic_key_set_disp_str (GschemKey *key,
-                            gchar* disp_str);
-guint
-schematic_key_get_keyval (GschemKey *key);
-
-GdkModifierType
-schematic_key_get_modifiers (GschemKey *key);
-
 guint
 schematic_keys_get_event_key (GdkEventKey *event);
 
