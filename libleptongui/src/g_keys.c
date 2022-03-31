@@ -35,7 +35,7 @@
  * \return TRUE if the key combination is valid for keybinding.
  */
 static gboolean
-g_key_is_valid (guint keyval)
+schematic_keys_verify_keyval (guint keyval)
 {
   static const guint invalid_keyvals[] = {
     GDK_KEY_Shift_L, GDK_KEY_Shift_R, GDK_KEY_Shift_Lock, GDK_KEY_Caps_Lock, GDK_KEY_ISO_Lock,
@@ -81,7 +81,7 @@ g_make_key_struct (guint keyval,
                    guint modifiers)
 {
   GschemKey *k = NULL;
-  if (g_key_is_valid (keyval))
+  if (schematic_keys_verify_keyval (keyval))
   {
     k = g_new0 (GschemKey, 1);
     k->keyval = keyval;
