@@ -64,8 +64,7 @@ void
 g_keys_reset (GschemToplevel *w_current);
 
 GschemKey*
-g_keys_execute (GschemToplevel *w_current,
-                guint key,
+g_keys_execute (guint key,
                 guint mods);
 
 /* g_window.c */
