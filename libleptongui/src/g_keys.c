@@ -32,9 +32,9 @@
  *
  * \param keyval     The key that was pressed.
  *
- * \return TRUE if the key combination is valid for keybinding.
+ * \return keyval if it is valid for keybinding, otherwise 0.
  */
-static gboolean
+static guint
 schematic_keys_verify_keyval (guint keyval)
 {
   static const guint invalid_keyvals[] = {
@@ -54,15 +54,19 @@ schematic_keys_verify_keyval (guint keyval)
   const guint *val;
 
   /* Exclude a bunch of control chars */
-  if (keyval <= 0xFF) return keyval >= 0x20;
+  if (keyval <= 0xFF)
+  {
+    return (keyval >= 0x20) ? keyval : 0;
+  }
 
   /* Exclude special & modifier keys */
   val = invalid_keyvals;
-  while (*val) {
-    if (keyval == *val++) return FALSE;
+  while (*val)
+  {
+    if (keyval == *val++) return 0;
   }
 
-  return TRUE;
+  return keyval;
 }
 
 /*! \brief Create a new bindable key object.
@@ -81,7 +85,7 @@ g_make_key_struct (guint keyval,
                    guint modifiers)
 {
   GschemKey *k = NULL;
-  if (schematic_keys_verify_keyval (keyval))
+  if (schematic_keys_verify_keyval (keyval) != 0)
   {
     k = g_new0 (GschemKey, 1);
     k->keyval = keyval;
