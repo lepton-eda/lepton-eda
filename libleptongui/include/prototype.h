@@ -60,6 +60,9 @@ schematic_keys_get_event_key (GdkEventKey *event);
 guint
 schematic_keys_get_event_mods (GdkEventKey *event);
 
+guint
+schematic_keys_verify_keyval (guint keyval);
+
 void
 g_keys_reset (GschemToplevel *w_current);
 

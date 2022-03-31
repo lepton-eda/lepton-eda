@@ -160,6 +160,7 @@
             schematic_key_set_disp_str
             schematic_keys_get_event_key
             schematic_keys_get_event_mods
+            schematic_keys_verify_keyval
             g_make_key_struct
 
             gschem_page_view_get_page
@@ -222,6 +223,7 @@
 (define-lff schematic_key_set_disp_str void '(* *))
 (define-lff schematic_keys_get_event_key int '(*))
 (define-lff schematic_keys_get_event_mods int '(*))
+(define-lff schematic_keys_verify_keyval int (list int))
 (define-lff g_make_key_struct '* (list int int))
 
 ;;; gschem_page_view.c
@@ -444,9 +446,10 @@
              ;; Create Scheme key value.
              (let* ((keyval (schematic_keys_get_event_key *event))
                     (mods (schematic_keys_get_event_mods *event))
-                    (*key (g_make_key_struct keyval mods)))
-               (if (null-pointer? *key)
-                   FALSE
+                    ;; Validate key value.
+                    (*key (and (not (zero? (schematic_keys_verify_keyval keyval)))
+                               (g_make_key_struct keyval mods))))
+               (if *key
                    (begin
                      ;; Update the status bar with the current key sequence.
                      (schematic_window_update_keyaccel_string *window keyval mods)
@@ -465,7 +468,9 @@
                        ;; returned #f.  Thus, you can move from page
                        ;; view to toolbar by Tab if the key is not
                        ;; assigned in the global keymap.
-                       (if retval TRUE FALSE)))))))))))
+                       (if retval TRUE FALSE)))
+                   ;; Invalid key.
+                   FALSE))))))))
 
 (define *process-key-event
   (procedure->pointer int process-key-event '(* * *)))

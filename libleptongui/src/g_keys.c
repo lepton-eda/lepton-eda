@@ -34,7 +34,7 @@
  *
  * \return keyval if it is valid for keybinding, otherwise 0.
  */
-static guint
+guint
 schematic_keys_verify_keyval (guint keyval)
 {
   static const guint invalid_keyvals[] = {
@@ -72,8 +72,7 @@ schematic_keys_verify_keyval (guint keyval)
 /*! \brief Create a new bindable key object.
  * \par Function Description
  * Create and return a new lepton-schematic key object from a \a
- * keyval and a set of \a modifiers.  If the key combination is
- * invalid, return SCM_BOOL_F.
+ * keyval and a set of \a modifiers.
  *
  * \param keyval     the pressed key.
  * \param modifiers  the active modifiers for the key.
@@ -85,12 +84,10 @@ g_make_key_struct (guint keyval,
                    guint modifiers)
 {
   GschemKey *k = NULL;
-  if (schematic_keys_verify_keyval (keyval) != 0)
-  {
-    k = g_new0 (GschemKey, 1);
-    k->keyval = keyval;
-    k->modifiers = (GdkModifierType) modifiers;
-  }
+  k = g_new0 (GschemKey, 1);
+  k->keyval = keyval;
+  k->modifiers = (GdkModifierType) modifiers;
+
   return k;
 }
 
