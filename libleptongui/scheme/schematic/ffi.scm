@@ -20,12 +20,7 @@
   #:use-module (system foreign)
   #:use-module (srfi srfi-9)
 
-  #:use-module (lepton eval)
   #:use-module (lepton ffi lib)
-  #:use-module (lepton ffi)
-  #:use-module (lepton toplevel)
-
-  #:use-module (schematic ffi gtk)
 
   #:export (g_init_window
             g_current_window
@@ -171,13 +166,7 @@
             o_undo_savestate
 
             x_event_get_pointer_position
-
-            check-key
-            make-key*
-            *process-key-event
-            key?
-            key-label
-            key-name
+            x_event_key
             ))
 
 (define libleptongui
@@ -364,69 +353,3 @@
     (and (force func)
          (let ((proc (delay (pointer->procedure void (force func) '()))))
            ((force proc))))))
-
-
-(define-record-type <key>
-  (make-key keyval modifiers name label)
-  key?
-  (keyval key-keyval set-key-keyval!)
-  (modifiers key-modifiers set-key-modifiers!)
-  (name key-name set-key-name!)
-  (label key-label set-key-label!))
-
-
-;;; Creates and returns a new <key> object from a KEYVAL and
-;;; MODIFIERS.  If the values are invalid, returns #f.
-(define (make-key* keyval modifiers)
-  (let* ((*name (gtk_accelerator_name keyval modifiers))
-         (name (pointer->string *name))
-         (*label (gtk_accelerator_get_label keyval modifiers))
-         (label (pointer->string *label)))
-    (g_free *name)
-    (g_free *label)
-    (make-key keyval modifiers name label)))
-
-(define (process-key-event *page_view *event *window)
-  ;; %lepton-window is defined in C code and is not visible at the
-  ;; moment the module is compiled.  Use last resort to refer to
-  ;; it.
-  (with-fluids (((@@ (guile-user) %lepton-window) *window))
-    ;; We have to dynwind LeptonToplevel as well since there are
-    ;; functions that depend on toplevel only and should know what
-    ;; its current value is.
-    (%with-toplevel
-     (pointer->geda-toplevel (gschem_toplevel_get_toplevel *window))
-     (lambda ()
-       (let ((*event (x_event_key *page_view *event *window)))
-         (if (null-pointer? *event)
-             FALSE
-             ;; Create Scheme key value.
-             (let* ((keyval (schematic_keys_get_event_key *event))
-                    (mods (schematic_keys_get_event_mods *event))
-                    ;; Validate key value.
-                    (valid-key? (and (not (zero? (schematic_keys_verify_keyval keyval))))))
-               (if valid-key?
-                   (begin
-                     ;; Update the status bar with the current key sequence.
-                     (schematic_window_update_keyaccel_string *window keyval mods)
-                     (let* ((key (make-key* keyval mods))
-                            ;; Build and evaluate Scheme expression.
-                            (expr (list 'press-key key))
-                            (retval (eval-protected expr (interaction-environment)))
-                            ;; If the keystroke was not part of a
-                            ;; prefix, start a timer to clear the
-                            ;; status bar display.
-                            (prefix? (eq? retval 'prefix)))
-
-                       (schematic_window_update_keyaccel_timer *window
-                                                               (if prefix? FALSE TRUE))
-                       ;; Propagate the event further if press-key()
-                       ;; returned #f.  Thus, you can move from page
-                       ;; view to toolbar by Tab if the key is not
-                       ;; assigned in the global keymap.
-                       (if retval TRUE FALSE)))
-                   ;; Invalid key.
-                   FALSE))))))))
-
-(define *process-key-event
-  (procedure->pointer int process-key-event '(* * *)))

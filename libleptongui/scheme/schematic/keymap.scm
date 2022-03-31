@@ -36,9 +36,32 @@
 
   #:export (key->string
             string->key
-            key->display-string)
+            key->display-string
+            key?
+            make-key*))
 
-  #:re-export (key?))
+;;; <key> record.
+
+(define-record-type <key>
+  (make-key keyval modifiers name label)
+  key?
+  (keyval key-keyval set-key-keyval!)
+  (modifiers key-modifiers set-key-modifiers!)
+  (name key-name set-key-name!)
+  (label key-label set-key-label!))
+
+
+;;; Creates and returns a new <key> object from a KEYVAL and
+;;; MODIFIERS.  If the values are invalid, returns #f.
+(define (make-key* keyval modifiers)
+  (let* ((*name (gtk_accelerator_name keyval modifiers))
+         (name (pointer->string *name))
+         (*label (gtk_accelerator_get_label keyval modifiers))
+         (label (pointer->string *label)))
+    (g_free *name)
+    (g_free *label)
+    (make-key keyval modifiers name label)))
+
 
 ;; -------------------- Key combinations --------------------
 

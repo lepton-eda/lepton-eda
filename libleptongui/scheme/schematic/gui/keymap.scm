@@ -19,7 +19,14 @@
 
 (define-module (schematic gui keymap)
   #:use-module (srfi srfi-1)
+  #:use-module (system foreign)
+
+  #:use-module (lepton eval)
+  #:use-module (lepton ffi)
+  #:use-module (lepton toplevel)
+
   #:use-module (schematic action)
+  #:use-module (schematic ffi)
   #:use-module (schematic keymap)
 
   #:export (%global-keymap
@@ -28,7 +35,56 @@
             press-key
             reset-keys
             find-key
-            %gschem-hotkey-store/dump-global-keymap))
+            %gschem-hotkey-store/dump-global-keymap
+            *process-key-event))
+
+;;; Key event processing.
+
+(define (process-key-event *page_view *event *window)
+  ;; %lepton-window is defined in C code and is not visible at the
+  ;; moment the module is compiled.  Use last resort to refer to
+  ;; it.
+  (with-fluids (((@@ (guile-user) %lepton-window) *window))
+    ;; We have to dynwind LeptonToplevel as well since there are
+    ;; functions that depend on toplevel only and should know what
+    ;; its current value is.
+    (%with-toplevel
+     (pointer->geda-toplevel (gschem_toplevel_get_toplevel *window))
+     (lambda ()
+       (let ((*event (x_event_key *page_view *event *window)))
+         (if (null-pointer? *event)
+             FALSE
+             ;; Create Scheme key value.
+             (let* ((keyval (schematic_keys_get_event_key *event))
+                    (mods (schematic_keys_get_event_mods *event))
+                    ;; Validate key value.
+                    (valid-key? (and (not (zero? (schematic_keys_verify_keyval keyval))))))
+               (if valid-key?
+                   (begin
+                     ;; Update the status bar with the current key sequence.
+                     (schematic_window_update_keyaccel_string *window keyval mods)
+                     (let* ((key (make-key* keyval mods))
+                            ;; Build and evaluate Scheme expression.
+                            (expr (list 'press-key key))
+                            (retval (eval-protected expr (interaction-environment)))
+                            ;; If the keystroke was not part of a
+                            ;; prefix, start a timer to clear the
+                            ;; status bar display.
+                            (prefix? (eq? retval 'prefix)))
+
+                       (schematic_window_update_keyaccel_timer *window
+                                                               (if prefix? FALSE TRUE))
+                       ;; Propagate the event further if press-key()
+                       ;; returned #f.  Thus, you can move from page
+                       ;; view to toolbar by Tab if the key is not
+                       ;; assigned in the global keymap.
+                       (if retval TRUE FALSE)))
+                   ;; Invalid key.
+                   FALSE))))))))
+
+(define *process-key-event
+  (procedure->pointer int process-key-event '(* * *)))
+
 
 ;; -------------------------------------------------------------------
 ;;;; Global keymaps and key dispatch logic
