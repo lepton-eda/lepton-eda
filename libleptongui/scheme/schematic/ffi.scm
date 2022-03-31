@@ -158,6 +158,8 @@
             schematic_key_set_str
             schematic_key_get_disp_str
             schematic_key_set_disp_str
+            schematic_keys_get_event_key
+            schematic_keys_get_event_mods
             g_keys_execute
             g_make_key_struct
 
@@ -218,7 +220,9 @@
 (define-lff schematic_key_set_str void '(* *))
 (define-lff schematic_key_get_disp_str '* '(*))
 (define-lff schematic_key_set_disp_str void '(* *))
-(define-lff g_keys_execute '* '(* * *))
+(define-lff schematic_keys_get_event_key int '(*))
+(define-lff schematic_keys_get_event_mods int '(* *))
+(define-lff g_keys_execute '* (list '* int int))
 (define-lff g_make_key_struct '* (list int int))
 
 ;;; gschem_page_view.c
@@ -439,8 +443,10 @@
              FALSE
              ;; Create Scheme key value.
              (let ((*key (g_keys_execute *window
-                                         (schematic_window_get_gdk_display *window)
-                                         *event)))
+                                         (schematic_keys_get_event_key *event)
+                                         (schematic_keys_get_event_mods
+                                          (schematic_window_get_gdk_display *window)
+                                          *event))))
                (if (null-pointer? *key)
                    FALSE
                    (let* ((key (pointer->key *key))

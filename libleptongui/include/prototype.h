@@ -54,12 +54,19 @@ schematic_key_get_keyval (GschemKey *key);
 GdkModifierType
 schematic_key_get_modifiers (GschemKey *key);
 
-void g_keys_reset (GschemToplevel *w_current);
+guint
+schematic_keys_get_event_key (GdkEventKey *event);
+
+guint
+schematic_keys_get_event_mods (GdkDisplay *display,
+                               GdkEventKey *event);
+void
+g_keys_reset (GschemToplevel *w_current);
 
 GschemKey*
 g_keys_execute (GschemToplevel *w_current,
-                GdkDisplay *display,
-                GdkEventKey *event);
+                guint key,
+                guint mods);
 
 /* g_window.c */
 GschemToplevel *g_current_window ();

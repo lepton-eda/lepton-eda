@@ -212,7 +212,7 @@ g_keys_reset (GschemToplevel *w_current)
 }
 
 
-static guint
+guint
 schematic_keys_get_event_key (GdkEventKey *event)
 {
   guint upper, lower;
@@ -226,7 +226,7 @@ schematic_keys_get_event_key (GdkEventKey *event)
 }
 
 
-static guint
+guint
 schematic_keys_get_event_mods (GdkDisplay *display,
                                GdkEventKey *event)
 {
@@ -269,28 +269,22 @@ schematic_keys_get_event_mods (GdkDisplay *display,
 
 /*! \brief Evaluate a user keystroke.
  * \par Function Description
- * Evaluates the key combination specified by \a event using the
- * current keymap.  Updates the lepton-schematic status bar with
- * the current key sequence.
+ * Evaluates the key combination specified by key value and
+ * modifiers of a #GdkEvent using the current keymap.  Updates the
+ * lepton-schematic status bar with the current key sequence.
  *
  * \param w_current  The active #GschemToplevel context.
- * \param display    The GdkDisplay of the window.
- * \param event      A GdkEventKey structure.
+ * \param key Key value of the event.
+ * \param mods Key modifiers of the event.
  *
  * \return New #GschemKey if a binding was found for the keystroke, NULL otherwise.
  */
 GschemKey*
 g_keys_execute (GschemToplevel *w_current,
-                GdkDisplay *display,
-                GdkEventKey *event)
+                guint key,
+                guint mods)
 {
-  guint key, mods;
-
   g_return_val_if_fail (w_current != NULL, 0);
-  g_return_val_if_fail (event != NULL, 0);
-
-  key = schematic_keys_get_event_key (event);
-  mods = schematic_keys_get_event_mods (display, event);
 
   /* Validate the key -- there are some keystrokes we mask out. */
   if (!g_key_is_valid (key))
