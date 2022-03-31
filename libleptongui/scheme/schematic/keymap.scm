@@ -62,12 +62,10 @@ menu)."
 lepton-schematic key object.  If STR contains syntax errors, or
 does not represent a valid bindable key combination, raises the
 'key-format Scheme error."
-  (define GdkModifierType uint32)
-
   (check-string str 1)
 
   (let ((keyval-bv (make-bytevector (sizeof int) 0))
-        (modifiers-bv (make-bytevector (sizeof GdkModifierType) 0)))
+        (modifiers-bv (make-bytevector (sizeof int) 0)))
 
     (gtk_accelerator_parse (string->pointer str)
                            (bytevector->pointer keyval-bv)
@@ -76,9 +74,10 @@ does not represent a valid bindable key combination, raises the
                                        0
                                        (native-endianness)
                                        (sizeof int)))
-          (modifiers (bytevector-u32-ref modifiers-bv
+          (modifiers (bytevector-uint-ref modifiers-bv
                                          0
-                                         (native-endianness))))
+                                         (native-endianness)
+                                         (sizeof int))))
       (if (and (zero? keyval)
                (zero? modifiers))
           (scm-error 'key-format
@@ -86,7 +85,7 @@ does not represent a valid bindable key combination, raises the
                      "~S is not a valid key combination."
                      (list str)
                      #f)
-          (pointer->key (g_make_key_struct keyval modifiers))))))
+          (make-key* keyval modifiers)))))
 
 
 ;; -------------------- Key sequences --------------------
