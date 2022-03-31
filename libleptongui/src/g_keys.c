@@ -265,29 +265,3 @@ schematic_keys_get_event_mods (GdkDisplay *display,
 
   return mods;
 }
-
-
-/*! \brief Evaluate a user keystroke.
- * \par Function Description
- * Evaluates the key combination specified by key value and
- * modifiers of a #GdkEvent using the current keymap.
- *
- * \param key Key value of the event.
- * \param mods Key modifiers of the event.
- *
- * \return New #GschemKey if a binding was found for the keystroke, NULL otherwise.
- */
-GschemKey*
-g_keys_execute (guint key,
-                guint mods)
-{
-  /* Validate the key -- there are some keystrokes we mask out. */
-  if (!g_key_is_valid (key))
-  {
-    return NULL;
-  }
-
-  GschemKey *k = g_make_key_struct (key, mods);
-
-  return k;
-}

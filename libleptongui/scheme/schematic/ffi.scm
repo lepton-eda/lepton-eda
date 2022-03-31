@@ -160,7 +160,6 @@
             schematic_key_set_disp_str
             schematic_keys_get_event_key
             schematic_keys_get_event_mods
-            g_keys_execute
             g_make_key_struct
 
             gschem_page_view_get_page
@@ -223,7 +222,6 @@
 (define-lff schematic_key_set_disp_str void '(* *))
 (define-lff schematic_keys_get_event_key int '(*))
 (define-lff schematic_keys_get_event_mods int '(* *))
-(define-lff g_keys_execute '* (list int int))
 (define-lff g_make_key_struct '* (list int int))
 
 ;;; gschem_page_view.c
@@ -448,7 +446,7 @@
                     (mods (schematic_keys_get_event_mods
                            (schematic_window_get_gdk_display *window)
                            *event))
-                    (*key (g_keys_execute keyval mods)))
+                    (*key (g_make_key_struct keyval mods)))
                (if (null-pointer? *key)
                    FALSE
                    (begin
