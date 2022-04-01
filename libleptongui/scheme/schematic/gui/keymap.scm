@@ -61,7 +61,7 @@
                    (begin
                      ;; Update the status bar with the current key sequence.
                      (schematic_window_update_keyaccel_string *window keyval mods)
-                     (let* ((key (make-key* keyval mods))
+                     (let* ((key (make-key keyval mods))
                             (retval (press-key key))
                             ;; If the keystroke was not part of a
                             ;; prefix, start a timer to clear the
