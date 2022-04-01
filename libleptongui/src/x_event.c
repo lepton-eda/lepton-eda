@@ -698,14 +698,7 @@ x_event_key (GschemPageView *page_view,
     x_event_faked_motion (page_view, event);
   }
 
-  if (pressed)
-  {
-    return event;
-  }
-  else
-  {
-    return NULL;
-  }
+  return pressed ? event : NULL;
 }
 
 
