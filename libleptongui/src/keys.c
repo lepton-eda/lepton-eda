@@ -104,7 +104,7 @@ schematic_keys_reset (GschemToplevel *w_current)
  * \return The obtained key value.
  */
 guint
-schematic_keys_get_event_key (GdkEventKey *event)
+schematic_keys_get_event_keyval (GdkEventKey *event)
 {
   guint upper, lower;
 
@@ -134,7 +134,7 @@ schematic_keys_get_event_key (GdkEventKey *event)
  * \return The obtained key modifiers.
  */
 guint
-schematic_keys_get_event_mods (GdkEventKey *event)
+schematic_keys_get_event_modifiers (GdkEventKey *event)
 {
   GdkKeymap *keymap;
   GdkDisplay *display;

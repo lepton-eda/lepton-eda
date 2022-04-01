@@ -53,8 +53,8 @@
          (if (null-pointer? *event)
              FALSE
              ;; Create Scheme key value.
-             (let* ((keyval (schematic_keys_get_event_key *event))
-                    (mods (schematic_keys_get_event_mods *event))
+             (let* ((keyval (schematic_keys_get_event_keyval *event))
+                    (mods (schematic_keys_get_event_modifiers *event))
                     ;; Validate key value.
                     (valid-key? (and (not (zero? (schematic_keys_verify_keyval keyval))))))
                (if valid-key?

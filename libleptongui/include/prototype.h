@@ -25,10 +25,10 @@ void g_run_hook_action_mode (GschemToplevel *w_current, const char *name, const 
 
 /* keys.c */
 guint
-schematic_keys_get_event_key (GdkEventKey *event);
+schematic_keys_get_event_keyval (GdkEventKey *event);
 
 guint
-schematic_keys_get_event_mods (GdkEventKey *event);
+schematic_keys_get_event_modifiers (GdkEventKey *event);
 
 guint
 schematic_keys_verify_keyval (guint keyval);
