@@ -39,7 +39,7 @@
             string->key
             key->display-string
             key?
-            make-key*))
+            make-key))
 
 ;;; <schematic-key> record.
 
@@ -59,7 +59,7 @@
 
 ;;; Creates and returns a new <schematic-key> object from a KEYVAL
 ;;; and MODIFIERS.  If the values are invalid, returns #f.
-(define (make-key* keyval modifiers)
+(define (make-key keyval modifiers)
   (let* ((*name (gtk_accelerator_name keyval modifiers))
          (name (pointer->string *name))
          (*label (gtk_accelerator_get_label keyval modifiers))
@@ -119,7 +119,7 @@ does not represent a valid bindable key combination, raises the
                      "~S is not a valid key combination."
                      (list str)
                      #f)
-          (make-key* keyval modifiers)))))
+          (make-key keyval modifiers)))))
 
 
 ;; -------------------- Key sequences --------------------
