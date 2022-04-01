@@ -147,8 +147,8 @@
             x_window_set_current_page
             x_window_setup
 
-            schematic_keys_get_event_key
-            schematic_keys_get_event_mods
+            schematic_keys_get_event_keyval
+            schematic_keys_get_event_modifiers
             schematic_keys_verify_keyval
 
             gschem_page_view_get_page
@@ -196,8 +196,8 @@
 (define-lff x_widgets_show_log void (list '*))
 
 ;;; keys.c
-(define-lff schematic_keys_get_event_key int '(*))
-(define-lff schematic_keys_get_event_mods int '(*))
+(define-lff schematic_keys_get_event_keyval int '(*))
+(define-lff schematic_keys_get_event_modifiers int '(*))
 (define-lff schematic_keys_verify_keyval int (list int))
 
 ;;; gschem_page_view.c
