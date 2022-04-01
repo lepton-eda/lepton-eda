@@ -25,6 +25,7 @@
   #:use-module (rnrs bytevectors)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-9)
+  #:use-module (srfi srfi-9 gnu)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
@@ -40,19 +41,24 @@
             key?
             make-key*))
 
-;;; <key> record.
+;;; <schematic-key> record.
 
-(define-record-type <key>
-  (make-key keyval modifiers name label)
-  key?
-  (keyval key-keyval set-key-keyval!)
-  (modifiers key-modifiers set-key-modifiers!)
-  (name key-name set-key-name!)
-  (label key-label set-key-label!))
+(define-record-type <schematic-key>
+  (make-schematic-key keyval modifiers name label)
+  schematic-key?
+  (keyval schematic-key-keyval set-schematic-key-keyval!)
+  (modifiers schematic-key-modifiers set-schematic-key-modifiers!)
+  (name schematic-key-name set-schematic-key-name!)
+  (label schematic-key-label set-schematic-key-label!))
+
+(set-record-type-printer!
+ <schematic-key>
+ (lambda (record port)
+   (format port "#<schematic-key ~A>" (schematic-key-label record))))
 
 
-;;; Creates and returns a new <key> object from a KEYVAL and
-;;; MODIFIERS.  If the values are invalid, returns #f.
+;;; Creates and returns a new <schematic-key> object from a KEYVAL
+;;; and MODIFIERS.  If the values are invalid, returns #f.
 (define (make-key* keyval modifiers)
   (let* ((*name (gtk_accelerator_name keyval modifiers))
          (name (pointer->string *name))
@@ -60,16 +66,21 @@
          (label (pointer->string *label)))
     (g_free *name)
     (g_free *label)
-    (make-key keyval modifiers name label)))
+    (make-schematic-key keyval modifiers name label)))
 
 
 ;; -------------------- Key combinations --------------------
+
+(define (key? key)
+  "Returns #t if KEY is a <schematic-key> record.  Otherwise
+returns #f."
+  (schematic-key? key))
 
 (define (key->string key)
   "Converts the bindable key object KEY to a string.  Returns a
 string representation of the key combination, in a format suitable
 for parsing with string->key()."
-  (key-name key))
+  (schematic-key-name key))
 
 
 (define (key->display-string key)
@@ -77,7 +88,7 @@ for parsing with string->key()."
 Returns a string representation of the key combination in a format
 suitable for display to the user (e.g. as accelerator text in a
 menu)."
-  (key-label key))
+  (schematic-key-label key))
 
 
 (define (string->key str)
