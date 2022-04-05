@@ -61,6 +61,7 @@
                      ;; Update the status bar with the current key sequence.
                      (schematic_window_update_keyaccel_string *window keyval mods)
                      (let* ((key (make-key keyval mods))
+                            ;; Actually evaluate the key press.
                             (retval (press-key key))
                             ;; If the keystroke was not part of a
                             ;; key sequence prefix, start a timer
