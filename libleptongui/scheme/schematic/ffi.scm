@@ -209,7 +209,7 @@
 (define-lff schematic_window_get_active_page '* '(*))
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_options '* '(*))
-(define-lff schematic_window_update_keyaccel_string void (list '* int int))
+(define-lff schematic_window_update_keyaccel_string void '(* *))
 (define-lff schematic_window_update_keyaccel_timer void (list '* int))
 
 ;;; gschem_options.c

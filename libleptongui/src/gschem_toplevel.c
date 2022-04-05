@@ -860,35 +860,30 @@ schematic_window_get_options (GschemToplevel *w_current)
 /*! \brief Update key accelerator string in status bar.
  * \par Function Description
  * Given the key accelerator string previously set in the status
- * bar, updates it by combining the previous string value with the
- * new one, or just sets the new value provided.  The behaviour
- * varies depending on whether the previously set string was a
- * prefix in a key sequence or not.
+ * bar, updates it by combining it with the new key label, or just
+ * sets the new value provided.  The behaviour varies depending on
+ * whether the previously set string was a prefix in a key
+ * sequence or not.
  *
  * \param [in] w_current The active #GschemToplevel context.
- * \param [in] key The new key value.
- * \param [in] mods The key modifiers.
+ * \param [in] keystr The new key label.
  */
 void
 schematic_window_update_keyaccel_string (GschemToplevel *w_current,
-                                         guint key,
-                                         guint mods)
+                                         char *keystr)
 {
-  /* Update key hint string for status bar. */
-  gchar *keystr = gtk_accelerator_get_label (key, (GdkModifierType) mods);
-
   /* If no current hint string, or the hint string is going to be
    * cleared anyway, use key string directly */
   if ((w_current->keyaccel_string == NULL) ||
       w_current->keyaccel_string_source_id) {
     g_free (w_current->keyaccel_string);
-    w_current->keyaccel_string = keystr;
-
-  } else {
+    w_current->keyaccel_string = g_strdup (keystr);
+  }
+  else
+  {
     gchar *p = w_current->keyaccel_string;
     w_current->keyaccel_string = g_strconcat (p, " ", keystr, NULL);
     g_free (p);
-    g_free (keystr);
   }
 
   /* Update status bar */
