@@ -60,13 +60,14 @@
 ;;; Creates and returns a new <schematic-key> object from a KEYVAL
 ;;; and MODIFIERS.  If the values are invalid, returns #f.
 (define (make-key keyval modifiers)
-  (let* ((*name (gtk_accelerator_name keyval modifiers))
-         (name (pointer->string *name))
-         (*label (gtk_accelerator_get_label keyval modifiers))
-         (label (pointer->string *label)))
-    (g_free *name)
-    (g_free *label)
-    (make-schematic-key keyval modifiers name label)))
+  (and (not (zero? (schematic_keys_verify_keyval keyval)))
+       (let* ((*name (gtk_accelerator_name keyval modifiers))
+              (name (pointer->string *name))
+              (*label (gtk_accelerator_get_label keyval modifiers))
+              (label (pointer->string *label)))
+         (g_free *name)
+         (g_free *label)
+         (make-schematic-key keyval modifiers name label))))
 
 
 ;; -------------------- Key combinations --------------------
