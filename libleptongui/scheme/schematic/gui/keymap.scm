@@ -63,12 +63,13 @@
                      (let* ((key (make-key keyval mods))
                             (retval (press-key key))
                             ;; If the keystroke was not part of a
-                            ;; prefix, start a timer to clear the
-                            ;; status bar display.
-                            (prefix? (eq? retval 'prefix)))
+                            ;; key sequence prefix, start a timer
+                            ;; to clear the status bar display.
+                            (start-cleanup-timer?
+                             (if (eq? retval 'prefix) FALSE TRUE)))
 
                        (schematic_window_update_keyaccel_timer *window
-                                                               (if prefix? FALSE TRUE))
+                                                               start-cleanup-timer?)
                        ;; Propagate the event further if press-key()
                        ;; returned #f.  Thus, you can move from page
                        ;; view to toolbar by Tab if the key is not
