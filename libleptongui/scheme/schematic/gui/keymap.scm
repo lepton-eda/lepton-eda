@@ -53,11 +53,10 @@
          (if (null-pointer? *event)
              FALSE
              ;; Create Scheme key value.
-             (let* ((keyval (schematic_keys_get_event_keyval *event))
-                    (mods (schematic_keys_get_event_modifiers *event))
-                    ;; Validate key value.
-                    (valid-key? (and (not (zero? (schematic_keys_verify_keyval keyval))))))
-               (if valid-key?
+             (let ((keyval (schematic_keys_get_event_keyval *event))
+                   (mods (schematic_keys_get_event_modifiers *event)))
+               ;; Validate key value.
+               (if (not (zero? (schematic_keys_verify_keyval keyval)))
                    (begin
                      ;; Update the status bar with the current key sequence.
                      (schematic_window_update_keyaccel_string *window keyval mods)
