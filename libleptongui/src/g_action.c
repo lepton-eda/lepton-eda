@@ -81,18 +81,21 @@ g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name)
  *
  * See also the (schematic action) Scheme module.
  *
- * \param snap         "Snap" returned coords to the grid.
- * \param x            Location to store x coordinate.
- * \param y            Location to store y coordinate.
+ * \param [in] w_current Active toplevel window structure.
+ * \param [in] snap      "Snap" returned coords to the grid.
+ * \param [in,out] x     Location to store x coordinate.
+ * \param [in,out] y     Location to store y coordinate.
  *
  * \return TRUE if current action position is set, FALSE otherwise.
  */
 gboolean
-g_action_get_position (gboolean snap, int *x, int *y)
+g_action_get_position (GschemToplevel *w_current,
+                       gboolean snap,
+                       int *x,
+                       int *y)
 {
   SCM s_action_position_proc;
   SCM s_point;
-  GschemToplevel *w_current = g_current_window ();
 
   g_assert (w_current);
 

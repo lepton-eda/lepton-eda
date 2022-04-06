@@ -463,7 +463,8 @@ i_callback_edit_copy (GtkWidget *widget, gpointer data)
 
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);
-    if (g_action_get_position (TRUE, &wx, &wy)) {
+    if (g_action_get_position (w_current, TRUE, &wx, &wy))
+    {
       o_copy_start(w_current, wx, wy);
     }
     i_set_state (w_current, COPYMODE);
@@ -487,7 +488,8 @@ i_callback_edit_mcopy (GtkWidget *widget, gpointer data)
 
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);
-    if (g_action_get_position (TRUE, &wx, &wy)) {
+    if (g_action_get_position (w_current, TRUE, &wx, &wy))
+    {
       o_copy_start(w_current, wx, wy);
     }
     i_set_state (w_current, MCOPYMODE);
@@ -511,7 +513,8 @@ i_callback_edit_move (GtkWidget *widget, gpointer data)
 
   if (o_select_return_first_object(w_current)) {
     o_redraw_cleanstates(w_current);
-    if (g_action_get_position (TRUE, &wx, &wy)) {
+    if (g_action_get_position (w_current, TRUE, &wx, &wy))
+    {
       o_move_start(w_current, wx, wy);
     }
     i_set_state (w_current, MOVEMODE);
@@ -638,7 +641,8 @@ i_callback_edit_rotate_90 (GtkWidget *widget, gpointer data)
     return;
   }
 
-  if (!g_action_get_position (TRUE, &wx, &wy)) {
+  if (!g_action_get_position (w_current, TRUE, &wx, &wy))
+  {
     i_set_state(w_current, ROTATEMODE);
     return;
   }
@@ -680,7 +684,8 @@ i_callback_edit_mirror (GtkWidget *widget, gpointer data)
     return;
   }
 
-  if (!g_action_get_position (TRUE, &wx, &wy)) {
+  if (!g_action_get_position (w_current, TRUE, &wx, &wy))
+  {
     i_set_state(w_current, MIRRORMODE);
     return;
   }
@@ -1128,7 +1133,8 @@ i_callback_view_zoom_box (GtkWidget *widget, gpointer data)
 
   i_set_state(w_current, ZOOMBOX);
 
-  if (g_action_get_position (FALSE, &wx, &wy)) {
+  if (g_action_get_position (w_current, FALSE, &wx, &wy))
+  {
     a_zoom_box_start(w_current, wx, wy);
   }
 }
@@ -1152,7 +1158,7 @@ i_callback_view_zoom_in (GtkWidget *widget, gpointer data)
   a_zoom (w_current,
           page_view,
           ZOOM_IN,
-          g_action_get_position (FALSE, NULL, NULL) ? HOTKEY : MENU);
+          g_action_get_position (w_current, FALSE, NULL, NULL) ? HOTKEY : MENU);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
@@ -1178,7 +1184,7 @@ i_callback_view_zoom_out (GtkWidget *widget, gpointer data)
   a_zoom(w_current,
          page_view,
          ZOOM_OUT,
-         g_action_get_position (FALSE, NULL, NULL) ? HOTKEY : MENU);
+         g_action_get_position (w_current, FALSE, NULL, NULL) ? HOTKEY : MENU);
 
   if (w_current->undo_panzoom) {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
@@ -1201,7 +1207,8 @@ i_callback_view_pan (GtkWidget *widget, gpointer data)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  if (!g_action_get_position (FALSE, &wx, &wy)) {
+  if (!g_action_get_position (w_current, FALSE, &wx, &wy))
+  {
     o_redraw_cleanstates (w_current);
     i_action_stop (w_current);
     i_set_state (w_current, PAN);
@@ -1661,7 +1668,7 @@ i_callback_clipboard_paste (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  g_action_get_position (TRUE, &wx, &wy);
+  g_action_get_position (w_current, TRUE, &wx, &wy);
 
   o_redraw_cleanstates(w_current);
   empty = o_buffer_paste_start (w_current, wx, wy, CLIPBOARD_BUFFER);
@@ -1728,7 +1735,7 @@ buffer_paste (gpointer data, int n)
 
   g_return_if_fail (w_current != NULL);
 
-  g_action_get_position (TRUE, &wx, &wy);
+  g_action_get_position (w_current, TRUE, &wx, &wy);
 
   empty = o_buffer_paste_start (w_current, wx, wy, n-1);
 
@@ -1790,7 +1797,7 @@ i_callback_add_attribute (GtkWidget *widget, gpointer data)
   g_return_if_fail (w_current != NULL);
 
   attrib_edit_dialog(w_current, NULL,
-                     g_action_get_position (TRUE, NULL, NULL) ? FROM_HOTKEY : FROM_MENU);
+                     g_action_get_position (w_current, TRUE, NULL, NULL) ? FROM_HOTKEY : FROM_MENU);
 
   i_set_state(w_current, SELECT);
 }
@@ -1812,7 +1819,8 @@ i_callback_add_net (GtkWidget *widget, gpointer data)
 
   i_set_state(w_current, NETMODE);
 
-  if (g_action_get_position (TRUE, &wx, &wy)) {
+  if (g_action_get_position (w_current, TRUE, &wx, &wy))
+  {
     o_net_reset(w_current);
     o_net_start(w_current, wx, wy);
   }
@@ -1855,7 +1863,8 @@ i_callback_add_bus (GtkWidget *widget, gpointer data)
 
   i_set_state(w_current, BUSMODE);
 
-  if (g_action_get_position (TRUE, &wx, &wy)) {
+  if (g_action_get_position (w_current, TRUE, &wx, &wy))
+  {
     o_bus_start(w_current, wx, wy);
   }
 }
@@ -1918,7 +1927,8 @@ i_callback_add_line (GtkWidget *widget, gpointer data)
 
   i_set_state(w_current, LINEMODE);
 
-  if (g_action_get_position (TRUE, &wx, &wy)) {
+  if (g_action_get_position (w_current, TRUE, &wx, &wy))
+  {
     o_line_start(w_current, wx, wy);
   }
 }
@@ -1957,7 +1967,8 @@ i_callback_add_box (GtkWidget *widget, gpointer data)
 
   i_set_state(w_current, BOXMODE);
 
-  if (g_action_get_position (TRUE, &wx, &wy)) {
+  if (g_action_get_position (w_current, TRUE, &wx, &wy))
+  {
     o_box_start(w_current, wx, wy);
   }
 }
@@ -2000,7 +2011,8 @@ i_callback_add_circle (GtkWidget *widget, gpointer data)
 
   i_set_state(w_current, CIRCLEMODE);
 
-  if (g_action_get_position (TRUE, &wx, &wy)) {
+  if (g_action_get_position (w_current, TRUE, &wx, &wy))
+  {
     o_circle_start(w_current, wx, wy);
   }
 }
@@ -2023,7 +2035,8 @@ i_callback_add_arc (GtkWidget *widget, gpointer data)
 
   i_set_state(w_current, ARCMODE);
 
-  if (g_action_get_position (TRUE, &wx, &wy)) {
+  if (g_action_get_position (w_current, TRUE, &wx, &wy))
+  {
     o_arc_start(w_current, wx, wy);
   }
 }
@@ -2046,7 +2059,8 @@ i_callback_add_pin (GtkWidget *widget, gpointer data)
 
   i_set_state (w_current, PINMODE);
 
-  if (g_action_get_position (TRUE, &wx, &wy)) {
+  if (g_action_get_position (w_current, TRUE, &wx, &wy))
+  {
     o_pin_start(w_current, wx, wy);
   }
 }

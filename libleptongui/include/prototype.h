@@ -12,7 +12,11 @@ void a_zoom_box_invalidate_rubber(GschemToplevel *w_current);
 void a_zoom_box_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
 /* g_action.c */
 gboolean g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name);
-gboolean g_action_get_position (gboolean snap, int *x, int *y);
+gboolean
+g_action_get_position (GschemToplevel *w_current,
+                       gboolean snap,
+                       int *x,
+                       int *y);
 
 /* g_hook.c */
 void g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *obj);
