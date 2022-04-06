@@ -19,6 +19,7 @@
 ;;
 
 (define-module (schematic window)
+  #:use-module (ice-9 format)
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
@@ -36,6 +37,17 @@
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
   #:replace (close-page!))
+
+
+;;; Define a wrapped pointer type.
+(define-wrapped-pointer-type <schematic-window>
+  schematic-window?
+  wrap-schematic-window
+  unwrap-schematic-window
+  ;; Printer.
+  (lambda (window port)
+    (format port "#<schematic-window-0x~x>"
+            (pointer-address (unwrap-schematic-window window)))))
 
 
 (define (current-window)
