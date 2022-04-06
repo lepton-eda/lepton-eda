@@ -29,7 +29,8 @@
 
   #:use-module (schematic ffi)
 
-  #:export (current-window
+  #:export (%lepton-window
+            current-window
             active-page
             set-active-page!
             pointer-position
@@ -39,6 +40,8 @@
   ;; module.
   #:replace (close-page!))
 
+
+(define %lepton-window (make-fluid))
 
 ;;; Define a wrapped pointer type.
 (define-wrapped-pointer-type <schematic-window>
@@ -55,7 +58,7 @@
   "Return the value of the toplevel window structure fluid in the
 current dynamic context.  Signals an error if there is no valid
 window fluid or the fluid value is NULL.  Never returns NULL."
-  (let ((window (fluid-ref (@@ (guile-user) %lepton-window))))
+  (let ((window (fluid-ref %lepton-window)))
 
     (when (null-pointer? window)
       (error (G_ "Found NULL lepton-schematic window.")))

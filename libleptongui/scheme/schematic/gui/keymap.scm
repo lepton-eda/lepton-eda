@@ -28,6 +28,7 @@
   #:use-module (schematic action)
   #:use-module (schematic ffi)
   #:use-module (schematic keymap)
+  #:use-module (schematic window)
 
   #:export (%global-keymap
             current-keymap
@@ -94,7 +95,7 @@
   ;; %lepton-window is defined in C code and is not visible at the
   ;; moment the module is compiled.  Use last resort to refer to
   ;; it.
-  (with-fluids (((@@ (guile-user) %lepton-window) *window))
+  (with-fluids ((%lepton-window *window))
     ;; We have to dynwind LeptonToplevel as well since there are
     ;; functions that depend on toplevel only and should know what
     ;; its current value is.

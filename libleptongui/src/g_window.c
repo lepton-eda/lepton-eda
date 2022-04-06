@@ -71,9 +71,8 @@ g_dynwind_window (GschemToplevel *w_current)
  * by main_prog().
  */
 void
-g_init_window ()
+g_init_window (SCM fluid)
 {
   /* Create fluid */
-  scheme_window_fluid = scm_permanent_object (scm_make_fluid ());
-  scm_c_define ("%lepton-window", scheme_window_fluid);
+  scheme_window_fluid = fluid;
 }

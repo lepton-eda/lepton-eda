@@ -32,7 +32,8 @@
              (schematic ffi)
              (schematic ffi gtk)
              (schematic gui keymap)
-             (schematic menu))
+             (schematic menu)
+             (schematic window))
 
 ;;; Initialize liblepton library.
 (liblepton_init)
@@ -61,7 +62,7 @@
   (set! %load-compiled-path (cons "@LEPTON_CCACHE_DIR@"
                                   %load-compiled-path)))
 (define (register-guile-funcs)
-  (g_init_window))
+  (g_init_window (scm->pointer %lepton-window)))
 
 (define (precompile-run)
   (let ((script (getenv "LEPTON_SCM_PRECOMPILE_SCRIPT")))

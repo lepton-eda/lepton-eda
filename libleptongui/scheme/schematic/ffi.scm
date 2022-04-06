@@ -184,7 +184,7 @@
 
 
 ;;; g_window.c
-(define-lff g_init_window void '())
+(define-lff g_init_window void '(*))
 
 (define-lff o_attrib_add_attrib '* (list '* '* int int '*))
 (define-lff o_buffer_init void '())
