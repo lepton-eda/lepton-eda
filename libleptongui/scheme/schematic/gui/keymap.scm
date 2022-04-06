@@ -22,6 +22,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
+  #:use-module (lepton log)
   #:use-module (lepton toplevel)
 
   #:use-module (schematic action)
@@ -62,7 +63,15 @@
                      (schematic_window_update_keyaccel_string *window
                                                               (string->pointer (key->display-string key)))
                      ;; Actually evaluate the key press.
-                     (let* ((retval (press-key key))
+                     (let* ((retval
+                             (catch #t
+                               (lambda () (press-key key))
+                               (lambda (k . a)
+                                 (log! 'message
+                                       "Could not eval key ~S: ~S ~S"
+                                       (key->display-string key)
+                                       k
+                                       a))))
                             ;; If the keystroke was not part of a
                             ;; key sequence prefix, start a timer
                             ;; to clear the status bar display.
