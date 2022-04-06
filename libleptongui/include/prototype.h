@@ -41,7 +41,6 @@ void
 schematic_keys_reset (GschemToplevel *w_current);
 
 /* g_window.c */
-GschemToplevel *g_current_window ();
 void g_dynwind_window (GschemToplevel *w_current);
 void g_init_window ();
 /* lepton-schematic.c */

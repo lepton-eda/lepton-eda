@@ -63,30 +63,6 @@ g_dynwind_window (GschemToplevel *w_current)
 }
 
 /*!
- * \brief Get the value of the #GschemToplevel fluid.
- * \par Function Description
- * Return the value of the #GschemToplevel fluid in the current dynamic
- * context.
- * Signals an error if there is no valid window fluid
- * or the fluid value is NULL.
- * Never returns NULL.
- */
-GschemToplevel *
-g_current_window ()
-{
-  SCM window_s = scm_fluid_ref (scheme_window_fluid);
-  GschemToplevel *w_current = (GschemToplevel *) scm_to_pointer (window_s);
-
-  if (w_current == NULL)
-  {
-    scm_misc_error (NULL, _("Found invalid lepton-schematic window SCM: ~S"),
-                    scm_list_1 (window_s));
-  }
-
-  return w_current;
-}
-
-/*!
  * \brief Initialise the GschemToplevel manipulation procedures.
  * \par Function Description
 

@@ -23,7 +23,6 @@
   #:use-module (lepton ffi lib)
 
   #:export (g_init_window
-            g_current_window
             generic_confirm_dialog
             generic_filesel_dialog
             generic_msg_dialog
@@ -186,7 +185,6 @@
 
 ;;; g_window.c
 (define-lff g_init_window void '())
-(define-lff g_current_window '* '())
 
 (define-lff o_attrib_add_attrib '* (list '* '* int int '*))
 (define-lff o_buffer_init void '())

@@ -24,6 +24,7 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
+  #:use-module (lepton log)
   #:use-module (lepton page foreign)
 
   #:use-module (schematic ffi)
@@ -52,8 +53,13 @@
 
 (define (current-window)
   "Return the value of the toplevel window structure fluid in the
-current dynamic context."
-  (g_current_window))
+current dynamic context.  Signals an error if there is no valid
+window fluid or the fluid value is NULL.  Never returns NULL."
+  (let ((window (fluid-ref (@@ (guile-user) %lepton-window))))
+
+    (when (null-pointer? window)
+      (error (G_ "Found NULL lepton-schematic window.")))
+    window))
 
 
 (define (active-page)
