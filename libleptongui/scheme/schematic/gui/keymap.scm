@@ -40,6 +40,11 @@
 ;;; Key event processing.
 
 (define (process-key-event *page_view *event *window)
+  (define (update-window-statusbar *window key)
+    (schematic_window_update_keyaccel_string
+     *window
+     (string->pointer (key->display-string key))))
+
   (define (protected-eval-key-press key)
     (catch #t
       (lambda () (press-key key))
@@ -72,8 +77,8 @@
                (begin
                  ;; Update the status bar with the current key
                  ;; sequence.
-                 (schematic_window_update_keyaccel_string *window
-                                                          (string->pointer (key->display-string key)))
+                 (update-window-statusbar *window key)
+
                  ;; Actually evaluate the key press.
                  (let* ((retval (protected-eval-key-press key))
                         ;; If the keystroke was not part of a key
