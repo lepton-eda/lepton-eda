@@ -40,6 +40,16 @@
 ;;; Key event processing.
 
 (define (process-key-event *page_view *event *window)
+  (define (protected-eval-key-press key)
+    (catch #t
+      (lambda () (press-key key))
+      (lambda (k . a)
+        (log! 'message
+              "Could not eval key ~S: ~S ~S"
+              (key->display-string key)
+              k
+              a))))
+
   ;; %lepton-window is defined in C code and is not visible at the
   ;; moment the module is compiled.  Use last resort to refer to
   ;; it.
@@ -63,15 +73,7 @@
                      (schematic_window_update_keyaccel_string *window
                                                               (string->pointer (key->display-string key)))
                      ;; Actually evaluate the key press.
-                     (let* ((retval
-                             (catch #t
-                               (lambda () (press-key key))
-                               (lambda (k . a)
-                                 (log! 'message
-                                       "Could not eval key ~S: ~S ~S"
-                                       (key->display-string key)
-                                       k
-                                       a))))
+                     (let* ((retval (protected-eval-key-press key))
                             ;; If the keystroke was not part of a
                             ;; key sequence prefix, start a timer
                             ;; to clear the status bar display.
