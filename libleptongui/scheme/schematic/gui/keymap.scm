@@ -39,7 +39,7 @@
 
 ;;; Key event processing.
 
-(define (process-key-event *page_view *event *window)
+(define (eval-press-key-event *event *page_view *window)
   (define (boolean->c-boolean x)
     (if x TRUE FALSE))
 
@@ -79,6 +79,17 @@
     ;; Return the key press result to process it further.
     key-press-result)
 
+  ;; Propagate the event further if press-key() returned #f.
+  ;; Thus, you can move from page view to toolbar by Tab if the
+  ;; key is not assigned in the global keymap.
+  (boolean->c-boolean
+   (let ((key (event->key (x_event_key *page_view *event *window))))
+     (and key
+          (update-keyaccel-timer *window
+                                 (protected-eval-key-press key))))))
+
+
+(define (process-key-event *page_view *event *window)
   ;; %lepton-window is defined in C code and is not visible at the
   ;; moment the module is compiled.  Use last resort to refer to
   ;; it.
@@ -88,15 +99,7 @@
     ;; its current value is.
     (%with-toplevel
      (pointer->geda-toplevel (gschem_toplevel_get_toplevel *window))
-     (lambda ()
-       ;; Propagate the event further if press-key() returned #f.
-       ;; Thus, you can move from page view to toolbar by Tab if
-       ;; the key is not assigned in the global keymap.
-       (boolean->c-boolean
-        (let ((key (event->key (x_event_key *page_view *event *window))))
-          (and key
-               (update-keyaccel-timer *window
-                                      (protected-eval-key-press key)))))))))
+     (lambda () (eval-press-key-event *event *page_view *window)))))
 
 (define *process-key-event
   (procedure->pointer int process-key-event '(* * *)))
