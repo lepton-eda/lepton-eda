@@ -50,6 +50,12 @@
               k
               a))))
 
+  ;; Validate event data and create a Scheme key record.
+  (define (event->key *event)
+    (and (not (null-pointer? *event))
+         (make-key (schematic_keys_get_event_keyval *event)
+                   (schematic_keys_get_event_modifiers *event))))
+
   ;; %lepton-window is defined in C code and is not visible at the
   ;; moment the module is compiled.  Use last resort to refer to
   ;; it.
@@ -61,34 +67,30 @@
      (pointer->geda-toplevel (gschem_toplevel_get_toplevel *window))
      (lambda ()
        (let ((*event (x_event_key *page_view *event *window)))
-         (if (null-pointer? *event)
-             FALSE
-             ;; Validate event data and create a Scheme key record.
-             (let ((key (make-key (schematic_keys_get_event_keyval *event)
-                                  (schematic_keys_get_event_modifiers *event))))
-               (if key
-                   (begin
-                     ;; Update the status bar with the current
-                     ;; key sequence.
-                     (schematic_window_update_keyaccel_string *window
-                                                              (string->pointer (key->display-string key)))
-                     ;; Actually evaluate the key press.
-                     (let* ((retval (protected-eval-key-press key))
-                            ;; If the keystroke was not part of a
-                            ;; key sequence prefix, start a timer
-                            ;; to clear the status bar display.
-                            (start-cleanup-timer?
-                             (if (eq? retval 'prefix) FALSE TRUE)))
+         (let ((key (event->key *event)))
+           (if key
+               (begin
+                 ;; Update the status bar with the current key
+                 ;; sequence.
+                 (schematic_window_update_keyaccel_string *window
+                                                          (string->pointer (key->display-string key)))
+                 ;; Actually evaluate the key press.
+                 (let* ((retval (protected-eval-key-press key))
+                        ;; If the keystroke was not part of a key
+                        ;; sequence prefix, start a timer to clear
+                        ;; the status bar display.
+                        (start-cleanup-timer?
+                         (if (eq? retval 'prefix) FALSE TRUE)))
 
-                       (schematic_window_update_keyaccel_timer *window
-                                                               start-cleanup-timer?)
-                       ;; Propagate the event further if press-key()
-                       ;; returned #f.  Thus, you can move from page
-                       ;; view to toolbar by Tab if the key is not
-                       ;; assigned in the global keymap.
-                       (if retval TRUE FALSE)))
-                   ;; Invalid key.
-                   FALSE))))))))
+                   (schematic_window_update_keyaccel_timer *window
+                                                           start-cleanup-timer?)
+                   ;; Propagate the event further if press-key()
+                   ;; returned #f.  Thus, you can move from page
+                   ;; view to toolbar by Tab if the key is not
+                   ;; assigned in the global keymap.
+                   (if retval TRUE FALSE)))
+               ;; Invalid key.
+               FALSE)))))))
 
 (define *process-key-event
   (procedure->pointer int process-key-event '(* * *)))
