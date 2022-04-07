@@ -43,14 +43,14 @@
   (define (boolean->c-boolean x)
     (if x TRUE FALSE))
 
-  (define (update-window-statusbar *window key)
+  (define (update-window-statusbar key)
     (schematic_window_update_keyaccel_string
      *window
      (string->pointer (key->display-string key))))
 
   (define (protected-eval-key-press key)
     ;; First update the status bar with the current key sequence.
-    (update-window-statusbar *window key)
+    (update-window-statusbar key)
     ;; Actually evaluate the key press.
     (catch #t
       (lambda () (press-key key))
