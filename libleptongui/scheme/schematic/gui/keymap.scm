@@ -67,6 +67,18 @@
          (make-key (schematic_keys_get_event_keyval *event)
                    (schematic_keys_get_event_modifiers *event))))
 
+  (define (key-prefix? x) (eq? x 'prefix))
+
+  ;; Stop any key accel update timer already running.  If the
+  ;; keystroke was not part of a key sequence prefix, start a new
+  ;; timer to clear the status bar display.
+  (define (update-keyaccel-timer *window key-press-result)
+    (schematic_window_update_keyaccel_timer
+     *window
+     (boolean->c-boolean (not (key-prefix? key-press-result))))
+    ;; Return the key press result to process it further.
+    key-press-result)
+
   ;; %lepton-window is defined in C code and is not visible at the
   ;; moment the module is compiled.  Use last resort to refer to
   ;; it.
@@ -80,15 +92,10 @@
        (let ((*event (x_event_key *page_view *event *window)))
          (let ((key (event->key *event)))
            (if key
-               (let* ((retval (protected-eval-key-press key))
-                      ;; If the keystroke was not part of a key
-                      ;; sequence prefix, start a timer to clear
-                      ;; the status bar display.
-                      (start-cleanup-timer?
-                       (boolean->c-boolean (not (eq? retval 'prefix)))))
+               (let ((retval
+                      (update-keyaccel-timer *window
+                                             (protected-eval-key-press key))))
 
-                 (schematic_window_update_keyaccel_timer *window
-                                                         start-cleanup-timer?)
                  ;; Propagate the event further if press-key()
                  ;; returned #f.  Thus, you can move from page
                  ;; view to toolbar by Tab if the key is not
