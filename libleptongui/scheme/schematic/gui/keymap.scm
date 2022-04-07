@@ -61,12 +61,6 @@
               k
               a))))
 
-  ;; Validate event data and create a Scheme key record.
-  (define (event->key *event)
-    (and (not (null-pointer? *event))
-         (make-key (schematic_keys_get_event_keyval *event)
-                   (schematic_keys_get_event_modifiers *event))))
-
   (define (key-prefix? x) (eq? x 'prefix))
 
   ;; Stop any key accel update timer already running.  If the
@@ -79,13 +73,21 @@
     ;; Return the key press result to process it further.
     key-press-result)
 
+  ;; Pre-process key event.
+  (define *key-event (x_event_key *page_view *event *window))
+
+  ;; Validate event data and create a Scheme key record.
+  (define key
+    (and (not (null-pointer? *key-event))
+         (make-key (schematic_keys_get_event_keyval *key-event)
+                   (schematic_keys_get_event_modifiers *key-event))))
+
   ;; Propagate the event further if press-key() returned #f.
   ;; Thus, you can move from page view to toolbar by Tab if the
   ;; key is not assigned in the global keymap.
   (boolean->c-boolean
-   (let ((key (event->key (x_event_key *page_view *event *window))))
-     (and key
-          (update-keyaccel-timer (protected-eval-key-press key))))))
+   (and key
+        (update-keyaccel-timer (protected-eval-key-press key)))))
 
 
 (define (process-key-event *page_view *event *window)
