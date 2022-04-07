@@ -72,7 +72,7 @@
   ;; Stop any key accel update timer already running.  If the
   ;; keystroke was not part of a key sequence prefix, start a new
   ;; timer to clear the status bar display.
-  (define (update-keyaccel-timer *window key-press-result)
+  (define (update-keyaccel-timer key-press-result)
     (schematic_window_update_keyaccel_timer
      *window
      (boolean->c-boolean (not (key-prefix? key-press-result))))
@@ -85,8 +85,7 @@
   (boolean->c-boolean
    (let ((key (event->key (x_event_key *page_view *event *window))))
      (and key
-          (update-keyaccel-timer *window
-                                 (protected-eval-key-press key))))))
+          (update-keyaccel-timer (protected-eval-key-press key))))))
 
 
 (define (process-key-event *page_view *event *window)
