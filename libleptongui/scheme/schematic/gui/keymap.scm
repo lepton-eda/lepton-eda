@@ -40,6 +40,9 @@
 ;;; Key event processing.
 
 (define (process-key-event *page_view *event *window)
+  (define (boolean->c-boolean x)
+    (if x TRUE FALSE))
+
   (define (update-window-statusbar *window key)
     (schematic_window_update_keyaccel_string
      *window
@@ -82,7 +85,7 @@
                       ;; sequence prefix, start a timer to clear
                       ;; the status bar display.
                       (start-cleanup-timer?
-                       (if (eq? retval 'prefix) FALSE TRUE)))
+                       (boolean->c-boolean (not (eq? retval 'prefix)))))
 
                  (schematic_window_update_keyaccel_timer *window
                                                          start-cleanup-timer?)
@@ -90,7 +93,7 @@
                  ;; returned #f.  Thus, you can move from page
                  ;; view to toolbar by Tab if the key is not
                  ;; assigned in the global keymap.
-                 (if retval TRUE FALSE))
+                 (boolean->c-boolean retval))
                ;; Invalid key.
                FALSE)))))))
 
