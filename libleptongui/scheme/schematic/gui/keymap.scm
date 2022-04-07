@@ -89,19 +89,14 @@
     (%with-toplevel
      (pointer->geda-toplevel (gschem_toplevel_get_toplevel *window))
      (lambda ()
-       (let ((key (event->key (x_event_key *page_view *event *window))))
-         (if key
-             (let ((retval
-                    (update-keyaccel-timer *window
-                                           (protected-eval-key-press key))))
-
-               ;; Propagate the event further if press-key()
-               ;; returned #f.  Thus, you can move from page
-               ;; view to toolbar by Tab if the key is not
-               ;; assigned in the global keymap.
-               (boolean->c-boolean retval))
-             ;; Invalid key.
-             FALSE))))))
+       ;; Propagate the event further if press-key() returned #f.
+       ;; Thus, you can move from page view to toolbar by Tab if
+       ;; the key is not assigned in the global keymap.
+       (boolean->c-boolean
+        (let ((key (event->key (x_event_key *page_view *event *window))))
+          (and key
+               (update-keyaccel-timer *window
+                                      (protected-eval-key-press key)))))))))
 
 (define *process-key-event
   (procedure->pointer int process-key-event '(* * *)))
