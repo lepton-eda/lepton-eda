@@ -41,6 +41,11 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   colors by rendering them applied to a checkered background
   pattern.
 
+- Previously, the export image GUI function in the GTK3 version of
+  the program produced images with wrong fonts as it utilized some
+  default font name.  Now it has been fixed so that it outputs the
+  fonts set up in the configuration files.
+
 
 Notable changes in Lepton EDA 1.9.17 (20211219)
 -----------------------------------------------
