@@ -23,9 +23,11 @@
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
+  #:use-module (lepton core gettext)
   #:use-module (lepton ffi)
   #:use-module (lepton log)
   #:use-module (lepton page foreign)
+  #:use-module (lepton toplevel)
 
   #:use-module (schematic ffi)
 
@@ -42,6 +44,12 @@
   #:replace (close-page!))
 
 
+;;; This is a fluid that is initialized with pointer to a new
+;;; lepton-schematic window when it is created.  Any Scheme
+;;; callback procedure called inside the window may use the value
+;;; of the fluid to reference its window, thus avoiding the need
+;;; of any additional arguments.  In any window, the fluid points
+;;; exactly to it.
 (define %lepton-window (make-fluid))
 
 ;;; Define a wrapped pointer type.
@@ -55,14 +63,21 @@
             (pointer-address (unwrap-schematic-window window)))))
 
 
+;;; Run THUNK in the dynamic context of *TOPLEVEL.
+(define (run-in-toplevel-context *toplevel thunk)
+  (%with-toplevel
+   (pointer->geda-toplevel *toplevel)
+   thunk))
+
+;;; Execute forms in the dynamic context of WINDOW and its
+;;; toplevel.
 (define-syntax-rule (with-window window form form* ...)
   (with-fluids ((%lepton-window window))
     ;; We have to dynwind LeptonToplevel here since there are
     ;; functions that depend on it and should know what its
     ;; current value is.
-    (%with-toplevel
-     (pointer->geda-toplevel (gschem_toplevel_get_toplevel window))
-     (lambda () form form* ...))))
+    (run-in-toplevel-context (gschem_toplevel_get_toplevel window)
+                             (lambda () form form* ...))))
 
 
 (define (current-window)

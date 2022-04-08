@@ -23,7 +23,6 @@
 
   #:use-module (lepton ffi)
   #:use-module (lepton log)
-  #:use-module (lepton toplevel)
 
   #:use-module (schematic action)
   #:use-module (schematic ffi)
