@@ -31,6 +31,7 @@
 
   #:export (%lepton-window
             current-window
+            with-window
             active-page
             set-active-page!
             pointer-position
@@ -52,6 +53,16 @@
   (lambda (window port)
     (format port "#<schematic-window-0x~x>"
             (pointer-address (unwrap-schematic-window window)))))
+
+
+(define-syntax-rule (with-window window form form* ...)
+  (with-fluids ((%lepton-window window))
+    ;; We have to dynwind LeptonToplevel here since there are
+    ;; functions that depend on it and should know what its
+    ;; current value is.
+    (%with-toplevel
+     (pointer->geda-toplevel (gschem_toplevel_get_toplevel window))
+     (lambda () form form* ...))))
 
 
 (define (current-window)

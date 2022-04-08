@@ -92,16 +92,8 @@
 
 
 (define (process-key-event *page_view *event *window)
-  ;; %lepton-window is defined in C code and is not visible at the
-  ;; moment the module is compiled.  Use last resort to refer to
-  ;; it.
-  (with-fluids ((%lepton-window *window))
-    ;; We have to dynwind LeptonToplevel as well since there are
-    ;; functions that depend on toplevel only and should know what
-    ;; its current value is.
-    (%with-toplevel
-     (pointer->geda-toplevel (gschem_toplevel_get_toplevel *window))
-     (lambda () (eval-press-key-event *event *page_view *window)))))
+  (with-window *window
+    (eval-press-key-event *event *page_view *window)))
 
 (define *process-key-event
   (procedure->pointer int process-key-event '(* * *)))
