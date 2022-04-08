@@ -5,6 +5,43 @@ This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
 
+Notable changes in Lepton EDA 1.9.18 (upcoming)
+-----------------------------------------------
+
+### General changes:
+
+- The minimal version of GTK3 has been bumped to 3.4.
+
+### Changes in `liblepton`:
+
+- Functions, used for exporting a current color map for later
+  including in Scheme RC scripts (typically, `gschemrc`), now
+  support output of translucent colors by adding alpha channel
+  values for colors that are not fully opaque.
+
+- Provisions have been added against potential memory leaks in
+  export functions in case they are called multiple times in
+  Scheme scripts, which also eliminated several build warnings.
+
+### Changes in `lepton-schematic`:
+
+- A new color chooser widget for the GTK3 version of the program
+  has been introduced.  Apart from stock functionality and a
+  combobox for color selection, as in the version for GTK2, it
+  has two buttons: *Apply* and *Toggle Editor*.  The former is
+  used to apply a selected color to immediately see the changes on
+  the canvas, and the latter is for toggling between palette
+  swatch view and color editor in the widget.
+
+- Both color chooser versions, for GTK2 and GTK3, now support
+  selecting and displaying translucent colors.
+
+- Color swatches for color selection in the color chooser widget
+  and various other widgets now display non-opaque, translucent
+  colors by rendering them applied to a checkered background
+  pattern.
+
+
 Notable changes in Lepton EDA 1.9.17 (20211219)
 -----------------------------------------------
 
