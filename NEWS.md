@@ -72,6 +72,14 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   default font name.  Now it has been fixed so that it outputs the
   fonts set up in the configuration files.
 
+- The hook `complex-place-list-changed-hook()` has been amended so
+  it now works with a list of objects instead of a single
+  component object.  The argument list usually includes an
+  inserted component and its toplevel (floating) attributes, so
+  the users can handle all them directly in their custom code.
+  The configuration example code for automatic relocation of
+  attributes around their component on insertion has been amended
+  according to the change.
 
 Notable changes in Lepton EDA 1.9.17 (20211219)
 -----------------------------------------------
