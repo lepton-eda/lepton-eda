@@ -17,6 +17,10 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   of compilation warnings when Lepton is compiled with the
   `--with-gtk3` option.
 
+- `lepton-symcheck` tests have been transformed into `srfi-64`
+  ones and included in the common integration test suite, thus
+  reducing the number of different Lepton test suites by one.
+
 ### Changes in `liblepton`:
 
 - Functions, used for exporting a current color map for later
