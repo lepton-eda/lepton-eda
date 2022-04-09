@@ -10,7 +10,7 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
 
 ### General changes:
 
-- The minimal version of GTK3 has been bumped to 3.4.
+- The minimal required version of GTK3 has been bumped to 3.22.
 
 - Several deprecated GTK3 functions related to GUI have been
   replaced with newer ones or removed, thus eliminating hundreds
