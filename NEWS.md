@@ -76,6 +76,15 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   default font name.  Now it has been fixed so that it outputs the
   fonts set up in the configuration files.
 
+- The following Scheme modules defined in C have been rewritten
+  using Scheme FFI and removed:
+  - `(schematic core attrib)`
+  - `(schematic core hook)`
+  - `(schematic core selection)`
+  - `(schematic core undo)`
+  - `(schematic core util)`
+  - `(schematic core window)`
+
 - The hook `complex-place-list-changed-hook()` has been amended so
   it now works with a list of objects instead of a single
   component object.  The argument list usually includes an
