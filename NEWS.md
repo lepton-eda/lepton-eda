@@ -85,6 +85,9 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   attributes around their component on insertion has been amended
   according to the change.
 
+- Three potential memory leaks related to the File selection
+  dialog code have been fixed.
+
 ### Changes in `lepton-attrib`:
 
 - Porting the program to the stable GTK version 3.24 has been
