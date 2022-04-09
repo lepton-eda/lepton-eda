@@ -24,6 +24,10 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
 - Fixed the issue with `make check` which failed if the command
   was launched after the tools were built in the C++ mode.
 
+- The vulnerable Glib function `g_memdup()` has been replaced with
+  `g_memdup2()` in the tools.  A workaround has been added for
+  Glib versions before 2.68 that do not support the latter.
+
 ### Changes in `liblepton`:
 
 - All so named `core` Scheme modules defined in C and their
