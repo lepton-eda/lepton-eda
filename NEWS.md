@@ -85,6 +85,12 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   attributes around their component on insertion has been amended
   according to the change.
 
+### Changes in `lepton-attrib`:
+
+- Porting the program to the stable GTK version 3.24 has been
+  completed.
+
+
 Notable changes in Lepton EDA 1.9.17 (20211219)
 -----------------------------------------------
 
