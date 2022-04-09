@@ -26,6 +26,20 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
 
 ### Changes in `liblepton`:
 
+- All so named `core` Scheme modules defined in C and their
+  functions have been reimplemented using Scheme foreign function
+  interface, thus making the library independent of Guile snarfing
+  and clearly separating C and Scheme interface as well as
+  allowing compilation of Scheme modules without applying several
+  special tricks as it used to be previously.  Some artifacts and
+  dependence on Guile library are still present on the C side of
+  `liblepton`. In spite of it, the Scheme modules that previously
+  were dependent on the `core` modules can now be simply compiled
+  with generic Guile compiler `guild`.
+
+- The functions that were previously available in the module
+  `(lepton core toplevel)` are now reside in `(lepton toplevel)`.
+
 - Functions, used for exporting a current color map for later
   including in Scheme RC scripts (typically, `gschemrc`), now
   support output of translucent colors by adding alpha channel
