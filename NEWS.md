@@ -21,6 +21,9 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   ones and included in the common integration test suite, thus
   reducing the number of different Lepton test suites by one.
 
+- Fixed the issue with `make check` which failed if the command
+  was launched after the tools were built in the C++ mode.
+
 ### Changes in `liblepton`:
 
 - Functions, used for exporting a current color map for later
