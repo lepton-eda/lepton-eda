@@ -1372,11 +1372,22 @@ update_rubber_band_label (GschemBottomWidget *widget, GParamSpec *pspec, gpointe
   g_return_if_fail (widget != NULL);
 
 #ifdef ENABLE_GTK3
-  GdkRGBA color;
-  gdk_rgba_parse (&color, widget->rubber_band_mode ? "green" : "blue");
-  gtk_widget_override_color (GTK_WIDGET (widget->rubber_band_label),
-                             GTK_STATE_FLAG_NORMAL,
-                             &color);
+  GtkCssProvider *provider = gtk_css_provider_new ();
+  GtkStyleContext *context = gtk_widget_get_style_context (widget->rubber_band_label);
+  if (widget->rubber_band_mode)
+  {
+    gtk_css_provider_load_from_data (provider,
+                                     "label { color: green; }", -1, NULL);
+  }
+  else
+  {
+    gtk_css_provider_load_from_data (provider,
+                                     "label { color: blue; }", -1, NULL);
+  }
+  gtk_style_context_add_provider (context,
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+  g_object_unref (provider);
 #else
   GdkColor color;
   gdk_color_parse (widget->rubber_band_mode ? "green" : "blue", &color);
