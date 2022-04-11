@@ -1415,11 +1415,22 @@ update_magnetic_net_label (GschemBottomWidget *widget, GParamSpec *pspec, gpoint
   g_return_if_fail (widget != NULL);
 
 #ifdef ENABLE_GTK3
-  GdkRGBA color;
-  gdk_rgba_parse (&color, widget->magnetic_net_mode ? "purple" : "darkgray");
-  gtk_widget_override_color (GTK_WIDGET (widget->magnetic_net_label),
-                             GTK_STATE_FLAG_NORMAL,
-                             &color);
+  GtkCssProvider *provider = gtk_css_provider_new ();
+  GtkStyleContext *context = gtk_widget_get_style_context (widget->magnetic_net_label);
+  if (widget->magnetic_net_mode)
+  {
+    gtk_css_provider_load_from_data (provider,
+                                     "label { color: purple; }", -1, NULL);
+  }
+  else
+  {
+    gtk_css_provider_load_from_data (provider,
+                                     "label { color: darkgray; }", -1, NULL);
+  }
+  gtk_style_context_add_provider (context,
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+  g_object_unref (provider);
 #else
   GdkColor color;
   gdk_color_parse (widget->magnetic_net_mode ? "purple" : "darkgray", &color);
