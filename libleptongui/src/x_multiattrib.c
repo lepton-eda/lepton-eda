@@ -3002,11 +3002,33 @@ multiattrib_update (Multiattrib *multiattrib)
   /* Work around GtkTextView's stubborn indifference
    * to GTK_STATE_INSENSITIVE when rendering its text. */
 #ifdef ENABLE_GTK3
-  gtk_widget_override_color (GTK_WIDGET (multiattrib->textview_value),
-                             GTK_STATE_FLAG_NORMAL,
-                             add_sensitive ?
-                             &multiattrib->value_normal_text_color :
-                             &multiattrib->insensitive_text_color);
+  GtkCssProvider *provider = gtk_css_provider_new ();
+  GtkStyleContext *context =
+    gtk_widget_get_style_context (GTK_WIDGET (multiattrib->textview_value));
+
+  const GdkRGBA vn = multiattrib->value_normal_text_color;
+  const GdkRGBA vi = multiattrib->insensitive_text_color;
+
+  char *color_normal = gdk_rgba_to_string (&vn);
+  char *color_insensitive = gdk_rgba_to_string (&vi);
+  char *data_normal = g_strdup_printf ("textview text { color: %s; }", color_normal);
+  char *data_insensitive = g_strdup_printf ("textview text { color: %s; }", color_insensitive);
+  if (add_sensitive)
+  {
+    gtk_css_provider_load_from_data (provider, data_normal, -1, NULL);
+  }
+  else
+  {
+    gtk_css_provider_load_from_data (provider, data_insensitive, -1, NULL);
+  }
+  gtk_style_context_add_provider (context,
+                                  GTK_STYLE_PROVIDER (provider),
+                                  GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
+  g_free (color_normal);
+  g_free (color_insensitive);
+  g_free (data_normal);
+  g_free (data_insensitive);
+  g_object_unref (provider);
 #else
   GtkStyle *style = gtk_widget_get_style (GTK_WIDGET (multiattrib->textview_value));
   gtk_widget_modify_text (GTK_WIDGET (multiattrib->textview_value),
