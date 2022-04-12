@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,4 +76,45 @@ void gschem_quit(void)
   {
     gtk_main_quit();
   }
+}
+
+#ifdef ENABLE_GTK3
+static GtkApplication *app = NULL;
+#endif
+
+gpointer
+lepton_schematic_app ()
+{
+#ifdef ENABLE_GTK3
+  return app;
+#else
+  return NULL;
+#endif
+}
+
+
+/*! \brief Start lepton-schematic.
+ *
+ * The function initializes the structures of the program and runs
+ * main gtk loop.
+ */
+int
+lepton_schematic_run (gpointer activate)
+{
+#ifdef ENABLE_GTK3
+  int status;
+
+  app = gtk_application_new ("com.github.lepton_eda.lepton_schematic",
+                             G_APPLICATION_FLAGS_NONE);
+
+  g_signal_connect (app, "activate", G_CALLBACK (activate), NULL);
+
+  status = g_application_run (G_APPLICATION (app), 0, NULL);
+  g_object_unref (app);
+  return status;
+#else
+  /* Run main GTK loop. */
+  gtk_main ();
+  return 0;
+#endif
 }

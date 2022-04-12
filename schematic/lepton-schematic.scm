@@ -25,6 +25,7 @@
              (lepton ffi)
              (lepton file-system)
              (lepton log)
+             (lepton m4)
              (lepton os)
              (lepton srfi-37)
              (lepton version)
@@ -236,16 +237,17 @@ Run `~A --help' for more information.\n")
   (map get-absolute-filename filename-list))
 
 ;;; Creates a new window in lepton-schematic.
-(define (make-schematic-window)
+(define (make-schematic-window app)
   (define new-window (x_window_setup (x_window_new)))
 
-  (x_window_create_main new-window
+  (x_window_create_main app
+                        new-window
                         (make-main-menu new-window)
                         *process-key-event))
 
-(define (main file-list)
+(define (main app file-list)
   ;; Create a new window and associated LeptonToplevel object.
-  (define window (make-schematic-window))
+  (define window (make-schematic-window app))
   ;; Current directory.
   (define cwd (getcwd))
 
@@ -313,13 +315,18 @@ Run `~A --help' for more information.\n")
 ;;; Init libstroke.
 (x_stroke_init)
 
-(let* ((schematics (parse-commandline))
-       ;; Foreign pointer to w_current.
-       (window (main schematics)))
+(define (activate app user-data)
+  (let* ((schematics (parse-commandline))
+         ;; Foreign pointer to w_current.
+         (window (main app schematics)))
 
-  ;; Evaluate post load expression in the dynamic context of the
-  ;; new window.
-  (with-window window (eval-post-load-expr!)))
+    ;; Evaluate post load expression in the dynamic context of the
+    ;; new window.
+    (with-window window (eval-post-load-expr!))))
 
 ;;; Run main GTK loop.
-(gtk_main)
+(if %m4-use-gtk3
+    (lepton_schematic_run (procedure->pointer void activate '(* *)))
+    (begin
+      (activate %null-pointer %null-pointer)
+      (lepton_schematic_run %null-pointer)))

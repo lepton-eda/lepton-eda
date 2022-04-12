@@ -21,7 +21,6 @@
   #:use-module (lepton ffi)
 
   #:export (gtk_init
-            gtk_main
             gtk_accelerator_parse
             gtk_accelerator_name
             gtk_accelerator_get_label
@@ -52,12 +51,6 @@
    void
    (dynamic-func "gtk_init" libgtk)
    (list '* '*)))
-
-(define gtk_main
-  (pointer->procedure
-   void
-   (dynamic-func "gtk_main" libgtk)
-   '()))
 
 (define (gtk_rc_parse filename)
   (define proc
