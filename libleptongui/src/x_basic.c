@@ -41,8 +41,8 @@ void x_basic_warp_cursor (GtkWidget* widget, gint x, gint y)
   display = gdk_screen_get_display (screen);
 
 #ifdef ENABLE_GTK3
-  GdkDeviceManager *device_manager = gdk_display_get_device_manager (display);
-  GdkDevice *pointer = gdk_device_manager_get_client_pointer (device_manager);
+  GdkSeat *seat = gdk_display_get_default_seat (display);
+  GdkDevice *pointer = gdk_seat_get_pointer (seat);
   gdk_device_warp (pointer, screen, window_x + x, window_y + y);
 #else
   gdk_display_warp_pointer (display, screen, window_x + x, window_y + y);
