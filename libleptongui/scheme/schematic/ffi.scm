@@ -22,7 +22,9 @@
 
   #:use-module (lepton ffi lib)
 
-  #:export (g_init_window
+  #:export (lepton_schematic_run
+            lepton_schematic_app
+            g_init_window
             generic_confirm_dialog
             generic_filesel_dialog
             generic_msg_dialog
@@ -184,6 +186,9 @@
                            args))))
          (force proc))))))
 
+;;; lepton_schematic.c
+(define-lff lepton_schematic_run int '(*))
+(define-lff lepton_schematic_app '* '())
 
 ;;; g_window.c
 (define-lff g_init_window void '(*))
@@ -228,7 +233,7 @@
 (define-lff x_window_open_page '* '(* *))
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup '* '(*))
-(define-lff x_window_create_main '* '(* * *))
+(define-lff x_window_create_main '* '(* * * *))
 (define-lff x_window_close_page void '(* *))
 
 ;;; x_dialog.c

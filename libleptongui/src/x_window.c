@@ -445,7 +445,8 @@ x_window_translate_response (GschemTranslateWidget *widget, gint response, Gsche
  *
  */
 GschemToplevel*
-x_window_create_main (GschemToplevel *w_current,
+x_window_create_main (gpointer app,
+                      GschemToplevel *w_current,
                       GtkWidget *menubar,
                       gpointer key_event_callback)
 {
@@ -455,7 +456,11 @@ x_window_create_main (GschemToplevel *w_current,
   GtkWidget *work_box = NULL;
   GtkWidget *scrolled = NULL;
 
+#ifdef ENABLE_GTK3
+  w_current->main_window = gtk_application_window_new (GTK_APPLICATION (app));
+#else
   w_current->main_window = GTK_WIDGET (gschem_main_window_new ());
+#endif
 
   gtk_widget_set_name (w_current->main_window, "lepton-schematic");
   gtk_window_set_resizable (GTK_WINDOW (w_current->main_window), TRUE);
