@@ -678,7 +678,41 @@ command_entry_set_font (GtkWidget* entry)
     PangoFontDescription* fdesc = pango_font_description_from_string (font);
 
 #ifdef ENABLE_GTK3
-    gtk_widget_override_font (entry, fdesc);
+    GtkCssProvider *provider = gtk_css_provider_new ();
+    GtkStyleContext *context =
+      gtk_widget_get_style_context (GTK_WIDGET (entry));
+
+    const char *pango_style;
+    switch (pango_font_description_get_style (fdesc))
+    {
+    case PANGO_STYLE_NORMAL: pango_style="normal"; break;
+    case PANGO_STYLE_OBLIQUE: pango_style="oblique"; break;
+    case PANGO_STYLE_ITALIC: pango_style="italic"; break;
+    default: g_assert_not_reached();
+    }
+
+    int pango_font_size = pango_font_description_get_size (fdesc) / PANGO_SCALE;
+    if (pango_font_size == 0) pango_font_size = 12;
+
+    char *entry_font =
+      g_strdup_printf ("entry {"
+                       "  font-family: %s;"
+                       "  font-size: %dpx;"
+                       "  font-style: %s;"
+                       "  font-weight: %d;"
+                       "}",
+                       pango_font_description_get_family (fdesc),
+                       pango_font_size,
+                       pango_style,
+                       pango_font_description_get_weight (fdesc));
+
+    gtk_css_provider_load_from_data (provider, entry_font, -1, NULL);
+
+    gtk_style_context_add_provider (context,
+                                    GTK_STYLE_PROVIDER (provider),
+                                    GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+    g_free (entry_font);
+    g_object_unref (provider);
 #else
     gtk_widget_modify_font (entry, fdesc);
 #endif
