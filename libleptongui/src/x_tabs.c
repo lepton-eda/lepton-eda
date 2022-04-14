@@ -281,15 +281,16 @@ x_tabs_menu_create_item_separ (GtkWidget* menu);
 
 #ifdef ENABLE_GTK3
 static void
-x_tabs_menu_item_on_activate (GSimpleAction* action,
-                              GVariant *parameter,
-                              gpointer data);
+x_tabs_menu_action_on_activate (GSimpleAction* action,
+                                GVariant *parameter,
+                                gpointer data);
 static void
-x_tabs_menu_item_on_activate_action (GtkMenuItem *item,
-                                     gpointer data);
+x_tabs_menu_item_on_activate (GtkMenuItem *item,
+                              gpointer data);
 #else /* GTK2 */
 static void
-x_tabs_menu_item_on_activate (GtkAction* action, gpointer data);
+x_tabs_menu_action_on_activate (GtkAction* action,
+                                gpointer data);
 #endif
 
 
@@ -1746,9 +1747,9 @@ x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
  */
 #ifdef ENABLE_GTK3
 static void
-x_tabs_menu_item_on_activate (GSimpleAction* action,
-                              GVariant *parameter,
-                              gpointer data)
+x_tabs_menu_action_on_activate (GSimpleAction* action,
+                                GVariant *parameter,
+                                gpointer data)
 {
   GschemToplevel* toplevel    = (GschemToplevel*) data;
   const gchar*    action_name = g_action_get_name (G_ACTION (action));
@@ -1757,8 +1758,8 @@ x_tabs_menu_item_on_activate (GSimpleAction* action,
 }
 
 static void
-x_tabs_menu_item_on_activate_action (GtkMenuItem *item,
-                                     gpointer data)
+x_tabs_menu_item_on_activate (GtkMenuItem *item,
+                              gpointer data)
 {
   g_signal_emit_by_name (G_ACTION (data), "activate");
 }
@@ -1766,7 +1767,8 @@ x_tabs_menu_item_on_activate_action (GtkMenuItem *item,
 #else /* GTK2 */
 
 static void
-x_tabs_menu_item_on_activate (GtkAction* action, gpointer data)
+x_tabs_menu_action_on_activate (GtkAction* action,
+                                gpointer data)
 {
   GschemToplevel* toplevel    = (GschemToplevel*) data;
   const gchar*    action_name = gtk_action_get_name (action);
@@ -1804,7 +1806,7 @@ x_tabs_menu_create_item (GschemToplevel* toplevel,
 
   g_signal_connect (item,
                     "activate",
-                    G_CALLBACK (&x_tabs_menu_item_on_activate_action),
+                    G_CALLBACK (&x_tabs_menu_item_on_activate),
                     action);
 #else /* GTK2 */
 
@@ -1821,7 +1823,7 @@ x_tabs_menu_create_item (GschemToplevel* toplevel,
 
   g_signal_connect (action,
                     "activate",
-                    G_CALLBACK (&x_tabs_menu_item_on_activate),
+                    G_CALLBACK (&x_tabs_menu_action_on_activate),
                     toplevel);
 
 } /* x_tabs_menu_create_item() */
