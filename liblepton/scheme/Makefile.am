@@ -237,7 +237,7 @@ GOBJECTS = $(SOURCES:%.scm=%.go)
 
 SUFFIXES = .scm .go
 .scm.go:
-	$(GUILD) compile \
+	$(AM_V_GEN) $(GUILD) compile \
 	-L . \
 	-L $(abs_top_srcdir)/liblepton/scheme \
 	-L $(abs_top_builddir)/liblepton/scheme \
