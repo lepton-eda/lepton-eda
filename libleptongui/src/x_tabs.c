@@ -278,8 +278,19 @@ x_tabs_menu_create_item (GschemToplevel* toplevel,
                          const gchar*    icon_name);
 static void
 x_tabs_menu_create_item_separ (GtkWidget* menu);
+
+#ifdef ENABLE_GTK3
+static void
+x_tabs_menu_item_on_activate (GSimpleAction* action,
+                              GVariant *parameter,
+                              gpointer data);
+static void
+x_tabs_menu_item_on_activate_action (GtkMenuItem *item,
+                                     gpointer data);
+#else /* GTK2 */
 static void
 x_tabs_menu_item_on_activate (GtkAction* action, gpointer data);
+#endif
 
 
 
@@ -1733,6 +1744,27 @@ x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data)
 
 /*! \brief "activate" signal handler for context menu item action.
  */
+#ifdef ENABLE_GTK3
+static void
+x_tabs_menu_item_on_activate (GSimpleAction* action,
+                              GVariant *parameter,
+                              gpointer data)
+{
+  GschemToplevel* toplevel    = (GschemToplevel*) data;
+  const gchar*    action_name = g_action_get_name (G_ACTION (action));
+
+  g_action_eval_by_name (toplevel, action_name);
+}
+
+static void
+x_tabs_menu_item_on_activate_action (GtkMenuItem *item,
+                                     gpointer data)
+{
+  g_signal_emit_by_name (G_ACTION (data), "activate");
+}
+
+#else /* GTK2 */
+
 static void
 x_tabs_menu_item_on_activate (GtkAction* action, gpointer data)
 {
@@ -1741,6 +1773,7 @@ x_tabs_menu_item_on_activate (GtkAction* action, gpointer data)
 
   g_action_eval_by_name (toplevel, action_name);
 }
+#endif
 
 
 
@@ -1764,17 +1797,26 @@ x_tabs_menu_create_item (GschemToplevel* toplevel,
                          const gchar*    action_label,
                          const gchar*    icon_name)
 {
+#ifdef ENABLE_GTK3
+  GSimpleAction* action = g_simple_action_new (action_name, NULL);
+
+  GtkWidget* item = gtk_menu_item_new_with_mnemonic (action_label);
+
+  g_signal_connect (item,
+                    "activate",
+                    G_CALLBACK (&x_tabs_menu_item_on_activate_action),
+                    action);
+#else /* GTK2 */
+
   GschemAction* action = gschem_action_new (action_name,  /* name */
                                             action_label, /* label */
                                             NULL,         /* tooltip */
-#ifdef ENABLE_GTK3
-                                            icon_name,    /* icon_name */
-#else /* GTK2 */
                                             icon_name,    /* stock_id */
-#endif
                                             NULL);        /* multikey_accel */
 
   GtkWidget* item = gtk_action_create_menu_item (GTK_ACTION (action));
+#endif
+
   gtk_menu_shell_append (GTK_MENU_SHELL (menu), item);
 
   g_signal_connect (action,
