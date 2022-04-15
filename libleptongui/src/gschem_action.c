@@ -23,6 +23,7 @@
 #include "gschem.h"
 
 
+#ifndef ENABLE_GTK3
 enum {
   PROP_MULTIKEY_ACCEL = 1,
 };
@@ -195,11 +196,7 @@ static void gschem_action_class_init (GschemActionClass *klass)
 GschemAction *gschem_action_new (const gchar *name,
                                  const gchar *label,
                                  const gchar *tooltip,
-#ifdef ENABLE_GTK3
-                                 const gchar *icon_name,
-#else /* GTK2 */
                                  const gchar *stock_id,
-#endif
                                  const gchar *multikey_accel)
 {
   g_return_val_if_fail (name != NULL, NULL);
@@ -208,11 +205,8 @@ GschemAction *gschem_action_new (const gchar *name,
                                       "name", name,
                                       "label", label,
                                       "tooltip", tooltip,
-#ifdef ENABLE_GTK3
-                                      "icon-name", icon_name,
-#else /* GTK2 */
                                       "stock-id", stock_id,
-#endif
                                       "multikey-accel", multikey_accel,
                                       NULL));
 }
+#endif

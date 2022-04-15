@@ -150,6 +150,8 @@
             schematic_keys_get_event_modifiers
             schematic_keys_verify_keyval
 
+            lepton_action_create_menu_item
+
             gschem_page_view_get_page
 
             gschem_toplevel_get_current_page_view
@@ -219,6 +221,8 @@
 (define-lff make_separator_menu_item '* '())
 (define-lff make_menu_action '* '(* * * * *))
 (define-lff x_menu_attach_recent_files_submenu void '(* *))
+(define-lff lepton_action_create_menu_item '* '(* *))
+
 ;;; x_window.c
 (define-lff x_window_new '* '())
 (define-lff x_window_open_page '* '(* *))

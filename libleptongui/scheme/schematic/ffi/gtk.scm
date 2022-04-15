@@ -34,7 +34,6 @@
             gtk_widget_show
             gtk_menu_new
             gtk_menu_bar_new
-            gtk_action_create_menu_item
             gtk_menu_item_set_submenu
             gtk_menu_shell_append))
 
@@ -107,6 +106,5 @@
 (define-lff gtk_tearoff_menu_item_new '* '())
 (define-lff gtk_menu_new '* '())
 (define-lff gtk_menu_bar_new '* '())
-(define-lff gtk_action_create_menu_item '* '(*))
 (define-lff gtk_menu_item_set_submenu void '(* *))
 (define-lff gtk_menu_shell_append void '(* *))

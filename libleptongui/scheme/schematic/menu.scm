@@ -1,6 +1,6 @@
 ;;; Lepton EDA Schematic Capture
 ;;; Scheme API
-;;; Copyright (C) 2020 Lepton EDA Contributors
+;;; Copyright (C) 2020-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -65,8 +65,7 @@
                                          (string->pointer menu-item-keys)
                                          menu-item-stock
                                          window))
-               (menu-item (gtk_action_create_menu_item action)))
-
+               (menu-item (lepton_action_create_menu_item action (string->pointer name))))
           (g_object_set_data menu-bar action-name action)
           menu-item)))
 
