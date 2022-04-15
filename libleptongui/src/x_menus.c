@@ -70,12 +70,26 @@ static struct PopupEntry popup_items[] =
 
 /*! \brief Callback function for menu items. Execute action \a action.
  */
+#ifdef ENABLE_GTK3
+static void
+g_menu_execute (GSimpleAction* action,
+                GVariant *parameter,
+                gpointer user_data)
+{
+  const gchar *action_name = g_action_get_name (G_ACTION (action));
+  GschemToplevel *w_current = (GschemToplevel *) user_data;
+
+  g_action_eval_by_name (w_current, action_name);
+}
+
+#else
 static void g_menu_execute(GtkAction *action, gpointer user_data)
 {
   const gchar *action_name = gtk_action_get_name (action);
   GschemToplevel *w_current = (GschemToplevel *) user_data;
   g_action_eval_by_name (w_current, action_name);
 }
+#endif
 
 
 GtkWidget*
@@ -89,7 +103,11 @@ make_separator_menu_item ()
 }
 
 
+#ifdef ENABLE_GTK3
+GSimpleAction*
+#else
 GschemAction*
+#endif
 make_menu_action (const char *action_name,
                   const char *menu_item_name,
                   const char *menu_item_keys,
@@ -99,6 +117,13 @@ make_menu_action (const char *action_name,
 #ifndef ENABLE_GTK3
   GtkStockItem stock_info;
 #endif
+
+#ifdef ENABLE_GTK3
+  GSimpleAction* action = g_simple_action_new (action_name, NULL);
+
+  /* Look up icon in the icon theme. */
+//  gtk_action_set_icon_name (GTK_ACTION (action), menu_item_stock);
+#else /* GTK2 */
   GschemAction *action =
     GSCHEM_ACTION (g_object_new (GSCHEM_TYPE_ACTION,
                                  "name", action_name,
@@ -106,11 +131,6 @@ make_menu_action (const char *action_name,
                                  "tooltip", menu_item_name,
                                  "multikey-accel", menu_item_keys,
                                  NULL));
-
-#ifdef ENABLE_GTK3
-  /* Look up icon in the icon theme. */
-  gtk_action_set_icon_name (GTK_ACTION (action), menu_item_stock);
-#else /* GTK2 */
   /* If stock name corresponds to a GTK stock item, then use it.
    * Otherwise, look it up in the icon theme. */
   if (menu_item_stock != NULL &&
@@ -132,6 +152,37 @@ make_menu_action (const char *action_name,
   return action;
 }
 
+#ifdef ENABLE_GTK3
+static void
+on_menu_item_activate (GtkMenuItem *item,
+                       gpointer data)
+{
+  g_signal_emit_by_name (G_ACTION (data), "activate");
+}
+
+
+GtkWidget*
+lepton_action_create_menu_item (GSimpleAction* action,
+                                gchar *label)
+{
+  GtkWidget *item = gtk_menu_item_new_with_mnemonic (label);
+
+  g_signal_connect (item,
+                    "activate",
+                    G_CALLBACK (&on_menu_item_activate),
+                    action);
+  return item;
+}
+
+#else
+GtkWidget*
+lepton_action_create_menu_item (GtkAction *action,
+                                gpointer data)
+{
+  return gtk_action_create_menu_item (GTK_ACTION (action));
+}
+#endif
+
 
 /*! \brief Create and return the popup menu widget.
  *
@@ -144,7 +195,6 @@ make_menu_action (const char *action_name,
 GtkWidget*
 get_main_popup (GschemToplevel* w_current)
 {
-  GschemAction *action;
   GtkWidget *menu_item;
   GtkWidget *menu;
   int i;
@@ -162,22 +212,35 @@ get_main_popup (GschemToplevel* w_current)
       continue;
     }
 
+#ifdef ENABLE_GTK3
+    GSimpleAction* action = g_simple_action_new (e.action, NULL);
+    menu_item = gtk_menu_item_new_with_mnemonic (gettext (e.name));
+
+    g_signal_connect (menu_item,
+                      "activate",
+                      G_CALLBACK (&on_menu_item_activate),
+                      action);
+
+    g_signal_connect (action,
+                      "activate",
+                      G_CALLBACK (g_menu_execute),
+                      w_current);
+#else /* GTK2 */
+    GschemAction *action;
     /* Don't bother showing keybindings in the popup menu */
     action = make_menu_action (e.action,
                                gettext (e.name),
                                NULL,
-#ifdef ENABLE_GTK3
-                               e.icon_name,
-#else /* GTK2 */
                                e.stock_id,
-#endif
                                w_current);
-
     menu_item = gtk_action_create_menu_item (GTK_ACTION (action));
+#endif
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 
     g_object_set_data (G_OBJECT (menu), e.action, action);
   }
+
+  gtk_widget_show_all (menu);
 
   return menu;
 }
@@ -223,7 +286,9 @@ x_menus_sensitivity (GtkWidget*   menu,
   GschemAction* action = (GschemAction*) data;
   if (action != NULL)
   {
+#ifndef ENABLE_GTK3
     gtk_action_set_sensitive (GTK_ACTION (action), sensitive);
+#endif
   }
   else
   {

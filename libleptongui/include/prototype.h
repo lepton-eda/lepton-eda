@@ -584,12 +584,25 @@ gint do_popup(GschemToplevel *w_current, GdkEventButton *event);
 void x_menus_sensitivity (GtkWidget* menu, const gchar* action_name, gboolean sensitive);
 GtkWidget*
 make_separator_menu_item ();
+#ifdef ENABLE_GTK3
+GSimpleAction*
+#else
 GschemAction*
+#endif
 make_menu_action (const char *action_name,
                   const char *menu_item_name,
                   const char *menu_item_keys,
                   const char *menu_item_stock,
                   GschemToplevel *w_current);
+#ifdef ENABLE_GTK3
+GtkWidget*
+lepton_action_create_menu_item (GSimpleAction* action,
+                                gchar *label);
+#else
+GtkWidget*
+lepton_action_create_menu_item (GtkAction *action,
+                                gpointer data);
+#endif
 void
 x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
                                     GtkWidget*      menuitem);
