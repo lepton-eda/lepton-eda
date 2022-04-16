@@ -227,7 +227,7 @@
 (define-lff make_separator_menu_item '* '())
 (define-lff make_menu_action '* '(* * * * *))
 (define-lff x_menu_attach_recent_files_submenu void '(* *))
-(define-lff lepton_action_create_menu_item '* '(* *))
+(define-lff lepton_action_create_menu_item '* '(* * *))
 (define-lff lepton_menu_set_action_data void '(* * * *))
 
 ;;; x_window.c

@@ -163,7 +163,8 @@ on_menu_item_activate (GtkMenuItem *item,
 
 GtkWidget*
 lepton_action_create_menu_item (GSimpleAction* action,
-                                gchar *label)
+                                gchar *label,
+                                gchar *shortcut)
 {
   GtkWidget *item = gtk_menu_item_new_with_mnemonic (label);
 
@@ -171,13 +172,37 @@ lepton_action_create_menu_item (GSimpleAction* action,
                     "activate",
                     G_CALLBACK (&on_menu_item_activate),
                     action);
+
+  GtkWidget *item_label = gtk_bin_get_child (GTK_BIN (item));
+
+  /* make sure item_label is a GschemAccelLabel */
+  if (item_label && !GSCHEM_IS_ACCEL_LABEL (item_label)) {
+    gtk_container_remove (GTK_CONTAINER (item), item_label);
+    item_label = NULL;
+  }
+
+  if (item_label == NULL) {
+    /* char *label_string; */
+    /* g_object_get (action, "label", &label_string, NULL); */
+    g_object_new (GSCHEM_TYPE_ACCEL_LABEL,
+                  "use-underline", TRUE,
+                  "xalign", 0.0,
+                  "visible", TRUE,
+                  "parent", item,
+                  "label", label,
+                  "accel-string", shortcut,
+                  NULL);
+    /* g_free (label_string); */
+  }
+
   return item;
 }
 
 #else
 GtkWidget*
 lepton_action_create_menu_item (GtkAction *action,
-                                gpointer data)
+                                gpointer data1,
+                                gpointer data2)
 {
   return gtk_action_create_menu_item (GTK_ACTION (action));
 }
@@ -228,7 +253,7 @@ get_main_popup (GschemToplevel* w_current)
 
 #ifdef ENABLE_GTK3
     GSimpleAction* action = g_simple_action_new (e.action, NULL);
-    menu_item = gtk_menu_item_new_with_mnemonic (gettext (e.name));
+    menu_item = lepton_action_create_menu_item (action, gettext (e.name), NULL);
 
     g_signal_connect (menu_item,
                       "activate",

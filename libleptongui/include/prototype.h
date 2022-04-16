@@ -604,11 +604,13 @@ make_menu_action (const char *action_name,
 #ifdef ENABLE_GTK3
 GtkWidget*
 lepton_action_create_menu_item (GSimpleAction* action,
-                                gchar *label);
+                                char *label,
+                                char *shortcut);
 #else
 GtkWidget*
 lepton_action_create_menu_item (GtkAction *action,
-                                gpointer data);
+                                gpointer data1,
+                                gpointer data2);
 #endif
 void
 lepton_menu_set_action_data (GtkWidget *menu,
