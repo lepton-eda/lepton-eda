@@ -611,6 +611,11 @@ lepton_action_create_menu_item (GtkAction *action,
                                 gpointer data);
 #endif
 void
+lepton_menu_set_action_data (GtkWidget *menu,
+                             const char *action_name,
+                             GtkWidget *menu_item,
+                             gpointer action);
+void
 x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
                                     GtkWidget*      menuitem);
 /* x_multiattrib.c */

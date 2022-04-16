@@ -184,6 +184,20 @@ lepton_action_create_menu_item (GtkAction *action,
 #endif
 
 
+void
+lepton_menu_set_action_data (GtkWidget *menu,
+                             const char *action_name,
+                             GtkWidget *menu_item,
+                             gpointer data)
+{
+#ifdef ENABLE_GTK3
+      g_object_set_data (G_OBJECT (menu), action_name, menu_item);
+#else
+      g_object_set_data (G_OBJECT (menu), action_name, GTK_ACTION (data));
+#endif
+}
+
+
 /*! \brief Create and return the popup menu widget.
  *
  *  \par Function Description
@@ -237,7 +251,7 @@ get_main_popup (GschemToplevel* w_current)
 #endif
     gtk_menu_shell_append (GTK_MENU_SHELL (menu), menu_item);
 
-    g_object_set_data (G_OBJECT (menu), e.action, action);
+    lepton_menu_set_action_data (menu, e.action, menu_item, action);
   }
 
   gtk_widget_show_all (menu);
@@ -280,20 +294,38 @@ x_menus_sensitivity (GtkWidget*   menu,
                      const gchar* action_name,
                      gboolean     sensitive)
 {
+#ifdef ENABLE_GTK3
+  GtkWindow *win = gtk_application_get_active_window (GTK_APPLICATION (g_application_get_default ()));
+  GAction *action = g_action_map_lookup_action (G_ACTION_MAP (win), action_name);
+
+  GObject* obj = G_OBJECT (menu);
+  gpointer data = g_object_get_data (obj, action_name);
+  GtkWidget *menu_item = GTK_WIDGET (data);
+  gtk_widget_set_sensitive (menu_item, sensitive);
+
+  if (action != NULL)
+  {
+    g_simple_action_set_enabled (G_SIMPLE_ACTION (action), sensitive);
+  }
+  else
+  {
+    g_debug ("x_menus_sensitivity(): cannot find action [%s]", action_name);
+  }
+
+#else
   GObject* obj = G_OBJECT (menu);
   gpointer data = g_object_get_data (obj, action_name);
 
   GschemAction* action = (GschemAction*) data;
   if (action != NULL)
   {
-#ifndef ENABLE_GTK3
     gtk_action_set_sensitive (GTK_ACTION (action), sensitive);
-#endif
   }
   else
   {
     g_debug ("x_menus_sensitivity(): cannot find action [%s]", action_name);
   }
+#endif
 }
 
 /*! \brief Callback for recent-chooser.

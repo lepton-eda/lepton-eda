@@ -153,6 +153,7 @@
             schematic_keys_verify_keyval
 
             lepton_action_create_menu_item
+            lepton_menu_set_action_data
 
             gschem_page_view_get_page
 
@@ -227,6 +228,7 @@
 (define-lff make_menu_action '* '(* * * * *))
 (define-lff x_menu_attach_recent_files_submenu void '(* *))
 (define-lff lepton_action_create_menu_item '* '(* *))
+(define-lff lepton_menu_set_action_data void '(* * * *))
 
 ;;; x_window.c
 (define-lff x_window_new '* '())
