@@ -66,7 +66,7 @@
                                          menu-item-stock
                                          window))
                (menu-item (lepton_action_create_menu_item action (string->pointer name))))
-          (g_object_set_data menu-bar action-name action)
+          (lepton_menu_set_action_data menu-bar action-name menu-item action)
           menu-item)))
 
   (define (item->menu-item item menu-bar)
