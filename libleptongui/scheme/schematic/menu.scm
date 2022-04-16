@@ -65,7 +65,9 @@
                                          (string->pointer menu-item-keys)
                                          menu-item-stock
                                          window))
-               (menu-item (lepton_action_create_menu_item action (string->pointer name))))
+               (menu-item (lepton_action_create_menu_item action
+                                                          (string->pointer name)
+                                                          (string->pointer menu-item-keys))))
           (lepton_menu_set_action_data menu-bar action-name menu-item action)
           menu-item)))
 
