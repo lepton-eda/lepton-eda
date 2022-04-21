@@ -232,8 +232,10 @@ lepton/m4.scm: Makefile
 
 GUILE_WARNINGS = -Wunbound-variable -Warity-mismatch -Wformat
 
-SOURCES = $(nobase_scmdata_DATA) $(nobase_dist_scmdata_DATA)
+SOURCES = $(nobase_dist_scmdata_DATA)
 GOBJECTS = $(SOURCES:%.scm=%.go)
+
+$(GOBJECTS): lepton/m4.go
 
 SUFFIXES = .scm .go
 .scm.go:
@@ -249,10 +251,11 @@ CLEANFILES = \
 	unit-tests/dummy.sym \
 	unit-tests/dummy.xpm \
 	$(nobase_scmdata_DATA) \
+	lepton/m4.go \
 	$(GOBJECTS)
 
 
-nobase_go_DATA = $(GOBJECTS)
+nobase_go_DATA = lepton/m4.go $(GOBJECTS)
 
 # Make sure source files are installed first, so that the mtime of
 # installed compiled files is greater than that of installed source
