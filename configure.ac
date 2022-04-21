@@ -124,6 +124,22 @@ dnl Default case: use GDK2.
 PKG_CHECK_MODULES(GDK_PIXBUF, [gdk-pixbuf-2.0 >= 2.21.0], ,
   AC_MSG_ERROR([GDK_PIXBUF 2.21.0 or later is required.]))
 
+
+dnl Enable compilation of Scheme files with guild.
+AC_MSG_CHECKING([whether to use GUILD])
+
+AC_ARG_ENABLE([guild],
+  AS_HELP_STRING([--enable-guild], [Enable guild compilation of Scheme files.]))
+
+if test "X$enable_guild" = "Xyes"; then
+  AC_MSG_RESULT([yes])
+else
+  AC_MSG_RESULT([no])
+fi
+
+AM_CONDITIONAL([ENABLE_GUILD], [test "X$enable_guild" = "Xyes"])
+
+
 AX_CHECK_CAIRO
 
 PKG_CHECK_MODULES(PANGOCAIRO, [pangocairo >= 0.26], ,

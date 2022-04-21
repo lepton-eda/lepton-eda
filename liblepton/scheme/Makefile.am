@@ -230,10 +230,20 @@ lepton/m4.scm: Makefile
 	fi
 
 
+CLEANFILES = \
+	unit-tests/dummy.sym \
+	unit-tests/dummy.xpm \
+	$(nobase_scmdata_DATA)
+
+
 GUILE_WARNINGS = -Wunbound-variable -Warity-mismatch -Wformat
 
 SOURCES = $(nobase_dist_scmdata_DATA)
 GOBJECTS = $(SOURCES:%.scm=%.go)
+
+
+# This part depends on the configure switch --enable-go.
+if ENABLE_GUILD
 
 $(GOBJECTS): lepton/m4.go
 
@@ -247,14 +257,6 @@ SUFFIXES = .scm .go
 	-L $(abs_top_builddir)/liblepton/scheme \
 	$(GUILE_WARNINGS) -o "$@" "$<"
 
-CLEANFILES = \
-	unit-tests/dummy.sym \
-	unit-tests/dummy.xpm \
-	$(nobase_scmdata_DATA) \
-	lepton/m4.go \
-	$(GOBJECTS)
-
-
 nobase_go_DATA = lepton/m4.go $(GOBJECTS)
 
 # Make sure source files are installed first, so that the mtime of
@@ -264,3 +266,7 @@ nobase_go_DATA = lepton/m4.go $(GOBJECTS)
 # for details.
 guile_install_go_files = install-nobase_goDATA
 $(guile_install_go_files): install-nobase_scmdataDATA install-nobase_dist_scmdataDATA
+
+CLEANFILES += lepton/m4.go $(GOBJECTS)
+
+endif
