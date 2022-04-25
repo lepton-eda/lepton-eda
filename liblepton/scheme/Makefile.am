@@ -257,7 +257,7 @@ SOURCES = $(nobase_dist_scmdata_DATA)
 GOBJECTS = $(SOURCES:%.scm=%.go)
 
 
-# This part depends on the configure switch --enable-go.
+# This part depends on the configure switch --enable-guild.
 if ENABLE_GUILD
 
 $(GOBJECTS): lepton/m4.go
