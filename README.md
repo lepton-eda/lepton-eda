@@ -221,6 +221,18 @@ You can then proceed to configure and build Lepton as described above.
 Noticeable configure options
 ----------------------------
 
+### --enable-guild
+
+The time of Scheme code compilation when you launch a Lepton
+program first time can be significantly reduced if you compile the
+code beforehand:
+
+    ./configure --enable-guild
+
+This option enables in-advance Scheme code compilation, which may
+be of help for end users though not always desirable for Lepton
+developers.
+
 ### --with-gtk3
 
 You can build Lepton with GTK3 GUI support if you enable it on the
