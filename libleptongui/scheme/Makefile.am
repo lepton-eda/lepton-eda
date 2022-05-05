@@ -4,10 +4,7 @@ godir = $(LEPTONDATADIR)/ccache
 nobase_dist_scmdata_DATA = \
 	auto-refdes.scm \
 	auto-uref.scm \
-	auto-place-attribs.scm \
-	auto-place-netname.scm \
 	pcb.scm \
-	default-attrib-positions.scm \
 	gschem/action.scm \
 	gschem/attrib.scm \
 	gschem/builtins.scm \
@@ -21,6 +18,7 @@ nobase_dist_scmdata_DATA = \
 	gschem/deprecated.scm \
 	schematic/action.scm \
 	schematic/attrib.scm \
+	schematic/autoplace.scm \
 	schematic/builtins.scm \
 	schematic/core/gettext.scm \
 	schematic/dialog.scm \

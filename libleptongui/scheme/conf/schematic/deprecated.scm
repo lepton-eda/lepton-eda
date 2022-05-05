@@ -1,7 +1,10 @@
 (use-modules (ice-9 regex)
+             (lepton attrib)
              (lepton config)
              (lepton legacy-config)
+             (lepton object)
              (lepton page)
+             (schematic autoplace)
              (schematic hook)
              (schematic window))
 
@@ -60,18 +63,6 @@
          ("pinnumber" "0"       #t ("value"))
          ("pinseq"    "0"       #f ())))
 
-; Convert a character into a string
-(define char2str
-  (lambda (char)
-    (list->string (list char))))
-
-; Attribute autoplacement grid
-(define autoplace-attributes-grid 50)
-
-; Load the default position of attributes, for attribute autoplacing
-; functions.
-(load-from-path "default-attrib-positions.scm")
-
 ; Adds the default pin attributes to each newly placed pin.
 (define (add-default-pin-attributes object)
   (for-each
@@ -82,9 +73,6 @@
 ; each newly placed pin
 (add-hook! add-pin-hook add-default-pin-attributes)
 
-
-; Comment in this to load the functions to place the attributes automatically.
-(load-from-path "auto-place-attribs.scm")
 
 ; Autoplace pin text attributes hook.
 ; Comment in these if you want the pin attributes to be automatically placed.
@@ -127,7 +115,6 @@
 
 ; Autoplace netname= attribute hook.  This autoplaces netname
 ; attribute at the time that it's added.
-(load-from-path "auto-place-netname.scm")
 (add-hook! add-objects-hook place-netname-attribute-handler)
 
 
