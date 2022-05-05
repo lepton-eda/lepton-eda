@@ -17,14 +17,16 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
-; This function resets all the refdes in a list of objects.
-;
-; objects: a list of gschem schematic objects
+(define-module (schematic refdes)
+  #:use-module (ice-9 regex)
 
-(use-modules (ice-9 regex)
-             (lepton attrib))
+  #:use-module (lepton attrib)
+
+  #:export (auto-refdes-reset!))
 
 (define (auto-refdes-reset! objects)
+  "Resets all the refdeses in OBJECTS which should be a list of
+schematic objects."
 
     (let (
         (question-mark "?")
