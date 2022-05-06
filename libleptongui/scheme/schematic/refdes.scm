@@ -23,6 +23,7 @@
 
   #:use-module (lepton attrib)
   #:use-module (lepton page)
+  #:use-module (schematic window)
 
   #:export (auto-refdes-reset!
             auto-uref-set-page-offset
