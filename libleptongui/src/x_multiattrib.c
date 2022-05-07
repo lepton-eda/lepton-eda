@@ -615,8 +615,14 @@ multiattrib_action_add_attribute (Multiattrib *multiattrib,
     if (is_multiattrib_object (object)) {
 
       /* create a new attribute and link it */
-      o_attrib_add_attrib (w_current, newtext,
-                           visible, show_name_value, object);
+      o_attrib_add_attrib (w_current,
+                           newtext,
+                           visible,
+                           show_name_value,
+                           object,
+                           FALSE,
+                           0,
+                           0);
     }
   }
 
@@ -648,7 +654,10 @@ multiattrib_action_duplicate_attributes (Multiattrib *multiattrib,
                          lepton_text_object_get_string (o_attrib),
                          lepton_text_object_is_visible (o_attrib),
                          lepton_text_object_get_show (o_attrib),
-                         lepton_object_get_attached_to (o_attrib));
+                         lepton_object_get_attached_to (o_attrib),
+                         FALSE,
+                         0,
+                         0);
   }
 
   schematic_window_active_page_changed (w_current);
@@ -680,7 +689,10 @@ multiattrib_action_promote_attributes (Multiattrib *multiattrib,
                            lepton_text_object_get_string (o_attrib),
                            VISIBLE,
                            lepton_text_object_get_show (o_attrib),
-                           lepton_object_get_parent (o_attrib));
+                           lepton_object_get_parent (o_attrib),
+                           FALSE,
+                           0,
+                           0);
     } else {
         active_page = schematic_window_get_active_page (w_current);
         /* make a copy of the attribute object */
@@ -763,7 +775,10 @@ multiattrib_action_copy_attribute_to_all (Multiattrib *multiattrib,
                            lepton_text_object_get_string (attrib_to_copy),
                            visibility,
                            lepton_text_object_get_show (attrib_to_copy),
-                           object);
+                           object,
+                           FALSE,
+                           0,
+                           0);
     }
   }
 

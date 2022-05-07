@@ -186,7 +186,9 @@
 ;;; g_window.c
 (define-lff g_init_window void '(*))
 
-(define-lff o_attrib_add_attrib '* (list '* '* int int '*))
+;;; o_attrib.c
+(define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
+
 (define-lff o_buffer_init void '())
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())
