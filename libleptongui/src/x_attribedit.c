@@ -109,9 +109,8 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
 
   attribptr =
     (LeptonObject*) g_object_get_data (G_OBJECT (w_current->aewindow), "attrib");
-  if (!attribptr) {
-    LeptonObject *new_object = NULL;
-
+  if (!attribptr)
+  {
     s_current = lepton_list_get_glist( toplevel->page_current->selection_list );
     while (s_current != NULL) {
       object = (LeptonObject *)s_current->data;
@@ -194,39 +193,59 @@ void attrib_edit_dialog_ok(GtkWidget * w, GschemToplevel *w_current)
               }
             }
             if (!replaced) {
-              o_attrib_add_attrib(w_current, newtext, vis, show, object);
+              o_attrib_add_attrib (w_current, newtext, vis, show, object, FALSE, 0, 0);
             }
           }
         }
         s_current = g_list_next (s_current);
       }
       o_undo_savestate_old(w_current, UNDO_ALL);
-    } else {
+    }
+    else
+    {
+      /* There is one or no selected object. */
       object = o_select_return_first_object(w_current);
-      new_object = o_attrib_add_attrib(w_current, newtext, vis, show, object);
 
-      invocation_flag =
-        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
-                                            "invocation_flag"));
+      /* We should set reasonable defaults for the coordinate of
+       * the new attribute if it is floating, that is, no object
+       * to attach to is selected.  We can do it only if the mouse
+       * pointer is somewhere over the canvas.  For this, the
+       * three following conditions should be met: invocation_flag
+       * must be set to FROM_HOTKEY, and proposed x and y must not
+       * have the value of -1.  The former condition means the
+       * user did not use menus to invoke the dialog, and the
+       * latter two mean the mouse cursor was not out of the
+       * program window.  In any other case, let's rely on
+       * o_attrib_add_attrib() in choosing some reasonable
+       * strategy for this.*/
       wx =
         GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
                                             "position_wx"));
       wy =
         GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
                                             "position_wy"));
-
+      invocation_flag =
+        GPOINTER_TO_INT (g_object_get_data (G_OBJECT (w_current->aewindow),
+                                            "invocation_flag"));
 #if DEBUG
       printf("invocation flag: %d\n", invocation_flag);
 #endif
-      if (invocation_flag == FROM_HOTKEY
-          && wx != -1 && wy != -1) {
-        o_invalidate (w_current, new_object);
-        lepton_text_object_set_x (new_object, wx);
-        lepton_text_object_set_y (new_object, wy);
-        lepton_text_object_recreate (new_object);
-        schematic_window_active_page_changed (w_current);
-        o_undo_savestate_old(w_current, UNDO_ALL);
-      }
+      gboolean propose_coord = (object == NULL
+                                && invocation_flag == FROM_HOTKEY
+                                && wx != -1
+                                && wy != -1);
+
+      o_attrib_add_attrib (w_current,
+                           newtext,
+                           vis,
+                           show,
+                           object,
+                           propose_coord,
+                           wx,
+                           wy);
+
+      schematic_window_active_page_changed (w_current);
+      o_undo_savestate_old(w_current, UNDO_ALL);
     }
   } else {
     o_text_change(w_current, attribptr, newtext, vis, show);

@@ -241,7 +241,10 @@ o_attrib_add_attrib (GschemToplevel *w_current,
                      const char *text_string,
                      int visibility,
                      int show_name_value,
-                     LeptonObject *object)
+                     LeptonObject *object,
+                     gboolean proposed_coord,
+                     int x,
+                     int y)
 {
   LeptonObject *new_obj;
   int world_x = - 1, world_y = -1;
@@ -249,6 +252,7 @@ o_attrib_add_attrib (GschemToplevel *w_current,
   int angle = 0;
   int color;
   int left, right, top, bottom;
+  int found;
   LeptonObject *o_current;
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
@@ -353,18 +357,59 @@ o_attrib_add_attrib (GschemToplevel *w_current,
         o_current = NULL;
         break;
     }
-  } else {
-    world_get_object_glist_bounds (lepton_page_objects (active_page),
-                                   /* Don't include hidden objects. */
-                                   FALSE,
-                                   &left,
-                                   &top,
-                                   &right,
-                                   &bottom);
+  }
+  else
+  {
+    /* If there is no object to attach the attrib to, let's first
+     * set up its coordinate and other parameters. */
 
-    /* this really is the lower left hand corner */
-    world_x = left;
-    world_y = top;
+    /* If any coordinate is proposed, set the attrib anchor to it.  */
+    if (proposed_coord)
+    {
+      world_x = x;
+      world_y = y;
+    }
+    else
+    {
+      /* Otherwise, try first to set the coordinate to the
+       * bottom-left corner of the visible objects. */
+      found =
+        world_get_object_glist_bounds (lepton_page_objects (active_page),
+                                       /* Don't include hidden objects. */
+                                       FALSE,
+                                       &left,
+                                       &top,
+                                       &right,
+                                       &bottom);
+      if (found)
+      {
+        world_x = left;
+        world_y = top;
+      }
+      else
+      {
+        /* No visible object was found on the canvas, and no coord
+         * is proposed.  Set the value to the center of the current
+         * page view. */
+        GschemPageView *view = gschem_toplevel_get_current_page_view (w_current);
+
+        if (view != NULL)
+        {
+          GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
+          world_x = (geometry->viewport_left + geometry->viewport_right) / 2;
+          world_y = (geometry->viewport_top + geometry->viewport_bottom) / 2;
+        }
+        else
+        {
+          /* Hmm, no page view found?  Ah, the function can be
+           * evaluated somewhere in Scheme code when no GUI is
+           * available.  The last resort.  Let's set the coord to
+           * a specific value. */
+          world_x = 0;
+          world_y = 0;
+        }
+      }
+    }
 
     /* printf("%d %d\n", world_x, world_y); */
     align = LOWER_LEFT;

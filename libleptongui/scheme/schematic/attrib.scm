@@ -68,7 +68,8 @@ the symbols 'name, 'value or 'both.  If TARGET is specified and is
 a Lepton object, the new attribute will be attached to it. If the
 object is not in lepton-schematic's active page, an 'object-state
 error will be raised.  If TARGET is #f, the new attribute will be
-floating in lepton-schematic's current active page.  See also
+floating in lepton-schematic's current active page.  The initial
+value of the attribute will be set then to (0 . 0).  See also
 active-page() in the (schematic window) module."
   (check-attrib-target target 1)
   (check-string name 2)
@@ -86,7 +87,10 @@ active-page() in the (schematic window) module."
                                                *str
                                                visibility
                                                show?
-                                               *object))))
+                                               *object
+                                               TRUE  ; let's be
+                                               0     ; specific
+                                               0))))
 
 
 (define (attribute-name name)

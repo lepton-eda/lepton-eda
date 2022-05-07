@@ -214,7 +214,17 @@ o_attrib_select_invisible (GschemToplevel *w_current,
                            LeptonObject *selected);
 void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object);
 void o_attrib_toggle_show_name_value(GschemToplevel *w_current, LeptonObject *object, int new_show_name_value);
-LeptonObject *o_attrib_add_attrib(GschemToplevel *w_current, const char *text_string, int visibility, int show_name_value, LeptonObject *object);
+
+LeptonObject*
+o_attrib_add_attrib (GschemToplevel *w_current,
+                     const char *text_string,
+                     int visibility,
+                     int show_name_value,
+                     LeptonObject *object,
+                     gboolean proposed_coord,
+                     int x,
+                     int y);
+
 /* o_basic.c */
 #ifdef ENABLE_GTK3
 void
