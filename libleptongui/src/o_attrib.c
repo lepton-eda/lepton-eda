@@ -260,9 +260,10 @@ o_attrib_add_attrib (GschemToplevel *w_current,
 
   o_current = object;
 
-  /* creating a toplevel or unattached attribute */
+  /* Creating an attribute for the given object, if it exists. */
   if (o_current) {
-    /* get coordinates of where to place the text object */
+    /* Get coordinates of where to place the text object and
+     * parameters of the new attribute. */
     switch (lepton_object_get_type (o_current)) {
       case(OBJ_COMPONENT):
         world_x = lepton_component_object_get_x (o_current);
@@ -348,6 +349,8 @@ o_attrib_add_attrib (GschemToplevel *w_current,
         }
         break;
 
+        /* We cannot attach an attribute to text, so create a
+         * toplevel attribute here. */
       case(OBJ_TEXT):
         world_x = lepton_text_object_get_x (o_current);
         world_y = lepton_text_object_get_y (o_current);
@@ -360,8 +363,7 @@ o_attrib_add_attrib (GschemToplevel *w_current,
   }
   else
   {
-    /* If there is no object to attach the attrib to, let's first
-     * set up its coordinate and other parameters. */
+    /* Creating a toplevel (unattached, floating) attribute. */
 
     /* If any coordinate is proposed, set the attrib anchor to it.  */
     if (proposed_coord)
@@ -435,6 +437,7 @@ o_attrib_add_attrib (GschemToplevel *w_current,
     o_attrib_attach (new_obj, o_current, FALSE);
   }
 
+  /* Select the attribute to enable its further processing. */
   o_selection_add (active_page->selection_list, new_obj);
 
   /* handle slot= attribute, it's a special case */
