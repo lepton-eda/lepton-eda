@@ -229,13 +229,69 @@ void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Adds an attribute with given parameters to the active page
  *  \par Function Description
+ *  This function creates and returns an attribute object with
+ *  given properties from \a text_string and adds it to the canvas
+ *  of the #GschemToplevel object \a w_current.  Depending on the
+ *  state of the objects on the page (selection, visibility), it
+ *  adds an attached or unattached attribute and selects an
+ *  appropriate place for it.  The strategy of choosing the place
+ *  and other features is rather complicated:
  *
+ * - First, the function checks if \a object is not NULL, and if
+ *   so, gets its coordinates to learn where to place the
+ *   attribute.  For most of primitives, the attribute becomes an
+ *   attached one, and its coords are set using the coords of \a
+ *   object.  For text, its coords are used in the calculations,
+ *   though the attribute gets unattached.
+ *
+ *   \bug Some objects, like paths or pictures, are not taken
+ *   into account in the code.
+ *
+ * - If there is no object to attach the attrib to, a toplevel
+ *   (floating) attribute is created.
+ *
+ * - If any cooordinate is proposed with \a proposed_coord, \a x,
+ *   and \a y, it becomes the coordinate of the new attrib.
+ *
+ * - Otherwise, if no coord is proposed, and no any visible object
+ *   exists on the page, the coordinate is set to the bottom-left
+ *   corner of the visible objects.
+ *
+ * - Then, if there is no visible object, and no coord is proposed,
+ *   the value of the center of the current page view becomes the
+ *   anchor of the attribute.
+ *
+ * - Eventually, if no one of the above conditions can be met,
+ *   when, for example, the program using this function, be it C
+ *   or Scheme code, misses a page view, the last resort is
+ *   setting the anchor to a specific value.  Currently, it is
+ *   (0,0).
+ *
+ * After creating a text item for the attribute with the coords
+ * and other parameters described above, it gets appended to the
+ * currently active page, attached to the given object if it
+ * exists, and selected in order to enable further GUI processing.
+ *
+ * \bug slot= attributes are processed specially in this function,
+ * which is wrong.
+ *
+ * Eventually, two Scheme hooks are evaluated, add-objects-hook()
+ * and select-objects-hook().  The user may set up some other
+ * script processing of newly added and hence selected attributes
+ * there.
+ *
+ *  \param [in] w_current The GschemToplevel object.
+ *  \param [in] text_string The text string of the attribute object.
+ *  \param [in] visibility If the attribute should be visible.
+ *  \param [in] show_name_value What combination of name-value to show.
+ *  \param [in] object The parent object to attach the new attribute to.
+ *  \param [in] proposed_coord If the proposed coord values can be used.
+ *  \param [in] x The proposed X coordinate.
+ *  \param [in] y The proposed Y coordinate.
+ *  \return The new attribute object.
  */
-/* This function no longer returns NULL, but will always return the new */
-/* text item */
 LeptonObject*
 o_attrib_add_attrib (GschemToplevel *w_current,
                      const char *text_string,
