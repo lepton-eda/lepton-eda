@@ -681,12 +681,6 @@ void x_window_close(GschemToplevel *w_current)
     o_buffer_free (w_current);
   }
 
-  /* Allow Scheme value for this window to be garbage-collected */
-  if (!scm_is_eq (w_current->smob, SCM_UNDEFINED)) {
-    scm_gc_unprotect_object (w_current->smob);
-    w_current->smob = SCM_UNDEFINED;
-  }
-
   /* finally close the main window */
   gtk_widget_destroy(w_current->main_window);
 
