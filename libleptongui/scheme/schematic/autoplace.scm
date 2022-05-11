@@ -22,10 +22,11 @@
 
 (define-module (schematic autoplace)
   #:use-module (ice-9 regex)
+  #:use-module (srfi srfi-1)
+
   #:use-module (geda deprecated)
   #:use-module (lepton attrib)
   #:use-module (lepton object)
-  #:use-module (gschem deprecated)
 
   #:export (autoplace-pin-attributes
             autoplace-object-attributes
@@ -321,6 +322,17 @@
                             point))
                     ))))))
 
+
+;; get-pin-ends pin
+;;
+;; Return the coordinates of the endpoints of a pin, in the format:
+;;
+;;   ((x1 . y1) x2 . y2)
+(define (get-pin-ends pin)
+  (let ((params (line-info pin)))
+    (cons (list-ref params 0) (list-ref params 1))))
+
+
 ; This function returns the pin direction of the pin object parameter.
 ; It returns a one character string: "^", "v", "<" or ">". The arrow
 ; points the pin's end, which is NOT the active connection end.
@@ -341,6 +353,69 @@
                     ; The x coords are not equal. The pin is horizontal.
                     ">"
                     "<"))))))
+
+
+;; get-object-bounds object exclude-attribs exclude-types
+;;
+;; Return the bounds of an object, excluding attributes with
+;; particular names or certain object types.
+;;
+;; The exclude-attribs should be a list of attribute names to be
+;; omitted, as strings. If the special string "all" appears in the
+;; list, all attributes are excluded.
+;;
+;; The exclude-types should be a list of single-character strings
+;; containing object type characters (as returned by the deprecated
+;; get-object-type function).
+;;
+;; Note that attributes attached to pins (but not attached to anything
+;; else) are included in the bounds.
+;;
+;; The bounds are returned in the form:
+;;
+;;   ((left . right) . (bottom . top))
+;;
+;; N.b. that this is a different form to that returned by
+;; object-bounds, so you can't use fold-bounds directly with bounds
+;; returned by this function.
+(define (get-object-bounds object exclude-attribs exclude-types)
+  (define no-attribs (member "all" exclude-attribs))
+
+  (define (exclude? object)
+    (or
+     ;; Is it an excluded type?
+     (member (string (get-object-type object)) exclude-types)
+     ;; Is it invisible text?
+     (and (text? object) (not (text-visible? object)))
+     ;; Is it an excluded attribute?
+     (and (attribute? object)
+          (or no-attribs
+              (member (attrib-name object) exclude-attribs)))))
+
+  (define (excluding-bounds object)
+    (cond
+     ;; If it's excluded, no bounds!
+     ((exclude? object) #f)
+     ;; If it's a component, recurse
+     ((component? object)
+      (fold fold-bounds #f
+            (map excluding-bounds (component-contents object))))
+     ;; If it's a pin, include its attributes
+     ((pin? object)
+      (fold fold-bounds #f
+            (cons (object-bounds object)
+                  (map excluding-bounds (object-attribs object)))))
+     ;; Otherwise, just return the object bounds
+     (else (object-bounds object))))
+
+  (let ((bounds (excluding-bounds object)))
+    (if bounds
+        ;; Re-arrange the bounds into the format expected
+        (cons (cons (caar bounds) (cadr bounds))
+              (cons (cddr bounds) (cdar bounds)))
+        ;; Stupid default
+        '((1000000 . 0) . (1000000 . 0)))))
+
 
 ; This function returns the net direction of the net object parameter.
 ; It returns a string :
@@ -416,6 +491,16 @@
                 (get-bound-of-pins desired_side coordinate (cdr pins))))
           )
         )))
+
+;; get-object-pins object
+;;
+;; Return the pin objects from a component's contents, in reverse
+;; order, or the empty list if object is not a component.
+(define (get-object-pins object)
+  (if (component? object)
+      (reverse! (filter! pin? (component-contents object)))
+      '()))
+
 
 ; This function returns the bounds of the pins in the given side of the object
 ; The side is a one character string: "^", "v", "<" or ">". The arrow
@@ -913,6 +998,63 @@
       )
   )
 
+
+;; set-attribute-text-properties! attrib color size alignment
+;;                                rotation x y
+;;
+;; Sets several parameters of the text object attrib.  x and y are the
+;; coordinates of the text anchor.  color is the colormap index of the
+;; color with which to draw the text.  size is the font size, and
+;; angle is the angle at which to draw the text.
+;;
+;; All of the former parameters may be set to -1 to leave the current
+;; value unchanged.
+;;
+;; alignment should be one of the following strings:
+;;
+;;    "Lower Left"
+;;    "Middle Left"
+;;    "Upper Left"
+;;    "Lower Middle"
+;;    "Middle Middle"
+;;    "Upper Middle"
+;;    "Lower Right"
+;;    "Middle Right"
+;;    "Upper Right"
+;;
+;; or the empty string "" to leave the alignment unchanged.
+(define (set-attribute-text-properties!
+                  attrib color size alignment rotation x y)
+  (set-text! attrib
+             ;; anchor
+             (let ((anchor (text-anchor attrib)))
+               (cons (if (= x -1) (car anchor) x)
+                     (if (= y -1) (cdr anchor) y)))
+             ;; align
+             (or
+              (assoc-ref
+               '(("Lower Left" . lower-left)
+                 ("Middle Left" . middle-left)
+                 ("Upper Left" . upper-left)
+                 ("Lower Middle" . lower-center)
+                 ("Middle Middle" . middle-center)
+                 ("Upper Middle" . upper-center)
+                 ("Lower Right" . lower-right)
+                 ("Middle Right" . middle-right)
+                 ("Upper Right" . upper-right))
+               alignment)
+              (and (string=? "" alignment) (text-align attrib))
+              (error "Invalid text alignment ~A." alignment))
+             ;; angle
+             (if (= rotation -1) (text-angle attrib) rotation)
+             ;; string
+             (text-string attrib)
+             ;; size
+             (if (= size -1) (text-size attrib) size)
+             ;; visible
+             (text-visible? attrib)
+             ;; show
+             (text-attribute-mode attrib)))
 
 
 ; This function sets the default parameters of each attribute,
