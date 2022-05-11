@@ -1,10 +1,10 @@
 (use-modules (ice-9 regex)
              (lepton attrib)
+             (lepton autoplace)
              (lepton config)
              (lepton legacy-config)
              (lepton object)
              (lepton page)
-             (schematic autoplace)
              (schematic hook)
              (schematic window))
 
