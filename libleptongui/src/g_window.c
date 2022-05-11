@@ -23,26 +23,6 @@
 
 SCM scheme_window_fluid = SCM_UNDEFINED;
 
-/*! \brief Get the smob for a #GschemToplevel.
- * \par Function Description
- * Return a smob representing \a window.
- *
- * \param window #GschemToplevel to obtain a smob for.
- * \param a smob representing \a window.
- */
-SCM
-g_scm_from_window (GschemToplevel *w_current)
-{
-  g_assert (w_current != NULL);
-
-  if (scm_is_eq (w_current->smob, SCM_UNDEFINED)) {
-    w_current->smob = scm_from_pointer (w_current, NULL);
-    scm_gc_protect_object (w_current->smob);
-  }
-
-  return w_current->smob;
-}
-
 /*!
  * \brief Set the #GschemToplevel fluid in the current dynamic context.
  * \par Function Description
@@ -57,7 +37,7 @@ void
 g_dynwind_window (GschemToplevel *w_current)
 {
   g_assert (w_current != NULL);
-  SCM window_s = g_scm_from_window (w_current);
+  SCM window_s = scm_from_pointer (w_current, NULL);
   scm_dynwind_fluid (scheme_window_fluid, window_s);
   edascm_dynwind_toplevel (w_current->toplevel);
 }

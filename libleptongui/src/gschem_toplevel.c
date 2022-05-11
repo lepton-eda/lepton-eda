@@ -352,8 +352,6 @@ GschemToplevel *gschem_toplevel_new ()
 
   w_current->bus_ripper_symname = NULL;
 
-  w_current->smob = SCM_UNDEFINED;
-
   return w_current;
 }
 

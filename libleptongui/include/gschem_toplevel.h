@@ -241,8 +241,6 @@ struct st_gschem_toplevel {
   gchar* bus_ripper_symname; /* default bus ripper symbol file name */
 
   gboolean dont_invalidate;
-
-  SCM smob;               /* The Scheme representation of this window */
 };
 
 
