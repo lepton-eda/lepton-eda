@@ -280,6 +280,7 @@ Please note @code{..} in the above commands, it ensures
 @cindex --with-gtk3
 @cindex --disable-attrib
 @cindex --enable-contrib
+@cindex --enable-guild
 
 The following command in the build directory
 
@@ -291,6 +292,13 @@ will let you see all options available.  Here we'll notice only those
 of them that may be of special interest for the user.
 
 @table @option
+
+@item --enable-guild
+turns on support of native compilation of Scheme code by
+@command{guild}.  If it is not used, the Lepton Scheme tools will be
+compiled at the time of first launching, which may significantly
+increase the first time launching duration.
+
 @item --with-gtk3
 turns on support for GTK3 library. @xref{Installation of
 lepton-attrib} for more information on what additional libraries are
