@@ -111,6 +111,9 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   interdependencies in the code by separating its C and Scheme
   parts.
 
+- The module `(schematic gschemdoc)` has been renamed to
+  `(schematic doc)`.
+
 - The hook `complex-place-list-changed-hook()` has been amended so
   it now works with a list of objects instead of a single
   component object.  The argument list usually includes an
