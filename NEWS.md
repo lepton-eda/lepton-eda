@@ -28,6 +28,19 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   `g_memdup2()` in the tools.  A workaround has been added for
   Glib versions before 2.68 that do not support the latter.
 
+
+### Changes when building from source:
+
+- Scheme libraries do no longer depend on functions defined in the
+  C code of Lepton libraries, so native compilation of all Scheme
+  code without Guile snarfing is now supported.  See below for
+  more.
+
+- A new `configure` option, `--enable-guild`, has been added to
+  enable beforehand compilation of Guile sources of the tools.
+  Please see [README](README.md) for more information.
+
+
 ### Changes in `liblepton`:
 
 - All so named `core` Scheme modules defined in C and their
@@ -52,6 +65,14 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
 - Provisions have been added against potential memory leaks in
   export functions in case they are called multiple times in
   Scheme scripts, which also eliminated several build warnings.
+
+### Changes in `libleptongui`:
+
+- The library does no longer depend on Guile snarfing and Scheme
+  functions defined in C code, which allowed for eliminating so
+  named `core` Scheme modules.  This is the same change as
+  described above in the section for `liblepton`.
+
 
 ### Changes in `lepton-schematic`:
 
