@@ -41,10 +41,6 @@ lepton_init_toplevel_fluid (SCM fluid);
 /* Get the value of the #LeptonToplevel fluid in C. */
 LeptonToplevel *edascm_c_current_toplevel ();
 
-/* Create a Guile value from #LeptonToplevel structure. */
-SCM
-edascm_from_toplevel (LeptonToplevel *toplevel);
-
 /* Set the #LeptonToplevel fluid in the current dynamic context. */
 void edascm_dynwind_toplevel (LeptonToplevel *toplevel);
 

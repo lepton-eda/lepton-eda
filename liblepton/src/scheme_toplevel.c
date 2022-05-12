@@ -42,7 +42,7 @@ SCM scheme_toplevel_fluid = SCM_UNDEFINED;
 void
 edascm_dynwind_toplevel (LeptonToplevel *toplevel)
 {
-  SCM s_toplevel = edascm_from_toplevel (toplevel);
+  SCM s_toplevel = scm_from_pointer (toplevel, NULL);
 
   scm_dynwind_fluid (scheme_toplevel_fluid, s_toplevel);
 }
@@ -91,9 +91,7 @@ edascm_c_current_toplevel ()
   g_debug ("edascm_c_current_toplevel()\n");
   SCM s_toplevel = edascm_current_toplevel ();
 
-  EDASCM_ASSERT_SMOB_VALID(s_toplevel);
-
-  return (LeptonToplevel *) SCM_SMOB_DATA (s_toplevel);
+  return (LeptonToplevel *) scm_to_pointer (s_toplevel);
 }
 
 /*!

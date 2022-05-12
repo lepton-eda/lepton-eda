@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 2010-2013 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -144,9 +144,6 @@ enum geda_smob_flags {
       scm_misc_error (NULL, "Found invalid object (smob) ~S", scm_list_1 (x)); \
     } } while (0)
 #endif
-
-/* Create a Guile value from a LeptonToplevel structure. */
-SCM edascm_from_toplevel (LeptonToplevel *toplevel);
 
 /*! Tests whether a Scheme value is a LeptonToplevel smob. */
 #define EDASCM_TOPLEVELP(x) EDASCM_SMOB_TYPEP(x, GEDA_SMOB_TOPLEVEL)

@@ -22,16 +22,11 @@
 
   #:export (%current-toplevel
             %make-toplevel
-            %with-toplevel
-            pointer->geda-toplevel))
-
-(define (pointer->geda-toplevel pointer)
-  ;; Return #f if the pointer is wrong.
-  (false-if-exception (pointer->scm (edascm_from_toplevel pointer))))
+            %with-toplevel))
 
 (define (%make-toplevel)
   "Make new toplevel."
-  (pointer->geda-toplevel (lepton_toplevel_new)))
+  (lepton_toplevel_new))
 
 (define (%current-toplevel)
   "Get toplevel for the current dynamic context."

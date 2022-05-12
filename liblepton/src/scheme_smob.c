@@ -372,25 +372,6 @@ smob_equalp (SCM obj1, SCM obj2)
   }
 }
 
-/*! \brief Get the smob for a LeptonToplevel.
- * \ingroup guile_c_iface
- * \par Function Description
- * Create a new smob representing \a toplevel.
- *
- * \param toplevel #LeptonToplevel to create a smob for.
- * \return a smob representing \a toplevel.
- */
-SCM
-edascm_from_toplevel (LeptonToplevel *toplevel)
-{
-  SCM smob;
-
-  SCM_NEWSMOB (smob, geda_smob_tag, toplevel);
-  SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_TOPLEVEL);
-
-  return smob;
-}
-
 /*! \brief Get a smob for a page.
  * \ingroup guile_c_iface
  * \par Function Description
