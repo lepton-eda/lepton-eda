@@ -1,7 +1,7 @@
 /* Lepton EDA library - Scheme API
  * Copyright (C) 2010-2013, 2016 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2010-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -260,8 +260,6 @@ smob_free (SCM smob)
   /* Otherwise, clear the weak reference */
   switch (EDASCM_SMOB_TYPE (smob)) {
   case GEDA_SMOB_TOPLEVEL:
-    s_toplevel_weak_unref ((LeptonToplevel *) data, smob_weakref_notify,
-                           unpack_as_pointer (smob));
     break;
   case GEDA_SMOB_PAGE:
     lepton_page_weak_unref ((LeptonPage *) data,
@@ -385,20 +383,10 @@ smob_equalp (SCM obj1, SCM obj2)
 SCM
 edascm_from_toplevel (LeptonToplevel *toplevel)
 {
-  SCM smob = smob_cache_lookup (toplevel);
-
-  if (EDASCM_TOPLEVELP (smob)) {
-    return smob;
-  }
+  SCM smob;
 
   SCM_NEWSMOB (smob, geda_smob_tag, toplevel);
   SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_TOPLEVEL);
-
-  /* Set weak reference */
-  s_toplevel_weak_ref (toplevel, smob_weakref_notify,
-                       unpack_as_pointer (smob));
-
-  smob_cache_add (toplevel, smob);
 
   return smob;
 }
