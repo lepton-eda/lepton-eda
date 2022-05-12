@@ -38,22 +38,14 @@ struct st_toplevel
 
   /* Callback functions for object change notification */
   GList *change_notify_funcs;
-
-  GList *weak_refs; /* Weak references */
 };
 
-void
-s_toplevel_add_weak_ptr (LeptonToplevel *toplevel,
-                         void *weak_pointer_loc);
 void
 s_toplevel_delete (LeptonToplevel *toplevel);
 
 LeptonToplevel*
 lepton_toplevel_new (void);
 
-void
-s_toplevel_remove_weak_ptr (LeptonToplevel *toplevel,
-                            void *weak_pointer_loc);
 LeptonPage*
 lepton_toplevel_get_page_current (LeptonToplevel *toplevel);
 
@@ -66,14 +58,6 @@ lepton_toplevel_get_pages (LeptonToplevel *toplevel);
 void
 lepton_toplevel_set_pages (LeptonToplevel *toplevel,
                            LeptonPageList *pages);
-void
-s_toplevel_weak_ref (LeptonToplevel *toplevel,
-                     void (*notify_func)(void *, void *),
-                     void *user_data);
-void
-s_toplevel_weak_unref (LeptonToplevel *toplevel,
-                       void (*notify_func)(void *, void *),
-                       void *user_data);
 void
 lepton_toplevel_goto_page (LeptonToplevel *toplevel,
                            LeptonPage *p_new);
