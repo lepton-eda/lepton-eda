@@ -57,6 +57,7 @@
             glist->list
 
             ;; Foreign functions.
+            lepton_init_toplevel_fluid
             edascm_current_toplevel
             edascm_c_current_toplevel
             edascm_from_toplevel
@@ -544,6 +545,7 @@
 (define-lff eda_renderer_set_color_map void '(* *))
 
 ;;; scheme_smob.c
+(define-lff lepton_init_toplevel_fluid void '(*))
 (define-lff edascm_current_toplevel '* '())
 (define-lff edascm_c_current_toplevel '* '())
 (define-lff edascm_from_toplevel '* '(*))

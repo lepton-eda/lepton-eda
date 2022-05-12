@@ -34,6 +34,10 @@ void edascm_init ();
 SCM
 edascm_current_toplevel ();
 
+/* Initialize #LeptonToplevel fluid. */
+void
+lepton_init_toplevel_fluid (SCM fluid);
+
 /* Get the value of the #LeptonToplevel fluid in C. */
 LeptonToplevel *edascm_c_current_toplevel ();
 

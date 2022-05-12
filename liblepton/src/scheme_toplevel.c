@@ -60,6 +60,23 @@ edascm_current_toplevel ()
 }
 
 /*!
+ * \brief Initialize fluid for obtaining the #LeptonToplevel value.
+ * \par Function Description
+ * This function should be used in Scheme FFI code to initialize
+ * the C variable \a scheme_toplevel_fluid with a Scheme fluid
+ * SCM, which then will be used both in C and Scheme worlds as a
+ * variable for defining the current #LeptonToplevel value.
+ *
+ * \param [in] fluid The Scheme fluid.
+ */
+void
+lepton_init_toplevel_fluid (SCM fluid)
+{
+  scheme_toplevel_fluid = fluid;
+}
+
+
+/*!
  * \brief Get the value of the #LeptonToplevel fluid.
  * \ingroup guile_c_iface
  * \par Function Description
