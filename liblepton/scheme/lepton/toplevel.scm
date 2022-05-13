@@ -24,6 +24,8 @@
 
   #:export (%lepton-toplevel
             pointer->toplevel
+            toplevel->pointer
+            toplevel?
             current-toplevel
             make-toplevel
             with-toplevel))
