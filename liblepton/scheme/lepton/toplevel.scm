@@ -28,12 +28,12 @@
             make-toplevel
             with-toplevel))
 
-(define-wrapped-pointer-type <lepton-toplevel>
-  lepton-toplevel?
+(define-wrapped-pointer-type <toplevel>
+  toplevel?
   pointer->toplevel
   toplevel->pointer
   (lambda (toplevel port)
-    (format port "#<lepton-toplevel-0x~x>"
+    (format port "#<toplevel-0x~x>"
             (pointer-address (toplevel->pointer toplevel)))))
 
 (define %lepton-toplevel #f)
