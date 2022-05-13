@@ -51,7 +51,7 @@
 
 (define (%current-toplevel)
   "Get toplevel for the current dynamic context."
-  (pointer->toplevel (fluid-ref %lepton-toplevel)))
+  (and=> (fluid-ref %lepton-toplevel) pointer->toplevel))
 
 (define (%with-toplevel toplevel thunk)
   "Call THUNK, setting the toplevel fluid to TOPLEVEL."
