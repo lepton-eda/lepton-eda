@@ -30,13 +30,11 @@
 
 (define-wrapped-pointer-type <lepton-toplevel>
   lepton-toplevel?
-  wrap-lepton-toplevel
-  unwrap-lepton-toplevel
+  pointer->toplevel
+  toplevel->pointer
   (lambda (toplevel port)
     (format port "#<lepton-toplevel-0x~x>"
-            (pointer-address (unwrap-lepton-toplevel toplevel)))))
-
-(define pointer->toplevel wrap-lepton-toplevel)
+            (pointer-address (toplevel->pointer toplevel)))))
 
 (define %lepton-toplevel #f)
 
@@ -49,13 +47,13 @@
 
 (define (%make-toplevel)
   "Make new toplevel."
-  (wrap-lepton-toplevel (lepton_toplevel_new)))
+  (pointer->toplevel (lepton_toplevel_new)))
 
 (define (%current-toplevel)
   "Get toplevel for the current dynamic context."
-  (wrap-lepton-toplevel (fluid-ref %lepton-toplevel)))
+  (pointer->toplevel (fluid-ref %lepton-toplevel)))
 
 (define (%with-toplevel toplevel thunk)
   "Call THUNK, setting the toplevel fluid to TOPLEVEL."
   (with-fluid* %lepton-toplevel
-    (unwrap-lepton-toplevel toplevel) thunk))
+    (toplevel->pointer toplevel) thunk))
