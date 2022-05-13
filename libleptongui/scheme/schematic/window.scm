@@ -63,19 +63,15 @@
             (pointer-address (unwrap-schematic-window window)))))
 
 
-;;; Run THUNK in the dynamic context of *TOPLEVEL.
-(define (run-in-toplevel-context *toplevel thunk)
-  (%with-toplevel (pointer->toplevel *toplevel) thunk))
-
 ;;; Execute forms in the dynamic context of WINDOW and its
-;;; toplevel.
+;;; toplevel.  We have to dynwind LeptonToplevel here as well
+;;; since there are functions that depend on it and should know
+;;; what its current value is.
 (define-syntax-rule (with-window window form form* ...)
-  (with-fluids ((%lepton-window window))
-    ;; We have to dynwind LeptonToplevel here since there are
-    ;; functions that depend on it and should know what its
-    ;; current value is.
-    (run-in-toplevel-context (gschem_toplevel_get_toplevel window)
-                             (lambda () form form* ...))))
+  (with-fluids ((%lepton-window window)
+                (%lepton-toplevel
+                 (pointer->toplevel (gschem_toplevel_get_toplevel window))))
+    form form* ...))
 
 
 (define (current-window)
