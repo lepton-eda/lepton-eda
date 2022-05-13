@@ -540,8 +540,10 @@
 (define-lff eda_renderer_new '* '(* *))
 (define-lff eda_renderer_set_color_map void '(* *))
 
-;;; scheme_smob.c
+;;; scheme_toplevel.c
 (define-lff lepton_init_toplevel_fluid void '(*))
+
+;;; scheme_smob.c
 (define-lff edascm_is_object int '(*))
 (define-lff edascm_is_page int '(*))
 (define-lff edascm_from_object '* '(*))
