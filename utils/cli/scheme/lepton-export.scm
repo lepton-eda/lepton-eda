@@ -315,7 +315,7 @@ Lepton EDA homepage: ~A
        schematics)
 
       ;; Render
-      (export-func)
+      (export-func (toplevel->pointer (current-toplevel)))
 
       (exit 0))))
 

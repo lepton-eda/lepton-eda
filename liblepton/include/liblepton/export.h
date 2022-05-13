@@ -1,5 +1,5 @@
 /* Lepton EDA library
- * Copyright (C) 2021 Lepton EDA Contributors
+ * Copyright (C) 2021-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,19 +22,19 @@ void
 export_config (void);
 
 void
-lepton_export_png ();
+lepton_export_png (LeptonToplevel *toplevel);
 
 void
-lepton_export_ps  ();
+lepton_export_ps  (LeptonToplevel *toplevel);
 
 void
-lepton_export_eps ();
+lepton_export_eps (LeptonToplevel *toplevel);
 
 void
-lepton_export_pdf ();
+lepton_export_pdf (LeptonToplevel *toplevel);
 
 void
-lepton_export_svg ();
+lepton_export_svg (LeptonToplevel *toplevel);
 
 gboolean
 lepton_export_parse_align (const gchar *scale);

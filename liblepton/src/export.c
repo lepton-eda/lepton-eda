@@ -2,7 +2,7 @@
  * Lepton EDA command-line utility
  * Copyright (C) 2012 Peter Brett <peter@peter-b.co.uk>
  * Copyright (C) 2014-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,14 +39,17 @@
 #include <cairo-pdf.h>
 #include <cairo-ps.h>
 
-static void export_layout_page (LeptonPage *page,
+static void export_layout_page (LeptonToplevel *toplevel,
+                                LeptonPage *page,
                                 cairo_rectangle_t *extents,
                                 cairo_matrix_t *mtx,
                                 gboolean postscript);
-static void export_draw_page (LeptonPage *page,
+static void export_draw_page (LeptonToplevel *toplevel,
+                              LeptonPage *page,
                               EdaRenderer *renderer);
 
-static void export_postscript (gboolean is_eps);
+static void export_postscript (LeptonToplevel *toplevel,
+                               gboolean is_eps);
 
 static gdouble export_parse_dist (const gchar *dist);
 
@@ -257,7 +260,8 @@ export_cairo_check_error (cairo_status_t status)
  * Takes into account all of the margin/orientation/paper settings,
  * and the size of the drawing itself. */
 static void
-export_layout_page (LeptonPage *page,
+export_layout_page (LeptonToplevel *toplevel,
+                    LeptonPage *page,
                     cairo_rectangle_t *extents,
                     cairo_matrix_t *mtx,
                     gboolean postscript)
@@ -268,8 +272,6 @@ export_layout_page (LeptonPage *page,
   gdouble m[4]; /* Calculated margins */
   gdouble s; /* Calculated scale */
   gdouble slack[2]; /* Calculated alignment slack */
-
-  LeptonToplevel *toplevel = edascm_c_current_toplevel();
 
   if (page == NULL) {
     const GList *pages = lepton_list_get_glist (toplevel->pages);
@@ -399,14 +401,13 @@ export_layout_page (LeptonPage *page,
 
 /* Actually draws a page.  If page is NULL, uses the first open page. */
 static void
-export_draw_page (LeptonPage *page,
+export_draw_page (LeptonToplevel *toplevel,
+                  LeptonPage *page,
                   EdaRenderer *renderer)
 {
   const GList *contents;
   GList *iter;
   cairo_t *cr;
-
-  LeptonToplevel *toplevel = edascm_c_current_toplevel();
 
   cr = eda_renderer_get_cairo_context (renderer);
 
@@ -430,7 +431,7 @@ export_draw_page (LeptonPage *page,
 }
 
 void
-lepton_export_png (void)
+lepton_export_png (LeptonToplevel *toplevel)
 {
   cairo_surface_t *surface;
   cairo_t *cr;
@@ -461,7 +462,7 @@ lepton_export_png (void)
                 NULL);
 
   /* Calculate page layout */
-  export_layout_page (NULL, &extents, &mtx, FALSE);
+  export_layout_page (toplevel, NULL, &extents, &mtx, FALSE);
   cairo_destroy (cr);
 
   /* Create a rendering surface of the correct size.  'extents' is
@@ -481,7 +482,7 @@ lepton_export_png (void)
   g_object_set (renderer, "cairo-context", cr, NULL);
 
   /* Draw */
-  export_draw_page (NULL, renderer);
+  export_draw_page (toplevel, NULL, renderer);
   export_cairo_check_error (cairo_surface_status (surface));
 
   /* Save to file */
@@ -494,15 +495,14 @@ lepton_export_png (void)
 
 /* Worker function used by both lepton_export_ps and export_eps */
 static void
-export_postscript (gboolean is_eps)
+export_postscript (LeptonToplevel *toplevel,
+                   gboolean is_eps)
 {
   cairo_surface_t *surface;
   cairo_rectangle_t extents;
   cairo_matrix_t mtx;
   cairo_t *cr;
   GList *iter;
-
-  LeptonToplevel *toplevel = edascm_c_current_toplevel();
 
   /* Create renderer */
   EdaRenderer *renderer = eda_renderer_new (NULL, NULL);
@@ -525,7 +525,7 @@ export_postscript (gboolean is_eps)
        iter = g_list_next (iter)) {
     LeptonPage *page = (LeptonPage *) iter->data;
 
-    export_layout_page (page, &extents, &mtx, !is_eps);
+    export_layout_page (toplevel, page, &extents, &mtx, !is_eps);
 
     /* Postscript output must always go in Portrait orientation to
      * pleasure printers, so we apply appropriate transformations
@@ -550,7 +550,7 @@ export_postscript (gboolean is_eps)
     }
 
     cairo_set_matrix (cr, &mtx);
-    export_draw_page (page, renderer);
+    export_draw_page (toplevel, page, renderer);
     cairo_show_page (cr);
   }
 
@@ -561,27 +561,25 @@ export_postscript (gboolean is_eps)
 }
 
 void
-lepton_export_ps (void)
+lepton_export_ps (LeptonToplevel *toplevel)
 {
-  export_postscript (FALSE);
+  export_postscript (toplevel, FALSE);
 }
 
 void
-lepton_export_eps (void)
+lepton_export_eps (LeptonToplevel *toplevel)
 {
-  export_postscript (TRUE);
+  export_postscript (toplevel, TRUE);
 }
 
 void
-lepton_export_pdf (void)
+lepton_export_pdf (LeptonToplevel *toplevel)
 {
   cairo_surface_t *surface;
   cairo_rectangle_t extents;
   cairo_matrix_t mtx;
   cairo_t *cr;
   GList *iter;
-
-  LeptonToplevel *toplevel = edascm_c_current_toplevel();
 
   /* Create renderer */
   EdaRenderer *renderer = eda_renderer_new (NULL, NULL);
@@ -603,10 +601,10 @@ lepton_export_pdf (void)
        iter = g_list_next (iter)) {
     LeptonPage *page = (LeptonPage *) iter->data;
 
-    export_layout_page (page, &extents, &mtx, FALSE);
+    export_layout_page (toplevel, page, &extents, &mtx, FALSE);
     cairo_pdf_surface_set_size (surface, extents.width, extents.height);
     cairo_set_matrix (cr, &mtx);
-    export_draw_page (page, renderer);
+    export_draw_page (toplevel, page, renderer);
     cairo_show_page (cr);
   }
 
@@ -617,7 +615,7 @@ lepton_export_pdf (void)
 }
 
 void
-lepton_export_svg ()
+lepton_export_svg (LeptonToplevel *toplevel)
 {
   cairo_surface_t *surface;
   cairo_rectangle_t extents;
@@ -641,7 +639,7 @@ lepton_export_svg ()
   surface = cairo_svg_surface_create (settings.outfile, 0, 0);
   cr = cairo_create (surface);
   g_object_set (renderer, "cairo-context", cr, NULL);
-  export_layout_page (NULL, &extents, &mtx, FALSE);
+  export_layout_page (toplevel, NULL, &extents, &mtx, FALSE);
   cairo_destroy (cr);
 
   /* Now create a new surface with the known extents. */
@@ -652,7 +650,7 @@ lepton_export_svg ()
   g_object_set (renderer, "cairo-context", cr, NULL);
 
   cairo_set_matrix (cr, &mtx);
-  export_draw_page (NULL, renderer);
+  export_draw_page (toplevel, NULL, renderer);
 
   cairo_show_page (cr);
   cairo_surface_finish (surface);

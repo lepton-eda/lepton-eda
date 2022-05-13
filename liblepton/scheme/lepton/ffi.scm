@@ -781,11 +781,11 @@
 
 ;;; export.c
 (define-lff export_config void '())
-(define-lff lepton_export_eps void '())
-(define-lff lepton_export_pdf void '())
-(define-lff lepton_export_png void '())
-(define-lff lepton_export_ps void '())
-(define-lff lepton_export_svg void '())
+(define-lff lepton_export_eps void '(*))
+(define-lff lepton_export_pdf void '(*))
+(define-lff lepton_export_png void '(*))
+(define-lff lepton_export_ps void '(*))
+(define-lff lepton_export_svg void '(*))
 (define-lff lepton_export_list_paper_size_names void '())
 (define-lff lepton_export_parse_align int '(*))
 (define-lff lepton_export_parse_layout int '(*))
