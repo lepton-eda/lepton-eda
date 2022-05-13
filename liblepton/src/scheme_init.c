@@ -40,7 +40,6 @@ edascm_init_impl (void *data)
   scm_setlocale (scm_variable_ref (scm_c_lookup ("LC_ALL")),
                  SCM_UNDEFINED);
   edascm_init_smob ();
-  edascm_init_toplevel ();
   return NULL;
 }
 

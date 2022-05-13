@@ -22,7 +22,8 @@
 
   #:use-module (lepton ffi)
 
-  #:export (%current-toplevel
+  #:export (%lepton-toplevel
+            %current-toplevel
             %make-toplevel
             %with-toplevel))
 
@@ -33,6 +34,15 @@
   (lambda (toplevel port)
     (format port "#<lepton-toplevel-0x~x>"
             (pointer-address (unwrap-lepton-toplevel toplevel)))))
+
+(define %lepton-toplevel #f)
+
+;;; Initialize %lepton-toplevel with a new fluid variable for
+;;; Scheme and C code.  Do it once.
+(when (not %lepton-toplevel)
+  (set! %lepton-toplevel (make-fluid))
+  (lepton_init_toplevel_fluid (scm->pointer %lepton-toplevel)))
+
 
 (define (%make-toplevel)
   "Make new toplevel."

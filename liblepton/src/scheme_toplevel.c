@@ -104,17 +104,3 @@ edascm_with_toplevel (SCM toplevel, SCM thunk)
 {
   return scm_with_fluid (scheme_toplevel_fluid, toplevel, thunk);
 }
-
-
-/*!
- * \brief Initialise the LeptonToplevel manipulation procedures.
- * \par Function Description
- * Registers some Scheme procedures for working with #LeptonToplevel smobs
- * and creates the #LeptonToplevel fluid. Should only be called by
- * edascm_init().
- */
-void
-edascm_init_toplevel ()
-{
-  scheme_toplevel_fluid = scm_permanent_object (scm_make_fluid ());
-}

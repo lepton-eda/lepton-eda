@@ -88,7 +88,6 @@
 #include <liblepton/libleptonguile.h>
 
 void edascm_init_smob ();
-void edascm_init_toplevel ();
 
 /* ---------------------------------------- */
 
