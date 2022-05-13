@@ -17,12 +17,22 @@
 
 
 (define-module (lepton toplevel)
+  #:use-module (ice-9 format)
   #:use-module (system foreign)
+
   #:use-module (lepton ffi)
 
   #:export (%current-toplevel
             %make-toplevel
             %with-toplevel))
+
+(define-wrapped-pointer-type <lepton-toplevel>
+  lepton-toplevel?
+  wrap-lepton-toplevel
+  unwrap-lepton-toplevel
+  (lambda (toplevel port)
+    (format port "#<lepton-toplevel-0x~x>"
+            (pointer-address (unwrap-lepton-toplevel toplevel)))))
 
 (define (%make-toplevel)
   "Make new toplevel."
@@ -30,7 +40,13 @@
 
 (define (%current-toplevel)
   "Get toplevel for the current dynamic context."
-  (false-if-exception (pointer->scm (edascm_current_toplevel))))
+  (let ((*toplevel (false-if-exception (edascm_current_toplevel))))
+    ;; This is the first approximation.  Really, toplevel fluid
+    ;; itself should be tested for non-#f value, something like:
+    ;; (fluid-ref %lepton-toplevel)
+    (and *toplevel
+         (not (null-pointer? *toplevel))
+         (wrap-lepton-toplevel *toplevel))))
 
 (define (%with-toplevel toplevel thunk)
   "Call THUNK, setting the toplevel fluid to TOPLEVEL."
