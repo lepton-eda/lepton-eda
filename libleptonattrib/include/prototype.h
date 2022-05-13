@@ -224,7 +224,7 @@ LeptonToplevel*
 x_window_get_toplevel ();
 
 int
-lepton_attrib_window ();
+lepton_attrib_window (LeptonToplevel *toplevel);
 
 void
 x_window_set_title_changed (int changed);

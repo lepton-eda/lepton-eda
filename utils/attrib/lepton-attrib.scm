@@ -60,7 +60,7 @@
   (pointer->procedure
    int
    (dynamic-func "lepton_attrib_window" libleptonattrib)
-   '()))
+   '(*)))
 
 ;;; Localization.
 (define %textdomain "libleptonattrib")
@@ -156,7 +156,7 @@ Lepton EDA homepage: ~S
                    ;; Open all files.
                    (for-each file->page files)
                    ;; Run attribute editor.
-                   (exit (lepton_attrib_window)))))))
+                   (exit (lepton_attrib_window (toplevel->pointer (current-toplevel)))))))))
 
         ;; There are non-existing or unreadable files.  Report and
         ;; exit.
