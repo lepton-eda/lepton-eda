@@ -236,5 +236,5 @@ Actual error:
 ;;; Wrapper for the main() function allowing using of liblepton
 ;;; variables, procedures, and modules.
 (define (main/with-toplevel args)
-  (%with-toplevel (%make-toplevel)
+  (with-toplevel (make-toplevel)
    (lambda () (main args))))

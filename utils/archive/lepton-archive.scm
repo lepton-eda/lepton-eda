@@ -863,7 +863,7 @@ the file manually.\n"))
           (archive))))
 
 
-(%with-toplevel (%make-toplevel)
+(with-toplevel (make-toplevel)
   (lambda ()
     ;; Process all gafrc files.
     (parse-rc "lepton-archive" "gafrc" )

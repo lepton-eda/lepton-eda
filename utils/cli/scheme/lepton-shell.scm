@@ -134,8 +134,8 @@ Lepton EDA homepage: ~S
   (setlocale LC_ALL "")
   (setlocale LC_NUMERIC "C")
 
-  (%with-toplevel
-   (%make-toplevel)
+  (with-toplevel
+   (make-toplevel)
    (lambda ()
      (unless (getenv "LEPTON_INHIBIT_RC_FILES")
        (parse-rc "lepton-shell" "gafrc"))

@@ -24,9 +24,9 @@
 
   #:export (%lepton-toplevel
             pointer->toplevel
-            %current-toplevel
-            %make-toplevel
-            %with-toplevel))
+            current-toplevel
+            make-toplevel
+            with-toplevel))
 
 (define-wrapped-pointer-type <lepton-toplevel>
   lepton-toplevel?
@@ -45,15 +45,15 @@
   (lepton_init_toplevel_fluid (scm->pointer %lepton-toplevel)))
 
 
-(define (%make-toplevel)
+(define (make-toplevel)
   "Make new toplevel."
   (pointer->toplevel (lepton_toplevel_new)))
 
-(define (%current-toplevel)
+(define (current-toplevel)
   "Get toplevel for the current dynamic context."
   (and=> (fluid-ref %lepton-toplevel) pointer->toplevel))
 
-(define (%with-toplevel toplevel thunk)
+(define (with-toplevel toplevel thunk)
   "Call THUNK, setting the toplevel fluid to TOPLEVEL."
   (with-fluid* %lepton-toplevel
     (toplevel->pointer toplevel) thunk))

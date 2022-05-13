@@ -194,8 +194,8 @@ Run `~A --help' for more information.\n")
     '())))
 
 
-(%with-toplevel
- (%make-toplevel)
+(with-toplevel
+ (make-toplevel)
  (lambda ()
    (let ((files (parse-commandline)))
      (for-each update files))))

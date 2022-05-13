@@ -60,8 +60,8 @@
 (define backend-output-string
   (with-output-to-string
     (λ ()
-      (%with-toplevel
-       (%make-toplevel)
+      (with-toplevel
+       (make-toplevel)
        (λ ()
          (set-toplevel-schematic! (make-toplevel-schematic (list input-schematic)))
          (spice-noqsi "-"))))))

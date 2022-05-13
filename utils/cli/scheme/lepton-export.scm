@@ -320,6 +320,6 @@ Lepton EDA homepage: ~A
       (exit 0))))
 
 ;;; Main function for `lepton-cli export'
-(%with-toplevel
- (%make-toplevel)
+(with-toplevel
+ (make-toplevel)
  export)

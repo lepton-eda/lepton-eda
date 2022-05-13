@@ -32,4 +32,4 @@
 (bindtextdomain %textdomain %lepton-localedir)
 (bind-textdomain-codeset %textdomain "UTF-8")
 
-(%with-toplevel (%make-toplevel) check-all-symbols)
+(with-toplevel (make-toplevel) check-all-symbols)

@@ -1035,7 +1035,7 @@ which values are equal in terms of F-EQUAL?."
 
     (with-output-to-file output-file
       (lambda ()
-        (%with-toplevel
-         (%make-toplevel)
+        (with-toplevel
+         (make-toplevel)
          (lambda ()
            (writesym options attributes pins)))))))

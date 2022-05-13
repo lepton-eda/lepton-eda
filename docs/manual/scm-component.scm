@@ -56,8 +56,8 @@
     page))
 
 (define (thunk->string thunk)
-  (%with-toplevel
-   (%make-toplevel)
+  (with-toplevel
+   (make-toplevel)
    (lambda ()
      (let ((page (thunk)))
        (page->string page)))))

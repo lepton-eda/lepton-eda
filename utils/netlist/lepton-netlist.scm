@@ -71,7 +71,7 @@
           (netlist-option-ref/toplevel %options 'load-path '()))
 
 ;;; Run netlister in new toplevel environment.
-(%with-toplevel (%make-toplevel)
+(with-toplevel (make-toplevel)
   (lambda ()
     ;; Init log domain and create log file right away even if
     ;; logging is enabled.

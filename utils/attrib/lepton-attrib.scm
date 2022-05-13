@@ -150,7 +150,7 @@ Lepton EDA homepage: ~S
                            readable-files)))
             (if (null? files)
                 (exit 0)
-                (%with-toplevel (%make-toplevel)
+                (with-toplevel (make-toplevel)
                  (lambda ()
                    (for-each process-gafrc* files)
                    ;; Open all files.

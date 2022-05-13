@@ -262,8 +262,8 @@ Lepton EDA homepage: <~a>
 
 
 
-( %with-toplevel
-  ( %make-toplevel )
+( with-toplevel
+  ( make-toplevel )
   ( lambda()
     ( main )
   )
