@@ -50,5 +50,5 @@
 
 (define (%with-toplevel toplevel thunk)
   "Call THUNK, setting the toplevel fluid to TOPLEVEL."
-  (pointer->scm (edascm_with_toplevel (scm->pointer toplevel)
-                                      (scm->pointer thunk))))
+  (edascm_with_toplevel (scm->pointer toplevel)
+                        (scm->pointer thunk)))
