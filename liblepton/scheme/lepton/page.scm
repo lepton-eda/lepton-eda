@@ -28,13 +28,11 @@
 
   #:use-module (lepton ffi)
   #:use-module (lepton gerror)
-  #:use-module (lepton gettext)
-  #:use-module (lepton page foreign)
-
   #:use-module (lepton object type)
   #:use-module (lepton object foreign)
-
   #:use-module (lepton os)
+  #:use-module (lepton page foreign)
+  #:use-module (lepton toplevel)
 
   #:export (active-pages
             close-page!
@@ -72,7 +70,7 @@ belong to a page, returns #f."
   "Returns a list of currently-opened pages."
   (glist->page-list
    (lepton_page_list_get_glist
-    (lepton_toplevel_get_pages (edascm_c_current_toplevel)))))
+    (lepton_toplevel_get_pages (toplevel->pointer (current-toplevel))))))
 
 
 (define (make-page filename)
@@ -80,7 +78,7 @@ belong to a page, returns #f."
 that this does not check that a file exists with that name, or
 attempt to load any data from it."
   (check-string filename 1)
-  (pointer->geda-page (lepton_page_new (edascm_c_current_toplevel)
+  (pointer->geda-page (lepton_page_new (toplevel->pointer (current-toplevel))
                                        (string->pointer filename))))
 
 
@@ -89,7 +87,7 @@ attempt to load any data from it."
 PAGE after calling this function will cause an error."
   (define pointer (geda-page->pointer* page 1))
 
-  (lepton_page_delete (edascm_c_current_toplevel)
+  (lepton_page_delete (toplevel->pointer (current-toplevel))
                       pointer))
 
 
@@ -161,7 +159,7 @@ syntax."
   (check-string str 2)
 
   (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-         (pointer (lepton_page_new (edascm_c_current_toplevel)
+         (pointer (lepton_page_new (toplevel->pointer (current-toplevel))
                                    (string->pointer filename)))
          (objects (o_read_buffer pointer
                                  %null-pointer

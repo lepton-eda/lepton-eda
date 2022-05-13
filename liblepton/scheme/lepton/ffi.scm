@@ -58,7 +58,6 @@
 
             ;; Foreign functions.
             lepton_init_toplevel_fluid
-            edascm_c_current_toplevel
             edascm_is_object
             edascm_from_object
             edascm_to_object
@@ -543,7 +542,6 @@
 
 ;;; scheme_smob.c
 (define-lff lepton_init_toplevel_fluid void '(*))
-(define-lff edascm_c_current_toplevel '* '())
 (define-lff edascm_is_object int '(*))
 (define-lff edascm_is_page int '(*))
 (define-lff edascm_from_object '* '(*))

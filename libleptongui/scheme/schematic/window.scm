@@ -89,7 +89,7 @@ window fluid or the fluid value is NULL.  Never returns NULL."
   "Returns the page which is active in the current
 lepton-schematic window.  If there is no active page, returns #f."
   (let ((*page (lepton_toplevel_get_page_current
-                (edascm_c_current_toplevel))))
+                (toplevel->pointer (current-toplevel)))))
     (and (not (null-pointer? *page))
          (pointer->geda-page *page))))
 

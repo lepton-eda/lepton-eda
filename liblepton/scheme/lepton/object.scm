@@ -31,6 +31,7 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton object text)
   #:use-module (lepton object type)
+  #:use-module (lepton toplevel)
 
   #:export (copy-object
             object-bounds
@@ -1441,7 +1442,9 @@ returns #f."
 
   (let* ((basename-pointer (string->pointer basename))
          (clib (s_clib_get_symbol_by_name basename-pointer))
-         (active-page (lepton_toplevel_get_page_current (edascm_c_current_toplevel))))
+         (active-page
+          (lepton_toplevel_get_page_current
+           (toplevel->pointer (current-toplevel)))))
     (and (not (null-pointer? clib))
          (pointer->geda-object (lepton_component_new active-page
                                                      (default_color_id)
