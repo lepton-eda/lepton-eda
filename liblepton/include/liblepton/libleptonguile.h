@@ -30,10 +30,6 @@ G_BEGIN_DECLS
 /* Initialise the Scheme API. */
 void edascm_init ();
 
-/* Get the value of the #LeptonToplevel fluid. */
-SCM
-edascm_current_toplevel ();
-
 /* Initialize #LeptonToplevel fluid. */
 void
 lepton_init_toplevel_fluid (SCM fluid);

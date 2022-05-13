@@ -47,17 +47,6 @@ edascm_dynwind_toplevel (LeptonToplevel *toplevel)
   scm_dynwind_fluid (scheme_toplevel_fluid, s_toplevel);
 }
 
-/*!
- * \brief Get the value of the #LeptonToplevel fluid.
- * \par Function Description
- * Return the value of the #LeptonToplevel fluid in the current dynamic
- * context.
- */
-SCM
-edascm_current_toplevel ()
-{
-  return scm_fluid_ref (scheme_toplevel_fluid);
-}
 
 /*!
  * \brief Initialize fluid for obtaining the #LeptonToplevel value.
@@ -89,8 +78,7 @@ LeptonToplevel *
 edascm_c_current_toplevel ()
 {
   g_debug ("edascm_c_current_toplevel()\n");
-  SCM s_toplevel = edascm_current_toplevel ();
-
+  SCM s_toplevel = scm_fluid_ref (scheme_toplevel_fluid);
   return (LeptonToplevel *) scm_to_pointer (s_toplevel);
 }
 

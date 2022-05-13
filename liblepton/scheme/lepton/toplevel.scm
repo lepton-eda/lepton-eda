@@ -50,13 +50,7 @@
 
 (define (%current-toplevel)
   "Get toplevel for the current dynamic context."
-  (let ((*toplevel (false-if-exception (edascm_current_toplevel))))
-    ;; This is the first approximation.  Really, toplevel fluid
-    ;; itself should be tested for non-#f value, something like:
-    ;; (fluid-ref %lepton-toplevel)
-    (and *toplevel
-         (not (null-pointer? *toplevel))
-         (wrap-lepton-toplevel *toplevel))))
+  (wrap-lepton-toplevel (fluid-ref %lepton-toplevel)))
 
 (define (%with-toplevel toplevel thunk)
   "Call THUNK, setting the toplevel fluid to TOPLEVEL."
