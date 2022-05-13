@@ -81,14 +81,3 @@ edascm_c_current_toplevel ()
   SCM s_toplevel = scm_fluid_ref (scheme_toplevel_fluid);
   return (LeptonToplevel *) scm_to_pointer (s_toplevel);
 }
-
-/*!
- * \brief Set the current #LeptonToplevel temporarily.
- * \par Function Description
- * Set the #LeptonToplevel fluid to \a toplevel and call \a thunk.
- */
-SCM
-edascm_with_toplevel (SCM toplevel, SCM thunk)
-{
-  return scm_with_fluid (scheme_toplevel_fluid, toplevel, thunk);
-}

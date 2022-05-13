@@ -23,6 +23,7 @@
   #:use-module (lepton ffi)
 
   #:export (%lepton-toplevel
+            pointer->toplevel
             %current-toplevel
             %make-toplevel
             %with-toplevel))
@@ -35,6 +36,8 @@
     (format port "#<lepton-toplevel-0x~x>"
             (pointer-address (unwrap-lepton-toplevel toplevel)))))
 
+(define pointer->toplevel wrap-lepton-toplevel)
+
 (define %lepton-toplevel #f)
 
 ;;; Initialize %lepton-toplevel with a new fluid variable for
@@ -46,7 +49,7 @@
 
 (define (%make-toplevel)
   "Make new toplevel."
-  (lepton_toplevel_new))
+  (wrap-lepton-toplevel (lepton_toplevel_new)))
 
 (define (%current-toplevel)
   "Get toplevel for the current dynamic context."
@@ -54,5 +57,5 @@
 
 (define (%with-toplevel toplevel thunk)
   "Call THUNK, setting the toplevel fluid to TOPLEVEL."
-  (edascm_with_toplevel (scm->pointer toplevel)
-                        (scm->pointer thunk)))
+  (with-fluid* %lepton-toplevel
+    (unwrap-lepton-toplevel toplevel) thunk))

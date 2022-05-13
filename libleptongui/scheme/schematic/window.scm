@@ -65,7 +65,7 @@
 
 ;;; Run THUNK in the dynamic context of *TOPLEVEL.
 (define (run-in-toplevel-context *toplevel thunk)
-  (%with-toplevel (pointer->scm *toplevel) thunk))
+  (%with-toplevel (pointer->toplevel *toplevel) thunk))
 
 ;;; Execute forms in the dynamic context of WINDOW and its
 ;;; toplevel.
