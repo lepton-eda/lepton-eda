@@ -55,7 +55,7 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   with generic Guile compiler `guild`.
 
 - The functions that were previously available in the module
-  `(lepton core toplevel)` are now reside in `(lepton toplevel)`.
+  `(lepton core toplevel)` reside now in `(lepton toplevel)`.
 
 - Functions, used for exporting a current color map for later
   including in Scheme RC scripts (typically, `gschemrc`), now
