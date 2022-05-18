@@ -74,10 +74,10 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
 
   Please see examples of using the functions in the configuration
   file `conf/schematic/deprecated.scm` usually living in the
-  `${prefix}/share/lepton-eda/scheme}`.  Two previously available
-  variables defining the behavior of the auto-placement code have
-  been moved to the new module and are not currently available in
-  any Lepton configuration files:
+  directory `${prefix}/share/lepton-eda/scheme}`.  Two previously
+  available variables defining the behavior of the auto-placement
+  code have been moved to the new module and are not currently
+  available in any Lepton configuration files:
   `default-position-of-text-attributes` and
   `autoplace-attributes-grid`.  Some better mechanism is desirable
   to make the settings available in the current configuration.
