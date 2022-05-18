@@ -62,6 +62,26 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   support output of translucent colors by adding alpha channel
   values for colors that are not fully opaque.
 
+- A new module, `(lepton autoplace)`, has been created from three
+  legacy scripts: `auto-place-attribs.scm`,
+  `auto-place-netname.scm`, and `default-attrib-positions.scm`.
+  The module merges functionality of the scripts and exports three
+  legacy functions that can be used for automatic placement of
+  attributes in `lepton-schematic` GUI using Scheme hooks:
+  - `autoplace-pin-attributes`
+  - `autoplace-object-attributes`
+  - `place-netname-attribute-handler`
+
+  Please see examples of using the functions in the configuration
+  file `conf/schematic/deprecated.scm` usually living in the
+  `${prefix}/share/lepton-eda/scheme}`.  Two previously available
+  variables defining the behavior of the auto-placement code have
+  been moved to the new module and are not currently available in
+  any Lepton configuration files:
+  `default-position-of-text-attributes` and
+  `autoplace-attributes-grid`.  Some better mechanism is desirable
+  to make the settings available in the current configuration.
+
 - Provisions have been added against potential memory leaks in
   export functions in case they are called multiple times in
   Scheme scripts, which also eliminated several build warnings.
