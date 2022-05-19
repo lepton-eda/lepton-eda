@@ -27,6 +27,7 @@
             toplevel->pointer
             toplevel?
             current-toplevel
+            set-current-toplevel!
             make-toplevel
             with-toplevel))
 
@@ -54,6 +55,13 @@
 (define (current-toplevel)
   "Get toplevel for the current dynamic context."
   (and=> (fluid-ref %lepton-toplevel) pointer->toplevel))
+
+
+(define (set-current-toplevel! toplevel)
+  "Unconditionally set current toplevel to TOPLEVEL which must be
+a <toplevel> instance."
+  (fluid-set! %lepton-toplevel (toplevel->pointer toplevel)))
+
 
 (define (with-toplevel toplevel thunk)
   "Call THUNK, setting the toplevel fluid to TOPLEVEL."
