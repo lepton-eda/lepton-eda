@@ -22,6 +22,7 @@
              (ice-9 regex)
              (srfi srfi-11)
              (lepton attrib)
+             (lepton core gettext)
              (lepton ffi)
              (lepton file-system)
              (lepton object)
