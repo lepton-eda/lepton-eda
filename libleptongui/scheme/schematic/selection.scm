@@ -33,7 +33,7 @@
 
 (define (page-selection page)
   "Return a list of selected objects on PAGE."
-  (define *page (geda-page->pointer* page 1))
+  (define *page (check-page page 1))
 
   (glist->list (lepton_list_get_glist (lepton_page_get_selection_list *page))
                pointer->geda-object))

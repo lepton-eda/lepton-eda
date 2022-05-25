@@ -27,6 +27,7 @@
              (lepton log)
              (lepton m4)
              (lepton os)
+             (lepton page foreign)
              (lepton srfi-37)
              (lepton version)
              (schematic core gettext)

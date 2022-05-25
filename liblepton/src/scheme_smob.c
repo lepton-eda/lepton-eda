@@ -246,9 +246,6 @@ smob_free (SCM smob)
   /* Otherwise, clear the weak reference */
   switch (EDASCM_SMOB_TYPE (smob)) {
   case GEDA_SMOB_PAGE:
-    lepton_page_weak_unref ((LeptonPage *) data,
-                            smob_weakref_notify,
-                            unpack_as_pointer (smob));
     break;
   case GEDA_SMOB_OBJECT:
     lepton_object_weak_unref ((LeptonObject *) data,
@@ -347,56 +344,6 @@ smob_equalp (SCM obj1, SCM obj2)
   }
 }
 
-/*! \brief Get a smob for a page.
- * \ingroup guile_c_iface
- * \par Function Description
- * Create a new smob representing \a page.
- *
- * \param page #LeptonPage to create a smob for.
- * \return a smob representing \a page.
- */
-SCM
-edascm_from_page (LeptonPage *page)
-{
-  SCM smob = smob_cache_lookup (page);
-
-  if (EDASCM_PAGEP (smob)) {
-    return smob;
-  }
-
-  SCM_NEWSMOB (smob, geda_smob_tag, page);
-  SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_PAGE);
-
-  /* Set weak reference */
-  lepton_page_weak_ref (page,
-                        smob_weakref_notify,
-                        unpack_as_pointer (smob));
-
-  smob_cache_add (page, smob);
-
-  return smob;
-}
-
-/*! \brief Get a page from a smob.
- * \ingroup guile_c_iface
- * \par Function Description
- * Return the #LeptonPage represented by \a smob.
- *
- * \param [in] smob Guile value to retrieve #LeptonPage from.
- * \return the #LeptonPage represented by \a smob.
- */
-LeptonPage *
-edascm_to_page (SCM smob)
-{
-  g_debug ("edascm_to_page()\n");
-#ifndef NDEBUG
-  SCM_ASSERT (EDASCM_PAGEP (smob), smob,
-              SCM_ARG1, "edascm_to_page");
-#endif
-  EDASCM_ASSERT_SMOB_VALID (smob);
-
-  return (LeptonPage *) SCM_SMOB_DATA (smob);
-}
 
 /*! \brief Get a smob for a schematic object.
  * \ingroup guile_c_iface
@@ -502,21 +449,6 @@ edascm_is_object (SCM smob)
   return EDASCM_OBJECTP (smob);
 }
 
-/*! \brief Test whether a smob is a #LeptonPage instance
- * \ingroup guile_c_iface
- * \par Function Description
- * If \a smob is a #LeptonPage instance, returns non-zero. Otherwise,
- * returns zero.
- *
- * \param [in] smob Guile value to test.
- *
- * \return non-zero iff \a smob is a #LeptonPage instance.
- */
-int
-edascm_is_page (SCM smob)
-{
-  return EDASCM_PAGEP (smob);
-}
 
 /*!
  * \brief Initialise the basic Lepton EDA smob types.

@@ -27,6 +27,7 @@
   #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton page foreign)
+  #:use-module (lepton page)
   #:use-module (lepton toplevel)
 
   #:use-module (schematic ffi)
@@ -91,20 +92,20 @@ lepton-schematic window.  If there is no active page, returns #f."
   (let ((*page (lepton_toplevel_get_page_current
                 (toplevel->pointer (current-toplevel)))))
     (and (not (null-pointer? *page))
-         (pointer->geda-page *page))))
+         (pointer->page *page))))
 
 
 (define (set-active-page! page)
   "Sets the page which is active in the current lepton-schematic
 window to PAGE.  Returns PAGE."
-  (define *page (geda-page->pointer* page 1))
+  (define *page (check-page page 1))
   (x_window_set_current_page (current-window) *page)
   page)
 
 
 (define (close-page! page)
   "Closes PAGE."
-  (define *page (geda-page->pointer* page 1))
+  (define *page (check-page page 1))
   (define *window (current-window))
   ;; Currently active page.
   (define *active_page

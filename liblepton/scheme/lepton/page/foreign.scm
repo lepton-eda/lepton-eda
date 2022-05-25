@@ -21,25 +21,21 @@
 
   #:use-module (lepton ffi)
 
-  #:export (geda-page-pointer?
-            geda-page->pointer
-            geda-page->pointer*
-            pointer->geda-page
+  #:export (page?
+            check-page
+            page->pointer
+            pointer->page
             glist->page-list))
 
-;;; Helper transformers between #<geda-page> smobs and C page
-;;; pointers.
-(define (geda-page->pointer smob)
-  (or (false-if-exception (edascm_to_page (scm->pointer smob)))
-      ;; Return NULL if the SMOB is not the #<geda-page> smob.
-      %null-pointer))
 
-(define (pointer->geda-page pointer)
-  ;; Return #f if the pointer is wrong.
-  (false-if-exception (pointer->scm (edascm_from_page pointer))))
+(define-wrapped-pointer-type <page>
+  page?
+  pointer->page
+  page->pointer
+  (lambda (page port)
+    (format port "#<page-0x~x>"
+            (pointer-address (page->pointer page)))))
 
-(define (geda-page-pointer? pointer)
-  (true? (edascm_is_page pointer)))
 
 (define (glist->page-list gls)
   "Converts a GList of foreign page pointers GLS into a Scheme
@@ -49,13 +45,15 @@ list.  Returns the Scheme list of pages."
     (if (null-pointer? gls)
         (reverse ls)
         (loop (glist-next gls)
-              (cons (pointer->geda-page (glist-data gls)) ls)))))
+              (cons (pointer->page (glist-data gls)) ls)))))
 
-(define-syntax geda-page->pointer*
+(define-syntax check-page
   (syntax-rules ()
     ((_ page pos)
-     (let ((pointer (geda-page->pointer page)))
-       (if (null-pointer? pointer)
+     (let ((pointer (and (page? page)
+                         (page->pointer page))))
+       (if (or (not pointer)
+               (null-pointer? pointer))
            (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
              (scm-error 'wrong-type-arg
                         proc-name

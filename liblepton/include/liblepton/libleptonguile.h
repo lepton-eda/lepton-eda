@@ -37,20 +37,11 @@ lepton_init_toplevel_fluid (SCM fluid);
 /* Set the #LeptonToplevel fluid in the current dynamic context. */
 void edascm_dynwind_toplevel (LeptonToplevel *toplevel);
 
-/* Create a Guile value from a page structure. */
-SCM edascm_from_page (LeptonPage *page);
-
 /* Create a Guile value from an object structure. */
 SCM edascm_from_object (LeptonObject *object);
 
-/* Retrieve a page structure from a Guile value. */
-LeptonPage *edascm_to_page (SCM smob);
-
 /* Retrieve an object structure from a Guile value. */
 LeptonObject *edascm_to_object (SCM smob);
-
-/* Test if smob is a gEDA page. */
-int edascm_is_page (SCM smob);
 
 /* Test if smob is a gEDA object. */
 int edascm_is_object (SCM smob);
