@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2021 Lepton EDA Contributors
+;;; Copyright (C) 2021-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 
 (define-module (lepton page foreign)
+  #:use-module (ice-9 format)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
