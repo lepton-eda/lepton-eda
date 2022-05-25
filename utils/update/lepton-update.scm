@@ -50,7 +50,6 @@ Command line switches:
   -h,--help             -- Print usage information.
   -V,--version          -- Print version information.
 "
-          program-name
           program-name)
   (exit 0))
 
