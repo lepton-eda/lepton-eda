@@ -123,7 +123,8 @@ g_run_hook_page (GschemToplevel *w_current,
 
   SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),
                          g_get_hook_by_name (name),
-                         edascm_from_page (page));
+                         scm_list_2 (scm_from_utf8_symbol ("pointer->page"),
+                                     scm_from_pointer (page, NULL)));
 
   g_scm_eval_protected (expr, scm_interaction_environment ());
   scm_dynwind_end ();

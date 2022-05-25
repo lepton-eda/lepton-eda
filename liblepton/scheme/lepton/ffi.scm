@@ -61,9 +61,6 @@
             edascm_is_object
             edascm_from_object
             edascm_to_object
-            edascm_is_page
-            edascm_from_page
-            edascm_to_page
 
             config_error_type
             config_error_code
@@ -545,11 +542,8 @@
 
 ;;; scheme_smob.c
 (define-lff edascm_is_object int '(*))
-(define-lff edascm_is_page int '(*))
 (define-lff edascm_from_object '* '(*))
 (define-lff edascm_to_object '* '(*))
-(define-lff edascm_from_page '* '(*))
-(define-lff edascm_to_page '* '(*))
 
 ;;; list.c
 (define-lff lepton_list_get_glist '* '(*))

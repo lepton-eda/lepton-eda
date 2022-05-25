@@ -19,6 +19,7 @@
 
 
 (define-module (lepton page)
+  #:use-module (ice-9 format)
   #:use-module (ice-9 optargs)
   #:use-module ((ice-9 rdelim)
                 #:select (read-string)
@@ -39,7 +40,6 @@
             file->page
             make-page
             object-page
-            page?
             page-append!
             page-remove!
             page-contents
@@ -48,12 +48,9 @@
             page-filename
             set-page-filename!
             page->string
-            string->page))
+            string->page)
 
-(define (page? page)
-  "Returns #t if PAGE is a #<geda-page> instance, otherwise
-returns #f."
-  (true? (edascm_is_page (scm->pointer page))))
+  #:re-export (page?))
 
 
 (define (object-page object)
@@ -63,7 +60,7 @@ belong to a page, returns #f."
 
   (let ((page-pointer (lepton_object_get_page object-pointer)))
     (and (not (null-pointer? page-pointer))
-         (pointer->geda-page page-pointer))))
+         (pointer->page page-pointer))))
 
 
 (define (active-pages)
@@ -90,8 +87,8 @@ procedure) is not defined or set to a wrong value."
 
   (let ((toplevel (current-toplevel)))
     (if (toplevel? toplevel)
-        (pointer->geda-page (lepton_page_new (toplevel->pointer toplevel)
-                                             (string->pointer filename)))
+        (pointer->page (lepton_page_new (toplevel->pointer toplevel)
+                                        (string->pointer filename)))
         (scm-error 'wrong-type-arg
                    'make-page
                    "Current <toplevel> value is not defined or wrong: ~A"
@@ -102,7 +99,7 @@ procedure) is not defined or set to a wrong value."
 (define (close-page! page)
   "Destroys PAGE, freeing all of its resources.  Attempting to use
 PAGE after calling this function will cause an error."
-  (define pointer (geda-page->pointer* page 1))
+  (define pointer (check-page page 1))
 
   (lepton_page_delete (toplevel->pointer (current-toplevel))
                       pointer))
@@ -110,14 +107,14 @@ PAGE after calling this function will cause an error."
 
 (define (page-filename page)
   "Returns the filename associated with PAGE as a string."
-  (define pointer (geda-page->pointer* page 1))
+  (define pointer (check-page page 1))
 
   (pointer->string (lepton_page_get_filename pointer)))
 
 
 (define (set-page-filename! page filename)
   "Sets the filename associated with PAGE.  Returns PAGE."
-  (define pointer (geda-page->pointer* page 1))
+  (define pointer (check-page page 1))
   (check-string filename 2)
 
   (lepton_page_set_filename pointer (string->pointer filename))
@@ -126,7 +123,7 @@ PAGE after calling this function will cause an error."
 
 (define (page-contents page)
   "Returns the contents of PAGE as a list of objects."
-  (define pointer (geda-page->pointer* page 1))
+  (define pointer (check-page page 1))
 
   (glist->object-list (lepton_page_objects pointer)))
 
@@ -134,7 +131,7 @@ PAGE after calling this function will cause an error."
 (define (page-dirty? page)
   "Returns #t if PAGE has been flagged as having been modified,
 otherwise returns #f."
-  (define pointer (geda-page->pointer* page 1))
+  (define pointer (check-page page 1))
 
   (true? (lepton_page_get_changed pointer)))
 
@@ -142,7 +139,7 @@ otherwise returns #f."
 (define* (set-page-dirty! page #:optional (state #t))
   "Clears the flag of changed state of PAGE if dirty STATE is #f.
 Otherwise, flags PAGE as having been modified.  Returns PAGE."
-  (define pointer (geda-page->pointer* page 1))
+  (define pointer (check-page page 1))
   (check-boolean state 2)
 
   (lepton_page_set_changed pointer (if state TRUE FALSE))
@@ -151,7 +148,7 @@ Otherwise, flags PAGE as having been modified.  Returns PAGE."
 
 (define (page->string page)
   "Returns a string representation of the contents of PAGE."
-  (define pointer (geda-page->pointer* page 1))
+  (define pointer (check-page page 1))
   (pointer->string
    (lepton_object_list_to_buffer (lepton_page_objects pointer))))
 
@@ -188,14 +185,14 @@ syntax."
 
     (lepton_page_append_list pointer objects)
 
-    (pointer->geda-page pointer)))
+    (pointer->page pointer)))
 
 
 ;;; Adds OBJECT to PAGE.  If OBJECT is already attached to a page
 ;;; or to a component object, raises an 'object-state error.
 ;;; Returns modified PAGE.
 (define (%page-append! page object)
-  (define page-pointer (geda-page->pointer* page 1))
+  (define page-pointer (check-page page 1))
   (define object-pointer (geda-object->pointer* object 2))
 
   ;; Check that the object isn't already attached to something.
@@ -235,7 +232,7 @@ PAGE are ignored.  Returns PAGE."
 ;;; 'object-state error.  If OBJECT is not attached to a page,
 ;;; does nothing.  Returns PAGE.
 (define (%page-remove! page object)
-  (define page-pointer (geda-page->pointer* page 1))
+  (define page-pointer (check-page page 1))
   (define object-pointer (geda-object->pointer* object 2))
 
   ;; Check that the object is not attached to something else.
