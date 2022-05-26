@@ -76,10 +76,19 @@ belong to a page, returns #f."
 (define (make-page filename)
   "Creates and returns a new page associated with FILENAME.  Note
 that this does not check that a file exists with that name, or
-attempt to load any data from it."
+attempt to load any data from it.  Raises a 'wrong-type-arg error
+if the current <toplevel> (as returned by the current-toplevel()
+procedure) is not defined or set to a wrong value."
   (check-string filename 1)
-  (pointer->geda-page (lepton_page_new (toplevel->pointer (current-toplevel))
-                                       (string->pointer filename))))
+  (let ((toplevel (current-toplevel)))
+    (if (toplevel? toplevel)
+        (pointer->geda-page (lepton_page_new (toplevel->pointer toplevel)
+                                             (string->pointer filename)))
+        (scm-error 'wrong-type-arg
+                   'make-page
+                   "Current <toplevel> value is not defined or wrong: ~A"
+                   (list toplevel)
+                   #f))))
 
 
 (define (close-page! page)
