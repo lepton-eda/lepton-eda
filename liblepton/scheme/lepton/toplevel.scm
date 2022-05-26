@@ -33,11 +33,22 @@
 
 (define-wrapped-pointer-type <toplevel>
   toplevel?
-  pointer->toplevel
-  toplevel->pointer
+  wrap-toplevel
+  unwrap-toplevel
   (lambda (toplevel port)
     (format port "#<toplevel-0x~x>"
-            (pointer-address (toplevel->pointer toplevel)))))
+            (pointer-address (unwrap-toplevel toplevel)))))
+
+(define pointer->toplevel wrap-toplevel)
+
+(define (toplevel->pointer toplevel)
+  (if (toplevel? toplevel)
+      (unwrap-toplevel toplevel)
+      (scm-error 'wrong-type-arg
+                 'toplevel->pointer
+                 "Wrong type argument in position 1 (expecting <toplevel>): ~A"
+                 (list toplevel)
+                 #f)))
 
 (define %lepton-toplevel #f)
 
