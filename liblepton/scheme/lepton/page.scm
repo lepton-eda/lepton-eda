@@ -80,6 +80,14 @@ attempt to load any data from it.  Raises a 'wrong-type-arg error
 if the current <toplevel> (as returned by the current-toplevel()
 procedure) is not defined or set to a wrong value."
   (check-string filename 1)
+
+  (when (string-null? filename)
+        (scm-error 'misc-error
+                   'make-page
+                   "Filename cannot be an empty string."
+                   '()
+                   #f))
+
   (let ((toplevel (current-toplevel)))
     (if (toplevel? toplevel)
         (pointer->geda-page (lepton_page_new (toplevel->pointer toplevel)
