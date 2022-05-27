@@ -99,6 +99,7 @@
 
 (test-assert-thrown 'wrong-type-arg (object-page 'x))
 (test-assert-thrown 'wrong-type-arg (make-page 'x))
+(test-assert-thrown 'misc-error (make-page ""))
 (test-assert-thrown 'wrong-type-arg (close-page! 'x))
 (test-assert-thrown 'wrong-type-arg (page-filename 'x))
 (test-assert-thrown 'wrong-type-arg (set-page-filename! 'x "filename"))
