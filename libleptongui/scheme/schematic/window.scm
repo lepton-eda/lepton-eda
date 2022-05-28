@@ -70,7 +70,7 @@
 (define-syntax-rule (with-window window form form* ...)
   (with-fluids ((%lepton-window window)
                 (%lepton-toplevel
-                 (pointer->toplevel (gschem_toplevel_get_toplevel window))))
+                 (gschem_toplevel_get_toplevel window)))
     form form* ...))
 
 
