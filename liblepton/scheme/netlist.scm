@@ -34,7 +34,7 @@
   #:use-module (netlist attrib compare)
   #:use-module (netlist attrib refdes)
   #:use-module (geda deprecated)
-  #:use-module (lepton core gettext)
+  #:use-module (lepton gettext)
   #:use-module (lepton library)
   #:use-module (lepton log)
   #:use-module (lepton object)

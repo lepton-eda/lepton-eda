@@ -23,8 +23,8 @@
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
-  #:use-module (lepton core gettext)
   #:use-module (lepton ffi)
+  #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (lepton page foreign)
   #:use-module (lepton toplevel)

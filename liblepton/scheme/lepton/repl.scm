@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@
   #:use-module (system repl repl)
   #:use-module (system repl common)
 
-  #:use-module (lepton core gettext)
+  #:use-module (lepton gettext)
   #:use-module ((lepton os) #:select (user-config-dir))
 
   #:export (lepton-repl

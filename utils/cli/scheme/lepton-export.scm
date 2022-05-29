@@ -19,8 +19,8 @@
 
 (use-modules (srfi srfi-1)
              (system foreign)
-             (lepton core gettext)
              (lepton ffi)
+             (lepton gettext)
              (lepton page)
              (lepton rc)
              (lepton srfi-37)

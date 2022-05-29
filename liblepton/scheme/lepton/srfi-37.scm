@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2021 Lepton EDA Contributors
+;;; Copyright (C) 2021-2022 Lepton EDA Contributors
 ;;; This module has been copied from the Guile repository and modified
 ;;; specially for Lepton EDA.
 
@@ -47,7 +47,7 @@
 ;;;; Module definition & exports
 (define-module (lepton srfi-37)
   #:use-module (srfi srfi-9)
-  #:use-module (lepton core gettext)
+  #:use-module (lepton gettext)
   #:export (option option-names option-required-arg?
             option-optional-arg? option-processor
             args-fold))

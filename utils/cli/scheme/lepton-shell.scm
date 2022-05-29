@@ -19,8 +19,8 @@
 
 (use-modules (ice-9 eval-string)
              (ice-9 readline)
-             (lepton core gettext)
              (lepton ffi)
+             (lepton gettext)
              (lepton rc)
              (lepton repl)
              (lepton srfi-37)

@@ -20,7 +20,7 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
 
-  #:use-module (lepton core gettext)
+  #:use-module (lepton gettext)
   #:use-module (symbol blame)
   #:use-module (symbol check log)
   #:use-module (symcheck option)

@@ -17,7 +17,7 @@ nobase_dist_scmdata_DATA = \
 	lepton/autoplace.scm \
 	lepton/color-map.scm \
 	lepton/config.scm \
-	lepton/core/gettext.scm \
+	lepton/gettext.scm \
 	lepton/eval.scm \
 	lepton/ffi.scm \
 	lepton/ffi/lib.scm \

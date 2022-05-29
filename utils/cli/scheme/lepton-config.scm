@@ -20,9 +20,9 @@
 (use-modules (ice-9 match)
              (srfi srfi-1)
              (lepton config)
-             (lepton core gettext)
              (lepton ffi)
              (lepton file-system)
+             (lepton gettext)
              (lepton srfi-37)
              (lepton version))
 
