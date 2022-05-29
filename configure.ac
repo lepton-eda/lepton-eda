@@ -238,11 +238,11 @@ AX_DATA_DIRS
 # Where should PCB footprints be searched for?
 AX_PCB_DIRS
 # Set up liblepton with the correct ld version number
-AX_LIBLEPTON([10:0:0])
+AX_LIBLEPTON([11:0:0])
 # Set up libleptonattrib with the correct ld version number
-AX_LIBLEPTONATTRIB([4:0:0])
+AX_LIBLEPTONATTRIB([5:0:0])
 # Set up libleptongui with the correct ld version number.
-AX_LIBLEPTONGUI([4:0:0])
+AX_LIBLEPTONGUI([5:0:0])
 
 #####################################################################
 # Generate output
