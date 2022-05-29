@@ -54,6 +54,10 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   were dependent on the `core` modules can now be simply compiled
   with generic Guile compiler `guild`.
 
+- The module `(lepton core gettext)` has been renamed to `(lepton
+  gettext)`.  It does not belong to the set of modules defined in
+  C described above.
+
 - The functions that were previously available in the module
   `(lepton core toplevel)` reside now in `(lepton toplevel)`.
 
