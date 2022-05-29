@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2010-02-14 06:08+0000\n"
 "Last-Translator: عبدالله شلي (Abdellah Chelli) <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -22,6 +22,13 @@ msgstr ""
 #, fuzzy
 msgid "Zoom too small!  Cannot zoom further."
 msgstr "التبعيد كبير جدا! لا يمكن التبعيد أكثر.\n"
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "_بدل الرؤية"
+
+msgid "_Apply"
+msgstr ""
 
 #, fuzzy
 msgid "Save As.._."
@@ -48,6 +55,13 @@ msgstr "فشل تحميل الملف"
 msgid "Save Color Scheme"
 msgstr "مخطط ألوان _فاتحة"
 
+msgid "_Save"
+msgstr "ا_حفظ"
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "انتقل/ألغِ"
+
 #, fuzzy, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -60,9 +74,6 @@ msgstr ""
 
 msgid "Overwrite file?"
 msgstr "اكتب على الملف؟"
-
-msgid "_Apply"
-msgstr ""
 
 msgid "Sa_ve..."
 msgstr ""
@@ -79,25 +90,13 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr ""
 
 msgid "User configuration file:"
-msgstr ""
-
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr ""
-
-msgid "Invalid text name/value visibility ~A."
-msgstr ""
-
-msgid "Object ~A is not directly included in a page."
-msgstr ""
-
-msgid "Could not launch URI ~S: ~A"
-msgstr ""
-
-msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr ""
 
 #, c-format
@@ -116,7 +115,7 @@ msgstr "gEDA: GPL Electronic Design Automation (أتمتة التصميم الإ
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -262,6 +261,9 @@ msgstr "أ_غلق دون حفظ"
 
 msgid "Coords"
 msgstr "إحداثيات"
+
+msgid "_Close"
+msgstr "أ_غلق"
 
 msgid "Screen"
 msgstr "شاشة"
@@ -602,6 +604,9 @@ msgstr "أنشئت نافذة جديدة [‎%s‬]\n"
 msgid "Execute Script"
 msgstr "نفذ مخطوطا (سكربت)..."
 
+msgid "_Run"
+msgstr ""
+
 #, fuzzy
 msgid "Scheme files (*.scm)"
 msgstr "مخططات"
@@ -823,6 +828,10 @@ msgstr ""
 #, fuzzy
 msgid "Add Picture"
 msgstr "صورة"
+
+#, fuzzy
+msgid "_Open"
+msgstr "افتح"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
@@ -1310,6 +1319,9 @@ msgstr "الاسم:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "_Add"
+msgstr "_أضف"
+
 msgid "<b>Add Attribute</b>"
 msgstr "<b>أضف سمة</b>"
 
@@ -1423,18 +1435,12 @@ msgstr "_جديد"
 msgid "_Open..."
 msgstr "ا_فتح..."
 
-msgid "_Save"
-msgstr "ا_حفظ"
-
 msgid "Save _As..."
 msgstr "احفظ _ك‍..."
 
 #, fuzzy
 msgid "Page _Manager..."
 msgstr "مدير الصفحات"
-
-msgid "_Close"
-msgstr "أ_غلق"
 
 msgid "Options"
 msgstr "خيارات"
@@ -1976,9 +1982,6 @@ msgstr "_عرض"
 msgid "_Page"
 msgstr "_صفحة"
 
-msgid "_Add"
-msgstr "_أضف"
-
 msgid "Hie_rarchy"
 msgstr "تسلسل​_هرمي"
 
@@ -2304,10 +2307,6 @@ msgstr "توثيق الم_كونات"
 #, fuzzy
 msgid "No documentation found"
 msgstr "ت_وثيق"
-
-#, scheme-format
-msgid "~S is not a valid key combination."
-msgstr ""
 
 #, scheme-format
 msgid "~S is not a prefix key sequence."

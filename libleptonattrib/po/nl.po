@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:10+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2014-08-31 20:31+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -177,6 +177,13 @@ msgstr ""
 msgid "Add new attribute"
 msgstr "Voeg nieuwe attribuut toe"
 
+msgid "_OK"
+msgstr ""
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "_afbreken"
+
 msgid "Enter new attribute name"
 msgstr "Voer nieuwe attribuutnaam toe"
 
@@ -205,6 +212,12 @@ msgstr ""
 "Kies \"Quit\" om gattrib te verlaten en het probleem op te lossen, of\n"
 "\"Forward\" om door te gaan met werken met gattrib.\n"
 
+msgid "_Quit"
+msgstr ""
+
+msgid "_Forward"
+msgstr ""
+
 msgid "Missing symbol file found for component!"
 msgstr "Ontbrekende symbool voor component gevonden!"
 
@@ -222,6 +235,9 @@ msgstr "Als je niet opslaat, zullen alle veranderingen verloren gaan."
 
 msgid "Close without saving"
 msgstr "Afsluiten zonder opslaan"
+
+msgid "_Save"
+msgstr ""
 
 #, fuzzy
 msgid ""
@@ -276,7 +292,7 @@ msgstr ""
 msgid ""
 "Copyright © 2003-2006 Stuart D. Brorson\n"
 "Copyright © 2003-2016 gEDA Contributors\n"
-"Copyright © 2017-2021 Lepton EDA Contributors"
+"Copyright © 2017-2022 Lepton EDA Contributors"
 msgstr ""
 
 msgid ""
@@ -311,6 +327,10 @@ msgid "All files"
 msgstr "Alle bestanden"
 
 msgid "Open..."
+msgstr "Open..."
+
+#, fuzzy
+msgid "_Open"
 msgstr "Open..."
 
 msgid "Components"

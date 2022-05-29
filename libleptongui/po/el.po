@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2012-09-01 20:41+0000\n"
 "Last-Translator: Panos Bouklis <panos@echidna-band.com>\n"
 "Language-Team: Greek <el@li.org>\n"
@@ -19,6 +19,13 @@ msgstr ""
 "X-Generator: Launchpad (build 16265)\n"
 
 msgid "Zoom too small!  Cannot zoom further."
+msgstr ""
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "Εναλλαγή ορατότητας"
+
+msgid "_Apply"
 msgstr ""
 
 #, fuzzy
@@ -45,6 +52,13 @@ msgstr "Αποτυχία αποθήκευσης αρχείου"
 msgid "Save Color Scheme"
 msgstr "Σχήμα _φωτεινών χρωμάτων"
 
+msgid "_Save"
+msgstr "_Αποθήκευση"
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "Μενού/Άκυρο"
+
 #, fuzzy, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -57,9 +71,6 @@ msgstr ""
 
 msgid "Overwrite file?"
 msgstr "Αντικατάσταση αρχείου;"
-
-msgid "_Apply"
-msgstr ""
 
 msgid "Sa_ve..."
 msgstr ""
@@ -76,28 +87,14 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr ""
 
 msgid "User configuration file:"
 msgstr ""
-
-#, fuzzy
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr "Το αντικείμενο ~A δεν περιλαμβάνεται στην τρέχουσα gschem."
-
-msgid "Invalid text name/value visibility ~A."
-msgstr "Μη έγκυρο όνομα/τιμή ορατότητας ~A."
-
-msgid "Object ~A is not directly included in a page."
-msgstr "Το αντικείμενο ~A δεν περιλαμβάνεται άμεσα σε μια σελίδα."
-
-msgid "Could not launch URI ~S: ~A"
-msgstr "Αδυναμία εκτέλεσης URI ~S: ~A"
-
-#, fuzzy
-msgid "Found invalid lepton-schematic window SCM: ~S"
-msgstr "Το ~S δεν είναι έγκυρος συνδιασμός πλήκτρων."
 
 #, fuzzy, c-format
 msgid "%s (git: %.7s)"
@@ -116,7 +113,7 @@ msgstr "gEDA: Ηλεκτρονικός Αυτοματισμός Σχεδίαση
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Πνευματικά δικαιώματα © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -265,6 +262,9 @@ msgstr "_Κλείσιμο χωρίς αποθήκευση"
 
 msgid "Coords"
 msgstr "Συντεταγμένες"
+
+msgid "_Close"
+msgstr "_Κλείσιμο"
 
 msgid "Screen"
 msgstr "Οθόνη"
@@ -604,6 +604,9 @@ msgstr "Δημιουργήθηκε νέο παράθυρο [%s]\n"
 msgid "Execute Script"
 msgstr "Εκτέλεση σεναρίου..."
 
+msgid "_Run"
+msgstr ""
+
 #, fuzzy
 msgid "Scheme files (*.scm)"
 msgstr "Σχεδιαγράμματα"
@@ -820,6 +823,10 @@ msgstr ""
 msgid "Add Picture"
 msgstr "Εικόνα"
 
+#, fuzzy
+msgid "_Open"
+msgstr "Άνοιγμα"
+
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
 msgstr "Αδυναμία φορτώματος εικόνας: %s"
@@ -921,8 +928,8 @@ msgstr ""
 msgid ""
 "duplicate slot may cause problems: [symbolname=%1$s, number=%2$d, slot=%3$d]"
 msgstr ""
-"οι διπλές υποδοχές μπορεί να προκαλέσουν προβλήματα: [σύμβολο=%s, αριθμός="
-"%d, υποδοχή=%d]\n"
+"οι διπλές υποδοχές μπορεί να προκαλέσουν προβλήματα: [σύμβολο=%s, "
+"αριθμός=%d, υποδοχή=%d]\n"
 
 msgid "No search string given in autonumber text."
 msgstr ""
@@ -1308,6 +1315,9 @@ msgstr "Όνομα:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "_Add"
+msgstr "_Προσθήκη"
+
 msgid "<b>Add Attribute</b>"
 msgstr "<b>Προσθήκη γνωρίσματος</b>"
 
@@ -1430,18 +1440,12 @@ msgstr "_Νέο"
 msgid "_Open..."
 msgstr "_Άνοιγμα..."
 
-msgid "_Save"
-msgstr "_Αποθήκευση"
-
 msgid "Save _As..."
 msgstr "Αποθήκευση _ως..."
 
 #, fuzzy
 msgid "Page _Manager..."
 msgstr "Διαχειριστής σελίδων"
-
-msgid "_Close"
-msgstr "_Κλείσιμο"
 
 #, fuzzy
 msgid "Options"
@@ -1985,9 +1989,6 @@ msgstr "_Προβολή"
 msgid "_Page"
 msgstr "_Σελίδα"
 
-msgid "_Add"
-msgstr "_Προσθήκη"
-
 msgid "Hie_rarchy"
 msgstr "_Ιεραρχία"
 
@@ -2304,10 +2305,6 @@ msgid "No documentation found"
 msgstr "Δε βρέθηκε τεκμηρίωση"
 
 #, scheme-format
-msgid "~S is not a valid key combination."
-msgstr "Το ~S δεν είναι έγκυρος συνδιασμός πλήκτρων."
-
-#, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr ""
 
@@ -2342,6 +2339,27 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Object ~A is not included in the current lepton-schematic page."
+#~ msgstr "Το αντικείμενο ~A δεν περιλαμβάνεται στην τρέχουσα gschem."
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr "Μη έγκυρο όνομα/τιμή ορατότητας ~A."
+
+#~ msgid "Object ~A is not directly included in a page."
+#~ msgstr "Το αντικείμενο ~A δεν περιλαμβάνεται άμεσα σε μια σελίδα."
+
+#~ msgid "Could not launch URI ~S: ~A"
+#~ msgstr "Αδυναμία εκτέλεσης URI ~S: ~A"
+
+#, fuzzy
+#~ msgid "Found invalid lepton-schematic window SCM: ~S"
+#~ msgstr "Το ~S δεν είναι έγκυρος συνδιασμός πλήκτρων."
+
+#, scheme-format
+#~ msgid "~S is not a valid key combination."
+#~ msgstr "Το ~S δεν είναι έγκυρος συνδιασμός πλήκτρων."
 
 #, fuzzy
 #~ msgid "Snap size"

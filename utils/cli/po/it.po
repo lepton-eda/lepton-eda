@@ -162,14 +162,14 @@ msgstr ""
 #, fuzzy, c-format
 #~ msgid "ERROR: Cannot infer output format from filename '%1$s'.\n"
 #~ msgstr ""
-#~ "ERRORE: impossibile ricavare il formato di uscita dal nome del file \"%s"
-#~ "\".\n"
+#~ "ERRORE: impossibile ricavare il formato di uscita dal nome del file "
+#~ "\"%s\".\n"
 
 #, fuzzy, c-format
 #~ msgid "ERROR: Cannot find supported format for filename '%1$s'.\n"
 #~ msgstr ""
-#~ "ERRORE: impossibile trovare il formato supportato per il file di nome \"%s"
-#~ "\".\n"
+#~ "ERRORE: impossibile trovare il formato supportato per il file di nome "
+#~ "\"%s\".\n"
 
 #, fuzzy, c-format
 #~ msgid "ERROR: Unsupported output format '%1$s'.\n"

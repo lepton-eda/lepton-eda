@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:10+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2010-01-29 16:49+0000\n"
 "Last-Translator: Carlos Nieves Ónega <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -156,6 +156,12 @@ msgstr ""
 msgid "Add new attribute"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
+msgid "_Cancel"
+msgstr ""
+
 msgid "Enter new attribute name"
 msgstr ""
 
@@ -175,6 +181,12 @@ msgid ""
 "\"Forward\" to continue working with lepton-attrib.\n"
 msgstr ""
 
+msgid "_Quit"
+msgstr ""
+
+msgid "_Forward"
+msgstr ""
+
 msgid "Missing symbol file found for component!"
 msgstr ""
 
@@ -191,6 +203,9 @@ msgid "If you don't save, all your changes will be permanently lost."
 msgstr ""
 
 msgid "Close without saving"
+msgstr ""
+
+msgid "_Save"
 msgstr ""
 
 msgid ""
@@ -225,7 +240,7 @@ msgstr ""
 msgid ""
 "Copyright © 2003-2006 Stuart D. Brorson\n"
 "Copyright © 2003-2016 gEDA Contributors\n"
-"Copyright © 2017-2021 Lepton EDA Contributors"
+"Copyright © 2017-2022 Lepton EDA Contributors"
 msgstr ""
 
 msgid ""
@@ -260,6 +275,9 @@ msgid "All files"
 msgstr ""
 
 msgid "Open..."
+msgstr ""
+
+msgid "_Open"
 msgstr ""
 
 msgid "Components"

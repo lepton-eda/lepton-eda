@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda-gschem\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2014-08-31 22:35+0100\n"
 "Last-Translator: Bert Timmerman <bert.timmerman@xs4all.nl>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -21,6 +21,13 @@ msgstr ""
 #, fuzzy
 msgid "Zoom too small!  Cannot zoom further."
 msgstr "Vergroting te klein! Kan niet verder vergroten.\n"
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "Schakel Zich_tbaarheid"
+
+msgid "_Apply"
+msgstr ""
 
 #, fuzzy
 msgid "Save As.._."
@@ -46,6 +53,13 @@ msgstr "Fout bij het opslaan van bestand"
 msgid "Save Color Scheme"
 msgstr "Licht Kleuren Schema"
 
+msgid "_Save"
+msgstr "Op_slaan"
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "Afbreken"
+
 #, fuzzy, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -58,9 +72,6 @@ msgstr ""
 
 msgid "Overwrite file?"
 msgstr "Overschrijf bestand ?"
-
-msgid "_Apply"
-msgstr ""
 
 msgid "Sa_ve..."
 msgstr ""
@@ -77,28 +88,14 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr ""
 
 msgid "User configuration file:"
 msgstr ""
-
-#, fuzzy
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr "Objekt ~A is niet bijgevoegd in de huidige gschem pagina."
-
-msgid "Invalid text name/value visibility ~A."
-msgstr "Ongeldige tekst naam/waarde zichtbaarheid ~A."
-
-msgid "Object ~A is not directly included in a page."
-msgstr "Object ~A is niet direct bijgevoegd in een pagina."
-
-msgid "Could not launch URI ~S: ~A"
-msgstr "Kan URI ~S: ~A niet starten"
-
-#, fuzzy
-msgid "Found invalid lepton-schematic window SCM: ~S"
-msgstr "Ongeldige gschem venster smob ~S gevonden"
 
 #, fuzzy, c-format
 msgid "%s (git: %.7s)"
@@ -117,7 +114,7 @@ msgstr "gEDA: GPL Elektronische Ontwerp Automatisering"
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Copyright © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -265,6 +262,9 @@ msgstr "Afsluiten zonder opslaan"
 
 msgid "Coords"
 msgstr "Coord."
+
+msgid "_Close"
+msgstr "S_luit"
 
 msgid "Screen"
 msgstr "Scherm"
@@ -606,6 +606,9 @@ msgstr "Nieuw venster gemaakt [%s]\n"
 msgid "Execute Script"
 msgstr "Script Uitvoeren..."
 
+msgid "_Run"
+msgstr ""
+
 #, fuzzy
 msgid "Scheme files (*.scm)"
 msgstr "Schema's"
@@ -832,6 +835,10 @@ msgstr ""
 
 msgid "Add Picture"
 msgstr "Voeg Afbeelding Toe"
+
+#, fuzzy
+msgid "_Open"
+msgstr "Open"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
@@ -1332,6 +1339,9 @@ msgstr "Naam:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "_Add"
+msgstr "Toe_voegen"
+
 msgid "<b>Add Attribute</b>"
 msgstr "<b>Plaats Attribuut</b>"
 
@@ -1457,18 +1467,12 @@ msgstr "_Nieuw"
 msgid "_Open..."
 msgstr "_Open..."
 
-msgid "_Save"
-msgstr "Op_slaan"
-
 msgid "Save _As..."
 msgstr "Opslaan _Als..."
 
 #, fuzzy
 msgid "Page _Manager..."
 msgstr "Pagina Manager"
-
-msgid "_Close"
-msgstr "S_luit"
 
 #, fuzzy
 msgid "Options"
@@ -2011,9 +2015,6 @@ msgstr "_Toon"
 msgid "_Page"
 msgstr "_Pagina"
 
-msgid "_Add"
-msgstr "Toe_voegen"
-
 msgid "Hie_rarchy"
 msgstr "Hie_rarchie"
 
@@ -2292,10 +2293,6 @@ msgid "No documentation found"
 msgstr "Geen documentatie gevonden"
 
 #, scheme-format
-msgid "~S is not a valid key combination."
-msgstr "~S is geen geldige toetsencombinatie."
-
-#, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr "~S is geen voorafgaande toetsen combinatie."
 
@@ -2353,6 +2350,27 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Object ~A is not included in the current lepton-schematic page."
+#~ msgstr "Objekt ~A is niet bijgevoegd in de huidige gschem pagina."
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr "Ongeldige tekst naam/waarde zichtbaarheid ~A."
+
+#~ msgid "Object ~A is not directly included in a page."
+#~ msgstr "Object ~A is niet direct bijgevoegd in een pagina."
+
+#~ msgid "Could not launch URI ~S: ~A"
+#~ msgstr "Kan URI ~S: ~A niet starten"
+
+#, fuzzy
+#~ msgid "Found invalid lepton-schematic window SCM: ~S"
+#~ msgstr "Ongeldige gschem venster smob ~S gevonden"
+
+#, scheme-format
+#~ msgid "~S is not a valid key combination."
+#~ msgstr "~S is geen geldige toetsencombinatie."
 
 #, fuzzy
 #~ msgid "Snap size"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2012-01-27 14:23+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -21,6 +21,13 @@ msgstr ""
 #, fuzzy
 msgid "Zoom too small!  Cannot zoom further."
 msgstr "Ampliação ampliação pequena! Não é possível ampliar mais.\n"
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "Al_ternar Visibilidade"
+
+msgid "_Apply"
+msgstr ""
 
 #, fuzzy
 msgid "Save As.._."
@@ -46,6 +53,13 @@ msgstr ""
 msgid "Save Color Scheme"
 msgstr "Esquema C_laro de Cor"
 
+msgid "_Save"
+msgstr "_Guardar"
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "Panorâmica/Cancelar"
+
 #, fuzzy, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -58,9 +72,6 @@ msgstr ""
 
 msgid "Overwrite file?"
 msgstr "Sobrepor a gravação?"
-
-msgid "_Apply"
-msgstr ""
 
 msgid "Sa_ve..."
 msgstr ""
@@ -77,25 +88,13 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr ""
 
 msgid "User configuration file:"
-msgstr ""
-
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr ""
-
-msgid "Invalid text name/value visibility ~A."
-msgstr ""
-
-msgid "Object ~A is not directly included in a page."
-msgstr ""
-
-msgid "Could not launch URI ~S: ~A"
-msgstr ""
-
-msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr ""
 
 #, c-format
@@ -113,7 +112,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -261,6 +260,9 @@ msgstr "_Fechar sem gravar"
 
 msgid "Coords"
 msgstr "Coordenadas"
+
+msgid "_Close"
+msgstr "Fe_char"
 
 msgid "Screen"
 msgstr "Ecrã"
@@ -601,6 +603,9 @@ msgstr "Nova Janela criada [%s]\n"
 msgid "Execute Script"
 msgstr "Executar Script..."
 
+msgid "_Run"
+msgstr ""
+
 #, fuzzy
 msgid "Scheme files (*.scm)"
 msgstr "Esquemas"
@@ -833,6 +838,10 @@ msgstr ""
 #, fuzzy
 msgid "Add Picture"
 msgstr "Imagem"
+
+#, fuzzy
+msgid "_Open"
+msgstr "Abrir"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
@@ -1329,6 +1338,9 @@ msgstr "Nome:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "_Add"
+msgstr "_Adicionar"
+
 msgid "<b>Add Attribute</b>"
 msgstr "<b>Adicionar Atributo</b>"
 
@@ -1442,18 +1454,12 @@ msgstr "_Novo"
 msgid "_Open..."
 msgstr "_Abrir..."
 
-msgid "_Save"
-msgstr "_Guardar"
-
 msgid "Save _As..."
 msgstr "Gu_ardar como..."
 
 #, fuzzy
 msgid "Page _Manager..."
 msgstr "Gestor de Pagina"
-
-msgid "_Close"
-msgstr "Fe_char"
 
 #, fuzzy
 msgid "Options"
@@ -1993,9 +1999,6 @@ msgstr "_Ver"
 msgid "_Page"
 msgstr "_Página"
 
-msgid "_Add"
-msgstr "_Adicionar"
-
 msgid "Hie_rarchy"
 msgstr "Hie_rarquia"
 
@@ -2319,10 +2322,6 @@ msgid "Could not show documentation:"
 msgstr "Documentação de _Componente..."
 
 msgid "No documentation found"
-msgstr ""
-
-#, scheme-format
-msgid "~S is not a valid key combination."
 msgstr ""
 
 #, scheme-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2010-02-11 03:18+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -19,6 +19,13 @@ msgstr ""
 "X-Generator: Launchpad (build Unknown)\n"
 
 msgid "Zoom too small!  Cannot zoom further."
+msgstr ""
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "变换可见性"
+
+msgid "_Apply"
 msgstr ""
 
 #, fuzzy
@@ -44,6 +51,13 @@ msgstr ""
 msgid "Save Color Scheme"
 msgstr ""
 
+#, fuzzy
+msgid "_Save"
+msgstr "全部保存"
+
+msgid "_Cancel"
+msgstr ""
+
 #, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -52,9 +66,6 @@ msgid ""
 msgstr ""
 
 msgid "Overwrite file?"
-msgstr ""
-
-msgid "_Apply"
 msgstr ""
 
 msgid "Sa_ve..."
@@ -72,25 +83,13 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr ""
 
 msgid "User configuration file:"
-msgstr ""
-
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr ""
-
-msgid "Invalid text name/value visibility ~A."
-msgstr ""
-
-msgid "Object ~A is not directly included in a page."
-msgstr ""
-
-msgid "Could not launch URI ~S: ~A"
-msgstr ""
-
-msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr ""
 
 #, c-format
@@ -108,7 +107,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -239,6 +238,10 @@ msgstr ""
 
 msgid "Coords"
 msgstr ""
+
+#, fuzzy
+msgid "_Close"
+msgstr "关闭"
 
 msgid "Screen"
 msgstr ""
@@ -555,6 +558,9 @@ msgstr ""
 msgid "Execute Script"
 msgstr "执行脚本..."
 
+msgid "_Run"
+msgstr ""
+
 msgid "Scheme files (*.scm)"
 msgstr ""
 
@@ -749,6 +755,10 @@ msgstr ""
 #, fuzzy
 msgid "Add Picture"
 msgstr "图片..."
+
+#, fuzzy
+msgid "_Open"
+msgstr "打开页面..."
 
 #, c-format
 msgid "Failed to load picture: %1$s"
@@ -1207,6 +1217,10 @@ msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
 #, fuzzy
+msgid "_Add"
+msgstr "添加"
+
+#, fuzzy
 msgid "<b>Add Attribute</b>"
 msgstr "属性..."
 
@@ -1323,20 +1337,12 @@ msgid "_Open..."
 msgstr "打开页面..."
 
 #, fuzzy
-msgid "_Save"
-msgstr "全部保存"
-
-#, fuzzy
 msgid "Save _As..."
 msgstr "页面保存为..."
 
 #, fuzzy
 msgid "Page _Manager..."
 msgstr "打开页面..."
-
-#, fuzzy
-msgid "_Close"
-msgstr "关闭"
 
 msgid "Options"
 msgstr ""
@@ -1879,10 +1885,6 @@ msgid "_Page"
 msgstr "页面"
 
 #, fuzzy
-msgid "_Add"
-msgstr "添加"
-
-#, fuzzy
 msgid "Hie_rarchy"
 msgstr "层次"
 
@@ -2177,10 +2179,6 @@ msgstr "文档"
 #, fuzzy
 msgid "No documentation found"
 msgstr "文档"
-
-#, scheme-format
-msgid "~S is not a valid key combination."
-msgstr ""
 
 #, scheme-format
 msgid "~S is not a prefix key sequence."

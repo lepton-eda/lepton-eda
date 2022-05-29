@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2012-01-31 12:08+0000\n"
 "Last-Translator: Antonio Augusto Todo Bom Neto <atodobom@gmail.com>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -22,6 +22,13 @@ msgstr ""
 #, fuzzy
 msgid "Zoom too small!  Cannot zoom further."
 msgstr "Zoom muito pequeno! Não posso diminuir.\n"
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "Al_ternar visibilidade"
+
+msgid "_Apply"
+msgstr ""
 
 #, fuzzy
 msgid "Save As.._."
@@ -47,6 +54,13 @@ msgstr "Falha ao salvar arquivo"
 msgid "Save Color Scheme"
 msgstr "Esquema de cores Claro"
 
+msgid "_Save"
+msgstr "_Salvar"
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "Pan/Cancelar"
+
 #, fuzzy, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -59,9 +73,6 @@ msgstr ""
 
 msgid "Overwrite file?"
 msgstr "Sobrescrever arquivo?"
-
-msgid "_Apply"
-msgstr ""
 
 msgid "Sa_ve..."
 msgstr ""
@@ -78,27 +89,14 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr ""
 
 msgid "User configuration file:"
 msgstr ""
-
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr ""
-
-msgid "Invalid text name/value visibility ~A."
-msgstr ""
-
-msgid "Object ~A is not directly included in a page."
-msgstr ""
-
-msgid "Could not launch URI ~S: ~A"
-msgstr "Impossível lançar URI ~S: ~A"
-
-#, fuzzy
-msgid "Found invalid lepton-schematic window SCM: ~S"
-msgstr "~S não é uma combinação válida."
 
 #, c-format
 msgid "%s (git: %.7s)"
@@ -117,7 +115,7 @@ msgstr "gEDA: GPL Electronic Design Automation"
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Copyright © 1998-2011 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -266,6 +264,9 @@ msgstr "_Fechar sem salvar"
 
 msgid "Coords"
 msgstr "Coordenadas"
+
+msgid "_Close"
+msgstr "_Fechar"
 
 msgid "Screen"
 msgstr "Janela"
@@ -608,6 +609,9 @@ msgstr "Criada nova Janela [%s]\n"
 msgid "Execute Script"
 msgstr "Executar Script..."
 
+msgid "_Run"
+msgstr ""
+
 #, fuzzy
 msgid "Scheme files (*.scm)"
 msgstr "Diagramas"
@@ -832,6 +836,10 @@ msgstr ""
 #, fuzzy
 msgid "Add Picture"
 msgstr "Imagem"
+
+#, fuzzy
+msgid "_Open"
+msgstr "Abrir"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
@@ -1334,6 +1342,9 @@ msgstr "Nome:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "_Add"
+msgstr "_Adicionar"
+
 msgid "<b>Add Attribute</b>"
 msgstr "<b>Adicionar Atributo</b>"
 
@@ -1458,18 +1469,12 @@ msgstr "_Novo"
 msgid "_Open..."
 msgstr "_Abrir..."
 
-msgid "_Save"
-msgstr "_Salvar"
-
 msgid "Save _As..."
 msgstr "Salvar _Como..."
 
 #, fuzzy
 msgid "Page _Manager..."
 msgstr "Gerenciador de Páginas"
-
-msgid "_Close"
-msgstr "_Fechar"
 
 #, fuzzy
 msgid "Options"
@@ -2012,9 +2017,6 @@ msgstr "Exibir"
 msgid "_Page"
 msgstr "_Página"
 
-msgid "_Add"
-msgstr "_Adicionar"
-
 msgid "Hie_rarchy"
 msgstr "Hie_rarquia"
 
@@ -2341,10 +2343,6 @@ msgid "No documentation found"
 msgstr "Documento não encontrado"
 
 #, scheme-format
-msgid "~S is not a valid key combination."
-msgstr "~S não é uma combinação válida."
-
-#, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr "~S não é uma sequência de prefixo."
 
@@ -2401,6 +2399,17 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "Could not launch URI ~S: ~A"
+#~ msgstr "Impossível lançar URI ~S: ~A"
+
+#, fuzzy
+#~ msgid "Found invalid lepton-schematic window SCM: ~S"
+#~ msgstr "~S não é uma combinação válida."
+
+#, scheme-format
+#~ msgid "~S is not a valid key combination."
+#~ msgstr "~S não é uma combinação válida."
 
 #, fuzzy
 #~ msgid "Snap size"

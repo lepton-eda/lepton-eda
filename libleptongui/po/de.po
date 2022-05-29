@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2012-04-12 22:09+0000\n"
 "Last-Translator: Dennis Baudys <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -22,6 +22,13 @@ msgstr ""
 #, fuzzy
 msgid "Zoom too small!  Cannot zoom further."
 msgstr "Bereich zu klein! Eine weitere Vergrößerung ist nicht möglich.\n"
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "Sichtbarkeit _umschalten"
+
+msgid "_Apply"
+msgstr ""
 
 #, fuzzy
 msgid "Save As.._."
@@ -47,6 +54,13 @@ msgstr "Datei konnte nicht gespeichert werden"
 msgid "Save Color Scheme"
 msgstr "_Helles Farbschema"
 
+msgid "_Save"
+msgstr "_Speichern"
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "Ausschnitt/Abbrechen"
+
 #, fuzzy, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -59,9 +73,6 @@ msgstr ""
 
 msgid "Overwrite file?"
 msgstr "Datei überschreiben?"
-
-msgid "_Apply"
-msgstr ""
 
 msgid "Sa_ve..."
 msgstr ""
@@ -78,28 +89,14 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr ""
 
 msgid "User configuration file:"
 msgstr ""
-
-#, fuzzy
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr "Das Objekt ~A ist im aktuellen Schaltplan nicht enthalten."
-
-msgid "Invalid text name/value visibility ~A."
-msgstr "Ungültiger Wert für das Sichtbarkeitsattribut von  ~A."
-
-msgid "Object ~A is not directly included in a page."
-msgstr "Das Objekt ~A ist in keiner Schaltplanseite direkt eingebunden."
-
-msgid "Could not launch URI ~S: ~A"
-msgstr "Die URI ~S konnte nicht geladen werden: ~A"
-
-#, fuzzy
-msgid "Found invalid lepton-schematic window SCM: ~S"
-msgstr "~S ist keine gültige Tasten-Kombination."
 
 #, fuzzy, c-format
 msgid "%s (git: %.7s)"
@@ -118,7 +115,7 @@ msgstr "gEDA: GPL Electronic Design Automation"
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Copyright © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -270,6 +267,9 @@ msgstr "Schließen _ohne Speichern"
 
 msgid "Coords"
 msgstr "Koordinaten"
+
+msgid "_Close"
+msgstr "S_chließen"
 
 msgid "Screen"
 msgstr "Bildschirm (Pixel)"
@@ -613,6 +613,9 @@ msgstr "Neues Fenster geöffnet [%s]\n"
 msgid "Execute Script"
 msgstr "Skript ausführen …"
 
+msgid "_Run"
+msgstr ""
+
 #, fuzzy
 msgid "Scheme files (*.scm)"
 msgstr "Schaltpläne"
@@ -852,6 +855,10 @@ msgstr ""
 msgid "Add Picture"
 msgstr "Bild"
 
+#, fuzzy
+msgid "_Open"
+msgstr "Öffnen"
+
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
 msgstr "Das Bild [%s] konnte nicht geladen werden"
@@ -957,8 +964,8 @@ msgstr ""
 msgid ""
 "duplicate slot may cause problems: [symbolname=%1$s, number=%2$d, slot=%3$d]"
 msgstr ""
-"Doppelt vergebener slot kann Probleme verursachen: [Symbolname=%s, Number="
-"%d, slot=%d]\n"
+"Doppelt vergebener slot kann Probleme verursachen: [Symbolname=%s, "
+"Number=%d, slot=%d]\n"
 
 #, fuzzy
 msgid "No search string given in autonumber text."
@@ -1346,6 +1353,9 @@ msgstr "Name:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "_Add"
+msgstr "_Einfügen"
+
 msgid "<b>Add Attribute</b>"
 msgstr "<b>Attribut hinzufügen</b>"
 
@@ -1465,18 +1475,12 @@ msgstr "_Neu"
 msgid "_Open..."
 msgstr "Ö_ffnen …"
 
-msgid "_Save"
-msgstr "_Speichern"
-
 msgid "Save _As..."
 msgstr "Speichern _unter …"
 
 #, fuzzy
 msgid "Page _Manager..."
 msgstr "Seitenverwaltung"
-
-msgid "_Close"
-msgstr "S_chließen"
 
 #, fuzzy
 msgid "Options"
@@ -2022,9 +2026,6 @@ msgstr "_Ansicht"
 msgid "_Page"
 msgstr "_Seite"
 
-msgid "_Add"
-msgstr "_Einfügen"
-
 msgid "Hie_rarchy"
 msgstr "Hie_rarchie"
 
@@ -2351,10 +2352,6 @@ msgid "No documentation found"
 msgstr "Dokumentation konnte nicht gefunden werden"
 
 #, scheme-format
-msgid "~S is not a valid key combination."
-msgstr "~S ist keine gültige Tasten-Kombination."
-
-#, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr "~S ist kein gültiger erster Teil einer Tastenkombination."
 
@@ -2389,6 +2386,27 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Object ~A is not included in the current lepton-schematic page."
+#~ msgstr "Das Objekt ~A ist im aktuellen Schaltplan nicht enthalten."
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr "Ungültiger Wert für das Sichtbarkeitsattribut von  ~A."
+
+#~ msgid "Object ~A is not directly included in a page."
+#~ msgstr "Das Objekt ~A ist in keiner Schaltplanseite direkt eingebunden."
+
+#~ msgid "Could not launch URI ~S: ~A"
+#~ msgstr "Die URI ~S konnte nicht geladen werden: ~A"
+
+#, fuzzy
+#~ msgid "Found invalid lepton-schematic window SCM: ~S"
+#~ msgstr "~S ist keine gültige Tasten-Kombination."
+
+#, scheme-format
+#~ msgid "~S is not a valid key combination."
+#~ msgstr "~S ist keine gültige Tasten-Kombination."
 
 #, fuzzy
 #~ msgid "Snap size"

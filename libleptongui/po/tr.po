@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2012-01-27 14:22+0000\n"
 "Last-Translator: Launchpad Translators\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -19,6 +19,13 @@ msgstr ""
 "X-Generator: Launchpad (build 16265)\n"
 
 msgid "Zoom too small!  Cannot zoom further."
+msgstr ""
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "gEDA Şematik Editörü"
+
+msgid "_Apply"
 msgstr ""
 
 #, fuzzy
@@ -45,6 +52,12 @@ msgstr ""
 msgid "Save Color Scheme"
 msgstr "gEDA Şematik Editörü"
 
+msgid "_Save"
+msgstr ""
+
+msgid "_Cancel"
+msgstr ""
+
 #, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -53,9 +66,6 @@ msgid ""
 msgstr ""
 
 msgid "Overwrite file?"
-msgstr ""
-
-msgid "_Apply"
 msgstr ""
 
 msgid "Sa_ve..."
@@ -73,25 +83,13 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr ""
 
 msgid "User configuration file:"
-msgstr ""
-
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr ""
-
-msgid "Invalid text name/value visibility ~A."
-msgstr ""
-
-msgid "Object ~A is not directly included in a page."
-msgstr ""
-
-msgid "Could not launch URI ~S: ~A"
-msgstr ""
-
-msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr ""
 
 #, c-format
@@ -109,7 +107,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -238,6 +236,9 @@ msgid "Close _without saving"
 msgstr ""
 
 msgid "Coords"
+msgstr ""
+
+msgid "_Close"
 msgstr ""
 
 msgid "Screen"
@@ -555,6 +556,9 @@ msgstr "Yeni pencere oluşturuldu [%s]\n"
 msgid "Execute Script"
 msgstr "Betik Çalıştır..."
 
+msgid "_Run"
+msgstr ""
+
 msgid "Scheme files (*.scm)"
 msgstr ""
 
@@ -746,6 +750,9 @@ msgid "All supported formats"
 msgstr ""
 
 msgid "Add Picture"
+msgstr ""
+
+msgid "_Open"
 msgstr ""
 
 #, c-format
@@ -1198,6 +1205,9 @@ msgstr ""
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "_Add"
+msgstr "Ekle"
+
 #, fuzzy
 msgid "<b>Add Attribute</b>"
 msgstr "Öznitelikler"
@@ -1312,16 +1322,10 @@ msgstr ""
 msgid "_Open..."
 msgstr ""
 
-msgid "_Save"
-msgstr ""
-
 msgid "Save _As..."
 msgstr ""
 
 msgid "Page _Manager..."
-msgstr ""
-
-msgid "_Close"
 msgstr ""
 
 #, fuzzy
@@ -1833,9 +1837,6 @@ msgstr "Görüntüle"
 msgid "_Page"
 msgstr "Sayfa"
 
-msgid "_Add"
-msgstr "Ekle"
-
 msgid "Hie_rarchy"
 msgstr "Hiyerarşi"
 
@@ -2122,10 +2123,6 @@ msgid "Could not show documentation:"
 msgstr ""
 
 msgid "No documentation found"
-msgstr ""
-
-#, scheme-format
-msgid "~S is not a valid key combination."
 msgstr ""
 
 #, scheme-format

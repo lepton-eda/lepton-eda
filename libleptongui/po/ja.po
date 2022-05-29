@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2012-01-31 12:07+0000\n"
 "Last-Translator: Peter TB Brett <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -21,6 +21,13 @@ msgstr ""
 #, fuzzy
 msgid "Zoom too small!  Cannot zoom further."
 msgstr "これ以上ズームできません。\n"
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "明るい配色(_L)"
+
+msgid "_Apply"
+msgstr ""
 
 #, fuzzy
 msgid "Save As.._."
@@ -46,6 +53,13 @@ msgstr ""
 msgid "Save Color Scheme"
 msgstr "明るい配色(_L)"
 
+msgid "_Save"
+msgstr "保存(_S)"
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "パン/キャンセル"
+
 #, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -54,9 +68,6 @@ msgid ""
 msgstr ""
 
 msgid "Overwrite file?"
-msgstr ""
-
-msgid "_Apply"
 msgstr ""
 
 msgid "Sa_ve..."
@@ -74,25 +85,13 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr ""
 
 msgid "User configuration file:"
-msgstr ""
-
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr ""
-
-msgid "Invalid text name/value visibility ~A."
-msgstr ""
-
-msgid "Object ~A is not directly included in a page."
-msgstr ""
-
-msgid "Could not launch URI ~S: ~A"
-msgstr ""
-
-msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr ""
 
 #, c-format
@@ -110,7 +109,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -249,6 +248,9 @@ msgstr ""
 
 msgid "Coords"
 msgstr "座標"
+
+msgid "_Close"
+msgstr "閉じる(_C)"
 
 msgid "Screen"
 msgstr "スクリーン"
@@ -571,6 +573,9 @@ msgstr ""
 msgid "Execute Script"
 msgstr "スクリプト実行..."
 
+msgid "_Run"
+msgstr ""
+
 msgid "Scheme files (*.scm)"
 msgstr ""
 
@@ -782,6 +787,10 @@ msgstr ""
 #, fuzzy
 msgid "Add Picture"
 msgstr "画像(_R)"
+
+#, fuzzy
+msgid "_Open"
+msgstr "開く"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
@@ -1243,6 +1252,9 @@ msgstr "名前:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "_Add"
+msgstr "追加"
+
 #, fuzzy
 msgid "<b>Add Attribute</b>"
 msgstr "アトリビュート(_A)"
@@ -1357,18 +1369,12 @@ msgstr "新規(_N)"
 msgid "_Open..."
 msgstr "開く(_O)..."
 
-msgid "_Save"
-msgstr "保存(_S)"
-
 msgid "Save _As..."
 msgstr "別名で保存(_A)..."
 
 #, fuzzy
 msgid "Page _Manager..."
 msgstr "ページマネージャ"
-
-msgid "_Close"
-msgstr "閉じる(_C)"
 
 #, fuzzy
 msgid "Options"
@@ -1899,9 +1905,6 @@ msgstr "表示(_V)"
 msgid "_Page"
 msgstr "ページ(_P)"
 
-msgid "_Add"
-msgstr "追加"
-
 msgid "Hie_rarchy"
 msgstr "階層"
 
@@ -2203,10 +2206,6 @@ msgid "Could not show documentation:"
 msgstr "部品モード"
 
 msgid "No documentation found"
-msgstr ""
-
-#, scheme-format
-msgid "~S is not a valid key combination."
 msgstr ""
 
 #, scheme-format

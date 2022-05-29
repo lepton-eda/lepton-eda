@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2014-12-29 20:06+0300\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -25,6 +25,13 @@ msgstr ""
 msgid "Zoom too small!  Cannot zoom further."
 msgstr ""
 "Eccessiva riduzione dell'immagine!  Non è possibile ridurla ulteriormente.\n"
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "Commu_ta Visibilità"
+
+msgid "_Apply"
+msgstr ""
 
 #, fuzzy
 msgid "Save As.._."
@@ -50,6 +57,13 @@ msgstr "Fallito il salvataggio file"
 msgid "Save Color Scheme"
 msgstr "Schema colori chiari"
 
+msgid "_Save"
+msgstr "_Salva"
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "Annulla"
+
 #, fuzzy, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -61,9 +75,6 @@ msgstr ""
 
 msgid "Overwrite file?"
 msgstr "Sovrascrivere il file?"
-
-msgid "_Apply"
-msgstr ""
 
 msgid "Sa_ve..."
 msgstr ""
@@ -80,28 +91,14 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr ""
 
 msgid "User configuration file:"
 msgstr ""
-
-#, fuzzy
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr "L'oggetto ~A non è incluso nella pagina di gschem corrente."
-
-msgid "Invalid text name/value visibility ~A."
-msgstr "Visibilità nome/valore testo non valida ~A."
-
-msgid "Object ~A is not directly included in a page."
-msgstr "L'oggetto ~A non è direttamente incluso in una pagina."
-
-msgid "Could not launch URI ~S: ~A"
-msgstr "Impossibile avviare l'URI ~S: ~A"
-
-#, fuzzy
-msgid "Found invalid lepton-schematic window SCM: ~S"
-msgstr "Trovato smob finestra gschem non valido ~S"
 
 #, fuzzy, c-format
 msgid "%s (git: %.7s)"
@@ -120,7 +117,7 @@ msgstr "gEDA: GPL Electronic Design Automation"
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Copyright © 1998-2012 Ales Hvezda <ahvezda@geda.seul.org>\n"
@@ -271,6 +268,9 @@ msgstr "Chiudi senza sal_vare"
 
 msgid "Coords"
 msgstr "Coordinate"
+
+msgid "_Close"
+msgstr "_Chiudi"
 
 msgid "Screen"
 msgstr "Schermo"
@@ -608,6 +608,9 @@ msgstr "Creata Nuova Finestra [%s]\n"
 msgid "Execute Script"
 msgstr "Esegui script..."
 
+msgid "_Run"
+msgstr ""
+
 #, fuzzy
 msgid "Scheme files (*.scm)"
 msgstr "Schemi"
@@ -839,6 +842,10 @@ msgstr ""
 
 msgid "Add Picture"
 msgstr "Aggiungi immagine"
+
+#, fuzzy
+msgid "_Open"
+msgstr "Apri"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
@@ -1341,6 +1348,9 @@ msgstr "Nome:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "_Add"
+msgstr "_Aggiungi"
+
 msgid "<b>Add Attribute</b>"
 msgstr "<b>Aggiungi Caratteristiche</b>"
 
@@ -1467,18 +1477,12 @@ msgstr "_Nuovo"
 msgid "_Open..."
 msgstr "_Apri..."
 
-msgid "_Save"
-msgstr "_Salva"
-
 msgid "Save _As..."
 msgstr "Salva _come..."
 
 #, fuzzy
 msgid "Page _Manager..."
 msgstr "Gestore Pagina"
-
-msgid "_Close"
-msgstr "_Chiudi"
 
 #, fuzzy
 msgid "Options"
@@ -2025,9 +2029,6 @@ msgstr "_Vista"
 msgid "_Page"
 msgstr "_Pagina"
 
-msgid "_Add"
-msgstr "_Aggiungi"
-
 msgid "Hie_rarchy"
 msgstr "Ge_rarchia"
 
@@ -2307,10 +2308,6 @@ msgid "No documentation found"
 msgstr "Nessun documento trovato"
 
 #, scheme-format
-msgid "~S is not a valid key combination."
-msgstr "~S non è una combinazione di tasti valida."
-
-#, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr "~S non è un prefisso di sequenza di tasti."
 
@@ -2367,6 +2364,27 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Object ~A is not included in the current lepton-schematic page."
+#~ msgstr "L'oggetto ~A non è incluso nella pagina di gschem corrente."
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr "Visibilità nome/valore testo non valida ~A."
+
+#~ msgid "Object ~A is not directly included in a page."
+#~ msgstr "L'oggetto ~A non è direttamente incluso in una pagina."
+
+#~ msgid "Could not launch URI ~S: ~A"
+#~ msgstr "Impossibile avviare l'URI ~S: ~A"
+
+#, fuzzy
+#~ msgid "Found invalid lepton-schematic window SCM: ~S"
+#~ msgstr "Trovato smob finestra gschem non valido ~S"
+
+#, scheme-format
+#~ msgid "~S is not a valid key combination."
+#~ msgstr "~S non è una combinazione di tasti valida."
 
 #, fuzzy
 #~ msgid "Snap size"

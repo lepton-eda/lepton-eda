@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: lepton-eda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2020-03-20 15:30+0300\n"
 "Last-Translator: Vladimir Zhbanov <vzhbanov@gmail.com>\n"
 "Language-Team: Russian\n"
@@ -21,11 +21,18 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 msgid "Zoom too small!  Cannot zoom further."
 msgstr "Масштаб слишком мал! Дальнейшее изменение невозможно."
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "Переключить «ручки»"
+
+msgid "_Apply"
+msgstr "_Применить"
 
 msgid "Save As.._."
 msgstr "Сохранить _как..."
@@ -57,6 +64,13 @@ msgstr "Не удалось сохранить файл"
 msgid "Save Color Scheme"
 msgstr "Сохранить цветовую схему как..."
 
+msgid "_Save"
+msgstr "_Сохранить"
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "Отмена"
+
 #, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -70,9 +84,6 @@ msgstr ""
 # Заголовок окна
 msgid "Overwrite file?"
 msgstr "Перезаписать файл?"
-
-msgid "_Apply"
-msgstr "_Применить"
 
 msgid "Sa_ve..."
 msgstr "_Сохранить..."
@@ -91,31 +102,14 @@ msgstr "<b>Текущий:</b> %s"
 msgid "Save configuration"
 msgstr "Сохранить настройки"
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr "Файл локальных настроек:"
 
 msgid "User configuration file:"
 msgstr "Файл пользовательских настроек:"
-
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr "Объект ~A не принадлежит текущей странице lepton-schematic."
-
-msgid "Invalid text name/value visibility ~A."
-msgstr "Недопустимое сочетание видимости имени/значения ~A."
-
-# Данная ошибка возникает, например, в случае попытки отдельного выделения
-# объекта, не являющегося самостоятельной частью страницы, а входящего в
-# состав какого-то символа, то есть включенного в страницу косвенно.
-msgid "Object ~A is not directly included in a page."
-msgstr "Объект ~A непосредственно в данных страницы не содержится. "
-
-msgid "Could not launch URI ~S: ~A"
-msgstr "Не удалось открыть URI ~S: ~A"
-
-# smob -- представление данных объекта для Scheme
-#, fuzzy
-msgid "Found invalid lepton-schematic window SCM: ~S"
-msgstr "Обнаружена недопустимая структура данных smob окна lepton-schematic ~S"
 
 #, c-format
 msgid "%s (git: %.7s)"
@@ -135,7 +129,7 @@ msgstr "Lepton Electronic Design Automation"
 #, fuzzy
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 "Copyright © 1998-2017 Ales Hvezda и другие авторы исходного кода.\n"
@@ -274,6 +268,9 @@ msgstr "_Закрыть без сохранения"
 
 msgid "Coords"
 msgstr "Координаты"
+
+msgid "_Close"
+msgstr "_Закрыть"
 
 msgid "Screen"
 msgstr "Отображаемая область"
@@ -583,6 +580,9 @@ msgstr "Создано новое окно «%1$s»"
 msgid "Execute Script"
 msgstr "Выполнить скрипт..."
 
+msgid "_Run"
+msgstr ""
+
 #, fuzzy
 msgid "Scheme files (*.scm)"
 msgstr "Схемы (*.sch)"
@@ -799,6 +799,10 @@ msgstr ""
 
 msgid "Add Picture"
 msgstr "Добавить изображение"
+
+#, fuzzy
+msgid "_Open"
+msgstr "Открыть"
 
 # Квадратные скобки добавлены для единообразия
 #, c-format
@@ -1284,6 +1288,9 @@ msgstr "_Имя:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr "Ctrl+Enter для ввода новой строки; Ctrl+Tab для ввода символа Tab"
 
+msgid "_Add"
+msgstr "_Добавить"
+
 # См. выше. Но тут слово "атрибут" необходимо. Иначе получается "добавить ... имя" или
 # "значение", а не "атрибут".
 msgid "<b>Add Attribute</b>"
@@ -1410,17 +1417,11 @@ msgstr "_Новый"
 msgid "_Open..."
 msgstr "_Открыть..."
 
-msgid "_Save"
-msgstr "_Сохранить"
-
 msgid "Save _As..."
 msgstr "Сохранить _как..."
 
 msgid "Page _Manager..."
 msgstr "_Менеджер страниц..."
-
-msgid "_Close"
-msgstr "_Закрыть"
 
 msgid "Options"
 msgstr "Параметры"
@@ -1948,9 +1949,6 @@ msgstr "_Вид"
 msgid "_Page"
 msgstr "Ст_раница"
 
-msgid "_Add"
-msgstr "_Добавить"
-
 msgid "Hie_rarchy"
 msgstr "_Иерархия"
 
@@ -2221,10 +2219,6 @@ msgid "No documentation found"
 msgstr "Документация не найдена"
 
 #, scheme-format
-msgid "~S is not a valid key combination."
-msgstr "Недопустимая комбинация клавиш ~S."
-
-#, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr "~S не является префиксом клавишной последовательности."
 
@@ -2278,6 +2272,31 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#~ msgid "Object ~A is not included in the current lepton-schematic page."
+#~ msgstr "Объект ~A не принадлежит текущей странице lepton-schematic."
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr "Недопустимое сочетание видимости имени/значения ~A."
+
+# Данная ошибка возникает, например, в случае попытки отдельного выделения
+# объекта, не являющегося самостоятельной частью страницы, а входящего в
+# состав какого-то символа, то есть включенного в страницу косвенно.
+#~ msgid "Object ~A is not directly included in a page."
+#~ msgstr "Объект ~A непосредственно в данных страницы не содержится. "
+
+#~ msgid "Could not launch URI ~S: ~A"
+#~ msgstr "Не удалось открыть URI ~S: ~A"
+
+# smob -- представление данных объекта для Scheme
+#, fuzzy
+#~ msgid "Found invalid lepton-schematic window SCM: ~S"
+#~ msgstr ""
+#~ "Обнаружена недопустимая структура данных smob окна lepton-schematic ~S"
+
+#, scheme-format
+#~ msgid "~S is not a valid key combination."
+#~ msgstr "Недопустимая комбинация клавиш ~S."
 
 #, fuzzy
 #~ msgid "Snap size"

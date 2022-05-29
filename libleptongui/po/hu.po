@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geda\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:12+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: 2012-01-27 14:23+0000\n"
 "Last-Translator: kop <Unknown>\n"
 "Language-Team: gEDA developers <geda-dev@seul.org>\n"
@@ -21,6 +21,13 @@ msgstr ""
 #, fuzzy
 msgid "Zoom too small!  Cannot zoom further."
 msgstr "Túl nagy nagyítás! Nem tudok tovább nagyítani.\n"
+
+#, fuzzy
+msgid "Toggle _Editor"
+msgstr "Lá_thatóság váltása"
+
+msgid "_Apply"
+msgstr ""
 
 #, fuzzy
 msgid "Save As.._."
@@ -46,6 +53,13 @@ msgstr ""
 msgid "Save Color Scheme"
 msgstr "Világos színséma"
 
+msgid "_Save"
+msgstr "Menté_s"
+
+#, fuzzy
+msgid "_Cancel"
+msgstr "Középre/mégsem"
+
 #, fuzzy, c-format
 msgid ""
 "The selected file `%1$s' already exists.\n"
@@ -57,9 +71,6 @@ msgstr ""
 
 msgid "Overwrite file?"
 msgstr "Felülírod a fájlt?"
-
-msgid "_Apply"
-msgstr ""
 
 msgid "Sa_ve..."
 msgstr ""
@@ -76,26 +87,13 @@ msgstr ""
 msgid "Save configuration"
 msgstr ""
 
+msgid "_OK"
+msgstr ""
+
 msgid "Local configuration file:"
 msgstr ""
 
 msgid "User configuration file:"
-msgstr ""
-
-#, fuzzy
-msgid "Object ~A is not included in the current lepton-schematic page."
-msgstr "A ~A objektum nem tálható a jelen gschem lapon."
-
-msgid "Invalid text name/value visibility ~A."
-msgstr "Érvénytelen szöveg név/érték megjelenés ~A."
-
-msgid "Object ~A is not directly included in a page."
-msgstr ""
-
-msgid "Could not launch URI ~S: ~A"
-msgstr ""
-
-msgid "Found invalid lepton-schematic window SCM: ~S"
 msgstr ""
 
 #, c-format
@@ -113,7 +111,7 @@ msgstr ""
 
 msgid ""
 "Copyright © 1998-2017 by Ales Hvezda and the respective original authors.\n"
-"Copyright © 2017-2021 Lepton Developers.\n"
+"Copyright © 2017-2022 Lepton Developers.\n"
 "See AUTHORS, ChangeLog files and consult 'git log' history for details."
 msgstr ""
 
@@ -256,6 +254,9 @@ msgstr "_Bezárás mentés nélkül"
 
 msgid "Coords"
 msgstr "Koordináták"
+
+msgid "_Close"
+msgstr "_Bezárás"
 
 msgid "Screen"
 msgstr "Képernyő"
@@ -594,6 +595,9 @@ msgstr "[%s] ablak létrehozva.\n"
 msgid "Execute Script"
 msgstr "Szkript végrehajtása"
 
+msgid "_Run"
+msgstr ""
+
 #, fuzzy
 msgid "Scheme files (*.scm)"
 msgstr "rajzok"
@@ -798,6 +802,10 @@ msgstr ""
 #, fuzzy
 msgid "Add Picture"
 msgstr "Kép"
+
+#, fuzzy
+msgid "_Open"
+msgstr "Megnyitás"
 
 #, fuzzy, c-format
 msgid "Failed to load picture: %1$s"
@@ -1276,6 +1284,9 @@ msgstr "Név:"
 msgid "Ctrl+Enter inserts new line; Ctrl+Tab inserts Tab"
 msgstr ""
 
+msgid "_Add"
+msgstr "Hozzá_adás"
+
 msgid "<b>Add Attribute</b>"
 msgstr "<b>Attribútum hozzáadása</b>"
 
@@ -1389,18 +1400,12 @@ msgstr "_Új"
 msgid "_Open..."
 msgstr "_Megnyitás..."
 
-msgid "_Save"
-msgstr "Menté_s"
-
 msgid "Save _As..."
 msgstr "Mentés másként"
 
 #, fuzzy
 msgid "Page _Manager..."
 msgstr "Oldalkiválasztó"
-
-msgid "_Close"
-msgstr "_Bezárás"
 
 #, fuzzy
 msgid "Options"
@@ -1935,9 +1940,6 @@ msgstr "Nézet"
 msgid "_Page"
 msgstr "Oldal"
 
-msgid "_Add"
-msgstr "Hozzá_adás"
-
 msgid "Hie_rarchy"
 msgstr "Hie_rarchia"
 
@@ -2260,10 +2262,6 @@ msgid "No documentation found"
 msgstr "Nem találtam dokumentumot"
 
 #, scheme-format
-msgid "~S is not a valid key combination."
-msgstr ""
-
-#, scheme-format
 msgid "~S is not a prefix key sequence."
 msgstr ""
 
@@ -2298,6 +2296,13 @@ msgid ""
 "ERROR: Unknown option ~A.\n"
 "Run `~A --help' for more information.\n"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Object ~A is not included in the current lepton-schematic page."
+#~ msgstr "A ~A objektum nem tálható a jelen gschem lapon."
+
+#~ msgid "Invalid text name/value visibility ~A."
+#~ msgstr "Érvénytelen szöveg név/érték megjelenés ~A."
 
 #, fuzzy
 #~ msgid "Snap size"

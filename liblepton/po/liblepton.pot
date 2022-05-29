@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: lepton-eda 1.9.17\n"
+"Project-Id-Version: lepton-eda 1.9.18\n"
 "Report-Msgid-Bugs-To: https://github.com/lepton-eda/lepton-eda/issues\n"
-"POT-Creation-Date: 2021-12-19 13:13+0300\n"
+"POT-Creation-Date: 2022-05-29 17:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -572,179 +572,179 @@ msgstr ""
 msgid "Unexpected end-of-file in attribute list"
 msgstr ""
 
-#: liblepton/src/color.c:270
+#: liblepton/src/color.c:275
 msgid "Background"
 msgstr ""
 
-#: liblepton/src/color.c:271
+#: liblepton/src/color.c:276
 msgid "Pin"
 msgstr ""
 
-#: liblepton/src/color.c:272
+#: liblepton/src/color.c:277
 msgid "Net endpoint"
 msgstr ""
 
-#: liblepton/src/color.c:273
+#: liblepton/src/color.c:278
 msgid "Graphic"
 msgstr ""
 
-#: liblepton/src/color.c:274
+#: liblepton/src/color.c:279
 msgid "Net"
 msgstr ""
 
-#: liblepton/src/color.c:275
+#: liblepton/src/color.c:280
 msgid "Attribute"
 msgstr ""
 
-#: liblepton/src/color.c:276
+#: liblepton/src/color.c:281
 msgid "Logic bubble"
 msgstr ""
 
-#: liblepton/src/color.c:277
+#: liblepton/src/color.c:282
 msgid "Grid point"
 msgstr ""
 
-#: liblepton/src/color.c:278
+#: liblepton/src/color.c:283
 msgid "Detached attribute"
 msgstr ""
 
-#: liblepton/src/color.c:279
+#: liblepton/src/color.c:284
 msgid "Text"
 msgstr ""
 
-#: liblepton/src/color.c:280
+#: liblepton/src/color.c:285
 msgid "Bus"
 msgstr ""
 
-#: liblepton/src/color.c:281
+#: liblepton/src/color.c:286
 msgid "Selection"
 msgstr ""
 
-#: liblepton/src/color.c:282
+#: liblepton/src/color.c:287
 msgid "Bounding box"
 msgstr ""
 
-#: liblepton/src/color.c:283
+#: liblepton/src/color.c:288
 msgid "Zoom box"
 msgstr ""
 
-#: liblepton/src/color.c:284
+#: liblepton/src/color.c:289
 msgid "Stroke"
 msgstr ""
 
-#: liblepton/src/color.c:285
+#: liblepton/src/color.c:290
 msgid "Lock"
 msgstr ""
 
-#: liblepton/src/color.c:286
+#: liblepton/src/color.c:291
 msgid "Output background"
 msgstr ""
 
-#: liblepton/src/color.c:287
+#: liblepton/src/color.c:292
 msgid "Freestyle 1"
 msgstr ""
 
-#: liblepton/src/color.c:288
+#: liblepton/src/color.c:293
 msgid "Freestyle 2"
 msgstr ""
 
-#: liblepton/src/color.c:289
+#: liblepton/src/color.c:294
 msgid "Freestyle 3"
 msgstr ""
 
-#: liblepton/src/color.c:290
+#: liblepton/src/color.c:295
 msgid "Freestyle 4"
 msgstr ""
 
-#: liblepton/src/color.c:291
+#: liblepton/src/color.c:296
 msgid "Net junction"
 msgstr ""
 
-#: liblepton/src/color.c:292
+#: liblepton/src/color.c:297
 msgid "Mesh grid major"
 msgstr ""
 
-#: liblepton/src/color.c:293
+#: liblepton/src/color.c:298
 msgid "Mesh grid minor"
 msgstr ""
 
-#: liblepton/src/color.c:297
+#: liblepton/src/color.c:302
 msgid "Unknown"
 msgstr ""
 
-#: liblepton/src/s_clib.c:458
+#: liblepton/src/s_clib.c:459
 #, c-format
 msgid "Library command failed [%1$s]: %2$s"
 msgstr ""
 
-#: liblepton/src/s_clib.c:463
+#: liblepton/src/s_clib.c:464
 #, c-format
 msgid "Library command failed [%1$s]: Uncaught signal %2$i."
 msgstr ""
 
-#: liblepton/src/s_clib.c:467
+#: liblepton/src/s_clib.c:468
 #, c-format
 msgid "Library command failed [%1$s]"
 msgstr ""
 
-#: liblepton/src/s_clib.c:468
+#: liblepton/src/s_clib.c:469
 #, c-format
 msgid ""
 "Error output was:\n"
 "%1$s"
 msgstr ""
 
-#: liblepton/src/s_clib.c:554
+#: liblepton/src/s_clib.c:555
 #, c-format
 msgid "Library name [%1$s] already in use.  Using [%2$s]."
 msgstr ""
 
-#: liblepton/src/s_clib.c:591
+#: liblepton/src/s_clib.c:592
 #, c-format
 msgid "Failed to open directory [%1$s]: %2$s"
 msgstr ""
 
-#: liblepton/src/s_clib.c:727
+#: liblepton/src/s_clib.c:728
 #, c-format
 msgid "Failed to scan library [%1$s]: Scheme function returned non-list."
 msgstr ""
 
-#: liblepton/src/s_clib.c:735
+#: liblepton/src/s_clib.c:736
 #, c-format
 msgid "Non-string symbol name while scanning library [%1$s]"
 msgstr ""
 
-#: liblepton/src/s_clib.c:891 liblepton/src/s_clib.c:938
+#: liblepton/src/s_clib.c:892 liblepton/src/s_clib.c:939
 msgid "Cannot add library: name not specified."
 msgstr ""
 
-#: liblepton/src/s_clib.c:898
+#: liblepton/src/s_clib.c:899
 #, c-format
 msgid ""
 "Cannot add library [%1$s]: both 'list' and 'get' commands must be specified."
 msgstr ""
 
-#: liblepton/src/s_clib.c:946
+#: liblepton/src/s_clib.c:947
 #, c-format
 msgid "Cannot add Scheme-library [%1$s]: callbacks must be closures."
 msgstr ""
 
-#: liblepton/src/s_clib.c:1073
+#: liblepton/src/s_clib.c:1074
 #, c-format
 msgid "Failed to load symbol from file [%1$s]: %2$s"
 msgstr ""
 
-#: liblepton/src/s_clib.c:1133
+#: liblepton/src/s_clib.c:1134
 #, c-format
 msgid "Failed to load symbol data [%1$s] from source [%2$s]"
 msgstr ""
 
-#: liblepton/src/s_clib.c:1375
+#: liblepton/src/s_clib.c:1377
 #, c-format
 msgid "Component [%1$s] was not found in the component library."
 msgstr ""
 
-#: liblepton/src/s_clib.c:1381
+#: liblepton/src/s_clib.c:1383
 #, c-format
 msgid "More than one component found with name [%1$s]."
 msgstr ""
@@ -779,12 +779,12 @@ msgstr ""
 msgid "Configuration does not have key '%s'"
 msgstr ""
 
-#: liblepton/src/export.c:245
+#: liblepton/src/export.c:248
 #, c-format
 msgid "ERROR: %s.\n"
 msgstr ""
 
-#: liblepton/scheme/lepton/attrib.scm:149
+#: liblepton/scheme/lepton/attrib.scm:148
 #, scheme-format
 msgid "Object ~A is not part of a page"
 msgstr ""
@@ -859,12 +859,12 @@ msgid ""
 "other limitations imposed by this netlist format.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:810
+#: liblepton/scheme/netlist.scm:806
 #, scheme-format
 msgid "Can't open directory ~S.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:821
+#: liblepton/scheme/netlist.scm:817
 #, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [-g BACKEND] [--] FILE ...\n"
@@ -892,7 +892,7 @@ msgid ""
 "Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:863
+#: liblepton/scheme/netlist.scm:859
 #, scheme-format
 msgid ""
 "\n"
@@ -901,11 +901,11 @@ msgid ""
 "\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:904
+#: liblepton/scheme/netlist.scm:900
 msgid "You gave neither backend to execute nor interactive mode!\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:908
+#: liblepton/scheme/netlist.scm:904
 #, scheme-format
 msgid ""
 "No schematic files specified for processing.\n"
@@ -913,7 +913,7 @@ msgid ""
 "                         Run `~A --help' for more information.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:914
+#: liblepton/scheme/netlist.scm:910
 #, scheme-format
 msgid ""
 "Could not find backend `~A' in load path.\n"
@@ -922,7 +922,7 @@ msgid ""
 "available backends.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:920
+#: liblepton/scheme/netlist.scm:916
 #, scheme-format
 msgid ""
 "Can't load backend file ~S.\n"
@@ -934,24 +934,24 @@ msgid ""
 "is the backend's name).\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:927
+#: liblepton/scheme/netlist.scm:923
 #, scheme-format
 msgid "Netlist mode requested by backend is not supported: ~A\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:987
+#: liblepton/scheme/netlist.scm:983
 msgid "Failed to evaluate Scheme expression at startup.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:1021
+#: liblepton/scheme/netlist.scm:1017
 msgid "Failed to load Scheme file before loading backend.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:1050
+#: liblepton/scheme/netlist.scm:1046
 msgid "Failed to load backend file.\n"
 msgstr ""
 
-#: liblepton/scheme/netlist.scm:1063
+#: liblepton/scheme/netlist.scm:1059
 msgid "Failed to load Scheme file after loading backend.\n"
 msgstr ""
 
