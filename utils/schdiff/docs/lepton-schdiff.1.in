@@ -13,7 +13,7 @@
 
 The
 .B lepton-schdiff
-program will use 
+program will use
 .B ImageMagick(1)
 to display a graphical diff of two schematic files.  It's most useful
 when combined with a revision control system so it can compare two revisions of
@@ -31,7 +31,7 @@ can easily be configured to work with most revision control systems.  Here are
 instructions for three:
 
 .B git:
-Use the 
+Use the
 .B difftool
 command exactly as you would use
 .B diff
@@ -40,7 +40,7 @@ command exactly as you would use
 option.
 
 .B mercurial:
-Use the 
+Use the
 .B lepton-schdiff
 command exactly as you would use
 .B diff
