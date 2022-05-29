@@ -147,6 +147,14 @@ Notable changes in Lepton EDA 1.9.18 (upcoming)
   attributes around their component on insertion has been amended
   according to the change.
 
+- Previously, the code for automatic placement of attributes could
+  place them at arbitrary coords, even inaccessible in the program
+  GUI, or at a wrong place around the object they should be
+  attached to.  It depended on some conditions: if and how many
+  objects are selected, where the mouse pointer is, and if the
+  user used hotkey or mouse click on menus for adding an
+  attribute.  These bugs have been fixed.
+
 - Three potential memory leaks related to the File selection
   dialog code have been fixed.
 
