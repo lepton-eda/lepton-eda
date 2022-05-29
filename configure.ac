@@ -9,7 +9,7 @@ dnl directory.
 #####################################################################
 
 AC_INIT([Lepton EDA],
-        [1.9.17],
+        [1.9.18],
         [https://github.com/lepton-eda/lepton-eda/issues],
         [lepton-eda],
         [https://github.com/lepton-eda/lepton-eda])
@@ -31,7 +31,7 @@ AC_GNU_SOURCE
 # Do version number magic
 #####################################################################
 
-AX_GIT_VERSION([20211219])
+AX_GIT_VERSION([20220529])
 
 #####################################################################
 # Windows/MinGW/Cygwin support
