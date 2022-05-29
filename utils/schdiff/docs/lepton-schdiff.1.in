@@ -93,3 +93,13 @@ Alan Somers
 .SH SEE ALSO
 
 .B composite(1), display(1), git(1), lepton-schematic(1), hg(1), svn(1)
+
+.SH COPYRIGHT
+.nf
+Copyright \(co 2011-2014 gEDA Contributors.
+Copyright \(co 2018-@YEAR@ Lepton EDA Contributors.
+License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
+file included with this program for full details.
+.PP
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.

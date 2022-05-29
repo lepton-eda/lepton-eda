@@ -52,7 +52,7 @@ Vladimir Zhbanov
 
 .SH COPYRIGHT
 .nf
-Copyright \(co 2021 Lepton Developers.
+Copyright \(co 2021-@YEAR@ Lepton Developers.
 License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
 file included with this program for full details.
 .PP

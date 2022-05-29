@@ -85,7 +85,7 @@ Dan McMahill <danmcmahill@netbsd.org>
 .SH COPYRIGHT
 .nf
 Copyright \(co 2012-2017 gEDA Contributors.
-Copyright \(co @YEAR@ Lepton EDA Contributors.
+Copyright \(co 2021-@YEAR@ Lepton EDA Contributors.
 License GPLv2+: GNU GPL version 2 or later. Please see the `COPYING'
 file included with this program for full details.
 .PP
