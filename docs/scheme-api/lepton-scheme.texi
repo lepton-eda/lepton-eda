@@ -2454,7 +2454,7 @@ example:
 
 @example
 (string->keys ``F N'')
-=> #(#<gschem-key "F"> #<gschem-key "N">)
+=> #(#<schematic-key "F"> #<schematic-key "N">)
 @end example
 
 In this case, @key{F} is a @dfn{prefix key}, because pressing it does
