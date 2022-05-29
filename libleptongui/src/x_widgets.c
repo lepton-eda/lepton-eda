@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2017-2019 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -440,4 +440,3 @@ x_widgets_destroy_dialogs (GschemToplevel* w_current)
   }
 
 } /* x_widgets_destroy_dialogs() */
-

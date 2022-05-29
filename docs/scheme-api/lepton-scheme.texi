@@ -13,7 +13,7 @@ This manual is for Lepton EDA, version @value{VERSION}.
 
 Copyright @copyright{} 2011-2013 Peter TB Brett
 Copyright @copyright{} 2011-2017 gEDA developers
-Copyright @copyright{} 2017-2021 Lepton developers
+Copyright @copyright{} 2017-2022 Lepton developers
 
 The text of and illustrations in this document are licensed under a
 Creative Commons Attribution–Share Alike 3.0 Unported license

@@ -1,6 +1,6 @@
 ;; Lepton EDA
 ;; liblepton - Lepton's library - Scheme API
-;; Copyright (C) 2019-2020 dmn <graahnul.grom@gmail.com>
+;; Copyright (C) 2019-2022 dmn <graahnul.grom@gmail.com>
 ;; License: GPLv2+. See the COPYING file
 ;;
 
@@ -650,4 +650,3 @@ https://lepton-eda.github.io/lepton-manual.html/Configuration.html
 
 ) ; let
 ) ; find-user-config-files()
-
