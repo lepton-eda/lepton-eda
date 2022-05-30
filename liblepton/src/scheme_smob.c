@@ -223,20 +223,6 @@ smob_weakref_notify (void *target, void *smob) {
   smob_cache_remove (target);
 }
 
-/*! \brief Weak reference notify function for double-length Lepton EDA smobs.
- * \par Function Description
- * Clears a Lepton EDA smob's second pointer when the target
- * object is destroyed.
- *
- * \see edascm_from_object().
- */
-static void
-smob_weakref2_notify (void *target, void *smob) {
-  SCM s = pack_from_pointer (smob);
-  SCM_SET_SMOB_DATA (s, NULL);
-  SCM_SET_SMOB_DATA_2 (s, NULL);
-  smob_cache_remove (target);
-}
 
 /*! \brief Free a Lepton EDA smob.
  * \par Function Description
@@ -267,10 +253,8 @@ smob_free (SCM smob)
                             unpack_as_pointer (smob));
     break;
   case GEDA_SMOB_OBJECT:
-    /* See edascm_from_object() for an explanation of why LeptonObject
-     * smobs store a LeptonToplevel in the second data word */
     lepton_object_weak_unref ((LeptonObject *) data,
-                              smob_weakref2_notify,
+                              smob_weakref_notify,
                               unpack_as_pointer (smob));
     break;
   default:
@@ -437,12 +421,6 @@ edascm_to_page (SCM smob)
  *   edascm_c_set_gc (x, 1);
  * \endcode
  *
- * \note We currently have to bake a LeptonToplevel pointer into the smob,
- * so that if the object becomes garbage-collectable we can obtain a
- * LeptonToplevel to use for deleting the smob without accessing the
- * LeptonToplevel fluid and potentially causing a race condition (see bug
- * 909358).
- *
  * \param object #LeptonObject to create a smob for.
  * \return a smob representing \a object.
  */
@@ -455,14 +433,12 @@ edascm_from_object (LeptonObject *object)
     return smob;
   }
 
-  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
-
-  SCM_NEWSMOB2 (smob, geda_smob_tag, object, toplevel);
+  SCM_NEWSMOB (smob, geda_smob_tag, object);
   SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_OBJECT);
 
-  /* Set weak references */
+  /* Set weak reference */
   lepton_object_weak_ref (object,
-                          smob_weakref2_notify,
+                          smob_weakref_notify,
                           unpack_as_pointer (smob));
 
   smob_cache_add (object, smob);
