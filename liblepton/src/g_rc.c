@@ -2,7 +2,7 @@
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
  * Copyright (C) 2016 Peter Brett <peter@peter-b.co.uk>
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -313,17 +313,20 @@ g_rc_parse__process_error (GError **err, const gchar *pname)
  * on application startup or when there is no chance of data loss from
  * an unexpected exit().
  *
+ * \param [in] toplevel  The #LeptonToplevel structure.
  * \param [in] pname     The name of the application (usually argv[0]).
  * \param [in] rcname    RC file basename, or NULL.
  * \param [in] rcfile    Specific RC file path, or NULL.
  */
 void
-g_rc_parse (const gchar *pname,
+g_rc_parse (LeptonToplevel *toplevel,
+            const gchar *pname,
             const gchar *rcname,
             const gchar *rcfile)
 {
-  LeptonToplevel *toplevel = edascm_c_current_toplevel ();
-  g_rc_parse_handler (toplevel, rcname, rcfile,
+  g_rc_parse_handler (toplevel,
+                      rcname,
+                      rcfile,
                       (ConfigParseErrorFunc) g_rc_parse__process_error,
                       (void *) pname);
 }

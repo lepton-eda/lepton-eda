@@ -1,6 +1,6 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2007-2016 gEDA Contributors
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton file-system)
   #:use-module (lepton os)
+  #:use-module (lepton toplevel)
 
   #:export (build-path
             geda-data-path
@@ -76,7 +77,8 @@ path (rather than the regular Scheme load path)."
   "Parses RC file RC-NAME in the namespace of PROGRAM-NAME.
 RC-NAME should be a basename of RC file, such as, for example,
 \"gafrc\"."
-  (g_rc_parse (string->pointer program-name)
+  (g_rc_parse (toplevel->pointer (current-toplevel))
+              (string->pointer program-name)
               (string->pointer rc-name)
               %null-pointer))
 

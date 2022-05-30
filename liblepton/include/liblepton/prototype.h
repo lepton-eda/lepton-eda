@@ -66,7 +66,8 @@ gboolean
 g_rc_load_cache_config (LeptonToplevel* toplevel,
                         GError** err);
 void
-g_rc_parse (const gchar* pname,
+g_rc_parse (LeptonToplevel *toplevel,
+            const gchar* pname,
             const gchar* rcname,
             const gchar* rcfile);
 void
