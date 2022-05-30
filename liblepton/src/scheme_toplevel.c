@@ -63,21 +63,3 @@ lepton_init_toplevel_fluid (SCM fluid)
 {
   scheme_toplevel_fluid = fluid;
 }
-
-
-/*!
- * \brief Get the value of the #LeptonToplevel fluid.
- * \ingroup guile_c_iface
- * \par Function Description
- * Return the value of the #LeptonToplevel fluid in the current dynamic
- * context.
- *
- * \note This is a part of the public C interface to the Scheme API.
- */
-LeptonToplevel *
-edascm_c_current_toplevel ()
-{
-  g_debug ("edascm_c_current_toplevel()\n");
-  SCM s_toplevel = scm_fluid_ref (scheme_toplevel_fluid);
-  return (LeptonToplevel *) scm_to_pointer (s_toplevel);
-}

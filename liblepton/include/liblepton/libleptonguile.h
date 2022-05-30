@@ -34,9 +34,6 @@ void edascm_init ();
 void
 lepton_init_toplevel_fluid (SCM fluid);
 
-/* Get the value of the #LeptonToplevel fluid in C. */
-LeptonToplevel *edascm_c_current_toplevel ();
-
 /* Set the #LeptonToplevel fluid in the current dynamic context. */
 void edascm_dynwind_toplevel (LeptonToplevel *toplevel);
 
