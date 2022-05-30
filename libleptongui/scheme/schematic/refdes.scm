@@ -36,7 +36,7 @@ schematic objects."
     (let (
         (question-mark "?")
         (refdes-name "refdes")
-        (refdes-regex "^([^0-9])+([0-9]+)(.*)$")
+        (refdes-regex "^([^0-9]+)([0-9]+)(.*)$")
         (refdes-regex-prefix 1)
         (refdes-regex-suffix 3))
 
