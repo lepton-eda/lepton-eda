@@ -245,8 +245,6 @@ smob_free (SCM smob)
 
   /* Otherwise, clear the weak reference */
   switch (EDASCM_SMOB_TYPE (smob)) {
-  case GEDA_SMOB_TOPLEVEL:
-    break;
   case GEDA_SMOB_PAGE:
     lepton_page_weak_unref ((LeptonPage *) data,
                             smob_weakref_notify,
@@ -270,10 +268,6 @@ smob_free (SCM smob)
    */
   if (EDASCM_SMOB_GCP (smob)) {
     switch (EDASCM_SMOB_TYPE (smob)) {
-    case GEDA_SMOB_TOPLEVEL:
-      g_critical ("%s: Blocked garbage-collection of LeptonToplevel %p",
-                 __FUNCTION__, data);
-      break;
     case GEDA_SMOB_PAGE:
       g_critical ("%s: Blocked garbage-collection of LeptonPage %p",
                  __FUNCTION__, data);
@@ -305,9 +299,6 @@ smob_print (SCM smob, SCM port, scm_print_state *pstate)
   scm_puts ("#<geda-", port);
 
   switch (EDASCM_SMOB_TYPE (smob)) {
-  case GEDA_SMOB_TOPLEVEL:
-    scm_puts ("toplevel", port);
-    break;
   case GEDA_SMOB_PAGE:
     scm_puts ("page", port);
     break;
