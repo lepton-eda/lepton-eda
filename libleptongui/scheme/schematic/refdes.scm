@@ -52,12 +52,12 @@ schematic objects."
     ; return: a string containing the reset refdes
 
     (define (rebuild-refdes refdes)
-        (let ((match (string-match refdes-regex refdes)))
+        (let ((found (string-match refdes-regex refdes)))
 
-        (if match
-            (string-append (match:substring match refdes-regex-prefix)
+        (if found
+            (string-append (match:substring found refdes-regex-prefix)
                            question-mark
-                           (match:substring match refdes-regex-suffix))
+                           (match:substring found refdes-regex-suffix))
             refdes)))
 
 
@@ -105,10 +105,10 @@ schematic objects."
 
   ; Return (prefix . number) on match or #f on failure
   (define (split-value value)
-    (let ((match (string-match "^([A-Za-z]*)([0-9]+)$" value)))
-      (if match
-          (cons (match:substring match 1)
-                (string->number (match:substring match 2)))
+    (let ((found (string-match "^([A-Za-z]*)([0-9]+)$" value)))
+      (if found
+          (cons (match:substring found 1)
+                (string->number (match:substring found 2)))
           #f)))
 
   ; Extract prefix from a refdes attribute value
