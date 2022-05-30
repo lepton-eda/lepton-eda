@@ -477,7 +477,7 @@
 (define-lff lepton_toplevel_get_page_current '* '(*))
 (define-lff lepton_toplevel_get_pages '* '(*))
 ;;; g_rc.c
-(define-lff g_rc_parse void '(* * *))
+(define-lff g_rc_parse void '(* * * *))
 ;;; s_attrib.c
 (define-lff s_attrib_uniq int (list '*))
 (define-lff s_attrib_add_entry int (list '*))
