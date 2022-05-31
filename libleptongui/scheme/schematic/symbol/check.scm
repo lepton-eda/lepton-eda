@@ -19,7 +19,10 @@
 
 (define-module (schematic symbol check)
   #:use-module (srfi srfi-1)
+  #:use-module (system foreign)
+  #:use-module (lepton object foreign)
   #:use-module (lepton page)
+
   #:use-module (schematic core gettext)
   #:use-module (schematic dialog)
   #:use-module (schematic window)
@@ -28,6 +31,9 @@
 
   #:export (check-symbol
             object-blaming-info))
+
+(define (blaming-info->string x)
+  (string-join (map cdr (object-blames x)) "\n" 'suffix))
 
 (define (check-symbol)
   "Checks the active page which should be a symbol page, and returns
@@ -39,16 +45,19 @@ of issues when checking the file by the lepton-symcheck utility."
   (define (blamed-object? object)
     (not (null? (filter warning-or-error (object-blames object)))))
 
-  (let ((page (active-page)))
-    (sym:check-symbol page)
-    (let ((page-info (object-blaming-info page)))
-      (schematic-message-dialog (if (string-null? page-info)
-                                    (G_ "Symbol has no pin info.")
-                                    page-info)))
-    (filter blamed-object? (page-contents page))))
+  (let ((objects (sym:check-symbol (active-page)))
+        (page-info (blaming-info->string (active-page))))
+    (schematic-message-dialog (if (string-null? page-info)
+                                  (G_ "Symbol has no pin info.")
+                                  page-info))
+    ;; Return the list of pointers to further process them in C
+    ;; code.
+    (map object->pointer (filter blamed-object? objects))))
 
-(define (object-blaming-info object)
-  "Returns concatenated string of blaming info for OBJECT.  The info
-is identical with what the lepton-symcheck utility returns.  Each
-line in the string represents one issue with the OBJECT."
-  (string-join (map cdr (object-blames object)) "\n" 'suffix))
+;;; OBJECT* is a foreign pointer to LeptonObject.
+(define (object-blaming-info *object)
+  "Returns concatenated string of blaming info for *OBJECT which
+should be a C foreign pointer to a LeptonObject instance.  The
+info is identical with what the lepton-symcheck utility returns.
+Each line in the string represents one issue with the *OBJECT."
+  (blaming-info->string (pointer->object *object)))
