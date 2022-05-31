@@ -2,8 +2,6 @@
 lib_LTLIBRARIES = liblepton.la
 
 scheme_api_sources = \
-	scheme_init.c \
-	scheme_smob.c \
 	scheme_toplevel.c \
 	g_rc.c
 

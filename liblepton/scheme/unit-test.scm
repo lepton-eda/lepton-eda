@@ -85,7 +85,6 @@
 ;;; environment variable LEPTON_INHIBIT_RC_FILES is actually for.
 ;;;   (unless (getenv "LEPTON_INHIBIT_RC_FILES")
 ;;;     (register-data-dirs))
-(edascm_init)
 
 ;;; Syntax and procedure that check exception type and probably
 ;;; have no analogs in SRFI-64.

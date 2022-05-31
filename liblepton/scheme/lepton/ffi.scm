@@ -27,7 +27,6 @@
   #:export (liblepton_init
             c-string-array->list
             register-data-dirs
-            edascm_init
 
             ;; Helpers.
             true?
@@ -446,7 +445,6 @@
 
 ;;; Basic lepton initialisation function.
 (define-lff liblepton_init void '())
-(define-lff edascm_init void '())
 
 (define-lff set_render_placeholders void '())
 (define-lff colors_count size_t '())

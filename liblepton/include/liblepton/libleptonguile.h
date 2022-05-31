@@ -27,17 +27,11 @@ G_BEGIN_DECLS
  * by source files that need to use the Scheme API.
  */
 
-/* Initialise the Scheme API. */
-void edascm_init ();
-
 /* Initialize #LeptonToplevel fluid. */
 void
 lepton_init_toplevel_fluid (SCM fluid);
 
 /* Set the #LeptonToplevel fluid in the current dynamic context. */
 void edascm_dynwind_toplevel (LeptonToplevel *toplevel);
-
-/* Set whether a gEDA object may be garbage collected. */
-void edascm_c_set_gc (SCM smob, int gc);
 
 G_END_DECLS

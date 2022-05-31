@@ -42,7 +42,6 @@
 #endif
 
 #include "liblepton_priv.h"
-#include "libleptonguile_priv.h"
 
 
 /*! \brief Mark an RC file as loaded.
