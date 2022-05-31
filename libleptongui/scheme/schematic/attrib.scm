@@ -78,7 +78,7 @@ active-page() in the (schematic window) module."
   (check-text-show show 5)
 
   (let ((*object (if (object? target)
-                     (geda-object->pointer target)
+                     (object->pointer target)
                      %null-pointer))
         (visibility (text-visibility->integer visible))
         (show? (symbol->text-attribute-show-mode show))
