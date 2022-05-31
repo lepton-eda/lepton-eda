@@ -83,14 +83,15 @@ active-page() in the (schematic window) module."
         (visibility (text-visibility->integer visible))
         (show? (symbol->text-attribute-show-mode show))
         (*str (string->pointer (string-append name "=" value))))
-    (pointer->geda-object (o_attrib_add_attrib (current-window)
-                                               *str
-                                               visibility
-                                               show?
-                                               *object
-                                               TRUE  ; let's be
-                                               0     ; specific
-                                               0))))
+    (pointer->object
+     (o_attrib_add_attrib (current-window)
+                          *str
+                          visibility
+                          show?
+                          *object
+                          TRUE  ; let's be
+                          0     ; specific
+                          0))))
 
 
 (define (attribute-name name)

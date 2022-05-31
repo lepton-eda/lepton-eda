@@ -36,7 +36,7 @@
   (define *page (check-page page 1))
 
   (glist->list (lepton_list_get_glist (lepton_page_get_selection_list *page))
-               pointer->geda-object))
+               pointer->object))
 
 
 (define (select-object! object)
