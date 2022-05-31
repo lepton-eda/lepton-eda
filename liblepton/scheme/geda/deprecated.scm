@@ -82,7 +82,7 @@
   "Returns the line width used to draw OBJECT. Deprecated because it
 doesn't respect type restrictions, unlike the object-stroke
 function in (lepton object)."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (lepton_object_get_stroke_width pointer))
 

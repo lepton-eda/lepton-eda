@@ -51,7 +51,7 @@
     ((_ <object> <pos>)
      ;; Check if object is text and error with 'wrong-type-arg if
      ;; not.
-     (let ((pointer (geda-object->pointer* <object> <pos> text? 'text)))
+     (let ((pointer (check-object <object> <pos> text? 'text)))
        ;; Now check if it is attribute and, if yes, return name
        ;; and value.  Otherwise raise an error with the key
        ;; 'attribute-format.
@@ -87,7 +87,7 @@ raises an 'attribute-format error."
 
 (define (object-attribs object)
   "Returns the attribute list of OBJECT."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (glist->object-list (lepton_object_get_attribs pointer)))
 
@@ -95,7 +95,7 @@ raises an 'attribute-format error."
 (define (attrib-attachment object)
   "Returns the object that attribute OBJECT is attached to.  If
 OBJECT is not attached as an attribute, returns #f."
-  (define pointer (geda-object->pointer* object 1 attribute? 'attribute))
+  (define pointer (check-object object 1 attribute? 'attribute))
 
   (let ((attachment (lepton_object_get_attached_to pointer)))
     (and (not (null-pointer? attachment))
@@ -105,7 +105,7 @@ OBJECT is not attached as an attribute, returns #f."
 (define (promotable-attribs object)
   "Returns the promotable attributes of component OBJECT,
 according to the current configuration."
-  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (define pointer (check-object object 1 component? 'component))
 
   (glist->object-list
    (lepton_component_object_get_promotable pointer FALSE)))
@@ -178,9 +178,9 @@ returns #f."
 ;;; If attrib is already attached to object, does nothing
 ;;; successfully.
 (define (%attach-attrib! object attrib)
-  (define object-pointer (geda-object->pointer* object 1))
+  (define object-pointer (check-object object 1))
   (define attrib-pointer
-    (geda-object->pointer* attrib 2 attribute? 'attribute))
+    (check-object attrib 2 attribute? 'attribute))
 
   ;; Check that attachment doesn't already exist.
   (if (equal? (lepton_object_get_attached_to attrib-pointer)
@@ -245,9 +245,9 @@ ignored. Returns OBJECT."
 ;;; attribute of an object other than OBJECT, raises an
 ;;; 'object-state error.  Returns OBJECT.
 (define (%detach-attrib! object attrib)
-  (define object-pointer (geda-object->pointer* object 1))
+  (define object-pointer (check-object object 1))
   (define attrib-pointer
-    (geda-object->pointer* attrib 2 attribute? 'attribute))
+    (check-object attrib 2 attribute? 'attribute))
 
   ;; If attrib isn't attached do nothing.
   (if (null-pointer? (lepton_object_get_attached_to attrib-pointer))

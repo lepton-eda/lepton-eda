@@ -56,7 +56,7 @@
 (define (object-page object)
   "Returns a page that OBJECT belongs to.  If OBJECT does not
 belong to a page, returns #f."
-  (define object-pointer (geda-object->pointer* object 1))
+  (define object-pointer (check-object object 1))
 
   (let ((page-pointer (lepton_object_get_page object-pointer)))
     (and (not (null-pointer? page-pointer))
@@ -193,7 +193,7 @@ syntax."
 ;;; Returns modified PAGE.
 (define (%page-append! page object)
   (define page-pointer (check-page page 1))
-  (define object-pointer (geda-object->pointer* object 2))
+  (define object-pointer (check-object object 2))
 
   ;; Check that the object isn't already attached to something.
   (let ((object-page-pointer (lepton_object_get_page object-pointer)))
@@ -233,7 +233,7 @@ PAGE are ignored.  Returns PAGE."
 ;;; does nothing.  Returns PAGE.
 (define (%page-remove! page object)
   (define page-pointer (check-page page 1))
-  (define object-pointer (geda-object->pointer* object 2))
+  (define object-pointer (check-object object 2))
 
   ;; Check that the object is not attached to something else.
   (let ((object-page-pointer (lepton_object_get_page object-pointer)))
