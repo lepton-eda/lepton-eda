@@ -57,7 +57,7 @@
 (define-syntax check-object
   (syntax-rules ()
     ((_ object pos)
-     (let ((pointer (geda-object->pointer object)))
+     (let ((pointer (object->pointer object)))
        (if (null-pointer? pointer)
            (let ((proc-name
                   (frame-procedure-name (stack-ref (make-stack #t) 1))))
@@ -68,7 +68,7 @@
                         #f))
            pointer)))
     ((_ object pos object-check-func type)
-     (let ((pointer (geda-object->pointer object))
+     (let ((pointer (object->pointer object))
            (proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
        (if (null-pointer? pointer)
            (scm-error 'wrong-type-arg
@@ -93,67 +93,67 @@ returns #f."
 
 (define (arc? object)
   "Returns #t if OBJECT is a arc object, otherwise returns #f."
-  (true? (lepton_object_is_arc (geda-object->pointer object))))
+  (true? (lepton_object_is_arc (object->pointer object))))
 
 (define (box? object)
   "Returns #t if OBJECT is a box object, otherwise returns #f."
-  (true? (lepton_object_is_box (geda-object->pointer object))))
+  (true? (lepton_object_is_box (object->pointer object))))
 
 (define (bus? object)
   "Returns #t if OBJECT is a bus object, otherwise returns #f."
-  (true? (lepton_object_is_bus (geda-object->pointer object))))
+  (true? (lepton_object_is_bus (object->pointer object))))
 
 (define (circle? object)
   "Returns #t if OBJECT is a circle object, otherwise returns #f."
-  (true? (lepton_object_is_circle (geda-object->pointer object))))
+  (true? (lepton_object_is_circle (object->pointer object))))
 
 (define (component? object)
   "Returns #t if OBJECT is a component object, otherwise returns #f."
-  (true? (lepton_object_is_component (geda-object->pointer object))))
+  (true? (lepton_object_is_component (object->pointer object))))
 
 (define (line? object)
   "Returns #t if OBJECT is a line object, otherwise returns #f."
-  (true? (lepton_object_is_line (geda-object->pointer object))))
+  (true? (lepton_object_is_line (object->pointer object))))
 
 (define-public (net? object)
   "Returns #t if OBJECT is a net object, otherwise returns #f."
-  (true? (lepton_object_is_net (geda-object->pointer object))))
+  (true? (lepton_object_is_net (object->pointer object))))
 
 (define (path? object)
   "Returns #t if OBJECT is a path object, otherwise returns #f."
-  (true? (lepton_object_is_path (geda-object->pointer object))))
+  (true? (lepton_object_is_path (object->pointer object))))
 
 (define (picture? object)
   "Returns #t if OBJECT is a picture object, otherwise returns #f."
-  (true? (lepton_object_is_picture (geda-object->pointer object))))
+  (true? (lepton_object_is_picture (object->pointer object))))
 
 (define (pin? object)
   "Returns #t if OBJECT is a pin object, otherwise returns #f."
-  (true? (lepton_object_is_pin (geda-object->pointer object))))
+  (true? (lepton_object_is_pin (object->pointer object))))
 
 (define (net-pin? object)
   "Returns #t if OBJECT is a net pin object, otherwise returns
 #f."
   (and (pin? object)
        (true? (lepton_pin_object_is_net_pin
-               (geda-object->pointer object)))))
+               (object->pointer object)))))
 
 (define (bus-pin? object)
   "Returns #t if OBJECT is a bus pin object, otherwise returns
 #f."
   (and (pin? object)
        (true? (lepton_pin_object_is_bus_pin
-               (geda-object->pointer object)))))
+               (object->pointer object)))))
 
 
 (define (text? object)
   "Returns #t if OBJECT is a text object, otherwise returns #f."
-  (true? (lepton_object_is_text (geda-object->pointer object))))
+  (true? (lepton_object_is_text (object->pointer object))))
 
 (define (attribute? object)
   "Returns #t if OBJECT is an attribute text object, otherwise
 returns #f."
-  (true? (lepton_object_is_attrib (geda-object->pointer object))))
+  (true? (lepton_object_is_attrib (object->pointer object))))
 
 (define (object-type object)
   "Returns a Scheme symbol representing the type of OBJECT.  The

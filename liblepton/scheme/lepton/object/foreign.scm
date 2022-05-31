@@ -1,5 +1,5 @@
 ;;; Lepton EDA library - Scheme API
-;;; Copyright (C) 2021 Lepton EDA Contributors
+;;; Copyright (C) 2021-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -22,13 +22,13 @@
   #:use-module (lepton ffi)
 
   #:export (geda-object-pointer?
-            geda-object->pointer
+            object->pointer
             pointer->geda-object
             glist->object-list))
 
 ;;; Helper transformers between #<geda-object> smobs and C object
 ;;; pointers.
-(define (geda-object->pointer smob)
+(define (object->pointer smob)
   (or (false-if-exception (edascm_to_object (scm->pointer smob)))
       ;; Return NULL if the SMOB is not the #<geda-object> smob.
       %null-pointer))
