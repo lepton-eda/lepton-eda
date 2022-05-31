@@ -1,6 +1,6 @@
 ;;; Lepton EDA Symbol Checker
 ;;; Scheme API
-;;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -73,6 +73,11 @@
                         epls))))))
 
 
+;;; The function is also called from C GUI code in the same named
+;;; procedure in the module (schematic symbol check).  To guard
+;;; <object>s from garbage collecting, as only FFI pointers to
+;;; them are returned to C, they are returned to that module and
+;;; directly used there.
 (define (check-symbol page)
   (let ((objects (page-contents page)))
 
@@ -101,4 +106,6 @@
                                (assq-ref symbol-attribs 'slotdef)))
                  (net-mapping (make-net-maps (or (assq-ref symbol-attribs 'net) '()))))
             (assign-nets! (symbol-pins->entity-pins pins slotting-info)
-                          net-mapping)))))))
+                          net-mapping)))
+        ;; Return objects to guard them from garbage collection.
+        objects))))
