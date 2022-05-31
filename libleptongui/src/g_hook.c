@@ -71,8 +71,10 @@ g_run_hook_object_list (GschemToplevel *w_current, const char *name,
   }
   SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),
                          g_get_hook_by_name (name),
-                         scm_cons (scm_from_utf8_symbol ("list"),
-                                   scm_reverse_x (lst, SCM_EOL)));
+                         scm_list_3 (scm_from_utf8_symbol ("map"),
+                                     scm_from_utf8_symbol ("pointer->object"),
+                                     scm_cons (scm_from_utf8_symbol ("list"),
+                                               scm_reverse_x (lst, SCM_EOL))));
 
   g_scm_eval_protected (expr, scm_interaction_environment ());
   scm_dynwind_end ();
@@ -98,7 +100,8 @@ g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *ob
   SCM expr = scm_list_3 (scm_from_utf8_symbol ("run-hook"),
                          g_get_hook_by_name (name),
                          scm_list_2 (scm_from_utf8_symbol ("list"),
-                                     scm_from_pointer (obj, NULL)));
+                                     scm_list_2 (scm_from_utf8_symbol ("pointer->object"),
+                                                 scm_from_pointer (obj, NULL))));
 
   g_scm_eval_protected (expr, scm_interaction_environment ());
   scm_dynwind_end ();
