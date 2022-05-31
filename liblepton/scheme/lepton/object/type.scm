@@ -86,9 +86,9 @@
 
 
 (define (object? object)
-  "Returns #t if OBJECT is a #<geda-object> instance, otherwise
-returns #f."
-  (geda-object-pointer? (scm->pointer object)))
+  "Returns #t if OBJECT is an <object> instance, otherwise returns
+#f."
+  (is-object? object))
 
 
 (define (arc? object)
