@@ -44,7 +44,7 @@
 not included directly in a page (i.e. inclusion in a component is
 not permitted), raises the 'object-state Scheme error.  If OBJECT
 is already selected, does nothing. Returns OBJECT."
-  (define *object (geda-object->pointer* object 1))
+  (define *object (check-object object 1))
 
   (let ((*page (lepton_object_get_page *object)))
     (when (or (null-pointer? *page)
@@ -65,7 +65,7 @@ is already selected, does nothing. Returns OBJECT."
 is not included directly in a page (i.e. not via inclusion in a
 component), raises the 'object-state Scheme error.  If OBJECT is
 not selected,does nothing.  Returns OBJECT."
-  (define *object (geda-object->pointer* object 1))
+  (define *object (check-object object 1))
 
   (let ((*page (lepton_object_get_page *object)))
     (when (or (null-pointer? *page)
@@ -85,7 +85,7 @@ not selected,does nothing.  Returns OBJECT."
   "Returns #t if OBJECT is selected.  Otherwise, returns #f.  If
 OBJECT is not included directly in a page (i.e. not via inclusion
 in a component), raises the 'object-state Scheme error."
-  (define *object (geda-object->pointer* object 1))
+  (define *object (check-object object 1))
 
   (let ((*page (lepton_object_get_page *object)))
     (when (or (null-pointer? *page)

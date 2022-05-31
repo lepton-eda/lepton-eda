@@ -158,7 +158,7 @@
 
 (define (object-id object)
   "Returns an internal id number of the OBJECT."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (let ((id (lepton_object_get_id pointer)))
     (and (not (= id -1))
@@ -167,7 +167,7 @@
 
 (define (copy-object object)
   "Returns a copy of OBJECT."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (pointer->geda-object (lepton_object_copy pointer)))
 
@@ -176,7 +176,7 @@
   "Returns the colormap index of the color used to draw
 OBJECT. Note that the color may not be meaningful for some object
 types."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (lepton_object_get_color pointer))
 
@@ -185,7 +185,7 @@ types."
   "Set the colormap index of the color used to draw OBJECT to COLOR.
 Note that the color may not be meaningful for some object types.
 Returns OBJECT."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (lepton_object_set_color pointer color)
 
@@ -198,7 +198,7 @@ OBJECT.  If OBJECT is not included in a page, raises an
 'object-state error.  The connections reported are independent of
 inclusion in components and includes only primitive objects such
 as pins, nets, or buses."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (when (null-pointer? (lepton_object_get_page pointer))
     (scm-error 'object-state
@@ -217,7 +217,7 @@ as pins, nets, or buses."
 (define (object-component object)
   "Returns the component object that contains OBJECT.
 If OBJECT is not part of a component, returns #f."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (let ((parent-pointer (lepton_object_get_parent pointer)))
     (and (not (null-pointer? parent-pointer))
@@ -241,7 +241,7 @@ the line.  For pins,the start is the connectable point on the
 pin.  If COLOR is specified, it should be the integer color map
 index of the color with which to draw the line.  If COLOR is not
 specified, the default line color is used.  Returns OBJECT."
-  (define pointer (geda-object->pointer* object 1 linear-object? 'line))
+  (define pointer (check-object object 1 linear-object? 'line))
 
   (check-coord start 2)
   (check-coord end 3)
@@ -314,7 +314,7 @@ values."
 
 ;;; Helper for pin-swap-whichend?().
 (define (object-whichend object)
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
   (true? (lepton_object_get_whichend pointer)))
 
 ;;; The function checks if OBJECT is a pin and its ends,
@@ -330,7 +330,7 @@ values."
 be a line, net, bus, or pin object) as a pair '(x . y).  For pin
 objects, this is the position of the connectable point on the
 pin."
-  (define pointer (geda-object->pointer* object 1 linear-object? 'line))
+  (define pointer (check-object object 1 linear-object? 'line))
 
   (define swap-coords? (pin-swap-whichend? object))
 
@@ -345,7 +345,7 @@ pin."
 be a line, net, bus, or pin object) as a pair '(x . y).  For pin
 objects, this is the position of the non-connectable point on the
 pin."
-  (define pointer (geda-object->pointer* object 1 linear-object? 'line))
+  (define pointer (check-object object 1 linear-object? 'line))
 
   (define swap-coords? (pin-swap-whichend? object))
 
@@ -469,7 +469,7 @@ optional COLOR is specified, it shoud be the integer color map
 index of the color to be used for drawing the box.  If COLOR is
 not specified, the default box color is used.  Returns the
 modified box object."
-  (define pointer (geda-object->pointer* object 1 box? 'box))
+  (define pointer (check-object object 1 box? 'box))
 
   (check-coord top-left 2)
   (check-coord bottom-right 3)
@@ -539,7 +539,7 @@ OBJECT. The return value is a list of the parameters in the form:
 
 (define (box-top-left object)
   "Returns the top left corner coordinate of box OBJECT."
-  (define pointer (geda-object->pointer* object 1 box? 'box))
+  (define pointer (check-object object 1 box? 'box))
 
   (cons (lepton_box_object_get_upper_x pointer)
         (lepton_box_object_get_upper_y pointer)))
@@ -547,7 +547,7 @@ OBJECT. The return value is a list of the parameters in the form:
 
 (define (box-bottom-right object)
   "Returns the bottom right corner coordinate of box OBJECT."
-  (define pointer (geda-object->pointer* object 1 box? 'box))
+  (define pointer (check-object object 1 box? 'box))
 
   (cons (lepton_box_object_get_lower_x pointer)
         (lepton_box_object_get_lower_y pointer)))
@@ -561,7 +561,7 @@ CENTER is the new coordinate of the circle center in the form '(x
 . y).  RADIUS is the new radius of the circle.  COLOR is the new
 colormap index of the color to be used for drawing the circle.
 Returns the modified circle object."
-  (define pointer (geda-object->pointer* object 1 circle? 'circle))
+  (define pointer (check-object object 1 circle? 'circle))
 
   (check-coord center 2)
   (check-integer radius 3)
@@ -600,14 +600,14 @@ parameters set to default values."
 (define (circle-center object)
   "Returns the coordinate of the center of circle OBJECT as a pair
 of integers in the form '(x . y)."
-  (define pointer (geda-object->pointer* object 1 circle? 'circle))
+  (define pointer (check-object object 1 circle? 'circle))
 
   (cons (lepton_circle_object_get_center_x pointer)
         (lepton_circle_object_get_center_y pointer)))
 
 (define (circle-radius object)
   "Returns the radius of circle OBJECT as an integer."
-  (define pointer (geda-object->pointer* object 1 circle? 'circle))
+  (define pointer (check-object object 1 circle? 'circle))
 
   (lepton_circle_object_get_radius pointer))
 
@@ -633,7 +633,7 @@ angle.  If optional COLOR is specified, it should be the integer
 color map index of the color with which to draw the arc.  If COLOR
 is not specified, the default arc color is used.  Returns the
 modified arc object."
-  (define pointer (geda-object->pointer* object 1 arc? 'arc))
+  (define pointer (check-object object 1 arc? 'arc))
 
   (check-coord center 2)
   (check-integer radius 3)
@@ -698,32 +698,32 @@ coordinate, radius, start and sweep angles, and color in the form:
 (define (arc-center object)
   "Returns the position of the center of arc OBJECT as a pair of
 two integers in the form '(x . y)."
-  (define pointer (geda-object->pointer* object 1 arc? 'arc))
+  (define pointer (check-object object 1 arc? 'arc))
   (cons (lepton_arc_object_get_center_x pointer)
         (lepton_arc_object_get_center_y pointer)))
 
 (define (arc-radius object)
   "Returns the radius of arc OBJECT as an integer."
-  (define pointer (geda-object->pointer* object 1 arc? 'arc))
+  (define pointer (check-object object 1 arc? 'arc))
   (lepton_arc_object_get_radius pointer))
 
 (define (arc-start-angle object)
   "Returns the start angle of arc OBJECT as an integer number of
 degrees."
-  (define pointer (geda-object->pointer* object 1 arc? 'arc))
+  (define pointer (check-object object 1 arc? 'arc))
   (lepton_arc_object_get_start_angle pointer))
 
 (define (arc-sweep-angle object)
   "Returns the sweep angle of arc OBJECT as an integer number of
 degrees."
-  (define pointer (geda-object->pointer* object 1 arc? 'arc))
+  (define pointer (check-object object 1 arc? 'arc))
   (lepton_arc_object_get_sweep_angle pointer))
 
 (define (arc-end-angle object)
   "Returns the end angle of arc OBJECT as an integer number of
 degrees.  The end angle is the sum of the start and sweep angles
 of the arc."
-  (define pointer (geda-object->pointer* object 1 arc? 'arc))
+  (define pointer (check-object object 1 arc? 'arc))
   (+ (lepton_arc_object_get_start_angle pointer)
      (lepton_arc_object_get_sweep_angle pointer)))
 
@@ -740,7 +740,7 @@ If COLOR is not specified, the default path color is used."
 
 (define (path-length object)
   "Returns the number of path elements in path OBJECT."
-  (define pointer (geda-object->pointer* object 1 path? 'path))
+  (define pointer (check-object object 1 path? 'path))
 
   (lepton_path_object_get_num_sections pointer))
 
@@ -763,7 +763,7 @@ path position.
 
 All coordinates are absolute."
 
-  (define pointer (geda-object->pointer* object 1 path? 'path))
+  (define pointer (check-object object 1 path? 'path))
 
   (check-integer index 2)
 
@@ -804,7 +804,7 @@ All coordinates are absolute."
   "Removes the path element at INDEX from path OBJECT. If INDEX is
 not a valid index, raises a Scheme 'out-of-range error.  Returns
 modified OBJECT."
-  (define pointer (geda-object->pointer* object 1 path? 'path))
+  (define pointer (check-object object 1 path? 'path))
 
   (check-integer index 2)
 
@@ -854,7 +854,7 @@ to the path. Returns modified OBJECT."
   (define (error-invalid-path-element)
     (error "Invalid path element type ~A." type))
 
-  (define pointer (geda-object->pointer* object 1 path? 'path))
+  (define pointer (check-object object 1 path? 'path))
 
   (check-integer index 2)
   (check-symbol type 3)
@@ -917,7 +917,7 @@ to the path. Returns modified OBJECT."
 BOTTOM-RIGHT are the new coordinates of the picture in the form
 '(x . y).  ANGLE is the new rotation angle.  MIRROR is the boolean
 value which sets whether the picture object should be mirrored."
-  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+  (define pointer (check-object object 1 picture? 'picture))
 
   (check-coord top-left 2)
   (check-coord bottom-right 3)
@@ -1019,7 +1019,7 @@ boolean flag which specifies if the picture should be mirrored."
 
 (define (picture-filename object)
   "Returns the filename associated with picture OBJECT."
-  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+  (define pointer (check-object object 1 picture? 'picture))
 
   (let ((filename-pointer (lepton_picture_object_get_filename pointer)))
     (and (not (null-pointer? filename-pointer))
@@ -1028,7 +1028,7 @@ boolean flag which specifies if the picture should be mirrored."
 (define (picture-top-left object)
   "Returns the top left corner coordinate of picture OBJECT as a
 pair in the form '(x . y)."
-  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+  (define pointer (check-object object 1 picture? 'picture))
 
   (cons (lepton_picture_object_get_upper_x pointer)
         (lepton_picture_object_get_upper_y pointer)))
@@ -1036,7 +1036,7 @@ pair in the form '(x . y)."
 (define (picture-bottom-right object)
   "Returns the bottom right corner coordinate of picture OBJECT as
 a pair in the form '(x . y)."
-  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+  (define pointer (check-object object 1 picture? 'picture))
 
   (cons (lepton_picture_object_get_lower_x pointer)
         (lepton_picture_object_get_lower_y pointer)))
@@ -1044,14 +1044,14 @@ a pair in the form '(x . y)."
 (define (picture-angle object)
   "Returns the rotation angle of picture OBJECT as an integer
 number of degrees."
-  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+  (define pointer (check-object object 1 picture? 'picture))
 
   (lepton_picture_object_get_angle pointer))
 
 (define (picture-mirror? object)
   "Returns #t if picture OBJECT is mirrored.  Otherwise returns
 #f."
-  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+  (define pointer (check-object object 1 picture? 'picture))
 
   (true? (lepton_picture_object_get_mirrored pointer)))
 
@@ -1068,7 +1068,7 @@ where:
   y2 - Y-coordinate of bottom right of PICTURE.
   angle - rotation angle.
   mirrored - whether PICTURE object is mirrored."
-  (define pointer (geda-object->pointer* object 1 picture? 'picture))
+  (define pointer (check-object object 1 picture? 'picture))
 
   (list (picture-filename object)
         (picture-top-left object)
@@ -1113,7 +1113,7 @@ be one of the following symbols:
 If COLOR is specified, it should be the integer color map index of
 the color with which to draw the text.  If COLOR is not specified,
 the default text color is used."
-  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (define pointer (check-object object 1 text? 'text))
 
   (check-coord anchor 2)
   (check-text-alignment align 3)
@@ -1236,7 +1236,7 @@ where anchor is a pair of integers in the form '(x . y)."
 (define (text-anchor object)
   "Returns the position of the anchor of text OBJECT in the form
 '(x . y)."
-  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (define pointer (check-object object 1 text? 'text))
   (cons (lepton_text_object_get_x pointer)
         (lepton_text_object_get_y pointer)))
 
@@ -1252,7 +1252,7 @@ symbols:
   - lower-right
   - middle-right
   - upper-right"
-  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (define pointer (check-object object 1 text? 'text))
 
   (let* ((align (lepton_text_object_get_alignment pointer))
          (string-pointer (lepton_text_object_alignment_to_string align))
@@ -1264,17 +1264,17 @@ symbols:
 (define (text-angle object)
   "Returns the angle that text OBJECT is displayed at as an
 integer."
-  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (define pointer (check-object object 1 text? 'text))
   (lepton_text_object_get_angle pointer))
 
 (define (text-string object)
   "Returns the string content of text OBJECT."
-  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (define pointer (check-object object 1 text? 'text))
   (pointer->string (lepton_text_object_get_string pointer)))
 
 (define (set-text-string! object str)
   "Set the string content of text OBJECT to STR."
-  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (define pointer (check-object object 1 text? 'text))
 
   (check-string str 2)
 
@@ -1294,19 +1294,19 @@ integer."
 
 (define (text-size object)
   "Return the font size of text OBJECT as an integer."
-  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (define pointer (check-object object 1 text? 'text))
   (lepton_text_object_get_size pointer))
 
 (define (text-visible? object)
   "Returns #t if text OBJECT is set to be visible.  Otherwise
 returns #f."
-  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (define pointer (check-object object 1 text? 'text))
   (true? (lepton_text_object_is_visible pointer)))
 
 (define (set-text-visibility! object visible?)
   "If VISIBLE? is #f, sets text OBJECT to be invisible;
 otherwise, sets it to be visible."
-  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (define pointer (check-object object 1 text? 'text))
 
   (check-boolean visible? 2)
 
@@ -1329,7 +1329,7 @@ value will be one of the following symbols:
   - name
   - value
   - both"
-  (define pointer (geda-object->pointer* object 1 text? 'text))
+  (define pointer (check-object object 1 text? 'text))
 
   (let* ((show (lepton_text_object_get_show pointer))
          (string-pointer (lepton_text_object_show_to_string show))
@@ -1361,7 +1361,7 @@ used:
   - LOCKED    whether the component object should be locked.
 Note that modifying the transformation parameters of OBJECT does
 not update its contents."
-  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (define pointer (check-object object 1 component? 'component))
 
   (check-coord position 2)
   (check-component-angle angle 3)
@@ -1463,7 +1463,7 @@ returns #f."
 
 (define (component-basename object)
   "Returns the basename of component OBJECT."
-  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (define pointer (check-object object 1 component? 'component))
   (pointer->string (lepton_component_object_get_basename pointer)))
 
 
@@ -1471,7 +1471,7 @@ returns #f."
   "Returns symbol's full file name for component OBJECT, if the
 component has a symbol file associated with it.  Otherwise returns
 #f."
-  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (define pointer (check-object object 1 component? 'component))
 
   (let ((sym (s_clib_get_symbol_by_name
               (lepton_component_object_get_basename pointer))))
@@ -1483,34 +1483,34 @@ component has a symbol file associated with it.  Otherwise returns
 
 (define (component-position object)
   "Returns position of component OBJECT in the form '(x . y)."
-  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (define pointer (check-object object 1 component? 'component))
   (cons (lepton_component_object_get_x pointer)
         (lepton_component_object_get_y pointer)))
 
 
 (define (component-angle object)
   "Returns rotation angle of component OBJECT."
-  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (define pointer (check-object object 1 component? 'component))
   (lepton_component_object_get_angle pointer))
 
 
 (define (component-mirror? object)
   "Returns #t if component OBJECT is mirrored, otherwise returns
 #f."
-  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (define pointer (check-object object 1 component? 'component))
   (true? (lepton_component_object_get_mirror pointer)))
 
 
 (define (component-locked? object)
   "Returns #t if OBJECT is locked, otherwise returns #t."
-  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (define pointer (check-object object 1 component? 'component))
   (not (true? (lepton_object_get_selectable pointer))))
 
 
 (define (component-contents object)
   "Returns a list of the primitive objects that make up
 component OBJECT."
-  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (define pointer (check-object object 1 component? 'component))
   (glist->object-list
    (lepton_component_object_get_contents pointer)))
 
@@ -1522,7 +1522,7 @@ component OBJECT."
   - Rotation angle.
   - Whether OBJECT is mirrored.
   - Whether OBJECT is locked."
-  (define pointer (geda-object->pointer* object 1 component? 'component))
+  (define pointer (check-object object 1 component? 'component))
 
   (list (component-basename object)
         (component-position object)
@@ -1533,10 +1533,10 @@ component OBJECT."
 
 (define (%component-append! component object)
   (define component-pointer
-    (geda-object->pointer* component 1 component? 'component))
+    (check-object component 1 component? 'component))
 
   (define object-pointer
-    (geda-object->pointer* object 2))
+    (check-object object 2))
 
   (let ((object-parent (lepton_object_get_parent object-pointer))
         (object-page (lepton_object_get_page object-pointer)))
@@ -1588,10 +1588,10 @@ in COMPONENT are left alone.  Returns COMPONENT."
 
 (define (%component-remove! component object)
   (define component-pointer
-    (geda-object->pointer* component 1 component? 'component))
+    (check-object component 1 component? 'component))
 
   (define object-pointer
-    (geda-object->pointer* object 2))
+    (check-object object 2))
 
   (let ((object-page (lepton_object_get_page object-pointer))
         (object-parent (lepton_object_get_parent object-pointer)))
@@ -1699,7 +1699,7 @@ return value is a list of parameters:
     - For other styles, dot/dash spacing and dash length.
 The dash parameters are ignored in case they are not supported for
 the dash style."
-  (define pointer (geda-object->pointer* object 1 strokable? 'strokable))
+  (define pointer (check-object object 1 strokable? 'strokable))
 
   (let ((cap-type (object-stroke-cap object))
         (line-type (object-stroke-line-type object))
@@ -1745,7 +1745,7 @@ Returns modified OBJECT."
         (eq? dash-type 'phantom)
         (eq? dash-type 'dotted)))
 
-  (define pointer (geda-object->pointer* object 1 strokable? 'strokable))
+  (define pointer (check-object object 1 strokable? 'strokable))
 
   (check-symbol cap-type 3)
   (unless (stroke-cap-type? cap-type)
@@ -1795,7 +1795,7 @@ Returns modified OBJECT."
   "Returns the integer stroke width of OBJECT, which must be a
 line, box, circle, arc, or path object."
   (define pointer
-    (geda-object->pointer* object 1 strokable? 'strokable))
+    (check-object object 1 strokable? 'strokable))
 
   (lepton_object_get_stroke_width pointer))
 
@@ -1819,7 +1819,7 @@ symbols 'none, 'square or 'round."
            (string->symbol (pointer->string c-string-pointer))))))
 
   (define pointer
-    (geda-object->pointer* object 1 strokable? 'strokable))
+    (check-object object 1 strokable? 'strokable))
 
   (cap-type->symbol (lepton_object_get_stroke_cap_type pointer)))
 
@@ -1840,18 +1840,18 @@ symbols 'none, 'square or 'round."
            (string->symbol (pointer->string c-string-pointer))))))
 
   (define pointer
-    (geda-object->pointer* object 1 strokable? 'strokable))
+    (check-object object 1 strokable? 'strokable))
 
   (stroke-type->symbol (lepton_object_get_stroke_type pointer)))
 
 (define (object-stroke-dash-length object)
   (define pointer
-    (geda-object->pointer* object 1 strokable? 'strokable))
+    (check-object object 1 strokable? 'strokable))
   (lepton_object_get_stroke_dash_length pointer))
 
 (define (object-stroke-dash-space object)
   (define pointer
-    (geda-object->pointer* object 1 strokable? 'strokable))
+    (check-object object 1 strokable? 'strokable))
   (lepton_object_get_stroke_space_length pointer))
 
 (define (object-stroke-dash object)
@@ -1903,7 +1903,7 @@ value is a list of parameters:
                 fill-type
                 (error ("Unsupported fill type for object ~A: ~A." object fill-type)))))))
 
-  (define pointer (geda-object->pointer* object 1 fillable? 'fillable))
+  (define pointer (check-object object 1 fillable? 'fillable))
 
   (let ((fill-type
          (fill-type->symbol (lepton_object_get_fill_type pointer)))
@@ -1946,7 +1946,7 @@ second hatch is used for the 'mesh type only.  Returns OBJECT."
   (define with-second-hatch?
     (eq? type 'mesh))
 
-  (define pointer (geda-object->pointer* object 1 fillable? 'fillable))
+  (define pointer (check-object object 1 fillable? 'fillable))
 
   (unless (fill-type? type)
     (error "Invalid fill style ~A." type))
@@ -2001,7 +2001,7 @@ second hatch is used for the 'mesh type only.  Returns OBJECT."
 
 ;;; Get bounds of one object.
 (define (one-object-bounds object)
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
   (define xmin (make-bytevector (sizeof int)))
   (define ymin (make-bytevector (sizeof int)))
   (define xmax (make-bytevector (sizeof int)))
@@ -2074,7 +2074,7 @@ actual bounds of the objects, not the visible bounds."
   "Checks the state of OBJECT's selectable flag: if it's true, the
 object is considered to be unlocked, otherwise it is locked.
 Returns #t if OBJECT is selectable, otherwise returns #f."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (true? (lepton_object_get_selectable pointer)))
 
@@ -2083,7 +2083,7 @@ Returns #t if OBJECT is selectable, otherwise returns #f."
   "Sets OBJECT's selectable flag to SELECTABLE?, thus locking or
 unlocking OBJECT.  Locked objects cannot be selected in GUI.
 Returns OBJECT."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (unless (eq? (object-selectable? object) selectable?)
     (lepton_object_set_selectable pointer (if selectable? 1 0))
@@ -2095,7 +2095,7 @@ Returns OBJECT."
 
 (define (object-embedded? object)
   "Check whether OBJECT is embedded."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (or (and (component? object)
            (true? (lepton_component_object_get_embedded pointer)))
@@ -2118,7 +2118,7 @@ nothing.  Returns OBJECT."
     ((embed-func lepton_picture_object_embed
                  lepton_picture_object_unembed) x))
 
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (or (and (component? object) (embed-component pointer))
       (and (picture? object) (embed-picture pointer)))
@@ -2128,7 +2128,7 @@ nothing.  Returns OBJECT."
 ;;; Mirrors OBJECT using X as x-coordinate of centre of rotation.
 ;;; Returns OBJECT.
 (define (mirror-object! object x)
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (lepton_object_emit_pre_change_notify pointer)
   (lepton_object_mirror x 0 pointer)
@@ -2142,7 +2142,7 @@ nothing.  Returns OBJECT."
 ;;; centre of rotation specified by X and Y.  ANGLE must be an
 ;;; integer multiple of 90 degrees.  Returns OBJECT.
 (define (rotate-object! object x y angle)
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (let ((angle (euclidean-remainder angle 360)))
     (when (not (zero? (euclidean-remainder angle 90)))
@@ -2159,7 +2159,7 @@ nothing.  Returns OBJECT."
 ;;; and DY are integer distances along corresponding axes.
 ;;; Returns OBJECT.
 (define (translate-object! object dx dy)
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (lepton_object_emit_pre_change_notify pointer)
   (lepton_object_translate pointer dx dy)

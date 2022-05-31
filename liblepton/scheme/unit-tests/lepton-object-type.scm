@@ -133,24 +133,22 @@ static char * test_image_xpm[] = {
 ;;; pointers.
 (for-each
  (lambda (object)
-   (test-assert (not-null-pointer? (geda-object->pointer* object 1))))
+   (test-assert (not-null-pointer? (check-object object 1))))
  object-list)
 
-(test-assert-thrown 'wrong-type-arg (geda-object->pointer* 'anything 1))
+(test-assert-thrown 'wrong-type-arg (check-object 'anything 1))
 
 (for-each
  (lambda (x)
    (let* ((object (car x))
           (check-func (cdr x))
           (other-funcs (exclude check-func func-list))
-          (pointer (geda-object->pointer* object
-                                          1
-                                          check-func
-                                          'anything)))
+          (pointer (check-object object 1 check-func 'anything)))
+
      ;; Test that pointer is not %null-pointer.
      (test-assert (not-null-pointer? pointer))
-     ;; Test geda-object->pointer*() with wrong object function.
-     ;; For example, (geda-object->pointer* arc 1 box? 'anything).
+     ;; Test check-object() with wrong object function.
+     ;; For example, (check-object arc 1 box? 'anything).
      (for-each
       (lambda (func)
         (unless (or (and (equal? func pin?)
@@ -162,7 +160,7 @@ static char * test_image_xpm[] = {
                     (and (equal? func net-pin?)
                          (equal? check-func pin?)))
           (test-assert-thrown 'wrong-type-arg
-                              (geda-object->pointer* object 1 func 'anything))))
+                              (check-object object 1 func 'anything))))
       other-funcs)
 
      ;; Test pointer->geda-object().

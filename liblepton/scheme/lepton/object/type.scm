@@ -1,7 +1,7 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2010-2011 Peter Brett <peter@peter-b.co.uk>
 ;;; Copyright (C) 2012-2016 gEDA Contributors
-;;; Copyright (C) 2017-2021 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -24,7 +24,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton object foreign)
 
-  #:export (geda-object->pointer*
+  #:export (check-object
 
             arc?
             attribute?
@@ -52,9 +52,9 @@
 ;;; key reporting the function name and position POS of the
 ;;; OBJECT argument.  In short, the usage is as follows:
 ;;;   (define (myfunc object)
-;;;     (define pointer (geda-object->pointer* object 1))
+;;;     (define pointer (check-object object 1))
 ;;;     (function-body))
-(define-syntax geda-object->pointer*
+(define-syntax check-object
   (syntax-rules ()
     ((_ object pos)
      (let ((pointer (geda-object->pointer object)))
@@ -159,7 +159,7 @@ returns #f."
   "Returns a Scheme symbol representing the type of OBJECT.  The
 type may be one of the symbols: 'arc, 'box, 'bus, 'circle,
 'complex, 'line, 'net, 'path, 'picture, 'pin, or 'text."
-  (define pointer (geda-object->pointer* object 1))
+  (define pointer (check-object object 1))
 
   (cond
    ((arc? object) 'arc)
