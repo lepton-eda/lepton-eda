@@ -34,7 +34,7 @@
 (liblepton_init)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
-(edascm_init)
+
 
 (define libleptonattrib (dynamic-link %libleptonattrib))
 

@@ -26,7 +26,6 @@
 (liblepton_init)
 (unless (getenv "LEPTON_INHIBIT_RC_FILES")
   (register-data-dirs))
-(edascm_init)
 
 
 (define %cli (basename (car (program-arguments))))

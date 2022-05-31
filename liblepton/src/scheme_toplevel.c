@@ -25,7 +25,7 @@
 #include <config.h>
 
 #include "liblepton_priv.h"
-#include "libleptonguile_priv.h"
+#include "libleptonguile.h"
 
 SCM scheme_toplevel_fluid = SCM_UNDEFINED;
 
