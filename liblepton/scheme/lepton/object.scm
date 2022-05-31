@@ -169,7 +169,7 @@
   "Returns a copy of OBJECT."
   (define pointer (check-object object 1))
 
-  (pointer->geda-object (lepton_object_copy pointer)))
+  (pointer->object (lepton_object_copy pointer)))
 
 
 (define (object-color object)
@@ -221,7 +221,7 @@ If OBJECT is not part of a component, returns #f."
 
   (let ((parent-pointer (lepton_object_get_parent pointer)))
     (and (not (null-pointer? parent-pointer))
-         (pointer->geda-object parent-pointer))))
+         (pointer->object parent-pointer))))
 
 
 ;;;; Lines
@@ -300,7 +300,7 @@ values."
         (x2 (car end))
         (y2 (cdr end))
         (color (or color (default_color_id))))
-    (pointer->geda-object
+    (pointer->object
      (lepton_line_object_new color x1 y1 x2 y2))))
 
 ;;; Helpers for linear two point objects.
@@ -384,7 +384,7 @@ values."
         (x2 (car end))
         (y2 (cdr end))
         (color (or color (color-map-name-to-index 'net))))
-    (pointer->geda-object
+    (pointer->object
      (lepton_net_object_new color x1 y1 x2 y2))))
 
 
@@ -405,7 +405,7 @@ values."
         (y2 (cdr end))
         (color (or color (color-map-name-to-index 'bus)))
         (ripper-direction 0))
-    (pointer->geda-object
+    (pointer->object
      (lepton_bus_object_new color x1 y1 x2 y2 ripper-direction))))
 
 
@@ -424,13 +424,13 @@ values."
   (let ((make-func (if (eq? connection-type 'bus)
                        lepton_pin_object_new_bus_pin
                        lepton_pin_object_new_net_pin)))
-    (pointer->geda-object (make-func (or color
-                                         default-pin-color)
-                                     (car start)
-                                     (cdr start)
-                                     (car end)
-                                     (cdr end)
-                                     default-pin-whichend))))
+    (pointer->object (make-func (or color
+                                    default-pin-color)
+                                (car start)
+                                (cdr start)
+                                (car end)
+                                (cdr end)
+                                default-pin-whichend))))
 
 (define* (make-net-pin start end #:optional color)
   "Creates and returns a new net pin object with given parameters.
@@ -522,7 +522,7 @@ box.  If COLOR is not specified, the default box color is used."
          (bottom-y (min y0 y1))
          (top-y (max y0 y1))
          (color (or color default-box-color)))
-    (pointer->geda-object
+    (pointer->object
      (lepton_box_object_new color
                             left-x
                             top-y
@@ -590,7 +590,7 @@ parameters set to default values."
   (check-integer radius 2)
   (and color (check-integer color 3))
 
-  (pointer->geda-object
+  (pointer->object
    (lepton_circle_object_new (or color
                                  (default_color_id))
                              (car center)
@@ -674,7 +674,7 @@ is not specified, the default arc color is used."
   (check-integer sweep-angle 4)
   (and color (check-integer color 5))
 
-  (pointer->geda-object
+  (pointer->object
    (lepton_arc_object_new (or color
                               default-arc-color)
                           ;; Center X.
@@ -734,7 +734,7 @@ of the arc."
 stroke and fill options.  If COLOR is specified, it should be the
 integer color map index of the color with which to draw the path.
 If COLOR is not specified, the default path color is used."
-  (pointer->geda-object
+  (pointer->object
    (lepton_path_object_new (or color (default_color_id))
                            (string->pointer ""))))
 
@@ -1015,7 +1015,7 @@ boolean flag which specifies if the picture should be mirrored."
     (if (pixbuf-missing? pointer)
         (error "Failed to set picture image data from vector.")
         ;; Return picture object.
-        (pointer->geda-object pointer))))
+        (pointer->object pointer))))
 
 (define (picture-filename object)
   "Returns the filename associated with picture OBJECT."
@@ -1208,7 +1208,7 @@ the default text color is used."
         (string (string->pointer string))
         (visibility (text-visibility->integer visible?))
         (show (symbol->text-attribute-show-mode show)))
-    (pointer->geda-object
+    (pointer->object
      (lepton_text_object_new (or color
                                  (default_color_id))
                              x
@@ -1422,7 +1422,7 @@ embedded."
         (y (cdr position))
         (mirror? (if mirror TRUE FALSE))
         (selectable? (if locked FALSE TRUE)))
-    (pointer->geda-object
+    (pointer->object
      (lepton_component_new_embedded color
                                     x
                                     y
@@ -1446,15 +1446,16 @@ returns #f."
           (lepton_toplevel_get_page_current
            (toplevel->pointer (current-toplevel)))))
     (and (not (null-pointer? clib))
-         (pointer->geda-object (lepton_component_new active-page
-                                                     (default_color_id)
-                                                     0
-                                                     0
-                                                     0
-                                                     FALSE
-                                                     clib
-                                                     basename-pointer
-                                                     TRUE)))))
+         (pointer->object
+          (lepton_component_new active-page
+                                (default_color_id)
+                                0
+                                0
+                                0
+                                FALSE
+                                clib
+                                basename-pointer
+                                TRUE)))))
 
 (define (make-component/library basename . args)
   (let ((c (%make-component/library basename)))

@@ -99,7 +99,7 @@ OBJECT is not attached as an attribute, returns #f."
 
   (let ((attachment (lepton_object_get_attached_to pointer)))
     (and (not (null-pointer? attachment))
-         (pointer->geda-object attachment))))
+         (pointer->object attachment))))
 
 
 (define (promotable-attribs object)

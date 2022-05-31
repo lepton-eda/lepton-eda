@@ -23,7 +23,7 @@
 
   #:export (geda-object-pointer?
             object->pointer
-            pointer->geda-object
+            pointer->object
             glist->object-list))
 
 ;;; Helper transformers between #<geda-object> smobs and C object
@@ -33,7 +33,7 @@
       ;; Return NULL if the SMOB is not the #<geda-object> smob.
       %null-pointer))
 
-(define (pointer->geda-object pointer)
+(define (pointer->object pointer)
   ;; Return #f if the pointer is wrong.
   (false-if-exception (pointer->scm (edascm_from_object pointer))))
 
@@ -48,4 +48,4 @@ list.  Returns the Scheme list of objects."
     (if (null-pointer? gls)
         (reverse ls)
         (loop (glist-next gls)
-              (cons (pointer->geda-object (glist-data gls)) ls)))))
+              (cons (pointer->object (glist-data gls)) ls)))))

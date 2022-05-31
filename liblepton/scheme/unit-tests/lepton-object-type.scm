@@ -163,11 +163,11 @@ static char * test_image_xpm[] = {
                               (check-object object 1 func 'anything))))
       other-funcs)
 
-     ;; Test pointer->geda-object().
-     (test-assert (check-func (pointer->geda-object pointer)))))
+     ;; Test pointer->object().
+     (test-assert (check-func (pointer->object pointer)))))
  object-func-list)
 
 ;;; Test that no exception is thrown here.
-(test-assert (not (pointer->geda-object 'anything)))
+(test-assert (not (pointer->object 'anything)))
 
 (test-end "object-pointer")
