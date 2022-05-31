@@ -142,9 +142,6 @@ enum geda_smob_flags {
     } } while (0)
 #endif
 
-/*! Tests whether a Scheme value is an LeptonObject smob. */
-#define EDASCM_OBJECTP(x) EDASCM_SMOB_TYPEP(x, GEDA_SMOB_OBJECT)
-
 /*!
  * \brief Test whether a structure may be garbage-collected
  * \par Macro Description

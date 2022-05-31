@@ -37,15 +37,6 @@ lepton_init_toplevel_fluid (SCM fluid);
 /* Set the #LeptonToplevel fluid in the current dynamic context. */
 void edascm_dynwind_toplevel (LeptonToplevel *toplevel);
 
-/* Create a Guile value from an object structure. */
-SCM edascm_from_object (LeptonObject *object);
-
-/* Retrieve an object structure from a Guile value. */
-LeptonObject *edascm_to_object (SCM smob);
-
-/* Test if smob is a gEDA object. */
-int edascm_is_object (SCM smob);
-
 /* Set whether a gEDA object may be garbage collected. */
 void edascm_c_set_gc (SCM smob, int gc);
 

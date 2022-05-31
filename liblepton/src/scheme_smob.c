@@ -181,22 +181,6 @@ smob_cache_remove (void *target)
   g_hash_table_remove (smob_cache, target);
 }
 
-/*! \brief Fetch a Scheme value from the cache
- * \par Function Description
- * Lookup \a target in the Scheme value cache, and if it is present,
- * return the corresponding Scheme value.  If \a target is not in the
- * cache, return #SCM_BOOL_F.
- *
- * \param target C value for which to fetch a cached Scheme value.
- * \return The cached Scheme value for \a target, or #SCM_BOOL_F.
- */
-static SCM
-smob_cache_lookup (void *target)
-{
-  SmobCacheEntry *entry = (SmobCacheEntry*) g_hash_table_lookup (smob_cache, target);
-  return entry ? entry->smob : SCM_BOOL_F;
-}
-
 /*! \brief Check whether a Scheme value is cached
  * \par Function Description
  * Lookup \a target in the Scheme value, and return #TRUE iff it has a
@@ -211,18 +195,6 @@ smob_cache_contains (void *target)
   gboolean result = g_hash_table_contains (smob_cache, target);
   return result;
 }
-
-/*! \brief Weak reference notify function for Lepton EDA smobs.
- * \par Function Description
- * Clears a Lepton EDA smob's pointer when the target object is destroyed.
- */
-static void
-smob_weakref_notify (void *target, void *smob) {
-  SCM s = pack_from_pointer (smob);
-  SCM_SET_SMOB_DATA (s, NULL);
-  smob_cache_remove (target);
-}
-
 
 /*! \brief Free a Lepton EDA smob.
  * \par Function Description
@@ -246,9 +218,6 @@ smob_free (SCM smob)
   /* Otherwise, clear the weak reference */
   switch (EDASCM_SMOB_TYPE (smob)) {
   case GEDA_SMOB_OBJECT:
-    lepton_object_weak_unref ((LeptonObject *) data,
-                              smob_weakref_notify,
-                              unpack_as_pointer (smob));
     break;
   default:
     /* This should REALLY definitely never be run */
@@ -264,7 +233,6 @@ smob_free (SCM smob)
   if (EDASCM_SMOB_GCP (smob)) {
     switch (EDASCM_SMOB_TYPE (smob)) {
     case GEDA_SMOB_OBJECT:
-      lepton_object_delete ((LeptonObject *) data);
       break;
     default:
       /* This should REALLY definitely never be run */
@@ -336,65 +304,6 @@ smob_equalp (SCM obj1, SCM obj2)
 }
 
 
-/*! \brief Get a smob for a schematic object.
- * \ingroup guile_c_iface
- * \par Function Description
- * Create a new smob representing \a object.
- *
- * \warning The returned smob is initially marked as owned by the C
- *   code. If it should be permitted to be garbage-collected, you
- *   should set the garbage-collectable flag by calling:
- *
- * \code
- *   SCM x = edascm_from_object (object);
- *   edascm_c_set_gc (x, 1);
- * \endcode
- *
- * \param object #LeptonObject to create a smob for.
- * \return a smob representing \a object.
- */
-SCM
-edascm_from_object (LeptonObject *object)
-{
-  SCM smob = smob_cache_lookup (object);
-
-  if (EDASCM_OBJECTP (smob)) {
-    return smob;
-  }
-
-  SCM_NEWSMOB (smob, geda_smob_tag, object);
-  SCM_SET_SMOB_FLAGS (smob, GEDA_SMOB_OBJECT);
-
-  /* Set weak reference */
-  lepton_object_weak_ref (object,
-                          smob_weakref_notify,
-                          unpack_as_pointer (smob));
-
-  smob_cache_add (object, smob);
-
-  return smob;
-}
-
-/*! \brief Get a schematic object from a smob.
- * \ingroup guile_c_iface
- * \par Function Description
- * Return the #LeptonObject represented by \a smob.
- *
- * \param [in] smob Guile value to retrieve #LeptonObject from.
- * \return the #LeptonObject represented by \a smob.
- */
-LeptonObject *
-edascm_to_object (SCM smob)
-{
-  g_debug ("edascm_to_object()\n");
-#ifndef NDEBUG
-  SCM_ASSERT (EDASCM_OBJECTP (smob), smob,
-              SCM_ARG1, "edascm_to_object");
-#endif
-  EDASCM_ASSERT_SMOB_VALID (smob);
-
-  return (LeptonObject *) SCM_SMOB_DATA (smob);
-}
 
 /*! \brief Set whether a Lepton EDA object may be garbage collected.
  * \ingroup guile_c_iface
@@ -423,23 +332,6 @@ edascm_c_set_gc (SCM smob, int gc)
 
   EDASCM_SMOB_SET_GC (smob, gc);
 }
-
-/*! \brief Test whether a smob is a #LeptonObject instance
- * \ingroup guile_c_iface
- * \par Function Description
- * If \a smob is a #LeptonObject instance, returns
- * non-zero. Otherwise, returns zero.
- *
- * \param [in] smob Guile value to test.
- *
- * \return non-zero iff \a smob is a #LeptonObject instance.
- */
-int
-edascm_is_object (SCM smob)
-{
-  return EDASCM_OBJECTP (smob);
-}
-
 
 /*!
  * \brief Initialise the basic Lepton EDA smob types.

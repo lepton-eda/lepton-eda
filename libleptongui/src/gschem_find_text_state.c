@@ -212,7 +212,7 @@ assign_store (GschemFindTextState *state, GSList *objects, gboolean filter_text)
     } else {
       str = scm_to_utf8_string (scm_call_1 (scm_c_public_ref ("schematic symbol check",
                                                               "object-blaming-info"),
-                                            edascm_from_object (object)));
+                                            scm_from_pointer (object, NULL)));
     }
 
     if (str == NULL) {
@@ -564,7 +564,7 @@ scm_to_gslist (SCM list_s)
   while (!scm_is_null (list_s)) {
     object_s = SCM_CAR (list_s);
     objects = g_slist_prepend (objects,
-                               (gpointer) edascm_to_object (object_s));
+                               (gpointer) scm_to_pointer (object_s));
     list_s = SCM_CDR (list_s);
   }
 

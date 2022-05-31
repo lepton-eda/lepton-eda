@@ -17,28 +17,36 @@
 
 
 (define-module (lepton object foreign)
+  #:use-module (ice-9 format)
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
 
-  #:export (geda-object-pointer?
+  #:export (is-object?
             object->pointer
             pointer->object
             glist->object-list))
 
-;;; Helper transformers between #<geda-object> smobs and C object
+(define-wrapped-pointer-type <object>
+  is-object?
+  wrap-object
+  unwrap-object
+  (lambda (object port)
+    (format port "#<object-0x~x>"
+            (pointer-address (unwrap-object object)))))
+
+
+;;; Helper transformers between the <object> type and C object
 ;;; pointers.
-(define (object->pointer smob)
-  (or (false-if-exception (edascm_to_object (scm->pointer smob)))
-      ;; Return NULL if the SMOB is not the #<geda-object> smob.
+(define (object->pointer object)
+  (or (false-if-exception (unwrap-object object))
+      ;; Return NULL if the OBJECT is not <object>.
       %null-pointer))
 
 (define (pointer->object pointer)
-  ;; Return #f if the pointer is wrong.
-  (false-if-exception (pointer->scm (edascm_from_object pointer))))
+  (and (pointer? pointer)
+       (wrap-object pointer)))
 
-(define (geda-object-pointer? pointer)
-  (true? (edascm_is_object pointer)))
 
 (define (glist->object-list gls)
   "Converts a GList of foreign object pointers GLS into a Scheme
