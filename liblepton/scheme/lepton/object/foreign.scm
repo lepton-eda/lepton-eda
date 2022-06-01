@@ -55,6 +55,22 @@ a 'wrong-type-arg error."
        (wrap-object pointer)))
 
 
+;;; This syntax is reused in the below check-object syntax.
+;;; Please see comments for the latter syntax.
+(define-syntax check-object*
+  (syntax-rules ()
+    ((_ object pos)
+     (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1)))
+           (pointer (and (is-object? object)
+                         (unwrap-object object))))
+       (if (null-pointer? pointer)
+           (scm-error 'wrong-type-arg
+                      proc-name
+                      "Wrong type argument in position ~A: ~A"
+                      (list pos object)
+                      #f)
+           pointer)))))
+
 ;;; This syntax rule is intended for use in toplevel 'define' or
 ;;; 'let' forms in the functions where the check for wrong type of
 ;;; OBJECT is necessary.  The rule checks the object and, if it is
@@ -67,30 +83,12 @@ a 'wrong-type-arg error."
 (define-syntax check-object
   (syntax-rules ()
     ((_ object pos)
-     (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1)))
-           (pointer (and (is-object? object)
-                         (unwrap-object object))))
-       (if (null-pointer? pointer)
-           (scm-error 'wrong-type-arg
-                      proc-name
-                      "Wrong type argument in position ~A: ~A"
-                      (list pos object)
-                      #f)
-           pointer)))
+     (check-object* object pos))
     ((_ object pos object-check-func type)
-     (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1)))
-           (pointer (and (is-object? object)
-                         (unwrap-object object))))
-       (if (null-pointer? pointer)
-           (scm-error 'wrong-type-arg
-                      proc-name
-                      "Wrong type argument in position ~A: ~A"
-                      (list pos object)
-                      #f)
-           (if (object-check-func object)
-               pointer
-               (scm-error 'wrong-type-arg
-                          proc-name
-                          "Wrong type argument in position ~A (expecting ~A object): ~A"
-                          (list pos type object)
-                          #f)))))))
+     (if (object-check-func object)
+         (check-object* object pos)
+         (scm-error 'wrong-type-arg
+                    (frame-procedure-name (stack-ref (make-stack #t) 1))
+                    "Wrong type argument in position ~A (expecting ~A object): ~A"
+                    (list pos type object)
+                    #f)))))
