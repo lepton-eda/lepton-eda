@@ -24,9 +24,12 @@
   #:use-module (schematic dialog)
   #:use-module (schematic window)
   #:use-module (symbol blame)
-  #:use-module ((symbol check) #:prefix sym:))
+  #:use-module ((symbol check) #:prefix sym:)
 
-(define-public (check-symbol)
+  #:export (check-symbol
+            object-blaming-info))
+
+(define (check-symbol)
   "Checks the active page which should be a symbol page, and returns
 its blamed objects, that is, the objects that would trigger report
 of issues when checking the file by the lepton-symcheck utility."
@@ -44,7 +47,7 @@ of issues when checking the file by the lepton-symcheck utility."
                                     page-info)))
     (filter blamed-object? (page-contents page))))
 
-(define-public (object-blaming-info object)
+(define (object-blaming-info object)
   "Returns concatenated string of blaming info for OBJECT.  The info
 is identical with what the lepton-symcheck utility returns.  Each
 line in the string represents one issue with the OBJECT."
