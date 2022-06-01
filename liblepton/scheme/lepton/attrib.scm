@@ -89,7 +89,7 @@ raises an 'attribute-format error."
   "Returns the attribute list of OBJECT."
   (define pointer (check-object object 1))
 
-  (glist->object-list (lepton_object_get_attribs pointer)))
+  (glist->list (lepton_object_get_attribs pointer) pointer->object))
 
 
 (define (attrib-attachment object)
@@ -106,9 +106,8 @@ OBJECT is not attached as an attribute, returns #f."
   "Returns the promotable attributes of component OBJECT,
 according to the current configuration."
   (define pointer (check-object object 1 component? 'component))
-
-  (glist->object-list
-   (lepton_component_object_get_promotable pointer FALSE)))
+  (glist->list (lepton_component_object_get_promotable pointer FALSE)
+               pointer->object))
 
 
 (define (attrib-value object)

@@ -24,8 +24,7 @@
 
   #:export (is-object?
             object->pointer
-            pointer->object
-            glist->object-list))
+            pointer->object))
 
 (define-wrapped-pointer-type <object>
   is-object?
@@ -46,14 +45,3 @@
 (define (pointer->object pointer)
   (and (pointer? pointer)
        (wrap-object pointer)))
-
-
-(define (glist->object-list gls)
-  "Converts a GList of foreign object pointers GLS into a Scheme
-list.  Returns the Scheme list of objects."
-  (let loop ((gls gls)
-             (ls '()))
-    (if (null-pointer? gls)
-        (reverse ls)
-        (loop (glist-next gls)
-              (cons (pointer->object (glist-data gls)) ls)))))
