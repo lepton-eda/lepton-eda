@@ -167,7 +167,9 @@ static char * test_image_xpm[] = {
      (test-assert (check-func (pointer->object pointer)))))
  object-func-list)
 
-;;; Test that no exception is thrown here.
-(test-assert (not (pointer->object 'anything)))
+;;; Test converting of wrong object pointers.
+(test-assert-thrown 'wrong-type-arg (pointer->object 'anything))
+(test-assert-thrown 'wrong-type-arg (pointer->object #f))
+(test-assert-thrown 'misc-error (pointer->object %null-pointer))
 
 (test-end "object-pointer")
