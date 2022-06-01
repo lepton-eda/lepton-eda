@@ -50,9 +50,20 @@ a 'wrong-type-arg error."
                  (list object)
                  #f)))
 
+
 (define (pointer->object pointer)
-  (and (pointer? pointer)
-       (wrap-object pointer)))
+  "Transforms POINTER to an <object> type instance. Raises a
+'wrong-type-arg error if POINTER is not a foreign C pointer.
+Raises a 'misc-error error if the pointer is a NULL pointer."
+  (if (pointer? pointer)
+      (if (null-pointer? pointer)
+          (error "Cannot convert NULL pointer to <object>.")
+          (wrap-object pointer))
+      (scm-error 'wrong-type-arg
+                 'pointer->object
+                 "Wrong type argument in position 1 (expecting pointer): ~A"
+                 (list pointer)
+                 #f)))
 
 
 ;;; This syntax is reused in the below check-object syntax.
