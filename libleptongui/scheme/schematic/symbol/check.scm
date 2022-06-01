@@ -27,8 +27,9 @@
   #:use-module ((symbol check) #:prefix sym:))
 
 (define-public (check-symbol)
-  "Checks the active page which should be a symbol, and returns
-its blamed objects."
+  "Checks the active page which should be a symbol page, and returns
+its blamed objects, that is, the objects that would trigger report
+of issues when checking the file by the lepton-symcheck utility."
   (define (warning-or-error blame)
     (or (eq? 'error (car blame)) (eq? 'warning (car blame))))
 
@@ -44,4 +45,7 @@ its blamed objects."
     (filter blamed-object? (page-contents page))))
 
 (define-public (object-blaming-info object)
+  "Returns concatenated string of blaming info for OBJECT.  The info
+is identical with what the lepton-symcheck utility returns.  Each
+line in the string represents one issue with the OBJECT."
   (string-join (map cdr (object-blames object)) "\n" 'suffix))
