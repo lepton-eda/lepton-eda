@@ -25,8 +25,7 @@
   #:export (page?
             check-page
             page->pointer
-            pointer->page
-            glist->page-list))
+            pointer->page))
 
 
 (define-wrapped-pointer-type <page>
@@ -37,16 +36,6 @@
     (format port "#<page-0x~x>"
             (pointer-address (page->pointer page)))))
 
-
-(define (glist->page-list gls)
-  "Converts a GList of foreign page pointers GLS into a Scheme
-list.  Returns the Scheme list of pages."
-  (let loop ((gls gls)
-             (ls '()))
-    (if (null-pointer? gls)
-        (reverse ls)
-        (loop (glist-next gls)
-              (cons (pointer->page (glist-data gls)) ls)))))
 
 (define-syntax check-page
   (syntax-rules ()

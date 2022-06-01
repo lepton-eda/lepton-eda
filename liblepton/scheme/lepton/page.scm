@@ -65,9 +65,10 @@ belong to a page, returns #f."
 
 (define (active-pages)
   "Returns a list of currently-opened pages."
-  (glist->page-list
+  (glist->list
    (lepton_page_list_get_glist
-    (lepton_toplevel_get_pages (toplevel->pointer (current-toplevel))))))
+    (lepton_toplevel_get_pages (toplevel->pointer (current-toplevel))))
+   pointer->page))
 
 
 (define (make-page filename)
@@ -125,7 +126,7 @@ PAGE after calling this function will cause an error."
   "Returns the contents of PAGE as a list of objects."
   (define pointer (check-page page 1))
 
-  (glist->object-list (lepton_page_objects pointer)))
+  (glist->list (lepton_page_objects pointer) pointer->object))
 
 
 (define (page-dirty? page)

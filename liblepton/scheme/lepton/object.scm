@@ -208,7 +208,7 @@ as pins, nets, or buses."
                '()))
 
   (let* ((gls (s_conn_return_others %null-pointer pointer))
-         (ls (glist->object-list gls)))
+         (ls (glist->list gls pointer->object)))
 
     (g_list_free gls)
     ls))
@@ -1512,8 +1512,8 @@ component has a symbol file associated with it.  Otherwise returns
   "Returns a list of the primitive objects that make up
 component OBJECT."
   (define pointer (check-object object 1 component? 'component))
-  (glist->object-list
-   (lepton_component_object_get_contents pointer)))
+  (glist->list (lepton_component_object_get_contents pointer)
+               pointer->object))
 
 
 (define (component-info object)

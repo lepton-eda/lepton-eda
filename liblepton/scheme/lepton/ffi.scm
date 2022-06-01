@@ -436,6 +436,9 @@
       (_ (error "Wrong Glist in glist-data()")))))
 
 (define (glist->list gls convert-func)
+  "Convert C GList GLS into Scheme list of objects using the
+function CONVERT-FUNC to transform foreign pointers to Scheme
+objects."
   (let loop ((gls gls)
              (ls '()))
     (if (null-pointer? gls)
