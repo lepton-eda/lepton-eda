@@ -24,9 +24,9 @@
   #:use-module (lepton ffi)
   #:use-module (lepton object foreign)
 
-  #:export (check-object
+  #:re-export (check-object)
 
-            arc?
+  #:export (arc?
             attribute?
             box?
             bus?
@@ -45,45 +45,6 @@
             object-type
             object-type?))
 
-;;; This syntax rule is intended for use in toplevel 'define' or
-;;; 'let' forms in the functions where the check for wrong type of
-;;; OBJECT is necessary.  The rule checks the object and, if it is
-;;; not #<geda-object>, throws an error with the 'wrong-type-arg
-;;; key reporting the function name and position POS of the
-;;; OBJECT argument.  In short, the usage is as follows:
-;;;   (define (myfunc object)
-;;;     (define pointer (check-object object 1))
-;;;     (function-body))
-(define-syntax check-object
-  (syntax-rules ()
-    ((_ object pos)
-     (let ((pointer (object->pointer object)))
-       (if (null-pointer? pointer)
-           (let ((proc-name
-                  (frame-procedure-name (stack-ref (make-stack #t) 1))))
-             (scm-error 'wrong-type-arg
-                        proc-name
-                        "Wrong type argument in position ~A: ~A"
-                        (list pos object)
-                        #f))
-           pointer)))
-    ((_ object pos object-check-func type)
-     (let ((pointer (object->pointer object))
-           (proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
-       (if (null-pointer? pointer)
-           (scm-error 'wrong-type-arg
-                      proc-name
-                      "Wrong type argument in position ~A: ~A"
-                      (list pos object)
-                      #f)
-           (if (object-check-func object)
-               pointer
-               (scm-error 'wrong-type-arg
-                          proc-name
-                          "Wrong type argument in position ~A (expecting ~A object): ~A"
-                          (list pos type object)
-                          #f)))))))
-
 
 (define (object? object)
   "Returns #t if OBJECT is an <object> instance, otherwise returns
@@ -93,43 +54,53 @@
 
 (define (arc? object)
   "Returns #t if OBJECT is a arc object, otherwise returns #f."
-  (true? (lepton_object_is_arc (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_arc (object->pointer object)))))
 
 (define (box? object)
   "Returns #t if OBJECT is a box object, otherwise returns #f."
-  (true? (lepton_object_is_box (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_box (object->pointer object)))))
 
 (define (bus? object)
   "Returns #t if OBJECT is a bus object, otherwise returns #f."
-  (true? (lepton_object_is_bus (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_bus (object->pointer object)))))
 
 (define (circle? object)
   "Returns #t if OBJECT is a circle object, otherwise returns #f."
-  (true? (lepton_object_is_circle (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_circle (object->pointer object)))))
 
 (define (component? object)
   "Returns #t if OBJECT is a component object, otherwise returns #f."
-  (true? (lepton_object_is_component (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_component (object->pointer object)))))
 
 (define (line? object)
   "Returns #t if OBJECT is a line object, otherwise returns #f."
-  (true? (lepton_object_is_line (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_line (object->pointer object)))))
 
 (define-public (net? object)
   "Returns #t if OBJECT is a net object, otherwise returns #f."
-  (true? (lepton_object_is_net (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_net (object->pointer object)))))
 
 (define (path? object)
   "Returns #t if OBJECT is a path object, otherwise returns #f."
-  (true? (lepton_object_is_path (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_path (object->pointer object)))))
 
 (define (picture? object)
   "Returns #t if OBJECT is a picture object, otherwise returns #f."
-  (true? (lepton_object_is_picture (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_picture (object->pointer object)))))
 
 (define (pin? object)
   "Returns #t if OBJECT is a pin object, otherwise returns #f."
-  (true? (lepton_object_is_pin (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_pin (object->pointer object)))))
 
 (define (net-pin? object)
   "Returns #t if OBJECT is a net pin object, otherwise returns
@@ -148,12 +119,14 @@
 
 (define (text? object)
   "Returns #t if OBJECT is a text object, otherwise returns #f."
-  (true? (lepton_object_is_text (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_text (object->pointer object)))))
 
 (define (attribute? object)
   "Returns #t if OBJECT is an attribute text object, otherwise
 returns #f."
-  (true? (lepton_object_is_attrib (object->pointer object))))
+  (and (is-object? object)
+       (true? (lepton_object_is_attrib (object->pointer object)))))
 
 (define (object-type object)
   "Returns a Scheme symbol representing the type of OBJECT.  The
