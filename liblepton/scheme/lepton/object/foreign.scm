@@ -39,6 +39,9 @@
 ;;; Helper transformers between the <object> type and C object
 ;;; pointers.
 (define (object->pointer object)
+  "Transforms OBJECT which should be an instance of the <object>
+type into a foreign C pointer.  If OBJECT has another type, raises
+a 'wrong-type-arg error."
   (if (is-object? object)
       (unwrap-object object)
       (scm-error 'wrong-type-arg
