@@ -162,6 +162,7 @@ TESTS = \
 	unit-tests/lepton-page-parse-line-endings.scm \
 	unit-tests/lepton-page-parse-ordering.scm \
 	unit-tests/lepton-page-parse-unterminated-attrib.scm \
+	unit-tests/lepton-page-pointer.scm \
 	unit-tests/lepton-page-string.scm \
 	unit-tests/lepton-pin-whichend.scm \
 	unit-tests/lepton-promotable-attribs.scm \
