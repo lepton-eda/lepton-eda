@@ -164,12 +164,26 @@ static char * test_image_xpm[] = {
       other-funcs)
 
      ;; Test pointer->object().
-     (test-assert (check-func (pointer->object pointer)))))
+     (test-assert (check-func (pointer->object pointer)))
+
+     ;; Test object->pointer().
+     (test-assert (object->pointer object))
+
+     ;; Test equality of an original object and the result of
+     ;; converting it to a pointer and back.
+     (test-assert
+         (eq? object (pointer->object (object->pointer object))))))
+
  object-func-list)
 
 ;;; Test converting of wrong object pointers.
 (test-assert-thrown 'wrong-type-arg (pointer->object 'anything))
 (test-assert-thrown 'wrong-type-arg (pointer->object #f))
 (test-assert-thrown 'misc-error (pointer->object %null-pointer))
+
+;;; Test converting of wrong pointer values to objects.
+(test-assert-thrown 'wrong-type-arg (object->pointer 'anything))
+(test-assert-thrown 'wrong-type-arg (object->pointer #f))
+(test-assert-thrown 'wrong-type-arg (object->pointer %null-pointer))
 
 (test-end "object-pointer")
