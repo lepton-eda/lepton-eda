@@ -70,14 +70,15 @@ Raises a 'misc-error error if the pointer is a NULL pointer."
            (error-wrong-type-arg pos '<object> object)
            pointer)))))
 
-;;; This syntax rule is intended for use in toplevel 'define' or
+;;; This syntax rule is intended for use in top level 'define' or
 ;;; 'let' forms in the functions where the check for wrong type of
-;;; OBJECT is necessary.  The rule checks the object and, if it is
-;;; not #<geda-object>, throws an error with the 'wrong-type-arg
-;;; key reporting the function name and position POS of the
-;;; OBJECT argument.  In short, the usage is as follows:
+;;; OBJECT is necessary.  The rule checks if the object instance
+;;; is of the type <object> and, if it is not, throws an error
+;;; with the 'wrong-type-arg key reporting the function name and
+;;; position POS of the OBJECT argument.  In short, the usage is
+;;; as follows:
 ;;;   (define (myfunc object)
-;;;     (define pointer (check-object object 1))
+;;;     (define pointer (check-object object ...))
 ;;;     (function-body))
 (define-syntax check-object
   (syntax-rules ()
