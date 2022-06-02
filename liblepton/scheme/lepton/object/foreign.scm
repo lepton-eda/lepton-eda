@@ -65,7 +65,8 @@ Raises a 'misc-error error if the pointer is a NULL pointer."
     ((_ object pos)
      (let ((pointer (and (is-object? object)
                          (unwrap-object object))))
-       (if (null-pointer? pointer)
+       (if (or (not pointer)
+               (null-pointer? pointer))
            (error-wrong-type-arg pos '<object> object)
            pointer)))))
 
