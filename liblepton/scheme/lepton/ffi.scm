@@ -32,6 +32,8 @@
             true?
             TRUE
             FALSE
+
+            error-wrong-type-arg
             check-boolean
             check-coord
             check-integer
@@ -817,6 +819,14 @@ by POINTER."
   (let ((sys-dirs (c-string-array->list (eda_get_system_data_dirs))))
     (for-each register-data-dir sys-dirs)
     (register-data-dir (pointer->string (eda_get_user_data_dir)))))
+
+
+(define-syntax-rule (error-wrong-type-arg pos type object)
+  (scm-error 'wrong-type-arg
+             (frame-procedure-name (stack-ref (make-stack #t) 1))
+             "Wrong type argument in position ~A (expecting ~A): ~A"
+             (list pos type object)
+             #f))
 
 (define (check-boolean val pos)
   ;; This function is defined just for consistency.  Someone may
