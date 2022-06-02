@@ -22,14 +22,14 @@
 
   #:use-module (lepton ffi)
 
-  #:export (page?
+  #:export (is-page?
             check-page
             page->pointer
             pointer->page))
 
 
 (define-wrapped-pointer-type <page>
-  page?
+  is-page?
   pointer->page
   page->pointer
   (lambda (page port)
@@ -40,7 +40,7 @@
 (define-syntax check-page
   (syntax-rules ()
     ((_ page pos)
-     (let ((pointer (and (page? page)
+     (let ((pointer (and (is-page? page)
                          (page->pointer page))))
        (if (or (not pointer)
                (null-pointer? pointer))
