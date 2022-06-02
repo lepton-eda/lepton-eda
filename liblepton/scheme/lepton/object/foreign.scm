@@ -44,11 +44,7 @@ type into a foreign C pointer.  If OBJECT has another type, raises
 a 'wrong-type-arg error."
   (if (is-object? object)
       (unwrap-object object)
-      (scm-error 'wrong-type-arg
-                 'object->pointer
-                 "Wrong type argument in position 1 (expecting <object>): ~A"
-                 (list object)
-                 #f)))
+      (error-wrong-type-arg 1 '<object> object)))
 
 
 (define (pointer->object pointer)
@@ -59,15 +55,7 @@ Raises a 'misc-error error if the pointer is a NULL pointer."
       (if (null-pointer? pointer)
           (error "Cannot convert NULL pointer to <object>.")
           (wrap-object pointer))
-      (scm-error 'wrong-type-arg
-                 'pointer->object
-                 "Wrong type argument in position 1 (expecting pointer): ~A"
-                 (list pointer)
-                 #f)))
-
-
-(define-syntax-rule (upper-frame-proc-name)
-  (frame-procedure-name (stack-ref (make-stack #t) 1)))
+      (error-wrong-type-arg 1 'pointer pointer)))
 
 
 ;;; This syntax is reused in the below check-object syntax.
@@ -78,11 +66,7 @@ Raises a 'misc-error error if the pointer is a NULL pointer."
      (let ((pointer (and (is-object? object)
                          (unwrap-object object))))
        (if (null-pointer? pointer)
-           (scm-error 'wrong-type-arg
-                      (upper-frame-proc-name)
-                      "Wrong type argument in position ~A: ~A"
-                      (list pos object)
-                      #f)
+           (error-wrong-type-arg pos '<object> object)
            pointer)))))
 
 ;;; This syntax rule is intended for use in toplevel 'define' or
@@ -101,8 +85,4 @@ Raises a 'misc-error error if the pointer is a NULL pointer."
     ((_ object pos object-check-func type)
      (if (object-check-func object)
          (check-object* object pos)
-         (scm-error 'wrong-type-arg
-                    (upper-frame-proc-name)
-                    "Wrong type argument in position ~A (expecting ~A object): ~A"
-                    (list pos type object)
-                    #f)))))
+         (error-wrong-type-arg pos type object)))))
