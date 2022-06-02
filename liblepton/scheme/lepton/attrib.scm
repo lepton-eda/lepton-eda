@@ -46,7 +46,7 @@
 
   #:re-export (attribute?))
 
-(define-syntax geda-object->attrib-pointers
+(define-syntax object->attrib-pointers
   (syntax-rules ()
     ((_ <object> <pos>)
      ;; Check if object is text and error with 'wrong-type-arg if
@@ -71,7 +71,7 @@ returns the name as a string.  Otherwise, raises an
 'attribute-format error.  If OBJECT is not a text object, raises
 'wrong-type-arg error."
   (let-values (((name-pointer value-pointer)
-                (geda-object->attrib-pointers object 1)))
+                (object->attrib-pointers object 1)))
     (pointer->string name-pointer)))
 
 (define (parse-attrib object)
@@ -79,7 +79,7 @@ returns the name as a string.  Otherwise, raises an
 successful, returns a pair in the form (name . value).  Otherwise,
 raises an 'attribute-format error."
   (let-values (((name-pointer value-pointer)
-                (geda-object->attrib-pointers object 1)))
+                (object->attrib-pointers object 1)))
     (cons (pointer->string name-pointer)
           (if (null-pointer? value-pointer)
               ""
@@ -116,7 +116,7 @@ returns the value as a string.  Otherwise, raises an
 'attribute-format error.  If OBJECT is not a text object, raises
 'wrong-type-arg error."
   (let-values (((name-pointer value-pointer)
-                (geda-object->attrib-pointers object 1)))
+                (object->attrib-pointers object 1)))
     (if (null-pointer? value-pointer)
         ""
         (pointer->string value-pointer))))
