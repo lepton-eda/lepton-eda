@@ -30,11 +30,33 @@
 
 (define-wrapped-pointer-type <page>
   is-page?
-  pointer->page
-  page->pointer
+  wrap-page
+  unwrap-page
   (lambda (page port)
     (format port "#<page-0x~x>"
-            (pointer-address (page->pointer page)))))
+            (pointer-address (unwrap-page page)))))
+
+
+;;; Helper transformers between the <page> type and C page
+;;; pointers.
+(define (page->pointer page)
+  "Transforms PAGE which should be an instance of the <page> type
+into a foreign C pointer.  If PAGE has another type, raises a
+'wrong-type-arg error."
+  (if (is-page? page)
+      (unwrap-page page)
+      (error-wrong-type-arg 1 '<page> page)))
+
+
+(define (pointer->page pointer)
+  "Transforms POINTER to a <page> type instance. Raises a
+'wrong-type-arg error if POINTER is not a foreign C pointer.
+Raises a 'misc-error error if the pointer is a NULL pointer."
+  (if (pointer? pointer)
+      (if (null-pointer? pointer)
+          (error "Cannot convert NULL pointer to <page>.")
+          (wrap-page pointer))
+      (error-wrong-type-arg 1 'pointer pointer)))
 
 
 (define-syntax check-page
