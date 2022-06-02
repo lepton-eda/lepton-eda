@@ -35,7 +35,8 @@
   #:use-module (lepton page foreign)
   #:use-module (lepton toplevel)
 
-  #:export (active-pages
+  #:export (page?
+            active-pages
             close-page!
             file->page
             make-page
@@ -48,9 +49,12 @@
             page-filename
             set-page-filename!
             page->string
-            string->page)
+            string->page))
 
-  #:re-export (page?))
+(define (page? page)
+  "Returns #t if PAGE is a <page> instance, otherwise returns
+#f."
+  (is-page? page))
 
 
 (define (object-page object)
