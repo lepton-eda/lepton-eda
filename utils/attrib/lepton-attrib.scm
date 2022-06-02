@@ -27,6 +27,7 @@
              (lepton log)
              (lepton page)
              (lepton rc)
+             (lepton toplevel foreign)
              (lepton toplevel)
              (lepton version))
 

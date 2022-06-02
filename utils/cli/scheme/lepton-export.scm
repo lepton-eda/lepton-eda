@@ -24,6 +24,7 @@
              (lepton page)
              (lepton rc)
              (lepton srfi-37)
+             (lepton toplevel foreign)
              (lepton toplevel)
              (lepton version))
 

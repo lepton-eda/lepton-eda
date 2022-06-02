@@ -31,6 +31,7 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton object text)
   #:use-module (lepton object type)
+  #:use-module (lepton toplevel foreign)
   #:use-module (lepton toplevel)
 
   #:export (copy-object

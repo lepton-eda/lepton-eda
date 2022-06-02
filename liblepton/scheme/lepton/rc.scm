@@ -26,6 +26,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton file-system)
   #:use-module (lepton os)
+  #:use-module (lepton toplevel foreign)
   #:use-module (lepton toplevel)
 
   #:export (build-path

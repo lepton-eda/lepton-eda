@@ -33,6 +33,7 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton os)
   #:use-module (lepton page foreign)
+  #:use-module (lepton toplevel foreign)
   #:use-module (lepton toplevel)
 
   #:export (page?
