@@ -59,17 +59,14 @@ Raises a 'misc-error error if the pointer is a NULL pointer."
       (error-wrong-type-arg 1 'pointer pointer)))
 
 
+;;; Syntax rules to check <page> instances.  The same as for
+;;; <object> in the module (lepton object foreign).
 (define-syntax check-page
   (syntax-rules ()
     ((_ page pos)
      (let ((pointer (and (is-page? page)
-                         (page->pointer page))))
+                         (unwrap-page page))))
        (if (or (not pointer)
                (null-pointer? pointer))
-           (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1))))
-             (scm-error 'wrong-type-arg
-                        proc-name
-                        "Wrong type argument in position ~A: ~A"
-                        (list pos page)
-                        #f))
+           (error-wrong-type-arg pos '<page> page)
            pointer)))))
