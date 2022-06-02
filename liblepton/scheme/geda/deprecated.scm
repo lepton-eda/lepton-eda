@@ -30,7 +30,7 @@
  #:use-module (lepton gettext)
  #:use-module (lepton log)
  #:use-module (lepton object)
- #:use-module (lepton object type)
+ #:use-module (lepton object foreign)
  #:use-module (lepton os)
  #:use-module (lepton page)
  #:use-module (lepton rc)
