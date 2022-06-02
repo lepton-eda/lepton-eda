@@ -30,7 +30,8 @@
             make-toplevel
             with-toplevel))
 
-
+;;; This fluid is used for setting or getting the <toplevel>
+;;; instance associated with the current dynamic context.
 (define %lepton-toplevel #f)
 
 (define (toplevel? toplevel)
@@ -47,11 +48,12 @@ returns #f."
 
 
 (define (make-toplevel)
-  "Make new toplevel."
+  "Makes and returns a new <toplevel> type instance."
   (pointer->toplevel (lepton_toplevel_new)))
 
 (define (current-toplevel)
-  "Get toplevel for the current dynamic context."
+  "Returns the <toplevel> instance associated with the current
+dynamic context."
   (and=> (fluid-ref %lepton-toplevel) pointer->toplevel))
 
 
@@ -62,6 +64,7 @@ a <toplevel> instance."
 
 
 (define (with-toplevel toplevel thunk)
-  "Call THUNK, setting the toplevel fluid to TOPLEVEL."
+  "Call THUNK in the dynamic state of TOPLEVEL which must be a
+<toplevel> instance."
   (with-fluid* %lepton-toplevel
     (toplevel->pointer toplevel) thunk))
