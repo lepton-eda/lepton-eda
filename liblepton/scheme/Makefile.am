@@ -167,6 +167,7 @@ TESTS = \
 	unit-tests/lepton-pin-whichend.scm \
 	unit-tests/lepton-promotable-attribs.scm \
 	unit-tests/lepton-rc-build-path.scm \
+	unit-tests/lepton-toplevel-pointer.scm \
 	unit-tests/lepton-version.scm \
 	unit-tests/netlist-attrib.scm \
 	unit-tests/netlist-load-path.scm \
