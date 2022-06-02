@@ -66,17 +66,20 @@ Raises a 'misc-error error if the pointer is a NULL pointer."
                  #f)))
 
 
+(define-syntax-rule (upper-frame-proc-name)
+  (frame-procedure-name (stack-ref (make-stack #t) 1)))
+
+
 ;;; This syntax is reused in the below check-object syntax.
 ;;; Please see comments for the latter syntax.
 (define-syntax check-object*
   (syntax-rules ()
     ((_ object pos)
-     (let ((proc-name (frame-procedure-name (stack-ref (make-stack #t) 1)))
-           (pointer (and (is-object? object)
+     (let ((pointer (and (is-object? object)
                          (unwrap-object object))))
        (if (null-pointer? pointer)
            (scm-error 'wrong-type-arg
-                      proc-name
+                      (upper-frame-proc-name)
                       "Wrong type argument in position ~A: ~A"
                       (list pos object)
                       #f)
@@ -99,7 +102,7 @@ Raises a 'misc-error error if the pointer is a NULL pointer."
      (if (object-check-func object)
          (check-object* object pos)
          (scm-error 'wrong-type-arg
-                    (frame-procedure-name (stack-ref (make-stack #t) 1))
+                    (upper-frame-proc-name)
                     "Wrong type argument in position ~A (expecting ~A object): ~A"
                     (list pos type object)
                     #f)))))
