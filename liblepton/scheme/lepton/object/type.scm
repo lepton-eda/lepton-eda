@@ -24,8 +24,6 @@
   #:use-module (lepton ffi)
   #:use-module (lepton object foreign)
 
-  #:re-export (check-object)
-
   #:export (arc?
             attribute?
             box?

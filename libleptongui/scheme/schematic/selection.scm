@@ -24,7 +24,6 @@
   #:use-module (lepton ffi)
   #:use-module (lepton page foreign)
   #:use-module (lepton object foreign)
-  #:use-module (lepton object type)
 
   #:export (object-selected?
             page-selection
