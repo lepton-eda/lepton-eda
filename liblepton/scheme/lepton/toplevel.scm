@@ -21,36 +21,23 @@
   #:use-module (system foreign)
 
   #:use-module (lepton ffi)
+  #:use-module (lepton toplevel foreign)
 
   #:export (%lepton-toplevel
-            pointer->toplevel
-            toplevel->pointer
             toplevel?
             current-toplevel
             set-current-toplevel!
             make-toplevel
             with-toplevel))
 
-(define-wrapped-pointer-type <toplevel>
-  toplevel?
-  wrap-toplevel
-  unwrap-toplevel
-  (lambda (toplevel port)
-    (format port "#<toplevel-0x~x>"
-            (pointer-address (unwrap-toplevel toplevel)))))
-
-(define pointer->toplevel wrap-toplevel)
-
-(define (toplevel->pointer toplevel)
-  (if (toplevel? toplevel)
-      (unwrap-toplevel toplevel)
-      (scm-error 'wrong-type-arg
-                 'toplevel->pointer
-                 "Wrong type argument in position 1 (expecting <toplevel>): ~A"
-                 (list toplevel)
-                 #f)))
 
 (define %lepton-toplevel #f)
+
+(define (toplevel? toplevel)
+  "Returns #t if TOPLEVEL is a <toplevel> instance, otherwise
+returns #f."
+  (is-toplevel? toplevel))
+
 
 ;;; Initialize %lepton-toplevel with a new fluid variable for
 ;;; Scheme and C code.  Do it once.

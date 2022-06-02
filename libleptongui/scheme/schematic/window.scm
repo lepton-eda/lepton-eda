@@ -28,6 +28,7 @@
   #:use-module (lepton log)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
+  #:use-module (lepton toplevel foreign)
   #:use-module (lepton toplevel)
 
   #:use-module (schematic ffi)
