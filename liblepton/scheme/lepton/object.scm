@@ -1069,7 +1069,7 @@ where:
   y2 - Y-coordinate of bottom right of PICTURE.
   angle - rotation angle.
   mirrored - whether PICTURE object is mirrored."
-  (define pointer (check-object object 1 picture? 'picture))
+  (check-object object 1 picture? 'picture)
 
   (list (picture-filename object)
         (picture-top-left object)
@@ -1524,7 +1524,7 @@ component OBJECT."
   - Rotation angle.
   - Whether OBJECT is mirrored.
   - Whether OBJECT is locked."
-  (define pointer (check-object object 1 component? 'component))
+  (check-object object 1 component? 'component)
 
   (list (component-basename object)
         (component-position object)
@@ -1701,7 +1701,7 @@ return value is a list of parameters:
     - For other styles, dot/dash spacing and dash length.
 The dash parameters are ignored in case they are not supported for
 the dash style."
-  (define pointer (check-object object 1 strokable? 'strokable))
+  (check-object object 1 strokable? 'strokable)
 
   (let ((cap-type (object-stroke-cap object))
         (line-type (object-stroke-line-type object))
