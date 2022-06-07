@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -51,14 +51,17 @@ enum
 
 
 
+G_DEFINE_TYPE (GschemOptions, gschem_options, G_TYPE_OBJECT);
+
+
 static void
-class_init (GschemOptionsClass *klass);
+gschem_options_class_init (GschemOptionsClass *klass);
 
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-instance_init (GschemOptions *adapter);
+gschem_options_init (GschemOptions *adapter);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
@@ -209,37 +212,6 @@ gschem_options_get_snap_size (GschemOptions *options)
   g_return_val_if_fail (options != NULL, DEFAULT_SNAP_SIZE);
 
   return options->snap_size;
-}
-
-
-
-/*! \brief Get/register GschemSelection type.
- */
-GType
-gschem_options_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemOptionsClass),
-      NULL,                                  /* base_init */
-      NULL,                                  /* base_finalize */
-      (GClassInitFunc) class_init,
-      NULL,                                  /* class_finalize */
-      NULL,                                  /* class_data */
-      sizeof(GschemOptions),
-      0,                                     /* n_preallocs */
-      (GInstanceInitFunc) instance_init,
-    };
-
-    type = g_type_register_static (G_TYPE_OBJECT,
-                                   "GschemOptions",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
 }
 
 
@@ -400,7 +372,7 @@ gschem_options_set_snap_size (GschemOptions *options, int snap_size)
  *  \param [in] klass The class for the gschem options
  */
 static void
-class_init (GschemOptionsClass *klass)
+gschem_options_class_init (GschemOptionsClass *klass)
 {
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
@@ -510,7 +482,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in,out] selection
  */
 static void
-instance_init (GschemOptions *options)
+gschem_options_init (GschemOptions *options)
 {
 }
 
