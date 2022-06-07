@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2014 Ales Hvezda
- * Copyright (C) 2014 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2014 gEDA Contributors
+ * Copyright (C) 2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,8 +38,11 @@ enum
 
 
 
+G_DEFINE_TYPE(GschemBindingInteger, gschem_binding_integer, GSCHEM_TYPE_BINDING);
+
+
 static void
-class_init (GschemBindingIntegerClass *klass);
+gschem_binding_integer_class_init (GschemBindingIntegerClass *klass);
 
 static void
 get_property (GObject    *object,
@@ -47,7 +51,7 @@ get_property (GObject    *object,
               GParamSpec *pspec);
 
 static void
-instance_init (GschemBindingInteger *swatch);
+gschem_binding_integer_init (GschemBindingInteger *swatch);
 
 static void
 model_notify (GObject *object, GParamSpec *pspec, GschemBindingInteger *binding);
@@ -75,37 +79,6 @@ widget_apply (GtkWidget *widget, GschemBindingInteger *binding);
 
 
 
-/*! \brief Get/register GschemBindingInteger type.
- */
-GType
-gschem_binding_integer_get_type()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemBindingIntegerClass),
-      NULL,                                         /* base_init */
-      NULL,                                         /* base_finalize */
-      (GClassInitFunc) class_init,
-      NULL,                                         /* class_finalize */
-      NULL,                                         /* class_data */
-      sizeof(GschemBindingInteger),
-      0,                                            /* n_preallocs */
-      (GInstanceInitFunc) instance_init,
-    };
-
-    type = g_type_register_static (GSCHEM_TYPE_BINDING,
-                                   "GschemBindingInteger",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
-}
-
-
-
 /*! \brief Create a new GschemFillSwatchCellRenderer
  *
  *  \return The new cell renderer
@@ -127,7 +100,7 @@ gschem_binding_integer_new (const gchar *param_name, GtkWidget *widget)
  *  \param [in,out] klass The swatch cell renderer class
  */
 static void
-class_init (GschemBindingIntegerClass *klass)
+gschem_binding_integer_class_init (GschemBindingIntegerClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -162,7 +135,7 @@ class_init (GschemBindingIntegerClass *klass)
  *  \param [in,out] renderer The fill swatch cell renderer
  */
 static void
-instance_init (GschemBindingInteger *binding)
+gschem_binding_integer_init (GschemBindingInteger *binding)
 {
 }
 
