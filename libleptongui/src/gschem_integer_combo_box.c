@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -39,6 +39,17 @@
 
 #include "gschem.h"
 
+
+
+#if GTK_CHECK_VERSION (2, 24, 0)
+G_DEFINE_TYPE (GschemIntegerComboBox,
+               gschem_integer_combo_box,
+               GTK_TYPE_COMBO_BOX);
+#else
+G_DEFINE_TYPE (GschemIntegerComboBox,
+               gschem_integer_combo_box,
+               GTK_TYPE_COMBO_BOX_ENTRY);
+#endif
 
 
 static void
@@ -130,42 +141,6 @@ gschem_integer_combo_box_class_init (GschemIntegerComboBoxClass *klass)
                 );
 }
 
-
-
-/*! \brief Get the GschemIntegerComboBox type
- *
- *  \return The GschemIntegerComboBox type
- */
-GType
-gschem_integer_combo_box_get_type()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemIntegerComboBoxClass),
-      NULL,                                                    /* base_init */
-      NULL,                                                    /* base_finalize */
-      (GClassInitFunc) gschem_integer_combo_box_class_init,
-      NULL,                                                    /* class_finalize */
-      NULL,                                                    /* class_data */
-      sizeof(GschemIntegerComboBox),
-      0,                                                       /* n_preallocs */
-      (GInstanceInitFunc) gschem_integer_combo_box_init,
-    };
-
-#if GTK_CHECK_VERSION (2, 24, 0)
-    type = g_type_register_static (GTK_TYPE_COMBO_BOX,
-                                   "GschemIntegerComboBox",
-                                   &info,
-                                   (GTypeFlags) 0);
-#else
-    type = g_type_register_static (GTK_TYPE_COMBO_BOX_ENTRY, "GschemIntegerComboBox", &info, 0);
-#endif
-  }
-
-  return type;
-}
 
 
 /*! \brief Get the entry associated with this combo box
