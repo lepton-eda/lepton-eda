@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
- * Copyright (C) 1998-2010 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 1998-2010 gEDA Contributors
+ * Copyright (C) 2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,36 +31,10 @@ G_DEFINE_TYPE(GschemMainWindow, gschem_main_window, GTK_TYPE_WINDOW);
 
 
 static void
-get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
-
-static void
 gschem_main_window_class_init (GschemMainWindowClass *klass);
 
 static void
 gschem_main_window_init (GschemMainWindow *window);
-
-static void
-set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
-
-
-
-/*! \brief Get a property
- *
- *  \param [in]     object
- *  \param [in]     param_id
- *  \param [in,out] value
- *  \param [in]     pspec
- */
-static void
-get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
-{
-  //GschemMainWindow *window = GSCHEM_MAIN_WINDOW (object);
-
-  switch (param_id) {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
-  }
-}
 
 
 
@@ -70,15 +45,13 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
 static void
 gschem_main_window_class_init (GschemMainWindowClass *klass)
 {
-  G_OBJECT_CLASS (klass)->get_property = get_property;
-  G_OBJECT_CLASS (klass)->set_property = set_property;
 }
 
 
 
-/*! \brief Initialize GschemSelection instance
+/*! \brief Initialize GschemMainWindow instance
  *
- *  \param [in,out] selection
+ *  \param [in,out] GschemMainWindow object
  */
 static void
 gschem_main_window_init (GschemMainWindow *window)
@@ -87,7 +60,7 @@ gschem_main_window_init (GschemMainWindow *window)
 
 
 
-/*! \brief Create a new instanceof the GschemMainWindow
+/*! \brief Create a new instance of the GschemMainWindow
  *
  *  \return A new instanceof the GschemMainWindow
  */
@@ -97,24 +70,4 @@ gschem_main_window_new ()
   return GSCHEM_MAIN_WINDOW (g_object_new (GSCHEM_TYPE_MAIN_WINDOW,
                                            "type", GTK_WINDOW_TOPLEVEL,
                                            NULL));
-}
-
-
-
-/*! \brief Set a property
- *
- *  \param [in,out] object
- *  \param [in]     param_id
- *  \param [in]     value
- *  \param [in]     pspec
- */
-static void
-set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec)
-{
-  //GschemMainWindow *window = GSCHEM_MAIN_WINDOW (object);
-
-  switch (param_id) {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
-  }
 }
