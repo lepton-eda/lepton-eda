@@ -1,6 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2014 Ales Hvezda
- * Copyright (C) 2014 gEDA Contributors (see ChangeLog for details)
+ * Copyright (C) 2014 gEDA Contributors
+ * Copyright (C) 2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,8 +37,11 @@ enum
 
 
 
+G_DEFINE_TYPE(GschemBinding, gschem_binding, G_TYPE_OBJECT);
+
+
 static void
-class_init (GschemBindingClass *klass);
+gschem_binding_class_init (GschemBindingClass *klass);
 
 static void
 get_property (GObject    *object,
@@ -46,7 +50,7 @@ get_property (GObject    *object,
               GParamSpec *pspec);
 
 static void
-instance_init (GschemBinding *binding);
+gschem_binding_init (GschemBinding *binding);
 
 static void
 set_property (GObject      *object,
@@ -66,37 +70,6 @@ update_widget (GschemBinding *binding);
 //gschem_binding_get_model_object (GschemBinding *binding)
 //{
 //}
-
-
-
-/*! \brief Get/register GschemBinding type.
- */
-GType
-gschem_binding_get_type()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemBindingClass),
-      NULL,                                         /* base_init */
-      NULL,                                         /* base_finalize */
-      (GClassInitFunc) class_init,
-      NULL,                                         /* class_finalize */
-      NULL,                                         /* class_data */
-      sizeof(GschemBinding),
-      0,                                            /* n_preallocs */
-      (GInstanceInitFunc) instance_init,
-    };
-
-    type = g_type_register_static (G_TYPE_OBJECT,
-                                   "GschemBinding",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
-}
 
 
 
@@ -157,7 +130,7 @@ gschem_binding_update_widget (GschemBinding *binding)
  *  \param [in,out] klass The GschemBindingClass class
  */
 static void
-class_init (GschemBindingClass *klass)
+gschem_binding_class_init (GschemBindingClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -194,7 +167,7 @@ class_init (GschemBindingClass *klass)
  *  \param [in,out] binding The GschemBinding
  */
 static void
-instance_init (GschemBinding *binding)
+gschem_binding_init (GschemBinding *binding)
 {
 }
 
