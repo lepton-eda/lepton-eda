@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,12 +28,17 @@
  */
 
 #include <config.h>
-
 #include "gschem.h"
 
 
+G_DEFINE_TYPE(GschemBin, gschem_bin, GTK_TYPE_BIN);
+
+
 static void
-class_init (GschemBinClass *klass);
+gschem_bin_class_init (GschemBinClass *klass);
+
+static void
+gschem_bin_init (GschemBin *klass);
 
 static void
 size_allocate (GtkWidget *widget, GtkAllocation *allocation);
@@ -43,35 +48,6 @@ static void
 size_request (GtkWidget *widget, GtkRequisition *requisition);
 #endif
 
-
-/*! \brief register/get class
- */
-GType
-gschem_bin_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemBinClass),
-      NULL,                                 /* base_init */
-      NULL,                                 /* base_finalize */
-      (GClassInitFunc) class_init,
-      NULL,                                 /* class_finalize */
-      NULL,                                 /* class_data */
-      sizeof(GschemBin),
-      0,                                    /* n_preallocs */
-      NULL,
-    };
-
-    type = g_type_register_static (GTK_TYPE_BIN,
-                                   "GschemBin",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
-}
 
 
 /*! \brief create a new status log widget
@@ -125,7 +101,7 @@ lepton_bin_get_preferred_height (GtkWidget *widget,
 /*! \brief initialize class
  */
 static void
-class_init (GschemBinClass *klass)
+gschem_bin_class_init (GschemBinClass *klass)
 {
   GtkWidgetClass *widget_klass = GTK_WIDGET_CLASS (klass);
 
@@ -140,6 +116,10 @@ class_init (GschemBinClass *klass)
 #endif
 }
 
+static void
+gschem_bin_init (GschemBin *klass)
+{
+}
 
 /*! \private
  *  \brief forward size allocation to child
