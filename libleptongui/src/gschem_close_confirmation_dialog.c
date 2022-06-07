@@ -64,7 +64,7 @@ enum {
 };
 
 
-static gpointer close_confirmation_dialog_parent_class = NULL;
+G_DEFINE_TYPE (CloseConfirmationDialog, close_confirmation_dialog, GTK_TYPE_DIALOG);
 
 
 static void close_confirmation_dialog_class_init (CloseConfirmationDialogClass *klass);
@@ -85,40 +85,10 @@ GList *close_confirmation_dialog_get_selected_pages (CloseConfirmationDialog *di
 
 
 
-GType
-close_confirmation_dialog_get_type ()
-{
-  static GType close_confirmation_dialog_type = 0;
-
-  if (!close_confirmation_dialog_type) {
-    static const GTypeInfo close_confirmation_dialog_info = {
-      sizeof(CloseConfirmationDialogClass),
-      NULL, /* base_init */
-      NULL, /* base_finalize */
-      (GClassInitFunc) close_confirmation_dialog_class_init,
-      NULL, /* class_finalize */
-      NULL, /* class_data */
-      sizeof(CloseConfirmationDialog),
-      0,    /* n_preallocs */
-      (GInstanceInitFunc) close_confirmation_dialog_init,
-    };
-
-    close_confirmation_dialog_type =
-      g_type_register_static (GTK_TYPE_DIALOG,
-                              "CloseConfirmationDialog",
-                              &close_confirmation_dialog_info,
-                              (GTypeFlags) 0);
-  }
-
-  return close_confirmation_dialog_type;
-}
-
 static void
 close_confirmation_dialog_class_init (CloseConfirmationDialogClass *klass)
 {
   GObjectClass *gobject_class = G_OBJECT_CLASS (klass);
-
-  close_confirmation_dialog_parent_class = g_type_class_peek_parent (klass);
 
   gobject_class->constructor  = close_confirmation_dialog_constructor;
   gobject_class->set_property = close_confirmation_dialog_set_property;
