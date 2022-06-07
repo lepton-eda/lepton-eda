@@ -1192,18 +1192,29 @@ gschem_bottom_widget_set_status_text_color (GschemBottomWidget *widget, gboolean
   g_return_if_fail (widget != NULL);
 
 #ifdef ENABLE_GTK3
+  const GdkRGBA *color = NULL;
+  gchar *str_color = NULL;
+  gchar *data = NULL;
+
   GtkCssProvider *provider = gtk_css_provider_new ();
   GtkStyleContext *context = gtk_widget_get_style_context (widget->status_label);
+
   if (active)
   {
-    gtk_css_provider_load_from_data (provider,
-                                     "label { color: green; }", -1, NULL);
+    color = &widget->status_active_color;
   }
   else
   {
-    gtk_css_provider_load_from_data (provider,
-                                     "label { color: black; }", -1, NULL);
+    color = &widget->status_inactive_color;
   }
+
+  str_color = gdk_rgba_to_string (color);
+  data = g_strdup_printf ("label { color: %s; }", str_color);
+  gtk_css_provider_load_from_data (provider, data, -1, NULL);
+
+  g_free (str_color);
+  g_free (data);
+
   gtk_style_context_add_provider (context,
                                   GTK_STYLE_PROVIDER (provider),
                                   GTK_STYLE_PROVIDER_PRIORITY_FALLBACK);
