@@ -44,6 +44,11 @@ enum
 };
 
 
+G_DEFINE_TYPE (GschemShowHideTextWidget,
+               gschem_show_hide_text_widget,
+               GTK_TYPE_INFO_BAR);
+
+
 static void
 activate_entry (GtkWidget *entry, GschemShowHideTextWidget *widget);
 
@@ -74,8 +79,6 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 static void
 notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemShowHideTextWidget *widget);
 
-
-static GObjectClass *gschem_show_hide_text_widget_parent_class = NULL;
 
 
 /*! \brief Show the hide text widget
@@ -135,8 +138,6 @@ void show_text_dialog (GschemToplevel *w_current)
 static void
 gschem_show_hide_text_widget_class_init (GschemShowHideTextWidgetClass *klass)
 {
-  gschem_show_hide_text_widget_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
-
   G_OBJECT_CLASS (klass)->dispose  = dispose;
   G_OBJECT_CLASS (klass)->finalize = finalize;
 
@@ -227,37 +228,6 @@ gschem_show_hide_text_widget_get_text_string (GschemShowHideTextWidget *widget)
   g_return_val_if_fail (widget != NULL, NULL);
 
   return gtk_entry_get_text (GTK_ENTRY (widget->entry));
-}
-
-
-
-/*! \brief Get/register GschemShowHideTextWidget type.
- */
-GType
-gschem_show_hide_text_widget_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemShowHideTextWidgetClass),
-      NULL,                                                    /* base_init */
-      NULL,                                                    /* base_finalize */
-      (GClassInitFunc) gschem_show_hide_text_widget_class_init,
-      NULL,                                                    /* class_finalize */
-      NULL,                                                    /* class_data */
-      sizeof(GschemShowHideTextWidget),
-      0,                                                       /* n_preallocs */
-      (GInstanceInitFunc) gschem_show_hide_text_widget_init,
-    };
-
-    type = g_type_register_static (GTK_TYPE_INFO_BAR,
-                                   "GschemShowHideTextWidget",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
 }
 
 
@@ -428,8 +398,9 @@ dispose (GObject *object)
 {
   /* lastly, chain up to the parent dispose */
 
-  g_return_if_fail (gschem_show_hide_text_widget_parent_class != NULL);
-  gschem_show_hide_text_widget_parent_class->dispose (object);
+  GschemShowHideTextWidgetClass* cls = GSCHEM_SHOW_HIDE_TEXT_WIDGET_GET_CLASS (object);
+  GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
+  parent_cls->dispose (object);
 }
 
 
@@ -441,8 +412,9 @@ finalize (GObject *object)
 {
   /* lastly, chain up to the parent finalize */
 
-  g_return_if_fail (gschem_show_hide_text_widget_parent_class != NULL);
-  gschem_show_hide_text_widget_parent_class->finalize (object);
+  GschemShowHideTextWidgetClass* cls = GSCHEM_SHOW_HIDE_TEXT_WIDGET_GET_CLASS (object);
+  GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
+  parent_cls->finalize (object);
 }
 
 
