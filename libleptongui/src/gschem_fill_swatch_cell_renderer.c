@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2013-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,8 +52,13 @@ enum
 
 
 
+G_DEFINE_TYPE (GschemFillSwatchCellRenderer,
+               gschem_fill_swatch_cell_renderer,
+               GTK_TYPE_CELL_RENDERER_TEXT);
+
+
 static void
-class_init (GschemFillSwatchCellRendererClass *klass);
+gschem_fill_swatch_cell_renderer_class_init (GschemFillSwatchCellRendererClass *klass);
 
 static void
 get_property (GObject    *object,
@@ -62,7 +67,7 @@ get_property (GObject    *object,
               GParamSpec *pspec);
 
 static void
-instance_init (GschemFillSwatchCellRenderer *swatch);
+gschem_fill_swatch_cell_renderer_init (GschemFillSwatchCellRenderer *swatch);
 
 #ifdef ENABLE_GTK3
 static void
@@ -91,37 +96,6 @@ set_property (GObject      *object,
 
 
 
-/*! \brief Get/register GschemFillSwatchCellRenderer type.
- */
-GType
-gschem_fill_swatch_cell_renderer_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof (GschemFillSwatchCellRendererClass),
-      NULL,                                         /* base_init */
-      NULL,                                         /* base_finalize */
-      (GClassInitFunc) class_init,
-      NULL,                                         /* class_finalize */
-      NULL,                                         /* class_data */
-      sizeof (GschemFillSwatchCellRenderer),
-      0,                                            /* n_preallocs */
-      (GInstanceInitFunc) instance_init,
-    };
-
-    type = g_type_register_static (GTK_TYPE_CELL_RENDERER_TEXT,
-                                   "GschemFillSwatchCellRenderer",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
-}
-
-
-
 /*! \brief Create a new GschemFillSwatchCellRenderer
  *
  *  \return The new cell renderer
@@ -140,7 +114,7 @@ gschem_fill_swatch_cell_renderer_new ()
  *  \param [in,out] klass The swatch cell renderer class
  */
 static void
-class_init (GschemFillSwatchCellRendererClass *klass)
+gschem_fill_swatch_cell_renderer_class_init (GschemFillSwatchCellRendererClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -176,7 +150,7 @@ class_init (GschemFillSwatchCellRendererClass *klass)
  *  \param [in,out] renderer The fill swatch cell renderer
  */
 static void
-instance_init (GschemFillSwatchCellRenderer *swatch)
+gschem_fill_swatch_cell_renderer_init (GschemFillSwatchCellRenderer *swatch)
 {
   swatch->enabled = TRUE;
   swatch->fill_type = FILLING_HOLLOW;
