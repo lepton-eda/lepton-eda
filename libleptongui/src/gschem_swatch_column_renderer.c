@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2013 Ales Hvezda
  * Copyright (C) 2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,11 @@ enum
   PROP_ENABLED
 };
 
+
+
+G_DEFINE_TYPE (GschemSwatchColumnRenderer,
+               gschem_swatch_column_renderer,
+               GTK_TYPE_CELL_RENDERER_TEXT);
 
 
 static void
@@ -134,7 +139,7 @@ get_property (GObject    *object,
  *  \param [in,out] klass The swatch cell renderer class
  */
 static void
-swatchcr_class_init (GschemSwatchColumnRendererClass *klass)
+gschem_swatch_column_renderer_class_init (GschemSwatchColumnRendererClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
@@ -170,7 +175,7 @@ swatchcr_class_init (GschemSwatchColumnRendererClass *klass)
  *  \param [in,out] swatch The swatch cell renderer
  */
 static void
-swatchcr_init (GschemSwatchColumnRenderer *swatch)
+gschem_swatch_column_renderer_init (GschemSwatchColumnRenderer *swatch)
 {
 #ifdef ENABLE_GTK3
   swatch->color.red = 0.0;
@@ -376,37 +381,6 @@ set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, param_id, pspec);
       break;
   }
-}
-
-
-
-/*! \brief Get/register Swatchcr type.
- */
-GType
-gschem_swatch_column_renderer_get_type()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemSwatchColumnRendererClass),
-      NULL,                                   /* base_init */
-      NULL,                                   /* base_finalize */
-      (GClassInitFunc) swatchcr_class_init,
-      NULL,                                   /* class_finalize */
-      NULL,                                   /* class_data */
-      sizeof(GschemSwatchColumnRenderer),
-      0,                                      /* n_preallocs */
-      (GInstanceInitFunc) swatchcr_init,
-    };
-
-    type = g_type_register_static (GTK_TYPE_CELL_RENDERER_TEXT,
-                                   "GschemSwatchColumnRenderer",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
 }
 
 
