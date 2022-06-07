@@ -35,6 +35,10 @@
 #include "gschem.h"
 #include <gdk/gdkkeysyms.h>
 
+
+G_DEFINE_TYPE(GschemMainWindow, gschem_main_window, GTK_TYPE_WINDOW);
+
+
 static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
@@ -78,37 +82,6 @@ gschem_main_window_class_init (GschemMainWindowClass *klass)
 {
   G_OBJECT_CLASS (klass)->get_property = get_property;
   G_OBJECT_CLASS (klass)->set_property = set_property;
-}
-
-
-
-/*! \brief Get/register GschemSelection type.
- */
-GType
-gschem_main_window_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemMainWindowClass),
-      NULL,                                                    /* base_init */
-      NULL,                                                    /* base_finalize */
-      (GClassInitFunc) gschem_main_window_class_init,
-      NULL,                                                    /* class_finalize */
-      NULL,                                                    /* class_data */
-      sizeof(GschemMainWindow),
-      0,                                                       /* n_preallocs */
-      (GInstanceInitFunc) gschem_main_window_init,
-    };
-
-    type = g_type_register_static (GTK_TYPE_WINDOW,
-                                   "GschemMainWindow",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
 }
 
 
