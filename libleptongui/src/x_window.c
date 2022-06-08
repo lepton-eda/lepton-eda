@@ -250,16 +250,24 @@ void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
                          GDK_EXPOSURE_MASK |
                          GDK_POINTER_MOTION_MASK |
                          GDK_BUTTON_PRESS_MASK   |
-#if GTK_CHECK_VERSION(3,4,0)
-                         GDK_SMOOTH_SCROLL_MASK |
-#endif
                          GDK_ENTER_NOTIFY_MASK |
                          GDK_KEY_PRESS_MASK |
-                         GDK_BUTTON_RELEASE_MASK
+                         GDK_BUTTON_RELEASE_MASK);
+
 #ifdef ENABLE_GTK3
-                         | GDK_SCROLL_MASK
+  gint events;
+
+  if (w_current->warp_cursor)
+  {
+    events = GDK_SCROLL_MASK;
+  }
+  else
+  {
+    events = GDK_SMOOTH_SCROLL_MASK | GDK_SCROLL_MASK;
+  }
+
+  gtk_widget_add_events (GTK_WIDGET (drawing_area), events);
 #endif
-                         );
 
   struct event_reg_t* tmp = NULL;
 
