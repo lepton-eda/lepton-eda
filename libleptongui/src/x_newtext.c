@@ -61,6 +61,8 @@ struct _NewText {
 };
 
 
+G_DEFINE_TYPE (NewText, newtext, GSCHEM_TYPE_DIALOG);
+
 
 /*! \brief Handles the user response when apply is selected
  *
@@ -440,37 +442,6 @@ static void newtext_init(NewText *dialog)
   pango_tab_array_free (tab_array);
   gtk_container_add(GTK_CONTAINER(scrolled_window), dialog->text_view);
 }
-
-
-
-/*! \brief Get/register NewText type.
- */
-GType newtext_get_type()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(NewTextClass),
-      NULL,                                   /* base_init */
-      NULL,                                   /* base_finalize */
-      (GClassInitFunc) newtext_class_init,
-      NULL,                                   /* class_finalize */
-      NULL,                                   /* class_data */
-      sizeof(NewText),
-      0,                                      /* n_preallocs */
-      (GInstanceInitFunc) newtext_init,
-    };
-
-    type = g_type_register_static (GSCHEM_TYPE_DIALOG,
-                                   "NewText",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
-}
-
 
 
 /*! \brief Open the dialog box to add new text
