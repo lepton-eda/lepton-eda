@@ -58,6 +58,9 @@ enum compselect_view {
 };
 
 
+G_DEFINE_TYPE (Compselect, compselect, GSCHEM_TYPE_DIALOG);
+
+
 /*! \brief Return currently active component-selector view
  *
  *  \par Function Description
@@ -268,10 +271,11 @@ enum {
   PROP_HIDDEN
 };
 
-static GObjectClass *compselect_parent_class = NULL;
-
 
 static void compselect_class_init      (CompselectClass *klass);
+static void compselect_init            (Compselect *compselect)
+{
+}
 static GObject *compselect_constructor (GType type,
                                         guint n_construct_properties,
                                         GObjectConstructParam *construct_params);
@@ -1330,33 +1334,6 @@ create_behaviors_combo_box (void)
   gtk_combo_box_set_active (GTK_COMBO_BOX (combobox), 0);
 
   return combobox;
-}
-
-GType
-compselect_get_type ()
-{
-  static GType compselect_type = 0;
-
-  if (!compselect_type) {
-    static const GTypeInfo compselect_info = {
-      sizeof (CompselectClass),
-      NULL, /* base_init */
-      NULL, /* base_finalize */
-      (GClassInitFunc) compselect_class_init,
-      NULL, /* class_finalize */
-      NULL, /* class_data */
-      sizeof (Compselect),
-      0,    /* n_preallocs */
-      NULL  /* instance_init */
-    };
-
-    compselect_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
-                                              "Compselect",
-                                              &compselect_info,
-                                              (GTypeFlags) 0);
-  }
-
-  return compselect_type;
 }
 
 
