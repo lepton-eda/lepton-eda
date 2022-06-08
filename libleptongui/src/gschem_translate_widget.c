@@ -43,11 +43,16 @@ enum
 };
 
 
+G_DEFINE_TYPE (GschemTranslateWidget,
+               gschem_translate_widget,
+               GTK_TYPE_INFO_BAR);
+
+
 static void
 activate_entry (GtkWidget *entry, GschemTranslateWidget *widget);
 
 static void
-class_init (GschemTranslateWidgetClass *klass);
+gschem_translate_widget_class_init (GschemTranslateWidgetClass *klass);
 
 static void
 click_cancel (GtkWidget *button, GschemTranslateWidget *widget);
@@ -68,7 +73,7 @@ static void
 get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec);
 
 static void
-instance_init (GschemTranslateWidget *view);
+gschem_translate_widget_init (GschemTranslateWidget *view);
 
 static void
 set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *pspec);
@@ -76,8 +81,6 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 static void
 notify_entry_text (GtkWidget *entry, GParamSpec *pspec, GschemTranslateWidget *widget);
 
-
-static GObjectClass *gschem_translate_widget_parent_class = NULL;
 
 
 /*! \brief Get the entry
@@ -106,36 +109,6 @@ gschem_translate_widget_get_label_text (GschemTranslateWidget *widget)
   g_return_val_if_fail (widget != NULL, NULL);
 
   return gtk_label_get_text (GTK_LABEL (widget->label));
-}
-
-
-/*! \brief Get/register GschemTranslateWidget type.
- */
-GType
-gschem_translate_widget_get_type ()
-{
-  static GType type = 0;
-
-  if (type == 0) {
-    static const GTypeInfo info = {
-      sizeof(GschemTranslateWidgetClass),
-      NULL,                                  /* base_init */
-      NULL,                                  /* base_finalize */
-      (GClassInitFunc) class_init,
-      NULL,                                  /* class_finalize */
-      NULL,                                  /* class_data */
-      sizeof(GschemTranslateWidget),
-      0,                                     /* n_preallocs */
-      (GInstanceInitFunc) instance_init,
-    };
-
-    type = g_type_register_static (GTK_TYPE_INFO_BAR,
-                                   "GschemTranslateWidget",
-                                   &info,
-                                   (GTypeFlags) 0);
-  }
-
-  return type;
 }
 
 
@@ -221,10 +194,8 @@ activate_entry (GtkWidget *entry, GschemTranslateWidget *widget)
  *  \param [in] klass The class for the GschemTranslateWidget
  */
 static void
-class_init (GschemTranslateWidgetClass *klass)
+gschem_translate_widget_class_init (GschemTranslateWidgetClass *klass)
 {
-  gschem_translate_widget_parent_class = G_OBJECT_CLASS (g_type_class_peek_parent (klass));
-
   G_OBJECT_CLASS (klass)->dispose  = dispose;
   G_OBJECT_CLASS (klass)->finalize = finalize;
 
@@ -333,8 +304,9 @@ dispose (GObject *object)
 {
   /* lastly, chain up to the parent dispose */
 
-  g_return_if_fail (gschem_translate_widget_parent_class != NULL);
-  gschem_translate_widget_parent_class->dispose (object);
+  GschemTranslateWidgetClass* cls = GSCHEM_TRANSLATE_WIDGET_GET_CLASS (object);
+  GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
+  parent_cls->dispose (object);
 }
 
 
@@ -346,8 +318,9 @@ finalize (GObject *object)
 {
   /* lastly, chain up to the parent finalize */
 
-  g_return_if_fail (gschem_translate_widget_parent_class != NULL);
-  gschem_translate_widget_parent_class->finalize (object);
+  GschemTranslateWidgetClass* cls = GSCHEM_TRANSLATE_WIDGET_GET_CLASS (object);
+  GObjectClass* parent_cls = (GObjectClass*) g_type_class_peek_parent (cls);
+  parent_cls->finalize (object);
 }
 
 
@@ -380,7 +353,7 @@ get_property (GObject *object, guint param_id, GValue *value, GParamSpec *pspec)
  *  \param [in,out] widget the GschemTranslateWidget
  */
 static void
-instance_init (GschemTranslateWidget *widget)
+gschem_translate_widget_init (GschemTranslateWidget *widget)
 {
   GtkWidget *action = gtk_info_bar_get_action_area (GTK_INFO_BAR (widget));
   GtkWidget *button_box;
