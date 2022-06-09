@@ -155,6 +155,19 @@ static void celltextview_class_init (CellTextViewClass *klass);
 static void celltextview_init       (CellTextView *self);
 static void celltextview_cell_editable_init (GtkCellEditableIface *iface);
 
+G_DEFINE_TYPE_EXTENDED
+(
+  CellTextView,
+  celltextview,
+  GTK_TYPE_TEXT_VIEW,
+  0,
+  G_IMPLEMENT_INTERFACE
+  (
+    GTK_TYPE_CELL_EDITABLE,
+    celltextview_cell_editable_init
+  )
+);
+
 enum {
     PROP_EDIT_CANCELED = 1
 };
@@ -244,47 +257,6 @@ celltextview_start_editing (GtkCellEditable *cell_editable,
  *  \par Function Description
  *
  */
-GType
-celltextview_get_type ()
-{
-  static GType celltextview_type = 0;
-
-  if (!celltextview_type) {
-    static const GTypeInfo celltextview_info = {
-      sizeof(CellTextViewClass),
-      NULL, /* base_init */
-      NULL, /* base_finalize */
-      (GClassInitFunc) celltextview_class_init,
-      NULL, /* class_finalize */
-      NULL, /* class_data */
-      sizeof(CellTextView),
-      0,    /* n_preallocs */
-      (GInstanceInitFunc) celltextview_init,
-    };
-
-    static const GInterfaceInfo cell_editable_info = {
-      (GInterfaceInitFunc) celltextview_cell_editable_init,
-      NULL, /* interface_finalize */
-      NULL  /* interface_data */
-    };
-
-    celltextview_type = g_type_register_static (GTK_TYPE_TEXT_VIEW,
-                                                "CellTextView",
-                                                &celltextview_info,
-                                                (GTypeFlags) 0);
-    g_type_add_interface_static (celltextview_type,
-                                 GTK_TYPE_CELL_EDITABLE,
-                                 &cell_editable_info);
-  }
-
-  return celltextview_type;
-}
-
-/*! \todo Finish function documentation
- *  \brief
- *  \par Function Description
- *
- */
 static void
 celltextview_class_init (CellTextViewClass *klass)
 {
@@ -330,7 +302,15 @@ celltextview_cell_editable_init (GtkCellEditableIface *iface)
  * in gschem code. It is inspired by the 'GtkCellRendererCombo' renderer
  * of GTK 2.4 (LGPL).
  */
+
+G_DEFINE_TYPE (CellRendererMultiLineText,
+               cellrenderermultilinetext,
+               GTK_TYPE_CELL_RENDERER_TEXT);
+
 static void cellrenderermultilinetext_class_init (CellRendererMultiLineTextClass *klass);
+static void cellrenderermultilinetext_init (CellRendererMultiLineText *obj)
+{
+}
 static void cellrenderermultilinetext_editing_done (GtkCellEditable *cell_editable,
                                                     gpointer         user_data);
 static gboolean cellrenderermultilinetext_focus_out_event (GtkWidget *widget,
@@ -482,39 +462,6 @@ cellrenderermultilinetext_focus_out_event (GtkWidget *widget,
  *  \par Function Description
  *
  */
-GType
-cellrenderermultilinetext_get_type ()
-{
-  static GType cellrenderermultilinetext_type = 0;
-
-  if (!cellrenderermultilinetext_type) {
-    static const GTypeInfo cellrenderermultilinetext_info = {
-      sizeof(CellRendererMultiLineTextClass),
-      NULL, /* base_init */
-      NULL, /* base_finalize */
-      (GClassInitFunc) cellrenderermultilinetext_class_init,
-      NULL, /* class_finalize */
-      NULL, /* class_data */
-      sizeof(CellRendererMultiLineText),
-      0,    /* n_preallocs */
-      NULL, /* instance_init */
-    };
-
-    cellrenderermultilinetext_type = g_type_register_static (
-      GTK_TYPE_CELL_RENDERER_TEXT,
-      "CellRendererMultiLineText",
-      &cellrenderermultilinetext_info,
-      (GTypeFlags) 0);
-  }
-
-  return cellrenderermultilinetext_type;
-}
-
-/*! \todo Finish function documentation
- *  \brief
- *  \par Function Description
- *
- */
 static void
 cellrenderermultilinetext_class_init (CellRendererMultiLineTextClass *klass)
 {
@@ -544,7 +491,9 @@ enum {
   NUM_COLUMNS
 };
 
-static GObjectClass *multiattrib_parent_class = NULL;
+G_DEFINE_TYPE (Multiattrib,
+               multiattrib,
+               GSCHEM_TYPE_DIALOG);
 
 static void multiattrib_class_init (MultiattribClass *klass);
 static void multiattrib_init       (Multiattrib *multiattrib);
@@ -1867,44 +1816,6 @@ multiattrib_geometry_restore (GschemDialog *dialog, EdaConfig *cfg, gchar *group
   g_clear_error (&error);
   gtk_expander_set_expanded (GTK_EXPANDER (MULTIATTRIB (dialog)->add_frame),
                              expand_add_attr);
-}
-
-
-/*! \brief Function to retrieve Multiattrib's GType identifier.
- *
- *  \par Function Description
- *
- *  Function to retrieve Multiattrib's GType identifier.
- *  Upon first call, this registers Multiattrib in the GType system.
- *  Subsequently it returns the saved value from its first execution.
- *
- *  \return the GType identifier associated with Multiattrib.
- */
-GType
-multiattrib_get_type ()
-{
-  static GType multiattrib_type = 0;
-
-  if (!multiattrib_type) {
-    static const GTypeInfo multiattrib_info = {
-      sizeof(MultiattribClass),
-      NULL, /* base_init */
-      NULL, /* base_finalize */
-      (GClassInitFunc) multiattrib_class_init,
-      NULL, /* class_finalize */
-      NULL, /* class_data */
-      sizeof(Multiattrib),
-      0,    /* n_preallocs */
-      (GInstanceInitFunc) multiattrib_init,
-    };
-
-    multiattrib_type = g_type_register_static (GSCHEM_TYPE_DIALOG,
-                                               "Multiattrib",
-                                               &multiattrib_info,
-                                               (GTypeFlags) 0);
-  }
-
-  return multiattrib_type;
 }
 
 
