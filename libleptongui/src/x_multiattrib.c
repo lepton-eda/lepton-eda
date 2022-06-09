@@ -18,15 +18,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 #include <config.h>
-
-#include <stdio.h>
-#ifdef HAVE_STDLIB_H
-#include <stdlib.h>
-#endif
-#ifdef HAVE_STRING_H
-#include <string.h>
-#endif
-
 #include "gschem.h"
 #include "x_multiattrib.h"
 #include <gdk/gdkkeysyms.h>
