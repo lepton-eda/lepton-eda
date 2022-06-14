@@ -163,8 +163,8 @@ on_menu_item_activate (GtkMenuItem *item,
 
 GtkWidget*
 lepton_action_create_menu_item (GSimpleAction* action,
-                                gchar *label,
-                                gchar *shortcut)
+                                const gchar *label,
+                                const gchar *shortcut)
 {
   GtkWidget *item = gtk_menu_item_new_with_mnemonic (label);
 
