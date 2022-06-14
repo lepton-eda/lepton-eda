@@ -603,8 +603,8 @@ make_menu_action (const char *action_name,
 #ifdef ENABLE_GTK3
 GtkWidget*
 lepton_action_create_menu_item (GSimpleAction* action,
-                                char *label,
-                                char *shortcut);
+                                const gchar *label,
+                                const gchar *shortcut);
 #else
 GtkWidget*
 lepton_action_create_menu_item (GtkAction *action,
