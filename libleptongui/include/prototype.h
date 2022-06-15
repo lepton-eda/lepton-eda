@@ -678,6 +678,7 @@ schematic_window_create_toolbar (GschemToplevel *w_current,
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GtkWidget *main_box,
+                      GtkWidget *work_box,
                       GschemToplevel *w_current,
                       gpointer key_event_callback);
 

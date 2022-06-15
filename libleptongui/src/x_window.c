@@ -523,6 +523,7 @@ schematic_window_create_work_box ()
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GtkWidget *main_box,
+                      GtkWidget *work_box,
                       GschemToplevel *w_current,
                       gpointer key_event_callback)
 {
@@ -534,8 +535,6 @@ x_window_create_main (GtkWidget *main_window,
    * set a size of the main window.  The drawing area's size is fixed,
    * see below
    */
-
-  GtkWidget *work_box = schematic_window_create_work_box ();
 
   _key_event_callback = key_event_callback;
 

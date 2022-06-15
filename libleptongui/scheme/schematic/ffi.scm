@@ -152,6 +152,7 @@
             x_window_setup
             schematic_window_create_app_window
             schematic_window_create_main_box
+            schematic_window_create_work_box
             schematic_window_create_menubar
             schematic_window_create_toolbar
 
@@ -317,12 +318,13 @@
 (define-lff x_window_open_page '* '(* *))
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup '* '(*))
-(define-lff x_window_create_main '* '(* * * *))
+(define-lff x_window_create_main '* '(* * * * *))
 (define-lff x_window_close void '(*))
 (define-lff x_window_close_all void '(*))
 (define-lff x_window_close_page void '(* *))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
+(define-lff schematic_window_create_work_box '* '())
 (define-lff schematic_window_create_menubar void '(* * *))
 (define-lff schematic_window_create_toolbar void '(* *))
 
