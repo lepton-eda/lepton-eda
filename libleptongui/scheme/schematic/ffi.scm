@@ -151,6 +151,7 @@
             schematic_window_create_app_window
             schematic_window_create_main_box
             schematic_window_create_menubar
+            schematic_window_create_toolbar
 
             about_dialog
 
@@ -320,6 +321,7 @@
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
 (define-lff schematic_window_create_menubar void '(* * *))
+(define-lff schematic_window_create_toolbar void '(* *))
 
 ;;; x_dialog.c
 (define-lff generic_confirm_dialog int '(*))

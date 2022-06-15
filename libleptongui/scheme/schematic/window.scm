@@ -100,6 +100,8 @@ GtkApplication structure of the program (when compiled with
     (let ((*main-box (schematic_window_create_main_box *main-window))
           (*menubar (make-main-menu *window)))
       (schematic_window_create_menubar *window *main-box *menubar)
+      (schematic_window_create_toolbar *window *main-box)
+
       (x_window_create_main *main-window
                             *main-box
                             *window

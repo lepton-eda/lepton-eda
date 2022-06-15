@@ -514,12 +514,6 @@ x_window_create_main (GtkWidget *main_window,
    */
 
   /*
-  *  toolbar:
-  */
-  schematic_window_create_toolbar (w_current, main_box);
-
-
-  /*
   *  popup menu:
   */
   w_current->popup_menu = (GtkWidget*) get_main_popup (w_current);
@@ -1142,8 +1136,9 @@ create_toolbar_separator (GtkWidget *toolbar, gint pos)
 
 
 
-static void
-schematic_window_create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
+void
+schematic_window_create_toolbar (GschemToplevel *w_current,
+                                 GtkWidget *main_box)
 {
   if (w_current->toolbars == 0)
   {
