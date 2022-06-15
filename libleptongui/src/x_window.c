@@ -492,6 +492,29 @@ schematic_window_create_main_box (GtkWidget *main_window)
 }
 
 
+/*! \brief Create a container for scrolled window and bottom infowidgets
+ *  \par Function Description
+ *  Creates a container for scrolled canvas and bottom
+ *  infowidgets.  When tabbed GUI is enabled, it will contain the
+ *  tabs notebook.
+ *
+ * \return Pointer to the new GtkWidget object.
+ */
+GtkWidget*
+schematic_window_create_work_box ()
+{
+  GtkWidget *work_box = NULL;
+
+#ifdef ENABLE_GTK3
+  work_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+#else
+  work_box = gtk_vbox_new (FALSE, 0);
+#endif
+
+  return work_box;
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -505,7 +528,6 @@ x_window_create_main (GtkWidget *main_window,
 {
   GtkWidget *hpaned = NULL;
   GtkWidget *vpaned = NULL;
-  GtkWidget *work_box = NULL;
   GtkWidget *scrolled = NULL;
 
   /* We want the widgets to flow around the drawing area, so we don't
@@ -513,15 +535,7 @@ x_window_create_main (GtkWidget *main_window,
    * see below
    */
 
-  /*
-  *  container for scrolled window and bottom infowidgets;
-  *  when tabbed GUI is enabled, it will contain the notebook:
-  */
-#ifdef ENABLE_GTK3
-  work_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
-#else
-  work_box = gtk_vbox_new (FALSE, 0);
-#endif
+  GtkWidget *work_box = schematic_window_create_work_box ();
 
   _key_event_callback = key_event_callback;
 
