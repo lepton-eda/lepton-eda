@@ -508,6 +508,7 @@ schematic_window_create_main_box (GtkWidget *main_window)
  */
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
+                      GtkWidget *main_box,
                       GschemToplevel *w_current,
                       GtkWidget *menubar,
                       gpointer key_event_callback)
@@ -516,8 +517,6 @@ x_window_create_main (GtkWidget *main_window,
   GtkWidget *vpaned = NULL;
   GtkWidget *work_box = NULL;
   GtkWidget *scrolled = NULL;
-
-  GtkWidget *main_box = schematic_window_create_main_box (main_window);
 
   /* We want the widgets to flow around the drawing area, so we don't
    * set a size of the main window.  The drawing area's size is fixed,

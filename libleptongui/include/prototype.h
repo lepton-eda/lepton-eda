@@ -664,6 +664,7 @@ schematic_window_create_main_box (GtkWidget *main_window);
 
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
+                      GtkWidget *main_box,
                       GschemToplevel *w_current,
                       GtkWidget *menubar,
                       gpointer key_event_callback);

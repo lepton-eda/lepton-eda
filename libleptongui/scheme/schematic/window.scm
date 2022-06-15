@@ -97,10 +97,12 @@ GtkApplication structure of the program (when compiled with
                               (procedure->pointer int i_callback_close_wm '(* * *))
                               *window)
 
-    (x_window_create_main *main-window
-                          *window
-                          (make-main-menu *window)
-                          *process-key-event)))
+    (let ((*main-box (schematic_window_create_main_box *main-window)))
+      (x_window_create_main *main-window
+                            *main-box
+                            *window
+                            (make-main-menu *window)
+                            *process-key-event))))
 
 
 (define (active-page)
