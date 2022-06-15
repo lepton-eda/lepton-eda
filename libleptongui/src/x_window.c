@@ -514,12 +514,6 @@ x_window_create_main (GtkWidget *main_window,
    */
 
   /*
-  *  popup menu:
-  */
-  w_current->popup_menu = get_main_popup (w_current);
-
-
-  /*
   *  container for scrolled window and bottom infowidgets;
   *  when tabbed GUI is enabled, it will contain the notebook:
   */

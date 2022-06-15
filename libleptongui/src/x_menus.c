@@ -281,6 +281,8 @@ get_main_popup (GschemToplevel* w_current)
 
   gtk_widget_show_all (menu);
 
+  w_current->popup_menu = menu;
+
   return menu;
 }
 
