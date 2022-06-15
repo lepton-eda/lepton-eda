@@ -666,6 +666,9 @@ void
 schematic_window_create_menubar (GschemToplevel *w_current,
                                  GtkWidget *main_box,
                                  GtkWidget *menubar);
+void
+schematic_window_create_toolbar (GschemToplevel *w_current,
+                                 GtkWidget *main_box);
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GtkWidget *main_box,

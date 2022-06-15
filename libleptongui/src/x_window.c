@@ -46,10 +46,6 @@ static void
 create_toolbar_separator (GtkWidget *toolbar, gint pos);
 
 static void
-create_toolbar (GschemToplevel *w_current, GtkWidget *main_box);
-
-
-static void
 create_find_text_widget (GschemToplevel *w_current, GtkWidget *work_box);
 
 static void
@@ -520,7 +516,7 @@ x_window_create_main (GtkWidget *main_window,
   /*
   *  toolbar:
   */
-  create_toolbar (w_current, main_box);
+  schematic_window_create_toolbar (w_current, main_box);
 
 
   /*
@@ -1147,7 +1143,7 @@ create_toolbar_separator (GtkWidget *toolbar, gint pos)
 
 
 static void
-create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
+schematic_window_create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
 {
   if (w_current->toolbars == 0)
   {
@@ -1244,7 +1240,7 @@ create_toolbar( GschemToplevel *w_current, GtkWidget *main_box )
   gtk_toggle_tool_button_set_active(
     GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select), TRUE);
 
-} /* create_toolbar() */
+} /* schematic_window_create_toolbar() */
 
 
 
