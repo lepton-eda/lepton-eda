@@ -91,10 +91,16 @@ GtkApplication structure of the program (when compiled with
   (define new-window
     (x_window_setup (x_window_new (parse-gschemrc *toplevel))))
 
-  (x_window_create_main (schematic_window_create_app_window *app)
-                        new-window
-                        (make-main-menu new-window)
-                        *process-key-event))
+  (let ((*main-window (schematic_window_create_app_window *app)))
+    (schematic_signal_connect *main-window
+                              (string->pointer "delete-event")
+                              (procedure->pointer int i_callback_close_wm '(* * *))
+                              new-window)
+
+    (x_window_create_main *main-window
+                          new-window
+                          (make-main-menu new-window)
+                          *process-key-event)))
 
 
 (define (active-page)

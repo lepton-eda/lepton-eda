@@ -496,12 +496,6 @@ x_window_create_main (GtkWidget *main_window,
    * see below
    */
 
-  /* this should work fine */
-  g_signal_connect (G_OBJECT (main_window), "delete_event",
-                    G_CALLBACK (i_callback_close_wm),
-                    w_current);
-
-
   /*
   *  top level container:
   */

@@ -49,6 +49,7 @@
             i_callback_clipboard_copy
             i_callback_clipboard_cut
             i_callback_clipboard_paste
+            i_callback_close_wm
             i_callback_edit_autonumber_text
             i_callback_edit_copy
             i_callback_edit_delete
@@ -341,6 +342,7 @@
 (define-lff i_callback_clipboard_copy void '(* *))
 (define-lff i_callback_clipboard_cut void '(* *))
 (define-lff i_callback_clipboard_paste void '(* *))
+(define-lff i_callback_close_wm int '(* * *))
 (define-lff i_callback_edit_autonumber_text void '(* *))
 (define-lff i_callback_edit_copy void '(* *))
 (define-lff i_callback_edit_delete void '(* *))
