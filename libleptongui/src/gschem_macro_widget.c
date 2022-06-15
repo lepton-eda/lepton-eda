@@ -697,7 +697,7 @@ command_entry_set_font (GtkWidget* entry)
     char *entry_font =
       g_strdup_printf ("entry {"
                        "  font-family: %s;"
-                       "  font-size: %dpx;"
+                       "  font-size: %dpt;"
                        "  font-style: %s;"
                        "  font-weight: %d;"
                        "}",
