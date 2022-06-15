@@ -659,6 +659,9 @@ void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
 GtkWidget*
 schematic_window_create_app_window (gpointer app);
 
+GtkWidget*
+schematic_window_create_main_box (GtkWidget *main_window);
+
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GschemToplevel *w_current,

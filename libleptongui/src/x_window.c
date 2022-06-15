@@ -473,6 +473,33 @@ schematic_window_create_app_window (gpointer app)
 }
 
 
+/*! \brief Create a top level box container for widgets.
+ *  \par Function Description
+ * In the main window widget of a lepton-schematic window, creates
+ * a top level box container which will contain the menubar,
+ * toolbar and other widgets.
+ *
+ * \param main_window The main window widget.
+ * \return Pointer to the new GtkWidget object.
+ */
+GtkWidget*
+schematic_window_create_main_box (GtkWidget *main_window)
+{
+  GtkWidget *main_box = NULL;
+
+  g_return_val_if_fail (main_window != NULL, NULL);
+
+#ifdef ENABLE_GTK3
+  main_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
+#else
+  main_box = gtk_vbox_new (FALSE, 1);
+#endif
+  gtk_container_set_border_width (GTK_CONTAINER (main_box), 0);
+  gtk_container_add (GTK_CONTAINER (main_window), main_box);
+
+  return main_box;
+}
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -485,28 +512,17 @@ x_window_create_main (GtkWidget *main_window,
                       GtkWidget *menubar,
                       gpointer key_event_callback)
 {
-  GtkWidget *main_box = NULL;
   GtkWidget *hpaned = NULL;
   GtkWidget *vpaned = NULL;
   GtkWidget *work_box = NULL;
   GtkWidget *scrolled = NULL;
 
+  GtkWidget *main_box = schematic_window_create_main_box (main_window);
+
   /* We want the widgets to flow around the drawing area, so we don't
    * set a size of the main window.  The drawing area's size is fixed,
    * see below
    */
-
-  /*
-  *  top level container:
-  */
-#ifdef ENABLE_GTK3
-  main_box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 1);
-#else
-  main_box = gtk_vbox_new (FALSE, 1);
-#endif
-  gtk_container_set_border_width (GTK_CONTAINER (main_box), 0);
-  gtk_container_add (GTK_CONTAINER (main_window), main_box);
-
 
   /*
   *  main menu:
