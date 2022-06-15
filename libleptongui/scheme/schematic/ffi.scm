@@ -164,6 +164,8 @@
             gschem_page_view_get_page
             gschem_page_view_invalidate_all
 
+            schematic_signal_connect
+
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_toplevel
             schematic_window_get_active_page
@@ -418,6 +420,9 @@
 
 ;;; o_slot.c
 (define-lff o_slot_end void '(* * *))
+
+;;; signals.c
+(define-lff schematic_signal_connect void '(* * * *))
 
 ;;; x_tabs.c
 (define-lff x_tabs_next void '(*))
