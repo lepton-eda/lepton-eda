@@ -668,6 +668,9 @@ schematic_window_create_main_box (GtkWidget *main_window);
 GtkWidget*
 schematic_window_create_work_box ();
 
+GschemPageView*
+schematic_window_create_page_view (GschemToplevel *w_current,
+                                   GtkWidget *work_box);
 void
 schematic_window_create_menubar (GschemToplevel *w_current,
                                  GtkWidget *main_box,

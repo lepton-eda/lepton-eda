@@ -515,6 +515,36 @@ schematic_window_create_work_box ()
 }
 
 
+/*! \brief Create a page view
+ *  \par Function Description
+ *  Creates a scrolled #GschemPageView widget in the working area
+ *  \a work_box.  This function is used when tabs are disabled.
+ *
+ * \param w_current The #GschemToplevel object.
+ * \param work_box The working area widget.
+ * \return Pointer to the new GtkWidget object.
+ */
+GschemPageView*
+schematic_window_create_page_view (GschemToplevel *w_current,
+                                   GtkWidget *work_box)
+{
+  GtkWidget *scrolled = NULL;
+
+  g_return_val_if_fail (w_current != NULL, NULL);
+  g_return_val_if_fail (work_box != NULL, NULL);
+
+  /* scrolled window (parent of page view): */
+  scrolled = gtk_scrolled_window_new (NULL, NULL);
+  gtk_container_add (GTK_CONTAINER (work_box), scrolled);
+
+  /* create page view: */
+  x_window_create_drawing (scrolled, w_current);
+  x_window_setup_scrolling (w_current, scrolled);
+
+  return GSCHEM_PAGE_VIEW (w_current->drawing_area);
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -529,7 +559,6 @@ x_window_create_main (GtkWidget *main_window,
 {
   GtkWidget *hpaned = NULL;
   GtkWidget *vpaned = NULL;
-  GtkWidget *scrolled = NULL;
 
   /* We want the widgets to flow around the drawing area, so we don't
    * set a size of the main window.  The drawing area's size is fixed,
@@ -544,16 +573,10 @@ x_window_create_main (GtkWidget *main_window,
   }
   else
   {
-    /* scrolled window (parent of page view): */
-    scrolled = gtk_scrolled_window_new (NULL, NULL);
-    gtk_container_add (GTK_CONTAINER (work_box), scrolled);
-
-    /* create page view: */
-    x_window_create_drawing (scrolled, w_current);
-    x_window_setup_scrolling (w_current, scrolled);
+    GschemPageView* pview =
+      schematic_window_create_page_view (w_current, work_box);
 
     /* setup callbacks for draw events - page view: */
-    GschemPageView* pview = GSCHEM_PAGE_VIEW (w_current->drawing_area);
     x_window_setup_draw_events_drawing_area (w_current, pview);
   }
 
