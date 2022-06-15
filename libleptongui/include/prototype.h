@@ -662,6 +662,10 @@ schematic_window_create_app_window (gpointer app);
 GtkWidget*
 schematic_window_create_main_box (GtkWidget *main_window);
 
+void
+schematic_window_create_menubar (GschemToplevel *w_current,
+                                 GtkWidget *main_box,
+                                 GtkWidget *menubar);
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GtkWidget *main_box,

@@ -24,11 +24,6 @@
 
 
 static void
-create_menubar (GschemToplevel *w_current,
-                GtkWidget *main_box,
-                GtkWidget *menubar);
-
-static void
 create_toolbar_button (GschemToplevel *w_current,
                        GtkWidget *toolbar,
                        const gchar *pixmap_name,
@@ -526,7 +521,7 @@ x_window_create_main (GtkWidget *main_window,
   /*
   *  main menu:
   */
-  create_menubar (w_current, main_box, menubar);
+  schematic_window_create_menubar (w_current, main_box, menubar);
 
 
   /*
@@ -1061,9 +1056,21 @@ GschemToplevel* x_window_new (LeptonToplevel *toplevel)
 
 
 
-static void
-create_menubar (GschemToplevel *w_current, GtkWidget *main_box, GtkWidget *menubar)
+/*! \brief Add a menubar widget to the main container of a window.
+ *  \par Function Description
+ *  Adds a menubar at the top of the program window.  GTK2 version
+ *  of the widget may have 'handle boxes' depending on configuration.
+ *
+ *  \param [in] w_current The toplevel GUI window structure.
+ *  \param [in] main_box The main container of the app window.
+ *  \param [in] menubar The menubar widget created elsewhere.
+ */
+void
+schematic_window_create_menubar (GschemToplevel *w_current,
+                                 GtkWidget *main_box,
+                                 GtkWidget *menubar)
 {
+  g_return_if_fail (w_current != NULL);
 
 #ifdef ENABLE_GTK3
   gtk_box_pack_start (GTK_BOX (main_box), menubar, FALSE, FALSE, 0);
