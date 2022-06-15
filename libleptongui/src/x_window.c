@@ -446,6 +446,33 @@ x_window_translate_response (GschemTranslateWidget *widget, gint response, Gsche
 }
 
 
+/*! \brief Creates a new main window widget.
+ *  \par Function Description
+ * Creates a new lepton-schematic window and initializes some of
+ * its properties.
+ *
+ * \param app Pointer to the GtkApplication (for GTK3).
+ * \return Pointer to the new GtkWidget object.
+ */
+GtkWidget*
+schematic_window_create_app_window (gpointer app)
+{
+  GtkWidget *main_window = NULL;
+
+#ifdef ENABLE_GTK3
+  g_return_val_if_fail (app != NULL, NULL);
+  main_window = gtk_application_window_new (GTK_APPLICATION (app));
+#else
+  main_window = GTK_WIDGET (gschem_main_window_new ());
+#endif
+
+  gtk_widget_set_name (main_window, "lepton-schematic");
+  gtk_window_set_resizable (GTK_WINDOW (main_window), TRUE);
+
+  return main_window;
+}
+
+
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -458,21 +485,13 @@ x_window_create_main (gpointer app,
                       GtkWidget *menubar,
                       gpointer key_event_callback)
 {
-  GtkWidget *main_window = NULL;
   GtkWidget *main_box = NULL;
   GtkWidget *hpaned = NULL;
   GtkWidget *vpaned = NULL;
   GtkWidget *work_box = NULL;
   GtkWidget *scrolled = NULL;
 
-#ifdef ENABLE_GTK3
-  main_window = gtk_application_window_new (GTK_APPLICATION (app));
-#else
-  main_window = GTK_WIDGET (gschem_main_window_new ());
-#endif
-
-  gtk_widget_set_name (main_window, "lepton-schematic");
-  gtk_window_set_resizable (GTK_WINDOW (main_window), TRUE);
+  GtkWidget *main_window = schematic_window_create_app_window (app);
 
   /* We want the widgets to flow around the drawing area, so we don't
    * set a size of the main window.  The drawing area's size is fixed,
