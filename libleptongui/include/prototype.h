@@ -670,7 +670,6 @@ GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GtkWidget *main_box,
                       GschemToplevel *w_current,
-                      GtkWidget *menubar,
                       gpointer key_event_callback);
 
 void x_window_close(GschemToplevel *w_current);

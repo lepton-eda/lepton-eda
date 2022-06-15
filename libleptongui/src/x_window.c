@@ -505,7 +505,6 @@ GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GtkWidget *main_box,
                       GschemToplevel *w_current,
-                      GtkWidget *menubar,
                       gpointer key_event_callback)
 {
   GtkWidget *hpaned = NULL;
@@ -517,12 +516,6 @@ x_window_create_main (GtkWidget *main_window,
    * set a size of the main window.  The drawing area's size is fixed,
    * see below
    */
-
-  /*
-  *  main menu:
-  */
-  schematic_window_create_menubar (w_current, main_box, menubar);
-
 
   /*
   *  toolbar:
