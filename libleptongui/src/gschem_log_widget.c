@@ -321,7 +321,7 @@ gschem_log_widget_init (GschemLogWidget *widget)
       char *textview_font =
         g_strdup_printf ("textview {"
                          "  font-family: %s;"
-                         "  font-size: %dpx;"
+                         "  font-size: %dpt;"
                          "  font-style: %s;"
                          "  font-weight: %d;"
                          "}",
