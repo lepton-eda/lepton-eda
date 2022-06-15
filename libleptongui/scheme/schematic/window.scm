@@ -32,11 +32,14 @@
   #:use-module (lepton toplevel)
 
   #:use-module (schematic ffi)
+  #:use-module (schematic gui keymap)
+  #:use-module (schematic menu)
   #:use-module (schematic window foreign)
 
   #:export (%lepton-window
             current-window
             with-window
+            make-schematic-window
             active-page
             set-active-page!
             pointer-position
@@ -71,6 +74,27 @@
   "Returns the <window> instance associated with the current
 dynamic context."
   (and=> (fluid-ref %lepton-window) pointer->window))
+
+
+(define (process-key-event *page_view *event *window)
+  (with-window *window
+    (eval-press-key-event *event *page_view *window)))
+
+(define *process-key-event
+  (procedure->pointer int process-key-event '(* * *)))
+
+
+(define (make-schematic-window *app *toplevel)
+  "Creates a new lepton-schematic window.  APP is a pointer to the
+GtkApplication structure of the program (when compiled with
+--with-gtk3).  TOPLEVEL is a foreign LeptonToplevel structure."
+  (define new-window
+    (x_window_setup (x_window_new (parse-gschemrc *toplevel))))
+
+  (x_window_create_main *app
+                        new-window
+                        (make-main-menu new-window)
+                        *process-key-event))
 
 
 (define (active-page)

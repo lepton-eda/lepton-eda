@@ -35,7 +35,6 @@
              (schematic ffi)
              (schematic ffi gtk)
              (schematic gui keymap)
-             (schematic menu)
              (schematic window))
 
 ;;; Initialize liblepton library.
@@ -236,16 +235,6 @@ Run `~A --help' for more information.\n")
                        filename)))
 
   (map get-absolute-filename filename-list))
-
-;;; Creates a new window in lepton-schematic.
-(define (make-schematic-window app toplevel)
-  (define new-window
-    (x_window_setup (x_window_new (parse-gschemrc toplevel))))
-
-  (x_window_create_main app
-                        new-window
-                        (make-main-menu new-window)
-                        *process-key-event))
 
 (define (main app file-list)
   ;; Create a new window and associated LeptonToplevel object.

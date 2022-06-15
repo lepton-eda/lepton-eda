@@ -27,7 +27,6 @@
   #:use-module (schematic action)
   #:use-module (schematic ffi)
   #:use-module (schematic keymap)
-  #:use-module (schematic window)
 
   #:export (%global-keymap
             current-keymap
@@ -35,7 +34,7 @@
             reset-keys
             find-key
             %gschem-hotkey-store/dump-global-keymap
-            *process-key-event))
+            eval-press-key-event))
 
 ;;; Key event processing.
 
@@ -88,14 +87,6 @@
   (boolean->c-boolean
    (and key
         (update-keyaccel-timer (protected-eval-key-press key)))))
-
-
-(define (process-key-event *page_view *event *window)
-  (with-window *window
-    (eval-press-key-event *event *page_view *window)))
-
-(define *process-key-event
-  (procedure->pointer int process-key-event '(* * *)))
 
 
 ;; -------------------------------------------------------------------
