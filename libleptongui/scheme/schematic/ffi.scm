@@ -147,6 +147,7 @@
             x_window_open_page
             x_window_set_current_page
             x_window_setup
+            schematic_window_create_app_window
 
             about_dialog
 
@@ -313,6 +314,7 @@
 (define-lff x_window_close void '(*))
 (define-lff x_window_close_all void '(*))
 (define-lff x_window_close_page void '(* *))
+(define-lff schematic_window_create_app_window '* '(*))
 
 ;;; x_dialog.c
 (define-lff generic_confirm_dialog int '(*))

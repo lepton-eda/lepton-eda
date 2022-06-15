@@ -91,7 +91,7 @@ GtkApplication structure of the program (when compiled with
   (define new-window
     (x_window_setup (x_window_new (parse-gschemrc *toplevel))))
 
-  (x_window_create_main *app
+  (x_window_create_main (schematic_window_create_app_window *app)
                         new-window
                         (make-main-menu new-window)
                         *process-key-event))
