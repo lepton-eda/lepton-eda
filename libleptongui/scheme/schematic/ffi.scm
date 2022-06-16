@@ -150,12 +150,17 @@
             x_window_open_page
             x_window_set_current_page
             x_window_setup
+            x_window_setup_draw_events_drawing_area
             schematic_window_create_app_window
             schematic_window_create_main_box
             schematic_window_create_work_box
             schematic_window_create_menubar
             schematic_window_create_toolbar
             schematic_window_set_key_event_callback
+            schematic_window_create_page_view
+
+            x_tabs_create
+            x_tabs_enabled
 
             about_dialog
 
@@ -319,6 +324,7 @@
 (define-lff x_window_open_page '* '(* *))
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup '* '(*))
+(define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_create_main '* '(* * * *))
 (define-lff x_window_close void '(*))
 (define-lff x_window_close_all void '(*))
@@ -329,6 +335,11 @@
 (define-lff schematic_window_create_menubar void '(* * *))
 (define-lff schematic_window_create_toolbar void '(* *))
 (define-lff schematic_window_set_key_event_callback void '(*))
+(define-lff schematic_window_create_page_view '* '(* *))
+
+;;; x_tabs.c
+(define-lff x_tabs_create void '(* *))
+(define-lff x_tabs_enabled int '())
 
 ;;; x_dialog.c
 (define-lff generic_confirm_dialog int '(*))

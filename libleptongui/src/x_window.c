@@ -578,20 +578,6 @@ x_window_create_main (GtkWidget *main_window,
    * see below
    */
 
-  if (x_tabs_enabled())
-  {
-    x_tabs_create (w_current, work_box);
-  }
-  else
-  {
-    GschemPageView* pview =
-      schematic_window_create_page_view (w_current, work_box);
-
-    /* setup callbacks for draw events - page view: */
-    x_window_setup_draw_events_drawing_area (w_current, pview);
-  }
-
-
   /* setup callbacks for draw events - main window: */
   x_window_setup_draw_events_main_wnd (w_current, main_window);
 

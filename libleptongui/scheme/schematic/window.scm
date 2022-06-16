@@ -108,6 +108,12 @@ GtkApplication structure of the program (when compiled with
       ;; Set up key event processing function.
       (schematic_window_set_key_event_callback *process-key-event)
 
+      (if (true? (x_tabs_enabled))
+          (x_tabs_create *window *work-box)
+          (let ((*page-view (schematic_window_create_page_view *window *work-box)))
+            ;; Setup callbacks for page view draw events.
+            (x_window_setup_draw_events_drawing_area *window *page-view)))
+
       (x_window_create_main *main-window
                             *main-box
                             *work-box
