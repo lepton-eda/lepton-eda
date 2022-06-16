@@ -132,9 +132,10 @@ GtkApplication structure of the program (when compiled with
       ;; Setup layout of notebooks.
       (schematic_window_create_notebooks *window *main-box *work-box)
 
-      (x_window_create_main *main-window
-                            *main-box
-                            *window))))
+      ;; Setup statusbar.
+      (schematic_window_create_statusbar *window *main-box)
+
+      (x_window_create_main *main-window *window))))
 
 
 (define (active-page)

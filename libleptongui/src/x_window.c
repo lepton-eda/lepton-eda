@@ -45,10 +45,6 @@ create_toolbar_radio_button (GSList** group,
 static void
 create_toolbar_separator (GtkWidget *toolbar, gint pos);
 
-static void
-create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box);
-
-
 static GtkWidget*
 create_notebook_right (GschemToplevel *w_current);
 
@@ -598,7 +594,6 @@ schematic_window_create_notebooks (GschemToplevel *w_current,
  */
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
-                      GtkWidget *main_box,
                       GschemToplevel *w_current)
 {
   /* We want the widgets to flow around the drawing area, so we don't
@@ -606,11 +601,6 @@ x_window_create_main (GtkWidget *main_window,
    * see below
    */
 
-
-  /*
-  *  status bar aka 'bottom widget':
-  */
-  create_bottom_widget (w_current, main_box);
 
   geometry_restore (main_window, w_current->find_text_state);
 
@@ -1333,8 +1323,9 @@ schematic_window_create_translate_widget (GschemToplevel *w_current,
 
 
 
-static void
-create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
+void
+schematic_window_create_statusbar (GschemToplevel *w_current,
+                                   GtkWidget *main_box)
 {
   const char* text_mid_button = _("none");
 
@@ -1421,7 +1412,7 @@ create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box)
                       w_current->bottom_widget,
                       FALSE, FALSE, 0);
 
-} /* create_bottom_widget */
+} /* schematic_window_create_statusbar */
 
 
 
