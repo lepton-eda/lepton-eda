@@ -125,6 +125,10 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_create_macro_widget *window *work-box)
       (schematic_window_create_translate_widget *window *work-box)
 
+      ;; Setup various widgets.
+      (x_widgets_init)
+      (x_widgets_create *window)
+
       (x_window_create_main *main-window
                             *main-box
                             *work-box

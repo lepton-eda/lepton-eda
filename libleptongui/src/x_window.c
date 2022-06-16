@@ -565,13 +565,6 @@ x_window_create_main (GtkWidget *main_window,
 
 
   /*
-  *  widgets:
-  */
-  x_widgets_init();
-  x_widgets_create (w_current);
-
-
-  /*
   *  windows layout:
   */
 #ifdef ENABLE_GTK3

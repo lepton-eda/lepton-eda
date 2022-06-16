@@ -136,6 +136,8 @@
             slot_edit_dialog_get_text
             slot_edit_dialog_quit
 
+            x_widgets_create
+            x_widgets_init
             x_widgets_show_find_text_state
             x_widgets_show_font_select
             x_widgets_show_log
@@ -269,6 +271,8 @@
 (define-lff x_color_init void '())
 
 ;;; x_widgets.c
+(define-lff x_widgets_create void '(*))
+(define-lff x_widgets_init void '())
 (define-lff x_widgets_show_find_text_state void '(*))
 (define-lff x_widgets_show_font_select void '(*))
 (define-lff x_widgets_show_log void '(*))
