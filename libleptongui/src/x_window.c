@@ -190,6 +190,20 @@ void x_window_setup_draw_events_main_wnd (GschemToplevel* w_current,
 
 gpointer _key_event_callback = NULL;
 
+/*! \brief Set key event callback
+ *  \par Function Description
+ *  Sets key event processing callback to a given function
+ *  pointer.  Currently it is necessary as key event processing is
+ *  handled in Scheme.
+ *
+ * \param [in] key_event_callback The pointer to the callback.
+ */
+void
+schematic_window_set_key_event_callback (gpointer key_event_callback)
+{
+  _key_event_callback = key_event_callback;
+}
+
 
 /*! \brief Set up callbacks for the drawing area.
  *  \par Function Description
@@ -554,8 +568,7 @@ GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GtkWidget *main_box,
                       GtkWidget *work_box,
-                      GschemToplevel *w_current,
-                      gpointer key_event_callback)
+                      GschemToplevel *w_current)
 {
   GtkWidget *hpaned = NULL;
   GtkWidget *vpaned = NULL;
@@ -564,8 +577,6 @@ x_window_create_main (GtkWidget *main_window,
    * set a size of the main window.  The drawing area's size is fixed,
    * see below
    */
-
-  _key_event_callback = key_event_callback;
 
   if (x_tabs_enabled())
   {

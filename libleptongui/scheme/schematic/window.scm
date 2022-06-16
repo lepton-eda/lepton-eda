@@ -105,11 +105,13 @@ GtkApplication structure of the program (when compiled with
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
 
+      ;; Set up key event processing function.
+      (schematic_window_set_key_event_callback *process-key-event)
+
       (x_window_create_main *main-window
                             *main-box
                             *work-box
-                            *window
-                            *process-key-event))))
+                            *window))))
 
 
 (define (active-page)

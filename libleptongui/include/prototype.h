@@ -678,12 +678,14 @@ schematic_window_create_menubar (GschemToplevel *w_current,
 void
 schematic_window_create_toolbar (GschemToplevel *w_current,
                                  GtkWidget *main_box);
+void
+schematic_window_set_key_event_callback (gpointer key_event_callback);
+
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GtkWidget *main_box,
                       GtkWidget *work_box,
-                      GschemToplevel *w_current,
-                      gpointer key_event_callback);
+                      GschemToplevel *w_current);
 
 void x_window_close(GschemToplevel *w_current);
 void x_window_close_all(GschemToplevel *w_current);
