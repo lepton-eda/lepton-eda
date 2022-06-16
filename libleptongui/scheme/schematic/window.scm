@@ -129,9 +129,11 @@ GtkApplication structure of the program (when compiled with
       (x_widgets_init)
       (x_widgets_create *window)
 
+      ;; Setup layout of notebooks.
+      (schematic_window_create_notebooks *window *main-box *work-box)
+
       (x_window_create_main *main-window
                             *main-box
-                            *work-box
                             *window))))
 
 

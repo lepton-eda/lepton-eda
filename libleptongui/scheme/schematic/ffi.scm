@@ -166,6 +166,7 @@
             schematic_window_create_show_text_widget
             schematic_window_create_macro_widget
             schematic_window_create_translate_widget
+            schematic_window_create_notebooks
 
             x_tabs_create
             x_tabs_enabled
@@ -336,7 +337,7 @@
 (define-lff x_window_setup '* '(*))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
-(define-lff x_window_create_main '* '(* * * *))
+(define-lff x_window_create_main '* '(* * *))
 (define-lff x_window_close void '(*))
 (define-lff x_window_close_all void '(*))
 (define-lff x_window_close_page void '(* *))
@@ -352,6 +353,7 @@
 (define-lff schematic_window_create_show_text_widget void '(* *))
 (define-lff schematic_window_create_macro_widget void '(* *))
 (define-lff schematic_window_create_translate_widget void '(* *))
+(define-lff schematic_window_create_notebooks void '(* * *))
 
 ;;; x_tabs.c
 (define-lff x_tabs_create void '(* *))

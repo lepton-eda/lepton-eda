@@ -696,10 +696,13 @@ schematic_window_create_macro_widget (GschemToplevel *w_current,
 void
 schematic_window_create_translate_widget (GschemToplevel *w_current,
                                           GtkWidget *work_box);
+void
+schematic_window_create_notebooks (GschemToplevel *w_current,
+                                   GtkWidget *main_box,
+                                   GtkWidget *work_box);
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GtkWidget *main_box,
-                      GtkWidget *work_box,
                       GschemToplevel *w_current);
 
 void x_window_close(GschemToplevel *w_current);

@@ -544,29 +544,23 @@ schematic_window_create_page_view (GschemToplevel *w_current,
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Create paned widgets with notebooks
  *  \par Function Description
+ *  Creates bottom and right notebooks and two paned widgets for
+ *  them.
  *
+ * \param [in] w_current The #GschemToplevel object.
+ * \param [in] main_box The top level box container widget.
+ * \param [in] work_box The working area widget.
  */
-GschemToplevel*
-x_window_create_main (GtkWidget *main_window,
-                      GtkWidget *main_box,
-                      GtkWidget *work_box,
-                      GschemToplevel *w_current)
+void
+schematic_window_create_notebooks (GschemToplevel *w_current,
+                                   GtkWidget *main_box,
+                                   GtkWidget *work_box)
 {
   GtkWidget *hpaned = NULL;
   GtkWidget *vpaned = NULL;
 
-  /* We want the widgets to flow around the drawing area, so we don't
-   * set a size of the main window.  The drawing area's size is fixed,
-   * see below
-   */
-
-
-  /*
-  *  windows layout:
-  */
 #ifdef ENABLE_GTK3
   vpaned = gtk_paned_new (GTK_ORIENTATION_VERTICAL);
   hpaned = gtk_paned_new (GTK_ORIENTATION_HORIZONTAL);
@@ -594,6 +588,23 @@ x_window_create_main (GtkWidget *main_window,
 
   gtk_paned_pack2 (GTK_PANED (hpaned), w_current->right_notebook,
                    FALSE, TRUE);
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ */
+GschemToplevel*
+x_window_create_main (GtkWidget *main_window,
+                      GtkWidget *main_box,
+                      GschemToplevel *w_current)
+{
+  /* We want the widgets to flow around the drawing area, so we don't
+   * set a size of the main window.  The drawing area's size is fixed,
+   * see below
+   */
 
 
   /*
