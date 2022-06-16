@@ -596,12 +596,6 @@ GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GschemToplevel *w_current)
 {
-  /* We want the widgets to flow around the drawing area, so we don't
-   * set a size of the main window.  The drawing area's size is fixed,
-   * see below
-   */
-
-
   geometry_restore (main_window, w_current->find_text_state);
 
   /* show all widgets: */
