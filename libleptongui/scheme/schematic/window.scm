@@ -114,6 +114,10 @@ GtkApplication structure of the program (when compiled with
             ;; Setup callbacks for page view draw events.
             (x_window_setup_draw_events_drawing_area *window *page-view)))
 
+
+      ;; Setup callbacks for main window draw events.
+      (x_window_setup_draw_events_main_wnd *window *main-window)
+
       (x_window_create_main *main-window
                             *main-box
                             *work-box

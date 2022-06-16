@@ -578,9 +578,6 @@ x_window_create_main (GtkWidget *main_window,
    * see below
    */
 
-  /* setup callbacks for draw events - main window: */
-  x_window_setup_draw_events_main_wnd (w_current, main_window);
-
 
   /*
   *  hidden infowidgets:
