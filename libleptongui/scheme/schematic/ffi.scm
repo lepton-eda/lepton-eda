@@ -159,6 +159,11 @@
             schematic_window_create_toolbar
             schematic_window_set_key_event_callback
             schematic_window_create_page_view
+            schematic_window_create_find_text_widget
+            schematic_window_create_hide_text_widget
+            schematic_window_create_show_text_widget
+            schematic_window_create_macro_widget
+            schematic_window_create_translate_widget
 
             x_tabs_create
             x_tabs_enabled
@@ -338,6 +343,11 @@
 (define-lff schematic_window_create_toolbar void '(* *))
 (define-lff schematic_window_set_key_event_callback void '(*))
 (define-lff schematic_window_create_page_view '* '(* *))
+(define-lff schematic_window_create_find_text_widget void '(* *))
+(define-lff schematic_window_create_hide_text_widget void '(* *))
+(define-lff schematic_window_create_show_text_widget void '(* *))
+(define-lff schematic_window_create_macro_widget void '(* *))
+(define-lff schematic_window_create_translate_widget void '(* *))
 
 ;;; x_tabs.c
 (define-lff x_tabs_create void '(* *))

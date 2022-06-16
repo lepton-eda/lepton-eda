@@ -46,21 +46,6 @@ static void
 create_toolbar_separator (GtkWidget *toolbar, gint pos);
 
 static void
-create_find_text_widget (GschemToplevel *w_current, GtkWidget *work_box);
-
-static void
-create_hide_text_widget (GschemToplevel *w_current, GtkWidget *work_box);
-
-static void
-create_show_text_widget (GschemToplevel *w_current, GtkWidget *work_box);
-
-static void
-create_macro_widget (GschemToplevel *w_current, GtkWidget *work_box);
-
-static void
-create_translate_widget (GschemToplevel *w_current, GtkWidget *work_box);
-
-static void
 create_bottom_widget (GschemToplevel *w_current, GtkWidget *main_box);
 
 
@@ -577,16 +562,6 @@ x_window_create_main (GtkWidget *main_window,
    * set a size of the main window.  The drawing area's size is fixed,
    * see below
    */
-
-
-  /*
-  *  hidden infowidgets:
-  */
-  create_find_text_widget (w_current, work_box);
-  create_hide_text_widget (w_current, work_box);
-  create_show_text_widget (w_current, work_box);
-  create_macro_widget (w_current, work_box);
-  create_translate_widget (w_current, work_box);
 
 
   /*
@@ -1263,8 +1238,9 @@ schematic_window_create_toolbar (GschemToplevel *w_current,
 
 
 
-static void
-create_find_text_widget (GschemToplevel *w_current, GtkWidget *work_box)
+void
+schematic_window_create_find_text_widget (GschemToplevel *w_current,
+                                          GtkWidget *work_box)
 {
   gpointer obj = g_object_new (GSCHEM_TYPE_FIND_TEXT_WIDGET, NULL);
 
@@ -1280,8 +1256,9 @@ create_find_text_widget (GschemToplevel *w_current, GtkWidget *work_box)
 
 
 
-static void
-create_hide_text_widget (GschemToplevel *w_current, GtkWidget *work_box)
+void
+schematic_window_create_hide_text_widget (GschemToplevel *w_current,
+                                          GtkWidget *work_box)
 {
   gpointer obj = g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
                                "button-text", _("Hide"),
@@ -1300,8 +1277,9 @@ create_hide_text_widget (GschemToplevel *w_current, GtkWidget *work_box)
 
 
 
-static void
-create_show_text_widget (GschemToplevel *w_current, GtkWidget *work_box)
+void
+schematic_window_create_show_text_widget (GschemToplevel *w_current,
+                                          GtkWidget *work_box)
 {
   gpointer obj = g_object_new (GSCHEM_TYPE_SHOW_HIDE_TEXT_WIDGET,
                                "button-text", _("Show"),
@@ -1320,8 +1298,9 @@ create_show_text_widget (GschemToplevel *w_current, GtkWidget *work_box)
 
 
 
-static void
-create_macro_widget (GschemToplevel *w_current, GtkWidget *work_box)
+void
+schematic_window_create_macro_widget (GschemToplevel *w_current,
+                                      GtkWidget *work_box)
 {
   w_current->macro_widget = macro_widget_new (w_current);
 
@@ -1332,8 +1311,9 @@ create_macro_widget (GschemToplevel *w_current, GtkWidget *work_box)
 
 
 
-static void
-create_translate_widget (GschemToplevel *w_current, GtkWidget *work_box)
+void
+schematic_window_create_translate_widget (GschemToplevel *w_current,
+                                          GtkWidget *work_box)
 {
   gpointer obj = g_object_new (GSCHEM_TYPE_TRANSLATE_WIDGET, NULL);
 

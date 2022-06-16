@@ -681,6 +681,21 @@ schematic_window_create_toolbar (GschemToplevel *w_current,
 void
 schematic_window_set_key_event_callback (gpointer key_event_callback);
 
+void
+schematic_window_create_find_text_widget (GschemToplevel *w_current,
+                                          GtkWidget *work_box);
+void
+schematic_window_create_hide_text_widget (GschemToplevel *w_current,
+                                          GtkWidget *work_box);
+void
+schematic_window_create_show_text_widget (GschemToplevel *w_current,
+                                          GtkWidget *work_box);
+void
+schematic_window_create_macro_widget (GschemToplevel *w_current,
+                                      GtkWidget *work_box);
+void
+schematic_window_create_translate_widget (GschemToplevel *w_current,
+                                          GtkWidget *work_box);
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GtkWidget *main_box,

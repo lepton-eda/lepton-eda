@@ -118,6 +118,13 @@ GtkApplication structure of the program (when compiled with
       ;; Setup callbacks for main window draw events.
       (x_window_setup_draw_events_main_wnd *window *main-window)
 
+      ;; Setup hidden infowidgets.
+      (schematic_window_create_find_text_widget *window *work-box)
+      (schematic_window_create_hide_text_widget *window *work-box)
+      (schematic_window_create_show_text_widget *window *work-box)
+      (schematic_window_create_macro_widget *window *work-box)
+      (schematic_window_create_translate_widget *window *work-box)
+
       (x_window_create_main *main-window
                             *main-box
                             *work-box
