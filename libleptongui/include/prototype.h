@@ -703,6 +703,9 @@ schematic_window_create_notebooks (GschemToplevel *w_current,
 void
 schematic_window_create_statusbar (GschemToplevel *w_current,
                                    GtkWidget *main_box);
+void
+schematic_window_restore_geometry (GschemToplevel* w_current,
+                                   GtkWidget* main_window);
 GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GschemToplevel *w_current);

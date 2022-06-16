@@ -56,10 +56,6 @@ static void
 geometry_save (GschemToplevel* w_current);
 
 static void
-geometry_restore (GschemToplevel* w_current,
-                  GtkWidget* main_window);
-
-static void
 open_page_error_dialog (GschemToplevel* w_current,
                         const gchar*    filename,
                         GError*         err);
@@ -596,8 +592,6 @@ GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GschemToplevel *w_current)
 {
-  geometry_restore (w_current, main_window);
-
   /* show all widgets: */
   gtk_widget_show_all (main_window);
 
@@ -1858,9 +1852,9 @@ geometry_save (GschemToplevel* w_current)
  *  \param main_window The main window widget of lepton-schematic.
  *  \param find_text_state The find text state widget.
  */
-static void
-geometry_restore (GschemToplevel *w_current,
-                  GtkWidget* main_window)
+void
+schematic_window_restore_geometry (GschemToplevel *w_current,
+                                   GtkWidget* main_window)
 {
   gchar* cwd = g_get_current_dir();
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);

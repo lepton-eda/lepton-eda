@@ -168,6 +168,7 @@
             schematic_window_create_translate_widget
             schematic_window_create_notebooks
             schematic_window_create_statusbar
+            schematic_window_restore_geometry
 
             x_tabs_create
             x_tabs_enabled
@@ -356,6 +357,7 @@
 (define-lff schematic_window_create_translate_widget void '(* *))
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
+(define-lff schematic_window_restore_geometry void '(* *))
 
 ;;; x_tabs.c
 (define-lff x_tabs_create void '(* *))

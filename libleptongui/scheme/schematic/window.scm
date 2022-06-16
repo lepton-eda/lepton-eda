@@ -135,6 +135,8 @@ GtkApplication structure of the program (when compiled with
       ;; Setup statusbar.
       (schematic_window_create_statusbar *window *main-box)
 
+      (schematic_window_restore_geometry *window *main-window)
+
       (x_window_create_main *main-window *window))))
 
 
