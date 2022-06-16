@@ -56,8 +56,8 @@ static void
 geometry_save (GschemToplevel* w_current);
 
 static void
-geometry_restore (GtkWidget* main_window,
-                  GtkWidget *find_text_state);
+geometry_restore (GschemToplevel* w_current,
+                  GtkWidget* main_window);
 
 static void
 open_page_error_dialog (GschemToplevel* w_current,
@@ -596,7 +596,7 @@ GschemToplevel*
 x_window_create_main (GtkWidget *main_window,
                       GschemToplevel *w_current)
 {
-  geometry_restore (main_window, w_current->find_text_state);
+  geometry_restore (w_current, main_window);
 
   /* show all widgets: */
   gtk_widget_show_all (main_window);
@@ -1859,8 +1859,8 @@ geometry_save (GschemToplevel* w_current)
  *  \param find_text_state The find text state widget.
  */
 static void
-geometry_restore (GtkWidget* main_window,
-                  GtkWidget *find_text_state)
+geometry_restore (GschemToplevel *w_current,
+                  GtkWidget* main_window)
 {
   gchar* cwd = g_get_current_dir();
   EdaConfig* cfg = eda_config_get_context_for_path (cwd);
@@ -1911,7 +1911,7 @@ geometry_restore (GtkWidget* main_window,
 
   if (x_widgets_use_docks())
   {
-    gtk_widget_set_size_request (find_text_state,
+    gtk_widget_set_size_request (w_current->find_text_state,
                                  -1,
                                  height / 4);
   }
