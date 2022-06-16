@@ -5,6 +5,7 @@ noinst_HEADERS = \
 	i_vars.h \
 	prototype.h \
 	x_dialog.h \
+	x_tabs.h \
 	gettext.h \
 	x_compselect.h \
 	x_multiattrib.h \

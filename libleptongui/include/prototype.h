@@ -677,7 +677,12 @@ x_widgets_toggle_widget_visibility (GtkWidget *widget);
 /* x_tabs.c */
 gboolean x_tabs_enabled();
 void x_tabs_init();
-void x_tabs_create (GschemToplevel* w_current, GtkWidget* work_box);
+void
+x_tabs_nbook_create (GschemToplevel* w_current,
+                     GtkWidget* work_box);
+TabInfo*
+x_tabs_page_new (GschemToplevel* w_current,
+                 LeptonPage* page);
 LeptonPage*
 x_tabs_page_open (GschemToplevel* w_current,
                   const gchar* filename);

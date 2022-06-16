@@ -206,10 +206,11 @@
             schematic_toolbar_insert_button
             schematic_toolbar_insert_separator
 
-            x_tabs_create
             x_tabs_enabled
             x_tabs_hdr_update
             x_tabs_page_close
+            x_tabs_nbook_create
+            x_tabs_page_new
             x_tabs_page_open
 
             schematic_action_mode_from_string
@@ -590,10 +591,11 @@
 (define-lff schematic_toolbar_radio_button_set_group void '(* *))
 
 ;;; x_tabs.c
-(define-lff x_tabs_create void '(* *))
 (define-lff x_tabs_enabled int '())
 (define-lff x_tabs_hdr_update void '(* *))
 (define-lff x_tabs_page_close void '(* *))
+(define-lff x_tabs_nbook_create void '(* *))
+(define-lff x_tabs_page_new '* '(* *))
 (define-lff x_tabs_page_open '* '(* *))
 
 ;;; gschem_find_text_widget.c

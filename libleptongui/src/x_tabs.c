@@ -38,7 +38,6 @@
  *
  * - x_tabs_enabled()      // whether tabbed GUI is currently enabled
  * - x_tabs_init()         // initialize tabbed GUI, read config
- * - x_tabs_create()       // create notebook
  * - x_tabs_page_open()    // open tab
  * - x_tabs_page_set_cur() // set current tab
  * - x_tabs_page_close()   // close tab
@@ -153,34 +152,6 @@ x_tabs_init()
 
 /* --------------------------------------------------------
  *
- * Tab data:
- *
- */
-
-/*!
- *  \struct _TabInfo
- *  \brief Represents relationship between page, page view, tab widget
- */
-struct _TabInfo
-{
-
-  gint            ndx_;   /* just for debugging; will be removed */
-
-  LeptonPage*     page_;
-  GschemPageView* pview_;
-  GtkWidget*      wtab_;  /* tab widget, i.e. scrolled wnd, parent of pview_ */
-
-  GschemToplevel* tl_;
-
-};
-
-typedef struct _TabInfo TabInfo;
-
-
-
-
-/* --------------------------------------------------------
- *
  * forward declarations:
  *
  */
@@ -240,9 +211,6 @@ x_tabs_tl_page_find (GschemToplevel* w_current,
 
 
 /* notebook: */
-
-static void
-x_tabs_nbook_create (GschemToplevel* w_current, GtkWidget* work_box);
 
 static gint
 x_tabs_nbook_page_add (GschemToplevel* w_current,
@@ -657,8 +625,9 @@ x_tabs_tl_page_find (GschemToplevel* w_current,
  *
  */
 
-static void
-x_tabs_nbook_create (GschemToplevel* w_current, GtkWidget* work_box)
+void
+x_tabs_nbook_create (GschemToplevel* w_current,
+                     GtkWidget* work_box)
 {
   GtkWidget* nbook = gtk_notebook_new();
 
@@ -1310,7 +1279,7 @@ x_tabs_prev (GschemToplevel* w_current)
  *  \param  [in] page       The page.
  *  \return                 A pointer to the new TabInfo structure.
  */
-static TabInfo*
+TabInfo*
 x_tabs_page_new (GschemToplevel* w_current,
                  LeptonPage* page)
 {
@@ -1328,25 +1297,6 @@ x_tabs_page_new (GschemToplevel* w_current,
   return x_tabs_info_add (w_current, ndx, page, pview, wtab);
 
 } /* x_tabs_page_new() */
-
-
-
-/*! \brief Creates notebook and initial tab.
- *  \public
- *
- *  \param [in] w_current  The toplevel environment.
- *  \param [in] work_box   Container widget for the notebook.
- */
-void
-x_tabs_create (GschemToplevel* w_current, GtkWidget* work_box)
-{
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (work_box != NULL);
-
-  x_tabs_nbook_create (w_current, work_box);
-  x_tabs_page_new (w_current, NULL);
-
-} /* x_tabs_create() */
 
 
 
