@@ -1162,28 +1162,55 @@ schematic_window_create_toolbar (GschemToplevel *w_current,
 }
 
 
+static void
+schematic_window_set_toolbar_net (GschemToplevel *w_current,
+                                  GtkWidget *button)
+{
+  w_current->toolbar_net = button;
+}
+
+
+static void
+schematic_window_set_toolbar_bus (GschemToplevel *w_current,
+                                  GtkWidget *button)
+{
+  w_current->toolbar_bus = button;
+}
+
+
+static void
+schematic_window_set_toolbar_select (GschemToplevel *w_current,
+                                     GtkWidget *button)
+{
+  w_current->toolbar_select = button;
+}
+
+
 GtkWidget*
 schematic_window_init_toolbar (GschemToplevel *w_current,
                                GtkWidget *toolbar)
 {
   GSList *radio_group = NULL;
+  GtkWidget *button = NULL;
   const gchar* text;
 
   text = _("Add nets mode\n"
            "Right mouse button to cancel");
 
-  w_current->toolbar_net =
+  button =
     create_toolbar_radio_button (&radio_group, w_current, toolbar,
                                  "insert-net", _("Nets"), text,
                                  G_CALLBACK (&i_callback_toolbar_add_net), 8);
+  schematic_window_set_toolbar_net (w_current, button);
 
   text = _("Add buses mode\n"
            "Right mouse button to cancel");
 
-  w_current->toolbar_bus =
+  button =
     create_toolbar_radio_button (&radio_group, w_current, toolbar,
                                  "insert-bus", _("Bus"), text,
                                  G_CALLBACK (&i_callback_toolbar_add_bus), 9);
+  schematic_window_set_toolbar_bus (w_current, button);
 
   schematic_window_create_toolbar_button (w_current, toolbar,
                                           "insert-text", _("Text"), _("Add Text..."),
@@ -1191,10 +1218,11 @@ schematic_window_init_toolbar (GschemToplevel *w_current,
 
   schematic_window_create_toolbar_separator (toolbar, 11);
 
-  w_current->toolbar_select =
+  button =
     create_toolbar_radio_button (&radio_group, w_current, toolbar,
                                  "select", _("Select"), _("Select mode"),
                                  G_CALLBACK (&i_callback_toolbar_edit_select), 12);
+  schematic_window_set_toolbar_select (w_current, button);
 
   schematic_window_create_toolbar_separator (toolbar, 13);
 
