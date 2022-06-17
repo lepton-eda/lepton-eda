@@ -672,7 +672,7 @@ void
 schematic_window_create_menubar (GschemToplevel *w_current,
                                  GtkWidget *main_box,
                                  GtkWidget *menubar);
-void
+GtkWidget*
 schematic_window_create_toolbar (GschemToplevel *w_current,
                                  GtkWidget *main_box);
 void
