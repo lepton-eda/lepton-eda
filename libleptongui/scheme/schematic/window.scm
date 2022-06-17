@@ -116,6 +116,12 @@ GtkApplication structure of the program (when compiled with
                                                 (string->pointer (G_ "Open file"))
                                                 (procedure->pointer void i_callback_file_open '(* *))
                                                 1)
+        (schematic_window_create_toolbar_button *window *toolbar
+                                                (string->pointer "document-save")
+                                                (string->pointer (G_ "Save"))
+                                                (string->pointer (G_ "Save file"))
+                                                (procedure->pointer void i_callback_file_save '(* *))
+                                                2)
         (schematic_window_init_toolbar *window *toolbar))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
