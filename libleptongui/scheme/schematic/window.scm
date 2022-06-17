@@ -102,6 +102,13 @@ GtkApplication structure of the program (when compiled with
           (*work-box (schematic_window_create_work_box)))
       (schematic_window_create_menubar *window *main-box *menubar)
       (let ((*toolbar (schematic_window_create_toolbar *window *main-box)))
+        (schematic_window_create_toolbar_button *window
+                                                *toolbar
+                                                (string->pointer "document-new")
+                                                (string->pointer (G_ "New"))
+                                                (string->pointer (G_ "New file"))
+                                                (procedure->pointer void i_callback_file_new '(* *))
+                                                0)
         (schematic_window_init_toolbar *window *toolbar))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
