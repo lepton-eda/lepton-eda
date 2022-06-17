@@ -1166,16 +1166,8 @@ GtkWidget*
 schematic_window_init_toolbar (GschemToplevel *w_current,
                                GtkWidget *toolbar)
 {
-  const gchar *text = _("Add component...\n"
-                        "Select library and component from list, move the mouse into main window, click to place\n"
-                        "Right mouse button to cancel");
-
-  schematic_window_create_toolbar_button (w_current, toolbar,
-                                          "insert-symbol", _("Component"), text,
-                                          G_CALLBACK (&i_callback_add_component), 7);
-
-
   GSList *radio_group = NULL;
+  const gchar* text;
 
   text = _("Add nets mode\n"
            "Right mouse button to cancel");

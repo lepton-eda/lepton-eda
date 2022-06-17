@@ -138,6 +138,17 @@ GtkApplication structure of the program (when compiled with
                                                 (procedure->pointer void i_callback_edit_redo '(* *))
                                                 5)
         (schematic_window_create_toolbar_separator *toolbar 6)
+        (schematic_window_create_toolbar_button *window
+                                                *toolbar
+                                                (string->pointer "insert-symbol")
+                                                (string->pointer (G_ "Component"))
+                                                (string->pointer (G_ "Add component...
+Select library and component from list, move the mouse into main window, click to place.
+Right mouse button to cancel"))
+                                                (procedure->pointer void i_callback_add_component '(* *))
+                                                7)
+
+
         (schematic_window_init_toolbar *window *toolbar))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
