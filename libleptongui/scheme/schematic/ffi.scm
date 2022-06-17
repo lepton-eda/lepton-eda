@@ -173,6 +173,7 @@
             schematic_window_restore_geometry
             schematic_window_show_all
             schematic_window_set_main_window
+            schematic_window_create_toolbar_button
 
             x_tabs_create
             x_tabs_enabled
@@ -370,6 +371,7 @@
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_show_all void '(* *))
 (define-lff schematic_window_set_main_window '* '(* *))
+(define-lff schematic_window_create_toolbar_button void (list '* '* '* '* '* '* int))
 
 ;;; x_tabs.c
 (define-lff x_tabs_create void '(* *))
