@@ -1169,7 +1169,14 @@ schematic_window_create_toolbar (GschemToplevel *w_current,
     gtk_box_pack_start (GTK_BOX (main_box), toolbar, FALSE, FALSE, 0);
   }
 #endif
+  return toolbar;
+}
 
+
+GtkWidget*
+schematic_window_init_toolbar (GschemToplevel *w_current,
+                               GtkWidget *toolbar)
+{
   create_toolbar_button (w_current, toolbar,
                          "document-new", _("New"), _("New file"),
                          G_CALLBACK (&i_callback_file_new), 0);
@@ -1240,8 +1247,7 @@ schematic_window_create_toolbar (GschemToplevel *w_current,
     GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select), TRUE);
 
   return toolbar;
-
-} /* schematic_window_create_toolbar() */
+}
 
 
 
