@@ -1169,10 +1169,6 @@ schematic_window_init_toolbar (GschemToplevel *w_current,
                                GtkWidget *toolbar)
 {
   schematic_window_create_toolbar_button (w_current, toolbar,
-                                          "document-new", _("New"), _("New file"),
-                                          G_CALLBACK (&i_callback_file_new), 0);
-
-  schematic_window_create_toolbar_button (w_current, toolbar,
                                           "document-open", _("Open"), _("Open file"),
                                           G_CALLBACK (&i_callback_file_open), 1);
 
