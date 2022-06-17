@@ -271,10 +271,10 @@ void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
  * falls back to the bitmap icons provided in the distribution.
  *
  * \param stock Name of the stock icon ("new", "open", etc.)
- * \param w_current Schematic top level
  * \return Pointer to the new GtkImage object.
  */
-static GtkWidget *x_window_stock_pixmap(const char *stock, GschemToplevel *w_current)
+static GtkWidget*
+x_window_stock_pixmap (const char *stock)
 {
   GtkWidget *wpixmap = NULL;
 #ifdef ENABLE_GTK3
@@ -1088,7 +1088,7 @@ create_toolbar_button (GschemToplevel *w_current,
                        GCallback callback,
                        gint pos)
 {
-  GtkWidget *pixmap = x_window_stock_pixmap (pixmap_name, w_current);
+  GtkWidget *pixmap = x_window_stock_pixmap (pixmap_name);
 
   GtkToolButton *button = (GtkToolButton*) gtk_tool_button_new (pixmap, label);
 
@@ -1116,7 +1116,7 @@ create_toolbar_radio_button (GSList** group,
   gtk_tool_button_set_label (GTK_TOOL_BUTTON (button), label);
   gtk_widget_set_tooltip_text (GTK_WIDGET (button), tooltip);
 
-  GtkWidget *pixmap = x_window_stock_pixmap (pixmap_name, w_current);
+  GtkWidget *pixmap = x_window_stock_pixmap (pixmap_name);
   gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (button), pixmap);
 
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), pos);
