@@ -130,6 +130,13 @@ GtkApplication structure of the program (when compiled with
                                                 (string->pointer (G_ "Undo last operation"))
                                                 (procedure->pointer void i_callback_edit_undo '(* *))
                                                 4)
+        (schematic_window_create_toolbar_button *window
+                                                *toolbar
+                                                (string->pointer "edit-redo")
+                                                (string->pointer (G_ "Redo"))
+                                                (string->pointer (G_ "Redo last undo"))
+                                                (procedure->pointer void i_callback_edit_redo '(* *))
+                                                5)
         (schematic_window_init_toolbar *window *toolbar))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
