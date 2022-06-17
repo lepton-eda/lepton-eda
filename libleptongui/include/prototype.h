@@ -686,6 +686,15 @@ schematic_window_create_toolbar_button (GschemToplevel *w_current,
                                         const gchar *tooltip,
                                         GCallback callback,
                                         gint pos);
+GtkWidget*
+schematic_window_create_toolbar_radio_button (GSList** group,
+                                              GschemToplevel *w_current,
+                                              GtkWidget *toolbar,
+                                              const gchar *pixmap_name,
+                                              const gchar *label,
+                                              const gchar *tooltip,
+                                              GCallback callback,
+                                              gint pos);
 void
 schematic_window_create_toolbar_separator (GtkWidget *toolbar,
                                            gint pos);
