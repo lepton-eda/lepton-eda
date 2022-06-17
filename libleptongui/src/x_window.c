@@ -33,9 +33,6 @@ create_toolbar_radio_button (GSList** group,
                              GCallback callback,
                              gint pos);
 
-static void
-create_toolbar_separator (GtkWidget *toolbar, gint pos);
-
 static GtkWidget*
 create_notebook_right (GschemToplevel *w_current);
 
@@ -1121,8 +1118,9 @@ create_toolbar_radio_button (GSList** group,
 
 
 
-static void
-create_toolbar_separator (GtkWidget *toolbar, gint pos)
+void
+schematic_window_create_toolbar_separator (GtkWidget *toolbar,
+                                           gint pos)
 {
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
                       GTK_TOOL_ITEM (gtk_separator_tool_item_new ()),
@@ -1168,7 +1166,7 @@ GtkWidget*
 schematic_window_init_toolbar (GschemToplevel *w_current,
                                GtkWidget *toolbar)
 {
-  create_toolbar_separator (toolbar, 3);
+  schematic_window_create_toolbar_separator (toolbar, 3);
 
   schematic_window_create_toolbar_button (w_current, toolbar,
                                           "edit-undo", _("Undo"), _("Undo last operation"),
@@ -1178,7 +1176,7 @@ schematic_window_init_toolbar (GschemToplevel *w_current,
                                           "edit-redo", _("Redo"), _("Redo last undo"),
                                           G_CALLBACK (&i_callback_edit_redo), 5);
 
-  create_toolbar_separator (toolbar, 6);
+  schematic_window_create_toolbar_separator (toolbar, 6);
 
   const gchar *text = _("Add component...\n"
                         "Select library and component from list, move the mouse into main window, click to place\n"
@@ -1211,14 +1209,14 @@ schematic_window_init_toolbar (GschemToplevel *w_current,
                                           "insert-text", _("Text"), _("Add Text..."),
                                           G_CALLBACK (&i_callback_add_text), 10);
 
-  create_toolbar_separator (toolbar, 11);
+  schematic_window_create_toolbar_separator (toolbar, 11);
 
   w_current->toolbar_select =
     create_toolbar_radio_button (&radio_group, w_current, toolbar,
                                  "select", _("Select"), _("Select mode"),
                                  G_CALLBACK (&i_callback_toolbar_edit_select), 12);
 
-  create_toolbar_separator (toolbar, 13);
+  schematic_window_create_toolbar_separator (toolbar, 13);
 
 
   /* activate 'select' button at start-up */
