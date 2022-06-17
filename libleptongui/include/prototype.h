@@ -675,6 +675,9 @@ schematic_window_create_menubar (GschemToplevel *w_current,
 GtkWidget*
 schematic_window_create_toolbar (GschemToplevel *w_current,
                                  GtkWidget *main_box);
+GtkWidget*
+schematic_window_init_toolbar (GschemToplevel *w_current,
+                               GtkWidget *toolbar);
 void
 schematic_window_set_key_event_callback (gpointer key_event_callback);
 
