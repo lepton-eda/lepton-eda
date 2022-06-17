@@ -1166,10 +1166,6 @@ GtkWidget*
 schematic_window_init_toolbar (GschemToplevel *w_current,
                                GtkWidget *toolbar)
 {
-  schematic_window_create_toolbar_button (w_current, toolbar,
-                                          "edit-redo", _("Redo"), _("Redo last undo"),
-                                          G_CALLBACK (&i_callback_edit_redo), 5);
-
   schematic_window_create_toolbar_separator (toolbar, 6);
 
   const gchar *text = _("Add component...\n"
