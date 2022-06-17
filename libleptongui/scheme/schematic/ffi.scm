@@ -360,7 +360,7 @@
 (define-lff schematic_window_create_work_box '* '())
 (define-lff schematic_window_create_menubar void '(* * *))
 (define-lff schematic_window_create_toolbar '* '(* *))
-(define-lff schematic_window_init_toolbar '* '(* *))
+(define-lff schematic_window_init_toolbar '* '(* * *))
 (define-lff schematic_window_set_key_event_callback void '(*))
 (define-lff schematic_window_create_page_view '* '(* *))
 (define-lff schematic_window_create_find_text_widget void '(* *))
