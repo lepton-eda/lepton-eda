@@ -1101,11 +1101,17 @@ schematic_window_create_toolbar_radio_button (GSList** group,
 
   g_signal_connect (button, "toggled", callback, w_current);
 
-  *group = gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (button));
-
   return button;
 }
 
+
+
+GSList*
+schematic_window_get_toolbar_radio_button_group (GtkWidget *button)
+{
+
+  return gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (button));
+}
 
 
 void
@@ -1152,7 +1158,7 @@ schematic_window_create_toolbar (GschemToplevel *w_current,
 }
 
 
-static void
+void
 schematic_window_set_toolbar_net (GschemToplevel *w_current,
                                   GtkWidget *button)
 {
@@ -1184,20 +1190,6 @@ schematic_window_init_toolbar (GschemToplevel *w_current,
   GtkWidget *button = NULL;
   const gchar* text;
 
-  text = _("Add nets mode\n"
-           "Right mouse button to cancel");
-
-  button =
-    schematic_window_create_toolbar_radio_button (&radio_group,
-                                                  w_current,
-                                                  toolbar,
-                                                  "insert-net",
-                                                  _("Nets"),
-                                                  text,
-                                                  G_CALLBACK (&i_callback_toolbar_add_net),
-                                                  8);
-  schematic_window_set_toolbar_net (w_current, button);
-
   text = _("Add buses mode\n"
            "Right mouse button to cancel");
 
@@ -1211,6 +1203,8 @@ schematic_window_init_toolbar (GschemToplevel *w_current,
                                                   G_CALLBACK (&i_callback_toolbar_add_bus),
                                                   9);
   schematic_window_set_toolbar_bus (w_current, button);
+  radio_group = gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (button));
+
 
   schematic_window_create_toolbar_button (w_current, toolbar,
                                           "insert-text", _("Text"), _("Add Text..."),

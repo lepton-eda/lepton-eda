@@ -148,8 +148,19 @@ Right mouse button to cancel"))
                                                 (procedure->pointer void i_callback_add_component '(* *))
                                                 7)
 
-        (let ((radio-group %null-pointer))
-          (schematic_window_init_toolbar *window *toolbar radio-group)))
+        (let* ((*radio-button
+                (schematic_window_create_toolbar_radio_button (bytevector->pointer (make-bytevector (sizeof '*) 0))
+                                                              *window
+                                                              *toolbar
+                                                              (string->pointer "insert-net")
+                                                              (string->pointer (G_ "Nets"))
+                                                              (string->pointer (G_ "Add nets mode
+Right mouse button to cancel"))
+                                                              (procedure->pointer void i_callback_toolbar_add_net '(* *))
+                                                              8))
+               (*radio-group (schematic_window_get_toolbar_radio_button_group *radio-button)))
+          (schematic_window_set_toolbar_net *window *radio-button)
+          (schematic_window_init_toolbar *window *toolbar *radio-group)))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
 
