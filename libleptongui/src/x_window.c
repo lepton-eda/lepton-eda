@@ -1166,8 +1166,6 @@ GtkWidget*
 schematic_window_init_toolbar (GschemToplevel *w_current,
                                GtkWidget *toolbar)
 {
-  schematic_window_create_toolbar_separator (toolbar, 6);
-
   const gchar *text = _("Add component...\n"
                         "Select library and component from list, move the mouse into main window, click to place\n"
                         "Right mouse button to cancel");
