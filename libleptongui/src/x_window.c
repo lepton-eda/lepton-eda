@@ -1140,13 +1140,13 @@ create_toolbar_separator (GtkWidget *toolbar, gint pos)
 
 
 
-void
+GtkWidget*
 schematic_window_create_toolbar (GschemToplevel *w_current,
                                  GtkWidget *main_box)
 {
   if (w_current->toolbars == 0)
   {
-    return;
+    return NULL;
   }
 
   GtkWidget *toolbar = gtk_toolbar_new ();
@@ -1238,6 +1238,8 @@ schematic_window_create_toolbar (GschemToplevel *w_current,
   /* activate 'select' button at start-up */
   gtk_toggle_tool_button_set_active(
     GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select), TRUE);
+
+  return toolbar;
 
 } /* schematic_window_create_toolbar() */
 
