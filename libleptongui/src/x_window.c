@@ -1166,8 +1166,6 @@ GtkWidget*
 schematic_window_init_toolbar (GschemToplevel *w_current,
                                GtkWidget *toolbar)
 {
-  schematic_window_create_toolbar_separator (toolbar, 3);
-
   schematic_window_create_toolbar_button (w_current, toolbar,
                                           "edit-undo", _("Undo"), _("Undo last operation"),
                                           G_CALLBACK (&i_callback_edit_undo), 4);
