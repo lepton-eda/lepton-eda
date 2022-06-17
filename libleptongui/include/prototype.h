@@ -687,6 +687,9 @@ schematic_window_create_toolbar_button (GschemToplevel *w_current,
                                         GCallback callback,
                                         gint pos);
 void
+schematic_window_create_toolbar_separator (GtkWidget *toolbar,
+                                           gint pos);
+void
 schematic_window_set_key_event_callback (gpointer key_event_callback);
 
 void
