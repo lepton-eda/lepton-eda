@@ -23,15 +23,6 @@
 #include "gschem.h"
 
 
-static void
-create_toolbar_button (GschemToplevel *w_current,
-                       GtkWidget *toolbar,
-                       const gchar *pixmap_name,
-                       const gchar *label,
-                       const gchar *tooltip,
-                       GCallback callback,
-                       gint pos);
-
 static GtkWidget*
 create_toolbar_radio_button (GSList** group,
                              GschemToplevel *w_current,
@@ -1079,14 +1070,14 @@ schematic_window_create_menubar (GschemToplevel *w_current,
 
 
 
-static void
-create_toolbar_button (GschemToplevel *w_current,
-                       GtkWidget *toolbar,
-                       const gchar *pixmap_name,
-                       const gchar *label,
-                       const gchar *tooltip,
-                       GCallback callback,
-                       gint pos)
+void
+schematic_window_create_toolbar_button (GschemToplevel *w_current,
+                                        GtkWidget *toolbar,
+                                        const gchar *pixmap_name,
+                                        const gchar *label,
+                                        const gchar *tooltip,
+                                        GCallback callback,
+                                        gint pos)
 {
   GtkWidget *pixmap = x_window_stock_pixmap (pixmap_name);
 
@@ -1177,27 +1168,27 @@ GtkWidget*
 schematic_window_init_toolbar (GschemToplevel *w_current,
                                GtkWidget *toolbar)
 {
-  create_toolbar_button (w_current, toolbar,
-                         "document-new", _("New"), _("New file"),
-                         G_CALLBACK (&i_callback_file_new), 0);
+  schematic_window_create_toolbar_button (w_current, toolbar,
+                                          "document-new", _("New"), _("New file"),
+                                          G_CALLBACK (&i_callback_file_new), 0);
 
-  create_toolbar_button (w_current, toolbar,
-                         "document-open", _("Open"), _("Open file"),
-                         G_CALLBACK (&i_callback_file_open), 1);
+  schematic_window_create_toolbar_button (w_current, toolbar,
+                                          "document-open", _("Open"), _("Open file"),
+                                          G_CALLBACK (&i_callback_file_open), 1);
 
-  create_toolbar_button (w_current, toolbar,
-                         "document-save", _("Save"), _("Save file"),
-                         G_CALLBACK (&i_callback_file_save), 2);
+  schematic_window_create_toolbar_button (w_current, toolbar,
+                                          "document-save", _("Save"), _("Save file"),
+                                          G_CALLBACK (&i_callback_file_save), 2);
 
   create_toolbar_separator (toolbar, 3);
 
-  create_toolbar_button (w_current, toolbar,
-                         "edit-undo", _("Undo"), _("Undo last operation"),
-                         G_CALLBACK (&i_callback_edit_undo), 4);
+  schematic_window_create_toolbar_button (w_current, toolbar,
+                                          "edit-undo", _("Undo"), _("Undo last operation"),
+                                          G_CALLBACK (&i_callback_edit_undo), 4);
 
-  create_toolbar_button (w_current, toolbar,
-                         "edit-redo", _("Redo"), _("Redo last undo"),
-                         G_CALLBACK (&i_callback_edit_redo), 5);
+  schematic_window_create_toolbar_button (w_current, toolbar,
+                                          "edit-redo", _("Redo"), _("Redo last undo"),
+                                          G_CALLBACK (&i_callback_edit_redo), 5);
 
   create_toolbar_separator (toolbar, 6);
 
@@ -1205,9 +1196,9 @@ schematic_window_init_toolbar (GschemToplevel *w_current,
                         "Select library and component from list, move the mouse into main window, click to place\n"
                         "Right mouse button to cancel");
 
-  create_toolbar_button (w_current, toolbar,
-                         "insert-symbol", _("Component"), text,
-                         G_CALLBACK (&i_callback_add_component), 7);
+  schematic_window_create_toolbar_button (w_current, toolbar,
+                                          "insert-symbol", _("Component"), text,
+                                          G_CALLBACK (&i_callback_add_component), 7);
 
 
   GSList *radio_group = NULL;
@@ -1228,9 +1219,9 @@ schematic_window_init_toolbar (GschemToplevel *w_current,
                                  "insert-bus", _("Bus"), text,
                                  G_CALLBACK (&i_callback_toolbar_add_bus), 9);
 
-  create_toolbar_button (w_current, toolbar,
-                         "insert-text", _("Text"), _("Add Text..."),
-                         G_CALLBACK (&i_callback_add_text), 10);
+  schematic_window_create_toolbar_button (w_current, toolbar,
+                                          "insert-text", _("Text"), _("Add Text..."),
+                                          G_CALLBACK (&i_callback_add_text), 10);
 
   create_toolbar_separator (toolbar, 11);
 

@@ -679,6 +679,14 @@ GtkWidget*
 schematic_window_init_toolbar (GschemToplevel *w_current,
                                GtkWidget *toolbar);
 void
+schematic_window_create_toolbar_button (GschemToplevel *w_current,
+                                        GtkWidget *toolbar,
+                                        const gchar *pixmap_name,
+                                        const gchar *label,
+                                        const gchar *tooltip,
+                                        GCallback callback,
+                                        gint pos);
+void
 schematic_window_set_key_event_callback (gpointer key_event_callback);
 
 void
