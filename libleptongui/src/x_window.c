@@ -583,15 +583,21 @@ schematic_window_create_notebooks (GschemToplevel *w_current,
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
+/*! \brief Show widgets of schematic window
  *  \par Function Description
+ *  Shows widgets of schematic window, sets visibility of right
+ *  and bottom notebooks, and sets focus to the drawing area.
  *
+ * \param [in] w_current The #GschemToplevel object.
+ * \param [in] main_window The main window widget.
  */
-GschemToplevel*
-x_window_create_main (GtkWidget *main_window,
-                      GschemToplevel *w_current)
+void
+schematic_window_show_all (GschemToplevel *w_current,
+                           GtkWidget *main_window)
 {
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (main_window != NULL);
+
   /* show all widgets: */
   gtk_widget_show_all (main_window);
 
@@ -605,11 +611,28 @@ x_window_create_main (GtkWidget *main_window,
 
   /* focus page view: */
   gtk_widget_grab_focus (w_current->drawing_area);
+}
+
+
+/*! \brief Set main window widget of schematic window
+ *  \par Function Description
+ *  Sets the main window widget of #GschemToplevel instance \a
+ *  w_current to \a main_window.
+ *
+ * \param [in] w_current The #GschemToplevel object.
+ * \param [in] main_window The main window widget.
+ */
+GschemToplevel*
+schematic_window_set_main_window (GschemToplevel *w_current,
+                                  GtkWidget *main_window)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+  g_return_val_if_fail (main_window != NULL, NULL);
 
   w_current->main_window = main_window;
 
   return w_current;
-} /* x_window_create_main() */
+}
 
 
 

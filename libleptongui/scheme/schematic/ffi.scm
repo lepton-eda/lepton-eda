@@ -144,7 +144,6 @@
             x_widgets_show_object_properties
             x_widgets_show_page_select
 
-            x_window_create_main
             x_window_close
             x_window_close_all
             x_window_close_page
@@ -169,6 +168,8 @@
             schematic_window_create_notebooks
             schematic_window_create_statusbar
             schematic_window_restore_geometry
+            schematic_window_show_all
+            schematic_window_set_main_window
 
             x_tabs_create
             x_tabs_enabled
@@ -339,7 +340,6 @@
 (define-lff x_window_setup '* '(*))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
-(define-lff x_window_create_main '* '(* *))
 (define-lff x_window_close void '(*))
 (define-lff x_window_close_all void '(*))
 (define-lff x_window_close_page void '(* *))
@@ -358,6 +358,8 @@
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
+(define-lff schematic_window_show_all void '(* *))
+(define-lff schematic_window_set_main_window '* '(* *))
 
 ;;; x_tabs.c
 (define-lff x_tabs_create void '(* *))
