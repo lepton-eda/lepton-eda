@@ -1178,9 +1178,9 @@ schematic_window_set_toolbar_select (GschemToplevel *w_current,
 
 GtkWidget*
 schematic_window_init_toolbar (GschemToplevel *w_current,
-                               GtkWidget *toolbar)
+                               GtkWidget *toolbar,
+                               GSList *radio_group)
 {
-  GSList *radio_group = NULL;
   GtkWidget *button = NULL;
   const gchar* text;
 

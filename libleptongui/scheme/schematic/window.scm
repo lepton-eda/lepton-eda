@@ -148,8 +148,8 @@ Right mouse button to cancel"))
                                                 (procedure->pointer void i_callback_add_component '(* *))
                                                 7)
 
-
-        (schematic_window_init_toolbar *window *toolbar))
+        (let ((radio-group %null-pointer))
+          (schematic_window_init_toolbar *window *toolbar radio-group)))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
 
