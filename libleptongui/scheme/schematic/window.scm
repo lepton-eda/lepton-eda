@@ -132,7 +132,7 @@ GtkApplication structure of the program (when compiled with
           (*menubar (make-main-menu *window))
           (*work-box (schematic_window_create_work_box)))
       (schematic_window_create_menubar *window *main-box *menubar)
-      (let ((*toolbar (schematic_window_create_toolbar *window *main-box)))
+      (let ((*toolbar (schematic_toolbar_new *window *main-box)))
         (make-toolbar-button *window
                              *toolbar
                              "document-new"
