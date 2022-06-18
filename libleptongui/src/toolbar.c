@@ -36,7 +36,7 @@
  * \return Pointer to the new GtkImage object.
  */
 static GtkWidget*
-x_window_stock_pixmap (const char *stock)
+get_stock_pixmap (const char *stock)
 {
   GtkWidget *wpixmap = NULL;
 #ifdef ENABLE_GTK3
@@ -74,7 +74,7 @@ schematic_window_create_toolbar_button (GschemToplevel *w_current,
                                         GCallback callback,
                                         gint pos)
 {
-  GtkWidget *pixmap = x_window_stock_pixmap (pixmap_name);
+  GtkWidget *pixmap = get_stock_pixmap (pixmap_name);
 
   GtkToolButton *button = (GtkToolButton*) gtk_tool_button_new (pixmap, label);
 
@@ -101,7 +101,7 @@ schematic_window_create_toolbar_radio_button (GSList** group,
   gtk_tool_button_set_label (GTK_TOOL_BUTTON (button), label);
   gtk_widget_set_tooltip_text (GTK_WIDGET (button), tooltip);
 
-  GtkWidget *pixmap = x_window_stock_pixmap (pixmap_name);
+  GtkWidget *pixmap = get_stock_pixmap (pixmap_name);
   gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (button), pixmap);
 
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), pos);
