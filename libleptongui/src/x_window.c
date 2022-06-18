@@ -1189,8 +1189,6 @@ schematic_window_init_toolbar (GschemToplevel *w_current,
 {
   GtkWidget *button = NULL;
 
-  schematic_window_create_toolbar_separator (toolbar, 11);
-
   button =
     schematic_window_create_toolbar_radio_button (&radio_group,
                                                   w_current,
