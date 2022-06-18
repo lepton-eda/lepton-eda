@@ -98,6 +98,7 @@ libleptongui_la_SOURCES = \
 	x_multiattrib.c \
 	x_newtext.c \
 	page_select_widget.c \
+	toolbar.c \
 	x_print.c \
 	x_rc.c \
 	x_stroke.c \

@@ -672,44 +672,6 @@ void
 schematic_window_create_menubar (GschemToplevel *w_current,
                                  GtkWidget *main_box,
                                  GtkWidget *menubar);
-GtkWidget*
-schematic_window_create_toolbar (GschemToplevel *w_current,
-                                 GtkWidget *main_box);
-void
-schematic_window_toolbar_activate_button (GtkWidget *button);
-
-void
-schematic_window_create_toolbar_button (GschemToplevel *w_current,
-                                        GtkWidget *toolbar,
-                                        const gchar *pixmap_name,
-                                        const gchar *label,
-                                        const gchar *tooltip,
-                                        GCallback callback,
-                                        gint pos);
-GtkWidget*
-schematic_window_create_toolbar_radio_button (GSList** group,
-                                              GschemToplevel *w_current,
-                                              GtkWidget *toolbar,
-                                              const gchar *pixmap_name,
-                                              const gchar *label,
-                                              const gchar *tooltip,
-                                              GCallback callback,
-                                              gint pos);
-GSList*
-schematic_window_get_toolbar_radio_button_group (GtkWidget *button);
-
-void
-schematic_window_create_toolbar_separator (GtkWidget *toolbar,
-                                           gint pos);
-void
-schematic_window_set_toolbar_bus (GschemToplevel *w_current,
-                                  GtkWidget *button);
-void
-schematic_window_set_toolbar_net (GschemToplevel *w_current,
-                                  GtkWidget *button);
-void
-schematic_window_set_toolbar_select (GschemToplevel *w_current,
-                                     GtkWidget *button);
 void
 schematic_window_set_key_event_callback (gpointer key_event_callback);
 

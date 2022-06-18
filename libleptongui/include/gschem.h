@@ -59,6 +59,7 @@ typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 #include "color_edit_widget.h"
 #include "font_select_widget.h"
 #include "page_select_widget.h"
+#include "toolbar.h"
 
 /* Gettext translation */
 #include "gettext.h"
