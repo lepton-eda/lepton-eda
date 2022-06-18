@@ -1189,10 +1189,6 @@ schematic_window_init_toolbar (GschemToplevel *w_current,
 {
   GtkWidget *button = NULL;
 
-  schematic_window_create_toolbar_button (w_current, toolbar,
-                                          "insert-text", _("Text"), _("Add Text..."),
-                                          G_CALLBACK (&i_callback_add_text), 10);
-
   schematic_window_create_toolbar_separator (toolbar, 11);
 
   button =
