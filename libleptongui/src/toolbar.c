@@ -127,8 +127,8 @@ schematic_window_create_toolbar_separator (GtkWidget *toolbar,
 
 
 GtkWidget*
-schematic_window_create_toolbar (GschemToplevel *w_current,
-                                 GtkWidget *main_box)
+schematic_toolbar_new (GschemToplevel *w_current,
+                       GtkWidget *main_box)
 {
   if (w_current->toolbars == 0)
   {

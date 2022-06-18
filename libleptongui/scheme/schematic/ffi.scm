@@ -162,7 +162,7 @@
             schematic_window_create_main_box
             schematic_window_create_work_box
             schematic_window_create_menubar
-            schematic_window_create_toolbar
+            schematic_toolbar_new
             schematic_window_toolbar_activate_button
             schematic_window_set_key_event_callback
             schematic_window_create_page_view
@@ -366,7 +366,7 @@
 (define-lff schematic_window_create_main_box '* '(*))
 (define-lff schematic_window_create_work_box '* '())
 (define-lff schematic_window_create_menubar void '(* * *))
-(define-lff schematic_window_create_toolbar '* '(* *))
+(define-lff schematic_toolbar_new '* '(* *))
 (define-lff schematic_window_toolbar_activate_button void '(*))
 (define-lff schematic_window_set_key_event_callback void '(*))
 (define-lff schematic_window_create_page_view '* '(* *))
