@@ -191,7 +191,19 @@ Right mouse button to cancel"))
                                                     10)
             (schematic_window_create_toolbar_separator *toolbar 11)
 
-            (schematic_window_init_toolbar *window *toolbar *radio-group))))
+
+            (let ((*radio-button
+                   (schematic_window_create_toolbar_radio_button (make-pointer-to-pointer *radio-group)
+                                                                 *window
+                                                                 *toolbar
+                                                                 (string->pointer "select")
+                                                                 (string->pointer (G_ "Select"))
+                                                                 (string->pointer (G_ "Select mode"))
+                                                                 (procedure->pointer void i_callback_toolbar_edit_select '(* *))
+                                                                 12)))
+              (schematic_window_set_toolbar_select *window *radio-button)
+
+              (schematic_window_init_toolbar *window *toolbar)))))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
 

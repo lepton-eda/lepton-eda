@@ -677,8 +677,7 @@ schematic_window_create_toolbar (GschemToplevel *w_current,
                                  GtkWidget *main_box);
 GtkWidget*
 schematic_window_init_toolbar (GschemToplevel *w_current,
-                               GtkWidget *toolbar,
-                               GSList *radio_group);
+                               GtkWidget *toolbar);
 void
 schematic_window_create_toolbar_button (GschemToplevel *w_current,
                                         GtkWidget *toolbar,
@@ -708,6 +707,9 @@ schematic_window_set_toolbar_bus (GschemToplevel *w_current,
 void
 schematic_window_set_toolbar_net (GschemToplevel *w_current,
                                   GtkWidget *button);
+void
+schematic_window_set_toolbar_select (GschemToplevel *w_current,
+                                     GtkWidget *button);
 void
 schematic_window_set_key_event_callback (gpointer key_event_callback);
 
