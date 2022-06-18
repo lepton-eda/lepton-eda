@@ -24,9 +24,13 @@
 
 
 /*! \brief Creates a new GtkImage displaying a GTK stock icon if available.
+ *  \par Function Description
  *
- * If a stock GTK icon with the requested name was not found, this function
- * falls back to the bitmap icons provided in the distribution.
+ * GTK3: Returns a GtkImage pixmap by the stock name \a stock.
+ *
+ * GTK2: The same as above though if a stock GTK icon with the
+ * requested name was not found, this function falls back to the
+ * bitmap icons provided in the distribution.
  *
  * \param stock Name of the stock icon ("new", "open", etc.)
  * \return Pointer to the new GtkImage object.
