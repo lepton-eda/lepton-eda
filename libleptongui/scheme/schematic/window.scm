@@ -203,6 +203,7 @@ Right mouse button to cancel"))
                                                                  12)))
               (schematic_window_set_toolbar_select *window *radio-button)
 
+              (schematic_window_create_toolbar_separator *toolbar 13)
               (schematic_window_init_toolbar *window *toolbar)))))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)

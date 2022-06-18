@@ -1186,9 +1186,6 @@ GtkWidget*
 schematic_window_init_toolbar (GschemToplevel *w_current,
                                GtkWidget *toolbar)
 {
-  schematic_window_create_toolbar_separator (toolbar, 13);
-
-
   /* activate 'select' button at start-up */
   gtk_toggle_tool_button_set_active(
     GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select), TRUE);
