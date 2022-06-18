@@ -100,7 +100,7 @@ GtkApplication structure of the program (when compiled with
     (x_window_setup (x_window_new (parse-gschemrc *toplevel))))
 
   (define (init-toolbar *window *toolbar)
-    (schematic_window_init_toolbar *window)
+    (schematic_window_toolbar_activate_button *window)
     *toolbar)
 
   (let ((*main-window (schematic_window_create_app_window *app)))
