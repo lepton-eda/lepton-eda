@@ -1183,7 +1183,7 @@ schematic_window_set_toolbar_select (GschemToplevel *w_current,
 
 
 void
-schematic_window_init_toolbar (GschemToplevel *w_current)
+schematic_window_toolbar_activate_button (GschemToplevel *w_current)
 {
   /* activate 'select' button at start-up */
   gtk_toggle_tool_button_set_active(
