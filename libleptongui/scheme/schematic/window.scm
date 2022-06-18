@@ -112,6 +112,16 @@ GtkApplication structure of the program (when compiled with
                                             (procedure->pointer void callback '(* *))
                                             position))
 
+  (define (make-toolbar-radio-button *group *window *toolbar icon name tooltip callback position)
+   (schematic_window_create_toolbar_radio_button *group
+                                                 *window
+                                                 *toolbar
+                                                 (string->pointer icon)
+                                                 (string->pointer (G_ name))
+                                                 (string->pointer (G_ tooltip))
+                                                 (procedure->pointer void callback '(* *))
+                                                 position))
+
   (let ((*main-window (schematic_window_create_app_window *app)))
     (schematic_signal_connect *main-window
                               (string->pointer "delete-event")
@@ -170,28 +180,28 @@ Right mouse button to cancel"
                              7)
 
         (let* ((*radio-button
-                (schematic_window_create_toolbar_radio_button (bytevector->pointer (make-bytevector (sizeof '*) 0))
-                                                              *window
-                                                              *toolbar
-                                                              (string->pointer "insert-net")
-                                                              (string->pointer (G_ "Nets"))
-                                                              (string->pointer (G_ "Add nets mode
-Right mouse button to cancel"))
-                                                              (procedure->pointer void i_callback_toolbar_add_net '(* *))
-                                                              8))
+                (make-toolbar-radio-button (bytevector->pointer (make-bytevector (sizeof '*) 0))
+                                           *window
+                                           *toolbar
+                                           "insert-net"
+                                           "Nets"
+                                           "Add nets mode
+Right mouse button to cancel"
+                                           i_callback_toolbar_add_net
+                                           8))
                (*radio-group (schematic_window_get_toolbar_radio_button_group *radio-button)))
           (schematic_window_set_toolbar_net *window *radio-button)
 
           (let* ((*radio-button
-                  (schematic_window_create_toolbar_radio_button (make-pointer-to-pointer *radio-group)
-                                                                *window
-                                                                *toolbar
-                                                                (string->pointer "insert-bus")
-                                                                (string->pointer (G_ "Bus"))
-                                                                (string->pointer (G_ "Add buses mode
-Right mouse button to cancel"))
-                                                                (procedure->pointer void i_callback_toolbar_add_bus '(* *))
-                                                                9))
+                  (make-toolbar-radio-button (make-pointer-to-pointer *radio-group)
+                                             *window
+                                             *toolbar
+                                             "insert-bus"
+                                             "Bus"
+                                             "Add buses mode
+Right mouse button to cancel"
+                                             i_callback_toolbar_add_bus
+                                             9))
                  (*radio-group (schematic_window_get_toolbar_radio_button_group *radio-button)))
             (schematic_window_set_toolbar_bus *window *radio-button)
 
@@ -206,14 +216,14 @@ Right mouse button to cancel"))
 
 
             (let ((*radio-button
-                   (schematic_window_create_toolbar_radio_button (make-pointer-to-pointer *radio-group)
-                                                                 *window
-                                                                 *toolbar
-                                                                 (string->pointer "select")
-                                                                 (string->pointer (G_ "Select"))
-                                                                 (string->pointer (G_ "Select mode"))
-                                                                 (procedure->pointer void i_callback_toolbar_edit_select '(* *))
-                                                                 12)))
+                   (make-toolbar-radio-button (make-pointer-to-pointer *radio-group)
+                                              *window
+                                              *toolbar
+                                              "select"
+                                              "Select"
+                                              "Select mode"
+                                              i_callback_toolbar_edit_select
+                                              12)))
               (schematic_window_set_toolbar_select *window *radio-button)
 
               (schematic_window_create_toolbar_separator *toolbar 13)
