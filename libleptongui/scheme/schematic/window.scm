@@ -83,6 +83,14 @@ dynamic context."
 (define *process-key-event
   (procedure->pointer int process-key-event '(* * *)))
 
+(define (make-pointer-to-pointer pointer)
+  (define bv (make-bytevector (sizeof '*)))
+  (bytevector-uint-set! bv
+                        0
+                        (pointer-address pointer)
+                        (native-endianness)
+                        (sizeof '*))
+  (bytevector->pointer bv))
 
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
@@ -160,7 +168,21 @@ Right mouse button to cancel"))
                                                               8))
                (*radio-group (schematic_window_get_toolbar_radio_button_group *radio-button)))
           (schematic_window_set_toolbar_net *window *radio-button)
-          (schematic_window_init_toolbar *window *toolbar *radio-group)))
+
+          (let* ((*radio-button
+                  (schematic_window_create_toolbar_radio_button (make-pointer-to-pointer *radio-group)
+                                                                *window
+                                                                *toolbar
+                                                                (string->pointer "insert-bus")
+                                                                (string->pointer (G_ "Bus"))
+                                                                (string->pointer (G_ "Add buses mode
+Right mouse button to cancel"))
+                                                                (procedure->pointer void i_callback_toolbar_add_bus '(* *))
+                                                                9))
+                 (*radio-group (schematic_window_get_toolbar_radio_button_group *radio-button)))
+            (schematic_window_set_toolbar_bus *window *radio-button)
+
+            (schematic_window_init_toolbar *window *toolbar *radio-group))))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
 

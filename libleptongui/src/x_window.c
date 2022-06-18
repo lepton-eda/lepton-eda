@@ -1166,7 +1166,7 @@ schematic_window_set_toolbar_net (GschemToplevel *w_current,
 }
 
 
-static void
+void
 schematic_window_set_toolbar_bus (GschemToplevel *w_current,
                                   GtkWidget *button)
 {
@@ -1188,23 +1188,6 @@ schematic_window_init_toolbar (GschemToplevel *w_current,
                                GSList *radio_group)
 {
   GtkWidget *button = NULL;
-  const gchar* text;
-
-  text = _("Add buses mode\n"
-           "Right mouse button to cancel");
-
-  button =
-    schematic_window_create_toolbar_radio_button (&radio_group,
-                                                  w_current,
-                                                  toolbar,
-                                                  "insert-bus",
-                                                  _("Bus"),
-                                                  text,
-                                                  G_CALLBACK (&i_callback_toolbar_add_bus),
-                                                  9);
-  schematic_window_set_toolbar_bus (w_current, button);
-  radio_group = gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (button));
-
 
   schematic_window_create_toolbar_button (w_current, toolbar,
                                           "insert-text", _("Text"), _("Add Text..."),
