@@ -189,6 +189,8 @@ Right mouse button to cancel"))
                                                     (string->pointer (G_ "Add Text..."))
                                                     (procedure->pointer void i_callback_add_text '(* *))
                                                     10)
+            (schematic_window_create_toolbar_separator *toolbar 11)
+
             (schematic_window_init_toolbar *window *toolbar *radio-group))))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
