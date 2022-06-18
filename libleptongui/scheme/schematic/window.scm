@@ -103,6 +103,15 @@ GtkApplication structure of the program (when compiled with
     (schematic_window_toolbar_activate_button *button)
     *toolbar)
 
+  (define (make-toolbar-button *window *toolbar icon name tooltip callback position)
+    (schematic_window_create_toolbar_button *window
+                                            *toolbar
+                                            (string->pointer icon)
+                                            (string->pointer (G_ name))
+                                            (string->pointer (G_ tooltip))
+                                            (procedure->pointer void callback '(* *))
+                                            position))
+
   (let ((*main-window (schematic_window_create_app_window *app)))
     (schematic_signal_connect *main-window
                               (string->pointer "delete-event")
@@ -114,51 +123,51 @@ GtkApplication structure of the program (when compiled with
           (*work-box (schematic_window_create_work_box)))
       (schematic_window_create_menubar *window *main-box *menubar)
       (let ((*toolbar (schematic_window_create_toolbar *window *main-box)))
-        (schematic_window_create_toolbar_button *window
-                                                *toolbar
-                                                (string->pointer "document-new")
-                                                (string->pointer (G_ "New"))
-                                                (string->pointer (G_ "New file"))
-                                                (procedure->pointer void i_callback_file_new '(* *))
-                                                0)
-        (schematic_window_create_toolbar_button *window
-                                                *toolbar
-                                                (string->pointer "document-open")
-                                                (string->pointer (G_ "Open"))
-                                                (string->pointer (G_ "Open file"))
-                                                (procedure->pointer void i_callback_file_open '(* *))
-                                                1)
-        (schematic_window_create_toolbar_button *window *toolbar
-                                                (string->pointer "document-save")
-                                                (string->pointer (G_ "Save"))
-                                                (string->pointer (G_ "Save file"))
-                                                (procedure->pointer void i_callback_file_save '(* *))
-                                                2)
+        (make-toolbar-button *window
+                             *toolbar
+                             "document-new"
+                             "New"
+                             "New file"
+                             i_callback_file_new
+                             0)
+        (make-toolbar-button *window
+                             *toolbar
+                             "document-open"
+                             "Open"
+                             "Open file"
+                             i_callback_file_open
+                             1)
+        (make-toolbar-button *window *toolbar
+                             "document-save"
+                             "Save"
+                             "Save file"
+                             i_callback_file_save
+                             2)
         (schematic_window_create_toolbar_separator *toolbar 3)
-        (schematic_window_create_toolbar_button *window
-                                                *toolbar
-                                                (string->pointer "edit-undo")
-                                                (string->pointer (G_ "Undo"))
-                                                (string->pointer (G_ "Undo last operation"))
-                                                (procedure->pointer void i_callback_edit_undo '(* *))
-                                                4)
-        (schematic_window_create_toolbar_button *window
-                                                *toolbar
-                                                (string->pointer "edit-redo")
-                                                (string->pointer (G_ "Redo"))
-                                                (string->pointer (G_ "Redo last undo"))
-                                                (procedure->pointer void i_callback_edit_redo '(* *))
-                                                5)
+        (make-toolbar-button *window
+                             *toolbar
+                             "edit-undo"
+                             "Undo"
+                             "Undo last operation"
+                             i_callback_edit_undo
+                             4)
+        (make-toolbar-button *window
+                             *toolbar
+                             "edit-redo"
+                             "Redo"
+                             "Redo last undo"
+                             i_callback_edit_redo
+                             5)
         (schematic_window_create_toolbar_separator *toolbar 6)
-        (schematic_window_create_toolbar_button *window
-                                                *toolbar
-                                                (string->pointer "insert-symbol")
-                                                (string->pointer (G_ "Component"))
-                                                (string->pointer (G_ "Add component...
+        (make-toolbar-button *window
+                             *toolbar
+                             "insert-symbol"
+                             "Component"
+                             "Add component...
 Select library and component from list, move the mouse into main window, click to place.
-Right mouse button to cancel"))
-                                                (procedure->pointer void i_callback_add_component '(* *))
-                                                7)
+Right mouse button to cancel"
+                             i_callback_add_component
+                             7)
 
         (let* ((*radio-button
                 (schematic_window_create_toolbar_radio_button (bytevector->pointer (make-bytevector (sizeof '*) 0))
@@ -186,13 +195,13 @@ Right mouse button to cancel"))
                  (*radio-group (schematic_window_get_toolbar_radio_button_group *radio-button)))
             (schematic_window_set_toolbar_bus *window *radio-button)
 
-            (schematic_window_create_toolbar_button *window
-                                                    *toolbar
-                                                    (string->pointer "insert-text")
-                                                    (string->pointer (G_ "Text"))
-                                                    (string->pointer (G_ "Add Text..."))
-                                                    (procedure->pointer void i_callback_add_text '(* *))
-                                                    10)
+            (make-toolbar-button *window
+                                 *toolbar
+                                 "insert-text"
+                                 "Text"
+                                 "Add Text..."
+                                 i_callback_add_text
+                                 10)
             (schematic_window_create_toolbar_separator *toolbar 11)
 
 
