@@ -99,8 +99,8 @@ GtkApplication structure of the program (when compiled with
   (define *window
     (x_window_setup (x_window_new (parse-gschemrc *toplevel))))
 
-  (define (init-toolbar *window *toolbar)
-    (schematic_window_toolbar_activate_button *window)
+  (define (init-toolbar *button *toolbar)
+    (schematic_window_toolbar_activate_button *button)
     *toolbar)
 
   (let ((*main-window (schematic_window_create_app_window *app)))
@@ -208,7 +208,8 @@ Right mouse button to cancel"))
               (schematic_window_set_toolbar_select *window *radio-button)
 
               (schematic_window_create_toolbar_separator *toolbar 13)
-              (init-toolbar *window *toolbar)))))
+              ;; Activate 'select' button at start-up.
+              (init-toolbar *radio-button *toolbar)))))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
 
