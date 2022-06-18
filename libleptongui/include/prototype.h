@@ -703,6 +703,9 @@ void
 schematic_window_create_toolbar_separator (GtkWidget *toolbar,
                                            gint pos);
 void
+schematic_window_set_toolbar_bus (GschemToplevel *w_current,
+                                  GtkWidget *button);
+void
 schematic_window_set_toolbar_net (GschemToplevel *w_current,
                                   GtkWidget *button);
 void

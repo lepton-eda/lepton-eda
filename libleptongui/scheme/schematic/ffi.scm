@@ -96,6 +96,7 @@
             i_callback_page_prev
             i_callback_page_print
             i_callback_page_revert
+            i_callback_toolbar_add_bus
             i_callback_toolbar_add_net
             i_callback_view_color_edit
             i_callback_view_pan
@@ -178,6 +179,7 @@
             schematic_window_create_toolbar_radio_button
             schematic_window_get_toolbar_radio_button_group
             schematic_window_create_toolbar_separator
+            schematic_window_set_toolbar_bus
             schematic_window_set_toolbar_net
 
             x_tabs_create
@@ -380,6 +382,7 @@
 (define-lff schematic_window_create_toolbar_radio_button '* (list '* '* '* '* '* '* '* int))
 (define-lff schematic_window_create_toolbar_separator void (list '* int))
 (define-lff schematic_window_get_toolbar_radio_button_group '* '(*))
+(define-lff schematic_window_set_toolbar_bus void '(* *))
 (define-lff schematic_window_set_toolbar_net void '(* *))
 
 ;;; x_tabs.c
@@ -471,6 +474,7 @@
 (define-lff i_callback_page_prev void '(* *))
 (define-lff i_callback_page_print void '(* *))
 (define-lff i_callback_page_revert void '(* *))
+(define-lff i_callback_toolbar_add_bus void '(* *))
 (define-lff i_callback_toolbar_add_net void '(* *))
 
 ;;; x_misc.c
