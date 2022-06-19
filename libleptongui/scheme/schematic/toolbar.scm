@@ -30,24 +30,41 @@
   #:export (make-toolbar))
 
 
+(define %toolbar-button-callbacks '())
+
+;;; Prevent garbage collection of callback procedures by storing
+;;; them in the global variable.
+(define (set-button-callback! *window *button signal callback)
+  (let ((*callback (procedure->pointer void callback '(* *))))
+    (set! %toolbar-button-callbacks
+          (assq-set! %toolbar-button-callbacks *button *callback))
+    (schematic_signal_connect *button
+                              (string->pointer signal)
+                              *callback
+                              *window)))
+
+
 (define (make-toolbar-button *window *toolbar icon name tooltip callback position)
-  (schematic_toolbar_button_new *window
-                                *toolbar
-                                (string->pointer icon)
-                                (string->pointer (G_ name))
-                                (string->pointer (G_ tooltip))
-                                (procedure->pointer void callback '(* *))
-                                position))
+  (let ((*button
+         (schematic_toolbar_button_new *toolbar
+                                       (string->pointer icon)
+                                       (string->pointer (G_ name))
+                                       (string->pointer (G_ tooltip))
+                                       position)))
+    (set-button-callback! *window *button "clicked" callback)
+    *button))
+
 
 (define (make-toolbar-radio-button *group *window *toolbar icon name tooltip callback position)
-  (schematic_toolbar_radio_button_new *group
-                                      *window
-                                      *toolbar
-                                      (string->pointer icon)
-                                      (string->pointer (G_ name))
-                                      (string->pointer (G_ tooltip))
-                                      (procedure->pointer void callback '(* *))
-                                      position))
+  (let ((*button
+         (schematic_toolbar_radio_button_new *group
+                                             *toolbar
+                                             (string->pointer icon)
+                                             (string->pointer (G_ name))
+                                             (string->pointer (G_ tooltip))
+                                             position)))
+    (set-button-callback! *window *button "toggled" callback)
+    *button))
 
 
 (define (make-toolbar *window *main-box)
