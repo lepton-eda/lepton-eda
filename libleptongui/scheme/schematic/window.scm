@@ -189,7 +189,7 @@ Right mouse button to cancel"
 Right mouse button to cancel"
                                            i_callback_toolbar_add_net
                                            8))
-               (*radio-group (schematic_window_get_toolbar_radio_button_group *radio-button)))
+               (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
           (schematic_window_set_toolbar_net *window *radio-button)
 
           (let* ((*radio-button
@@ -202,7 +202,7 @@ Right mouse button to cancel"
 Right mouse button to cancel"
                                              i_callback_toolbar_add_bus
                                              9))
-                 (*radio-group (schematic_window_get_toolbar_radio_button_group *radio-button)))
+                 (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
             (schematic_window_set_toolbar_bus *window *radio-button)
 
             (make-toolbar-button *window

@@ -113,9 +113,8 @@ schematic_toolbar_radio_button_new (GSList** group,
 
 
 GSList*
-schematic_window_get_toolbar_radio_button_group (GtkWidget *button)
+schematic_toolbar_radio_button_get_group (GtkWidget *button)
 {
-
   return gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (button));
 }
 
