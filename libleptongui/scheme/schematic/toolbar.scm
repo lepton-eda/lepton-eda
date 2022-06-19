@@ -30,10 +30,6 @@
   #:export (make-toolbar))
 
 
-(define (init-toolbar *button *toolbar)
-  (schematic_toolbar_activate_button *button)
-  *toolbar)
-
 (define (make-toolbar-button *window *toolbar icon name tooltip callback position)
   (schematic_toolbar_button_new *window
                                 *toolbar
@@ -151,4 +147,7 @@ Right mouse button to cancel"
 
           (schematic_toolbar_insert_separator *toolbar 13)
           ;; Activate 'select' button at start-up.
-          (init-toolbar *radio-button *toolbar))))))
+          (schematic_toolbar_activate_button *radio-button)
+
+          ;; Return pointer to the toolbar widget.
+          *toolbar)))))
