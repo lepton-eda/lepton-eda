@@ -46,7 +46,7 @@ schematic_toolbar_radio_button_new (GSList** group,
                                     GCallback callback,
                                     gint pos);
 GSList*
-schematic_window_get_toolbar_radio_button_group (GtkWidget *button);
+schematic_toolbar_radio_button_get_group (GtkWidget *button);
 
 void
 schematic_window_create_toolbar_separator (GtkWidget *toolbar,
