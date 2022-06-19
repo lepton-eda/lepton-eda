@@ -256,7 +256,7 @@ i_set_state_msg (GschemToplevel *w_current,
   if ((newstate != schematic_window_get_action_mode (w_current)) || (message != NULL))
   {
     schematic_window_set_action_mode (w_current, newstate);
-    i_update_toolbar (w_current);
+    schematic_toolbar_update (w_current);
   }
   i_show_state(w_current, message);
 }

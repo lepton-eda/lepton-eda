@@ -199,7 +199,7 @@ schematic_toolbar_activate_button (GtkWidget *button)
  *
  */
 void
-i_update_toolbar (GschemToplevel *w_current)
+schematic_toolbar_update (GschemToplevel *w_current)
 {
   if (!w_current->toolbars)
     return;
