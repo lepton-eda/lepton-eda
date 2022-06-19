@@ -261,58 +261,6 @@ i_set_state_msg (GschemToplevel *w_current,
   i_show_state(w_current, message);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \param [in] w_current GschemToplevel structure
- *
- */
-void i_update_toolbar(GschemToplevel *w_current)
-{
-  if (!w_current->toolbars)
-    return;
-
-  switch (schematic_window_get_action_mode (w_current))
-  {
-    case(SELECT):
-      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select),
-                                         TRUE);
-      break;
-
-    case(NETMODE):
-      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_net),
-                                         TRUE);
-      break;
-
-    case(BUSMODE):
-      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_bus),
-                                         TRUE);
-      break;
-
-    case(ARCMODE): /*! \todo */
-    case(BOXMODE): /*! \todo */
-    case(CIRCLEMODE): /*! \todo */
-    case(LINEMODE): /*! \todo */
-    case(PICTUREMODE): /*! \todo */
-    case(PINMODE): /*! \todo */
-    case(PAN): /*! \todo */
-    case(COPYMODE): /*! \todo */
-    case(MCOPYMODE): /*! \todo */
-    case(MOVEMODE): /*! \todo */
-    case(COMPMODE): /*! \todo */
-    case(ROTATEMODE): /*! \todo */
-    case(TEXTMODE): /*! \todo */
-    case(MIRRORMODE): /*! \todo */
-    case(ZOOMBOX): /*! \todo */
-    case(PASTEMODE): /*! \todo */
-    case(GRIPS): /*! \todo */
-    default:
-      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select),
-                                         TRUE);
-      break;
-  }
-}
-
-
 
 /*! \brief Update sensitivity of the Edit/Paste menu item
  *
