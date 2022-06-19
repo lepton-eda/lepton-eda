@@ -113,14 +113,14 @@ GtkApplication structure of the program (when compiled with
                                   position))
 
   (define (make-toolbar-radio-button *group *window *toolbar icon name tooltip callback position)
-   (schematic_window_create_toolbar_radio_button *group
-                                                 *window
-                                                 *toolbar
-                                                 (string->pointer icon)
-                                                 (string->pointer (G_ name))
-                                                 (string->pointer (G_ tooltip))
-                                                 (procedure->pointer void callback '(* *))
-                                                 position))
+    (schematic_toolbar_radio_button_new *group
+                                        *window
+                                        *toolbar
+                                        (string->pointer icon)
+                                        (string->pointer (G_ name))
+                                        (string->pointer (G_ tooltip))
+                                        (procedure->pointer void callback '(* *))
+                                        position))
 
   (let ((*main-window (schematic_window_create_app_window *app)))
     (schematic_signal_connect *main-window
