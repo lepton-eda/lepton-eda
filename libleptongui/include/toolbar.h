@@ -49,8 +49,8 @@ GSList*
 schematic_toolbar_radio_button_get_group (GtkWidget *button);
 
 void
-schematic_window_create_toolbar_separator (GtkWidget *toolbar,
-                                           gint pos);
+schematic_toolbar_insert_separator (GtkWidget *toolbar,
+                                    gint pos);
 void
 schematic_window_set_toolbar_bus (GschemToplevel *w_current,
                                   GtkWidget *button);
