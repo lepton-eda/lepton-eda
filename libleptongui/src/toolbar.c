@@ -66,12 +66,10 @@ get_stock_pixmap (const char *stock)
 
 
 GtkToolButton*
-schematic_toolbar_button_new (GschemToplevel *w_current,
-                              GtkWidget *toolbar,
+schematic_toolbar_button_new (GtkWidget *toolbar,
                               const gchar *pixmap_name,
                               const gchar *label,
                               const gchar *tooltip,
-                              GCallback callback,
                               gint pos)
 {
   GtkWidget *pixmap = get_stock_pixmap (pixmap_name);
@@ -82,20 +80,16 @@ schematic_toolbar_button_new (GschemToplevel *w_current,
 
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), pos);
 
-  g_signal_connect (button, "clicked", callback, w_current);
-
   return button;
 }
 
 
 GtkWidget*
 schematic_toolbar_radio_button_new (GSList** group,
-                                    GschemToplevel *w_current,
                                     GtkWidget *toolbar,
                                     const gchar *pixmap_name,
                                     const gchar *label,
                                     const gchar *tooltip,
-                                    GCallback callback,
                                     gint pos)
 {
   GtkWidget *button = GTK_WIDGET (gtk_radio_tool_button_new (*group));
@@ -107,8 +101,6 @@ schematic_toolbar_radio_button_new (GSList** group,
   gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (button), pixmap);
 
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), pos);
-
-  g_signal_connect (button, "toggled", callback, w_current);
 
   return button;
 }

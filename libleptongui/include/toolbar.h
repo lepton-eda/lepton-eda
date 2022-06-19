@@ -29,21 +29,17 @@ void
 schematic_toolbar_activate_button (GtkWidget *button);
 
 GtkToolButton*
-schematic_toolbar_button_new (GschemToplevel *w_current,
-                              GtkWidget *toolbar,
+schematic_toolbar_button_new (GtkWidget *toolbar,
                               const gchar *pixmap_name,
                               const gchar *label,
                               const gchar *tooltip,
-                              GCallback callback,
                               gint pos);
 GtkWidget*
 schematic_toolbar_radio_button_new (GSList** group,
-                                    GschemToplevel *w_current,
                                     GtkWidget *toolbar,
                                     const gchar *pixmap_name,
                                     const gchar *label,
                                     const gchar *tooltip,
-                                    GCallback callback,
                                     gint pos);
 GSList*
 schematic_toolbar_radio_button_get_group (GtkWidget *button);
