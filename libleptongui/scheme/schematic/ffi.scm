@@ -176,7 +176,8 @@
             schematic_window_restore_geometry
             schematic_window_show_all
             schematic_window_set_main_window
-            schematic_window_create_toolbar_button
+
+            schematic_toolbar_button_new
             schematic_window_create_toolbar_radio_button
             schematic_window_get_toolbar_radio_button_group
             schematic_window_create_toolbar_separator
@@ -380,7 +381,9 @@
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_show_all void '(* *))
 (define-lff schematic_window_set_main_window '* '(* *))
-(define-lff schematic_window_create_toolbar_button void (list '* '* '* '* '* '* int))
+
+;;; toolbar.c
+(define-lff schematic_toolbar_button_new void (list '* '* '* '* '* '* int))
 (define-lff schematic_window_create_toolbar_radio_button '* (list '* '* '* '* '* '* '* int))
 (define-lff schematic_window_create_toolbar_separator void (list '* int))
 (define-lff schematic_window_get_toolbar_radio_button_group '* '(*))

@@ -66,13 +66,13 @@ get_stock_pixmap (const char *stock)
 
 
 void
-schematic_window_create_toolbar_button (GschemToplevel *w_current,
-                                        GtkWidget *toolbar,
-                                        const gchar *pixmap_name,
-                                        const gchar *label,
-                                        const gchar *tooltip,
-                                        GCallback callback,
-                                        gint pos)
+schematic_toolbar_button_new (GschemToplevel *w_current,
+                              GtkWidget *toolbar,
+                              const gchar *pixmap_name,
+                              const gchar *label,
+                              const gchar *tooltip,
+                              GCallback callback,
+                              gint pos)
 {
   GtkWidget *pixmap = get_stock_pixmap (pixmap_name);
 
