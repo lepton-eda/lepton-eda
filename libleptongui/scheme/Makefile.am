@@ -35,6 +35,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/repl.scm \
 	schematic/selection.scm \
 	schematic/symbol/check.scm \
+	schematic/toolbar.scm \
 	schematic/util.scm \
 	schematic/undo.scm \
 	schematic/window.scm \

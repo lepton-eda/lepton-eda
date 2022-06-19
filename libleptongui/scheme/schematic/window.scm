@@ -34,6 +34,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic gui keymap)
   #:use-module (schematic menu)
+  #:use-module (schematic toolbar)
   #:use-module (schematic window foreign)
 
   #:export (%lepton-window
@@ -83,14 +84,6 @@ dynamic context."
 (define *process-key-event
   (procedure->pointer int process-key-event '(* * *)))
 
-(define (make-pointer-to-pointer pointer)
-  (define bv (make-bytevector (sizeof '*)))
-  (bytevector-uint-set! bv
-                        0
-                        (pointer-address pointer)
-                        (native-endianness)
-                        (sizeof '*))
-  (bytevector->pointer bv))
 
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
@@ -98,29 +91,6 @@ GtkApplication structure of the program (when compiled with
 --with-gtk3).  TOPLEVEL is a foreign LeptonToplevel structure."
   (define *window
     (x_window_setup (x_window_new (parse-gschemrc *toplevel))))
-
-  (define (init-toolbar *button *toolbar)
-    (schematic_toolbar_activate_button *button)
-    *toolbar)
-
-  (define (make-toolbar-button *window *toolbar icon name tooltip callback position)
-    (schematic_toolbar_button_new *window
-                                  *toolbar
-                                  (string->pointer icon)
-                                  (string->pointer (G_ name))
-                                  (string->pointer (G_ tooltip))
-                                  (procedure->pointer void callback '(* *))
-                                  position))
-
-  (define (make-toolbar-radio-button *group *window *toolbar icon name tooltip callback position)
-    (schematic_toolbar_radio_button_new *group
-                                        *window
-                                        *toolbar
-                                        (string->pointer icon)
-                                        (string->pointer (G_ name))
-                                        (string->pointer (G_ tooltip))
-                                        (procedure->pointer void callback '(* *))
-                                        position))
 
   (let ((*main-window (schematic_window_create_app_window *app)))
     (schematic_signal_connect *main-window
@@ -132,103 +102,10 @@ GtkApplication structure of the program (when compiled with
           (*menubar (make-main-menu *window))
           (*work-box (schematic_window_create_work_box)))
       (schematic_window_create_menubar *window *main-box *menubar)
-      (let ((*toolbar (schematic_toolbar_new *window *main-box)))
-        (make-toolbar-button *window
-                             *toolbar
-                             "document-new"
-                             "New"
-                             "New file"
-                             i_callback_file_new
-                             0)
-        (make-toolbar-button *window
-                             *toolbar
-                             "document-open"
-                             "Open"
-                             "Open file"
-                             i_callback_file_open
-                             1)
-        (make-toolbar-button *window *toolbar
-                             "document-save"
-                             "Save"
-                             "Save file"
-                             i_callback_file_save
-                             2)
-        (schematic_toolbar_insert_separator *toolbar 3)
-        (make-toolbar-button *window
-                             *toolbar
-                             "edit-undo"
-                             "Undo"
-                             "Undo last operation"
-                             i_callback_edit_undo
-                             4)
-        (make-toolbar-button *window
-                             *toolbar
-                             "edit-redo"
-                             "Redo"
-                             "Redo last undo"
-                             i_callback_edit_redo
-                             5)
-        (schematic_toolbar_insert_separator *toolbar 6)
-        (make-toolbar-button *window
-                             *toolbar
-                             "insert-symbol"
-                             "Component"
-                             "Add component...
-Select library and component from list, move the mouse into main window, click to place.
-Right mouse button to cancel"
-                             i_callback_add_component
-                             7)
 
-        (let* ((*radio-button
-                (make-toolbar-radio-button (bytevector->pointer (make-bytevector (sizeof '*) 0))
-                                           *window
-                                           *toolbar
-                                           "insert-net"
-                                           "Nets"
-                                           "Add nets mode
-Right mouse button to cancel"
-                                           i_callback_toolbar_add_net
-                                           8))
-               (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
-          (schematic_window_set_toolbar_net *window *radio-button)
+      ;; Make toolbar.
+      (make-toolbar *window *main-box)
 
-          (let* ((*radio-button
-                  (make-toolbar-radio-button (make-pointer-to-pointer *radio-group)
-                                             *window
-                                             *toolbar
-                                             "insert-bus"
-                                             "Bus"
-                                             "Add buses mode
-Right mouse button to cancel"
-                                             i_callback_toolbar_add_bus
-                                             9))
-                 (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
-            (schematic_window_set_toolbar_bus *window *radio-button)
-
-            (make-toolbar-button *window
-                                 *toolbar
-                                 "insert-text"
-                                 "Text"
-                                 "Add Text..."
-                                 i_callback_add_text
-                                 10)
-            (schematic_toolbar_insert_separator *toolbar 11)
-
-
-            (let ((*radio-button
-                   (make-toolbar-radio-button (make-pointer-to-pointer *radio-group)
-                                              *window
-                                              *toolbar
-                                              "select"
-                                              "Select"
-                                              "Select mode"
-                                              i_callback_toolbar_edit_select
-                                              12)))
-              (schematic_window_set_toolbar_select *window *radio-button)
-
-              (schematic_toolbar_insert_separator *toolbar 13)
-              ;; Activate 'select' button at start-up.
-              (init-toolbar *radio-button *toolbar)))))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
 
