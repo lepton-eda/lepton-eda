@@ -92,7 +92,6 @@ i_set_state_msg (GschemToplevel *w_current,
                  SchematicActionMode newstate,
                  const char *message);
 
-void i_update_toolbar(GschemToplevel *w_current);
 void i_update_menus(GschemToplevel *w_current);
 void i_set_filename(GschemToplevel *w_current, const gchar *filename, gboolean changed);
 void i_update_grid_info(GschemToplevel *w_current);

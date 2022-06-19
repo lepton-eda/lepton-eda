@@ -60,6 +60,8 @@ schematic_window_set_toolbar_net (GschemToplevel *w_current,
 void
 schematic_window_set_toolbar_select (GschemToplevel *w_current,
                                      GtkWidget *button);
+void
+i_update_toolbar (GschemToplevel *w_current);
 
 G_END_DECLS
 
