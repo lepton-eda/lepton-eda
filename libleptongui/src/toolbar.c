@@ -65,7 +65,7 @@ get_stock_pixmap (const char *stock)
 }
 
 
-void
+GtkToolButton*
 schematic_toolbar_button_new (GschemToplevel *w_current,
                               GtkWidget *toolbar,
                               const gchar *pixmap_name,
@@ -83,6 +83,8 @@ schematic_toolbar_button_new (GschemToplevel *w_current,
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), pos);
 
   g_signal_connect (button, "clicked", callback, w_current);
+
+  return button;
 }
 
 

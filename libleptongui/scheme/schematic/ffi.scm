@@ -383,7 +383,7 @@
 (define-lff schematic_window_set_main_window '* '(* *))
 
 ;;; toolbar.c
-(define-lff schematic_toolbar_button_new void (list '* '* '* '* '* '* int))
+(define-lff schematic_toolbar_button_new '* (list '* '* '* '* '* '* int))
 (define-lff schematic_toolbar_radio_button_new '* (list '* '* '* '* '* '* '* int))
 (define-lff schematic_toolbar_insert_separator void (list '* int))
 (define-lff schematic_toolbar_radio_button_get_group '* '(*))
