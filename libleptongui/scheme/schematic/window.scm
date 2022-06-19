@@ -100,7 +100,7 @@ GtkApplication structure of the program (when compiled with
     (x_window_setup (x_window_new (parse-gschemrc *toplevel))))
 
   (define (init-toolbar *button *toolbar)
-    (schematic_window_toolbar_activate_button *button)
+    (schematic_toolbar_activate_button *button)
     *toolbar)
 
   (define (make-toolbar-button *window *toolbar icon name tooltip callback position)

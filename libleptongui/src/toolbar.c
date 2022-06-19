@@ -188,7 +188,7 @@ schematic_window_set_toolbar_select (GschemToplevel *w_current,
 
 
 void
-schematic_window_toolbar_activate_button (GtkWidget *button)
+schematic_toolbar_activate_button (GtkWidget *button)
 {
   gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (button), TRUE);
 }
