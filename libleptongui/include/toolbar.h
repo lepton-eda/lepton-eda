@@ -37,14 +37,14 @@ schematic_toolbar_button_new (GschemToplevel *w_current,
                               GCallback callback,
                               gint pos);
 GtkWidget*
-schematic_window_create_toolbar_radio_button (GSList** group,
-                                              GschemToplevel *w_current,
-                                              GtkWidget *toolbar,
-                                              const gchar *pixmap_name,
-                                              const gchar *label,
-                                              const gchar *tooltip,
-                                              GCallback callback,
-                                              gint pos);
+schematic_toolbar_radio_button_new (GSList** group,
+                                    GschemToplevel *w_current,
+                                    GtkWidget *toolbar,
+                                    const gchar *pixmap_name,
+                                    const gchar *label,
+                                    const gchar *tooltip,
+                                    GCallback callback,
+                                    gint pos);
 GSList*
 schematic_window_get_toolbar_radio_button_group (GtkWidget *button);
 
