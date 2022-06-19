@@ -120,8 +120,8 @@ schematic_toolbar_radio_button_get_group (GtkWidget *button)
 
 
 void
-schematic_window_create_toolbar_separator (GtkWidget *toolbar,
-                                           gint pos)
+schematic_toolbar_insert_separator (GtkWidget *toolbar,
+                                    gint pos)
 {
   gtk_toolbar_insert (GTK_TOOLBAR (toolbar),
                       GTK_TOOL_ITEM (gtk_separator_tool_item_new ()),

@@ -153,7 +153,7 @@ GtkApplication structure of the program (when compiled with
                              "Save file"
                              i_callback_file_save
                              2)
-        (schematic_window_create_toolbar_separator *toolbar 3)
+        (schematic_toolbar_insert_separator *toolbar 3)
         (make-toolbar-button *window
                              *toolbar
                              "edit-undo"
@@ -168,7 +168,7 @@ GtkApplication structure of the program (when compiled with
                              "Redo last undo"
                              i_callback_edit_redo
                              5)
-        (schematic_window_create_toolbar_separator *toolbar 6)
+        (schematic_toolbar_insert_separator *toolbar 6)
         (make-toolbar-button *window
                              *toolbar
                              "insert-symbol"
@@ -212,7 +212,7 @@ Right mouse button to cancel"
                                  "Add Text..."
                                  i_callback_add_text
                                  10)
-            (schematic_window_create_toolbar_separator *toolbar 11)
+            (schematic_toolbar_insert_separator *toolbar 11)
 
 
             (let ((*radio-button
@@ -226,7 +226,7 @@ Right mouse button to cancel"
                                               12)))
               (schematic_window_set_toolbar_select *window *radio-button)
 
-              (schematic_window_create_toolbar_separator *toolbar 13)
+              (schematic_toolbar_insert_separator *toolbar 13)
               ;; Activate 'select' button at start-up.
               (init-toolbar *radio-button *toolbar)))))
       ;; Make main popup menu.
