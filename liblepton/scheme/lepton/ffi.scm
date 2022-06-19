@@ -25,6 +25,7 @@
                liblepton)
 
   #:export (liblepton_init
+            reference-pointer
             c-string-array->list
             register-data-dirs
 
@@ -791,6 +792,17 @@ objects."
 (define-lff lepton_export_settings_set_outfile void '(*))
 
 (define-lff lepton_coord_snap int (list int int))
+
+
+(define (reference-pointer pointer)
+  (define bv (make-bytevector (sizeof '*)))
+  (bytevector-uint-set! bv
+                        0
+                        (pointer-address pointer)
+                        (native-endianness)
+                        (sizeof '*))
+  (bytevector->pointer bv))
+
 
 (define (c-string-array->list pointer)
   "Returns a list of strings from the array of C strings pointed to

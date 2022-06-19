@@ -22,21 +22,12 @@
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi)
   #:use-module (lepton gettext)
 
   #:use-module (schematic ffi)
 
   #:export (make-toolbar))
-
-
-(define (make-pointer-to-pointer pointer)
-  (define bv (make-bytevector (sizeof '*)))
-  (bytevector-uint-set! bv
-                        0
-                        (pointer-address pointer)
-                        (native-endianness)
-                        (sizeof '*))
-  (bytevector->pointer bv))
 
 
 (define (init-toolbar *button *toolbar)
@@ -125,7 +116,7 @@ Right mouse button to cancel"
       (schematic_window_set_toolbar_net *window *radio-button)
 
       (let* ((*radio-button
-              (make-toolbar-radio-button (make-pointer-to-pointer *radio-group)
+              (make-toolbar-radio-button (reference-pointer *radio-group)
                                          *window
                                          *toolbar
                                          "insert-bus"
@@ -148,7 +139,7 @@ Right mouse button to cancel"
 
 
         (let ((*radio-button
-               (make-toolbar-radio-button (make-pointer-to-pointer *radio-group)
+               (make-toolbar-radio-button (reference-pointer *radio-group)
                                           *window
                                           *toolbar
                                           "select"
