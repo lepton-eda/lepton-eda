@@ -26,7 +26,7 @@ GtkWidget*
 schematic_toolbar_new (GschemToplevel *w_current,
                        GtkWidget *main_box);
 void
-schematic_window_toolbar_activate_button (GtkWidget *button);
+schematic_toolbar_activate_button (GtkWidget *button);
 
 void
 schematic_window_create_toolbar_button (GschemToplevel *w_current,
