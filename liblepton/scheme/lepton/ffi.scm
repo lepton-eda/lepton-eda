@@ -17,6 +17,7 @@
 
 (define-module (lepton ffi)
   #:use-module (ice-9 match)
+  #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
   #:use-module (srfi srfi-1)
   #:use-module (lepton ffi lib)
