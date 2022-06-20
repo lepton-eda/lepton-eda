@@ -178,6 +178,7 @@
             schematic_window_set_main_window
 
             schematic_toolbar_button_new
+            schematic_toolbar_button_set_tooltip_text
             schematic_toolbar_radio_button_new
             schematic_toolbar_radio_button_get_group
             schematic_toolbar_radio_button_set_group
@@ -385,8 +386,9 @@
 (define-lff schematic_window_set_main_window '* '(* *))
 
 ;;; toolbar.c
-(define-lff schematic_toolbar_button_new '* '(* * *))
-(define-lff schematic_toolbar_radio_button_new '* '(* * *))
+(define-lff schematic_toolbar_button_new '* '(* *))
+(define-lff schematic_toolbar_button_set_tooltip_text void '(* *))
+(define-lff schematic_toolbar_radio_button_new '* '(* *))
 (define-lff schematic_toolbar_insert_button void (list '* '* int))
 (define-lff schematic_toolbar_insert_separator void (list '* int))
 (define-lff schematic_toolbar_radio_button_get_group '* '(*))
