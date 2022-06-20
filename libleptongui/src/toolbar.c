@@ -66,11 +66,9 @@ get_stock_pixmap (const char *stock)
 
 
 GtkToolButton*
-schematic_toolbar_button_new (GtkWidget *toolbar,
-                              const gchar *pixmap_name,
+schematic_toolbar_button_new (const gchar *pixmap_name,
                               const gchar *label,
-                              const gchar *tooltip,
-                              gint pos)
+                              const gchar *tooltip)
 {
   GtkWidget *pixmap = get_stock_pixmap (pixmap_name);
 
@@ -78,19 +76,15 @@ schematic_toolbar_button_new (GtkWidget *toolbar,
 
   gtk_widget_set_tooltip_text (GTK_WIDGET (button), tooltip);
 
-  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), pos);
-
   return button;
 }
 
 
 GtkWidget*
 schematic_toolbar_radio_button_new (GSList** group,
-                                    GtkWidget *toolbar,
                                     const gchar *pixmap_name,
                                     const gchar *label,
-                                    const gchar *tooltip,
-                                    gint pos)
+                                    const gchar *tooltip)
 {
   GtkWidget *button = GTK_WIDGET (gtk_radio_tool_button_new (*group));
 
@@ -100,8 +94,6 @@ schematic_toolbar_radio_button_new (GSList** group,
   GtkWidget *pixmap = get_stock_pixmap (pixmap_name);
   gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (button), pixmap);
 
-  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), pos);
-
   return button;
 }
 
@@ -110,6 +102,15 @@ GSList*
 schematic_toolbar_radio_button_get_group (GtkWidget *button)
 {
   return gtk_radio_tool_button_get_group (GTK_RADIO_TOOL_BUTTON (button));
+}
+
+
+void
+schematic_toolbar_insert_button (GtkWidget *toolbar,
+                                 GtkToolButton *button,
+                                 gint pos)
+{
+  gtk_toolbar_insert (GTK_TOOLBAR (toolbar), GTK_TOOL_ITEM (button), pos);
 }
 
 

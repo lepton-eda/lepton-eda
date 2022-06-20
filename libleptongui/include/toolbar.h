@@ -29,21 +29,21 @@ void
 schematic_toolbar_activate_button (GtkWidget *button);
 
 GtkToolButton*
-schematic_toolbar_button_new (GtkWidget *toolbar,
-                              const gchar *pixmap_name,
+schematic_toolbar_button_new (const gchar *pixmap_name,
                               const gchar *label,
-                              const gchar *tooltip,
-                              gint pos);
+                              const gchar *tooltip);
 GtkWidget*
 schematic_toolbar_radio_button_new (GSList** group,
-                                    GtkWidget *toolbar,
                                     const gchar *pixmap_name,
                                     const gchar *label,
-                                    const gchar *tooltip,
-                                    gint pos);
+                                    const gchar *tooltip);
 GSList*
 schematic_toolbar_radio_button_get_group (GtkWidget *button);
 
+void
+schematic_toolbar_insert_button (GtkWidget *toolbar,
+                                 GtkToolButton *button,
+                                 gint pos);
 void
 schematic_toolbar_insert_separator (GtkWidget *toolbar,
                                     gint pos);
