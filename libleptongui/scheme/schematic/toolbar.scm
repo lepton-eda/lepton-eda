@@ -50,11 +50,17 @@
   *toolbar)
 
 
+(define (set-button-tooltip! *button tooltip)
+  (schematic_toolbar_button_set_tooltip_text *button
+                                             (string->pointer (G_ tooltip)))
+  *button)
+
+
 (define (make-toolbar-button *window *toolbar icon name tooltip callback position)
   (let ((*button
          (schematic_toolbar_button_new (string->pointer icon)
-                                       (string->pointer (G_ name))
-                                       (string->pointer (G_ tooltip)))))
+                                       (string->pointer (G_ name)))))
+    (set-button-tooltip! *button tooltip)
     (set-button-callback! *window *button "clicked" callback)
     (toolbar-insert! *toolbar *button position)
     *button))
@@ -63,9 +69,9 @@
 (define (make-toolbar-radio-button *group *window *toolbar icon name tooltip callback position)
   (let ((*button
          (schematic_toolbar_radio_button_new (string->pointer icon)
-                                             (string->pointer (G_ name))
-                                             (string->pointer (G_ tooltip)))))
+                                             (string->pointer (G_ name)))))
     (schematic_toolbar_radio_button_set_group *button *group)
+    (set-button-tooltip! *button tooltip)
     (set-button-callback! *window *button "toggled" callback)
     (toolbar-insert! *toolbar *button position)
     *button))

@@ -30,12 +30,13 @@ schematic_toolbar_activate_button (GtkWidget *button);
 
 GtkToolButton*
 schematic_toolbar_button_new (const gchar *pixmap_name,
-                              const gchar *label,
-                              const gchar *tooltip);
+                              const gchar *label);
+void
+schematic_toolbar_button_set_tooltip_text (GtkWidget *button,
+                                           const gchar *tooltip);
 GtkWidget*
 schematic_toolbar_radio_button_new (const gchar *pixmap_name,
-                                    const gchar *label,
-                                    const gchar *tooltip);
+                                    const gchar *label);
 GSList*
 schematic_toolbar_radio_button_get_group (GtkWidget *button);
 
