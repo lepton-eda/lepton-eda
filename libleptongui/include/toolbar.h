@@ -41,6 +41,9 @@ GSList*
 schematic_toolbar_radio_button_get_group (GtkWidget *button);
 
 void
+schematic_toolbar_radio_button_set_group (GtkWidget *button,
+                                          GSList *group);
+void
 schematic_toolbar_insert_button (GtkWidget *toolbar,
                                  GtkToolButton *button,
                                  gint pos);
