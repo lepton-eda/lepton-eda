@@ -62,8 +62,7 @@
 
 (define (make-toolbar-radio-button *group *window *toolbar icon name tooltip callback position)
   (let ((*button
-         (schematic_toolbar_radio_button_new %null-pointer
-                                             (string->pointer icon)
+         (schematic_toolbar_radio_button_new (string->pointer icon)
                                              (string->pointer (G_ name))
                                              (string->pointer (G_ tooltip)))))
     (schematic_toolbar_radio_button_set_group *button *group)

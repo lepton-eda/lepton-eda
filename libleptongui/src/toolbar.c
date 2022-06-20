@@ -81,12 +81,11 @@ schematic_toolbar_button_new (const gchar *pixmap_name,
 
 
 GtkWidget*
-schematic_toolbar_radio_button_new (GSList* group,
-                                    const gchar *pixmap_name,
+schematic_toolbar_radio_button_new (const gchar *pixmap_name,
                                     const gchar *label,
                                     const gchar *tooltip)
 {
-  GtkWidget *button = GTK_WIDGET (gtk_radio_tool_button_new (group));
+  GtkWidget *button = GTK_WIDGET (gtk_radio_tool_button_new (NULL));
 
   gtk_tool_button_set_label (GTK_TOOL_BUTTON (button), label);
   gtk_widget_set_tooltip_text (GTK_WIDGET (button), tooltip);
