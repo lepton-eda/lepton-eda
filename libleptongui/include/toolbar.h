@@ -33,7 +33,7 @@ schematic_toolbar_button_new (const gchar *pixmap_name,
                               const gchar *label,
                               const gchar *tooltip);
 GtkWidget*
-schematic_toolbar_radio_button_new (GSList** group,
+schematic_toolbar_radio_button_new (GSList* group,
                                     const gchar *pixmap_name,
                                     const gchar *label,
                                     const gchar *tooltip);

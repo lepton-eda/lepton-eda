@@ -120,7 +120,7 @@ Right mouse button to cancel"
                          7)
 
     (let* ((*radio-button
-            (make-toolbar-radio-button (bytevector->pointer (make-bytevector (sizeof '*) 0))
+            (make-toolbar-radio-button %null-pointer
                                        *window
                                        *toolbar
                                        "insert-net"
@@ -133,7 +133,7 @@ Right mouse button to cancel"
       (schematic_window_set_toolbar_net *window *radio-button)
 
       (let* ((*radio-button
-              (make-toolbar-radio-button (reference-pointer *radio-group)
+              (make-toolbar-radio-button *radio-group
                                          *window
                                          *toolbar
                                          "insert-bus"
@@ -156,7 +156,7 @@ Right mouse button to cancel"
 
 
         (let ((*radio-button
-               (make-toolbar-radio-button (reference-pointer *radio-group)
+               (make-toolbar-radio-button *radio-group
                                           *window
                                           *toolbar
                                           "select"
