@@ -44,13 +44,19 @@
                               *window)))
 
 
+(define (toolbar-insert! *toolbar *button position)
+  "Insert *BUTTON into POSITION of *TOOLBAR.  Returns *TOOLBAR."
+  (schematic_toolbar_insert_button *toolbar *button position)
+  *toolbar)
+
+
 (define (make-toolbar-button *window *toolbar icon name tooltip callback position)
   (let ((*button
          (schematic_toolbar_button_new (string->pointer icon)
                                        (string->pointer (G_ name))
                                        (string->pointer (G_ tooltip)))))
     (set-button-callback! *window *button "clicked" callback)
-    (schematic_toolbar_insert_button *toolbar *button position)
+    (toolbar-insert! *toolbar *button position)
     *button))
 
 
@@ -61,7 +67,7 @@
                                              (string->pointer (G_ name))
                                              (string->pointer (G_ tooltip)))))
     (set-button-callback! *window *button "toggled" callback)
-    (schematic_toolbar_insert_button *toolbar *button position)
+    (toolbar-insert! *toolbar *button position)
     *button))
 
 
