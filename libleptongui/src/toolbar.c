@@ -74,13 +74,13 @@ schematic_toolbar_button_set_tooltip_text (GtkWidget *button,
 }
 
 
-GtkToolButton*
+GtkWidget*
 schematic_toolbar_button_new (const gchar *pixmap_name,
                               const gchar *label)
 {
   GtkWidget *pixmap = get_stock_pixmap (pixmap_name);
 
-  GtkToolButton *button = (GtkToolButton*) gtk_tool_button_new (pixmap, label);
+  GtkWidget *button = GTK_WIDGET (gtk_tool_button_new (pixmap, label));
 
   return button;
 }
