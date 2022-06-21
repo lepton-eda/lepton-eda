@@ -39,6 +39,7 @@
   #:use-module (schematic repl)
   #:use-module (schematic selection)
   #:use-module (schematic undo)
+  #:use-module (schematic window foreign)
   #:use-module (schematic window))
 
 
@@ -56,12 +57,12 @@
 (define-syntax run-callback
   (syntax-rules ()
     ((_ c-callback action-name)
-     (let ((window (current-window)))
-       (if (null-pointer? window)
+     (let ((*window (and=> (current-window) window->pointer)))
+       (if *window
+           (c-callback %null-pointer *window)
            (begin
-             (log! 'critical "NULL window in ~S()." action-name)
-             #f)
-           (c-callback %null-pointer window))))))
+             (log! 'critical "~S: Current window is unavailable." action-name)
+             #f))))))
 
 ;; -------------------------------------------------------------------
 ;;;; Special actions

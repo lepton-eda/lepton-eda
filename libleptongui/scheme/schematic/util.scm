@@ -26,6 +26,7 @@
 
   #:use-module (schematic core gettext)
   #:use-module (schematic ffi)
+  #:use-module (schematic window foreign)
   #:use-module (schematic window)
 
   #:export (show-file
@@ -34,6 +35,10 @@
 (define (show-uri uri)
   "Shows URI in the associated default application.  Raises an
 error on failure."
+  (define *window
+    (or (and=> (current-window) window->pointer)
+        (error "~S: Current window is unavailable." 'show-uri)))
+
   (define unknown-error (G_ "Unknown error"))
 
   (define (get-gerror-msg *error)
@@ -52,7 +57,7 @@ error on failure."
   (check-string uri 1)
 
   (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
-    (unless (true? (x_show_uri (current-window)
+    (unless (true? (x_show_uri *window
                                (string->pointer uri)
                                *error))
 

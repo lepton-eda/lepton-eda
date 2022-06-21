@@ -22,6 +22,7 @@
   #:use-module (system foreign)
 
   #:use-module (schematic ffi)
+  #:use-module (schematic window foreign)
   #:use-module (schematic window)
 
     ; public:
@@ -38,7 +39,9 @@
 (define (undo-save-state)
   "Saves current state onto the undo stack.  Returns #t on
 success, #f on failure."
-  (define *window (current-window))
+  (define *window
+    (or (and=> (current-window) window->pointer)
+        (error "~S: Current window is unavailable." 'undo-save-state)))
 
   (let ((*view (gschem_toplevel_get_current_page_view *window)))
     (and (not (null-pointer? *view))

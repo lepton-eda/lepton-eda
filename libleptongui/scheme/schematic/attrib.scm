@@ -31,6 +31,7 @@
 
   #:use-module (schematic core gettext)
   #:use-module (schematic ffi)
+  #:use-module (schematic window foreign)
   #:use-module (schematic window)
 
   #:export (add-attrib!
@@ -71,6 +72,10 @@ error will be raised.  If TARGET is #f, the new attribute will be
 floating in lepton-schematic's current active page.  The initial
 value of the attribute will be set then to (0 . 0).  See also
 active-page() in the (schematic window) module."
+  (define *window
+    (or (and=> (current-window) window->pointer)
+        (error "~S: Current window is unavailable." 'add-attrib!)))
+
   (check-attrib-target target 1)
   (check-string name 2)
   (check-string value 3)
@@ -84,7 +89,7 @@ active-page() in the (schematic window) module."
         (show? (symbol->text-attribute-show-mode show))
         (*str (string->pointer (string-append name "=" value))))
     (pointer->object
-     (o_attrib_add_attrib (current-window)
+     (o_attrib_add_attrib *window
                           *str
                           visibility
                           show?

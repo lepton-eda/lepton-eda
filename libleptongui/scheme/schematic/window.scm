@@ -32,6 +32,7 @@
   #:use-module (lepton toplevel)
 
   #:use-module (schematic ffi)
+  #:use-module (schematic window foreign)
 
   #:export (%lepton-window
             current-window
@@ -67,14 +68,9 @@
 
 
 (define (current-window)
-  "Return the value of the toplevel window structure fluid in the
-current dynamic context.  Signals an error if there is no valid
-window fluid or the fluid value is NULL.  Never returns NULL."
-  (let ((window (fluid-ref %lepton-window)))
-
-    (when (null-pointer? window)
-      (error (G_ "Found NULL lepton-schematic window.")))
-    window))
+  "Returns the <window> instance associated with the current
+dynamic context."
+  (and=> (fluid-ref %lepton-window) pointer->window))
 
 
 (define (active-page)
@@ -89,15 +85,23 @@ lepton-schematic window.  If there is no active page, returns #f."
 (define (set-active-page! page)
   "Sets the page which is active in the current lepton-schematic
 window to PAGE.  Returns PAGE."
+  (define *window
+    (or (and=> (current-window) window->pointer)
+        (error "~S: Current window is unavailable." 'set-active-page!)))
+
   (define *page (check-page page 1))
-  (x_window_set_current_page (current-window) *page)
+
+  (x_window_set_current_page *window *page)
   page)
 
 
 (define (close-page! page)
   "Closes PAGE."
   (define *page (check-page page 1))
-  (define *window (current-window))
+  (define *window
+    (or (and=> (current-window) window->pointer)
+        (error "~S: Current window is unavailable." 'close-page!)))
+
   ;; Currently active page.
   (define *active_page
     (schematic_window_get_active_page *window))
@@ -120,11 +124,15 @@ window to PAGE.  Returns PAGE."
   "Returns the current mouse pointer position, expressed in world
 coordinates in the form (X . Y).  If the pointer is outside the
 schematic drawing area, returns #f."
+  (define *window
+    (or (and=> (current-window) window->pointer)
+        (error "~S: Current window is unavailable." 'pointer-position)))
+
   (define x (make-bytevector (sizeof int)))
   (define y (make-bytevector (sizeof int)))
 
   (let ((result (true? (x_event_get_pointer_position
-                        (current-window)
+                        *window
                         FALSE
                         (bytevector->pointer x)
                         (bytevector->pointer y)))))
@@ -138,11 +146,15 @@ schematic drawing area, returns #f."
 snapped point position as a pair in the same form.  This always
 snaps the given point to the grid, disregarding the current user
 snap settings."
+  (define *window
+    (or (and=> (current-window) window->pointer)
+        (error "~S: Current window is unavailable." 'snap-point)))
+
   ;; Mimic snap_grid() when snapping is not off.
   (define (snap-grid coord)
     (lepton_coord_snap coord
                        (gschem_options_get_snap_size
-                        (schematic_window_get_options (current-window)))))
+                        (schematic_window_get_options *window))))
 
   (check-coord point 1)
 
