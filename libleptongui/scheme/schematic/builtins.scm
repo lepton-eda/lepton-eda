@@ -539,7 +539,7 @@
   (coord_dialog (*current-window) 0 0))
 
 (define-action-public (&options-select-font #:label (G_ "Select Schematic Font"))
-  (run-callback i_callback_options_select_font "&options-select-font"))
+  (x_widgets_show_font_select (*current-window)))
 
 (define-action-public (&options-draw-grips #:label (G_ "Toggle Grips"))
   (run-callback i_callback_options_draw_grips "&options-draw-grips"))

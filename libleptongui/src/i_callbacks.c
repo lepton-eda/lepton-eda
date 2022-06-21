@@ -2640,17 +2640,6 @@ i_callback_help_hotkeys (GtkWidget *widget, gpointer data)
   x_dialog_hotkeys(w_current);
 }
 
-
-void
-i_callback_options_select_font (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  x_widgets_show_font_select (w_current);
-}
-
 void
 i_callback_options_draw_grips (GtkWidget *widget, gpointer data)
 {

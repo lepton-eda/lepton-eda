@@ -92,7 +92,6 @@
             i_callback_options_rubberband
             i_callback_options_scale_down_snap_size
             i_callback_options_scale_up_snap_size
-            i_callback_options_select_font
             i_callback_options_show_log_window
             i_callback_options_snap
             i_callback_options_snap_size
@@ -134,6 +133,7 @@
             x_show_uri
             x_stroke_init
 
+            x_widgets_show_font_select
             x_widgets_show_log
             x_widgets_show_object_properties
 
@@ -211,6 +211,7 @@
 (define-lff x_color_init void '())
 
 ;;; x_widgets.c
+(define-lff x_widgets_show_font_select void '(*))
 (define-lff x_widgets_show_log void '(*))
 (define-lff x_widgets_show_object_properties void '(*))
 
@@ -325,7 +326,6 @@
 (define-lff i_callback_options_rubberband void '(* *))
 (define-lff i_callback_options_scale_down_snap_size void '(* *))
 (define-lff i_callback_options_scale_up_snap_size void '(* *))
-(define-lff i_callback_options_select_font void '(* *))
 (define-lff i_callback_options_show_log_window void '(* *))
 (define-lff i_callback_options_snap void '(* *))
 (define-lff i_callback_options_snap_size void '(* *))
