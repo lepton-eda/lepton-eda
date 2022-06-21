@@ -96,7 +96,7 @@
   (run-callback i_callback_file_save_all "&file-save-all"))
 
 (define-action-public (&file-print #:label (G_ "Print") #:icon "gtk-print")
-  (run-callback i_callback_file_print "&file-print"))
+  (x_print (*current-window)))
 
 (define-action-public (&file-image #:label (G_ "Export Image"))
   (run-callback i_callback_file_write_png "&file-image"))

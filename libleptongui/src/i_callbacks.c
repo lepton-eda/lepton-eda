@@ -235,17 +235,6 @@ i_callback_file_save_as (GtkWidget *widget, gpointer data)
   x_fileselect_save (w_current, page, NULL);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_file_print (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  x_print (w_current);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

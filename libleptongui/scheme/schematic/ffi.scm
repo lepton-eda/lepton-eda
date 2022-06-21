@@ -79,7 +79,6 @@
             i_callback_file_close
             i_callback_file_new
             i_callback_file_open
-            i_callback_file_print
             i_callback_file_save
             i_callback_file_save_all
             i_callback_file_save_as
@@ -171,6 +170,8 @@
 
             x_event_get_pointer_position
             x_event_key
+
+            x_print
 
             parse-gschemrc
             ))
@@ -299,7 +300,6 @@
 (define-lff i_callback_file_close void '(* *))
 (define-lff i_callback_file_new void '(* *))
 (define-lff i_callback_file_open void '(* *))
-(define-lff i_callback_file_print void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lff i_callback_file_save_all void '(* *))
 (define-lff i_callback_file_save_as void '(* *))
@@ -355,6 +355,9 @@
 
 ;;; x_event.c
 (define-lff x_event_key '* '(* * *))
+
+;;; x_print.c
+(define-lff x_print void '(*))
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
