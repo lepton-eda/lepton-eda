@@ -2640,19 +2640,6 @@ i_callback_help_hotkeys (GtkWidget *widget, gpointer data)
   x_dialog_hotkeys(w_current);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_options_show_coord_window (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-  coord_dialog (w_current, 0, 0);
-}
 
 void
 i_callback_options_select_font (GtkWidget *widget, gpointer data)

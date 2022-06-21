@@ -93,7 +93,6 @@
             i_callback_options_scale_down_snap_size
             i_callback_options_scale_up_snap_size
             i_callback_options_select_font
-            i_callback_options_show_coord_window
             i_callback_options_show_log_window
             i_callback_options_snap
             i_callback_options_snap_size
@@ -146,6 +145,8 @@
             x_window_open_page
             x_window_set_current_page
             x_window_setup
+
+            coord_dialog
 
             schematic_keys_get_event_keyval
             schematic_keys_get_event_modifiers
@@ -217,6 +218,9 @@
 (define-lff schematic_keys_get_event_keyval int '(*))
 (define-lff schematic_keys_get_event_modifiers int '(*))
 (define-lff schematic_keys_verify_keyval int (list int))
+
+;;; gschem_coord_dialog.c
+(define-lff coord_dialog void (list '* int int))
 
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
@@ -322,7 +326,6 @@
 (define-lff i_callback_options_scale_down_snap_size void '(* *))
 (define-lff i_callback_options_scale_up_snap_size void '(* *))
 (define-lff i_callback_options_select_font void '(* *))
-(define-lff i_callback_options_show_coord_window void '(* *))
 (define-lff i_callback_options_show_log_window void '(* *))
 (define-lff i_callback_options_snap void '(* *))
 (define-lff i_callback_options_snap_size void '(* *))

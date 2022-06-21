@@ -536,7 +536,7 @@
   (run-callback i_callback_options_show_log_window "&options-show-log-window"))
 
 (define-action-public (&options-show-coord-window #:label (G_ "Show Coordinate Window"))
-  (run-callback i_callback_options_show_coord_window "&options-show-coord-window"))
+  (coord_dialog (*current-window) 0 0))
 
 (define-action-public (&options-select-font #:label (G_ "Select Schematic Font"))
   (run-callback i_callback_options_select_font "&options-select-font"))

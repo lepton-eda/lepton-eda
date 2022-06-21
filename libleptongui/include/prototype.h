@@ -180,7 +180,6 @@ void i_callback_options_show_log_window (GtkWidget *widget, gpointer data);
 void i_callback_cancel (GtkWidget *widget, gpointer data);
 void i_callback_help_about (GtkWidget *widget, gpointer data);
 void i_callback_help_hotkeys (GtkWidget *widget, gpointer data);
-void i_callback_options_show_coord_window (GtkWidget *widget, gpointer data);
 void i_callback_options_select_font (GtkWidget *widget, gpointer data);
 void i_callback_options_draw_grips (GtkWidget *widget, gpointer data);
 gboolean i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
