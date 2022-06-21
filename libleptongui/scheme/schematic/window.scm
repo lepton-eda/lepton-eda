@@ -54,16 +54,6 @@
 ;;; exactly to it.
 (define %lepton-window (make-fluid))
 
-;;; Define a wrapped pointer type.
-(define-wrapped-pointer-type <schematic-window>
-  schematic-window?
-  wrap-schematic-window
-  unwrap-schematic-window
-  ;; Printer.
-  (lambda (window port)
-    (format port "#<schematic-window-0x~x>"
-            (pointer-address (unwrap-schematic-window window)))))
-
 
 ;;; Execute forms in the dynamic context of WINDOW and its
 ;;; toplevel.  We have to dynwind LeptonToplevel here as well
