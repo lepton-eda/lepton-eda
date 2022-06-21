@@ -216,9 +216,6 @@ schematic_toolbar_activate_button (GtkWidget *button)
 void
 schematic_toolbar_update (GschemToplevel *w_current)
 {
-  if (!w_current->toolbars)
-    return;
-
   switch (schematic_window_get_action_mode (w_current))
   {
     case(SELECT):
