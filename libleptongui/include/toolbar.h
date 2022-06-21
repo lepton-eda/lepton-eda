@@ -28,7 +28,7 @@ schematic_toolbar_new (GschemToplevel *w_current,
 void
 schematic_toolbar_activate_button (GtkWidget *button);
 
-GtkToolButton*
+GtkWidget*
 schematic_toolbar_button_new (const gchar *pixmap_name,
                               const gchar *label);
 void
