@@ -76,7 +76,6 @@
             i_callback_edit_unembed
             i_callback_edit_unlock
             i_callback_edit_update
-            i_callback_file_close
             i_callback_file_new
             i_callback_file_open
             i_callback_file_save
@@ -139,6 +138,7 @@
             x_stroke_init
             x_widgets_show_log
             x_window_create_main
+            x_window_close
             x_window_close_all
             x_window_close_page
             x_window_new
@@ -243,6 +243,7 @@
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup '* '(*))
 (define-lff x_window_create_main '* '(* * * *))
+(define-lff x_window_close void '(*))
 (define-lff x_window_close_all void '(*))
 (define-lff x_window_close_page void '(* *))
 
@@ -298,7 +299,6 @@
 (define-lff i_callback_edit_unembed void '(* *))
 (define-lff i_callback_edit_unlock void '(* *))
 (define-lff i_callback_edit_update void '(* *))
-(define-lff i_callback_file_close void '(* *))
 (define-lff i_callback_file_new void '(* *))
 (define-lff i_callback_file_open void '(* *))
 (define-lff i_callback_file_save void '(* *))

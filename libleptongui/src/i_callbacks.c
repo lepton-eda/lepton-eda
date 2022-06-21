@@ -236,27 +236,6 @@ i_callback_file_save_as (GtkWidget *widget, gpointer data)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  don't use the widget parameter on this function, or do some
- *  checking...
- *  since there is a call: widget = NULL, data = 0 (will be w_current)
- *  this function closes a window
- */
-void
-i_callback_file_close (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  g_message (_("Closing Window"));
-  x_window_close(w_current);
-}
-
 /*! \section edit-menu Edit Menu Callback Functions */
 /*! \todo Finish function documentation!!!
  *  \brief

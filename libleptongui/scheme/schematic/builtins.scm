@@ -120,7 +120,8 @@
                          (lepton_toplevel_new)))
 
 (define-action-public (&file-close-window #:label (G_ "Close Window") #:icon "gtk-close")
-  (run-callback i_callback_file_close "&file-close-window"))
+  (log! 'message (G_ "Closing Window"))
+  (x_window_close (*current-window)))
 
 (define-action-public (&file-quit #:label (G_ "Quit") #:icon "gtk-quit")
   (lepton-repl-save-history)
