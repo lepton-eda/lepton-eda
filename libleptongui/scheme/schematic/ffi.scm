@@ -80,7 +80,6 @@
             i_callback_file_open
             i_callback_file_save
             i_callback_file_save_all
-            i_callback_file_save_as
             i_callback_file_script
             i_callback_help_about
             i_callback_help_hotkeys
@@ -169,6 +168,8 @@
 
             x_event_get_pointer_position
             x_event_key
+
+            x_fileselect_save
 
             x_image_setup
 
@@ -303,7 +304,6 @@
 (define-lff i_callback_file_open void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lff i_callback_file_save_all void '(* *))
-(define-lff i_callback_file_save_as void '(* *))
 (define-lff i_callback_file_script void '(* *))
 (define-lff i_callback_help_about void '(* *))
 (define-lff i_callback_help_hotkeys void '(* *))
@@ -355,6 +355,9 @@
 
 ;;; x_event.c
 (define-lff x_event_key '* '(* * *))
+
+;;; x_fileselect.c
+(define-lff x_fileselect_save int '(* * *))
 
 ;;; x_image.c
 (define-lff x_image_setup void '(*))

@@ -90,7 +90,10 @@
   (run-callback i_callback_file_save "&file-save"))
 
 (define-action-public (&file-save-as #:label (G_ "Save As") #:icon "gtk-save-as")
-  (run-callback i_callback_file_save_as "&file-save-as"))
+  (define *window (*current-window))
+  (x_fileselect_save *window
+                     (schematic_window_get_active_page *window)
+                     %null-pointer))
 
 (define-action-public (&file-save-all #:label (G_ "Save All") #:icon "gtk-save")
   (run-callback i_callback_file_save_all "&file-save-all"))

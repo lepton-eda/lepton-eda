@@ -217,25 +217,6 @@ i_callback_file_save_all (GtkWidget *widget, gpointer data)
 } /* i_callback_file_save_all() */
 
 
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_file_save_as (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  LeptonPage* page = schematic_window_get_active_page (w_current);
-
-  x_fileselect_save (w_current, page, NULL);
-}
-
-
 /*! \section edit-menu Edit Menu Callback Functions */
 /*! \todo Finish function documentation!!!
  *  \brief

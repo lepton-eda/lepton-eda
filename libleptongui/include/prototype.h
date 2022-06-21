@@ -76,7 +76,6 @@ void i_callback_file_open (GtkWidget *widget, gpointer data);
 void i_callback_file_script (GtkWidget *widget, gpointer data);
 void i_callback_file_save (GtkWidget *widget, gpointer data);
 void i_callback_file_save_all (GtkWidget *widget, gpointer data);
-void i_callback_file_save_as (GtkWidget *widget, gpointer data);
 void i_callback_edit_undo (GtkWidget *widget, gpointer data);
 void i_callback_edit_redo (GtkWidget *widget, gpointer data);
 void i_callback_edit_select (GtkWidget *widget, gpointer data);
