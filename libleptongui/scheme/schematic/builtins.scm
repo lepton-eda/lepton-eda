@@ -99,7 +99,7 @@
   (x_print (*current-window)))
 
 (define-action-public (&file-image #:label (G_ "Export Image"))
-  (run-callback i_callback_file_write_png "&file-image"))
+  (x_image_setup (*current-window)))
 
 (define-action-public (&file-script #:label (G_ "Run Script") #:icon "gtk-execute")
   (run-callback i_callback_file_script "&file-script"))

@@ -83,7 +83,6 @@
             i_callback_file_save_all
             i_callback_file_save_as
             i_callback_file_script
-            i_callback_file_write_png
             i_callback_help_about
             i_callback_help_hotkeys
             i_callback_hierarchy_down_schematic
@@ -170,6 +169,8 @@
 
             x_event_get_pointer_position
             x_event_key
+
+            x_image_setup
 
             x_print
 
@@ -304,7 +305,6 @@
 (define-lff i_callback_file_save_all void '(* *))
 (define-lff i_callback_file_save_as void '(* *))
 (define-lff i_callback_file_script void '(* *))
-(define-lff i_callback_file_write_png void '(* *))
 (define-lff i_callback_help_about void '(* *))
 (define-lff i_callback_help_hotkeys void '(* *))
 (define-lff i_callback_hierarchy_down_schematic void '(* *))
@@ -355,6 +355,9 @@
 
 ;;; x_event.c
 (define-lff x_event_key '* '(* * *))
+
+;;; x_image.c
+(define-lff x_image_setup void '(*))
 
 ;;; x_print.c
 (define-lff x_print void '(*))

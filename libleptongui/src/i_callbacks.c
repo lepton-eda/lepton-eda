@@ -240,21 +240,6 @@ i_callback_file_save_as (GtkWidget *widget, gpointer data)
  *  \brief
  *  \par Function Description
  *
- */
-void
-i_callback_file_write_png (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  x_image_setup(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  *  \note
  *  don't use the widget parameter on this function, or do some
  *  checking...
