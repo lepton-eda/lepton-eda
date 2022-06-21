@@ -89,7 +89,6 @@ void i_callback_edit_delete (GtkWidget *widget, gpointer data);
 void i_callback_edit_edit (GtkWidget *widget, gpointer data);
 void i_callback_edit_text (GtkWidget *widget, gpointer data);
 void i_callback_edit_slot (GtkWidget *widget, gpointer data);
-void i_callback_edit_object_properties (GtkWidget *widget, gpointer data);
 void i_callback_edit_rotate_90 (GtkWidget *widget, gpointer data);
 void i_callback_edit_mirror (GtkWidget *widget, gpointer data);
 void i_callback_edit_lock (GtkWidget *widget, gpointer data);

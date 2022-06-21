@@ -62,7 +62,6 @@
             i_callback_edit_mcopy
             i_callback_edit_mirror
             i_callback_edit_move
-            i_callback_edit_object_properties
             i_callback_edit_redo
             i_callback_edit_rotate_90
             i_callback_edit_select
@@ -135,7 +134,10 @@
             x_menu_attach_recent_files_submenu
             x_show_uri
             x_stroke_init
+
             x_widgets_show_log
+            x_widgets_show_object_properties
+
             x_window_create_main
             x_window_close
             x_window_close_all
@@ -206,7 +208,10 @@
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())
 (define-lff x_color_init void '())
-(define-lff x_widgets_show_log void (list '*))
+
+;;; x_widgets.c
+(define-lff x_widgets_show_log void '(*))
+(define-lff x_widgets_show_object_properties void '(*))
 
 ;;; keys.c
 (define-lff schematic_keys_get_event_keyval int '(*))
@@ -286,7 +291,6 @@
 (define-lff i_callback_edit_mcopy void '(* *))
 (define-lff i_callback_edit_mirror void '(* *))
 (define-lff i_callback_edit_move void '(* *))
-(define-lff i_callback_edit_object_properties void '(* *))
 (define-lff i_callback_edit_redo void '(* *))
 (define-lff i_callback_edit_rotate_90 void '(* *))
 (define-lff i_callback_edit_select void '(* *))

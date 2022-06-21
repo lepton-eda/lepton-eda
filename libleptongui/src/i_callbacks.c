@@ -495,19 +495,6 @@ i_callback_edit_slot (GtkWidget *widget, gpointer data)
   }
 }
 
-/*! \brief Show "object properties" widget
- *
- */
-void
-i_callback_edit_object_properties (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  x_widgets_show_object_properties (w_current);
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

@@ -178,8 +178,9 @@
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
   (run-callback i_callback_edit_slot "&edit-slot"))
 
+;;; Show "object properties" widget.
 (define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")
-  (run-callback i_callback_edit_object_properties "&edit-object-properties"))
+  (x_widgets_show_object_properties (*current-window)))
 
 (define-action-public (&edit-translate #:label (G_ "Translate Symbol"))
   (run-callback i_callback_edit_translate "&edit-translate"))
