@@ -66,6 +66,17 @@ get_stock_pixmap (const char *stock)
 
 
 void
+schematic_toolbar_button_set_icon_widget (GtkWidget *button,
+                                          const gchar *icon_name)
+{
+  g_return_if_fail (button != NULL);
+
+  GtkWidget *icon = get_stock_pixmap (icon_name);
+  gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (button), icon);
+}
+
+
+void
 schematic_toolbar_button_set_label (GtkWidget *button,
                                     const gchar *label)
 {
@@ -86,25 +97,16 @@ schematic_toolbar_button_set_tooltip_text (GtkWidget *button,
 
 
 GtkWidget*
-schematic_toolbar_button_new (const gchar *pixmap_name)
+schematic_toolbar_button_new ()
 {
-  GtkWidget *pixmap = get_stock_pixmap (pixmap_name);
-
-  GtkWidget *button = GTK_WIDGET (gtk_tool_button_new (pixmap, NULL));
-
-  return button;
+  return GTK_WIDGET (gtk_tool_button_new (NULL, NULL));
 }
 
 
 GtkWidget*
-schematic_toolbar_radio_button_new (const gchar *pixmap_name)
+schematic_toolbar_radio_button_new ()
 {
-  GtkWidget *button = GTK_WIDGET (gtk_radio_tool_button_new (NULL));
-
-  GtkWidget *pixmap = get_stock_pixmap (pixmap_name);
-  gtk_tool_button_set_icon_widget (GTK_TOOL_BUTTON (button), pixmap);
-
-  return button;
+  return GTK_WIDGET (gtk_radio_tool_button_new (NULL));
 }
 
 
