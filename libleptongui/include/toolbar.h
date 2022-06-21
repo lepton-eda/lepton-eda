@@ -29,8 +29,11 @@ void
 schematic_toolbar_activate_button (GtkWidget *button);
 
 GtkWidget*
-schematic_toolbar_button_new (const gchar *pixmap_name);
+schematic_toolbar_button_new ();
 
+void
+schematic_toolbar_button_set_icon_widget (GtkWidget *button,
+                                          const gchar *icon_name);
 void
 schematic_toolbar_button_set_label (GtkWidget *button,
                                     const gchar *label);
@@ -38,7 +41,7 @@ void
 schematic_toolbar_button_set_tooltip_text (GtkWidget *button,
                                            const gchar *tooltip);
 GtkWidget*
-schematic_toolbar_radio_button_new (const gchar *pixmap_name);
+schematic_toolbar_radio_button_new ();
 
 GSList*
 schematic_toolbar_radio_button_get_group (GtkWidget *button);
