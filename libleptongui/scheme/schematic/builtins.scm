@@ -19,6 +19,7 @@
 ;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (schematic builtins)
+  #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
@@ -203,16 +204,11 @@
                       (string->pointer numslots-value)
                       (string->pointer slot-value))))
 
-(define (first-selected-component)
-  (let ((selected-components (filter component? (page-selection (active-page)))))
-    (and (not (null? selected-components))
-         (car selected-components))))
-
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
-  (let ((component (first-selected-component)))
-    (if component
-        (slot-edit-dialog (*current-window) component)
-        (schematic-message-dialog (G_ "Please first select a component!")))))
+  (match (filter component? (page-selection (active-page)))
+    ((a b . c) (schematic-message-dialog (G_ "Please select only one component!")))
+    ((component) (slot-edit-dialog (*current-window) component))
+    (_ (schematic-message-dialog (G_ "Please first select a component!")))))
 
 ;;; Show "object properties" widget.
 (define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")
