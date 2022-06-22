@@ -177,28 +177,39 @@
 
 
 ;;; Start a dialog for changing slot of selected component.
-(define (slot-edit-dialog *window *object)
-  ;; Just an abbreviation.
-  (define search-attribs o_attrib_search_object_attribs_by_name)
+(define (slot-edit-dialog *window component)
+  (define (attrib-by-name attribs name)
+    (let loop ((ls attribs))
+      (and (not (null? ls))
+           (if (string= name (attrib-name (car ls)))
+               (car ls)
+               (loop (cdr ls))))))
 
-  (when (true? (lepton_object_is_component *object))
-    (let ((*count-string (search-attribs *object (string->pointer "numslots") 0))
-          (*value-string (search-attribs *object (string->pointer "slot") 0)))
+  (define (component-attrib-by-name component name)
+    (or (attrib-by-name (object-attribs component) name)
+        (attrib-by-name (inherited-attribs component) name)))
 
-      (slot_edit_dialog *window
-                        *count-string
-                        (if (null-pointer? *value-string)
-                            ;; we didn't find a slot=? attribute,
-                            ;; make something up for now.. this is
-                            ;; an error condition
-                            (string->pointer "1")
-                            *value-string)))))
+  (define (component-attrib-value-by-name component name)
+    (and=> (component-attrib-by-name component name) attrib-value))
+
+  ;; We ignore possible lack of the "numslot" attribute though
+  ;; cannot do this for "slot".  If the latter is missing, it
+  ;; will be added with the value "1" for now.
+  (let ((numslots-value (or (component-attrib-value-by-name component "numslots") ""))
+        (slot-value (or (component-attrib-value-by-name component "slot") "1")))
+    ;; Run the dialog.
+    (slot_edit_dialog *window
+                      (string->pointer numslots-value)
+                      (string->pointer slot-value))))
+
+(define (first-selected-component)
+  (let ((selected-components (filter component? (page-selection (active-page)))))
+    (and (not (null? selected-components))
+         (car selected-components))))
 
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
-  (let* ((*window (*current-window))
-         (*object (o_select_return_first_object *window)))
-    (unless (null-pointer? *object)
-      (slot-edit-dialog *window *object))))
+  (and=> (first-selected-component)
+         (lambda (c) (slot-edit-dialog (*current-window) c))))
 
 ;;; Show "object properties" widget.
 (define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")

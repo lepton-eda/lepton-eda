@@ -115,7 +115,6 @@
             make_separator_menu_item
 
             o_attrib_add_attrib
-            o_attrib_search_object_attribs_by_name
 
             o_buffer_init
             o_undo_init
@@ -174,8 +173,6 @@
 
             text_edit_dialog
 
-            o_select_return_first_object
-
             o_undo_savestate
 
             x_event_get_pointer_position
@@ -216,7 +213,6 @@
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
-(define-lff o_attrib_search_object_attribs_by_name '* (list '* '* int))
 
 ;;; page_select_widget.c
 (define-lff page_select_widget_update void '(*))
@@ -392,9 +388,6 @@
 
 ;;; x_print.c
 (define-lff x_print void '(*))
-
-;;; o_select.c
-(define-lff o_select_return_first_object '* '(*))
 
 ;;; x_tabs.c
 (define-lff x_tabs_next void '(*))
