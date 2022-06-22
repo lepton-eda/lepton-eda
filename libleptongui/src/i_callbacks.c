@@ -464,26 +464,6 @@ i_callback_edit_edit (GtkWidget *widget, gpointer data)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
- */
-void
-i_callback_edit_slot (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  LeptonObject *object;
-
-  g_return_if_fail (w_current != NULL);
-
-  object = o_select_return_first_object(w_current);
-
-  if (object) {
-    o_slot_start(w_current, object);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
  *  This function rotate all objects in the selection list by 90 degrees.
  *
  */

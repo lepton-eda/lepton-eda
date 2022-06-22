@@ -68,7 +68,6 @@
             i_callback_edit_select_all
             i_callback_edit_show_hidden
             i_callback_edit_show_text
-            i_callback_edit_slot
             i_callback_edit_translate
             i_callback_edit_undo
             i_callback_edit_unembed
@@ -169,6 +168,10 @@
             gschem_options_get_snap_size
 
             text_edit_dialog
+
+            o_select_return_first_object
+
+            o_slot_start
 
             o_undo_savestate
 
@@ -323,7 +326,6 @@
 (define-lff i_callback_edit_select_all void '(* *))
 (define-lff i_callback_edit_show_hidden void '(* *))
 (define-lff i_callback_edit_show_text void '(* *))
-(define-lff i_callback_edit_slot void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
 (define-lff i_callback_edit_undo void '(* *))
 (define-lff i_callback_edit_unembed void '(* *))
@@ -383,6 +385,12 @@
 
 ;;; x_print.c
 (define-lff x_print void '(*))
+
+;;; o_slot.c
+(define-lff o_slot_start void '(* *))
+
+;;; o_select.c
+(define-lff o_select_return_first_object '* '(*))
 
 ;;; x_tabs.c
 (define-lff x_tabs_next void '(*))

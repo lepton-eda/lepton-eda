@@ -176,7 +176,10 @@
   (text_edit_dialog (*current-window)))
 
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
-  (run-callback i_callback_edit_slot "&edit-slot"))
+  (let* ((*window (*current-window))
+         (*object (o_select_return_first_object *window)))
+    (unless (null-pointer? *object)
+      (o_slot_start *window *object))))
 
 ;;; Show "object properties" widget.
 (define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")
