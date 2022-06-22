@@ -32,6 +32,7 @@
   #:use-module (schematic action)
   #:use-module (schematic gettext)
   #:use-module (schematic ffi)
+  #:use-module (schematic dialog)
   #:use-module (schematic doc)
   #:use-module (schematic gui keymap)
   #:use-module (schematic hook)
@@ -208,8 +209,10 @@
          (car selected-components))))
 
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
-  (and=> (first-selected-component)
-         (lambda (c) (slot-edit-dialog (*current-window) c))))
+  (let ((component (first-selected-component)))
+    (if component
+        (slot-edit-dialog (*current-window) component)
+        (schematic-message-dialog (G_ "Please first select a component!")))))
 
 ;;; Show "object properties" widget.
 (define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")
