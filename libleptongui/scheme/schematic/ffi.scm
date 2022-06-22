@@ -113,7 +113,10 @@
             i_callback_view_zoom_out
             make_menu_action
             make_separator_menu_item
+
             o_attrib_add_attrib
+            o_attrib_search_object_attribs_by_name
+
             o_buffer_init
             o_undo_init
 
@@ -125,6 +128,8 @@
             x_menu_attach_recent_files_submenu
             x_show_uri
             x_stroke_init
+
+            slot_edit_dialog
 
             x_widgets_show_find_text_state
             x_widgets_show_font_select
@@ -171,8 +176,6 @@
 
             o_select_return_first_object
 
-            o_slot_start
-
             o_undo_savestate
 
             x_event_get_pointer_position
@@ -213,6 +216,7 @@
 
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
+(define-lff o_attrib_search_object_attribs_by_name '* (list '* '* int))
 
 ;;; page_select_widget.c
 (define-lff page_select_widget_update void '(*))
@@ -246,6 +250,9 @@
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
 (define-lff gschem_page_view_invalidate_all void '(*))
+
+;;; gschem_slot_edit_dialog.c
+(define-lff slot_edit_dialog void '(* * *))
 
 ;;; gschem_toplevel.c
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
@@ -385,9 +392,6 @@
 
 ;;; x_print.c
 (define-lff x_print void '(*))
-
-;;; o_slot.c
-(define-lff o_slot_start void '(* *))
 
 ;;; o_select.c
 (define-lff o_select_return_first_object '* '(*))

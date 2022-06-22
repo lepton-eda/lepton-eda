@@ -175,11 +175,30 @@
 (define-action-public (&edit-text #:label (G_ "Edit Text") #:icon "gtk-edit")
   (text_edit_dialog (*current-window)))
 
+
+;;; Start a dialog for changing slot of selected component.
+(define (slot-edit-dialog *window *object)
+  ;; Just an abbreviation.
+  (define search-attribs o_attrib_search_object_attribs_by_name)
+
+  (when (true? (lepton_object_is_component *object))
+    (let ((*count-string (search-attribs *object (string->pointer "numslots") 0))
+          (*value-string (search-attribs *object (string->pointer "slot") 0)))
+
+      (slot_edit_dialog *window
+                        *count-string
+                        (if (null-pointer? *value-string)
+                            ;; we didn't find a slot=? attribute,
+                            ;; make something up for now.. this is
+                            ;; an error condition
+                            (string->pointer "1")
+                            *value-string)))))
+
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
   (let* ((*window (*current-window))
          (*object (o_select_return_first_object *window)))
     (unless (null-pointer? *object)
-      (o_slot_start *window *object))))
+      (slot-edit-dialog *window *object))))
 
 ;;; Show "object properties" widget.
 (define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")

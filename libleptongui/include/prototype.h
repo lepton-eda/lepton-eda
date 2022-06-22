@@ -400,7 +400,6 @@ void o_select_unselect_all(GschemToplevel *w_current);
 void o_select_visible_unlocked(GschemToplevel *w_current);
 void o_select_move_to_place_list(GschemToplevel *w_current);
 /* o_slot.c */
-void o_slot_start(GschemToplevel *w_current, LeptonObject *object);
 void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *string);
 /* o_text.c */
 void o_text_prepare_place(GschemToplevel *w_current, char *text, int color, int align, int rotate, int size);

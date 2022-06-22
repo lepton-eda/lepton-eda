@@ -28,34 +28,6 @@
 
 #define MAX_SLOT_SIZE 10
 
-/*! \todo Finish function documentation!!!
- *  \brief Change slot of selected component
- *  \par Function Description
- *
- */
-void o_slot_start (GschemToplevel *w_current, LeptonObject *object)
-{
-  char *slot_count;
-  char *slot_value;
-
-  /* single object for now */
-  if (!lepton_object_is_component (object))
-    return;
-
-  slot_count = o_attrib_search_object_attribs_by_name (object, "numslots", 0);
-  slot_value = o_attrib_search_object_attribs_by_name (object, "slot", 0);
-
-  if (slot_value == NULL) {
-    /* we didn't find a slot=? attribute, make something up */
-    /* for now.. this is an error condition */
-    slot_value = g_strdup ("1");
-  }
-
-  slot_edit_dialog (w_current, slot_count, slot_value);
-
-  g_free (slot_count);
-  g_free (slot_value);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
