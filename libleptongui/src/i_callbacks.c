@@ -460,20 +460,6 @@ i_callback_edit_edit (GtkWidget *widget, gpointer data)
   o_edit(w_current, lepton_list_get_glist (active_page->selection_list));
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_edit_text (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  text_edit_dialog (w_current);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

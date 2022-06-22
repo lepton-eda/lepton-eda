@@ -69,7 +69,6 @@
             i_callback_edit_show_hidden
             i_callback_edit_show_text
             i_callback_edit_slot
-            i_callback_edit_text
             i_callback_edit_translate
             i_callback_edit_undo
             i_callback_edit_unembed
@@ -167,6 +166,8 @@
 
             gschem_options_get_snap_size
 
+            text_edit_dialog
+
             o_undo_savestate
 
             x_event_get_pointer_position
@@ -238,6 +239,9 @@
 ;;; gschem_options.c
 (define-lff gschem_options_get_snap_size int '(*))
 
+;;; gschem_text_properties_widget.c
+(define-lff text_edit_dialog void '(*))
+
 ;;; x_menus.c
 (define-lff make_separator_menu_item '* '())
 (define-lff make_menu_action '* '(* * * * *))
@@ -303,7 +307,6 @@
 (define-lff i_callback_edit_show_hidden void '(* *))
 (define-lff i_callback_edit_show_text void '(* *))
 (define-lff i_callback_edit_slot void '(* *))
-(define-lff i_callback_edit_text void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
 (define-lff i_callback_edit_undo void '(* *))
 (define-lff i_callback_edit_unembed void '(* *))

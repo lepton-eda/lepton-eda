@@ -173,7 +173,7 @@
   (run-callback i_callback_edit_edit "&edit-edit"))
 
 (define-action-public (&edit-text #:label (G_ "Edit Text") #:icon "gtk-edit")
-  (run-callback i_callback_edit_text "&edit-text"))
+  (text_edit_dialog (*current-window)))
 
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
   (run-callback i_callback_edit_slot "&edit-slot"))
