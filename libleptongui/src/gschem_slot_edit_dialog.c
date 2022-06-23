@@ -43,7 +43,10 @@
  *  The function takes the dialog entry and applies the new slot to the
  *  symbol.
  */
-void slot_edit_dialog_response(GtkWidget *widget, gint response, GschemToplevel *w_current)
+void
+slot_edit_dialog_response (GtkWidget *widget,
+                           gint response,
+                           GschemToplevel *w_current)
 {
   GtkWidget *textentry;
   char *slot_string;
@@ -80,7 +83,11 @@ void slot_edit_dialog_response(GtkWidget *widget, gint response, GschemToplevel 
  *  \par Function Description
  *  This function creates the slot edit dialog.
  */
-void slot_edit_dialog (GschemToplevel *w_current, const char *count, const char *string)
+void
+slot_edit_dialog (GschemToplevel *w_current,
+                  const char *count,
+                  const char *string,
+                  GCallback response_callback)
 {
   GtkWidget *label[2];
   GtkWidget *table;
@@ -110,7 +117,7 @@ void slot_edit_dialog (GschemToplevel *w_current, const char *count, const char 
                                      GTK_RESPONSE_ACCEPT);
 
     g_signal_connect (G_OBJECT (w_current->sewindow), "response",
-                      G_CALLBACK (slot_edit_dialog_response),
+                      G_CALLBACK (response_callback),
                       w_current);
 
     gtk_container_set_border_width (GTK_CONTAINER (w_current->sewindow),

@@ -129,6 +129,7 @@
             x_stroke_init
 
             slot_edit_dialog
+            *slot_edit_dialog_response
 
             x_widgets_show_find_text_state
             x_widgets_show_font_select
@@ -267,7 +268,8 @@
 (define-lff gschem_page_view_invalidate_all void '(*))
 
 ;;; gschem_slot_edit_dialog.c
-(define-lff slot_edit_dialog void '(* * *))
+(define-lff slot_edit_dialog void '(* * * *))
+(define-lfc *slot_edit_dialog_response)
 
 ;;; gschem_toplevel.c
 (define-lff gschem_toplevel_get_current_page_view '* '(*))

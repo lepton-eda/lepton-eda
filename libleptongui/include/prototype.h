@@ -27,6 +27,17 @@ g_run_hook_page (GschemToplevel *w_current,
                  LeptonPage *page);
 void g_run_hook_action_mode (GschemToplevel *w_current, const char *name, const gchar *action_mode);
 
+/* gschem_slot_edit_dialog.c */
+void
+slot_edit_dialog (GschemToplevel *w_current,
+                  const char *count,
+                  const char *string,
+                  GCallback response_callback);
+void
+slot_edit_dialog_response (GtkWidget *widget,
+                           gint response,
+                           GschemToplevel *w_current);
+
 /* keys.c */
 guint
 schematic_keys_get_event_keyval (GdkEventKey *event);
@@ -483,7 +494,6 @@ void text_input_dialog(GschemToplevel *w_current);
 void text_edit_dialog(GschemToplevel *w_current);
 void arc_angle_dialog(GschemToplevel *w_current, LeptonObject *arc_object);
 void snap_size_dialog(GschemToplevel *w_current);
-void slot_edit_dialog(GschemToplevel *w_current, const char *count, const char *string);
 void about_dialog(GschemToplevel *w_current);
 void coord_display_update(GschemToplevel *w_current, int x, int y);
 void coord_dialog(GschemToplevel *w_current, int x, int y);

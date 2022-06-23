@@ -202,7 +202,8 @@
     ;; Run the dialog.
     (slot_edit_dialog *window
                       (string->pointer numslots-value)
-                      (string->pointer slot-value))))
+                      (string->pointer slot-value)
+                      *slot_edit_dialog_response)))
 
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
   (match (filter component? (page-selection (active-page)))
