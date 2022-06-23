@@ -64,6 +64,13 @@
              (log! 'critical "~S: Current window is unavailable." action-name)
              #f))))))
 
+(define-syntax *current-window
+  (syntax-rules ()
+    ((_)
+     (let ((*window (and=> (current-window) window->pointer)))
+       (or *window
+           (error "Current window is unavailable."))))))
+
 ;; -------------------------------------------------------------------
 ;;;; Special actions
 
