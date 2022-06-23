@@ -38,6 +38,35 @@
 
 /***************** Start of slot edit dialog box *********************/
 
+
+void
+slot_edit_dialog_quit (GschemToplevel *w_current)
+{
+  i_set_state (w_current, SELECT);
+  gtk_widget_destroy (w_current->sewindow);
+  w_current->sewindow = NULL;
+}
+
+
+void
+slot_edit_dialog_set_slot (GschemToplevel *w_current,
+                           char *string)
+{
+  int len;
+  char *slot_string;
+
+  len = strlen (string);
+  if (len != 0)
+  {
+    slot_string = g_strdup_printf ("slot=%s", string);
+    o_slot_end (w_current,
+                o_select_return_first_object (w_current),
+                slot_string);
+    g_free (slot_string);
+  }
+}
+
+
 /*! \brief response function for the slot edit dialog
  *  \par Function Description
  *  The function takes the dialog entry and applies the new slot to the
@@ -49,8 +78,6 @@ slot_edit_dialog_response (GtkWidget *widget,
                            GschemToplevel *w_current)
 {
   GtkWidget *textentry;
-  char *slot_string;
-  int len;
   gchar *string = NULL;
 
   switch (response) {
@@ -62,20 +89,12 @@ slot_edit_dialog_response (GtkWidget *widget,
     textentry = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->sewindow),
                                                "textentry"));
     string = (gchar*) gtk_entry_get_text(GTK_ENTRY(textentry));
-    len = strlen(string);
-    if (len != 0) {
-      slot_string = g_strdup_printf ("slot=%s", string);
-      o_slot_end (w_current, o_select_return_first_object (w_current),
-                  slot_string);
-      g_free (slot_string);
-    }
+    slot_edit_dialog_set_slot (w_current, string);
     break;
   default:
     printf("slot_edit_dialog_response(): strange signal %1$d\n",response);
   }
-  i_set_state(w_current, SELECT);
-  gtk_widget_destroy(w_current->sewindow);
-  w_current->sewindow = NULL;
+  slot_edit_dialog_quit (w_current);
 }
 
 
