@@ -21,7 +21,7 @@
 #ifndef ACTION_MODE_H
 #define ACTION_MODE_H
 
-#undef NONE
+G_BEGIN_DECLS
 
 /* NOTE: when adding states, also update i_status_string() function */
 
@@ -56,5 +56,14 @@ enum _SchematicActionMode {
 };
 
 typedef enum _SchematicActionMode SchematicActionMode;
+
+
+SchematicActionMode
+schematic_action_mode_from_string (char *s);
+
+const char*
+schematic_action_mode_to_string (SchematicActionMode mode);
+
+G_END_DECLS
 
 #endif /* ACTION_MODE_H */
