@@ -61,7 +61,4 @@ extern int verbose_mode;
 #define ATTRIBUTE_UNUSED
 #endif
 
-/*EK* used by prototype.h */
-#include "../include/action_mode.h"
-
 #endif
