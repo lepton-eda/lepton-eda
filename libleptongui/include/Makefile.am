@@ -1,9 +1,9 @@
 noinst_HEADERS = \
+	action_mode.h \
 	globals.h \
 	i_vars.h \
 	prototype.h \
 	x_dialog.h \
-	x_states.h \
 	gettext.h \
 	x_compselect.h \
 	x_multiattrib.h \

@@ -62,6 +62,6 @@ extern int verbose_mode;
 #endif
 
 /*EK* used by prototype.h */
-#include "../include/x_states.h"
+#include "../include/action_mode.h"
 
 #endif

@@ -16,8 +16,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
  */
 
-#ifndef X_STATES_H
-#define X_STATES_H
+#ifndef ACTION_MODE_H
+#define ACTION_MODE_H
 
 #undef NONE
 
@@ -53,5 +53,4 @@ enum x_states {
   ROTATEMODE,
 };
 
-
-#endif
+#endif /* ACTION_MODE_H */

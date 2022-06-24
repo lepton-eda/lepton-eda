@@ -17,6 +17,7 @@ typedef struct st_gschem_toplevel GschemToplevel;
 typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 
 /* gschem headers */
+#include "action_mode.h"
 #include "gschem_defines.h"
 #include "gschem_bin.h"
 #include "gschem_bottom_widget.h"
@@ -42,7 +43,6 @@ typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 #include "gschem_preview.h"
 #include "x_compselect.h"
 #include "x_dialog.h"
-#include "x_states.h"
 #include "gschem_swatch_column_renderer.h"
 #include "gschem_fill_swatch_cell_renderer.h"
 #include "globals.h"
@@ -65,4 +65,3 @@ typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 
 
 #endif /* LEPTON_MAIN_HEADER_H_ */
-
