@@ -189,6 +189,9 @@
             x_tabs_create
             x_tabs_enabled
 
+            schematic_action_mode_from_string
+            schematic_action_mode_to_string
+
             schematic_grid_mode_from_string
             schematic_grid_mode_to_string
 
@@ -322,6 +325,10 @@
 (define-lff x_widgets_show_object_properties void '(*))
 (define-lff x_widgets_show_options void '(*))
 (define-lff x_widgets_show_page_select void '(*))
+
+;;; action_mode.c
+(define-lff schematic_action_mode_from_string int '(*))
+(define-lff schematic_action_mode_to_string '* (list int))
 
 ;;; grid_mode.c
 (define-lff schematic_grid_mode_from_string int '(*))

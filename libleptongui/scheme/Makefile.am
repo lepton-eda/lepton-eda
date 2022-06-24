@@ -14,6 +14,7 @@ nobase_dist_scmdata_DATA = \
 	gschem/window.scm \
 	gschem/deprecated.scm \
 	schematic/action.scm \
+	schematic/action-mode.scm \
 	schematic/attrib.scm \
 	schematic/builtins.scm \
 	schematic/gettext.scm \
