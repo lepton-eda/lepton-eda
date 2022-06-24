@@ -34,6 +34,7 @@
   #:use-module (schematic gettext)
   #:use-module (schematic ffi)
   #:use-module (schematic dialog)
+  #:use-module (schematic dialog slot-edit)
   #:use-module (schematic doc)
   #:use-module (schematic gui keymap)
   #:use-module (schematic hook)
@@ -176,34 +177,6 @@
 
 (define-action-public (&edit-text #:label (G_ "Edit Text") #:icon "gtk-edit")
   (text_edit_dialog (*current-window)))
-
-
-;;; Start a dialog for changing slot of selected component.
-(define (slot-edit-dialog *window component)
-  (define (attrib-by-name attribs name)
-    (let loop ((ls attribs))
-      (and (not (null? ls))
-           (if (string= name (attrib-name (car ls)))
-               (car ls)
-               (loop (cdr ls))))))
-
-  (define (component-attrib-by-name component name)
-    (or (attrib-by-name (object-attribs component) name)
-        (attrib-by-name (inherited-attribs component) name)))
-
-  (define (component-attrib-value-by-name component name)
-    (and=> (component-attrib-by-name component name) attrib-value))
-
-  ;; We ignore possible lack of the "numslot" attribute though
-  ;; cannot do this for "slot".  If the latter is missing, it
-  ;; will be added with the value "1" for now.
-  (let ((numslots-value (or (component-attrib-value-by-name component "numslots") ""))
-        (slot-value (or (component-attrib-value-by-name component "slot") "1")))
-    ;; Run the dialog.
-    (slot_edit_dialog *window
-                      (string->pointer numslots-value)
-                      (string->pointer slot-value)
-                      *slot_edit_dialog_response)))
 
 (define-action-public (&edit-slot #:label (G_ "Choose Slot"))
   (match (filter component? (page-selection (active-page)))
