@@ -1,5 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
+ * Copyright (C) 1998-2015 gEDA Contributors
+ * Copyright (C) 2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -23,7 +25,7 @@
 
 /* NOTE: when adding states, also update i_status_string() function */
 
-enum x_states {
+enum _SchematicActionMode {
   /* Basic modes */
   SELECT,
   GRIPS,
@@ -52,5 +54,7 @@ enum x_states {
   MIRRORMODE,
   ROTATEMODE,
 };
+
+typedef enum _SchematicActionMode SchematicActionMode;
 
 #endif /* ACTION_MODE_H */

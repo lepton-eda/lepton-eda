@@ -204,7 +204,8 @@ void i_action_update_status (GschemToplevel *w_current, gboolean inside_action)
  *  \param [in] newstate   The new state
  */
 static void
-update_state_menu_items (GschemToplevel* w_current, enum x_states newstate)
+update_state_menu_items (GschemToplevel* w_current,
+                         SchematicActionMode newstate)
 {
   x_menus_sensitivity (w_current->menubar, "&edit-select", newstate != SELECT);
 }
@@ -221,7 +222,9 @@ update_state_menu_items (GschemToplevel* w_current, enum x_states newstate)
  *  \param [in] newstate The new state
  *   *EK* Egil Kvaleberg
  */
-void i_set_state(GschemToplevel *w_current, enum x_states newstate)
+void
+i_set_state (GschemToplevel *w_current,
+             SchematicActionMode newstate)
 {
   i_set_state_msg(w_current, newstate, NULL);
 
@@ -268,8 +271,10 @@ void i_set_state(GschemToplevel *w_current, enum x_states newstate)
  *  \param [in] message Message to be shown
  *   *EK* Egil Kvaleberg
  */
-void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate,
-                     const char *message)
+void
+i_set_state_msg (GschemToplevel *w_current,
+                 SchematicActionMode newstate,
+                 const char *message)
 {
   if ((newstate != w_current->event_state) || (message != NULL)) {
     w_current->event_state = newstate;
@@ -418,7 +423,7 @@ void i_update_menus (GschemToplevel* w_current)
   */
   x_clipboard_query_usable (w_current, clipboard_usable_cb, w_current);
 
-  update_state_menu_items (w_current, (enum x_states) w_current->event_state);
+  update_state_menu_items (w_current, (SchematicActionMode) w_current->event_state);
 
   gboolean selected      = o_select_selected (w_current);
   gboolean text_selected = selected && obj_selected (page, OBJ_TEXT);

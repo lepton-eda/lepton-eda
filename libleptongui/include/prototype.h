@@ -62,8 +62,15 @@ void i_action_start(GschemToplevel *w_current);
 void i_action_stop(GschemToplevel *w_current);
 void i_action_update_status(GschemToplevel *w_current,gboolean inside_action);
 void i_show_state(GschemToplevel *w_current, const char *message);
-void i_set_state(GschemToplevel *w_current, enum x_states newstate);
-void i_set_state_msg(GschemToplevel *w_current, enum x_states newstate, const char *message);
+
+void
+i_set_state (GschemToplevel *w_current,
+             SchematicActionMode newstate);
+void
+i_set_state_msg (GschemToplevel *w_current,
+                 SchematicActionMode newstate,
+                 const char *message);
+
 void i_update_toolbar(GschemToplevel *w_current);
 void i_update_menus(GschemToplevel *w_current);
 void i_set_filename(GschemToplevel *w_current, const gchar *filename, gboolean changed);
