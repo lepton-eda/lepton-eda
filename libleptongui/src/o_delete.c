@@ -121,7 +121,8 @@ void o_delete_selected (GschemToplevel *w_current)
 
   g_run_hook_object_list (w_current, "remove-objects-hook", to_remove);
 
-  if (w_current->inside_action && w_current->event_state == MOVEMODE) {
+  if (w_current->inside_action && w_current->action_mode == MOVEMODE)
+  {
     /* In MOVEMODE selection is equal to the place list and we
      * have to remove the place list as well. o_move_cancel will
      * do it for us. */

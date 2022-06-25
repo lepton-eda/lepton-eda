@@ -249,7 +249,8 @@ void o_rotate_world_update(GschemToplevel *w_current,
     o_undo_savestate_old(w_current, UNDO_ALL);
   }
 
-  if (w_current->event_state == ROTATEMODE) {
+  if (w_current->action_mode == ROTATEMODE)
+  {
     i_set_state(w_current, SELECT);
   }
 }
@@ -302,7 +303,8 @@ void o_mirror_world_update(GschemToplevel *w_current, int centerx, int centery, 
   schematic_window_active_page_changed (w_current);
   o_undo_savestate_old(w_current, UNDO_ALL);
 
-  if (w_current->event_state == MIRRORMODE) {
+  if (w_current->action_mode == MIRRORMODE)
+  {
     i_set_state(w_current, SELECT);
   }
 }

@@ -289,7 +289,7 @@ GschemToplevel *gschem_toplevel_new ()
   /* Gschem internal state */
   /* --------------------- */
   w_current->num_untitled = 0;
-  w_current->event_state = SELECT;
+  w_current->action_mode = SELECT;
   w_current->min_zoom = 0;
   w_current->max_zoom = 8;
   w_current->drawbounding_action_mode = FREE;

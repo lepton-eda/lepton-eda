@@ -132,7 +132,8 @@ x_compselect_callback_response (GtkDialog *dialog,
               g_assert_not_reached ();
         }
 
-        if (w_current->event_state == COMPMODE) {
+        if (w_current->action_mode == COMPMODE)
+        {
           /* Delete the component which was being placed */
           if (w_current->rubber_visible)
             o_place_invalidate_rubber (w_current, FALSE);
@@ -174,8 +175,8 @@ x_compselect_callback_response (GtkDialog *dialog,
         gtk_widget_destroy (GTK_WIDGET (dialog));
         w_current->cswindow = NULL;
 
-        if (w_current->event_state == COMPMODE) {
-
+        if (w_current->action_mode == COMPMODE)
+        {
           /* Cancel the place operation currently in progress */
           o_redraw_cleanstates (w_current);
 

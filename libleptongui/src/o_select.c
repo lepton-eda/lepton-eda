@@ -59,7 +59,8 @@ void o_select_start (GschemToplevel *w_current, int wx, int wy)
   /* look for grips or fall through if not enabled */
   o_grips_start(w_current, wx, wy);
 
-  if (w_current->event_state != GRIPS) {
+  if (w_current->action_mode != GRIPS)
+  {
     /* now go into normal SELECT */
     i_action_start (w_current);
     w_current->first_wx = w_current->second_wx = wx;

@@ -1161,7 +1161,7 @@ x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p)
 static void
 x_tabs_cancel_all (GschemToplevel* w_current)
 {
-  if (w_current->event_state == COMPMODE && w_current->cswindow)
+  if (w_current->action_mode == COMPMODE && w_current->cswindow)
   {
     o_place_invalidate_rubber (w_current, FALSE);
     w_current->rubber_visible = 0;
@@ -1179,7 +1179,7 @@ x_tabs_cancel_all (GschemToplevel* w_current)
     o_move_cancel (w_current);
   }
 
-  if (w_current->event_state == GRIPS)
+  if (w_current->action_mode == GRIPS)
   {
     o_grips_cancel (w_current);
   }

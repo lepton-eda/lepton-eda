@@ -189,7 +189,7 @@ void o_redraw_rect (GschemToplevel *w_current,
 
   /* Determine whether we should draw the selection at all */
   draw_selected = !(w_current->inside_action &&
-                    (w_current->event_state == MOVEMODE));
+                    (w_current->action_mode == MOVEMODE));
 
   /* First pass -- render non-selected objects */
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
@@ -240,7 +240,8 @@ void o_redraw_rect (GschemToplevel *w_current,
 
     /* Redraw the rubberband objects (if they were previously visible) */
     if (page->place_list != NULL) {
-      switch (w_current->event_state) {
+      switch (w_current->action_mode)
+      {
         case COMPMODE:
         case TEXTMODE:
         case COPYMODE:
@@ -274,7 +275,8 @@ void o_redraw_rect (GschemToplevel *w_current,
     }
 
     if (w_current->rubber_visible) {
-      switch (w_current->event_state) {
+      switch (w_current->action_mode)
+      {
         case ARCMODE    : o_arc_draw_rubber (w_current, renderer); break;
         case BOXMODE    : o_box_draw_rubber (w_current, renderer); break;
         case CIRCLEMODE : o_circle_draw_rubber (w_current, renderer); break;
@@ -333,8 +335,8 @@ int o_invalidate_rubber (GschemToplevel *w_current)
   if (!w_current->inside_action)
     return(FALSE);
 
-  switch(w_current->event_state) {
-
+  switch(w_current->action_mode)
+  {
     case (ARCMODE)    : o_arc_invalidate_rubber (w_current); break;
     case (BOXMODE)    : o_box_invalidate_rubber (w_current); break;
     case (BUSMODE)    : o_bus_invalidate_rubber (w_current); break;
@@ -357,7 +359,7 @@ int o_invalidate_rubber (GschemToplevel *w_current)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *  This function is neccesary to make jumps between event_states.
+ *  This function is neccesary to make jumps between action modes.
  *  If we are inside an drawing action that created something on the dc,
  *  e.g. if we are drawing a box and then jump to line drawing without
  *  leaving the box drawing mode, there will remain some rubberbands on the
@@ -372,7 +374,8 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     return FALSE;
   }
 
-  switch (w_current->event_state) {
+  switch (w_current->action_mode)
+  {
     /* all states with something on the dc */
     case(COMPMODE):
       /* De-select the lists in the component selector */
@@ -400,13 +403,14 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
 
       /* If we're cancelling from a move action, re-wind the
        * page contents back to their state before we started. */
-      if (w_current->event_state == MOVEMODE) {
+      if (w_current->action_mode == MOVEMODE)
+      {
         o_move_cancel (w_current);
       }
 
       /* If we're cancelling from a grip action, call the specific cancel
        * routine to reset the visibility of the object being modified */
-      if (w_current->event_state == GRIPS)
+      if (w_current->action_mode == GRIPS)
         o_grips_cancel (w_current);
 
       /* Free the place list and its contents. If we were in a move
