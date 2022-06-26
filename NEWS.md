@@ -34,6 +34,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - Porting the program to the stable GTK version 3.24 has been
   completed.  Deprecated functions are no longer used in the code.
 
+- Two Scheme scripts, `auto-refdes.scm` and `auto-uref.scm`, used
+  in the program have been transformed into a new module,
+  `(schematic refdes)`.  Main functions of the scripts are now
+  exported in the new module.
+
 
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
