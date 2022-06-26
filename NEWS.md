@@ -5,6 +5,30 @@ This file documents important user-visible changes in Lepton EDA.  For
 more information, please consult `git log` history.
 
 
+Notable changes in Lepton EDA 1.9.19 (upcoming)
+-----------------------------------------------
+
+### General changes:
+
+- **SMOB** machinery deprecated in Guile has been fully replaced
+  with using modern foreign function interface (FFI).
+
+### Changes in `liblepton`:
+
+- A new Scheme type, `<toplevel>`, has been introduced.  This is a
+  wrapped foreign pointer type in Scheme representing the
+  `LeptonToplevel` structure in C.  Three procedures in the module
+  `(lepton toplevel)` are now exported for transforming instances
+  of the type *to* or *from* pointers and for checking the type.
+  Those are `toplevel->pointer`, `pointer->toplevel`, and
+  `toplevel?`.
+
+- Three procedures in the module `(lepton toplevel)`,
+  `%current-toplevel()`, `%make-toplevel()`, and `%with-toplevel`,
+  have been renamed.  The procedures had the prefix `%` as they
+  were previously defined in C code.  Now, when this is no longer
+  the case, the prefix has been dropped.
+
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
 
