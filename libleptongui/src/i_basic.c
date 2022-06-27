@@ -229,33 +229,9 @@ i_set_state (GschemToplevel *w_current,
 {
   i_set_state_msg(w_current, newstate, NULL);
 
-  const gchar* mode = "select-mode";
-    switch (newstate) {
-      case SELECT: mode="select-mode"; break;
-      case GRIPS: mode="grips-mode"; break;
-      case ARCMODE: mode="arc-mode"; break;
-      case BOXMODE: mode="box-mode"; break;
-      case BUSMODE: mode="bus-mode"; break;
-      case CIRCLEMODE: mode="circle-mode"; break;
-      case LINEMODE: mode="line-mode"; break;
-      case NETMODE: mode="net-mode"; break;
-      case PATHMODE: mode="path-mode"; break;
-      case PICTUREMODE: mode="picture-mode"; break;
-      case PINMODE: mode="pin-mode"; break;
-      case COMPMODE: mode="component-mode"; break;
-      case COPYMODE: mode="copy-mode"; break;
-      case MCOPYMODE: mode="multiple-copy-mode"; break;
-      case MOVEMODE: mode="move-mode"; break;
-      case PASTEMODE: mode="paste-mode"; break;
-      case TEXTMODE: mode="text-mode"; break;
-      case SBOX: mode="box-select-mode"; break;
-      case ZOOMBOX: mode="zoom-box-mode"; break;
-      case PAN: mode="pan-mode"; break;
-      case MIRRORMODE: mode="mirror-mode"; break;
-      case ROTATEMODE: mode="rotate-mode"; break;
-    }
-
   update_state_menu_items (w_current, newstate);
+
+  const gchar* mode = schematic_action_mode_to_string (newstate);
 
   g_run_hook_action_mode (w_current, "switch-action-mode-hook", mode);
 }
