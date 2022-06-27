@@ -950,3 +950,39 @@ schematic_window_update_keyaccel_timer (GschemToplevel *w_current,
       g_timeout_add (400, clear_keyaccel_string, w_current);
   }
 }
+
+
+/*! \brief Get action mode for this schematic window.
+ *
+ * \par Function Description
+ * Returns the current action mode value for \a w_current.
+ *
+ * \param [in] w_current The #GschemToplevel instance.
+ * \return The current action mode value.
+ */
+SchematicActionMode
+schematic_window_get_action_mode (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, SELECT);
+
+  return (SchematicActionMode) w_current->action_mode;
+}
+
+
+/*! \brief Set action mode for this schematic window.
+ *
+ * \par Function Description
+ * Sets the current action mode value for \a w_current to the
+ * given value.
+ *
+ * \param [in] w_current The #GschemToplevel instance.
+ * \param [in] mode The new action mode value.
+ */
+void
+schematic_window_set_action_mode (GschemToplevel *w_current,
+                                  SchematicActionMode mode)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->action_mode = (int) mode;
+}

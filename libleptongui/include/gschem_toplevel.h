@@ -313,4 +313,12 @@ schematic_window_update_keyaccel_string (GschemToplevel *w_current,
 void
 schematic_window_update_keyaccel_timer (GschemToplevel *w_current,
                                         gboolean start_timer);
+
+SchematicActionMode
+schematic_window_get_action_mode (GschemToplevel *w_current);
+
+void
+schematic_window_set_action_mode (GschemToplevel *w_current,
+                                  SchematicActionMode mode);
+
 G_END_DECLS
