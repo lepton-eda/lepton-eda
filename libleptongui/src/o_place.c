@@ -218,13 +218,15 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
   /* If drawing is true, then don't worry about the previous drawing
    * method and movement constraints, use with the current settings */
   if (drawing) {
+    SchematicActionMode action_mode =
+      schematic_window_get_action_mode (w_current);
     /* Ensure we set this to flag there is "something" supposed to be
      * drawn when the invalidate call below causes an expose event. */
     w_current->last_drawb_mode = w_current->actionfeedback_mode;
     w_current->drawbounding_action_mode = (w_current->CONTROLKEY &&
-                                           ! ((w_current->action_mode == PASTEMODE) ||
-                                              (w_current->action_mode == COMPMODE) ||
-                                              (w_current->action_mode == TEXTMODE)))
+                                           ! (   (action_mode == PASTEMODE)
+                                              || (action_mode == COMPMODE)
+                                              || (action_mode == TEXTMODE)))
                                           ? CONSTRAINED : FREE;
   }
 
@@ -297,13 +299,15 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
 
+  SchematicActionMode action_mode =
+    schematic_window_get_action_mode (w_current);
   /* Don't worry about the previous drawing method and movement
    * constraints, use with the current settings */
   w_current->last_drawb_mode = w_current->actionfeedback_mode;
   w_current->drawbounding_action_mode = (w_current->CONTROLKEY &&
-                                         ! ((w_current->action_mode == PASTEMODE) ||
-                                            (w_current->action_mode == COMPMODE) ||
-                                            (w_current->action_mode == TEXTMODE)))
+                                         ! (   (action_mode == PASTEMODE)
+                                            || (action_mode == COMPMODE)
+                                            || (action_mode == TEXTMODE)))
                                         ? CONSTRAINED : FREE;
 
   /* Calculate delta of X-Y positions from buffer's origin */

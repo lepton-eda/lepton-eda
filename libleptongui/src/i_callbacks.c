@@ -2546,7 +2546,10 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  if (w_current->action_mode == COMPMODE &&
+  SchematicActionMode action_mode =
+    schematic_window_get_action_mode (w_current);
+
+  if (action_mode == COMPMODE &&
       w_current->cswindow) {
     /* user hit escape key when placing components */
 
@@ -2571,7 +2574,7 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
 
     /* If we're cancelling from a grip action, call the specific cancel
      * routine to reset the visibility of the object being modified */
-  if (w_current->action_mode == GRIPS)
+  if (action_mode == GRIPS)
   {
     o_grips_cancel (w_current);
   }

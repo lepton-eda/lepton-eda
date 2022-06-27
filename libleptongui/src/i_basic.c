@@ -61,7 +61,7 @@ static const char *i_status_string(GschemToplevel *w_current)
 {
   static char *buf = 0;
 
-  switch ( w_current->action_mode )
+  switch (schematic_window_get_action_mode (w_current))
   {
     case SELECT     : return _("Select Mode");
     case SBOX       : return _("Select Box Mode");
@@ -277,9 +277,9 @@ i_set_state_msg (GschemToplevel *w_current,
                  SchematicActionMode newstate,
                  const char *message)
 {
-  if ((newstate != w_current->action_mode) || (message != NULL))
+  if ((newstate != schematic_window_get_action_mode (w_current)) || (message != NULL))
   {
-    w_current->action_mode = newstate;
+    schematic_window_set_action_mode (w_current, newstate);
     i_update_toolbar (w_current);
   }
   i_show_state(w_current, message);
@@ -295,7 +295,7 @@ void i_update_toolbar(GschemToplevel *w_current)
   if (!w_current->toolbars)
     return;
 
-  switch (w_current->action_mode)
+  switch (schematic_window_get_action_mode (w_current))
   {
     case(SELECT):
       gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select),
@@ -426,7 +426,7 @@ void i_update_menus (GschemToplevel* w_current)
   */
   x_clipboard_query_usable (w_current, clipboard_usable_cb, w_current);
 
-  update_state_menu_items (w_current, (SchematicActionMode) w_current->action_mode);
+  update_state_menu_items (w_current, schematic_window_get_action_mode (w_current));
 
   gboolean selected      = o_select_selected (w_current);
   gboolean text_selected = selected && obj_selected (page, OBJ_TEXT);

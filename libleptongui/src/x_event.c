@@ -98,10 +98,13 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
+  SchematicActionMode action_mode =
+    schematic_window_get_action_mode (w_current);
+
 #if DEBUG
   printf("pressed button %d! \n", event->button);
   printf("event state: %d \n", event->state);
-  printf("w_current state: %d \n", w_current->action_mode);
+  printf("w_current action mode: %d \n", action_mode);
   printf("Selection is:\n");
   o_selection_print_all(&(page->selection_list));
   printf("\n");
@@ -113,7 +116,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
   w_y = snap_grid (w_current, unsnapped_wy);
 
   if (event->type == GDK_2BUTTON_PRESS &&
-      w_current->action_mode == SELECT)
+      action_mode == SELECT)
   {
     /* Don't re-select an object (lp-912978) */
     /* o_find_object(w_current, w_x, w_y, TRUE); */
@@ -142,7 +145,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
     if (w_current->inside_action) {
       /* End action */
       if (page->place_list != NULL) {
-        switch(w_current->action_mode)
+        switch (action_mode)
         {
           case (COMPMODE)   : o_place_end(w_current, w_x, w_y, w_current->continue_component_place,
                                 "add-objects-hook"); break;
@@ -153,7 +156,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
           default: break;
         }
       } else {
-        switch(w_current->action_mode)
+        switch (action_mode)
         {
           case (ARCMODE)    : o_arc_end1(w_current, w_x, w_y); break;
           case (BOXMODE)    : o_box_end(w_current, w_x, w_y); break;
@@ -169,7 +172,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       }
     } else {
       /* Start action */
-      switch(w_current->action_mode)
+      switch (action_mode)
       {
         case (ARCMODE)    : o_arc_start(w_current, w_x, w_y); break;
         case (BOXMODE)    : o_box_start(w_current, w_x, w_y); break;
@@ -190,7 +193,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
       }
     }
 
-    switch(w_current->action_mode)
+    switch (action_mode)
     {
       case(ROTATEMODE):   o_rotate_world_update(w_current, w_x, w_y, 90,
                             lepton_list_get_glist(page->selection_list)); break;
@@ -206,12 +209,12 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
     /* try this out and see how it behaves */
     if (w_current->inside_action) {
-      if (!(w_current->action_mode == COMPMODE||
-            w_current->action_mode == TEXTMODE||
-            w_current->action_mode == MOVEMODE||
-            w_current->action_mode == COPYMODE  ||
-            w_current->action_mode == MCOPYMODE ||
-            w_current->action_mode == PASTEMODE ))
+      if (!(   action_mode == COMPMODE
+            || action_mode == TEXTMODE
+            || action_mode == MOVEMODE
+            || action_mode == COPYMODE
+            || action_mode == MCOPYMODE
+            || action_mode == PASTEMODE ))
       {
         i_callback_cancel (NULL, w_current);
       }
@@ -288,7 +291,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 
         /* reset all draw and place actions */
 
-        switch (w_current->action_mode)
+        switch (action_mode)
         {
           case (ARCMODE)    : o_arc_invalidate_rubber     (w_current); break;
           case (BOXMODE)    : o_box_invalidate_rubber     (w_current); break;
@@ -333,8 +336,11 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
     return TRUE; /* terminate event */
   }
 
+  SchematicActionMode action_mode =
+    schematic_window_get_action_mode (w_current);
+
 #if DEBUG
-  printf("released! %d \n", w_current->action_mode);
+  printf("released! %d \n", action_mode);
 #endif
 
   w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
@@ -356,7 +362,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 
     if (w_current->inside_action) {
       if (page->place_list != NULL) {
-        switch(w_current->action_mode)
+        switch (action_mode)
         {
           case (COPYMODE)  :
           case (MCOPYMODE) : o_copy_end(w_current); break;
@@ -364,7 +370,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
           default: break;
         }
       } else {
-        switch(w_current->action_mode)
+        switch (action_mode)
         {
           case (GRIPS)     : o_grips_end(w_current); break;
           case (PATHMODE)  : o_path_end (w_current, w_x, w_y); break;
@@ -378,14 +384,14 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   } else if (event->button == 2) {
 
     if (w_current->inside_action) {
-      if (w_current->action_mode == COMPMODE||
-          w_current->action_mode == TEXTMODE||
-          w_current->action_mode == MOVEMODE||
-          w_current->action_mode == COPYMODE  ||
-          w_current->action_mode == MCOPYMODE ||
-          w_current->action_mode == PASTEMODE )
+      if (   action_mode == COMPMODE
+          || action_mode == TEXTMODE
+          || action_mode == MOVEMODE
+          || action_mode == COPYMODE
+          || action_mode == MCOPYMODE
+          || action_mode == PASTEMODE )
       {
-        if (w_current->action_mode == MOVEMODE)
+        if (action_mode == MOVEMODE)
         {
           o_move_invalidate_rubber (w_current, FALSE);
         } else {
@@ -395,12 +401,12 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 
         o_place_rotate(w_current);
 
-        if (w_current->action_mode == COMPMODE)
+        if (action_mode == COMPMODE)
         {
           o_component_place_changed_run_hook (w_current);
         }
 
-        if (w_current->action_mode == MOVEMODE)
+        if (action_mode == MOVEMODE)
         {
           o_move_invalidate_rubber (w_current, TRUE);
         } else {
@@ -414,7 +420,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
     switch(w_current->middle_button) {
       case(MOUSEBTN_DO_ACTION):
         if (w_current->inside_action && (page->place_list != NULL)) {
-          switch(w_current->action_mode)
+          switch (action_mode)
           {
             case (COPYMODE): o_copy_end(w_current); break;
             case (MOVEMODE): o_move_end(w_current); break;
@@ -515,9 +521,12 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
+  SchematicActionMode action_mode =
+    schematic_window_get_action_mode (w_current);
+
   if (w_current->inside_action) {
     if (page->place_list != NULL) {
-      switch (w_current->action_mode)
+      switch (action_mode)
       {
         case (COPYMODE)   :
         case (MCOPYMODE)  :
@@ -528,7 +537,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
         default: break;
       }
     } else {
-      switch (w_current->action_mode)
+      switch (action_mode)
       {
         case (ARCMODE)    : o_arc_motion (w_current, w_x, w_y, ARC_RADIUS); break;
         case (BOXMODE)    : o_box_motion  (w_current, w_x, w_y); break;
@@ -547,7 +556,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       }
     }
   } else {
-    switch (w_current->action_mode)
+    switch (action_mode)
     {
       case(NETMODE)    :   o_net_start_magnetic(w_current, w_x, w_y); break;
       default: break;

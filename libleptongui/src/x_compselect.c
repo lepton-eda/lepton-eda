@@ -108,6 +108,9 @@ x_compselect_callback_response (GtkDialog *dialog,
   GschemToplevel *w_current = (GschemToplevel *)user_data;
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
 
+  SchematicActionMode action_mode =
+    schematic_window_get_action_mode (w_current);
+
   switch (arg1) {
       case COMPSELECT_RESPONSE_PLACE: {
         CLibSymbol *symbol = NULL;
@@ -132,7 +135,7 @@ x_compselect_callback_response (GtkDialog *dialog,
               g_assert_not_reached ();
         }
 
-        if (w_current->action_mode == COMPMODE)
+        if (action_mode == COMPMODE)
         {
           /* Delete the component which was being placed */
           if (w_current->rubber_visible)
@@ -175,7 +178,7 @@ x_compselect_callback_response (GtkDialog *dialog,
         gtk_widget_destroy (GTK_WIDGET (dialog));
         w_current->cswindow = NULL;
 
-        if (w_current->action_mode == COMPMODE)
+        if (action_mode == COMPMODE)
         {
           /* Cancel the place operation currently in progress */
           o_redraw_cleanstates (w_current);

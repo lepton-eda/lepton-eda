@@ -59,7 +59,7 @@ void o_select_start (GschemToplevel *w_current, int wx, int wy)
   /* look for grips or fall through if not enabled */
   o_grips_start(w_current, wx, wy);
 
-  if (w_current->action_mode != GRIPS)
+  if (schematic_window_get_action_mode (w_current) != GRIPS)
   {
     /* now go into normal SELECT */
     i_action_start (w_current);

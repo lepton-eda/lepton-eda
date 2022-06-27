@@ -187,9 +187,12 @@ void o_redraw_rect (GschemToplevel *w_current,
                       rectangle->width, rectangle->height);
 #endif
 
+  SchematicActionMode action_mode =
+    schematic_window_get_action_mode (w_current);
+
   /* Determine whether we should draw the selection at all */
   draw_selected = !(w_current->inside_action &&
-                    (w_current->action_mode == MOVEMODE));
+                    (action_mode == MOVEMODE));
 
   /* First pass -- render non-selected objects */
   for (iter = obj_list; iter != NULL; iter = g_list_next (iter)) {
@@ -240,7 +243,7 @@ void o_redraw_rect (GschemToplevel *w_current,
 
     /* Redraw the rubberband objects (if they were previously visible) */
     if (page->place_list != NULL) {
-      switch (w_current->action_mode)
+      switch (action_mode)
       {
         case COMPMODE:
         case TEXTMODE:
@@ -275,7 +278,7 @@ void o_redraw_rect (GschemToplevel *w_current,
     }
 
     if (w_current->rubber_visible) {
-      switch (w_current->action_mode)
+      switch (action_mode)
       {
         case ARCMODE    : o_arc_draw_rubber (w_current, renderer); break;
         case BOXMODE    : o_box_draw_rubber (w_current, renderer); break;
@@ -335,7 +338,7 @@ int o_invalidate_rubber (GschemToplevel *w_current)
   if (!w_current->inside_action)
     return(FALSE);
 
-  switch(w_current->action_mode)
+  switch (schematic_window_get_action_mode (w_current))
   {
     case (ARCMODE)    : o_arc_invalidate_rubber (w_current); break;
     case (BOXMODE)    : o_box_invalidate_rubber (w_current); break;
@@ -374,7 +377,10 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
     return FALSE;
   }
 
-  switch (w_current->action_mode)
+  SchematicActionMode action_mode =
+    schematic_window_get_action_mode (w_current);
+
+  switch (action_mode)
   {
     /* all states with something on the dc */
     case(COMPMODE):
@@ -403,15 +409,17 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
 
       /* If we're cancelling from a move action, re-wind the
        * page contents back to their state before we started. */
-      if (w_current->action_mode == MOVEMODE)
+      if (action_mode == MOVEMODE)
       {
         o_move_cancel (w_current);
       }
 
       /* If we're cancelling from a grip action, call the specific cancel
        * routine to reset the visibility of the object being modified */
-      if (w_current->action_mode == GRIPS)
+      if (action_mode == GRIPS)
+      {
         o_grips_cancel (w_current);
+      }
 
       /* Free the place list and its contents. If we were in a move
        * action, the list (refering to objects on the page) would
