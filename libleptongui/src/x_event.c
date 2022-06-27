@@ -204,6 +204,7 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
         gschem_page_view_pan (page_view, w_x, w_y);
         i_set_state(w_current, SELECT);
         break;
+    default: break;
     }
   } else if (event->button == 2) {
 
@@ -424,6 +425,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
           {
             case (COPYMODE): o_copy_end(w_current); break;
             case (MOVEMODE): o_move_end(w_current); break;
+            default: break;
           }
         }
       break;
