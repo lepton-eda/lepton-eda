@@ -125,7 +125,6 @@ void i_callback_view_dark_colors (GtkWidget *widget, gpointer data);
 void i_callback_view_light_colors (GtkWidget *widget, gpointer data);
 void i_callback_view_bw_colors (GtkWidget *widget, gpointer data);
 void i_callback_view_color_edit (GtkWidget *widget, gpointer data);
-void i_callback_page_manager (GtkWidget *widget, gpointer data);
 void i_callback_page_next (GtkWidget *widget, gpointer data);
 void i_callback_page_prev (GtkWidget *widget, gpointer data);
 void i_callback_page_close (GtkWidget *widget, gpointer data);

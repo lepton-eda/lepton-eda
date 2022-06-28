@@ -46,6 +46,7 @@ struct _PageSelectWidget
 typedef struct _PageSelectWidgetClass PageSelectWidgetClass;
 typedef struct _PageSelectWidget      PageSelectWidget;
 
+G_BEGIN_DECLS
 
 GtkWidget*
 page_select_widget_new (GschemToplevel* w_current);
@@ -57,5 +58,6 @@ page_select_widget_update (GschemToplevel* w_current);
 GType
 page_select_widget_get_type();
 
-#endif /* LEPTON_PAGE_SELECT_WIDGET_H_ */
+G_END_DECLS
 
+#endif /* LEPTON_PAGE_SELECT_WIDGET_H_ */

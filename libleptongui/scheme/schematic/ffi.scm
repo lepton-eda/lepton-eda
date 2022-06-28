@@ -95,7 +95,6 @@
             i_callback_options_snap
             i_callback_options_snap_size
             i_callback_page_close
-            i_callback_page_manager
             i_callback_page_next
             i_callback_page_next_tab
             i_callback_page_prev
@@ -123,6 +122,9 @@
             o_attrib_add_attrib
             o_buffer_init
             o_undo_init
+
+            page_select_widget_update
+
             set_quiet_mode
             set_verbose_mode
             x_color_init
@@ -134,6 +136,7 @@
             x_widgets_show_font_select
             x_widgets_show_log
             x_widgets_show_object_properties
+            x_widgets_show_page_select
 
             x_window_create_main
             x_window_close
@@ -206,6 +209,9 @@
 ;;; o_attrib.c
 (define-lff o_attrib_add_attrib '* (list '* '* int int '* int int int))
 
+;;; page_select_widget.c
+(define-lff page_select_widget_update void '(*))
+
 (define-lff o_buffer_init void '())
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())
@@ -216,6 +222,7 @@
 (define-lff x_widgets_show_font_select void '(*))
 (define-lff x_widgets_show_log void '(*))
 (define-lff x_widgets_show_object_properties void '(*))
+(define-lff x_widgets_show_page_select void '(*))
 
 ;;; keys.c
 (define-lff schematic_keys_get_event_keyval int '(*))
@@ -351,7 +358,6 @@
 (define-lff i_callback_view_zoom_in void '(* *))
 (define-lff i_callback_view_zoom_out void '(* *))
 (define-lff i_callback_page_close void '(* *))
-(define-lff i_callback_page_manager void '(* *))
 (define-lff i_callback_page_next void '(* *))
 (define-lff i_callback_page_next_tab void '(* *))
 (define-lff i_callback_page_prev void '(* *))
