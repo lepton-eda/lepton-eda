@@ -511,7 +511,7 @@
 ;;;; Configuration actions
 
 (define-action-public (&help-hotkeys #:label (G_ "Show Hotkeys") #:icon "preferences-desktop-keyboard-shortcuts")
-  (run-callback i_callback_help_hotkeys "&help-hotkeys"))
+  (x_dialog_hotkeys (*current-window)))
 
 (define-action-public (&options-grid #:label (G_ "Switch Grid Style"))
   (run-callback i_callback_options_grid "&options-grid"))
