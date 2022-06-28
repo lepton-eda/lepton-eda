@@ -96,7 +96,6 @@
             i_callback_options_snap_size
             i_callback_page_close
             i_callback_page_next
-            i_callback_page_next_tab
             i_callback_page_prev
             i_callback_page_prev_tab
             i_callback_page_print
@@ -181,6 +180,8 @@
             x_image_setup
 
             x_print
+
+            x_tabs_next
 
             parse-gschemrc
             ))
@@ -359,7 +360,6 @@
 (define-lff i_callback_view_zoom_out void '(* *))
 (define-lff i_callback_page_close void '(* *))
 (define-lff i_callback_page_next void '(* *))
-(define-lff i_callback_page_next_tab void '(* *))
 (define-lff i_callback_page_prev void '(* *))
 (define-lff i_callback_page_prev_tab void '(* *))
 (define-lff i_callback_page_print void '(* *))
@@ -380,6 +380,9 @@
 
 ;;; x_print.c
 (define-lff x_print void '(*))
+
+;;; x_tabs.c
+(define-lff x_tabs_next void '(*))
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
