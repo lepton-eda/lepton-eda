@@ -111,7 +111,6 @@ void i_callback_edit_show_text (GtkWidget *widget, gpointer data);
 void i_callback_edit_autonumber_text (GtkWidget *widget, gpointer data);
 void i_callback_view_sidebar (GtkWidget *widget, gpointer data);
 void i_callback_view_status (GtkWidget *widget, gpointer data);
-void i_callback_view_find_text_state (GtkWidget *widget, gpointer data);
 void i_callback_view_redraw (GtkWidget *widget, gpointer data);
 void i_callback_view_zoom_full (GtkWidget *widget, gpointer data);
 void i_callback_view_zoom_extents (GtkWidget *widget, gpointer data);

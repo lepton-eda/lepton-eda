@@ -105,7 +105,6 @@
             i_callback_view_bw_colors
             i_callback_view_color_edit
             i_callback_view_dark_colors
-            i_callback_view_find_text_state
             i_callback_view_light_colors
             i_callback_view_pan
             i_callback_view_pan_down
@@ -132,6 +131,7 @@
             x_show_uri
             x_stroke_init
 
+            x_widgets_show_find_text_state
             x_widgets_show_font_select
             x_widgets_show_log
             x_widgets_show_object_properties
@@ -212,6 +212,7 @@
 (define-lff x_color_init void '())
 
 ;;; x_widgets.c
+(define-lff x_widgets_show_find_text_state void '(*))
 (define-lff x_widgets_show_font_select void '(*))
 (define-lff x_widgets_show_log void '(*))
 (define-lff x_widgets_show_object_properties void '(*))
@@ -335,7 +336,6 @@
 (define-lff i_callback_view_bw_colors void '(* *))
 (define-lff i_callback_view_color_edit void '(* *))
 (define-lff i_callback_view_dark_colors void '(* *))
-(define-lff i_callback_view_find_text_state void '(* *))
 (define-lff i_callback_view_light_colors void '(* *))
 (define-lff i_callback_view_pan void '(* *))
 (define-lff i_callback_view_pan_down void '(* *))
