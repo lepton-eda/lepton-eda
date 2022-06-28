@@ -97,7 +97,6 @@
             i_callback_page_close
             i_callback_page_next
             i_callback_page_prev
-            i_callback_page_prev_tab
             i_callback_page_print
             i_callback_page_revert
             i_callback_view_bw_colors
@@ -182,6 +181,7 @@
             x_print
 
             x_tabs_next
+            x_tabs_prev
 
             parse-gschemrc
             ))
@@ -361,7 +361,6 @@
 (define-lff i_callback_page_close void '(* *))
 (define-lff i_callback_page_next void '(* *))
 (define-lff i_callback_page_prev void '(* *))
-(define-lff i_callback_page_prev_tab void '(* *))
 (define-lff i_callback_page_print void '(* *))
 (define-lff i_callback_page_revert void '(* *))
 ;;; x_misc.c
@@ -383,6 +382,7 @@
 
 ;;; x_tabs.c
 (define-lff x_tabs_next void '(*))
+(define-lff x_tabs_prev void '(*))
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())

@@ -128,7 +128,6 @@ void i_callback_view_color_edit (GtkWidget *widget, gpointer data);
 void i_callback_page_next (GtkWidget *widget, gpointer data);
 void i_callback_page_prev (GtkWidget *widget, gpointer data);
 void i_callback_page_close (GtkWidget *widget, gpointer data);
-void i_callback_page_prev_tab (GtkWidget *widget, gpointer data);
 void i_callback_page_revert (GtkWidget *widget, gpointer data);
 void i_callback_page_print (GtkWidget *widget, gpointer data);
 void i_callback_clipboard_copy (GtkWidget *widget, gpointer data);
