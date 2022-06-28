@@ -111,7 +111,6 @@
             i_callback_view_pan_left
             i_callback_view_pan_right
             i_callback_view_pan_up
-            i_callback_view_redraw
             i_callback_view_sidebar
             i_callback_view_status
             i_callback_view_zoom_box
@@ -155,6 +154,7 @@
             lepton_menu_set_action_data
 
             gschem_page_view_get_page
+            gschem_page_view_invalidate_all
 
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_toplevel
@@ -227,6 +227,7 @@
 
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
+(define-lff gschem_page_view_invalidate_all void '(*))
 
 ;;; gschem_toplevel.c
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
@@ -342,7 +343,6 @@
 (define-lff i_callback_view_pan_left void '(* *))
 (define-lff i_callback_view_pan_right void '(* *))
 (define-lff i_callback_view_pan_up void '(* *))
-(define-lff i_callback_view_redraw void '(* *))
 (define-lff i_callback_view_sidebar void '(* *))
 (define-lff i_callback_view_status void '(* *))
 (define-lff i_callback_view_zoom_box void '(* *))

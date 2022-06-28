@@ -908,22 +908,6 @@ i_callback_view_status (GtkWidget *widget, gpointer data)
   gtk_widget_set_visible (GTK_WIDGET (w_current->bottom_notebook), !visible);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  repeat middle shortcut doesn't make sense on redraw, just hit right
- *  button
- */
-void
-i_callback_view_redraw (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  g_return_if_fail (w_current != NULL);
-
-  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

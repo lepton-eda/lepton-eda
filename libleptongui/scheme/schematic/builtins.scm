@@ -231,8 +231,10 @@
 (define-action-public (&view-find-text-state #:label (G_ "Find Text State"))
   (x_widgets_show_find_text_state (*current-window)))
 
+;;; Redraw canvas.
 (define-action-public (&view-redraw #:label (G_ "Redraw") #:icon "gtk-refresh")
-  (run-callback i_callback_view_redraw "&view-redraw"))
+  (gschem_page_view_invalidate_all
+   (gschem_toplevel_get_current_page_view (*current-window))))
 
 (define-action-public (&view-pan #:label (G_ "Pan"))
   (run-callback i_callback_view_pan "&view-pan"))
