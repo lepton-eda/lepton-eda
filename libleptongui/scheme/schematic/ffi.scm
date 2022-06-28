@@ -91,7 +91,6 @@
             i_callback_options_rubberband
             i_callback_options_scale_down_snap_size
             i_callback_options_scale_up_snap_size
-            i_callback_options_show_log_window
             i_callback_options_snap
             i_callback_options_snap_size
             i_callback_page_close
@@ -339,7 +338,6 @@
 (define-lff i_callback_options_rubberband void '(* *))
 (define-lff i_callback_options_scale_down_snap_size void '(* *))
 (define-lff i_callback_options_scale_up_snap_size void '(* *))
-(define-lff i_callback_options_show_log_window void '(* *))
 (define-lff i_callback_options_snap void '(* *))
 (define-lff i_callback_options_snap_size void '(* *))
 (define-lff i_callback_view_bw_colors void '(* *))

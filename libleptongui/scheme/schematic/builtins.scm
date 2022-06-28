@@ -538,7 +538,7 @@
   (run-callback i_callback_options_magneticnet "&options-magneticnet"))
 
 (define-action-public (&options-show-log-window #:label (G_ "Show Log Window"))
-  (run-callback i_callback_options_show_log_window "&options-show-log-window"))
+  (x_widgets_show_log (*current-window)))
 
 (define-action-public (&options-show-coord-window #:label (G_ "Show Coordinate Window"))
   (coord_dialog (*current-window) 0 0))
