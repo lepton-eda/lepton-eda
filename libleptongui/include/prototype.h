@@ -177,7 +177,6 @@ void i_callback_options_grid (GtkWidget *widget, gpointer data);
 void i_callback_options_snap (GtkWidget *widget, gpointer data);
 void i_callback_options_rubberband (GtkWidget *widget, gpointer data);
 void i_callback_options_magneticnet (GtkWidget *widget, gpointer data);
-void i_callback_options_show_log_window (GtkWidget *widget, gpointer data);
 void i_callback_cancel (GtkWidget *widget, gpointer data);
 void i_callback_help_about (GtkWidget *widget, gpointer data);
 void i_callback_help_hotkeys (GtkWidget *widget, gpointer data);

@@ -2453,22 +2453,6 @@ i_callback_options_magneticnet (GtkWidget *widget, gpointer data)
  *  \brief
  *  \par Function Description
  *
- */
-void
-i_callback_options_show_log_window (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  x_widgets_show_log (w_current);
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  *  \note
  *  HACK: be sure that you don't use the widget parameter in this one,
  *  since it is being called with a null, I suppose we should call it
