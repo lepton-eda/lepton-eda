@@ -580,7 +580,7 @@ found, shows a dialog with an error message."
 
 
 (define-action-public (&help-about #:label (G_ "About lepton-schematic") #:icon "gtk-about")
-  (run-callback i_callback_help_about "&help-about"))
+  (about_dialog (*current-window)))
 
 
 ; Backward compatibility:

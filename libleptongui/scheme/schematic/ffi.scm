@@ -79,7 +79,6 @@
             i_callback_file_save
             i_callback_file_save_all
             i_callback_file_script
-            i_callback_help_about
             i_callback_help_hotkeys
             i_callback_hierarchy_down_schematic
             i_callback_hierarchy_down_symbol
@@ -143,6 +142,8 @@
             x_window_open_page
             x_window_set_current_page
             x_window_setup
+
+            about_dialog
 
             coord_dialog
 
@@ -228,6 +229,9 @@
 (define-lff schematic_keys_get_event_keyval int '(*))
 (define-lff schematic_keys_get_event_modifiers int '(*))
 (define-lff schematic_keys_verify_keyval int (list int))
+
+;;; gschem_about_dialog.c
+(define-lff about_dialog void '(*))
 
 ;;; gschem_coord_dialog.c
 (define-lff coord_dialog void (list '* int int))
@@ -326,7 +330,6 @@
 (define-lff i_callback_file_save void '(* *))
 (define-lff i_callback_file_save_all void '(* *))
 (define-lff i_callback_file_script void '(* *))
-(define-lff i_callback_help_about void '(* *))
 (define-lff i_callback_help_hotkeys void '(* *))
 (define-lff i_callback_hierarchy_down_schematic void '(* *))
 (define-lff i_callback_hierarchy_down_symbol void '(* *))
