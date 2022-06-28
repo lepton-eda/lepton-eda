@@ -285,7 +285,9 @@
   (run-callback i_callback_page_revert "&page-revert"))
 
 (define-action-public (&page-manager #:label (G_ "Page Manager"))
-  (run-callback i_callback_page_manager "&page-manager"))
+  (define *window (*current-window))
+  (x_widgets_show_page_select *window)
+  (page_select_widget_update *window))
 
 (define-action-public (&page-prev #:label (G_ "Previous Page") #:icon "gtk-go-back")
   (run-callback i_callback_page_prev "&page-prev"))

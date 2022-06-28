@@ -1194,21 +1194,6 @@ i_callback_view_color_edit (GtkWidget *widget, gpointer data)
 }
 
 /*! \section page-menu Page Menu Callback Functions */
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_page_manager (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  x_widgets_show_page_select (w_current);
-  page_select_widget_update (w_current);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
