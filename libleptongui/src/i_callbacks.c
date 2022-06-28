@@ -2522,21 +2522,6 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
   i_action_stop (w_current);
 }
 
-/*! \section help-menu Help Menu Callback Functions */
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_help_hotkeys (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-  x_dialog_hotkeys(w_current);
-}
-
 void
 i_callback_options_draw_grips (GtkWidget *widget, gpointer data)
 {

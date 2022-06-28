@@ -178,7 +178,6 @@ void i_callback_options_snap (GtkWidget *widget, gpointer data);
 void i_callback_options_rubberband (GtkWidget *widget, gpointer data);
 void i_callback_options_magneticnet (GtkWidget *widget, gpointer data);
 void i_callback_cancel (GtkWidget *widget, gpointer data);
-void i_callback_help_hotkeys (GtkWidget *widget, gpointer data);
 void i_callback_options_draw_grips (GtkWidget *widget, gpointer data);
 gboolean i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
 /* i_vars.c */
