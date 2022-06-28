@@ -908,18 +908,6 @@ i_callback_view_status (GtkWidget *widget, gpointer data)
   gtk_widget_set_visible (GTK_WIDGET (w_current->bottom_notebook), !visible);
 }
 
-/*! \brief Show the find text state window
- */
-void
-i_callback_view_find_text_state (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  x_widgets_show_find_text_state (w_current);
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

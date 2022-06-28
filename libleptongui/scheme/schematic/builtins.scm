@@ -227,8 +227,9 @@
 (define-action-public (&view-status #:label (G_ "Status"))
   (run-callback i_callback_view_status "&view-status"))
 
+;;; Show the find text state window.
 (define-action-public (&view-find-text-state #:label (G_ "Find Text State"))
-  (run-callback i_callback_view_find_text_state "&view-find-text-state"))
+  (x_widgets_show_find_text_state (*current-window)))
 
 (define-action-public (&view-redraw #:label (G_ "Redraw") #:icon "gtk-refresh")
   (run-callback i_callback_view_redraw "&view-redraw"))
