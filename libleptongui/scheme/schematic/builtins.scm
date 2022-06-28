@@ -302,7 +302,7 @@
   (x_tabs_next (*current-window)))
 
 (define-action-public (&page-prev-tab #:label (G_ "Previous Tab") #:icon "gtk-go-back")
-  (run-callback i_callback_page_prev_tab "&page-prev-tab"))
+  (x_tabs_prev (*current-window)))
 
 (define-action-public (&page-print #:label (G_ "Print Page") #:icon "gtk-print")
   (run-callback i_callback_page_print "&page-print"))

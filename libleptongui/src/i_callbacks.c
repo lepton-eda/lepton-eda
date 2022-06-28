@@ -1293,16 +1293,6 @@ i_callback_page_close (GtkWidget *widget, gpointer data)
 
 
 
-void
-i_callback_page_prev_tab (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
-
-  x_tabs_prev (w_current);
-}
-
-
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
