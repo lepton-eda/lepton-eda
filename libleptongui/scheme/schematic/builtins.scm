@@ -299,7 +299,7 @@
   (run-callback i_callback_page_close "&page-close"))
 
 (define-action-public (&page-next-tab #:label (G_ "Next Tab") #:icon "gtk-go-forward")
-  (run-callback i_callback_page_next_tab "&page-next-tab"))
+  (x_tabs_next (*current-window)))
 
 (define-action-public (&page-prev-tab #:label (G_ "Previous Tab") #:icon "gtk-go-back")
   (run-callback i_callback_page_prev_tab "&page-prev-tab"))
