@@ -2257,31 +2257,6 @@ i_callback_options_grid (GtkWidget *widget, gpointer data)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  Rubber band is cool !
- *  Added on/off option from the pull down menu
- *  Chris Ellec - January 2001
- */
-void
-i_callback_options_rubberband (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  gschem_options_cycle_net_rubber_band_mode (w_current->options);
-
-  if (gschem_options_get_net_rubber_band_mode (w_current->options)) {
-    g_message (_("Rubber band ON"));
-  } else {
-    g_message (_("Rubber band OFF"));
-  }
-}
-
 
 /*! \brief callback function for setting the magnetic net option
  *  \par Function Description
