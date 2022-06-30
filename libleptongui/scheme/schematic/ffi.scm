@@ -77,6 +77,7 @@
             i_callback_file_new
             *i_callback_file_new
             i_callback_file_open
+            *i_callback_file_open
             i_callback_file_save
             i_callback_file_save_all
             i_callback_file_script
@@ -307,7 +308,7 @@
 
 ;;; page_select_widget.c
 (define-lff page_select_widget_update void '(*))
-(define-lff page_select_widget_new '* '(* *))
+(define-lff page_select_widget_new '* '(* * *))
 
 (define-lff o_buffer_init void '())
 (define-lff set_quiet_mode void '())
@@ -504,6 +505,7 @@
 (define-lff i_callback_file_new void '(* *))
 (define-lfc *i_callback_file_new)
 (define-lff i_callback_file_open void '(* *))
+(define-lfc *i_callback_file_open)
 (define-lff i_callback_file_save void '(* *))
 (define-lff i_callback_file_save_all void '(* *))
 (define-lff i_callback_file_script void '(* *))
