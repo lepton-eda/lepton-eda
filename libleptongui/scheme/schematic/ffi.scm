@@ -220,9 +220,7 @@
             schematic_window_update_keyaccel_timer
 
             gschem_options_cycle_magnetic_net_mode
-            gschem_options_get_magnetic_net_mode
             gschem_options_cycle_net_rubber_band_mode
-            gschem_options_get_net_rubber_band_mode
             gschem_options_cycle_snap_mode
             gschem_options_get_snap_mode
             gschem_options_get_snap_size
@@ -355,9 +353,7 @@
 
 ;;; gschem_options.c
 (define-lff gschem_options_cycle_magnetic_net_mode void '(*))
-(define-lff gschem_options_get_magnetic_net_mode int '(*))
 (define-lff gschem_options_cycle_net_rubber_band_mode void '(*))
-(define-lff gschem_options_get_net_rubber_band_mode int '(*))
 (define-lff gschem_options_cycle_snap_mode void '(*))
 (define-lff gschem_options_get_snap_mode int '(*))
 (define-lff gschem_options_get_snap_size int '(*))

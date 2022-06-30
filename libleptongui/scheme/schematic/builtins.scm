@@ -571,23 +571,12 @@
   (run-callback i_callback_options_afeedback "&options-action-feedback"))
 
 (define-action-public (&options-rubberband #:label (G_ "Toggle Net Rubber Band"))
-  (let ((*options (schematic_window_get_options (*current-window))))
-    (gschem_options_cycle_net_rubber_band_mode *options)
-    (log! 'message
-          (string-append (G_ "Rubber band: ")
-                         (if (true? (gschem_options_get_net_rubber_band_mode *options))
-                             (G_ "ON")
-                             (G_ "OFF"))))))
+  (gschem_options_cycle_net_rubber_band_mode
+   (schematic_window_get_options (*current-window))))
 
 (define-action-public (&options-magneticnet #:label (G_ "Toggle Magnetic Nets"))
   (define *window (*current-window))
-  (define *options (schematic_window_get_options *window))
-  (gschem_options_cycle_magnetic_net_mode *options)
-  (log! 'message
-        (string-append (G_ "Magnetic net mode: ")
-                       (if (true? (gschem_options_get_magnetic_net_mode *options))
-                           (G_ "ON")
-                           (G_ "OFF"))))
+  (gschem_options_cycle_magnetic_net_mode (schematic_window_get_options *window))
   (i_show_state *window %null-pointer))
 
 
