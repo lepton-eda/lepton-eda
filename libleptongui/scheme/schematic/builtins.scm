@@ -535,8 +535,9 @@
   (x_widgets_show_options (*current-window)))
 
 
+;;; Multiplies by two the snap grid size.
 (define-action-public (&options-scale-up-snap-size #:label (G_ "Increase Grid Spacing"))
-  (run-callback i_callback_options_scale_up_snap_size "&options-scale-up-snap-size"))
+  (gschem_options_scale_snap_up (schematic_window_get_options (*current-window))))
 
 (define-action-public (&options-scale-down-snap-size #:label (G_ "Decrease Grid Spacing"))
   (run-callback i_callback_options_scale_down_snap_size "&options-scale-down-snap-size"))
