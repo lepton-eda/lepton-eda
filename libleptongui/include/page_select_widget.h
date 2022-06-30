@@ -51,7 +51,8 @@ G_BEGIN_DECLS
 GtkWidget*
 page_select_widget_new (GschemToplevel* w_current,
                         GCallback page_new_callback,
-                        GCallback page_open_callback);
+                        GCallback page_open_callback,
+                        GCallback page_save_callback);
 void
 page_select_widget_update (GschemToplevel* w_current);
 
