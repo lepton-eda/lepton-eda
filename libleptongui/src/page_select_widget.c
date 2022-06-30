@@ -57,17 +57,19 @@ pagesel_popup_menu (PageSelectWidget* pagesel, GdkEventButton* event);
 static void
 widget_create (PageSelectWidget *pagesel);
 
-
+static GCallback callback_page_new = NULL;
 
 /*! \brief Create new PageSelectWidget object.
  *  \public
  */
 GtkWidget*
-page_select_widget_new (GschemToplevel* w_current)
+page_select_widget_new (GschemToplevel* w_current,
+                        GCallback page_new_callback)
 {
   gpointer obj = g_object_new (PAGE_SELECT_WIDGET_TYPE,
                                "toplevel", w_current,
                                NULL);
+  callback_page_new = G_CALLBACK (page_new_callback);
   return GTK_WIDGET (obj);
 }
 
@@ -295,8 +297,7 @@ pagesel_callback_popup_new_page (GtkMenuItem* mitem, gpointer data)
 {
   PageSelectWidget* pagesel = (PageSelectWidget*) data;
   GschemToplevel* toplevel = pagesel->toplevel_;
-
-  i_callback_file_new (NULL, toplevel);
+  ((void (*) (GtkWidget*, GschemToplevel*)) callback_page_new) (NULL, toplevel);
 }
 
 

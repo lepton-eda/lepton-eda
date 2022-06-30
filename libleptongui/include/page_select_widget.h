@@ -49,8 +49,8 @@ typedef struct _PageSelectWidget      PageSelectWidget;
 G_BEGIN_DECLS
 
 GtkWidget*
-page_select_widget_new (GschemToplevel* w_current);
-
+page_select_widget_new (GschemToplevel* w_current,
+                        GCallback page_new_callback);
 void
 page_select_widget_update (GschemToplevel* w_current);
 

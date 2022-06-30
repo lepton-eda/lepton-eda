@@ -138,7 +138,9 @@ GtkApplication structure of the program (when compiled with
       ;; Setup various widgets.
       (x_widgets_init)
       (x_widgets_create *window)
-
+      (schematic_window_set_page_select_widget *window
+                                               (page_select_widget_new *window
+                                                                       *i_callback_file_new))
       ;; Setup layout of notebooks.
       (schematic_window_create_notebooks *window *main-box *work-box)
 

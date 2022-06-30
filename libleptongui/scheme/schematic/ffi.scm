@@ -75,6 +75,7 @@
             i_callback_edit_unlock
             i_callback_edit_update
             i_callback_file_new
+            *i_callback_file_new
             i_callback_file_open
             i_callback_file_save
             i_callback_file_save_all
@@ -118,6 +119,7 @@
 
             o_place_invalidate_rubber
 
+            page_select_widget_new
             page_select_widget_update
 
             set_quiet_mode
@@ -161,6 +163,7 @@
             schematic_window_create_menubar
             schematic_window_get_inside_action
             schematic_window_set_key_event_callback
+            schematic_window_set_page_select_widget
             schematic_window_create_page_view
             schematic_window_create_find_text_widget
             schematic_window_create_hide_text_widget
@@ -304,6 +307,7 @@
 
 ;;; page_select_widget.c
 (define-lff page_select_widget_update void '(*))
+(define-lff page_select_widget_new '* '(* *))
 
 (define-lff o_buffer_init void '())
 (define-lff set_quiet_mode void '())
@@ -416,6 +420,7 @@
 (define-lff schematic_window_create_menubar void '(* * *))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_key_event_callback void '(*))
+(define-lff schematic_window_set_page_select_widget void '(* *))
 (define-lff schematic_window_create_page_view '* '(* *))
 (define-lff schematic_window_create_find_text_widget void '(* *))
 (define-lff schematic_window_create_hide_text_widget void '(* *))
@@ -497,6 +502,7 @@
 (define-lff i_callback_edit_unlock void '(* *))
 (define-lff i_callback_edit_update void '(* *))
 (define-lff i_callback_file_new void '(* *))
+(define-lfc *i_callback_file_new)
 (define-lff i_callback_file_open void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lff i_callback_file_save_all void '(* *))
