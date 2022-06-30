@@ -86,6 +86,7 @@
             i_callback_hierarchy_down_symbol
             i_callback_hierarchy_up
             i_callback_page_close
+            *i_callback_page_close
             i_callback_page_next
             i_callback_page_prev
             i_callback_page_print
@@ -309,7 +310,7 @@
 
 ;;; page_select_widget.c
 (define-lff page_select_widget_update void '(*))
-(define-lff page_select_widget_new '* '(* * * *))
+(define-lff page_select_widget_new '* '(* * * * *))
 
 (define-lff o_buffer_init void '())
 (define-lff set_quiet_mode void '())
@@ -528,6 +529,7 @@
 (define-lff i_callback_view_zoom_in void '(* *))
 (define-lff i_callback_view_zoom_out void '(* *))
 (define-lff i_callback_page_close void '(* *))
+(define-lfc *i_callback_page_close)
 (define-lff i_callback_page_next void '(* *))
 (define-lff i_callback_page_prev void '(* *))
 (define-lff i_callback_page_print void '(* *))

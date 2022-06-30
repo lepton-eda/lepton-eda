@@ -142,7 +142,8 @@ GtkApplication structure of the program (when compiled with
                                                (page_select_widget_new *window
                                                                        *i_callback_file_new
                                                                        *i_callback_file_open
-                                                                       *i_callback_file_save))
+                                                                       *i_callback_file_save
+                                                                       *i_callback_page_close))
       ;; Setup layout of notebooks.
       (schematic_window_create_notebooks *window *main-box *work-box)
 
