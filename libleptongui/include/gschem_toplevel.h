@@ -338,4 +338,10 @@ schematic_window_set_actionfeedback_mode (GschemToplevel *w_current,
 GList*
 schematic_window_get_place_list (GschemToplevel *w_current);
 
+GtkWidget*
+schematic_window_get_page_select_widget (GschemToplevel *w_current);
+
+void
+schematic_window_set_page_select_widget (GschemToplevel *w_current,
+                                         GtkWidget* widget);
 G_END_DECLS

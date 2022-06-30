@@ -1090,3 +1090,32 @@ schematic_window_get_place_list (GschemToplevel *w_current)
 
   return lepton_page_get_place_list (active_page);
 }
+
+
+/*! \brief Get Page select widget for this schematic window.
+ *
+ * \param [in] w_current The #GschemToplevel instance.
+ * \return The current Page select widget.
+ */
+GtkWidget*
+schematic_window_get_page_select_widget (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->page_select_widget;
+}
+
+
+/*! \brief Set Page select widget for this schematic window.
+ *
+ * \param [in] w_current The #GschemToplevel instance.
+ * \param [in] widget The Page select widget.
+ */
+void
+schematic_window_set_page_select_widget (GschemToplevel *w_current,
+                                         GtkWidget* widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->page_select_widget = widget;
+}
