@@ -580,7 +580,16 @@
                              (G_ "OFF"))))))
 
 (define-action-public (&options-magneticnet #:label (G_ "Toggle Magnetic Nets"))
-  (run-callback i_callback_options_magneticnet "&options-magneticnet"))
+  (define *window (*current-window))
+  (define *options (schematic_window_get_options *window))
+  (gschem_options_cycle_magnetic_net_mode *options)
+  (log! 'message
+        (string-append (G_ "Magnetic net mode: ")
+                       (if (true? (gschem_options_get_magnetic_net_mode *options))
+                           (G_ "ON")
+                           (G_ "OFF"))))
+  (i_show_state *window %null-pointer))
+
 
 (define-action-public (&options-show-log-window #:label (G_ "Show Log Window"))
   (x_widgets_show_log (*current-window)))

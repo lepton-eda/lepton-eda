@@ -2258,31 +2258,6 @@ i_callback_options_grid (GtkWidget *widget, gpointer data)
 
 
 
-/*! \brief callback function for setting the magnetic net option
- *  \par Function Description
- *  This function just toggles a variable to switch the magnetic net
- *  mode ON and OFF
- */
-void
-i_callback_options_magneticnet (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  gschem_options_cycle_magnetic_net_mode (w_current->options);
-
-  if (gschem_options_get_magnetic_net_mode (w_current->options)) {
-    g_message (_("magnetic net mode: ON"));
-  }
-  else {
-    g_message (_("magnetic net mode: OFF"));
-  }
-
-  i_show_state(w_current, NULL);
-}
-
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
