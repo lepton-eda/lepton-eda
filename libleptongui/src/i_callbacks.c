@@ -2202,19 +2202,6 @@ i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_options_snap_size (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-  snap_size_dialog(w_current);
-}
 
 /*! \brief Multiply by two the snap grid size.
  *  \par Function Description

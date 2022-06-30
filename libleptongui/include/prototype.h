@@ -185,7 +185,6 @@ void i_callback_attributes_show_name (GtkWidget *widget, gpointer data);
 void i_callback_attributes_show_value (GtkWidget *widget, gpointer data);
 void i_callback_attributes_show_both (GtkWidget *widget, gpointer data);
 void i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data);
-void i_callback_options_snap_size (GtkWidget *widget, gpointer data);
 void i_callback_options_scale_up_snap_size (GtkWidget *widget, gpointer data);
 void i_callback_options_scale_down_snap_size (GtkWidget *widget, gpointer data);
 void i_callback_options_afeedback (GtkWidget *widget, gpointer data);
