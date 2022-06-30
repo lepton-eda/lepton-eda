@@ -87,7 +87,6 @@
             i_callback_options_grid
             i_callback_options_magneticnet
             i_callback_options_rubberband
-            i_callback_options_scale_down_snap_size
             i_callback_options_snap
             i_callback_page_close
             i_callback_page_next
@@ -219,6 +218,7 @@
 
             gschem_options_get_snap_size
             gschem_options_scale_snap_up
+            gschem_options_scale_snap_down
 
             text_edit_dialog
 
@@ -344,6 +344,7 @@
 ;;; gschem_options.c
 (define-lff gschem_options_get_snap_size int '(*))
 (define-lff gschem_options_scale_snap_up void '(*))
+(define-lff gschem_options_scale_snap_down void '(*))
 
 ;;; gschem_text_properties_widget.c
 (define-lff text_edit_dialog void '(*))
@@ -468,7 +469,6 @@
 (define-lff i_callback_options_grid void '(* *))
 (define-lff i_callback_options_magneticnet void '(* *))
 (define-lff i_callback_options_rubberband void '(* *))
-(define-lff i_callback_options_scale_down_snap_size void '(* *))
 (define-lff i_callback_options_snap void '(* *))
 (define-lff i_callback_view_color_edit void '(* *))
 (define-lff i_callback_view_pan void '(* *))

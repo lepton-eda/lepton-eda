@@ -2203,21 +2203,6 @@ i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
 }
 
 
-/*! \brief Divide by two the snap grid size.
- *  \par Function Description
- *  Callback function for the scale-down snap grid size hotkey.
- *  Divide by two the snap grid size (if it's and even number).
- */
-void
-i_callback_options_scale_down_snap_size (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  gschem_options_scale_snap_down (w_current->options);
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
