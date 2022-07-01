@@ -71,7 +71,6 @@
             i_callback_edit_show_hidden
             i_callback_edit_show_text
             i_callback_edit_translate
-            i_callback_edit_undo
             i_callback_edit_unembed
             i_callback_edit_unlock
             i_callback_edit_update
@@ -249,6 +248,7 @@
 
             o_slot_end
 
+            o_undo_callback
             o_undo_savestate
 
             x_event_get_pointer_position
@@ -502,7 +502,6 @@
 (define-lff i_callback_edit_show_hidden void '(* *))
 (define-lff i_callback_edit_show_text void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
-(define-lff i_callback_edit_undo void '(* *))
 (define-lff i_callback_edit_unembed void '(* *))
 (define-lff i_callback_edit_unlock void '(* *))
 (define-lff i_callback_edit_update void '(* *))
@@ -572,6 +571,7 @@
 
 ;;; o_undo.c
 (define-lff o_undo_init void '())
+(define-lff o_undo_callback void (list '* '* int))
 (define-lff o_undo_savestate void (list '* '* int))
 
 ;;; This is a special case: the function may be not defined in C

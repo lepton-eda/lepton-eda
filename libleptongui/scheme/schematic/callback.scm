@@ -28,12 +28,34 @@
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
-  #:export (callback-file-new
+  #:export (callback-edit-undo
+            callback-file-new
             *callback-file-new
             callback-file-open
             *callback-file-open
             callback-page-close
             *callback-page-close))
+
+
+(define (callback-edit-undo *widget *window)
+  ;; The same definition as in gschem_defines.h.
+  (define UNDO_ACTION 0)
+  ;; If we're cancelling from a move action, re-wind the
+  ;; page contents back to their state before we started.
+  ;;
+  ;; It "might" be nice to sub-undo rotates / zoom changes
+  ;; made whilst moving components, but when the undo code
+  ;; hits lepton_page_delete(), the place list objects are free'd.
+  ;; Since they are also contained in the schematic page, a
+  ;; crash occurs when the page objects are free'd.
+  (if (true? (schematic_window_get_inside_action *window))
+      (i_callback_cancel *widget *window)
+      (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
+        (if (null-pointer? *page-view)
+            (log! 'warning "callback-edit-undo: NULL page view.")
+            (let ((*page (gschem_page_view_get_page *page-view)))
+              (unless (null-pointer? *page)
+                (o_undo_callback *window *page UNDO_ACTION)))))))
 
 
 (define (callback-file-new *widget *window)

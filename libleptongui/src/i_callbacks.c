@@ -115,39 +115,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 
 
 /*! \section edit-menu Edit Menu Callback Functions */
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_edit_undo (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  /* If we're cancelling from a move action, re-wind the
-   * page contents back to their state before we started.
-   *
-   * It "might" be nice to sub-undo rotates / zoom changes
-   * made whilst moving components, but when the undo code
-   * hits lepton_page_delete(), the place list objects are free'd.
-   * Since they are also contained in the schematic page, a
-   * crash occurs when the page objects are free'd.
-   * */
-  if (schematic_window_get_inside_action (w_current))
-  {
-    i_callback_cancel (widget, w_current);
-  } else {
-    GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-    g_return_if_fail (page_view != NULL);
-
-    LeptonPage *page = gschem_page_view_get_page (page_view);
-
-    if (page != NULL) {
-      o_undo_callback (w_current, page, UNDO_ACTION);
-    }
-  }
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

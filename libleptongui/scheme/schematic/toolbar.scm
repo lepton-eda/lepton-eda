@@ -138,7 +138,7 @@
                          "edit-undo"
                          "Undo"
                          "Undo last operation"
-                         i_callback_edit_undo
+                         callback-edit-undo
                          4)
     (make-toolbar-button *window
                          *toolbar
