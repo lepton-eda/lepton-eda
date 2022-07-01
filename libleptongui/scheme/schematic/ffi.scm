@@ -74,8 +74,6 @@
             i_callback_edit_unembed
             i_callback_edit_unlock
             i_callback_edit_update
-            i_callback_file_new
-            *i_callback_file_new
             i_callback_file_open
             *i_callback_file_open
             i_callback_file_save
@@ -504,8 +502,6 @@
 (define-lff i_callback_edit_unembed void '(* *))
 (define-lff i_callback_edit_unlock void '(* *))
 (define-lff i_callback_edit_update void '(* *))
-(define-lff i_callback_file_new void '(* *))
-(define-lfc *i_callback_file_new)
 (define-lff i_callback_file_open void '(* *))
 (define-lfc *i_callback_file_open)
 (define-lff i_callback_file_save void '(* *))

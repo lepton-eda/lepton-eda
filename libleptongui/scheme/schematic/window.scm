@@ -32,6 +32,7 @@
   #:use-module (lepton toplevel foreign)
   #:use-module (lepton toplevel)
 
+  #:use-module (schematic callback)
   #:use-module (schematic ffi)
   #:use-module (schematic gui keymap)
   #:use-module (schematic menu)
@@ -140,7 +141,7 @@ GtkApplication structure of the program (when compiled with
       (x_widgets_create *window)
       (schematic_window_set_page_select_widget *window
                                                (page_select_widget_new *window
-                                                                       *i_callback_file_new
+                                                                       *callback-file-new
                                                                        *i_callback_file_open
                                                                        *i_callback_file_save
                                                                        *i_callback_page_close))

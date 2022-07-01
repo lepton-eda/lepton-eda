@@ -32,6 +32,7 @@
   #:use-module (lepton repl)
 
   #:use-module (schematic action)
+  #:use-module (schematic callback)
   #:use-module (schematic gettext)
   #:use-module (schematic ffi)
   #:use-module (schematic dialog)
@@ -83,9 +84,9 @@
 
 ;; -------------------------------------------------------------------
 ;;;; File menu actions
-
 (define-action-public (&file-new #:label (G_ "New File") #:icon "gtk-new")
-  (run-callback i_callback_file_new "&file-new"))
+  (callback-file-new %null-pointer (*current-window)))
+
 
 (define-action-public (&file-open #:label (G_ "Open File") #:icon "gtk-open")
   (run-callback i_callback_file_open "&file-open"))

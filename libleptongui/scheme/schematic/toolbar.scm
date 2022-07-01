@@ -25,6 +25,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
 
+  #:use-module (schematic callback)
   #:use-module (schematic ffi)
 
   #:export (make-toolbar))
@@ -116,7 +117,7 @@
                          "document-new"
                          "New"
                          "New file"
-                         i_callback_file_new
+                         callback-file-new
                          0)
     (make-toolbar-button *window
                          *toolbar

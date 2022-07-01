@@ -17,6 +17,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/action-mode.scm \
 	schematic/attrib.scm \
 	schematic/builtins.scm \
+	schematic/callback.scm \
 	schematic/gettext.scm \
 	schematic/dialog.scm \
 	schematic/dialog/slot-edit.scm \
