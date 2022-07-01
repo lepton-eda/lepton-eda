@@ -999,3 +999,17 @@ schematic_window_set_toolbar (GschemToplevel *w_current,
 {
   w_current->toolbar = toolbar;
 }
+
+
+/*! \brief Get the 'inside_action' field of a schematic window structure.
+ *
+ * \param [in] w_current The #GschemToplevel instance.
+ * \return TRUE if the window is inside action.
+ */
+gboolean
+schematic_window_get_inside_action (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, FALSE);
+
+  return w_current->inside_action;
+}

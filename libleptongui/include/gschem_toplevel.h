@@ -320,4 +320,7 @@ schematic_window_set_action_mode (GschemToplevel *w_current,
 void
 schematic_window_set_toolbar (GschemToplevel *w_current,
                               GtkWidget *toolbar);
+int
+schematic_window_get_inside_action (GschemToplevel *w_current);
+
 G_END_DECLS
