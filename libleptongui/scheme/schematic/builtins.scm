@@ -308,7 +308,7 @@
   (run-callback i_callback_page_next "&page-next"))
 
 (define-action-public (&page-close #:label (G_ "Close Page") #:icon "gtk-close")
-  (run-callback i_callback_page_close "&page-close"))
+  (callback-page-close %null-pointer (*current-window)))
 
 (define-action-public (&page-next-tab #:label (G_ "Next Tab") #:icon "gtk-go-forward")
   (x_tabs_next (*current-window)))

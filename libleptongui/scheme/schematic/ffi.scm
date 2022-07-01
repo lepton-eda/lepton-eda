@@ -81,8 +81,6 @@
             i_callback_hierarchy_down_schematic
             i_callback_hierarchy_down_symbol
             i_callback_hierarchy_up
-            i_callback_page_close
-            *i_callback_page_close
             i_callback_page_next
             i_callback_page_prev
             i_callback_page_print
@@ -201,6 +199,8 @@
             schematic_snap_mode_to_string
 
             about_dialog
+
+            x_dialog_close_changed_page
 
             coord_dialog
 
@@ -345,6 +345,9 @@
 
 ;;; gschem_about_dialog.c
 (define-lff about_dialog void '(*))
+
+;;; gschem_close_confirmation_dialog.c
+(define-lff x_dialog_close_changed_page int '(* *))
 
 ;;; gschem_coord_dialog.c
 (define-lff coord_dialog void (list '* int int))
@@ -521,8 +524,6 @@
 (define-lff i_callback_view_zoom_full void '(* *))
 (define-lff i_callback_view_zoom_in void '(* *))
 (define-lff i_callback_view_zoom_out void '(* *))
-(define-lff i_callback_page_close void '(* *))
-(define-lfc *i_callback_page_close)
 (define-lff i_callback_page_next void '(* *))
 (define-lff i_callback_page_prev void '(* *))
 (define-lff i_callback_page_print void '(* *))

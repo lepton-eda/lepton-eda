@@ -30,7 +30,9 @@
   #:export (callback-file-new
             *callback-file-new
             callback-file-open
-            *callback-file-open))
+            *callback-file-open
+            callback-page-close
+            *callback-page-close))
 
 
 (define (callback-file-new *widget *window)
@@ -53,3 +55,14 @@
 
 (define *callback-file-open
   (procedure->pointer void callback-file-open '(* *)))
+
+
+(define (callback-page-close *widget *window)
+  (let ((*page (schematic_window_get_active_page *window)))
+    (unless (or (null-pointer? *page)
+                (and (true? (lepton_page_get_changed *page))
+                     (not (true? (x_dialog_close_changed_page *window *page)))))
+      (x_window_close_page *window *page))))
+
+(define *callback-page-close
+  (procedure->pointer void callback-page-close '(* *)))

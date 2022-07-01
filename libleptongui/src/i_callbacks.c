@@ -1152,32 +1152,6 @@ i_callback_page_prev (GtkWidget *widget, gpointer data)
   x_window_set_current_page (w_current, p_new);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_page_close (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  g_return_if_fail (w_current != NULL);
-
-  LeptonPage *page = schematic_window_get_active_page (w_current);
-
-  if (page == NULL) {
-    return;
-  }
-
-  if (lepton_page_get_changed (page)
-      && !x_dialog_close_changed_page (w_current, page)) {
-    return;
-  }
-
-  x_window_close_page (w_current, page);
-}
-
-
 
 /*! \todo Finish function documentation!!!
  *  \brief

@@ -144,7 +144,7 @@ GtkApplication structure of the program (when compiled with
                                                                        *callback-file-new
                                                                        *callback-file-open
                                                                        *i_callback_file_save
-                                                                       *i_callback_page_close))
+                                                                       *callback-page-close))
       ;; Setup layout of notebooks.
       (schematic_window_create_notebooks *window *main-box *work-box)
 
