@@ -124,7 +124,7 @@
                          "document-open"
                          "Open"
                          "Open file"
-                         i_callback_file_open
+                         callback-file-open
                          1)
     (make-toolbar-button *window *toolbar
                          "document-save"

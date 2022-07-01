@@ -74,8 +74,6 @@
             i_callback_edit_unembed
             i_callback_edit_unlock
             i_callback_edit_update
-            i_callback_file_open
-            *i_callback_file_open
             i_callback_file_save
             *i_callback_file_save
             i_callback_file_save_all
@@ -251,6 +249,7 @@
             x_event_get_pointer_position
             x_event_key
 
+            x_fileselect_open
             x_fileselect_save
 
             x_image_setup
@@ -502,8 +501,6 @@
 (define-lff i_callback_edit_unembed void '(* *))
 (define-lff i_callback_edit_unlock void '(* *))
 (define-lff i_callback_edit_update void '(* *))
-(define-lff i_callback_file_open void '(* *))
-(define-lfc *i_callback_file_open)
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
 (define-lff i_callback_file_save_all void '(* *))
@@ -550,6 +547,7 @@
 (define-lff x_event_key '* '(* * *))
 
 ;;; x_fileselect.c
+(define-lff x_fileselect_open void '(*))
 (define-lff x_fileselect_save int '(* * *))
 
 ;;; x_image.c

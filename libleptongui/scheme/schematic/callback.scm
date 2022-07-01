@@ -28,7 +28,9 @@
   #:use-module (schematic window foreign)
 
   #:export (callback-file-new
-            *callback-file-new))
+            *callback-file-new
+            callback-file-open
+            *callback-file-open))
 
 
 (define (callback-file-new *widget *window)
@@ -44,3 +46,10 @@
 
 (define *callback-file-new
   (procedure->pointer void callback-file-new '(* *)))
+
+
+(define (callback-file-open *widget *window)
+  (x_fileselect_open *window))
+
+(define *callback-file-open
+  (procedure->pointer void callback-file-open '(* *)))

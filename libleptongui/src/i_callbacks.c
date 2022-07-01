@@ -24,29 +24,6 @@
 
 /*! \section callback-intro Callback Functions */
 
-/*! \section file-menu File Menu Callback Functions */
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  don't use the widget parameter on this function, or do some
- *  checking...
- *  since there is a call: widget = NULL, data = 0 (will be w_current)
- *  \todo This should be renamed to page_open perhaps...
- */
-void
-i_callback_file_open (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  x_fileselect_open (w_current);
-}
-
-
 /*! \brief Open the "Execute Script" dialog, execute the selected Scheme file
  */
 void
