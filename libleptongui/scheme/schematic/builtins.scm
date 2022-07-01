@@ -30,7 +30,7 @@
   #:use-module (lepton repl)
 
   #:use-module (schematic action)
-  #:use-module (schematic core gettext)
+  #:use-module (schematic gettext)
   #:use-module (schematic ffi)
   #:use-module (schematic doc)
   #:use-module (schematic gui keymap)

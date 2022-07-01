@@ -29,7 +29,7 @@
   #:use-module (lepton object)
   #:use-module (lepton os)
 
-  #:use-module (schematic core gettext)
+  #:use-module (schematic gettext)
   #:use-module (schematic dialog)
   #:use-module (schematic util)
 

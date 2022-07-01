@@ -23,7 +23,7 @@
   #:use-module (lepton object foreign)
   #:use-module (lepton page)
 
-  #:use-module (schematic core gettext)
+  #:use-module (schematic gettext)
   #:use-module (schematic dialog)
   #:use-module (schematic window)
   #:use-module (symbol blame)

@@ -16,7 +16,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/action.scm \
 	schematic/attrib.scm \
 	schematic/builtins.scm \
-	schematic/core/gettext.scm \
+	schematic/gettext.scm \
 	schematic/dialog.scm \
 	schematic/ffi.scm \
 	schematic/ffi/gobject.scm \

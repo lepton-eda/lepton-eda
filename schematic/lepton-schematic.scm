@@ -31,7 +31,7 @@
              (lepton page foreign)
              (lepton srfi-37)
              (lepton version)
-             (schematic core gettext)
+             (schematic gettext)
              (schematic ffi)
              (schematic ffi gtk)
              (schematic gui keymap)
