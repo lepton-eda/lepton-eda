@@ -237,7 +237,8 @@ i_callback_edit_undo (GtkWidget *widget, gpointer data)
    * Since they are also contained in the schematic page, a
    * crash occurs when the page objects are free'd.
    * */
-  if (w_current->inside_action) {
+  if (schematic_window_get_inside_action (w_current))
+  {
     i_callback_cancel (widget, w_current);
   } else {
     GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
@@ -485,7 +486,8 @@ i_callback_edit_rotate_90 (GtkWidget *widget, gpointer data)
     return;
   }
 
-  if (w_current->inside_action && (active_page->place_list != NULL))
+  if (schematic_window_get_inside_action (w_current) &&
+      (active_page->place_list != NULL))
   {
     o_place_rotate (w_current);
     return;
@@ -529,7 +531,9 @@ i_callback_edit_mirror (GtkWidget *widget, gpointer data)
     return;
   }
 
-  if (w_current->inside_action && (active_page->place_list != NULL)) {
+  if (schematic_window_get_inside_action (w_current) &&
+      (active_page->place_list != NULL))
+  {
     o_place_mirror (w_current);
     return;
   }
@@ -793,7 +797,7 @@ i_callback_edit_find (GtkWidget *widget, gpointer data)
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
-  if (w_current->inside_action)
+  if (schematic_window_get_inside_action (w_current))
     return;
 
   find_text_dialog(w_current);
@@ -813,7 +817,7 @@ i_callback_edit_hide_text (GtkWidget *widget, gpointer data)
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
-  if (w_current->inside_action)
+  if (schematic_window_get_inside_action (w_current))
     return;
 
   hide_text_dialog(w_current);
@@ -833,7 +837,7 @@ i_callback_edit_show_text (GtkWidget *widget, gpointer data)
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
-  if (w_current->inside_action)
+  if (schematic_window_get_inside_action (w_current))
     return;
 
   show_text_dialog(w_current);
@@ -853,7 +857,7 @@ i_callback_edit_autonumber_text (GtkWidget *widget, gpointer data)
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
-  if (w_current->inside_action)
+  if (schematic_window_get_inside_action (w_current))
     return;
 
   autonumber_text_dialog(w_current);
@@ -2065,7 +2069,8 @@ i_callback_attributes_show_name (GtkWidget *widget, gpointer data)
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
-  if (w_current->inside_action) {
+  if (schematic_window_get_inside_action (w_current))
+  {
     return;
   }
 
@@ -2101,7 +2106,8 @@ i_callback_attributes_show_value (GtkWidget *widget, gpointer data)
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
-  if (w_current->inside_action) {
+  if (schematic_window_get_inside_action (w_current))
+  {
     return;
   }
 
@@ -2137,7 +2143,8 @@ i_callback_attributes_show_both (GtkWidget *widget, gpointer data)
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
-  if (w_current->inside_action) {
+  if (schematic_window_get_inside_action (w_current))
+  {
     return;
   }
 
@@ -2172,7 +2179,8 @@ i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
 
   /* This is a new addition 3/15 to prevent this from executing
    * inside an action */
-  if (w_current->inside_action) {
+  if (schematic_window_get_inside_action (w_current))
+  {
     return;
   }
 
@@ -2261,7 +2269,7 @@ i_callback_options_afeedback (GtkWidget *widget, gpointer data)
     g_message (_("Action feedback mode set to BOUNDINGBOX"));
   }
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
-  if (w_current->inside_action &&
+  if (schematic_window_get_inside_action (w_current) &&
       active_page->place_list != NULL)
     o_place_invalidate_rubber (w_current, FALSE);
 }
@@ -2416,7 +2424,8 @@ i_callback_cancel (GtkWidget *widget, gpointer data)
     g_object_set_property (G_OBJECT(w_current->cswindow), "hidden", &value);
   }
 
-  if (w_current->inside_action) {
+  if (schematic_window_get_inside_action (w_current))
+  {
     /* If we're cancelling from a move action, re-wind the
      * page contents back to their state before we started */
     o_move_cancel (w_current);
