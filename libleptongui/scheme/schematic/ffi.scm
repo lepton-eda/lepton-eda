@@ -64,7 +64,6 @@
             i_callback_edit_mcopy
             i_callback_edit_mirror
             i_callback_edit_move
-            i_callback_edit_redo
             i_callback_edit_rotate_90
             i_callback_edit_select
             i_callback_edit_select_all
@@ -495,7 +494,6 @@
 (define-lff i_callback_edit_mcopy void '(* *))
 (define-lff i_callback_edit_mirror void '(* *))
 (define-lff i_callback_edit_move void '(* *))
-(define-lff i_callback_edit_redo void '(* *))
 (define-lff i_callback_edit_rotate_90 void '(* *))
 (define-lff i_callback_edit_select void '(* *))
 (define-lff i_callback_edit_select_all void '(* *))

@@ -145,7 +145,7 @@
                          "edit-redo"
                          "Redo"
                          "Redo last undo"
-                         i_callback_edit_redo
+                         callback-edit-redo
                          5)
     (schematic_toolbar_insert_separator *toolbar 6)
     (make-toolbar-button *window

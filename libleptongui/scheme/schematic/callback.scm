@@ -29,6 +29,7 @@
   #:use-module (schematic window foreign)
 
   #:export (callback-edit-undo
+            callback-edit-redo
             callback-file-new
             *callback-file-new
             callback-file-open
@@ -36,10 +37,11 @@
             callback-page-close
             *callback-page-close))
 
+;; The same definitions as in gschem_defines.h.
+(define UNDO_ACTION 0)
+(define REDO_ACTION 1)
 
 (define (callback-edit-undo *widget *window)
-  ;; The same definition as in gschem_defines.h.
-  (define UNDO_ACTION 0)
   ;; If we're cancelling from a move action, re-wind the
   ;; page contents back to their state before we started.
   ;;
@@ -56,6 +58,15 @@
             (let ((*page (gschem_page_view_get_page *page-view)))
               (unless (null-pointer? *page)
                 (o_undo_callback *window *page UNDO_ACTION)))))))
+
+
+(define (callback-edit-redo *widget *window)
+  (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
+    (if (null-pointer? *page-view)
+        (log! 'warning "callback-edit-redo: NULL page view.")
+        (let ((*page (gschem_page_view_get_page *page-view)))
+          (unless (null-pointer? *page)
+            (o_undo_callback *window *page REDO_ACTION))))))
 
 
 (define (callback-file-new *widget *window)

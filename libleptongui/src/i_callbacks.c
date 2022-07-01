@@ -120,27 +120,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
  *  \brief
  *  \par Function Description
  *
- */
-void
-i_callback_edit_redo (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  g_return_if_fail (w_current != NULL);
-
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  g_return_if_fail (page_view != NULL);
-
-  LeptonPage *page = gschem_page_view_get_page (page_view);
-
-  if (page != NULL) {
-    o_undo_callback (w_current, page, REDO_ACTION);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  *  \note
  *  Select also does not update the middle button shortcut.
  */

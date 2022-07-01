@@ -179,7 +179,7 @@
   (callback-edit-undo %null-pointer (*current-window)))
 
 (define-action-public (&edit-redo #:label (G_ "Redo") #:icon "gtk-redo")
-  (run-callback i_callback_edit_redo "&edit-redo"))
+  (callback-edit-redo %null-pointer (*current-window)))
 
 (define-action-public (&edit-select #:label (G_ "Select Mode") #:icon "select")
   (run-callback i_callback_edit_select "&edit-select"))
