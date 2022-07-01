@@ -76,7 +76,6 @@
             i_callback_edit_update
             i_callback_file_save
             *i_callback_file_save
-            i_callback_file_save_all
             i_callback_file_script
             i_callback_hierarchy_down_schematic
             i_callback_hierarchy_down_symbol
@@ -102,8 +101,10 @@
             i_callback_view_zoom_in
             i_callback_view_zoom_out
 
+            i_set_state_msg
             i_show_state
             i_update_grid_info
+            i_update_menus
 
             make_menu_action
             make_separator_menu_item
@@ -150,10 +151,12 @@
             x_window_close_page
             x_window_new
             x_window_open_page
+            x_window_save_page
             x_window_set_current_page
             x_window_setup
             x_window_setup_draw_events_drawing_area
             x_window_setup_draw_events_main_wnd
+            x_window_untitled_page
             schematic_window_create_app_window
             schematic_window_create_main_box
             schematic_window_create_work_box
@@ -188,6 +191,7 @@
 
             x_tabs_create
             x_tabs_enabled
+            x_tabs_hdr_update
 
             schematic_action_mode_from_string
             schematic_action_mode_to_string
@@ -410,10 +414,12 @@
 ;;; x_window.c
 (define-lff x_window_new '* '(*))
 (define-lff x_window_open_page '* '(* *))
+(define-lff x_window_save_page int '(* * *))
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup '* '(*))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
+(define-lff x_window_untitled_page int '(*))
 (define-lff x_window_close void '(*))
 (define-lff x_window_close_all void '(*))
 (define-lff x_window_close_page void '(* *))
@@ -453,6 +459,7 @@
 ;;; x_tabs.c
 (define-lff x_tabs_create void '(* *))
 (define-lff x_tabs_enabled int '())
+(define-lff x_tabs_hdr_update void '(* *))
 
 ;;; x_dialog.c
 (define-lff generic_confirm_dialog int '(*))
@@ -506,7 +513,6 @@
 (define-lff i_callback_edit_update void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
-(define-lff i_callback_file_save_all void '(* *))
 (define-lff i_callback_file_script void '(* *))
 (define-lff i_callback_hierarchy_down_schematic void '(* *))
 (define-lff i_callback_hierarchy_down_symbol void '(* *))
@@ -533,8 +539,10 @@
 (define-lff i_callback_toolbar_edit_select void '(* *))
 
 ;;; i_basic.c
+(define-lff i_set_state_msg void (list '* int '*))
 (define-lff i_show_state void '(* *))
 (define-lff i_update_grid_info void '(*))
+(define-lff i_update_menus void '(*))
 
 ;;; o_place.c
 (define-lff o_place_invalidate_rubber void (list '* int))

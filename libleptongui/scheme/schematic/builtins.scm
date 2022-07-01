@@ -20,6 +20,7 @@
 
 (define-module (schematic builtins)
   #:use-module (ice-9 match)
+  #:use-module (rnrs bytevectors)
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
@@ -27,11 +28,13 @@
   #:use-module (lepton ffi)
   #:use-module (lepton log)
   #:use-module (lepton object)
+  #:use-module (lepton page foreign)
   #:use-module (lepton page)
   #:use-module (lepton rc)
   #:use-module (lepton repl)
 
   #:use-module (schematic action)
+  #:use-module (schematic action-mode)
   #:use-module (schematic callback)
   #:use-module (schematic gettext)
   #:use-module (schematic ffi)
@@ -100,8 +103,47 @@
                      (schematic_window_get_active_page *window)
                      %null-pointer))
 
+;;; Save all opened pages.
 (define-action-public (&file-save-all #:label (G_ "Save All") #:icon "gtk-save")
-  (run-callback i_callback_file_save_all "&file-save-all"))
+  (define *window (*current-window))
+
+  (define (save-page! page)
+    (let ((*page (page->pointer page)))
+      (if (true? (x_window_untitled_page *page))
+          ;; For untitled pages, open "Save as..." dialog.
+          (let ((bv (make-bytevector (sizeof int) 0)))
+            ;; Skip the result if the File save dialog has been cancelled.
+            (or (not (true? (x_fileselect_save *window *page (bytevector->pointer bv))))
+                ;; Otherwise, get the result of the save operation.
+                (true? (bytevector-sint-ref bv 0 (native-endianness) (sizeof int)))))
+
+          ;; Simply save any other page.
+          (true? (x_window_save_page *window
+                                     *page
+                                     (string->pointer (page-filename page)))))
+
+      ;; Update tab view.
+      (when (true? (x_tabs_enabled))
+        (x_tabs_hdr_update *window *page))))
+
+  (define (save-all-pages)
+    (map save-page! (active-pages)))
+
+  (define all-saved?
+    (every identity (save-all-pages)))
+
+  ;; Update statusbar once.
+  (i_set_state_msg *window
+                   (symbol->action-mode 'select-mode)
+                   (string->pointer (if all-saved?
+                                        (G_ "Saved All")
+                                        (G_ "Failed to Save All"))))
+
+  ;; Update Page select widget.
+  (page_select_widget_update *window)
+  ;; Update sensitivity of menu items.
+  (i_update_menus *window))
+
 
 (define-action-public (&file-print #:label (G_ "Print") #:icon "gtk-print")
   (x_print (*current-window)))

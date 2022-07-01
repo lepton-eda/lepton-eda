@@ -114,62 +114,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 } /* i_callback_file_save() */
 
 
-/*! \brief Save all opened pages
- */
-void
-i_callback_file_save_all (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
-  g_return_if_fail (w_current != NULL);
-
-  LeptonToplevel* toplevel = gschem_toplevel_get_toplevel (w_current);
-  GList*    pages    = lepton_list_get_glist (toplevel->pages);
-
-  gboolean result = TRUE;
-  gboolean res    = FALSE;
-
-  for ( ; pages != NULL; pages = g_list_next (pages) )
-  {
-    LeptonPage* page = (LeptonPage*) pages->data;
-
-    if (x_window_untitled_page (page))
-    {
-      /* open "save as..." dialog: */
-      if (x_fileselect_save (w_current, page, &res))
-      {
-        result = result && res;
-      }
-    }
-    else
-    {
-      /* save page: */
-      const gchar* fname = lepton_page_get_filename (page);
-      res = x_window_save_page (w_current, page, fname);
-      result = result && res;
-    }
-
-
-    if (x_tabs_enabled())
-    {
-      x_tabs_hdr_update (w_current, page);
-    }
-
-    if (result)
-    {
-      i_set_state_msg(w_current, SELECT, _("Saved All"));
-    }
-    else
-    {
-      i_set_state_msg(w_current, SELECT, _("Failed to Save All"));
-    }
-  }
-
-  page_select_widget_update (w_current);
-  i_update_menus(w_current);
-
-} /* i_callback_file_save_all() */
-
-
 /*! \section edit-menu Edit Menu Callback Functions */
 /*! \todo Finish function documentation!!!
  *  \brief
