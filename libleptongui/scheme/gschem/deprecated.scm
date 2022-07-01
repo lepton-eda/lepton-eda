@@ -2,7 +2,7 @@
 ;; Scheme API
 ;; Copyright (C) 2010-2011 Peter Brett
 ;; Copyright (C) 2010-2012 gEDA Contributors
-;; Copyright (C) 2017-2020 Lepton EDA Contributors
+;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@
   #:use-module (lepton page)
 
   #:use-module (schematic attrib)
-  #:use-module (schematic core gettext)
+  #:use-module (schematic gettext)
   #:use-module (schematic dialog)
   #:use-module (schematic hook)
   #:use-module (schematic selection)

@@ -29,7 +29,7 @@
   #:use-module (lepton object text)
   #:use-module (lepton page)
 
-  #:use-module (schematic core gettext)
+  #:use-module (schematic gettext)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
   #:use-module (schematic window)
