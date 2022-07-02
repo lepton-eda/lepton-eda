@@ -298,8 +298,11 @@
     (o_lock (*current-window))))
 
 
+;;; Unlock all objects in selection list.
 (define-action-public (&edit-unlock #:label (G_ "Unlock"))
-  (run-callback i_callback_edit_unlock "&edit-unlock"))
+  (unless (null? (page-selection (active-page)))
+    (o_unlock (*current-window))))
+
 
 (define-action-public (&edit-invoke-macro #:label (G_ "Invoke Macro"))
   (run-callback i_callback_edit_invoke_macro "&edit-invoke-macro"))

@@ -63,7 +63,6 @@
             i_callback_edit_show_text
             i_callback_edit_translate
             i_callback_edit_unembed
-            i_callback_edit_unlock
             i_callback_edit_update
             i_callback_file_save
             *i_callback_file_save
@@ -115,6 +114,7 @@
             o_delete_selected
 
             o_lock
+            o_unlock
 
             o_move_start
 
@@ -503,7 +503,6 @@
 (define-lff i_callback_edit_show_text void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
 (define-lff i_callback_edit_unembed void '(* *))
-(define-lff i_callback_edit_unlock void '(* *))
 (define-lff i_callback_edit_update void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
@@ -551,6 +550,7 @@
 
 ;;; o_misc.c
 (define-lff o_lock void '(*))
+(define-lff o_unlock void '(*))
 
 ;;; o_move.c
 (define-lff o_move_start void (list '* int int))
