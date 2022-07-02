@@ -100,7 +100,6 @@ void i_update_net_options_status (GschemToplevel* w_current);
 /* i_callbacks.c */
 void i_callback_file_script (GtkWidget *widget, gpointer data);
 void i_callback_file_save (GtkWidget *widget, gpointer data);
-void i_callback_edit_deselect (GtkWidget *widget, gpointer data);
 void i_callback_edit_copy (GtkWidget *widget, gpointer data);
 void i_callback_edit_mcopy (GtkWidget *widget, gpointer data);
 void i_callback_edit_move (GtkWidget *widget, gpointer data);

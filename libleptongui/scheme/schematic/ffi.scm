@@ -54,7 +54,6 @@
             i_callback_edit_autonumber_text
             i_callback_edit_copy
             i_callback_edit_delete
-            i_callback_edit_deselect
             i_callback_edit_edit
             i_callback_edit_embed
             i_callback_edit_find
@@ -249,6 +248,7 @@
             text_edit_dialog
 
             o_select_return_first_object
+            o_select_unselect_all
             o_select_visible_unlocked
 
             o_slot_end
@@ -491,7 +491,6 @@
 (define-lff i_callback_edit_autonumber_text void '(* *))
 (define-lff i_callback_edit_copy void '(* *))
 (define-lff i_callback_edit_delete void '(* *))
-(define-lff i_callback_edit_deselect void '(* *))
 (define-lff i_callback_edit_edit void '(* *))
 (define-lff i_callback_edit_embed void '(* *))
 (define-lff i_callback_edit_find void '(* *))
@@ -569,6 +568,7 @@
 
 ;;; o_select.c
 (define-lff o_select_return_first_object '* '(*))
+(define-lff o_select_unselect_all void '(*))
 (define-lff o_select_visible_unlocked void '(*))
 
 ;;; o_slot.c
