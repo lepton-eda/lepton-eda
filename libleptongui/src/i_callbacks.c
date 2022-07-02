@@ -134,28 +134,6 @@ i_callback_edit_select (GtkWidget *widget, gpointer data)
   i_action_stop (w_current);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  don't use the widget parameter on this function, or do some checking...
- * since there is a call: widget = NULL, data = 0 (will be w_current hack)
- */
-void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  g_return_if_fail (w_current != NULL);
-
-  if (schematic_toolbar_toggle_tool_button_get_active (widget))
-  {
-    if (!o_invalidate_rubber (w_current)) {
-      i_callback_cancel (widget, w_current);
-    }
-    i_callback_edit_select (widget, data);
-  }
-}
-
 
 /*! \brief Deselect all objects on page.
  * \par Function Description

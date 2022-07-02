@@ -200,7 +200,7 @@ Right mouse button to cancel"
                                           "select"
                                           "Select"
                                           "Select mode"
-                                          i_callback_toolbar_edit_select
+                                          callback-toolbar-edit-select
                                           12)))
 
           (schematic_toolbar_insert_separator *toolbar 13)
