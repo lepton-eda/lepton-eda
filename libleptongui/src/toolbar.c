@@ -345,3 +345,19 @@ schematic_toolbar_update (GtkWidget *toolbar,
     gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (button), TRUE);
   }
 }
+
+
+/*! \brief Return the state of a toolbar toggle button.
+ *  \par Function Description
+ *
+ * Queries the state of a toggle button and returns TRUE if it is
+ * pressed in and FALSE if it is raised.
+ *
+ * \param [in] The button widget.
+ * \return TRUE if the button is active, FALSE if not.
+ */
+gboolean
+schematic_toolbar_toggle_tool_button_get_active (GtkWidget *button)
+{
+  return gtk_toggle_tool_button_get_active (GTK_TOGGLE_TOOL_BUTTON (button));
+}

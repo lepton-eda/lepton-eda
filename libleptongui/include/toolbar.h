@@ -59,6 +59,9 @@ schematic_toolbar_insert_separator (GtkWidget *toolbar,
 void
 schematic_toolbar_update (GtkWidget *toolbar,
                           SchematicActionMode action_mode);
+gboolean
+schematic_toolbar_toggle_tool_button_get_active (GtkWidget *button);
+
 G_END_DECLS
 
 #endif /* __TOOLBAR_H__ */
