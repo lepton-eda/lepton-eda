@@ -147,7 +147,8 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
 
-  if (gtk_toggle_tool_button_get_active (GTK_TOGGLE_TOOL_BUTTON (widget))) {
+  if (schematic_toolbar_toggle_tool_button_get_active (widget))
+  {
     if (!o_invalidate_rubber (w_current)) {
       i_callback_cancel (widget, w_current);
     }
@@ -1380,7 +1381,8 @@ void i_callback_toolbar_add_net(GtkWidget* widget, gpointer data)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
-  if (gtk_toggle_tool_button_get_active (GTK_TOGGLE_TOOL_BUTTON (widget))) {
+  if (schematic_toolbar_toggle_tool_button_get_active (widget))
+  {
     i_callback_add_net (widget, w_current);
   }
   scm_dynwind_end ();
@@ -1423,7 +1425,8 @@ void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
-  if (gtk_toggle_tool_button_get_active (GTK_TOGGLE_TOOL_BUTTON (widget))) {
+  if (schematic_toolbar_toggle_tool_button_get_active (widget))
+  {
     i_callback_add_bus (widget, w_current);
   }
   scm_dynwind_end ();
