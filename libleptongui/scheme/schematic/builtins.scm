@@ -229,7 +229,20 @@
 
 
 (define-action-public (&edit-mcopy #:label (G_ "Multiple Copy Mode") #:icon "multi-clone")
-  (run-callback i_callback_edit_mcopy "&edit-mcopy"))
+  (define *window (*current-window))
+
+  (if (null? (page-selection (active-page)))
+      (i_set_state_msg *window
+                       (symbol->action-mode 'select-mode)
+                       (string->pointer (G_ "Select objs first")))
+      (let ((position (action-position)))
+        (o_redraw_cleanstates *window)
+        (and position
+             (match (snap-point position)
+               ((x . y) (o_copy_start *window x y))
+               (_ #f)))
+        (i_set_state *window (symbol->action-mode 'multiple-copy-mode)))))
+
 
 (define-action-public (&edit-rotate-90 #:label (G_ "Rotate Mode") #:icon "object-rotate-left")
   (run-callback i_callback_edit_rotate_90 "&edit-rotate-90"))

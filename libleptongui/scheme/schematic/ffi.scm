@@ -59,7 +59,6 @@
             i_callback_edit_hide_text
             i_callback_edit_invoke_macro
             i_callback_edit_lock
-            i_callback_edit_mcopy
             i_callback_edit_mirror
             i_callback_edit_move
             i_callback_edit_rotate_90
@@ -497,7 +496,6 @@
 (define-lff i_callback_edit_hide_text void '(* *))
 (define-lff i_callback_edit_invoke_macro void '(* *))
 (define-lff i_callback_edit_lock void '(* *))
-(define-lff i_callback_edit_mcopy void '(* *))
 (define-lff i_callback_edit_mirror void '(* *))
 (define-lff i_callback_edit_move void '(* *))
 (define-lff i_callback_edit_rotate_90 void '(* *))
