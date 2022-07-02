@@ -604,7 +604,7 @@ doesn't make much sense anyway.
 @end itemize
 
 
-@node Symbol example
+@anchor{Symbol example}
 @subsection Symbol example
 
 This section provides a simple example which tries to follow all of
