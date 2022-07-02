@@ -116,25 +116,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 
 /*! \section edit-menu Edit Menu Callback Functions */
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  Select also does not update the middle button shortcut.
- */
-void
-i_callback_edit_select (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  o_redraw_cleanstates(w_current);
-
-  /* this is probably the only place this should be */
-  i_set_state(w_current, SELECT);
-  i_action_stop (w_current);
-}
-
-
 /*! \brief Deselect all objects on page.
  * \par Function Description
  * Sets all objects on page as deselected.

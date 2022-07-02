@@ -26,6 +26,7 @@
   #:use-module (lepton gettext)
   #:use-module (lepton log)
 
+  #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
@@ -35,6 +36,7 @@
             *callback-file-open
             callback-page-close
             *callback-page-close
+            callback-edit-select
             callback-toolbar-edit-select))
 
 
@@ -71,8 +73,14 @@
   (procedure->pointer void callback-page-close '(* *)))
 
 
+(define (callback-edit-select *window)
+  (o_redraw_cleanstates *window)
+  (i_set_state *window (symbol->action-mode 'select-mode))
+  (i_action_stop *window))
+
+
 (define (callback-toolbar-edit-select *widget *window)
   (when (true? (schematic_toolbar_toggle_tool_button_get_active *widget))
     (unless (true? (o_invalidate_rubber *window))
       (i_callback_cancel *widget *window))
-    (i_callback_edit_select *widget *window)))
+    (callback-edit-select *window)))
