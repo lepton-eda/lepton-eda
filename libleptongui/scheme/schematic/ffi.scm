@@ -60,7 +60,6 @@
             i_callback_edit_invoke_macro
             i_callback_edit_lock
             i_callback_edit_mirror
-            i_callback_edit_move
             i_callback_edit_rotate_90
             i_callback_edit_show_hidden
             i_callback_edit_show_text
@@ -114,6 +113,8 @@
             o_invalidate_rubber
 
             o_copy_start
+
+            o_move_start
 
             o_place_invalidate_rubber
 
@@ -497,7 +498,6 @@
 (define-lff i_callback_edit_invoke_macro void '(* *))
 (define-lff i_callback_edit_lock void '(* *))
 (define-lff i_callback_edit_mirror void '(* *))
-(define-lff i_callback_edit_move void '(* *))
 (define-lff i_callback_edit_rotate_90 void '(* *))
 (define-lff i_callback_edit_show_hidden void '(* *))
 (define-lff i_callback_edit_show_text void '(* *))
@@ -545,6 +545,9 @@
 
 ;;; o_copy.c
 (define-lff o_copy_start void (list '* int int))
+
+;;; o_move.c
+(define-lff o_move_start void (list '* int int))
 
 ;;; o_place.c
 (define-lff o_place_invalidate_rubber void (list '* int))
