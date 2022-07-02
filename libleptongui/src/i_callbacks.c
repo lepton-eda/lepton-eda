@@ -421,25 +421,6 @@ i_callback_edit_show_hidden (GtkWidget *widget, gpointer data)
   o_edit_show_hidden (w_current, lepton_page_objects (active_page));
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_edit_find (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  /* This is a new addition 3/15 to prevent this from executing
-   * inside an action */
-  if (schematic_window_get_inside_action (w_current))
-    return;
-
-  find_text_dialog(w_current);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
