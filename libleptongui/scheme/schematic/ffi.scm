@@ -57,7 +57,6 @@
             i_callback_edit_find
             i_callback_edit_hide_text
             i_callback_edit_invoke_macro
-            i_callback_edit_lock
             i_callback_edit_mirror
             i_callback_edit_rotate_90
             i_callback_edit_show_hidden
@@ -114,6 +113,8 @@
             o_copy_start
 
             o_delete_selected
+
+            o_lock
 
             o_move_start
 
@@ -496,7 +497,6 @@
 (define-lff i_callback_edit_find void '(* *))
 (define-lff i_callback_edit_hide_text void '(* *))
 (define-lff i_callback_edit_invoke_macro void '(* *))
-(define-lff i_callback_edit_lock void '(* *))
 (define-lff i_callback_edit_mirror void '(* *))
 (define-lff i_callback_edit_rotate_90 void '(* *))
 (define-lff i_callback_edit_show_hidden void '(* *))
@@ -548,6 +548,9 @@
 
 ;;; o_delete.c
 (define-lff o_delete_selected void '(*))
+
+;;; o_misc.c
+(define-lff o_lock void '(*))
 
 ;;; o_move.c
 (define-lff o_move_start void (list '* int int))
