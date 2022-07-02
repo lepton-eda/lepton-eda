@@ -291,8 +291,12 @@
 (define-action-public (&edit-translate #:label (G_ "Translate Symbol"))
   (run-callback i_callback_edit_translate "&edit-translate"))
 
+
+;;; Lock all objects in selection list.
 (define-action-public (&edit-lock #:label (G_ "Lock"))
-  (run-callback i_callback_edit_lock "&edit-lock"))
+  (unless (null? (page-selection (active-page)))
+    (o_lock (*current-window))))
+
 
 (define-action-public (&edit-unlock #:label (G_ "Unlock"))
   (run-callback i_callback_edit_unlock "&edit-unlock"))
