@@ -52,7 +52,6 @@
             i_callback_clipboard_paste
             i_callback_close_wm
             i_callback_edit_autonumber_text
-            i_callback_edit_copy
             i_callback_edit_delete
             i_callback_edit_edit
             i_callback_edit_embed
@@ -114,6 +113,8 @@
 
             o_redraw_cleanstates
             o_invalidate_rubber
+
+            o_copy_start
 
             o_place_invalidate_rubber
 
@@ -489,7 +490,6 @@
 (define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_close_wm int '(* * *))
 (define-lff i_callback_edit_autonumber_text void '(* *))
-(define-lff i_callback_edit_copy void '(* *))
 (define-lff i_callback_edit_delete void '(* *))
 (define-lff i_callback_edit_edit void '(* *))
 (define-lff i_callback_edit_embed void '(* *))
@@ -544,6 +544,9 @@
 ;;; o_basic.c
 (define-lff o_redraw_cleanstates int '(*))
 (define-lff o_invalidate_rubber int '(*))
+
+;;; o_copy.c
+(define-lff o_copy_start void (list '* int int))
 
 ;;; o_place.c
 (define-lff o_place_invalidate_rubber void (list '* int))

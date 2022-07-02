@@ -122,31 +122,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
  *
  */
 void
-i_callback_edit_copy (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  gint wx, wy;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (o_select_return_first_object(w_current)) {
-    o_redraw_cleanstates(w_current);
-    if (g_action_get_position (w_current, TRUE, &wx, &wy))
-    {
-      o_copy_start(w_current, wx, wy);
-    }
-    i_set_state (w_current, COPYMODE);
-  } else {
-    i_set_state_msg(w_current, SELECT, _("Select objs first"));
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
 i_callback_edit_mcopy (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
