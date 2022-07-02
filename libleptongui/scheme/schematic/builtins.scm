@@ -621,8 +621,12 @@
 (define-action-public (&attributes-visibility-toggle #:label (G_ "Toggle Text Visibility"))
   (run-callback i_callback_attributes_visibility_toggle "&attributes-visibility-toggle"))
 
+
 (define-action-public (&edit-find-text #:label (G_ "Find Specific Text") #:icon "gtk-find")
-  (run-callback i_callback_edit_find "&edit-find-text"))
+  (define *window (*current-window))
+  (unless (true? (schematic_window_get_inside_action *window))
+    (find_text_dialog *window)))
+
 
 (define-action-public (&edit-hide-text #:label (G_ "Hide Specific Text"))
   (run-callback i_callback_edit_hide_text "&edit-hide-text"))

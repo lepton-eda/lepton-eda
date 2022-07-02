@@ -54,7 +54,6 @@
             i_callback_edit_autonumber_text
             i_callback_edit_edit
             i_callback_edit_embed
-            i_callback_edit_find
             i_callback_edit_hide_text
             i_callback_edit_invoke_macro
             i_callback_edit_mirror
@@ -134,6 +133,8 @@
             x_menu_attach_recent_files_submenu
             x_show_uri
             x_stroke_init
+
+            find_text_dialog
 
             slot_edit_dialog
             slot_edit_dialog_response
@@ -465,6 +466,9 @@
 (define-lff x_tabs_enabled int '())
 (define-lff x_tabs_hdr_update void '(* *))
 
+;;; gschem_find_text_widget.c
+(define-lff find_text_dialog void '(*))
+
 ;;; x_dialog.c
 (define-lff generic_confirm_dialog int '(*))
 (define-lff generic_filesel_dialog '* (list '* '* int))
@@ -494,7 +498,6 @@
 (define-lff i_callback_edit_autonumber_text void '(* *))
 (define-lff i_callback_edit_edit void '(* *))
 (define-lff i_callback_edit_embed void '(* *))
-(define-lff i_callback_edit_find void '(* *))
 (define-lff i_callback_edit_hide_text void '(* *))
 (define-lff i_callback_edit_invoke_macro void '(* *))
 (define-lff i_callback_edit_mirror void '(* *))
