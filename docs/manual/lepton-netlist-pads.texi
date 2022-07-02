@@ -8,6 +8,11 @@ This document is released under
 
 March 6th, 2003
 
+@menu
+* Forward annotation to PADS PowerPCB::
+* Back annotation from PADS PowerPCB::
+@end menu
+
 @node Forward annotation to PADS PowerPCB
 @subsection Forward annotation of lepton schematic changes to PADS PowerPCB layout
 
