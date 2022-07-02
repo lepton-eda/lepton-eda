@@ -65,7 +65,6 @@
             i_callback_edit_mirror
             i_callback_edit_move
             i_callback_edit_rotate_90
-            i_callback_edit_select
             i_callback_edit_show_hidden
             i_callback_edit_show_text
             i_callback_edit_translate
@@ -503,7 +502,6 @@
 (define-lff i_callback_edit_mirror void '(* *))
 (define-lff i_callback_edit_move void '(* *))
 (define-lff i_callback_edit_rotate_90 void '(* *))
-(define-lff i_callback_edit_select void '(* *))
 (define-lff i_callback_edit_show_hidden void '(* *))
 (define-lff i_callback_edit_show_text void '(* *))
 (define-lff i_callback_edit_translate void '(* *))

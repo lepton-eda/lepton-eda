@@ -177,7 +177,7 @@
   (redo!))
 
 (define-action-public (&edit-select #:label (G_ "Select Mode") #:icon "select")
-  (run-callback i_callback_edit_select "&edit-select"))
+  (callback-edit-select (*current-window)))
 
 ;;; Select all objects on the active page.
 (define-action-public (&edit-select-all #:label (G_ "Select All") #:icon "gtk-select-all")
