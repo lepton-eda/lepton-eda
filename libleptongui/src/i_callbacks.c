@@ -122,29 +122,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
  *
  */
 void
-i_callback_edit_delete (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  if (o_select_return_first_object(w_current)) {
-    o_redraw_cleanstates(w_current);
-    o_delete_selected(w_current);
-    /* if you delete the objects you must go into select
-     * mode after the delete */
-    i_action_stop (w_current);
-    i_set_state(w_current, SELECT);
-    i_update_menus(w_current);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
 i_callback_edit_edit (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
