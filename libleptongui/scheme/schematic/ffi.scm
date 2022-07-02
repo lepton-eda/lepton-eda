@@ -52,7 +52,6 @@
             i_callback_clipboard_paste
             i_callback_close_wm
             i_callback_edit_autonumber_text
-            i_callback_edit_delete
             i_callback_edit_edit
             i_callback_edit_embed
             i_callback_edit_find
@@ -113,6 +112,8 @@
             o_invalidate_rubber
 
             o_copy_start
+
+            o_delete_selected
 
             o_move_start
 
@@ -490,7 +491,6 @@
 (define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_close_wm int '(* * *))
 (define-lff i_callback_edit_autonumber_text void '(* *))
-(define-lff i_callback_edit_delete void '(* *))
 (define-lff i_callback_edit_edit void '(* *))
 (define-lff i_callback_edit_embed void '(* *))
 (define-lff i_callback_edit_find void '(* *))
@@ -545,6 +545,9 @@
 
 ;;; o_copy.c
 (define-lff o_copy_start void (list '* int int))
+
+;;; o_delete.c
+(define-lff o_delete_selected void '(*))
 
 ;;; o_move.c
 (define-lff o_move_start void (list '* int int))

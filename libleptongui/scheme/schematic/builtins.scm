@@ -206,7 +206,16 @@
 
 
 (define-action-public (&edit-delete #:label (G_ "Delete") #:icon "gtk-delete")
-  (run-callback i_callback_edit_delete "&edit-delete"))
+  (define *window (*current-window))
+
+  (unless (null? (page-selection (active-page)))
+    (o_redraw_cleanstates *window)
+    (o_delete_selected *window)
+    ;; If you delete the objects you must go into select mode
+    ;; after the delete.
+    (i_action_stop *window)
+    (i_set_state *window (symbol->action-mode 'select-mode))
+    (i_update_menus *window)))
 
 
 (define-action-public (&edit-move #:label (G_ "Move Mode"))
