@@ -179,8 +179,17 @@
 (define-action-public (&edit-select #:label (G_ "Select Mode") #:icon "select")
   (run-callback i_callback_edit_select "&edit-select"))
 
+;;; Select all objects on the active page.
 (define-action-public (&edit-select-all #:label (G_ "Select All") #:icon "gtk-select-all")
-  (run-callback i_callback_edit_select_all "&edit-select-all"))
+  (define *window (*current-window))
+
+  (o_redraw_cleanstates *window)
+
+  (o_select_visible_unlocked *window)
+
+  (i_set_state *window (symbol->action-mode 'select-mode))
+  (i_action_stop *window)
+  (i_update_menus *window))
 
 (define-action-public (&edit-deselect #:label (G_ "Deselect"))
   (run-callback i_callback_edit_deselect "&edit-deselect"))

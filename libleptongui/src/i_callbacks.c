@@ -155,22 +155,6 @@ void i_callback_toolbar_edit_select(GtkWidget* widget, gpointer data)
   }
 }
 
-/*! \brief Select all objects on page.
- * \par Function Description
- * Sets all objects on page as selected.
- */
-void
-i_callback_edit_select_all (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  o_redraw_cleanstates (w_current);
-
-  o_select_visible_unlocked (w_current);
-
-  i_set_state (w_current, SELECT);
-  i_action_stop (w_current);
-  i_update_menus (w_current);
-}
 
 /*! \brief Deselect all objects on page.
  * \par Function Description

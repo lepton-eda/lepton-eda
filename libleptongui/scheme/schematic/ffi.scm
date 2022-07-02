@@ -66,7 +66,6 @@
             i_callback_edit_move
             i_callback_edit_rotate_90
             i_callback_edit_select
-            i_callback_edit_select_all
             i_callback_edit_show_hidden
             i_callback_edit_show_text
             i_callback_edit_translate
@@ -100,6 +99,8 @@
             i_callback_view_zoom_in
             i_callback_view_zoom_out
 
+            i_action_stop
+            i_set_state
             i_set_state_msg
             i_show_state
             i_update_grid_info
@@ -113,6 +114,8 @@
 
             o_buffer_init
             o_undo_init
+
+            o_redraw_cleanstates
 
             o_place_invalidate_rubber
 
@@ -244,6 +247,9 @@
             gschem_options_set_snap_size
 
             text_edit_dialog
+
+            o_select_return_first_object
+            o_select_visible_unlocked
 
             o_slot_end
 
@@ -496,7 +502,6 @@
 (define-lff i_callback_edit_move void '(* *))
 (define-lff i_callback_edit_rotate_90 void '(* *))
 (define-lff i_callback_edit_select void '(* *))
-(define-lff i_callback_edit_select_all void '(* *))
 (define-lff i_callback_edit_show_hidden void '(* *))
 (define-lff i_callback_edit_show_text void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
@@ -531,10 +536,15 @@
 (define-lff i_callback_toolbar_edit_select void '(* *))
 
 ;;; i_basic.c
+(define-lff i_action_stop void '(*))
+(define-lff i_set_state void (list '* int))
 (define-lff i_set_state_msg void (list '* int '*))
 (define-lff i_show_state void '(* *))
 (define-lff i_update_grid_info void '(*))
 (define-lff i_update_menus void '(*))
+
+;;; o_basic.c
+(define-lff o_redraw_cleanstates int '(*))
 
 ;;; o_place.c
 (define-lff o_place_invalidate_rubber void (list '* int))
@@ -556,6 +566,10 @@
 
 ;;; x_print.c
 (define-lff x_print void '(*))
+
+;;; o_select.c
+(define-lff o_select_return_first_object '* '(*))
+(define-lff o_select_visible_unlocked void '(*))
 
 ;;; o_slot.c
 (define-lff o_slot_end void '(* * *))

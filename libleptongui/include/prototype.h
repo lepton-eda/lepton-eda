@@ -102,7 +102,6 @@ void i_callback_file_script (GtkWidget *widget, gpointer data);
 void i_callback_file_save (GtkWidget *widget, gpointer data);
 void i_callback_edit_select (GtkWidget *widget, gpointer data);
 void i_callback_toolbar_edit_select(GtkWidget *widget, gpointer data);
-void i_callback_edit_select_all (GtkWidget *widget, gpointer data);
 void i_callback_edit_deselect (GtkWidget *widget, gpointer data);
 void i_callback_edit_copy (GtkWidget *widget, gpointer data);
 void i_callback_edit_mcopy (GtkWidget *widget, gpointer data);
