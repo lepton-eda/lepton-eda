@@ -225,22 +225,6 @@ i_callback_edit_mirror (GtkWidget *widget, gpointer data)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *  Thus function unlocks all objects in selection list.
- */
-void
-i_callback_edit_unlock (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  if (o_select_return_first_object(w_current)) {
-    o_unlock(w_current);
-  }
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
