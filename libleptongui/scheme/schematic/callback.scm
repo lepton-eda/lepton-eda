@@ -34,7 +34,8 @@
             callback-file-open
             *callback-file-open
             callback-page-close
-            *callback-page-close))
+            *callback-page-close
+            callback-toolbar-edit-select))
 
 
 (define (callback-file-new *widget *window)
@@ -68,3 +69,10 @@
 
 (define *callback-page-close
   (procedure->pointer void callback-page-close '(* *)))
+
+
+(define (callback-toolbar-edit-select *widget *window)
+  (when (true? (schematic_toolbar_toggle_tool_button_get_active *widget))
+    (unless (true? (o_invalidate_rubber *window))
+      (i_callback_cancel *widget *window))
+    (i_callback_edit_select *widget *window)))

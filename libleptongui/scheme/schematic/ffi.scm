@@ -84,7 +84,6 @@
             i_callback_page_revert
             i_callback_toolbar_add_bus
             i_callback_toolbar_add_net
-            i_callback_toolbar_edit_select
             i_callback_view_color_edit
             i_callback_view_pan
             i_callback_view_pan_down
@@ -116,6 +115,7 @@
             o_undo_init
 
             o_redraw_cleanstates
+            o_invalidate_rubber
 
             o_place_invalidate_rubber
 
@@ -163,6 +163,7 @@
             schematic_window_create_main_box
             schematic_window_create_work_box
             schematic_window_create_menubar
+            schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
             schematic_window_set_key_event_callback
             schematic_window_set_page_select_widget
@@ -427,6 +428,7 @@
 (define-lff schematic_window_create_main_box '* '(*))
 (define-lff schematic_window_create_work_box '* '())
 (define-lff schematic_window_create_menubar void '(* * *))
+(define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
 (define-lff schematic_window_set_key_event_callback void '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
@@ -533,7 +535,6 @@
 (define-lff i_callback_page_revert void '(* *))
 (define-lff i_callback_toolbar_add_bus void '(* *))
 (define-lff i_callback_toolbar_add_net void '(* *))
-(define-lff i_callback_toolbar_edit_select void '(* *))
 
 ;;; i_basic.c
 (define-lff i_action_stop void '(*))
@@ -545,6 +546,7 @@
 
 ;;; o_basic.c
 (define-lff o_redraw_cleanstates int '(*))
+(define-lff o_invalidate_rubber int '(*))
 
 ;;; o_place.c
 (define-lff o_place_invalidate_rubber void (list '* int))
