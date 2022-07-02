@@ -116,23 +116,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 
 /*! \section edit-menu Edit Menu Callback Functions */
 
-/*! \brief Deselect all objects on page.
- * \par Function Description
- * Sets all objects on page as deselected.
- */
-void
-i_callback_edit_deselect (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  o_redraw_cleanstates (w_current);
-
-  o_select_unselect_all (w_current);
-
-  i_set_state (w_current, SELECT);
-  i_action_stop (w_current);
-  i_update_menus (w_current);
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
