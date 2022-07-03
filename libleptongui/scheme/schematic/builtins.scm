@@ -629,7 +629,10 @@
 
 
 (define-action-public (&edit-hide-text #:label (G_ "Hide Specific Text"))
-  (run-callback i_callback_edit_hide_text "&edit-hide-text"))
+  (define *window (*current-window))
+  (unless (true? (schematic_window_get_inside_action *window))
+    (hide_text_dialog *window)))
+
 
 (define-action-public (&edit-show-text #:label (G_ "Show Specific Text"))
   (run-callback i_callback_edit_show_text "&edit-show-text"))
