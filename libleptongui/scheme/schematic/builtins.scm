@@ -635,7 +635,10 @@
 
 
 (define-action-public (&edit-show-text #:label (G_ "Show Specific Text"))
-  (run-callback i_callback_edit_show_text "&edit-show-text"))
+  (define *window (*current-window))
+  (unless (true? (schematic_window_get_inside_action *window))
+    (show_text_dialog *window)))
+
 
 (define-action-public (&edit-autonumber #:label (G_ "Autonumber Text"))
   (run-callback i_callback_edit_autonumber_text "&edit-autonumber"))

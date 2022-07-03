@@ -109,7 +109,6 @@ void i_callback_edit_embed (GtkWidget *widget, gpointer data);
 void i_callback_edit_unembed (GtkWidget *widget, gpointer data);
 void i_callback_edit_update (GtkWidget *widget, gpointer data);
 void i_callback_edit_show_hidden (GtkWidget *widget, gpointer data);
-void i_callback_edit_show_text (GtkWidget *widget, gpointer data);
 void i_callback_edit_autonumber_text (GtkWidget *widget, gpointer data);
 void i_callback_view_sidebar (GtkWidget *widget, gpointer data);
 void i_callback_view_status (GtkWidget *widget, gpointer data);

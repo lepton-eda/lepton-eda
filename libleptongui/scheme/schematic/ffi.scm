@@ -58,7 +58,6 @@
             i_callback_edit_mirror
             i_callback_edit_rotate_90
             i_callback_edit_show_hidden
-            i_callback_edit_show_text
             i_callback_edit_translate
             i_callback_edit_unembed
             i_callback_edit_update
@@ -135,6 +134,7 @@
 
             find_text_dialog
             hide_text_dialog
+            show_text_dialog
 
             slot_edit_dialog
             slot_edit_dialog_response
@@ -471,6 +471,7 @@
 
 ;;; gschem_show_hide_text_widget.c
 (define-lff hide_text_dialog void '(*))
+(define-lff show_text_dialog void '(*))
 
 ;;; x_dialog.c
 (define-lff generic_confirm_dialog int '(*))
@@ -505,7 +506,6 @@
 (define-lff i_callback_edit_mirror void '(* *))
 (define-lff i_callback_edit_rotate_90 void '(* *))
 (define-lff i_callback_edit_show_hidden void '(* *))
-(define-lff i_callback_edit_show_text void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
 (define-lff i_callback_edit_unembed void '(* *))
 (define-lff i_callback_edit_update void '(* *))
