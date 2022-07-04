@@ -732,7 +732,7 @@ the snap grid size should be set to 100")))
   (run-callback i_callback_add_bus "&add-bus"))
 
 (define-action-public (&add-text #:label (G_ "Add Text") #:icon "insert-text")
-  (run-callback i_callback_add_text "&add-text"))
+  (callback-add-text %null-pointer (*current-window)))
 
 (define-action-public (&add-line #:label (G_ "Add Line") #:icon "insert-line")
   (run-callback i_callback_add_line "&add-line"))
