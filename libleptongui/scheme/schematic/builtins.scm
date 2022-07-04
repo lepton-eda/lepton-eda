@@ -654,8 +654,20 @@ the snap grid size should be set to 100")))
 (define-action-public (&add-text #:label (G_ "Add Text") #:icon "insert-text")
   (callback-add-text %null-pointer (*current-window)))
 
+
 (define-action-public (&add-line #:label (G_ "Add Line") #:icon "insert-line")
-  (run-callback i_callback_add_line "&add-line"))
+  (define *window (*current-window))
+  (o_redraw_cleanstates *window)
+  (o_invalidate_rubber *window)
+
+  (i_set_state *window (symbol->action-mode 'line-mode))
+
+  (let ((position (action-position)))
+    (and position
+         (match (snap-point position)
+           ((x . y) (o_line_start *window x y))
+           (_ #f)))))
+
 
 (define-action-public (&add-path #:label (G_ "Add Path") #:icon "insert-path")
   (run-callback i_callback_add_path "&add-path"))
