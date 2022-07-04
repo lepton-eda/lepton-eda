@@ -35,7 +35,6 @@
             i_callback_add_box
             i_callback_add_bus
             i_callback_add_circle
-            i_callback_add_component
             i_callback_add_line
             i_callback_add_net
             i_callback_add_path
@@ -137,6 +136,8 @@
             slot_edit_dialog_response
             slot_edit_dialog_get_text
             slot_edit_dialog_quit
+
+            x_compselect_open
 
             x_widgets_create
             x_widgets_init
@@ -336,6 +337,9 @@
 ;;; x_colorcb.c
 (define-lff x_colorcb_update_colors void '())
 
+;;; x_compselect.c
+(define-lff x_compselect_open void '(*))
+
 ;;; x_widgets.c
 (define-lff x_widgets_create void '(*))
 (define-lff x_widgets_init void '())
@@ -502,7 +506,6 @@
 (define-lff i_callback_add_box void '(* *))
 (define-lff i_callback_add_bus void '(* *))
 (define-lff i_callback_add_circle void '(* *))
-(define-lff i_callback_add_component void '(* *))
 (define-lff i_callback_add_line void '(* *))
 (define-lff i_callback_add_net void '(* *))
 (define-lff i_callback_add_path void '(* *))

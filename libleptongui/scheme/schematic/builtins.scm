@@ -720,7 +720,7 @@ the snap grid size should be set to 100")))
 ;;;; Actions related to adding things
 
 (define-action-public (&add-component #:label (G_ "Add Component") #:icon "insert-symbol")
-  (run-callback i_callback_add_component "&add-component"))
+  (callback-add-component %null-pointer (*current-window)))
 
 (define-action-public (&add-attribute #:label (G_ "Add Attribute") #:icon "insert-attribute")
   (run-callback i_callback_add_attribute "&add-attribute"))
