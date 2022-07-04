@@ -750,7 +750,16 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&add-path #:label (G_ "Add Path") #:icon "insert-path")
-  (run-callback i_callback_add_path "&add-path"))
+  (define *window (*current-window))
+
+  (o_redraw_cleanstates *window)
+  (o_invalidate_rubber *window)
+
+  (i_set_state *window (symbol->action-mode 'path-mode))
+
+  ;; Don't start path here since setting of its first point and
+  ;; control point requires the left button click and release.
+  )
 
 (define-action-public (&add-box #:label (G_ "Add Box") #:icon "insert-box")
   (run-callback i_callback_add_box "&add-box"))

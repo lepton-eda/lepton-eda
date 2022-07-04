@@ -837,22 +837,6 @@ void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
 }
 
 
-void
-i_callback_add_path (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_assert (w_current != NULL);
-
-  o_redraw_cleanstates (w_current);
-  o_invalidate_rubber (w_current);
-
-  i_set_state (w_current, PATHMODE);
-
-  /* Don't start path here since setting of its first point and
-   * control point requires the left button click and release */
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
