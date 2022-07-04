@@ -837,30 +837,6 @@ void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_add_line (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  gint wx, wy;
-
-  g_return_if_fail (w_current != NULL);
-
-  o_redraw_cleanstates(w_current);
-  o_invalidate_rubber (w_current);
-
-  i_set_state(w_current, LINEMODE);
-
-  if (g_action_get_position (w_current, TRUE, &wx, &wy))
-  {
-    o_line_start(w_current, wx, wy);
-  }
-}
-
 void
 i_callback_add_path (GtkWidget *widget, gpointer data)
 {

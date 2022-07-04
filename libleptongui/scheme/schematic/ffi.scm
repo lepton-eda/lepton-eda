@@ -35,7 +35,6 @@
             i_callback_add_box
             i_callback_add_bus
             i_callback_add_circle
-            i_callback_add_line
             i_callback_add_net
             i_callback_add_path
             i_callback_add_picture
@@ -100,6 +99,9 @@
 
             o_edit
             o_edit_show_hidden
+
+            o_line_start
+
             o_mirror_world_update
             o_rotate_world_update
 
@@ -507,7 +509,6 @@
 (define-lff i_callback_add_box void '(* *))
 (define-lff i_callback_add_bus void '(* *))
 (define-lff i_callback_add_circle void '(* *))
-(define-lff i_callback_add_line void '(* *))
 (define-lff i_callback_add_net void '(* *))
 (define-lff i_callback_add_path void '(* *))
 (define-lff i_callback_add_picture void '(* *))
@@ -564,6 +565,9 @@
 
 ;;; o_delete.c
 (define-lff o_delete_selected void '(*))
+
+;;; o_line.c
+(define-lff o_line_start void (list '* int int))
 
 ;;; o_misc.c
 (define-lff o_edit void '(* *))
