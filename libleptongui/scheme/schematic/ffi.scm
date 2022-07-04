@@ -36,7 +36,6 @@
             i_callback_add_bus
             i_callback_add_circle
             i_callback_add_net
-            i_callback_add_path
             i_callback_add_picture
             i_callback_add_pin
             i_callback_attributes_show_both
@@ -507,7 +506,6 @@
 (define-lff i_callback_add_bus void '(* *))
 (define-lff i_callback_add_circle void '(* *))
 (define-lff i_callback_add_net void '(* *))
-(define-lff i_callback_add_path void '(* *))
 (define-lff i_callback_add_picture void '(* *))
 (define-lff i_callback_add_pin void '(* *))
 (define-lff i_callback_attributes_show_both void '(* *))
