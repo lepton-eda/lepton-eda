@@ -31,6 +31,7 @@
   #:use-module (schematic window foreign)
 
   #:export (callback-add-component
+            callback-add-text
             callback-file-new
             *callback-file-new
             callback-file-open
@@ -94,3 +95,13 @@
   (x_compselect_open *window)
 
   (i_set_state *window (symbol->action-mode 'select-mode)))
+
+
+(define (callback-add-text *widget *window)
+  (o_redraw_cleanstates *window)
+  (o_invalidate_rubber *window)
+
+  (i_action_stop *window)
+  (i_set_state *window (symbol->action-mode 'select-mode))
+
+  (text_input_dialog *window))

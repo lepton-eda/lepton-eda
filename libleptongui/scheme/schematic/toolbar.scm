@@ -188,7 +188,7 @@ Right mouse button to cancel"
                              "insert-text"
                              "Text"
                              "Add Text..."
-                             i_callback_add_text
+                             callback-add-text
                              10)
         (schematic_toolbar_insert_separator *toolbar 11)
 

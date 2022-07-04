@@ -40,7 +40,6 @@
             i_callback_add_path
             i_callback_add_picture
             i_callback_add_pin
-            i_callback_add_text
             i_callback_attributes_show_both
             i_callback_attributes_show_name
             i_callback_attributes_show_value
@@ -258,6 +257,8 @@
             gschem_options_set_snap_size
 
             text_edit_dialog
+
+            text_input_dialog
 
             o_select_return_first_object
             o_select_unselect_all
@@ -508,7 +509,6 @@
 (define-lff i_callback_add_path void '(* *))
 (define-lff i_callback_add_picture void '(* *))
 (define-lff i_callback_add_pin void '(* *))
-(define-lff i_callback_add_text void '(* *))
 (define-lff i_callback_attributes_show_both void '(* *))
 (define-lff i_callback_attributes_show_name void '(* *))
 (define-lff i_callback_attributes_show_value void '(* *))
@@ -594,6 +594,9 @@
 
 ;;; x_image.c
 (define-lff x_image_setup void '(*))
+
+;;; x_newtext.c
+(define-lff text_input_dialog void '(*))
 
 ;;; x_print.c
 (define-lff x_print void '(*))
