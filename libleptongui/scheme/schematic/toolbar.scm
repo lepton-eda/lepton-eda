@@ -156,7 +156,7 @@
                          "Add component...
 Select library and component from list, move the mouse into main window, click to place.
 Right mouse button to cancel"
-                         i_callback_add_component
+                         callback-add-component
                          7)
 
     (let* ((*radio-button

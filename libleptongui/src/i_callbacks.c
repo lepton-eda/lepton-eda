@@ -729,25 +729,6 @@ void i_callback_buffer_paste5 (GtkWidget *widget, gpointer data) {buffer_paste (
 
 
 /*! \section add-menu Add Menu Callback Functions */
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_add_component (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  o_redraw_cleanstates (w_current);
-
-  i_set_state(w_current, COMPMODE);
-  x_compselect_open (w_current);
-
-  i_set_state(w_current, SELECT);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

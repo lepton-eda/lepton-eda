@@ -30,7 +30,8 @@
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
 
-  #:export (callback-file-new
+  #:export (callback-add-component
+            callback-file-new
             *callback-file-new
             callback-file-open
             *callback-file-open
@@ -84,3 +85,12 @@
     (unless (true? (o_invalidate_rubber *window))
       (i_callback_cancel *widget *window))
     (callback-edit-select *window)))
+
+
+(define (callback-add-component *widget *window)
+  (o_redraw_cleanstates *window)
+
+  (i_set_state *window (symbol->action-mode 'component-mode))
+  (x_compselect_open *window)
+
+  (i_set_state *window (symbol->action-mode 'select-mode)))
