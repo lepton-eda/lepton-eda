@@ -761,8 +761,21 @@ the snap grid size should be set to 100")))
   ;; control point requires the left button click and release.
   )
 
+
 (define-action-public (&add-box #:label (G_ "Add Box") #:icon "insert-box")
-  (run-callback i_callback_add_box "&add-box"))
+  (define *window (*current-window))
+
+  (o_redraw_cleanstates *window)
+  (o_invalidate_rubber *window)
+
+  (i_set_state *window (symbol->action-mode 'box-mode))
+
+  (let ((position (action-position)))
+    (and position
+         (match (snap-point position)
+           ((x . y) (o_box_start *window x y))
+           (_ #f)))))
+
 
 (define-action-public (&add-circle #:label (G_ "Add Circle") #:icon "insert-circle")
   (run-callback i_callback_add_circle "&add-circle"))
