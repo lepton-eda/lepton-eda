@@ -32,7 +32,6 @@
             generic_msg_dialog
             i_callback_add_arc
             i_callback_add_attribute
-            i_callback_add_box
             i_callback_add_bus
             i_callback_add_circle
             i_callback_add_net
@@ -91,6 +90,8 @@
 
             o_redraw_cleanstates
             o_invalidate_rubber
+
+            o_box_start
 
             o_copy_start
 
@@ -502,7 +503,6 @@
 ;;; i_callbacks.c
 (define-lff i_callback_add_arc void '(* *))
 (define-lff i_callback_add_attribute void '(* *))
-(define-lff i_callback_add_box void '(* *))
 (define-lff i_callback_add_bus void '(* *))
 (define-lff i_callback_add_circle void '(* *))
 (define-lff i_callback_add_net void '(* *))
@@ -554,6 +554,9 @@
 ;;; o_basic.c
 (define-lff o_redraw_cleanstates int '(*))
 (define-lff o_invalidate_rubber int '(*))
+
+;;; o_box.c
+(define-lff o_box_start void (list '* int int))
 
 ;;; o_copy.c
 (define-lff o_copy_start void (list '* int int))

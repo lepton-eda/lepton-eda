@@ -140,7 +140,6 @@ void i_callback_add_net (GtkWidget *widget, gpointer data);
 void i_callback_toolbar_add_net(GtkWidget *widget, gpointer data);
 void i_callback_add_bus (GtkWidget *widget, gpointer data);
 void i_callback_toolbar_add_bus(GtkWidget *widget, gpointer data);
-void i_callback_add_box (GtkWidget *widget, gpointer data);
 void i_callback_add_picture (GtkWidget *widget, gpointer data);
 void i_callback_add_circle (GtkWidget *widget, gpointer data);
 void i_callback_add_arc (GtkWidget *widget, gpointer data);
