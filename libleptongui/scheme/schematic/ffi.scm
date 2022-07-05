@@ -34,7 +34,6 @@
             i_callback_add_attribute
             i_callback_add_bus
             i_callback_add_net
-            i_callback_add_pin
             i_callback_attributes_show_both
             i_callback_attributes_show_name
             i_callback_attributes_show_value
@@ -111,6 +110,8 @@
             o_move_start
 
             picture_selection_dialog
+
+            o_pin_start
 
             o_place_invalidate_rubber
             o_place_mirror
@@ -508,7 +509,6 @@
 (define-lff i_callback_add_attribute void '(* *))
 (define-lff i_callback_add_bus void '(* *))
 (define-lff i_callback_add_net void '(* *))
-(define-lff i_callback_add_pin void '(* *))
 (define-lff i_callback_attributes_show_both void '(* *))
 (define-lff i_callback_attributes_show_name void '(* *))
 (define-lff i_callback_attributes_show_value void '(* *))
@@ -587,6 +587,9 @@
 ;;; o_picture.c
 (define-lff picture_selection_dialog void '(*))
 
+;;; o_pin.c
+(define-lff o_pin_start void (list '* int int))
+
 ;;; o_place.c
 (define-lff o_place_invalidate_rubber void (list '* int))
 (define-lff o_place_mirror void '(*))
@@ -597,6 +600,7 @@
 
 ;;; x_misc.c
 (define-lff x_show_uri int '(* * *))
+
 ;;; x_event.c
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 
