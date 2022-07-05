@@ -52,7 +52,6 @@
             i_callback_clipboard_paste
             i_callback_close_wm
             i_callback_edit_autonumber_text
-            i_callback_edit_edit
             i_callback_edit_embed
             i_callback_edit_invoke_macro
             i_callback_edit_mirror
@@ -110,6 +109,7 @@
 
             o_delete_selected
 
+            o_edit
             o_lock
             o_unlock
 
@@ -237,6 +237,7 @@
             schematic_window_get_gdk_display
             schematic_window_get_options
             schematic_window_get_place_list
+            schematic_window_get_selection_list
             schematic_window_update_keyaccel_string
             schematic_window_update_keyaccel_timer
 
@@ -388,6 +389,7 @@
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_options '* '(*))
 (define-lff schematic_window_get_place_list '* '(*))
+(define-lff schematic_window_get_selection_list '* '(*))
 (define-lff schematic_window_update_keyaccel_string void '(* *))
 (define-lff schematic_window_update_keyaccel_timer void (list '* int))
 
@@ -500,7 +502,6 @@
 (define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_close_wm int '(* * *))
 (define-lff i_callback_edit_autonumber_text void '(* *))
-(define-lff i_callback_edit_edit void '(* *))
 (define-lff i_callback_edit_embed void '(* *))
 (define-lff i_callback_edit_invoke_macro void '(* *))
 (define-lff i_callback_edit_mirror void '(* *))
@@ -554,6 +555,7 @@
 (define-lff o_delete_selected void '(*))
 
 ;;; o_misc.c
+(define-lff o_edit void '(* *))
 (define-lff o_lock void '(*))
 (define-lff o_unlock void '(*))
 

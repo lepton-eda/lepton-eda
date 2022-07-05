@@ -100,7 +100,6 @@ void i_update_net_options_status (GschemToplevel* w_current);
 /* i_callbacks.c */
 void i_callback_file_script (GtkWidget *widget, gpointer data);
 void i_callback_file_save (GtkWidget *widget, gpointer data);
-void i_callback_edit_edit (GtkWidget *widget, gpointer data);
 void i_callback_edit_rotate_90 (GtkWidget *widget, gpointer data);
 void i_callback_edit_mirror (GtkWidget *widget, gpointer data);
 void i_callback_edit_translate (GtkWidget *widget, gpointer data);

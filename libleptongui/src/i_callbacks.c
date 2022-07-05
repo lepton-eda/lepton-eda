@@ -119,24 +119,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
- */
-void
-i_callback_edit_edit (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
-
-  o_edit (w_current, lepton_list_get_glist (selection));
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
  *  This function rotate all objects in the selection list by 90 degrees.
  *
  */
