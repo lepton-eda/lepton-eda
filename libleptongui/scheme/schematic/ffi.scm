@@ -30,7 +30,7 @@
             generic_confirm_dialog
             generic_filesel_dialog
             generic_msg_dialog
-            i_callback_add_arc
+
             i_callback_add_attribute
             i_callback_add_bus
             i_callback_add_net
@@ -88,6 +88,8 @@
 
             o_redraw_cleanstates
             o_invalidate_rubber
+
+            o_arc_start
 
             o_box_start
 
@@ -506,7 +508,6 @@
 (define-lff generic_filesel_dialog '* (list '* '* int))
 (define-lff generic_msg_dialog void '(*))
 ;;; i_callbacks.c
-(define-lff i_callback_add_arc void '(* *))
 (define-lff i_callback_add_attribute void '(* *))
 (define-lff i_callback_add_bus void '(* *))
 (define-lff i_callback_add_net void '(* *))
@@ -557,6 +558,9 @@
 ;;; o_basic.c
 (define-lff o_redraw_cleanstates int '(*))
 (define-lff o_invalidate_rubber int '(*))
+
+;;; o_arc.c
+(define-lff o_arc_start void (list '* int int))
 
 ;;; o_box.c
 (define-lff o_box_start void (list '* int int))
