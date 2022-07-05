@@ -272,8 +272,12 @@
 (define-action-public (&edit-mirror #:label (G_ "Mirror Mode") #:icon "object-flip-horizontal")
   (run-callback i_callback_edit_mirror "&edit-mirror"))
 
+
 (define-action-public (&edit-edit #:label (G_ "Edit..."))
-  (run-callback i_callback_edit_edit "&edit-edit"))
+  (define *window (*current-window))
+  (define *selection (schematic_window_get_selection_list *window))
+  (o_edit *window (lepton_list_get_glist *selection)))
+
 
 (define-action-public (&edit-text #:label (G_ "Edit Text") #:icon "gtk-edit")
   (text_edit_dialog (*current-window)))
