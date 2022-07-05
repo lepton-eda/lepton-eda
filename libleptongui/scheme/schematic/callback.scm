@@ -33,7 +33,8 @@
   #:use-module (schematic window foreign)
   #:use-module (schematic window)
 
-  #:export (callback-add-component
+  #:export (callback-add-bus
+            callback-add-component
             callback-add-net
             callback-add-text
             callback-file-new
@@ -81,6 +82,18 @@
   (procedure->pointer void callback-page-close '(* *)))
 
 
+(define (callback-add-bus *window)
+  (o_redraw_cleanstates *window)
+  (o_invalidate_rubber *window)
+  (i_set_state *window (symbol->action-mode 'bus-mode))
+  (let ((position (action-position)))
+    (and position
+         (match (snap-point position)
+           ((x . y)
+            (o_bus_start *window x y))
+           (_ #f)))))
+
+
 (define (callback-add-net *window)
   (o_redraw_cleanstates *window)
   (i_set_state *window (symbol->action-mode 'net-mode))
@@ -101,7 +114,7 @@
 
 (define (callback-toolbar-add-bus *widget *window)
   (when (true? (schematic_toolbar_toggle_tool_button_get_active *widget))
-    (i_callback_add_bus *widget *window)))
+    (callback-add-bus *window)))
 
 
 (define (callback-toolbar-add-net *widget *window)
