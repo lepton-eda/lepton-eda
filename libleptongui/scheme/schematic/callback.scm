@@ -18,6 +18,7 @@
 
 
 (define-module (schematic callback)
+  #:use-module (ice-9 match)
   #:use-module (system foreign)
 
   #:use-module (lepton config)
@@ -26,11 +27,14 @@
   #:use-module (lepton gettext)
   #:use-module (lepton log)
 
+  #:use-module (schematic action)
   #:use-module (schematic action-mode)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window)
 
   #:export (callback-add-component
+            callback-add-net
             callback-add-text
             callback-file-new
             *callback-file-new
@@ -76,6 +80,18 @@
   (procedure->pointer void callback-page-close '(* *)))
 
 
+(define (callback-add-net *window)
+  (o_redraw_cleanstates *window)
+  (i_set_state *window (symbol->action-mode 'net-mode))
+  (let ((position (action-position)))
+    (and position
+         (match (snap-point position)
+           ((x . y)
+            (o_net_reset *window)
+            (o_net_start *window x y))
+           (_ #f)))))
+
+
 (define (callback-edit-select *window)
   (o_redraw_cleanstates *window)
   (i_set_state *window (symbol->action-mode 'select-mode))
@@ -84,7 +100,7 @@
 
 (define (callback-toolbar-add-net *widget *window)
   (when (true? (schematic_toolbar_toggle_tool_button_get_active *widget))
-    (i_callback_add_net *widget *window)))
+    (callback-add-net *window)))
 
 
 (define (callback-toolbar-edit-select *widget *window)

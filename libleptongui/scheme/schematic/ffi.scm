@@ -33,7 +33,6 @@
 
             i_callback_add_attribute
             i_callback_add_bus
-            i_callback_add_net
             i_callback_attributes_show_both
             i_callback_attributes_show_name
             i_callback_attributes_show_value
@@ -106,6 +105,9 @@
             o_rotate_world_update
 
             o_move_start
+
+            o_net_reset
+            o_net_start
 
             picture_selection_dialog
 
@@ -510,7 +512,6 @@
 ;;; i_callbacks.c
 (define-lff i_callback_add_attribute void '(* *))
 (define-lff i_callback_add_bus void '(* *))
-(define-lff i_callback_add_net void '(* *))
 (define-lff i_callback_attributes_show_both void '(* *))
 (define-lff i_callback_attributes_show_name void '(* *))
 (define-lff i_callback_attributes_show_value void '(* *))
@@ -583,6 +584,10 @@
 
 ;;; o_move.c
 (define-lff o_move_start void (list '* int int))
+
+;;; o_net.c
+(define-lff o_net_reset void '(*))
+(define-lff o_net_start void (list '* int int))
 
 ;;; o_picture.c
 (define-lff picture_selection_dialog void '(*))

@@ -726,7 +726,7 @@ the snap grid size should be set to 100")))
   (run-callback i_callback_add_attribute "&add-attribute"))
 
 (define-action-public (&add-net #:label (G_ "Add Net") #:icon "insert-net")
-  (run-callback i_callback_add_net "&add-net"))
+  (callback-add-net (*current-window)))
 
 (define-action-public (&add-bus #:label (G_ "Add Bus") #:icon "insert-bus")
   (run-callback i_callback_add_bus "&add-bus"))
