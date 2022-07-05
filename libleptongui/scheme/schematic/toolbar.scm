@@ -167,7 +167,7 @@ Right mouse button to cancel"
                                        "Nets"
                                        "Add nets mode
 Right mouse button to cancel"
-                                       i_callback_toolbar_add_net
+                                       callback-toolbar-add-net
                                        8))
            (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
 

@@ -39,6 +39,7 @@
             callback-page-close
             *callback-page-close
             callback-edit-select
+            callback-toolbar-add-net
             callback-toolbar-edit-select))
 
 
@@ -79,6 +80,11 @@
   (o_redraw_cleanstates *window)
   (i_set_state *window (symbol->action-mode 'select-mode))
   (i_action_stop *window))
+
+
+(define (callback-toolbar-add-net *widget *window)
+  (when (true? (schematic_toolbar_toggle_tool_button_get_active *widget))
+    (i_callback_add_net *widget *window)))
 
 
 (define (callback-toolbar-edit-select *widget *window)
