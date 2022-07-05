@@ -843,26 +843,6 @@ void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
  *
  */
 void
-i_callback_add_picture (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  o_redraw_cleanstates(w_current);
-  o_invalidate_rubber (w_current);
-
-  i_set_state(w_current, SELECT);
-
-  picture_selection_dialog(w_current);
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
 i_callback_add_circle (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
