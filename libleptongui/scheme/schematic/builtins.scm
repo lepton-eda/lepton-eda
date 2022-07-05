@@ -266,8 +266,32 @@
         (i_set_state *window (symbol->action-mode 'multiple-copy-mode)))))
 
 
+;;; Rotate all objects in the place list or in the selection list,
+;;; if the former is empty, by 90 degrees.
 (define-action-public (&edit-rotate-90 #:label (G_ "Rotate Mode") #:icon "object-rotate-left")
-  (run-callback i_callback_edit_rotate_90 "&edit-rotate-90"))
+  (define *window (*current-window))
+  (define *page (and=> (active-page) page->pointer))
+
+  (when *page
+    (if (and (true? (schematic_window_get_inside_action *window))
+             (not (null-pointer? (schematic_window_get_place_list *window))))
+        ;; If there are objects to place, rotate them.
+        (o_place_rotate *window)
+        ;; Otherwise, rotate the current selection, if any.
+        (let ((position (action-position)))
+          (if position
+              ;; Mouse pointer is over the canvas: rotate selection.
+              (let ((*objects (lepton_list_get_glist
+                               (schematic_window_get_selection_list *window))))
+                (o_redraw_cleanstates *window)
+                (unless (null-pointer? *objects)
+                  (match (snap-point position)
+                    ((x . y) (o_rotate_world_update *window x y 90 *objects))
+                    (_ #f))))
+              ;; Mouse pointer is out of the canvas: just set the
+              ;; rotation mode.
+              (i_set_state *window (symbol->action-mode 'rotate-mode)))))))
+
 
 (define-action-public (&edit-mirror #:label (G_ "Mirror Mode") #:icon "object-flip-horizontal")
   (run-callback i_callback_edit_mirror "&edit-mirror"))
