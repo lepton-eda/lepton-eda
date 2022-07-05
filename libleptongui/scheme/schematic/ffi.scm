@@ -32,7 +32,6 @@
             generic_msg_dialog
 
             i_callback_add_attribute
-            i_callback_add_bus
             i_callback_attributes_show_both
             i_callback_attributes_show_name
             i_callback_attributes_show_value
@@ -88,6 +87,8 @@
             o_arc_start
 
             o_box_start
+
+            o_bus_start
 
             o_circle_start
 
@@ -507,7 +508,6 @@
 (define-lff generic_msg_dialog void '(*))
 ;;; i_callbacks.c
 (define-lff i_callback_add_attribute void '(* *))
-(define-lff i_callback_add_bus void '(* *))
 (define-lff i_callback_attributes_show_both void '(* *))
 (define-lff i_callback_attributes_show_name void '(* *))
 (define-lff i_callback_attributes_show_value void '(* *))
@@ -558,6 +558,9 @@
 
 ;;; o_box.c
 (define-lff o_box_start void (list '* int int))
+
+;;; o_bus.c
+(define-lff o_bus_start void (list '* int int))
 
 ;;; o_circle.c
 (define-lff o_circle_start void (list '* int int))
