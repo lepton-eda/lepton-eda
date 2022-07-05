@@ -33,7 +33,6 @@
             i_callback_add_arc
             i_callback_add_attribute
             i_callback_add_bus
-            i_callback_add_circle
             i_callback_add_net
             i_callback_add_pin
             i_callback_attributes_show_both
@@ -91,6 +90,8 @@
             o_invalidate_rubber
 
             o_box_start
+
+            o_circle_start
 
             o_copy_start
 
@@ -505,7 +506,6 @@
 (define-lff i_callback_add_arc void '(* *))
 (define-lff i_callback_add_attribute void '(* *))
 (define-lff i_callback_add_bus void '(* *))
-(define-lff i_callback_add_circle void '(* *))
 (define-lff i_callback_add_net void '(* *))
 (define-lff i_callback_add_pin void '(* *))
 (define-lff i_callback_attributes_show_both void '(* *))
@@ -557,6 +557,9 @@
 
 ;;; o_box.c
 (define-lff o_box_start void (list '* int int))
+
+;;; o_circle.c
+(define-lff o_circle_start void (list '* int int))
 
 ;;; o_copy.c
 (define-lff o_copy_start void (list '* int int))
