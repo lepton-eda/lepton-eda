@@ -773,26 +773,6 @@ i_callback_add_bus (GtkWidget *widget, gpointer data)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  don't use the widget parameter on this function, or do some checking...
- *  since there is a call: widget = NULL, data = 0 (will be w_current hack)
- */
-void i_callback_toolbar_add_bus(GtkWidget* widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  g_dynwind_window (w_current);
-  if (schematic_toolbar_toggle_tool_button_get_active (widget))
-  {
-    i_callback_add_bus (widget, w_current);
-  }
-  scm_dynwind_end ();
-}
-
 
 /*! \section hierarchy-menu Hierarchy Menu Callback Functions */
 /*! \todo Finish function documentation!!!
