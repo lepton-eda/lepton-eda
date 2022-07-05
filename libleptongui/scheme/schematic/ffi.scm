@@ -52,7 +52,6 @@
             i_callback_page_prev
             i_callback_page_print
             i_callback_page_revert
-            i_callback_toolbar_add_bus
             i_callback_view_color_edit
             i_callback_view_pan
             i_callback_view_pan_down
@@ -544,7 +543,6 @@
 (define-lff i_callback_page_prev void '(* *))
 (define-lff i_callback_page_print void '(* *))
 (define-lff i_callback_page_revert void '(* *))
-(define-lff i_callback_toolbar_add_bus void '(* *))
 
 ;;; i_basic.c
 (define-lff i_action_stop void '(*))

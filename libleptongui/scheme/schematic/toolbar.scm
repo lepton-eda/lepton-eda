@@ -179,7 +179,7 @@ Right mouse button to cancel"
                                          "Bus"
                                          "Add buses mode
 Right mouse button to cancel"
-                                         i_callback_toolbar_add_bus
+                                         callback-toolbar-add-bus
                                          9))
              (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
 
