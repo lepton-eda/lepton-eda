@@ -206,28 +206,6 @@ void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
   schematic_window_active_page_changed (w_current);
 }
 
-/*! \brief Set what part of an attribute is shown.
- *  \par Function Description
- *  This function changes what part (name, value or both) of an
- *  attribute is shown by its attribute object. The attribute object
- *  is erased, updated and finally redrawn.
- *
- *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] object     The attribute object.
- *  \param [in] show_name_value  The new display flag for attribute.
- */
-void o_attrib_toggle_show_name_value(GschemToplevel *w_current,
-                                     LeptonObject *object, int show_name_value)
-{
-  g_return_if_fail (lepton_object_is_text (object));
-
-  o_invalidate (w_current, object);
-  lepton_text_object_set_show (object, show_name_value);
-  lepton_text_object_recreate (object);
-
-  schematic_window_active_page_changed (w_current);
-}
-
 
 /*! \brief Adds an attribute with given parameters to the active page
  *  \par Function Description
