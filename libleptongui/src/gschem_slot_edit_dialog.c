@@ -54,24 +54,6 @@ slot_edit_dialog_quit (GschemToplevel *w_current)
 }
 
 
-void
-slot_edit_dialog_set_slot (GschemToplevel *w_current,
-                           char *string)
-{
-  int len;
-  char *slot_string;
-
-  len = strlen (string);
-  if (len != 0)
-  {
-    slot_string = g_strdup_printf ("slot=%s", string);
-    o_slot_end (w_current,
-                o_select_return_first_object (w_current),
-                slot_string);
-    g_free (slot_string);
-  }
-}
-
 /*! \brief Get text entry string from the slot edit dialog.
  *  \par Function Description
  *  The function returns the slot value stored in the dialog entry

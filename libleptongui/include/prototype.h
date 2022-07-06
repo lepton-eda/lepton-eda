@@ -40,9 +40,6 @@ const char*
 slot_edit_dialog_get_text (GtkWidget *widget);
 
 void
-slot_edit_dialog_set_slot (GschemToplevel *w_current,
-                           char *string);
-void
 slot_edit_dialog_quit (GschemToplevel *w_current);
 
 /* keys.c */

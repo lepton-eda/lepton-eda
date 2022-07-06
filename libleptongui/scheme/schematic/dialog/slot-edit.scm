@@ -22,8 +22,12 @@
   #:use-module (system foreign)
 
   #:use-module (lepton attrib)
+  #:use-module (lepton ffi)
 
   #:use-module (schematic ffi)
+  #:use-module ((schematic selection) #:select (page-selection))
+  #:use-module (schematic window)
+  #:use-module ((lepton object foreign) #:select (object->pointer))
 
   #:export (slot-edit-dialog))
 
@@ -33,7 +37,14 @@
     (when accepted?
       (let ((*string (slot_edit_dialog_get_text *widget)))
         (unless (null-pointer? *string)
-          (slot_edit_dialog_set_slot *window *string))))
+          (with-window
+           *window
+           ;; The only one component must be selected.
+           (let ((component (car (page-selection (active-page))))
+                 (slot-string (string-append "slot=" (pointer->string *string))))
+             (o_slot_end *window
+                         (object->pointer component)
+                         (string->pointer slot-string)))))))
     (slot_edit_dialog_quit *window)))
 
 

@@ -131,7 +131,6 @@
             slot_edit_dialog
             slot_edit_dialog_response
             slot_edit_dialog_get_text
-            slot_edit_dialog_set_slot
             slot_edit_dialog_quit
 
             x_widgets_show_find_text_state
@@ -176,6 +175,8 @@
             gschem_options_get_snap_size
 
             text_edit_dialog
+
+            o_slot_end
 
             o_undo_savestate
 
@@ -274,7 +275,6 @@
 (define-lff slot_edit_dialog void '(* * * *))
 (define-lff slot_edit_dialog_response int (list int))
 (define-lff slot_edit_dialog_get_text '* '(*))
-(define-lff slot_edit_dialog_set_slot void '(* *))
 (define-lff slot_edit_dialog_quit void '(*))
 
 ;;; gschem_toplevel.c
@@ -415,6 +415,9 @@
 
 ;;; x_print.c
 (define-lff x_print void '(*))
+
+;;; o_slot.c
+(define-lff o_slot_end void '(* * *))
 
 ;;; x_tabs.c
 (define-lff x_tabs_next void '(*))
