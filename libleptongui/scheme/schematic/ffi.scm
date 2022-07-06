@@ -51,7 +51,6 @@
             i_callback_clipboard_cut
             i_callback_clipboard_paste
             i_callback_close_wm
-            i_callback_edit_embed
             i_callback_edit_invoke_macro
             i_callback_edit_translate
             i_callback_edit_unembed
@@ -505,7 +504,6 @@
 (define-lff i_callback_clipboard_cut void '(* *))
 (define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_close_wm int '(* * *))
-(define-lff i_callback_edit_embed void '(* *))
 (define-lff i_callback_edit_invoke_macro void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
 (define-lff i_callback_edit_unembed void '(* *))

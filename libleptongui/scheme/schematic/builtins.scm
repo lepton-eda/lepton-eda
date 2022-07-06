@@ -358,8 +358,29 @@
 (define-action-public (&edit-invoke-macro #:label (G_ "Invoke Macro"))
   (run-callback i_callback_edit_invoke_macro "&edit-invoke-macro"))
 
+
+;;; Embed all objects in the current selection list.
 (define-action-public (&edit-embed #:label (G_ "Embed Component/Picture"))
-  (run-callback i_callback_edit_embed "&edit-embed"))
+  (define *window (*current-window))
+
+  (define (embed! object)
+    (set-object-embedded! object #t))
+
+  (let ((selection (page-selection (active-page))))
+    ;; Is anything selected?
+    (if (null? selection)
+        ;; Nothing selected, go back to select state.
+        (begin
+          (o_redraw_cleanstates *window)
+          (i_action_stop *window)
+          (i_set_state *window (symbol->action-mode 'select-mode)))
+
+        ;; Embed all selected components and pictures.
+        (begin
+          (for-each embed! selection)
+          (undo-save-state)
+          (page_select_widget_update *window)))))
+
 
 (define-action-public (&edit-unembed #:label (G_ "Unembed Component/Picture"))
   (run-callback i_callback_edit_unembed "&edit-unembed"))
