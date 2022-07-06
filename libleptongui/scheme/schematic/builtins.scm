@@ -1008,7 +1008,14 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&attributes-visibility-toggle #:label (G_ "Toggle Text Visibility"))
-  (run-callback i_callback_attributes_visibility_toggle "&attributes-visibility-toggle"))
+  (define (toggle-visibility! object)
+    (set-text-visibility! object (not (text-visible? object))))
+
+  (unless (true? (schematic_window_get_inside_action (*current-window)))
+    (let ((attribs (filter attribute? (page-selection (active-page)))))
+      (unless (null? attribs)
+        (for-each toggle-visibility! attribs)
+        (undo-save-state)))))
 
 
 (define-action-public (&edit-find-text #:label (G_ "Find Specific Text") #:icon "gtk-find")
