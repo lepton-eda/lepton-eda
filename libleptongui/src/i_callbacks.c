@@ -295,26 +295,6 @@ i_callback_edit_update (GtkWidget *widget, gpointer data)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_edit_autonumber_text (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  /* This is a new addition 3/15 to prevent this from executing
-   * inside an action */
-  if (schematic_window_get_inside_action (w_current))
-    return;
-
-  autonumber_text_dialog(w_current);
-}
-
 /*! \section view-menu View Menu Callback Functions */
 /*! \brief Toggle the visibility of the sidebar
  */

@@ -698,7 +698,10 @@
 
 
 (define-action-public (&edit-autonumber #:label (G_ "Autonumber Text"))
-  (run-callback i_callback_edit_autonumber_text "&edit-autonumber"))
+  (define *window (*current-window))
+  (unless (true? (schematic_window_get_inside_action *window))
+    (autonumber_text_dialog *window)))
+
 
 ;; -------------------------------------------------------------------
 ;;;; Configuration actions

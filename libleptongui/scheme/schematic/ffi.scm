@@ -51,7 +51,6 @@
             i_callback_clipboard_cut
             i_callback_clipboard_paste
             i_callback_close_wm
-            i_callback_edit_autonumber_text
             i_callback_edit_embed
             i_callback_edit_invoke_macro
             i_callback_edit_translate
@@ -131,6 +130,9 @@
             x_colorcb_update_colors
 
             x_menu_attach_recent_files_submenu
+
+            autonumber_text_dialog
+
             x_show_uri
             x_stroke_init
 
@@ -503,7 +505,6 @@
 (define-lff i_callback_clipboard_cut void '(* *))
 (define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_close_wm int '(* * *))
-(define-lff i_callback_edit_autonumber_text void '(* *))
 (define-lff i_callback_edit_embed void '(* *))
 (define-lff i_callback_edit_invoke_macro void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
@@ -568,6 +569,9 @@
 (define-lff o_place_invalidate_rubber void (list '* int))
 (define-lff o_place_mirror void '(*))
 (define-lff o_place_rotate void '(*))
+
+;;; x_autonumber.c
+(define-lff autonumber_text_dialog void '(*))
 
 ;;; x_misc.c
 (define-lff x_show_uri int '(* * *))
