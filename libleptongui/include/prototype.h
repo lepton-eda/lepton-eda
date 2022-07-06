@@ -168,7 +168,6 @@ void
 o_attrib_select_invisible (GschemToplevel *w_current,
                            LeptonSelection *selection,
                            LeptonObject *selected);
-void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object);
 LeptonObject*
 o_attrib_add_attrib (GschemToplevel *w_current,
                      const char *text_string,

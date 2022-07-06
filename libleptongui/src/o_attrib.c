@@ -163,49 +163,6 @@ o_attrib_select_invisible (GschemToplevel *w_current,
   }
 }
 
-/*! \brief Change visibility status of attribute object.
- *  \par Function Description
- *  This function toggles the visibility status of the attribute \a
- *  object and updates it. The object is erased or redrawn if
- *  necessary.
- *
- *  \param [in] w_current  The GschemToplevel object.
- *  \param [in] object     The attribute object.
- */
-void o_attrib_toggle_visibility(GschemToplevel *w_current, LeptonObject *object)
-{
-  g_return_if_fail (lepton_object_is_text (object));
-
-  gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
-
-  if (lepton_text_object_is_visible (object)) {
-    /* only erase if we are not showing hidden text */
-    if (!show_hidden_text) {
-      o_invalidate (w_current, object);
-    }
-
-    lepton_text_object_set_visibility (object, INVISIBLE);
-
-    if (show_hidden_text) {
-      /* draw text so that little I is drawn */
-      o_invalidate (w_current, object);
-    }
-
-  } else {
-    /* if we are in the special show hidden mode, then erase text first */
-    /* to get rid of the little I */
-    if (show_hidden_text) {
-      o_invalidate (w_current, object);
-    }
-
-    lepton_text_object_set_visibility (object, VISIBLE);
-    lepton_text_object_recreate (object);
-  }
-
-  schematic_window_active_page_changed (w_current);
-}
-
 
 /*! \brief Adds an attribute with given parameters to the active page
  *  \par Function Description
