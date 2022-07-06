@@ -161,49 +161,6 @@ i_callback_edit_invoke_macro (GtkWidget *widget, gpointer data)
   macro_widget_show (w_current->macro_widget);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *  This function embedds all objects in selection list
- *
- */
-void
-i_callback_edit_embed (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  LeptonObject *o_current;
-
-  g_return_if_fail (w_current != NULL);
-
-  /* anything selected ? */
-  if (o_select_selected(w_current)) {
-    /* yes, embed each selected component */
-    LeptonSelection *selection = schematic_window_get_selection_list (w_current);
-    GList* s_current = lepton_list_get_glist (selection);
-
-    while (s_current != NULL) {
-      o_current = (LeptonObject *) s_current->data;
-      g_assert (o_current != NULL);
-
-      if (lepton_object_is_component (o_current))
-        lepton_component_object_embed (o_current);
-      else if (lepton_object_is_picture (o_current))
-        lepton_picture_object_embed (o_current);
-
-      s_current = g_list_next(s_current);
-    }
-
-    o_undo_savestate_old(w_current, UNDO_ALL);
-    page_select_widget_update (w_current);
-
-  } else {
-    /* nothing selected, go back to select state */
-    o_redraw_cleanstates(w_current);
-    i_action_stop (w_current);
-    i_set_state(w_current, SELECT);
-  }
-
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief
