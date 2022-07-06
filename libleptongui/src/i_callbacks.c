@@ -294,23 +294,6 @@ i_callback_edit_update (GtkWidget *widget, gpointer data)
 
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_edit_show_hidden (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  LeptonPage *active_page = schematic_window_get_active_page (w_current);
-
-  o_edit_show_hidden (w_current, lepton_page_objects (active_page));
-}
-
 
 /*! \todo Finish function documentation!!!
  *  \brief
