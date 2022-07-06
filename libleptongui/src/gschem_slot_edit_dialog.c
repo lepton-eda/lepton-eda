@@ -39,6 +39,12 @@
 /***************** Start of slot edit dialog box *********************/
 
 
+/*! \brief Close the slot edit dialog.
+ *  \par Function Description
+ *  Quits the dialog destroying it.
+ *
+ *  \param [in] w_current The schematic window structure.
+ */
 void
 slot_edit_dialog_quit (GschemToplevel *w_current)
 {
@@ -66,39 +72,42 @@ slot_edit_dialog_set_slot (GschemToplevel *w_current,
   }
 }
 
-
-/*! \brief Response function for the slot edit dialog.
+/*! \brief Get text entry string from the slot edit dialog.
  *  \par Function Description
- *  The function takes the dialog entry and applies the new slot
- *  to the selected symbol.
+ *  The function returns the slot value stored in the dialog entry
+ *  named "textentry".
  *
  *  \param [in] widget The slot edit widget.
- *  \param [in] response The GTK response ID.
- *  \param [in] w_current The current schematic window structure.
+ *  \return The string slot value.
  */
-void
-slot_edit_dialog_response (GtkWidget *widget,
-                           gint response,
-                           GschemToplevel *w_current)
+const char*
+slot_edit_dialog_get_text (GtkWidget *widget)
 {
-  GtkWidget *textentry;
-  gchar *string = NULL;
+  GtkWidget *textentry = GTK_WIDGET (g_object_get_data (G_OBJECT (widget),
+                                                        "textentry"));
+  return gtk_entry_get_text (GTK_ENTRY (textentry));
+}
 
-  switch (response) {
-  case GTK_RESPONSE_REJECT:
-  case GTK_RESPONSE_DELETE_EVENT:
-    /* void */
-    break;
+
+/*! \brief Get response signal from the slot edit dialog.
+ *  \par Function Description
+ *  The function gets the slot edit dialog response ID and returns
+ *  TRUE if it should accept the input, otherwise it returns
+ *  FALSE.
+ *
+ *  \param [in] response The GTK response ID.
+ *  \return TRUE if the response ID is GTK_RESPONSE_ACCEPT, otherwise FALSE.
+ */
+gboolean
+slot_edit_dialog_response (gint response)
+{
+  switch (response)
+  {
   case GTK_RESPONSE_ACCEPT:
-    textentry = GTK_WIDGET (g_object_get_data (G_OBJECT (w_current->sewindow),
-                                               "textentry"));
-    string = (gchar*) gtk_entry_get_text(GTK_ENTRY(textentry));
-    slot_edit_dialog_set_slot (w_current, string);
-    break;
+    return TRUE;
   default:
-    printf("slot_edit_dialog_response(): strange signal %1$d\n",response);
+    return FALSE;
   }
-  slot_edit_dialog_quit (w_current);
 }
 
 

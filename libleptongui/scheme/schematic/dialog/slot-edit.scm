@@ -28,6 +28,19 @@
   #:export (slot-edit-dialog))
 
 
+(define (slot-edit-dialog-response *widget response *window)
+  (let ((accepted? (true? (slot_edit_dialog_response response))))
+    (when accepted?
+      (let ((*string (slot_edit_dialog_get_text *widget)))
+        (unless (null-pointer? *string)
+          (slot_edit_dialog_set_slot *window *string))))
+    (slot_edit_dialog_quit *window)))
+
+
+(define *slot-edit-dialog-response
+  (procedure->pointer void slot-edit-dialog-response (list '* int '*)))
+
+
 ;;; Launch a dialog for changing slot of selected COMPONENT in *WINDOW.
 (define (slot-edit-dialog *window component)
   (define (attrib-by-name attribs name)
@@ -53,4 +66,4 @@
     (slot_edit_dialog *window
                       (string->pointer numslots-value)
                       (string->pointer slot-value)
-                      *slot_edit_dialog_response)))
+                      *slot-edit-dialog-response)))

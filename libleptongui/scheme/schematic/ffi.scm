@@ -129,7 +129,10 @@
             x_stroke_init
 
             slot_edit_dialog
-            *slot_edit_dialog_response
+            slot_edit_dialog_response
+            slot_edit_dialog_get_text
+            slot_edit_dialog_set_slot
+            slot_edit_dialog_quit
 
             x_widgets_show_find_text_state
             x_widgets_show_font_select
@@ -269,7 +272,10 @@
 
 ;;; gschem_slot_edit_dialog.c
 (define-lff slot_edit_dialog void '(* * * *))
-(define-lfc *slot_edit_dialog_response)
+(define-lff slot_edit_dialog_response int (list int))
+(define-lff slot_edit_dialog_get_text '* '(*))
+(define-lff slot_edit_dialog_set_slot void '(* *))
+(define-lff slot_edit_dialog_quit void '(*))
 
 ;;; gschem_toplevel.c
 (define-lff gschem_toplevel_get_current_page_view '* '(*))

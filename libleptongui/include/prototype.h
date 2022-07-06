@@ -33,10 +33,17 @@ slot_edit_dialog (GschemToplevel *w_current,
                   const char *count,
                   const char *string,
                   GCallback response_callback);
+gboolean
+slot_edit_dialog_response (gint response);
+
+const char*
+slot_edit_dialog_get_text (GtkWidget *widget);
+
 void
-slot_edit_dialog_response (GtkWidget *widget,
-                           gint response,
-                           GschemToplevel *w_current);
+slot_edit_dialog_set_slot (GschemToplevel *w_current,
+                           char *string);
+void
+slot_edit_dialog_quit (GschemToplevel *w_current);
 
 /* keys.c */
 guint
