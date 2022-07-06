@@ -53,7 +53,6 @@
             i_callback_close_wm
             i_callback_edit_invoke_macro
             i_callback_edit_translate
-            i_callback_edit_unembed
             i_callback_edit_update
             i_callback_file_save
             *i_callback_file_save
@@ -506,7 +505,6 @@
 (define-lff i_callback_close_wm int '(* * *))
 (define-lff i_callback_edit_invoke_macro void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
-(define-lff i_callback_edit_unembed void '(* *))
 (define-lff i_callback_edit_update void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
