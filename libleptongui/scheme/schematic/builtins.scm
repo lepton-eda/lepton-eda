@@ -293,8 +293,31 @@
               (i_set_state *window (symbol->action-mode 'rotate-mode)))))))
 
 
+;;; Mirror objects in the place list or in the selection list if
+;;; the former is empty.
 (define-action-public (&edit-mirror #:label (G_ "Mirror Mode") #:icon "object-flip-horizontal")
-  (run-callback i_callback_edit_mirror "&edit-mirror"))
+  (define *window (*current-window))
+  (define *page (and=> (active-page) page->pointer))
+
+  (when *page
+    (if (and (true? (schematic_window_get_inside_action *window))
+             (not (null-pointer? (schematic_window_get_place_list *window))))
+        ;; If there are objects to place, mirror them.
+        (o_place_mirror *window)
+        ;; Otherwise, mirror the current selection, if any.
+        (let ((position (action-position)))
+          (if position
+              ;; Mouse pointer is over the canvas: mirror selection.
+              (let ((*objects (lepton_list_get_glist
+                               (schematic_window_get_selection_list *window))))
+                (o_redraw_cleanstates *window)
+                (unless (null-pointer? *objects)
+                  (match (snap-point position)
+                    ((x . y) (o_mirror_world_update *window x y *objects))
+                    (_ #f))))
+              ;; Mouse pointer is out of the canvas: just set the
+              ;; mirror mode.
+              (i_set_state *window (symbol->action-mode 'mirror-mode)))))))
 
 
 (define-action-public (&edit-edit #:label (G_ "Edit..."))

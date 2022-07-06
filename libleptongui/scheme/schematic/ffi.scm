@@ -54,7 +54,6 @@
             i_callback_edit_autonumber_text
             i_callback_edit_embed
             i_callback_edit_invoke_macro
-            i_callback_edit_mirror
             i_callback_edit_show_hidden
             i_callback_edit_translate
             i_callback_edit_unembed
@@ -111,11 +110,13 @@
             o_edit
             o_lock
             o_unlock
+            o_mirror_world_update
             o_rotate_world_update
 
             o_move_start
 
             o_place_invalidate_rubber
+            o_place_mirror
             o_place_rotate
 
             page_select_widget_new
@@ -505,7 +506,6 @@
 (define-lff i_callback_edit_autonumber_text void '(* *))
 (define-lff i_callback_edit_embed void '(* *))
 (define-lff i_callback_edit_invoke_macro void '(* *))
-(define-lff i_callback_edit_mirror void '(* *))
 (define-lff i_callback_edit_show_hidden void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
 (define-lff i_callback_edit_unembed void '(* *))
@@ -558,6 +558,7 @@
 (define-lff o_edit void '(* *))
 (define-lff o_lock void '(*))
 (define-lff o_unlock void '(*))
+(define-lff o_mirror_world_update void (list '* int int '*))
 (define-lff o_rotate_world_update void (list '* int int int '*))
 
 ;;; o_move.c
@@ -565,6 +566,7 @@
 
 ;;; o_place.c
 (define-lff o_place_invalidate_rubber void (list '* int))
+(define-lff o_place_mirror void '(*))
 (define-lff o_place_rotate void '(*))
 
 ;;; x_misc.c

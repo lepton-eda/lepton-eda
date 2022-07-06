@@ -122,51 +122,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
  *
  */
 void
-i_callback_edit_mirror (GtkWidget *widget, gpointer data)
-{
-  gint wx, wy;
-  GList *object_list;
-  GschemToplevel *w_current = NULL;
-  LeptonPage* active_page = NULL;
-
-  w_current = GSCHEM_TOPLEVEL (data);
-  g_return_if_fail (w_current != NULL);
-
-  active_page = schematic_window_get_active_page (w_current);
-
-  if (active_page == NULL) {
-    return;
-  }
-
-  if (schematic_window_get_inside_action (w_current) &&
-      schematic_window_get_place_list (w_current) != NULL)
-  {
-    o_place_mirror (w_current);
-    return;
-  }
-
-  if (!g_action_get_position (w_current, TRUE, &wx, &wy))
-  {
-    i_set_state(w_current, MIRRORMODE);
-    return;
-  }
-
-  o_redraw_cleanstates(w_current);
-
-  object_list = lepton_list_get_glist (schematic_window_get_selection_list (w_current));
-
-  if (object_list) {
-    o_mirror_world_update(w_current, wx, wy, object_list);
-  }
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
 i_callback_edit_translate (GtkWidget *widget, gpointer data)
 {
   SchematicSnapMode snap_mode;
