@@ -67,10 +67,14 @@ slot_edit_dialog_set_slot (GschemToplevel *w_current,
 }
 
 
-/*! \brief response function for the slot edit dialog
+/*! \brief Response function for the slot edit dialog.
  *  \par Function Description
- *  The function takes the dialog entry and applies the new slot to the
- *  symbol.
+ *  The function takes the dialog entry and applies the new slot
+ *  to the selected symbol.
+ *
+ *  \param [in] widget The slot edit widget.
+ *  \param [in] response The GTK response ID.
+ *  \param [in] w_current The current schematic window structure.
  */
 void
 slot_edit_dialog_response (GtkWidget *widget,
