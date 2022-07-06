@@ -367,8 +367,14 @@
 (define-action-public (&edit-update #:label (G_ "Update Component") #:icon "gtk-refresh")
   (run-callback i_callback_edit_update "&edit-update"))
 
+
 (define-action-public (&edit-show-hidden #:label (G_ "Show/Hide Invisible Text"))
-  (run-callback i_callback_edit_show_hidden "&edit-show-hidden"))
+  (define *window (*current-window))
+  (define *page (and=> (active-page) page->pointer))
+  (when *page
+    (o_edit_show_hidden *window
+                        (lepton_page_objects *page))))
+
 
 ;; -------------------------------------------------------------------
 ;;;; Clipboard actions

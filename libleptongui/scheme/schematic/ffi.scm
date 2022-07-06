@@ -54,7 +54,6 @@
             i_callback_edit_autonumber_text
             i_callback_edit_embed
             i_callback_edit_invoke_macro
-            i_callback_edit_show_hidden
             i_callback_edit_translate
             i_callback_edit_unembed
             i_callback_edit_update
@@ -108,6 +107,7 @@
             o_delete_selected
 
             o_edit
+            o_edit_show_hidden
             o_lock
             o_unlock
             o_mirror_world_update
@@ -506,7 +506,6 @@
 (define-lff i_callback_edit_autonumber_text void '(* *))
 (define-lff i_callback_edit_embed void '(* *))
 (define-lff i_callback_edit_invoke_macro void '(* *))
-(define-lff i_callback_edit_show_hidden void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
 (define-lff i_callback_edit_unembed void '(* *))
 (define-lff i_callback_edit_update void '(* *))
@@ -556,6 +555,7 @@
 
 ;;; o_misc.c
 (define-lff o_edit void '(* *))
+(define-lff o_edit_show_hidden void '(* *))
 (define-lff o_lock void '(*))
 (define-lff o_unlock void '(*))
 (define-lff o_mirror_world_update void (list '* int int '*))
