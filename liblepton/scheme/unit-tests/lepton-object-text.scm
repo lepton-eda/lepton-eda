@@ -108,6 +108,29 @@
 (test-end "set-text-visibility!")
 
 
+(test-begin "set-text-attribute-mode!")
+
+(let* ((t (make-text '(1 . 2) 'lower-left 0 "test text" 10 #t 'both))
+       (info (text-info t)))
+
+  (test-eq (text-attribute-mode t) 'both)
+  (set-text-attribute-mode! t 'name)
+  (test-eq (text-attribute-mode t) 'name)
+  (set-text-attribute-mode! t 'value)
+  (test-eq (text-attribute-mode t) 'value)
+
+  (test-equal (text-info (set-text-attribute-mode! t 'both)) info)
+
+  (test-assert-thrown 'misc-error
+                      (set-text-attribute-mode! t 'unknown))
+  (test-assert-thrown 'wrong-type-arg
+                      (set-text-attribute-mode! t #f))
+  (test-assert-thrown 'wrong-type-arg
+                      (set-text-attribute-mode! t "both")))
+
+(test-end "set-text-attribute-mode!")
+
+
 (test-begin "set-text-string!" 4)
 
 (let ((a (make-text '(1 . 2) 'lower-left 0 "test text" 10 #t 'both 21))
