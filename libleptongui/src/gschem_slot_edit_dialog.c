@@ -102,9 +102,19 @@ slot_edit_dialog_response (GtkWidget *widget,
 }
 
 
-/*! \brief Create the slot entry dialog
+/*! \brief Create the slot edit dialog.
  *  \par Function Description
- *  This function creates the slot edit dialog.
+ *
+ *  This function creates the slot edit dialog connecting \a
+ *  response_callback to its "response" signal.  \a count is a
+ *  string corresponding to the value of the "numslots=" attribute
+ *  of the edited symbol, \a string is an initial value set from
+ *  its "slot=" attribute.
+ *
+ *  \param [in] w_current The current schematic window structure.
+ *  \param [in] count The string corresponding to "numslots=".
+ *  \param [in] string The string corresponding to "slot=".
+ *  \param [in] response_callback The callback function processing the result.
  */
 void
 slot_edit_dialog (GschemToplevel *w_current,
