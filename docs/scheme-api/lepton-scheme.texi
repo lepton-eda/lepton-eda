@@ -1378,6 +1378,13 @@ will be one of the following symbols:
 @end itemize
 @end defun
 
+@defun set-text-attribute-mode! text
+Sets the attribute mode of @var{text} to @var{mode} which should be
+one of the symbols @samp{'name}, @samp{'value}, or @samp{'both}.
+Returns the modified text object.
+@end defun
+
+
 @node Components
 @subsection Components
 
