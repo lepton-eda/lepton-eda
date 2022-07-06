@@ -983,20 +983,22 @@ the snap grid size should be set to 100")))
 ) ; &attributes-detach action
 
 
+(define (set-selected-attribs-show-mode! mode)
+  (define (set-show-mode! object)
+    (set-text-attribute-mode! object mode))
+  (let ((attribs (filter attribute? (page-selection (active-page)))))
+    (unless (null? attribs)
+      (for-each set-show-mode! attribs)
+      (undo-save-state))))
+
 
 (define-action-public (&attributes-show-value #:label (G_ "Show Attribute Value") #:icon "attribute-show-value")
   (run-callback i_callback_attributes_show_value "&attributes-show-value"))
 
 
 (define-action-public (&attributes-show-name #:label (G_ "Show Attribute Name") #:icon "attribute-show-name")
-  (define (set-show-name! object)
-    (set-text-attribute-mode! object 'name))
-
   (unless (true? (schematic_window_get_inside_action (*current-window)))
-    (let ((attribs (filter attribute? (page-selection (active-page)))))
-      (unless (null? attribs)
-        (for-each set-show-name! attribs)
-        (undo-save-state)))))
+    (set-selected-attribs-show-mode! 'name)))
 
 
 (define-action-public (&attributes-show-both #:label (G_ "Show Name & Value") #:icon "attribute-show-both")
