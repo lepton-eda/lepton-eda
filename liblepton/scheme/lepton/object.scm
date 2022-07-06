@@ -135,6 +135,7 @@
             text-visible?
             make-text
             set-text!
+            set-text-attribute-mode!
             set-text-string!
             set-text-visibility!
 
@@ -1342,6 +1343,25 @@ value will be one of the following symbols:
                    (string->symbol (pointer->string string-pointer)))))
     (or (check-text-attribute-show-mode sym)
         (error "Text object ~A has invalid text attribute visibility ~A" object sym))))
+
+
+(define (set-text-attribute-mode! object mode)
+  "Sets the attribute mode of text OBJECT to MODE which should be
+one of 'name, 'value, or 'both.  Returns the modified OBJECT."
+  (define pointer (check-object object 1 text? 'text))
+
+  (check-text-show mode 2)
+
+  (unless (eq? mode (text-attribute-mode object))
+    (let ((show-mode (symbol->text-attribute-show-mode mode)))
+      (lepton_object_emit_pre_change_notify pointer)
+
+      (lepton_text_object_set_show pointer show-mode)
+      (lepton_object_page_set_changed pointer)
+
+      (lepton_object_emit_change_notify pointer)))
+
+  object)
 
 
 ;;;; Component objects
