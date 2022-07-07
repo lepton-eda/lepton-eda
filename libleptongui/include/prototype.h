@@ -13,8 +13,8 @@ void a_zoom_box_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
 
 /* execute_script.c */
 void
-i_callback_file_script (GtkWidget *widget,
-                        gpointer data);
+schematic_execute_script (GtkWidget *widget,
+                          gpointer data);
 
 /* g_action.c */
 gboolean g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name);

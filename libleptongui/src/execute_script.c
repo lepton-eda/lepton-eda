@@ -25,7 +25,8 @@
 /*! \brief Open the "Execute Script" dialog, execute the selected Scheme file
  */
 void
-i_callback_file_script (GtkWidget *widget, gpointer data)
+schematic_execute_script (GtkWidget *widget,
+                          gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
@@ -72,4 +73,4 @@ i_callback_file_script (GtkWidget *widget, gpointer data)
 
   gtk_widget_destroy (dialog);
 
-} /* i_callback_file_script() */
+}
