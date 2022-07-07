@@ -27,7 +27,7 @@ g_run_hook_page (GschemToplevel *w_current,
                  LeptonPage *page);
 void g_run_hook_action_mode (GschemToplevel *w_current, const char *name, const gchar *action_mode);
 
-/* gschem_slot_edit_dialog.c */
+/* slot_edit_dialog.c */
 void
 slot_edit_dialog (GschemToplevel *w_current,
                   const char *count,

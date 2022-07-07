@@ -40,7 +40,6 @@ libleptongui_la_SOURCES = \
 	gschem_rotation_combo.c \
 	gschem_selection_adapter.c \
 	gschem_show_hide_text_widget.c \
-	gschem_slot_edit_dialog.c \
 	gschem_swatch_column_renderer.c \
 	gschem_text_properties_widget.c \
 	gschem_translate_widget.c \
@@ -76,6 +75,7 @@ libleptongui_la_SOURCES = \
 	o_undo.c \
 	s_stretch.c \
 	schematic_hierarchy.c \
+	slot_edit_dialog.c \
 	x_attribedit.c \
 	x_autonumber.c \
 	x_basic.c \

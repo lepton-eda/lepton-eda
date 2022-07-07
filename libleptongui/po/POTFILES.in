@@ -35,7 +35,6 @@ libleptongui/src/gschem_preview.c
 libleptongui/src/gschem_rotation_combo.c
 libleptongui/src/gschem_selection_adapter.c
 libleptongui/src/gschem_show_hide_text_widget.c
-libleptongui/src/gschem_slot_edit_dialog.c
 libleptongui/src/gschem_swatch_column_renderer.c
 libleptongui/src/gschem_text_properties_widget.c
 libleptongui/src/gschem_translate_widget.c
@@ -67,6 +66,7 @@ libleptongui/src/o_slot.c
 libleptongui/src/o_text.c
 libleptongui/src/o_undo.c
 libleptongui/src/schematic_hierarchy.c
+libleptongui/src/slot_edit_dialog.c
 libleptongui/src/x_attribedit.c
 libleptongui/src/x_autonumber.c
 libleptongui/src/x_basic.c
