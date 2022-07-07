@@ -26,6 +26,7 @@
 
   #:use-module (lepton attrib)
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton log)
   #:use-module (lepton object foreign)
@@ -148,8 +149,18 @@
 (define-action-public (&file-image #:label (G_ "Export Image"))
   (x_image_setup (*current-window)))
 
+
 (define-action-public (&file-script #:label (G_ "Run Script") #:icon "gtk-execute")
-  (run-callback schematic_execute_script "&file-script"))
+  (define *window (*current-window))
+  (define *filename (schematic_execute_script (*current-window)))
+
+  (unless (null-pointer? *filename)
+    (log! 'message (G_ "Executing Guile script: ~S") (pointer->string *filename))
+    (g_read_file (gschem_toplevel_get_toplevel *window)
+                 *filename
+                 %null-pointer)
+    (g_free *filename)))
+
 
 (define-action-public (&file-new-window #:label (G_ "New Window") #:icon "window-new")
   (x_window_open_page

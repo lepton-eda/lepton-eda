@@ -24,12 +24,10 @@
 
 /*! \brief Open the "Execute Script" dialog, execute the selected Scheme file
  */
-void
-schematic_execute_script (GtkWidget *widget,
-                          gpointer data)
+char*
+schematic_execute_script (GschemToplevel *w_current)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  g_return_if_fail (w_current != NULL);
+  char* filename = NULL;
 
   GtkWidget* dialog = gtk_file_chooser_dialog_new(
     _("Execute Script"),
@@ -63,14 +61,10 @@ schematic_execute_script (GtkWidget *widget,
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
   {
-    gchar* filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-
-    g_message (_("Executing Guile script [%s]"), filename);
-    g_read_file (gschem_toplevel_get_toplevel (w_current), filename, NULL);
-
-    g_free (filename);
+    filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
   }
 
   gtk_widget_destroy (dialog);
 
+  return filename;
 }
