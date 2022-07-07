@@ -32,13 +32,14 @@
             generic_filesel_dialog
             generic_msg_dialog
 
+            schematic_execute_script
+
             i_callback_cancel
             i_callback_clipboard_copy
             i_callback_clipboard_cut
             i_callback_clipboard_paste
             i_callback_file_save
             *i_callback_file_save
-            i_callback_file_script
             i_callback_hierarchy_down_schematic
             i_callback_hierarchy_down_symbol
             i_callback_hierarchy_up
@@ -508,7 +509,7 @@
 (define-lff generic_msg_dialog void '(*))
 
 ;;; execute_script.c
-(define-lff i_callback_file_script void '(* *))
+(define-lff schematic_execute_script void '(* *))
 
 ;;; i_callbacks.c
 (define-lff i_callback_cancel void '(* *))

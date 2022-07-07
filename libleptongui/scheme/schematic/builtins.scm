@@ -149,7 +149,7 @@
   (x_image_setup (*current-window)))
 
 (define-action-public (&file-script #:label (G_ "Run Script") #:icon "gtk-execute")
-  (run-callback i_callback_file_script "&file-script"))
+  (run-callback schematic_execute_script "&file-script"))
 
 (define-action-public (&file-new-window #:label (G_ "New Window") #:icon "window-new")
   (x_window_open_page
