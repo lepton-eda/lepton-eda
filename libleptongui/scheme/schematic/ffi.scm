@@ -506,6 +506,10 @@
 (define-lff generic_confirm_dialog int '(*))
 (define-lff generic_filesel_dialog '* (list '* '* int))
 (define-lff generic_msg_dialog void '(*))
+
+;;; execute_script.c
+(define-lff i_callback_file_script void '(* *))
+
 ;;; i_callbacks.c
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_clipboard_copy void '(* *))
@@ -513,7 +517,6 @@
 (define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
-(define-lff i_callback_file_script void '(* *))
 (define-lff i_callback_hierarchy_down_schematic void '(* *))
 (define-lff i_callback_hierarchy_down_symbol void '(* *))
 (define-lff i_callback_hierarchy_up void '(* *))

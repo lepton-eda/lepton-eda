@@ -10,6 +10,12 @@ void a_zoom_box_end(GschemToplevel *w_current, int x, int y);
 void a_zoom_box_motion(GschemToplevel *w_current, int x, int y);
 void a_zoom_box_invalidate_rubber(GschemToplevel *w_current);
 void a_zoom_box_draw_rubber(GschemToplevel *w_current, EdaRenderer *renderer);
+
+/* execute_script.c */
+void
+i_callback_file_script (GtkWidget *widget,
+                        gpointer data);
+
 /* g_action.c */
 gboolean g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name);
 gboolean
@@ -97,8 +103,8 @@ void i_set_filename(GschemToplevel *w_current, const gchar *filename, gboolean c
 void i_update_grid_info(GschemToplevel *w_current);
 void i_update_grid_info_callback (GschemPageView *view, GschemToplevel *w_current);
 void i_update_net_options_status (GschemToplevel* w_current);
+
 /* i_callbacks.c */
-void i_callback_file_script (GtkWidget *widget, gpointer data);
 void i_callback_file_save (GtkWidget *widget, gpointer data);
 void i_callback_view_sidebar (GtkWidget *widget, gpointer data);
 void i_callback_view_status (GtkWidget *widget, gpointer data);
