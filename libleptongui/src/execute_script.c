@@ -22,7 +22,16 @@
 #include "gschem.h"
 
 
-/*! \brief Open the "Execute Script" dialog, execute the selected Scheme file
+/*! \brief Open the "Execute Script" file chooser dialog
+ *  \par Function Description
+ *
+ *  This function opens a file chooser dialog where the user may
+ *  select a Scheme script file for execution.  If the "Run" key
+ *  is pressed, the dialog is destroyed, and the Scheme file is
+ *  executed.
+ *
+ *  \param [in] w_current The current schematic window structure.
+ *  \return TRUE if the dialog was closed with ACCEPT response, FALSE otherwise.
  */
 char*
 schematic_execute_script (GschemToplevel *w_current)
