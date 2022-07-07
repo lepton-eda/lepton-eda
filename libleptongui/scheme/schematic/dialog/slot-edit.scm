@@ -25,31 +25,21 @@
   #:use-module (lepton ffi)
 
   #:use-module (schematic ffi)
-  #:use-module ((schematic selection) #:select (page-selection))
-  #:use-module (schematic window)
   #:use-module ((lepton object foreign) #:select (object->pointer))
 
   #:export (slot-edit-dialog))
 
 
-(define (slot-edit-dialog-response *widget response *window)
+(define (slot-edit-dialog-response *widget response *window component)
   (let ((accepted? (true? (slot_edit_dialog_response response))))
     (when accepted?
       (let ((*string (slot_edit_dialog_get_text *widget)))
         (unless (null-pointer? *string)
-          (with-window
-           *window
-           ;; The only one component must be selected.
-           (let ((component (car (page-selection (active-page))))
-                 (slot-string (string-append "slot=" (pointer->string *string))))
-             (o_slot_end *window
-                         (object->pointer component)
-                         (string->pointer slot-string)))))))
+          (let ((slot-string (string-append "slot=" (pointer->string *string))))
+            (o_slot_end *window
+                        (object->pointer component)
+                        (string->pointer slot-string))))))
     (slot_edit_dialog_quit *window)))
-
-
-(define *slot-edit-dialog-response
-  (procedure->pointer void slot-edit-dialog-response (list '* int '*)))
 
 
 ;;; Launch a dialog for changing slot of selected COMPONENT in *WINDOW.
@@ -80,5 +70,9 @@
 
       (schematic_signal_connect *widget
                                 (string->pointer "response")
-                                *slot-edit-dialog-response
+                                (procedure->pointer
+                                 void
+                                 (lambda (*widget response *window)
+                                   (slot-edit-dialog-response *widget response *window component))
+                                 (list '* int '*))
                                 *window))))
