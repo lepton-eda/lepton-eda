@@ -27,7 +27,11 @@
 
   #:export (lepton_schematic_run
             lepton_schematic_app
+
             g_init_window
+
+            g_read_file
+
             generic_confirm_dialog
             generic_filesel_dialog
             generic_msg_dialog
@@ -323,6 +327,9 @@
 (define-lff lepton_schematic_run int '(*))
 (define-lff lepton_schematic_app '* '())
 
+;;; g_basic.c
+(define-lff g_read_file int '(* * *))
+
 ;;; g_window.c
 (define-lff g_init_window void '(*))
 
@@ -509,7 +516,7 @@
 (define-lff generic_msg_dialog void '(*))
 
 ;;; execute_script.c
-(define-lff schematic_execute_script void '(* *))
+(define-lff schematic_execute_script '* '(*))
 
 ;;; i_callbacks.c
 (define-lff i_callback_cancel void '(* *))
