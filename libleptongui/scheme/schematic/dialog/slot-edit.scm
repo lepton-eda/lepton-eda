@@ -74,7 +74,11 @@
   (let ((numslots-value (or (component-attrib-value-by-name component "numslots") ""))
         (slot-value (or (component-attrib-value-by-name component "slot") "1")))
     ;; Run the dialog.
-    (slot_edit_dialog *window
-                      (string->pointer numslots-value)
-                      (string->pointer slot-value)
-                      *slot-edit-dialog-response)))
+    (let ((*widget (slot_edit_dialog *window
+                                     (string->pointer numslots-value)
+                                     (string->pointer slot-value))))
+
+      (schematic_signal_connect *widget
+                                (string->pointer "response")
+                                *slot-edit-dialog-response
+                                *window))))

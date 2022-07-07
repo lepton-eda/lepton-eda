@@ -96,22 +96,20 @@ slot_edit_dialog_response (gint response)
 /*! \brief Create the slot edit dialog.
  *  \par Function Description
  *
- *  This function creates the slot edit dialog connecting \a
- *  response_callback to its "response" signal.  \a count is a
- *  string corresponding to the value of the "numslots=" attribute
- *  of the edited symbol, \a string is an initial value set from
- *  its "slot=" attribute.
+ *  This function creates and returns the slot edit dialog.  \a
+ *  count is a string corresponding to the value of the
+ *  "numslots=" attribute of the edited symbol, \a string is an
+ *  initial value set from its "slot=" attribute.
  *
  *  \param [in] w_current The current schematic window structure.
  *  \param [in] count The string corresponding to "numslots=".
  *  \param [in] string The string corresponding to "slot=".
- *  \param [in] response_callback The callback function processing the result.
+ *  \return The slot edit dialog widget.
  */
-void
+GtkWidget*
 slot_edit_dialog (GschemToplevel *w_current,
                   const char *count,
-                  const char *string,
-                  GCallback response_callback)
+                  const char *string)
 {
   GtkWidget *label[2];
   GtkWidget *table;
@@ -139,10 +137,6 @@ slot_edit_dialog (GschemToplevel *w_current,
 
     gtk_dialog_set_default_response (GTK_DIALOG (w_current->sewindow),
                                      GTK_RESPONSE_ACCEPT);
-
-    g_signal_connect (G_OBJECT (w_current->sewindow), "response",
-                      G_CALLBACK (response_callback),
-                      w_current);
 
     gtk_container_set_border_width (GTK_CONTAINER (w_current->sewindow),
                                     DIALOG_BORDER_SPACING);
@@ -191,6 +185,7 @@ slot_edit_dialog (GschemToplevel *w_current,
     gtk_entry_set_text(GTK_ENTRY(widget[1]), string);
     gtk_editable_select_region (GTK_EDITABLE(widget[1]), 0, -1);
   }
+  return GTK_WIDGET (w_current->sewindow);
 }
 
 /***************** End of Slot Edit dialog box ***********************/

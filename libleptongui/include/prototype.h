@@ -28,11 +28,10 @@ g_run_hook_page (GschemToplevel *w_current,
 void g_run_hook_action_mode (GschemToplevel *w_current, const char *name, const gchar *action_mode);
 
 /* slot_edit_dialog.c */
-void
+GtkWidget*
 slot_edit_dialog (GschemToplevel *w_current,
                   const char *count,
-                  const char *string,
-                  GCallback response_callback);
+                  const char *string);
 gboolean
 slot_edit_dialog_response (gint response);
 

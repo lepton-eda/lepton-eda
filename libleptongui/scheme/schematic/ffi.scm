@@ -274,7 +274,7 @@
 (define-lff gschem_page_view_invalidate_all void '(*))
 
 ;;; slot_edit_dialog.c
-(define-lff slot_edit_dialog void '(* * * *))
+(define-lff slot_edit_dialog '* '(* * *))
 (define-lff slot_edit_dialog_response int (list int))
 (define-lff slot_edit_dialog_get_text '* '(*))
 (define-lff slot_edit_dialog_quit void '(*))
