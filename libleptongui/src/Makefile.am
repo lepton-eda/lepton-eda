@@ -3,6 +3,7 @@ lib_LTLIBRARIES = libleptongui.la
 libleptongui_la_SOURCES = \
 	a_zoom.c \
 	action_mode.c \
+	execute_script.c \
 	g_action.c \
 	g_hook.c \
 	g_window.c \
