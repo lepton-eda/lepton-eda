@@ -151,16 +151,6 @@ i_callback_edit_translate (GtkWidget *widget, gpointer data)
   gtk_widget_grab_focus (gschem_translate_widget_get_entry (GSCHEM_TRANSLATE_WIDGET (w_current->translate_widget)));
 }
 
-void
-i_callback_edit_invoke_macro (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  macro_widget_show (schematic_window_get_macro_widget (w_current));
-}
-
 
 /*! \todo Finish function documentation!!!
  *  \brief

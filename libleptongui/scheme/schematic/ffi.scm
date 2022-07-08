@@ -51,7 +51,6 @@
             i_callback_clipboard_cut
             i_callback_clipboard_paste
             i_callback_close_wm
-            i_callback_edit_invoke_macro
             i_callback_edit_translate
             i_callback_edit_update
             i_callback_file_save
@@ -217,6 +216,8 @@
 
             x_dialog_hotkeys
 
+            macro_widget_show
+
             schematic_keys_get_event_keyval
             schematic_keys_get_event_modifiers
             schematic_keys_verify_keyval
@@ -237,6 +238,7 @@
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_gdk_display
+            schematic_window_get_macro_widget
             schematic_window_get_options
             schematic_window_get_place_list
             schematic_window_get_selection_list
@@ -366,6 +368,9 @@
 ;;; gschem_hotkey_dialog.c
 (define-lff x_dialog_hotkeys void '(*))
 
+;;; gschem_macro_widget.c
+(define-lff macro_widget_show void '(*))
+
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
 (define-lff gschem_page_view_invalidate_all void '(*))
@@ -389,6 +394,7 @@
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_gdk_display '* '(*))
+(define-lff schematic_window_get_macro_widget '* '(*))
 (define-lff schematic_window_get_options '* '(*))
 (define-lff schematic_window_get_place_list '* '(*))
 (define-lff schematic_window_get_selection_list '* '(*))
@@ -503,7 +509,6 @@
 (define-lff i_callback_clipboard_cut void '(* *))
 (define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_close_wm int '(* * *))
-(define-lff i_callback_edit_invoke_macro void '(* *))
 (define-lff i_callback_edit_translate void '(* *))
 (define-lff i_callback_edit_update void '(* *))
 (define-lff i_callback_file_save void '(* *))
