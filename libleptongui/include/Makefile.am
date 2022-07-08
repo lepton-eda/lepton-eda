@@ -42,4 +42,5 @@ noinst_HEADERS = \
 	color_edit_widget.h \
 	font_select_widget.h \
 	page_select_widget.h \
+	snap_mode.h \
 	toolbar.h

@@ -92,7 +92,7 @@ struct _GschemOptions {
   int        grid_mode;
   gboolean   magnetic_net_mode;
   gboolean   net_rubber_band_mode;
-  SNAP_STATE snap_mode;
+  SchematicSnapMode snap_mode;
   int        snap_size;
 };
 
@@ -119,7 +119,7 @@ gschem_options_get_magnetic_net_mode (GschemOptions *options);
 gboolean
 gschem_options_get_net_rubber_band_mode (GschemOptions *options);
 
-SNAP_STATE
+SchematicSnapMode
 gschem_options_get_snap_mode (GschemOptions *options);
 
 int
@@ -141,9 +141,15 @@ void
 gschem_options_set_net_rubber_band_mode (GschemOptions *options, gboolean enabled);
 
 void
-gschem_options_set_snap_mode (GschemOptions *options, SNAP_STATE snap_mode);
+gschem_options_set_snap_mode (GschemOptions *options, SchematicSnapMode snap_mode);
 
 void
 gschem_options_set_snap_size (GschemOptions *options, int snap_size);
+
+SchematicSnapMode
+schematic_snap_mode_from_string (char *s);
+
+const char*
+schematic_snap_mode_to_string (SchematicSnapMode mode);
 
 G_END_DECLS

@@ -596,7 +596,7 @@ i_callback_edit_unlock (GtkWidget *widget, gpointer data)
 void
 i_callback_edit_translate (GtkWidget *widget, gpointer data)
 {
-  SNAP_STATE snap_mode;
+  SchematicSnapMode snap_mode;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
@@ -2264,7 +2264,7 @@ i_callback_options_grid (GtkWidget *widget, gpointer data)
 void
 i_callback_options_snap (GtkWidget *widget, gpointer data)
 {
-  SNAP_STATE snap_mode;
+  SchematicSnapMode snap_mode;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);

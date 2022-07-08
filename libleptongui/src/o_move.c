@@ -297,7 +297,7 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
   GList *selection, *s_current;
   LeptonObject *object = NULL;
   gint object_x, object_y;
-  SNAP_STATE snap_mode;
+  SchematicSnapMode snap_mode;
 
   g_assert (w_current->inside_action != 0);
 

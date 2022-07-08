@@ -129,12 +129,12 @@ gschem_options_cycle_net_rubber_band_mode (GschemOptions *options)
 void
 gschem_options_cycle_snap_mode (GschemOptions *options)
 {
-  SNAP_STATE next_snap_mode;
+  SchematicSnapMode next_snap_mode;
 
   g_return_if_fail (options != NULL);
 
   /* toggle to the next snap state */
-  next_snap_mode = (SNAP_STATE) ((options->snap_mode + 1) % SNAP_STATE_COUNT);
+  next_snap_mode = (SchematicSnapMode) ((options->snap_mode + 1) % SNAP_MODE_COUNT);
 
   gschem_options_set_snap_mode (options, next_snap_mode);
 }
@@ -191,7 +191,7 @@ gschem_options_get_net_rubber_band_mode (GschemOptions *options)
  *  \param [in] options These options
  *  \return The snap mode
  */
-SNAP_STATE
+SchematicSnapMode
 gschem_options_get_snap_mode (GschemOptions *options)
 {
   g_return_val_if_fail (options != NULL, SNAP_GRID);
@@ -297,7 +297,7 @@ gschem_options_set_net_rubber_band_mode (GschemOptions *options, gboolean enable
  *  \param [in] snap_mode The snap mode
  */
 void
-gschem_options_set_snap_mode (GschemOptions *options, SNAP_STATE snap_mode)
+gschem_options_set_snap_mode (GschemOptions *options, SchematicSnapMode snap_mode)
 {
   g_return_if_fail (options != NULL);
 
@@ -385,7 +385,7 @@ gschem_options_class_init (GschemOptionsClass *klass)
                                                      "Snap Mode",
                                                      "Snap Mode",
                                                      0,
-                                                     SNAP_STATE_COUNT - 1,
+                                                     SNAP_MODE_COUNT - 1,
                                                      SNAP_GRID,
                                                      (GParamFlags) (G_PARAM_READWRITE
                                                                     | G_PARAM_STATIC_STRINGS
@@ -484,7 +484,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
       break;
 
     case PROP_SNAP_MODE:
-      gschem_options_set_snap_mode (options, (SNAP_STATE) g_value_get_int (value));
+      gschem_options_set_snap_mode (options, (SchematicSnapMode) g_value_get_int (value));
       break;
 
     case PROP_SNAP_SIZE:

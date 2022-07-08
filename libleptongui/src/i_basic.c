@@ -111,7 +111,7 @@ void i_show_state(GschemToplevel *w_current, const char *message)
   gchar *what_to_say;
   const gchar *array[5] = { NULL };
   int i = 3; /* array[4] must be NULL */
-  SNAP_STATE snap_mode;
+  SchematicSnapMode snap_mode;
 
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);

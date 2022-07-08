@@ -77,6 +77,7 @@ libleptongui_la_SOURCES = \
 	s_stretch.c \
 	schematic_hierarchy.c \
 	slot_edit_dialog.c \
+	snap_mode.c \
 	x_attribedit.c \
 	x_autonumber.c \
 	x_basic.c \

@@ -18,6 +18,7 @@ typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 
 /* gschem headers */
 #include "action_mode.h"
+#include "snap_mode.h"
 #include "gschem_defines.h"
 #include "gschem_bin.h"
 #include "gschem_bottom_widget.h"

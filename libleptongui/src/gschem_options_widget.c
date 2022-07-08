@@ -316,7 +316,8 @@ create_snap_mode_widget (GschemOptionsWidget *widget)
   box = gtk_hbox_new (FALSE, FALSE);
 #endif
 
-  for (index=0; index<SNAP_STATE_COUNT; index++) {
+  for (index = 0; index < SNAP_MODE_COUNT; index++)
+  {
     widget->snap_radio[index] = gtk_toggle_button_new_with_mnemonic (NULL);
 
     gtk_box_pack_start (GTK_BOX (box),                           /* box     */
@@ -727,9 +728,10 @@ update_snap_mode_model (GschemOptionsWidget *widget, GtkWidget *button)
   if (widget->options != NULL) {
     int index;
 
-    for (index = 0; index < SNAP_STATE_COUNT; index++) {
+    for (index = 0; index < SNAP_MODE_COUNT; index++)
+    {
       if (widget->snap_radio[index] == button) {
-        gschem_options_set_snap_mode (widget->options, (SNAP_STATE) index);
+        gschem_options_set_snap_mode (widget->options, (SchematicSnapMode) index);
         break;
       }
     }
@@ -750,22 +752,25 @@ update_snap_mode_widget (GschemOptionsWidget *widget)
 
   if (widget->options != NULL) {
     int index;
-    SNAP_STATE snap_mode;
+    SchematicSnapMode snap_mode;
 
     snap_mode = gschem_options_get_snap_mode (widget->options);
 
-    for (index=0; index<SNAP_STATE_COUNT; index++) {
+    for (index = 0; index < SNAP_MODE_COUNT; index++)
+    {
       g_signal_handlers_block_by_func (G_OBJECT (widget->snap_radio[index]),
                                        (gpointer) update_snap_mode_model,
                                        widget);
     }
 
-    for (index=0; index<SNAP_STATE_COUNT; index++) {
+    for (index = 0; index < SNAP_MODE_COUNT; index++)
+    {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (widget->snap_radio[index]),
                                     (snap_mode == index));
   }
 
-    for (index=0; index<SNAP_STATE_COUNT; index++) {
+    for (index = 0; index < SNAP_MODE_COUNT; index++)
+    {
       g_signal_handlers_unblock_by_func (G_OBJECT (widget->snap_radio[index]),
                                          (gpointer) update_snap_mode_model,
                                          widget);
