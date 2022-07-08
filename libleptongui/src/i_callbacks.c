@@ -2239,7 +2239,7 @@ i_callback_options_afeedback (GtkWidget *widget, gpointer data)
 void
 i_callback_options_grid (GtkWidget *widget, gpointer data)
 {
-  GRID_MODE grid_mode;
+  SchematicGridMode grid_mode;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);

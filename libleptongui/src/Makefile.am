@@ -7,6 +7,7 @@ libleptongui_la_SOURCES = \
 	g_hook.c \
 	g_window.c \
 	globals.c \
+	grid_mode.c \
 	lepton-schematic.c \
 	gschemhotkeystore.c \
 	gschem_about_dialog.c \

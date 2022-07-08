@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2014 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -37,7 +37,7 @@
 #define ZOOM_EXTENTS_PADDING_PX 5
 
 /* For grip size in pixels (i.e. device units) */
-#define GRIP_SIZE		10.0
+#define GRIP_SIZE               10.0
 
 /* for bus_ripper_type */
 #define COMP_BUS_RIPPER         0
@@ -51,8 +51,8 @@
 #define CONSTRAINED 2
 
 /* for attrib_edit_dialog invocation flag */
-#define FROM_MENU		0
-#define FROM_HOTKEY		1
+#define FROM_MENU               0
+#define FROM_HOTKEY             1
 
 /* for text cap style */
 #define LOWER 0
@@ -71,26 +71,17 @@
 #define LAST_DRAWB_MODE_NONE -1
 
 /* used in o_undo_callback */
-#define UNDO_ACTION		0
-#define REDO_ACTION		1
+#define UNDO_ACTION             0
+#define REDO_ACTION             1
 
 /* used for undo_type */
-#define UNDO_DISK		0
-#define UNDO_MEMORY		1
+#define UNDO_DISK               0
+#define UNDO_MEMORY             1
 
 /* selection types */
 /* used in o_select_object */
 #define SINGLE                  0
 #define MULTIPLE                1
-
-/* for grid */
-typedef enum
-{
-  GRID_MODE_NONE,
-  GRID_MODE_DOTS,
-  GRID_MODE_MESH,
-  GRID_MODE_COUNT
-} GRID_MODE;
 
 /* for dots_grid_mode */
 #define DOTS_GRID_VARIABLE_MODE 0
@@ -108,9 +99,9 @@ typedef enum
 #define SCROLL_WHEEL_GTK     1
 
 /* for selected_from */
-#define DONTCARE		0
-#define MENU			1
-#define HOTKEY			2
+#define DONTCARE                0
+#define MENU                    1
+#define HOTKEY                  2
 
 /* The prefix of the default filename used for newly created pages
  *

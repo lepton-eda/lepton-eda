@@ -110,7 +110,7 @@ gschem_options_cycle_net_rubber_band_mode (GschemOptions *options);
 void
 gschem_options_cycle_snap_mode (GschemOptions *options);
 
-GRID_MODE
+SchematicGridMode
 gschem_options_get_grid_mode (GschemOptions *options);
 
 gboolean
@@ -132,8 +132,8 @@ GschemOptions*
 gschem_options_new ();
 
 void
-gschem_options_set_grid_mode (GschemOptions *options, GRID_MODE grid_mode);
-
+gschem_options_set_grid_mode (GschemOptions *options,
+                              SchematicGridMode grid_mode);
 void
 gschem_options_set_magnetic_net_mode (GschemOptions *options, gboolean enabled);
 

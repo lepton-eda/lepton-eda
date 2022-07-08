@@ -75,11 +75,11 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 void
 gschem_options_cycle_grid_mode (GschemOptions *options)
 {
-  GRID_MODE next_grid_mode;
+  SchematicGridMode next_grid_mode;
 
   g_return_if_fail (options != NULL);
 
-  next_grid_mode = (GRID_MODE) ((options->grid_mode + 1) % GRID_MODE_COUNT);
+  next_grid_mode = (SchematicGridMode) ((options->grid_mode + 1) % GRID_MODE_COUNT);
 
   gschem_options_set_grid_mode (options, next_grid_mode);
 }
@@ -146,12 +146,12 @@ gschem_options_cycle_snap_mode (GschemOptions *options)
  *  \param [in] options These options
  *  \return The grid mode
  */
-GRID_MODE
+SchematicGridMode
 gschem_options_get_grid_mode (GschemOptions *options)
 {
   g_return_val_if_fail (options != NULL, GRID_MODE_MESH);
 
-  return (GRID_MODE) options->grid_mode;
+  return (SchematicGridMode) options->grid_mode;
 }
 
 
@@ -235,7 +235,7 @@ gschem_options_new ()
  *  \param [in] grid_mode The grid mode
  */
 void
-gschem_options_set_grid_mode (GschemOptions *options, GRID_MODE grid_mode)
+gschem_options_set_grid_mode (GschemOptions *options, SchematicGridMode grid_mode)
 {
   g_return_if_fail (options != NULL);
 
@@ -472,7 +472,7 @@ set_property (GObject *object, guint param_id, const GValue *value, GParamSpec *
 
   switch (param_id) {
     case PROP_GRID_MODE:
-      gschem_options_set_grid_mode (options, (GRID_MODE) g_value_get_int (value));
+      gschem_options_set_grid_mode (options, (SchematicGridMode) g_value_get_int (value));
       break;
 
     case PROP_MAGNETIC_NET_MODE:

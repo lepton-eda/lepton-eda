@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -363,7 +363,7 @@ void x_grid_draw_region (GschemToplevel *w_current,
                          int width,
                          int height)
 {
-  GRID_MODE grid_mode;
+  SchematicGridMode grid_mode;
 
   g_return_if_fail (w_current != NULL);
 
@@ -398,7 +398,7 @@ void x_grid_draw_region (GschemToplevel *w_current,
  */
 int x_grid_query_drawn_spacing (GschemToplevel *w_current)
 {
-  GRID_MODE grid_mode;
+  SchematicGridMode grid_mode;
 
   g_return_val_if_fail (w_current != NULL, -1);
 

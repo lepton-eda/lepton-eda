@@ -568,7 +568,7 @@ update_grid_mode_model (GschemOptionsWidget *widget, GtkWidget *button)
 
     for (index = 0; index < GRID_MODE_COUNT; index++) {
       if (widget->grid_radio[index] == button) {
-        gschem_options_set_grid_mode (widget->options, (GRID_MODE) index);
+        gschem_options_set_grid_mode (widget->options, (SchematicGridMode) index);
         break;
       }
     }
@@ -588,7 +588,7 @@ update_grid_mode_widget (GschemOptionsWidget *widget)
   g_return_if_fail (widget != NULL);
 
   if (widget->options != NULL) {
-    GRID_MODE grid_mode;
+    SchematicGridMode grid_mode;
     int index;
 
     grid_mode = gschem_options_get_grid_mode (widget->options);
