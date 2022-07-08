@@ -350,4 +350,7 @@ schematic_window_get_selection_list (GschemToplevel *w_current);
 void
 schematic_window_set_selection_list (GschemToplevel *w_current,
                                      LeptonSelection *place_list);
+GtkWidget*
+schematic_window_get_macro_widget (GschemToplevel *w_current);
+
 G_END_DECLS

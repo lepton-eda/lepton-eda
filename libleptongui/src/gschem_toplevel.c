@@ -1156,3 +1156,17 @@ schematic_window_set_selection_list (GschemToplevel *w_current,
 
   lepton_page_set_selection_list (active_page, selection_list);
 }
+
+
+/*! \brief Get the macro widget for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The macro widget pointer.
+ */
+GtkWidget*
+schematic_window_get_macro_widget (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->macro_widget;
+}
