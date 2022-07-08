@@ -2269,9 +2269,11 @@ i_callback_options_snap (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  gschem_options_cycle_snap_mode (w_current->options);
+  GschemOptions* options = schematic_window_get_options (w_current);
 
-  snap_mode = gschem_options_get_snap_mode (w_current->options);
+  gschem_options_cycle_snap_mode (options);
+
+  snap_mode = gschem_options_get_snap_mode (options);
 
   switch (snap_mode) {
   case SNAP_OFF:
