@@ -527,8 +527,25 @@
 (define-action-public (&options-grid #:label (G_ "Switch Grid Style"))
   (run-callback i_callback_options_grid "&options-grid"))
 
+
 (define-action-public (&options-snap #:label (G_ "Switch Snap Mode"))
-  (run-callback i_callback_options_snap "&options-snap"))
+  (define *window (*current-window))
+  (define *options (schematic_window_get_options *window))
+
+  (gschem_options_cycle_snap_mode *options)
+
+  (let ((snap-mode (pointer->string
+                    (schematic_snap_mode_to_string
+                     (gschem_options_get_snap_mode *options)))))
+    (match snap-mode
+      ("off" (log! 'message (G_ "Snap OFF (CAUTION!)")))
+      ("grid" (log! 'message (G_ "Snap ON")))
+      ("resnap" (log! 'message (G_ "Snap back to the grid (CAUTION!)")))
+      (_ (error "Invalid snap_mode: ~S" snap-mode))))
+
+  (i_show_state *window %null-pointer)
+  (i_update_grid_info *window))
+
 
 ;;; Shows the options widget.
 (define-action-public (&options-snap-size #:label (G_ "Set Grid Spacing"))

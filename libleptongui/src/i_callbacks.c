@@ -2256,43 +2256,6 @@ i_callback_options_grid (GtkWidget *widget, gpointer data)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_options_snap (GtkWidget *widget, gpointer data)
-{
-  SchematicSnapMode snap_mode;
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  GschemOptions* options = schematic_window_get_options (w_current);
-
-  gschem_options_cycle_snap_mode (options);
-
-  snap_mode = gschem_options_get_snap_mode (options);
-
-  switch (snap_mode) {
-  case SNAP_OFF:
-    g_message (_("Snap OFF (CAUTION!)"));
-    break;
-  case SNAP_GRID:
-    g_message (_("Snap ON"));
-    break;
-  case SNAP_RESNAP:
-    g_message (_("Snap back to the grid (CAUTION!)"));
-    break;
-  default:
-    g_critical("options_snap: Invalid snap_mode: %1$d\n",
-               snap_mode);
-  }
-
-  i_show_state(w_current, NULL); /* update status on screen */
-  i_update_grid_info (w_current);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

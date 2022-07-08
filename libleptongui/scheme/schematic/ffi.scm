@@ -87,7 +87,6 @@
             i_callback_options_grid
             i_callback_options_magneticnet
             i_callback_options_rubberband
-            i_callback_options_snap
             i_callback_page_close
             i_callback_page_next
             i_callback_page_prev
@@ -109,6 +108,9 @@
             i_callback_view_zoom_full
             i_callback_view_zoom_in
             i_callback_view_zoom_out
+
+            i_show_state
+            i_update_grid_info
 
             make_menu_action
             make_separator_menu_item
@@ -190,6 +192,9 @@
             x_tabs_create
             x_tabs_enabled
 
+            schematic_snap_mode_from_string
+            schematic_snap_mode_to_string
+
             about_dialog
 
             coord_dialog
@@ -216,6 +221,8 @@
             schematic_window_update_keyaccel_string
             schematic_window_update_keyaccel_timer
 
+            gschem_options_cycle_snap_mode
+            gschem_options_get_snap_mode
             gschem_options_get_snap_size
             gschem_options_set_snap_size
 
@@ -331,6 +338,10 @@
 (define-lff slot_edit_dialog_get_text '* '(*))
 (define-lff slot_edit_dialog_quit void '(*))
 
+;;; snap_mode.c
+(define-lff schematic_snap_mode_from_string int '(*))
+(define-lff schematic_snap_mode_to_string '* (list int))
+
 ;;; gschem_toplevel.c
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
@@ -341,6 +352,8 @@
 (define-lff schematic_window_update_keyaccel_timer void (list '* int))
 
 ;;; gschem_options.c
+(define-lff gschem_options_cycle_snap_mode void '(*))
+(define-lff gschem_options_get_snap_mode int '(*))
 (define-lff gschem_options_get_snap_size int '(*))
 (define-lff gschem_options_set_snap_size void (list '* int))
 
@@ -467,7 +480,6 @@
 (define-lff i_callback_options_grid void '(* *))
 (define-lff i_callback_options_magneticnet void '(* *))
 (define-lff i_callback_options_rubberband void '(* *))
-(define-lff i_callback_options_snap void '(* *))
 (define-lff i_callback_view_color_edit void '(* *))
 (define-lff i_callback_view_pan void '(* *))
 (define-lff i_callback_view_pan_down void '(* *))
@@ -489,6 +501,10 @@
 (define-lff i_callback_toolbar_add_bus void '(* *))
 (define-lff i_callback_toolbar_add_net void '(* *))
 (define-lff i_callback_toolbar_edit_select void '(* *))
+
+;;; i_basic.c
+(define-lff i_show_state void '(* *))
+(define-lff i_update_grid_info void '(*))
 
 ;;; x_misc.c
 (define-lff x_show_uri int '(* * *))
