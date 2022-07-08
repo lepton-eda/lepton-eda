@@ -13,8 +13,6 @@
 
 /* forward declaration, until everyone stops referencing it */
 typedef struct st_gschem_toplevel GschemToplevel;
-/* this is used both in gschem_toplevel.h and prototype.h */
-typedef void (*i_callback_func) (gpointer, guint, GtkWidget*);
 
 /* gschem headers */
 #include "action_mode.h"
