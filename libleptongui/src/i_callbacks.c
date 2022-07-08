@@ -158,7 +158,7 @@ i_callback_edit_invoke_macro (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  macro_widget_show (w_current->macro_widget);
+  macro_widget_show (schematic_window_get_macro_widget (w_current));
 }
 
 
