@@ -356,7 +356,7 @@
 
 
 (define-action-public (&edit-invoke-macro #:label (G_ "Invoke Macro"))
-  (run-callback i_callback_edit_invoke_macro "&edit-invoke-macro"))
+  (macro_widget_show (schematic_window_get_macro_widget (*current-window))))
 
 
 ;;; Embed all objects in the current selection list.
