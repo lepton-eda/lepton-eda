@@ -323,4 +323,10 @@ schematic_window_set_toolbar (GschemToplevel *w_current,
 int
 schematic_window_get_inside_action (GschemToplevel *w_current);
 
+gboolean
+schematic_window_get_draw_grips (GschemToplevel *w_current);
+
+void
+schematic_window_set_draw_grips (GschemToplevel *w_current,
+                                 gboolean draw_grips);
 G_END_DECLS

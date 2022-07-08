@@ -1013,3 +1013,32 @@ schematic_window_get_inside_action (GschemToplevel *w_current)
 
   return w_current->inside_action;
 }
+
+
+/*! \brief Get the 'draw grips' setting of a schematic window structure.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return TRUE if drawing grips enabled, FALSE otherwise.
+ */
+gboolean
+schematic_window_get_draw_grips (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, TRUE);
+
+  return w_current->draw_grips;
+}
+
+
+/*! \brief Set the 'draw grips' setting of a schematic window structure.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] draw_grips The new value.
+ */
+void
+schematic_window_set_draw_grips (GschemToplevel *w_current,
+                                 gboolean draw_grips)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->draw_grips = draw_grips;
+}
