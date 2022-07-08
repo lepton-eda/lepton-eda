@@ -2244,9 +2244,9 @@ i_callback_options_grid (GtkWidget *widget, gpointer data)
 
   g_return_if_fail (w_current != NULL);
 
-  gschem_options_cycle_grid_mode (w_current->options);
+  gschem_options_cycle_grid_mode (schematic_window_get_options (w_current));
 
-  grid_mode = gschem_options_get_grid_mode (w_current->options);
+  grid_mode = gschem_options_get_grid_mode (schematic_window_get_options (w_current));
 
   switch (grid_mode) {
     case GRID_MODE_NONE: g_message (_("Grid OFF"));           break;
