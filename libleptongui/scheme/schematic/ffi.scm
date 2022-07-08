@@ -83,7 +83,6 @@
             i_callback_hierarchy_down_symbol
             i_callback_hierarchy_up
             i_callback_options_afeedback
-            i_callback_options_draw_grips
             i_callback_options_grid
             i_callback_page_close
             i_callback_page_next
@@ -214,6 +213,8 @@
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_toplevel
             schematic_window_get_active_page
+            schematic_window_get_draw_grips
+            schematic_window_set_draw_grips
             schematic_window_get_gdk_display
             schematic_window_get_options
             schematic_window_update_keyaccel_string
@@ -346,6 +347,8 @@
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff schematic_window_get_active_page '* '(*))
+(define-lff schematic_window_get_draw_grips int '(*))
+(define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_options '* '(*))
 (define-lff schematic_window_update_keyaccel_string void '(* *))
@@ -478,7 +481,6 @@
 (define-lff i_callback_hierarchy_down_symbol void '(* *))
 (define-lff i_callback_hierarchy_up void '(* *))
 (define-lff i_callback_options_afeedback void '(* *))
-(define-lff i_callback_options_draw_grips void '(* *))
 (define-lff i_callback_options_grid void '(* *))
 (define-lff i_callback_view_color_edit void '(* *))
 (define-lff i_callback_view_pan void '(* *))

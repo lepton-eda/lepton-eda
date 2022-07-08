@@ -589,8 +589,15 @@
 (define-action-public (&options-select-font #:label (G_ "Select Schematic Font"))
   (x_widgets_show_font_select (*current-window)))
 
+
 (define-action-public (&options-draw-grips #:label (G_ "Toggle Grips"))
-  (run-callback i_callback_options_draw_grips "&options-draw-grips"))
+  (define *window (*current-window))
+  (define draw-grips (true? (schematic_window_get_draw_grips *window)))
+
+  (schematic_window_set_draw_grips *window (if draw-grips FALSE TRUE))
+  (gschem_page_view_invalidate_all
+   (gschem_toplevel_get_current_page_view *window)))
+
 
 ;; -------------------------------------------------------------------
 ;;;; Documentation-related actions
