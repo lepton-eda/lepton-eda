@@ -525,7 +525,19 @@
   (x_dialog_hotkeys (*current-window)))
 
 (define-action-public (&options-grid #:label (G_ "Switch Grid Style"))
-  (run-callback i_callback_options_grid "&options-grid"))
+  (define *window (*current-window))
+  (define *options (schematic_window_get_options *window))
+
+  (gschem_options_cycle_grid_mode *options)
+
+  (let ((grid-mode (pointer->string
+                    (schematic_grid_mode_to_string
+                     (gschem_options_get_grid_mode *options)))))
+    (match grid-mode
+      ("none" (log! 'message (G_ "Grid OFF")))
+      ("dots" (log! 'message (G_ "Dot grid selected")))
+      ("mesh" (log! 'message (G_ "Mesh grid selected")))
+      (_ (error "Invalid grid mode: ~S" grid-mode)))))
 
 
 (define-action-public (&options-snap #:label (G_ "Switch Snap Mode"))

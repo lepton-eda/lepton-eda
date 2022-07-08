@@ -83,7 +83,6 @@
             i_callback_hierarchy_down_symbol
             i_callback_hierarchy_up
             i_callback_options_afeedback
-            i_callback_options_grid
             i_callback_page_close
             i_callback_page_next
             i_callback_page_prev
@@ -189,6 +188,9 @@
             x_tabs_create
             x_tabs_enabled
 
+            schematic_grid_mode_from_string
+            schematic_grid_mode_to_string
+
             schematic_snap_mode_from_string
             schematic_snap_mode_to_string
 
@@ -220,6 +222,8 @@
             schematic_window_update_keyaccel_string
             schematic_window_update_keyaccel_timer
 
+            gschem_options_cycle_grid_mode
+            gschem_options_get_grid_mode
             gschem_options_cycle_magnetic_net_mode
             gschem_options_cycle_net_rubber_band_mode
             gschem_options_cycle_snap_mode
@@ -315,6 +319,10 @@
 (define-lff x_widgets_show_options void '(*))
 (define-lff x_widgets_show_page_select void '(*))
 
+;;; grid_mode.c
+(define-lff schematic_grid_mode_from_string int '(*))
+(define-lff schematic_grid_mode_to_string '* (list int))
+
 ;;; keys.c
 (define-lff schematic_keys_get_event_keyval int '(*))
 (define-lff schematic_keys_get_event_modifiers int '(*))
@@ -355,6 +363,8 @@
 (define-lff schematic_window_update_keyaccel_timer void (list '* int))
 
 ;;; gschem_options.c
+(define-lff gschem_options_cycle_grid_mode void '(*))
+(define-lff gschem_options_get_grid_mode int '(*))
 (define-lff gschem_options_cycle_magnetic_net_mode void '(*))
 (define-lff gschem_options_cycle_net_rubber_band_mode void '(*))
 (define-lff gschem_options_cycle_snap_mode void '(*))
@@ -481,7 +491,6 @@
 (define-lff i_callback_hierarchy_down_symbol void '(* *))
 (define-lff i_callback_hierarchy_up void '(* *))
 (define-lff i_callback_options_afeedback void '(* *))
-(define-lff i_callback_options_grid void '(* *))
 (define-lff i_callback_view_color_edit void '(* *))
 (define-lff i_callback_view_pan void '(* *))
 (define-lff i_callback_view_pan_down void '(* *))

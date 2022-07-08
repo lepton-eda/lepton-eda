@@ -2231,31 +2231,6 @@ i_callback_options_afeedback (GtkWidget *widget, gpointer data)
     o_place_invalidate_rubber (w_current, FALSE);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_options_grid (GtkWidget *widget, gpointer data)
-{
-  SchematicGridMode grid_mode;
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  gschem_options_cycle_grid_mode (schematic_window_get_options (w_current));
-
-  grid_mode = gschem_options_get_grid_mode (schematic_window_get_options (w_current));
-
-  switch (grid_mode) {
-    case GRID_MODE_NONE: g_message (_("Grid OFF"));           break;
-    case GRID_MODE_DOTS: g_message (_("Dot grid selected"));  break;
-    case GRID_MODE_MESH: g_message (_("Mesh grid selected")); break;
-    default:             g_message (_("Invalid grid mode"));
-  }
-}
-
 
 
 /*! \todo Finish function documentation!!!

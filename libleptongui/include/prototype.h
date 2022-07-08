@@ -186,7 +186,6 @@ void i_callback_attributes_show_value (GtkWidget *widget, gpointer data);
 void i_callback_attributes_show_both (GtkWidget *widget, gpointer data);
 void i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data);
 void i_callback_options_afeedback (GtkWidget *widget, gpointer data);
-void i_callback_options_grid (GtkWidget *widget, gpointer data);
 void i_callback_cancel (GtkWidget *widget, gpointer data);
 gboolean i_callback_close_wm(GtkWidget *widget, GdkEvent *event, gpointer data);
 /* i_vars.c */
