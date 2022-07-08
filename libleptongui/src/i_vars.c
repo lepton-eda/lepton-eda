@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,7 +48,6 @@ int   default_undo_levels = 20;
 int   default_undo_control = TRUE;
 int   default_undo_type = UNDO_DISK;
 int   default_undo_panzoom = FALSE;
-int   default_draw_grips = TRUE;
 int   default_netconn_rubberband = DEFAULT_NET_RUBBER_BAND_MODE;
 int   default_magnetic_net_mode = DEFAULT_MAGNETIC_NET_MODE;
 int   default_warp_cursor = FALSE;
@@ -64,6 +63,7 @@ int   default_dots_grid_dot_size = 1;
 int   default_dots_grid_mode = DOTS_GRID_VARIABLE_MODE;
 int   default_dots_grid_fixed_threshold = 10;
 int   default_mesh_grid_display_threshold = 3;
+gboolean default_draw_grips = TRUE;
 
 int   default_auto_save_interval = 120;
 

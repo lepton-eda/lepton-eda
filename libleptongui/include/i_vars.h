@@ -1,4 +1,3 @@
-
 extern int default_text_size;
 extern int default_text_caps;
 extern gchar *default_print_command;
@@ -29,7 +28,6 @@ extern int default_undo_levels;
 extern int default_undo_control;
 extern int default_undo_type;
 extern int default_undo_panzoom;
-extern int default_draw_grips;
 extern int default_netconn_rubberband;
 extern int default_magnetic_net_mode;
 extern int default_warp_cursor;
@@ -51,6 +49,7 @@ extern int default_keyboardpan_gain;
 extern int default_select_slack_pixels;
 extern int default_zoom_gain;
 extern int default_scrollpan_steps;
+extern gboolean default_draw_grips;
 extern gboolean default_tabs_enabled;
 extern gboolean default_tabs_show_close_button;
 extern gboolean default_tabs_show_up_button;

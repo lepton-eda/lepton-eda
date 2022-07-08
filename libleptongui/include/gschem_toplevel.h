@@ -210,7 +210,7 @@ struct st_gschem_toplevel {
   int undo_control;       /* sets if undo is enabled or not */
   int undo_type;          /* type of undo (disk/memory) */
   int undo_panzoom;       /* sets if pan / zoom info is saved in undo */
-  int draw_grips;         /* sets if grips are enabled or not */
+  gboolean draw_grips;    /* sets if grips are enabled or not */
 
   int warp_cursor;        /* warp the cursor when zooming */
   int toolbars;           /* sets if the toolbar(s) are enabled or disabled */
