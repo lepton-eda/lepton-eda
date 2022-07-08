@@ -2338,7 +2338,8 @@ i_callback_options_draw_grips (GtkWidget *widget, gpointer data)
   GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
   g_return_if_fail (w_current != NULL);
 
-  w_current->draw_grips = !w_current->draw_grips;
+  gboolean draw_grips = schematic_window_get_draw_grips (w_current);
+  schematic_window_set_draw_grips (w_current, !draw_grips);
 
   GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
   gschem_page_view_invalidate_all (view);
