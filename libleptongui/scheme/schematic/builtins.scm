@@ -868,14 +868,13 @@ the snap grid size should be set to 100")))
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
   (define *window (*current-window))
 
-  (let ((*object (o_select_return_first_object *window)))
-
+  (let ((components (filter component? (page-selection (active-page)))))
     ;; Only allow going into symbols.
-    (when (true? (lepton_object_is_component *object))
-      (let ((*basename (lepton_component_object_get_basename *object)))
-        (log! 'message (G_ "Searching for symbol: ~S") (pointer->string *basename))
-
-        (let ((*sym (s_clib_get_symbol_by_name *basename)))
+    (unless (null? components)
+      ;; Get pointer to the first selected component.
+      (let ((name (component-basename (car components))))
+        (log! 'message (G_ "Searching for symbol: ~S") name)
+        (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
           (unless (null-pointer? *sym)
             (let ((*fname (s_clib_symbol_get_filename *sym)))
               (if (null-pointer? *fname)
