@@ -86,6 +86,33 @@ int generic_confirm_dialog (const char *msg)
 
 /***************** End of generic confirm dialog box *********************/
 
+/*! \brief Launch generic error dialog.
+ *  \par Function Description
+ *
+ *  Launches a generic error message dialog displaying one or two
+ *  messages.  The second message is optional and may be set to
+ *  NULL.
+ *
+ * \param [in] primary_message The main error message.
+ * \param [in] secondary_message The additional or detail message.
+ */
+void
+generic_error_dialog (const char *primary_message,
+                      const char *secondary_message)
+{
+  GtkWidget *dialog = gtk_message_dialog_new (NULL,
+                                              GTK_DIALOG_MODAL,
+                                              GTK_MESSAGE_ERROR,
+                                              GTK_BUTTONS_OK,
+                                              primary_message);
+  g_object_set (G_OBJECT (dialog),
+                "secondary-text", secondary_message,
+                NULL);
+  gtk_dialog_run (GTK_DIALOG (dialog));
+  gtk_widget_destroy (dialog);
+}
+
+
 /***************** Start of generic file select dialog box ***************/
 /*! \todo Finish function documentation!!!
  *  \brief

@@ -765,14 +765,8 @@ i_callback_hierarchy_down_schematic (GtkWidget *widget, gpointer data)
         g_message (_("Failed to descend into '%1$s': %2$s"),
                    current_filename, msg);
 
-        GtkWidget *dialog =
-          gtk_message_dialog_new (GTK_WINDOW (w_current->main_window),
-                                  GTK_DIALOG_MODAL, GTK_MESSAGE_ERROR,
-                                  GTK_BUTTONS_OK,
-                                  _("Failed to descend hierarchy."));
-        g_object_set (G_OBJECT (dialog), "secondary-text", secondary, NULL);
-        gtk_dialog_run (GTK_DIALOG (dialog));
-        gtk_widget_destroy (dialog);
+        generic_error_dialog (_("Failed to descend hierarchy."), secondary);
+
         g_free (secondary);
         g_error_free (err);
 

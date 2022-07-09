@@ -447,6 +447,11 @@ void x_dialog_hotkeys(GschemToplevel *w_current);
 
 void generic_msg_dialog(const char *);
 int generic_confirm_dialog(const char *);
+
+void
+generic_error_dialog (const char *primary_message,
+                      const char *secondary_message);
+
 char * generic_filesel_dialog(const char *, const char *, gint);
 
 void find_text_dialog(GschemToplevel *w_current);
