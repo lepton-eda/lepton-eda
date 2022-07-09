@@ -141,7 +141,6 @@ void i_callback_buffer_paste3 (GtkWidget *widget, gpointer data);
 void i_callback_buffer_paste4 (GtkWidget *widget, gpointer data);
 void i_callback_buffer_paste5 (GtkWidget *widget, gpointer data);
 void i_callback_hierarchy_down_schematic (GtkWidget *widget, gpointer data);
-void i_callback_hierarchy_down_symbol (GtkWidget *widget, gpointer data);
 void i_callback_cancel (GtkWidget *widget, gpointer data);
 
 /* i_vars.c */

@@ -864,8 +864,44 @@ the snap grid size should be set to 100")))
 (define-action-public (&hierarchy-down-schematic #:label (G_ "Down Schematic") #:icon "gtk-go-down")
   (run-callback i_callback_hierarchy_down_schematic "&hierarchy-down-schematic"))
 
+
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
-  (run-callback i_callback_hierarchy_down_symbol "&hierarchy-down-symbol"))
+  (define *window (*current-window))
+
+  (let ((*object (o_select_return_first_object *window)))
+
+    ;; Only allow going into symbols.
+    (when (true? (lepton_object_is_component *object))
+      (let ((*basename (lepton_component_object_get_basename *object)))
+        (log! 'message (G_ "Searching for symbol: ~S") (pointer->string *basename))
+
+        (let ((*sym (s_clib_get_symbol_by_name *basename)))
+          (unless (null-pointer? *sym)
+            (let ((*fname (s_clib_symbol_get_filename *sym)))
+              (if (null-pointer? *fname)
+                  (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
+
+                  (begin
+                    (g_free *fname)
+
+                    (s_hierarchy_down_symbol *window
+                                             *sym
+                                             (schematic_window_get_active_page *window))
+                    (gschem_toplevel_page_changed *window)
+
+                    ;; Get active page once again, it should now be the symbol
+                    ;; page.
+                    (x_window_set_current_page *window
+                                               (schematic_window_get_active_page *window))
+
+                    ;; s_hierarchy_down_symbol() will not zoom the loaded page.
+                    ;; Tabbed GUI: zoom is set in x_tabs_page_set_cur().
+                    (when (not (true? (x_tabs_enabled)))
+                      (gschem_page_view_zoom_extents
+                       (gschem_toplevel_get_current_page_view *window)
+                       %null-pointer))
+
+                    (undo-save-state))))))))))
 
 
 ;;; Go to the upper hierarchy level page, that is, return to the

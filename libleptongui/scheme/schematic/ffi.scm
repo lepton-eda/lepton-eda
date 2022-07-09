@@ -45,7 +45,6 @@
             i_callback_file_save
             *i_callback_file_save
             i_callback_hierarchy_down_schematic
-            i_callback_hierarchy_down_symbol
             i_callback_page_next
             i_callback_page_prev
             i_callback_page_print
@@ -141,6 +140,7 @@
             show_text_dialog
 
             s_hierarchy_find_up_page
+            s_hierarchy_down_symbol
 
             slot_edit_dialog
             slot_edit_dialog_response
@@ -235,6 +235,7 @@
 
             gschem_page_view_get_page
             gschem_page_view_invalidate_all
+            gschem_page_view_zoom_extents
 
             schematic_signal_connect
 
@@ -242,6 +243,7 @@
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_show_hidden_text
             gschem_toplevel_get_toplevel
+            gschem_toplevel_page_changed
             gschem_toplevel_page_content_changed
             schematic_window_get_actionfeedback_mode
             schematic_window_set_actionfeedback_mode
@@ -396,9 +398,11 @@
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
 (define-lff gschem_page_view_invalidate_all void '(*))
+(define-lff gschem_page_view_zoom_extents void '(* *))
 
 ;;; schematic_hierarchy.c
 (define-lff s_hierarchy_find_up_page '* '(*))
+(define-lff s_hierarchy_down_symbol void '(* * *))
 
 ;;; slot_edit_dialog.c
 (define-lff slot_edit_dialog '* '(* * *))
@@ -415,6 +419,7 @@
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_show_hidden_text int '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
+(define-lff gschem_toplevel_page_changed void '(*))
 (define-lff gschem_toplevel_page_content_changed void '(* *))
 (define-lff schematic_window_get_actionfeedback_mode int '(*))
 (define-lff schematic_window_set_actionfeedback_mode void (list '* int))
@@ -530,7 +535,6 @@
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
 (define-lff i_callback_hierarchy_down_schematic void '(* *))
-(define-lff i_callback_hierarchy_down_symbol void '(* *))
 (define-lff i_callback_view_color_edit void '(* *))
 (define-lff i_callback_view_pan void '(* *))
 (define-lff i_callback_view_pan_down void '(* *))

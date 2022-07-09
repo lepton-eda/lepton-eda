@@ -830,65 +830,6 @@ i_callback_hierarchy_down_schematic (GtkWidget *widget, gpointer data)
 } /* i_callback_hierarchy_down_schematic() */
 
 
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *  \bug may cause problems with non-directory symbols
- */
-void
-i_callback_hierarchy_down_symbol (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel* w_current = GSCHEM_TOPLEVEL (data);
-  g_return_if_fail (w_current != NULL);
-
-  LeptonObject* object = o_select_return_first_object (w_current);
-
-  /* only allow going into symbols */
-  if (!lepton_object_is_component (object))
-    return;
-
-  gchar *basename = lepton_component_object_get_basename (object);
-  g_message (_("Searching for symbol [%1$s]"), basename);
-
-  const CLibSymbol* sym = s_clib_get_symbol_by_name (basename);
-  if (sym == NULL)
-    return;
-
-  gchar* fname = s_clib_symbol_get_filename (sym);
-  if (fname == NULL)
-  {
-    g_message (_("Symbol is not a real file. Symbol cannot be loaded."));
-    return;
-  }
-
-  g_free (fname);
-
-
-  LeptonPage *active_page = schematic_window_get_active_page (w_current);
-
-  s_hierarchy_down_symbol (w_current, sym, active_page);
-  gschem_toplevel_page_changed (w_current);
-
-  /* Get active page once again, it should now be the symbol
-   * page. */
-  active_page = schematic_window_get_active_page (w_current);
-  x_window_set_current_page (w_current, active_page);
-
-  /* s_hierarchy_down_symbol() will not zoom the loaded page.
-   * Tabbed GUI: zoom is set in x_tabs_page_set_cur().
-  */
-  if (!x_tabs_enabled())
-  {
-    GschemPageView* pview = gschem_toplevel_get_current_page_view (w_current);
-    gschem_page_view_zoom_extents (pview, NULL);
-  }
-
-  o_undo_savestate_old (w_current, UNDO_ALL);
-
-} /* i_callback_hierarchy_down_symbol() */
-
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
