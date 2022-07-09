@@ -329,4 +329,10 @@ schematic_window_get_draw_grips (GschemToplevel *w_current);
 void
 schematic_window_set_draw_grips (GschemToplevel *w_current,
                                  gboolean draw_grips);
+int
+schematic_window_get_actionfeedback_mode (GschemToplevel *w_current);
+
+void
+schematic_window_set_actionfeedback_mode (GschemToplevel *w_current,
+                                          int actionfeedback_mode);
 G_END_DECLS

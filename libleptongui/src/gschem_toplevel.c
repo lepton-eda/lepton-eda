@@ -1042,3 +1042,32 @@ schematic_window_set_draw_grips (GschemToplevel *w_current,
 
   w_current->draw_grips = draw_grips;
 }
+
+
+/*! \brief Get the action feedback mode for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The action feedback mode.
+ */
+int
+schematic_window_get_actionfeedback_mode (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, OUTLINE);
+
+  return w_current->actionfeedback_mode;
+}
+
+
+/*! \brief Set the action feedback mode for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] actionfeedback_mode The current action feedback mode.
+ */
+void
+schematic_window_set_actionfeedback_mode (GschemToplevel *w_current,
+                                          int actionfeedback_mode)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->actionfeedback_mode = actionfeedback_mode;
+}
