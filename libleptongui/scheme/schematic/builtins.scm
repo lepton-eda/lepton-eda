@@ -867,8 +867,26 @@ the snap grid size should be set to 100")))
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
   (run-callback i_callback_hierarchy_down_symbol "&hierarchy-down-symbol"))
 
+
+;;; Go to the upper hierarchy level page, that is, return to the
+;;; page which is parent for the current page in the hierarchy of
+;;; schematics.
 (define-action-public (&hierarchy-up #:label (G_ "Up Hierarchy") #:icon "gtk-go-up")
-  (run-callback i_callback_hierarchy_up "&hierarchy-up"))
+  (define *window (*current-window))
+  (define *page (and=> (active-page) page->pointer))
+
+  (when *page
+    (let ((*upper-page (s_hierarchy_find_up_page *page)))
+      (if (null-pointer? *upper-page)
+          (log! 'message (G_ "Cannot find any schematics above the current one!"))
+          (let ((changed? (true? (lepton_page_get_changed *page))))
+            (when (or (not changed?)
+                      ;; If the page has changed, ask the user to
+                      ;; really close it.
+                      (true? (x_dialog_close_changed_page *window *page)))
+              (x_window_close_page *window *page)
+              (x_window_set_current_page *window *upper-page)))))))
+
 
 ;; -------------------------------------------------------------------
 ;;;; Attribute actions

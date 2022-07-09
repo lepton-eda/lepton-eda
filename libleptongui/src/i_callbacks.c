@@ -889,40 +889,6 @@ i_callback_hierarchy_down_symbol (GtkWidget *widget, gpointer data)
 } /* i_callback_hierarchy_down_symbol() */
 
 
-
-/*! \brief Go to the upper hierarchy level page
- *  \par Function Description
- * Return to the page which is parent for the current page in the
- * hierarchy of schematics.
- */
-void
-i_callback_hierarchy_up (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  LeptonPage *page = NULL;
-  LeptonPage *up_page = NULL;
-
-  g_return_if_fail (w_current != NULL);
-
-  page = schematic_window_get_active_page (w_current);
-
-  if (page == NULL) {
-    return;
-  }
-
-  up_page = s_hierarchy_find_up_page (page);
-  if (up_page == NULL) {
-    g_message (_("Cannot find any schematics above the current one!"));
-  } else {
-    if (lepton_page_get_changed (page) &&
-        !x_dialog_close_changed_page (w_current, page))
-      return;
-    x_window_close_page (w_current, page);
-    x_window_set_current_page(w_current, up_page);
-  }
-}
-
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

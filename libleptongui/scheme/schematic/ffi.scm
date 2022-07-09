@@ -46,7 +46,6 @@
             *i_callback_file_save
             i_callback_hierarchy_down_schematic
             i_callback_hierarchy_down_symbol
-            i_callback_hierarchy_up
             i_callback_page_next
             i_callback_page_prev
             i_callback_page_print
@@ -140,6 +139,8 @@
             find_text_dialog
             hide_text_dialog
             show_text_dialog
+
+            s_hierarchy_find_up_page
 
             slot_edit_dialog
             slot_edit_dialog_response
@@ -396,6 +397,9 @@
 (define-lff gschem_page_view_get_page '* '(*))
 (define-lff gschem_page_view_invalidate_all void '(*))
 
+;;; schematic_hierarchy.c
+(define-lff s_hierarchy_find_up_page '* '(*))
+
 ;;; slot_edit_dialog.c
 (define-lff slot_edit_dialog '* '(* * *))
 (define-lff slot_edit_dialog_response int (list int))
@@ -527,7 +531,6 @@
 (define-lfc *i_callback_file_save)
 (define-lff i_callback_hierarchy_down_schematic void '(* *))
 (define-lff i_callback_hierarchy_down_symbol void '(* *))
-(define-lff i_callback_hierarchy_up void '(* *))
 (define-lff i_callback_view_color_edit void '(* *))
 (define-lff i_callback_view_pan void '(* *))
 (define-lff i_callback_view_pan_down void '(* *))
