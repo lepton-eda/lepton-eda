@@ -83,6 +83,34 @@ lepton_page_set_changed (LeptonPage *page,
 }
 
 
+/*! \brief Get page's \a page_control field value.
+ *
+ *  \param [in] page The page to obtain the field of.
+ *  \return The value of the \a page_control field.
+ */
+int
+lepton_page_get_page_control (LeptonPage *page)
+{
+  g_return_val_if_fail (page != NULL, 0);
+
+  return page->page_control;
+}
+
+/*! \brief Set page's \a page_control field value.
+ *
+ *  \param [in] page The page.
+ *  \param [in] page_control The new \a page_control value.
+ */
+void
+lepton_page_set_page_control (LeptonPage *page,
+                              int page_control)
+{
+  g_return_if_fail (page != NULL);
+
+  page->page_control = page_control;
+}
+
+
 /*! \brief Get page's \a place_list field value.
  *
  *  \param [in] page The page to obtain the field of.
