@@ -895,7 +895,7 @@ the snap grid size should be set to 100")))
 
                     ;; s_hierarchy_down_symbol() will not zoom the loaded page.
                     ;; Tabbed GUI: zoom is set in x_tabs_page_set_cur().
-                    (when (not (true? (x_tabs_enabled)))
+                    (unless (true? (x_tabs_enabled))
                       (gschem_page_view_zoom_extents
                        (gschem_toplevel_get_current_page_view *window)
                        %null-pointer))
