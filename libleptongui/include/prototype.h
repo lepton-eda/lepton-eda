@@ -614,6 +614,9 @@ schematic_window_restore_geometry (GschemToplevel* w_current,
 void
 schematic_window_show_all (GschemToplevel *w_current,
                            GtkWidget *main_window);
+GtkWidget*
+schematic_window_get_main_window (GschemToplevel *w_current);
+
 GschemToplevel*
 schematic_window_set_main_window (GschemToplevel *w_current,
                                   GtkWidget *main_window);
