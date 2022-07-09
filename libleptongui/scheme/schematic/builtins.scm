@@ -579,8 +579,29 @@
     (gschem_options_set_snap_size *options (/ snap-size 2))))
 
 
+;;; Toggles visibility of currently selected objects between
+;;; outline mode (fully visible) and bounding box mode
+;;; (displaying bounding box rectangle).
 (define-action-public (&options-action-feedback #:label (G_ "Toggle Outline Drawing"))
-  (run-callback i_callback_options_afeedback "&options-action-feedback"))
+  (define *window (*current-window))
+
+  ;; Definitions from "gschem_defines.h".
+  (define OUTLINE 0)
+  (define BOUNDINGBOX 1)
+
+  (if (= (schematic_window_get_actionfeedback_mode *window) BOUNDINGBOX)
+      (begin
+        (schematic_window_set_actionfeedback_mode *window OUTLINE)
+        (log! 'message (G_ "Action feedback mode set to OUTLINE")))
+
+      (begin
+        (schematic_window_set_actionfeedback_mode *window BOUNDINGBOX)
+        (log! 'message (G_ "Action feedback mode set to BOUNDINGBOX"))))
+
+  (when (and (true? (schematic_window_get_inside_action *window))
+             (not (null-pointer? (schematic_window_get_place_list *window))))
+    (o_place_invalidate_rubber *window FALSE)))
+
 
 (define-action-public (&options-rubberband #:label (G_ "Toggle Net Rubber Band"))
   (gschem_options_cycle_net_rubber_band_mode

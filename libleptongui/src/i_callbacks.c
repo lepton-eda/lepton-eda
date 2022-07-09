@@ -2208,38 +2208,6 @@ i_callback_attributes_visibility_toggle (GtkWidget *widget, gpointer data)
  *  \par Function Description
  *
  *  \note
- *  repeat last command doesn't make sense on options either??? (does
- *  it?)
- */
-void
-i_callback_options_afeedback (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  if (schematic_window_get_actionfeedback_mode (w_current) == BOUNDINGBOX)
-  {
-    schematic_window_set_actionfeedback_mode (w_current, OUTLINE);
-    g_message (_("Action feedback mode set to OUTLINE"));
-  }
-  else
-  {
-    schematic_window_set_actionfeedback_mode (w_current, BOUNDINGBOX);
-    g_message (_("Action feedback mode set to BOUNDINGBOX"));
-  }
-  if (schematic_window_get_inside_action (w_current) &&
-      schematic_window_get_place_list (w_current) != NULL)
-    o_place_invalidate_rubber (w_current, FALSE);
-}
-
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
  *  HACK: be sure that you don't use the widget parameter in this one,
  *  since it is being called with a null, I suppose we should call it
  *  with the right param.
