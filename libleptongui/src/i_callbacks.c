@@ -773,7 +773,7 @@ i_callback_hierarchy_down_schematic (GtkWidget *widget, gpointer data)
       } else {
         /* this only signifies that we tried */
         loaded_flag = TRUE;
-        page_control = child->page_control;
+        page_control = lepton_page_get_page_control (child);
 
         /* tabbed GUI: create a tab for every subpage loaded: */
         if (x_tabs_enabled())
