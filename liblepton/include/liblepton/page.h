@@ -74,6 +74,12 @@ void
 lepton_page_set_changed (LeptonPage *page,
                          int changed);
 int
+lepton_page_get_pid (LeptonPage *page);
+
+void
+lepton_page_set_pid (LeptonPage *page,
+                     int pid);
+int
 lepton_page_get_page_control (LeptonPage *page);
 
 void

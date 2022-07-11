@@ -83,6 +83,34 @@ lepton_page_set_changed (LeptonPage *page,
 }
 
 
+/*! \brief Get page's \a pid field value.
+ *
+ *  \param [in] page The page to obtain the field of.
+ *  \return The value of the \a pid field.
+ */
+int
+lepton_page_get_pid (LeptonPage *page)
+{
+  g_return_val_if_fail (page != NULL, 0);
+
+  return page->pid;
+}
+
+/*! \brief Set page's \a pid field value.
+ *
+ *  \param [in] page The page.
+ *  \param [in] pid The new \a pid value.
+ */
+void
+lepton_page_set_pid (LeptonPage *page,
+                     int pid)
+{
+  g_return_if_fail (page != NULL);
+
+  page->pid = pid;
+}
+
+
 /*! \brief Get page's \a page_control field value.
  *
  *  \param [in] page The page to obtain the field of.
