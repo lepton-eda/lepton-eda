@@ -158,7 +158,7 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
 
   page->up = parent->pid;
   page_control_counter++;
-  page->page_control = page_control_counter;
+  lepton_page_set_page_control (page, page_control_counter);
 
 }
 
