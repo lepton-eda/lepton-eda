@@ -900,8 +900,6 @@ the snap grid size should be set to 100")))
     (g_clear_error *error)))
 
 (define (hierarchy-down-filename filename *window *parent page-control)
-  ;; The same definition as in "liblepton/defines.h".
-  (define HIERARCHY_NORMAL_LOAD 0)
   (define use-tabs? (true? (x_tabs_enabled)))
 
   (log! 'message (G_ "Searching for source ~S") filename)
@@ -910,7 +908,6 @@ the snap grid size should be set to 100")))
                                                     (string->pointer filename)
                                                     *parent
                                                     page-control
-                                                    HIERARCHY_NORMAL_LOAD
                                                     *error)))
     (if (null-pointer? *child)
         ;; Launch the error dialog.

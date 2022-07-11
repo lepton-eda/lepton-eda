@@ -112,10 +112,6 @@
 #define NORMAL_FLAG		0
 #define SELECTION_FLAG		1
 
-/* hierarchy loading flags */
-#define HIERARCHY_NORMAL_LOAD   0
-#define HIERARCHY_FORCE_LOAD    1
-
 /* hierarchy traversing flags */
 #define HIERARCHY_NODUPS (1<<0)
 #define HIERARCHY_POSTORDER (1<<1)

@@ -403,7 +403,7 @@
 ;;; schematic_hierarchy.c
 (define-lff s_hierarchy_find_up_page '* '(*))
 (define-lff s_hierarchy_down_symbol void '(* * *))
-(define-lff s_hierarchy_down_schematic_single '* (list '* '* '* int int '*))
+(define-lff s_hierarchy_down_schematic_single '* (list '* '* '* int '*))
 
 ;;; slot_edit_dialog.c
 (define-lff slot_edit_dialog '* '(* * *))

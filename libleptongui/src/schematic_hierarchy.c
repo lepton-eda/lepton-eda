@@ -28,35 +28,21 @@ static int page_control_counter=0;
  *  \brief Search for schematic associated source files and load them.
  *  \par Function Description
  *  This function searches the associated source file refered by the
- *  <B>filename</B> and loads it.  If the <B>flag</B> is set to
- *  <B>HIERARCHY_NORMAL_LOAD</B> and the page is already in the list of
+ *  <B>filename</B> and loads it.  If the page is already in the list of
  *  pages it will return the <B>pid</B> of that page.
- *  If the <B>flag</B> is set to <B>HIERARCHY_FORCE_LOAD</B> then this
- *  function will load the page again with a new page id. The second case
- *  is mainly used by gnetlist where pushed down schematics MUST be unique.
  *
  *  \param [in] w_current     The GschemToplevel object.
  *  \param [in] filename      Schematic file name.
  *  \param [in] parent        The parent page of the schematic.
  *  \param [in] page_control
- *  \param [in] flag          sets whether to force load
  *  \param [out] err         Location to return a GError on failure.
  *  \return The page loaded, or NULL if failed.
- *
- *  \note
- *  This function finds the associated source files and
- *  loads all up
- *  It only works for schematic files though
- *  this is basically push
- *  flag can either be HIERARCHY_NORMAL_LOAD or HIERARCHY_FORCE_LOAD
- *  flag is mainly used by gnetlist where pushed down schematics MUST be unique
  */
 LeptonPage *
 s_hierarchy_down_schematic_single (GschemToplevel *w_current,
                                    const gchar *filename,
                                    LeptonPage *parent,
                                    int page_control,
-                                   int flag,
                                    GError **err)
 {
   gchar *string;
@@ -83,56 +69,37 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
 
   string = scm_to_utf8_string (string_s);
 
-  switch (flag) {
-  case HIERARCHY_NORMAL_LOAD:
-    {
-      gchar *filename = f_normalize_filename (string, NULL);
-      found = lepton_toplevel_search_page (toplevel, filename);
-      g_free (filename);
+  gchar *normalized_filename = f_normalize_filename (string, NULL);
+  found = lepton_toplevel_search_page (toplevel, normalized_filename);
+  g_free (normalized_filename);
 
-      if (found) {
-        /* check whether this page is in the parents list */
-        for (forbear = parent;
-             forbear != NULL && found->pid != forbear->pid && forbear->up >= 0;
-             forbear = lepton_toplevel_search_page_by_id (toplevel->pages, forbear->up))
-          ; /* void */
+  if (found) {
+    /* check whether this page is in the parents list */
+    for (forbear = parent;
+         forbear != NULL && found->pid != forbear->pid && forbear->up >= 0;
+         forbear = lepton_toplevel_search_page_by_id (toplevel->pages, forbear->up))
+      ; /* void */
 
-        if (forbear != NULL && found->pid == forbear->pid) {
-          g_set_error (err, EDA_ERROR, EDA_ERROR_LOOP,
-                       _("Hierarchy contains a circular dependency."));
-          return NULL;  /* error signal */
-        }
-        lepton_toplevel_goto_page (toplevel, found);
-        if (page_control != 0) {
-          found->page_control = page_control;
-        }
-        found->up = parent->pid;
-        g_free (string);
-        return found;
-      }
-
-      found = lepton_page_new (toplevel, string);
-
-      schematic_file_open (w_current,
-                           found,
-                           lepton_page_get_filename (found),
-                           NULL);
+    if (forbear != NULL && found->pid == forbear->pid) {
+      g_set_error (err, EDA_ERROR, EDA_ERROR_LOOP,
+                   _("Hierarchy contains a circular dependency."));
+      return NULL;  /* error signal */
     }
-    break;
-
-  case HIERARCHY_FORCE_LOAD:
-    {
-      found = lepton_page_new (toplevel, string);
-      schematic_file_open (w_current,
-                           found,
-                           lepton_page_get_filename (found),
-                           NULL);
+    lepton_toplevel_goto_page (toplevel, found);
+    if (page_control != 0) {
+      found->page_control = page_control;
     }
-    break;
-
-  default:
-    g_return_val_if_reached (NULL);
+    found->up = parent->pid;
+    g_free (string);
+    return found;
   }
+
+  found = lepton_page_new (toplevel, string);
+
+  schematic_file_open (w_current,
+                       found,
+                       lepton_page_get_filename (found),
+                       NULL);
 
   if (page_control == 0) {
     page_control_counter++;
@@ -359,8 +326,7 @@ s_hierarchy_traversepages (GschemToplevel *w_current,
        lets load the page and dive into it */
     GError *err = NULL;
     child_page =
-      s_hierarchy_down_schematic_single (w_current, filename, p_current, 0,
-                                         HIERARCHY_NORMAL_LOAD, &err);
+      s_hierarchy_down_schematic_single (w_current, filename, p_current, 0, &err);
     if (child_page != NULL) {
       /* call the recursive function */
       s_hierarchy_traversepages (w_current, child_page, flags | HIERARCHY_INNERLOOP);

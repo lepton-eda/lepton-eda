@@ -730,7 +730,6 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
                                    const gchar *filename,
                                    LeptonPage *parent,
                                    int page_control,
-                                   int flag,
                                    GError **err);
 void
 s_hierarchy_down_symbol (GschemToplevel *w_current,
