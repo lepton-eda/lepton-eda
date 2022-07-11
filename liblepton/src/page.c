@@ -139,6 +139,34 @@ lepton_page_set_page_control (LeptonPage *page,
 }
 
 
+/*! \brief Get page's \a up field value.
+ *
+ *  \param [in] page The page to obtain the field of.
+ *  \return The value of the \a up field.
+ */
+int
+lepton_page_get_up (LeptonPage *page)
+{
+  g_return_val_if_fail (page != NULL, 0);
+
+  return page->up;
+}
+
+/*! \brief Set page's \a up field value.
+ *
+ *  \param [in] page The page.
+ *  \param [in] up The new \a up value.
+ */
+void
+lepton_page_set_up (LeptonPage *page,
+                    int up)
+{
+  g_return_if_fail (page != NULL);
+
+  page->up = up;
+}
+
+
 /*! \brief Get page's \a place_list field value.
  *
  *  \param [in] page The page to obtain the field of.

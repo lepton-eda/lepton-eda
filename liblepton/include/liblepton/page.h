@@ -85,6 +85,12 @@ lepton_page_get_page_control (LeptonPage *page);
 void
 lepton_page_set_page_control (LeptonPage *page,
                               int page_control);
+int
+lepton_page_get_up (LeptonPage *page);
+
+void
+lepton_page_set_up (LeptonPage *page,
+                    int up);
 GList*
 lepton_page_get_place_list (LeptonPage *page);
 
