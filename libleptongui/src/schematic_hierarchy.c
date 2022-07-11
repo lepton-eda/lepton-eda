@@ -140,7 +140,7 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
     /* change link to parent page since we
      * can come here from any parent and must
      * come back to the same page */
-    page->up = parent->pid;
+    page->up = lepton_page_get_pid (parent);
     lepton_toplevel_goto_page (toplevel, page);
     g_free (filename);
     return;
@@ -156,7 +156,7 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
                        lepton_page_get_filename (page),
                        NULL);
 
-  page->up = parent->pid;
+  page->up = lepton_page_get_pid (parent);
   page_control_counter++;
   lepton_page_set_page_control (page, page_control_counter);
 
