@@ -122,7 +122,6 @@ void i_callback_page_next (GtkWidget *widget, gpointer data);
 void i_callback_page_prev (GtkWidget *widget, gpointer data);
 void i_callback_page_revert (GtkWidget *widget, gpointer data);
 void i_callback_page_print (GtkWidget *widget, gpointer data);
-void i_callback_clipboard_copy (GtkWidget *widget, gpointer data);
 void i_callback_clipboard_paste (GtkWidget *widget, gpointer data);
 void i_callback_buffer_copy1 (GtkWidget *widget, gpointer data);
 void i_callback_buffer_copy2 (GtkWidget *widget, gpointer data);

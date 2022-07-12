@@ -531,21 +531,6 @@ i_callback_page_print (GtkWidget *widget, gpointer data)
 }
 
 /*! \section clipboard-menu Clipboard Menu Callback Functions */
-/*! \brief Copy selection to clipboard.
- *  \par Function Description
- * Copies the current selection to the clipboard, via buffer 0.
- */
-void
-i_callback_clipboard_copy (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-  if (!o_select_selected (w_current)) return;
-
-  o_buffer_copy (w_current, CLIPBOARD_BUFFER);
-}
-
 
 /*! \brief Start pasting clipboard contents
  *  \par Function Description

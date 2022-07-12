@@ -617,6 +617,8 @@ the snap grid size should be set to 100")))
 ;; -------------------------------------------------------------------
 ;;;; Clipboard actions
 
+(define CLIPBOARD_BUFFER 0)
+
 (define (buffer-cut *window buffer-number)
   (let ((selection (if (active-page) (page-selection (active-page)) '())))
     (unless (null? selection)
@@ -624,14 +626,19 @@ the snap grid size should be set to 100")))
       (o_buffer_cut *window buffer-number)
       (i_update_menus *window))))
 
+(define (buffer-copy *window buffer-number)
+  (let ((selection (if (active-page) (page-selection (active-page)) '())))
+    (unless (null? selection)
+      (o_buffer_copy *window buffer-number)
+      (i_update_menus *window))))
+
 ;;; Cut the current selection to the clipboard, via buffer 0.
 (define-action-public (&clipboard-cut #:label (G_ "Cut") #:icon "gtk-cut")
-  (define CLIPBOARD_BUFFER 0)
   (buffer-cut (*current-window) CLIPBOARD_BUFFER))
 
-
+;;; Copies the current selection to the clipboard, via buffer 0.
 (define-action-public (&clipboard-copy #:label (G_ "Copy") #:icon "gtk-copy")
-  (run-callback i_callback_clipboard_copy "&clipboard-copy"))
+  (buffer-copy (*current-window) CLIPBOARD_BUFFER))
 
 (define-action-public (&clipboard-paste #:label (G_ "Paste") #:icon "gtk-paste")
   (run-callback i_callback_clipboard_paste "&clipboard-paste"))
