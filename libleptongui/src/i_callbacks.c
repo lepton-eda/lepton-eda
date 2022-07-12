@@ -1110,23 +1110,6 @@ i_callback_view_pan_down (GtkWidget *widget, gpointer data)
 
 
 
-/*! \brief Load the Black & White color scheme
- */
-void
-i_callback_view_bw_colors (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_scm_c_eval_string_protected ("(load-rc-from-sys-config-dirs \"gschem-colormap-bw\")");
-
-  x_colorcb_update_colors();
-  color_edit_widget_update (w_current);
-
-  gschem_page_view_invalidate_all (gschem_toplevel_get_current_page_view (w_current));
-}
-
-
-
 /*! \brief Show color scheme editor widget
  */
 void

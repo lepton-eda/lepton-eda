@@ -282,9 +282,9 @@
 (define-action-public (&view-light-colors #:label (G_ "Light Color Scheme"))
   (load-color-scheme (*current-window) "gschem-colormap-lightbg"))
 
-
 (define-action-public (&view-bw-colors #:label (G_ "Monochrome Color Scheme"))
-  (run-callback i_callback_view_bw_colors "&view-bw-colors"))
+  (load-color-scheme (*current-window) "gschem-colormap-bw"))
+
 
 (define-action-public (&view-color-edit #:label (G_ "Show Color Scheme Editor"))
   (run-callback i_callback_view_color_edit "&view-color-edit"))
