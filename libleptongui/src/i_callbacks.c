@@ -560,25 +560,6 @@ i_callback_clipboard_paste (GtkWidget *widget, gpointer data)
 }
 
 /*! \section buffer-menu Buffer Menu Callback Functions */
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-static void
-buffer_copy (gpointer data, int n)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  if (!o_select_selected (w_current))
-    return;
-
-  o_buffer_copy(w_current, n-1);
-  i_update_menus(w_current);
-}
-
 
 /*! \todo Finish function documentation!!!
  *  \brief
@@ -606,12 +587,6 @@ buffer_paste (gpointer data, int n)
     i_set_state_msg(w_current, SELECT, _("Empty buffer"));
   }
 }
-
-void i_callback_buffer_copy1 (GtkWidget *widget, gpointer data) {buffer_copy (data, 1);}
-void i_callback_buffer_copy2 (GtkWidget *widget, gpointer data) {buffer_copy (data, 2);}
-void i_callback_buffer_copy3 (GtkWidget *widget, gpointer data) {buffer_copy (data, 3);}
-void i_callback_buffer_copy4 (GtkWidget *widget, gpointer data) {buffer_copy (data, 4);}
-void i_callback_buffer_copy5 (GtkWidget *widget, gpointer data) {buffer_copy (data, 5);}
 
 void i_callback_buffer_paste1 (GtkWidget *widget, gpointer data) {buffer_paste (data, 1);}
 void i_callback_buffer_paste2 (GtkWidget *widget, gpointer data) {buffer_paste (data, 2);}
