@@ -41,7 +41,6 @@
 
             i_callback_cancel
             i_callback_clipboard_copy
-            i_callback_clipboard_cut
             i_callback_clipboard_paste
             i_callback_file_save
             *i_callback_file_save
@@ -77,6 +76,8 @@
             o_attrib_add_attrib
 
             o_buffer_init
+            o_buffer_cut
+
             o_undo_init
 
             o_redraw_cleanstates
@@ -345,7 +346,10 @@
 (define-lff page_select_widget_update void '(*))
 (define-lff page_select_widget_new '* '(* * * * *))
 
+;;; o_buffer.c
 (define-lff o_buffer_init void '())
+(define-lff o_buffer_cut void (list '* int))
+
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())
 (define-lff x_color_init void '())
@@ -535,7 +539,6 @@
 ;;; i_callbacks.c
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_clipboard_copy void '(* *))
-(define-lff i_callback_clipboard_cut void '(* *))
 (define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)

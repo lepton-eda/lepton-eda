@@ -546,21 +546,6 @@ i_callback_clipboard_copy (GtkWidget *widget, gpointer data)
   o_buffer_copy (w_current, CLIPBOARD_BUFFER);
 }
 
-/*! \brief Cut selection to clipboard.
- *  \par Function Description
- * Cut the current selection to the clipboard, via buffer 0.
- */
-void
-i_callback_clipboard_cut (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-  if (!o_select_selected (w_current)) return;
-
-  o_redraw_cleanstates(w_current);
-  o_buffer_cut (w_current, CLIPBOARD_BUFFER);
-}
 
 /*! \brief Start pasting clipboard contents
  *  \par Function Description
