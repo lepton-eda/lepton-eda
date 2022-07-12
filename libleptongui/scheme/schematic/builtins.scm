@@ -279,9 +279,9 @@
 (define-action-public (&view-dark-colors #:label (G_ "Dark Color Scheme"))
   (load-color-scheme (*current-window) "gschem-colormap-darkbg"))
 
-
 (define-action-public (&view-light-colors #:label (G_ "Light Color Scheme"))
-  (run-callback i_callback_view_light_colors "&view-light-colors"))
+  (load-color-scheme (*current-window) "gschem-colormap-lightbg"))
+
 
 (define-action-public (&view-bw-colors #:label (G_ "Monochrome Color Scheme"))
   (run-callback i_callback_view_bw_colors "&view-bw-colors"))

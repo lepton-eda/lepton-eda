@@ -98,7 +98,6 @@
             i_callback_page_revert
             i_callback_view_bw_colors
             i_callback_view_color_edit
-            i_callback_view_light_colors
             i_callback_view_pan
             i_callback_view_pan_down
             i_callback_view_pan_left
@@ -444,7 +443,6 @@
 (define-lff i_callback_options_snap_size void '(* *))
 (define-lff i_callback_view_bw_colors void '(* *))
 (define-lff i_callback_view_color_edit void '(* *))
-(define-lff i_callback_view_light_colors void '(* *))
 (define-lff i_callback_view_pan void '(* *))
 (define-lff i_callback_view_pan_down void '(* *))
 (define-lff i_callback_view_pan_left void '(* *))
