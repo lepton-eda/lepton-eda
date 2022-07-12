@@ -632,6 +632,22 @@ the snap grid size should be set to 100")))
       (o_buffer_copy *window buffer-number)
       (i_update_menus *window))))
 
+(define (buffer-paste-start *window buffer-number)
+  ;; Choose a default position to start pasting. This is required to
+  ;; make pasting when the cursor is outside the screen or pasting via
+  ;; menu work as expected.
+  (let ((position (action-position)))
+    (and position
+         (match (snap-point position)
+           ((x . y)
+            (o_redraw_cleanstates *window)
+            (let ((empty? (true? (o_buffer_paste_start *window x y CLIPBOARD_BUFFER))))
+              (when empty?
+                (i_set_state_msg *window
+                                 (symbol->action-mode 'select-mode)
+                                 (string->pointer (G_ "Empty clipboard"))))))
+           (_ #f)))))
+
 ;;; Cut the current selection to the clipboard, via buffer 0.
 (define-action-public (&clipboard-cut #:label (G_ "Cut") #:icon "gtk-cut")
   (buffer-cut (*current-window) CLIPBOARD_BUFFER))
@@ -640,8 +656,9 @@ the snap grid size should be set to 100")))
 (define-action-public (&clipboard-copy #:label (G_ "Copy") #:icon "gtk-copy")
   (buffer-copy (*current-window) CLIPBOARD_BUFFER))
 
+;;; Start pasting the current clipboard contents, via buffer 0.
 (define-action-public (&clipboard-paste #:label (G_ "Paste") #:icon "gtk-paste")
-  (run-callback i_callback_clipboard_paste "&clipboard-paste"))
+  (buffer-paste-start (*current-window) CLIPBOARD_BUFFER))
 
 ;; -------------------------------------------------------------------
 ;;;; View control actions

@@ -40,7 +40,6 @@
             schematic_execute_script
 
             i_callback_cancel
-            i_callback_clipboard_paste
             i_callback_file_save
             *i_callback_file_save
             i_callback_page_next
@@ -77,6 +76,7 @@
             o_buffer_init
             o_buffer_copy
             o_buffer_cut
+            o_buffer_paste_start
 
             o_undo_init
 
@@ -350,6 +350,7 @@
 (define-lff o_buffer_init void '())
 (define-lff o_buffer_copy void (list '* int))
 (define-lff o_buffer_cut void (list '* int))
+(define-lff o_buffer_paste_start int (list '* int int int))
 
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())
@@ -539,7 +540,6 @@
 
 ;;; i_callbacks.c
 (define-lff i_callback_cancel void '(* *))
-(define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
 (define-lff i_callback_view_color_edit void '(* *))

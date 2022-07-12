@@ -530,34 +530,6 @@ i_callback_page_print (GtkWidget *widget, gpointer data)
   lepton_toplevel_print_all (gschem_toplevel_get_toplevel (w_current));
 }
 
-/*! \section clipboard-menu Clipboard Menu Callback Functions */
-
-/*! \brief Start pasting clipboard contents
- *  \par Function Description
- * Start pasting the current clipboard contents, via buffer 0.
- */
-void
-i_callback_clipboard_paste (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  int empty;
-
-  /* Choose a default position to start pasting. This is required to
-   * make pasting when the cursor is outside the screen or pasting via
-   * menu work as expected. */
-  gint wx = 0, wy = 0;
-
-  g_return_if_fail (w_current != NULL);
-
-  g_action_get_position (w_current, TRUE, &wx, &wy);
-
-  o_redraw_cleanstates(w_current);
-  empty = o_buffer_paste_start (w_current, wx, wy, CLIPBOARD_BUFFER);
-
-  if (empty) {
-    i_set_state_msg (w_current, SELECT, _("Empty clipboard"));
-  }
-}
 
 /*! \section buffer-menu Buffer Menu Callback Functions */
 
