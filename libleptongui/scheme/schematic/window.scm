@@ -102,7 +102,7 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_create_menubar *window *main-box *menubar)
       (schematic_window_create_toolbar *window *main-box)
       ;; Make main popup menu.
-      (get_main_popup *window)
+      (schematic_window_create_main_popup_menu *window)
 
       (x_window_create_main *main-window
                             *main-box

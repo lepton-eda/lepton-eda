@@ -112,9 +112,10 @@
             i_callback_view_zoom_full
             i_callback_view_zoom_in
             i_callback_view_zoom_out
+
             make_menu_action
             make_separator_menu_item
-            get_main_popup
+            schematic_window_create_main_popup_menu
 
             o_attrib_add_attrib
 
@@ -306,7 +307,7 @@
 (define-lff x_menu_attach_recent_files_submenu void '(* *))
 (define-lff lepton_action_create_menu_item '* '(* * *))
 (define-lff lepton_menu_set_action_data void '(* * * *))
-(define-lff get_main_popup '* '(*))
+(define-lff schematic_window_create_main_popup_menu '* '(*))
 
 ;;; x_rc.c
 (define-lff x_rc_parse_gschem void '(*))

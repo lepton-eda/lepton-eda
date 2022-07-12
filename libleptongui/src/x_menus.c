@@ -232,7 +232,7 @@ lepton_menu_set_action_data (GtkWidget *menu,
  *  - value: pointer to a corresponding GschemAction object
  */
 GtkWidget*
-get_main_popup (GschemToplevel* w_current)
+schematic_window_create_main_popup_menu (GschemToplevel* w_current)
 {
   GtkWidget *menu_item;
   GtkWidget *menu;
