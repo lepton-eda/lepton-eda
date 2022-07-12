@@ -310,19 +310,6 @@ i_callback_view_pan_down (GtkWidget *widget, gpointer data)
 }
 
 
-
-/*! \brief Show color scheme editor widget
- */
-void
-i_callback_view_color_edit (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  x_widgets_show_color_edit (w_current);
-}
-
 /*! \section page-menu Page Menu Callback Functions */
 
 /*! \todo Finish function documentation!!!

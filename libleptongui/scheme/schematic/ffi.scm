@@ -46,7 +46,6 @@
             i_callback_page_prev
             i_callback_page_print
             i_callback_page_revert
-            i_callback_view_color_edit
             i_callback_view_pan
             i_callback_view_pan_down
             i_callback_view_pan_left
@@ -154,6 +153,7 @@
 
             x_widgets_create
             x_widgets_init
+            x_widgets_show_color_edit
             x_widgets_show_find_text_state
             x_widgets_show_font_select
             x_widgets_show_log
@@ -368,6 +368,7 @@
 ;;; x_widgets.c
 (define-lff x_widgets_create void '(*))
 (define-lff x_widgets_init void '())
+(define-lff x_widgets_show_color_edit void '(*))
 (define-lff x_widgets_show_find_text_state void '(*))
 (define-lff x_widgets_show_font_select void '(*))
 (define-lff x_widgets_show_log void '(*))
@@ -542,7 +543,6 @@
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
-(define-lff i_callback_view_color_edit void '(* *))
 (define-lff i_callback_view_pan void '(* *))
 (define-lff i_callback_view_pan_down void '(* *))
 (define-lff i_callback_view_pan_left void '(* *))

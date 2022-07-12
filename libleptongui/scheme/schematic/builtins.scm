@@ -730,8 +730,10 @@ the snap grid size should be set to 100")))
   (load-color-scheme (*current-window) "gschem-colormap-bw"))
 
 
+;;; Show color scheme editor widget.
 (define-action-public (&view-color-edit #:label (G_ "Show Color Scheme Editor"))
-  (run-callback i_callback_view_color_edit "&view-color-edit"))
+  (x_widgets_show_color_edit (*current-window)))
+
 
 ;; -------------------------------------------------------------------
 ;;;; Page-related actions
