@@ -531,42 +531,6 @@ i_callback_page_print (GtkWidget *widget, gpointer data)
 }
 
 
-/*! \section buffer-menu Buffer Menu Callback Functions */
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-static void
-buffer_paste (gpointer data, int n)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  int empty;
-
-  /* Choose a default position to start pasting. This is required to
-   * make pasting when the cursor is outside the screen or pasting via
-   * menu work as expected. */
-  gint wx = 0, wy = 0;
-
-  g_return_if_fail (w_current != NULL);
-
-  g_action_get_position (w_current, TRUE, &wx, &wy);
-
-  empty = o_buffer_paste_start (w_current, wx, wy, n-1);
-
-  if (empty) {
-    i_set_state_msg(w_current, SELECT, _("Empty buffer"));
-  }
-}
-
-void i_callback_buffer_paste1 (GtkWidget *widget, gpointer data) {buffer_paste (data, 1);}
-void i_callback_buffer_paste2 (GtkWidget *widget, gpointer data) {buffer_paste (data, 2);}
-void i_callback_buffer_paste3 (GtkWidget *widget, gpointer data) {buffer_paste (data, 3);}
-void i_callback_buffer_paste4 (GtkWidget *widget, gpointer data) {buffer_paste (data, 4);}
-void i_callback_buffer_paste5 (GtkWidget *widget, gpointer data) {buffer_paste (data, 5);}
-
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
