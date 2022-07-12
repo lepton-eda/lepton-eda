@@ -98,7 +98,6 @@
             i_callback_page_revert
             i_callback_view_bw_colors
             i_callback_view_color_edit
-            i_callback_view_dark_colors
             i_callback_view_light_colors
             i_callback_view_pan
             i_callback_view_pan_down
@@ -127,6 +126,11 @@
             set_quiet_mode
             set_verbose_mode
             x_color_init
+
+            color_edit_widget_update
+
+            x_colorcb_update_colors
+
             x_menu_attach_recent_files_submenu
             x_show_uri
             x_stroke_init
@@ -273,6 +277,12 @@
 (define-lff set_quiet_mode void '())
 (define-lff set_verbose_mode void '())
 (define-lff x_color_init void '())
+
+;;; color_edit_widget.c
+(define-lff color_edit_widget_update void '(*))
+
+;;; x_colorcb.c
+(define-lff x_colorcb_update_colors void '())
 
 ;;; x_widgets.c
 (define-lff x_widgets_create void '(*))
@@ -434,7 +444,6 @@
 (define-lff i_callback_options_snap_size void '(* *))
 (define-lff i_callback_view_bw_colors void '(* *))
 (define-lff i_callback_view_color_edit void '(* *))
-(define-lff i_callback_view_dark_colors void '(* *))
 (define-lff i_callback_view_light_colors void '(* *))
 (define-lff i_callback_view_pan void '(* *))
 (define-lff i_callback_view_pan_down void '(* *))

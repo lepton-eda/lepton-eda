@@ -28,6 +28,7 @@
   #:use-module (lepton log)
   #:use-module (lepton object)
   #:use-module (lepton page)
+  #:use-module (lepton rc)
   #:use-module (lepton repl)
 
   #:use-module (schematic action)
@@ -263,8 +264,19 @@
 (define-action-public (&view-zoom-full #:label (G_ "Zoom Full"))
   (run-callback i_callback_view_zoom_full "&view-zoom-full"))
 
+
+;;; Load the Dark color scheme.
 (define-action-public (&view-dark-colors #:label (G_ "Dark Color Scheme"))
-  (run-callback i_callback_view_dark_colors "&view-dark-colors"))
+  (define *window (*current-window))
+
+  (load-rc-from-sys-config-dirs "gschem-colormap-darkbg")
+
+  (x_colorcb_update_colors)
+  (color_edit_widget_update *window)
+
+  (gschem_page_view_invalidate_all
+   (gschem_toplevel_get_current_page_view *window)))
+
 
 (define-action-public (&view-light-colors #:label (G_ "Light Color Scheme"))
   (run-callback i_callback_view_light_colors "&view-light-colors"))

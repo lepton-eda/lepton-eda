@@ -141,7 +141,6 @@ void i_callback_view_pan_left (GtkWidget *widget, gpointer data);
 void i_callback_view_pan_right (GtkWidget *widget, gpointer data);
 void i_callback_view_pan_up (GtkWidget *widget, gpointer data);
 void i_callback_view_pan_down (GtkWidget *widget, gpointer data);
-void i_callback_view_dark_colors (GtkWidget *widget, gpointer data);
 void i_callback_view_light_colors (GtkWidget *widget, gpointer data);
 void i_callback_view_bw_colors (GtkWidget *widget, gpointer data);
 void i_callback_view_color_edit (GtkWidget *widget, gpointer data);
