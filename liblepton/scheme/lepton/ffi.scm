@@ -333,6 +333,7 @@
             lepton_toplevel_get_page_current
             lepton_toplevel_get_pages
             lepton_toplevel_goto_page
+            lepton_toplevel_search_page
 
             lepton_object_list_to_buffer
 
@@ -345,6 +346,9 @@
             lepton_page_get_filename
             lepton_page_set_filename
             lepton_page_get_page_control
+            lepton_page_set_page_control
+            lepton_page_get_pid
+            lepton_page_set_up
             lepton_page_new
             lepton_page_objects
             lepton_page_remove
@@ -390,6 +394,7 @@
 (define-lff lepton_toplevel_get_page_current '* '(*))
 (define-lff lepton_toplevel_get_pages '* '(*))
 (define-lff lepton_toplevel_goto_page void '(* *))
+(define-lff lepton_toplevel_search_page '* '(* *))
 
 ;;; g_rc.c
 (define-lff g_rc_parse void '(* * * *))
@@ -676,6 +681,9 @@
 (define-lff lepton_page_get_filename '* '(*))
 (define-lff lepton_page_set_filename void '(* *))
 (define-lff lepton_page_get_page_control int '(*))
+(define-lff lepton_page_set_page_control void (list '* int))
+(define-lff lepton_page_get_pid int '(*))
+(define-lff lepton_page_set_up void (list '* int))
 (define-lff lepton_page_new '* '(* *))
 (define-lff lepton_page_objects '* '(*))
 (define-lff lepton_page_remove void '(* *))

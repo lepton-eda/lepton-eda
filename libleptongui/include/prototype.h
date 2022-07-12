@@ -737,10 +737,6 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
                                    LeptonPage *parent,
                                    int page_control,
                                    GError **err);
-void
-s_hierarchy_down_symbol (GschemToplevel *w_current,
-                         const CLibSymbol *symbol,
-                         LeptonPage *parent);
 LeptonPage*
 s_hierarchy_find_up_page (LeptonPage *current_page);
 

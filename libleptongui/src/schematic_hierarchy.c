@@ -127,52 +127,6 @@ s_hierarchy_down_schematic_single (GschemToplevel *w_current,
   return found;
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-s_hierarchy_down_symbol (GschemToplevel *w_current,
-                         const CLibSymbol *symbol,
-                         LeptonPage *parent)
-{
-  LeptonPage *page;
-  gchar *filename;
-
-  g_return_if_fail (w_current != NULL);
-
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-  g_return_if_fail (toplevel != NULL);
-
-  filename = s_clib_symbol_get_filename (symbol);
-
-  page = lepton_toplevel_search_page (toplevel, filename);
-  if (page) {
-    /* change link to parent page since we
-     * can come here from any parent and must
-     * come back to the same page */
-    lepton_page_set_up (page, lepton_page_get_pid (parent));
-    lepton_toplevel_goto_page (toplevel, page);
-    g_free (filename);
-    return;
-  }
-
-  page = lepton_page_new (toplevel, filename);
-  g_free(filename);
-
-  lepton_toplevel_goto_page (toplevel, page);
-
-  schematic_file_open (w_current,
-                       page,
-                       lepton_page_get_filename (page),
-                       NULL);
-
-  lepton_page_set_up (page, lepton_page_get_pid (parent));
-  schematic_hierarchy_increment_page_control_counter ();
-  lepton_page_set_page_control (page, schematic_hierarchy_get_page_control_counter ());
-
-}
 
 /*! \brief Search for the parent page of a page in hierarchy.
  *  \par Function Description

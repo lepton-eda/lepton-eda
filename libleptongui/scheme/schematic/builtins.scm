@@ -981,6 +981,34 @@ the snap grid size should be set to 100")))
                           %null-pointer)))
 
 
+(define (hierarchy-down-symbol *window *symbol *parent)
+  (let* ((*toplevel (gschem_toplevel_get_toplevel *window))
+         (*filename (s_clib_symbol_get_filename *symbol))
+         (*page (lepton_toplevel_search_page *toplevel *filename)))
+    (if (not (null-pointer? *page))
+        (begin
+          ;; Change link to parent page since we can come here
+          ;; from any parent and must come back to the same page.
+          (lepton_page_set_up *page (lepton_page_get_pid *parent))
+          (lepton_toplevel_goto_page *toplevel *page)
+          (g_free *filename))
+
+        (let ((*page (lepton_page_new *toplevel *filename)))
+          (g_free *filename)
+
+          (lepton_toplevel_goto_page *toplevel *page)
+
+          (schematic_file_open *window
+                               *page
+                               (lepton_page_get_filename *page)
+                               %null-pointer)
+
+          (lepton_page_set_up *page (lepton_page_get_pid *parent))
+          (schematic_hierarchy_increment_page_control_counter)
+          (lepton_page_set_page_control *page
+                                        (schematic_hierarchy_get_page_control_counter))))))
+
+
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
   (define *window (*current-window))
 
@@ -999,9 +1027,9 @@ the snap grid size should be set to 100")))
                   (begin
                     (g_free *fname)
 
-                    (s_hierarchy_down_symbol *window
-                                             *sym
-                                             (schematic_window_get_active_page *window))
+                    (hierarchy-down-symbol *window
+                                           *sym
+                                           (schematic_window_get_active_page *window))
                     (gschem_toplevel_page_changed *window)
 
                     ;; Get active page once again, it should now be the symbol

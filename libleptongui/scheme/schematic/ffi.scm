@@ -139,8 +139,9 @@
             hide_text_dialog
             show_text_dialog
 
+            schematic_hierarchy_get_page_control_counter
+            schematic_hierarchy_increment_page_control_counter
             s_hierarchy_find_up_page
-            s_hierarchy_down_symbol
             s_hierarchy_down_schematic_single
 
             slot_edit_dialog
@@ -288,6 +289,7 @@
 
             x_fileselect_open
             x_fileselect_save
+            schematic_file_open
 
             x_image_setup
 
@@ -401,8 +403,9 @@
 (define-lff gschem_page_view_zoom_extents void '(* *))
 
 ;;; schematic_hierarchy.c
+(define-lff schematic_hierarchy_get_page_control_counter int '())
+(define-lff schematic_hierarchy_increment_page_control_counter void '())
 (define-lff s_hierarchy_find_up_page '* '(*))
-(define-lff s_hierarchy_down_symbol void '(* * *))
 (define-lff s_hierarchy_down_schematic_single '* (list '* '* '* int '*))
 
 ;;; slot_edit_dialog.c
@@ -629,6 +632,7 @@
 ;;; x_fileselect.c
 (define-lff x_fileselect_open void '(*))
 (define-lff x_fileselect_save int '(* * *))
+(define-lff schematic_file_open int '(* * * *))
 
 ;;; x_image.c
 (define-lff x_image_setup void '(*))
