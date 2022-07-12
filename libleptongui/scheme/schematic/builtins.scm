@@ -265,17 +265,19 @@
   (run-callback i_callback_view_zoom_full "&view-zoom-full"))
 
 
-;;; Load the Dark color scheme.
-(define-action-public (&view-dark-colors #:label (G_ "Dark Color Scheme"))
-  (define *window (*current-window))
-
-  (load-rc-from-sys-config-dirs "gschem-colormap-darkbg")
+(define (load-color-scheme *window color-scheme)
+  (load-rc-from-sys-config-dirs color-scheme)
 
   (x_colorcb_update_colors)
   (color_edit_widget_update *window)
 
   (gschem_page_view_invalidate_all
    (gschem_toplevel_get_current_page_view *window)))
+
+
+;;; Load the Dark color scheme.
+(define-action-public (&view-dark-colors #:label (G_ "Dark Color Scheme"))
+  (load-color-scheme (*current-window) "gschem-colormap-darkbg"))
 
 
 (define-action-public (&view-light-colors #:label (G_ "Light Color Scheme"))
