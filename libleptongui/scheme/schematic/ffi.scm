@@ -47,7 +47,6 @@
             i_callback_page_print
             i_callback_page_revert
             i_callback_view_pan_down
-            i_callback_view_pan_left
             i_callback_view_pan_right
             i_callback_view_pan_up
 
@@ -232,6 +231,7 @@
             gschem_page_view_get_page
             gschem_page_view_invalidate_all
             gschem_page_view_pan
+            gschem_page_view_pan_mouse
             gschem_page_view_zoom_extents
 
             schematic_signal_connect
@@ -250,6 +250,7 @@
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_gdk_display
+            schematic_window_get_keyboardpan_gain
             schematic_window_get_macro_widget
             schematic_window_get_options
             schematic_window_get_place_list
@@ -412,6 +413,7 @@
 (define-lff gschem_page_view_get_page '* '(*))
 (define-lff gschem_page_view_invalidate_all void '(*))
 (define-lff gschem_page_view_pan void (list '* int int))
+(define-lff gschem_page_view_pan_mouse void (list '* int int))
 (define-lff gschem_page_view_zoom_extents void '(* *))
 
 ;;; schematic_hierarchy.c
@@ -445,6 +447,7 @@
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_gdk_display '* '(*))
+(define-lff schematic_window_get_keyboardpan_gain int '(*))
 (define-lff schematic_window_get_macro_widget '* '(*))
 (define-lff schematic_window_get_options '* '(*))
 (define-lff schematic_window_get_place_list '* '(*))
@@ -554,7 +557,6 @@
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
 (define-lff i_callback_view_pan_down void '(* *))
-(define-lff i_callback_view_pan_left void '(* *))
 (define-lff i_callback_view_pan_right void '(* *))
 (define-lff i_callback_view_pan_up void '(* *))
 (define-lff i_callback_page_next void '(* *))

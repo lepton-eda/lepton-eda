@@ -699,8 +699,16 @@ the snap grid size should be set to 100")))
      (i_set_state *window (symbol->action-mode 'pan-mode)))))
 
 
+;;; Viewport moving.  The distance can be set with the
+;;; [schematic.gui]::keyboardpan-gain configuration setting.
+
+;;; Moves the viewport to the left.
 (define-action-public (&view-pan-left #:label (G_ "Pan Left"))
-  (run-callback i_callback_view_pan_left "&view-pan-left"))
+  (define *window (*current-window))
+  (gschem_page_view_pan_mouse (gschem_toplevel_get_current_page_view *window)
+                              (schematic_window_get_keyboardpan_gain *window)
+                              0))
+
 
 (define-action-public (&view-pan-right #:label (G_ "Pan Right"))
   (run-callback i_callback_view_pan_right "&view-pan-right"))
