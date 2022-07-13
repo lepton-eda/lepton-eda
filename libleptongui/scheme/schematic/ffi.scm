@@ -31,7 +31,6 @@
             generic_filesel_dialog
             generic_msg_dialog
 
-            i_callback_add_attribute
             i_callback_attributes_show_both
             i_callback_attributes_show_name
             i_callback_attributes_show_value
@@ -130,6 +129,8 @@
             x_colorcb_update_colors
 
             x_menu_attach_recent_files_submenu
+
+            attrib_edit_dialog
 
             autonumber_text_dialog
 
@@ -507,7 +508,6 @@
 (define-lff generic_filesel_dialog '* (list '* '* int))
 (define-lff generic_msg_dialog void '(*))
 ;;; i_callbacks.c
-(define-lff i_callback_add_attribute void '(* *))
 (define-lff i_callback_attributes_show_both void '(* *))
 (define-lff i_callback_attributes_show_name void '(* *))
 (define-lff i_callback_attributes_show_value void '(* *))
@@ -598,6 +598,9 @@
 (define-lff o_place_invalidate_rubber void (list '* int))
 (define-lff o_place_mirror void '(*))
 (define-lff o_place_rotate void '(*))
+
+;;; x_attribedit.c
+(define-lff attrib_edit_dialog void (list '* '* int))
 
 ;;; x_autonumber.c
 (define-lff autonumber_text_dialog void '(*))

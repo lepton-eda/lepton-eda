@@ -642,8 +642,22 @@ the snap grid size should be set to 100")))
 (define-action-public (&add-component #:label (G_ "Add Component") #:icon "insert-symbol")
   (callback-add-component %null-pointer (*current-window)))
 
+
 (define-action-public (&add-attribute #:label (G_ "Add Attribute") #:icon "insert-attribute")
-  (run-callback i_callback_add_attribute "&add-attribute"))
+  ;; Definitions from "gschem_defines.h".
+  (define FROM_MENU 0)
+  (define FROM_HOTKEY 1)
+
+  (define *window (*current-window))
+
+  (attrib_edit_dialog *window
+                      %null-pointer
+                      (match (action-position)
+                        ((x . y) FROM_HOTKEY)
+                        (_ FROM_MENU)))
+
+  (i_set_state *window (symbol->action-mode 'select-mode)))
+
 
 (define-action-public (&add-net #:label (G_ "Add Net") #:icon "insert-net")
   (callback-add-net (*current-window)))

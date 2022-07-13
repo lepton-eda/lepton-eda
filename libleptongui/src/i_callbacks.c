@@ -728,27 +728,6 @@ void i_callback_buffer_paste4 (GtkWidget *widget, gpointer data) {buffer_paste (
 void i_callback_buffer_paste5 (GtkWidget *widget, gpointer data) {buffer_paste (data, 5);}
 
 
-/*! \section add-menu Add Menu Callback Functions */
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_add_attribute (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  attrib_edit_dialog(w_current, NULL,
-                     g_action_get_position (w_current, TRUE, NULL, NULL) ? FROM_HOTKEY : FROM_MENU);
-
-  i_set_state(w_current, SELECT);
-}
-
-
 /*! \section hierarchy-menu Hierarchy Menu Callback Functions */
 /*! \todo Finish function documentation!!!
  *  \brief
