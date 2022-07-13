@@ -60,19 +60,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 } /* i_callback_file_save() */
 
 
-/*! \section view-menu View Menu Callback Functions */
-/*! \brief Toggle the visibility of the sidebar
- */
-void
-i_callback_view_sidebar (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  x_widgets_toggle_widget_visibility (w_current->right_notebook);
-}
-
 /*! \brief Toggle the visibility of the status window
  */
 void

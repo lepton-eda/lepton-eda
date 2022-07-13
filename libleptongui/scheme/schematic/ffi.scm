@@ -51,7 +51,6 @@
             i_callback_view_pan_left
             i_callback_view_pan_right
             i_callback_view_pan_up
-            i_callback_view_sidebar
             i_callback_view_status
             i_callback_view_zoom_box
             i_callback_view_zoom_extents
@@ -160,6 +159,7 @@
             x_widgets_show_object_properties
             x_widgets_show_options
             x_widgets_show_page_select
+            x_widgets_toggle_widget_visibility
 
             x_window_close
             x_window_close_all
@@ -257,6 +257,8 @@
             schematic_window_get_macro_widget
             schematic_window_get_options
             schematic_window_get_place_list
+            schematic_window_get_right_notebook
+            schematic_window_set_right_notebook
             schematic_window_get_selection_list
             schematic_window_update_keyaccel_string
             schematic_window_update_keyaccel_timer
@@ -375,6 +377,7 @@
 (define-lff x_widgets_show_object_properties void '(*))
 (define-lff x_widgets_show_options void '(*))
 (define-lff x_widgets_show_page_select void '(*))
+(define-lff x_widgets_toggle_widget_visibility void '(*))
 
 ;;; action_mode.c
 (define-lff schematic_action_mode_from_string int '(*))
@@ -441,6 +444,8 @@
 (define-lff schematic_window_get_macro_widget '* '(*))
 (define-lff schematic_window_get_options '* '(*))
 (define-lff schematic_window_get_place_list '* '(*))
+(define-lff schematic_window_get_right_notebook '* '(*))
+(define-lff schematic_window_set_right_notebook void '(* *))
 (define-lff schematic_window_get_selection_list '* '(*))
 (define-lff schematic_window_update_keyaccel_string void '(* *))
 (define-lff schematic_window_update_keyaccel_timer void (list '* int))
@@ -548,7 +553,6 @@
 (define-lff i_callback_view_pan_left void '(* *))
 (define-lff i_callback_view_pan_right void '(* *))
 (define-lff i_callback_view_pan_up void '(* *))
-(define-lff i_callback_view_sidebar void '(* *))
 (define-lff i_callback_view_status void '(* *))
 (define-lff i_callback_view_zoom_box void '(* *))
 (define-lff i_callback_view_zoom_extents void '(* *))
