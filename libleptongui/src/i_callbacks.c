@@ -81,7 +81,7 @@ i_callback_view_zoom_full (GtkWidget *widget, gpointer data)
 
   if (schematic_window_get_undo_panzoom (w_current))
   {
-    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
+    o_undo_savestate_viewport (w_current);
   }
 }
 
@@ -105,7 +105,7 @@ i_callback_view_zoom_extents (GtkWidget *widget, gpointer data)
 
   if (schematic_window_get_undo_panzoom (w_current))
   {
-    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
+    o_undo_savestate_viewport (w_current);
   }
 }
 
@@ -157,7 +157,7 @@ i_callback_view_zoom_in (GtkWidget *widget, gpointer data)
 
   if (schematic_window_get_undo_panzoom (w_current))
   {
-    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
+    o_undo_savestate_viewport (w_current);
   }
 }
 
@@ -184,7 +184,7 @@ i_callback_view_zoom_out (GtkWidget *widget, gpointer data)
 
   if (schematic_window_get_undo_panzoom (w_current))
   {
-    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
+    o_undo_savestate_viewport (w_current);
   }
 }
 
@@ -213,7 +213,7 @@ i_callback_view_pan (GtkWidget *widget, gpointer data)
     gschem_page_view_pan (page_view, wx, wy);
     if (schematic_window_get_undo_panzoom (w_current))
     {
-      o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
+      o_undo_savestate_viewport (w_current);
     }
   }
 }
