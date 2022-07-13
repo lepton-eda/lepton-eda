@@ -78,13 +78,11 @@ i_callback_view_sidebar (GtkWidget *widget, gpointer data)
 void
 i_callback_view_status (GtkWidget *widget, gpointer data)
 {
-  gboolean visible;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
 
-  visible = gtk_widget_get_visible (GTK_WIDGET (w_current->bottom_notebook));
-  gtk_widget_set_visible (GTK_WIDGET (w_current->bottom_notebook), !visible);
+  x_widgets_toggle_widget_visibility (w_current->bottom_notebook);
 }
 
 
