@@ -325,6 +325,27 @@ o_undo_savestate_old (GschemToplevel *w_current, int flag)
   o_undo_savestate (w_current, page, flag);
 }
 
+
+/*! \brief Save viewport undo information.
+ *
+ * \par Function Description
+ *
+ * This function saves undo information marking the record as a
+ * viewport only one.
+ *
+ * \param [in] w_current The current schematic window instance.
+ */
+void
+o_undo_savestate_viewport (GschemToplevel *w_current)
+{
+  g_return_if_fail (w_current != NULL);
+
+  LeptonPage *page = schematic_window_get_active_page (w_current);
+
+  o_undo_savestate (w_current, page, UNDO_VIEWPORT_ONLY);
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
