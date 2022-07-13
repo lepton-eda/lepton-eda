@@ -1199,3 +1199,32 @@ schematic_window_set_shift_key_pressed (GschemToplevel *w_current,
 
   w_current->SHIFTKEY = state;
 }
+
+
+/*! \brief Get the right notebook widget for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The right notebook widget.
+ */
+GtkWidget*
+schematic_window_get_right_notebook (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->right_notebook;
+}
+
+
+/*! \brief Set the right notebook widget for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The new right notebook widget.
+ */
+void
+schematic_window_set_right_notebook (GschemToplevel *w_current,
+                                     GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->right_notebook = widget;
+}
