@@ -710,8 +710,16 @@ the snap grid size should be set to 100")))
 (define-action-public (&view-zoom-box #:label (G_ "Zoom Box"))
   (run-callback i_callback_view_zoom_box "&view-zoom-box"))
 
+
 (define-action-public (&view-zoom-extents #:label (G_ "Zoom Extents") #:icon "gtk-zoom-fit")
-  (run-callback i_callback_view_zoom_extents "&view-zoom-extents"))
+  (define *window (*current-window))
+
+  (gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view *window)
+                                 %null-pointer)
+
+  (if (true? (schematic_window_get_undo_panzoom *window))
+      (o_undo_savestate_viewport *window)))
+
 
 (define-action-public (&view-zoom-in #:label (G_ "Zoom In") #:icon "gtk-zoom-in")
   (run-callback i_callback_view_zoom_in "&view-zoom-in"))

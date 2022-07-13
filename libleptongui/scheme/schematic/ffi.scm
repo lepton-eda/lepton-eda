@@ -52,7 +52,6 @@
             i_callback_view_pan_right
             i_callback_view_pan_up
             i_callback_view_zoom_box
-            i_callback_view_zoom_extents
             i_callback_view_zoom_in
             i_callback_view_zoom_out
 
@@ -561,7 +560,6 @@
 (define-lff i_callback_view_pan_right void '(* *))
 (define-lff i_callback_view_pan_up void '(* *))
 (define-lff i_callback_view_zoom_box void '(* *))
-(define-lff i_callback_view_zoom_extents void '(* *))
 (define-lff i_callback_view_zoom_in void '(* *))
 (define-lff i_callback_view_zoom_out void '(* *))
 (define-lff i_callback_page_next void '(* *))

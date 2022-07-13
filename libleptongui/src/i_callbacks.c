@@ -68,30 +68,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
  *  repeat middle shortcut would get into the way of what user is try to do
  */
 void
-i_callback_view_zoom_extents (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  g_return_if_fail (w_current != NULL);
-
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  g_return_if_fail (page_view != NULL);
-
-  gschem_page_view_zoom_extents (page_view, NULL);
-
-  if (schematic_window_get_undo_panzoom (w_current))
-  {
-    o_undo_savestate_viewport (w_current);
-  }
-}
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- *  \note
- *  repeat middle shortcut would get into the way of what user is try to do
- */
-void
 i_callback_view_zoom_box (GtkWidget *widget, gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
