@@ -699,6 +699,14 @@ the snap grid size should be set to 100")))
 (define-action-public (&view-pan-down #:label (G_ "Pan Down"))
   (run-callback i_callback_view_pan_down "&view-pan-down"))
 
+;;; Definitions from "gschem_defines.h".
+(define DONTCARE 0)
+(define MENU 1)
+(define HOTKEY 2)
+(define ZOOM_OUT 0)
+(define ZOOM_IN 1)
+(define ZOOM_FULL 2)
+
 (define-action-public (&view-zoom-box #:label (G_ "Zoom Box"))
   (run-callback i_callback_view_zoom_box "&view-zoom-box"))
 
@@ -711,8 +719,15 @@ the snap grid size should be set to 100")))
 (define-action-public (&view-zoom-out #:label (G_ "Zoom Out") #:icon "gtk-zoom-out")
   (run-callback i_callback_view_zoom_out "&view-zoom-out"))
 
+
 (define-action-public (&view-zoom-full #:label (G_ "Zoom Full"))
-  (run-callback i_callback_view_zoom_full "&view-zoom-full"))
+  (define *window (*current-window))
+  (define *page-view (gschem_toplevel_get_current_page_view *window))
+
+  (a_zoom *window *page-view ZOOM_FULL DONTCARE)
+
+  (when (true? (schematic_window_get_undo_panzoom *window))
+    (o_undo_savestate_viewport *window)))
 
 
 (define (load-color-scheme *window color-scheme)

@@ -53,7 +53,6 @@
             i_callback_view_pan_up
             i_callback_view_zoom_box
             i_callback_view_zoom_extents
-            i_callback_view_zoom_full
             i_callback_view_zoom_in
             i_callback_view_zoom_out
 
@@ -261,6 +260,7 @@
             schematic_window_get_right_notebook
             schematic_window_set_right_notebook
             schematic_window_get_selection_list
+            schematic_window_get_undo_panzoom
             schematic_window_update_keyaccel_string
             schematic_window_update_keyaccel_timer
             schematic_window_get_shift_key_pressed
@@ -287,6 +287,7 @@
 
             o_undo_callback
             o_undo_savestate
+            o_undo_savestate_viewport
 
             x_event_get_pointer_position
             x_event_key
@@ -301,6 +302,8 @@
 
             x_tabs_next
             x_tabs_prev
+
+            a_zoom
 
             parse-gschemrc
             ))
@@ -450,6 +453,7 @@
 (define-lff schematic_window_get_right_notebook '* '(*))
 (define-lff schematic_window_set_right_notebook void '(* *))
 (define-lff schematic_window_get_selection_list '* '(*))
+(define-lff schematic_window_get_undo_panzoom int '(*))
 (define-lff schematic_window_update_keyaccel_string void '(* *))
 (define-lff schematic_window_update_keyaccel_timer void (list '* int))
 (define-lff schematic_window_get_shift_key_pressed int '(*))
@@ -558,7 +562,6 @@
 (define-lff i_callback_view_pan_up void '(* *))
 (define-lff i_callback_view_zoom_box void '(* *))
 (define-lff i_callback_view_zoom_extents void '(* *))
-(define-lff i_callback_view_zoom_full void '(* *))
 (define-lff i_callback_view_zoom_in void '(* *))
 (define-lff i_callback_view_zoom_out void '(* *))
 (define-lff i_callback_page_next void '(* *))
@@ -672,6 +675,10 @@
 (define-lff o_undo_init void '())
 (define-lff o_undo_callback void (list '* '* int))
 (define-lff o_undo_savestate void (list '* '* int))
+(define-lff o_undo_savestate_viewport void '(*))
+
+;;; a_zoom.c
+(define-lff a_zoom void (list '* '* int int))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.
