@@ -843,43 +843,32 @@ the snap grid size should be set to 100")))
 
 ;;; The function searches the next sibling of current page in the
 ;;; the given page list.
-(define (hierarchy-find-next-page current-page ls enforce-hierarchy?)
-  (and (not (null? ls))
-       (let ((next-page (car ls)))
-         (if enforce-hierarchy?
-             (if (= (lepton_page_get_page_control (page->pointer current-page))
-                    (lepton_page_get_page_control (page->pointer next-page)))
-                 next-page
-                 (hierarchy-find-next-page current-page (cdr ls) enforce-hierarchy?))
-             next-page))))
+(define* (hierarchy-goto-nearest-page *window #:key (previous? #f))
+  (define current-page (active-page))
+  (define enforce-hierarchy? (true? (schematic_window_get_enforce_hierarchy *window)))
+  (define (find-page ls)
+    (and (not (null? ls))
+         (let ((next-page (car ls)))
+           (if enforce-hierarchy?
+               (if (= (lepton_page_get_page_control (page->pointer current-page))
+                      (lepton_page_get_page_control (page->pointer next-page)))
+                   next-page
+                   (find-page (cdr ls)))
+               next-page))))
+  (define next-pages
+    (cdr (member current-page ((if previous? reverse identity) (active-pages)))))
 
+  (let ((found-page (find-page next-pages)))
+    (when found-page
+      (x_window_set_current_page *window (page->pointer found-page)))))
 
 ;;; Search for a page preceding a given page in hierarchy.
 (define-action-public (&page-prev #:label (G_ "Previous Page") #:icon "gtk-go-back")
-  (define *window (*current-window))
-  (define current-page (active-page))
-  (define next-pages (cdr (member current-page (reverse (active-pages)))))
-  (define enforce-hierarchy? (true? (schematic_window_get_enforce_hierarchy *window)))
-
-  (let ((found-page (hierarchy-find-next-page current-page
-                                              next-pages
-                                              enforce-hierarchy?)))
-    (when found-page
-      (x_window_set_current_page *window (page->pointer found-page)))))
-
+  (hierarchy-goto-nearest-page (*current-window) #:previous? #t))
 
 ;;; Search for a page following a given page in hierarchy.
 (define-action-public (&page-next #:label (G_ "Next Page") #:icon "gtk-go-forward")
-  (define *window (*current-window))
-  (define current-page (active-page))
-  (define next-pages (cdr (member current-page (active-pages))))
-  (define enforce-hierarchy? (true? (schematic_window_get_enforce_hierarchy *window)))
-
-  (let ((found-page (hierarchy-find-next-page current-page
-                                              next-pages
-                                              enforce-hierarchy?)))
-    (when found-page
-      (x_window_set_current_page *window (page->pointer found-page)))))
+  (hierarchy-goto-nearest-page (*current-window) #:previous? #f))
 
 
 (define-action-public (&page-close #:label (G_ "Close Page") #:icon "gtk-close")
