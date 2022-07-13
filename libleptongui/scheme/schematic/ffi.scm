@@ -47,7 +47,6 @@
             i_callback_page_print
             i_callback_page_revert
             i_callback_view_pan_down
-            i_callback_view_pan_right
             i_callback_view_pan_up
 
             i_action_stop
@@ -557,7 +556,6 @@
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
 (define-lff i_callback_view_pan_down void '(* *))
-(define-lff i_callback_view_pan_right void '(* *))
 (define-lff i_callback_view_pan_up void '(* *))
 (define-lff i_callback_page_next void '(* *))
 (define-lff i_callback_page_prev void '(* *))

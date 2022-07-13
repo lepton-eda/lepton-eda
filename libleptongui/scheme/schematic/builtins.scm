@@ -710,8 +710,13 @@ the snap grid size should be set to 100")))
                               0))
 
 
+;;; Moves the viewport to the right.
 (define-action-public (&view-pan-right #:label (G_ "Pan Right"))
-  (run-callback i_callback_view_pan_right "&view-pan-right"))
+  (define *window (*current-window))
+  (gschem_page_view_pan_mouse (gschem_toplevel_get_current_page_view *window)
+                              (- (schematic_window_get_keyboardpan_gain *window))
+                              0))
+
 
 (define-action-public (&view-pan-up #:label (G_ "Pan Up"))
   (run-callback i_callback_view_pan_up "&view-pan-up"))
