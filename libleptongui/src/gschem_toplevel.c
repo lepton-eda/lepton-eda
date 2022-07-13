@@ -1315,3 +1315,32 @@ schematic_window_set_keyboardpan_gain (GschemToplevel *w_current,
 
   w_current->keyboardpan_gain = keyboardpan_gain;
 }
+
+
+/*! \brief Get the field 'enforce_hierarchy' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The field 'enforce_hierarchy'.
+ */
+int
+schematic_window_get_enforce_hierarchy (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->enforce_hierarchy;
+}
+
+
+/*! \brief Set the field 'enforce_hierarchy' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] enforce The new value for the field 'enforce_hierarchy'.
+ */
+void
+schematic_window_set_enforce_hierarchy (GschemToplevel *w_current,
+                                        int enforce)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->enforce_hierarchy = enforce;
+}
