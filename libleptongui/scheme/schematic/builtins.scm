@@ -339,8 +339,30 @@
 (define-action-public (&edit-object-properties #:label (G_ "Edit Object Properties") #:icon "gtk-properties")
   (x_widgets_show_object_properties (*current-window)))
 
+
 (define-action-public (&edit-translate #:label (G_ "Translate Symbol"))
-  (run-callback i_callback_edit_translate "&edit-translate"))
+  (define *window (*current-window))
+  (define *options (schematic_window_get_options *window))
+  (define snap-mode
+    (string->symbol
+     (pointer->string
+      (schematic_snap_mode_to_string
+       (gschem_options_get_snap_mode *options)))))
+
+  (when (eq? snap-mode 'off)
+    (log! 'message (G_ "WARNING: Do not translate with snap off!"))
+    (log! 'message (G_ "WARNING: Turning snap on and continuing with translate."))
+    (gschem_options_set_snap_mode *options
+                                  (schematic_snap_mode_from_string (string->pointer "grid")))
+    ;; Update status on screen.
+    (i_show_state *window %null-pointer))
+
+  (when (not (= 100 (gschem_options_get_snap_size *options)))
+    (log! 'message (G_ "WARNING: Snap grid size is not equal to 100!"))
+    (log! 'message (G_ "WARNING: If you are translating a symbol to the origin,
+the snap grid size should be set to 100")))
+
+  (schematic_window_show_translate_widget *window))
 
 
 ;;; Lock all objects in selection list.

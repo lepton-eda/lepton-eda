@@ -100,7 +100,6 @@ void i_update_net_options_status (GschemToplevel* w_current);
 /* i_callbacks.c */
 void i_callback_file_script (GtkWidget *widget, gpointer data);
 void i_callback_file_save (GtkWidget *widget, gpointer data);
-void i_callback_edit_translate (GtkWidget *widget, gpointer data);
 void i_callback_edit_update (GtkWidget *widget, gpointer data);
 void i_callback_view_sidebar (GtkWidget *widget, gpointer data);
 void i_callback_view_status (GtkWidget *widget, gpointer data);
@@ -652,6 +651,9 @@ schematic_window_create_macro_widget (GschemToplevel *w_current,
 void
 schematic_window_create_translate_widget (GschemToplevel *w_current,
                                           GtkWidget *work_box);
+void
+schematic_window_show_translate_widget (GschemToplevel *w_current);
+
 void
 schematic_window_create_notebooks (GschemToplevel *w_current,
                                    GtkWidget *main_box,

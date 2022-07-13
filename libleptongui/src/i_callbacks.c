@@ -119,42 +119,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
- *
- */
-void
-i_callback_edit_translate (GtkWidget *widget, gpointer data)
-{
-  SchematicSnapMode snap_mode;
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  snap_mode = gschem_options_get_snap_mode (w_current->options);
-
-  if (snap_mode == SNAP_OFF) {
-    g_message (_("WARNING: Do not translate with snap off!"));
-    g_message (_("WARNING: Turning snap on and continuing "
-                 "with translate."));
-    gschem_options_set_snap_mode (w_current->options, SNAP_GRID);
-    i_show_state(w_current, NULL); /* update status on screen */
-  }
-
-  if (gschem_options_get_snap_size (w_current->options) != 100) {
-    g_message (_("WARNING: Snap grid size is "
-                 "not equal to 100!"));
-    g_message (_("WARNING: If you are translating a symbol "
-                 "to the origin, the snap grid size should be "
-                 "set to 100"));
-  }
-
-  gtk_widget_show (w_current->translate_widget);
-  gtk_widget_grab_focus (gschem_translate_widget_get_entry (GSCHEM_TRANSLATE_WIDGET (w_current->translate_widget)));
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
  *  This function updates components
  *
  */

@@ -1109,6 +1109,14 @@ schematic_window_create_translate_widget (GschemToplevel *w_current,
 }
 
 
+void
+schematic_window_show_translate_widget (GschemToplevel *w_current)
+{
+  gtk_widget_show (w_current->translate_widget);
+  gtk_widget_grab_focus (gschem_translate_widget_get_entry (GSCHEM_TRANSLATE_WIDGET (w_current->translate_widget)));
+}
+
+
 
 void
 schematic_window_create_statusbar (GschemToplevel *w_current,
