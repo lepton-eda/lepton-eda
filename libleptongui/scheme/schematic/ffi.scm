@@ -51,7 +51,6 @@
             i_callback_clipboard_cut
             i_callback_clipboard_paste
             i_callback_close_wm
-            i_callback_edit_translate
             i_callback_edit_update
             i_callback_file_save
             *i_callback_file_save
@@ -176,6 +175,7 @@
             schematic_window_create_show_text_widget
             schematic_window_create_macro_widget
             schematic_window_create_translate_widget
+            schematic_window_show_translate_widget
             schematic_window_create_notebooks
             schematic_window_create_statusbar
             schematic_window_restore_geometry
@@ -251,6 +251,7 @@
             gschem_options_cycle_net_rubber_band_mode
             gschem_options_cycle_snap_mode
             gschem_options_get_snap_mode
+            gschem_options_set_snap_mode
             gschem_options_get_snap_size
             gschem_options_set_snap_size
 
@@ -408,6 +409,7 @@
 (define-lff gschem_options_cycle_net_rubber_band_mode void '(*))
 (define-lff gschem_options_cycle_snap_mode void '(*))
 (define-lff gschem_options_get_snap_mode int '(*))
+(define-lff gschem_options_set_snap_mode void (list '* int))
 (define-lff gschem_options_get_snap_size int '(*))
 (define-lff gschem_options_set_snap_size void (list '* int))
 
@@ -451,6 +453,7 @@
 (define-lff schematic_window_create_show_text_widget void '(* *))
 (define-lff schematic_window_create_macro_widget void '(* *))
 (define-lff schematic_window_create_translate_widget void '(* *))
+(define-lff schematic_window_show_translate_widget void '(*))
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
@@ -509,7 +512,6 @@
 (define-lff i_callback_clipboard_cut void '(* *))
 (define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_close_wm int '(* * *))
-(define-lff i_callback_edit_translate void '(* *))
 (define-lff i_callback_edit_update void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
