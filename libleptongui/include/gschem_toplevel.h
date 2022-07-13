@@ -365,4 +365,10 @@ schematic_window_get_right_notebook (GschemToplevel *w_current);
 void
 schematic_window_set_right_notebook (GschemToplevel *w_current,
                                      GtkWidget *widget);
+GtkWidget*
+schematic_window_get_bottom_notebook (GschemToplevel *w_current);
+
+void
+schematic_window_set_bottom_notebook (GschemToplevel *w_current,
+                                      GtkWidget *widget);
 G_END_DECLS

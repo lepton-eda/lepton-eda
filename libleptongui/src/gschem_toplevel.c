@@ -1228,3 +1228,32 @@ schematic_window_set_right_notebook (GschemToplevel *w_current,
 
   w_current->right_notebook = widget;
 }
+
+
+/*! \brief Get the bottom notebook for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The bottom notebook.
+ */
+GtkWidget*
+schematic_window_get_bottom_notebook (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->bottom_notebook;
+}
+
+
+/*! \brief Set the bottom notebook for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The new bottom notebook.
+ */
+void
+schematic_window_set_bottom_notebook (GschemToplevel *w_current,
+                                      GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->bottom_notebook = widget;
+}
