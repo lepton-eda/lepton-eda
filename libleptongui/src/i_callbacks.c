@@ -79,7 +79,8 @@ i_callback_view_zoom_full (GtkWidget *widget, gpointer data)
   /* scroll bar stuff */
   a_zoom(w_current, page_view, ZOOM_FULL, DONTCARE);
 
-  if (w_current->undo_panzoom) {
+  if (schematic_window_get_undo_panzoom (w_current))
+  {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 }
@@ -102,7 +103,8 @@ i_callback_view_zoom_extents (GtkWidget *widget, gpointer data)
 
   gschem_page_view_zoom_extents (page_view, NULL);
 
-  if (w_current->undo_panzoom) {
+  if (schematic_window_get_undo_panzoom (w_current))
+  {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 }
@@ -153,7 +155,8 @@ i_callback_view_zoom_in (GtkWidget *widget, gpointer data)
           ZOOM_IN,
           g_action_get_position (w_current, FALSE, NULL, NULL) ? HOTKEY : MENU);
 
-  if (w_current->undo_panzoom) {
+  if (schematic_window_get_undo_panzoom (w_current))
+  {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 }
@@ -179,7 +182,8 @@ i_callback_view_zoom_out (GtkWidget *widget, gpointer data)
          ZOOM_OUT,
          g_action_get_position (w_current, FALSE, NULL, NULL) ? HOTKEY : MENU);
 
-  if (w_current->undo_panzoom) {
+  if (schematic_window_get_undo_panzoom (w_current))
+  {
     o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
   }
 }
@@ -207,7 +211,8 @@ i_callback_view_pan (GtkWidget *widget, gpointer data)
     i_set_state (w_current, PAN);
   } else {
     gschem_page_view_pan (page_view, wx, wy);
-    if (w_current->undo_panzoom) {
+    if (schematic_window_get_undo_panzoom (w_current))
+    {
       o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
     }
   }
