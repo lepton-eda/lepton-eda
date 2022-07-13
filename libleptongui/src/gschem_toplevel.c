@@ -1257,3 +1257,32 @@ schematic_window_set_bottom_notebook (GschemToplevel *w_current,
 
   w_current->bottom_notebook = widget;
 }
+
+
+/*! \brief Get the field 'undo_panzoom' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The field 'undo_panzoom'.
+ */
+int
+schematic_window_get_undo_panzoom (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->undo_panzoom;
+}
+
+
+/*! \brief Set the field 'undo_panzoom' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] undo_panzoom The new value for the field 'undo_panzoom'.
+ */
+void
+schematic_window_set_undo_panzoom (GschemToplevel *w_current,
+                                   int undo_panzoom)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->undo_panzoom = undo_panzoom;
+}

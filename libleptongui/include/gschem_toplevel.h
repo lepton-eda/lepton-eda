@@ -371,4 +371,10 @@ schematic_window_get_bottom_notebook (GschemToplevel *w_current);
 void
 schematic_window_set_bottom_notebook (GschemToplevel *w_current,
                                       GtkWidget *widget);
+int
+schematic_window_get_undo_panzoom (GschemToplevel *w_current);
+
+void
+schematic_window_set_undo_panzoom (GschemToplevel *w_current,
+                                   int undo_panzoom);
 G_END_DECLS
