@@ -66,13 +66,11 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 void
 i_callback_view_sidebar (GtkWidget *widget, gpointer data)
 {
-  gboolean visible;
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
   g_return_if_fail (w_current != NULL);
 
-  visible = gtk_widget_get_visible (GTK_WIDGET (w_current->right_notebook));
-  gtk_widget_set_visible (GTK_WIDGET (w_current->right_notebook), !visible);
+  x_widgets_toggle_widget_visibility (w_current->right_notebook);
 }
 
 /*! \brief Toggle the visibility of the status window
