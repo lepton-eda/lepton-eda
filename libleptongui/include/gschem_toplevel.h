@@ -377,4 +377,10 @@ schematic_window_get_undo_panzoom (GschemToplevel *w_current);
 void
 schematic_window_set_undo_panzoom (GschemToplevel *w_current,
                                    int undo_panzoom);
+int
+schematic_window_get_keyboardpan_gain (GschemToplevel *w_current);
+
+void
+schematic_window_set_keyboardpan_gain (GschemToplevel *w_current,
+                                       int keyboardpan_gain);
 G_END_DECLS

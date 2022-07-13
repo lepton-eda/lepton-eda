@@ -1286,3 +1286,32 @@ schematic_window_set_undo_panzoom (GschemToplevel *w_current,
 
   w_current->undo_panzoom = undo_panzoom;
 }
+
+
+/*! \brief Get the field 'keyboardpan_gain' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The field 'keyboardpan_gain'.
+ */
+int
+schematic_window_get_keyboardpan_gain (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->keyboardpan_gain;
+}
+
+
+/*! \brief Set the field 'keyboardpan_gain' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] keyboardpan_gain The new value for the field 'keyboardpan_gain'.
+ */
+void
+schematic_window_set_keyboardpan_gain (GschemToplevel *w_current,
+                                       int keyboardpan_gain)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->keyboardpan_gain = keyboardpan_gain;
+}
