@@ -73,7 +73,7 @@ i_callback_view_pan_left (GtkWidget *widget, gpointer data)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  gschem_page_view_pan_mouse (page_view, w_current->keyboardpan_gain, 0);
+  gschem_page_view_pan_mouse (page_view, schematic_window_get_keyboardpan_gain (w_current), 0);
 }
 
 /*! \brief Scheme callback function that moves the viewport to the right.
@@ -90,7 +90,7 @@ i_callback_view_pan_right (GtkWidget *widget, gpointer data)
   g_return_if_fail (page_view != NULL);
 
   /* yes, that's a negative sign there */
-  gschem_page_view_pan_mouse (page_view, -w_current->keyboardpan_gain, 0);
+  gschem_page_view_pan_mouse (page_view, -schematic_window_get_keyboardpan_gain (w_current), 0);
 }
 
 /*! \brief Scheme callback function that moves the viewport up.
@@ -106,7 +106,7 @@ i_callback_view_pan_up (GtkWidget *widget, gpointer data)
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
 
-  gschem_page_view_pan_mouse (page_view, 0, w_current->keyboardpan_gain);
+  gschem_page_view_pan_mouse (page_view, 0, schematic_window_get_keyboardpan_gain (w_current));
 }
 
 /*! \brief Scheme callback function that moves the viewport down.
@@ -123,7 +123,7 @@ i_callback_view_pan_down (GtkWidget *widget, gpointer data)
   g_return_if_fail (page_view != NULL);
 
   /* yes, that's a negative sign there */
-  gschem_page_view_pan_mouse (page_view, 0, -w_current->keyboardpan_gain);
+  gschem_page_view_pan_mouse (page_view, 0, -schematic_window_get_keyboardpan_gain (w_current));
 }
 
 
