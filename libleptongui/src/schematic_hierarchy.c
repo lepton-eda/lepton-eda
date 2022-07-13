@@ -334,38 +334,3 @@ s_hierarchy_print_page (LeptonPage *p_current,
          lepton_page_get_filename (p_current), p_current->pid);
   return 0;
 }
-
-/*! \brief Search for a page preceding a given page in hierarchy.
- *  \par Function Description
- *  This function searches the previous sibling of page \a page in the
- *  hierarchy. It checks all the pages preceding \a page in the list
- *  \a page_list.
- *
- *  It returns a pointer on the page if found, NULL otherwise.
- *
- *  \note
- *  The page \a current_page must be in the list \a page_list.
- *
- *  \param [in] page_list    The list of pages in which to search.
- *  \param [in] current_page The reference page for the search.
- *  \returns A pointer on the page found or NULL if not found.
-  */
-LeptonPage *
-s_hierarchy_find_prev_page (LeptonPageList *page_list,
-                            LeptonPage *current_page)
-{
-  const GList *iter;
-
-  iter = g_list_find (lepton_list_get_glist (page_list), current_page);
-  for (iter = g_list_previous (iter);
-       iter != NULL;
-       iter = g_list_previous (iter)) {
-
-    LeptonPage *page = (LeptonPage *)iter->data;
-    if (page->page_control == current_page->page_control) {
-      return page;
-    }
-  }
-
-  return NULL;
-}

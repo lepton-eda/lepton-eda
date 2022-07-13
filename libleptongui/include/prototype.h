@@ -105,7 +105,6 @@ void i_update_net_options_status (GschemToplevel* w_current);
 
 /* i_callbacks.c */
 void i_callback_file_save (GtkWidget *widget, gpointer data);
-void i_callback_page_prev (GtkWidget *widget, gpointer data);
 void i_callback_page_revert (GtkWidget *widget, gpointer data);
 void i_callback_page_print (GtkWidget *widget, gpointer data);
 void i_callback_cancel (GtkWidget *widget, gpointer data);
@@ -726,9 +725,6 @@ s_hierarchy_traversepages (GschemToplevel *w_current,
 gint
 s_hierarchy_print_page (LeptonPage *p_current,
                         void * data);
-LeptonPage*
-s_hierarchy_find_prev_page (LeptonPageList *page_list,
-                            LeptonPage *current_page);
 G_END_DECLS
 
 #endif /* LEPTON_PROTOTYPE_H_ */

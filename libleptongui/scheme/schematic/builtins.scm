@@ -840,13 +840,9 @@ the snap grid size should be set to 100")))
   (x_widgets_show_page_select *window)
   (page_select_widget_update *window))
 
-(define-action-public (&page-prev #:label (G_ "Previous Page") #:icon "gtk-go-back")
-  (run-callback i_callback_page_prev "&page-prev"))
-
 
 ;;; The function searches the next sibling of current page in the
-;;; hierarchy. It checks all the pages following the page in the
-;;; given page list.
+;;; the given page list.
 (define (hierarchy-find-next-page current-page ls enforce-hierarchy?)
   (and (not (null? ls))
        (let ((next-page (car ls)))
@@ -856,6 +852,21 @@ the snap grid size should be set to 100")))
                  next-page
                  (hierarchy-find-next-page current-page (cdr ls) enforce-hierarchy?))
              next-page))))
+
+
+;;; Search for a page preceding a given page in hierarchy.
+(define-action-public (&page-prev #:label (G_ "Previous Page") #:icon "gtk-go-back")
+  (define *window (*current-window))
+  (define current-page (active-page))
+  (define next-pages (cdr (member current-page (reverse (active-pages)))))
+  (define enforce-hierarchy? (true? (schematic_window_get_enforce_hierarchy *window)))
+
+  (let ((found-page (hierarchy-find-next-page current-page
+                                              next-pages
+                                              enforce-hierarchy?)))
+    (when found-page
+      (x_window_set_current_page *window (page->pointer found-page)))))
+
 
 ;;; Search for a page following a given page in hierarchy.
 (define-action-public (&page-next #:label (G_ "Next Page") #:icon "gtk-go-forward")

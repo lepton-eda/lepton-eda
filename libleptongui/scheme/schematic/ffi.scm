@@ -42,7 +42,6 @@
             i_callback_cancel
             i_callback_file_save
             *i_callback_file_save
-            i_callback_page_prev
             i_callback_page_print
             i_callback_page_revert
 
@@ -554,7 +553,6 @@
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
-(define-lff i_callback_page_prev void '(* *))
 (define-lff i_callback_page_print void '(* *))
 (define-lff i_callback_page_revert void '(* *))
 

@@ -66,46 +66,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
  *  \brief
  *  \par Function Description
  *
- */
-void
-i_callback_page_prev (GtkWidget *widget, gpointer data)
-{
-  LeptonPage *p_new;
-  GList *iter;
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  LeptonPage *p_current = schematic_window_get_active_page (w_current);
-  LeptonPageList *pages = schematic_window_get_pages (w_current);
-
-  iter = g_list_find (lepton_list_get_glist (pages), p_current);
-  iter = g_list_previous( iter );
-
-  if ( iter == NULL  )
-    return;
-
-  if (w_current->enforce_hierarchy)
-  {
-    p_new = s_hierarchy_find_prev_page (pages, p_current);
-  }
-  else
-  {
-    p_new = (LeptonPage *)iter->data;
-  }
-
-  if (p_new == NULL || p_new == p_current) {
-    return;
-  }
-
-  x_window_set_current_page (w_current, p_new);
-}
-
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
  *  \bug may have memory leak?
  */
 void
