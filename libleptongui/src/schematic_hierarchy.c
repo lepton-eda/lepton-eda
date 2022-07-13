@@ -369,39 +369,3 @@ s_hierarchy_find_prev_page (LeptonPageList *page_list,
 
   return NULL;
 }
-
-/*! \brief Search for a page following a given page in hierarchy.
- *  \par Function Description
- *  This function searches the next sibling of page \a page in the
- *  hierarchy. It checks all the pages following \a page in the list
- *  \a page_list.
- *
- *  It returns a pointer on the page if found, NULL otherwise.
- *
- *  \note
- *  The page \a current_page must be in the list \a page_list.
- *
- *  \param [in] page_list    The list of pages in which to search.
- *  \param [in] current_page The reference page for the search.
- *  \returns A pointer on the page found or NULL if not found.
-  */
-LeptonPage *
-s_hierarchy_find_next_page (LeptonPageList *page_list,
-                            LeptonPage *current_page)
-{
-  const GList *iter;
-
-  iter = g_list_find (lepton_list_get_glist (page_list), current_page);
-  for (iter = g_list_next (iter);
-       iter != NULL;
-       iter = g_list_next (iter)) {
-
-    LeptonPage *page = (LeptonPage *)iter->data;
-    if (lepton_page_get_page_control (page) == lepton_page_get_page_control (current_page))
-    {
-      return page;
-    }
-  }
-
-  return NULL;
-}

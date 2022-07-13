@@ -42,7 +42,6 @@
             i_callback_cancel
             i_callback_file_save
             *i_callback_file_save
-            i_callback_page_next
             i_callback_page_prev
             i_callback_page_print
             i_callback_page_revert
@@ -246,6 +245,7 @@
             schematic_window_set_bottom_notebook
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
+            schematic_window_get_enforce_hierarchy
             schematic_window_get_gdk_display
             schematic_window_get_keyboardpan_gain
             schematic_window_get_macro_widget
@@ -443,6 +443,7 @@
 (define-lff schematic_window_set_bottom_notebook void '(* *))
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
+(define-lff schematic_window_get_enforce_hierarchy int '(*))
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
 (define-lff schematic_window_get_macro_widget '* '(*))
@@ -553,7 +554,6 @@
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
-(define-lff i_callback_page_next void '(* *))
 (define-lff i_callback_page_prev void '(* *))
 (define-lff i_callback_page_print void '(* *))
 (define-lff i_callback_page_revert void '(* *))
