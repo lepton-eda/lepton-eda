@@ -51,7 +51,6 @@
             i_callback_view_pan_left
             i_callback_view_pan_right
             i_callback_view_pan_up
-            i_callback_view_status
             i_callback_view_zoom_box
             i_callback_view_zoom_extents
             i_callback_view_zoom_full
@@ -251,6 +250,8 @@
             schematic_window_get_actionfeedback_mode
             schematic_window_set_actionfeedback_mode
             schematic_window_get_active_page
+            schematic_window_get_bottom_notebook
+            schematic_window_set_bottom_notebook
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_gdk_display
@@ -438,6 +439,8 @@
 (define-lff schematic_window_get_actionfeedback_mode int '(*))
 (define-lff schematic_window_set_actionfeedback_mode void (list '* int))
 (define-lff schematic_window_get_active_page '* '(*))
+(define-lff schematic_window_get_bottom_notebook '* '(*))
+(define-lff schematic_window_set_bottom_notebook void '(* *))
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_gdk_display '* '(*))
@@ -553,7 +556,6 @@
 (define-lff i_callback_view_pan_left void '(* *))
 (define-lff i_callback_view_pan_right void '(* *))
 (define-lff i_callback_view_pan_up void '(* *))
-(define-lff i_callback_view_status void '(* *))
 (define-lff i_callback_view_zoom_box void '(* *))
 (define-lff i_callback_view_zoom_extents void '(* *))
 (define-lff i_callback_view_zoom_full void '(* *))

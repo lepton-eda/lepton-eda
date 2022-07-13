@@ -669,8 +669,11 @@ the snap grid size should be set to 100")))
    (schematic_window_get_right_notebook (*current-window))))
 
 
+;;; Toggle the visibility of the status window.
 (define-action-public (&view-status #:label (G_ "Status"))
-  (run-callback i_callback_view_status "&view-status"))
+  (x_widgets_toggle_widget_visibility
+   (schematic_window_get_bottom_notebook (*current-window))))
+
 
 ;;; Show the find text state window.
 (define-action-public (&view-find-text-state #:label (G_ "Find Text State"))

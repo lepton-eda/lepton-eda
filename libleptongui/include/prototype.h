@@ -105,7 +105,6 @@ void i_update_net_options_status (GschemToplevel* w_current);
 
 /* i_callbacks.c */
 void i_callback_file_save (GtkWidget *widget, gpointer data);
-void i_callback_view_status (GtkWidget *widget, gpointer data);
 void i_callback_view_zoom_full (GtkWidget *widget, gpointer data);
 void i_callback_view_zoom_extents (GtkWidget *widget, gpointer data);
 void i_callback_view_zoom_box (GtkWidget *widget, gpointer data);

@@ -60,19 +60,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 } /* i_callback_file_save() */
 
 
-/*! \brief Toggle the visibility of the status window
- */
-void
-i_callback_view_status (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  g_return_if_fail (w_current != NULL);
-
-  x_widgets_toggle_widget_visibility (w_current->bottom_notebook);
-}
-
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
