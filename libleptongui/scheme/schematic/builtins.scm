@@ -684,8 +684,20 @@ the snap grid size should be set to 100")))
   (gschem_page_view_invalidate_all
    (gschem_toplevel_get_current_page_view (*current-window))))
 
+
 (define-action-public (&view-pan #:label (G_ "Pan"))
-  (run-callback i_callback_view_pan "&view-pan"))
+  (define *window (*current-window))
+
+  (match (action-position)
+    ((x . y)
+     (gschem_page_view_pan (gschem_toplevel_get_current_page_view *window) x y)
+     (when (true? (schematic_window_get_undo_panzoom *window))
+       (o_undo_savestate_viewport *window)))
+    (_
+     (o_redraw_cleanstates *window)
+     (i_action_stop *window)
+     (i_set_state *window (symbol->action-mode 'pan-mode)))))
+
 
 (define-action-public (&view-pan-left #:label (G_ "Pan Left"))
   (run-callback i_callback_view_pan_left "&view-pan-left"))

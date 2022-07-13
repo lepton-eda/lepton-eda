@@ -60,36 +60,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 } /* i_callback_file_save() */
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void
-i_callback_view_pan (GtkWidget *widget, gpointer data)
-{
-  gint wx, wy;
-
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  g_return_if_fail (w_current != NULL);
-
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  g_return_if_fail (page_view != NULL);
-
-  if (!g_action_get_position (w_current, FALSE, &wx, &wy))
-  {
-    o_redraw_cleanstates (w_current);
-    i_action_stop (w_current);
-    i_set_state (w_current, PAN);
-  } else {
-    gschem_page_view_pan (page_view, wx, wy);
-    if (schematic_window_get_undo_panzoom (w_current))
-    {
-      o_undo_savestate_viewport (w_current);
-    }
-  }
-}
-
 /*! \brief Scheme callback function that moves the viewport to the left.
  *
  * The distance can be set with "keyboardpan-gain" scheme callback.

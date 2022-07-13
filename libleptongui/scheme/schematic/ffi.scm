@@ -46,7 +46,6 @@
             i_callback_page_prev
             i_callback_page_print
             i_callback_page_revert
-            i_callback_view_pan
             i_callback_view_pan_down
             i_callback_view_pan_left
             i_callback_view_pan_right
@@ -232,6 +231,7 @@
 
             gschem_page_view_get_page
             gschem_page_view_invalidate_all
+            gschem_page_view_pan
             gschem_page_view_zoom_extents
 
             schematic_signal_connect
@@ -411,6 +411,7 @@
 ;;; gschem_page_view.c
 (define-lff gschem_page_view_get_page '* '(*))
 (define-lff gschem_page_view_invalidate_all void '(*))
+(define-lff gschem_page_view_pan void (list '* int int))
 (define-lff gschem_page_view_zoom_extents void '(* *))
 
 ;;; schematic_hierarchy.c
@@ -552,7 +553,6 @@
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
-(define-lff i_callback_view_pan void '(* *))
 (define-lff i_callback_view_pan_down void '(* *))
 (define-lff i_callback_view_pan_left void '(* *))
 (define-lff i_callback_view_pan_right void '(* *))
