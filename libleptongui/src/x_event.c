@@ -439,7 +439,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 
       case(MOUSEBTN_DO_PAN):
         if (gschem_page_view_pan_end (page_view) && w_current->undo_panzoom) {
-          o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
+          o_undo_savestate_viewport (w_current);
         }
       break;
     }
@@ -447,7 +447,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   } else if (event->button == 3) {
       /* just for ending a mouse pan */
       if (gschem_page_view_pan_end (page_view) && w_current->undo_panzoom) {
-        o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
+        o_undo_savestate_viewport (w_current);
       }
   }
  end_button_released:
@@ -865,7 +865,7 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
   }
 
   if (w_current->undo_panzoom && (zoom || pan_xaxis || pan_yaxis)) {
-    o_undo_savestate_old(w_current, UNDO_VIEWPORT_ONLY);
+    o_undo_savestate_viewport (w_current);
   }
 
   x_event_faked_motion (view, NULL);
