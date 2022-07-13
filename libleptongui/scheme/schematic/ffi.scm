@@ -51,7 +51,6 @@
             i_callback_view_pan_left
             i_callback_view_pan_right
             i_callback_view_pan_up
-            i_callback_view_zoom_box
             i_callback_view_zoom_in
             i_callback_view_zoom_out
 
@@ -303,6 +302,7 @@
             x_tabs_prev
 
             a_zoom
+            a_zoom_box_start
 
             parse-gschemrc
             ))
@@ -559,7 +559,6 @@
 (define-lff i_callback_view_pan_left void '(* *))
 (define-lff i_callback_view_pan_right void '(* *))
 (define-lff i_callback_view_pan_up void '(* *))
-(define-lff i_callback_view_zoom_box void '(* *))
 (define-lff i_callback_view_zoom_in void '(* *))
 (define-lff i_callback_view_zoom_out void '(* *))
 (define-lff i_callback_page_next void '(* *))
@@ -677,6 +676,7 @@
 
 ;;; a_zoom.c
 (define-lff a_zoom void (list '* '* int int))
+(define-lff a_zoom_box_start void (list '* int int))
 
 ;;; This is a special case: the function may be not defined in C
 ;;; if libstroke was not found on the configure stage.

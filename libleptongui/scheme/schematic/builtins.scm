@@ -707,8 +707,17 @@ the snap grid size should be set to 100")))
 (define ZOOM_IN 1)
 (define ZOOM_FULL 2)
 
+
 (define-action-public (&view-zoom-box #:label (G_ "Zoom Box"))
-  (run-callback i_callback_view_zoom_box "&view-zoom-box"))
+  (define *window (*current-window))
+
+  (o_redraw_cleanstates *window)
+
+  (i_set_state *window (symbol->action-mode 'zoom-box-mode))
+
+  (match (action-position)
+    ((x . y) (a_zoom_box_start *window x y))
+    (_ #f)))
 
 
 (define-action-public (&view-zoom-extents #:label (G_ "Zoom Extents") #:icon "gtk-zoom-fit")
