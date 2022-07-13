@@ -46,7 +46,6 @@
             i_callback_page_prev
             i_callback_page_print
             i_callback_page_revert
-            i_callback_view_pan_down
 
             i_action_stop
             i_set_state
@@ -554,7 +553,6 @@
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
-(define-lff i_callback_view_pan_down void '(* *))
 (define-lff i_callback_page_next void '(* *))
 (define-lff i_callback_page_prev void '(* *))
 (define-lff i_callback_page_print void '(* *))

@@ -725,8 +725,14 @@ the snap grid size should be set to 100")))
                               0
                               (schematic_window_get_keyboardpan_gain *window)))
 
+
+;;; Moves the viewport down.
 (define-action-public (&view-pan-down #:label (G_ "Pan Down"))
-  (run-callback i_callback_view_pan_down "&view-pan-down"))
+  (define *window (*current-window))
+  (gschem_page_view_pan_mouse (gschem_toplevel_get_current_page_view *window)
+                              0
+                              (- (schematic_window_get_keyboardpan_gain *window))))
+
 
 ;;; Definitions from "gschem_defines.h".
 (define DONTCARE 0)

@@ -60,24 +60,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 } /* i_callback_file_save() */
 
 
-/*! \brief Scheme callback function that moves the viewport down.
- *
- * The distance can be set with "keyboardpan-gain" scheme callback.
- */
-void
-i_callback_view_pan_down (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  g_return_if_fail (w_current != NULL);
-
-  GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
-  g_return_if_fail (page_view != NULL);
-
-  /* yes, that's a negative sign there */
-  gschem_page_view_pan_mouse (page_view, 0, -schematic_window_get_keyboardpan_gain (w_current));
-}
-
-
 /*! \section page-menu Page Menu Callback Functions */
 
 /*! \todo Finish function documentation!!!

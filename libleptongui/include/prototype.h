@@ -105,7 +105,6 @@ void i_update_net_options_status (GschemToplevel* w_current);
 
 /* i_callbacks.c */
 void i_callback_file_save (GtkWidget *widget, gpointer data);
-void i_callback_view_pan_down (GtkWidget *widget, gpointer data);
 void i_callback_page_next (GtkWidget *widget, gpointer data);
 void i_callback_page_prev (GtkWidget *widget, gpointer data);
 void i_callback_page_revert (GtkWidget *widget, gpointer data);
