@@ -679,6 +679,9 @@ void x_widgets_show_font_select (GschemToplevel* w_current);
 void x_widgets_show_page_select (GschemToplevel* w_current);
 void x_widgets_destroy_dialogs (GschemToplevel* w_current);
 
+void
+x_widgets_toggle_widget_visibility (GtkWidget *widget);
+
 /* x_tabs.c */
 gboolean x_tabs_enabled();
 void x_tabs_init();

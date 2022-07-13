@@ -438,3 +438,11 @@ x_widgets_destroy_dialogs (GschemToplevel* w_current)
   }
 
 } /* x_widgets_destroy_dialogs() */
+
+
+void
+x_widgets_toggle_widget_visibility (GtkWidget *widget)
+{
+  gboolean visible = gtk_widget_get_visible (widget);
+  gtk_widget_set_visible (widget, !visible);
+}
