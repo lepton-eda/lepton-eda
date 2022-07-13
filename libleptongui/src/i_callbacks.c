@@ -86,7 +86,7 @@ i_callback_page_next (GtkWidget *widget, gpointer data)
     return;
   }
 
-  if (w_current->enforce_hierarchy)
+  if (schematic_window_get_enforce_hierarchy (w_current))
   {
     p_new = s_hierarchy_find_next_page (pages, p_current);
   }
