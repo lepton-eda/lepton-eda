@@ -17,11 +17,6 @@ schematic_execute_script (GschemToplevel *w_current);
 
 /* g_action.c */
 gboolean g_action_eval_by_name (GschemToplevel *w_current, const gchar *action_name);
-gboolean
-g_action_get_position (GschemToplevel *w_current,
-                       gboolean snap,
-                       int *x,
-                       int *y);
 
 /* g_hook.c */
 void g_run_hook_object (GschemToplevel *w_current, const char *name, LeptonObject *obj);
