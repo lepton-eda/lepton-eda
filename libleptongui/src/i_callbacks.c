@@ -114,54 +114,6 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 } /* i_callback_file_save() */
 
 
-/*! \section edit-menu Edit Menu Callback Functions */
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *  This function updates components
- *
- */
-void
-i_callback_edit_update (GtkWidget *widget, gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  GList *selected_components = NULL;
-  GList *iter;
-
-  g_return_if_fail (w_current != NULL);
-
-  if (o_select_selected(w_current)) {
-
-    /* Updating components modifies the selection. Therefore,
-     * create a new list of only the LeptonObjects we want to
-     * update from the current selection, then iterate over that
-     * new list to perform the update. */
-    LeptonSelection *selection = schematic_window_get_selection_list (w_current);
-    GList *s_current = lepton_list_get_glist (selection);
-    for (iter = s_current; iter != NULL; iter = g_list_next (iter))
-    {
-      LeptonObject *o_current = (LeptonObject *) iter->data;
-      if (lepton_object_is_component (o_current)) {
-        selected_components = g_list_prepend (selected_components, o_current);
-      }
-    }
-    for (iter = selected_components; iter != NULL; iter = g_list_next (iter)) {
-      LeptonObject *o_current = (LeptonObject *) iter->data;
-      iter->data = o_update_component (w_current, o_current);
-    }
-    g_list_free (selected_components);
-
-  } else {
-    /* nothing selected, go back to select state */
-    o_redraw_cleanstates(w_current);
-    i_action_stop (w_current);
-    i_set_state(w_current, SELECT);
-  }
-
-}
-
-
 /*! \section view-menu View Menu Callback Functions */
 /*! \brief Toggle the visibility of the sidebar
  */

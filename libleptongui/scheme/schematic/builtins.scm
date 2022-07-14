@@ -28,6 +28,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
   #:use-module (lepton log)
+  #:use-module (lepton object foreign)
   #:use-module (lepton object)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
@@ -428,7 +429,21 @@ the snap grid size should be set to 100")))
 
 
 (define-action-public (&edit-update #:label (G_ "Update Component") #:icon "gtk-refresh")
-  (run-callback i_callback_edit_update "&edit-update"))
+  (define *window (*current-window))
+
+  (define selected-components (filter component? (page-selection (active-page))))
+
+  ;; Update only selected components.
+  (if (null? selected-components)
+      (begin
+        ;; Nothing selected, go back to select state.
+        (o_redraw_cleanstates *window)
+        (i_action_stop *window)
+        (i_set_state *window (symbol->action-mode 'select-mode)))
+      (for-each
+       (lambda (component)
+         (o_update_component *window (object->pointer component)))
+       selected-components)))
 
 
 (define-action-public (&edit-show-hidden #:label (G_ "Show/Hide Invisible Text"))
