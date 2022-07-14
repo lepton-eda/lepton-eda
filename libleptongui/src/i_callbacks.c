@@ -127,9 +127,8 @@ schematic_page_revert_dialog (GschemToplevel *w_current,
  *  \bug may have memory leak?
  */
 void
-i_callback_page_revert (gpointer data)
+i_callback_page_revert (GschemToplevel *w_current)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   LeptonPage *page_current = NULL;
   LeptonPage *page = NULL;
   gchar *filename;
