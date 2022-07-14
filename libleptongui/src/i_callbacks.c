@@ -62,29 +62,26 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
 
 /*! \section page-menu Page Menu Callback Functions */
 
-/*! \todo Finish function documentation!!!
- *  \brief
+
+/*! \brief Create and run the Page revert dialog.
  *  \par Function Description
  *
- *  \bug may have memory leak?
+ *  This function creates and runs the page revert dialog
+ *  displaying \a filename and a warning message to the user.
+ *
+ *  \param [in] w_current The current schematic window instance.
+ *  \param [in] filename The filename to display.
+ *  \return TRUE if the dialog got GTK_RESPONSE_YES response,
+ *          otherwise FALSE.
  */
-void
-i_callback_page_revert (gpointer data)
+static gboolean
+schematic_page_revert_dialog (GschemToplevel *w_current,
+                              const char *filename)
 {
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-  LeptonPage *page_current = NULL;
-  LeptonPage *page = NULL;
-  gchar *filename;
-  int page_control;
-  int up;
   int response;
   GtkWidget* dialog;
 
-  g_return_if_fail (w_current != NULL);
-
-  page_current = schematic_window_get_active_page (w_current);
-
-  filename = g_strdup (lepton_page_get_filename (page_current));
+  g_return_val_if_fail (w_current != NULL, FALSE);
 
   const gchar* msg =
     _("<b>Revert page:</b>"
@@ -119,7 +116,33 @@ i_callback_page_revert (gpointer data)
   response = gtk_dialog_run (GTK_DIALOG (dialog));
   gtk_widget_destroy (dialog);
 
-  if (response != GTK_RESPONSE_YES )
+  return (response == GTK_RESPONSE_YES) ? TRUE : FALSE;
+}
+
+
+/*! \todo Finish function documentation!!!
+ *  \brief
+ *  \par Function Description
+ *
+ *  \bug may have memory leak?
+ */
+void
+i_callback_page_revert (gpointer data)
+{
+  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
+  LeptonPage *page_current = NULL;
+  LeptonPage *page = NULL;
+  gchar *filename;
+  int page_control;
+  int up;
+
+  g_return_if_fail (w_current != NULL);
+
+  page_current = schematic_window_get_active_page (w_current);
+
+  filename = g_strdup (lepton_page_get_filename (page_current));
+
+  if (!schematic_page_revert_dialog (w_current, filename))
     return;
 
   GList* pages = lepton_list_get_glist (w_current->toplevel->pages);
