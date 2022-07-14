@@ -129,6 +129,8 @@
             s_hierarchy_find_up_page
             s_hierarchy_down_schematic_single
 
+            schematic_page_revert_dialog
+
             slot_edit_dialog
             slot_edit_dialog_response
             slot_edit_dialog_get_text
@@ -416,6 +418,9 @@
 (define-lff schematic_hierarchy_increment_page_control_counter void '())
 (define-lff s_hierarchy_find_up_page '* '(*))
 (define-lff s_hierarchy_down_schematic_single '* (list '* '* '* int '*))
+
+;;; page_revert_dialog.c
+(define-lff schematic_page_revert_dialog int '(* *))
 
 ;;; slot_edit_dialog.c
 (define-lff slot_edit_dialog '* '(* * *))

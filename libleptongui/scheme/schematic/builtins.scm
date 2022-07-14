@@ -833,9 +833,13 @@ the snap grid size should be set to 100")))
 ;;;; Page-related actions
 
 (define-action-public (&page-revert #:label (G_ "Revert Changes") #:icon "gtk-revert-to-saved")
+  (define *window (*current-window))
   (define (untitled-page? page)
     (true? (x_window_untitled_page (page->pointer page))))
-  (unless (untitled-page? (active-page))
+
+  (when (and (not (untitled-page? (active-page)))
+             (true? (schematic_page_revert_dialog *window
+                                                  (string->pointer (page-filename (active-page))))))
     (i_callback_page_revert (*current-window))))
 
 
