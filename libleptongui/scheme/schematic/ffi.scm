@@ -51,7 +51,6 @@
             i_callback_clipboard_cut
             i_callback_clipboard_paste
             i_callback_close_wm
-            i_callback_edit_update
             i_callback_file_save
             *i_callback_file_save
             i_callback_file_script
@@ -107,6 +106,7 @@
             o_unlock
             o_mirror_world_update
             o_rotate_world_update
+            o_update_component
 
             o_move_start
 
@@ -512,7 +512,6 @@
 (define-lff i_callback_clipboard_cut void '(* *))
 (define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_close_wm int '(* * *))
-(define-lff i_callback_edit_update void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
 (define-lff i_callback_file_script void '(* *))
@@ -564,6 +563,7 @@
 (define-lff o_unlock void '(*))
 (define-lff o_mirror_world_update void (list '* int int '*))
 (define-lff o_rotate_world_update void (list '* int int int '*))
+(define-lff o_update_component '* '(* *))
 
 ;;; o_move.c
 (define-lff o_move_start void (list '* int int))
