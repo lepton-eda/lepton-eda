@@ -66,6 +66,7 @@ libleptongui/src/o_select.c
 libleptongui/src/o_slot.c
 libleptongui/src/o_text.c
 libleptongui/src/o_undo.c
+libleptongui/src/page_revert_dialog.c
 libleptongui/src/schematic_hierarchy.c
 libleptongui/src/slot_edit_dialog.c
 libleptongui/src/x_attribedit.c
