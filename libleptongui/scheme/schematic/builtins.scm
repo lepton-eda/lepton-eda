@@ -846,7 +846,7 @@ the snap grid size should be set to 100")))
     (let ((*page_current (schematic_window_get_active_page *window))
           ;; If there's only one opened page, create a dummy page
           ;; (to be closed afterwards) to prevent
-          ;; x_window_close_page() from creating a stray blank
+          ;; window-close-page!() from creating a stray blank
           ;; page.
           (*dummy-page (if (= 1 (length (active-pages)))
                            (x_window_open_page *window %null-pointer)
@@ -859,7 +859,7 @@ the snap grid size should be set to 100")))
             (up (lepton_page_get_up *page_current)))
 
         ;; Delete the page then re-open the file as a new page.
-        (x_window_close_page *window *page_current)
+        (window-close-page! (current-window) (active-page))
 
         ;; Force symbols to be re-loaded from disk.
         (s_clib_refresh)
@@ -880,7 +880,8 @@ the snap grid size should be set to 100")))
           ;; Close dummy page, if it exists.
           (unless (null-pointer? *dummy-page)
             (x_window_set_current_page *window *dummy-page)
-            (x_window_close_page *window *dummy-page)
+            (window-close-page! (current-window)
+                                (pointer->page *dummy-page))
             (x_window_set_current_page *window *page))
 
           (when (true? (x_tabs_enabled))
@@ -1270,7 +1271,7 @@ the snap grid size should be set to 100")))
                       ;; If the page has changed, ask the user to
                       ;; really close it.
                       (true? (x_dialog_close_changed_page *window *page)))
-              (x_window_close_page *window *page)
+              (window-close-page! (current-window) (active-page))
               (x_window_set_current_page *window *upper-page)))))))
 
 

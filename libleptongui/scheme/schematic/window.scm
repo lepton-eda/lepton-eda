@@ -50,7 +50,8 @@
             active-page
             set-active-page!
             pointer-position
-            snap-point)
+            snap-point
+            window-close-page!)
 
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
@@ -158,6 +159,16 @@ window to PAGE.  Returns PAGE."
   page)
 
 
+(define (window-close-page! window page)
+  "Closes PAGE of WINDOW."
+  (define *window (check-window window 1))
+  (define *page (check-page page 2))
+  (define tabs-enabled? (true? (x_tabs_enabled)))
+  (if tabs-enabled?
+      (x_tabs_page_close *window *page)
+      (x_window_close_page_impl *window *page)))
+
+
 (define (close-page! page)
   "Closes PAGE."
   (define *page (check-page page 1))
@@ -170,13 +181,13 @@ window to PAGE.  Returns PAGE."
     (schematic_window_get_active_page *window))
 
   (if (eq? page (active-page))
-      (x_window_close_page *window *page)
+      (window-close-page! (current-window) (active-page))
       ;; If the page is not active, make it active and close, then
       ;; switch back to the previously active page.
       (begin
         (x_window_set_current_page *window *page)
-        (x_window_close_page *window
-                             (schematic_window_get_active_page *window))
+        (window-close-page! (current-window)
+                             (pointer->page (schematic_window_get_active_page *window)))
         (x_window_set_current_page *window *active_page)))
 
   ;; Return value is unspecified.

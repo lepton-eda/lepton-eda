@@ -26,6 +26,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
+  #:use-module (lepton page foreign)
 
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
@@ -77,7 +78,8 @@
     (unless (or (null-pointer? *page)
                 (and (true? (lepton_page_get_changed *page))
                      (not (true? (x_dialog_close_changed_page *window *page)))))
-      (x_window_close_page *window *page))))
+      (window-close-page! (pointer->window *window)
+                          (pointer->page *page)))))
 
 (define *callback-page-close
   (procedure->pointer void callback-page-close '(* *)))

@@ -638,9 +638,6 @@ gint
 x_window_save_page (GschemToplevel *w_current,
                     LeptonPage *page,
                     const gchar *filename);
-void
-x_window_close_page (GschemToplevel *w_current,
-                     LeptonPage *page);
 LeptonPage*
 x_window_close_page_impl (GschemToplevel *w_current,
                           LeptonPage *page);
