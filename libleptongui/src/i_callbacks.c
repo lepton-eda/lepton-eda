@@ -84,13 +84,6 @@ i_callback_page_revert (GtkWidget *widget, gpointer data)
 
   page_current = schematic_window_get_active_page (w_current);
 
-  /* do not revert untitled pages:
-  */
-  if (x_window_untitled_page (page_current))
-  {
-    return;
-  }
-
   filename = g_strdup (lepton_page_get_filename (page_current));
 
   const gchar* msg =
