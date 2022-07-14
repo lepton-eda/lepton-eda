@@ -836,7 +836,7 @@ the snap grid size should be set to 100")))
   (define (untitled-page? page)
     (true? (x_window_untitled_page (page->pointer page))))
   (unless (untitled-page? (active-page))
-    (i_callback_page_revert %null-pointer (*current-window))))
+    (i_callback_page_revert (*current-window))))
 
 
 (define-action-public (&page-manager #:label (G_ "Page Manager"))

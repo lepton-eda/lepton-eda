@@ -552,7 +552,7 @@
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
-(define-lff i_callback_page_revert void '(* *))
+(define-lff i_callback_page_revert void '(*))
 
 ;;; i_basic.c
 (define-lff i_action_stop void '(*))

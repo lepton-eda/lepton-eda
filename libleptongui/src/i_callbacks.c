@@ -69,7 +69,7 @@ i_callback_file_save (GtkWidget *widget, gpointer data)
  *  \bug may have memory leak?
  */
 void
-i_callback_page_revert (GtkWidget *widget, gpointer data)
+i_callback_page_revert (gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
   LeptonPage *page_current = NULL;
