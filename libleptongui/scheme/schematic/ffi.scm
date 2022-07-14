@@ -42,7 +42,6 @@
             i_callback_cancel
             i_callback_file_save
             *i_callback_file_save
-            i_callback_page_revert
 
             i_action_stop
             i_set_state
@@ -102,6 +101,8 @@
 
             page_select_widget_new
             page_select_widget_update
+
+            s_clib_refresh
 
             set_quiet_mode
             set_verbose_mode
@@ -357,6 +358,9 @@
 (define-lff set_verbose_mode void '())
 (define-lff x_color_init void '())
 
+;;; s_clib.c
+(define-lff s_clib_refresh void '())
+
 ;;; color_edit_widget.c
 (define-lff color_edit_widget_update void '(*))
 
@@ -557,7 +561,6 @@
 (define-lff i_callback_cancel void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
-(define-lff i_callback_page_revert void '(*))
 
 ;;; i_basic.c
 (define-lff i_action_stop void '(*))

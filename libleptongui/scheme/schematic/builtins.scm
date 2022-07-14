@@ -837,10 +837,57 @@ the snap grid size should be set to 100")))
   (define (untitled-page? page)
     (true? (x_window_untitled_page (page->pointer page))))
 
+  (define filename (page-filename (active-page)))
+  (define *filename (string->pointer filename))
+
   (when (and (not (untitled-page? (active-page)))
-             (true? (schematic_page_revert_dialog *window
-                                                  (string->pointer (page-filename (active-page))))))
-    (i_callback_page_revert (*current-window))))
+             (true? (schematic_page_revert_dialog *window *filename)))
+
+    (let ((*page_current (schematic_window_get_active_page *window))
+          ;; If there's only one opened page, create a dummy page
+          ;; (to be closed afterwards) to prevent
+          ;; x_window_close_page() from creating a stray blank
+          ;; page.
+          (*dummy-page (if (= 1 (length (active-pages)))
+                           (x_window_open_page *window %null-pointer)
+                           %null-pointer)))
+      (unless (null-pointer? *dummy-page)
+        (x_window_set_current_page *window *dummy-page)
+        (x_window_set_current_page *window *page_current))
+
+      (let ((page-control (lepton_page_get_page_control *page_current))
+            (up (lepton_page_get_up *page_current)))
+
+        ;; Delete the page then re-open the file as a new page.
+        (x_window_close_page *window *page_current)
+
+        ;; Force symbols to be re-loaded from disk.
+        (s_clib_refresh)
+
+        (let ((*page (x_window_open_page *window *filename)))
+
+          ;; Raise an error if the page cannot be reloaded for
+          ;; some reason.
+          (when (null-pointer? *page)
+            (error "Could not open file ~S" filename))
+
+          ;; Make sure we maintain the hierarchy info.
+          (lepton_page_set_page_control *page page-control)
+          (lepton_page_set_up *page up)
+
+          (x_window_set_current_page *window *page)
+
+          ;; Close dummy page, if it exists.
+          (unless (null-pointer? *dummy-page)
+            (x_window_set_current_page *window *dummy-page)
+            (x_window_close_page *window *dummy-page)
+            (x_window_set_current_page *window *page))
+
+          (when (true? (x_tabs_enabled))
+            ;; Page hierarchy info was changed after the page is
+            ;; opened; update tab's header (e.g. show/hide
+            ;; "hierarchy up" button).
+            (x_tabs_hdr_update *window *page)))))))
 
 
 (define-action-public (&page-manager #:label (G_ "Page Manager"))

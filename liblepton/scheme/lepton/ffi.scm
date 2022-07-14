@@ -348,6 +348,7 @@
             lepton_page_get_page_control
             lepton_page_set_page_control
             lepton_page_get_pid
+            lepton_page_get_up
             lepton_page_set_up
             lepton_page_new
             lepton_page_objects
@@ -683,6 +684,7 @@
 (define-lff lepton_page_get_page_control int '(*))
 (define-lff lepton_page_set_page_control void (list '* int))
 (define-lff lepton_page_get_pid int '(*))
+(define-lff lepton_page_get_up int '(*))
 (define-lff lepton_page_set_up void (list '* int))
 (define-lff lepton_page_new '* '(* *))
 (define-lff lepton_page_objects '* '(*))
