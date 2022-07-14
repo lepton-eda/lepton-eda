@@ -98,8 +98,8 @@ i_callback_page_revert (GschemToplevel *w_current)
     x_window_set_current_page (w_current, page_current);
   }
 
-  page_control = page_current->page_control;
-  up = page_current->up;
+  page_control = lepton_page_get_page_control (page_current);
+  up = lepton_page_get_up (page_current);
 
   /* delete the page, then re-open the file as a new page */
   x_window_close_page (w_current, page_current);
@@ -112,8 +112,8 @@ i_callback_page_revert (GschemToplevel *w_current)
   g_return_if_fail (page != NULL);
 
   /* make sure we maintain the hierarchy info */
-  page->page_control = page_control;
-  page->up = up;
+  lepton_page_set_page_control (page, page_control);
+  lepton_page_set_up (page, up);
 
   x_window_set_current_page (w_current, page);
 
