@@ -69,6 +69,7 @@
   (define (update-keyaccel-timer key-press-result)
     (schematic_window_update_keyaccel_timer
      *window
+     *schematic_window_clear_keyaccel_string
      (boolean->c-boolean (not (key-prefix? key-press-result))))
     ;; Return the key press result to process it further.
     key-press-result)

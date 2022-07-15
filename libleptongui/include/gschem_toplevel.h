@@ -310,10 +310,13 @@ schematic_window_get_options (GschemToplevel *w_current);
 void
 schematic_window_update_keyaccel_string (GschemToplevel *w_current,
                                          char *keystr);
+gboolean
+schematic_window_clear_keyaccel_string (gpointer data);
+
 void
 schematic_window_update_keyaccel_timer (GschemToplevel *w_current,
+                                        gpointer clear_keyaccel_callback,
                                         gboolean start_timer);
-
 SchematicActionMode
 schematic_window_get_action_mode (GschemToplevel *w_current);
 

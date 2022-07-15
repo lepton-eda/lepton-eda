@@ -259,6 +259,7 @@
             schematic_window_get_undo_panzoom
             schematic_window_update_keyaccel_string
             schematic_window_update_keyaccel_timer
+            *schematic_window_clear_keyaccel_string
             schematic_window_get_shift_key_pressed
 
             gschem_options_cycle_grid_mode
@@ -444,6 +445,7 @@
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff gschem_toplevel_page_changed void '(*))
 (define-lff gschem_toplevel_page_content_changed void '(* *))
+(define-lfc *schematic_window_clear_keyaccel_string)
 (define-lff schematic_window_get_actionfeedback_mode int '(*))
 (define-lff schematic_window_set_actionfeedback_mode void (list '* int))
 (define-lff schematic_window_get_active_page '* '(*))
@@ -462,7 +464,7 @@
 (define-lff schematic_window_get_selection_list '* '(*))
 (define-lff schematic_window_get_undo_panzoom int '(*))
 (define-lff schematic_window_update_keyaccel_string void '(* *))
-(define-lff schematic_window_update_keyaccel_timer void (list '* int))
+(define-lff schematic_window_update_keyaccel_timer void (list '* '* int))
 (define-lff schematic_window_get_shift_key_pressed int '(*))
 
 ;;; gschem_options.c

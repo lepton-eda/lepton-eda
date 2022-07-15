@@ -912,8 +912,8 @@ schematic_window_update_keyaccel_string (GschemToplevel *w_current,
  * \param [in] data a pointer to the GschemToplevel to update.
  * \return FALSE (this is a one-shot timer).
  */
-static gboolean
-clear_keyaccel_string (gpointer data)
+gboolean
+schematic_window_clear_keyaccel_string (gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
@@ -943,6 +943,7 @@ clear_keyaccel_string (gpointer data)
  */
 void
 schematic_window_update_keyaccel_timer (GschemToplevel *w_current,
+                                        gpointer clear_keyaccel_callback,
                                         gboolean start_timer)
 {
   if (w_current->keyaccel_string_source_id)
@@ -960,7 +961,7 @@ schematic_window_update_keyaccel_timer (GschemToplevel *w_current,
   if (start_timer)
   {
     w_current->keyaccel_string_source_id =
-      g_timeout_add (400, clear_keyaccel_string, w_current);
+      g_timeout_add (400, (GSourceFunc) clear_keyaccel_callback, w_current);
   }
 }
 
