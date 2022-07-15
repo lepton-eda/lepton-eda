@@ -567,8 +567,7 @@ schematic_window_set_main_window (GschemToplevel *w_current,
  *
  */
 void
-x_window_close (GschemToplevel *w_current,
-                gboolean last_window)
+x_window_close (GschemToplevel *w_current)
 {
   x_clipboard_finish (w_current);
 
@@ -599,19 +598,6 @@ x_window_close (GschemToplevel *w_current,
 
   if (w_current->sewindow)
   gtk_widget_destroy(w_current->sewindow);
-
-  if (last_window)
-  {
-    schematic_window_save_geometry (w_current);
-  }
-
-  /* stuff that has to be done before we free w_current */
-  if (last_window) {
-    /* close the log file */
-    s_log_close ();
-    /* free the buffers */
-    o_buffer_free (w_current);
-  }
 }
 
 

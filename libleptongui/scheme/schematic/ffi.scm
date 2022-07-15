@@ -61,6 +61,7 @@
             o_buffer_init
             o_buffer_copy
             o_buffer_cut
+            o_buffer_free
             o_buffer_paste_start
 
             o_redraw_cleanstates
@@ -184,6 +185,7 @@
             schematic_window_create_notebooks
             schematic_window_create_statusbar
             schematic_window_restore_geometry
+            schematic_window_save_geometry
             schematic_window_show_all
             schematic_window_get_main_window
             schematic_window_set_main_window
@@ -299,6 +301,8 @@
             o_undo_savestate
             o_undo_savestate_viewport
 
+            s_log_close
+
             x_event_get_pointer_position
             x_event_key
 
@@ -367,6 +371,7 @@
 (define-lff o_buffer_init void '())
 (define-lff o_buffer_copy void (list '* int))
 (define-lff o_buffer_cut void (list '* int))
+(define-lff o_buffer_free void '(*))
 (define-lff o_buffer_paste_start int (list '* int int int))
 
 (define-lff set_quiet_mode void '())
@@ -522,7 +527,7 @@
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
 (define-lff x_window_untitled_page int '(*))
-(define-lff x_window_close void (list '* int))
+(define-lff x_window_close void '(*))
 (define-lff x_window_close_page '* '(* *))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))
@@ -542,6 +547,7 @@
 (define-lff schematic_window_create_notebooks void '(* * *))
 (define-lff schematic_window_create_statusbar void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
+(define-lff schematic_window_save_geometry void '(*))
 (define-lff schematic_window_show_all void '(* *))
 (define-lff schematic_window_get_main_window '* '(*))
 (define-lff schematic_window_set_main_window '* '(* *))
@@ -701,6 +707,9 @@
 (define-lff o_undo_cleanup void '())
 (define-lff o_undo_savestate void (list '* '* int))
 (define-lff o_undo_savestate_viewport void '(*))
+
+;;; s_log.c
+(define-lff s_log_close void '())
 
 ;;; a_zoom.c
 (define-lff a_zoom void (list '* '* int int))

@@ -82,9 +82,17 @@
     ;; Last chance to save possible unsaved pages.
     (when (true? (x_dialog_close_window *window))
       ;; Close the window if the user didn't cancel the close.
-      (x_window_close *window
-                      ;; Check if the window is the last one.
-                      (if last-window? TRUE FALSE))
+      (x_window_close *window)
+      ;; Check if the window is the last one and do jobs that have
+      ;; to be done before freeing its memory.
+      (when last-window?
+        ;; Save window geometry.
+        (schematic_window_save_geometry *window)
+        ;; Close the log file.
+        (s_log_close)
+        ;; free the buffers.
+        (o_buffer_free *window))
+
       ;; Destroy main widget of the window.
       (gtk_widget_destroy (schematic_window_get_main_window *window))
       (remove-window! (pointer->window *window))
