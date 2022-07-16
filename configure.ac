@@ -251,41 +251,41 @@ AX_LIBLEPTONGUI([5:0:0])
 AC_CONFIG_FILES([schematic/lepton-schematic:script.in:schematic/lepton-schematic.scm],
                 [chmod +x schematic/lepton-schematic])
 
-AC_CONFIG_FILES([utils/cli/scheme/lepton-cli:script.in:utils/cli/scheme/lepton-cli.scm],
-                [chmod +x utils/cli/scheme/lepton-cli])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-cli:script.in:tools/cli/scheme/lepton-cli.scm],
+                [chmod +x tools/cli/scheme/lepton-cli])
 
-AC_CONFIG_FILES([utils/cli/scheme/lepton-config:script.in:utils/cli/scheme/lepton-config.scm],
-                [chmod +x utils/cli/scheme/lepton-config])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-config:script.in:tools/cli/scheme/lepton-config.scm],
+                [chmod +x tools/cli/scheme/lepton-config])
 
-AC_CONFIG_FILES([utils/cli/scheme/lepton-export:script.in:utils/cli/scheme/lepton-export.scm],
-                [chmod +x utils/cli/scheme/lepton-export])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-export:script.in:tools/cli/scheme/lepton-export.scm],
+                [chmod +x tools/cli/scheme/lepton-export])
 
-AC_CONFIG_FILES([utils/cli/scheme/lepton-shell:script.in:utils/cli/scheme/lepton-shell.scm],
-                [chmod +x utils/cli/scheme/lepton-shell])
+AC_CONFIG_FILES([tools/cli/scheme/lepton-shell:script.in:tools/cli/scheme/lepton-shell.scm],
+                [chmod +x tools/cli/scheme/lepton-shell])
 
-AC_CONFIG_FILES([utils/archive/lepton-archive:script.in:utils/archive/lepton-archive.scm],
-                [chmod +x utils/archive/lepton-archive])
+AC_CONFIG_FILES([tools/archive/lepton-archive:script.in:tools/archive/lepton-archive.scm],
+                [chmod +x tools/archive/lepton-archive])
 
-AC_CONFIG_FILES([utils/attrib/lepton-attrib:script.in:utils/attrib/lepton-attrib.scm],
-                [chmod +x utils/attrib/lepton-attrib])
+AC_CONFIG_FILES([tools/attrib/lepton-attrib:script.in:tools/attrib/lepton-attrib.scm],
+                [chmod +x tools/attrib/lepton-attrib])
 
-AC_CONFIG_FILES([utils/embed/lepton-embed:script.in:utils/embed/lepton-embed.scm],
-                [chmod +x utils/embed/lepton-embed])
+AC_CONFIG_FILES([tools/embed/lepton-embed:script.in:tools/embed/lepton-embed.scm],
+                [chmod +x tools/embed/lepton-embed])
 
-AC_CONFIG_FILES([utils/netlist/lepton-netlist:script.in:utils/netlist/lepton-netlist.scm],
-                [chmod +x utils/netlist/lepton-netlist])
+AC_CONFIG_FILES([tools/netlist/lepton-netlist:script.in:tools/netlist/lepton-netlist.scm],
+                [chmod +x tools/netlist/lepton-netlist])
 
-AC_CONFIG_FILES([utils/symcheck/lepton-symcheck:script.in:utils/symcheck/lepton-symcheck.scm],
-                [chmod +x utils/symcheck/lepton-symcheck])
+AC_CONFIG_FILES([tools/symcheck/lepton-symcheck:script.in:tools/symcheck/lepton-symcheck.scm],
+                [chmod +x tools/symcheck/lepton-symcheck])
 
-AC_CONFIG_FILES([utils/tragesym/lepton-tragesym:script.in:utils/tragesym/lepton-tragesym.scm],
-                [chmod +x utils/tragesym/lepton-tragesym])
+AC_CONFIG_FILES([tools/tragesym/lepton-tragesym:script.in:tools/tragesym/lepton-tragesym.scm],
+                [chmod +x tools/tragesym/lepton-tragesym])
 
-AC_CONFIG_FILES([utils/upcfg/lepton-upcfg:script.in:utils/upcfg/lepton-upcfg.scm],
-                [chmod +x utils/upcfg/lepton-upcfg])
+AC_CONFIG_FILES([tools/upcfg/lepton-upcfg:script.in:tools/upcfg/lepton-upcfg.scm],
+                [chmod +x tools/upcfg/lepton-upcfg])
 
-AC_CONFIG_FILES([utils/update/lepton-update:script.in:utils/update/lepton-update.scm],
-                [chmod +x utils/update/lepton-update])
+AC_CONFIG_FILES([tools/update/lepton-update:script.in:tools/update/lepton-update.scm],
+                [chmod +x tools/update/lepton-update])
 
 AC_CONFIG_FILES([Makefile
 
@@ -301,11 +301,11 @@ AC_CONFIG_FILES([Makefile
                  liblepton/src/Makefile
                  liblepton/tests/Makefile
 
-                 utils/cli/Makefile
-                 utils/cli/scheme/Makefile
-                 utils/cli/docs/Makefile
-                 utils/cli/po/Makefile.in
-                 utils/cli/tests/Makefile
+                 tools/cli/Makefile
+                 tools/cli/scheme/Makefile
+                 tools/cli/docs/Makefile
+                 tools/cli/po/Makefile.in
+                 tools/cli/tests/Makefile
 
                  libleptongui/Makefile
                  libleptongui/libleptongui.pc
@@ -330,72 +330,72 @@ AC_CONFIG_FILES([Makefile
                  libleptonattrib/data/Makefile
                  libleptonattrib/docs/Makefile
 
-                 utils/attrib/Makefile
+                 tools/attrib/Makefile
 
-                 utils/symcheck/tests/Makefile
-                 utils/symcheck/docs/Makefile
-                 utils/symcheck/Makefile
+                 tools/symcheck/tests/Makefile
+                 tools/symcheck/docs/Makefile
+                 tools/symcheck/Makefile
 
-                 utils/netlist/Makefile
-                 utils/netlist/scheme/Makefile
-                 utils/netlist/examples/Makefile
-                 utils/netlist/tests/Makefile
-                 utils/netlist/tests/symcache/Makefile
-                 utils/netlist/docs/Makefile
-                 utils/netlist/docs/vams/Makefile
-                 utils/netlist/examples/spice-noqsi/Makefile
-                 utils/netlist/examples/vams/Makefile
-                 utils/netlist/examples/vams/vhdl/Makefile
-                 utils/netlist/examples/vams/vhdl/basic-vhdl/Makefile
-                 utils/netlist/examples/vams/vhdl/new-vhdl/Makefile
-                 utils/netlist/examples/switcap/Makefile
-                 utils/netlist/examples/switcap/cache/Makefile
-                 utils/netlist/examples/verilog/Makefile
-                 utils/netlist/examples/verilog/T_FF_example/Makefile
-                 utils/netlist/examples/verilog/T_FF_example/verilog_modules/Makefile
-                 utils/netlist/examples/analog/Makefile
-                 utils/netlist/examples/analog/varactor_osc/Makefile
-                 utils/netlist/examples/analog/bandpass/Makefile
-                 utils/netlist/examples/analog/voltage_doubler/Makefile
+                 tools/netlist/Makefile
+                 tools/netlist/scheme/Makefile
+                 tools/netlist/examples/Makefile
+                 tools/netlist/tests/Makefile
+                 tools/netlist/tests/symcache/Makefile
+                 tools/netlist/docs/Makefile
+                 tools/netlist/docs/vams/Makefile
+                 tools/netlist/examples/spice-noqsi/Makefile
+                 tools/netlist/examples/vams/Makefile
+                 tools/netlist/examples/vams/vhdl/Makefile
+                 tools/netlist/examples/vams/vhdl/basic-vhdl/Makefile
+                 tools/netlist/examples/vams/vhdl/new-vhdl/Makefile
+                 tools/netlist/examples/switcap/Makefile
+                 tools/netlist/examples/switcap/cache/Makefile
+                 tools/netlist/examples/verilog/Makefile
+                 tools/netlist/examples/verilog/T_FF_example/Makefile
+                 tools/netlist/examples/verilog/T_FF_example/verilog_modules/Makefile
+                 tools/netlist/examples/analog/Makefile
+                 tools/netlist/examples/analog/varactor_osc/Makefile
+                 tools/netlist/examples/analog/bandpass/Makefile
+                 tools/netlist/examples/analog/voltage_doubler/Makefile
 
-                 utils/Makefile
+                 tools/Makefile
 
-                 utils/symfix/Makefile
-                 utils/symfix/docs/Makefile
+                 tools/symfix/Makefile
+                 tools/symfix/docs/Makefile
 
-                 utils/archive/docs/Makefile
-                 utils/archive/Makefile
+                 tools/archive/docs/Makefile
+                 tools/archive/Makefile
 
-                 utils/embed/Makefile
-                 utils/embed/docs/Makefile
+                 tools/embed/Makefile
+                 tools/embed/docs/Makefile
 
-                 utils/pcb_backannotate/Makefile
-                 utils/pcb_backannotate/docs/Makefile
+                 tools/pcb_backannotate/Makefile
+                 tools/pcb_backannotate/docs/Makefile
 
-                 utils/refdes_renum/Makefile
-                 utils/refdes_renum/docs/Makefile
-                 utils/refdes_renum/tests/Makefile
-                 utils/refdes_renum/tests/inputs/Makefile
-                 utils/refdes_renum/tests/outputs/Makefile
+                 tools/refdes_renum/Makefile
+                 tools/refdes_renum/docs/Makefile
+                 tools/refdes_renum/tests/Makefile
+                 tools/refdes_renum/tests/inputs/Makefile
+                 tools/refdes_renum/tests/outputs/Makefile
 
-                 utils/schdiff/Makefile
-                 utils/schdiff/docs/Makefile
+                 tools/schdiff/Makefile
+                 tools/schdiff/docs/Makefile
 
-                 utils/upcfg/Makefile
-                 utils/upcfg/docs/Makefile
+                 tools/upcfg/Makefile
+                 tools/upcfg/docs/Makefile
 
-                 utils/update/Makefile
-                 utils/update/docs/Makefile
-                 utils/update/tests/Makefile
+                 tools/update/Makefile
+                 tools/update/docs/Makefile
+                 tools/update/tests/Makefile
 
-                 utils/sch2pcb/Makefile
-                 utils/sch2pcb/src/Makefile
-                 utils/sch2pcb/examples/Makefile
-                 utils/sch2pcb/docs/Makefile
+                 tools/sch2pcb/Makefile
+                 tools/sch2pcb/src/Makefile
+                 tools/sch2pcb/examples/Makefile
+                 tools/sch2pcb/docs/Makefile
 
-                 utils/tragesym/Makefile
-                 utils/tragesym/examples/Makefile
-                 utils/tragesym/docs/Makefile
+                 tools/tragesym/Makefile
+                 tools/tragesym/examples/Makefile
+                 tools/tragesym/docs/Makefile
 
                  symbols/Makefile
                  symbols/docs/Makefile
