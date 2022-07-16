@@ -8,9 +8,9 @@ backend="`echo "${tmp}" | sed -e "s:^${stem}-::"`"
 LIBLEPTON="${abs_top_builddir}/liblepton/src/liblepton"
 export LIBLEPTON
 
-NETLISTER="${abs_top_builddir}/utils/netlist/lepton-netlist"
+NETLISTER="${abs_top_builddir}/tools/netlist/lepton-netlist"
 
-export GUILE_LOAD_PATH="${abs_top_srcdir}/utils/netlist/scheme:${abs_top_builddir}/utils/netlist/scheme:${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme:${abs_top_srcdir}/symcheck/scheme:${abs_top_builddir}/symcheck/scheme:..."
+export GUILE_LOAD_PATH="${abs_top_srcdir}/tools/netlist/scheme:${abs_top_builddir}/tools/netlist/scheme:${abs_top_srcdir}/liblepton/scheme:${abs_top_builddir}/liblepton/scheme:${abs_top_srcdir}/symcheck/scheme:${abs_top_builddir}/symcheck/scheme:..."
 
 export LEPTON_INHIBIT_RC_FILES=yes
 
@@ -37,15 +37,15 @@ fi
 cat > "${rundir}/gafrc" << EOF
 ;; We want to point at the scheme code that hasn't been installed yet so that
 ;; 'make check' during development can work correctly.
-(scheme-directory "${abs_top_srcdir}/utils/netlist/scheme")
-(scheme-directory "${abs_top_builddir}/utils/netlist/scheme")
-(scheme-directory "${abs_top_srcdir}/utils/netlist/scheme/backend")
-(scheme-directory "${abs_top_builddir}/utils/netlist/scheme/backend")
+(scheme-directory "${abs_top_srcdir}/tools/netlist/scheme")
+(scheme-directory "${abs_top_builddir}/tools/netlist/scheme")
+(scheme-directory "${abs_top_srcdir}/tools/netlist/scheme/backend")
+(scheme-directory "${abs_top_builddir}/tools/netlist/scheme/backend")
 (scheme-directory "${abs_top_srcdir}/liblepton/scheme")
 (scheme-directory "${abs_top_builddir}/liblepton/scheme")
 
 
-(component-library "${abs_top_srcdir}/utils/netlist/tests/symcache")
+(component-library "${abs_top_srcdir}/tools/netlist/tests/symcache")
 
 
 ;; Rather than checking what m4 and pcb's m4 files do with
