@@ -26,7 +26,7 @@
 
 (define input-directory
   (build-filename *abs-top-srcdir*
-                  "utils"
+                  "tools"
                   "symcheck"
                   "tests"))
 

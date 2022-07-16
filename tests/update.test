@@ -4,11 +4,11 @@
 (load-from-path "env.scm")
 
 (define default-test-directory
-  (build-filename *abs-top-srcdir* "utils" "update" "tests"))
+  (build-filename *abs-top-srcdir* "tools" "update" "tests"))
 
 (define lepton-update
   (build-filename *abs-top-builddir*
-                  "utils"
+                  "tools"
                   "update"
                   "lepton-update"))
 
@@ -35,7 +35,7 @@
 
 
 (define (build-test-filename name)
-  (build-filename *abs-top-srcdir* "utils" "update" "tests" name))
+  (build-filename *abs-top-srcdir* "tools" "update" "tests" name))
 
 (define testdir (build-filename (getcwd) "run.update.test"))
 
