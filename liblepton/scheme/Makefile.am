@@ -184,8 +184,8 @@ SCM_LOG_DRIVER = \
 	$(GUILE) \
 	-L $(abs_top_srcdir)/liblepton/scheme \
 	-L $(abs_top_builddir)/liblepton/scheme \
-	-L $(abs_top_srcdir)/utils/netlist/scheme \
-	-L $(abs_top_builddir)/utils/netlist/scheme \
+	-L $(abs_top_srcdir)/tools/netlist/scheme \
+	-L $(abs_top_builddir)/tools/netlist/scheme \
 	-L $(abs_top_srcdir)/symcheck/scheme \
 	-L $(abs_top_builddir)/symcheck/scheme \
 	--no-auto-compile -e main/with-toplevel -s $(abs_top_srcdir)/liblepton/scheme/unit-test.scm
