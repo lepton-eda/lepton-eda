@@ -1,5 +1,5 @@
 libleptonattrib/data/lepton-attrib.desktop.in
-utils/attrib/lepton-attrib.scm
+tools/attrib/lepton-attrib.scm
 libleptonattrib/src/f_export.c
 libleptonattrib/src/globals.c
 libleptonattrib/src/listsort.c

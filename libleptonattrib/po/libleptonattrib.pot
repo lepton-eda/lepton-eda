@@ -25,7 +25,7 @@ msgstr ""
 msgid "Manipulate component attributes with lepton-attrib"
 msgstr ""
 
-#: utils/attrib/lepton-attrib.scm:77
+#: tools/attrib/lepton-attrib.scm:77
 #, scheme-format
 msgid ""
 "Usage: ~A [OPTIONS] FILE ...\n"
