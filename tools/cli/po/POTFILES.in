@@ -1,5 +1,5 @@
 # List of translatable files
-utils/cli/scheme/lepton-cli.scm
-utils/cli/scheme/lepton-config.scm
-utils/cli/scheme/lepton-export.scm
-utils/cli/scheme/lepton-shell.scm
+tools/cli/scheme/lepton-cli.scm
+tools/cli/scheme/lepton-config.scm
+tools/cli/scheme/lepton-export.scm
+tools/cli/scheme/lepton-shell.scm
