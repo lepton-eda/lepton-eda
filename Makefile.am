@@ -11,7 +11,7 @@ SUBDIRS = \
 	${ATTRIB_DIR} \
 	libleptongui \
 	schematic \
-	utils \
+	tools \
 	symbols \
 	docs \
 	examples \
