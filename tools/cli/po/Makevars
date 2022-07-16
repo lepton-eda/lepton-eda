@@ -4,7 +4,7 @@
 DOMAIN = lepton-cli
 
 # These two variables depend on the location of this directory.
-subdir = utils/cli/po
+subdir = tools/cli/po
 top_builddir = ../../..
 
 # These options get passed to xgettext.
