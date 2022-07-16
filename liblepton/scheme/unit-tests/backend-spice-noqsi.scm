@@ -42,9 +42,9 @@
 (define top-srcdir (string-append srcdir "/../../"))
 
 ;;; Paths. Assuming we're in the liblepton/scheme/ directory.
-(define backend (string-append top-srcdir "utils/netlist/scheme/backend/gnet-spice-noqsi.scm"))
+(define backend (string-append top-srcdir "tools/netlist/scheme/backend/gnet-spice-noqsi.scm"))
 (define symbol-lib (string-append top-srcdir "symbols/sym"))
-(define schematic-base (string-append top-srcdir "utils/netlist/examples/spice-noqsi/HelloWorld/HelloWorld"))
+(define schematic-base (string-append top-srcdir "tools/netlist/examples/spice-noqsi/HelloWorld/HelloWorld"))
 (define input-schematic (string-append schematic-base ".sch"))
 (define output-circuit (string-append schematic-base ".cir"))
 
