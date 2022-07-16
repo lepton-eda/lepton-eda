@@ -10,10 +10,10 @@
        #'(string-append <schematic> "-" <backend>)))))
 
 (define default-test-directory
-  (build-filename *abs-top-srcdir* "utils" "netlist" "tests"))
+  (build-filename *abs-top-srcdir* "tools" "netlist" "tests"))
 
 (define backend-directory
-  (build-filename *abs-top-srcdir* "utils" "netlist" "scheme" "backend"))
+  (build-filename *abs-top-srcdir* "tools" "netlist" "scheme" "backend"))
 
 (define default-symbol-directory
   (build-filename default-test-directory "symcache"))
@@ -87,7 +87,7 @@
 
 (define switcap-example-dir
   (build-filename *abs-top-srcdir*
-                  "utils"
+                  "tools"
                   "netlist"
                   "examples"
                   "switcap"))

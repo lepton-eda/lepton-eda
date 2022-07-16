@@ -132,7 +132,7 @@
 
 (define (make-test-filename name)
   (build-filename *abs-top-srcdir*
-                  "utils"
+                  "tools"
                   "cli"
                   "tests"
                   name))

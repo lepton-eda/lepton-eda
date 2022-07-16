@@ -96,7 +96,7 @@
 ;;; Test if netlister exists :-)
 (define *netlister*
   (build-filename *abs-top-builddir*
-                  "utils"
+                  "tools"
                   "netlist"
                   "lepton-netlist"))
 
@@ -121,59 +121,59 @@
 
 (define lepton-archive
   (build-filename *abs-top-builddir*
-                  "utils"
+                  "tools"
                   "archive"
                   "lepton-archive"))
 
 (define lepton-cli
   (build-filename *abs-top-builddir*
-                  "utils"
+                  "tools"
                   "cli"
                   "scheme"
                   "lepton-cli"))
 
 (define lepton-config
   (build-filename *abs-top-builddir*
-                  "utils"
+                  "tools"
                   "cli"
                   "scheme"
                   "lepton-config"))
 
 (define lepton-embed
   (build-filename *abs-top-builddir*
-                  "utils"
+                  "tools"
                   "embed"
                   "lepton-embed"))
 
 (define lepton-export
   (build-filename *abs-top-builddir*
-                  "utils"
+                  "tools"
                   "cli"
                   "scheme"
                   "lepton-export"))
 
 (define lepton-shell
   (build-filename *abs-top-builddir*
-                  "utils"
+                  "tools"
                   "cli"
                   "scheme"
                   "lepton-shell"))
 
 (define lepton-symcheck
   (build-filename *abs-top-builddir*
-                  "utils"
+                  "tools"
                   "symcheck"
                   "lepton-symcheck"))
 
 (define lepton-tragesym
   (build-filename *abs-top-builddir*
-                  "utils"
+                  "tools"
                   "tragesym"
                   "lepton-tragesym"))
 
 (define lepton-upcfg
   (build-filename *abs-top-builddir*
-                  "utils"
+                  "tools"
                   "upcfg"
                   "lepton-upcfg"))
 
