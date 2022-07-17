@@ -248,8 +248,8 @@ AX_LIBLEPTONGUI([5:0:0])
 # Generate output
 #####################################################################
 
-AC_CONFIG_FILES([schematic/lepton-schematic:script.in:schematic/lepton-schematic.scm],
-                [chmod +x schematic/lepton-schematic])
+AC_CONFIG_FILES([tools/schematic/lepton-schematic:script.in:tools/schematic/lepton-schematic.scm],
+                [chmod +x tools/schematic/lepton-schematic])
 
 AC_CONFIG_FILES([tools/cli/scheme/lepton-cli:script.in:tools/cli/scheme/lepton-cli.scm],
                 [chmod +x tools/cli/scheme/lepton-cli])
@@ -320,7 +320,7 @@ AC_CONFIG_FILES([Makefile
                  libleptongui/tests/Makefile
                  libleptongui/scheme/Makefile
 
-                 schematic/Makefile
+                 tools/schematic/Makefile
 
                  libleptonattrib/libleptonattrib.pc
                  libleptonattrib/Makefile
