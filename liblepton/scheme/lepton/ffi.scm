@@ -796,6 +796,8 @@ objects."
 
 
 (define (reference-pointer pointer)
+  "Returns a newly created pointer to POINTER.  Thus, the action is
+the reverse of what dereference-pointer() does."
   (define bv (make-bytevector (sizeof '*)))
   (bytevector-uint-set! bv
                         0
