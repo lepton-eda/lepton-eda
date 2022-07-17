@@ -10,7 +10,6 @@ SUBDIRS = \
 	liblepton \
 	${ATTRIB_DIR} \
 	libleptongui \
-	schematic \
 	tools \
 	symbols \
 	docs \

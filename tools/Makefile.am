@@ -12,6 +12,7 @@ SUBDIRS = \
 	pcb_backannotate \
 	refdes_renum \
 	schdiff \
+	schematic \
 	upcfg \
 	update \
 	symcheck \
