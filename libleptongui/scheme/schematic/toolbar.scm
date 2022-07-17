@@ -108,6 +108,8 @@
 
 
 (define (make-toolbar *window *main-box)
+  "Creates a new toolbar widget for *WINDOW, inserting it in the
+*MAINBOX widget."
   (let ((*toolbar (schematic_toolbar_new *window *main-box)))
     (make-toolbar-button *window
                          *toolbar
