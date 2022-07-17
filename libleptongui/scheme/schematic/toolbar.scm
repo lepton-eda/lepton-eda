@@ -50,24 +50,39 @@
   *toolbar)
 
 
+;;; Sets the button icon for the button pointer *BUTTON to the
+;;; pixmap from the file name ICON-NAME.
 (define (set-button-icon! *button icon-name)
   (schematic_toolbar_button_set_icon_widget *button
                                             (string->pointer icon-name))
   *button)
 
 
+;;; Sets the button label text of *BUTTON to the given LABEL text.
 (define (set-button-label! *button label)
   (schematic_toolbar_button_set_label *button
                                       (string->pointer (G_ label)))
   *button)
 
 
+;;; Sets the button tooltip text of *BUTTON to the given TOOLTIP
+;;; text.
 (define (set-button-tooltip! *button tooltip)
   (schematic_toolbar_button_set_tooltip_text *button
                                              (string->pointer (G_ tooltip)))
   *button)
 
 
+;;; Makes and returns a new GTK toolbar button with given
+;;; parameters.  The *WINDOW argument is necessary for setting a
+;;; Scheme callback which may want to get any info from *WINDOW.
+;;; The *TOOLBAR argument is a pointer to the toolbar instance to
+;;; insert the button to.  ICON defines a filename for the icon
+;;; pixmap.  LABEL defines a button text label.  TOOLTIP defines a
+;;; tooltip that pops up when the mouse cursor is over the button.
+;;; CALLBACK is a Scheme procedure to run when the user clicks the
+;;; button.  POSITION is a number defining the place of the button
+;;; in the toolbar it should be insert to.
 (define (make-toolbar-button *window *toolbar icon label tooltip callback position)
   (let ((*button (schematic_toolbar_button_new)))
     (set-button-icon! *button icon)
@@ -78,6 +93,9 @@
     *button))
 
 
+;;; Creates and returns a toolbar radio button.  *GROUP is a group
+;;; to insert the radio button to.  Other parameters are the same
+;;; with those for make-toolbar-button().
 (define (make-toolbar-radio-button *group *window *toolbar icon label tooltip callback position)
   (let ((*button (schematic_toolbar_radio_button_new)))
     (schematic_toolbar_radio_button_set_group *button *group)
