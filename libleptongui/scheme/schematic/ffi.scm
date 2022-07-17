@@ -162,8 +162,6 @@
             schematic_window_create_main_box
             schematic_window_create_work_box
             schematic_window_create_menubar
-            schematic_toolbar_new
-            schematic_toolbar_activate_button
             schematic_window_set_key_event_callback
             schematic_window_create_page_view
             schematic_window_create_find_text_widget
@@ -177,6 +175,8 @@
             schematic_window_show_all
             schematic_window_set_main_window
 
+            schematic_toolbar_new
+            schematic_toolbar_activate_button
             schematic_toolbar_button_new
             schematic_toolbar_button_set_icon_widget
             schematic_toolbar_button_set_label
@@ -372,8 +372,6 @@
 (define-lff schematic_window_create_main_box '* '(*))
 (define-lff schematic_window_create_work_box '* '())
 (define-lff schematic_window_create_menubar void '(* * *))
-(define-lff schematic_toolbar_new '* '(* *))
-(define-lff schematic_toolbar_activate_button void '(*))
 (define-lff schematic_window_set_key_event_callback void '(*))
 (define-lff schematic_window_create_page_view '* '(* *))
 (define-lff schematic_window_create_find_text_widget void '(* *))
@@ -388,6 +386,8 @@
 (define-lff schematic_window_set_main_window '* '(* *))
 
 ;;; toolbar.c
+(define-lff schematic_toolbar_new '* '(* *))
+(define-lff schematic_toolbar_activate_button void '(*))
 (define-lff schematic_toolbar_button_new '* '())
 (define-lff schematic_toolbar_button_set_icon_widget void '(* *))
 (define-lff schematic_toolbar_button_set_label void '(* *))
