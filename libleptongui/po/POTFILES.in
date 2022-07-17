@@ -104,4 +104,4 @@ libleptongui/scheme/schematic/doc.scm
 libleptongui/scheme/schematic/keymap.scm
 libleptongui/scheme/gschem/deprecated.scm
 
-schematic/lepton-schematic.scm
+tools/schematic/lepton-schematic.scm
