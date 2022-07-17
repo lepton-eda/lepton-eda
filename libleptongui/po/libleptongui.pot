@@ -2757,7 +2757,7 @@ msgstr ""
 msgid "Invalid text alignment ~A."
 msgstr ""
 
-#: schematic/lepton-schematic.scm:99
+#: tools/schematic/lepton-schematic.scm:99
 #, scheme-format
 msgid ""
 "Usage: ~A [OPTION ...] [--] [FILE ...]\n"
@@ -2780,7 +2780,7 @@ msgid ""
 "Lepton EDA homepage: ~S\n"
 msgstr ""
 
-#: schematic/lepton-schematic.scm:161
+#: tools/schematic/lepton-schematic.scm:161
 #, scheme-format
 msgid ""
 "ERROR: Unknown option ~A.\n"
