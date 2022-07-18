@@ -120,6 +120,13 @@ schematic_toolbar_button_set_tooltip_text (GtkWidget *button,
 }
 
 
+/*! \brief Create a new toolbar button.
+ *  \par Function Description
+ *
+ * Returns a newly created toolbar button widget.
+ *
+ * \return The created button widget.
+ */
 GtkWidget*
 schematic_toolbar_button_new ()
 {
