@@ -296,6 +296,13 @@ schematic_window_set_toolbar_select (GschemToplevel *w_current,
 }
 
 
+/*! \brief Activate a toolbar button.
+ *  \par Function Description
+ *
+ * Activates the given widget \a button.
+ *
+ * \param [in] button The button to activate.
+ */
 void
 schematic_toolbar_activate_button (GtkWidget *button)
 {
