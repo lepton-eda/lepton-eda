@@ -84,6 +84,14 @@ schematic_toolbar_button_set_icon_widget (GtkWidget *button,
 }
 
 
+/*! \brief Set button label.
+ *  \par Function Description
+ *
+ * Sets the button label text to the given \a label.
+ *
+ * \param button [in] The button widget pointer.
+ * \param label [in] The new label.
+ */
 void
 schematic_toolbar_button_set_label (GtkWidget *button,
                                     const gchar *label)
