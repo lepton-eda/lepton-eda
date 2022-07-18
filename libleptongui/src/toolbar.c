@@ -257,45 +257,6 @@ schematic_toolbar_new (GschemToplevel *w_current,
 }
 
 
-/*! \brief Set the field 'toolbar_net' of the current schematic window instance.
- *
- * \param [in] w_current The pointer to the schematic window instance.
- * \param [in] button The new value.
- */
-void
-schematic_window_set_toolbar_net (GschemToplevel *w_current,
-                                  GtkWidget *button)
-{
-  w_current->toolbar_net = button;
-}
-
-
-/*! \brief Set the field 'toolbar_bus' of the current schematic window instance.
- *
- * \param [in] w_current The pointer to the schematic window instance.
- * \param [in] button The new value.
- */
-void
-schematic_window_set_toolbar_bus (GschemToplevel *w_current,
-                                  GtkWidget *button)
-{
-  w_current->toolbar_bus = button;
-}
-
-
-/*! \brief Set the field 'toolbar_select' of the current schematic window instance.
- *
- * \param [in] w_current The pointer to the schematic window instance.
- * \param [in] button The new value.
- */
-void
-schematic_window_set_toolbar_select (GschemToplevel *w_current,
-                                     GtkWidget *button)
-{
-  w_current->toolbar_select = button;
-}
-
-
 /*! \brief Activate a toolbar button.
  *  \par Function Description
  *
@@ -310,33 +271,57 @@ schematic_toolbar_activate_button (GtkWidget *button)
 }
 
 
-/*! \brief Update toolbar of the window.
+static GtkWidget*
+toolbar_button_by_label (GtkWidget *toolbar,
+                         const char *name)
+{
+  GtkToolItem *button = NULL;
+
+  if (name == NULL)
+  {
+    return NULL;
+  }
+
+  for (int i = 0; i < gtk_toolbar_get_n_items (GTK_TOOLBAR (toolbar)); i++)
+  {
+    button = gtk_toolbar_get_nth_item (GTK_TOOLBAR (toolbar), i);
+
+    if (GTK_IS_RADIO_TOOL_BUTTON (gtk_toolbar_get_nth_item (GTK_TOOLBAR (toolbar), i)))
+    {
+      const char *label = gtk_tool_button_get_label (GTK_TOOL_BUTTON (button));
+
+      if (strcmp (label, name) == 0)
+      {
+        return (GTK_WIDGET (button));
+      }
+    }
+  };
+
+  return NULL;
+}
+
+
+/*! \brief Update window toolbar.
  *  \par Function Description
  *
- *  Updates the toolbar of the window \a w_current activating one
- *  of the buttons depending on the current action mode.
+ *  Updates the toolbar widget activating one of the buttons
+ *  depending on the current action mode.
  *
- *  \param [in] w_current The pointer to the schematic window instance.
+ *  \param [in] toolbar The pointer to the toolbar widget.
+ *  \param [in] action_mode The action mode.
  */
 void
-schematic_toolbar_update (GschemToplevel *w_current)
+schematic_toolbar_update (GtkWidget *toolbar,
+                          SchematicActionMode action_mode)
 {
-  switch (schematic_window_get_action_mode (w_current))
+  GtkWidget *button = NULL;
+  const char *name = NULL;
+
+  switch (action_mode)
   {
-    case(SELECT):
-      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select),
-                                         TRUE);
-      break;
-
-    case(NETMODE):
-      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_net),
-                                         TRUE);
-      break;
-
-    case(BUSMODE):
-      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_bus),
-                                         TRUE);
-      break;
+    case(SELECT): name = "Select"; break;
+    case(NETMODE): name = "Nets"; break;
+    case(BUSMODE): name = "Bus"; break;
 
     case(ARCMODE): /*! \todo */
     case(BOXMODE): /*! \todo */
@@ -355,9 +340,13 @@ schematic_toolbar_update (GschemToplevel *w_current)
     case(ZOOMBOX): /*! \todo */
     case(PASTEMODE): /*! \todo */
     case(GRIPS): /*! \todo */
-    default:
-      gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (w_current->toolbar_select),
-                                         TRUE);
-      break;
+    default: name = "Select"; break;
+  }
+
+  button = toolbar_button_by_label (toolbar, name);
+
+  if (button != NULL)
+  {
+    gtk_toggle_tool_button_set_active (GTK_TOGGLE_TOOL_BUTTON (button), TRUE);
   }
 }

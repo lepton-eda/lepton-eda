@@ -33,6 +33,7 @@ struct st_gschem_toplevel {
   /* ------------------- */
   GtkWidget *main_window;
 
+  GtkWidget *toolbar;
   GtkWidget *drawing_area; /* page view */
   GtkWidget *menubar;
   GtkWidget *popup_menu;
@@ -45,10 +46,6 @@ struct st_gschem_toplevel {
   GtkWidget *translate_widget;
 
   GtkWidget *bottom_widget;
-
-  GtkWidget *toolbar_select;
-  GtkWidget *toolbar_net;
-  GtkWidget *toolbar_bus;
 
 
   /* tabbed GUI: notebook: */
@@ -320,5 +317,7 @@ schematic_window_get_action_mode (GschemToplevel *w_current);
 void
 schematic_window_set_action_mode (GschemToplevel *w_current,
                                   SchematicActionMode mode);
-
+void
+schematic_window_set_toolbar (GschemToplevel *w_current,
+                              GtkWidget *toolbar);
 G_END_DECLS
