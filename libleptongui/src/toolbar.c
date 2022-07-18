@@ -148,6 +148,14 @@ schematic_toolbar_radio_button_new ()
 }
 
 
+/*! \brief Get the group of a toolbar radio button.
+ *  \par Function Description
+ *
+ * Returns the radio group of the radio button \a button.
+ *
+ * \param [in] button The radio button widget pointer.
+ * \return The pointer to the GSList of the radio button group.
+ */
 GSList*
 schematic_toolbar_radio_button_get_group (GtkWidget *button)
 {
