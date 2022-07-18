@@ -102,6 +102,14 @@ schematic_toolbar_button_set_label (GtkWidget *button,
 }
 
 
+/*! \brief Set button tooltip.
+ *  \par Function Description
+ *
+ * Sets the button tooltip text to the given \a tooltip.
+ *
+ * \param [in] button The button widget pointer.
+ * \param [in] tooltip The new tooltip text.
+ */
 void
 schematic_toolbar_button_set_tooltip_text (GtkWidget *button,
                                            const gchar *tooltip)
