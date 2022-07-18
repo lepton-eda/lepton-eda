@@ -134,6 +134,13 @@ schematic_toolbar_button_new ()
 }
 
 
+/*! \brief Create a new toolbar radio button.
+ *  \par Function Description
+ *
+ * Returns a newly created toolbar radio button widget.
+ *
+ * \return The created radio button widget.
+ */
 GtkWidget*
 schematic_toolbar_radio_button_new ()
 {
