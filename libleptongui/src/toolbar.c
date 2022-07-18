@@ -310,10 +310,13 @@ schematic_toolbar_activate_button (GtkWidget *button)
 }
 
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \param [in] w_current GschemToplevel structure
+/*! \brief Update toolbar of the window.
+ *  \par Function Description
  *
+ *  Updates the toolbar of the window \a w_current activating one
+ *  of the buttons depending on the current action mode.
+ *
+ *  \param [in] w_current The pointer to the schematic window instance.
  */
 void
 schematic_toolbar_update (GschemToplevel *w_current)
