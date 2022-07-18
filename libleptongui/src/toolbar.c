@@ -215,6 +215,15 @@ schematic_toolbar_insert_separator (GtkWidget *toolbar,
 }
 
 
+/*! \brief Create a toolbar widget.
+ *  \par Function Description
+ *
+ * Creates a new toolbar widget and inserts it into the main box
+ * widget of lepton-schematic.
+ *
+ * \param [in] w_current The pointer to the schematic window instance.
+ * \param [in] main_box The main box widget.
+ */
 GtkWidget*
 schematic_toolbar_new (GschemToplevel *w_current,
                        GtkWidget *main_box)
