@@ -159,6 +159,7 @@ GschemToplevel *gschem_toplevel_new ()
   /* main window widgets */
   /* ------------------- */
   w_current->main_window  = NULL;
+  w_current->toolbar = NULL;
   w_current->drawing_area = NULL;
   w_current->menubar      = NULL;
   w_current->popup_menu   = NULL;
@@ -166,11 +167,6 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->macro_widget  = NULL;
   w_current->bottom_widget = NULL;
   w_current->translate_widget = NULL;
-
-  w_current->toolbar_select = NULL;
-  w_current->toolbar_net    = NULL;
-  w_current->toolbar_bus    = NULL;
-
 
   /* tabbed GUI: notebook: */
   w_current->xtabs_nbook = NULL;
@@ -985,4 +981,21 @@ schematic_window_set_action_mode (GschemToplevel *w_current,
   g_return_if_fail (w_current != NULL);
 
   w_current->action_mode = (int) mode;
+}
+
+
+/*! \brief Set toolbar of the current schematic window instance.
+ *  \par Function Description
+ *
+ * Sets toolbar of the current window to the given toolbar widget
+ * \a toolbar.
+ *
+ * \param [in] w_current The pointer to the schematic window instance.
+ * \param [in] toolbar The toolbar
+ */
+void
+schematic_window_set_toolbar (GschemToplevel *w_current,
+                              GtkWidget *toolbar)
+{
+  w_current->toolbar = toolbar;
 }

@@ -104,8 +104,8 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_create_menubar *window *main-box *menubar)
 
       ;; Make toolbar.
-      (make-toolbar *window *main-box)
-
+      (schematic_window_set_toolbar *window
+                                    (make-toolbar *window *main-box))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
 

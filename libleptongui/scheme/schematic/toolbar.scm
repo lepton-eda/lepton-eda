@@ -168,7 +168,6 @@ Right mouse button to cancel"
                                        i_callback_toolbar_add_net
                                        8))
            (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
-      (schematic_window_set_toolbar_net *window *radio-button)
 
       (let* ((*radio-button
               (make-toolbar-radio-button *radio-group
@@ -181,7 +180,6 @@ Right mouse button to cancel"
                                          i_callback_toolbar_add_bus
                                          9))
              (*radio-group (schematic_toolbar_radio_button_get_group *radio-button)))
-        (schematic_window_set_toolbar_bus *window *radio-button)
 
         (make-toolbar-button *window
                              *toolbar
@@ -202,7 +200,6 @@ Right mouse button to cancel"
                                           "Select mode"
                                           i_callback_toolbar_edit_select
                                           12)))
-          (schematic_window_set_toolbar_select *window *radio-button)
 
           (schematic_toolbar_insert_separator *toolbar 13)
           ;; Activate 'select' button at start-up.

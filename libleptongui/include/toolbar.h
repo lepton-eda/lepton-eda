@@ -57,17 +57,8 @@ void
 schematic_toolbar_insert_separator (GtkWidget *toolbar,
                                     gint pos);
 void
-schematic_window_set_toolbar_bus (GschemToplevel *w_current,
-                                  GtkWidget *button);
-void
-schematic_window_set_toolbar_net (GschemToplevel *w_current,
-                                  GtkWidget *button);
-void
-schematic_window_set_toolbar_select (GschemToplevel *w_current,
-                                     GtkWidget *button);
-void
-schematic_toolbar_update (GschemToplevel *w_current);
-
+schematic_toolbar_update (GtkWidget *toolbar,
+                          SchematicActionMode action_mode);
 G_END_DECLS
 
 #endif /* __TOOLBAR_H__ */

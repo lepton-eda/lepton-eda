@@ -174,6 +174,7 @@
             schematic_window_restore_geometry
             schematic_window_show_all
             schematic_window_set_main_window
+            schematic_window_set_toolbar
 
             schematic_toolbar_new
             schematic_toolbar_activate_button
@@ -186,9 +187,6 @@
             schematic_toolbar_radio_button_set_group
             schematic_toolbar_insert_button
             schematic_toolbar_insert_separator
-            schematic_window_set_toolbar_bus
-            schematic_window_set_toolbar_net
-            schematic_window_set_toolbar_select
 
             x_tabs_create
             x_tabs_enabled
@@ -384,6 +382,7 @@
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_show_all void '(* *))
 (define-lff schematic_window_set_main_window '* '(* *))
+(define-lff schematic_window_set_toolbar void '(* *))
 
 ;;; toolbar.c
 (define-lff schematic_toolbar_new '* '(* *))
@@ -397,9 +396,6 @@
 (define-lff schematic_toolbar_insert_separator void (list '* int))
 (define-lff schematic_toolbar_radio_button_get_group '* '(*))
 (define-lff schematic_toolbar_radio_button_set_group void '(* *))
-(define-lff schematic_window_set_toolbar_bus void '(* *))
-(define-lff schematic_window_set_toolbar_net void '(* *))
-(define-lff schematic_window_set_toolbar_select void '(* *))
 
 ;;; x_tabs.c
 (define-lff x_tabs_create void '(* *))
