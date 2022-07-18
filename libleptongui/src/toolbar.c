@@ -163,6 +163,14 @@ schematic_toolbar_radio_button_get_group (GtkWidget *button)
 }
 
 
+/*! \brief Set the group of a toolbar radio button.
+ *  \par Function Description
+ *
+ * Sets the group of the radio button to a given \a group.
+ *
+ * \param [in] button The radio button widget pointer.
+ * \param [in] group The group.
+ */
 void
 schematic_toolbar_radio_button_set_group (GtkWidget *button,
                                           GSList *group)
