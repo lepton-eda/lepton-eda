@@ -179,6 +179,15 @@ schematic_toolbar_radio_button_set_group (GtkWidget *button,
 }
 
 
+/*! \brief Insert a button to a toolbar.
+ *  \par Function Description
+ *
+ * Inserts \a button into the position \a pos of \a toolbar
+ *
+ * \param [in] toolbar The toolbar widget.
+ * \param [in] button The button.
+ * \param [in] pos The position.
+ */
 void
 schematic_toolbar_insert_button (GtkWidget *toolbar,
                                  GtkToolButton *button,
