@@ -270,6 +270,11 @@ schematic_window_set_toolbar_net (GschemToplevel *w_current,
 }
 
 
+/*! \brief Set the field 'toolbar_bus' of the current schematic window instance.
+ *
+ * \param [in] w_current The pointer to the schematic window instance.
+ * \param [in] button The new value.
+ */
 void
 schematic_window_set_toolbar_bus (GschemToplevel *w_current,
                                   GtkWidget *button)
