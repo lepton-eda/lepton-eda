@@ -197,6 +197,14 @@ schematic_toolbar_insert_button (GtkWidget *toolbar,
 }
 
 
+/*! \brief Insert a separator to a toolbar.
+ *  \par Function Description
+ *
+ * Inserts a separator into the position \a pos of \a toolbar
+ *
+ * \param [in] toolbar The toolbar widget.
+ * \param [in] pos The position.
+ */
 void
 schematic_toolbar_insert_separator (GtkWidget *toolbar,
                                     gint pos)
