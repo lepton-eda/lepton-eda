@@ -668,7 +668,8 @@ void x_window_close_all(GschemToplevel *w_current)
   GschemToplevel *current;
   GList *list_copy, *iter;
 
-  iter = list_copy = g_list_copy (global_window_list);
+  GList *gwl = schematic_window_list ();
+  iter = list_copy = g_list_copy (gwl);
   while (iter != NULL ) {
     current = (GschemToplevel *)iter->data;
     iter = g_list_next (iter);
