@@ -61,6 +61,9 @@ schematic_window_list_remove (GschemToplevel *w_current);
 guint
 schematic_window_list_length ();
 
+void
+schematic_window_list_add (GschemToplevel *w_current);
+
 G_END_DECLS
 
 #endif

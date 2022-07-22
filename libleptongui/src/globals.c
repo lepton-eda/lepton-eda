@@ -57,3 +57,9 @@ schematic_window_list_length ()
 {
   return g_list_length (global_window_list);
 }
+
+void
+schematic_window_list_add (GschemToplevel *w_current)
+{
+  global_window_list = g_list_append (global_window_list, w_current);
+}
