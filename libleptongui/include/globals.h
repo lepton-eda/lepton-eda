@@ -47,4 +47,11 @@ extern int verbose_mode;
 # define N_(String) (String)
 #endif
 
+G_BEGIN_DECLS
+
+GList*
+schematic_window_list ();
+
+G_END_DECLS
+
 #endif

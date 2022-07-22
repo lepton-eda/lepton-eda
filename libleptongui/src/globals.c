@@ -28,3 +28,10 @@ GList *global_window_list = NULL;
 
 /* command line options */
 int quiet_mode = FALSE;
+
+
+GList*
+schematic_window_list ()
+{
+  return global_window_list;
+}
