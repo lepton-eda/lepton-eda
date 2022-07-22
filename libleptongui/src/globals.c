@@ -35,3 +35,12 @@ schematic_window_list ()
 {
   return global_window_list;
 }
+
+
+GList*
+schematic_window_list_find (GschemToplevel *w_current)
+{
+  GList *gwl = schematic_window_list ();
+
+  return (g_list_find (gwl, w_current));
+}

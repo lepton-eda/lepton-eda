@@ -917,10 +917,8 @@ schematic_window_clear_keyaccel_string (gpointer data)
 {
   GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
 
-  GList *gwl = schematic_window_list ();
-
   /* If the window context has disappeared, do nothing. */
-  if (g_list_find (gwl, w_current) == NULL)
+  if (!schematic_window_list_find (w_current))
   {
     return FALSE;
   }
