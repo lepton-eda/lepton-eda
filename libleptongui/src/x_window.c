@@ -648,7 +648,7 @@ void x_window_close(GschemToplevel *w_current)
   /* finally close the main window */
   gtk_widget_destroy(w_current->main_window);
 
-  global_window_list = g_list_remove (global_window_list, w_current);
+  schematic_window_list_remove (w_current);
   gschem_toplevel_free (w_current);
 
   /* just closed last window, so quit */

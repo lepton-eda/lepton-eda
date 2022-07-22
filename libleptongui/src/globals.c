@@ -44,3 +44,10 @@ schematic_window_list_find (GschemToplevel *w_current)
 
   return (g_list_find (gwl, w_current));
 }
+
+
+void
+schematic_window_list_remove (GschemToplevel *w_current)
+{
+  global_window_list = g_list_remove (global_window_list, w_current);
+}

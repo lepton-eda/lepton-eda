@@ -55,6 +55,9 @@ schematic_window_list ();
 GList*
 schematic_window_list_find (GschemToplevel *w_current);
 
+void
+schematic_window_list_remove (GschemToplevel *w_current);
+
 G_END_DECLS
 
 #endif
