@@ -627,7 +627,8 @@ void x_window_close(GschemToplevel *w_current)
   if (w_current->sewindow)
   gtk_widget_destroy(w_current->sewindow);
 
-  if (g_list_length (global_window_list) == 1) {
+  if (schematic_window_list_length () == 1)
+  {
     /* no more window after this one, remember to quit */
     last_window = TRUE;
   }

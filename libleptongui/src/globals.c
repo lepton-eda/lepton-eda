@@ -51,3 +51,9 @@ schematic_window_list_remove (GschemToplevel *w_current)
 {
   global_window_list = g_list_remove (global_window_list, w_current);
 }
+
+guint
+schematic_window_list_length ()
+{
+  return g_list_length (global_window_list);
+}
