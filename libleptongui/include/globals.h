@@ -22,9 +22,6 @@
 #define H_GSCHEM_GLOBALS_H
 
 
-/* window list */
-extern GList *global_window_list;
-
 extern int do_logging;
 
 

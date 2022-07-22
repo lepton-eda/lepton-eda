@@ -24,7 +24,7 @@
 #include "gschem.h"
 
 /* window list */
-GList *global_window_list = NULL;
+static GList *global_window_list = NULL;
 
 /* command line options */
 int quiet_mode = FALSE;
