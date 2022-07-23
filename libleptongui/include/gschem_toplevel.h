@@ -307,10 +307,13 @@ schematic_window_get_pages (GschemToplevel *w_current);
 GschemOptions*
 schematic_window_get_options (GschemToplevel *w_current);
 
+guint
+schematic_window_add_timer (guint interval,
+                            gpointer callback,
+                            gpointer data);
 void
-schematic_window_update_keyaccel_timer (GschemToplevel *w_current,
-                                        gpointer clear_keyaccel_callback,
-                                        gboolean start_timer);
+schematic_window_destroy_timer (guint source_id);
+
 SchematicActionMode
 schematic_window_get_action_mode (GschemToplevel *w_current);
 

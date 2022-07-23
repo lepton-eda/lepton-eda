@@ -878,7 +878,7 @@ schematic_window_get_options (GschemToplevel *w_current)
  * \param [in] callback The callback.
  * \param [in] data The data.
  */
-static guint
+guint
 schematic_window_add_timer (guint interval,
                             gpointer callback,
                             gpointer data)
@@ -895,48 +895,13 @@ schematic_window_add_timer (guint interval,
  *
  * \param [in] source_id The source id.
  */
-static void
+void
 schematic_window_destroy_timer (guint source_id)
 {
   GSource *timer = g_main_context_find_source_by_id (NULL, source_id);
   if (timer != NULL)
   {
     g_source_destroy (timer);
-  }
-}
-
-
-/*! \brief Update timer for clearing the current key accelerator string.
- * \par Function Description
- * If a timer responsible for clearing key accelerator string in
- * the status bar has been started, the function stops it.  If \a
- * start_timer is TRUE, it runs a new timer for this.  It should
- * be FALSE if the current key sequence is a prefix which should
- * persist.
- *
- * \param [in] w_current The GschemToplevel to update.
- * \param [in] start_timer If a new timer should be started.
- */
-void
-schematic_window_update_keyaccel_timer (GschemToplevel *w_current,
-                                        gpointer clear_keyaccel_callback,
-                                        gboolean start_timer)
-{
-  guint source_id = schematic_window_get_keyaccel_string_source_id (w_current);
-  if (source_id != 0)
-  {
-    /* Cancel any existing timers that haven't fired yet. */
-    schematic_window_destroy_timer (source_id);
-    schematic_window_set_keyaccel_string_source_id (w_current, 0);
-  }
-  if (start_timer)
-  {
-    source_id =
-      schematic_window_add_timer (400,
-                                    (gpointer) clear_keyaccel_callback,
-                                    (gpointer) w_current);
-
-    schematic_window_set_keyaccel_string_source_id (w_current, source_id);
   }
 }
 

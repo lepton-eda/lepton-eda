@@ -105,10 +105,18 @@
   ;; keystroke was not part of a key sequence prefix, start a new
   ;; timer to clear the status bar display.
   (define (update-keyaccel-timer key-press-result)
-    (schematic_window_update_keyaccel_timer
-     *window
-     *clear-keyaccelerator-string
-     (boolean->c-boolean (not (key-prefix? key-press-result))))
+    (let ((source-id (schematic_window_get_keyaccel_string_source_id *window)))
+      (unless (zero? source-id)
+        ;; Cancel any existing timers that haven't fired yet.
+        (schematic_window_destroy_timer source-id)
+        (schematic_window_set_keyaccel_string_source_id *window 0)))
+
+    (unless (key-prefix? key-press-result)
+      (schematic_window_set_keyaccel_string_source_id
+       *window
+       ;; Fire up a new timer.
+       (schematic_window_add_timer 400 *clear-keyaccelerator-string *window)))
+
     ;; Return the key press result to process it further.
     key-press-result)
 

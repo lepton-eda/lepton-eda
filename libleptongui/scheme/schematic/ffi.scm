@@ -235,6 +235,8 @@
             schematic_signal_connect
 
             schematic_window_active_page_changed
+            schematic_window_add_timer
+            schematic_window_destroy_timer
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_show_hidden_text
             gschem_toplevel_get_toplevel
@@ -261,7 +263,6 @@
             schematic_window_set_keyaccel_string
             schematic_window_get_keyaccel_string_source_id
             schematic_window_set_keyaccel_string_source_id
-            schematic_window_update_keyaccel_timer
             schematic_window_get_shift_key_pressed
 
             schematic_window_list_find
@@ -444,6 +445,8 @@
 
 ;;; gschem_toplevel.c
 (define-lff schematic_window_active_page_changed void '(*))
+(define-lff schematic_window_add_timer int (list int '* '*))
+(define-lff schematic_window_destroy_timer void (list int))
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_show_hidden_text int '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
@@ -470,7 +473,6 @@
 (define-lff schematic_window_set_keyaccel_string void '(* *))
 (define-lff schematic_window_get_keyaccel_string_source_id int '(*))
 (define-lff schematic_window_set_keyaccel_string_source_id void (list '* int))
-(define-lff schematic_window_update_keyaccel_timer void (list '* '* int))
 (define-lff schematic_window_get_shift_key_pressed int '(*))
 
 ;;; globals.c
