@@ -262,8 +262,9 @@
             schematic_window_get_keyaccel_string_source_id
             schematic_window_set_keyaccel_string_source_id
             schematic_window_update_keyaccel_timer
-            *schematic_window_clear_keyaccel_string
             schematic_window_get_shift_key_pressed
+
+            schematic_window_list_find
 
             gschem_options_cycle_grid_mode
             gschem_options_get_grid_mode
@@ -448,7 +449,6 @@
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff gschem_toplevel_page_changed void '(*))
 (define-lff gschem_toplevel_page_content_changed void '(* *))
-(define-lfc *schematic_window_clear_keyaccel_string)
 (define-lff schematic_window_get_actionfeedback_mode int '(*))
 (define-lff schematic_window_set_actionfeedback_mode void (list '* int))
 (define-lff schematic_window_get_active_page '* '(*))
@@ -472,6 +472,9 @@
 (define-lff schematic_window_set_keyaccel_string_source_id void (list '* int))
 (define-lff schematic_window_update_keyaccel_timer void (list '* '* int))
 (define-lff schematic_window_get_shift_key_pressed int '(*))
+
+;;; globals.c
+(define-lff schematic_window_list_find '* '(*))
 
 ;;; gschem_options.c
 (define-lff gschem_options_cycle_grid_mode void '(*))

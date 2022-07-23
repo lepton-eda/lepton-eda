@@ -39,6 +39,25 @@
 
 ;;; Key event processing.
 
+;;; Clears the current keyboard accelerator string in the status
+;;; bar of the relevant toplevel window *WINDOW.  Called some time
+;;; after a keystroke is pressed.  If the current key sequence was
+;;; a prefix, let it persist.
+(define (clear-key-accelerator-string *window)
+  ;; If the window context has disappeared, do nothing.
+  (unless (null-pointer? (schematic_window_list_find *window))
+    (schematic_window_set_keyaccel_string *window %null-pointer)
+    (schematic_window_set_keyaccel_string_source_id *window 0)
+    (i_show_state *window %null-pointer))
+
+  ;; Return FALSE (this is a one-shot timer).
+  FALSE)
+
+
+(define *clear-keyaccelerator-string
+  (procedure->pointer int clear-key-accelerator-string '(*)))
+
+
 (define (eval-press-key-event *event *page_view *window)
   (define (boolean->c-boolean x)
     (if x TRUE FALSE))
@@ -88,7 +107,7 @@
   (define (update-keyaccel-timer key-press-result)
     (schematic_window_update_keyaccel_timer
      *window
-     *schematic_window_clear_keyaccel_string
+     *clear-keyaccelerator-string
      (boolean->c-boolean (not (key-prefix? key-press-result))))
     ;; Return the key press result to process it further.
     key-press-result)

@@ -868,34 +868,6 @@ schematic_window_get_options (GschemToplevel *w_current)
 }
 
 
-/*! \brief Clear the current key accelerator string.
- * \par Function Description
- * This function clears the current keyboard accelerator string in
- * the status bar of the relevant toplevel.  Called some time after a
- * keystroke is pressed.  If the current key sequence was a prefix,
- * let it persist.
- *
- * \param [in] data a pointer to the GschemToplevel to update.
- * \return FALSE (this is a one-shot timer).
- */
-gboolean
-schematic_window_clear_keyaccel_string (gpointer data)
-{
-  GschemToplevel *w_current = GSCHEM_TOPLEVEL (data);
-
-  /* If the window context has disappeared, do nothing. */
-  if (!schematic_window_list_find (w_current))
-  {
-    return FALSE;
-  }
-
-  schematic_window_set_keyaccel_string (w_current, NULL);
-  schematic_window_set_keyaccel_string_source_id (w_current, 0);
-  i_show_state(w_current, NULL);
-  return FALSE;
-}
-
-
 /*! \brief Update timer for clearing the current key accelerator string.
  * \par Function Description
  * If a timer responsible for clearing key accelerator string in
