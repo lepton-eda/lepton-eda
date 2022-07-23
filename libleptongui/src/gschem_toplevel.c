@@ -868,6 +868,16 @@ schematic_window_get_options (GschemToplevel *w_current)
 }
 
 
+/*! \brief Add a new timer.
+ * \par Function Description
+ *
+ * Adds a new timer that should call \a callback with \a data
+ * argument after given time \a interval in milliseconds.
+ *
+ * \param [in] interval The time interval.
+ * \param [in] callback The callback.
+ * \param [in] data The data.
+ */
 static guint
 schematic_window_add_timer (guint interval,
                             gpointer callback,
@@ -877,6 +887,14 @@ schematic_window_add_timer (guint interval,
 }
 
 
+/*! \brief Destroy timer with given source id.
+ * \par Function Description
+ *
+ * Searches for a timer in the main GTK context having the given
+ * source id.  If such a timer exists, destroys it,
+ *
+ * \param [in] source_id The source id.
+ */
 static void
 schematic_window_destroy_timer (guint source_id)
 {
