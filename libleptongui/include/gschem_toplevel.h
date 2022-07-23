@@ -395,4 +395,10 @@ schematic_window_get_enforce_hierarchy (GschemToplevel *w_current);
 void
 schematic_window_set_enforce_hierarchy (GschemToplevel *w_current,
                                         int enforce);
+guint
+schematic_window_get_keyaccel_string_source_id (GschemToplevel *w_current);
+
+void
+schematic_window_set_keyaccel_string_source_id (GschemToplevel *w_current,
+                                                guint source_id);
 G_END_DECLS

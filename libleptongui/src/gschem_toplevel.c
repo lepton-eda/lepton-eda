@@ -1363,3 +1363,32 @@ schematic_window_set_enforce_hierarchy (GschemToplevel *w_current,
 
   w_current->enforce_hierarchy = enforce;
 }
+
+
+/*! \brief Get the field 'keyaccel_string_source_id' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The field 'keyaccel_string_source_id'.
+ */
+guint
+schematic_window_get_keyaccel_string_source_id (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->keyaccel_string_source_id;
+}
+
+
+/*! \brief Set the field 'keyaccel_string_source_id' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] source_id The new value for the field 'keyaccel_string_source_id'.
+ */
+void
+schematic_window_set_keyaccel_string_source_id (GschemToplevel *w_current,
+                                                guint source_id)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->keyaccel_string_source_id = source_id;
+}
