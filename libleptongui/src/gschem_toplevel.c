@@ -209,7 +209,7 @@ GschemToplevel *gschem_toplevel_new ()
 
 
   w_current->keyaccel_string = NULL;
-  w_current->keyaccel_string_source_id = 0;
+  schematic_window_set_keyaccel_string_source_id (w_current, 0);
 
   /* ------------ */
   /* Dialog boxes */
@@ -886,7 +886,8 @@ schematic_window_update_keyaccel_string (GschemToplevel *w_current,
   /* If no current hint string, or the hint string is going to be
    * cleared anyway, use key string directly */
   if ((w_current->keyaccel_string == NULL) ||
-      w_current->keyaccel_string_source_id) {
+      schematic_window_get_keyaccel_string_source_id (w_current) != 0)
+  {
     g_free (w_current->keyaccel_string);
     w_current->keyaccel_string = g_strdup (keystr);
   }
@@ -925,7 +926,7 @@ schematic_window_clear_keyaccel_string (gpointer data)
 
   g_free(w_current->keyaccel_string);
   w_current->keyaccel_string = NULL;
-  w_current->keyaccel_string_source_id = 0;
+  schematic_window_set_keyaccel_string_source_id (w_current, 0);
   i_show_state(w_current, NULL);
   return FALSE;
 }
@@ -947,22 +948,24 @@ schematic_window_update_keyaccel_timer (GschemToplevel *w_current,
                                         gpointer clear_keyaccel_callback,
                                         gboolean start_timer)
 {
-  if (w_current->keyaccel_string_source_id)
+  guint source_id = schematic_window_get_keyaccel_string_source_id (w_current);
+  if (source_id != 0)
   {
     /* Cancel any existing timers that haven't fired yet. */
     GSource *timer =
-      g_main_context_find_source_by_id (NULL,
-                                        w_current->keyaccel_string_source_id);
+      g_main_context_find_source_by_id (NULL, source_id);
     if (timer != NULL)
     {
       g_source_destroy (timer);
     }
-    w_current->keyaccel_string_source_id = 0;
+    schematic_window_set_keyaccel_string_source_id (w_current, 0);
   }
   if (start_timer)
   {
-    w_current->keyaccel_string_source_id =
+    source_id =
       g_timeout_add (400, (GSourceFunc) clear_keyaccel_callback, w_current);
+
+    schematic_window_set_keyaccel_string_source_id (w_current, source_id);
   }
 }
 
