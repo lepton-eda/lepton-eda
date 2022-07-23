@@ -257,7 +257,10 @@
             schematic_window_set_right_notebook
             schematic_window_get_selection_list
             schematic_window_get_undo_panzoom
-            schematic_window_update_keyaccel_string
+            schematic_window_get_keyaccel_string
+            schematic_window_set_keyaccel_string
+            schematic_window_get_keyaccel_string_source_id
+            schematic_window_set_keyaccel_string_source_id
             schematic_window_update_keyaccel_timer
             *schematic_window_clear_keyaccel_string
             schematic_window_get_shift_key_pressed
@@ -463,7 +466,10 @@
 (define-lff schematic_window_set_right_notebook void '(* *))
 (define-lff schematic_window_get_selection_list '* '(*))
 (define-lff schematic_window_get_undo_panzoom int '(*))
-(define-lff schematic_window_update_keyaccel_string void '(* *))
+(define-lff schematic_window_get_keyaccel_string '* '(*))
+(define-lff schematic_window_set_keyaccel_string void '(* *))
+(define-lff schematic_window_get_keyaccel_string_source_id int '(*))
+(define-lff schematic_window_set_keyaccel_string_source_id void (list '* int))
 (define-lff schematic_window_update_keyaccel_timer void (list '* '* int))
 (define-lff schematic_window_get_shift_key_pressed int '(*))
 

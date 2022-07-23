@@ -307,9 +307,6 @@ schematic_window_get_pages (GschemToplevel *w_current);
 GschemOptions*
 schematic_window_get_options (GschemToplevel *w_current);
 
-void
-schematic_window_update_keyaccel_string (GschemToplevel *w_current,
-                                         char *keystr);
 gboolean
 schematic_window_clear_keyaccel_string (gpointer data);
 

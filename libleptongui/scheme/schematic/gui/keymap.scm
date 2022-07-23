@@ -43,10 +43,29 @@
   (define (boolean->c-boolean x)
     (if x TRUE FALSE))
 
+  ;; Update key accelerator string in status bar.
   (define (update-window-statusbar key)
-    (schematic_window_update_keyaccel_string
-     *window
-     (string->pointer (key->display-string key))))
+    ;; Given the key accelerator string previously set in the
+    ;; status bar, the function updates it by combining it with
+    ;; the new key label, or just sets the new value provided.
+    ;; The behaviour varies depending on whether the previously
+    ;; set string was a prefix in a key sequence or not.  If no
+    ;; current hint string, or the hint string is going to be
+    ;; cleared anyway, use key string directly.
+    (let ((new-key-string (key->display-string key))
+          (*current-key-string (schematic_window_get_keyaccel_string *window))
+          (source-id (schematic_window_get_keyaccel_string_source_id *window)))
+      (schematic_window_set_keyaccel_string
+       *window
+       (string->pointer
+        (string-join
+         (if (or (null-pointer? *current-key-string)
+                 (not (zero? source-id)))
+             (list new-key-string)
+             (list (pointer->string *current-key-string) new-key-string))))))
+
+    ;; Update status bar.
+    (i_show_state *window %null-pointer))
 
   (define (protected-eval-key-press key)
     ;; First update the status bar with the current key sequence.

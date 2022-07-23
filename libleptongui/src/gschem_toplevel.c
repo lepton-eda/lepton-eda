@@ -868,42 +868,6 @@ schematic_window_get_options (GschemToplevel *w_current)
 }
 
 
-/*! \brief Update key accelerator string in status bar.
- * \par Function Description
- * Given the key accelerator string previously set in the status
- * bar, updates it by combining it with the new key label, or just
- * sets the new value provided.  The behaviour varies depending on
- * whether the previously set string was a prefix in a key
- * sequence or not.
- *
- * \param [in] w_current The active #GschemToplevel context.
- * \param [in] keystr The new key label.
- */
-void
-schematic_window_update_keyaccel_string (GschemToplevel *w_current,
-                                         char *keystr)
-{
-  /* If no current hint string, or the hint string is going to be
-   * cleared anyway, use key string directly */
-  if (schematic_window_get_keyaccel_string (w_current) == NULL ||
-      schematic_window_get_keyaccel_string_source_id (w_current) != 0)
-  {
-    schematic_window_set_keyaccel_string (w_current, keystr);
-  }
-  else
-  {
-    const gchar *current_keystr =
-      schematic_window_get_keyaccel_string (w_current);
-    gchar *composed_keystr = g_strconcat (current_keystr, " ", keystr, NULL);
-    schematic_window_set_keyaccel_string (w_current, composed_keystr);
-    g_free (composed_keystr);
-  }
-
-  /* Update status bar */
-  i_show_state(w_current, NULL);
-}
-
-
 /*! \brief Clear the current key accelerator string.
  * \par Function Description
  * This function clears the current keyboard accelerator string in
