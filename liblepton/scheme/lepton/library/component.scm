@@ -98,7 +98,7 @@ library directory."
                                     (string->pointer name))))
         ;; Report that path is invalid.
         (log! 'warning
-              (G_ "Invalid path ~S passed to component-library.\n")
+              (G_ "Invalid path ~S passed to component-library.")
               expanded-path))))
 
 
