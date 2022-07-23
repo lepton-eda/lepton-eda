@@ -401,4 +401,10 @@ schematic_window_get_keyaccel_string_source_id (GschemToplevel *w_current);
 void
 schematic_window_set_keyaccel_string_source_id (GschemToplevel *w_current,
                                                 guint source_id);
+const char*
+schematic_window_get_keyaccel_string (GschemToplevel *w_current);
+
+void
+schematic_window_set_keyaccel_string (GschemToplevel *w_current,
+                                      char *str);
 G_END_DECLS

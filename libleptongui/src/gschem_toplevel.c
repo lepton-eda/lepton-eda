@@ -1395,3 +1395,33 @@ schematic_window_set_keyaccel_string_source_id (GschemToplevel *w_current,
 
   w_current->keyaccel_string_source_id = source_id;
 }
+
+
+/*! \brief Get the field 'keyaccel_string' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The field 'keyaccel_string'.
+ */
+const char*
+schematic_window_get_keyaccel_string (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->keyaccel_string;
+}
+
+
+/*! \brief Set the field 'keyaccel_string' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] str The new value for the field 'keyaccel_string'.
+ */
+void
+schematic_window_set_keyaccel_string (GschemToplevel *w_current,
+                                      char *str)
+{
+  g_return_if_fail (w_current != NULL);
+
+  g_free (w_current->keyaccel_string);
+  w_current->keyaccel_string = g_strdup (str);
+}
