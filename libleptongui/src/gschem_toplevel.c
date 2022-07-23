@@ -868,6 +868,26 @@ schematic_window_get_options (GschemToplevel *w_current)
 }
 
 
+static guint
+schematic_window_add_timer (guint interval,
+                            gpointer callback,
+                            gpointer data)
+{
+  return g_timeout_add (interval, (GSourceFunc) callback, data);
+}
+
+
+static void
+schematic_window_destroy_timer (guint source_id)
+{
+  GSource *timer = g_main_context_find_source_by_id (NULL, source_id);
+  if (timer != NULL)
+  {
+    g_source_destroy (timer);
+  }
+}
+
+
 /*! \brief Update timer for clearing the current key accelerator string.
  * \par Function Description
  * If a timer responsible for clearing key accelerator string in
@@ -888,18 +908,15 @@ schematic_window_update_keyaccel_timer (GschemToplevel *w_current,
   if (source_id != 0)
   {
     /* Cancel any existing timers that haven't fired yet. */
-    GSource *timer =
-      g_main_context_find_source_by_id (NULL, source_id);
-    if (timer != NULL)
-    {
-      g_source_destroy (timer);
-    }
+    schematic_window_destroy_timer (source_id);
     schematic_window_set_keyaccel_string_source_id (w_current, 0);
   }
   if (start_timer)
   {
     source_id =
-      g_timeout_add (400, (GSourceFunc) clear_keyaccel_callback, w_current);
+      schematic_window_add_timer (400,
+                                    (gpointer) clear_keyaccel_callback,
+                                    (gpointer) w_current);
 
     schematic_window_set_keyaccel_string_source_id (w_current, source_id);
   }
