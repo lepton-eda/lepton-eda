@@ -208,7 +208,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->page_select_dialog       = NULL;
 
 
-  w_current->keyaccel_string = NULL;
+  schematic_window_set_keyaccel_string (w_current, NULL);
   schematic_window_set_keyaccel_string_source_id (w_current, 0);
 
   /* ------------ */
@@ -885,17 +885,18 @@ schematic_window_update_keyaccel_string (GschemToplevel *w_current,
 {
   /* If no current hint string, or the hint string is going to be
    * cleared anyway, use key string directly */
-  if ((w_current->keyaccel_string == NULL) ||
+  if (schematic_window_get_keyaccel_string (w_current) == NULL ||
       schematic_window_get_keyaccel_string_source_id (w_current) != 0)
   {
-    g_free (w_current->keyaccel_string);
-    w_current->keyaccel_string = g_strdup (keystr);
+    schematic_window_set_keyaccel_string (w_current, keystr);
   }
   else
   {
-    gchar *p = w_current->keyaccel_string;
-    w_current->keyaccel_string = g_strconcat (p, " ", keystr, NULL);
-    g_free (p);
+    const gchar *current_keystr =
+      schematic_window_get_keyaccel_string (w_current);
+    gchar *composed_keystr = g_strconcat (current_keystr, " ", keystr, NULL);
+    schematic_window_set_keyaccel_string (w_current, composed_keystr);
+    g_free (composed_keystr);
   }
 
   /* Update status bar */
@@ -924,8 +925,7 @@ schematic_window_clear_keyaccel_string (gpointer data)
     return FALSE;
   }
 
-  g_free(w_current->keyaccel_string);
-  w_current->keyaccel_string = NULL;
+  schematic_window_set_keyaccel_string (w_current, NULL);
   schematic_window_set_keyaccel_string_source_id (w_current, 0);
   i_show_state(w_current, NULL);
   return FALSE;

@@ -138,11 +138,15 @@ void i_show_state(GschemToplevel *w_current, const char *message)
 
   what_to_say = g_strjoinv(" - ", (gchar **) array + i);
 
-  if(w_current->keyaccel_string) {
+
+  if (schematic_window_get_keyaccel_string (w_current))
+  {
      gchar *p = what_to_say;
 
-     what_to_say = g_strdup_printf("%s \t\t %s", w_current->keyaccel_string,
-           what_to_say);
+     what_to_say =
+       g_strdup_printf("%s \t\t %s",
+                       schematic_window_get_keyaccel_string (w_current),
+                       what_to_say);
      g_free(p);
   }
 

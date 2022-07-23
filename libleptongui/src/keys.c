@@ -83,8 +83,7 @@ schematic_keys_reset (GschemToplevel *w_current)
   SCM s_expr = scm_list_1 (scm_from_utf8_symbol ("reset-keys"));
 
   /* Reset the status bar */
-  g_free (w_current->keyaccel_string);
-  w_current->keyaccel_string = NULL;
+  schematic_window_set_keyaccel_string (w_current, NULL);
   i_show_state(w_current, NULL);
 
   /* Reset the Scheme keybinding state */
