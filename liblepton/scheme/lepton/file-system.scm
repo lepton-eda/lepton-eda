@@ -1,6 +1,6 @@
 ;;; Lepton EDA library - Scheme API
 ;;; Copyright (C) 2007-2016 gEDA Contributors
-;;; Copyright (C) 2017-2019 Lepton EDA Contributors
+;;; Copyright (C) 2017-2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -25,12 +25,14 @@
             file-readable?))
 
 (define (regular-file? path)
-  "Returns #t if the given path is a regular file, otherwise #f."
-  (eqv? (stat:type (stat path)) 'regular))
+  "Returns #t if the given path exists and is a regular file, otherwise #f."
+  (and (file-exists? path)
+       (eqv? (stat:type (stat path)) 'regular)))
 
 (define (directory? path)
-  "Returns #t if the given path is a directory file, otherwise #f."
-  (eqv? (stat:type (stat path)) 'directory ))
+  "Returns #t if the given path exists and is a directory file, otherwise #f."
+  (and (file-exists? path)
+       (eqv? (stat:type (stat path)) 'directory)))
 
 (define (file-readable? filename)
   "Returns #t if file FILENAME is readable with current user's
