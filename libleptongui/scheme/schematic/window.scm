@@ -23,6 +23,7 @@
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
+  #:use-module (lepton config)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
@@ -104,8 +105,13 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_create_menubar *window *main-box *menubar)
 
       ;; Make toolbar.
-      (schematic_window_set_toolbar *window
-                                    (make-toolbar *window *main-box))
+      (let ((create-toolbar?
+             (config-boolean (path-config-context (getcwd))
+                             "schematic.gui"
+                             "toolbars")))
+        (when create-toolbar?
+          (schematic_window_set_toolbar *window
+                                        (make-toolbar *window *main-box))))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
 
