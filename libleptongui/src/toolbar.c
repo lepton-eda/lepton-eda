@@ -228,11 +228,6 @@ GtkWidget*
 schematic_toolbar_new (GschemToplevel *w_current,
                        GtkWidget *main_box)
 {
-  if (w_current->toolbars == 0)
-  {
-    return NULL;
-  }
-
   GtkWidget *toolbar = gtk_toolbar_new ();
 
   gtk_orientable_set_orientation (GTK_ORIENTABLE (toolbar),
