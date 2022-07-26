@@ -28,7 +28,6 @@
   #:use-module (symbol check duplicate)
 
   #:export (create-net-name
-            netattrib-search-net
             check-net-maps
             attrib-value-by-name))
 
@@ -70,54 +69,6 @@ primitives."
   (first* (map attrib-value
                (filter has-appropriate-name? (object-attribs object)))))
 
-
-(define (blame-missing-colon net-attrib-value)
-  (log! 'critical
-        (G_ "Invalid attribute (missing ':'): net=~A")
-        net-attrib-value)
-  #f)
-
-(define (netattrib-netname s)
-  (and s
-       (let ((colon-position (string-index s #\:)))
-         (if colon-position
-             (string-take s colon-position)
-             (blame-missing-colon s)))))
-
-(define %delimiters (string->char-set ",; "))
-
-(define (netattrib-search-net object wanted-pin)
-  (define (search-pin value)
-    (let ((colon-position (string-index value #\:)))
-      (if colon-position
-          (let ((net-name (netattrib-netname value))
-                (pin-part (string-drop value (1+ colon-position))))
-            (let loop ((pin-list (string-split pin-part %delimiters)))
-              (and (not (null? pin-list))
-                   (if (string=? (car pin-list) wanted-pin)
-                       net-name
-                       (loop (cdr pin-list))))))
-          (blame-missing-colon value))))
-
-  (define (search-in-values ls)
-    (and (not (null? ls))
-         (or (search-pin (car ls))
-             (search-in-values (cdr ls)))))
-
-  (define (net-values attribs)
-    (define (net-value attrib)
-      (and (string=? (attrib-name attrib) "net")
-           (attrib-value attrib)))
-    (filter-map net-value attribs))
-
-  (and object
-       (component? object)
-       ;; first look inside the component (for backward compatibility)
-       (let ((inherited (search-in-values (net-values (inherited-attribs object)))))
-             (or
-              ;; now look outside the component
-              (search-in-values (net-values (object-attribs object)))
-              inherited))))
 
 ;;; Checks for duplicate pinnumbers in NET-MAPS.
 (define (check-duplicates/net-maps-override net-maps)
