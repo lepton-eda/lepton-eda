@@ -560,7 +560,6 @@ void x_stroke_record (GschemToplevel *w_current, gint x, gint y);
 gint x_stroke_translate_and_execute (GschemToplevel *w_current);
 
 /* x_window.c */
-GschemToplevel* x_window_setup (GschemToplevel *w_current);
 void x_window_create_drawing(GtkWidget *drawbox, GschemToplevel *w_current);
 void x_window_setup_draw_events_main_wnd (GschemToplevel* w_current,
                                           GtkWidget*      main_window);

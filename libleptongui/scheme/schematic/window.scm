@@ -70,8 +70,25 @@
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
 --with-gtk3).  TOPLEVEL is a foreign LeptonToplevel structure."
+  (define (setup-window *window)
+    (let ((*toplevel (gschem_toplevel_get_toplevel *window)))
+      ;; Immediately setup user params.
+      (i_vars_set *window)
+
+      ;; Initialize the autosave callback.
+      (lepton_toplevel_init_autosave *toplevel)
+
+      ;; Initialize the clipboard callback.
+      (x_clipboard_init *window)
+
+      ;; Add to the list of windows.
+      (schematic_window_list_add *window)
+
+      ;; Return the window.
+      *window))
+
   (define *window
-    (x_window_setup (x_window_new (parse-gschemrc *toplevel))))
+    (setup-window (x_window_new (parse-gschemrc *toplevel))))
 
   (let ((*main-window (schematic_window_create_app_window *app)))
     (schematic_signal_connect *main-window

@@ -52,32 +52,6 @@ static LeptonPage*
 x_window_new_page (GschemToplevel* w_current);
 
 
-
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-GschemToplevel*
-x_window_setup (GschemToplevel *w_current)
-{
-  LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
-
-  /* immediately setup user params */
-  i_vars_set(w_current);
-
-  /* Initialize the autosave callback */
-  lepton_toplevel_init_autosave (toplevel);
-
-  /* Initialize the clipboard callback */
-  x_clipboard_init (w_current);
-
-  /* Add to the list of windows */
-  schematic_window_list_add (w_current);
-
-  return w_current;
-}
-
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description

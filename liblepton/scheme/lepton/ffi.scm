@@ -333,6 +333,7 @@
             lepton_toplevel_get_page_current
             lepton_toplevel_get_pages
             lepton_toplevel_goto_page
+            lepton_toplevel_init_autosave
             lepton_toplevel_search_page
 
             lepton_object_list_to_buffer
@@ -395,6 +396,7 @@
 (define-lff lepton_toplevel_get_page_current '* '(*))
 (define-lff lepton_toplevel_get_pages '* '(*))
 (define-lff lepton_toplevel_goto_page void '(* *))
+(define-lff lepton_toplevel_init_autosave void '(*))
 (define-lff lepton_toplevel_search_page '* '(* *))
 
 ;;; g_rc.c

@@ -50,6 +50,8 @@
             i_update_grid_info
             i_update_menus
 
+            i_vars_set
+
             make_menu_action
             make_separator_menu_item
             schematic_window_create_main_popup_menu
@@ -118,6 +120,8 @@
 
             autonumber_text_dialog
 
+            x_clipboard_init
+
             x_show_uri
             x_stroke_init
 
@@ -156,7 +160,6 @@
             x_window_open_page
             x_window_save_page
             x_window_set_current_page
-            x_window_setup
             x_window_setup_draw_events_drawing_area
             x_window_setup_draw_events_main_wnd
             x_window_untitled_page
@@ -265,6 +268,7 @@
             schematic_window_get_shift_key_pressed
 
             schematic_window_list
+            schematic_window_list_add
             schematic_window_list_find
 
             gschem_options_cycle_grid_mode
@@ -477,6 +481,7 @@
 
 ;;; globals.c
 (define-lff schematic_window_list '* '())
+(define-lff schematic_window_list_add void '(*))
 (define-lff schematic_window_list_find '* '(*))
 
 ;;; gschem_options.c
@@ -509,7 +514,6 @@
 (define-lff x_window_open_page '* '(* *))
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_set_current_page void '(* *))
-(define-lff x_window_setup '* '(*))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
 (define-lff x_window_untitled_page int '(*))
@@ -585,6 +589,9 @@
 (define-lff i_update_grid_info void '(*))
 (define-lff i_update_menus void '(*))
 
+;;; i_vars.c
+(define-lff i_vars_set void '(*))
+
 ;;; o_basic.c
 (define-lff o_redraw_cleanstates int '(*))
 (define-lff o_invalidate_rubber int '(*))
@@ -639,6 +646,9 @@
 
 ;;; x_autonumber.c
 (define-lff autonumber_text_dialog void '(*))
+
+;;; x_clipboard.c
+(define-lff x_clipboard_init void '(*))
 
 ;;; x_misc.c
 (define-lff x_show_uri int '(* * *))
