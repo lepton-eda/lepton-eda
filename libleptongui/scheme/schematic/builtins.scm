@@ -530,8 +530,10 @@
 (define-action-public (&options-snap #:label (G_ "Switch Snap Mode"))
   (run-callback i_callback_options_snap "&options-snap"))
 
+;;; Shows the options widget.
 (define-action-public (&options-snap-size #:label (G_ "Set Grid Spacing"))
-  (snap_size_dialog (*current-window)))
+  (x_widgets_show_options (*current-window)))
+
 
 (define-action-public (&options-scale-up-snap-size #:label (G_ "Increase Grid Spacing"))
   (run-callback i_callback_options_scale_up_snap_size "&options-scale-up-snap-size"))

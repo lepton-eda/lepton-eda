@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2015 gEDA Contributors
- * Copyright (C) 2017-2020 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -133,16 +133,6 @@ gschem_options_widget_new (GschemToplevel *w_current)
   return GTK_WIDGET (g_object_new (GSCHEM_TYPE_OPTIONS_WIDGET,
                                    "gschem-toplevel",  w_current,
                                    NULL));
-}
-
-
-
-/*! \brief Shows the options widget
- */
-void
-snap_size_dialog (GschemToplevel *w_current)
-{
-  x_widgets_show_options (w_current);
 }
 
 

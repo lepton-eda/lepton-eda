@@ -146,6 +146,7 @@
             x_widgets_show_font_select
             x_widgets_show_log
             x_widgets_show_object_properties
+            x_widgets_show_options
             x_widgets_show_page_select
 
             x_window_close
@@ -218,8 +219,6 @@
             schematic_window_update_keyaccel_timer
 
             gschem_options_get_snap_size
-
-            snap_size_dialog
 
             text_edit_dialog
 
@@ -306,6 +305,7 @@
 (define-lff x_widgets_show_font_select void '(*))
 (define-lff x_widgets_show_log void '(*))
 (define-lff x_widgets_show_object_properties void '(*))
+(define-lff x_widgets_show_options void '(*))
 (define-lff x_widgets_show_page_select void '(*))
 
 ;;; keys.c
@@ -343,9 +343,6 @@
 
 ;;; gschem_options.c
 (define-lff gschem_options_get_snap_size int '(*))
-
-;;; gschem_options_widget.c
-(define-lff snap_size_dialog void '(*))
 
 ;;; gschem_text_properties_widget.c
 (define-lff text_edit_dialog void '(*))

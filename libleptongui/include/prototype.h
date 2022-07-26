@@ -498,7 +498,6 @@ void select_all_text_in_textview(GtkTextView *textview);
 void text_input_dialog(GschemToplevel *w_current);
 void text_edit_dialog(GschemToplevel *w_current);
 void arc_angle_dialog(GschemToplevel *w_current, LeptonObject *arc_object);
-void snap_size_dialog(GschemToplevel *w_current);
 void about_dialog(GschemToplevel *w_current);
 void coord_display_update(GschemToplevel *w_current, int x, int y);
 void coord_dialog(GschemToplevel *w_current, int x, int y);
