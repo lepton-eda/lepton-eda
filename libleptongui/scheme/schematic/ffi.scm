@@ -151,7 +151,6 @@
             x_widgets_toggle_widget_visibility
 
             x_window_close
-            x_window_close_all
             x_window_close_page
             x_window_new
             x_window_open_page
@@ -265,6 +264,7 @@
             schematic_window_set_keyaccel_string_source_id
             schematic_window_get_shift_key_pressed
 
+            schematic_window_list
             schematic_window_list_find
 
             gschem_options_cycle_grid_mode
@@ -476,6 +476,7 @@
 (define-lff schematic_window_get_shift_key_pressed int '(*))
 
 ;;; globals.c
+(define-lff schematic_window_list '* '())
 (define-lff schematic_window_list_find '* '(*))
 
 ;;; gschem_options.c
@@ -513,7 +514,6 @@
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
 (define-lff x_window_untitled_page int '(*))
 (define-lff x_window_close void '(*))
-(define-lff x_window_close_all void '(*))
 (define-lff x_window_close_page '* '(* *))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))

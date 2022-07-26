@@ -658,27 +658,6 @@ void x_window_close(GschemToplevel *w_current)
   }
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-void x_window_close_all(GschemToplevel *w_current)
-{
-  GschemToplevel *current;
-  GList *list_copy, *iter;
-
-  GList *gwl = schematic_window_list ();
-  iter = list_copy = g_list_copy (gwl);
-  while (iter != NULL ) {
-    current = (GschemToplevel *)iter->data;
-    iter = g_list_next (iter);
-    x_window_close (current);
-  }
-  g_list_free (list_copy);
-}
-
-
 
 /*! \brief Opens a new page from a file.
  *  \private

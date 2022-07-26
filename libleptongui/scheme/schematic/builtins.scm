@@ -173,9 +173,17 @@
   (log! 'message (G_ "Closing Window"))
   (x_window_close (*current-window)))
 
+
 (define-action-public (&file-quit #:label (G_ "Quit") #:icon "gtk-quit")
   (lepton-repl-save-history)
-  (x_window_close_all (*current-window)))
+  (let ((*list-copy (g_list_copy (schematic_window_list))))
+    (let loop ((*window-list *list-copy))
+      (if (null-pointer? *window-list)
+          (g_list_free *list-copy)
+          (begin
+            (x_window_close (glist-data *window-list))
+            (loop (glist-next *window-list)))))))
+
 
 (define-action-public (&file-repl #:label (G_ "Terminal REPL") #:icon "gtk-execute")
   (start-repl-in-background-terminal))
