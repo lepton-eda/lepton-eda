@@ -46,7 +46,8 @@
                current-window
                with-window)
 
-  #:export (make-schematic-window
+  #:export (close-window!
+            make-schematic-window
             active-page
             set-active-page!
             pointer-position
@@ -66,10 +67,15 @@
   (procedure->pointer int process-key-event '(* * *)))
 
 
+(define (close-window! *window)
+  "Closes *WINDOW."
+  (x_window_close *window))
+
+
 (define (callback-close-schematic-window *widget *event *window)
   (if (null-pointer? *window)
       (error "NULL window.")
-      (x_window_close *window))
+      (close-window! *window))
   ;; Stop further propagation of the "delete-event" signal for
   ;; window:
   ;;   - if the user has cancelled closing, the window should

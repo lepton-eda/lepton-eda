@@ -171,7 +171,7 @@
 
 (define-action-public (&file-close-window #:label (G_ "Close Window") #:icon "gtk-close")
   (log! 'message (G_ "Closing Window"))
-  (x_window_close (*current-window)))
+  (close-window! (*current-window)))
 
 
 (define-action-public (&file-quit #:label (G_ "Quit") #:icon "gtk-quit")
@@ -181,7 +181,7 @@
       (if (null-pointer? *window-list)
           (g_list_free *list-copy)
           (begin
-            (x_window_close (glist-data *window-list))
+            (close-window! (glist-data *window-list))
             (loop (glist-next *window-list)))))))
 
 
