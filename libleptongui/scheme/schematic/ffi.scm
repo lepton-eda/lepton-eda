@@ -27,6 +27,7 @@
 
   #:export (lepton_schematic_run
             lepton_schematic_app
+            gschem_quit
 
             g_init_window
 
@@ -346,6 +347,7 @@
 ;;; lepton_schematic.c
 (define-lff lepton_schematic_run int '(*))
 (define-lff lepton_schematic_app '* '())
+(define-lff gschem_quit void '())
 
 ;;; g_basic.c
 (define-lff g_read_file int '(* * *))

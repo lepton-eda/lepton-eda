@@ -619,11 +619,6 @@ x_window_close (GschemToplevel *w_current,
 
   schematic_window_list_remove (w_current);
   gschem_toplevel_free (w_current);
-
-  /* just closed last window, so quit */
-  if (last_window) {
-    gschem_quit();
-  }
 }
 
 

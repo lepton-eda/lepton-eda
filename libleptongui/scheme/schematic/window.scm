@@ -69,9 +69,14 @@
 
 (define (close-window! *window)
   "Closes *WINDOW."
-  (x_window_close *window
-                  ;; Check if the window is the last one.
-                  (if (= (schematic_window_list_length) 1) TRUE FALSE)))
+  (let ((last-window? (= (schematic_window_list_length) 1)))
+    (x_window_close *window
+                    ;; Check if the window is the last one.
+                    (if last-window? TRUE FALSE))
+
+    ;; Just closed last window, so quit.
+    (when (zero? (schematic_window_list_length))
+      (gschem_quit))))
 
 
 (define (callback-close-schematic-window *widget *event *window)
