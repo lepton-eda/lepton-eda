@@ -218,7 +218,6 @@
 
             gschem_options_get_snap_size
             gschem_options_set_snap_size
-            gschem_options_scale_snap_down
 
             text_edit_dialog
 
@@ -344,7 +343,6 @@
 ;;; gschem_options.c
 (define-lff gschem_options_get_snap_size int '(*))
 (define-lff gschem_options_set_snap_size void (list '* int))
-(define-lff gschem_options_scale_snap_down void '(*))
 
 ;;; gschem_text_properties_widget.c
 (define-lff text_edit_dialog void '(*))

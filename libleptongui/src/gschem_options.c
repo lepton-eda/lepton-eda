@@ -227,25 +227,6 @@ gschem_options_new ()
 }
 
 
-/*! \brief Scale the snap size down
- *
- *  \param [in] options These options
- */
-void
-gschem_options_scale_snap_down (GschemOptions *options)
-{
-  g_return_if_fail (options != NULL);
-
-  int snap_size = gschem_options_get_snap_size (options);
-
-  if ((snap_size % 2) == 0)
-  {
-    gschem_options_set_snap_size (options, snap_size / 2);
-  }
-}
-
-
-
 /*! \brief Set the grid mode
  *
  *  If the grid mode is invalid the default grid mode is set.

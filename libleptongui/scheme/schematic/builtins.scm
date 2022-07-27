@@ -544,7 +544,11 @@
 
 ;;; Divides by two the snap grid size (if it's and even number).
 (define-action-public (&options-scale-down-snap-size #:label (G_ "Decrease Grid Spacing"))
-  (gschem_options_scale_snap_down (schematic_window_get_options (*current-window))))
+  (define *options (schematic_window_get_options (*current-window)))
+  (define snap-size (gschem_options_get_snap_size *options))
+  (when (even? snap-size)
+    (gschem_options_set_snap_size *options (/ snap-size 2))))
+
 
 (define-action-public (&options-action-feedback #:label (G_ "Toggle Outline Drawing"))
   (run-callback i_callback_options_afeedback "&options-action-feedback"))
