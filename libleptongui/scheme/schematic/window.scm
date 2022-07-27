@@ -36,6 +36,7 @@
 
   #:use-module (schematic callback)
   #:use-module (schematic ffi)
+  #:use-module (schematic ffi gtk)
   #:use-module (schematic gui keymap)
   #:use-module (schematic menu)
   #:use-module (schematic toolbar)
@@ -76,7 +77,18 @@
 
     ;; Just closed last window, so quit.
     (when (zero? (schematic_window_list_length))
-      (gschem_quit))))
+      ;; Clean up all memory objects allocated during the
+      ;; lepton-schematic runtime.
+      (i_vars_atexit_save_cache_config %null-pointer)
+      (s_clib_free)
+      (s_attrib_free)
+      (x_stroke_free)
+      (o_undo_cleanup)
+
+      ;; Check whether the main loop is running.
+      (if (zero? (gtk_main_level))
+          (primitive-exit 0)
+          (gtk_main_quit)))))
 
 
 (define (callback-close-schematic-window *widget *event *window)

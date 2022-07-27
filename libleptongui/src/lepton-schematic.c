@@ -51,33 +51,6 @@ set_quiet_mode () {
 }
 
 
-/*! \brief Cleanup gSchem on exit.
- *  \par Function Description
- *  This function cleans up all memory objects allocated during the
- *  gSchem runtime.
- */
-void gschem_quit(void)
-{
-  i_vars_atexit_save_cache_config (NULL);
-  s_clib_free();
-  s_attrib_free();
-#ifdef HAVE_LIBSTROKE
-  x_stroke_free ();
-#endif /* HAVE_LIBSTROKE */
-  o_undo_cleanup();
-
-  /* Check whether the main loop is running:
-  */
-  if (gtk_main_level() == 0)
-  {
-    exit (0);
-  }
-  else
-  {
-    gtk_main_quit();
-  }
-}
-
 #ifdef ENABLE_GTK3
 static GtkApplication *app = NULL;
 #endif

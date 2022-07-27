@@ -22,6 +22,8 @@
   #:use-module (lepton ffi)
 
   #:export (gtk_init
+            gtk_main_level
+            gtk_main_quit
             gtk_accelerator_parse
             gtk_accelerator_name
             gtk_accelerator_get_label
@@ -52,6 +54,9 @@
 (define-lff gtk_icon_theme_get_default '* '())
 
 (define-lff gtk_init void '(* *))
+
+(define-lff gtk_main_level int '())
+(define-lff gtk_main_quit void '())
 
 (define-lff gtk_menu_item_new_with_mnemonic '* '(*))
 (define-lff gtk_menu_new '* '())

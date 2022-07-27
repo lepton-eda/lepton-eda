@@ -27,7 +27,6 @@
 
   #:export (lepton_schematic_run
             lepton_schematic_app
-            gschem_quit
 
             g_init_window
 
@@ -51,6 +50,7 @@
             i_update_grid_info
             i_update_menus
 
+            i_vars_atexit_save_cache_config
             i_vars_set
 
             make_menu_action
@@ -63,8 +63,6 @@
             o_buffer_copy
             o_buffer_cut
             o_buffer_paste_start
-
-            o_undo_init
 
             o_redraw_cleanstates
             o_invalidate_rubber
@@ -105,7 +103,10 @@
             page_select_widget_new
             page_select_widget_update
 
+            s_attrib_free
+
             s_clib_refresh
+            s_clib_free
 
             set_quiet_mode
             set_verbose_mode
@@ -124,7 +125,9 @@
             x_clipboard_init
 
             x_show_uri
+
             x_stroke_init
+            x_stroke_free
 
             find_text_dialog
             hide_text_dialog
@@ -294,6 +297,8 @@
             s_slot_update_object
 
             o_undo_callback
+            o_undo_cleanup
+            o_undo_init
             o_undo_savestate
             o_undo_savestate_viewport
 
@@ -347,7 +352,6 @@
 ;;; lepton_schematic.c
 (define-lff lepton_schematic_run int '(*))
 (define-lff lepton_schematic_app '* '())
-(define-lff gschem_quit void '())
 
 ;;; g_basic.c
 (define-lff g_read_file int '(* * *))
@@ -372,8 +376,12 @@
 (define-lff set_verbose_mode void '())
 (define-lff x_color_init void '())
 
+;;; s_attrib.c
+(define-lff s_attrib_free void '())
+
 ;;; s_clib.c
 (define-lff s_clib_refresh void '())
+(define-lff s_clib_free void '())
 
 ;;; color_edit_widget.c
 (define-lff color_edit_widget_update void '(*))
@@ -595,6 +603,7 @@
 
 ;;; i_vars.c
 (define-lff i_vars_set void '(*))
+(define-lff i_vars_atexit_save_cache_config void '(*))
 
 ;;; o_basic.c
 (define-lff o_redraw_cleanstates int '(*))
@@ -696,6 +705,7 @@
 ;;; o_undo.c
 (define-lff o_undo_init void '())
 (define-lff o_undo_callback void (list '* '* int))
+(define-lff o_undo_cleanup void '())
 (define-lff o_undo_savestate void (list '* '* int))
 (define-lff o_undo_savestate_viewport void '(*))
 
@@ -707,6 +717,14 @@
 ;;; if libstroke was not found on the configure stage.
 (define (x_stroke_init)
   (let ((func (delay (false-if-exception (dynamic-func "x_stroke_init"
+                                                       libleptongui)))))
+    (and (force func)
+         (let ((proc (delay (pointer->procedure void (force func) '()))))
+           ((force proc))))))
+
+;;; The same as above.
+(define (x_stroke_free)
+  (let ((func (delay (false-if-exception (dynamic-func "x_stroke_free"
                                                        libleptongui)))))
     (and (force func)
          (let ((proc (delay (pointer->procedure void (force func) '()))))

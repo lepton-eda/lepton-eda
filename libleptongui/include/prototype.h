@@ -64,7 +64,6 @@ void g_dynwind_window (GschemToplevel *w_current);
 void g_init_window (SCM fluid);
 
 /* lepton-schematic.c */
-void gschem_quit(void);
 void
 set_verbose_mode ();
 void
