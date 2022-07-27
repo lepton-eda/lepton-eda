@@ -66,6 +66,27 @@
   (procedure->pointer int process-key-event '(* * *)))
 
 
+(define (callback-close-schematic-window *widget *event *window)
+  (if (null-pointer? *window)
+      (error "NULL window.")
+      (x_window_close *window))
+  ;; Stop further propagation of the "delete-event" signal for
+  ;; window:
+  ;;   - if the user has cancelled closing, the window should
+  ;;     obviously not be destroyed
+  ;;   - otherwise the window has already been destroyed, nothing
+  ;;     more to do
+  TRUE)
+
+
+;;; When invoked via signal "delete-event", the function closes
+;;; the current window and, if this is the last window, quits
+;;; lepton-schematic.  The signal is emitted when you click the
+;;; close button on the window.
+(define *callback-close-schematic-window
+  (procedure->pointer int callback-close-schematic-window '(* * *)))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
