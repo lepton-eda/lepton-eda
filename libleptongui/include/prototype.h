@@ -108,8 +108,8 @@ void i_callback_cancel (GtkWidget *widget, gpointer data);
 
 /* i_vars.c */
 void i_vars_set(GschemToplevel *w_current);
-void i_vars_atexit_save_cache_config (gpointer user_data);
- /* m_basic.c */
+
+/* m_basic.c */
 int snap_grid(GschemToplevel *w_current, int input);
 int clip_nochange(GschemPageGeometry *geometry, int x1, int y1, int x2, int y2);
 int visible(GschemToplevel *w_current, int wleft, int wtop, int wright, int wbottom);

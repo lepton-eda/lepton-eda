@@ -79,7 +79,9 @@
     (when (zero? (schematic_window_list_length))
       ;; Clean up all memory objects allocated during the
       ;; lepton-schematic runtime.
-      (i_vars_atexit_save_cache_config %null-pointer)
+
+      ;; Save cache config on exit.
+      (config-save! (cache-config-context))
       (s_clib_free)
       (s_attrib_free)
       (x_stroke_free)

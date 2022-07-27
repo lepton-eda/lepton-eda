@@ -427,23 +427,3 @@ i_vars_set (GschemToplevel* w_current)
   g_clear_error (&err);
 
 } /* i_vars_set() */
-
-
-/*! \brief Save cache config on exit.
- */
-void
-i_vars_atexit_save_cache_config (gpointer user_data)
-{
-  EdaConfig* cfg = eda_config_get_cache_context();
-
-  GError* err = NULL;
-  eda_config_save (cfg, &err);
-
-  if (err != NULL)
-  {
-    g_warning ("Failed to save cache configuration to '%1$s': %2$s.",
-               eda_config_get_filename (cfg),
-               err->message);
-    g_clear_error (&err);
-  }
-}

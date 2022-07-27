@@ -50,7 +50,6 @@
             i_update_grid_info
             i_update_menus
 
-            i_vars_atexit_save_cache_config
             i_vars_set
 
             make_menu_action
@@ -603,7 +602,6 @@
 
 ;;; i_vars.c
 (define-lff i_vars_set void '(*))
-(define-lff i_vars_atexit_save_cache_config void '(*))
 
 ;;; o_basic.c
 (define-lff o_redraw_cleanstates int '(*))
