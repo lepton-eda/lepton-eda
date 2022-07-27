@@ -135,9 +135,6 @@ void
 gschem_options_scale_snap_down (GschemOptions *options);
 
 void
-gschem_options_scale_snap_up (GschemOptions *options);
-
-void
 gschem_options_set_grid_mode (GschemOptions *options, GRID_MODE grid_mode);
 
 void
