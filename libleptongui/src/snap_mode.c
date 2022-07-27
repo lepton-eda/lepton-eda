@@ -36,9 +36,9 @@ schematic_snap_mode_from_string (char *s)
 {
   SchematicSnapMode result = SNAP_OFF;
 
-  if      (strcmp (s, "snap-off-mode") == 0) {result = SNAP_OFF; }
-  else if (strcmp (s, "snap-grid-mode") == 0) {result = SNAP_GRID; }
-  else if (strcmp (s, "snap-resnap-mode") == 0) {result = SNAP_RESNAP; }
+  if      (strcmp (s, "off") == 0) {result = SNAP_OFF; }
+  else if (strcmp (s, "grid") == 0) {result = SNAP_GRID; }
+  else if (strcmp (s, "resnap") == 0) {result = SNAP_RESNAP; }
 
   return result;
 }
@@ -57,12 +57,12 @@ schematic_snap_mode_from_string (char *s)
 const char*
 schematic_snap_mode_to_string (SchematicSnapMode mode)
 {
-  const char *result = "snap-grid-mode";
+  const char *result = "grid";
   switch (mode)
   {
-  case SNAP_OFF: result = "snap-off-mode"; break;
-  case SNAP_GRID: result = "snap-grid-mode"; break;
-  case SNAP_RESNAP: result = "snap-resnap-mode"; break;
+  case SNAP_OFF: result = "off"; break;
+  case SNAP_GRID: result = "grid"; break;
+  case SNAP_RESNAP: result = "resnap"; break;
   default: break;
   }
 
