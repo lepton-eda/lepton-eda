@@ -300,7 +300,7 @@ C function::
 
 Scheme function::
 
-  save-config! cfg
+  config-save! cfg
 
 Attempt to save configuration parameters for the context ``cfg`` to
 its associated file.  This function may generate a ``GIOError`` (in
