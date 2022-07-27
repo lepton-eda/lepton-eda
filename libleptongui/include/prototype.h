@@ -618,9 +618,9 @@ schematic_window_show_all (GschemToplevel *w_current,
 GschemToplevel*
 schematic_window_set_main_window (GschemToplevel *w_current,
                                   GtkWidget *main_window);
-
-void x_window_close(GschemToplevel *w_current);
-
+void
+x_window_close (GschemToplevel *w_current,
+                gboolean last_window);
 LeptonPage*
 x_window_open_page (GschemToplevel *w_current,
                     const gchar *filename);

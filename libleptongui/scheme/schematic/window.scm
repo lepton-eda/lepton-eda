@@ -69,7 +69,9 @@
 
 (define (close-window! *window)
   "Closes *WINDOW."
-  (x_window_close *window))
+  (x_window_close *window
+                  ;; Check if the window is the last one.
+                  (if (= (schematic_window_list_length) 1) TRUE FALSE)))
 
 
 (define (callback-close-schematic-window *widget *event *window)

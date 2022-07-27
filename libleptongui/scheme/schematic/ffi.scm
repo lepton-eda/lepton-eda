@@ -270,6 +270,7 @@
             schematic_window_list
             schematic_window_list_add
             schematic_window_list_find
+            schematic_window_list_length
 
             gschem_options_cycle_grid_mode
             gschem_options_get_grid_mode
@@ -483,6 +484,7 @@
 (define-lff schematic_window_list '* '())
 (define-lff schematic_window_list_add void '(*))
 (define-lff schematic_window_list_find '* '(*))
+(define-lff schematic_window_list_length int '())
 
 ;;; gschem_options.c
 (define-lff gschem_options_cycle_grid_mode void '(*))
@@ -517,7 +519,7 @@
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
 (define-lff x_window_untitled_page int '(*))
-(define-lff x_window_close void '(*))
+(define-lff x_window_close void (list '* int))
 (define-lff x_window_close_page '* '(* *))
 (define-lff schematic_window_create_app_window '* '(*))
 (define-lff schematic_window_create_main_box '* '(*))

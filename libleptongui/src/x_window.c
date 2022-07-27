@@ -555,10 +555,10 @@ schematic_window_set_main_window (GschemToplevel *w_current,
  *  \par Function Description
  *
  */
-void x_window_close(GschemToplevel *w_current)
+void
+x_window_close (GschemToplevel *w_current,
+                gboolean last_window)
 {
-  gboolean last_window = FALSE;
-
   /* If we're closing whilst inside an action, re-wind the
    * page contents back to their state before we started */
   if (w_current->inside_action) {
@@ -600,12 +600,6 @@ void x_window_close(GschemToplevel *w_current)
 
   if (w_current->sewindow)
   gtk_widget_destroy(w_current->sewindow);
-
-  if (schematic_window_list_length () == 1)
-  {
-    /* no more window after this one, remember to quit */
-    last_window = TRUE;
-  }
 
   if (last_window)
   {
