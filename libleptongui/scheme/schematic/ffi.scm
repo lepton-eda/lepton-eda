@@ -243,6 +243,7 @@
             schematic_window_active_page_changed
             schematic_window_add_timer
             schematic_window_destroy_timer
+            gschem_toplevel_free
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_show_hidden_text
             gschem_toplevel_get_toplevel
@@ -275,6 +276,7 @@
             schematic_window_list_add
             schematic_window_list_find
             schematic_window_list_length
+            schematic_window_list_remove
 
             gschem_options_cycle_grid_mode
             gschem_options_get_grid_mode
@@ -463,6 +465,7 @@
 (define-lff schematic_window_active_page_changed void '(*))
 (define-lff schematic_window_add_timer int (list int '* '*))
 (define-lff schematic_window_destroy_timer void (list int))
+(define-lff gschem_toplevel_free void '(*))
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_show_hidden_text int '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
@@ -496,6 +499,7 @@
 (define-lff schematic_window_list_add void '(*))
 (define-lff schematic_window_list_find '* '(*))
 (define-lff schematic_window_list_length int '())
+(define-lff schematic_window_list_remove void '(*))
 
 ;;; gschem_options.c
 (define-lff gschem_options_cycle_grid_mode void '(*))

@@ -82,6 +82,8 @@
       (x_window_close *window
                       ;; Check if the window is the last one.
                       (if last-window? TRUE FALSE))
+      (schematic_window_list_remove *window)
+      (gschem_toplevel_free *window)
 
       ;; Just closed last window, so quit.
       (when (zero? (schematic_window_list_length))
