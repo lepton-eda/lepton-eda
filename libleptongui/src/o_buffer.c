@@ -110,12 +110,6 @@ o_buffer_paste_start(GschemToplevel *w_current, int w_x, int w_y, int buf_num)
   gboolean show_hidden_text =
     gschem_toplevel_get_show_hidden_text (w_current);
 
-  /* Cancel current place or draw action if it is being done */
-  if (schematic_window_get_inside_action (w_current))
-  {
-    i_callback_cancel (NULL, w_current);
-  }
-
   if (buf_num == CLIPBOARD_BUFFER) {
     clipboard_to_buffer(w_current, buf_num);
   }

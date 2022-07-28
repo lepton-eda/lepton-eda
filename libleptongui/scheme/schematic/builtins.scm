@@ -647,6 +647,10 @@ the snap grid size should be set to 100")))
          (match (snap-point position)
            ((x . y)
             (o_redraw_cleanstates *window)
+            ;; Cancel current place or draw action if it is being
+            ;; done.
+            (when (in-action? (pointer->window *window))
+              (i_callback_cancel %null-pointer *window))
             (let ((empty? (true? (o_buffer_paste_start *window x y buffer-number))))
               (when empty?
                 (i_set_state_msg *window
