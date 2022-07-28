@@ -533,9 +533,9 @@ lepton_menu_set_action_data (GtkWidget *menu,
                              const char *action_name,
                              GtkWidget *menu_item,
                              gpointer action);
-void
-recent_chooser_item_activated (GtkRecentChooser *chooser,
-                               GschemToplevel *w_current);
+char*
+schematic_menu_recent_chooser_get_filename (GtkRecentChooser *chooser,
+                                            GschemToplevel *w_current);
 void
 x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
                                     GtkWidget* menuitem,

@@ -116,7 +116,7 @@
 
             x_colorcb_update_colors
 
-            *recent_chooser_item_activated
+            schematic_menu_recent_chooser_get_filename
             x_menu_attach_recent_files_submenu
 
             attrib_edit_dialog
@@ -532,7 +532,7 @@
 ;;; x_menus.c
 (define-lff make_separator_menu_item '* '())
 (define-lff make_menu_action '* '(* * * * *))
-(define-lfc *recent_chooser_item_activated)
+(define-lff schematic_menu_recent_chooser_get_filename '* '(* *))
 (define-lff x_menu_attach_recent_files_submenu void (list '* '* '* int))
 (define-lff lepton_action_create_menu_item '* '(* * *))
 (define-lff lepton_menu_set_action_data void '(* * * *))

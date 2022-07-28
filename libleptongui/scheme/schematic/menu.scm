@@ -24,6 +24,8 @@
 
   #:use-module (lepton config)
   #:use-module (lepton eval)
+  #:use-module (lepton ffi glib)
+  #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
   #:use-module (schematic ffi gobject)
@@ -47,6 +49,22 @@
        (list? items)
        (set-main-menu-list!
         (append %main-menu-list (list (cons name items))))))
+
+;;; Opens file selected in recent-chooser.
+(define (recent-chooser-callback-item-activated *chooser *window)
+  (define *filename
+    (schematic_menu_recent_chooser_get_filename *chooser *window))
+
+  (x_window_set_current_page *window
+                             (x_window_open_page *window *filename))
+  ;; Free the returned C string.
+  (g_free *filename))
+
+;;; C callback for the above function.
+(define *recent-chooser-callback-item-activated
+  (procedure->pointer void
+                      recent-chooser-callback-item-activated
+                      '(* *)))
 
 
 (define (make-main-menu window)
@@ -115,7 +133,7 @@
       (x_menu_attach_recent_files_submenu
        window
        menu-item
-       *recent_chooser_item_activated
+       *recent-chooser-callback-item-activated
        ;; Set maximum number of recent files from config.
        (get-max-recent-files))))
 

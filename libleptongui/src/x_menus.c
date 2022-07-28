@@ -354,15 +354,21 @@ x_menus_sensitivity (GtkWidget*   menu,
 #endif
 }
 
-/*! \brief Callback for recent-chooser.
+/*! \brief Return selected filename in recent-chooser.
  *
  *  \par Function Description
- *  Will be called if element of recent-file-list is activated
+ *
+ *  Will be called if element of recent-file-list is activated.
+ *  Returns selected filename.  The caller must free the filename.
+ *
+ *  \param [in] chooser The recent-chooser instance.
+ *  \param [in] w_current The current schematic window.
+ *  \return The selected filename.
  */
-void
-recent_chooser_item_activated (GtkRecentChooser *chooser, GschemToplevel *w_current)
+char*
+schematic_menu_recent_chooser_get_filename (GtkRecentChooser *chooser,
+                                            GschemToplevel *w_current)
 {
-  LeptonPage *page;
   gchar *uri;
   gchar *filename;
 
@@ -371,11 +377,10 @@ recent_chooser_item_activated (GtkRecentChooser *chooser, GschemToplevel *w_curr
   if (w_current->recent_manager != NULL) {
     gtk_recent_manager_add_item (w_current->recent_manager, uri);
   }
-  page = x_window_open_page(w_current, (char *)filename);
-  x_window_set_current_page(w_current, page);
 
   g_free(uri);
-  g_free(filename);
+
+  return filename;
 }
 
 
