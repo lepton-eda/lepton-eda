@@ -41,19 +41,18 @@
 
 ;;; Clears the current keyboard accelerator string in the status
 ;;; bar of the relevant toplevel window *WINDOW.  Called some time
-;;; after a keystroke is pressed.  If the current key sequence was
-;;; a prefix, let it persist.
+;;; after a keystroke is pressed.  Always returns FALSE as this
+;;; function must stop GSource timer defined in C.
 (define (clear-key-accelerator-string *window)
   ;; If the window context has disappeared, do nothing.
   (unless (null-pointer? (schematic_window_list_find *window))
     (schematic_window_set_keyaccel_string *window %null-pointer)
     (schematic_window_set_keyaccel_string_source_id *window 0)
     (i_show_state *window %null-pointer))
-
-  ;; Return FALSE (this is a one-shot timer).
+  ;; Always return FALSE as this is one-shot timer.
   FALSE)
 
-
+;;; C callback function for the above procedure.
 (define *clear-keyaccelerator-string
   (procedure->pointer int clear-key-accelerator-string '(*)))
 
@@ -111,6 +110,7 @@
         (schematic_window_destroy_timer source-id)
         (schematic_window_set_keyaccel_string_source_id *window 0)))
 
+    ;; If the current key sequence was a prefix, let it persist.
     (unless (key-prefix? key-press-result)
       (schematic_window_set_keyaccel_string_source_id
        *window
