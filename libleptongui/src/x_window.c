@@ -31,9 +31,6 @@ create_notebook_bottom (GschemToplevel *w_current);
 
 
 static void
-geometry_save (GschemToplevel* w_current);
-
-static void
 open_page_error_dialog (GschemToplevel* w_current,
                         const gchar*    filename,
                         GError*         err);
@@ -605,7 +602,7 @@ x_window_close (GschemToplevel *w_current,
 
   if (last_window)
   {
-    geometry_save (w_current);
+    schematic_window_save_geometry (w_current);
   }
 
   /* stuff that has to be done before we free w_current */
@@ -1543,8 +1540,8 @@ x_window_untitled_page (LeptonPage* page)
  *
  *  \param w_current The toplevel environment.
  */
-static void
-geometry_save (GschemToplevel* w_current)
+void
+schematic_window_save_geometry (GschemToplevel* w_current)
 {
   gint x = 0;
   gint y = 0;
