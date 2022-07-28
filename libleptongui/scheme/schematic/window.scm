@@ -42,6 +42,7 @@
   #:use-module (schematic toolbar)
   #:use-module (schematic window foreign)
   #:use-module (schematic window global)
+  #:use-module (schematic window list)
 
   #:re-export (%lepton-window
                current-window
@@ -68,9 +69,11 @@
   (procedure->pointer int process-key-event '(* * *)))
 
 
-(define (close-window! *window)
-  "Closes *WINDOW."
-  (let ((last-window? (= (schematic_window_list_length) 1)))
+(define (close-window! window)
+  "Closes WINDOW."
+  (define *window (window->pointer window))
+
+  (let ((last-window? (= (length (schematic-windows)) 1)))
     ;; If we're closing whilst inside an action, re-wind the page
     ;; contents back to their state before we started.
     (when (true? (schematic_window_get_inside_action *window))
@@ -82,11 +85,11 @@
       (x_window_close *window
                       ;; Check if the window is the last one.
                       (if last-window? TRUE FALSE))
-      (schematic_window_list_remove *window)
+      (remove-window! (pointer->window *window))
       (gschem_toplevel_free *window)
 
       ;; Just closed last window, so quit.
-      (when (zero? (schematic_window_list_length))
+      (when (zero? (length (schematic-windows)))
         ;; Clean up all memory objects allocated during the
         ;; lepton-schematic runtime.
 
@@ -106,7 +109,7 @@
 (define (callback-close-schematic-window *widget *event *window)
   (if (null-pointer? *window)
       (error "NULL window.")
-      (close-window! *window))
+      (close-window! (pointer->window *window)))
   ;; Stop further propagation of the "delete-event" signal for
   ;; window:
   ;;   - if the user has cancelled closing, the window should
@@ -140,7 +143,7 @@ GtkApplication structure of the program (when compiled with
       (x_clipboard_init *window)
 
       ;; Add to the list of windows.
-      (schematic_window_list_add *window)
+      (add-window! (pointer->window *window))
 
       ;; Return the window.
       *window))

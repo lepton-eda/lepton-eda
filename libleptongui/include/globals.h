@@ -44,23 +44,4 @@ extern int verbose_mode;
 # define N_(String) (String)
 #endif
 
-G_BEGIN_DECLS
-
-GList*
-schematic_window_list ();
-
-GList*
-schematic_window_list_find (GschemToplevel *w_current);
-
-void
-schematic_window_list_remove (GschemToplevel *w_current);
-
-guint
-schematic_window_list_length ();
-
-void
-schematic_window_list_add (GschemToplevel *w_current);
-
-G_END_DECLS
-
 #endif

@@ -272,12 +272,6 @@
             schematic_window_set_keyaccel_string_source_id
             schematic_window_get_shift_key_pressed
 
-            schematic_window_list
-            schematic_window_list_add
-            schematic_window_list_find
-            schematic_window_list_length
-            schematic_window_list_remove
-
             gschem_options_cycle_grid_mode
             gschem_options_get_grid_mode
             gschem_options_cycle_magnetic_net_mode
@@ -493,13 +487,6 @@
 (define-lff schematic_window_get_keyaccel_string_source_id int '(*))
 (define-lff schematic_window_set_keyaccel_string_source_id void (list '* int))
 (define-lff schematic_window_get_shift_key_pressed int '(*))
-
-;;; globals.c
-(define-lff schematic_window_list '* '())
-(define-lff schematic_window_list_add void '(*))
-(define-lff schematic_window_list_find '* '(*))
-(define-lff schematic_window_list_length int '())
-(define-lff schematic_window_list_remove void '(*))
 
 ;;; gschem_options.c
 (define-lff gschem_options_cycle_grid_mode void '(*))

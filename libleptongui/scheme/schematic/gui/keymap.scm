@@ -28,6 +28,8 @@
   #:use-module (schematic action)
   #:use-module (schematic ffi)
   #:use-module (schematic keymap)
+  #:use-module (schematic window list)
+  #:use-module (schematic window foreign)
 
   #:export (%global-keymap
             current-keymap
@@ -45,7 +47,7 @@
 ;;; function must stop GSource timer defined in C.
 (define (clear-key-accelerator-string *window)
   ;; If the window context has disappeared, do nothing.
-  (unless (null-pointer? (schematic_window_list_find *window))
+  (when (window-exists? (pointer->window *window))
     (schematic_window_set_keyaccel_string *window %null-pointer)
     (schematic_window_set_keyaccel_string_source_id *window 0)
     (i_show_state *window %null-pointer))

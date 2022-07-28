@@ -53,6 +53,7 @@
   #:use-module (schematic undo)
   #:use-module (schematic window global)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window list)
   #:use-module (schematic window))
 
 
@@ -171,18 +172,12 @@
 
 (define-action-public (&file-close-window #:label (G_ "Close Window") #:icon "gtk-close")
   (log! 'message (G_ "Closing Window"))
-  (close-window! (*current-window)))
+  (close-window! (pointer->window (*current-window))))
 
 
 (define-action-public (&file-quit #:label (G_ "Quit") #:icon "gtk-quit")
   (lepton-repl-save-history)
-  (let ((*list-copy (g_list_copy (schematic_window_list))))
-    (let loop ((*window-list *list-copy))
-      (if (null-pointer? *window-list)
-          (g_list_free *list-copy)
-          (begin
-            (close-window! (glist-data *window-list))
-            (loop (glist-next *window-list)))))))
+  (for-each close-window! (schematic-windows)))
 
 
 (define-action-public (&file-repl #:label (G_ "Terminal REPL") #:icon "gtk-execute")

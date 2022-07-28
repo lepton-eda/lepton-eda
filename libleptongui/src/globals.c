@@ -23,43 +23,5 @@
 
 #include "gschem.h"
 
-/* window list */
-static GList *global_window_list = NULL;
-
 /* command line options */
 int quiet_mode = FALSE;
-
-
-GList*
-schematic_window_list ()
-{
-  return global_window_list;
-}
-
-
-GList*
-schematic_window_list_find (GschemToplevel *w_current)
-{
-  GList *gwl = schematic_window_list ();
-
-  return (g_list_find (gwl, w_current));
-}
-
-
-void
-schematic_window_list_remove (GschemToplevel *w_current)
-{
-  global_window_list = g_list_remove (global_window_list, w_current);
-}
-
-guint
-schematic_window_list_length ()
-{
-  return g_list_length (global_window_list);
-}
-
-void
-schematic_window_list_add (GschemToplevel *w_current)
-{
-  global_window_list = g_list_append (global_window_list, w_current);
-}
