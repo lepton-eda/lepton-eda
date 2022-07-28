@@ -534,8 +534,12 @@ lepton_menu_set_action_data (GtkWidget *menu,
                              GtkWidget *menu_item,
                              gpointer action);
 void
+recent_chooser_item_activated (GtkRecentChooser *chooser,
+                               GschemToplevel *w_current);
+void
 x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
                                     GtkWidget* menuitem,
+                                    GCallback callback_item_activated,
                                     gint max_items);
 
 /* x_multiattrib.c */
