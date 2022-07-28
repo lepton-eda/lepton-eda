@@ -115,6 +115,7 @@
       (x_menu_attach_recent_files_submenu
        window
        menu-item
+       *recent_chooser_item_activated
        ;; Set maximum number of recent files from config.
        (get-max-recent-files))))
 
