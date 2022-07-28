@@ -22,7 +22,10 @@
   #:use-module (system foreign)
   #:use-module (srfi srfi-1)
 
+  #:use-module (lepton config)
   #:use-module (lepton eval)
+  #:use-module (lepton gettext)
+  #:use-module (lepton log)
   #:use-module (schematic ffi gobject)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic ffi)
@@ -93,12 +96,27 @@
 
   (define RECENT_MENU_ITEM_NAME "Open Recen_t")
 
+  (define (get-max-recent-files)
+    (catch 'config-error
+      (lambda ()
+        (config-int (path-config-context (getcwd))
+                    "schematic.gui"
+                    "max-recent-files"))
+      (lambda (key subr message args rest)
+        (log! 'warning (G_ "ERROR: ~?.\n") message args)
+        ;; Default value.
+        10)))
+
   (define (append-menu-item raw-name menu menu-item window)
     (and menu-item
          (gtk_menu_shell_append menu menu-item)
          (gtk_widget_show menu-item))
     (when (string= raw-name RECENT_MENU_ITEM_NAME)
-      (x_menu_attach_recent_files_submenu window menu-item)))
+      (x_menu_attach_recent_files_submenu
+       window
+       menu-item
+       ;; Set maximum number of recent files from config.
+       (get-max-recent-files))))
 
   (define (append-tearoff-menu-item menu)
     (let ((tearoff-menu-item (gtk_tearoff_menu_item_new)))

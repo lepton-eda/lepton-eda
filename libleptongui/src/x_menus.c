@@ -28,7 +28,6 @@
 
 #include <glib/gstdio.h>
 
-#define DEFAULT_MAX_RECENT_FILES 10
 #define RECENT_MENU_ITEM_NAME "Open Recen_t"
 
 struct PopupEntry
@@ -385,7 +384,8 @@ recent_chooser_item_activated (GtkRecentChooser *chooser, GschemToplevel *w_curr
  */
 void
 x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
-                                    GtkWidget*      menuitem)
+                                    GtkWidget*      menuitem,
+                                    gint max_items)
 {
   GtkRecentFilter *recent_filter;
   GtkWidget *menuitem_file_recent_items;
@@ -406,26 +406,6 @@ x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
   gtk_recent_chooser_set_show_tips(GTK_RECENT_CHOOSER(menuitem_file_recent_items), TRUE);
   gtk_recent_chooser_set_sort_type(GTK_RECENT_CHOOSER(menuitem_file_recent_items),
                                    GTK_RECENT_SORT_MRU);
-
-  /* read configuration: maximum number of recent files: */
-  gchar* cwd = g_get_current_dir();
-  EdaConfig* cfg = eda_config_get_context_for_path (cwd);
-  g_free (cwd);
-
-  gint max_items = DEFAULT_MAX_RECENT_FILES;
-
-  if (cfg != NULL)
-  {
-    GError* err = NULL;
-    gint val = eda_config_get_int (cfg, "schematic.gui", "max-recent-files", &err);
-
-    if (err == NULL && val > 0)
-    {
-      max_items = val;
-    }
-
-    g_clear_error (&err);
-  }
 
   gtk_recent_chooser_set_limit(GTK_RECENT_CHOOSER(menuitem_file_recent_items), max_items);
 

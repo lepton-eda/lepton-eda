@@ -535,7 +535,9 @@ lepton_menu_set_action_data (GtkWidget *menu,
                              gpointer action);
 void
 x_menu_attach_recent_files_submenu (GschemToplevel* w_current,
-                                    GtkWidget*      menuitem);
+                                    GtkWidget* menuitem,
+                                    gint max_items);
+
 /* x_multiattrib.c */
 void x_multiattrib_open (GschemToplevel *w_current);
 void x_multiattrib_close (GschemToplevel *w_current);
