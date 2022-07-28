@@ -85,6 +85,8 @@
       (x_window_close *window
                       ;; Check if the window is the last one.
                       (if last-window? TRUE FALSE))
+      ;; Destroy main widget of the window.
+      (gtk_widget_destroy (schematic_window_get_main_window *window))
       (remove-window! (pointer->window *window))
       (gschem_toplevel_free *window)
 

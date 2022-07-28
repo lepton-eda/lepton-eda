@@ -615,9 +615,6 @@ x_window_close (GschemToplevel *w_current,
     /* free the buffers */
     o_buffer_free (w_current);
   }
-
-  /* finally close the main window */
-  gtk_widget_destroy (schematic_window_get_main_window (w_current));
 }
 
 

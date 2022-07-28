@@ -33,6 +33,7 @@
             gtk_window_set_default_icon_name
             gtk_tearoff_menu_item_new
             gtk_menu_item_new_with_mnemonic
+            gtk_widget_destroy
             gtk_widget_show
             gtk_menu_new
             gtk_menu_bar_new
@@ -68,6 +69,7 @@
 
 (define-lff gtk_tearoff_menu_item_new '* '())
 
+(define-lff gtk_widget_destroy void '(*))
 (define-lff gtk_widget_show void '(*))
 
 (define-lff gtk_window_set_default_icon_name void '(*))

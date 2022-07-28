@@ -185,6 +185,7 @@
             schematic_window_create_statusbar
             schematic_window_restore_geometry
             schematic_window_show_all
+            schematic_window_get_main_window
             schematic_window_set_main_window
             schematic_window_set_toolbar
 
@@ -542,6 +543,7 @@
 (define-lff schematic_window_create_statusbar void '(* *))
 (define-lff schematic_window_restore_geometry void '(* *))
 (define-lff schematic_window_show_all void '(* *))
+(define-lff schematic_window_get_main_window '* '(*))
 (define-lff schematic_window_set_main_window '* '(* *))
 (define-lff schematic_window_set_toolbar void '(* *))
 
