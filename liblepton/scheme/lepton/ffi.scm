@@ -21,6 +21,7 @@
   #:use-module (system foreign)
   #:use-module (srfi srfi-1)
   #:use-module (lepton ffi lib)
+  #:use-module (lepton ffi lff)
 
   #:re-export (libgtk
                liblepton)
@@ -377,24 +378,6 @@
 
             lepton_coord_snap))
 
-
-;;; Brief syntax macro for defining lazy foreign functions.
-(define-syntax define-lff
-  (syntax-rules ()
-    ((_ name type args)
-     (define name
-       (let ((proc (delay (pointer->procedure
-                           type
-                           (dynamic-func (symbol->string (quote name)) liblepton)
-                           args))))
-         (force proc))))
-    ((_ name type args lib)
-     (define name
-       (let ((proc (delay (pointer->procedure
-                           type
-                           (dynamic-func (symbol->string (quote name)) lib)
-                           args))))
-         (force proc))))))
 
 (define-lff g_clear_error void '(*) libglib)
 (define-lff g_free void '(*) libglib)
