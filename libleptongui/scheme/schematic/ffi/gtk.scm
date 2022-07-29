@@ -18,6 +18,7 @@
 
 (define-module (schematic ffi gtk)
   #:use-module (system foreign)
+  #:use-module (lepton ffi lff)
   #:use-module (lepton ffi)
 
   #:export (gtk_init
@@ -36,15 +37,11 @@
             gtk_menu_item_set_submenu
             gtk_menu_shell_append))
 
-(define-syntax define-lff
-  (syntax-rules ()
-    ((_ name type args)
-     (define name
-       (let ((proc (delay (pointer->procedure
-                           type
-                           (dynamic-func (symbol->string (quote name)) libgtk)
-                           args))))
-         (force proc))))))
+;;; Simplify definition of functions by omitting the library
+;;; argument.
+(define-syntax-rule (define-lff arg ...)
+  (define-lff-lib arg ... libgtk))
+
 
 (define gtk_init
   (pointer->procedure
