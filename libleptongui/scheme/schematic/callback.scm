@@ -20,6 +20,7 @@
 (define-module (schematic callback)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)

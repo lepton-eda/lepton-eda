@@ -19,6 +19,7 @@ nobase_dist_scmdata_DATA = \
 	lepton/gettext.scm \
 	lepton/eval.scm \
 	lepton/ffi.scm \
+	lepton/ffi/boolean.scm \
 	lepton/ffi/lib.scm \
 	lepton/file-system.scm \
 	lepton/gerror.scm \

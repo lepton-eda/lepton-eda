@@ -21,6 +21,7 @@
   #:use-module (srfi srfi-1)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
   #:use-module (lepton log)
 

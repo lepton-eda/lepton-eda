@@ -21,6 +21,7 @@
 (define-module (lepton object type)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
   #:use-module (lepton object foreign)
 

@@ -27,6 +27,7 @@
   #:use-module (rnrs bytevectors)
 
   #:use-module (lepton color-map)
+  #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
   #:use-module (lepton object foreign)
   #:use-module (lepton object text)

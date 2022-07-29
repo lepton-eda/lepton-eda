@@ -30,11 +30,6 @@
             c-string-array->list
             register-data-dirs
 
-            ;; Helpers.
-            true?
-            TRUE
-            FALSE
-
             error-wrong-type-arg
             check-boolean
             check-coord
@@ -382,11 +377,6 @@
 
             lepton_coord_snap))
 
-;;; Helper to check if result of C function is TRUE (non-zero).
-(define true? (negate zero?))
-;;; Helpers to set results of boolean functions.
-(define TRUE 1)
-(define FALSE 0)
 
 ;;; Brief syntax macro for defining lazy foreign functions.
 (define-syntax define-lff
