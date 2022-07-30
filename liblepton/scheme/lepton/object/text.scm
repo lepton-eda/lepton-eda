@@ -20,6 +20,8 @@
 (define-module (lepton object text)
   #:use-module (ice-9 match)
   #:use-module (system foreign)
+
+  #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi)
 
   #:export (check-text-alignment

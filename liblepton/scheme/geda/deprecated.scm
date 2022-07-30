@@ -26,6 +26,7 @@
  #:use-module (system foreign)
 
  #:use-module (lepton attrib)
+ #:use-module (lepton ffi check-args)
  #:use-module (lepton ffi)
  #:use-module (lepton gettext)
  #:use-module (lepton log)

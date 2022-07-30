@@ -20,6 +20,7 @@
   #:use-module (ice-9 format)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi)
 
   #:export (is-window?

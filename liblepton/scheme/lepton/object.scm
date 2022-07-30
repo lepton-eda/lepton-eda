@@ -28,6 +28,7 @@
 
   #:use-module (lepton color-map)
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi check-args)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi gobject)
   #:use-module (lepton ffi)
