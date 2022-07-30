@@ -171,19 +171,21 @@ Run `~A --help' for more information.\n")
 
 
 ;;; Load GTK2 resource files.
-;;; TODO: disable it in GTK3 version.
 ;;; Search system and user configuration directories for
 ;;; lepton-gtkrc files and load them in sequence.
 (define (parse-gtkrc)
-  (let loop ((dirs (append (sys-config-dirs)
-                           (list (user-config-dir)))))
-    (or (null? dirs)
-        (let ((filename (string-append (car dirs)
-                                       file-name-separator-string
-                                       "lepton-gtkrc")))
-          (when (file-readable? filename)
-            (gtk_rc_parse (string->pointer filename)))
-          (loop (cdr dirs))))))
+  ;; Note: the function gtk_rc_parse() is deprecated in GTK3 so
+  ;; the code below is disabled in the GTK3 port.
+  (unless %m4-use-gtk3
+    (let loop ((dirs (append (sys-config-dirs)
+                             (list (user-config-dir)))))
+      (or (null? dirs)
+          (let ((filename (string-append (car dirs)
+                                         file-name-separator-string
+                                         "lepton-gtkrc")))
+            (when (file-readable? filename)
+              (gtk_rc_parse (string->pointer filename)))
+            (loop (cdr dirs)))))))
 
 
 
@@ -294,7 +296,7 @@ Run `~A --help' for more information.\n")
 (x_color_init)
 (o_undo_init)
 
-;;; Parse custom GTK resource files.
+;;; Parse custom GTK resource files.  Used only for GTK2.
 (parse-gtkrc)
 
 ;;; Set default icon theme and make sure we can find our own
