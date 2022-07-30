@@ -81,9 +81,11 @@
 (define-lff gtk_init void '(* *))
 
 (define-lff gtk_menu_item_new_with_mnemonic '* '(*))
-(define-lff gtk_widget_show void '(*))
-(define-lff gtk_tearoff_menu_item_new '* '())
 (define-lff gtk_menu_new '* '())
 (define-lff gtk_menu_bar_new '* '())
 (define-lff gtk_menu_item_set_submenu void '(* *))
 (define-lff gtk_menu_shell_append void '(* *))
+
+(define-lff gtk_tearoff_menu_item_new '* '())
+
+(define-lff gtk_widget_show void '(*))
