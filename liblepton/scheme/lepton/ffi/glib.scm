@@ -53,10 +53,14 @@
 
 (define-lff g_list_append '* '(* *))
 (define-lff g_list_free void '(*))
+(define-lff g_list_free_full void '(*))
 (define-lff g_list_remove '* '(* *))
 (define-lff g_list_remove_all '* '(* *))
 
 (define-lff g_log void (list '* int '* '*))
+
+(define-lff g_slist_free_full void '(*))
+
 
 ;;; GSList: singly-linked list.
 
