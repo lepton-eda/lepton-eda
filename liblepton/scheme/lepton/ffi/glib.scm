@@ -54,7 +54,7 @@
 (define-lff g_log void (list '* int '* '*))
 
 
-;;; Glist struct is {data*, next*, prev*}.  We could use
+;;; GList struct is {data*, next*, prev*}.  We could use
 ;;; functions to get data, but it's easier to parse the struct
 ;;; directly.
 (define (parse-glist gls)
@@ -64,19 +64,19 @@
   (let ((pointer-ls (parse-glist gls)))
     (match pointer-ls
       ((data next prev) next)
-      (_ (error "Wrong Glist in glist-next()")))))
+      (_ (error "Wrong GList in glist-next()")))))
 
 (define (glist-prev gls)
   (let ((pointer-ls (parse-glist gls)))
     (match pointer-ls
       ((data next prev) prev)
-      (_ (error "Wrong Glist in glist-prev()")))))
+      (_ (error "Wrong GList in glist-prev()")))))
 
 (define (glist-data gls)
   (let ((pointer-ls (parse-glist gls)))
     (match pointer-ls
       ((data next prev) data)
-      (_ (error "Wrong Glist in glist-data()")))))
+      (_ (error "Wrong GList in glist-data()")))))
 
 (define (glist->list gls convert-func)
   "Convert C GList GLS into Scheme list of objects using the
