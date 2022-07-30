@@ -212,7 +212,7 @@ Run `~A --help' for more information.\n")
                                        file-name-separator-string
                                        "icons")))
           (gtk_icon_theme_append_search_path (gtk_icon_theme_get_default)
-                                             icon-dir)
+                                             (string->pointer icon-dir))
           (loop (cdr sys-dirs))))))
 
 

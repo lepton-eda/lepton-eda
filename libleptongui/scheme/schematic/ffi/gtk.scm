@@ -43,20 +43,12 @@
   (define-lff-lib arg ... libgtk))
 
 
-(define (gtk_icon_theme_append_search_path icon-theme path)
-  (define proc
-    (delay
-      (pointer->procedure
-       void
-       (dynamic-func "gtk_icon_theme_append_search_path" libgtk)
-       (list '* '*))))
-  ((force proc) icon-theme (string->pointer path)))
-
 (define-lff gtk_accelerator_parse void '(* * *))
 (define GdkModifierType uint32)
 (define-lff gtk_accelerator_name '* (list int GdkModifierType))
 (define-lff gtk_accelerator_get_label '* (list int GdkModifierType))
 
+(define-lff gtk_icon_theme_append_search_path void '(* *))
 (define-lff gtk_icon_theme_get_default '* '())
 
 (define-lff gtk_init void '(* *))
