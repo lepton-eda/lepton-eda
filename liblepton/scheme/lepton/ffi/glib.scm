@@ -31,6 +31,11 @@
             g_log
 
             ;; Mock glib functions.
+
+            gslist-data
+            gslist-next
+            gslist->list
+
             glist-data
             glist-next
             glist-prev
@@ -53,6 +58,38 @@
 
 (define-lff g_log void (list '* int '* '*))
 
+;;; GSList: singly-linked list.
+
+;;; GSList struct is {data*, next*}.  We could use functions to
+;;; get data, but it's easier to parse the struct directly.
+(define (parse-gslist gsls)
+  (parse-c-struct gsls '(* *)))
+
+(define (gslist-next gsls)
+  (let ((pointer-ls (parse-gslist gsls)))
+    (match pointer-ls
+      ((data next) next)
+      (_ (error "Wrong GSList in gslist-next()")))))
+
+(define (gslist-data gsls)
+  (let ((pointer-ls (parse-gslist gsls)))
+    (match pointer-ls
+      ((data next) data)
+      (_ (error "Wrong GSList in gslist-data()")))))
+
+(define (gslist->list gsls convert-func)
+  "Convert C GSList GSLS into Scheme list of objects using the
+function CONVERT-FUNC to transform foreign pointers to Scheme
+objects."
+  (let loop ((gsls gsls)
+             (ls '()))
+    (if (null-pointer? gsls)
+        (reverse ls)
+        (loop (gslist-next gsls)
+              (cons (convert-func (gslist-data gsls)) ls)))))
+
+
+;;; GList: doubly-linked list.
 
 ;;; GList struct is {data*, next*, prev*}.  We could use
 ;;; functions to get data, but it's easier to parse the struct
