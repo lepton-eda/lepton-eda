@@ -43,12 +43,6 @@
   (define-lff-lib arg ... libgtk))
 
 
-(define gtk_init
-  (pointer->procedure
-   void
-   (dynamic-func "gtk_init" libgtk)
-   (list '* '*)))
-
 (define (gtk_rc_parse filename)
   (define proc
     (delay (pointer->procedure
@@ -68,16 +62,6 @@
     ((force proc) (string->pointer name))))
 
 
-(define (gtk_icon_theme_get_default)
-  (define proc
-    (delay
-      (pointer->procedure
-       '*
-       (dynamic-func "gtk_icon_theme_get_default" libgtk)
-       '())))
-  ((force proc)))
-
-
 (define (gtk_icon_theme_append_search_path icon-theme path)
   (define proc
     (delay
@@ -91,6 +75,11 @@
 (define GdkModifierType uint32)
 (define-lff gtk_accelerator_name '* (list int GdkModifierType))
 (define-lff gtk_accelerator_get_label '* (list int GdkModifierType))
+
+(define-lff gtk_icon_theme_get_default '* '())
+
+(define-lff gtk_init void '(* *))
+
 (define-lff gtk_menu_item_new_with_mnemonic '* '(*))
 (define-lff gtk_widget_show void '(*))
 (define-lff gtk_tearoff_menu_item_new '* '())
