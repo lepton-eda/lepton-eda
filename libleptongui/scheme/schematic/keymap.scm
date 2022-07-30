@@ -28,6 +28,7 @@
   #:use-module (srfi srfi-9 gnu)
   #:use-module (system foreign)
 
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
 
   #:use-module (schematic gettext)

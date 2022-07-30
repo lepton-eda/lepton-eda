@@ -16,7 +16,6 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 
 (define-module (lepton ffi)
-  #:use-module (ice-9 match)
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
   #:use-module (srfi srfi-1)
@@ -39,20 +38,6 @@
             check-symbol
             check-vector
             check-procedure
-
-            ;; glib
-            g_clear_error
-            g_free
-            g_list_append
-            g_list_free
-            g_list_remove
-            g_list_remove_all
-            g_log
-            ;; Mock glib functions.
-            glist-data
-            glist-next
-            glist-prev
-            glist->list
 
             ;; Foreign functions.
             lepton_init_toplevel_fluid
@@ -382,49 +367,6 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... liblepton))
 
-
-(define-lff-lib g_clear_error void '(*) libglib)
-(define-lff-lib g_free void '(*) libglib)
-(define-lff-lib g_list_append '* '(* *) libglib)
-(define-lff-lib g_list_free void '(*) libglib)
-(define-lff-lib g_list_remove '* '(* *) libglib)
-(define-lff-lib g_list_remove_all '* '(* *) libglib)
-(define-lff-lib g_log void (list '* int '* '*) libglib)
-
-;;; Glist struct is {data*, next*, prev*}.  We could use libglib
-;;; functions to get data, but it's easier to parse the struct
-;;; directly.
-(define (parse-glist gls)
-  (parse-c-struct gls '(* * *)))
-
-(define (glist-next gls)
-  (let ((pointer-ls (parse-glist gls)))
-    (match pointer-ls
-      ((data next prev) next)
-      (_ (error "Wrong Glist in glist-next()")))))
-
-(define (glist-prev gls)
-  (let ((pointer-ls (parse-glist gls)))
-    (match pointer-ls
-      ((data next prev) prev)
-      (_ (error "Wrong Glist in glist-prev()")))))
-
-(define (glist-data gls)
-  (let ((pointer-ls (parse-glist gls)))
-    (match pointer-ls
-      ((data next prev) data)
-      (_ (error "Wrong Glist in glist-data()")))))
-
-(define (glist->list gls convert-func)
-  "Convert C GList GLS into Scheme list of objects using the
-function CONVERT-FUNC to transform foreign pointers to Scheme
-objects."
-  (let loop ((gls gls)
-             (ls '()))
-    (if (null-pointer? gls)
-        (reverse ls)
-        (loop (glist-next gls)
-              (cons (convert-func (glist-data gls)) ls)))))
 
 ;;; Basic lepton initialisation function.
 (define-lff liblepton_init void '())

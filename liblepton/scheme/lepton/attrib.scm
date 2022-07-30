@@ -25,6 +25,7 @@
 
   #:use-module (lepton color-map)
   #:use-module (lepton ffi boolean)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton object)
