@@ -81,14 +81,16 @@
       ((data next) data)
       (_ (error "Wrong GSList in gslist-data()")))))
 
-(define (gslist->list gsls convert-func)
+(define* (gslist->list gsls convert-func #:optional (free? #f))
   "Convert C GSList GSLS into Scheme list of objects using the
 function CONVERT-FUNC to transform foreign pointers to Scheme
 objects."
   (let loop ((gsls gsls)
              (ls '()))
     (if (null-pointer? gsls)
-        (reverse ls)
+        (begin
+          (when free? (g_slist_free_full gsls))
+          (reverse ls))
         (loop (gslist-next gsls)
               (cons (convert-func (gslist-data gsls)) ls)))))
 
@@ -119,13 +121,15 @@ objects."
       ((data next prev) data)
       (_ (error "Wrong GList in glist-data()")))))
 
-(define (glist->list gls convert-func)
+(define* (glist->list gls convert-func #:optional (free? #f))
   "Convert C GList GLS into Scheme list of objects using the
 function CONVERT-FUNC to transform foreign pointers to Scheme
 objects."
   (let loop ((gls gls)
              (ls '()))
     (if (null-pointer? gls)
-        (reverse ls)
+        (begin
+          (when free? (g_list_free_full gls))
+          (reverse ls))
         (loop (glist-next gls)
               (cons (convert-func (glist-data gls)) ls)))))
