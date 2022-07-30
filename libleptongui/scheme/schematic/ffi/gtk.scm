@@ -43,15 +43,6 @@
   (define-lff-lib arg ... libgtk))
 
 
-(define (gtk_rc_parse filename)
-  (define proc
-    (delay (pointer->procedure
-            void
-            (dynamic-func "gtk_rc_parse" libgtk)
-            (list '*))))
-  ((force proc) (string->pointer filename)))
-
-
 (define (gtk_window_set_default_icon_name name)
   (let ((proc (delay
                 (pointer->procedure
@@ -85,6 +76,8 @@
 (define-lff gtk_menu_bar_new '* '())
 (define-lff gtk_menu_item_set_submenu void '(* *))
 (define-lff gtk_menu_shell_append void '(* *))
+
+(define-lff gtk_rc_parse void '(*))
 
 (define-lff gtk_tearoff_menu_item_new '* '())
 

@@ -170,7 +170,8 @@ Run `~A --help' for more information.\n")
     '())))
 
 
-;;; Load GTK resource files.
+;;; Load GTK2 resource files.
+;;; TODO: disable it in GTK3 version.
 ;;; Search system and user configuration directories for
 ;;; lepton-gtkrc files and load them in sequence.
 (define (parse-gtkrc)
@@ -181,7 +182,7 @@ Run `~A --help' for more information.\n")
                                        file-name-separator-string
                                        "lepton-gtkrc")))
           (when (file-readable? filename)
-            (gtk_rc_parse filename))
+            (gtk_rc_parse (string->pointer filename)))
           (loop (cdr dirs))))))
 
 
