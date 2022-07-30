@@ -43,16 +43,6 @@
   (define-lff-lib arg ... libgtk))
 
 
-(define (gtk_window_set_default_icon_name name)
-  (let ((proc (delay
-                (pointer->procedure
-                 void
-                 (dynamic-func "gtk_window_set_default_icon_name"
-                               libgtk)
-                 (list '*)))))
-    ((force proc) (string->pointer name))))
-
-
 (define (gtk_icon_theme_append_search_path icon-theme path)
   (define proc
     (delay
@@ -82,3 +72,5 @@
 (define-lff gtk_tearoff_menu_item_new '* '())
 
 (define-lff gtk_widget_show void '(*))
+
+(define-lff gtk_window_set_default_icon_name void '(*))

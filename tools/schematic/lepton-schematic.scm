@@ -196,7 +196,7 @@ Run `~A --help' for more information.\n")
 (define (set-window-default-icon)
   (define %theme-icon-name "lepton-schematic")
 
-  (gtk_window_set_default_icon_name %theme-icon-name))
+  (gtk_window_set_default_icon_name (string->pointer %theme-icon-name)))
 
 ;;; Setup icon search paths.
 ;;; Add the icons installed by the program to the search path for
