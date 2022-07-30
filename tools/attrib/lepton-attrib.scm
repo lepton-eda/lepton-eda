@@ -21,6 +21,8 @@
              (ice-9 receive)
              (srfi srfi-1)
              (system foreign)
+
+             (lepton ffi glib)
              (lepton ffi lib)
              (lepton ffi)
              (lepton file-system)
@@ -100,16 +102,6 @@ Lepton EDA homepage: ~S
           "Could not open file ~S.\n"
           filename))
 
-(define (gslist->list gslist)
-  (let loop ((gsls gslist)
-             (ls '()))
-    (if (null-pointer? gsls)
-        ls
-        (let* ((elem (parse-c-struct gsls (list '* '*)))
-               (str (pointer->string (first elem)))
-               (gsls (second elem)))
-          (loop gsls (cons str ls))))))
-
 
 (define (process-gafrc* name)
   (process-gafrc "lepton-attrib" name))
@@ -147,7 +139,7 @@ Lepton EDA homepage: ~S
           (let ((files (if (null? readable-files)
                            ;; No files specified on the command
                            ;; line, pop up the File open dialog.
-                           (gslist->list (x_fileselect_open))
+                           (gslist->list (x_fileselect_open) pointer->string 'free)
                            readable-files)))
             (if (null? files)
                 (exit 0)
