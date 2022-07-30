@@ -23,18 +23,12 @@
 
   #:use-module (lepton ffi lib)
 
-  #:export (define-lff))
+  #:export (define-lff-lib))
 
 
-(define-syntax define-lff
+;;; Syntax to define a lazy foreign function from given library.
+(define-syntax define-lff-lib
   (syntax-rules ()
-    ((_ name type args)
-     (define name
-       (let ((proc (delay (pointer->procedure
-                           type
-                           (dynamic-func (symbol->string (quote name)) liblepton)
-                           args))))
-         (force proc))))
     ((_ name type args lib)
      (define name
        (let ((proc (delay (pointer->procedure

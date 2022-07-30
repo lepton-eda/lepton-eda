@@ -378,15 +378,20 @@
 
             lepton_coord_snap))
 
+;;; Simplify definition of functions by omitting the library
+;;; argument.
+(define-syntax-rule (define-lff arg ...)
+  (define-lff-lib arg ... liblepton))
 
-(define-lff g_clear_error void '(*) libglib)
-(define-lff g_free void '(*) libglib)
-(define-lff g_list_append '* '(* *) libglib)
-(define-lff g_list_free void '(*) libglib)
-(define-lff g_list_remove '* '(* *) libglib)
-(define-lff g_list_remove_all '* '(* *) libglib)
-(define-lff g_log void (list '* int '* '*) libglib)
-(define-lff g_object_unref void '(*) libgobject)
+
+(define-lff-lib g_clear_error void '(*) libglib)
+(define-lff-lib g_free void '(*) libglib)
+(define-lff-lib g_list_append '* '(* *) libglib)
+(define-lff-lib g_list_free void '(*) libglib)
+(define-lff-lib g_list_remove '* '(* *) libglib)
+(define-lff-lib g_list_remove_all '* '(* *) libglib)
+(define-lff-lib g_log void (list '* int '* '*) libglib)
+(define-lff-lib g_object_unref void '(*) libgobject)
 
 ;;; Glist struct is {data*, next*, prev*}.  We could use libglib
 ;;; functions to get data, but it's easier to parse the struct
