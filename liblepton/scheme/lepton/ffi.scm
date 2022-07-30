@@ -40,7 +40,7 @@
             check-vector
             check-procedure
 
-            ;; glib, gobject.
+            ;; glib
             g_clear_error
             g_free
             g_list_append
@@ -48,7 +48,6 @@
             g_list_remove
             g_list_remove_all
             g_log
-            g_object_unref
             ;; Mock glib functions.
             glist-data
             glist-next
@@ -391,7 +390,6 @@
 (define-lff-lib g_list_remove '* '(* *) libglib)
 (define-lff-lib g_list_remove_all '* '(* *) libglib)
 (define-lff-lib g_log void (list '* int '* '*) libglib)
-(define-lff-lib g_object_unref void '(*) libgobject)
 
 ;;; Glist struct is {data*, next*, prev*}.  We could use libglib
 ;;; functions to get data, but it's easier to parse the struct
