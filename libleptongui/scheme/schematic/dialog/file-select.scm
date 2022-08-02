@@ -25,10 +25,10 @@
 
   #:use-module (schematic ffi)
 
-  #:export (file-select-open))
+  #:export (file-select-dialog))
 
 
-(define (file-select-open *window)
+(define (file-select-dialog *window)
   "Opens file selection dialog in *WINDOW.  Loads selected files as
 pages.  The current page of the window is set to the page of the
 last loaded page."

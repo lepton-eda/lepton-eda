@@ -67,7 +67,7 @@
 
 
 (define (callback-file-open *widget *window)
-  (file-select-open *window))
+  (file-select-dialog *window))
 
 (define *callback-file-open
   (procedure->pointer void callback-file-open '(* *)))
