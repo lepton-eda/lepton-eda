@@ -54,7 +54,8 @@
             set-active-page!
             pointer-position
             snap-point
-            window-close-page!)
+            window-close-page!
+            window-open-page!)
 
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
@@ -303,6 +304,19 @@ window to PAGE.  Returns PAGE."
 
   ;; Return value is unspecified.
   (if #f #f))
+
+
+(define (window-open-page! window filename)
+  "Loads file FILENAME and opens a new page for it.  If FILENAME is
+#f, opens a new untitled page.  Returns the new page."
+  (define *window (check-window window 1))
+  (define *filename
+    (if filename
+        (and (check-string filename 1)
+             (string->pointer filename))
+        %null-pointer))
+
+  (pointer->page (x_window_open_page *window *filename)))
 
 
 (define (pointer-position)
