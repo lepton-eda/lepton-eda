@@ -20,6 +20,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/callback.scm \
 	schematic/gettext.scm \
 	schematic/dialog.scm \
+	schematic/dialog/file-select.scm \
 	schematic/dialog/slot-edit.scm \
 	schematic/ffi.scm \
 	schematic/ffi/gobject.scm \

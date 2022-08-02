@@ -43,6 +43,7 @@
   #:use-module (schematic gettext)
   #:use-module (schematic ffi)
   #:use-module (schematic dialog)
+  #:use-module (schematic dialog file-select)
   #:use-module (schematic dialog slot-edit)
   #:use-module (schematic doc)
   #:use-module (schematic gui keymap)
@@ -92,7 +93,7 @@
 
 
 (define-action-public (&file-open #:label (G_ "Open File") #:icon "gtk-open")
-  (x_fileselect_open (*current-window)))
+  (file-select-open (*current-window)))
 
 (define-action-public (&file-save #:label (G_ "Save") #:icon "gtk-save")
   (run-callback i_callback_file_save "&file-save"))
