@@ -23,6 +23,7 @@
              (system foreign)
 
              (lepton ffi glib)
+             (lepton ffi lff)
              (lepton ffi lib)
              (lepton ffi)
              (lepton file-system)
@@ -39,31 +40,20 @@
   (register-data-dirs))
 
 
+;;; Simplify definition of functions by omitting the library
+;;; argument.
+(define-syntax-rule (define-lff arg ...)
+  (define-lff-lib arg ... libleptonattrib))
+
+
 (define libleptonattrib (dynamic-link %libleptonattrib))
 
-(define gtk_init
-  (pointer->procedure
-   void
-   (dynamic-func "gtk_init" libgtk)
-   (list '* '*)))
+(define-lff-lib gtk_init void '(* *) libgtk)
 
-(define set_verbose_mode
-  (pointer->procedure
-   void
-   (dynamic-func "set_verbose_mode" libleptonattrib)
-   '()))
+(define-lff set_verbose_mode void '())
+(define-lff x_fileselect_open '* '())
+(define-lff lepton_attrib_window int '(*))
 
-(define x_fileselect_open
-  (pointer->procedure
-   '*
-   (dynamic-func "x_fileselect_open" libleptonattrib)
-   '()))
-
-(define lepton_attrib_window
-  (pointer->procedure
-   int
-   (dynamic-func "lepton_attrib_window" libleptonattrib)
-   '(*)))
 
 ;;; Localization.
 (define %textdomain "libleptonattrib")
