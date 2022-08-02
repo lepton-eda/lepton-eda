@@ -93,7 +93,7 @@
 
 
 (define-action-public (&file-open #:label (G_ "Open File") #:icon "gtk-open")
-  (file-select-dialog (*current-window)))
+  (file-select-dialog (current-window)))
 
 (define-action-public (&file-save #:label (G_ "Save") #:icon "gtk-save")
   (run-callback i_callback_file_save "&file-save"))
