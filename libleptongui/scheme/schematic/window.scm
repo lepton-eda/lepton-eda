@@ -55,7 +55,8 @@
             pointer-position
             snap-point
             window-close-page!
-            window-open-page!)
+            window-open-page!
+            window-set-current-page!)
 
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
@@ -319,6 +320,14 @@ window to PAGE.  Returns PAGE."
         %null-pointer))
 
   (pointer->page (x_window_open_page *window *filename)))
+
+
+(define (window-set-current-page! window page)
+  "Sets current page of WINDOW to PAGE."
+  (define *window (check-window window 1))
+  (define *page (check-page page 2))
+
+  (x_window_set_current_page *window *page))
 
 
 (define (pointer-position)
