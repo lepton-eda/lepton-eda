@@ -246,7 +246,9 @@ GtkApplication structure of the program (when compiled with
 
       (schematic_window_show_all *window *main-window)
       ;; Returns *window.
-      (schematic_window_set_main_window *window *main-window))))
+      (schematic_window_set_main_window *window *main-window)))
+
+  (pointer->window *window))
 
 
 (define (active-page)

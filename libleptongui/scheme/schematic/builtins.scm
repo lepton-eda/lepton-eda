@@ -166,10 +166,10 @@
 
 
 (define-action-public (&file-new-window #:label (G_ "New Window") #:icon "window-new")
-  (x_window_open_page
+  (window-open-page!
    (make-schematic-window (lepton_schematic_app)
                           (lepton_toplevel_new))
-   %null-pointer))
+   #f))
 
 (define-action-public (&file-close-window #:label (G_ "Close Window") #:icon "gtk-close")
   (log! 'message (G_ "Closing Window"))

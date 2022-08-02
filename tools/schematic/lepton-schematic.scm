@@ -35,6 +35,7 @@
              (schematic ffi)
              (schematic ffi gtk)
              (schematic gui keymap)
+             (schematic window foreign)
              (schematic window))
 
 ;;; Initialize liblepton library.
@@ -241,8 +242,9 @@ Run `~A --help' for more information.\n")
 
 (define (main app file-list)
   ;; Create a new window and associated LeptonToplevel object.
-  (define *window (make-schematic-window app
-                                         (lepton_toplevel_new)))
+  (define *window
+    (window->pointer (make-schematic-window app (lepton_toplevel_new))))
+
   ;; Current directory.
   (define cwd (getcwd))
 
