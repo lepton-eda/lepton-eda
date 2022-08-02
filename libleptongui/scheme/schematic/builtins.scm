@@ -842,10 +842,9 @@ the snap grid size should be set to 100")))
     (true? (x_window_untitled_page (page->pointer page))))
 
   (define filename (page-filename (active-page)))
-  (define *filename (string->pointer filename))
 
   (when (and (not (untitled-page? (active-page)))
-             (true? (schematic_page_revert_dialog *window *filename)))
+             (true? (schematic_page_revert_dialog *window (string->pointer filename))))
 
     (let ((*page_current (schematic_window_get_active_page *window))
           ;; If there's only one opened page, create a dummy page
@@ -853,7 +852,7 @@ the snap grid size should be set to 100")))
           ;; window-close-page!() from creating a stray blank
           ;; page.
           (*dummy-page (if (= 1 (length (active-pages)))
-                           (x_window_open_page *window %null-pointer)
+                           (page->pointer (window-open-page! (current-window) #f))
                            %null-pointer)))
       (unless (null-pointer? *dummy-page)
         (x_window_set_current_page *window *dummy-page)
@@ -868,7 +867,7 @@ the snap grid size should be set to 100")))
         ;; Force symbols to be re-loaded from disk.
         (s_clib_refresh)
 
-        (let ((*page (x_window_open_page *window *filename)))
+        (let ((*page (page->pointer (window-open-page! (current-window) filename))))
 
           ;; Raise an error if the page cannot be reloaded for
           ;; some reason.
