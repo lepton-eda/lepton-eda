@@ -30,6 +30,7 @@
 
   #:use-module (schematic action)
   #:use-module (schematic action-mode)
+  #:use-module (schematic dialog file-select)
   #:use-module (schematic ffi)
   #:use-module (schematic window foreign)
   #:use-module (schematic window)
@@ -66,7 +67,7 @@
 
 
 (define (callback-file-open *widget *window)
-  (x_fileselect_open *window))
+  (file-select-open *window))
 
 (define *callback-file-open
   (procedure->pointer void callback-file-open '(* *)))
