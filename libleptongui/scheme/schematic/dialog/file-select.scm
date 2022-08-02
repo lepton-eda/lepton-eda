@@ -18,11 +18,30 @@
 
 
 (define-module (schematic dialog file-select)
+  #:use-module (srfi srfi-1)
+  #:use-module (system foreign)
+
+  #:use-module (lepton ffi glib)
+
   #:use-module (schematic ffi)
 
   #:export (file-select-open))
 
 
 (define (file-select-open *window)
-  "Opens file selection dialog in *WINDOW."
-  (x_fileselect_open *window))
+  "Opens file selection dialog in *WINDOW.  Loads selected files as
+pages.  The current page of the window is set to the page of the
+last loaded page."
+  (define filenames
+    (gslist->list (x_fileselect_open *window) pointer->string 'free))
+
+  ;; Open each file.
+  (define *pages
+    (map
+     (lambda (filename)
+       (x_window_open_page *window (string->pointer filename)))
+     filenames))
+
+  ;; Switch to the last page opened.
+  (unless (null? *pages)
+    (x_window_set_current_page *window (last *pages))))

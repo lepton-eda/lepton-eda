@@ -694,7 +694,7 @@
 (define-lff x_event_key '* '(* * *))
 
 ;;; x_fileselect.c
-(define-lff x_fileselect_open void '(*))
+(define-lff x_fileselect_open '* '(*))
 (define-lff x_fileselect_save int '(* * *))
 (define-lff schematic_file_open int '(* * * *))
 

@@ -455,8 +455,11 @@ gboolean x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapp
 /* x_compselect.c */
 void x_compselect_open (GschemToplevel *w_current);
 void x_compselect_deselect (GschemToplevel *w_current);
+
 /* x_fileselect.c */
-void x_fileselect_open(GschemToplevel *w_current);
+GSList*
+x_fileselect_open (GschemToplevel *w_current);
+
 gboolean
 x_fileselect_save (GschemToplevel *w_current,
                    LeptonPage* page,

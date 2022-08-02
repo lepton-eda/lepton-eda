@@ -318,20 +318,17 @@ x_fileselect_add_preview (GtkFileChooser *filechooser)
 
 /*! \brief Opens a file chooser for opening one or more schematics.
  *  \par Function Description
- *  This function opens a file chooser dialog and wait for the user to
- *  select at least one file to load as <B>w_current</B>'s new pages.
  *
- *  The function updates the user interface.
- *
- *  At the end of the function, the w_current->toplevel's current page
- *  is set to the page of the last loaded page.
+ *  This function opens a file chooser dialog and waits for the
+ *  user to select at least one file to load.
  *
  *  \param [in] w_current The GschemToplevel environment.
+ *  \return The GSList of file names to open.
  */
-void
-x_fileselect_open(GschemToplevel *w_current)
+GSList*
+x_fileselect_open (GschemToplevel *w_current)
 {
-  LeptonPage *page = NULL;
+  GSList *filenames = NULL;
   GtkWidget *dialog;
   gchar *cwd;
 
@@ -375,23 +372,12 @@ x_fileselect_open(GschemToplevel *w_current)
     /* remember current filter: */
     filter_last_opendlg = gtk_file_chooser_get_filter (GTK_FILE_CHOOSER (dialog));
 
-    GSList *tmp, *filenames =
-      gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER (dialog));
-
-    /* open each file */
-    for (tmp = filenames; tmp != NULL;tmp = g_slist_next (tmp)) {
-      page = x_window_open_page (w_current, (gchar*)tmp->data);
-    }
-    /* Switch to the last page opened */
-    if ( page != NULL )
-      x_window_set_current_page (w_current, page);
-
-    /* free the list of filenames */
-    g_slist_foreach (filenames, (GFunc)g_free, NULL);
-    g_slist_free (filenames);
+    filenames = gtk_file_chooser_get_filenames (GTK_FILE_CHOOSER (dialog));
   }
+
   gtk_widget_destroy (dialog);
 
+  return filenames;
 }
 
 
