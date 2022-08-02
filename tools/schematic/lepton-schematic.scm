@@ -242,27 +242,24 @@ Run `~A --help' for more information.\n")
 
 (define (main app file-list)
   ;; Create a new window and associated LeptonToplevel object.
-  (define *window
-    (window->pointer (make-schematic-window app (lepton_toplevel_new))))
+  (define window (make-schematic-window app (lepton_toplevel_new)))
+
+  (define *window (window->pointer window))
 
   ;; Current directory.
   (define cwd (getcwd))
 
-  (define (open-page *filename)
-    (x_window_open_page *window *filename))
-
-  (define (string-ls->pointer-ls ls)
-    (map string->pointer ls))
+  (define (open-page filename)
+    (window-open-page! window filename))
 
   ;; Open up log window on startup if requested in config.
   (open-log-window *window)
 
-  (let* ((filenames (get-absolute-filenames file-list cwd))
-         (*filenames (if (null? filenames)
-                         (list %null-pointer)
-                         (string-ls->pointer-ls filenames)))
-         (*pages (map open-page *filenames))
-         (*current-page (last *pages)))
+  (let* ((filenames (if (null? file-list)
+                        (list #f)
+                        (get-absolute-filenames file-list cwd)))
+         (pages (map open-page filenames))
+         (*current-page (page->pointer (last pages))))
 
     ;; Update the window to show the current page:
     (x_window_set_current_page *window *current-page))
