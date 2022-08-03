@@ -26,6 +26,7 @@
   #:use-module (lepton config)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi check-args)
+  #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
@@ -162,6 +163,23 @@
   (procedure->pointer int callback-close-schematic-window '(* * *)))
 
 
+;;; Opens a file selected in recent-chooser.
+(define (callback-recent-chooser-item-activated *chooser *window)
+  (define *filename
+    (schematic_menu_recent_chooser_get_filename *chooser *window))
+
+  (x_window_set_current_page *window
+                             (x_window_open_page *window *filename))
+  ;; Free the returned C string.
+  (g_free *filename))
+
+;;; C callback for the above function.
+(define *callback-recent-chooser-item-activated
+  (procedure->pointer void
+                      callback-recent-chooser-item-activated
+                      '(* *)))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -193,7 +211,7 @@ GtkApplication structure of the program (when compiled with
                               *window)
 
     (let ((*main-box (schematic_window_create_main_box *main-window))
-          (*menubar (make-main-menu *window))
+          (*menubar (make-main-menu *window *callback-recent-chooser-item-activated))
           (*work-box (schematic_window_create_work_box)))
       (schematic_window_create_menubar *window *main-box *menubar)
 
