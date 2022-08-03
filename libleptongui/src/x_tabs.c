@@ -378,24 +378,6 @@ x_tabs_dbg_pages_dump (GschemToplevel* w_current)
   printf( " ^^^^^^^^^^^^^^ pages ^^^^^^^^^^^^^^^^^^\n\n" );
 }
 
-static void
-x_tabs_dbg_pages_dump_simple (GschemToplevel* w_current)
-{
-  printf( " >> pages:\n" );
-  g_return_if_fail( w_current != NULL );
-
-  for ( GList* node = w_current->toplevel->pages->glist;
-        node != NULL;
-        node = g_list_next( node ) )
-  {
-    LeptonPage* p = node->data;
-    printf ("    p: [%s]\n",
-            g_path_get_basename (lepton_page_get_filename (p)));
-  }
-
-  printf( "\n" );
-}
-
 #endif /* DEBUG */
 
 
@@ -1608,10 +1590,6 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
 
   gtk_widget_grab_focus (GTK_WIDGET (nfo->pview_));
   page_select_widget_update (w_current);
-
-#ifdef DEBUG
-  x_tabs_dbg_pages_dump_simple( w_current );
-#endif
 
 } /* x_tabs_page_on_reordered() */
 
