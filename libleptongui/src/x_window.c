@@ -585,8 +585,8 @@ schematic_window_set_main_window (GschemToplevel *w_current,
  *  does not conflict with a file on disk.
  */
 LeptonPage*
-x_window_open_page_impl (GschemToplevel *w_current,
-                         const gchar *filename)
+x_window_open_page (GschemToplevel *w_current,
+                    const gchar *filename)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   g_return_val_if_fail (toplevel != NULL, NULL);
@@ -638,7 +638,7 @@ x_window_open_page_impl (GschemToplevel *w_current,
 
   return page;
 
-} /* x_window_open_page_impl() */
+} /* x_window_open_page() */
 
 
 
@@ -826,7 +826,7 @@ x_window_close_page (GschemToplevel *w_current,
     /* Create a new page if there wasn't another to switch to */
     if (new_current == NULL && !x_tabs_enabled())
     {
-      new_current = x_window_open_page_impl (w_current, NULL);
+      new_current = x_window_open_page (w_current, NULL);
     }
 
     /* change to new_current and update display */

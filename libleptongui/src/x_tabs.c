@@ -1394,7 +1394,7 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
     printf( "    x_tabs_page_open(): #1: [pview] [!page], fn: [%s] \n\n", filename );
 #endif
 
-    nfo_cur->page_ = x_window_open_page_impl (w_current, filename);
+    nfo_cur->page_ = x_window_open_page (w_current, filename);
     x_window_set_current_page_impl (w_current, nfo_cur->page_);
 
     x_tabs_hdr_set (w_current->xtabs_nbook, nfo_cur);
@@ -1426,7 +1426,7 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
 
     TabInfo* nfo_new = x_tabs_page_new (w_current, NULL);
 
-    nfo_new->page_ = x_window_open_page_impl (w_current, filename);
+    nfo_new->page_ = x_window_open_page (w_current, filename);
     x_window_set_current_page_impl (w_current, nfo_new->page_);
 
     x_tabs_hdr_set (w_current->xtabs_nbook, nfo_new);

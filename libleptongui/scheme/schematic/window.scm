@@ -344,7 +344,7 @@ window to PAGE.  Returns PAGE."
   (define *page
     (if (true? (x_tabs_enabled))
         (x_tabs_page_open *window *filename)
-        (x_window_open_page_impl *window *filename)))
+        (x_window_open_page *window *filename)))
 
   (unless (or (null-pointer? *filename)
               (null-pointer? *page))
