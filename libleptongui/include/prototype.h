@@ -634,9 +634,6 @@ GschemToplevel*
 schematic_window_set_main_window (GschemToplevel *w_current,
                                   GtkWidget *main_window);
 LeptonPage*
-x_window_open_page (GschemToplevel *w_current,
-                    const gchar *filename);
-LeptonPage*
 x_window_open_page_impl (GschemToplevel *w_current,
                          const gchar *filename);
 void
