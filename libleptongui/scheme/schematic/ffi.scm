@@ -212,6 +212,8 @@
             x_tabs_nbook_create
             x_tabs_page_new
             x_tabs_page_open
+            *x_tabs_page_on_reordered
+            *x_tabs_page_on_sel
 
             schematic_action_mode_from_string
             schematic_action_mode_to_string
@@ -593,10 +595,12 @@
 ;;; x_tabs.c
 (define-lff x_tabs_enabled int '())
 (define-lff x_tabs_hdr_update void '(* *))
+(define-lff x_tabs_nbook_create '* '(* *))
 (define-lff x_tabs_page_close void '(* *))
-(define-lff x_tabs_nbook_create void '(* *))
 (define-lff x_tabs_page_new '* '(* *))
 (define-lff x_tabs_page_open '* '(* *))
+(define-lfc *x_tabs_page_on_reordered)
+(define-lfc *x_tabs_page_on_sel)
 
 ;;; gschem_find_text_widget.c
 (define-lff find_text_dialog void '(*))

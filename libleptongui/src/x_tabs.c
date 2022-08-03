@@ -221,17 +221,6 @@ x_tabs_nbook_page_add (GschemToplevel* w_current,
 static void
 x_tabs_nbook_page_close (GschemToplevel* w_current,
                          LeptonPage* page);
-static void
-x_tabs_page_on_sel (GtkNotebook* nbook,
-                    GtkWidget*   wtab,
-                    guint        ndx,
-                    gpointer     data);
-
-static void
-x_tabs_page_on_reordered (GtkNotebook* nbook,
-                          GtkWidget*   wtab,
-                          guint        newindex,
-                          gpointer     data);
 
 
 static gboolean
@@ -625,7 +614,7 @@ x_tabs_tl_page_find (GschemToplevel* w_current,
  *
  */
 
-void
+GtkWidget*
 x_tabs_nbook_create (GschemToplevel* w_current,
                      GtkWidget* work_box)
 {
@@ -684,13 +673,7 @@ x_tabs_nbook_create (GschemToplevel* w_current,
   );
 #endif
 
-  g_signal_connect (nbook, "switch-page",
-                    G_CALLBACK (&x_tabs_page_on_sel), w_current);
-
-  g_signal_connect (nbook,
-                    "page-reordered",
-                    G_CALLBACK (&x_tabs_page_on_reordered),
-                    w_current);
+  return nbook;
 
 } /* x_tabs_nbook_create() */
 
@@ -1567,7 +1550,7 @@ x_tabs_page_close (GschemToplevel* w_current,
  *  \param [in] data   GschemToplevel*.
  *
  */
-static void
+void
 x_tabs_page_on_sel (GtkNotebook* nbook,
                     GtkWidget*   wtab,
                     guint        ndx,
@@ -1606,7 +1589,7 @@ x_tabs_page_on_sel (GtkNotebook* nbook,
 
 /*! \brief GtkNotebook "page-reordered" signal handler.
  */
-static void
+void
 x_tabs_page_on_reordered (GtkNotebook* nbook,
                           GtkWidget*   wtab,
                           guint        newindex,

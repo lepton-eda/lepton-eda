@@ -234,8 +234,15 @@ GtkApplication structure of the program (when compiled with
       (schematic_window_set_key_event_callback *process-key-event)
 
       (if (true? (x_tabs_enabled))
-          (begin
-            (x_tabs_nbook_create *window *work-box)
+          (let ((*notebook (x_tabs_nbook_create *window *work-box)))
+            (schematic_signal_connect *notebook
+                                      (string->pointer "switch-page")
+                                      *x_tabs_page_on_sel
+                                      *window)
+            (schematic_signal_connect *notebook
+                                      (string->pointer "page-reordered")
+                                      *x_tabs_page_on_reordered
+                                      *window)
             (x_tabs_page_new *window %null-pointer))
 
           (let ((*page-view (schematic_window_create_page_view *window *work-box)))
