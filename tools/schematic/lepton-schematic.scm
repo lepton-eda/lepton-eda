@@ -255,14 +255,12 @@ Run `~A --help' for more information.\n")
   ;; Open up log window on startup if requested in config.
   (open-log-window *window)
 
-  (let* ((filenames (if (null? file-list)
-                        (list #f)
-                        (get-absolute-filenames file-list cwd)))
-         (pages (map open-page filenames))
-         (*current-page (page->pointer (last pages))))
+  (let ((pages (map open-page (if (null? file-list)
+                                  (list #f)
+                                  (get-absolute-filenames file-list cwd)))))
 
     ;; Update the window to show the current page:
-    (x_window_set_current_page *window *current-page))
+    (window-set-current-page! window (last pages)))
 
   ;; Return the new window.
   *window)
