@@ -53,7 +53,7 @@
 
 (define (callback-file-new *widget *window)
   ;; Create a new page.
-  (let ((*page (x_window_open_page *window %null-pointer)))
+  (let ((*page (page->pointer (window-open-page! (pointer->window *window) #f))))
     (if (null-pointer? *page)
         (error (G_ "Could not create a new page."))
         (begin
