@@ -184,6 +184,16 @@
                       '(* *)))
 
 
+(define (callback-page-reordered *notebook *widget-tab new-index *window)
+  (x_tabs_page_on_reordered *notebook *widget-tab new-index *window)
+  (page_select_widget_update *window))
+
+(define *callback-page-reordered
+  (procedure->pointer void
+                      callback-page-reordered
+                      (list '* '* int '*)))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -245,7 +255,7 @@ GtkApplication structure of the program (when compiled with
                                       *window)
             (schematic_signal_connect *notebook
                                       (string->pointer "page-reordered")
-                                      *x_tabs_page_on_reordered
+                                      *callback-page-reordered
                                       *window)
             (x_tabs_page_new *window %null-pointer))
 

@@ -1537,7 +1537,6 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
   lepton_list_move_item (pages, nfo->page_, newindex);
 
   gtk_widget_grab_focus (GTK_WIDGET (nfo->pview_));
-  page_select_widget_update (w_current);
 
 } /* x_tabs_page_on_reordered() */
 

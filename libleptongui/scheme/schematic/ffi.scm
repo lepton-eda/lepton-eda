@@ -214,7 +214,7 @@
             x_tabs_nbook_create
             x_tabs_page_new
             x_tabs_page_open
-            *x_tabs_page_on_reordered
+            x_tabs_page_on_reordered
             *x_tabs_page_on_sel
             schematic_tabs_set_callback
 
@@ -604,7 +604,7 @@
 (define-lff x_tabs_page_close void '(* *))
 (define-lff x_tabs_page_new '* '(* *))
 (define-lff x_tabs_page_open '* '(* *))
-(define-lfc *x_tabs_page_on_reordered)
+(define-lff x_tabs_page_on_reordered void (list '* '* int '*))
 (define-lfc *x_tabs_page_on_sel)
 (define-lff schematic_tabs_set_callback void '(* *))
 
