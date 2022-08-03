@@ -165,13 +165,17 @@
 
 ;;; Opens a file selected in recent-chooser.
 (define (callback-recent-chooser-item-activated *chooser *window)
+  (define window (pointer->window *window))
   (define *filename
     (schematic_menu_recent_chooser_get_filename *chooser *window))
+  (define filename (pointer->string *filename))
 
-  (x_window_set_current_page *window
-                             (x_window_open_page *window *filename))
   ;; Free the returned C string.
-  (g_free *filename))
+  (g_free *filename)
+
+  (window-set-current-page! window
+                            (window-open-page! window filename)))
+
 
 ;;; C callback for the above function.
 (define *callback-recent-chooser-item-activated
