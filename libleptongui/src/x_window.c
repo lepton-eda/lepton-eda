@@ -1185,38 +1185,6 @@ create_notebook_bottom (GschemToplevel* w_current)
 
 
 
-/*! \brief Opens a new page from a file or a blank one if \a filename is NULL.
- *
- *  \see x_window_open_page_impl()
- *  \see x_tabs_page_open()
- */
-LeptonPage*
-x_window_open_page (GschemToplevel* w_current, const gchar* filename)
-{
-  LeptonPage* page = NULL;
-
-  if (x_tabs_enabled())
-  {
-    page = x_tabs_page_open (w_current, filename);
-  }
-  else
-  {
-    page = x_window_open_page_impl (w_current, filename);
-  }
-
-  if (filename != NULL && page != NULL)
-  {
-    /* check for symbol version changes, display
-     * an error dialog box, if necessary:
-    */
-    major_changed_dialog (w_current);
-  }
-
-  return page;
-}
-
-
-
 /*! \brief Changes the current page.
  *
  *  \see x_window_set_current_page_impl()

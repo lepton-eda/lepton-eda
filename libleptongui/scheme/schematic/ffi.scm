@@ -36,6 +36,7 @@
             generic_error_dialog
             generic_filesel_dialog
             generic_msg_dialog
+            major_changed_dialog
 
             schematic_execute_script
 
@@ -163,7 +164,7 @@
 
             x_window_close_page
             x_window_new
-            x_window_open_page
+            x_window_open_page_impl
             x_window_save_page
             x_window_set_current_page
             x_window_setup_draw_events_drawing_area
@@ -209,6 +210,7 @@
             x_tabs_enabled
             x_tabs_hdr_update
             x_tabs_page_close
+            x_tabs_page_open
 
             schematic_action_mode_from_string
             schematic_action_mode_to_string
@@ -543,7 +545,7 @@
 
 ;;; x_window.c
 (define-lff x_window_new '* '(*))
-(define-lff x_window_open_page '* '(* *))
+(define-lff x_window_open_page_impl '* '(* *))
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
@@ -592,6 +594,7 @@
 (define-lff x_tabs_enabled int '())
 (define-lff x_tabs_hdr_update void '(* *))
 (define-lff x_tabs_page_close void '(* *))
+(define-lff x_tabs_page_open '* '(* *))
 
 ;;; gschem_find_text_widget.c
 (define-lff find_text_dialog void '(*))
@@ -605,6 +608,7 @@
 (define-lff generic_error_dialog void '(* * *))
 (define-lff generic_filesel_dialog '* (list '* '* int))
 (define-lff generic_msg_dialog void '(*))
+(define-lff major_changed_dialog void '(*))
 
 ;;; execute_script.c
 (define-lff schematic_execute_script '* '(*))

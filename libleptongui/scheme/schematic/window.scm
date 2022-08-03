@@ -341,7 +341,18 @@ window to PAGE.  Returns PAGE."
              (string->pointer filename))
         %null-pointer))
 
-  (pointer->page (x_window_open_page *window *filename)))
+  (define *page
+    (if (true? (x_tabs_enabled))
+        (x_tabs_page_open *window *filename)
+        (x_window_open_page_impl *window *filename)))
+
+  (unless (or (null-pointer? *filename)
+              (null-pointer? *page))
+    ;; Check for symbol version changes, display an error dialog
+    ;; box, if necessary.
+    (major_changed_dialog *window))
+
+  (pointer->page *page))
 
 
 (define (window-set-current-page! window page)
