@@ -209,7 +209,6 @@
             x_tabs_enabled
             x_tabs_hdr_update
             x_tabs_page_close
-            x_tabs_hier_up
             x_tabs_nbook_create
             x_tabs_page_new
             x_tabs_page_open
@@ -600,7 +599,6 @@
 ;;; x_tabs.c
 (define-lff x_tabs_enabled int '())
 (define-lff x_tabs_hdr_update void '(* *))
-(define-lff x_tabs_hier_up void '(*))
 (define-lff x_tabs_nbook_create '* '(* *))
 (define-lff x_tabs_page_close void '(* *))
 (define-lff x_tabs_page_new '* '(* *))

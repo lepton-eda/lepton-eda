@@ -208,13 +208,29 @@
   (procedure->pointer void callback-tab-button-close '(* *)))
 
 
+;;; Go to the upper hierarchy level page.
+(define (hierarchy-up *window)
+  (define *page (schematic_window_get_active_page *window))
+
+  (unless (null-pointer? *page)
+
+    (let ((*parent (s_hierarchy_find_up_page *page)))
+      (if (null-pointer? *parent)
+          (log! 'message (G_ "Cannot find any schematics above the current one!"))
+
+          (unless (and (true? (lepton_page_get_changed *page))
+                       (not (true? (x_dialog_close_changed_page *window *page))))
+            (x_tabs_page_close *window *page)
+            (x_tabs_page_set_cur *window *parent))))))
+
+
 (define (callback-tab-button-up *button *tab-info)
   (if (null-pointer? *tab-info)
       (error "NULL TabInfo pointer.")
       (let ((*window (schematic_tab_info_get_window *tab-info))
             (*page (schematic_tab_info_get_page *tab-info)))
         (x_tabs_page_set_cur *window *page)
-        (x_tabs_hier_up *window))))
+        (hierarchy-up *window))))
 
 (define *callback-tab-button-up
   (procedure->pointer void callback-tab-button-up '(* *)))

@@ -677,9 +677,6 @@ x_widgets_toggle_widget_visibility (GtkWidget *widget);
 /* x_tabs.c */
 gboolean x_tabs_enabled();
 
-void
-x_tabs_hier_up (GschemToplevel* w_current);
-
 void x_tabs_init();
 
 GtkWidget*

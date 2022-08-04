@@ -1041,47 +1041,6 @@ x_tabs_cancel_all (GschemToplevel* w_current)
 
 
 
-/*! \brief Go to the upper hierarchy level page.
- *
- * \note
- * Code taken from i_callback_hierarchy_up()
- *
-*/
-void
-x_tabs_hier_up (GschemToplevel* w_current)
-{
-  LeptonPage* page = schematic_window_get_active_page (w_current);
-
-  if (page == NULL)
-  {
-    return;
-  }
-
-  LeptonPage* parent = s_hierarchy_find_up_page (page);
-
-  if (parent == NULL)
-  {
-    g_message (_("Cannot find any schematics above the current one!"));
-    return;
-  }
-
-  if (lepton_page_get_changed (page))
-  {
-    if (!x_dialog_close_changed_page (w_current, page))
-    {
-      return;
-    }
-  }
-
-  x_tabs_page_close (w_current, page);
-
-  x_tabs_page_set_cur (w_current, parent);
-
-} /* x_tabs_hier_up() */
-
-
-
-
 /* --------------------------------------------------------
  *
  * implementation: core and public functions:
