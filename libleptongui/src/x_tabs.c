@@ -973,8 +973,11 @@ x_tabs_hdr_on_btn_up (GtkToolButton* btn,
 
   if (nfo != NULL)
   {
-    x_tabs_page_set_cur (nfo->tl_, nfo->page_);
-    x_tabs_hier_up (nfo->tl_);
+    GschemToplevel *window = schematic_tab_info_get_window (nfo);
+    LeptonPage *page = schematic_tab_info_get_page (nfo);
+
+    x_tabs_page_set_cur (window, page);
+    x_tabs_hier_up (window);
   }
 
 } /* x_tabs_hdr_on_btn_up() */
