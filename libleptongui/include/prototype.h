@@ -680,6 +680,10 @@ gboolean x_tabs_enabled();
 void
 x_tabs_hdr_on_btn_close (GtkToolButton* btn,
                          gpointer p);
+void
+x_tabs_hdr_on_btn_up (GtkToolButton* btn,
+                      gpointer p);
+
 void x_tabs_init();
 
 GtkWidget*

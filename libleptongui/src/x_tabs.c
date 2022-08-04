@@ -279,9 +279,6 @@ static void
 x_tabs_hdr_set (GtkNotebook* nbook, TabInfo* nfo);
 
 static void
-x_tabs_hdr_on_btn_up (GtkToolButton* btn, gpointer p);
-
-static void
 x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p);
 
 
@@ -298,6 +295,7 @@ x_tabs_hier_up (GschemToplevel* w_current);
 
 /* Callbacks */
 
+static GCallback callback_hierarchy_up = NULL;
 static GCallback callback_page_close = NULL;
 
 void
@@ -308,6 +306,7 @@ schematic_tabs_set_callback (char *name,
   g_return_if_fail (callback != NULL);
 
   if (strcmp (name, "page-close") == 0) {callback_page_close = callback;}
+  else if (strcmp (name, "hierarchy-up") == 0) {callback_hierarchy_up = callback;}
 }
 
 
@@ -874,7 +873,7 @@ x_tabs_hdr_create (TabInfo* nfo)
 
     g_signal_connect (btn_up,
                       "clicked",
-                      G_CALLBACK (&x_tabs_hdr_on_btn_up),
+                      G_CALLBACK (callback_hierarchy_up),
                       nfo);
 
   } /* if: show_btn_up && parent */
@@ -973,8 +972,9 @@ x_tabs_hdr_on_btn_close (GtkToolButton* btn, gpointer p)
 
 
 
-static void
-x_tabs_hdr_on_btn_up (GtkToolButton* btn, gpointer p)
+void
+x_tabs_hdr_on_btn_up (GtkToolButton* btn,
+                      gpointer p)
 {
   TabInfo* nfo = (TabInfo*) p;
   g_return_if_fail (nfo != NULL);
