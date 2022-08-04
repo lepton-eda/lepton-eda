@@ -946,6 +946,14 @@ x_tabs_hdr_update (GschemToplevel* w_current,
 }
 
 
+GschemToplevel*
+schematic_tab_info_get_window (TabInfo *tab_info)
+{
+  g_return_val_if_fail (tab_info != NULL, NULL);
+
+  return tab_info->tl_;
+}
+
 
 void
 x_tabs_hdr_on_btn_close (GtkToolButton* btn, gpointer p)
@@ -955,17 +963,19 @@ x_tabs_hdr_on_btn_close (GtkToolButton* btn, gpointer p)
 
   if (nfo != NULL)
   {
-    x_tabs_page_set_cur (nfo->tl_, nfo->page_);
+    GschemToplevel *window = schematic_tab_info_get_window (nfo);
+
+    x_tabs_page_set_cur (window, nfo->page_);
 
     if (lepton_page_get_changed (nfo->page_))
     {
-      if (!x_dialog_close_changed_page (nfo->tl_, nfo->page_))
+      if (!x_dialog_close_changed_page (window, nfo->page_))
       {
         return;
       }
     }
 
-    x_tabs_page_close (nfo->tl_, nfo->page_);
+    x_tabs_page_close (window, nfo->page_);
   }
 
 } /* x_tabs_hdr_on_btn_close() */
