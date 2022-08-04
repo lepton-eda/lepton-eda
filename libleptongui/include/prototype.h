@@ -678,8 +678,7 @@ x_widgets_toggle_widget_visibility (GtkWidget *widget);
 gboolean x_tabs_enabled();
 
 void
-x_tabs_hdr_on_btn_up (GtkToolButton* btn,
-                      gpointer p);
+x_tabs_hier_up (GschemToplevel* w_current);
 
 void x_tabs_init();
 

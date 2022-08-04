@@ -208,6 +208,18 @@
   (procedure->pointer void callback-tab-button-close '(* *)))
 
 
+(define (callback-tab-button-up *button *tab-info)
+  (if (null-pointer? *tab-info)
+      (error "NULL TabInfo pointer.")
+      (let ((*window (schematic_tab_info_get_window *tab-info))
+            (*page (schematic_tab_info_get_page *tab-info)))
+        (x_tabs_page_set_cur *window *page)
+        (x_tabs_hier_up *window))))
+
+(define *callback-tab-button-up
+  (procedure->pointer void callback-tab-button-up '(* *)))
+
+
 (define (make-schematic-window *app *toplevel)
   "Creates a new lepton-schematic window.  APP is a pointer to the
 GtkApplication structure of the program (when compiled with
@@ -262,7 +274,7 @@ GtkApplication structure of the program (when compiled with
             (schematic_tabs_set_callback (string->pointer "page-close")
                                          *callback-tab-button-close)
             (schematic_tabs_set_callback (string->pointer "hierarchy-up")
-                                         *x_tabs_hdr_on_btn_up)
+                                         *callback-tab-button-up)
             (schematic_signal_connect *notebook
                                       (string->pointer "switch-page")
                                       *x_tabs_page_on_sel

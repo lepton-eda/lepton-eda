@@ -288,9 +288,6 @@ x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p);
 static void
 x_tabs_cancel_all (GschemToplevel* w_current);
 
-static void
-x_tabs_hier_up (GschemToplevel* w_current);
-
 
 
 /* Callbacks */
@@ -964,26 +961,6 @@ schematic_tab_info_get_page (TabInfo *tab_info)
 }
 
 
-void
-x_tabs_hdr_on_btn_up (GtkToolButton* btn,
-                      gpointer p)
-{
-  TabInfo* nfo = (TabInfo*) p;
-  g_return_if_fail (nfo != NULL);
-
-  if (nfo != NULL)
-  {
-    GschemToplevel *window = schematic_tab_info_get_window (nfo);
-    LeptonPage *page = schematic_tab_info_get_page (nfo);
-
-    x_tabs_page_set_cur (window, page);
-    x_tabs_hier_up (window);
-  }
-
-} /* x_tabs_hdr_on_btn_up() */
-
-
-
 static void
 x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p)
 {
@@ -1070,7 +1047,7 @@ x_tabs_cancel_all (GschemToplevel* w_current)
  * Code taken from i_callback_hierarchy_up()
  *
 */
-static void
+void
 x_tabs_hier_up (GschemToplevel* w_current)
 {
   LeptonPage* page = schematic_window_get_active_page (w_current);
