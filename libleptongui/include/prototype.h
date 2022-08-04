@@ -678,9 +678,6 @@ x_widgets_toggle_widget_visibility (GtkWidget *widget);
 gboolean x_tabs_enabled();
 
 void
-x_tabs_hdr_on_btn_close (GtkToolButton* btn,
-                         gpointer p);
-void
 x_tabs_hdr_on_btn_up (GtkToolButton* btn,
                       gpointer p);
 
@@ -720,6 +717,11 @@ x_tabs_hdr_update (GschemToplevel* w_current,
 void
 schematic_tabs_set_callback (char *name,
                              GCallback callback);
+GschemToplevel*
+schematic_tab_info_get_window (TabInfo *tab_info);
+
+LeptonPage*
+schematic_tab_info_get_page (TabInfo *tab_info);
 
 /* color_edit_widget.c */
 void color_edit_widget_update (GschemToplevel* w_current);

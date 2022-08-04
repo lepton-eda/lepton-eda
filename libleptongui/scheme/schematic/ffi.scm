@@ -207,15 +207,17 @@
             schematic_toolbar_insert_separator
 
             x_tabs_enabled
-            *x_tabs_hdr_on_btn_close
             *x_tabs_hdr_on_btn_up
             x_tabs_hdr_update
             x_tabs_page_close
             x_tabs_nbook_create
             x_tabs_page_new
             x_tabs_page_open
+            x_tabs_page_set_cur
             x_tabs_page_on_reordered
             *x_tabs_page_on_sel
+            schematic_tab_info_get_page
+            schematic_tab_info_get_window
             schematic_tabs_set_callback
 
             schematic_action_mode_from_string
@@ -597,15 +599,17 @@
 
 ;;; x_tabs.c
 (define-lff x_tabs_enabled int '())
-(define-lfc *x_tabs_hdr_on_btn_close)
 (define-lfc *x_tabs_hdr_on_btn_up)
 (define-lff x_tabs_hdr_update void '(* *))
 (define-lff x_tabs_nbook_create '* '(* *))
 (define-lff x_tabs_page_close void '(* *))
 (define-lff x_tabs_page_new '* '(* *))
 (define-lff x_tabs_page_open '* '(* *))
+(define-lff x_tabs_page_set_cur void '(* *))
 (define-lff x_tabs_page_on_reordered void (list '* '* int '*))
 (define-lfc *x_tabs_page_on_sel)
+(define-lff schematic_tab_info_get_page '* '(*))
+(define-lff schematic_tab_info_get_window '* '(*))
 (define-lff schematic_tabs_set_callback void '(* *))
 
 ;;; gschem_find_text_widget.c

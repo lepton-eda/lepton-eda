@@ -965,34 +965,6 @@ schematic_tab_info_get_page (TabInfo *tab_info)
 
 
 void
-x_tabs_hdr_on_btn_close (GtkToolButton* btn, gpointer p)
-{
-  TabInfo* nfo = (TabInfo*) p;
-  g_return_if_fail (nfo != NULL);
-
-  if (nfo != NULL)
-  {
-    GschemToplevel *window = schematic_tab_info_get_window (nfo);
-    LeptonPage *page = schematic_tab_info_get_page (nfo);
-
-    x_tabs_page_set_cur (window, page);
-
-    if (lepton_page_get_changed (page))
-    {
-      if (!x_dialog_close_changed_page (window, page))
-      {
-        return;
-      }
-    }
-
-    x_tabs_page_close (window, page);
-  }
-
-} /* x_tabs_hdr_on_btn_close() */
-
-
-
-void
 x_tabs_hdr_on_btn_up (GtkToolButton* btn,
                       gpointer p)
 {
