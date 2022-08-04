@@ -235,6 +235,8 @@ GtkApplication structure of the program (when compiled with
 
       (if (true? (x_tabs_enabled))
           (let ((*notebook (x_tabs_nbook_create *window *work-box)))
+            (schematic_tabs_set_callback (string->pointer "page-close")
+                                         *x_tabs_hdr_on_btn_close)
             (schematic_signal_connect *notebook
                                       (string->pointer "switch-page")
                                       *x_tabs_page_on_sel
