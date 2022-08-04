@@ -709,10 +709,6 @@ void x_tabs_prev (GschemToplevel* w_current);
 void
 x_tabs_hdr_update (GschemToplevel* w_current,
                    LeptonPage* page);
-#ifdef DEBUG
-void x_tabs_dbg_infos_dump (GschemToplevel* w_current);
-void x_tabs_dbg_pages_dump (GschemToplevel* w_current);
-#endif
 
 /* color_edit_widget.c */
 void color_edit_widget_update (GschemToplevel* w_current);
