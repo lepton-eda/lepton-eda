@@ -1341,7 +1341,9 @@ x_tabs_page_close (GschemToplevel* w_current,
   printf( "x_tabs_page_close()\n" );
 #endif
 
-  TabInfo* nfo_cur = x_tabs_info_find_by_page (w_current->xtabs_info_list, page);
+  GList *tabinfo_list = schematic_window_get_tab_info_list (w_current);
+
+  TabInfo* nfo_cur = x_tabs_info_find_by_page (tabinfo_list, page);
   g_return_if_fail (nfo_cur != NULL);
 
   gint cnt = gtk_notebook_get_n_pages (w_current->xtabs_nbook);
