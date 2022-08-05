@@ -1593,3 +1593,17 @@ schematic_window_set_slot_edit_widget (GschemToplevel *w_current,
 
   w_current->sewindow = widget;
 }
+
+
+/*! \brief Get the field 'xtabs_info_list' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The field 'xtabs_info_list'.
+ */
+GList*
+schematic_window_get_tab_info_list (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->xtabs_info_list;
+}
