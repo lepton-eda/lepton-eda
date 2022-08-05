@@ -726,6 +726,10 @@ schematic_tab_info_get_window (TabInfo *tab_info);
 LeptonPage*
 schematic_tab_info_get_page (TabInfo *tab_info);
 
+void
+schematic_tab_info_set_page (TabInfo *tab_info,
+                             LeptonPage* page);
+
 /* color_edit_widget.c */
 void color_edit_widget_update (GschemToplevel* w_current);
 

@@ -948,6 +948,14 @@ schematic_tab_info_get_page (TabInfo *tab_info)
   return tab_info->page_;
 }
 
+void
+schematic_tab_info_set_page (TabInfo *tab_info,
+                             LeptonPage* page)
+{
+  g_return_if_fail (tab_info != NULL);
+
+  tab_info->page_ = page;
+}
 
 static void
 x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p)
