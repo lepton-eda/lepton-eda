@@ -957,6 +957,15 @@ schematic_tab_info_set_page (TabInfo *tab_info,
   tab_info->page_ = page;
 }
 
+
+GschemPageView*
+schematic_tab_info_get_page_view (TabInfo *tab_info)
+{
+  g_return_val_if_fail (tab_info != NULL, NULL);
+
+  return tab_info->pview_;
+}
+
 static void
 x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p)
 {
