@@ -732,6 +732,9 @@ schematic_tab_info_set_page (TabInfo *tab_info,
 GschemPageView*
 schematic_tab_info_get_page_view (TabInfo *tab_info);
 
+GtkWidget*
+schematic_tab_info_get_tab_widget (TabInfo *tab_info);
+
 /* color_edit_widget.c */
 void color_edit_widget_update (GschemToplevel* w_current);
 

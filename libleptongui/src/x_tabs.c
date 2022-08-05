@@ -966,6 +966,16 @@ schematic_tab_info_get_page_view (TabInfo *tab_info)
   return tab_info->pview_;
 }
 
+
+GtkWidget*
+schematic_tab_info_get_tab_widget (TabInfo *tab_info)
+{
+  g_return_val_if_fail (tab_info != NULL, NULL);
+
+  return tab_info->wtab_;
+}
+
+
 static void
 x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p)
 {
