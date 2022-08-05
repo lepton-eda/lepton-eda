@@ -193,6 +193,42 @@
                       callback-page-reordered
                       (list '* '* int '*)))
 
+
+;;; Closes the tab of *WINDOW which contains *PAGE.  When the last
+;;; tab is closed, a new tab with blank page will be opened.
+(define (close-tab! *window *page)
+  (when (null-pointer? *window)
+    (error "NULL window in ~S()" 'close-tab!))
+
+  (let ((*current-tab-info
+         (x_tabs_info_find_by_page (schematic_window_get_tab_info_list *window)
+                                   *page)))
+
+    (when (null-pointer? *current-tab-info)
+      (error "NULL TabInfo in ~S()" 'close-tab!))
+
+    (let ((*notebook (schematic_window_get_tab_notebook *window)))
+
+      (when (< (gtk_notebook_get_n_pages *notebook) 1)
+        (error "Wrong number of tabs in ~S()" 'close-tab!))
+
+      (let* ((*current-page (schematic_tab_info_get_page *current-tab-info))
+             ;; Page to be set as current after the current page is closed.
+             (*new-current-page (x_window_close_page *window *current-page)))
+
+        (x_tabs_nbook_page_close *window *current-page)
+
+        (x_tabs_info_rm *window *current-tab-info)
+
+        (if (null-pointer? *new-current-page)
+            (begin
+              (x_tabs_page_new *window %null-pointer)
+              ;;  x_tabs_page_new() just invoked, but no need to process
+              ;;  pending events here: it will be done in x_tabs_page_open()
+              (x_tabs_page_open *window %null-pointer))
+            (x_tabs_page_set_cur *window *new-current-page))))))
+
+
 (define (callback-tab-button-close *button *tab-info)
   (if (null-pointer? *tab-info)
       (error "NULL TabInfo pointer.")
@@ -202,7 +238,7 @@
 
         (unless (and (true? (lepton_page_get_changed *page))
                      (not (true? (x_dialog_close_changed_page *window *page))))
-          (x_tabs_page_close *window *page)))))
+          (close-tab! *window *page)))))
 
 (define *callback-tab-button-close
   (procedure->pointer void callback-tab-button-close '(* *)))
@@ -220,7 +256,7 @@
 
           (unless (and (true? (lepton_page_get_changed *page))
                        (not (true? (x_dialog_close_changed_page *window *page))))
-            (x_tabs_page_close *window *page)
+            (close-tab! *window *page)
             (x_tabs_page_set_cur *window *parent))))))
 
 
@@ -368,7 +404,7 @@ window to PAGE.  Returns PAGE."
   (define *page (check-page page 2))
   (define tabs-enabled? (true? (x_tabs_enabled)))
   (if tabs-enabled?
-      (x_tabs_page_close *window *page)
+      (close-tab! *window *page)
       (x_window_close_page *window *page)))
 
 

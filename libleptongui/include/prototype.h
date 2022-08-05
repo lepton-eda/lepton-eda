@@ -677,6 +677,13 @@ x_widgets_toggle_widget_visibility (GtkWidget *widget);
 /* x_tabs.c */
 gboolean x_tabs_enabled();
 
+TabInfo*
+x_tabs_info_find_by_page (GList* nfos,
+                          LeptonPage* page);
+void
+x_tabs_info_rm (GschemToplevel* w_current,
+                TabInfo* nfo);
+
 void x_tabs_init();
 
 GtkWidget*
@@ -689,11 +696,11 @@ LeptonPage*
 x_tabs_page_open (GschemToplevel* w_current,
                   const gchar* filename);
 void
+x_tabs_nbook_page_close (GschemToplevel* w_current,
+                         LeptonPage* page);
+void
 x_tabs_page_set_cur (GschemToplevel* w_current,
                      LeptonPage* page);
-void
-x_tabs_page_close (GschemToplevel* w_current,
-                   LeptonPage* page);
 void
 x_tabs_page_on_sel (GtkNotebook* nbook,
                     GtkWidget*   wtab,

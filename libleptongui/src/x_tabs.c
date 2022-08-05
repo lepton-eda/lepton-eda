@@ -40,7 +40,6 @@
  * - x_tabs_init()         // initialize tabbed GUI, read config
  * - x_tabs_page_open()    // open tab
  * - x_tabs_page_set_cur() // set current tab
- * - x_tabs_page_close()   // close tab
  * - x_tabs_next()         // go to next tab
  * - x_tabs_prev()         // go to prev tab
  * - x_tabs_hdr_update()   // update tab's header widget
@@ -168,9 +167,6 @@ x_tabs_info_add (GschemToplevel* w_current,
                  GschemPageView* pview,
                  GtkWidget*      wtab);
 
-static void
-x_tabs_info_rm (GschemToplevel* w_current, TabInfo* nfo);
-
 static gint
 x_tabs_info_cmp_page (gconstpointer elem, gconstpointer data);
 
@@ -180,9 +176,6 @@ x_tabs_info_cmp_pview (gconstpointer elem, gconstpointer data);
 static gint
 x_tabs_info_cmp_wtab (gconstpointer elem, gconstpointer data);
 
-static TabInfo*
-x_tabs_info_find_by_page (GList* nfos,
-                          LeptonPage* page);
 static TabInfo*
 x_tabs_info_find_by_pview (GList* nfos, GschemPageView* pview);
 
@@ -217,12 +210,6 @@ x_tabs_nbook_page_add (GschemToplevel* w_current,
                        LeptonPage*     page,
                        GschemPageView* pview,
                        GtkWidget*      wtab);
-
-static void
-x_tabs_nbook_page_close (GschemToplevel* w_current,
-                         LeptonPage* page);
-
-
 static gboolean
 x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data);
 static GtkMenu*
@@ -348,8 +335,9 @@ x_tabs_info_add (GschemToplevel* w_current,
 
 
 
-static void
-x_tabs_info_rm (GschemToplevel* w_current, TabInfo* nfo)
+void
+x_tabs_info_rm (GschemToplevel* w_current,
+                TabInfo* nfo)
 {
   GList* node = g_list_find (w_current->xtabs_info_list, nfo);
 
@@ -407,7 +395,7 @@ x_tabs_info_cmp_wtab (gconstpointer elem, gconstpointer data)
 
 
 
-static TabInfo*
+TabInfo*
 x_tabs_info_find_by_page (GList* nfos,
                           LeptonPage* page)
 {
@@ -605,7 +593,7 @@ x_tabs_nbook_page_add (GschemToplevel* w_current,
 
 
 
-static void
+void
 x_tabs_nbook_page_close (GschemToplevel* w_current,
                          LeptonPage* page)
 {
@@ -1318,73 +1306,6 @@ x_tabs_page_set_cur (GschemToplevel* w_current,
   }
 
 } /* x_tabs_page_set_cur() */
-
-
-
-/*! \brief Closes a tab which contains a \a page.
- *  \public
- *
- *  \par Function Description
- *  When the last tab is closed, a new tab with blank page will be opened.
- *
- *  \param [in] w_current  The toplevel environment.
- *  \param [in] page       The page.
- *
- */
-void
-x_tabs_page_close (GschemToplevel* w_current,
-                   LeptonPage* page)
-{
-  g_return_if_fail (w_current != NULL);
-
-#ifdef DEBUG
-  printf( "x_tabs_page_close()\n" );
-#endif
-
-  GList *tabinfo_list = schematic_window_get_tab_info_list (w_current);
-
-  TabInfo* nfo_cur = x_tabs_info_find_by_page (tabinfo_list, page);
-  g_return_if_fail (nfo_cur != NULL);
-
-  GtkNotebook *notebook = schematic_window_get_tab_notebook (w_current);
-
-  gint cnt = gtk_notebook_get_n_pages (notebook);
-  g_return_if_fail (cnt >= 1);
-
-
-  /* page to be set as current after the [page] is closed:
-  */
-  LeptonPage *current_page = schematic_tab_info_get_page (nfo_cur);
-  LeptonPage* new_cur_page = x_window_close_page (w_current, current_page);
-
-  x_tabs_nbook_page_close (w_current, current_page);
-
-  /* x_tabs_pview_rm (nfo_cur->pview_); NOTE: for now: nop */
-
-  x_tabs_info_rm (w_current, nfo_cur);
-
-  if (new_cur_page != NULL)
-  {
-    x_tabs_page_set_cur (w_current, new_cur_page);
-  }
-  else
-  {
-#ifdef DEBUG
-    printf( "x_tabs_page_close(): NEW LeptonPage\n" );
-#endif
-
-    x_tabs_page_new  (w_current, NULL);
-
-    /*
-     * x_tabs_page_new() just invoked, but
-     * no need to process pending events here:
-     * it will be done in x_tabs_page_open()
-    */
-
-    x_tabs_page_open (w_current, NULL);
-  }
-
-} /* x_tabs_page_close() */
 
 
 

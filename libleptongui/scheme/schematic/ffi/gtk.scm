@@ -38,7 +38,8 @@
             gtk_menu_new
             gtk_menu_bar_new
             gtk_menu_item_set_submenu
-            gtk_menu_shell_append))
+            gtk_menu_shell_append
+            gtk_notebook_get_n_pages))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -64,6 +65,8 @@
 (define-lff gtk_menu_bar_new '* '())
 (define-lff gtk_menu_item_set_submenu void '(* *))
 (define-lff gtk_menu_shell_append void '(* *))
+
+(define-lff gtk_notebook_get_n_pages int '(*))
 
 (define-lff gtk_rc_parse void '(*))
 
