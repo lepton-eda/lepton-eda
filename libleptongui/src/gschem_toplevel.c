@@ -1607,3 +1607,17 @@ schematic_window_get_tab_info_list (GschemToplevel *w_current)
 
   return w_current->xtabs_info_list;
 }
+
+
+/*! \brief Get the field 'xtabs_nbook' for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The field 'xtabs_nbook'.
+ */
+GtkNotebook*
+schematic_window_get_tab_notebook (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->xtabs_nbook;
+}

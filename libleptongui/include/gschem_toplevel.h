@@ -455,4 +455,7 @@ schematic_window_set_slot_edit_widget (GschemToplevel *w_current,
 GList*
 schematic_window_get_tab_info_list (GschemToplevel *w_current);
 
+GtkNotebook*
+schematic_window_get_tab_notebook (GschemToplevel *w_current);
+
 G_END_DECLS
