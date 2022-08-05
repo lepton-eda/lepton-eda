@@ -1177,24 +1177,24 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
    * - first cmd-line supplied page upon startup
    * - new page when the last page is closed
   */
-  if (nfo_cur->page_ == NULL)
+  if (schematic_tab_info_get_page (nfo_cur) == NULL)
   {
 #ifdef DEBUG
     printf( "    x_tabs_page_open(): #1: [pview] [!page], fn: [%s] \n\n", filename );
 #endif
 
-    nfo_cur->page_ = x_window_open_page (w_current, filename);
-    x_window_set_current_page_impl (w_current, nfo_cur->page_);
+    schematic_tab_info_set_page (nfo_cur, x_window_open_page (w_current, filename));
+    x_window_set_current_page_impl (w_current, schematic_tab_info_get_page (nfo_cur));
 
-    x_tabs_hdr_set (w_current->xtabs_nbook, nfo_cur);
-    gtk_widget_grab_focus (GTK_WIDGET (nfo_cur->pview_));
-    return nfo_cur->page_;
+    x_tabs_hdr_set (schematic_window_get_tab_notebook (w_current), nfo_cur);
+    gtk_widget_grab_focus (GTK_WIDGET (schematic_tab_info_get_page_view (nfo_cur)));
+    return schematic_tab_info_get_page (nfo_cur);
   }
 
 
   LeptonPage* page = NULL;
   if (filename != NULL)
-    page = lepton_toplevel_search_page (w_current->toplevel, filename);
+    page = lepton_toplevel_search_page (gschem_toplevel_get_toplevel (w_current), filename);
 
 
   /* XXX: 2: [!pview] [!page] - either:
@@ -1215,11 +1215,11 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
 
     TabInfo* nfo_new = x_tabs_page_new (w_current, NULL);
 
-    nfo_new->page_ = x_window_open_page (w_current, filename);
-    x_window_set_current_page_impl (w_current, nfo_new->page_);
+    schematic_tab_info_set_page (nfo_new, x_window_open_page (w_current, filename));
+    x_window_set_current_page_impl (w_current, schematic_tab_info_get_page (nfo_new));
 
-    x_tabs_hdr_set (w_current->xtabs_nbook, nfo_new);
-    gtk_widget_grab_focus (GTK_WIDGET (nfo_new->pview_));
+    x_tabs_hdr_set (schematic_window_get_tab_notebook (w_current), nfo_new);
+    gtk_widget_grab_focus (GTK_WIDGET (schematic_tab_info_get_page_view (nfo_new)));
 
     /* x_tabs_page_new() just invoked,
      * let page view creation complete -
@@ -1228,7 +1228,7 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
     while (gtk_events_pending())
       gtk_main_iteration();
 
-    return nfo_new->page_;
+    return schematic_tab_info_get_page (nfo_new);
   }
 
 
@@ -1241,13 +1241,14 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
     printf( "    x_tabs_page_open(): #3: [pview] [page] \n\n" );
 #endif
 
-    TabInfo* nfo_exi = x_tabs_info_find_by_page( w_current->xtabs_info_list, page );
+    TabInfo* nfo_exi = x_tabs_info_find_by_page (schematic_window_get_tab_info_list (w_current), page);
 
     g_return_val_if_fail (nfo_exi != NULL, NULL);
 
-    gint ndx_exi = gtk_notebook_page_num (w_current->xtabs_nbook, nfo_exi->wtab_);
-    gtk_notebook_set_current_page (w_current->xtabs_nbook, ndx_exi);
-    gtk_widget_grab_focus (GTK_WIDGET (nfo_exi->pview_));
+    gint ndx_exi = gtk_notebook_page_num (schematic_window_get_tab_notebook (w_current),
+                                          schematic_tab_info_get_tab_widget (nfo_exi));
+    gtk_notebook_set_current_page (schematic_window_get_tab_notebook (w_current), ndx_exi);
+    gtk_widget_grab_focus (GTK_WIDGET (schematic_tab_info_get_page_view (nfo_exi)));
 
     return page;
   }
