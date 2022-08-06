@@ -1158,12 +1158,6 @@ x_tabs_page_new (GschemToplevel* w_current,
 LeptonPage*
 x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
 {
-  g_return_val_if_fail (w_current != NULL, NULL);
-
-#ifdef DEBUG
-  printf( "x_tabs_page_open(): fn: %s\n", filename );
-#endif
-
   /*
    * Find TabInfo for a page view that is set as current
    * for toplevel (w_current->drawing_area):
@@ -1253,7 +1247,6 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
     return page;
   }
 
-  g_return_val_if_fail (FALSE && "end of func", NULL);
   return NULL;
 
 } /* x_tabs_page_open() */

@@ -194,6 +194,15 @@
                       (list '* '* int '*)))
 
 
+(define (open-tab! *window *filename)
+  (when (null-pointer? *window)
+    (error "NULL window pointer in open-tab!()"))
+  (let ((*page (x_tabs_page_open *window *filename)))
+    (if (null-pointer? *page)
+        (error "open-tab!: Could not open a page for ~S" (pointer->string *filename))
+        *page)))
+
+
 ;;; Closes the tab of *WINDOW which contains *PAGE.  When the last
 ;;; tab is closed, a new tab with blank page will be opened.
 (define (close-tab! *window *page)
@@ -225,7 +234,7 @@
               (x_tabs_page_new *window %null-pointer)
               ;;  x_tabs_page_new() just invoked, but no need to process
               ;;  pending events here: it will be done in x_tabs_page_open()
-              (x_tabs_page_open *window %null-pointer))
+              (open-tab! *window %null-pointer))
             (x_tabs_page_set_cur *window *new-current-page))))))
 
 
@@ -445,7 +454,7 @@ window to PAGE.  Returns PAGE."
 
   (define *page
     (if (true? (x_tabs_enabled))
-        (x_tabs_page_open *window *filename)
+        (open-tab! *window *filename)
         (x_window_open_page *window *filename)))
 
   (unless (or (null-pointer? *filename)
