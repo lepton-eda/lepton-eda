@@ -539,6 +539,10 @@
   (let ((snap-mode (pointer->string
                     (schematic_snap_mode_to_string
                      (gschem_options_get_snap_mode *options)))))
+    ;; FIXME: the user should be always aware of snap mode change,
+    ;; no matter what is used to switch the mode, a hotkey or a
+    ;; mouse click on the status bar.  May be show the messages
+    ;; below in the status bar?
     (match snap-mode
       ("off" (log! 'message (G_ "Snap OFF (CAUTION!)")))
       ("grid" (log! 'message (G_ "Snap ON")))
