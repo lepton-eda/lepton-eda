@@ -146,10 +146,4 @@ gschem_options_set_snap_mode (GschemOptions *options, SchematicSnapMode snap_mod
 void
 gschem_options_set_snap_size (GschemOptions *options, int snap_size);
 
-SchematicSnapMode
-schematic_snap_mode_from_string (char *s);
-
-const char*
-schematic_snap_mode_to_string (SchematicSnapMode mode);
-
 G_END_DECLS
