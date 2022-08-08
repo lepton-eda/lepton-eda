@@ -195,9 +195,109 @@
 
 
 (define (open-tab! *window *filename)
+  "Creates a new page, page view and tab for *FILENAME in *WINDOW.
+If *FILENAME is %null-pointer, the page will be blank.  If there
+is a page with the given *FILENAME, switches to its tab.  Returns
+the new or found page."
+
+  (define (open-tab-page)
+    ;; Find TabInfo for a page view that is set as current
+    ;; for toplevel (w_current->drawing_area):
+    (let ((*current-tab-info (x_tabs_info_cur *window)))
+
+      (when (null-pointer? *current-tab-info)
+        (error "No current TabInfo found."))
+
+      (if (null-pointer? (schematic_tab_info_get_page *current-tab-info))
+          ;; The current tab info may not have an associated page
+          ;; in the following cases:
+          ;;   - when a first blank page is created upon startup
+          ;;   - when a first cmd-line supplied page is opened
+          ;;     upon startup
+          ;;   - when a new page is created after the last page is
+          ;;     closed
+          (begin
+            (schematic_tab_info_set_page *current-tab-info
+                                         (x_window_open_page *window *filename))
+            (x_window_set_current_page_impl
+             *window
+             (schematic_tab_info_get_page *current-tab-info))
+
+            (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
+                            *current-tab-info)
+            (schematic_page_view_grab_focus
+             (schematic_tab_info_get_page_view *current-tab-info))
+
+            ;; Return the newly created page.
+            (schematic_tab_info_get_page *current-tab-info))
+
+          (let ((*page (if (null-pointer? *filename)
+                           %null-pointer
+                           (lepton_toplevel_search_page (gschem_toplevel_get_toplevel *window)
+                                                        *filename))))
+            ;; *FILENAME may be NULL when the user triggers one of
+            ;; the actions:
+            ;;   - File -> Open page
+            ;;   - File -> New page
+            (if (null-pointer? *page)
+                (begin
+                  ;; First we have to cancel all current actions.
+                  ;; This prevents assertion triggering in
+                  ;; o_place_invalidate_rubber() if File->New is
+                  ;; invoked while component selection mode is
+                  ;; active.
+                  (x_tabs_cancel_all *window)
+
+                  ;; Create a new tab.
+                  (let ((*new-tab-info (x_tabs_page_new *window
+                                                        %null-pointer)))
+                    (schematic_tab_info_set_page *new-tab-info
+                                                 (x_window_open_page *window
+                                                                     *filename))
+                    (x_window_set_current_page_impl
+                     *window
+                     (schematic_tab_info_get_page *new-tab-info))
+
+                    (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
+                                    *new-tab-info)
+                    (schematic_page_view_grab_focus
+                     (schematic_tab_info_get_page_view *new-tab-info))
+
+                    ;; x_tabs_page_new() just invoked.  Finish
+                    ;; page view creation by processing pending
+                    ;; events.
+                    (let loop ((pending-event? (true? (gtk_events_pending))))
+                      (when pending-event?
+                        (gtk_main_iteration)
+                        (loop (true? (gtk_events_pending)))))
+
+                    ;; Return the page for *FILENAME.
+                    (schematic_tab_info_get_page *new-tab-info)))
+
+                ;; If the page exists, switch to its existing
+                ;; page view.
+                (let ((*existing-tab-info
+                       (x_tabs_info_find_by_page
+                        (schematic_window_get_tab_info_list *window)
+                        *page)))
+
+                  (when (null-pointer? *existing-tab-info)
+                    (error "NULL TabInfo for existing page."))
+
+                  (let ((notebook-index
+                         (gtk_notebook_page_num (schematic_window_get_tab_notebook *window)
+                                                (schematic_tab_info_get_tab_widget *existing-tab-info))))
+                    (gtk_notebook_set_current_page (schematic_window_get_tab_notebook *window)
+                                                   notebook-index)
+                    (schematic_page_view_grab_focus (schematic_tab_info_get_page_view *existing-tab-info))
+
+                    ;; Return the existing page.
+                    *page)))))))
+
   (when (null-pointer? *window)
     (error "NULL window pointer in open-tab!()"))
-  (let ((*page (x_tabs_page_open *window *filename)))
+
+  (let ((*page (open-tab-page)))
     (if (null-pointer? *page)
         (error "open-tab!: Could not open a page for ~S" (pointer->string *filename))
         *page)))

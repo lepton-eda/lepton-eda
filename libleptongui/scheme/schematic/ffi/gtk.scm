@@ -22,11 +22,13 @@
   #:use-module (lepton ffi)
 
   #:export (gtk_init
+            gtk_main_iteration
             gtk_main_level
             gtk_main_quit
             gtk_accelerator_parse
             gtk_accelerator_name
             gtk_accelerator_get_label
+            gtk_events_pending
             gtk_rc_parse
             gtk_icon_theme_get_default
             gtk_icon_theme_append_search_path
@@ -39,7 +41,9 @@
             gtk_menu_bar_new
             gtk_menu_item_set_submenu
             gtk_menu_shell_append
-            gtk_notebook_get_n_pages))
+            gtk_notebook_get_n_pages
+            gtk_notebook_page_num
+            gtk_notebook_set_current_page))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -52,11 +56,14 @@
 (define-lff gtk_accelerator_name '* (list int GdkModifierType))
 (define-lff gtk_accelerator_get_label '* (list int GdkModifierType))
 
+(define-lff gtk_events_pending int '())
+
 (define-lff gtk_icon_theme_append_search_path void '(* *))
 (define-lff gtk_icon_theme_get_default '* '())
 
 (define-lff gtk_init void '(* *))
 
+(define-lff gtk_main_iteration int '())
 (define-lff gtk_main_level int '())
 (define-lff gtk_main_quit void '())
 
@@ -67,6 +74,8 @@
 (define-lff gtk_menu_shell_append void '(* *))
 
 (define-lff gtk_notebook_get_n_pages int '(*))
+(define-lff gtk_notebook_page_num int '(* *))
+(define-lff gtk_notebook_set_current_page void (list '* int))
 
 (define-lff gtk_rc_parse void '(*))
 

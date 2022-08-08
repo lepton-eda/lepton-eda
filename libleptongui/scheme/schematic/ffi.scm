@@ -167,6 +167,7 @@
             x_window_open_page
             x_window_save_page
             x_window_set_current_page
+            x_window_set_current_page_impl
             x_window_setup_draw_events_drawing_area
             x_window_setup_draw_events_main_wnd
             x_window_untitled_page
@@ -208,18 +209,23 @@
             schematic_toolbar_insert_button
             schematic_toolbar_insert_separator
 
+            x_tabs_cancel_all
             x_tabs_enabled
+            x_tabs_hdr_set
             x_tabs_hdr_update
+            x_tabs_info_cur
             x_tabs_info_find_by_page
             x_tabs_info_rm
             x_tabs_nbook_create
             x_tabs_nbook_page_close
             x_tabs_page_new
-            x_tabs_page_open
             x_tabs_page_set_cur
             x_tabs_page_on_reordered
             *x_tabs_page_on_sel
             schematic_tab_info_get_page
+            schematic_tab_info_set_page
+            schematic_tab_info_get_page_view
+            schematic_tab_info_get_tab_widget
             schematic_tab_info_get_window
             schematic_tabs_set_callback
 
@@ -255,6 +261,7 @@
             gschem_page_view_pan
             gschem_page_view_pan_mouse
             gschem_page_view_zoom_extents
+            schematic_page_view_grab_focus
 
             schematic_signal_connect
 
@@ -467,6 +474,7 @@
 (define-lff gschem_page_view_pan void (list '* int int))
 (define-lff gschem_page_view_pan_mouse void (list '* int int))
 (define-lff gschem_page_view_zoom_extents void '(* *))
+(define-lff schematic_page_view_grab_focus void '(*))
 
 ;;; schematic_hierarchy.c
 (define-lff schematic_hierarchy_get_page_control_counter int '())
@@ -559,6 +567,7 @@
 (define-lff x_window_open_page '* '(* *))
 (define-lff x_window_save_page int '(* * *))
 (define-lff x_window_set_current_page void '(* *))
+(define-lff x_window_set_current_page_impl void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
 (define-lff x_window_untitled_page int '(*))
@@ -603,18 +612,23 @@
 (define-lff schematic_toolbar_radio_button_set_group void '(* *))
 
 ;;; x_tabs.c
+(define-lff x_tabs_cancel_all void '(*))
 (define-lff x_tabs_enabled int '())
+(define-lff x_tabs_hdr_set void '(* *))
 (define-lff x_tabs_hdr_update void '(* *))
+(define-lff x_tabs_info_cur '* '(*))
 (define-lff x_tabs_info_find_by_page '* '(* *))
 (define-lff x_tabs_info_rm void '(* *))
 (define-lff x_tabs_nbook_create '* '(* *))
 (define-lff x_tabs_nbook_page_close void '(* *))
 (define-lff x_tabs_page_new '* '(* *))
-(define-lff x_tabs_page_open '* '(* *))
 (define-lff x_tabs_page_set_cur void '(* *))
 (define-lff x_tabs_page_on_reordered void (list '* '* int '*))
 (define-lfc *x_tabs_page_on_sel)
 (define-lff schematic_tab_info_get_page '* '(*))
+(define-lff schematic_tab_info_set_page void '(* *))
+(define-lff schematic_tab_info_get_page_view '* '(*))
+(define-lff schematic_tab_info_get_tab_widget '* '(*))
 (define-lff schematic_tab_info_get_window '* '(*))
 (define-lff schematic_tabs_set_callback void '(* *))
 

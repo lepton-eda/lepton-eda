@@ -38,7 +38,6 @@
  *
  * - x_tabs_enabled()      // whether tabbed GUI is currently enabled
  * - x_tabs_init()         // initialize tabbed GUI, read config
- * - x_tabs_page_open()    // open tab
  * - x_tabs_page_set_cur() // set current tab
  * - x_tabs_next()         // go to next tab
  * - x_tabs_prev()         // go to prev tab
@@ -158,9 +157,6 @@ x_tabs_init()
 /* tab info: */
 
 static TabInfo*
-x_tabs_info_cur (GschemToplevel* w_current);
-
-static TabInfo*
 x_tabs_info_add (GschemToplevel* w_current,
                  gint            ndx,
                  LeptonPage*     page,
@@ -263,17 +259,7 @@ static GtkWidget*
 x_tabs_hdr_create (TabInfo* nfo);
 
 static void
-x_tabs_hdr_set (GtkNotebook* nbook, TabInfo* nfo);
-
-static void
 x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p);
-
-
-
-/* helpers: */
-
-static void
-x_tabs_cancel_all (GschemToplevel* w_current);
 
 
 
@@ -302,7 +288,7 @@ schematic_tabs_set_callback (char *name,
 
 /*! \brief Get current tab info.
 */
-static TabInfo*
+TabInfo*
 x_tabs_info_cur (GschemToplevel* w_current)
 {
   GschemPageView* pview = x_tabs_tl_pview_cur (w_current);
@@ -887,7 +873,7 @@ x_tabs_hdr_create (TabInfo* nfo)
 
 /*! \brief Creates hdr widget, sets it as tab's label.
  */
-static void
+void
 x_tabs_hdr_set (GtkNotebook* nbook, TabInfo* nfo)
 {
   g_return_if_fail (nbook != NULL);
@@ -1007,7 +993,7 @@ x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p)
  * Code taken from i_callback_cancel()
  *
 */
-static void
+void
 x_tabs_cancel_all (GschemToplevel* w_current)
 {
   SchematicActionMode action_mode =
@@ -1136,119 +1122,6 @@ x_tabs_page_new (GschemToplevel* w_current,
   return x_tabs_info_add (w_current, ndx, page, pview, wtab);
 
 } /* x_tabs_page_new() */
-
-
-
-/*! \brief Opens a tab.
- *  \public
- *
- *  \par Function Description
- *  Create a new page, page view and tab for \a filename.
- *  If \a filename == NULL, the page will be blank.
- *  If \a page is already opened, switch to its tab.
- *
- *  \note
- *  The code is intentionally left unrefactored.
- *
- *  \param [in] w_current  The toplevel environment.
- *  \param [in] filename   File name or NULL.
- *  \return                The page opened.
- *
- */
-LeptonPage*
-x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
-{
-  /*
-   * Find TabInfo for a page view that is set as current
-   * for toplevel (w_current->drawing_area):
-  */
-  TabInfo* nfo_cur = x_tabs_info_cur (w_current);
-
-  g_return_val_if_fail (nfo_cur != NULL && "no current TabInfo found", NULL);
-
-  /* XXX: 1: [pview] [!page] - either:
-   * - first blank page upon startup
-   * - first cmd-line supplied page upon startup
-   * - new page when the last page is closed
-  */
-  if (schematic_tab_info_get_page (nfo_cur) == NULL)
-  {
-#ifdef DEBUG
-    printf( "    x_tabs_page_open(): #1: [pview] [!page], fn: [%s] \n\n", filename );
-#endif
-
-    schematic_tab_info_set_page (nfo_cur, x_window_open_page (w_current, filename));
-    x_window_set_current_page_impl (w_current, schematic_tab_info_get_page (nfo_cur));
-
-    x_tabs_hdr_set (schematic_window_get_tab_notebook (w_current), nfo_cur);
-    schematic_page_view_grab_focus (schematic_tab_info_get_page_view (nfo_cur));
-
-    return schematic_tab_info_get_page (nfo_cur);
-  }
-
-
-  LeptonPage* page = NULL;
-  if (filename != NULL)
-    page = lepton_toplevel_search_page (gschem_toplevel_get_toplevel (w_current), filename);
-
-
-  /* XXX: 2: [!pview] [!page] - either:
-   * - file->open page
-   * - file->new page
-  */
-  if (page == NULL)
-  {
-#ifdef DEBUG
-    printf( "    x_tabs_page_open(): #2: [!pview] [!page] \n\n" );
-#endif
-
-    /* cancel all actions;
-     * this prevents assertion triggering in o_place_invalidate_rubber()
-     * if File->New is invoked while component selection mode is active:
-    */
-    x_tabs_cancel_all (w_current);
-
-    TabInfo* nfo_new = x_tabs_page_new (w_current, NULL);
-
-    schematic_tab_info_set_page (nfo_new, x_window_open_page (w_current, filename));
-    x_window_set_current_page_impl (w_current, schematic_tab_info_get_page (nfo_new));
-
-    x_tabs_hdr_set (schematic_window_get_tab_notebook (w_current), nfo_new);
-    schematic_page_view_grab_focus (schematic_tab_info_get_page_view (nfo_new));
-
-    /* x_tabs_page_new() just invoked,
-     * let page view creation complete -
-     * process pending events:
-    */
-    while (gtk_events_pending())
-      gtk_main_iteration();
-
-    return schematic_tab_info_get_page (nfo_new);
-  }
-
-
-  /* XXX: 3: [pview] [page]:
-   * - switch to existing page view
-  */
-  else /* (page != NULL) */
-  {
-#ifdef DEBUG
-    printf( "    x_tabs_page_open(): #3: [pview] [page] \n\n" );
-#endif
-
-    TabInfo* nfo_exi = x_tabs_info_find_by_page (schematic_window_get_tab_info_list (w_current), page);
-
-    g_return_val_if_fail (nfo_exi != NULL, NULL);
-
-    gint ndx_exi = gtk_notebook_page_num (schematic_window_get_tab_notebook (w_current),
-                                          schematic_tab_info_get_tab_widget (nfo_exi));
-    gtk_notebook_set_current_page (schematic_window_get_tab_notebook (w_current), ndx_exi);
-    schematic_page_view_grab_focus (schematic_tab_info_get_page_view (nfo_exi));
-
-    return page;
-  }
-
-} /* x_tabs_page_open() */
 
 
 
