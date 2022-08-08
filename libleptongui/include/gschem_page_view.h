@@ -170,6 +170,10 @@ gschem_page_view_set_hscroll_policy (GschemPageView *view, GtkScrollablePolicy s
 
 void
 gschem_page_view_set_vscroll_policy (GschemPageView *view, GtkScrollablePolicy scroll);
+
+void
+schematic_page_view_grab_focus (GschemPageView *page_view);
+
 #endif
 
 G_END_DECLS

@@ -1181,7 +1181,8 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
     x_window_set_current_page_impl (w_current, schematic_tab_info_get_page (nfo_cur));
 
     x_tabs_hdr_set (schematic_window_get_tab_notebook (w_current), nfo_cur);
-    gtk_widget_grab_focus (GTK_WIDGET (schematic_tab_info_get_page_view (nfo_cur)));
+    schematic_page_view_grab_focus (schematic_tab_info_get_page_view (nfo_cur));
+
     return schematic_tab_info_get_page (nfo_cur);
   }
 
@@ -1213,7 +1214,7 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
     x_window_set_current_page_impl (w_current, schematic_tab_info_get_page (nfo_new));
 
     x_tabs_hdr_set (schematic_window_get_tab_notebook (w_current), nfo_new);
-    gtk_widget_grab_focus (GTK_WIDGET (schematic_tab_info_get_page_view (nfo_new)));
+    schematic_page_view_grab_focus (schematic_tab_info_get_page_view (nfo_new));
 
     /* x_tabs_page_new() just invoked,
      * let page view creation complete -
@@ -1242,7 +1243,7 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
     gint ndx_exi = gtk_notebook_page_num (schematic_window_get_tab_notebook (w_current),
                                           schematic_tab_info_get_tab_widget (nfo_exi));
     gtk_notebook_set_current_page (schematic_window_get_tab_notebook (w_current), ndx_exi);
-    gtk_widget_grab_focus (GTK_WIDGET (schematic_tab_info_get_page_view (nfo_exi)));
+    schematic_page_view_grab_focus (schematic_tab_info_get_page_view (nfo_exi));
 
     return page;
   }

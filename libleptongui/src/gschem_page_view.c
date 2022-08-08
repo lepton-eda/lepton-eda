@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1690,4 +1690,17 @@ geometry_cache_finalize (GschemPageView *view)
   geometry_cache_dispose (view);
   g_hash_table_destroy (view->_geometry_cache);
   view->_geometry_cache = NULL;
+}
+
+
+/*! \brief Focuses page view.
+ *
+ *  \param  [in] page_view The page view.
+ */
+void
+schematic_page_view_grab_focus (GschemPageView *page_view)
+{
+  g_return_if_fail (page_view != NULL);
+
+  gtk_widget_grab_focus (GTK_WIDGET (page_view));
 }
