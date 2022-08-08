@@ -1229,7 +1229,7 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
   /* XXX: 3: [pview] [page]:
    * - switch to existing page view
   */
-  if (page != NULL)
+  else /* (page != NULL) */
   {
 #ifdef DEBUG
     printf( "    x_tabs_page_open(): #3: [pview] [page] \n\n" );
@@ -1246,8 +1246,6 @@ x_tabs_page_open (GschemToplevel* w_current, const gchar* filename)
 
     return page;
   }
-
-  return NULL;
 
 } /* x_tabs_page_open() */
 
