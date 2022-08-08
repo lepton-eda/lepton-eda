@@ -199,6 +199,11 @@
 If *FILENAME is %null-pointer, the page will be blank.  If there
 is a page with the given *FILENAME, switches to its tab.  Returns
 the new or found page."
+  (define (process-pending-events)
+    (let loop ((pending-event? (true? (gtk_events_pending))))
+      (when pending-event?
+        (gtk_main_iteration)
+        (loop (true? (gtk_events_pending))))))
 
   (define (open-tab-page)
     ;; Find TabInfo for a page view that is set as current
@@ -266,10 +271,7 @@ the new or found page."
                     ;; x_tabs_page_new() just invoked.  Finish
                     ;; page view creation by processing pending
                     ;; events.
-                    (let loop ((pending-event? (true? (gtk_events_pending))))
-                      (when pending-event?
-                        (gtk_main_iteration)
-                        (loop (true? (gtk_events_pending)))))
+                    (process-pending-events)
 
                     ;; Return the page for *FILENAME.
                     (schematic_tab_info_get_page *new-tab-info)))
