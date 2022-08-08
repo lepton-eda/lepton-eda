@@ -209,6 +209,10 @@ the new or found page."
     (schematic_page_view_grab_focus
      (schematic_tab_info_get_page_view *tab-info)))
 
+  (define (setup-tab-header *tab-info)
+    (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
+                    *tab-info))
+
   (define (open-tab-page)
     ;; Find TabInfo for a page view that is set as current
     ;; for toplevel (w_current->drawing_area):
@@ -229,8 +233,7 @@ the new or found page."
             (schematic_tab_info_set_page *current-tab-info *page)
             (x_window_set_current_page_impl *window *page)
 
-            (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
-                            *current-tab-info)
+            (setup-tab-header *current-tab-info)
             (grab-focus *current-tab-info)
 
             ;; Return the newly created page.
@@ -260,8 +263,7 @@ the new or found page."
                     (schematic_tab_info_set_page *new-tab-info *page)
                     (x_window_set_current_page_impl *window *page)
 
-                    (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
-                                    *new-tab-info)
+                    (setup-tab-header *new-tab-info)
                     (grab-focus *new-tab-info)
 
                     ;; x_tabs_page_new() just invoked.  Finish
