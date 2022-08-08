@@ -221,14 +221,14 @@ the new or found page."
           ;;     upon startup
           ;;   - when a new page is created after the last page is
           ;;     closed
-          (let ((*page (x_window_open_page *window *filename)))
+          (let ((*page (x_window_open_page *window *filename))
+                (*page-view (schematic_tab_info_get_page_view *current-tab-info)))
             (schematic_tab_info_set_page *current-tab-info *page)
             (x_window_set_current_page_impl *window *page)
 
             (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
                             *current-tab-info)
-            (schematic_page_view_grab_focus
-             (schematic_tab_info_get_page_view *current-tab-info))
+            (schematic_page_view_grab_focus *page-view)
 
             ;; Return the newly created page.
             *page)
