@@ -909,11 +909,11 @@ x_tabs_hdr_update (GschemToplevel* w_current,
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
 
-  TabInfo* nfo = x_tabs_info_find_by_page (w_current->xtabs_info_list,
+  TabInfo* nfo = x_tabs_info_find_by_page (schematic_window_get_tab_info_list (w_current),
                                            page);
   g_return_if_fail (nfo != NULL);
 
-  x_tabs_hdr_set (w_current->xtabs_nbook, nfo);
+  x_tabs_hdr_set (schematic_window_get_tab_notebook (w_current), nfo);
 }
 
 
