@@ -205,6 +205,10 @@ the new or found page."
         (gtk_main_iteration)
         (loop (true? (gtk_events_pending))))))
 
+  (define (grab-focus *tab-info)
+    (schematic_page_view_grab_focus
+     (schematic_tab_info_get_page_view *tab-info)))
+
   (define (open-tab-page)
     ;; Find TabInfo for a page view that is set as current
     ;; for toplevel (w_current->drawing_area):
@@ -221,14 +225,13 @@ the new or found page."
           ;;     upon startup
           ;;   - when a new page is created after the last page is
           ;;     closed
-          (let ((*page (x_window_open_page *window *filename))
-                (*page-view (schematic_tab_info_get_page_view *current-tab-info)))
+          (let ((*page (x_window_open_page *window *filename)))
             (schematic_tab_info_set_page *current-tab-info *page)
             (x_window_set_current_page_impl *window *page)
 
             (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
                             *current-tab-info)
-            (schematic_page_view_grab_focus *page-view)
+            (grab-focus *current-tab-info)
 
             ;; Return the newly created page.
             *page)
@@ -259,8 +262,7 @@ the new or found page."
 
                     (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
                                     *new-tab-info)
-                    (schematic_page_view_grab_focus
-                     (schematic_tab_info_get_page_view *new-tab-info))
+                    (grab-focus *new-tab-info)
 
                     ;; x_tabs_page_new() just invoked.  Finish
                     ;; page view creation by processing pending
@@ -285,7 +287,7 @@ the new or found page."
                                                 (schematic_tab_info_get_tab_widget *existing-tab-info))))
                     (gtk_notebook_set_current_page (schematic_window_get_tab_notebook *window)
                                                    notebook-index)
-                    (schematic_page_view_grab_focus (schematic_tab_info_get_page_view *existing-tab-info))
+                    (grab-focus *existing-tab-info)
 
                     ;; Return the existing page.
                     *page)))))))
