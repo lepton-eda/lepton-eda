@@ -220,6 +220,8 @@ the new or found page."
 
       (setup-tab-header *tab-info)
       (grab-focus *tab-info)
+      ;; Finish page view creation by processing pending events.
+      (process-pending-events)
 
       *page))
 
@@ -258,23 +260,8 @@ the new or found page."
                   ;; active.
                   (x_tabs_cancel_all *window)
 
-                  ;; Create a new tab.
-                  (let ((*new-tab-info (x_tabs_page_new *window
-                                                        %null-pointer))
-                        (*page (x_window_open_page *window *filename)))
-                    (schematic_tab_info_set_page *new-tab-info *page)
-                    (x_window_set_current_page_impl *window *page)
-
-                    (setup-tab-header *new-tab-info)
-                    (grab-focus *new-tab-info)
-
-                    ;; x_tabs_page_new() just invoked.  Finish
-                    ;; page view creation by processing pending
-                    ;; events.
-                    (process-pending-events)
-
-                    ;; Return the page for *FILENAME.
-                    *page))
+                  ;; Create a new tab with a new page.
+                  (open-new-page (x_tabs_page_new *window %null-pointer)))
 
                 ;; If the page exists, switch to its existing
                 ;; page view.
