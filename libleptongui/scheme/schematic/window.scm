@@ -252,13 +252,10 @@ the new or found page."
 
                   ;; Create a new tab.
                   (let ((*new-tab-info (x_tabs_page_new *window
-                                                        %null-pointer)))
-                    (schematic_tab_info_set_page *new-tab-info
-                                                 (x_window_open_page *window
-                                                                     *filename))
-                    (x_window_set_current_page_impl
-                     *window
-                     (schematic_tab_info_get_page *new-tab-info))
+                                                        %null-pointer))
+                        (*page (x_window_open_page *window *filename)))
+                    (schematic_tab_info_set_page *new-tab-info *page)
+                    (x_window_set_current_page_impl *window *page)
 
                     (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
                                     *new-tab-info)
@@ -271,7 +268,7 @@ the new or found page."
                     (process-pending-events)
 
                     ;; Return the page for *FILENAME.
-                    (schematic_tab_info_get_page *new-tab-info)))
+                    *page))
 
                 ;; If the page exists, switch to its existing
                 ;; page view.
