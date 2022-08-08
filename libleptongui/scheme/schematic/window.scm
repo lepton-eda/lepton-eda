@@ -225,6 +225,13 @@ the new or found page."
 
       *page))
 
+  (define (set-notebook-current *tab-info)
+    (let ((*notebook (schematic_window_get_tab_notebook *window)))
+      (gtk_notebook_set_current_page
+       *notebook
+       (gtk_notebook_page_num *notebook
+                              (schematic_tab_info_get_tab_widget *tab-info)))))
+
   (define (open-tab-page)
     ;; Find TabInfo for a page view that is set as current
     ;; for toplevel (w_current->drawing_area):
@@ -273,15 +280,11 @@ the new or found page."
                   (when (null-pointer? *existing-tab-info)
                     (error "NULL TabInfo for existing page."))
 
-                  (let ((notebook-index
-                         (gtk_notebook_page_num (schematic_window_get_tab_notebook *window)
-                                                (schematic_tab_info_get_tab_widget *existing-tab-info))))
-                    (gtk_notebook_set_current_page (schematic_window_get_tab_notebook *window)
-                                                   notebook-index)
-                    (grab-focus *existing-tab-info)
+                  (set-notebook-current *existing-tab-info)
+                  (grab-focus *existing-tab-info)
 
-                    ;; Return the existing page.
-                    *page)))))))
+                  ;; Return the existing page.
+                  *page))))))
 
   (when (null-pointer? *window)
     (error "NULL window pointer in open-tab!()"))
