@@ -213,6 +213,16 @@ the new or found page."
     (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
                     *tab-info))
 
+  (define (open-new-page *tab-info)
+    (let ((*page (x_window_open_page *window *filename)))
+      (schematic_tab_info_set_page *tab-info *page)
+      (x_window_set_current_page_impl *window *page)
+
+      (setup-tab-header *tab-info)
+      (grab-focus *tab-info)
+
+      *page))
+
   (define (open-tab-page)
     ;; Find TabInfo for a page view that is set as current
     ;; for toplevel (w_current->drawing_area):
@@ -229,15 +239,7 @@ the new or found page."
           ;;     upon startup
           ;;   - when a new page is created after the last page is
           ;;     closed
-          (let ((*page (x_window_open_page *window *filename)))
-            (schematic_tab_info_set_page *current-tab-info *page)
-            (x_window_set_current_page_impl *window *page)
-
-            (setup-tab-header *current-tab-info)
-            (grab-focus *current-tab-info)
-
-            ;; Return the newly created page.
-            *page)
+          (open-new-page *current-tab-info)
 
           (let ((*page (if (null-pointer? *filename)
                            %null-pointer
