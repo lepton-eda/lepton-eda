@@ -304,6 +304,9 @@
             schematic_window_get_slot_edit_widget
             schematic_window_get_text_input_widget
             schematic_window_set_dont_invalidate
+            schematic_window_set_object_properties_widget
+
+            gschem_object_properties_widget_new
 
             gschem_options_cycle_grid_mode
             gschem_options_get_grid_mode
@@ -535,6 +538,10 @@
 (define-lff schematic_window_get_slot_edit_widget '* '(*))
 (define-lff schematic_window_get_text_input_widget '* '(*))
 (define-lff schematic_window_set_dont_invalidate void (list '* int))
+(define-lff schematic_window_set_object_properties_widget void '(* *))
+
+;;; gschem_object_properties_widget.c
+(define-lff gschem_object_properties_widget_new '* '(*))
 
 ;;; gschem_options.c
 (define-lff gschem_options_cycle_grid_mode void '(*))

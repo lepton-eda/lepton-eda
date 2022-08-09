@@ -472,6 +472,8 @@ GtkApplication structure of the program (when compiled with
 
       ;; Setup various widgets.
       (x_widgets_init)
+      (schematic_window_set_object_properties_widget *window
+                                                     (gschem_object_properties_widget_new *window))
       (x_widgets_create *window)
       (schematic_window_set_page_select_widget *window
                                                (page_select_widget_new *window
