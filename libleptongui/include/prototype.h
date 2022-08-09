@@ -720,9 +720,6 @@ void x_tabs_next (GschemToplevel* w_current);
 void x_tabs_prev (GschemToplevel* w_current);
 
 void
-x_tabs_hdr_on_btn_save (GtkToolButton* btn,
-                        gpointer p);
-void
 x_tabs_hdr_set (GtkNotebook* nbook,
                 TabInfo* nfo);
 void

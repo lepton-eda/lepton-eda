@@ -344,11 +344,21 @@ the new or found page."
 (define *callback-tab-button-close
   (procedure->pointer void callback-tab-button-close '(* *)))
 
+
 (define (callback-tab-button-save *button *tab-info)
-  (x_tabs_hdr_on_btn_save *button *tab-info))
+  (when (null-pointer? *tab-info)
+    (error "NULL TabInfo pointer."))
+
+  (let ((*window (schematic_tab_info_get_window *tab-info))
+        (*page (schematic_tab_info_get_page *tab-info)))
+
+    (x_tabs_page_set_cur *window *page)
+    (i_callback_file_save %null-pointer *window)))
+
 
 (define *callback-tab-button-save
   (procedure->pointer void callback-tab-button-save '(* *)))
+
 
 ;;; Go to the upper hierarchy level page.
 (define (hierarchy-up *window)
