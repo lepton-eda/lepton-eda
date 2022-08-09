@@ -1666,3 +1666,18 @@ schematic_window_set_options_widget (GschemToplevel *w_current,
 
   w_current->options_widget = widget;
 }
+
+
+/*! \brief Set log widget for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The widget.
+ */
+void
+schematic_window_set_log_widget (GschemToplevel *w_current,
+                                 GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->log_widget = widget;
+}
