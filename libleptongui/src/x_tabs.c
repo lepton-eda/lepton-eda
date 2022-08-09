@@ -968,8 +968,10 @@ x_tabs_hdr_on_btn_save (GtkToolButton* btn,
   TabInfo* nfo = (TabInfo*) p;
   g_return_if_fail (nfo != NULL);
 
-  x_tabs_page_set_cur (nfo->tl_, nfo->page_);
-  g_action_eval_by_name (nfo->tl_, "&file-save");
+  x_tabs_page_set_cur (schematic_tab_info_get_window (nfo),
+                       schematic_tab_info_get_page (nfo));
+  g_action_eval_by_name (schematic_tab_info_get_window (nfo),
+                         "&file-save");
 
 } /* x_tabs_hdr_on_btn_save() */
 
