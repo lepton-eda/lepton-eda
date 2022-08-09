@@ -464,4 +464,7 @@ schematic_window_set_object_properties_widget (GschemToplevel *w_current,
 void
 schematic_window_set_text_properties_widget (GschemToplevel *w_current,
                                              GtkWidget *widget);
+void
+schematic_window_set_options_widget (GschemToplevel *w_current,
+                                     GtkWidget *widget);
 G_END_DECLS

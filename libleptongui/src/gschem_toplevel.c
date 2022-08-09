@@ -1651,3 +1651,18 @@ schematic_window_set_text_properties_widget (GschemToplevel *w_current,
 
   w_current->text_properties = widget;
 }
+
+
+/*! \brief Set options widget for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The widget.
+ */
+void
+schematic_window_set_options_widget (GschemToplevel *w_current,
+                                     GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->options_widget = widget;
+}
