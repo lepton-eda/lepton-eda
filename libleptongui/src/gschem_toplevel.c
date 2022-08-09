@@ -1683,6 +1683,20 @@ schematic_window_set_log_widget (GschemToplevel *w_current,
 }
 
 
+/*! \brief Get find text state widget of this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The widget.
+ */
+GtkWidget*
+schematic_window_get_find_text_state_widget (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, NULL);
+
+  return w_current->find_text_state;
+}
+
+
 /*! \brief Set find text state widget for this schematic window.
  *
  *  \param [in] w_current The schematic window.

@@ -470,6 +470,9 @@ schematic_window_set_options_widget (GschemToplevel *w_current,
 void
 schematic_window_set_log_widget (GschemToplevel *w_current,
                                  GtkWidget *widget);
+GtkWidget*
+schematic_window_get_find_text_state_widget (GschemToplevel *w_current);
+
 void
 schematic_window_set_find_text_state_widget (GschemToplevel *w_current,
                                              GtkWidget *widget);
