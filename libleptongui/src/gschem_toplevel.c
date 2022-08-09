@@ -1621,3 +1621,18 @@ schematic_window_get_tab_notebook (GschemToplevel *w_current)
 
   return w_current->xtabs_nbook;
 }
+
+
+/*! \brief Set object properties widget for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The widget.
+ */
+void
+schematic_window_set_object_properties_widget (GschemToplevel *w_current,
+                                               GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->object_properties = widget;
+}

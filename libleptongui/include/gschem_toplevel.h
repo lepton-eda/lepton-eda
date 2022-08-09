@@ -458,4 +458,7 @@ schematic_window_get_tab_info_list (GschemToplevel *w_current);
 GtkNotebook*
 schematic_window_get_tab_notebook (GschemToplevel *w_current);
 
+void
+schematic_window_set_object_properties_widget (GschemToplevel *w_current,
+                                               GtkWidget *widget);
 G_END_DECLS
