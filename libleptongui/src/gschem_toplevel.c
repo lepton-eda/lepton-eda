@@ -1711,3 +1711,18 @@ schematic_window_set_color_edit_widget (GschemToplevel *w_current,
 
   w_current->color_edit_widget = widget;
 }
+
+
+/*! \brief Set font select widget for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The widget.
+ */
+void
+schematic_window_set_font_select_widget (GschemToplevel *w_current,
+                                         GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->font_select_widget = widget;
+}
