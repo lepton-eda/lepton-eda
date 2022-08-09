@@ -130,8 +130,6 @@ void x_widgets_create (GschemToplevel* w_current)
   g_signal_connect (w_current->find_text_state, "select-object",
                     G_CALLBACK (&x_window_select_object), w_current);
 
-  w_current->color_edit_widget = color_edit_widget_new (w_current);
-
 } /* x_widgets_create() */
 
 

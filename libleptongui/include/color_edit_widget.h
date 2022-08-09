@@ -63,11 +63,14 @@ typedef struct _ColorEditWidgetClass ColorEditWidgetClass;
 typedef struct _ColorEditWidget      ColorEditWidget;
 
 
-GtkWidget*
-color_edit_widget_new (GschemToplevel* w_current);
-
 GType
 color_edit_widget_get_type();
 
+G_BEGIN_DECLS
+
+GtkWidget*
+color_edit_widget_new (GschemToplevel* w_current);
+
+G_END_DECLS
 
 #endif /* LEPTON_COLOR_EDIT_WIDGET_H_ */

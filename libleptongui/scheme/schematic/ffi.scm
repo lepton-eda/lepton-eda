@@ -113,6 +113,7 @@
             set_verbose_mode
             x_color_init
 
+            color_edit_widget_new
             color_edit_widget_update
 
             x_colorcb_update_colors
@@ -279,6 +280,7 @@
             schematic_window_get_active_page
             schematic_window_get_bottom_notebook
             schematic_window_set_bottom_notebook
+            schematic_window_set_color_edit_widget
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_enforce_hierarchy
@@ -432,6 +434,7 @@
 (define-lff s_clib_free void '())
 
 ;;; color_edit_widget.c
+(define-lff color_edit_widget_new '* '(*))
 (define-lff color_edit_widget_update void '(*))
 
 ;;; x_colorcb.c
@@ -524,6 +527,7 @@
 (define-lff schematic_window_get_active_page '* '(*))
 (define-lff schematic_window_get_bottom_notebook '* '(*))
 (define-lff schematic_window_set_bottom_notebook void '(* *))
+(define-lff schematic_window_set_color_edit_widget void '(* *))
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
