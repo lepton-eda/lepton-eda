@@ -660,7 +660,6 @@ x_window_untitled_page (LeptonPage* page);
 /* x_widgets.c */
 gboolean x_widgets_use_docks();
 void x_widgets_init();
-void x_widgets_create (GschemToplevel* w_current);
 void x_widgets_show_options (GschemToplevel* w_current);
 void x_widgets_show_text_properties (GschemToplevel* w_current);
 void x_widgets_show_object_properties (GschemToplevel* w_current);

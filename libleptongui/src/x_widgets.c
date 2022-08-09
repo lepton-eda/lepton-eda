@@ -120,20 +120,6 @@ void x_widgets_init()
 
 
 
-void x_widgets_create (GschemToplevel* w_current)
-{
-  g_return_if_fail (w_current != NULL);
-
-  w_current->find_text_state =
-      gschem_find_text_state_new();
-
-  g_signal_connect (w_current->find_text_state, "select-object",
-                    G_CALLBACK (&x_window_select_object), w_current);
-
-} /* x_widgets_create() */
-
-
-
 void x_widgets_show_options (GschemToplevel* w_current)
 {
   g_return_if_fail (w_current != NULL);

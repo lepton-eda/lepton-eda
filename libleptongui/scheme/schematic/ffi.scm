@@ -133,6 +133,8 @@
             x_stroke_init
             x_stroke_free
 
+            gschem_find_text_state_new
+
             find_text_dialog
             hide_text_dialog
             show_text_dialog
@@ -151,7 +153,6 @@
 
             x_compselect_open
 
-            x_widgets_create
             x_widgets_destroy_dialogs
             x_widgets_init
             x_widgets_show_color_edit
@@ -167,6 +168,7 @@
             x_window_new
             x_window_open_page
             x_window_save_page
+            *x_window_select_object
             x_window_set_current_page
             x_window_set_current_page_impl
             x_window_setup_draw_events_drawing_area
@@ -284,6 +286,8 @@
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_enforce_hierarchy
+            schematic_window_get_find_text_state_widget
+            schematic_window_set_find_text_state_widget
             schematic_window_set_font_select_widget
             schematic_window_get_gdk_display
             schematic_window_get_keyboardpan_gain
@@ -444,7 +448,6 @@
 (define-lff x_compselect_open void '(*))
 
 ;;; x_widgets.c
-(define-lff x_widgets_create void '(*))
 (define-lff x_widgets_destroy_dialogs void '(*))
 (define-lff x_widgets_init void '())
 (define-lff x_widgets_show_color_edit void '(*))
@@ -531,6 +534,8 @@
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
+(define-lff schematic_window_get_find_text_state_widget '* '(*))
+(define-lff schematic_window_set_find_text_state_widget void '(* *))
 (define-lff schematic_window_set_font_select_widget void '(* *))
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
@@ -602,6 +607,7 @@
 (define-lff x_window_new '* '(*))
 (define-lff x_window_open_page '* '(* *))
 (define-lff x_window_save_page int '(* * *))
+(define-lfc *x_window_select_object)
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_set_current_page_impl void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
@@ -667,6 +673,9 @@
 (define-lff schematic_tab_info_get_tab_widget '* '(*))
 (define-lff schematic_tab_info_get_window '* '(*))
 (define-lff schematic_tabs_set_callback void '(* *))
+
+;;; gschem_find_text_state.c
+(define-lff gschem_find_text_state_new '* '())
 
 ;;; gschem_find_text_widget.c
 (define-lff find_text_dialog void '(*))

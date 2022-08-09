@@ -480,7 +480,11 @@ GtkApplication structure of the program (when compiled with
                                            (gschem_options_widget_new *window))
       (schematic_window_set_log_widget *window
                                        (gschem_log_widget_new))
-      (x_widgets_create *window)
+      (schematic_window_set_find_text_state_widget *window (gschem_find_text_state_new))
+      (schematic_signal_connect (schematic_window_get_find_text_state_widget *window)
+                                (string->pointer "select-object")
+                                *x_window_select_object
+                                *window)
       (schematic_window_set_color_edit_widget *window
                                               (color_edit_widget_new *window))
       (schematic_window_set_font_select_widget *window
