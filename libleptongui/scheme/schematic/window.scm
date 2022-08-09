@@ -344,6 +344,11 @@ the new or found page."
 (define *callback-tab-button-close
   (procedure->pointer void callback-tab-button-close '(* *)))
 
+(define (callback-tab-button-save *button *tab-info)
+  (x_tabs_hdr_on_btn_save *button *tab-info))
+
+(define *callback-tab-button-save
+  (procedure->pointer void callback-tab-button-save '(* *)))
 
 ;;; Go to the upper hierarchy level page.
 (define (hierarchy-up *window)
@@ -426,6 +431,8 @@ GtkApplication structure of the program (when compiled with
           (let ((*notebook (x_tabs_nbook_create *window *work-box)))
             (schematic_tabs_set_callback (string->pointer "page-close")
                                          *callback-tab-button-close)
+            (schematic_tabs_set_callback (string->pointer "file-save")
+                                         *callback-tab-button-save)
             (schematic_tabs_set_callback (string->pointer "hierarchy-up")
                                          *callback-tab-button-up)
             (schematic_signal_connect *notebook

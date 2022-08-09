@@ -211,6 +211,7 @@
 
             x_tabs_cancel_all
             x_tabs_enabled
+            x_tabs_hdr_on_btn_save
             x_tabs_hdr_set
             x_tabs_hdr_update
             x_tabs_info_cur
@@ -614,6 +615,7 @@
 ;;; x_tabs.c
 (define-lff x_tabs_cancel_all void '(*))
 (define-lff x_tabs_enabled int '())
+(define-lff x_tabs_hdr_on_btn_save void '(* *))
 (define-lff x_tabs_hdr_set void '(* *))
 (define-lff x_tabs_hdr_update void '(* *))
 (define-lff x_tabs_info_cur '* '(*))

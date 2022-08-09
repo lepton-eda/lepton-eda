@@ -258,15 +258,13 @@ x_tabs_pview_create (GschemToplevel* w_current,
 static GtkWidget*
 x_tabs_hdr_create (TabInfo* nfo);
 
-static void
-x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p);
-
 
 
 /* Callbacks */
 
 static GCallback callback_hierarchy_up = NULL;
 static GCallback callback_page_close = NULL;
+static GCallback callback_file_save = NULL;
 
 void
 schematic_tabs_set_callback (char *name,
@@ -277,6 +275,7 @@ schematic_tabs_set_callback (char *name,
 
   if (strcmp (name, "page-close") == 0) {callback_page_close = callback;}
   else if (strcmp (name, "hierarchy-up") == 0) {callback_hierarchy_up = callback;}
+  else if (strcmp (name, "file-save") == 0) {callback_file_save = callback;}
 }
 
 
@@ -813,7 +812,7 @@ x_tabs_hdr_create (TabInfo* nfo)
 
     g_signal_connect (btn_save,
                       "clicked",
-                      G_CALLBACK (&x_tabs_hdr_on_btn_save),
+                      G_CALLBACK (callback_file_save),
                       nfo);
   }
 
@@ -962,8 +961,9 @@ schematic_tab_info_get_tab_widget (TabInfo *tab_info)
 }
 
 
-static void
-x_tabs_hdr_on_btn_save (GtkToolButton* btn, gpointer p)
+void
+x_tabs_hdr_on_btn_save (GtkToolButton* btn,
+                        gpointer p)
 {
   TabInfo* nfo = (TabInfo*) p;
   g_return_if_fail (nfo != NULL);
