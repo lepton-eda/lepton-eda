@@ -1696,3 +1696,18 @@ schematic_window_set_find_text_state_widget (GschemToplevel *w_current,
 
   w_current->find_text_state = widget;
 }
+
+
+/*! \brief Set color edit widget for this schematic window.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] widget The widget.
+ */
+void
+schematic_window_set_color_edit_widget (GschemToplevel *w_current,
+                                        GtkWidget *widget)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->color_edit_widget = widget;
+}
