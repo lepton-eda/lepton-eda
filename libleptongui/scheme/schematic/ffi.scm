@@ -305,6 +305,7 @@
             schematic_window_get_text_input_widget
             schematic_window_set_dont_invalidate
             schematic_window_set_object_properties_widget
+            schematic_window_set_text_properties_widget
 
             gschem_object_properties_widget_new
 
@@ -318,6 +319,7 @@
             gschem_options_get_snap_size
             gschem_options_set_snap_size
 
+            gschem_text_properties_widget_new
             text_edit_dialog
 
             text_input_dialog
@@ -539,6 +541,7 @@
 (define-lff schematic_window_get_text_input_widget '* '(*))
 (define-lff schematic_window_set_dont_invalidate void (list '* int))
 (define-lff schematic_window_set_object_properties_widget void '(* *))
+(define-lff schematic_window_set_text_properties_widget void '(* *))
 
 ;;; gschem_object_properties_widget.c
 (define-lff gschem_object_properties_widget_new '* '(*))
@@ -555,6 +558,7 @@
 (define-lff gschem_options_set_snap_size void (list '* int))
 
 ;;; gschem_text_properties_widget.c
+(define-lff gschem_text_properties_widget_new '* '(*))
 (define-lff text_edit_dialog void '(*))
 
 ;;; x_menus.c

@@ -124,9 +124,6 @@ void x_widgets_create (GschemToplevel* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  w_current->text_properties =
-      gschem_text_properties_widget_new (w_current);
-
   w_current->options_widget =
       gschem_options_widget_new (w_current);
 

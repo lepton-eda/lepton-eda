@@ -59,5 +59,9 @@ gschem_text_properties_widget_adjust_focus (GschemTextPropertiesWidget *widget);
 GType
 gschem_text_properties_widget_get_type ();
 
+G_BEGIN_DECLS
+
 GtkWidget*
 gschem_text_properties_widget_new (GschemToplevel *w_current);
+
+G_END_DECLS
