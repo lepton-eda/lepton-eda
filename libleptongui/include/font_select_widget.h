@@ -1,6 +1,6 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 2018 dmn <graahnul.grom@gmail.com>
- * Copyright (C) 2018-2021 Lepton EDA Contributors
+ * Copyright (C) 2018-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -60,11 +60,14 @@ typedef struct _FontSelectWidgetClass FontSelectWidgetClass;
 typedef struct _FontSelectWidget      FontSelectWidget;
 
 
-GtkWidget*
-font_select_widget_new (GschemToplevel* w_current);
-
 GType
 font_select_widget_get_type();
 
+G_BEGIN_DECLS
+
+GtkWidget*
+font_select_widget_new (GschemToplevel* w_current);
+
+G_END_DECLS
 
 #endif /* LEPTON_FONT_SELECT_WIDGET_H_ */

@@ -132,8 +132,6 @@ void x_widgets_create (GschemToplevel* w_current)
 
   w_current->color_edit_widget = color_edit_widget_new (w_current);
 
-  w_current->font_select_widget = font_select_widget_new (w_current);
-
 } /* x_widgets_create() */
 
 

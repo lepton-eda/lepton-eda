@@ -282,6 +282,7 @@
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_enforce_hierarchy
+            schematic_window_set_font_select_widget
             schematic_window_get_gdk_display
             schematic_window_get_keyboardpan_gain
             schematic_window_get_macro_widget
@@ -308,6 +309,8 @@
             schematic_window_set_object_properties_widget
             schematic_window_set_options_widget
             schematic_window_set_text_properties_widget
+
+            font_select_widget_new
 
             gschem_log_widget_new
 
@@ -524,6 +527,7 @@
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
+(define-lff schematic_window_set_font_select_widget void '(* *))
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
 (define-lff schematic_window_get_macro_widget '* '(*))
@@ -550,6 +554,9 @@
 (define-lff schematic_window_set_object_properties_widget void '(* *))
 (define-lff schematic_window_set_options_widget void '(* *))
 (define-lff schematic_window_set_text_properties_widget void '(* *))
+
+;;; font_select_widget.c
+(define-lff font_select_widget_new '* '(*))
 
 ;;; gschem_log_widget.c
 (define-lff gschem_log_widget_new '* '())
