@@ -124,9 +124,6 @@ void x_widgets_create (GschemToplevel* w_current)
 {
   g_return_if_fail (w_current != NULL);
 
-  w_current->log_widget =
-      gschem_log_widget_new();
-
   w_current->find_text_state =
       gschem_find_text_state_new();
 
