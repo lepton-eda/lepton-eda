@@ -66,22 +66,27 @@ static GCallback callback_page_close = NULL;
  *  \public
  */
 GtkWidget*
-page_select_widget_new (GschemToplevel* w_current,
-                        GCallback page_new_callback,
-                        GCallback page_open_callback,
-                        GCallback page_save_callback,
-                        GCallback page_close_callback)
+page_select_widget_new (GschemToplevel* w_current)
 {
   gpointer obj = g_object_new (PAGE_SELECT_WIDGET_TYPE,
                                "toplevel", w_current,
                                NULL);
-  callback_page_new = G_CALLBACK (page_new_callback);
-  callback_page_open = G_CALLBACK (page_open_callback);
-  callback_page_save = G_CALLBACK (page_save_callback);
-  callback_page_close = G_CALLBACK (page_close_callback);
   return GTK_WIDGET (obj);
 }
 
+
+void
+schematic_page_select_widget_set_callback (char *name,
+                                           GCallback callback)
+{
+  g_return_if_fail (name != NULL);
+  g_return_if_fail (callback != NULL);
+
+  if (strcmp (name, "page-close") == 0) {callback_page_close = callback;}
+  else if (strcmp (name, "file-new") == 0) {callback_page_new = callback;}
+  else if (strcmp (name, "file-save") == 0) {callback_page_save = callback;}
+  else if (strcmp (name, "file-open") == 0) {callback_page_open = callback;}
+}
 
 
 /* --------------------------------------------------------
