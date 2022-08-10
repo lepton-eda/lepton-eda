@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 2012 gEDA Contributors
- * Copyright (C) 2017-2019 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -49,15 +49,14 @@ typedef struct _PageSelectWidget      PageSelectWidget;
 G_BEGIN_DECLS
 
 GtkWidget*
-page_select_widget_new (GschemToplevel* w_current,
-                        GCallback page_new_callback,
-                        GCallback page_open_callback,
-                        GCallback page_save_callback,
-                        GCallback page_close_callback);
+page_select_widget_new (GschemToplevel* w_current);
+
 void
 page_select_widget_update (GschemToplevel* w_current);
 
-
+void
+schematic_page_select_widget_set_callback (char *name,
+                                           GCallback callback);
 GType
 page_select_widget_get_type();
 
