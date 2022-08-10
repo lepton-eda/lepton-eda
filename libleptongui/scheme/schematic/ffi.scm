@@ -104,6 +104,7 @@
             page_select_widget_new
             page_select_widget_update
             schematic_page_select_widget_set_callback
+            *pagesel_callback_selection_changed
 
             s_attrib_free
 
@@ -420,6 +421,7 @@
 (define-lff page_select_widget_update void '(*))
 (define-lff page_select_widget_new '* '(*))
 (define-lff schematic_page_select_widget_set_callback void '(* *))
+(define-lfc *pagesel_callback_selection_changed)
 
 ;;; o_buffer.c
 (define-lff o_buffer_init void '())
