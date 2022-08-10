@@ -1185,27 +1185,6 @@ create_notebook_bottom (GschemToplevel* w_current)
 
 
 
-/*! \brief Changes the current page.
- *
- *  \see x_window_set_current_page_impl()
- *  \see x_tabs_page_set_cur()
- */
-void
-x_window_set_current_page (GschemToplevel* w_current,
-                           LeptonPage* page)
-{
-  if (x_tabs_enabled())
-  {
-    x_tabs_page_set_cur (w_current, page);
-  }
-  else
-  {
-    x_window_set_current_page_impl (w_current, page);
-  }
-}
-
-
-
 /*! \brief Create new blank page.
  *
  * \todo Do further refactoring: this function should be used

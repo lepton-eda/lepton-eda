@@ -855,8 +855,8 @@ the snap grid size should be set to 100")))
                            (page->pointer (window-open-page! (current-window) #f))
                            %null-pointer)))
       (unless (null-pointer? *dummy-page)
-        (x_window_set_current_page *window *dummy-page)
-        (x_window_set_current_page *window *page_current))
+        (set-window-page! *window *dummy-page)
+        (set-window-page! *window *page_current))
 
       (let ((page-control (lepton_page_get_page_control *page_current))
             (up (lepton_page_get_up *page_current)))
@@ -878,14 +878,14 @@ the snap grid size should be set to 100")))
           (lepton_page_set_page_control *page page-control)
           (lepton_page_set_up *page up)
 
-          (x_window_set_current_page *window *page)
+          (set-window-page! *window *page)
 
           ;; Close dummy page, if it exists.
           (unless (null-pointer? *dummy-page)
-            (x_window_set_current_page *window *dummy-page)
+            (set-window-page! *window *dummy-page)
             (window-close-page! (current-window)
                                 (pointer->page *dummy-page))
-            (x_window_set_current_page *window *page))
+            (set-window-page! *window *page))
 
           (when (true? (x_tabs_enabled))
             ;; Page hierarchy info was changed after the page is
@@ -919,7 +919,7 @@ the snap grid size should be set to 100")))
 
   (let ((found-page (find-page next-pages)))
     (when found-page
-      (x_window_set_current_page *window (page->pointer found-page)))))
+      (set-window-page! *window (page->pointer found-page)))))
 
 ;;; Search for a page preceding a given page in hierarchy.
 (define-action-public (&page-prev #:label (G_ "Previous Page") #:icon "gtk-go-back")
@@ -1135,7 +1135,7 @@ the snap grid size should be set to 100")))
               ;; Tabbed GUI is used.  Create a tab for every
               ;; subpage loaded.  Zoom will be set in
               ;; x_tabs_page_set_cur().
-              (x_window_set_current_page *window *child)
+              (set-window-page! *window *child)
               ;; s_hierarchy_down_schematic_single() does not zoom
               ;; the loaded page, so zoom it here.
               (zoom-child-page *window *parent *child))
@@ -1186,7 +1186,7 @@ the snap grid size should be set to 100")))
        (unless (null? pages)
          ;; If the list of resulting pages is not empty, make the
          ;; first page active.
-         (x_window_set_current_page *window (car pages)))))
+         (set-window-page! *window (car pages)))))
     (_ (schematic-message-dialog (G_ "Please first select a component!")))))
 
 
@@ -1245,8 +1245,8 @@ the snap grid size should be set to 100")))
 
                ;; Get active page once again, it should now be the symbol
                ;; page.
-               (x_window_set_current_page *window
-                                          (schematic_window_get_active_page *window))
+               (set-window-page! *window
+                                 (schematic_window_get_active_page *window))
 
                ;; s_hierarchy_down_symbol() will not zoom the loaded page.
                ;; Tabbed GUI: zoom is set in x_tabs_page_set_cur().
@@ -1276,7 +1276,7 @@ the snap grid size should be set to 100")))
                       ;; really close it.
                       (true? (x_dialog_close_changed_page *window *page)))
               (window-close-page! (current-window) (active-page))
-              (x_window_set_current_page *window *upper-page)))))))
+              (set-window-page! *window *upper-page)))))))
 
 
 ;; -------------------------------------------------------------------
