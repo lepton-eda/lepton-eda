@@ -63,6 +63,16 @@ static GCallback callback_page_save = NULL;
 static GCallback callback_page_close = NULL;
 static GCallback callback_selection_changed = NULL;
 
+
+GschemToplevel*
+schematic_page_select_widget_get_window (PageSelectWidget* pagesel)
+{
+  g_return_val_if_fail (pagesel != NULL, NULL);
+
+  return pagesel->toplevel_;
+}
+
+
 /*! \brief Create new PageSelectWidget object.
  *  \public
  */
