@@ -489,8 +489,6 @@ GtkApplication structure of the program (when compiled with
                                               (color_edit_widget_new *window))
       (schematic_window_set_font_select_widget *window
                                                (font_select_widget_new *window))
-      (schematic_window_set_page_select_widget *window
-                                               (page_select_widget_new *window))
       (schematic_page_select_widget_set_callback (string->pointer "file-new")
                                                  *callback-file-new)
       (schematic_page_select_widget_set_callback (string->pointer "file-open")
@@ -499,6 +497,8 @@ GtkApplication structure of the program (when compiled with
                                                  *i_callback_file_save)
       (schematic_page_select_widget_set_callback (string->pointer "page-close")
                                                  *callback-page-close)
+      (schematic_window_set_page_select_widget *window
+                                               (page_select_widget_new *window))
 
       ;; Setup layout of notebooks.
       (schematic_window_create_notebooks *window *main-box *work-box)
