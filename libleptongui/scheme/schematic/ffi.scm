@@ -172,7 +172,6 @@
             x_window_open_page
             x_window_save_page
             *x_window_select_object
-            x_window_set_current_page
             x_window_set_current_page_impl
             x_window_setup_draw_events_drawing_area
             x_window_setup_draw_events_main_wnd
@@ -614,7 +613,6 @@
 (define-lff x_window_open_page '* '(* *))
 (define-lff x_window_save_page int '(* * *))
 (define-lfc *x_window_select_object)
-(define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_set_current_page_impl void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
