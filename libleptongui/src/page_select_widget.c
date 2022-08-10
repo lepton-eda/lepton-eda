@@ -61,6 +61,7 @@ static GCallback callback_page_new = NULL;
 static GCallback callback_page_open = NULL;
 static GCallback callback_page_save = NULL;
 static GCallback callback_page_close = NULL;
+static GCallback callback_selection_changed = NULL;
 
 /*! \brief Create new PageSelectWidget object.
  *  \public
@@ -86,6 +87,7 @@ schematic_page_select_widget_set_callback (char *name,
   else if (strcmp (name, "file-new") == 0) {callback_page_new = callback;}
   else if (strcmp (name, "file-save") == 0) {callback_page_save = callback;}
   else if (strcmp (name, "file-open") == 0) {callback_page_open = callback;}
+  else if (strcmp (name, "selection-changed") == 0) {callback_selection_changed = callback;}
 }
 
 
@@ -197,7 +199,7 @@ page_select_widget_update (GschemToplevel* w_current)
 
 /*! \brief "changed" signal handler for GtkTreeSelection object.
  */
-static void
+void
 pagesel_callback_selection_changed (GtkTreeSelection* selection,
                                     gpointer data)
 {
@@ -516,7 +518,7 @@ widget_create (PageSelectWidget* pagesel)
                                GTK_SELECTION_SINGLE);
   g_signal_connect (selection,
                     "changed",
-                    G_CALLBACK (pagesel_callback_selection_changed),
+                    G_CALLBACK (callback_selection_changed),
                     pagesel);
   /*   - first column: page name */
   renderer = GTK_CELL_RENDERER (
