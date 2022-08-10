@@ -657,8 +657,8 @@ x_window_open_page (GschemToplevel *w_current,
  *  \param [in] page      The page to become current page.
  */
 void
-x_window_set_current_page_impl (GschemToplevel *w_current,
-                                LeptonPage *page)
+x_window_set_current_page (GschemToplevel *w_current,
+                           LeptonPage *page)
 {
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
@@ -675,7 +675,7 @@ x_window_set_current_page_impl (GschemToplevel *w_current,
   page_select_widget_update (w_current);
   x_multiattrib_update (w_current);
 
-} /* x_window_set_current_page_impl() */
+} /* x_window_set_current_page() */
 
 
 
@@ -832,7 +832,7 @@ x_window_close_page (GschemToplevel *w_current,
     /* change to new_current and update display */
     if (!x_tabs_enabled())
     {
-      x_window_set_current_page_impl (w_current, new_current);
+      x_window_set_current_page (w_current, new_current);
     }
 
   }

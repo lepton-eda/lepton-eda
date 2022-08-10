@@ -637,8 +637,8 @@ LeptonPage*
 x_window_open_page (GschemToplevel *w_current,
                     const gchar *filename);
 void
-x_window_set_current_page_impl (GschemToplevel *w_current,
-                                LeptonPage *page);
+x_window_set_current_page (GschemToplevel *w_current,
+                           LeptonPage *page);
 gint
 x_window_save_page (GschemToplevel *w_current,
                     LeptonPage *page,
