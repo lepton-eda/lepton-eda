@@ -60,7 +60,7 @@ page_select_widget_update (GschemToplevel* w_current);
 void
 schematic_page_select_widget_set_callback (char *name,
                                            GCallback callback);
-void
+LeptonPage*
 pagesel_callback_selection_changed (GtkTreeSelection* selection,
                                     gpointer data);
 GType
