@@ -296,6 +296,10 @@ the new or found page."
         *page)))
 
 
+(define (set-tab-page! *window *page)
+  (x_tabs_page_set_cur *window *page))
+
+
 ;;; Closes the tab of *WINDOW which contains *PAGE.  When the last
 ;;; tab is closed, a new tab with blank page will be opened.
 (define (close-tab! *window *page)
@@ -328,7 +332,7 @@ the new or found page."
               ;;  x_tabs_page_new() just invoked, but no need to process
               ;;  pending events here: it will be done in x_tabs_page_open()
               (open-tab! *window %null-pointer))
-            (x_tabs_page_set_cur *window *new-current-page))))))
+            (set-tab-page! *window *new-current-page))))))
 
 
 (define (callback-tab-button-close *button *tab-info)
@@ -336,7 +340,7 @@ the new or found page."
       (error "NULL TabInfo pointer.")
       (let ((*window (schematic_tab_info_get_window *tab-info))
             (*page (schematic_tab_info_get_page *tab-info)))
-        (x_tabs_page_set_cur *window *page)
+        (set-tab-page! *window *page)
 
         (unless (and (true? (lepton_page_get_changed *page))
                      (not (true? (x_dialog_close_changed_page *window *page))))
@@ -353,7 +357,7 @@ the new or found page."
   (let ((*window (schematic_tab_info_get_window *tab-info))
         (*page (schematic_tab_info_get_page *tab-info)))
 
-    (x_tabs_page_set_cur *window *page)
+    (set-tab-page! *window *page)
     (i_callback_file_save %null-pointer *window)))
 
 
@@ -374,7 +378,7 @@ the new or found page."
           (unless (and (true? (lepton_page_get_changed *page))
                        (not (true? (x_dialog_close_changed_page *window *page))))
             (close-tab! *window *page)
-            (x_tabs_page_set_cur *window *parent))))))
+            (set-tab-page! *window *parent))))))
 
 
 (define (callback-tab-button-up *button *tab-info)
@@ -382,7 +386,7 @@ the new or found page."
       (error "NULL TabInfo pointer.")
       (let ((*window (schematic_tab_info_get_window *tab-info))
             (*page (schematic_tab_info_get_page *tab-info)))
-        (x_tabs_page_set_cur *window *page)
+        (set-tab-page! *window *page)
         (hierarchy-up *window))))
 
 (define *callback-tab-button-up
