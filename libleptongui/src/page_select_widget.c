@@ -209,7 +209,7 @@ page_select_widget_update (GschemToplevel* w_current)
 
 /*! \brief "changed" signal handler for GtkTreeSelection object.
  */
-void
+LeptonPage*
 pagesel_callback_selection_changed (GtkTreeSelection* selection,
                                     gpointer data)
 {
@@ -221,7 +221,7 @@ pagesel_callback_selection_changed (GtkTreeSelection* selection,
 
   if (!gtk_tree_selection_get_selected (selection, &model, &iter))
   {
-    return;
+    return NULL;
   }
 
   w_current = pagesel->toplevel_;
@@ -235,10 +235,10 @@ pagesel_callback_selection_changed (GtkTreeSelection* selection,
    * if the newly-selected page is already the current page. */
   if (page == schematic_window_get_active_page (w_current))
   {
-    return;
+    return NULL;
   }
 
-  x_window_set_current_page (w_current, page);
+  return page;
 }
 
 
