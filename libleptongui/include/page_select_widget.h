@@ -48,6 +48,9 @@ typedef struct _PageSelectWidget      PageSelectWidget;
 
 G_BEGIN_DECLS
 
+GschemToplevel*
+schematic_page_select_widget_get_window (PageSelectWidget* pagesel);
+
 GtkWidget*
 page_select_widget_new (GschemToplevel* w_current);
 
