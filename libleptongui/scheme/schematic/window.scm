@@ -217,7 +217,7 @@ the new or found page."
   (define (open-new-page *tab-info)
     (let ((*page (x_window_open_page *window *filename)))
       (schematic_tab_info_set_page *tab-info *page)
-      (x_window_set_current_page_impl *window *page)
+      (x_window_set_current_page *window *page)
 
       (setup-tab-header *tab-info)
       (grab-focus *tab-info)
@@ -335,7 +335,7 @@ the new or found page."
   "Changes page in the active page view of *WINDOW to *PAGE."
   (if (true? (x_tabs_enabled))
       (x_tabs_page_set_cur *window *page)
-      (x_window_set_current_page_impl *window *page)))
+      (x_window_set_current_page *window *page)))
 
 
 (define (callback-tab-button-close *button *tab-info)
