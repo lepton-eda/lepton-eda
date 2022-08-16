@@ -716,8 +716,8 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
                           guint        newindex,
                           gpointer     data);
 void
-x_tabs_pview_create (GschemPageView* pview,
-                     GtkWidget*      wtab);
+schematic_tabs_add_page_view (GschemPageView* pview,
+                              GtkWidget*      wtab);
 gboolean
 x_tabs_tl_page_find (GschemToplevel* w_current,
                      LeptonPage* page);

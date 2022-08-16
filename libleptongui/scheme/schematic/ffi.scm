@@ -228,7 +228,6 @@
             x_tabs_nbook_page_close
             x_tabs_page_on_reordered
             *x_tabs_page_on_sel
-            x_tabs_pview_create
             x_tabs_tl_page_find
             x_tabs_tl_pview_cur
             x_tabs_tl_pview_cur_set
@@ -237,6 +236,7 @@
             schematic_tab_info_get_page_view
             schematic_tab_info_get_tab_widget
             schematic_tab_info_get_window
+            schematic_tabs_add_page_view
             schematic_tabs_set_callback
 
             schematic_action_mode_from_string
@@ -679,7 +679,7 @@
 (define-lff x_tabs_nbook_page_close void '(* *))
 (define-lff x_tabs_page_on_reordered void (list '* '* int '*))
 (define-lfc *x_tabs_page_on_sel)
-(define-lff x_tabs_pview_create void '(* *))
+(define-lff schematic_tabs_add_page_view void '(* *))
 (define-lff x_tabs_tl_page_find int '(* *))
 (define-lff x_tabs_tl_pview_cur '* '(*))
 (define-lff x_tabs_tl_pview_cur_set void '(* *))

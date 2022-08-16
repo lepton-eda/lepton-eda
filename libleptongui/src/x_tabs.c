@@ -564,8 +564,8 @@ x_tabs_nbook_page_close (GschemToplevel* w_current,
 
 
 void
-x_tabs_pview_create (GschemPageView* pview,
-                     GtkWidget*      wtab)
+schematic_tabs_add_page_view (GschemPageView* pview,
+                              GtkWidget*      wtab)
 {
 #ifdef ENABLE_GTK3
   gtk_widget_set_hexpand (GTK_WIDGET (pview), TRUE);
@@ -579,7 +579,7 @@ x_tabs_pview_create (GschemPageView* pview,
 
   gtk_widget_set_can_focus (GTK_WIDGET (pview), TRUE);
 
-} /* x_tabs_pview_create() */
+} /* schematic_tabs_add_page_view() */
 
 
 
