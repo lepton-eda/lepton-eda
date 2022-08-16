@@ -717,8 +717,7 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
                           gpointer     data);
 
 GschemPageView*
-x_tabs_pview_create (GschemToplevel* w_current,
-                     LeptonPage*     page,
+x_tabs_pview_create (LeptonPage*     page,
                      GtkWidget*      wtab);
 gboolean
 x_tabs_tl_page_find (GschemToplevel* w_current,

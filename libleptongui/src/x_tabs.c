@@ -564,8 +564,7 @@ x_tabs_nbook_page_close (GschemToplevel* w_current,
 
 
 GschemPageView*
-x_tabs_pview_create (GschemToplevel* w_current,
-                     LeptonPage*     page,
+x_tabs_pview_create (LeptonPage*     page,
                      GtkWidget*      wtab)
 {
 #ifdef DEBUG
