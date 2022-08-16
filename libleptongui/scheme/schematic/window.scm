@@ -30,6 +30,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
+  #:use-module (lepton m4)
   #:use-module (lepton page foreign)
   #:use-module (lepton page)
   #:use-module (lepton toplevel foreign)
@@ -208,7 +209,30 @@
 
 
 (define (setup-page-view-draw-events *window *page-view)
-  (x_window_setup_draw_events_drawing_area *window *page-view))
+  (define signal-callback-list
+    (list
+     (if %m4-use-gtk3
+         `("draw" . ,*x_event_draw)
+         `("expose-event" . ,*x_event_expose))
+     `("button-press-event" . ,*x_event_button_pressed)
+     `("button-release-event" . ,*x_event_button_released)
+     `("motion-notify-event" . ,*x_event_motion)
+     `("configure-event" . ,*x_event_configure)
+     `("key-press-event" . ,*process-key-event)
+     `("key-release-event" . ,*process-key-event)
+     `("scroll-event" . ,*x_event_scroll)
+     `("update-grid-info" . ,*i_update_grid_info_callback)
+     `("notify::page" . ,*gschem_toplevel_notify_page_callback)))
+
+  (define (connect-signal element)
+    (schematic_signal_connect *page-view
+                              (string->pointer (car element))
+                              (cdr element)
+                              *window))
+
+  (x_window_setup_draw_events_drawing_area *window *page-view)
+
+  (for-each connect-signal signal-callback-list))
 
 
 ;;; After calling this function it may be necessary to wait to let
@@ -523,9 +547,6 @@ GtkApplication structure of the program (when compiled with
                                         (make-toolbar *window *main-box))))
       ;; Make main popup menu.
       (schematic_window_create_main_popup_menu *window)
-
-      ;; Set up key event processing function.
-      (schematic_window_set_key_event_callback *process-key-event)
 
       (if (true? (x_tabs_enabled))
           (let ((*notebook (x_tabs_nbook_create *window *work-box)))

@@ -49,6 +49,7 @@
             i_set_state_msg
             i_show_state
             i_update_grid_info
+            *i_update_grid_info_callback
             i_update_menus
 
             i_vars_set
@@ -183,7 +184,6 @@
             schematic_window_create_menubar
             schematic_toolbar_toggle_tool_button_get_active
             schematic_window_get_inside_action
-            schematic_window_set_key_event_callback
             schematic_window_set_page_select_widget
             schematic_window_create_page_view
             schematic_window_create_find_text_widget
@@ -283,6 +283,7 @@
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_show_hidden_text
             gschem_toplevel_get_toplevel
+            *gschem_toplevel_notify_page_callback
             gschem_toplevel_page_changed
             gschem_toplevel_page_content_changed
             schematic_window_get_actionfeedback_mode
@@ -363,6 +364,13 @@
 
             x_event_get_pointer_position
             x_event_key
+            *x_event_button_pressed
+            *x_event_button_released
+            *x_event_configure
+            *x_event_draw
+            *x_event_expose
+            *x_event_motion
+            *x_event_scroll
 
             x_fileselect_open
             x_fileselect_save
@@ -535,6 +543,7 @@
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_show_hidden_text int '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
+(define-lfc *gschem_toplevel_notify_page_callback)
 (define-lff gschem_toplevel_page_changed void '(*))
 (define-lff gschem_toplevel_page_content_changed void '(* *))
 (define-lff schematic_window_get_actionfeedback_mode int '(*))
@@ -632,7 +641,6 @@
 (define-lff schematic_window_create_menubar void '(* * *))
 (define-lff schematic_toolbar_toggle_tool_button_get_active int '(*))
 (define-lff schematic_window_get_inside_action int '(*))
-(define-lff schematic_window_set_key_event_callback void '(*))
 (define-lff schematic_window_set_page_select_widget void '(* *))
 (define-lff schematic_window_create_page_view '* '(* *))
 (define-lff schematic_window_create_find_text_widget void '(* *))
@@ -721,6 +729,7 @@
 (define-lff i_set_state_msg void (list '* int '*))
 (define-lff i_show_state void '(* *))
 (define-lff i_update_grid_info void '(*))
+(define-lfc *i_update_grid_info_callback)
 (define-lff i_update_menus void '(*))
 
 ;;; i_vars.c
@@ -790,9 +799,14 @@
 
 ;;; x_event.c
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
-
-;;; x_event.c
 (define-lff x_event_key '* '(* * *))
+(define-lfc *x_event_button_pressed)
+(define-lfc *x_event_button_released)
+(define-lfc *x_event_configure)
+(define-lfc *x_event_draw)
+(define-lfc *x_event_expose)
+(define-lfc *x_event_motion)
+(define-lfc *x_event_scroll)
 
 ;;; x_fileselect.c
 (define-lff x_fileselect_open '* '(*))

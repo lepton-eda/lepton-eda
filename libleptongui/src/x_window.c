@@ -114,23 +114,6 @@ void x_window_setup_draw_events_main_wnd (GschemToplevel* w_current,
 } /* x_window_setup_draw_events_main_wnd() */
 
 
-gpointer _key_event_callback = NULL;
-
-/*! \brief Set key event callback
- *  \par Function Description
- *  Sets key event processing callback to a given function
- *  pointer.  Currently it is necessary as key event processing is
- *  handled in Scheme.
- *
- * \param [in] key_event_callback The pointer to the callback.
- */
-void
-schematic_window_set_key_event_callback (gpointer key_event_callback)
-{
-  _key_event_callback = key_event_callback;
-}
-
-
 /*! \brief Set up callbacks for the drawing area.
  *  \par Function Description
  *
@@ -143,35 +126,6 @@ schematic_window_set_key_event_callback (gpointer key_event_callback)
 void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
                                               GschemPageView* drawing_area)
 {
-  struct event_reg_t
-  {
-    const gchar* detailed_signal;
-    GCallback    c_handler;
-  };
-
-  struct event_reg_t drawing_area_events[] =
-  {
-#ifdef ENABLE_GTK3
-    { "draw",                 G_CALLBACK(x_event_draw)                         },
-#else
-    { "expose_event",         G_CALLBACK(x_event_expose)                       },
-#endif
-    { "button_press_event",   G_CALLBACK(x_event_button_pressed)               },
-    { "button_release_event", G_CALLBACK(x_event_button_released)              },
-    { "motion_notify_event",  G_CALLBACK(x_event_motion)                       },
-    { "configure_event",      G_CALLBACK(x_event_configure)                    },
-    { "key_press_event",      G_CALLBACK(_key_event_callback)                   },
-    { "key_release_event",    G_CALLBACK(_key_event_callback)                   },
-    { "scroll_event",         G_CALLBACK(x_event_scroll)                       },
-    { "update-grid-info",     G_CALLBACK(i_update_grid_info_callback)          },
-    { "notify::page",         G_CALLBACK(gschem_toplevel_notify_page_callback) },
-    { NULL,                   NULL                                             }
-  };
-
-
-  /* is the configure event type missing here? hack */
-
-
   /* gtk_widget_set_events() can be called on unrealized widgets only.
   *  Since with tabbed GUI (see x_tabs.c) we need to setup events
   *  for already created page view widgets, use
@@ -199,16 +153,6 @@ void x_window_setup_draw_events_drawing_area (GschemToplevel* w_current,
 
   gtk_widget_add_events (GTK_WIDGET (drawing_area), events);
 #endif
-
-  struct event_reg_t* tmp = NULL;
-
-  for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++)
-  {
-    g_signal_connect (drawing_area,
-                      tmp->detailed_signal,
-                      tmp->c_handler,
-                      w_current);
-  }
 
 } /* x_window_setup_draw_events_drawing_area() */
 
