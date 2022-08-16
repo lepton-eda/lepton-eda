@@ -679,7 +679,7 @@
 (define-lff x_tabs_nbook_page_close void '(* *))
 (define-lff x_tabs_page_on_reordered void (list '* '* int '*))
 (define-lfc *x_tabs_page_on_sel)
-(define-lff x_tabs_pview_create '* '(* *))
+(define-lff x_tabs_pview_create void '(* *))
 (define-lff x_tabs_tl_page_find int '(* *))
 (define-lff x_tabs_tl_pview_cur '* '(*))
 (define-lff x_tabs_tl_pview_cur_set void '(* *))

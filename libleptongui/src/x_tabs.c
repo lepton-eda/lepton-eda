@@ -563,7 +563,7 @@ x_tabs_nbook_page_close (GschemToplevel* w_current,
  */
 
 
-GschemPageView*
+void
 x_tabs_pview_create (GschemPageView* pview,
                      GtkWidget*      wtab)
 {
@@ -578,8 +578,6 @@ x_tabs_pview_create (GschemPageView* pview,
   gtk_widget_show_all (wtab);
 
   gtk_widget_set_can_focus (GTK_WIDGET (pview), TRUE);
-
-  return pview;
 
 } /* x_tabs_pview_create() */
 
