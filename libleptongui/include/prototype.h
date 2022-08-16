@@ -715,8 +715,7 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
                           GtkWidget*   wtab,
                           guint        newindex,
                           gpointer     data);
-
-GschemPageView*
+void
 x_tabs_pview_create (GschemPageView* pview,
                      GtkWidget*      wtab);
 gboolean
