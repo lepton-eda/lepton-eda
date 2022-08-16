@@ -1097,7 +1097,7 @@ x_tabs_page_new (GschemToplevel* w_current,
   x_tabs_tl_pview_cur_set (w_current, pview);
   gint ndx = x_tabs_nbook_page_add (w_current, page, pview, wtab);
 
-  gtk_notebook_set_tab_reorderable (w_current->xtabs_nbook, wtab, TRUE);
+  gtk_notebook_set_tab_reorderable (schematic_window_get_tab_notebook (w_current), wtab, TRUE);
 
   return x_tabs_info_add (w_current, ndx, page, pview, wtab);
 
