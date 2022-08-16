@@ -434,11 +434,25 @@ int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
 #ifdef ENABLE_GTK3
 gint
 x_event_draw (GschemPageView *widget,
-                cairo_t *cr,
+              cairo_t *cr,
+              GschemToplevel *w_current);
+gint
+x_event_expose (gpointer view,
+                gpointer event,
+                gpointer w_current);
+
+#else /* GTK2 */
+
+gint
+x_event_draw (gpointer view,
+              gpointer cr,
+              gpointer w_current);
+gint
+x_event_expose (GschemPageView *widget,
+                GdkEventExpose *event,
                 GschemToplevel *w_current);
-#else
-gint x_event_expose(GschemPageView *widget, GdkEventExpose *event, GschemToplevel *w_current);
 #endif
+
 gint x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_button_released(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
 gint x_event_motion(GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current);

@@ -52,7 +52,29 @@ x_event_draw (GschemPageView *view,
   return(0);
 }
 
+
+/* Dummy function for making Scheme happy. */
+gint
+x_event_expose (gpointer view,
+                gpointer event,
+                gpointer w_current)
+{
+  return(0);
+}
+
+
 #else /* GTK2 */
+
+
+/* Dummy function for making Scheme happy. */
+gint
+x_event_draw (gpointer view,
+              gpointer cr,
+              gpointer w_current)
+{
+  return(0);
+}
+
 
 /*! \brief Redraws the view when widget is exposed.
  *
