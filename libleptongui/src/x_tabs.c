@@ -572,8 +572,6 @@ x_tabs_pview_create (GschemToplevel* w_current,
   printf( "x_tabs_pview_create(): page: %p\n", page );
 #endif
 
-  x_window_setup_scrolling (w_current, wtab);
-
   GschemPageView* pview = gschem_page_view_new_with_page (page);
 
 #ifdef ENABLE_GTK3

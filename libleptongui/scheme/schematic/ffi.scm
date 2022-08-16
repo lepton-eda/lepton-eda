@@ -175,6 +175,7 @@
             x_window_set_current_page
             x_window_setup_draw_events_drawing_area
             x_window_setup_draw_events_main_wnd
+            x_window_setup_scrolling
             x_window_untitled_page
             schematic_window_create_app_window
             schematic_window_create_main_box
@@ -620,6 +621,7 @@
 (define-lff x_window_set_current_page void '(* *))
 (define-lff x_window_setup_draw_events_drawing_area void '(* *))
 (define-lff x_window_setup_draw_events_main_wnd void '(* *))
+(define-lff x_window_setup_scrolling void '(* *))
 (define-lff x_window_untitled_page int '(*))
 (define-lff x_window_close_page '* '(* *))
 (define-lff schematic_window_create_app_window '* '(*))
