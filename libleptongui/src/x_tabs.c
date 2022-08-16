@@ -1136,7 +1136,7 @@ x_tabs_page_set_cur (GschemToplevel* w_current,
   printf( "x_tabs_page_set_cur()\n" );
 #endif
 
-  TabInfo* nfo = x_tabs_info_find_by_page (w_current->xtabs_info_list, page);
+  TabInfo* nfo = x_tabs_info_find_by_page (schematic_window_get_tab_info_list (w_current), page);
 
   gint ndx = -1;
 
@@ -1150,11 +1150,12 @@ x_tabs_page_set_cur (GschemToplevel* w_current,
     printf( "    x_tabs_page_set_cur(): #3: [pview] [page] \n\n" );
 #endif
 
-    ndx = gtk_notebook_page_num (w_current->xtabs_nbook, nfo->wtab_);
+    ndx = gtk_notebook_page_num (schematic_window_get_tab_notebook (w_current),
+                                 schematic_tab_info_get_tab_widget (nfo));
     g_return_if_fail (ndx >= 0);
 
-    gtk_notebook_set_current_page (w_current->xtabs_nbook, ndx);
-    gtk_widget_grab_focus (GTK_WIDGET (nfo->pview_));
+    gtk_notebook_set_current_page (schematic_window_get_tab_notebook (w_current), ndx);
+    schematic_page_view_grab_focus (schematic_tab_info_get_page_view (nfo));
   }
 
   else
@@ -1169,9 +1170,9 @@ x_tabs_page_set_cur (GschemToplevel* w_current,
 
       nfo = x_tabs_page_new (w_current, page);
 
-      x_tabs_hdr_set (w_current->xtabs_nbook, nfo);
-      gtk_notebook_set_current_page (w_current->xtabs_nbook, ndx);
-      gtk_widget_grab_focus (GTK_WIDGET (nfo->pview_));
+      x_tabs_hdr_set (schematic_window_get_tab_notebook (w_current), nfo);
+      gtk_notebook_set_current_page (schematic_window_get_tab_notebook (w_current), ndx);
+      schematic_page_view_grab_focus (schematic_tab_info_get_page_view (nfo));
 
       /* x_tabs_page_new() just invoked,
        * let page view creation complete -
