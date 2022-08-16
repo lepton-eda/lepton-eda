@@ -588,8 +588,6 @@ x_tabs_pview_create (GschemToplevel* w_current,
 
   gtk_widget_set_can_focus (GTK_WIDGET (pview), TRUE);
 
-  x_window_setup_draw_events_drawing_area (w_current, pview);
-
   return pview;
 
 } /* x_tabs_pview_create() */
