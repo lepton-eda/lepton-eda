@@ -605,9 +605,6 @@ schematic_window_create_menubar (GschemToplevel *w_current,
                                  GtkWidget *main_box,
                                  GtkWidget *menubar);
 void
-schematic_window_set_key_event_callback (gpointer key_event_callback);
-
-void
 schematic_window_create_find_text_widget (GschemToplevel *w_current,
                                           GtkWidget *work_box);
 void
