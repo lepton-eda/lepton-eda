@@ -218,7 +218,7 @@ tab notebook.  Returns a C TabInfo structure."
   (x_window_setup_scrolling *window *wtab)
 
   (let ((*page-view (gschem_page_view_new_with_page *page)))
-    (x_tabs_pview_create *page-view *wtab)
+    (schematic_tabs_add_page_view *page-view *wtab)
     (x_window_setup_draw_events_drawing_area *window *page-view)
     (x_tabs_tl_pview_cur_set *window *page-view)
     (let ((page-index (x_tabs_nbook_page_add *window *page *page-view *wtab)))
