@@ -195,21 +195,23 @@
                       (list '* '* int '*)))
 
 
+(define (process-pending-events)
+  (let loop ((pending-event? (true? (gtk_events_pending))))
+    (when pending-event?
+      (gtk_main_iteration)
+      (loop (true? (gtk_events_pending))))))
+
+
+(define (grab-focus *tab-info)
+  (schematic_page_view_grab_focus
+   (schematic_tab_info_get_page_view *tab-info)))
+
+
 (define (open-tab! *window *filename)
   "Creates a new page, page view and tab for *FILENAME in *WINDOW.
 If *FILENAME is %null-pointer, the page will be blank.  If there
 is a page with the given *FILENAME, switches to its tab.  Returns
 the new or found page."
-  (define (process-pending-events)
-    (let loop ((pending-event? (true? (gtk_events_pending))))
-      (when pending-event?
-        (gtk_main_iteration)
-        (loop (true? (gtk_events_pending))))))
-
-  (define (grab-focus *tab-info)
-    (schematic_page_view_grab_focus
-     (schematic_tab_info_get_page_view *tab-info)))
-
   (define (setup-tab-header *tab-info)
     (x_tabs_hdr_set (schematic_window_get_tab_notebook *window)
                     *tab-info))
@@ -297,7 +299,44 @@ the new or found page."
 
 
 (define (set-tab-page! *window *page)
-  (x_tabs_page_set_cur *window *page))
+  "Sets page of the current tab in *WINDOW to *PAGE.  If there's a
+tab that contains *PAGE, it will be activated, otherwise a new tab
+for *PAGE page will be created and set active."
+  (when (null-pointer? *window)
+    (error "NULL window pointer in set-tab-page!()"))
+
+  (let ((*tab-info (x_tabs_info_find_by_page (schematic_window_get_tab_info_list *window)
+                                             *page))
+        (page-index -1))
+
+    ;; There is page view for *PAGE: switch to it.
+    (if (not (null-pointer? *tab-info))
+
+        (let ((page-index (gtk_notebook_page_num (schematic_window_get_tab_notebook *window)
+                                                 (schematic_tab_info_get_tab_widget *tab-info))))
+          (if (>= page-index 0)
+              (begin
+                (gtk_notebook_set_current_page (schematic_window_get_tab_notebook *window)
+                                               page-index)
+                (grab-focus *tab-info))
+              (log! 'warning "set-tab-page!: Negative page index.")))
+
+        ;; There is no page view for *PAGE, create a new one.
+        (when (and (null-pointer? *tab-info)
+                   (true? (x_tabs_tl_page_find *window *page)))
+          (let ((*tab-info (x_tabs_page_new *window *page)))
+
+            (x_tabs_hdr_set (schematic_window_get_tab_notebook *window) *tab-info)
+            (gtk_notebook_set_current_page (schematic_window_get_tab_notebook *window)
+                                           page-index)
+            (grab-focus *tab-info)
+
+            ;; Finish page view creation by processing pending events.
+            (process-pending-events)
+
+            ;; Zoom new page view created for existing page.
+            (gschem_page_view_zoom_extents (x_tabs_tl_pview_cur *window)
+                                           %null-pointer))))))
 
 
 ;;; Closes the tab of *WINDOW which contains *PAGE.  When the last
@@ -396,7 +435,7 @@ the new or found page."
 (define (*window-set-current-page! *window *page)
   "Sets current page of *WINDOW to *PAGE."
   (if (true? (x_tabs_enabled))
-      (x_tabs_page_set_cur *window *page)
+      (set-tab-page! *window *page)
       (x_window_set_current_page *window *page)))
 
 
