@@ -583,17 +583,6 @@ schematic_tabs_add_page_view (GschemPageView* pview,
 
 
 
-/*
-*
-* static void
-* x_tabs_pview_rm (GschemPageView* pview)
-* {
-* }
-*
-*/
-
-
-
 
 /* --------------------------------------------------------
  *
