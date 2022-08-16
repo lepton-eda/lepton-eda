@@ -207,10 +207,23 @@
    (schematic_tab_info_get_page_view *tab-info)))
 
 
+;;; After calling this function it may be necessary to wait to let
+;;; page view creation to complete.  See process-pending-events()
+;;; above.
 (define (tab-add-page! *window *page)
   "Creates a new page view for *PAGE in *WINDOW and adds it to the
 tab notebook.  Returns a C TabInfo structure."
-  (x_tabs_page_new *window *page))
+  (define *wtab (gtk_scrolled_window_new %null-pointer %null-pointer))
+
+  (let ((*page-view (x_tabs_pview_create *window *page *wtab)))
+    (x_tabs_tl_pview_cur_set *window *page-view)
+    (let ((page-index (x_tabs_nbook_page_add *window *page *page-view *wtab)))
+
+      (gtk_notebook_set_tab_reorderable (schematic_window_get_tab_notebook *window)
+                                        *wtab
+                                        TRUE)
+      ;; Return TabInfo.
+      (x_tabs_info_add *window page-index *page *page-view *wtab))))
 
 
 (define (open-tab! *window *filename)
