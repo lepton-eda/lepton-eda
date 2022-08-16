@@ -207,6 +207,10 @@
    (schematic_tab_info_get_page_view *tab-info)))
 
 
+(define (setup-page-view-draw-events *window *page-view)
+  (x_window_setup_draw_events_drawing_area *window *page-view))
+
+
 ;;; After calling this function it may be necessary to wait to let
 ;;; page view creation to complete.  See process-pending-events()
 ;;; above.
@@ -219,7 +223,7 @@ tab notebook.  Returns a C TabInfo structure."
 
   (let ((*page-view (gschem_page_view_new_with_page *page)))
     (schematic_tabs_add_page_view *page-view *wtab)
-    (x_window_setup_draw_events_drawing_area *window *page-view)
+    (setup-page-view-draw-events *window *page-view)
     (x_tabs_tl_pview_cur_set *window *page-view)
     (let ((page-index (x_tabs_nbook_page_add *window *page *page-view *wtab)))
 
@@ -543,7 +547,7 @@ GtkApplication structure of the program (when compiled with
 
           (let ((*page-view (schematic_window_create_page_view *window *work-box)))
             ;; Setup callbacks for page view draw events.
-            (x_window_setup_draw_events_drawing_area *window *page-view)))
+            (setup-page-view-draw-events *window *page-view)))
 
 
       ;; Setup callbacks for main window draw events.
