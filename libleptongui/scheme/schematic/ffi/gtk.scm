@@ -43,7 +43,9 @@
             gtk_menu_shell_append
             gtk_notebook_get_n_pages
             gtk_notebook_page_num
-            gtk_notebook_set_current_page))
+            gtk_notebook_set_current_page
+            gtk_notebook_set_tab_reorderable
+            gtk_scrolled_window_new))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -76,8 +78,11 @@
 (define-lff gtk_notebook_get_n_pages int '(*))
 (define-lff gtk_notebook_page_num int '(* *))
 (define-lff gtk_notebook_set_current_page void (list '* int))
+(define-lff gtk_notebook_set_tab_reorderable void (list '* '* int))
 
 (define-lff gtk_rc_parse void '(*))
+
+(define-lff gtk_scrolled_window_new '* '(* *))
 
 (define-lff gtk_tearoff_menu_item_new '* '())
 

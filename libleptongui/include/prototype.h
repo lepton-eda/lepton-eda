@@ -677,6 +677,12 @@ x_tabs_cancel_all (GschemToplevel* w_current);
 gboolean x_tabs_enabled();
 
 TabInfo*
+x_tabs_info_add (GschemToplevel* w_current,
+                 gint            ndx,
+                 LeptonPage*     page,
+                 GschemPageView* pview,
+                 GtkWidget*      wtab);
+TabInfo*
 x_tabs_info_cur (GschemToplevel* w_current);
 
 TabInfo*
@@ -691,9 +697,11 @@ void x_tabs_init();
 GtkWidget*
 x_tabs_nbook_create (GschemToplevel* w_current,
                      GtkWidget* work_box);
-TabInfo*
-x_tabs_page_new (GschemToplevel* w_current,
-                 LeptonPage* page);
+gint
+x_tabs_nbook_page_add (GschemToplevel* w_current,
+                       LeptonPage*     page,
+                       GschemPageView* pview,
+                       GtkWidget*      wtab);
 void
 x_tabs_nbook_page_close (GschemToplevel* w_current,
                          LeptonPage* page);
@@ -708,11 +716,19 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
                           guint        newindex,
                           gpointer     data);
 
+GschemPageView*
+x_tabs_pview_create (GschemToplevel* w_current,
+                     LeptonPage*     page,
+                     GtkWidget*      wtab);
 gboolean
 x_tabs_tl_page_find (GschemToplevel* w_current,
                      LeptonPage* page);
 GschemPageView*
 x_tabs_tl_pview_cur (GschemToplevel* w_current);
+
+void
+x_tabs_tl_pview_cur_set (GschemToplevel* w_current,
+                         GschemPageView* pview);
 
 void x_tabs_next (GschemToplevel* w_current);
 

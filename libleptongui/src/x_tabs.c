@@ -155,13 +155,6 @@ x_tabs_init()
 
 /* tab info: */
 
-static TabInfo*
-x_tabs_info_add (GschemToplevel* w_current,
-                 gint            ndx,
-                 LeptonPage*     page,
-                 GschemPageView* pview,
-                 GtkWidget*      wtab);
-
 static gint
 x_tabs_info_cmp_page (gconstpointer elem, gconstpointer data);
 
@@ -188,17 +181,9 @@ static void
 x_tabs_tl_page_cur_set (GschemToplevel* w_current,
                         LeptonPage* page);
 
-static void
-x_tabs_tl_pview_cur_set (GschemToplevel* w_current, GschemPageView* pview);
-
 
 /* notebook: */
 
-static gint
-x_tabs_nbook_page_add (GschemToplevel* w_current,
-                       LeptonPage*     page,
-                       GschemPageView* pview,
-                       GtkWidget*      wtab);
 static gboolean
 x_tabs_hdr_on_mouse_click (GtkWidget* hdr, GdkEvent* e, gpointer data);
 static GtkMenu*
@@ -225,25 +210,6 @@ static void
 x_tabs_menu_action_on_activate (GtkAction* action,
                                 gpointer data);
 #endif
-
-
-
-/* page view: */
-
-static GschemPageView*
-x_tabs_pview_create (GschemToplevel* w_current,
-                     LeptonPage*     page,
-                     GtkWidget**     ppwtab);
-
-/*
- *
- * NOTE: for now: nop
- *
- * static void
- * x_tabs_pview_rm (GschemPageView* pview);
- *
-*/
-
 
 
 /* tab header widget: */
@@ -290,7 +256,7 @@ x_tabs_info_cur (GschemToplevel* w_current)
 
 
 
-static TabInfo*
+TabInfo*
 x_tabs_info_add (GschemToplevel* w_current,
                  gint            ndx,
                  LeptonPage*     page,
@@ -447,7 +413,7 @@ x_tabs_tl_pview_cur (GschemToplevel* w_current)
 
 
 
-static void
+void
 x_tabs_tl_pview_cur_set (GschemToplevel* w_current, GschemPageView* pview)
 {
   w_current->drawing_area = GTK_WIDGET (pview);
@@ -551,7 +517,7 @@ x_tabs_nbook_create (GschemToplevel* w_current,
 
 
 
-static gint
+gint
 x_tabs_nbook_page_add (GschemToplevel* w_current,
                        LeptonPage*     page,
                        GschemPageView* pview,
@@ -597,17 +563,14 @@ x_tabs_nbook_page_close (GschemToplevel* w_current,
  */
 
 
-static GschemPageView*
+GschemPageView*
 x_tabs_pview_create (GschemToplevel* w_current,
                      LeptonPage*     page,
-                     GtkWidget**     ppwtab)
+                     GtkWidget*      wtab)
 {
 #ifdef DEBUG
   printf( "x_tabs_pview_create(): page: %p\n", page );
 #endif
-
-  *ppwtab = gtk_scrolled_window_new (NULL, NULL);
-  GtkWidget* wtab = *ppwtab;
 
   x_window_setup_scrolling (w_current, wtab);
 
@@ -1066,42 +1029,6 @@ x_tabs_prev (GschemToplevel* w_current)
 
   gtk_notebook_prev_page (w_current->xtabs_nbook);
 }
-
-
-
-/*! \brief Creates page view, TabInfo, adds a tab to the notebook.
- *
- *  \par Function Description
- *  After calling this function it may be necessary to
- *  wait to let page view creation to complete, for example:
- *
- *  while ( gtk_events_pending() )
- *  {
- *      gtk_main_iteration();
- *  }
- *
- *  \param  [in] w_current  The toplevel environment.
- *  \param  [in] page       The page.
- *  \return                 A pointer to the new TabInfo structure.
- */
-TabInfo*
-x_tabs_page_new (GschemToplevel* w_current,
-                 LeptonPage* page)
-{
-#ifdef DEBUG
-  printf( "x_tabs_new_page(): page: %p\n", page);
-#endif
-
-  GtkWidget* wtab = NULL;
-  GschemPageView* pview = x_tabs_pview_create (w_current, page, &wtab);
-  x_tabs_tl_pview_cur_set (w_current, pview);
-  gint ndx = x_tabs_nbook_page_add (w_current, page, pview, wtab);
-
-  gtk_notebook_set_tab_reorderable (schematic_window_get_tab_notebook (w_current), wtab, TRUE);
-
-  return x_tabs_info_add (w_current, ndx, page, pview, wtab);
-
-} /* x_tabs_page_new() */
 
 
 
