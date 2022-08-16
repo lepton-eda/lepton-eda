@@ -207,6 +207,12 @@
    (schematic_tab_info_get_page_view *tab-info)))
 
 
+(define (tab-add-page! *window *page)
+  "Creates a new page view for *PAGE in *WINDOW and adds it to the
+tab notebook.  Returns a C TabInfo structure."
+  (x_tabs_page_new *window *page))
+
+
 (define (open-tab! *window *filename)
   "Creates a new page, page view and tab for *FILENAME in *WINDOW.
 If *FILENAME is %null-pointer, the page will be blank.  If there
@@ -271,7 +277,7 @@ the new or found page."
                   (x_tabs_cancel_all *window)
 
                   ;; Create a new tab with a new page.
-                  (open-new-page (x_tabs_page_new *window %null-pointer)))
+                  (open-new-page (tab-add-page! *window %null-pointer)))
 
                 ;; If the page exists, switch to its existing
                 ;; page view.
@@ -324,7 +330,7 @@ for *PAGE page will be created and set active."
         ;; There is no page view for *PAGE, create a new one.
         (when (and (null-pointer? *tab-info)
                    (true? (x_tabs_tl_page_find *window *page)))
-          (let ((*tab-info (x_tabs_page_new *window *page)))
+          (let ((*tab-info (tab-add-page! *window *page)))
 
             (x_tabs_hdr_set (schematic_window_get_tab_notebook *window) *tab-info)
             (gtk_notebook_set_current_page (schematic_window_get_tab_notebook *window)
@@ -367,8 +373,8 @@ for *PAGE page will be created and set active."
 
         (if (null-pointer? *new-current-page)
             (begin
-              (x_tabs_page_new *window %null-pointer)
-              ;;  x_tabs_page_new() just invoked, but no need to process
+              (tab-add-page! *window %null-pointer)
+              ;;  tab-add-page!() just invoked, but no need to process
               ;;  pending events here: it will be done in x_tabs_page_open()
               (open-tab! *window %null-pointer))
             (set-tab-page! *window *new-current-page))))))
@@ -516,7 +522,7 @@ GtkApplication structure of the program (when compiled with
                                       (string->pointer "page-reordered")
                                       *callback-page-reordered
                                       *window)
-            (x_tabs_page_new *window %null-pointer))
+            (tab-add-page! *window %null-pointer))
 
           (let ((*page-view (schematic_window_create_page_view *window *work-box)))
             ;; Setup callbacks for page view draw events.
