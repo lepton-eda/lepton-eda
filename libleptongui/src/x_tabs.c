@@ -38,7 +38,6 @@
  *
  * - x_tabs_enabled()      // whether tabbed GUI is currently enabled
  * - x_tabs_init()         // initialize tabbed GUI, read config
- * - x_tabs_page_set_cur() // set current tab
  * - x_tabs_next()         // go to next tab
  * - x_tabs_prev()         // go to prev tab
  * - x_tabs_hdr_update()   // update tab's header widget
@@ -188,15 +187,9 @@ x_tabs_tl_page_cur (GschemToplevel* w_current);
 static void
 x_tabs_tl_page_cur_set (GschemToplevel* w_current,
                         LeptonPage* page);
-static GschemPageView*
-x_tabs_tl_pview_cur (GschemToplevel* w_current);
 
 static void
 x_tabs_tl_pview_cur_set (GschemToplevel* w_current, GschemPageView* pview);
-
-static gboolean
-x_tabs_tl_page_find (GschemToplevel* w_current,
-                     LeptonPage* page);
 
 
 /* notebook: */
@@ -443,7 +436,7 @@ x_tabs_tl_page_cur_set (GschemToplevel* w_current,
 
 
 
-static GschemPageView*
+GschemPageView*
 x_tabs_tl_pview_cur (GschemToplevel* w_current)
 {
   GtkWidget*      wview = w_current->drawing_area;
@@ -467,7 +460,7 @@ x_tabs_tl_pview_cur_set (GschemToplevel* w_current, GschemPageView* pview)
  *  \return TRUE if found.
  *
  */
-static gboolean
+gboolean
 x_tabs_tl_page_find (GschemToplevel* w_current,
                      LeptonPage* page)
 {
@@ -1109,84 +1102,6 @@ x_tabs_page_new (GschemToplevel* w_current,
   return x_tabs_info_add (w_current, ndx, page, pview, wtab);
 
 } /* x_tabs_page_new() */
-
-
-
-/*! \brief Changes the current tab.
- *  \public
- *
- *  \par Function Description
- *  If there's a tab that contains \a page, it will be activated,
- *  otherwise a new tab for \a page will be created and set active.
- *
- *  \note
- *  The code is intentionally left unrefactored.
- *
- *  \param [in] w_current  The toplevel environment.
- *  \param [in] page       The page.
- *
- */
-void
-x_tabs_page_set_cur (GschemToplevel* w_current,
-                     LeptonPage* page)
-{
-  g_return_if_fail (w_current != NULL);
-
-#ifdef DEBUG
-  printf( "x_tabs_page_set_cur()\n" );
-#endif
-
-  TabInfo* nfo = x_tabs_info_find_by_page (schematic_window_get_tab_info_list (w_current), page);
-
-  gint ndx = -1;
-
-
-  /* XXX: 3: [pview] [page]:
-   * - switch to existing page view
-  */
-  if (nfo != NULL)
-  {
-#ifdef DEBUG
-    printf( "    x_tabs_page_set_cur(): #3: [pview] [page] \n\n" );
-#endif
-
-    ndx = gtk_notebook_page_num (schematic_window_get_tab_notebook (w_current),
-                                 schematic_tab_info_get_tab_widget (nfo));
-    g_return_if_fail (ndx >= 0);
-
-    gtk_notebook_set_current_page (schematic_window_get_tab_notebook (w_current), ndx);
-    schematic_page_view_grab_focus (schematic_tab_info_get_page_view (nfo));
-  }
-
-  else
-
-  /*  XXX: 4: [!pview] [page]:
-  */
-  if (nfo == NULL && x_tabs_tl_page_find (w_current, page))
-  {
-#ifdef DEBUG
-      printf( "    x_tabs_page_set_cur(): #4: [!pview] [page] \n\n" );
-#endif
-
-      nfo = x_tabs_page_new (w_current, page);
-
-      x_tabs_hdr_set (schematic_window_get_tab_notebook (w_current), nfo);
-      gtk_notebook_set_current_page (schematic_window_get_tab_notebook (w_current), ndx);
-      schematic_page_view_grab_focus (schematic_tab_info_get_page_view (nfo));
-
-      /* x_tabs_page_new() just invoked,
-       * let page view creation complete -
-       * process pending events:
-      */
-      while (gtk_events_pending())
-        gtk_main_iteration();
-
-      /* new page view is created for existing page => zoom it:
-      */
-      gschem_page_view_zoom_extents (x_tabs_tl_pview_cur (w_current), NULL);
-  }
-
-} /* x_tabs_page_set_cur() */
 
 
 

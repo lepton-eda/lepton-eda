@@ -1134,7 +1134,7 @@ the snap grid size should be set to 100")))
           (if use-tabs?
               ;; Tabbed GUI is used.  Create a tab for every
               ;; subpage loaded.  Zoom will be set in
-              ;; x_tabs_page_set_cur().
+              ;; set-tab-page!().
               (*window-set-current-page! *window *child)
               ;; s_hierarchy_down_schematic_single() does not zoom
               ;; the loaded page, so zoom it here.
@@ -1249,7 +1249,7 @@ the snap grid size should be set to 100")))
                                           (schematic_window_get_active_page *window))
 
                ;; s_hierarchy_down_symbol() will not zoom the loaded page.
-               ;; Tabbed GUI: zoom is set in x_tabs_page_set_cur().
+               ;; Tabbed GUI: zoom is set in set-tab-page!().
                (unless (true? (x_tabs_enabled))
                  (gschem_page_view_zoom_extents
                   (gschem_toplevel_get_current_page_view *window)

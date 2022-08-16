@@ -698,9 +698,6 @@ void
 x_tabs_nbook_page_close (GschemToplevel* w_current,
                          LeptonPage* page);
 void
-x_tabs_page_set_cur (GschemToplevel* w_current,
-                     LeptonPage* page);
-void
 x_tabs_page_on_sel (GtkNotebook* nbook,
                     GtkWidget*   wtab,
                     guint        ndx,
@@ -710,6 +707,12 @@ x_tabs_page_on_reordered (GtkNotebook* nbook,
                           GtkWidget*   wtab,
                           guint        newindex,
                           gpointer     data);
+
+gboolean
+x_tabs_tl_page_find (GschemToplevel* w_current,
+                     LeptonPage* page);
+GschemPageView*
+x_tabs_tl_pview_cur (GschemToplevel* w_current);
 
 void x_tabs_next (GschemToplevel* w_current);
 
