@@ -564,15 +564,9 @@ x_tabs_nbook_page_close (GschemToplevel* w_current,
 
 
 GschemPageView*
-x_tabs_pview_create (LeptonPage*     page,
+x_tabs_pview_create (GschemPageView* pview,
                      GtkWidget*      wtab)
 {
-#ifdef DEBUG
-  printf( "x_tabs_pview_create(): page: %p\n", page );
-#endif
-
-  GschemPageView* pview = gschem_page_view_new_with_page (page);
-
 #ifdef ENABLE_GTK3
   gtk_widget_set_hexpand (GTK_WIDGET (pview), TRUE);
   gtk_widget_set_vexpand (GTK_WIDGET (pview), TRUE);
