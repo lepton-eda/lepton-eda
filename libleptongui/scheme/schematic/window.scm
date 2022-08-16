@@ -215,6 +215,8 @@
 tab notebook.  Returns a C TabInfo structure."
   (define *wtab (gtk_scrolled_window_new %null-pointer %null-pointer))
 
+  (x_window_setup_scrolling *window *wtab)
+
   (let ((*page-view (x_tabs_pview_create *window *page *wtab)))
     (x_window_setup_draw_events_drawing_area *window *page-view)
     (x_tabs_tl_pview_cur_set *window *page-view)
