@@ -198,6 +198,15 @@ x_compselect_callback_response (GtkDialog *dialog,
 }
 
 
+GschemPreview*
+schematic_compselect_get_preview (Compselect *cs)
+{
+  g_return_val_if_fail (cs != NULL, NULL);
+
+  return cs->preview;
+}
+
+
 GtkWidget*
 schematic_compselect_new (GschemToplevel *w_current)
 {
@@ -210,6 +219,32 @@ schematic_compselect_new (GschemToplevel *w_current)
                     "response",
                     G_CALLBACK (x_compselect_callback_response),
                     w_current);
+
+  GschemPreview *preview = schematic_compselect_get_preview (COMPSELECT (cs));
+
+  struct event_reg_t {
+    const gchar *detailed_signal;
+    GCallback c_handler;
+  } drawing_area_events[] = {
+    { "realize",              G_CALLBACK (preview_callback_realize)       },
+#ifdef ENABLE_GTK3
+    { "draw",                 G_CALLBACK (x_event_draw)                   },
+#else
+    { "expose_event",         G_CALLBACK (x_event_expose)                 },
+#endif
+    { "button_press_event",   G_CALLBACK (preview_callback_button_press)  },
+    { "configure_event",      G_CALLBACK (x_event_configure)              },
+    { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
+    { NULL,                   NULL                                        }
+  }, *tmp;
+
+  for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++)
+  {
+    g_signal_connect (GTK_WIDGET (preview),
+                      tmp->detailed_signal,
+                      tmp->c_handler,
+                      preview->preview_w_current);
+  }
 
   gtk_window_set_transient_for (GTK_WINDOW (cs),
                                 GTK_WINDOW (w_current->main_window));
@@ -1530,7 +1565,7 @@ compselect_constructor (GType type,
                                         NULL));
 #endif
 
-  preview = gschem_preview_new ();
+  preview = GTK_WIDGET (g_object_new (GSCHEM_TYPE_PREVIEW, NULL));
 
 #ifdef ENABLE_GTK3
   gtk_container_set_border_width (GTK_CONTAINER (frame), 5);
