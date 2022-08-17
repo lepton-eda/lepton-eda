@@ -471,6 +471,10 @@ gboolean x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapp
 void x_compselect_open (GschemToplevel *w_current);
 void x_compselect_deselect (GschemToplevel *w_current);
 
+GtkWidget*
+schematic_compselect_new (GschemToplevel *w_current);
+
+
 /* x_fileselect.c */
 GSList*
 x_fileselect_open (GschemToplevel *w_current);
