@@ -41,6 +41,11 @@
 (define UNDO_ACTION 0)
 (define REDO_ACTION 1)
 
+
+(define (undo-callback *window *page action-type)
+  (o_undo_callback *window *page action-type))
+
+
 (define (callback-edit-undo *widget *window)
   ;; If we're cancelling from a move action, re-wind the
   ;; page contents back to their state before we started.
@@ -57,7 +62,7 @@
             (log! 'warning "callback-edit-undo: NULL page view.")
             (let ((*page (gschem_page_view_get_page *page-view)))
               (unless (null-pointer? *page)
-                (o_undo_callback *window *page UNDO_ACTION)))))))
+                (undo-callback *window *page UNDO_ACTION)))))))
 
 
 (define (callback-edit-redo *widget *window)
@@ -66,7 +71,7 @@
         (log! 'warning "callback-edit-redo: NULL page view.")
         (let ((*page (gschem_page_view_get_page *page-view)))
           (unless (null-pointer? *page)
-            (o_undo_callback *window *page REDO_ACTION))))))
+            (undo-callback *window *page REDO_ACTION))))))
 
 
 (define (callback-file-new *widget *window)
