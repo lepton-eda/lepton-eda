@@ -42,8 +42,13 @@
 (define REDO_ACTION 1)
 
 
-(define (undo-callback *window *page action-type)
-  (o_undo_callback *window *page action-type))
+(define (undo-callback *window action-type)
+  (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
+    (if (null-pointer? *page-view)
+        (log! 'warning "undo-callback: NULL page view.")
+        (let ((*page (gschem_page_view_get_page *page-view)))
+          (unless (null-pointer? *page)
+            (o_undo_callback *window *page action-type))))))
 
 
 (define (callback-edit-undo *widget *window)
@@ -57,21 +62,11 @@
   ;; crash occurs when the page objects are free'd.
   (if (true? (schematic_window_get_inside_action *window))
       (i_callback_cancel *widget *window)
-      (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
-        (if (null-pointer? *page-view)
-            (log! 'warning "callback-edit-undo: NULL page view.")
-            (let ((*page (gschem_page_view_get_page *page-view)))
-              (unless (null-pointer? *page)
-                (undo-callback *window *page UNDO_ACTION)))))))
+      (undo-callback *window UNDO_ACTION)))
 
 
 (define (callback-edit-redo *widget *window)
-  (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
-    (if (null-pointer? *page-view)
-        (log! 'warning "callback-edit-redo: NULL page view.")
-        (let ((*page (gschem_page_view_get_page *page-view)))
-          (unless (null-pointer? *page)
-            (undo-callback *window *page REDO_ACTION))))))
+  (undo-callback *window REDO_ACTION))
 
 
 (define (callback-file-new *widget *window)
