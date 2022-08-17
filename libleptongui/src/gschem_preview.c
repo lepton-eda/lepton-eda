@@ -451,9 +451,9 @@ preview_finalize (GObject *self)
  *  \return The field.
  */
 GschemToplevel*
-schematic_preview_get_preview_w_current (GschemPreview *preview)
+schematic_preview_get_preview_w_current (GtkWidget *preview)
 {
   g_return_val_if_fail (preview != NULL, NULL);
 
-  return preview->preview_w_current;
+  return GSCHEM_PREVIEW (preview)->preview_w_current;
 }
