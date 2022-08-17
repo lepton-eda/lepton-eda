@@ -96,7 +96,41 @@
       (test-assert (string-contains <stdout> "hierarchy/cache/sub.sch"))
       (test-assert (string-contains <stdout> "hierarchy/cache/sub.sym"))
       (test-assert (string-contains <stdout> "hierarchy/gafrc"))
-      (test-assert (string-contains <stdout> "hierarchy/sch.sch"))))
+      (test-assert (string-contains <stdout> "hierarchy/sch.sch")))
+
+    ;; Test extracting the archive using lepton-archive.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-archive "--extract" tarball)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (file-exists? "./hierarchy/cache/subsub.sch"))
+      (test-assert (file-exists? "./hierarchy/cache/resistor.sym"))
+      (test-assert (file-exists? "./hierarchy/cache/in.sym"))
+      (test-assert (file-exists? "./hierarchy/cache/subsub.sym"))
+      (test-assert (file-exists? "./hierarchy/cache/out.sym"))
+      (test-assert (file-exists? "./hierarchy/cache/sub.sch"))
+      (test-assert (file-exists? "./hierarchy/cache/sub.sym"))
+      (test-assert (file-exists? "./hierarchy/gafrc"))
+      (test-assert (file-exists? "./hierarchy/sch.sch")))
+
+    ;; Test extracting the archive with relative paths.
+    (mkdir "EXT")
+    (chdir "EXT")
+    (test-assert (not (file-exists? "./hierarchy/")))
+    ;; Test extracting the archive using lepton-archive.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-archive
+                        "--extract"
+                        (build-filename ".." tarball))
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (file-exists? "./hierarchy/cache/subsub.sch"))
+      (test-assert (file-exists? "./hierarchy/cache/resistor.sym"))
+      (test-assert (file-exists? "./hierarchy/cache/in.sym"))
+      (test-assert (file-exists? "./hierarchy/cache/subsub.sym"))
+      (test-assert (file-exists? "./hierarchy/cache/out.sym"))
+      (test-assert (file-exists? "./hierarchy/cache/sub.sch"))
+      (test-assert (file-exists? "./hierarchy/cache/sub.sym"))
+      (test-assert (file-exists? "./hierarchy/gafrc"))
+      (test-assert (file-exists? "./hierarchy/sch.sch"))))
 
   (test-teardown))
 
