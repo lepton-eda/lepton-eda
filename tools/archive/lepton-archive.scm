@@ -819,10 +819,10 @@ If this archive was created using lepton-archive, you can rename it using
 the file manually.\n"))
 
     ;; Gunzip the file.
-    (system* "gunzip" "-f" filename.tar.gz)
+    (system* "gunzip" "-f" (basename filename.tar.gz))
     (let* (
            ;; Get rid of the ".gz" suffix.
-           (filename.tar (string-drop-right filename.tar.gz 3))
+           (filename.tar (string-drop-right (basename filename.tar.gz) 3))
            ;; Get list of files in the archive.
            (return-string (get-command-output (string-append "tar -t -f " filename.tar)))
            (filename-list (filter string-not-null? (string-split return-string #\newline))))
