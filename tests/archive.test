@@ -102,6 +102,8 @@
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-archive "--extract" tarball)
       (test-eq EXIT_SUCCESS <status>)
+      ;; Tarball must not be deleted.
+      (test-assert (file-exists? tarball))
       (test-assert (file-exists? "./hierarchy/cache/subsub.sch"))
       (test-assert (file-exists? "./hierarchy/cache/resistor.sym"))
       (test-assert (file-exists? "./hierarchy/cache/in.sym"))
@@ -122,6 +124,8 @@
                         "--extract"
                         (build-filename ".." tarball))
       (test-eq EXIT_SUCCESS <status>)
+      ;; Tarball must not be deleted.
+      (test-assert (file-exists? (build-filename ".." tarball)))
       (test-assert (file-exists? "./hierarchy/cache/subsub.sch"))
       (test-assert (file-exists? "./hierarchy/cache/resistor.sym"))
       (test-assert (file-exists? "./hierarchy/cache/in.sym"))
