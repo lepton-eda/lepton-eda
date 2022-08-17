@@ -397,11 +397,6 @@ o_undo_callback (GschemToplevel *w_current,
   g_return_if_fail (w_current != NULL);
   g_return_if_fail (page != NULL);
 
-  if (w_current->undo_control == FALSE) {
-    g_message (_("Undo/Redo is disabled in configuration"));
-    return;
-  }
-
   if (page->undo_current == NULL) {
     return;
   }

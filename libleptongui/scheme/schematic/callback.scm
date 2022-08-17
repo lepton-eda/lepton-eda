@@ -20,6 +20,7 @@
 (define-module (schematic callback)
   #:use-module (system foreign)
 
+  #:use-module (lepton config)
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
@@ -43,12 +44,17 @@
 
 
 (define (undo-callback *window action-type)
-  (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
-    (if (null-pointer? *page-view)
-        (log! 'warning "undo-callback: NULL page view.")
-        (let ((*page (gschem_page_view_get_page *page-view)))
-          (unless (null-pointer? *page)
-            (o_undo_callback *window *page action-type))))))
+  (define undo? (config-boolean (path-config-context (getcwd))
+                                "schematic.undo"
+                                "undo-control"))
+  (if undo?
+      (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
+        (if (null-pointer? *page-view)
+            (log! 'warning "undo-callback: NULL page view.")
+            (let ((*page (gschem_page_view_get_page *page-view)))
+              (unless (null-pointer? *page)
+                (o_undo_callback *window *page action-type)))))
+      (log! 'message (G_ "Undo/Redo is disabled in configuration"))))
 
 
 (define (callback-edit-undo *widget *window)
