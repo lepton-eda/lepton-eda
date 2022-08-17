@@ -61,15 +61,6 @@ static void preview_dispose (GObject *self);
 static void preview_finalize (GObject *self);
 
 
-/*! \brief create a new preview widget
- */
-GtkWidget*
-gschem_preview_new ()
-{
-  return GTK_WIDGET (g_object_new (GSCHEM_TYPE_PREVIEW, NULL));
-}
-
-
 /*! \brief get the filename for the current page
  */
 static const char*
@@ -285,9 +276,14 @@ preview_event_scroll (GtkWidget *widget,
   return x_event_scroll (widget, event, GSCHEM_PREVIEW (widget)->preview_w_current);
 }
 
-static void
-gschem_preview_init (GschemPreview *preview)
+
+/*! \brief create a new preview widget
+ */
+GtkWidget*
+gschem_preview_new ()
 {
+  GschemPreview *preview = GSCHEM_PREVIEW (g_object_new (GSCHEM_TYPE_PREVIEW, NULL));
+
   struct event_reg_t {
     const gchar *detailed_signal;
     GCallback c_handler;
@@ -304,6 +300,21 @@ gschem_preview_init (GschemPreview *preview)
     { NULL,                   NULL                                        }
   }, *tmp;
 
+  for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++)
+  {
+    g_signal_connect (GTK_WIDGET (preview),
+                      tmp->detailed_signal,
+                      tmp->c_handler,
+                      preview->preview_w_current);
+  }
+
+  return GTK_WIDGET (preview);
+}
+
+
+static void
+gschem_preview_init (GschemPreview *preview)
+{
   GschemToplevel *preview_w_current;
   preview_w_current = gschem_toplevel_new ();
   gschem_toplevel_set_toplevel (preview_w_current, lepton_toplevel_new ());
@@ -339,13 +350,6 @@ gschem_preview_init (GschemPreview *preview)
                          | GDK_SCROLL_MASK
 #endif
                          );
-  for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++) {
-    g_signal_connect (GTK_WIDGET (preview),
-                      tmp->detailed_signal,
-                      tmp->c_handler,
-                      preview_w_current);
-  }
-
 }
 
 static void
