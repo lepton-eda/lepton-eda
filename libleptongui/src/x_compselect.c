@@ -257,30 +257,27 @@ schematic_compselect_new (GschemToplevel *w_current)
 
 /*! \brief Opens a component selection dialog.
  *  \par Function Description
- *  This function opens the component chooser dialog for
- *  <B>toplevel</B> if it is not already. In this last case, it only
- *  raises the dialog.
+ *  This function opens the component chooser dialog.
  *
- *  \param [in] w_current  The GschemToplevel environment.
+ *  \param [in] cswindow  The component chooser widget.
  */
 void
-x_compselect_open (GschemToplevel *w_current)
+x_compselect_open (GtkWidget *cswindow)
 {
   GtkWidget *current_tab, *entry_filter;
   GtkNotebook *compselect_notebook;
 
-  g_return_if_fail (w_current != NULL);
-  g_return_if_fail (w_current->cswindow != NULL);
+  g_return_if_fail (cswindow != NULL);
 
-  gtk_window_present (GTK_WINDOW (w_current->cswindow));
-  gtk_editable_select_region (GTK_EDITABLE (COMPSELECT (w_current->cswindow)->entry_filter), 0, -1);
+  gtk_window_present (GTK_WINDOW (cswindow));
+  gtk_editable_select_region (GTK_EDITABLE (COMPSELECT (cswindow)->entry_filter), 0, -1);
 
   /* Set the focus to the filter entry only if it is in the current
      displayed tab */
-  compselect_notebook = GTK_NOTEBOOK (COMPSELECT (w_current->cswindow)->viewtabs);
+  compselect_notebook = GTK_NOTEBOOK (COMPSELECT (cswindow)->viewtabs);
   current_tab = gtk_notebook_get_nth_page (compselect_notebook,
                                            gtk_notebook_get_current_page (compselect_notebook));
-  entry_filter = GTK_WIDGET (COMPSELECT (w_current->cswindow)->entry_filter);
+  entry_filter = GTK_WIDGET (COMPSELECT (cswindow)->entry_filter);
   if (gtk_widget_is_ancestor (entry_filter, current_tab)) {
     gtk_widget_grab_focus (entry_filter);
   }
