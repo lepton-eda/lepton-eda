@@ -443,3 +443,17 @@ preview_finalize (GObject *self)
 
   G_OBJECT_CLASS (gschem_preview_parent_class)->finalize (self);
 }
+
+
+/*! \brief Get the field \a preview_w_current of this preview.
+ *
+ *  \param [in] preview The preview.
+ *  \return The field.
+ */
+GschemToplevel*
+schematic_preview_get_preview_w_current (GschemPreview *preview)
+{
+  g_return_val_if_fail (preview != NULL, NULL);
+
+  return preview->preview_w_current;
+}
