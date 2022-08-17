@@ -66,4 +66,7 @@ gboolean
 preview_event_scroll (GtkWidget *widget,
                       GdkEventScroll *event,
                       GschemToplevel *w_current);
+GschemToplevel*
+schematic_preview_get_preview_w_current (GschemPreview *preview);
+
 G_END_DECLS
