@@ -471,6 +471,13 @@ gboolean x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapp
 void x_compselect_open (GtkWidget *cswindow);
 void x_compselect_deselect (GschemToplevel *w_current);
 
+void
+x_compselect_callback_response (GtkDialog *dialog,
+                                gint arg1,
+                                gpointer user_data);
+GtkWidget*
+schematic_compselect_get_preview (GtkWidget *cs);
+
 GtkWidget*
 schematic_compselect_new (GschemToplevel *w_current);
 

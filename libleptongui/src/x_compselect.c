@@ -99,7 +99,7 @@ compselect_get_view (Compselect *compselect)
  *  \param [in] arg1      The response ID.
  *  \param [in] user_data A pointer on the GschemToplevel environment.
  */
-static void
+void
 x_compselect_callback_response (GtkDialog *dialog,
                                 gint arg1,
                                 gpointer user_data)
@@ -199,11 +199,11 @@ x_compselect_callback_response (GtkDialog *dialog,
 
 
 GtkWidget*
-schematic_compselect_get_preview (Compselect *cs)
+schematic_compselect_get_preview (GtkWidget *cs)
 {
   g_return_val_if_fail (cs != NULL, NULL);
 
-  return GTK_WIDGET (cs->preview);
+  return GTK_WIDGET (COMPSELECT (cs)->preview);
 }
 
 
@@ -215,37 +215,6 @@ schematic_compselect_new (GschemToplevel *w_current)
                                             "settings-name", "compselect",
                                             "gschem-toplevel", w_current,
                                             NULL));
-  g_signal_connect (cs,
-                    "response",
-                    G_CALLBACK (x_compselect_callback_response),
-                    w_current);
-
-  GtkWidget *preview = schematic_compselect_get_preview (COMPSELECT (cs));
-
-  struct event_reg_t {
-    const gchar *detailed_signal;
-    GCallback c_handler;
-  } drawing_area_events[] = {
-    { "realize",              G_CALLBACK (preview_callback_realize)       },
-#ifdef ENABLE_GTK3
-    { "draw",                 G_CALLBACK (x_event_draw)                   },
-#else
-    { "expose_event",         G_CALLBACK (x_event_expose)                 },
-#endif
-    { "button_press_event",   G_CALLBACK (preview_callback_button_press)  },
-    { "configure_event",      G_CALLBACK (x_event_configure)              },
-    { "scroll_event",         G_CALLBACK (preview_event_scroll)           },
-    { NULL,                   NULL                                        }
-  }, *tmp;
-
-  for (tmp = drawing_area_events; tmp->detailed_signal != NULL; tmp++)
-  {
-    g_signal_connect (preview,
-                      tmp->detailed_signal,
-                      tmp->c_handler,
-                      schematic_preview_get_preview_w_current (preview));
-  }
-
   gtk_window_set_transient_for (GTK_WINDOW (cs),
                                 GTK_WINDOW (w_current->main_window));
 
