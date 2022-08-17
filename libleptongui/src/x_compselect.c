@@ -197,6 +197,29 @@ x_compselect_callback_response (GtkDialog *dialog,
 
 }
 
+
+GtkWidget*
+schematic_compselect_new (GschemToplevel *w_current)
+{
+  GtkWidget *cs = GTK_WIDGET (g_object_new (TYPE_COMPSELECT,
+                                            /* GschemDialog */
+                                            "settings-name", "compselect",
+                                            "gschem-toplevel", w_current,
+                                            NULL));
+  g_signal_connect (cs,
+                    "response",
+                    G_CALLBACK (x_compselect_callback_response),
+                    w_current);
+
+  gtk_window_set_transient_for (GTK_WINDOW (cs),
+                                GTK_WINDOW (w_current->main_window));
+
+  gtk_widget_show (cs);
+
+  return cs;
+}
+
+
 /*! \brief Opens a component selection dialog.
  *  \par Function Description
  *  This function opens the component chooser dialog for
@@ -212,23 +235,7 @@ x_compselect_open (GschemToplevel *w_current)
   GtkNotebook *compselect_notebook;
 
   if (w_current->cswindow == NULL) {
-    w_current->cswindow = GTK_WIDGET (
-      g_object_new (TYPE_COMPSELECT,
-                    /* GschemDialog */
-                    "settings-name", "compselect",
-                    "gschem-toplevel", w_current,
-                    NULL));
-
-    g_signal_connect (w_current->cswindow,
-                      "response",
-                      G_CALLBACK (x_compselect_callback_response),
-                      w_current);
-
-    gtk_window_set_transient_for (GTK_WINDOW (w_current->cswindow),
-                                  GTK_WINDOW (w_current->main_window));
-
-    gtk_widget_show (w_current->cswindow);
-
+    w_current->cswindow = schematic_compselect_new (w_current);
   } else {
     gtk_window_present (GTK_WINDOW (w_current->cswindow));
   }
