@@ -26,6 +26,7 @@
   #:use-module (lepton ffi)
   #:use-module (lepton gettext)
   #:use-module (lepton log)
+  #:use-module (lepton m4)
   #:use-module (lepton page foreign)
 
   #:use-module (schematic action)
@@ -133,11 +134,34 @@
 
 
 (define (callback-add-component *widget *window)
+  (define signal-callback-list
+    (list
+     (if %m4-use-gtk3
+         `("draw" . ,*x_event_draw)
+         `("expose-event" . ,*x_event_expose))
+     `("realize" . ,*preview_callback_realize)
+     `("button-press-event" . ,*preview_callback_button_press)
+     `("configure-event" . ,*x_event_configure)
+     `("scroll-event" . ,*preview_event_scroll)))
+
   (o_redraw_cleanstates *window)
 
   (i_set_state *window (symbol->action-mode 'component-mode))
   (when (null-pointer? (schematic_window_get_compselect *window))
-    (schematic_window_set_compselect *window (schematic_compselect_new *window)))
+    (let ((*compselect-widget (schematic_compselect_new *window)))
+      (schematic_signal_connect *compselect-widget
+                                (string->pointer "response")
+                                *x_compselect_callback_response
+                                *window)
+      (let ((*preview (schematic_compselect_get_preview *compselect-widget)))
+        (for-each
+         (lambda (element)
+           (schematic_signal_connect *preview
+                                     (string->pointer (car element))
+                                     (cdr element)
+                                     (schematic_preview_get_preview_w_current *preview)))
+         signal-callback-list))
+      (schematic_window_set_compselect *window *compselect-widget)))
   (x_compselect_open (schematic_window_get_compselect *window))
 
   (i_set_state *window (symbol->action-mode 'select-mode)))

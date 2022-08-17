@@ -155,8 +155,10 @@
             slot_edit_dialog_get_text
             slot_edit_dialog_quit
 
+            *x_compselect_callback_response
             x_compselect_open
             schematic_compselect_new
+            schematic_compselect_get_preview
 
             x_widgets_destroy_dialogs
             x_widgets_init
@@ -274,6 +276,11 @@
             gschem_page_view_pan_mouse
             gschem_page_view_zoom_extents
             schematic_page_view_grab_focus
+
+            *preview_callback_realize
+            *preview_callback_button_press
+            *preview_event_scroll
+            schematic_preview_get_preview_w_current
 
             schematic_signal_connect
 
@@ -467,8 +474,10 @@
 (define-lff x_colorcb_update_colors void '())
 
 ;;; x_compselect.c
+(define-lfc *x_compselect_callback_response)
 (define-lff x_compselect_open void '(*))
 (define-lff schematic_compselect_new '* '(*))
+(define-lff schematic_compselect_get_preview '* '(*))
 
 ;;; x_widgets.c
 (define-lff x_widgets_destroy_dialogs void '(*))
@@ -519,6 +528,12 @@
 (define-lff gschem_page_view_pan_mouse void (list '* int int))
 (define-lff gschem_page_view_zoom_extents void '(* *))
 (define-lff schematic_page_view_grab_focus void '(*))
+
+;;; gschem_preview.c
+(define-lfc *preview_callback_realize)
+(define-lfc *preview_callback_button_press)
+(define-lfc *preview_event_scroll)
+(define-lff schematic_preview_get_preview_w_current '* '(*))
 
 ;;; schematic_hierarchy.c
 (define-lff schematic_hierarchy_get_page_control_counter int '())
