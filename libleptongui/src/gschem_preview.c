@@ -82,7 +82,7 @@ preview_get_filename (GschemPreview *preview)
  *  \param [in] widget    The preview widget.
  *  \param [in] user_data Unused user data.
  */
-static void
+void
 preview_callback_realize (GtkWidget *widget, gpointer user_data)
 {
   g_return_if_fail (widget != NULL);
@@ -103,7 +103,7 @@ preview_callback_realize (GtkWidget *widget, gpointer user_data)
  *  \param [in] user_data Unused user data.
  *  \returns FALSE to propagate the event further.
  */
-static gboolean
+gboolean
 preview_callback_button_press (GtkWidget *widget,
                                GdkEventButton *event,
                                gpointer user_data)
@@ -265,7 +265,7 @@ gschem_preview_class_init (GschemPreviewClass *klass)
 }
 
 
-static gboolean
+gboolean
 preview_event_scroll (GtkWidget *widget,
                       GdkEventScroll *event,
                       GschemToplevel *w_current)

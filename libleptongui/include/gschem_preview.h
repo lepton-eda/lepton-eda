@@ -52,3 +52,18 @@ gschem_preview_get_type (void);
 
 GtkWidget*
 gschem_preview_new ();
+
+G_BEGIN_DECLS
+
+gboolean
+preview_callback_button_press (GtkWidget *widget,
+                               GdkEventButton *event,
+                               gpointer user_data);
+void
+preview_callback_realize (GtkWidget *widget,
+                          gpointer user_data);
+gboolean
+preview_event_scroll (GtkWidget *widget,
+                      GdkEventScroll *event,
+                      GschemToplevel *w_current);
+G_END_DECLS
