@@ -468,7 +468,7 @@ x_event_key (GschemPageView *page_view,
 gint x_event_scroll(GtkWidget *widget, GdkEventScroll *event, GschemToplevel *w_current);
 gboolean x_event_get_pointer_position (GschemToplevel *w_current, gboolean snapped, gint *wx, gint *wy);
 /* x_compselect.c */
-void x_compselect_open (GschemToplevel *w_current);
+void x_compselect_open (GtkWidget *cswindow);
 void x_compselect_deselect (GschemToplevel *w_current);
 
 GtkWidget*
