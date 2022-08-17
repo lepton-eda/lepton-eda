@@ -800,9 +800,6 @@ Your new archive lives in ~S\n" temp/output.tar.gz))))
     (debug-format "Extracting ~S" filename)
     (system* "tar" "-f" archive-filename "-x" filename))
 
-  (define (is-simple-file? file)
-    (string=? (basename file) file))
-
   (define (extract-from-archive filename.tar.gz)
     (debug-format "Trying to extract archive ~S." filename.tar.gz)
 
