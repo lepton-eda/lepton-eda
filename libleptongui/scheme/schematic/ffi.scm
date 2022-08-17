@@ -156,6 +156,7 @@
             slot_edit_dialog_quit
 
             x_compselect_open
+            schematic_compselect_new
 
             x_widgets_destroy_dialogs
             x_widgets_init
@@ -292,6 +293,8 @@
             schematic_window_get_bottom_notebook
             schematic_window_set_bottom_notebook
             schematic_window_set_color_edit_widget
+            schematic_window_get_compselect
+            schematic_window_set_compselect
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_enforce_hierarchy
@@ -465,6 +468,7 @@
 
 ;;; x_compselect.c
 (define-lff x_compselect_open void '(*))
+(define-lff schematic_compselect_new '* '(*))
 
 ;;; x_widgets.c
 (define-lff x_widgets_destroy_dialogs void '(*))
@@ -552,6 +556,8 @@
 (define-lff schematic_window_get_bottom_notebook '* '(*))
 (define-lff schematic_window_set_bottom_notebook void '(* *))
 (define-lff schematic_window_set_color_edit_widget void '(* *))
+(define-lff schematic_window_get_compselect '* '(*))
+(define-lff schematic_window_set_compselect void '(* *))
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))

@@ -269,11 +269,10 @@ x_compselect_open (GschemToplevel *w_current)
   GtkWidget *current_tab, *entry_filter;
   GtkNotebook *compselect_notebook;
 
-  if (w_current->cswindow == NULL) {
-    w_current->cswindow = schematic_compselect_new (w_current);
-  } else {
-    gtk_window_present (GTK_WINDOW (w_current->cswindow));
-  }
+  g_return_if_fail (w_current != NULL);
+  g_return_if_fail (w_current->cswindow != NULL);
+
+  gtk_window_present (GTK_WINDOW (w_current->cswindow));
   gtk_editable_select_region (GTK_EDITABLE (COMPSELECT (w_current->cswindow)->entry_filter), 0, -1);
 
   /* Set the focus to the filter entry only if it is in the current

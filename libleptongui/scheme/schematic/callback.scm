@@ -136,6 +136,8 @@
   (o_redraw_cleanstates *window)
 
   (i_set_state *window (symbol->action-mode 'component-mode))
+  (when (null-pointer? (schematic_window_get_compselect *window))
+    (schematic_window_set_compselect *window (schematic_compselect_new *window)))
   (x_compselect_open *window)
 
   (i_set_state *window (symbol->action-mode 'select-mode)))
