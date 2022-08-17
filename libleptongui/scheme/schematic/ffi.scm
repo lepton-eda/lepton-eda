@@ -20,6 +20,7 @@
   #:use-module (system foreign)
   #:use-module (srfi srfi-9)
 
+  #:use-module (lepton ffi lff)
   #:use-module (lepton ffi lib)
   #:use-module (lepton ffi)
 
@@ -269,16 +270,10 @@
 (define libleptongui
   (dynamic-link (or (getenv "LIBLEPTONGUI") %libleptongui)))
 
-;;; Brief syntax macro for defining lazy foreign functions.
-(define-syntax define-lff
-  (syntax-rules ()
-    ((_ name type args)
-     (define name
-       (let ((proc (delay (pointer->procedure
-                           type
-                           (dynamic-func (symbol->string (quote name)) libleptongui)
-                           args))))
-         (force proc))))))
+;;; Simplify definition of functions by omitting the library
+;;; argument.
+(define-syntax-rule (define-lff arg ...)
+  (define-lff-lib arg ... libleptongui))
 
 
 ;;; Brief syntax macro for defining lazy foreign callbacks.
