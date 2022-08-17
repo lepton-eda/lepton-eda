@@ -780,12 +780,6 @@ Your new archive lives in ~S\n" temp/output.tar.gz))))
 (define (extract)
   "Extracts the archive into the current directory."
 
-  ;; Temporary directory to extract archive in.
-  (define tmpdir
-    (let ((name (tmpnam)))
-      (mkdir* name #o700)
-      name))
-
   (define string-not-null? (negate string-null?))
 
   (define (report-non-existing-file filename)
@@ -798,17 +792,10 @@ Your new archive lives in ~S\n" temp/output.tar.gz))))
 
   (define (extract-file archive-filename filename)
     (debug-format "Extracting ~S" filename)
-    (system* "tar" "-f" archive-filename "-x" filename))
+    (system* "tar" "-f" archive-filename "-z" "-x" filename))
 
   (define (extract-from-archive filename.tar.gz)
     (debug-format "Trying to extract archive ~S." filename.tar.gz)
-
-    (unless (copy-file-to-dir filename.tar.gz tmpdir)
-      (format-error "Can't work in the ~S directory.
-Check that you have write permission there.\n"
-                    tmpdir))
-
-    (chdir tmpdir)
 
     ;; Change name of file so it can be gunziped.
     (unless (check-archive-filename filename.tar.gz)
@@ -818,28 +805,12 @@ If this archive was created using lepton-archive, you can rename it using
 .tar.gz as suffix and try again.  Otherwise, just gunzip and tar -xvf
 the file manually.\n"))
 
-    ;; Gunzip the file.
-    (system* "gunzip" "-f" (basename filename.tar.gz))
-    (let* (
-           ;; Get rid of the ".gz" suffix.
-           (filename.tar (string-drop-right (basename filename.tar.gz) 3))
-           ;; Get list of files in the archive.
-           (return-string (get-command-output (string-append "tar -t -f " filename.tar)))
+    (let* (;; Get list of files in the archive.
+           (return-string (get-command-output (string-append "tar -t -z -f " filename.tar.gz)))
            (filename-list (filter string-not-null? (string-split return-string #\newline))))
 
       ;; Extract all files first.
-      (for-each (cut extract-file filename.tar <>) filename-list)
-
-      ;; Clean up /tmp directory.
-      (delete-file* filename.tar)
-      ;; Don't report errors on deleting tar.gz, since gunzip
-      ;; might delete it before.
-      (delete-file* filename.tar.gz 'quiet)
-
-      ;; Move files to the project directory.
-      (move-files-recursively tmpdir project-directory)
-
-      (chdir project-directory)))
+      (for-each (cut extract-file filename.tar.gz <>) filename-list)))
 
   (define (process-file filename)
     (if (file-exists? filename)
