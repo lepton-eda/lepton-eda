@@ -243,7 +243,7 @@ schematic_compselect_new (GschemToplevel *w_current)
     g_signal_connect (GTK_WIDGET (preview),
                       tmp->detailed_signal,
                       tmp->c_handler,
-                      preview->preview_w_current);
+                      schematic_preview_get_preview_w_current (preview));
   }
 
   gtk_window_set_transient_for (GTK_WINDOW (cs),
