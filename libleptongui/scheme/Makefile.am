@@ -42,6 +42,7 @@ nobase_dist_scmdata_DATA = \
 	schematic/undo.scm \
 	schematic/window.scm \
 	schematic/window/foreign.scm \
+	schematic/window/global.scm \
 	conf/schematic/attribs.scm \
 	conf/schematic/deprecated.scm \
 	conf/schematic/keys.scm \

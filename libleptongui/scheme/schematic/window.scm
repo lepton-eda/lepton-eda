@@ -40,11 +40,13 @@
   #:use-module (schematic menu)
   #:use-module (schematic toolbar)
   #:use-module (schematic window foreign)
+  #:use-module (schematic window global)
 
-  #:export (%lepton-window
-            current-window
-            with-window
-            make-schematic-window
+  #:re-export (%lepton-window
+               current-window
+               with-window)
+
+  #:export (make-schematic-window
             active-page
             set-active-page!
             pointer-position
@@ -53,32 +55,6 @@
   ;; Overrides the close-page! procedure in the (lepton page)
   ;; module.
   #:replace (close-page!))
-
-
-;;; This is a fluid that is initialized with pointer to a new
-;;; lepton-schematic window when it is created.  Any Scheme
-;;; callback procedure called inside the window may use the value
-;;; of the fluid to reference its window, thus avoiding the need
-;;; of any additional arguments.  In any window, the fluid points
-;;; exactly to it.
-(define %lepton-window (make-fluid))
-
-
-;;; Execute forms in the dynamic context of WINDOW and its
-;;; toplevel.  We have to dynwind LeptonToplevel here as well
-;;; since there are functions that depend on it and should know
-;;; what its current value is.
-(define-syntax-rule (with-window window form form* ...)
-  (with-fluids ((%lepton-window window)
-                (%lepton-toplevel
-                 (gschem_toplevel_get_toplevel window)))
-    form form* ...))
-
-
-(define (current-window)
-  "Returns the <window> instance associated with the current
-dynamic context."
-  (and=> (fluid-ref %lepton-window) pointer->window))
 
 
 (define (process-key-event *page_view *event *window)
