@@ -64,10 +64,11 @@ success, #f on failure."
 
 
 (define (undo-callback *window action-type)
-  (define undo? (config-boolean (path-config-context (getcwd))
-                                "schematic.undo"
-                                "undo-control"))
-  (if undo?
+  (define undo-enabled?
+    (config-boolean (path-config-context (getcwd))
+                    "schematic.undo"
+                    "undo-control"))
+  (if undo-enabled?
       (let ((*page-view (gschem_toplevel_get_current_page_view *window)))
         (if (null-pointer? *page-view)
             (log! 'warning "undo-callback: NULL page view.")
