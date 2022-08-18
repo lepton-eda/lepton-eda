@@ -41,11 +41,11 @@
 /*! \brief Start the process of selection
  *  \par Function Description
  *  Chooses the way of how to start the selection process. If no
- *  grip was found at the given coordinates the function sets
- *  \a w_current->inside_action in order to force other functions
- *  (\a o_select_motion() or \a o_select_end()) to decide that.
- *  Otherwise, it switches on the GRIPS mode for working with the
- *  grip found.
+ *  grip was found at the given coordinates the function sets \a
+ *  inside_action of \a w_current to TRUE in order to force other
+ *  functions (\a o_select_motion() or \a o_select_end()) to
+ *  decide that.  Otherwise, it switches on the GRIPS mode for
+ *  working with the grip found.
  *
  *  The function is intended to be called by pressing the left
  *  mouse button.
