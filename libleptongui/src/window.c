@@ -956,6 +956,8 @@ void
 schematic_window_set_toolbar (SchematicWindow *w_current,
                               GtkWidget *toolbar)
 {
+  g_return_if_fail (w_current != NULL);
+
   w_current->toolbar = toolbar;
 }
 
