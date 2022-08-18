@@ -353,4 +353,10 @@ schematic_window_set_selection_list (GschemToplevel *w_current,
 GtkWidget*
 schematic_window_get_macro_widget (GschemToplevel *w_current);
 
+int
+schematic_window_get_shift_key_pressed (GschemToplevel *w_current);
+
+void
+schematic_window_set_shift_key_pressed (GschemToplevel *w_current,
+                                        int state);
 G_END_DECLS
