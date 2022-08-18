@@ -948,7 +948,7 @@ schematic_window_set_action_mode (GschemToplevel *w_current,
  * \a toolbar.
  *
  * \param [in] w_current The pointer to the schematic window instance.
- * \param [in] toolbar The toolbar
+ * \param [in] toolbar The toolbar.
  */
 void
 schematic_window_set_toolbar (GschemToplevel *w_current,
