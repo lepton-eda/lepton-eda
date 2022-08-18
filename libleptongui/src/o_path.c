@@ -416,7 +416,7 @@ void
 o_path_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   g_assert (w_current);
-  g_assert (w_current->inside_action != 0);
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   o_path_invalidate_rubber (w_current);
 
