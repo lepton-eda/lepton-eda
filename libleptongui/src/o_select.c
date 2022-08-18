@@ -110,7 +110,7 @@ void o_select_end (GschemToplevel *w_current, int wx, int wy)
  */
 void o_select_motion (GschemToplevel *w_current, int wx, int wy)
 {
-  g_assert (w_current->inside_action != 0);
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   /* Check if a mod key is pressed or there is no selected object
    * under the cursor */
