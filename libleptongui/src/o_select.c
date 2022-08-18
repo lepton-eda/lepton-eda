@@ -114,10 +114,11 @@ void o_select_motion (GschemToplevel *w_current, int wx, int wy)
 
   /* Check if a mod key is pressed or there is no selected object
    * under the cursor */
-  if (w_current->SHIFTKEY || w_current->CONTROLKEY
-          || (!o_find_selected_object(w_current, w_current->first_wx, w_current->first_wy)
-              && (!o_find_object(w_current, w_current->first_wx, w_current->first_wy, TRUE)
-                  || !o_select_selected(w_current)))) {
+  if (schematic_window_get_shift_key_pressed (w_current)
+      || w_current->CONTROLKEY
+      || (!o_find_selected_object(w_current, w_current->first_wx, w_current->first_wy)
+          && (!o_find_object(w_current, w_current->first_wx, w_current->first_wy, TRUE)
+              || !o_select_selected(w_current)))) {
     /* Start drawing a selection box to select objects */
     o_select_box_start(w_current, wx, wy);
   } else {
