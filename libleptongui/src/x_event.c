@@ -383,7 +383,8 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 
   if (event->button == 1) {
 
-    if (w_current->inside_action) {
+    if (schematic_window_get_inside_action (w_current))
+    {
       if (schematic_window_get_place_list (w_current) != NULL)
       {
         switch (action_mode)
@@ -407,7 +408,8 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
     }
   } else if (event->button == 2) {
 
-    if (w_current->inside_action) {
+    if (schematic_window_get_inside_action (w_current))
+    {
       if (   action_mode == COMPMODE
           || action_mode == TEXTMODE
           || action_mode == MOVEMODE
@@ -443,8 +445,8 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 
     switch(w_current->middle_button) {
       case(MOUSEBTN_DO_ACTION):
-        if (w_current->inside_action &&
-            (schematic_window_get_place_list (w_current) != NULL))
+        if (schematic_window_get_inside_action (w_current)
+            && (schematic_window_get_place_list (w_current) != NULL))
         {
           switch (action_mode)
           {
