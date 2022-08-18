@@ -33,6 +33,9 @@
     ; public:
     ;
   #:export (undo-save-state
+            undo!
+            redo!
+            ;; Toolbar callbacks.
             callback-edit-undo
             callback-edit-redo)
 
@@ -89,3 +92,19 @@ success, #f on failure."
 
 (define (callback-edit-redo *widget *window)
   (undo-callback *window TRUE))
+
+
+(define (undo!)
+  "Undo the last action done in the current window."
+  (define *window
+    (or (and=> (current-window) window->pointer)
+        (error "~S: Current window is unavailable." 'undo!)))
+  (with-window *window (callback-edit-undo %null-pointer *window)))
+
+
+(define (redo!)
+  "Redo the last action undone in the current window."
+  (define *window
+    (or (and=> (current-window) window->pointer)
+        (error "~S: Current window is unavailable." 'undo!)))
+  (with-window *window (callback-edit-redo %null-pointer *window)))

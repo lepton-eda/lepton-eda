@@ -176,10 +176,10 @@
 ;;;; General editing actions
 
 (define-action-public (&edit-undo #:label (G_ "Undo") #:icon "gtk-undo")
-  (callback-edit-undo %null-pointer (*current-window)))
+  (undo!))
 
 (define-action-public (&edit-redo #:label (G_ "Redo") #:icon "gtk-redo")
-  (callback-edit-redo %null-pointer (*current-window)))
+  (redo!))
 
 (define-action-public (&edit-select #:label (G_ "Select Mode") #:icon "select")
   (run-callback i_callback_edit_select "&edit-select"))
