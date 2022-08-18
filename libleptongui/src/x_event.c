@@ -218,7 +218,8 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   SchematicActionMode action_mode =
     schematic_window_get_action_mode (w_current);
 
-  if (w_current->inside_action) {
+  if (schematic_window_get_inside_action (w_current))
+  {
     if (schematic_window_get_place_list (w_current) != NULL)
     {
       switch (action_mode)
