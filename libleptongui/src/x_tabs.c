@@ -931,7 +931,7 @@ x_tabs_cancel_all (GschemToplevel* w_current)
     g_object_set_property (G_OBJECT (w_current->cswindow), "hidden", &value);
   }
 
-  if (w_current->inside_action)
+  if (schematic_window_get_inside_action (w_current))
   {
     o_move_cancel (w_current);
   }
