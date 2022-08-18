@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -322,6 +322,9 @@ schematic_window_set_toolbar (GschemToplevel *w_current,
 int
 schematic_window_get_inside_action (GschemToplevel *w_current);
 
+void
+schematic_window_set_inside_action (GschemToplevel *w_current,
+                                    int inside_action);
 gboolean
 schematic_window_get_draw_grips (GschemToplevel *w_current);
 

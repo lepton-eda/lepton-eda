@@ -972,6 +972,25 @@ schematic_window_get_inside_action (GschemToplevel *w_current)
 }
 
 
+/*! \brief Set the 'inside_action' field of the current schematic window instance.
+ *  \par Function Description
+ *
+ * Sets \a inside_action field of the current window to the given
+ * value.
+ *
+ * \param [in] w_current The pointer to the schematic window instance.
+ * \param [in] inside_action The new value.
+ */
+void
+schematic_window_set_inside_action (GschemToplevel *w_current,
+                                    int inside_action)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->inside_action = inside_action;
+}
+
+
 /*! \brief Get the 'draw grips' setting of a schematic window structure.
  *
  *  \param [in] w_current The schematic window.
