@@ -200,7 +200,8 @@ x_event_button_pressed (GschemPageView *page_view,
    * returning from the function directly. */
 
   if (event->button == 1) {
-    if (w_current->inside_action) {
+    if (schematic_window_get_inside_action (w_current))
+    {
       /* End action */
       if (schematic_window_get_place_list (w_current) != NULL)
       {
@@ -268,7 +269,8 @@ x_event_button_pressed (GschemPageView *page_view,
   } else if (event->button == 2) {
 
     /* try this out and see how it behaves */
-    if (w_current->inside_action) {
+    if (schematic_window_get_inside_action (w_current))
+    {
       if (!(   action_mode == COMPMODE
             || action_mode == TEXTMODE
             || action_mode == MOVEMODE
@@ -334,7 +336,8 @@ x_event_button_pressed (GschemPageView *page_view,
     } /* switch w_current->middle_button */
 
   } else if (event->button == 3) {
-    if (!w_current->inside_action) {
+    if (!schematic_window_get_inside_action (w_current))
+    {
       if (w_current->third_button == MOUSEBTN_DO_POPUP) {
         /* (third-button "popup") */
         i_update_menus(w_current);  /* update menus before popup  */
