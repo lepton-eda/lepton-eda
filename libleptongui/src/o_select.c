@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2022 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -337,7 +337,7 @@ void o_select_box_end(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_select_box_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
-  g_assert (w_current->inside_action != 0);
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   if (w_current->rubber_visible)
     o_select_box_invalidate_rubber (w_current);
