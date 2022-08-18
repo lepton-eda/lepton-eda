@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2023 Lepton EDA Contributors
+ * Copyright (C) 2017-2024 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -333,7 +333,7 @@ int o_invalidate_rubber (GschemToplevel *w_current)
 {
   /* return FALSE if it did not erase anything */
 
-  if (!w_current->inside_action)
+  if (!schematic_window_get_inside_action (w_current))
     return(FALSE);
 
   switch (schematic_window_get_action_mode (w_current))
