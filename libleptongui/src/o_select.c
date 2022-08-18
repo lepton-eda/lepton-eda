@@ -464,7 +464,9 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
    * single object selection.  This makes it possible to <mouse-1> on
    * a net segment to select it and then Shift+<mouse-1> on it to
    * deselect it. */
-  if (w_current->SHIFTKEY || w_current->CONTROLKEY) {
+  if (schematic_window_get_shift_key_pressed (w_current)
+      || w_current->CONTROLKEY)
+  {
     o_select_object (w_current, o_net, SINGLE, 0);
     return;
   }
