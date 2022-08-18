@@ -937,7 +937,7 @@ void o_grips_motion(GschemToplevel *w_current, int w_x, int w_y)
 {
   int grip = w_current->which_grip;
 
-  g_assert( w_current->inside_action != 0 );
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
   g_return_if_fail( w_current->which_object != NULL );
 
   switch (lepton_object_get_type (w_current->which_object)) {
