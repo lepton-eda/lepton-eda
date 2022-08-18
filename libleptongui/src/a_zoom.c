@@ -217,7 +217,7 @@ void a_zoom_box_end(GschemToplevel *w_current, int x, int y)
  */
 void a_zoom_box_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
-  g_assert( w_current->inside_action != 0 );
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   if (w_current->rubber_visible)
     a_zoom_box_invalidate_rubber (w_current);
