@@ -164,7 +164,7 @@ void o_select_object(GschemToplevel *w_current, LeptonObject *o_current,
   int CONTROLKEY;
   int removing_obj = 0;
 
-  SHIFTKEY = w_current->SHIFTKEY;
+  SHIFTKEY = schematic_window_get_shift_key_pressed (w_current);
   CONTROLKEY = w_current->CONTROLKEY;
 
 #if DEBUG
