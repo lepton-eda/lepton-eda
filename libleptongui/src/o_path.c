@@ -454,7 +454,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
   int x1, y1, x2, y2;
 
   g_assert (w_current);
-  g_assert (w_current->inside_action != 0);
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
   g_assert (w_current->temp_path != NULL);
   g_assert (w_current->temp_path->sections != NULL);
 
