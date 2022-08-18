@@ -214,7 +214,10 @@ o_component_translate_all (GschemToplevel *w_current, int offset)
   /* this is an experimental mod, to be able to translate to all
    * places */
   gschem_page_view_zoom_extents (view, NULL);
-  if (!w_current->SHIFTKEY) o_select_unselect_all(w_current);
+  if (!schematic_window_get_shift_key_pressed (w_current))
+  {
+    o_select_unselect_all (w_current);
+  }
   gschem_page_view_invalidate_all (view);
   gschem_toplevel_page_content_changed (w_current, active_page);
   o_undo_savestate_old(w_current, UNDO_ALL);
