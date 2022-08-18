@@ -423,7 +423,7 @@ o_undo_find_prev_object_head (LeptonUndo *start);
 void
 o_undo_callback (GschemToplevel *w_current,
                  LeptonPage *page,
-                 int type);
+                 gboolean redo);
 void o_undo_cleanup(void);
 /* s_stretch.c */
 GList *s_stretch_add(GList *list, LeptonObject *object, int whichone);

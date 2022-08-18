@@ -58,12 +58,7 @@ success, #f on failure."
                 #t)))))
 
 
-;; The same definitions as in gschem_defines.h.
-(define UNDO_ACTION 0)
-(define REDO_ACTION 1)
-
-
-(define (undo-callback *window action-type)
+(define (undo-callback *window redo?)
   (define undo-enabled?
     (config-boolean (path-config-context (getcwd))
                     "schematic.undo"
@@ -74,7 +69,7 @@ success, #f on failure."
             (log! 'warning "undo-callback: NULL page view.")
             (let ((*page (gschem_page_view_get_page *page-view)))
               (unless (null-pointer? *page)
-                (o_undo_callback *window *page action-type)))))
+                (o_undo_callback *window *page redo?)))))
       (log! 'message (G_ "Undo/Redo is disabled in configuration"))))
 
 
@@ -89,8 +84,8 @@ success, #f on failure."
   ;; crash occurs when the page objects are free'd.
   (if (true? (schematic_window_get_inside_action *window))
       (i_callback_cancel *widget *window)
-      (undo-callback *window UNDO_ACTION)))
+      (undo-callback *window FALSE)))
 
 
 (define (callback-edit-redo *widget *window)
-  (undo-callback *window REDO_ACTION))
+  (undo-callback *window TRUE))

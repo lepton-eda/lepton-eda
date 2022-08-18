@@ -70,10 +70,6 @@
  * constants, so be sure not to clash with those */
 #define LAST_DRAWB_MODE_NONE -1
 
-/* used in o_undo_callback */
-#define UNDO_ACTION             0
-#define REDO_ACTION             1
-
 /* used for undo_type */
 #define UNDO_DISK               0
 #define UNDO_MEMORY             1

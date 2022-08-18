@@ -372,16 +372,12 @@ GList *o_undo_find_prev_object_head (LeptonUndo *start)
  *  \brief
  *  \par Function Description
  *
- *  <B>type</B> can be one of the following values:
- *  <DL>
- *    <DT>*</DT><DD>UNDO_ACTION
- *    <DT>*</DT><DD>REDO_ACTION
- *  </DL>
+ *  If \a redo is TRUE, do "redo" instead of "undo".
  */
 void
 o_undo_callback (GschemToplevel *w_current,
                  LeptonPage *page,
-                 int type)
+                 gboolean redo)
 {
   LeptonToplevel *toplevel = gschem_toplevel_get_toplevel (w_current);
   LeptonUndo *u_current;
@@ -401,9 +397,14 @@ o_undo_callback (GschemToplevel *w_current,
     return;
   }
 
-  if (type == UNDO_ACTION) {
+  if (!redo)
+  {
+    /* Undo action. */
     u_current = page->undo_current->prev;
-  } else {
+  }
+  else
+  {
+    /* Redo action. */
     u_current = page->undo_current->next;
   }
 
@@ -510,14 +511,19 @@ o_undo_callback (GschemToplevel *w_current,
   page->undo_tos = save_tos;
   page->undo_current = save_current;
 
-  if (type == UNDO_ACTION) {
+  if (!redo)
+  {
+    /* Undo action. */
     if (page->undo_current) {
       page->undo_current = page->undo_current->prev;
       if (page->undo_current == NULL) {
         page->undo_current = page->undo_bottom;
       }
     }
-  } else { /* type is REDO_ACTION */
+  }
+  else
+  {
+    /* Redo action. */
     if (page->undo_current) {
       page->undo_current = page->undo_current->next;
       if (page->undo_current == NULL) {
