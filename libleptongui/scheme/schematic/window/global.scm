@@ -25,6 +25,7 @@
 
   #:export (%lepton-window
             current-window
+            *current-window
             with-window))
 
 
@@ -52,3 +53,14 @@
   "Returns the <window> instance associated with the current
 dynamic context."
   (and=> (fluid-ref %lepton-window) pointer->window))
+
+
+;;; This macro checks if the current window is available and
+;;; produces a C pointer to its instance applicable for use in FFI
+;;; code.
+(define-syntax *current-window
+  (syntax-rules ()
+    ((_)
+     (let ((*window (and=> (current-window) window->pointer)))
+       (or *window
+           (error "Current window is unavailable."))))))

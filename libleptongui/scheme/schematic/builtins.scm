@@ -48,6 +48,7 @@
   #:use-module (schematic repl)
   #:use-module (schematic selection)
   #:use-module (schematic undo)
+  #:use-module (schematic window global)
   #:use-module (schematic window foreign)
   #:use-module (schematic window))
 
@@ -73,12 +74,6 @@
              (log! 'critical "~S: Current window is unavailable." action-name)
              #f))))))
 
-(define-syntax *current-window
-  (syntax-rules ()
-    ((_)
-     (let ((*window (and=> (current-window) window->pointer)))
-       (or *window
-           (error "Current window is unavailable."))))))
 
 ;; -------------------------------------------------------------------
 ;;;; Special actions
