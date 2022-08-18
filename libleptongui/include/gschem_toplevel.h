@@ -357,6 +357,12 @@ GtkWidget*
 schematic_window_get_macro_widget (GschemToplevel *w_current);
 
 int
+schematic_window_get_alt_key_pressed (GschemToplevel *w_current);
+
+void
+schematic_window_set_alt_key_pressed (GschemToplevel *w_current,
+                                      int state);
+int
 schematic_window_get_control_key_pressed (GschemToplevel *w_current);
 
 void
