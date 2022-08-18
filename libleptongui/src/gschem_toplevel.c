@@ -1130,6 +1130,35 @@ schematic_window_get_macro_widget (GschemToplevel *w_current)
 }
 
 
+/*! \brief Get stored state of schematic window's Control key.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return 1 if the Control key is pressed, 0 otherwise.
+ */
+int
+schematic_window_get_control_key_pressed (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->CONTROLKEY;
+}
+
+
+/*! \brief Store current state of schematic window's Control key.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] state The state.
+ */
+void
+schematic_window_set_control_key_pressed (GschemToplevel *w_current,
+                                          int state)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->CONTROLKEY = state;
+}
+
+
 /*! \brief Get stored state of schematic window's Shift key.
  *
  *  \param [in] w_current The schematic window.
