@@ -95,7 +95,7 @@ void o_arc_start(GschemToplevel *w_current, int w_x, int w_y)
  */
 void o_arc_end1(GschemToplevel *w_current, int w_x, int w_y)
 {
-  g_assert( w_current->inside_action != 0 );
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   /* erases the previous temporary radius segment */
   /* o_arc_invalidate_rubber (w_current); */
