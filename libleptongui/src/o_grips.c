@@ -1334,7 +1334,7 @@ void o_grips_end(GschemToplevel *w_current)
   LeptonObject *object;
   int grip;
 
-  g_assert (w_current->inside_action != 0);
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   object = w_current->which_object;
   grip = w_current->which_grip;
