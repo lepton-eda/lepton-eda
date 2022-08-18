@@ -191,7 +191,7 @@ x_event_button_pressed (GschemPageView *page_view,
     return(0);
   }
 
-  w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
+  schematic_window_set_shift_key_pressed (w_current, (event->state & GDK_SHIFT_MASK) ? 1 : 0);
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
@@ -289,7 +289,8 @@ x_event_button_pressed (GschemPageView *page_view,
 
       /* don't want to search if shift */
       /* key is pressed */
-      if (!w_current->SHIFTKEY) {
+      if (!schematic_window_get_shift_key_pressed (w_current))
+      {
         o_find_object(w_current, unsnapped_wx, unsnapped_wy, TRUE);
       }
 
