@@ -88,7 +88,7 @@ void o_pin_end(GschemToplevel *w_current, int x, int y)
  */
 void o_pin_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
-  g_assert( w_current->inside_action != 0 );
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   /* erase the rubberpin if it is visible */
   if (w_current->rubber_visible)
