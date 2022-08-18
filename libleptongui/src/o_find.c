@@ -193,7 +193,9 @@ gboolean o_find_object (GschemToplevel *w_current, int w_x, int w_y,
 
   /* deselect everything only if shift key isn't pressed and
      the caller allows it */
-  if (change_selection && (!w_current->SHIFTKEY)) {
+  if (change_selection
+      && (!schematic_window_get_shift_key_pressed (w_current)))
+  {
     o_select_unselect_all (w_current);
   }
 
