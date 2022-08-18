@@ -386,7 +386,7 @@ void o_select_box_search(GschemToplevel *w_current)
 {
   LeptonObject *o_current=NULL;
   int count = 0; /* object count */
-  int SHIFTKEY = w_current->SHIFTKEY;
+  int SHIFTKEY = schematic_window_get_shift_key_pressed (w_current);
   int CONTROLKEY = w_current->CONTROLKEY;
   int left, right, top, bottom;
   const GList *iter;
