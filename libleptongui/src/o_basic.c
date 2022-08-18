@@ -371,7 +371,8 @@ int o_redraw_cleanstates(GschemToplevel *w_current)
 {
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
   /* returns FALSE if the function was'nt nessecary */
-  if (w_current->inside_action == 0) {
+  if (schematic_window_get_inside_action (w_current) == 0)
+  {
     return FALSE;
   }
 
