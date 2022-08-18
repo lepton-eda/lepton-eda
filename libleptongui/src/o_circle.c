@@ -156,7 +156,7 @@ void o_circle_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   int diff_x, diff_y;
 
-  g_assert( w_current->inside_action != 0 );
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   /* erase the previous temporary circle if it is visible */
   if (w_current->rubber_visible)
