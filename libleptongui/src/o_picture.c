@@ -86,7 +86,7 @@ void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
   int picture_width, picture_height;
   int picture_left, picture_top;
 
-  g_assert( w_current->inside_action != 0 );
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   LeptonPage *active_page = schematic_window_get_active_page (w_current);
 
