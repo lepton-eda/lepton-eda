@@ -195,8 +195,9 @@ void i_action_stop (GschemToplevel *w_current)
  */
 void i_action_update_status (GschemToplevel *w_current, gboolean inside_action)
 {
-  if (w_current->inside_action != inside_action) {
-    w_current->inside_action = inside_action;
+  if (schematic_window_get_inside_action (w_current) != inside_action)
+  {
+    schematic_window_set_inside_action (w_current, inside_action);
     gschem_bottom_widget_set_status_text_color (GSCHEM_BOTTOM_WIDGET (w_current->bottom_widget),
                                                 inside_action);
   }
