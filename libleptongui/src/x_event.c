@@ -168,7 +168,7 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
     return TRUE; /* terminate event */
   }
 
-  w_current->SHIFTKEY   = (event->state & GDK_SHIFT_MASK  ) ? 1 : 0;
+  schematic_window_set_shift_key_pressed (w_current, (event->state & GDK_SHIFT_MASK) ? 1 : 0);
   w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
