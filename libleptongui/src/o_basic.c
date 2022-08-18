@@ -191,7 +191,7 @@ void o_redraw_rect (GschemToplevel *w_current,
     schematic_window_get_action_mode (w_current);
 
   /* Determine whether we should draw the selection at all */
-  draw_selected = !(w_current->inside_action &&
+  draw_selected = !(schematic_window_get_inside_action (w_current) &&
                     (action_mode == MOVEMODE));
 
   /* First pass -- render non-selected objects */
@@ -239,8 +239,8 @@ void o_redraw_rect (GschemToplevel *w_current,
                   NULL);
   }
 
-  if (w_current->inside_action) {
-
+  if (schematic_window_get_inside_action (w_current))
+  {
     /* Redraw the rubberband objects (if they were previously visible) */
     if (page->place_list != NULL) {
       switch (action_mode)
