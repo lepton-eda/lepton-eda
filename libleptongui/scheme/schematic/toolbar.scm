@@ -27,6 +27,7 @@
 
   #:use-module (schematic callback)
   #:use-module (schematic ffi)
+  #:use-module (schematic undo)
 
   #:export (make-toolbar))
 
