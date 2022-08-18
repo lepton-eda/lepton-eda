@@ -201,7 +201,7 @@ void o_arc_motion (GschemToplevel *w_current, int w_x, int w_y, int whichone)
 {
   int diff_x, diff_y, angle_deg;
 
-  g_assert (w_current->inside_action != 0);
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   /* erase the previous temporary arc */
   if (w_current->rubber_visible)
