@@ -49,9 +49,7 @@
 (define (undo-save-state)
   "Saves current state onto the undo stack.  Returns #t on
 success, #f on failure."
-  (define *window
-    (or (and=> (current-window) window->pointer)
-        (error "~S: Current window is unavailable." 'undo-save-state)))
+  (define *window (*current-window))
 
   (let ((*view (gschem_toplevel_get_current_page_view *window)))
     (and (not (null-pointer? *view))
@@ -96,15 +94,9 @@ success, #f on failure."
 
 (define (undo!)
   "Undo the last action done in the current window."
-  (define *window
-    (or (and=> (current-window) window->pointer)
-        (error "~S: Current window is unavailable." 'undo!)))
-  (with-window *window (callback-edit-undo %null-pointer *window)))
+  (callback-edit-undo %null-pointer (*current-window)))
 
 
 (define (redo!)
   "Redo the last action undone in the current window."
-  (define *window
-    (or (and=> (current-window) window->pointer)
-        (error "~S: Current window is unavailable." 'undo!)))
-  (with-window *window (callback-edit-redo %null-pointer *window)))
+  (callback-edit-redo %null-pointer (*current-window)))
