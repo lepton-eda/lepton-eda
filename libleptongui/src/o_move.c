@@ -297,7 +297,7 @@ void o_move_motion (GschemToplevel *w_current, int w_x, int w_y)
   gint object_x, object_y;
   SchematicSnapMode snap_mode;
 
-  g_assert (w_current->inside_action != 0);
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   GschemPageView *page_view = gschem_toplevel_get_current_page_view (w_current);
   g_return_if_fail (page_view != NULL);
