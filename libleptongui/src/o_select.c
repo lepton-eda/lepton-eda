@@ -84,7 +84,7 @@ void o_select_start (GschemToplevel *w_current, int wx, int wy)
  */
 void o_select_end (GschemToplevel *w_current, int wx, int wy)
 {
-  g_assert (w_current->inside_action != 0);
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   /* look for objects to select */
   o_find_object(w_current, wx, wy, TRUE);
