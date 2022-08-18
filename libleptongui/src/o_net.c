@@ -599,7 +599,7 @@ void o_net_motion (GschemToplevel *w_current, int w_x, int w_y)
   gboolean magnetic_net_mode;
 
   g_return_if_fail (w_current != NULL);
-  g_assert( w_current->inside_action != 0 );
+  g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   magnetic_net_mode = gschem_options_get_magnetic_net_mode (w_current->options);
 
