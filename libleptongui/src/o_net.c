@@ -640,7 +640,7 @@ void o_net_motion (GschemToplevel *w_current, int w_x, int w_y)
 
     horizontal = w_current->net_direction & quadrant;
 
-    if (!w_current->SHIFTKEY)
+    if (!schematic_window_get_shift_key_pressed (w_current))
       horizontal = !horizontal;
 
     /* calculate the co-ordinates necessary to draw the lines*/
