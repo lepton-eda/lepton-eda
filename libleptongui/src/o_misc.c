@@ -126,7 +126,7 @@ void o_lock(GschemToplevel *w_current)
 
   schematic_window_active_page_changed (w_current);
 
-  if (!w_current->SHIFTKEY)
+  if (!schematic_window_get_shift_key_pressed (w_current))
     o_select_unselect_all(w_current);
 
   o_undo_savestate_old(w_current, UNDO_ALL);
