@@ -73,7 +73,7 @@ void o_bus_end(GschemToplevel *w_current, int w_x, int w_y)
 
   /* erase the rubberbus */
   /* o_bus_invalidate_rubber (w_current); */
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
 
   /* don't allow zero length bus */
   /* this ends the bus drawing behavior we want this? hack */
