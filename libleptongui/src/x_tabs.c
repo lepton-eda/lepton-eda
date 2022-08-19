@@ -921,7 +921,7 @@ x_tabs_cancel_all (GschemToplevel* w_current)
   if (action_mode == COMPMODE && w_current->cswindow)
   {
     o_place_invalidate_rubber (w_current, FALSE);
-    w_current->rubber_visible = 0;
+    schematic_window_set_rubber_visible (w_current, 0);
 
     x_compselect_deselect (w_current);
 
