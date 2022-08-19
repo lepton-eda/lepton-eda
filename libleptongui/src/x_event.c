@@ -381,7 +381,9 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
  *
  */
 gint
-x_event_button_released (GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current)
+x_event_button_released (GschemPageView *page_view,
+                         GdkEvent *event,
+                         GschemToplevel *w_current)
 {
   int unsnapped_wx, unsnapped_wy;
   int w_x, w_y;
@@ -393,11 +395,15 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   printf("released! %d \n", action_mode);
 #endif
 
-  schematic_window_set_shift_key_pressed (w_current, (event->state & schematic_event_shift_mask ()) ? 1 : 0);
-  schematic_window_set_control_key_pressed (w_current, (event->state & schematic_event_control_mask ()) ? 1 : 0);
-  schematic_window_set_alt_key_pressed (w_current, (event->state & schematic_event_alt_mask ()) ? 1 : 0);
+  GdkModifierType state;
+  gdk_event_get_state (event, &state);
+  schematic_window_set_shift_key_pressed (w_current, (state & schematic_event_shift_mask ()) ? 1 : 0);
+  schematic_window_set_control_key_pressed (w_current, (state & schematic_event_control_mask ()) ? 1 : 0);
+  schematic_window_set_alt_key_pressed (w_current, (state & schematic_event_alt_mask ()) ? 1 : 0);
 
-  gschem_page_view_SCREENtoWORLD (page_view, (int) event->x, (int) event->y,
+  gdouble x_win, y_win;
+  gdk_event_get_coords (event, &x_win, &y_win);
+  gschem_page_view_SCREENtoWORLD (page_view, (int) x_win, (int) y_win,
                                   &unsnapped_wx, &unsnapped_wy);
   w_x = snap_grid (w_current, unsnapped_wx);
   w_y = snap_grid (w_current, unsnapped_wy);
@@ -408,7 +414,9 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
-  if (event->button == 1) {
+  guint button = schematic_event_get_button (event);
+
+  if (button == 1) {
 
     if (schematic_window_get_inside_action (w_current))
     {
@@ -433,7 +441,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         }
       }
     }
-  } else if (event->button == 2) {
+  } else if (button == 2) {
 
     if (schematic_window_get_inside_action (w_current))
     {
@@ -501,7 +509,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
       break;
     }
 
-  } else if (event->button == 3) {
+  } else if (button == 3) {
       /* just for ending a mouse pan */
       if (gschem_page_view_pan_end (page_view) &&
           schematic_window_get_undo_panzoom (w_current))
