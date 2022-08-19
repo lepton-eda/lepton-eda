@@ -166,7 +166,7 @@ void o_move_end(GschemToplevel *w_current)
   diff_y = w_current->second_wy - w_current->first_wy;
 
   o_move_invalidate_rubber (w_current, FALSE);
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
 
   net_rubber_band_mode = gschem_options_get_net_rubber_band_mode (w_current->options);
 
