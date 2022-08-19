@@ -269,7 +269,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->magnetic_wx = -1;
   w_current->magnetic_wy = -1;
   schematic_window_set_inside_action (w_current, 0);
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
   w_current->net_direction = 0;
   w_current->which_grip = -1;
   w_current->which_object = NULL;
