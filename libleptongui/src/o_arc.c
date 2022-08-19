@@ -99,7 +99,7 @@ void o_arc_end1(GschemToplevel *w_current, int w_x, int w_y)
 
   /* erases the previous temporary radius segment */
   /* o_arc_invalidate_rubber (w_current); */
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
 
   /* ack! zero length radius */
   if (w_current->distance != 0) {
