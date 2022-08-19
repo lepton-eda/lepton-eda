@@ -391,19 +391,25 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
 
   /* update the state of the modifiers */
   schematic_window_set_shift_key_pressed (w_current, (event->state & GDK_SHIFT_MASK) ? 1 : 0);
-  w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
+  schematic_window_set_control_key_pressed (w_current, (event->state & GDK_CONTROL_MASK) ? 1 : 0);
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK) ? 1 : 0;
 
   if (w_current->scroll_wheel == SCROLL_WHEEL_CLASSIC) {
     /* Classic gschem behaviour */
-    zoom =      !w_current->CONTROLKEY && !schematic_window_get_shift_key_pressed (w_current);
-    pan_yaxis = !w_current->CONTROLKEY &&  schematic_window_get_shift_key_pressed (w_current);
-    pan_xaxis =  w_current->CONTROLKEY && !schematic_window_get_shift_key_pressed (w_current);
+    zoom =      !schematic_window_get_control_key_pressed (w_current) &&
+                !schematic_window_get_shift_key_pressed (w_current);
+    pan_yaxis = !schematic_window_get_control_key_pressed (w_current) &&
+                 schematic_window_get_shift_key_pressed (w_current);
+    pan_xaxis =  schematic_window_get_control_key_pressed (w_current) &&
+                !schematic_window_get_shift_key_pressed (w_current);
   } else {
     /* GTK style behaviour */
-    zoom =       w_current->CONTROLKEY && !schematic_window_get_shift_key_pressed (w_current);
-    pan_yaxis = !w_current->CONTROLKEY && !schematic_window_get_shift_key_pressed (w_current);
-    pan_xaxis = !w_current->CONTROLKEY &&  schematic_window_get_shift_key_pressed (w_current);
+    zoom =       schematic_window_get_control_key_pressed (w_current) &&
+                !schematic_window_get_shift_key_pressed (w_current);
+    pan_yaxis = !schematic_window_get_control_key_pressed (w_current) &&
+                !schematic_window_get_shift_key_pressed (w_current);
+    pan_xaxis = !schematic_window_get_control_key_pressed (w_current) &&
+                 schematic_window_get_shift_key_pressed (w_current);
   }
 
   /* If the user has a left/right scroll wheel, always scroll the y-axis */
