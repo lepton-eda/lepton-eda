@@ -66,7 +66,7 @@ void o_net_reset(GschemToplevel *w_current)
   w_current->second_wx = w_current->second_wy = -1;
   w_current->third_wx = w_current->third_wy = -1;
   w_current->magnetic_wx = w_current->magnetic_wy = -1;
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
   i_action_stop (w_current);
 }
 
