@@ -160,12 +160,12 @@ void o_place_motion (GschemToplevel *w_current, int w_x, int w_y)
   g_return_if_fail (page->place_list != NULL);
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
-  if (w_current->rubber_visible)
+  if (schematic_window_get_rubber_visible (w_current))
     o_place_invalidate_rubber (w_current, FALSE);
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
   o_place_invalidate_rubber (w_current, TRUE);
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 
