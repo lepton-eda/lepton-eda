@@ -43,7 +43,7 @@ void o_place_start (GschemToplevel *w_current, int w_x, int w_y)
   w_current->second_wy = w_y;
 
   o_place_invalidate_rubber (w_current, TRUE);
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /*! \brief End placement action
