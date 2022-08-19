@@ -848,7 +848,7 @@ static void o_grips_start_line(GschemToplevel *w_current, LeptonObject *o_curren
 
   /* draw the first temporary line */
   /* o_line_invalidate_rubber (w_current); */
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /*! \brief Start process of modifiying one grip.
