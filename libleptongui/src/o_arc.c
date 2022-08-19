@@ -204,7 +204,7 @@ void o_arc_motion (GschemToplevel *w_current, int w_x, int w_y, int whichone)
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   /* erase the previous temporary arc */
-  if (w_current->rubber_visible)
+  if (schematic_window_get_rubber_visible (w_current))
     o_arc_invalidate_rubber (w_current);
 
   if(whichone == ARC_RADIUS) {
@@ -247,7 +247,7 @@ void o_arc_motion (GschemToplevel *w_current, int w_x, int w_y, int whichone)
 
   /* draw the new temporary arc */
   o_arc_invalidate_rubber (w_current);
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /*! \brief Draw arc from GschemToplevel object.
