@@ -502,7 +502,7 @@ o_undo_callback (GschemToplevel *w_current,
 
   GschemPageGeometry *geometry = gschem_page_view_get_page_geometry (view);
 
-  if (w_current->undo_panzoom || o_undo_modify_viewport())
+  if (schematic_window_get_undo_panzoom (w_current) || o_undo_modify_viewport())
   {
     if (u_current->scale != 0) {
       gschem_page_geometry_set_viewport (geometry,
