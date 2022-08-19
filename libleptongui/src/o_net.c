@@ -606,13 +606,14 @@ void o_net_motion (GschemToplevel *w_current, int w_x, int w_y)
 
   /* Orthognal mode enabled when Control Key is NOT pressed or
      if we are using magnetic mode */
-  ortho = !w_current->CONTROLKEY || magnetic_net_mode;
+  ortho = !schematic_window_get_control_key_pressed (w_current) || magnetic_net_mode;
 
   if (schematic_window_get_rubber_visible (w_current))
     o_net_invalidate_rubber (w_current);
 
   if (magnetic_net_mode) {
-    if (w_current->CONTROLKEY) {
+    if (schematic_window_get_control_key_pressed (w_current))
+    {
       /* set the magnetic marker position to current xy if the
          controlkey is pressed. Thus the net will not connect to
          the closest net if we finish the net drawing */
