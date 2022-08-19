@@ -423,7 +423,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         } else {
           o_place_invalidate_rubber (w_current, FALSE);
         }
-        w_current->rubber_visible = 0;
+        schematic_window_set_rubber_visible (w_current, 0);
 
         o_place_rotate(w_current);
 
@@ -438,7 +438,7 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
         } else {
           o_place_invalidate_rubber (w_current, TRUE);
         }
-        w_current->rubber_visible = 1;
+        schematic_window_set_rubber_visible (w_current, 1);
         goto end_button_released;
       }
     }
