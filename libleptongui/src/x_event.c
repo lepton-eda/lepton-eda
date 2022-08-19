@@ -325,7 +325,7 @@ x_event_key (GschemPageView *page_view,
   /* update the state of the modifiers */
   w_current->ALTKEY     = (event->state & GDK_MOD1_MASK)    ? 1 : 0;
   schematic_window_set_shift_key_pressed (w_current, (event->state & GDK_SHIFT_MASK) ? 1 : 0);
-  w_current->CONTROLKEY = (event->state & GDK_CONTROL_MASK) ? 1 : 0;
+  schematic_window_set_control_key_pressed (w_current, (event->state & GDK_CONTROL_MASK) ? 1 : 0);
 
   pressed = (event->type == GDK_KEY_PRESS) ? 1 : 0;
 
@@ -343,7 +343,7 @@ x_event_key (GschemPageView *page_view,
 
     case GDK_KEY_Control_L:
     case GDK_KEY_Control_R:
-      w_current->CONTROLKEY = pressed;
+      schematic_window_set_control_key_pressed (w_current, pressed);
       special = TRUE;
       break;
   }
