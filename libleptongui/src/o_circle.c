@@ -69,7 +69,7 @@ void o_circle_start(GschemToplevel *w_current, int w_x, int w_y)
 
   /* first temporary circle */
   o_circle_invalidate_rubber (w_current);
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /*! \brief End the input of a circle.
