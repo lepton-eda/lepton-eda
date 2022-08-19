@@ -135,7 +135,8 @@ void o_bus_motion (GschemToplevel *w_current, int w_x, int w_y)
   w_current->second_wy = w_y;
 
   /* If you press the control key then you can draw non-ortho bus */
-  if (!w_current->CONTROLKEY) {
+  if (!schematic_window_get_control_key_pressed (w_current))
+  {
     diff_x = abs(w_current->second_wx - w_current->first_wx);
     diff_y = abs(w_current->second_wy - w_current->first_wy);
 
