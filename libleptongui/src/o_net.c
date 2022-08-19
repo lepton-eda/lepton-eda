@@ -491,7 +491,7 @@ void o_net_end(GschemToplevel *w_current, int w_x, int w_y)
   if (w_current->magnetic_wx != -1 && w_current->magnetic_wy != -1)
     o_net_finishmagnetic(w_current);
 
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
 
   /* See if either of the nets are zero length.  We'll only add */
   /* the non-zero ones */
