@@ -117,7 +117,7 @@ void o_box_end(GschemToplevel *w_current, int w_x, int w_y)
 
   /* erase the temporary box */
   /* o_box_invalidate_rubber (w_current); */
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
 
   box_width  = GET_BOX_WIDTH (w_current);
   box_height = GET_BOX_HEIGHT(w_current);
