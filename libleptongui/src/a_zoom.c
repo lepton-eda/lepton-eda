@@ -219,14 +219,14 @@ void a_zoom_box_motion (GschemToplevel *w_current, int w_x, int w_y)
 {
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
-  if (w_current->rubber_visible)
+  if (schematic_window_get_rubber_visible (w_current))
     a_zoom_box_invalidate_rubber (w_current);
 
   w_current->second_wx = w_x;
   w_current->second_wy = w_y;
 
   a_zoom_box_invalidate_rubber (w_current);
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /*! \todo Finish function documentation!!!
