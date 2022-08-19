@@ -493,7 +493,9 @@ gint x_event_scroll (GtkWidget *widget, GdkEventScroll *event,
                                    gtk_adjustment_get_page_size (adj)));
   }
 
-  if (w_current->undo_panzoom && (zoom || pan_xaxis || pan_yaxis)) {
+  if (schematic_window_get_undo_panzoom (w_current) &&
+      (zoom || pan_xaxis || pan_yaxis))
+  {
     o_undo_savestate_viewport (w_current);
   }
 
