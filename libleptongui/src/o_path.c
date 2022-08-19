@@ -378,7 +378,7 @@ o_path_start(GschemToplevel *w_current, int w_x, int w_y)
   w_current->third_wy = w_y;
 
   /* Enable preview drawing */
-  w_current->rubber_visible = TRUE;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /* \brief Begin inputting a new path node.
