@@ -92,7 +92,7 @@ void o_picture_end(GschemToplevel *w_current, int w_x, int w_y)
 
   /* erase the temporary picture */
   /* o_picture_draw_rubber(w_current); */
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
 
   picture_width  = GET_PICTURE_WIDTH (w_current);
   picture_height = GET_PICTURE_HEIGHT(w_current);
