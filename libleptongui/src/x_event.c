@@ -443,7 +443,8 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
       }
     }
 
-    switch(w_current->middle_button) {
+    switch (schematic_window_get_middle_button (w_current))
+    {
       case(MOUSEBTN_DO_ACTION):
         if (schematic_window_get_inside_action (w_current)
             && (schematic_window_get_place_list (w_current) != NULL))
