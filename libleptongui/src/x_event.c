@@ -348,16 +348,8 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 gint
 x_event_button_released (GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current)
 {
-  LeptonPage *page = gschem_page_view_get_page (page_view);
   int unsnapped_wx, unsnapped_wy;
   int w_x, w_y;
-
-  g_return_val_if_fail ((page_view != NULL), 0);
-  g_return_val_if_fail ((w_current != NULL), 0);
-
-  if (page == NULL) {
-    return TRUE; /* terminate event */
-  }
 
   SchematicActionMode action_mode =
     schematic_window_get_action_mode (w_current);
