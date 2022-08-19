@@ -430,7 +430,17 @@ x_dialog_close_changed_page (GschemToplevel *w_current,
                              LeptonPage *page);
 gboolean x_dialog_close_window (GschemToplevel *w_current);
 int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
+
 /* x_event.c */
+gint
+schematic_event_shift_mask ();
+
+gint
+schematic_event_control_mask ();
+
+gint
+schematic_event_alt_mask ();
+
 #ifdef ENABLE_GTK3
 gint
 x_event_draw (GschemPageView *widget,

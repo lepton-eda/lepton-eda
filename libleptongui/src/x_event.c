@@ -34,6 +34,28 @@
 static int DOING_STROKE = FALSE;
 #endif /* HAVE_LIBSTROKE */
 
+
+gint
+schematic_event_shift_mask ()
+{
+  return GDK_SHIFT_MASK;
+}
+
+
+gint
+schematic_event_control_mask ()
+{
+  return GDK_CONTROL_MASK;
+}
+
+
+gint
+schematic_event_alt_mask ()
+{
+  return GDK_MOD1_MASK;
+}
+
+
 #ifdef ENABLE_GTK3
 /*! \brief Redraws the view when widget is exposed.
  *
