@@ -990,7 +990,7 @@ void o_grips_cancel(GschemToplevel *w_current)
   /* reset global variables */
   w_current->which_grip = -1;
   w_current->which_object = NULL;
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
 
   /* Switch drawing of the object back on */
   g_return_if_fail (object != NULL);
