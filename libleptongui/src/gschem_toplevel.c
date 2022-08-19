@@ -291,7 +291,7 @@ GschemToplevel *gschem_toplevel_new ()
   w_current->drawbounding_action_mode = FREE;
   schematic_window_set_control_key_pressed (w_current, 0);
   schematic_window_set_shift_key_pressed (w_current, 0);
-  w_current->ALTKEY     = 0;
+  schematic_window_set_alt_key_pressed (w_current, 0);
   w_current->buffer_number = 0;
   w_current->clipboard_buffer = NULL;
 
