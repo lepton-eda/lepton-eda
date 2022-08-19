@@ -105,7 +105,7 @@ void o_circle_end(GschemToplevel *w_current, int w_x, int w_y)
 
   /* erase the temporary circle */
   /* o_circle_invalidate_rubber (w_current); */
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
 
   /* circle with null radius are not allowed */
   if (w_current->distance == 0) {
