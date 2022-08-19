@@ -573,7 +573,7 @@ static void o_grips_start_arc(GschemToplevel *w_current, LeptonObject *o_current
 
   /* draw the first temporary arc */
   /* o_arc_invalidate_rubber (w_current); */
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /*! \brief Initialize grip motion process for a box.
