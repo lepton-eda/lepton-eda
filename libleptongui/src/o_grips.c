@@ -1405,7 +1405,7 @@ void o_grips_end(GschemToplevel *w_current)
   w_current->which_grip = -1;
   w_current->which_object = NULL;
 
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
 
   schematic_window_active_page_changed (w_current);
   o_undo_savestate_old(w_current, UNDO_ALL);
