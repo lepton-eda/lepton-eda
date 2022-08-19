@@ -87,7 +87,7 @@ void o_place_end (GschemToplevel *w_current,
 
   /* erase old image */
   /* o_place_invalidate_rubber (w_current, FALSE); */
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
 
   /* Calc final object positions */
   w_current->second_wx = w_x;
