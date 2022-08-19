@@ -283,8 +283,8 @@ x_event_button_pressed (GschemPageView *page_view,
       goto end_button_pressed;
     }
 
-    switch(w_current->middle_button) {
-
+    switch (schematic_window_get_middle_button (w_current))
+    {
       case(MOUSEBTN_DO_ACTION):
 
       /* don't want to search if shift */
@@ -335,7 +335,7 @@ x_event_button_pressed (GschemPageView *page_view,
         do_popup(w_current, event);
         break;
 
-    } /* switch w_current->middle_button */
+    } /* switch (schematic_window_get_middle_button (w_current)) */
 
   } else if (event->button == 3) {
     if (!schematic_window_get_inside_action (w_current))
