@@ -466,7 +466,9 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 #endif /* HAVE_LIBSTROKE */
 
       case(MOUSEBTN_DO_PAN):
-        if (gschem_page_view_pan_end (page_view) && w_current->undo_panzoom) {
+        if (gschem_page_view_pan_end (page_view) &&
+            schematic_window_get_undo_panzoom (w_current))
+        {
           o_undo_savestate_viewport (w_current);
         }
       break;
@@ -474,7 +476,9 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
 
   } else if (event->button == 3) {
       /* just for ending a mouse pan */
-      if (gschem_page_view_pan_end (page_view) && w_current->undo_panzoom) {
+      if (gschem_page_view_pan_end (page_view) &&
+          schematic_window_get_undo_panzoom (w_current))
+      {
         o_undo_savestate_viewport (w_current);
       }
   }
