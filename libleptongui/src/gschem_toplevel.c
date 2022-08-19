@@ -1827,3 +1827,32 @@ schematic_window_set_compselect (GschemToplevel *w_current,
 
   w_current->cswindow = widget;
 }
+
+
+/*! \brief Get schematic window's field 'rubber_visible'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'rubber_visible'.
+ */
+int
+schematic_window_get_rubber_visible (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->rubber_visible;
+}
+
+
+/*! \brief Set schematic window's field 'rubber_visible'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] visibility The new value of the field 'rubber_visible'.
+ */
+void
+schematic_window_set_rubber_visible (GschemToplevel *w_current,
+                                     int visibility)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->rubber_visible = visibility;
+}

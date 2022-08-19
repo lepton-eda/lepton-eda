@@ -500,4 +500,10 @@ schematic_window_get_compselect (GschemToplevel *w_current);
 void
 schematic_window_set_compselect (GschemToplevel *w_current,
                                  GtkWidget *widget);
+int
+schematic_window_get_rubber_visible (GschemToplevel *w_current);
+
+void
+schematic_window_set_rubber_visible (GschemToplevel *w_current,
+                                     int visibility);
 G_END_DECLS
