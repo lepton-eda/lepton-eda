@@ -153,7 +153,8 @@ void o_line_motion (GschemToplevel *w_current, int w_x, int w_y)
   w_current->second_wy = w_y;
 
   /* if the control key was pressed then draw ortho lines */
-  if (w_current->CONTROLKEY) {
+  if (schematic_window_get_control_key_pressed (w_current))
+  {
     diff_x = abs(w_current->second_wx - w_current->first_wx);
     diff_y = abs(w_current->second_wy - w_current->first_wy);
 
