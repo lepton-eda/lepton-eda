@@ -304,7 +304,8 @@ x_event_button_pressed (GschemPageView *page_view,
       }
 
       /* determine here if copy or move */
-      if (w_current->ALTKEY) {
+      if (schematic_window_get_alt_key_pressed (w_current))
+      {
         i_set_state(w_current, COPYMODE);
         o_copy_start(w_current, w_x, w_y);
       } else {
