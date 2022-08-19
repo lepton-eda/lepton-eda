@@ -91,7 +91,7 @@ void o_pin_motion (GschemToplevel *w_current, int w_x, int w_y)
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   /* erase the rubberpin if it is visible */
-  if (w_current->rubber_visible)
+  if (schematic_window_get_rubber_visible (w_current))
     o_pin_invalidate_rubber (w_current);
 
   w_current->second_wx = w_x;
@@ -106,7 +106,7 @@ void o_pin_motion (GschemToplevel *w_current, int w_x, int w_y)
   }
 
   o_pin_invalidate_rubber (w_current);
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /*! \todo Finish function documentation!!!
