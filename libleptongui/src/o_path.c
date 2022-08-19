@@ -513,7 +513,7 @@ o_path_end(GschemToplevel *w_current, int w_x, int w_y)
     gschem_toplevel_page_content_changed (w_current, page);
     o_undo_savestate (w_current, page, UNDO_ALL);
 
-    w_current->rubber_visible = FALSE;
+    schematic_window_set_rubber_visible (w_current, 0);
 
     i_action_stop (w_current);
   } else {
