@@ -305,7 +305,7 @@ o_place_draw_rubber (GschemToplevel *w_current, EdaRenderer *renderer)
     schematic_window_get_action_mode (w_current);
   /* Don't worry about the previous drawing method and movement
    * constraints, use with the current settings */
-  w_current->drawbounding_action_mode = (w_current->CONTROLKEY &&
+  w_current->drawbounding_action_mode = (schematic_window_get_control_key_pressed (w_current) &&
                                          ! (   (action_mode == PASTEMODE)
                                             || (action_mode == COMPMODE)
                                             || (action_mode == TEXTMODE)))
