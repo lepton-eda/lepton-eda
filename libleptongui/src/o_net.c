@@ -413,7 +413,8 @@ void o_net_start_magnetic(GschemToplevel *w_current, int w_x, int w_y)
 
   o_net_invalidate_rubber (w_current);
 
-  if (w_current->CONTROLKEY) {
+  if (schematic_window_get_control_key_pressed (w_current))
+  {
     w_current->magnetic_wx = w_x;
     w_current->magnetic_wy = w_y;
   }
