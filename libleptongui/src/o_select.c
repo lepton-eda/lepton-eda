@@ -388,7 +388,7 @@ void o_select_box_search(GschemToplevel *w_current)
   LeptonObject *o_current=NULL;
   int count = 0; /* object count */
   int SHIFTKEY = schematic_window_get_shift_key_pressed (w_current);
-  int CONTROLKEY = w_current->CONTROLKEY;
+  int CONTROLKEY = schematic_window_get_control_key_pressed (w_current);
   int left, right, top, bottom;
   const GList *iter;
   gboolean show_hidden_text =
