@@ -208,6 +208,13 @@
    (schematic_tab_info_get_page_view *tab-info)))
 
 
+(define (callback-button-released *page-view *event *window)
+  (x_event_button_released *page-view *event *window))
+
+(define *callback-button-released
+  (procedure->pointer int callback-button-released '(* * *)))
+
+
 (define (setup-page-view-draw-events *window *page-view)
   (define signal-callback-list
     (list
@@ -215,7 +222,7 @@
          `("draw" . ,*x_event_draw)
          `("expose-event" . ,*x_event_expose))
      `("button-press-event" . ,*x_event_button_pressed)
-     `("button-release-event" . ,*x_event_button_released)
+     `("button-release-event" . ,*callback-button-released)
      `("motion-notify-event" . ,*x_event_motion)
      `("configure-event" . ,*x_event_configure)
      `("key-press-event" . ,*process-key-event)
