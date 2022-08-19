@@ -97,7 +97,7 @@ void o_line_end(GschemToplevel *w_current, int w_x, int w_y)
 
   /* Don't bother.. the real object is invalidated, its in the same place */
   /* o_line_invalidate_rubber (w_current); */
-  w_current->rubber_visible = 0;
+  schematic_window_set_rubber_visible (w_current, 0);
 
   /* don't allow zero length lines */
   if ( (w_current->first_wx != w_current->second_wx) ||
