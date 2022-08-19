@@ -466,7 +466,7 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_net)
    * a net segment to select it and then Shift+<mouse-1> on it to
    * deselect it. */
   if (schematic_window_get_shift_key_pressed (w_current)
-      || w_current->CONTROLKEY)
+      || schematic_window_get_control_key_pressed (w_current))
   {
     o_select_object (w_current, o_net, SINGLE, 0);
     return;
