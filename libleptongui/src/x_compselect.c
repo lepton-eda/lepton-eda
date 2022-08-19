@@ -138,9 +138,9 @@ x_compselect_callback_response (GtkDialog *dialog,
         if (action_mode == COMPMODE)
         {
           /* Delete the component which was being placed */
-          if (w_current->rubber_visible)
+          if (schematic_window_get_rubber_visible (w_current))
             o_place_invalidate_rubber (w_current, FALSE);
-          w_current->rubber_visible = 0;
+          schematic_window_set_rubber_visible (w_current, 0);
           lepton_object_list_delete (toplevel->page_current->place_list);
           toplevel->page_current->place_list = NULL;
         } else {
