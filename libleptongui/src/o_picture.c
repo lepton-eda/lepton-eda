@@ -286,7 +286,7 @@ void o_picture_motion (GschemToplevel *w_current, int w_x, int w_y)
   g_assert (schematic_window_get_inside_action (w_current) != 0);
 
   /* erase the previous temporary box */
-  if (w_current->rubber_visible)
+  if (schematic_window_get_rubber_visible (w_current))
     o_picture_invalidate_rubber (w_current);
 
   /*
@@ -301,7 +301,7 @@ void o_picture_motion (GschemToplevel *w_current, int w_x, int w_y)
 
   /* draw the new temporary box */
   o_picture_invalidate_rubber (w_current);
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /*! \brief Draw picture from GschemToplevel object.
