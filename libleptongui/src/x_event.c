@@ -380,9 +380,9 @@ x_event_button_released (GschemPageView *page_view, GdkEventButton *event, Gsche
   printf("released! %d \n", action_mode);
 #endif
 
-  schematic_window_set_shift_key_pressed (w_current, (event->state & GDK_SHIFT_MASK) ? 1 : 0);
-  schematic_window_set_control_key_pressed (w_current, (event->state & GDK_CONTROL_MASK) ? 1 : 0);
-  schematic_window_set_alt_key_pressed (w_current, (event->state & GDK_MOD1_MASK) ? 1 : 0);
+  schematic_window_set_shift_key_pressed (w_current, (event->state & schematic_event_shift_mask ()) ? 1 : 0);
+  schematic_window_set_control_key_pressed (w_current, (event->state & schematic_event_control_mask ()) ? 1 : 0);
+  schematic_window_set_alt_key_pressed (w_current, (event->state & schematic_event_alt_mask ()) ? 1 : 0);
 
   gschem_page_view_SCREENtoWORLD (page_view, (int) event->x, (int) event->y,
                                   &unsnapped_wx, &unsnapped_wy);
