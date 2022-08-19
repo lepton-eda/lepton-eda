@@ -323,7 +323,7 @@ x_event_key (GschemPageView *page_view,
 #endif
 
   /* update the state of the modifiers */
-  w_current->ALTKEY     = (event->state & GDK_MOD1_MASK)    ? 1 : 0;
+  schematic_window_set_alt_key_pressed (w_current, (event->state & GDK_MOD1_MASK) ? 1 : 0);
   schematic_window_set_shift_key_pressed (w_current, (event->state & GDK_SHIFT_MASK) ? 1 : 0);
   schematic_window_set_control_key_pressed (w_current, (event->state & GDK_CONTROL_MASK) ? 1 : 0);
 
@@ -332,7 +332,7 @@ x_event_key (GschemPageView *page_view,
   switch (event->keyval) {
     case GDK_KEY_Alt_L:
     case GDK_KEY_Alt_R:
-      w_current->ALTKEY = pressed;
+      schematic_window_set_alt_key_pressed (w_current, pressed);
       break;
 
     case GDK_KEY_Shift_L:
