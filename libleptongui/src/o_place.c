@@ -225,7 +225,7 @@ void o_place_invalidate_rubber (GschemToplevel *w_current, int drawing)
       schematic_window_get_action_mode (w_current);
     /* Ensure we set this to flag there is "something" supposed to be
      * drawn when the invalidate call below causes an expose event. */
-    w_current->drawbounding_action_mode = (w_current->CONTROLKEY &&
+    w_current->drawbounding_action_mode = (schematic_window_get_control_key_pressed (w_current) &&
                                            ! (   (action_mode == PASTEMODE)
                                               || (action_mode == COMPMODE)
                                               || (action_mode == TEXTMODE)))
