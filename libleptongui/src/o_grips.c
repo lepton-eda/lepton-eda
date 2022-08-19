@@ -817,7 +817,7 @@ static void o_grips_start_circle(GschemToplevel *w_current, LeptonObject *o_curr
 
   /* draw the first temporary circle */
   /* o_circle_invalidate_rubber (w_current); */
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /*! \brief Initialize grip motion process for a line.
