@@ -1856,3 +1856,32 @@ schematic_window_set_rubber_visible (GschemToplevel *w_current,
 
   w_current->rubber_visible = visibility;
 }
+
+
+/*! \brief Get schematic window's field 'middle_button'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'middle_button'.
+ */
+int
+schematic_window_get_middle_button (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->middle_button;
+}
+
+
+/*! \brief Set schematic window's field 'middle_button'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] button The new value of the field 'middle_button'.
+ */
+void
+schematic_window_set_middle_button (GschemToplevel *w_current,
+                                    int button)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->middle_button = button;
+}

@@ -506,4 +506,10 @@ schematic_window_get_rubber_visible (GschemToplevel *w_current);
 void
 schematic_window_set_rubber_visible (GschemToplevel *w_current,
                                      int visibility);
+int
+schematic_window_get_middle_button (GschemToplevel *w_current);
+
+void
+schematic_window_set_middle_button (GschemToplevel *w_current,
+                                    int button);
 G_END_DECLS
