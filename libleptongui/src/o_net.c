@@ -422,7 +422,7 @@ void o_net_start_magnetic(GschemToplevel *w_current, int w_x, int w_y)
   }
 
   o_net_invalidate_rubber (w_current);
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /*! \brief set the start point of a new net
