@@ -250,7 +250,8 @@ void o_redraw_rect (GschemToplevel *w_current,
         case COPYMODE:
         case MCOPYMODE:
         case PASTEMODE:
-          if (w_current->rubber_visible) {
+          if (schematic_window_get_rubber_visible (w_current))
+          {
             /* FIXME shouldn't need to save/restore colormap here */
             cairo_save (cr);
             eda_renderer_set_color_map (renderer, render_outline_color_map);
@@ -275,7 +276,8 @@ void o_redraw_rect (GschemToplevel *w_current,
       }
     }
 
-    if (w_current->rubber_visible) {
+    if (schematic_window_get_rubber_visible (w_current))
+    {
       switch (action_mode)
       {
         case ARCMODE    : o_arc_draw_rubber (w_current, renderer); break;
