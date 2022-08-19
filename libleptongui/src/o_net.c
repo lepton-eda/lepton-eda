@@ -607,7 +607,7 @@ void o_net_motion (GschemToplevel *w_current, int w_x, int w_y)
      if we are using magnetic mode */
   ortho = !w_current->CONTROLKEY || magnetic_net_mode;
 
-  if (w_current->rubber_visible)
+  if (schematic_window_get_rubber_visible (w_current))
     o_net_invalidate_rubber (w_current);
 
   if (magnetic_net_mode) {
@@ -657,7 +657,7 @@ void o_net_motion (GschemToplevel *w_current, int w_x, int w_y)
   }
 
   o_net_invalidate_rubber (w_current);
-  w_current->rubber_visible = 1;
+  schematic_window_set_rubber_visible (w_current, 1);
 }
 
 /*! \brief draw rubbernet lines to the gc
