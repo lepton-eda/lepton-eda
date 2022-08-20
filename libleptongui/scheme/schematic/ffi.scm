@@ -54,6 +54,8 @@
 
             i_vars_set
 
+            snap_grid
+
             make_menu_action
             make_separator_menu_item
             schematic_window_create_main_popup_menu
@@ -768,6 +770,9 @@
 ;;; i_vars.c
 (define-lff i_vars_set void '(*))
 
+;;; m_basic.c
+(define-lff snap_grid int (list '* int))
+
 ;;; o_basic.c
 (define-lff o_redraw_cleanstates int '(*))
 (define-lff o_invalidate_rubber int '(*))
@@ -834,7 +839,7 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_button_pressed)
-(define-lff x_event_button_released int (list '* '* '* int int))
+(define-lff x_event_button_released int (list '* '* '* int int int int))
 (define-lfc *x_event_configure)
 (define-lfc *x_event_draw)
 (define-lfc *x_event_expose)

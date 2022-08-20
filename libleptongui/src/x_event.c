@@ -385,19 +385,16 @@ x_event_button_released (GschemPageView *page_view,
                          GdkEvent *event,
                          GschemToplevel *w_current,
                          int unsnapped_wx,
-                         int unsnapped_wy)
+                         int unsnapped_wy,
+                         int w_x,
+                         int w_y)
 {
-  int w_x, w_y;
-
   SchematicActionMode action_mode =
     schematic_window_get_action_mode (w_current);
 
 #if DEBUG
   printf("released! %d \n", action_mode);
 #endif
-
-  w_x = snap_grid (w_current, unsnapped_wx);
-  w_y = snap_grid (w_current, unsnapped_wy);
 
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_button_released label to escape the state evaluation rather

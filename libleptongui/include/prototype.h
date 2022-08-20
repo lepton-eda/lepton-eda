@@ -473,7 +473,9 @@ x_event_button_released (GschemPageView *page_view,
                          GdkEvent *event,
                          GschemToplevel *w_current,
                          int unsnapped_wx,
-                         int unsnapped_wy);
+                         int unsnapped_wy,
+                         int w_x,
+                         int w_y);
 
 gint x_event_motion(GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current);
 gboolean x_event_faked_motion (GschemPageView *view, GdkEventKey *event);
