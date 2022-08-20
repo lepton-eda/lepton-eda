@@ -334,6 +334,9 @@
             schematic_window_set_object_properties_widget
             schematic_window_set_options_widget
             schematic_window_set_text_properties_widget
+            schematic_window_set_alt_key_pressed
+            schematic_window_set_control_key_pressed
+            schematic_window_set_shift_key_pressed
 
             font_select_widget_new
 
@@ -381,6 +384,10 @@
             *x_event_expose
             *x_event_motion
             *x_event_scroll
+            schematic_event_alt_mask
+            schematic_event_control_mask
+            schematic_event_shift_mask
+
 
             x_fileselect_open
             x_fileselect_save
@@ -605,6 +612,9 @@
 (define-lff schematic_window_set_object_properties_widget void '(* *))
 (define-lff schematic_window_set_options_widget void '(* *))
 (define-lff schematic_window_set_text_properties_widget void '(* *))
+(define-lff schematic_window_set_alt_key_pressed void (list '* int))
+(define-lff schematic_window_set_control_key_pressed void (list '* int))
+(define-lff schematic_window_set_shift_key_pressed void (list '* int))
 
 ;;; font_select_widget.c
 (define-lff font_select_widget_new '* '(*))
@@ -828,6 +838,9 @@
 (define-lfc *x_event_expose)
 (define-lfc *x_event_motion)
 (define-lfc *x_event_scroll)
+(define-lff schematic_event_alt_mask int '())
+(define-lff schematic_event_control_mask int '())
+(define-lff schematic_event_shift_mask int '())
 
 ;;; x_fileselect.c
 (define-lff x_fileselect_open '* '(*))

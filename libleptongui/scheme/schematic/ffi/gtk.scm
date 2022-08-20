@@ -45,7 +45,9 @@
             gtk_notebook_page_num
             gtk_notebook_set_current_page
             gtk_notebook_set_tab_reorderable
-            gtk_scrolled_window_new))
+            gtk_scrolled_window_new
+
+            gdk_event_get_state))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -90,3 +92,6 @@
 (define-lff gtk_widget_show void '(*))
 
 (define-lff gtk_window_set_default_icon_name void '(*))
+
+
+(define-lff gdk_event_get_state int '(* *))
