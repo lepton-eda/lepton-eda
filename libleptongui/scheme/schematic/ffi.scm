@@ -832,7 +832,7 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_button_pressed)
-(define-lff x_event_button_released int '(* * *))
+(define-lff x_event_button_released int (list '* '* '* double double))
 (define-lfc *x_event_configure)
 (define-lfc *x_event_draw)
 (define-lfc *x_event_expose)

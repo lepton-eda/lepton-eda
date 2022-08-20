@@ -383,7 +383,9 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
 gint
 x_event_button_released (GschemPageView *page_view,
                          GdkEvent *event,
-                         GschemToplevel *w_current)
+                         GschemToplevel *w_current,
+                         gdouble x_win,
+                         gdouble y_win)
 {
   int unsnapped_wx, unsnapped_wy;
   int w_x, w_y;
@@ -395,8 +397,6 @@ x_event_button_released (GschemPageView *page_view,
   printf("released! %d \n", action_mode);
 #endif
 
-  gdouble x_win, y_win;
-  gdk_event_get_coords (event, &x_win, &y_win);
   gschem_page_view_SCREENtoWORLD (page_view, (int) x_win, (int) y_win,
                                   &unsnapped_wx, &unsnapped_wy);
   w_x = snap_grid (w_current, unsnapped_wx);

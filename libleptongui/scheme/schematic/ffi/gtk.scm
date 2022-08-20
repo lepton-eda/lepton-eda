@@ -47,6 +47,7 @@
             gtk_notebook_set_tab_reorderable
             gtk_scrolled_window_new
 
+            gdk_event_get_coords
             gdk_event_get_state))
 
 ;;; Simplify definition of functions by omitting the library
@@ -94,4 +95,5 @@
 (define-lff gtk_window_set_default_icon_name void '(*))
 
 
+(define-lff gdk_event_get_coords int '(* * *))
 (define-lff gdk_event_get_state int '(* *))
