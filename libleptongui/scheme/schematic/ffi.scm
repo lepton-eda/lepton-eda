@@ -274,6 +274,7 @@
             gschem_page_view_new_with_page
             gschem_page_view_pan
             gschem_page_view_pan_mouse
+            gschem_page_view_SCREENtoWORLD
             gschem_page_view_zoom_extents
             schematic_page_view_grab_focus
 
@@ -533,6 +534,7 @@
 (define-lff gschem_page_view_new_with_page '* '(*))
 (define-lff gschem_page_view_pan void (list '* int int))
 (define-lff gschem_page_view_pan_mouse void (list '* int int))
+(define-lff gschem_page_view_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff gschem_page_view_zoom_extents void '(* *))
 (define-lff schematic_page_view_grab_focus void '(*))
 
@@ -832,7 +834,7 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_button_pressed)
-(define-lff x_event_button_released int (list '* '* '* double double))
+(define-lff x_event_button_released int (list '* '* '* int int))
 (define-lfc *x_event_configure)
 (define-lfc *x_event_draw)
 (define-lfc *x_event_expose)

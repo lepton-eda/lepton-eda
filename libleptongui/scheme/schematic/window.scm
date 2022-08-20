@@ -213,6 +213,8 @@
   (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
   (define window-x-bv (make-bytevector (sizeof double) 0))
   (define window-y-bv (make-bytevector (sizeof double) 0))
+  (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
+  (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
   (define shift-mask (schematic_event_shift_mask))
   (define control-mask (schematic_event_control_mask))
   (define alt-mask (schematic_event_alt_mask))
@@ -235,7 +237,14 @@
       (schematic_window_set_alt_key_pressed *window
                                             (state-contains? state alt-mask))
 
-      (x_event_button_released *page-view *event *window window-x window-y)))
+      (gschem_page_view_SCREENtoWORLD *page-view
+                                      (inexact->exact (round window-x))
+                                      (inexact->exact (round window-y))
+                                      (bytevector->pointer unsnapped-x-bv)
+                                      (bytevector->pointer unsnapped-y-bv))
+      (let ((unsnapped-x (bytevector-sint-ref unsnapped-x-bv 0 (native-endianness) (sizeof int)))
+            (unsnapped-y (bytevector-sint-ref unsnapped-y-bv 0 (native-endianness) (sizeof int))))
+        (x_event_button_released *page-view *event *window unsnapped-x unsnapped-y))))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))

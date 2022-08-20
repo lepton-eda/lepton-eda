@@ -384,10 +384,9 @@ gint
 x_event_button_released (GschemPageView *page_view,
                          GdkEvent *event,
                          GschemToplevel *w_current,
-                         gdouble x_win,
-                         gdouble y_win)
+                         int unsnapped_wx,
+                         int unsnapped_wy)
 {
-  int unsnapped_wx, unsnapped_wy;
   int w_x, w_y;
 
   SchematicActionMode action_mode =
@@ -397,8 +396,6 @@ x_event_button_released (GschemPageView *page_view,
   printf("released! %d \n", action_mode);
 #endif
 
-  gschem_page_view_SCREENtoWORLD (page_view, (int) x_win, (int) y_win,
-                                  &unsnapped_wx, &unsnapped_wy);
   w_x = snap_grid (w_current, unsnapped_wx);
   w_y = snap_grid (w_current, unsnapped_wy);
 
