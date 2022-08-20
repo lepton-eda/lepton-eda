@@ -94,6 +94,7 @@
 
 (define-lff gtk_window_set_default_icon_name void '(*))
 
-
+;;; gdk_event_get_button() can only be used for GTK3.
+;; (define-lff gdk_event_get_button int '(* *))
 (define-lff gdk_event_get_coords int '(* * *))
 (define-lff gdk_event_get_state int '(* *))

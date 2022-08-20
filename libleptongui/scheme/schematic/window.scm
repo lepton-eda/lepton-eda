@@ -227,7 +227,8 @@
     (gdk_event_get_coords *event
                           (bytevector->pointer window-x-bv)
                           (bytevector->pointer window-y-bv))
-    (let ((state (bytevector-u32-native-ref state-bv 0))
+    (let ((button-number (schematic_event_get_button *event))
+          (state (bytevector-u32-native-ref state-bv 0))
           (window-x (bytevector-ieee-double-native-ref window-x-bv 0))
           (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
       (schematic_window_set_shift_key_pressed *window
@@ -246,7 +247,15 @@
              (unsnapped-y (bytevector-sint-ref unsnapped-y-bv 0 (native-endianness) (sizeof int)))
              (x (snap_grid *window unsnapped-x))
              (y (snap_grid *window unsnapped-y)))
-        (x_event_button_released *page-view *event *window unsnapped-x unsnapped-y x y))))
+
+        (x_event_button_released *page-view
+                                 *event
+                                 *window
+                                 button-number
+                                 unsnapped-x
+                                 unsnapped-y
+                                 x
+                                 y))))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))

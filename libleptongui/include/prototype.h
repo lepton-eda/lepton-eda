@@ -472,6 +472,7 @@ gint
 x_event_button_released (GschemPageView *page_view,
                          GdkEvent *event,
                          GschemToplevel *w_current,
+                         guint button,
                          int unsnapped_wx,
                          int unsnapped_wy,
                          int w_x,

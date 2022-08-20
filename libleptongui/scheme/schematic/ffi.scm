@@ -387,6 +387,7 @@
             *x_event_expose
             *x_event_motion
             *x_event_scroll
+            schematic_event_get_button
             schematic_event_alt_mask
             schematic_event_control_mask
             schematic_event_shift_mask
@@ -839,12 +840,13 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_button_pressed)
-(define-lff x_event_button_released int (list '* '* '* int int int int))
+(define-lff x_event_button_released int (list '* '* '* int int int int int))
 (define-lfc *x_event_configure)
 (define-lfc *x_event_draw)
 (define-lfc *x_event_expose)
 (define-lfc *x_event_motion)
 (define-lfc *x_event_scroll)
+(define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_alt_mask int '())
 (define-lff schematic_event_control_mask int '())
 (define-lff schematic_event_shift_mask int '())

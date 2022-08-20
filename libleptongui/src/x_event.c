@@ -384,6 +384,7 @@ gint
 x_event_button_released (GschemPageView *page_view,
                          GdkEvent *event,
                          GschemToplevel *w_current,
+                         guint button,
                          int unsnapped_wx,
                          int unsnapped_wy,
                          int w_x,
@@ -401,8 +402,6 @@ x_event_button_released (GschemPageView *page_view,
    * than returning from the function directly. */
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
-
-  guint button = schematic_event_get_button (event);
 
   if (button == 1) {
 
