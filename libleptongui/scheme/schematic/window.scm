@@ -216,7 +216,7 @@
   (define alt-mask (schematic_event_alt_mask))
 
   (define (state-contains? state mask)
-    (if (zero? (logand state mask)) 0 1))
+    (if (logtest state mask) 1 0))
 
   (define (process-event *page-view *event *window)
     (gdk_event_get_state *event (bytevector->pointer state-bv))
