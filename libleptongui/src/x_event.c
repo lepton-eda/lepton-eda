@@ -34,6 +34,14 @@
 static int DOING_STROKE = FALSE;
 #endif /* HAVE_LIBSTROKE */
 
+void
+schematic_event_set_doing_stroke (gboolean val)
+{
+#ifdef HAVE_LIBSTROKE
+  DOING_STROKE = val;
+#endif /* HAVE_LIBSTROKE */
+}
+
 
 gint
 schematic_event_shift_mask ()
@@ -375,140 +383,6 @@ x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemT
   return(0);
 }
 
-/*! \todo Finish function documentation!!!
- *  \brief
- *  \par Function Description
- *
- */
-gint
-x_event_button_released (GschemPageView *page_view,
-                         GdkEvent *event,
-                         GschemToplevel *w_current,
-                         guint button,
-                         int unsnapped_wx,
-                         int unsnapped_wy,
-                         int w_x,
-                         int w_y)
-{
-  SchematicActionMode action_mode =
-    schematic_window_get_action_mode (w_current);
-
-#if DEBUG
-  printf("released! %d \n", action_mode);
-#endif
-
-  /* Huge switch statement to evaluate state transitions. Jump to
-   * end_button_released label to escape the state evaluation rather
-   * than returning from the function directly. */
-  scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-  g_dynwind_window (w_current);
-
-  if (button == 1) {
-
-    if (schematic_window_get_inside_action (w_current))
-    {
-      if (schematic_window_get_place_list (w_current) != NULL)
-      {
-        switch (action_mode)
-        {
-          case (COPYMODE)  :
-          case (MCOPYMODE) : o_copy_end(w_current); break;
-          case (MOVEMODE)  : o_move_end(w_current); break;
-          default: break;
-        }
-      } else {
-        switch (action_mode)
-        {
-          case (GRIPS)     : o_grips_end(w_current); break;
-          case (PATHMODE)  : o_path_end (w_current, w_x, w_y); break;
-          case (SBOX)      : o_select_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
-          case (SELECT)    : o_select_end(w_current, unsnapped_wx, unsnapped_wy); break;
-          case (ZOOMBOX)   : a_zoom_box_end(w_current, unsnapped_wx, unsnapped_wy); break;
-          default: break;
-        }
-      }
-    }
-  } else if (button == 2) {
-
-    if (schematic_window_get_inside_action (w_current))
-    {
-      if (   action_mode == COMPMODE
-          || action_mode == TEXTMODE
-          || action_mode == MOVEMODE
-          || action_mode == COPYMODE
-          || action_mode == MCOPYMODE
-          || action_mode == PASTEMODE )
-      {
-        if (action_mode == MOVEMODE)
-        {
-          o_move_invalidate_rubber (w_current, FALSE);
-        } else {
-          o_place_invalidate_rubber (w_current, FALSE);
-        }
-        schematic_window_set_rubber_visible (w_current, 0);
-
-        o_place_rotate(w_current);
-
-        if (action_mode == COMPMODE)
-        {
-          o_component_place_changed_run_hook (w_current);
-        }
-
-        if (action_mode == MOVEMODE)
-        {
-          o_move_invalidate_rubber (w_current, TRUE);
-        } else {
-          o_place_invalidate_rubber (w_current, TRUE);
-        }
-        schematic_window_set_rubber_visible (w_current, 1);
-        goto end_button_released;
-      }
-    }
-
-    switch (schematic_window_get_middle_button (w_current))
-    {
-      case(MOUSEBTN_DO_ACTION):
-        if (schematic_window_get_inside_action (w_current)
-            && (schematic_window_get_place_list (w_current) != NULL))
-        {
-          switch (action_mode)
-          {
-            case (COPYMODE): o_copy_end(w_current); break;
-            case (MOVEMODE): o_move_end(w_current); break;
-            default: break;
-          }
-        }
-      break;
-
-#ifdef HAVE_LIBSTROKE
-      case(MOUSEBTN_DO_STROKE):
-      DOING_STROKE = FALSE;
-      x_stroke_translate_and_execute (w_current);
-      break;
-#endif /* HAVE_LIBSTROKE */
-
-      case(MOUSEBTN_DO_PAN):
-        if (gschem_page_view_pan_end (page_view) &&
-            schematic_window_get_undo_panzoom (w_current))
-        {
-          o_undo_savestate_viewport (w_current);
-        }
-      break;
-    }
-
-  } else if (button == 3) {
-      /* just for ending a mouse pan */
-      if (gschem_page_view_pan_end (page_view) &&
-          schematic_window_get_undo_panzoom (w_current))
-      {
-        o_undo_savestate_viewport (w_current);
-      }
-  }
- end_button_released:
-  scm_dynwind_end ();
-
-  return(0);
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

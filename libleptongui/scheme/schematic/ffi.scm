@@ -79,6 +79,9 @@
 
             o_circle_start
 
+            o_component_place_changed_run_hook
+
+            o_copy_end
             o_copy_start
 
             o_delete_selected
@@ -86,15 +89,21 @@
             o_edit
             o_edit_show_hidden
 
+            o_grips_end
+
             o_line_start
 
             o_mirror_world_update
             o_rotate_world_update
 
+            o_move_end
+            o_move_invalidate_rubber
             o_move_start
 
             o_net_reset
             o_net_start
+
+            o_path_end
 
             picture_selection_dialog
 
@@ -138,6 +147,7 @@
 
             x_stroke_init
             x_stroke_free
+            x_stroke_translate_and_execute
 
             gschem_find_text_state_new
 
@@ -275,6 +285,7 @@
             gschem_page_view_invalidate_all
             gschem_page_view_new_with_page
             gschem_page_view_pan
+            gschem_page_view_pan_end
             gschem_page_view_pan_mouse
             gschem_page_view_SCREENtoWORLD
             gschem_page_view_zoom_extents
@@ -299,6 +310,7 @@
             gschem_toplevel_page_content_changed
             schematic_window_get_actionfeedback_mode
             schematic_window_set_actionfeedback_mode
+            schematic_window_get_action_mode
             schematic_window_get_active_page
             schematic_window_get_bottom_notebook
             schematic_window_set_bottom_notebook
@@ -314,10 +326,12 @@
             schematic_window_get_gdk_display
             schematic_window_get_keyboardpan_gain
             schematic_window_get_macro_widget
+            schematic_window_get_middle_button
             schematic_window_get_options
             schematic_window_get_place_list
             schematic_window_get_right_notebook
             schematic_window_set_right_notebook
+            schematic_window_set_rubber_visible
             schematic_window_get_selection_list
             schematic_window_get_undo_panzoom
             schematic_window_get_keyaccel_string
@@ -364,6 +378,8 @@
 
             text_input_dialog
 
+            o_select_box_end
+            o_select_end
             o_select_unselect_all
 
             o_slot_end
@@ -381,13 +397,13 @@
             x_event_get_pointer_position
             x_event_key
             *x_event_button_pressed
-            x_event_button_released
             *x_event_configure
             *x_event_draw
             *x_event_expose
             *x_event_motion
             *x_event_scroll
             schematic_event_get_button
+            schematic_event_set_doing_stroke
             schematic_event_alt_mask
             schematic_event_control_mask
             schematic_event_shift_mask
@@ -407,6 +423,7 @@
             x_tabs_prev
 
             a_zoom
+            a_zoom_box_end
             a_zoom_box_start
 
             parse-gschemrc
@@ -536,6 +553,7 @@
 (define-lff gschem_page_view_invalidate_all void '(*))
 (define-lff gschem_page_view_new_with_page '* '(*))
 (define-lff gschem_page_view_pan void (list '* int int))
+(define-lff gschem_page_view_pan_end int '(*))
 (define-lff gschem_page_view_pan_mouse void (list '* int int))
 (define-lff gschem_page_view_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff gschem_page_view_zoom_extents void '(* *))
@@ -579,6 +597,7 @@
 (define-lff gschem_toplevel_page_content_changed void '(* *))
 (define-lff schematic_window_get_actionfeedback_mode int '(*))
 (define-lff schematic_window_set_actionfeedback_mode void (list '* int))
+(define-lff schematic_window_get_action_mode int '(*))
 (define-lff schematic_window_get_active_page '* '(*))
 (define-lff schematic_window_get_bottom_notebook '* '(*))
 (define-lff schematic_window_set_bottom_notebook void '(* *))
@@ -594,10 +613,12 @@
 (define-lff schematic_window_get_gdk_display '* '(*))
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
 (define-lff schematic_window_get_macro_widget '* '(*))
+(define-lff schematic_window_get_middle_button int '(*))
 (define-lff schematic_window_get_options '* '(*))
 (define-lff schematic_window_get_place_list '* '(*))
 (define-lff schematic_window_get_right_notebook '* '(*))
 (define-lff schematic_window_set_right_notebook void '(* *))
+(define-lff schematic_window_set_rubber_visible void (list '* int))
 (define-lff schematic_window_get_selection_list '* '(*))
 (define-lff schematic_window_get_undo_panzoom int '(*))
 (define-lff schematic_window_get_keyaccel_string '* '(*))
@@ -790,11 +811,18 @@
 ;;; o_circle.c
 (define-lff o_circle_start void (list '* int int))
 
+;;; o_component.c
+(define-lff o_component_place_changed_run_hook void '(*))
+
 ;;; o_copy.c
+(define-lff o_copy_end void '(*))
 (define-lff o_copy_start void (list '* int int))
 
 ;;; o_delete.c
 (define-lff o_delete_selected void '(*))
+
+;;; o_grips.c
+(define-lff o_grips_end void '(*))
 
 ;;; o_line.c
 (define-lff o_line_start void (list '* int int))
@@ -806,11 +834,16 @@
 (define-lff o_rotate_world_update void (list '* int int int '*))
 
 ;;; o_move.c
+(define-lff o_move_end void '(*))
+(define-lff o_move_invalidate_rubber void (list '* int))
 (define-lff o_move_start void (list '* int int))
 
 ;;; o_net.c
 (define-lff o_net_reset void '(*))
 (define-lff o_net_start void (list '* int int))
+
+;;; o_path.c
+(define-lff o_path_end void (list '* int int))
 
 ;;; o_picture.c
 (define-lff picture_selection_dialog void '(*))
@@ -840,13 +873,13 @@
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
 (define-lfc *x_event_button_pressed)
-(define-lff x_event_button_released int (list '* '* '* int int int int int))
 (define-lfc *x_event_configure)
 (define-lfc *x_event_draw)
 (define-lfc *x_event_expose)
 (define-lfc *x_event_motion)
 (define-lfc *x_event_scroll)
 (define-lff schematic_event_get_button int '(*))
+(define-lff schematic_event_set_doing_stroke void (list int))
 (define-lff schematic_event_alt_mask int '())
 (define-lff schematic_event_control_mask int '())
 (define-lff schematic_event_shift_mask int '())
@@ -869,6 +902,8 @@
 (define-lff x_print void '(*))
 
 ;;; o_select.c
+(define-lff o_select_box_end void (list '* int int))
+(define-lff o_select_end void (list '* int int))
 (define-lff o_select_unselect_all void '(*))
 
 ;;; o_slot.c
@@ -896,6 +931,7 @@
 
 ;;; a_zoom.c
 (define-lff a_zoom void (list '* '* int int))
+(define-lff a_zoom_box_end void (list '* int int))
 (define-lff a_zoom_box_start void (list '* int int))
 
 ;;; This is a special case: the function may be not defined in C
@@ -914,6 +950,13 @@
     (and (force func)
          (let ((proc (delay (pointer->procedure void (force func) '()))))
            ((force proc))))))
+
+(define (x_stroke_translate_and_execute *window)
+  (let ((func (delay (false-if-exception (dynamic-func "x_stroke_translate_and_execute"
+                                                       libleptongui)))))
+    (and (force func)
+         (let ((proc (delay (pointer->procedure int (force func) '(*)))))
+           ((force proc) *window)))))
 
 
 (define (parse-gschemrc toplevel)

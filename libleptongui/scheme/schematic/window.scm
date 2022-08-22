@@ -20,6 +20,7 @@
 
 (define-module (schematic window)
   #:use-module (ice-9 format)
+  #:use-module (ice-9 match)
   #:use-module (rnrs bytevectors)
   #:use-module (system foreign)
 
@@ -36,6 +37,7 @@
   #:use-module (lepton toplevel foreign)
   #:use-module (lepton toplevel)
 
+  #:use-module (schematic action-mode)
   #:use-module (schematic callback)
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
@@ -209,6 +211,13 @@
 
 
 (define (callback-button-released *page-view *event *window)
+  ;; Defines from gschem_defines.h.
+  (define MOUSEBTN_DO_STROKE 0)
+  (define MOUSEBTN_DO_REPEAT 1)
+  (define MOUSEBTN_DO_ACTION 2)
+  (define MOUSEBTN_DO_POPUP  4)
+  (define MOUSEBTN_DO_PAN    5)
+
   (define GdkModifierType uint32)
   (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
   (define window-x-bv (make-bytevector (sizeof double) 0))
@@ -246,16 +255,88 @@
       (let* ((unsnapped-x (bytevector-sint-ref unsnapped-x-bv 0 (native-endianness) (sizeof int)))
              (unsnapped-y (bytevector-sint-ref unsnapped-y-bv 0 (native-endianness) (sizeof int)))
              (x (snap_grid *window unsnapped-x))
-             (y (snap_grid *window unsnapped-y)))
+             (y (snap_grid *window unsnapped-y))
+             (action-mode
+              (action-mode->symbol (schematic_window_get_action_mode *window))))
 
-        (x_event_button_released *page-view
-                                 *event
-                                 *window
-                                 button-number
-                                 unsnapped-x
-                                 unsnapped-y
-                                 x
-                                 y))))
+        ;; Evaluate state transitions.
+        (match button-number
+          (1
+           (when (true? (schematic_window_get_inside_action *window))
+             (if (not (null-pointer? (schematic_window_get_place_list *window)))
+                 (match action-mode
+                   ((or 'copy-mode 'multiple-copy-mode) (o_copy_end *window))
+                   ('move-mode (o_move_end *window))
+                   (_ FALSE))
+
+                 (match action-mode
+                   ('grips-mode (o_grips_end *window))
+                   ('path-mode (o_path_end *window x y))
+                   ('box-select-mode (o_select_box_end *window unsnapped-x unsnapped-y))
+                   ('select-mode (o_select_end *window unsnapped-x unsnapped-y))
+                   ('zoom-box-mode (a_zoom_box_end *window unsnapped-x unsnapped-y))
+                   (_ FALSE)))))
+
+          (2
+           (when (true? (schematic_window_get_inside_action *window))
+             (when (or (eq? action-mode 'component-mode)
+                     (eq? action-mode 'text-mode)
+                     (eq? action-mode 'move-mode)
+                     (eq? action-mode 'copy-mode)
+                     (eq? action-mode 'multiple-copy-mode)
+                     (eq? action-mode 'paste-mode))
+                 (if (eq? action-mode 'move-mode)
+                     (o_move_invalidate_rubber *window FALSE)
+                     (o_place_invalidate_rubber *window FALSE))
+                 (schematic_window_set_rubber_visible *window 0)
+
+                 (o_place_rotate *window)
+
+                 (when (eq? action-mode 'component-mode)
+                   (o_component_place_changed_run_hook *window))
+
+                 (if (eq? action-mode 'move-mode)
+                     (o_move_invalidate_rubber *window TRUE)
+                     (o_place_invalidate_rubber *window TRUE))
+
+                 (schematic_window_set_rubber_visible *window 1)))
+           (unless (and (true? (schematic_window_get_inside_action *window))
+                        (or (eq? action-mode 'component-mode)
+                            (eq? action-mode 'text-mode)
+                            (eq? action-mode 'move-mode)
+                            (eq? action-mode 'copy-mode)
+                            (eq? action-mode 'multiple-copy-mode)
+                            (eq? action-mode 'paste-mode)))
+             (let ((middle-button (schematic_window_get_middle_button *window)))
+               (cond
+                ((= middle-button MOUSEBTN_DO_ACTION)
+                 (when (and (true? (schematic_window_get_inside_action *window))
+                            (not (null-pointer? (schematic_window_get_place_list *window))))
+                   (match action-mode
+                     ('copy-mode (o_copy_end *window))
+                     ('move-mode (o_move_end *window))
+                     (_ FALSE))))
+
+                ((= middle-button MOUSEBTN_DO_STROKE)
+                 (schematic_event_set_doing_stroke FALSE)
+                 (with-window *window
+                  (x_stroke_translate_and_execute *window)))
+
+                ((= middle-button MOUSEBTN_DO_PAN)
+                 (when (and (true? (gschem_page_view_pan_end *page-view))
+                            (true? (schematic_window_get_undo_panzoom *window)))
+                   (o_undo_savestate_viewport *window)))
+                (else FALSE)))))
+
+          (3
+           ;; Just for ending a mouse pan.
+           (when (and (true? (gschem_page_view_pan_end *page-view))
+                      (true? (schematic_window_get_undo_panzoom *window)))
+             (o_undo_savestate_viewport *window)))
+
+          (_ FALSE))
+
+        FALSE)))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))

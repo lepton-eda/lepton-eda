@@ -432,6 +432,9 @@ gboolean x_dialog_close_window (GschemToplevel *w_current);
 int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
 
 /* x_event.c */
+void
+schematic_event_set_doing_stroke (gboolean val);
+
 gint
 schematic_event_shift_mask ();
 
@@ -467,16 +470,6 @@ x_event_expose (GschemPageView *widget,
 #endif
 
 gint x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
-
-gint
-x_event_button_released (GschemPageView *page_view,
-                         GdkEvent *event,
-                         GschemToplevel *w_current,
-                         guint button,
-                         int unsnapped_wx,
-                         int unsnapped_wy,
-                         int w_x,
-                         int w_y);
 
 gint x_event_motion(GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current);
 gboolean x_event_faked_motion (GschemPageView *view, GdkEventKey *event);
