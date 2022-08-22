@@ -396,7 +396,7 @@
 
             x_event_get_pointer_position
             x_event_key
-            *x_event_button_pressed
+            x_event_button_pressed
             *x_event_configure
             *x_event_draw
             *x_event_expose
@@ -872,7 +872,7 @@
 ;;; x_event.c
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
-(define-lfc *x_event_button_pressed)
+(define-lff x_event_button_pressed int '(* * *))
 (define-lfc *x_event_configure)
 (define-lfc *x_event_draw)
 (define-lfc *x_event_expose)
