@@ -441,6 +441,9 @@ schematic_event_control_mask ();
 gint
 schematic_event_alt_mask ();
 
+guint
+schematic_event_get_button (GdkEvent *event);
+
 #ifdef ENABLE_GTK3
 gint
 x_event_draw (GschemPageView *widget,

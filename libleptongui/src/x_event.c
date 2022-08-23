@@ -56,6 +56,19 @@ schematic_event_alt_mask ()
 }
 
 
+guint
+schematic_event_get_button (GdkEvent *event)
+{
+#ifdef ENABLE_GTK3
+  guint button;
+  gdk_event_get_button (event, &button);
+  return button;
+#else
+  return ((GdkEventButton*) event)->button;
+#endif
+}
+
+
 #ifdef ENABLE_GTK3
 /*! \brief Redraws the view when widget is exposed.
  *
