@@ -350,7 +350,8 @@ x_event_button_pressed (GschemPageView *page_view,
       }
     } else {
       if ((schematic_window_get_third_button (w_current) == MOUSEBTN_DO_PAN) &&
-          (!w_current->third_button_cancel)) {
+          (!schematic_window_get_third_button_cancel (w_current)))
+      {
         gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       } else { /* this is the default cancel */
 
