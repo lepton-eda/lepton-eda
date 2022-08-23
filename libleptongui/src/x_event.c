@@ -63,6 +63,16 @@ schematic_event_alt_mask ()
   return GDK_MOD1_MASK;
 }
 
+gboolean
+schematic_event_is_double_button_press (GdkEvent *event)
+{
+#ifdef ENABLE_GTK3
+  return gdk_event_get_event_type (event) == GDK_2BUTTON_PRESS;
+#else
+  return ((GdkEventButton*) event)->type == GDK_2BUTTON_PRESS;
+#endif
+}
+
 
 guint
 schematic_event_get_button (GdkEvent *event)
@@ -178,7 +188,7 @@ x_event_button_pressed (GschemPageView *page_view,
   w_x = snap_grid (w_current, unsnapped_wx);
   w_y = snap_grid (w_current, unsnapped_wy);
 
-  if (event->type == GDK_2BUTTON_PRESS &&
+  if (schematic_event_is_double_button_press (event) &&
       action_mode == SELECT)
   {
     /* Don't re-select an object (lp-912978) */
