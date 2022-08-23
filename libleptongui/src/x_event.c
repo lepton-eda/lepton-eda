@@ -145,7 +145,6 @@ x_event_expose (GschemPageView *view,
  */
 gint
 x_event_button_pressed (GschemPageView *page_view,
-                        LeptonPage *page,
                         GdkEventButton *event,
                         GschemToplevel *w_current)
 {

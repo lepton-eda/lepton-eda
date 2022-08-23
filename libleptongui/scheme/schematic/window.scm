@@ -353,9 +353,9 @@
 
 
 (define (callback-button-pressed *page-view *event *window)
-  (define (process-event *page-view *page *event *window)
+  (define (process-event *page-view *event *window)
     (schematic_page_view_grab_focus *page-view)
-    (x_event_button_pressed *page-view *page *event *window))
+    (x_event_button_pressed *page-view *event *window))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))
@@ -364,7 +364,7 @@
         (if (null-pointer? *page)
             ;; If there is no page, terminate event.
             TRUE
-            (process-event *page-view *page *event *window)))))
+            (process-event *page-view *event *window)))))
 
 (define *callback-button-pressed
   (procedure->pointer int callback-button-pressed '(* * *)))
