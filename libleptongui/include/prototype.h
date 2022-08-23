@@ -469,7 +469,11 @@ x_event_expose (GschemPageView *widget,
                 GschemToplevel *w_current);
 #endif
 
-gint x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current);
+gint
+x_event_button_pressed (GschemPageView *page_view,
+                        LeptonPage *page,
+                        GdkEventButton *event,
+                        GschemToplevel *w_current);
 
 gint x_event_motion(GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current);
 gboolean x_event_faked_motion (GschemPageView *view, GdkEventKey *event);

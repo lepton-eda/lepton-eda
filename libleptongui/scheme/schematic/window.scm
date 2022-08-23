@@ -353,7 +353,9 @@
 
 
 (define (callback-button-pressed *page-view *event *window)
-  (x_event_button_pressed *page-view *event *window))
+  (define *page (gschem_page_view_get_page *page-view))
+
+  (x_event_button_pressed *page-view *page *event *window))
 
 (define *callback-button-pressed
   (procedure->pointer int callback-button-pressed '(* * *)))

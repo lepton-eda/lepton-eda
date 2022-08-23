@@ -144,9 +144,11 @@ x_event_expose (GschemPageView *view,
  *
  */
 gint
-x_event_button_pressed(GschemPageView *page_view, GdkEventButton *event, GschemToplevel *w_current)
+x_event_button_pressed (GschemPageView *page_view,
+                        LeptonPage *page,
+                        GdkEventButton *event,
+                        GschemToplevel *w_current)
 {
-  LeptonPage *page = gschem_page_view_get_page (page_view);
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
