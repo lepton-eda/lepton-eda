@@ -473,7 +473,8 @@ gint
 x_event_button_pressed (GschemPageView *page_view,
                         GdkEvent *event,
                         GschemToplevel *w_current,
-                        SchematicActionMode action_mode);
+                        SchematicActionMode action_mode,
+                        LeptonSelection *selection);
 
 gint x_event_motion(GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current);
 gboolean x_event_faked_motion (GschemPageView *view, GdkEventKey *event);
