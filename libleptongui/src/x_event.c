@@ -207,7 +207,7 @@ x_event_button_pressed (GschemPageView *page_view,
       {
         switch (action_mode)
         {
-          case (COMPMODE)   : o_place_end(w_current, w_x, w_y, w_current->continue_component_place,
+          case (COMPMODE)   : o_place_end(w_current, w_x, w_y, schematic_window_get_continue_component_place (w_current),
                                 "add-objects-hook"); break;
           case (TEXTMODE)   : o_place_end(w_current, w_x, w_y, FALSE,
                                 "add-objects-hook"); break;
