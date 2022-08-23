@@ -156,7 +156,8 @@ x_event_expose (GschemPageView *view,
 gint
 x_event_button_pressed (GschemPageView *page_view,
                         GdkEvent *event,
-                        GschemToplevel *w_current)
+                        GschemToplevel *w_current,
+                        SchematicActionMode action_mode)
 {
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
@@ -164,8 +165,6 @@ x_event_button_pressed (GschemPageView *page_view,
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
-  SchematicActionMode action_mode =
-    schematic_window_get_action_mode (w_current);
   LeptonSelection *selection = schematic_window_get_selection_list (w_current);
 
   GdkModifierType state;

@@ -355,7 +355,10 @@
 (define (callback-button-pressed *page-view *event *window)
   (define (process-event *page-view *event *window)
     (schematic_page_view_grab_focus *page-view)
-    (x_event_button_pressed *page-view *event *window))
+    (x_event_button_pressed *page-view
+                            *event
+                            *window
+                            (schematic_window_get_action_mode *window)))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))
