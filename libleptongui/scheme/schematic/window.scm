@@ -354,6 +354,7 @@
 
 (define (callback-button-pressed *page-view *event *window)
   (define (process-event *page-view *page *event *window)
+    (schematic_page_view_grab_focus *page-view)
     (x_event_button_pressed *page-view *page *event *window))
 
   (if (or (null-pointer? *window)

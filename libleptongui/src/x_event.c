@@ -152,8 +152,6 @@ x_event_button_pressed (GschemPageView *page_view,
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
-  schematic_page_view_grab_focus (page_view);
-
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
