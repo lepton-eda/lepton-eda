@@ -353,9 +353,17 @@
 
 
 (define (callback-button-pressed *page-view *event *window)
-  (define *page (gschem_page_view_get_page *page-view))
+  (define (process-event *page-view *page *event *window)
+    (x_event_button_pressed *page-view *page *event *window))
 
-  (x_event_button_pressed *page-view *page *event *window))
+  (if (or (null-pointer? *window)
+          (null-pointer? *page-view))
+      (error "NULL page view or window.")
+      (let ((*page (gschem_page_view_get_page *page-view)))
+        (if (null-pointer? *page)
+            ;; If there is no page, terminate event.
+            TRUE
+            (process-event *page-view *page *event *window)))))
 
 (define *callback-button-pressed
   (procedure->pointer int callback-button-pressed '(* * *)))

@@ -152,12 +152,6 @@ x_event_button_pressed (GschemPageView *page_view,
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
-  g_return_val_if_fail ((w_current != NULL), 0);
-
-  if (page == NULL) {
-    return TRUE; /* terminate event */
-  }
-
   if (!gtk_widget_has_focus (GTK_WIDGET (page_view))) {
     gtk_widget_grab_focus (GTK_WIDGET (page_view));
   }
