@@ -471,7 +471,7 @@ x_event_expose (GschemPageView *widget,
 
 gint
 x_event_button_pressed (GschemPageView *page_view,
-                        GdkEventButton *event,
+                        GdkEvent *event,
                         GschemToplevel *w_current);
 
 gint x_event_motion(GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current);
@@ -551,7 +551,10 @@ gboolean x_show_uri (GschemToplevel *w_current, const gchar *buf, GError **err);
 GtkWidget*
 schematic_window_create_main_popup_menu (GschemToplevel *w_current);
 
-gint do_popup(GschemToplevel *w_current, GdkEventButton *event);
+gint
+do_popup (GschemToplevel *w_current,
+          GdkEvent *event);
+
 void x_menus_sensitivity (GtkWidget* menu, const gchar* action_name, gboolean sensitive);
 GtkWidget*
 make_separator_menu_item ();

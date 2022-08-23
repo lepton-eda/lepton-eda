@@ -145,7 +145,7 @@ x_event_expose (GschemPageView *view,
  */
 gint
 x_event_button_pressed (GschemPageView *page_view,
-                        GdkEventButton *event,
+                        GdkEvent *event,
                         GschemToplevel *w_current)
 {
   int w_x, w_y;
@@ -158,16 +158,22 @@ x_event_button_pressed (GschemPageView *page_view,
     schematic_window_get_action_mode (w_current);
   LeptonSelection *selection = schematic_window_get_selection_list (w_current);
 
+  GdkModifierType state;
+  gdk_event_get_state (event, &state);
+  gdouble x_win, y_win;
+  gdk_event_get_coords (event, &x_win, &y_win);
+  guint button = schematic_event_get_button (event);
+
 #if DEBUG
-  printf("pressed button %d! \n", event->button);
-  printf("event state: %d \n", event->state);
+  printf("pressed button %d! \n", button);
+  printf("event state: %d \n", state);
   printf("w_current action mode: %d \n", action_mode);
   printf("Selection is:\n");
   o_selection_print_all (&selection);
   printf("\n");
 #endif
 
-  gschem_page_view_SCREENtoWORLD (page_view, (int) event->x, (int) event->y,
+  gschem_page_view_SCREENtoWORLD (page_view, (int) x_win, (int) y_win,
                                   &unsnapped_wx, &unsnapped_wy);
   w_x = snap_grid (w_current, unsnapped_wx);
   w_y = snap_grid (w_current, unsnapped_wy);
@@ -190,15 +196,15 @@ x_event_button_pressed (GschemPageView *page_view,
     return(0);
   }
 
-  schematic_window_set_shift_key_pressed (w_current, (event->state & schematic_event_alt_mask ()) ? 1 : 0);
-  schematic_window_set_control_key_pressed (w_current, (event->state & schematic_event_control_mask ()) ? 1 : 0);
-  schematic_window_set_alt_key_pressed (w_current, (event->state & schematic_event_alt_mask()) ? 1 : 0);
+  schematic_window_set_shift_key_pressed (w_current, (state & schematic_event_shift_mask ()) ? 1 : 0);
+  schematic_window_set_control_key_pressed (w_current, (state & schematic_event_control_mask ()) ? 1 : 0);
+  schematic_window_set_alt_key_pressed (w_current, (state & schematic_event_alt_mask()) ? 1 : 0);
 
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_button_pressed label to escape the state evaluation rather than
    * returning from the function directly. */
 
-  if (event->button == 1) {
+  if (button == 1) {
     if (schematic_window_get_inside_action (w_current))
     {
       /* End action */
@@ -265,7 +271,7 @@ x_event_button_pressed (GschemPageView *page_view,
         break;
     default: break;
     }
-  } else if (event->button == 2) {
+  } else if (button == 2) {
 
     /* try this out and see how it behaves */
     if (schematic_window_get_inside_action (w_current))
@@ -326,7 +332,7 @@ x_event_button_pressed (GschemPageView *page_view,
 #endif /* HAVE_LIBSTROKE */
 
       case(MOUSEBTN_DO_PAN):
-      gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
+      gschem_page_view_pan_start (page_view, (int) x_win, (int) y_win);
       break;
 
       case (MOUSEBTN_DO_POPUP):
@@ -336,7 +342,7 @@ x_event_button_pressed (GschemPageView *page_view,
 
     } /* switch (schematic_window_get_middle_button (w_current)) */
 
-  } else if (event->button == 3) {
+  } else if (button == 3) {
     if (!schematic_window_get_inside_action (w_current))
     {
       if (schematic_window_get_third_button (w_current) == MOUSEBTN_DO_POPUP) {
@@ -345,13 +351,13 @@ x_event_button_pressed (GschemPageView *page_view,
         do_popup(w_current, event);
       } else {
         /* (third-button "mousepan") */
-        gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
+        gschem_page_view_pan_start (page_view, (int) x_win, (int) y_win);
       }
     } else {
       if ((schematic_window_get_third_button (w_current) == MOUSEBTN_DO_PAN) &&
           (!schematic_window_get_third_button_cancel (w_current)))
       {
-        gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
+        gschem_page_view_pan_start (page_view, (int) x_win, (int) y_win);
       } else { /* this is the default cancel */
 
         /* reset all draw and place actions */

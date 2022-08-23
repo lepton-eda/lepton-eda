@@ -290,16 +290,17 @@ schematic_window_create_main_popup_menu (GschemToplevel* w_current)
  *  \note
  *  need to look at this... here and the setup
  */
-gint do_popup (GschemToplevel *w_current, GdkEventButton *event)
+gint do_popup (GschemToplevel *w_current, GdkEvent *event)
 {
   GtkWidget *menu = (GtkWidget *) w_current->popup_menu;
   g_return_val_if_fail (menu != NULL, FALSE);
 
 #ifdef ENABLE_GTK3
-  gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
+  gtk_menu_popup_at_pointer (GTK_MENU (menu), event);
 #else
   gtk_menu_popup (GTK_MENU (menu), NULL, NULL, NULL, NULL,
-                  event->button, event->time);
+                  ((GdkEventButton*) event)->button,
+                  ((GdkEventButton*) event)->time);
 #endif
 
   return FALSE;
