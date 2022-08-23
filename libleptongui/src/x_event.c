@@ -152,9 +152,7 @@ x_event_button_pressed (GschemPageView *page_view,
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
-  if (!gtk_widget_has_focus (GTK_WIDGET (page_view))) {
-    gtk_widget_grab_focus (GTK_WIDGET (page_view));
-  }
+  schematic_page_view_grab_focus (page_view);
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
