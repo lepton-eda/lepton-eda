@@ -512,4 +512,10 @@ schematic_window_get_middle_button (GschemToplevel *w_current);
 void
 schematic_window_set_middle_button (GschemToplevel *w_current,
                                     int button);
+int
+schematic_window_get_continue_component_place (GschemToplevel *w_current);
+
+void
+schematic_window_set_continue_component_place (GschemToplevel *w_current,
+                                               int cont);
 G_END_DECLS

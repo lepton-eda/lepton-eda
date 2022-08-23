@@ -1885,3 +1885,32 @@ schematic_window_set_middle_button (GschemToplevel *w_current,
 
   w_current->middle_button = button;
 }
+
+
+/*! \brief Get schematic window's field 'continue_component_place'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'continue_component_place'.
+ */
+int
+schematic_window_get_continue_component_place (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->continue_component_place;
+}
+
+
+/*! \brief Set schematic window's field 'continue_component_place'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] cont The new value of the field 'continue_component_place'.
+ */
+void
+schematic_window_set_continue_component_place (GschemToplevel *w_current,
+                                               int cont)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->continue_component_place = cont;
+}
