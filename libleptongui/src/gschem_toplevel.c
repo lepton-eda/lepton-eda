@@ -1916,6 +1916,35 @@ schematic_window_set_third_button (GschemToplevel *w_current,
 }
 
 
+/*! \brief Get schematic window's field 'third_button_cancel'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'third_button_cancel'.
+ */
+int
+schematic_window_get_third_button_cancel (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->third_button_cancel;
+}
+
+
+/*! \brief Set schematic window's field 'third_button_cancel'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field 'third_button_cancel'.
+ */
+void
+schematic_window_set_third_button_cancel (GschemToplevel *w_current,
+                                          int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->third_button_cancel = val;
+}
+
+
 /*! \brief Get schematic window's field 'continue_component_place'.
  *
  *  \param [in] w_current The schematic window.
