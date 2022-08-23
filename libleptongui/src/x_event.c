@@ -340,7 +340,7 @@ x_event_button_pressed (GschemPageView *page_view,
   } else if (event->button == 3) {
     if (!schematic_window_get_inside_action (w_current))
     {
-      if (w_current->third_button == MOUSEBTN_DO_POPUP) {
+      if (schematic_window_get_third_button (w_current) == MOUSEBTN_DO_POPUP) {
         /* (third-button "popup") */
         i_update_menus(w_current);  /* update menus before popup  */
         do_popup(w_current, event);
@@ -349,7 +349,7 @@ x_event_button_pressed (GschemPageView *page_view,
         gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       }
     } else {
-      if ((w_current->third_button == MOUSEBTN_DO_PAN) &&
+      if ((schematic_window_get_third_button (w_current) == MOUSEBTN_DO_PAN) &&
           (!w_current->third_button_cancel)) {
         gschem_page_view_pan_start (page_view, (int) event->x, (int) event->y);
       } else { /* this is the default cancel */
