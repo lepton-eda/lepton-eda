@@ -1887,6 +1887,35 @@ schematic_window_set_middle_button (GschemToplevel *w_current,
 }
 
 
+/*! \brief Get schematic window's field 'third_button'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'third_button'.
+ */
+int
+schematic_window_get_third_button (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->third_button;
+}
+
+
+/*! \brief Set schematic window's field 'third_button'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] button The new value of the field 'third_button'.
+ */
+void
+schematic_window_set_third_button (GschemToplevel *w_current,
+                                   int button)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->third_button = button;
+}
+
+
 /*! \brief Get schematic window's field 'continue_component_place'.
  *
  *  \param [in] w_current The schematic window.

@@ -513,6 +513,12 @@ void
 schematic_window_set_middle_button (GschemToplevel *w_current,
                                     int button);
 int
+schematic_window_get_third_button (GschemToplevel *w_current);
+
+void
+schematic_window_set_third_button (GschemToplevel *w_current,
+                                   int button);
+int
 schematic_window_get_continue_component_place (GschemToplevel *w_current);
 
 void
