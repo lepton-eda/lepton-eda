@@ -171,24 +171,6 @@ x_event_button_pressed (GschemPageView *page_view,
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
-  if (schematic_event_is_double_button_press (event) &&
-      action_mode == SELECT)
-  {
-    /* Don't re-select an object (lp-912978) */
-    /* o_find_object(w_current, w_x, w_y, TRUE); */
-
-    /* GDK_BUTTON_EVENT is emitted before GDK_2BUTTON_EVENT, which
-     * leads to setting of the inside_action flag.  If o_edit()
-     * brings up a modal window (e.g., the edit attribute dialog),
-     * it intercepts the release button event and thus doesn't
-     * allow resetting of the inside_action flag so we do it
-     * manually here before processing the double-click event. */
-    i_action_stop (w_current);
-    o_edit(w_current, lepton_list_get_glist (selection));
-    scm_dynwind_end ();
-    return(0);
-  }
-
   schematic_window_set_shift_key_pressed (w_current, (state & schematic_event_shift_mask ()) ? 1 : 0);
   schematic_window_set_control_key_pressed (w_current, (state & schematic_event_control_mask ()) ? 1 : 0);
   schematic_window_set_alt_key_pressed (w_current, (state & schematic_event_alt_mask()) ? 1 : 0);

@@ -403,6 +403,7 @@
             *x_event_motion
             *x_event_scroll
             schematic_event_get_button
+            schematic_event_is_double_button_press
             schematic_event_set_doing_stroke
             schematic_event_alt_mask
             schematic_event_control_mask
@@ -879,6 +880,7 @@
 (define-lfc *x_event_motion)
 (define-lfc *x_event_scroll)
 (define-lff schematic_event_get_button int '(*))
+(define-lff schematic_event_is_double_button_press int '(*))
 (define-lff schematic_event_set_doing_stroke void (list int))
 (define-lff schematic_event_alt_mask int '())
 (define-lff schematic_event_control_mask int '())

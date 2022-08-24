@@ -381,19 +381,33 @@
              (y (snap_grid *window unsnapped-y))
              (action-mode (schematic_window_get_action_mode *window))
              (*selection (schematic_window_get_selection_list *window)))
-        (x_event_button_pressed *page-view
-                                *event
-                                *window
-                                action-mode
-                                *selection
-                                button-number
-                                state
-                                window-x
-                                window-y
-                                x
-                                y
-                                unsnapped-x
-                                unsnapped-y))))
+        (if (and (true? (schematic_event_is_double_button_press *event))
+                 (eq? (action-mode->symbol action-mode) 'select-mode))
+            ;; Process double-click event.
+            (begin
+              ;; GDK_BUTTON_EVENT is emitted before GDK_2BUTTON_EVENT, which
+              ;; leads to setting of the inside_action flag.  If o_edit()
+              ;; brings up a modal window (e.g., the edit attribute dialog),
+              ;; it intercepts the release button event and thus doesn't
+              ;; allow resetting of the inside_action flag so we do it
+              ;; manually here before processing the double-click event.
+              (i_action_stop *window)
+              (o_edit *window (lepton_list_get_glist *selection))
+              FALSE)
+            ;; Process simple one click event.
+            (x_event_button_pressed *page-view
+                                    *event
+                                    *window
+                                    action-mode
+                                    *selection
+                                    button-number
+                                    state
+                                    window-x
+                                    window-y
+                                    x
+                                    y
+                                    unsnapped-x
+                                    unsnapped-y)))))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))
