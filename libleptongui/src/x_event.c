@@ -158,19 +158,17 @@ x_event_button_pressed (GschemPageView *page_view,
                         GdkEvent *event,
                         GschemToplevel *w_current,
                         SchematicActionMode action_mode,
-                        LeptonSelection *selection)
+                        LeptonSelection *selection,
+                        guint button,
+                        GdkModifierType state,
+                        gdouble x_win,
+                        gdouble y_win)
 {
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
-
-  GdkModifierType state;
-  gdk_event_get_state (event, &state);
-  gdouble x_win, y_win;
-  gdk_event_get_coords (event, &x_win, &y_win);
-  guint button = schematic_event_get_button (event);
 
 #if DEBUG
   printf("pressed button %d! \n", button);

@@ -210,6 +210,8 @@
    (schematic_tab_info_get_page_view *tab-info)))
 
 
+(define GdkModifierType uint32)
+
 (define (callback-button-released *page-view *event *window)
   (define window (pointer->window *window))
   ;; Defines from gschem_defines.h.
@@ -219,7 +221,6 @@
   (define MOUSEBTN_DO_POPUP  4)
   (define MOUSEBTN_DO_PAN    5)
 
-  (define GdkModifierType uint32)
   (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
   (define window-x-bv (make-bytevector (sizeof double) 0))
   (define window-y-bv (make-bytevector (sizeof double) 0))
@@ -353,13 +354,29 @@
 
 
 (define (callback-button-pressed *page-view *event *window)
+  (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
+  (define window-x-bv (make-bytevector (sizeof double) 0))
+  (define window-y-bv (make-bytevector (sizeof double) 0))
+
   (define (process-event *page-view *event *window)
     (schematic_page_view_grab_focus *page-view)
-    (x_event_button_pressed *page-view
-                            *event
-                            *window
-                            (schematic_window_get_action_mode *window)
-                            (schematic_window_get_selection_list *window)))
+    (gdk_event_get_state *event (bytevector->pointer state-bv))
+    (gdk_event_get_coords *event
+                          (bytevector->pointer window-x-bv)
+                          (bytevector->pointer window-y-bv))
+    (let ((button-number (schematic_event_get_button *event))
+          (state (bytevector-u32-native-ref state-bv 0))
+          (window-x (bytevector-ieee-double-native-ref window-x-bv 0))
+          (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
+      (x_event_button_pressed *page-view
+                              *event
+                              *window
+                              (schematic_window_get_action_mode *window)
+                              (schematic_window_get_selection_list *window)
+                              button-number
+                              state
+                              window-x
+                              window-y)))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))
