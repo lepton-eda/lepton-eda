@@ -196,7 +196,10 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
     coord_display_update(w_current, (int) event->x, (int) event->y);
   }
 
-  gschem_page_view_pan_motion (page_view, w_current->mousepan_gain, (int) event->x, (int) event->y);
+  gschem_page_view_pan_motion (page_view,
+                               schematic_window_get_mousepan_gain (w_current),
+                               (int) event->x,
+                               (int) event->y);
 
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_motion label to escape the state evaluation rather
