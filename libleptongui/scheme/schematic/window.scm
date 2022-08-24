@@ -523,21 +523,43 @@
                  ;; Finish event processing.
                  FALSE)
 
-                ;; Process other buttons yet in C.
-                (_
-                 (x_event_button_pressed *page-view
-                                         *event
-                                         *window
-                                         c-action-mode
-                                         *selection
-                                         button-number
-                                         state
-                                         window-x
-                                         window-y
-                                         x
-                                         y
-                                         unsnapped-x
-                                         unsnapped-y))))))))
+                ;; Third mouse button.
+                (3
+                 (if (not (true? (schematic_window_get_inside_action *window)))
+                     (if (eq? (schematic_window_get_third_button *window)
+                              MOUSEBTN_DO_POPUP)
+                         (begin
+                           ;; (third-button "popup")
+                           ;; Update menus before popup.
+                           (i_update_menus *window)
+                           (do_popup *window *event))
+                         ;; (third-button "mousepan")
+                         (gschem_page_view_pan_start *page-view
+                                                     (inexact->exact (round window-x))
+                                                     (inexact->exact (round window-y))))
+                     (if (and (eq? (schematic_window_get_third_button *window)
+                                   MOUSEBTN_DO_PAN)
+                              (not (true? (schematic_window_get_third_button_cancel *window))))
+                         (gschem_page_view_pan_start *page-view
+                                                     (inexact->exact (round window-x))
+                                                     (inexact->exact (round window-y)))
+                         ;; This is the default cancel.
+                         ;; Reset all draw and place actions.
+                         (match action-mode
+                           ('arc-mode (o_arc_invalidate_rubber *window))
+                           ('box-mode (o_box_invalidate_rubber *window))
+                           ('bus-mode (o_bus_reset *window))
+                           ('circle-mode (o_circle_invalidate_rubber *window))
+                           ('line-mode (o_line_invalidate_rubber *window))
+                           ('net-mode (o_net_reset *window))
+                           ('path-mode (o_path_invalidate_rubber *window))
+                           ('picture-mode (o_picture_invalidate_rubber *window))
+                           ('pin-mode (o_pin_invalidate_rubber *window))
+                           (_ (i_callback_cancel %null-pointer *window)))))
+                 ;; Finish event processing.
+                 FALSE)
+
+                (_ FALSE)))))))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))

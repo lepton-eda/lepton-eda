@@ -73,15 +73,19 @@
             o_invalidate_rubber
 
             o_arc_end1
+            o_arc_invalidate_rubber
             o_arc_start
 
             o_box_end
+            o_box_invalidate_rubber
             o_box_start
 
             o_bus_end
+            o_bus_reset
             o_bus_start
 
             o_circle_end
+            o_circle_invalidate_rubber
             o_circle_start
 
             o_component_place_changed_run_hook
@@ -99,6 +103,7 @@
             o_grips_end
 
             o_line_end
+            o_line_invalidate_rubber
             o_line_start
 
             o_mirror_world_update
@@ -114,13 +119,16 @@
 
             o_path_continue
             o_path_end
+            o_path_invalidate_rubber
             o_path_start
 
             o_picture_end
+            o_picture_invalidate_rubber
             o_picture_start
             picture_selection_dialog
 
             o_pin_end
+            o_pin_invalidate_rubber
             o_pin_start
 
             o_place_end
@@ -350,6 +358,8 @@
             schematic_window_set_right_notebook
             schematic_window_set_rubber_visible
             schematic_window_get_selection_list
+            schematic_window_get_third_button
+            schematic_window_get_third_button_cancel
             schematic_window_get_undo_panzoom
             schematic_window_get_keyaccel_string
             schematic_window_set_keyaccel_string
@@ -416,7 +426,6 @@
 
             x_event_get_pointer_position
             x_event_key
-            x_event_button_pressed
             *x_event_configure
             *x_event_draw
             *x_event_expose
@@ -643,6 +652,8 @@
 (define-lff schematic_window_set_right_notebook void '(* *))
 (define-lff schematic_window_set_rubber_visible void (list '* int))
 (define-lff schematic_window_get_selection_list '* '(*))
+(define-lff schematic_window_get_third_button int '(*))
+(define-lff schematic_window_get_third_button_cancel int '(*))
 (define-lff schematic_window_get_undo_panzoom int '(*))
 (define-lff schematic_window_get_keyaccel_string '* '(*))
 (define-lff schematic_window_set_keyaccel_string void '(* *))
@@ -826,18 +837,22 @@
 
 ;;; o_arc.c
 (define-lff o_arc_end1 void (list '* int int))
+(define-lff o_arc_invalidate_rubber void '(*))
 (define-lff o_arc_start void (list '* int int))
 
 ;;; o_box.c
 (define-lff o_box_end void (list '* int int))
+(define-lff o_box_invalidate_rubber void '(*))
 (define-lff o_box_start void (list '* int int))
 
 ;;; o_bus.c
 (define-lff o_bus_end void (list '* int int))
+(define-lff o_bus_reset void '(*))
 (define-lff o_bus_start void (list '* int int))
 
 ;;; o_circle.c
 (define-lff o_circle_end void (list '* int int))
+(define-lff o_circle_invalidate_rubber void '(*))
 (define-lff o_circle_start void (list '* int int))
 
 ;;; o_component.c
@@ -858,6 +873,7 @@
 
 ;;; o_line.c
 (define-lff o_line_end void (list '* int int))
+(define-lff o_line_invalidate_rubber void '(*))
 (define-lff o_line_start void (list '* int int))
 
 ;;; o_misc.c
@@ -879,15 +895,18 @@
 ;;; o_path.c
 (define-lff o_path_continue void (list '* int int))
 (define-lff o_path_end void (list '* int int))
+(define-lff o_path_invalidate_rubber void '(*))
 (define-lff o_path_start void (list '* int int))
 
 ;;; o_picture.c
 (define-lff o_picture_end void (list '* int int))
+(define-lff o_picture_invalidate_rubber void '(*))
 (define-lff o_picture_start void (list '* int int))
 (define-lff picture_selection_dialog void '(*))
 
 ;;; o_pin.c
 (define-lff o_pin_end void (list '* int int))
+(define-lff o_pin_invalidate_rubber void '(*))
 (define-lff o_pin_start void (list '* int int))
 
 ;;; o_place.c
@@ -912,7 +931,6 @@
 ;;; x_event.c
 (define-lff x_event_get_pointer_position int (list '* int '* '*))
 (define-lff x_event_key '* '(* * *))
-(define-lff x_event_button_pressed int (list '* '* '* int '* int uint32 double double int int int int))
 (define-lfc *x_event_configure)
 (define-lfc *x_event_draw)
 (define-lfc *x_event_expose)
