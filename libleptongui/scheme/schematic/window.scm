@@ -576,7 +576,17 @@
 
 
 (define (callback-motion *page-view *event *window)
-  (x_event_motion *page-view *event *window))
+  (define (process-event *page-view *event *window)
+    (x_event_motion *page-view *event *window))
+
+  (if (or (null-pointer? *window)
+          (null-pointer? *page-view))
+      (error "NULL page view or window.")
+      (let ((*page (gschem_page_view_get_page *page-view)))
+        (if (null-pointer? *page)
+            ;; If there is no page, terminate event.
+            TRUE
+            (process-event *page-view *event *window)))))
 
 (define *callback-motion
   (procedure->pointer int callback-motion '(* * *)))

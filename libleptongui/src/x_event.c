@@ -156,17 +156,10 @@ x_event_expose (GschemPageView *view,
 gint
 x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current)
 {
-  LeptonPage *page = gschem_page_view_get_page (page_view);
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
   int skip_event=0;
   GdkEvent *test_event;
-
-  g_return_val_if_fail ((w_current != NULL), 0);
-
-  if (page == NULL) {
-    return TRUE; /* terminate event */
-  }
 
   schematic_window_set_shift_key_pressed (w_current, (event->state & GDK_SHIFT_MASK) ? 1 : 0);
   schematic_window_set_control_key_pressed (w_current, (event->state & GDK_CONTROL_MASK) ? 1 : 0);
