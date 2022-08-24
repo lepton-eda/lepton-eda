@@ -1972,3 +1972,32 @@ schematic_window_set_continue_component_place (GschemToplevel *w_current,
 
   w_current->continue_component_place = cont;
 }
+
+
+/*! \brief Get schematic window's field 'mousepan_gain'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \return The value of the field 'mousepan_gain'.
+ */
+int
+schematic_window_get_mousepan_gain (GschemToplevel *w_current)
+{
+  g_return_val_if_fail (w_current != NULL, 0);
+
+  return w_current->mousepan_gain;
+}
+
+
+/*! \brief Set schematic window's field 'mousepan_gain'.
+ *
+ *  \param [in] w_current The schematic window.
+ *  \param [in] val The new value of the field 'mousepan_gain'.
+ */
+void
+schematic_window_set_mousepan_gain (GschemToplevel *w_current,
+                                    int val)
+{
+  g_return_if_fail (w_current != NULL);
+
+  w_current->mousepan_gain = val;
+}
