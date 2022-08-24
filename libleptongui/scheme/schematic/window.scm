@@ -221,6 +221,10 @@
 (define GdkModifierType uint32)
 
 
+(define alt-mask (schematic_event_alt_mask))
+(define control-mask (schematic_event_control_mask))
+(define shift-mask (schematic_event_shift_mask))
+
 (define (state-contains? state mask)
     (if (logtest state mask) 1 0))
 
@@ -233,9 +237,6 @@
   (define window-y-bv (make-bytevector (sizeof double) 0))
   (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
-  (define shift-mask (schematic_event_shift_mask))
-  (define control-mask (schematic_event_control_mask))
-  (define alt-mask (schematic_event_alt_mask))
 
   (define (process-event *page-view *event *window)
     (gdk_event_get_state *event (bytevector->pointer state-bv))
@@ -364,9 +365,6 @@
   (define window-y-bv (make-bytevector (sizeof double) 0))
   (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
-  (define shift-mask (schematic_event_shift_mask))
-  (define control-mask (schematic_event_control_mask))
-  (define alt-mask (schematic_event_alt_mask))
 
   (define (process-event *page-view *event *window)
     (schematic_page_view_grab_focus *page-view)
@@ -576,8 +574,17 @@
 
 
 (define (callback-motion *page-view *event *window)
+  (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
   (define (process-event *page-view *event *window)
-    (x_event_motion *page-view *event *window))
+    (gdk_event_get_state *event (bytevector->pointer state-bv))
+    (let ((state (bytevector-u32-native-ref state-bv 0)))
+      (schematic_window_set_shift_key_pressed *window
+                                              (state-contains? state shift-mask))
+      (schematic_window_set_control_key_pressed *window
+                                                (state-contains? state control-mask))
+      (schematic_window_set_alt_key_pressed *window
+                                            (state-contains? state alt-mask))
+      (x_event_motion *page-view *event *window)))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))

@@ -161,10 +161,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   int skip_event=0;
   GdkEvent *test_event;
 
-  schematic_window_set_shift_key_pressed (w_current, (event->state & GDK_SHIFT_MASK) ? 1 : 0);
-  schematic_window_set_control_key_pressed (w_current, (event->state & GDK_CONTROL_MASK) ? 1 : 0);
-  schematic_window_set_alt_key_pressed (w_current, (event->state & GDK_MOD1_MASK) ? 1 : 0);
-
 #if DEBUG
   /*  printf("MOTION!\n");*/
 #endif
