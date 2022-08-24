@@ -171,78 +171,8 @@ x_event_button_pressed (GschemPageView *page_view,
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
-  if (button == 2) {
-
-    /* try this out and see how it behaves */
-    if (schematic_window_get_inside_action (w_current))
-    {
-      if (!(   action_mode == COMPMODE
-            || action_mode == TEXTMODE
-            || action_mode == MOVEMODE
-            || action_mode == COPYMODE
-            || action_mode == MCOPYMODE
-            || action_mode == PASTEMODE ))
-      {
-        i_callback_cancel (NULL, w_current);
-      }
-      goto end_button_pressed;
-    }
-
-    switch (schematic_window_get_middle_button (w_current))
-    {
-      case(MOUSEBTN_DO_ACTION):
-
-      /* don't want to search if shift */
-      /* key is pressed */
-      if (!schematic_window_get_shift_key_pressed (w_current))
-      {
-        o_find_object(w_current, unsnapped_wx, unsnapped_wy, TRUE);
-      }
-
-      /* make sure the list is not empty */
-      if (!o_select_selected(w_current)) {
-        /* this means the above find did not
-         * find anything */
-        i_action_stop (w_current);
-        i_set_state(w_current, SELECT);
-        goto end_button_pressed;
-      }
-
-      /* determine here if copy or move */
-      if (schematic_window_get_alt_key_pressed (w_current))
-      {
-        i_set_state(w_current, COPYMODE);
-        o_copy_start(w_current, w_x, w_y);
-      } else {
-        o_move_start(w_current, w_x, w_y);
-      }
-      break;
-
-      case(MOUSEBTN_DO_REPEAT):
-        g_scm_c_eval_string_protected
-        (
-          "( use-modules (schematic action) )"
-          "( &repeat-last-action )"
-        );
-      break;
-#ifdef HAVE_LIBSTROKE
-      case(MOUSEBTN_DO_STROKE):
-      DOING_STROKE=TRUE;
-      break;
-#endif /* HAVE_LIBSTROKE */
-
-      case(MOUSEBTN_DO_PAN):
-      gschem_page_view_pan_start (page_view, (int) x_win, (int) y_win);
-      break;
-
-      case (MOUSEBTN_DO_POPUP):
-        i_update_menus(w_current);
-        do_popup(w_current, event);
-        break;
-
-    } /* switch (schematic_window_get_middle_button (w_current)) */
-
-  } else if (button == 3) {
+  if (button == 3)
+  {
     if (!schematic_window_get_inside_action (w_current))
     {
       if (schematic_window_get_third_button (w_current) == MOUSEBTN_DO_POPUP) {
@@ -282,7 +212,6 @@ x_event_button_pressed (GschemPageView *page_view,
     }
   }
 
- end_button_pressed:
   scm_dynwind_end ();
 
   return(0);

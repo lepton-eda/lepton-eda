@@ -56,6 +56,7 @@
 
             snap_grid
 
+            do_popup
             make_menu_action
             make_separator_menu_item
             schematic_window_create_main_popup_menu
@@ -92,6 +93,8 @@
 
             o_edit
             o_edit_show_hidden
+
+            o_find_object
 
             o_grips_end
 
@@ -299,6 +302,7 @@
             gschem_page_view_pan
             gschem_page_view_pan_end
             gschem_page_view_pan_mouse
+            gschem_page_view_pan_start
             gschem_page_view_SCREENtoWORLD
             gschem_page_view_zoom_extents
             schematic_page_view_grab_focus
@@ -351,7 +355,6 @@
             schematic_window_set_keyaccel_string
             schematic_window_get_keyaccel_string_source_id
             schematic_window_set_keyaccel_string_source_id
-            schematic_window_get_shift_key_pressed
             schematic_window_get_arc_edit_widget
             schematic_window_get_attrib_edit_widget
             schematic_window_get_compselect_widget
@@ -364,8 +367,10 @@
             schematic_window_set_object_properties_widget
             schematic_window_set_options_widget
             schematic_window_set_text_properties_widget
+            schematic_window_get_alt_key_pressed
             schematic_window_set_alt_key_pressed
             schematic_window_set_control_key_pressed
+            schematic_window_get_shift_key_pressed
             schematic_window_set_shift_key_pressed
 
             font_select_widget_new
@@ -393,6 +398,7 @@
 
             o_select_box_end
             o_select_end
+            o_select_selected
             o_select_start
             o_select_unselect_all
 
@@ -570,6 +576,7 @@
 (define-lff gschem_page_view_pan void (list '* int int))
 (define-lff gschem_page_view_pan_end int '(*))
 (define-lff gschem_page_view_pan_mouse void (list '* int int))
+(define-lff gschem_page_view_pan_start void (list '* int int))
 (define-lff gschem_page_view_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff gschem_page_view_zoom_extents void '(* *))
 (define-lff schematic_page_view_grab_focus void '(*))
@@ -641,7 +648,6 @@
 (define-lff schematic_window_set_keyaccel_string void '(* *))
 (define-lff schematic_window_get_keyaccel_string_source_id int '(*))
 (define-lff schematic_window_set_keyaccel_string_source_id void (list '* int))
-(define-lff schematic_window_get_shift_key_pressed int '(*))
 (define-lff schematic_window_get_arc_edit_widget '* '(*))
 (define-lff schematic_window_get_attrib_edit_widget '* '(*))
 (define-lff schematic_window_get_compselect_widget '* '(*))
@@ -654,8 +660,10 @@
 (define-lff schematic_window_set_object_properties_widget void '(* *))
 (define-lff schematic_window_set_options_widget void '(* *))
 (define-lff schematic_window_set_text_properties_widget void '(* *))
+(define-lff schematic_window_get_alt_key_pressed int '(*))
 (define-lff schematic_window_set_alt_key_pressed void (list '* int))
 (define-lff schematic_window_set_control_key_pressed void (list '* int))
+(define-lff schematic_window_get_shift_key_pressed int '(*))
 (define-lff schematic_window_set_shift_key_pressed void (list '* int))
 
 ;;; font_select_widget.c
@@ -686,6 +694,7 @@
 (define-lff text_edit_dialog void '(*))
 
 ;;; x_menus.c
+(define-lff do_popup int '(* *))
 (define-lff make_separator_menu_item '* '())
 (define-lff make_menu_action '* '(* * * * *))
 (define-lff schematic_menu_recent_chooser_get_filename '* '(* *))
@@ -841,6 +850,9 @@
 ;;; o_delete.c
 (define-lff o_delete_selected void '(*))
 
+;;; o_find.c
+(define-lff o_find_object int (list '* int int int))
+
 ;;; o_grips.c
 (define-lff o_grips_end void '(*))
 
@@ -933,6 +945,7 @@
 ;;; o_select.c
 (define-lff o_select_box_end void (list '* int int))
 (define-lff o_select_end void (list '* int int))
+(define-lff o_select_selected int '(*))
 (define-lff o_select_start void (list '* int int))
 (define-lff o_select_unselect_all void '(*))
 

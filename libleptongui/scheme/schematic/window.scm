@@ -210,7 +210,16 @@
    (schematic_tab_info_get_page_view *tab-info)))
 
 
+;;; Defines from gschem_defines.h.
+(define MOUSEBTN_DO_STROKE 0)
+(define MOUSEBTN_DO_REPEAT 1)
+(define MOUSEBTN_DO_ACTION 2)
+(define MOUSEBTN_DO_POPUP  4)
+(define MOUSEBTN_DO_PAN    5)
+
+
 (define GdkModifierType uint32)
+
 
 (define (state-contains? state mask)
     (if (logtest state mask) 1 0))
@@ -218,12 +227,6 @@
 
 (define (callback-button-released *page-view *event *window)
   (define window (pointer->window *window))
-  ;; Defines from gschem_defines.h.
-  (define MOUSEBTN_DO_STROKE 0)
-  (define MOUSEBTN_DO_REPEAT 1)
-  (define MOUSEBTN_DO_ACTION 2)
-  (define MOUSEBTN_DO_POPUP  4)
-  (define MOUSEBTN_DO_PAN    5)
 
   (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
   (define window-x-bv (make-bytevector (sizeof double) 0))
@@ -409,6 +412,7 @@
                                                     (state-contains? state alt-mask))
               ;; Evaluate state transitions.
               (match button-number
+                ;; First mouse button.
                 (1
                  (if (true? (schematic_window_get_inside_action *window))
                      ;; End action.
@@ -462,6 +466,63 @@
                     (gschem_page_view_pan *page-view x y)
                     (i_set_state *window (symbol->action-mode 'select-mode)))
                    (_ FALSE)))
+
+                ;; Second mouse button.
+                (2
+                 (if (true? (schematic_window_get_inside_action *window))
+                     (when (not (or (eq? action-mode 'component-mode)
+                                    (eq? action-mode 'text-mode)
+                                    (eq? action-mode 'move-mode)
+                                    (eq? action-mode 'copy-mode)
+                                    (eq? action-mode 'multiple-copy-mode)
+                                    (eq? action-mode 'paste-mode) ))
+                       (i_callback_cancel %null-pointer *window))
+
+                     (let ((middle-button (schematic_window_get_middle_button *window)))
+                       (cond
+                        ((= middle-button MOUSEBTN_DO_ACTION)
+                         ;; Don't want to search an object under
+                         ;; mouse cursor if Shift key is pressed.
+                         (unless (true? (schematic_window_get_shift_key_pressed *window))
+                           (o_find_object *window unsnapped-x unsnapped-y TRUE))
+
+                         ;; Make sure the selection list is not empty.
+                         (if (not (true? (o_select_selected *window)))
+                             (begin
+                               ;; This means the above find did not
+                               ;; find anything.
+                               (i_action_stop *window)
+                               (i_set_state *window (symbol->action-mode 'select-mode)))
+
+                             ;; Determine here if copy or move
+                             ;; should be started.
+                             (if (true? (schematic_window_get_alt_key_pressed *window))
+                                 ;; Set copy mode and start copying.
+                                 (begin
+                                   (i_set_state *window (symbol->action-mode 'copy-mode))
+                                   (o_copy_start *window x y))
+                                 ;; Start moving objects.
+                                 (o_move_start *window x y))))
+
+                        ((= middle-button MOUSEBTN_DO_REPEAT)
+                         ((@ (schematic action) &repeat-last-action)))
+
+                        ((= middle-button MOUSEBTN_DO_STROKE)
+                         (schematic_event_set_doing_stroke TRUE))
+
+                        ((= middle-button MOUSEBTN_DO_PAN)
+                         (gschem_page_view_pan_start *page-view
+                                                     (inexact->exact (round window-x))
+                                                     (inexact->exact (round window-y))))
+
+                        ((= middle-button MOUSEBTN_DO_POPUP)
+                         (i_update_menus *window)
+                         (do_popup *window *event))
+
+                        (else FALSE))))
+                 ;; Finish event processing.
+                 FALSE)
+
                 ;; Process other buttons yet in C.
                 (_
                  (x_event_button_pressed *page-view
