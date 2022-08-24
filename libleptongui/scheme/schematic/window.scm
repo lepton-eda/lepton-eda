@@ -575,6 +575,13 @@
   (procedure->pointer int callback-button-pressed '(* * *)))
 
 
+(define (callback-motion *page-view *event *window)
+  (x_event_motion *page-view *event *window))
+
+(define *callback-motion
+  (procedure->pointer int callback-motion '(* * *)))
+
+
 (define (setup-page-view-draw-events *window *page-view)
   (define signal-callback-list
     (list
@@ -583,7 +590,7 @@
          `("expose-event" . ,*x_event_expose))
      `("button-press-event" . ,*callback-button-pressed)
      `("button-release-event" . ,*callback-button-released)
-     `("motion-notify-event" . ,*x_event_motion)
+     `("motion-notify-event" . ,*callback-motion)
      `("configure-event" . ,*x_event_configure)
      `("key-press-event" . ,*process-key-event)
      `("key-release-event" . ,*process-key-event)

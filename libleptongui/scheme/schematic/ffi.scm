@@ -429,7 +429,7 @@
             *x_event_configure
             *x_event_draw
             *x_event_expose
-            *x_event_motion
+            x_event_motion
             *x_event_scroll
             schematic_event_get_button
             schematic_event_is_double_button_press
@@ -934,7 +934,7 @@
 (define-lfc *x_event_configure)
 (define-lfc *x_event_draw)
 (define-lfc *x_event_expose)
-(define-lfc *x_event_motion)
+(define-lff x_event_motion int '(* * *))
 (define-lfc *x_event_scroll)
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
