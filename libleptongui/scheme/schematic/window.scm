@@ -378,12 +378,14 @@
       (let* ((unsnapped-x (bytevector-sint-ref unsnapped-x-bv 0 (native-endianness) (sizeof int)))
              (unsnapped-y (bytevector-sint-ref unsnapped-y-bv 0 (native-endianness) (sizeof int)))
              (x (snap_grid *window unsnapped-x))
-             (y (snap_grid *window unsnapped-y)))
+             (y (snap_grid *window unsnapped-y))
+             (action-mode (schematic_window_get_action_mode *window))
+             (*selection (schematic_window_get_selection_list *window)))
         (x_event_button_pressed *page-view
                                 *event
                                 *window
-                                (schematic_window_get_action_mode *window)
-                                (schematic_window_get_selection_list *window)
+                                action-mode
+                                *selection
                                 button-number
                                 state
                                 window-x
