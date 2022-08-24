@@ -170,15 +170,6 @@ x_event_button_pressed (GschemPageView *page_view,
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
-#if DEBUG
-  printf("pressed button %d! \n", button);
-  printf("event state: %d \n", state);
-  printf("w_current action mode: %d \n", action_mode);
-  printf("Selection is:\n");
-  o_selection_print_all (&selection);
-  printf("\n");
-#endif
-
   gschem_page_view_SCREENtoWORLD (page_view, (int) x_win, (int) y_win,
                                   &unsnapped_wx, &unsnapped_wy);
   w_x = snap_grid (w_current, unsnapped_wx);
