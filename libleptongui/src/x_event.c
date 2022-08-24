@@ -171,78 +171,7 @@ x_event_button_pressed (GschemPageView *page_view,
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
-  /* Huge switch statement to evaluate state transitions. Jump to
-   * end_button_pressed label to escape the state evaluation rather than
-   * returning from the function directly. */
-
-  if (button == 1) {
-    if (schematic_window_get_inside_action (w_current))
-    {
-      /* End action */
-      if (schematic_window_get_place_list (w_current) != NULL)
-      {
-        switch (action_mode)
-        {
-          case (COMPMODE)   : o_place_end(w_current, w_x, w_y, schematic_window_get_continue_component_place (w_current),
-                                "add-objects-hook"); break;
-          case (TEXTMODE)   : o_place_end(w_current, w_x, w_y, FALSE,
-                                "add-objects-hook"); break;
-          case (PASTEMODE)  : o_place_end(w_current, w_x, w_y, FALSE,
-                                "paste-objects-hook"); break;
-          default: break;
-        }
-      } else {
-        switch (action_mode)
-        {
-          case (ARCMODE)    : o_arc_end1(w_current, w_x, w_y); break;
-          case (BOXMODE)    : o_box_end(w_current, w_x, w_y); break;
-          case (BUSMODE)    : o_bus_end(w_current, w_x, w_y); break;
-          case (CIRCLEMODE) : o_circle_end(w_current, w_x, w_y); break;
-          case (LINEMODE)   : o_line_end(w_current, w_x, w_y); break;
-          case (NETMODE)    : o_net_end(w_current, w_x, w_y); break;
-          case (PATHMODE)   : o_path_continue (w_current, w_x, w_y); break;
-          case (PICTUREMODE): o_picture_end(w_current, w_x, w_y); break;
-          case (PINMODE)    : o_pin_end (w_current, w_x, w_y); break;
-          default: break;
-        }
-      }
-    } else {
-      /* Start action */
-      switch (action_mode)
-      {
-        case (ARCMODE)    : o_arc_start(w_current, w_x, w_y); break;
-        case (BOXMODE)    : o_box_start(w_current, w_x, w_y); break;
-        case (BUSMODE)    : o_bus_start(w_current, w_x, w_y); break;
-        case (CIRCLEMODE) : o_circle_start(w_current, w_x, w_y); break;
-        case (LINEMODE)   : o_line_start(w_current, w_x, w_y); break;
-        case (NETMODE)    : o_net_start(w_current, w_x, w_y); break;
-        case (PATHMODE)   : o_path_start (w_current, w_x, w_y); break;
-        case (PICTUREMODE): o_picture_start(w_current, w_x, w_y); break;
-        case (PINMODE)    : o_pin_start (w_current, w_x, w_y); break;
-        case (ZOOMBOX)    : a_zoom_box_start(w_current, unsnapped_wx, unsnapped_wy); break;
-        case (SELECT)     : o_select_start(w_current, w_x, w_y); break;
-
-        case (COPYMODE)   :
-        case (MCOPYMODE)  : o_copy_start(w_current, w_x, w_y); break;
-        case (MOVEMODE)   : o_move_start(w_current, w_x, w_y); break;
-        default: break;
-      }
-    }
-
-    switch (action_mode)
-    {
-      case(ROTATEMODE):   o_rotate_world_update(w_current, w_x, w_y, 90,
-                                                lepton_list_get_glist (selection)); break;
-      case(MIRRORMODE):   o_mirror_world_update(w_current, w_x, w_y,
-                                                lepton_list_get_glist (selection)); break;
-
-      case(PAN):
-        gschem_page_view_pan (page_view, w_x, w_y);
-        i_set_state(w_current, SELECT);
-        break;
-    default: break;
-    }
-  } else if (button == 2) {
+  if (button == 2) {
 
     /* try this out and see how it behaves */
     if (schematic_window_get_inside_action (w_current))

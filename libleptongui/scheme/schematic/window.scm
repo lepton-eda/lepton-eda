@@ -383,10 +383,11 @@
              (unsnapped-y (bytevector-sint-ref unsnapped-y-bv 0 (native-endianness) (sizeof int)))
              (x (snap_grid *window unsnapped-x))
              (y (snap_grid *window unsnapped-y))
-             (action-mode (schematic_window_get_action_mode *window))
+             (c-action-mode (schematic_window_get_action_mode *window))
+             (action-mode (action-mode->symbol c-action-mode))
              (*selection (schematic_window_get_selection_list *window)))
         (if (and (true? (schematic_event_is_double_button_press *event))
-                 (eq? (action-mode->symbol action-mode) 'select-mode))
+                 (eq? action-mode 'select-mode))
             ;; Process double-click event.
             (begin
               ;; GDK_BUTTON_EVENT is emitted before GDK_2BUTTON_EVENT, which
@@ -406,19 +407,76 @@
                                                         (state-contains? state control-mask))
               (schematic_window_set_alt_key_pressed *window
                                                     (state-contains? state alt-mask))
-              (x_event_button_pressed *page-view
-                                      *event
-                                      *window
-                                      action-mode
-                                      *selection
-                                      button-number
-                                      state
-                                      window-x
-                                      window-y
-                                      x
-                                      y
-                                      unsnapped-x
-                                      unsnapped-y))))))
+              ;; Evaluate state transitions.
+              (match button-number
+                (1
+                 (if (true? (schematic_window_get_inside_action *window))
+                     ;; End action.
+                     (if (not (null-pointer? (schematic_window_get_place_list *window)))
+                         (match action-mode
+                           ('component-mode
+                            (let ((continue-placement?
+                                   (schematic_window_get_continue_component_place *window)))
+                              (o_place_end *window x y continue-placement? (string->pointer "add-objects-hook"))))
+                           ('text-mode
+                            (o_place_end *window x y FALSE (string->pointer "add-objects-hook")))
+                           ('paste-mode
+                            (o_place_end *window x y FALSE (string->pointer "paste-objects-hook")))
+                           (_ FALSE))
+
+                         (match action-mode
+                           ('arc-mode (o_arc_end1 *window x y))
+                           ('box-mode (o_box_end *window x y))
+                           ('bus-mode (o_bus_end *window x y))
+                           ('circle-mode (o_circle_end *window x y))
+                           ('line-mode (o_line_end *window x y))
+                           ('net-mode (o_net_end *window x y))
+                           ('path-mode (o_path_continue *window x y))
+                           ('picture-mode (o_picture_end *window x y))
+                           ('pin-mode (o_pin_end *window x y))
+                           (_ FALSE)))
+
+                     ;; Start action
+                     (match action-mode
+                       ('arc-mode (o_arc_start *window x y))
+                       ('box-mode (o_box_start *window x y))
+                       ('bus-mode (o_bus_start *window x y))
+                       ('circle-mode (o_circle_start *window x y))
+                       ('line-mode (o_line_start *window x y))
+                       ('net-mode (o_net_start *window x y))
+                       ('path-mode (o_path_start *window x y))
+                       ('picture-mode (o_picture_start *window x y))
+                       ('pin-mode (o_pin_start *window x y))
+                       ('zoom-box-mode (a_zoom_box_start *window unsnapped-x unsnapped-y))
+                       ('select-mode (o_select_start *window x y))
+                       ((or 'copy-mode 'multiple-copy-mode) (o_copy_start *window x y))
+                       ('move-mode (o_move_start *window x y))
+                       (_ FALSE)))
+
+                 (match action-mode
+                   ('rotate-mode
+                    (o_rotate_world_update *window x y 90 (lepton_list_get_glist *selection)))
+                   ('mirror-mode
+                    (o_mirror_world_update *window x y (lepton_list_get_glist *selection)))
+                   ('pan-mode
+                    (gschem_page_view_pan *page-view x y)
+                    (i_set_state *window (symbol->action-mode 'select-mode)))
+                   (_ FALSE)))
+                ;; Process other buttons yet in C.
+                (_
+                 (x_event_button_pressed *page-view
+                                         *event
+                                         *window
+                                         c-action-mode
+                                         *selection
+                                         button-number
+                                         state
+                                         window-x
+                                         window-y
+                                         x
+                                         y
+                                         unsnapped-x
+                                         unsnapped-y))))))))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))

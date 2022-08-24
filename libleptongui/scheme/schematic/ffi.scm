@@ -71,12 +71,16 @@
             o_redraw_cleanstates
             o_invalidate_rubber
 
+            o_arc_end1
             o_arc_start
 
+            o_box_end
             o_box_start
 
+            o_bus_end
             o_bus_start
 
+            o_circle_end
             o_circle_start
 
             o_component_place_changed_run_hook
@@ -91,6 +95,7 @@
 
             o_grips_end
 
+            o_line_end
             o_line_start
 
             o_mirror_world_update
@@ -100,15 +105,22 @@
             o_move_invalidate_rubber
             o_move_start
 
+            o_net_end
             o_net_reset
             o_net_start
 
+            o_path_continue
             o_path_end
+            o_path_start
 
+            o_picture_end
+            o_picture_start
             picture_selection_dialog
 
+            o_pin_end
             o_pin_start
 
+            o_place_end
             o_place_invalidate_rubber
             o_place_mirror
             o_place_rotate
@@ -317,6 +329,7 @@
             schematic_window_set_color_edit_widget
             schematic_window_get_compselect
             schematic_window_set_compselect
+            schematic_window_get_continue_component_place
             schematic_window_get_draw_grips
             schematic_window_set_draw_grips
             schematic_window_get_enforce_hierarchy
@@ -380,6 +393,7 @@
 
             o_select_box_end
             o_select_end
+            o_select_start
             o_select_unselect_all
 
             o_slot_end
@@ -605,6 +619,7 @@
 (define-lff schematic_window_set_color_edit_widget void '(* *))
 (define-lff schematic_window_get_compselect '* '(*))
 (define-lff schematic_window_set_compselect void '(* *))
+(define-lff schematic_window_get_continue_component_place int '(*))
 (define-lff schematic_window_get_draw_grips int '(*))
 (define-lff schematic_window_set_draw_grips void (list '* int))
 (define-lff schematic_window_get_enforce_hierarchy int '(*))
@@ -801,15 +816,19 @@
 (define-lff o_invalidate_rubber int '(*))
 
 ;;; o_arc.c
+(define-lff o_arc_end1 void (list '* int int))
 (define-lff o_arc_start void (list '* int int))
 
 ;;; o_box.c
+(define-lff o_box_end void (list '* int int))
 (define-lff o_box_start void (list '* int int))
 
 ;;; o_bus.c
+(define-lff o_bus_end void (list '* int int))
 (define-lff o_bus_start void (list '* int int))
 
 ;;; o_circle.c
+(define-lff o_circle_end void (list '* int int))
 (define-lff o_circle_start void (list '* int int))
 
 ;;; o_component.c
@@ -826,6 +845,7 @@
 (define-lff o_grips_end void '(*))
 
 ;;; o_line.c
+(define-lff o_line_end void (list '* int int))
 (define-lff o_line_start void (list '* int int))
 
 ;;; o_misc.c
@@ -840,19 +860,26 @@
 (define-lff o_move_start void (list '* int int))
 
 ;;; o_net.c
+(define-lff o_net_end void (list '* int int))
 (define-lff o_net_reset void '(*))
 (define-lff o_net_start void (list '* int int))
 
 ;;; o_path.c
+(define-lff o_path_continue void (list '* int int))
 (define-lff o_path_end void (list '* int int))
+(define-lff o_path_start void (list '* int int))
 
 ;;; o_picture.c
+(define-lff o_picture_end void (list '* int int))
+(define-lff o_picture_start void (list '* int int))
 (define-lff picture_selection_dialog void '(*))
 
 ;;; o_pin.c
+(define-lff o_pin_end void (list '* int int))
 (define-lff o_pin_start void (list '* int int))
 
 ;;; o_place.c
+(define-lff o_place_end void (list '* int int int '*))
 (define-lff o_place_invalidate_rubber void (list '* int))
 (define-lff o_place_mirror void '(*))
 (define-lff o_place_rotate void '(*))
@@ -906,6 +933,7 @@
 ;;; o_select.c
 (define-lff o_select_box_end void (list '* int int))
 (define-lff o_select_end void (list '* int int))
+(define-lff o_select_start void (list '* int int))
 (define-lff o_select_unselect_all void '(*))
 
 ;;; o_slot.c
