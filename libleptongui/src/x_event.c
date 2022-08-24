@@ -192,7 +192,8 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   w_x = snap_grid (w_current, unsnapped_wx);
   w_y = snap_grid (w_current, unsnapped_wy);
 
-  if (w_current->cowindow) {
+  if (schematic_window_get_coord_widget (w_current) != NULL)
+  {
     coord_display_update(w_current, (int) event->x, (int) event->y);
   }
 
