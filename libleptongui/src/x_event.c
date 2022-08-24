@@ -162,18 +162,14 @@ x_event_button_pressed (GschemPageView *page_view,
                         guint button,
                         GdkModifierType state,
                         gdouble x_win,
-                        gdouble y_win)
+                        gdouble y_win,
+                        int w_x,
+                        int w_y,
+                        int unsnapped_wx,
+                        int unsnapped_wy)
 {
-  int w_x, w_y;
-  int unsnapped_wx, unsnapped_wy;
-
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
-
-  gschem_page_view_SCREENtoWORLD (page_view, (int) x_win, (int) y_win,
-                                  &unsnapped_wx, &unsnapped_wy);
-  w_x = snap_grid (w_current, unsnapped_wx);
-  w_y = snap_grid (w_current, unsnapped_wy);
 
   if (schematic_event_is_double_button_press (event) &&
       action_mode == SELECT)

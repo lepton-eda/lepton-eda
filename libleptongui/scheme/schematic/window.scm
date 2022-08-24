@@ -357,6 +357,8 @@
   (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
   (define window-x-bv (make-bytevector (sizeof double) 0))
   (define window-y-bv (make-bytevector (sizeof double) 0))
+  (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
+  (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
 
   (define (process-event *page-view *event *window)
     (schematic_page_view_grab_focus *page-view)
@@ -368,15 +370,28 @@
           (state (bytevector-u32-native-ref state-bv 0))
           (window-x (bytevector-ieee-double-native-ref window-x-bv 0))
           (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
-      (x_event_button_pressed *page-view
-                              *event
-                              *window
-                              (schematic_window_get_action_mode *window)
-                              (schematic_window_get_selection_list *window)
-                              button-number
-                              state
-                              window-x
-                              window-y)))
+      (gschem_page_view_SCREENtoWORLD *page-view
+                                      (inexact->exact (round window-x))
+                                      (inexact->exact (round window-y))
+                                      (bytevector->pointer unsnapped-x-bv)
+                                      (bytevector->pointer unsnapped-y-bv))
+      (let* ((unsnapped-x (bytevector-sint-ref unsnapped-x-bv 0 (native-endianness) (sizeof int)))
+             (unsnapped-y (bytevector-sint-ref unsnapped-y-bv 0 (native-endianness) (sizeof int)))
+             (x (snap_grid *window unsnapped-x))
+             (y (snap_grid *window unsnapped-y)))
+        (x_event_button_pressed *page-view
+                                *event
+                                *window
+                                (schematic_window_get_action_mode *window)
+                                (schematic_window_get_selection_list *window)
+                                button-number
+                                state
+                                window-x
+                                window-y
+                                x
+                                y
+                                unsnapped-x
+                                unsnapped-y))))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))
