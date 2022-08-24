@@ -212,6 +212,10 @@
 
 (define GdkModifierType uint32)
 
+(define (state-contains? state mask)
+    (if (logtest state mask) 1 0))
+
+
 (define (callback-button-released *page-view *event *window)
   (define window (pointer->window *window))
   ;; Defines from gschem_defines.h.
@@ -229,9 +233,6 @@
   (define shift-mask (schematic_event_shift_mask))
   (define control-mask (schematic_event_control_mask))
   (define alt-mask (schematic_event_alt_mask))
-
-  (define (state-contains? state mask)
-    (if (logtest state mask) 1 0))
 
   (define (process-event *page-view *event *window)
     (gdk_event_get_state *event (bytevector->pointer state-bv))
@@ -359,6 +360,9 @@
   (define window-y-bv (make-bytevector (sizeof double) 0))
   (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
+  (define shift-mask (schematic_event_shift_mask))
+  (define control-mask (schematic_event_control_mask))
+  (define alt-mask (schematic_event_alt_mask))
 
   (define (process-event *page-view *event *window)
     (schematic_page_view_grab_focus *page-view)
@@ -395,19 +399,26 @@
               (o_edit *window (lepton_list_get_glist *selection))
               FALSE)
             ;; Process simple one click event.
-            (x_event_button_pressed *page-view
-                                    *event
-                                    *window
-                                    action-mode
-                                    *selection
-                                    button-number
-                                    state
-                                    window-x
-                                    window-y
-                                    x
-                                    y
-                                    unsnapped-x
-                                    unsnapped-y)))))
+            (begin
+              (schematic_window_set_shift_key_pressed *window
+                                                      (state-contains? state shift-mask))
+              (schematic_window_set_control_key_pressed *window
+                                                        (state-contains? state control-mask))
+              (schematic_window_set_alt_key_pressed *window
+                                                    (state-contains? state alt-mask))
+              (x_event_button_pressed *page-view
+                                      *event
+                                      *window
+                                      action-mode
+                                      *selection
+                                      button-number
+                                      state
+                                      window-x
+                                      window-y
+                                      x
+                                      y
+                                      unsnapped-x
+                                      unsnapped-y))))))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))

@@ -171,10 +171,6 @@ x_event_button_pressed (GschemPageView *page_view,
   scm_dynwind_begin ((scm_t_dynwind_flags) 0);
   g_dynwind_window (w_current);
 
-  schematic_window_set_shift_key_pressed (w_current, (state & schematic_event_shift_mask ()) ? 1 : 0);
-  schematic_window_set_control_key_pressed (w_current, (state & schematic_event_control_mask ()) ? 1 : 0);
-  schematic_window_set_alt_key_pressed (w_current, (state & schematic_event_alt_mask()) ? 1 : 0);
-
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_button_pressed label to escape the state evaluation rather than
    * returning from the function directly. */
