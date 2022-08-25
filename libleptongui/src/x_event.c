@@ -216,11 +216,6 @@ x_event_motion (GschemPageView *page_view,
                 int w_x,
                 int w_y)
 {
-  if (schematic_window_get_coord_widget (w_current) != NULL)
-  {
-    coord_display_update(w_current, (int) x_win, (int) y_win);
-  }
-
   gschem_page_view_pan_motion (page_view,
                                schematic_window_get_mousepan_gain (w_current),
                                (int) x_win,

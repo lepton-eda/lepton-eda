@@ -611,6 +611,10 @@
                        (unsnapped-y (bytevector-sint-ref unsnapped-y-bv 0 (native-endianness) (sizeof int)))
                        (x (snap_grid *window unsnapped-x))
                        (y (snap_grid *window unsnapped-y)))
+                  (unless (null-pointer? (schematic_window_get_coord_widget *window))
+                    (coord_display_update *window
+                                          (inexact->exact (round window-x))
+                                          (inexact->exact (round window-y))))
                   (x_event_motion *page-view
                                   *event
                                   *window
