@@ -156,17 +156,15 @@ x_event_expose (GschemPageView *view,
 gint
 x_event_motion (GschemPageView *page_view,
                 GdkEvent *event,
-                GschemToplevel *w_current)
+                GschemToplevel *w_current,
+                GdkModifierType state,
+                gdouble x_win,
+                gdouble y_win)
 {
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
   int skip_event=0;
   GdkEvent *test_event;
-
-  GdkModifierType state;
-  gdk_event_get_state (event, &state);
-  gdouble x_win, y_win;
-  gdk_event_get_coords (event, &x_win, &y_win);
 
 #ifdef HAVE_LIBSTROKE
   if (DOING_STROKE == TRUE) {

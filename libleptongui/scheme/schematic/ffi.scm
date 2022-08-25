@@ -934,7 +934,7 @@
 (define-lfc *x_event_configure)
 (define-lfc *x_event_draw)
 (define-lfc *x_event_expose)
-(define-lff x_event_motion int '(* * *))
+(define-lff x_event_motion int (list '* '* '* uint32 double double))
 (define-lfc *x_event_scroll)
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))

@@ -575,16 +575,29 @@
 
 (define (callback-motion *page-view *event *window)
   (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
+  (define window-x-bv (make-bytevector (sizeof double) 0))
+  (define window-y-bv (make-bytevector (sizeof double) 0))
+
   (define (process-event *page-view *event *window)
     (gdk_event_get_state *event (bytevector->pointer state-bv))
-    (let ((state (bytevector-u32-native-ref state-bv 0)))
+    (gdk_event_get_coords *event
+                          (bytevector->pointer window-x-bv)
+                          (bytevector->pointer window-y-bv))
+    (let ((state (bytevector-u32-native-ref state-bv 0))
+          (window-x (bytevector-ieee-double-native-ref window-x-bv 0))
+          (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
       (schematic_window_set_shift_key_pressed *window
                                               (state-contains? state shift-mask))
       (schematic_window_set_control_key_pressed *window
                                                 (state-contains? state control-mask))
       (schematic_window_set_alt_key_pressed *window
                                             (state-contains? state alt-mask))
-      (x_event_motion *page-view *event *window)))
+      (x_event_motion *page-view
+                      *event
+                      *window
+                      state
+                      window-x
+                      window-y)))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))

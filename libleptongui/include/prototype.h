@@ -475,7 +475,10 @@ x_event_expose (GschemPageView *widget,
 gint
 x_event_motion (GschemPageView *page_view,
                 GdkEvent *event,
-                GschemToplevel *w_current);
+                GschemToplevel *w_current,
+                GdkModifierType state,
+                gdouble x_win,
+                gdouble y_win);
 
 gboolean x_event_faked_motion (GschemPageView *view, GdkEventKey *event);
 gboolean x_event_configure (GschemPageView *page_view, GdkEventConfigure *event, gpointer user_data);
