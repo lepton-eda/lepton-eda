@@ -158,6 +158,47 @@ x_event_expose (GschemPageView *view,
 #endif
 
 
+/*! \brief Check if a moving event has to be skipped.
+ *
+ *  \par Function Description
+ *
+ *  The function checks if there are more moving events in the GDK
+ *  event queue.  If the event in the queue is a motion event and
+ *  has the same state (depressed buttons and modifiers are the
+ *  same) as \a event has, the function returns TRUE.  Otherwise
+ *  it returns FALSE.
+ *
+ *  \param event The event to compare state with.
+ *  \returns TRUE if event in the queue matches, otherwise FALSE.
+ */
+
+gboolean
+schematic_event_skip_motion_event (GdkEvent *event)
+{
+  gboolean skip_event = FALSE;
+  GdkEvent *test_event;
+
+  if ((test_event = gdk_event_get()) != NULL)
+  {
+    GdkModifierType state;
+    gdk_event_get_state (event, &state);
+
+    /* Only skip the event if it is a motion event and no buttons
+     * or modifier keys changed. */
+    if (test_event->type == GDK_MOTION_NOTIFY
+        && ((GdkEventMotion *) test_event)->state == state)
+    {
+      skip_event = TRUE;
+    }
+    /* Put it back in front of the queue. */
+    gdk_event_put (test_event);
+    gdk_event_free (test_event);
+  }
+
+  return skip_event;
+}
+
+
 /*! \todo Finish function documentation!!!
  *  \brief
  *  \par Function Description
@@ -173,23 +214,10 @@ x_event_motion (GschemPageView *page_view,
 {
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
-  int skip_event=0;
-  GdkEvent *test_event;
 
-  /* skip the moving event if there are other moving events in the
-     gdk event queue (Werner)
-     Only skip the event if is the same event and no buttons or modifier
-     keys changed*/
-  if ((test_event = gdk_event_get()) != NULL) {
-    if (test_event->type == GDK_MOTION_NOTIFY
-        && ((GdkEventMotion *) test_event)->state == state)
-    {
-      skip_event= 1;
-    }
-    gdk_event_put(test_event); /* put it back in front of the queue */
-    gdk_event_free(test_event);
-    if (skip_event == 1)
-      return 0;
+  if (schematic_event_skip_motion_event (event))
+  {
+    return 0;
   }
 
   gschem_page_view_SCREENtoWORLD (page_view, (int) x_win, (int) y_win,
