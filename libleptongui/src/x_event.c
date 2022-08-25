@@ -34,6 +34,16 @@
 static int DOING_STROKE = FALSE;
 #endif /* HAVE_LIBSTROKE */
 
+gboolean
+schematic_event_get_doing_stroke ()
+{
+#ifdef HAVE_LIBSTROKE
+  return DOING_STROKE;
+#else
+  return FALSE;
+#endif /* HAVE_LIBSTROKE */
+}
+
 void
 schematic_event_set_doing_stroke (gboolean val)
 {

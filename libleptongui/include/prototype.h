@@ -432,6 +432,9 @@ gboolean x_dialog_close_window (GschemToplevel *w_current);
 int x_dialog_validate_attribute(GtkWindow* parent, char *attribute);
 
 /* x_event.c */
+gboolean
+schematic_event_get_doing_stroke ();
+
 void
 schematic_event_set_doing_stroke (gboolean val);
 
