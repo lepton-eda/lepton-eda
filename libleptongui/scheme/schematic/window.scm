@@ -592,12 +592,17 @@
                                                 (state-contains? state control-mask))
       (schematic_window_set_alt_key_pressed *window
                                             (state-contains? state alt-mask))
-      (x_event_motion *page-view
-                      *event
-                      *window
-                      state
-                      window-x
-                      window-y)))
+
+      (if (true? (schematic_event_get_doing_stroke))
+          (begin
+            (x_stroke_record *window window-x window-y)
+            FALSE)
+          (x_event_motion *page-view
+                          *event
+                          *window
+                          state
+                          window-x
+                          window-y))))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))

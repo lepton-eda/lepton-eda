@@ -170,6 +170,7 @@
 
             x_stroke_init
             x_stroke_free
+            x_stroke_record
             x_stroke_translate_and_execute
 
             gschem_find_text_state_new
@@ -433,6 +434,7 @@
             *x_event_scroll
             schematic_event_get_button
             schematic_event_is_double_button_press
+            schematic_event_get_doing_stroke
             schematic_event_set_doing_stroke
             schematic_event_alt_mask
             schematic_event_control_mask
@@ -938,6 +940,7 @@
 (define-lfc *x_event_scroll)
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
+(define-lff schematic_event_get_doing_stroke int '())
 (define-lff schematic_event_set_doing_stroke void (list int))
 (define-lff schematic_event_alt_mask int '())
 (define-lff schematic_event_control_mask int '())
@@ -1018,6 +1021,13 @@
     (and (force func)
          (let ((proc (delay (pointer->procedure int (force func) '(*)))))
            ((force proc) *window)))))
+
+(define (x_stroke_record *window x y)
+  (let ((func (delay (false-if-exception (dynamic-func "x_stroke_record"
+                                                       libleptongui)))))
+    (and (force func)
+         (let ((proc (delay (pointer->procedure void (force func) (list '* int int)))))
+           ((force proc) *window x y)))))
 
 
 (define (parse-gschemrc toplevel)
