@@ -372,10 +372,10 @@
     (gdk_event_get_coords *event
                           (bytevector->pointer window-x-bv)
                           (bytevector->pointer window-y-bv))
-    (let ((button-number (schematic_event_get_button *event))
-          (state (bytevector-u32-native-ref state-bv 0))
-          (window-x (bytevector-ieee-double-native-ref window-x-bv 0))
-          (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
+    (let* ((button-number (schematic_event_get_button *event))
+           (state (bytevector-u32-native-ref state-bv 0))
+           (window-x (bytevector-ieee-double-native-ref window-x-bv 0))
+           (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
       (gschem_page_view_SCREENtoWORLD *page-view
                                       (inexact->exact (round window-x))
                                       (inexact->exact (round window-y))
@@ -599,12 +599,28 @@
             FALSE)
           (if (true? (schematic_event_skip_motion_event *event))
               FALSE
-              (x_event_motion *page-view
-                              *event
-                              *window
-                              state
-                              window-x
-                              window-y)))))
+
+              (let ((unsnapped-x-bv (make-bytevector (sizeof int) 0))
+                    (unsnapped-y-bv (make-bytevector (sizeof int) 0)))
+                (gschem_page_view_SCREENtoWORLD *page-view
+                                                (inexact->exact (round window-x))
+                                                (inexact->exact (round window-y))
+                                                (bytevector->pointer unsnapped-x-bv)
+                                                (bytevector->pointer unsnapped-y-bv))
+                (let* ((unsnapped-x (bytevector-sint-ref unsnapped-x-bv 0 (native-endianness) (sizeof int)))
+                       (unsnapped-y (bytevector-sint-ref unsnapped-y-bv 0 (native-endianness) (sizeof int)))
+                       (x (snap_grid *window unsnapped-x))
+                       (y (snap_grid *window unsnapped-y)))
+                  (x_event_motion *page-view
+                                  *event
+                                  *window
+                                  state
+                                  window-x
+                                  window-y
+                                  unsnapped-x
+                                  unsnapped-y
+                                  x
+                                  y)))))))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))

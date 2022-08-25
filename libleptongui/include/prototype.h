@@ -484,7 +484,11 @@ x_event_motion (GschemPageView *page_view,
                 GschemToplevel *w_current,
                 GdkModifierType state,
                 gdouble x_win,
-                gdouble y_win);
+                gdouble y_win,
+                int unsnapped_wx,
+                int unsnapped_wy,
+                int w_x,
+                int w_y);
 
 gboolean x_event_faked_motion (GschemPageView *view, GdkEventKey *event);
 gboolean x_event_configure (GschemPageView *page_view, GdkEventConfigure *event, gpointer user_data);

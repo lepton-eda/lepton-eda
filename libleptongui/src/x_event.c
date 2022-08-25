@@ -210,16 +210,12 @@ x_event_motion (GschemPageView *page_view,
                 GschemToplevel *w_current,
                 GdkModifierType state,
                 gdouble x_win,
-                gdouble y_win)
+                gdouble y_win,
+                int unsnapped_wx,
+                int unsnapped_wy,
+                int w_x,
+                int w_y)
 {
-  int w_x, w_y;
-  int unsnapped_wx, unsnapped_wy;
-
-  gschem_page_view_SCREENtoWORLD (page_view, (int) x_win, (int) y_win,
-                                  &unsnapped_wx, &unsnapped_wy);
-  w_x = snap_grid (w_current, unsnapped_wx);
-  w_y = snap_grid (w_current, unsnapped_wy);
-
   if (schematic_window_get_coord_widget (w_current) != NULL)
   {
     coord_display_update(w_current, (int) x_win, (int) y_win);
