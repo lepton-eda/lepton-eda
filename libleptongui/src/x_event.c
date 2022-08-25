@@ -177,7 +177,8 @@ x_event_motion (GschemPageView *page_view,
   GdkEvent *test_event;
 
 #ifdef HAVE_LIBSTROKE
-  if (DOING_STROKE == TRUE) {
+  if (schematic_event_get_doing_stroke())
+  {
     x_stroke_record (w_current, x_win, y_win);
     return(0);
   }
