@@ -154,16 +154,23 @@ x_event_expose (GschemPageView *view,
  *
  */
 gint
-x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current)
+x_event_motion (GschemPageView *page_view,
+                GdkEvent *event,
+                GschemToplevel *w_current)
 {
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
   int skip_event=0;
   GdkEvent *test_event;
 
+  GdkModifierType state;
+  gdk_event_get_state (event, &state);
+  gdouble x_win, y_win;
+  gdk_event_get_coords (event, &x_win, &y_win);
+
 #ifdef HAVE_LIBSTROKE
   if (DOING_STROKE == TRUE) {
-    x_stroke_record (w_current, event->x, event->y);
+    x_stroke_record (w_current, x_win, y_win);
     return(0);
   }
 #endif /* HAVE_LIBSTROKE */
@@ -174,7 +181,8 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
      keys changed*/
   if ((test_event = gdk_event_get()) != NULL) {
     if (test_event->type == GDK_MOTION_NOTIFY
-        && ((GdkEventMotion *) test_event)->state == event->state) {
+        && ((GdkEventMotion *) test_event)->state == state)
+    {
       skip_event= 1;
     }
     gdk_event_put(test_event); /* put it back in front of the queue */
@@ -183,20 +191,20 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
       return 0;
   }
 
-  gschem_page_view_SCREENtoWORLD (page_view, (int) event->x, (int) event->y,
+  gschem_page_view_SCREENtoWORLD (page_view, (int) x_win, (int) y_win,
                                   &unsnapped_wx, &unsnapped_wy);
   w_x = snap_grid (w_current, unsnapped_wx);
   w_y = snap_grid (w_current, unsnapped_wy);
 
   if (schematic_window_get_coord_widget (w_current) != NULL)
   {
-    coord_display_update(w_current, (int) event->x, (int) event->y);
+    coord_display_update(w_current, (int) x_win, (int) y_win);
   }
 
   gschem_page_view_pan_motion (page_view,
                                schematic_window_get_mousepan_gain (w_current),
-                               (int) event->x,
-                               (int) event->y);
+                               (int) x_win,
+                               (int) y_win);
 
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_motion label to escape the state evaluation rather

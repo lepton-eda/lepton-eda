@@ -472,7 +472,11 @@ x_event_expose (GschemPageView *widget,
                 GschemToplevel *w_current);
 #endif
 
-gint x_event_motion(GschemPageView *page_view, GdkEventMotion *event, GschemToplevel *w_current);
+gint
+x_event_motion (GschemPageView *page_view,
+                GdkEvent *event,
+                GschemToplevel *w_current);
+
 gboolean x_event_faked_motion (GschemPageView *view, GdkEventKey *event);
 gboolean x_event_configure (GschemPageView *page_view, GdkEventConfigure *event, gpointer user_data);
 gint x_event_enter(GtkWidget *widget, GdkEventCrossing *event, GschemToplevel *w_current);
