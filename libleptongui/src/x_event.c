@@ -161,10 +161,6 @@ x_event_motion (GschemPageView *page_view, GdkEventMotion *event, GschemToplevel
   int skip_event=0;
   GdkEvent *test_event;
 
-#if DEBUG
-  /*  printf("MOTION!\n");*/
-#endif
-
 #ifdef HAVE_LIBSTROKE
   if (DOING_STROKE == TRUE) {
     x_stroke_record (w_current, event->x, event->y);
