@@ -215,11 +215,6 @@ x_event_motion (GschemPageView *page_view,
   int w_x, w_y;
   int unsnapped_wx, unsnapped_wy;
 
-  if (schematic_event_skip_motion_event (event))
-  {
-    return 0;
-  }
-
   gschem_page_view_SCREENtoWORLD (page_view, (int) x_win, (int) y_win,
                                   &unsnapped_wx, &unsnapped_wy);
   w_x = snap_grid (w_current, unsnapped_wx);

@@ -453,6 +453,9 @@ schematic_event_get_button (GdkEvent *event);
 gboolean
 schematic_event_is_double_button_press (GdkEvent *event);
 
+gboolean
+schematic_event_skip_motion_event (GdkEvent *event);
+
 #ifdef ENABLE_GTK3
 gint
 x_event_draw (GschemPageView *widget,
