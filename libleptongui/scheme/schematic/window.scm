@@ -42,6 +42,7 @@
   #:use-module (schematic ffi)
   #:use-module (schematic ffi gtk)
   #:use-module (schematic gui keymap)
+  #:use-module (schematic gui stroke)
   #:use-module (schematic menu)
   #:use-module (schematic toolbar)
   #:use-module (schematic window foreign)
@@ -326,8 +327,16 @@
 
                 ((= middle-button MOUSEBTN_DO_STROKE)
                  (schematic_event_set_doing_stroke FALSE)
-                 (with-window *window
-                  (x_stroke_translate_and_execute *window)))
+                 (let ((*str (x_stroke_translate_and_execute *window)))
+                   ;; When libbstroke is not defined, e.g. for
+                   ;; GTK3 port, the above function returns #f.
+                   (when (and *str
+                              (not (null-pointer? *str)))
+                     (let ((str (pointer->string *str)))
+                       (g_free *str)
+                       (with-window *window
+                                    (eval-stroke str)))))
+                 FALSE)
 
                 ((= middle-button MOUSEBTN_DO_PAN)
                  (when (and (true? (gschem_page_view_pan_end *page-view))

@@ -616,7 +616,9 @@ void gschem_rotation_combo_set_angle (GtkWidget *widget, int angle);
 void x_stroke_init (void);
 void x_stroke_free (void);
 void x_stroke_record (GschemToplevel *w_current, gint x, gint y);
-gint x_stroke_translate_and_execute (GschemToplevel *w_current);
+
+char*
+x_stroke_translate_and_execute (GschemToplevel *w_current);
 
 /* x_window.c */
 void x_window_create_drawing(GtkWidget *drawbox, GschemToplevel *w_current);

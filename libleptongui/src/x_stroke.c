@@ -136,22 +136,23 @@ x_stroke_record (GschemToplevel *w_current, gint x, gint y)
 
 }
 
-/*! \brief Evaluates the stroke.
+/*! \brief Translates the stroke.
  *  \par Function Description
- *  This function transforms the stroke input so far in an action.
+ *  This function transforms the stroke input so far into a string.
  *
- *  It makes use of the guile procedure <B>eval-stroke</B> to evaluate
- *  the stroke sequence into a possible action. The mouse footprint is
- *  erased in this function.
+ *  The stroke sequence is to be evaluated in Scheme code into a
+ *  possible action by the Guile procedure <B>eval-stroke<B>. The
+ *  mouse footprint is erased in this function.
  *
- *  It returns 1 if the stroke has been successfully evaluated as an
- *  action. It returns 0 if libstroke failed to transform the stroke
- *  or there is no action attached to the stroke.
+ *  It returns a string consisting of numbers if the stroke has
+ *  been successfully translated, or NULL if libstroke failed to
+ *  transform the stroke.  The user must g_free the returned
+ *  string.
  *
  *  \param [in] w_current The GschemToplevel object.
- *  \returns 1 on success, 0 otherwise.
+ *  \returns A string representing the stroke, or NULL.
  */
-gint
+char*
 x_stroke_translate_and_execute (GschemToplevel *w_current)
 {
   gchar sequence[STROKE_MAX_SEQUENCE];
@@ -162,7 +163,7 @@ x_stroke_translate_and_execute (GschemToplevel *w_current)
   g_assert (stroke_points != NULL);
 
   if (stroke_points->len == 0)
-    return 0;
+    return NULL;
 
   point = &g_array_index (stroke_points, StrokePoint, 0);
   min_x = max_x = point->x;
@@ -181,21 +182,11 @@ x_stroke_translate_and_execute (GschemToplevel *w_current)
   /* resets length of array */
   stroke_points->len = 0;
 
-  /* try evaluating stroke */
+  /* Return translated stroke. */
   if (stroke_trans ((char*)&sequence)) {
-    gchar *guile_string =
-      g_strdup_printf("(eval-stroke \"%s\")", sequence);
-    SCM ret;
-
-    scm_dynwind_begin ((scm_t_dynwind_flags) 0);
-    scm_dynwind_unwind_handler (g_free, guile_string, SCM_F_WIND_EXPLICITLY);
-    ret = g_scm_c_eval_string_protected (guile_string);
-    scm_dynwind_end ();
-
-    return (SCM_NFALSEP (ret));
+    return g_strdup_printf ("%s", sequence);
   }
-
-  return 0;
+  return NULL;
 }
 
 #endif /* HAVE_LIBSTROKE */

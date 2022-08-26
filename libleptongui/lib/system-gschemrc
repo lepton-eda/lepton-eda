@@ -3,7 +3,6 @@
              (schematic attrib)
              (schematic builtins)
              (schematic gui keymap)
-             (schematic gui stroke)
              (schematic menu)
              (schematic netlist)
              (lepton config))
@@ -13,4 +12,3 @@
 ( load-from-path "conf/schematic/stroke.scm"     )
 ( load-from-path "conf/schematic/keys.scm"       )
 ( load-from-path "conf/schematic/menu.scm"       )
-
