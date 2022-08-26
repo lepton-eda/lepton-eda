@@ -237,22 +237,30 @@
   (bytevector-u32-native-ref state-bv 0))
 
 
+(define (event-coords *event)
+  (define window-x-bv (make-bytevector (sizeof double) 0))
+  (define window-y-bv (make-bytevector (sizeof double) 0))
+
+  (gdk_event_get_coords *event
+                        (bytevector->pointer window-x-bv)
+                        (bytevector->pointer window-y-bv))
+
+  (let ((window-x (bytevector-ieee-double-native-ref window-x-bv 0))
+        (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
+    (cons window-x window-y)))
+
+
 (define (callback-button-released *page-view *event *window)
   (define window (pointer->window *window))
 
-  (define window-x-bv (make-bytevector (sizeof double) 0))
-  (define window-y-bv (make-bytevector (sizeof double) 0))
+  (define window-coords (event-coords *event))
   (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
-
   (define (process-event *page-view *event *window)
-    (gdk_event_get_coords *event
-                          (bytevector->pointer window-x-bv)
-                          (bytevector->pointer window-y-bv))
     (let ((button-number (schematic_event_get_button *event))
           (state (event-state *event))
-          (window-x (bytevector-ieee-double-native-ref window-x-bv 0))
-          (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
+          (window-x (car window-coords))
+          (window-y (cdr window-coords)))
       (schematic_window_set_shift_key_pressed *window
                                               (state-contains? state shift-mask))
       (schematic_window_set_control_key_pressed *window
@@ -374,20 +382,16 @@
 
 (define (callback-button-pressed *page-view *event *window)
   (define window (pointer->window *window))
-  (define window-x-bv (make-bytevector (sizeof double) 0))
-  (define window-y-bv (make-bytevector (sizeof double) 0))
+  (define window-coords (event-coords *event))
   (define unsnapped-x-bv (make-bytevector (sizeof int) 0))
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
 
   (define (process-event *page-view *event *window)
     (schematic_page_view_grab_focus *page-view)
-    (gdk_event_get_coords *event
-                          (bytevector->pointer window-x-bv)
-                          (bytevector->pointer window-y-bv))
     (let* ((button-number (schematic_event_get_button *event))
            (state (event-state *event))
-           (window-x (bytevector-ieee-double-native-ref window-x-bv 0))
-           (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
+           (window-x (car window-coords))
+           (window-y (cdr window-coords)))
       (gschem_page_view_SCREENtoWORLD *page-view
                                       (inexact->exact (round window-x))
                                       (inexact->exact (round window-y))
@@ -587,18 +591,14 @@
 
 (define (callback-motion *page-view *event *window)
   (define window (pointer->window *window))
-  (define window-x-bv (make-bytevector (sizeof double) 0))
-  (define window-y-bv (make-bytevector (sizeof double) 0))
+  (define window-coords (event-coords *event))
   ;; Define from arc_object.h.
   (define ARC_RADIUS 1)
 
   (define (process-event *page-view *event *window)
-    (gdk_event_get_coords *event
-                          (bytevector->pointer window-x-bv)
-                          (bytevector->pointer window-y-bv))
     (let ((state (event-state *event))
-          (window-x (bytevector-ieee-double-native-ref window-x-bv 0))
-          (window-y (bytevector-ieee-double-native-ref window-y-bv 0)))
+          (window-x (car window-coords))
+          (window-y (cdr window-coords)))
       (schematic_window_set_shift_key_pressed *window
                                               (state-contains? state shift-mask))
       (schematic_window_set_control_key_pressed *window
