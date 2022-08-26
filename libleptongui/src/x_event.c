@@ -216,11 +216,6 @@ x_event_motion (GschemPageView *page_view,
                 int w_x,
                 int w_y)
 {
-  gschem_page_view_pan_motion (page_view,
-                               schematic_window_get_mousepan_gain (w_current),
-                               (int) x_win,
-                               (int) y_win);
-
   /* Huge switch statement to evaluate state transitions. Jump to
    * end_motion label to escape the state evaluation rather
    * than returning from the function directly. */

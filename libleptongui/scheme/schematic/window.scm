@@ -615,6 +615,10 @@
                     (coord_display_update *window
                                           (inexact->exact (round window-x))
                                           (inexact->exact (round window-y))))
+                  (gschem_page_view_pan_motion *page-view
+                                               (schematic_window_get_mousepan_gain *window)
+                                               (inexact->exact (round window-x))
+                                               (inexact->exact (round window-y)))
                   (x_event_motion *page-view
                                   *event
                                   *window

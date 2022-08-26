@@ -312,6 +312,7 @@
             gschem_page_view_pan
             gschem_page_view_pan_end
             gschem_page_view_pan_mouse
+            gschem_page_view_pan_motion
             gschem_page_view_pan_start
             gschem_page_view_SCREENtoWORLD
             gschem_page_view_zoom_extents
@@ -354,6 +355,7 @@
             schematic_window_get_keyboardpan_gain
             schematic_window_get_macro_widget
             schematic_window_get_middle_button
+            schematic_window_get_mousepan_gain
             schematic_window_get_options
             schematic_window_get_place_list
             schematic_window_get_right_notebook
@@ -590,6 +592,7 @@
 (define-lff gschem_page_view_pan void (list '* int int))
 (define-lff gschem_page_view_pan_end int '(*))
 (define-lff gschem_page_view_pan_mouse void (list '* int int))
+(define-lff gschem_page_view_pan_motion void (list '* int int int))
 (define-lff gschem_page_view_pan_start void (list '* int int))
 (define-lff gschem_page_view_SCREENtoWORLD void (list '* int int '* '*))
 (define-lff gschem_page_view_zoom_extents void '(* *))
@@ -651,6 +654,7 @@
 (define-lff schematic_window_get_keyboardpan_gain int '(*))
 (define-lff schematic_window_get_macro_widget '* '(*))
 (define-lff schematic_window_get_middle_button int '(*))
+(define-lff schematic_window_get_mousepan_gain int '(*))
 (define-lff schematic_window_get_options '* '(*))
 (define-lff schematic_window_get_place_list '* '(*))
 (define-lff schematic_window_get_right_notebook '* '(*))
