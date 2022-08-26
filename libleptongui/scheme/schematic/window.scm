@@ -577,6 +577,8 @@
   (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
   (define window-x-bv (make-bytevector (sizeof double) 0))
   (define window-y-bv (make-bytevector (sizeof double) 0))
+  ;; Define from arc_object.h.
+  (define ARC_RADIUS 1)
 
   (define (process-event *page-view *event *window)
     (gdk_event_get_state *event (bytevector->pointer state-bv))
@@ -619,16 +621,43 @@
                                                (schematic_window_get_mousepan_gain *window)
                                                (inexact->exact (round window-x))
                                                (inexact->exact (round window-y)))
-                  (x_event_motion *page-view
-                                  *event
-                                  *window
-                                  state
-                                  window-x
-                                  window-y
-                                  unsnapped-x
-                                  unsnapped-y
-                                  x
-                                  y)))))))
+                  ;; Evaluate state transitions.
+                  (let ((action-mode (action-mode->symbol (schematic_window_get_action_mode *window))))
+
+                    (if (true? (schematic_window_get_inside_action *window))
+                        (if (not (null-pointer? (schematic_window_get_place_list *window)))
+                            (match action-mode
+                              ((or 'copy-mode
+                                   'multiple-copy-mode
+                                   'component-mode
+                                   'paste-mode
+                                   'text-mode)
+                               (o_place_motion *window x y))
+                              ('move-mode (o_move_motion *window x y))
+                              (_ FALSE))
+
+                            (match action-mode
+                              ('arc-mode (o_arc_motion *window x y ARC_RADIUS))
+                              ('box-mode (o_box_motion *window x y))
+                              ('bus-mode (o_bus_motion *window x y))
+                              ('circle-mode (o_circle_motion *window x y))
+                              ('line-mode (o_line_motion *window x y))
+                              ('net-mode (o_net_motion *window x y))
+                              ('path-mode (o_path_motion *window x y))
+                              ('picture-mode (o_picture_motion *window x y))
+                              ('pin-mode (o_pin_motion *window x y))
+                              ('grips-mode (o_grips_motion *window x y))
+                              ('box-select-mode (o_select_box_motion *window unsnapped-x unsnapped-y))
+                              ('zoom-box-mode (a_zoom_box_motion *window unsnapped-x unsnapped-y))
+                              ('select-mode (o_select_motion *window x y))
+                              (_ FALSE)))
+
+                        ;; Not inside action.
+                        (match action-mode
+                          ('net-mode (o_net_start_magnetic *window x y))
+                          (_ FALSE)))
+
+                    FALSE)))))))
 
   (if (or (null-pointer? *window)
           (null-pointer? *page-view))

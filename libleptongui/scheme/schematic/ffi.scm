@@ -74,17 +74,21 @@
 
             o_arc_end1
             o_arc_invalidate_rubber
+            o_arc_motion
             o_arc_start
 
             o_box_end
             o_box_invalidate_rubber
+            o_box_motion
             o_box_start
 
             o_bus_end
+            o_bus_motion
             o_bus_reset
             o_bus_start
 
             o_circle_end
+            o_circle_motion
             o_circle_invalidate_rubber
             o_circle_start
 
@@ -101,9 +105,11 @@
             o_find_object
 
             o_grips_end
+            o_grips_motion
 
             o_line_end
             o_line_invalidate_rubber
+            o_line_motion
             o_line_start
 
             o_mirror_world_update
@@ -111,29 +117,36 @@
 
             o_move_end
             o_move_invalidate_rubber
+            o_move_motion
             o_move_start
 
             o_net_end
+            o_net_motion
             o_net_reset
             o_net_start
+            o_net_start_magnetic
 
             o_path_continue
             o_path_end
             o_path_invalidate_rubber
+            o_path_motion
             o_path_start
 
             o_picture_end
             o_picture_invalidate_rubber
+            o_picture_motion
             o_picture_start
             picture_selection_dialog
 
             o_pin_end
             o_pin_invalidate_rubber
+            o_pin_motion
             o_pin_start
 
             o_place_end
             o_place_invalidate_rubber
             o_place_mirror
+            o_place_motion
             o_place_rotate
 
             page_select_widget_new
@@ -411,7 +424,9 @@
             text_input_dialog
 
             o_select_box_end
+            o_select_box_motion
             o_select_end
+            o_select_motion
             o_select_selected
             o_select_start
             o_select_unselect_all
@@ -433,7 +448,6 @@
             *x_event_configure
             *x_event_draw
             *x_event_expose
-            x_event_motion
             *x_event_scroll
             schematic_event_get_button
             schematic_event_is_double_button_press
@@ -460,6 +474,7 @@
 
             a_zoom
             a_zoom_box_end
+            a_zoom_box_motion
             a_zoom_box_start
 
             parse-gschemrc
@@ -847,21 +862,25 @@
 ;;; o_arc.c
 (define-lff o_arc_end1 void (list '* int int))
 (define-lff o_arc_invalidate_rubber void '(*))
+(define-lff o_arc_motion void (list '* int int int))
 (define-lff o_arc_start void (list '* int int))
 
 ;;; o_box.c
 (define-lff o_box_end void (list '* int int))
 (define-lff o_box_invalidate_rubber void '(*))
+(define-lff o_box_motion void (list '* int int))
 (define-lff o_box_start void (list '* int int))
 
 ;;; o_bus.c
 (define-lff o_bus_end void (list '* int int))
+(define-lff o_bus_motion void (list '* int int))
 (define-lff o_bus_reset void '(*))
 (define-lff o_bus_start void (list '* int int))
 
 ;;; o_circle.c
 (define-lff o_circle_end void (list '* int int))
 (define-lff o_circle_invalidate_rubber void '(*))
+(define-lff o_circle_motion void (list '* int int))
 (define-lff o_circle_start void (list '* int int))
 
 ;;; o_component.c
@@ -879,10 +898,12 @@
 
 ;;; o_grips.c
 (define-lff o_grips_end void '(*))
+(define-lff o_grips_motion void (list '* int int))
 
 ;;; o_line.c
 (define-lff o_line_end void (list '* int int))
 (define-lff o_line_invalidate_rubber void '(*))
+(define-lff o_line_motion void (list '* int int))
 (define-lff o_line_start void (list '* int int))
 
 ;;; o_misc.c
@@ -894,27 +915,33 @@
 ;;; o_move.c
 (define-lff o_move_end void '(*))
 (define-lff o_move_invalidate_rubber void (list '* int))
+(define-lff o_move_motion void (list '* int int))
 (define-lff o_move_start void (list '* int int))
 
 ;;; o_net.c
 (define-lff o_net_end void (list '* int int))
+(define-lff o_net_motion void (list '* int int))
 (define-lff o_net_reset void '(*))
 (define-lff o_net_start void (list '* int int))
+(define-lff o_net_start_magnetic void (list '* int int))
 
 ;;; o_path.c
 (define-lff o_path_continue void (list '* int int))
 (define-lff o_path_end void (list '* int int))
 (define-lff o_path_invalidate_rubber void '(*))
+(define-lff o_path_motion void (list '* int int))
 (define-lff o_path_start void (list '* int int))
 
 ;;; o_picture.c
 (define-lff o_picture_end void (list '* int int))
 (define-lff o_picture_invalidate_rubber void '(*))
+(define-lff o_picture_motion void (list '* int int))
 (define-lff o_picture_start void (list '* int int))
 (define-lff picture_selection_dialog void '(*))
 
 ;;; o_pin.c
 (define-lff o_pin_end void (list '* int int))
+(define-lff o_pin_motion void (list '* int int))
 (define-lff o_pin_invalidate_rubber void '(*))
 (define-lff o_pin_start void (list '* int int))
 
@@ -922,6 +949,7 @@
 (define-lff o_place_end void (list '* int int int '*))
 (define-lff o_place_invalidate_rubber void (list '* int))
 (define-lff o_place_mirror void '(*))
+(define-lff o_place_motion void (list '* int int))
 (define-lff o_place_rotate void '(*))
 
 ;;; x_attribedit.c
@@ -943,7 +971,6 @@
 (define-lfc *x_event_configure)
 (define-lfc *x_event_draw)
 (define-lfc *x_event_expose)
-(define-lff x_event_motion int (list '* '* '* uint32 double double int int int int))
 (define-lfc *x_event_scroll)
 (define-lff schematic_event_get_button int '(*))
 (define-lff schematic_event_is_double_button_press int '(*))
@@ -973,7 +1000,9 @@
 
 ;;; o_select.c
 (define-lff o_select_box_end void (list '* int int))
+(define-lff o_select_box_motion void (list '* int int))
 (define-lff o_select_end void (list '* int int))
+(define-lff o_select_motion void (list '* int int))
 (define-lff o_select_selected int '(*))
 (define-lff o_select_start void (list '* int int))
 (define-lff o_select_unselect_all void '(*))
@@ -1004,6 +1033,7 @@
 ;;; a_zoom.c
 (define-lff a_zoom void (list '* '* int int))
 (define-lff a_zoom_box_end void (list '* int int))
+(define-lff a_zoom_box_motion void (list '* int int))
 (define-lff a_zoom_box_start void (list '* int int))
 
 ;;; This is a special case: the function may be not defined in C
