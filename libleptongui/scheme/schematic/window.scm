@@ -219,22 +219,30 @@
 (define MOUSEBTN_DO_PAN    5)
 
 
-(define GdkModifierType uint32)
-
-
-(define alt-mask (schematic_event_alt_mask))
-(define control-mask (schematic_event_control_mask))
-(define shift-mask (schematic_event_shift_mask))
-
-(define (state-contains? state mask)
-    (if (logtest state mask) 1 0))
-
-
 (define (event-state *event)
+  (define GdkModifierType uint32)
   (define state-bv (make-bytevector (sizeof GdkModifierType) 0))
 
   (gdk_event_get_state *event (bytevector->pointer state-bv))
   (bytevector-u32-native-ref state-bv 0))
+
+
+(define (window-save-modifiers *window *event)
+  (define alt-mask (schematic_event_alt_mask))
+  (define control-mask (schematic_event_control_mask))
+  (define shift-mask (schematic_event_shift_mask))
+
+  (define (state-contains? state mask)
+    (if (logtest state mask) 1 0))
+
+  (define state (event-state *event))
+
+  (schematic_window_set_shift_key_pressed *window
+                                          (state-contains? state shift-mask))
+  (schematic_window_set_control_key_pressed *window
+                                            (state-contains? state control-mask))
+  (schematic_window_set_alt_key_pressed *window
+                                        (state-contains? state alt-mask)))
 
 
 (define (event-coords *event)
@@ -258,16 +266,9 @@
   (define unsnapped-y-bv (make-bytevector (sizeof int) 0))
   (define (process-event *page-view *event *window)
     (let ((button-number (schematic_event_get_button *event))
-          (state (event-state *event))
           (window-x (car window-coords))
           (window-y (cdr window-coords)))
-      (schematic_window_set_shift_key_pressed *window
-                                              (state-contains? state shift-mask))
-      (schematic_window_set_control_key_pressed *window
-                                                (state-contains? state control-mask))
-      (schematic_window_set_alt_key_pressed *window
-                                            (state-contains? state alt-mask))
-
+      (window-save-modifiers *window *event)
       (gschem_page_view_SCREENtoWORLD *page-view
                                       (inexact->exact (round window-x))
                                       (inexact->exact (round window-y))
@@ -388,10 +389,9 @@
 
   (define (process-event *page-view *event *window)
     (schematic_page_view_grab_focus *page-view)
-    (let* ((button-number (schematic_event_get_button *event))
-           (state (event-state *event))
-           (window-x (car window-coords))
-           (window-y (cdr window-coords)))
+    (let ((button-number (schematic_event_get_button *event))
+          (window-x (car window-coords))
+          (window-y (cdr window-coords)))
       (gschem_page_view_SCREENtoWORLD *page-view
                                       (inexact->exact (round window-x))
                                       (inexact->exact (round window-y))
@@ -419,12 +419,7 @@
               FALSE)
             ;; Process simple one click event.
             (begin
-              (schematic_window_set_shift_key_pressed *window
-                                                      (state-contains? state shift-mask))
-              (schematic_window_set_control_key_pressed *window
-                                                        (state-contains? state control-mask))
-              (schematic_window_set_alt_key_pressed *window
-                                                    (state-contains? state alt-mask))
+              (window-save-modifiers *window *event)
               ;; Evaluate state transitions.
               (match button-number
                 ;; First mouse button.
@@ -596,15 +591,9 @@
   (define ARC_RADIUS 1)
 
   (define (process-event *page-view *event *window)
-    (let ((state (event-state *event))
-          (window-x (car window-coords))
+    (let ((window-x (car window-coords))
           (window-y (cdr window-coords)))
-      (schematic_window_set_shift_key_pressed *window
-                                              (state-contains? state shift-mask))
-      (schematic_window_set_control_key_pressed *window
-                                                (state-contains? state control-mask))
-      (schematic_window_set_alt_key_pressed *window
-                                            (state-contains? state alt-mask))
+      (window-save-modifiers *window *event)
 
       (if (true? (schematic_event_get_doing_stroke))
           (begin
