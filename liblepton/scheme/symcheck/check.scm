@@ -69,8 +69,7 @@ Lepton EDA homepage: <~A>
   (define (report-symbol-statistics page)
     (unless (symcheck-option-ref 'quiet)
       (check-log! 'message (G_ "Checking: ~A\n") (page-filename page)))
-    (check-symbol page)
-    (check-report `(,page . ,(page-contents page))))
+    (check-report `(,page . ,(check-symbol page))))
 
   (define (error-no-files-specified)
     (format #t
