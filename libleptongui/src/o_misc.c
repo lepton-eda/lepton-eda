@@ -89,54 +89,6 @@ void o_edit(GschemToplevel *w_current, GList *list)
   /* some sort of redrawing? */
 }
 
-/*! \brief Lock selected objects
- *
- *  \par Function Description
- *  This locks the entire selected list. It does lock components,
- *  but does NOT change the color of primatives of the components.
- *
- *  \note This function cannot be called recursively.
- *
- *  \param w_current  The toplevel environment.
- */
-void o_lock(GschemToplevel *w_current)
-{
-  g_return_if_fail (w_current != NULL);
-
-  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
-
-  GList* objs = lepton_list_get_glist (selection);
-
-  /* lock selected objects:
-  */
-  LeptonObject* obj = NULL;
-  for (GList* iter = objs; iter != NULL; iter = g_list_next (iter))
-  {
-    obj = (LeptonObject*) iter->data;
-    lepton_object_set_selectable (obj, FALSE);
-
-    /* for objects with attributes, also lock them:
-    */
-    GList *attribs = lepton_object_get_attribs (obj);
-    if (attribs != NULL)
-    {
-      lepton_object_list_set_selectable (attribs, FALSE);
-    }
-  }
-
-  schematic_window_active_page_changed (w_current);
-
-  if (!schematic_window_get_shift_key_pressed (w_current))
-    o_select_unselect_all(w_current);
-
-  o_undo_savestate_old(w_current, UNDO_ALL);
-  i_update_menus(w_current);
-
-  /* refresh view to properly restore attributes' colors:
-  */
-  GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
-  gschem_page_view_invalidate_all (view);
-}
 
 /*! \brief Unlock selected objects
  *
