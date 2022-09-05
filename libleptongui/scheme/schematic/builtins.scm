@@ -367,9 +367,33 @@ the snap grid size should be set to 100")))
 
 
 ;;; Lock all objects in selection list.
+;;; The function locks the entire selected list. It does lock
+;;; components, but does NOT change the color of primitives of the
+;;; components.
 (define-action-public (&edit-lock #:label (G_ "Lock"))
-  (unless (null? (page-selection (active-page)))
-    (o_lock (*current-window))))
+  (define *window (*current-window))
+  (define (lock-object! object)
+    (set-object-selectable! object #f))
+  (define (lock-object-with-attribs! object)
+    (lock-object! object)
+    (for-each lock-object! (object-attribs object)))
+
+  ;; Lock selected objects with their attributes.
+  (for-each lock-object-with-attribs! (page-selection (active-page)))
+
+  ;; Apart from setting the current page as changed, the function
+  ;; updates the Page manager.
+  (schematic_window_active_page_changed *window)
+
+  (unless (true? (schematic_window_get_shift_key_pressed *window))
+    (o_select_unselect_all *window))
+
+  (undo-save-state)
+  (i_update_menus *window)
+
+  ;; Refresh page view to properly restore attributes' colors.
+  (gschem_page_view_invalidate_all
+   (gschem_toplevel_get_current_page_view *window)))
 
 
 ;;; Unlock all objects in selection list.

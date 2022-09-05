@@ -102,7 +102,6 @@
 
             o_edit
             o_edit_show_hidden
-            o_lock
             o_unlock
             o_mirror_world_update
             o_rotate_world_update
@@ -230,6 +229,7 @@
 
             schematic_signal_connect
 
+            schematic_window_active_page_changed
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_toplevel
             schematic_window_get_actionfeedback_mode
@@ -244,6 +244,7 @@
             schematic_window_get_selection_list
             schematic_window_update_keyaccel_string
             schematic_window_update_keyaccel_timer
+            schematic_window_get_shift_key_pressed
 
             gschem_options_cycle_grid_mode
             gschem_options_get_grid_mode
@@ -387,6 +388,7 @@
 (define-lff schematic_snap_mode_to_string '* (list int))
 
 ;;; gschem_toplevel.c
+(define-lff schematic_window_active_page_changed void '(*))
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff schematic_window_get_actionfeedback_mode int '(*))
@@ -401,6 +403,7 @@
 (define-lff schematic_window_get_selection_list '* '(*))
 (define-lff schematic_window_update_keyaccel_string void '(* *))
 (define-lff schematic_window_update_keyaccel_timer void (list '* int))
+(define-lff schematic_window_get_shift_key_pressed int '(*))
 
 ;;; gschem_options.c
 (define-lff gschem_options_cycle_grid_mode void '(*))
@@ -559,7 +562,6 @@
 ;;; o_misc.c
 (define-lff o_edit void '(* *))
 (define-lff o_edit_show_hidden void '(* *))
-(define-lff o_lock void '(*))
 (define-lff o_unlock void '(*))
 (define-lff o_mirror_world_update void (list '* int int '*))
 (define-lff o_rotate_world_update void (list '* int int int '*))
