@@ -102,7 +102,6 @@
 
             o_edit
             o_edit_show_hidden
-            o_unlock
             o_mirror_world_update
             o_rotate_world_update
             o_update_component
@@ -562,7 +561,6 @@
 ;;; o_misc.c
 (define-lff o_edit void '(* *))
 (define-lff o_edit_show_hidden void '(* *))
-(define-lff o_unlock void '(*))
 (define-lff o_mirror_world_update void (list '* int int '*))
 (define-lff o_rotate_world_update void (list '* int int int '*))
 (define-lff o_update_component '* '(* *))

@@ -397,9 +397,28 @@ the snap grid size should be set to 100")))
 
 
 ;;; Unlock all objects in selection list.
+;;; The function unlocks currenly selected objects.  Locked
+;;; objects can be selected with a bounding box.
 (define-action-public (&edit-unlock #:label (G_ "Unlock"))
-  (unless (null? (page-selection (active-page)))
-    (o_unlock (*current-window))))
+  (define *window (*current-window))
+  (define (unlock-object! object)
+    (set-object-selectable! object #t))
+  (define (unlock-object-with-attribs! object)
+    (unlock-object! object)
+    (for-each unlock-object! (object-attribs object)))
+
+  ;; Unlock selected objects with their attributes.
+  (for-each unlock-object-with-attribs! (page-selection (active-page)))
+
+  ;; Apart from setting the current page as changed, the function
+  ;; updates the Page manager.
+  (schematic_window_active_page_changed *window)
+
+  (undo-save-state)
+
+  ;; Refresh page view to properly restore attributes' colors.
+  (gschem_page_view_invalidate_all
+   (gschem_toplevel_get_current_page_view *window)))
 
 
 (define-action-public (&edit-invoke-macro #:label (G_ "Invoke Macro"))
