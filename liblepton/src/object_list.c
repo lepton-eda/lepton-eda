@@ -289,24 +289,6 @@ lepton_object_list_set_color (const GList *objects,
   }
 }
 
-/*! \brief Set a list of objects as selectable or not
- *
- *  \param [in] objects the list of objects to set as selectable or not
- *  \param [in] selectable the new state of the objects
- */
-void
-lepton_object_list_set_selectable (const GList *objects,
-                                   gboolean selectable)
-{
-  const GList *iter = objects;
-
-  while (iter != NULL) {
-    LeptonObject *object = (LeptonObject*)iter->data;
-
-    lepton_object_set_selectable (object, selectable);
-    iter = g_list_next (iter);
-  }
-}
 
 /*! \brief "Save" a file into a string buffer
  *  \par Function Description

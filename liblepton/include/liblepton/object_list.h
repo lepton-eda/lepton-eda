@@ -1,7 +1,7 @@
 /* Lepton EDA library
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,9 +40,6 @@ lepton_object_list_rotate (const GList *objects,
 void
 lepton_object_list_set_color (const GList *objects,
                               int color);
-void
-lepton_object_list_set_selectable (const GList *objects,
-                                   gboolean selectable);
 gchar*
 lepton_object_list_to_buffer (const GList *objects);
 
