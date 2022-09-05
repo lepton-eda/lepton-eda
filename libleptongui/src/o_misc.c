@@ -90,50 +90,6 @@ void o_edit(GschemToplevel *w_current, GList *list)
 }
 
 
-/*! \brief Unlock selected objects
- *
- *  \par Function Description
- *  Unlock objects currenly selected.
- *  Locked objects can be selected with a bounding box.
- *
- *  \note This function cannot be called recursively.
- *
- *  \param w_current  The toplevel environment.
- */
-void o_unlock(GschemToplevel *w_current)
-{
-  g_return_if_fail (w_current != NULL);
-
-  LeptonSelection *selection = schematic_window_get_selection_list (w_current);
-
-  GList* objs = lepton_list_get_glist (selection);
-
-  /* unlock selected objects:
-  */
-  LeptonObject* obj = NULL;
-  for (GList* iter = objs; iter != NULL; iter = g_list_next (iter))
-  {
-    obj = (LeptonObject*) iter->data;
-    lepton_object_set_selectable (obj, TRUE);
-
-    /* for objects with attributes, also unlock them:
-    */
-    GList *attribs = lepton_object_get_attribs (obj);
-    if (attribs != NULL)
-    {
-      lepton_object_list_set_selectable (attribs, TRUE);
-    }
-  }
-
-  schematic_window_active_page_changed (w_current);
-  o_undo_savestate_old(w_current, UNDO_ALL);
-
-  /* refresh view to properly restore attributes' colors:
-  */
-  GschemPageView* view = gschem_toplevel_get_current_page_view (w_current);
-  gschem_page_view_invalidate_all (view);
-}
-
 /*! \brief Rotate all objects in list.
  *  \par Function Description
  *  Given an object <B>list</B>, and the center of rotation
