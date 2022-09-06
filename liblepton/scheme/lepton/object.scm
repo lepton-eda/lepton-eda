@@ -1463,6 +1463,12 @@ returns #f."
                                 TRUE)))))
 
 (define (make-component/library basename . args)
+  "Searches the component library for a component with given
+BASENAME.  If found, creates a new component object by
+instantiating that library component and returns it.  The
+component is initially set to be unembedded.  If no match is found
+for BASENAME in the library, returns #f.  Argument list ARGS is
+the same as for make-component()."
   (let ((c (%make-component/library basename)))
     (if c (apply set-component! c args) #f)))
 
