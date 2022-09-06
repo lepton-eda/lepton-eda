@@ -374,7 +374,6 @@ void o_select_connected_nets(GschemToplevel *w_current, LeptonObject* o_current)
 LeptonObject *o_select_return_first_object(GschemToplevel *w_current);
 int o_select_selected(GschemToplevel *w_current);
 void o_select_unselect_all(GschemToplevel *w_current);
-void o_select_visible_unlocked(GschemToplevel *w_current);
 void o_select_move_to_place_list(GschemToplevel *w_current);
 /* o_slot.c */
 void o_slot_end(GschemToplevel *w_current, LeptonObject *object, const char *string);
