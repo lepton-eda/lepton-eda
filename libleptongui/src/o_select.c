@@ -600,58 +600,6 @@ void o_select_unselect_all(GschemToplevel *w_current)
   }
 }
 
-/*! \brief Selects all visible objects on the current page.
- * \par Function Description
- * Clears any existing selection, then selects everything visible and
- * unlocked on the current page, and any attached attributes whether
- * visible or invisible..
- *
- * \param w_current  The current #GschemToplevel structure.
- */
-void
-o_select_visible_unlocked (GschemToplevel *w_current)
-{
-  const GList *iter;
-  GList *added;
-  gboolean show_hidden_text =
-    gschem_toplevel_get_show_hidden_text (w_current);
-
-  LeptonPage *active_page = schematic_window_get_active_page (w_current);
-  LeptonSelection *selection = lepton_page_get_selection_list (active_page);
-
-  o_select_unselect_all (w_current);
-  for (iter = lepton_page_objects (active_page);
-       iter != NULL;
-       iter = g_list_next (iter)) {
-    LeptonObject *obj = (LeptonObject *) iter->data;
-
-    /* Skip invisible text objects. */
-    if (lepton_object_is_text (obj) &&
-        !lepton_text_object_is_visible (obj) &&
-        !show_hidden_text)
-      continue;
-
-    /* Skip locked objects. */
-    if (!lepton_object_get_selectable(obj)) continue;
-
-    /* Add object to selection. */
-    /*! \bug We can't call o_select_object() because it
-     * behaves differently depending on the state of
-     * w_current->SHIFTKEY and w_current->CONTROLKEY, which may well
-     * be set if this function is called via a keystroke
-     * (e.g. Ctrl-A). */
-    o_selection_add (selection, obj);
-
-    /* Add any attributes of object to selection as well. */
-    o_attrib_add_selected (w_current, selection, obj);
-  }
-
-  /* Run hooks for all items selected */
-  added = lepton_list_get_glist (selection);
-  if (added != NULL) {
-    g_run_hook_object_list (w_current, "select-objects-hook", added);
-  }
-}
 
 /*! \todo Finish function documentation!!!
  *  \brief

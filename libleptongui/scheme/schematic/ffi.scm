@@ -230,6 +230,7 @@
 
             schematic_window_active_page_changed
             gschem_toplevel_get_current_page_view
+            gschem_toplevel_get_show_hidden_text
             gschem_toplevel_get_toplevel
             schematic_window_get_actionfeedback_mode
             schematic_window_set_actionfeedback_mode
@@ -259,7 +260,6 @@
 
             o_select_return_first_object
             o_select_unselect_all
-            o_select_visible_unlocked
 
             o_slot_end
 
@@ -389,6 +389,7 @@
 ;;; gschem_toplevel.c
 (define-lff schematic_window_active_page_changed void '(*))
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
+(define-lff gschem_toplevel_get_show_hidden_text int '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
 (define-lff schematic_window_get_actionfeedback_mode int '(*))
 (define-lff schematic_window_set_actionfeedback_mode void (list '* int))
@@ -597,7 +598,6 @@
 ;;; o_select.c
 (define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_unselect_all void '(*))
-(define-lff o_select_visible_unlocked void '(*))
 
 ;;; o_slot.c
 (define-lff o_slot_end void '(* * *))

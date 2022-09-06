@@ -181,12 +181,38 @@
   (callback-edit-select (*current-window)))
 
 ;;; Select all objects on the active page.
-(define-action-public (&edit-select-all #:label (G_ "Select All") #:icon "gtk-select-all")
+;;; The action clears any existing selection, then selects
+;;; everything visible and unlocked on the current page, and any
+;;; attached attributes whether visible or invisible.
+(define-action-public (&edit-select-all #:label (G_ "Select All")
+                                        #:icon "gtk-select-all")
   (define *window (*current-window))
+  (define show-hidden-text?
+    (true? (gschem_toplevel_get_show_hidden_text *window)))
 
   (o_redraw_cleanstates *window)
 
-  (o_select_visible_unlocked *window)
+  (o_select_unselect_all *window)
+
+  (for-each
+
+   (lambda (object)
+     ;; Skip invisible text objects and locked objects.
+     (unless (or (and (text? object)
+                      (not (text-visible? object))
+                      (not show-hidden-text?))
+                 (not (object-selectable? object)))
+       ;; Add object to selection.
+       (select-object! object)
+       ;; Add any attributes of object to selection as well.
+       (for-each select-object! (object-attribs object))))
+
+   (page-contents (active-page)))
+
+  ;; Run hooks for all items selected.
+  (let ((new-selection (page-selection (active-page))))
+    (unless (null? new-selection)
+      (run-hook select-objects-hook new-selection)))
 
   (i_set_state *window (symbol->action-mode 'select-mode))
   (i_action_stop *window)
