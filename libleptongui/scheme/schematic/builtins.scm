@@ -186,17 +186,7 @@
 ;;; attached attributes whether visible or invisible.
 (define-action-public (&edit-select-all #:label (G_ "Select All")
                                         #:icon "gtk-select-all")
-  (define *window (*current-window))
-  (define show-hidden-text?
-    (true? (gschem_toplevel_get_show_hidden_text *window)))
-
-  (o_redraw_cleanstates *window)
-
-  (o_select_unselect_all *window)
-
-  (for-each
-
-   (lambda (object)
+   (define (select-visible-and-selectable! object)
      ;; Skip invisible text objects and locked objects.
      (unless (or (and (text? object)
                       (not (text-visible? object))
@@ -207,7 +197,16 @@
        ;; Add any attributes of object to selection as well.
        (for-each select-object! (object-attribs object))))
 
-   (page-contents (active-page)))
+  (define *window (*current-window))
+  (define show-hidden-text?
+    (true? (gschem_toplevel_get_show_hidden_text *window)))
+
+  (o_redraw_cleanstates *window)
+
+  (o_select_unselect_all *window)
+
+  (for-each select-visible-and-selectable!
+            (page-contents (active-page)))
 
   ;; Run hooks for all items selected.
   (let ((new-selection (page-selection (active-page))))
