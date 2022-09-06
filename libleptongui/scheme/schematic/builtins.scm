@@ -496,7 +496,89 @@ the snap grid size should be set to 100")))
           (page_select_widget_update *window)))))
 
 
-(define-action-public (&edit-update #:label (G_ "Update Component") #:icon "gtk-refresh")
+;;; Update a component.
+(define-action-public (&edit-update #:label (G_ "Update Component")
+                                    #:icon "gtk-refresh")
+  ;; Update component to the latest version of the symbol
+  ;; available in the symbol library, while preserving any
+  ;; attributes set in the current schematic. On success, the
+  ;; component is deleted on its page and replaced with a new
+  ;; one. On failure, the current component is left unchanged.
+  (define (update-component *window current-component)
+    (let ((basename (component-basename current-component))
+          (page (object-page current-component))
+          (position (component-position current-component))
+          (angle (component-angle current-component))
+          (mirror? (component-mirror? current-component))
+          (locked? (component-locked? current-component))
+          (embedded? (object-embedded? current-component))
+          (attribs (object-attribs current-component)))
+
+      ;; Force symbol data to be reloaded from source
+      (s_clib_symbol_invalidate_data
+       (s_clib_get_symbol_by_name (string->pointer basename)))
+
+      ;; Create new object.
+      (let ((new-component
+             (set-component-with-transform!
+              (make-component/library basename
+                                      position
+                                      angle
+                                      mirror?
+                                      locked?)
+              position
+              angle
+              mirror?
+              locked?)))
+        (if new-component
+            (begin
+              ;; Embed new object if the old one is embedded.
+              (set-object-embedded! new-component embedded?)
+
+              ;; Unselect the old object.
+              (deselect-object! current-component)
+
+              ;; Detach attributes from old component.
+              (apply detach-attribs! current-component attribs)
+
+              ;; Replace the old component with the new one.
+              (page-remove! page current-component)
+              (page-append! page new-component)
+
+              ;; Promote new attributes.
+              (let ((new-attribs (promote-attribs! new-component))
+                    (current-attrib-names (map attrib-name attribs)))
+                ;; Remove any attributes from the new attribute
+                ;; list that are already attached to the old
+                ;; component.  The attributes are matched by name.
+                (for-each
+                 (lambda (attrib)
+                   (let ((name (attrib-name attrib)))
+                     (when (member (attrib-name attrib) current-attrib-names)
+                       (detach-attribs! new-component attrib)
+                       (page-remove! (object-page attrib) attrib))))
+                 new-attribs)
+
+                ;; Attach old attributes to the new component.
+                (apply attach-attribs! new-component attribs)
+
+                ;; Update pinnumbers for current slot
+                (s_slot_update_object (object->pointer new-component))
+
+                ;; Select the new component.
+                (select-object! new-component)
+
+                ;; Mark the page as modified.
+                (gschem_toplevel_page_content_changed *window (page->pointer page))
+
+                ;; Register changes for undo.
+                (undo-save-state)))
+
+            ;; If component not found, warn the user.
+            (log! 'message
+                  (G_ "Could not find symbol ~S in library. Update failed.")
+                  basename)))))
+
   (define *window (*current-window))
 
   (define selected-components (filter component? (page-selection (active-page))))
@@ -509,8 +591,7 @@ the snap grid size should be set to 100")))
         (i_action_stop *window)
         (i_set_state *window (symbol->action-mode 'select-mode)))
       (for-each
-       (lambda (component)
-         (o_update_component *window (object->pointer component)))
+       (lambda (component) (update-component *window component))
        selected-components)))
 
 

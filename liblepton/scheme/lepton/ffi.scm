@@ -318,6 +318,7 @@
             s_clib_get_symbol_by_name
             s_clib_init
             s_clib_symbol_get_filename
+            s_clib_symbol_invalidate_data
 
             o_attrib_attach
 
@@ -369,6 +370,7 @@
 (define-lff lepton_colormap_disable_color void (list '* size_t))
 (define-lff lepton_colormap_set_color void (list '* size_t uint8 uint8 uint8 uint8))
 (define-lff print_colors_array '* '())
+
 ;;; s_clib.c
 (define-lff s_clib_add_command '* '(* * *))
 (define-lff s_clib_add_directory '* '(* *))
@@ -376,6 +378,7 @@
 (define-lff s_clib_get_symbol_by_name '* '(*))
 (define-lff s_clib_init void '())
 (define-lff s_clib_symbol_get_filename '* '(*))
+(define-lff s_clib_symbol_invalidate_data void '(*))
 
 ;;; o_selection.c
 (define-lff o_selection_add void '(* *))

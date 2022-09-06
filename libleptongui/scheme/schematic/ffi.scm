@@ -104,7 +104,6 @@
             o_edit_show_hidden
             o_mirror_world_update
             o_rotate_world_update
-            o_update_component
 
             o_move_start
 
@@ -232,6 +231,7 @@
             gschem_toplevel_get_current_page_view
             gschem_toplevel_get_show_hidden_text
             gschem_toplevel_get_toplevel
+            gschem_toplevel_page_content_changed
             schematic_window_get_actionfeedback_mode
             schematic_window_set_actionfeedback_mode
             schematic_window_get_active_page
@@ -262,6 +262,8 @@
             o_select_unselect_all
 
             o_slot_end
+
+            s_slot_update_object
 
             o_undo_callback
             o_undo_savestate
@@ -391,6 +393,7 @@
 (define-lff gschem_toplevel_get_current_page_view '* '(*))
 (define-lff gschem_toplevel_get_show_hidden_text int '(*))
 (define-lff gschem_toplevel_get_toplevel '* '(*))
+(define-lff gschem_toplevel_page_content_changed void '(* *))
 (define-lff schematic_window_get_actionfeedback_mode int '(*))
 (define-lff schematic_window_set_actionfeedback_mode void (list '* int))
 (define-lff schematic_window_get_active_page '* '(*))
@@ -564,7 +567,6 @@
 (define-lff o_edit_show_hidden void '(* *))
 (define-lff o_mirror_world_update void (list '* int int '*))
 (define-lff o_rotate_world_update void (list '* int int int '*))
-(define-lff o_update_component '* '(* *))
 
 ;;; o_move.c
 (define-lff o_move_start void (list '* int int))
@@ -601,6 +603,9 @@
 
 ;;; o_slot.c
 (define-lff o_slot_end void '(* * *))
+
+;;; s_slot.c
+(define-lff s_slot_update_object void '(*))
 
 ;;; signals.c
 (define-lff schematic_signal_connect void '(* * * *))
