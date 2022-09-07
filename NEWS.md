@@ -51,6 +51,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   the module `(geda deprecated-config)`.  This reduces a little
   start-up time of the program when launched first time.
 
+- The file `pcb.scm` has been transformed into the module
+  `(schematic pcb)`.  This also reduces start-up compilation time
+  of the program.
+
 
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
