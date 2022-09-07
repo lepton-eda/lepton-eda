@@ -47,6 +47,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   been fixed so it now correctly translates refdeses like
   **Uxyz123** to **Uxyz?** instead of just **z?**.
 
+- The file `geda-deprecated-config.scm` has been transformed into
+  the module `(geda deprecated-config)`.  This reduces a little
+  start-up time of the program when launched first time.
+
 
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
