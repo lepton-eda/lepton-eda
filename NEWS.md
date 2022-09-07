@@ -29,6 +29,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   were previously defined in C code.  Now, when this is no longer
   the case, the prefix has been dropped.
 
+- Log rotation has been moved from `geda.scm` to the config file
+  `system-gafrc` in which system administrators can disable or
+  enable it.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
