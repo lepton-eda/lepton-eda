@@ -851,7 +851,14 @@ Lepton EDA homepage: <https://github.com/lepton-eda/lepton-eda>
   (and (eq? (netlist-mode) 'spice)
        (set! get-uref get-spice-refdes))
   (for-each process-gafrc* files)
-  (set-toplevel-schematic! (make-toplevel-schematic files)))
+  (catch 'system-error
+    (lambda () (set-toplevel-schematic! (make-toplevel-schematic files)))
+    (lambda (key subr message args rest)
+      (netlist-error 1
+                     (format #f
+                             (G_ "Failed to open schematic files: ~?\n")
+                             message
+                             args)))))
 
 
 (define (catch-handler tag . args)
