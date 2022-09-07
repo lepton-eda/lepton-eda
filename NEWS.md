@@ -43,6 +43,10 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   `(schematic refdes)`.  Main functions of the scripts are now
   exported in the new module.
 
+- A regular expression in the function `auto-refdes-reset!()` has
+  been fixed so it now correctly translates refdeses like
+  **Uxyz123** to **Uxyz?** instead of just **z?**.
+
 
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
