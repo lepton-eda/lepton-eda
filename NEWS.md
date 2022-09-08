@@ -15,6 +15,13 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   libraries available in the projects.  Detailed changes on type
   renamings and new modules are described below.
 
+### Changes when building from source:
+
+- Several deprecated GTK3 functions related to GUI have been
+  replaced with newer ones or removed, thus eliminating many
+  compilation warnings when Lepton is compiled with the
+  `--with-gtk3` option.
+
 ### Changes in `liblepton`:
 
 - A new Scheme type, `<toplevel>`, has been introduced.  This is a
