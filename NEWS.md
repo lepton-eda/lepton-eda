@@ -85,6 +85,17 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   `(schematic pcb)`.  This also reduces start-up compilation time
   of the program.
 
+- A bug in the GTK3 port of the program related to cursor warping
+  has been fixed.  When the setting `warp-cursor` in the
+  `schematic.gui` configuration group was set to `true`, rotating
+  the mouse wheel in both directions only led to zooming in.  The
+  issue was related to GTK3 smooth scrolling introducing in the
+  release 1.9.17.  Since it seems to be an GTK3 issue (see [this
+  bug description](https://gitlab.gnome.org/GNOME/gtk/-/issues/2048)),
+  it has been fixed by disabling smooth events if the mouse cursor
+  warping is enabled in configuration
+
+
 
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
