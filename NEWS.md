@@ -11,7 +11,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 ### General changes:
 
 - **SMOB** machinery deprecated in Guile has been fully replaced
-  with using modern foreign function interface (FFI).
+  with using modern foreign function interface (FFI) in all
+  libraries available in the projects.  Detailed changes on type
+  renamings and new modules are described below.
 
 ### Changes in `liblepton`:
 
@@ -32,6 +34,27 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - Log rotation has been moved from `geda.scm` to the config file
   `system-gafrc` in which system administrators can disable or
   enable it.
+
+- Three previously available SMOB types, `<geda-toplevel>`,
+  `<geda-page>`, and `<geda-object>` have been replaced with three
+  wrapped foreign pointer types, `<toplevel>`, `<page>`, and
+  `<object>`, respectively.  In order to achieve this, three new
+  modules with the definitions of the types and supporting
+  functionality have been created: `(lepton toplevel foreign)`,
+  `(lepton page foreign)`, and `(lepton object foreign)`
+
+- Functions dealing with C `GList` lists in Scheme have been
+  unified.
+
+- The module `(lepton toplevel)` now has a new procedure,
+  `set-current-toplevel!()`, which may be used to unconditionally
+  set the current toplevel fluid to a given value, which may be
+  convenient for working with Lepton modules in REPL.
+
+- Several new checks have been added for `make-page()`:
+  - the procedure now raises an error if if its filename argument
+    is an empty string;
+  - it now raises an error if current toplevel is not set.
 
 ### Changes in `lepton-schematic`:
 
