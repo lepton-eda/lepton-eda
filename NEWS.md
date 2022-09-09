@@ -65,6 +65,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 ### Changes in `libleptongui`:
 
+- The module `(schematic core gettext)` has been renamed to
+  `(schematic gettext)`.
+
 - A new Scheme module, `(schematic window foreign)`, has been
   introduced.  It contains foreign wrappers and functions for
   toplevel schematic window structure similar to what we have in
