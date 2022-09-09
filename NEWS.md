@@ -63,6 +63,23 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
     is an empty string;
   - it now raises an error if current toplevel is not set.
 
+### Changes in `libleptongui`:
+
+- A new Scheme module, `(schematic window foreign)`, has been
+  introduced.  It contains foreign wrappers and functions for
+  toplevel schematic window structure similar to what we have in
+  `(lepton toplevel foreign)` for `<toplevel>` structure.
+
+- `current-window()` now returns a Scheme wrapped pointer to an
+  instance of C type `GschemToplevel`.
+
+- A syntax rule has been added to check the result of
+  `current-window()` in the module `(schematic builtins)`.
+
+- Several actions in the module `(schematic builtins)` have been
+  simplified so that a few intermediate `i_callback_*()` functions
+  are no longer used.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
