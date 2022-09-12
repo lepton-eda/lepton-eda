@@ -169,6 +169,12 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   directory instead of reporting that anything was done
   successfully.
 
+- A bug causing failures of the program when an archive name to
+  extract was specified as a related path, has been fixed.
+
+- The program does no longer create a temporary directory for
+  extracting archives.
+
 
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
