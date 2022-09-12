@@ -18,8 +18,9 @@ a bunch of project files, and in extract mode it extracts the
 files from the archive and places them in the local directory.
 .PP
 In archive mode the program processes schematic files traversing
-their hierarchy, collecting and caching all subschematics, symbols
-and subcircuits specified in the "file=" attributes.
+their hierarchy using the "source=" attributes, collecting and
+caching all subschematics, symbols and SPICE subcircuits specified
+in the "file=" attributes.
 .PP
 Archive mode is the default.
 
