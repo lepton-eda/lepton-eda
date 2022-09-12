@@ -151,6 +151,24 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   no component is selected or when the selection contains more
   than one component.
 
+### Changes in `lepton-archive`:
+
+- The program now outputs its basename instead of the full path
+  when the option `--help` is given.
+
+- The program does no longer copy same files several times.
+
+- In some cases, the `gafrc` file to be updated may have no write
+  permissions for the user.  The program now solves this as
+  follows: instead of trying to append anything to it, a new file
+  with updated contents is created after deleting the existing
+  one.
+
+- In cases, when renaming a file is failing, the user will now be
+  warned that the archive created was left alone in the temp
+  directory instead of reporting that anything was done
+  successfully.
+
 
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
