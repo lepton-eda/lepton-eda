@@ -238,6 +238,13 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   extracting archives.
 
 
+### Changes in `lepton-netlist`:
+
+- Previously, the program used to output backtrace when a
+  processed file was missing.  Now it just reports the issue
+  without outputting backtrace.
+
+
 Notable changes in Lepton EDA 1.9.18 (20220529)
 -----------------------------------------------
 
