@@ -79,6 +79,14 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 - A syntax rule has been added to check the result of
   `current-window()` in the module `(schematic builtins)`.
 
+- A wrapper function for the `g_signal_connect()` C macro has been
+  added to allow for connecting callbacks written in Scheme to
+  signals defined in C code, especially for widgets.
+
+- A separate Scheme module for Slot edit dialog code, `(schematic
+  dialog edit-slot)`, has been added to localize the functionality
+  of the dialog.
+
 - Several actions in the module `(schematic builtins)` have been
   simplified so that a few intermediate `i_callback_*()` functions
   are no longer used.
@@ -117,6 +125,17 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 - A regression introduced in 1.9.18, consisting in missing icons
   in the tab menu in the GTK2 port, has been fixed.
+
+- The slot editing action has been improved.  Previously, the
+  action code worked on the first selected object no matter the
+  type it had.  The action did nothing if the returned object was
+  just a graphical primitive despite of the fact if the selection
+  had components or not, it silently ignored user input in such
+  situations.  The empty selection list was ignored as well.  Now,
+  the list of objects is filtered and if it contains one
+  component, it works with it.  The user is now warned if either
+  no component is selected or when the selection contains more
+  than one component.
 
 
 Notable changes in Lepton EDA 1.9.18 (20220529)
