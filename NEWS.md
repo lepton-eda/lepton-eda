@@ -15,6 +15,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   libraries available in the projects.  Detailed changes on type
   renamings and new modules are described below.
 
+- All Lepton tools, including `lepton-schematic` do now reside in
+  the toplevel directory `/tools` of the repository.
+
 ### Changes when building from source:
 
 - Several deprecated GTK3 functions related to GUI have been
