@@ -111,6 +111,14 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   simplified so that a few intermediate `i_callback_*()` functions
   are no longer used.
 
+- A new module, `(schematic toolbar)`, now serves the toolbar
+  creation.  Relevant functions have been moved to it.  The code
+  has been refactored and splitted up so that the toolbar buttons
+  and separators, groups of them and their properties, are now
+  created and set in Scheme using separate procedures.
+
+- **Glib** signals are now connected to toolbar buttons in Scheme.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
