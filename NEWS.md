@@ -119,6 +119,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
 
 - **Glib** signals are now connected to toolbar buttons in Scheme.
 
+- A new module, `(schematic callback)`, has been added to allow
+  for calling the callbacks from both Scheme and C.  Several C
+  callbacks of the Page manager widget have been rewritten in
+  Scheme using the module.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
