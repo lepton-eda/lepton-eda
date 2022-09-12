@@ -165,6 +165,11 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   no component is selected or when the selection contains more
   than one component.
 
+- Toggling of magnetic and rubberband net modes is no longer
+  logged.  The modes are pretty well visible for the user in the
+  status bar.  Moreover, logging the events of toggling just
+  increases log size without adding any useful info.
+
 ### Changes in `lepton-archive`:
 
 - The program now outputs its basename instead of the full path
