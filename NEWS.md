@@ -83,6 +83,17 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   added to allow for connecting callbacks written in Scheme to
   signals defined in C code, especially for widgets.
 
+- The signal "delete-event" of `lepton-schematic` is now connected
+  in Scheme code.
+
+- Key event processing callback is now assigned in Scheme.
+
+- A new Scheme function, `make-schematic-window()`, has been
+  factored out for creating a new main `lepton-schematic`
+  window. The function now lives in the module `(schematic
+  window)`. Many top level widgets are now also set up in Scheme
+  and their pointers are available for processing in Scheme.
+
 - A separate Scheme module for Slot edit dialog code, `(schematic
   dialog edit-slot)`, has been added to localize the functionality
   of the dialog.
