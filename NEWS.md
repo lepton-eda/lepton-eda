@@ -151,6 +151,14 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   allowed for simplifying some Scheme procedures working with
   lists in `lepton-attrib`.
 
+- The fluid `%lepton-window` and functions related to it have been
+  moved to a new module, `(schematic window global)`, in order to
+  avoid circular dependencies between modules in the `schematic`
+  namespace.
+
+- Two new Scheme functions, `undo!()` and `redo!()`, have been
+  introduced in the module `(schematic undo)`.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
