@@ -66,6 +66,12 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
     is an empty string;
   - it now raises an error if current toplevel is not set.
 
+- An issue that caused printing backtraces on missing files in the
+  functions `regular-file?()` and `directory?()` residing in the
+  module `(lepton file-system)` has been fixed so that the
+  functions now just test if a given file is missing and report
+  that.
+
 ### Changes in `libleptongui`:
 
 - The module `(schematic core gettext)` has been renamed to
