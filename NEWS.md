@@ -124,6 +124,33 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   callbacks of the Page manager widget have been rewritten in
   Scheme using the module.
 
+- A new module, `(lepton ffi boolean)`, has been created.  It
+  contains variables and procedures for working with foreign C
+  boolean values.
+
+- A new module, `(lepton ffi lff)`, has been introduced.  The
+  syntax `define-lff()` has been moved to it and renamed to
+  `define-lff-lib()`.  The macro name means *define lazy foreign
+  function*.  The syntax has been splitted up and renamed in order
+  to re-use it in different places for different goals without
+  many changes in the code.  This allowed for simplifying several
+  definitions in the module `(schematic ffi gtk)`, and in the
+  tools `lepton-schematic` and `lepton-attrib`.
+
+- Two new modules, `(lepton ffi gobject)` and `(lepton ffi glib)`,
+  have been introduced to localize `libgobject` and `libglib`
+  functions and separate their definitions from Lepton functions.
+
+- A new module, `(lepton ffi check-args)`, now contains functions
+  for checking arguments of foreign functions.
+
+- Scheme accessors for `GSList` lists and foreign functions for
+  freeing all memory of `GSList`s and `GList`s have been
+  introduced in the module `(lepton ffi glib)`.  Along with a new
+  optional argument that enables or disables memory freeing this
+  allowed for simplifying some Scheme procedures working with
+  lists in `lepton-attrib`.
+
 ### Changes in `lepton-schematic`:
 
 - Porting the program to the stable GTK version 3.24 has been
@@ -174,6 +201,9 @@ Notable changes in Lepton EDA 1.9.19 (upcoming)
   logged.  The modes are pretty well visible for the user in the
   status bar.  Moreover, logging the events of toggling just
   increases log size without adding any useful info.
+
+- The function `gtk_rc_parse()` deprecated in GTK3 is no longer
+  called in Scheme for GTK3 port.
 
 ### Changes in `lepton-archive`:
 
