@@ -203,7 +203,8 @@
   ;; Produce one.pcb, one.cmd, and one.net.
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
-    (test-eq EXIT_SUCCESS <status>))
+    (test-eq EXIT_SUCCESS <status>)
+    (string-contains <stdout> "Done processing."))
 
   ;; Check that all necessary files exist.
   (test-assert (file-exists? tests/one.pcb))
