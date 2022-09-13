@@ -191,7 +191,12 @@
   ;; lepton-sch2pcb exits with status 0.
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb one.sch two.sch)
-    (test-eq EXIT_SUCCESS <status>))
+    (test-eq EXIT_SUCCESS <status>)
+    (string-contains <stdout> "No elements found, so nothing to do.")
+    (test-assert (file-exists? "one.cmd"))
+    (test-assert (file-exists? "one.net"))
+    ;; one.pcb is missing at this point.
+    (test-assert (not (file-exists? "one.pcb"))))
 
   (test-assert (file-exists? m4-pcbdir))
 
