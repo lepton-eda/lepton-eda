@@ -194,7 +194,7 @@ build_and_run_command (const gchar *format, ...)
 
     if (verbose)
       printf ("\n%s", SEP_STRING);
-    
+
     if (g_spawn_sync (".",                  /* Working directory */
                       args,                 /* argv */
                       NULL,                 /* envp */
@@ -224,7 +224,7 @@ build_and_run_command (const gchar *format, ...)
 
     g_free(standard_error);
     g_free (standard_output);
-    
+
     g_free (args);
     /* free the list, but leave data untouched */
     g_list_free (tmp);
@@ -264,21 +264,21 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
     verboseList = g_list_append (verboseList, (gpointer) "-q");
 
   if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
-			      gnetlist,
-			      verboseList,
-			      backend_mkfile_cmd ? backend_mkfile_cmd : backend_mkfile_cmd_default,
-			      pins_file,
-			      extra_gnetlist_arg_list,
-			      largs))
+                              gnetlist,
+                              verboseList,
+                              backend_mkfile_cmd ? backend_mkfile_cmd : backend_mkfile_cmd_default,
+                              pins_file,
+                              extra_gnetlist_arg_list,
+                              largs))
     return FALSE;
 
   if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
-			      gnetlist,
-			      verboseList,
-			      backend_mkfile_net ? backend_mkfile_net : backend_mkfile_net_default,
-			      net_file,
-			      extra_gnetlist_arg_list,
-			      largs))
+                              gnetlist,
+                              verboseList,
+                              backend_mkfile_net ? backend_mkfile_net : backend_mkfile_net_default,
+                              net_file,
+                              extra_gnetlist_arg_list,
+                              largs))
     return FALSE;
   create_m4_override_file ();
 
@@ -290,12 +290,12 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
   mtime = (stat (pcb_file, &st) == 0) ? st.st_mtime : 0;
 
   if (!build_and_run_command ("%s %l -g %s -o %s %l %l %l",
-			      gnetlist,
-			      verboseList,
-			      backend_mkfile_pcb ? backend_mkfile_pcb : backend_mkfile_pcb_default,
-			      pcb_file,
-			      args1,
-			      extra_gnetlist_arg_list,
+                              gnetlist,
+                              verboseList,
+                              backend_mkfile_pcb ? backend_mkfile_pcb : backend_mkfile_pcb_default,
+                              pcb_file,
+                              args1,
+                              extra_gnetlist_arg_list,
                   largs)) {
       if (stat (pcb_file, &st) != 0 || mtime == st.st_mtime) {
           fprintf (stderr,
@@ -327,12 +327,12 @@ run_gnetlist (gchar * pins_file, gchar * net_file, gchar * pcb_file,
     }
 
     if (!build_and_run_command ("%s %l -g %s -o %s %l %l",
-				gnetlist,
-				verboseList,
-				backend,
-				out_file,
-				extra_gnetlist_arg_list,
-				largs))
+                                gnetlist,
+                                verboseList,
+                                backend,
+                                out_file,
+                                extra_gnetlist_arg_list,
+                                largs))
       return FALSE;
     g_free (out_file);
     g_free (backend);
@@ -1537,7 +1537,7 @@ sch2pcb_main (gint argc, gchar ** argv)
     pcb_new_file_name = g_strdup (pcb_file_name);
 
   if (!run_gnetlist (pins_file_name, net_file_name, pcb_new_file_name,
-		     sch_basename, schematics)) {
+                     sch_basename, schematics)) {
     fprintf(stderr, "Failed to run netlister\n");
     exit (1);
   }
