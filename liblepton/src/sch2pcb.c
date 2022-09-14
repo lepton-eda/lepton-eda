@@ -1480,7 +1480,9 @@ get_args (gint argc, gchar ** argv)
 }
 
 gint
-sch2pcb_main (gint argc, gchar ** argv)
+sch2pcb_main (gint argc,
+              gchar **argv,
+              const char *m4_dir)
 {
   gchar *pcb_file_name,
     *pcb_new_file_name, *bak_file_name, *pins_file_name, *net_file_name, *tmp;
@@ -1488,26 +1490,9 @@ sch2pcb_main (gint argc, gchar ** argv)
   gboolean initial_pcb = TRUE;
   gboolean created_pcb_file = TRUE;
   char *path, *p;
-  const char *pcbdata_path;
-  const char *configure_m4_pcbdir = PCBM4DIR; /* do not free it */
 
-  pcbdata_path = g_getenv ("PCBDATA");  /* do not free return value */
-  if (pcbdata_path != NULL) {
-    /* If PCBDATA is set, use the value */
-    sch2pcb_set_m4_pcbdir (g_strconcat (pcbdata_path, "/m4", NULL));
-  } else if (configure_m4_pcbdir != NULL) {
-    /* Use the default value passed in from the configure script
-     * instead of trying to hard code a value which is very
-     * likely wrong
-     */
-    sch2pcb_set_m4_pcbdir (configure_m4_pcbdir);
-  } else {
-    /* Neither PCBDATA was set nor PCBM4DIR has been configured */
-    /* Fall back to using the "m4" subdirectory in the current directory */
-    sch2pcb_set_m4_pcbdir ("./m4");
-  }
-
-  sch2pcb_set_default_m4_pcbdir (m4_pcbdir);
+  sch2pcb_set_default_m4_pcbdir (m4_dir);
+  sch2pcb_set_m4_pcbdir (m4_dir);
 
   if (argc < 2)
     usage ();

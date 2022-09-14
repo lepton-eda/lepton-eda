@@ -29,4 +29,4 @@
 (define-syntax-rule (define-lff arg ...)
   (define-lff-lib arg ... liblepton))
 
-(define-lff sch2pcb_main int (list int '*))
+(define-lff sch2pcb_main int (list int '* '*))

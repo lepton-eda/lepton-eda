@@ -233,6 +233,7 @@ lepton/m4.scm: Makefile
 	echo '(define-public %ldconfig-libgobject "$(LIBGOBJECT)")' >> $@.new && \
 	echo '(define-public %ldconfig-libgtk2 "$(LIBGTK2)")' >> $@.new && \
 	echo '(define-public %ldconfig-libgtk3 "$(LIBGTK3)")' >> $@.new && \
+	echo '(define-public %pcb-m4-dir "$(PCBM4DIR)")' >> $@.new && \
 	if cmp $@ $@.new > /dev/null 2>&1; then \
 	  rm $@.new; echo "$@ is unchanged"; \
 	else \

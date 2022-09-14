@@ -19,7 +19,8 @@
 
 (use-modules (rnrs bytevectors)
              (system foreign)
-             (lepton ffi sch2pcb))
+             (lepton ffi sch2pcb)
+             (lepton m4))
 
 ;;; FIXME: this is a function from (lepton config).  Probably it
 ;;; has to be moved to some dedicated FFI module.
@@ -35,5 +36,25 @@
     (sizeof '*))))
 
 
+(define %pcb-data-path (getenv "PCBDATA"))
+
+(define %pcb-m4-path
+  (let ((pcb-configure-m4-directory (and (not (string-null? %pcb-m4-dir))
+                                         %pcb-m4-dir)))
+    (if %pcb-data-path
+        ;; If PCBDATA is set, use the value.
+        (string-append %pcb-data-path file-name-separator-string "m4")
+
+        (if pcb-configure-m4-directory
+            ;; Use the default value passed in from the configure
+            ;; script instead of trying to hard code a value which
+            ;; is very likely wrong.
+            pcb-configure-m4-directory
+            ;; Neither PCBDATA was set nor PCBM4DIR has been
+            ;; configured.  Fall back to using the "m4" subdirectory
+            ;; in the current directory.
+            (string-append (getcwd) file-name-separator-string "m4")))))
+
 (sch2pcb_main (length (program-arguments))
-              (string-list->bv-pointer (program-arguments)) )
+              (string-list->bv-pointer (program-arguments))
+              (string->pointer %pcb-m4-path))
