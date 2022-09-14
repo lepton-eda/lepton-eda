@@ -185,7 +185,6 @@
   (build-filename *abs-top-builddir*
                   "tools"
                   "sch2pcb"
-                  "src"
                   "lepton-sch2pcb"))
 
 (define lepton-symcheck

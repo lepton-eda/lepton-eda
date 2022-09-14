@@ -32,6 +32,8 @@
 #include <unistd.h>
 #include <sys/stat.h>
 
+#include "liblepton_priv.h"
+
 #define DEFAULT_PCB_INC "pcb.inc"
 
 #define SEP_STRING "--------\n"
@@ -1455,7 +1457,7 @@ get_args (gint argc, gchar ** argv)
 }
 
 gint
-main (gint argc, gchar ** argv)
+sch2pcb_main (gint argc, gchar ** argv)
 {
   gchar *pcb_file_name,
     *pcb_new_file_name, *bak_file_name, *pins_file_name, *net_file_name, *tmp;

@@ -298,4 +298,8 @@ lepton_version_url ();
 const char*
 lepton_version_copyright ();
 
+/* sch2pcb.c */
+gint
+sch2pcb_main (gint argc, gchar ** argv);
+
 G_END_DECLS

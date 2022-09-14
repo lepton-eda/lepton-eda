@@ -275,6 +275,9 @@ AC_CONFIG_FILES([tools/embed/lepton-embed:tools/script.in:tools/embed/lepton-emb
 AC_CONFIG_FILES([tools/netlist/lepton-netlist:tools/script.in:tools/netlist/lepton-netlist.scm],
                 [chmod +x tools/netlist/lepton-netlist])
 
+AC_CONFIG_FILES([tools/sch2pcb/lepton-sch2pcb:tools/script.in:tools/sch2pcb/lepton-sch2pcb.scm],
+                [chmod +x tools/sch2pcb/lepton-sch2pcb])
+
 AC_CONFIG_FILES([tools/symcheck/lepton-symcheck:tools/script.in:tools/symcheck/lepton-symcheck.scm],
                 [chmod +x tools/symcheck/lepton-symcheck])
 
@@ -390,7 +393,6 @@ AC_CONFIG_FILES([Makefile
                  tools/update/tests/Makefile
 
                  tools/sch2pcb/Makefile
-                 tools/sch2pcb/src/Makefile
                  tools/sch2pcb/examples/Makefile
                  tools/sch2pcb/docs/Makefile
                  tools/sch2pcb/tests/Makefile

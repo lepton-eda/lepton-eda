@@ -58,6 +58,7 @@ liblepton_la_SOURCES = \
 	s_slot.c \
 	s_textbuffer.c \
 	s_weakref.c \
+	sch2pcb.c \
 	text_object.c \
 	version.c \
 	edacairo.c \
@@ -65,8 +66,14 @@ liblepton_la_SOURCES = \
 	edarenderer.c \
 	export.c
 
-liblepton_la_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"  $(DATADIR_DEFS) \
-	-I$(srcdir)/../include -I$(srcdir)/../include/liblepton -I$(top_srcdir)
+liblepton_la_CPPFLAGS = \
+	-DLOCALEDIR=\"$(localedir)\" \
+	-DPCBM4DIR=\"$(PCBM4DIR)\" \
+	-DPCBLIBPATH=\"$(PCBLIBPATH)\" \
+	$(DATADIR_DEFS) \
+	-I$(srcdir)/../include \
+	-I$(srcdir)/../include/liblepton \
+	-I$(top_srcdir)
 liblepton_la_CFLAGS = \
 	$(GCC_CFLAGS) $(MINGW_CFLAGS) $(GUILE_CFLAGS) $(GLIB_CFLAGS) $(GIO_CFLAGS) \
 	$(GTK_CFLAGS)  $(CAIRO_PNG_CFLAGS) $(CAIRO_PDF_CLAGS) $(CAIRO_PS_CFLAGS) $(CAIRO_SVG_CFLAGS) \
