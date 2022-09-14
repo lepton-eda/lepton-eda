@@ -51,6 +51,23 @@
 (test-end)
 
 
+(test-begin "sch2pcb-m4")
+
+;;; When the program is launched without arguments, it outputs the
+;;; default m4 path which is used for looking for m4-elements.
+(let ((m4-dir "some-m4-dir")
+      (PCBDATA (getenv "PCBDATA")))
+  (putenv (string-append "PCBDATA=" m4-dir))
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> (build-filename m4-dir "m4"))))
+  ;; Unset PCBDATA environment variable.
+  (unsetenv "PCBDATA"))
+
+(test-end)
+
+
 (test-begin "sch2pcb")
 
 (receive (<status> <stdout> <stderr>)
