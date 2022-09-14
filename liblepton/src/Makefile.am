@@ -68,7 +68,6 @@ liblepton_la_SOURCES = \
 
 liblepton_la_CPPFLAGS = \
 	-DLOCALEDIR=\"$(localedir)\" \
-	-DPCBM4DIR=\"$(PCBM4DIR)\" \
 	-DPCBLIBPATH=\"$(PCBLIBPATH)\" \
 	$(DATADIR_DEFS) \
 	-I$(srcdir)/../include \
