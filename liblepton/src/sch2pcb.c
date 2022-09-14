@@ -155,7 +155,6 @@ build_and_run_command (const gchar *format, ...)
   gint i;
   gint status;
   gboolean result = FALSE;
-  gboolean spawn_result;
   gchar *standard_output = NULL;
   gchar *standard_error = NULL;
   GError * error = NULL;
@@ -845,7 +844,7 @@ add_elements (gchar * pcb_file)
 {
   FILE *f_in, *f_out;
   PcbElement *el = NULL;
-  gchar *command, *p, *tmp_file, *s, buf[1024];
+  gchar *p, *tmp_file, *s, buf[1024];
   gint total, paren_level = 0;
   gboolean is_m4, skipping = FALSE;
 
@@ -947,7 +946,7 @@ update_element_descriptions (gchar * pcb_file, gchar * bak)
   FILE *f_in, *f_out;
   GList *list;
   PcbElement *el, *el_exists;
-  gchar *fmt, *command, *tmp, *s, buf[1024];
+  gchar *fmt, *tmp, *s, buf[1024];
 
   for (list = pcb_element_list; list; list = g_list_next (list)) {
     el = (PcbElement *) list->data;
@@ -1002,7 +1001,7 @@ prune_elements (gchar * pcb_file, gchar * bak)
   FILE *f_in, *f_out;
   GList *list;
   PcbElement *el, *el_exists;
-  gchar *fmt, *command, *tmp, *s, buf[1024];
+  gchar *fmt, *tmp, *s, buf[1024];
   gint paren_level = 0;
   gboolean skipping = FALSE;
 
@@ -1412,7 +1411,7 @@ version()
 static void
 get_args (gint argc, gchar ** argv)
 {
-  gchar *opt, *arg, *s;
+  gchar *opt, *arg;
   gint i, r;
 
   for (i = 1; i < argc; ++i) {
