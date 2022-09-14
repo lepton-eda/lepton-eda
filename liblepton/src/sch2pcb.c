@@ -23,14 +23,7 @@
 #include <config.h>
 #include <version.h>
 
-#include <glib.h>
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <ctype.h>
-#include <unistd.h>
-#include <sys/stat.h>
 
 #include "liblepton_priv.h"
 
