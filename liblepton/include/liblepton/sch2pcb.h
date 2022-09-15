@@ -144,9 +144,6 @@ GList*
 sch2pcb_get_schematics ();
 
 void
-sch2pcb_usage ();
-
-void
 sch2pcb_extra_gnetlist_list_append (char *arg);
 
 void
