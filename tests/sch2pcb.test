@@ -73,7 +73,7 @@
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-sch2pcb)
   (test-eq EXIT_SUCCESS <status>)
-  (test-assert (string-contains <stdout> "usage: lepton-sch2pcb")))
+  (test-assert (string-contains <stdout> "Usage: lepton-sch2pcb")))
 
 (test-end)
 
@@ -83,7 +83,7 @@
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-sch2pcb "-h")
   (test-eq EXIT_SUCCESS <status>)
-  (test-assert (string-contains <stdout> "usage: lepton-sch2pcb")))
+  (test-assert (string-contains <stdout> "Usage: lepton-sch2pcb")))
 
 (test-end)
 
@@ -93,7 +93,7 @@
 (receive (<status> <stdout> <stderr>)
     (command-values lepton-sch2pcb "--help")
   (test-eq EXIT_SUCCESS <status>)
-  (test-assert (string-contains <stdout> "usage: lepton-sch2pcb")))
+  (test-assert (string-contains <stdout> "Usage: lepton-sch2pcb")))
 
 (test-end)
 
@@ -1073,7 +1073,7 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb "sch2pcb-project")
     (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "usage: lepton-sch2pcb")))
+    (test-assert (string-contains <stdout> "Usage: lepton-sch2pcb")))
 
   (test-teardown))
 
@@ -1254,7 +1254,7 @@
     (receive (<status> <stdout> <stderr>)
         (command-values lepton-sch2pcb "sch2pcb-project")
       (test-eq EXIT_SUCCESS <status>)
-      (test-assert (string-contains <stdout> "usage: lepton-sch2pcb"))
+      (test-assert (string-contains <stdout> "Usage: lepton-sch2pcb"))
       (test-assert (not (file-exists? one.pcb))))
 
     ;; Test with schematics.

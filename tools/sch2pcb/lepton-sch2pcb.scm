@@ -26,6 +26,8 @@
              (lepton srfi-37)
              (lepton version))
 
+(define %sch2pcb (basename (car (program-arguments))))
+
 (define %pcb-data-path (getenv "PCBDATA"))
 
 (define %pcb-m4-path
@@ -47,9 +49,107 @@
 
 
 (define *%pcb-m4-path (string->pointer %pcb-m4-path))
-
 (sch2pcb_set_default_m4_pcbdir *%pcb-m4-path)
 (sch2pcb_set_m4_pcbdir *%pcb-m4-path)
+
+
+(define (usage)
+  (format #t
+          (G_
+"Usage: ~A [options] {project | foo.sch [foo1.sch ...]}
+
+Generate a PCB layout file from a set of Lepton EDA schematics.
+
+   1) `lepton-netlist -g PCB` is run to generate foo.net from the schematics.
+
+   2) `lepton-netlist -g gsch2pcb` is run to get PCB m4 derived elements which
+   match schematic footprints.  For schematic footprints which don't match
+   any PCB m4 layout elements, search a set of file element directories in
+   an attempt to find matching PCB file elements.
+   Output to foo.pcb if it doesn't exist.  If there is a current foo.pcb,
+   output only new elements to foo.new.pcb.
+   If any elements with a non-empty element name in the current foo.pcb
+   have no matching schematic component, then remove those elements from
+   foo.pcb and rename foo.pcb to a foo.pcb.bak sequence.
+
+   3) `lepton-netlist -g pcbpins` is run to get a PCB actions file which will rename all
+   of the pins in a .pcb file to match pin names from the schematic.
+
+   \\project\\ is a file (not ending in .sch) containing a list of
+   schematics to process and some options.  A schematics line is like:
+       schematics foo1.sch foo2.sch ...
+   Options in a project file are like command line args without the \\-\\:
+       output-name myproject
+
+Options (may be included in a project file):
+   -d, --elements-dir D    Search D for PCB file elements.  These defaults
+                           are searched if they exist: ./packages,
+                           /usr/local/share/pcb/newlib, /usr/share/pcb/newlib,
+                           (old pcb) /usr/local/lib/pcb_lib, /usr/lib/pcb_lib,
+                           (old pcb) /usr/local/pcb_lib
+   -o, --output-name N     Use output file names N.net, N.pcb, and N.new.pcb
+                           instead of foo.net, ... where foo is the basename
+                           of the first command line .sch file.
+   -f, --use-files         Force using file elements over m4 PCB elements
+                           for new footprints even though m4 elements are
+                           searched for first and may have been found.
+   -r, --remove-unfound    Don't include references to unfound elements in
+                           the generated .pcb files.  Use if you want PCB to
+                           be able to load the (incomplete) .pcb file.
+                           This is the default behavior.
+   -k, --keep-unfound      Keep include references to unfound elements in
+                           the generated .pcb files.  Use if you want to hand
+                           edit or otherwise preprocess the generated .pcb file
+                           before running pcb.
+   -p, --preserve          Preserve elements in PCB files which are not found
+                           in the schematics.  Note that elements with an empty
+                           element name (schematic refdes) are never deleted,
+                           so you really shouldn't need this option.
+   -q, --quiet             Don't tell the user what to do next after running lepton-sch2pcb.
+
+   -s, --skip-m4           Skip m4 when looking for footprints.  The default is to use
+                           m4 (which is what previous versions did).
+       --m4-file F.inc     Use m4 file F.inc in addition to the default m4
+                           files ./pcb.inc and ~/.pcb/pcb.inc.
+       --m4-pcbdir D       Use D as the PCB m4 files install directory
+                           instead of the default:
+                           ~A
+
+   --backend-cmd backend   Backend that generates pins file (.cmd)
+   --backend-net backend   Backend that generates netlist file (.net)
+   --backend-pcb backend   Backend that generates board files (.pcb, .pcb.new)
+
+   --gnetlist backend      A convenience run of extra lepton-netlist -g commands.
+                           Example:  lepton-netlist partslist3
+                           Creates:  myproject.partslist3
+   --empty-footprint name  See the project.sample file.
+
+Options (not recognized in a project file):
+   --gnetlist-arg arg      Allows additional arguments to be passed to lepton-netlist.
+   --fix-elements          If a schematic component footprint is not equal
+                           to its PCB element Description, update the
+                           Description instead of replacing the element.
+                           Do this the first time lepton-sch2pcb is used with
+                           PCB files originally created with gschem2pcb.
+   -v, --verbose           Use -v -v for additional file element debugging.
+   -V, --version
+Environment variables:
+   NETLISTER               If set, this specifies the name of the netlister program
+                           to execute.
+
+Additional Resources:
+  gnetlist user guide:     http://wiki.geda-project.org/geda:gnetlist_ug
+  gEDA homepage:           http://www.geda-project.org
+  PCB homepage:            http://pcb.geda-project.org
+
+Report bugs at <~A>
+Lepton EDA homepage: <~A>
+")
+          %sch2pcb
+          %pcb-m4-path
+          (lepton-version-ref 'bugs)
+          (lepton-version-ref 'url))
+  (exit 0))
 
 
 ;;; Parse command line options.
@@ -72,7 +172,7 @@
                seeds))
      (option '(#\h #\? "help") #f #f
              (lambda (opt name arg seeds)
-               (sch2pcb_usage)))
+               (usage)))
      (option '(#\r "remove-unfound") #f #f
              (lambda (opt name arg seeds)
                ;; This is default behavior.
@@ -158,7 +258,7 @@
               (if (char? name)
                   (string-append "-" (char-set->string (char-set name)))
                   (string-append "--" name)))
-      (sch2pcb_usage))
+      (usage))
     (lambda (op seeds)
       (if (string-suffix? ".sch" op)
           (begin
@@ -312,7 +412,7 @@
 
 (let ((number-of-args (length (program-arguments))))
   (if (= 1 number-of-args)
-      (sch2pcb_usage)
+      (usage)
       (begin
         ;; Parse command line arguments and set up internal
         ;; variables.
@@ -320,7 +420,7 @@
         (sch2pcb_load_extra_project_files)
         (sch2pcb_add_default_m4_files)
         (if (null-pointer? (sch2pcb_get_schematics))
-            (sch2pcb_usage)
+            (usage)
             (begin
               ;; Defaults for the newlib element directory search path
               ;; if not configured in the project file.
