@@ -42,4 +42,7 @@ sch2pcb_get_m4_pcbdir ();
 void
 sch2pcb_set_m4_pcbdir (const gchar *dir);
 
+void
+sch2pcb_usage ();
+
 G_END_DECLS

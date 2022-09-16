@@ -1402,8 +1402,8 @@ static const gchar *usage_string1 =
   "Report bugs at <%s>\n"
   "Lepton EDA homepage: <%s>\n";
 
-static void
-usage ()
+void
+sch2pcb_usage ()
 {
   puts (usage_string0);
   printf ("                           %s\n\n", default_m4_pcbdir);
@@ -1460,7 +1460,7 @@ sch2pcb_get_args (gint argc,
         i++;
         continue;
       } else if (!strcmp (opt, "help") || !strcmp (opt, "h"))
-        usage ();
+        sch2pcb_usage ();
       else if (i < argc
                && ((r = parse_config (opt, (i < argc - 1) ? arg : NULL))
                    >= 0)
@@ -1469,7 +1469,7 @@ sch2pcb_get_args (gint argc,
         continue;
       }
       printf ("lepton-sch2pcb: bad or incomplete arg: %s\n", argv[i]);
-      usage ();
+      sch2pcb_usage ();
     } else {
       if (!g_str_has_suffix (argv[i], ".sch")) {
         load_extra_project_files ();
@@ -1496,7 +1496,7 @@ sch2pcb_main (gint argc,
   sch2pcb_set_m4_pcbdir (m4_dir);
 
   if (argc < 2)
-    usage ();
+    sch2pcb_usage ();
 
   sch2pcb_get_args (argc, argv);
 
@@ -1504,7 +1504,7 @@ sch2pcb_main (gint argc,
   add_default_m4_files ();
 
   if (!schematics)
-    usage ();
+    sch2pcb_usage ();
 
 
   /* Defaults for the search path if not configured in the project file */
