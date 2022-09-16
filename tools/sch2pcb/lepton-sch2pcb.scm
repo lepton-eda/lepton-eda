@@ -55,6 +55,16 @@
             ;; in the current directory.
             (string-append (getcwd) file-name-separator-string "m4")))))
 
-(sch2pcb_main (length (program-arguments))
-              (string-list->bv-pointer (program-arguments))
-              (string->pointer %pcb-m4-path))
+
+(define *%pcb-m4-path (string->pointer %pcb-m4-path))
+
+(sch2pcb_set_default_m4_pcbdir *%pcb-m4-path)
+(sch2pcb_set_m4_pcbdir *%pcb-m4-path)
+
+(let ((number-of-args (length (program-arguments))))
+  (if (= 1 number-of-args)
+      (sch2pcb_usage)
+      (begin
+        (sch2pcb_get_args number-of-args
+                          (string-list->bv-pointer (program-arguments)))
+        (sch2pcb_main))))

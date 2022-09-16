@@ -1528,9 +1528,7 @@ sch2pcb_get_args (gint argc,
 }
 
 gint
-sch2pcb_main (gint argc,
-              gchar **argv,
-              const char *m4_dir)
+sch2pcb_main ()
 {
   gchar *pcb_file_name,
     *pcb_new_file_name, *bak_file_name, *pins_file_name, *net_file_name, *tmp;
@@ -1538,14 +1536,6 @@ sch2pcb_main (gint argc,
   gboolean initial_pcb = TRUE;
   gboolean created_pcb_file = TRUE;
   char *path, *p;
-
-  sch2pcb_set_default_m4_pcbdir (m4_dir);
-  sch2pcb_set_m4_pcbdir (m4_dir);
-
-  if (argc < 2)
-    sch2pcb_usage ();
-
-  sch2pcb_get_args (argc, argv);
 
   sch2pcb_load_extra_project_files ();
   sch2pcb_add_default_m4_files ();

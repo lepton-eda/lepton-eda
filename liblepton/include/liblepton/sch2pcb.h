@@ -24,9 +24,8 @@
 G_BEGIN_DECLS
 
 gint
-sch2pcb_main (gint argc,
-              gchar **argv,
-              const char *m4_dir);
+sch2pcb_main ();
+
 void
 sch2pcb_get_args (gint argc,
                   gchar **argv);
