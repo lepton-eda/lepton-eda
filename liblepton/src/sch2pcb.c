@@ -1494,20 +1494,20 @@ sch2pcb_main (gint argc, gchar ** argv)
   pcbdata_path = g_getenv ("PCBDATA");  /* do not free return value */
   if (pcbdata_path != NULL) {
     /* If PCBDATA is set, use the value */
-    m4_pcbdir = g_strconcat (pcbdata_path, "/m4", NULL);
+    sch2pcb_set_m4_pcbdir (g_strconcat (pcbdata_path, "/m4", NULL));
   } else if (configure_m4_pcbdir != NULL) {
     /* Use the default value passed in from the configure script
      * instead of trying to hard code a value which is very
      * likely wrong
      */
-    m4_pcbdir = g_strdup (configure_m4_pcbdir);
+    sch2pcb_set_m4_pcbdir (configure_m4_pcbdir);
   } else {
     /* Neither PCBDATA was set nor PCBM4DIR has been configured */
     /* Fall back to using the "m4" subdirectory in the current directory */
-    m4_pcbdir = g_strdup ("./m4");
+    sch2pcb_set_m4_pcbdir ("./m4");
   }
 
-  default_m4_pcbdir = g_strdup (m4_pcbdir);
+  sch2pcb_set_default_m4_pcbdir (m4_pcbdir);
 
   if (argc < 2)
     usage ();
