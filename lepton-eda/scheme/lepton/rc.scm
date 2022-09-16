@@ -25,6 +25,8 @@
   #:use-module (lepton eval)
   #:use-module (lepton ffi)
   #:use-module (lepton file-system)
+  #:use-module (lepton gettext)
+  #:use-module (lepton log)
   #:use-module (lepton os)
   #:use-module (lepton toplevel foreign)
   #:use-module (lepton toplevel)
@@ -94,7 +96,13 @@ RC-NAME should be a basename of RC file, such as, for example,
 resides in."
   (let ((cwd (getcwd)))
     (unless (hash-ref %rc-dirs cwd)
-      (chdir (dirname schematic))
-      (parse-rc program "gafrc")
-      (hash-set! %rc-dirs cwd cwd)
-      (chdir cwd))))
+      (let ((dir (dirname schematic)))
+        (if (directory? dir)
+            (begin
+              (chdir dir)
+              (parse-rc program "gafrc")
+              (hash-set! %rc-dirs cwd cwd)
+              (chdir cwd))
+            (log! 'message
+                  (G_ "Could not process \"gafrc\" in the directory ~S: the directory does not exist.")
+                  dir))))))
