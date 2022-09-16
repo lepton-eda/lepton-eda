@@ -229,21 +229,23 @@
 
 (test-group-with-cleanup "sch2pcb -v"
   (prepare-test-directory)
-  ;; Verbose level is 1.
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-v" one.sch)
-    (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "Processing PCBLIBPATH"))
-    (test-assert (not (string-contains <stdout> "Adding directory to file element directory list"))))
+  (let ((verbose-output "Processing PCBLIBPATH")
+        (double-verbose-output "Adding directory to file element directory list"))
+    ;; Verbose level is 1.
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb "-v" one.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> verbose-output))
+      (test-assert (not (string-contains <stdout> double-verbose-output))))
 
-  ;; Verbose level is >1.
-  (with-output-to-file "project"
-    (lambda () (display "elements-dir project")))
-  (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-v" "-v" "project" one.sch)
-    (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "Processing PCBLIBPATH"))
-    (test-assert (string-contains <stdout> "Adding directory to file element directory list")))
+    ;; Verbose level is >1.
+    (with-output-to-file "project"
+      (lambda () (display "elements-dir project")))
+    (receive (<status> <stdout> <stderr>)
+        (command-values lepton-sch2pcb "-v" "-v" "project" one.sch)
+      (test-eq EXIT_SUCCESS <status>)
+      (test-assert (string-contains <stdout> verbose-output))
+      (test-assert (string-contains <stdout> double-verbose-output))))
 
   (test-teardown))
 
