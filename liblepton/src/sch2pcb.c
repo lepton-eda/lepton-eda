@@ -120,7 +120,6 @@ static gboolean use_m4 = TRUE;
 static gchar *empty_footprint_name;
 
 static gboolean remove_unfound_elements = TRUE,
-  quiet_mode = FALSE,
   force_element_files, preserve, bak_done;
 
 static gchar *default_m4_pcbdir;
@@ -362,6 +361,21 @@ void
 sch2pcb_set_need_PKG_purge (gboolean val)
 {
   need_PKG_purge = val;
+}
+
+
+static gboolean quiet_mode = FALSE;
+
+gboolean
+sch2pcb_get_quiet_mode ()
+{
+  return quiet_mode;
+}
+
+void
+sch2pcb_set_quiet_mode (gboolean mode)
+{
+  quiet_mode = mode;
 }
 
 
