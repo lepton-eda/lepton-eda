@@ -1271,8 +1271,8 @@ sch2pcb_parse_config (gchar *config,
   return 1;
 }
 
-static void
-load_project (const gchar * path)
+void
+sch2pcb_load_project (const gchar * path)
 {
   FILE *f;
   gchar *s, buf[1024], config[32], arg[768];
@@ -1307,14 +1307,14 @@ sch2pcb_load_extra_project_files (void)
   /* TODO: consider linking sch2pcb with liblepton and
    *       using eda_get_system_config_dirs() here:
   */
-  load_project ("/etc/gsch2pcb");
-  load_project ("/usr/local/etc/gsch2pcb");
+  sch2pcb_load_project ("/etc/gsch2pcb");
+  sch2pcb_load_project ("/usr/local/etc/gsch2pcb");
 
   path = g_build_filename (g_get_user_config_dir(),
                            PACKAGE,
                            "gsch2pcb",
                            NULL);
-  load_project (path);
+  sch2pcb_load_project (path);
   g_free (path);
 
   done = TRUE;
@@ -1481,7 +1481,7 @@ sch2pcb_get_args (gint argc,
     } else {
       if (!g_str_has_suffix (argv[i], ".sch")) {
         sch2pcb_load_extra_project_files ();
-        load_project (argv[i]);
+        sch2pcb_load_project (argv[i]);
       } else
         add_schematic (argv[i]);
     }
