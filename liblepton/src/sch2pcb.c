@@ -1184,8 +1184,9 @@ add_multiple_schematics (gchar * sch)
   }
 }
 
-static gint
-parse_config (gchar * config, gchar * arg)
+gint
+sch2pcb_parse_config (gchar *config,
+                      gchar *arg)
 {
   gchar *s;
 
@@ -1287,7 +1288,7 @@ load_project (const gchar * path)
       continue;
     arg[0] = '\0';
     sscanf (s, "%31s %767[^\n]", config, arg);
-    parse_config (config, arg);
+    sch2pcb_parse_config (config, arg);
   }
   fclose (f);
 }
@@ -1469,7 +1470,7 @@ sch2pcb_get_args (gint argc,
       } else if (!strcmp (opt, "help") || !strcmp (opt, "h"))
         sch2pcb_usage ();
       else if (i < argc
-               && ((r = parse_config (opt, (i < argc - 1) ? arg : NULL))
+               && ((r = sch2pcb_parse_config (opt, (i < argc - 1) ? arg : NULL))
                    >= 0)
         ) {
         i += r;

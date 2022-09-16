@@ -54,6 +54,9 @@ sch2pcb_get_schematics ();
 void
 sch2pcb_usage ();
 
+gint
+sch2pcb_parse_config (gchar *config,
+                      gchar *arg);
 void
 sch2pcb_version ();
 
