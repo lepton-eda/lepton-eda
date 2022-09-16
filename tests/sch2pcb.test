@@ -224,6 +224,33 @@
                 (build-filename "sym" symbol-name)))
    %symbols))
 
+
+(test-begin "sch2pcb -v")
+
+(test-group-with-cleanup "sch2pcb -v"
+  (prepare-test-directory)
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-v" one.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "Processing PCBLIBPATH")))
+  (test-teardown))
+
+(test-end)
+
+
+(test-begin "sch2pcb --verbose")
+
+(test-group-with-cleanup "sch2pcb --verbose"
+  (prepare-test-directory)
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--verbose" one.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "Processing PCBLIBPATH")))
+  (test-teardown))
+
+(test-end)
+
+
 (test-begin "sch2pcb-schematics")
 (test-group-with-cleanup "sch2pcb-schematics"
   (prepare-test-directory)
