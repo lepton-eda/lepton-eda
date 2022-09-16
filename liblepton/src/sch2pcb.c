@@ -1418,8 +1418,8 @@ sch2pcb_usage ()
   exit (0);
 }
 
-static void
-version()
+void
+sch2pcb_version ()
 {
   const char* msg =
     "Lepton EDA %s.%s (git: %.7s)\n"
@@ -1454,7 +1454,7 @@ sch2pcb_get_args (gint argc,
       if (*opt == '-')
         ++opt;
       if (!strcmp (opt, "version") || !strcmp (opt, "V")) {
-        version();
+        sch2pcb_version ();
       } else if (!strcmp (opt, "verbose") || !strcmp (opt, "v")) {
         verbose += 1;
         continue;

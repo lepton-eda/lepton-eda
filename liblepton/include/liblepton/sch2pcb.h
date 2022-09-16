@@ -54,4 +54,7 @@ sch2pcb_get_schematics ();
 void
 sch2pcb_usage ();
 
+void
+sch2pcb_version ();
+
 G_END_DECLS
