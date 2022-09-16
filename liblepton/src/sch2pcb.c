@@ -1432,8 +1432,9 @@ version()
   exit (0);
 }
 
-static void
-get_args (gint argc, gchar ** argv)
+void
+sch2pcb_get_args (gint argc,
+                  gchar ** argv)
 {
   gchar *opt, *arg;
   gint i, r;
@@ -1497,7 +1498,7 @@ sch2pcb_main (gint argc,
   if (argc < 2)
     usage ();
 
-  get_args (argc, argv);
+  sch2pcb_get_args (argc, argv);
 
   load_extra_project_files ();
   add_default_m4_files ();
