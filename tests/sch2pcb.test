@@ -334,3 +334,25 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --gnetlist-arg")
+
+(test-group-with-cleanup "sch2pcb --gnetlist-arg"
+  (prepare-test-directory)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--gnetlist-arg" two.sch "-v" one.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "lepton-netlist -g pcbpins -o one.cmd two.sch one.sch"))
+    (test-assert (string-contains <stdout> "lepton-netlist -g PCB -o one.net two.sch one.sch"))
+    (test-assert (string-contains <stdout> "lepton-netlist -g gsch2pcb -o one.pcb -m gnet-gsch2pcb-tmp.scm two.sch one.sch")))
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--gnetlist-arg" "-x" two.sch "-v" one.sch)
+    (test-eq EXIT_FAILURE <status>)
+    (test-assert (string-contains <stdout> "lepton-netlist -g pcbpins -o two.cmd -x two.sch one.sch"))
+    (test-assert (string-contains <stderr> "lepton-netlist: no such option: -x")))
+  (test-teardown))
+
+(test-end)
