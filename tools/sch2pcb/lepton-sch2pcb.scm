@@ -68,4 +68,5 @@
         (sch2pcb_get_args number-of-args
                           (string-list->bv-pointer (program-arguments)))
         (sch2pcb_load_extra_project_files)
+        (sch2pcb_add_default_m4_files)
         (sch2pcb_main))))

@@ -1537,8 +1537,6 @@ sch2pcb_main ()
   gboolean created_pcb_file = TRUE;
   char *path, *p;
 
-  sch2pcb_add_default_m4_files ();
-
   if (sch2pcb_get_schematics () == NULL)
   {
     sch2pcb_usage ();
