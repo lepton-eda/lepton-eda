@@ -98,6 +98,30 @@
 (test-end)
 
 
+(test-begin "sch2pcb -V")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-sch2pcb "-V")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Lepton EDA"))
+  (test-assert (string-contains <stdout> "Copyright"))
+  (test-assert (string-contains <stdout> "There is NO WARRANTY")))
+
+(test-end)
+
+
+(test-begin "sch2pcb --version")
+
+(receive (<status> <stdout> <stderr>)
+    (command-values lepton-sch2pcb "--version")
+  (test-eq EXIT_SUCCESS <status>)
+  (test-assert (string-contains <stdout> "Lepton EDA"))
+  (test-assert (string-contains <stdout> "Copyright"))
+  (test-assert (string-contains <stdout> "There is NO WARRANTY")))
+
+(test-end)
+
+
 (test-begin "sch2pcb wrong options")
 
 (test-expect-fail 2)
