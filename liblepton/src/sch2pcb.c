@@ -130,7 +130,7 @@ static gint
 
 static gboolean remove_unfound_elements = TRUE,
   quiet_mode = FALSE,
-  force_element_files, preserve, fix_elements, bak_done, need_PKG_purge;
+  force_element_files, preserve, bak_done, need_PKG_purge;
 
 static gchar *default_m4_pcbdir;
 
@@ -161,6 +161,21 @@ sch2pcb_set_m4_pcbdir (const gchar *dir)
 {
   g_free (m4_pcbdir);
   m4_pcbdir = g_strdup (dir);
+}
+
+
+static gboolean fix_elements = FALSE;
+
+gboolean
+sch2pcb_get_fix_elements ()
+{
+  return fix_elements;
+}
+
+void
+sch2pcb_set_fix_elements (gboolean val)
+{
+  fix_elements = val;
 }
 
 
@@ -993,7 +1008,9 @@ sch2pcb_add_elements (gchar *pcb_file)
         fprintf (stderr,
                  "%s: can't find PCB element for footprint %s (value=%s)\n",
                  el->refdes, el->description, el->value);
-        if (remove_unfound_elements && !fix_elements) {
+        if (remove_unfound_elements
+            && !sch2pcb_get_fix_elements())
+        {
           fprintf (stderr,
                    "So device %s will not be in the layout.\n", el->refdes);
           ++n_PKG_removed_new;
@@ -1516,7 +1533,7 @@ sch2pcb_get_args (gint argc,
         verbose += 1;
         continue;
       } else if (!strcmp (opt, "fix-elements")) {
-        fix_elements = TRUE;
+        sch2pcb_set_fix_elements (TRUE);
         continue;
       } else if (!strcmp (opt, "gnetlist-arg")) {
         extra_gnetlist_arg_list =
@@ -1554,8 +1571,10 @@ sch2pcb_main (char *pcb_file_name,
 {
   gboolean created_pcb_file = TRUE;
 
-  if (fix_elements)
+  if (sch2pcb_get_fix_elements())
+  {
     update_element_descriptions (pcb_file_name, bak_file_name);
+  }
   prune_elements (pcb_file_name, bak_file_name);
 
   /* Report work done during processing */

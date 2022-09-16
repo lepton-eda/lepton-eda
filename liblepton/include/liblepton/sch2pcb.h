@@ -60,6 +60,12 @@ sch2pcb_element_directory_list_append (char *dir);
 void
 sch2pcb_element_directory_list_prepend (char *dir);
 
+gboolean
+sch2pcb_get_fix_elements ();
+
+void
+sch2pcb_set_fix_elements (gboolean val);
+
 char*
 sch2pcb_get_m4_pcbdir ();
 
