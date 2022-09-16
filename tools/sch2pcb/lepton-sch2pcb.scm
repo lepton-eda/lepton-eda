@@ -1,3 +1,5 @@
+;;; lepton-sch2pcb -- transform schematics to PCB
+;;;
 ;;; Copyright (C) 2022 Lepton EDA Contributors
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
