@@ -1850,7 +1850,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (!strcmp (opt, "quiet") || !strcmp (opt, "q"))
       {
-        quiet_mode = TRUE;
+        sch2pcb_set_quiet_mode (TRUE);
         continue;
       }
       else if (!strcmp (opt, "preserve") || !strcmp (opt, "p"))
