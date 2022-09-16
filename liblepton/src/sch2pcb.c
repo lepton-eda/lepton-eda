@@ -1285,8 +1285,8 @@ load_project (const gchar * path)
   fclose (f);
 }
 
-static void
-load_extra_project_files (void)
+void
+sch2pcb_load_extra_project_files (void)
 {
   gchar *path;
   static gboolean done = FALSE;
@@ -1472,7 +1472,7 @@ sch2pcb_get_args (gint argc,
       sch2pcb_usage ();
     } else {
       if (!g_str_has_suffix (argv[i], ".sch")) {
-        load_extra_project_files ();
+        sch2pcb_load_extra_project_files ();
         load_project (argv[i]);
       } else
         add_schematic (argv[i]);
@@ -1500,7 +1500,7 @@ sch2pcb_main (gint argc,
 
   sch2pcb_get_args (argc, argv);
 
-  load_extra_project_files ();
+  sch2pcb_load_extra_project_files ();
   add_default_m4_files ();
 
   if (!schematics)
