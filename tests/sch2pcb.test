@@ -136,7 +136,7 @@
 
 (test-end)
 
-(define remove-attrib-prog
+(define change-attrib-prog
   '((use-modules (srfi srfi-1)
                  (srfi srfi-26)
                  (lepton attrib)
@@ -174,6 +174,13 @@
              (attrib (get-attrib object attr-name)))
         (detach-attribs! object attrib)
         (page-remove! page attrib)
+        (save-page page (string-append filename ".new"))))
+
+    (define (replace-attrib! filename refdes attr-name value)
+      (let* ((page (file->page filename))
+             (object (object-with-refdes page refdes))
+             (attrib (get-attrib object attr-name)))
+        (set-attrib-value! attrib "RXXX")
         (save-page page (string-append filename ".new"))))))
 
 
@@ -306,7 +313,7 @@
   (test-assert (file-exists? lepton-shell))
   (with-output-to-file "script.scm"
     (lambda ()
-      (for-each write remove-attrib-prog)
+      (for-each write change-attrib-prog)
       (write '(remove-attrib! "one.sch" "R101" "value"))))
   (test-assert (file-exists? "script.scm"))
   (test-run-success lepton-shell "-s" "script.scm")
@@ -353,6 +360,41 @@
     (test-eq EXIT_FAILURE <status>)
     (test-assert (string-contains <stdout> "lepton-netlist -g pcbpins -o two.cmd -x two.sch one.sch"))
     (test-assert (string-contains <stderr> "lepton-netlist: no such option: -x")))
+  (test-teardown))
+
+(test-end)
+
+
+(test-begin "sch2pcb --keep-unfound --remove-unfound")
+
+(test-group-with-cleanup "sch2pcb --keep-unfound --remove-unfound"
+  (prepare-test-directory)
+
+  ;; First, just make an initial .pcb file.
+  (test-run-success lepton-sch2pcb one.sch two.sch)
+
+  (test-assert (file-exists? lepton-shell))
+  (with-output-to-file "script.scm"
+    (lambda ()
+      (for-each write change-attrib-prog)
+      (write '(replace-attrib! "one.sch" "R101" "value" "RXXX"))))
+  (test-assert (file-exists? "script.scm"))
+  (test-run-success lepton-shell "-s" "script.scm")
+  (delete-file one.sch)
+  (rename-file "one.sch.new" one.sch)
+
+  ;; Check, if the error message is missing with --keep-unfound.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--keep-unfound" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (not (string-contains <stderr> "will not be in the layout"))))
+
+  ;; Check, if the error message is present with --remove-unfound.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--remove-unfound" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stderr> "will not be in the layout")))
+
   (test-teardown))
 
 (test-end)
