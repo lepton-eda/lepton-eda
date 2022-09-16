@@ -50,8 +50,7 @@ typedef struct
 }
 ElementMap;
 
-static GList *extra_gnetlist_list, *extra_gnetlist_arg_list;
-
+static GList *extra_gnetlist_list;
 
 /* --backend-cmd:
 *  backend that generates .cmd file:
@@ -168,6 +167,17 @@ static gboolean use_m4 = TRUE;
 
 static gboolean remove_unfound_elements = TRUE,
   force_element_files, preserve, bak_done;
+
+
+static GList *extra_gnetlist_arg_list;
+
+void
+sch2pcb_extra_gnetlist_arg_list_append (char *arg)
+{
+  extra_gnetlist_arg_list =
+    g_list_append (extra_gnetlist_arg_list, g_strdup (arg));
+}
+
 
 static gchar *default_m4_pcbdir;
 
@@ -1807,8 +1817,7 @@ sch2pcb_get_args (gint argc,
         sch2pcb_set_fix_elements (TRUE);
         continue;
       } else if (!strcmp (opt, "gnetlist-arg")) {
-        extra_gnetlist_arg_list =
-          g_list_append (extra_gnetlist_arg_list, g_strdup (arg));
+        sch2pcb_extra_gnetlist_arg_list_append (arg);
         i++;
         continue;
       } else if (!strcmp (opt, "help") || !strcmp (opt, "h"))
