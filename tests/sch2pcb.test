@@ -318,3 +318,19 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --fix-elements")
+
+(test-group-with-cleanup "sch2pcb --fix-elements"
+  (prepare-test-directory)
+
+  (test-run-success lepton-sch2pcb one.sch)
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--fix-elements" one.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stderr> "Could not find any elements to fix.")))
+
+  (test-teardown))
+
+(test-end)
