@@ -1783,7 +1783,7 @@ sch2pcb_get_args (gint argc,
                   gchar ** argv)
 {
   gchar *opt, *arg;
-  gint i, r;
+  gint i;
 
   for (i = 1; i < argc; ++i) {
     opt = argv[i];
@@ -1806,17 +1806,113 @@ sch2pcb_get_args (gint argc,
         i++;
         continue;
       } else if (!strcmp (opt, "help") || !strcmp (opt, "h"))
+      {
         sch2pcb_usage ();
-      else if (i < argc
-               && ((r = sch2pcb_parse_config (opt, (i < argc - 1) ? arg : NULL))
-                   >= 0)
-        ) {
-        i += r;
+      }
+      else if (!strcmp (opt, "remove-unfound") || !strcmp (opt, "r"))
+      {
+        /* This is default behavior set in header section */
+        remove_unfound_elements = TRUE;
         continue;
       }
-      printf ("lepton-sch2pcb: bad or incomplete arg: %s\n", argv[i]);
-      sch2pcb_usage ();
-    } else {
+      else if (!strcmp (opt, "keep-unfound") || !strcmp (opt, "k"))
+      {
+        remove_unfound_elements = FALSE;
+        continue;
+      }
+      else if (!strcmp (opt, "quiet") || !strcmp (opt, "q"))
+      {
+        quiet_mode = TRUE;
+        continue;
+      }
+      else if (!strcmp (opt, "preserve") || !strcmp (opt, "p"))
+      {
+        preserve = TRUE;
+        continue;
+      }
+      else if (!strcmp (opt, "use-files") || !strcmp (opt, "f"))
+      {
+        force_element_files = TRUE;
+        continue;
+      }
+      else if (!strcmp (opt, "skip-m4") || !strcmp (opt, "s"))
+      {
+        use_m4 = FALSE;
+        continue;
+      }
+      else if (!strcmp (opt, "elements-dir") || !strcmp (opt, "d"))
+      {
+        gchar *elements_dir = expand_dir (arg);
+        if (verbose > 1)
+          printf ("\tAdding directory to file element directory list: %s\n",
+                  elements_dir);
+        element_directory_list =
+          g_list_prepend (element_directory_list, elements_dir);
+        i++;
+        continue;
+      }
+      else if (!strcmp (opt, "output-name") || !strcmp (opt, "o"))
+      {
+        sch_basename = g_strdup (arg);
+        i++;
+        continue;
+      }
+      else if (!strcmp (opt, "schematics"))
+      {
+        add_multiple_schematics (arg);
+        i++;
+        continue;
+      }
+      else if (!strcmp (opt, "m4-pcbdir"))
+      {
+        sch2pcb_set_m4_pcbdir (arg);
+        i++;
+        continue;
+      }
+      else if (!strcmp (opt, "m4-file"))
+      {
+        add_m4_file (arg);
+        i++;
+        continue;
+      }
+      else if (!strcmp (opt, "gnetlist"))
+      {
+        extra_gnetlist_list = g_list_append (extra_gnetlist_list, g_strdup (arg));
+        i++;
+        continue;
+      }
+      else if (!strcmp (opt, "empty-footprint"))
+      {
+        empty_footprint_name = g_strdup (arg);
+        i++;
+        continue;
+      }
+      else if (strcmp (opt, "backend-cmd") == 0)
+      {
+        backend_mkfile_cmd = g_strdup (arg);
+        i++;
+        continue;
+      }
+      else if (strcmp (opt, "backend-net") == 0)
+      {
+        backend_mkfile_net = g_strdup (arg);
+        i++;
+        continue;
+      }
+      else if (strcmp (opt, "backend-pcb") == 0)
+      {
+        backend_mkfile_pcb = g_strdup (arg);
+        i++;
+        continue;
+      }
+      else
+      {
+        printf ("lepton-sch2pcb: bad or incomplete arg: %s\n", argv[i]);
+        sch2pcb_usage ();
+      }
+    }
+    else
+    {
       if (!g_str_has_suffix (argv[i], ".sch")) {
         sch2pcb_load_extra_project_files ();
         sch2pcb_load_project (argv[i]);
