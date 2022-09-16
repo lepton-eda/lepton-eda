@@ -519,19 +519,18 @@ the snap grid size should be set to 100")))
        (s_clib_get_symbol_by_name (string->pointer basename)))
 
       ;; Create new object.
-      (let ((new-component
-             (set-component-with-transform!
-              (make-component/library basename
-                                      position
-                                      angle
-                                      mirror?
-                                      locked?)
-              position
-              angle
-              mirror?
-              locked?)))
-        (if new-component
-            (begin
+      (let ((library-component (make-component/library basename
+                                                       position
+                                                       angle
+                                                       mirror?
+                                                       locked?)))
+        (if library-component
+            (let ((new-component
+                   (set-component-with-transform! library-component
+                                                  position
+                                                  angle
+                                                  mirror?
+                                                  locked?)))
               ;; Embed new object if the old one is embedded.
               (set-object-embedded! new-component embedded?)
 
