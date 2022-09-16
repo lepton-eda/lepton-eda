@@ -37,6 +37,9 @@ char*
 sch2pcb_get_default_m4_pcbdir ();
 
 void
+sch2pcb_add_schematic (gchar *sch);
+
+void
 sch2pcb_set_default_m4_pcbdir (const gchar *dir);
 
 char*

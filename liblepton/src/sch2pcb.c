@@ -1152,8 +1152,8 @@ sch2pcb_add_default_m4_files (void)
 
 }
 
-static void
-add_schematic (gchar * sch)
+void
+sch2pcb_add_schematic (gchar *sch)
 {
   const gchar* s;
   schematics = g_list_append (schematics, g_strdup (sch));
@@ -1173,7 +1173,7 @@ add_multiple_schematics (gchar * sch)
     int i;
     for (i = 0; i < count; ++i)
     {
-      add_schematic (args[i]);
+      sch2pcb_add_schematic (args[i]);
     }
     g_strfreev (args);
   } else {
@@ -1483,7 +1483,7 @@ sch2pcb_get_args (gint argc,
         sch2pcb_load_extra_project_files ();
         sch2pcb_load_project (argv[i]);
       } else
-        add_schematic (argv[i]);
+        sch2pcb_add_schematic (argv[i]);
     }
   }
 }
