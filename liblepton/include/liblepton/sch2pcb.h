@@ -90,6 +90,9 @@ void
 sch2pcb_set_m4_pcbdir (const gchar *dir);
 
 void
+sch2pcb_increment_verbose_mode ();
+
+void
 sch2pcb_load_extra_project_files (void);
 
 void

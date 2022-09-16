@@ -466,6 +466,12 @@ sch2pcb_get_verbose_mode ()
   return verbose;
 }
 
+void
+sch2pcb_increment_verbose_mode ()
+{
+  verbose += 1;
+}
+
 
 static void
 create_m4_override_file ()
@@ -1795,7 +1801,7 @@ sch2pcb_get_args (gint argc,
       if (!strcmp (opt, "version") || !strcmp (opt, "V")) {
         sch2pcb_version ();
       } else if (!strcmp (opt, "verbose") || !strcmp (opt, "v")) {
-        verbose += 1;
+        sch2pcb_increment_verbose_mode ();
         continue;
       } else if (!strcmp (opt, "fix-elements")) {
         sch2pcb_set_fix_elements (TRUE);
