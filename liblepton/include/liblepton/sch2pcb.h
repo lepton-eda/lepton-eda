@@ -77,6 +77,9 @@ sch2pcb_get_empty_footprint_name ();
 void
 sch2pcb_set_empty_footprint_name (char *val);
 
+void
+sch2pcb_extra_gnetlist_arg_list_append (char *arg);
+
 gboolean
 sch2pcb_get_fix_elements ();
 
