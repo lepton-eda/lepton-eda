@@ -78,7 +78,7 @@ static gchar *sch_basename;
 static GList *schematics;
 
 static const gchar* m4_override_file;
-static gchar *m4_pcbdir, *default_m4_pcbdir, *m4_files;
+static gchar *m4_files;
 
 static gboolean use_m4 = TRUE;
 
@@ -96,6 +96,37 @@ static gint verbose,
 static gboolean remove_unfound_elements = TRUE,
   quiet_mode = FALSE,
   force_element_files, preserve, fix_elements, bak_done, need_PKG_purge;
+
+static gchar *default_m4_pcbdir;
+
+char*
+sch2pcb_get_default_m4_pcbdir ()
+{
+  return default_m4_pcbdir;
+}
+
+void
+sch2pcb_set_default_m4_pcbdir (const gchar *dir)
+{
+  g_free (default_m4_pcbdir);
+  default_m4_pcbdir = g_strdup (dir);
+}
+
+static gchar *m4_pcbdir;
+
+char*
+sch2pcb_get_m4_pcbdir ()
+{
+  return m4_pcbdir;
+}
+
+
+void
+sch2pcb_set_m4_pcbdir (const gchar *dir)
+{
+  g_free (m4_pcbdir);
+  m4_pcbdir = g_strdup (dir);
+}
 
 
 static void
