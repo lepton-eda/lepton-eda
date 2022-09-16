@@ -1129,8 +1129,8 @@ expand_dir (gchar * dir)
   return s;
 }
 
-static void
-add_default_m4_files (void)
+void
+sch2pcb_add_default_m4_files (void)
 {
   gchar *path;
 
@@ -1501,7 +1501,7 @@ sch2pcb_main (gint argc,
   sch2pcb_get_args (argc, argv);
 
   sch2pcb_load_extra_project_files ();
-  add_default_m4_files ();
+  sch2pcb_add_default_m4_files ();
 
   if (!schematics)
     sch2pcb_usage ();
