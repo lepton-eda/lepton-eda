@@ -54,6 +54,9 @@ sch2pcb_get_schematics ();
 void
 sch2pcb_usage ();
 
+void
+sch2pcb_load_extra_project_files (void);
+
 gint
 sch2pcb_parse_config (gchar *config,
                       gchar *arg);
