@@ -105,6 +105,12 @@ GList*
 sch2pcb_get_pcb_element_list ();
 
 gboolean
+sch2pcb_get_preserve ();
+
+void
+sch2pcb_set_preserve (gboolean val);
+
+gboolean
 sch2pcb_get_quiet_mode ();
 
 void
