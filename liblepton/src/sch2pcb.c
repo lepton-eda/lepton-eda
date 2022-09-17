@@ -51,7 +51,7 @@ typedef struct
 ElementMap;
 
 static GList *pcb_element_list,
-  *element_directory_list, *extra_gnetlist_list, *extra_gnetlist_arg_list;
+  *extra_gnetlist_list, *extra_gnetlist_arg_list;
 
 
 /* --backend-cmd:
@@ -81,6 +81,21 @@ GList*
 sch2pcb_get_schematics ()
 {
   return schematics;
+}
+
+
+static GList *element_directory_list;
+
+GList*
+sch2pcb_get_element_directory_list ()
+{
+  return element_directory_list;
+}
+
+void
+sch2pcb_set_element_directory_list (GList *list)
+{
+  element_directory_list = list;
 }
 
 

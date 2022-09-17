@@ -42,6 +42,12 @@ sch2pcb_add_schematic (gchar *sch);
 void
 sch2pcb_set_default_m4_pcbdir (const gchar *dir);
 
+GList*
+sch2pcb_get_element_directory_list ();
+
+void
+sch2pcb_set_element_directory_list (GList *list);
+
 char*
 sch2pcb_get_m4_pcbdir ();
 
