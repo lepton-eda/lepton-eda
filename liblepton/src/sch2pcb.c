@@ -163,8 +163,6 @@ sch2pcb_element_directory_list_prepend (char *dir)
 static const gchar* m4_override_file;
 static gchar *m4_files;
 
-static gboolean use_m4 = TRUE;
-
 static gboolean bak_done;
 
 static GList *extra_gnetlist_arg_list;
@@ -508,6 +506,21 @@ sch2pcb_set_sch_basename (char *arg)
 {
   g_free (sch_basename);
   sch_basename = g_strdup (arg);
+}
+
+
+static gboolean use_m4 = TRUE;
+
+gboolean
+sch2pcb_get_use_m4 ()
+{
+  return use_m4;
+}
+
+void
+sch2pcb_set_use_m4 (gboolean val)
+{
+  use_m4 = val;
 }
 
 
