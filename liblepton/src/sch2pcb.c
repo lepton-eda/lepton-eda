@@ -165,7 +165,7 @@ static gchar *m4_files;
 
 static gboolean use_m4 = TRUE;
 
-static gboolean force_element_files, bak_done;
+static gboolean bak_done;
 
 static GList *extra_gnetlist_arg_list;
 
@@ -237,6 +237,21 @@ void
 sch2pcb_set_fix_elements (gboolean val)
 {
   fix_elements = val;
+}
+
+
+static gboolean force_element_files;
+
+gboolean
+sch2pcb_get_force_element_files ()
+{
+  return force_element_files;
+}
+
+void
+sch2pcb_set_force_element_files (gboolean val)
+{
+  force_element_files = val;
 }
 
 
