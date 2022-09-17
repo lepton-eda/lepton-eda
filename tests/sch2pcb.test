@@ -491,3 +491,31 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --preserve")
+(test-group-with-cleanup "sch2pcb --preserve"
+  (prepare-test-directory)
+
+  ;; Produce an initial pcb file.
+  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+  (test-assert (file-exists? one.pcb))
+  (test-run-success "diff" one.pcb tests/one.pcb)
+
+  ;; Now, elements in the one.pcb should be preserved.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--preserve" "--m4-pcbdir" m4-pcbdir one.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "elements not in the schematic preserved")))
+  ;; Pcb file should not have been changed.
+  (test-run-success "diff" one.pcb tests/one.pcb)
+
+  ;; This is just to check that without --preserve the output .pcb
+  ;; file really changes.
+  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch)
+  ;; Pcb file should have been changed.
+  (test-run-failure "diff" one.pcb tests/one.pcb)
+
+  (test-teardown))
+
+(test-end)
