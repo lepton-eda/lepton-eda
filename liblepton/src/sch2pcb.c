@@ -165,7 +165,7 @@ static gchar *m4_files;
 
 static gboolean use_m4 = TRUE;
 
-static gboolean force_element_files, preserve, bak_done;
+static gboolean force_element_files, bak_done;
 
 static GList *extra_gnetlist_arg_list;
 
@@ -432,6 +432,21 @@ void
 sch2pcb_set_need_PKG_purge (gboolean val)
 {
   need_PKG_purge = val;
+}
+
+
+static gboolean preserve;
+
+gboolean
+sch2pcb_get_preserve ()
+{
+  return preserve;
+}
+
+void
+sch2pcb_set_preserve (gboolean val)
+{
+  preserve = val;
 }
 
 
