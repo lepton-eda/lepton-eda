@@ -165,9 +165,7 @@ static gchar *m4_files;
 
 static gboolean use_m4 = TRUE;
 
-static gboolean remove_unfound_elements = TRUE,
-  force_element_files, preserve, bak_done;
-
+static gboolean force_element_files, preserve, bak_done;
 
 static GList *extra_gnetlist_arg_list;
 
@@ -449,6 +447,21 @@ void
 sch2pcb_set_quiet_mode (gboolean mode)
 {
   quiet_mode = mode;
+}
+
+
+static gboolean remove_unfound_elements = TRUE;
+
+gboolean
+sch2pcb_get_remove_unfound_elements ()
+{
+  return remove_unfound_elements;
+}
+
+void
+sch2pcb_set_remove_unfound_elements (gboolean val)
+{
+  remove_unfound_elements = val;
 }
 
 
