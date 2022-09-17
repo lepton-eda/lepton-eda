@@ -110,6 +110,12 @@ sch2pcb_get_quiet_mode ();
 void
 sch2pcb_set_quiet_mode (gboolean mode);
 
+gboolean
+sch2pcb_get_remove_unfound_elements ();
+
+void
+sch2pcb_set_remove_unfound_elements (gboolean val);
+
 char*
 sch2pcb_get_sch_basename ();
 
