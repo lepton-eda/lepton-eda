@@ -99,6 +99,21 @@ sch2pcb_set_element_directory_list (GList *list)
 }
 
 
+void
+sch2pcb_element_directory_list_append (char *dir)
+{
+  sch2pcb_set_element_directory_list (
+    g_list_append (sch2pcb_get_element_directory_list (), dir));
+}
+
+void
+sch2pcb_element_directory_list_prepend (char *dir)
+{
+  sch2pcb_set_element_directory_list (
+    g_list_prepend (sch2pcb_get_element_directory_list (), dir));
+}
+
+
 static const gchar* m4_override_file;
 static gchar *m4_files;
 

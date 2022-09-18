@@ -48,6 +48,12 @@ sch2pcb_get_element_directory_list ();
 void
 sch2pcb_set_element_directory_list (GList *list);
 
+void
+sch2pcb_element_directory_list_append (char *dir);
+
+void
+sch2pcb_element_directory_list_prepend (char *dir);
+
 char*
 sch2pcb_get_m4_pcbdir ();
 
