@@ -1571,8 +1571,8 @@ sch2pcb_add_schematic (gchar *sch)
     sch_basename = g_strndup (sch, s - sch);
 }
 
-static void
-add_multiple_schematics (gchar * sch)
+void
+sch2pcb_add_multiple_schematics (gchar * sch)
 {
   /* parse the string using shell semantics */
   gint count;
@@ -1646,7 +1646,7 @@ sch2pcb_parse_config (gchar *config,
   } else if (!strcmp (config, "output-name") || !strcmp (config, "o"))
     sch_basename = g_strdup (arg);
   else if (!strcmp (config, "schematics"))
-    add_multiple_schematics (arg);
+    sch2pcb_add_multiple_schematics (arg);
   else if (!strcmp (config, "m4-pcbdir")) {
     g_free (m4_pcbdir);
     m4_pcbdir = g_strdup (arg);
@@ -1929,7 +1929,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (!strcmp (opt, "schematics"))
       {
-        add_multiple_schematics (arg);
+        sch2pcb_add_multiple_schematics (arg);
         i++;
         continue;
       }
