@@ -59,6 +59,20 @@ static GList *extra_gnetlist_list, *extra_gnetlist_arg_list;
 static gchar*       backend_mkfile_cmd         = NULL;
 static const gchar* backend_mkfile_cmd_default = "pcbpins";
 
+char*
+sch2pcb_get_backend_mkfile_cmd ()
+{
+  return backend_mkfile_cmd;
+}
+
+void
+sch2pcb_set_backend_mkfile_cmd (char *val)
+{
+  g_free (backend_mkfile_cmd);
+  backend_mkfile_cmd = g_strdup (val);
+}
+
+
 /* --backend-net:
 *  backend that generates .net file:
 */

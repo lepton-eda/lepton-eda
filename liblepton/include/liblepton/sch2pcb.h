@@ -45,6 +45,12 @@ sch2pcb_get_default_m4_pcbdir ();
 void
 sch2pcb_add_schematic (gchar *sch);
 
+char*
+sch2pcb_get_backend_mkfile_cmd ();
+
+void
+sch2pcb_set_backend_mkfile_cmd (char *val);
+
 void
 sch2pcb_set_default_m4_pcbdir (const gchar *dir);
 
