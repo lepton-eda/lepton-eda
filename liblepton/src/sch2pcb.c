@@ -1979,7 +1979,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (strcmp (opt, "backend-pcb") == 0)
       {
-        backend_mkfile_pcb = g_strdup (arg);
+        sch2pcb_set_backend_mkfile_pcb (arg);
         i++;
         continue;
       }
