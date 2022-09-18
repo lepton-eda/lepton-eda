@@ -1923,7 +1923,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (!strcmp (opt, "output-name") || !strcmp (opt, "o"))
       {
-        sch_basename = g_strdup (arg);
+        sch2pcb_set_sch_basename (arg);
         i++;
         continue;
       }
