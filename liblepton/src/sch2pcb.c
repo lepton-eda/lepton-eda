@@ -50,8 +50,6 @@ typedef struct
 }
 ElementMap;
 
-static GList *extra_gnetlist_list;
-
 /* --backend-cmd:
 *  backend that generates .cmd file:
 */
@@ -172,6 +170,16 @@ sch2pcb_extra_gnetlist_arg_list_append (char *arg)
 {
   extra_gnetlist_arg_list =
     g_list_append (extra_gnetlist_arg_list, g_strdup (arg));
+}
+
+
+static GList *extra_gnetlist_list;
+
+void
+sch2pcb_extra_gnetlist_list_append (char *arg)
+{
+  extra_gnetlist_list =
+    g_list_append (extra_gnetlist_list, g_strdup (arg));
 }
 
 
