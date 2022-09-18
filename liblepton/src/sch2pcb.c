@@ -1519,8 +1519,8 @@ sch2pcb_prune_elements (gchar *pcb_file,
   g_free (tmp);
 }
 
-static void
-add_m4_file (const gchar * arg)
+void
+sch2pcb_add_m4_file (const gchar *arg)
 {
   gchar *s;
 
@@ -1554,11 +1554,11 @@ sch2pcb_add_default_m4_files (void)
   path = g_build_filename ((gchar *) g_get_home_dir (),
                            ".pcb", DEFAULT_PCB_INC, NULL);
   if (g_file_test (path, G_FILE_TEST_IS_REGULAR))
-    add_m4_file (path);
+    sch2pcb_add_m4_file (path);
   g_free (path);
 
   if (g_file_test (DEFAULT_PCB_INC, G_FILE_TEST_IS_REGULAR))
-    add_m4_file (DEFAULT_PCB_INC);
+    sch2pcb_add_m4_file (DEFAULT_PCB_INC);
 
 }
 
@@ -1651,7 +1651,7 @@ sch2pcb_parse_config (gchar *config,
     g_free (m4_pcbdir);
     m4_pcbdir = g_strdup (arg);
   } else if (!strcmp (config, "m4-file"))
-    add_m4_file (arg);
+    sch2pcb_add_m4_file (arg);
   else if (!strcmp (config, "gnetlist"))
     extra_gnetlist_list = g_list_append (extra_gnetlist_list, g_strdup (arg));
   else if (!strcmp (config, "empty-footprint"))
@@ -1941,7 +1941,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (!strcmp (opt, "m4-file"))
       {
-        add_m4_file (arg);
+        sch2pcb_add_m4_file (arg);
         i++;
         continue;
       }
