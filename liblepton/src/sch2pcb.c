@@ -117,8 +117,6 @@ static gchar *m4_files;
 
 static gboolean use_m4 = TRUE;
 
-static gchar *empty_footprint_name;
-
 static gboolean remove_unfound_elements = TRUE,
   force_element_files, preserve, bak_done;
 
@@ -151,6 +149,22 @@ sch2pcb_set_m4_pcbdir (const gchar *dir)
 {
   g_free (m4_pcbdir);
   m4_pcbdir = g_strdup (dir);
+}
+
+
+static gchar *empty_footprint_name;
+
+char*
+sch2pcb_get_empty_footprint_name ()
+{
+  return empty_footprint_name;
+}
+
+void
+sch2pcb_set_empty_footprint_name (char *val)
+{
+  g_free (empty_footprint_name);
+  empty_footprint_name = g_strdup (val);
 }
 
 

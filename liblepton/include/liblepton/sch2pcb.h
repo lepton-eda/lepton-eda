@@ -60,6 +60,12 @@ sch2pcb_element_directory_list_append (char *dir);
 void
 sch2pcb_element_directory_list_prepend (char *dir);
 
+char*
+sch2pcb_get_empty_footprint_name ();
+
+void
+sch2pcb_set_empty_footprint_name (char *val);
+
 gboolean
 sch2pcb_get_fix_elements ();
 
