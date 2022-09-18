@@ -73,8 +73,6 @@ static gchar*       backend_mkfile_pcb         = NULL;
 static const gchar* backend_mkfile_pcb_default = "gsch2pcb";
 
 
-static gchar *sch_basename;
-
 static GList *schematics;
 
 GList*
@@ -163,6 +161,22 @@ sch2pcb_set_m4_pcbdir (const gchar *dir)
 {
   g_free (m4_pcbdir);
   m4_pcbdir = g_strdup (dir);
+}
+
+
+static gchar *sch_basename;
+
+char*
+sch2pcb_get_sch_basename ()
+{
+  return sch_basename;
+}
+
+void
+sch2pcb_set_sch_basename (char *arg)
+{
+  g_free (sch_basename);
+  sch_basename = g_strdup (arg);
 }
 
 
