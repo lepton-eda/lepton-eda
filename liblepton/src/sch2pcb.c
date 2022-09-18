@@ -1832,7 +1832,7 @@ void
 sch2pcb_usage ()
 {
   puts (usage_string0);
-  printf ("                           %s\n\n", default_m4_pcbdir);
+  printf ("                           %s\n\n", sch2pcb_get_default_m4_pcbdir ());
   printf (usage_string1, PACKAGE_BUGREPORT, PACKAGE_URL);
   exit (0);
 }
