@@ -79,6 +79,20 @@ sch2pcb_set_backend_mkfile_cmd (char *val)
 static gchar*       backend_mkfile_net         = NULL;
 static const gchar* backend_mkfile_net_default = "PCB";
 
+char*
+sch2pcb_get_backend_mkfile_net ()
+{
+  return backend_mkfile_net;
+}
+
+void
+sch2pcb_set_backend_mkfile_net (char *val)
+{
+  g_free (backend_mkfile_net);
+  backend_mkfile_net = g_strdup (val);
+}
+
+
 /* --backend-pcb:
  * backend that generates .pcb, .pcb.new files:
 */
