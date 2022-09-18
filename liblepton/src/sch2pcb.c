@@ -1967,7 +1967,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (strcmp (opt, "backend-cmd") == 0)
       {
-        backend_mkfile_cmd = g_strdup (arg);
+        sch2pcb_set_backend_mkfile_cmd (arg);
         i++;
         continue;
       }
