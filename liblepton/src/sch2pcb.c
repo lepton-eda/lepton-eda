@@ -1917,8 +1917,7 @@ sch2pcb_get_args (gint argc,
         if (sch2pcb_get_verbose_mode () > 1)
           printf ("\tAdding directory to file element directory list: %s\n",
                   elements_dir);
-        element_directory_list =
-          g_list_prepend (element_directory_list, elements_dir);
+        sch2pcb_element_directory_list_prepend (elements_dir);
         i++;
         continue;
       }
