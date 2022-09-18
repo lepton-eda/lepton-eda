@@ -99,6 +99,19 @@ sch2pcb_set_backend_mkfile_net (char *val)
 static gchar*       backend_mkfile_pcb         = NULL;
 static const gchar* backend_mkfile_pcb_default = "gsch2pcb";
 
+char*
+sch2pcb_get_backend_mkfile_pcb ()
+{
+  return backend_mkfile_pcb;
+}
+
+void
+sch2pcb_set_backend_mkfile_pcb (char *val)
+{
+  g_free (backend_mkfile_pcb);
+  backend_mkfile_pcb = g_strdup (val);
+}
+
 
 static GList *pcb_element_list = NULL;
 
