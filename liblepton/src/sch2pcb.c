@@ -1973,7 +1973,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (strcmp (opt, "backend-net") == 0)
       {
-        backend_mkfile_net = g_strdup (arg);
+        sch2pcb_set_backend_mkfile_net (arg);
         i++;
         continue;
       }
