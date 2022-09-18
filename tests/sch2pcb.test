@@ -547,3 +547,17 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --use-files")
+(test-group-with-cleanup "sch2pcb --use-files"
+  (prepare-test-directory)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--verbose" "--use-files" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "trying to replace with a file element")))
+
+  (test-teardown))
+
+(test-end)
