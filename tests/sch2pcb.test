@@ -615,3 +615,17 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --elements-dir")
+(test-group-with-cleanup "sch2pcb --elements-dir"
+  (prepare-test-directory)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-v" "-v" "--elements-dir" "some-dir" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "Adding directory to file element directory list: some-dir")))
+
+  (test-teardown))
+
+(test-end)
