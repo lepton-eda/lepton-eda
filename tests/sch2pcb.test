@@ -575,3 +575,23 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --skip-m4")
+(test-group-with-cleanup "sch2pcb --skip-m4"
+  (prepare-test-directory)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--skip-m4" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "No elements found, so nothing to do.")))
+
+  ;; Without the option --skip-m4 everything should work OK.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "Done processing.")))
+
+  (test-teardown))
+
+(test-end)
