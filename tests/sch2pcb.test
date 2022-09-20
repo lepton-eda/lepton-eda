@@ -718,3 +718,34 @@
   (test-teardown))
 
 (test-end)
+
+
+(define (prepare-missing-footprint)
+  (test-setup)
+
+  (copy-file tests/gafrc gafrc)
+  (mkdir "sym")
+  (copy-file (build-filename tests/ "sym" "resistor-2.sym")
+             (build-filename "sym" "resistor-2.sym"))
+  (copy-file (build-filename tests/ "missing-footprint.sch")
+             "missing-footprint.sch"))
+
+(test-begin "sch2pcb --empty-footprint")
+(test-group-with-cleanup "sch2pcb --empty-footprint"
+  (prepare-missing-footprint)
+
+  (test-assert (file-exists? "missing-footprint.sch"))
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb
+                      "--verbose"
+                      "--empty-footprint"
+                      "missing"
+                      "missing-footprint.sch")
+    (test-eq EXIT_SUCCESS <status>)
+    (string-contains <stdout> "WARNING: R1 has a footprint attribute \"none\" so won't be in the layout.")
+    (string-contains <stdout> "R2: has the empty footprint attribute \"missing\" so won't be in the layout."))
+
+  (test-teardown))
+
+(test-end)

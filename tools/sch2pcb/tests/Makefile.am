@@ -1,5 +1,6 @@
 EXTRA_DIST = \
 	m4-elements/common.m4 \
+	missing-footprint.sch \
 	one.cmd \
 	one.net \
 	one.pcb \
