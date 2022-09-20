@@ -77,6 +77,9 @@ sch2pcb_get_empty_footprint_name ();
 void
 sch2pcb_set_empty_footprint_name (char *val);
 
+gchar*
+sch2pcb_expand_dir (gchar *dir);
+
 void
 sch2pcb_extra_gnetlist_arg_list_append (char *arg);
 

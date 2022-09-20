@@ -1533,8 +1533,8 @@ add_m4_file (const gchar * arg)
   }
 }
 
-static gchar *
-expand_dir (gchar * dir)
+gchar*
+sch2pcb_expand_dir (gchar *dir)
 {
   gchar *s;
   if (dir == NULL)
@@ -1637,7 +1637,7 @@ sch2pcb_parse_config (gchar *config,
     return 0;
   }
   if (!strcmp (config, "elements-dir") || !strcmp (config, "d")) {
-    gchar *elements_dir = expand_dir (arg);
+    gchar *elements_dir = sch2pcb_expand_dir (arg);
     if (verbose > 1)
       printf ("\tAdding directory to file element directory list: %s\n",
               elements_dir);
@@ -1913,7 +1913,7 @@ sch2pcb_get_args (gint argc,
       }
       else if (!strcmp (opt, "elements-dir") || !strcmp (opt, "d"))
       {
-        gchar *elements_dir = expand_dir (arg);
+        gchar *elements_dir = sch2pcb_expand_dir (arg);
         if (verbose > 1)
           printf ("\tAdding directory to file element directory list: %s\n",
                   elements_dir);
