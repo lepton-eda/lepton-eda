@@ -398,3 +398,38 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb -k -r")
+
+(test-group-with-cleanup "sch2pcb -k -r"
+  (prepare-test-directory)
+
+  ;; First, just make an initial .pcb file.
+  (test-run-success lepton-sch2pcb one.sch two.sch)
+
+  (test-assert (file-exists? lepton-shell))
+  (with-output-to-file "script.scm"
+    (lambda ()
+      (for-each write change-attrib-prog)
+      (write '(replace-attrib! "one.sch" "R101" "value" "RXXX"))))
+  (test-assert (file-exists? "script.scm"))
+  (test-run-success lepton-shell "-s" "script.scm")
+  (delete-file one.sch)
+  (rename-file "one.sch.new" one.sch)
+
+  ;; Check, if the error message is missing with --keep-unfound.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-k" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (not (string-contains <stderr> "will not be in the layout"))))
+
+  ;; Check, if the error message is present with --remove-unfound.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-r" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stderr> "will not be in the layout")))
+
+  (test-teardown))
+
+(test-end)
