@@ -791,3 +791,18 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --m4-file")
+
+(test-group-with-cleanup "sch2pcb --m4-file"
+  (prepare-test-directory)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-v" "--m4-file" "m4.inc" one.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "(define gsch2pcb:m4-files \"m4.inc\")")))
+
+  (test-teardown))
+
+(test-end)
