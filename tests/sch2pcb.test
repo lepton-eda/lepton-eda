@@ -749,3 +749,17 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --backend-cmd")
+(test-group-with-cleanup "sch2pcb --backend-cmd"
+  (prepare-test-directory)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-v" "--backend-cmd" "geda" one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (string-contains <stdout> "lepton-netlist -v -g geda -o one.cmd one.sch two.sch"))
+
+  (test-teardown))
+
+(test-end)
