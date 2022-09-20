@@ -983,28 +983,32 @@ the snap grid size should be set to 100")))
 ) ; &attributes-detach action
 
 
-(define (set-selected-attribs-show-mode! mode)
+(define (set-selected-attribs-show-mode! mode *window)
   (define (set-show-mode! object)
     (set-text-attribute-mode! object mode))
   (let ((attribs (filter attribute? (page-selection (active-page)))))
     (unless (null? attribs)
       (for-each set-show-mode! attribs)
+      ;; If attribute mode has changed, the page must get changed,
+      ;; too.  Update the window only in such a case.
+      (when (page-dirty? (active-page))
+        (schematic_window_active_page_changed *window))
       (undo-save-state))))
 
 
 (define-action-public (&attributes-show-value #:label (G_ "Show Attribute Value") #:icon "attribute-show-value")
   (unless (true? (schematic_window_get_inside_action (*current-window)))
-    (set-selected-attribs-show-mode! 'value)))
+    (set-selected-attribs-show-mode! 'value (*current-window))))
 
 
 (define-action-public (&attributes-show-name #:label (G_ "Show Attribute Name") #:icon "attribute-show-name")
   (unless (true? (schematic_window_get_inside_action (*current-window)))
-    (set-selected-attribs-show-mode! 'name)))
+    (set-selected-attribs-show-mode! 'name (*current-window))))
 
 
 (define-action-public (&attributes-show-both #:label (G_ "Show Name & Value") #:icon "attribute-show-both")
   (unless (true? (schematic_window_get_inside_action (*current-window)))
-    (set-selected-attribs-show-mode! 'both)))
+    (set-selected-attribs-show-mode! 'both (*current-window))))
 
 
 (define-action-public (&attributes-visibility-toggle #:label (G_ "Toggle Text Visibility"))
@@ -1015,6 +1019,9 @@ the snap grid size should be set to 100")))
     (let ((attribs (filter attribute? (page-selection (active-page)))))
       (unless (null? attribs)
         (for-each toggle-visibility! attribs)
+        ;; Here, the attribute visibility changes anyways, so it's
+        ;; safe to mark the page as changed and update the window.
+        (schematic_window_active_page_changed (*current-window))
         (undo-save-state)))))
 
 
