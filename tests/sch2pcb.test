@@ -462,3 +462,32 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb -q")
+
+(test-group-with-cleanup "sch2pcb -q"
+  (prepare-test-directory)
+
+  ;; In order to simulate adding elements, use one schematic file
+  ;; to make an initial .pcb file.
+  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch)
+  ;; Now, check that the output contains info on next steps.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (string-contains <stdout> "Next steps")))
+
+  ;; OK, now remove the .pcb file created and make it once again
+  ;; from one file.
+  (delete-file one.pcb)
+  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch)
+  ;; Check, if no next steps advertised when -q is specified.
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-q" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (test-assert (not (string-contains <stdout> "Next steps"))))
+
+  (test-teardown))
+
+(test-end)
