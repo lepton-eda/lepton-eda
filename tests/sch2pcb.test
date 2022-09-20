@@ -643,3 +643,51 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --output-name")
+(test-group-with-cleanup "sch2pcb --output-name"
+  (prepare-test-directory)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--output-name" "OUT" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (string-contains <stdout> "Done processing."))
+
+  ;; Check that new files have been created.
+  (test-assert (file-exists? "OUT.pcb"))
+  (test-assert (file-exists? "OUT.cmd"))
+  (test-assert (file-exists? "OUT.net"))
+  ;; Check that there is no difference with new and "golden"
+  ;; files.
+  (test-run-success "diff" "OUT.pcb" tests/one.pcb)
+  (test-run-success "diff" "OUT.cmd" tests/one.cmd)
+  (test-run-success "diff" "OUT.net" tests/one.net)
+
+  (test-teardown))
+
+(test-end)
+
+
+(test-begin "sch2pcb -o")
+(test-group-with-cleanup "sch2pcb -o"
+  (prepare-test-directory)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "-o" "OUT" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (string-contains <stdout> "Done processing."))
+
+  ;; Check that new files have been created.
+  (test-assert (file-exists? "OUT.pcb"))
+  (test-assert (file-exists? "OUT.cmd"))
+  (test-assert (file-exists? "OUT.net"))
+  ;; Check that there is no difference with new and "golden"
+  ;; files.
+  (test-run-success "diff" "OUT.pcb" tests/one.pcb)
+  (test-run-success "diff" "OUT.cmd" tests/one.cmd)
+  (test-run-success "diff" "OUT.net" tests/one.net)
+
+  (test-teardown))
+
+(test-end)
