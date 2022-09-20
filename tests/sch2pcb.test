@@ -691,3 +691,30 @@
   (test-teardown))
 
 (test-end)
+
+
+(test-begin "sch2pcb --gnetlist")
+(test-group-with-cleanup "sch2pcb --gnetlist"
+  (prepare-test-directory)
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--gnetlist" "geda" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (string-contains <stdout> "Done processing."))
+
+  ;; Check that new files have been created.
+  (test-assert (file-exists? "one.pcb"))
+  (test-assert (file-exists? "one.cmd"))
+  (test-assert (file-exists? "one.net"))
+  (test-assert (file-exists? "one.geda"))
+
+  (receive (<status> <stdout> <stderr>)
+      (command-values lepton-sch2pcb "--gnetlist" "geda -o x.geda" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+    (test-eq EXIT_SUCCESS <status>)
+    (string-contains <stdout> "Done processing."))
+
+  (test-assert (file-exists? "x.geda"))
+
+  (test-teardown))
+
+(test-end)
