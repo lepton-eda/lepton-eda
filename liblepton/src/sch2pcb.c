@@ -1546,14 +1546,14 @@ sch2pcb_main (gint argc,
       g_list_append (sch2pcb_get_element_directory_list (), (gpointer) "packages"));
 
 #define PCB_PATH_DELIMETER ":"
-  if (verbose)
+  if (sch2pcb_get_verbose_mode () != 0)
     printf ("Processing PCBLIBPATH=\"%s\"\n", PCBLIBPATH);
 
   path = g_strdup (PCBLIBPATH);
   for (p = strtok (path, PCB_PATH_DELIMETER); p && *p;
        p = strtok (NULL, PCB_PATH_DELIMETER)) {
     if (g_file_test (p, G_FILE_TEST_IS_DIR)) {
-      if (verbose)
+      if (sch2pcb_get_verbose_mode () != 0)
         printf ("Adding %s to the newlib search path\n", p);
       sch2pcb_set_element_directory_list (
         g_list_append (sch2pcb_get_element_directory_list (), g_strdup (p)));
@@ -1603,7 +1603,7 @@ sch2pcb_main (gint argc,
   prune_elements (pcb_file_name, bak_file_name);
 
   /* Report work done during processing */
-  if (verbose)
+  if (sch2pcb_get_verbose_mode () != 0)
     printf ("\n");
   printf ("\n----------------------------------\n");
   printf ("Done processing.  Work performed:\n");
@@ -1657,7 +1657,7 @@ sch2pcb_main (gint argc,
             n_preserved, pcb_file_name);
 
   /* Tell user what to do next */
-  if (verbose)
+  if (sch2pcb_get_verbose_mode () != 0)
     printf ("\n");
 
   if (n_added_ef + n_added_m4 > 0) {
