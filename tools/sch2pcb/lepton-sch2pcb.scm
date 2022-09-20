@@ -17,27 +17,13 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 
 
-(use-modules (rnrs bytevectors)
-             (srfi srfi-1)
+(use-modules (srfi srfi-1)
              (system foreign)
              (lepton ffi boolean)
              (lepton ffi sch2pcb)
              (lepton gettext)
-             (lepton m4))
-
-;;; FIXME: this is a function from (lepton config).  Probably it
-;;; has to be moved to some dedicated FFI module.
-(define (string-list->bv-pointer ls)
-  (bytevector->pointer
-   (uint-list->bytevector
-    (map pointer-address
-         (append (map string->pointer ls)
-                 ;; NULL-terminate the list of strings to be
-                 ;; passed to g_strfreev().
-                 (list %null-pointer)))
-    (native-endianness)
-    (sizeof '*))))
-
+             (lepton m4)
+             (lepton srfi-37))
 
 (define %pcb-data-path (getenv "PCBDATA"))
 
@@ -63,6 +49,125 @@
 
 (sch2pcb_set_default_m4_pcbdir *%pcb-m4-path)
 (sch2pcb_set_m4_pcbdir *%pcb-m4-path)
+
+
+;;; Parse command line options.
+(define (parse-command-line)
+  (reverse
+   (args-fold
+    (cdr (program-arguments))
+    (list
+     (option '(#\V "version") #f #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_version)))
+     (option '(#\v "verbose") #f #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_increment_verbose_mode)
+               seeds))
+     (option '("fix-elements") #f #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_fix_elements TRUE)
+               seeds))
+     (option '("gnetlist-arg") #t #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_extra_gnetlist_arg_list_append (string->pointer arg))
+               seeds))
+     (option '(#\h #\? "help") #f #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_usage)))
+     (option '(#\r "remove-unfound") #f #f
+             (lambda (opt name arg seeds)
+               ;; This is default behavior.
+               (sch2pcb_set_remove_unfound_elements TRUE)
+               seeds))
+     (option '(#\k "keep-unfound") #f #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_remove_unfound_elements FALSE)
+               seeds))
+     (option '(#\q "quiet") #f #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_quiet_mode TRUE)
+               seeds))
+     (option '(#\p "preserve") #f #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_preserve TRUE)
+               seeds))
+     (option '(#\f "use-files") #f #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_force_element_files TRUE)
+               seeds))
+     (option '(#\s "skip-m4") #f #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_use_m4 FALSE)
+               seeds))
+     (option '(#\d "elements-dir") #t #f
+             (lambda (opt name arg seeds)
+               (let ((*elements-dir (sch2pcb_expand_dir (string->pointer arg))))
+                 (when (> (sch2pcb_get_verbose_mode) 1)
+                   (format #t "\tAdding directory to file element directory list: ~S\n"
+                           (pointer->string *elements-dir)))
+                 (sch2pcb_element_directory_list_prepend *elements-dir))
+               seeds))
+     (option '(#\o "output-name") #t #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_sch_basename (string->pointer arg))
+               seeds))
+     (option '("schematics") #t #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_add_multiple_schematics (string->pointer arg))
+               seeds))
+     (option '("m4-pcbdir") #t #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_m4_pcbdir (string->pointer arg))
+               seeds))
+     (option '("m4-file") #t #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_add_m4_file (string->pointer arg))
+               seeds))
+     (option '("gnetlist") #t #f
+             (lambda (opt name arg seeds)
+               ;; If the argument of the option is quoted, remove
+               ;; the quotes.
+               (let ((command (if (and (string-prefix? "\"" arg)
+                                       (string-suffix? "\"" arg))
+                                  (string-drop-right (string-drop arg 1) 1)
+                                  arg)))
+                 (sch2pcb_extra_gnetlist_list_append (string->pointer command)))
+               seeds))
+     (option '("empty-footprint") #t #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_empty_footprint_name (string->pointer arg))
+               seeds))
+     (option '("backend-cmd") #t #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_backend_mkfile_cmd (string->pointer arg))
+               seeds))
+     (option '("backend-net") #t #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_backend_mkfile_net (string->pointer arg))
+               seeds))
+     (option '("backend-pcb") #t #f
+             (lambda (opt name arg seeds)
+               (sch2pcb_set_backend_mkfile_pcb (string->pointer arg))
+               seeds)))
+    (lambda (opt name arg seeds)
+      (format #t
+              "lepton-sch2pcb: bad or incomplete arg: ~S\n"
+              (if (char? name)
+                  (string-append "-" (char-set->string (char-set name)))
+                  (string-append "--" name)))
+      (sch2pcb_usage))
+    (lambda (op seeds)
+      (if (string-suffix? ".sch" op)
+          (begin
+            (sch2pcb_add_schematic (string->pointer op))
+            (cons op seeds))
+          (begin
+            (sch2pcb_load_extra_project_files)
+            (sch2pcb_load_project (string->pointer op))
+            seeds)))
+    '())))
+
 
 ;;; Produces a backup file name given that BASE is an initial
 ;;; name.  If BASE exists, adds a numerical index as a suffix to
@@ -207,8 +312,9 @@
   (if (= 1 number-of-args)
       (sch2pcb_usage)
       (begin
-        (sch2pcb_get_args number-of-args
-                          (string-list->bv-pointer (program-arguments)))
+        ;; Parse command line arguments and set up internal
+        ;; variables.
+        (parse-command-line)
         (sch2pcb_load_extra_project_files)
         (sch2pcb_add_default_m4_files)
         (if (null-pointer? (sch2pcb_get_schematics))

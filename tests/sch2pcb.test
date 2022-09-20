@@ -293,7 +293,9 @@
 
   ;; Produce one.pcb, one.cmd, and one.net.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "Done processing.")))
 
@@ -328,7 +330,7 @@
   ;; not trigger creating one.new.pcb.
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb
-                      "--m4-pcbdir" m4-pcbdir
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
                       one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "No elements to add so not creating one.new.pcb")))
@@ -338,14 +340,14 @@
   ;; Use one schematic file to create an initial pcb file.
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb
-                      "--m4-pcbdir" m4-pcbdir
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
                       one.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "0 file elements and 4 m4 elements added to one.pcb.")))
   ;; The second pass creates one.new.pcb.
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb
-                      "--m4-pcbdir" m4-pcbdir
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
                       one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "0 file elements and 3 m4 elements added to one.new.pcb.")))
@@ -377,14 +379,21 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--gnetlist-arg" two.sch "-v" one.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--gnetlist-arg" "=" two.sch)
+                      "-v"
+                      one.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "lepton-netlist -g pcbpins -o one.cmd two.sch one.sch"))
     (test-assert (string-contains <stdout> "lepton-netlist -g PCB -o one.net two.sch one.sch"))
     (test-assert (string-contains <stdout> "lepton-netlist -g gsch2pcb -o one.pcb -m gnet-gsch2pcb-tmp.scm two.sch one.sch")))
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--gnetlist-arg" "-x" two.sch "-v" one.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--gnetlist-arg" "=" "-x")
+                      two.sch
+                      "-v"
+                      one.sch)
     (test-eq EXIT_FAILURE <status>)
     (test-assert (string-contains <stdout> "lepton-netlist -g pcbpins -o two.cmd -x two.sch one.sch"))
     (test-assert (string-contains <stderr> "lepton-netlist: no such option: -x")))
@@ -470,20 +479,29 @@
 
   ;; In order to simulate adding elements, use one schematic file
   ;; to make an initial .pcb file.
-  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch)
+  (test-run-success lepton-sch2pcb
+                    (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                    one.sch)
   ;; Now, check that the output contains info on next steps.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "Next steps")))
 
   ;; OK, now remove the .pcb file created and make it once again
   ;; from one file.
   (delete-file one.pcb)
-  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch)
+  (test-run-success lepton-sch2pcb
+                    (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                    one.sch)
   ;; Check, if no next steps advertised when --quiet is specified.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--quiet" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "--quiet"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (not (string-contains <stdout> "Next steps"))))
 
@@ -499,20 +517,29 @@
 
   ;; In order to simulate adding elements, use one schematic file
   ;; to make an initial .pcb file.
-  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch)
+  (test-run-success lepton-sch2pcb
+                    (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                    one.sch)
   ;; Now, check that the output contains info on next steps.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "Next steps")))
 
   ;; OK, now remove the .pcb file created and make it once again
   ;; from one file.
   (delete-file one.pcb)
-  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch)
+  (test-run-success lepton-sch2pcb
+                    (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                    one.sch)
   ;; Check, if no next steps advertised when -q is specified.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-q" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "-q"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (not (string-contains <stdout> "Next steps"))))
 
@@ -526,13 +553,18 @@
   (prepare-test-directory)
 
   ;; Produce an initial pcb file.
-  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+  (test-run-success lepton-sch2pcb
+                    (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                    one.sch two.sch)
   (test-assert (file-exists? one.pcb))
   (test-run-success "diff" one.pcb tests/one.pcb)
 
   ;; Now, elements in the one.pcb should be preserved.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--preserve" "--m4-pcbdir" m4-pcbdir one.sch)
+      (command-values lepton-sch2pcb
+                      "--preserve"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "elements not in the schematic preserved")))
   ;; Pcb file should not have been changed.
@@ -540,7 +572,9 @@
 
   ;; This is just to check that without --preserve the output .pcb
   ;; file really changes.
-  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch)
+  (test-run-success lepton-sch2pcb
+                    (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                    one.sch)
   ;; Pcb file should have been changed.
   (test-run-failure "diff" one.pcb tests/one.pcb)
 
@@ -554,13 +588,18 @@
   (prepare-test-directory)
 
   ;; Produce an initial pcb file.
-  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+  (test-run-success lepton-sch2pcb
+                    (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                    one.sch two.sch)
   (test-assert (file-exists? one.pcb))
   (test-run-success "diff" one.pcb tests/one.pcb)
 
   ;; Now, elements in the one.pcb should be preserved.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-p" "--m4-pcbdir" m4-pcbdir one.sch)
+      (command-values lepton-sch2pcb
+                      "-p"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "elements not in the schematic preserved")))
   ;; Pcb file should not have been changed.
@@ -568,7 +607,9 @@
 
   ;; This is just to check that without -p the output .pcb
   ;; file really changes.
-  (test-run-success lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch)
+  (test-run-success lepton-sch2pcb
+                    (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                    one.sch)
   ;; Pcb file should have been changed.
   (test-run-failure "diff" one.pcb tests/one.pcb)
 
@@ -582,7 +623,11 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--verbose" "--use-files" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "--verbose"
+                      "--use-files"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "trying to replace with a file element")))
 
@@ -596,7 +641,11 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--verbose" "-f" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "--verbose"
+                      "-f"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "trying to replace with a file element")))
 
@@ -610,14 +659,21 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-v" "--skip-m4" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "-v"
+                      "--skip-m4"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "(define gsch2pcb:use-m4 #f)"))
     (test-assert (string-contains <stdout> "No elements found, so nothing to do.")))
 
   ;; Without the option --skip-m4 everything should work OK.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-v" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "-v"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     ;; By default, gsch2pcb:use-m4 is #t.
     (test-assert (string-contains <stdout> "(define gsch2pcb:use-m4 #t)"))
@@ -633,13 +689,18 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-s" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "-s"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "No elements found, so nothing to do.")))
 
   ;; Without the option -s everything should work OK.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "Done processing.")))
 
@@ -653,9 +714,13 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-v" "-v" "--elements-dir" "some-dir" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "-v" "-v"
+                      (string-append "--elements-dir" "=" "some-dir")
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "Adding directory to file element directory list: some-dir")))
+    (test-assert (string-contains <stdout> "Adding directory to file element directory list: \"some-dir\"")))
 
   (test-teardown))
 
@@ -667,9 +732,13 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-v" "-v" "-d" "some-dir" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "-v" "-v"
+                      "-d" "some-dir"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
-    (test-assert (string-contains <stdout> "Adding directory to file element directory list: some-dir")))
+    (test-assert (string-contains <stdout> "Adding directory to file element directory list: \"some-dir\"")))
 
   (test-teardown))
 
@@ -681,7 +750,10 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--output-name" "OUT" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--output-name" "=" "OUT")
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "Done processing.")))
 
@@ -705,7 +777,10 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-o" "OUT" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "-o" "OUT"
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "Done processing.")))
 
@@ -729,7 +804,10 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--gnetlist" "geda" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--gnetlist" "=" "geda")
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "Done processing.")))
 
@@ -740,7 +818,10 @@
   (test-assert (file-exists? "one.geda"))
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--gnetlist" "geda -o x.geda" "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--gnetlist" "=" "\"geda -o x.geda\"")
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "Done processing.")))
 
@@ -749,9 +830,9 @@
   ;; Test run with unknown backend.
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb
-                      "--m4-pcbdir" m4-pcbdir
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
                       one.sch two.sch
-                      "--gnetlist" "unknown-backend")
+                      (string-append "--gnetlist" "=" "unknown-backend"))
 
     (test-eq EXIT_FAILURE <status>)
     (test-assert (string-contains <stderr> "Failed to run netlister")))
@@ -780,8 +861,7 @@
   (receive (<status> <stdout> <stderr>)
       (command-values lepton-sch2pcb
                       "--verbose"
-                      "--empty-footprint"
-                      "missing"
+                      (string-append "--empty-footprint" "=" "missing")
                       "missing-footprint.sch")
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stderr> "WARNING: R1 has a footprint attribute \"none\" so won't be in the layout."))
@@ -797,7 +877,10 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-v" "--backend-cmd" "geda" one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "-v"
+                      (string-append "--backend-cmd" "=" "geda")
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "lepton-netlist -g geda -o one.cmd one.sch two.sch")))
 
@@ -811,7 +894,10 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-v" "--backend-net" "geda" one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "-v"
+                      (string-append "--backend-net" "=" "geda")
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "lepton-netlist -g geda -o one.net one.sch two.sch")))
 
@@ -825,7 +911,10 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-v" "--backend-pcb" "geda" one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      "-v"
+                      (string-append "--backend-pcb" "=" "geda")
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "lepton-netlist -g geda -o one.pcb -m gnet-gsch2pcb-tmp.scm one.sch two.sch")))
 
@@ -840,7 +929,10 @@
   (prepare-test-directory)
 
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "-v" "--m4-file" "m4.inc" one.sch)
+      (command-values lepton-sch2pcb
+                      "-v"
+                      (string-append "--m4-file" "=" "m4.inc")
+                      one.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (string-contains <stdout> "define gsch2pcb:m4-files"))
     (test-assert (string-contains <stdout> "m4.inc")))
@@ -1007,7 +1099,9 @@
 
     ;; m4 elements directory is specified.
     (receive (<status> <stdout> <stderr>)
-        (command-values lepton-sch2pcb "sch2pcb-project" "--m4-pcbdir" m4-pcbdir)
+        (command-values lepton-sch2pcb
+                        "sch2pcb-project"
+                        (string-append "--m4-pcbdir" "=" m4-pcbdir))
       (test-eq EXIT_SUCCESS <status>)
       (test-assert
           (string-contains <stdout>
@@ -1297,7 +1391,9 @@
 
   ;; Create initial PCB file.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (file-exists? one.pcb))
     (test-run-success "diff" one.pcb tests/one.pcb)
@@ -1313,7 +1409,10 @@
 
   ;; Test with --keep-unfound after component change.
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir "--keep-unfound" one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      "--keep-unfound"
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     (test-assert (file-exists? one.pcb))
     (test-assert (file-exists? "one.pcb.bak"))
@@ -1342,7 +1441,10 @@
   (delete-file one.pcb)
   (copy-file tests/one.pcb one.pcb)
   (receive (<status> <stdout> <stderr>)
-      (command-values lepton-sch2pcb "--m4-pcbdir" m4-pcbdir "--remove-unfound" one.sch two.sch)
+      (command-values lepton-sch2pcb
+                      (string-append "--m4-pcbdir" "=" m4-pcbdir)
+                      "--remove-unfound"
+                      one.sch two.sch)
     (test-eq EXIT_SUCCESS <status>)
     ;; Test that backup file is intact.
     (test-assert (file-exists? "one.pcb.bak"))

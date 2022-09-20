@@ -24,19 +24,28 @@
 
   #:export (sch2pcb_add_default_m4_files
             sch2pcb_add_elements
-            sch2pcb_get_args
+            sch2pcb_add_m4_file
+            sch2pcb_add_multiple_schematics
+            sch2pcb_add_schematic
             sch2pcb_set_backend_mkfile_cmd
             sch2pcb_set_backend_mkfile_net
             sch2pcb_set_backend_mkfile_pcb
-            sch2pcb_element_directory_list_append
-            sch2pcb_get_fix_elements
             sch2pcb_set_default_m4_pcbdir
-            sch2pcb_set_m4_pcbdir
-            sch2pcb_load_extra_project_files
-            sch2pcb_make_pcb_element_list
-            sch2pcb_get_sch_basename
-            sch2pcb_get_schematics
+            sch2pcb_element_directory_list_append
+            sch2pcb_element_directory_list_prepend
             sch2pcb_get_empty_footprint_name
+            sch2pcb_set_empty_footprint_name
+            sch2pcb_expand_dir
+            sch2pcb_extra_gnetlist_arg_list_append
+            sch2pcb_extra_gnetlist_list_append
+            sch2pcb_get_fix_elements
+            sch2pcb_set_fix_elements
+            sch2pcb_set_force_element_files
+            sch2pcb_increment_verbose_mode
+            sch2pcb_load_extra_project_files
+            sch2pcb_load_project
+            sch2pcb_set_m4_pcbdir
+            sch2pcb_make_pcb_element_list
             sch2pcb_get_n_PKG_removed_new
             sch2pcb_get_n_PKG_removed_old
             sch2pcb_get_n_added_ef
@@ -51,12 +60,20 @@
             sch2pcb_get_n_unknown
             sch2pcb_get_need_PKG_purge
             sch2pcb_get_pcb_element_list
+            sch2pcb_set_preserve
             sch2pcb_prune_elements
             sch2pcb_get_quiet_mode
+            sch2pcb_set_quiet_mode
+            sch2pcb_set_remove_unfound_elements
             sch2pcb_run_netlister
+            sch2pcb_get_sch_basename
+            sch2pcb_set_sch_basename
+            sch2pcb_get_schematics
             sch2pcb_update_element_descriptions
             sch2pcb_usage
-            sch2pcb_get_verbose_mode))
+            sch2pcb_set_use_m4
+            sch2pcb_get_verbose_mode
+            sch2pcb_version))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -65,19 +82,28 @@
 
 (define-lff sch2pcb_add_default_m4_files void '())
 (define-lff sch2pcb_add_elements int '(*))
-(define-lff sch2pcb_get_args void (list int '*))
+(define-lff sch2pcb_add_m4_file void '(*))
+(define-lff sch2pcb_add_multiple_schematics void '(*))
+(define-lff sch2pcb_add_schematic void '(*))
 (define-lff sch2pcb_set_backend_mkfile_cmd void '(*))
 (define-lff sch2pcb_set_backend_mkfile_net void '(*))
 (define-lff sch2pcb_set_backend_mkfile_pcb void '(*))
-(define-lff sch2pcb_element_directory_list_append void '(*))
-(define-lff sch2pcb_get_fix_elements int '())
 (define-lff sch2pcb_set_default_m4_pcbdir void '(*))
-(define-lff sch2pcb_set_m4_pcbdir void '(*))
-(define-lff sch2pcb_load_extra_project_files void '())
-(define-lff sch2pcb_make_pcb_element_list void '(*))
-(define-lff sch2pcb_get_sch_basename '* '())
-(define-lff sch2pcb_get_schematics '* '())
+(define-lff sch2pcb_element_directory_list_append void '(*))
+(define-lff sch2pcb_element_directory_list_prepend void '(*))
 (define-lff sch2pcb_get_empty_footprint_name '* '())
+(define-lff sch2pcb_set_empty_footprint_name void '(*))
+(define-lff sch2pcb_expand_dir '* '(*))
+(define-lff sch2pcb_extra_gnetlist_arg_list_append void '(*))
+(define-lff sch2pcb_extra_gnetlist_list_append void '(*))
+(define-lff sch2pcb_get_fix_elements int '())
+(define-lff sch2pcb_set_fix_elements void (list int))
+(define-lff sch2pcb_set_force_element_files void (list int))
+(define-lff sch2pcb_increment_verbose_mode void '())
+(define-lff sch2pcb_load_extra_project_files void '())
+(define-lff sch2pcb_load_project void '(*))
+(define-lff sch2pcb_set_m4_pcbdir void '(*))
+(define-lff sch2pcb_make_pcb_element_list void '(*))
 (define-lff sch2pcb_get_n_PKG_removed_new int '())
 (define-lff sch2pcb_get_n_PKG_removed_old int '())
 (define-lff sch2pcb_get_n_added_ef int '())
@@ -92,9 +118,17 @@
 (define-lff sch2pcb_get_n_unknown int '())
 (define-lff sch2pcb_get_need_PKG_purge int '())
 (define-lff sch2pcb_get_pcb_element_list '* '())
+(define-lff sch2pcb_set_preserve void (list int))
 (define-lff sch2pcb_prune_elements void '(* *))
 (define-lff sch2pcb_get_quiet_mode int '())
+(define-lff sch2pcb_set_quiet_mode void (list int))
+(define-lff sch2pcb_set_remove_unfound_elements void (list int))
 (define-lff sch2pcb_run_netlister int '(* * * * *))
+(define-lff sch2pcb_get_sch_basename '* '())
+(define-lff sch2pcb_set_sch_basename void '(*))
+(define-lff sch2pcb_get_schematics '* '())
 (define-lff sch2pcb_update_element_descriptions void '(* *))
 (define-lff sch2pcb_usage int '())
+(define-lff sch2pcb_set_use_m4 void (list int))
 (define-lff sch2pcb_get_verbose_mode int '())
+(define-lff sch2pcb_version void '())
