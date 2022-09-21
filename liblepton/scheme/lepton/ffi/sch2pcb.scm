@@ -72,8 +72,7 @@
             sch2pcb_update_element_descriptions
             sch2pcb_usage
             sch2pcb_set_use_m4
-            sch2pcb_get_verbose_mode
-            sch2pcb_version))
+            sch2pcb_get_verbose_mode))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -131,4 +130,3 @@
 (define-lff sch2pcb_usage int '())
 (define-lff sch2pcb_set_use_m4 void (list int))
 (define-lff sch2pcb_get_verbose_mode int '())
-(define-lff sch2pcb_version void '())
