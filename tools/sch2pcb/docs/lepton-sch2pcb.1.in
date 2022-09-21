@@ -61,11 +61,11 @@ Force use of file elements in preference to elements generated with
 \fB-s\fR, \fB--skip-m4\fR
 Disable element generation using \fBM4\fR(1) entirely.
 .TP 8
-\fB--m4-file\fR \fIFILE\fR
+\fB--m4-file\fR=\fIFILE\fR
 Use the \fBM4\fR(1) file \fIFILE\fR in addition to the default M4
 files `./pcb.inc' and `~/.pcb/pcb.inc'.
 .TP 8
-\fB--m4-pcbdir\fR \fIDIRECTORY\fR
+\fB--m4-pcbdir\fR=\fIDIRECTORY\fR
 Set \fIDIRECTORY\fR as the directory where \fBlepton-sch2pcb\fR should look
 for \fBM4\fR(1) files installed by \fBpcb\fR(1).
 .TP 8
@@ -84,26 +84,26 @@ Preserve elements in PCB files which are not found in the schematics.
 Since elements with an empty element name (schematic "refdes") are
 never deleted, this option is rarely useful.
 .TP 8
-\fB--backend-cmd\fR \fIBACKEND\fR
+\fB--backend-cmd\fR=\fIBACKEND\fR
 Use \fIBACKEND\fR to generate `<name>.cmd' file instead of
 the default one (`pcbpins').
 .TP 8
-\fB--backend-net\fR \fIBACKEND\fR
+\fB--backend-net\fR=\fIBACKEND\fR
 Use \fIBACKEND\fR to generate `<name>.net' file instead of
 the default one (`PCB').
 .TP 8
-\fB--backend-pcb\fR \fIBACKEND\fR
+\fB--backend-pcb\fR=\fIBACKEND\fR
 Use \fIBACKEND\fR to generate `<name>.pcb' file instead of
 the default one (`gsch2pcb').
 .TP 8
-\fB--gnetlist\fR \fIBACKEND\fR
+\fB--gnetlist\fR=\fIBACKEND\fR
 In addition to the default backends, run \fBlepton-netlist\fR(1) with `\-g
 \fIBACKEND\fR', with output to `<name>.\fIBACKEND\fR'.
 .TP 8
-\fB--gnetlist-arg\fR \fIARG\fR
+\fB--gnetlist-arg\fR=\fIARG\fR
 Pass \fIARG\fR as an additional argument to \fBlepton-netlist\fR(1).
 .TP 8
-\fB--empty-footprint\fR \fINAME\fR
+\fB--empty-footprint\fR=\fINAME\fR
 If \fINAME\fR is not `none', \fBlepton-sch2pcb\fR will not add elements for
 components with that name to the PCB file.  Note that if the omitted
 components have net connections, they will still appear in the netlist
