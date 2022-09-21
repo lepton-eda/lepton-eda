@@ -138,10 +138,10 @@ listed on a line beginning with `schematics'.
 .PP
 An example project file might look like:
 
-.nf
-	schematics partA.sch partB.sch
-	output-name design
-.ad b
+.RS
+  schematics partA.sch partB.sch
+  output-name design
+.RE
 
 .SH ENVIRONMENT
 .TP 8
