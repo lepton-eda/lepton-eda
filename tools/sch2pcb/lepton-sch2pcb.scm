@@ -132,6 +132,7 @@ Options (not recognized in a project file):
                            Do this the first time lepton-sch2pcb is used with
                            PCB files originally created with gschem2pcb.
    -v, --verbose           Use -v -v for additional file element debugging.
+   -h, --help              Print a help message.
    -V, --version
 Environment variables:
    NETLISTER               If set, this specifies the name of the netlister program
