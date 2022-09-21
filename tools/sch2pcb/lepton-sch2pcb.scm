@@ -82,12 +82,12 @@ Generate a PCB layout file from a set of Lepton EDA schematics.
        output-name myproject
 
 Options (may be included in a project file):
-   -d, --elements-dir D    Search D for PCB file elements.  These defaults
+   -d D, --elements-dir=D  Search D for PCB file elements.  These defaults
                            are searched if they exist: ./packages,
                            /usr/local/share/pcb/newlib, /usr/share/pcb/newlib,
                            (old pcb) /usr/local/lib/pcb_lib, /usr/lib/pcb_lib,
                            (old pcb) /usr/local/pcb_lib
-   -o, --output-name N     Use output file names N.net, N.pcb, and N.new.pcb
+   -o N, --output-name=N   Use output file names N.net, N.pcb, and N.new.pcb
                            instead of foo.net, ... where foo is the basename
                            of the first command line .sch file.
    -f, --use-files         Force using file elements over m4 PCB elements
@@ -109,23 +109,23 @@ Options (may be included in a project file):
 
    -s, --skip-m4           Skip m4 when looking for footprints.  The default is to use
                            m4 (which is what previous versions did).
-       --m4-file F.inc     Use m4 file F.inc in addition to the default m4
+       --m4-file=F.inc     Use m4 file F.inc in addition to the default m4
                            files ./pcb.inc and ~/.pcb/pcb.inc.
-       --m4-pcbdir D       Use D as the PCB m4 files install directory
+       --m4-pcbdir=D       Use D as the PCB m4 files install directory
                            instead of the default:
                            ~A
 
-   --backend-cmd backend   Backend that generates pins file (.cmd)
-   --backend-net backend   Backend that generates netlist file (.net)
-   --backend-pcb backend   Backend that generates board files (.pcb, .pcb.new)
+   --backend-cmd=backend   Backend that generates pins file (.cmd)
+   --backend-net=backend   Backend that generates netlist file (.net)
+   --backend-pcb=backend   Backend that generates board files (.pcb, .pcb.new)
 
-   --gnetlist backend      A convenience run of extra lepton-netlist -g commands.
+   --gnetlist=backend      A convenience run of extra lepton-netlist -g commands.
                            Example:  lepton-netlist partslist3
                            Creates:  myproject.partslist3
-   --empty-footprint name  See the project.sample file.
+   --empty-footprint=name  See the project.sample file.
 
 Options (not recognized in a project file):
-   --gnetlist-arg arg      Allows additional arguments to be passed to lepton-netlist.
+   --gnetlist-arg=arg      Allows additional arguments to be passed to lepton-netlist.
    --fix-elements          If a schematic component footprint is not equal
                            to its PCB element Description, update the
                            Description instead of replacing the element.
