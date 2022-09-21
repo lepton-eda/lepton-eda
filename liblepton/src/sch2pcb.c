@@ -1836,24 +1836,3 @@ sch2pcb_usage ()
   printf (usage_string1, PACKAGE_BUGREPORT, PACKAGE_URL);
   exit (0);
 }
-
-void
-sch2pcb_version ()
-{
-  const char* msg =
-    "Lepton EDA %s.%s (git: %.7s)\n"
-    "Copyright (C) 1998-2016 gEDA developers\n"
-    "Copyright (C) 2017-2022 Lepton EDA developers\n"
-    "This is free software, and you are welcome to redistribute it\n"
-    "under certain conditions. For details, see the file `COPYING',\n"
-    "which is included in the Lepton EDA distribution.\n"
-    "There is NO WARRANTY, to the extent permitted by law."
-    "\n";
-
-  printf (msg,
-          PACKAGE_DOTTED_VERSION,
-          PACKAGE_DATE_VERSION,
-          PACKAGE_GIT_COMMIT);
-
-  exit (0);
-}

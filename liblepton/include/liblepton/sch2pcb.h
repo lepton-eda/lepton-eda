@@ -257,7 +257,4 @@ sch2pcb_get_use_m4 ();
 void
 sch2pcb_set_use_m4 (gboolean val);
 
-void
-sch2pcb_version ();
-
 G_END_DECLS

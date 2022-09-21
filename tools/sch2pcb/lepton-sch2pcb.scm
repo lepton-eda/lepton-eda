@@ -23,7 +23,8 @@
              (lepton ffi sch2pcb)
              (lepton gettext)
              (lepton m4)
-             (lepton srfi-37))
+             (lepton srfi-37)
+             (lepton version))
 
 (define %pcb-data-path (getenv "PCBDATA"))
 
@@ -57,9 +58,6 @@
    (args-fold
     (cdr (program-arguments))
     (list
-     (option '(#\V "version") #f #f
-             (lambda (opt name arg seeds)
-               (sch2pcb_version)))
      (option '(#\v "verbose") #f #f
              (lambda (opt name arg seeds)
                (sch2pcb_increment_verbose_mode)
@@ -149,7 +147,11 @@
      (option '("backend-pcb") #t #f
              (lambda (opt name arg seeds)
                (sch2pcb_set_backend_mkfile_pcb (string->pointer arg))
-               seeds)))
+               seeds))
+     (option '(#\V "version") #f #f
+             (lambda (opt name arg seeds)
+               (display-lepton-version #:print-name #t #:copyright #t)
+               (exit 0))))
     (lambda (opt name arg seeds)
       (format #t
               "lepton-sch2pcb: bad or incomplete arg: ~S\n"
