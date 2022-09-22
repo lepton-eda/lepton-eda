@@ -28,6 +28,7 @@
   #:use-module (lepton ffi boolean)
   #:use-module (lepton ffi glib)
   #:use-module (lepton ffi)
+  #:use-module (lepton gerror)
   #:use-module (lepton log)
   #:use-module (lepton object foreign)
   #:use-module (lepton object)
@@ -861,8 +862,124 @@ the snap grid size should be set to 100")))
 ;; -------------------------------------------------------------------
 ;;;; Hierarchy actions
 
-(define-action-public (&hierarchy-down-schematic #:label (G_ "Down Schematic") #:icon "gtk-go-down")
-  (run-callback i_callback_hierarchy_down_schematic "&hierarchy-down-schematic"))
+(define-action-public (&hierarchy-down-schematic #:label (G_ "Down Schematic")
+                                                 #:icon "gtk-go-down")
+  (define *window (*current-window))
+  ;; The same definition as in "liblepton/defines.h".
+  (define HIERARCHY_NORMAL_LOAD 0)
+  (define loaded_flag #f)
+  (define looking_inside #f)
+  (define *save_first_page #f)
+  (define page_control 0)
+  (define *parent (schematic_window_get_active_page *window))
+  (define *attrib %null-pointer)
+  (define count 0)
+  (define *child %null-pointer)
+  (define *object (o_select_return_first_object *window))
+
+  ;; only allow going into symbols
+  (when (true? (lepton_object_is_component *object))
+    (set! *attrib (o_attrib_search_attached_attribs_by_name *object (string->pointer "source") count))
+
+    ;; if above is null, then look inside symbol
+    (when (null-pointer? *attrib)
+      (set! *attrib
+            (o_attrib_search_inherited_attribs_by_name *object (string->pointer "source") count))
+      (set! looking_inside #t)
+      (log! 'debug "going to look inside now\n"))
+
+    (let loop-while ((*attrib *attrib)
+                     (count count))
+      (unless (null-pointer? *attrib)
+        ;; look for source=filename,filename, ...
+        ;; loop over all filenames
+        (let loop-internal-while ((pcount 0)
+                                  ;; pcount == 0, we use it in u_basic_breakup_string()
+                                  (*current-filename (u_basic_breakup_string *attrib (char->integer #\,) 0)))
+          (unless (null-pointer? *current-filename)
+            (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
+              (log! 'message (G_ "Searching for source ~S") (pointer->string *current-filename))
+              (set! *child
+                    (s_hierarchy_down_schematic_single *window
+                                                       *current-filename
+                                                       *parent
+                                                       page_control
+                                                       HIERARCHY_NORMAL_LOAD
+                                                       *error))
+              (gschem_toplevel_page_changed *window)
+
+              ;; s_hierarchy_down_schematic_single() will not zoom the loaded page.
+              ;; Tabbed GUI: zoom will be set in x_tabs_page_set_cur().
+
+              (when (and (not (null-pointer? *child))
+                         (not (true? (x_tabs_enabled))))
+                (lepton_toplevel_goto_page (gschem_toplevel_get_toplevel *window) *child)
+                (gschem_toplevel_page_changed *window)
+                (gschem_page_view_zoom_extents (gschem_toplevel_get_current_page_view *window)
+                                               %null-pointer)
+                (undo-save-state)
+                (lepton_toplevel_goto_page (gschem_toplevel_get_toplevel *window) *parent)
+                (gschem_toplevel_page_changed *window))
+
+              ;; save the first page
+              (when (and (not loaded_flag)
+                         (not (null-pointer? *child)))
+                (set! *save_first_page *child))
+
+              ;; now do some error fixing
+              (if (null-pointer? *child)
+                  (let* ((message (if (null-pointer? *error)
+                                      (G_ "Unknown error.")
+                                      (gerror-message (dereference-pointer *error))))
+                         (secondary-message
+                          (format #f
+                                  (G_ "Failed to descend hierarchy into ~S: ~A\n\nThe lepton-schematic log may contain more information.")
+                                  (pointer->string *current-filename)
+                                  message)))
+
+                    (log! 'message
+                          (G_ "Failed to descend into ~S: ~A")
+                          (pointer->string *current-filename)
+                          message)
+
+                    (generic_error_dialog (string->pointer (G_ "Failed to descend hierarchy."))
+                                          (string->pointer secondary-message))
+
+                    (g_clear_error *error))
+                  (begin
+                    ;; this only signifies that we tried
+                    (set! loaded_flag #t)
+                    (set! page_control (lepton_page_get_page_control *child))
+
+                    ;; tabbed GUI: create a tab for every subpage loaded:
+                    (when (true? (x_tabs_enabled))
+                      (x_window_set_current_page *window *child))))
+
+              (loop-internal-while (1+ pcount)
+                                   (u_basic_breakup_string *attrib (char->integer #\,) pcount)))))
+
+        (let ((count (1+ count)))
+
+          ;; continue looking outside first
+          (when (not looking_inside)
+            (set! *attrib
+                  (o_attrib_search_attached_attribs_by_name *object (string->pointer "source") count)))
+
+          ;; okay we were looking outside and didn't find anything,
+          ;; so now we need to look inside the symbol
+          (set! looking_inside (and (not looking_inside)
+                                    (null-pointer? *attrib)
+                                    (not loaded_flag)))
+
+          (when looking_inside
+            (set! *attrib
+                  (o_attrib_search_inherited_attribs_by_name *object (string->pointer "source") count)))
+
+          (loop-while *attrib count))))
+
+    (when (and loaded_flag
+               *save_first_page)
+      (x_window_set_current_page *window *save_first_page))))
 
 
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")

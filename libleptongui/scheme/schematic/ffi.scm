@@ -33,6 +33,7 @@
             g_read_file
 
             generic_confirm_dialog
+            generic_error_dialog
             generic_filesel_dialog
             generic_msg_dialog
 
@@ -44,7 +45,6 @@
             i_callback_clipboard_paste
             i_callback_file_save
             *i_callback_file_save
-            i_callback_hierarchy_down_schematic
             i_callback_page_next
             i_callback_page_prev
             i_callback_page_print
@@ -141,6 +141,7 @@
 
             s_hierarchy_find_up_page
             s_hierarchy_down_symbol
+            s_hierarchy_down_schematic_single
 
             slot_edit_dialog
             slot_edit_dialog_response
@@ -403,6 +404,7 @@
 ;;; schematic_hierarchy.c
 (define-lff s_hierarchy_find_up_page '* '(*))
 (define-lff s_hierarchy_down_symbol void '(* * *))
+(define-lff s_hierarchy_down_schematic_single '* (list '* '* '* int int '*))
 
 ;;; slot_edit_dialog.c
 (define-lff slot_edit_dialog '* '(* * *))
@@ -521,6 +523,7 @@
 
 ;;; x_dialog.c
 (define-lff generic_confirm_dialog int '(*))
+(define-lff generic_error_dialog void '(* *))
 (define-lff generic_filesel_dialog '* (list '* '* int))
 (define-lff generic_msg_dialog void '(*))
 
@@ -534,7 +537,6 @@
 (define-lff i_callback_clipboard_paste void '(* *))
 (define-lff i_callback_file_save void '(* *))
 (define-lfc *i_callback_file_save)
-(define-lff i_callback_hierarchy_down_schematic void '(* *))
 (define-lff i_callback_view_color_edit void '(* *))
 (define-lff i_callback_view_pan void '(* *))
 (define-lff i_callback_view_pan_down void '(* *))

@@ -321,6 +321,8 @@
             s_clib_symbol_invalidate_data
 
             o_attrib_attach
+            o_attrib_search_attached_attribs_by_name
+            o_attrib_search_inherited_attribs_by_name
 
             s_conn_remove_object
             s_conn_remove_object_connections
@@ -332,6 +334,7 @@
             lepton_toplevel_new
             lepton_toplevel_get_page_current
             lepton_toplevel_get_pages
+            lepton_toplevel_goto_page
 
             lepton_object_list_to_buffer
 
@@ -343,6 +346,7 @@
             lepton_page_delete
             lepton_page_get_filename
             lepton_page_set_filename
+            lepton_page_get_page_control
             lepton_page_new
             lepton_page_objects
             lepton_page_remove
@@ -352,7 +356,9 @@
 
             o_read_buffer
 
-            lepton_coord_snap))
+            lepton_coord_snap
+
+            u_basic_breakup_string))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -387,6 +393,8 @@
 (define-lff lepton_toplevel_new '* '())
 (define-lff lepton_toplevel_get_page_current '* '(*))
 (define-lff lepton_toplevel_get_pages '* '(*))
+(define-lff lepton_toplevel_goto_page void '(* *))
+
 ;;; g_rc.c
 (define-lff g_rc_parse void '(* * * *))
 ;;; s_attrib.c
@@ -652,6 +660,8 @@
 
 ;;; o_attrib.c
 (define-lff o_attrib_attach void (list '* '* int))
+(define-lff o_attrib_search_attached_attribs_by_name '* (list '* '* int))
+(define-lff o_attrib_search_inherited_attribs_by_name '* (list '* '* int))
 
 ;; s_conn.c
 (define-lff s_conn_remove_object void '(* *))
@@ -671,6 +681,7 @@
 (define-lff lepton_page_delete void '(* *))
 (define-lff lepton_page_get_filename '* '(*))
 (define-lff lepton_page_set_filename void '(* *))
+(define-lff lepton_page_get_page_control int '(*))
 (define-lff lepton_page_new '* '(* *))
 (define-lff lepton_page_objects '* '(*))
 (define-lff lepton_page_remove void '(* *))
@@ -705,6 +716,8 @@
 (define-lff lepton_export_settings_set_outfile void '(*))
 
 (define-lff lepton_coord_snap int (list int int))
+
+(define-lff u_basic_breakup_string '* (list '* int int))
 
 
 (define (reference-pointer pointer)
