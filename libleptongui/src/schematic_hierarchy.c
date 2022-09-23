@@ -169,8 +169,8 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
                        NULL);
 
   lepton_page_set_up (page, lepton_page_get_pid (parent));
-  page_control_counter++;
-  lepton_page_set_page_control (page, page_control_counter);
+  schematic_hierarchy_increment_page_control_counter ();
+  lepton_page_set_page_control (page, schematic_hierarchy_get_page_control_counter ());
 
 }
 
