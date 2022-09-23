@@ -937,11 +937,11 @@ the snap grid size should be set to 100")))
 
               ;; now do some error fixing
               (if (null-pointer? *child)
-                  (let* ((message (if (null-pointer? *error)
-                                      (G_ "Unknown error.")
-                                      (gerror-message (dereference-pointer *error))))
-                         (secondary-message
-                          (failed-to-descend-error (pointer->string *current-filename) message)))
+                  (let ((secondary-message
+                         (failed-to-descend-error (pointer->string *current-filename)
+                                                  (if (null-pointer? *error)
+                                                      (G_ "Unknown error.")
+                                                      (gerror-message (dereference-pointer *error))))))
 
                     (generic_error_dialog (string->pointer (G_ "Failed to descend hierarchy."))
                                           (string->pointer secondary-message))
