@@ -949,11 +949,12 @@ the snap grid size should be set to 100")))
                           ;; s_hierarchy_down_schematic_single()
                           ;; does not zoom the loaded page, so zoom
                           ;; it here.
-                          (zoom-child-page *window *parent *child))
+                          (zoom-child-page *window *parent *child))))
 
-                      ;; Save the first page.
-                      (unless *save_first_page
-                        (set! *save_first_page *child))))
+                ;; Save the first page.
+                (when (and (not *save_first_page)
+                           (not (null-pointer? *child)))
+                  (set! *save_first_page *child))
 
                 (loop  (if (null-pointer? *child)
                            page_control
