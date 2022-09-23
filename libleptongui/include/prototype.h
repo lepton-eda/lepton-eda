@@ -725,6 +725,12 @@ void x_tabs_dbg_pages_dump (GschemToplevel* w_current);
 void color_edit_widget_update (GschemToplevel* w_current);
 
 /* schematic_hierarchy.c */
+int
+schematic_hierarchy_get_page_control_counter ();
+
+void
+schematic_hierarchy_increment_page_control_counter ();
+
 LeptonPage*
 s_hierarchy_down_schematic_single (GschemToplevel *w_current,
                                    const gchar *filename,
@@ -737,6 +743,7 @@ s_hierarchy_down_symbol (GschemToplevel *w_current,
                          LeptonPage *parent);
 LeptonPage*
 s_hierarchy_find_up_page (LeptonPage *current_page);
+
 LeptonPage*
 s_hierarchy_load_subpage (GschemToplevel *w_current,
                           LeptonPage *page,

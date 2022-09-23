@@ -1,7 +1,7 @@
 /* Lepton EDA Schematic Capture
  * Copyright (C) 1998-2010 Ales Hvezda
  * Copyright (C) 1998-2016 gEDA Contributors
- * Copyright (C) 2017-2021 Lepton EDA Contributors
+ * Copyright (C) 2017-2022 Lepton EDA Contributors
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,18 @@
 
 /*! \brief */
 static int page_control_counter=0;
+
+int
+schematic_hierarchy_get_page_control_counter ()
+{
+  return page_control_counter;
+}
+
+void
+schematic_hierarchy_increment_page_control_counter ()
+{
+  page_control_counter++;
+}
 
 /*!
  *  \brief Search for schematic associated source files and load them.
