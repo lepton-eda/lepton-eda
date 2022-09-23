@@ -894,7 +894,6 @@ the snap grid size should be set to 100")))
   (define *parent (schematic_window_get_active_page *window))
   (define *attrib %null-pointer)
   (define count 0)
-  (define *child %null-pointer)
   (define *object (o_select_return_first_object *window))
 
   ;; only allow going into symbols
@@ -918,14 +917,13 @@ the snap grid size should be set to 100")))
                                   (*current-filename (u_basic_breakup_string *attrib (char->integer #\,) 0)))
           (unless (null-pointer? *current-filename)
             (log! 'message (G_ "Searching for source ~S") (pointer->string *current-filename))
-            (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
-              (set! *child
-                    (s_hierarchy_down_schematic_single *window
-                                                       *current-filename
-                                                       *parent
-                                                       page_control
-                                                       HIERARCHY_NORMAL_LOAD
-                                                       *error))
+            (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+                   (*child (s_hierarchy_down_schematic_single *window
+                                                              *current-filename
+                                                              *parent
+                                                              page_control
+                                                              HIERARCHY_NORMAL_LOAD
+                                                              *error)))
               (gschem_toplevel_page_changed *window)
 
               ;; now do some error fixing
