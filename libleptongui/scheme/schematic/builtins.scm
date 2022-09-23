@@ -928,13 +928,6 @@ the snap grid size should be set to 100")))
                                                        *error))
               (gschem_toplevel_page_changed *window)
 
-              ;; s_hierarchy_down_schematic_single() will not zoom the loaded page.
-              ;; Tabbed GUI: zoom will be set in x_tabs_page_set_cur().
-
-              (when (and (not (null-pointer? *child))
-                         (not use-tabs?))
-                (zoom-child-page *window *parent *child))
-
               ;; now do some error fixing
               (if (null-pointer? *child)
                   (let ((secondary-message
@@ -948,6 +941,11 @@ the snap grid size should be set to 100")))
 
                     (g_clear_error *error))
                   (begin
+                    ;; s_hierarchy_down_schematic_single() will not zoom the loaded page.
+                    ;; Tabbed GUI: zoom will be set in x_tabs_page_set_cur().
+                    (unless use-tabs?
+                      (zoom-child-page *window *parent *child))
+
                     ;; Save the first page.
                     (unless loaded_flag
                       (set! *save_first_page *child))
