@@ -934,11 +934,6 @@ the snap grid size should be set to 100")))
                          (not (true? (x_tabs_enabled))))
                 (zoom-child-page *window *parent *child))
 
-              ;; save the first page
-              (when (and (not loaded_flag)
-                         (not (null-pointer? *child)))
-                (set! *save_first_page *child))
-
               ;; now do some error fixing
               (if (null-pointer? *child)
                   (let ((secondary-message
@@ -952,6 +947,10 @@ the snap grid size should be set to 100")))
 
                     (g_clear_error *error))
                   (begin
+                    ;; Save the first page.
+                    (unless loaded_flag
+                      (set! *save_first_page *child))
+
                     ;; this only signifies that we tried
                     (set! loaded_flag #t)
                     (set! page_control (lepton_page_get_page_control *child))
