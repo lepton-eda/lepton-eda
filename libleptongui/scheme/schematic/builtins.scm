@@ -862,6 +862,15 @@ the snap grid size should be set to 100")))
 ;; -------------------------------------------------------------------
 ;;;; Hierarchy actions
 
+(define (failed-to-descend-error filename message)
+  (log! 'message (G_ "Failed to descend into ~S: ~A") filename message)
+  (format #f (string-append
+              (format #f
+                      (G_ "Failed to descend hierarchy into ~S: ~A\n\n")
+                      filename
+                      message)
+              (G_ "The lepton-schematic log may contain more information."))))
+
 (define-action-public (&hierarchy-down-schematic #:label (G_ "Down Schematic")
                                                  #:icon "gtk-go-down")
   (define *window (*current-window))
@@ -932,15 +941,7 @@ the snap grid size should be set to 100")))
                                       (G_ "Unknown error.")
                                       (gerror-message (dereference-pointer *error))))
                          (secondary-message
-                          (format #f
-                                  (G_ "Failed to descend hierarchy into ~S: ~A\n\nThe lepton-schematic log may contain more information.")
-                                  (pointer->string *current-filename)
-                                  message)))
-
-                    (log! 'message
-                          (G_ "Failed to descend into ~S: ~A")
-                          (pointer->string *current-filename)
-                          message)
+                          (failed-to-descend-error (pointer->string *current-filename) message)))
 
                     (generic_error_dialog (string->pointer (G_ "Failed to descend hierarchy."))
                                           (string->pointer secondary-message))
