@@ -901,7 +901,6 @@ the snap grid size should be set to 100")))
   (define use-tabs? (true? (x_tabs_enabled)))
   (define looking_inside #f)
   (define *save_first_page #f)
-  (define page_control 0)
   (define *parent (schematic_window_get_active_page *window))
   (define *attrib %null-pointer)
   (define count 0)
@@ -923,7 +922,8 @@ the snap grid size should be set to 100")))
       (unless (null-pointer? *attrib)
         ;; look for source=filename,filename, ...
         ;; loop over all filenames
-        (let loop-internal-while ((pcount 0)
+        (let loop-internal-while ((page_control 0)
+                                  (pcount 0)
                                   ;; pcount == 0, we use it in u_basic_breakup_string()
                                   (*current-filename (u_basic_breakup_string *attrib (char->integer #\,) 0)))
           (unless (null-pointer? *current-filename)
@@ -955,11 +955,12 @@ the snap grid size should be set to 100")))
 
                     ;; Save the first page.
                     (unless *save_first_page
-                      (set! *save_first_page *child))
+                      (set! *save_first_page *child))))
 
-                    (set! page_control (lepton_page_get_page_control *child))))
-
-              (loop-internal-while (1+ pcount)
+              (loop-internal-while (if (null-pointer? *child)
+                                       page_control
+                                       (lepton_page_get_page_control *child))
+                                   (1+ pcount)
                                    (u_basic_breakup_string *attrib (char->integer #\,) pcount)))))
 
         (let ((count (1+ count)))
