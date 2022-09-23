@@ -881,6 +881,18 @@ the snap grid size should be set to 100")))
   (lepton_toplevel_goto_page *toplevel *parent)
   (gschem_toplevel_page_changed *window))
 
+(define (hierarchy-down-error-dialog filename *error)
+  (let ((secondary-message
+         (failed-to-descend-error filename
+                                  (if (null-pointer? *error)
+                                      (G_ "Unknown error.")
+                                      (gerror-message (dereference-pointer *error))))))
+
+    (generic_error_dialog (string->pointer (G_ "Failed to descend hierarchy."))
+                          (string->pointer secondary-message))
+
+    (g_clear_error *error)))
+
 (define-action-public (&hierarchy-down-schematic #:label (G_ "Down Schematic")
                                                  #:icon "gtk-go-down")
   (define *window (*current-window))
@@ -924,18 +936,11 @@ the snap grid size should be set to 100")))
                                                               page_control
                                                               HIERARCHY_NORMAL_LOAD
                                                               *error)))
-              ;; now do some error fixing
               (if (null-pointer? *child)
-                  (let ((secondary-message
-                         (failed-to-descend-error (pointer->string *current-filename)
-                                                  (if (null-pointer? *error)
-                                                      (G_ "Unknown error.")
-                                                      (gerror-message (dereference-pointer *error))))))
-
-                    (generic_error_dialog (string->pointer (G_ "Failed to descend hierarchy."))
-                                          (string->pointer secondary-message))
-
-                    (g_clear_error *error))
+                  ;; Launch the error dialog.
+                  (hierarchy-down-error-dialog (pointer->string *current-filename)
+                                               *error)
+                  ;; Open the child page.
                   (begin
                     ;; Notify window that another page became active.
                     (gschem_toplevel_page_changed *window)
