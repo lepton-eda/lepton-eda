@@ -274,7 +274,6 @@
 
             text_input_dialog
 
-            o_select_return_first_object
             o_select_unselect_all
 
             o_slot_end
@@ -641,7 +640,6 @@
 (define-lff x_print void '(*))
 
 ;;; o_select.c
-(define-lff o_select_return_first_object '* '(*))
 (define-lff o_select_unselect_all void '(*))
 
 ;;; o_slot.c
