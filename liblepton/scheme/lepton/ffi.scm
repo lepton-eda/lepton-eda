@@ -321,8 +321,6 @@
             s_clib_symbol_invalidate_data
 
             o_attrib_attach
-            o_attrib_search_attached_attribs_by_name
-            o_attrib_search_inherited_attribs_by_name
 
             s_conn_remove_object
             s_conn_remove_object_connections
@@ -658,8 +656,6 @@
 
 ;;; o_attrib.c
 (define-lff o_attrib_attach void (list '* '* int))
-(define-lff o_attrib_search_attached_attribs_by_name '* (list '* '* int))
-(define-lff o_attrib_search_inherited_attribs_by_name '* (list '* '* int))
 
 ;; s_conn.c
 (define-lff s_conn_remove_object void '(* *))

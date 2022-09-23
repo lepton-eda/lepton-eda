@@ -871,6 +871,12 @@ the snap grid size should be set to 100")))
                       message)
               (G_ "The lepton-schematic log may contain more information."))))
 
+(define (source-attrib? attrib)
+  (string= (attrib-name attrib) "source"))
+
+(define (split-attrib-value object)
+  (string-split (attrib-value object) #\,))
+
 (define (zoom-child-page *window *parent *child)
   (define *toplevel (gschem_toplevel_get_toplevel *window))
   (define *page-view (gschem_toplevel_get_current_page_view *window))
@@ -946,59 +952,32 @@ the snap grid size should be set to 100")))
 (define-action-public (&hierarchy-down-schematic #:label (G_ "Down Schematic")
                                                  #:icon "gtk-go-down")
   (define *window (*current-window))
-  (define looking_inside #f)
-  (define *save_first_page #f)
-  (define *parent (schematic_window_get_active_page *window))
-  (define *attrib %null-pointer)
-  (define count 0)
   (define *object (o_select_return_first_object *window))
 
   ;; only allow going into symbols
   (when (true? (lepton_object_is_component *object))
-    (set! *attrib (o_attrib_search_attached_attribs_by_name *object (string->pointer "source") count))
-
-    ;; if above is null, then look inside symbol
-    (when (null-pointer? *attrib)
-      (set! *attrib
-            (o_attrib_search_inherited_attribs_by_name *object (string->pointer "source") count))
-      (set! looking_inside #t)
-      (log! 'debug "going to look inside now\n"))
-
-    (let loop-while ((*attrib *attrib)
-                     (count count))
-      (unless (null-pointer? *attrib)
-        ;; Look for the attribute 'source=filename,filename,...'
-        ;; and loop over all filenames.
-        (let ((pages (hierarchy-filenames->pages
-                      (string-split (pointer->string *attrib) #\,)
-                      *window
-                      *parent)))
-          ;; Save the first page.
-          (when (and (not *save_first_page)
-                     (not (null? pages)))
-            (set! *save_first_page (car pages))))
-
-        (let ((count (1+ count)))
-
-          ;; continue looking outside first
-          (when (not looking_inside)
-            (set! *attrib
-                  (o_attrib_search_attached_attribs_by_name *object (string->pointer "source") count)))
-
-          ;; okay we were looking outside and didn't find anything,
-          ;; so now we need to look inside the symbol
-          (set! looking_inside (and (not looking_inside)
-                                    (null-pointer? *attrib)
-                                    (not *save_first_page)))
-
-          (when looking_inside
-            (set! *attrib
-                  (o_attrib_search_inherited_attribs_by_name *object (string->pointer "source") count)))
-
-          (loop-while *attrib count))))
-
-    (when *save_first_page
-      (x_window_set_current_page *window *save_first_page))))
+    ;; Get component's "source=" attributes.  First look into
+    ;; attached attribs and return the list if it is not empty.  If
+    ;; the list of attached "source=" attribs is empty, look into
+    ;; the list of inherited attribs.  The resulting list is
+    ;; transformed into the list of files by splitting up the
+    ;; attributes of the form "source=filename1,filename2,..." by
+    ;; comma and appending the resulting lists.
+    (let* ((component (pointer->object *object))
+           (pages
+            (hierarchy-filenames->pages
+             (append-map split-attrib-value
+                         (let ((attached-attribs (filter source-attrib?
+                                                         (object-attribs component))))
+                           (if (null? attached-attribs)
+                               (filter source-attrib? (inherited-attribs component))
+                               attached-attribs)))
+             *window
+             (schematic_window_get_active_page *window))))
+      (unless (null? pages)
+        ;; If the list of resulting pages is not empty, make the
+        ;; first page active.
+        (x_window_set_current_page *window (car pages))))))
 
 
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
