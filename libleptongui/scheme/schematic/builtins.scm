@@ -982,31 +982,40 @@ the snap grid size should be set to 100")))
 
 
 (define (hierarchy-down-symbol *window *symbol *parent)
-  (let* ((*toplevel (gschem_toplevel_get_toplevel *window))
-         (*filename (s_clib_symbol_get_filename *symbol))
-         (*page (lepton_toplevel_search_page *toplevel *filename)))
-    (if (not (null-pointer? *page))
-        (begin
-          ;; Change link to parent page since we can come here
-          ;; from any parent and must come back to the same page.
-          (lepton_page_set_up *page (lepton_page_get_pid *parent))
-          (lepton_toplevel_goto_page *toplevel *page)
-          (g_free *filename))
+  (define filename
+    (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
+      (if (null-pointer? *clib-filename)
+          (begin
+            (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
+            #f)
+          (let ((clib-filename (pointer->string *clib-filename)))
+            (g_free *clib-filename)
+            clib-filename))))
 
-        (let ((*page (lepton_page_new *toplevel *filename)))
-          (g_free *filename)
+  (and filename
+       (let* ((*toplevel (gschem_toplevel_get_toplevel *window))
+              (*filename (string->pointer filename))
+              (*page (lepton_toplevel_search_page *toplevel *filename)))
+         (if (not (null-pointer? *page))
+             (begin
+               ;; Change link to parent page since we can come here
+               ;; from any parent and must come back to the same page.
+               (lepton_page_set_up *page (lepton_page_get_pid *parent))
+               (lepton_toplevel_goto_page *toplevel *page))
 
-          (lepton_toplevel_goto_page *toplevel *page)
+             (let ((*page (lepton_page_new *toplevel *filename)))
+               (lepton_toplevel_goto_page *toplevel *page)
 
-          (schematic_file_open *window
-                               *page
-                               (lepton_page_get_filename *page)
-                               %null-pointer)
+               (schematic_file_open *window
+                                    *page
+                                    (lepton_page_get_filename *page)
+                                    %null-pointer)
 
-          (lepton_page_set_up *page (lepton_page_get_pid *parent))
-          (schematic_hierarchy_increment_page_control_counter)
-          (lepton_page_set_page_control *page
-                                        (schematic_hierarchy_get_page_control_counter))))))
+               (lepton_page_set_up *page (lepton_page_get_pid *parent))
+               (schematic_hierarchy_increment_page_control_counter)
+               (lepton_page_set_page_control *page
+                                             (schematic_hierarchy_get_page_control_counter))))
+         *page)))
 
 
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
@@ -1020,31 +1029,24 @@ the snap grid size should be set to 100")))
         (log! 'message (G_ "Searching for symbol: ~S") name)
         (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
           (unless (null-pointer? *sym)
-            (let ((*fname (s_clib_symbol_get_filename *sym)))
-              (if (null-pointer? *fname)
-                  (log! 'message (G_ "Symbol is not a real file. Symbol cannot be loaded."))
+            (when (hierarchy-down-symbol *window
+                                         *sym
+                                         (schematic_window_get_active_page *window))
+              (gschem_toplevel_page_changed *window)
 
-                  (begin
-                    (g_free *fname)
+              ;; Get active page once again, it should now be the symbol
+              ;; page.
+              (x_window_set_current_page *window
+                                         (schematic_window_get_active_page *window))
 
-                    (hierarchy-down-symbol *window
-                                           *sym
-                                           (schematic_window_get_active_page *window))
-                    (gschem_toplevel_page_changed *window)
+              ;; s_hierarchy_down_symbol() will not zoom the loaded page.
+              ;; Tabbed GUI: zoom is set in x_tabs_page_set_cur().
+              (unless (true? (x_tabs_enabled))
+                (gschem_page_view_zoom_extents
+                 (gschem_toplevel_get_current_page_view *window)
+                 %null-pointer))
 
-                    ;; Get active page once again, it should now be the symbol
-                    ;; page.
-                    (x_window_set_current_page *window
-                                               (schematic_window_get_active_page *window))
-
-                    ;; s_hierarchy_down_symbol() will not zoom the loaded page.
-                    ;; Tabbed GUI: zoom is set in x_tabs_page_set_cur().
-                    (unless (true? (x_tabs_enabled))
-                      (gschem_page_view_zoom_extents
-                       (gschem_toplevel_get_current_page_view *window)
-                       %null-pointer))
-
-                    (undo-save-state))))))))))
+              (undo-save-state))))))))
 
 
 ;;; Go to the upper hierarchy level page, that is, return to the
