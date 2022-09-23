@@ -981,7 +981,7 @@ the snap grid size should be set to 100")))
                           %null-pointer)))
 
 
-(define (hierarchy-down-symbol *window *symbol *parent)
+(define (hierarchy-down-symbol *window *toplevel *symbol *parent)
   (define filename
     (let ((*clib-filename (s_clib_symbol_get_filename *symbol)))
       (if (null-pointer? *clib-filename)
@@ -993,29 +993,22 @@ the snap grid size should be set to 100")))
             clib-filename))))
 
   (and filename
-       (let* ((*toplevel (gschem_toplevel_get_toplevel *window))
-              (*filename (string->pointer filename))
+       (let* ((*filename (string->pointer filename))
               (*page (lepton_toplevel_search_page *toplevel *filename)))
-         (if (not (null-pointer? *page))
-             (begin
-               ;; Change link to parent page since we can come here
-               ;; from any parent and must come back to the same page.
-               (lepton_page_set_up *page (lepton_page_get_pid *parent))
-               (lepton_toplevel_goto_page *toplevel *page))
-
+         (if (null-pointer? *page)
+             ;; Create a new page.
              (let ((*page (lepton_page_new *toplevel *filename)))
-               (lepton_toplevel_goto_page *toplevel *page)
-
                (schematic_file_open *window
                                     *page
                                     (lepton_page_get_filename *page)
                                     %null-pointer)
 
-               (lepton_page_set_up *page (lepton_page_get_pid *parent))
                (schematic_hierarchy_increment_page_control_counter)
                (lepton_page_set_page_control *page
-                                             (schematic_hierarchy_get_page_control_counter))))
-         *page)))
+                                             (schematic_hierarchy_get_page_control_counter))
+               *page)
+             ;; Return existing page.
+             *page))))
 
 
 (define-action-public (&hierarchy-down-symbol #:label (G_ "Down Symbol") #:icon "gtk-goto-bottom")
@@ -1029,24 +1022,31 @@ the snap grid size should be set to 100")))
         (log! 'message (G_ "Searching for symbol: ~S") name)
         (let ((*sym (s_clib_get_symbol_by_name (string->pointer name))))
           (unless (null-pointer? *sym)
-            (when (hierarchy-down-symbol *window
-                                         *sym
-                                         (schematic_window_get_active_page *window))
-              (gschem_toplevel_page_changed *window)
+            (let* ((*toplevel (gschem_toplevel_get_toplevel *window))
+                   (*parent (schematic_window_get_active_page *window))
+                   (*page (hierarchy-down-symbol *window *toplevel *sym *parent)))
+              (when *page
 
-              ;; Get active page once again, it should now be the symbol
-              ;; page.
-              (x_window_set_current_page *window
-                                         (schematic_window_get_active_page *window))
+                ;; Change link to parent page since we can come here
+                ;; from any parent and must come back to the same page.
+                (lepton_page_set_up *page (lepton_page_get_pid *parent))
+                (lepton_toplevel_goto_page *toplevel *page)
 
-              ;; s_hierarchy_down_symbol() will not zoom the loaded page.
-              ;; Tabbed GUI: zoom is set in x_tabs_page_set_cur().
-              (unless (true? (x_tabs_enabled))
-                (gschem_page_view_zoom_extents
-                 (gschem_toplevel_get_current_page_view *window)
-                 %null-pointer))
+                (gschem_toplevel_page_changed *window)
 
-              (undo-save-state))))))))
+                ;; Get active page once again, it should now be the symbol
+                ;; page.
+                (x_window_set_current_page *window
+                                           (schematic_window_get_active_page *window))
+
+                ;; s_hierarchy_down_symbol() will not zoom the loaded page.
+                ;; Tabbed GUI: zoom is set in x_tabs_page_set_cur().
+                (unless (true? (x_tabs_enabled))
+                  (gschem_page_view_zoom_extents
+                   (gschem_toplevel_get_current_page_view *window)
+                   %null-pointer))
+
+                (undo-save-state)))))))))
 
 
 ;;; Go to the upper hierarchy level page, that is, return to the
