@@ -886,6 +886,7 @@ the snap grid size should be set to 100")))
   (define *window (*current-window))
   ;; The same definition as in "liblepton/defines.h".
   (define HIERARCHY_NORMAL_LOAD 0)
+  (define use-tabs? (true? (x_tabs_enabled)))
   (define loaded_flag #f)
   (define looking_inside #f)
   (define *save_first_page #f)
@@ -931,7 +932,7 @@ the snap grid size should be set to 100")))
               ;; Tabbed GUI: zoom will be set in x_tabs_page_set_cur().
 
               (when (and (not (null-pointer? *child))
-                         (not (true? (x_tabs_enabled))))
+                         (not use-tabs?))
                 (zoom-child-page *window *parent *child))
 
               ;; now do some error fixing
@@ -956,7 +957,7 @@ the snap grid size should be set to 100")))
                     (set! page_control (lepton_page_get_page_control *child))
 
                     ;; tabbed GUI: create a tab for every subpage loaded:
-                    (when (true? (x_tabs_enabled))
+                    (when use-tabs?
                       (x_window_set_current_page *window *child))))
 
               (loop-internal-while (1+ pcount)
