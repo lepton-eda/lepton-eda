@@ -356,9 +356,7 @@
 
             o_read_buffer
 
-            lepton_coord_snap
-
-            u_basic_breakup_string))
+            lepton_coord_snap))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -716,8 +714,6 @@
 (define-lff lepton_export_settings_set_outfile void '(*))
 
 (define-lff lepton_coord_snap int (list int int))
-
-(define-lff u_basic_breakup_string '* (list '* int int))
 
 
 (define (reference-pointer pointer)

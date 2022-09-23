@@ -920,48 +920,45 @@ the snap grid size should be set to 100")))
     (let loop-while ((*attrib *attrib)
                      (count count))
       (unless (null-pointer? *attrib)
-        ;; look for source=filename,filename, ...
-        ;; loop over all filenames
-        (let loop-internal-while ((page_control 0)
-                                  (pcount 0)
-                                  ;; pcount == 0, we use it in u_basic_breakup_string()
-                                  (*current-filename (u_basic_breakup_string *attrib (char->integer #\,) 0)))
-          (unless (null-pointer? *current-filename)
-            (log! 'message (G_ "Searching for source ~S") (pointer->string *current-filename))
-            (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
-                   (*child (s_hierarchy_down_schematic_single *window
-                                                              *current-filename
-                                                              *parent
-                                                              page_control
-                                                              HIERARCHY_NORMAL_LOAD
-                                                              *error)))
-              (if (null-pointer? *child)
-                  ;; Launch the error dialog.
-                  (hierarchy-down-error-dialog (pointer->string *current-filename)
-                                               *error)
-                  ;; Open the child page.
-                  (begin
-                    ;; Notify window that another page became active.
-                    (gschem_toplevel_page_changed *window)
-                    (if use-tabs?
-                        ;; Tabbed GUI is used. Create a tab for
-                        ;; every subpage loaded.  Zoom will be set
-                        ;; in x_tabs_page_set_cur().
-                        (x_window_set_current_page *window *child)
-                        ;; s_hierarchy_down_schematic_single()
-                        ;; does not zoom the loaded page, so zoom
-                        ;; it here.
-                        (zoom-child-page *window *parent *child))
+        ;; Look for the attribute 'source=filename,filename,...'
+        ;; and loop over all filenames.
+        (let loop ((page_control 0)
+                   (filenames (string-split (pointer->string *attrib) #\,)))
+          (unless (null? filenames)
+            (let ((current-filename (car filenames)))
+              (log! 'message (G_ "Searching for source ~S") current-filename)
+              (let* ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0)))
+                     (*child (s_hierarchy_down_schematic_single *window
+                                                                (string->pointer current-filename)
+                                                                *parent
+                                                                page_control
+                                                                HIERARCHY_NORMAL_LOAD
+                                                                *error)))
+                (if (null-pointer? *child)
+                    ;; Launch the error dialog.
+                    (hierarchy-down-error-dialog current-filename *error)
+                    ;; Open the child page.
+                    (begin
+                      ;; Notify window that another page became active.
+                      (gschem_toplevel_page_changed *window)
+                      (if use-tabs?
+                          ;; Tabbed GUI is used. Create a tab for
+                          ;; every subpage loaded.  Zoom will be set
+                          ;; in x_tabs_page_set_cur().
+                          (x_window_set_current_page *window *child)
+                          ;; s_hierarchy_down_schematic_single()
+                          ;; does not zoom the loaded page, so zoom
+                          ;; it here.
+                          (zoom-child-page *window *parent *child))
 
-                    ;; Save the first page.
-                    (unless *save_first_page
-                      (set! *save_first_page *child))))
+                      ;; Save the first page.
+                      (unless *save_first_page
+                        (set! *save_first_page *child))))
 
-              (loop-internal-while (if (null-pointer? *child)
-                                       page_control
-                                       (lepton_page_get_page_control *child))
-                                   (1+ pcount)
-                                   (u_basic_breakup_string *attrib (char->integer #\,) pcount)))))
+                (loop  (if (null-pointer? *child)
+                           page_control
+                           (lepton_page_get_page_control *child))
+                       (cdr filenames))))))
 
         (let ((count (1+ count)))
 
