@@ -993,7 +993,7 @@ the snap grid size should be set to 100")))
             clib-filename))))
 
   (and filename
-       (let* ((*filename (string->pointer filename))
+       (let* ((*filename (string->pointer (canonicalize-path filename)))
               (*page (lepton_toplevel_search_page *toplevel *filename)))
          (if (null-pointer? *page)
              ;; Create a new page.
