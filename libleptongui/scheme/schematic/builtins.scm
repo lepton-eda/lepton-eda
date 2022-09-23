@@ -925,6 +925,24 @@ the snap grid size should be set to 100")))
               (zoom-child-page *window *parent *child))
           *child))))
 
+(define (hierarchy-filenames->pages filenames *window *parent)
+  (let loop ((page-control 0)
+             (filenames filenames)
+             (children '()))
+    (if (null? filenames)
+        (reverse children)
+        (let ((*child (hierarchy-down-filename (car filenames)
+                                               *window
+                                               *parent
+                                               page-control)))
+          (loop (if *child
+                    (lepton_page_get_page_control *child)
+                    page-control)
+                (cdr filenames)
+                (if *child
+                    (cons *child children)
+                    children))))))
+
 (define-action-public (&hierarchy-down-schematic #:label (G_ "Down Schematic")
                                                  #:icon "gtk-go-down")
   (define *window (*current-window))
@@ -951,23 +969,10 @@ the snap grid size should be set to 100")))
       (unless (null-pointer? *attrib)
         ;; Look for the attribute 'source=filename,filename,...'
         ;; and loop over all filenames.
-        (let ((pages
-               (let loop ((page_control 0)
-                          (filenames (string-split (pointer->string *attrib) #\,))
-                          (children '()))
-                 (if (null? filenames)
-                     (reverse children)
-                     (let ((*child (hierarchy-down-filename (car filenames)
-                                                            *window
-                                                            *parent
-                                                            page_control)))
-                       (loop (if *child
-                                 (lepton_page_get_page_control *child)
-                                 page_control)
-                             (cdr filenames)
-                             (if *child
-                                 (cons *child children)
-                                 children)))))))
+        (let ((pages (hierarchy-filenames->pages
+                      (string-split (pointer->string *attrib) #\,)
+                      *window
+                      *parent)))
           ;; Save the first page.
           (when (and (not *save_first_page)
                      (not (null? pages)))
