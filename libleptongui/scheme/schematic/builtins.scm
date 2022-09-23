@@ -924,8 +924,6 @@ the snap grid size should be set to 100")))
                                                               page_control
                                                               HIERARCHY_NORMAL_LOAD
                                                               *error)))
-              (gschem_toplevel_page_changed *window)
-
               ;; now do some error fixing
               (if (null-pointer? *child)
                   (let ((secondary-message
@@ -939,6 +937,8 @@ the snap grid size should be set to 100")))
 
                     (g_clear_error *error))
                   (begin
+                    ;; Notify window that another page became active.
+                    (gschem_toplevel_page_changed *window)
                     (if use-tabs?
                         ;; Tabbed GUI is used. Create a tab for
                         ;; every subpage loaded.  Zoom will be set
