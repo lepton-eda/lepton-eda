@@ -917,8 +917,8 @@ the snap grid size should be set to 100")))
                                   ;; pcount == 0, we use it in u_basic_breakup_string()
                                   (*current-filename (u_basic_breakup_string *attrib (char->integer #\,) 0)))
           (unless (null-pointer? *current-filename)
+            (log! 'message (G_ "Searching for source ~S") (pointer->string *current-filename))
             (let ((*error (bytevector->pointer (make-bytevector (sizeof '*) 0))))
-              (log! 'message (G_ "Searching for source ~S") (pointer->string *current-filename))
               (set! *child
                     (s_hierarchy_down_schematic_single *window
                                                        *current-filename
