@@ -951,22 +951,27 @@ the snap grid size should be set to 100")))
       (unless (null-pointer? *attrib)
         ;; Look for the attribute 'source=filename,filename,...'
         ;; and loop over all filenames.
-        (let loop ((page_control 0)
-                   (filenames (string-split (pointer->string *attrib) #\,)))
-          (unless (null? filenames)
-            (let ((*child (hierarchy-down-filename (car filenames)
-                                                   *window
-                                                   *parent
-                                                   page_control)))
-              ;; Save the first page.
-              (when (and (not *save_first_page)
-                         *child)
-                (set! *save_first_page *child))
-
-              (loop (if *child
-                        (lepton_page_get_page_control *child)
-                        page_control)
-                    (cdr filenames)))))
+        (let ((pages
+               (let loop ((page_control 0)
+                          (filenames (string-split (pointer->string *attrib) #\,))
+                          (children '()))
+                 (if (null? filenames)
+                     (reverse children)
+                     (let ((*child (hierarchy-down-filename (car filenames)
+                                                            *window
+                                                            *parent
+                                                            page_control)))
+                       (loop (if *child
+                                 (lepton_page_get_page_control *child)
+                                 page_control)
+                             (cdr filenames)
+                             (if *child
+                                 (cons *child children)
+                                 children)))))))
+          ;; Save the first page.
+          (when (and (not *save_first_page)
+                     (not (null? pages)))
+            (set! *save_first_page (car pages))))
 
         (let ((count (1+ count)))
 
