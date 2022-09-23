@@ -899,7 +899,6 @@ the snap grid size should be set to 100")))
   ;; The same definition as in "liblepton/defines.h".
   (define HIERARCHY_NORMAL_LOAD 0)
   (define use-tabs? (true? (x_tabs_enabled)))
-  (define loaded_flag #f)
   (define looking_inside #f)
   (define *save_first_page #f)
   (define page_control 0)
@@ -955,11 +954,9 @@ the snap grid size should be set to 100")))
                         (zoom-child-page *window *parent *child))
 
                     ;; Save the first page.
-                    (unless loaded_flag
+                    (unless *save_first_page
                       (set! *save_first_page *child))
 
-                    ;; this only signifies that we tried
-                    (set! loaded_flag #t)
                     (set! page_control (lepton_page_get_page_control *child))))
 
               (loop-internal-while (1+ pcount)
@@ -976,7 +973,7 @@ the snap grid size should be set to 100")))
           ;; so now we need to look inside the symbol
           (set! looking_inside (and (not looking_inside)
                                     (null-pointer? *attrib)
-                                    (not loaded_flag)))
+                                    (not *save_first_page)))
 
           (when looking_inside
             (set! *attrib
@@ -984,8 +981,7 @@ the snap grid size should be set to 100")))
 
           (loop-while *attrib count))))
 
-    (when (and loaded_flag
-               *save_first_page)
+    (when *save_first_page
       (x_window_set_current_page *window *save_first_page))))
 
 
