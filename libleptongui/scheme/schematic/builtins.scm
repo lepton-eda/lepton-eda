@@ -939,10 +939,15 @@ the snap grid size should be set to 100")))
 
                     (g_clear_error *error))
                   (begin
-                    ;; s_hierarchy_down_schematic_single() will not zoom the loaded page.
-                    ;; Tabbed GUI: zoom will be set in x_tabs_page_set_cur().
-                    (unless use-tabs?
-                      (zoom-child-page *window *parent *child))
+                    (if use-tabs?
+                        ;; Tabbed GUI is used. Create a tab for
+                        ;; every subpage loaded.  Zoom will be set
+                        ;; in x_tabs_page_set_cur().
+                        (x_window_set_current_page *window *child)
+                        ;; s_hierarchy_down_schematic_single()
+                        ;; does not zoom the loaded page, so zoom
+                        ;; it here.
+                        (zoom-child-page *window *parent *child))
 
                     ;; Save the first page.
                     (unless loaded_flag
@@ -950,11 +955,7 @@ the snap grid size should be set to 100")))
 
                     ;; this only signifies that we tried
                     (set! loaded_flag #t)
-                    (set! page_control (lepton_page_get_page_control *child))
-
-                    ;; tabbed GUI: create a tab for every subpage loaded:
-                    (when use-tabs?
-                      (x_window_set_current_page *window *child))))
+                    (set! page_control (lepton_page_get_page_control *child))))
 
               (loop-internal-while (1+ pcount)
                                    (u_basic_breakup_string *attrib (char->integer #\,) pcount)))))
