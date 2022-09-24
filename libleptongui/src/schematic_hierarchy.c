@@ -397,7 +397,8 @@ s_hierarchy_find_next_page (LeptonPageList *page_list,
        iter = g_list_next (iter)) {
 
     LeptonPage *page = (LeptonPage *)iter->data;
-    if (page->page_control == current_page->page_control) {
+    if (lepton_page_get_page_control (page) == lepton_page_get_page_control (current_page))
+    {
       return page;
     }
   }
