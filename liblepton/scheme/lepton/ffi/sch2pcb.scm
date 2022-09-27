@@ -24,12 +24,14 @@
 
   #:export (sch2pcb_add_default_m4_files
             sch2pcb_get_args
+            sch2pcb_element_directory_list_append
             sch2pcb_set_default_m4_pcbdir
             sch2pcb_set_m4_pcbdir
             sch2pcb_load_extra_project_files
             sch2pcb_get_schematics
             sch2pcb_main
-            sch2pcb_usage))
+            sch2pcb_usage
+            sch2pcb_get_verbose_mode))
 
 ;;; Simplify definition of functions by omitting the library
 ;;; argument.
@@ -37,6 +39,7 @@
   (define-lff-lib arg ... liblepton))
 
 (define-lff sch2pcb_add_default_m4_files void '())
+(define-lff sch2pcb_element_directory_list_append void '(*))
 (define-lff sch2pcb_get_args void (list int '*))
 (define-lff sch2pcb_set_default_m4_pcbdir void '(*))
 (define-lff sch2pcb_set_m4_pcbdir void '(*))
@@ -44,3 +47,4 @@
 (define-lff sch2pcb_get_schematics '* '())
 (define-lff sch2pcb_main int '())
 (define-lff sch2pcb_usage int '())
+(define-lff sch2pcb_get_verbose_mode int '())

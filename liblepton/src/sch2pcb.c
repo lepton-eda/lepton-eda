@@ -1535,26 +1535,6 @@ sch2pcb_main ()
   gint i;
   gboolean initial_pcb = TRUE;
   gboolean created_pcb_file = TRUE;
-  char *path, *p;
-
-  /* Defaults for the search path if not configured in the project file */
-  if (g_file_test ("packages", G_FILE_TEST_IS_DIR))
-    sch2pcb_element_directory_list_append ((char *) "packages");
-
-#define PCB_PATH_DELIMETER ":"
-  if (sch2pcb_get_verbose_mode () != 0)
-    printf ("Processing PCBLIBPATH=\"%s\"\n", PCBLIBPATH);
-
-  path = g_strdup (PCBLIBPATH);
-  for (p = strtok (path, PCB_PATH_DELIMETER); p && *p;
-       p = strtok (NULL, PCB_PATH_DELIMETER)) {
-    if (g_file_test (p, G_FILE_TEST_IS_DIR)) {
-      if (sch2pcb_get_verbose_mode () != 0)
-        printf ("Adding %s to the newlib search path\n", p);
-      sch2pcb_element_directory_list_append (g_strdup (p));
-    }
-  }
-  g_free (path);
 
   pins_file_name = g_strconcat (sch_basename, ".cmd", NULL);
   net_file_name = g_strconcat (sch_basename, ".net", NULL);

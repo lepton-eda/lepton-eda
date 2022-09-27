@@ -18,6 +18,7 @@
 
 
 (use-modules (rnrs bytevectors)
+             (srfi srfi-1)
              (system foreign)
              (lepton ffi sch2pcb)
              (lepton m4))
@@ -71,4 +72,15 @@
         (sch2pcb_add_default_m4_files)
         (if (null-pointer? (sch2pcb_get_schematics))
             (sch2pcb_usage)
-            (sch2pcb_main)))))
+            (begin
+              ;; Defaults for the newlib element directory search path
+              ;; if not configured in the project file.
+              (when (not (zero? (sch2pcb_get_verbose_mode)))
+                (format #t "Processing PCBLIBPATH=~S\n" %pcb-lib-path))
+              (for-each
+               (lambda (x)
+                 (sch2pcb_element_directory_list_append (string->pointer x)))
+               (filter-map
+                (lambda (x) (false-if-exception (canonicalize-path x)))
+                (cons "packages" (parse-path %pcb-lib-path))))
+              (sch2pcb_main))))))
